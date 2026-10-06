@@ -1,6 +1,6 @@
 {
  "n_blocks": 11,
- "pearson": NaN,
+ "pearson":null,
  "pearson_misses": -0.22345940494442668,
  "spearman": 1.0,
  "spearman_misses": -0.16363636363636366,
@@ -57,7 +57,7 @@
   0.8318
  ],
  "pearson_logit_held_all": 0.1748,
- "pearson_logit_held_negatives": NaN,
+ "pearson_logit_held_negatives":null,
  "pearson_logit_held_positives": 0.1748,
  "n_held": 19183,
  "frac_held_concordant": 0.0062,

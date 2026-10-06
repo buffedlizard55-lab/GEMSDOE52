@@ -80,7 +80,7 @@
    100.0,
    100.0
   ],
-  "nodata": NaN,
+  "nodata":null,
   "nodata_repr": "nan",
   "finite_pixels": 5167373,
   "min": 0.0,

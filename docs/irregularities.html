@@ -236,6 +236,36 @@ Closing it needs an endpoint that returns the board as data; we do not know one 
 publishes, and inventing a URL is not a fix. Until then treat “live board” on this site as
 “live-attempted, snapshot-served”.</td></tr>
 
+<tr><td><code>IR-52-017</code></td>
+<td><strong>Four published JSON files were not valid JSON.</strong> Python writes a missing correlation as a
+bare <code>NaN</code>, which <code>json.loads</code> accepts and the browser's <code>JSON.parse</code>
+rejects outright.</td>
+<td>Found by <em>reading the live page</em> at 22:31 UTC rather than the local files: the overview printed
+&ldquo;Conditional-independence premise &hellip; <b>not measured</b>&rdquo; with three <code>NaN</code>s, while
+<code>evidence/independence_*.json</code> and <code>docs/data/grid.json</code> all contained
+<code>NaN</code>. A silent parse failure on a data-driven page is indistinguishable from an honest &ldquo;we
+have no number&rdquo;.</td>
+<td><span class="tag ok">mitigated</span> &mdash; <code>refresh_feed.copy_evidence</code> normalises
+<code>NaN</code>/<code>Infinity</code> to <code>null</code> on the way to the site (evidence keeps
+<code>NaN</code>: &ldquo;undefined&rdquo; is the truthful value and <code>null</code> renders as &ldquo;&ndash;&rdquo;),
+and <code>scripts/check_site.py</code> now parses every published file with <code>parse_constant</code>
+raising, so an unparsable file is a build failure rather than a quiet page.</td></tr>
+
+<tr><td><code>IR-52-018</code></td>
+<td><strong>We published independence numbers that no longer existed.</strong> The README and
+<code>knowledge/03</code> asserted the co-training premise had survived, quoting r&nbsp;=&nbsp;0.4298 (tip)
+and r&nbsp;=&nbsp;&minus;0.1406 (hide). Those came from a pre-fix run of the diagnostic; the files were
+rewritten afterwards and no longer contain them.</td>
+<td>Caught by re-reading <code>evidence/independence_*.json</code> while fixing <code>IR-52-017</code>:
+block-level false-alarm correlation is <em>undefined</em> on both instruments (degenerate per-block variance,
+Spearman 1.0 on ties), the miss-rate correlation is &minus;0.2235 (tip) and <strong>+0.8307</strong> (hide),
+the held-pixel logit is +0.1748 / +0.1316.</td>
+<td><span class="tag ok">corrected, claim weakened on purpose</span> &mdash; the premise is now stated as
+<em>neither established nor refuted, unmeasured at the registered granularity</em>. The verdict on
+co-training rests on the mechanism's own measurement (AUC &Delta; &minus;0.0159, 1/4 folds, worst arm on
+both instruments), which is unchanged. Rule added: prose re-reads its source file in the same session
+(<code>knowledge/03</code> &sect;N-1).</td></tr>
+
 </tbody>
 </table>
 

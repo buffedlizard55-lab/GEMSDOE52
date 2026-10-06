@@ -183,14 +183,17 @@ as well), `tip` (only the along-strike ends of traces removed). Each writes its 
 ## 4. What was actually found, before any of this was shipped
 
 * **The co-training mechanism failed its own gate.** One Blum–Mitchell round *lowered* View A's
-  blocked AUC in every fold (0.797 → 0.761 pooled). Stated precisely, because the naive reading is wrong:
-  **the theorem's premise survived** — the two views' out-of-fold errors are only weakly coupled
-  (block-level false-alarm correlation r = 0.4298 on the truncation instrument against a 0.60 abandonment
-  threshold; r = −0.1406 on the whole-component instrument), so conditional independence was *not*
-  refuted. What failed is the second half: turning that disagreement into labels and retraining sharpens
-  the maxima you already had instead of finding new ones. Both measurements are published
-  (`evidence/independence_*.json`, `evidence/holdout_*.json`) with the reading string attached, and the
-  pseudo-label mechanism is **not** in the shipped field. The disagreement **strata** — the
+  blocked AUC (mean Δ = −0.0159, fold support 1/4 on `hide`; 0.797 → 0.761 pooled earlier in the run), and its
+  arm is the worst measured on both instruments — 0.0084 tip / 0.0078 hide against 0.0253 / 0.0396 for
+  matched-budget `random` — so the pseudo-label round is **not** in the shipped field, and the failure is
+  published (`evidence/holdout_*.json`, `docs/validation.html`). The premise is a subtler story, and we
+  corrected our own earlier sentence about it: the pre-registered block-level test **could not fire** at this
+  grid size (degenerate per-block false-alarm variance ⇒ correlation undefined, `spearman` 1.0 on all ties),
+  the pixel-level logit correlation is weak (+0.1748 tip, +0.1316 hide against a 0.60 abandonment threshold),
+  and the block-level *miss-rate* correlation on `hide` is **+0.8307** — the views miss the same
+  neighbourhoods. So conditional independence here is **neither established nor refuted: it is unmeasured at
+  the granularity the pre-registration specified**, and the r = 0.4298 / −0.1406 numbers this README carried
+  at 22:20 UTC are **retracted**; `knowledge/03` §N-1 has the full table and the rule it taught us. The disagreement **strata** — the
   physical asymmetry between "field says fault, surface says nothing" and its converse — are, because
   they were measured separately and survived: A-only pixels sit in materially deeper cover than
   concordant pixels (mean depth-to-basement rank 455 vs 251) and carry a gravity step (6.06 vs the

@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-06T22:29:38Z",
+ "generated_utc": "2026-10-06T22:34:54Z",
  "repo": "buffedlizard55-lab/GEMSDOE52",
  "branch": "arena/dd2ae151-gemsdoe52",
  "files": [
@@ -47,15 +47,15 @@
   "folds.json",
   "folds_hide.json",
   "folds_tip.json",
-  "grid.json",
+  "grid.json (+1 NaN->null)",
   "hide_and_recover_benchmark.json",
   "holdout_hide.json",
   "holdout_tip.json",
   "holdout_validation.json",
-  "independence.json",
-  "independence_hide.json",
+  "independence.json (+2 NaN->null)",
+  "independence_hide.json (+2 NaN->null)",
   "independence_test.json",
-  "independence_tip.json",
+  "independence_tip.json (+2 NaN->null)",
   "layer_screen.json",
   "prepared_manifest.json",
   "restore_receipt.json",
@@ -67,9 +67,9 @@
   "submission_gems52-h52-cotrain-disagreement-emission-composite-37654px-r1.json",
   "uniqueness_gate.json"
  ],
- "leaderboard_status": "offline snapshot (feed run without --fetch)",
+ "leaderboard_status": "unreachable: ValueError: leaderboard table parsed empty - page layout changed \u2014 serving the last verified snapshot instead",
  "submission": "gems52-h52-cotrain-disagreement-emission-composite-37654px-r1.tif",
- "downloads": 4,
+ "downloads": -1,
  "pipeline": {
   "footprint": 5165840,
   "catalogue": 60894,

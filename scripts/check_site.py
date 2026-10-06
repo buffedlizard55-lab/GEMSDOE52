@@ -142,7 +142,11 @@ def main() -> int:
     # 6. the JSON itself must be valid and self-consistent where we can check it
     for f in sorted(DATA.glob("*.json")):
         try:
-            d = json.loads(f.read_text())
+            # strict: Python's json accepts NaN/Infinity, JSON.parse does not.  A published file with a
+            # bare NaN reads fine here and silently in the browser, which is how "not measured" appeared
+            # on a page whose evidence file had a number in it.
+            d = json.loads(f.read_text(), parse_constant=lambda x: (_ for _ in ()).throw(
+                ValueError(f"non-JSON constant {x!r}; JSON.parse would reject this file")))
         except Exception as e:                                    # noqa: BLE001
             problems.append(f"data/{f.name}: invalid JSON ({e})")
             continue
