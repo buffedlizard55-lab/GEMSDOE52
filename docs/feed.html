@@ -61,7 +61,12 @@ inventing rows.</p>
 <p>Three consequences, stated because each one is a way a site like this usually starts lying:</p>
 <ul class="tight">
   <li>If the fetch fails, the page says <em>“unreachable — serving the last verified snapshot”</em> and
-  shows the snapshot's own timestamp. The staleness is the point of showing it.</li>
+  shows the snapshot's own timestamp. The staleness is the point of showing it. <b>This has already
+  happened once, for an instructive reason</b>: the first scheduled run reached the board and got HTTP 200,
+  then parsed zero rows, because the leaderboard table is rendered client-side and is not in the server
+  HTML at all. The strict parser raised instead of publishing an empty board, and the fallback did its job —
+  see <a href="irregularities.html"><code>IR-52-016</code></a>. Treat “live board” here as
+  <em>live-attempted, snapshot-served</em> until an endpoint that returns the board as data exists.</li>
   <li>The workflow commits only <code>docs/data/</code>. It never touches
   <code>docs/downloads/</code> or <code>submission/</code>: publishing a candidate raster has to stay a
   deliberate act, because a submission slot is spent once a week and cannot be recalled.</li>

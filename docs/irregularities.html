@@ -220,6 +220,22 @@ other — which fails at import (<code>cannot import name 'build_quadrant_ids'</
 passing), so both implementations remain checkable and neither silently redefines the other. Where a page
 from them contradicts the register, the register wins and says so on their page.</td></tr>
 
+<tr><td><code>IR-52-016</code></td>
+<td><strong>The scheduled fetch reaches the leaderboard page but cannot read the table — so the board on
+this site updates when a browser renders it, not when cron runs.</strong> Observed live at 22:28 UTC on the
+first CI run: <code>status: unreachable: ValueError: leaderboard table parsed empty — page layout
+changed — serving the last verified snapshot instead</code>.</td>
+<td>The runner got HTTP 200 from <code>www.drivendata.org</code> (unlike this sandbox, which gets a TLS
+EOF), and <code>refresh_feed.parse_board</code> found no <code>&lt;tr&gt;</code> rows: the board table is
+built client-side, so the server HTML has no rows to parse. The parser is deliberately strict — it raises
+rather than publishing a short or empty board — and the run then falls back to
+<code>registry/leaderboard_snapshot_2026-10-06.json</code> with its own 21:33 UTC timestamp.</td>
+<td><span class="tag warn">open, contained</span> — the page label is the mitigation: the feed card shows
+the snapshot's timestamp and the failed-fetch reason, so staleness is visible rather than disguised.
+Closing it needs an endpoint that returns the board as data; we do not know one that the organiser
+publishes, and inventing a URL is not a fix. Until then treat “live board” on this site as
+“live-attempted, snapshot-served”.</td></tr>
+
 </tbody>
 </table>
 
