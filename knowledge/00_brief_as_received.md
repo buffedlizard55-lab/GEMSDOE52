@@ -1,15 +1,18 @@
 # The brief, as received (standing starting point for this repo)
 
-> **Provenance and integrity note.** The text below is a faithful itemisation of the instructions
-> given to this session, reconstructed from the session record. The *verbatim* wording of the
-> original message was not recoverable from the workspace: this repo's git history has a single
-> commit (`744df63 Initial commit`) that contains no brief, no file anywhere under `/home/user` or
-> the sibling checkouts contains it (`grep -rl "Blum" /tmp/GEMSDOE* /home/user` → only
-> `src/gems52/cotrain.py`), and Arena's session summary paraphrases rather than quotes. Rather than
-> invent quotation marks, the directives are restated here in full and in order, each one
-> implementation-traceable. If the original text turns up, replace this section and bump the version
-> in `registry/preregistration.json`. This irregularity is also listed on the site's
-> `docs/irregularities.html`.
+> **Provenance, updated 22:35 UTC.** The brief's **verbatim wording was recovered tonight** from
+`README.md` §8 ("Original Task Prompt (Verbatim)") of commit `503f18e`'s parent chain on `main` — the PR #2
+session recorded the full prompt as a fenced block. It is reproduced below and in the repo README. Two caveats
+kept honest: (a) that copy is a *sibling session's transcription* of the Arena message, not the message
+itself, and we cannot diff it against the original because this workspace holds no copy of it; (b) everything
+written here before 22:20 UTC was a reconstruction from the session record, and where the reconstruction and
+the recovered text disagree, **the recovered text wins** — the one substantive difference found was the
+radiometric clause, which is conditional in the original ("plus any radiometric bands in
+`training_features.tif`") and absolute in our earlier note; see `knowledge/04` and `IR-52-001` on the
+register. Until 22:20 UTC this file stated the verbatim wording was unrecoverable; that statement was
+correct about *this checkout* and wrong about the repository, because `main` had moved ahead of our base
+commit and a fetch was the difference. Lesson recorded in `knowledge/03` §N-8: enumerate the remote refs
+before declaring anything unrecoverable.
 
 Version 2, recorded 2026-10-06 (UTC). Nothing here expires; every later instruction in this session
 is additive.
@@ -77,3 +80,54 @@ is additive.
 23. Work in **three verification passes**, flag every irregularity found, give official links for
     manual review, and finish with a **pull request, then merge to main**. Zero manual input from the
     user; no hallucinated facts.
+
+---
+
+## Appendix · the recovered verbatim text
+
+```text
+Always keep in mind Arena Core Values:
+1. Maximize P(Win): Spend cycles where they change the expected score. Don't polish infrastructure when the model is the bottleneck; don't tune hyperparameters when the features are missing the signal.
+2. Own the Outcome: Verify end-to-end. A script that "should work" hasn't worked; a submission file that wasn't checked on disk isn't ready; a claim without a number in `evidence/` is a guess.
+
+Work autonomously with zero manual input from the user. Verify everything line by line from official trusted sources with links. Flag any irregularities for review. Do not hallucinate and make stuff up. Put the prompt into the README.md.
+
+For the DOE GEMS challenge (https://www.drivendata.org/competitions/306/competition-doe-gems/page/968/ & https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/ & https://www.drivendata.org/competitions/306/competition-doe-gems/ & https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/ & https://www.drivendata.org/competitions/306/competition-doe-gems/data/ & https://www.dropbox.com/scl/fi/3vz9o0wwavi26xaeoxlwr/gems-geodawn-numerical-features.tif?rlkey=je8d8fepqfbst9lnwsq9rkplu&st=zj1lag1r&dl=0 & https://www.dropbox.com/scl/fi/t7fyt03qdh9egyme0itwo/existing_faults.tif?rlkey=yiao96uluqdkipf0h5vju71jf&st=rnino7ya&dl=0 & https://www.dropbox.com/scl/fi/6rgvnuady818ol8yqgis4/example_submission.tif?rlkey=kbykilvau066xuogoosbf4cq8&st=8junzdyw&dl=0):
+
+Use the Blum & Mitchell (COLT '98, doi:10.1145/279943.279962) co-training setup:
+- Split features into two views:
+  * View A — potential-field and subsurface (gravity, magnetics, strain, seismicity)
+  * View B — surface (DEM-derived curvature and slope, plus any radiometric bands in `training_features.tif`)
+- Test conditional independence empirically by correlating each view's errors on labeled negatives — if strongly correlated, abandon co-training.
+- Pseudo-label only where one view is confident and the other abstains, using whole-segment spatial blocks and a buffer so no leakage reaches evaluation.
+- Use **disagreement as the discovery signal**:
+  * A confident, B not → buried fault candidate beneath cover (flag for Phase 2 geological reasoning)
+  * B confident, A not → surface artifact (roads, erosion lines) to suppress
+- Compare against a single-view baseline on hide-and-recover segments to verify co-training isn't amplifying bias.
+- Normalize to [0, 1], apply metric-aware placement, run the uniqueness gate, and confirm the output is not merely the union of the two views.
+- For Phase 2 readiness, write a short geological reasoning note for every A-only candidate so reviewers can evaluate the buried-fault calls.
+
+Study, analyze and explain why the following had the highest score out of the listed GEMSDOE websites and how to beat the 0.2778 score and get the top score of 0.3195 on the leaderboard:
+- https://buffedlizard55-lab.github.io/GEMSDOE32/docs/index.html - h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros: 0.2778
+- https://buffedlizard55-lab.github.io/GEMSDOE36/docs/ - gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif: 0.2750
+- https://buffedlizard55-lab.github.io/GEMSDOE44/docs/
+- https://buffedlizard55-lab.github.io/GEMSDOE46/
+
+We're at ~0.2778 vs 0.3195 top on GEMS. The remaining ~0.04 gap is almost certainly geological domain knowledge, not post-processing. Generate 3–5 candidate geological hypotheses we haven't tried yet. For each:
+1. What data layers it combines (name the bands in `training_features.tif` or external sources)
+2. What physical signature it looks for
+3. Why it should catch faults missing from the USGS/INGENIOUS catalogue
+4. How it differs from our previous implementations
+Rank them by expected DTI improvement vs implementation cost, and we'll validate the top one on spatially-blocked holdout before touching a submission slot. Do not spend a weekly submission slot on an idea that hasn't beaten our current holdout best on spatially-blocked validation.
+
+Once the competition rasters are placed in `data/` (`bash scripts/download_competition_data.sh` if you have URLs, or manual drop from DrivenData) and `python scripts/prepare_data.py` is run, the full model pipeline can be executed and verified. Do all of this autonomously with zero manual input from the user.
+
+Fix the "Predicted values must be in range [0, 1]" error. Must generate a UNIQUE .tif submission for the competition. Never copy a previous submission as the final output. Make sure the Github pages is clean and user-friendly. Have the one-click TIF/ZIP file download at the very top so the user does not have to scroll down and search for it. Provide a unique submission name and <=200-char submission note. Provide an Executive Summary subpage on the Github pages website as well.
+
+Do your work in 3 passes:
+Pass 1 — Implement and verify: Complete the task end-to-end. Run tests, linters, type-checks, or build steps that exist in the repo, and verify your changes actually work rather than assuming they do.
+Pass 2 — Review and fix: Re-read every file you touched or created. Look for bugs, unhandled edge cases, broken imports, type errors, regressions, leftover debug code, or unintended changes. Fix anything you find and re-verify.
+Pass 3 — Re-check against the user's original request: Re-read the user's prompt from the top and confirm every requirement, constraint, and detail they asked for is addressed. If anything is missing or only partially done, complete it now.
+
+Please remember to create a PR once you are done.
+```

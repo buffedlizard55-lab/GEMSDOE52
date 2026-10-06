@@ -134,3 +134,17 @@ All of these were measured, in this family, and are not to be retried without ne
 * This sandbox has no network egress except the agent's own page-fetching tool (`curl` to
   drivendata.org → `SSL_ERROR_SYSCALL`, `urllib` → TLS EOF). Anything that must be *live* belongs in the
   GitHub-hosted workflow, which is why `.github/workflows/feed.yml` exists instead of a cron in here.
+
+---
+
+## N-8 · Declaring something unrecoverable before fetching the remote
+
+We wrote, in `knowledge/00` and on the site, that the brief's verbatim wording could not be recovered: the
+checkout had one commit and no brief file. That was true of the *working tree* and false of the
+*repository* — `origin/main` had two further merged PRs, and `git show origin/main:README.md` §8 contains the
+prompt verbatim. Recovered at 22:35 UTC, and it corrected a real claim on the way in (the radiometric clause
+is conditional in the original, absolute in our reconstruction).
+
+**Rule:** before writing "not available anywhere", `git fetch && git ls-tree -r origin/main --name-only`, and
+`grep` the merged branches. In a family of repos where siblings merge into the same `main`, the branch you
+were cut from is not the repository.

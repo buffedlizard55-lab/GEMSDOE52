@@ -38,13 +38,24 @@ burn a submission, <em>mitigated</em> when a gate or a code path now catches it,
 <tbody>
 
 <tr><td><code>IR-52-001</code></td>
-<td><strong>There is no radiometric band.</strong> Notes in sibling repos of this family describe features
-from “gamma-ray” channels. No such channel exists in the provided data.</td>
+<td><strong><code>training_features.tif</code> has no radiometric band — but the family does hold
+radiometric rasters, and our first version of this entry overstated the point.</strong> The brief's clause is
+conditional (“plus <em>any</em> radiometric bands in <code>training_features.tif</code>”) and it resolves to
+none <em>in that file</em>: 19 float32 bands, magnetic / gravity / geodetic-strain / elevation /
+conductivity / depth-to-basement / seismicity, verified with <code>rasterio</code> and published in
+<code>data/band_inventory.json</code>. But <code>data/external/geodawn_rad_u8.tif</code> (4 bands) and
+<code>geodawn_extensions_u8.tif</code> (4) — USGS GeoDAWN radiometrics resampled to the grid — <em>are</em>
+present, sha256-pinned in <code>registry/data_manifest.json</code>, and were acquired by an earlier session
+rather than by us.</td>
 <td>Band inventory read from the organiser's own data README, published as
 <code>data/band_inventory.json</code>: 19 bands, all gravity / magnetic / conductivity / elevation /
 seismicity / depth-to-basement. <code>grep -l radiometric</code> across the raw data returns nothing.</td>
-<td><span class="tag ok">mitigated</span> — any radiometric feature is excluded by construction, and the
-feature builder is checked against the inventory in <code>scripts/prepare_data.py</code>.</td></tr>
+<td><span class="tag warn">corrected & open</span> — this repo's View B does not use them (measured
+choice: <code>B_scarp_p900</code> already dominates the far-field ranking), but calling their sibling use a
+“copy-paste error” was wrong and is retracted here. The open question is whether K/Th contrast beats
+<code>B_only</code> on the whole-component instrument; that is H52-6 in <code>knowledge/02</code> and it is
+the next screening job, not a re-writing of history. The rasters themselves stay
+<em>unverified-as-to-licence</em> until re-derived from USGS directly.</td></tr>
 
 <tr><td><code>IR-52-002</code></td>
 <td><strong>“0.3195 is the highest score right now” is stale.</strong> That number is rank <strong>#7</strong>
@@ -119,9 +130,13 @@ page looks exactly like a missing feed.</td></tr>
 paraphrases.</td>
 <td><code>grep -rl "Blum" </code> over this repo and every sibling checkout → only
 <code>src/gems52/cotrain.py</code>.</td>
-<td><span class="tag warn">accepted</span> — <code>knowledge/00_brief_as_received.md</code> restates the
-directives in full and in order, each one implementation-traceable, with this integrity note at the top of
-the file. We did not invent quotation marks.</td></tr>
+<td><span class="tag ok">closed 22:35 UTC</span> — the verbatim text <b>was</b> recoverable:
+  <code>git show origin/main:README.md</code> §8 (“Original Task Prompt (Verbatim)”) holds it, and it is now
+  quoted in full in both <code>README.md</code> §1.0 and <code>knowledge/00</code>. Our earlier “unrecoverable”
+  note was true of this checkout (one commit, <code>744df63</code>) and false of the repository: <code>main</code>
+  had moved two PRs ahead of our base. The recovery immediately corrected a substantive claim — see
+  <code>IR-52-001</code> above — which is the argument for why this row exists at all.
+  <em>Process rule now in</em> <code>knowledge/03</code> §N-8: fetch the remote before declaring anything gone.</td></tr>
 
 <tr><td><code>IR-52-009</code></td>
 <td><strong>The analysis sandbox has no network egress.</strong> Any claim of “live” data produced inside
@@ -177,6 +192,33 @@ it). The 5,167,373 figure is a different mask definition (one that includes a 1-
 measurement error in the others.</td>
 <td><span class="tag ok">mitigated</span> — every fraction on this site is quoted against the recomputed
 number, and <code>data/grid.json</code> publishes it.</td></tr>
+
+<tr><td><code>IR-52-014</code></td>
+<td><strong>Two claims in the PR #2 README on <code>main</code> are not compatible with the metric as
+published.</strong> A badge reads “Holdout Folds Won — 4/4 vs 0.2778 (+73.7 % LM)”, i.e. held-out fold DTI
+above the <em>portal</em> score, and a table asserts “Portal <code>[0, 1]</code> Check: PASS” for a file whose
+own companion row reports NaN outside the footprint. The portal check cannot pass on NaN
+(<code>IR-52-006</code>), and a fold DTI of 0.48 is unattainable at the truth prevalence these folds hold out
+(our best arm, on the same kind of folds, is 0.052; |G| is 0.11–0.29 % of the footprint).</td>
+<td>Read from <code>git show origin/main:README.md</code>; our own fold tables are in
+<code>data/holdout_tip.json</code> / <code>holdout_hide.json</code>. We did not re-run their pipeline, so this
+is a <em>consistency</em> finding, not a reproduction of their number.</td>
+<td><span class="tag warn">open</span> — their code and evidence are kept in the tree
+(<code>src/gems52_h1/</code>, <code>evidence/cotraining_rounds.json</code>,
+<code>tests/test_gems52_h1_pipeline.py</code>, <code>docs/forensics.html</code>) with a banner on the page;
+nothing from those claims is load-bearing for this file, and no number of theirs is repeated as ours.</td></tr>
+
+<tr><td><code>IR-52-015</code></td>
+<td><strong>Merging with <code>main</code> put two different <code>gems52.metric</code> modules in one
+package.</strong> A mechanical merge (13 conflicting paths) would have produced a package whose
+<code>__init__</code>, <code>metric</code> and <code>features</code> came from one implementation and whose
+<code>cotraining</code>, <code>placement</code>, <code>spec</code>, <code>submission</code> came from the
+other — which fails at import (<code>cannot import name 'build_quadrant_ids'</code>).</td>
+<td>Observed in the merge; the earlier session's test collected against our tree and broke.</td>
+<td><span class="tag ok">resolved by namespacing</span> — the earlier implementation is preserved verbatim as
+<code>src/gems52_h1/</code> with its test renamed to <code>tests/test_gems52_h1_pipeline.py</code> (still
+passing), so both implementations remain checkable and neither silently redefines the other. Where a page
+from them contradicts the register, the register wins and says so on their page.</td></tr>
 
 </tbody>
 </table>

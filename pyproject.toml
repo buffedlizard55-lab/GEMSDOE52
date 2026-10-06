@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=65.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gems52"
+version = "1.0.0"
+description = "GEMSDOE52 Blum & Mitchell Two-View Co-Training and Disagreement Discovery System"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

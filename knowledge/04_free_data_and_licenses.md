@@ -101,8 +101,21 @@ USGS "public domain" default applies to a cooperative state-survey product (it o
 ### D-5 · Things we will not spend time on, with the reason
 
 * 1 m LiDAR (3DEP / OpenTopography): public domain, but the fetch is tens of GB and dead here — see N-6.
-* Radiometric grids: **the provided data has no radiometric band at all** (IR-52-001), and any K/Th/U
-  argument in a note from a sibling site is a copy-paste error, not a feature.
+* Radiometric grids — **corrected 22:35 UTC, we had this wrong.** The provided `training_features.tif` is
+  19 float32 bands and contains **no** radiometric channel (verified with `rasterio`: count = 19; the
+  inventory in `evidence/band_inventory.json` lists magnetic, gravity, geodetic strain, elevation,
+  conductivity, depth-to-basement and seismicity only). But the brief's own clause is conditional — "plus
+  *any* radiometric bands in `training_features.tif`" — and it resolves to none **in that file only**: the
+  family's `data/external/` holds `geodawn_rad_u8.tif` (4 bands) and `geodawn_extensions_u8.tif` (4), i.e.
+  USGS GeoDAWN radiometrics resampled to the competition grid, sha256-pinned in `registry/data_manifest.json`,
+  plus `lidar_scarp_features_u8.tif` (12 bands). Those are **external, sibling-acquired, and unverified by
+  us as to licence terms** — GeoDAWN is a USGS product (DOI 10.5066/P93LGLVQ) so public domain is likely, but
+  the *rasters in this checkout* were produced by another session, so they fail our "confirmed obtainable by
+  the route we state" test until someone re-derives them from the source. This repo's View B does not use
+  them: a choice, not an oversight, and the cheapest measured follow-up for next round is exactly this —
+  K/Th contrast separates clay-filled from carbonate-lined cover, which is a physical discriminator between
+  a buried fault scarp and a road cut, and it belongs to the far-field ranking where `B_only` is currently
+  unopposed.
 * Commercial fault catalogues and proprietary well logs: fail the free test.
 * QFaults / INGENIOUS / similar global fracture compilations: already tested — 1 and 0 pixels in the
   footprint. They are empty here, and they cannot be a prior for what is missing.
