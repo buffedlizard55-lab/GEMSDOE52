@@ -68,6 +68,15 @@ def download_index() -> int:
     """
     import hashlib
     import html
+    import importlib.util
+
+    # Reading a GeoTIFF needs rasterio, which the CI runner deliberately does not have (see
+    # tests/test_workflows.py: the scheduled feed must not depend on a package index).  Without it we do
+    # NOT rewrite the page - the committed version, generated where the toolchain exists, keeps the
+    # verdicts.  A feed that silently degrades a safety table is worse than one that leaves it alone.
+    if importlib.util.find_spec("rasterio") is None:
+        log("downloads: rasterio absent, leaving the committed verdict table as it is")
+        return -1
 
     sample = ROOT / "data" / "sample_submission.tif"
     cur = None
@@ -81,7 +90,7 @@ def download_index() -> int:
         verdict, note = "unknown", ""
         try:
             sys.path.insert(0, str(ROOT / "src"))
-            from gems52 import gates as _g
+            from gems52 import gates as _g  # noqa: E402
             rep = _g.format_report(f, sample) if sample.exists() else None
             if rep is None:
                 note = "no sample_submission.tif to compare against"
@@ -211,7 +220,7 @@ def main() -> int:
     a = ap.parse_args()
     DL.mkdir(parents=True, exist_ok=True)
     copied = copy_evidence()
-    n_dl = download_index()
+    n_dl = download_index()      # -1 when the verdicts could not be recomputed here
     sub = latest_submission()
     board = fetch_board(a.fetch)
     write("leaderboard.json", board)
