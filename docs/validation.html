@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Validation — GEMSDOE52</title><link rel="stylesheet" href="style.css"></head>
+<body><a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap"><div class="brand">GEMS<span>DOE</span>52</div>
+<nav class="top"><a href="index.html">Overview</a><a href="executive-summary.html">Executive&nbsp;summary</a>
+<a href="method.html">Method</a><a href="hypotheses.html">Hypotheses</a>
+<a href="validation.html" aria-current="page">Validation</a><a href="feed.html">Data&nbsp;feed</a>
+<a href="irregularities.html">Irregularities</a><a href="sources.html">Official&nbsp;links</a></nav></div></header>
+<main id="main">
+
+<h1>Validation: three instruments, and what each one can and cannot see</h1>
+<p>Every claim on this page is a number from <code>evidence/</code>, produced on folds built from the
+official label file, with the visible catalogue masked out of both the allowed emission set and the
+score — the treatment the organiser applies (<a
+href="https://community.drivendata.org/t/discussion-on-evaluation-masking-and-new-fault-truth/11516">thread
+11516, posts #2 and #4, chrisk-dd, Sep 21</a>).</p>
+
+<h2><span class="num">1</span> Why one instrument is not enough</h2>
+<table><thead><tr><th>instrument</th><th>what is hidden</th>
+<th class="num">held truth within 5&nbsp;px of a still-visible trace</th><th>what it can measure</th>
+<th>what it is blind to</th></tr></thead><tbody>
+<tr><td class="mono">hide</td><td>whole 8-connected catalogue components, assigned to a fold by majority
+block, 4 px boundary buffer, thinned to 0.2 % prevalence</td><td class="num"><b>0.5 %</b></td>
+<td>discovery of an entirely unrecognised structure</td>
+<td>near-trace mass. A trace's own neighbours belong to the same component, so they are hidden with it —
+an arm that works by <em>extending</em> traces looks like noise here, and we nearly shipped on that
+artefact</td></tr>
+<tr><td class="mono">block</td><td>as <code>hide</code>, plus the model is fitted only on other quadrants
+and scored inside its own</td><td class="num">0.5 %</td>
+<td>the same, with the "the neighbouring block gives it away" leak removed</td>
+<td>as <code>hide</code>; smaller scored area changes the DTI scale, so numbers are never comparable
+across modes</td></tr>
+<tr class="hi"><td class="mono">tip</td><td>the along-strike ends of traces (outer 30 % of each component
+by projection on its own principal axis); the trace bodies stay visible</td>
+<td class="num"><b>88.5 %</b></td>
+<td>mapping truncation: whether a ranking puts mass where a mapped trace continues</td>
+<td>wholly unrecognised structures — which is what <code>hide</code> is for</td></tr>
+</tbody></table>
+<p class="small">The third column is measured on the real label file
+(<code>knowledge/05_instruments_and_what_each_can_see.md</code>), not assumed. It is why this repo runs
+two instruments. The shipped configuration is <b>not</b> the one that maximises the flattering number, and
+not the minimum of the two either — the two regimes are <em>disjoint populations</em>, so the choice is made
+on their sum by <code>scripts/composite_split.py</code>, whose control and tie-break rules are printed under
+its own table below and stored in <code>evidence/composite.json</code>.</p>
+
+<h2><span class="num">2</span> Arm tables</h2>
+<div id="armtables"><p class="small muted">loading <code>data/holdout_tip.json</code> and
+<code>data/holdout_hide.json</code>…</p></div>
+
+<h2><span class="num">3</span> The premise test, measured on cells that can measure it</h2>
+<div id="indep"><p class="small muted">loading <code>data/independence_*.json</code>…</p></div>
+
+<h2><span class="num">4</span> Two-regime composite: the sweep that picked the shipped file</h2>
+<p class="small">Corridor mass (1–6 px off a visible trace, where 88.5 % of the truncation instrument's
+truth lives) is ranked by the ranking that wins <em>there</em>; far-field mass (never-mapped structures, the
+only population the whole-component instrument can see) by the ranking that wins <em>there</em>; and the
+share between them at a fixed total budget is swept. Each candidate is compared against random emission
+<b>in the same region, at the same split and the same budget</b> — anything else compares a ranking against
+the best thing in the sweep rather than against chance.</p>
+<div id="composite"><p class="small muted">loading <code>data/composite.json</code>…</p></div>
+<p class="small"><b>Two honest caveats.</b> (i) The rule's control was wrong in the first version of the
+script — it took <code>max</code> over every arm containing “random”, which handed the corridor arm's own
+score to the bar it was supposed to clear, and made the shipped arm look like it lost to chance. The fix and
+the recomputation are in <code>scripts/composite_recount.py</code>, and both selections are in the JSON.
+(ii) The selected configuration clears the control bar on both instruments and <em>misses</em> the
+pre-registered “+0.010 over naive union” bar on the truncation instrument, so it is
+<b>not promoted</b>: it is the best of what we measured, which is a weaker statement, and the build records
+say so (<code>promoted: false</code>, <code>forced: true</code>).</p>
+
+<h2><span class="num">5</span> Gates that were run, and what they said</h2>
+<ul class="tight" id="gates"><li class="muted small">loading gate records…</li></ul>
+
+<div class="banner red"><b>The promotion rule, applied literally.</b>
+<code>registry/preregistration.json</code> requires the shipped arm to beat the naive union by 0.010 DTI
+on the folds <em>and</em> to beat uniform-random emission at equal budget on ≥ 3 of 4 folds. The
+co-training arm failed on both instruments — <span class="mono">beats_union: not OK</span>,
+<span class="mono">placement_not_mass: not OK</span>, <span class="mono">fold_support: 0/4</span> — so it
+is <b>not</b> what we ship, and no weekly slot was spent on it. These tables are that failure's record,
+kept published.</div>
+
+<h2><span class="num">6</span> Layer screen, for reference</h2>
+<p class="small">The per-layer precision that motivated the split, reproduced from
+<code>evidence/layer_screen.json</code>: the best single surface layer
+(<span class="mono">B_scarp_p900</span>, precision@40k 0.493, 5.73× base rate) is the strongest localiser
+on isolated catalogue pixels, and the best geophysical one (<span class="mono">A_strain_inv_reg</span>,
+0.310) is the strongest on the continuation population. The inverse relationship of
+<span class="mono">A_depth_base_rank</span> (0.032) is not a failure — it is the statement that the
+catalogue lives where the cover is thin.</p>
+<div id="layers"><p class="small muted">loading <code>data/layer_screen.json</code>…</p></div>
+
+</main>
+<footer><div class="wrap">GEMSDOE52 · tables render from <code>docs/data/*.json</code>, regenerated by
+<code>scripts/refresh_feed.py</code> · <a href="sources.html">official links</a> ·
+<a href="irregularities.html">irregularities</a></div></footer>
+<script src="site.js"></script><script src="tables.js"></script></body></html>

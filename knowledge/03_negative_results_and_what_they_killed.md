@@ -1,0 +1,136 @@
+# 03 · Negative results, and what each one killed
+
+Written so the next run does not repeat them. Every number below is reproducible from
+`evidence/*.json` in this repo; nothing here is inferred from memory or from a sibling site.
+
+Ordering is by how much compute each dead end cost us.
+
+---
+
+## N-1 · Co-training with pseudo-labels is refuted on both instruments (the largest one)
+
+**The idea** (the brief's mechanism, and the one the group had never tried): train View A on the
+geophysical bands and View B on the surface bands; wherever one view is confident and the other
+abstains, harvest that disagreement as a pseudo-label, retrain, and emit the second-round model.
+Blum & Mitchell's COLT'98 result (doi:10.1145/279943.279962) says this *can* work when each view is
+individually sufficient and their errors are conditionally independent given the label.
+
+**What happened.** Pre-registered gates, evaluated on the arm `cotrain|25000`, on both instruments:
+
+| gate | tip (truncation) | hide (whole-component) |
+|---|---|---|
+| beats naive union at equal budget | −0.01582 → **FAIL** | −0.03027 → **FAIL** |
+| beats the better single view | +0.00097 → pass | +0.00183 → pass |
+| placement, not mass (vs identical-mass scramble) | −0.01667 → **FAIL** | −0.03183 → **FAIL** |
+| fold support (≥3/4 folds beating random) | 0/4 → **FAIL** | 0/4 → **FAIL** |
+| promoted | **false** | **false** |
+
+Absolute DTI for the arm: `cotrain|37654` = 0.0084 (tip) / 0.0078 (hide) — the *worst* of every arm
+we measured, including the random control at 0.0253 / 0.0396.
+
+**The reading, which matters more than the failure.** The independence premise itself survived: block
+-level correlation between the two views' false-alarm rates was r = 0.4298 (tip, n = 11 blocks,
+Spearman 0.4455) against an abandonment threshold of 0.60, and miss-correlation was r = −0.3114. On
+hide, false-alarm r = −0.1406 and held-positive logit r = 0.1316. So the views *do* disagree in an
+informative way — the strata table is built on exactly that disagreement and it behaves as geology
+predicts (A-only pixels sit at 455/512 median cover-depth rank versus 297 for B-only). What failed is
+the *second* half of the theorem's machinery: turning disagreement into labels and retraining makes the
+ranking *worse*, not better. The reason is visible in the numbers — the pseudo-labels are drawn from the
+pixels a model is already most confident about, so round 2 mostly sharpens existing maxima (mass stays
+put, placement degrades), and the one-view-confident population is dominated by artefacts (roads,
+quarries, gully heads) that the surface view treats as edges.
+
+**Rule we adopted:** the disagreement signal is used as a *stratification of the emission budget*, never
+as a label source, in this competition and at this prevalence (~0.2 % of pixels).
+
+---
+
+## N-2 · A whole-footprint rank field's top-K is not a fault detector
+
+Before the fold machinery existed we scored the top 40 k pixels of the blended rank field over the whole
+footprint in hide mode and got essentially the random control. Cause: the top of a rank field is the
+*regional anomaly* — a basement-high, a drainage-basin-scale gravity low — not a linear structure. Any
+"take the most extreme values" rule spends its budget on 10 km blobs. This is the same failure mode that
+killed GEMSDOE47's off-catalogue SGMC arm.
+
+**Rule adopted:** ranking must always be applied *inside a permitted set* (footprint minus catalogue,
+and for corridor mass, inside the corridor), and any arm whose field is unimodal-scaled must be checked
+against `random` at the same budget in the same mask.
+
+---
+
+## N-3 · Hide mode is structurally blind to near-trace mass; tip mode is blind to isolated faults
+
+`union_cor|37654` scores 0.0320 on tip and **0.0001** on hide. That is not a weakness of the arm, it is
+arithmetic: the hide folds hold out whole components, so only 0.5 % of held-out truth lies within 5 px of
+a *visible* trace, and a corridor arm is by construction looking next to visible traces. Conversely tip
+folds truncate known traces, so an arm that finds an isolated, never-mapped fault gets no credit there.
+
+Two consequences we now treat as design rules:
+
+1. **Never select on one instrument.** Every arm is reported on both, and the shipped selection rule is a
+   two-regime composite (corridor mass scored by the tip-winning ranking, far-field mass by the
+   hide-winning ranking), *not* the minimum of the two.
+2. **Max-min alone is a trap.** The best arm by max-min is `B_only|25000` (0.0296 / 0.0497) and it
+   throws away the entire near-trace population, where the truth is densest (88.5 % of tip-fold truth
+   lies within 5 px of a visible trace). Selecting by max-min would have discarded the corridor — the one
+   regime the organiser's own statement says is *in scope* ("new-fault truth can lie within 300 m of a
+   known trace, and those corrections are a competition goal", chrisk-dd, Sep 21).
+3. Tip-mode prevalence is data-determined (4–8 k px per fold), so only *ranking* transfers between folds;
+   absolute tip DTI must never be read as a score forecast.
+
+---
+
+## N-4 · The pre-registered blend weights were asserted, and backwards
+
+`registry/preregistration.json` opened with w = (0.55 r_A + 0.20 r_B + 0.25 min) because co-training
+theory says the two views are comparable in quality. On this data the surface view dominates: `B_only`
+is the **only** arm that beats its random control on both instruments (0.0291 tip / 0.0518 hide at
+37,654 px; +31 % over random on hide but winning only 2/4 folds, and +15 % on tip), while A-only is below
+random on hide. Any re-weighting therefore has to be recorded as an *amendment* to the pre-registration
+with the fitted numbers in it — never applied silently. The `wt_A20B80` family is exactly that amendment,
+declared in the arm table rather than hidden in a config.
+
+---
+
+## N-5 · NaN outside the footprint is unwritable *and* unsubmittable
+
+`grid.write_geotiff` refuses non-finite pixels, and the portal's own validator enforces `0 <= v <= 1`,
+which NaN fails regardless of the comparison direction. That is the mechanism behind the historical
+"Predicted values must be in range [0, 1]" rejection this lab hit before: it was never a scaling problem,
+it was the no-data encoding. The page's "null or NaN where there is no data" sentence and the validator
+contradict each other; scoring is identical either way (p = 0 contributes nothing to FPw), so the safe
+encoding is 0.0 and `gates.format_report` now calls NaN a problem by name.
+
+---
+
+## N-6 · Inherited dead ends, re-listed so they stay dead
+
+All of these were measured, in this family, and are not to be retried without new information:
+
+| tried | result | why it fails |
+|---|---|---|
+| fit a truth model to published leaderboard scores | RMSE 0.1449 against scores of 0.25–0.38 | unusable; the board is too coarse and too few |
+| supervised detectors trained to reproduce the catalogue | 0.1223, then 0.0286 | the metric rewards *new* faults only; a catalogue copy is max-penalised |
+| external fault catalogues as positive priors | QFaults → 1 px in footprint, INGENIOUS → 0 px | nothing mapped there yet; as a *negative* filter they are still interesting |
+| 1 m LiDAR acquisition | download volume exceeds this sandbox | licence is fine (public domain), bandwidth is not |
+| potential-field transforms at 300 m cell size | magnetic transforms AUC ≈ 0.52; cross-strike magnetic braid 0.4987; strain-ratio Laplacian 0.4765; basement-depth signed step 0.5113; Laplacian of fine strain ≈ 0.5; drainage-azimuth asymmetry 0.4796 | the provided grids are already processed to the point where a second derivative amplifies nothing but noise |
+
+---
+
+## N-7 · Process failures worth recording (they cost hours, not model quality)
+
+* `pkill -f <pattern>` inside a tool call kills the tool call itself whenever the pattern also matches
+  the invoking shell's command line. It bit us twice (once silently dropping the command queued after it).
+  Use the process tools, or `pgrep` then `kill <pid>`, and never put the target's name in the same compound
+  command.
+* A 12-arm × 6-budget × 4-fold × 2-mode sweep (`scripts/budget_sweep.py`) does not fit in a 2 CPU / 3 GB
+  box: ~40 min of wall time for a table whose informative rows are readable in ~7 min from a named arm
+  list. The script is left in the repo, correct but unrun; `scripts/composite_split.py` replaces it with
+  an explicit `--far/--cor/--splits` grid.
+* Bash heredoc patch scripts inside compound commands are unsafe (one unbalanced bracket swallows the
+  rest of the command and writes nothing). Prefer editing files with a real edit tool and then verifying
+  with `grep -n` + `ast.parse`. Both silent patch failures in this session were caught by that habit.
+* This sandbox has no network egress except the agent's own page-fetching tool (`curl` to
+  drivendata.org → `SSL_ERROR_SYSCALL`, `urllib` → TLS EOF). Anything that must be *live* belongs in the
+  GitHub-hosted workflow, which is why `.github/workflows/feed.yml` exists instead of a cron in here.

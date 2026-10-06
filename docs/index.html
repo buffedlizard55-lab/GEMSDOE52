@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEMSDOE52 — co-trained disagreement for uncatalogued faults (DOE GEMS Prize)</title>
+<meta name="description" content="Single-band GeoTIFF submission for DrivenData competition 306, built by co-training a potential-field view against a surface view and emitting only where the metric says it pays.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap">
+  <div class="brand">GEMS<span>DOE</span>52</div>
+  <nav class="top">
+    <a href="index.html" aria-current="page">Overview</a>
+    <a href="executive-summary.html">Executive&nbsp;summary&nbsp;&amp;&nbsp;how&nbsp;to&nbsp;submit</a>
+    <a href="method.html">Method</a>
+    <a href="hypotheses.html">Hypotheses</a>
+    <a href="validation.html">Validation</a>
+    <a href="feed.html">Data&nbsp;feed</a>
+    <a href="irregularities.html">Irregularities</a>
+    <a href="sources.html">Official&nbsp;links</a>
+  </nav>
+</div></header>
+<main id="main">
+
+<p class="mono small muted">DrivenData&nbsp;·&nbsp;DOE&nbsp;GEMS&nbsp;Prize&nbsp;·&nbsp;competition&nbsp;306&nbsp;·&nbsp;
+repo <code>buffedlizard55-lab/GEMSDOE52</code> · <span data-feed-stamp>loading feed…</span></p>
+
+<section class="hero">
+  <div>
+    <h1>The submission file, first.</h1>
+    <p>One GeoTIFF. Download it, open <a
+    href="https://www.drivendata.org/competitions/306/competition-doe-gems/">the competition page</a>,
+    click <em>Make a submission</em>, pick the file, write the note below in the notes box, submit.
+    Nothing to configure, nothing to check by hand: the file is produced by
+    <code>scripts/build_submission.py</code> and gated by <code>src/gems52/gates.py</code> before it
+    is written.</p>
+    <p class="small"><strong>What is in it.</strong> {0,1} mass on pixels the metric's own acceptance
+    rule says are worth paying for, placed off the pixel-exact catalogue mask where a potential-field
+    view is confident and the surface view withholds. <a href="method.html">Method</a> ·
+    <a href="executive-summary.html">exact instructions</a> ·
+    <a href="validation.html">what the blocked holdout said, including the part that failed</a>.</p>
+  </div>
+  <div class="dl">
+    <!--DOWNLOAD-->
+    <div class="dlmeta" id="dlmeta">reading <code>data/submission.json</code>…</div>
+  </div>
+</section>
+
+<div class="kpis" id="kpis"></div>
+
+<h2><span class="num">01</span> The one-sentence version</h2>
+<p>Two models are fitted on the same unlabelled pixels — View&nbsp;A on the gravity, magnetic,
+conductivity and seismicity layers, View&nbsp;B on slope, curvature, scarp and stream-power from the
+elevation model — and the useful output is not their agreement, it is <em>where they disagree with
+conviction</em>: a gravity or magnetic offset with no scarp is a fault under cover, which is exactly
+the population the LiDAR-derived catalogue is structurally unable to contain.</p>
+
+<div class="banner" id="verdict"><span class="muted">Loading the pre-registered verdict from
+<code>data/</code>…</span></div>
+
+<h2><span class="num">02</span> Live numbers</h2>
+<p class="small muted">Every figure on this page is read from <code>docs/data/*.json</code>, which
+<code>scripts/refresh_feed.py</code> regenerates from <code>evidence/</code> and the public
+leaderboard. The committed workflow runs it on a schedule and on every push, so a stale number is
+visible as a stale timestamp rather than as a wrong claim.</p>
+<div class="grid2">
+  <div class="card"><h3>Public leaderboard</h3><div id="lb">loading…</div></div>
+  <div class="card"><h3>Blocked-holdout arms (top 8)</h3><div id="arms">loading…</div></div>
+</div>
+
+<h2><span class="num">03</span> What the holdout said, before the tuning</h2>
+<p>Written in plain terms, because the interesting result is a negative one:</p>
+<ul class="tight">
+  <li><strong>The co-training round, as such, did not help.</strong> Adding a view's confident
+  pseudo-labels to the other view's training set <em>lowered</em> View&nbsp;A's held-out AUC in every
+  fold (0.797&nbsp;→&nbsp;0.761 on the full grid; see <code>evidence/co_train_folds_*.json</code>).
+  The premise the brief asks us to test — conditional independence of the two views' errors given the
+  label — is measured, and reported, not assumed.</li>
+  <li><strong>The disagreement <em>strata</em> did help, and are the part we keep.</strong> The
+  A-only stratum (field confident, surface withholds) sits in deeper cover than the concordant
+  stratum and carries a real gravity step; the B-only stratum carries slope without a field offset,
+  which is what an artefact looks like. Those are physical signatures, measured on the official
+  bands, and they survive the failure of the pseudo-label mechanism.</li>
+  <li><strong>A top-K cut of a global score field loses to random emission</strong> at large budgets,
+  because the maximum of a smooth field is a mountain, not a fault. Ranking has to be applied
+  <em>inside</em> a permitted region — never over the footprint. That is why the shipped file is the
+  far-field ranking alone (corridor share 0.0 at 37,654 px, the one arm that beats its matched-budget
+  <code>random</code> control on <em>both</em> instruments) and why the corridor regime, which wins on
+  the truncation instrument at the same budget, is built and measured but left unfunded until the
+  composite sweep finishes; see <a href="validation.html">Validation</a> and
+  <a href="irregularities.html"><code>IR-52-012</code></a>.</li>
+</ul>
+
+<h2><span class="num">04</span> Why 0.2778 was the number, in three lines</h2>
+<p><code>h33-2-b2</code> is an earlier emission with its 2,545 pixels of self-overlap with the
+catalogue mask <em>deleted</em>: 40,199&nbsp;→&nbsp;37,654 pixels, +2.6&nbsp;% DTI for removing
+6.3&nbsp;% of the mass. On this metric, mass that sits on a masked pixel earns nothing and still pays
+the false-positive term, so the cheapest available points are precision points. The full derivation,
+the perfect-precision counterfactual (0.464 at this budget) and the acceptance-bar table are in
+<code>knowledge/01_why_02778_and_the_bar.md</code> and <a href="method.html#bar">Method&nbsp;§4</a>.</p>
+
+<h2><span class="num">05</span> Core values this repo is run by</h2>
+<div class="grid2">
+  <div class="card"><h3>Maximize P(Win)</h3>
+    <p class="small">Every decision is taken on the number the organiser scores, at the prevalence the
+    organiser's own published scores imply, and no weekly slot is spent on an idea that has not beaten
+    the current holdout best. Where an idea fails its gate — as the pseudo-label round did — the
+    failure is published, not buried, because a buried failure repeats next session.</p></div>
+  <div class="card"><h3>Own the Outcome</h3>
+    <p class="small">The file, its hash, its gates, its provenance and its irregularities are all in
+    this repo. Nothing here is left for a human to babysit: if a number cannot be verified from an
+    official source it is labelled unverified (see <a href="irregularities.html">Irregularities</a>),
+    and if a claim came from a sibling session rather than the organiser it says so.</p></div>
+</div>
+
+</main>
+<footer><div class="wrap">
+  GEMSDOE52 · generated by <code>scripts/refresh_feed.py</code> ·
+  evidence in <code>evidence/</code>, knowledge in <code>knowledge/</code>, pre-registration in
+  <code>registry/preregistration.json</code> ·
+  <a href="sources.html">official links for manual review</a>
+</div></footer>
+<script src="site.js"></script>
+<script src="render.js"></script>
+</body>
+</html>

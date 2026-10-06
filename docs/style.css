@@ -1,0 +1,100 @@
+/* GEMSDOE52 — field-report aesthetic: warm paper, ink, one accent.
+   No framework, no build step, no external font request: the site must render identically offline. */
+:root{
+  --paper:#f4f1ea; --paper-2:#eae5da; --ink:#1b1a17; --ink-2:#4a463d;
+  --rule:#cdc6b7; --accent:#0f5d52; --accent-2:#a8441c; --good:#1d6b3f; --bad:#9a2d20;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
+}
+*{box-sizing:border-box}
+html{background:var(--paper);color:var(--ink);
+  font:16px/1.62 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  -webkit-text-size-adjust:100%}
+body{margin:0}
+main{max-width:64rem;margin:0 auto;padding:0 1.25rem 6rem}
+a{color:var(--accent);text-underline-offset:2px}
+a:hover{color:var(--accent-2)}
+h1,h2,h3,.display{font-family:var(--mono);letter-spacing:-.02em;line-height:1.18;color:var(--ink)}
+h1{font-size:clamp(1.7rem,4.4vw,2.5rem);margin:.3rem 0 .6rem}
+h2{font-size:1.32rem;margin:2.6rem 0 .7rem;padding-top:.7rem;border-top:2px solid var(--ink)}
+h3{font-size:1.05rem;margin:1.6rem 0 .4rem}
+p{margin:.55rem 0}
+code,kbd,pre{font-family:var(--mono);font-size:.86em}
+pre{background:#22201b;color:#efe9dc;padding:.85rem 1rem;overflow:auto;border-radius:3px}
+:not(pre)>code{background:var(--paper-2);padding:.08rem .3rem;border-radius:2px}
+small,.small{font-size:.83rem;line-height:1.5}
+.muted{color:var(--ink-2)}
+.mono{font-family:var(--mono)}
+
+header.top{border-bottom:3px solid var(--ink);padding:1.1rem 0 .5rem;margin-bottom:1.4rem}
+header.top .wrap{max-width:64rem;margin:0 auto;padding:0 1.25rem;display:flex;gap:1rem;
+  align-items:baseline;flex-wrap:wrap}
+.brand{font-family:var(--mono);font-weight:700;font-size:1.02rem;letter-spacing:.06em;text-transform:uppercase}
+.brand span{color:var(--accent-2)}
+nav.top{margin-left:auto;display:flex;gap:.9rem;flex-wrap:wrap;font-family:var(--mono);font-size:.8rem}
+nav.top a{text-decoration:none;color:var(--ink-2);padding:.15rem 0;border-bottom:2px solid transparent}
+nav.top a:hover,nav.top a[aria-current]{color:var(--ink);border-bottom-color:var(--accent-2)}
+
+/* the one thing the page is for */
+.hero{display:grid;grid-template-columns:1fr auto;gap:1.4rem;align-items:stretch;
+  border:2px solid var(--ink);background:#fffdf7;padding:1.15rem 1.25rem;margin:1.4rem 0 1.1rem}
+.hero h1{margin-top:0}
+.hero .dl{display:flex;flex-direction:column;justify-content:center;gap:.5rem;min-width:15rem}
+.dlbtn{display:block;background:var(--accent);color:#fff;text-decoration:none;
+  font-family:var(--mono);font-weight:700;font-size:1.02rem;padding:.85rem 1.1rem;
+  border-radius:3px;border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);text-align:center}
+.dlbtn:hover{background:#0b4a41;color:#fff;transform:translate(1px,1px);box-shadow:3px 3px 0 var(--ink)}
+.dlbtn small{display:block;font-weight:400;font-size:.72rem;opacity:.85;margin-top:.25rem}
+.dlmeta{font-family:var(--mono);font-size:.72rem;color:var(--ink-2);word-break:break-all;text-align:center}
+
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:.7rem;margin:1rem 0}
+.kpi{border:1px solid var(--rule);border-left:4px solid var(--accent);background:#fffdf7;padding:.6rem .75rem}
+.kpi b{display:block;font-family:var(--mono);font-size:1.35rem;line-height:1.2}
+.kpi span{font-size:.76rem;color:var(--ink-2);font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em}
+.kpi.bad b{color:var(--bad)} .kpi.good b{color:var(--good)}
+
+table{border-collapse:collapse;width:100%;margin:.8rem 0;font-size:.88rem}
+th,td{border-bottom:1px solid var(--rule);padding:.42rem .5rem;text-align:left;vertical-align:top}
+th{font-family:var(--mono);font-size:.74rem;text-transform:uppercase;letter-spacing:.04em;
+  background:var(--paper-2);border-bottom:2px solid var(--ink)}
+td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+tr.hi td{background:#fff6de}
+tbody tr:hover td{background:#f7f2e6}
+
+.banner{border:2px solid var(--ink);padding:.8rem 1rem;margin:1rem 0;background:#fff6de}
+.banner.red{background:#fde7e4} .banner.green{background:#e3f3e6}
+.tag{display:inline-block;font-family:var(--mono);font-size:.7rem;text-transform:uppercase;
+  letter-spacing:.05em;padding:.12rem .45rem;border:1px solid var(--ink);border-radius:2px;background:var(--paper-2)}
+.tag.ok{background:#d8efdc;border-color:var(--good);color:var(--good)}
+.tag.no{background:#f6dcd8;border-color:var(--bad);color:var(--bad)}
+.tag.warn{background:#fbeed0;border-color:#8a6d1f;color:#8a6d1f}
+ul.tight{margin:.4rem 0 .4rem 1.15rem;padding:0} ul.tight li{margin:.22rem 0}
+.feed{font-family:var(--mono);font-size:.74rem;color:var(--ink-2);border:1px dashed var(--rule);
+  padding:.45rem .6rem;background:#fffdf7;margin:.9rem 0}
+.feed b{color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(19rem,1fr));gap:1rem}
+.card{border:1px solid var(--rule);background:#fffdf7;padding:.8rem .9rem}
+.card h3{margin-top:0}
+footer{border-top:2px solid var(--ink);margin-top:3.5rem;padding:1.1rem 0 3rem;
+  font-family:var(--mono);font-size:.74rem;color:var(--ink-2)}
+footer .wrap{max-width:64rem;margin:0 auto;padding:0 1.25rem}
+.skip{position:absolute;left:-9999px} .skip:focus{left:1rem;top:.5rem;background:#fff;padding:.4rem}
+.bar{height:.55rem;background:var(--paper-2);border:1px solid var(--rule)}
+.bar i{display:block;height:100%;background:var(--accent)}
+.bar.junk i{background:var(--accent-2)}
+h2 .num{color:var(--accent-2)}
+ol.steps{counter-reset:s;list-style:none;padding-left:0}
+ol.steps>li{counter-increment:s;position:relative;padding-left:2.5rem;margin:.6rem 0}
+ol.steps>li::before{content:counter(s);position:absolute;left:0;top:.05rem;width:1.7rem;height:1.7rem;
+  background:var(--ink);color:var(--paper);font-family:var(--mono);font-weight:700;
+  display:grid;place-items:center;border-radius:2px;font-size:.9rem}
+@media print{.hero .dlbtn{box-shadow:none} header.top nav{display:none}}
+
+/* additions for the feed / irregularities / sources pages */
+.lede{font-size:1.02rem;color:var(--ink);max-width:64ch}
+table.irrg td{vertical-align:top;font-size:.86rem}
+table.irrg td code{white-space:nowrap}
+table.irrg tr:hover td{background:#fffdf2}
+tr.us td{background:#fff2c9}
+h1 .num{margin-right:.35rem}
+pre{background:var(--paper-2);border:1px solid var(--rule);padding:.6rem .7rem;overflow:auto;font-size:.78rem}
+pre code{font-family:var(--mono)}

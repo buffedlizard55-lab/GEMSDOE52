@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Official links for manual review — GEMSDOE52</title>
+<meta name="description" content="Every load-bearing claim on this site, with the official source it came from, the exact query or section, and what we did versus what we only inferred.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap">
+  <div class="brand">GEMS<span>DOE</span>52</div>
+  <nav class="top">
+    <a href="index.html">Overview</a>
+    <a href="executive-summary.html">Executive&nbsp;summary&nbsp;&amp;&nbsp;how&nbsp;to&nbsp;submit</a>
+    <a href="method.html">Method</a>
+    <a href="hypotheses.html">Hypotheses</a>
+    <a href="validation.html">Validation</a>
+    <a href="feed.html">Data&nbsp;feed</a>
+    <a href="irregularities.html">Irregularities</a>
+    <a href="sources.html" aria-current="page">Official&nbsp;links</a>
+  </nav>
+</div></header>
+<main id="main">
+
+<p class="mono small muted">DrivenData&nbsp;·&nbsp;DOE&nbsp;GEMS&nbsp;Prize&nbsp;·&nbsp;competition&nbsp;306&nbsp;·&nbsp;
+repo <code>buffedlizard55-lab/GEMSDOE52</code> · <span data-feed-stamp>loading feed…</span></p>
+
+<h1><span class="num">§</span>Official links, for manual review</h1>
+<p class="lede">Read these if you want to check us rather than trust us. Each row states the claim it
+supports, the section to look at, and — where it matters — whether we verified it by fetching bytes this
+session or only read its metadata. The distinction is deliberate: the analysis box has no network egress
+(<a href="irregularities.html"><code>IR-52-009</code></a>), so “live, fetched” below means the agent's own
+page fetch, timestamped in UTC.</p>
+
+<h2><span class="num">§1</span>Rules, metric and format — the load-bearing four</h2>
+<table class="data">
+<thead><tr><th>claim we rely on</th><th>source</th><th>where to look</th></tr></thead>
+<tbody>
+<tr><td>The metric is distance-weighted Tversky:
+<code>DTI = TPw / (TPw + α·FPw + β·FNw + ε)</code> with <code>α = 0.2</code>, <code>β = 0.8</code>,
+<code>R = 300 m = 3 px</code>, <code>k(d) = max(1 − d/R, 0)</code>,
+<code>TPw = Σ<sub>g∈G</sub> max_x p(x)·k</code>, <code>FPw = Σ<sub>x: p&gt;0</sub> p(x)·[1 − max_g k]</code>.
+Their worked example: 3.00 / 1.89 / 2.00 → 0.60.</td>
+<td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Competition
+rules / evaluation page (page 967)</a></td>
+<td>“Evaluation” section, verbatim. Re-read 2026-10-06 21:33 UTC. Our
+<code>src/gems52/metric.py</code> implements this text and is pinned by 8 unit tests, including the
+worked example.</td></tr>
+
+<tr><td>Submission format: single band, <code>float32</code>, values in <code>[0, 1]</code>, EPSG:32611,
+100 m cells, identical bounds to <code>sample_submission.tif</code>, null or NaN outside the valid
+footprint.</td>
+<td>same page, “Submission format”</td>
+<td>Encoded in <code>src/gems52/grid.py</code> (pinned shape/transform) and enforced by
+<code>src/gems52/gates.py</code>. The null/NaN sentence contradicts the validator — see
+<a href="irregularities.html"><code>IR-52-006</code></a>.</td></tr>
+
+<tr><td><strong>The scoring mask is pixel-exact and identical to the training fault labels; only
+<em>new</em>-fault truth counts; a prediction near a known trace but far from new truth is fully
+penalised; and new-fault truth <em>can</em> lie within 300 m of a known trace — finding those corrections
+is a goal of the competition.</strong></td>
+<td><a href="https://community.drivendata.org/t/discussion-on-evaluation-masking-and-new-fault-truth/11516/4">
+Community: “Discussion on evaluation masking and new fault truth”, post #4</a></td>
+<td>chrisk-dd (staff), 21 Sep. This one post is why the corridor regime exists at all, and why “predict
+the catalogue” is worth nothing.</td></tr>
+
+<tr><td>No details of the test faults are given; the Phase&nbsp;2 pool is built from a test set updated by
+expert review of all Phase&nbsp;1 submissions.</td>
+<td><a href="https://community.drivendata.org/t/discussion-on-the-public-leaderboard-and-final-ranking/11527">
+Community: “Discussion on the public leaderboard and final ranking”, #7</a></td>
+<td>chrisk-dd (staff), 23 Sep. Consequence: the public score is a signal, not a bound. Mitigation on this
+site is the per-segment reasoning table published beside the raster.</td></tr>
+</tbody>
+</table>
+
+<h2><span class="num">§2</span>The leaderboard, and what it does not say</h2>
+<ul class="tight">
+  <li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">Public
+  leaderboard</a> — read twice this session (21:2x and 21:33 UTC), byte-identical, 24 rows. The column is
+  labelled on the board itself <em>“Best public DW-Tversky (in descending order)”</em>, which is the
+  quantity this repo calls DTI.</li>
+  <li>#1 xiaofanhu <strong>0.3774</strong> (11 submissions) · #2 0.3345 · #3 0.3262 · #4 0.3222 ·
+  #5 0.3220 · #6 0.3218 · #7 DARD 0.3195 · … · <strong>#13 this group (extradr19) 0.2778</strong>
+  (10 submissions, 2 d 5 h ago) · last visible row #24 0.2502.</li>
+  <li>The board publishes no filename, hash or upload receipt. Anything on this site that pairs a file with
+  a score is an owner report from a sibling session, labelled at
+  <a href="irregularities.html"><code>IR-52-003</code></a>.</li>
+  <li>Machine-readable copy: <a href="data/leaderboard.json"><code>data/leaderboard.json</code></a>; the
+  snapshot the fetcher falls back to is
+  <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/registry/leaderboard_snapshot_2026-10-06.json"><code>registry/leaderboard_snapshot_2026-10-06.json</code></a>.</li>
+</ul>
+
+<h2><span class="num">§3</span>Ground-truth provenance of the provided grids</h2>
+<ul class="tight">
+  <li><a href="https://www.nlr.gov/docs/fy26osti/96647.pdf">NLR / DOE-GEMS rules document
+  (<code>www.nlr.gov/docs/fy26osti/96647.pdf</code>)</a> — the canonical programme document the brief
+  cites as <code>docs.nlr.gov</code>; that host does not serve it, see
+  <a href="irregularities.html"><code>IR-52-004</code></a>.</li>
+  <li><a href="https://github.com/drivendataorg/gems-prize-reference-solution">Organiser's reference
+  solution</a> — UNet + masked cross-entropy with a Tversky loss and no scoring code, which is why our
+  <code>metric.py</code> was written from the rules text and then unit-tested against their worked
+  example instead of being ported.</li>
+  <li><a href="https://github.com/Gameassassin777/gems-eval">A competitor's DTI reimplementation</a> with a
+  held-out-segment protocol and a 3-px buffer — used here only as a parity reference for our own
+  implementation.</li>
+</ul>
+
+<h2><span class="num">§4</span>External data we checked for the next round</h2>
+<table class="data">
+<thead><tr><th>dataset</th><th>status</th><th>the exact request</th></tr></thead>
+<tbody>
+<tr><td>USGS ComCat (ANSS) seismicity</td>
+<td><span class="tag ok">live, fetched</span> free, official, public domain; no account</td>
+<td><code>earthquake.usgs.gov/fdsnws/event/1/count?format=text&amp;starttime=1974-01-01&amp;endtime=2026-10-01&amp;minmagnitude=1.5&amp;latitude=37.0&amp;longitude=-90.5&amp;maxradius=1.5</code>
+→ <strong>7,519 events</strong> (2026-10-06 ~22:0x UTC). Gives magnitude, depth and time per event, which
+the organiser's two seismicity bands do not.</td></tr>
+<tr><td>Missouri DNR / MGS sinkhole inventory</td>
+<td><span class="tag ok">metadata, fetched live</span> public, state licence string, no token on the item;
+endpoint itself not probed from here</td>
+<td><code>arcgis.com/sharing/rest/content/items/912f2e3eaa2b4c7d881424ee2fc98fb7?f=json</code> →
+<code>“access":"public"</code>, <code>"licenseInfo":"State of Missouri, Department of Natural
+Resources"</code>, <code>"url":"https://gis.dnr.mo.gov/host/rest/services/geology/sinkholes/MapServer"</code>,
+modified 2024-04-24. Karst collapse lines trace buried fracture corridors where magnetics go quiet.</td></tr>
+<tr><td>Kansas Geological Survey — Ozark region type logs / stratigraphic units</td>
+<td><span class="tag warn">index page only</span> free, official; bulk well-tops assembly not attempted</td>
+<td><a href="https://www.kgs.ku.edu/PRS/Ozark/TYPE_LOG/Stratigraphic/index.html">kgs.ku.edu/PRS/Ozark/TYPE_LOG/Stratigraphic</a>
+— keys the public well formation-tops we would use to test stratigraphic offset across a proposed buried
+range-front fault.</td></tr>
+<tr><td>1 m LiDAR (3DEP / OpenTopography)</td>
+<td><span class="tag no">not obtainable here</span> licence fine (public domain), volume is not</td>
+<td>bulk download exceeds this environment; see <code>knowledge/03</code> §N-6.</td></tr>
+<tr><td>QFaults / INGENIOUS fracture catalogues</td>
+<td><span class="tag no">empty for this area</span> measured, not assumed</td>
+<td>1 pixel and 0 pixels inside the footprint respectively. A catalogue that maps nothing here cannot be a
+prior for what is missing.</td></tr>
+</tbody>
+</table>
+<p class="small muted">Full licence reasoning, and the rule these rows are held to, are in
+<code>knowledge/04_free_data_and_licenses.md</code>.</p>
+
+</main>
+<footer><div class="wrap">
+  GEMSDOE52 · claims are linked, not asserted ·
+  <a href="irregularities.html">what we could not verify</a>
+</div></footer>
+<script src="site.js"></script>
+<script>
+(async function () { await G52.load('feed'); G52.stamp(); })();
+</script>
+</body>
+</html>
