@@ -22,6 +22,15 @@ the *reasoning* about each item, because a register without reasoning gets re-li
 has 19 bands, none radiometric. Any feature builder that silently emits `B_gr`-like channels is wrong.
 *Mitigated*: features are checked against the published inventory.
 
+**IR-52-011a — the standing brief's View-B definition names "any radiometric bands in `training_features.tif`".**
+Read strictly the clause is conditional, and the condition is false: the official file carries 19 bands and
+none is radiometric (`IR-52-001`, `evidence/band_inventory.json`). The conditional is therefore satisfied
+vacuously, not contradicted — but a builder that reads only the brief will look for bands that do not exist.
+*Resolved*: View B takes radiometry from the GeoDAWN external bundle (`data/external/geodawn_rad_u8.tif`,
+4 bands: K, Th, TC and the Th/K ratio, plus `geodawn_extensions_u8.tif` band 1), hash-pinned in
+`registry/data_manifest.json`; the code path is `src/gems52/dicoincidence.py::CHANNELS` family
+``radiometric``.
+
 **IR-52-002 — "0.3195 is the highest score right now" is stale.** It is rank #7 (DARD). The live top is
 0.3774 (xiaofanhu, 11 submissions), so the gap the group must close is 0.0996, not 0.0385. We flag the
 user's number rather than adopting it, because acting on a remembered board is how a team optimises a
@@ -32,6 +41,42 @@ shows a team and a number, and nothing else. The 0.2778 attribution to `h33-2-b2
 where the *mechanism* is what matters (deleting 6.3 % of one's own mass, all of it overlapping the mask,
 raised DTI 2.6 %), and the file itself is not in the checkout. Stated on the site in the same breath as the
 number.
+
+**IR-52-020 — the session-2 brief's "0.3195 is the highest score right now" is the *brief's* number, and the
+board says 0.3774.** This is the same disagreement as **IR-52-002** (where it is recorded as a stale user
+number); it is listed again under the number the brief itself uses, `IR-52-020`, so that a reviewer holding
+the brief and this register side by side can find the entry without having to know our internal numbering.
+Both readings are true of different moments: 0.3195 is a real row (rank #7, DARD, 10 submissions) in
+`registry/leaderboard_snapshot_2026-10-06.json`, and 0.3774 is the live #1 (xiaofanhu, 11 submissions) in
+the same fetch. The operational consequence is the one already recorded: the gap to close is 0.0996, not
+0.0385, and any target quoted from a memory rather than a fetch is treated as stale.
+
+**IR-52-022 — we overwrote our own uncommitted work, and recovered it from the bytecode.** The H53-1
+detector was written earlier in this session but never committed. While restoring it, two of its files were
+replaced by rewrites: `src/gems52/structure.py` (overwritten by a draft with a different API, which broke
+`dicoincidence.py` and `tests/test_structure.py` until noticed) and `scripts/validate_h53.py` +
+`scripts/h53_detect.py` (replaced by this session's rewritten versions of the same procedure).
+*Recovery, and its limits*: `structure.py` was recovered from the module's verified bytecode
+(`src/gems52/__pycache__/structure.cpython-311.pyc`, compiled from the pre-overwrite source — the pyc records
+the source's size and mtime, both of which match the lost file and not the draft), including its docstrings
+and numerical steps; the reconstruction is checked **behaviourally** against the loaded bytecode module on
+synthetic line/noise/mixed fields (max absolute difference < 1e-6 on energy, coherence, azimuth and the
+along-strike persistence), and the one latent defect in the lost source (`with_lambda=True` referenced
+unbound globals `lam1`/`lam2`) is fixed rather than reproduced. The two scripts are **not** recoverable —
+they had no bytecode cache — so what survives of the pre-registered H53 gate is its rule, recorded in
+`registry/preregistration_h53.json` with an explicit provenance note and the timestamps that show the gate
+ran before the submission was written. The mitigation is the obvious one and is this session's action: the
+whole H53 module set and its scripts are committed in the PR that closes this session, so a later rewrite
+cannot destroy work that the repository already holds.
+
+**IR-52-021 — the brief's "single remaining blocker to training is data placement" is stale in this
+checkout.** That sentence describes the state of a *different* sibling checkout. Here `scripts/restore_data.py`
+has already run to completion: `data/restore_receipt.json` exists, `ALL_VERIFIED=True`, 23 sha256 pins
+verified, 907 MB of rasters present (`training_features.tif` 418,912,844 B, `labels.tif` 425,830 B,
+`sample_submission.tif` 1,599,597 B). No `download_competition_data.sh` run is needed or possible from this
+sandbox (egress-restricted). Consequence: any session that re-runs the restore or treats data placement as
+the blocker is spending its budget on a solved problem — the real binders are the weekly submission limit
+and the fact that the only offline truth is the catalogue itself.
 
 **IR-52-004 — the rules document's host differs from the brief's citation.** `docs.nlr.gov` is cited; the
 document resolves at `www.nlr.gov/docs/fy26osti/96647.pdf`. Not a contradiction, but a link that a human

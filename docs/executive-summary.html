@@ -19,13 +19,14 @@ everything else here is the evidence behind that file.
 
 <div class="banner" data-gate-verdict>reading the holdout verdict from <code>data/submission.json</code>…
 </div>
-<p class="small"><strong>Why that verdict is above the steps.</strong> The file is legal, unique and
-built from the configuration the two-instrument composite selected; it is <em>not</em> promoted by the bar
-this repo pre-registered for itself before any fold was scored. Both statements are true, so both are
-printed here rather than one of them being left for you to find in <code>evidence/</code>. If you spend a
-weekly slot, spend it knowing which bar the file missed —
-<a href="validation.html">Validation §4</a> and
-<a href="irregularities.html"><code>IR-52-010</code></a>.</p>
+<p class="small"><strong>Why that verdict is above the steps.</strong> The file is legal, unique, and
+<em>promoted</em>: on both blocked instruments at the incumbent's budget it beats every comparator it was
+measured against — the same field without the coincidence gate, surface lineaments with no corroboration,
+and the same arm with its places rolled to a different tile — and the ordering is identical on both
+instruments. The rule it had to clear is written in <code>registry/preregistration_h53.json</code> and
+re-derivable from <code>evidence/h53_holdout.json</code>. The failures that came before it (the co-training
+round, the corridor composite) stay published on <a href="validation.html">Validation</a> and
+<a href="irregularities.html">the register</a>.</p>
 
 <h2><span class="num">1</span> Submission steps (portal-side)</h2>
 <ol class="steps">
@@ -37,11 +38,12 @@ weekly slot, spend it knowing which bar the file missed —
   last-round entries. Do not “try both files and see” — there is no feedback after the deadline.</li>
 <li>Select the downloaded <code>.tif</code>. Leave every other option at its default: the file already
   carries CRS, transform, band count and dtype.</li>
-<li>Notes box, verbatim: <code>gems52 · metric-aware emission of two-view disagreement · N segments,
-  P px · sha256 abcdef… · not the union of prior entries (see repo evidence)</code> — the exact string
-  is printed in <code>evidence/submission_&lt;file&gt;.json</code> under
-  <code>file</code>, <code>stats.emitted</code> and <code>sha256</code>, and is mirrored into
-  <code>docs/data/submission.json</code> so this page can render it.</li>
+<li>Notes box, verbatim: the string in the banner above — it is rendered from
+  <code>docs/data/submission.json</code> &rarr; <code>note</code>, which is copied from
+  <code>evidence/submission_&lt;file&gt;.json</code> at build time, so what you paste is what was audited
+  (180 characters, inside the form's 200-character limit). Name the submission
+  <code>gems52-h53-coincidence-gated-singles-37654px-r1</code>, so it is distinguishable from the r1 file it
+  replaces.</li>
 <li>Submit. If — and only if — the validator rejects the file, stop and read §3. Do not re-upload a
   renamed copy: each weekly slot is spent.</li>
 </ol>
