@@ -53,23 +53,63 @@ def copy_evidence() -> list[str]:
 
 
 def download_index() -> int:
-    """Write docs/downloads/index.html: every shippable raster, newest first, with its hash and size.
+    """Write docs/downloads/index.html: every shippable raster, the current one first, with its hash,
+    size and — this is the part that matters — the format gate re-run on the bytes as served.
 
-    A Pages build serves a directory only if an index.html exists, so without this the "click the file
-    to submit" promise dies on a 404 instead of a download.  The listing is generated from the
-    directory, never typed, so it cannot go stale.
+    Two reasons this is generated and not hand-written:
+
+    * A Pages build serves a directory only if an index.html exists, so without this the "click the file
+      to submit" promise dies on a 404 instead of a download.
+    * `docs/downloads/` accumulates rasters from *other* sessions of this family once their PRs merge.
+      One of those is a NaN-outside-the-footprint variant, which the portal's `0 <= v <= 1` check
+      rejects (see knowledge/06 IR-52-006). A download page that lists it next to ours, unlabelled, is
+      a way to lose a weekly submission slot. So every file is re-checked here and judged on its bytes,
+      and a file that fails is marked failed.
     """
     import hashlib
     import html
-    rows = []
-    for f in sorted(DL.glob("*.tif"), key=lambda x: x.stat().st_mtime, reverse=True):
+
+    sample = ROOT / "data" / "sample_submission.tif"
+    cur = None
+    latest = DL.parent.parent / "submission" / "LATEST.txt"
+    if latest.exists():
+        cur = latest.read_text().strip()
+
+    entries = []
+    for f in sorted(DL.glob("*.tif")):
         h = hashlib.sha256(f.read_bytes()).hexdigest()
-        rows.append(f"<tr><td><a href=\"{html.escape(f.name)}\">{html.escape(f.name)}</a></td>"
-                    f"<td>{f.stat().st_size:,}</td><td><code>{h[:16]}…</code></td>"
-                    f"<td>{time.strftime('%Y-%m-%d %H:%M UTC', time.gmtime(f.stat().st_mtime))}</td></tr>")
+        verdict, note = "unknown", ""
+        try:
+            sys.path.insert(0, str(ROOT / "src"))
+            from gems52 import gates as _g
+            rep = _g.format_report(f, sample) if sample.exists() else None
+            if rep is None:
+                note = "no sample_submission.tif to compare against"
+            elif rep["ok"]:
+                verdict, note = "ok", (f"{rep['n_nonzero']:,} positive px · max {rep['max']:.3g} · "
+                                       f"{rep['crs']} · {rep['height']}×{rep['width']}")
+            else:
+                verdict, note = "fail", "; ".join(rep["problems"])[:300]
+        except Exception as e:                                    # noqa: BLE001
+            note = f"gate not run: {type(e).__name__}: {str(e)[:120]}"
+        entries.append(dict(name=f.name, bytes=f.stat().st_size, sha=h, verdict=verdict, note=note,
+                            mtime=f.stat().st_mtime, current=(f.name == cur)))
+    entries.sort(key=lambda e: (not e["current"], e["verdict"] != "ok", -e["mtime"]))
+
+    def row(e):
+        badge = {"ok": '<span class="tag ok">passes format gate</span>',
+                 "fail": '<span class="tag no">WILL BE REJECTED by the portal</span>',
+                 "unknown": '<span class="tag warn">gate not run</span>'}[e["verdict"]]
+        first = '<b>current build</b> · ' if e["current"] else ""
+        return (f'<tr><td>{first}<a href="{html.escape(e["name"])}">{html.escape(e["name"])}</a><br>'
+                f'<span class="small muted">{badge} — {html.escape(e["note"])}</span></td>'
+                f'<td>{e["bytes"]:,}</td><td><code>{e["sha"][:16]}…</code></td>'
+                f'<td>{time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime(e["mtime"]))}</td></tr>')
+
     csv = [f for f in sorted(DL.glob("*.csv"), key=lambda x: x.stat().st_mtime, reverse=True)]
     extra = "".join(f'<li><a href="{html.escape(f.name)}">{html.escape(f.name)}</a> '
                     f'({f.stat().st_size:,} bytes)</li>' for f in csv)
+    n_ok = sum(1 for e in entries if e["verdict"] == "ok")
     body = f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -78,22 +118,23 @@ def download_index() -> int:
 <body><main class="wrap">
 <p><a href="../index.html">&larr; GEMSDOE52</a></p>
 <h1>Downloads</h1>
-<p class="lede">Every file here is a submission candidate that has already cleared the format gate.
-The top row is the current one. Download it, then follow
-<a href="../executive-summary.html">the submission steps</a> - no renaming, no reprojecting,
+<p class="lede">Files from every session of this family land here, so the table re-checks each one
+against the portal rules on its own bytes rather than trusting the filename.
+<strong>Only the {n_ok} row(s) marked "passes format gate" are submittable.</strong> Download one, then
+follow <a href="../executive-summary.html">the submission steps</a> - no renaming, no reprojecting,
 nothing to open in a GIS.</p>
 <table class="data"><thead><tr><th>file</th><th>bytes</th><th>sha256 (first 16)</th><th>built</th></tr>
 </thead><tbody>
-{chr(10).join(rows) if rows else '<tr><td colspan="4">no raster staged yet</td></tr>'}
+{chr(10).join(row(e) for e in entries) if entries else '<tr><td colspan="4">no raster staged yet</td></tr>'}
 </tbody></table>
 {f'<h2>Companion tables</h2><ul>{extra}</ul>' if extra else ''}
 <p class="note">Generated by <code>scripts/refresh_feed.py</code> from the contents of this
-directory; hashes are computed from the bytes on disk, so a download can be checked against the
-receipt published with it.</p>
+directory; hashes are computed from the bytes on disk, and the verdict column is
+<code>gems52.gates.format_report</code> run on the same bytes a browser would receive.</p>
 </main></body></html>
 """
     (DL / "index.html").write_text(body)
-    return len(rows)
+    return len(entries)
 
 
 def latest_submission() -> dict:
