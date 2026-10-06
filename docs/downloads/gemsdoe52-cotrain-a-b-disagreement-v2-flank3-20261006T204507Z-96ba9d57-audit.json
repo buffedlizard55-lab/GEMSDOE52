@@ -1,0 +1,187 @@
+{
+  "candidate_id": "cotrain-disagreement-v2-flank3",
+  "slug": "cotrain-a-b-disagreement-v2-flank3",
+  "timestamp_utc": "20261006T204507Z",
+  "novelty_used": "h32d-flank-plus-cotrain-a-only-disagreement",
+  "content_digest8": "96ba9d57",
+  "submission_note": "GEMSDOE52 co-train disagreement-a-b A-only novelty on H32-D flank-3 prune: 40,532 dots, 0 within 300m of catalogue; A-B r=+0.19; sgmc_cal 0.0629 UNSCORED",
+  "zeros_tif": {
+    "filename": "gemsdoe52-cotrain-a-b-disagreement-v2-flank3-20261006T204507Z-96ba9d57-zeros.tif",
+    "size_bytes": 222152,
+    "sha256": "78df8af098fa0d659bb128df1fbfd0448830e19f756b76fd76b0894867a1b814",
+    "mode": "zeros",
+    "crs": "EPSG:32611",
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "shape": [
+      3730,
+      3292
+    ],
+    "dtype": "float32",
+    "nodata": null,
+    "nodata_repr": "None",
+    "emitted_positive_pixels": 40532,
+    "footprint_fraction": 0.007844,
+    "on_catalogue_positive_pixels": 0,
+    "in_footprint_finite_pixels": 5167373,
+    "in_footprint_min": 0.0,
+    "in_footprint_max": 1.0,
+    "full_grid_finite_pixels": 12279160,
+    "checks": {
+      "single_band": true,
+      "dtype_float32": true,
+      "dimensions_3730x3292": true,
+      "crs_epsg_32611": true,
+      "in_footprint_all_finite": true,
+      "in_footprint_zero_nan": true,
+      "in_footprint_zero_inf": true,
+      "in_footprint_zero_sentinel": true,
+      "in_footprint_range_0_1": true,
+      "outside_footprint_compliant": true,
+      "zero_on_catalogue_leakage": true,
+      "validator_range_0_1_guaranteed": true
+    },
+    "all_checks_passed": true
+  },
+  "nan_tif": {
+    "filename": "gemsdoe52-cotrain-a-b-disagreement-v2-flank3-20261006T204507Z-96ba9d57-nan.tif",
+    "size_bytes": 357995,
+    "sha256": "c8688bbea931d23b6316e502a9b09f7f68ede16eee7c09900edbd9f7fcc98325",
+    "mode": "nan",
+    "crs": "EPSG:32611",
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "shape": [
+      3730,
+      3292
+    ],
+    "dtype": "float32",
+    "nodata": null,
+    "nodata_repr": "nan",
+    "emitted_positive_pixels": 40532,
+    "footprint_fraction": 0.007844,
+    "on_catalogue_positive_pixels": 0,
+    "in_footprint_finite_pixels": 5167373,
+    "in_footprint_min": 0.0,
+    "in_footprint_max": 1.0,
+    "full_grid_finite_pixels": 5167373,
+    "checks": {
+      "single_band": true,
+      "dtype_float32": true,
+      "dimensions_3730x3292": true,
+      "crs_epsg_32611": true,
+      "in_footprint_all_finite": true,
+      "in_footprint_zero_nan": true,
+      "in_footprint_zero_inf": true,
+      "in_footprint_zero_sentinel": true,
+      "in_footprint_range_0_1": true,
+      "outside_footprint_compliant": true,
+      "zero_on_catalogue_leakage": true,
+      "validator_range_0_1_guaranteed": true
+    },
+    "all_checks_passed": true
+  },
+  "independence_test": {
+    "fold_corrs": [
+      0.09011293050187978,
+      0.26263364977475073,
+      0.11099110824101689,
+      0.2943875136705063
+    ],
+    "mean_corr": 0.18953130054703843,
+    "gate_threshold": 0.6,
+    "gate_passed": true
+  },
+  "discovery": {
+    "h32d_flank_pixels": 37357,
+    "a_only_pixels": 3000,
+    "b_only_pixels": 200,
+    "total_pixels": 40532,
+    "not_union_of_two_views": true,
+    "jaccard_vs_union_of_components": 0.24553729315190886,
+    "a_band_summary_top3": {
+      "mag_anom": 411,
+      "rtp": 409,
+      "tmi_hg": 132,
+      "geod_2ndinv": 1390,
+      "iso_grav_anom_slope": 541,
+      "tc": 2,
+      "geod_shearrate": 1779,
+      "geod_dilaterate": 430,
+      "tmi_vg": 226,
+      "deq_n100a15": 1408,
+      "iso_grav_anom_vg": 282,
+      "iso_grav_anom": 4,
+      "tmi": 284,
+      "depth_to_base_surf": 205,
+      "ieq_n100a15": 957,
+      "cond_surf": 136,
+      "iso_grav_anom_hg": 404
+    },
+    "n_a_only_with_reasoning": 3000
+  },
+  "holdout_metrics": {
+    "cotrain_candidate": {
+      "catalogue_hidden_mean": 0.000738861145955881,
+      "catalogue_hidden_per_quadrant": {
+        "NW": 0.0005948071702855623,
+        "NE": 0.0003217945910987808,
+        "SW": 0.0017738857737854452,
+        "SE": 0.00026495704865373595
+      },
+      "sgmc_prevalence_calibrated_dti": 0.06292436772025845,
+      "drift_corrected_holdout_mean": 0.02855678887200469,
+      "drift_corrected_per_quadrant": {
+        "NW": 0.030200684528730322,
+        "NE": 0.028143180580598327,
+        "SW": 0.03383576147937388,
+        "SE": 0.022047528899316226
+      },
+      "emitted_pixels": 40532,
+      "on_catalogue_pixels": 0
+    },
+    "h32d_baseline": {
+      "catalogue_hidden_mean": 0.10122068397615705,
+      "sgmc_prevalence_calibrated_dti": 0.061294720121546874,
+      "drift_corrected_holdout_mean": 0.15188374789388925,
+      "emitted_pixels": 46090
+    },
+    "h32d_flank_only": {
+      "catalogue_hidden_mean": 0.00026966301115070824,
+      "sgmc_prevalence_calibrated_dti": 0.06498347147059784,
+      "drift_corrected_holdout_mean": 0.02869183279421538,
+      "emitted_pixels": 37357
+    }
+  },
+  "uniqueness_gate": {
+    "min_jaccard_distance_vs_calibrated_artifact": 0.28098401283848295,
+    "all_distances_at_least_0p01": true,
+    "per_artifact_jaccard": {
+      "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif": 0.993278553820871,
+      "8GEMSDOE_Hedge-v2_submission.tif": 0.9674502802657039,
+      "gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif": 0.9750486082555347,
+      "gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif": 0.9817663707953868,
+      "gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif": 0.81112749562678,
+      "gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif": 0.7642444571462952,
+      "gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif": 0.7188819944686146,
+      "gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif": 0.684782324486861,
+      "gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif": 0.28098401283848295,
+      "gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif": 0.689768722183633,
+      "gemsdoe-ens12-adopted-7f00890a.tif": 0.9674502802657039,
+      "gemsdoe9-PLACEHOLDER-2314b599.tif": 0.9941586828126941
+    }
+  },
+  "build_seconds": 66.3
+}

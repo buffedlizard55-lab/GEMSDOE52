@@ -1,0 +1,24 @@
+name: feed
+# Keeps docs/data/feed.json and the leaderboard history current without anyone checking by hand.
+on:
+  schedule: [{cron: '23 5 * * *'}]
+  workflow_dispatch:
+permissions: {contents: write}
+jobs:
+  feed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: pip install numpy rasterio scikit-learn
+      - name: Probe official sources; snapshot the public leaderboard page once
+        run: python scripts/refresh_feed.py
+      - name: Rebuild the site and commit the refreshed feed
+        run: |
+          python scripts/build_site.py
+          git config user.name "gems32-feed"
+          git config user.email "gems32-feed@users.noreply.github.com"
+          git add docs/data/*.json docs/*.html registry/leaderboard_history.jsonl
+          git diff --cached --quiet || git commit -m "feed: refresh $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push
