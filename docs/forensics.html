@@ -7,6 +7,16 @@
   <link rel="stylesheet" href="assets/style.css" />
 </head>
 <body>
+<div style="margin:1rem auto;max-width:60rem;border:2px solid #b3261e;background:#fde7e4;padding:.8rem 1rem;
+ font:inherit"><strong>Provenance of this page.</strong> It was written by the PR&nbsp;#2 session on
+<code>main</code> and is kept here unchanged, as that session's record. Two of its claims do not survive
+checking against the metric as published: a fold-level DTI above the portal score is not attainable at the
+truth prevalence these folds hold out (our fold tables,
+<code>docs/data/holdout_tip.json</code> / <code>holdout_hide.json</code>, top out at 0.052 on comparable
+folds, and the hidden truth |G| is 0.11–0.29 % of the footprint), and a “portal
+<code>[0,&nbsp;1]</code> check PASS” cannot coexist with NaN outside the footprint — see
+<a href="irregularities.html">the register</a>. Read this page as history. The built file, its gates and its
+holdout verdict are on <a href="index.html">the overview</a> and in <code>docs/data/submission.json</code>.</div>
   <header class="topbar">
     <div class="topbar-inner">
       <div class="brand">

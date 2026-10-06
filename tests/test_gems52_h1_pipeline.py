@@ -10,13 +10,13 @@ import numpy as np
 import pytest
 import rasterio
 
-from gems52.cotraining import (
+from gems52_h1.cotraining import (
     ConditionalIndependenceViolationError,
     _extract_buffered_whole_segment_pseudolabels,
     segment_connected_faults,
     test_conditional_independence_on_negatives as check_conditional_independence_on_negatives,
 )
-from gems52.metric import (
+from gems52_h1.metric import (
     ALPHA,
     BETA,
     RADIUS_PX,
@@ -26,12 +26,12 @@ from gems52.metric import (
     dti_exact,
     marginal_inclusion_threshold,
 )
-from gems52.placement import (
+from gems52_h1.placement import (
     emit_submodular_expected_credit,
     expected_single_dot_credit,
     verify_not_mere_union,
 )
-from gems52.spec import (
+from gems52_h1.spec import (
     BAND_NAME_TO_IDX,
     CRS_STRING,
     SHAPE,
@@ -39,7 +39,7 @@ from gems52.spec import (
     VIEW_A_BAND_NAMES,
     VIEW_B_BAND_NAMES,
 )
-from gems52.submission import verify_geotiff_on_disk
+from gems52_h1.submission import verify_geotiff_on_disk
 
 ROOT = Path(__file__).resolve().parents[1]
 

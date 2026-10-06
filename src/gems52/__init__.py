@@ -1,5 +1,3 @@
-"""GEMSDOE52: Blum-Mitchell (COLT '98) Two-View Co-Training & Disagreement Discovery
-for the DOE GEMS Prize Challenge (DrivenData #306, GeoDAWN / Great Basin).
-"""
+"""GEMS52 -- co-training across a geophysical and a surface view for new-fault discovery."""
 
-__version__ = "1.0.0"
+__all__ = ["metric", "grid", "transform", "features", "cotrain", "holdout", "emit", "gates"]

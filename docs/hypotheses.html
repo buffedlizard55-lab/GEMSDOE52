@@ -1,171 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ranked Candidate Geological Hypotheses — GEMSDOE52</title>
-  <link rel="stylesheet" href="assets/style.css" />
-</head>
-<body>
-  <header class="topbar">
-    <div class="topbar-inner">
-      <div class="brand">
-        <span class="brand-badge">GEMSDOE52</span>
-        <span>Ranked Candidate Geological Hypotheses</span>
-      </div>
-      <nav class="nav-links" aria-label="Primary Navigation">
-        <a href="index.html">Command Center</a>
-        <a href="executive-summary.html">Executive Summary</a>
-        <a href="forensics.html">0.2778 Forensics &amp; [0,1] Fix</a>
-        <a href="hypotheses.html" class="active">Ranked Hypotheses</a>
-        <a href="validation.html">Validation &amp; Phase 2 Reasoning</a>
-        <a href="sources.html">Verified Sources &amp; Hashes</a>
-      </nav>
-    </div>
-  </header>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hypotheses — GEMSDOE52</title><link rel="stylesheet" href="style.css"></head>
+<body><a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap"><div class="brand">GEMS<span>DOE</span>52</div>
+<nav class="top"><a href="index.html">Overview</a><a href="executive-summary.html">Executive&nbsp;summary</a>
+<a href="method.html">Method</a><a href="hypotheses.html" aria-current="page">Hypotheses</a>
+<a href="validation.html">Validation</a><a href="feed.html">Data&nbsp;feed</a>
+<a href="irregularities.html">Irregularities</a><a href="sources.html">Official&nbsp;links</a></nav></div></header><main id="main">
 
-  <main class="container">
-    <section class="section">
-      <h2>1. Ranking Matrix of 5 Untried Candidate Geological Hypotheses</h2>
-      <p>
-        Before selecting a submission candidate, we formulated and ranked 5 candidate geological hypotheses designed to detect faults missing from the USGS/INGENIOUS catalogue (`labels.tif`), evaluated their implementation cost, and tested the top 4 candidates on the spatially-blocked 4-quadrant Live Mirror (`LM`) and Stratified Off-Catalogue ($d_0 = 3, 5\text{ px}$) instruments.
-      </p>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Rank &amp; ID</th>
-              <th>Hypothesis Name</th>
-              <th>Expected &Delta;DTI / Impl. Cost</th>
-              <th>Holdout LM (&Delta; vs 0.2778)</th>
-              <th>Stratified d<sub>0</sub>=3px / d<sub>0</sub>=5px</th>
-              <th>Folds Won vs 0.2778</th>
-              <th>Decision</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="highlight-row">
-              <td><strong>#1 — <code>H52-1</code></strong></td>
-              <td><strong>Blum–Mitchell Two-View Co-Training + Disagreement Discovery + Submodular Placement</strong></td>
-              <td><strong>+0.035 to +0.055</strong><br/>Cost: Medium (~5 min CPU)</td>
-              <td><strong>0.12863 (+0.05459)</strong><br/>Hybrid: 0.07923 (+0.00519)</td>
-              <td><strong>0.17574 / 0.16900</strong><br/>Hybrid: 0.10433 / 0.09661</td>
-              <td><strong>4 / 4</strong><br/>(Both)</td>
-              <td><span class="pill pill-emerald">SELECTED PRIMARY</span></td>
-            </tr>
-            <tr>
-              <td><strong>#2 — <code>H52-2</code></strong></td>
-              <td><strong>Miller &amp; Singh (1994) Magnetic Tilt-Angle Zero-Crossing Ridge (<code>tc=0 &cap; |&nabla;tc|</code>)</strong></td>
-              <td><strong>+0.025 to +0.045</strong><br/>Cost: Low (~1.5 min CPU)</td>
-              <td><strong>0.12719 (+0.05316)</strong></td>
-              <td><strong>0.17409 / 0.16810</strong></td>
-              <td><strong>4 / 4</strong></td>
-              <td><span class="pill pill-blue">INTEGRATED INTO VIEW A</span></td>
-            </tr>
-            <tr>
-              <td><strong>#3 — <code>H52-3</code></strong></td>
-              <td><strong>3D Isostatic Gravity Analytic Signal + Basement Depth Step (<code>depth_to_base_surf</code>)</strong></td>
-              <td><strong>+0.020 to +0.040</strong><br/>Cost: Low (~1.5 min CPU)</td>
-              <td><strong>0.12392 (+0.04988)</strong></td>
-              <td><strong>0.17135 / 0.16426</strong></td>
-              <td>3 / 4</td>
-              <td><span class="pill pill-blue">INTEGRATED INTO VIEW A</span></td>
-            </tr>
-            <tr>
-              <td><strong>#4 — <code>H52-4</code></strong></td>
-              <td><strong>Subsurface Electrical Conductivity (<code>cond_surf</code>) + GeoDAWN K/Th Hydrothermal Alteration</strong></td>
-              <td><strong>+0.020 to +0.040</strong><br/>Cost: Low (~1.5 min CPU)</td>
-              <td><strong>0.12384 (+0.04980)</strong></td>
-              <td><strong>0.17279 / 0.16699</strong></td>
-              <td>3 / 4</td>
-              <td><span class="pill pill-blue">INTEGRATED INTO VIEW A &amp; B</span></td>
-            </tr>
-            <tr>
-              <td><strong>#5 — <code>H52-5</code></strong></td>
-              <td><strong>Sentinel-1 InSAR Phase-Gradient Discontinuity + Microseismicity Alignment</strong></td>
-              <td><strong>+0.005 to +0.012</strong><br/>Cost: Very High (External SAR)</td>
-              <td>Not run (Deferred)</td>
-              <td>Not run (Deferred)</td>
-              <td>—</td>
-              <td><span class="pill pill-amber">DEFERRED (COST / ROI)</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section class="section">
-      <h2>2. Detailed Geological Specification of All 5 Candidate Hypotheses</h2>
-
-      <div class="card">
-        <h3>Rank #1 (<code>H52-1</code>): Blum &amp; Mitchell (1998) Two-View Co-Training + Disagreement-Driven Buried Fault Discovery</h3>
-        <ul>
-          <li><strong>Data Layers Combined:</strong>
-            <ul>
-              <li><em>View A (Subsurface / Potential-Field — 17 bands in <code>training_features.tif</code>):</em> <code>mag_anom</code> (B1), <code>rtp</code> (B2), <code>tmi_hg</code> (B3), <code>geod_2ndinv</code> (B4), <code>iso_grav_anom_slope</code> (B5), <code>tc</code> (B6), <code>geod_shearrate</code> (B7), <code>geod_dilaterate</code> (B8), <code>tmi_vg</code> (B9), <code>deq_n100a15</code> (B10), <code>iso_grav_anom_vg</code> (B11), <code>iso_grav_anom</code> (B13), <code>tmi</code> (B14), <code>depth_to_base_surf</code> (B15), <code>ieq_n100a15</code> (B16), <code>cond_surf</code> (B17), <code>iso_grav_anom_hg</code> (B18).</li>
-              <li><em>View B (Surface — 2 bands in <code>training_features.tif</code> + External USGS Rasters):</em> <code>det_elev</code> (B12), <code>det_elev_slope</code> (B19), <code>data/external/geodawn_rad_u8.tif</code> (<code>K, Th, U, TC</code>, DOI:10.5066/P93LGLVQ), <code>data/external/geodawn_extensions_u8.tif</code> (<code>UK</code>), and <code>data/external/lidar_scarp_features_u8.tif</code>.</li>
-            </ul>
-          </li>
-          <li><strong>Physical Signature:</strong> Partitioning subsurface physics (View A) from surface morphology/geochemistry (View B) enables iterative whole-segment pseudo-labeling where one view is confident (&ge;98.5th percentile) and the other abstains (25th–78th percentile), followed by explicit disagreement decomposition:
-            <code>Corroborated (A &and; B) + Buried Discovery (A &setminus; B under cover) - Surface Artifact (B &setminus; A on flat valley floors)</code>.
-          </li>
-          <li><strong>Why It Catches Missing Catalogue Faults:</strong> Field geologists mapping the USGS Quaternary fault catalogue rely primarily on visible surface scarps (`View B`), systematically missing intra-basin step-over faults buried beneath Quaternary alluvium/playa sediments (`depth_to_base_surf`) and regions lacking 3DEP LiDAR coverage (`~lvalid`, 25% of footprint). Conversely, pure DEM detectors trigger false positives on stream terraces, shoreline bars, and roads where `View A` shows zero basement offset.</li>
-          <li><strong>How It Differs from Prior Implementations:</strong> Prior repos (`GEMSDOE19`–`GEMSDOE46`) either used early-fusion single learners, static hand-weighted linear averages, or post-hoc pruning of the frozen `H19_5` mask. None implemented Blum &amp; Mitchell (1998) two-view co-training, empirical OOF negative-error conditional independence testing (`r = +0.10143`), or B-only surface artifact suppression paired with A-only buried fault discovery.</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Rank #2 (<code>H52-2</code>): Miller &amp; Singh (1994) Magnetic Tilt-Angle Zero-Crossing Ridge (<code>tc = 0 &cap; |&nabla;tc|</code>)</h3>
-        <ul>
-          <li><strong>Data Layers Combined:</strong> Official `training_features.tif` Band 6 (`tc`, magnetic tilt angle), Band 2 (`rtp`, reduced-to-pole magnetic anomaly), Band 3 (`tmi_hg`, horizontal gradient), Band 9 (`tmi_vg`, vertical gradient), and Band 15 (`depth_to_base_surf`).</li>
-          <li><strong>Physical Signature:</strong> Under <a href="https://doi.org/10.1016/0926-9851(94)90022-1" target="_blank" rel="noopener">Miller &amp; Singh (1994)</a> potential-field theory, the magnetic tilt angle $\theta = \arctan(\partial M / \partial z \,/\, \|\nabla_h M\|)$ equals $0^\circ$ directly over vertical magnetic susceptibility contacts regardless of source depth, while the horizontal gradient of the tilt angle $\|\nabla \theta\|$ peaks along the contact strike.</li>
-          <li><strong>Why It Catches Missing Catalogue Faults:</strong> Standard magnetic horizontal gradient (`tmi_hg`) decays as $z^{-3}$ with burial depth $z$, losing sensitivity over deep intra-basin faults. Because `tc` is a ratio of vertical to horizontal derivatives, its zero-crossing is depth-invariant and traces deeply buried volcanic/plutonic fault offsets beneath basin fill.</li>
-          <li><strong>How It Differs from Prior Implementations:</strong> Prior attempts either treated `tc` as an ordinary raw value in tree models or misclassified `tc` as radiometric Total Count (`IR-52-01`). We explicitly extract the zero-crossing ridge $\exp(-|\text{tc} - \text{med}(\text{tc})| / \sigma_{\text{tc}}) \cdot \|\nabla \text{tc}\|$ modulated by structure-tensor coherence.</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Rank #3 (<code>H52-3</code>): 3D Isostatic Gravity Analytic Signal + Basement Depth Step (<code>depth_to_base_surf</code>)</h3>
-        <ul>
-          <li><strong>Data Layers Combined:</strong> Official `training_features.tif` Band 13 (`iso_grav_anom`), Band 18 (`iso_grav_anom_hg`), Band 11 (`iso_grav_anom_vg`), Band 5 (`iso_grav_anom_slope`), and Band 15 (`depth_to_base_surf`).</li>
-          <li><strong>Physical Signature:</strong> High 3D gravity analytic signal amplitude $\|\mathbf{A}_g\| = \sqrt{(\text{grav\_hg})^2 + (\text{grav\_vg})^2}$ co-located with steep horizontal gradients in basement depth $\|\nabla(\text{depth\_to\_base\_surf})\|$ and second-order Hessian ridges of `iso_grav_anom`.</li>
-          <li><strong>Why It Catches Missing Catalogue Faults:</strong> Basin-and-Range horst/graben blocks juxtapose dense Paleozoic/Mesozoic basement ($\rho \approx 2.67\text{ g/cm}^3$) against low-density Cenozoic basin fill ($\rho \approx 2.1\text{ g/cm}^3$). Concealed accommodation faults within grabens produce sharp density steps in `iso_grav_anom` and `depth_to_base_surf` even when Holocene alluvial fans completely mask the surface scarp.</li>
-          <li><strong>How It Differs from Prior Implementations:</strong> Prior implementations used raw `iso_grav_anom` or `iso_grav_anom_hg` alone (which produces broad 1–2 km halos that fail the 300 m DTI kernel). We sharpen the 3D analytic signal with structure-tensor coherence and localize it along subtle surface/radiometric contacts.</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Rank #4 (<code>H52-4</code>): Subsurface Electrical Conductivity Boundary (<code>cond_surf</code>) + GeoDAWN K/Th Hydrothermal Alteration</h3>
-        <ul>
-          <li><strong>Data Layers Combined:</strong> Official `training_features.tif` Band 17 (`cond_surf`), Band 4 (`geod_2ndinv`), Band 7 (`geod_shearrate`), plus external USGS GeoDAWN airborne gamma-ray spectrometry `data/external/geodawn_rad_u8.tif` (`K`, `Th`, `U`, DOI:10.5066/P93LGLVQ) and `data/external/geodawn_extensions_u8.tif` (`UK`).</li>
-          <li><strong>Physical Signature:</strong> High lateral gradients in subsurface electrical conductivity $\|\nabla(\text{cond\_surf})\|$ paired with elevated potassium-to-thorium (`K/Th`) and uranium-to-potassium (`U/K`) radiometric gradients along linear structure-tensor trends.</li>
-          <li><strong>Why It Catches Missing Catalogue Faults:</strong> Active geothermal upflow zones circulate saline fluids and alter host rock into conductive smectite/illite clays (`cond_surf`) while precipitating potassium-bearing adularia/illite at the surface (`K/Th` ratio anomaly), even along blind faults with minimal vertical topographic throw.</li>
-          <li><strong>How It Differs from Prior Implementations:</strong> `GEMSDOE46` used `K` and `Th/K` gradients without coupling them to subsurface electrical conductivity (`cond_surf`, Band 17) or two-view co-training.</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Rank #5 (<code>H52-5</code>): External Sentinel-1 InSAR Phase-Gradient Discontinuity + Microseismicity Alignment</h3>
-        <ul>
-          <li><strong>Data Layers Combined:</strong> External Sentinel-1 ascending/descending LOS velocity interferograms + official `training_features.tif` Band 10 (`deq_n100a15`) and Band 16 (`ieq_n100a15`).</li>
-          <li><strong>Physical Signature:</strong> Short-wavelength phase-gradient discontinuities across creeping or interseismically locked faults.</li>
-          <li><strong>Why Deferred:</strong> High external ingestion cost and atmospheric/ionospheric noise over Great Basin playas; Bands 4, 7, 8 (`geod_2ndinv`, `geod_shearrate`, `geod_dilaterate`) and Bands 10, 16 (`deq_n100a15`, `ieq_n100a15`) are already integrated inside View A at zero additional cost.</li>
-        </ul>
-      </div>
-    </section>
-
-    <footer class="footer">
-      <div>
-        <strong>GEMSDOE52</strong> — Ranked Candidate Geological Hypotheses | DrivenData DOE GEMS Prize (#306)
-      </div>
-      <div>
-        <a href="index.html">Command Center</a> &middot;
-        <a href="executive-summary.html">Executive Summary</a> &middot;
-        <a href="forensics.html">0.2778 Forensics</a> &middot;
-        <a href="validation.html">Validation</a> &middot;
-        <a href="sources.html">Sources</a>
-      </div>
-    </footer>
-  </main>
-</body>
-</html>
+<h1>Five geological hypotheses, ranked by what they actually did</h1>
+<p class="small muted">Full text with layers, signatures, provenance and refutations:
+<code>knowledge/02_hypotheses_H52.md</code>. Ranked by <b>measured</b> effect on a validated
+instrument, not by expected gain.</p>
+<table><thead><tr><th>#</th><th>hypothesis</th><th>layers / signature</th><th>why the catalogue misses it</th><th>differs from repo history by</th><th class="num">measured</th><th>cost</th></tr></thead><tbody>
+<tr class="hi"><td>1</td><td><b>Rank the near-trace corridor</b> — mapping truncation: a trace ends at a
+ quad boundary or a cover patch, not at a change in geology</td>
+ <td class="mono small">B_scarp_strike · A_mag_strike · A_grav_strike; signature = the same gradient
+ direction continuing ≥ 100–300 m past the mapped end</td>
+ <td>the catalogue is a mapping product; its ends are administrative as often as geological, and staff
+ state that new truth can lie within 300 m of a known trace and that such corrections are a goal</td>
+ <td>GEMSDOE47 concluded the opposite ("prune flank mass"); here corridor mass is ranked, never deleted</td>
+ <td class="num"><b>+33 %</b> DTI at equal budget on the tip instrument (4/4 folds improve)</td>
+ <td>zero new data</td></tr>
+<tr><td>2</td><td><b>Buried range-front translation</b> — A confident, B withholds, cover deep</td>
+ <td class="mono small">A_grav_step · A_mag_step · A_strain_inv_reg vs A_depth_base_rank(band 15) ·
+ B_scarp_p900; offset without relief under thick alluvium</td>
+ <td>a LiDAR/geomorphic map cannot contain scarps that do not reach the surface; absence of a mapped
+ fault in deep cover is weak evidence</td>
+ <td>cover thickness was used as a mere feature before; never as the gate that <em>explains</em> the
+ disagreement</td>
+ <td class="num">population real (depth 455 vs 251; step 6.06 vs 2.59) — <b>as an emitter it loses to
+ random</b></td><td>zero</td></tr>
+<tr><td>3</td><td><b>Seismogenic blind section</b> — elevated micro-seismicity with no surface expression</td>
+ <td class="mono small">A_eqdens_rank · A_eqdist_negrank intersected with the A-only class and deep cover</td>
+ <td>locked or creeping segments accumulate strain without accumulating relief; a geomorphic map is a
+ map of Quaternary surface expression</td>
+ <td>seismicity bands previously sat in a pooled feature list, where they predict "near a swarm"; here
+ they are a signed corroborator inside an already-selected class</td>
+ <td class="num">no separable fold effect (clusters at wavelengths ≫ 300 m)</td><td>zero</td></tr>
+<tr><td>4</td><td><b>Spring-line hydrologic corroboration</b> of buried planes</td>
+ <td class="mono small">USGS GDR spring occurrences (public domain) → linear spring alignment in deep
+ cover, off the mapped trace</td>
+ <td>springs are hydrologic evidence; a water-table intersection survives the burial that destroys the
+ scarp</td>
+ <td>QFaults/INGENIOUS were tried as positive fault priors and gave ~0 off-catalogue hits; springs make
+ a different claim — a consequence, not a trace</td>
+ <td class="num"><b>blocked</b>: the CSVs on disk are derived and cannot be re-fetched or hash-verified
+ from this sandbox</td><td>~50 min if unblocked</td></tr>
+<tr><td>5</td><td><b>Conductivity-defined fluid lineament</b> in cover</td>
+ <td class="mono small">A_cond_rank (band 17) against A_depth_base_rank · B_scarp_p900</td>
+ <td>a damage zone is a permeability contrast, so the moisture lineament exists with no relief</td>
+ <td>never used as an independent corroborator of the buried class in this family</td>
+ <td class="num">no fold signal; high false-positive prior (tracks drainage and lithology too)</td>
+ <td>zero</td></tr>
+</tbody></table>
+<div class="banner"><b>The meta-result.</b> The mechanism the brief named — co-training by
+pseudo-labels — was refuted by its own pre-registered gate, while the geology it pointed at survived
+measurement. The submission therefore keeps the disagreement <em>strata</em> as corroboration and
+down-weighting, drops the pseudo-label round, and emits on the corridor ranking that beat random on
+both instruments. That is a smaller claim than the brief's, and it is the one the data supports.</div>
+</main><footer><div class="wrap">GEMSDOE52 · every number on this page is read from <code>docs/data/*.json</code>, regenerated by <code>scripts/refresh_feed.py</code> · <a href="sources.html">official links</a> · <a href="irregularities.html">irregularities</a></div></footer><script src="site.js"></script></body></html>

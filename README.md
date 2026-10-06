@@ -1,153 +1,70 @@
-# GEMSDOE52 — Blum & Mitchell (COLT ’98) Two-View Co-Training & Disagreement Discovery for the DOE GEMS Prize (DrivenData #306)
+# GEMSDOE52
 
-[![Portal Format Gate](https://img.shields.io/badge/Portal_Range_%5B0%2C1%5D-PASSED_100%25-10b981)](#4-root-cause--guaranteed-fix-for-predicted-values-must-be-in-range-0-1)
-[![Conditional Independence Gate](https://img.shields.io/badge/OOF_Negative_Error_r-%2B0.10143_PASSED-38bdf8)](#2-blum--mitchell-colt-98-two-view-co-training--disagreement-discovery)
-[![Holdout Validation](https://img.shields.io/badge/Holdout_Folds_Won-4%2F4_vs_0.2778_(%2B73.7%25_LM)-10b981)](#5-spatially-blocked-holdout-validation--hide-and-recover-results)
-[![Uniqueness Gate](https://img.shields.io/badge/Uniqueness_Gate-PASSED_(Max_Jaccard_0.0838)-f59e0b)](#6-uniqueness-gate--non-union-verification)
+Target: a **unique, downloadable single-band GeoTIFF** for [DrivenData competition 306 — DOE GEMS
+Prize](https://www.drivendata.org/competitions/306/competition-doe-gems/), built to beat this group's
+best of 0.2778, with the reasoning and the evidence published next to the file.
 
----
+## The file — download it, submit it, nothing to configure
 
-## 1. Quick-Start Submission Deliverables & Portal Metadata
+| | |
+|---|---|
+| **download** | [`docs/downloads/gems52-h52-cotrain-disagreement-emission-composite-37654px-r1.tif`](docs/downloads/gems52-h52-cotrain-disagreement-emission-composite-37654px-r1.tif) — click, save, upload |
+| also in the repo | [`submission/gems52-h52-cotrain-disagreement-emission-composite-37654px-r1.tif`](submission/gems52-h52-cotrain-disagreement-emission-composite-37654px-r1.tif) |
+| bytes / shape | 89,751 · 3730 × 3292 · single band · `float32` · EPSG:32611 · 100 m cells |
+| values | {0, 1} only — 37,654 positive px, 0 outside the valid footprint, **no NaN** |
+| sha256 | `063fb7247f8e12b80788dd14652c3245dec15be82f7c7e8e901193b9aeaa68b6` |
+| format gate | `True` (`src/gems52/gates.py`, checked on the written bytes, not on intent) |
+| uniqueness gate | `True` — strictly-novel-and-selective: 29,685 px (78.8%) touch no prior of this family, and 174,685 prior px are deliberately **not** re-emitted, so it is not "the union" either |
+| selection | `evidence/composite.json` — the two-regime sweep over {far-field ranker} × {corridor ranker} × {corridor share} × {budget} on both instruments chose `B_only+blanket|37654|s0`; rebuilding from that record reproduces the identical sha256, which is the reproducibility claim |
+| holdout verdict | control bar on **both** instruments: cleared (+16.7 % tip, +32.1 % hide over matched-budget random). Registered +0.010-over-naive-union bar: **not met** on the truncation instrument (+0.0051) → `promoted: false`, `forced: true`. Read it before spending a weekly slot (§4, `docs/irregularities.html`) |
+| exact steps | [docs/executive-summary.html](docs/executive-summary.html) |
+| rebuild it | `PYTHONPATH=src python3 scripts/build_submission.py --mode tip --arm composite --tag r1 --force`   # reads the selection from evidence/composite.json |
 
-- **Unique Submission Name:** `GEMSDOE52-CoTrain-Disagree-H52-1`
-- **Portal Submission Note (`183 / 200` chars max):**
-  ```text
-  GEMSDOE52 H52-1 | Blum-Mitchell 2-view co-training (View A geophys vs View B surface) + disagreement submodular: 41,200 dots, 0 within 200m of cat; OOF neg r=+0.101; 4/4 folds >0.2778
-  ```
+The site is the product: [docs/index.html](docs/index.html) renders every number from
+`docs/data/*.json`, which `scripts/refresh_feed.py` regenerates and a committed GitHub Actions workflow
+refreshes on a schedule, so **nothing on the page needs hand-checking**.
 
-| Deliverable Artifact | Path in Repository / Pages | Emitted Dots | Size (Bytes) | SHA-256 Checksum | Portal `[0, 1]` Check |
-| :--- | :--- | :---: | :---: | :--- | :---: |
-| **Primary Portal GeoTIFF (`zeros` outside)** | [`docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-zeros.tif`](docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-zeros.tif) | `41,200` | `153,803` | `c7e980f472113ff1b3378b9d08a4a361cece5984d07fe93e4b3a6e98fdf8068e` | **PASS (`12,279,160` finite in `[0, 1]`, `nodata=None`)** |
-| **Primary Portal ZIP Archive** | [`docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-zeros.zip`](docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-zeros.zip) | `41,200` | `121,316` | `b94c1e40d020c23489c20e499b6406b8f3a7e16558abcd0d6c47ccbd688d4cca` | **PASS** |
-| **0.2778-Anchored Hybrid Companion GeoTIFF** | [`docs/downloads/gemsdoe52-cotrain-anchored-hybrid-20261006-zeros.tif`](docs/downloads/gemsdoe52-cotrain-anchored-hybrid-20261006-zeros.tif) | `40,704` | `154,585` | `a7cce341cbe047d08dcbfbd21642f33b54c8941bc212e485e94a09dc0c951e90` | **PASS (`12,279,160` finite in `[0, 1]`, `nodata=None`)** |
-| **Companion NaN-Outside GeoTIFF** | [`docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-nan.tif`](docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-nan.tif) | `41,200` | `223,917` | `f66ce1a252f38bcb84d15c832d1d0abc76b6b08bed4e753a048bd47983b37c29` | **PASS (`5,167,373` active finite in `[0, 1]`)** |
-| **JSON Audit Receipt** | [`docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-audit.json`](docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-audit.json) | — | `9,584` | Verified on disk | **PASS** |
-
-### GitHub Pages Documentation Suite (`docs/`)
-- **Command Center & One-Click Download Hero:** [`docs/index.html`](docs/index.html)
-- **Executive Summary Subpage:** [`docs/executive-summary.html`](docs/executive-summary.html)
-- **0.2778 Forensic Analysis & `[0, 1]` Portal Error Fix:** [`docs/forensics.html`](docs/forensics.html)
-- **5 Ranked Candidate Geological Hypotheses:** [`docs/hypotheses.html`](docs/hypotheses.html)
-- **Spatially-Blocked Validation & Phase 2 Geological Reasoning:** [`docs/validation.html`](docs/validation.html)
-- **Verified Trusted Sources & SHA-256 Ledger:** [`docs/sources.html`](docs/sources.html)
-
----
-
-## 2. Blum & Mitchell (COLT ’98) Two-View Co-Training & Disagreement Discovery
-
-### 2.1 Physically Disjoint Two-View Partition (`src/gems52/spec.py` & `src/gems52/features.py`)
-Following [Blum & Mitchell (COLT ’98, doi:10.1145/279943.279962)](https://doi.org/10.1145/279943.279962), we split the feature space into two conditionally independent views with zero shared bands:
-1. **View A — Potential-Field & Subsurface (17 official bands in `training_features.tif` $\to$ 14 channels):**
-   - **Magnetics:** `mag_anom` (B1), `rtp` (B2), `tmi_hg` (B3), `tc` (B6 — Miller & Singh 1994 magnetic tilt angle; see `IR-52-01`), `tmi_vg` (B9), `tmi` (B14)
-   - **Gravity:** `iso_grav_anom_slope` (B5), `iso_grav_anom_vg` (B11), `iso_grav_anom` (B13), `iso_grav_anom_hg` (B18)
-   - **Subsurface & Basement:** `depth_to_base_surf` (B15), `cond_surf` (B17)
-   - **Geodetic Strain & Seismicity:** `geod_2ndinv` (B4), `geod_shearrate` (B7), `geod_dilaterate` (B8), `deq_n100a15` (B10), `ieq_n100a15` (B16)
-2. **View B — Surface DEM & Radiometrics (2 official DEM bands in `training_features.tif` + USGS GeoDAWN / 3DEP $\to$ 12 channels):**
-   - **Surface DEM:** `det_elev` (B12), `det_elev_slope` (B19), multi-scale curvature ($\sigma = 1, 2\text{ px}$), Hessian scarp ridges ($\sigma = 1, 2, 3\text{ px}$), morphological white top-hat, local relief, slope breaks, and DEM structure-tensor coherence.
-   - **Airborne Gamma-Ray Radiometrics & 3DEP LiDAR Scarps:** `K`, `Th`, `U`, `TC` (`data/external/geodawn_rad_u8.tif`, [USGS GeoDAWN DOI:10.5066/P93LGLVQ](https://doi.org/10.5066/P93LGLVQ)), `UK` (`data/external/geodawn_extensions_u8.tif`), and 3DEP LiDAR scarp stack (`data/external/lidar_scarp_features_u8.tif`).
-
-### 2.2 Empirical Conditional Independence Test on Labeled Negatives (`evidence/independence_test.json`)
-Before executing co-training, we trained spatially-blocked out-of-fold Round 0 learners on View A and View B across the 4 spatial quadrants (with a `15 px = 1.5 km` fold collar) and correlated their out-of-fold error scores across `4,520,340` labeled negative pixels (`200,000` sampled):
-- **OOF Negative Error Pearson $r$:** `+0.10143` ($p = 0.0$, strictly below the $|r| \ge 0.50$ abandonment threshold)
-- **OOF Negative Error Spearman $\rho$:** `+0.10595`
-- **Top-2% False-Positive Tail Jaccard Overlap:** `0.01963` (98.04% disjoint false-positive tails)
-- **Per-Quadrant Pearson $r$:** `foldNW: +0.00657`, `foldNE: +0.06283`, `foldSW: +0.15848`, `foldSE: +0.18437`
-- **Gate Decision:** `PROCEED_WITH_COTRAINING`
-
-### 2.3 Whole-Segment Spatial Blocks, 5-px Buffer & Disagreement Decomposition (`src/gems52/cotraining.py`)
-- **Whole-Segment Partitioning:** All `3,199` connected fault segments in `labels.tif` (`60,988` pixels) are partitioned as *whole connected components* (`2,669` training segments with `50,339` pixels; `530` held-out hide-and-recover segments with `10,649` pixels).
-- **Abstention-Gated Pseudo-Labeling with 5-px Buffer:** In each co-training round ($t = 1, 2$), a connected unlabeled segment is pseudo-labeled by the teacher view *only* where the teacher is confident ($\ge 98.5\text{th}$ percentile) and the student view abstains ($25\text{th}\text{–}78\text{th}$ percentile), with a `5 px (500 m)` morphological dilation buffer excluded from negative sampling so zero leakage reaches evaluation.
-- **Disagreement as the Discovery Signal:**
-  - **View A $\wedge$ View B (Corroborated):** Range-front and bedrock fault structures supported by both subsurface potential-field gradients and surface scarps.
-  - **View A $\setminus$ View B (A-Only Buried Fault Candidate Beneath Cover):** View A is confident along a high-coherence subsurface gradient while View B abstains under sedimentary cover (`depth_to_base_surf`) or outside 3DEP LiDAR coverage $\to$ **800 A-only buried fault dots across 676 structural corridors**, each documented with explicit Phase 2 geological reasoning in `evidence/a_only_geological_reasoning.json`.
-  - **View B $\setminus$ View A (B-Only Surface Artifact Suppression):** View B fires on flat valley floors / low-coherence surface features (playa edges, roads, erosion lines) while View A is near zero $\to$ **13,709 B-only surface artifact dots suppressed** relative to View B solo.
+**Core values this repo is run by — _Maximize P(Win)_, _Own the Outcome_.** Maximize P(Win): every
+decision is taken on the number the organiser scores, at the prevalence their published scores imply, and no
+weekly slot goes to an idea that has not beaten the current holdout best. Own the Outcome: the file, its
+hash, its gates, its provenance, its negative results and its irregularities are all in this repo — including
+the bug our own writer shipped tonight and the gate caught (IR-52-007), and the mechanism from the brief that
+failed its own test (§4).
 
 ---
 
-## 3. Forensic Analysis of `0.2778` (`GEMSDOE32`) & How We Bridge to `0.3195+`
+## 1. The standing brief
 
-Under the official Distance-Weighted Tversky Index ([DrivenData Page 967](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/#performance-metric), $\alpha = 0.2, \beta = 0.8, R = 3\text{ px} = 300\text{ m}$), once the known competition catalogue $C$ (`60,988` pixels) is masked out during live evaluation:
-$$\text{DTI}(p) = \frac{T(p)}{0.2\,(T(p) + S(p) - M(p)) + 0.8\,|G|}, \qquad \Delta\text{DTI} > 0 \iff \Delta T > 0.2 \cdot \text{DTI} \approx 0.0556.$$
+The instruction set this repo is built against is recorded in
+[`knowledge/00_brief_as_received.md`](knowledge/00_brief_as_received.md) — every directive, in order,
+each one traceable to code or evidence here. Its integrity note matters: the *verbatim* wording of the
+original message is not recoverable from this workspace (single commit `744df63`, no brief file
+anywhere on disk), so the brief is restated faithfully rather than quoted, and that is flagged on the
+site's [irregularities page](docs/irregularities.html) instead of being papered over with invented
+quotation marks.
 
-Our byte-level Euclidean distance transform audit (`scipy.ndimage.distance_transform_edt(~labels)`) across all 7 historical submissions in `data/scored/` establishes the exact lineage of `0.2778`:
-1. `gems19-h19-5` (`0.1922`, `121,131` dots) $\to$ subsampled into discrete dots in `gems24-d1-5` (`0.2477`, `60,069` dots) and `gems24-d2-8` (`0.2600`, `44,090` dots: `0` at $d=0$, `3,891` at $d=1.0\text{ px}$, `2,545` at $1 < d \le 2.0\text{ px}$, `37,654` at $d > 2.0\text{ px}$).
-2. Pruning the `3,891` dots at $d = 1.0\text{ px}$ yielded `h27-4` (`0.2708`, `40,199` dots), saving $0.2 \times 3,891 = 778.2$ denominator penalty units.
-3. Pruning the `2,545` dots at $1.0 < d \le 2.0\text{ px}$ yielded `GEMSDOE32` (`h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif`, `0.2778`, `37,654` dots), saving an additional $0.2 \times 2,545 = 509.0$ denominator penalty units (`np.array_equal(d28 & (d_cat > 2.0), b2) == True`).
+In one paragraph: treat the task as **co-training** across two views — View A the geophysical
+potential fields, View B the surface/geomorphic layers — and take the discovery signal from their
+**disagreement**, not their agreement, grounding it in [Blum & Mitchell, *Combining labeled and
+unlabeled data with co-training*, COLT '98, doi:10.1145/279943.279962](https://doi.org/10.1145/279943.279962);
+**test the theorem's premise** (conditional independence of the views' errors given the label)
+empirically on spatially-blocked out-of-fold errors, and drop the arm if the test fails; pseudo-label
+only where one view is confident and the other withholds; hold out **whole segments with a buffer**;
+read **A-only as a fault buried under cover** and write that reasoning out for **every candidate**,
+and **B-only as suspect** (roads, erosion, levees); compare against a **single-view baseline on
+hide-and-recover**; normalise to [0, 1], write a GeoTIFF, place mass so that it is **aware of the
+metric's own kernel**, pass a **uniqueness gate**, and be **more than the union** of previous
+submissions.
 
-**Why `0.2778` Plateaued Below `0.3195` and How `GEMSDOE52` Beats It:**
-`0.2778` remained frozen on the legacy `H19_5` pixel backbone, which placed 2-px adjacent dot pairs (wasting ~5,000 dots to self-overlap within the 3-px kernel), retained B-only valley-floor surface artifacts, and missed buried intra-basin faults and 3DEP/GeoDAWN scarps. Replacing that static backbone with Blum–Mitchell Co-Training + Disagreement Discovery + CELF Submodular Expected-Credit Placement increases off-catalogue true-positive coverage from `8.88%` to `16.76%` (`LM = 0.12863` vs `0.07404`, **+73.7% relative improvement**, winning **4/4 spatial folds**).
+### 1.0 The brief, verbatim
 
----
-
-## 4. Root Cause & Guaranteed Fix for `"Predicted values must be in range [0, 1]"`
-
-Two distinct issues in the competition rasters cause DrivenData's portal validator to reject submissions with `"Predicted values must be in range [0, 1]"`:
-1. **3,061 Unmasked `-3.4028235e+38` Sentinel Cells Inside the Active Footprint:** In `data/training_features.tif`, 13 of the 19 bands contain `3,061` float32 sentinel cells (`-3.4028234663852886e+38`) *inside* the `5,167,373`-pixel active footprint (`np.isfinite(sample_submission.tif)`). Checking only `np.isfinite(raw)` treats `-3.4028235e+38` as a valid finite number and propagates negative infinity sentinels into predictions.
-2. **Full-Grid Range Check Against `NaN` Outside Footprint:** While `sample_submission.tif` has `7,111,787` `NaN` cells outside the active footprint, evaluating `(arr >= 0.0) & (arr <= 1.0)` across the full `3730 x 3292` raster returns `False` if any cell is `NaN`.
-
-**Our Fix (`src/gems52/features.py` & `src/gems52/submission.py`):**
-- `_read_clean_band` masks `raw <= -1e38` and imputes the in-footprint median prior to feature extraction.
-- `write_submission_geotiff(..., mode="zeros")` clips all active predictions to `[0.0, 1.0]`, writes `0.0` outside the footprint, sets `nodata=None`, and runs `verify_geotiff_on_disk` to assert `12,279,160 / 12,279,160` finite `float32` pixels strictly in `[0.0, 1.0]`.
-
----
-
-## 5. Spatially-Blocked Holdout Validation & Hide-and-Recover Results
-
-### 5.1 Spatially-Blocked Off-Catalogue Holdout (`evidence/holdout_validation.json`)
-| Candidate Model / Hypothesis | Emitted Dots | On-Cat / $\le 200\text{ m}$ | `foldNW` LM | `foldNE` LM | `foldSW` LM | `foldSE` LM | Mean LM ($\Delta$ vs `0.2778`) | Stratified $d_0=3\text{ px}$ | Stratified $d_0=5\text{ px}$ | Folds Won |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| `BASE_02778_GEMSDOE32_B2` (Live `0.2778`) | `37,654` | `0 / 0` | `0.07389` | `0.07371` | `0.09246` | `0.05610` | `0.07404` (`+0.00000`) | `0.09539` | `0.08852` | Baseline |
-| `VIEW_A_SOLO_SUBMODULAR` (Subsurface Only) | `37,654` | `0 / 0` | `0.07854` | `0.03212` | `0.06390` | `0.05524` | `0.05745` (`-0.01659`) | `0.07723` | `0.07382` | `1 / 4` |
-| `VIEW_B_SOLO_SUBMODULAR` (Surface Only) | `37,654` | `0 / 0` | `0.11907` | `0.12133` | `0.08702` | `0.14943` | `0.11921` (`+0.04517`) | `0.16688` | `0.16117` | `3 / 4` |
-| `NAIVE_UNION_MAX_AB_SUBMODULAR` ($\max(A, B)$) | `37,654` | `0 / 0` | `0.09562` | `0.07089` | `0.08256` | `0.12057` | `0.09241` (`+0.01837`) | `0.13022` | `0.12334` | `2 / 4` |
-| `H52_3_GRAV_ANALYTIC_BASESTEP` (Rank #3) | `39,850` | `0 / 0` | `0.12352` | `0.12573` | `0.09080` | `0.15564` | `0.12392` (`+0.04988`) | `0.17135` | `0.16426` | `3 / 4` |
-| `H52_4_COND_RAD_HYDROTHERMAL` (Rank #4) | `39,850` | `0 / 0` | `0.12046` | `0.13553` | `0.08615` | `0.15322` | `0.12384` (`+0.04980`) | `0.17279` | `0.16699` | `3 / 4` |
-| `H52_2_MAG_TILT_ZEROCROSS` (Rank #2) | `39,850` | `0 / 0` | `0.12770` | `0.12924` | `0.09551` | `0.15633` | `0.12719` (`+0.05316`) | `0.17409` | `0.16810` | **`4 / 4`** |
-| **`GEMSDOE52_H52_1_ANCHORED_HYBRID`** | `40,704` | `0 / 0` | `0.07772` | `0.07939` | `0.09509` | `0.06471` | `0.07923` (`+0.00519`) | `0.10433` | `0.09661` | **`4 / 4`** |
-| **`GEMSDOE52_H52_1_PRIMARY` (Rank #1 Selected)** | **`41,200`** | **`0 / 0`** | **`0.12865`** | **`0.13065`** | **`0.09651`** | **`0.15870`** | **`0.12863` (`+0.05459`)** | **`0.17574`** | **`0.16900`** | **`4 / 4`** |
-
-### 5.2 Hide-and-Recover Whole-Segment Benchmark (`evidence/hide_and_recover_benchmark.json`)
-Evaluated on `8,250` hidden fault pixels across `530` held-out whole segments (including `2,252` buried fault pixels under deep cover) at a matched budget of `12,000` dots:
-- `single_view_A_geophysical_t0`: Overall DTI `0.02383` (`215.01` TP) | Buried DTI `0.01981` (`48.30` TP)
-- `single_view_B_surface_t0`: Overall DTI `0.07771` (`703.87` TP) | Buried DTI `0.00000` (`0.00` TP)
-- `naive_union_A_or_B_t0`: Overall DTI `0.04284` (`385.95` TP) | Buried DTI `0.00837` (`18.86` TP)
-- `early_fusion_single_learner`: Overall DTI `0.07234` (`654.02` TP) | Buried DTI `0.00232` (`4.29` TP)
-- **`cotrained_discovery_round1`**: Overall DTI **`0.08077`** (`729.07` TP) | Buried DTI **`0.00133`** (`2.49` TP)
-- **`cotrained_discovery_round2_final`**: Overall DTI **`0.07886`** (`711.72` TP) | Buried DTI **`0.00269`** (`5.05` TP)
-
----
-
-## 6. Uniqueness Gate & Non-Union Verification (`evidence/uniqueness_gate.json`)
-
-- **Zero SHA-256 Collisions Across All 7 Historical Submissions:** `true`
-- **Maximum Pairwise Jaccard Similarity vs Any Prior Submission:** `0.08378` (`0.01051` vs `GEMSDOE32` `0.2778`, `0.01046` vs `GEMSDOE36`, `0.00989` vs `GEMSDOE44`, `0.08378` vs `GEMSDOE46`, `0.01541` vs `GEMSDOE19`, `0.01173` vs `GEMSDOE24 D15`, `0.00971` vs `GEMSDOE24 D28`).
-- **Confirmed Not Mere Union of View A and View B:**
-  - Jaccard vs Set Union $(A \cup B)$: `0.26595`
-  - Jaccard vs Field Union $\text{Emit}(\max(A, B))$: `0.19950`
-  - B-only surface artifact dots suppressed ($|B \setminus C|$): `13,709`
-  - Novel co-trained dots absent from $A \cup B$ ($|C \setminus (A \cup B)|$): `16,910`
-
----
-
-## 7. Autonomous Reproduction Instructions
-
-```bash
-# 1. Restore and SHA-256 verify all 17 competition, external USGS, and scored rasters into data/
-bash scripts/download_competition_data.sh
-
-# 2. Build and cache strictly disjoint View A (14 subsurface channels) and View B (12 surface channels)
-python3 scripts/prepare_data.py
-
-# 3. Run Blum-Mitchell Two-View Co-Training, Independence Gate, Holdout Validation, Phase 2 Reasoning & GeoTIFF Export
-python3 scripts/run_cotraining_pipeline.py
-
-# 4. Run the automated pytest verification suite (6/6 tests passing)
-pytest -v
-```
-
----
-
-## 8. Original Task Prompt (Verbatim)
+Recovered intact: `README.md` §8 of commit `503f18e6` on `main` (the PR #2 session) records the original
+task prompt as a fenced block, and that block is reproduced here unaltered — including the URLs, the
+character counts and the sentence about radiometric bands, which is *conditional* ("any radiometric bands in
+`training_features.tif`") and resolves to none, as `knowledge/04` and `docs/irregularities.html` explain.
+This supersedes the reconstruction that stood here until 22:20 UTC tonight; the sibling session's copy is
+not the Arena message itself, but it is a byte-for-byte record of it, so the wording is quoted rather than
+paraphrased, and the provenance is stated rather than assumed.
 
 ```text
 Always keep in mind Arena Core Values:
@@ -195,3 +112,136 @@ Pass 3 — Re-check against the user's original request: Re-read the user's prom
 
 Please remember to create a PR once you are done.
 ```
+
+### 1.1 The directives, itemised (the standing starting point, restated in order)
+
+1. **Co-train** two views of the same unlabelled pixels — View A the geophysical potential fields, View B
+   the surface/geomorphic layers — and treat **disagreement, not agreement, as the discovery signal**
+   (Blum & Mitchell, COLT '98, doi:10.1145/279943.279962).
+2. **Test the premise instead of assuming it**: conditional independence of the two views' errors given the
+   label, measured on spatially-blocked out-of-fold errors; abandon the arm if the test says so.
+3. **Pseudo-label only** where one view is confident and the other abstains.
+4. **Hold out whole segments**, with a buffer, never random pixels.
+5. **Write the reasoning for every candidate**: A-only ⇒ a fault buried under cover; B-only ⇒ suspect
+   (roads, erosion, levees).
+6. **Benchmark against a single-view baseline** on hide-and-recover.
+7. **Normalise to [0, 1]** and write a **GeoTIFF**; place mass **metric-aware** (the kernel, the mask, the
+   acceptance bar), not by percentile.
+8. **Pass a uniqueness gate** and be **more than the union** of previous submissions — never copy a prior
+   answer; this exercise is for learning.
+9. **Propose 3–5 new geological hypotheses** with layers, physical signature, why they find
+   catalogue-missing faults, diff against repo history, ranked by expected DTI gain over cost; validate the
+   top one on a spatially-blocked holdout before spending a slot. New external data must be **free,
+   official, and confirmed obtainable**.
+10. **The site**: clean GitHub Pages, one-click `.tif` at the very top, an executive-summary subpage with
+    the exact submission steps, the `[0, 1]` error explained and made impossible, a unique submission name
+    with a short note, a live data feed so nothing needs manual checking, official links for manual review,
+    irregularities flagged, three verification passes, then a PR and a merge to `main`.
+
+## 2. Layout
+
+```
+src/gems52/     metric.py      literal official DTI, kernel, credit bar, max_cover  (tested)
+                grid.py        pinned 3730x3292 / EPSG:32611 grid, GeoTIFF writer+re-read receipt
+                transform.py   resample-any-grid-to-the-grid helper
+                features.py    the 27 derived layers (19 View A, 8 View B)
+                cotrain.py     uint8 rank stack, per-view logistic learners, co-training round,
+                               the independence test, the disagreement strata
+                emit.py        accept_bar + lazy-greedy metric-aware emission (gain > bar*(1-wmax))
+                holdout.py     three validation instruments: hide / block / tip, catalogue-masked
+                gates.py       format legality + uniqueness / not-merely-the-union audit
+scripts/        prepare_data.py restore_data.py screen_layers.py run_pipeline.py
+                validate_holdout.py build_submission.py refresh_feed.py research.sh
+tests/          test_metric.py  (8 tests, including the marginal acceptance rule pixel-by-pixel)
+knowledge/      00_brief 01_why_02778 02_hypotheses 03_negative_results 04_free_data_and_licenses
+                05_instruments 06_provenance_and_irregularities  (written for the next session)
+evidence/       grid, band inventory, layer screen, folds, independence, strata, holdout tables,
+                per-submission gate reports
+registry/       data_manifest.json (23 pinned inputs + sha256), preregistration.json (decision rules,
+                written before any fold was scored)
+docs/           the GitHub Pages site; docs/data/*.json is its only source of numbers
+submission/     built rasters + LATEST.txt
+```
+
+## 3. Reproduce it
+
+```bash
+python3 scripts/restore_data.py                 # 23 pinned inputs -> data/, sha256-checked
+python3 scripts/prepare_data.py                 # bands + labels + elevation -> work/derived/
+python3 -m pytest -q                            # metric parity + lattice weights + emission rule
+PYTHONPATH=src python3 scripts/run_pipeline.py --stage fit --rounds 1 --mode tip
+PYTHONPATH=src python3 scripts/validate_holdout.py --mode tip --emit topk
+PYTHONPATH=src python3 scripts/build_submission.py --mode tip --arm <winner> --emit greedy
+PYTHONPATH=src python3 scripts/refresh_feed.py   # regenerate the site's data/*.json
+```
+
+`--mode` picks the instrument: `hide` (whole catalogue components removed), `block` (quadrant-blocked
+as well), `tip` (only the along-strike ends of traces removed). Each writes its own
+`evidence/*_<mode>.json`, so the two instruments' numbers cannot be confused with each other.
+`bash scripts/research.sh tip hide` runs fit+validate for several modes in sequence.
+
+## 4. What was actually found, before any of this was shipped
+
+* **The co-training mechanism failed its own gate.** One Blum–Mitchell round *lowered* View A's
+  blocked AUC in every fold (0.797 → 0.761 pooled). Stated precisely, because the naive reading is wrong:
+  **the theorem's premise survived** — the two views' out-of-fold errors are only weakly coupled
+  (block-level false-alarm correlation r = 0.4298 on the truncation instrument against a 0.60 abandonment
+  threshold; r = −0.1406 on the whole-component instrument), so conditional independence was *not*
+  refuted. What failed is the second half: turning that disagreement into labels and retraining sharpens
+  the maxima you already had instead of finding new ones. Both measurements are published
+  (`evidence/independence_*.json`, `evidence/holdout_*.json`) with the reading string attached, and the
+  pseudo-label mechanism is **not** in the shipped field. The disagreement **strata** — the
+  physical asymmetry between "field says fault, surface says nothing" and its converse — are, because
+  they were measured separately and survived: A-only pixels sit in materially deeper cover than
+  concordant pixels (mean depth-to-basement rank 455 vs 251) and carry a gravity step (6.06 vs the
+  artefact class's 2.59), which is the signature a buried range-front fault has and a road cut
+  does not.
+* **The instrument had to be rebuilt to see the thing we were claiming.** Removing whole catalogue
+  components makes a fold that is *structurally blind* to near-trace mass: only 0.5 % of a hidden
+  component's pixels lie within 5 px of a still-visible trace, because a trace's neighbours belong to
+  the same component. Yet the organiser's own clarification is that new-fault truth can lie within
+  300 m of a known trace, and that mapping-truncation corrections are part of what the competition is
+  for. So the `tip` instrument was added, where 88.5 % of the held-out truth *is* reachable from a
+  visible trace. Numbers from the two instruments are never pooled.
+* **Ranking a smooth field by global percentile loses to random emission.** At 37,654 px the top of
+  an uncentred field is one big anomaly high, not the next fault. The fix is to apply every ranking
+  *inside a permitted region* — footprint minus catalogue, and for corridor mass inside the 1–6 px
+  corridor — which is what the arm table does; the naive global-percentile arms are reported alongside it
+  so the comparison is auditable rather than asserted. The instruments, and the selection rule that follows
+  from them, are written up in `knowledge/05_instruments_and_what_each_can_see.md`.
+* **0.2778 is a placement result, not a discovery result.** Removing 2,545 pixels of self-overlap with
+  the mask (6.3 % of the mass) raised that submission's DTI by 2.6 %. See
+  [`knowledge/01_why_02778_and_the_bar.md`](knowledge/01_why_02778_and_the_bar.md) for the algebra, the
+  perfect-precision counterfactual (0.464 at the same budget), and the acceptance-bar table that shows
+  the marginal rule across the entire live leaderboard is the same sentence: *emit a pixel iff it is
+  within 224 m of a fault pixel the catalogue does not already have*.
+
+### 1.2 Prior submissions of this family that this file must not be
+
+`GEMSDOE52-CoTrain-Disagree-H52-1` (PR #2, 41,200 px, `c7e980f4…`) and the rasters in `data/scored/`
+(gems19, gems24) are this group's own priors. The uniqueness gate compares against every one of them:
+this file re-emits none of their mass where it is redundant (174,685 prior pixels dropped) and puts
+78.8 % of its own mass where no prior ever reached. Their evidence stays published in `evidence/` and their
+code stays runnable as `gems52_h1`; their *holdout claims* do not stand — see `IR-52-014` on
+[the register](docs/irregularities.html).
+
+## 5. Irregularities, stated plainly
+
+The live public leaderboard's #1 is **0.3774**, not the 0.3195 stated in the session's opening
+context; the group's own 0.2778 currently sits at **#13 of 24 visible rows** (read twice this session, 21:2x
+and 21:33 UTC, identical both times). Every file→score
+mapping in this family (including the 0.2778 one) is **owner-reported**, not organiser-authenticated —
+the board exposes no filename, hash or upload receipt, and GEMSDOE47 formally retracted its alleged
+mapping. Full list: [`docs/irregularities.html`](docs/irregularities.html) and
+[`knowledge/06_provenance_and_irregularities.md`](knowledge/06_provenance_and_irregularities.md).
+
+Licences: all pinned inputs are the competition's own bundles or USGS/GDR open data; the sibling-derived
+external CSVs in `data/external/` are **derived, not organiser-authenticated** and are used only as
+optional corroboration, never as positive labels. See
+[`knowledge/04_free_data_and_licenses.md`](knowledge/04_free_data_and_licenses.md).
+
+## 6. No manual steps
+
+`docs/data/*.json` is regenerated from `evidence/` by `scripts/refresh_feed.py`;
+`.github/workflows/feed.yml` runs it nightly and on push, and the site renders only from those files.
+If a number on the site is wrong, the fix is the evidence file, never the HTML.
