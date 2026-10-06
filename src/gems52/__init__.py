@@ -1,3 +1,5 @@
-"""GEMSDOE32 — Gaussian Process Bayesian Optimization Surrogate & Multi-Physics Dip-Projected Fault Discovery."""
+"""GEMSDOE52: Blum-Mitchell (COLT '98) Two-View Co-Training & Disagreement Discovery
+for the DOE GEMS Prize Challenge (DrivenData #306, GeoDAWN / Great Basin).
+"""
 
-__version__ = "0.1.0"
+__version__ = "1.0.0"

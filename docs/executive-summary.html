@@ -1,73 +1,157 @@
-<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Make a submission (executive summary) · GEMSDOE52 &middot; GEMSDOE52</title><link rel=stylesheet href=assets/site.css></head><body><header class=top><div class=wrap><h1>Make a submission (executive summary) · GEMSDOE52</h1><nav><a href="index.html">Home</a> <a href="executive-summary.html">Make a submission</a> <a href="hypotheses.html">Hypotheses</a> <a href="leaderboard.html">Leaderboard</a> <a href="sources.html">Sources</a> <a href="irregularities.html">Irregularities</a></nav><div class=dlbtn><a class="btn" href="downloads/gemsdoe52-cotrain-a-b-disagreement-v2-flank3-20261006T204507Z-96ba9d57-zeros.tif">&#11015; Download the submission GeoTIFF</a><a class="btn alt" href="downloads/gemsdoe52-cotrain-a-b-disagreement-v2-flank3-20261006T204507Z-96ba9d57-nan.tif">.nan twin</a></div></div></header><div class=values><div class=wrap><b>Core Values.</b> <b>Maximize P(Win)</b> &mdash; every weekly submission slot is an experiment, not a lottery ticket. <b>Own the Outcome</b> &mdash; every claim here carries an evidence class, and the defect in our own previously-shipped primary was measured, published and replaced rather than quietly dropped.</div></div><main class=wrap>
-<div class=dl>
-<h2>&#11015;&nbsp;ONE-CLICK SUBMISSION FILE</h2>
-<p><a class="btn" href="downloads/gemsdoe52-cotrain-a-b-disagreement-v2-flank3-20261006T204507Z-96ba9d57-zeros.tif">Download gemsdoe52-cotrain-a-b-disagreement-v2-flank3-20261006T204507Z-96ba9d57-zeros.tif</a></p>
-<p><b>Filename:</b> <code>gemsdoe52-cotrain-a-b-disagreement-v2-flank3-20261006T204507Z-96ba9d57-zeros.tif</code><br>
-<b>Unique submission name to use:</b> <code>GEMSDOE52-cotrain-a-b-disagreement-v2-flank3</code><br>
-<b>Note to paste into <em>Note (optional)</em>:</b><br>
-<code>GEMSDOE52 co-train disagreement-a-b A-only novelty on H32-D flank-3 prune: 40,532 dots, 0 within 300m of catalogue; A-B r=+0.19; sgmc_cal 0.0629 UNSCORED</code></p>
-<p class=mut>single band &middot; float32 &middot; EPSG:32611 &middot; 100&nbsp;m &middot; 3292&times;3730 &middot;
-40,532 predicted pixels &middot; every cell finite &middot;
-every value in [0, 1] &middot; 0 NaN anywhere &middot; no nodata tag &middot; sha256
-<code>78df8af098fa0d65&hellip;</code> &middot;
-<a href="downloads/gemsdoe52-cotrain-a-b-disagreement-v2-flank3-20261006T204507Z-96ba9d57-audit.json">format receipt</a> </p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Executive Summary — GEMSDOE52 Blum–Mitchell Two-View Co-Training</title>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-badge">GEMSDOE52</span>
+        <span>Executive Summary — DOE GEMS Prize (#306)</span>
+      </div>
+      <nav class="nav-links" aria-label="Primary Navigation">
+        <a href="index.html">Command Center</a>
+        <a href="executive-summary.html" class="active">Executive Summary</a>
+        <a href="forensics.html">0.2778 Forensics &amp; [0,1] Fix</a>
+        <a href="hypotheses.html">Ranked Hypotheses</a>
+        <a href="validation.html">Validation &amp; Phase 2 Reasoning</a>
+        <a href="sources.html">Verified Sources &amp; Hashes</a>
+      </nav>
+    </div>
+  </header>
 
-<div class=card><h3>1 &middot; Check the file (optional, 20 s)</h3>
-<pre>python3 - &lt;&lt;'PYEOF'
-import rasterio, numpy as np, hashlib
-p = "gemsdoe52-cotrain-a-b-disagreement-v2-flank3-20261006T204507Z-96ba9d57-zeros.tif"
-print("sha256", hashlib.sha256(open(p, "rb").read()).hexdigest())
-with rasterio.open(p) as s:
-    a = s.read(1)
-    print(s.crs, s.width, s.height, s.transform, s.dtypes, s.nodata)
-inside = np.isfinite(a)
-print("finite", int(inside.sum()), "min", float(np.nanmin(a)), "max", float(np.nanmax(a)))
-assert float(np.nanmin(a)) &gt;= 0.0 and float(np.nanmax(a)) &lt;= 1.0
-print("OK: single band, [0, 1] wherever finite")
-PYEOF</pre>
-<p class=mut>Expected: <code>EPSG:32611</code>, 3292&times;3730, 100&nbsp;m pixels,
-<code>float32</code>, values within [0,&nbsp;1], 0 NaN anywhere. The repository's
-independent receipt is
-<a href="downloads/gemsdoe52-cotrain-a-b-disagreement-v2-flank3-20261006T204507Z-96ba9d57-audit.json">downloads/gemsdoe52-cotrain-a-b-disagreement-v2-flank3-20261006T204507Z-96ba9d57-audit.json</a>.</p>
-</div>
+  <main class="container">
+    <section class="download-hero">
+      <div class="hero-eyebrow">
+        <span class="pill pill-emerald">Executive Summary Subpage</span>
+        <span class="pill pill-blue">Submission: GEMSDOE52-CoTrain-Disagree-H52-1</span>
+        <span class="pill pill-emerald">Holdout LM: 0.12863 (+73.7% vs 0.2778)</span>
+      </div>
+      <h1>Executive Summary: Two-View Co-Training &amp; Disagreement Discovery for Hidden Geothermal Faults</h1>
+      <p class="lead">
+        This page provides a complete executive briefing on the <code>GEMSDOE52</code> submission system for the U.S. Department of Energy (DOE) Geothermal Earthshot <strong>Geothermal Exploration from Modeling and Simulation (GEMS) Prize</strong> (<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/" target="_blank" rel="noopener">DrivenData #306</a>).
+      </p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="downloads/gemsdoe52-cotrain-disagree-submodular-20261006-zeros.tif" download>
+          &#11015; Download Primary .TIF (41,200 dots, [0,1] Verified)
+        </a>
+        <a class="btn btn-secondary" href="downloads/gemsdoe52-cotrain-disagree-submodular-20261006-zeros.zip" download>
+          &#128230; Download Primary .ZIP (121.3 KB)
+        </a>
+        <a class="btn btn-outline" href="downloads/gemsdoe52-cotrain-anchored-hybrid-20261006-zeros.tif" download>
+          &#11015; Download 0.2778-Anchored Hybrid .TIF (40,704 dots)
+        </a>
+      </div>
+    </section>
 
-<div class=card><h3>2 &middot; Upload &mdash; the exact portal URL, file, and name</h3>
-<ol>
-<li><b>Portal URL:</b>
-<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">https://www.drivendata.org/competitions/306/competition-doe-gems/</a>
-&rarr; the <b>Submit</b> tab. The same page also carries the
-<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">problem
-description (page 967)</a>, which defines the metric.</li>
-<li><em>File to submit</em> &rarr; choose <code>gemsdoe52-cotrain-a-b-disagreement-v2-flank3-20261006T204507Z-96ba9d57-zeros.tif</code>.</li>
-<li>Paste this into <em>Note (optional)</em>:
-<code>GEMSDOE52 co-train disagreement-a-b A-only novelty on H32-D flank-3 prune: 40,532 dots, 0 within 300m of catalogue; A-B r=+0.19; sgmc_cal 0.0629 UNSCORED</code></li>
-<li>Submit. The response screen shows the new score and the remaining weekly slots.</li>
-</ol>
-</div>
+    <section class="section">
+      <h2>1. Core Problem &amp; Strategic Thesis (Maximize P(Win) &amp; Own the Outcome)</h2>
+      <div class="card">
+        <p>
+          The DOE GEMS Prize evaluates fault predictions across a <code>3730 &times; 3292</code> grid at <code>100 m</code> resolution in <code>EPSG:32611</code> (<code>5,167,373</code> active footprint pixels in the Great Basin) using the <strong>Distance-Weighted Tversky Index (DTI)</strong> with <code>&alpha; = 0.2</code> (false-positive weight), <code>&beta; = 0.8</code> (false-negative weight), and a <code>300 m (3 px)</code> linear triangular distance kernel <code>k(d) = max(0, 1 - d/3)</code> (<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/#performance-metric" target="_blank" rel="noopener">DrivenData Page 967</a>).
+        </p>
+        <p>
+          Because the known USGS/INGENIOUS fault catalogue (<code>60,988</code> pixels in <code>labels.tif</code>) is <strong>excluded during live scoring</strong>, the evaluation target <code>G</code> consists entirely of <em>unmapped off-catalogue faults</em>. Single-learner models trained naively on <code>labels.tif</code> suffer from severe sampling bias: mapped faults are disproportionately located along exposed topographic range fronts, whereas hidden geothermal reservoirs are frequently controlled by <strong>buried intra-basin faults beneath Cenozoic alluvial/playa cover</strong>.
+        </p>
+        <p>
+          To overcome this sampling bias without amplifying single-view noise, we implement <strong>Blum &amp; Mitchell (COLT &rsquo;98, <a href="https://doi.org/10.1145/279943.279962" target="_blank" rel="noopener">DOI:10.1145/279943.279962</a>) Two-View Co-Training</strong> between two physically independent sensor modalities:
+        </p>
+        <ul>
+          <li><strong>View A (Potential-Field &amp; Subsurface — 17 bands in <code>training_features.tif</code>):</strong> Gravity, magnetics (including Band 6 <code>tc</code> tilt derivative), geodetic strain, seismicity, basement depth, and subsurface electrical conductivity.</li>
+          <li><strong>View B (Surface — 2 DEM bands in <code>training_features.tif</code> + USGS GeoDAWN / 3DEP):</strong> Detrended DEM elevation/slope, multi-scale curvature/scarp ridges, 3DEP LiDAR scarps, and airborne gamma-ray radiometrics (<code>K</code>, <code>Th</code>, <code>U</code>, <code>TC</code>).</li>
+        </ul>
+      </div>
+    </section>
 
-<div class=card><h3>3 &middot; Know the two-round consequence before you click</h3>
-<p>The competition scores your chosen file <b>twice</b>: first against the faults the experts
-mapped before the competition, then against an <em>expanded</em> set that includes faults the
-panel verifies from everyone's submissions. The metric weights a false negative 4&times; a false
-positive (&beta;&nbsp;=&nbsp;0.8 vs &alpha;&nbsp;=&nbsp;0.2) precisely to make novel-but-real
-predictions cheap. The flank-300&nbsp;m prune removes every pixel that could earn
-catalogue-hidden credit in round 1; the round-2 verification is where the disagreement discoveries
-earn their keep.</p>
-</div>
+    <section class="section">
+      <h2>2. Key Quantitative Results at a Glance</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Verification Gate / Benchmark</th>
+              <th>Measured Value</th>
+              <th>Baseline / Threshold</th>
+              <th>Status &amp; Evidence File</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. Empirical Conditional Independence Gate</strong><br/>Out-of-fold error correlation across 4.52M labeled negatives</td>
+              <td>Pearson <code>r = +0.10143</code><br/>Spearman <code>&rho; = +0.10595</code><br/>Top-2% FP Jaccard <code>= 0.01963</code></td>
+              <td>Abandon if <code>|r| &ge; 0.50</code></td>
+              <td><span class="pill pill-emerald">PASSED</span><br/><code>evidence/independence_test.json</code></td>
+            </tr>
+            <tr>
+              <td><strong>2. Hide-and-Recover Benchmark (8,250 hidden fault px)</strong><br/>530 held-out whole segments (12,000 matched dot budget)</td>
+              <td>Co-Trained Round 1: <code>0.08077</code> DTI<br/>Co-Trained Round 2: <code>0.07886</code> DTI<br/>Buried Subset DTI: <code>0.00269</code></td>
+              <td>View A: <code>0.02383</code><br/>View B: <code>0.07771</code> (Buried: <code>0.0</code>)<br/>Union: <code>0.04284</code> | Early: <code>0.07234</code></td>
+              <td><span class="pill pill-emerald">PASSED</span><br/><code>evidence/hide_and_recover_benchmark.json</code></td>
+            </tr>
+            <tr>
+              <td><strong>3. Spatially-Blocked 4-Quadrant Live Mirror (LM)</strong><br/>Off-catalogue SGMC evaluation across NW, NE, SW, SE</td>
+              <td>Primary H52-1: <code>0.12863</code><br/>Anchored Hybrid: <code>0.07923</code><br/><strong>4/4 folds won</strong> by both</td>
+              <td><code>GEMSDOE32 (0.2778)</code>: <code>0.07404</code><br/>View A Solo: <code>0.05745</code><br/>View B Solo: <code>0.11921</code> | Union: <code>0.09241</code></td>
+              <td><span class="pill pill-emerald">PASSED (4/4 FOLDS)</span><br/><code>evidence/holdout_validation.json</code></td>
+            </tr>
+            <tr>
+              <td><strong>4. Stratified Off-Catalogue DTI (d<sub>0</sub> = 3 px &amp; 5 px)</strong><br/>Strictly outside 300 m and 500 m catalogue halos</td>
+              <td><code>d<sub>0</sub>=3px</code>: <strong>0.17574</strong> (+84.2% rel.)<br/><code>d<sub>0</sub>=5px</code>: <strong>0.16900</strong> (+90.9% rel.)</td>
+              <td><code>GEMSDOE32 (0.2778)</code>:<br/><code>d<sub>0</sub>=3px</code>: <code>0.09539</code><br/><code>d<sub>0</sub>=5px</code>: <code>0.08852</code></td>
+              <td><span class="pill pill-emerald">PASSED</span><br/><code>evidence/holdout_validation.json</code></td>
+            </tr>
+            <tr>
+              <td><strong>5. Phase 2 Reviewer Geological Reasoning Dossier</strong><br/>Explicit subsurface geological reasoning for every A-only dot</td>
+              <td><strong>800 A-only buried fault dots</strong><br/>across <strong>676 structural corridors</strong><br/>(100% coverage)</td>
+              <td>100% of A-only candidates must have explicit Phase 2 reasoning</td>
+              <td><span class="pill pill-emerald">PASSED</span><br/><code>evidence/a_only_geological_reasoning.json</code></td>
+            </tr>
+            <tr>
+              <td><strong>6. Uniqueness &amp; Non-Union Gate</strong><br/>Compared against all 7 prior submissions + Union(A, B)</td>
+              <td>Max Jaccard vs prior: <code>0.08378</code><br/>Jaccard vs <code>0.2778</code>: <code>0.01051</code><br/>Jaccard vs <code>A &cup; B</code>: <code>0.26595</code></td>
+              <td>Zero SHA-256 collisions;<br/>confirmed not mere union</td>
+              <td><span class="pill pill-emerald">PASSED</span><br/><code>evidence/uniqueness_gate.json</code></td>
+            </tr>
+            <tr>
+              <td><strong>7. Portal <code>[0, 1]</code> Format &amp; Geometry Gate</strong><br/>Independent disk re-read of written GeoTIFFs</td>
+              <td><code>3730 &times; 3292</code>, <code>EPSG:32611</code>, <code>float32</code>, <code>nodata=None</code>, <code>12,279,160</code> finite in <code>[0, 1]</code></td>
+              <td>Zero <code>NaN</code>, zero <code>Inf</code>, zero <code>-3.40e38</code> sentinels</td>
+              <td><span class="pill pill-emerald">PASSED</span><br/><code>evidence/submission_audit.json</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
 
-<div class=card><h3>4 &middot; Why this submission is unique</h3>
-<p>No prior submission in any of the
-<a href="leaderboard.html">GEMSDOE{1..51}</a> repositories combines all three of:</p>
-<ul>
-<li>a Blum-Mitchell co-training of two HistGradientBoosting classifiers on disjoint geophysical
-and surface views (independence gate validated empirically on 4 spatially-blocked folds, r =
-+0.190)</li>
-<li>a flank-300&nbsp;m prune of the H32-D base (0 pixels within 300 m of the visible catalogue,
-matching the structure of GEMSDOE32's 0.2778 submission but with a different off-catalogue footprint)</li>
-<li>a geophysical-only &ldquo;A-only discovery&rdquo; set (3,000 cells, geophysical signature with no
-topographic scarp) with per-cell View-A-band reasoning for every predicted pixel</li>
-</ul>
-<p class=mut>Min Jaccard distance vs every calibrated artifact = <b>0.2810</b>.</p>
-</div>
-</main><footer><div class=wrap>GEMSDOE52 &middot; <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DrivenData #306</a> &middot; <a href="https://github.com/buffedlizard55-lab/GEMSDOE52">repository</a> &middot; generated by <code>scripts/build_docs.py</code></div></footer></body></html>
+    <section class="section">
+      <h2>3. Summary of the 5 Ranked Geological Hypotheses</h2>
+      <div class="card">
+        <ol>
+          <li><strong>H52-1 (Rank #1 — Implemented &amp; Selected): Blum–Mitchell Two-View Co-Training + Disagreement Discovery + Submodular Expected-Credit Placement</strong> — Combines View A and View B via abstention-gated whole-segment co-training, suppresses <code>13,709</code> B-only flat-valley surface artifacts, discovers <code>800</code> A-only buried fault dots across <code>676</code> intra-basin corridors, and places <code>41,200</code> dots via CELF lazy-greedy submodular optimization outside <code>d<sub>cat</sub> &le; 2.0 px</code>. Holdout LM: <strong>0.12863</strong> (<code>4/4</code> folds won).</li>
+          <li><strong>H52-2 (Rank #2 — Tested): Miller &amp; Singh (1994) Magnetic Tilt-Angle Zero-Crossing Ridge (<code>tc = 0</code> &cap; <code>|&nabla;tc|</code>)</strong> — Targets vertical basement susceptibility contacts invariant to source depth. Holdout LM: <strong>0.12719</strong> (<code>4/4</code> folds won vs <code>0.2778</code>).</li>
+          <li><strong>H52-3 (Rank #3 — Tested): 3D Isostatic Gravity Analytic Signal + Basement Depth Step (<code>depth_to_base_surf</code>)</strong> — Targets blind range-bounding normal faults bounding deep Cenozoic sedimentary basins. Holdout LM: <strong>0.12392</strong>.</li>
+          <li><strong>H52-4 (Rank #4 — Tested): Subsurface Electrical Conductivity Boundary (<code>cond_surf</code>) + GeoDAWN K/Th Hydrothermal Alteration</strong> — Targets clay-altered hydrothermal fault gouge corridors coupled with surface potassium metasomatism. Holdout LM: <strong>0.12384</strong>.</li>
+          <li><strong>H52-5 (Rank #5 — Deferred): External Sentinel-1 InSAR Phase-Gradient Discontinuity</strong> — High cost / requires external interferogram ingestion; existing geodetic strain invariants in View A already capture regional deformation.</li>
+        </ol>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>
+        <strong>GEMSDOE52</strong> — Executive Summary | DrivenData DOE GEMS Prize (#306)
+      </div>
+      <div>
+        <a href="index.html">Command Center</a> &middot;
+        <a href="forensics.html">0.2778 Forensics</a> &middot;
+        <a href="hypotheses.html">Hypotheses</a> &middot;
+        <a href="validation.html">Validation</a> &middot;
+        <a href="sources.html">Sources</a>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>
