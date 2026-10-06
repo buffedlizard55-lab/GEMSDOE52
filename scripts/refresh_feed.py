@@ -42,13 +42,29 @@ def write(name: str, obj) -> Path:
     return p
 
 
+def _json_safe(text: str) -> tuple[str, int]:
+    """Turn `NaN` / `Infinity` into `null`, and report how many times.
+
+    Python's ``json.dumps`` emits bare ``NaN`` for a missing correlation, which ``json.loads`` reads back
+    happily and ``JSON.parse`` -- the browser -- rejects outright. Every page that renders that file then
+    shows "not measured" for a number the repo actually has an opinion about, silently, and the failure is
+    indistinguishable from "we never ran the test". The evidence keeps its NaN (it is the honest value:
+    undefined, not zero); the published copy says ``null``, which is what ``render.js`` already prints as
+    "--". Found by reading the live page, not the local files.
+    """
+    pat = re.compile(r"(?<=[\[:,\[])\s*(?:NaN|-?Infinity)\b")
+    n = len(pat.findall(text))
+    return pat.sub("null", text), n
+
+
 def copy_evidence() -> list[str]:
-    """Every evidence JSON is published verbatim, so the site can never disagree with the repo."""
+    """Every evidence JSON is published, with NaN normalised to null so a browser can parse it."""
     out = []
     DATA.mkdir(parents=True, exist_ok=True)
     for src in sorted(EV.glob("*.json")):
-        (DATA / src.name).write_text(src.read_text())
-        out.append(src.name)
+        body, n_fix = _json_safe(src.read_text())
+        (DATA / src.name).write_text(body)
+        out.append(src.name + (f" (+{n_fix} NaN->null)" if n_fix else ""))
     return out
 
 

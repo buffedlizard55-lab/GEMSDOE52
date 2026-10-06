@@ -28,20 +28,39 @@ individually sufficient and their errors are conditionally independent given the
 Absolute DTI for the arm: `cotrain|37654` = 0.0084 (tip) / 0.0078 (hide) — the *worst* of every arm
 we measured, including the random control at 0.0253 / 0.0396.
 
-**The reading, which matters more than the failure.** The independence premise itself survived: block
--level correlation between the two views' false-alarm rates was r = 0.4298 (tip, n = 11 blocks,
-Spearman 0.4455) against an abandonment threshold of 0.60, and miss-correlation was r = −0.3114. On
-hide, false-alarm r = −0.1406 and held-positive logit r = 0.1316. So the views *do* disagree in an
-informative way — the strata table is built on exactly that disagreement and it behaves as geology
-predicts (A-only pixels sit at 455/512 median cover-depth rank versus 297 for B-only). What failed is
-the *second* half of the theorem's machinery: turning disagreement into labels and retraining makes the
-ranking *worse*, not better. The reason is visible in the numbers — the pseudo-labels are drawn from the
-pixels a model is already most confident about, so round 2 mostly sharpens existing maxima (mass stays
-put, placement degrades), and the one-view-confident population is dominated by artefacts (roads,
-quarries, gully heads) that the surface view treats as edges.
+**The reading — and a retraction that matters more than the failure.** *This section used to assert that the
+independence premise survived, quoting r = 0.4298 (tip, n = 11 blocks) and r = −0.1406 (hide). Those numbers
+came from a pre-fix run of the diagnostic; `evidence/independence_*.json` was rewritten afterwards and no
+longer contains them. Quoting them further would have been exactly the failure the register exists to catch.
+What the files on disk say, re-read at 22:33 UTC:*
+
+| reading | tip | hide |
+|---|---|---|
+| block-level false-alarm Pearson | **undefined** — both views' per-block false-alarm rate is constant (all zeros), so fewer than 3 usable blocks; Spearman degenerates to 1.0 on the ties | **undefined** — same |
+| block-level miss-rate Pearson | −0.2235 (Spearman −0.1636) | **+0.8307** (Spearman 0.7727) |
+| held-pixel logit Pearson | +0.1748 over 19,183 held px (negatives-only slice undefined) | +0.1316 over 36,375 held px |
+| held strata | 0.62 % concordant, 2.42 % A-only, 9.13 % B-only | 0.12 % concordant, 1.19 % A-only, 10.74 % B-only |
+
+The honest statement is narrower than the one we wrote. The pre-registered **abandonment test could not fire
+at this grid size** — it is a block-level correlation, and the block-level false-alarm variance is
+degenerate. Of the two readings that *are* available, they disagree with each other: the pixel-level logit is
+weakly coupled (+0.17 tip, +0.13 hide, far below the 0.60 threshold), while the block-level *miss-rate*
+correlation on `hide` is +0.83 — the views miss the same neighbourhoods, which is what a shared
+interpolation grid and a shared geology would do. **Conditional independence is therefore neither established
+nor refuted here: it is unmeasured at the granularity the pre-registration specified, and where a block-level
+quantity can be measured it looks worse than the theorem would like.** The mechanism's own result is
+unambiguous regardless: mean AUC Δ −0.0159 with 1/4 fold support, and the arm is worst-of-all on both
+instruments (0.0084 tip / 0.0078 hide vs 0.0253 / 0.0396 for matched random), so the pseudo-label round is
+dropped on its own measurement, not on the premise's. What the strata still show is physical and unaffected:
+A-only pixels sit at median band-15 rank 455.0 against 296.7 for B-only and 251.2 for concordant
+(`evidence/strata.json`) — deeper cover, exactly where a surface view must abstain.
 
 **Rule we adopted:** the disagreement signal is used as a *stratification of the emission budget*, never
 as a label source, in this competition and at this prevalence (~0.2 % of pixels).
+
+**And the rule the retraction taught:** any number quoted in prose is re-read, in the same session, from the
+file that publishes it — evidence JSONs are overwritten by every re-run of the script that makes them, and
+prose is not.
 
 ---
 

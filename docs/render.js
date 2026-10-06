@@ -57,23 +57,38 @@
   const indT = miss(d.independence_tip) || {};
   const indH = miss(d.independence_hide) || {};
   const promoted = gates.promoted;
+  // The banner must describe the file being offered, so it prefers the built submission's own gate
+  // record and falls back to the arm-level gates.  It used to print the co-training arm's verdict under a
+  // heading about the download, which is a different experiment.
+  const shown = (Object.keys(sub.holdout_gates || {}).length ? sub.holdout_gates : gates) || {};
+  const num = v => (v === null || v === undefined || Number.isNaN(Number(v))) ? '–' : Number(v).toFixed(3);
+  const yn = v => v === true ? '<b>yes</b>' : v === false ? '<b>no</b>' : '–';
+  const unionBits = Object.entries(shown.vs_naive_union || {})
+    .map(([m, v]) => `${m} ${v === null || v === undefined ? '–' : (v >= 0 ? '+' : '') + Number(v).toFixed(4)}`)
+    .join(', ');
+  const premise = (tag, o) => `
+      ${tag}: block-level false-alarm <span class="mono">r=${num(o.pearson)}</span> ·
+      miss-rate <span class="mono">r=${num(o.pearson_misses)}</span> ·
+      held-pixel logit <span class="mono">r=${num(o.pearson_logit_held_all)}</span> vs a
+      <span class="mono">0.60</span> abandonment threshold${o.n_held ? ` over ${o.n_held.toLocaleString('en-US')} held px` : ''}.
+      ${o.note ? `<span class="muted">${esc(o.note)}</span>` : ''}`;
   set('verdict', `
     <div style="display:flex;gap:.8rem;align-items:flex-start;flex-wrap:wrap">
-      <span class="tag ${promoted ? 'ok' : 'no'}" style="font-size:.8rem">
-        ${promoted ? 'HOLDOUT GATES CLEARED' : 'HOLDOUT GATES NOT CLEARED'}</span>
+      <span class="tag ${shown.promoted ? 'ok' : 'no'}" style="font-size:.8rem">
+        ${shown.promoted ? 'HOLDOUT GATES CLEARED' : 'HOLDOUT GATES NOT CLEARED'}</span>
       <div class="small" style="flex:1 1 22rem">
-        Tested arm <code>${gates.tested || '–'}</code>. ${esc(gates.reason || 'no gate record')}<br>
-        ${Object.entries(gates.checks || {}).map(([k, v]) =>
-          `<span class="mono">${k}: <b>${v.ok ? 'OK' : 'not OK'}</b>${'delta' in v ? ' ' + v.delta : ''}</span>`
-        ).join(' · ')}
+        ${sub.file ? `Offered file <code>${esc(String(sub.file).replace(/\.tif$/, ''))}</code>` : 'No file staged yet'}
+        · tested <code>${shown.tested || '–'}</code>. ${esc(shown.reason || 'no gate record')}<br>
+        matched-budget control bar on both instruments: ${yn(shown.composite_control_bar)} ·
+        registered +0.010-over-union bar: ${yn(shown.registered_union_bar)}
+        (${unionBits || '–'}) · built with <code>--force</code>: ${yn(sub.forced)}
+        ${Object.keys(gates.checks || {}).length ? '<br><span class="muted">co-training arm gates, for reference: '
+          + Object.entries(gates.checks).map(([k, v]) =>
+            `<span class="mono">${k}: ${v.ok ? 'OK' : 'not OK'}</span>`).join(' · ') + '</span>' : ''}
       </div></div>
-    <p class="small" style="margin-bottom:0"><strong>Conditional-independence premise.</strong>
-      tip instrument: false-alarm <span class="mono">r=${(indT.false_alarm?.pearson_r ?? NaN).toFixed(3)}</span>,
-      misses <span class="mono">r=${(indT.misses?.pearson_r ?? NaN).toFixed(3)}</span>,
-      pixel logit <span class="mono">r=${(indT.pearson_logit_negatives_pooled ?? NaN).toFixed(3)}</span>
-      → <b>${indT.independent_enough === true ? 'independent enough' : indT.independent_enough === false ? 'NOT independent enough' : 'not measured'}</b>.
-      hide instrument: <span class="mono">r=${(indH.pearson_logit_held_all ?? indH.pearson_logit_held_positives ?? NaN)}</span>
-      ${indH.decision ? '· ' + esc(indH.decision.reading) : ''}</p>`);
+    <p class="small" style="margin-bottom:0"><strong>Conditional-independence premise
+      (Blum–Mitchell), as measured.</strong>${premise('tip instrument', indT)}${premise('hide instrument', indH)}
+      ${indH.decision ? `<br><span class="small">${esc(indH.decision.reading)}</span>` : ''}</p>`);
 
   // ---------------------------------------------------------------- leaderboard
   const tbl = (head, rows_) => `<table><thead><tr>${head.map(hh => `<th class="${hh[1] === 'n' ? 'num' : ''}">${hh[0]}</th>`).join('')}</tr></thead>

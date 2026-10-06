@@ -74,10 +74,16 @@ visible as a stale timestamp rather than as a wrong claim.</p>
 <p>Written in plain terms, because the interesting result is a negative one:</p>
 <ul class="tight">
   <li><strong>The co-training round, as such, did not help.</strong> Adding a view's confident
-  pseudo-labels to the other view's training set <em>lowered</em> View&nbsp;A's held-out AUC in every
-  fold (0.797&nbsp;→&nbsp;0.761 on the full grid; see <code>evidence/co_train_folds_*.json</code>).
-  The premise the brief asks us to test — conditional independence of the two views' errors given the
-  label — is measured, and reported, not assumed.</li>
+  pseudo-labels to the other view's training set <em>lowered</em> View&nbsp;A's held-out AUC (mean
+  Δ&nbsp;=&nbsp;−0.0159, fold support 1/4; and the arm itself scores 0.0084 tip / 0.0078 hide against
+  0.0253 / 0.0396 for matched-budget random — worst of everything measured). The premise the brief asks us
+  to test — conditional independence of the views' errors given the label — came out
+  <strong>neither established nor refuted</strong>: the block-level test we pre-registered cannot fire at
+  this grid size (per-block false-alarm variance is degenerate, so the correlation is undefined), the
+  pixel-level logit correlation is weak (+0.175 tip, +0.132 hide against a 0.60 threshold), and the
+  block-level <em>miss-rate</em> correlation on the whole-component instrument is +0.831, which points the
+  other way. An earlier version of this page asserted the premise had survived, with numbers that were no
+  longer in the evidence files; that claim is retracted in <code>knowledge/03</code> §N-1.</li>
   <li><strong>The disagreement <em>strata</em> did help, and are the part we keep.</strong> The
   A-only stratum (field confident, surface withholds) sits in deeper cover than the concordant
   stratum and carries a real gravity step; the B-only stratum carries slope without a field offset,
@@ -88,8 +94,9 @@ visible as a stale timestamp rather than as a wrong claim.</p>
   <em>inside</em> a permitted region — never over the footprint. That is why the shipped file is the
   far-field ranking alone (corridor share 0.0 at 37,654 px, the one arm that beats its matched-budget
   <code>random</code> control on <em>both</em> instruments) and why the corridor regime, which wins on
-  the truncation instrument at the same budget, is built and measured but left unfunded until the
-  composite sweep finishes; see <a href="validation.html">Validation</a> and
+  the truncation instrument at the same budget, is built, measured and left unfunded: the composite sweep
+  finished and every corridor-funded split scored lower on the sum (+4.5&nbsp;% tip, −7.5&nbsp;% hide at a
+  0.25 share), and rebuilding from its record reproduces this file's sha256 exactly; see <a href="validation.html">Validation</a> and
   <a href="irregularities.html"><code>IR-52-012</code></a>.</li>
 </ul>
 
