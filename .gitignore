@@ -1,0 +1,9 @@
+# Large raw competition data & intermediate caches (excluded from Git)
+data/
+*.npz
+*.npy
+*.pkl
+__pycache__/
+.pytest_cache/
+.venv/
+Unselected files/

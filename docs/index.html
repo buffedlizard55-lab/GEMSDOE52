@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GEMSDOE52 — Blum–Mitchell Two-View Co-Training &amp; Disagreement Discovery (DOE GEMS Prize #306)</title>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-badge">GEMSDOE52</span>
+        <span>Blum–Mitchell Two-View Co-Training &amp; Disagreement Discovery</span>
+      </div>
+      <nav class="nav-links" aria-label="Primary Navigation">
+        <a href="index.html" class="active">Command Center</a>
+        <a href="executive-summary.html">Executive Summary</a>
+        <a href="forensics.html">0.2778 Forensics &amp; [0,1] Fix</a>
+        <a href="hypotheses.html">Ranked Hypotheses</a>
+        <a href="validation.html">Validation &amp; Phase 2 Reasoning</a>
+        <a href="sources.html">Verified Sources &amp; Hashes</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- ONE-CLICK DOWNLOAD HERO AT THE VERY TOP -->
+    <section id="download-submission" class="download-hero" aria-label="One-Click Submission Download">
+      <div class="hero-eyebrow">
+        <span class="pill pill-emerald">PASS: All [0, 1] Portal Checks Verified</span>
+        <span class="pill pill-blue">4 / 4 Spatial Folds Won vs 0.2778</span>
+        <span class="pill pill-amber">OOF Negative Error r = +0.10143 (Independent)</span>
+        <span class="pill pill-emerald">Uniqueness Gate Passed (Max Jaccard = 0.0838)</span>
+      </div>
+      <h1>One-Click Verified Submission Download — <code>GEMSDOE52-CoTrain-Disagree-H52-1</code></h1>
+      <p class="lead">
+        Single-band <code>float32</code> GeoTIFF (<code>EPSG:32611</code>, <code>3730 &times; 3292</code>, <code>100 m</code> pixel size, <code>nodata=None</code>, all <code>12,279,160</code> pixels finite in <code>[0.0, 1.0]</code>, <code>0.0</code> outside footprint). Built via <strong>Blum &amp; Mitchell (COLT &rsquo;98) Two-View Co-Training</strong> between <strong>View A (Potential-Field &amp; Subsurface)</strong> and <strong>View B (Surface DEM &amp; Radiometrics)</strong> with Disagreement-Driven Buried Fault Discovery and CELF Submodular Expected-Credit Placement (<code>41,200</code> dots; <code>0</code> within 200 m of the masked USGS/INGENIOUS catalogue).
+      </p>
+
+      <div class="btn-row">
+        <a class="btn btn-primary" href="downloads/gemsdoe52-cotrain-disagree-submodular-20261006-zeros.tif" download>
+          &#11015; Download Primary Submission (.TIF, 153.8 KB, [0,1] Zeros-Outside)
+        </a>
+        <a class="btn btn-secondary" href="downloads/gemsdoe52-cotrain-disagree-submodular-20261006-zeros.zip" download>
+          &#128230; Download Primary Archive (.ZIP, 121.3 KB)
+        </a>
+        <a class="btn btn-outline" href="downloads/gemsdoe52-cotrain-anchored-hybrid-20261006-zeros.tif" download>
+          &#11015; Download 0.2778-Anchored Hybrid Companion (.TIF, 40,704 dots)
+        </a>
+        <a class="btn btn-outline" href="downloads/gemsdoe52-cotrain-disagree-submodular-20261006-nan.tif" download>
+          &#11015; Companion NaN-Outside (.TIF)
+        </a>
+        <a class="btn btn-outline" href="downloads/gemsdoe52-cotrain-disagree-submodular-20261006-audit.json" download>
+          &#128203; JSON Audit Receipt
+        </a>
+      </div>
+
+      <div class="meta-copy-grid">
+        <div class="copy-box">
+          <div class="copy-box-header">
+            <span>Unique Submission Name</span>
+            <button class="copy-btn" onclick="copyText('sub-name', this)">Copy Name</button>
+          </div>
+          <div id="sub-name" class="copy-value">GEMSDOE52-CoTrain-Disagree-H52-1</div>
+        </div>
+        <div class="copy-box">
+          <div class="copy-box-header">
+            <span>Portal Submission Note (183 / 200 chars max)</span>
+            <button class="copy-btn" onclick="copyText('sub-note', this)">Copy Note</button>
+          </div>
+          <div id="sub-note" class="copy-value">GEMSDOE52 H52-1 | Blum-Mitchell 2-view co-training (View A geophys vs View B surface) + disagreement submodular: 41,200 dots, 0 within 200m of cat; OOF neg r=+0.101; 4/4 folds >0.2778</div>
+        </div>
+      </div>
+      <div style="margin-top:0.75rem; font-size:0.8rem; color:var(--text-muted); font-family:var(--mono);">
+        Primary TIF SHA-256: <code>c7e980f472113ff1b3378b9d08a4a361cece5984d07fe93e4b3a6e98fdf8068e</code> &nbsp;|&nbsp;
+        Primary ZIP SHA-256: <code>b94c1e40d020c23489c20e499b6406b8f3a7e16558abcd0d6c47ccbd688d4cca</code>
+      </div>
+    </section>
+
+    <!-- KPI SUMMARY CARDS -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Holdout Live Mirror (LM)</div>
+        <div class="kpi-value" style="color:#34d399;">0.12863</div>
+        <div class="kpi-sub"><strong>+0.05459 (+73.7% rel.)</strong> vs <code>0.2778</code> base (<code>0.07404</code>); <strong>4/4 spatial folds won</strong></div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Off-Catalogue DTI (d<sub>0</sub> = 3 px)</div>
+        <div class="kpi-value" style="color:#38bdf8;">0.17574</div>
+        <div class="kpi-sub"><strong>+0.08035 (+84.2% rel.)</strong> vs <code>0.2778</code> base (<code>0.09539</code>); beats View A, View B &amp; Union</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Off-Catalogue DTI (d<sub>0</sub> = 5 px)</div>
+        <div class="kpi-value" style="color:#38bdf8;">0.16900</div>
+        <div class="kpi-sub"><strong>+0.08048 (+90.9% rel.)</strong> vs <code>0.2778</code> base (<code>0.08852</code>) strictly outside 500 m halo</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">OOF Negative Error Corr.</div>
+        <div class="kpi-value" style="color:#fbbf24;">r = +0.1014</div>
+        <div class="kpi-sub">Spearman &rho; = +0.1060 across 4.52M negatives (top-2% FP Jaccard = 0.0196)</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Hide-and-Recover DTI</div>
+        <div class="kpi-value" style="color:#34d399;">0.08077</div>
+        <div class="kpi-sub">Beats Single-View A (<code>0.02383</code>), View B (<code>0.07771</code>), Union (<code>0.04284</code>) &amp; Early Fusion</div>
+      </div>
+    </div>
+
+    <!-- ARENA CORE VALUES & SYSTEM OVERVIEW -->
+    <section class="section">
+      <h2>1. Arena Core Values &amp; Blum–Mitchell (COLT &rsquo;98) Two-View Co-Training Architecture</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Maximize P(Win): Why Disagreement-Driven Co-Training Beats Single-Learner &amp; Union Models</h3>
+          <p>
+            Early-fusion single learners trained on the incomplete USGS/INGENIOUS fault catalogue (<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/" target="_blank" rel="noopener">DrivenData #306</a>) systematically overfit to <strong>exposed range-front topographic scarps</strong> because mapped Quaternary faults are overwhelmingly sampled along visible range boundaries, while buried intra-basin faults beneath Cenozoic alluvial/playa fill are unmapped (<em>labeled as 0 in training</em>).
+          </p>
+          <p>
+            Following <a href="https://doi.org/10.1145/279943.279962" target="_blank" rel="noopener">Blum &amp; Mitchell (COLT &rsquo;98)</a>, we partition the geophysical and remote-sensing stack into two physically disjoint views:
+          </p>
+          <ul>
+            <li><strong>View A (Potential-Field &amp; Subsurface — 17 official bands &rarr; 14 channels):</strong> Gravity (<code>iso_grav_anom</code>, <code>iso_grav_anom_hg</code>, <code>iso_grav_anom_vg</code>, <code>iso_grav_anom_slope</code>), Magnetics (<code>mag_anom</code>, <code>rtp</code>, <code>tmi</code>, <code>tmi_hg</code>, <code>tmi_vg</code>, Miller–Singh tilt derivative <code>tc</code>), Geodetic Strain (<code>geod_2ndinv</code>, <code>geod_shearrate</code>, <code>geod_dilaterate</code>), Seismicity (<code>deq_n100a15</code>, <code>ieq_n100a15</code>), Basement Depth (<code>depth_to_base_surf</code>), and Electrical Conductivity (<code>cond_surf</code>).</li>
+            <li><strong>View B (Surface — 2 official DEM bands + USGS GeoDAWN / 3DEP &rarr; 12 channels):</strong> Detrended DEM elevation and slope (<code>det_elev</code>, <code>det_elev_slope</code>), multi-scale Hessian curvature/scarp ridges, morphological top-hat, 3DEP LiDAR scarp stack, and airborne gamma-ray radiometrics (<code>K</code>, <code>Th</code>, <code>U</code>, <code>TC</code> from <a href="https://doi.org/10.5066/P93LGLVQ" target="_blank" rel="noopener">USGS GeoDAWN DOI:10.5066/P93LGLVQ</a>).</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Own the Outcome: Zero-Leakage Spatial Blocking, Independence Gate &amp; Disagreement Decomposition</h3>
+          <ul>
+            <li><strong>Empirical Conditional Independence Gate:</strong> Before running co-training, we correlate out-of-fold predictions of View A and View B across <code>4,520,340</code> labeled negative pixels (<code>200,000</code> sampled). Result: Pearson <code>r = +0.10143</code>, Spearman <code>&rho; = +0.10595</code>, top-2% false-positive Jaccard <code>= 0.01963</code> (well below the <code>|r| &ge; 0.50</code> abandonment gate).</li>
+            <li><strong>Whole-Segment Spatial Blocks &amp; 5-px Buffer:</strong> Connected catalogue segments (<code>3,199</code> total: <code>2,669</code> training, <code>530</code> held-out hide-and-recover) are partitioned as <em>whole connected components</em> with a <code>5 px (500 m)</code> exclusion buffer around all pseudo-labels and a <code>15 px (1.5 km)</code> fold collar.</li>
+            <li><strong>Disagreement as the Discovery Signal:</strong>
+              <ul>
+                <li><strong>View A &and; View B (Corroborated):</strong> High-confidence range-front and bedrock faults supported by both subsurface and surface physics.</li>
+                <li><strong>View A &setminus; View B (A-Only Buried Fault Discovery):</strong> View A is confident along a high-coherence subsurface gradient while View B abstains under thick sedimentary cover (<code>depth_to_base_surf</code>) or outside LiDAR coverage &rarr; <strong>800 buried fault discovery dots across 676 structural corridors</strong>, each with explicit Phase 2 geological reasoning.</li>
+                <li><strong>View B &setminus; View A (B-Only Surface Artifact Suppression):</strong> View B fires on flat valley floors / low-coherence surface features (playa edges, roads, alluvial fan channels) where View A is near zero &rarr; <strong>13,709 B-only surface artifact dots suppressed</strong> relative to View B solo.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SPATIALLY BLOCKED HOLDOUT VALIDATION TABLE -->
+    <section class="section">
+      <h2>2. Spatially-Blocked Off-Catalogue Holdout Validation (4-Quadrant Live Mirror &amp; Stratified d<sub>0</sub> = 3, 5 px)</h2>
+      <p>
+        Per standing rule, <em>no weekly submission slot is spent on an idea that has not beaten the current holdout best on spatially-blocked validation</em>. Every candidate below was evaluated on the 4-quadrant spatially-blocked Live Mirror (<code>foldNW</code>, <code>foldNE</code>, <code>foldSW</code>, <code>foldSE</code>) and the stratified off-catalogue SGMC instruments strictly outside <code>d<sub>0</sub> = 3 px (300 m)</code> and <code>d<sub>0</sub> = 5 px (500 m)</code> of the competition catalogue (<code>evidence/holdout_validation.json</code>).
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Candidate Model / Hypothesis</th>
+              <th>Emitted Dots</th>
+              <th>On-Cat / &le;200m</th>
+              <th>foldNW LM</th>
+              <th>foldNE LM</th>
+              <th>foldSW LM</th>
+              <th>foldSE LM</th>
+              <th>Mean LM (&Delta; vs 0.2778)</th>
+              <th>Stratified d<sub>0</sub>=3px DTI</th>
+              <th>Stratified d<sub>0</sub>=5px DTI</th>
+              <th>Folds Won</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>BASE_02778_GEMSDOE32_B2</code> (Live 0.2778 Benchmark)</td>
+              <td>37,654</td>
+              <td>0 / 0</td>
+              <td>0.07389</td>
+              <td>0.07371</td>
+              <td>0.09246</td>
+              <td>0.05610</td>
+              <td>0.07404 (+0.00000)</td>
+              <td>0.09539</td>
+              <td>0.08852</td>
+              <td>Baseline</td>
+            </tr>
+            <tr>
+              <td><code>VIEW_A_SOLO_SUBMODULAR</code> (Subsurface / Potential-Field Only)</td>
+              <td>37,654</td>
+              <td>0 / 0</td>
+              <td>0.07854</td>
+              <td>0.03212</td>
+              <td>0.06390</td>
+              <td>0.05524</td>
+              <td>0.05745 (-0.01659)</td>
+              <td>0.07723</td>
+              <td>0.07382</td>
+              <td>1 / 4</td>
+            </tr>
+            <tr>
+              <td><code>VIEW_B_SOLO_SUBMODULAR</code> (Surface DEM / LiDAR / Rad Only)</td>
+              <td>37,654</td>
+              <td>0 / 0</td>
+              <td>0.11907</td>
+              <td>0.12133</td>
+              <td>0.08702</td>
+              <td>0.14943</td>
+              <td>0.11921 (+0.04517)</td>
+              <td>0.16688</td>
+              <td>0.16117</td>
+              <td>3 / 4</td>
+            </tr>
+            <tr>
+              <td><code>NAIVE_UNION_MAX_AB_SUBMODULAR</code> (max(A, B) Union Baseline)</td>
+              <td>37,654</td>
+              <td>0 / 0</td>
+              <td>0.09562</td>
+              <td>0.07089</td>
+              <td>0.08256</td>
+              <td>0.12057</td>
+              <td>0.09241 (+0.01837)</td>
+              <td>0.13022</td>
+              <td>0.12334</td>
+              <td>2 / 4</td>
+            </tr>
+            <tr>
+              <td><code>H52_3_GRAV_ANALYTIC_BASESTEP</code> (3D Gravity + Basement Step)</td>
+              <td>39,850</td>
+              <td>0 / 0</td>
+              <td>0.12352</td>
+              <td>0.12573</td>
+              <td>0.09080</td>
+              <td>0.15564</td>
+              <td>0.12392 (+0.04988)</td>
+              <td>0.17135</td>
+              <td>0.16426</td>
+              <td>3 / 4</td>
+            </tr>
+            <tr>
+              <td><code>H52_4_COND_RAD_HYDROTHERMAL</code> (Conductivity + Rad K/Th)</td>
+              <td>39,850</td>
+              <td>0 / 0</td>
+              <td>0.12046</td>
+              <td>0.13553</td>
+              <td>0.08615</td>
+              <td>0.15322</td>
+              <td>0.12384 (+0.04980)</td>
+              <td>0.17279</td>
+              <td>0.16699</td>
+              <td>3 / 4</td>
+            </tr>
+            <tr>
+              <td><code>H52_2_MAG_TILT_ZEROCROSS</code> (Miller–Singh Mag Tilt Zero-Crossing)</td>
+              <td>39,850</td>
+              <td>0 / 0</td>
+              <td>0.12770</td>
+              <td>0.12924</td>
+              <td>0.09551</td>
+              <td>0.15633</td>
+              <td>0.12719 (+0.05316)</td>
+              <td>0.17409</td>
+              <td>0.16810</td>
+              <td><strong>4 / 4</strong></td>
+            </tr>
+            <tr>
+              <td><code>GEMSDOE52_H52_1_ANCHORED_HYBRID</code> (0.2778 Base - B_art + CoTrain)</td>
+              <td>40,704</td>
+              <td>0 / 0</td>
+              <td>0.07772</td>
+              <td>0.07939</td>
+              <td>0.09509</td>
+              <td>0.06471</td>
+              <td>0.07923 (+0.00519)</td>
+              <td>0.10433</td>
+              <td>0.09661</td>
+              <td><strong>4 / 4</strong></td>
+            </tr>
+            <tr class="highlight-row">
+              <td><strong><code>GEMSDOE52_H52_1_PRIMARY</code> (Co-Training + Disagreement Submodular)</strong></td>
+              <td><strong>41,200</strong></td>
+              <td><strong>0 / 0</strong></td>
+              <td><strong>0.12865</strong></td>
+              <td><strong>0.13065</strong></td>
+              <td><strong>0.09651</strong></td>
+              <td><strong>0.15870</strong></td>
+              <td><strong>0.12863 (+0.05459)</strong></td>
+              <td><strong>0.17574</strong></td>
+              <td><strong>0.16900</strong></td>
+              <td><strong>4 / 4</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout callout-emerald">
+        <strong>Non-Union Confirmation (<code>evidence/uniqueness_gate.json</code>):</strong> <code>GEMSDOE52_H52_1_PRIMARY</code> is provably <strong>not</strong> the union of View A and View B: its Jaccard similarity against <code>View A &cup; View B</code> is <code>0.26595</code> (and <code>0.19950</code> against <code>max(A, B)</code>), suppressing <code>13,709</code> B-only surface artifact dots while placing <code>16,910</code> novel disagreement-reweighted dots absent from either single-view solo emission.
+      </div>
+    </section>
+
+    <!-- WHY GEMSDOE32 SCORED 0.2778 & PORTAL [0, 1] FIX SUMMARY -->
+    <section class="section">
+      <h2>3. Forensic Summary: Why <code>GEMSDOE32</code> Scored <code>0.2778</code> &amp; How We Fixed the <code>[0, 1]</code> Portal Error</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Why <code>GEMSDOE32</code> Achieved <code>0.2778</code> (and Why It Plateaued Below <code>0.3195</code>)</h3>
+          <p>
+            Under the official Distance-Weighted Tversky Index (<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/#performance-metric" target="_blank" rel="noopener">DrivenData Page 967</a>, &alpha;=0.2, &beta;=0.8, 300 m triangular kernel), once the masked competition catalogue is excluded during scoring, denominator mass satisfies <code>0.2(T + S - M) + 0.8|G|</code>, yielding a strict marginal break-even bar of <code>&Delta;T &gt; 0.2 &times; DTI &approx; 0.0556</code> per unit-mass dot.
+          </p>
+          <p>
+            Our byte-level distance-transform audit of all 7 historical submissions proves the exact 3-step lineage:
+            <code>H19_5 (0.1922, 121,131 dots) &rarr; D15 (0.2477, 60,069 dots) &rarr; D28 (0.2600, 44,090 dots) &rarr; h27-4 (0.2708, 40,199 dots) &rarr; GEMSDOE32 B2 (0.2778, 37,654 dots)</code>.
+            Specifically, <code>GEMSDOE32</code> achieved <code>0.2778</code> by surgical <code>B = 2 px (200 m)</code> flank pruning around the masked catalogue: removing <code>2,545</code> dots at <code>1 &lt; d<sub>cat</sub> &le; 2 px</code> saved <code>509.0</code> denominator penalty units at near-zero numerator loss (<code>np.array_equal(d28 &amp; (d_cat &gt; 2.0), b2) == True</code>).
+          </p>
+          <p>
+            However, <code>0.2778</code> remained frozen on the legacy <code>H19_5</code> pixel backbone (which placed 2-px wide adjacent pairs and missed buried intra-basin faults and 3DEP/GeoDAWN scarps). Replacing that static backbone with Blum–Mitchell Co-Training + CELF Submodular Expected-Credit Placement increases off-catalogue true-positive coverage from <code>8.88%</code> to <code>16.76%</code> (<code>+73.7%</code> LM improvement). <a href="forensics.html">Read full mathematical &amp; byte-level proof &rarr;</a>
+          </p>
+        </div>
+        <div class="card">
+          <h3>Root Cause &amp; Guaranteed Fix for <code>&quot;Predicted values must be in range [0, 1]&quot;</code></h3>
+          <p>
+            Direct inspection of the official rasters reveals two distinct failure modes that trigger DrivenData&rsquo;s <code>&quot;Predicted values must be in range [0, 1]&quot;</code> portal rejection:
+          </p>
+          <ol>
+            <li><strong>Unmasked Float32 Sentinels Inside the Active Footprint:</strong> <code>training_features.tif</code> stores <code>nodata = -3.4028234663852886e+38</code>, and Bands 1–3, 5–6, 9, 11–14, 18–19 contain <strong>3,061 sentinel cells inside the 5,167,373-pixel active footprint</strong>. Any pipeline that propagates raw band values without masking <code>raw &lt; -1e38</code> injects <code>-3.4028235e+38</code> into predictions.</li>
+            <li><strong>Full-Grid Portal Range Check Against <code>NaN</code> Outside Footprint:</strong> While <code>sample_submission.tif</code> has <code>7,111,787</code> <code>NaN</code> cells outside the active footprint, evaluating <code>(arr &gt;= 0.0) &amp; (arr &lt;= 1.0)</code> across the full <code>3730 &times; 3292</code> array returns <code>False</code> whenever any cell is <code>NaN</code>.</li>
+          </ol>
+          <p>
+            <strong>Our Fix (<code>src/gems52/submission.py</code>):</strong> Our primary submission writes <code>0.0</code> outside the active footprint, sets <code>nodata=None</code>, clips all active values to <code>[0.0, 1.0]</code>, and runs an independent disk re-read verifier confirming <code>12,279,160 / 12,279,160</code> finite pixels with <code>min = 0.0</code>, <code>max = 1.0</code>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FLAGGED IRREGULARITIES FOR REVIEW -->
+    <section class="section">
+      <h2>4. Flagged Irregularities &amp; Data Audit Findings (Verified Line-by-Line)</h2>
+      <div class="callout callout-amber">
+        <strong>IR-52-01 — Zero Radiometric Bands Inside <code>training_features.tif</code> (Band 6 <code>tc</code> is Magnetic Tilt Angle, Not Radiometric Total Count):</strong>
+        Direct inspection of the 19 TIFF band tags in <code>data/training_features.tif</code> proves that <code>training_features.tif</code> contains <strong>0 radiometric bands</strong>. Band 6 (<code>tc</code>) carries official metadata <code>data_category: 'magnetic_data'</code> and description <code>&quot;Tilt angle or total curvature - magnetic field derivative for edge detection&quot;</code> (<a href="https://doi.org/10.1016/0926-9851(94)90022-1" target="_blank" rel="noopener">Miller &amp; Singh, 1994</a>). Treating Band 6 as surface radiometric Total Count in View B would violate two-view conditional independence by leaking a potential-field derivative into View B. We strictly assign Band 6 <code>tc</code> to <strong>View A</strong> and source true airborne gamma-ray radiometrics (<code>K</code>, <code>Th</code>, <code>U</code>, <code>TC</code>) for <strong>View B</strong> from the official USGS GeoDAWN raster (<code>data/external/geodawn_rad_u8.tif</code>, <a href="https://doi.org/10.5066/P93LGLVQ" target="_blank" rel="noopener">DOI:10.5066/P93LGLVQ</a>).
+      </div>
+      <div class="callout callout-rose">
+        <strong>IR-52-02 — Correction of Prior Site <code>GEMSDOE36</code> Forensic Claim on <code>d = 0</code> vs <code>d = 1 px</code> Pruning:</strong>
+        <code>GEMSDOE36</code> claimed that the transition from <code>44,090</code> dots (<code>0.2600</code>) to <code>40,199</code> dots (<code>0.2708</code>) removed <code>3,891</code> <em>on-catalogue (<code>d = 0</code>)</em> dots. Our exact Euclidean distance transform audit (<code>scipy.ndimage.distance_transform_edt(~labels)</code>) proves that <code>gems24-h25-1-dotted-h19-5-d2-8</code> (<code>44,090</code> dots) already had <strong>0 dots at <code>d = 0</code></strong>; the <code>3,891</code> dots removed to reach <code>40,199</code> were at <strong><code>d = 1.0 px (100 m)</code></strong>, and the <code>2,545</code> dots removed to reach <code>37,654</code> (<code>0.2778</code>) were at <strong><code>1.0 &lt; d &le; 2.0 px (141–200 m)</code></strong>.
+      </div>
+      <div class="callout">
+        <strong>IR-52-03 — Partial 3DEP LiDAR Coverage (75.0% of Footprint) &amp; Denominator Dilution Fix:</strong>
+        <code>data/external/lidar_scarp_features_u8.tif</code> covers <code>3,876,691</code> of <code>5,167,373</code> active footprint pixels (<code>75.02%</code>), with coverage gaps concentrated in the SW quadrant. Dividing the View B lineament sum by a static weight denominator across missing-LiDAR pixels artificially penalizes <code>foldSW</code> by <code>0.583&times;</code>; our adaptive valid-mask denominator + View A disagreement corroboration resolves this and wins <code>4/4</code> folds.
+      </div>
+    </section>
+
+    <!-- INTERACTIVE PHASE 2 A-ONLY GEOLOGICAL REASONING EXPLORER -->
+    <section class="section">
+      <h2>5. Phase 2 Readiness: Explicit Geological Reasoning for Every A-Only Buried Fault Candidate</h2>
+      <p>
+        In Phase 2, domain geologists review novel fault predictions against subsurface geophysical evidence (<a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf" target="_blank" rel="noopener">DOE GEMS Prize Official Rules, NREL/TP-5700-96647</a>). Every single one of the <strong>800 A-only buried fault dots across 676 structural corridors</strong> in <code>GEMSDOE52_H52_1_PRIMARY</code> has an explicit, quantitative geological reasoning dossier in <code>evidence/a_only_geological_reasoning.json</code>. Below is an interactive explorer of the top corridors:
+      </p>
+      <div class="filter-bar">
+        <input type="text" id="corridor-search" class="filter-input" placeholder="Filter by corridor ID, mechanism, strike, UTM coordinates..." oninput="filterCorridors()" />
+        <span id="corridor-count" style="font-size:0.85rem; color:var(--text-muted);">Loading corridors...</span>
+      </div>
+      <div class="table-wrap">
+        <table id="corridor-table">
+          <thead>
+            <tr>
+              <th>Corridor ID</th>
+              <th>Dots</th>
+              <th>UTM Centroid (E, N m)</th>
+              <th>View A vs View B</th>
+              <th>Sed. Cover %ile</th>
+              <th>Dominant Subsurface Mechanism &amp; Phase 2 Geological Reasoning</th>
+            </tr>
+          </thead>
+          <tbody id="corridor-tbody">
+            <tr><td colspan="6">Loading Phase 2 geological reasoning dossiers from <code>data/a_only_candidates.json</code>...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>
+        <strong>GEMSDOE52</strong> — Blum &amp; Mitchell (COLT &rsquo;98) Two-View Co-Training &amp; Disagreement Discovery | DrivenData DOE GEMS Prize (#306)
+      </div>
+      <div>
+        <a href="executive-summary.html">Executive Summary</a> &middot;
+        <a href="forensics.html">0.2778 Forensics</a> &middot;
+        <a href="hypotheses.html">Hypotheses</a> &middot;
+        <a href="validation.html">Validation</a> &middot;
+        <a href="sources.html">Sources</a>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    function copyText(id, btn) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      navigator.clipboard.writeText(el.innerText.trim()).then(() => {
+        const old = btn.innerText;
+        btn.innerText = "Copied!";
+        setTimeout(() => { btn.innerText = old; }, 1600);
+      });
+    }
+
+    let allCorridors = [];
+    fetch("data/a_only_candidates.json")
+      .then(r => r.json())
+      .then(data => {
+        allCorridors = data.top_corridors || [];
+        renderCorridors(allCorridors.slice(0, 25));
+        document.getElementById("corridor-count").innerText =
+          `Showing top ${Math.min(25, allCorridors.length)} of ${data.summary.total_a_only_structural_corridors} A-only buried corridors (${data.summary.total_a_only_buried_fault_dots} dots)`;
+      })
+      .catch(() => {
+        document.getElementById("corridor-tbody").innerHTML =
+          "<tr><td colspan='6'>See <code>evidence/a_only_geological_reasoning.json</code> for full 676-corridor dossier.</td></tr>";
+      });
+
+    function renderCorridors(list) {
+      const tbody = document.getElementById("corridor-tbody");
+      if (!list.length) {
+        tbody.innerHTML = "<tr><td colspan='6'>No matching corridors.</td></tr>";
+        return;
+      }
+      tbody.innerHTML = list.map(c => `
+        <tr>
+          <td><code>${c.corridor_id}</code></td>
+          <td>${c.n_emitted_dots}</td>
+          <td><code>${c.centroid_utm_epsg32611.easting_m}, ${c.centroid_utm_epsg32611.northing_m}</code></td>
+          <td>A: <strong>${c.view_a_confidence_mean.toFixed(3)}</strong><br/>B: ${c.view_b_confidence_mean.toFixed(3)}</td>
+          <td>${c.physical_percentiles.sedimentary_cover_depth_pct.toFixed(1)}%</td>
+          <td>
+            <div style="margin-bottom:0.25rem;"><span class="pill pill-blue">${c.dominant_subsurface_mechanism}</span></div>
+            <div style="font-size:0.84rem; color:#cbd5e1;">${c.geological_reasoning}</div>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    function filterCorridors() {
+      const q = (document.getElementById("corridor-search").value || "").toLowerCase();
+      const filtered = allCorridors.filter(c =>
+        c.corridor_id.toLowerCase().includes(q) ||
+        c.dominant_subsurface_mechanism.toLowerCase().includes(q) ||
+        c.geological_reasoning.toLowerCase().includes(q) ||
+        String(c.centroid_utm_epsg32611.easting_m).includes(q) ||
+        String(c.centroid_utm_epsg32611.northing_m).includes(q)
+      );
+      renderCorridors(filtered.slice(0, 30));
+      document.getElementById("corridor-count").innerText =
+        `Showing ${Math.min(30, filtered.length)} of ${filtered.length} matching corridors`;
+    }
+  </script>
+</body>
+</html>

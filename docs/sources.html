@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verified Trusted Sources &amp; SHA-256 Reproducibility Ledger — GEMSDOE52</title>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-badge">GEMSDOE52</span>
+        <span>Verified Trusted Sources &amp; SHA-256 Ledger</span>
+      </div>
+      <nav class="nav-links" aria-label="Primary Navigation">
+        <a href="index.html">Command Center</a>
+        <a href="executive-summary.html">Executive Summary</a>
+        <a href="forensics.html">0.2778 Forensics &amp; [0,1] Fix</a>
+        <a href="hypotheses.html">Ranked Hypotheses</a>
+        <a href="validation.html">Validation &amp; Phase 2 Reasoning</a>
+        <a href="sources.html" class="active">Verified Sources &amp; Hashes</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section">
+      <h2>1. Official Competition &amp; Scientific References (Verified Line-by-Line)</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Source Title / Citation</th>
+              <th>Official Verified URL / DOI</th>
+              <th>Role in GEMSDOE52</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Competition Portal</strong></td>
+              <td>DOE GEMS Prize: Exploring for Faults Overview</td>
+              <td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/" target="_blank" rel="noopener">https://www.drivendata.org/competitions/306/competition-doe-gems/</a></td>
+              <td>Competition overview, timeline, and submission constraints.</td>
+            </tr>
+            <tr>
+              <td><strong>Metric &amp; Data Spec</strong></td>
+              <td>Problem Description &amp; Distance-Weighted Tversky Index</td>
+              <td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/" target="_blank" rel="noopener">https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/</a></td>
+              <td>Exact DTI equation (&alpha;=0.2, &beta;=0.8, 300 m kernel), 19-band table, and <code>[0, 1]</code> portal rule.</td>
+            </tr>
+            <tr>
+              <td><strong>Background &amp; Context</strong></td>
+              <td>About the GEMS Prize &amp; INGENIOUS Study Area</td>
+              <td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/968/" target="_blank" rel="noopener">https://www.drivendata.org/competitions/306/competition-doe-gems/page/968/</a></td>
+              <td>Great Basin geothermal exploration context and Phase 2 review criteria.</td>
+            </tr>
+            <tr>
+              <td><strong>Official Rules PDF</strong></td>
+              <td>NREL / U.S. DOE GEMS Prize Official Rules (NREL/TP-5700-96647)</td>
+              <td><a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf" target="_blank" rel="noopener">https://docs.nlr.gov/docs/fy26osti/96647.pdf</a></td>
+              <td>Phase 1 &amp; Phase 2 judging criteria and geological interpretability requirements.</td>
+            </tr>
+            <tr>
+              <td><strong>Co-Training Paper</strong></td>
+              <td>Blum, A. &amp; Mitchell, T. (1998). <em>Combining Labeled and Unlabeled Data with Co-Training</em>. COLT &rsquo;98, pp. 92–100.</td>
+              <td><a href="https://doi.org/10.1145/279943.279962" target="_blank" rel="noopener">https://doi.org/10.1145/279943.279962</a></td>
+              <td>Theoretical foundation for two-view conditional independence and iterative pseudo-labeling.</td>
+            </tr>
+            <tr>
+              <td><strong>INGENIOUS GDR Data</strong></td>
+              <td>Great Basin Center for Geothermal Energy — INGENIOUS Dataset (DOE GDR #1391)</td>
+              <td><a href="https://gdr.openei.org/submissions/1391" target="_blank" rel="noopener">https://gdr.openei.org/submissions/1391</a></td>
+              <td>Provenance of the 19 geophysical bands, basement depth, and geothermal well/spring records.</td>
+            </tr>
+            <tr>
+              <td><strong>USGS GeoDAWN</strong></td>
+              <td>USGS GeoDAWN Airborne Geophysical &amp; Radiometric Survey (Nevada &amp; Utah)</td>
+              <td><a href="https://doi.org/10.5066/P93LGLVQ" target="_blank" rel="noopener">https://doi.org/10.5066/P93LGLVQ</a></td>
+              <td>Source of View B airborne gamma-ray radiometric bands (<code>K, Th, U, TC</code>).</td>
+            </tr>
+            <tr>
+              <td><strong>USGS SGMC</strong></td>
+              <td>USGS State Geologic Map Compilation (SGMC) Digital Fault Traces</td>
+              <td><a href="https://doi.org/10.3133/ds1052" target="_blank" rel="noopener">https://doi.org/10.3133/ds1052</a></td>
+              <td>Off-catalogue validation proxy (strictly outside 300 m and 500 m of <code>labels.tif</code>).</td>
+            </tr>
+            <tr>
+              <td><strong>Magnetic Tilt Theory</strong></td>
+              <td>Miller, H. G. &amp; Singh, V. (1994). <em>Potential field tilt—a new concept for location of potential field sources</em>. J. Appl. Geophys., 32(2–3), 213–217.</td>
+              <td><a href="https://doi.org/10.1016/0926-9851(94)90022-1" target="_blank" rel="noopener">https://doi.org/10.1016/0926-9851(94)90022-1</a></td>
+              <td>Physical basis for Band 6 (<code>tc</code>) zero-crossing ridge in View A (<code>H52-2</code>).</td>
+            </tr>
+            <tr>
+              <td><strong>Submodular Optimization</strong></td>
+              <td>Minoux, M. (1978) / Leskovec et al. (2007). <em>Cost-Effective Lazy Forward (CELF) Submodular Maximization</em>. KDD &rsquo;07.</td>
+              <td><a href="https://doi.org/10.1145/1281192.1281239" target="_blank" rel="noopener">https://doi.org/10.1145/1281192.1281239</a></td>
+              <td>Exact lazy-greedy submodular expected-credit placement over the 300 m triangular kernel.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>2. Autonomous Reproduction Commands</h2>
+      <div class="card">
+        <pre># 1. Restore and SHA-256 verify all 17 competition, external USGS, and scored rasters into data/
+bash scripts/download_competition_data.sh
+
+# 2. Build and cache strictly disjoint View A (14 subsurface channels) and View B (12 surface channels)
+python3 scripts/prepare_data.py
+
+# 3. Run Blum-Mitchell Two-View Co-Training, Independence Gate, Holdout Validation, Phase 2 Reasoning &amp; GeoTIFF Export
+python3 scripts/run_cotraining_pipeline.py
+
+# 4. Run the automated pytest verification suite
+pytest -v</pre>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>3. SHA-256 Cryptographic Ledger of Restored Data &amp; Generated Deliverables</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>File Path</th>
+              <th>Size (Bytes)</th>
+              <th>SHA-256 Checksum</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="highlight-row">
+              <td><code>docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-zeros.tif</code></td>
+              <td>153,803</td>
+              <td><code>c7e980f472113ff1b3378b9d08a4a361cece5984d07fe93e4b3a6e98fdf8068e</code></td>
+            </tr>
+            <tr class="highlight-row">
+              <td><code>docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-zeros.zip</code></td>
+              <td>121,316</td>
+              <td><code>b94c1e40d020c23489c20e499b6406b8f3a7e16558abcd0d6c47ccbd688d4cca</code></td>
+            </tr>
+            <tr>
+              <td><code>docs/downloads/gemsdoe52-cotrain-anchored-hybrid-20261006-zeros.tif</code></td>
+              <td>154,585</td>
+              <td><code>a7cce341cbe047d08dcbfbd21642f33b54c8941bc212e485e94a09dc0c951e90</code></td>
+            </tr>
+            <tr>
+              <td><code>docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-nan.tif</code></td>
+              <td>223,917</td>
+              <td><code>f66ce1a252f38bcb84d15c832d1d0abc76b6b08bed4e753a048bd47983b37c29</code></td>
+            </tr>
+            <tr>
+              <td><code>data/training_features.tif</code></td>
+              <td>418,912,844</td>
+              <td><code>4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5</code></td>
+            </tr>
+            <tr>
+              <td><code>data/labels.tif</code></td>
+              <td>425,830</td>
+              <td><code>7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093</code></td>
+            </tr>
+            <tr>
+              <td><code>data/sample_submission.tif</code></td>
+              <td>1,599,597</td>
+              <td><code>2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc</code></td>
+            </tr>
+            <tr>
+              <td><code>data/external/lidar_scarp_features_u8.tif</code></td>
+              <td>36,943,606</td>
+              <td><code>d580bb8bdcdb941e32fefb8b38044bc5bf04e199bf2e83498c3576e6fc465568</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>
+        <strong>GEMSDOE52</strong> — Verified Sources &amp; SHA-256 Ledger | DrivenData DOE GEMS Prize (#306)
+      </div>
+      <div>
+        <a href="index.html">Command Center</a> &middot;
+        <a href="executive-summary.html">Executive Summary</a> &middot;
+        <a href="forensics.html">0.2778 Forensics</a> &middot;
+        <a href="hypotheses.html">Hypotheses</a> &middot;
+        <a href="validation.html">Validation</a>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>
