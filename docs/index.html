@@ -36,6 +36,32 @@ repo <code>buffedlizard55-lab/GEMSDOE52</code> · <span data-feed-stamp>loading 
     Nothing to configure, nothing to check by hand: the file is produced by
     <code>scripts/build_submission.py</code> and gated by <code>src/gems52/gates.py</code> before it
     is written.</p>
+    <p class="small"><strong>What is in it.</strong> 37,654 separated single pixels of {0,1} mass, placed off the
+    pixel-exact catalogue mask where a surface lineament has an <em>independent geophysical family agreeing
+    on its strike inside the same 1.6 km tile</em> (a permutation-calibrated coincidence test over the 100
+    family-disjoint channel pairs), emitted at a 3 px minimum separation — the geometry the current best
+    submission on the board uses, filled with ranked evidence instead of a lattice. <a href="method.html">Method</a>
+    <a href="hypotheses.html">Hypotheses</a>
+    <a href="validation.html">Validation</a>
+    <a href="feed.html">Data&nbsp;feed</a>
+    <a href="irregularities.html">Irregularities</a>
+    <a href="sources.html">Official&nbsp;links</a>
+  </nav>
+</div></header>
+<main id="main">
+
+<p class="mono small muted">DrivenData&nbsp;·&nbsp;DOE&nbsp;GEMS&nbsp;Prize&nbsp;·&nbsp;competition&nbsp;306&nbsp;·&nbsp;
+repo <code>buffedlizard55-lab/GEMSDOE52</code> · <span data-feed-stamp>loading feed…</span></p>
+
+<section class="hero">
+  <div>
+    <h1>The submission file, first.</h1>
+    <p>One GeoTIFF. Download it, open <a
+    href="https://www.drivendata.org/competitions/306/competition-doe-gems/">the competition page</a>,
+    click <em>Make a submission</em>, pick the file, write the note below in the notes box, submit.
+    Nothing to configure, nothing to check by hand: the file is produced by
+    <code>scripts/build_submission.py</code> and gated by <code>src/gems52/gates.py</code> before it
+    is written.</p>
     <p class="small"><strong>What is in it.</strong> {0,1} mass on pixels the metric's own acceptance
     rule says are worth paying for, placed off the pixel-exact catalogue mask where a potential-field
     view is confident and the surface view withholds. <a href="method.html">Method</a> ·
@@ -71,8 +97,16 @@ visible as a stale timestamp rather than as a wrong claim.</p>
 </div>
 
 <h2><span class="num">03</span> What the holdout said, before the tuning</h2>
-<p>Written in plain terms, because the interesting result is a negative one:</p>
+<p>Written in plain terms, newest first where it succeeded and oldest first where it failed:</p>
 <ul class="tight">
+  <li><strong>H53-1 (this session) did help, and it is the file at the top of this page.</strong>
+  Surface lineaments gated by independent-physics agreement <em>at the same place</em>, emitted as
+  separated single pixels, score <b>0.0387 tip / 0.0661 hide</b> fold-mean against 0.0357 / 0.0565 for the
+  same field without the gate, 0.0289 / 0.0445 for surface-only, and 0.0192 / 0.0369 for the same arm with
+  its places rolled to another tile — where the previous best in this repository at that budget was
+  0.0320 / 0.0518. Two of the three gates built on the way could not fire at all; that is written up in
+  full (<code>knowledge/09</code>, <code>evidence/h53_holdout.json</code>) rather than quietly
+  replaced.</li>
   <li><strong>The co-training round, as such, did not help.</strong> Adding a view's confident
   pseudo-labels to the other view's training set <em>lowered</em> View&nbsp;A's held-out AUC (mean
   Δ&nbsp;=&nbsp;−0.0159, fold support 1/4; and the arm itself scores 0.0084 tip / 0.0078 hide against

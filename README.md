@@ -8,17 +8,28 @@ best of 0.2778, with the reasoning and the evidence published next to the file.
 
 | | |
 |---|---|
-| **download** | [`docs/downloads/gems52-h52-cotrain-disagreement-emission-composite-37654px-r1.tif`](docs/downloads/gems52-h52-cotrain-disagreement-emission-composite-37654px-r1.tif) — click, save, upload |
-| also in the repo | [`submission/gems52-h52-cotrain-disagreement-emission-composite-37654px-r1.tif`](submission/gems52-h52-cotrain-disagreement-emission-composite-37654px-r1.tif) |
-| bytes / shape | 89,751 · 3730 × 3292 · single band · `float32` · EPSG:32611 · 100 m cells |
-| values | {0, 1} only — 37,654 positive px, 0 outside the valid footprint, **no NaN** |
-| sha256 | `063fb7247f8e12b80788dd14652c3245dec15be82f7c7e8e901193b9aeaa68b6` |
-| format gate | `True` (`src/gems52/gates.py`, checked on the written bytes, not on intent) |
-| uniqueness gate | `True` — strictly-novel-and-selective: 29,685 px (78.8%) touch no prior of this family, and 174,685 prior px are deliberately **not** re-emitted, so it is not "the union" either |
-| selection | `evidence/composite.json` — the two-regime sweep over {far-field ranker} × {corridor ranker} × {corridor share} × {budget} on both instruments chose `B_only+blanket|37654|s0`; rebuilding from that record reproduces the identical sha256, which is the reproducibility claim |
-| holdout verdict | control bar on **both** instruments: cleared (+16.7 % tip, +32.1 % hide over matched-budget random). Registered +0.010-over-naive-union bar: **not met** on the truncation instrument (+0.0051) → `promoted: false`, `forced: true`. Read it before spending a weekly slot (§4, `docs/irregularities.html`) |
-| exact steps | [docs/executive-summary.html](docs/executive-summary.html) |
-| rebuild it | `PYTHONPATH=src python3 scripts/build_submission.py --mode tip --arm composite --tag r1 --force`   # reads the selection from evidence/composite.json |
+| **download** | [`docs/downloads/gems52-h53-coincidence-gated-singles-37654px-r1.tif`](docs/downloads/gems52-h53-coincidence-gated-singles-37654px-r1.tif) — click, save, upload |
+| also as a zip | [`docs/downloads/gems52-h53-coincidence-gated-singles-37654px-r1.zip`](docs/downloads/gems52-h53-coincidence-gated-singles-37654px-r1.zip) (the same bytes, verified inside the archive) |
+| in the repo too | [`submission/gems52-h53-coincidence-gated-singles-37654px-r1.tif`](submission/gems52-h53-coincidence-gated-singles-37654px-r1.tif) |
+| bytes / shape | 147,575 · 3730 × 3292 · single band · `float32` · EPSG:32611 · 100 m cells · 256 × 256 tiles |
+| values | {0, 1} only — **37,654 positive px, every one of them a separated single pixel** (3 px minimum separation), 0 outside the valid footprint, **no NaN** |
+| sha256 | `9ffe11b2b56a2cb43e7da5ce3613a626b1a5503dc72e91cee694376d15f4420f` |
+| **submission name** | `gems52-h53-coincidence-gated-singles-37654px-r1` |
+| **notes-box text** (180 chars, ≤200 by assert) | *H53-1: surface lineaments kept only where an independent geophysical family agrees on strike in the same 1.6 km tile (permutation-calibrated, top 10%); 37,654 spaced single pixels.* |
+| format gate | `ok: true` (`src/gems52/gates.py`, read off the written bytes: same grid, bounds, CRS, dtype, value range as `sample_submission.tif`, no NaN) |
+| uniqueness gate | `ok: true` — 8 priors checked, **84.6 %** of the mass sits where no prior of this family put anything, and 655,900 prior pixels are deliberately **not** re-emitted |
+| not merely the union | 31,932 of the 37,654 pixels are ones the ungated union would not have chosen at the same budget (Jaccard vs that union 0.082) |
+| holdout verdict | **`promoted: true`** — fold-mean DTI on *both* blocked instruments above every comparator, and identical comparator ordering in both (tip 0.0387 vs 0.0320 previous best; hide 0.0661 vs 0.0518) |
+| selection | `evidence/h53_holdout.json` + `evidence/dicoincidence.json` — the coincidence gate is `coincidence_table()` (100 family-disjoint pair tests, 400 circular-roll permutations each) and the gate is the pair-relative top-decile agreement per 1.6 km tile |
+| exact steps | [`docs/executive-summary.html`](docs/executive-summary.html) |
+| rebuild it | `PYTHONPATH=src python3 scripts/h53_detect.py --stage tiles && PYTHONPATH=src python3 scripts/h53_detect.py --stage stats && PYTHONPATH=src python3 scripts/build_h53_submission.py` |
+
+**Why this file and not r1:** r1 cleared the control bar but failed the pre-registered
+"+0.010 over the naive union" bar on the truncation instrument, so it shipped flagged `promoted: false,
+forced: true`. H53-1 was built, gated and promoted *before* this file was written, and the builder refuses
+to write a file when the holdout verdict is not promoted (`scripts/build_h53_submission.py`; `--force`
+records itself in the audit). The weekly slot is therefore spent on an arm that beat the previous holdout
+best on both instruments, which is the standing rule.
 
 The site is the product: [docs/index.html](docs/index.html) renders every number from
 `docs/data/*.json`, which `scripts/refresh_feed.py` regenerates and a committed GitHub Actions workflow
@@ -113,30 +124,46 @@ Pass 3 — Re-check against the user's original request: Re-read the user's prom
 Please remember to create a PR once you are done.
 ```
 
-### 1.1 The directives, itemised (the standing starting point, restated in order)
+### 1.1 The directives, itemised (the standing starting point, restated in the brief's own order)
 
-1. **Co-train** two views of the same unlabelled pixels — View A the geophysical potential fields, View B
-   the surface/geomorphic layers — and treat **disagreement, not agreement, as the discovery signal**
-   (Blum & Mitchell, COLT '98, doi:10.1145/279943.279962).
-2. **Test the premise instead of assuming it**: conditional independence of the two views' errors given the
-   label, measured on spatially-blocked out-of-fold errors; abandon the arm if the test says so.
-3. **Pseudo-label only** where one view is confident and the other abstains.
-4. **Hold out whole segments**, with a buffer, never random pixels.
-5. **Write the reasoning for every candidate**: A-only ⇒ a fault buried under cover; B-only ⇒ suspect
-   (roads, erosion, levees).
-6. **Benchmark against a single-view baseline** on hide-and-recover.
-7. **Normalise to [0, 1]** and write a **GeoTIFF**; place mass **metric-aware** (the kernel, the mask, the
-   acceptance bar), not by percentile.
-8. **Pass a uniqueness gate** and be **more than the union** of previous submissions — never copy a prior
-   answer; this exercise is for learning.
-9. **Propose 3–5 new geological hypotheses** with layers, physical signature, why they find
-   catalogue-missing faults, diff against repo history, ranked by expected DTI gain over cost; validate the
-   top one on a spatially-blocked holdout before spending a slot. New external data must be **free,
-   official, and confirmed obtainable**.
-10. **The site**: clean GitHub Pages, one-click `.tif` at the very top, an executive-summary subpage with
-    the exact submission steps, the `[0, 1]` error explained and made impossible, a unique submission name
-    with a short note, a live data feed so nothing needs manual checking, official links for manual review,
-    irregularities flagged, three verification passes, then a PR and a merge to `main`.
+The brief as received by this session is [`knowledge/07_brief_2026-10-06_session2.md`](knowledge/07_brief_2026-10-06_session2.md);
+it carries **eleven** operative directives, and this list is that list — same order, same scope — so a
+reviewer can diff prose against prose. (Earlier revisions of this README itemised ten, having folded the
+re-read-the-prompt rule and the why-0.2778 rule into others; that folding is what let a session start from a
+summary instead of from the brief, so it is undone.)
+
+1. **Ship a unique, downloadable `.tif`** — not a copy of any prior submission; a unique name and a short
+   note for the submission form; the download obvious at the very top of the site.
+2. **Re-read the whole prompt before working** — the brief lives in this repository, and this file is where a
+   session starts.
+3. **Co-train two views of the same unlabelled pixels** — View A the potential fields and subsurface
+   (gravity, magnetics, strain, seismicity), View B the surface (slope, curvature, scarp; radiometry where it
+   exists *outside* the official cube, per `IR-52-001`/`IR-52-011a`) — and treat **disagreement, not
+   agreement, as the discovery signal** (Blum & Mitchell, COLT '98, doi:10.1145/279943.279962): A-only ⇒
+   buried beneath cover, B-only ⇒ suspect (roads, erosion, levees).
+4. **Test the independence premise instead of assuming it** — correlate each view's spatially-blocked
+   out-of-fold errors on labelled negatives, and abandon the mechanism if it is strongly correlated.
+5. **Pseudo-label only across the confident/abstaining boundary**, in whole-segment blocks with a buffer, and
+   **write the geological reasoning** for every A-only candidate.
+6. **Benchmark against a single-view baseline on hide-and-recover**, because co-training can amplify bias.
+7. **Normalise to [0, 1]**, write the GeoTIFF on the competition grid, and place mass **metric-aware** (the
+   300 m kernel, the pixel-exact mask, the acceptance bar), not by percentile.
+8. **Pass the uniqueness gate and be more than the union of the views** — never re-emit a prior answer as the
+   product; priors are for learning.
+9. **Propose 3–5 new geological hypotheses** — layers, physical signature, why they catch
+   catalogue-missing faults, diff against repo history — ranked by expected DTI gain over cost; **validate the
+   top one on the spatially-blocked holdout before spending a weekly slot**; any idea that needs new external
+   data must name a free, official source and confirm it is obtainable.
+10. **The site** — clean GitHub Pages, one-click `.tif` at the very top, an executive-summary subpage with the
+    exact submission steps, the `[0, 1]` validator error explained and made impossible, official links for
+    manual review, a live feed so nothing needs hand-checking, irregularities flagged.
+11. **Three passes** (implement → review/fix → re-check against the request), then a **pull request merged
+    into `main`**, plus the list of what remains.
+
+**Why 0.2778 scored what it did, and what the bar is** — the reasoning the brief asks for in the same breath
+as the build: [`knowledge/01_why_02778_and_the_bar.md`](knowledge/01_why_02778_and_the_bar.md). Note the
+disagreement it records: the brief quotes 0.3195 as the leader, the fetched board says 0.3774
+(`IR-52-020`, `registry/leaderboard_snapshot_2026-10-06.json`).
 
 ## 2. Layout
 
@@ -182,6 +209,33 @@ as well), `tip` (only the along-strike ends of traces removed). Each writes its 
 
 ## 4. What was actually found, before any of this was shipped
 
+**H53-1 (this session): the discovery signal pays, but only after two of its own gates were repaired.**
+Full write-up in [`knowledge/09_what_h53_found.md`](knowledge/09_what_h53_found.md); the numbers are in
+`evidence/h53_holdout.json` and `evidence/dicoincidence.json`.
+
+* **The brief's mechanism, implemented literally, produced a gate that could not fire.** The first version
+  gated on a tile's *z-score* against the rolled null: one tile contributes one scalar, whose null s.d. is
+  ≈ 0.3, so `|z| ≥ 3` demands a cosine of ≈ 0.9 and passes 0.0 % of tiles (measured). A gate that silently
+  passes nothing looks exactly like a gate that passes nothing for physical reasons. Replaced with a
+  **pair-relative percentile** (`agreement_percentile`, distribution-free), which is also the honest framing:
+  the informative statement in a province with one dominant fabric is *"this tile agrees better than this
+  pair's own tiles do"*, not *"these two datasets agree"* — that is the default here, and an earlier
+  version of the arms that used the global gate counted 93 % of all candidate nodes as corroborated.
+* **The gate, once it can fire, is what wins.** Fold-mean DTI at the same budget, same folds, same emitter:
+  `B_corr + separation` **0.0387 tip / 0.0661 hide**, ungated union + separation 0.0357 / 0.0565, surface-only
+  + separation 0.0289 / 0.0445, the same arm with its places rolled to another tile 0.0192 / 0.0369. Against
+  the repo's previous best at this budget — tip `union_cor` 0.0320, hide `B_only` 0.0518 — that is
+  **+21 % / +28 %**, with 3/4 and 4/4 fold support and the same comparator ordering on both instruments.
+* **Separation, not density, is what the metric pays for.** The incumbent's own sweep is a ladder in
+  spacing (2.24 px → 3.0 px → 3.0 px at 60,069 → 44,090 → 37,654 px) and its best file is 37,654 *single*
+  pixels. So the emitter here is greedy top-`budget` under a **minimum separation**
+  (`src/gems52/nodes.py::emit_nodes`): 37,654 pixels, all isolated, median nearest-neighbour distance 3.0 px
+  — the same geometry the top of the ladder uses, filled with ranked evidence instead of a lattice.
+* **What did not work, and is published rather than buried:** gating on *global* coincidence
+  (37/100 pairs clear a Bonferroni z gate, so the gate stops discriminating); a per-tile z (above); and the
+  gated arms without separation, which lose to the ungated union on both instruments. The eight-row arm table
+  with all four controls is in `evidence/h53_holdout.json`.
+
 * **The co-training mechanism failed its own gate.** One Blum–Mitchell round *lowered* View A's
   blocked AUC (mean Δ = −0.0159, fold support 1/4 on `hide`; 0.797 → 0.761 pooled earlier in the run), and its
   arm is the worst measured on both instruments — 0.0084 tip / 0.0078 hide against 0.0253 / 0.0396 for
@@ -221,17 +275,20 @@ as well), `tip` (only the along-strike ends of traces removed). Each writes its 
 
 ### 1.2 Prior submissions of this family that this file must not be
 
-`GEMSDOE52-CoTrain-Disagree-H52-1` (PR #2, 41,200 px, `c7e980f4…`) and the rasters in `data/scored/`
-(gems19, gems24) are this group's own priors. The uniqueness gate compares against every one of them:
-this file re-emits none of their mass where it is redundant (174,685 prior pixels dropped) and puts
-78.8 % of its own mass where no prior ever reached. Their evidence stays published in `evidence/` and their
-code stays runnable as `gems52_h1`; their *holdout claims* do not stand — see `IR-52-014` on
-[the register](docs/irregularities.html).
+`GEMSDOE52-CoTrain-Disagree-H52-1` (PR #2, 41,200 px, `c7e980f4…`), the r1 composite this session's
+predecessor built (`gems52-h52-cotrain-disagreement-emission-composite-37654px-r1.tif`, 89,751 B,
+`063fb724…`, `promoted: false`, `forced: true`), and the rasters in `data/scored/` (gems19, gems24) are
+this group's own priors. The uniqueness gate compares against every one of them: this file puts **84.6 %**
+of its 37,654 pixels where no prior ever reached, drops 655,900 prior pixels rather than re-emitting them,
+and its 31,932-pixel difference from the ungated union at the same budget is the measured statement that it
+is not a union either. r1 stays published — its evidence, its hash, its retraction of the co-training round
+— because the point of the register is that the failures are as legible as the file.
 
 ## 5. Irregularities, stated plainly
 
 The live public leaderboard's #1 is **0.3774**, not the 0.3195 stated in the session's opening
-context; the group's own 0.2778 currently sits at **#13 of 24 visible rows** (read twice this session, 21:2x
+context (`IR-52-002` / `IR-52-020` — the same disagreement under the brief's own item number, now entered in
+`knowledge/06` and on the register page rather than only referenced); the group's own 0.2778 currently sits at **#13 of 24 visible rows** (read twice this session, 21:2x
 and 21:33 UTC, identical both times). Every file→score
 mapping in this family (including the 0.2778 one) is **owner-reported**, not organiser-authenticated —
 the board exposes no filename, hash or upload receipt, and GEMSDOE47 formally retracted its alleged
