@@ -50,32 +50,33 @@ jobs:
 
       - name: Show what changed
         run: |
-          git status --short
-          git diff --stat || true
-          python - <<'PY'
-import json, pathlib
-for name in ("leaderboard", "feed", "submission"):
-    p = pathlib.Path("docs/data") / f"{name}.json"
-    if not p.exists():
-        print(f"{name}: MISSING")
-        continue
-    d = json.loads(p.read_text())
-    if name == "leaderboard":
-        rows = d.get("rows", [])
-        top = rows[0].get("score") if rows else "n/a"
-        print(f"leaderboard: status={d.get('status')}, rows={len(rows)}, top={top}, "
-              f"fetched_utc={d.get('fetched_utc')}, gap_to_top={d.get('gap_to_top')}")
-        print(f"  our rows: {d.get('our_rows')}")
-        if rows:
-            worst = rows[-1]
-            print(f"  last visible row: #{worst.get('rank')} {worst.get('team')} {worst.get('score')}")
-    elif name == "feed":
-        print(f"feed: generated_utc={d.get('generated_utc')}, n_files={len(d.get('files', []))}, "
-              f"leaderboard_status={d.get('leaderboard_status')}, submission={d.get('submission')}")
-    else:
-        print(f"{name}: " + ", ".join(f"{k}={d[k]}" for k in ("exists", "file", "download", "sha256")
-                                      if k in d))
-PY
+            git status --short
+            git diff --stat || true
+            python - <<'PY'
+            import json, pathlib
+            for name in ("leaderboard", "feed", "submission"):
+                p = pathlib.Path("docs/data") / f"{name}.json"
+                if not p.exists():
+                    print(f"{name}: MISSING")
+                    continue
+                d = json.loads(p.read_text())
+                if name == "leaderboard":
+                    rows = d.get("rows", [])
+                    print(f"leaderboard: status={d.get('status')}, rows={len(rows)}, "
+                          f"top={rows[0].get('score') if rows else 'n/a'}, "
+                          f"fetched_utc={d.get('fetched_utc')}, gap_to_top={d.get('gap_to_top')}")
+                    print(f"  our rows: {d.get('our_rows')}")
+                    if rows:
+                        w = rows[-1]
+                        print(f"  last visible row: #{w.get('rank')} {w.get('team')} {w.get('score')}")
+                elif name == "feed":
+                    print(f"feed: generated_utc={d.get('generated_utc')}, n_files={len(d.get('files', []))}, "
+                          f"leaderboard_status={d.get('leaderboard_status')}, submission={d.get('submission')}, "
+                          f"downloads={d.get('downloads')}")
+                else:
+                    print("submission: " + ", ".join(f"{k}={d[k]}" for k in
+                          ("exists", "file", "download", "sha256", "bytes") if k in d))
+            PY
 
       - name: Commit the refreshed feed
         if: always()

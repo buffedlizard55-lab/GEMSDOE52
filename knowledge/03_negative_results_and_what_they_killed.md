@@ -148,3 +148,30 @@ is conditional in the original, absolute in our reconstruction).
 **Rule:** before writing "not available anywhere", `git fetch && git ls-tree -r origin/main --name-only`, and
 `grep` the merged branches. In a family of repos where siblings merge into the same `main`, the branch you
 were cut from is not the repository.
+
+---
+
+## N-9 · A GitHub Actions workflow that has never run is not "done" (found 22:26 UTC)
+
+`.github/workflows/feed.yml` — the thing the whole "you never have to check the site by hand" promise
+rests on — failed twice in 0 seconds with **no log and no job**, because an inline `python - <<'PY'` block
+inside a `run: |` scalar had lost its indentation when that block was edited. A block scalar ends at the
+first non-indented line, so the file stopped being valid YAML, and Actions rejects it before any step
+runs. Nothing in the repo noticed: `pytest` did not parse it, `check_site.py` did not read it, and the
+site itself was fine, so the *absence* of the problem looked like its presence.
+
+Fixed by re-indenting the step, and then by making the repo unable to forget: `tests/test_workflows.py`
+now (a) `yaml.safe_load`s every workflow file, (b) asserts the feed workflow contains the refresh, commit
+and "fail loudly" steps, (c) asserts the commit step touches only `docs/data/` — publishing a raster stays
+a human act — and (d) asserts the fetcher stays stdlib-only so a package index cannot freeze the board.
+
+Two things this exposed that are worth keeping as rules, not as fixes:
+
+* **The runner has no scientific stack, so any verification that needs one must decline rather than
+  degrade.** The generated `docs/downloads/index.html` re-runs the format gate on every staged raster,
+  which needs `rasterio`; on a runner without it the page used to be rewritten with "gate not run" for
+  every file — a safety table silently emptied. It now leaves the committed version alone and logs that it
+  skipped (see `download_index`).
+* **A lint that misfires is worse than no lint.** The first version of that test re-derived YAML's
+  block-scalar indentation rule with a regex and failed on valid YAML; deleted. `yaml.safe_load` is the
+  authority, and the test says so in a comment so nobody re-adds the clever version.
