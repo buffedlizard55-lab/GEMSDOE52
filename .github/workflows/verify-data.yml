@@ -1,0 +1,20 @@
+name: verify-data
+# Hash-pin check of the owner mirrors + unit tests.  Runs weekly so that a silently changed mirror
+# cannot enter a submission unnoticed.
+on:
+  schedule: [{cron: '17 6 * * 1'}]
+  workflow_dispatch:
+  push: {branches: [main], paths: ['registry/data_manifest.json', 'scripts/fetch_data.py']}
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: pip install numpy rasterio scikit-learn pytest
+      - run: python -m pytest tests -q
+      - name: Fetch every pinned mirror and compare sha256
+        run: python scripts/fetch_data.py --dest /tmp/gems32/data | tee registry/data_verify.txt
