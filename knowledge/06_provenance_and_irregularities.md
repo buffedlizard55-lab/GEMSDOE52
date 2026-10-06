@@ -125,3 +125,13 @@ leaderboard freely; that is what the two instruments and the register are for.
 3. Well-based stratigraphic offset (D-3) confirming or killing H52-1: if the marker bed does not step
    across an A-only structure, the "buried range-front fault" story is an artefact and the A-only stratum
    should stop informing the ranking at all.
+
+**IR-52-016 — the scheduled board fetch reaches the page and reads nothing.** First CI run, 22:28 UTC:
+HTTP 200 from `www.drivendata.org` (so GitHub's egress is fine, unlike this sandbox's TLS EOF), then
+`leaderboard table parsed empty — page layout changed`, because the board table is built client-side and the
+server HTML contains no `<tr>` rows to parse. The parser raises rather than publishing an empty board; the
+run fell back to the dated snapshot and reported why. **Consequence for how this site must be read: "live
+data feed" means live-attempted, snapshot-served for the leaderboard** — every other number on the site comes
+from `evidence/`, which we generate ourselves, and is genuinely regenerated on every push. Closing this needs
+a data endpoint the organiser publishes; guessing at one is not a fix, so the status line stays visible
+instead.

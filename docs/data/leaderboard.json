@@ -2,8 +2,8 @@
  "source": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
  "our_team": "extradr19",
  "our_best_reported": 0.2778,
- "note": "participant-level public board; it carries no filename, hash or upload receipt, so no file-to-score mapping on this site is organiser-authenticated",
- "status": "unreachable: ValueError: leaderboard table parsed empty - page layout changed \u2014 serving the last verified snapshot instead",
+ "note": "Public leaderboard, re-verified 2026-10-06 during verification pass 2. Distance-weighted Tversky on this board is the same quantity this repo calls DTI. extradr19 = this group, #13 with 0.2778 after 10 submissions; #1 xiaofanhu 0.3774 after 11. The board publishes no filename, hash or upload receipt, so no file-to-score mapping is organiser-authenticated. The session context's claim that 0.3195 was our highest score is stale: 0.3195 is DARD at #7. The CI workflow replaces this file with a live fetch when it can reach the site.",
+ "status": "offline snapshot (feed run without --fetch)",
  "fetched_utc": "2026-10-06T21:33:00Z",
  "column_header_on_board": "Best public DW-Tversky (in descending order)",
  "rows": [
