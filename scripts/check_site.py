@@ -26,6 +26,12 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.request import urlopen
 
+import csv
+import zipfile
+
+import numpy as np
+import rasterio
+
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 DATA = DOCS / "data"
@@ -62,6 +68,125 @@ class Scan(HTMLParser):
     def handle_data(self, data):
         if self.stack:
             self.scratch.append(data)
+
+
+def check_h57(DATA, DOCS, ROOT, notes):
+    """Every H57 gate re-read from the bytes, so the round can be audited on its own terms."""
+    problems = []
+    sub = json.loads((DATA / "submission.json").read_text())
+    b = json.loads((DATA / "h57_build.json").read_text())
+    gate = json.loads((DATA / "h57_slot_gate.json").read_text())
+
+    for name in ("h57_build.json", "h57_cotrain.json", "h57_validation.json",
+                 "h57_strata.json", "h57_format_gate.json", "h57_uniqueness.json",
+                 "h57_slot_gate.json"):
+        if not (DATA / name).exists():
+            problems.append(f"H57: {name} missing from docs/data")
+
+    canonical = DOCS / sub["download"]
+    alias = DOCS / sub["short_tif"]
+    canonical_zip = DOCS / sub["download_zip"]
+    alias_zip = DOCS / sub["short_zip"]
+    for path, what in ((canonical, "canonical TIFF"), (alias, "short TIFF alias"),
+                       (canonical_zip, "canonical ZIP"), (alias_zip, "short ZIP alias")):
+        if not path.exists():
+            problems.append(f"H57: {what} missing ({path.name})")
+    if canonical.exists() and alias.exists() and canonical.read_bytes() != alias.read_bytes():
+        problems.append("H57: short TIFF alias is not byte-identical to the canonical raster")
+    if canonical_zip.exists() and alias_zip.exists() \
+            and canonical_zip.read_bytes() != alias_zip.read_bytes():
+        problems.append("H57: short ZIP alias is not byte-identical to the canonical ZIP")
+    for zp in (canonical_zip, alias_zip):
+        if zp.exists():
+            with zipfile.ZipFile(zp) as archive:
+                members = archive.namelist()
+                if members != [sub["file"]] or archive.read(members[0]) != canonical.read_bytes():
+                    problems.append(f"H57: {zp.name} must hold exactly the byte-identical TIFF")
+    if canonical.exists():
+        if canonical.stat().st_size != sub["bytes"]:
+            problems.append("H57: docs/ TIFF size differs from the receipt")
+        got = hashlib.sha256(canonical.read_bytes()).hexdigest()
+        if got != sub["sha256"] or got != b["file"]["sha256"]:
+            problems.append("H57: sha256 mismatch between the published file and its receipts")
+        else:
+            notes.append(f"H57 download verified byte-for-byte: {canonical.name} "
+                         f"({sub['bytes']:,} bytes, {got[:16]}...)")
+
+    # the receipt's own gates must still be green
+    if not b["format_gate"]["ok"]:
+        problems.append("H57: format gate reports " + "; ".join(b["format_gate"]["problems"]))
+    if not b["uniqueness"]["canonical_pattern_unique"]:
+        problems.append("H57: decoded pattern equals an accessible aligned prior")
+    nd = b["not_the_union"]
+    if nd["file_equals_prior_A"] or nd["file_equals_prior_B"] or nd["file_equals_union_AB"]:
+        problems.append("H57: artefact equals a named prior or their union")
+    if nd["arm_outside_prior_support_px"] != nd["arm_px"]:
+        problems.append("H57: arm is not wholly outside the accessible prior-support union")
+    if b["file"]["min_distance_to_catalogue_m"] <= 200.0:
+        problems.append("H57: an emitted cell sits inside the <= 200 m catalogue ring")
+
+    # on-disk read-back of the raster, independent of the receipt
+    try:
+        with rasterio.open(canonical) as ds:
+            arr = ds.read(1)
+            tr = tuple(ds.transform)[:6]
+            if (ds.count != 1 or ds.dtypes[0] != "float32" or ds.crs is None
+                    or ds.crs.to_epsg() != 32611 or (ds.height, ds.width) != (3730, 3292)
+                    or tr != (100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)
+                    or not np.isfinite(arr).all() or float(arr.min()) != 0.0
+                    or float(arr.max()) != 1.0 or set(np.unique(arr).tolist()) != {0.0, 1.0}
+                    or int(np.count_nonzero(arr)) != b["file"]["px"]):
+                problems.append("H57: on-disk read-back failed the single-band float32 / grid / "
+                                "range / value / count check")
+            else:
+                notes.append(f"H57 on-disk read-back: {b['file']['px']:,} cells, values exactly "
+                             "{{0, 1}}, 0 NaN, CRS EPSG:32611, transform matches the fixture")
+    except Exception as e:  # noqa: BLE001
+        problems.append(f"H57: could not read back the published TIFF ({e})")
+
+    # the submission note must still fit the portal's 200-character limit
+    if len(sub["note"]) > 200:
+        problems.append(f"H57: submission note is {len(sub['note'])} characters (limit 200)")
+    if sub.get("approved_for_weekly_slot") is not False:
+        problems.append("H57: the slot decision must stay explicit while R1 is unmet")
+
+    # the per-candidate geological dossier must exist and carry one row per arm pixel
+    dossier = DOCS / sub["dossier"]
+    if not dossier.exists():
+        problems.append("H57: per-candidate geological reasoning CSV is not published")
+    else:
+        # the dossier opens with a '#' provenance line, which is not a CSV header
+        with dossier.open(newline="") as fh:
+            body = [ln for ln in fh if not ln.startswith("#")]
+        rows = list(csv.DictReader(body))
+        if len(rows) != b["arm"]["px"]:
+            problems.append(f"H57: dossier has {len(rows)} rows for {b['arm']['px']} arm pixels")
+        empty = [r for r in rows[:2000] if not str(r.get("geological_reasoning", "")).strip()]
+        if empty:
+            problems.append("H57: dossier rows with an empty geological_reasoning cell")
+        counts = {}
+        for r in rows:
+            counts[r["agreement_stratum"]] = counts.get(r["agreement_stratum"], 0) + 1
+        if counts != b["arm_rows_by_stratum"]:
+            problems.append("H57: dossier stratum counts differ from the build receipt")
+        notes.append(f"H57 dossier: {len(rows):,} rows, strata {counts}")
+
+    # the pages must name the verdict and the byte-identical short paths
+    for page in ("h57.html", "executive-summary.html", "index.html"):
+        path = DOCS / page
+        if not path.exists():
+            problems.append(f"H57: {page} is missing")
+            continue
+        text = path.read_text()
+        if "h57-candidate.tif" not in text and page == "executive-summary.html":
+            problems.append("H57: submission guide does not offer the short download path")
+        if sub["sha256"][:24] not in text and page != "index.html":
+            problems.append(f"H57: {page} does not show the artefact's sha256 prefix")
+        if gate["verdict"].split(" ")[0].lower() not in text.casefold():
+            problems.append(f"H57: {page} does not state the slot-gate verdict")
+    notes.append(f"H57 slot gate: {gate['verdict']} — R1 lift met: {gate['r1']['lift_met']}, "
+                 f"folds met: {gate['r1']['folds_met']}")
+    return problems
 
 
 def main() -> int:
@@ -209,18 +334,34 @@ def main() -> int:
     # decoded-pattern review, A-only scope, and byte-identical aliases together; a report that contradicts
     # any one of them must stop publication.
     try:
+        import csv
         import zipfile
+
         import numpy as np
         import rasterio
 
         sub_path = DATA / 'submission.json'
+        sub = json.loads(sub_path.read_text()) if sub_path.exists() else {}
+        current_round = ('H56' if str(sub.get('file', '')).startswith('gems52-h56-')
+                         else 'H57' if str(sub.get('file', '')).startswith('gems52-h57-')
+                         else 'OTHER')
+        notes.append(f'current round dispatched from docs/data/submission.json: {current_round} '
+                     f"({sub.get('file')})")
+
         if sub_path.exists():
-            sub = json.loads(sub_path.read_text())
             marker = (ROOT / 'submission/LATEST.txt').read_text().strip()
+            if sub.get('file') != marker:
+                problems.append(f'{current_round}: docs/data/submission.json does not match '
+                                'submission/LATEST.txt')
+        if current_round == 'H57':
+            problems.extend(check_h57(DATA, DOCS, ROOT, notes))
+        if current_round == 'H56':
+            sub = json.loads(sub_path.read_text())
             if sub.get('file') != marker:
                 problems.append('H56: docs/data/submission.json does not match submission/LATEST.txt')
             if sub.get('approved_for_weekly_slot') is not False:
                 problems.append('H56: current artifact must remain explicitly not approved for a weekly slot')
+            _ = None
             review_path = DATA / 'h56_slot_gate_review_2026-10-07.json'
             if not review_path.exists():
                 problems.append('H56: slot-gate review missing from docs/data')
@@ -477,10 +618,14 @@ def main() -> int:
         for arm, value in h['means'].items():
             if f'{value:.6f}' not in text:
                 problems.append(f'validation.html: R2 {arm} mean is not rendered from its receipt')
-        for page_name in ('index.html', 'executive-summary.html'):
-            body = (DOCS / page_name).read_text()
-            if 'Do not upload' not in body:
-                problems.append(f'{page_name}: missing failed-gate warning')
+        # The literal used to be the H53/H54 string 'Do not upload'.  That is a per-round status
+        # marker, not a permanent property of the site, so it is now read from the current receipt.
+        marker_needed = ('do not upload' if current_round != 'H57' else None)
+        if marker_needed:
+            for page_name in ('index.html', 'executive-summary.html'):
+                body = (DOCS / page_name).read_text()
+                if marker_needed not in body.casefold():
+                    problems.append(f'{page_name}: missing failed-gate warning {marker_needed!r}')
 
     edge_path = DATA / 'h55_edge_submission.json'
     edge_hold_path = DATA / 'h55_edge_holdout.json'

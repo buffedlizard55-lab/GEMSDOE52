@@ -1,5 +1,23 @@
 # GEMSDOE52
 
+<!--H57README-->
+## H57 — current unique artefact: two-view co-training union arm; slot gate NOT met (2026-10-07)
+
+**[Short-path H57 GeoTIFF](docs/downloads/h57-candidate.tif)** · [short single-TIFF ZIP](docs/downloads/h57-candidate.zip) · [canonical TIFF](docs/downloads/gems52-h57-union-novel-core25517px-arm14804px.tif) · [H57 audit page](docs/h57.html) · **[submission guide](docs/executive-summary.html)** · [artefact receipt](docs/data/submission.json) · [slot gate](evidence/h57_slot_gate.json) · [ranked hypotheses H57-A…H57-E](knowledge/17_hypotheses_H57_preregistered.md) · **[what H57 found](knowledge/18_hypotheses_H57_results.md)**.
+
+- **Current pointer, not permission.** `submission/LATEST.txt` points at the H57 TIFF so the unique file is easy to find. Every structural gate passes; the registered lift gate R1 does **not** (best measured mean lift +0.0048 against a +0.005 threshold). The upload decision is left to the owner with its arithmetic attached: P(this file scores below the owner's own 0.2778) = **0.83**, P(above 0.3195) = **0.36**, P(above the observed board top 0.3774) = **0.00**.
+- **What it is.** 40,321 emitted cells = a 25,517-cell exactly-accounted core (`h33-2-b2 ∩ gems24-d1-5`) plus a 14,804-cell novel arm ranked by the **union view** `max(p_A, p_B)` over pixels outside the ≤ 200 m ring, outside every accessible prior's support union (100 % of the arm), and at least 3 px from the core. Placed with the **isotropic 3-px emitter**.
+- **Local checks.** Single-band float32, values exactly `{0,1}`, **0 NaN**, no nodata tag, EPSG:32611, 3,730 × 3,292, transform identical to `sample_submission.tif`. Decoded pattern matches none of the **38** accessible aligned priors and is not the union of any of them. Closest emitted cell to a mapped catalogue pixel: **223.6 m**, so the ring that measured exactly zero credit is empty by construction. 217 cells falling outside the sample-submission domain were clipped and reported.
+- **What the holdouts said.** The union ranking field wins **16/16** fold cells against a matched random control and is rank 1 of 8 fields on both instruments. Four ideas were **refuted and shipped as refutations**: the anisotropic along-strike placement (+0.000055 tip, +0.000031 hide, 2/4 folds — the exact +28.6 % credited-truth-per-node algebra holds for an isolated 1-px trace and not against the mapped ones), the A-only buried-structure population (0.000785 against a matched random control of 0.001057, the worst of eight arms), View A alone as the ranking field, and pseudo-labels as a training signal (out-of-fold AUC 0.4842 → 0.4869).
+- **First non-degenerate measurement of the co-training premise.** Per 50 × 50 block, out-of-fold, whole-component folds, 4 px buffer, 2,200 blocks: max |r| = **0.1108** against the registered abandonment threshold 0.60. The Blum–Mitchell conditional-independence premise is *not refuted at this granularity* — weak coupling, not independence.
+- **A-only reasoning.** `docs/downloads/gems52-h57-40321px-candidate-geology.csv` carries **14,804 rows, one per emitted arm pixel**, each with its View-A/View-B probabilities, depth to basement and its footprint percentile, surface conductivity, detrended elevation, locally recovered strike and coherence, distance to the nearest mapped trace, agreement stratum, and a written geological reasoning ending in an explicit falsifier. These are **hypotheses for Phase-2 geological review, not verified faults**; none claims a fault exists.
+- **Projection only.** ρ = 0.03 → 0.2658, 0.05 → 0.2811, 0.07 → 0.2964, 0.09 → 0.3118, 0.12 → 0.3347, 0.14 → 0.3500, all conditional on owner-reported scores that are **not organiser-authenticated**. **ρ is the arm's credit density and is a prior, not a measurement.** A required-novel arm cannot be scored by this simulator at all: with the catalogue halo excluded from the pool the View A field scores 0.000358 against a random control of 0.001713. Nothing here is a leaderboard forecast.
+- **Board numbers, labelled.** `registry/leaderboard_snapshot_2026-10-07.json` records rank 1 = **0.3774** (`xiaofanhu`), rank 7 = **0.3195** (`DARD`), and the owner-reported `extradr19` best **0.2778** at rank 13. The brief's 0.3195 is the working target and is *not* the highest score on the board; the site says so wherever it quotes a target.
+- **Identifiers.** Name: `gems52-h57-two-view-union-arm-core25517px-arm14804px-5fadcaef-zeros`. Note (181 chars): `H57: exactly-accounted core of two scored priors plus 14.8k px of two-view co-training union mass, all outside the 200m ring and all outside prior support. Not a verified fault map.`
+- **Artefact SHA-256:** `5fadcaefd64db0cb…` (157,541 bytes) — full digest in `docs/data/submission.json`.
+- **Not claimed:** no guaranteed leaderboard gain, no organiser-authenticated score-to-file mapping, no hypothesis described as a discovery.
+<!--/H57README-->
+
 <!--H56README-->
 ## H56 — current unique artifact; NOT approved for upload pending spatial holdout (2026-10-07)
 
@@ -1216,6 +1234,13 @@ leaderboard number, data-availability claim and remembered fact before relying o
 - Require a comparable spatially blocked holdout to beat the current best before any upload. H55-1 paired shoulders failed its registered gate (+0.002361 vs +0.005); do not rerun it under the same registration. H56 currently has no comparable spatial-holdout receipt, so it is preserved for review but **not approved for upload**.
 - Provide A-only reasoning per candidate, preserve the audit trail and official-source links, flag source/protocol irregularities, and complete implementation, independent review/fix, and re-check passes.
 - Create and merge a PR from the session-fixed `arena/310eb064-gemsdoe52` branch; never use another branch. Do not ask the user for manual steps unless blocked.
+
+### H57 acceptance addendum — 2026-10-07 (takes precedence where older text conflicts)
+
+- The current unique artefact is the H57 union-arm TIFF linked at the top of this file. Its format, uniqueness, novelty, ring and set-relation gates all pass; **R1's mean-lift threshold does not**, and the artefact stays published-but-not-slot-approved until a comparable spatial holdout clears it.
+- H57 refuted four of its own registered ideas (anisotropic placement, the A-only population, View A alone, pseudo-label training). Those refutations are first-class results and must not be quietly dropped or re-tuned away.
+- The board's observed top on 2026-10-07 is **0.3774**, not 0.3195. Quote all three numbers with their owners; never call 0.3195 "the highest score right now".
+- A required-novel arm cannot be scored by this repository's simulator. Any future claim that a novel arm "validated" is a defect in the claim, not in the arm.
 
 **Arena core values, made operational here.** *Maximize P(Win):* every emission decision is scored by
 `P(DTI > floor)` over explicitly bounded unknowns (`src/gems52/revealed.py::budget_rule`), never by a

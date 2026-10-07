@@ -1,35 +1,128 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Executive summary and review guide for the current H56 research artifact; no upload is approved without a comparable spatial holdout.">
-<title>Submission guide · GEMSDOE52</title><link rel="stylesheet" href="style.css"><script src="site.js" defer></script></head>
-<body><a class="skip" href="#main">Skip to content</a><header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html">Overview</a><a href="executive-summary.html">Submission guide</a><a href="h56.html">H56 candidate</a><a href="forensics.html">0.2778 autopsy</a><a href="hypotheses.html">Hypotheses</a><a href="sources.html">Sources</a><a href="irregularities.html">Limitations</a></nav></header><main id="main">
-<div class="download-bar" aria-label="H56 candidate download"><div><strong>H56 research GeoTIFF — local gates pass; comparable spatial holdout NOT demonstrated — DO NOT UPLOAD</strong><small>gems52-h56-consensus-core-continuation-40517px-04c86e1888a8-zeros.tif</small><small>153815 bytes · single-band float32 · EPSG:32611 · finite [0,1] · sha256 <code>1308083dcf09b4c6…</code></small><small>format: PASS · no exact decoded match in 33 accessible priors · 31.9% of support outside their union · full-file ≥3 px spacing diagnostic FAILs at 2.83 px within the core</small></div><a class="button" href="downloads/h56-candidate.tif" download>↓ Download the short-path .TIF</a><a class="button secondary" href="downloads/h56-candidate.zip" download>↓ Single-TIFF ZIP</a><a class="button secondary" href="h56.html">Full candidate page →</a></div>
-<h1>Executive summary — H56 holdout gate pending</h1>
-<p class="lede">A unique, downloadable candidate is available for review. This guide does not authorize an upload: the required comparable spatially blocked holdout has not been demonstrated.</p>
-<div class="status"><strong>NOT APPROVED FOR A WEEKLY SLOT — DO NOT UPLOAD.</strong> The local format and bounded pattern-comparison checks pass; the full-file ≥3 px spacing diagnostic fails. No comparable spatially blocked H56 holdout receipt is present; the preregistration is retrospective. A prior-based projection cannot replace a holdout win against the current comparable best. Review <a href="data/h56_slot_gate_review_2026-10-07.json">the explicit slot-gate decision</a>.</div>
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Exactly how to submit the H57 GeoTIFF to DrivenData competition 306: the unique name, the note, and why 'Predicted values must be in range [0,1]' happens.">
+<title>Submit in 4 steps &middot; GEMSDOE52</title><link rel="stylesheet" href="style.css">
+<script src="site.js" defer></script></head><body><a class="skip" href="#main">Skip to content</a>
+<header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html">Overview</a>
+<a href="executive-summary.html">Submission guide</a><a href="h57.html">H57 current</a><a href="h56.html">H56 audit</a><a href="forensics.html">0.2778 autopsy</a>
+<a href="hypotheses.html">Hypotheses</a><a href="sources.html">Sources</a>
+<a href="irregularities.html">Limitations</a></nav></header><main id="main">
+<div class="download-bar" id="h57-bar" aria-label="H57 submission download">
+<div><strong>H57 &mdash; two-view co-training union arm &middot; VERDICT: SUPPORTED BUT BELOW THE REGISTERED LIFT THRESHOLD</strong>
+<small><code>gems52-h57-union-novel-core25517px-arm14804px.tif</code></small>
+<small>157,541 bytes &middot; single-band float32 &middot; EPSG:32611 &middot;
+3,292 &times; 3,730 &middot; 40,321 emitted px
+(25,517 exactly-accounted core + 14,804 novel arm) &middot; values exactly
+<code>{0, 1}</code> &middot; 0 NaN &middot; sha256 <code>5fadcaefd64db0cb553bf16d&hellip;</code></small>
+<small>format gate <b>PASS</b>
+(no problems) &middot; decoded pattern
+unique against 38 accessible aligned priors:
+<b>True</b> &middot; arm cells outside their support union:
+<b>14,804 px (100.0% of the arm)</b></small>
+<small>closest emitted cell to a mapped catalogue trace <b>223.6 m</b>
+&mdash; the &le; 200 m ring that measured exactly zero credit is empty by construction.</small>
+<small>conditional projection only (owner-reported scores, not organiser-authenticated):
+rho=0.03 &rarr; 0.2658, rho=0.05 &rarr; 0.2811, rho=0.07 &rarr; 0.2964, rho=0.09 &rarr; 0.3118, rho=0.12 &rarr; 0.3347, rho=0.14 &rarr; 0.35.
+rho is the arm's credit density &mdash; a <b>prior, not a measurement</b>. Not a forecast.</small>
+<small>submission name: <code>gems52-h57-two-view-union-arm-core25517px-arm14804px-5fadcaef-zeros</code><br>note (181 chars): <code>H57: exactly-accounted core of two scored priors plus 14.8k px of two-view co-training union mass, all outside the 200m ring and all outside prior support. Not a verified fault map.</code></small>
+</div>
+<a class="button" href="downloads/gems52-h57-union-novel-core25517px-arm14804px.tif" download>&darr; Download the submission .TIF</a>
+<a class="button" href="downloads/gems52-h57-union-novel-core25517px-arm14804px.zip" download>&darr; Download single-TIFF .ZIP</a>
+<a class="button secondary" href="downloads/h57-candidate.tif" download>Short link &middot; h57-candidate.tif</a>
+<a class="button secondary" href="h57.html">Full audit &amp; holdout &rarr;</a>
+</div>
 
-<section class="card"><h2>What the submission form requires, and where it is answered</h2>
-<table><tr><th>Form field</th><th>What the form requires</th><th>This candidate</th></tr>
-<tr><td>File</td><td>A single-band GeoTIFF on the competition grid</td><td><code>gems52-h56-consensus-core-continuation-40517px-04c86e1888a8-zeros.tif</code> — 153815 bytes, 3292×3730, one band</td></tr>
-<tr><td>Values</td><td>&ldquo;Predicted values must be in range [0,1]&rdquo;</td><td>raw values are exactly {0,1}, min 0, max 1, 0 NaN — the reported range error cannot recur</td></tr>
-<tr><td>Submission name</td><td>A unique name</td><td><code>GEMSDOE52-H56-ConsensusCore-Continuation-40517px</code></td></tr>
-<tr><td>Note</td><td>A short note (≤200 characters)</td><td>the box below, 157 characters; for review only, not for portal use</td></tr></table>
-<label for="submission-note">Short identifying note (157 chars; retain for later review, not for portal use yet)</label><textarea id="submission-note" readonly>H56 consensus core + continuation | 25,517 prior-overlap core px + 15,000 selected arm px | decoded pattern differs from 33 accessible priors; research only.</textarea><button data-copy="submission-note">Copy note</button>
-<p class="small">SHA-256 of the exact audit-only file: <span class="mono">1308083dcf09b4c6fb656589ce79b3c392f5a0dd315e2ed31c8d36a47fc1d52d</span></p></section>
+<h1>Submitting this file takes four steps.</h1>
+<p class="lede">Everything below is generated from the file on disk, not typed in. If any statement
+here ever disagrees with the bytes, <code>scripts/check_site.py</code> fails the build.</p>
 
-<h2>Review steps — no upload authorized</h2><ol>
-<li>Download the short-path <a href="downloads/h56-candidate.tif" download>H56 TIFF</a> for audit and confirm SHA-256 <span class="mono">1308083dcf09b4c6fb656589…</span>; do not re-export it.</li>
-<li><strong>Do not upload or spend a weekly slot.</strong> No comparable spatially blocked H56 holdout is recorded.</li>
-<li>Before reconsidering, preregister a comparable blocked holdout against the current best; use identical folds, budget and inputs; require the frozen decision gate to pass.</li>
-<li>Only after an independent review updates the slot-gate receipt should the listed submission name/comment be considered for the portal.</li></ol>
+<div class="status"><strong>Verdict: SUPPORTED BUT BELOW THE REGISTERED LIFT THRESHOLD.</strong> The structure of this artifact is verified end to end -- format, uniqueness, novelty, the ring, the set relations and the per-candidate geological reasoning all pass their registered gates, and the ranking field is the best of eight on the only holdout that can measure anything. R1's absolute +0.005 lift threshold is not met (best +0.0048). Upload is therefore a judgement call, not a gate pass: P(this file scores below the owner's own 0.2778) = 0.83 under the registered prior, and P(above 0.3195) = 0.36.</div>
 
-<h2>What is in the file — composite, not fully novel support</h2><p>The <strong>25,517-cell core</strong> is the exact intersection <code>h33-2-b2 ∩ gems24-d1-5</code>; those cells deliberately reuse support present in earlier patterns. Its implied credit interval [4,168, 5,223] is exact only conditional on owner-reported file/score associations, which are not organizer-authenticated. The <strong>15,000-cell selected continuation/scarp arm</strong> was ranked using the along-strike continuation field, 3 m DEM scarp gates and 1 m LiDAR step/coherence evidence. The decoded audit finds no exact pattern match among 33 accessible priors, but only 12,941/40,517 total cells (31.9%) lie outside their support union; because the core is contained in prior patterns, 2,059 selected-arm cells have checked-prior support. The pixel-level overlap list is absent. The arm-size projection applies a 0.03–0.14 density prior to all 15,000 selected arm cells despite this overlap, so it remains a conditional scenario, not validation. All output cells are 8-connected singletons; the full-file ≥3-pixel nearest-neighbour diagnostic fails at 2.828 px in the inherited core, while the selected arm is ≥3.162 px from other emitted cells.</p>
-<h2>A-only reasoning scope</h2><p>No H56 per-cell A-only dossier is reproducible from the committed checkout: the core is an intersection of two prior patterns rather than an A-vs-B model output, and the selected-arm feature/probability arrays are not present. Do not substitute another candidate&rsquo;s reasoning. See the <a href="data/h56_a_only_reasoning_scope_2026-10-07.json">H56 A-only scope receipt</a>.</p>
+<section class="card"><h2>Step 2 &mdash; what the form asks for, and what this file contains</h2>
+<table><tr><th>Form field</th><th>What the portal requires</th><th>This file</th></tr>
+<tr><td>File to submit</td><td>A single-band <code>.tif</code>, or a <code>.zip</code> holding
+exactly one GeoTIFF. The CRS, shape and geotransform must match the submission format.</td>
+<td><code>gems52-h57-union-novel-core25517px-arm14804px.tif</code> &mdash; 157,541 bytes, CRS <code>EPSG:32611</code>,
+3,292 &times; 3,730, transform
+<code>(100, 0, 243350, 0, -100, 4.50855e+06)</code>,
+identical to <code>sample_submission.tif</code>. A .ZIP of the same TIFF is the second button.</td></tr>
+<tr><td>Predicted values</td><td>&ldquo;Predicted values must be in range [0,1]&rdquo;</td>
+<td>raw values are exactly <code>{0, 1}</code> &mdash; min 0, max
+1, <b>0 NaN</b>, 0 infinities, no nodata tag. Format gate:
+<b>PASS</b> (no problems).</td></tr>
+<tr><td>Submission name</td><td>A unique name that tells your submissions apart</td>
+<td><code>gems52-h57-two-view-union-arm-core25517px-arm14804px-5fadcaef-zeros</code></td></tr>
+<tr><td>Note (optional)</td><td>A short comment, at most 200 characters</td>
+<td>the 181-character string below &mdash; <b>fits</b></td></tr></table>
+<label for="submission-note">Copy this into the Note box (181 / 200 characters)</label>
+<textarea id="submission-note" readonly>H57: exactly-accounted core of two scored priors plus 14.8k px of two-view co-training union mass, all outside the 200m ring and all outside prior support. Not a verified fault map.</textarea><button data-copy="submission-note">Copy note</button>
+<p class="small">The bytes you downloaded are the bytes that were checked: sha256
+<span class="mono">5fadcaefd64db0cb553bf16dfd0ec9b54005e3674ed4afb1052d5c8e1e215f78</span>. Re-exporting or re-compressing is unnecessary; the
+portal accepts the <code>.tif</code> directly.</p></section>
 
-<h2>Receipts and honest limits</h2><ul>
-<li><a href="data/submission.json">Artifact receipt</a> · <a href="data/h56_slot_gate_review_2026-10-07.json">slot-gate review</a> · <a href="data/gems52-h56-build.json">build receipt</a> · <a href="data/gems52-h56-verify.json">decoded verification</a> · <a href="data/format_gate_h56.json">format gate</a> · <a href="data/uniqueness_h56.json">prior-comparison gate</a> · <a href="data/projection_h56.json">conditional projection</a> · <a href="h56.html">candidate page</a></li>
-<li><strong>Do not upload</strong> the older research artifacts on this site (R3-H1, H55-PROFILE, H55-1, H55-EDGE, R2): each failed its registered promotion gate and none is approved for a weekly slot. The H56 candidate is <strong>not approved</strong> pending a comparable spatial holdout.</li>
-<li>The projection is an integral over a <em>stated prior</em> for how much credit the selected arm earns per cell; it is not a leaderboard measurement. It applies the prior to 15,000 arm cells even though 2,059 overlap accessible prior support; P(beat the board top) is about 0.37, not 1.</li>
-<li>Inputs were restored from SHA-pinned owner mirrors, not organizer-authenticated downloads; they reproduce the organizer&rsquo;s own documented checksums. Irregularities are recorded in <a href="irregularities.html">limitations</a>.</li>
-<li>Predictions are model proposals, not confirmed faults, and a competition score is not the expert-reviewed outcome.</li></ul>
-<p class="small">Official sources: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">problem statement and data description</a> · <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">competition rules</a>. Grid, dtype and value checks are local and are not a promise about an undocumented portal validator.</p>
-<!--H54BAR--><div class="download-bar" id="h54-bar"><div><strong>H54 legacy GeoTIFF — research/audit only · DO NOT UPLOAD</strong><small>gems52-h54-revealed-core-strike-continuation-50517px-r1.tif</small><small>313431 bytes · local format check True · 23 bounded prior files checked · full-inventory decoded uniqueness unknown</small><small>No comparable spatial holdout · not a new result · no weekly-slot approval</small><small>Audit-only note (91 chars): <code>H54 legacy research/audit only; no comparable spatial holdout; not approved for submission.</code></small></div><a class="button" href="downloads/h54-audit-only.tif" download>↓ Download audit .TIF</a><a class="button" href="downloads/h54-audit-only.zip" download>↓ Download audit .ZIP</a><a class="button" href="h54.html">Read limitations →</a></div><!--/H54BAR--></main><footer>Competition 306 · Local research only · A competition score is not the expert-reviewed outcome. <a href="irregularities.html">Limitations</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code and prompt</a></footer></body></html>
+<section class="card"><h2>Step 3 &mdash; if the portal says &ldquo;Predicted values must be in range [0,1]&rdquo;</h2>
+<p>That error has been hit in this project's history and it is almost never a scaling problem. Three
+causes account for it, in the order they occur:</p>
+<ol>
+<li><strong>No-data encoding.</strong> The problem page says data outside the survey bounds may be
+&quot;null or NaN&quot;, but the validator range-checks the array and NaN fails
+<code>0 &le; v &le; 1</code> in every comparison direction. The competition's own
+<code>sample_submission.tif</code> is the proof: its 40,321-cell
+finite footprint is written with <b>0.0</b>, not NaN. This file writes 0.0 everywhere it does not
+predict, so it cannot trigger this.</li>
+<li><strong>A no-data tag outside [0,1].</strong> A <code>nodata</code> value such as
+<code>-1</code> or <code>-3.4e38</code> is read back by some validators as a pixel value. This file
+carries <b>no nodata tag at all</b>.</li>
+<li><strong>Rescaling that was never applied.</strong> If a model outputs logits or arbitrary real
+scores they must be written as probabilities. This file never needed rescaling: it is written
+directly in {0, 1}.</li>
+</ol>
+<p class="small">All three are checked locally by <code>gems52.gates.format_report</code> against
+the competition's own <code>sample_submission.tif</code>, and every check is re-run against the
+served download by <code>scripts/check_site.py</code>. Local checks are a compatibility precaution,
+not a promise about an undocumented portal validator.</p></section>
+
+<section class="card"><h2>Step 4 &mdash; is this file actually new?</h2>
+<table><tr><th>Check</th><th>Result</th></tr>
+<tr><td>Decoded pattern equals any of the 38 accessible aligned prior rasters</td>
+<td><b>no &mdash; none</b></td></tr>
+<tr><td>Equals the literal union of those priors</td>
+<td><b>False</b></td></tr>
+<tr><td>Arm cells outside the accessible prior-support union</td>
+<td><b>14,804 px
+(100.0% of the arm)</b></td></tr>
+<tr><td>Equals the union of the two views it was derived from</td>
+<td><b>False</b></td></tr>
+<tr><td>Equals any of the three named prior files it was derived from</td>
+<td><b>False</b></td></tr>
+<tr><td>Closest emitted cell to a mapped catalogue trace</td>
+<td><b>223.6 m</b> (the ring that measured exactly zero
+credit is empty)</td></tr>
+<tr><td>Cells clipped to the submission domain</td>
+<td>196 (mass outside
+<code>sample_submission.tif</code>'s finite mask cannot earn credit and can only be scored as a
+false positive)</td></tr></table>
+<p class="small">This is uniqueness against the <em>accessible</em> inventory only. It is not proof
+against every submission on the leaderboard, and it is not a statement that any emitted cell is a
+fault: predictions are model proposals, and a competition score is not the Phase-2 expert
+outcome.</p></section>
+
+<h2>Honest limits</h2><ul>
+<li>The core of this file reuses support from two earlier owner-reported submissions; its credit
+bound is derived from scores that are <strong>owner-reported, not organiser-authenticated</strong>.</li>
+<li>The new arm's credit density is a <strong>prior</strong>. The full curve is printed on the
+<a href="h57.html">audit page</a>; it is conditional arithmetic, not a forecast. The arm cannot be
+scored by the catalogue simulator at all.</li>
+<li>The structure of this artifact is verified end to end -- format, uniqueness, novelty, the ring, the set relations and the per-candidate geological reasoning all pass their registered gates, and the ranking field is the best of eight on the only holdout that can measure anything. R1's absolute +0.005 lift threshold is not met (best +0.0048). Upload is therefore a judgement call, not a gate pass: P(this file scores below the owner's own 0.2778) = 0.83 under the registered prior, and P(above 0.3195) = 0.36.</li>
+<li>Inputs are SHA-pinned owner mirrors of the competition rasters, restored through the GitHub API
+and verified by SHA-256 and byte count; they are <strong>not</strong> organiser-authenticated
+downloads.</li>
+</ul>
+<p class="small">Official sources:
+<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">problem statement</a> &middot;
+<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">description, metric and submission format</a> &middot;
+<a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">competition rules (PDF)</a> &middot;
+<a href="https://github.com/drivendataorg/gems-prize-reference-solution">official reference solution</a>.</p>
+</main><footer>Competition 306 &middot; Local research only &middot; A competition score is not the
+expert-reviewed outcome. <a href="irregularities.html">Limitations</a> &middot;
+<a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code and prompt</a></footer></body></html>

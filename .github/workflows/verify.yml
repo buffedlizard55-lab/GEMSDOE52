@@ -2,7 +2,7 @@ name: Verify scientific code and site
 on:
   pull_request: {}
   push:
-    branches: [main, arena/f1d591a5-gemsdoe52, arena/ec9410af-gemsdoe52]
+    branches: [main, arena/f1d591a5-gemsdoe52, arena/ec9410af-gemsdoe52, arena/bb5c27dd-gemsdoe52]
 permissions:
   contents: read
 jobs:
