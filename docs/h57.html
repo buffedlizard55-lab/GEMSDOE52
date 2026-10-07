@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="H57 registered spatial holdout, corrected views, fail-closed co-training decision, and bounded TIFF gates"><title>H57 real-data holdout and research TIFF · GEMSDOE52</title>
+<link rel="stylesheet" href="style.css"><script src="site.js" defer></script></head>
+<body><a class="skip" href="#main">Skip to content</a><header><nav><a class="brand" href="index.html">GEMS / DOE 52</a>
+<a href="index.html">Overview</a><a href="h57.html">H57 real-data test</a>
+<a href="executive-summary.html">Submission guide</a><a href="validation.html">Validation</a>
+<a href="forensics.html">0.2778 autopsy</a><a href="sources.html">Sources</a>
+<a href="irregularities.html">Limitations</a></nav></header><main id="main"><!--H57-BAR--><section class="download-bar" id="h57-bar" aria-label="H57 research GeoTIFF download">
+<div>
+<strong>H57 real-data research TIFF — safe to download for review; NOT approved to submit</strong>
+<small><code>gems52-h57-view-b-corrected-fallback-37654px-20261007T214818Z-7987bbd21afe-research.tif</code> · 143,630 bytes · 1 band float32 · EPSG:32611 · 3730×3292 · finite values [0,1] · 37,654 emitted pixels</small>
+<small>On-disk format gate: <b>PASS</b> · exact decoded-pattern uniqueness: <b>PASS</b> against 26 supplied aligned accessible rasters · literal prior-union check: <b>PASS</b> · SHA-256 <code>ba8e2b9234235ce7…</code></small>
+<small>Spatial holdout: H57 fallback mean DTI <b>0.169466</b>; best same-run single-view control <b>0.169466</b>; historical comparable mean <b>0.197032</b> (lift -0.027566). Co-training exchange: <b>disabled by the frozen OOF error gate</b>.</small>
+<small><b>Safe to download for research?</b> YES — local format/range and decoded-pattern checks passed. &nbsp; <b>Approved to submit?</b> NO — research only; do not upload or spend a competition slot.</small>
+<small>Submission name: <code>GEMSDOE52-H57-view-b-corrected-fallback-7987bbd21a</code> (50 chars) · note (124 chars): <code>H57 corrected View-B single-view fallback; co-training disabled by frozen OOF gates; research only; not approved for upload.</code></small>
+<small>No portal upload or slot use. A participant-level public score is not predicted or attributed to this file. The existing competitive <code>submission/LATEST.txt</code> pointer is unchanged.</small>
+</div>
+<a class="button" href="downloads/gems52-h57-view-b-corrected-fallback-37654px-20261007T214818Z-7987bbd21afe-research.tif" download>↓ Download H57 .TIF</a>
+<a class="button" href="downloads/gems52-h57-view-b-corrected-fallback-37654px-20261007T214818Z-7987bbd21afe-research.zip" download>↓ Download single-TIFF .ZIP</a>
+<a class="button secondary" href="h57.html">Holdout and audit →</a>
+<a class="button secondary" href="executive-summary.html">Submission guide →</a>
+</section><!--/H57-BAR-->
+<div class="eyebrow">H57 · registered real-data test · 2026-10-07</div>
+<h1>Corrected views.<br>Fail-closed validation.</h1>
+<p class="lede">H57 tested whether corrected potential-field/subsurface View A and surface, radiometric and LiDAR View B could support a one-round whole-component co-training experiment. It did <strong>not</strong> meet the registered OOF-independence gate. The model was therefore not co-trained; the released TIFF is explicitly a corrected View-B research fallback.</p>
+<div class="status"><strong>Download is safe for research review; submission is not approved.</strong>
+The TIFF passed local format/range checks and is decoded-pattern distinct from all 26 supplied aligned accessible priors. The OOF false-positive-rate errors were constant in fold 1, so the registered co-training mechanism failed closed. The fallback mean (0.169466) is below the prior comparable local mean (0.197032); no weekly slot was used.</div>
+<div class="grid"><div class="card"><div class="metric">0.16947</div><div class="label">four-fold mean DTI, corrected View-B fallback</div></div>
+<div class="card"><div class="metric">-0.02757</div><div class="label">difference vs historical comparable local mean 0.1970318</div></div>
+<div class="card"><div class="metric">0</div><div class="label">portal uploads / slots used</div></div></div>
+<h2>Four-fold matched-control results</h2>
+<p>All round-0 arms used the same training rows, seed, learner, 80-pixel buffer, fold-specific proportional budget, and metric-aware placement. The fixed strongest same-run control is corrected View B itself (mean 0.169466); therefore no co-training lift is claimed. Fold scores below are local catalogue-holdout DTI, not public leaderboard scores.</p>
+<div class="table-wrap"><table><thead><tr><th>Fold</th><th>View A</th><th>View B</th><th>Early fusion</th><th>Max A/B</th><th>Round-0 router</th><th>Matched random</th></tr></thead><tbody><tr><th>Fold 0</th><td>0.057563</td>
+<td>0.144225</td><td>0.133641</td>
+<td>0.124498</td><td>0.109611</td>
+<td>0.070033</td></tr>
+<tr><th>Fold 1</th><td>0.090219</td>
+<td>0.217077</td><td>0.201218</td>
+<td>0.215954</td><td>0.183811</td>
+<td>0.071222</td></tr>
+<tr><th>Fold 2</th><td>0.095010</td>
+<td>0.153441</td><td>0.157519</td>
+<td>0.143343</td><td>0.133360</td>
+<td>0.083089</td></tr>
+<tr><th>Fold 3</th><td>0.058960</td>
+<td>0.163121</td><td>0.153446</td>
+<td>0.155806</td><td>0.121750</td>
+<td>0.072631</td></tr></tbody></table></div>
+<p>Mean controls: A 0.075438; corrected B 0.169466; early fusion 0.161456; max(A,B) 0.159900; round-0 disagreement router 0.137133; matched random 0.074244.</p>
+<h2>Why the registered co-training gate failed</h2>
+<p>The predeclared diagnostic required both block-level negative MSE and FPR error correlations to be defined in every fold and pooled, with at least 20 non-degenerate 50×50 blocks and absolute Pearson/Spearman values below 0.60. Pooled proxy-error correlations were weak, but fold 1's FPR error was constant, making Pearson and Spearman undefined. The correct action was to disable co-training—not to impute, change thresholds, or switch diagnostics.</p>
+<div class="table-wrap"><table><thead><tr><th>Fold</th><th>Usable blocks</th><th>Negative MSE r / ρ</th><th>Negative FPR r / ρ</th><th>Gate</th><th>Reason</th></tr></thead><tbody><tr><th>0</th><td>1028</td>
+<td>-0.080879 / -0.057475</td>
+<td>-0.017635 / 0.003680</td>
+<td>PASS</td><td>weak proxy negative-error correlation; not proof of conditional feature independence</td></tr>
+<tr><th>1</th><td>615</td>
+<td>0.130061 / 0.130550</td>
+<td>not measured / not measured</td>
+<td>FAIL CLOSED</td><td>insufficient or degenerate negative error blocks: disable co-training</td></tr>
+<tr><th>2</th><td>265</td>
+<td>0.106328 / 0.080479</td>
+<td>-0.043637 / 0.103382</td>
+<td>PASS</td><td>weak proxy negative-error correlation; not proof of conditional feature independence</td></tr>
+<tr><th>3</th><td>374</td>
+<td>0.117781 / 0.112971</td>
+<td>-0.020178 / -0.023057</td>
+<td>PASS</td><td>weak proxy negative-error correlation; not proof of conditional feature independence</td></tr>
+<tr><th>Pooled</th><td>2282</td>
+<td>0.072734 / 0.074282</td>
+<td>-0.000149 / 0.090253</td>
+<td>PASS</td><td>weak proxy negative-error correlation; not proof of conditional feature independence</td></tr>
+</tbody></table></div>
+<p><strong>No pseudo-labels were generated, no round-1 model was fit, and no co-training score exists.</strong> Not applicable to this artifact: the OOF independence gate disabled co-training, so the exported field is corrected View B only. There is no H57 A-only stratum or A-only candidate to interpret; this is recorded as a failed promotion requirement, not as missing evidence for a co-trained prediction.</p>
+<h2>Local TIFF / uniqueness checks</h2>
+<ul><li>Single-band float32; 3730×3292; EPSG:32611; 100 m cell size; exact sample transform.</li>
+<li>All pixels finite and within [0,1]; 37,654 positive cells; output pixels re-read and matched the in-memory emission exactly.</li>
+<li>Decoded-pixel SHA-256: <code>7987bbd21afe77dfafc0fb1880a3695febaba7fbdb6a4581ce9331778a04ebd6</code>; TIFF-byte SHA-256: <code>ba8e2b9234235ce7bc7f9d45369981727a9611296e31a3287b5f3fdbd122e304</code>.</li>
+<li>Canonical decoded pattern unique: PASS against 26 accessible aligned prior rasters; literal prior-union equality: PASS; support novelty 70.3% is reported as a diagnostic only.</li>
+<li>Same-run A/B union gate: not applicable because co-training was disabled. Local slot gates: {&quot;a_only_reasoning&quot;: false, &quot;canonical_decoded_pattern_unique&quot;: true, &quot;format&quot;: true, &quot;not_literal_prior_union&quot;: true, &quot;not_literal_same_run_AB_union&quot;: false, &quot;scientific_holdout&quot;: false}.</li></ul>
+<p>A local format pass or decoded uniqueness pass is not evidence of geological quality, organizer authentication, portal acceptance, or a leaderboard score.</p>
+<h2>Why 0.2778, and what the leaderboard says</h2>
+<p>The public board snapshot fetched 2026-10-07 lists xiaofanhu at <strong>0.3774 (#1)</strong>, DARD at <strong>0.3195 (#7)</strong>, and extradr19 at <strong>0.2778 (#13)</strong>. The table is participant-level and does not authenticate a particular TIFF, filename, or hash. The user-supplied mapping of 0.2778 to the H33 file is owner-reported. Local byte forensics on an available related mirror show 2,545 off-catalogue flank pixels removed and none on the known-label mask; reducing weak false-positive mass is a plausible explanation, not a proven cause of the score. See the <a href="forensics.html">0.2778 autopsy</a>.</p>
+<p>H57's local B-only fallback does <strong>not</strong> beat the registered comparable mean and no public-score improvement is forecast. No upload or weekly slot was used.</p>
+<h2>Ranked geological hypotheses</h2>
+<p>The leading H57-1 test combined corrected potential-field/subsurface View A with radiometric/LiDAR-aware surface View B and failed its co-training gate; it did not validate a buried fault. Three alternatives remain unrun.</p>
+<div class="table-wrap"><table><thead><tr><th>Rank</th><th>Hypothesis</th><th>Target signature / expected missing-fault mechanism</th><th>Difference / cost</th></tr></thead><tbody>
+<tr><th>1</th><td>H57-1 · corrected two-view covered range fronts</td><td>Potential-field/deep-cover contrast with weak DEM/LiDAR scarp; test buffered whole-segment co-training only if OOF errors permit.</td><td>Corrected band-6 TC routing plus external radiometric/LiDAR stack; H56 was synthetic. Actual test failed closed. Low-to-medium expectation; 2–4 CPU h.</td></tr>
+<tr><th>2</th><td>H57-2 · LiDAR scarp-network endpoints/relays</td><td>Strike-consistent fragment terminations or en-echelon relays with a broad structural edge; potential secondary scarps may be unmapped.</td><td>Topology/coverage censoring rather than another local scarp maximum. 2–3 h; owner-mirrored derivatives exist; raw 3DEP tile QA would be separate.</td></tr>
+<tr><th>3</th><td>H57-3 · conductivity-edge T-junctions</td><td>Scale-persistent conductivity edge termination against a differently oriented gravity/RTP edge.</td><td>Endpoint/intersection geometry, not conductivity magnitude. 3–5 h; conductivity depth and geological independence remain uncertain.</td></tr>
+<tr><th>4</th><td>H57-4 · event-level ComCat lineaments</td><td>Filtered event clusters aligned with potential-field edges where surface scarps are weak.</td><td>Declustering/completeness/depth workflow, not 100-km smoothed seismic context. 4–6 h; ComCat query availability checked, but events are not a fault layer.</td></tr>
+</tbody></table></div>
+<p><a href="h57-hypotheses.md">Read the full preregistration, exact channel lists, gate rules, limits and official sources →</a> · <a href="data/h57_submission.json">Artifact receipt</a> · <a href="data/h57_holdout.json">Fold-level holdout JSON</a> · <a href="data/h57_independence.json">OOF block-error diagnostic</a> · <a href="data/h57_pseudo_exchange.json">Pseudo-label gate receipt</a> · <a href="data/h57_prefit_lock.json">Pre-fit lock</a></p>
+<h2>Official sources and limitations</h2>
+<ul><li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">DrivenData problem, scoring and GeoTIFF format</a>.</li>
+<li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">Official participant leaderboard</a> (dated observation, no candidate hash attribution).</li>
+<li><a href="https://doi.org/10.1145/279943.279962">Blum &amp; Mitchell, COLT 1998</a> (co-training assumptions, not proof they hold here).</li>
+<li><a href="https://doi.org/10.5066/P93LGLVQ">USGS GeoDAWN data release</a>; H57 uses owner-mirrored derivatives, not independently authenticated raw arrays.</li>
+<li><a href="https://doi.org/10.2172/1724080">USGS/DOE Great Basin blind-system report</a> (mechanism context, not validation of H57 predictions).</li>
+<li><a href="https://www.usgs.gov/3d-elevation-program">USGS 3DEP</a> and <a href="https://earthquake.usgs.gov/fdsnws/event/1/">USGS ComCat</a>.</li>
+<li><a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">DOE/NREL GEMS Prize rules, September 2026</a>.</li></ul>
+<p>Frozen registration SHA-256: <code>63f3cb685e0a3b21d53201e9e0a91c6b26c54a8af52dce896a47c7a2fdc090b2</code> · pre-fit lock SHA-256: <code>5d24577ed3070911944f309c26cfcf304e118560d84bb7a722720c3d153a8cc3</code> · run signature: <code>c29a3e415c8636fb046e6bbab6e02cad82cd21ffa2a4afff9f8ae38e0996688b</code>.</p>
+<h2>Limitations and next work</h2>
+<ul><li>SHA/size pins establish consistency with local owner mirrors, not organizer downloads; GeoDAWN/LiDAR features are owner-mirror derivatives.</li>
+<li>Catalogue-zero cells are proxy negatives, not verified fault absence. Whole 8-connected raster components are not authenticated geological fault segments.</li>
+<li>The four-fold holdout tests recovery of known catalogue components; it is not validation against expert-hidden new faults, verified geothermal vents, or prize outcomes.</li>
+<li>The supplied board is team-level; the H33 filename/score mapping remains owner-reported. Do not infer a public score from local DTI.</li>
+<li>Next: keep the slot unused; review false-positive/constant FPR diagnostics and feature-domain limits, then preregister an independent alternative (for example H57-2) before any new fit. Obtain authenticated official inputs if permitted.</li></ul>
+<h2>Submission status</h2><p><strong>Safe to download for research: YES.</strong> <strong>Approved to submit: NO.</strong> Current note: <code>H57 corrected View-B single-view fallback; co-training disabled by frozen OOF gates; research only; not approved for upload.</code>. The note is an identifier only; do not paste it into a portal while this run is unapproved.</p></main>
+<footer>Competition 306 · H57 is local model research, not verified fault discovery, geothermal resource confirmation, organizer validation, or a public-score forecast. <a href="irregularities.html">Limitations &amp; review</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Repository and complete prompt</a></footer></body></html>

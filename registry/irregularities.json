@@ -1,6 +1,6 @@
 {
  "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified.",
- "generated": "2026-10-07T02:35Z",
+ "generated": "2026-10-07T21:00Z",
  "entries": [
   {
    "id": "IR-30-029",
@@ -399,6 +399,14 @@
    "what_it_is": "Unpadded citation of IR-52-004. docs/forensics.html, src/gems52_h1/ and evidence/prepared_manifest.json use the two-digit form; the register uses three.",
    "how_we_know": "grep -o \"IR-52-0[0-9]\" over the tree; both forms resolve to the same entry.",
    "disposition": "alias of IR-52-004 - kept as its own id so the citation test can resolve it rather than so it can drift. The rules document's domain differs from the one cited in the brief ( docs.nlr.gov vs the live www.nlr.gov )."
+  },
+  {
+   "id": "IR-52-032",
+   "title": "The core feature-band map omitted geodetic shear band 7, preventing a clean feature build",
+   "status": "fixed before H57 model fitting; regression test added",
+   "what_it_is": "A malformed inline comment in src/gems52/features.py swallowed the band-7 mapping. The TIFF has 19 bands, but BANDS omitted index 7, so features.build() later indexed raw[\"geod_shearrate\"] and failed. The defect was distinct from the band-6 physical misclassification (IR-52-019).",
+   "how_we_know": "Direct source inspection: BANDS had keys 1\u20136 and 8\u201319, while the builder reads raw[\"geod_shearrate\"]. The 19-band inventory and source tags identify band 7 as geodetic shear rate. Added a regression test requiring exactly the 1-based keys 1..19 and the band-7 label.",
+   "disposition": "Fixed by restoring key 7 and correcting the historical documentation pointer. The H57 stack still uses only the locked corrected gems55.radlayers view lists; A_mag_tilt_abs remains excluded from View A. No model was fit before this fix."
   }
  ]
 }

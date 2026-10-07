@@ -1,0 +1,96 @@
+{
+  "created_utc": "2026-10-07T21:36:27.686744Z",
+  "status": "PREFIT_LOCKED",
+  "review_pass": 7,
+  "base_commit": "ad0f38caafdeb193251253bf39749a22d6d03c9d",
+  "working_branch": "arena/9f28a48b-gemsdoe52",
+  "model_fit_started": false,
+  "spatial_holdout_scored": false,
+  "registration_path": "registry/h57_preregistration.json",
+  "registration_sha256": "63f3cb685e0a3b21d53201e9e0a91c6b26c54a8af52dce896a47c7a2fdc090b2",
+  "hypothesis_path": "knowledge/17_hypotheses_H57_preregistered.md",
+  "hypothesis_sha256": "877800972244a64ba72f501e9be74066fa3ec4fa65485a56c6d1d8d779a48703",
+  "registration_hash_matches_hypothesis": true,
+  "input_readback": {
+    "training_features.tif": {
+      "path": "data/training_features.tif",
+      "sha256": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+      "bytes": 418912844
+    },
+    "labels.tif": {
+      "path": "data/labels.tif",
+      "sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+      "bytes": 425830
+    },
+    "sample_submission.tif": {
+      "path": "data/sample_submission.tif",
+      "sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+      "bytes": 1599597
+    },
+    "geodawn_rad_u8.tif": {
+      "path": "data/external/geodawn_rad_u8.tif",
+      "sha256": "c22420f75999030d7cc65c9e31e50d232ea6158423bca051613a18a8b20ba682",
+      "bytes": 26612970
+    },
+    "geodawn_extensions_u8.tif": {
+      "path": "data/external/geodawn_extensions_u8.tif",
+      "sha256": "a35a9c6d2a14786f4dab85481ee59769213072f5dab5b2535ea82ae4d9bb7d9b",
+      "bytes": 27132925
+    },
+    "lidar_scarp_features_u8.tif": {
+      "path": "data/external/lidar_scarp_features_u8.tif",
+      "sha256": "d580bb8bdcdb941e32fefb8b38044bc5bf04e199bf2e83498c3576e6fc465568",
+      "bytes": 36943606
+    }
+  },
+  "input_pins_match": true,
+  "reviewed_before_fit": [
+    "corrected view routing excludes band 6 from A and includes TC in B",
+    "round-0 controls are matched on rows, seed, learner, placement and budget",
+    "co-training exchange is disabled globally unless OOF independence passes and every fold has accepted components in both directions",
+    "round-0 training-unlabelled quantile thresholds remain fixed for round 1",
+    "per-block minimum of 32 finite negatives, 20 blocks per fold/pooled, and both Pearson/Spearman <0.60 are explicit",
+    "per-channel stack uses linear min-max uint8 scaling, not empirical CDF rank",
+    "support novelty is reported diagnostically, while exact decoded identity and literal unions are the uniqueness gates",
+    "format and A-only reasoning checks are explicit"
+  ],
+  "provenance": "SHA/size values match registry/data_manifest.json owner-mirror pins; they do not authenticate source bytes against DrivenData or the raw USGS originals",
+  "prefit_audits_already_run": [
+    "scripts/prepare_data.py",
+    "evidence/h57_band6_identity.json"
+  ],
+  "no_H57_training_or_holdout_run_before_lock": true,
+  "source_sha256": {
+    "scripts/run_h57.py": "61f8e0d88d3eff267a66ff2162c39754bea280619a86d6c7ddf3cdb0ab6215b5",
+    "scripts/prepare_data.py": "2d54a649252a39a87d4a5e942770ae1dce68145f81462ee97d42e15c121cdb7e",
+    "src/gems55/h57.py": "802aa21d5138b5e9b5ff7a459bbc89994d022cebb7d7d292652d1420dbb1bb20",
+    "src/gems52/features.py": "3aac119c3e4e0c538c2fbb136c413486c4bbbd22619573c080f03f12eb614205",
+    "src/gems52/transform.py": "58925a52bd84667603c87c44657319cefaa995485783c9381abee82de242e23d",
+    "src/gems52/spatial.py": "3776a6be457268a548b7d9931263bc6b5c1e5a431cb1ee727a22caacffc17c34",
+    "src/gems52/cotrain.py": "99604a3af4389978d0b6d2aaa03259d35559b440cc5bf1e99479c554cf08b74b",
+    "src/gems52/emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9",
+    "src/gems52/metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+    "src/gems52/gates.py": "bda4e1c14ce6b2278afbb7bd6eb9c373bca7b518842dfbbc8c74420fc87a6463",
+    "src/gems52/grid.py": "6c403cde5fe156de7e9bb3aeac64a591b884f122ad99e9968c3ba19a7a25ace3",
+    "src/gems55/radlayers.py": "e8dc6cd43ae4753ada9605c2daebec84eb492cdf359ac8dc7f147265539758dd",
+    "src/gems55/reasoning.py": "ef110bbe4f6e50f76cf8972fba7ac9991e455ee60bb964b23b6c3cec478739e7"
+  },
+  "reviewed_implementation": [
+    "fail-closed staged runner is implemented; source/input/registration/lock hashes and fixed Arena branch are checked before model fit",
+    "round-0 controls use identical sampled rows, labels, learner parameters, seeds, budgets, metric-aware emitter and fold masks",
+    "unsupported held-component truth outside the feature footprint remains in DTI as a false negative",
+    "OOF error gate must pass in every fold and pooled before pseudo-label generation; all folds must pass bilateral whole-segment checks before any round-1 fit",
+    "deployment fit follows the completed holdout; full-data exchange is rechecked and otherwise falls back explicitly to View B",
+    "candidate is independently reopened, range/grid checked, decoded-pixel compared against all supplied aligned priors, and literal prior/same-run unions checked",
+    "TIF/ZIP download aliases are only exposed after local format and decoded-pattern gates; portal upload code is absent and LATEST is changed only on all local promotion gates"
+  ],
+  "verification_before_fit": {
+    "pytest_full": "168 passed, 41 pre-existing rasterio PendingDeprecationWarnings, 0 failed",
+    "focused_h57_and_registry": "19 passed",
+    "python_compile": "PASS for run_h57.py, h57.py, radlayers.py, reasoning.py and test_h57.py",
+    "runner_help": "PASS",
+    "git_diff_check": "PASS",
+    "model_fit_started": false,
+    "spatial_holdout_scored": false
+  }
+}

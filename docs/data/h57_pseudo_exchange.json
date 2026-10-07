@@ -1,0 +1,9 @@
+{
+  "generated_utc": "2026-10-07T21:47:24.724427Z",
+  "status": "DISABLED_INDEPENDENCE_GATE",
+  "enabled": false,
+  "used_in_primary": false,
+  "reason": "OOF block-error independence failed closed; no pseudo labels were generated and no round-1 model was fit",
+  "independence_sha256": "734bb2505dfb0f1039f079306bc1b8ba5786c5eea4628c16abc3873ef24735e0",
+  "folds": []
+}

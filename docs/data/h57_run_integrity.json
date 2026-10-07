@@ -1,0 +1,53 @@
+{
+  "updated_utc": "2026-10-07T21:48:25.792386Z",
+  "status": "ARTIFACT_BUILT",
+  "base_commit": "ad0f38caafdeb193251253bf39749a22d6d03c9d",
+  "branch": "arena/9f28a48b-gemsdoe52",
+  "head_at_update": "ad0f38caafdeb193251253bf39749a22d6d03c9d",
+  "registration_sha256": "63f3cb685e0a3b21d53201e9e0a91c6b26c54a8af52dce896a47c7a2fdc090b2",
+  "hypothesis_sha256": "877800972244a64ba72f501e9be74066fa3ec4fa65485a56c6d1d8d779a48703",
+  "prefit_lock_sha256": "5d24577ed3070911944f309c26cfcf304e118560d84bb7a722720c3d153a8cc3",
+  "source_signature": "3fd55088fb6543ff68ddb51755c6599072fa204e19b11f7fc2da214866efcf62",
+  "run_signature": "c29a3e415c8636fb046e6bbab6e02cad82cd21ffa2a4afff9f8ae38e0996688b",
+  "input_sha256": {
+    "training_features.tif": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+    "labels.tif": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+    "sample_submission.tif": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+    "geodawn_rad_u8.tif": "c22420f75999030d7cc65c9e31e50d232ea6158423bca051613a18a8b20ba682",
+    "geodawn_extensions_u8.tif": "a35a9c6d2a14786f4dab85481ee59769213072f5dab5b2535ea82ae4d9bb7d9b",
+    "lidar_scarp_features_u8.tif": "d580bb8bdcdb941e32fefb8b38044bc5bf04e199bf2e83498c3576e6fc465568"
+  },
+  "source_sha256": {
+    "scripts/run_h57.py": "61f8e0d88d3eff267a66ff2162c39754bea280619a86d6c7ddf3cdb0ab6215b5",
+    "scripts/prepare_data.py": "2d54a649252a39a87d4a5e942770ae1dce68145f81462ee97d42e15c121cdb7e",
+    "src/gems55/h57.py": "802aa21d5138b5e9b5ff7a459bbc89994d022cebb7d7d292652d1420dbb1bb20",
+    "src/gems52/features.py": "3aac119c3e4e0c538c2fbb136c413486c4bbbd22619573c080f03f12eb614205",
+    "src/gems52/transform.py": "58925a52bd84667603c87c44657319cefaa995485783c9381abee82de242e23d",
+    "src/gems52/spatial.py": "3776a6be457268a548b7d9931263bc6b5c1e5a431cb1ee727a22caacffc17c34",
+    "src/gems52/cotrain.py": "99604a3af4389978d0b6d2aaa03259d35559b440cc5bf1e99479c554cf08b74b",
+    "src/gems52/emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9",
+    "src/gems52/metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+    "src/gems52/gates.py": "bda4e1c14ce6b2278afbb7bd6eb9c373bca7b518842dfbbc8c74420fc87a6463",
+    "src/gems52/grid.py": "6c403cde5fe156de7e9bb3aeac64a591b884f122ad99e9968c3ba19a7a25ace3",
+    "src/gems55/radlayers.py": "e8dc6cd43ae4753ada9605c2daebec84eb492cdf359ac8dc7f147265539758dd",
+    "src/gems55/reasoning.py": "ef110bbe4f6e50f76cf8972fba7ac9991e455ee60bb964b23b6c3cec478739e7"
+  },
+  "software": {
+    "python": "3.11.2",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "sklearn": "1.7.2",
+    "rasterio": "1.4.3"
+  },
+  "model_fit_started": true,
+  "spatial_holdout_scored": true,
+  "portal_upload_performed": false,
+  "submission_slots_used": 0,
+  "feature_manifest_sha256": "60a350325d0cd39e2bb8c07e92011722a37f1d0cff4d258257854291ffc49002",
+  "details": {
+    "artifact_file": "gems52-h57-view-b-corrected-fallback-37654px-20261007T214818Z-7987bbd21afe-research.tif",
+    "artifact_sha256": "ba8e2b9234235ce7bc7f9d45369981727a9611296e31a3287b5f3fdbd122e304",
+    "approved_for_weekly_slot": false,
+    "holdout_sha256": "5ba55cd50326cc00758576984ddbde077283c608529345bcb569798d368d90f9"
+  }
+}

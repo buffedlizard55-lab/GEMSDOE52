@@ -226,7 +226,7 @@ def main() -> int:
     port = httpd.server_address[1]
     threading.Thread(target=httpd.serve_forever, daemon=True).start()
     try:
-        for path in ("index.html", "executive-summary.html", "h55.html", "h55-profile.html", "h55-edge.html",
+        for path in ("index.html", "executive-summary.html", "h57.html", "h55.html", "h55-profile.html", "h55-edge.html",
                      "r3.html", "r3-hypotheses.html", "feed.html", "irregularities.html", "sources.html",
                      "downloads/index.html"):
             with urlopen(f"http://127.0.0.1:{port}/{path}", timeout=10) as r:
@@ -455,6 +455,180 @@ def main() -> int:
             problems.append('H56: historical short alias is ambiguously identical to the current co-training demo')
         if 'HISTORICAL H56 CORE-CONTINUATION ARCHIVE' not in old_page:
             problems.append('h56.html: earlier H56 page/short alias is not clearly marked historical')
+
+    # H57 is a distinct, real-data research release; its quality gate failed, so it must never
+    # replace the protected synthetic H56 latest pointer or be presented as upload-approved.
+    h57_receipt_path = DATA / 'h57_submission.json'
+    h57_holdout_path = DATA / 'h57_holdout.json'
+    h57_independence_path = DATA / 'h57_independence.json'
+    h57_exchange_path = DATA / 'h57_pseudo_exchange.json'
+    h57_integrity_path = DATA / 'h57_run_integrity.json'
+    if not all(path.is_file() for path in (h57_receipt_path, h57_holdout_path,
+                                            h57_independence_path, h57_exchange_path,
+                                            h57_integrity_path)):
+        problems.append('H57: published artifact, holdout, independence, exchange, or run receipt is missing')
+    else:
+        import numpy as np
+        import rasterio
+        import zipfile
+        h57 = json.loads(h57_receipt_path.read_text())
+        h57_hold = json.loads(h57_holdout_path.read_text())
+        h57_ind = json.loads(h57_independence_path.read_text())
+        h57_exchange = json.loads(h57_exchange_path.read_text())
+        h57_integrity = json.loads(h57_integrity_path.read_text())
+        h57_name = str(h57.get('file') or '')
+        h57_zip_name = str(h57.get('zip') or '')
+        h57_file = DOCS / 'downloads' / h57_name
+        h57_source = ROOT / 'submission' / h57_name
+        h57_zip = DOCS / 'downloads' / h57_zip_name
+        h57_zip_source = ROOT / 'submission' / h57_zip_name
+        h57_uni = h57.get('uniqueness') or {}
+        h57_fmt = h57.get('format_gate') or {}
+        h57_slot = h57_hold.get('slot_gate') or {}
+        if (h57.get('safe_to_download_for_research') is not True
+                or h57.get('approved_to_submit') is not False
+                or h57.get('approved_for_weekly_slot') is not False
+                or h57.get('slots_used') != 0
+                or h57.get('portal_upload_performed') is not False):
+            problems.append('H57: research-download/NOT-approved/zero-slot/zero-upload status is missing or unsafe')
+        if (h57.get('candidate_arm') != 'view_B_corrected_fallback'
+                or h57.get('candidate_arm_is_cotrain') is not False
+                or h57_hold.get('primary', {}).get('arm') != 'view_B_corrected_fallback'):
+            problems.append('H57: published fallback is misidentified as co-training or a different model arm')
+        if (not h57_fmt.get('ok') or h57_fmt.get('validation_class', '').startswith('organizer')
+                or h57_fmt.get('dtype') != 'float32' or h57_fmt.get('bands') != 1
+                or h57_fmt.get('crs') != 'EPSG:32611'
+                or (h57_fmt.get('height'), h57_fmt.get('width')) != (3730, 3292)
+                or h57_fmt.get('n_nonzero') != h57.get('emitted_pixels')
+                or h57_fmt.get('nan_pixels') != 0 or h57_fmt.get('infinity_pixels') != 0
+                or h57_fmt.get('mass_outside_footprint') != 0):
+            problems.append('H57: local TIFF format/range receipt is incomplete or inconsistent')
+        if (not h57_uni.get('canonical_pattern_unique')
+                or not h57_uni.get('research_publication_ok')
+                or h57_uni.get('equals_literal_prior_union') is not False
+                or h57_uni.get('n_priors_checked', 0) < 1
+                or h57_uni.get('candidate_decoded_sha256') != h57.get('decoded_pixels_sha256')):
+            problems.append('H57: bounded decoded-pattern uniqueness or literal prior-union audit failed')
+        if (len(str(h57.get('submission_name') or '')) > 200
+                or len(str(h57.get('submission_note') or '')) > 200
+                or h57.get('submission_name_chars') != len(str(h57.get('submission_name') or ''))
+                or h57.get('submission_note_chars') != len(str(h57.get('submission_note') or ''))):
+            problems.append('H57: unique name or short note is missing or exceeds the 200-character portal limit')
+        if (h57_hold.get('exchange', {}).get('enabled') is not False
+                or h57_hold.get('submission_slots_used') != 0
+                or h57_hold.get('portal_upload_performed') is not False
+                or h57_slot.get('approved_for_weekly_slot') is not False
+                or h57_exchange.get('enabled') is not False
+                or h57_exchange.get('used_in_primary') is not False
+                or h57_exchange.get('folds') != []):
+            problems.append('H57: failed exchange/holdout gate must retain no pseudo-labels, no round-1 fit, and zero slots')
+        fold1_fpr = (((h57_ind.get('per_fold') or {}).get('1') or {}).get('tests') or {}).get('negative_false_positive_rate') or {}
+        if (h57_ind.get('allow_exchange') is not False
+                or (h57_ind.get('per_fold') or {}).get('1', {}).get('allow_exchange') is not False
+                or fold1_fpr.get('pearson') is not None or fold1_fpr.get('spearman') is not None):
+            problems.append('H57: fold-1 constant/undefined negative-FPR errors did not fail the registered independence gate closed')
+        comparison = h57_hold.get('comparisons') or {}
+        if (h57_hold.get('primary', {}).get('mean_dti') is None
+                or comparison.get('historical_best_comparable_mean_dti') is None
+                or float(h57_hold['primary']['mean_dti']) >= float(comparison['historical_best_comparable_mean_dti'])
+                or h57_slot.get('scientific_holdout_pass') is not False):
+            problems.append('H57: failed local holdout must remain explicit and cannot imply slot approval')
+        if h57_integrity.get('portal_upload_performed') is not False or h57_integrity.get('submission_slots_used') != 0:
+            problems.append('H57: run-integrity receipt must retain no upload and zero slots')
+        if h57.get('provenance', {}).get('owner_mirror_not_organizer_authenticated') is not True:
+            problems.append('H57: owner-mirror inputs must not be described as organizer-authenticated')
+
+        # Every public copy is checked against the same canonical bytes; uniqueness means decoded
+        # predictions differ, not merely that the filename or compression differs.
+        expected_sha = str(h57.get('sha256') or '')
+        expected_zip_sha = str(h57.get('zip_sha256') or '')
+        if (not h57_name.endswith('.tif') or not expected_sha or not h57_source.is_file()
+                or not h57_file.is_file()
+                or hashlib.sha256(h57_source.read_bytes()).hexdigest() != expected_sha
+                or hashlib.sha256(h57_file.read_bytes()).hexdigest() != expected_sha
+                or h57_source.read_bytes() != h57_file.read_bytes()
+                or h57_file.stat().st_size != h57.get('bytes')):
+            problems.append('H57: canonical and public TIFFs are missing or differ from the receipt bytes')
+        else:
+            try:
+                with rasterio.open(h57_file) as ds:
+                    a = ds.read(1)
+                    decoded_sha = hashlib.sha256(a.astype('<f4').tobytes()).hexdigest()
+                    if (ds.count != 1 or ds.dtypes[0] != 'float32' or ds.crs is None
+                            or ds.crs.to_epsg() != 32611 or (ds.height, ds.width) != (3730, 3292)
+                            or not np.isfinite(a).all() or float(a.min()) < 0 or float(a.max()) > 1
+                            or int(np.count_nonzero(a)) != h57.get('emitted_pixels')
+                            or decoded_sha != h57.get('decoded_pixels_sha256')):
+                        problems.append('H57: re-opened TIFF pixels/CRS/dtype/range/count/hash differ from receipt')
+            except Exception as exc:  # noqa: BLE001
+                problems.append(f'H57: unable to reopen TIFF for decoded-pattern verification ({exc})')
+        if (not expected_zip_sha or not h57_zip_source.is_file() or not h57_zip.is_file()
+                or hashlib.sha256(h57_zip_source.read_bytes()).hexdigest() != expected_zip_sha
+                or hashlib.sha256(h57_zip.read_bytes()).hexdigest() != expected_zip_sha
+                or h57_zip_source.read_bytes() != h57_zip.read_bytes()):
+            problems.append('H57: canonical and public single-TIFF ZIPs are missing or differ from their receipt')
+        elif h57_file.is_file():
+            try:
+                with zipfile.ZipFile(h57_zip) as archive:
+                    members = archive.namelist()
+                    if (archive.testzip() is not None or members != [h57_name]
+                            or archive.read(h57_name) != h57_file.read_bytes()):
+                        problems.append('H57: ZIP must contain exactly one CRC-valid TIFF byte-identical to the direct download')
+            except (OSError, zipfile.BadZipFile, KeyError) as exc:
+                problems.append(f'H57: invalid single-TIFF ZIP ({exc})')
+
+        # Published evidence and the short portal identification must be discoverable at the top.
+        for published_name, source_path in (
+                ('h57_submission.json', next(iter(sorted((ROOT / 'evidence').glob('submission_gems52-h57-*.json'))), None)),
+                ('h57_holdout.json', ROOT / 'evidence/h57_holdout.json'),
+                ('h57_independence.json', ROOT / 'evidence/h57_independence.json'),
+                ('h57_pseudo_exchange.json', ROOT / 'evidence/h57_pseudo_exchange.json'),
+                ('h57_prefit_lock.json', ROOT / 'evidence/h57_prefit_lock.json')):
+            public_path = DATA / published_name
+            if source_path is None or not source_path.is_file() or not public_path.is_file() or source_path.read_bytes() != public_path.read_bytes():
+                problems.append(f'H57: published data/{published_name} differs from its evidence source')
+        page_text = (DOCS / 'h57.html').read_text() if (DOCS / 'h57.html').is_file() else ''
+        guide_text = (DOCS / 'executive-summary.html').read_text() if (DOCS / 'executive-summary.html').is_file() else ''
+        home_text = (DOCS / 'index.html').read_text() if (DOCS / 'index.html').is_file() else ''
+        downloads_text = (DOCS / 'downloads/index.html').read_text() if (DOCS / 'downloads/index.html').is_file() else ''
+        readme_text = (ROOT / 'README.md').read_text()
+        for label, text in (('H57 audit', page_text), ('H57 guide', guide_text),
+                            ('home', home_text), ('downloads index', downloads_text),
+                            ('README', readme_text)):
+            if h57_name not in text:
+                problems.append(f'H57 {label}: exact research filename/download identity is missing')
+            if 'safe to download' not in text.casefold() or 'approved to submit' not in text.casefold():
+                problems.append(f'H57 {label}: downloadability and submit approval are not stated separately')
+        if ('owner-reported' not in page_text.casefold() or 'participant-level' not in page_text.casefold()
+                or 'not independently authenticated' not in page_text.casefold()):
+            problems.append('H57 audit: leaderboard attribution/input authentication limits are missing')
+        if any(f'H57-{n}' not in page_text for n in range(1, 5)):
+            problems.append('H57 audit: four ranked geological hypotheses are not present')
+        if home_text.find('<!--H57-BAR-->') < 0 or home_text.find('<!--H57-BAR-->') > home_text.find('<!--H56BAR-->'):
+            problems.append('H57: top-of-site H57 download card must precede the historical H56 banner')
+        if readme_text.count('<!--H57-STATUS-->') != 1 or readme_text.count('<!--/H57-STATUS-->') != 1:
+            problems.append('H57: README status insertion is missing or duplicated')
+        if 'Do not upload' not in guide_text:
+            problems.append('H57 guide: must explicitly say "Do not upload"')
+        # The general site-server pass above has shut its socket down; use a fresh short-lived
+        # loopback server here to verify both H57 download endpoints and their content types.
+        h57_httpd = ThreadedTCPServer(("127.0.0.1", 0), H)
+        h57_port = h57_httpd.server_address[1]
+        threading.Thread(target=h57_httpd.serve_forever, daemon=True).start()
+        try:
+            with urlopen(f'http://127.0.0.1:{h57_port}/downloads/{h57_name}', timeout=20) as r:
+                body = r.read()
+                if (len(body) != h57.get('bytes') or hashlib.sha256(body).hexdigest() != expected_sha
+                        or 'tiff' not in r.headers.get('Content-Type', '').casefold()):
+                    problems.append('H57: published TIFF does not serve byte-identically through the local site')
+            with urlopen(f'http://127.0.0.1:{h57_port}/downloads/{h57_zip_name}', timeout=20) as r:
+                body = r.read()
+                if len(body) != h57.get('zip_bytes') or hashlib.sha256(body).hexdigest() != expected_zip_sha:
+                    problems.append('H57: published single-TIFF ZIP does not serve byte-identically through the local site')
+        finally:
+            h57_httpd.shutdown()
+            h57_httpd.server_close()
+        notes.append(f"H57 research TIFF verified: {h57.get('bytes'):,} bytes, {h57_uni.get('n_priors_checked')} accessible priors, holdout {h57_hold.get('primary', {}).get('mean_dti', float('nan')):.6f}, NOT approved/zero slots")
 
     # H55 is an archive: bind its corrected A-only promotion prose to the frozen sweep and keep it
     # distinct from the registered block-error-correlation result above.

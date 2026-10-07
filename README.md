@@ -1,6 +1,23 @@
 # GEMSDOE52
 
-## H56 Co-training — NEW unique TIF, downloadable now (synthetic demo)
+<!--H57-STATUS-->
+## H57 real-data research candidate — one-click download; NOT approved to submit
+
+**[Download the unique H57 GeoTIFF](docs/downloads/gems52-h57-view-b-corrected-fallback-37654px-20261007T214818Z-7987bbd21afe-research.tif)** · [single-TIFF ZIP](docs/downloads/gems52-h57-view-b-corrected-fallback-37654px-20261007T214818Z-7987bbd21afe-research.zip) · [full H57 holdout, source review, four hypotheses and submission guide](docs/h57.html) · [executive summary / future submission steps](docs/executive-summary.html) · [artifact receipt](docs/data/h57_submission.json)
+
+- **Safe to download for research review? YES.** Local on-disk format/range check passed; one-band float32, 3730×3292, EPSG:32611, 100 m, all values finite in [0,1], 37,654 positive pixels. Exact decoded-pixel pattern is unique against all 26 supplied aligned accessible prior rasters; literal prior-union equality is false. This is bounded to the inventory, not a global uniqueness guarantee.
+- **Approved to submit? NO. Do not upload or spend a weekly slot.** Registered OOF independence failed closed because fold 1's block-level false-positive-rate errors were constant/undefined. No pseudo labels or round-1 model were fit. The corrected View-B research fallback mean is 0.169466; the historical comparable local mean is 0.197032 (difference -0.027566). No public-score forecast is made.
+- **Submission identifier:** `GEMSDOE52-H57-view-b-corrected-fallback-7987bbd21a` · **note (124 chars):** `H57 corrected View-B single-view fallback; co-training disabled by frozen OOF gates; research only; not approved for upload.`. These identify a research file; the note explicitly says not approved.
+- **No A-only candidate exists for this H57 artifact:** the frozen independence gate disabled co-training, so the exported field is single-view B. A-only reasoning is therefore not applicable and the promotion gate remains closed.
+- **`submission/LATEST.txt` remains unchanged** at the earlier synthetic H56 pointer. No organizer upload or slot use occurred. See official-source links and limitations on the H57 audit page.
+
+### Continuing brief and review gates (2026-10-07)
+
+Keep a unique, one-click downloadable GeoTIFF and a unique short competition name/note, but state download safety separately from submit approval. Ground geology and competition claims in official sources; distinguish organizer-authenticated facts from owner-reported filenames/scores and catalogue-zero proxies from verified fault absence. Maintain 3–5 ranked, layer-specific geological hypotheses with physical signature, missing-catalogue mechanism, novelty, expected gain and implementation cost. Validate a leading idea on spatially blocked holdout before any competition slot; discuss the reported 0.2778 result and dated leaderboard without inventing file attribution. Preserve the full historical prompt below, document limitations and remaining work, and complete implementation/review/re-check passes. Create and merge a PR to main only if the fixed Arena branch, checks and repository state permit.
+
+<!--/H57-STATUS-->
+
+## H56 Co-training — historical synthetic methodology demo (not the real-data H57 candidate)
 
 **[★ Download the unique H56 Co-training TIFF — 37,654 px, one click ★](docs/downloads/gems52-h56-cotrain-disagreement-37654px-20261007T1630Z-zeros.tif)** · [single-TIFF ZIP](docs/downloads/gems52-h56-cotrain-disagreement-37654px-20261007T1630Z-zeros.zip) · [A-only reasoning CSV (372 neighborhoods)](docs/downloads/gems52-h56-cotrain-disagreement-37654px-20261007T1630Z-zeros-a-only-reasoning.csv) · [full H56 audit & how to submit](docs/h56-cotrain.html) · [4 ranked hypotheses, preregistered](knowledge/13_hypotheses_H56_cotrain.md)
 
@@ -17,7 +34,7 @@
 
 ## H55 main candidate — historical archive, not current upload advice
 
-The archived H55 local receipt and four-fold View-B holdout are **historical**; they are not H56 validation or approval. The separate A-only promotion comparison was mixed: **hide 0.02979 vs matched random 0.03948 (below), 1/4 folds; tip 0.02894 vs 0.02477 (above), 2/4 folds**. A-only fails the preregistered ≥3/4-wins-per-instrument rule. This is distinct from co-training's registered block-error-correlation test. H55 is superseded. Current H56 is a **synthetic methodology demo**; neither H55's local gate nor H56's downloadable TIFF authorizes a weekly submission. See [H55 archive](docs/h55.html) and [H56 current status](docs/h56-cotrain.html).
+The archived H55 local receipt and four-fold View-B holdout are **historical**; they are not H56 validation or approval. The separate A-only promotion comparison was mixed: **hide 0.02979 vs matched random 0.03948 (below), 1/4 folds; tip 0.02894 vs 0.02477 (above), 2/4 folds**. A-only fails the preregistered ≥3/4-wins-per-instrument rule. This is distinct from co-training's registered block-error-correlation test. H55 is superseded. H56 is an **earlier synthetic methodology demo**; neither H55's local gate nor H56's downloadable TIFF authorizes a weekly submission. See [H55 archive](docs/h55.html) and [H56 current status](docs/h56-cotrain.html).
 
 ## H55-1 paired DEM shoulders — preregistered spatial holdout failed; no artifact promoted
 
@@ -45,7 +62,7 @@ Audit: [full H55-1 page and ranked hypotheses](docs/h55-paired-shoulders.html) �
 - Inputs were SHA-pinned owner mirrors, not organizer-authenticated. No external raster or ComCat data entered this model.
 - [Preregistered hypotheses](knowledge/12_hypotheses_H55_preregistered.md) · [holdout](evidence/h55_profile_holdout.json) · [TIFF/uniqueness receipt](evidence/submission_h55.json) · [3-pass review](evidence/h55_review_receipt.json).
 
-**Next-session start:** read this README and the full current task prompt below. The H55-PROFILE follow-up failed its promotion gate; the main H55 file is historical and superseded by current H56; H55-PROFILE remains a separate failed-gate record. A download link is not approval to spend a contest slot.
+**Next-session start:** read this README, `AGENTS.md`, the H57 top status and the full preserved brief below. H57 is the latest real-data research result, but its OOF gate failed closed and its fallback is not approved to submit; keep `submission/LATEST.txt` unchanged unless a newly preregistered candidate beats the comparable spatial holdout gate. A download link is not approval to spend a contest slot.
 <!--/H55PROFILEREADME-->
 
 ## H55-EDGE — failed protocol-subset result, preserved as a separate archive

@@ -101,13 +101,30 @@ def interpret(rec: dict) -> list[str]:
     elif e is not None and e < 2.0:
         out.append(f"CAVEAT: the patch is not linear (elongation {e:.1f}), so the 'fault trace' "
                    f"reading is not supported by its shape. Treat as a point candidate only.")
-    th_ = rec["nearest_thermal_feature"]
+    th_ = rec.get("nearest_thermal_feature")
     if th_ and th_.get("t_use_c") is not None and th_["t_use_c"] >= 60 and th_["distance_m"] <= 5000:
         out.append(f"A well or spring with a {th_['t_use_c']:.0f} C measurement sits "
                    f"{th_['distance_m']:.0f} m away ({th_['name']}; INGENIOUS/GDR 1391, "
                    f"DOI 10.15121/1881483). Warm discharge that close is independent evidence of a "
                    f"permeable pathway, and permeability at that distance from any mapped trace "
                    f"implies structure the catalogue does not contain.")
+    lidar = rec.get("lidar_coverage")
+    if lidar and lidar.get("mean") is not None:
+        coverage = lidar["mean"]
+        if coverage < 0.50:
+            out.append(f"LiDAR coverage is present over only {coverage:.0%} of this neighborhood; "
+                       "absence of a LiDAR scarp is not evidence of burial outside measured tiles.")
+        else:
+            scarp = rec.get("lidar_scarp_rank")
+            p50 = (scarp or {}).get("p50")
+            if p50 is not None and p50 >= 0.60:
+                out.append(f"Within the measured LiDAR area ({coverage:.0%} coverage), the scarp-step "
+                           f"response is in the upper tail (median rank {p50:.2f}); this supports a "
+                           "surface expression but roads, channels and terrace risers remain alternatives.")
+            elif p50 is not None and p50 <= 0.35:
+                out.append(f"LiDAR covers {coverage:.0%} of this neighborhood and its scarp-step "
+                           f"response is low (median rank {p50:.2f}); this is compatible with cover "
+                           "concealment, but does not establish a buried fault.")
     if not out:
         out.append("No supporting measurement cleared its threshold. This candidate is emitted "
                    "because the ranking placed it here, not because a physical signature was "
@@ -118,13 +135,18 @@ def interpret(rec: dict) -> list[str]:
 def build(emitted: np.ndarray, stratum: np.ndarray, layers: dict[str, np.ndarray],
           valid: np.ndarray, d_cat: np.ndarray, cat: np.ndarray,
           thermal_table=None, transform=None, min_px: int = 1, group_px: int = 3,
-          log=lambda *a: None) -> dict:
+          log=lambda *a: None, prob_a: np.ndarray | None = None,
+          prob_b: np.ndarray | None = None) -> dict:
     """Reasoning records for every emitted component of the A-only disagreement stratum.
 
     ``layers`` must carry the rank-encoded fields named in :func:`interpret`; missing layers are
     reported as missing rather than silently dropped, so a reviewer can see what was not measured.
     """
     from scipy import ndimage
+    shape = emitted.shape
+    for name, probability in (("prob_a", prob_a), ("prob_b", prob_b)):
+        if probability is not None and probability.shape != shape:
+            raise ValueError(f"{name} must match the emission grid")
     sel = emitted & stratum & valid & ~cat
     # The shipped emission is 8-isolated by construction (max component = 1), so labelling ``sel``
     # itself would produce one record per lone pixel -- useless to a reviewer who has to look at a
@@ -189,6 +211,9 @@ def build(emitted: np.ndarray, stratum: np.ndarray, layers: dict[str, np.ndarray
                 rec["lon"] = round(float(lon[0]), 5)
             except Exception as exc:                                # pragma: no cover
                 rec["coordinate_error"] = str(exc)
+        emitted_in_group = comp & sel[sl]
+        rec["view_a_score"] = _rank_in(prob_a[sl], emitted_in_group) if prob_a is not None else None
+        rec["view_b_score"] = _rank_in(prob_b[sl], emitted_in_group) if prob_b is not None else None
         for key, layer in (("depth_to_basement_rank", "A_depth_base_rank__rank"),
                            ("gravity_step_rank", "A_grav_step__rank"),
                            ("mag_step_rank", "A_mag_step__rank"),
@@ -197,6 +222,8 @@ def build(emitted: np.ndarray, stratum: np.ndarray, layers: dict[str, np.ndarray
                            ("thk_step_rank", "R_thk_step900__rank"),
                            ("uk_step_rank", "R_uk_step900__rank"),
                            ("scarp_rank", "B_scarp_p900__rank"),
+                           ("lidar_scarp_rank", "L_step_max__rank"),
+                           ("lidar_coverage", "L_cover"),
                            ("coherence", "Th_coherence")):
             a = sub.get(layer)
             rec[key] = _rank_in(a, comp) if a is not None else None

@@ -1,0 +1,273 @@
+{
+  "schema_version": 1,
+  "experiment": "GEMSDOE52-H57-corrected-radiometric-two-view",
+  "registered_utc": "2026-10-07T21:06:33Z",
+  "registration_kind": "pre-fit; written after data/feature audit but before any H57 model fit or spatial-holdout score",
+  "base_commit": "ad0f38caafdeb193251253bf39749a22d6d03c9d",
+  "working_branch": "arena/9f28a48b-gemsdoe52",
+  "hypothesis_document": "knowledge/17_hypotheses_H57_preregistered.md",
+  "hypothesis_sha256": "877800972244a64ba72f501e9be74066fa3ec4fa65485a56c6d1d8d779a48703",
+  "inputs": {
+    "training_features.tif": {
+      "sha256": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+      "bytes": 418912844,
+      "provenance": "SHA/size-pinned owner mirror; not organizer-authenticated"
+    },
+    "labels.tif": {
+      "sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+      "bytes": 425830,
+      "provenance": "SHA/size-pinned owner mirror; not organizer-authenticated"
+    },
+    "sample_submission.tif": {
+      "sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+      "bytes": 1599597,
+      "provenance": "SHA/size-pinned owner mirror; not organizer-authenticated"
+    },
+    "geodawn_rad_u8.tif": {
+      "sha256": "c22420f75999030d7cc65c9e31e50d232ea6158423bca051613a18a8b20ba682",
+      "bytes": 26612970,
+      "provenance": "SHA/size-pinned owner-mirror derivative of the official USGS GeoDAWN release; raw-to-derivative chain not organizer-authenticated"
+    },
+    "geodawn_extensions_u8.tif": {
+      "sha256": "a35a9c6d2a14786f4dab85481ee59769213072f5dab5b2535ea82ae4d9bb7d9b",
+      "bytes": 27132925,
+      "provenance": "SHA/size-pinned owner-mirror derivative of the official USGS GeoDAWN release; raw-to-derivative chain not organizer-authenticated"
+    },
+    "lidar_scarp_features_u8.tif": {
+      "sha256": "d580bb8bdcdb941e32fefb8b38044bc5bf04e199bf2e83498c3576e6fc465568",
+      "bytes": 36943606,
+      "provenance": "SHA/size-pinned owner-mirror derivative; official USGS 3DEP is source context, not direct authentication of these derived bytes"
+    },
+    "band6_identity_evidence": {
+      "path": "evidence/h57_band6_identity.json",
+      "sha256": "38d83de71a6005bfd912c3c3325637f94720632f1b4b51e0f12685171b1bff51",
+      "n_sampled": 150000,
+      "spearman_band6_vs_external_geodawn_TC": 0.9999501923763776
+    }
+  },
+  "primary_hypothesis": "H57-1: corrected potential-field/subsurface View A and surface/radiometric/LiDAR View B may find cover-hidden range-front discontinuities through whole-component buffered one-round co-training; enabled only if the registered OOF error gate passes",
+  "ranked_unrun_alternatives": [
+    "H57-2: LiDAR scarp-network endpoint/relay topology",
+    "H57-3: conductivity-edge termination at gravity/RTP T-junctions",
+    "H57-4: event-level USGS ComCat lineaments aligned with broad structural edges"
+  ],
+  "views": {
+    "source": "src/gems55/radlayers.py; the corrected lists below are frozen",
+    "view_A": [
+      "A_grav_step",
+      "A_grav_edge",
+      "A_grav_vg_rank",
+      "A_grav_hg_rank",
+      "A_grav_slope_band",
+      "A_mag_step",
+      "A_mag_edge_vg",
+      "A_rtp_rank",
+      "A_strain_inv_rank",
+      "A_strain_inv_reg",
+      "A_shear_rank",
+      "A_dilate_rank",
+      "A_eqdens_rank",
+      "A_eqdist_negrank",
+      "A_depth_base_rank",
+      "A_cond_rank"
+    ],
+    "view_B": [
+      "B_scarp_p900",
+      "B_scarp_p300",
+      "B_scarp_fine",
+      "B_slope_rank",
+      "B_elev_rank",
+      "B_line_resp",
+      "B_elev_grad",
+      "R_tc_step900",
+      "R_tc_edge",
+      "R_tc_line",
+      "R_tc_rank",
+      "R_thk_step900",
+      "R_uk_step900",
+      "R_thk_edge",
+      "R_uk_edge",
+      "L_step_max",
+      "L_ex_max",
+      "L_coh100",
+      "L_relief",
+      "L_cover"
+    ],
+    "band6_routing": "GeoDAWN total count; View B only; must not be used as magnetic/tilt input to A",
+    "external_layers_used": [
+      "GeoDAWN extensions band 1 Th/K",
+      "GeoDAWN extensions band 2 U/K",
+      "LiDAR scarp features bands 1,3,9,10,12"
+    ],
+    "model_features_not_used": [
+      "Prior submission TIFF values or masks",
+      "USGS ComCat events",
+      "SGMC/Quaternary-fault external traces as positive labels"
+    ]
+  },
+  "feature_construction": {
+    "core_builder": "gems52.features.build; output arrays are used only through the frozen radlayers view lists",
+    "radio_lidar_builder": "gems55.radlayers.build",
+    "stack_builder": "gems52.cotrain.build_stack_from_dir",
+    "stack_encoding": "per-channel linear min-max mapping to uint8 0..255 over the all-19-band valid footprint using gems52.cotrain.rank_u8 (legacy-named helper; this is not an empirical CDF rank); NaN values map to zero; label-free/transductive, no evaluation labels or label statistics",
+    "valid_domain": "finite intersection of all 19 training_features.tif bands",
+    "max_spatial_support_px": 36,
+    "feature_buffer_px": 80
+  },
+  "fold_protocol": {
+    "folds": 4,
+    "assignment": "four fixed contiguous quadrants; whole original 8-connected catalogue components assigned by majority quadrant",
+    "implementation": "src/gems52/spatial.py::folds",
+    "buffer_px": 80,
+    "evaluation_region": "eligible pixels in the held quadrant plus support around tails of held components",
+    "leakage_invariants": [
+      "zero shared original train/truth components",
+      "train and evaluation region disjoint",
+      "nearest training pixel is at least 80 pixels from evaluation region",
+      "zero evaluation pixels in pseudo-label rows"
+    ],
+    "negative_class": "catalogue-zero proxy only; not verified geological absence",
+    "negative_collar_px": 3,
+    "max_sampled_negatives_per_fold": 160000,
+    "sampling": "all eligible training positives and a deterministic without-replacement sample from training pixels outside a 3-pixel dilation of the catalogue"
+  },
+  "seed": 520208,
+  "learner": {
+    "class": "sklearn.ensemble.HistGradientBoostingClassifier",
+    "max_iter": 120,
+    "max_leaf_nodes": 15,
+    "learning_rate": 0.08,
+    "l2_regularization": 2.0,
+    "min_samples_leaf": 80,
+    "early_stopping": false,
+    "class_weight": "balanced"
+  },
+  "independence_gate": {
+    "errors": [
+      "negative mean squared error",
+      "negative false-positive rate"
+    ],
+    "negative_observations": "finite held-out OOF predictions in 50x50 blocks outside a 3-pixel catalogue collar",
+    "threshold_for_fpr": "each view's 99th percentile on the fold's training-unlabelled domain",
+    "correlations": [
+      "Pearson",
+      "tie-aware Spearman"
+    ],
+    "max_abs_correlation": 0.6,
+    "minimum_non_degenerate_blocks": 20,
+    "minimum_finite_negatives_per_50x50_block": 32,
+    "decision": "all two metrics must be defined and have absolute Pearson/Spearman <0.60 for each fold and pooled; otherwise disable exchange",
+    "undefined_or_missing": "fail closed; do not impute or switch to pixel correlation"
+  },
+  "pseudo_label_exchange": {
+    "rounds": 1,
+    "positive_only": true,
+    "donor_confident_quantile": 0.99,
+    "receiver_abstain_quantiles": [
+      0.4,
+      0.8
+    ],
+    "proposal_connectivity": 8,
+    "whole_component_only": true,
+    "block_side_px": 50,
+    "minimum_segment_pixels": 5,
+    "max_pseudo_pixels_per_donor_per_fold": 2000,
+    "pseudo_sample_weight": 0.25,
+    "forbidden": "all labelled positives and 3-pixel collar, sampled labelled rows, non-training cells, and any evaluation pixel",
+    "if_gate_fails": "no pseudo labels are created; co-training primary is not fit or scored; use B-only research fallback",
+    "minimum_accepted_segments_per_direction_per_fold": 1,
+    "activation_gate": "Every one of the four outer folds must yield at least one eligible whole segment from A to B and at least one from B to A before any round-1 model is fit or scored; otherwise disable exchange globally and use the registered B-only research fallback.",
+    "all_fold_precheck_before_round1_fit": true
+  },
+  "primary_field": {
+    "arm": "cotrain_disagreement_aonly",
+    "probabilities": "round-1 pA and pB",
+    "a_only": "pA >= training-unlabelled q99(A) AND q40(B) <= pB <= q80(B)",
+    "b_only": "pB >= training-unlabelled q99(B) AND q40(A) <= pA <= q80(A)",
+    "concordant": "pA >= training-unlabelled q99(A) AND pB >= training-unlabelled q99(B)",
+    "base_field": "0.5*pA + 0.5*pB",
+    "a_only_field": "pA*(0.35 + 0.40*depth_rank)",
+    "b_only_field": "0.25*pB",
+    "concordant_field": "min(pA,pB)",
+    "depth_rank": "label-free empirical rank of training_features.tif band 15 over the all-19-band valid footprint",
+    "threshold_source": "training-unlabelled pixels only; relative confidence, not calibrated probability",
+    "threshold_reuse": "Compute q40/q80/q99 from round-0 supervised model scores on training&valid&catalogue-zero pixels; reuse unchanged for the round-0 control and round-1 candidate, with no post-exchange re-estimation.",
+    "composition": "Initialize every prediction-region cell to 0.5*pA+0.5*pB; replace concordant cells with min(pA,pB), A-only cells with pA*(0.35+0.40*depth_rank), and B-only cells with 0.25*pB. Priority for degenerate tied thresholds: concordant, then A-only, then B-only."
+  },
+  "arms": [
+    "view_A",
+    "view_B_corrected",
+    "early_fusion",
+    "max_AB_union_control",
+    "round0_disagreement_no_exchange",
+    "cotrain_disagreement_aonly_when_gate_passes",
+    "matched_random"
+  ],
+  "primary_budget_global_pixels": 37654,
+  "per_fold_budget": "round(37654 * evaluation_region_px / eligible_px)",
+  "placement": {
+    "implementation": "src/gems52/emit.py::greedy_emit",
+    "kernel": "max(1 - Euclidean_distance_m/300, 0); alpha=0.2, beta=0.8",
+    "dti_projected": 0.0,
+    "pool_cap": 400000,
+    "truth_given_to_emitter": false,
+    "same_rule_for_all_arms": true,
+    "pool_rule": "min(400000, max(16*per_fold_budget, 10000)); same for every arm, matching the prior 80-pixel validation runner"
+  },
+  "primary_comparator": {
+    "same_run": "strongest among view_A, corrected view_B, early_fusion, max_AB_union_control, and round0 disagreement control",
+    "historical_best_comparable": {
+      "path": "evidence/h55_paired_shoulders_holdout.json",
+      "arm": "h55_paired_shoulders_mean_dti",
+      "mean_dti": 0.1970317574426225,
+      "buffer_px": 80,
+      "budget_global_pixels": 37654,
+      "note": "historical local catalogue-holdout proxy; H55 baseline view routing was not radiometrically corrected, so this is a conservative reference floor, not organizer truth"
+    },
+    "paired_fold_rule": "Choose the one same-run control with highest mean DTI across all four folds; compute paired differences against that fixed control in every fold."
+  },
+  "slot_gate": {
+    "minimum_mean_lift_vs_strongest_same_run_control": 0.005,
+    "minimum_mean_lift_vs_historical_best": 0.005,
+    "minimum_positive_paired_outer_folds": 3,
+    "total_outer_folds": 4,
+    "leakage_checks_required": true,
+    "independence_gate_required_for_cotrain": true,
+    "format_gate_required": true,
+    "canonical_pattern_unique_against_all_supplied_accessible_priors": true,
+    "literal_union_gate_required": true,
+    "a_only_reasoning_required": true,
+    "organizer_score_required_to_claim_public_improvement": true,
+    "automatic_portal_upload": false,
+    "on_any_failure": "research-only; do not spend a weekly submission slot",
+    "paired_fold_control_selection": "the single strongest same-run control by four-fold mean DTI, fixed for all paired differences",
+    "support_novelty_fraction": "reported as a diagnostic only, not a promotion gate; dense historical diagnostic rasters may saturate the prior union",
+    "decoded_uniqueness_definition": "candidate float32 grid is not exactly equal to any supplied aligned prior after canonical NaN/sentinel normalization; report both literal prior-union equality and per-prior comparisons",
+    "literal_union_definition": "candidate is not the exact support union of all supplied priors and is not the same-run union of matched-budget View-A and View-B emissions"
+  },
+  "research_artifact": {
+    "allowed_after_holdout_failure": true,
+    "fallback_if_independence_fails": "corrected view_B only; label it single-view, not co-training",
+    "filename_namespace": "gems52-h57-",
+    "portal_name_and_note_limit_chars": 200,
+    "submission_latest_pointer": "do not point the competitive LATEST marker at a failed-gate H57 artifact"
+  },
+  "no_public_score_forecast": true,
+  "no_competition_slot_spend": true,
+  "provenance_caveats": [
+    "Core/external rasters are SHA/size-pinned owner mirrors, not organizer-authenticated downloads.",
+    "Catalogue-zero proxy cells may contain unknown faults.",
+    "Original connected components are spatial proxies, not authenticated fault segment identifiers.",
+    "A passing local catalogue-holdout metric is not validation on organizer-hidden new-fault labels.",
+    "Local format and decoded-pattern checks are not organizer upload acceptance."
+  ],
+  "arms_definition": {
+    "view_A": "round-0 corrected View A probability field",
+    "view_B_corrected": "round-0 corrected View B probability field",
+    "early_fusion": "round-0 HistGradientBoostingClassifier fitted on concatenated corrected A+B features using the same rows and weights",
+    "max_AB_union_control": "pixelwise maximum of round-0 A and B probabilities",
+    "round0_disagreement_no_exchange": "registered primary-field composition using round-0 A/B probabilities and training-only thresholds",
+    "cotrain_disagreement_aonly_when_gate_passes": "registered primary-field composition using round-1 A/B probabilities after bilateral whole-component exchange",
+    "matched_random": "uniform without-replacement sample from the identical allowed set at the matched per-fold budget"
+  }
+}
