@@ -250,8 +250,12 @@ def latest_submission():
             order.append((nm, marker, own))
     if not order:
         return dict(exists=False, file=None, note='No artifact has been built.')
-    audited = [c for c in order if c[2].exists()]
-    name, marker, own = (audited[0] if audited else order[0])
+    # A missing per-artefact receipt must NOT promote a different round's archive as "current".
+    # This used to fall through to the next marker, so when H57 shipped without
+    # evidence/submission_<h57 stem>.json the scheduled feed published the R2 archive's full report
+    # under docs/data/submission.json -- pointing the whole site back at a two-year-old artefact.
+    # The current marker wins whatever receipts exist; only its OWN receipt may be used.
+    name, marker, own = order[0]
     stem = name[:-4] if name.endswith('.tif') else name
     path = DL / name
     r2 = EV / 'submission_r2.json'
@@ -260,16 +264,16 @@ def latest_submission():
         if candidate.get('file') == name or candidate.get('stem') == stem:
             report = candidate
             report['file'] = name
-        elif r2.exists() and json.loads(r2.read_text()).get('file') == name:
-            report = json.loads(r2.read_text())
         else:
             report = dict(file=name, approved_for_weekly_slot=False,
-                          promotion='historical research artifact; consult its original audit')
-    elif r2.exists() and json.loads(r2.read_text()).get('file') == name:
+                          promotion='current round; no per-artefact receipt at '
+                                    f'evidence/submission_{stem}.json, so no gate report is shown')
+    elif r2.exists() and name == json.loads(r2.read_text()).get('file'):
         report = json.loads(r2.read_text())
     else:
         report = dict(file=name, approved_for_weekly_slot=False,
-                      promotion='historical research artifact; consult its original audit')
+                      promotion='current round; no per-artefact receipt at '
+                                f'evidence/submission_{stem}.json, so no gate report is shown')
     if report.get('synthetic') is True:
         report.update(
             approved_for_weekly_slot=False,

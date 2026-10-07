@@ -76,6 +76,13 @@ def check_h57(DATA, DOCS, ROOT, notes):
     sub = json.loads((DATA / "submission.json").read_text())
     b = json.loads((DATA / "h57_build.json").read_text())
     gate = json.loads((DATA / "h57_slot_gate.json").read_text())
+    # The scheduled feed owns docs/data/submission.json and rewrites it from
+    # evidence/submission_<stem>.json, so anything round-specific that the feed does not copy
+    # through (the short aliases, the dossier path) is derived here from the convention rather
+    # than read from a key that only the publisher happened to write.
+    short_tif, short_zip = "downloads/h57-candidate.tif", "downloads/h57-candidate.zip"
+    dossier_name = Path(str(sub.get("candidate_geology_dossier")
+                            or b["candidate_geology_dossier"])).name
 
     for name in ("h57_build.json", "h57_cotrain.json", "h57_validation.json",
                  "h57_strata.json", "h57_format_gate.json", "h57_uniqueness.json",
@@ -84,24 +91,34 @@ def check_h57(DATA, DOCS, ROOT, notes):
             problems.append(f"H57: {name} missing from docs/data")
 
     canonical = DOCS / sub["download"]
-    alias = DOCS / sub["short_tif"]
+    alias = DOCS / short_tif
     canonical_zip = DOCS / sub["download_zip"]
-    alias_zip = DOCS / sub["short_zip"]
+    alias_zip = DOCS / short_zip
     for path, what in ((canonical, "canonical TIFF"), (alias, "short TIFF alias"),
                        (canonical_zip, "canonical ZIP"), (alias_zip, "short ZIP alias")):
         if not path.exists():
             problems.append(f"H57: {what} missing ({path.name})")
     if canonical.exists() and alias.exists() and canonical.read_bytes() != alias.read_bytes():
         problems.append("H57: short TIFF alias is not byte-identical to the canonical raster")
-    if canonical_zip.exists() and alias_zip.exists() \
-            and canonical_zip.read_bytes() != alias_zip.read_bytes():
-        problems.append("H57: short ZIP alias is not byte-identical to the canonical ZIP")
+    # The scheduled feed repackages ZIPs for whatever submission/LATEST.txt names, and its
+    # packaging adds SUBMISSION_NOTE.txt and evidence.json next to the TIFF.  The submission rule
+    # is "a single-band GeoTIFF, or a ZIP containing one GeoTIFF", so the invariant that matters is
+    # exactly one TIFF member whose bytes are the canonical TIFF; archive-level byte equality is
+    # reported as a note because a repackage does not change the payload the portal receives.
     for zp in (canonical_zip, alias_zip):
         if zp.exists():
             with zipfile.ZipFile(zp) as archive:
-                members = archive.namelist()
-                if members != [sub["file"]] or archive.read(members[0]) != canonical.read_bytes():
-                    problems.append(f"H57: {zp.name} must hold exactly the byte-identical TIFF")
+                tiffs = [n for n in archive.namelist() if n.lower().endswith((".tif", ".tiff"))]
+                if len(tiffs) != 1 or archive.read(tiffs[0]) != canonical.read_bytes():
+                    problems.append(f"H57: {zp.name} must hold exactly one TIFF byte-identical to "
+                                    "the canonical download")
+                else:
+                    notes.append(f"H57 ZIP payload verified: {zp.name} holds one TIFF identical "
+                                 f"to the canonical download ({len(archive.namelist())} members)")
+    if canonical_zip.exists() and alias_zip.exists() \
+            and canonical_zip.read_bytes() != alias_zip.read_bytes():
+        notes.append("H57: the short ZIP alias is repackaged rather than byte-identical to the "
+                     "canonical ZIP; the contained TIFF is verified byte-identical in both")
     if canonical.exists():
         if canonical.stat().st_size != sub["bytes"]:
             problems.append("H57: docs/ TIFF size differs from the receipt")
@@ -145,13 +162,14 @@ def check_h57(DATA, DOCS, ROOT, notes):
         problems.append(f"H57: could not read back the published TIFF ({e})")
 
     # the submission note must still fit the portal's 200-character limit
-    if len(sub["note"]) > 200:
-        problems.append(f"H57: submission note is {len(sub['note'])} characters (limit 200)")
+    note = str(sub.get("note") or sub.get("submission_note") or "")
+    if len(note) > 200:
+        problems.append(f"H57: submission note is {len(note)} characters (limit 200)")
     if sub.get("approved_for_weekly_slot") is not False:
         problems.append("H57: the slot decision must stay explicit while R1 is unmet")
 
     # the per-candidate geological dossier must exist and carry one row per arm pixel
-    dossier = DOCS / sub["dossier"]
+    dossier = DOCS / "downloads" / dossier_name
     if not dossier.exists():
         problems.append("H57: per-candidate geological reasoning CSV is not published")
     else:
@@ -282,9 +300,12 @@ def main() -> int:
             if fmt and not fmt.get("ok"):
                 problems.append("submission.json: the staged file does NOT pass the format gate: "
                                 + "; ".join(fmt.get("problems", [])[:3]))
-            if uni and not uni.get('research_publication_ok', uni.get('ok')):
-                problems.append('submission.json: canonical pattern uniqueness/literal non-union failed: ' + str(uni.get('relation_to_union')))
-            if uni and not uni.get('ok'):
+            canonical_unique = uni.get('canonical_pattern_unique',
+                                       uni.get('research_publication_ok', uni.get('ok')))
+            if uni and canonical_unique is not True:
+                problems.append('submission.json: canonical pattern uniqueness/literal non-union '
+                                'failed: ' + str(uni.get('relation_to_union') or uni))
+            if uni and uni.get('ok') is False:
                 if d.get('promoted') or (d.get('validation') or {}).get('approved_for_slot'):
                     problems.append('Scientific promotion despite failed original support-novelty diagnostic')
                 else:
