@@ -410,6 +410,26 @@ def main() -> int:
         + "\n".join(f"- {k}: {v2}" for k, v2 in gate["checks"].items())
         + f"\n\n- {gate['recommendation']}\n")
 
+    # Every other round in this repository ships evidence/submission_<stem>.json. The scheduled
+    # feed looks for exactly that name, and when it is absent the feed used to fall through to an
+    # older round's archive and publish *that* as the current submission. Writing it here makes
+    # H57 conform to the convention the feed already depends on.
+    (EV / f"submission_{Path(b['artefact']).stem}.json").write_text(json.dumps(
+        dict(round="H57", file=fname(b), stem=Path(b["artefact"]).stem,
+             submission_name=name, note=note, note_chars=len(note),
+             bytes=b["file"]["bytes"], sha256=b["file"]["sha256"],
+             nonzero_px=b["file"]["px"], core_px=b["core"]["px"], arm_px=b["arm"]["px"],
+             verdict=verdict, approved_for_weekly_slot=False, promoted=False,
+             submission_slots_used=0,
+             format=b["format_gate"], uniqueness=b["uniqueness"],
+             not_the_union=b["not_the_union"],
+             receipts=["h57_build.json", "h57_cotrain.json", "h57_validation.json",
+                       "h57_strata.json", "h57_format_gate.json", "h57_uniqueness.json",
+                       "h57_slot_gate.json"],
+             candidate_geology_dossier=b["candidate_geology_dossier"],
+             official_score_status="no portal upload or organizer score is recorded"),
+        indent=1, allow_nan=False) + "\n")
+
     DATA.mkdir(parents=True, exist_ok=True)
     # docs/data/submission.json is the machine-readable "current artefact" receipt the site and
     # scripts/check_site.py both read.  It is regenerated, never hand-edited.
@@ -457,7 +477,8 @@ def main() -> int:
     (ROOT / "submission" / "H56_LATEST.txt").write_text(
         "gems52-h56-consensus-core-continuation-40517px-04c86e1888a8-zeros.tif\n")
     for n in ("h57_build.json", "h57_cotrain.json", "h57_validation.json", "h57_strata.json",
-              "h57_format_gate.json", "h57_uniqueness.json", "h57_slot_gate.json"):
+              "h57_format_gate.json", "h57_uniqueness.json", "h57_slot_gate.json",
+              f"submission_{Path(b['artefact']).stem}.json"):
         if (EV / n).exists():
             shutil.copy2(EV / n, DATA / n)
 
