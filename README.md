@@ -1,5 +1,18 @@
 # GEMSDOE52
 
+<!--H56README-->
+## H56 — the current upload-ready candidate (2026-10-07)
+
+**[Download the unique H56 candidate TIFF](docs/downloads/gems52-h56-consensus-core-continuation-40517px-04c86e1888a8-zeros.tif)** · [H56 page with the exact submission steps](docs/h56.html) · [artifact receipt](docs/data/submission.json) · [hypotheses H56-1…H56-6](knowledge/15_hypotheses_H56_preregistered.md) · [what H56 found](knowledge/16_what_h56_found.md).
+
+- **What it is.** 40,517 emitted cells = a 25,517-cell double-corroborated core (`h33-2-b2 ∩ gems24-d1-5`, credit bounded exactly in [4,168, 5,223] by the published scores) + a 15,000-cell novel arm placed outside the union of all 33 accessible prior rasters and at least three pixels from the core, ordered by along-strike continuation × 3 m DEM scarp gate × 1 m LiDAR step. Size chosen by `src/gems52/revealed.py::budget_rule` (max P(DTI > 0.2778) over the exact core-credit interval × the ρ_novel prior U[0.03, 0.14]).
+- **Gates.** Local format gate PASS (single-band float32, finite, values {0,1}, pinned grid, 0 cells outside the footprint) · canonical-pattern uniqueness PASS against 33 priors · prior-support novelty 31.9% · relation `strictly-novel-and-selective` · 0 cells on the catalogue, minimum distance 223.6 m, every cell an isolated singleton (nearest-neighbour median 3.6 px).
+- **Expected score (projection, not a measurement):** mean ≈ 0.308, worst ≈ 0.238, best ≈ 0.378; P(beat this group's best 0.278) ≈ 0.83; P(beat the board top 0.320) ≈ 0.37. The band comes from a *prior* on the novel arm's credit density; it is not a leaderboard result.
+- **Upload.** Download the .TIF, verify its SHA-256, upload it as-is on the competition submission form (values in [0,1] — satisfied), name it `GEMSDOE52-H56-ConsensusCore-Continuation-40517px`, and paste the ≤200-character note from `docs/h56.html`. This session used zero weekly slots; the upload itself is the operator's action.
+- **Limits, stated:** inputs are SHA-pinned owner mirrors, not organizer-authenticated downloads; the projection rests on a stated prior; the 8-file consensus tier is the only structure in the accessible ensemble whose density (22–30%) beats the champion's, and it cannot be selected pixel-wise beyond its lower bound.
+
+<!--/H56README-->
+
 <!--H55PROFILEREADME-->
 ## H55-PROFILE follow-up — generated, but not promoted
 
@@ -1166,3 +1179,37 @@ next steps that does not say what the current file cannot do is marketing.
    approximate truth-pixel count, or whether out-of-footprint mass is taxed — would be worth more than any
    remaining modelling hour, because both are already derivable from the metric algebra in `knowledge/01`
    given the answer.
+
+## Standing brief — read this before doing anything (session starting point)
+
+*Copied verbatim from the current user task; it supersedes older briefs where they differ. Re-verify every
+leaderboard number, data-availability claim and remembered fact before relying on it.*
+
+```text
+1. Review the repo and answer, with PhD-level rigour, WHY the best GEMSDOE-site submission
+   (h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros, 0.2778) scored 0.2778, and whether a submission
+   beating 0.2778 (target: beat the board top 0.3195) can be generated.
+2. Generate a UNIQUE TIF submission (never a copy of a prior submission; prior files only for
+   learning). Put it somewhere obvious and easy to download so it can be uploaded immediately, and
+   flag it clearly as safe or not safe to upload.
+3. Before implementing, produce 3-5 new geological hypotheses, each naming the layers involved, the
+   physical signature, why it catches a fault missing from the USGS/INGENIOUS catalogue, and how it
+   differs from everything already in the repo. Rank by expected improvement vs implementation cost.
+   Validate the top candidate on the spatially blocked holdout before spending a weekly submission
+   slot. If new data is needed, name the specific free official source and verify obtainability.
+4. Write the full prompt into the repo README and read it each session as the starting point; keep an
+   automatic feed so nothing has to be hand-checked.
+5. Site work: clean GitHub Pages site under docs/, an executive-summary subpage explaining exactly
+   how to submit (the form requires predicted values in [0,1], a unique submission name, and a short
+   note of at most 200 characters), with an obvious download at the top.
+6. Every claim verified line-by-line against official trusted sources with links for manual review;
+   no manual input required; flag irregularities; zero hallucinations; run three passes
+   (implement+verify, bug/edge-case review+fix, full re-check against the original request).
+7. Create a pull request and merge it to main; finish with what still needs doing and the limitations.
+```
+
+**Arena core values, made operational here.** *Maximize P(Win):* every emission decision is scored by
+`P(DTI > floor)` over explicitly bounded unknowns (`src/gems52/revealed.py::budget_rule`), never by a
+point hope. *Own the Outcome:* the file, its receipts, the failing diagnostics and the limits are
+published next to the download, including the probability that the target is *not* reached.
+

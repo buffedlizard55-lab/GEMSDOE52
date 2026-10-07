@@ -170,7 +170,6 @@ def main() -> int:
             elif dl.stat().st_size != d.get("bytes"):
                 problems.append("submission.json: docs/ copy size != the size in the receipt")
             else:
-                import hashlib
                 got = hashlib.sha256(dl.read_bytes()).hexdigest()
                 if got != d.get("sha256"):
                     problems.append(f"submission.json: sha256 mismatch ({got[:12]}… != {str(d.get('sha256'))[:12]}…)")
@@ -244,7 +243,6 @@ def main() -> int:
         # H55-PROFILE is a separate failed-gate follow-up; never conflate it with the main H55 incumbent.
         h55_path = DATA / "h55_profile.json"
         if h55_path.exists():
-            import hashlib
             import zipfile
             import numpy as np
             import rasterio
@@ -318,7 +316,6 @@ def main() -> int:
     edge_deviation_path = DATA / 'h55_edge_protocol_deviation.json'
     if edge_path.exists():
         import csv
-        import hashlib
         import zipfile
         import numpy as np
         import rasterio
@@ -387,6 +384,15 @@ def main() -> int:
                 if 'h55-edge.html' not in page_text:
                     problems.append(f'{page_name}: missing separate H55-EDGE archive link')
             notes.append(f"H55-EDGE verified as a separate failed-gate archive: {edge['bytes']:,} bytes, {edge_hold['positive_folds']}/4 positive folds; main incumbent unchanged")
+
+    # The prose-literal list was collected and then never read: the diagnostic existed but was
+    # invisible, so a page could quote a 4-decimal score that its own receipt had changed.
+    # Surface it as an informational note (not a failure: several pages deliberately quote the
+    # published scores in prose, and the receipts remain the machine-readable source of truth).
+    if typed_numbers:
+        notes.append(f"prose literals with 4+ decimals found in HTML: {len(typed_numbers)} "
+                     "(informational; receipts stay authoritative)")
+        notes.extend("  " + x for x in typed_numbers[:4])
 
     print(f"pages checked: {len(pages)}   data files: {len(list(DATA.glob('*.json')))}")
     for nse in notes:
