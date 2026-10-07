@@ -17,6 +17,10 @@ jobs:
           cache: pip
       - name: Install pinned CPU scientific environment
         run: python -m pip install -r requirements-r2.txt
+      - name: Restore the small pinned template required by raster integration tests
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/restore_data.py --only sample_submission
       - name: Run numerical spatial and workflow regressions
         env:
           OPENBLAS_NUM_THREADS: '1'

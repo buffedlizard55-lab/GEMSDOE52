@@ -30,5 +30,6 @@
   "concurrent_h53_preserved": true,
   "global_incumbent_pointer": "submission/LATEST.txt (H53, unchanged)",
   "research_pointer": "submission/R2_LATEST.txt",
-  "concurrent_h53_tests": "32 additional tests preserved and passed; structure-tensor numerical overflow warnings in stress fixture flagged"
+  "concurrent_h53_tests": "32 additional tests preserved and passed; structure-tensor numerical overflow warnings in stress fixture flagged",
+  "ci_bug_fixed": "Fresh CI lacked ignored data/sample_submission.tif; workflow now restores only the SHA-pinned 1.6MB template before integration tests. No bulk training data committed."
 }
