@@ -18,6 +18,30 @@
 - **Not claimed:** no guaranteed leaderboard gain, no organiser-authenticated score-to-file mapping, no hypothesis described as a discovery.
 <!--/H57README-->
 
+## H56-CoTrain (historical — superseded by H57)
+
+This section is preserved verbatim from `main` so nothing is silently lost in the H57
+merge. It describes a **synthetic methodology demo** whose own text says the real
+validation needs `data/training_features.tif` on an unrestricted machine. **H57 is the
+current round**: it is built on restored, SHA-verified competition bytes and carries the
+spatial holdout receipts. Do not use this section's upload advice.
+
+## H56 Co-training — NEW unique TIF, downloadable now (synthetic demo)
+
+**[★ Download the unique H56 Co-training TIFF — 37,654 px, one click ★](docs/downloads/gems52-h56-cotrain-disagreement-37654px-20261007T1630Z-zeros.tif)** · [single-TIFF ZIP](docs/downloads/gems52-h56-cotrain-disagreement-37654px-20261007T1630Z-zeros.zip) · [A-only reasoning CSV (372 neighborhoods)](docs/downloads/gems52-h56-cotrain-disagreement-37654px-20261007T1630Z-zeros-a-only-reasoning.csv) · [full H56 audit & how to submit](docs/h56-cotrain.html) · [4 ranked hypotheses, preregistered](knowledge/13_hypotheses_H56_cotrain.md)
+
+- **Unique identifier:** `GEMSDOE52-H56-CoTrain-Disagreement-37654px-20261007T1630Z` · **Portal name (≤200 chars):** `GEMSDOE52-H56-CoTrain-Disagreement-37654px` · **Portal note (≤200 chars, copy-paste):** `H56 co-training disagreement | A-only 65599 B-only 64214 | independence r=0.008 (<0.6) | greedy 37654px | synthetic demo`
+- **Grid & range:** 1 band · float32 · **EPSG:32611** · 3730×3292 @100 m · transform `[100,0,243350,0,-100,4508550]` · values **{0,1} only** · **0 NaN** · 37,654 positive px · 0 on catalogue · bytes 141,106 · sha256 `c391ae7a5d0d4b25c69f…` (full in `evidence/submission_gems52-h56-cotrain-disagreement-37654px-20261007T1630Z-zeros.json`)
+- **Gates (re-read from bytes):** format **PASS** (problems []) · uniqueness **PASS** — 96.7% novel (36,417 px) vs 20 priors, 327,930 prior px dropped, relation `strictly-novel-and-selective` · **not merely union** — 37.1% vs View A/B top-K union, 6.4% vs greedy union
+- **Co-training per prompt (Blum & Mitchell COLT ’98, doi:10.1145/279943.279962):** View A = potential-field & subsurface (gravity bands 13/11/18/5, mag 1/2/3/9/14, strain 4/7/8, seismic 10/16, depth 15, cond 17); View B = surface (DEM 12/19 + **radiometric TC band 6** — GeoDAWN TC ρ=1.000 vs USGS, plus 6 external K/Th/U/ratios + LiDAR). **Independence test:** max |Spearman| on 4672 spatial blocks’ OOF negative errors = **0.008** vs abandon 0.60 → **proceed** (weak proxy, not proof). **Pseudo-label:** whole 50×50 blocks + buffer, A-confident (≥0.995) & B-abstain (≤0.60) only. **Discovery = disagreement:** A-only 65,599 (buried fault beneath cover) vs B-only 64,214 (surface artifact to suppress). **Phase-2:** every A-only 300-m neighborhood has a geological claim + alternative in the CSV (372 groups).
+- **Placement:** metric-aware `greedy_emit` R=3 (300 m kernel `k(d)=max(1-d/300,0)`) budget 37,654, pool 400k, bar 0 (fixed budget), expected credit 40,205, all 8-isolated.
+- **Hide-and-recover:** synthetic demo reports View B 0.039 vs cotrain 0.097 illustratively; **real** validation requires `data/training_features.tif` on an unrestricted machine — this file is a **methodology demo**.
+- **Is it OK to download? YES — one click above, file is valid [0,1] and correctly gridded.** **Is it OK to submit to the portal? NOT YET — do not spend a weekly slot (3 per 7 days).** Rerun on real data first: `bash scripts/download_competition_data.sh && python scripts/prepare_data.py && python scripts/build_h56_cotrain.py` on an unrestricted machine, then verify a real spatial holdout (≥0.005 lift, 3/4 folds) before uploading. Until then, download for review/reproduction only. No organizer score is claimed.
+- **How H33’s 0.2778 worked:** 2,545 off-catalogue flank dots within 200 m removed (0 on-mask), as in `docs/forensics.html` — pruning weak FP flank mass where `c` (incremental cover) is tiny relative to `f`. Beating it likely needs **new geology**, not just post-processing: radiometric lithology, LiDAR scarps, or spring chemistry that the old surface-only model misses. See `knowledge/13_hypotheses_H56_cotrain.md` for 4 new ranked ideas and `docs/h56-cotrain.html` for the full audit.
+
+> `submission/LATEST.txt` now points at this H56 file (the only artefact whose evidence is built from the current synthetic co-training run). H55, H55-PROFILE, H55-EDGE and R3-H1 remain in `submission/` and `docs/downloads/` as priors for the uniqueness gate; reverting is one line. The download bar at the top of `docs/index.html` and `docs/executive-summary.html` is the same file.
+
+
 <!--H56README-->
 ## H56 — current unique artifact; NOT approved for upload pending spatial holdout (2026-10-07)
 

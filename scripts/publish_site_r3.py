@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""Publish the R3 research result to GitHub Pages from strict local receipts.
+"""Publish R3 research pages and a receipt-backed review of the historical H55 result.
 
-Run `scripts/refresh_feed.py` first. The TIFF is visibly labelled research-only:
-its preregistered local lift gate failed, and this script never submits anything.
+H56 now owns the current submission pointer and executive guide. This publisher may add separate
+R3 research links and the H55 archive review, but it must not replace H56's current status or guide.
+It never uploads or submits anything.
 """
 from __future__ import annotations
 
+import hashlib
 import html
 import json
 from pathlib import Path
@@ -13,12 +15,22 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 DATA = DOCS / "data"
+EVIDENCE = ROOT / "evidence"
+H55_TAG = "20261007T0150Z"
+H55_STEM = f"gems52-h55-btherm-greedy-37654px-{H55_TAG}-zeros"
 
 
 def load(name: str):
     path = DATA / f"{name}.json"
     if not path.exists():
         raise FileNotFoundError(f"run scripts/refresh_feed.py first; missing {path.relative_to(ROOT)}")
+    return json.loads(path.read_text())
+
+
+def load_evidence(name: str):
+    path = EVIDENCE / name
+    if not path.is_file():
+        raise FileNotFoundError(f"missing immutable evidence receipt {path.relative_to(ROOT)}")
     return json.loads(path.read_text())
 
 
@@ -34,6 +46,7 @@ def nav(prefix: str = "") -> str:
     links = (
         ("index.html", "Overview"),
         ("executive-summary.html", "Submission guide"),
+        ("h55.html", "Current H55"),
         ("r3.html", "R3 experiment"),
         ("r3-hypotheses.html", "R3 hypotheses"),
         ("validation.html", "R2 validation"),
@@ -55,8 +68,8 @@ def page(title: str, description: str, body: str, prefix: str = "") -> str:
         '</head><body><a class="skip" href="#main">Skip to content</a>'
         f'<header><nav><a class="brand" href="{prefix}index.html">GEMS / DOE 52</a>{nav(prefix)}</nav></header>'
         f'<main id="main">{body}</main>'
-        '<footer>Competition 306 · Local research only · Fault predictions are not confirmed faults, '
-        'geothermal vents, or organizer-score forecasts. '
+        '<footer>Competition 306 · Local checks only; organizer acceptance and score are not recorded here. '
+        'Fault predictions are not confirmed faults or geothermal vents. '
         f'<a href="{prefix}irregularities.html">Limitations &amp; review</a> · '
         '<a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code and complete prompt</a></footer>'
         '</body></html>'
@@ -172,69 +185,40 @@ def render_index(sub, holdout, board, feed) -> str:
     return page("R3 research result", "R3-H1 paired DEM profile research artifact; holdout gate failed; no upload approval.", "".join(body))
 
 
-def render_summary(sub, holdout) -> str:
-    note = sub.get("submission_note") or sub.get("note") or ""
-    gate = holdout["slot_gate"]
-    body = [download_bar(sub)]
-    body.append(
-        '<div class="eyebrow">R3-H1 submission guide · research-only</div>'
-        '<h1>A valid file is not<br>a justified submission.</h1>'
-        '<p class="small">This guide covers only R3-H1. The repository’s H55 headline item is separate; '
-        '<a href="index.html">return to the overview</a> or <a href="h55.html">read its own page</a>.</p>'
-        '<div class="status"><strong>Do not upload the R3-H1 file.</strong>'
-        'It passes the local file-format/range checks, but the preregistered spatial promotion gate failed. '
-        'No weekly slot has been used. A format pass is not scientific approval or proof that the portal '
-        'will accept an upload.</div>'
-        '<p class="lede">This page preserves the requested one-click TIFF, unique name, and short note while '
-        'making the failed validation gate impossible to miss.</p>'
+def a_only_comparison_summary(sweep: dict) -> str:
+    """Report the A-only fold gate and matched-random means without conflating the tests."""
+    def row(mode, arm, emitter_name):
+        return next((item for item in (sweep.get(mode, {}).get("summary") or {}).get("ranked", [])
+                     if item.get("arm") == arm and item.get("emitter") == emitter_name), None)
+
+    comparisons = {}
+    for mode in ("hide", "tip"):
+        candidate = row(mode, "A_only", "hc4|37654")
+        random = row(mode, "random", "hc|37654")
+        if not candidate or not random:
+            return "A-only matched-random fold comparison: not measured in the published sweep."
+        comparisons[mode] = (candidate, random)
+
+    hide, random_hide = comparisons["hide"]
+    tip, random_tip = comparisons["tip"]
+    hide_mean, hide_random = float(hide["mean_dti"]), float(random_hide["mean_dti"])
+    tip_mean, tip_random = float(tip["mean_dti"]), float(random_tip["mean_dti"])
+    hide_wins = int(hide.get("fold_wins_vs_random") or 0)
+    tip_wins = int(tip.get("fold_wins_vs_random") or 0)
+    passes = hide_wins >= 3 and tip_wins >= 3
+    def relation(candidate: float, control: float) -> str:
+        return "below" if candidate < control else "above" if candidate > control else "equal to"
+    return (
+        f"A-only mean DTI: {hide_mean:.5f} vs matched random "
+        f"{hide_random:.5f} on hide, and {tip_mean:.5f} vs "
+        f"{tip_random:.5f} on tip. Its fold wins are {hide_wins}/4 and "
+        f"{tip_wins}/4; it {'passes' if passes else 'does not pass'} the preregistered "
+        "≥3/4-wins-per-instrument promotion comparison. The means are "
+        f"{relation(hide_mean, hide_random)} random on hide and "
+        f"{relation(tip_mean, tip_random)} random on tip. This is separate from the "
+        "conditional-independence test."
     )
-    body.append(
-        '<section class="card"><h2>File identification</h2>'
-        f'<p>Filename: <code>{esc(sub.get("file"))}</code></p>'
-        f'<p>Submission name: <code>{esc(sub.get("submission_name"))}</code></p>'
-        f'<label for="submission-note">Short identifying note ({esc(sub.get("submission_note_chars", len(note)))} chars; do not submit this run)</label>'
-        f'<textarea id="submission-note" readonly>{esc(note)}</textarea>'
-        '<button data-copy="submission-note">Copy note</button>'
-        f'<p class="small">SHA-256 <span class="mono">{esc(sub.get("sha256"))}</span></p>'
-        f'<p>Local gate: lift {fnum(gate["mean_dti_lift"], 6)} vs required '
-        f'+{fnum(gate["required_mean_lift"], 3)}; positive folds {gate["positive_folds"]}/'
-        f'{gate["total_folds"]} vs required {gate["required_positive_folds"]}/4.</p></section>'
-    )
-    body.append(
-        '<h2>Why the [0,1] error is addressed</h2>'
-        '<p>The written raster is single-band float32 with finite binary {0,1} raw values. The local '
-        'format gate reopens the written bytes and checks [0,1], exact sample-template shape, CRS, '
-        'geotransform, bounds, and one band. The internal validity mask matches the sample grid; no '
-        'negative sentinel or NaN is written. This is a local precaution for the reported '
-        '“Predicted values must be in range [0, 1]” error, not evidence about an undocumented portal validator.</p>'
-        '<p>The exact grid and byte receipt are linked below. Do not reproject or edit the TIFF. Input '
-        'rasters are owner-mirrored and SHA-pinned, not organizer-authenticated.</p>'
-        '<a href="data/submission_r3.json">Open artifact receipt →</a> · '
-        '<a href="data/format_gate_r3.json">Open format check →</a> · '
-        '<a href="data/independent_tiff_check_r3.json">Open independent TIFF readback →</a> · '
-        '<a href="data/uniqueness_r3.json">Open prior-comparison gate →</a>'
-    )
-    body.append(
-        '<h2>Submission steps for a future approved file</h2>'
-        '<p><strong>Do not use the current R3 file for these steps.</strong> Once a future candidate '
-        'passes its preregistered holdout and independent confirmation:</p>'
-        '<ol><li>Check the new artifact receipt says <code>approved_for_weekly_slot: true</code> and '
-        'the download hash matches.</li>'
-        '<li>Open the official <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">'
-        'DOE GEMS competition</a> and sign into the eligible team account.</li>'
-        '<li>Choose “New submission” and follow the portal’s current input instructions. The prediction '
-        'file is the exact single-band .tif; the research ZIP linked here also contains a note and audit '
-        'JSON and is for download/review, not assumed to be a valid portal payload.</li>'
-        '<li>Paste the artifact’s ≤200-character identifying note into the optional Note field. Do not '
-        'change pixel values, CRS, transform, or bounds in GIS software.</li>'
-        '<li>Only after the scientific gate passes and a slot is available, submit and save the organizer '
-        'receipt, ID, timestamp, and returned score. The rules describe a weekly submission limit; '
-        'this session used zero slots.</li></ol>'
-        '<p>Official sources: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">'
-        'problem and format</a>; <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">competition rules and AI disclosure</a>. '
-        'A competition score is not the final expert-reviewed outcome.</p>'
-    )
-    return page("Submission guide", "How to submit only after scientific approval; the current R3 artifact is not approved.", "".join(body))
+
 
 
 def render_r3(sub, holdout, independence, cotrain, board) -> str:
@@ -466,6 +450,111 @@ def render_downloads(sub) -> str:
     return page("Downloads", "Current research-only artifact, notes, and historical downloads.", "".join(body), prefix="../")
 
 
+def insert_h55_review(h55_archive: dict, verification: dict, sweep: dict,
+                      current_submission: dict) -> None:
+    """Put H55's historical, receipt-backed findings above the archived R2 notes."""
+    path = DOCS / "irregularities.html"
+    if not path.exists():
+        raise FileNotFoundError("missing docs/irregularities.html; H55 archive review must not be omitted")
+    independent = verification.get("independence_summary") or {}
+    hide = independent.get("hide") or {}
+    tip = independent.get("tip") or {}
+    if h55_archive.get("approved_for_weekly_slot") is True:
+        h55_status = (
+            "The archived H55 receipt recorded a local slot-gate PASS for that exact file at the time. "
+            "This is historical only: H55 is superseded, no H55 portal receipt or official score is recorded, "
+            "and its old gate is not upload advice for the current artifact."
+        )
+    elif h55_archive.get("approved_for_weekly_slot") is False:
+        h55_status = (
+            "The archived H55 receipt recorded a local slot-gate FAIL; the artifact was research-only. "
+            "No H55 portal receipt or official score is recorded."
+        )
+    else:
+        h55_status = "The H55 archive receipt does not establish a local slot decision; do not infer approval."
+
+    current_file = str(current_submission.get("file") or "not recorded")
+    # The status text has to name the round that is actually current, not the round this function was
+    # written for.  A hard-coded "H56" link survived the H57 round and pointed readers at the wrong
+    # audit page; the round is now read from the receipt.
+    rnd = str(current_submission.get("round") or "H56").upper()
+    page_href = "h57.html" if rnd == "H57" else (
+        "h56-cotrain.html" if current_submission.get("synthetic")
+        or current_submission.get("synthetic_demo") else "h56.html")
+    if current_submission.get("synthetic") or current_submission.get("synthetic_demo"):
+        current_status = (
+            f"The current pointer is <code>{esc(current_file)}</code>, a synthetic methodology demo. "
+            "Its illustrative holdout figures are not real-data validation; its weekly-slot gate is closed. "
+            "Do not upload or spend a slot until a real-data build passes the preregistered comparable spatial holdout. "
+            f'See the <a href="{page_href}">current {esc(rnd)} status and audit</a>.'
+        )
+    elif current_submission.get("approved_for_weekly_slot") is False:
+        current_status = (
+            f"The current pointer is <code>{esc(current_file)}</code>; its receipt explicitly closes the "
+            "weekly-slot gate. No comparable spatial holdout is recorded, so do not upload or spend a slot. "
+            f'See the <a href="{page_href}">current {esc(rnd)} status and review</a>.'
+        )
+    elif current_submission.get("approved_for_weekly_slot") is True:
+        current_status = (
+            f"The current pointer is <code>{esc(current_file)}</code> and its local receipt records a pass; "
+            "that still does not establish organizer approval or portal acceptance. See the current "
+            '<a href="h56.html">artifact status page</a>.'
+        )
+    else:
+        current_status = (
+            f"The current pointer is <code>{esc(current_file)}</code>, but its receipt does not record a "
+            'slot decision. Do not infer approval; consult the <a href="h56.html">current artifact page</a>.'
+        )
+
+    block = (
+        '<!--H55-ARCHIVE-REVIEW--><section id="h55-archive-review" class="card">'
+        '<div class="eyebrow">Historical H55 evidence review · 2026-10-07</div>'
+        '<h2>H55 archive: findings and promotion decision do not carry forward to H56</h2>'
+        f'<p><strong>{esc(h55_status)}</strong> H55 file: <code>{esc(h55_archive.get("file"))}</code>. '
+        f'{current_status} <a href="h55.html">Open the full H55 archive analysis</a>.</p>'
+        '<p>Band 6 was re-audited as GeoDAWN total-count radiometry, not a magnetic derivative, despite its TIFF tag. '
+        'The preregistered block-level proxy error-correlation test reached '
+        f'|ρ|={fnum(hide.get("max_abs_spearman_mean_overprediction"), 4)} on hide and '
+        f'{fnum(tip.get("max_abs_spearman_mean_overprediction"), 4)} on tip against the '
+        f'{fnum(hide.get("abandon_threshold"), 2)} cutoff; co-training was abandoned under that registered test. '
+        'Catalogue-zero pixels are incomplete-label proxies; this is not proof of geological absence or '
+        'conditional independence.</p>'
+        f'<p>{esc(a_only_comparison_summary(sweep))}</p>'
+        '<p>H55-JUNCTION remains untested. This archival review creates no TIFF and uses no weekly slot. '
+        '<a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/12_hypotheses_H55_preregistered.md">'
+        'Open the frozen H55 hypothesis register</a>.</p>'
+        '</section><!--/H55-ARCHIVE-REVIEW-->'
+    )
+    text = path.read_text(encoding="utf-8")
+    start_tag, end_tag = "<!--H55-ARCHIVE-REVIEW-->", "<!--/H55-ARCHIVE-REVIEW-->"
+    if start_tag in text and end_tag in text:
+        start = text.index(start_tag)
+        end = text.index(end_tag, start) + len(end_tag)
+        text = text[:start] + block + text[end:]
+    else:
+        # Clean up the superseded pre-H56 marker when upgrading an existing site page.
+        old_start, old_end = "<!--H55-CURRENT-REVIEW-->", "<!--/H55-CURRENT-REVIEW-->"
+        if old_start in text and old_end in text:
+            start = text.index(old_start)
+            end = text.index(old_end, start) + len(old_end)
+            text = text[:start] + block + text[end:]
+        else:
+            marker = '<main id="main">'
+            if marker not in text:
+                raise ValueError("docs/irregularities.html lacks the expected main container")
+            text = text.replace(marker, marker + block, 1)
+
+    # Replace stale H53/H54-era assertions with the later H55 source audit and mixed A-only result.
+    text = text.replace(
+        '<li><strong>No radiometric bands in the available stack.</strong> No invented data layers, LiDAR-only hidden-label claims or local microseismic locations.</li>',
+        '<li><strong>H55 corrected the H52-era radiometry interpretation.</strong> Band 6 is measured as GeoDAWN total-count radiometry, not a magnetic derivative. External layers and catalogues remain bounded context, not confirmed hidden labels.</li>')
+    text = text.replace(
+        '<li><strong>Geophysical view is weaker here.</strong> Low negative-error correlation did not make co-training win. Strong surface-only control prevented a false promotion.</li>',
+        '<li><strong>H55 co-training and A-only results are separate.</strong> The registered block-error-correlation test exceeded its cutoff and co-training was abandoned. A-only fails the ≥3/4 fold-win gate with mixed means: below random on hide and above random on tip.</li>')
+    text = text.replace('<h2>Next session, in order</h2>', '<h2>Historical R2 next-session plan</h2>')
+    path.write_text(text, encoding="utf-8")
+
+
 def insert_nav_link(path: Path) -> None:
     if not path.exists():
         return
@@ -543,36 +632,53 @@ def insert_r3_download_section(sub: dict) -> None:
 
 
 def main() -> int:
-    # The repository can carry several parallel research rounds. R3 has its own receipt and page; it
-    # must not replace the current submission.json/H55 headline merely because this publisher ran.
-    sub = load("submission_r3")
+    # H55's evidence is historical and must not be inferred from docs/data/submission.json, which now
+    # belongs to the current H56 candidate. Load its immutable evidence receipts by their exact tag.
+    r3 = load("submission_r3")
+    current = load("submission")
+    h55_archive = load_evidence(f"submission_{H55_STEM}.json")
+    h55_verification = load_evidence(f"h55_verification_{H55_TAG}.json")
+    h55_sweep = load_evidence("h55_sweep_hardcore.json")
     holdout = load("holdout_r3_paired_profile")
     independence = load("independence_r3")
     cotrain = load("cotraining_summary_r3")
     board = load("leaderboard")
-    if sub.get("file") is None or sub.get("approved_for_weekly_slot") is not False:
-        raise ValueError("the R3 receipt must name a non-approved research artifact")
-    sub["download"] = "downloads/" + sub["file"]
-    sub["download_zip"] = "downloads/" + sub["file"].removesuffix(".tif") + ".zip"
-    sub["exists"] = (DOCS / sub["download"]).exists()
-    sub["submission_note"] = sub.get("submission_note") or sub.get("note") or ""
-    sub["submission_note_chars"] = len(sub["submission_note"])
-    if not sub["exists"]:
-        raise FileNotFoundError(f"missing R3 research raster: {sub['download']}")
-    if not (DOCS / sub["download_zip"]).exists():
-        raise FileNotFoundError(f"missing R3 research archive: {sub['download_zip']}")
 
-    (DOCS / "executive-summary.html").write_text(render_summary(sub, holdout), encoding="utf-8")
-    (DOCS / "r3.html").write_text(render_r3(sub, holdout, independence, cotrain, board), encoding="utf-8")
-    (DOCS / "r3-hypotheses.html").write_text(render_hypotheses(sub, holdout), encoding="utf-8")
-    insert_r3_home_bar(sub)
-    insert_r3_download_section(sub)
+    if r3.get("file") is None or r3.get("approved_for_weekly_slot") is not False:
+        raise ValueError("the R3 receipt must name a non-approved research artifact")
+    r3["download"] = "downloads/" + r3["file"]
+    r3["download_zip"] = "downloads/" + r3["file"].removesuffix(".tif") + ".zip"
+    r3["exists"] = (DOCS / r3["download"]).exists()
+    r3["submission_note"] = r3.get("submission_note") or r3.get("note") or ""
+    r3["submission_note_chars"] = len(r3["submission_note"])
+    if not r3["exists"]:
+        raise FileNotFoundError(f"missing R3 research raster: {r3['download']}")
+    if not (DOCS / r3["download_zip"]).exists():
+        raise FileNotFoundError(f"missing R3 research archive: {r3['download_zip']}")
+
+    latest = (ROOT / "submission" / "LATEST.txt").read_text().strip()
+    if current.get("file") != latest:
+        raise ValueError("docs/data/submission.json does not match submission/LATEST.txt")
+    if current.get("approved_for_weekly_slot") is not False:
+        raise ValueError("the current H56 slot gate must remain explicitly closed in this publication pass")
+    if h55_archive.get("file") != f"{H55_STEM}.tif" or h55_archive.get("approved_for_weekly_slot") is not True:
+        raise ValueError("the H55 archive receipt is not the expected historical, locally reviewed artifact")
+    if h55_verification.get("tag") != H55_TAG or h55_verification.get("all_ok") is not True:
+        raise ValueError("the H55 verification receipt does not match the pinned historical artifact")
+    h55_tiff = DOCS / "downloads" / h55_archive["file"]
+    if not h55_tiff.is_file() or hashlib.sha256(h55_tiff.read_bytes()).hexdigest() != h55_archive.get("sha256"):
+        raise ValueError("the archived H55 download is missing or differs from its evidence hash")
+
+    (DOCS / "r3.html").write_text(render_r3(r3, holdout, independence, cotrain, board), encoding="utf-8")
+    (DOCS / "r3-hypotheses.html").write_text(render_hypotheses(r3, holdout), encoding="utf-8")
+    insert_h55_review(h55_archive, h55_verification, h55_sweep, current)
+    insert_r3_home_bar(r3)
+    insert_r3_download_section(r3)
     for name in ("index.html", "validation.html", "forensics.html", "hypotheses.html", "sources.html",
                  "irregularities.html", "feed.html", "h54.html", "executive-summary.html"):
         insert_nav_link(DOCS / name)
-    print("wrote R3 research pages and top-level callouts without replacing the current submission")
+    print("wrote R3 research pages and H55 archive review; H56 current guide/status and pointer remain intact")
     return 0
-
 
 if __name__ == "__main__":
     raise SystemExit(main())

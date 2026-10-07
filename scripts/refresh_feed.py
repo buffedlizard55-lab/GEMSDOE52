@@ -23,11 +23,6 @@ DATA = DOCS / 'data'
 DL = DOCS / 'downloads'
 BOARD = 'https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/'
 OUR_BEST = 0.2778  # brief/owner attribution, NOT an authenticated artifact score
-H54_FILE = 'gems52-h54-revealed-core-strike-continuation-50517px-r1.tif'
-H54_STEM = H54_FILE[:-4]
-H54_AUDIT_NOTE = 'H54 legacy research/audit only; no comparable spatial holdout; not approved for submission.'
-H56_SHORT_NAME = 'h56-candidate'
-H56_SLOT_REVIEW = 'evidence/h56_slot_gate_review_2026-10-07.json'
 
 
 def log(message):
@@ -58,24 +53,12 @@ def copy_evidence():
     for path in sorted(EV.glob('*_r[23]*.json')):
         write(path.name, safe(json.loads(path.read_text())))
         copied.append(path.name)
-    h54_names = (
-        'revealed_calibration.json', 'revealed_budget.json', 'independence_revealed.json',
-        'cotraining_views54.json', 'revealed_submission_audit.json', 'revealed_format_gate.json',
-        'revealed_uniqueness_gate.json', 'a_only_geological_reasoning54.json',
-        'h54_prior_inventory_availability.json', 'h54_artifact_review_2026-10-07.json',
-        'h56_slot_gate_review_2026-10-07.json', f'submission_{H54_STEM}.json',
-    )
-    for name in h54_names:
-        path = EV / name
-        if path.exists():
-            write(name, safe(json.loads(path.read_text())))
-            copied.append(name)
     for name in ('r2_preregistration', 'r3_preregistration', 'h55_preregistration',
-                 'h55_paired_shoulders_preregistration', 'h55_edge_preregistration',
-                 'source_policy', 'data_manifest', 'irregularities', 'leaderboard_snapshot_2026-10-07'):
+                 'h55_edge_preregistration', 'source_policy', 'data_manifest',
+                 'irregularities', 'leaderboard_snapshot_2026-10-07'):
         path = ROOT / 'registry' / (name + '.json')
         if path.exists():
-            if name in ('h55_preregistration', 'h55_paired_shoulders_preregistration', 'h55_edge_preregistration'):
+            if name in ('h55_preregistration', 'h55_edge_preregistration'):
                 # The frozen registration's byte hash is a preregistration receipt; preserve its exact
                 # bytes in the static site rather than semantically reserializing the JSON.
                 target = DATA / (name + '.json')
@@ -91,6 +74,25 @@ def copy_evidence():
         for path in sorted(EV.glob(pat)):
             write(path.name, safe(json.loads(path.read_text())))
             copied.append(path.name)
+    marker = ROOT / 'submission/LATEST.txt'
+    if marker.exists():
+        current_name = marker.read_text().strip()
+        current_stem = current_name[:-4] if current_name.endswith('.tif') else current_name
+        current_receipt = EV / f'submission_{current_stem}.json'
+        if current_receipt.exists() and current_stem.startswith('gems52-h56-cotrain-'):
+            receipt = json.loads(current_receipt.read_text())
+            write('submission_h56.json', safe(receipt))
+            copied.append('submission_h56.json')
+            # The audit page links the per-candidate reasoning record from the tagged receipt.
+            # Publish only a basename under the evidence directory; never follow an arbitrary
+            # receipt path outside the repository into the static site.
+            reasoning_name = Path(str((receipt.get('reasoning') or {}).get('json') or '')).name
+            if reasoning_name.startswith('h56_reasoning_') and reasoning_name.endswith('.json'):
+                reasoning_source = EV / reasoning_name
+                if reasoning_source.is_file():
+                    DATA.mkdir(parents=True, exist_ok=True)
+                    (DATA / reasoning_name).write_bytes(reasoning_source.read_bytes())
+                    copied.append(reasoning_name)
     for path in sorted(EV.glob('h55_reasoning_*.json')):
         (DL / path.name).write_text(path.read_text())
     reasoning = EV / 'a_only_reasoning_r3.csv'
@@ -100,35 +102,6 @@ def copy_evidence():
         if not target.exists() or target.read_bytes() != reasoning.read_bytes():
             target.write_bytes(reasoning.read_bytes())
         copied.append(reasoning.name)
-    h54_reasoning = EV / 'a_only_reasoning54.csv'
-    if h54_reasoning.exists():
-        target = DL / h54_reasoning.name
-        DL.mkdir(parents=True, exist_ok=True)
-        if not target.exists() or target.read_bytes() != h54_reasoning.read_bytes():
-            target.write_bytes(h54_reasoning.read_bytes())
-        copied.append(h54_reasoning.name)
-    paired_note = ROOT / 'knowledge/11_h55_paired_shoulders.md'
-    if paired_note.exists():
-        target = DATA / 'h55_paired_shoulders_hypotheses.md'
-        if not target.exists() or target.read_bytes() != paired_note.read_bytes():
-            target.write_bytes(paired_note.read_bytes())
-        copied.append(target.name)
-    paired_review = EV / 'review_execution_h55_paired_shoulders.json'
-    if paired_review.exists():
-        write(paired_review.name, safe(json.loads(paired_review.read_text())))
-        copied.append(paired_review.name)
-    # H56's build/verification/review receipts are linked from its candidate and guide pages.
-    # Preserve their exact bytes: the slot-gate supplement pins the build and verifier hashes.
-    for name in ('gems52-h56-build.json', 'gems52-h56-verify.json',
-                 'gems52-h56_review_receipt.json', 'h56_a_only_reasoning_scope_2026-10-07.json',
-                 'review_current_integrated_tree_2026-10-07.json'):
-        path = EV / name
-        if path.exists():
-            target = DATA / name
-            target.parent.mkdir(parents=True, exist_ok=True)
-            if not target.exists() or target.read_bytes() != path.read_bytes():
-                target.write_bytes(path.read_bytes())
-            copied.append(name)
     return copied
 
 
@@ -138,123 +111,6 @@ def file_hash(path):
         for block in iter(lambda: fh.read(1 << 20), b''):
             h.update(block)
     return h.hexdigest()
-
-
-def h54_audit_record():
-    """Return an explicit audit-only record without replacing the current H55 pointer."""
-    path = DL / H54_FILE
-    receipt_path = EV / f'submission_{H54_STEM}.json'
-    if not path.exists() or not receipt_path.exists():
-        return None
-    receipt = json.loads(receipt_path.read_text())
-    actual = file_hash(path)
-    if actual != receipt.get('sha256'):
-        raise ValueError('H54 audit TIFF differs from its recorded bytes')
-    marker = ROOT / 'submission/H54_RESEARCH_LATEST.txt'
-    if marker.exists() and marker.read_text().strip() != H54_FILE:
-        raise ValueError('H54 research marker points to a different TIFF')
-    return {
-        'status': 'legacy-audit-only',
-        'exists': True,
-        'file': H54_FILE,
-        'submission_name': 'GEMSDOE52-H54-Research-AuditOnly',
-        'submission_note': H54_AUDIT_NOTE,
-        'submission_note_chars': len(H54_AUDIT_NOTE),
-        'sha256': actual,
-        'bytes': path.stat().st_size,
-        'format_ok': bool(receipt.get('format', {}).get('ok')),
-        'format': receipt.get('format', {}),
-        'uniqueness': receipt.get('uniqueness', {}),
-        'writer_receipt': receipt.get('writer_receipt', {}),
-        'canonical_download': 'downloads/' + H54_FILE,
-        'canonical_zip': 'downloads/' + H54_STEM + '.zip',
-        'short_download': 'downloads/h54-audit-only.tif',
-        'short_zip': 'downloads/h54-audit-only.zip',
-        'short_download_zip': 'downloads/h54-audit-only.zip',
-        'download': 'downloads/h54-audit-only.tif',
-        'download_zip': 'downloads/h54-audit-only.zip',
-        'approved_for_weekly_slot': False,
-        'comparable_spatial_holdout': 'not demonstrated',
-        'official_score': None,
-        'official_score_file_mapping_authenticated': False,
-        'global_decoded_pattern_uniqueness': 'unknown; bounded local prior audit only',
-        'receipt': 'data/submission_' + H54_STEM + '.json',
-        'review': 'data/h54_artifact_review_2026-10-07.json',
-        'prior_inventory': 'data/h54_prior_inventory_availability.json',
-        'a_only_reasoning_csv': 'downloads/a_only_reasoning54.csv',
-    }
-
-
-def make_h54_audit_zip():
-    """Build a single-TIFF archive whose note cannot be mistaken for slot approval."""
-    import zipfile
-    src = DL / H54_FILE
-    receipt = EV / f'submission_{H54_STEM}.json'
-    if not src.exists() or not receipt.exists():
-        return None
-    audit = json.loads(receipt.read_text())
-    expected_sha = audit.get('sha256')
-    if file_hash(src) != expected_sha:
-        raise ValueError('H54 TIFF SHA-256 does not match its frozen receipt')
-    body = '\n'.join((
-        H54_FILE,
-        f'sha256 {expected_sha}',
-        f"{src.stat().st_size} bytes; one-band float32 GeoTIFF; audit/research only.",
-        '',
-        'STATUS: ' + H54_AUDIT_NOTE,
-        'No comparable spatially blocked holdout is demonstrated. Do not spend an upload slot on this file.',
-        'The public leaderboard score-to-filename mapping is not authenticated.',
-        '',
-    ))
-    target = DL / (H54_STEM + '.zip')
-    members = [H54_FILE, 'SUBMISSION_NOTE.txt', 'evidence.json']
-    if target.exists():
-        try:
-            with zipfile.ZipFile(target) as old:
-                valid = (old.namelist() == members and old.read(H54_FILE) == src.read_bytes()
-                         and old.read('SUBMISSION_NOTE.txt') == body.encode()
-                         and old.read('evidence.json') == receipt.read_bytes() and old.testzip() is None)
-            if valid:
-                return str(target)
-        except (OSError, KeyError, zipfile.BadZipFile):
-            pass
-    with zipfile.ZipFile(target, 'w', zipfile.ZIP_DEFLATED) as archive:
-        archive.write(src, arcname=H54_FILE)
-        archive.writestr('SUBMISSION_NOTE.txt', body)
-        archive.write(receipt, arcname='evidence.json')
-    return str(target)
-
-
-def stage_h54_short_aliases():
-    """Short links are byte-identical aliases, never rewritten prediction rasters."""
-    import shutil
-    pairs = ((DL / H54_FILE, DL / 'h54-audit-only.tif'),
-             (DL / (H54_STEM + '.zip'), DL / 'h54-audit-only.zip'))
-    for source, alias in pairs:
-        if not source.exists():
-            raise FileNotFoundError(source)
-        if not alias.exists() or alias.read_bytes() != source.read_bytes():
-            alias.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(source, alias)
-        if file_hash(source) != file_hash(alias):
-            raise ValueError(f'H54 short alias is not byte-identical: {alias.name}')
-
-
-def stage_h56_short_aliases(name: str) -> None:
-    """Publish short links as byte-identical aliases of the current H56 candidate."""
-    import shutil
-    if not name.startswith('gems52-h56-') or not name.endswith('.tif'):
-        raise ValueError('H56 alias helper received a non-H56 TIFF')
-    stem = name[:-4]
-    pairs = ((DL / name, DL / (H56_SHORT_NAME + '.tif')),
-             (DL / (stem + '.zip'), DL / (H56_SHORT_NAME + '.zip')))
-    for source, alias in pairs:
-        if not source.exists():
-            raise FileNotFoundError(source)
-        if not alias.exists() or alias.read_bytes() != source.read_bytes():
-            shutil.copyfile(source, alias)
-        if file_hash(source) != file_hash(alias):
-            raise ValueError(f'H56 short alias is not byte-identical: {alias.name}')
 
 
 def submission_note(d):
@@ -267,34 +123,12 @@ def submission_note(d):
     """
     if d.get('submission_note'):
         return str(d['submission_note'])[:200]
+    portal_note = (d.get('portal') or {}).get('note')
+    if portal_note:
+        return str(portal_note)[:200]
     n = (f"H54 revealed-core {d.get('retained_core_px', 0)}px + {d.get('novel_px', 0)}px novel "
          f"strike-continuation; 200m corridor excluded; |G|=14089")
     return n[:200]
-
-
-def make_single_tiff_zip(name: str):
-    """Preserve the current H56 package contract: ZIP contains exactly its TIFF."""
-    import zipfile
-    src = ROOT / 'submission' / name
-    report_path = DATA / 'submission.json'
-    target = DL / (name[:-4] + '.zip') if name.endswith('.tif') else DL / (name + '.zip')
-    report = json.loads(report_path.read_text()) if report_path.exists() else {}
-    if report.get('file') != name or not src.exists():
-        return None
-    expected_sha = report.get('sha256')
-    if expected_sha and file_hash(src) != expected_sha:
-        raise ValueError('Current H56 TIFF differs from docs/data/submission.json')
-    if target.exists():
-        try:
-            with zipfile.ZipFile(target) as old:
-                if (old.namelist() == [name] and old.read(name) == src.read_bytes()
-                        and old.testzip() is None):
-                    return str(target)
-        except (OSError, KeyError, zipfile.BadZipFile):
-            pass
-    with zipfile.ZipFile(target, 'w', zipfile.ZIP_DEFLATED) as archive:
-        archive.write(src, arcname=name)
-    return str(target)
 
 
 def make_zip(name):
@@ -306,12 +140,6 @@ def make_zip(name):
     for a round it was not written against is worse than a generic one.  So the body is assembled
     from the keys the record actually has, and says which round it came from.
     """
-    if name == H54_FILE:
-        return make_h54_audit_zip()
-    current_receipt = DATA / 'submission.json'
-    if (name.startswith('gems52-h56-') and current_receipt.exists()
-            and json.loads(current_receipt.read_text()).get('file') == name):
-        return make_single_tiff_zip(name)
     import zipfile
     src = ROOT / 'submission' / name
     if not src.exists():
@@ -410,7 +238,9 @@ def make_zip(name):
 
 
 def latest_submission():
-    """Resolve the current marker without allowing an older round to outrank H56 by receipt shape."""
+    # Two rounds ship artefacts and each keeps its own marker.  Prefer the one that carries a complete
+    # gate report of its own, so the site never offers a file whose audit it cannot show; IR-52-029
+    # records the choice, the reason, and that reverting is one line in submission/LATEST.txt.
     order = []
     for marker in (ROOT / 'submission/LATEST.txt', ROOT / 'submission/R2_LATEST.txt'):
         if marker.exists():
@@ -420,46 +250,53 @@ def latest_submission():
             order.append((nm, marker, own))
     if not order:
         return dict(exists=False, file=None, note='No artifact has been built.')
-
-    # H56's complete receipt is the maintained docs/data/submission.json record rather than an
-    # evidence/submission_<stem>.json file. When it matches the primary marker, preserve it as the
-    # current report instead of falling back to a historical R2 receipt.
-    name, marker, own = order[0]
-    published = DATA / 'submission.json'
-    report = {}
-    if published.exists():
-        candidate = json.loads(published.read_text())
-        if candidate.get('file') == name:
+    audited = [c for c in order if c[2].exists()]
+    name, marker, own = (audited[0] if audited else order[0])
+    stem = name[:-4] if name.endswith('.tif') else name
+    path = DL / name
+    r2 = EV / 'submission_r2.json'
+    if own.exists():
+        candidate = json.loads(own.read_text())
+        if candidate.get('file') == name or candidate.get('stem') == stem:
             report = candidate
-    if not report:
-        audited = [c for c in order if c[2].exists()]
-        name, marker, own = (audited[0] if audited else order[0])
-        r2 = EV / 'submission_r2.json'
-        if own.exists() and json.loads(own.read_text()).get('file') == name:
-            report = json.loads(own.read_text())
+            report['file'] = name
         elif r2.exists() and json.loads(r2.read_text()).get('file') == name:
             report = json.loads(r2.read_text())
         else:
             report = dict(file=name, approved_for_weekly_slot=False,
                           promotion='historical research artifact; consult its original audit')
-
-    path = DL / name
+    elif r2.exists() and json.loads(r2.read_text()).get('file') == name:
+        report = json.loads(r2.read_text())
+    else:
+        report = dict(file=name, approved_for_weekly_slot=False,
+                      promotion='historical research artifact; consult its original audit')
+    if report.get('synthetic') is True:
+        report.update(
+            approved_for_weekly_slot=False,
+            promotion='synthetic methodology demo; not approved for portal upload',
+            artifact_status='RESEARCH ONLY — SYNTHETIC METHODOLOGY DEMO',
+            official_score_status='no portal upload or organizer score is recorded',
+            submission_slots_used=0,
+            slot_gate=dict(approved_for_weekly_slot=False,
+                           reason='Synthetic inputs are not competition data; real-data holdout has not been run. Do not upload or spend a slot.'),
+        )
+    if report.get('format_gate') and not report.get('format'):
+        report['format'] = report['format_gate']
     report['marker'] = str(marker.relative_to(ROOT))
     report['exists'] = path.exists()
     report['download'] = 'downloads/' + name
     report['download_zip'] = 'downloads/' + name.replace('.tif', '') + '.zip'
-    if name.startswith('gems52-h56-') and name.endswith('.tif'):
-        report['short_download'] = 'downloads/' + H56_SHORT_NAME + '.tif'
-        report['short_download_zip'] = 'downloads/' + H56_SHORT_NAME + '.zip'
-        report['short_aliases_are_canonical_byte_copies'] = True
     report['submission_note'] = submission_note(report)
     report['submission_note_chars'] = len(report['submission_note'])
     if path.exists():
-        report['bytes'] = path.stat().st_size
+        actual_bytes = path.stat().st_size
         actual = file_hash(path)
-        report['published_byte_hash_matches_receipt'] = report.get('sha256') == actual
+        if report.get('bytes') is not None and int(report['bytes']) != actual_bytes:
+            raise ValueError('Published TIFF byte count differs from the audited receipt. Do not publish it.')
         if report.get('sha256') and report['sha256'] != actual:
             raise ValueError('Published TIFF differs from the audited TIFF. Do not upload it.')
+        report['bytes'] = actual_bytes
+        report['published_byte_hash_matches_receipt'] = report.get('sha256') == actual
     return report
 
 
@@ -538,17 +375,6 @@ def main():
         mp = ROOT / 'submission' / mk
         if mp.exists():
             make_zip(mp.read_text().strip())
-    current_marker = ROOT / 'submission/LATEST.txt'
-    if current_marker.exists():
-        current_name = current_marker.read_text().strip()
-        if current_name.startswith('gems52-h56-'):
-            stage_h56_short_aliases(current_name)
-    h54_marker = ROOT / 'submission/H54_RESEARCH_LATEST.txt'
-    if h54_marker.exists():
-        if h54_marker.read_text().strip() != H54_FILE:
-            raise ValueError('H54 research-only marker does not match the audited H54 artifact')
-        make_h54_audit_zip()
-        stage_h54_short_aliases()
     # Also publish explicitly named research-only ZIPs without promoting them
     # through either global pointer. Their package receipts remain per-artifact.
     edge_marker = ROOT / 'submission/H55_EDGE_LATEST.txt'
@@ -560,11 +386,8 @@ def main():
             if not target_zip.exists() or file_hash(target_zip) != file_hash(edge_zip):
                 target_zip.write_bytes(edge_zip.read_bytes())
     sub = latest_submission()
-    h54 = h54_audit_record()
     board = fetch_board(args.fetch)
     write('submission.json', sub)
-    if h54 is not None:
-        write('h54_audit.json', h54)
     write('leaderboard.json', board)
     inv = EV / 'prior_inventory_r2.json'
     entries = json.loads(inv.read_text()).get('entries', []) if inv.exists() else []
@@ -572,11 +395,9 @@ def main():
         generated_utc=time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
         branch=current_branch(args.branch), repo='buffedlizard55-lab/GEMSDOE52',
         evidence_copied=copied,
-        files=sorted({p.name for pat in ('*_r[23]*.json', 'h55_*.json', 'h56_*.json', 'submission_gems52-h55-*.json')
+        files=sorted({p.name for pat in ('*_r[23]*.json', 'h55_*.json', 'submission_gems52-h55-*.json')
                       for p in DATA.glob(pat)}),
         submission=sub.get('file'), downloads=len(list(DL.glob('*.tif'))),
-        h54_audit_only=(h54 or {}).get('file'),
-        h55_paired_shoulders='separate failed-gate experiment; no TIFF or slot use',
         leaderboard_status=board['status'],
         leaderboard_last_observed_utc=board.get('fetched_utc') or board.get('observed_date_utc'),
         prior_entries=len(entries), eligible_prior_rasters=sum(bool(r.get('eligible_prior')) for r in entries),

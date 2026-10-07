@@ -150,15 +150,49 @@ def independence(mode: str, valid: np.ndarray, cat: np.ndarray) -> dict:
     else:
         out["verdict"] = (f"NOT REFUTED at the pre-registered threshold: max |Spearman| over folds = "
                           f"{max(abs(x) for x in sp) if sp else float('nan'):.4f} < {ABANDON_R}. This "
-                          f"is not evidence of independence; it is the absence of evidence against it, "
-                          f"and the arm-level result (A_only below random on both instruments, "
-                          f"knowledge/03 N-10) is what actually decides the design.")
+                          f"is not evidence of independence; it is the absence of evidence against it. "
+                          f"The A_only matched-random fold comparison in "
+                          f"evidence/h55_sweep_hardcore.json is a separate promotion test, not an "
+                          f"independence statistic.")
     return out
 
 
 # --------------------------------------------------------------------------------------------
 # 2. is it merely the union of the two views?
 # --------------------------------------------------------------------------------------------
+def a_only_promotion_summary() -> str:
+    """Summarize the separate A-only matched-random promotion check from its sweep receipt."""
+    path = EV / "h55_sweep_hardcore.json"
+    if not path.exists():
+        return "The A-only matched-random comparison is not measured in this receipt."
+    sweep = json.loads(path.read_text())
+
+    def row(mode, arm, emitter):
+        return next((item for item in sweep.get(mode, {}).get("summary", {}).get("ranked", [])
+                     if item.get("arm") == arm and item.get("emitter") == emitter), None)
+
+    comparisons = {}
+    for mode in ("hide", "tip"):
+        candidate = row(mode, "A_only", "hc4|37654")
+        random = row(mode, "random", "hc|37654")
+        if not candidate or not random:
+            return "The A-only matched-random comparison is incomplete in the sweep receipt."
+        comparisons[mode] = (candidate, random)
+
+    hide, random_hide = comparisons["hide"]
+    tip, random_tip = comparisons["tip"]
+    hide_wins = int(hide.get("fold_wins_vs_random") or 0)
+    tip_wins = int(tip.get("fold_wins_vs_random") or 0)
+    gate = hide_wins >= 3 and tip_wins >= 3
+    disposition = "passes" if gate else "does not pass"
+    return (
+        f"A_only mean DTI is {float(hide['mean_dti']):.5f} vs matched random "
+        f"{float(random_hide['mean_dti']):.5f} on hide and {float(tip['mean_dti']):.5f} vs "
+        f"{float(random_tip['mean_dti']):.5f} on tip; its fold wins are {hide_wins}/4 and "
+        f"{tip_wins}/4, so it {disposition} the pre-registered ≥3/4-per-instrument gate."
+    )
+
+
 def union_audit_from_fields(emitted, pA, pB, allowed, budget):
     a = emit_opt.topk(pA, allowed, budget)
     b = emit_opt.topk(pB, allowed, budget)
@@ -294,10 +328,10 @@ def main() -> int:
         f"{ut['frac_of_shipped']:.1%} of its pixels with the union of the two views' top-K sets and "
         f"{ug['frac_of_shipped']:.1%} with the union of their coverage-greedy emissions, and is equal "
         "to no set in the table. It is View B's own coverage-greedy emission with a thermal rank "
-        "bonus. View A contributes nothing to it: A_only is below matched random on both instruments "
-        "(knowledge/03 N-10), and the conditional-independence premise co-training needs is refuted "
-        "at the pre-registered threshold on both instruments (evidence/h55_verification_*.json), so "
-        "including View A would dilute the file on two independently measured grounds.")
+        "bonus. View A contributes nothing to this emission: " + a_only_promotion_summary() + " "
+        "The registered conditional-independence test is refuted at its pre-registered threshold on "
+        "both instruments (evidence/h55_verification_*.json), so co-training is abandoned. These are "
+        "separate findings; the fold-vs-random result is not a conditional-independence test.")
     out["union_audit"] = ua
     log(f"   verdict: {ua['verdict'][:150]}...")
 
@@ -312,6 +346,11 @@ def main() -> int:
                     abs(x) for x in r["pooled"]["far_spearman"]["values"]),
                 abandon_threshold=r["abandon_threshold"], verdict=r["verdict"])
         for m, r in out["independence"].items()}
+    out["review_note"] = (
+        "Text review correction: an earlier union-audit sentence misstated the A_only matched-random "
+        "mean comparison. The corrected verdict now reads its per-instrument means and fold-win counts "
+        "from evidence/h55_sweep_hardcore.json; this is separate from the OOF error-correlation test."
+    )
     (EV / f"h55_verification_{tag}.json").write_text(
         json.dumps(out, indent=1, allow_nan=False, default=str))
     log(f"\nwrote evidence/h55_verification_{tag}.json  ({time.time()-t0:.1f}s)")

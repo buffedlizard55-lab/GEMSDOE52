@@ -359,16 +359,18 @@ it for exactly that reason.
 
 ### The three things that did not work, stated with their numbers
 
-1. **The potential-field view alone is not promotable.** `A_only` wins 1/4
-   `hide` folds and 2/4 `tip` folds and sits *below* matched random on both
-   (0.02979 vs 0.03948; 0.02894 vs 0.02477). The brief said to abandon
-   co-training if the two views' errors are strongly correlated; the sharper finding is that one view
-   has no error signal to correlate with. `knowledge/03` N-6 predicted this at the layer level
-   (potential-field transforms AUC ≈ 0.52); it now holds at the arm level on both instruments.
+1. **The potential-field view alone is not promotable under the registered fold gate.** `A_only` wins
+   1/4 `hide` folds and 2/4 `tip` folds. Its mean DTI is below matched random on `hide` (0.02979 vs
+   0.03948), but above matched random on `tip` (0.02894 vs 0.02477). It therefore fails the required
+   ≥3/4 wins on each instrument; it is inaccurate to say both means are below random. The separately
+   preregistered block-error correlation test refutes the co-training premise. `knowledge/03` N-6
+   predicted weak potential-field ranking at the layer level (transforms AUC ≈ 0.52); the H55 result
+   does not establish that View A has no error signal, only that this A-only arm fails promotion.
 2. **Every blend is at or below the surface view alone.** `AB_w80` 0.09112 / 0.05358
    against `B_c50` 0.09112 / 0.05421; the geometric mean and the min were worse still
-   (`evidence/h55_holdout_hide.json`, fold 0). Mixing in a view that loses to random dilutes a view
-   that does not.
+   (`evidence/h55_holdout_hide.json`, fold 0). Mixing A into B does not improve the View B comparator (hide is unchanged and tip is lower).
+   Separately, A-only is below matched random on hide but above it on tip, and fails its fold-win
+   promotion rule; it is not a below-random-on-both result.
 3. **The disagreement signal, as a modulator, hurts.** Boosting View B where A is confident and B
    abstains (`Bdis_A`) and damping it where B is confident and A abstains (`Bsup_B`) scored 0.06776
    and 0.06902 against 0.07387 for unmodulated `B_only` on `hide` fold 0 at identical emitter and
@@ -419,9 +421,10 @@ qualifications travel with that verdict:
   view that is finding a few regional anomalies and nothing else — the same reading as N-2 and N-10,
   arrived at from a third direction.
 
-The abandonment therefore rests on two independent grounds, and the file ships a single view because
-of both: the premise co-training needs is refuted, and the view it would have leaned on is below
-matched random on both instruments.
+The co-training abandonment follows from the pre-registered block-error-correlation statistic. Separately,
+the A-only emitter fails the ≥3/4-fold promotion rule: 1/4 hide and 2/4 tip wins, with its mean below
+matched random on hide but above it on tip. The file's single-view choice is not a claim that A-only loses
+to random on both instruments.
 
 ### Not merely the union of the two views
 
