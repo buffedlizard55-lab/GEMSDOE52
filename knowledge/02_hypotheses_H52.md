@@ -1,3 +1,5 @@
+> **Historical report — superseded where contradicted by R2.** See `09_r2_review.md` and `evidence/reference_forensics_r2.json`. In particular: known pixels do not pay penalties; H33 removed off-catalogue flanks; the old OOF independence report contained no negative predictions; hidden prevalence and a 0.464 ceiling are not established.
+
 # Hypotheses H52-1 … H52-5 — ranked, with the evidence that decided each one
 
 Every hypothesis states the layers it uses, the physical signature it predicts, why that signature can

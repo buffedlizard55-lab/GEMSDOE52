@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "gems52"
-version = "1.0.0"
-description = "GEMSDOE52 Blum & Mitchell Two-View Co-Training and Disagreement Discovery System"
+version = "2.0.0"
+description = "GEMSDOE52 signed-normal structural contrast, spatial validation and gated two-view experiments"
 requires-python = ">=3.10"
 
 [tool.pytest.ini_options]

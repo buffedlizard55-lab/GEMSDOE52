@@ -1,3 +1,5 @@
+> **Historical report — superseded where contradicted by R2.** See `09_r2_review.md` and `evidence/reference_forensics_r2.json`. In particular: known pixels do not pay penalties; H33 removed off-catalogue flanks; the old OOF independence report contained no negative predictions; hidden prevalence and a 0.464 ceiling are not established.
+
 # 03 · Negative results, and what each one killed
 
 Written so the next run does not repeat them. Every number below is reproducible from

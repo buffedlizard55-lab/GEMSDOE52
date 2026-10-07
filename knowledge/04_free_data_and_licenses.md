@@ -1,3 +1,5 @@
+> **Historical report — superseded where contradicted by R2.** See `09_r2_review.md` and `evidence/reference_forensics_r2.json`. In particular: known pixels do not pay penalties; H33 removed off-catalogue flanks; the old OOF independence report contained no negative predictions; hidden prevalence and a 0.464 ceiling are not established.
+
 # 04 · Free, official external data — what is actually obtainable, and what each source buys us
 
 Standing rule from the brief: new data must be (a) free, (b) official, (c) licence-permitted for use *and*

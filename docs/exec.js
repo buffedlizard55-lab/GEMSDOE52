@@ -11,24 +11,12 @@
       n.innerHTML = `<a class="dlbtn" href="${sub.download || 'downloads/' + nm}" download>
         Download <code>${nm}</code><small>${(sub.bytes || 0).toLocaleString()} bytes ·
         ${sub.sha256 ? 'sha256 ' + sub.sha256.slice(0, 16) + '…' : ''}</small></a>`;
-      if (sub.download_zip) {
-        const z = document.createElement('a');
-        z.className = 'dlbtn';
-        z.href = sub.download_zip; z.download = '';
-        z.style.cssText = 'background:var(--paper-2);color:var(--ink);box-shadow:3px 3px 0 var(--rule)';
-        z.innerHTML = 'Download .zip<small>tif + the note to paste + the evidence JSON</small>';
-        n.after(z);
-      }
     });
     const px = (sub.stats && sub.stats.emitted != null) ? sub.stats.emitted : '?';
-    // The note is data, not prose: refresh_feed.py writes it into data/submission.json, so this page
-    // cannot drift from the file it describes.  Both key spellings are honoured because two build
-    // scripts are live in this repo (build_revealed_submission.py writes `submission_note`,
-    // build_h53_submission.py writes `note`).
-    const note = sub.submission_note || sub.note
-      || (`gems52 · ${px} px · {0,1} mass · no NaN · sha256 `
-          + `${sub.sha256 ? sub.sha256.slice(0, 16) : '?'}…`
-          + ` · strictly novel against every prior of this family, not their union`);
+    const note = sub.note || `gems52 · metric-aware emission · ${sub.n_segments ?? '?'} segments, `
+      + `${px} px · {0,1} mass · no NaN · sha256 `
+      + `${sub.sha256 ? sub.sha256.slice(0, 16) : '?'}…`
+      + ` · strictly novel against every prior of this family, not their union`;
     document.querySelectorAll('[data-note]').forEach(n => n.innerHTML = `<code>${esc(note)}</code>`);
     const gate = sub.holdout_gates || {};
     document.querySelectorAll('[data-gate-verdict]').forEach(n => {
