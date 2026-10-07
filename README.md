@@ -33,11 +33,13 @@ best of 0.2778, with the reasoning and the evidence published next to the file.
 
 > Three rounds have shipped into this repo in parallel (IR-52-029). `submission/LATEST.txt` — the
 > marker `scripts/refresh_feed.py` resolves to build the site's headline download — points at the
-> **H55** file below, because it is the only artefact in `submission/` whose promotion rests on 4/4
-> folds of **both** blocked instruments against a matched-budget random control *and* on the
-> pre-registered conditional-independence test actually firing. Every other artefact stays in
-> `submission/`, stays downloadable, and is now a **prior** for the uniqueness gate. Reverting is one
-> line. The parallel rounds' own sections follow unchanged.
+> **H55** file below, because its View B emitter passed 4/4 folds on both blocked instruments
+> against a matched-budget random control. Separately, the registered block-error-correlation test fired
+> and refuted the co-training premise, so co-training was abandoned; that is not the A-only fold gate or
+> proof that A-only loses to random on both instruments. Earlier submissions stay in
+> `submission/` as comparison priors; separate research-only TIFFs remain under `docs/downloads/` with
+> their own receipts. None is silently promoted. Reverting the current marker is one line. The parallel
+> rounds' own sections follow below.
 
 | | |
 |---|---|
@@ -50,7 +52,8 @@ best of 0.2778, with the reasoning and the evidence published next to the file.
 | values | `[0.0, 1.0]` only · **37,654 positive px** · **0 NaN** · 0 on a catalogue pixel · 0 outside the footprint |
 | sha256 | `a0f3ed4b4524ca67a0c715beca5a905eced165ee9e59be5e5831a39b7526254d` (the published bytes hash-matches the receipt: `True`) |
 | format gate | `True`, problems `[]` |
-| uniqueness gate | `True` — **strictly-novel-and-selective**: 23,008 px (61.1%) touch none of the **23** priors scanned, and 1,123,846 prior px are deliberately not re-emitted |
+| **local slot status** | **PASS**, `approved_for_weekly_slot: true` in the local H55 receipt. This is not organizer acceptance; no portal receipt or official score is recorded. |
+| uniqueness gate | `True` — **strictly-novel-and-selective**: 23,008 px (61.1%) fall outside the **23** accessible aligned priors scanned, and 1,123,846 prior px are deliberately not re-emitted |
 | placement efficiency | `A/S` = **8.8151** = 93.97% of the exact 9.380298 kernel-disc ceiling, against **8.044** (85.8%) for the file that scored 0.2778. Every emitted pixel is 8-isolated (`max_component = 1`) |
 | selection | `evidence/h55_sweep.json`, pre-registered rule, read at build time: **`B_therm\|greedy|37654`**, rule 1 `True` |
 | **holdout** | **`hide` 0.09701** vs random 0.03948 (+146 %), **4/4** folds · **`tip` 0.0547** vs random 0.02477 (+121 %), **4/4** folds · sum **0.15171** vs the previously shipped arm's 0.0809 (**+87.5 %**) |
@@ -86,17 +89,21 @@ neutral rather than credited.
 
 ---
 
-## The file — download it, submit it, nothing to configure
+## H54 archive — historical artifact, not the current submission
+
+The following H54 record is retained for provenance and prior comparison only. The current candidate is
+H55 in the table near the top of this README; do not mistake this older download or its gates for H55's
+current local status.
 
 | | |
 |---|---|
-| **download (TIF)** | [`docs/downloads/gems52-h54-revealed-core-strike-continuation-50517px-r1.tif`](docs/downloads/gems52-h54-revealed-core-strike-continuation-50517px-r1.tif) — click, save, upload |
-| **download (ZIP)** | [`docs/downloads/gems52-h54-revealed-core-strike-continuation-50517px-r1.zip`](docs/downloads/gems52-h54-revealed-core-strike-continuation-50517px-r1.zip) — the same raster plus the note to paste and the evidence JSON |
+| historical download (TIF) | [`docs/downloads/gems52-h54-revealed-core-strike-continuation-50517px-r1.tif`](docs/downloads/gems52-h54-revealed-core-strike-continuation-50517px-r1.tif) |
+| historical download (ZIP) | [`docs/downloads/gems52-h54-revealed-core-strike-continuation-50517px-r1.zip`](docs/downloads/gems52-h54-revealed-core-strike-continuation-50517px-r1.zip) — the same raster plus the note to paste and the evidence JSON |
 | also in the repo | [`submission/gems52-h54-revealed-core-strike-continuation-50517px-r1.tif`](submission/gems52-h54-revealed-core-strike-continuation-50517px-r1.tif) |
 | bytes / shape | 313,431 · 3730 × 3292 · single band · `float32` · EPSG:32611 · 100 m cells |
 | values | {0, 1} only — 50,517 positive px, 0 outside the valid footprint, 0 on the catalogue, 0 within 200 m of a mapped trace, **no NaN** (verified by reading the written file back, not by trusting the writer) |
 | sha256 | `15210d91fa0c939b254d058876b47268e650176e08bf0eed10437ced8d476e36` |
-| notes box (≤200 chars) | `H54 revealed-core 25517px + 25000px novel strike-continuation; 200m corridor excluded; \|G\|=14089` — 96 chars, rendered from `docs/data/submission.json → submission_note` |
+| historical notes box (≤200 chars) | `H54 revealed-core 25517px + 25000px novel strike-continuation; 200m corridor excluded; \|G\|=14089` — 96 chars, retained with the historical H54 receipt |
 | format gate | `True` (`src/gems52/gates.py`, checked on the written bytes) |
 | uniqueness gate | `True` — strictly-novel-and-selective: **25,000 px (49.5 %)** touch no prior of this family — including the sibling round's `gems52-h53-coincidence-gated-singles` raster, which is a prior too — and **1,112,457** prior px are deliberately **not** re-emitted, so it is not "the union" either |
 | what it is | 25,517 px **retained core** = the double-corroborated atom `A & C`, whose credit the organiser's own published scores bound exactly at 4,168–5,223 (density 16.3–20.5 %, central 20.1 %); plus 25,000 px **strictly novel** = 10,419 along the strike recovered from that core and 14,581 free candidates on the same fabric, every one an isolated dot |
@@ -104,11 +111,12 @@ neutral rather than credited.
 | calibration | `evidence/revealed_calibration.json` — `\|G\|` = **14,088.7 px**, the ≤200 m ring's credit **exactly 0**, six atoms partitioning 121,131 px exactly. Cross-check: `T = 471.6·S^0.2284` predicts eight published scores to within 4 %, five within 1.5 %, including one file from a different family |
 | two views | View A (potential field / subsurface, 49 features) out-of-fold AUC **0.7132** (block mean 0.7065); View B (surface / LiDAR scarp / radiometric, 32 features) **0.9277**; blend 0.9128 — **View B alone beats the blend, and that is printed rather than buried**. Independence: pixel r = 0.2777, block mean r = 0.2830 against a 0.60 abandonment threshold → proceed, block variance not degenerate |
 | holdout verdict | The two-instrument holdout this repo used to select with **does not predict the organiser's score** (Spearman −0.1045, p = 0.734, n = 13; the group's best file ranks *last* of 13 on it). It is reported, labelled broken, and no longer selects anything — `IR-52-017`, `knowledge/03` N-9 |
-| exact steps | [docs/executive-summary.html](docs/executive-summary.html) |
+| historical analysis | [docs/h54.html](docs/h54.html) |
 | rebuild it | `PYTHONPATH=src python3 scripts/build_revealed_submission.py --tag r1`   # idempotent: rerunning reproduces the same sha256 even after the previous output has been published into `docs/downloads/` |
-The site is the product: [docs/index.html](docs/index.html) renders every number from
-`docs/data/*.json`, which `scripts/refresh_feed.py` regenerates and a committed GitHub Actions workflow
-refreshes on a schedule, so **nothing on the page needs hand-checking**.
+The current top-level site is H55-focused: [docs/index.html](docs/index.html) links the exact H55 TIFF, and
+[docs/executive-summary.html](docs/executive-summary.html) renders the H55 receipt while separately
+marking R3-H1 research-only. `scripts/refresh_feed.py` copies local receipts; scheduled refreshes do not
+submit to the portal and do not constitute a live leaderboard scrape. See §6.1 for the page owners.
 
 **Core values this repo is run by — _Maximize P(Win)_, _Own the Outcome_.**
 
@@ -159,11 +167,12 @@ submissions.
 
 Recovered intact: `README.md` §8 of commit `503f18e6` on `main` (the PR #2 session) records the original
 task prompt as a fenced block, and that block is reproduced here unaltered — including the URLs, the
-character counts and the sentence about radiometric bands, which is *conditional* ("any radiometric bands in
-`training_features.tif`") and resolves to none, as `knowledge/04` and `docs/irregularities.html` explain.
-This supersedes the reconstruction that stood here until 22:20 UTC tonight; the sibling session's copy is
-not the Arena message itself, but it is a byte-for-byte record of it, so the wording is quoted rather than
-paraphrased, and the provenance is stated rather than assumed.
+character counts and the conditional sentence about "any radiometric bands in `training_features.tif`."
+The H52-era interpretation that none was present was later corrected by H55: band 6 measures as GeoDAWN
+total-count radiometry despite its TIFF tag labelling it magnetic; see N-18 and the H55 evidence. This
+supersedes the reconstruction that stood here until 22:20 UTC tonight; the sibling session's copy is not
+the Arena message itself, but it is a byte-for-byte record of it, so the wording is quoted rather than
+paraphrased and the provenance is stated rather than assumed.
 
 ```text
 Always keep in mind Arena Core Values:
@@ -766,10 +775,10 @@ summary instead of from the brief, so it is undone.)
    note for the submission form; the download obvious at the very top of the site.
 2. **Re-read the whole prompt before working** — the brief lives in this repository, and this file is where a
    session starts.
-3. **Co-train two views of the same unlabelled pixels** — View A the potential fields and subsurface
-   (gravity, magnetics, strain, seismicity), View B the surface (slope, curvature, scarp; radiometry where it
-   exists *outside* the official cube, per `IR-52-001`/`IR-52-011a`) — and treat **disagreement, not
-   agreement, as the discovery signal** (Blum & Mitchell, COLT '98, doi:10.1145/279943.279962): A-only ⇒
+3. **Test two views of the same unlabelled pixels** — View A the potential fields and subsurface
+   (gravity, magnetics, strain, seismicity), View B the surface (slope, curvature, scarp, and radiometry
+   verified in the inputs; H55 reclassified band 6 as GeoDAWN total-count) — and treat **disagreement,
+   not agreement, as the discovery signal** (Blum & Mitchell, COLT '98, doi:10.1145/279943.279962): A-only ⇒
    buried beneath cover, B-only ⇒ suspect (roads, erosion, levees).
 4. **Test the independence premise instead of assuming it** — correlate each view's spatially-blocked
    out-of-fold errors on labelled negatives, and abandon the mechanism if it is strongly correlated.
@@ -796,6 +805,13 @@ disagreement it records: the brief quotes 0.3195 as the leader, the fetched boar
 (`IR-52-020`, `registry/leaderboard_snapshot_2026-10-06.json`).
 
 ## 2. Layout
+
+The tree below is the historical H52/H53 implementation map, not the current site ownership or a claim that
+all of those data are available in this checkout. Current H55, H55-PROFILE, H55-EDGE, R3, and legacy page
+ownership is recorded in §6.1. In particular, `scripts/make_h55_page.py` renders the H55 analysis,
+`scripts/publish_site_r3.py` renders the H55 executive guide and separate R3 research pages,
+`scripts/verify_h55.py` writes verification evidence, and `scripts/check_site.py` validates the published
+site and current artifact receipt.
 
 ```
 src/gems52/     metric.py      literal official DTI, kernel, credit bar, max_cover  (tested)
@@ -832,7 +848,7 @@ docs/           the GitHub Pages site; docs/data/*.json is its only source of nu
 submission/     built rasters + LATEST.txt
 ```
 
-## 3. Reproduce it
+## 3. Reproduce archived experiments and regenerate current pages
 
 ```bash
 python3 scripts/restore_data.py                 # 23 pinned inputs -> data/, sha256-checked
@@ -844,12 +860,29 @@ PYTHONPATH=src python3 scripts/build_submission.py --mode tip --arm <winner> --e
 PYTHONPATH=src python3 scripts/refresh_feed.py   # regenerate the site's data/*.json
 ```
 
-The H53 artefact — the one the site offers at the top — is built by a single idempotent command:
+### Current H55 site regeneration (no raster rebuild or portal submission)
+
+With the committed receipts and downloads already present, regenerate and validate the static site with:
 
 ```bash
-python3 scripts/restore_data.py                                   # 23 pinned inputs -> data/
-PYTHONPATH=src python3 scripts/build_revealed_submission.py --tag r1   # ~3 min, 2 cores, <2 GB
-python3 scripts/make_site_pages.py && python3 scripts/refresh_feed.py && python3 scripts/check_site.py
+python3 scripts/refresh_feed.py       # no --fetch: local evidence only, no external board request
+python3 scripts/make_h55_page.py
+python3 scripts/publish_site_r3.py    # H55 executive guide plus separate R3 research pages
+python3 scripts/check_site.py
+```
+
+This refresh path does not create a new TIFF or submit anything. Rebuilding the scientific H55 raster is a
+separate data/dependency-intensive task and must rerun the registered local gates before any weekly slot.
+
+### Historical H54 revealed-preference raster reproduction
+
+The following H54 build sequence is preserved for historical reproducibility; it is not the current site
+candidate. The H54 publisher is disabled, and these commands must not be read as a request to replace H55.
+
+```bash
+python3 scripts/restore_data.py                                      # 23 pinned inputs -> data/
+PYTHONPATH=src python3 scripts/build_revealed_submission.py --tag r1 # ~3 min, 2 cores, <2 GB
+python3 scripts/refresh_feed.py && python3 scripts/make_h55_page.py && python3 scripts/publish_site_r3.py && python3 scripts/check_site.py
 ```
 
 It writes the raster, reads it back, runs both gates on the written bytes, and emits
@@ -1001,35 +1034,21 @@ code stays runnable as `gems52_h1`; their *holdout claims* do not stand — see 
 [the register](docs/irregularities.html).
 ## 5. Irregularities, stated plainly
 
-Seven were added this round and are summarised in
-[`knowledge/06_provenance_and_irregularities.md`](knowledge/06_provenance_and_irregularities.md) under
-"H53 round": **IR-52-017** (the validation instrument does not predict the board), **IR-52-018** (the
-≤200 m ring earns exactly zero, contradicting `knowledge/01` §5 item 2 and `knowledge/02` H52-2),
-**IR-52-019** (no available feature re-ranks inside the champion file), **IR-52-020** (a per-block AUC
-of 1.000 over n = 3 samples), **IR-52-021** (`gates.find_priors` swept the 19-band feature stack in as a
-prior submission, producing a "prior union" larger than the footprint), **IR-52-022** (the downloads
-index was built before the rasters were copied into it, so it was always one run behind), and
-**IR-52-029** (two rounds shipped a submission in parallel — PR #8's
-`gems52-h53-coincidence-gated-singles` and this round's `gems52-h54-revealed-core-strike-continuation`;
-the site now offers the later one, which is one session's judgement call over another's shipped artefact
-and is flagged for review, with the reason being a measurement: the instruments that promoted the H53
-file are the ones `IR-52-023` shows carry no information about the organiser's score. Reverting is one
-line in `submission/LATEST.txt` plus a `refresh_feed.py` run. The IDs this round added are 023–029; the
-sibling round's H53 entries keep 020–022, and this round is numbered **H54** so that nothing collides).
+The provenance and limitations ledger is [`knowledge/06_provenance_and_irregularities.md`](knowledge/06_provenance_and_irregularities.md); [`docs/irregularities.html`](docs/irregularities.html) now puts the receipt-backed H55 review above its archived R2/H53/H54 notes. Use the H55 analysis and executive guide for the exact artifact download/status. **Current H55 status:** the local slot gate is PASS for the exact H55 TIFF listed above; this is not organizer acceptance, no H55 portal receipt or official score is recorded, and the A-only fold comparison is mixed by instrument (below matched random on `hide`, above on `tip`). See §6.1 and the H55 page for the current receipt-backed facts.
 
-The live public leaderboard's #1 is **0.3774**, not the 0.3195 stated in the session's opening
-context (`IR-52-002` / `IR-52-020` — the same disagreement under the brief's own item number, now entered in
-`knowledge/06` and on the register page rather than only referenced); the group's own 0.2778 currently sits at **#13 of 24 visible rows** (read twice this session, 21:2x
-and 21:33 UTC, identical both times). Every file→score
-mapping in this family (including the 0.2778 one) is **owner-reported**, not organiser-authenticated —
-the board exposes no filename, hash or upload receipt, and GEMSDOE47 formally retracted its alleged
-mapping. Full list: [`docs/irregularities.html`](docs/irregularities.html) and
-[`knowledge/06_provenance_and_irregularities.md`](knowledge/06_provenance_and_irregularities.md).
+The following entries preserve the earlier H53/H54 history and should not be read as saying H54 is current:
 
-Licences: all pinned inputs are the competition's own bundles or USGS/GDR open data; the sibling-derived
-external CSVs in `data/external/` are **derived, not organiser-authenticated** and are used only as
-optional corroboration, never as positive labels. See
-[`knowledge/04_free_data_and_licenses.md`](knowledge/04_free_data_and_licenses.md).
+- **IR-52-017**: the earlier validation instrument did not predict the board.
+- **IR-52-018**: the ≤200 m ring arithmetic contradicted an earlier corridor hypothesis.
+- **IR-52-019**: an H54-era report said no available feature re-ranked inside the champion file.
+- **IR-52-020**: an earlier per-block AUC used only n = 3 samples.
+- **IR-52-021**: `gates.find_priors` swept the 19-band feature stack in as a prior submission, producing a "prior union" larger than the footprint.
+- **IR-52-022**: the downloads index was built before rasters were copied into it.
+- **IR-52-029**: recorded the H53/H54 concurrent-session marker decision. It is historical: `submission/LATEST.txt` now points to H55, and reverting the marker is not a substitute for reviewing the current H55 evidence.
+
+**Dated leaderboard observation (2026-10-07).** The official board showed 0.3774 at #1, 0.3195 at #7, and 0.2778 at #13. Public rows do not identify TIFF filenames or hashes, so file-to-score mapping remains owner-reported; H55 has no organizer submission receipt or official score recorded in this repository. Recurring DrivenData scraping remains disabled under the reviewed Terms of Use; the local feed is a dated snapshot, not a live board scrape.
+
+The repository's pinned inputs include competition bundles and public USGS/GDR data, but the competition inputs in this checkout are owner mirrors, not independently authenticated against organizer downloads. External derived CSVs are optional corroboration, never positive labels. See [`knowledge/04_free_data_and_licenses.md`](knowledge/04_free_data_and_licenses.md) and the source/limitation links on the site.
 
 ## 6. No manual steps
 
@@ -1037,33 +1056,32 @@ optional corroboration, never as positive labels. See
 `.github/workflows/feed.yml` runs it nightly and on push, and the site renders only from those files.
 If a number on the site is wrong, the fix is the evidence file, never the HTML.
 
-## 6.1 Two rounds now share this repo — who generates what
+## 6.1 Multiple research rounds and page ownership (status: 2026-10-07)
 
-Three rounds shipped artefacts and two of them rewrote the same files, so the ownership is written down
-rather than left to be rediscovered:
+Several parallel experiments share this repository. Keep their outputs and approval states separate:
 
-| owner | generates | artefact |
+| owner / artifact | generator and pages | status |
 |---|---|---|
-| **H54 (this round)** | `docs/h54.html`, and the one-click download bar inserted at the top of `docs/index.html` and `docs/executive-summary.html` between `<!--H54BAR-->` sentinels | `submission/gems52-h54-revealed-core-strike-continuation-50517px-r1.tif` — **the candidate this round offers**, `submission/LATEST.txt` |
-| R2 (PR #9) | `scripts/publish_site_r2.py` → `index.html`, `executive-summary.html`, `validation.html`, `forensics.html`, `method.html`, `hypotheses.html`, `sources.html`, `irregularities.html`, `feed.html`, `h53.html`, `downloads/index.html`, `README.md` | `submission/gems52-r2-signednormal-37654-1f751ac9b6ee-zeros.tif`, self-labelled *"Research-only. Do not upload this run."*, `submission/R2_LATEST.txt` |
-| H53 (PR #8) | `scripts/build_h53_submission.py`, `docs/h53.html` | `submission/gems52-h53-coincidence-gated-singles-37654px-r1.tif` |
-| both | `scripts/refresh_feed.py` → `docs/data/*.json`, stages rasters and the ZIP into `docs/downloads/` | — |
+| **H55 main candidate** | `scripts/make_h55_page.py` writes `docs/h55.html` and the H55 download bar in `docs/index.html`; `scripts/publish_site_r3.py` renders `docs/executive-summary.html` from the current `docs/data/submission.json` receipt | `submission/LATEST.txt` points to `gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.tif`; its local preregistered gate is recorded separately from any organizer acceptance or score |
+| H55-PROFILE | `scripts/publish_h55_profile_site.py` → `docs/h55-profile.html` and a separate follow-up callout | Failed its registered holdout; research-only; does not replace H55 |
+| H55-EDGE | `scripts/publish_site_h55.py` → `docs/h55-edge.html` and archive links | Failed the implemented-subset holdout and strict support-novelty gate; research-only; does not replace H55 |
+| R3-H1 | `scripts/publish_site_r3.py` → `docs/r3.html`, `docs/r3-hypotheses.html`, plus a clearly separate research bar and download section | Separate failed-gate research artifact; not the current submission guide or H55 receipt |
+| R2 / H54 / H53 | `scripts/publish_site_r2.py`, the legacy `scripts/make_site_pages.py`, and `scripts/build_h53_submission.py` | Historical archives. The R2/H54 publishers must not be run as the current site build because they can rewrite top-level pages from a historical round. |
+| local evidence feed | `scripts/refresh_feed.py` → `docs/data/*.json` and staged download copies in `docs/downloads/` | Updates local receipts and a dated board snapshot; it does not submit to the portal or refresh the board without recorded permission |
 
-`scripts/make_site_pages.py` used to write `validation.html`, `feed.html`, `irregularities.html` and
-`sources.html` from its own templates. **It does not any more** — that clobbered the R2 site and failed
-R2's `check_site.py` invariants (arm means rendered from the current receipt; a failed-gate warning on the
-two top pages). It now writes exactly one page and edits two, idempotently.
+`make_site_pages.py` is a **disabled legacy H54 publisher**: its historical feed receipts disagree with each other and the current marker, so its entry point is a safe no-op and the tracked archive page is preserved without regeneration. It must never publish H54 as current. The R3 publisher owns the separate R3 experiment pages, but the executive guide is rendered from the current H55 receipt. The R3 research-only warning must never be presented as the status of H55, and the H55 local approval flag must never be presented as organizer approval.
 
-`refresh_feed.latest_submission()` prefers whichever marker file names an artefact that has a complete
-gate report of its own (`evidence/submission_<stem>.json`), so the site never offers a file whose audit it
-cannot show. Today that is `LATEST.txt` → the H54 raster. `IR-52-029` records the choice, the reason, and
-that reverting is one line. Both other artefacts stay in `submission/`, stay downloadable, and are now
-*priors* for the uniqueness gate: measured prior union **1,137,974 px over 23 rasters**, novel pool
-440,192 px, **0** collisions between the H54 novel mass and any prior pixel.
+`refresh_feed.latest_submission()` follows the current `submission/LATEST.txt` marker only when it can find that artifact's own receipt. Today the marker names H55. Its receipt compares 23 accessible aligned priors; the measured prior-support union is 1,138,492 pixels and 23,008 H55 pixels (61.1%) are outside that bounded union. This is not a global-uniqueness or geological-novelty claim. Other rounds remain available as archived artifacts and comparison priors; none is silently promoted by the feed.
 
-## 7. Remaining work, limitations, and what would change the answer
+### Three-pass review correction — 2026-10-07
 
-Ordered by expected effect on the score the organiser actually computes.
+The H55 A-only comparison was described incorrectly in an earlier version of the generated page and verification prose. At the matched 37,654-pixel budget, the mean DTI is **0.02979 vs 0.03948** on `hide` (below random), but **0.02894 vs 0.02477** on `tip` (above random). It wins only **1/4 hide** and **2/4 tip** folds, so it fails the preregistered ≥3/4 wins-per-instrument promotion comparison. Do not say that both means are below random. The H55 page generator, verification verdict, and geological review notes now use the instrument-specific comparison; no raster bytes or numeric experiment results changed in this text correction.
+
+The executive summary is also now H55-focused: it renders the current H55 file/name/note, the on-disk format and bounded-uniqueness checks, the explicit same-budget non-union comparison, and the local gate/organizer-status distinction. R3-H1 remains separately labeled research-only. H55-JUNCTION is a distinct registered hypothesis and remains untested; this review does not claim a JUNCTION holdout result, create a new TIFF, or make a portal submission.
+
+## 7. Historical R2 worklist, limitations, and what would change the answer
+
+The seven-item list below was written for the earlier R2 analysis. Treat it as historical context, not as a current H55 experiment plan; H55-specific limits and next steps are in §7.1.
 
 1. **Recover the `h19-5` field, not its emission.** The single highest-value artefact this group could
    produce next is the top 16,678 px of the *ranked field* behind `gems19-h19-5`, worth ≈0.2975 by the
@@ -1128,16 +1146,19 @@ next steps that does not say what the current file cannot do is marketing.
   and only 3,340 of 5,165,840 cells survive it.
 * **The budget was chosen at fold prevalence (0.2 %), not board prevalence (≈0.157 %)**, and the rule
   preferred the smaller mass on a near-exact tie.
-* **View A is dead at 100 m and was only tested at 100 m.** N-15 excludes it as a *primary emitter* at the
-  scale the metric scores; it does not exclude a 300 m potential-field product used to *gate* a 100 m
-  surface detection.
+* **View A alone is not promotable under the tested 100 m fold rule.** A-only wins 1/4 hide and 2/4 tip
+  folds; its means are below matched random on hide but above random on tip. N-15 excludes it as the
+  primary emitter under that rule, not as a source of all signal; a 300 m potential-field product used to
+  *gate* a 100 m surface detection remains a separate untested hypothesis.
 * **The external layers are uint8-quantised mirrors** (1st–99th percentile) of the official grids. Sources
   are named and reachable; a float32 re-reduction would sharpen every ratio-step layer.
 * **The register's id space collided across concurrent sessions** (IR-52-030): two sessions allocated
   IR-52-021/022 to different findings. Both readings are recorded and cross-referenced rather than
   silently renumbered, because renumbering someone else's citation is how a register stops being checkable.
 
-**Next, in expected-value order.**
+**Next experiment before considering another weekly slot.** H55-PROFILE was the top-ranked hypothesis in the original H55 register and was tested on its frozen spatial holdout; it failed the +0.005 mean-lift gate. H55-JUNCTION is the highest-ranked still-untested candidate in `knowledge/12_hypotheses_H55_preregistered.md`. Freeze its exact transform, controls, buffer and promotion thresholds before scoring; compare on the same whole-component spatial holdout, and do not use a weekly slot unless the frozen gate passes. The current H55 result is not evidence for H55-JUNCTION.
+
+**Other H55 maintenance questions, in expected-value order.**
 
 1. **Sweep the budget on the board, once.** The fold `T(S)` curve is flat between 37,654 and 70,000 px on
    `hide` (0.0911 / 0.0920 / 0.0885), and `DTI = T/(0.2S + 0.8|G|)` is monotone increasing in `S` wherever

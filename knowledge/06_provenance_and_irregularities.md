@@ -304,10 +304,10 @@ input), and in both cases the alternative was shipping it.
 | the INGENIOUS well/spring database is official, free, CC-BY | GDR submission 1391 read live 2026-10-06, DOI 10.15121/1881483, file URL resolves. **Discharges the blocker** `knowledge/02` H52-5 recorded | **strong** — the blocker was "host unreachable", and it is reachable |
 | \|G\| ≥ 8,128 | inversion of the published metric on 13 SHA-256-verified rasters; geometry exact, DTI owner-reported | **medium-strong** — arithmetic exact, one input second-hand |
 | placement gain +216 % on `hide` fold 0 | one field, one permitted set, one budget, one mask, one fold, two emitters, the tested metric | **strong for the fold**, explicitly not a board forecast |
-| `A_only` below random on both instruments | 4 folds × 2 instruments, matched-budget random in the same permitted set | **strong** |
+| `A_only` fails the ≥3/4-fold promotion gate on both instruments; its mean is below random on `hide` and above random on `tip` | 4 folds × 2 instruments, matched-budget random in the same permitted set (`evidence/h55_sweep_hardcore.json`) | **strong for the recorded fold comparison** |
 | the conditional-independence premise is refuted | 40 usable blocks of 62, 4/4 folds, both instruments, the statistic the pre-registration named | **strong for that statistic**; the FAR statistic disagrees and is printed beside it |
 | the thermal layer is neutral | selection-sum margin 0.00003 over the identical field without it | **strong as a null result** |
-| the shipped bytes are what the record says | `scripts/verify_h55.py` re-reads the file: 22/22 checks, `PASS3_ALL_OK=True` | **strong** |
+| the shipped bytes are what the record says | `scripts/verify_h55.py` re-reads the file: 23/23 checks, `PASS3_ALL_OK=True` | **strong** |
 
 ### What would change our mind — H55 version
 

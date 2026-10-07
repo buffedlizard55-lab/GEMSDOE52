@@ -1,17 +1,11 @@
 #!/usr/bin/env python3
-"""Generate docs/h54.html and insert the H54 one-click download bar into the R2 site's top pages.
+"""Disabled legacy H54 publisher.
 
-Why this script writes one page and edits two, instead of owning the site: PR #9 (the R2 round) added
-`scripts/publish_site_r2.py`, which regenerates `index.html`, `executive-summary.html`,
-`validation.html`, `forensics.html`, `method.html`, `hypotheses.html`, `sources.html`,
-`irregularities.html`, `feed.html`, `h53.html`, `downloads/index.html` **and `README.md`**, and
-`scripts/check_site.py` now enforces invariants of those generated pages (arm means rendered from the
-current receipt; a failed-gate warning on the two top pages). An earlier version of this script wrote
-`validation.html`, `feed.html`, `irregularities.html` and `sources.html` from its own templates, which
-clobbered the R2 site and failed those checks. It does not do that any more.
-
-Everything here is rendered from `evidence/*.json`; no number is typed into this file. The download bar
-insertion is idempotent, so running the script twice does not stack two bars.
+The tracked H54 page is a historical archive. Its old feed inputs are inconsistent with the current
+submission marker and with one another, so rebuilding that page is intentionally disabled rather than
+risking a mislabeled TIFF/status or replacing current H55 pages. The archived templates remain for audit;
+``main()`` is a safe no-op. Current publishing is owned by ``make_h55_page.py`` and
+``publish_site_r3.py``.
 """
 from __future__ import annotations
 
@@ -242,13 +236,7 @@ def h54_body() -> str:
 
 
 def main() -> int:
-    (DOCS / "h54.html").write_text(page("H54 revealed preference", h54_body()))
-    print("wrote docs/h54.html")
-    sub = json.loads((DOCS / "data/submission.json").read_text())
-    bar = download_bar(sub)
-    for name in ("index.html", "executive-summary.html"):
-        ok = insert_bar(DOCS / name, bar)
-        print(("inserted" if ok else "SKIPPED (no <main>)") + f" the H54 bar into docs/{name}")
+    print("skipped: legacy H54 publisher is disabled because its historical feed receipts are inconsistent; no pages were changed")
     return 0
 
 

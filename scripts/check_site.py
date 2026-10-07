@@ -152,15 +152,21 @@ def main() -> int:
             problems.append(f"data/{f.name}: invalid JSON ({e})")
             continue
         if f.name == "submission.json" and isinstance(d, dict) and d.get("exists"):
-            fmt = d.get("format") or {}
+            fmt = d.get("format_gate") or d.get("format") or {}
             uni = d.get("uniqueness") or {}
-            if fmt and not fmt.get("ok"):
+            format_ok = d.get("format_ok", fmt.get("ok"))
+            uniqueness_ok = d.get("uniqueness_ok", uni.get("research_publication_ok", uni.get("ok")))
+            if fmt and (not fmt.get("ok") or format_ok is False):
                 problems.append("submission.json: the staged file does NOT pass the format gate: "
                                 + "; ".join(fmt.get("problems", [])[:3]))
-            if uni and not uni.get('research_publication_ok', uni.get('ok')):
+            if uni and not uniqueness_ok:
                 problems.append('submission.json: canonical pattern uniqueness/literal non-union failed: ' + str(uni.get('relation_to_union')))
+            if d.get("approved_for_weekly_slot") is True and (format_ok is not True or uniqueness_ok is not True):
+                problems.append('submission.json: local slot approval conflicts with a failed or missing format/uniqueness gate')
+            if d.get("submission_note") and len(str(d["submission_note"])) > 200:
+                problems.append('submission.json: identifying note exceeds the documented 200-character limit')
             if uni and not uni.get('ok'):
-                if d.get('promoted') or (d.get('validation') or {}).get('approved_for_slot'):
+                if d.get('promoted') or d.get('approved_for_weekly_slot') is True or (d.get('validation') or {}).get('approved_for_slot'):
                     problems.append('Scientific promotion despite failed original support-novelty diagnostic')
                 else:
                     notes.append('Original >=20% support-novelty diagnostic FAIL is retained. Canonical-distinct research release only; no slot approval.')
@@ -177,6 +183,46 @@ def main() -> int:
                 else:
                     notes.append(f"download verified byte-for-byte against the receipt: {dl.name} "
                                  f"({d.get('bytes')} bytes, {got[:16]}…)")
+                    if f.name == "submission.json":
+                        import zipfile
+                        import numpy as np
+                        import rasterio
+                        try:
+                            with rasterio.open(dl) as ds:
+                                a = ds.read(1)
+                                actual_transform = np.asarray(tuple(ds.transform)[:6], dtype=float)
+                                actual_bounds = np.asarray(tuple(ds.bounds), dtype=float)
+                                expected_transform = np.asarray(fmt.get("transform"), dtype=float)
+                                expected_bounds = np.asarray(fmt.get("bounds"), dtype=float)
+                                reference_bounds = np.asarray(fmt.get("ref_bounds"), dtype=float)
+                                raster_ok = (
+                                    ds.count == fmt.get("bands") == 1
+                                    and ds.dtypes[0] == fmt.get("dtype") == "float32"
+                                    and ds.crs is not None and ds.crs.to_epsg() == 32611
+                                    and ds.width == fmt.get("width") and ds.height == fmt.get("height")
+                                    and np.isfinite(a).all()
+                                    and float(a.min()) >= 0 and float(a.max()) <= 1
+                                    and int(np.count_nonzero(a)) == fmt.get("n_nonzero")
+                                    and expected_transform.shape == (6,)
+                                    and expected_bounds.shape == (4,)
+                                    and reference_bounds.shape == (4,)
+                                    and np.allclose(actual_transform, expected_transform, rtol=0, atol=1e-9)
+                                    and np.allclose(actual_bounds, expected_bounds, rtol=0, atol=1e-6)
+                                    and np.allclose(actual_bounds, reference_bounds, rtol=0, atol=1e-6)
+                                )
+                            if not raster_ok:
+                                problems.append("submission.json: on-disk H55 band/dtype/CRS/shape/range/transform/bounds checks failed")
+                            zip_path = dl.with_suffix(".zip")
+                            if not zip_path.exists():
+                                problems.append("submission.json: single-TIFF ZIP is missing")
+                            else:
+                                with zipfile.ZipFile(zip_path) as archive:
+                                    tiffs = [name for name in archive.namelist()
+                                             if name.lower().endswith((".tif", ".tiff"))]
+                                    if len(tiffs) != 1 or hashlib.sha256(archive.read(tiffs[0])).hexdigest() != d.get("sha256"):
+                                        problems.append("submission.json: ZIP must contain exactly one byte-identical TIFF")
+                        except Exception as error:  # noqa: BLE001
+                            problems.append(f"submission.json: on-disk GeoTIFF/ZIP verification failed ({error})")
         if f.name == "submission_r3.json" and isinstance(d, dict):
             if d.get("approved_for_weekly_slot") is not False or d.get("weekly_submission_slots_used") != 0:
                 problems.append("submission_r3.json: R3 research artifact must remain non-approved with zero slots")
@@ -234,12 +280,16 @@ def main() -> int:
                     problems.append(f"served {path}: status {r.status}, {len(body)} bytes")
         sub = json.loads((DATA / "submission.json").read_text())
         with urlopen(f"http://127.0.0.1:{port}/{sub['download']}", timeout=20) as r:
-            n = len(r.read())
+            served = r.read()
+            n = len(served)
             ctype = r.headers.get("Content-Type", "")
+            served_sha = hashlib.sha256(served).hexdigest()
             if n != sub["bytes"]:
                 problems.append(f"served {sub['download']}: {n} bytes != {sub['bytes']} in the receipt")
+            elif served_sha != sub.get("sha256"):
+                problems.append(f"served {sub['download']}: SHA-256 differs from the H55 receipt")
             else:
-                notes.append(f"the .tif serves through the site: {n:,} bytes, content-type {ctype}")
+                notes.append(f"the .tif serves byte-identically through the site: {n:,} bytes, content-type {ctype}")
 
         # H55-PROFILE is a separate failed-gate follow-up; never conflate it with the main H55 incumbent.
         h55_path = DATA / "h55_profile.json"
@@ -308,10 +358,35 @@ def main() -> int:
         for arm, value in h['means'].items():
             if f'{value:.6f}' not in text:
                 problems.append(f'validation.html: R2 {arm} mean is not rendered from its receipt')
-        for page_name in ('index.html', 'executive-summary.html'):
-            body = (DOCS / page_name).read_text()
-            if 'Do not upload' not in body:
-                problems.append(f'{page_name}: missing failed-gate warning')
+
+    # The executive guide describes the current H55 receipt. Do not require the historical R2/R3
+    # "Do not upload" sentence there: those are separate artifacts with separate gate statuses.
+    if current:
+        guide = (DOCS / 'executive-summary.html').read_text() if (DOCS / 'executive-summary.html').exists() else ''
+        for value, label in ((current.get('file'), 'filename'),
+                             (current.get('submission_name'), 'submission name'),
+                             (current.get('submission_note'), 'portal note'),
+                             (current.get('sha256'), 'SHA-256')):
+            if value and str(value) not in guide:
+                problems.append(f'executive-summary.html: current H55 {label} is not rendered from submission.json')
+        if current.get('approved_for_weekly_slot') is True:
+            for phrase in ('Current H55 artifact', 'Local scientific slot gate: PASS',
+                           'not organizer approval', 'not a public-score forecast',
+                           'No organizer submission receipt or official score is recorded'):
+                if phrase.casefold() not in guide.casefold():
+                    problems.append(f'executive-summary.html: missing current H55 status disclosure {phrase!r}')
+            if 'R3-H1 submission guide · research-only' in guide:
+                problems.append('executive-summary.html: R3 research-only guide was rendered in place of current H55 status')
+        elif current.get('approved_for_weekly_slot') is False:
+            if 'research only' not in guide.casefold() or 'do not upload' not in guide.casefold():
+                problems.append('executive-summary.html: current H55 failed-gate status is not explicit')
+        review_page = (DOCS / 'irregularities.html').read_text() if (DOCS / 'irregularities.html').exists() else ''
+        for phrase in ('Current H55 status', 'band 6 is measured as GeoDAWN total-count radiometry',
+                       '0.02979', '0.02894', 'H55-JUNCTION remains untested'):
+            if phrase.casefold() not in review_page.casefold():
+                problems.append(f'irregularities.html: missing current H55 review detail {phrase!r}')
+        if 'No radiometric bands in the available stack' in review_page:
+            problems.append('irregularities.html: stale H52-era radiometry statement contradicts H55')
 
     edge_path = DATA / 'h55_edge_submission.json'
     edge_hold_path = DATA / 'h55_edge_holdout.json'
@@ -410,8 +485,8 @@ def main() -> int:
         slot = f"Scientific slot gate remains CLOSED for {sub.get('file')}."
     else:
         slot = 'Scientific slot gate: not recorded in docs/data/submission.json (not assumed either way).'
-    print('\n✓ local links/JSON/receipt values verified; format and canonical-pattern research release '
-          f'verified; byte-identical TIFF serves through the site. {slot}')
+    print('\n✓ local links/JSON/receipt values verified; current artifact format and bounded prior-comparison '
+          f'gates verified; byte-identical TIFF serves through the site. {slot}')
     return 0
 
 

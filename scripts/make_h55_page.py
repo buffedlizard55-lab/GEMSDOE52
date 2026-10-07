@@ -58,6 +58,30 @@ def main() -> int:
         r = t[m].get((a, e))
         return f"{r['fold_wins_vs_random']}/4" if r else "&ndash;"
 
+    def a_only_vs_random(mode):
+        candidate = C[mode].get(("A_only", "hc4|37654"))
+        random = G[mode].get(("random", "hc|37654"))
+        if not candidate or not random:
+            return "not measured"
+        candidate_dti = float(candidate["mean_dti"])
+        random_dti = float(random["mean_dti"])
+        if candidate_dti < random_dti:
+            relation = "below"
+        elif candidate_dti > random_dti:
+            relation = "above"
+        else:
+            relation = "equal to"
+        return f"{candidate_dti:.5f} ({relation} matched random, {random_dti:.5f})"
+
+    a_only_hide = C["hide"].get(("A_only", "hc4|37654"))
+    a_only_tip = C["tip"].get(("A_only", "hc4|37654"))
+    a_only_gate = (
+        "not measured" if not a_only_hide or not a_only_tip else
+        "passes" if (a_only_hide.get("fold_wins_vs_random") or 0) >= 3
+                    and (a_only_tip.get("fold_wins_vs_random") or 0) >= 3 else
+        "does not pass"
+    )
+
     rows = []
     for a, e in [("B_therm", "greedy|37654"), ("B_c50", "greedy|37654"),
                  ("B_c100", "greedy|37654"), ("B_therm", "greedy|50000"),
@@ -193,6 +217,7 @@ than prediction, and that this family had left 14&nbsp;% of it unspent.</p>
 <a class="button" href="downloads/{ev['file']}" download>&darr; Download .TIF</a>
 <a class="button" href="downloads/{ev['zip']}" download>&darr; Download .ZIP</a>
 <a class="button" href="downloads/h55_reasoning_{TAG}.json">&darr; Phase-2 reasoning</a></div>
+<p class="small">Separate experiment, not the current candidate: <a href="h55-edge.html">H55-EDGE potential-field research</a> failed its local promotion gates and remains research-only. It does not change this H55 receipt.</p>
 
 <h2><span class="num">1</span> Band 6 of the organiser's own feature file is radiometric, not magnetic</h2>
 <p>The TIFF tag inside <code>training_features.tif</code> says <code>data_category = magnetic_data</code>,
@@ -306,13 +331,16 @@ record: the false-alarm-rate statistic correlates weakly (max |&rho;| {far_max:.
 folds), so this is the verdict of the statistic the pre-registration <em>named</em>; and View A's
 block-level FAR has CV 1.35&ndash;5.22 against View B's 0.75&ndash;1.18 &mdash; a view finding a few
 regional anomalies and nothing else, which is the same reading as N-2 and N-10 from a third direction.</p>
-<p>The file therefore ships <b>one view</b>, on two independent grounds: the premise co-training needs is
-refuted, <em>and</em> <code>A_only</code> wins {wins(C, 'hide', 'A_only', 'hc4|37654')} <code>hide</code>
-and {wins(C, 'tip', 'A_only', 'hc4|37654')} <code>tip</code> folds while sitting <b>below</b> matched
-random on both ({cell(C, 'hide', 'A_only', 'hc4|37654')} vs 0.03948;
-{cell(C, 'tip', 'A_only', 'hc4|37654')} vs 0.02477).</p>
+<p>The file therefore ships <b>one view</b>, on two independent grounds: the pre-registered error-correlation
+threshold refutes the co-training premise, and <code>A_only</code> wins
+{wins(C, 'hide', 'A_only', 'hc4|37654')} <code>hide</code> and
+{wins(C, 'tip', 'A_only', 'hc4|37654')} <code>tip</code> folds. At the matched 37,654-pixel budget,
+its mean DTI is {a_only_vs_random('hide')} on <code>hide</code> and
+{a_only_vs_random('tip')} on <code>tip</code>. It {a_only_gate} the pre-registered ≥3/4-fold comparison
+on <b>both</b> instruments; fold counts, rather than an inaccurate claim that both means are below random,
+are the reason it is not promoted as the primary emitter.</p>
 
-<h2><span class="num">7</span> Not merely the union of the two views</h2>
+<h2 id="non-union"><span class="num">7</span> Not merely the union of the two views</h2>
 <p>The brief asks for this explicitly, and <code>gates.uniqueness_report</code> does not answer it &mdash;
 that gate compares against <em>previous submissions</em>. This compares against the two views of
 <em>this</em> pipeline at the same budget:</p>

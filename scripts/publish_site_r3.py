@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Publish the R3 research result to GitHub Pages from strict local receipts.
+"""Publish separate R3 experiment pages and the current H55 executive guide from local receipts.
 
-Run `scripts/refresh_feed.py` first. The TIFF is visibly labelled research-only:
-its preregistered local lift gate failed, and this script never submits anything.
+Run `scripts/refresh_feed.py` first. The R3 TIFF is visibly marked research-only because its
+preregistered local lift gate failed; the top-level executive guide is rendered from H55's own
+submission receipt and must not inherit R3's status. This script never uploads or submits anything.
 """
 from __future__ import annotations
 
@@ -34,6 +35,7 @@ def nav(prefix: str = "") -> str:
     links = (
         ("index.html", "Overview"),
         ("executive-summary.html", "Submission guide"),
+        ("h55.html", "Current H55"),
         ("r3.html", "R3 experiment"),
         ("r3-hypotheses.html", "R3 hypotheses"),
         ("validation.html", "R2 validation"),
@@ -55,8 +57,8 @@ def page(title: str, description: str, body: str, prefix: str = "") -> str:
         '</head><body><a class="skip" href="#main">Skip to content</a>'
         f'<header><nav><a class="brand" href="{prefix}index.html">GEMS / DOE 52</a>{nav(prefix)}</nav></header>'
         f'<main id="main">{body}</main>'
-        '<footer>Competition 306 · Local research only · Fault predictions are not confirmed faults, '
-        'geothermal vents, or organizer-score forecasts. '
+        '<footer>Competition 306 · Local checks only; organizer acceptance and score are not recorded here. '
+        'Fault predictions are not confirmed faults or geothermal vents. '
         f'<a href="{prefix}irregularities.html">Limitations &amp; review</a> · '
         '<a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code and complete prompt</a></footer>'
         '</body></html>'
@@ -172,70 +174,232 @@ def render_index(sub, holdout, board, feed) -> str:
     return page("R3 research result", "R3-H1 paired DEM profile research artifact; holdout gate failed; no upload approval.", "".join(body))
 
 
-def render_summary(sub, holdout) -> str:
-    note = sub.get("submission_note") or sub.get("note") or ""
-    gate = holdout["slot_gate"]
-    body = [download_bar(sub)]
-    body.append(
-        '<div class="eyebrow">R3-H1 submission guide · research-only</div>'
-        '<h1>A valid file is not<br>a justified submission.</h1>'
-        '<p class="small">This guide covers only R3-H1. The repository’s H55 headline item is separate; '
-        '<a href="index.html">return to the overview</a> or <a href="h55.html">read its own page</a>.</p>'
-        '<div class="status"><strong>Do not upload the R3-H1 file.</strong>'
-        'It passes the local file-format/range checks, but the preregistered spatial promotion gate failed. '
-        'No weekly slot has been used. A format pass is not scientific approval or proof that the portal '
-        'will accept an upload.</div>'
-        '<p class="lede">This page preserves the requested one-click TIFF, unique name, and short note while '
-        'making the failed validation gate impossible to miss.</p>'
+def a_only_comparison_summary(sweep: dict) -> str:
+    """Report the A-only fold gate and matched-random means without conflating the tests."""
+    def row(mode, arm, emitter_name):
+        return next((item for item in (sweep.get(mode, {}).get("summary") or {}).get("ranked", [])
+                     if item.get("arm") == arm and item.get("emitter") == emitter_name), None)
+
+    comparisons = {}
+    for mode in ("hide", "tip"):
+        candidate = row(mode, "A_only", "hc4|37654")
+        random = row(mode, "random", "hc|37654")
+        if not candidate or not random:
+            return "A-only matched-random fold comparison: not measured in the published sweep."
+        comparisons[mode] = (candidate, random)
+
+    hide, random_hide = comparisons["hide"]
+    tip, random_tip = comparisons["tip"]
+    hide_wins = int(hide.get("fold_wins_vs_random") or 0)
+    tip_wins = int(tip.get("fold_wins_vs_random") or 0)
+    passes = hide_wins >= 3 and tip_wins >= 3
+    return (
+        f"A-only mean DTI: {float(hide['mean_dti']):.5f} vs matched random "
+        f"{float(random_hide['mean_dti']):.5f} on hide, and {float(tip['mean_dti']):.5f} vs "
+        f"{float(random_tip['mean_dti']):.5f} on tip. Its fold wins are {hide_wins}/4 and "
+        f"{tip_wins}/4; it {'passes' if passes else 'does not pass'} the preregistered "
+        "≥3/4-wins-per-instrument promotion comparison. The means are mixed: below random on "
+        "hide, above random on tip. This is separate from the conditional-independence test."
     )
-    body.append(
-        '<section class="card"><h2>File identification</h2>'
+
+
+def render_summary(sub, verification, sweep) -> str:
+    """Render the executive guide from the current H55 receipt, not the separate R3 artifact."""
+    note = str(sub.get("submission_note") or "")
+    fmt = sub.get("format_gate") or {}
+    uniqueness = sub.get("uniqueness") or {}
+    geometry = sub.get("geometry") or {}
+    emitter = sub.get("emitter_stats") or {}
+    projection = sub.get("projection") or {}
+    selection = sub.get("selection") or {}
+    approved = sub.get("approved_for_weekly_slot")
+    format_ok = bool(fmt.get("ok", sub.get("format_ok")))
+    unique_ok = bool(uniqueness.get("research_publication_ok", sub.get("uniqueness_ok")))
+    independently_verified = bool((verification.get("shipped_file") or {}).get("all_ok"))
+    byte_match = bool(sub.get("published_byte_hash_matches_receipt"))
+    local_ready = approved is True and format_ok and unique_ok and independently_verified and byte_match
+
+    if local_ready:
+        status = (
+            '<div class="status"><strong>Local scientific slot gate: PASS.</strong> '
+            'The H55 receipt marks this exact artifact <code>approved_for_weekly_slot: true</code>; '
+            f'{esc(sub.get("promotion") or "No promotion rationale is recorded.")} '
+            'This is an in-repository promotion decision, not organizer approval, not portal acceptance, '
+            'and not a public-score forecast. No organizer submission receipt or official score is recorded '
+            'here, and this publisher never uploads to the competition.</div>'
+        )
+    elif approved is False:
+        status = (
+            '<div class="status"><strong>Research only — do not upload.</strong> '
+            'The current H55 receipt does not approve this artifact for a weekly slot. A file-format '
+            'pass, if present, is not scientific approval or portal acceptance.</div>'
+        )
+    else:
+        status = (
+            '<div class="status"><strong>Submission status: not established.</strong> '
+            'The receipt does not contain a true or false local slot-approval flag. Do not infer '
+            'approval from the existence of a downloadable TIFF.</div>'
+        )
+
+    comparisons = (verification.get("union_audit") or {}).get("comparisons") or []
+    comparison_by_name = {str(row.get("name")): row for row in comparisons}
+    topk_union = comparison_by_name.get("union of the two views' top-K")
+    greedy_union = comparison_by_name.get("union of the two views' coverage-greedy emissions")
+
+    def overlap_text(row):
+        if row is None or row.get("frac_of_shipped") is None:
+            return "not measured"
+        return f"{100 * float(row['frac_of_shipped']):.1f}%"
+
+    a_only_status = a_only_comparison_summary(sweep)
+
+    independence = verification.get("independence_summary") or {}
+    hide_ind = independence.get("hide") or {}
+    tip_ind = independence.get("tip") or {}
+    transform = fmt.get("transform") or []
+    transform_text = ", ".join(fnum(value, 0) for value in transform) if transform else "not recorded"
+    bounds = fmt.get("bounds") or []
+    bounds_text = ", ".join(fnum(value, 1) for value in bounds) if bounds else "not recorded"
+    emitted = sub.get("emitted", sub.get("positive_px"))
+    novel_px = uniqueness.get("novel_vs_all_priors")
+    emitted_text = "not recorded" if emitted is None else f"{int(emitted):,}"
+    novel_px_text = "not recorded" if novel_px is None else f"{int(novel_px):,}"
+    note_len = len(note)
+    tag = str(sub.get("tag") or "not recorded")
+    evidence_name = f"h55_verification_{tag}.json"
+    h55_reasoning = f"h55_reasoning_{tag}.json"
+
+    body = [
+        '<div class="eyebrow">Current H55 artifact · auditable submission guide</div>',
+        '<h1>One exact file.<br>A clear local gate.</h1>',
+        '<p class="lede">This guide is about the current H55 candidate only. R3-H1, H55-PROFILE, '
+        'and H55-EDGE are separate experiments with their own receipts; their research-only labels '
+        'do not apply to this H55 file, and this H55 status does not approve those experiments.</p>',
+        status,
+        '<section class="card"><h2>File identification and one-click download</h2>'
         f'<p>Filename: <code>{esc(sub.get("file"))}</code></p>'
         f'<p>Submission name: <code>{esc(sub.get("submission_name"))}</code></p>'
-        f'<label for="submission-note">Short identifying note ({esc(sub.get("submission_note_chars", len(note)))} chars; do not submit this run)</label>'
-        f'<textarea id="submission-note" readonly>{esc(note)}</textarea>'
-        '<button data-copy="submission-note">Copy note</button>'
-        f'<p class="small">SHA-256 <span class="mono">{esc(sub.get("sha256"))}</span></p>'
-        f'<p>Local gate: lift {fnum(gate["mean_dti_lift"], 6)} vs required '
-        f'+{fnum(gate["required_mean_lift"], 3)}; positive folds {gate["positive_folds"]}/'
-        f'{gate["total_folds"]} vs required {gate["required_positive_folds"]}/4.</p></section>'
-    )
-    body.append(
-        '<h2>Why the [0,1] error is addressed</h2>'
-        '<p>The written raster is single-band float32 with finite binary {0,1} raw values. The local '
-        'format gate reopens the written bytes and checks [0,1], exact sample-template shape, CRS, '
-        'geotransform, bounds, and one band. The internal validity mask matches the sample grid; no '
-        'negative sentinel or NaN is written. This is a local precaution for the reported '
-        '“Predicted values must be in range [0, 1]” error, not evidence about an undocumented portal validator.</p>'
-        '<p>The exact grid and byte receipt are linked below. Do not reproject or edit the TIFF. Input '
-        'rasters are owner-mirrored and SHA-pinned, not organizer-authenticated.</p>'
-        '<a href="data/submission_r3.json">Open artifact receipt →</a> · '
-        '<a href="data/format_gate_r3.json">Open format check →</a> · '
-        '<a href="data/independent_tiff_check_r3.json">Open independent TIFF readback →</a> · '
-        '<a href="data/uniqueness_r3.json">Open prior-comparison gate →</a>'
-    )
-    body.append(
-        '<h2>Submission steps for a future approved file</h2>'
-        '<p><strong>Do not use the current R3 file for these steps.</strong> Once a future candidate '
-        'passes its preregistered holdout and independent confirmation:</p>'
-        '<ol><li>Check the new artifact receipt says <code>approved_for_weekly_slot: true</code> and '
-        'the download hash matches.</li>'
-        '<li>Open the official <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">'
-        'DOE GEMS competition</a> and sign into the eligible team account.</li>'
-        '<li>Choose “New submission” and follow the portal’s current input instructions. The prediction '
-        'file is the exact single-band .tif; the research ZIP linked here also contains a note and audit '
-        'JSON and is for download/review, not assumed to be a valid portal payload.</li>'
-        '<li>Paste the artifact’s ≤200-character identifying note into the optional Note field. Do not '
-        'change pixel values, CRS, transform, or bounds in GIS software.</li>'
-        '<li>Only after the scientific gate passes and a slot is available, submit and save the organizer '
-        'receipt, ID, timestamp, and returned score. The rules describe a weekly submission limit; '
-        'this session used zero slots.</li></ol>'
-        '<p>Official sources: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">'
-        'problem and format</a>; <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">competition rules and AI disclosure</a>. '
-        'A competition score is not the final expert-reviewed outcome.</p>'
-    )
-    return page("Submission guide", "How to submit only after scientific approval; the current R3 artifact is not approved.", "".join(body))
+        f'<p>SHA-256: <code class="mono">{esc(sub.get("sha256"))}</code> · '
+        f'{esc(sub.get("bytes"))} bytes</p>'
+        f'<label for="h55-submission-note">Portal note ({note_len} characters; '
+        f'{200 - note_len} characters below the documented 200-character project limit)</label>'
+        f'<textarea id="h55-submission-note" readonly>{esc(note)}</textarea>'
+        '<button data-copy="h55-submission-note">Copy note</button>'
+        f'<div class="actions"><a class="button" href="{esc(sub.get("download"))}" download>↓ Download exact .TIF</a>'
+        f'<a class="button secondary" href="{esc(sub.get("download_zip"))}" download>↓ Download audit .ZIP</a>'
+        '<a class="button secondary" href="h55.html">Full H55 analysis →</a></div>'
+        '<p class="small">The .TIF is the prediction file. The ZIP is for audit/review; do not upload '
+        'the ZIP unless the portal explicitly asks for it.</p></section>'
+    ]
 
+    body.append(
+        '<h2>What the local file checks establish</h2>'
+        f'<p>On-disk format gate: <strong>{"PASS" if format_ok else "FAIL"}</strong>. '
+        f'{esc(fmt.get("bands", "not recorded"))} band(s), {esc(fmt.get("dtype", "not recorded"))}, '
+        f'{esc(fmt.get("crs", "not recorded"))}, {esc(fmt.get("width", sub.get("width")))} × '
+        f'{esc(fmt.get("height", sub.get("height")))} cells; observed values '
+        f'[{fnum(fmt.get("min"), 1)}, {fnum(fmt.get("max"), 1)}], '
+        f'{esc(fmt.get("nan_pixels", fmt.get("n_nan", sub.get("nan_px"))))} NaN cells and '
+        f'{esc(fmt.get("infinity_pixels", 0))} infinities. The affine transform is '
+        f'<code>{esc(transform_text)}</code> and the raster bounds are '
+        f'<code>{esc(bounds_text)}</code>. The local gate also records a template-bound comparison '
+        f'({"PASS" if fmt.get("bounds") == fmt.get("ref_bounds") else "FAIL/NOT RECORDED"}). '
+        'These checks reduce the known [0,1] rejection risk, but do not establish behavior of an '
+        'undocumented portal validator or guarantee upload acceptance.</p>'
+        f'<p>Full receipts: <a href="data/submission.json">current H55 artifact and promotion receipt</a> · '
+        f'<a href="data/{esc(evidence_name)}">independent on-disk verification</a>.</p>'
+    )
+
+    novel_fraction = uniqueness.get("novel_fraction")
+    n_priors = uniqueness.get("n_priors_checked")
+    body.append(
+        '<h2>Bounded uniqueness and the explicit non-union check</h2>'
+        f'<p>The decoded binary pattern is {"canonical-distinct" if uniqueness.get("canonical_pattern_unique") else "not verified canonical-distinct"}; '
+        f'{esc(n_priors)} accessible, grid-aligned prior TIFFs were scanned. '
+        f'{esc(novel_px_text)} of {esc(emitted_text)} emitted pixels '
+        f'({"not measured" if novel_fraction is None else f"{100 * float(novel_fraction):.1f}%"}) '
+        'fall outside that comparison union. The receipt records the check as '
+        f'<code>{esc(uniqueness.get("relation_to_union", "not recorded"))}</code>. '
+        'This is a bounded inventory result, not proof of global uniqueness, independent geology, '
+        'or fault discovery; private, inaccessible, and unlinked submissions are outside the claim.</p>'
+        f"<p>Separately, the candidate is unequal to the same-budget union of the two views' top-K outputs "
+        f'and the union of their coverage-greedy emissions. It overlaps {overlap_text(topk_union)} of its '
+        f'pixels with the top-K union and {overlap_text(greedy_union)} with the coverage-greedy union. '
+        'The selected emission is View B coverage-greedy with a thermal rank bonus, not a literal A/B '
+        'union. <a href="h55.html#non-union">See the complete comparison table</a> · '
+        f'<a href="data/{esc(evidence_name)}">machine-readable union audit</a>.</p>'
+    )
+
+    ceiling = emitter.get("disc_ceiling")
+    eff = geometry.get("spacing_efficiency")
+    body.append(
+        '<h2>Metric-aware placement and spatial holdout</h2>'
+        f'<p>The placement uses the official 300 m distance-weighted Tversky kernel documented by '
+        f'<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">DrivenData</a>. '
+        f'The current file contains {esc(emitted_text)} positive pixels; measured weighted-coverage '
+        f'efficiency is A/S = {fnum(geometry.get("A_per_S"), 4)} '
+        f'({"not measured" if eff is None else f"{100 * float(eff):.2f}%"} of the recorded '
+        f'{fnum(ceiling, 6)} kernel-disc ceiling). This is a placement statistic, not a score forecast.</p>'
+        f'<p>The registered local holdout selected <code>{esc(selection.get("arm", "not recorded"))}</code> '
+        f'with <code>{esc(selection.get("emitter", "not recorded"))}</code>: hide mean DTI '
+        f'{fnum(selection.get("hide"), 5)} vs matched random {fnum((projection.get("random_control") or {}).get("hide"), 5)} '
+        f'({esc(selection.get("hide_wins", "not recorded"))}/4 folds), and tip mean DTI '
+        f'{fnum(selection.get("tip"), 5)} vs {fnum((projection.get("random_control") or {}).get("tip"), 5)} '
+        f'({esc(selection.get("tip_wins", "not recorded"))}/4 folds). These are spatial proxy tests '
+        'against held-out mapped-catalogue components, not validation against the hidden expert-mapped '
+        'new-fault task.</p>'
+    )
+
+    body.append(
+        '<h2>Two views, co-training gate, and A-only comparison</h2>'
+        f'<p>The pre-registered spatial-block out-of-fold error-correlation statistic on '
+        f'catalogue-zero proxy negatives reached |ρ|={fnum(hide_ind.get("max_abs_spearman_mean_overprediction"), 4)} '
+        f'on hide and |ρ|={fnum(tip_ind.get("max_abs_spearman_mean_overprediction"), 4)} on tip, '
+        f'exceeding the {fnum(hide_ind.get("abandon_threshold"), 2)} abandonment threshold '
+        f'({esc(hide_ind.get("usable_blocks_per_fold", "not recorded"))} usable blocks of '
+        f'{esc(hide_ind.get("blocks_available", "not recorded"))} per fold). The preregistered verdict '
+        'is to abandon co-training; these proxy negatives do not prove geological absence or conditional '
+        'independence. ' + a_only_status + '</p>'
+        f'<p>The H55 analysis records {esc(sub.get("a_only_components", "not recorded"))} A-only '
+        f'components and {esc(sub.get("a_only_emitted_px", "not recorded"))} A-only emitted pixels with '
+        f'measured, cautious geological reasoning in <a href="downloads/{esc(h55_reasoning)}">the '
+        'per-candidate H55 reasoning record</a>. Those are hypotheses for review, not confirmed faults. '
+        f'The separate H55-JUNCTION hypothesis remains untested; see the <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/12_hypotheses_H55_preregistered.md">'
+        'frozen hypothesis register</a>. This H55 receipt is not evidence for that untested idea.</p>'
+    )
+
+    body.append(
+        '<h2>Download and portal caveats</h2>'
+        '<ol><li>Download the exact .TIF above and retain its SHA-256. Do not reproject, edit, or substitute '
+        'the audit ZIP for the raster.</li>'
+        '<li>Before using a weekly slot, confirm the current quota/rules and sign into the authorized '
+        'team account on the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">'
+        'official competition page</a>. Start a new submission only if you choose to proceed.</li>'
+        '<li>Upload only this exact .TIF and paste the identifying portal note above verbatim. The local '
+        'format check reduces the known [0,1] risk but cannot guarantee portal acceptance.</li>'
+        '<li>Follow the Prize Rules for generative-AI disclosure; report use, extent, and manner as the '
+        'current portal requires.</li>'
+        '<li>Save any organizer receipt, submission ID, timestamp, and returned score separately. None '
+        'is recorded in the H55 artifact receipt here; this publisher never submits anything.</li></ol>'
+        '<p>Input grids are integrity-pinned owner mirrors, not independently authenticated against '
+        'organizer downloads. A predicted high-value pixel is not a field-confirmed fault, geothermal '
+        'vent, or guarantee of competition performance.</p>'
+        '<p>Official review links: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">'
+        'competition</a> · <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">'
+        'problem and scoring</a> · <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">'
+        'Prize Rules, including generative-AI disclosure</a> · '
+        '<a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">'
+        'USGS GeoDAWN</a> · <a href="https://gdr.openei.org/submissions/1391">'
+        'DOE GDR INGENIOUS</a> · <a href="sources.html">source ledger and limitations</a>.</p>'
+        '<p>A separate <a href="r3.html">R3-H1 research result</a> failed its own local gate and is clearly '
+        'marked research-only there. That status does not apply to this H55 file.</p>'
+    )
+
+    return page(
+        "H55 submission guide",
+        "Current H55 artifact, exact download, local promotion status, file checks, bounded uniqueness, and limitations.",
+        "".join(body),
+    )
 
 def render_r3(sub, holdout, independence, cotrain, board) -> str:
     gate = holdout["slot_gate"]
@@ -466,6 +630,66 @@ def render_downloads(sub) -> str:
     return page("Downloads", "Current research-only artifact, notes, and historical downloads.", "".join(body), prefix="../")
 
 
+def insert_h55_review(current: dict, verification: dict, sweep: dict) -> None:
+    """Put receipt-backed H55 status above the historical R2 notes on the irregularities page."""
+    path = DOCS / "irregularities.html"
+    if not path.exists():
+        raise FileNotFoundError("missing docs/irregularities.html; current H55 review must not be silently omitted")
+    independent = verification.get("independence_summary") or {}
+    hide = independent.get("hide") or {}
+    tip = independent.get("tip") or {}
+    if current.get("approved_for_weekly_slot") is True:
+        local_status = (
+            "Local H55 slot gate: PASS for this exact receipt; this is not organizer approval, "
+            "and no H55 portal receipt or official score is recorded."
+        )
+    elif current.get("approved_for_weekly_slot") is False:
+        local_status = "Local H55 slot gate: FAIL; this artifact is research-only and not approved for upload."
+    else:
+        local_status = "H55 slot status is not established by the receipt; do not infer approval."
+    block = (
+        '<!--H55-CURRENT-REVIEW--><section id="h55-current-review" class="card">'
+        '<div class="eyebrow">Current H55 status · 2026-10-07</div>'
+        '<h2>Current artifact review; older notes below are historical</h2>'
+        f'<p><strong>{esc(local_status)}</strong> Current file: <code>{esc(current.get("file"))}</code>. '
+        '<a href="executive-summary.html">Open the current H55 download and submission guide</a> · '
+        '<a href="h55.html">Full H55 analysis</a>.</p>'
+        '<p>Band 6 was re-audited as GeoDAWN total-count radiometry, not a magnetic derivative, despite its TIFF tag; '
+        'see <a href="h55.html">the H55 evidence page</a>. The pre-registered block-level proxy error-correlation '
+        f'test reached |ρ|={fnum(hide.get("max_abs_spearman_mean_overprediction"), 4)} on hide and '
+        f'{fnum(tip.get("max_abs_spearman_mean_overprediction"), 4)} on tip against the '
+        f'{fnum(hide.get("abandon_threshold"), 2)} cutoff; co-training was abandoned under that registered test. '
+        'Catalogue-zero pixels are incomplete-label proxies, so this is not proof of geological absence or '
+        'conditional independence.</p>'
+        f'<p>{esc(a_only_comparison_summary(sweep))}</p>'
+        '<p>H55-JUNCTION remains untested; no new TIFF or weekly submission slot is part of this review. '
+        '<a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/12_hypotheses_H55_preregistered.md">'
+        'Open the frozen H55 hypothesis register</a>.</p>'
+        '</section><!--/H55-CURRENT-REVIEW-->'
+    )
+    text = path.read_text(encoding="utf-8")
+    start_tag, end_tag = "<!--H55-CURRENT-REVIEW-->", "<!--/H55-CURRENT-REVIEW-->"
+    if start_tag in text and end_tag in text:
+        start = text.index(start_tag)
+        end = text.index(end_tag, start) + len(end_tag)
+        text = text[:start] + block + text[end:]
+    else:
+        marker = '<main id="main">'
+        if marker not in text:
+            raise ValueError("docs/irregularities.html lacks the expected main container")
+        text = text.replace(marker, marker + block, 1)
+
+    # Replace two stale H53/H54-era assertions that contradicted the current H55 source audit.
+    text = text.replace(
+        '<li><strong>No radiometric bands in the available stack.</strong> No invented data layers, LiDAR-only hidden-label claims or local microseismic locations.</li>',
+        '<li><strong>H55 corrected the H52-era radiometry interpretation.</strong> Band 6 is measured as GeoDAWN total-count radiometry, not a magnetic derivative. External layers and catalogues remain bounded context, not confirmed hidden labels.</li>')
+    text = text.replace(
+        '<li><strong>Geophysical view is weaker here.</strong> Low negative-error correlation did not make co-training win. Strong surface-only control prevented a false promotion.</li>',
+        '<li><strong>H55 co-training and A-only results are separate.</strong> The registered block-error-correlation test exceeded its cutoff and co-training was abandoned. A-only fails the ≥3/4 fold-win gate with mixed means: below random on hide and above on tip.</li>')
+    text = text.replace('<h2>Next session, in order</h2>', '<h2>Historical R2 next-session plan</h2>')
+    path.write_text(text, encoding="utf-8")
+
+
 def insert_nav_link(path: Path) -> None:
     if not path.exists():
         return
@@ -543,9 +767,12 @@ def insert_r3_download_section(sub: dict) -> None:
 
 
 def main() -> int:
-    # The repository can carry several parallel research rounds. R3 has its own receipt and page; it
-    # must not replace the current submission.json/H55 headline merely because this publisher ran.
+    # R3 owns its experiment pages only. The top-level executive guide describes the current H55
+    # artifact from submission.json; it must never relabel R3 as the current upload candidate.
     sub = load("submission_r3")
+    current = load("submission")
+    h55_verification = load(f"h55_verification_{current.get('tag', '')}")
+    h55_sweep = load("h55_sweep_hardcore")
     holdout = load("holdout_r3_paired_profile")
     independence = load("independence_r3")
     cotrain = load("cotraining_summary_r3")
@@ -562,9 +789,30 @@ def main() -> int:
     if not (DOCS / sub["download_zip"]).exists():
         raise FileNotFoundError(f"missing R3 research archive: {sub['download_zip']}")
 
-    (DOCS / "executive-summary.html").write_text(render_summary(sub, holdout), encoding="utf-8")
+    if current.get("file") is None or current.get("approved_for_weekly_slot") not in (True, False):
+        raise ValueError("the current H55 receipt must name an artifact and an explicit local gate status")
+    current_file = DOCS / str(current.get("download") or "")
+    if not current_file.is_file():
+        raise FileNotFoundError(f"missing current H55 raster: {current_file.relative_to(ROOT)}")
+    if h55_verification.get("tag") != current.get("tag") or \
+            (h55_verification.get("shipped_file") or {}).get("file") != current.get("file"):
+        raise ValueError("the H55 verification receipt does not describe the current submission.json artifact")
+    checks = (h55_verification.get("shipped_file") or {}).get("checks") or {}
+    hash_gate_ok = (current.get("published_byte_hash_matches_receipt") is True
+                    and current.get("sha256") == (current.get("format_gate") or {}).get("sha256")
+                    and checks.get("sha256_matches_record") is True)
+    if current.get("approved_for_weekly_slot") is True and not (
+            (current.get("format_gate") or {}).get("ok") is True
+            and (current.get("uniqueness") or {}).get("research_publication_ok") is True
+            and (h55_verification.get("shipped_file") or {}).get("all_ok") is True
+            and hash_gate_ok):
+        raise ValueError("H55 is marked locally approved, but one or more independent artifact gates failed")
+
+    (DOCS / "executive-summary.html").write_text(
+        render_summary(current, h55_verification, h55_sweep), encoding="utf-8")
     (DOCS / "r3.html").write_text(render_r3(sub, holdout, independence, cotrain, board), encoding="utf-8")
     (DOCS / "r3-hypotheses.html").write_text(render_hypotheses(sub, holdout), encoding="utf-8")
+    insert_h55_review(current, h55_verification, h55_sweep)
     insert_r3_home_bar(sub)
     insert_r3_download_section(sub)
     for name in ("index.html", "validation.html", "forensics.html", "hypotheses.html", "sources.html",
