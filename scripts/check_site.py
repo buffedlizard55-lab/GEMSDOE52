@@ -30,6 +30,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 DATA = DOCS / "data"
 H56_CURRENT_FILE = "gems52-h56-cotrain-disagreement-37654px-20261007T1630Z-zeros.tif"
+H57_CURRENT_FILE = "gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif"
 
 
 class Scan(HTMLParser):
@@ -171,7 +172,6 @@ def main() -> int:
             elif dl.stat().st_size != d.get("bytes"):
                 problems.append("submission.json: docs/ copy size != the size in the receipt")
             else:
-                import hashlib
                 got = hashlib.sha256(dl.read_bytes()).hexdigest()
                 if got != d.get("sha256"):
                     problems.append(f"submission.json: sha256 mismatch ({got[:12]}… != {str(d.get('sha256'))[:12]}…)")
@@ -245,7 +245,6 @@ def main() -> int:
         # H55-PROFILE is a separate failed-gate follow-up; never conflate it with the main H55 incumbent.
         h55_path = DATA / "h55_profile.json"
         if h55_path.exists():
-            import hashlib
             import zipfile
             import numpy as np
             import rasterio
@@ -319,7 +318,6 @@ def main() -> int:
     edge_deviation_path = DATA / 'h55_edge_protocol_deviation.json'
     if edge_path.exists():
         import csv
-        import hashlib
         import zipfile
         import numpy as np
         import rasterio
@@ -389,70 +387,79 @@ def main() -> int:
                     problems.append(f'{page_name}: missing separate H55-EDGE archive link')
             notes.append(f"H55-EDGE verified as a separate failed-gate archive: {edge['bytes']:,} bytes, {edge_hold['positive_folds']}/4 positive folds; main incumbent unchanged")
 
-    # The latest pointer is the H56 co-training synthetic demonstration. Its download is
-    # byte-verified, but neither synthetic holdout numbers nor a local format pass open a slot.
-    h56_receipt_path = DATA / 'submission_h56.json'
-    if not current or not h56_receipt_path.exists():
-        problems.append('H56: current feed receipt or tagged H56 audit receipt is missing')
+    # The latest pointer is the H57 credited-core continuation: a real-data candidate whose format
+    # and uniqueness gates pass, and whose novel arm is ranked by a REFUTED co-training model that
+    # must stay disclosed everywhere the file is offered.  A submit verdict is recorded; no slot is
+    # claimed to have been spent.
+    h57_receipt_path = DATA / 'submission_h57.json'
+    if not current or not h57_receipt_path.exists():
+        problems.append('H57: current feed receipt or tagged H57 receipt is missing')
     else:
-        h56_receipt = json.loads(h56_receipt_path.read_text())
+        h57 = json.loads(h57_receipt_path.read_text())
         latest = (ROOT / 'submission/LATEST.txt').read_text().strip()
-        h56_file = DOCS / 'downloads' / str(current.get('file', ''))
-        h56_source = ROOT / 'submission' / str(current.get('file', ''))
+        cur_file = str(current.get('file', ''))
+        dl_file = DOCS / 'downloads' / cur_file
+        src_file = ROOT / 'submission' / cur_file
         expected_sha = current.get('sha256')
-        if current.get('file') != latest or current.get('file') != H56_CURRENT_FILE:
-            problems.append('H56: current feed, submission/LATEST.txt, and expected synthetic-demo name disagree')
-        if (current.get('approved_for_weekly_slot') is not False
-                or current.get('synthetic') is not True
-                or current.get('submission_slots_used') != 0
-                or (current.get('slot_gate') or {}).get('approved_for_weekly_slot') is not False):
-            problems.append('H56: the synthetic demonstration must remain explicitly not approved with zero slots')
-        if 'SYNTHETIC' not in str(current.get('artifact_status', '')).upper():
-            problems.append('H56: current artifact is missing its synthetic-demo status label')
-        if (h56_receipt.get('sha256') != expected_sha
-                or h56_receipt.get('bytes') != current.get('bytes')
-                or h56_receipt.get('synthetic') is not True):
-            problems.append('H56: tagged receipt, current feed hash/size, or synthetic status disagree')
-        reasoning_name = Path(str((h56_receipt.get('reasoning') or {}).get('json') or '')).name
-        reasoning_source = ROOT / 'evidence' / reasoning_name
-        reasoning_public = DATA / reasoning_name
-        if (not reasoning_name.startswith('h56_reasoning_') or not reasoning_name.endswith('.json')
-                or not reasoning_source.is_file() or not reasoning_public.is_file()):
-            problems.append('H56: tagged per-candidate reasoning record is missing from evidence or published data')
-        elif reasoning_source.read_bytes() != reasoning_public.read_bytes():
-            problems.append('H56: published per-candidate reasoning JSON differs from its evidence source')
-        if not expected_sha or not h56_file.is_file() or hashlib.sha256(h56_file.read_bytes()).hexdigest() != expected_sha:
-            problems.append('H56: current downloadable TIFF is missing or differs from its audited SHA-256')
-        elif h56_file.stat().st_size != current.get('bytes'):
-            problems.append('H56: current downloadable TIFF size differs from its receipt')
-        if (not h56_source.is_file() or not h56_file.is_file()
-                or hashlib.sha256(h56_source.read_bytes()).hexdigest() != expected_sha
-                or hashlib.sha256(h56_file.read_bytes()).hexdigest() != expected_sha):
-            problems.append('H56: submission/ and docs/downloads/ do not contain the same receipt-verified TIFF')
-        fmt = h56_receipt.get('format_gate') or {}
-        uni = h56_receipt.get('uniqueness') or {}
-        holdout_note = str((h56_receipt.get('holdout') or {}).get('note', '')).lower()
-        if not fmt.get('ok') or fmt.get('mass_outside_footprint') != 0 or fmt.get('valid_px') != 5167373:
-            problems.append('H56: local format/true-footprint receipt did not pass')
-        if not uni.get('canonical_pattern_unique') or not uni.get('research_publication_ok'):
-            problems.append('H56: bounded canonical-pattern research check is missing or failed')
-        if 'synthetic' not in holdout_note or 'real holdout requires' not in holdout_note:
-            problems.append('H56: illustrative synthetic holdout is not distinguished from real-data validation')
+        if cur_file != latest or cur_file != H57_CURRENT_FILE:
+            problems.append('H57: current feed, submission/LATEST.txt, and the expected H57 name disagree')
+        if current.get('approved_for_weekly_slot') is not True or current.get('synthetic') is not False:
+            problems.append('H57: current feed must record a real-data candidate with a submit verdict')
+        if current.get('submission_slots_used') != 0:
+            problems.append('H57: the feed must not claim a weekly slot was spent')
+        if 'REFUTED' not in json.dumps(current.get('co_training_disclosure') or {}).upper():
+            problems.append('H57: the refuted co-training arm is not disclosed in the current feed')
+        if current.get('sha256') != h57.get('sha256') or current.get('bytes') != h57.get('bytes'):
+            problems.append('H57: tagged receipt and current feed disagree on hash/size')
+        if not expected_sha or not dl_file.is_file() or not src_file.is_file():
+            problems.append('H57: current downloadable TIFF is missing from docs/downloads or submission')
+        elif (hashlib.sha256(dl_file.read_bytes()).hexdigest() != expected_sha
+              or hashlib.sha256(src_file.read_bytes()).hexdigest() != expected_sha):
+            problems.append('H57: downloadable TIFF differs from its audited SHA-256')
+        elif dl_file.stat().st_size != current.get('bytes'):
+            problems.append('H57: downloadable TIFF size differs from its receipt')
+        fmt = current.get('format_gate') or {}
+        uni = current.get('uniqueness') or {}
+        if not fmt.get('ok') or fmt.get('problems'):
+            problems.append('H57: format gate receipt is missing or failed')
+        if not uni.get('ok') or not uni.get('support_novelty_gate_ok') or int(uni.get('novel_vs_all_priors') or 0) <= 0:
+            problems.append('H57: uniqueness gate receipt is missing or failed')
+        if int(uni.get('prior_px_dropped') or 0) <= 0 or uni.get('equals_literal_prior_union'):
+            problems.append('H57: candidate must drop prior support and must not be the literal union')
+        if any(r.get('identical') for r in uni.get('per_prior', [])):
+            problems.append('H57: candidate is identical to a prior')
+        br = current.get('metric_bracket') or {}
+        if not (float(br.get('low', 1)) < float(br.get('central', 0)) < float(br.get('high', 0))):
+            problems.append('H57: metric bracket is missing or out of order')
         if len(str(current.get('submission_note') or '')) > 200:
-            problems.append('H56: identifying note exceeds 200 characters')
-        h56_page = (DOCS / 'h56-cotrain.html').read_text() if (DOCS / 'h56-cotrain.html').exists() else ''
-        for term in ('RESEARCH-ONLY SYNTHETIC DEMO', 'do not spend a weekly slot',
-                     'do not upload until you rerun on real data'):
-            if term.casefold() not in h56_page.casefold():
-                problems.append(f'H56 co-training page: missing synthetic/no-slot warning {term!r}')
+            problems.append('H57: identifying note exceeds 200 characters')
+        page = (DOCS / 'h57.html').read_text() if (DOCS / 'h57.html').exists() else ''
+        for term in ('ABANDON', 'refuted', 'not proven', 'how to submit'):
+            if term.casefold() not in page.casefold():
+                problems.append(f'H57 page: missing disclosure text {term!r}')
         for page_name in ('index.html', 'executive-summary.html'):
             text = (DOCS / page_name).read_text() if (DOCS / page_name).exists() else ''
-            if current.get('file') not in text or 'synthetic' not in text.casefold() or 'not approved' not in text.casefold():
-                problems.append(f'{page_name}: current H56 identity/synthetic/no-approval status is missing')
+            if cur_file not in text or 'submit: yes' not in text.casefold():
+                problems.append(f'{page_name}: current H57 identity or submit verdict is missing')
+        # H56 stays an archive: its receipt must still mark it synthetic and not approved, and its
+        # page must keep the no-slot warning that stopped an upload in the previous round.
+        h56_receipt_path = DATA / 'submission_h56.json'
+        if not h56_receipt_path.exists():
+            problems.append('H56 archive: tagged receipt is missing')
+        else:
+            h56 = json.loads(h56_receipt_path.read_text())
+            if h56.get('synthetic') is not True or h56.get('file') == cur_file:
+                problems.append('H56 archive: the synthetic demo must stay synthetic and non-current')
+            if (h56.get('slot_gate') or {}).get('approved_for_weekly_slot') is True:
+                problems.append('H56 archive: the synthetic demo must not claim a slot approval')
+            h56_page = (DOCS / 'h56-cotrain.html').read_text() if (DOCS / 'h56-cotrain.html').exists() else ''
+            for term in ('do not spend a weekly slot', 'RESEARCH-ONLY SYNTHETIC DEMO'):
+                if term.casefold() not in h56_page.casefold():
+                    problems.append(f'H56 page: missing archive warning {term!r}')
         old_alias = DOCS / 'downloads/h56-candidate.tif'
+        if old_alias.exists() and hashlib.sha256(old_alias.read_bytes()).hexdigest() == expected_sha:
+            problems.append('H56: historical short alias is ambiguously identical to the current file')
         old_page = (DOCS / 'h56.html').read_text() if (DOCS / 'h56.html').exists() else ''
-        if old_alias.exists() and old_alias.read_bytes() == h56_file.read_bytes():
-            problems.append('H56: historical short alias is ambiguously identical to the current co-training demo')
         if 'HISTORICAL H56 CORE-CONTINUATION ARCHIVE' not in old_page:
             problems.append('h56.html: earlier H56 page/short alias is not clearly marked historical')
 

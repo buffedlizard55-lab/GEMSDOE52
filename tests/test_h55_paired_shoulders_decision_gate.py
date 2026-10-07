@@ -43,7 +43,7 @@ def test_no_h55_1_candidate_was_built_or_promoted():
                       if "h55-1" in p.name.lower() or "paired-shoulders" in p.name.lower()]
     assert paired_outputs == []
     assert not (submission / "H55_PAIRED_SHOULDERS_LATEST.txt").exists()
-    assert (submission / "LATEST.txt").read_text().strip().startswith("gems52-h56-")
+    assert (submission / "LATEST.txt").read_text().strip().startswith("gems57-h57-")
     assert result["slot_gate"]["approved_for_weekly_slot"] is False
     assert "no h55-1 tiff was built" in (ROOT / "README.md").read_text().lower()
 

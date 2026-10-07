@@ -84,9 +84,14 @@ def test_h55_archive_review_is_idempotent_and_carries_h56_status(monkeypatch, tm
     assert "H55 is superseded" in result
     current = _json(DATA / "submission.json")
     assert current["file"] in result
-    assert "synthetic methodology demo" in result
-    assert "h56-cotrain.html" in result
-    assert "weekly-slot gate" in result and "Do not upload or spend a slot" in result
+    if current.get("synthetic"):
+        assert "synthetic methodology demo" in result
+        assert "h56-cotrain.html" in result
+        assert "weekly-slot gate" in result and "Do not upload or spend a slot" in result
+    else:
+        # the current pointer is a real-data candidate: the archive review must carry its gate status
+        assert "records a pass" in result and "h57.html" in result
+        assert "does not establish organizer" in result
     assert "0.02979" in result and "0.02894" in result
     assert "below random on hide and above random on tip" in result
     assert "H55-JUNCTION remains untested" in result
