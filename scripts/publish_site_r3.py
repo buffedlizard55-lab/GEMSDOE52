@@ -177,8 +177,10 @@ def render_summary(sub, holdout) -> str:
     gate = holdout["slot_gate"]
     body = [download_bar(sub)]
     body.append(
-        '<div class="eyebrow">Submission guide · current artifact is research-only</div>'
+        '<div class="eyebrow">R3-H1 submission guide · research-only</div>'
         '<h1>A valid file is not<br>a justified submission.</h1>'
+        '<p class="small">This guide covers only R3-H1. The repository’s H55 headline item is separate; '
+        '<a href="index.html">return to the overview</a> or <a href="h55.html">read its own page</a>.</p>'
         '<div class="status"><strong>Do not upload the R3-H1 file.</strong>'
         'It passes the local file-format/range checks, but the preregistered spatial promotion gate failed. '
         'No weekly slot has been used. A format pass is not scientific approval or proof that the portal '
@@ -483,29 +485,92 @@ def insert_nav_link(path: Path) -> None:
         path.write_text(updated)
 
 
+def insert_r3_home_bar(sub: dict) -> None:
+    path = DOCS / "index.html"
+    text = path.read_text(encoding="utf-8")
+    bar = download_bar(sub).replace(
+        '<section class="download-bar"',
+        '<section class="download-bar" id="r3-h1-research-bar"', 1)
+    block = "<!--R3-H1-RESEARCH-BAR-->" + bar + "<!--/R3-H1-RESEARCH-BAR-->"
+    start_tag, end_tag = "<!--R3-H1-RESEARCH-BAR-->", "<!--/R3-H1-RESEARCH-BAR-->"
+    if start_tag in text and end_tag in text:
+        start = text.index(start_tag)
+        end = text.index(end_tag, start) + len(end_tag)
+        text = text[:start] + block + text[end:]
+    else:
+        anchor = "<!--/H55BAR-->"
+        if anchor in text:
+            index = text.index(anchor) + len(anchor)
+        else:
+            main = text.find("<main")
+            index = text.find(">", main) + 1 if main >= 0 else 0
+        text = text[:index] + block + text[index:]
+    path.write_text(text, encoding="utf-8")
+
+
+def insert_r3_download_section(sub: dict) -> None:
+    path = DOCS / "downloads/index.html"
+    text = path.read_text(encoding="utf-8") if path.exists() else "<!doctype html><html><body><main>"
+    name = str(sub["file"])
+    stem = name.removesuffix(".tif")
+    block = (
+        '<!--R3-H1-RESEARCH-DOWNLOADS--><section class="card" id="r3-h1-research-download">'
+        '<h2>R3-H1 research-only artifact — DO NOT UPLOAD</h2>'
+        f'<p>{esc(sub.get("artifact_status"))}</p>'
+        f'<p><a href="{esc(name)}" download>Download R3 research TIFF</a> · '
+        f'<a href="{esc(stem)}.zip" download>Download ZIP and audit receipt</a> · '
+        f'<a href="{esc(stem)}-audit.json">Audit JSON</a> · '
+        '<a href="a_only_reasoning_r3.csv">A-only reasoning CSV</a></p>'
+        f'<p class="small">{esc(sub.get("submission_name"))} · '
+        f'{esc(sub.get("submission_note"))} · no weekly slot used.</p>'
+        '</section><!--/R3-H1-RESEARCH-DOWNLOADS-->'
+    )
+    start_tag, end_tag = "<!--R3-H1-RESEARCH-DOWNLOADS-->", "<!--/R3-H1-RESEARCH-DOWNLOADS-->"
+    if start_tag in text and end_tag in text:
+        start = text.index(start_tag)
+        end = text.index(end_tag, start) + len(end_tag)
+        text = text[:start] + block + text[end:]
+    else:
+        index = text.lower().rfind("</main>")
+        if index < 0:
+            index = text.lower().rfind("</body>")
+        if index < 0:
+            text += block
+        else:
+            text = text[:index] + block + text[index:]
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(text, encoding="utf-8")
+
+
 def main() -> int:
-    sub = load("submission")
+    # The repository can carry several parallel research rounds. R3 has its own receipt and page; it
+    # must not replace the current submission.json/H55 headline merely because this publisher ran.
+    sub = load("submission_r3")
     holdout = load("holdout_r3_paired_profile")
     independence = load("independence_r3")
     cotrain = load("cotraining_summary_r3")
     board = load("leaderboard")
-    feed = load("feed")
-    if sub.get("file") is None or not sub.get("exists"):
-        raise ValueError("the current feed does not point to an existing audited artifact")
-    if sub.get("approved_for_weekly_slot") is not False:
-        raise ValueError("R3 site publisher expects a research-only, non-approved receipt")
-    if not (DOCS / sub["download"]).exists():
-        raise FileNotFoundError(f"missing published raster: {sub['download']}")
+    if sub.get("file") is None or sub.get("approved_for_weekly_slot") is not False:
+        raise ValueError("the R3 receipt must name a non-approved research artifact")
+    sub["download"] = "downloads/" + sub["file"]
+    sub["download_zip"] = "downloads/" + sub["file"].removesuffix(".tif") + ".zip"
+    sub["exists"] = (DOCS / sub["download"]).exists()
+    sub["submission_note"] = sub.get("submission_note") or sub.get("note") or ""
+    sub["submission_note_chars"] = len(sub["submission_note"])
+    if not sub["exists"]:
+        raise FileNotFoundError(f"missing R3 research raster: {sub['download']}")
+    if not (DOCS / sub["download_zip"]).exists():
+        raise FileNotFoundError(f"missing R3 research archive: {sub['download_zip']}")
 
-    (DOCS / "index.html").write_text(render_index(sub, holdout, board, feed), encoding="utf-8")
     (DOCS / "executive-summary.html").write_text(render_summary(sub, holdout), encoding="utf-8")
     (DOCS / "r3.html").write_text(render_r3(sub, holdout, independence, cotrain, board), encoding="utf-8")
     (DOCS / "r3-hypotheses.html").write_text(render_hypotheses(sub, holdout), encoding="utf-8")
-    (DOCS / "downloads/index.html").write_text(render_downloads(sub), encoding="utf-8")
-    for name in ("validation.html", "forensics.html", "hypotheses.html", "sources.html",
-                 "irregularities.html", "feed.html", "h54.html"):
+    insert_r3_home_bar(sub)
+    insert_r3_download_section(sub)
+    for name in ("index.html", "validation.html", "forensics.html", "hypotheses.html", "sources.html",
+                 "irregularities.html", "feed.html", "h54.html", "executive-summary.html"):
         insert_nav_link(DOCS / name)
-    print("wrote R3 overview, submission guide, experiment report, and current downloads index")
+    print("wrote R3 research pages and top-level callouts without replacing the current submission")
     return 0
 
 

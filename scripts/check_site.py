@@ -13,6 +13,7 @@ Run:  python3 scripts/check_site.py            (exit 1 on any breakage)
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import pathlib
 import re
@@ -169,13 +170,36 @@ def main() -> int:
             elif dl.stat().st_size != d.get("bytes"):
                 problems.append("submission.json: docs/ copy size != the size in the receipt")
             else:
-                import hashlib
                 got = hashlib.sha256(dl.read_bytes()).hexdigest()
                 if got != d.get("sha256"):
                     problems.append(f"submission.json: sha256 mismatch ({got[:12]}… != {str(d.get('sha256'))[:12]}…)")
                 else:
                     notes.append(f"download verified byte-for-byte against the receipt: {dl.name} "
                                  f"({d.get('bytes')} bytes, {got[:16]}…)")
+        if f.name == "submission_r3.json" and isinstance(d, dict):
+            if d.get("approved_for_weekly_slot") is not False or d.get("weekly_submission_slots_used") != 0:
+                problems.append("submission_r3.json: R3 research artifact must remain non-approved with zero slots")
+            if not str(d.get("artifact_status", "")).startswith("RESEARCH ONLY"):
+                problems.append("submission_r3.json: missing explicit research-only status")
+            if len(str(d.get("submission_note") or d.get("note") or "")) > 200:
+                problems.append("submission_r3.json: note exceeds the 200-character limit")
+            fmt = d.get("format") or {}
+            uni = d.get("uniqueness") or {}
+            if not fmt.get("ok") or not uni.get("research_publication_ok"):
+                problems.append("submission_r3.json: research artifact failed its local format/canonical-pattern gate")
+            if not (d.get("view_comparison") or {}).get("not_copied_or_literal_union"):
+                problems.append("submission_r3.json: copy/union audit did not pass")
+            dl = DOCS / "downloads" / str(d.get("file", ""))
+            if not dl.exists():
+                problems.append(f"submission_r3.json: research download missing: {dl.name}")
+            elif dl.stat().st_size != d.get("bytes"):
+                problems.append("submission_r3.json: research download size differs from its receipt")
+            else:
+                got = hashlib.sha256(dl.read_bytes()).hexdigest()
+                if got != d.get("sha256"):
+                    problems.append("submission_r3.json: research download hash differs from its receipt")
+                else:
+                    notes.append(f"R3 research TIFF verified against its independent receipt: {dl.name} ({got[:16]}…)")
         if f.name == "leaderboard.json" and d.get("rows"):
             top = d["rows"][0]["score"]
             if abs(float(d.get("top", top)) - float(top)) > 1e-9:
@@ -211,6 +235,13 @@ def main() -> int:
                 problems.append(f"served {sub['download']}: {n} bytes != {sub['bytes']} in the receipt")
             else:
                 notes.append(f"the .tif serves through the site: {n:,} bytes, content-type {ctype}")
+        r3 = json.loads((DATA / "submission_r3.json").read_text())
+        with urlopen(f"http://127.0.0.1:{port}/downloads/{r3['file']}", timeout=20) as r:
+            body = r.read()
+            if len(body) != r3["bytes"] or hashlib.sha256(body).hexdigest() != r3["sha256"]:
+                problems.append("served R3 research TIFF differs from its audited bytes")
+            else:
+                notes.append(f"research-only R3 TIFF also serves byte-identically: {len(body):,} bytes")
     finally:
         httpd.shutdown()
 
@@ -239,7 +270,22 @@ def main() -> int:
         for p in problems[:40]:
             print("  ✗", p)
         return 1
-    print('\n✓ local links/JSON/receipt values verified; format and canonical-pattern research release verified; byte-identical TIFF serves through the site. Scientific slot gate remains closed.')
+    # The closing sentence used to assert "Scientific slot gate remains closed" unconditionally -- a
+    # success message stating a condition the script never read, which is the exact failure mode this
+    # script exists to catch in other files.  It became actively wrong the moment an artefact shipped
+    # with approved_for_weekly_slot=True (IR-52-031).  Read it, or do not print it.
+    sub_p = DATA / 'submission.json'
+    sub = json.loads(sub_p.read_text()) if sub_p.exists() else {}
+    gate = sub.get('approved_for_weekly_slot')
+    if gate is True:
+        slot = ('Scientific slot gate is OPEN for '
+                f"{sub.get('file')} ({sub.get('promotion', 'no promotion reason recorded')})")
+    elif gate is False:
+        slot = f"Scientific slot gate remains CLOSED for {sub.get('file')}."
+    else:
+        slot = 'Scientific slot gate: not recorded in docs/data/submission.json (not assumed either way).'
+    print('\n✓ local links/JSON/receipt values verified; format and canonical-pattern research release '
+          f'verified; byte-identical TIFF serves through the site. {slot}')
     return 0
 
 

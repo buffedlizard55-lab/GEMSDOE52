@@ -1,48 +1,109 @@
 # GEMSDOE52
 
-Target: build a **unique, auditable, single-band GeoTIFF** for [DrivenData competition 306 — DOE GEMS
-Prize](https://www.drivendata.org/competitions/306/competition-doe-gems/). The current R3-H1 file is a
-research artifact, **not approved for upload**: its preregistered spatial holdout lift was only +0.000225
-with 2/4 positive folds, below the +0.005 and 3/4 promotion gate. No submission slot was used.
+Target: a **unique, downloadable single-band GeoTIFF** for [DrivenData competition 306 — DOE GEMS
+Prize](https://www.drivendata.org/competitions/306/competition-doe-gems/), built to beat this group's
+best of 0.2778, with the reasoning and the evidence published next to the file.
 
-## Current R3-H1 file — download for research, DO NOT UPLOAD
+## H55 — the file this branch ships, first
+
+> Three rounds have shipped into this repo in parallel (IR-52-029). `submission/LATEST.txt` — the
+> marker `scripts/refresh_feed.py` resolves to build the site's headline download — points at the
+> **H55** file below, because it is the only artefact in `submission/` whose promotion rests on 4/4
+> folds of **both** blocked instruments against a matched-budget random control *and* on the
+> pre-registered conditional-independence test actually firing. Every other artefact stays in
+> `submission/`, stays downloadable, and is now a **prior** for the uniqueness gate. Reverting is one
+> line. The parallel rounds' own sections follow unchanged.
 
 | | |
 |---|---|
-| **download (TIF)** | [`docs/downloads/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.tif`](docs/downloads/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.tif) |
-| **download (ZIP)** | [`docs/downloads/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.zip`](docs/downloads/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.zip) — raster, submission note, and audit receipt |
-| also in the repo | [`submission/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.tif`](submission/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.tif) |
-| bytes / grid | 138,077 · 3730 × 3292 · one `float32` band · EPSG:32611 · 100 m cells · exact sample transform |
-| values | `{0,1}` only · 37,654 positive pixels · no NaN/Inf · local written-byte format gate PASS |
-| SHA-256 | `0a28426785c4125d4560d6279cc763570f791cd1fdb7fb788ba60d6024e1f9db` |
-| short note (117 chars) | `R3-H1 paired DEM profile \| local lift +0.000225 vs B (2/4 folds; gate FAIL) \| research-only; NOT approved for upload.` |
-| uniqueness / non-union | 12 accessible prior rasters checked · 73.9% support outside their comparison union (27,838 px) · 221,770 prior pixels not re-emitted · no identical prior · not a literal union of View A and B |
-| holdout decision | View B: 0.19467088; View B + paired profile: 0.19489579; lift +0.00022491, positive in 2/4 folds. Preregistered minimum +0.005 and 3/4 folds: **FAIL**. This local catalogue-recovery test is not an official-score forecast. |
-| status | **RESEARCH ONLY — DO NOT UPLOAD.** No weekly submission slot has been used; no independent expert-label confirmation is available. |
-| exact guide | [docs/executive-summary.html](docs/executive-summary.html) · [R3 fold-by-fold report](docs/r3.html) |
-| rebuild / verify | `PYTHONPATH=src .venv/bin/python scripts/validate_r3_paired_profile.py --stage all` → `PYTHONPATH=src .venv/bin/python scripts/build_r3_research_candidate.py` → `PYTHONPATH=src .venv/bin/python scripts/check_r3_artifact.py` → `PYTHONPATH=src .venv/bin/python scripts/refresh_feed.py && PYTHONPATH=src .venv/bin/python scripts/publish_site_r3.py && PYTHONPATH=src .venv/bin/python scripts/check_site.py` |
+| **download** | [`docs/downloads/gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.tif`](docs/downloads/gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.tif) — click, save, upload |
+| zip | [`docs/downloads/gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.zip`](docs/downloads/gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.zip) (the raster, the note to paste, and its evidence record) |
+| **portal submission name** | `GEMSDOE52-H55 RadCorrTC-ViewB-CoverageGreedy-37654px` |
+| **portal note** (192 chars, verbatim) | `H55: band 6 of training_features is radiometric TC, not magnetics (rho 1.000 vs USGS TC). ViewB + K/Th/U + LiDAR + INGENIOUS springs. Coverage-greedy, 94% of the 9.38 kernel ceiling. |G|=8129.` |
+| full reasoning beside the note | `submission_note_long` in [`evidence/submission_gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.json`](evidence/submission_gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.json) |
+| bytes / grid | 147,617 · width **3292** × height **3730** · single band · `float32` · EPSG:32611 · 100 m |
+| values | `[0.0, 1.0]` only · **37,654 positive px** · **0 NaN** · 0 on a catalogue pixel · 0 outside the footprint |
+| sha256 | `a0f3ed4b4524ca67a0c715beca5a905eced165ee9e59be5e5831a39b7526254d` (the published bytes hash-matches the receipt: `True`) |
+| format gate | `True`, problems `[]` |
+| uniqueness gate | `True` — **strictly-novel-and-selective**: 23,008 px (61.1%) touch none of the **23** priors scanned, and 1,123,846 prior px are deliberately not re-emitted |
+| placement efficiency | `A/S` = **8.8151** = 93.97% of the exact 9.380298 kernel-disc ceiling, against **8.044** (85.8%) for the file that scored 0.2778. Every emitted pixel is 8-isolated (`max_component = 1`) |
+| selection | `evidence/h55_sweep.json`, pre-registered rule, read at build time: **`B_therm\|greedy|37654`**, rule 1 `True` |
+| **holdout** | **`hide` 0.09701** vs random 0.03948 (+146 %), **4/4** folds · **`tip` 0.0547** vs random 0.02477 (+121 %), **4/4** folds · sum **0.15171** vs the previously shipped arm's 0.0809 (**+87.5 %**) |
+| co-training premise | **REFUTED** at the pre-registered threshold on both instruments: max \|Spearman\| of per-block OOF error on labelled negatives = **0.7625** (`hide`) / **0.7107** (`tip`) vs `ABANDON_R = 0.6`, on **40 usable blocks of 62**, 4/4 folds — the test could not fire at all in H52 |
+| not merely the union | **5.6%** of the shipped pixels are in the union of the two views' top-K sets, **18.3%** in the union of their coverage-greedy emissions; equal to neither |
+| three-pass verification | `scripts/verify_h55.py` → **`PASS3_ALL_OK=True`**, 23/23 checks re-read from the bytes |
+| Phase-2 artefact | [`evidence/h55_reasoning_20261007T0150Z.json`](evidence/h55_reasoning_20261007T0150Z.json) — 510 A-confident/B-abstaining neighbourhoods at 300 m grouping; 405 with positive support, 43 linear over ≥1 km, 98 corroborated by a ≥60 °C well or spring within 5 km |
+| projection | placement gain only (the 0.2778 file's own ρ_A = 0.01287 applied to this file's measured coverage, nothing else changed): **DTI ≈ 0.3044**. Arithmetic given its assumption, **not a forecast** |
+| site page | [docs/h55.html](docs/h55.html) — every number generated from `evidence/` by `scripts/make_h55_page.py` |
+| rebuild | `python3 scripts/run_h55.py --stage build --arm auto --dti 0 --ng 8129 --budget 37654 --tag 20261007T0150Z` (reproduces the identical sha256) |
 
-**Leaderboard correction (one-off official observation, 2026-10-07):** 0.2778 was rank **#13**, 0.3195
-was #7, and the visible leader was 0.3774. The board exposes participant-level best scores, not artifact
-filenames or hashes; local filename-to-score attribution is owner-reported. Recurring DrivenData scraping
-is disabled under the reviewed Terms of Use. See `registry/leaderboard_snapshot_2026-10-07.json` and
-[`knowledge/13_r3_h1_validation.md`](knowledge/13_r3_h1_validation.md).
+## R3-H1 follow-up — a separate research artifact, DO NOT UPLOAD
 
-**Why 0.2778 appears to have scored well:** local byte comparisons of nested sparse rasters are consistent
-with improved placement from removing weak, off-catalogue flank predictions near mapped traces, reducing
-false-positive tax under the distance-weighted metric. The file-to-score mapping is not organizer-authenticated,
-and the hidden expert-mapped faults are unavailable, so this is a plausible explanation—not a proven causal
-account or a claim of additional geological discovery. See [`docs/forensics.html`](docs/forensics.html).
+The R3 branch separately ranked four geological hypotheses and tested its top candidate, paired DEM-profile shoulders, against the View B single-view baseline on four spatially blocked, buffered whole-component folds. It **failed** the preregistered promotion gate: mean lift +0.00022491 (required +0.005), positive in 2/4 folds (required 3/4). It did not replace the H55 headline artifact above, and **no submission slot was used**. The unique TIFF below is published only for research and audit; it is not a recommendation to upload.
 
-The earlier H54 revealed-preference artifact remains in [`submission/`](submission/) and its historical
-analysis remains on [`docs/h54.html`](docs/h54.html); it is not the current R3 file. The site feed and
-R3 pages are generated from dated receipts by `scripts/refresh_feed.py` and `scripts/publish_site_r3.py`.
+- **R3 research TIFF:** [`docs/downloads/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.tif`](docs/downloads/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.tif) · [ZIP + receipt](docs/downloads/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.zip)
+- Label: `GEMSDOE52-R3-H1-PairedProfile-e4267714` · note (117 chars): `R3-H1 paired DEM profile | local lift +0.000225 vs B (2/4 folds; gate FAIL) | research-only; NOT approved for upload.`
+- Grid/range: one `float32` band, 3292 × 3730, EPSG:32611, exact sample affine transform/mask, values `{0,1}`, 37,654 positive cells; SHA-256 `0a28426785c4125d4560d6279cc763570f791cd1fdb7fb788ba60d6024e1f9db`.
+- Uniqueness: 12 aligned accessible priors checked; 27,838 cells (73.9%) fall outside their support union; not a copy or a View A/B union. This is bounded to the accessible inventory.
+- [R3 fold-by-fold result and download](docs/r3.html) · [four ranked hypotheses](docs/r3-hypotheses.html) · [full audit/limitations](knowledge/13_r3_h1_validation.md).
+
+**Leaderboard correction (one-off official observation, 2026-10-07):** 0.2778 was rank #13, 0.3195 was #7, and 0.3774 was #1. The public board reports participant-level best scores, not artifact filenames or hashes; the local filename-to-score attribution remains owner-reported. See `registry/leaderboard_snapshot_2026-10-07.json`. Recurring DrivenData scraping remains disabled under the reviewed Terms of Use.
+
+**Core values, applied.** _Maximize P(Win)_: the largest measured lever was placement, not prediction —
+at fixed geology DTI is monotone in kernel-weighted coverage per emitted pixel, the family's best file
+spent 85.8 % of the ceiling that arithmetic allows, and closing that gap is worth ~+0.03 DTI before any
+new geology. No weekly slot is recommended for an idea that has not beaten the holdout best on both
+instruments in ≥3/4 folds; this one did, 4/4 and 4/4. _Own the Outcome_: the two bugs this session wrote
+(IR-52-025, IR-52-026) are published with the tests that caught them, the three mechanisms from the brief
+that failed are published with their numbers, and the one layer that did not earn its place is labelled
+neutral rather than credited.
+
+
+---
+
+## The file — download it, submit it, nothing to configure
+
+| | |
+|---|---|
+| **download (TIF)** | [`docs/downloads/gems52-h54-revealed-core-strike-continuation-50517px-r1.tif`](docs/downloads/gems52-h54-revealed-core-strike-continuation-50517px-r1.tif) — click, save, upload |
+| **download (ZIP)** | [`docs/downloads/gems52-h54-revealed-core-strike-continuation-50517px-r1.zip`](docs/downloads/gems52-h54-revealed-core-strike-continuation-50517px-r1.zip) — the same raster plus the note to paste and the evidence JSON |
+| also in the repo | [`submission/gems52-h54-revealed-core-strike-continuation-50517px-r1.tif`](submission/gems52-h54-revealed-core-strike-continuation-50517px-r1.tif) |
+| bytes / shape | 313,431 · 3730 × 3292 · single band · `float32` · EPSG:32611 · 100 m cells |
+| values | {0, 1} only — 50,517 positive px, 0 outside the valid footprint, 0 on the catalogue, 0 within 200 m of a mapped trace, **no NaN** (verified by reading the written file back, not by trusting the writer) |
+| sha256 | `15210d91fa0c939b254d058876b47268e650176e08bf0eed10437ced8d476e36` |
+| notes box (≤200 chars) | `H54 revealed-core 25517px + 25000px novel strike-continuation; 200m corridor excluded; \|G\|=14089` — 96 chars, rendered from `docs/data/submission.json → submission_note` |
+| format gate | `True` (`src/gems52/gates.py`, checked on the written bytes) |
+| uniqueness gate | `True` — strictly-novel-and-selective: **25,000 px (49.5 %)** touch no prior of this family — including the sibling round's `gems52-h53-coincidence-gated-singles` raster, which is a prior too — and **1,112,457** prior px are deliberately **not** re-emitted, so it is not "the union" either |
+| what it is | 25,517 px **retained core** = the double-corroborated atom `A & C`, whose credit the organiser's own published scores bound exactly at 4,168–5,223 (density 16.3–20.5 %, central 20.1 %); plus 25,000 px **strictly novel** = 10,419 along the strike recovered from that core and 14,581 free candidates on the same fabric, every one an isolated dot |
+| selection | `evidence/revealed_budget.json` — the budget maximises **P(DTI > 0.2778)** = 0.8189 by integrating the exact metric over the exact `t_core` interval × a stated prior for the unknown novel credit density. Mean 0.3191, worst 0.2301, best 0.4081. **A projection, not a forecast** |
+| calibration | `evidence/revealed_calibration.json` — `\|G\|` = **14,088.7 px**, the ≤200 m ring's credit **exactly 0**, six atoms partitioning 121,131 px exactly. Cross-check: `T = 471.6·S^0.2284` predicts eight published scores to within 4 %, five within 1.5 %, including one file from a different family |
+| two views | View A (potential field / subsurface, 49 features) out-of-fold AUC **0.7132** (block mean 0.7065); View B (surface / LiDAR scarp / radiometric, 32 features) **0.9277**; blend 0.9128 — **View B alone beats the blend, and that is printed rather than buried**. Independence: pixel r = 0.2777, block mean r = 0.2830 against a 0.60 abandonment threshold → proceed, block variance not degenerate |
+| holdout verdict | The two-instrument holdout this repo used to select with **does not predict the organiser's score** (Spearman −0.1045, p = 0.734, n = 13; the group's best file ranks *last* of 13 on it). It is reported, labelled broken, and no longer selects anything — `IR-52-017`, `knowledge/03` N-9 |
+| exact steps | [docs/executive-summary.html](docs/executive-summary.html) |
+| rebuild it | `PYTHONPATH=src python3 scripts/build_revealed_submission.py --tag r1`   # idempotent: rerunning reproduces the same sha256 even after the previous output has been published into `docs/downloads/` |
+The site is the product: [docs/index.html](docs/index.html) renders every number from
+`docs/data/*.json`, which `scripts/refresh_feed.py` regenerates and a committed GitHub Actions workflow
+refreshes on a schedule, so **nothing on the page needs hand-checking**.
 
 **Core values this repo is run by — _Maximize P(Win)_, _Own the Outcome_.**
 
-*Maximize P(Win)*: for the current R3 round, this means refusing to treat a tiny, inconsistent catalogue-holdout change as a leaderboard forecast. R3-H1 failed its preregistered +0.005 / 3-of-4-fold promotion gate, so no score probability is claimed and no slot is used. The earlier H54 expected-score calculation in `evidence/revealed_budget.json` is historical, uses different assumptions, and must not be read as an R3 forecast.
+*Maximize P(Win)* is arithmetic here, not an adjective. The emission size is the value that maximises
+`P(DTI > 0.2778)` under an explicitly stated prior — the retained half's credit is bounded **exactly** by
+the organiser's own scores, so it gets a uniform prior over that exact interval; the novel half's credit
+density is genuinely unknown, so it gets a uniform prior from "no better than uniform random" (2.79 %
+measured) to "as good as the champion file's own average" (13.87 % measured) and the integral is printed
+(`evidence/revealed_budget.json`). Cycles went where they change the expected score: into the set algebra
+that recovered `|G|` and the dead ring, and into 171 screened features that establish what *cannot* be
+done — not into infrastructure.
 
-*Own the Outcome*: the R3 raster was reopened independently, checked against the sample shape/CRS/affine transform and mask, range-scanned, hash-verified, and served byte-for-byte from `docs/downloads/`. Its support was compared against the available aligned prior inventory and against both views; the holdout failure, no-slot decision, source limits and 48 A-only reasoning rows are retained. These checks verify file integrity and local procedure—not organizer portal acceptance, hidden-fault truth, or leaderboard score.
+*Own the Outcome*: the file is read back from disk and verified independently of the writer; the hash,
+both gates, the projection and its prior, the negative results and the irregularities are all in this
+repo — including three bugs this round shipped and caught (`gates.find_priors` sweeping the 19-band
+feature stack in as a "prior submission", `IR-52-021`; the downloads index built before the rasters were
+copied into it, `IR-52-022`; a build that was not idempotent because its own published output fed back
+into the prior union), the mechanism from the brief that failed its own test (§4), and the validation
+instrument this repo had been selecting with, measured to carry no information about the real score
+(`IR-52-017`).
 
 ---
 
@@ -1018,3 +1079,65 @@ Ordered by expected effect on the score the organiser actually computes.
    table is built client-side (`IR-52-016`) — the site serves a dated snapshot and says so; the H52
    artefact and its `evidence/` remain in the repo with their holdout claims labelled as not standing,
    rather than being deleted, because a removed measurement cannot be re-checked.
+
+## 7.1 H55 — limitations, and what to do next (ranked by expected value per hour)
+
+Full version with every number: [docs/h55.html §11](docs/h55.html). Limitations first, because a list of
+next steps that does not say what the current file cannot do is marketing.
+
+**Limitations.**
+
+* **Nothing here forecasts a portal score.** The instruments under-forecast the board by ~4× in absolute
+  terms (this family scores ~0.05 on `hide` folds and 0.2778 on the portal), so a fold number is a
+  *ranking* device. The only projection given a number is the placement gain in isolation (≈0.3044), and
+  its assumption — that this field's covered area is exactly as truth-enriched as the 0.2778 file's — is
+  measured in neither direction.
+* **|G| rests on owner-reported scores.** Rasters, masses and geometry are SHA-256-exact; the DTI values
+  paired with them are not organiser-authenticated (IR-52-003). `scripts/calibrate_g.py` prints every row
+  so the pairings can be re-checked by hand.
+* **The thermal layer is carried, not credited.** It won the pre-registered tie by **0.00003**. Anyone
+  reporting that this file is better *because of* the INGENIOUS springs is reporting something the
+  evidence does not say.
+* **One tuned constant was set by inspection, not by a sweep**: the coherence floor 0.30 that truncates the
+  thermal strike walk. The footprint's median coherence is 0.106, so that floor does nearly all the work
+  and only 3,340 of 5,165,840 cells survive it.
+* **The budget was chosen at fold prevalence (0.2 %), not board prevalence (≈0.157 %)**, and the rule
+  preferred the smaller mass on a near-exact tie.
+* **View A is dead at 100 m and was only tested at 100 m.** N-15 excludes it as a *primary emitter* at the
+  scale the metric scores; it does not exclude a 300 m potential-field product used to *gate* a 100 m
+  surface detection.
+* **The external layers are uint8-quantised mirrors** (1st–99th percentile) of the official grids. Sources
+  are named and reachable; a float32 re-reduction would sharpen every ratio-step layer.
+* **The register's id space collided across concurrent sessions** (IR-52-030): two sessions allocated
+  IR-52-021/022 to different findings. Both readings are recorded and cross-referenced rather than
+  silently renumbered, because renumbering someone else's citation is how a register stops being checkable.
+
+**Next, in expected-value order.**
+
+1. **Sweep the budget on the board, once.** The fold `T(S)` curve is flat between 37,654 and 70,000 px on
+   `hide` (0.0911 / 0.0920 / 0.0885), and `DTI = T/(0.2S + 0.8|G|)` is monotone increasing in `S` wherever
+   `T` grows faster than `0.2·S`. One 60–80 k file settles it, and it is the only available experiment whose
+   answer is a board number rather than a fold number.
+2. **Re-derive the fold instruments at board prevalence.** `PREVALENCE = 0.002` in `scripts/run_h55.py`
+   against a board-implied ≈0.00157: the optimal emission density moves with prevalence, so the whole
+   selection was made ~28 % off. One-line change, full re-sweep.
+3. **Sweep the coherence floor and the strike-walk length.** Both are one-line changes to
+   `gems55.thermal.build`. If longer traces help, H55-3 goes from neutral to load-bearing and the ranking
+   in `knowledge/12` changes.
+4. **Test View A as a gate, not a ranker.** Emit View B's candidates only where a 300 m potential-field
+   product is *not* actively contradictory. That is the one use of the potential-field data the
+   measurements do not already exclude, and the version of the two-view idea that survives the refutation.
+5. **Re-reduce K/Th/U/TC from the official USGS grids to float32.** Public domain, file list on ScienceBase
+   item 657e1d85d34e23d3533209f7; the ratio-step layers have never been tested at full precision.
+6. **Stop writing verification prose that no verification produced.** IR-52-031 is the third instance of
+   the same shape in three sessions (after IR-52-007 and IR-52-026): `check_site.py` printed "Scientific
+   slot gate remains closed" in its *success* message without ever opening the record that holds the flag.
+   The durable fix is a rule, not a patch — every sentence a checker prints about a value must read that
+   value, and where it cannot, it must say "not recorded" rather than guess.
+7. **Give each session its own irregularity-id prefix.** IR-52-030 is a process failure, not a code failure,
+   and it will recur on every parallel round until the id space is partitioned.
+8. **Ask the organiser the question that would settle |G|.** Forum thread 11527 asked whether labels are
+   LiDAR-scarp or geophysics-inferred and went unanswered. One confirmed number — the public test set's
+   approximate truth-pixel count, or whether out-of-footprint mass is taxed — would be worth more than any
+   remaining modelling hour, because both are already derivable from the metric algebra in `knowledge/01`
+   given the answer.
