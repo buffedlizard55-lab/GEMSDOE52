@@ -1,6 +1,6 @@
 {
-  "generated_utc": "2026-10-07T13:21:11Z",
-  "branch": "main",
+  "generated_utc": "2026-10-07T16:39:55Z",
+  "branch": "arena/c49c717c-gemsdoe52",
   "repo": "buffedlizard55-lab/GEMSDOE52",
   "evidence_copied": [
     "a_only_reasoning_r2.json",
@@ -136,13 +136,13 @@
     "verified_claims_r2.json",
     "verified_claims_r3.json"
   ],
-  "submission": "gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.tif",
-  "downloads": 12,
+  "submission": "gems52-h56-cotrain-disagreement-37654px-20261007T1630Z-zeros.tif",
+  "downloads": 13,
   "leaderboard_status": "dated snapshot; automated DrivenData access disabled by Terms-of-Use policy",
   "leaderboard_last_observed_utc": "2026-10-07",
   "prior_entries": 395,
   "eligible_prior_rasters": 389,
-  "scientific_gate": true,
+  "scientific_gate": false,
   "slots_used": 0,
   "freshness_note": "Local evidence refresh is automatic; the board is a dated snapshot. No automatic portal submission."
 }
