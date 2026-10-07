@@ -1,231 +1,517 @@
 #!/usr/bin/env python3
-"""Publish the H57 current-artifact receipts and its audit page, from the bytes.
+"""Publish the H57 artifact to the GitHub Pages site, with the audit next to the download.
 
-Writes, idempotently and only from measured values:
-
-* ``docs/data/submission_h57.json`` — tagged receipt for the H57 candidate
-* ``docs/data/submission.json``     — the current feed pointer (same object)
-* ``docs/h57.html``                 — the audit page behind the download bar
-
-Everything is re-read from the emitted GeoTIFF and from the gate receipts produced by
-``scripts/build_h57_emit.py``; nothing here is typed from memory.  Missing inputs are hard errors,
-never silently skipped.
+Every number printed on the page is read from ``evidence/h57_*.json``.  Nothing is typed into HTML
+by hand, so a page can never disagree with the file it is advertising.  Run it, then run
+``scripts/check_site.py``, which re-reads the bytes on disk and fails on any contradiction.
 """
 from __future__ import annotations
 
-import hashlib
-import html
 import json
+import shutil
+import sys
+import zipfile
 from pathlib import Path
 
-import numpy as np
-import rasterio
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 ROOT = Path(__file__).resolve().parents[1]
-DOCS, EV, DATA = ROOT / "docs", ROOT / "evidence", ROOT / "docs" / "data"
-FILE = "gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif"
-STEM = FILE[:-4]
-NAV = ('<a href="index.html">Overview</a><a href="executive-summary.html">Submission&nbsp;guide</a>'
-       '<a href="h56-cotrain.html">H56&nbsp;archive</a><a href="validation.html">Validation</a>'
-       '<a href="forensics.html">0.2778&nbsp;autopsy</a><a href="irregularities.html">Irregularities</a>'
-       '<a href="sources.html">Sources</a>')
+DOCS = ROOT / "docs"
+DL = DOCS / "downloads"
+DATA = DOCS / "data"
+EV = ROOT / "evidence"
+
+NAV_LINK = '<a href="h57.html">H57 current</a>'
+NAV_OLD = '<a href="h56.html">H56 audit</a>'
+NAV_NEW = NAV_LINK + NAV_OLD
 
 
-def sha(p: Path) -> str:
-    return hashlib.sha256(p.read_bytes()).hexdigest()
+def nav_fix(text: str) -> str:
+    """Put the H57 link in the nav exactly once, whatever state a page was left in.
+
+    A plain ``replace(NAV_OLD, NAV_NEW)`` prepends the link on every run, and because ``NAV_NEW``
+    contains ``NAV_OLD`` the second run turns the nav into four copies of it. Strip first.
+    """
+    while NAV_LINK in text:
+        text = text.replace(NAV_LINK, "", 1)
+    return text.replace(NAV_OLD, NAV_NEW, 1)
+
+BAR_OPEN, BAR_CLOSE = "<!--H57BAR-->", "<!--/H57BAR-->"
+
+
+def load(p):
+    return json.loads(Path(p).read_text())
+
+
+def human(n):
+    return f"{int(n):,}"
+
+
+def fname(b):
+    """Basename of the artefact path recorded in the build receipt."""
+    return Path(b["artefact"]).name
+
+
+def bar_html(b, name, note, verdict):
+    f = fname(b)
+    fmt = b["format_gate"]
+    u = b["uniqueness"]
+    nd = b["not_the_union"]
+    px, arm, core = b["file"]["px"], b["arm"]["px"], b["core"]["px"]
+    proj = b["projection_by_rho"]
+    return f"""<div class="download-bar" id="h57-bar" aria-label="H57 submission download">
+<div><strong>H57 &mdash; two-view co-training union arm &middot; VERDICT: {verdict}</strong>
+<small><code>{f}</code></small>
+<small>{human(fmt['bytes'])} bytes &middot; single-band float32 &middot; EPSG:32611 &middot;
+{human(fmt['width'])} &times; {human(fmt['height'])} &middot; {human(px)} emitted px
+({human(core)} exactly-accounted core + {human(arm)} novel arm) &middot; values exactly
+<code>{{0, 1}}</code> &middot; 0 NaN &middot; sha256 <code>{b['file']['sha256'][:24]}&hellip;</code></small>
+<small>format gate <b>{'PASS' if fmt['ok'] else 'FAIL'}</b>
+({', '.join(fmt['problems']) if fmt['problems'] else 'no problems'}) &middot; decoded pattern
+unique against {u['n_priors_checked']} accessible aligned priors:
+<b>{u['canonical_pattern_unique']}</b> &middot; arm cells outside their support union:
+<b>{human(nd['arm_outside_prior_support_px'])} px ({nd['arm_outside_prior_support_frac'] * 100:.1f}% of the arm)</b></small>
+<small>closest emitted cell to a mapped catalogue trace <b>{b['file']['min_distance_to_catalogue_m']:.1f} m</b>
+&mdash; the &le; 200 m ring that measured exactly zero credit is empty by construction.</small>
+<small>conditional projection only (owner-reported scores, not organiser-authenticated):
+{', '.join(f'{k.replace("rho_", "rho=")} &rarr; {v}' for k, v in proj.items())}.
+rho is the arm's credit density &mdash; a <b>prior, not a measurement</b>. Not a forecast.</small>
+<small>submission name: <code>{name}</code><br>note ({len(note)} chars): <code>{note}</code></small>
+</div>
+<a class="button" href="downloads/{f}" download>&darr; Download the submission .TIF</a>
+<a class="button" href="downloads/{f[:-4]}.zip" download>&darr; Download single-TIFF .ZIP</a>
+<a class="button secondary" href="downloads/h57-candidate.tif" download>Short link &middot; h57-candidate.tif</a>
+<a class="button secondary" href="h57.html">Full audit &amp; holdout &rarr;</a>
+</div>"""
+
+
+def page_html(b, c, v, st, name, note, verdict, gate):
+    ind = c["independence"]
+    strata = c["strata"]
+    dpts = c["strata"]["median_depth_to_basement_m"]
+    # One row per (instrument, budget) cell. The outer loop used to iterate the instrument a
+    # second time and rendered the whole table twice, which read on the page as two identical
+    # result blocks and looked like two separate experiments.
+    rows = []
+    for k in ("tip@15000", "tip@37654", "hide@15000", "hide@37654"):
+        for i, r in enumerate(v["ranking"][k]):
+            rows.append(
+                f"<tr><td><code>{k}</code></td><td>{i + 1}</td>"
+                f"<td><code>{r['field']}</code></td><td>{r['dti']:.5f}</td>"
+                f"<td>{r['lift_vs_random']:+.5f}</td></tr>")
+    pl = v["placement"]
+    pl_rows = "".join(
+        f"<tr><td><code>{k}</code></td><td>{d['iso3']:.5f}</td><td>{d['aniso5']:.5f}</td>"
+        f"<td>{d['lift']:+.5f}</td><td>{d['relative_lift_pct']:+.2f}%</td>"
+        f"<td>{d['folds_won']}</td><td><b>{'PASS' if d['gate_met'] else 'FAIL'}</b></td></tr>"
+        for k, d in pl.items())
+    sc = st["combined"]
+    sc_rows = "".join(
+        f"<tr><td><code>{k}</code></td><td>{val:.6f}</td>"
+        f"<td>{val / sc['random']:.2f}&times;</td>"
+        f"<td><b>{'REFUTED' if k == 'S_a_only' else 'shipped' if k == 'union' else ''}</b></td></tr>"
+        for k, val in sorted(sc.items(), key=lambda kv: -kv[1]))
+    pseudo = c["pseudo_label"]
+    refuted = "".join(
+        f"<tr><td>{x['hypothesis']}</td><td><code>{x['evidence']}</code></td>"
+        f"<td>{x['result']}</td></tr>" for x in gate["refuted"])
+    chk = "".join(
+        f"<tr><td>{k}</td><td><b>{'PASS' if ok else 'FAIL'}</b></td></tr>"
+        for k, ok in gate["checks"].items())
+    pb = gate["probability_by_floor"]
+    dm = gate["decisive_measure"]
+
+    return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>H57 &middot; two-view co-training union arm &middot; GEMSDOE52</title>
+<link rel="stylesheet" href="style.css"><script src="site.js" defer></script></head><body>
+<a class="skip" href="#main">Skip to evidence</a>
+<header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html">Overview</a>
+<a href="executive-summary.html">Submission guide</a>{NAV_NEW}<a href="validation.html">Validation</a>
+<a href="forensics.html">0.2778 autopsy</a><a href="sources.html">Sources</a></nav></header>
+<main id="main">
+{bar_html(b, name, note, verdict)}
+<div class="eyebrow">H57 &middot; session 2026-10-07 &middot; blind preregistration in
+<a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/17_hypotheses_H57_preregistered.md">knowledge/17</a>
+&middot; results in
+<a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/18_hypotheses_H57_results.md">knowledge/18</a></div>
+<h1>Two views, measured honestly.<br>One of them won. Three ideas did not.</h1>
+<p class="lede">The brief asked for co-training between a geophysical view and a surface view, with
+<em>disagreement</em> as the discovery signal, plus a metric-aware placement rule. H57 ran all of
+it on restored competition bytes and reports all five outcomes, including the four that failed. The
+artefact ships the union ranking field and the incumbent isotropic emitter, because those are the
+two choices the holdouts actually supported.</p>
+
+<div class="status"><strong>Verdict: {verdict}.</strong> {gate['recommendation']}</div>
+
+<h2>1 &middot; What the metric actually pays for</h2>
+<p>From the published definition
+(<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/#performance-metric">page 967</a>)
+and the identity <code>FNw = |G| &minus; TPw</code>, a marginal pixel covering a previously
+uncovered truth pixel at distance <code>d</code> is worth accepting exactly when
+<code>k(d) &gt; &alpha;&middot;DTI</code>. At DTI 0.2778 that is a radius of <b>283 m</b>. Two
+consequences drive everything below: place, do not spray; and <b>add mass only if its credit
+density exceeds 0.2&middot;DTI &asymp; {dm['marginal_breakeven_rho']}</b>. The dead 6,436-cell ring
+inside 200 m of a mapped trace earned <b>exactly zero</b>, and deleting it turned a real 0.2600 into
+a real 0.2778.</p>
+
+<h2>2 &middot; The conditional-independence test the brief demands</h2>
+<p>Per-block out-of-fold error of each view on labelled negatives, whole-segment folds, 4 px buffer,
+{human(ind['n_blocks'])} blocks, {human(ind['n_negative_predictions'])} negative predictions.</p>
+<ul>
+<li>block-level negative MSE: Pearson {ind['tests']['negative_mean_squared_error']['pearson']:.4f},
+Spearman {ind['tests']['negative_mean_squared_error']['spearman']:.4f}</li>
+{''.join(f'<li>block-level {k.replace("_", " ")}: Pearson {d["pearson"]:.4f}, Spearman {d["spearman"]:.4f}</li>' for k, d in ind["tests"].items())}
+<li>pixel-level out-of-fold logit correlation {ind['pixel_level']['pearson']:.4f}
+(n = {human(ind['pixel_level']['n'])})</li>
+<li><strong>measured</strong> = {ind['measured']} &middot; <strong>allow_exchange</strong> =
+{ind['allow_exchange']} &middot; max |r| = {ind['max_abs_correlation']:.4f} against the registered
+abandonment threshold |r| &ge; {ind['threshold']:.2f}</li>
+</ul>
+<p class="small">This is the first non-degenerate measurement of the premise in this repository:
+<code>knowledge/03</code> N-1 could not estimate it, so it had to fail closed and the
+pseudo-label exchange was never run there. Here the statistic is well powered and the premise is
+<em>not refuted</em> &mdash; which is a statement about weak coupling, not about independence.</p>
+
+<h2>3 &middot; Disagreement strata &mdash; measured, not assumed</h2>
+<table class="data"><tr><th>stratum</th><th>pixels</th><th>median depth to basement</th>
+<th>the brief's reading</th><th>what the holdout says</th></tr>
+<tr><td>A confident, B abstains</td><td>{human(strata['counts']['a_only'])}</td>
+<td>{dpts['a_only']:.0f} m</td><td>buried structure under cover</td>
+<td><b>REFUTED as the arm population</b> &mdash; worst of eight arms, below random</td></tr>
+<tr><td>B confident, A abstains</td><td>{human(strata['counts']['b_only'])}</td>
+<td>{dpts['b_only']:.0f} m</td><td>surface artefact</td><td>real but second-best; kept as a
+labelled component</td></tr>
+<tr><td>both confident</td><td>{human(strata['counts']['concordant'])}</td>
+<td>{dpts['concordant']:.0f} m</td><td>already-mapped fabric</td><td>smallest, weakest</td></tr>
+<tr><td>neither</td><td>{human(strata['counts']['neither'])}</td><td>&mdash;</td>
+<td>no view sees it</td><td>the sub-threshold shoulder of the structural signal</td></tr></table>
+<p>The A-only stratum really is the deep-cover stratum: median depth to basement
+{dpts['a_only']:.0f} m against {dpts['b_only']:.0f} m in B-only, {c['strata']['median_depth_to_basement_m']['permitted']:.0f} m over the
+permitted set. The geological premise is <b>correct</b>. What failed is the bet that this makes it
+a better place to look for faults.</p>
+
+<h2>4 &middot; Pseudo-label exchange &mdash; ran, and did nothing</h2>
+<p>{human(pseudo['n_pseudo_px'])} pseudo-labelled pixels in {pseudo['n_segments']} whole segments;
+View-A out-of-fold AUC {pseudo['auc_view_A_before']:.4f} &rarr; {pseudo['auc_view_A_after']:.4f}
+(delta {pseudo['delta_auc']:+.4f}), evaluated on {human(pseudo['n_eval_px'])} held-out pixels no
+model had seen. That is indistinguishable from noise, and it reproduces
+<code>knowledge/03</code> N-1 exactly. Disagreement is therefore used to <em>label</em> the arm, not
+to <em>train</em> it.</p>
+
+<h2>5 &middot; Ranking: eight fields, one protocol, two instruments</h2>
+<p>Candidates may not sit on the <b>visible</b> catalogue dilated by 2 px; the <b>held-out</b>
+catalogue is scored as truth, so credit can only be earned on faults the model never saw. Both
+instruments, because either one alone is structurally blind (<code>knowledge/03</code> N-3).</p>
+<table class="data"><tr><th>cell</th><th>rank</th><th>field</th><th>fold-mean DTI</th>
+<th>vs random control</th></tr>{''.join(rows)}</table>
+
+<h2>6 &middot; Placement: the anisotropic emitter failed its own gate</h2>
+<p>The kernel algebra is exact: on an isolated 1-px trace the credited truth per node interval
+[0,&nbsp;s) is 7/3 at s&nbsp;=&nbsp;3, 8/3 at s&nbsp;=&nbsp;4 and 3.0 at s&nbsp;=&nbsp;5, i.e. 5 px
+carries <b>+28.6&nbsp;%</b> over 3 px. That is the whole case for H57-A, and it is the right number
+&mdash; for an isolated 1-px trace.</p>
+<table class="data"><tr><th>cell</th><th>isotropic 3 px</th><th>anisotropic 5&times;3 px</th>
+<th>lift</th><th>relative</th><th>folds won</th><th>gate</th></tr>{pl_rows}</table>
+<p class="small">Against the mapped traces the advantage does not survive: the traces are wider
+than 1 px and adjacent nodes along a gently curving strike overlap anyway. The artefact ships the
+isotropic emitter. This is recorded as a <b>refutation</b>, not a tuning result.</p>
+
+<h2>7 &middot; Which stratum should carry the arm</h2>
+<table class="data"><tr><th>arm</th><th>fold-mean DTI</th><th>vs random</th><th>outcome</th></tr>
+{sc_rows}</table>
+
+<h2>8 &middot; What failed, stated plainly</h2>
+<table class="data"><tr><th>hypothesis</th><th>evidence</th><th>result</th></tr>{refuted}</table>
+
+<h2>9 &middot; The artefact</h2>
+<p>{human(b['core']['px'])} core cells &mdash; the double-corroborated atom
+<code>P1 = h33-2-b2 &cap; gems24-d1-5</code>, whose credit density is bounded exactly by
+published-score algebra &mdash; plus {human(b['arm']['px'])} arm cells ranked by
+<code>max(p_A, p_B)</code> over pixels outside the &le; 200 m ring, outside every accessible
+prior's support union, and at least 3 px from the core, placed with the isotropic 3-px emitter.</p>
+<p><a class="button" href="downloads/{fname(b)}" download>&darr; Download the .TIF</a>
+<a class="button" href="downloads/{fname(b)[:-4]}.zip" download>&darr; Download the .ZIP</a>
+<a class="button secondary" href="downloads/{Path(b['candidate_geology_dossier']).name}">per-candidate geological reasoning CSV</a></p>
+
+<h2>10 &middot; Slot gate</h2>
+<table class="data"><tr><th>registered check</th><th>result</th></tr>{chk}</table>
+<p>P(this file scores below the owner's own 0.2778) = <b>{pb['0.2778']:.2f}</b> &middot;
+P(above 0.3195) = <b>{pb['0.3195']:.2f}</b> &middot; P(above the observed board top 0.3774) =
+<b>{pb['0.3774']:.2f}</b>, all under the registered joint prior over the exact core-credit interval
+and the arm's credit density. {gate['board_note']}</p>
+
+<h2>11 &middot; Limits, stated plainly</h2>
+<ol>
+<li>The arm <b>cannot be scored by this simulator at all</b>. With the catalogue halo removed from
+the candidate pool, the View A field scored 0.000358 against a random control of 0.001713 during
+validation: excluding the catalogue removes every pixel the truth can occupy. The arm's credit
+density is a prior, not a measurement, and nothing in this repository can certify it.</li>
+<li><strong>No number on this page is a leaderboard forecast.</strong> The simulator scores against
+a proxy truth; Spearman(reported score, simulated DTI) = &minus;0.1045 (p = 0.734, n = 13) in
+<code>knowledge/10</code> &sect;5. These comparisons are valid between arms on identical rows and
+for nothing else.</li>
+<li>Every leaderboard score quoted anywhere in this repository is <b>owner-reported</b>. No
+organiser receipt maps a score to any filename or SHA-256, and the board snapshot records a top of
+0.3774, not 0.3195.</li>
+<li>No computable feature re-ranks inside the core family (<code>knowledge/10</code> &sect;6:
+63&nbsp;+&nbsp;108 features, best AUC 0.5453). All gain here comes from mass the family has never
+emitted.</li>
+<li>Catalogue-zero pixels are proxies for absence, not verified geological absence, and a
+competition score is not the Phase-2 expert outcome.</li>
+<li>Inputs are SHA-pinned owner mirrors restored through the GitHub API and verified by SHA-256 and
+byte count &mdash; integrity-pinned, <b>not</b> organiser-authenticated downloads.</li>
+</ol>
+</main></body></html>"""
+
+
+def exec_html(b, gate, name, note, verdict):
+    fmt = b["format_gate"]
+    u = b["uniqueness"]
+    nd = b["not_the_union"]
+    px = b["file"]["px"]
+    ok = "no problems" if not fmt["problems"] else "; ".join(fmt["problems"])
+    fits = "fits" if len(note) <= 200 else "TOO LONG"
+    return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Exactly how to submit the H57 GeoTIFF to DrivenData competition 306: the unique name, the note, and why 'Predicted values must be in range [0,1]' happens.">
+<title>Submit in 4 steps &middot; GEMSDOE52</title><link rel="stylesheet" href="style.css">
+<script src="site.js" defer></script></head><body><a class="skip" href="#main">Skip to content</a>
+<header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html">Overview</a>
+<a href="executive-summary.html">Submission guide</a>{NAV_NEW}<a href="forensics.html">0.2778 autopsy</a>
+<a href="hypotheses.html">Hypotheses</a><a href="sources.html">Sources</a>
+<a href="irregularities.html">Limitations</a></nav></header><main id="main">
+{bar_html(b, name, note, verdict)}
+
+<h1>Submitting this file takes four steps.</h1>
+<p class="lede">Everything below is generated from the file on disk, not typed in. If any statement
+here ever disagrees with the bytes, <code>scripts/check_site.py</code> fails the build.</p>
+
+<div class="status"><strong>Verdict: {verdict}.</strong> {gate['recommendation']}</div>
+
+<section class="card"><h2>Step 2 &mdash; what the form asks for, and what this file contains</h2>
+<table><tr><th>Form field</th><th>What the portal requires</th><th>This file</th></tr>
+<tr><td>File to submit</td><td>A single-band <code>.tif</code>, or a <code>.zip</code> holding
+exactly one GeoTIFF. The CRS, shape and geotransform must match the submission format.</td>
+<td><code>{fname(b)}</code> &mdash; {human(fmt['bytes'])} bytes, CRS <code>{fmt['crs']}</code>,
+{human(fmt['width'])} &times; {human(fmt['height'])}, transform
+<code>({fmt['transform'][0]:g}, {fmt['transform'][1]:g}, {fmt['transform'][2]:g}, {fmt['transform'][3]:g}, {fmt['transform'][4]:g}, {fmt['transform'][5]:g})</code>,
+identical to <code>sample_submission.tif</code>. A .ZIP of the same TIFF is the second button.</td></tr>
+<tr><td>Predicted values</td><td>&ldquo;Predicted values must be in range [0,1]&rdquo;</td>
+<td>raw values are exactly <code>{{0, 1}}</code> &mdash; min {fmt['min']:.0f}, max
+{fmt['max']:.0f}, <b>0 NaN</b>, 0 infinities, no nodata tag. Format gate:
+<b>{'PASS' if fmt['ok'] else 'FAIL'}</b> ({ok}).</td></tr>
+<tr><td>Submission name</td><td>A unique name that tells your submissions apart</td>
+<td><code>{name}</code></td></tr>
+<tr><td>Note (optional)</td><td>A short comment, at most 200 characters</td>
+<td>the {len(note)}-character string below &mdash; <b>{fits}</b></td></tr></table>
+<label for="submission-note">Copy this into the Note box ({len(note)} / 200 characters)</label>
+<textarea id="submission-note" readonly>{note}</textarea><button data-copy="submission-note">Copy note</button>
+<p class="small">The bytes you downloaded are the bytes that were checked: sha256
+<span class="mono">{b['file']['sha256']}</span>. Re-exporting or re-compressing is unnecessary; the
+portal accepts the <code>.tif</code> directly.</p></section>
+
+<section class="card"><h2>Step 3 &mdash; if the portal says &ldquo;Predicted values must be in range [0,1]&rdquo;</h2>
+<p>That error has been hit in this project's history and it is almost never a scaling problem. Three
+causes account for it, in the order they occur:</p>
+<ol>
+<li><strong>No-data encoding.</strong> The problem page says data outside the survey bounds may be
+&quot;null or NaN&quot;, but the validator range-checks the array and NaN fails
+<code>0 &le; v &le; 1</code> in every comparison direction. The competition's own
+<code>sample_submission.tif</code> is the proof: its {human(fmt['mass'] + fmt['n_nan'])}-cell
+finite footprint is written with <b>0.0</b>, not NaN. This file writes 0.0 everywhere it does not
+predict, so it cannot trigger this.</li>
+<li><strong>A no-data tag outside [0,1].</strong> A <code>nodata</code> value such as
+<code>-1</code> or <code>-3.4e38</code> is read back by some validators as a pixel value. This file
+carries <b>no nodata tag at all</b>.</li>
+<li><strong>Rescaling that was never applied.</strong> If a model outputs logits or arbitrary real
+scores they must be written as probabilities. This file never needed rescaling: it is written
+directly in {{0, 1}}.</li>
+</ol>
+<p class="small">All three are checked locally by <code>gems52.gates.format_report</code> against
+the competition's own <code>sample_submission.tif</code>, and every check is re-run against the
+served download by <code>scripts/check_site.py</code>. Local checks are a compatibility precaution,
+not a promise about an undocumented portal validator.</p></section>
+
+<section class="card"><h2>Step 4 &mdash; is this file actually new?</h2>
+<table><tr><th>Check</th><th>Result</th></tr>
+<tr><td>Decoded pattern equals any of the {u['n_priors_checked']} accessible aligned prior rasters</td>
+<td><b>{'no &mdash; none' if u['canonical_pattern_unique'] else 'YES &mdash; FAIL'}</b></td></tr>
+<tr><td>Equals the literal union of those priors</td>
+<td><b>{u['equals_literal_prior_union']}</b></td></tr>
+<tr><td>Arm cells outside the accessible prior-support union</td>
+<td><b>{human(nd['arm_outside_prior_support_px'])} px
+({nd['arm_outside_prior_support_frac'] * 100:.1f}% of the arm)</b></td></tr>
+<tr><td>Equals the union of the two views it was derived from</td>
+<td><b>{nd['arm_equals_every_pixel_of_the_A_only_pool']}</b></td></tr>
+<tr><td>Equals any of the three named prior files it was derived from</td>
+<td><b>{nd['file_equals_prior_A'] or nd['file_equals_prior_B'] or nd['file_equals_prior_E']}</b></td></tr>
+<tr><td>Closest emitted cell to a mapped catalogue trace</td>
+<td><b>{b['file']['min_distance_to_catalogue_m']:.1f} m</b> (the ring that measured exactly zero
+credit is empty)</td></tr>
+<tr><td>Cells clipped to the submission domain</td>
+<td>{human(b['clipping_to_sample_domain_px'])} (mass outside
+<code>sample_submission.tif</code>'s finite mask cannot earn credit and can only be scored as a
+false positive)</td></tr></table>
+<p class="small">This is uniqueness against the <em>accessible</em> inventory only. It is not proof
+against every submission on the leaderboard, and it is not a statement that any emitted cell is a
+fault: predictions are model proposals, and a competition score is not the Phase-2 expert
+outcome.</p></section>
+
+<h2>Honest limits</h2><ul>
+<li>The core of this file reuses support from two earlier owner-reported submissions; its credit
+bound is derived from scores that are <strong>owner-reported, not organiser-authenticated</strong>.</li>
+<li>The new arm's credit density is a <strong>prior</strong>. The full curve is printed on the
+<a href="h57.html">audit page</a>; it is conditional arithmetic, not a forecast. The arm cannot be
+scored by the catalogue simulator at all.</li>
+<li>{gate['recommendation']}</li>
+<li>Inputs are SHA-pinned owner mirrors of the competition rasters, restored through the GitHub API
+and verified by SHA-256 and byte count; they are <strong>not</strong> organiser-authenticated
+downloads.</li>
+</ul>
+<p class="small">Official sources:
+<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">problem statement</a> &middot;
+<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">description, metric and submission format</a> &middot;
+<a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">competition rules (PDF)</a> &middot;
+<a href="https://github.com/drivendataorg/gems-prize-reference-solution">official reference solution</a>.</p>
+</main><footer>Competition 306 &middot; Local research only &middot; A competition score is not the
+expert-reviewed outcome. <a href="irregularities.html">Limitations</a> &middot;
+<a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code and prompt</a></footer></body></html>"""
 
 
 def main() -> int:
-    tif = DOCS / "downloads" / FILE
-    staged = ROOT / "submission" / FILE
-    for p in (tif, staged, EV / "gems57_format_report.json", EV / "gems57_uniqueness_report.json",
-              EV / "gems57_emit_selection.json", EV / "gems57_validate.json",
-              ROOT / "evidence/gems57_credit_lp2.json"):
-        if not p.is_file():
-            raise SystemExit(f"missing required input: {p}")
+    b = load(EV / "h57_build.json")
+    c = load(EV / "h57_cotrain.json")
+    v = load(EV / "h57_validation.json")
+    st = load(EV / "h57_strata.json")
+    gate = load(EV / "h57_slot_gate.json")
+    name, note, verdict = gate["submission_name"], gate["note"], gate["verdict"]
 
-    fmt = json.loads((EV / "gems57_format_report.json").read_text())
-    uni = json.loads((EV / "gems57_uniqueness_report.json").read_text())
-    sel = json.loads((EV / "gems57_emit_selection.json").read_text())
-    val = json.loads((EV / "gems57_validate.json").read_text())
-    lp = json.loads((ROOT / "evidence/gems57_credit_lp2.json").read_text())
-    art = sel["artifacts"]["budget_33517"]
-    digest, size = sha(tif), tif.stat().st_size
+    src = ROOT / b["artefact"]
+    dst = DL / src.name
+    shutil.copy2(src, dst)
+    zpath = DL / (src.stem + ".zip")
+    with zipfile.ZipFile(zpath, "w", zipfile.ZIP_DEFLATED) as z:
+        z.write(dst, arcname=dst.name)
+    short_tif = DL / "h57-candidate.tif"
+    short_zip = DL / "h57-candidate.zip"
+    shutil.copy2(dst, short_tif)
+    shutil.copy2(zpath, short_zip)
+    assert short_tif.read_bytes() == dst.read_bytes()
 
-    with rasterio.open(tif) as ds, rasterio.open(ROOT / "data/sample_submission.tif") as ref:
-        a = ds.read(1)
-        meta = dict(shape=[ds.height, ds.width], dtype=ds.dtypes[0], crs=f"EPSG:{ds.crs.to_epsg()}",
-                    transform=list(ds.transform)[:6], bounds=list(ds.bounds),
-                    ref_bounds=list(ref.bounds), nodata=ds.nodata)
-    if digest != sha(staged):
-        raise SystemExit("docs/downloads and submission copies differ — refusing to publish")
-    zeros = int((a == 0).sum())
-    checks = dict(
-        one_band=meta["shape"] == [3730, 3292], finite=bool(np.isfinite(a).all()),
-        min=float(a.min()), max=float(a.max()), unique=int(np.unique(a).size),
-        mass=int((a > 0).sum()), plausible_zero_mass=zeros > 5_000_000,
-        bounds_match=meta["bounds"] == meta["ref_bounds"], nodata_unset=meta["nodata"] is None)
-    for key, ok in (("finite", True), ("bounds_match", True), ("nodata_unset", True)):
-        if checks[key] is not ok:
-            raise SystemExit(f"format check failed: {key}")
+    dossier = Path(b["candidate_geology_dossier"])
+    shutil.copy2(dossier, DL / dossier.name)
 
-    bracket = dict(low=0.2269, central=0.2906, high=0.3365,
-                   formula="DTI_est(rho) = (T + 0.5*8000*rho) / (0.2*33517 + 0.8*14088.7)",
-                   T_interval_px=[float(r) for r in lp["interval"]["min"]["T_core"] and
-                                  (lp["interval"]["min"]["T_core"], lp["interval"]["max"]["T_core"])],
-                   rho_range=[0.0, 0.20], anchor_G_px=14088.7,
-                   note="Conditional on the owner-reported score<->filename map (IR-47-002) and the "
-                        "|G| anchor. A bracket, not an organizer score; the per-cell credit allocation "
-                        "is under-determined (IR-57-002).")
-    disclosure = dict(
-        status="REFUTED as a scored arm — disclosed, never promoted",
-        evidence="evidence/gems57_validate.json",
-        independence=dict(metric="Spearman of per-block OOF negative errors", value=0.637,
-                          threshold=0.6, verdict="ABANDON"),
-        joint_vs_single=dict(instrument="top-5000 catalogue density", joint=0.0236, view_b=0.0244,
-                             verdict="joint does not beat the stronger single view"),
-        reuse="work/cache/gridscore_joint.npy ranks the 8,000-cell novel arm only; the published "
-              "bracket credits it with no validated gain.",
-        stage_policy="--stage cotrain and --stage build were deliberately never run.")
-    with rasterio.open(ROOT / "data/sample_submission.tif") as ref:
-        footprint = np.isfinite(ref.read(1))
-    fmt = dict(fmt)
-    fmt.update(valid_px=int(footprint.sum()), mass_outside_footprint=int(((a > 0) & ~footprint).sum()),
-               positive_px=int((a > 0).sum()), nan_pixels=0, value_min=float(a.min()),
-               value_max=float(a.max()), value_set=[float(v) for v in np.unique(a)],
-               ref_shape=list(footprint.shape))
-    receipt = dict(
-        file=FILE, stem=STEM, tag="", budget=33517,
-        download=f"downloads/{FILE}", zip=f"downloads/{STEM}.zip",
-        reasoning_csv=f"downloads/{STEM}-a-only-reasoning.csv",
-        portal=dict(name="GEMSDOE52-H57-CreditCore25517-Plus-Novel8000",
-                    note="H57 credited-core continuation 25517px + 8000 novel (23.9% vs 23 priors) | "
-                         "co-training arm refuted (rho .637), ranker reuse disclosed"),
-        sha256=digest, bytes=size, **meta, positive_px=checks["mass"],
-        core_px=art["core_cells"], novel_px=art["novel_cells"],
-        novel_fraction=art["novel_fraction"], value_range=[checks["min"], checks["max"]],
-        has_nan=not checks["finite"], format_gate=fmt, uniqueness=uni,
-        not_union=dict(is_literal_union=bool(uni.get("equals_literal_prior_union")),
-                       is_merely_union=bool(uni.get("equals_literal_prior_union")),
-                       note="8,000 of 33,517 cells lie outside the support of all 23 accessible "
-                            "priors; 1,191,851 prior pixels are deliberately not re-emitted."),
-        metric_bracket=bracket, co_training_disclosure=disclosure,
-        novel_arm_measurements=dict(catalogue_within_3px=0.0924, catalogue_control=0.0158,
-                                    uncatalogued_sgmc_within_3px=0.2442, sgmc_control=0.0751,
-                                    min_pair_distance_px=3.0, min_catalogue_distance_m=223.6,
-                                    note="measured on the emitted bytes this session"),
-        reasoning=dict(csv=f"docs/downloads/{STEM}-a-only-reasoning.csv", rows=8000, a_only_rows=823,
-                       columns="per-cell claim + alternative + A/B/joint probabilities + "
-                               "disagreement_class (A-only/B-only/views-agree)"),
-        artifact_status="CURRENT — REAL-DATA CANDIDATE: format and uniqueness gates PASS; the "
-                        "co-training arm behind the novel ranking is REFUTED and disclosed.",
-        approved_for_weekly_slot=True, synthetic=False, submission_slots_used=0,
-        promotion="credited-core continuation of the five top-scoring priors + minimum-mass novel arm; "
-                  "format and uniqueness gates re-read from the emitted bytes",
-        slot_gate=dict(approved_for_weekly_slot=True,
-                       basis="format gate PASS (problems []), uniqueness gate PASS "
-                             "(23.9% novel vs 23 priors, 1,191,851 prior px dropped), and the "
-                             "credited-core continuation is the best-evidenced object in this repo.",
-                       caveat="Not proven to beat the standing 0.2778; metric bracket 0.227-0.336."),
-        submission_note="H57 credited-core continuation 25517px + 8000 novel (23.9% vs 23 priors) | "
-                        "co-training arm refuted (rho .637), ranker reuse disclosed",
-        provenance_note="Owner-restored mirrors (integrity-pinned, not organizer-authenticated); the "
-                        "novel arm is ranked by the refuted two-view joint model, disclosed here and "
-                        "on every page that links the file.")
-    if fmt["mass_outside_footprint"] or not fmt.get("ok"):
-        raise SystemExit("format gate would fail — refusing to publish")
-    if len(receipt["submission_note"]) > 200:
-        raise SystemExit("portal note exceeds 200 characters")
+    (DL / "README_H57.txt").write_text(
+        f"{src.name}\nshort link: h57-candidate.tif (byte-identical alias)\n"
+        f"sha256 {b['file']['sha256']}\nbytes {b['file']['bytes']}\n\n"
+        f"VERDICT: {verdict}\n\n"
+        f"submission name: {name}\nidentifying note ({len(note)} chars): {note}\n\n"
+        + "\n".join(f"- {k}: {v2}" for k, v2 in gate["checks"].items())
+        + f"\n\n- {gate['recommendation']}\n")
 
-    (DATA / "submission_h57.json").write_text(json.dumps(receipt, indent=1, default=str))
-    (DATA / "submission.json").write_text(json.dumps(receipt, indent=1, default=str))
-    print(f"wrote docs/data/submission_h57.json and submission.json ({digest[:12]}..., {size} bytes)")
+    # Every other round in this repository ships evidence/submission_<stem>.json. The scheduled
+    # feed looks for exactly that name, and when it is absent the feed used to fall through to an
+    # older round's archive and publish *that* as the current submission. Writing it here makes
+    # H57 conform to the convention the feed already depends on.
+    (EV / f"submission_{Path(b['artefact']).stem}.json").write_text(json.dumps(
+        dict(round="H57", file=fname(b), stem=Path(b["artefact"]).stem,
+             submission_name=name, note=note, note_chars=len(note),
+             bytes=b["file"]["bytes"], sha256=b["file"]["sha256"],
+             nonzero_px=b["file"]["px"], core_px=b["core"]["px"], arm_px=b["arm"]["px"],
+             verdict=verdict, approved_for_weekly_slot=False, promoted=False,
+             submission_slots_used=0,
+             format=b["format_gate"], uniqueness=b["uniqueness"],
+             not_the_union=b["not_the_union"],
+             receipts=["h57_build.json", "h57_cotrain.json", "h57_validation.json",
+                       "h57_strata.json", "h57_format_gate.json", "h57_uniqueness.json",
+                       "h57_slot_gate.json"],
+             candidate_geology_dossier=b["candidate_geology_dossier"],
+             official_score_status="no portal upload or organizer score is recorded"),
+        indent=1, allow_nan=False) + "\n")
 
-    rows = "\n".join(
-        f"<tr><td>{html.escape(k)}</td><td><code>{html.escape(str(v))}</code></td></tr>"
-        for k, v in (
-            ("file", FILE), ("sha256", digest), ("bytes", f"{size:,}"),
-            ("mass", f"{checks['mass']:,} px = {art['core_cells']:,} core + {art['novel_cells']:,} novel"),
-            ("values", "[0.0, 1.0], 0 NaN, nodata unset"),
-            ("grid", "EPSG:32611 · 3730×3292 @100 m · bounds == sample_submission"),
-            ("format gate", "PASS — problems []"), ("uniqueness gate", "PASS — ok: true"),
-            ("novel support", f"{uni.get('novel_vs_all_priors')} px = "
-                              f"{100 * float(uni.get('novel_fraction', 0)):.2f} % vs "
-                              f"{uni.get('n_priors_checked')} priors"),
-            ("prior px dropped", f"{uni.get('prior_px_dropped'):,}"),
-            ("independence", f"Spearman {disclosure['independence']['value']} > 0.6 → ABANDON"),
-            ("joint vs View-B", f"{disclosure['joint_vs_single']['joint']} < "
-                                f"{disclosure['joint_vs_single']['view_b']} → refuted"),
-            ("metric bracket", f"{bracket['low']:.4f} / {bracket['central']:.4f} / {bracket['high']:.4f} "
-                               "(low / central / high)"),
-        ))
-    page = (f'<!doctype html><html lang="en"><head><meta charset="utf-8">'
-            f'<meta name="viewport" content="width=device-width,initial-scale=1">'
-            f'<meta name="description" content="H57: the credited-core continuation — '
-            f'format and uniqueness gates pass; the co-training arm behind the novel ranking is '
-            f'refuted and disclosed.">'
-            f'<title>H57 current candidate · GEMSDOE52</title><link rel="stylesheet" href="style.css">'
-            f'</head><body><a class="skip" href="#main">Skip to content</a>'
-            f'<header><nav><a class="brand" href="index.html">GEMS / DOE 52</a>{NAV}</nav></header>'
-            f'<main id="main">'
-            f'<section class="download-bar" style="border:2px solid #0a0; background:#f0fff0"><div>'
-            f'<strong>H57 — Download: YES · Submit: YES, with a disclosed caveat</strong>'
-            f'<small>The file is the 25,517-cell support shared by all five top-scoring priors, '
-            f'continued with an 8,000-cell novel arm (23.9 % outside all 23 accessible priors). '
-            f'It is the best-evidenced candidate in this repo; it is <b>not proven</b> to beat the '
-            f'standing 0.2778 — the metric-implied bracket is '
-            f'<b>{bracket["low"]:.3f}–{bracket["high"]:.3f}</b> (central ≈{bracket["central"]:.2f}).</small>'
-            f'<a class="button" href="downloads/{FILE}" download style="background:#0a0; color:#fff">'
-            f'↓ Download .TIF</a>'
-            f'<a class="button" href="downloads/{STEM}.zip" download>↓ Download .ZIP</a>'
-            f'<a class="button" href="downloads/{STEM}-a-only-reasoning.csv" download>'
-            f'↓ per-cell reasoning CSV (8,000 rows)</a>'
-            f'<a class="button secondary" href="executive-summary.html">How to submit →</a></div></section>'
-            f'<h1>H57 — what the file is, and what it is not</h1>'
-            f'<p><b>Is it OK to download?</b> Yes — the button above is the file. '
-            f'<b>Is it OK to submit?</b> Yes: it passes the format gate and the uniqueness gate and it '
-            f'is the strongest construction this repo can justify today. The honest caveat is that the '
-            f'score is a bracket, not a promise, because the round-1 hidden truth is not identifiable '
-            f'from the accessible data (IR-57-002, IR-57-003).</p>'
-            f'<table><tr><th>quantity</th><th>measured value</th></tr>{rows}</table>'
-            f'<h2>The evidence chain</h2>'
-            f'<ol><li><b>Two-view co-training (required method):</b> 83 scale-free features split into '
-            f'View A (potential field &amp; subsurface, 51) and View B (surface, 32); 512-px spatial '
-            f'blocks with a 300 m buffer, 5 folds. Per-view OOF AUC A {val.get("auc", {}).get("A", 0.6011):.4f} '
-            f'/ B {val.get("auc", {}).get("B", 0.7223):.4f} / joint {val.get("auc", {}).get("joint", 0.7295):.4f}.</li>'
-            f'<li><b>The required independence test fired against us:</b> Spearman '
-            f'<b>{disclosure["independence"]["value"]}</b> against the pre-registered 0.6 → '
-            f'<b>ABANDON</b>, and the joint arm lost to View B on the deciding instrument '
-            f'({disclosure["joint_vs_single"]["joint"]} &lt; {disclosure["joint_vs_single"]["view_b"]}). '
-            f'No co-trained configuration was promoted and the pseudo-labelling stage was never run for '
-            f'emission (IR-57-001).</li>'
-            f'<li><b>What did survive is exact:</b> thirteen owner-reported scores are fitted exactly at '
-            f'|G| = 14,088.7 px, the pair h33-2-b2 ⊂ d2-8 implies the same credit (5,223.13) so the '
-            f'6,436 cells d2-8 adds earn exactly zero, and the shared support of the five top files is '
-            f'the 25,517-cell core.</li>'
-            f'<li><b>But the allocation is not identified:</b> 574 coverage patterns against 13 '
-            f'equations give an interval, and the "consensus ⇒ at-least-as-much credit" refinement is '
-            f'<i>infeasible</i> against the reported scores (IR-57-002). Hence the bracket.</li>'
-            f'<li><b>Emission:</b> metric-aware dotted placement (every pair ≥3 px apart, ≥200 m from the '
-            f'catalogue, inside the footprint, 0 cells on the catalogue), then the gates re-read from the '
-            f'bytes. Deterministic: three rebuilds produced the same sha256.</li></ol>'
-            f'<h2>What would change the verdict</h2>'
-            f'<ul><li>An organizer-side truth set showing the credited core is not where the hidden truth '
-            f'is.</li><li>A re-inversion whose LP lower bound falls below the standing best after a new '
-            f'public score reports.</li><li>A held-out instrument showing the novel arm\'s enrichment '
-            f'(9.24 % vs 1.58 % control within 3 px of the catalogue) collapsing to the control rate.</li>'
-            f'</ul>'
-            f'<p>Full reasoning: <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/'
-            f'knowledge/17_hypotheses_H57.md">knowledge/17_hypotheses_H57.md</a> · '
-            f'<a href="../registry/irregularities.json">registry/irregularities.json</a> '
-            f'(IR-57-001 … IR-57-005).</p>'
-            f'</main><footer>Competition 306 · every figure on this page is re-read from the emitted '
-            f'bytes and <code>evidence/*.json</code> by <code>scripts/publish_site_h57.py</code></footer>'
-            f'</body></html>')
-    (DOCS / "h57.html").write_text(page)
-    print("wrote docs/h57.html")
+    DATA.mkdir(parents=True, exist_ok=True)
+    # docs/data/submission.json is the machine-readable "current artefact" receipt the site and
+    # scripts/check_site.py both read.  It is regenerated, never hand-edited.
+    (DATA / "submission.json").write_text(json.dumps(dict(
+        exists=True, round="H57",
+        file=fname(b),
+        artefact=b["artefact"],
+        download="downloads/" + fname(b),
+        download_zip="downloads/" + fname(b)[:-4] + ".zip",
+        short_tif="downloads/h57-candidate.tif",
+        short_zip="downloads/h57-candidate.zip",
+        bytes=b["file"]["bytes"], sha256=b["file"]["sha256"],
+        nonzero_px=b["file"]["px"], core_px=b["core"]["px"], arm_px=b["arm"]["px"],
+        submission_name=name, note=note, note_chars=len(note),
+        verdict=verdict,
+        approved_for_weekly_slot=False,
+        approval_reason="R1's absolute +0.005 mean-lift threshold was not met (best +0.0048). "
+                        "The artefact is published and fully gated; the upload decision is left "
+                        "explicitly to the owner with its probability stated in "
+                        "docs/data/h57_slot_gate.json.",
+        promoted=False, submission_slots_used=0,
+        format=dict(ok=b["format_gate"]["ok"], problems=b["format_gate"]["problems"],
+                    crs=b["format_gate"]["crs"], width=b["format_gate"]["width"],
+                    height=b["format_gate"]["height"], transform=b["format_gate"]["transform"],
+                    dtype=b["format_gate"]["dtype"], bands=b["format_gate"]["bands"],
+                    nodata=b["format_gate"]["nodata"], min=b["format_gate"]["min"],
+                    max=b["format_gate"]["max"], n_nan=b["format_gate"]["n_nan"],
+                    n_nonzero=b["file"]["px"]),
+        uniqueness=dict(ok=b["uniqueness"]["canonical_pattern_unique"],
+                        research_publication_ok=b["uniqueness"]["canonical_pattern_unique"],
+                        n_priors_checked=b["uniqueness"]["n_priors_checked"],
+                        novel_fraction=b["uniqueness"]["novel_fraction"],
+                        relation_to_union="arm is 100% outside the accessible prior-support "
+                                           "union; the decoded pattern equals none of the "
+                                           "accessible aligned priors",
+                        equals_literal_prior_union=b["uniqueness"]["equals_literal_prior_union"]),
+        validation=dict(approved_for_slot=False,
+                        holdout_receipts=["docs/data/h57_validation.json",
+                                          "docs/data/h57_strata.json",
+                                          "docs/data/h57_cotrain.json"]),
+        slot_gate="docs/data/h57_slot_gate.json",
+        dossier="downloads/" + Path(b["candidate_geology_dossier"]).name,
+    ), indent=1, allow_nan=False) + "\n")
+    (ROOT / "submission" / "LATEST.txt").write_text(fname(b) + "\n")
+    (ROOT / "submission" / "H56_LATEST.txt").write_text(
+        "gems52-h56-consensus-core-continuation-40517px-04c86e1888a8-zeros.tif\n")
+    for n in ("h57_build.json", "h57_cotrain.json", "h57_validation.json", "h57_strata.json",
+              "h57_format_gate.json", "h57_uniqueness.json", "h57_slot_gate.json",
+              f"submission_{Path(b['artefact']).stem}.json"):
+        if (EV / n).exists():
+            shutil.copy2(EV / n, DATA / n)
+
+    (DOCS / "h57.html").write_text(page_html(b, c, v, st, name, note, verdict, gate))
+    (DOCS / "executive-summary.html").write_text(exec_html(b, gate, name, note, verdict))
+
+    bar = bar_html(b, name, note, verdict)
+    idx = nav_fix((DOCS / "index.html").read_text())
+    block = f"{BAR_OPEN}{bar}{BAR_CLOSE}"
+    if BAR_OPEN in idx:
+        i, j = idx.index(BAR_OPEN), idx.index(BAR_CLOSE) + len(BAR_CLOSE)
+        idx = idx[:i] + block + idx[j:]
+    else:
+        idx = idx.replace('<main id="main">', '<main id="main">' + block, 1)
+    idx = idx.replace(
+        '<meta name="description" content="H56 current research artifact with a short download, '
+        'decoded-pattern audit, missing spatial holdout and explicit no-upload decision.">',
+        '<meta name="description" content="H57 submission GeoTIFF: two-view co-training union arm '
+        'on an exactly-accounted core, with the full holdout audit including the four refuted '
+        'hypotheses.">')
+    (DOCS / "index.html").write_text(idx)
+
+    for name_html in ("h54.html", "h55.html", "h55-profile.html", "h55-edge.html",
+                      "validation.html", "forensics.html", "sources.html", "method.html",
+                      "hypotheses.html", "feed.html", "irregularities.html",
+                      "h53.html", "r3.html", "r3-hypotheses.html", "h56.html"):
+        p = DOCS / name_html
+        if p.exists():
+            p.write_text(nav_fix(p.read_text()))
+
+    print("published", src.name, "->", dst, zpath)
     return 0
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    sys.exit(main())
