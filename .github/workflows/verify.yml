@@ -20,7 +20,9 @@ jobs:
       - name: Restore the small pinned template required by raster integration tests
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python scripts/restore_data.py --only sample_submission
+        run: |
+          python scripts/restore_data.py --only sample_submission
+          cp data/bridge/sample_submission.tif data/sample_submission.tif
       - name: Run numerical spatial and workflow regressions
         env:
           OPENBLAS_NUM_THREADS: '1'
