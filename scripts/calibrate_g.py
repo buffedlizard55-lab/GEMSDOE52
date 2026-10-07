@@ -3,7 +3,7 @@
 
 Input: the 13 rasters in ``data/scored`` + ``data/reference`` whose scores this laboratory reported,
 and whose byte counts and SHA-256s ``scripts/restore_data.py`` verified against
-``registry/data_manifest.json``.  Output: ``evidence/h53_g_calibration.json``.
+``registry/data_manifest.json``.  Output: ``evidence/h55_g_calibration.json``.
 
 The estimator is the metric itself, inverted.  For a *sparse* emission (every emitted pixel
 8-isolated, so no two pixels compete for the same truth pixel and ``M == T``) the published DTI
@@ -41,7 +41,7 @@ import rasterio
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from gems53 import calib                      # noqa: E402
+from gems55 import calib                      # noqa: E402
 from gems52 import metric as M                # noqa: E402
 
 # name -> (path relative to ROOT, owner-reported public-leaderboard DW-Tversky)
@@ -144,7 +144,7 @@ def main() -> int:
         implied_rho_A=(best or {}).get("rho_A"),
         implied_T_over_n_g=(best or {}).get("T_over_n_g"),
         rows=rows)
-    out = ROOT / "evidence" / "h53_g_calibration.json"
+    out = ROOT / "evidence" / "h55_g_calibration.json"
     out.write_text(json.dumps(payload, indent=1))
     print(f"\nsparse rows: {len(sparse)}  contiguous rows: {len(dense)}")
     print(f"|G| >= {lb_sparse:.0f} (sparse rows)   |G| >= {lb_all:.0f} (all rows)")

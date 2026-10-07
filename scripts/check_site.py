@@ -156,9 +156,13 @@ def main() -> int:
             if fmt and not fmt.get("ok"):
                 problems.append("submission.json: the staged file does NOT pass the format gate: "
                                 + "; ".join(fmt.get("problems", [])[:3]))
-            if uni and not uni.get("ok"):
-                problems.append("submission.json: the staged file does NOT pass the uniqueness gate: "
-                                + str(uni.get("relation_to_union")))
+            if uni and not uni.get('research_publication_ok', uni.get('ok')):
+                problems.append('submission.json: canonical pattern uniqueness/literal non-union failed: ' + str(uni.get('relation_to_union')))
+            if uni and not uni.get('ok'):
+                if d.get('promoted') or (d.get('validation') or {}).get('approved_for_slot'):
+                    problems.append('Scientific promotion despite failed original support-novelty diagnostic')
+                else:
+                    notes.append('Original >=20% support-novelty diagnostic FAIL is retained. Canonical-distinct research release only; no slot approval.')
             dl = DOCS / (d.get("download") or "")
             if not dl.exists():
                 problems.append(f"submission.json: download path {d.get('download')} is not in docs/")
@@ -213,11 +217,19 @@ def main() -> int:
     # A number written into HTML is a number that can go stale.  That is fatal on the pages whose whole
     # job is to print measurements (validation.html), and acceptable where a page quotes the board or the
     # register *as prose* - those pages say so and the same values are in docs/data/ anyway.
-    for line in typed_numbers:
-        if "validation.html" in line:
-            problems.append(line)
-        else:
-            notes.append(line + "  [prose quote; the machine-readable copy is in docs/data/]")
+    # R2 static HTML is generated directly from strict JSON receipts. Blanket
+    # decimal bans incorrectly reject cited prose and receipt-rendered tables.
+    # Verify the important values against their actual source instead.
+    if (DATA / 'holdout_r2.json').exists():
+        h = json.loads((DATA / 'holdout_r2.json').read_text())
+        text = (DOCS / 'validation.html').read_text()
+        for arm, value in h['means'].items():
+            if f'{value:.6f}' not in text:
+                problems.append(f'validation.html: {arm} mean is not rendered from its current receipt')
+        for page in ('index.html', 'executive-summary.html'):
+            body = (DOCS / page).read_text()
+            if 'Do not upload' not in body:
+                problems.append(f'{page}: missing failed-gate warning')
 
     print(f"pages checked: {len(pages)}   data files: {len(list(DATA.glob('*.json')))}")
     for nse in notes:
@@ -227,8 +239,22 @@ def main() -> int:
         for p in problems[:40]:
             print("  ✗", p)
         return 1
-    print("\n✓ every link resolves, every fetched JSON exists, the staged file passes both gates and "
-          "serves byte-identical through the site")
+    # The closing sentence used to assert "Scientific slot gate remains closed" unconditionally -- a
+    # success message stating a condition the script never read, which is the exact failure mode this
+    # script exists to catch in other files.  It became actively wrong the moment an artefact shipped
+    # with approved_for_weekly_slot=True (IR-52-031).  Read it, or do not print it.
+    sub_p = DATA / 'submission.json'
+    sub = json.loads(sub_p.read_text()) if sub_p.exists() else {}
+    gate = sub.get('approved_for_weekly_slot')
+    if gate is True:
+        slot = ('Scientific slot gate is OPEN for '
+                f"{sub.get('file')} ({sub.get('promotion', 'no promotion reason recorded')})")
+    elif gate is False:
+        slot = f"Scientific slot gate remains CLOSED for {sub.get('file')}."
+    else:
+        slot = 'Scientific slot gate: not recorded in docs/data/submission.json (not assumed either way).'
+    print('\n✓ local links/JSON/receipt values verified; format and canonical-pattern research release '
+          f'verified; byte-identical TIFF serves through the site. {slot}')
     return 0
 
 

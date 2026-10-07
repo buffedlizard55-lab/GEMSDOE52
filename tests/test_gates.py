@@ -140,3 +140,22 @@ def test_find_priors_never_returns_a_copy_of_the_candidate(tmp_path):
     assert "some-earlier-file.tif" in names
     uni = gates.uniqueness_report(arr > 0, found)
     assert not any(r.get("identical") for r in uni["per_prior"])
+
+
+def test_find_priors_skips_competition_inputs(tmp_path):
+    """A feature stack or an external layer is an input, not somebody's answer.
+
+    Regression: sweeping a root that contains `training_features.tif` read band 1 as a prior
+    submission and produced a "prior union" of 5,363,764 px against a 5,167,373 px footprint, which
+    destroyed both the novelty count and the not-the-union test.
+    """
+    (tmp_path / "data" / "external").mkdir(parents=True)
+    (tmp_path / "out").mkdir()
+    real = write_tif(tmp_path / "out", "real.tif", np.ones((6, 6), np.float32))
+    feats = write_tif(tmp_path / "data", "training_features.tif", np.ones((6, 6), np.float32))
+    ext = write_tif(tmp_path / "data" / "external", "layer.tif", np.ones((6, 6), np.float32))
+    sample = write_tif(tmp_path / "data", "sample_submission.tif", np.ones((6, 6), np.float32))
+    found = gates.find_priors([tmp_path], min_bytes=100)
+    assert real in found
+    for bad in (feats, ext, sample):
+        assert bad not in found, bad

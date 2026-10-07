@@ -1,4 +1,1 @@
-gems52-h53-btherm-greedy-37654px-20261007T0150Z-zeros.tif
-a0f3ed4b4524ca67a0c715beca5a905eced165ee9e59be5e5831a39b7526254d
-37654 px
-arm=B_therm emitter=greedy radius=4.0 n_g=8129.0
+gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.tif

@@ -1,3 +1,5 @@
+> **Historical report — superseded where contradicted by R2.** See `09_r2_review.md` and `evidence/reference_forensics_r2.json`. In particular: known pixels do not pay penalties; H33 removed off-catalogue flanks; the old OOF independence report contained no negative predictions; hidden prevalence and a 0.464 ceiling are not established.
+
 # 03 · Negative results, and what each one killed
 
 Written so the next run does not repeat them. Every number below is reproducible from
@@ -197,76 +199,187 @@ Two things this exposed that are worth keeping as rules, not as fixes:
 
 ---
 
-## Added by H53 (2026-10-07). Same rule: a negative result is written down with the number that
-## makes it negative, so the next session does not re-derive it.
+## N-9 · The whole-component hide-and-recover simulator does not predict the organiser's score
 
-**N-10 — the potential-field view, on its own, loses to random emission on both instruments.**
-With the view split corrected (band 6 moved out, see N-13) and the placement fixed (hard-core 400 m,
-so placement is no longer the excuse), `A_only|hc4|37654` scores **0.02979 hide / 0.02894 tip**
-against matched-budget random **0.03948 / 0.02477**, winning **1/4** and **2/4** folds. It is not
-promotable under any rule this repo has ever written. N-6 predicted this at the layer level
-(transform AUC ≈ 0.52 at a 300 m cell); it now holds at the arm level, on two instruments, at the
-best placement measured. *What it kills:* any plan whose primary emitter is gravity, magnetics,
-strain, seismicity, basement depth or conductivity. *What it leaves open:* those layers as
-corroboration inside a reasoning record, where they cost nothing and a Phase-2 reviewer can use them.
+**What was run.** All 13 restored scored rasters, 4 spatial folds each. Held-out truth = whole
+8-connected catalogue components assigned to spatial blocks by majority vote, thinned to the inferred
+prevalence. Emission = each file's own pixels restricted to that fold's legal set, plus a mass-matched
+uniform-random control on the same folds. Scored with `src/gems52/metric.py`, the transcription pinned
+by `tests/test_metric.py`. Scripts: `work/a6_calibrate.py`, `work/a10_calibrate2.py`.
 
-**N-11 — every blend of the two views scores at or below the surface view alone.**
-`AB_w80` (0.8·B + 0.2·A, both regionally centred) = 0.09112 hide / 0.05358 tip; `B_c50` alone =
-0.09112 / 0.05421; `B_c100` alone = 0.09167 / 0.05448. The geometric mean, the arithmetic mean and
-the min were all worse again on the single-fold run (0.05517 / 0.04720 / — at `hc4|50000`, against
-`B_centred` 0.10867). *What it kills:* the two-view co-training premise as a source of ranking
-improvement, for the third time and now with the split corrected. This is the honest answer to the
-brief's question, and it is not the answer the brief hoped for: with one view below random, there is
-no conditional independence to test, no pseudo-labels worth exchanging, and no disagreement worth
-amplifying. *What it leaves open:* the possibility that View A becomes useful at a coarser cell
-(≥300 m) where its own resolution lives — untested here, and the only version of the idea the
-measurements do not already exclude.
+**Result.**
 
-**N-12 — the disagreement strata, used as a modulator of the ranking, make it worse.**
-Boosting View B by +0.10 of the centred rank where A is confident and B abstains (`Bdis_A`) scored
-0.06776 on `hide` fold 0; damping it by −0.10 where B is confident and A abstains (`Bsup_B`) scored
-0.06902; unmodulated `B_only` scored **0.07387** at the identical emitter, budget, mask and fold.
-*What it kills:* the "A-confident/B-abstains ⇒ buried fault, so rank it up" move, which is the
-brief's central discovery mechanism and which this repo has now tested as a pseudo-label source
-(N-1, refuted) and as a rank modulator (refuted). *What survives:* the strata as a **description**.
-A-only pixels do sit in materially deeper cover (mean depth-to-basement rank 455 vs 251 for
-concordant) and do carry a larger gravity step (6.06 vs 2.59); that is a real population fact, it is
-why the Phase-2 reasoning records quote it, and it is simply not a ranking signal at 100 m.
+* Spearman ρ(reported score, simulated DTI) = **−0.1045**, p = **0.734**, n = 13.
+* Spearman ρ(reported score, simulated lift over random) = **−0.1265**, p = 0.680.
+* `h33-2-b2`, the group's best file on the board (0.2778), is the **worst** of the 13 on the
+  instrument: simulated DTI 0.0046 against 0.0496 for mass-matched random, lift **0.09×**.
+* `8GEMSDOE_Hedge-v2` ranks **first** on the instrument (0.316, lift 4.19×) and scored **0.1563**.
 
-**N-13 — the correction that makes N-10 to N-12 mean what they say.** Band 6 of the organiser's own
-`training_features.tif` is the GeoDAWN **aeroradiometric total-count** grid, not the "tilt angle or
-total curvature — magnetic field derivative" its TIFF tag claims: Spearman **+1.0000** against the
-independently reduced USGS TC grid (DOI 10.5066/P93LGLVQ), **+0.9914** against K+Th+U, |ρ| ≤ 0.149
-against all five magnetic bands in the same file, strictly positive (2.953 … 88.573) where a tilt
-angle is bounded by ±π/2. `src/gems52/features.py` filed it in **View A** as `A_mag_tilt_abs`. Every
-independence measurement this family ever took therefore had a radiometric surface-geochemistry band
-inside the potential-field view, which inflates any A↔B correlation and makes the "views miss the
-same neighbourhoods" reading partly an artefact of the mis-filing. IR-52-019 corrects IR-52-001.
-*What it kills:* the sentence "training_features.tif contains no radiometric band", which appears in
-`knowledge/04`, `knowledge/06`, `docs/irregularities.html`, `docs/data/prepared_manifest.json` and
-`src/gems52_h1/spec.py`. *What it does not kill:* the H52 holdout numbers, which are still valid
-measurements of the H52 field — they are just measurements of a field with a mis-assigned band.
+**The confound was checked and is not the explanation.** The first run let hidden truth sit inside the
+200 m ring that a corridor-excluding prior may not enter, which structurally handicaps exactly the
+files that obey the rule. Restricting the hidden truth to pixels more than 200 m from the *visible*
+catalogue (`work/a10`) moved the champion's lift from 0.10 to 0.09 and left ρ unchanged.
 
-**N-14 — the thermal-fluid layer is neutral at a 37,654 px budget, and "neutral" is the finding.**
-`B_therm` (View B centred, plus INGENIOUS/GDR thermal lineaments injected as a rank bonus) beat
-`B_c50` (the same field without them) by **0.00003** on the selection sum — 0.15171 vs 0.15168 —
-with 4/4 folds on both instruments each. Only **3,340** of 5,165,840 footprint cells carry a thermal
-lineament, because the walk is gated by structure-tensor coherence (median coherence 0.106; only
-643,745 cells clear the 0.30 floor) and truncated where the structure stops. *What it kills:* the
-claim that the thermal layer is why this file is better. It is not. *What it leaves open:* a much
-larger budget, where 3,340 high-conviction cells are a bigger share of the file, and a lower
-coherence floor, which would lengthen the traces at the cost of inventing some. Both are untested
-and both are cheap; neither is claimed.
+**What it kills.** Every selection this repo made through that gate, including the
+`promoted: false, forced: true` decision recorded in `docs/data/submission.json` and the "+33 %"
+corridor effect quoted in `knowledge/02` H52-2 as the primary emitter arm. The premise of the
+instrument is that the hidden truth is a held-out part of the mapped catalogue; `knowledge/10` §2–§3
+measure that the hidden truth does not come within 200 m of the mapped catalogue at all. The premise is
+false, so the instrument measures the wrong quantity and its ordering carries no information — ρ ≈ 0 is
+not a weak signal, it is the expected reading for an instrument pointed at the wrong target.
 
-**N-15 — the coverage-greedy's first version was worse than top-K, and that was a bug, not a
-property.** `np.maximum(cf[nbi], kk, out=cf[nbi])` writes into a throwaway copy, because fancy
-indexing copies. The running cover was never raised, every later candidate looked uncovered, the
-greedy packed into the belief field's peak and reported `A/S` = 1.8–2.1 with DTI 0.0115 on the fold
-where the hard-core rule reached 0.10101. An earlier draft of `knowledge/07` H53-5 recorded that as
-"the greedy under-spreads when ρ̂ is peaked"; the claim is **withdrawn**. Fixed, the greedy reaches
-`A/S` = 9.27 (98.8 % of ceiling) and banks 20 % more ρ̂-weighted coverage than hard-core thinning and
-33 % more than top-K, on both a flat and a clustered belief (`tests/test_h53_emit.py`). IR-52-025.
-*What it kills:* the reasoning "improve the placement by improving the greedy's objective" — the
-objective was already right. *What it teaches:* `out=` with a fancy-indexed destination is a silent
-no-op, and the telescoping identity `sum(marginal gains) == Σ ρ̂·K_E` is the one-line test that
-catches it.
+**Rule adopted.** A validation instrument is only an instrument if it reproduces the ordering of
+artefacts whose real scores are already known. We hold 13 such artefacts. Any new instrument must be
+calibrated against them before it is allowed to promote anything. This one was not, and fails.
+
+**What replaced it.** Exact set algebra over five scored files that stand in verified nesting
+relations (`A ⊂ B ⊂ E`, `C ⊂ E`). That yields `|G|`, the dead ring, and an exact interval on the
+credit carried by the double-corroborated atom — see `knowledge/10`. It is arithmetic on artefacts the
+organiser has already scored, which is the only ground truth available without portal access.
+
+## N-10 · No point or local-differential feature re-ranks inside the champion file
+
+**What was run.** 63 features — the 19 competition bands, their horizontal gradients, Laplacians and
+5×5 ranges, linearity ratios (gradient over local standard deviation), all 12 LiDAR scarp bands, the 4
+radiometric bands and 4 ratio bands, and the SGMC layer — scored against the credit hierarchy of
+`knowledge/10` §3, with AUC computed inside each of the 4×4 spatial blocks that contain both classes
+(10–11 blocks) and averaged. Script: `work/a12_atoms.py`, output `work/a12_feature_auc.json`.
+
+**Result.** Best AUC(`P1` vs `P2`) = **0.5453** (`lin_detelev`, sd 0.008); next `sc_step_max` 0.5453,
+`sc_downface` 0.5419, `rad_K` 0.5399. That is the maximum of 63 tests, so after multiplicity it is not
+a signal. Best AUC(`P1` vs `P5`) = 0.5376, AUC(`P1` vs `P6`) = 0.5451 — the same nothing.
+
+**The part that matters more than the null.** The *habitat* signature is strong and it is not credit.
+AUC(`A` vs uniform random) reaches **0.7023** for `ddetelev_range5`, 0.6605 for `ddetelev_hg`, 0.6522
+for `sc_upface`, and 0.6494 for inverted `rad_K` — the champion's dots sit on radiometrically depleted,
+high-relief ground. But `P2`, `P5` and `P6`, which carry 4–20× less credit per pixel than `P1`, have
+almost the same habitat AUCs against random (0.7023 / 0.6802 / 0.6834 for `ddetelev_range5`).
+
+**What it kills.** Any plan whose argument is "train a classifier on the credited tier, then emit its
+top-K and expect the credited tier's credit density". The classifier learns the habitat, and habitat
+does not separate credited from uncredited mass. This is a stronger and more specific statement than
+N-6's "supervised detectors trained to reproduce the catalogue fail": here the target is not the
+catalogue but the group's own organiser-credited pixels, and it still does not transfer.
+
+**Rule adopted.** `ρ_novel` — the credit density of mass this repo has never emitted — enters every
+projection as a *prior* with a stated range, never as a point estimate. See
+`src/gems52/revealed.py::budget_rule`.
+
+## N-11 · Structure-tensor coherence does not re-rank inside the champion file either
+
+**What was run.** Coherence, gradient magnitude and coherence × gradient magnitude from the structure
+tensor, at σ = 2, 4 and 8 px, on 12 bands (gravity anomaly, RTP, detrended elevation, TMI horizontal
+gradient, gravity horizontal gradient, depth to base of basin fill, second invariant of strain, TMI,
+detrended-elevation slope, tilt curvature, conductivity, shear rate) — 108 features, same blocked AUC
+protocol. Script: `work/a13_coherence.py`.
+
+**Result.** Best AUC(`P1` vs `P2`) = **0.5122** (`tc` gradient magnitude at σ = 2, se 0.0032), i.e.
+worse than the point features. Coherence itself never exceeds 0.5066 on that contrast.
+
+**What it does *not* kill.** Coherence of the credited dot *cloud* — as opposed to coherence of a
+geophysical band — is strongly non-random: mean 0.549 against 0.412 for a matched uniform-random cloud
+at σ = 6 px, and 16.8 % of credited dots above coherence 0.8 against 2.2 % of random dots (7.6×). The
+two independent thinnings `A` and `C` agree on the recovered orientation histogram to cosine
+**0.9952** while the random control is flat, and the dominant recovered strike is 100–110° in array
+convention = azimuth ≈ 010–020°, the NNE–SSW Basin-and-Range normal-fault strike of this footprint.
+So the *fabric* is recoverable and geologically correct; what is not recoverable is which individual
+dots on it were right. That distinction is what H54-2 is built on (`knowledge/11`).
+
+## N-12 · Radiometric alteration ratios are not an alteration signal here
+
+**What was run.** The 4 external radiometric bands (K, Th, U, TC) and 4 external ratio bands (Th/K,
+U/K, U/Th) plus band 6 `tc`, against the credited tier, same blocked protocol (`work/a9`, `work/a12`).
+
+**Result.** All four channels are strongly depleted on the credited dots — `rad_K` AUC 0.3506,
+`rad_TC` 0.3702, `rad_Th` 0.4075, `rad_U` 0.4279 against random — while all three *ratios* sit within
+0.05 of chance: `ext_ThK` 0.4959, `ext_UK` 0.5723, `ext_UTh` 0.5547.
+
+**What it kills.** Hypothesis H54-4 as a standalone emitter. Depletion in K, Th and U *together* with
+unchanged ratios is bare rock and thin soil on steep ground — the same habitat `ddetelev_range5`
+already captures at 0.6664 — not hydrothermal alteration, which moves the ratios and leaves total
+count roughly alone. The bands are kept as View B features; the alteration-halo claim is withdrawn.
+
+## N-13 · A per-block AUC of 1.000 over n = 3 samples
+
+The first H53 build reported View A and View B block AUCs including a block with **1.000**. That block
+held **3 labelled samples**. `scripts/build_revealed_submission.py` now tags every block with
+`counted_in_mean` (n ≥ 500) and reports the mean over counted blocks only, alongside the raw list, so
+a degenerate block can inflate nothing. Reported means after the fix: View A 0.7031, View B 0.9241.
+
+The general rule, which is the same one N-8 states about read-backs: **an aggregate that silently
+includes a degenerate subgroup is worse than no aggregate.** Report the n next to the statistic.
+
+---
+
+## Added by H55 (2026-10-07). Same rule as the rest of this file: a negative result is written down with
+## the number that makes it negative, so the next session does not re-derive it.
+
+**N-15 — the potential-field view, on its own, loses to random emission on both instruments.** With the
+view split corrected (band 6 moved out, N-18) and placement fixed (400 m hard-core, so placement is no
+longer the excuse), `A_only|hc4|37654` scores **0.02979 hide / 0.02894 tip** against matched-budget random
+**0.03948 / 0.02477**, winning **1/4** and **2/4** folds. Not promotable under any rule this repo has ever
+written. N-6 predicted this at the layer level (transform AUC ≈ 0.52 at a 300 m cell); it now holds at the
+arm level, on two instruments, at the best placement measured. *Kills:* any plan whose primary emitter is
+gravity, magnetics, strain, seismicity, basement depth or conductivity at 100 m. *Leaves open:* those layers
+as corroboration inside a Phase-2 reasoning record, where they cost nothing.
+
+**N-16 — every blend of the two views scores at or below the surface view alone.** `AB_w80`
+(0.8·B + 0.2·A, both regionally centred) = 0.09112 hide / 0.05358 tip; `B_c50` alone = 0.09112 / 0.05421;
+`B_c100` alone = 0.09167 / 0.05448. The geometric mean, the arithmetic mean and the min were all worse again
+on the single-fold run. *Kills:* the two-view premise as a source of ranking improvement, for the third
+time, now with the split corrected. *Leaves open:* View A at a coarser cell (≥300 m) used to *gate* a 100 m
+surface detection — a different experiment, and the only version the measurements do not already exclude.
+
+**N-17 — the disagreement strata, used as a modulator of the ranking, make it worse.** Boosting View B where
+A is confident and B abstains (`Bdis_A`) scored 0.06776 on `hide` fold 0; damping it where B is confident and
+A abstains (`Bsup_B`) scored 0.06902; unmodulated `B_only` scored **0.07387** at identical emitter, budget,
+mask and fold. *Kills:* the "A-confident/B-abstains ⇒ buried fault, so rank it up" move — the brief's central
+discovery mechanism — which this repo has now tested as a pseudo-label source (N-1, refuted) and as a rank
+modulator (refuted). *Survives:* the strata as a **description**. A-only pixels do sit in materially deeper
+cover (mean depth-to-basement rank 455 vs 251 for concordant) and do carry a larger gravity step (6.06 vs
+2.59). A real population fact is not a ranking signal.
+
+**N-18 — the correction that makes N-15 to N-17 mean what they say.** Band 6 of the organiser's own
+`training_features.tif` is the GeoDAWN **aeroradiometric total-count** grid, not the "tilt angle or total
+curvature — magnetic field derivative" its TIFF tag claims: Spearman **+1.0000** against the independently
+reduced USGS TC grid (DOI 10.5066/P93LGLVQ), **+0.9914** against K+Th+U (which is what a total-count channel
+*is*), |ρ| ≤ 0.149 against all five magnetic bands in the same file, and strictly positive (2.953 … 88.573)
+where a tilt angle is bounded by ±π/2. `src/gems52/features.py` filed it in **View A** as `A_mag_tilt_abs`, so
+every independence measurement this family ever took had a surface-geochemistry band inside the
+potential-field view, which inflates any A↔B correlation and makes the "views miss the same neighbourhoods"
+reading partly an artefact of the mis-filing. **IR-52-019 corrects IR-52-001.** *Kills:* the sentence
+"training_features.tif contains no radiometric band", which appears in `knowledge/04`, `knowledge/06`,
+`docs/irregularities.html`, `docs/data/prepared_manifest.json` and `src/gems52_h1/spec.py`. *Does not kill:*
+the H52 holdout numbers — still valid measurements of the H52 field, just of a field with a mis-assigned band.
+
+**N-19 — the conditional-independence premise is REFUTED, and the test that refutes it finally fires.** The
+pre-registration said: correlate the two views' per-block out-of-fold error on labelled negatives across
+spatial blocks, abandon if strongly correlated (`ABANDON_R = 0.60`). In H52 this **could not fire** — fewer
+than three usable blocks, Spearman degenerate to 1.0 on ties — so N-1 correctly recorded the premise as
+*unmeasured*. On the corrected split: **40 usable blocks of 62** per fold, **4/4 folds of both instruments**,
+max |Spearman| = **0.7625** (`hide`) and **0.7107** (`tip`). *Kills:* co-training, on the brief's own
+criterion, and the hope that a better block statistic would rescue it. *Two qualifications that must travel
+with the verdict:* the false-alarm-rate-at-fixed-budget statistic correlates weakly (max |ρ| 0.2494, negative
+on 3 of 8 folds), so this is the verdict of the statistic the pre-registration **named**; and View A's
+block-level FAR has CV 1.35–5.22 against View B's 0.75–1.18, i.e. View A finds a few regional anomalies and
+nothing else — a third independent route to N-2 and N-15.
+
+**N-20 — the thermal-fluid layer is neutral at a 37,654 px budget, and "neutral" is the finding.**
+`B_therm` (View B centred, plus INGENIOUS/GDR thermal lineaments injected as a rank bonus) beat `B_c50` — the
+identical field without them — by **0.00003** on the selection sum (0.15171 vs 0.15168), 4/4 folds on both
+instruments each. Only **3,340** of 5,165,840 footprint cells carry a thermal lineament, because the walk is
+gated by structure-tensor coherence (median 0.106; 643,745 cells clear the 0.30 floor). *Kills:* the claim
+that this file is better because of the springs. It is not. *Leaves open:* a much larger budget, where 3,340
+high-conviction cells are a bigger share of the file, and a lower coherence floor, which would lengthen the
+traces at the cost of inventing some. Both untested, both cheap, neither claimed.
+
+**N-21 — our own coverage-greedy was worse than top-K, and that was a bug, not a property.**
+`np.maximum(cf[nbi], kk, out=cf[nbi])` writes into a throwaway copy, because fancy indexing copies. The
+running cover was never raised, every later candidate looked uncovered, the greedy packed into the belief
+field's peak and reported `A/S` = 1.8–2.1 with DTI 0.0115 on the fold where the hard-core rule reached
+0.10101. An earlier draft of `knowledge/12` recorded that as "the greedy under-spreads when ρ̂ is peaked";
+the claim is **withdrawn**. Fixed, the greedy reaches `A/S` = 9.27 (98.8 % of ceiling) and banks 20 % more
+ρ̂-weighted coverage than hard-core thinning and 33 % more than top-K, on both a flat and a clustered belief.
+**IR-52-025.** *Kills:* the plan "improve the placement by improving the greedy's objective" — the objective
+was already right. *Teaches:* `out=` with a fancy-indexed destination is a silent no-op, and the telescoping
+identity `sum(marginal gains) == Σ ρ̂·K_E` is the one-line test that catches it.

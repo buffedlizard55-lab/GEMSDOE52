@@ -108,10 +108,10 @@ def test_features_module_band_six_claim_is_corrected_not_deleted():
     """The H52 features module still files band 6 in View A. That is now a known-wrong choice, so it
     must point at the correction rather than at a superseded claim."""
     src = (ROOT / "src" / "gems52" / "features.py").read_text()
-    assert "IR-52-019" in src or "gems53" in src, (
+    assert "IR-52-019" in src or "gems55" in src, (
         "features.py still asserts 'no radiometric band' without pointing at the measurement that "
-        "disproved it (evidence/h53_band6_identity.json)")
-    h53 = (ROOT / "src" / "gems53" / "radlayers.py").read_text()
+        "disproved it (evidence/h55_band6_identity.json)")
+    h53 = (ROOT / "src" / "gems55" / "radlayers.py").read_text()
     assert "mag_tilt_curvature" not in h53.split("VIEW_A =")[1].split("]")[0], \
         "band 6 must not appear in the corrected View A"
 
@@ -130,7 +130,7 @@ def test_no_python_file_in_src_has_a_syntax_error():
 
 def test_workflows_are_still_valid_yaml_and_still_stdlib_only():
     """tests/test_workflows.py already guards this; the guard is repeated here only for the files the
-    H53 work touched, so a failure names the change that caused it."""
+    H55 work touched, so a failure names the change that caused it."""
     p = ROOT / ".github" / "workflows" / "feed.yml"
     assert p.exists()
     try:

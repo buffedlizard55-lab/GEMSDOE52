@@ -11,23 +11,22 @@ Published definitions, with R = 300 m, alpha = 0.2, beta = 0.8:
     FNw   = sum_{g in G} [ 1 - max_{x : d(x,g) <= R} p(x) k(d(x,g)) ]
     DTI   = TPw / (TPw + alpha*FPw + beta*FNw + eps)
 
-Two algebraic consequences used everywhere in this repository (both are unit-tested against the
-brute-force transcription above, not asserted):
+Algebraic consequences (checked against brute force, not a model of hidden labels):
 
     (i)  FNw == |G| - TPw identically, hence with T = TPw, S = sum_x p(x),
          M = sum_x p(x) max_g k(d(x,g))  and  FPw = S - M:
 
              DTI = T / ( 0.2*(T + S - M) + 0.8*|G| )
 
-    (ii) CREDIT BAR. Add one unit of mass at a pixel x whose realised kernel weight against its
-         best-covered truth pixel is w.  Then dT = w and the denominator changes by
-         alpha*(dT + dFPw) = alpha*(w + (1 - w)) = alpha, so
+    (ii) For general incremental credit c and false-positive increment f, an addition helps iff
 
-             dDTI > 0   <=>   w > alpha * DTI
+             c * (1 - 0.2*DTI) > 0.2*DTI*f.
 
-         which is independent of the value p(x) itself -- the reason a {0, 1} emission is optimal
-         over the whole soft family and why "probability maps" are a placement problem here, not a
-         calibration problem.
+         Only in the special case of one previously uncovered truth pixel, with c=w and f=1-w,
+         does this reduce to w > 0.2*DTI. Max-cover competition between nearby predictions means
+         c is not generally the nearest-truth kernel weight. Calibration and placement still matter.
+         Uniform scaling of a fixed support is monotone, but that one-parameter argument alone is
+         not a proof of global binary optimality or of optimal expected DTI under uncertain truth.
 
 The organiser's published worked example (TPw 3.00, FPw 1.89, FNw 2.00) evaluates to
 0.6026516673...; the page rounds it to 0.60.  ``tests/test_metric.py`` pins that number so a
@@ -44,7 +43,7 @@ BETA = 0.8
 R_M = 300.0
 PIXEL_M = 100.0
 R_PX = R_M / PIXEL_M          # exactly 3.0 px at 100 m
-EPS = 0.0                      # published formula carries an unquantified eps; immaterial unless
+EPS = 0.0                      # published eps unquantified; empty denominator explicitly returns zero
 
 
 def kernel(d_m) -> np.ndarray:
@@ -85,8 +84,10 @@ def max_cover(p: np.ndarray, g: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.
     gy, gx = np.nonzero(idx)
     m = np.zeros(gy.size, dtype=np.float64)
     for dy, dx, kk in OFFSETS:
-        sh = wp[3 - dy:3 - dy + w.shape[0], 3 - dx:3 - dx + w.shape[1]] * kk
-        m = np.maximum(m, sh[gy, gx])
+        # Gather truth coordinates before multiplication: 60k values, not a
+        # 12.28M-cell temporary for every offset. Sign is immaterial to the
+        # symmetric kernel but the zero padding is essential.
+        m = np.maximum(m, wp[gy + 3 - dy, gx + 3 - dx] * kk)
     ed = ndimage.distance_transform_edt(~idx, sampling=PIXEL_M)
     q = np.maximum(1.0 - ed / R_M, 0.0)
     return m, q, ed
@@ -97,8 +98,12 @@ def dti(p: np.ndarray, g: np.ndarray, alpha: float = ALPHA, beta: float = BETA,
     """Exact DTI of prediction ``p`` against truth mask ``g`` (both 2-D, same grid)."""
     p = np.asarray(p, dtype=np.float64)
     g = np.asarray(g)
-    if p.shape != g.shape:
-        raise ValueError(f"shape mismatch {p.shape} vs {g.shape}")
+    if p.shape != g.shape or p.ndim != 2:
+        raise ValueError(f"2D shape mismatch {p.shape} vs {g.shape}")
+    if not np.isfinite(p).all() or (p < 0).any() or (p > 1).any():
+        raise ValueError("predictions must be finite and within [0,1]")
+    if not np.isfinite([alpha, beta, eps]).all() or alpha < 0 or beta < 0 or eps < 0:
+        raise ValueError("metric coefficients and epsilon must be finite and nonnegative")
     ng = int((g > 0).sum())
     if ng == 0:
         return dict(dti=0.0, tpw=0.0, fpw=float(np.nansum(p)), fnw=0.0, n_truth=0,
@@ -111,7 +116,8 @@ def dti(p: np.ndarray, g: np.ndarray, alpha: float = ALPHA, beta: float = BETA,
     fnw = ng - tpw
     num = tpw
     den = tpw + alpha * fpw + beta * fnw + eps
-    reduced = tpw / (alpha * (tpw + mass - m_cover) + beta * ng)
+    reduced_den = (1 - beta) * tpw + alpha * (mass - m_cover) + beta * ng + eps
+    reduced = tpw / reduced_den if reduced_den > 0 else 0.0
     return dict(dti=num / den if den > 0 else 0.0, tpw=tpw, fpw=fpw, fnw=fnw, n_truth=ng,
                 mass=mass, m_covers=m_cover, reduced=float(reduced))
 

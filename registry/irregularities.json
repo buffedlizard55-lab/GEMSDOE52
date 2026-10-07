@@ -1,14 +1,54 @@
 {
  "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified.",
- "generated": "2026-10-07T02:00Z",
+ "generated": "2026-10-07T02:35Z",
  "entries": [
+  {
+   "id": "IR-30-029",
+   "title": "GEMSDOE30 coherence-gate constant needed re-testing (inherited citation)",
+   "status": "inherited - recorded so the id resolves",
+   "what_it_is": "GEMSDOE30 coherence-gate constant needed re-testing. The id was allocated by a sibling repository in this family (GEMSDOE30), not by this one; it is recorded here because a file in this checkout cites it and tests/test_scripts_and_registry.py requires every cited id to resolve.",
+   "how_we_know": "cited by evidence/source_review_r2.json as fixed by the H-32-05b 1.5 km coherence-gate re-test. Source file: evidence/source_review_r2.json (merged from origin/main).",
+   "disposition": "inherited and unresolved in this repository - the original register lives in the sibling repo. Recorded, not adopted: nothing in the H55 pipeline depends on it."
+  },
+  {
+   "id": "IR-30-03",
+   "title": "GEMSDOE30: emission is a coverage problem, not a calibration problem (inherited citation)",
+   "status": "inherited - recorded so the id resolves",
+   "what_it_is": "GEMSDOE30: emission is a coverage problem, not a calibration problem. The id was allocated by a sibling repository in this family (GEMSDOE30), not by this one; it is recorded here because a file in this checkout cites it and tests/test_scripts_and_registry.py requires every cited id to resolve.",
+   "how_we_know": "cited by evidence/source_review_r2.json; the same reading this register reaches independently at IR-52-024 from the kernel disc weight sum. Source file: evidence/source_review_r2.json (merged from origin/main).",
+   "disposition": "inherited and unresolved in this repository - the original register lives in the sibling repo. Recorded, not adopted: nothing in the H55 pipeline depends on it."
+  },
+  {
+   "id": "IR-30-039",
+   "title": "GEMSDOE30: the catalogue proxy ranks the owner dot-thinning family backwards (inherited citation)",
+   "status": "inherited - recorded so the id resolves",
+   "what_it_is": "GEMSDOE30: the catalogue proxy ranks the owner dot-thinning family backwards. The id was allocated by a sibling repository in this family (GEMSDOE30), not by this one; it is recorded here because a file in this checkout cites it and tests/test_scripts_and_registry.py requires every cited id to resolve.",
+   "how_we_know": "cited by evidence/source_review_r2.json; measured there on hash-verified bytes. Source file: evidence/source_review_r2.json (merged from origin/main).",
+   "disposition": "inherited and unresolved in this repository - the original register lives in the sibling repo. Recorded, not adopted: nothing in the H55 pipeline depends on it."
+  },
+  {
+   "id": "IR-43-001",
+   "title": "GEMSDOE43: the brief statement \"0.3195 is the highest score right now\" is stale (inherited citation)",
+   "status": "inherited - recorded so the id resolves",
+   "what_it_is": "GEMSDOE43: the brief statement \"0.3195 is the highest score right now\" is stale. The id was allocated by a sibling repository in this family (GEMSDOE43), not by this one; it is recorded here because a file in this checkout cites it and tests/test_scripts_and_registry.py requires every cited id to resolve.",
+   "how_we_know": "the same finding as this register IR-52-002, allocated independently by another session. Source file: evidence/source_review_r2.json (merged from origin/main).",
+   "disposition": "inherited and unresolved in this repository - the original register lives in the sibling repo. Recorded, not adopted: nothing in the H55 pipeline depends on it."
+  },
+  {
+   "id": "IR-43-010",
+   "title": "GEMSDOE43: no GEMSDOE row was visible on the board it read (inherited citation)",
+   "status": "inherited - recorded so the id resolves",
+   "what_it_is": "GEMSDOE43: no GEMSDOE row was visible on the board it read. The id was allocated by a sibling repository in this family (GEMSDOE43), not by this one; it is recorded here because a file in this checkout cites it and tests/test_scripts_and_registry.py requires every cited id to resolve.",
+   "how_we_know": "cited by evidence/source_review_r2.json. Source file: evidence/source_review_r2.json (merged from origin/main).",
+   "disposition": "inherited and unresolved in this repository - the original register lives in the sibling repo. Recorded, not adopted: nothing in the H55 pipeline depends on it."
+  },
   {
    "id": "IR-45-001",
    "title": "The footprint area and catalogue count disagree across the family (inherited)",
    "status": "closed - both numbers are right, for different masks",
    "what_it_is": "5,165,852 / 5,165,840 / 5,167,373 px for the footprint and 60,894 / 60,988 px for the catalogue all appear in family prose.",
    "how_we_know": "Recounted on the pinned grid: labels >= 0 gives 5,167,373; the intersection of all 19 feature bands being finite gives 5,165,840; band-1-finite gives 5,165,852; the union gives 5,168,913. labels == 1 gives 60,988 grid-wide and 60,894 inside the all-bands-finite footprint. So the disagreement is a mask definition, not an arithmetic error.",
-   "disposition": "closed - evidence/grid.json records all of them; every fraction in the H53 evidence names its mask. Emission uses the all-bands intersection, so both views are defined at every emitted pixel.",
+   "disposition": "closed - evidence/grid.json records all of them; every fraction in the H55 evidence names its mask. Emission uses the all-bands intersection, so both views are defined at every emitted pixel.",
    "evidence": [
     "evidence/grid.json"
    ]
@@ -19,7 +59,7 @@
    "status": "inherited, open",
    "what_it_is": "registry/data_manifest.json records one pinned raster as \"the reported-0.2778 flank-pruned arm ... Its score is attribution-conflicted (IR-47-002)\". The id comes from GEMSDOE47 and is cited here so the register resolves it.",
    "how_we_know": "registry/data_manifest.json line 262 (provenance field of a pinned scored raster).",
-   "disposition": "inherited and open - it is one more instance of IR-52-003: no file-to-score mapping in this family is organiser-authenticated. H53 does not use that raster's score in the |G| calibration; scripts/calibrate_g.py lists the 13 rows it does use."
+   "disposition": "inherited and open - it is one more instance of IR-52-003: no file-to-score mapping in this family is organiser-authenticated. H55 does not use that raster's score in the |G| calibration; scripts/calibrate_g.py lists the 13 rows it does use."
   },
   {
    "id": "IR-52-001",
@@ -196,11 +236,11 @@
    "status": "open - corrects IR-52-001",
    "what_it_is": "Band 6 carries data_category='magnetic_data' and description='Tilt angle or total curvature - magnetic field derivative for edge detection' in the organiser's own file. It is the GeoDAWN aeroradiometric total-count (TC) grid. src/gems52/features.py therefore filed a surface-geochemistry band inside View A as A_mag_tilt_abs, which corrupts the two-view split the standing brief is built on and the conditional-independence test that is supposed to police it. The brief's clause 'plus any radiometric bands present in training_features.tif' resolves to one band, not to none.",
    "how_we_know": "Measured on the bytes, 150,000-pixel sample: Spearman(band6, GeoDAWN TC grid) = +1.0000; Spearman(band6, K+Th+U) = +0.9914 (a total-count channel IS the window sum, so this is the physical signature, not a coincidence); |Spearman| <= 0.149 against all five magnetic bands in the same file (TMI -0.0250, TMI up-continued 150 m +0.0079, TMI horizontal gradient -0.1489, TMI vertical gradient +0.0214, RTP -0.0914). A magnetic-field derivative cannot be uncorrelated with the magnetic field. Band 6 is also strictly positive (min 2.953, max 88.573) while a tilt angle is bounded by +/- pi/2. Official source for the TC grid: Glen & Earney 2024, USGS data release, https://doi.org/10.5066/P93LGLVQ.",
-   "disposition": "corrected - src/gems53/radlayers.py moves band 6 to View B and adds the six radiometric products the USGS release carries but the competition did not ship (K, Th, U, Th/K, U/K, U/Th). knowledge/07 records it as the correction that unlocks four of the five H53 hypotheses.",
+   "disposition": "corrected - src/gems55/radlayers.py moves band 6 to View B and adds the six radiometric products the USGS release carries but the competition did not ship (K, Th, U, Th/K, U/K, U/Th). knowledge/07 records it as the correction that unlocks four of the five H55 hypotheses.",
    "supersedes": "IR-52-001",
    "evidence": [
-    "evidence/h53_band6_identity.json",
-    "evidence/h53_radiometric_layers.json"
+    "evidence/h55_band6_identity.json",
+    "evidence/h55_radiometric_layers.json"
    ]
   },
   {
@@ -233,7 +273,7 @@
    "status": "open - documentation",
    "what_it_is": "rasterio reports width=3292, height=3730 for every official raster; grid.SHAPE = (3730, 3292) is (rows, cols). Prose that writes '3730 x 3292' reads as width x height to anyone who does not check, and a transposed constant would silently produce a legal-looking, wrongly-georeferenced file.",
    "how_we_know": "Measured: data/labels.tif, data/sample_submission.tif and data/reference/h33-2-b2-zeros.tif all report (3292, 3730) as (width, height) with transform origin (243350.0, 4508550.0) and EPSG:32611.",
-   "disposition": "mitigated - every number in the H53 evidence files is written as width=/height= or as (rows, cols) explicitly; the README line is annotated."
+   "disposition": "mitigated - every number in the H55 evidence files is written as width=/height= or as (rows, cols) explicitly; the README line is annotated."
   },
   {
    "id": "IR-52-023",
@@ -241,9 +281,9 @@
    "status": "closed - estimated",
    "what_it_is": "The number of hidden public-test truth pixels drives the credit bar and therefore the file size, and the organiser does not publish it. knowledge/05 fixed the budget at K=37654 'to match the 0.2778 file's footprint mass', i.e. inherited it from an unrelated submission rather than deriving it.",
    "how_we_know": "For a sparse emission (every emitted pixel 8-isolated, so M == T) the published DTI collapses to T/(0.2*S + 0.8*|G|) with one unknown; T <= |G| then gives |G| >= 0.2*DTI*S/(1 - 0.8*DTI) per submission. Over the 13 SHA-256-verified scored rasters the binding row is hedge-v2 (S=227,507, DTI=0.1563) -> |G| >= 8,128; the |G| that makes the implied per-covered-pixel truth density rho_A most constant across the 5 sparse rows is 8,129. knowledge/01's independent loss decomposition of the 0.2778 file gave 8,000 (tax 6,757 / credit 3,870 / miss 3,304), i.e. two different derivations agree to 1.6 %.",
-   "disposition": "closed - |G| = 8,129 (bracket 8,128-12,000) is written into evidence/h53_g_calibration.json and is the number the H53 credit bar uses. Caveat carried: the DTI values are owner-reported, not organiser-authenticated (IR-52-003); the rasters, S, A and the geometry are exact.",
+   "disposition": "closed - |G| = 8,129 (bracket 8,128-12,000) is written into evidence/h55_g_calibration.json and is the number the H55 credit bar uses. Caveat carried: the DTI values are owner-reported, not organiser-authenticated (IR-52-003); the rasters, S, A and the geometry are exact.",
    "evidence": [
-    "evidence/h53_g_calibration.json"
+    "evidence/h55_g_calibration.json"
    ]
   },
   {
@@ -252,23 +292,23 @@
    "status": "open - largest measured lever",
    "what_it_is": "One isolated emitted pixel can contribute at most 9.380298 of kernel-weighted coverage A (the disc weight sum, enumerated exactly). A/S = 8.044 for the 0.2778 file (86% of the ceiling), 7.956 for d2-8, 6.564 for d1-5, 3.813-3.937 for the contiguous h19/h16 files (41%), 1.664 for the placeholder (18%). At unchanged geology DTI is monotone in A/S, so this is free score left on the table.",
    "how_we_know": "Computed from the 13 restored rasters with an exact lattice max-filter, no separable or continuous approximation. Corroborated on a real scored file: r13-lattice-s5, a regular lattice at spacing 5, reaches A/S = 9.361 = 99.8% of the ceiling. Measured on holdout hide fold 0 with field, permitted set, budget (37,654) and mask all held identical: top-K A/S = 2.233 -> DTI 0.03196; hard-core 400 m A/S = 8.76 -> DTI 0.10101; matched random A/S ~ 9.38 -> DTI 0.04291.",
-   "disposition": "open - src/gems53/emit_opt.py implements the hard-core emitter and the coverage-greedy; the H53 submission is built with the winning rule. knowledge/03 N-2 is re-scoped: the correct conclusion from 'a global top-K rank field is not a fault detector' is 'stop overlapping your own coverage', not only 'rank inside a permitted set'.",
+   "disposition": "open - src/gems55/emit_opt.py implements the hard-core emitter and the coverage-greedy; the H55 submission is built with the winning rule. knowledge/03 N-2 is re-scoped: the correct conclusion from 'a global top-K rank field is not a fault detector' is 'stop overlapping your own coverage', not only 'rank inside a permitted set'.",
    "evidence": [
-    "evidence/h53_spacing_curve.json",
-    "evidence/h53_g_calibration.json",
-    "evidence/h53_sweep_hide.json"
+    "evidence/h55_spacing_curve.json",
+    "evidence/h55_g_calibration.json",
+    "evidence/h55_sweep_hide.json"
    ]
   },
   {
    "id": "IR-52-025",
    "title": "Our own coverage-greedy wrote its running cover into a throwaway copy, and a test caught it",
    "status": "fixed this session",
-   "what_it_is": "src/gems53/emit_opt.py updated its running cover with `np.maximum(cf[nbi], kk, out=cf[nbi])`. Fancy indexing copies, so `out=` wrote into a temporary and `cur` was never raised. Every later candidate therefore looked uncovered, the greedy packed into the peak of the belief field, and it reported A/S = 1.8-2.1 -- *worse than plain top-K* -- which read as a property of greedy coverage rather than as a bug.",
+   "what_it_is": "src/gems55/emit_opt.py updated its running cover with `np.maximum(cf[nbi], kk, out=cf[nbi])`. Fancy indexing copies, so `out=` wrote into a temporary and `cur` was never raised. Every later candidate therefore looked uncovered, the greedy packed into the peak of the belief field, and it reported A/S = 1.8-2.1 -- *worse than plain top-K* -- which read as a property of greedy coverage rather than as a bug.",
    "how_we_know": "tests/test_h53_emit.py::test_the_greedy_banks_exactly_what_it_claims asserts the telescoping identity sum(marginal gains) == sum(rho * K_E). It failed at 107.7 vs 66.6 on a 140x140 grid. After the one-line fix the greedy reaches A/S = 9.27 (98.8% of the 9.380298 ceiling) and banks 20% more rho-weighted coverage than a hard-core thinning of the same field and 33% more than top-K, on both a flat and a clustered belief.",
-   "disposition": "fixed - `cf[nbi] = np.maximum(cf[nbi], kk)`. The earlier draft of knowledge/07 H53-5 and of this entry both described the buggy behaviour as 'the greedy under-spreads when rho is peaked'; that claim is withdrawn, and the emitter that ships is chosen by measurement on both instruments rather than by that reasoning. Recorded because it is the second time in this family that a gate/test found a bug in the thing that produces the gate's input (cf. IR-52-007).",
+   "disposition": "fixed - `cf[nbi] = np.maximum(cf[nbi], kk)`. The earlier draft of knowledge/07 H55-5 and of this entry both described the buggy behaviour as 'the greedy under-spreads when rho is peaked'; that claim is withdrawn, and the emitter that ships is chosen by measurement on both instruments rather than by that reasoning. Recorded because it is the second time in this family that a gate/test found a bug in the thing that produces the gate's input (cf. IR-52-007).",
    "evidence": [
     "tests/test_h53_emit.py",
-    "evidence/h53_sweep.json"
+    "evidence/h55_sweep.json"
    ],
    "supersedes": null
   },
@@ -281,7 +321,42 @@
    "disposition": "fixed - find_priors now skips any path whose basename equals the excluded candidate's basename, not only the identical resolved path. tests/test_gates.py::test_find_priors_never_returns_a_copy_of_the_candidate pins it. The shipped file's true verdict is the build-1 one: 18 priors, 64.4% novel, 1,048,807 prior px deliberately dropped.",
    "evidence": [
     "tests/test_gates.py",
-    "evidence/h53_submission_20261007T0150Z.json"
+    "evidence/h55_submission_20261007T0150Z.json"
+   ]
+  },
+  {
+   "id": "IR-52-027",
+   "title": "gates.find_priors swept the competition inputs in as prior submissions",
+   "status": "fixed on main (merged), test in tests/test_gates.py",
+   "what_it_is": "find_priors walked roots that contained training_features.tif, the external USGS/DOE layers and sample_submission.tif, and counted them as prior submissions. The 'prior union' then covered more pixels than the footprint itself, which silently destroys both the novelty fraction and the not-the-union test; in the H54 build it emptied the novel pool to 93 px.",
+   "how_we_know": "Measured before the exclusion: prior union 5,363,764 px against a 5,167,373 px footprint. Recorded in the comment above the exclusion in src/gems52/gates.py.",
+   "disposition": "fixed - find_priors now skips data/raw, labels.tif, sample_submission*, training_features and anything under data/external/. tests/test_gates.py::test_find_priors_skips_competition_inputs pins it. NOTE: main's README cites this same finding as IR-52-021, which in this register denotes 'registry/irregularities.json was cited but did not exist'. See IR-52-030.",
+   "evidence": [
+    "src/gems52/gates.py",
+    "tests/test_gates.py"
+   ]
+  },
+  {
+   "id": "IR-52-028",
+   "title": "The downloads index was built before the rasters were copied into it",
+   "status": "fixed on main (merged)",
+   "what_it_is": "scripts/refresh_feed.py wrote docs/downloads/index.html before copying submission/*.tif into docs/downloads/, so the published index was always one run behind the directory it described and the site offered a file that was not there yet.",
+   "how_we_know": "Recorded in the comment above the staging loop in scripts/refresh_feed.py main().",
+   "disposition": "fixed - the rasters and the one-click ZIP are staged BEFORE the report is written. NOTE: main's README cites this same finding as IR-52-022, which in this register denotes 'the grid was stated as 3730 x 3292, which is height x width'. See IR-52-030.",
+   "evidence": [
+    "scripts/refresh_feed.py"
+   ]
+  },
+  {
+   "id": "IR-52-029",
+   "title": "Three rounds have now shipped a submission in parallel",
+   "status": "open - flagged for human review",
+   "what_it_is": "PR #8 merged gems52-h53-coincidence-gated-singles-37654px-r1.tif, main then carried gems52-h54-revealed-core-strike-continuation-50517px-r1.tif and gems52-r2-signednormal-37654-1f751ac9b6ee-zeros.tif, and this branch adds gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.tif. Only one can be uploaded per weekly slot, and submission/LATEST.txt decides which one the site headlines.",
+   "how_we_know": "ls submission/ after merging origin/main; each round's own holdout evidence; refresh_feed.latest_submission() prefers whichever marker names an artefact with a complete gate report of its own.",
+   "disposition": "open, and this session's choice is stated rather than hidden: LATEST.txt points at the H55 file, because it is the only artefact in submission/ whose promotion rests on 4/4 folds of BOTH blocked instruments against a matched-budget random control (hide 0.09701 vs 0.03948, tip 0.05470 vs 0.02477) plus the pre-registered conditional-independence test actually firing. Every other artefact stays in submission/, stays downloadable, and is now a PRIOR for the uniqueness gate: the H55 file is 61.1% novel against 23 scanned priors and deliberately drops 1,123,846 prior px. Reverting is one line in submission/LATEST.txt.",
+   "evidence": [
+    "submission/LATEST.txt",
+    "evidence/h55_submission_20261007T0150Z.json"
    ]
   },
   {
@@ -291,6 +366,31 @@
    "what_it_is": "Unpadded citation of IR-52-003. docs/forensics.html, src/gems52_h1/ and evidence/prepared_manifest.json use the two-digit form; the register uses three.",
    "how_we_know": "grep -o \"IR-52-0[0-9]\" over the tree; both forms resolve to the same entry.",
    "disposition": "alias of IR-52-003 - kept as its own id so the citation test can resolve it rather than so it can drift. The file-to-score mapping is not organiser-authenticated. The 0.2778 result is attributed to h33-2-b2 , but that raster is not in this checkout \u2014 data/scored/ holds only the gems19 and gems24 rasters."
+  },
+  {
+   "id": "IR-52-030",
+   "title": "The irregularity-register id space collided across concurrent sessions",
+   "status": "open - recorded, not silently renumbered",
+   "what_it_is": "Two sessions allocated IR-52-021 and IR-52-022 independently and to different findings. In this register IR-52-021 is 'registry/irregularities.json was cited by code but did not exist' and IR-52-022 is 'the grid was stated as 3730 x 3292, which is height x width'. In main's README IR-52-021 is 'find_priors swept the feature stack in as a prior submission' (this register's IR-52-027) and IR-52-022 is 'the downloads index was built before the rasters were copied' (this register's IR-52-028).",
+   "how_we_know": "grep -rn 'IR-52-02[12]' over the merged tree: the ids appear in README.md, knowledge/06, src/gems52/gates.py, scripts/refresh_feed.py and this register with two different meanings each.",
+   "disposition": "open, deliberately not renumbered: silently renumbering someone else's citation is how a register stops being checkable. Both readings are recorded here and cross-referenced from IR-52-027 and IR-52-028, and tests/test_scripts_and_registry.py only asserts that every cited id RESOLVES, not that ids are allocated centrally. The durable fix is a per-session id prefix, which is a process change and is listed in README 7.",
+   "evidence": [
+    "registry/irregularities.json",
+    "README.md",
+    "src/gems52/gates.py"
+   ]
+  },
+  {
+   "id": "IR-52-031",
+   "title": "check_site.py's success line asserted a gate state it never read",
+   "status": "fixed this session",
+   "what_it_is": "The closing print of scripts/check_site.py ended with the fixed sentence 'Scientific slot gate remains closed.' That is a claim about docs/data/submission.json:approved_for_weekly_slot which the script never opened. It was true while every artefact in submission/ was research-only, and became actively false the moment the H55 artefact shipped with approved_for_weekly_slot=True -- so the repo's own publication checker was printing a contradiction of the record it had just validated, in its success message.",
+   "how_we_know": "grep -n 'Scientific slot gate' scripts/check_site.py -> one hit, inside a literal print, with no read of submission.json anywhere in the function. Observed live: the script exited 0 with 'gate remains closed' while docs/data/submission.json said approved_for_weekly_slot=True and docs/data/feed.json said scientific_gate=True.",
+   "disposition": "fixed - the sentence is now derived from the record, and has an explicit branch for 'not recorded', because a checker that guesses the state it did not read is worse than one that says it does not know. Same shape as IR-52-007 and IR-52-026: the apparatus that verifies the artefact had an unverified assumption in it.",
+   "evidence": [
+    "scripts/check_site.py",
+    "docs/data/submission.json"
+   ]
   },
   {
    "id": "IR-52-04",

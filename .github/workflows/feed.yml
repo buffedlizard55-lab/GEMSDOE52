@@ -1,17 +1,10 @@
 name: Refresh competition feed
 
-# This is what makes the site self-maintaining: nobody has to remember to check the leaderboard.
-# The runner is a GitHub-hosted machine with normal internet egress, which this workspace does not
-# have (drivendata.org is unreachable from the sandbox - see knowledge/06), so the *live* fetch has
-# to happen here rather than in the analysis environment.
-#
-# The workflow never fabricates: if the page cannot be fetched or parsed it commits the previous
-# snapshot with a loud `fetch_ok: false`, and the site renders that as a warning. The failure is also
-# raised as a workflow error so a broken schedule cannot rot silently.
-#
-# It commits ONLY `docs/data/` (the feed).  It deliberately never touches `docs/downloads/` or
-# `submission/`: publishing a new candidate raster has to stay a human decision, because a submission
-# slot is spent once a week and cannot be recalled.
+# Self-maintaining LOCAL evidence feed, not unauthorized leaderboard scraping.
+# DrivenData Terms prohibit automatic access; the last dated board observation
+# is retained honestly until documented permission/a sanctioned API exists.
+# Commits ONLY docs/data/. Never trains/promotes a model or spends any of the
+# competition's three weekly submission slots.
 
 on:
   schedule:
@@ -44,9 +37,9 @@ jobs:
       # No dependencies: scripts/refresh_feed.py is stdlib-only (urllib), on purpose, so a scheduled
       # refresh cannot fail on a package index.
 
-      - name: Refresh the feed, fetching the live board when reachable
+      - name: Refresh the feed from audited local evidence
         run: |
-          python scripts/refresh_feed.py --fetch || echo "fetch_failed=1" >> "$GITHUB_ENV"
+          python scripts/refresh_feed.py --branch "${{ github.ref_name }}" || echo "fetch_failed=1" >> "$GITHUB_ENV"
 
       - name: Show what changed
         run: |
@@ -92,8 +85,8 @@ jobs:
             echo "feed unchanged; nothing to commit"
           fi
 
-      - name: Fail loudly if the live fetch did not work
+      - name: Fail loudly if the evidence feed did not update
         if: env.fetch_failed == '1'
         run: |
-          echo "::error::refresh_feed.py --fetch failed; the site is still showing the previous snapshot."
+          echo "::error::Local evidence refresh failed. No fresh external observation is claimed."
           exit 1

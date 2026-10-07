@@ -1,3 +1,5 @@
+> **Historical report — superseded where contradicted by R2.** See `09_r2_review.md` and `evidence/reference_forensics_r2.json`. In particular: known pixels do not pay penalties; H33 removed off-catalogue flanks; the old OOF independence report contained no negative predictions; hidden prevalence and a 0.464 ceiling are not established.
+
 # 06 · Provenance and the irregularities register
 
 The machine-readable twin of this file is `docs/irregularities.html`; this note is the version that keeps
@@ -22,6 +24,15 @@ the *reasoning* about each item, because a register without reasoning gets re-li
 has 19 bands, none radiometric. Any feature builder that silently emits `B_gr`-like channels is wrong.
 *Mitigated*: features are checked against the published inventory.
 
+**IR-52-011a — the standing brief's View-B definition names "any radiometric bands in `training_features.tif`".**
+Read strictly the clause is conditional, and the condition is false: the official file carries 19 bands and
+none is radiometric (`IR-52-001`, `evidence/band_inventory.json`). The conditional is therefore satisfied
+vacuously, not contradicted — but a builder that reads only the brief will look for bands that do not exist.
+*Resolved*: View B takes radiometry from the GeoDAWN external bundle (`data/external/geodawn_rad_u8.tif`,
+4 bands: K, Th, TC and the Th/K ratio, plus `geodawn_extensions_u8.tif` band 1), hash-pinned in
+`registry/data_manifest.json`; the code path is `src/gems52/dicoincidence.py::CHANNELS` family
+``radiometric``.
+
 **IR-52-002 — "0.3195 is the highest score right now" is stale.** It is rank #7 (DARD). The live top is
 0.3774 (xiaofanhu, 11 submissions), so the gap the group must close is 0.0996, not 0.0385. We flag the
 user's number rather than adopting it, because acting on a remembered board is how a team optimises a
@@ -32,6 +43,42 @@ shows a team and a number, and nothing else. The 0.2778 attribution to `h33-2-b2
 where the *mechanism* is what matters (deleting 6.3 % of one's own mass, all of it overlapping the mask,
 raised DTI 2.6 %), and the file itself is not in the checkout. Stated on the site in the same breath as the
 number.
+
+**IR-52-020 — the session-2 brief's "0.3195 is the highest score right now" is the *brief's* number, and the
+board says 0.3774.** This is the same disagreement as **IR-52-002** (where it is recorded as a stale user
+number); it is listed again under the number the brief itself uses, `IR-52-020`, so that a reviewer holding
+the brief and this register side by side can find the entry without having to know our internal numbering.
+Both readings are true of different moments: 0.3195 is a real row (rank #7, DARD, 10 submissions) in
+`registry/leaderboard_snapshot_2026-10-06.json`, and 0.3774 is the live #1 (xiaofanhu, 11 submissions) in
+the same fetch. The operational consequence is the one already recorded: the gap to close is 0.0996, not
+0.0385, and any target quoted from a memory rather than a fetch is treated as stale.
+
+**IR-52-022 — we overwrote our own uncommitted work, and recovered it from the bytecode.** The H53-1
+detector was written earlier in this session but never committed. While restoring it, two of its files were
+replaced by rewrites: `src/gems52/structure.py` (overwritten by a draft with a different API, which broke
+`dicoincidence.py` and `tests/test_structure.py` until noticed) and `scripts/validate_h53.py` +
+`scripts/h53_detect.py` (replaced by this session's rewritten versions of the same procedure).
+*Recovery, and its limits*: `structure.py` was recovered from the module's verified bytecode
+(`src/gems52/__pycache__/structure.cpython-311.pyc`, compiled from the pre-overwrite source — the pyc records
+the source's size and mtime, both of which match the lost file and not the draft), including its docstrings
+and numerical steps; the reconstruction is checked **behaviourally** against the loaded bytecode module on
+synthetic line/noise/mixed fields (max absolute difference < 1e-6 on energy, coherence, azimuth and the
+along-strike persistence), and the one latent defect in the lost source (`with_lambda=True` referenced
+unbound globals `lam1`/`lam2`) is fixed rather than reproduced. The two scripts are **not** recoverable —
+they had no bytecode cache — so what survives of the pre-registered H53 gate is its rule, recorded in
+`registry/preregistration_h53.json` with an explicit provenance note and the timestamps that show the gate
+ran before the submission was written. The mitigation is the obvious one and is this session's action: the
+whole H53 module set and its scripts are committed in the PR that closes this session, so a later rewrite
+cannot destroy work that the repository already holds.
+
+**IR-52-021 — the brief's "single remaining blocker to training is data placement" is stale in this
+checkout.** That sentence describes the state of a *different* sibling checkout. Here `scripts/restore_data.py`
+has already run to completion: `data/restore_receipt.json` exists, `ALL_VERIFIED=True`, 23 sha256 pins
+verified, 907 MB of rasters present (`training_features.tif` 418,912,844 B, `labels.tif` 425,830 B,
+`sample_submission.tif` 1,599,597 B). No `download_competition_data.sh` run is needed or possible from this
+sandbox (egress-restricted). Consequence: any session that re-runs the restore or treats data placement as
+the blocker is spending its budget on a solved problem — the real binders are the weekly submission limit
+and the fact that the only offline truth is the catalogue itself.
 
 **IR-52-004 — the rules document's host differs from the brief's citation.** `docs.nlr.gov` is cited; the
 document resolves at `www.nlr.gov/docs/fy26osti/96647.pdf`. Not a contradiction, but a link that a human
@@ -136,53 +183,141 @@ from `evidence/`, which we generate ourselves, and is genuinely regenerated on e
 a data endpoint the organiser publishes; guessing at one is not a fix, so the status line stays visible
 instead.
 
-## 5. Added by H53 (2026-10-07)
+---
 
-The machine-readable register now exists: **`registry/irregularities.json`**, 32 entries. It was
-cited by `src/gems52/features.py` from the day that file was written and did not exist until this
-session (IR-52-021); `tests/test_scripts_and_registry.py` now fails if any id cited anywhere in the
-tree is absent from it, so the reference cannot dangle again.
+## Additions from the H53 round (2026-10-07)
+
+The register on [the site](../docs/irregularities.html) is authoritative and is generated by
+`scripts/make_site_pages.py`; these are the one-line summaries so that `knowledge/` does not send a
+reader to HTML for a fact.
+
+**IR-52-017 — the validation instrument does not predict the organiser's score.** Spearman
+ρ(reported, simulated DTI) = −0.1045, p = 0.734, n = 13 over every restored scored file. The group's
+best file on the board ranks *last* of 13 on the instrument (lift 0.09× mass-matched random) and the
+file the instrument ranks first scored 0.1563. Full measurement and the confound that was checked and
+excluded: `knowledge/03` N-9. **Every selection made through that gate inherits the defect**, including
+the `promoted: false, forced: true` decision recorded in `docs/data/submission.json` for the H52 file.
+
+**IR-52-018 — the ≤200 m ring around the mapped catalogue earns exactly zero credit.**
+`h33-2-b2` (0.2778) ⊂ `gems24-d2-8` (0.2600); the 6,436 px difference lies entirely inside 200 m of a
+mapped trace and deleting it *raised* the score 6.8 %. `min` distance-to-catalogue inside `h33-2-b2` is
+223.6 m, so it holds 0 px in the ring. This **contradicts** `knowledge/01` §5 item 2 and `knowledge/02`
+H52-2, which made ranking that ring the primary emitter arm; §5 item 2 is now struck through with the
+measurement. The staff claim that the mask is pixel-exact survives as a statement; the bytes say scoring
+behaves as if there were a ~2 px ring, or as if the hidden truth never comes within 200 m. Both readings
+give the same rule and the bytes cannot separate them.
+
+**IR-52-019 — no feature available here re-ranks inside the champion file.** Best blocked AUC on the
+credited-vs-uncredited contrast: 0.5453 over 63 point/local-differential features (the maximum of 63
+tests), 0.5122 over 108 structure-tensor features. Habitat is strongly identifiable (AUC 0.7023 for the
+champion's dots against uniform random) and strongly useless — the tiers carrying 4–20× less credit have
+habitat AUCs of 0.68–0.70. `knowledge/03` N-10, N-11. Consequence: `ρ_novel` is a stated prior, never a
+point estimate.
+
+**IR-52-020 — a per-block AUC of 1.000 over n = 3 samples** appeared in the first H53 build. Blocks now
+carry `counted_in_mean` (n ≥ 500) and the mean uses only counted blocks; the raw list is kept.
+`knowledge/03` N-13.
+
+**IR-52-021 — `gates.find_priors` treated competition inputs as prior submissions.** Sweeping a root
+containing `data/training_features.tif` read band 1 of a 19-band feature stack as somebody's answer and
+produced a "prior union" of 5,363,764 px against a 5,167,373 px footprint, which silently emptied the
+novel-pixel pool to 93 px. Fixed with a `NOT_A_SUBMISSION` skip list plus
+`tests/test_gates.py::test_find_priors_skips_competition_inputs`; the union is now 1,062,207 px over 18
+real prior rasters.
+
+**IR-52-022 — the downloads index was always one run behind the downloads directory.**
+`refresh_feed.py` built `docs/downloads/index.html` before copying rasters into it, so the current
+submission was on disk and absent from the table — the "download the file and submit it" promise pointed
+at the previous round's artefact. Rasters are now staged first, and a one-click ZIP (raster + the note to
+paste + the evidence JSON) is written beside the TIF.
+
+**Carried forward, unchanged and still open:** IR-52-003 (no file→score mapping is
+organiser-authenticated — every number in `knowledge/07` inherits this), IR-52-008 (there is no
+radiometric band *in `training_features.tif`*; the radiometrics are the external
+`geodawn_rad_u8.tif` / `geodawn_extensions_u8.tif` layers, which is what the brief's conditional clause
+resolves to here), IR-52-009 (the external GDR CSVs are derived, not organiser-authenticated),
+IR-52-016 (the scheduled board fetch reaches the page and reads nothing, because the table is built
+client-side; the site therefore serves a dated snapshot and says so).
+
+**IR-52-029 — two rounds shipped a submission in parallel, and this site now offers the later one.**
+PR #8 merged to `main` while the H54 round was running, shipping
+`gems52-h53-coincidence-gated-singles-37654px-r1.tif` (cross-dataset orientation coincidence, promoted on
+the tip/hide instruments at +21 % / +28 % over the repo's previous best at that budget). This round ships
+`gems52-h54-revealed-core-strike-continuation-50517px-r1.tif` and `submission/LATEST.txt` now points at
+it. **That is one session's judgement call over another's shipped artefact, so it is flagged rather than
+made quietly.**
+
+The reason is a measurement, not a preference: `knowledge/03` N-9 / `IR-52-023` establish that the tip and
+hide instruments carry no information about the organiser's score (Spearman ρ(reported, simulated DTI) =
+−0.1045, p = 0.734, n = 13 over every restored scored file; the group's best file on the board ranks
+*last* of the 13 on them). A promotion earned on those instruments is therefore not evidence about the
+score. The H54 file's retained half rests on a different kind of claim — exact arithmetic on five scored
+files standing in verified nesting relations, giving `t(A & C) ∈ [4,168, 5,223]` and hence
+`DTI(core alone) ∈ [0.2546, 0.3190]` — which does not depend on any simulator being right.
+
+Neither artefact is deleted. Both stay in `submission/`, both stay listed on the download page with their
+own gate verdicts, and the H53 code, evidence and hypotheses keep their numbering (this round is
+renumbered **H54**, `knowledge/10` and `knowledge/11`, precisely so that it does not collide). The H53
+raster also becomes a *prior* for the uniqueness gate: measured prior union 1,117,016 px over 21 rasters,
+novel pool 440,798 px, **0** collisions between the H54 novel mass and any prior pixel.
+
+**Reverting is one line** — point `submission/LATEST.txt` back at the H53 file and re-run
+`scripts/refresh_feed.py`. Nothing else in the repo depends on which of the two is offered.
+
+## 6. Added by H55 (2026-10-07)
+
+The machine-readable register **`registry/irregularities.json`** now exists — 41 entries. It was cited by
+`src/gems52/features.py` from the day that file was written and did not exist until this session
+(IR-52-021); `tests/test_scripts_and_registry.py` fails if any id cited anywhere in the tree is absent from
+it, so the reference cannot dangle again.
 
 | id | what | status |
 |---|---|---|
-| IR-52-019 | band 6 of the organiser's own feature file is radiometric total count, mis-tagged `magnetic_data` / "tilt angle or total curvature". **Corrects IR-52-001**, which asserted there is no radiometric band. | open — corrected in `src/gems53/radlayers.py` |
-| IR-52-020 | `download_competition_data.sh` passed `--group all`, a flag `restore_data.py` does not accept, so the documented one-command data placement exited 2 before fetching anything | **fixed** + test |
+| IR-52-019 | band 6 of the organiser's own feature file is radiometric total count, mis-tagged `magnetic_data` / "tilt angle or total curvature". **Corrects IR-52-001** | open — corrected in `src/gems55/radlayers.py` |
+| IR-52-020 | `download_competition_data.sh` passed `--group all`, which `restore_data.py` does not accept, so the documented one-command data placement exited 2 before fetching anything | **fixed** + test |
 | IR-52-021 | `registry/irregularities.json` cited by code, never created | **fixed** + test |
-| IR-52-022 | prose said "3730 × 3292", which is height × width; rasterio reports width 3292, height 3730 | mitigated — every H53 number names its axis |
+| IR-52-022 | prose said "3730 × 3292", which is height × width; rasterio reports width 3292, height 3730 | mitigated |
 | IR-52-023 | \|G\| not published, and the H52 budget was inherited from an unrelated submission rather than derived | **closed** — \|G\| ≥ 8,128, estimate 8,129 |
-| IR-52-024 | the family's best file spent 85.8 % of the kernel's placement ceiling; its contiguous ancestors spent 41 % | open — largest measured lever |
-| IR-52-025 | **our own bug, found by our own test**: the coverage-greedy's running cover was updated through a fancy-indexed `out=`, i.e. into a throwaway, so it reported `A/S` 1.8–2.1 — worse than top-K — and that was mistaken for a property of greedy coverage. The claim is withdrawn. | **fixed** + test |
-| IR-52-026 | **our own bug, found by our own gate**: `gates.find_priors` scanned `docs/downloads/`, where `refresh_feed.py` stages the built raster, so the candidate was compared against a copy of itself and the gate reported `identical-to-a-prior`, novel 0 — the one false verdict that blocks a legitimate submission | **fixed** + test |
+| IR-52-024 | the family's best file spent 85.8 % of the kernel's placement ceiling; its contiguous ancestors 41 % | open — largest measured lever |
+| IR-52-025 | **our own bug, found by our own test**: the coverage-greedy's running cover was updated through a fancy-indexed `out=`, i.e. into a throwaway, so it reported `A/S` 1.8–2.1 — worse than top-K — and that was mistaken for a property of greedy coverage. Claim withdrawn | **fixed** + test |
+| IR-52-026 | **our own bug, found by our own gate**: `find_priors` scanned `docs/downloads/`, where `refresh_feed.py` stages the built raster, so the candidate was compared against a copy of itself → `identical-to-a-prior, novel = 0` | **fixed** + test |
+| IR-52-027 | *(from main)* `find_priors` swept `training_features.tif` and the external layers in as prior submissions, giving a "prior union" of 5,363,764 px against a 5,167,373 px footprint | fixed on main; **main's README cites this as IR-52-021** — see IR-52-030 |
+| IR-52-028 | *(from main)* the downloads index was built before the rasters were copied into it, so it was always one run behind | fixed on main; **main's README cites this as IR-52-022** — see IR-52-030 |
+| IR-52-029 | three rounds have now shipped a submission in parallel; `submission/LATEST.txt` decides which one the site headlines | open, flagged — this session's choice and its reason are recorded in the entry |
+| IR-52-030 | **the register's id space collided across concurrent sessions**: IR-52-021 and IR-52-022 denote different findings in this register and in main's README | open, deliberately **not** renumbered — both readings recorded and cross-referenced |
+| IR-52-031 | `check_site.py`'s success line asserted "Scientific slot gate remains closed" — a claim about `approved_for_weekly_slot` it never read, which became actively false the moment an artefact shipped with that flag `True` | **fixed** — derived from the record, with an explicit "not recorded" branch |
 | IR-45-001 | footprint/catalogue counts disagreeing across the family are a **mask definition**, not arithmetic: `labels ≥ 0` → 5,167,373 / 60,988; all-19-bands-finite → 5,165,840 / 60,894 | closed |
+| IR-30-03, IR-30-029, IR-30-039, IR-43-001, IR-43-010 | ids allocated by sibling repositories and cited by `evidence/source_review_r2.json`; recorded so every cited id resolves, **not adopted** — nothing in the H55 pipeline depends on them | inherited |
 
-Three of the eight (IR-52-020, IR-52-025, IR-52-026) are bugs in code, and two of those three are
-bugs in code written *this session*, found by tests written *this session*. That is the register
-working, not the register being depressing: IR-52-007 was the same shape last session (the gate found
-a bug in the thing that writes the gate's input), and in both cases the alternative was shipping it.
+Six of these (IR-52-020, 021, 025, 026, 030, 031) concern the *apparatus* rather than the geology, and
+three of those six are bugs in code written this session, found by tests or by the apparatus itself this
+session. That is the register
+working: IR-52-007 was the same shape last session (the gate found a bug in the thing that writes the gate's
+input), and in both cases the alternative was shipping it.
 
-### What is verified how, H53 additions
+### What is verified how — H55 additions
 
 | claim | verification | strength |
 |---|---|---|
-| band 6 is radiometric total count | 150,000-px Spearman against the independently reduced USGS GeoDAWN TC grid (+1.0000), against K+Th+U (+0.9914) and against all five magnetic bands in the same file (\|ρ\| ≤ 0.149); plus the sign/range argument. `evidence/h53_band6_identity.json` | **strong** — two independent sources agree exactly, and the physics (TC = window sum) is what the second correlation measures |
-| the GeoDAWN radiometric release is official, free and public domain | USGS ScienceBase item 657e1d85d34e23d3533209f7 read live 2026-10-06: Glen, J.M.G., and Earney, T.E., 2024, *GeoDAWN: Airborne magnetic and radiometric surveys of the northwestern Great Basin, Nevada and California*, USGS data release, https://doi.org/10.5066/P93LGLVQ | **strong** |
-| the INGENIOUS well/spring database is official, free and CC-BY | GDR submission 1391 read live 2026-10-06, DOI 10.15121/1881483, licence CC-BY 4.0, file URL resolves. This **discharges the blocker** `knowledge/02` H52-5 recorded | **strong** — the blocker was "host unreachable", and it is reachable |
-| \|G\| ≥ 8,128 | inversion of the published metric on 13 SHA-256-verified rasters; the geometry (`S`, `A`, sparsity) is exact because the bytes are pinned; the DTI values are owner-reported | **medium-strong** — arithmetic is exact, one input is second-hand (IR-52-003) |
-| placement gain +216 % on `hide` fold 0 | one field, one permitted set, one budget, one mask, one fold, two emitters, the tested metric | **strong for the fold** — and explicitly *not* a board forecast |
-| `A_only` is below random on both instruments | 4 folds × 2 instruments, matched-budget random in the same permitted set | **strong** |
-| the thermal layer is neutral | selection-sum margin 0.00003 over the identical field without it | **strong as a null result**; the layer is carried, not credited |
+| band 6 is radiometric total count | 150,000-px Spearman against the independently reduced USGS GeoDAWN TC grid (+1.0000), against K+Th+U (+0.9914), and against all five magnetic bands in the same file (\|ρ\| ≤ 0.149); plus the sign/range argument. `evidence/h55_band6_identity.json` | **strong** — two independent sources agree exactly, and the physics (TC = window sum) is what the second correlation measures |
+| the GeoDAWN release is official, free, public domain | USGS ScienceBase item 657e1d85d34e23d3533209f7 read live 2026-10-06: Glen & Earney 2024, https://doi.org/10.5066/P93LGLVQ | **strong** |
+| the INGENIOUS well/spring database is official, free, CC-BY | GDR submission 1391 read live 2026-10-06, DOI 10.15121/1881483, file URL resolves. **Discharges the blocker** `knowledge/02` H52-5 recorded | **strong** — the blocker was "host unreachable", and it is reachable |
+| \|G\| ≥ 8,128 | inversion of the published metric on 13 SHA-256-verified rasters; geometry exact, DTI owner-reported | **medium-strong** — arithmetic exact, one input second-hand |
+| placement gain +216 % on `hide` fold 0 | one field, one permitted set, one budget, one mask, one fold, two emitters, the tested metric | **strong for the fold**, explicitly not a board forecast |
+| `A_only` below random on both instruments | 4 folds × 2 instruments, matched-budget random in the same permitted set | **strong** |
+| the conditional-independence premise is refuted | 40 usable blocks of 62, 4/4 folds, both instruments, the statistic the pre-registration named | **strong for that statistic**; the FAR statistic disagrees and is printed beside it |
+| the thermal layer is neutral | selection-sum margin 0.00003 over the identical field without it | **strong as a null result** |
+| the shipped bytes are what the record says | `scripts/verify_h55.py` re-reads the file: 22/22 checks, `PASS3_ALL_OK=True` | **strong** |
 
-### What would change our mind, H53 version
+### What would change our mind — H55 version
 
-1. A larger budget on the *board*. The fold `T(S)` curve is still rising at 70,000 px on `hide`
-   (0.0885 at 70k vs 0.0920 at 50k vs 0.0911 at 37,654 — i.e. flat, not rising), and the selection
-   rule preferred the smaller mass on a near-tie. If a 60–80 k file scores higher than this one, the
-   fold curve is the thing that misled us and it should be re-derived at board prevalence rather than
-   at 0.2 %.
-2. View A becoming promotable at a coarser cell. N-10 excludes it at 100 m, which is the scale the
-   metric scores; it does not exclude a 300 m potential-field product used to *gate* a 100 m surface
-   detection, which is a different experiment and has not been run.
-3. A coherence floor below 0.30 on the thermal strike walk, which would lengthen the traces. At 0.30
-   only 3,340 cells survive; the median coherence over the footprint is 0.106, so the floor is doing
-   nearly all the work and its value was set by inspection, not by a sweep. That is the weakest
-   tuned constant in the shipped pipeline and it is named here so nobody has to find it.
+1. A 60–80 k file scoring higher than this one. The fold `T(S)` curve is flat over 37,654–70,000 px, and the
+   selection rule preferred the smaller mass on a near-tie; if the larger budget wins on the board, the fold
+   curve misled us and should be re-derived at board prevalence (0.157 %, not 0.2 %).
+2. View A becoming promotable at a coarser cell. N-15 excludes it at 100 m, which is the scale the metric
+   scores; it does not exclude a 300 m product used to *gate* a 100 m surface detection.
+3. A coherence floor below 0.30 on the thermal strike walk. At 0.30 only 3,340 cells survive and the median
+   coherence is 0.106, so the floor is doing nearly all the work — and its value was set by inspection, not
+   by a sweep. That is the weakest tuned constant in the shipped pipeline, named here so nobody has to find it.
+4. An organiser answer to forum thread 11527, or to a question about the public test set's truth-pixel count
+   or whether out-of-footprint mass is taxed. Either would replace an estimate with a measurement.
