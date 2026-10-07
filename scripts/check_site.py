@@ -70,6 +70,52 @@ class Scan(HTMLParser):
             self.scratch.append(data)
 
 
+def check_h57_creditcore(DATA, DOCS, ROOT, notes):
+    """The H57 credited-core alternate: verify its bytes, gates and page, never its promotion.
+
+    It is published beside the union arm and must never silently take the current pointer; this
+    check therefore asserts the pointer still names a different file and that the alternate's own
+    receipts agree with its bytes.
+    """
+    import hashlib
+    import json as _json
+    problems = []
+    receipt_path = DATA / "submission_h57_creditcore.json"
+    if not receipt_path.exists():
+        return []
+    r = _json.loads(receipt_path.read_text())
+    name = str(r.get("file", ""))
+    dl = DOCS / "downloads" / name
+    src = ROOT / "submission" / name
+    sha = hashlib.sha256(dl.read_bytes()).hexdigest() if dl.exists() else None
+    if not name.startswith("gems57-h57-credit-core"):
+        problems.append("H57 alternate: unexpected file name")
+    if sha != r.get("sha256") or (not src.exists() or hashlib.sha256(src.read_bytes()).hexdigest() != sha):
+        problems.append("H57 alternate: published bytes differ from its receipt")
+    current = _json.loads((DATA / "submission.json").read_text()) if (DATA / "submission.json").exists() else {}
+    if current.get("file") == name:
+        problems.append("H57 alternate: it must not silently be the current pointer")
+    fmt, uni = r.get("format_gate") or {}, r.get("uniqueness") or {}
+    if not fmt.get("ok") or fmt.get("problems") or fmt.get("mass_outside_footprint"):
+        problems.append("H57 alternate: format gate receipt missing or failed")
+    if not uni.get("ok") or int(uni.get("novel_vs_all_priors") or 0) <= 0:
+        problems.append("H57 alternate: uniqueness gate receipt missing or failed")
+    if "REFUTED" not in _json.dumps(r.get("co_training_disclosure") or {}).upper():
+        problems.append("H57 alternate: the refuted co-training arm is not disclosed")
+    page = (DOCS / "h57-creditcore.html").read_text() if (DOCS / "h57-creditcore.html").exists() else ""
+    for term in ("ABANDON", "not proven", "Submit: YES"):
+        if term.casefold() not in page.casefold():
+            problems.append(f"H57 alternate page: missing disclosure {term!r}")
+    home = (DOCS / "index.html").read_text() if (DOCS / "index.html").exists() else ""
+    if name not in home:
+        problems.append("H57 alternate: not linked from the home page")
+    if not problems:
+        notes.append(f"H57 credited-core alternate verified beside the union arm: {name} "
+                     f"({r.get('bytes'):,} bytes, "
+                     f"{r.get('uniqueness', {}).get('novel_vs_all_priors'):,} novel px)")
+    return problems
+
+
 def check_h57(DATA, DOCS, ROOT, notes):
     """Every H57 gate re-read from the bytes, so the round can be audited on its own terms."""
     problems = []
@@ -376,6 +422,7 @@ def main() -> int:
                                 'submission/LATEST.txt')
         if current_round == 'H57':
             problems.extend(check_h57(DATA, DOCS, ROOT, notes))
+            problems.extend(check_h57_creditcore(DATA, DOCS, ROOT, notes))
         if current_round == 'H56':
             sub = json.loads(sub_path.read_text())
             if sub.get('file') != marker:
