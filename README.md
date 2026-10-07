@@ -14,6 +14,17 @@
 **Next-session start:** read this README and the full current task prompt below. The H55-PROFILE follow-up failed its promotion gate; the separate main H55 incumbent is not superseded by that failure. A download link is not approval to spend a contest slot.
 <!--/H55PROFILEREADME-->
 
+## H55-EDGE — failed protocol-subset result, preserved as a separate archive
+
+**[H55-EDGE research TIFF](docs/downloads/gems52-h55-grav-rtp-logedge-37654-c4b8c10205da-zeros.tif)** · [one-TIFF ZIP](docs/downloads/gems52-h55-grav-rtp-logedge-37654-c4b8c10205da-zeros.zip) · [page and complete audit](docs/h55-edge.html) · [A-only reasoning CSV](docs/downloads/gems52-h55-grav-rtp-logedge-37654-c4b8c10205da-zeros-a-only-reasoning.csv).
+
+- This is a separate failed experiment; it does **not** replace the main H55 candidate, H55-PROFILE, or `submission/LATEST.txt`.
+- The four-fold spatial result was +0.000546 mean lift over View B, positive in 2/4 folds; the frozen promotion gate required +0.005 and 3/4. The strict support-novelty diagnostic also failed. No portal upload, official score, or weekly slot use occurred.
+- **Protocol deviation:** the frozen H55-EDGE registration lists new LoG transforms for gravity bands 13/11/18 and RTP bands 2/9. The executed transform used bands 13 and 2 only. Preserve [the original registration](registry/h55_edge_preregistration.json) and [post-run deviation receipt](evidence/h55_edge_protocol_deviation.json); this result covers only the implemented subset and must not be retrofitted to claim a full-specification test.
+- **Execution provenance:** the pre-merge source snapshot, relevant code hashes, and limits on rerunning the old implementation are recorded in [the provenance receipt](evidence/h55_edge_execution_provenance.json) and [commit 709ac3b](https://github.com/buffedlizard55-lab/GEMSDOE52/commit/709ac3b376e9f4d102de41865ae30f4a3dd0b728). Later main-branch H55/R2 changes mean a rerun from the merged tree is not the original experiment; large ignored inputs and feature caches are not committed.
+- The 816-row A-only CSV contains 801 candidates with zero paired sigma-3 edge response. These are model-stratum points, not verified faults; the per-pixel notes include measured band 15/19 and signed-LoG values and alternative explanations.
+- Exact preregistration hash: `12b678d62269589c42b4009ec07e38f53f325b8a4ece5e42da888f9c8e01c401`; it matches the H55-EDGE holdout, deviation, and artifact receipts. H55-EDGE TIFF SHA-256: `f0732d40d57b92d3f082eb2b910b6e6951b7238e7616f9e6e9c6c22ee9f1c7f8`.
+
 Target: a **unique, downloadable single-band GeoTIFF** for [DrivenData competition 306 — DOE GEMS
 Prize](https://www.drivendata.org/competitions/306/competition-doe-gems/), built to beat this group's
 best of 0.2778, with the reasoning and the evidence published next to the file.

@@ -217,13 +217,16 @@ def main() -> int:
         def log_message(self, *a):
             pass
 
-    socketserver.TCPServer.allow_reuse_address = True
-    httpd = socketserver.TCPServer(("127.0.0.1", 0), H)
+    class ThreadedTCPServer(socketserver.ThreadingTCPServer):
+        allow_reuse_address = True
+        daemon_threads = True
+
+    httpd = ThreadedTCPServer(("127.0.0.1", 0), H)
     port = httpd.server_address[1]
     threading.Thread(target=httpd.serve_forever, daemon=True).start()
     try:
-        for path in ("index.html", "executive-summary.html", "h55-profile.html", "r3.html",
-                     "r3-hypotheses.html", "feed.html", "irregularities.html", "sources.html",
+        for path in ("index.html", "executive-summary.html", "h55.html", "h55-profile.html", "h55-edge.html",
+                     "r3.html", "r3-hypotheses.html", "feed.html", "irregularities.html", "sources.html",
                      "downloads/index.html"):
             with urlopen(f"http://127.0.0.1:{port}/{path}", timeout=10) as r:
                 body = r.read()
@@ -274,6 +277,15 @@ def main() -> int:
                     if len(r.read()) != h55["bytes"]:
                         problems.append("served H55 TIFF byte count differs from receipt")
                 notes.append(f"H55-PROFILE TIFF verified: {h55['bytes']:,} bytes, {h55['uniqueness']['n_priors_checked']} priors, research-only")
+        edge_served_path = DATA / "h55_edge_submission.json"
+        if edge_served_path.exists():
+            edge_served = json.loads(edge_served_path.read_text())
+            with urlopen(f"http://127.0.0.1:{port}/downloads/{edge_served['file']}", timeout=20) as r:
+                n = len(r.read())
+                if n != edge_served["bytes"]:
+                    problems.append("served H55-EDGE TIFF byte count differs from receipt")
+                else:
+                    notes.append(f"H55-EDGE TIFF served byte-identically: {n:,} bytes")
 
         # R3-H1 is a separate failed-gate research release; it is not the submission.json incumbent.
         r3 = json.loads((DATA / "submission_r3.json").read_text())
@@ -286,22 +298,95 @@ def main() -> int:
     finally:
         httpd.shutdown()
 
-    # A number written into HTML is a number that can go stale.  That is fatal on the pages whose whole
-    # job is to print measurements (validation.html), and acceptable where a page quotes the board or the
-    # register *as prose* - those pages say so and the same values are in docs/data/ anyway.
-    # R2 static HTML is generated directly from strict JSON receipts. Blanket
-    # decimal bans incorrectly reject cited prose and receipt-rendered tables.
-    # Verify the important values against their actual source instead.
-    if (DATA / 'holdout_r2.json').exists():
-        h = json.loads((DATA / 'holdout_r2.json').read_text())
+    # Verify receipt-rendered measurements without conflating the H55 incumbent, H55-PROFILE,
+    # and H55-EDGE. The latter is a separate failed-gate archive and must never become global latest.
+    current = json.loads((DATA / 'submission.json').read_text()) if (DATA / 'submission.json').exists() else {}
+    r2_holdout = DATA / 'holdout_r2.json'
+    if r2_holdout.exists():
+        h = json.loads(r2_holdout.read_text())
         text = (DOCS / 'validation.html').read_text()
         for arm, value in h['means'].items():
             if f'{value:.6f}' not in text:
-                problems.append(f'validation.html: {arm} mean is not rendered from its current receipt')
-        for page in ('index.html', 'executive-summary.html'):
-            body = (DOCS / page).read_text()
+                problems.append(f'validation.html: R2 {arm} mean is not rendered from its receipt')
+        for page_name in ('index.html', 'executive-summary.html'):
+            body = (DOCS / page_name).read_text()
             if 'Do not upload' not in body:
-                problems.append(f'{page}: missing failed-gate warning')
+                problems.append(f'{page_name}: missing failed-gate warning')
+
+    edge_path = DATA / 'h55_edge_submission.json'
+    edge_hold_path = DATA / 'h55_edge_holdout.json'
+    edge_deviation_path = DATA / 'h55_edge_protocol_deviation.json'
+    if edge_path.exists():
+        import csv
+        import hashlib
+        import zipfile
+        import numpy as np
+        import rasterio
+        edge = json.loads(edge_path.read_text())
+        if not edge_hold_path.exists() or not edge_deviation_path.exists():
+            problems.append('H55-EDGE: missing independent holdout or protocol-deviation receipt')
+        else:
+            edge_hold = json.loads(edge_hold_path.read_text())
+            edge_deviation = json.loads(edge_deviation_path.read_text())
+            prereg_path = ROOT / 'registry/h55_edge_preregistration.json'
+            prereg_sha = hashlib.sha256(prereg_path.read_bytes()).hexdigest() if prereg_path.exists() else None
+            if not prereg_sha or prereg_sha != edge.get('preregistration_sha256'):
+                problems.append('H55-EDGE: frozen preregistration hash does not match artifact receipt')
+            if edge_deviation.get('preregistration_sha256_at_validation') != prereg_sha:
+                problems.append('H55-EDGE: protocol-deviation receipt hash mismatch')
+            if edge_hold.get('preregistration_sha256') != prereg_sha:
+                problems.append('H55-EDGE: holdout receipt hash mismatch')
+            if edge.get('approved_for_weekly_slot') is not False or edge.get('official_score') is not None or edge.get('submission_slots_used') != 0:
+                problems.append('H55-EDGE: artifact must remain failed-gate, unscored, and zero-slot')
+            if edge.get('uniqueness', {}).get('support_novelty_gate_ok') is not False:
+                problems.append('H55-EDGE: strict support-novelty failure was not retained')
+            if edge_deviation.get('holdout_result_for_implemented_subset', {}).get('gate_passed') is not False:
+                problems.append('H55-EDGE: implemented-subset holdout failure was not retained')
+            edge_name = edge.get('file') or ''
+            edge_file = DOCS / 'downloads' / edge_name
+            expected_sha = edge.get('sha256')
+            if not edge_file.exists() or hashlib.sha256(edge_file.read_bytes()).hexdigest() != expected_sha:
+                problems.append('H55-EDGE: published TIFF is missing or differs from the audited bytes')
+            else:
+                with rasterio.open(edge_file) as ds:
+                    a = ds.read(1)
+                    if (ds.count != 1 or ds.dtypes[0] != 'float32' or ds.crs is None or ds.crs.to_epsg() != 32611
+                            or (ds.height, ds.width) != (3730, 3292) or not np.isfinite(a).all()
+                            or float(a.min()) < 0 or float(a.max()) > 1
+                            or int(np.count_nonzero(a)) != int(edge['format']['n_nonzero'])
+                            or np.any((a > 0) & (ds.dataset_mask() == 0))):
+                        problems.append('H55-EDGE: on-disk raster format/range/footprint check failed')
+                zip_path = edge_file.with_suffix('.zip')
+                if not zip_path.exists():
+                    problems.append('H55-EDGE: single-TIFF ZIP is missing')
+                else:
+                    with zipfile.ZipFile(zip_path) as archive:
+                        if archive.namelist() != [edge_name] or hashlib.sha256(archive.read(edge_name)).hexdigest() != expected_sha:
+                            problems.append('H55-EDGE: ZIP must contain exactly one byte-identical TIFF')
+            reasoning = edge.get('view_comparison', {}).get('a_only_reasoning', {})
+            reasoning_path = DOCS / 'downloads' / reasoning.get('file', '')
+            if not reasoning_path.exists() or hashlib.sha256(reasoning_path.read_bytes()).hexdigest() != reasoning.get('sha256'):
+                problems.append('H55-EDGE: per-pixel reasoning CSV missing or hash-mismatched')
+            elif reasoning_path.exists():
+                with reasoning_path.open(newline='') as fh:
+                    rows = list(csv.DictReader(fh))
+                if len(rows) != reasoning.get('rows') or len(rows) != 816:
+                    problems.append('H55-EDGE: reasoning CSV row count differs from its receipt')
+            edge_page = (DOCS / 'h55-edge.html').read_text() if (DOCS / 'h55-edge.html').exists() else ''
+            for term in ('h55_edge_protocol_deviation.json', 'H55-EDGE', 'do not upload', 'not the current H55 candidate'):
+                if term.casefold() not in edge_page.casefold():
+                    problems.append(f'H55-EDGE page: missing required disclosure/link text {term!r}')
+            main_marker = (ROOT / 'submission/LATEST.txt').read_text().strip() if (ROOT / 'submission/LATEST.txt').exists() else ''
+            edge_marker = (ROOT / 'submission/H55_EDGE_LATEST.txt').read_text().strip() if (ROOT / 'submission/H55_EDGE_LATEST.txt').exists() else ''
+            if main_marker == edge_name or current.get('file') != main_marker:
+                problems.append('H55-EDGE: global incumbent marker/current receipt was changed or conflated')
+            if edge_marker != edge_name:
+                problems.append('H55-EDGE: experiment-specific marker is missing or points to different bytes')
+            for page_name in ('index.html', 'h55.html', 'downloads/index.html'):
+                page_text = (DOCS / page_name).read_text()
+                if 'h55-edge.html' not in page_text:
+                    problems.append(f'{page_name}: missing separate H55-EDGE archive link')
+            notes.append(f"H55-EDGE verified as a separate failed-gate archive: {edge['bytes']:,} bytes, {edge_hold['positive_folds']}/4 positive folds; main incumbent unchanged")
 
     print(f"pages checked: {len(pages)}   data files: {len(list(DATA.glob('*.json')))}")
     for nse in notes:

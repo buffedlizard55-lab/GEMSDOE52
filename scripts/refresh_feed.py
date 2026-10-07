@@ -53,11 +53,19 @@ def copy_evidence():
     for path in sorted(EV.glob('*_r[23]*.json')):
         write(path.name, safe(json.loads(path.read_text())))
         copied.append(path.name)
-    for name in ('r2_preregistration', 'r3_preregistration', 'source_policy', 'data_manifest',
+    for name in ('r2_preregistration', 'r3_preregistration', 'h55_preregistration',
+                 'h55_edge_preregistration', 'source_policy', 'data_manifest',
                  'irregularities', 'leaderboard_snapshot_2026-10-07'):
         path = ROOT / 'registry' / (name + '.json')
         if path.exists():
-            write(name + '.json', safe(json.loads(path.read_text())))
+            if name in ('h55_preregistration', 'h55_edge_preregistration'):
+                # The frozen registration's byte hash is a preregistration receipt; preserve its exact
+                # bytes in the static site rather than semantically reserializing the JSON.
+                target = DATA / (name + '.json')
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(path.read_bytes())
+            else:
+                write(name + '.json', safe(json.loads(path.read_text())))
             copied.append(name + '.json')
     # H55 publishes its own evidence the same way the R2 round publishes *_r2.json: copied on every
     # run so the page cannot drift from the artefact, and named by round so it is never mistaken for
@@ -183,6 +191,22 @@ def make_zip(name):
                   str(d['submission_note_long']), '']
     body = "\n".join(lines)
     zp = DL / f'{stem}.zip'
+    expected_members = [name, 'SUBMISSION_NOTE.txt'] + (['evidence.json'] if ev.exists() else [])
+    # Preserve a byte-identical, already-valid archive rather than changing ZIP timestamps on every
+    # scheduled refresh. Rebuild only when a member, note, or receipt actually changes.
+    if zp.exists():
+        try:
+            with zipfile.ZipFile(zp) as existing:
+                valid = (existing.namelist() == expected_members
+                         and existing.read(name) == src.read_bytes()
+                         and existing.read('SUBMISSION_NOTE.txt') == body.encode())
+                if ev.exists():
+                    valid = valid and existing.read('evidence.json') == ev.read_bytes()
+                valid = valid and existing.testzip() is None
+            if valid:
+                return str(zp)
+        except (OSError, KeyError, zipfile.BadZipFile):
+            pass
     with zipfile.ZipFile(zp, 'w', zipfile.ZIP_DEFLATED) as z:
         z.write(src, arcname=name)
         z.writestr('SUBMISSION_NOTE.txt', body)
@@ -299,12 +323,22 @@ def main():
     # (IR-52-028).
     for f in sorted((ROOT / 'submission').glob('*.tif')):
         tgt = DL / f.name
-        if not tgt.exists() or tgt.stat().st_size != f.stat().st_size:
+        if not tgt.exists() or file_hash(tgt) != file_hash(f):
             tgt.write_bytes(f.read_bytes())
     for mk in ('LATEST.txt', 'R2_LATEST.txt'):
         mp = ROOT / 'submission' / mk
         if mp.exists():
             make_zip(mp.read_text().strip())
+    # Also publish explicitly named research-only ZIPs without promoting them
+    # through either global pointer. Their package receipts remain per-artifact.
+    edge_marker = ROOT / 'submission/H55_EDGE_LATEST.txt'
+    if edge_marker.exists():
+        edge_name = edge_marker.read_text().strip()
+        edge_zip = ROOT / 'submission' / Path(edge_name).with_suffix('.zip').name
+        if edge_zip.exists():
+            target_zip = DL / edge_zip.name
+            if not target_zip.exists() or file_hash(target_zip) != file_hash(edge_zip):
+                target_zip.write_bytes(edge_zip.read_bytes())
     sub = latest_submission()
     board = fetch_board(args.fetch)
     write('submission.json', sub)
@@ -314,7 +348,9 @@ def main():
     write('feed.json', dict(
         generated_utc=time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
         branch=current_branch(args.branch), repo='buffedlizard55-lab/GEMSDOE52',
-        evidence_copied=copied, files=sorted(p.name for p in DATA.glob('*_r[23]*.json')),
+        evidence_copied=copied,
+        files=sorted({p.name for pat in ('*_r[23]*.json', 'h55_*.json', 'submission_gems52-h55-*.json')
+                      for p in DATA.glob(pat)}),
         submission=sub.get('file'), downloads=len(list(DL.glob('*.tif'))),
         leaderboard_status=board['status'],
         leaderboard_last_observed_utc=board.get('fetched_utc') or board.get('observed_date_utc'),

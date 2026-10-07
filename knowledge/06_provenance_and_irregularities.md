@@ -321,3 +321,13 @@ input), and in both cases the alternative was shipping it.
    by a sweep. That is the weakest tuned constant in the shipped pipeline, named here so nobody has to find it.
 4. An organiser answer to forum thread 11527, or to a question about the public test set's truth-pixel count
    or whether out-of-footprint mass is taxed. Either would replace an estimate with a measurement.
+
+## 7. H55-EDGE negative result (separate from the main H55 and H55-PROFILE)
+
+**H55-EDGE did not earn a weekly slot.** Its preregistered spatial holdout lift over View B was +0.000546, positive in 2/4 folds, below the required +0.005 and 3/4. The strict support-novelty gate also failed. The model output is retained as a research-only artifact; it has no portal upload, organizer score, or acceptance receipt. It does not replace `submission/LATEST.txt`, the main H55 candidate, or H55-PROFILE.
+
+**Protocol deviation was discovered after the run and remains explicit.** The frozen `registry/h55_edge_preregistration.json` specified new LoG transforms for gravity bands 13/11/18 and RTP bands 2/9; the implementation transformed only bands 13 and 2. The holdout result covers only that narrower implementation. The original registration hash `12b678d62269589c42b4009ec07e38f53f325b8a4ece5e42da888f9c8e01c401` is unchanged and reconciled with `evidence/h55_edge_holdout.json`, `evidence/h55_edge_protocol_deviation.json`, and `evidence/h55_edge_submission.json`; do not retroactively alter it or tune the omitted channels on the same folds.
+
+The 816-row A-only reasoning table has 816 distinct measured explanations; 801 rows have zero paired sigma-3 gravity/RTP edge response. The notes report the actual band 15/19 and signed-LoG values and alternate non-fault explanations. These are learner-stratum points, not confirmed faults or independent field observations. See [the H55-EDGE page](../docs/h55-edge.html), [the per-pixel CSV](../evidence/gems52-h55-grav-rtp-logedge-37654-c4b8c10205da-zeros-a-only-reasoning.csv), and [the full protocol-deviation receipt](../evidence/h55_edge_protocol_deviation.json).
+
+The H55-EDGE result was executed before the origin/main integration. [Its provenance receipt](../evidence/h55_edge_execution_provenance.json) records hashes for the exact pre-merge source snapshot preserved in commit `709ac3b376e9f4d102de41865ae30f4a3dd0b728`. The later merge changes shared H55/R2 modules, so a rerun from the current tree is not the same execution. The ignored training rasters and derived feature cache are not committed; the receipt explicitly limits independent rerun claims.
