@@ -112,8 +112,11 @@ def table(head, rows) -> str:
 
 
 def h54_body() -> str:
-    sub = load("submission_" + (json.loads((DOCS / "data/submission.json").read_text())["file"]
-                                .replace(".tif", "")))
+    # Read the *feed* copy, not the evidence copy: scripts/refresh_feed.py enriches it with
+    # `exists`, `download`, `download_zip` and `submission_note`, which is what download_bar() needs.
+    # Reading evidence/submission_<stem>.json here rendered the "not built" branch on a page whose
+    # subject was the built file.
+    sub = json.loads((DOCS / "data/submission.json").read_text())
     cal = load("revealed_calibration")
     bud = load("revealed_budget")
     ind = load("independence_revealed")
