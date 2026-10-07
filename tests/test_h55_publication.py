@@ -84,9 +84,18 @@ def test_h55_archive_review_is_idempotent_and_carries_h56_status(monkeypatch, tm
     assert "H55 is superseded" in result
     current = _json(DATA / "submission.json")
     assert current["file"] in result
-    assert "synthetic methodology demo" in result
-    assert "h56-cotrain.html" in result
-    assert "weekly-slot gate" in result and "Do not upload or spend a slot" in result
+    # The status block must name the round that is actually current and link to *its* audit page.
+    # It used to assert a hard-coded "synthetic methodology demo" and an h56-cotrain.html link, which
+    # silently went stale when a later round became current.
+    assert f"current {str(current.get('round') or 'H56').upper()} status" in result, (
+        "the H55 archive review must name the current round, read from the receipt")
+    expected_href = ("h57.html" if str(current.get("round") or "").upper() == "H57"
+                     else "h56-cotrain.html")
+    assert f'href="{expected_href}"' in result
+    # case-insensitive: which sentence casing the status block uses depends on which branch the
+    # current round's receipt selects, and the instruction itself is what must be present
+    assert "weekly-slot gate" in result
+    assert "do not upload or spend a slot" in result.casefold()
     assert "0.02979" in result and "0.02894" in result
     assert "below random on hide and above random on tip" in result
     assert "H55-JUNCTION remains untested" in result
