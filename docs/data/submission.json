@@ -17,7 +17,12 @@
     "n_novel": 15000,
     "novel_fraction": 0.3193967964064467,
     "p_win_floor_0_2778": 0.8312,
-    "p_beats_board_top_0_3195": 0.3675
+    "p_beats_board_top_0_3195": 0.3675,
+    "n_selected_arm_cells": 15000,
+    "selected_arm_fraction": 0.3702149714934472,
+    "decoded_support_novel_fraction": 0.3193967964064467,
+    "novel_fraction_definition": "decoded emitted support outside the 33 accessible-prior union; not selected-arm size",
+    "selected_arm_prior_support_overlap_cells": 2059
   },
   "file": "gems52-h56-consensus-core-continuation-40517px-04c86e1888a8-zeros.tif",
   "path": "submission/gems52-h56-consensus-core-continuation-40517px-04c86e1888a8-zeros.tif",
@@ -35,10 +40,10 @@
   "height": 3730,
   "crs": "EPSG:32611",
   "submission_name": "GEMSDOE52-H56-ConsensusCore-Continuation-40517px",
-  "submission_note": "H56 consensus-core + continuation | 25,517 double-corroborated core px + 15,000 novel along-strike/scarp px | revealed-preference projection: does not copy any prior file.",
-  "submission_note_chars": 171,
-  "approved_for_weekly_slot": true,
-  "promotion": "selected by src/gems52/revealed.py::budget_rule (max P(DTI > 0.2778) over the exact t_core interval [4168, 5223] x rho_novel prior U[0.03, 0.14]); both local gates pass. This is a projection from published scores plus a prior, not a leaderboard measurement.",
+  "submission_note": "H56 consensus core + continuation | 25,517 prior-overlap core px + 15,000 selected arm px | decoded pattern differs from 33 accessible priors; research only.",
+  "submission_note_chars": 157,
+  "approved_for_weekly_slot": false,
+  "promotion": "Current unique decoded H56 research composite; local format and bounded no-exact-match/support-novelty checks pass, but the full-file >=3 px nearest-neighbour diagnostic fails, the selected arm is not wholly support-novel against the 33 accessible priors, no comparable spatially blocked holdout is recorded, and H56 A-only point reasoning is unavailable. Do not upload or spend a weekly slot.",
   "format_ok": true,
   "uniqueness_ok": true,
   "relation_to_union": "strictly-novel-and-selective",
@@ -582,5 +587,33 @@
     "top_argument_ignored": false,
     "rule": "distinct decoded values from every supplied prior, >=20% new support against binary/>=0.5 continuous proposal union, and selective prior-pixel removal",
     "scope": "Only the supplied, aligned accessible inventory; not a proof against all private/unlinked submissions"
+  },
+  "spatial_holdout": {
+    "performed": false,
+    "comparable_holdout_best_beaten": false,
+    "status": "NOT DEMONSTRATED",
+    "decision": "No slot approval until a preregistered comparable spatial holdout beats the current best."
+  },
+  "slot_gate_review": "data/h56_slot_gate_review_2026-10-07.json",
+  "marker": "submission/LATEST.txt",
+  "exists": true,
+  "download_zip": "downloads/gems52-h56-consensus-core-continuation-40517px-04c86e1888a8-zeros.zip",
+  "short_download": "downloads/h56-candidate.tif",
+  "short_download_zip": "downloads/h56-candidate.zip",
+  "short_aliases_are_canonical_byte_copies": true,
+  "published_byte_hash_matches_receipt": true,
+  "postbuild_review": {
+    "review": "data/h56_slot_gate_review_2026-10-07.json",
+    "decoded_pattern_exact_match_count": 0,
+    "accessible_priors_checked": 33,
+    "support_outside_union": 12941,
+    "support_outside_union_fraction": 0.3193967964064467,
+    "selected_arm_cells": 15000,
+    "selected_arm_cells_with_accessible_prior_support": 2059,
+    "global_min_nearest_neighbor_px": 2.8284271247461903,
+    "global_min_NN_separation_pass": false,
+    "selected_arm_min_separation_px": 3.1622776601683795,
+    "comparable_spatial_holdout": "not demonstrated",
+    "a_only_reasoning": "not available; see data/h56_a_only_reasoning_scope_2026-10-07.json"
   }
 }

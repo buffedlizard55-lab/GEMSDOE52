@@ -12,6 +12,11 @@ H56-4, H56-5 and H56-6 were never run, so they remain genuinely untested; (c) th
 (measured density ÷ implementation cost) was fixed in the slate itself. `registry/h56_preregistration.json`
 records the same timestamps and the same `registration_kind`.
 
+**Score/source authentication limit:** all public leaderboard scores are participant-level observations;
+no organizer receipt in this checkout maps a score to any particular filename/hash. The credited-pixel
+bounds, inferred `|G|`, and score projections below are conditional on owner-reported score-to-file
+associations. They are not organizer-authenticated truth credits, a test score, or a holdout result.
+
 ## 0 · The measurement that ranks everything else
 
 The repo's revealed-preference inverse (`knowledge/10`) is extended here to **all fourteen**
@@ -49,8 +54,9 @@ re-thinning its family. All further gains must come from mass the family has nev
 ## 1 · Ranked hypotheses (rank = expected DTI gain ÷ implementation cost)
 
 ### H56-1 · Consensus-core retention + continuation arm — **RANK 1, implemented**
-* **Layers.** Core: `P1 = h33-2-b2 ∩ gems24-d1-5` (25,517 px), the only set whose credit the
-  published scores bound *exactly* (`[4,168, 5,223]`, central 5,140). Novel arm, three layers never
+* **Layers.** Core: `P1 = h33-2-b2 ∩ gems24-d1-5` (25,517 px), whose conditional implied-credit
+  interval is `[4,168, 5,223]` (central 5,140) under unauthenticated owner-reported file/score links.
+  Selected continuation/scarp arm, three layers never
   used together before: (a) the strike field of the credited cloud (structure tensor of the
   smoothed core, σ = 3 px — the H54-2 mechanism, coherence 1.57× a matched random cloud and strike
   100–110° agreed to cosine 0.9952 between two independent thinnings); (b) **NEW**: the 3 m DEM
@@ -68,8 +74,12 @@ re-thinning its family. All further gains must come from mass the family has nev
   `revealed.budget_rule` (`P(DTI > 0.2778)` over the exact `t_core` interval × the ρ_novel prior
   U[0.03, 0.14]) — the size is a decision, not a taste. First use of the 3 m DEM layer anywhere in
   the repo.
-* **Measured outcome (see `knowledge/16`)**: file of 40,517 px (sha256 `1308083dcf09b4c6…`, 153,815 B), 31.9 % novel support, both gates
-  pass, projected mean DTI 0.308 with P(> 0.2778) = 0.83 and P(> 0.3195) = 0.37.
+* **Post-build report (see `knowledge/16` and `evidence/h56_slot_gate_review_2026-10-07.json`)**:
+  40,517 px (sha256 `1308083dcf09b4c6…`, 153,815 B), no exact decoded match among 33 checked priors,
+  12,941/40,517 = 31.9% support outside their union; format and canonical-pattern checks pass, but the
+  full-file ≥3 px nearest-neighbour diagnostic fails at 2.83 px inside the fixed core. The 15,000-cell
+  selected arm is not wholly support-novel. Projection mean DTI 0.308 / P(>0.2778)=0.83 /
+  P(>0.3195)=0.37 is conditional arithmetic, not a holdout. H56 is not approved for upload.
 
 ### H56-2 · All-8 consensus tier emitted alone — **RANK 2, not selected**
 * **Layers.** Only the intersection of the eight aligned, well-predicted scored files (no external
@@ -118,6 +128,16 @@ re-thinning its family. All further gains must come from mass the family has nev
    optimum geometry — two dots closer than the kernel share truth pixels and the second pays tax).
 3. Size chosen by maximising `P(DTI > 0.2778)` over the exact `t_core` interval × ρ_novel prior,
    ties to the larger novel fraction.
-4. Promotion rule unchanged: report the projection band, never a point claim; the file ships as
-   *zeros-outside, all-finite, footprint-only*, and the site must state both the expected value and
-   the fact that P(beat the board top 0.3195) is ≈ 0.37, not 1.
+4. Promotion rule unchanged: report any projection as conditional, never as a point claim; the file
+   must be *zeros-outside, all-finite, footprint-only*, and the site must state both the projection and
+   that P(beat the board top 0.3195) is ≈ 0.37, not 1. This retrospective slate is not a holdout.
+
+## 3 · Review correction and slot decision (2026-10-07)
+
+The user-required comparable spatial holdout is absent. Do not upload or spend a slot. A post-build
+reconciliation found that an earlier description of all 15,000 selected-arm cells as outside the
+33-prior support union was too strong: only 12,941 cells in the complete 40,517-cell raster are outside
+that union. The full nearest-neighbour ≥3 px diagnostic is also false (2.828 px), inherited inside the
+core; the arm itself is ≥3.162 px from the rest. No H56 per-cell A-only dossier can be reproduced from
+the committed checkout. See the linked slot-gate and A-only-scope receipts; neither the 33-prior audit
+nor the projection validates H56 against hidden labels.

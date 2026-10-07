@@ -136,5 +136,15 @@
     0.03,
     0.14
   ],
-  "note": "P is over the rectangle t_core x rho_novel; not a measurement."
+  "note": "P is over the rectangle t_core x rho_novel; not a measurement.",
+  "interpretation_notes": {
+    "n_novel_in_budget_table": "The 15,000 value is the number of selected continuation/scarp-arm cells used by the conditional arithmetic; it is not the decoded support-novel count.",
+    "selected_arm_fraction": 0.3702149714934472,
+    "decoded_support_novel_cells": 12941,
+    "decoded_support_novel_fraction": 0.3193967964064467,
+    "selected_arm_cells_with_accessible_prior_support": 2059,
+    "score_file_mapping_authenticated": false,
+    "holdout_performed": false,
+    "status": "conditional scenario only; not measured performance or promotion evidence"
+  }
 }

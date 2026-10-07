@@ -215930,5 +215930,13 @@
       "strike_deg": 102.7,
       "reasoning": "View A (potential field / subsurface) is confident here and View B (surface / radiometric) abstains, which is the disagreement class the co-training premise says to read as a buried structure. The Bouguer horizontal gradient is 0.1045 and the reduced-to-pole gradient 11.6650 against a detrended-elevation slope of 11.4285 and a depth to the base of the basin fill of 235 m: a density and magnetisation contrast with no relief, i.e. offset without topographic expression. The mapped catalogue in this footprint is a geomorphic scarp product, so where cover is thick enough to prevent scarp preservation that mapping method has no signal and absence from it is weak evidence of absence. Strike 103 deg, a free candidate on the same recovered fabric, 1118 m from the nearest mapped trace -- emitted outside the 200 m ring whose credit is exactly zero in the organiser's own scores."
     }
-  ]
+  ],
+  "candidate_raster_check": {
+    "file": "gems52-h54-revealed-core-strike-continuation-50517px-r1.tif",
+    "sha256": "15210d91fa0c939b254d058876b47268e650176e08bf0eed10437ced8d476e36",
+    "every_candidate_is_emitted": true,
+    "candidate_count": 11996,
+    "unique_coordinates": 11996,
+    "non_emitted_coordinates": 0
+  }
 }

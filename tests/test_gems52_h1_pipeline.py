@@ -234,6 +234,15 @@ def test_real_evidence_receipts_and_submission_geotiff_gates() -> None:
     assert sub_audit["uniqueness_gate"]["max_jaccard_vs_prior_submissions"] < 0.15
     assert sub_audit["uniqueness_gate"]["non_union_verification"]["confirmed_not_mere_union"] is True
 
+
+
+def test_submission_geotiffs_match_raw_competition_grid_when_available() -> None:
+    """Use ignored organizer-mirror rasters when present; do not fail a source-only checkout."""
+    sample_path = ROOT / "data" / "sample_submission.tif"
+    labels_path = ROOT / "data" / "labels.tif"
+    if not sample_path.exists() or not labels_path.exists():
+        pytest.skip("optional raw organizer-mirror TIFFs under ignored data/ are not present in this checkout")
+    dl_dir = ROOT / "docs" / "downloads"
     with rasterio.open(ROOT / "data" / "sample_submission.tif") as ds:
         footprint = np.isfinite(ds.read(1))
     with rasterio.open(ROOT / "data" / "labels.tif") as ds:
@@ -254,6 +263,7 @@ def test_real_evidence_receipts_and_submission_geotiff_gates() -> None:
     with zipfile.ZipFile(primary_zip, "r") as zf:
         names = zf.namelist()
         assert names == [primary_tif.name]
+
 
 
 def test_github_pages_and_readme_completeness() -> None:
