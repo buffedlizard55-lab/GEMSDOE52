@@ -1,6 +1,6 @@
 {
   "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified.",
-  "generated": "2026-10-07T02:25Z",
+  "generated": "2026-10-07T02:35Z",
   "entries": [
     {
       "id": "IR-30-029",
@@ -378,6 +378,18 @@
         "registry/irregularities.json",
         "README.md",
         "src/gems52/gates.py"
+      ]
+    },
+    {
+      "id": "IR-52-031",
+      "title": "check_site.py's success line asserted a gate state it never read",
+      "status": "fixed this session",
+      "what_it_is": "The closing print of scripts/check_site.py ended with the fixed sentence 'Scientific slot gate remains closed.' That is a claim about docs/data/submission.json:approved_for_weekly_slot which the script never opened. It was true while every artefact in submission/ was research-only, and became actively false the moment the H55 artefact shipped with approved_for_weekly_slot=True -- so the repo's own publication checker was printing a contradiction of the record it had just validated, in its success message.",
+      "how_we_know": "grep -n 'Scientific slot gate' scripts/check_site.py -> one hit, inside a literal print, with no read of submission.json anywhere in the function. Observed live: the script exited 0 with 'gate remains closed' while docs/data/submission.json said approved_for_weekly_slot=True and docs/data/feed.json said scientific_gate=True.",
+      "disposition": "fixed - the sentence is now derived from the record, and has an explicit branch for 'not recorded', because a checker that guesses the state it did not read is worse than one that says it does not know. Same shape as IR-52-007 and IR-52-026: the apparatus that verifies the artefact had an unverified assumption in it.",
+      "evidence": [
+        "scripts/check_site.py",
+        "docs/data/submission.json"
       ]
     },
     {

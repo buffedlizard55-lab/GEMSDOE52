@@ -1,8 +1,8 @@
 {
-  "generated_utc": "2026-10-07T01:57:44Z",
+  "generated_utc": "2026-10-07T02:18:44Z",
   "tag": "20261007T0150Z",
   "shipped_file": {
-    "file": "gems52-h53-btherm-greedy-37654px-20261007T0150Z-zeros.tif",
+    "file": "gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.tif",
     "profile": {
       "driver": "GTiff",
       "count": 1,
@@ -53,10 +53,10 @@
     "uniqueness": {
       "ok": true,
       "relation": "strictly-novel-and-selective",
-      "novel_px": 24254,
-      "novel_fraction": 0.6441,
-      "priors_checked": 18,
-      "prior_px_dropped": 1048807
+      "novel_px": 22625,
+      "novel_fraction": 0.6008657778722049,
+      "priors_checked": 25,
+      "prior_px_dropped": 1147945
     },
     "geometry": {
       "S": 37654,
@@ -85,19 +85,23 @@
           "mean_overprediction": {
             "usable_blocks": 40,
             "n_blocks": 40,
-            "pearson_r": 0.5833085956676168,
+            "pearson_r": 0.5833085956676167,
             "spearman_rho": 0.6341463414634146,
-            "abandon": false,
-            "threshold": 0.6
+            "abandon": true,
+            "threshold": 0.6,
+            "measured": true,
+            "reason": "proxy diagnostic, not proof"
           },
           "far_at_budget": {
             "usable_blocks": 40,
             "budget": 37654,
             "n_blocks": 40,
-            "pearson_r": 0.15288350028115427,
-            "spearman_rho": 0.10487804878048781,
+            "pearson_r": 0.15288350028115424,
+            "spearman_rho": 0.1401504815324602,
             "abandon": false,
             "threshold": 0.6,
+            "measured": true,
+            "reason": "proxy diagnostic, not proof",
             "dispersion_A": 0.02364078049661237,
             "dispersion_B": 0.003648031052383256,
             "cv_A": 3.0285746550713113,
@@ -111,19 +115,23 @@
           "mean_overprediction": {
             "usable_blocks": 40,
             "n_blocks": 40,
-            "pearson_r": -0.1106495927455218,
+            "pearson_r": -0.11064959274552182,
             "spearman_rho": -0.11575984990619138,
             "abandon": false,
-            "threshold": 0.6
+            "threshold": 0.6,
+            "measured": true,
+            "reason": "proxy diagnostic, not proof"
           },
           "far_at_budget": {
             "usable_blocks": 40,
             "budget": 37654,
             "n_blocks": 40,
-            "pearson_r": -0.14537942484474892,
-            "spearman_rho": -0.20544090056285183,
+            "pearson_r": -0.14537942484474894,
+            "spearman_rho": -0.17407810081155076,
             "abandon": false,
             "threshold": 0.6,
+            "measured": true,
+            "reason": "proxy diagnostic, not proof",
             "dispersion_A": 0.0053735508603405275,
             "dispersion_B": 0.004981169335310946,
             "cv_A": 1.3467214853120366,
@@ -137,19 +145,23 @@
           "mean_overprediction": {
             "usable_blocks": 40,
             "n_blocks": 40,
-            "pearson_r": 0.6631462754171986,
+            "pearson_r": 0.6631462754171984,
             "spearman_rho": 0.7624765478424016,
             "abandon": true,
-            "threshold": 0.6
+            "threshold": 0.6,
+            "measured": true,
+            "reason": "proxy diagnostic, not proof"
           },
           "far_at_budget": {
             "usable_blocks": 40,
             "budget": 37654,
             "n_blocks": 40,
             "pearson_r": -0.1738552803869588,
-            "spearman_rho": -0.0425891181988743,
+            "spearman_rho": -0.013278713476324434,
             "abandon": false,
             "threshold": 0.6,
+            "measured": true,
+            "reason": "proxy diagnostic, not proof",
             "dispersion_A": 0.10727619493933868,
             "dispersion_B": 0.003945088879965918,
             "cv_A": 4.839176589066242,
@@ -163,19 +175,23 @@
           "mean_overprediction": {
             "usable_blocks": 40,
             "n_blocks": 40,
-            "pearson_r": 0.48411192144693416,
+            "pearson_r": 0.4841119214469341,
             "spearman_rho": 0.5575984990619137,
             "abandon": false,
-            "threshold": 0.6
+            "threshold": 0.6,
+            "measured": true,
+            "reason": "proxy diagnostic, not proof"
           },
           "far_at_budget": {
             "usable_blocks": 40,
             "budget": 37654,
             "n_blocks": 40,
-            "pearson_r": -0.190412764487413,
-            "spearman_rho": 0.1328330206378987,
+            "pearson_r": -0.19041276448741296,
+            "spearman_rho": 0.12629204939011568,
             "abandon": false,
             "threshold": 0.6,
+            "measured": true,
+            "reason": "proxy diagnostic, not proof",
             "dispersion_A": 0.15389588863653578,
             "dispersion_B": 0.0037070579373677443,
             "cv_A": 5.220228127680022,
@@ -222,12 +238,12 @@
         },
         "far_spearman": {
           "values": [
-            0.1049,
-            -0.2054,
-            -0.0426,
-            0.1328
+            0.1402,
+            -0.1741,
+            -0.0133,
+            0.1263
           ],
-          "mean": -0.0026,
+          "mean": 0.0198,
           "n": 4,
           "folds_exceeding_abandon_threshold": 0,
           "abandon_r": 0.6
@@ -251,19 +267,23 @@
           "mean_overprediction": {
             "usable_blocks": 40,
             "n_blocks": 40,
-            "pearson_r": 0.5841374920029128,
+            "pearson_r": 0.5841374920029131,
             "spearman_rho": 0.6033771106941839,
-            "abandon": false,
-            "threshold": 0.6
+            "abandon": true,
+            "threshold": 0.6,
+            "measured": true,
+            "reason": "proxy diagnostic, not proof"
           },
           "far_at_budget": {
             "usable_blocks": 40,
             "budget": 37654,
             "n_blocks": 40,
-            "pearson_r": -0.020588797810634288,
-            "spearman_rho": 0.06960600375234523,
+            "pearson_r": -0.020588797810634323,
+            "spearman_rho": 0.09966892131074671,
             "abandon": false,
             "threshold": 0.6,
+            "measured": true,
+            "reason": "proxy diagnostic, not proof",
             "dispersion_A": 0.022910324217632668,
             "dispersion_B": 0.0034415069592641672,
             "cv_A": 2.887681921013702,
@@ -277,19 +297,23 @@
           "mean_overprediction": {
             "usable_blocks": 40,
             "n_blocks": 40,
-            "pearson_r": 0.2912679195164246,
+            "pearson_r": 0.29126791951642456,
             "spearman_rho": 0.40018761726078805,
             "abandon": false,
-            "threshold": 0.6
+            "threshold": 0.6,
+            "measured": true,
+            "reason": "proxy diagnostic, not proof"
           },
           "far_at_budget": {
             "usable_blocks": 40,
             "budget": 37654,
             "n_blocks": 40,
-            "pearson_r": -0.1929161532054219,
-            "spearman_rho": -0.24934333958724203,
+            "pearson_r": -0.19291615320542194,
+            "spearman_rho": -0.21645917666709974,
             "abandon": false,
             "threshold": 0.6,
+            "measured": true,
+            "reason": "proxy diagnostic, not proof",
             "dispersion_A": 0.025397701308687265,
             "dispersion_B": 0.004140647963660521,
             "cv_A": 3.2280889571878655,
@@ -303,19 +327,23 @@
           "mean_overprediction": {
             "usable_blocks": 40,
             "n_blocks": 40,
-            "pearson_r": 0.6519450479622789,
+            "pearson_r": 0.651945047962279,
             "spearman_rho": 0.7106941838649157,
             "abandon": true,
-            "threshold": 0.6
+            "threshold": 0.6,
+            "measured": true,
+            "reason": "proxy diagnostic, not proof"
           },
           "far_at_budget": {
             "usable_blocks": 40,
             "budget": 37654,
             "n_blocks": 40,
             "pearson_r": -0.19025067211389896,
-            "spearman_rho": -0.026454033771106947,
+            "spearman_rho": 0.0005783536191209791,
             "abandon": false,
             "threshold": 0.6,
+            "measured": true,
+            "reason": "proxy diagnostic, not proof",
             "dispersion_A": 0.11489085609751472,
             "dispersion_B": 0.00371145121825749,
             "cv_A": 4.93352421894855,
@@ -329,19 +357,23 @@
           "mean_overprediction": {
             "usable_blocks": 40,
             "n_blocks": 40,
-            "pearson_r": 0.5137959638898963,
+            "pearson_r": 0.5137959638898961,
             "spearman_rho": 0.5836772983114447,
             "abandon": false,
-            "threshold": 0.6
+            "threshold": 0.6,
+            "measured": true,
+            "reason": "proxy diagnostic, not proof"
           },
           "far_at_budget": {
             "usable_blocks": 40,
             "budget": 37654,
             "n_blocks": 40,
-            "pearson_r": -0.19709255916143878,
-            "spearman_rho": 0.15590994371482178,
+            "pearson_r": -0.1970925591614388,
+            "spearman_rho": 0.18725184619961874,
             "abandon": false,
             "threshold": 0.6,
+            "measured": true,
+            "reason": "proxy diagnostic, not proof",
             "dispersion_A": 0.13535651845098112,
             "dispersion_B": 0.0036005219153956436,
             "cv_A": 5.124488594140449,
@@ -388,12 +420,12 @@
         },
         "far_spearman": {
           "values": [
-            0.0696,
-            -0.2493,
-            -0.0265,
-            0.1559
+            0.0997,
+            -0.2165,
+            0.0006,
+            0.1873
           ],
-          "mean": -0.0126,
+          "mean": 0.0178,
           "n": 4,
           "folds_exceeding_abandon_threshold": 0,
           "abandon_r": 0.6
@@ -455,7 +487,7 @@
         "shipped_equals": false
       }
     ],
-    "verdict": "NOT the union of the two views. The shipped set shares 5.6% of its pixels with the union of the two views' top-K sets and 18.3% with the union of their coverage-greedy emissions, and is equal to no set in the table. It is View B's own coverage-greedy emission with a thermal rank bonus. View A contributes nothing to it: A_only is below matched random on both instruments (knowledge/03 N-10), and the conditional-independence premise co-training needs is refuted at the pre-registered threshold on both instruments (evidence/h53_verification_*.json), so including View A would dilute the file on two independently measured grounds."
+    "verdict": "NOT the union of the two views. The shipped set shares 5.6% of its pixels with the union of the two views' top-K sets and 18.3% with the union of their coverage-greedy emissions, and is equal to no set in the table. It is View B's own coverage-greedy emission with a thermal rank bonus. View A contributes nothing to it: A_only is below matched random on both instruments (knowledge/03 N-10), and the conditional-independence premise co-training needs is refuted at the pre-registered threshold on both instruments (evidence/h55_verification_*.json), so including View A would dilute the file on two independently measured grounds."
   },
   "all_ok": true,
   "independence_summary": {
@@ -464,7 +496,7 @@
       "usable_blocks_per_fold": 40,
       "blocks_available": 62,
       "max_abs_spearman_mean_overprediction": 0.7625,
-      "max_abs_spearman_far_at_budget": 0.2054,
+      "max_abs_spearman_far_at_budget": 0.1741,
       "abandon_threshold": 0.6,
       "verdict": "REFUTED at the pre-registered threshold: |Spearman| reaches 0.7625 >= 0.6. Abandon co-training."
     },
@@ -473,7 +505,7 @@
       "usable_blocks_per_fold": 40,
       "blocks_available": 62,
       "max_abs_spearman_mean_overprediction": 0.7107,
-      "max_abs_spearman_far_at_budget": 0.2493,
+      "max_abs_spearman_far_at_budget": 0.2165,
       "abandon_threshold": 0.6,
       "verdict": "REFUTED at the pre-registered threshold: |Spearman| reaches 0.7107 >= 0.6. Abandon co-training."
     }
