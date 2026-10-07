@@ -13,6 +13,7 @@ Run:  python3 scripts/check_site.py            (exit 1 on any breakage)
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import pathlib
 import re
@@ -176,6 +177,30 @@ def main() -> int:
                 else:
                     notes.append(f"download verified byte-for-byte against the receipt: {dl.name} "
                                  f"({d.get('bytes')} bytes, {got[:16]}…)")
+        if f.name == "submission_r3.json" and isinstance(d, dict):
+            if d.get("approved_for_weekly_slot") is not False or d.get("weekly_submission_slots_used") != 0:
+                problems.append("submission_r3.json: R3 research artifact must remain non-approved with zero slots")
+            if not str(d.get("artifact_status", "")).startswith("RESEARCH ONLY"):
+                problems.append("submission_r3.json: missing explicit research-only status")
+            if len(str(d.get("submission_note") or d.get("note") or "")) > 200:
+                problems.append("submission_r3.json: note exceeds the 200-character limit")
+            fmt = d.get("format") or {}
+            uni = d.get("uniqueness") or {}
+            if not fmt.get("ok") or not uni.get("research_publication_ok"):
+                problems.append("submission_r3.json: research artifact failed its local format/canonical-pattern gate")
+            if not (d.get("view_comparison") or {}).get("not_copied_or_literal_union"):
+                problems.append("submission_r3.json: copy/union audit did not pass")
+            dl = DOCS / "downloads" / str(d.get("file", ""))
+            if not dl.exists():
+                problems.append(f"submission_r3.json: research download missing: {dl.name}")
+            elif dl.stat().st_size != d.get("bytes"):
+                problems.append("submission_r3.json: research download size differs from its receipt")
+            else:
+                got = hashlib.sha256(dl.read_bytes()).hexdigest()
+                if got != d.get("sha256"):
+                    problems.append("submission_r3.json: research download hash differs from its receipt")
+                else:
+                    notes.append(f"R3 research TIFF verified against its independent receipt: {dl.name} ({got[:16]}…)")
         if f.name == "leaderboard.json" and d.get("rows"):
             top = d["rows"][0]["score"]
             if abs(float(d.get("top", top)) - float(top)) > 1e-9:
@@ -197,8 +222,9 @@ def main() -> int:
     port = httpd.server_address[1]
     threading.Thread(target=httpd.serve_forever, daemon=True).start()
     try:
-        for path in ("index.html", "executive-summary.html", "h55-profile.html", "feed.html", "irregularities.html",
-                     "sources.html", "downloads/index.html"):
+        for path in ("index.html", "executive-summary.html", "h55-profile.html", "r3.html",
+                     "r3-hypotheses.html", "feed.html", "irregularities.html", "sources.html",
+                     "downloads/index.html"):
             with urlopen(f"http://127.0.0.1:{port}/{path}", timeout=10) as r:
                 body = r.read()
                 if r.status != 200 or len(body) < 200:
@@ -248,6 +274,15 @@ def main() -> int:
                     if len(r.read()) != h55["bytes"]:
                         problems.append("served H55 TIFF byte count differs from receipt")
                 notes.append(f"H55-PROFILE TIFF verified: {h55['bytes']:,} bytes, {h55['uniqueness']['n_priors_checked']} priors, research-only")
+
+        # R3-H1 is a separate failed-gate research release; it is not the submission.json incumbent.
+        r3 = json.loads((DATA / "submission_r3.json").read_text())
+        with urlopen(f"http://127.0.0.1:{port}/downloads/{r3['file']}", timeout=20) as r:
+            body = r.read()
+            if len(body) != r3["bytes"] or hashlib.sha256(body).hexdigest() != r3["sha256"]:
+                problems.append("served R3 research TIFF differs from its audited bytes")
+            else:
+                notes.append(f"research-only R3 TIFF also serves byte-identically: {len(body):,} bytes")
     finally:
         httpd.shutdown()
 
