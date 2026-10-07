@@ -68,22 +68,80 @@ def file_hash(path):
     return h.hexdigest()
 
 
+def submission_note(d):
+    """The <=200-character note that distinguishes this submission later."""
+    if d.get('submission_note'):
+        return str(d['submission_note'])[:200]
+    n = (f"H54 revealed-core {d.get('retained_core_px', 0)}px + {d.get('novel_px', 0)}px novel "
+         f"strike-continuation; 200m corridor excluded; |G|=14089")
+    return n[:200]
+
+
+def make_zip(name):
+    """One-click ZIP beside the TIF: the raster, the note to paste, and the evidence behind it."""
+    import zipfile
+    src = ROOT / 'submission' / name
+    if not src.exists():
+        return None
+    stem = name[:-4] if name.endswith('.tif') else name
+    ev = EV / f'submission_{stem}.json'
+    d = json.loads(ev.read_text()) if ev.exists() else {}
+    proj = d.get('projected_dti') or {}
+    body = (
+        f"{name}\n"
+        f"sha256 {d.get('sha256')}\n"
+        f"{d.get('bytes')} bytes, 1 band, float32, EPSG:32611, values in [0,1], no NaN.\n\n"
+        f"SUBMISSION NOTE (<=200 chars, paste into the portal's notes box):\n"
+        f"{submission_note(d)}\n\n"
+        f"What it is: {d.get('budget')} emitted pixels = {d.get('retained_core_px')} px retained core "
+        f"(the double-corroborated atom A&C, whose credit the organiser's own published scores bound "
+        f"exactly) + {d.get('novel_px')} px strictly novel ({d.get('novel_along_strike_px')} along the "
+        f"recovered strike of that structure, {d.get('novel_far_px')} free candidates on the same "
+        f"fabric).\n"
+        f"Nothing is emitted within {d.get('corridor_excluded_m')} m of a mapped trace, because that "
+        f"ring's credit is exactly zero in the organiser's own scores (knowledge/10 s2).\n"
+        f"Projected DTI {proj.get('mean_dti')} (P(win over 0.2778) {proj.get('p_win')}); the "
+        f"projection is an integral over a stated prior, not a forecast - see "
+        f"evidence/revealed_budget.json.\n")
+    zp = DL / f'{stem}.zip'
+    with zipfile.ZipFile(zp, 'w', zipfile.ZIP_DEFLATED) as z:
+        z.write(src, arcname=name)
+        z.writestr('SUBMISSION_NOTE.txt', body)
+        if ev.exists():
+            z.write(ev, arcname='evidence.json')
+    return str(zp)
+
+
 def latest_submission():
-    marker = ROOT / 'submission/R2_LATEST.txt'
-    if not marker.exists():
-        marker = ROOT / 'submission/LATEST.txt'
-    if not marker.exists():
+    # Two rounds ship artefacts and each keeps its own marker.  Prefer the one that carries a complete
+    # gate report of its own, so the site never offers a file whose audit it cannot show; IR-52-029
+    # records the choice, the reason, and that reverting is one line in submission/LATEST.txt.
+    order = []
+    for marker in (ROOT / 'submission/LATEST.txt', ROOT / 'submission/R2_LATEST.txt'):
+        if marker.exists():
+            nm = marker.read_text().strip()
+            stem = nm[:-4] if nm.endswith('.tif') else nm
+            own = EV / f'submission_{stem}.json'
+            order.append((nm, marker, own))
+    if not order:
         return dict(exists=False, file=None, note='No artifact has been built.')
-    name = marker.read_text().strip()
+    audited = [c for c in order if c[2].exists()]
+    name, marker, own = (audited[0] if audited else order[0])
     path = DL / name
     r2 = EV / 'submission_r2.json'
-    if r2.exists() and json.loads(r2.read_text()).get('file') == name:
+    if own.exists() and json.loads(own.read_text()).get('file') == name:
+        report = json.loads(own.read_text())
+    elif r2.exists() and json.loads(r2.read_text()).get('file') == name:
         report = json.loads(r2.read_text())
     else:
         report = dict(file=name, approved_for_weekly_slot=False,
                       promotion='historical research artifact; consult its original audit')
+    report['marker'] = str(marker.relative_to(ROOT))
     report['exists'] = path.exists()
     report['download'] = 'downloads/' + name
+    report['download_zip'] = 'downloads/' + name.replace('.tif', '') + '.zip'
+    report['submission_note'] = submission_note(report)
+    report['submission_note_chars'] = len(report['submission_note'])
     if path.exists():
         report['bytes'] = path.stat().st_size
         actual = file_hash(path)
@@ -155,6 +213,18 @@ def main():
     parser.add_argument('--branch', help='Actual Actions ref, if Git is checked out detached.')
     args = parser.parse_args()
     copied = copy_evidence()
+    DL.mkdir(parents=True, exist_ok=True)
+    # Stage the rasters and the one-click ZIP BEFORE the report is written: the report points into
+    # docs/downloads/, so publishing after it left the site offering a file that was not there yet
+    # (IR-52-028).
+    for f in sorted((ROOT / 'submission').glob('*.tif')):
+        tgt = DL / f.name
+        if not tgt.exists() or tgt.stat().st_size != f.stat().st_size:
+            tgt.write_bytes(f.read_bytes())
+    for mk in ('LATEST.txt', 'R2_LATEST.txt'):
+        mp = ROOT / 'submission' / mk
+        if mp.exists():
+            make_zip(mp.read_text().strip())
     sub = latest_submission()
     board = fetch_board(args.fetch)
     write('submission.json', sub)

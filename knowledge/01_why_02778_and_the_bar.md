@@ -90,13 +90,22 @@ Three independent levers, in the order their size is actually known:
 
 1. **Never pay tax on masked pixels** (worth +2.6 % alone, and it is what `h33-2-b2` did). Free,
    already in `holdout.mask_visible` / `emit`'s `allowed` set. Everyone at the top does this.
-2. **Rank the near-trace corridor instead of pruning it.** Staff (thread 11516 #4) says the mask is
-   pixel-exact and (#4 again, and #2 of the Sep 16 post) that only *new* truth counts; a
-   *corollary* is that mass 1-2 px off a mapped trace is scored, unmasked, and is exactly where a
-   truncated or widened trace is corrected. `h33-2-b2` shows 6.3 % of its mass was there and paid off.
-   GEMSDOE45's independent numbers agree: `isolated` catalogue pixels are only 24,347 of 60,988 -
-   40 % of the mapped population is trace-adjacent in a way a corridor arm can extend.
-   Cost: zero extra data. This is the highest-confidence gain after (1).
+2. ~~**Rank the near-trace corridor instead of pruning it.**~~ **REFUTED ON THE BYTES, 2026-10-07 —
+   see `knowledge/10` §2 and §3.** This item argued that mass 1-2 px off a mapped trace is scored and
+   is where a truncated trace gets corrected, and cited "`h33-2-b2` shows 6.3 % of its mass was there
+   and paid off". The restored reference file does not support either half of that. Measured:
+   `h33-2-b2` has **0 px** within 1 px and **0 px** within 2 px of the mapped catalogue; its minimum
+   distance-to-catalogue is **223.6 m**. It is a strict subset of `gems24-d2-8` (reported 0.2600), and
+   `d2-8 \ h33-2-b2` = **6,436 px, every one of them inside 200 m of a mapped trace** — 14.6 % of
+   that file's mass, not 6.3 %. Deleting exactly that ring is what turned 0.2600 into 0.2778: the ring
+   did not pay off, it cost **6.8 %**. Inverting the metric on the nested pair gives its credit as
+   **exactly zero**, and `|G|` = 14,088.7 px falls out of the same equation.
+   The staff claim that the mask is pixel-exact (thread 11516 #4) survives as a *statement*; the bytes
+   say the scoring behaves as if there were a ~2 px ring, or as if the hidden truth simply does not
+   come within 200 m of the mapped catalogue. The two readings cannot be separated from here, and both
+   give the same rule. **Do not emit inside 200 m of a mapped trace.** Cost of obeying it: zero.
+   GEMSDOE45's `isolated`-pixel count (24,347 of 60,988) is unchanged and is now read as a fact about
+   the catalogue's own topology, not as evidence for a corridor arm.
 3. **Actually find uncatalogued structure.** This is what separates 0.28 from 0.37, and it is the
    reason for the A-only/B-only disagreement analysis in this repo. Our own measurement (see
    `knowledge/03`): the *detector* part is real but modest (A-view AUC 0.73-0.82 for recovering a

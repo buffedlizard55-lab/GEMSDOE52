@@ -103,7 +103,17 @@ def find_priors(roots, exclude=None, *, min_bytes=1000):
         if not Path(root).exists():
             continue
         for path in sorted(Path(root).rglob("*.tif")):
-            if "data/raw" in str(path) or path.name == "labels.tif" or path.name.startswith("sample_submission"):
+            # Competition *inputs* are not prior submissions.  Sweeping a root that contains them
+            # (the obvious mistake is passing the repository's parent so sibling checkouts are
+            # covered) reads band 1 of the 19-band feature stack as if it were somebody's answer, and
+            # the "prior union" then covers more pixels than the footprint itself -- which silently
+            # destroys both the novelty fraction and the not-the-union test, and in the H54 build
+            # emptied the novel pool to 93 px.  Measured before this exclusion: union 5,363,764 px
+            # against a 5,167,373 px footprint.  IR-52-027; regression test in tests/test_gates.py.
+            sp = str(path)
+            if ("data/raw" in sp or path.name == "labels.tif"
+                    or path.name.startswith("sample_submission")
+                    or "training_features" in sp or "/external/" in sp or "data/external" in sp):
                 continue
             if exclude is not None and path.resolve() == Path(exclude).resolve():
                 continue
