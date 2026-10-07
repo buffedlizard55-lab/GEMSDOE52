@@ -89,7 +89,7 @@ Three independent levers, in the order their size is actually known:
 1. **Never pay tax on masked pixels** (worth +2.6 % alone, and it is what `h33-2-b2` did). Free,
    already in `holdout.mask_visible` / `emit`'s `allowed` set. Everyone at the top does this.
 2. ~~**Rank the near-trace corridor instead of pruning it.**~~ **REFUTED ON THE BYTES, 2026-10-07 —
-   see `knowledge/07` §2 and §3.** This item argued that mass 1-2 px off a mapped trace is scored and
+   see `knowledge/10` §2 and §3.** This item argued that mass 1-2 px off a mapped trace is scored and
    is where a truncated trace gets corrected, and cited "`h33-2-b2` shows 6.3 % of its mass was there
    and paid off". The restored reference file does not support either half of that. Measured:
    `h33-2-b2` has **0 px** within 1 px and **0 px** within 2 px of the mapped catalogue; its minimum

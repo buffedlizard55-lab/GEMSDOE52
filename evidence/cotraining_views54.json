@@ -52,48 +52,48 @@
    "a_iso_grav_anom_hg",
    "a_iso_grav_anom_hg__hg"
   ],
-  "oof_auc": 0.7126,
+  "oof_auc": 0.7132,
   "per_block": [
    {
     "block": 0,
-    "n": 10450,
-    "auc": 0.707,
+    "n": 10592,
+    "auc": 0.713,
     "counted_in_mean": true
    },
    {
     "block": 1,
-    "n": 15835,
-    "auc": 0.7207,
+    "n": 16027,
+    "auc": 0.7129,
     "counted_in_mean": true
    },
    {
     "block": 2,
-    "n": 13807,
-    "auc": 0.6993,
+    "n": 13419,
+    "auc": 0.6961,
     "counted_in_mean": true
    },
    {
     "block": 3,
-    "n": 12435,
-    "auc": 0.7166,
+    "n": 12531,
+    "auc": 0.7184,
     "counted_in_mean": true
    },
    {
     "block": 4,
-    "n": 8273,
-    "auc": 0.6681,
+    "n": 8022,
+    "auc": 0.6731,
     "counted_in_mean": true
    },
    {
     "block": 5,
-    "n": 13627,
-    "auc": 0.7793,
+    "n": 13861,
+    "auc": 0.7741,
     "counted_in_mean": true
    },
    {
     "block": 6,
-    "n": 1289,
-    "auc": 0.5968,
+    "n": 1268,
+    "auc": 0.597,
     "counted_in_mean": true
    },
    {
@@ -104,26 +104,26 @@
    },
    {
     "block": 9,
-    "n": 8587,
-    "auc": 0.7337,
+    "n": 8668,
+    "auc": 0.7372,
     "counted_in_mean": true
    },
    {
     "block": 10,
-    "n": 5973,
-    "auc": 0.7324,
+    "n": 5902,
+    "auc": 0.7349,
     "counted_in_mean": true
    },
    {
     "block": 13,
-    "n": 2449,
-    "auc": 0.6579,
+    "n": 2538,
+    "auc": 0.6897,
     "counted_in_mean": true
    },
    {
     "block": 14,
-    "n": 9340,
-    "auc": 0.7221,
+    "n": 9237,
+    "auc": 0.7255,
     "counted_in_mean": true
    }
   ]
@@ -168,160 +168,160 @@
   "per_block": [
    {
     "block": 0,
-    "n": 10450,
-    "auc": 0.9256,
+    "n": 10592,
+    "auc": 0.9268,
     "counted_in_mean": true
    },
    {
     "block": 1,
-    "n": 15835,
-    "auc": 0.9301,
+    "n": 16027,
+    "auc": 0.9317,
     "counted_in_mean": true
    },
    {
     "block": 2,
-    "n": 13807,
-    "auc": 0.9281,
+    "n": 13419,
+    "auc": 0.9292,
     "counted_in_mean": true
    },
    {
     "block": 3,
-    "n": 12435,
-    "auc": 0.9042,
+    "n": 12531,
+    "auc": 0.9043,
     "counted_in_mean": true
    },
    {
     "block": 4,
-    "n": 8273,
-    "auc": 0.8894,
+    "n": 8022,
+    "auc": 0.8888,
     "counted_in_mean": true
    },
    {
     "block": 5,
-    "n": 13627,
-    "auc": 0.9588,
+    "n": 13861,
+    "auc": 0.9577,
     "counted_in_mean": true
    },
    {
     "block": 6,
-    "n": 1289,
-    "auc": 0.9413,
+    "n": 1268,
+    "auc": 0.9397,
     "counted_in_mean": true
    },
    {
     "block": 8,
     "n": 3,
-    "auc": 1.0,
+    "auc": 0.5,
     "counted_in_mean": false
    },
    {
     "block": 9,
-    "n": 8587,
-    "auc": 0.944,
+    "n": 8668,
+    "auc": 0.9413,
     "counted_in_mean": true
    },
    {
     "block": 10,
-    "n": 5973,
-    "auc": 0.9234,
+    "n": 5902,
+    "auc": 0.9227,
     "counted_in_mean": true
    },
    {
     "block": 13,
-    "n": 2449,
-    "auc": 0.8878,
+    "n": 2538,
+    "auc": 0.8865,
     "counted_in_mean": true
    },
    {
     "block": 14,
-    "n": 9340,
-    "auc": 0.9323,
+    "n": 9237,
+    "auc": 0.9319,
     "counted_in_mean": true
    }
   ]
  },
- "blended_oof_auc": 0.9139,
+ "blended_oof_auc": 0.9128,
  "single_view_baseline": {
   "note": "the brief's hide-and-recover comparison: is the two-view method better than each view alone at equal cost?",
-  "view_a_mean": 0.7031,
-  "view_b_mean": 0.9241,
+  "view_a_mean": 0.7065,
+  "view_b_mean": 0.9237,
   "blocks_excluded_for_small_n": 2,
-  "label_caveat": "the label is 'was this pixel one of the organiser-credited core dots', so a high AUC means the view can find WHERE this family emitted, not WHICH emissions were right; knowledge/07 s6 measures that habitat is not credit (AUC 0.70 for the credited tier against random, but 0.68-0.70 for tiers carrying 20x less credit). This is why rho_novel is a prior and not a point estimate in the budget rule.",
-  "blend": 0.9139,
+  "label_caveat": "the label is 'was this pixel one of the organiser-credited core dots', so a high AUC means the view can find WHERE this family emitted, not WHICH emissions were right; knowledge/10 s6 measures that habitat is not credit (AUC 0.70 for the credited tier against random, but 0.68-0.70 for tiers carrying 20x less credit). This is why rho_novel is a prior and not a point estimate in the budget rule.",
+  "blend": 0.9128,
   "co_training_wins": false
  },
  "independence": {
-  "pixel_pearson_r": 0.2744,
+  "pixel_pearson_r": 0.2777,
   "pixel_pearson_p": 0.0,
-  "pixel_spearman_r": 0.4409,
-  "block_mean_r": 0.2784,
-  "block_var_r": 0.002666,
+  "pixel_spearman_r": 0.4269,
+  "block_mean_r": 0.283,
+  "block_var_r": 0.003039,
   "n_blocks": 11,
   "per_block": [
    {
     "block": 0,
-    "n": 7487,
-    "pearson_r": 0.214,
+    "n": 7629,
+    "pearson_r": 0.219,
     "p": 0.0
    },
    {
     "block": 1,
-    "n": 11977,
-    "pearson_r": 0.2952,
+    "n": 12169,
+    "pearson_r": 0.2752,
     "p": 0.0
    },
    {
     "block": 2,
-    "n": 10336,
-    "pearson_r": 0.2608,
+    "n": 9948,
+    "pearson_r": 0.2437,
     "p": 0.0
    },
    {
     "block": 3,
-    "n": 9798,
-    "pearson_r": 0.3256,
+    "n": 9894,
+    "pearson_r": 0.3248,
     "p": 0.0
    },
    {
     "block": 4,
-    "n": 5448,
-    "pearson_r": 0.2803,
+    "n": 5197,
+    "pearson_r": 0.3229,
     "p": 0.0
    },
    {
     "block": 5,
-    "n": 10913,
-    "pearson_r": 0.382,
+    "n": 11147,
+    "pearson_r": 0.3863,
     "p": 0.0
    },
    {
     "block": 6,
-    "n": 991,
-    "pearson_r": 0.2386,
+    "n": 970,
+    "pearson_r": 0.1876,
     "p": 0.0
    },
    {
     "block": 9,
-    "n": 6303,
-    "pearson_r": 0.3205,
+    "n": 6384,
+    "pearson_r": 0.308,
     "p": 0.0
    },
    {
     "block": 10,
-    "n": 4460,
-    "pearson_r": 0.3008,
+    "n": 4389,
+    "pearson_r": 0.3242,
     "p": 0.0
    },
    {
     "block": 13,
-    "n": 1550,
-    "pearson_r": 0.1952,
+    "n": 1639,
+    "pearson_r": 0.2352,
     "p": 0.0
    },
    {
     "block": 14,
-    "n": 7287,
-    "pearson_r": 0.2493,
+    "n": 7184,
+    "pearson_r": 0.2865,
     "p": 0.0
    }
   ],

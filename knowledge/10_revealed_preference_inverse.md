@@ -147,7 +147,7 @@ credit.
 
 **Verdict: habitat is not credit.** A field built from these features can find *where this family
 emits*; it cannot find *which of those emissions were right*. Recorded as N-10 and N-11. This is why
-the H53 emission keeps the exactly-accounted core instead of pretending to a better ranker it cannot
+the H54 emission keeps the exactly-accounted core instead of pretending to a better ranker it cannot
 validate.
 
 ## 7. What *is* recoverable: the strike of the credited structure

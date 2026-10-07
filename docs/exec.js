@@ -22,8 +22,10 @@
     });
     const px = (sub.stats && sub.stats.emitted != null) ? sub.stats.emitted : '?';
     // The note is data, not prose: refresh_feed.py writes it into data/submission.json, so this page
-    // cannot drift from the file it describes.
-    const note = sub.submission_note
+    // cannot drift from the file it describes.  Both key spellings are honoured because two build
+    // scripts are live in this repo (build_revealed_submission.py writes `submission_note`,
+    // build_h53_submission.py writes `note`).
+    const note = sub.submission_note || sub.note
       || (`gems52 · ${px} px · {0,1} mass · no NaN · sha256 `
           + `${sub.sha256 ? sub.sha256.slice(0, 16) : '?'}…`
           + ` · strictly novel against every prior of this family, not their union`);

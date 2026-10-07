@@ -221,7 +221,7 @@ catalogue (`work/a10`) moved the champion's lift from 0.10 to 0.09 and left ρ u
 **What it kills.** Every selection this repo made through that gate, including the
 `promoted: false, forced: true` decision recorded in `docs/data/submission.json` and the "+33 %"
 corridor effect quoted in `knowledge/02` H52-2 as the primary emitter arm. The premise of the
-instrument is that the hidden truth is a held-out part of the mapped catalogue; `knowledge/07` §2–§3
+instrument is that the hidden truth is a held-out part of the mapped catalogue; `knowledge/10` §2–§3
 measure that the hidden truth does not come within 200 m of the mapped catalogue at all. The premise is
 false, so the instrument measures the wrong quantity and its ordering carries no information — ρ ≈ 0 is
 not a weak signal, it is the expected reading for an instrument pointed at the wrong target.
@@ -232,7 +232,7 @@ calibrated against them before it is allowed to promote anything. This one was n
 
 **What replaced it.** Exact set algebra over five scored files that stand in verified nesting
 relations (`A ⊂ B ⊂ E`, `C ⊂ E`). That yields `|G|`, the dead ring, and an exact interval on the
-credit carried by the double-corroborated atom — see `knowledge/07`. It is arithmetic on artefacts the
+credit carried by the double-corroborated atom — see `knowledge/10`. It is arithmetic on artefacts the
 organiser has already scored, which is the only ground truth available without portal access.
 
 ## N-10 · No point or local-differential feature re-ranks inside the champion file
@@ -240,7 +240,7 @@ organiser has already scored, which is the only ground truth available without p
 **What was run.** 63 features — the 19 competition bands, their horizontal gradients, Laplacians and
 5×5 ranges, linearity ratios (gradient over local standard deviation), all 12 LiDAR scarp bands, the 4
 radiometric bands and 4 ratio bands, and the SGMC layer — scored against the credit hierarchy of
-`knowledge/07` §3, with AUC computed inside each of the 4×4 spatial blocks that contain both classes
+`knowledge/10` §3, with AUC computed inside each of the 4×4 spatial blocks that contain both classes
 (10–11 blocks) and averaged. Script: `work/a12_atoms.py`, output `work/a12_feature_auc.json`.
 
 **Result.** Best AUC(`P1` vs `P2`) = **0.5453** (`lin_detelev`, sd 0.008); next `sc_step_max` 0.5453,
@@ -281,7 +281,7 @@ two independent thinnings `A` and `C` agree on the recovered orientation histogr
 **0.9952** while the random control is flat, and the dominant recovered strike is 100–110° in array
 convention = azimuth ≈ 010–020°, the NNE–SSW Basin-and-Range normal-fault strike of this footprint.
 So the *fabric* is recoverable and geologically correct; what is not recoverable is which individual
-dots on it were right. That distinction is what H53-2 is built on (`knowledge/08`).
+dots on it were right. That distinction is what H54-2 is built on (`knowledge/11`).
 
 ## N-12 · Radiometric alteration ratios are not an alteration signal here
 
@@ -292,7 +292,7 @@ U/K, U/Th) plus band 6 `tc`, against the credited tier, same blocked protocol (`
 `rad_TC` 0.3702, `rad_Th` 0.4075, `rad_U` 0.4279 against random — while all three *ratios* sit within
 0.05 of chance: `ext_ThK` 0.4959, `ext_UK` 0.5723, `ext_UTh` 0.5547.
 
-**What it kills.** Hypothesis H53-4 as a standalone emitter. Depletion in K, Th and U *together* with
+**What it kills.** Hypothesis H54-4 as a standalone emitter. Depletion in K, Th and U *together* with
 unchanged ratios is bare rock and thin soil on steep ground — the same habitat `ddetelev_range5`
 already captures at 0.6664 — not hydrothermal alteration, which moves the ratios and leaves total
 count roughly alone. The bands are kept as View B features; the alteration-halo claim is withdrawn.

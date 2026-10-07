@@ -352,11 +352,5 @@
   ],
   "reading": "a strike undirected in [0,180); array +x is east and +y is south, so a strike near 0 or 180 deg is N-S and near 90 deg is E-W"
  },
- "dti_against_mapped_catalogue": 0.0063633907216275355,
- "exists": true,
- "download": "downloads/gems52-h54-revealed-core-strike-continuation-50517px-r1.tif",
- "download_zip": "downloads/gems52-h54-revealed-core-strike-continuation-50517px-r1.zip",
- "submission_note": "H54 revealed-core 25517px + 25000px novel strike-continuation; 200m corridor excluded; |G|=14089",
- "submission_note_chars": 96,
- "size_bytes_local": 313480
+ "dti_against_mapped_catalogue": 0.0063633907216275355
 }

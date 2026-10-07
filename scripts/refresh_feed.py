@@ -187,7 +187,7 @@ def make_zip(name: str) -> str | None:
         f"({d.get('novel_along_strike_px')} along the recovered strike of that structure, "
         f"{d.get('novel_far_px')} free candidates on the same fabric).\n"
         f"Nothing is emitted within {d.get('corridor_excluded_m')} m of a mapped trace, because that "
-        f"ring's credit is exactly zero in the organiser's own scores (knowledge/07 s2).\n"
+        f"ring's credit is exactly zero in the organiser's own scores (knowledge/10 s2).\n"
         f"Projected DTI {d.get('projected_dti', {}).get('mean_dti')} "
         f"(P(win over 0.2778) {d.get('projected_dti', {}).get('p_win')}); the projection is an "
         f"integral over a stated prior, not a forecast - see evidence/revealed_budget.json.\n"
@@ -203,7 +203,7 @@ def make_zip(name: str) -> str | None:
 
 def submission_note(d: dict) -> str:
     """The <=200-character note that distinguishes this submission later."""
-    n = (f"H53 revealed-core {d.get('retained_core_px', 0)}px + {d.get('novel_px', 0)}px novel "
+    n = (f"H54 revealed-core {d.get('retained_core_px', 0)}px + {d.get('novel_px', 0)}px novel "
          f"strike-continuation; 200m corridor excluded; |G|=14089")
     return n[:200]
 
@@ -318,7 +318,7 @@ def main() -> int:
             g_bracket=[8128, 14089], g_point_estimate=14088.7,
             g_note="bracket from T<=|G| over 13 scored files; point estimate from T(B)-T(A)=0 on "
                    "the exactly-nested pair, i.e. from the <=200 m ring around the mapped catalogue "
-                   "carrying no credit (knowledge/07 s2)",
+                   "carrying no credit (knowledge/10 s2)",
             accept_bar_at_our_best=round(0.2 * OUR_BEST / (1 - 0.2 * OUR_BEST), 5),
             rule="emit a pixel iff its expected kernel credit clears "
                  "alpha*DTI/(1-alpha*DTI); across DTI 0.28-0.46 that is 'within 224 m of an "

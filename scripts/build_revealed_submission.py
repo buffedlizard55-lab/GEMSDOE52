@@ -8,9 +8,9 @@ Outputs
     evidence/revealed_calibration.json           the exact set algebra (|G|, dead corridor, tiers)
     evidence/revealed_budget.json                the P(win) budget table and the selection rule
     evidence/independence_revealed.json          the brief's conditional-independence test
-    evidence/cotraining_views53.json             per-view and blended out-of-fold AUC by block
-    evidence/a_only_geological_reasoning53.json  a written reason per emitted A-only candidate
-    evidence/a_only_reasoning53.csv              the same, one row per pixel, for Phase 2 reviewers
+    evidence/cotraining_views54.json             per-view and blended out-of-fold AUC by block
+    evidence/a_only_geological_reasoning54.json  a written reason per emitted A-only candidate
+    evidence/a_only_reasoning54.csv              the same, one row per pixel, for Phase 2 reviewers
     evidence/revealed_submission_audit.json      everything above, in one place
 """
 from __future__ import annotations
@@ -27,7 +27,7 @@ from scipy import ndimage
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from gems52 import emit as E, gates, metric as M, revealed as R, views53 as V  # noqa: E402
+from gems52 import emit as E, gates, metric as M, revealed as R, views54 as V  # noqa: E402
 from gems52.grid import SHAPE, TRANSFORM                              # noqa: E402
 
 SEED = 20261006
@@ -93,7 +93,7 @@ def main() -> int:
     # then 8932acae... for two runs of unchanged code.
     prior_paths = [p for p in gates.find_priors([data / "scored", data / "reference",
                                                  ROOT / "submission", ROOT.parent])
-                   if not p.name.startswith("gems52-h53-revealed-core-strike-continuation-")]
+                   if not p.name.startswith("gems52-h54-revealed-core-strike-continuation-")]
     prior_union = np.zeros(SHAPE, bool)
     used = 0
     for p in prior_paths:
@@ -222,7 +222,7 @@ def main() -> int:
                             label="revealed-preference tier A&C, derived from the organiser's own "
                                   "published scores -- not a pseudo-label, see knowledge/03 N-1",
                             **indep))
-    gates.write_report(ev / "cotraining_views53.json",
+    gates.write_report(ev / "cotraining_views54.json",
                        dict(view_a=dict(n_features=len(results["A"]["names"]),
                                         features=results["A"]["names"],
                                         oof_auc=round(results["A"]["auc"], 4),
@@ -243,7 +243,7 @@ def main() -> int:
                                 label_caveat="the label is 'was this pixel one of the organiser-"
                                              "credited core dots', so a high AUC means the view can "
                                              "find WHERE this family emitted, not WHICH emissions "
-                                             "were right; knowledge/07 s6 measures that habitat is "
+                                             "were right; knowledge/10 s6 measures that habitat is "
                                              "not credit (AUC 0.70 for the credited tier against "
                                              "random, but 0.68-0.70 for tiers carrying 20x less "
                                              "credit). This is why rho_novel is a prior and not a "
@@ -325,7 +325,7 @@ def main() -> int:
     assert float(out.min()) >= 0.0 and float(out.max()) <= 1.0, "values must lie in [0,1]"
     assert not np.isnan(out).any(), "NaN would trip the portal's 'must be in range [0, 1]' check"
     assert int((out > 0).sum()) == n_core + int(novel.sum())
-    name = f"gems52-h53-revealed-core-strike-continuation-{int(out.sum())}px-{a.tag}.tif"
+    name = f"gems52-h54-revealed-core-strike-continuation-{int(out.sum())}px-{a.tag}.tif"
     op = ROOT / a.out_dir / name
     op.parent.mkdir(parents=True, exist_ok=True)
     if not a.dry_run:
@@ -341,7 +341,7 @@ def main() -> int:
     uniq = gates.uniqueness_report(out, [
         p for p in gates.find_priors([data / "scored", data / "reference", ROOT / "submission",
                                       ROOT.parent], exclude=op if not a.dry_run else None)
-        if not p.name.startswith("gems52-h53-revealed-core-strike-continuation-")], top=14)
+        if not p.name.startswith("gems52-h54-revealed-core-strike-continuation-")], top=14)
     log(f"[gates] format ok={fmt.get('ok')} problems={fmt.get('problems')}")
     log(f"[gates] uniqueness ok={uniq['ok']} relation={uniq['relation_to_union']} "
         f"novel_fraction={uniq['novel_fraction']} prior_px_dropped={uniq['prior_px_dropped']}")
@@ -363,7 +363,7 @@ def main() -> int:
     reasons = []
     for i, (ry, cx) in enumerate(zip(rr_.tolist(), cc_.tolist())):
         reasons.append(dict(
-            candidate_id=f"H53-AO-{i:05d}", row=int(ry), col=int(cx),
+            candidate_id=f"H54-AO-{i:05d}", row=int(ry), col=int(cx),
             utm_easting=round(float(tr.c + (cx + 0.5) * tr.a), 2),
             utm_northing=round(float(tr.f + (ry + 0.5) * tr.e), 2),
             dist_to_mapped_fault_m=round(float(ed[ry, cx]), 1),
@@ -391,13 +391,13 @@ def main() -> int:
                 f"{'continuing an already-credited lineament along strike' if along[ry, cx] else 'a free candidate on the same recovered fabric'}, "
                 f"{float(ed[ry, cx]):.0f} m from the nearest mapped trace -- emitted outside the "
                 "200 m ring whose credit is exactly zero in the organiser's own scores.")))
-    gates.write_report(ev / "a_only_geological_reasoning53.json",
+    gates.write_report(ev / "a_only_geological_reasoning54.json",
                        dict(n_candidates=len(reasons),
                             stratum_definition="View A confident (>= 90th percentile of the View A "
                                                "score) and View B abstaining, inside the permitted "
                                                "set, and emitted",
                             candidates=reasons))
-    with open(ev / "a_only_reasoning53.csv", "w") as f:
+    with open(ev / "a_only_reasoning54.csv", "w") as f:
         cols = ["candidate_id", "row", "col", "utm_easting", "utm_northing",
                 "dist_to_mapped_fault_m", "view_a_score", "view_b_score",
                 "depth_to_base_of_basement_m", "det_elev_slope", "bouguer_gradient",
@@ -458,7 +458,7 @@ def main() -> int:
         generated_utc=_time.strftime("%Y-%m-%dT%H:%M:%SZ", _time.gmtime()),
         file=name, sha256=gates.sha256(op) if op.exists() else None,
         bytes=int(op.stat().st_size) if op.exists() else None,
-        arm=f"H53 revealed-core+strike-continuation|{int(out.sum())}|s0",
+        arm=f"H54 revealed-core+strike-continuation|{int(out.sum())}|s0",
         budget=int(out.sum()), emit="revealed-core + isolated-dot top-K on a two-view field",
         selection_source="evidence/revealed_budget.json",
         g_estimate_px=round(g, 1),
@@ -480,9 +480,9 @@ def main() -> int:
                             mass_on_catalogue=int(((out > 0) & cat).sum()),
                             mass_within_corridor=int(((out > 0) & (ed <= R.CORRIDOR_M)).sum())),
         holdout_gates=dict(
-            promoted=True, tested="H53 revealed-core + strike continuation",
+            promoted=True, tested="H54 revealed-core + strike continuation",
             explicit_selection=True,
-            instrument="NOT the whole-component hide simulator: knowledge/07 s5 measures that it "
+            instrument="NOT the whole-component hide simulator: knowledge/10 s5 measures that it "
                        "does not predict the organiser's score (Spearman -0.10, p=0.73, n=13), so "
                        "the selection is made on the exact set algebra over five scored files "
                        "instead, and the P(win) integral in evidence/revealed_budget.json",
@@ -494,7 +494,7 @@ def main() -> int:
             reason="budget chosen by maximising P(DTI > 0.2778) over the exact t_core interval and "
                    "a stated rho_novel prior; ties to the larger novel fraction"),
         forced=False,
-        per_candidate_csv="a_only_reasoning53.csv",
+        per_candidate_csv="a_only_reasoning54.csv",
         stratum_mix=dict(A_only_emitted=int(ao.sum()),
                          B_only_suppressed=int(B_only.sum()),
                          concordant=int(concordant.sum()), abstain=int((~hi_a & ~hi_b).sum())),

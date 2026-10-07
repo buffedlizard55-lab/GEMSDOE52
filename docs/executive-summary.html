@@ -36,6 +36,14 @@ and the best blocked AUC was 0.5453 (point features) and 0.5122 (structure-tenso
 budget is chosen by integrating the metric over a <em>stated prior</em> for that unknown, and the
 integral — P(win), mean, worst case — is printed on the overview page from
 <code>data/submission.json</code>. It is a projection, not a forecast.</p>
+<p class="small"><strong>Why that verdict is above the steps.</strong> The file is legal, unique, and
+<em>promoted</em>: on both blocked instruments at the incumbent's budget it beats every comparator it was
+measured against — the same field without the coincidence gate, surface lineaments with no corroboration,
+and the same arm with its places rolled to a different tile — and the ordering is identical on both
+instruments. The rule it had to clear is written in <code>registry/preregistration_h53.json</code> and
+re-derivable from <code>evidence/h53_holdout.json</code>. The failures that came before it (the co-training
+round, the corridor composite) stay published on <a href="validation.html">Validation</a> and
+<a href="irregularities.html">the register</a>.</p>
 
 <h2><span class="num">1</span> Submission steps (portal-side)</h2>
 <ol class="steps">
@@ -51,8 +59,7 @@ integral — P(win), mean, worst case — is printed on the overview page from
   rendered from <code>data/submission.json → submission_note</code>, which
   <code>scripts/refresh_feed.py</code> writes from the gate report, so it cannot drift from the file it
   describes and it is always ≤&nbsp;200 characters. If you want the hash in the note as well, it is
-  <code>sha256</code> in the same JSON.</li>
-<li>Submit. If — and only if — the validator rejects the file, stop and read §3. Do not re-upload a
+  <code>sha256</code> in the same JSON.</li><li>Submit. If — and only if — the validator rejects the file, stop and read §3. Do not re-upload a
   renamed copy: each weekly slot is spent.</li>
 </ol>
 

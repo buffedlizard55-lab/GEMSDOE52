@@ -155,7 +155,7 @@ def view_feature_iter(stack: Stack, view: str):
             yield f"b_rad_{nm}", stack.rad(b).astype(np.float32)
         for b, nm in EXT_BANDS.items():
             yield f"b_rad_{nm}", stack.ext(b).astype(np.float32)
-        # scarp up/down-face asymmetry (H53-5): a real fault scarp is systematically asymmetric,
+        # scarp up/down-face asymmetry (H54-5): a real fault scarp is systematically asymmetric,
         # a road cut or an erosion line is not.
         up = stack.lidar(7).astype(np.float32)
         dn = stack.lidar(6).astype(np.float32)
