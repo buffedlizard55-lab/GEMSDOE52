@@ -355,3 +355,47 @@ optional corroboration, never as positive labels. See
 `docs/data/*.json` is regenerated from `evidence/` by `scripts/refresh_feed.py`;
 `.github/workflows/feed.yml` runs it nightly and on push, and the site renders only from those files.
 If a number on the site is wrong, the fix is the evidence file, never the HTML.
+
+## 7. Remaining work, limitations, and what would change the answer
+
+Ordered by expected effect on the score the organiser actually computes.
+
+1. **Recover the `h19-5` field, not its emission.** The single highest-value artefact this group could
+   produce next is the top 16,678 px of the *ranked field* behind `gems19-h19-5`, worth ≈0.2975 by the
+   same algebra that predicts eight published scores to within 4 %. We hold only its thresholded
+   emission, and `knowledge/07` §6 measures that no feature computable from the provided grids
+   re-ranks inside it (best blocked AUC 0.5453 over 63 point features, 0.5122 over 108 structure-tensor
+   features). If any sibling checkout still holds the field array, this is a one-command win.
+2. **Get real egress.** Only `pypi.org` and `api.github.com` respond from this sandbox;
+   `raw.githubusercontent.com` and `drivendata.org` both die at HTTP 000. That blocks three things at
+   once: the live board (so every file→score mapping here stays owner-reported, `IR-52-003`), USGS
+   ComCat event-level seismicity (`knowledge/04` D-1 — service and licence verified live, 7,519 events
+   for a comparable query, no authentication), and the QFaults **trace geometry**. The restored
+   `gdr_qfaults_traces.csv` carries 1,126 traces with `slip_rate`, `recency`, `slip_sense` and
+   `map_scale` but **centroids only** — 376 in the footprint, 77 on the mapped catalogue, mean distance
+   to it 595 m, so the layer is largely independent of the labels and worth rasterising the moment a
+   polyline is obtainable.
+3. **Separate the two readings of the dead ring.** Either the organiser's mask is a ~2 px buffer
+   (contradicting the staff reading recorded in `knowledge/01` §1 and `knowledge/02` H52-2) or the
+   hidden truth never comes within 200 m of the mapped catalogue. One question in the discussion forum
+   resolves it, and the answer changes whether the 1–2 px corridor is emittable at all. Both readings
+   give the same rule today, so this is not blocking — but it is the cheapest large uncertainty left.
+4. **Replace the broken instrument rather than only labelling it.** `IR-52-017` says the whole-component
+   hide simulator carries no information about the real score. A calibrated replacement needs a
+   pseudo-truth that reproduces the hidden truth's *measured* statistics — ~14,089 px, ≥200 m from the
+   mapped catalogue, NNE–SSW linear traces — and any such construction embeds the hypothesis it is meant
+   to test. Until one exists, every claim here rests on the set algebra, and the algebra only covers
+   artefacts the organiser has already scored.
+5. **`ρ_novel` is a prior, and that is the whole risk.** The retained half of this file's credit is
+   bounded exactly; the novel half's is not, and `knowledge/07` §6 explains why nothing available here
+   can measure it. The budget was chosen so the retained core carries the score if the novel half is
+   worthless (worst case 0.2301 against a 0.2778 floor), and the projection is an integral over a
+   stated prior — printed on the overview page, never described as a forecast.
+6. **Approximations to tighten if the arithmetic is ever reused elsewhere.** `M = T` (licensed by the
+   >200 m dot separation, not exact); additivity across disjoint atoms (submodularity alone gives weaker
+   bounds); `|G|` *defined* by "the ring earns nothing", so a ring that earns a little moves every
+   credit in §3 of `knowledge/07` down with it.
+7. **Small, open, and worth a look.** `refresh_feed.py` still cannot parse the live board because the
+   table is built client-side (`IR-52-016`) — the site serves a dated snapshot and says so; the H52
+   artefact and its `evidence/` remain in the repo with their holdout claims labelled as not standing,
+   rather than being deleted, because a removed measurement cannot be re-checked.
