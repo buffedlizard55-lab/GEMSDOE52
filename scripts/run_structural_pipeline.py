@@ -40,7 +40,9 @@ ROOT = Path(__file__).resolve().parents[1]
 WORK = ROOT / "work/r2"
 EV = ROOT / "evidence"
 PREREG_PATH = ROOT / "registry/r2_preregistration.json"
+H55_PREREG_PATH = ROOT / "registry/h55_preregistration.json"
 CFG = json.loads(PREREG_PATH.read_text())
+H55_CFG = json.loads(H55_PREREG_PATH.read_text())
 SEED = CFG["seed"]
 ARMS = CFG["arms"]
 CACHE_CODE_HASH = structural.digest(__file__)
@@ -49,6 +51,7 @@ CACHE_CODE_HASH = structural.digest(__file__)
 def cache_signature(store, names, rows, domain):
     return hashlib.sha256(json.dumps(dict(
         pipeline=CACHE_CODE_HASH, prereg=structural.digest(PREREG_PATH),
+        h55_prereg=structural.digest(H55_PREREG_PATH),
         feature_manifest=structural.digest(store.directory / 'manifest.json'),
         structural_source=structural.digest(ROOT / 'src/gems52/structural.py'),
         spatial_source=structural.digest(ROOT / 'src/gems52/spatial.py'),
@@ -192,7 +195,8 @@ def validate():
         np.savez(fold_dir / "training_indices.npz", rows=rows, y=y)
         training.append(dict(**f["receipt"], **sample_receipt))
         predictions, models, qs = {}, {}, {}
-        for name in ("raw_fusion", "view_A", "view_B", "structural_contrast"):
+        for name in ("raw_fusion", "view_A", "view_B", "structural_contrast",
+                     "view_B_h55", "structural_contrast_h55"):
             names = store.manifest[name]
             path = fold_dir / (name + ".npy")
             mp = fold_dir / (name + ".joblib")
@@ -236,19 +240,28 @@ def validate():
             sc["auc_proxy"] = float(roc_auc_score(auc_y, np.nan_to_num(predictions[name].ravel()[auc_ids]))) if len(np.unique(auc_y)) == 2 else None
             arms[name] = sc
             log(f"fold {fi} {name}: DTI {sc['dti']:.6f}, {sc['emitted']} px")
+        for name in ("view_B_h55", "structural_contrast_h55"):
+            field = prior_adjust(predictions[name], sample_receipt["catalogue_prior"])
+            pred, placement = place(field, f["region"], f["visible"], valid,
+                                    CFG["primary_budget_global_pixels"])
+            sc = score_fold(pred, f["truth"], f["region"], f["visible"])
+            sc["placement"] = placement
+            arms[name] = sc
+            log(f"fold {fi} {name}: DTI {sc['dti']:.6f}, {sc['emitted']} px")
         fold_rows.append(dict(fold=fi, receipt=f["receipt"], arms=arms))
         del predictions, models
 
     independence = spatial.independence(negative_rows, CFG["co_training_gate"]["maximum_abs_correlation"],
                                         CFG["co_training_gate"]["minimum_negative_blocks"])
-    write_json(EV / "independence_r2.json", independence)
-    write_json(EV / "folds_r2.json", training)
+    write_json(EV / "independence_h55.json", independence)
+    write_json(EV / "folds_h55.json", training)
     pseudo_report = run_optional_exchange(store, cat, independence)
-    write_json(EV / "pseudo_exchange_r2.json", pseudo_report)
-    controls = [a for a in ARMS if a != CFG["primary_candidate"]]
-    means = {a: float(np.mean([f["arms"][a]["dti"] for f in fold_rows])) for a in ARMS}
+    write_json(EV / "pseudo_exchange_h55.json", pseudo_report)
+    means = {a: float(np.mean([f["arms"][a]["dti"] for f in fold_rows]))
+             for a in fold_rows[0]["arms"]}
+    primary = "structural_contrast_h55"
+    controls = [name for name in means if name != primary]
     best = max(controls, key=lambda a: means[a])
-    primary = CFG["primary_candidate"]
     diffs = [f["arms"][primary]["dti"] - f["arms"][best]["dti"] for f in fold_rows]
     # A small 4-fold proxy is not a reliable prediction of an organizer score.
     lift = float(np.mean(diffs))
@@ -265,6 +278,8 @@ def validate():
     if not gate["meets_mean_lift"] or not gate["meets_fold_support"]:
         gate["reason"] = "preregistered candidate did not beat the strongest comparable baseline by the required lift/fold support; do not spend a weekly slot"
     report = dict(generated_utc=now(), preregistration_sha256=structural.digest(PREREG_PATH),
+                  h55_preregistration_sha256=structural.digest(H55_PREREG_PATH),
+                  registered_candidate=H55_CFG["primary_hypothesis"],
                   protocol="spatial-quadrant, whole original 8-connected component hide-and-recover, 80-pixel Euclidean training buffer",
                   feature_support_px=store.manifest["support_px"], external_data_used=False,
                   primary_budget_global_pixels=CFG["primary_budget_global_pixels"], means=means,
@@ -275,8 +290,8 @@ def validate():
                            "Original connected raster components are segment proxies, not authenticated geological fault IDs.",
                            "Four large folds have low inferential power; candidate and controls were fixed before scoring.",
                            "Historical scored fields already used the complete catalogue and cannot be a clean OOF comparator."])
-    write_json(EV / "holdout_r2.json", report)
-    log(f"primary lift {lift:+.6f} vs {best}; fold support {support}/4; slot approval FALSE")
+    write_json(EV / "h55_profile_holdout.json", report)
+    log(f"H55 primary lift {lift:+.6f} vs {best}; fold support {support}/4; slot approval FALSE")
     return report
 
 
@@ -352,7 +367,7 @@ def reasoning(store, cat, prediction, classes, pa, pb, quantile_values, name):
                     + ("Deeper-than-median modelled cover, anti-aligned gravity/cover normals and cross-scale gravity persistence are consistent with a covered basin-margin discontinuity. " if supported else
                        "Signed normal/cover support is incomplete; do not interpret this discrepancy as proof of a buried fault. ")
                     + "No fault displacement, geothermal fluid flow or vent has been verified at this pixel.")
-            writer.writerow(dict(candidate_id=f"R2-A-{i + 1:05d}", row=int(y), col=int(x), easting=round(float(east[i]), 2), northing=round(float(north[i]), 2),
+            writer.writerow(dict(candidate_id=f"H55-A-{i + 1:05d}", row=int(y), col=int(x), easting=round(float(east[i]), 2), northing=round(float(north[i]), 2),
                                  longitude=round(float(longitude[i]), 7), latitude=round(float(latitude[i]), 7),
                                  view_A_score=round(float(pa[y, x]), 7), view_B_score=round(float(pb[y, x]), 7),
                                  basement_depth_band_value=round(float(cover[y, x]), 5), slope_band_value=round(float(slope[y, x]), 5),
@@ -365,22 +380,23 @@ def reasoning(store, cat, prediction, classes, pa, pb, quantile_values, name):
                     units_note="Raw band native units have not been authenticated against organizer metadata; gradient-direction and persistence values are dimensionless.",
                     candidate_scope="every emitted A-only pixel; raster components are not claimed to be geologically verified segments",
                     geological_support_url="https://www.usgs.gov/publications/discovering-blind-geothermal-systems-great-basin-region-integrated-geologic-and")
-    write_json(EV / "a_only_reasoning_r2.json", receipts)
+    write_json(EV / "a_only_reasoning_h55.json", receipts)
     shutil.copy2(output, ROOT / "docs/downloads" / output.name)
     return receipts
 
 
 def build_submission():
-    holdout = json.loads((EV / "holdout_r2.json").read_text())
-    if holdout["preregistration_sha256"] != structural.digest(PREREG_PATH):
-        raise ValueError("preregistration changed after validation; rerun from a clean work directory")
+    holdout = json.loads((EV / "h55_profile_holdout.json").read_text())
+    if (holdout["preregistration_sha256"] != structural.digest(PREREG_PATH) or
+            holdout.get("h55_preregistration_sha256") != structural.digest(H55_PREREG_PATH)):
+        raise ValueError("R2/H55 preregistration changed after validation; rerun from a clean work directory")
     store, cat = load_data()
     valid = store.valid
     rows, y, train_receipt = training_rows(cat, valid, valid, cat, SEED + 100)
     directory = WORK / "final"
     directory.mkdir(parents=True, exist_ok=True)
     fields, quantile_values = {}, {}
-    for arm in ("view_A", "view_B", "structural_contrast"):
+    for arm in ("view_A", "view_B", "structural_contrast_h55"):
         mp, pp = directory / (arm + ".joblib"), directory / (arm + ".npy")
         cp = directory / (arm + '_cache.json')
         signature = cache_signature(store, store.manifest[arm], rows, valid)
@@ -401,7 +417,7 @@ def build_submission():
     density = prior_adjust(fields[primary], train_receipt["catalogue_prior"])
     prediction, placement = place(density, valid, cat, valid, CFG["primary_budget_global_pixels"])
     decoded_sha = hashlib.sha256(prediction.astype('<f4').tobytes()).hexdigest()
-    name = f"gems52-r2-signednormal-{placement['emitted']}-{decoded_sha[:12]}-zeros"
+    name = f"gems52-h55-profile-{placement['emitted']}-{decoded_sha[:12]}-research"
     destination = ROOT / "submission" / (name + ".tif")
     download = ROOT / "docs/downloads" / destination.name
     destination.parent.mkdir(parents=True, exist_ok=True)
@@ -421,8 +437,9 @@ def build_submission():
             with rasterio.open(destination, "w", **profile) as dst:
                 dst.write(prediction, 1)
                 dst.write_mask(sample_valid.astype(np.uint8) * 255)
-                dst.update_tags(model="GEMSDOE52 R2 signed-normal structural contrast",
-                                status="experimental; not approved for weekly slot", decoded_sha256=decoded_sha)
+                dst.update_tags(model="GEMSDOE52 H55 paired-normal profile research model",
+                                status="research only; failed spatial holdout gate; not approved for weekly slot",
+                                decoded_sha256=decoded_sha)
     fmt = gates.format_report(destination, ROOT / "data/sample_submission.tif", footprint=valid)
     if not fmt["ok"]:
         raise ValueError(f"written GeoTIFF format gate failed: {fmt['problems']}")
@@ -447,8 +464,8 @@ def build_submission():
         matched_max_union_pixels_dropped=int(((max_union_prediction > 0) & ~(prediction > 0)).sum()), placement=max_union_placement)
     comparisons["not_merely_union"] = not comparisons["union"]["equal"] and comparisons["union"]["view_union_pixels_dropped"] > 0 and not comparisons['matched_budget_max_union']['equal']
     if not uniqueness['research_publication_ok'] or not comparisons["not_merely_union"]:
-        write_json(EV / 'uniqueness_r2.json', uniqueness)
-        write_json(EV / 'not_union_r2.json', comparisons)
+        write_json(EV / 'uniqueness_h55.json', uniqueness)
+        write_json(EV / 'not_union_h55.json', comparisons)
         raise ValueError("canonical prediction uniqueness/literal-union gate failed; do not publish a renamed prior")
     # Preserve the original saturated-support failure; this is research release,
     # not post-hoc scientific promotion or a change to the registered model.
@@ -458,32 +475,36 @@ def build_submission():
     with zipfile.ZipFile(download.with_suffix(".zip"), "w", compression=zipfile.ZIP_DEFLATED) as z:
         z.write(download, arcname=download.name)
     why = reasoning(store, cat, prediction, classes, fields["view_A"], fields["view_B"], quantile_values, name)
-    note = f"G52 R2 signed gravity-cover normals | {placement['emitted']:,} new-model dots | holdout gate FAIL | UNSCORED research only; no weekly-slot approval."
+    note = f"H55 paired-normal profile | {placement['emitted']:,} metric-placed pixels | spatial holdout failed | research only; not approved for upload."
     with rasterio.open(destination) as src:
         mask_agreement = bool(np.array_equal(src.dataset_mask() > 0, sample_valid))
         written_equal = bool(np.array_equal(src.read(1), prediction))
     if not mask_agreement or not written_equal:
         raise ValueError("internal mask or written prediction bytes disagree with intended output")
-    receipt = dict(generated_utc=now(), file=destination.name, submission_name="GEMSDOE52-R2-SignedNormal-" + decoded_sha[:8],
+    receipt = dict(generated_utc=now(), file=destination.name,
+                   submission_name="GEMSDOE52-H55-PairedProfile-" + decoded_sha[:8],
                    note=note, bytes=destination.stat().st_size, sha256=structural.digest(destination), decoded_sha256=decoded_sha,
                    format=fmt, uniqueness=uniqueness, view_comparison=comparisons, stats=placement,
-                   model="supervised structural contrast fallback; NOT co-trained", pseudo_exchange_used=False,
+                   model="supervised structural contrast with preregistered H55 DEM profile features; NOT co-trained", pseudo_exchange_used=False,
                    validation=holdout["slot_gate"], promoted=False, forced=False,
                    artifact_status="EXPERIMENTAL — FORMAT CHECKED; DO NOT SPEND A WEEKLY SLOT",
                    official_score=None, source_authentication="owner-mirrored rasters, SHA-pinned but not organizer-authenticated",
                    stats_by_stratum={n: int(((prediction > 0) & (classes == c)).sum()) for c, n in ((0, "other"), (1, "concordant"), (2, "A_only"), (3, "B_only"))},
                    a_only_reasoning=why, internal_mask_matches_sample=mask_agreement,
                    normalization="binary [0,1], all raw cells finite; internal validity mask exactly matches sample footprint",
-                   preregistration_sha256=structural.digest(PREREG_PATH), feature_manifest_sha256=structural.digest(WORK / "features/manifest.json"),
+                   preregistration_sha256=structural.digest(PREREG_PATH),
+                   h55_preregistration_sha256=structural.digest(H55_PREREG_PATH),
+                   feature_manifest_sha256=structural.digest(WORK / "features/manifest.json"),
                    training=train_receipt, software={"python": platform.python_version(), "numpy": np.__version__, "rasterio": rasterio.__version__,
                                                    "sklearn": __import__('sklearn').__version__})
     write_json(EV / ("submission_" + name + ".json"), receipt)
-    write_json(EV / "submission_r2.json", receipt)
-    write_json(EV / "uniqueness_r2.json", uniqueness)
-    write_json(EV / "not_union_r2.json", comparisons)
+    write_json(EV / "submission_h55.json", receipt)
+    write_json(EV / "uniqueness_h55.json", uniqueness)
+    write_json(EV / "not_union_h55.json", comparisons)
     write_json(ROOT / "docs/downloads" / (name + "-audit.json"), receipt)
-    (ROOT / "submission/R2_LATEST.txt").write_text(destination.name + "\n")
-    log(f"WROTE {destination.name} ({receipt['bytes']} bytes); format/canonical-pattern pass; original support-novelty diagnostic FAIL; EXPERIMENTAL, no slot used")
+    # Intentionally do not modify submission/LATEST.txt or R2_LATEST.txt: this
+    # candidate failed the registered gate and must not displace an incumbent.
+    log(f"WROTE {destination.name} ({receipt['bytes']} bytes); format/canonical-pattern pass; research-only, no slot used")
     return receipt
 
 
@@ -493,13 +514,25 @@ def main():
     a = ap.parse_args()
     os.chdir(ROOT)
     if a.stage in ("features", "all"):
-        if not (WORK / "features/manifest.json").exists():
+        manifest_path = WORK / "features/manifest.json"
+        rebuild = True
+        if manifest_path.exists():
+            try:
+                cached = json.loads(manifest_path.read_text())
+                rebuild = (cached.get("version") != "h55-profile-v1" or
+                           "structural_contrast_h55" not in cached or
+                           len(cached.get("h55_profile_features", [])) != 20)
+            except (OSError, json.JSONDecodeError):
+                rebuild = True
+        if rebuild:
             structural.build(dest=WORK / "features", log=print)
-        write_json(EV / "features_r2.json", json.loads((WORK / "features/manifest.json").read_text()))
+        write_json(EV / "features_h55.json", json.loads(manifest_path.read_text()))
     if a.stage in ("validate", "all"):
         validate()
     if a.stage in ("build", "all"):
         build_submission()
+        from publish_h55_profile_site import publish as publish_h55_profile
+        publish_h55_profile()
 
 
 if __name__ == "__main__":

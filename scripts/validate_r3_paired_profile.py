@@ -68,7 +68,13 @@ def ensure_features() -> dict:
     if manifest_path.exists():
         current = json.loads(manifest_path.read_text())
         actual_features = sha256(ROOT / "data/training_features.tif")
-        if (current.get("version") == "r3-paired-profile-v1"
+        # The shared feature builder now carries both the R3-H1 and H55 profile
+        # channels. Reuse any cache that explicitly contains the R3 feature group,
+        # rather than demanding an R3-only manifest version and rebuilding away
+        # the other preregistered channels.
+        if (current.get("r3_h1_profile")
+                and current.get("view_B_paired_shoulder")
+                and current.get("h2_features")
                 and current.get("inputs", {}).get("features_sha256") == actual_features):
             log("verified existing R3 feature cache")
             write_json(EVIDENCE / "features_r3.json", current)

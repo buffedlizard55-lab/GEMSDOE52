@@ -7,7 +7,7 @@
 <header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html">Overview</a>
 <a href="executive-summary.html">Submission guide</a><a href="validation.html">Validation</a>
 <a href="forensics.html">0.2778 autopsy</a><a href="sources.html">Sources</a>
-<a href="h55.html" aria-current="page">H55 (this round)</a><a href="h54.html">Parallel H54</a>
+<a href="h55.html" aria-current="page">H55 (this round)</a><a href="h55-profile.html">H55-PROFILE follow-up</a><a href="h54.html">Parallel H54</a>
 <a href="h53.html">Parallel H53</a></nav></header>
 <main id="main">
 <h1>H55 &mdash; three corrections, one file</h1>
@@ -139,12 +139,12 @@ corrected split it fires on
 <th class="num">Spearman, mean over-prediction on negatives<br>(the pre-registered statistic)</th>
 <th class="num">Spearman, false-alarm rate at budget 37,654</th>
 <th class="num">CV of A's block FAR</th><th class="num">CV of B's block FAR</th></tr></thead>
-<tbody><tr><td class='mono'>hide</td><td class='num'>0</td><td class='num'>40 / 62</td><td class='num'><b>+0.6341</b></td><td class='num'>+0.1049</td><td class='num'>3.03</td><td class='num'>0.78</td></tr><tr><td class='mono'>hide</td><td class='num'>1</td><td class='num'>40 / 62</td><td class='num'><b>-0.1158</b></td><td class='num'>-0.2054</td><td class='num'>1.35</td><td class='num'>1.18</td></tr><tr><td class='mono'>hide</td><td class='num'>2</td><td class='num'>40 / 62</td><td class='num'><b>+0.7625</b></td><td class='num'>-0.0426</td><td class='num'>4.84</td><td class='num'>0.94</td></tr><tr><td class='mono'>hide</td><td class='num'>3</td><td class='num'>40 / 62</td><td class='num'><b>+0.5576</b></td><td class='num'>+0.1328</td><td class='num'>5.22</td><td class='num'>0.84</td></tr><tr><td class='mono'>tip</td><td class='num'>0</td><td class='num'>40 / 62</td><td class='num'><b>+0.6034</b></td><td class='num'>+0.0696</td><td class='num'>2.89</td><td class='num'>0.75</td></tr><tr><td class='mono'>tip</td><td class='num'>1</td><td class='num'>40 / 62</td><td class='num'><b>+0.4002</b></td><td class='num'>-0.2493</td><td class='num'>3.23</td><td class='num'>0.96</td></tr><tr><td class='mono'>tip</td><td class='num'>2</td><td class='num'>40 / 62</td><td class='num'><b>+0.7107</b></td><td class='num'>-0.0265</td><td class='num'>4.93</td><td class='num'>0.85</td></tr><tr><td class='mono'>tip</td><td class='num'>3</td><td class='num'>40 / 62</td><td class='num'><b>+0.5837</b></td><td class='num'>+0.1559</td><td class='num'>5.12</td><td class='num'>0.81</td></tr></tbody></table>
+<tbody><tr><td class='mono'>hide</td><td class='num'>0</td><td class='num'>40 / 62</td><td class='num'><b>+0.6341</b></td><td class='num'>+0.1402</td><td class='num'>3.03</td><td class='num'>0.78</td></tr><tr><td class='mono'>hide</td><td class='num'>1</td><td class='num'>40 / 62</td><td class='num'><b>-0.1158</b></td><td class='num'>-0.1741</td><td class='num'>1.35</td><td class='num'>1.18</td></tr><tr><td class='mono'>hide</td><td class='num'>2</td><td class='num'>40 / 62</td><td class='num'><b>+0.7625</b></td><td class='num'>-0.0133</td><td class='num'>4.84</td><td class='num'>0.94</td></tr><tr><td class='mono'>hide</td><td class='num'>3</td><td class='num'>40 / 62</td><td class='num'><b>+0.5576</b></td><td class='num'>+0.1263</td><td class='num'>5.22</td><td class='num'>0.84</td></tr><tr><td class='mono'>tip</td><td class='num'>0</td><td class='num'>40 / 62</td><td class='num'><b>+0.6034</b></td><td class='num'>+0.0997</td><td class='num'>2.89</td><td class='num'>0.75</td></tr><tr><td class='mono'>tip</td><td class='num'>1</td><td class='num'>40 / 62</td><td class='num'><b>+0.4002</b></td><td class='num'>-0.2165</td><td class='num'>3.23</td><td class='num'>0.96</td></tr><tr><td class='mono'>tip</td><td class='num'>2</td><td class='num'>40 / 62</td><td class='num'><b>+0.7107</b></td><td class='num'>+0.0006</td><td class='num'>4.93</td><td class='num'>0.85</td></tr><tr><td class='mono'>tip</td><td class='num'>3</td><td class='num'>40 / 62</td><td class='num'><b>+0.5837</b></td><td class='num'>+0.1873</td><td class='num'>5.12</td><td class='num'>0.81</td></tr></tbody></table>
 <p><b>Verdict: refuted at the pre-registered threshold</b> &mdash; max |&rho;| =
 0.7625 (<code>hide</code>) and
 0.7107 (<code>tip</code>) against
 0.6. Co-training is abandoned. Two qualifications printed in the same
-record: the false-alarm-rate statistic correlates weakly (max |&rho;| 0.2493, negative on 3 of 8
+record: the false-alarm-rate statistic correlates weakly (max |&rho;| 0.2165, negative on 3 of 8
 folds), so this is the verdict of the statistic the pre-registration <em>named</em>; and View A's
 block-level FAR has CV 1.35&ndash;5.22 against View B's 0.75&ndash;1.18 &mdash; a view finding a few
 regional anomalies and nothing else, which is the same reading as N-2 and N-10 from a third direction.</p>
@@ -217,7 +217,7 @@ the one false verdict that would block a legitimate submission. Fixed by basenam
 <p>Also fixed: <b>IR-52-020</b> (<code>download_competition_data.sh</code> passed <code>--group all</code>,
 a flag <code>restore_data.py</code> does not accept, so the documented one-command data placement exited 2
 before fetching anything), <b>IR-52-021</b> (<code>registry/irregularities.json</code> was cited by code but
-never existed &mdash; now 41 entries, and every id cited anywhere in the tree must resolve), and
+never existed &mdash; now 42 entries, and every id cited anywhere in the tree must resolve), and
 <b>IR-52-030</b> (two concurrent sessions allocated IR-52-021 and IR-52-022 to different findings; both
 readings are recorded rather than silently renumbered).</p>
 
@@ -254,6 +254,6 @@ at build time by <code>scripts/run_h55.py</code> and <code>scripts/verify_h55.py
 <code>docs/data/</code> by <code>scripts/refresh_feed.py</code>; this page is regenerated by
 <code>scripts/make_h55_page.py</code>. Nothing here is typed in by hand. Where a claim is an assumption
 rather than a measurement, it says so in the same sentence.</p>
-</main><footer>Competition 306 &middot; H55 &middot; fault predictions, not confirmed geothermal vents.
+<p class="small muted" id="h55-profile-followup-link"><strong>Separate follow-up:</strong> the H55-PROFILE paired-normal DEM experiment failed its registered mean-lift gate and is research-only. <a href="h55-profile.html">Read the follow-up evidence and download</a>; it does not replace this page's incumbent candidate.</p></main><footer>Competition 306 &middot; H55 &middot; fault predictions, not confirmed geothermal vents.
 <a href="irregularities.html">Limitations &amp; review</a> &middot;
 <a href="sources.html">official links</a></footer></body></html>

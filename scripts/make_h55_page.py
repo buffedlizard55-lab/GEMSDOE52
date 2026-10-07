@@ -167,7 +167,7 @@ the instruments under-forecast the board by ~4&times; in absolute terms.</small>
 <header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html">Overview</a>
 <a href="executive-summary.html">Submission guide</a><a href="validation.html">Validation</a>
 <a href="forensics.html">0.2778 autopsy</a><a href="sources.html">Sources</a>
-<a href="h55.html" aria-current="page">H55 (this round)</a><a href="h54.html">Parallel H54</a>
+<a href="h55.html" aria-current="page">H55 (this round)</a><a href="h55-profile.html">H55-PROFILE follow-up</a><a href="h54.html">Parallel H54</a>
 <a href="h53.html">Parallel H53</a></nav></header>
 <main id="main">'''
     FOOT = '''<p class="small muted">Every number on this page is read out of <code>evidence/h55_*.json</code>
@@ -408,6 +408,8 @@ uniqueness gate &mdash; this file is {uni['novel_fraction']:.1%} novel against {
 them and drops {uni['prior_px_dropped']:,} prior px.</li>
 </ul>
 ''' + FOOT
+    profile_link = """<p class="small muted" id="h55-profile-followup-link"><strong>Separate follow-up:</strong> the H55-PROFILE paired-normal DEM experiment failed its registered mean-lift gate and is research-only. <a href="h55-profile.html">Read the follow-up evidence and download</a>; it does not replace this page's incumbent candidate.</p>"""
+    body = body.replace("</main>", profile_link + "</main>", 1)
     (DOCS / "h55.html").write_text(body)
     print(f"docs/h55.html written ({len(body):,} chars); index.html bar refreshed")
     return 0
