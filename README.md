@@ -1,11 +1,13 @@
 # GEMSDOE52
 
+> **Current H58 session status (2026-10-07):** the new four-hypothesis slate is frozen in `knowledge/19_hypotheses_H58_preregistered.md`. A decoded preflight found that the three tracked core rasters differ materially from the exact owner-mirror pins; no H58 holdout or artifact exists yet. H57's report has no input-hash linkage and is archived, not a comparable baseline. **No artifact is approved for a competition slot.** See `evidence/h58_preflight_integrity.json` and `registry/irregularities.json` → `IR-H58-001`.
+
 <!--H57README-->
-## H57 — current unique artefact: two-view co-training union arm; slot gate NOT met (2026-10-07)
+## H57 — archived unique artifact: two-view co-training union arm; NOT approved to submit (2026-10-07)
 
 **[Short-path H57 GeoTIFF](docs/downloads/h57-candidate.tif)** · [short single-TIFF ZIP](docs/downloads/h57-candidate.zip) · [canonical TIFF](docs/downloads/gems52-h57-union-novel-core25517px-arm14804px.tif) · [H57 audit page](docs/h57.html) · **[submission guide](docs/executive-summary.html)** · [artefact receipt](docs/data/submission.json) · [slot gate](evidence/h57_slot_gate.json) · [ranked hypotheses H57-A…H57-E](knowledge/17_hypotheses_H57_preregistered.md) · **[what H57 found](knowledge/18_hypotheses_H57_results.md)**.
 
-- **Current pointer, not permission.** `submission/LATEST.txt` points at the H57 TIFF so the unique file is easy to find. Every structural gate passes; the registered lift gate R1 does **not** (best measured mean lift +0.0048 against a +0.005 threshold). The upload decision is left to the owner with its arithmetic attached: P(this file scores below the owner's own 0.2778) = **0.83**, P(above 0.3195) = **0.36**, P(above the observed board top 0.3774) = **0.00**.
+- **Historical pointer, not permission.** `submission/LATEST.txt` still names this archived TIFF, but R1 failed and the file is **not approved for upload**. The current tracked feature/label/template rasters are not the manifest-pinned bytes; H57 did not record input hashes in its result receipt. Therefore its local holdout numbers and projection are not comparable evidence for the staged inputs and must not be used to authorize a weekly slot. The owner-mirror staging is not organizer-authenticated.
 - **What it is.** 40,321 emitted cells = a 25,517-cell exactly-accounted core (`h33-2-b2 ∩ gems24-d1-5`) plus a 14,804-cell novel arm ranked by the **union view** `max(p_A, p_B)` over pixels outside the ≤ 200 m ring, outside every accessible prior's support union (100 % of the arm), and at least 3 px from the core. Placed with the **isotropic 3-px emitter**.
 - **Local checks.** Single-band float32, values exactly `{0,1}`, **0 NaN**, no nodata tag, EPSG:32611, 3,730 × 3,292, transform identical to `sample_submission.tif`. Decoded pattern matches none of the **38** accessible aligned priors and is not the union of any of them. Closest emitted cell to a mapped catalogue pixel: **223.6 m**, so the ring that measured exactly zero credit is empty by construction. 217 cells falling outside the sample-submission domain were clipped and reported.
 - **What the holdouts said.** The union ranking field wins **16/16** fold cells against a matched random control and is rank 1 of 8 fields on both instruments. Four ideas were **refuted and shipped as refutations**: the anisotropic along-strike placement (+0.000055 tip, +0.000031 hide, 2/4 folds — the exact +28.6 % credited-truth-per-node algebra holds for an isolated 1-px trace and not against the mapped ones), the A-only buried-structure population (0.000785 against a matched random control of 0.001057, the worst of eight arms), View A alone as the ranking field, and pseudo-labels as a training signal (out-of-fold AUC 0.4842 → 0.4869).
@@ -1270,4 +1272,13 @@ leaderboard number, data-availability claim and remembered fact before relying o
 `P(DTI > floor)` over explicitly bounded unknowns (`src/gems52/revealed.py::budget_rule`), never by a
 point hope. *Own the Outcome:* the file, its receipts, the failing diagnostics and the limits are
 published next to the download, including the probability that the target is *not* reached.
+
+### H58 acceptance addendum — 2026-10-07 (supersedes earlier current-artifact wording)
+
+- Four distinct hypotheses are frozen before implementation in `knowledge/19_hypotheses_H58_preregistered.md`; the machine settings and hash are in `registry/h58_preregistration.json`. The top candidate is a cold-discharge / agreeing-geothermometer test; this is a testable hypothesis, not a fault or geothermal discovery.
+- `evidence/h58_preflight_integrity.json` records a critical integrity issue: the tracked feature, label, and sample TIFFs differ from the 23-file manifest-pinned owner mirror in decoded pixel content. The pinned restore is in `work/h58_pinned`; no tracked TIFF was overwritten. Hash-matching an owner mirror is not organizer authentication.
+- H57's historical holdout numbers are not a comparable baseline for the staged data because its report does not bind the model to recorded input hashes. Rerun the single-view and union baselines on the exact staged bytes before comparing H58.
+- `dist_known_fault_px` in the GDR CSV is target-derived and is forbidden as a predictor. The raw GDR chemistry/geothermometer derivation is not locally verified. The official GDR listing and license are linked in the H58 slate; no raw archive download is claimed.
+- No upload slot is authorized until the fixed H58-A candidate beats the same-input, same-fold strongest view/union baseline by at least +0.005 mean DTI and wins 3/4 folds in both whole-segment `hide` and spatial `block` holdouts, and all artifact/provenance checks pass. A positive proxy holdout would still not authenticate an organizer score.
+- The fixed Arena working branch for this session is `arena/5c0bfd30-gemsdoe52`; an older branch string elsewhere in the archived brief is stale for this session. Never switch branches.
 

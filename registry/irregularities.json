@@ -479,6 +479,26 @@
       "what_it_is": "The anisotropic along-strike placement gained +0.000055 (tip) and +0.000031 (hide) at 2/4 folds, and the A-only buried-structure stratum scored 0.000785 against a matched random control of 0.001057, the worst of eight arms.",
       "how_we_know": "Both are recorded as refutations in evidence/h57_slot_gate.json, knowledge/18 and on the audit page. The artefact ships neither.",
       "disposition": "evidence/h57_validation.json placement and evidence/h57_strata.json combined."
+    },
+    {
+      "id": "IR-H58-001",
+      "round": "H58",
+      "session": "2026-10-07",
+      "severity": "critical",
+      "title": "Tracked core rasters differ materially from manifest-pinned owner mirrors; the sample copy also contradicts the official description",
+      "what_it_is": "The tracked training, label, and sample rasters differ materially from the manifest-pinned owner-mirror copies in decoded pixel content, while their grid profiles match. The staged sample has ones on the staged labels, contrary to the official page's 'total fault absence' description.",
+      "observation": "The 23-file staged owner mirror passes manifest byte/hash verification, but the three tracked core rasters fail those pins and differ by decoded pixels despite identical grid metadata. training_features.tif has 97,207,447/233,304,040 decoded value mismatches (97,120,016 where both are valid; 87,431 validity-mask mismatches). labels.tif differs at 120,650 pixels despite equal class counts; positive masks intersect at only 663 pixels. sample_submission.tif differs at 60,988 cells: the staged mirror has ones exactly on the staged labels, contrary to the official page description of a sample predicting total fault absence.",
+      "how_we_know": "Streaming Rasterio pixelwise comparison of data/{training_features,labels,sample_submission}.tif and work/h58_pinned copies; byte/SHA and decoded mismatch counts are recorded in evidence/h58_preflight_integrity.json. The staging restore receipt records all 23 manifest pins passing.",
+      "evidence": [
+        "evidence/h58_preflight_integrity.json",
+        "work/h58_pinned/restore_receipt.json",
+        "registry/data_manifest.json",
+        "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/"
+      ],
+      "handling": "Do not overwrite tracked TIFFs. New H58 code must read the separate work/h58_pinned data root, record hashes, and fail closed on mismatches. The sample is used only for grid profile/finite domain, never for its pixel values. Rerun H57 baselines on the exact staged bytes because the old H57 result has no input-hash linkage. Owner-mirror pin integrity is not organizer authentication.",
+      "unverifiable": "Which of the two pixel-level raster versions is the organizer-authentic competition input cannot be established from the staged GitHub mirror or the current tracked files. The raw official competition download is login-walled; the sample semantic conflict also remains unresolved.",
+      "status": "open - critical provenance issue; blocks any upload approval",
+      "disposition": "Use the staged files only for a clearly labelled owner-mirror research run. No weekly slot is authorized until organizer provenance/label alignment is resolved, even if a local holdout result is positive. Previous H57 scores are historical and not a pinned-data baseline until rerun."
     }
   ]
 }
