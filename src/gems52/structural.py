@@ -216,7 +216,7 @@ def save_array(path, a):
     tmp.replace(path)
 
 
-def build(features="data/training_features.tif", sample="data/sample_submission.tif", dest="work/r2/features", log=print, include_h55_shoulders=False):
+def build(features="data/training_features.tif", sample="data/sample_submission.tif", dest="work/r2/features", log=print):
     dest = Path(dest)
     dest.mkdir(parents=True, exist_ok=True)
     with rasterio.open(sample) as ref:
@@ -235,7 +235,7 @@ def build(features="data/training_features.tif", sample="data/sample_submission.
         flat_idx = np.flatnonzero(eligible.ravel())
         save_array(dest / "valid.npy", eligible)
         save_array(dest / "flat_idx.npy", flat_idx)
-        names, view_a, view_b, h2_features, structural_features, raw, cross, profile, paired_shoulders = [], [], [], [], [], [], [], [], []
+        names, view_a, view_b, h2_features, structural_features, raw, cross, profile = [], [], [], [], [], [], [], []
         file_hashes = {}
 
         def put(name, values, view):
@@ -253,11 +253,9 @@ def build(features="data/training_features.tif", sample="data/sample_submission.
                 h2_features.append(name)
             elif view == "H55":
                 profile.append(name)
-            elif view == "H55_SHOULDERS":
-                paired_shoulders.append(name)
             else:
                 cross.append(name)
-            if view not in ("H2", "H55", "H55_SHOULDERS"):
+            if view not in ("H2", "H55"):
                 structural_features.append(name)
             log(f"feature {len(names):02d} {name}", flush=True)
 
@@ -341,12 +339,6 @@ def build(features="data/training_features.tif", sample="data/sample_submission.
                 put(f"H55_{suffix}_{offset}px", values, "H55")
             del scale_features, values
 
-        if include_h55_shoulders:
-            from .h55_paired_shoulders import paired_shoulder_features
-            log("building preregistered H55 paired-shoulder channels", flush=True)
-            for feature_name, values in paired_shoulder_features(elev, valid).items():
-                put(feature_name, values, "H55_SHOULDERS")
-
         put("C_gravity_surface_direction", cosine(gx, gy, surf_x, surf_y), "C")
         put("C_cover_surface_direction", cosine(dx, dy, surf_x, surf_y), "C")
         put("C_magnetic_surface_direction", np.abs(cosine(mx, my, surf_x, surf_y)), "C")
@@ -358,9 +350,6 @@ def build(features="data/training_features.tif", sample="data/sample_submission.
                     feature_names=names, view_A=view_a, view_B=view_b,
                     view_B_paired_shoulder=view_b + h2_features, h2_features=h2_features,
                     view_B_h55=view_b + profile, raw_fusion=raw,
-                    view_B_h55_paired_shoulders=view_b + paired_shoulders,
-                    h55_paired_shoulder_features=paired_shoulders,
-                    h55_paired_shoulders_included=bool(include_h55_shoulders),
                     structural_contrast=structural_features,
                     structural_contrast_h55=structural_features + profile,
                     cross_features=cross, h55_profile_features=profile,
@@ -369,9 +358,7 @@ def build(features="data/training_features.tif", sample="data/sample_submission.
                     support_px=SUPPORT_PX, feature_scales_px=list(SCALES),
                     r3_h1_profile=dict(band=12, context_band=19, gaussian_sigma_px=2.0,
                                        offset_px=2.0, support_px=10, external_data_used=False),
-                    inputs={"features_sha256": digest(features), "sample_sha256": digest(sample),
-                            "structural_source_sha256": digest(Path(__file__)),
-                            "h55_paired_shoulders_source_sha256": digest(Path(__file__).with_name("h55_paired_shoulders.py")) if include_h55_shoulders else None},
+                    inputs={"features_sha256": digest(features), "sample_sha256": digest(sample)},
                     external_data_used=False, radiometric_bands_present=False,
                     caveat="Catalogue-zero is not verified fault absence; gravity and modelled depth are not independent evidence; R3 paired-flank and H55 paired-normal features are geomorphic hypotheses, not fault labels.")
     (dest / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")

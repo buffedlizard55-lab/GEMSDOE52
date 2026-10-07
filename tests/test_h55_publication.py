@@ -82,8 +82,11 @@ def test_h55_archive_review_is_idempotent_and_carries_h56_status(monkeypatch, tm
     assert result.count("<!--H55-ARCHIVE-REVIEW-->") == 1
     assert "Historical H55 evidence review" in result
     assert "H55 is superseded" in result
-    assert "gems52-h56-consensus-core-continuation-40517px" in result
-    assert "weekly-slot gate" in result and "do not upload or spend a slot" in result
+    current = _json(DATA / "submission.json")
+    assert current["file"] in result
+    assert "synthetic methodology demo" in result
+    assert "h56-cotrain.html" in result
+    assert "weekly-slot gate" in result and "Do not upload or spend a slot" in result
     assert "0.02979" in result and "0.02894" in result
     assert "below random on hide and above random on tip" in result
     assert "H55-JUNCTION remains untested" in result

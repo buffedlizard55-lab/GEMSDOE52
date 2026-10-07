@@ -474,11 +474,18 @@ def insert_h55_review(h55_archive: dict, verification: dict, sweep: dict,
         h55_status = "The H55 archive receipt does not establish a local slot decision; do not infer approval."
 
     current_file = str(current_submission.get("file") or "not recorded")
-    if current_submission.get("approved_for_weekly_slot") is False:
+    if current_submission.get("synthetic") or current_submission.get("synthetic_demo"):
+        current_status = (
+            f"The current pointer is <code>{esc(current_file)}</code>, a synthetic methodology demo. "
+            "Its illustrative holdout figures are not real-data validation; its weekly-slot gate is closed. "
+            "Do not upload or spend a slot until a real-data build passes the preregistered comparable spatial holdout. "
+            'See the <a href="h56-cotrain.html">current H56 status and audit</a>.'
+        )
+    elif current_submission.get("approved_for_weekly_slot") is False:
         current_status = (
             f"The current pointer is <code>{esc(current_file)}</code>; its receipt explicitly closes the "
             "weekly-slot gate. No comparable spatial holdout is recorded, so do not upload or spend a slot. "
-            'See the <a href="h56.html">current H56 status and review</a>.'
+            'See the <a href="h56-cotrain.html">current H56 status and review</a>.'
         )
     elif current_submission.get("approved_for_weekly_slot") is True:
         current_status = (

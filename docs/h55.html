@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="H55: a radiometric band mis-tagged as magnetic, |G| recovered by inverting the metric, and placement at 94% of the kernel's coverage ceiling.">
-<title>H55 &mdash; radiometric correction, calibrated |G|, coverage-optimal placement &middot; GEMSDOE52</title>
+<meta name="description" content="Historical H55 archive: corrected band-6 radiometry, separate co-training and A-only tests, with current H56 status clearly distinguished.">
+<title>H55 archive &mdash; historical evidence and correction &middot; GEMSDOE52</title>
 <link rel="stylesheet" href="style.css"><script src="site.js" defer></script></head><body>
 <a class="skip" href="#main">Skip to evidence</a>
 <header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html">Overview</a>
@@ -9,19 +9,19 @@
 <a href="forensics.html">0.2778 autopsy</a><a href="sources.html">Sources</a>
 <a href="h55.html" aria-current="page">H55 archive</a><a href="h55-profile.html">H55-PROFILE follow-up</a><a href="h54.html">Parallel H54</a>
 <a href="h53.html">Parallel H53</a></nav></header>
-<main id="main"><div class="status"><strong>H55 is historical; not the current artifact or an upload recommendation.</strong> The H56 TIFF is now the current pointer, but H56 itself is not approved because no comparable spatial holdout is recorded. H55&rsquo;s local blocked-fold results do not validate H56, and no organizer receipt authenticates a public score-to-filename mapping. Do not use the preserved H55 name/note as current portal instructions.</div><!--H55EDGE-ARCHIVE--><section id="h55-edge-archive" class="card"><h2>H55-EDGE potential-field experiment — failed gates, research only</h2><p>Mean spatial holdout lift +0.000546, positive in 2/4 folds; required +0.005 and 3/4. Strict support-novelty gate also failed. No slot or score.</p><p><a href="downloads/gems52-h55-grav-rtp-logedge-37654-c4b8c10205da-zeros.tif" download>Download research TIFF</a> · <a href="downloads/gems52-h55-grav-rtp-logedge-37654-c4b8c10205da-zeros.zip" download>one-TIFF ZIP</a> · <a href="downloads/gems52-h55-grav-rtp-logedge-37654-c4b8c10205da-zeros-a-only-reasoning.csv">A-only reasoning CSV</a> · <a href="h55-edge.html">Full H55-EDGE audit</a></p></section><!--/H55EDGE-ARCHIVE-->
+<main id="main"><!--H55EDGE-ARCHIVE--><section id="h55-edge-archive" class="card"><h2>H55-EDGE potential-field experiment — failed gates, research only</h2><p>Mean spatial holdout lift +0.000546, positive in 2/4 folds; required +0.005 and 3/4. Strict support-novelty gate also failed. No slot or score.</p><p><a href="downloads/gems52-h55-grav-rtp-logedge-37654-c4b8c10205da-zeros.tif" download>Download research TIFF</a> · <a href="downloads/gems52-h55-grav-rtp-logedge-37654-c4b8c10205da-zeros.zip" download>one-TIFF ZIP</a> · <a href="downloads/gems52-h55-grav-rtp-logedge-37654-c4b8c10205da-zeros-a-only-reasoning.csv">A-only reasoning CSV</a> · <a href="h55-edge.html">Full H55-EDGE audit</a></p></section><!--/H55EDGE-ARCHIVE--><div class="status" id="h55-archive-status"><strong>HISTORICAL H55 ARCHIVE — NOT CURRENT SUBMISSION ADVICE.</strong> H55 is historical; not the current artifact, and is superseded. Its local PASS and View-B holdout are historical findings, not evidence that current H56 is ready. The current H56 co-training TIFF is a synthetic methodology demo and is <b>not approved for upload</b>; do not spend a weekly slot until a real-data build passes the preregistered comparable spatial holdout. No H55 organizer score/upload receipt is recorded in this repository. <a href="h56-cotrain.html">View current H56 status</a>.</div>
 <h1>H55 &mdash; three corrections, one file</h1>
 <p class="lede">A radiometric band hiding in the official feature file under a magnetic tag; a hidden
 constant recovered from our own scored history; and the arithmetic that says placement was worth more
 than prediction, and that this family had left 14&nbsp;% of it unspent.</p>
 
-<div class="download-bar"><div><strong>Archived H55 research TIFF — not current, not approved for a new slot</strong><small>gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.tif</small>
+<div class="download-bar"><div><strong>gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.tif</strong>
 <small>147,617 bytes &middot; sha256 <code>a0f3ed4b4524ca67a0c715beca5a905eced165ee9e59be5e5831a39b7526254d</code></small>
 <small>format gate True &middot; uniqueness gate True
 (strictly-novel-and-selective) &middot; three-pass re-verification of the bytes:
 <b>PASS</b>, 23/23 checks</small></div>
-<a class="button" href="downloads/gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.tif" download>&darr; Download archived .TIF</a>
-<a class="button" href="downloads/gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.zip" download>&darr; Archived ZIP</a>
+<a class="button" href="downloads/gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.tif" download>&darr; Download archived H55 .TIF</a>
+<a class="button" href="downloads/gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.zip" download>&darr; Download H55 archive .ZIP</a>
 <a class="button" href="downloads/h55_reasoning_20261007T0150Z.json">&darr; Phase-2 reasoning</a></div>
 
 <h2><span class="num">1</span> Band 6 of the organiser's own feature file is radiometric, not magnetic</h2>
@@ -148,7 +148,12 @@ record: the false-alarm-rate statistic correlates weakly (max |&rho;| 0.2165, ne
 folds), so this is the verdict of the statistic the pre-registration <em>named</em>; and View A's
 block-level FAR has CV 1.35&ndash;5.22 against View B's 0.75&ndash;1.18 &mdash; a view finding a few
 regional anomalies and nothing else, which is the same reading as N-2 and N-10 from a third direction.</p>
-<p>H55 selected one primary view based on separate registered findings. The block-error-correlation test refuted the co-training premise. Separately, <code>A_only</code> wins 1/4 <code>hide</code> folds and 2/4 <code>tip</code> folds, failing the required &ge;3/4 wins on each instrument. Its mean is below matched random on <code>hide</code> (0.02979 vs 0.03948), but above matched random on <code>tip</code> (0.02894 vs 0.02477). The mixed means are not evidence that A-only loses on both instruments; this fold-promotion result is distinct from the conditional-independence test.</p>
+<p>In the historical H55 analysis, the registered block-error-correlation test refuted the co-training
+premise; separately, the A-only arm failed its preregistered promotion comparison. It wins 1/4
+<code>hide</code> folds and 2/4 <code>tip</code> folds, failing the required &ge;3/4 wins on each instrument.
+Its mean was below matched random on <code>hide</code> (0.02979 vs 0.03948) but above matched random on <code>tip</code> (0.02894 vs 0.02477). These are distinct tests: do not describe
+A-only as below random on both, or conflate its fold gate with co-training's block-correlation result.
+H55 is archived and neither result approves current H56.</p>
 
 <h2><span class="num">7</span> Not merely the union of the two views</h2>
 <p>The brief asks for this explicitly, and <code>gates.uniqueness_report</code> does not answer it &mdash;
@@ -240,14 +245,16 @@ do not already exclude.</li>
 <li><b>External layers are uint8-quantised mirrors</b> (1st&ndash;99th percentile) of the official grids.
 The sources are named and reachable, but a re-reduction to float32 from the USGS release would sharpen
 every ratio-step layer.</li>
-<li><b>Historical-pointer correction.</b> The global <code>submission/LATEST.txt</code> no longer points at H55; it points at the H56 research artifact. This H55 file is a historical archive, and its 61.1% support-novelty figure was bounded to 23 priors in its original audit, not a global uniqueness or current slot gate.</li>
+<li><b>Three rounds have shipped in parallel</b> (IR-52-029). <code>submission/LATEST.txt</code> points at
+this file; reverting is one line. Every other artefact stays downloadable and is now a prior for the
+uniqueness gate &mdash; this file is 61.1% novel against 23 of
+them and drops 1,123,846 prior px.</li>
 </ul>
-<p class="small muted">H55 measurements on this archived page are traceable to <code>evidence/h55_*.json</code>,
-produced by <code>scripts/run_h55.py</code> and <code>scripts/verify_h55.py</code> and copied to
-<code>docs/data/</code> by <code>scripts/refresh_feed.py</code>. This snapshot is preserved after H56 became
-the current artifact. The legacy <code>scripts/make_h55_page.py</code> publisher is disabled so it cannot
-restore H55 as current or overwrite H56's overview/download guide. Where a claim is an assumption rather
-than a measurement, it says so in the same sentence.</p>
-<p class="small muted" id="h55-profile-followup-link"><strong>Separate follow-up:</strong> the H55-PROFILE paired-normal DEM experiment failed its registered mean-lift gate and is research-only. <a href="h55-profile.html">Read the follow-up evidence and download</a>; neither H55 artifact replaces the current H56 pointer or authorizes an upload.</p></main><footer>Competition 306 &middot; H55 &middot; fault predictions, not confirmed geothermal vents.
+<p class="small muted">Every number on this page is read out of <code>evidence/h55_*.json</code>
+at build time by <code>scripts/run_h55.py</code> and <code>scripts/verify_h55.py</code> and copied to
+<code>docs/data/</code> by <code>scripts/refresh_feed.py</code>; this page is regenerated by
+<code>scripts/make_h55_page.py</code>. Nothing here is typed in by hand. Where a claim is an assumption
+rather than a measurement, it says so in the same sentence.</p>
+<p class="small muted" id="h55-profile-followup-link"><strong>Separate follow-up:</strong> the H55-PROFILE paired-normal DEM experiment failed its registered mean-lift gate and is research-only. <a href="h55-profile.html">Read the follow-up evidence and download</a>; it does not replace this page's incumbent candidate.</p></main><footer>Competition 306 &middot; H55 &middot; fault predictions, not confirmed geothermal vents.
 <a href="irregularities.html">Limitations &amp; review</a> &middot;
 <a href="sources.html">official links</a></footer></body></html>
