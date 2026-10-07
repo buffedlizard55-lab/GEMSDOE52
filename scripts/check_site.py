@@ -197,7 +197,7 @@ def main() -> int:
     port = httpd.server_address[1]
     threading.Thread(target=httpd.serve_forever, daemon=True).start()
     try:
-        for path in ("index.html", "executive-summary.html", "feed.html", "irregularities.html",
+        for path in ("index.html", "executive-summary.html", "h55-profile.html", "feed.html", "irregularities.html",
                      "sources.html", "downloads/index.html"):
             with urlopen(f"http://127.0.0.1:{port}/{path}", timeout=10) as r:
                 body = r.read()
@@ -211,6 +211,43 @@ def main() -> int:
                 problems.append(f"served {sub['download']}: {n} bytes != {sub['bytes']} in the receipt")
             else:
                 notes.append(f"the .tif serves through the site: {n:,} bytes, content-type {ctype}")
+
+        # H55-PROFILE is a separate failed-gate follow-up; never conflate it with the main H55 incumbent.
+        h55_path = DATA / "h55_profile.json"
+        if h55_path.exists():
+            import hashlib
+            import zipfile
+            import numpy as np
+            import rasterio
+            h55 = json.loads(h55_path.read_text())
+            h55_file = DOCS / "downloads" / h55["file"]
+            if not h55.get("research_only") or h55.get("weekly_slot_approved"):
+                problems.append("h55_profile.json: research-only/failed-slot status is missing or unsafe")
+            if len(h55.get("note", "")) > 200:
+                problems.append("h55_profile.json: portal note exceeds 200 characters")
+            if not h55_file.exists() or hashlib.sha256(h55_file.read_bytes()).hexdigest() != h55.get("sha256"):
+                problems.append("h55_profile.json: published H55 TIFF missing or differs from SHA-256 receipt")
+            else:
+                with rasterio.open(h55_file) as ds:
+                    a = ds.read(1)
+                    if (ds.count != 1 or ds.dtypes[0] != "float32" or ds.crs is None or ds.crs.to_epsg() != 32611
+                            or (ds.height, ds.width) != (3730, 3292)
+                            or not np.isfinite(a).all() or float(a.min()) < 0 or float(a.max()) > 1):
+                        problems.append("H55 TIFF: raster dimensions/CRS/dtype/finite [0,1] check failed")
+                    elif int((a > 0).sum()) != h55["format"]["n_nonzero"]:
+                        problems.append("H55 TIFF: nonzero count differs from the published summary")
+                zpath = h55_file.with_suffix(".zip")
+                if not zpath.exists():
+                    problems.append("H55 single-TIFF ZIP is missing")
+                else:
+                    with zipfile.ZipFile(zpath) as z:
+                        tiffs = [n for n in z.namelist() if n.lower().endswith((".tif", ".tiff"))]
+                        if len(tiffs) != 1 or z.read(tiffs[0]) != h55_file.read_bytes():
+                            problems.append("H55 ZIP must contain exactly one TIFF byte-identical to the direct download")
+                with urlopen(f"http://127.0.0.1:{port}/downloads/{h55['file']}", timeout=20) as r:
+                    if len(r.read()) != h55["bytes"]:
+                        problems.append("served H55 TIFF byte count differs from receipt")
+                notes.append(f"H55-PROFILE TIFF verified: {h55['bytes']:,} bytes, {h55['uniqueness']['n_priors_checked']} priors, research-only")
     finally:
         httpd.shutdown()
 

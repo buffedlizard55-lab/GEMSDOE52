@@ -1,5 +1,19 @@
 # GEMSDOE52
 
+<!--H55PROFILEREADME-->
+## H55-PROFILE follow-up — generated, but not promoted
+
+**[Download the unique H55-PROFILE research TIFF](docs/downloads/gems52-h55-profile-37654-7fd28c25b51a-research.tif)** · [single-TIFF ZIP](docs/downloads/gems52-h55-profile-37654-7fd28c25b51a-research.zip) · [experiment page](docs/h55-profile.html). This follow-up does **not** replace the main H55 candidate or change `submission/LATEST.txt`.
+
+- Unique identifier: `GEMSDOE52-H55-PairedProfile-7fd28c25`; optional portal note (122 chars): `H55 paired-normal profile | 37,654 metric-placed pixels | spatial holdout failed | research only; not approved for upload.`
+- Local format/range/geometry and decoded-pattern uniqueness checks passed against 27 accessible aligned priors. Bounded audit only; not proof against private/unlinked site assets.
+- **Do not submit:** holdout mean lift +0.002300, 3/4 folds positive; pre-registered +0.005 lift threshold failed. No official score/upload acceptance and no weekly slot used. The main H55 file and `submission/LATEST.txt` remain unchanged.
+- Inputs were SHA-pinned owner mirrors, not organizer-authenticated. No external raster or ComCat data entered this model.
+- [Preregistered hypotheses](knowledge/12_hypotheses_H55_preregistered.md) · [holdout](evidence/h55_profile_holdout.json) · [TIFF/uniqueness receipt](evidence/submission_h55.json) · [3-pass review](evidence/h55_review_receipt.json).
+
+**Next-session start:** read this README and the full current task prompt below; the H55 candidate failed its promotion gate. A download link is not approval to spend a contest slot.
+<!--/H55PROFILEREADME-->
+
 Target: a **unique, downloadable single-band GeoTIFF** for [DrivenData competition 306 — DOE GEMS
 Prize](https://www.drivendata.org/competitions/306/competition-doe-gems/), built to beat this group's
 best of 0.2778, with the reasoning and the evidence published next to the file.

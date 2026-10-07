@@ -66,6 +66,57 @@ def hessian(s):
     return (xx + yy + root) * 0.5, (xx + yy - root) * 0.5
 
 
+def normal_profile(elevation, valid, sigma=3.0, offset_px=3.0, tangent_px=3.0, offsets_px=None):
+    """Local-normal DEM profile features for a paired-shoulder hypothesis.
+
+    The smoothed DEM gradient defines an unoriented local normal (its sign is fixed by
+    increasing elevation). Elevations at +/- offset are bilinearly sampled along it. We
+    retain the signed cross-normal step, balance of the two center-to-flank changes, and
+    persistence of the step while sampling the local tangent. This is a profile transform,
+    not a fault probability; roads, drainage and lithologic edges remain confounders.
+    """
+    from scipy.ndimage import map_coordinates
+
+    gx, gy, magnitude, smooth_dem = normals(elevation, valid, sigma)
+    ux = np.divide(gx, magnitude, out=np.zeros_like(gx), where=magnitude > 1e-8)
+    uy = np.divide(gy, magnitude, out=np.zeros_like(gy), where=magnitude > 1e-8)
+    h, w = elevation.shape
+    yy, xx = np.indices((h, w), dtype=np.float32)
+
+    def sample(source, y, x):
+        coords = np.stack((y.astype(np.float32, copy=False), x.astype(np.float32, copy=False)))
+        return map_coordinates(source, coords, order=1, mode="nearest", prefilter=False)
+
+    offsets = tuple(float(x) for x in (offsets_px if offsets_px is not None else (offset_px,)))
+    if not offsets or any(x <= 0 for x in offsets):
+        raise ValueError("normal profile offsets must be positive")
+    tx, ty = -uy, ux
+    result = []
+    for distance_px in offsets:
+        z_plus = sample(smooth_dem, yy + distance_px * uy, xx + distance_px * ux)
+        z_minus = sample(smooth_dem, yy - distance_px * uy, xx - distance_px * ux)
+        # Remove the local first-order plane so a uniform hillslope does not score as a break.
+        linear_change = distance_px * 100.0 * magnitude
+        signed_step = z_plus - z_minus - 2.0 * linear_change
+        plus_flank = z_plus - smooth_dem - linear_change
+        minus_flank = smooth_dem - z_minus - linear_change
+        pair_denominator = np.abs(plus_flank) + np.abs(minus_flank)
+        pair_balance = np.divide(np.abs(plus_flank - minus_flank), pair_denominator,
+                                 out=np.zeros_like(pair_denominator), where=pair_denominator > 1e-3)
+        paired_flank = np.minimum(np.abs(plus_flank), np.abs(minus_flank))
+
+        # A single isolated break is downweighted by averaging its detrended step along strike.
+        persistence = np.abs(signed_step).astype(np.float32)
+        for tangent_distance in (1.0, tangent_px):
+            persistence += (np.abs(sample(signed_step, yy + tangent_distance * ty, xx + tangent_distance * tx)) +
+                            np.abs(sample(signed_step, yy - tangent_distance * ty, xx - tangent_distance * tx))) * 0.5
+        persistence /= 3.0
+        result.extend((signed_step, paired_flank, pair_balance, persistence))
+    for array in result:
+        array[~valid] = 0.0
+    return result
+
+
 def digest(path):
     h = hashlib.sha256()
     with Path(path).open("rb") as fh:
@@ -114,7 +165,7 @@ def build(features="data/training_features.tif", sample="data/sample_submission.
         flat_idx = np.flatnonzero(eligible.ravel())
         save_array(dest / "valid.npy", eligible)
         save_array(dest / "flat_idx.npy", flat_idx)
-        names, view_a, view_b, raw, cross = [], [], [], [], []
+        names, view_a, view_b, raw, cross, profile = [], [], [], [], [], []
         file_hashes = {}
 
         def put(name, values, view):
@@ -124,7 +175,7 @@ def build(features="data/training_features.tif", sample="data/sample_submission.
             save_array(dest / (name + ".npy"), v)
             file_hashes[name] = digest(dest / (name + ".npy"))
             names.append(name)
-            (view_a if view == "A" else view_b if view == "B" else cross).append(name)
+            (view_a if view == "A" else view_b if view == "B" else profile if view == "H55" else cross).append(name)
             log(f"feature {len(names):02d} {name}", flush=True)
 
         def read(i):
@@ -189,16 +240,31 @@ def build(features="data/training_features.tif", sample="data/sample_submission.
             residual = np.divide(a - mu, sd + floor)
             put(f"B_{name}_local_residual", residual, "B")
             put(f"B_{name}_local_sd", sd, "B")
+        profile = []
+        suffixes = ("normal_signed_step", "paired_flank_contrast",
+                    "paired_flank_asymmetry", "tangent_step_persistence")
+        # Persist and release one scale at a time: holding 20 full-grid arrays in memory is
+        # unnecessary on a small runner and made the feature stage vulnerable to OOM.
+        for offset in (1, 2, 3, 4, 6):
+            for suffix, values in zip(suffixes, normal_profile(elev, valid, offset_px=offset)):
+                feature_name = f"H55_{suffix}_{offset}px"
+                put(feature_name, values, "H55")
+            del values
         put("C_gravity_surface_direction", cosine(gx, gy, surf_x, surf_y), "C")
         put("C_cover_surface_direction", cosine(dx, dy, surf_x, surf_y), "C")
         put("C_magnetic_surface_direction", np.abs(cosine(mx, my, surf_x, surf_y)), "C")
         logcover = np.log1p(np.maximum(cover, 0))
         put("C_signed_cover_surface_silence", np.maximum(anti3, 0) * logcover / (1 + np.abs(slope)), "C")
         put("C_cover_persistent_gravity", gcoh * logcover, "C")
+        baseline_contrast = [name for name in names if name not in profile]
 
-    manifest = dict(version="r2-signed-normal-v1", template=template,
-                    feature_names=names, view_A=view_a, view_B=view_b, raw_fusion=raw,
-                    structural_contrast=names, cross_features=cross, feature_sha256=file_hashes,
+    manifest = dict(version="h55-profile-v1", template=template,
+                    feature_names=names, view_A=view_a, view_B=view_b,
+                    view_B_h55=view_b + profile, raw_fusion=raw,
+                    structural_contrast=baseline_contrast,
+                    structural_contrast_h55=baseline_contrast + profile,
+                    cross_features=cross, h55_profile_features=profile,
+                    feature_sha256=file_hashes,
                     input_footprint_px=int(valid.sum()), eligible_px=int(eligible.sum()),
                     support_px=SUPPORT_PX, feature_scales_px=list(SCALES),
                     inputs={"features_sha256": digest(features), "sample_sha256": digest(sample)},
