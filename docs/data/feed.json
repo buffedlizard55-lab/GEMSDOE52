@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-07T00:58:28Z",
+ "generated_utc": "2026-10-07T00:58:40Z",
  "repo": "buffedlizard55-lab/GEMSDOE52",
  "branch": "arena/4ab47a80-gemsdoe52",
  "files": [
@@ -97,9 +97,9 @@
   "submission_h53_audit.json",
   "uniqueness_gate.json"
  ],
- "leaderboard_status": "offline snapshot (feed run without --fetch)",
+ "leaderboard_status": "unreachable: ValueError: leaderboard table parsed empty - page layout changed \u2014 serving the last verified snapshot instead",
  "submission": "gems52-h54-revealed-core-strike-continuation-50517px-r1.tif",
- "downloads": 7,
+ "downloads": -1,
  "pipeline": {
   "footprint": 5167373,
   "catalogue": 60988,
