@@ -1,0 +1,513 @@
+#!/usr/bin/env python3
+"""Publish the R3 research result to GitHub Pages from strict local receipts.
+
+Run `scripts/refresh_feed.py` first. The TIFF is visibly labelled research-only:
+its preregistered local lift gate failed, and this script never submits anything.
+"""
+from __future__ import annotations
+
+import html
+import json
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+DOCS = ROOT / "docs"
+DATA = DOCS / "data"
+
+
+def load(name: str):
+    path = DATA / f"{name}.json"
+    if not path.exists():
+        raise FileNotFoundError(f"run scripts/refresh_feed.py first; missing {path.relative_to(ROOT)}")
+    return json.loads(path.read_text())
+
+
+def esc(value) -> str:
+    return html.escape(str(value), quote=True)
+
+
+def fnum(value, digits=6):
+    return "not measured" if value is None else f"{float(value):.{digits}f}"
+
+
+def nav(prefix: str = "") -> str:
+    links = (
+        ("index.html", "Overview"),
+        ("executive-summary.html", "Submission guide"),
+        ("r3.html", "R3 experiment"),
+        ("r3-hypotheses.html", "R3 hypotheses"),
+        ("validation.html", "R2 validation"),
+        ("forensics.html", "0.2778 autopsy"),
+        ("hypotheses.html", "Hypotheses"),
+        ("sources.html", "Sources"),
+        ("irregularities.html", "Limitations"),
+    )
+    return "".join(f'<a href="{prefix}{href}">{label}</a>' for href, label in links)
+
+
+def page(title: str, description: str, body: str, prefix: str = "") -> str:
+    return (
+        '<!doctype html><html lang="en"><head><meta charset="utf-8">'
+        '<meta name="viewport" content="width=device-width,initial-scale=1">'
+        f'<meta name="description" content="{esc(description)}">'
+        f'<title>{esc(title)} · GEMSDOE52</title>'
+        f'<link rel="stylesheet" href="{prefix}style.css"><script src="{prefix}site.js" defer></script>'
+        '</head><body><a class="skip" href="#main">Skip to content</a>'
+        f'<header><nav><a class="brand" href="{prefix}index.html">GEMS / DOE 52</a>{nav(prefix)}</nav></header>'
+        f'<main id="main">{body}</main>'
+        '<footer>Competition 306 · Local research only · Fault predictions are not confirmed faults, '
+        'geothermal vents, or organizer-score forecasts. '
+        f'<a href="{prefix}irregularities.html">Limitations &amp; review</a> · '
+        '<a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code and complete prompt</a></footer>'
+        '</body></html>'
+    )
+
+
+def download_bar(sub: dict, prefix: str = "") -> str:
+    uniqueness = sub.get("uniqueness") or {}
+    format_gate = sub.get("format") or {}
+    note = sub.get("submission_note") or sub.get("note") or ""
+    novel_fraction = uniqueness.get("novel_fraction")
+    novel_text = "not measured" if novel_fraction is None else f"{100 * float(novel_fraction):.1f}%"
+    return (
+        '<section class="download-bar" aria-label="Research-only R3 artifact download">'
+        '<div><strong>R3-H1 research GeoTIFF — NOT APPROVED FOR UPLOAD</strong>'
+        f'<small>{esc(sub.get("file"))}</small>'
+        f'<small>{esc(sub.get("bytes"))} bytes · single-band float32 · EPSG:32611 · finite [0,1] · '
+        f'sha256 <code>{esc((sub.get("sha256") or "")[:16])}…</code></small>'
+        f'<small>on-disk format gate: {"PASS" if format_gate.get("ok") else "FAIL"} · '
+        f'canonical pattern unique: {"PASS" if uniqueness.get("canonical_pattern_unique") else "FAIL"} · '
+        f'all-prior ≥20% support-novelty diagnostic: '
+        f'{"PASS" if uniqueness.get("support_novelty_gate_ok") else "FAIL"} '
+        f'({novel_text} support outside comparison union)</small>'
+        f'<small>submission note ({esc(sub.get("submission_note_chars", len(note)))} chars): '
+        f'<code>{esc(note)}</code></small></div>'
+        f'<a class="button" href="{esc(prefix + str(sub.get("download", "")))}" download>↓ Download .TIF</a>'
+        f'<a class="button" href="{esc(prefix + str(sub.get("download_zip", "")))}" download>↓ Download .ZIP</a>'
+        f'<a class="button secondary" href="{esc(prefix)}r3.html">Validation details →</a>'
+        '<small style="width:100%"><strong>Research-only:</strong> the registered spatial-holdout '
+        'gate failed; no weekly submission slot has been used. Do not upload this file.</small></section>'
+    )
+
+
+def render_index(sub, holdout, board, feed) -> str:
+    gate = holdout["slot_gate"]
+    summary = holdout["summary"]
+    top = board.get("top")
+    rows = {str(row.get("rank")): row for row in board.get("rows", [])}
+    our_rank = next((row.get("rank") for row in board.get("rows", [])
+                     if float(row.get("score", -1)) == 0.2778), "not recorded")
+    body = [download_bar(sub)]
+    body.append(
+        '<div class="eyebrow">R3 · paired DEM-normal scarp-profile test · 2026-10-07</div>'
+        '<h1>A new geological test.<br>An honest negative result.</h1>'
+        '<p class="lede">R3-H1 adds two signed, paired-flank profile features to the existing surface-view '
+        'model. The preregistered spatial validation showed only a tiny, inconsistent lift. The artifact '
+        'is published for audit and reproduction, not as a recommended competition submission.</p>'
+    )
+    body.append(
+        '<div class="status"><strong>Do not upload this R3 file.</strong>'
+        f'The mean local DTI lift was {fnum(gate["mean_dti_lift"], 6)} versus View B, with '
+        f'{gate["positive_folds"]}/{gate["total_folds"]} positive folds. The preregistered gate required '
+        f'+{fnum(gate["required_mean_lift"], 3)} and at least {gate["required_positive_folds"]} positive '
+        'folds. No portal slot was used. This local proxy test does not predict the organizer score.</div>'
+    )
+    body.append(
+        '<div class="grid">'
+        f'<div class="card"><div class="metric">{fnum(summary["baseline_mean_dti"], 5)}</div>'
+        '<div class="label">View B mean spatial holdout DTI</div></div>'
+        f'<div class="card"><div class="metric">{fnum(summary["candidate_mean_dti"], 5)}</div>'
+        '<div class="label">View B + paired profile mean DTI</div></div>'
+        f'<div class="card"><div class="metric">{gate["positive_folds"]}/{gate["total_folds"]}</div>'
+        '<div class="label">positive paired folds · 0 weekly slots used</div></div>'
+        '</div>'
+    )
+    body.append(
+        '<div class="two"><section><h2>What R3-H1 tested</h2>'
+        '<p>Band 12 is detrended elevation; band 19 is its slope. Smooth elevation at σ=2 pixels, sample '
+        'bilinearly at ±2 pixels along the local DEM-gradient normal, and encode signed flank concordance '
+        'and shoulder asymmetry. The features are dimensionless, label-free, clipped to [−1,1], and kept '
+        'out of the historical View B feature list so the control remains unchanged.</p>'
+        '<p>This is a surface scarp hypothesis. It can miss buried faults and can respond to roads, fan '
+        'margins, erosion, lithologic contacts, grading, or DEM artifacts.</p>'
+        '<div class="actions"><a href="r3.html">Read the fold-by-fold result →</a>'
+        '<a href="r3-hypotheses.html">Open the frozen four-hypothesis ranking →</a></div>'
+        '<h2>Why 0.2778 did well (what we can and cannot say)</h2>'
+        '<p>The 2026-10-07 public board showed 0.2778 at rank '
+        f'{esc(our_rank)}; 0.3195 at rank 7; and {esc(top)} at rank 1. The board reports team-level best '
+        'scores, not TIFF filenames or hashes. Local byte comparisons are consistent with a sparse, '
+        'distance-aware placement effect: in a tracked nested raster comparison, 2,545 off-catalogue '
+        'points within 200 m of mapped traces were removed between the owner-attributed 0.2708 and 0.2778 '
+        'files. That does <em>not</em> mean those pixels were on the known-fault mask, and the local '
+        'filename-to-score attribution is not organizer-authenticated. Avoiding weak off-catalogue mass '
+        'is a plausible explanation under the distance-weighted metric, not a proven causal account.</p>'
+        '<a href="forensics.html">Read the corrected 0.2778 byte-level autopsy →</a>'
+        '</section><aside><div class="card"><h3>Current board snapshot</h3>'
+        f'<p>Leader: <strong>{esc(top)}</strong> · our reported result: <strong>0.2778</strong> · '
+        f'rank {esc(our_rank)} (participant-level observation).</p>'
+        '<p class="small">One-off official observation from '
+        f'{esc(board.get("observed_date_utc", board.get("fetched_utc", "not recorded")))}. '
+        'No automated DrivenData requests are made; see the Terms-of-Use note in the source ledger.</p>'
+        '<a href="data/leaderboard.json">Open dated board evidence →</a></div>'
+        '<div class="card" style="margin-top:16px"><h3>What a zero result means</h3>'
+        '<p>The local “negative” examples are catalogue-zero proxies, not verified fault absence. The '
+        'holdout re-tests known components; it does not reproduce the hidden expert-mapped test task.</p>'
+        '<p><strong>No public-score forecast is claimed.</strong></p></div></aside></div>'
+    )
+    body.append(
+        '<h2>Separate co-training diagnostic</h2>'
+        '<p>The block-level proxy-error correlation test fell below its frozen 0.60 cutoff and allowed a '
+        'separate one-round exchange. This is not proof of conditional independence. A-to-B+H1 changed '
+        'mean local DTI by +0.000794 in 2/4 folds; B+H1-to-A changed it by −0.002259 in 2/4. Neither '
+        'direction entered the artifact. Forty-eight accepted A-only whole components have individual '
+        'geological caveats and measured raster context in the review CSV.</p>'
+        '<a href="downloads/a_only_reasoning_r3.csv">Download A-only reasoning CSV →</a> · '
+        '<a href="r3.html#independence">Inspect the independence and exchange gates →</a>'
+    )
+    body.append(
+        '<div class="live-feed" id="feed">Local evidence feed. The official board remains a dated snapshot.</div>'
+        f'<p class="small">Feed generated {esc(feed.get("generated_utc", "not recorded"))}; board observed '
+        f'{esc(feed.get("leaderboard_last_observed_utc", "not measured"))}. No portal submission is automated.</p>'
+    )
+    return page("R3 research result", "R3-H1 paired DEM profile research artifact; holdout gate failed; no upload approval.", "".join(body))
+
+
+def render_summary(sub, holdout) -> str:
+    note = sub.get("submission_note") or sub.get("note") or ""
+    gate = holdout["slot_gate"]
+    body = [download_bar(sub)]
+    body.append(
+        '<div class="eyebrow">Submission guide · current artifact is research-only</div>'
+        '<h1>A valid file is not<br>a justified submission.</h1>'
+        '<div class="status"><strong>Do not upload the R3-H1 file.</strong>'
+        'It passes the local file-format/range checks, but the preregistered spatial promotion gate failed. '
+        'No weekly slot has been used. A format pass is not scientific approval or proof that the portal '
+        'will accept an upload.</div>'
+        '<p class="lede">This page preserves the requested one-click TIFF, unique name, and short note while '
+        'making the failed validation gate impossible to miss.</p>'
+    )
+    body.append(
+        '<section class="card"><h2>File identification</h2>'
+        f'<p>Filename: <code>{esc(sub.get("file"))}</code></p>'
+        f'<p>Submission name: <code>{esc(sub.get("submission_name"))}</code></p>'
+        f'<label for="submission-note">Short identifying note ({esc(sub.get("submission_note_chars", len(note)))} chars; do not submit this run)</label>'
+        f'<textarea id="submission-note" readonly>{esc(note)}</textarea>'
+        '<button data-copy="submission-note">Copy note</button>'
+        f'<p class="small">SHA-256 <span class="mono">{esc(sub.get("sha256"))}</span></p>'
+        f'<p>Local gate: lift {fnum(gate["mean_dti_lift"], 6)} vs required '
+        f'+{fnum(gate["required_mean_lift"], 3)}; positive folds {gate["positive_folds"]}/'
+        f'{gate["total_folds"]} vs required {gate["required_positive_folds"]}/4.</p></section>'
+    )
+    body.append(
+        '<h2>Why the [0,1] error is addressed</h2>'
+        '<p>The written raster is single-band float32 with finite binary {0,1} raw values. The local '
+        'format gate reopens the written bytes and checks [0,1], exact sample-template shape, CRS, '
+        'geotransform, bounds, and one band. The internal validity mask matches the sample grid; no '
+        'negative sentinel or NaN is written. This is a local precaution for the reported '
+        '“Predicted values must be in range [0, 1]” error, not evidence about an undocumented portal validator.</p>'
+        '<p>The exact grid and byte receipt are linked below. Do not reproject or edit the TIFF. Input '
+        'rasters are owner-mirrored and SHA-pinned, not organizer-authenticated.</p>'
+        '<a href="data/submission_r3.json">Open artifact receipt →</a> · '
+        '<a href="data/format_gate_r3.json">Open format check →</a> · '
+        '<a href="data/independent_tiff_check_r3.json">Open independent TIFF readback →</a> · '
+        '<a href="data/uniqueness_r3.json">Open prior-comparison gate →</a>'
+    )
+    body.append(
+        '<h2>Submission steps for a future approved file</h2>'
+        '<p><strong>Do not use the current R3 file for these steps.</strong> Once a future candidate '
+        'passes its preregistered holdout and independent confirmation:</p>'
+        '<ol><li>Check the new artifact receipt says <code>approved_for_weekly_slot: true</code> and '
+        'the download hash matches.</li>'
+        '<li>Open the official <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">'
+        'DOE GEMS competition</a> and sign into the eligible team account.</li>'
+        '<li>Choose “New submission” and follow the portal’s current input instructions. The prediction '
+        'file is the exact single-band .tif; the research ZIP linked here also contains a note and audit '
+        'JSON and is for download/review, not assumed to be a valid portal payload.</li>'
+        '<li>Paste the artifact’s ≤200-character identifying note into the optional Note field. Do not '
+        'change pixel values, CRS, transform, or bounds in GIS software.</li>'
+        '<li>Only after the scientific gate passes and a slot is available, submit and save the organizer '
+        'receipt, ID, timestamp, and returned score. The rules describe a weekly submission limit; '
+        'this session used zero slots.</li></ol>'
+        '<p>Official sources: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">'
+        'problem and format</a>; <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">competition rules and AI disclosure</a>. '
+        'A competition score is not the final expert-reviewed outcome.</p>'
+    )
+    return page("Submission guide", "How to submit only after scientific approval; the current R3 artifact is not approved.", "".join(body))
+
+
+def render_r3(sub, holdout, independence, cotrain, board) -> str:
+    gate = holdout["slot_gate"]
+    folds = holdout["folds"]
+    summary = holdout["summary"]
+    fold_rows = []
+    for fold in folds:
+        base = fold["arms"]["view_B"]["dti"]
+        candidate = fold["arms"]["view_B_paired_shoulder"]["dti"]
+        fold_rows.append(
+            f'<tr><td>{fold["fold"]}</td><td class="number">{base:.6f}</td>'
+            f'<td class="number">{candidate:.6f}</td>'
+            f'<td class="number">{candidate - base:+.6f}</td>'
+            f'<td class="number">{fold["arms"]["view_B_paired_shoulder"]["emitted"]:,}</td></tr>'
+        )
+    baseline_rows = []
+    for arm, mean in summary["refitted_baseline_arm_means"].items():
+        baseline_rows.append(f'<tr><td>{esc(arm)}</td><td class="number">{float(mean):.6f}</td></tr>')
+    uniqueness = sub["uniqueness"]
+    view_comparison = sub["view_comparison"]
+    literal_union = view_comparison["view_union"]
+    matched_union = view_comparison["matched_budget_max_view_union"]
+
+    base_ind = independence["baseline_view_pair"]
+    cand_ind = {k: v for k, v in independence.items()
+                if k not in ("blocks", "baseline_view_pair", "primary_pair")}
+    direction_rows = []
+    for direction in cotrain.get("directions", []):
+        direction_rows.append(
+            f'<tr><td>{esc(direction["donor_view"])} → {esc(direction["receiver_view"])}</td>'
+            f'<td class="number">{direction["pseudo_pixels"]:,}</td>'
+            f'<td class="number">{float(direction["mean_baseline_dti"]):.6f}</td>'
+            f'<td class="number">{float(direction["mean_after_exchange_dti"]):.6f}</td>'
+            f'<td class="number">{float(direction["mean_paired_lift"]):+.6f}</td>'
+            f'<td>{direction["positive_folds"]}/{direction["total_folds"]}</td></tr>'
+        )
+    board_observed = board.get("observed_date_utc", board.get("fetched_utc", "not recorded"))
+    note = sub.get("submission_note") or sub.get("note") or ""
+    body = [download_bar(sub)]
+    body.append(
+        '<div class="eyebrow">R3-H1 · preregistered before implementation</div>'
+        '<h1>Paired scarp-profile shoulders<br>on the 100 m DEM</h1>'
+        '<p class="lede">A narrow geomorphic hypothesis: asymmetric paired slopes on opposite flanks '
+        'of a subtle scarp may add information beyond the existing surface view. The feature was fixed '
+        'before model fitting; the result below is a holdout diagnostic, not an organizer-score forecast.</p>'
+        '<div class="status"><strong>Result: local gate failed; no weekly-slot approval.</strong>'
+        f'Mean lift {float(gate["mean_dti_lift"]):+.6f} versus View B; positive folds '
+        f'{gate["positive_folds"]}/{gate["total_folds"]}; thresholds +{gate["required_mean_lift"]:.3f} '
+        f'and ≥{gate["required_positive_folds"]}/4. The TIF is published only as a research artifact.</div>'
+    )
+    body.append(
+        '<h2>Frozen transform</h2><ul>'
+        '<li>Band 12 is detrended elevation; band 19 is its detrended-elevation slope and remains in the existing View B model.</li>'
+        '<li>The new H1 transform smooths band 12 with a normalized Gaussian (sigma 2 pixels) and uses its local DEM-gradient normal.</li>'
+        '<li>Bilinear elevation samples at ±2 pixels (200 m at the 100 m grid); derive signed flank-slope concordance and shoulder asymmetry.</li>'
+        '<li>Two features, clipped to [−1,1], with 10-pixel registered maximum support; no external data.</li>'
+        '<li>Baseline `view_B` and candidate `view_B_paired_shoulder` use identical fold rows, learner, placement, and per-fold budget.</li>'
+        '</ul><p>Expected physical interpretation: a displaced, asymmetric scarp could be a surface expression of a fault. The same profile can arise from roads, erosion, fan margins, lithology, grading, or DEM artifacts. A 100 m DEM cannot resolve metre-scale morphology or buried faults without surface expression.</p>'
+    )
+    body.append(
+        '<h2>Primary holdout table</h2><div class="table-wrap"><table><thead><tr>'
+        '<th>fold</th><th>View B DTI</th><th>View B + H1 DTI</th><th>paired lift</th><th>emitted</th>'
+        '</tr></thead><tbody>' + "".join(fold_rows) + '</tbody></table></div>'
+        '<p>Four spatial quadrants; whole original 8-connected catalogue components; 80-pixel Euclidean '
+        'train/evaluation buffer; negatives are held-out catalogue-zero proxies. The refit reproduced all '
+        'six previously published R2 baseline means exactly. Local component recovery is not validation '
+        'against the hidden expert-mapped new-fault labels.</p>'
+    )
+    body.append(
+        '<h3>Refitted comparators</h3><div class="table-wrap"><table><thead><tr><th>arm</th><th>mean local DTI</th></tr></thead><tbody>'
+        + "".join(baseline_rows) + '</tbody></table></div>'
+        f'<p>Best refitted incumbent: <strong>{esc(summary["refitted_local_incumbent"])}</strong> '
+        f'({float(summary["refitted_local_incumbent_mean_dti"]):.6f}). Candidate mean '
+        f'{float(summary["candidate_mean_dti"]):.6f}; increase {float(summary["candidate_lift_over_incumbent"]):+.6f}. '
+        'This does not translate to an organizer score.</p>'
+    )
+    body.append(
+        '<h2>Accessible-prior uniqueness and non-union check</h2>'
+        f'<p>The emitted pattern has {int(sub["stats"]["emitted"]):,} positive pixels. It differs from '
+        f'all {int(uniqueness["n_priors_checked"])} aligned accessible prior rasters; '
+        f'{int(uniqueness["novel_vs_all_priors"]):,} pixels '
+        f'({100 * float(uniqueness["novel_fraction"]):.1f}%) are outside their comparison union, '
+        f'and {int(uniqueness["prior_px_dropped"]):,} prior-support pixels are not re-emitted. '
+        'This is limited to the supplied accessible inventory, not private or unlinked submissions.</p>'
+        f'<p>Against the separately placed View A ∪ View B support union, the candidate has '
+        f'{int(literal_union["candidate_only"]):,} candidate-only pixels and the union has '
+        f'{int(literal_union["union_only"]):,} pixels absent from the candidate. Against a max-view '
+        f'control at the same budget, the intersection is {int(matched_union["intersection"]):,} pixels; '
+        f'each pattern also has {int(matched_union["candidate_only"]):,} pixels the other lacks. '
+        'It is neither a copied raster nor a literal or matched-budget max-view union.</p>'
+        '<a href="data/uniqueness_r3.json">Accessible-prior comparison receipt →</a> · '
+        '<a href="data/not_union_r3.json">View-union comparison receipt →</a>'
+    )
+    body.append(
+        '<h2 id="independence">Independence gate and one-round co-training diagnostic</h2>'
+        f'<p>The proxy-negative block test used {cand_ind["n_blocks"]:,} blocks and '
+        f'{cand_ind["n_negative_predictions"]:,} negative predictions. The frozen abandonment threshold '
+        f'was {cand_ind["threshold"]:.2f}; maximum absolute correlation was '
+        f'{cand_ind["max_abs_correlation"]:.5f} for A vs B+H1. Baseline A vs B was '
+        f'{base_ind["max_abs_correlation"]:.5f}. Both diagnostics were defined and below the threshold, '
+        'so the preregistered secondary exchange ran. Catalogue-zero blocks are proxies, not verified '
+        'fault absences; low error correlation does not prove sufficient views or conditional independence.</p>'
+        '<div class="table-wrap"><table><thead><tr><th>donor → receiver</th><th>pseudo pixels</th>'
+        '<th>baseline DTI</th><th>after exchange DTI</th><th>paired lift</th><th>positive folds</th></tr></thead><tbody>'
+        + "".join(direction_rows) + '</tbody></table></div>'
+        '<p>The secondary round did not alter the primary artifact. All pseudo pixels were in training '
+        'regions; zero fell in an evaluation region. Accepted whole A-only components are documented '
+        'one by one, including measured context and alternative explanations: '
+        '<a href="downloads/a_only_reasoning_r3.csv">A-only reasoning CSV</a>. A-only is a buried-structure '
+        'hypothesis, not a confirmed fault; B-only is treated as a possible surface artifact.</p>'
+        '<a href="data/independence_r3.json">Full block-level independence evidence →</a> · '
+        '<a href="data/cotraining_summary_r3.json">Machine-readable co-training summary →</a>'
+    )
+    body.append(
+        '<h2>Why 0.2778 is not a causal proof</h2>'
+        f'<p>The public snapshot from {esc(board_observed)} reports 0.2778 at rank '
+        f'{esc(next((row.get("rank") for row in board.get("rows", []) if float(row.get("score", -1)) == 0.2778), "not recorded"))}; '
+        'the board does not expose the scoring TIFF or its hash. The local forensic byte comparisons '
+        'support a plausible sparse-placement explanation, but the participant filename-to-score link is '
+        'owner-reported. No hidden new-fault labels are available to this project.</p>'
+        '<p>Sources: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">'
+        'official task, metric and format</a>; <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">'
+        'official participant leaderboard</a>; <a href="https://www.drivendata.org/termsofuse/">DrivenData Terms</a>; '
+        '<a href="https://www.cs.cmu.edu/~avrim/Papers/cotrain.pdf">Blum–Mitchell co-training paper</a>; '
+        '<a href="https://data.usgs.gov/datacatalog/data/USGS:77ae0551-c61e-4979-aedd-d797abdcde0e">USGS 1 m DEM catalog</a> '
+        '(exact footprint coverage not checked).</p>'
+        '<p><a href="r3-hypotheses.html">Four ranked hypotheses and outcome →</a> · '
+        '<a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/13_r3_h1_validation.md">'
+        'Full technical report and limitations in the repository →</a> · '
+        '<a href="data/verified_claims_r3.json">R3 claim/source ledger →</a> · '
+        '<a href="data/r3_preregistration.json">Frozen preregistration →</a></p>'
+    )
+    return page("R3-H1 validation", "Preregistered paired scarp-profile feature, spatial holdout, independence gate, and no-slot decision.", "".join(body))
+
+
+def render_hypotheses(sub, holdout) -> str:
+    gate = holdout["slot_gate"]
+    body = [download_bar(sub)]
+    body.append(
+        '<div class="eyebrow">R3 · registered 2026-10-07 · four ranked hypotheses</div>'
+        '<h1>Geological hypotheses,<br>ranked before the test</h1>'
+        '<p class="lede">Ranked by qualitative expected local value relative to implementation effort. '
+        'These are testable physical ideas, not proven faults or quantified score forecasts. Only R3-H1 '
+        'was selected for this round; it failed its preregistered gate and consumed no submission slot.</p>'
+        '<div class="status"><strong>R3-H1 outcome: gate failed.</strong>'
+        f'Mean local DTI lift {fnum(gate["mean_dti_lift"], 6)} vs View B, with '
+        f'{gate["positive_folds"]}/{gate["total_folds"]} positive folds; the registered thresholds were '
+        f'+{fnum(gate["required_mean_lift"], 3)} and {gate["required_positive_folds"]}/4. No public-score '
+        'forecast or geological confirmation is claimed.</div>'
+        '<div class="table-wrap"><table><thead><tr><th>Rank / effort</th><th>Layers and physical signature</th>'
+        '<th>Why it could find an unmapped structure / how it differs</th><th>Status and key limitation</th></tr></thead><tbody>'
+        '<tr><td><strong>1 · R3-H1</strong><br>medium</td>'
+        '<td>Band 12 (detrended elevation) supplies the two new paired-flank measurements; band 19 (its slope) '
+        'remains in the existing View B model. Smooth band 12; sample paired flanks at ±2 pixels along its '
+        'DEM-gradient normal; encode signed concordance and shoulder asymmetry.</td>'
+        '<td>A coherent asymmetric scarp can be absent from a generalized or incomplete fault inventory. '
+        'Adds paired-profile geometry not explicit in this repository’s scalar curvature/slope features.</td>'
+        '<td><strong>Tested; gate failed.</strong> Lift '
+        f'{float(gate["mean_dti_lift"]):+.6f}, {gate["positive_folds"]}/{gate["total_folds"]} positive folds. '
+        'Surface-only; roads, fan margins, erosion, lithology, grading and DEM artifacts can mimic it.</td></tr>'
+        '<tr><td><strong>2 · R3-H2</strong><br>medium</td>'
+        '<td>Bands 2, 3, 9 (magnetic field/derivatives), 13 and 18 (gravity), and 15 (basement depth); band 17 '
+        'conductivity only as separately reported context. Detect persistent lineament endpoints, T-junctions, '
+        'offsets and relay geometry across scales.</td>'
+        '<td>Buried transfer structures can be omitted from surface mapping. The new part would be explicit '
+        'endpoint/junction graph topology, not another gradient, orientation-coincidence or lineament score.</td>'
+        '<td>Not tested; roughly 4–8 CPU hours. Intrusions, lithologic contacts, stripes and model boundaries '
+        'are strong confounders. USGS examples motivate testing, not labels.</td></tr>'
+        '<tr><td><strong>3 · R3-H3</strong><br>medium-high</td>'
+        '<td>Bands 12 and 19 with gravity band 13 and basement-depth band 15 as coarse context. Trace connected '
+        'drainage azimuth changes / knickpoints where a reach crosses a subsurface edge.</td>'
+        '<td>A fault may deflect drainage, while conditioning on a coarse subsurface edge could '
+        'focus the test. This extends a prior negative pixelwise drainage-asymmetry screen to connected channel '
+        'topology; lithology and fan deposition remain alternatives.</td>'
+        '<td>Not tested; roughly 6–10 CPU hours. At 100 m, channel features may be erased or created by '
+        'detrending/DEM conditioning.</td></tr>'
+        '<tr><td><strong>4 · R3-H4</strong><br>high</td>'
+        '<td>Official USGS 3DEP one-metre bare-earth DEM tiles aligned to competition bands 12/19; optionally '
+        'compare the official 1 m link list.</td>'
+        '<td>Higher-resolution profiles could resolve small scarps or offset geomorphic surfaces that the '
+        '100 m raster smooths away. It cannot detect buried faults without surface expression.</td>'
+        '<td>Not viable for a score claim yet; likely 1–3 days. Exact competition-footprint coverage, tile bytes, '
+        'and link-list acquisition were not verified.</td></tr>'
+        '</tbody></table></div>'
+        '<h2>Test and evidence rules</h2>'
+        '<ul><li>Use spatially blocked, whole-component holdouts and the same View B baseline, fixed learner, '
+        'metric-aware placement and emission budget.</li>'
+        '<li>Catalogue-zero pixels are incomplete-label proxies, not verified fault absences; no hidden expert '
+        'labels are available here.</li>'
+        '<li>A-only components require individual geological reasoning and competing explanations. B-only '
+        'components may be surface artifacts. Neither class is independently confirmed.</li>'
+        '<li>Co-training disagreement is secondary unless weak proxy-error dependence is measured; a low '
+        'correlation is not proof of conditional independence or sufficient views.</li></ul>'
+        '<p>Sources: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">'
+        'official task, metric and output format</a>; <a href="https://www.usgs.gov/publications/discovering-blind-geothermal-systems-great-basin-region-integrated-geologic-and">'
+        'USGS Great Basin blind-system report</a>; <a href="https://data.usgs.gov/datacatalog/data/USGS:77ae0551-c61e-4979-aedd-d797abdcde0e">'
+        'USGS 1 m DEM catalog</a> (specific footprint coverage unverified); and '
+        '<a href="https://doi.org/10.1145/279943.279962">Blum–Mitchell co-training paper</a>.</p>'
+        '<p><a href="r3.html">Read the fold-by-fold R3-H1 report →</a> · '
+        '<a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/12_hypotheses_r3_preregistered.md">'
+        'Open the full preregistered source note →</a></p>'
+    )
+    return page("R3 ranked hypotheses", "Four preregistered geological hypotheses ranked by qualitative value and implementation cost.", "".join(body))
+
+
+def render_downloads(sub) -> str:
+    body = [download_bar(sub, prefix="../")]
+    body.append(
+        '<div class="eyebrow">Files</div><h1>Downloads and receipts</h1>'
+        '<p class="lede">The first file is the current R3 research artifact. Its failed local gate is part '
+        'of the receipt; it is not approved for upload.</p>'
+        f'<div class="card"><h2>{esc(sub.get("file"))}</h2>'
+        f'<p>{esc(sub.get("artifact_status"))}</p>'
+        f'<p><a href="../{esc(sub.get("download"))}" download>Download TIFF</a> · '
+        f'<a href="../{esc(sub.get("download_zip"))}" download>Download ZIP</a> · '
+        f'<a href="{esc(Path(sub.get("download", "")).name.replace(".tif", "-audit.json"))}">Audit receipt</a></p>'
+        f'<p class="small">SHA-256 {esc(sub.get("sha256"))}</p></div>'
+        '<h2>Research support files</h2><ul>'
+        '<li><a href="a_only_reasoning_r3.csv">R3 A-only geological reasoning CSV (one row per accepted whole component)</a></li>'
+        '<li><a href="../data/holdout_r3_paired_profile.json">Fold-level holdout receipt</a></li>'
+        '<li><a href="../data/independence_r3.json">Block-level independence diagnostic</a></li>'
+        '<li><a href="../data/submission_r3.json">Artifact receipt</a></li>'
+        '<li><a href="../data/independent_tiff_check_r3.json">Independent TIFF readback, grid, mask, range, and hash check</a></li>'
+        '</ul><h2>Historical submissions</h2>'
+        '<p>Older R2/H53/H54 TIFFs remain in the repository for reproducibility and prior comparison; '
+        'they are not the current R3 experiment. See the linked historical audits before using them.</p>'
+    )
+    return page("Downloads", "Current research-only artifact, notes, and historical downloads.", "".join(body), prefix="../")
+
+
+def insert_nav_link(path: Path) -> None:
+    if not path.exists():
+        return
+    text = path.read_text()
+    updated = text.replace("<strong>New R2 research GeoTIFF</strong>",
+                           "<strong>Historical R2 research GeoTIFF</strong>")
+    additions = ""
+    if 'href="r3.html"' not in updated:
+        additions += '<a href="r3.html">R3 experiment</a>'
+    if 'href="r3-hypotheses.html"' not in updated:
+        additions += '<a href="r3-hypotheses.html">R3 hypotheses</a>'
+    marker = "</nav>"
+    index = updated.find(marker)
+    if index >= 0 and additions:
+        updated = updated[:index] + additions + updated[index:]
+    if updated != text:
+        path.write_text(updated)
+
+
+def main() -> int:
+    sub = load("submission")
+    holdout = load("holdout_r3_paired_profile")
+    independence = load("independence_r3")
+    cotrain = load("cotraining_summary_r3")
+    board = load("leaderboard")
+    feed = load("feed")
+    if sub.get("file") is None or not sub.get("exists"):
+        raise ValueError("the current feed does not point to an existing audited artifact")
+    if sub.get("approved_for_weekly_slot") is not False:
+        raise ValueError("R3 site publisher expects a research-only, non-approved receipt")
+    if not (DOCS / sub["download"]).exists():
+        raise FileNotFoundError(f"missing published raster: {sub['download']}")
+
+    (DOCS / "index.html").write_text(render_index(sub, holdout, board, feed), encoding="utf-8")
+    (DOCS / "executive-summary.html").write_text(render_summary(sub, holdout), encoding="utf-8")
+    (DOCS / "r3.html").write_text(render_r3(sub, holdout, independence, cotrain, board), encoding="utf-8")
+    (DOCS / "r3-hypotheses.html").write_text(render_hypotheses(sub, holdout), encoding="utf-8")
+    (DOCS / "downloads/index.html").write_text(render_downloads(sub), encoding="utf-8")
+    for name in ("validation.html", "forensics.html", "hypotheses.html", "sources.html",
+                 "irregularities.html", "feed.html", "h54.html"):
+        insert_nav_link(DOCS / name)
+    print("wrote R3 overview, submission guide, experiment report, and current downloads index")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

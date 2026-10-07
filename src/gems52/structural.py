@@ -43,6 +43,76 @@ def normals(a, valid, sigma):
     return gx, gy, mag, s
 
 
+def paired_scarp_profile(elevation, valid, sigma=2.0, offset_px=2.0, tile_rows=256):
+    """Measure paired DEM flank slopes along the local uphill normal.
+
+    This R3-H1 transform is intentionally surface-only: it samples a smoothed
+    detrended-elevation profile at +/- ``offset_px`` (default 200 m) around each
+    pixel, along the local DEM-gradient normal. The output is two dimensionless
+    features: signed same-direction flank-slope concordance and signed left/right
+    flank asymmetry. Samples are bilinear and computed in row tiles to bound peak
+    memory on the 12 Mpixel competition grid. The input footprint must be eroded
+    beyond the profile/smoothing support before these values are used for fitting.
+
+    The transform is a geomorphic hypothesis, not proof of a fault; roads, fan
+    margins, drainage, lithologic contacts and DEM artifacts can make similar
+    profiles.
+    """
+    elev = np.asarray(elevation, dtype=np.float32)
+    valid = np.asarray(valid, dtype=bool)
+    if elev.ndim != 2 or valid.shape != elev.shape:
+        raise ValueError("elevation and valid must be same-shaped 2-D arrays")
+    if min(elev.shape) < 3:
+        raise ValueError("profile transform needs at least a 3x3 grid")
+    if not np.isfinite(sigma) or sigma <= 0:
+        raise ValueError("sigma must be finite and positive")
+    if not np.isfinite(offset_px) or offset_px <= 0:
+        raise ValueError("offset_px must be finite and positive")
+    if not isinstance(tile_rows, int) or tile_rows <= 0:
+        raise ValueError("tile_rows must be a positive integer")
+
+    field = smooth(elev, valid, sigma)
+    gy, gx = np.gradient(field, 100.0, 100.0)
+    magnitude = np.hypot(gx, gy)
+    nx = np.divide(gx, magnitude, out=np.zeros_like(gx), where=magnitude > 1e-10)
+    ny = np.divide(gy, magnitude, out=np.zeros_like(gy), where=magnitude > 1e-10)
+    concordance = np.zeros(elev.shape, dtype=np.float32)
+    asymmetry = np.zeros(elev.shape, dtype=np.float32)
+    height, width = elev.shape
+    columns = np.arange(width, dtype=np.float32)[None, :]
+    distance_m = float(offset_px) * 100.0
+    epsilon = 1e-12
+
+    for y0 in range(0, height, tile_rows):
+        y1 = min(height, y0 + tile_rows)
+        rows = np.arange(y0, y1, dtype=np.float32)[:, None]
+        tile_shape = (y1 - y0, width)
+        coords = np.empty((2, *tile_shape), dtype=np.float32)
+        samples = []
+        for sign in (-1.0, 1.0):
+            coords[0] = rows + sign * float(offset_px) * ny[y0:y1]
+            coords[1] = columns + sign * float(offset_px) * nx[y0:y1]
+            samples.append(ndi.map_coordinates(field, coords, order=1, mode="nearest", prefilter=False))
+        left = (field[y0:y1] - samples[0]) / distance_m
+        right = (samples[1] - field[y0:y1]) / distance_m
+        left_abs, right_abs = np.abs(left), np.abs(right)
+        denom = left_abs + right_abs
+        same_direction = np.sign(left * right)
+        good = denom > epsilon
+        pair = np.zeros_like(denom, dtype=np.float32)
+        asym = np.zeros_like(denom, dtype=np.float32)
+        pair[good] = (same_direction[good] * (2.0 * np.minimum(left_abs[good], right_abs[good]) / denom[good])).astype(np.float32)
+        asym[good] = (same_direction[good] * ((right_abs[good] - left_abs[good]) / denom[good])).astype(np.float32)
+        concordance[y0:y1] = np.clip(pair, -1.0, 1.0)
+        asymmetry[y0:y1] = np.clip(asym, -1.0, 1.0)
+
+    concordance[~valid] = 0.0
+    asymmetry[~valid] = 0.0
+    if not np.isfinite(concordance[valid]).all() or not np.isfinite(asymmetry[valid]).all():
+        raise ValueError("paired profile transform produced non-finite values")
+    return concordance, asymmetry
+
+
 def cosine(ax, ay, bx, by):
     """Signed normal dot product; undefined flat-field direction maps to 0."""
     den = np.hypot(ax, ay) * np.hypot(bx, by)
@@ -114,7 +184,7 @@ def build(features="data/training_features.tif", sample="data/sample_submission.
         flat_idx = np.flatnonzero(eligible.ravel())
         save_array(dest / "valid.npy", eligible)
         save_array(dest / "flat_idx.npy", flat_idx)
-        names, view_a, view_b, raw, cross = [], [], [], [], []
+        names, view_a, view_b, h2_features, structural_features, raw, cross = [], [], [], [], [], [], []
         file_hashes = {}
 
         def put(name, values, view):
@@ -124,7 +194,16 @@ def build(features="data/training_features.tif", sample="data/sample_submission.
             save_array(dest / (name + ".npy"), v)
             file_hashes[name] = digest(dest / (name + ".npy"))
             names.append(name)
-            (view_a if view == "A" else view_b if view == "B" else cross).append(name)
+            if view == "A":
+                view_a.append(name)
+            elif view == "B":
+                view_b.append(name)
+            elif view == "H2":
+                h2_features.append(name)
+            else:
+                cross.append(name)
+            if view != "H2":
+                structural_features.append(name)
             log(f"feature {len(names):02d} {name}", flush=True)
 
         def read(i):
@@ -189,6 +268,14 @@ def build(features="data/training_features.tif", sample="data/sample_submission.
             residual = np.divide(a - mu, sd + floor)
             put(f"B_{name}_local_residual", residual, "B")
             put(f"B_{name}_local_sd", sd, "B")
+
+        # R3-H1: paired flank geometry is kept out of the old view_B and
+        # structural_contrast definitions so their baselines remain comparable.
+        pair_concordance, shoulder_asymmetry = paired_scarp_profile(elev, valid, sigma=2.0, offset_px=2.0)
+        put("B_paired_profile_concordance_200m", pair_concordance, "H2")
+        put("B_paired_shoulder_asymmetry_200m", shoulder_asymmetry, "H2")
+        del pair_concordance, shoulder_asymmetry
+
         put("C_gravity_surface_direction", cosine(gx, gy, surf_x, surf_y), "C")
         put("C_cover_surface_direction", cosine(dx, dy, surf_x, surf_y), "C")
         put("C_magnetic_surface_direction", np.abs(cosine(mx, my, surf_x, surf_y)), "C")
@@ -196,14 +283,18 @@ def build(features="data/training_features.tif", sample="data/sample_submission.
         put("C_signed_cover_surface_silence", np.maximum(anti3, 0) * logcover / (1 + np.abs(slope)), "C")
         put("C_cover_persistent_gravity", gcoh * logcover, "C")
 
-    manifest = dict(version="r2-signed-normal-v1", template=template,
-                    feature_names=names, view_A=view_a, view_B=view_b, raw_fusion=raw,
-                    structural_contrast=names, cross_features=cross, feature_sha256=file_hashes,
+    manifest = dict(version="r3-paired-profile-v1", template=template,
+                    feature_names=names, view_A=view_a, view_B=view_b,
+                    view_B_paired_shoulder=view_b + h2_features, h2_features=h2_features,
+                    raw_fusion=raw, structural_contrast=structural_features,
+                    cross_features=cross, feature_sha256=file_hashes,
                     input_footprint_px=int(valid.sum()), eligible_px=int(eligible.sum()),
                     support_px=SUPPORT_PX, feature_scales_px=list(SCALES),
+                    r3_h1_profile=dict(band=12, context_band=19, gaussian_sigma_px=2.0,
+                                       offset_px=2.0, support_px=10, external_data_used=False),
                     inputs={"features_sha256": digest(features), "sample_sha256": digest(sample)},
                     external_data_used=False, radiometric_bands_present=False,
-                    caveat="Catalogue-zero is not verified fault absence; gravity and modelled depth are not independent evidence.")
+                    caveat="Catalogue-zero is not verified fault absence; gravity and modelled depth are not independent evidence; paired profile features are a geomorphic hypothesis, not a fault label.")
     (dest / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     return manifest
 

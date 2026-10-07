@@ -47,16 +47,25 @@ def safe(value):
 
 
 def copy_evidence():
-    # Historical evidence remains in Git for audit, but is not silently promoted
-    # as current just because this scheduled publisher ran.
+    # R2 and R3 receipts are historical/current as labelled in their own payloads;
+    # copying a file into the site feed never promotes it or changes its gate.
     copied = []
-    for path in sorted(EV.glob('*_r2.json')):
+    paths = sorted(EV.glob('*_r[23]*.json'))
+    for path in paths:
         write(path.name, safe(json.loads(path.read_text())))
         copied.append(path.name)
-    for name in ('r2_preregistration', 'source_policy', 'data_manifest'):
+    for name in ('r2_preregistration', 'r3_preregistration', 'source_policy',
+                 'data_manifest', 'leaderboard_snapshot_2026-10-07'):
         path = ROOT / 'registry' / (name + '.json')
         if path.exists():
             write(name + '.json', safe(json.loads(path.read_text())))
+    reasoning = EV / 'a_only_reasoning_r3.csv'
+    if reasoning.exists():
+        target = DL / reasoning.name
+        DL.mkdir(parents=True, exist_ok=True)
+        if not target.exists() or target.read_bytes() != reasoning.read_bytes():
+            target.write_bytes(reasoning.read_bytes())
+        copied.append(reasoning.name)
     return copied
 
 
@@ -70,11 +79,9 @@ def file_hash(path):
 
 def submission_note(d):
     """The <=200-character note that distinguishes this submission later."""
-    if d.get('submission_note'):
-        return str(d['submission_note'])[:200]
-    n = (f"H54 revealed-core {d.get('retained_core_px', 0)}px + {d.get('novel_px', 0)}px novel "
-         f"strike-continuation; 200m corridor excluded; |G|=14089")
-    return n[:200]
+    if d.get('submission_note') or d.get('note'):
+        return str(d.get('submission_note') or d.get('note'))[:200]
+    return "Research artifact — consult its dated receipt before considering upload."
 
 
 def make_zip(name):
@@ -86,23 +93,25 @@ def make_zip(name):
     stem = name[:-4] if name.endswith('.tif') else name
     ev = EV / f'submission_{stem}.json'
     d = json.loads(ev.read_text()) if ev.exists() else {}
-    proj = d.get('projected_dti') or {}
+    validation = d.get('validation') or {}
+    fmt = d.get('format') or {}
+    uniqueness = d.get('uniqueness') or {}
     body = (
         f"{name}\n"
-        f"sha256 {d.get('sha256')}\n"
-        f"{d.get('bytes')} bytes, 1 band, float32, EPSG:32611, values in [0,1], no NaN.\n\n"
-        f"SUBMISSION NOTE (<=200 chars, paste into the portal's notes box):\n"
+        f"submission name: {d.get('submission_name')}\n"
+        f"sha256: {d.get('sha256')}\n"
+        f"{d.get('bytes')} bytes; one float32 band; EPSG:32611; [0,1] finite pixel values.\n"
+        f"format gate: {fmt.get('ok')}; canonical pattern unique: "
+        f"{uniqueness.get('canonical_pattern_unique')}; all-prior >=20% support-novelty gate: "
+        f"{uniqueness.get('support_novelty_gate_ok')}.\n"
+        f"artifact status: {d.get('artifact_status')}\n"
+        f"weekly-slot approval: {d.get('approved_for_weekly_slot', False)}; "
+        f"weekly slots used: {d.get('weekly_submission_slots_used', 0)}.\n\n"
+        f"SUBMISSION NOTE (<=200 chars; do not paste/upload unless status permits):\n"
         f"{submission_note(d)}\n\n"
-        f"What it is: {d.get('budget')} emitted pixels = {d.get('retained_core_px')} px retained core "
-        f"(the double-corroborated atom A&C, whose credit the organiser's own published scores bound "
-        f"exactly) + {d.get('novel_px')} px strictly novel ({d.get('novel_along_strike_px')} along the "
-        f"recovered strike of that structure, {d.get('novel_far_px')} free candidates on the same "
-        f"fabric).\n"
-        f"Nothing is emitted within {d.get('corridor_excluded_m')} m of a mapped trace, because that "
-        f"ring's credit is exactly zero in the organiser's own scores (knowledge/10 s2).\n"
-        f"Projected DTI {proj.get('mean_dti')} (P(win over 0.2778) {proj.get('p_win')}); the "
-        f"projection is an integral over a stated prior, not a forecast - see "
-        f"evidence/revealed_budget.json.\n")
+        f"This archive contains the exact raster and its audit receipt. The local validation field is "
+        f"not an official-score forecast, and format checking does not establish portal acceptance.\n"
+        f"Validation summary: {json.dumps(validation, sort_keys=True)}\n")
     zp = DL / f'{stem}.zip'
     with zipfile.ZipFile(zp, 'w', zipfile.ZIP_DEFLATED) as z:
         z.write(src, arcname=name)
@@ -117,7 +126,7 @@ def latest_submission():
     # gate report of its own, so the site never offers a file whose audit it cannot show; IR-52-029
     # records the choice, the reason, and that reverting is one line in submission/LATEST.txt.
     order = []
-    for marker in (ROOT / 'submission/LATEST.txt', ROOT / 'submission/R2_LATEST.txt'):
+    for marker in (ROOT / 'submission/R3_LATEST.txt', ROOT / 'submission/LATEST.txt', ROOT / 'submission/R2_LATEST.txt'):
         if marker.exists():
             nm = marker.read_text().strip()
             stem = nm[:-4] if nm.endswith('.tif') else nm
@@ -166,8 +175,9 @@ def parse_board(text):
 
 
 def fetch_board(do_fetch=False):
-    snap = ROOT / 'registry/leaderboard_snapshot_2026-10-06.json'
-    out = json.loads(snap.read_text()) if snap.exists() else dict(rows=[])
+    snapshots = sorted((ROOT / 'registry').glob('leaderboard_snapshot_*.json'))
+    snap = snapshots[-1] if snapshots else None
+    out = json.loads(snap.read_text()) if snap and snap.exists() else dict(rows=[])
     out.update(source=BOARD, owner_best_reported=OUR_BEST,
                artifact_score_authenticated=False,
                note='Dated participant-level observation; no filename/hash/receipt attribution. Participant identity is not authenticated as the user\'s team.')
@@ -221,10 +231,16 @@ def main():
         tgt = DL / f.name
         if not tgt.exists() or tgt.stat().st_size != f.stat().st_size:
             tgt.write_bytes(f.read_bytes())
-    for mk in ('LATEST.txt', 'R2_LATEST.txt'):
+    for mk in ('R3_LATEST.txt', 'LATEST.txt', 'R2_LATEST.txt'):
         mp = ROOT / 'submission' / mk
         if mp.exists():
-            make_zip(mp.read_text().strip())
+            name = mp.read_text().strip()
+            stem = name[:-4] if name.endswith('.tif') else name
+            archive = DL / f'{stem}.zip'
+            # Rebuild the current R3 archive from its exact receipt. Preserve historical ZIP bytes
+            # instead of rewriting H54/R2 packages during an unrelated R3 feed refresh.
+            if mk == 'R3_LATEST.txt' or not archive.exists():
+                make_zip(name)
     sub = latest_submission()
     board = fetch_board(args.fetch)
     write('submission.json', sub)
@@ -234,9 +250,10 @@ def main():
     write('feed.json', dict(
         generated_utc=time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
         branch=current_branch(args.branch), repo='buffedlizard55-lab/GEMSDOE52',
-        evidence_copied=copied, files=sorted(p.name for p in DATA.glob('*_r2.json')),
+        evidence_copied=copied, files=sorted(p.name for p in DATA.glob('*_r[23]*.json')),
         submission=sub.get('file'), downloads=len(list(DL.glob('*.tif'))),
-        leaderboard_status=board['status'], leaderboard_last_observed_utc=board.get('fetched_utc'),
+        leaderboard_status=board['status'],
+        leaderboard_last_observed_utc=board.get('fetched_utc') or board.get('observed_date_utc'),
         prior_entries=len(entries), eligible_prior_rasters=sum(bool(r.get('eligible_prior')) for r in entries),
         scientific_gate=sub.get('approved_for_weekly_slot', False), slots_used=0,
         freshness_note='Local evidence refresh is automatic; the board is a dated snapshot. No automatic portal submission.'))

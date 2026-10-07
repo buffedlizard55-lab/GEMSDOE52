@@ -460,10 +460,5 @@
     "numpy": "2.2.6",
     "rasterio": "1.4.3",
     "sklearn": "1.7.2"
-  },
-  "marker": "submission/R3_LATEST.txt",
-  "exists": true,
-  "download": "downloads/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.tif",
-  "download_zip": "downloads/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.zip",
-  "published_byte_hash_matches_receipt": true
+  }
 }
