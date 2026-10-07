@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-10-06T23:19:00.988198Z",
+  "generated_utc": "2026-10-07T01:57:38.960770Z",
   "enabled": true,
   "reason": "weak proxy negative-error correlation; not proof of conditional feature independence; pseudo-label arm is separate and cannot replace the preregistered primary after looking at outer results",
   "rounds": [

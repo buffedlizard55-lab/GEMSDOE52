@@ -220,16 +220,48 @@ def main() -> int:
     # R2 static HTML is generated directly from strict JSON receipts. Blanket
     # decimal bans incorrectly reject cited prose and receipt-rendered tables.
     # Verify the important values against their actual source instead.
-    if (DATA / 'holdout_r2.json').exists():
-        h = json.loads((DATA / 'holdout_r2.json').read_text())
+    current = json.loads((DATA / 'submission.json').read_text()) if (DATA / 'submission.json').exists() else {}
+    h55_holdout = DATA / 'holdout_h55.json'
+    r2_holdout = DATA / 'holdout_r2.json'
+    if current.get('hypothesis') and h55_holdout.exists():
+        h = json.loads(h55_holdout.read_text())
         text = (DOCS / 'validation.html').read_text()
         for arm, value in h['means'].items():
             if f'{value:.6f}' not in text:
-                problems.append(f'validation.html: {arm} mean is not rendered from its current receipt')
+                problems.append(f'validation.html: H55 {arm} mean is not rendered from its current receipt')
+        for page in ('index.html', 'executive-summary.html'):
+            body = (DOCS / page).read_text()
+            if 'Do not' not in body or 'slot' not in body:
+                problems.append(f'{page}: missing H55 failed-gate/weekly-slot warning')
+    elif r2_holdout.exists():
+        h = json.loads(r2_holdout.read_text())
+        text = (DOCS / 'validation.html').read_text()
+        for arm, value in h['means'].items():
+            if f'{value:.6f}' not in text:
+                problems.append(f'validation.html: R2 {arm} mean is not rendered from its current receipt')
         for page in ('index.html', 'executive-summary.html'):
             body = (DOCS / page).read_text()
             if 'Do not upload' not in body:
                 problems.append(f'{page}: missing failed-gate warning')
+
+    if current.get('hypothesis'):
+        deviation_path = DATA / 'protocol_deviation_h55.json'
+        if not deviation_path.exists():
+            problems.append('protocol_deviation_h55.json: missing post-run preregistration/implementation audit')
+        else:
+            deviation = json.loads(deviation_path.read_text())
+            if deviation.get('preregistration_sha256_at_validation') != current.get('preregistration_sha256'):
+                problems.append('protocol_deviation_h55.json: registration hash disagrees with H55 artifact receipt')
+            if deviation.get('holdout_result_for_implemented_subset', {}).get('gate_passed') is not False:
+                problems.append('protocol_deviation_h55.json: implementation-subset gate must remain failed')
+            if deviation.get('release_status', {}).get('weekly_slot_approved') is not False:
+                problems.append('protocol_deviation_h55.json: failed H55 artifact must not be marked slot-approved')
+            for page in ('index.html', 'h55.html', 'validation.html', 'hypotheses.html',
+                         'executive-summary.html', 'irregularities.html', 'method.html',
+                         'sources.html', 'feed.html', 'forensics.html'):
+                body = (DOCS / page).read_text()
+                if 'protocol' not in body.lower() or 'protocol_deviation_h55.json' not in body:
+                    problems.append(f'{page}: missing visible protocol-deviation link/disclosure')
 
     print(f"pages checked: {len(pages)}   data files: {len(list(DATA.glob('*.json')))}")
     for nse in notes:

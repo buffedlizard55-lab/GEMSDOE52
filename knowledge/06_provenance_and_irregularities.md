@@ -263,3 +263,59 @@ novel pool 440,798 px, **0** collisions between the H54 novel mass and any prior
 
 **Reverting is one line** — point `submission/LATEST.txt` back at the H53 file and re-run
 `scripts/refresh_feed.py`. Nothing else in the repo depends on which of the two is offered.
+
+## H55 / current-source refresh (2026-10-07)
+
+**IR-52-030 — the current official public leaderboard differs from the stale prompt.** Arena's dated
+fetch of the rendered DrivenData page on 2026-10-07 reports a leader at **0.3774**, `DARD` rank 7 at
+**0.3195**, and participant `extradr19` rank 13 at **0.2778**. The page does not expose a TIFF name or
+hash, so it does not connect that 0.2778 score to `H33-2-B2`; participant identity is not authenticated
+to this repo. `registry/leaderboard_snapshot_2026-10-07.json` is the observed table; scheduled
+DrivenData access remains disabled by policy.
+
+**IR-52-031 — the old prior inventory was not local.** The prior check found all 377 eligible TIFFs
+missing under ignored `data/review/priors/`. `scripts/review_sources.py --download-priors --workers 4`
+then refreshed the owner-site trees and downloaded 395 distinct linked TIFF URLs; 389 are aligned,
+single-band competition-grid priors and all 389 bytes are now present. Four linked TIFFs are not
+eligible predictions and two formerly linked owner-repository blobs no longer resolve. 53GEMSDOE and
+54GEMSDOE still have no supplied links. This is the finite accessible inventory, not a proof about
+private/unlinked/external-storage files; the raw file-to-score mapping remains unknown.
+
+**IR-52-032 — the GDR 1391 metadata is reachable but the promised raw point archives are not.** The
+official GDR record page was fetched. The linked well/spring ZIP still failed direct TLS
+(`SSL_ERROR_SYSCALL`) and the paleo-geothermal ZIP returned HTTP 500. No raw GDR feature entered H55;
+H55-2 is not viable until the official bytes can be acquired and hashed. See `evidence/source_review_h55.json`.
+
+**IR-52-033 — H55-1 improved the local mean slightly, then failed its frozen slot gate.** The new
+signed gravity/RTP LoG-edge feature set produced mean DTI **0.195217** versus the strongest comparable
+surface-only View-B baseline **0.194671**, paired lift **+0.000546**, positive in **2/4** folds. The
+preregistered threshold is +0.005 mean and 3/4 positive. No slot was used. The candidate is a research
+artifact only; this score is catalogue-component hide/recover, not a public leaderboard result.
+
+**IR-52-034 — the H55 co-training premise is only partly measured.** H55 View-A/B negative-error
+correlation had a maximum absolute blockwise coefficient **0.08443** in 2,093 50×50 blocks. This let a
+separate exchange experiment proceed but does not prove conditional independence. Sending A-generated
+pseudo-segments to B changed B's mean by **+0.001488** over its baseline (3/4 folds positive), below the
+registered +0.005 threshold; sending B to H55-A changed A's mean by **−0.004381** (0/4 positive). Neither
+exchange was used in the H55 primary TIFF.
+
+**IR-52-035 — support novelty still fails closed.** The 389-raster inventory is broader than the former
+383-entry snapshot. The new candidate's exact decoded-pattern comparison, strict all-prior support
+novelty, and matched-budget A/B max-union results are recorded separately in
+`evidence/submission_h55.json`/`evidence/uniqueness_h55.json`; a saturated prior union is not treated as
+evidence of identity. The original >=20% support-novelty diagnostic is not waived for slot eligibility.
+
+**IR-52-036 — the new file was not uploaded.** No DrivenData portal request was made, no organizer score
+was observed, no acceptance claim is made, and no weekly slot was used. The TIF's on-disk format check
+is local evidence only. The new official rule's generative-AI narrative requirement is addressed in
+`knowledge/13_ai_use_h55.md`.
+
+**IR-52-037 — post-run code review found a preregistration-to-implementation mismatch.** The frozen
+H55-1 candidate-feature list names gravity bands 13/11/18 and magnetic bands 2/9 for the signed-LoG
+edge transforms. The implementation actually computes the new LoG/sign-change channels for gravity
+band 13 and RTP band 2 only; bands 11/18/9 remain raw or pre-existing R2 features, not H55-transformed
+channels. The +0.000546, 2/4 result and the research TIFF therefore evaluate this narrower implemented
+variant, not the complete registered feature set. The original preregistration/hash and results are
+preserved; no retroactive amendment is made. Do not tune the omitted channels on the same four folds;
+any future test needs a separate preregistration and untouched confirmation design. Machine-readable
+audit: `evidence/protocol_deviation_h55.json`. The failed gate and no-upload decision are unchanged.

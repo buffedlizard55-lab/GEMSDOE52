@@ -47,13 +47,14 @@ def safe(value):
 
 
 def copy_evidence():
-    # Historical evidence remains in Git for audit, but is not silently promoted
-    # as current just because this scheduled publisher ran.
+    # Publish current R2/H55 receipts without turning a local refresh timestamp
+    # into a claim of new official leaderboard data.
     copied = []
-    for path in sorted(EV.glob('*_r2.json')):
+    paths = sorted(set(EV.glob('*_r2.json')) | set(EV.glob('*_h55.json')))
+    for path in paths:
         write(path.name, safe(json.loads(path.read_text())))
         copied.append(path.name)
-    for name in ('r2_preregistration', 'source_policy', 'data_manifest'):
+    for name in ('r2_preregistration', 'h55_preregistration', 'source_policy', 'data_manifest'):
         path = ROOT / 'registry' / (name + '.json')
         if path.exists():
             write(name + '.json', safe(json.loads(path.read_text())))
@@ -69,46 +70,33 @@ def file_hash(path):
 
 
 def submission_note(d):
-    """The <=200-character note that distinguishes this submission later."""
+    """Return the receipt's <=200-character identifying note; never assume H54."""
     if d.get('submission_note'):
         return str(d['submission_note'])[:200]
-    n = (f"H54 revealed-core {d.get('retained_core_px', 0)}px + {d.get('novel_px', 0)}px novel "
-         f"strike-continuation; 200m corridor excluded; |G|=14089")
+    label = str(d.get('hypothesis') or d.get('arm') or 'GEMSDOE52 research')
+    pixels = d.get('budget')
+    gate = d.get('approved_for_weekly_slot', False)
+    n = f"{label[:90]}; {pixels if pixels is not None else 'unreported'} metric-placed cells; {'slot eligible' if gate else 'research-only / not slot-approved'}; unscored."
     return n[:200]
 
 
 def make_zip(name):
-    """One-click ZIP beside the TIF: the raster, the note to paste, and the evidence behind it."""
+    """Make the competition's advertised ZIP option: exactly one GeoTIFF member.
+
+    The note and audit stay as adjacent site metadata; packaging them as extra
+    archive members risks violating the portal's "single GeoTIFF" wording.
+    """
     import zipfile
     src = ROOT / 'submission' / name
     if not src.exists():
         return None
     stem = name[:-4] if name.endswith('.tif') else name
-    ev = EV / f'submission_{stem}.json'
-    d = json.loads(ev.read_text()) if ev.exists() else {}
-    proj = d.get('projected_dti') or {}
-    body = (
-        f"{name}\n"
-        f"sha256 {d.get('sha256')}\n"
-        f"{d.get('bytes')} bytes, 1 band, float32, EPSG:32611, values in [0,1], no NaN.\n\n"
-        f"SUBMISSION NOTE (<=200 chars, paste into the portal's notes box):\n"
-        f"{submission_note(d)}\n\n"
-        f"What it is: {d.get('budget')} emitted pixels = {d.get('retained_core_px')} px retained core "
-        f"(the double-corroborated atom A&C, whose credit the organiser's own published scores bound "
-        f"exactly) + {d.get('novel_px')} px strictly novel ({d.get('novel_along_strike_px')} along the "
-        f"recovered strike of that structure, {d.get('novel_far_px')} free candidates on the same "
-        f"fabric).\n"
-        f"Nothing is emitted within {d.get('corridor_excluded_m')} m of a mapped trace, because that "
-        f"ring's credit is exactly zero in the organiser's own scores (knowledge/10 s2).\n"
-        f"Projected DTI {proj.get('mean_dti')} (P(win over 0.2778) {proj.get('p_win')}); the "
-        f"projection is an integral over a stated prior, not a forecast - see "
-        f"evidence/revealed_budget.json.\n")
     zp = DL / f'{stem}.zip'
-    with zipfile.ZipFile(zp, 'w', zipfile.ZIP_DEFLATED) as z:
-        z.write(src, arcname=name)
-        z.writestr('SUBMISSION_NOTE.txt', body)
-        if ev.exists():
-            z.write(ev, arcname='evidence.json')
+    with zipfile.ZipFile(zp, 'w', zipfile.ZIP_DEFLATED) as archive:
+        archive.write(src, arcname=name)
+    with zipfile.ZipFile(zp) as archive:
+        if archive.namelist() != [name] or hashlib.sha256(archive.read(name)).hexdigest() != file_hash(src):
+            raise ValueError(f'ZIP read-back mismatch or extra member: {zp}')
     return str(zp)
 
 
@@ -166,11 +154,13 @@ def parse_board(text):
 
 
 def fetch_board(do_fetch=False):
-    snap = ROOT / 'registry/leaderboard_snapshot_2026-10-06.json'
+    snap = ROOT / 'registry/leaderboard_snapshot_2026-10-07.json'
+    if not snap.exists():
+        snap = ROOT / 'registry/leaderboard_snapshot_2026-10-06.json'
     out = json.loads(snap.read_text()) if snap.exists() else dict(rows=[])
     out.update(source=BOARD, owner_best_reported=OUR_BEST,
-               artifact_score_authenticated=False,
-               note='Dated participant-level observation; no filename/hash/receipt attribution. Participant identity is not authenticated as the user\'s team.')
+               artifact_score_authenticated=False)
+    out.setdefault('note', 'Dated participant-level observation; no filename/hash/receipt attribution. Participant identity is not authenticated as the user\'s team.')
     policy = json.loads((ROOT / 'registry/source_policy.json').read_text())['drivendata']
     allowed = bool(policy.get('automated_fetch_allowed') and policy.get('written_permission_reference'))
     out['automated_fetch_allowed'] = allowed
@@ -234,7 +224,8 @@ def main():
     write('feed.json', dict(
         generated_utc=time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
         branch=current_branch(args.branch), repo='buffedlizard55-lab/GEMSDOE52',
-        evidence_copied=copied, files=sorted(p.name for p in DATA.glob('*_r2.json')),
+        evidence_copied=copied,
+        files=sorted([p.name for p in DATA.glob('*_r2.json')] + [p.name for p in DATA.glob('*_h55.json')]),
         submission=sub.get('file'), downloads=len(list(DL.glob('*.tif'))),
         leaderboard_status=board['status'], leaderboard_last_observed_utc=board.get('fetched_utc'),
         prior_entries=len(entries), eligible_prior_rasters=sum(bool(r.get('eligible_prior')) for r in entries),

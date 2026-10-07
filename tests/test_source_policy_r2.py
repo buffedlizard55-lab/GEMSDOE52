@@ -18,14 +18,14 @@ def load_script(name):
 
 def test_disabled_board_fetch_never_opens_url(monkeypatch):
     feed = load_script('refresh_feed')
-    old = json.loads((ROOT / 'registry/leaderboard_snapshot_2026-10-06.json').read_text())
+    dated_snapshot = feed.fetch_board(False)
     def fail(*args, **kwargs):
         raise AssertionError('Network called despite disabled policy')
     monkeypatch.setattr(feed.urllib.request, 'urlopen', fail)
     result = feed.fetch_board(True)
     assert not result['automated_fetch_allowed']
     assert result['fetch_requested_but_disabled']
-    assert result['fetched_utc'] == old['fetched_utc']
+    assert result['fetched_utc'] == dated_snapshot['fetched_utc']
 
 
 def test_source_crawler_applies_policy_before_any_network(monkeypatch):
