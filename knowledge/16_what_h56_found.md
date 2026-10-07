@@ -34,12 +34,17 @@ union of the two families is strictly worse than the champion's own support. (H5
 `submission/gems52-h56-consensus-core-continuation-40517px-04c86e1888a8-zeros.tif`
 (SHA-256 `1308083dcf09b4c6…`, 153,815 bytes, `evidence/gems52-h56-build.json`):
 
-* **Core** 25,517 px = `P1 = h33-2-b2 ∩ gems24-d1-5` (credit exactly bounded [4,168, 5,223]).
-* **Novel arm** 15,000 px, outside the union of all 33 accessible priors AND ≥3 px from the core
-  (a cell nearer than the kernel radius re-covers truth the core already covers, so it is pure tax),
-  ranked by 0.45·along-strike continuation + 0.35·3 m DEM scarp gate + 0.20·LiDAR step×coherence.
-* **Budget** chosen by `revealed.budget_rule`: maximise `P(DTI > 0.2778)` over the exact core-credit
-  interval × ρ_novel prior U[0.03, 0.14] → 15,000 novel cells (novel fraction 0.37).
+* **Core** 25,517 px = `P1 = h33-2-b2 ∩ gems24-d1-5`. The `[4,168, 5,223]` implied-credit interval is exact only *conditional on the owner-reported file/score links*; the mapping is not organizer-authenticated.
+* **Selected continuation/scarp arm** 15,000 px, ≥3 px from the core (a cell nearer than the
+  kernel radius re-covers truth the core already covers, so it is pure tax), ranked by
+  0.45·along-strike continuation + 0.35·3 m DEM scarp gate + 0.20·LiDAR step×coherence. **Correction
+  after the decoded audit:** do not say all 15,000 arm cells are outside the 33-prior support union.
+  The saved verifier reports only 12,941 total emitted cells outside that union. Since the 25,517-cell
+  core is contained in prior patterns, 2,059 selected arm cells have support in at least one checked
+  prior. No pixel-level overlap list is preserved.
+* **Budget** chosen by `revealed.budget_rule`: maximise `P(DTI > 0.2778)` over the conditional core-credit
+  interval × ρ_novel prior U[0.03, 0.14] → 15,000 selected arm cells. The decoded audit's whole-file
+  support novelty is 12,941 / 40,517 = 31.9%, not 15,000 / 40,517.
 * **Verified from the bytes** (`work/b7_verify_h56.py`, `evidence/gems52-h56-verify.json`): 40,517
   emitted; values {0,1}; all finite; 0 cells outside the footprint; 0 on the catalogue; minimum
   distance to the catalogue 223.6 m; 0 cells within 200 m; every cell an isolated 8-connected
@@ -62,4 +67,21 @@ union of the two families is strictly worse than the champion's own support. (H5
 3. Beating the board top (0.3195) requires ρ_novel ≳ 0.08 — the prior gives that about a 37 % chance.
    The 8-file consensus tier's LP upper bound (0.353 if its density is at the top of its interval)
    is the only *accessible-evidence* route above the board top, and it cannot be selected pixel-wise.
-4. Both input rasters and prior submissions are owner-mirrored, not organizer-authenticated.
+4. Both input rasters and prior submissions are owner-mirrored, not organizer-authenticated. The
+   0.308/0.83/0.37 projection uses score-to-file associations that are not organizer-authenticated and
+   a 15,000-cell novel-density assumption despite the post-build prior-support overlap above; it is
+   conditional arithmetic, not holdout or measured performance.
+5. The saved checkout has no H56 per-pixel A-only dossier or the aligned arm/features/A-B probability
+   arrays needed to make one. Do not substitute R2, H54 or H55-EDGE explanations for H56; see
+   `evidence/h56_a_only_reasoning_scope_2026-10-07.json`.
+
+## 5 · Post-build review corrections (2026-10-07)
+
+The explicit no-upload review is `evidence/h56_slot_gate_review_2026-10-07.json`. No comparable spatial
+holdout is recorded, and the H56 slate is retrospective. A second review of the saved verifier also
+records two non-promotion issues: (a) support novelty is 12,941 cells against 33 accessible priors,
+not the 15,000 selected-arm count; (b) the full-file nearest-neighbour ≥3 px diagnostic is false at
+2.828 px, although the novel/selected arm itself is ≥3.162 px from the other emitted cells. No H56
+A-only per-pixel reasoning is available in this checkout. These do not make H56 a valid competition
+submission; retain it as research-only until a properly preregistered comparable holdout and independent
+review pass.

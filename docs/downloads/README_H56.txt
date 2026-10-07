@@ -1,24 +1,36 @@
 gems52-h56-consensus-core-continuation-40517px-04c86e1888a8-zeros.tif
+short link: h56-candidate.tif (byte-identical alias)
 sha256 1308083dcf09b4c6fb656589ce79b3c392f5a0dd315e2ed31c8d36a47fc1d52d
 bytes 153815
 
-SAFE TO UPLOAD: both local gates pass.
-  - format gate PASS: single band, float32, 3730x3292, grid/CRS identical to the organizer grid,
-    every value finite and inside [0,1] (the range check that rejected an earlier upload cannot fail).
-  - uniqueness gate PASS: the canonical pattern is identical to none of the 33 accessible aligned
-    prior files and is not their union; 31.9 % of its support lies outside their union.
-  - submission name: GEMSDOE52-H56-ConsensusCore-Continuation-40517px
-  - short note (171 chars, <= 200): H56 consensus-core + continuation | 25,517 double-corroborated
-    core px + 15,000 novel along-strike/scarp px | revealed-preference projection: does not copy
-    any prior file.
+RESEARCH / AUDIT ONLY — NOT APPROVED FOR UPLOAD. DO NOT SPEND A WEEKLY SLOT.
 
-WHAT IT IS (short): 25,517 px double-corroborated core (h33-2-b2 n gems24-d1-5, credit exactly
-bounded [4,168, 5,223] by the published scores) + 15,000 novel px >= 3 px from it and outside every
-prior's support, >= 200 m from the mapped catalogue, every cell an isolated singleton.
+- The local format gate passes: one float32 band, 3730x3292, EPSG:32611, finite {0,1} values.
+- Decoded-pattern audit: no exact match among 33 accessible aligned prior rasters. This is bounded
+  to those files, not proof against private or unlinked submissions.
+- Only 12,941 of 40,517 emitted cells (31.9%) lie outside the 33-prior support union. The 25,517-cell
+  core deliberately overlaps prior patterns. Although the selected continuation/scarp arm is 15,000
+  cells, 2,059 arm cells have checked-prior support. A pixel-level overlap list is not preserved.
+- The full-file >=3-pixel nearest-neighbour diagnostic FAILs: minimum is 2.828 px inside the fixed
+  core. The selected arm is at least 3.162 px from other emitted cells. Do not summarize this as an
+  all-file spacing pass.
+- No comparable spatially blocked H56 holdout is recorded; the hypothesis slate is retrospective.
+  Local format and decoded-pattern checks are not holdout validation. The slot decision is CLOSED.
+- Score-to-filename associations are not organizer-authenticated. The 0.308 mean and 0.83/0.37
+  probabilities are conditional arithmetic, not a measured score or forecast. The projection applies
+  a density prior to all 15,000 selected arm cells despite the support overlap above.
+- No H56 per-pixel A-only dossier is reproducible from this checkout; do not substitute another
+  candidate's CSV. See the scope receipt below.
 
-EXPECTED SCORE: projection, NOT a measurement. mean ~0.308, worst ~0.238, best ~0.378;
-P(beat this group's best 0.278) ~ 0.83; P(beat the board top 0.320) ~ 0.37.
+Audit receipts (from this repository):
+- ../data/h56_slot_gate_review_2026-10-07.json
+- ../data/gems52-h56-verify.json
+- ../data/h56_a_only_reasoning_scope_2026-10-07.json
 
-NOT SAFE TO ASSUME: this is a model proposal, not confirmed faults, and inputs are SHA-pinned
-owner mirrors rather than organizer-authenticated downloads (see registry/irregularities.json).
-Uploading it spends one weekly submission slot; that action is the operator's.
+Submission name retained for possible later review: GEMSDOE52-H56-ConsensusCore-Continuation-40517px
+Identifying note retained for possible later review (157 chars; do not paste in portal now):
+H56 consensus core + continuation | 25,517 prior-overlap core px + 15,000 selected arm px |
+decoded pattern differs from 33 accessible priors; research only.
+
+The TIFF and ZIP aliases are byte-identical copies of the canonical H56 files; aliases do not
+change the prediction or establish uniqueness. No portal upload or acceptance is claimed.
