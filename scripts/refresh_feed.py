@@ -69,7 +69,9 @@ def file_hash(path):
 
 
 def latest_submission():
-    marker = ROOT / 'submission/LATEST.txt'
+    marker = ROOT / 'submission/R2_LATEST.txt'
+    if not marker.exists():
+        marker = ROOT / 'submission/LATEST.txt'
     if not marker.exists():
         return dict(exists=False, file=None, note='No artifact has been built.')
     name = marker.read_text().strip()

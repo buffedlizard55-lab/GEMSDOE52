@@ -13,7 +13,7 @@
         ${sub.sha256 ? 'sha256 ' + sub.sha256.slice(0, 16) + '…' : ''}</small></a>`;
     });
     const px = (sub.stats && sub.stats.emitted != null) ? sub.stats.emitted : '?';
-    const note = `gems52 · two-regime metric-aware emission · ${sub.n_segments ?? '?'} segments, `
+    const note = sub.note || `gems52 · metric-aware emission · ${sub.n_segments ?? '?'} segments, `
       + `${px} px · {0,1} mass · no NaN · sha256 `
       + `${sub.sha256 ? sub.sha256.slice(0, 16) : '?'}…`
       + ` · strictly novel against every prior of this family, not their union`;

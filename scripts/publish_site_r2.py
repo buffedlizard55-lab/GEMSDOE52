@@ -36,7 +36,7 @@ def table(headers, rows, primary=None):
 
 def page(name, title, body, r):
     menu = [('index.html', 'Overview'), ('executive-summary.html', 'Submission guide'),
-            ('validation.html', 'Validation'), ('forensics.html', '0.2778 autopsy'), ('sources.html', 'Sources')]
+            ('validation.html', 'Validation'), ('forensics.html', '0.2778 autopsy'), ('sources.html', 'Sources'), ('h53.html', 'Parallel H53')]
     nav = ''.join(link(p, t) for p, t in menu)
     bar = f'''<div class="download-bar"><div><strong>New R2 research GeoTIFF</strong><small>{esc(r['file'])}</small><small>FORMAT CHECKED · UNSCORED · NOT APPROVED FOR A WEEKLY SLOT</small></div><a class="button" href="downloads/{esc(r['file'])}" download>↓ Download .TIF</a></div>'''
     doc = f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="New fault-prediction research TIFF, spatial validation and auditable source evidence. No unsupported leaderboard forecast."><title>{esc(title)} · GEMSDOE52</title><link rel="stylesheet" href="style.css"><script src="site.js" defer></script></head><body><a class="skip" href="#main">Skip to evidence</a><header><nav><a class="brand" href="index.html">GEMS / DOE 52</a>{nav}</nav></header><main id="main">{bar}{body}</main><footer>Competition 306 · Reproducible CPU research · Fault predictions, not confirmed geothermal vents. {link('irregularities.html','Limitations & review')} · {link('method.html','Method')} · {link('hypotheses.html','Hypotheses')} · {link('https://github.com/buffedlizard55-lab/GEMSDOE52','Code & complete prompt')}</footer></body></html>'''
@@ -138,6 +138,10 @@ DTI = TPw / (TPw + 0.2 FPw + 0.8 FNw)
 - {u['n_priors_checked']} accessible aligned prior-file comparisons; no canonical decoded equality; {u['novel_fraction']:.1%} novel support relative to a saturated all-raster binary/≥0.5 union. The original 20% support-novelty diagnostic FAIL is retained; canonical pixel-pattern uniqueness is a separate question. Scope is bounded, not global/private novelty.
 - {why['rows']} emitted A-only pixels each have a geological reasoning row: [CSV](docs/downloads/{why['file']}). Not verified faults/vents.
 - Official board last observed 2026-10-06: 0.3774 leader, 0.3195 rank 7. File-to-score mappings in the user brief are not organizer-authenticated.
+
+## Preserved concurrent incumbent
+
+[Parallel H53](docs/h53.html) remains intact, including its TIFF/ZIP/source/tests and `submission/LATEST.txt` pointer. Its tip/whole-hide validation is not comparable to R2. R2 uses `submission/R2_LATEST.txt`, is research-only and does not replace H53 scientifically. Original concurrent documentation is archived in `knowledge/archive/h53_before_r2_merge/`.
 
 ## Start each session here
 

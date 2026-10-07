@@ -482,7 +482,7 @@ def build_submission():
     write_json(EV / "uniqueness_r2.json", uniqueness)
     write_json(EV / "not_union_r2.json", comparisons)
     write_json(ROOT / "docs/downloads" / (name + "-audit.json"), receipt)
-    (ROOT / "submission/LATEST.txt").write_text(destination.name + "\n")
+    (ROOT / "submission/R2_LATEST.txt").write_text(destination.name + "\n")
     log(f"WROTE {destination.name} ({receipt['bytes']} bytes); format/canonical-pattern pass; original support-novelty diagnostic FAIL; EXPERIMENTAL, no slot used")
     return receipt
 

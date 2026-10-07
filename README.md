@@ -10,6 +10,10 @@
 - 925 emitted A-only pixels each have a geological reasoning row: [CSV](docs/downloads/gems52-r2-signednormal-37654-1f751ac9b6ee-zeros-candidates.csv). Not verified faults/vents.
 - Official board last observed 2026-10-06: 0.3774 leader, 0.3195 rank 7. File-to-score mappings in the user brief are not organizer-authenticated.
 
+## Preserved concurrent incumbent
+
+[Parallel H53](docs/h53.html) remains intact, including its TIFF/ZIP/source/tests and `submission/LATEST.txt` pointer. Its tip/whole-hide validation is not comparable to R2. R2 uses `submission/R2_LATEST.txt`, is research-only and does not replace H53 scientifically. Original concurrent documentation is archived in `knowledge/archive/h53_before_r2_merge/`.
+
 ## Start each session here
 
 Read this README and the full current prompt below, [three-pass review](knowledge/09_r2_review.md), [preregistered hypotheses](knowledge/07_r2_hypotheses_preregistered.md), and [fixed configuration](registry/r2_preregistration.json). Work on the ordered next steps in the review, not another unvalidated upload. Historical claims are retained only for audit, explicitly superseded.

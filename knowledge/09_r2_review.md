@@ -58,3 +58,7 @@ Final unit/site/browser/download/PR checks and the full accessible inventory cou
 6. Geological verification must distinguish density/lithology/processing contacts from displaced faults, and faults from permeable, hot geothermal systems. Review A-only coordinates/alternatives independently.
 7. Obtain sanctioned source access/permission if a live DrivenData feed is essential. Until then retain dated observations. Never ask for passwords/tokens or automate account slots.
 8. Only reconsider an upload after a predeclared candidate clears best comparable baseline, frozen incumbent confirmation, format, canonical pattern novelty, literal non-union, and geological review. Record actual submission ID/hash/score/timestamp without reconstructing hidden truth.
+
+## Concurrent main integration
+
+H53 (PR #8) was merged while this branch worked. Its complete code/rasters/evidence/registry/tests and global incumbent pointer are preserved. Original pages/README archived, dedicated `docs/h53.html` summary linked. R2 has a separate marker and never claims protocol-comparable superiority. Combined suite: 86 passed; inherited H53 structure-tensor overflow warnings flagged, not presented as scientific validation.

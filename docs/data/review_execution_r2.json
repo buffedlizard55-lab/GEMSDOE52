@@ -2,9 +2,9 @@
   "reviewed_utc": "2026-10-07T00:32:37.651842+00:00",
   "passes": 3,
   "tests": {
-    "passed": 54,
+    "passed": 86,
     "skipped": 0,
-    "warnings": 34,
+    "warnings": 38,
     "command": ".venv/bin/python -m pytest -q"
   },
   "essential_lint": "passed E9/F63/F7/F82/F401",
@@ -24,7 +24,11 @@
   "source_authentication": "owner SHA pins verified, organizer authentication unverified",
   "deployment": {
     "branch": "arena/f1d591a5-gemsdoe52",
-    "pull_request": null,
-    "state": "not yet created; GitHub is source of truth for subsequent merge/deployment"
-  }
+    "pull_request": "https://github.com/buffedlizard55-lab/GEMSDOE52/pull/9",
+    "state": "PR created; concurrent main integrated; final merge/deployment verified on GitHub"
+  },
+  "concurrent_h53_preserved": true,
+  "global_incumbent_pointer": "submission/LATEST.txt (H53, unchanged)",
+  "research_pointer": "submission/R2_LATEST.txt",
+  "concurrent_h53_tests": "32 additional tests preserved and passed; structure-tensor numerical overflow warnings in stress fixture flagged"
 }

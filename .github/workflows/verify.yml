@@ -21,6 +21,19 @@ jobs:
         env:
           OPENBLAS_NUM_THREADS: '1'
           OMP_NUM_THREADS: '2'
-        run: python -m pytest -q
+        run: |
+          python -m pytest -q --junitxml=work-tests.xml || status=$?
+          python - <<'PYTEST'
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+          if Path('work-tests.xml').exists():
+              for case in ET.parse('work-tests.xml').iter('testcase'):
+                  for tag in ('failure', 'error'):
+                      for error in case.findall(tag):
+                          message = (error.text or error.get('message', ''))[-5000:]
+                          message = message.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A')
+                          print(f"::error title={case.get('name')}::{message}")
+          PYTEST
+          exit "${status:-0}"
       - name: Verify all local website links JSON and download bytes
         run: python scripts/check_site.py
