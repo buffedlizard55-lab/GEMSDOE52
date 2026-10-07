@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-07T02:01:09Z",
+ "generated_utc": "2026-10-07T02:02:12Z",
  "repo": "buffedlizard55-lab/GEMSDOE52",
  "branch": "arena/8766a504-gemsdoe52",
  "files": [
@@ -103,9 +103,9 @@
   "submission_gems52-h52-cotrain-disagreement-emission-composite-37654px-r1.json",
   "uniqueness_gate.json"
  ],
- "leaderboard_status": "offline snapshot (feed run without --fetch)",
+ "leaderboard_status": "unreachable: ValueError: leaderboard table parsed empty - page layout changed \u2014 serving the last verified snapshot instead",
  "submission": "gems52-h53-btherm-greedy-37654px-20261007T0150Z-zeros.tif",
- "downloads": 5,
+ "downloads": -1,
  "pipeline": {
   "footprint_labels_ge0": 5167373,
   "footprint_all_bands_finite": 5165840,
