@@ -1,299 +1,125 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Irregularities — GEMSDOE52</title>
-<meta name="description" content="Every inconsistency, unverified claim, contradiction and near-miss found while building this submission, with the evidence that established it and what we did about it.">
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-<a class="skip" href="#main">Skip to content</a>
-<header class="top"><div class="wrap">
-  <div class="brand">GEMS<span>DOE</span>52</div>
-  <nav class="top">
-    <a href="index.html">Overview</a>
-    <a href="executive-summary.html">Executive&nbsp;summary&nbsp;&amp;&nbsp;how&nbsp;to&nbsp;submit</a>
-    <a href="method.html">Method</a>
-    <a href="hypotheses.html">Hypotheses</a>
-    <a href="validation.html">Validation</a>
-    <a href="feed.html">Data&nbsp;feed</a>
-    <a href="irregularities.html" aria-current="page">Irregularities</a>
-    <a href="sources.html">Official&nbsp;links</a>
-  </nav>
-</div></header>
-<main id="main">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Irregularities — GEMSDOE52</title><link rel="stylesheet" href="style.css"></head>
+<body><a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap"><div class="brand">GEMS<span>DOE</span>52</div>
+<nav class="top"><a href="index.html">Overview</a><a href="executive-summary.html">Executive&nbsp;summary</a>
+<a href="method.html">Method</a><a href="hypotheses.html">Hypotheses</a>
+<a href="validation.html">Validation</a><a href="feed.html">Data&nbsp;feed</a>
+<a href="irregularities.html" aria-current="page">Irregularities</a><a href="sources.html">Official&nbsp;links</a></nav></div></header><main id="main">
 
-<p class="mono small muted">DrivenData&nbsp;·&nbsp;DOE&nbsp;GEMS&nbsp;Prize&nbsp;·&nbsp;competition&nbsp;306&nbsp;·&nbsp;
-repo <code>buffedlizard55-lab/GEMSDOE52</code> · <span data-feed-stamp>loading feed…</span></p>
-
-<h1><span class="num">!</span>Irregularities register</h1>
-<p class="lede">Nothing here was found by a reader asking “is this site lying to me?” late in the day; it
-is written into the repo because each item changed a decision. An item is <em>open</em> when it can still
-burn a submission, <em>mitigated</em> when a gate or a code path now catches it, and
-<em>accepted</em> when we have decided to live with it and say so.</p>
-
-<table class="data irrg">
-<thead><tr><th>id</th><th>what it is</th><th>how we know</th><th>disposition</th></tr></thead>
-<tbody>
-
-<tr><td><code>IR-52-001</code></td>
-<td><strong><code>training_features.tif</code> has no radiometric band — but the family does hold
-radiometric rasters, and our first version of this entry overstated the point.</strong> The brief's clause is
-conditional (“plus <em>any</em> radiometric bands in <code>training_features.tif</code>”) and it resolves to
-none <em>in that file</em>: 19 float32 bands, magnetic / gravity / geodetic-strain / elevation /
-conductivity / depth-to-basement / seismicity, verified with <code>rasterio</code> and published in
-<code>data/band_inventory.json</code>. But <code>data/external/geodawn_rad_u8.tif</code> (4 bands) and
-<code>geodawn_extensions_u8.tif</code> (4) — USGS GeoDAWN radiometrics resampled to the grid — <em>are</em>
-present, sha256-pinned in <code>registry/data_manifest.json</code>, and were acquired by an earlier session
-rather than by us.</td>
-<td>Band inventory read from the organiser's own data README, published as
-<code>data/band_inventory.json</code>: 19 bands, all gravity / magnetic / conductivity / elevation /
-seismicity / depth-to-basement. <code>grep -l radiometric</code> across the raw data returns nothing.</td>
-<td><span class="tag warn">corrected & open</span> — this repo's View B does not use them (measured
-choice: <code>B_scarp_p900</code> already dominates the far-field ranking), but calling their sibling use a
-“copy-paste error” was wrong and is retracted here. The open question is whether K/Th contrast beats
-<code>B_only</code> on the whole-component instrument; that is H52-6 in <code>knowledge/02</code> and it is
-the next screening job, not a re-writing of history. The rasters themselves stay
-<em>unverified-as-to-licence</em> until re-derived from USGS directly.</td></tr>
-
-<tr><td><code>IR-52-002</code></td>
-<td><strong>“0.3195 is the highest score right now” is stale.</strong> That number is rank <strong>#7</strong>
-(DARD), not the top.</td>
-<td>Public board read twice this session — 21:2x and 21:33&nbsp;UTC — identical both times: #1 xiaofanhu
-0.3774 (11 submissions), #2 0.3345, …, #7 DARD 0.3195, #13 this group 0.2778.</td>
-<td><span class="tag ok">mitigated</span> — every target on this site is set against the live top
-(0.3774) and the gap (0.0996), never against a remembered number. The <a href="feed.html">feed</a>
-re-derives it on a schedule.</td></tr>
-
-<tr><td><code>IR-52-003</code></td>
-<td><strong>The file-to-score mapping is not organiser-authenticated.</strong> The 0.2778 result is
-attributed to <code>h33-2-b2</code>, but that raster is <em>not</em> in this checkout —
-<code>data/scored/</code> holds only the gems19 and gems24 rasters.</td>
-<td>Board pages carry no filename, no hash, no receipt. The attribution comes from a sibling session's
-owner report; we kept the arithmetic it implies (40,199&nbsp;−&nbsp;2,545&nbsp;=&nbsp;37,654 px) because it
-reproduces from the files we <em>do</em> have, and we labelled the link as owner-reported.</td>
-<td><span class="tag warn">open</span> — do not treat “this exact file scored 0.2778” as verified. What is
-verified is the <em>mechanism</em>: deleting self-overlap with the pixel-exact mask raised DTI by 2.6&nbsp;%
-at the same ranking.</td></tr>
-
-<tr><td><code>IR-52-004</code></td>
-<td><strong>The rules document's domain differs from the one cited in the brief</strong>
-(<code>docs.nlr.gov</code> vs the live <code>www.nlr.gov</code>).</td>
-<td>The canonical rules PDF resolves at <code>www.nlr.gov/docs/fy26osti/96647.pdf</code>.</td>
-<td><span class="tag ok">mitigated</span> — <a href="sources.html">Official links</a> carries the working
-URL; the brief's citation is kept in <code>knowledge/00</code> unchanged.</td></tr>
-
-<tr><td><code>IR-52-005</code></td>
-<td><strong><code>sample_submission.tif</code> is not empty.</strong> It ships 60,988 positive pixels, and
-every one of them sits on a labelled fault pixel.</td>
-<td>Counted from the file. Copying it would be both a duplicate submission and a metric own-goal: the
-organiser masks the catalogue pixels, so mass there earns nothing and the file would also fail the
-uniqueness gate.</td>
-<td><span class="tag ok">mitigated</span> — <code>gates.uniqueness_report</code> fails any candidate whose
-mass is a subset of a prior, and emission is computed on <code>valid &amp; ~catalogue</code>.</td></tr>
-
-<tr><td><code>IR-52-006</code></td>
-<td><strong>The page text and the portal validator contradict each other about no-data encoding.</strong>
-The rules say “null or NaN where there is no data”; the validator enforces <code>0&nbsp;&lt;=&nbsp;v&nbsp;&lt;=&nbsp;1</code>,
-and NaN fails that comparison whatever the direction.</td>
-<td>The historical “Predicted values must be in range [0, 1]” rejection in this family is exactly this
-mechanism, and <code>grid.write_geotiff</code> independently refuses non-finite pixels.</td>
-<td><span class="tag ok">mitigated</span> — empty space is written as <strong>0.0</strong>; NaN anywhere is
-now a named gate failure. Scoring is identical either way (p&nbsp;=&nbsp;0 contributes nothing to
-<code>FPw</code>), so nothing is lost.</td></tr>
-
-<tr><td><code>IR-52-007</code></td>
-<td><strong>Our own GeoTIFF writer had a georeferencing bug, and it was caught at 22:09 UTC tonight.</strong>
-<code>from_origin</code> was handed <code>TRANSFORM[2], TRANSFORM[0], TRANSFORM[4], TRANSFORM[5]</code>
-instead of <code>(c, f, a, −e)</code>, so the first file written today had
-<code>transform (-100, 0, 243350, 0, -4508550, 100)</code> and bounds reaching
-<code>-1.68e10</code>&nbsp;m — a file that would have been rejected, or worse, silently mis-registered.</td>
-<td><code>gates.format_report</code> flagged it by comparing against <code>data/sample_submission.tif</code>
-(<code>format.ok=False</code>, three named problems). The rejected file's sha256 is
-<code>427159429ffcc206af80a68d227317313f8465e5f0b6271fd3fa9908f8ae1a02</code>; its evidence record is kept
-in <code>evidence/</code> under a <code>-rejected-transform</code> name and the bytes were removed from
-<code>submission/</code>.</td>
-<td><span class="tag ok">mitigated</span> — the writer now builds the affine from the pinned six numbers
-and <em>asserts</em> the reconstruction (cell size and origin) before it writes. The current file reports
-<code>format_ok=True</code>. This is the strongest argument on this site for the gate existing.
-<strong>Pass 3 found two more of the same kind</strong>, both silent-by-design: <code>docs/tables.js</code>
-did not parse (one unbalanced row-array literal, so the layer-screen table never rendered), and
-<code>docs/exec.js</code> did not parse (<code>a &amp;&amp; b ?? c</code> is a JavaScript syntax error, so the
-executive summary's download note and expectation line never filled). <code>scripts/check_site.py</code> now
-runs <code>node --check</code> on every page script and JS file, because a broken script on a data-driven
-page looks exactly like a missing feed.</td></tr>
-
-<tr><td><code>IR-52-008</code></td>
-<td><strong>The brief's verbatim wording is not recoverable from this workspace.</strong> One commit
-(<code>744df63</code>) containing no brief; no file anywhere on disk holds it; the session summary
-paraphrases.</td>
-<td><code>grep -rl "Blum" </code> over this repo and every sibling checkout → only
-<code>src/gems52/cotrain.py</code>.</td>
-<td><span class="tag ok">closed 22:35 UTC</span> — the verbatim text <b>was</b> recoverable:
-  <code>git show origin/main:README.md</code> §8 (“Original Task Prompt (Verbatim)”) holds it, and it is now
-  quoted in full in both <code>README.md</code> §1.0 and <code>knowledge/00</code>. Our earlier “unrecoverable”
-  note was true of this checkout (one commit, <code>744df63</code>) and false of the repository: <code>main</code>
-  had moved two PRs ahead of our base. The recovery immediately corrected a substantive claim — see
-  <code>IR-52-001</code> above — which is the argument for why this row exists at all.
-  <em>Process rule now in</em> <code>knowledge/03</code> §N-8: fetch the remote before declaring anything gone.</td></tr>
-
-<tr><td><code>IR-52-009</code></td>
-<td><strong>The analysis sandbox has no network egress.</strong> Any claim of “live” data produced inside
-the sandbox would be fabricated.</td>
-<td><code>curl</code> → <code>SSL_ERROR_SYSCALL</code>; <code>urllib</code> → TLS closed. Metadata fetches
-<em>did</em> succeed through the agent's own fetch tool, which is what the leaderboard snapshot and the
-external-data rows in <code>knowledge/04</code> are built on.</td>
-<td><span class="tag ok">mitigated</span> — live fetching moved to the GitHub-hosted workflow; the
-sandbox-time numbers are labelled as snapshot, with their UTC timestamp.</td></tr>
-
-<tr><td><code>IR-52-010</code></td>
-<td><strong>The pre-registered co-training gate failed, on the mechanism the brief centres.</strong>
-<code>cotrain|25000</code>: −0.0158 DTI vs naive union on the truncation instrument, −0.0303 on the
-whole-component instrument, 0/4 folds, <code>promoted=false</code>.</td>
-<td><code>evidence/holdout_tip.json</code> and <code>evidence/holdout_hide.json</code>, gates computed by
-<code>scripts/validate_holdout.py</code> against <code>registry/preregistration.json</code>.</td>
-<td><span class="tag warn">open</span> — the failure is published (Overview §03,
-<a href="validation.html">Validation</a>) and the mechanism is dropped from the shipped file; the
-disagreement <em>strata</em> are kept, because they measured as physical. No weekly slot was spent on it.</td></tr>
-
-<tr><td><code>IR-52-011</code></td>
-<td><strong>The blend weights in the first pre-registration were asserted, not fitted</strong>
-(0.55·r<sub>A</sub>&nbsp;+&nbsp;0.20·r<sub>B</sub>&nbsp;+&nbsp;0.25·min), and they are backwards for the
-population that matters: the surface view dominates on both instruments.</td>
-<td>Arm table: <code>B_only|37654</code> = 0.0291 tip / 0.0518 hide; <code>cotrain|37654</code> = 0.0084 /
-0.0078; <code>random|37654</code> = 0.0253 / 0.0396.</td>
-<td><span class="tag ok">mitigated</span> — every re-weighting we ship is declared as a named arm in the
-holdout table, so it is auditable, never silent in a config.</td></tr>
-
-<tr><td><code>IR-52-012</code></td>
-<td><strong>The shipped split was chosen by a partially-measured rule, for 9 minutes.</strong> The file was
-built before the composite sweep finished, so its first evidence record carried an explicit command-line
-selection (corridor share 0.0) rather than a sweep verdict.</td>
-<td>Its selection record says so: <code>selection_source: "explicit --far/--cor/--split on the command
-line"</code>. Both <em>extreme</em> splits are measured — share 0.0 is exactly <code>B_only|37654</code>
-(0.0291 / 0.0518) and share 1.0 is exactly <code>union_cor|37654</code> (0.0320 / 0.0001) — but an interior
-split is only rule-derived.</td>
-<td><span class="tag ok">closed 22:19 UTC</span> — the sweep finished and <strong>confirmed the shipped
-configuration</strong>: <code>B_only+blanket|37654|s0</code> is the best-sum composite, and rebuilding from
-its record reproduces the identical sha256 (<code>063fb724…</code>) — which is also how we know the
-emission is a function of the record and not of a notebook. Every corridor-funded split (share &gt; 0)
-ranks <em>worse</em> on the sum: +4.5 % on the instrument that can see the corridor, −7.5 % on the one that
-cannot. The evidence record now reads <code>selection_source: evidence/composite.json</code>, and
-<code>promoted: false</code> survives, because the registered +0.010-over-union bar is still missed on the
-truncation instrument (+0.0051) even though the matched-budget control is beaten on both (+16.7 % and
-+32.1 %).</td></tr>
-
-<tr><td><code>IR-45-001</code><br><span class="small muted">inherited</span></td>
-<td><strong>Footprint area disagrees across the family's repos:</strong> 5,165,852 / 5,165,840 /
-5,167,373 pixels.</td>
-<td>Recounted here from the provided valid-data mask: <strong>5,165,840</strong> (catalogue 1.1803&nbsp;% of
-it). The 5,167,373 figure is a different mask definition (one that includes a 1-px collar), not a
-measurement error in the others.</td>
-<td><span class="tag ok">mitigated</span> — every fraction on this site is quoted against the recomputed
-number, and <code>data/grid.json</code> publishes it.</td></tr>
-
-<tr><td><code>IR-52-014</code></td>
-<td><strong>Two claims in the PR #2 README on <code>main</code> are not compatible with the metric as
-published.</strong> A badge reads “Holdout Folds Won — 4/4 vs 0.2778 (+73.7 % LM)”, i.e. held-out fold DTI
-above the <em>portal</em> score, and a table asserts “Portal <code>[0, 1]</code> Check: PASS” for a file whose
-own companion row reports NaN outside the footprint. The portal check cannot pass on NaN
-(<code>IR-52-006</code>), and a fold DTI of 0.48 is unattainable at the truth prevalence these folds hold out
-(our best arm, on the same kind of folds, is 0.052; |G| is 0.11–0.29 % of the footprint).</td>
-<td>Read from <code>git show origin/main:README.md</code>; our own fold tables are in
-<code>data/holdout_tip.json</code> / <code>holdout_hide.json</code>. We did not re-run their pipeline, so this
-is a <em>consistency</em> finding, not a reproduction of their number.</td>
-<td><span class="tag warn">open</span> — their code and evidence are kept in the tree
-(<code>src/gems52_h1/</code>, <code>evidence/cotraining_rounds.json</code>,
-<code>tests/test_gems52_h1_pipeline.py</code>, <code>docs/forensics.html</code>) with a banner on the page;
-nothing from those claims is load-bearing for this file, and no number of theirs is repeated as ours.</td></tr>
-
-<tr><td><code>IR-52-015</code></td>
-<td><strong>Merging with <code>main</code> put two different <code>gems52.metric</code> modules in one
-package.</strong> A mechanical merge (13 conflicting paths) would have produced a package whose
-<code>__init__</code>, <code>metric</code> and <code>features</code> came from one implementation and whose
-<code>cotraining</code>, <code>placement</code>, <code>spec</code>, <code>submission</code> came from the
-other — which fails at import (<code>cannot import name 'build_quadrant_ids'</code>).</td>
-<td>Observed in the merge; the earlier session's test collected against our tree and broke.</td>
-<td><span class="tag ok">resolved by namespacing</span> — the earlier implementation is preserved verbatim as
-<code>src/gems52_h1/</code> with its test renamed to <code>tests/test_gems52_h1_pipeline.py</code> (still
-passing), so both implementations remain checkable and neither silently redefines the other. Where a page
-from them contradicts the register, the register wins and says so on their page.</td></tr>
-
-<tr><td><code>IR-52-016</code></td>
-<td><strong>The scheduled fetch reaches the leaderboard page but cannot read the table — so the board on
-this site updates when a browser renders it, not when cron runs.</strong> Observed live at 22:28 UTC on the
-first CI run: <code>status: unreachable: ValueError: leaderboard table parsed empty — page layout
-changed — serving the last verified snapshot instead</code>.</td>
-<td>The runner got HTTP 200 from <code>www.drivendata.org</code> (unlike this sandbox, which gets a TLS
-EOF), and <code>refresh_feed.parse_board</code> found no <code>&lt;tr&gt;</code> rows: the board table is
-built client-side, so the server HTML has no rows to parse. The parser is deliberately strict — it raises
-rather than publishing a short or empty board — and the run then falls back to
-<code>registry/leaderboard_snapshot_2026-10-06.json</code> with its own 21:33 UTC timestamp.</td>
-<td><span class="tag warn">open, contained</span> — the page label is the mitigation: the feed card shows
-the snapshot's timestamp and the failed-fetch reason, so staleness is visible rather than disguised.
-Closing it needs an endpoint that returns the board as data; we do not know one that the organiser
-publishes, and inventing a URL is not a fix. Until then treat “live board” on this site as
-“live-attempted, snapshot-served”.</td></tr>
-
-<tr><td><code>IR-52-017</code></td>
-<td><strong>Four published JSON files were not valid JSON.</strong> Python writes a missing correlation as a
-bare <code>NaN</code>, which <code>json.loads</code> accepts and the browser's <code>JSON.parse</code>
-rejects outright.</td>
-<td>Found by <em>reading the live page</em> at 22:31 UTC rather than the local files: the overview printed
-&ldquo;Conditional-independence premise &hellip; <b>not measured</b>&rdquo; with three <code>NaN</code>s, while
-<code>evidence/independence_*.json</code> and <code>docs/data/grid.json</code> all contained
-<code>NaN</code>. A silent parse failure on a data-driven page is indistinguishable from an honest &ldquo;we
-have no number&rdquo;.</td>
-<td><span class="tag ok">mitigated</span> &mdash; <code>refresh_feed.copy_evidence</code> normalises
-<code>NaN</code>/<code>Infinity</code> to <code>null</code> on the way to the site (evidence keeps
-<code>NaN</code>: &ldquo;undefined&rdquo; is the truthful value and <code>null</code> renders as &ldquo;&ndash;&rdquo;),
-and <code>scripts/check_site.py</code> now parses every published file with <code>parse_constant</code>
-raising, so an unparsable file is a build failure rather than a quiet page.</td></tr>
-
-<tr><td><code>IR-52-018</code></td>
-<td><strong>We published independence numbers that no longer existed.</strong> The README and
-<code>knowledge/03</code> asserted the co-training premise had survived, quoting r&nbsp;=&nbsp;0.4298 (tip)
-and r&nbsp;=&nbsp;&minus;0.1406 (hide). Those came from a pre-fix run of the diagnostic; the files were
-rewritten afterwards and no longer contain them.</td>
-<td>Caught by re-reading <code>evidence/independence_*.json</code> while fixing <code>IR-52-017</code>:
-block-level false-alarm correlation is <em>undefined</em> on both instruments (degenerate per-block variance,
-Spearman 1.0 on ties), the miss-rate correlation is &minus;0.2235 (tip) and <strong>+0.8307</strong> (hide),
-the held-pixel logit is +0.1748 / +0.1316.</td>
-<td><span class="tag ok">corrected, claim weakened on purpose</span> &mdash; the premise is now stated as
-<em>neither established nor refuted, unmeasured at the registered granularity</em>. The verdict on
-co-training rests on the mechanism's own measurement (AUC &Delta; &minus;0.0159, 1/4 folds, worst arm on
-both instruments), which is unchanged. Rule added: prose re-reads its source file in the same session
-(<code>knowledge/03</code> &sect;N-1).</td></tr>
-
-</tbody>
-</table>
-
-<h2><span class="num">!1</span>Open risks we are carrying into the file, deliberately</h2>
-<ul class="tight">
-  <li><strong>Placement is the whole game and our holdout is a proxy.</strong> The metric's
-  perfect-precision counterfactual at this budget is 0.464 while every arm we measure is at
-  0.03–0.05 on the instruments, because the instruments hold out a fraction of the truth population at a
-  far higher prevalence. Only <em>differences at matched budget</em> transfer. Anyone reading 0.0518 as a
-  score forecast is misreading this site.</li>
-  <li><strong>Phase&nbsp;2 truth is a revision of Phase&nbsp;1.</strong> The staff position (community
-  thread, 23 Sep, #7) is that no details of the test faults are given and the final pool is built after
-  expert review of all Phase&nbsp;1 submissions — so a public-board score is not a bound on the private
-  one. Our mitigation is the 1,542-row per-segment reasoning table shipped next to the raster: if a
-  reviewer disagrees, the disagreement is locatable.</li>
-  <li><strong>The weekly limit is the binding constraint, not compute.</strong> Our board row shows 10
-  submissions used. Nothing on this site has been uploaded on our initiative, and the workflow is
-  explicitly forbidden from publishing a new raster by itself.</li>
-</ul>
-
-</main>
-<footer><div class="wrap">
-  GEMSDOE52 · register maintained in <code>knowledge/06_provenance_and_irregularities.md</code> ·
-  <a href="sources.html">official links for manual review</a>
-</div></footer>
-<script src="site.js"></script>
-<script>
-(async function () { await G52.load('feed'); G52.stamp(); })();
-</script>
-</body>
-</html>
+<h1>Irregularities, contradictions, and things that could not be verified</h1>
+<p class="small muted">Flagged rather than smoothed over. Each item says what was checked and what stays
+open.</p>
+<table><thead><tr><th>#</th><th>finding</th><th>how it was established</th><th>what was done</th></tr></thead><tbody>
+<tr class="hi"><td>IR-52-001</td><td><b>The method's premise failed.</b> The pre-registered co-training
+lift test is negative on every measure used: pooled AUC 0.797→0.761 on the full grid, 1/4 folds
+improved, and the arm lost to the naive union and to random emission on both instruments.</td>
+<td><code>evidence/co_train_folds_*.json</code>, <code>evidence/independence_*.json</code>,
+<code>evidence/holdout_*.json</code>; thresholds fixed in
+<code>registry/preregistration.json</code> before any fold was scored</td>
+<td>the pseudo-label round is excluded from the shipped field and the failure is on the front page; the
+strata the same theory motivates are kept because they were measured separately and survived</td></tr>
+<tr><td>IR-52-002</td><td><b>"0.3195 is the highest score right now" (session context) is stale</b>: live
+#1 is 0.3774 and our 0.2778 sits at #13 of 16 visible rows.</td><td>leaderboard fetch, 2026-10-06</td>
+<td>numbers come from the feed, so no page can repeat the stale value</td></tr>
+<tr><td>IR-52-003</td><td><b>No file→score mapping is organiser-authenticated</b>, including the
+<code>h33-2-b2</code> → 0.2778 mapping that the "why 0.2778" analysis rests on.</td>
+<td>board inspection; sibling <code>registry/</code> status <code>NO_ELIGIBLE_SUBMISSION</code> after
+GEMSDOE47 retracted its mapping</td>
+<td>tagged <span class="tag warn">owner-reported</span> everywhere; the arithmetic on the file's own
+pixels stands regardless, but the <em>ranking</em> claim depends on the mapping and is labelled so</td></tr>
+<tr><td>IR-52-004</td><td><b>0 labels are not proven absences.</b> <code>labels.tif</code> is −1/0/1
+where 0 means "not mapped"; the final test set is updated by expert review, so 0-pixels are
+positive-unlabelled.</td><td>band inventory of the supplied files; staff post in thread 11527</td>
+<td>stated in <code>cotrain.labelled_sets</code>; negatives keep a 3 px collar; the β=0.8 asymmetry is
+modelled, not assumed away</td></tr>
+<tr><td>IR-52-005</td><td><b><code>sample_submission.tif</code> ships 60,988 positive pixels sitting
+exactly on label pixels</b> — copying or lightly editing it is un-original and worth ~0 under the
+mask.</td><td>direct file comparison</td><td>never used as target or base; the uniqueness gate compares
+the shipped file against every prior raster found on disk</td></tr>
+<tr><td>IR-52-006</td><td><b>The brief's verbatim text is not recoverable from this workspace</b> — one
+commit, no brief file, and a search for the theory citation returns only our own source.</td>
+<td><code>git log</code>; filesystem <code>grep</code></td>
+<td><code>knowledge/00_brief_as_received.md</code> itemises every directive and states it is a
+reconstruction; no quotation marks are placed around invented wording</td></tr>
+<tr><td>IR-52-007</td><td><b>Isolated-vs-flanking counts disagree with the sibling's published
+numbers</b> (ours 24,347 / 36,547; GEMSDOE47 published 6,315 / 54,673).</td>
+<td>recomputed from the label file; the cause is the dilation definition (exact 300 m disc vs box
+dilation)</td><td>both definitions documented in <code>evidence/layer_screen.json</code>; we use ours and
+say which</td></tr>
+<tr><td>IR-52-008</td><td><b>There is no radiometric band</b> in the training cube, although the brief's
+reasoning implies one; band 15 is depth to basement, band 17 is EM conductivity.</td>
+<td>band-by-band inventory → <code>evidence/band_inventory.json</code></td>
+<td>recorded; radiometric evidence would need an external source, hence H52-5 is blocked on provenance
+rather than quietly used</td></tr>
+<tr><td>IR-52-009</td><td><b>The external GDR CSVs (27,092 springs, 1,126 QFaults traces, 1 vent) are
+derived files from a sibling session</b>; the GDR host is unreachable here, so they cannot be
+re-downloaded and hash-checked.</td><td><code>registry/data_manifest.json</code>; failed fetch</td>
+<td>not allowed to move mass in the shipped file; kept as documented corroboration, labelled derived</td></tr>
+<tr><td>IR-52-010</td><td><b>The reference UNet arm cannot be reproduced here</b>: 2 cores / 3 GB cannot
+hold the 27-layer float32 cube plus a torch model, and the official reference solution publishes no
+scoring code.</td><td>measured resident memory of the cube (27 × 49 MB)</td>
+<td>stated rather than faked; the learners here are rank-input logistic views, which are exact, cheap and
+auditable — and sufficient because the metric's optimum is {0,1}, not a calibrated probability</td></tr>
+<tr><td>IR-52-011</td><td><b>The rules PDF host in the brief is stale</b>: cited
+<code>docs.nlr.gov</code>, live host is <code>www.nlr.gov</code>.</td><td>fetch of both</td>
+<td>recorded on <a href="sources.html">sources</a>; the canonical PDF is read from the live host</td></tr>
+<tr><td>IR-52-012</td><td><b>Prior-project claims about what the leaderboard "needs" were not
+reproducible</b>: fitting a truth model to the eleven published scores gives best RMSE 0.1449, i.e. no
+signal.</td><td>inherited analysis, re-checked by reading the sibling <code>knowledge/</code></td>
+<td>not repeated here: no claim on this site is derived from inverting published scores</td></tr>
+<tr class="hi"><td>IR-52-017</td><td><b>The validation instrument this repo selected with does not
+predict the organiser's score.</b> Over the 13 restored scored files, Spearman ρ(reported, simulated
+DTI) = <b>−0.1045</b>, p = 0.734, n = 13. The group's best file on the board (0.2778) is the
+<i>worst</i> of the 13 on the instrument (lift 0.09× mass-matched random), and the file the instrument
+ranks first (<code>8GEMSDOE_Hedge-v2</code>, 0.316) scored 0.1563.</td>
+<td><code>work/a6_calibrate.py</code>, <code>work/a10_calibrate2.py</code>; the confound I introduced
+first (hidden truth allowed inside the 200 m ring a corridor-excluding prior may not enter) was fixed
+and re-run — lift 0.10 → 0.09, ρ unchanged</td>
+<td>recorded as <code>knowledge/03</code> N-9; the H53 selection is made on exact set algebra over five
+scored files instead, and the instrument is labelled broken everywhere it is still reported. New rule:
+an instrument must reproduce the ordering of artefacts whose real scores are already known before it may
+promote anything</td></tr>
+<tr><td>IR-52-018</td><td><b>The ≤200 m ring around the mapped catalogue earns exactly zero credit.</b>
+<code>h33-2-b2</code> (0.2778) is a strict subset of <code>gems24-d2-8</code> (0.2600); the 6,436 px
+difference is <i>entirely</i> inside 200 m of a mapped trace, and deleting it <i>raised</i> the score
+6.8 %. This contradicts <code>knowledge/01</code> §5 item 2 and <code>knowledge/02</code> H52-2, which
+made ranking that ring the primary emitter arm on the strength of a staff reading that the mask is
+pixel-exact.</td>
+<td>direct set arithmetic on restored bytes with pinned SHA-256; <code>min</code> distance-to-catalogue
+inside <code>h33-2-b2</code> is 223.6 m, so it holds <b>0 px</b> in the ring</td>
+<td><code>knowledge/01</code> §5 item 2 struck through with the measurement; <code>CORRIDOR_M = 200</code>
+in <code>src/gems52/revealed.py</code>; the emission writes <b>0 px</b> inside the ring (verified on
+read-back). Both readings — a ~2 px mask buffer, or truth that never comes within 200 m — give the same
+rule, and the bytes cannot separate them</td></tr>
+<tr><td>IR-52-019</td><td><b>No feature available here re-ranks inside the champion file.</b> 63 point
+and local-differential features reach a best blocked AUC of <b>0.5453</b> on the credited-vs-uncredited
+contrast (the maximum of 63 tests); 108 structure-tensor features reach <b>0.5122</b>. Habitat is
+strongly identifiable — AUC 0.7023 for the champion's dots against uniform random — and strongly
+<i>useless</i>: the tiers carrying 4–20× less credit have habitat AUCs of 0.68–0.70.</td>
+<td><code>work/a12_atoms.py</code>, <code>work/a13_coherence.py</code>, 10–11 spatial blocks per AUC</td>
+<td>recorded as N-10 and N-11; <code>ρ_novel</code> therefore enters every projection as a stated prior
+U[0.03, 0.14] and never as a point estimate, and the budget is chosen by integrating over it</td></tr>
+<tr><td>IR-52-020</td><td><b>A per-block AUC of 1.000 over n = 3 samples</b> appeared in the first H53
+build's View A and View B reports.</td><td>block sizes printed alongside the AUCs</td>
+<td>every block now carries <code>counted_in_mean</code> (n ≥ 500) and the reported mean uses only
+counted blocks; raw list kept. Recorded as N-13</td></tr>
+<tr><td>IR-52-021</td><td><b><code>gates.find_priors</code> treated competition inputs as prior
+submissions.</b> Sweeping a root containing <code>data/training_features.tif</code> read band 1 of a
+19-band feature stack as somebody's answer and produced a "prior union" of <b>5,363,764 px</b> against
+a <b>5,167,373 px</b> footprint — which silently emptied the novel-pixel pool (93 px) and would have
+made the not-the-union test meaningless.</td>
+<td>measured before and after; regression test added</td>
+<td><code>NOT_A_SUBMISSION</code> skip list in <code>src/gems52/gates.py</code>;
+<code>tests/test_gates.py::test_find_priors_skips_competition_inputs</code>. Union is now 1,062,207 px
+over 18 real prior rasters</td></tr>
+<tr><td>IR-52-022</td><td><b>The downloads index was always one run behind the downloads
+directory.</b> <code>refresh_feed.py</code> built <code>docs/downloads/index.html</code> <i>before</i>
+copying rasters into it, so the current submission was on disk and absent from the table — the
+"download the file and submit it" promise pointed at the previous round's artefact.</td>
+<td>observed directly: the H53 raster copied, the index listing only the four older ones</td>
+<td>rasters are staged before the index is built; a one-click ZIP (raster + the note to paste + the
+evidence JSON) is written beside the TIF</td></tr>
+</tbody></table>
+</main><footer><div class="wrap">GEMSDOE52 · tables render from <code>docs/data/*.json</code>, regenerated by <code>scripts/refresh_feed.py</code> · <a href="sources.html">official links</a> · <a href="irregularities.html">irregularities</a></div></footer><script src="site.js"></script><script src="tables.js"></script></body></html>

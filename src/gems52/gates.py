@@ -127,11 +127,20 @@ def find_priors(roots: list[Path], exclude: Path | None = None, *,
     """
     found: list[Path] = []
     seen: set[str] = set()
+    # Competition *inputs* are not prior submissions.  Sweeping a root that contains them (the
+    # obvious mistake is passing the repository's parent so that sibling checkouts are covered)
+    # reads band 1 of a 19-band feature stack as if it were somebody's answer, and the union then
+    # covers more pixels than the footprint itself -- which silently destroys both the novelty count
+    # and the "is it the union?" test.  Measured before this exclusion: union 5,363,764 px against a
+    # 5,167,373 px footprint.
+    NOT_A_SUBMISSION = ("data/raw", "/labels.tif", "/sample_submission", "training_features",
+                        "data/external/", "/external/")
     for r in roots:
         if not Path(r).exists():
             continue
         for p in sorted(Path(r).rglob("*.tif")):
-            if "data/raw" in str(p) or "/labels.tif" in str(p) or "/sample_submission" in str(p):
+            sp = str(p)
+            if any(tok in sp for tok in NOT_A_SUBMISSION):
                 continue
             if exclude and p.resolve() == Path(exclude).resolve():
                 continue

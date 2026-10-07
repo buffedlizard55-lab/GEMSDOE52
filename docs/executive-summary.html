@@ -19,13 +19,23 @@ everything else here is the evidence behind that file.
 
 <div class="banner" data-gate-verdict>reading the holdout verdict from <code>data/submission.json</code>…
 </div>
-<p class="small"><strong>Why that verdict is above the steps.</strong> The file is legal, unique and
-built from the configuration the two-instrument composite selected; it is <em>not</em> promoted by the bar
-this repo pre-registered for itself before any fold was scored. Both statements are true, so both are
-printed here rather than one of them being left for you to find in <code>evidence/</code>. If you spend a
-weekly slot, spend it knowing which bar the file missed —
-<a href="validation.html">Validation §4</a> and
-<a href="irregularities.html"><code>IR-52-010</code></a>.</p>
+<p class="small"><strong>Why that verdict is above the steps.</strong> This file <em>is</em> promoted
+(<code>promoted: true</code>, <code>forced: false</code>) — but not by the two-instrument holdout this
+repo used to select with, because that instrument has since been measured to be broken: over the 13
+scored files whose real scores are known, Spearman&nbsp;ρ(reported, simulated)&nbsp;=&nbsp;<b>−0.10</b>,
+p&nbsp;=&nbsp;0.73, and the group's best file on the board ranks <em>last</em> of the 13 on the
+instrument. It is promoted instead by an instrument that does have ground truth: exact set algebra over
+five of this group's own scored files, whose published scores then bound the credit this emission
+carries. Spend the slot knowing which bar the file cleared, and which one no longer exists —
+<a href="validation.html">Validation</a> and
+<a href="irregularities.html"><code>IR-52-017</code></a>.</p>
+<p class="small"><strong>The honest limit.</strong> The retained half of this file's credit is bounded
+exactly by arithmetic on published scores. The novel half's credit density is <em>not</em> known and
+cannot be measured here: 171 features were screened for the ability to re-rank inside the champion file
+and the best blocked AUC was 0.5453 (point features) and 0.5122 (structure-tensor coherence). So the
+budget is chosen by integrating the metric over a <em>stated prior</em> for that unknown, and the
+integral — P(win), mean, worst case — is printed on the overview page from
+<code>data/submission.json</code>. It is a projection, not a forecast.</p>
 
 <h2><span class="num">1</span> Submission steps (portal-side)</h2>
 <ol class="steps">
@@ -37,18 +47,18 @@ weekly slot, spend it knowing which bar the file missed —
   last-round entries. Do not “try both files and see” — there is no feedback after the deadline.</li>
 <li>Select the downloaded <code>.tif</code>. Leave every other option at its default: the file already
   carries CRS, transform, band count and dtype.</li>
-<li>Notes box, verbatim: <code>gems52 · metric-aware emission of two-view disagreement · N segments,
-  P px · sha256 abcdef… · not the union of prior entries (see repo evidence)</code> — the exact string
-  is printed in <code>evidence/submission_&lt;file&gt;.json</code> under
-  <code>file</code>, <code>stats.emitted</code> and <code>sha256</code>, and is mirrored into
-  <code>docs/data/submission.json</code> so this page can render it.</li>
+<li>Notes box: paste the string printed under the download button at the top of this page. It is
+  rendered from <code>data/submission.json → submission_note</code>, which
+  <code>scripts/refresh_feed.py</code> writes from the gate report, so it cannot drift from the file it
+  describes and it is always ≤&nbsp;200 characters. If you want the hash in the note as well, it is
+  <code>sha256</code> in the same JSON.</li>
 <li>Submit. If — and only if — the validator rejects the file, stop and read §3. Do not re-upload a
   renamed copy: each weekly slot is spent.</li>
 </ol>
 
 <h2><span class="num">2</span> What the file is</h2>
 <table><thead><tr><th>property</th><th>value</th><th>where it is enforced</th></tr></thead><tbody id="subprops">
-<tr><td>class</td><td colspan="2">single-band <code>float32</code>, values in <code>[0,1]</code>, NaN
+<tr><td>class</td><td colspan="2">single-band <code>float32</code>, values in <code>[0,1]</code>, <b>0.0</b>
  outside the footprint, EPSG:32611, 100 m cells, bounds identical to
  <code>sample_submission.tif</code>, 3730 × 3292</td></tr>
 <tr><td>mass</td><td colspan="2">{0, 1} on accepted pixels only — <em>not</em> a smoothed probability:

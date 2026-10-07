@@ -4,7 +4,9 @@
   await Promise.all(['feed', 'leaderboard', 'submission', 'holdout_tip', 'holdout_hide',
                      'independence_tip', 'independence_hide', 'strata_tip', 'strata_hide',
                      'layer_screen', 'folds_tip', 'folds_hide', 'co_train_folds_tip',
-                     'co_train_folds_hide', 'band_inventory']
+                     'co_train_folds_hide', 'band_inventory', 'revealed_calibration',
+                     'revealed_budget', 'revealed_uniqueness_gate', 'independence_revealed',
+                     'cotraining_views53']
                     .map(n => G52.load(n)));
   G52.stamp();
   const d = G52.data;
@@ -21,7 +23,10 @@
         Download the submission .tif<small>${nm.length > 46 ? nm.slice(0, 43) + '…' : nm}</small></a>
       <div class="dlmeta">${(sub.bytes || 0).toLocaleString()} bytes · float32 · EPSG:32611<br>
         sha256 <code>${(sub.sha256 || '').slice(0, 16)}…</code><br>
-        ${sub.n_segments ?? '–'} segments · ${sub.budget ?? '–'} px budget</div>
+        ${sub.budget ?? '–'} px emitted · ${sub.retained_core_px ?? '–'} retained + ${sub.novel_px ?? '–'} strictly novel</div>
+      ${sub.download_zip ? `<a class="dlbtn" style="background:var(--paper-2);color:var(--ink);box-shadow:3px 3px 0 var(--rule)"
+         href="${sub.download_zip}" download>Download .zip (tif + note + evidence)<small>same file, plus the note to paste and the JSON behind it</small></a>` : ''}
+      ${sub.submission_note ? `<div class="dlmeta">Notes box, verbatim (≤200 chars):<br><code>${esc(sub.submission_note)}</code></div>` : ''}
       <a class="dlbtn" style="background:var(--paper-2);color:var(--ink);box-shadow:3px 3px 0 var(--rule)"
          href="executive-summary.html">How to submit →</a>`;
   } else {
@@ -117,4 +122,66 @@
        visible catalogue masked out of both the allowed set and the score ·
        <a href="validation.html">full table and gates</a></p>`);
   } else set('arms', '<p class="small muted">no holdout table in <code>data/</code> yet</p>');
+
+  // ------------------------------------------------------------------ H53 calibration table
+  const cal = miss(d.revealed_calibration) || {};
+  if (cal.size_of) {
+    const dens = (cal.density_of || {}), cr = (cal.credit_of || {}), sz = cal.size_of;
+    const rowsT = [
+      ['|G| (hidden truth, px)', cal.g_estimate_px ? cal.g_estimate_px.toLocaleString('en-US') : '–',
+       'exact: solved from T(B) − T(A) = 0 on the verified nesting A ⊂ B'],
+      ['credit of the ≤200 m ring', cal.corridor_credit, 'exact, not modelled'],
+      ['retained core A & C (px)', (sz['P1=A&C'] || 0).toLocaleString('en-US'), 'measured on the bytes'],
+      ['its credit', cr['P1=A&C'] ? `${(cal.t_core_bounds ? cal.t_core_bounds[0] + ' – ' + cal.t_core_bounds[1] : cr['P1=A&C'])}, central ${cal.t_core_central ?? '–'}` : '–',
+       'exact interval from t ≥ 0; central estimate splits the measured tail credit by size'],
+      ['its credit density', dens['P1=A&C'] ? `${(100 * (cal.t_core_central / sz['P1=A&C'])).toFixed(2)} % central` : '–',
+       'against 2.79 % for uniform-random mass and 13.87 % for the champion file as a whole'],
+      ['DTI(core emitted alone)', cal.dti_core_bounds ? `${cal.dti_core_bounds[0]} – ${cal.dti_core_bounds[1]}` : '–',
+       `central ${cal.dti_core_central ?? '–'} — a pure budget reduction, no new geology`],
+    ];
+    Object.keys(sz).forEach(k => {
+      if (k === 'P1=A&C') return;
+      rowsT.push([`atom ${k}`, sz[k].toLocaleString('en-US'),
+                  `credit ${cr[k] ?? '–'} · density ${dens[k] !== undefined ? (100 * dens[k]).toFixed(2) + ' %' : '–'}`]);
+    });
+    set('h53cal', rowsT.map(r => `<tr><td>${esc(r[0])}</td><td class="num">${esc(String(r[1]))}</td><td class="small muted">${esc(r[2])}</td></tr>`).join(''));
+  }
+
+  // ------------------------------------------------------------------ H53 budget / P(win) table
+  const bud = miss(d.revealed_budget) || {};
+  if (bud.rows) {
+    const sel = bud.selected || {};
+    set('h53budget', bud.rows.map(r => `<tr${r.n_novel === sel.n_novel ? ' class="hi"' : ''}>
+      <td class="num">${r.n_novel.toLocaleString('en-US')}</td>
+      <td class="num">${r.total.toLocaleString('en-US')}</td>
+      <td class="num">${(100 * r.novel_fraction).toFixed(1)} %</td>
+      <td class="num"><b>${r.p_win.toFixed(4)}</b></td>
+      <td class="num">${r.mean_dti.toFixed(4)}</td>
+      <td class="num">${r.worst_dti.toFixed(4)}</td>
+      <td class="num">${r.best_dti.toFixed(4)}</td></tr>`).join('')
+      + `<tr><td colspan="7" class="small muted">selected row highlighted. Rule: ${esc(bud.rule || '')}.
+         |G| = ${bud.g_estimate_px ?? '–'} px · t_core interval ${JSON.stringify(bud.t_core_bounds ?? [])} ·
+         ρ_novel prior ${JSON.stringify(bud.rho_prior ?? [])} · floor ${bud.floor ?? '–'}.</td></tr>`);
+  }
+
+  // ------------------------------------------------------------------ H53 two-view + independence
+  const v53 = miss(d.cotraining_views53) || {};
+  const ind53 = miss(d.independence_revealed) || {};
+  const vb = document.getElementById('h53views');
+  if (vb && (v53.view_a || ind53.pixel_pearson_r !== undefined)) {
+    const sb = v53.single_view_baseline || {};
+    vb.innerHTML = `<table><thead><tr><th>quantity</th><th>value</th><th>reading</th></tr></thead><tbody>
+      <tr><td>View A out-of-fold AUC</td><td class="num">${v53.view_a ? v53.view_a.oof_auc : '–'}</td>
+        <td class="small muted">potential field / subsurface, ${v53.view_a ? v53.view_a.n_features : '–'} features; block mean ${sb.view_a_mean ?? '–'}</td></tr>
+      <tr><td>View B out-of-fold AUC</td><td class="num">${v53.view_b ? v53.view_b.oof_auc : '–'}</td>
+        <td class="small muted">surface / LiDAR scarp / radiometric, ${v53.view_b ? v53.view_b.n_features : '–'} features; block mean ${sb.view_b_mean ?? '–'}</td></tr>
+      <tr><td>blended</td><td class="num">${v53.blended_oof_auc ?? '–'}</td>
+        <td class="small muted"><b>co-training wins: ${sb.co_training_wins === undefined ? '–' : (sb.co_training_wins ? 'yes' : 'no')}</b> — View B alone beats the blend, and that is printed rather than buried</td></tr>
+      <tr><td>independence, pixel Pearson r</td><td class="num">${ind53.pixel_pearson_r ?? '–'}</td>
+        <td class="small muted">threshold ${ind53.threshold ?? '–'} → ${esc(ind53.verdict || '–')}</td></tr>
+      <tr><td>independence, block mean r</td><td class="num">${ind53.block_mean_r ?? '–'}</td>
+        <td class="small muted">variance ${ind53.block_var_r ?? '–'} over ${ind53.n_blocks ?? '–'} blocks; degenerate: ${ind53.degenerate_block_variance === undefined ? '–' : (ind53.degenerate_block_variance ? 'yes' : 'no')} — N-1 recorded that a degenerate block variance once stopped this test from firing at all</td></tr>
+      <tr><td colspan="3" class="small muted">${esc(sb.label_caveat || '')}</td></tr>
+      </tbody></table>`;
+  }
 })();

@@ -162,6 +162,52 @@ directory; hashes are computed from the bytes on disk, and the verdict column is
     return len(entries)
 
 
+def make_zip(name: str) -> str | None:
+    """Write docs/downloads/<stem>.zip: the raster plus the note the portal's notes box wants.
+
+    One click should hand over everything the submission step needs, so the ZIP carries the exact
+    text to paste and the hash to check the download against.
+    """
+    import zipfile
+    src = ROOT / "submission" / name
+    if not src.exists():
+        return None
+    ev = EV / f"submission_{name.replace('.tif', '')}.json"
+    d = json.loads(ev.read_text()) if ev.exists() else {}
+    stem = name.replace(".tif", "")
+    note = (
+        f"{name}\n"
+        f"sha256 {d.get('sha256')}\n"
+        f"{d.get('bytes')} bytes, 1 band, float32, EPSG:32611, values in [0,1], no NaN.\n\n"
+        f"SUBMISSION NOTE (<=200 chars, paste into the portal's notes box):\n"
+        f"{submission_note(d)}\n\n"
+        f"What it is: {d.get('budget')} emitted pixels = {d.get('retained_core_px')} px retained "
+        f"core (the double-corroborated atom A&C, whose credit the organiser's own published scores "
+        f"bound exactly) + {d.get('novel_px')} px strictly novel "
+        f"({d.get('novel_along_strike_px')} along the recovered strike of that structure, "
+        f"{d.get('novel_far_px')} free candidates on the same fabric).\n"
+        f"Nothing is emitted within {d.get('corridor_excluded_m')} m of a mapped trace, because that "
+        f"ring's credit is exactly zero in the organiser's own scores (knowledge/07 s2).\n"
+        f"Projected DTI {d.get('projected_dti', {}).get('mean_dti')} "
+        f"(P(win over 0.2778) {d.get('projected_dti', {}).get('p_win')}); the projection is an "
+        f"integral over a stated prior, not a forecast - see evidence/revealed_budget.json.\n"
+    )
+    zp = DL / f"{stem}.zip"
+    with zipfile.ZipFile(zp, "w", zipfile.ZIP_DEFLATED) as z:
+        z.write(src, arcname=name)
+        z.writestr("SUBMISSION_NOTE.txt", note)
+        if ev.exists():
+            z.write(ev, arcname="evidence.json")
+    return str(zp)
+
+
+def submission_note(d: dict) -> str:
+    """The <=200-character note that distinguishes this submission later."""
+    n = (f"H53 revealed-core {d.get('retained_core_px', 0)}px + {d.get('novel_px', 0)}px novel "
+         f"strike-continuation; 200m corridor excluded; |G|=14089")
+    return n[:200]
+
+
 def latest_submission() -> dict:
     sub = ROOT / "submission"
     latest = sub / "LATEST.txt"
@@ -177,6 +223,9 @@ def latest_submission() -> dict:
     d = json.loads(ev.read_text())
     d["exists"] = True
     d["download"] = f"downloads/{name}"
+    d["download_zip"] = f"downloads/{name.replace('.tif', '')}.zip"
+    d["submission_note"] = submission_note(d)
+    d["submission_note_chars"] = len(submission_note(d))
     d["size_bytes_local"] = (sub / name).stat().st_size if (sub / name).exists() else None
     return d
 
@@ -236,6 +285,19 @@ def main() -> int:
     a = ap.parse_args()
     DL.mkdir(parents=True, exist_ok=True)
     copied = copy_evidence()
+    # Stage the rasters BEFORE building the index. The index re-runs the format gate on whatever is
+    # in docs/downloads/, so copying afterwards left it permanently one run behind: the current
+    # submission was on disk but absent from the table, and the "download the file and submit it"
+    # promise pointed at last round's artefact.
+    sub_name = (ROOT / "submission" / "LATEST.txt").read_text().strip() \
+        if (ROOT / "submission" / "LATEST.txt").exists() else None
+    for f in sorted((ROOT / "submission").glob("*.tif")):
+        tgt = DL / f.name
+        if not tgt.exists() or tgt.stat().st_size != f.stat().st_size:
+            tgt.write_bytes(f.read_bytes())
+    # a one-click ZIP beside the TIF: the raster plus the submission note the portal asks for
+    if sub_name:
+        make_zip(sub_name)
     n_dl = download_index()      # -1 when the verdicts could not be recomputed here
     sub = latest_submission()
     board = fetch_board(a.fetch)
@@ -245,19 +307,18 @@ def main() -> int:
         for f in sorted((EV).glob(pat))[-1:]:
             (DL / f.name).write_text(f.read_text())
     # the reasoning table is published next to the raster it explains
-    for f in sorted((ROOT / "submission").glob("*.tif")):
-        tgt = DL / f.name
-        if not tgt.exists() or tgt.stat().st_size != f.stat().st_size:
-            tgt.write_bytes(f.read_bytes())
     write("feed.json", dict(
         generated_utc=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-        repo="buffedlizard55-lab/GEMSDOE52", branch="arena/dd2ae151-gemsdoe52",
+        repo="buffedlizard55-lab/GEMSDOE52", branch="arena/4ab47a80-gemsdoe52",
         files=sorted(p.name for p in DATA.glob("*.json")), evidence_copied=copied,
         leaderboard_status=board.get("status"), submission=sub.get("file"),
         downloads=n_dl,
         pipeline=dict(
-            footprint=5165840, catalogue=60894,
-            g_bracket=[5764, 15179],
+            footprint=5167373, catalogue=60988,
+            g_bracket=[8128, 14089], g_point_estimate=14088.7,
+            g_note="bracket from T<=|G| over 13 scored files; point estimate from T(B)-T(A)=0 on "
+                   "the exactly-nested pair, i.e. from the <=200 m ring around the mapped catalogue "
+                   "carrying no credit (knowledge/07 s2)",
             accept_bar_at_our_best=round(0.2 * OUR_BEST / (1 - 0.2 * OUR_BEST), 5),
             rule="emit a pixel iff its expected kernel credit clears "
                  "alpha*DTI/(1-alpha*DTI); across DTI 0.28-0.46 that is 'within 224 m of an "

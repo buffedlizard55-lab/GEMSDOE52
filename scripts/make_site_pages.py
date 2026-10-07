@@ -74,6 +74,41 @@ on the folds <em>and</em> beat uniform-random emission at the same budget on ≥
 co-training arm failed on both instruments — <code>beats_union: not OK</code>,
 <code>placement_not_mass: not OK</code>, <code>fold_support: 0/4</code> — so it is <b>not</b> what we ship,
 and no weekly slot was spent on it. The tables above are that failure's record, kept published.</div>
+<h2><span class="num">5</span> H53 · what replaced the broken instrument</h2>
+<p>The instruments above are still reported, unchanged, because deleting a failed measurement hides it.
+But they no longer select anything. <code>knowledge/07</code> records why: the whole-component hide
+simulator's premise is that the hidden truth is a held-out part of the mapped catalogue, and the bytes
+say the hidden truth does not come within 200 m of the mapped catalogue at all.</p>
+<p>What selects now is arithmetic on artefacts the organiser has already scored. Five of this group's
+files stand in verified nesting relations (<code>A ⊂ B ⊂ E</code>, <code>C ⊂ E</code>, every containment
+checked on the bytes with <code>0 px</code> exceptions), so their published scores form a small linear
+system rather than 13 noisy observations:</p>
+<table><thead><tr><th>quantity</th><th>value</th><th>status</th></tr></thead><tbody id="h53cal"></tbody></table>
+<p class="small muted">Rendered from <code>data/revealed_calibration.json</code> and
+<code>data/submission.json</code>. "Exact" means it follows from the published scores and the verified
+set relations plus <code>t ≥ 0</code>, with one approximation stated: <code>M = T</code>, which the
+&gt;200 m dot separation licenses.</p>
+<h2><span class="num">6</span> The budget rule, as a probability</h2>
+<p><code>DTI = (t_core + ρ_novel·n_novel) / (0.2·S + 0.8·|G|)</code>, capped by <code>T ≤ |G|</code>.
+Two unknowns, treated differently: <code>t_core</code> is bounded exactly, so it gets a uniform prior
+over that exact interval; <code>ρ_novel</code> is unknowable, so it gets a uniform prior from "no better
+than uniform random" (2.79 % credit per emitted pixel, measured) to "as good as the champion's own
+average" (13.87 %, measured). Both endpoints are in <code>data/revealed_calibration.json</code> under
+<code>reference_densities</code>.
+The rule then maximises <b>P(DTI &gt; floor)</b> — the floor being the group's best reported score,
+carried in <code>data/revealed_budget.json</code> — and breaks ties toward the larger novel fraction,
+because the brief requires a unique artefact and a mean cannot see that. The whole table is in
+<code>data/revealed_budget.json</code> and rendered below.</p>
+<table><thead><tr><th>novel px</th><th>total px</th><th>novel fraction</th><th>P(win)</th><th>mean DTI</th>
+<th>worst</th><th>best</th></tr></thead><tbody id="h53budget"></tbody></table>
+<h2><span class="num">7</span> The two views, and the conditional-independence test</h2>
+<p>The brief requires the Blum &amp; Mitchell premise to be <em>tested</em> rather than assumed: correlate
+the two views' out-of-fold errors on labelled negatives over spatial blocks, and abandon the arm if they
+are strongly correlated. It also requires a single-view baseline, so that co-training cannot quietly
+amplify one view's bias. Both are below, including the reading that co-training does <em>not</em> win
+here.</p>
+<div id="h53views"><p class="small muted">reading <code>data/cotraining_views53.json</code> and
+<code>data/independence_revealed.json</code>…</p></div>
 '''
 
 FEED = '''
@@ -163,6 +198,58 @@ auditable — and sufficient because the metric's optimum is {0,1}, not a calibr
 reproducible</b>: fitting a truth model to the eleven published scores gives best RMSE 0.1449, i.e. no
 signal.</td><td>inherited analysis, re-checked by reading the sibling <code>knowledge/</code></td>
 <td>not repeated here: no claim on this site is derived from inverting published scores</td></tr>
+<tr class="hi"><td>IR-52-017</td><td><b>The validation instrument this repo selected with does not
+predict the organiser's score.</b> Over the 13 restored scored files, Spearman ρ(reported, simulated
+DTI) = <b>−0.1045</b>, p = 0.734, n = 13. The group's best file on the board (0.2778) is the
+<i>worst</i> of the 13 on the instrument (lift 0.09× mass-matched random), and the file the instrument
+ranks first (<code>8GEMSDOE_Hedge-v2</code>, 0.316) scored 0.1563.</td>
+<td><code>work/a6_calibrate.py</code>, <code>work/a10_calibrate2.py</code>; the confound I introduced
+first (hidden truth allowed inside the 200 m ring a corridor-excluding prior may not enter) was fixed
+and re-run — lift 0.10 → 0.09, ρ unchanged</td>
+<td>recorded as <code>knowledge/03</code> N-9; the H53 selection is made on exact set algebra over five
+scored files instead, and the instrument is labelled broken everywhere it is still reported. New rule:
+an instrument must reproduce the ordering of artefacts whose real scores are already known before it may
+promote anything</td></tr>
+<tr><td>IR-52-018</td><td><b>The ≤200 m ring around the mapped catalogue earns exactly zero credit.</b>
+<code>h33-2-b2</code> (0.2778) is a strict subset of <code>gems24-d2-8</code> (0.2600); the 6,436 px
+difference is <i>entirely</i> inside 200 m of a mapped trace, and deleting it <i>raised</i> the score
+6.8 %. This contradicts <code>knowledge/01</code> §5 item 2 and <code>knowledge/02</code> H52-2, which
+made ranking that ring the primary emitter arm on the strength of a staff reading that the mask is
+pixel-exact.</td>
+<td>direct set arithmetic on restored bytes with pinned SHA-256; <code>min</code> distance-to-catalogue
+inside <code>h33-2-b2</code> is 223.6 m, so it holds <b>0 px</b> in the ring</td>
+<td><code>knowledge/01</code> §5 item 2 struck through with the measurement; <code>CORRIDOR_M = 200</code>
+in <code>src/gems52/revealed.py</code>; the emission writes <b>0 px</b> inside the ring (verified on
+read-back). Both readings — a ~2 px mask buffer, or truth that never comes within 200 m — give the same
+rule, and the bytes cannot separate them</td></tr>
+<tr><td>IR-52-019</td><td><b>No feature available here re-ranks inside the champion file.</b> 63 point
+and local-differential features reach a best blocked AUC of <b>0.5453</b> on the credited-vs-uncredited
+contrast (the maximum of 63 tests); 108 structure-tensor features reach <b>0.5122</b>. Habitat is
+strongly identifiable — AUC 0.7023 for the champion's dots against uniform random — and strongly
+<i>useless</i>: the tiers carrying 4–20× less credit have habitat AUCs of 0.68–0.70.</td>
+<td><code>work/a12_atoms.py</code>, <code>work/a13_coherence.py</code>, 10–11 spatial blocks per AUC</td>
+<td>recorded as N-10 and N-11; <code>ρ_novel</code> therefore enters every projection as a stated prior
+U[0.03, 0.14] and never as a point estimate, and the budget is chosen by integrating over it</td></tr>
+<tr><td>IR-52-020</td><td><b>A per-block AUC of 1.000 over n = 3 samples</b> appeared in the first H53
+build's View A and View B reports.</td><td>block sizes printed alongside the AUCs</td>
+<td>every block now carries <code>counted_in_mean</code> (n ≥ 500) and the reported mean uses only
+counted blocks; raw list kept. Recorded as N-13</td></tr>
+<tr><td>IR-52-021</td><td><b><code>gates.find_priors</code> treated competition inputs as prior
+submissions.</b> Sweeping a root containing <code>data/training_features.tif</code> read band 1 of a
+19-band feature stack as somebody's answer and produced a "prior union" of <b>5,363,764 px</b> against
+a <b>5,167,373 px</b> footprint — which silently emptied the novel-pixel pool (93 px) and would have
+made the not-the-union test meaningless.</td>
+<td>measured before and after; regression test added</td>
+<td><code>NOT_A_SUBMISSION</code> skip list in <code>src/gems52/gates.py</code>;
+<code>tests/test_gates.py::test_find_priors_skips_competition_inputs</code>. Union is now 1,062,207 px
+over 18 real prior rasters</td></tr>
+<tr><td>IR-52-022</td><td><b>The downloads index was always one run behind the downloads
+directory.</b> <code>refresh_feed.py</code> built <code>docs/downloads/index.html</code> <i>before</i>
+copying rasters into it, so the current submission was on disk and absent from the table — the
+"download the file and submit it" promise pointed at the previous round's artefact.</td>
+<td>observed directly: the H53 raster copied, the index listing only the four older ones</td>
+<td>rasters are staged before the index is built; a one-click ZIP (raster + the note to paste + the
+evidence JSON) is written beside the TIF</td></tr>
 </tbody></table>
 '''
 

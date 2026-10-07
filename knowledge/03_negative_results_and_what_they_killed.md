@@ -194,3 +194,115 @@ Two things this exposed that are worth keeping as rules, not as fixes:
 * **A lint that misfires is worse than no lint.** The first version of that test re-derived YAML's
   block-scalar indentation rule with a regex and failed on valid YAML; deleted. `yaml.safe_load` is the
   authority, and the test says so in a comment so nobody re-adds the clever version.
+
+---
+
+## N-9 · The whole-component hide-and-recover simulator does not predict the organiser's score
+
+**What was run.** All 13 restored scored rasters, 4 spatial folds each. Held-out truth = whole
+8-connected catalogue components assigned to spatial blocks by majority vote, thinned to the inferred
+prevalence. Emission = each file's own pixels restricted to that fold's legal set, plus a mass-matched
+uniform-random control on the same folds. Scored with `src/gems52/metric.py`, the transcription pinned
+by `tests/test_metric.py`. Scripts: `work/a6_calibrate.py`, `work/a10_calibrate2.py`.
+
+**Result.**
+
+* Spearman ρ(reported score, simulated DTI) = **−0.1045**, p = **0.734**, n = 13.
+* Spearman ρ(reported score, simulated lift over random) = **−0.1265**, p = 0.680.
+* `h33-2-b2`, the group's best file on the board (0.2778), is the **worst** of the 13 on the
+  instrument: simulated DTI 0.0046 against 0.0496 for mass-matched random, lift **0.09×**.
+* `8GEMSDOE_Hedge-v2` ranks **first** on the instrument (0.316, lift 4.19×) and scored **0.1563**.
+
+**The confound was checked and is not the explanation.** The first run let hidden truth sit inside the
+200 m ring that a corridor-excluding prior may not enter, which structurally handicaps exactly the
+files that obey the rule. Restricting the hidden truth to pixels more than 200 m from the *visible*
+catalogue (`work/a10`) moved the champion's lift from 0.10 to 0.09 and left ρ unchanged.
+
+**What it kills.** Every selection this repo made through that gate, including the
+`promoted: false, forced: true` decision recorded in `docs/data/submission.json` and the "+33 %"
+corridor effect quoted in `knowledge/02` H52-2 as the primary emitter arm. The premise of the
+instrument is that the hidden truth is a held-out part of the mapped catalogue; `knowledge/07` §2–§3
+measure that the hidden truth does not come within 200 m of the mapped catalogue at all. The premise is
+false, so the instrument measures the wrong quantity and its ordering carries no information — ρ ≈ 0 is
+not a weak signal, it is the expected reading for an instrument pointed at the wrong target.
+
+**Rule adopted.** A validation instrument is only an instrument if it reproduces the ordering of
+artefacts whose real scores are already known. We hold 13 such artefacts. Any new instrument must be
+calibrated against them before it is allowed to promote anything. This one was not, and fails.
+
+**What replaced it.** Exact set algebra over five scored files that stand in verified nesting
+relations (`A ⊂ B ⊂ E`, `C ⊂ E`). That yields `|G|`, the dead ring, and an exact interval on the
+credit carried by the double-corroborated atom — see `knowledge/07`. It is arithmetic on artefacts the
+organiser has already scored, which is the only ground truth available without portal access.
+
+## N-10 · No point or local-differential feature re-ranks inside the champion file
+
+**What was run.** 63 features — the 19 competition bands, their horizontal gradients, Laplacians and
+5×5 ranges, linearity ratios (gradient over local standard deviation), all 12 LiDAR scarp bands, the 4
+radiometric bands and 4 ratio bands, and the SGMC layer — scored against the credit hierarchy of
+`knowledge/07` §3, with AUC computed inside each of the 4×4 spatial blocks that contain both classes
+(10–11 blocks) and averaged. Script: `work/a12_atoms.py`, output `work/a12_feature_auc.json`.
+
+**Result.** Best AUC(`P1` vs `P2`) = **0.5453** (`lin_detelev`, sd 0.008); next `sc_step_max` 0.5453,
+`sc_downface` 0.5419, `rad_K` 0.5399. That is the maximum of 63 tests, so after multiplicity it is not
+a signal. Best AUC(`P1` vs `P5`) = 0.5376, AUC(`P1` vs `P6`) = 0.5451 — the same nothing.
+
+**The part that matters more than the null.** The *habitat* signature is strong and it is not credit.
+AUC(`A` vs uniform random) reaches **0.7023** for `ddetelev_range5`, 0.6605 for `ddetelev_hg`, 0.6522
+for `sc_upface`, and 0.6494 for inverted `rad_K` — the champion's dots sit on radiometrically depleted,
+high-relief ground. But `P2`, `P5` and `P6`, which carry 4–20× less credit per pixel than `P1`, have
+almost the same habitat AUCs against random (0.7023 / 0.6802 / 0.6834 for `ddetelev_range5`).
+
+**What it kills.** Any plan whose argument is "train a classifier on the credited tier, then emit its
+top-K and expect the credited tier's credit density". The classifier learns the habitat, and habitat
+does not separate credited from uncredited mass. This is a stronger and more specific statement than
+N-6's "supervised detectors trained to reproduce the catalogue fail": here the target is not the
+catalogue but the group's own organiser-credited pixels, and it still does not transfer.
+
+**Rule adopted.** `ρ_novel` — the credit density of mass this repo has never emitted — enters every
+projection as a *prior* with a stated range, never as a point estimate. See
+`src/gems52/revealed.py::budget_rule`.
+
+## N-11 · Structure-tensor coherence does not re-rank inside the champion file either
+
+**What was run.** Coherence, gradient magnitude and coherence × gradient magnitude from the structure
+tensor, at σ = 2, 4 and 8 px, on 12 bands (gravity anomaly, RTP, detrended elevation, TMI horizontal
+gradient, gravity horizontal gradient, depth to base of basin fill, second invariant of strain, TMI,
+detrended-elevation slope, tilt curvature, conductivity, shear rate) — 108 features, same blocked AUC
+protocol. Script: `work/a13_coherence.py`.
+
+**Result.** Best AUC(`P1` vs `P2`) = **0.5122** (`tc` gradient magnitude at σ = 2, se 0.0032), i.e.
+worse than the point features. Coherence itself never exceeds 0.5066 on that contrast.
+
+**What it does *not* kill.** Coherence of the credited dot *cloud* — as opposed to coherence of a
+geophysical band — is strongly non-random: mean 0.549 against 0.412 for a matched uniform-random cloud
+at σ = 6 px, and 16.8 % of credited dots above coherence 0.8 against 2.2 % of random dots (7.6×). The
+two independent thinnings `A` and `C` agree on the recovered orientation histogram to cosine
+**0.9952** while the random control is flat, and the dominant recovered strike is 100–110° in array
+convention = azimuth ≈ 010–020°, the NNE–SSW Basin-and-Range normal-fault strike of this footprint.
+So the *fabric* is recoverable and geologically correct; what is not recoverable is which individual
+dots on it were right. That distinction is what H53-2 is built on (`knowledge/08`).
+
+## N-12 · Radiometric alteration ratios are not an alteration signal here
+
+**What was run.** The 4 external radiometric bands (K, Th, U, TC) and 4 external ratio bands (Th/K,
+U/K, U/Th) plus band 6 `tc`, against the credited tier, same blocked protocol (`work/a9`, `work/a12`).
+
+**Result.** All four channels are strongly depleted on the credited dots — `rad_K` AUC 0.3506,
+`rad_TC` 0.3702, `rad_Th` 0.4075, `rad_U` 0.4279 against random — while all three *ratios* sit within
+0.05 of chance: `ext_ThK` 0.4959, `ext_UK` 0.5723, `ext_UTh` 0.5547.
+
+**What it kills.** Hypothesis H53-4 as a standalone emitter. Depletion in K, Th and U *together* with
+unchanged ratios is bare rock and thin soil on steep ground — the same habitat `ddetelev_range5`
+already captures at 0.6664 — not hydrothermal alteration, which moves the ratios and leaves total
+count roughly alone. The bands are kept as View B features; the alteration-halo claim is withdrawn.
+
+## N-13 · A per-block AUC of 1.000 over n = 3 samples
+
+The first H53 build reported View A and View B block AUCs including a block with **1.000**. That block
+held **3 labelled samples**. `scripts/build_revealed_submission.py` now tags every block with
+`counted_in_mean` (n ≥ 500) and reports the mean over counted blocks only, alongside the raw list, so
+a degenerate block can inflate nothing. Reported means after the fix: View A 0.7031, View B 0.9241.
+
+The general rule, which is the same one N-8 states about read-backs: **an aggregate that silently
+includes a degenerate subgroup is worse than no aggregate.** Report the n next to the statistic.

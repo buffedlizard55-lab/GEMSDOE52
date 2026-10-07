@@ -30,17 +30,21 @@ repo <code>buffedlizard55-lab/GEMSDOE52</code> · <span data-feed-stamp>loading 
 <section class="hero">
   <div>
     <h1>The submission file, first.</h1>
-    <p>One GeoTIFF. Download it, open <a
+    <p>One GeoTIFF, one click, and a ZIP of the same thing. Download it, open <a
     href="https://www.drivendata.org/competitions/306/competition-doe-gems/">the competition page</a>,
-    click <em>Make a submission</em>, pick the file, write the note below in the notes box, submit.
+    click <em>Make a submission</em>, pick the file, paste the note printed under the button, submit.
     Nothing to configure, nothing to check by hand: the file is produced by
-    <code>scripts/build_submission.py</code> and gated by <code>src/gems52/gates.py</code> before it
-    is written.</p>
-    <p class="small"><strong>What is in it.</strong> {0,1} mass on pixels the metric's own acceptance
-    rule says are worth paying for, placed off the pixel-exact catalogue mask where a potential-field
-    view is confident and the surface view withholds. <a href="method.html">Method</a> ·
+    <code>scripts/build_revealed_submission.py</code>, gated by <code>src/gems52/gates.py</code> before
+    it is written, and read back from disk afterwards.</p>
+    <p class="small"><strong>What is in it.</strong> {0,1} mass, no NaN, on pixels the metric's own
+    acceptance rule says are worth paying for, and <em>nothing</em> within 200&nbsp;m of a mapped trace —
+    that ring's credit is <b>exactly zero</b> in the organiser's own scores, which is measured from five
+    of this group's scored files standing in verified nesting relations, not modelled. Half the mass is
+    the double-corroborated core whose credit those same scores bound exactly; half is strictly novel,
+    placed along the strike recovered from that core. <a href="method.html">Method</a> ·
     <a href="executive-summary.html">exact instructions</a> ·
-    <a href="validation.html">what the blocked holdout said, including the part that failed</a>.</p>
+    <a href="validation.html">what the blocked holdout said — including that it does not predict the
+    board</a>.</p>
   </div>
   <div class="dl">
     <!--DOWNLOAD-->
