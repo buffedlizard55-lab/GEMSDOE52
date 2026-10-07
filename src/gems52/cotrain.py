@@ -1,25 +1,12 @@
-"""Two-view co-training with disagreement as the discovery signal.
+"""Historical two-view baseline, retained for comparison, not the active R2 runner.
 
-Theory (as required by the standing brief)
-------------------------------------------
-Blum & Mitchell, *A Comparison of Procedural Results for Co-Training* and the related co-training
-analysis (COLT '98, pp. 92-100, doi:10.1145/279943.279962), show that when each example carries
-two views that are (a) each sufficient to predict the class and (b) conditionally independent given
-the class, two learners trained one-per-view can each enlarge the other's labelled set with their
-own confident predictions on unlabelled data, and the joint error drops.
-
-Both assumptions are *falsifiable*, and this module falsifies them or fails, rather than assuming
-them:
-
-* ``view_correlation`` measures the conditional-independence proxy directly: the correlation of
-  the two views' per-block out-of-fold error on labelled negatives.  The brief says to abandon the
-  method if those errors are strongly correlated, and ``ABANDON_R`` is that line.
-* the pseudo-label rule is deliberately narrower than textbook self-training: a pixel is
-  pseudo-labelled **only** when one view is confident and the other abstains (``pseudo_labels``),
-  and only inside whole spatial blocks, buffered away from every labelled and held-out pixel, so
-  no leakage can reach the evaluation.
-* co-training is known to amplify its own biases, so nothing here is trusted until it beats the
-  single-view baselines on the blocked holdout (``src/gems52/holdout.py``).
+Blum & Mitchell, *Combining Labeled and Unlabeled Data with Co-Training*,
+COLT 1998 pp. 92–100, DOI 10.1145/279943.279962. View sufficiency,
+compatibility and conditional independence are assumptions, not findings here.
+The old evidence omitted all OOF negative predictions and cannot establish
+independence. New experiments use gems52.spatial and run_structural_pipeline.py.
+A-only is a buried-structure HYPOTHESIS, not verified geology; B-only can also
+be a real surface fault, not automatically a road/erosion artifact.
 """
 
 from __future__ import annotations
@@ -184,12 +171,14 @@ def view_correlation(err_a: np.ndarray, err_b: np.ndarray) -> dict:
     a, b = np.asarray(err_a, float), np.asarray(err_b, float)
     m = np.isfinite(a) & np.isfinite(b)
     a, b = a[m], b[m]
-    r = float(np.corrcoef(a, b)[0, 1]) if a.size > 2 else float("nan")
-    ra = np.argsort(np.argsort(a))
-    rb = np.argsort(np.argsort(b))
-    rho = float(np.corrcoef(ra, rb)[0, 1]) if a.size > 2 else float("nan")
+    from .spatial import correlations
+    result = correlations(a, b)
+    r, rho = result['pearson'], result['spearman']
+    undefined = r is None or rho is None
     return dict(n_blocks=int(a.size), pearson_r=r, spearman_rho=rho,
-                abandon=bool(np.isfinite(r) and abs(r) >= ABANDON_R), threshold=ABANDON_R)
+                abandon=bool(undefined or abs(r) >= ABANDON_R or abs(rho) >= ABANDON_R),
+                threshold=ABANDON_R, measured=not undefined,
+                reason='undefined/constant errors disable exchange' if undefined else 'proxy diagnostic, not proof')
 
 
 # --------------------------------------------------------------------------------------------
@@ -287,8 +276,8 @@ def strata(p_a: np.ndarray, p_b: np.ndarray, valid: np.ndarray, q_conf: float = 
     """Split the unlabelled grid into concordant / A-only / B-only / silent, by per-view quantiles.
 
     A-only means the potential-field view is in its confident tail while the surface view abstains:
-    physically, a structure with a gravity or magnetic offset and no scarp.  B-only is the mirror
-    image and is where roads, irrigation levees, fan edges and erosion lines live.
+    potentially consistent with a covered structure, but not proof of one. B-only may be
+    a real scarp or an artifact: independent geological verification is required.
     """
     v = valid.ravel()
     a = p_a[v]
@@ -303,8 +292,8 @@ def strata(p_a: np.ndarray, p_b: np.ndarray, valid: np.ndarray, q_conf: float = 
     ab_a = (p_a <= ha)
     ab_b = (p_b <= hb)
     A[conf_a & conf_b] = 1
-    A[conf_a & ~conf_b] = 2
-    A[conf_b & ~conf_a] = 3
+    A[conf_a & ~conf_b & ab_b] = 2
+    A[conf_b & ~conf_a & ab_a] = 3
     A[~valid.ravel().reshape(A.shape)] = 0
     return dict(mask=A.reshape(valid.shape), thresholds=dict(conf_a=ca, conf_b=cb,
                                                               abstain_a=ha, abstain_b=hb),

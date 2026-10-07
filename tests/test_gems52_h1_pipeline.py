@@ -280,6 +280,9 @@ def test_github_pages_and_readme_completeness() -> None:
             assert target.exists(), f"Broken local link {href} in {page} -> {target}"
 
     readme_text = (ROOT / "README.md").read_text()
-    assert "Use the Blum & Mitchell (COLT '98, doi:10.1145/279943.279962) co-training setup:" in readme_text
-    assert "GEMSDOE52-CoTrain-Disagree-H52-1" in readme_text
+    current_prompt = (ROOT / "knowledge/08_current_user_prompt.md").read_text()
+    assert current_prompt in readme_text
+    assert "MUST GENERATE A UNIQUE TIF SUBMISSION" in readme_text
+    assert "Own the Outcome" in readme_text
+    assert "Pass 3:" in readme_text
 

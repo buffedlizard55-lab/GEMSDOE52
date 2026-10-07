@@ -1,170 +1,142 @@
-"""Metric-aware emission: choose *which* pixels to emit, not what to call them.
+"""Triangular-kernel, metric-aware prediction placement.
 
-Why this is the whole game here (and it is proved, not asserted -- ``tests/test_metric.py``):
+For a known truth set, adding a binary pixel changes TP by c (incremental
+max-cover) and FP by f = 1 - max_g k(d). With alpha=.2, beta=.8, improvement
+is exactly c*(1-.2*DTI) > .2*DTI*f. Distance alone does NOT decide this:
+a dot can cover several truth pixels or only duplicate existing coverage.
 
-    DTI = T / (0.2*(T + S - M) + 0.8*|G|),  T = sum_g max_x p(x) k(d(x,g))
+At inference the truth is unknown. We greedily maximize SUM rho_g*max_x k(d)
+under a fixed dot budget, where rho is a model-derived proxy truth density.
+This is a coverage surrogate, not E[DTI] and not a guaranteed improvement in
+DTI. A full-pool cardinality greedy has the usual submodular-coverage bound;
+that bound does not extend to the DTI ratio or to an arbitrary restricted pool.
+For a nonzero stopping target, FP discounts below use an explicitly approximate
+independent-Bernoulli model. Nearby fault pixels are not in fact independent.
 
-so with p in {0,1} the score depends only on the emitted *set*, one truth pixel is credited once
-per covering pixel (a single dot can be the best cover of several truth pixels, which is why
-step-overs and parallel-strand corridors are cheap and wide ridgelines are expensive), and
-redundant mass is free at best and costly otherwise.
-
-The rule used to stop adding pixels is the exact marginal condition of that DTI:
-
-    accept x  <=>  gain(x) > [alpha*DTI / (1 - alpha*DTI)] * (1 - wmax(x))
-
-with ``gain(x) = sum_g rho_g * max(0, k(d(x,g)) - m_g)`` the incremental expected credit and
-``wmax(x) = max_g k(d(x,g))`` the pixel's own false-positive discount.  For a pixel covering one
-uncovered truth pixel at weight w this collapses to ``w > alpha*DTI``, the credit bar.
-
-Greedy on a monotone submodular coverage function carries the standard 1 - 1/e guarantee; it is
-used here because the objective *is* the metric's own numerator.
+R2 repairs two inherited bugs: reversed zero-padding at grid edges; and wx=1
+for EVERY candidate (because the code included its own lattice offset without
+asking whether a truth pixel existed there), which disabled the cost gate.
 """
-
 from __future__ import annotations
 
+import heapq
 import numpy as np
 
 R_PX = 3
-OFFSETS = [(dy, dx, 1.0 - (dy * dy + dx * dx) ** 0.5 / R_PX)
+OFFSETS = [(dy, dx, 1.0 - np.hypot(dy, dx) / R_PX)
            for dy in range(-R_PX, R_PX + 1) for dx in range(-R_PX, R_PX + 1)
-           if (dy * dy + dx * dx) ** 0.5 <= R_PX + 1e-12]
+           if np.hypot(dy, dx) < R_PX]
 
 
 def accept_bar(dti: float, alpha: float = 0.2) -> float:
-    """The ``alpha*DTI / (1 - alpha*DTI)`` multiplier in the marginal rule (see module docstring)."""
-    d = 1.0 - alpha * dti
-    return float(alpha * dti / d) if d > 0 else float("inf")
+    if not 0 <= dti <= 1 or not 0 <= alpha < 1:
+        raise ValueError("DTI and alpha must be in their valid ranges")
+    return float(alpha * dti / (1 - alpha * dti))
 
 
-def _neighbour_tables(cands: np.ndarray, shape: tuple[int, int]) -> tuple[np.ndarray, np.ndarray]:
-    """(flat neighbour indices, kernel weights) for each candidate; -1 where out of bounds."""
+def _neighbour_tables(cands, shape):
     h, w = shape
     r, c = cands // w, cands % w
-    nb = np.full((cands.size, len(OFFSETS)), -1, dtype=np.int64)
-    kk = np.zeros((cands.size, len(OFFSETS)), dtype=np.float32)
+    nb = np.full((len(cands), len(OFFSETS)), -1, np.int64)
+    kk = np.zeros(nb.shape, np.float32)
     for j, (dy, dx, k) in enumerate(OFFSETS):
-        yy = r + dy
-        xx = c + dx
+        yy, xx = r + dy, c + dx
         ok = (yy >= 0) & (yy < h) & (xx >= 0) & (xx < w)
-        nb[ok, j] = (yy[ok] * w + xx[ok]).astype(np.int64)
+        nb[ok, j] = yy[ok] * w + xx[ok]
         kk[ok, j] = k
     return nb, kk
 
 
-def gain_field(density: np.ndarray, shape: tuple[int, int]) -> np.ndarray:
-    """First-pass expected credit of every pixel: (density * kernel) summed over the disc."""
+def gain_field(density, shape):
+    """Exact zero-padded convolution of rho with the triangular lattice kernel."""
     h, w = shape
-    d = density.reshape(h, w)
-    out = np.zeros((h, w), dtype=np.float32)
+    d = np.asarray(density, np.float32).reshape(h, w)
+    out = np.zeros((h, w), np.float32)
     for dy, dx, k in OFFSETS:
-        s = np.roll(np.roll(d, -dy, axis=0), -dx, axis=1) * k
-        # kill the wrapped band on every shift: a fault 40 m from the east edge is not adjacent
-        # to one 40 m from the west edge
-        if dy:
-            s[:max(0, dy)] = 0.0
-            s[h + min(0, dy):] = 0.0
-        if dx:
-            s[:, :max(0, dx)] = 0.0
-            s[:, w + min(0, dx):] = 0.0
-        out += s
+        y0, y1 = max(0, -dy), min(h, h - dy)
+        x0, x1 = max(0, -dx), min(w, w - dx)
+        if y1 > y0 and x1 > x0:
+            out[y0:y1, x0:x1] += d[y0 + dy:y1 + dy, x0 + dx:x1 + dx] * k
     return out
 
 
-def greedy_emit(density: np.ndarray, allowed: np.ndarray, dti_projected: float,
-                budget: int, pool: int = 400_000, hard_max: int | None = None,
-                log=print) -> tuple[np.ndarray, dict]:
-    """Lazy-greedy maximum expected coverage under the metric's own acceptance rule.
+def expected_nearest_discount(rho_nb, weights):
+    """E[max k among occupied neighbours], under independent Bernoulli rho.
 
-    Parameters
-    ----------
-    density : float32 (H*W,) expected truth mass per pixel (calibrated: sum ~= |G| estimate).
-    allowed : bool (H*W,) pixels this emitter may use (footprint, off-catalogue, gates).
-    dti_projected : the DTI to beat; it sets the credit bar via ``accept_bar``.
-    budget : maximum number of emitted pixels.
-    pool : candidate pool size taken by initial gain (gains are non-increasing, so a top-K pool is
-        a valid superset for a greedy that stops when the bar is not cleared).
-
-    Two documented approximations, both flagged in the returned stats:
-
-    * A candidate whose gain no longer clears *its own* threshold is not deleted from the heap;
-      the scan gives up after ``MAX_REJECTS`` consecutive failures.  Because a rejected pixel can
-      only have been beaten by pixels with larger gains, and thresholds differ by at most a factor
-      ``1/(1-w)``, the objective loss is bounded and small; the stop is reported so it can be
-      audited rather than assumed away.
-    * Gains are expectations under ``density``, i.e. under the assumption that expected credit is
-      the right thing to maximise.  It is: DTI is linear in ``p`` for a fixed support, so the
-      Bayes-optimal decision at a fixed bar is the expectation.
+    NOT max of lattice weights (the inherited, always-one bug). This is only a
+    surrogate for a spatially correlated geological truth, stated in receipts.
     """
-    import heapq
-    h, w = int(allowed.shape[0]), int(allowed.shape[1])
-    g0 = gain_field(density, (h, w)).ravel()
-    allow = allowed.ravel()
-    g0 = np.where(allow, g0, -np.inf)
-    n_pool = int(min(pool, max(int(allow.sum()) - 1, 0)))
-    if n_pool <= 0:
-        return np.zeros((h, w), dtype=np.float32), {"emitted": 0, "reason": "no candidates"}
-    cand = np.argpartition(-g0, n_pool - 1)[:n_pool]
-    cand = cand[np.argsort(-g0[cand])]
-    dens = density.ravel()
-    nb, kk = _neighbour_tables(cand, (h, w))
-    rho_nb = np.take(dens, nb) * (nb >= 0)
-    m = np.zeros(h * w, dtype=np.float32)      # current best cover at each truth pixel
+    survival = np.ones(rho_nb.shape[0], np.float64)
+    discount = np.zeros_like(survival)
+    order = np.argsort([-k for _, _, k in OFFSETS], kind="stable")
+    for j in order:
+        p = np.clip(rho_nb[:, j], 0, 1)
+        discount += survival * p * weights[:, j]
+        survival *= 1 - p
+    return discount
+
+
+def greedy_emit(density, allowed, dti_projected, budget, pool=400_000, hard_max=None, log=print):
+    """Deterministic lazy greedy of expected incremental kernel coverage.
+
+    R2 validation uses dti_projected=0 to enforce exactly the same density/budget
+    for all arms; the nonzero cost gate is available and tested, not claimed to
+    optimize an unknown official score. No truth labels enter this function.
+    """
+    allowed = np.asarray(allowed, bool)
+    if allowed.ndim != 2:
+        raise ValueError("allowed must be a 2D grid")
+    dens = np.asarray(density, np.float32).reshape(allowed.shape).ravel()
+    if not np.isfinite(dens).all() or (dens < 0).any():
+        raise ValueError("density must be finite and nonnegative")
+    budget = int(min(max(0, budget), hard_max if hard_max is not None else max(0, budget)))
+    g0 = gain_field(dens, allowed.shape).ravel()
+    candidates = np.flatnonzero(allowed.ravel() & (g0 > 0))
+    total_candidates = len(candidates)
+    count = min(int(pool), total_candidates)
+    if count <= 0 or budget == 0:
+        return np.zeros(allowed.shape, np.float32), dict(emitted=0, reason="zero budget or no positive-gain candidates")
+    # Stable cutoff: do not let argpartition randomly pick a different plateau.
+    vals = g0[candidates]
+    if len(candidates) > count:
+        cutoff = np.partition(vals, len(vals) - count)[len(vals) - count]
+        high = candidates[vals > cutoff]
+        tie = candidates[vals == cutoff]
+        candidates = np.concatenate([high, tie[:count - len(high)]])
+    order = np.lexsort((candidates, -g0[candidates]))
+    cand = candidates[order]
+    nb, kk = _neighbour_tables(cand, allowed.shape)
+    rho_nb = dens[np.maximum(nb, 0)] * (nb >= 0)
+    discount = expected_nearest_discount(rho_nb, kk) if dti_projected else np.zeros(len(cand))
     bar = accept_bar(dti_projected)
-
-    def gain_of(i: int) -> tuple[float, float]:
-        nbi = nb[i]
-        ok = nbi >= 0
-        g = float(np.sum(rho_nb[i][ok] * np.maximum(0.0, kk[i][ok] - m[nbi[ok]])))
-        wx = float(np.max(kk[i][ok])) if ok.any() else 0.0
-        return g, wx
-
-    heap = [(-float(g0[c]), idx) for idx, c in enumerate(cand)]
+    cover = np.zeros(dens.shape, np.float32)
+    heap = [(-float(g0[c]), int(c), i) for i, c in enumerate(cand)]
     heapq.heapify(heap)
-    dead = np.zeros(cand.size, dtype=bool)
-    chosen: list[int] = []
-    gains: list[float] = []
-    first_gain = last_gain = None
-    rejects = 0
-    MAX_REJECTS = 1000      # documented approximation, see the note in the docstring
-    repush = np.zeros(cand.size, dtype=np.int16)
-    MAX_REPUSH = 8          # a candidate can only be beaten by pixels within its 3 px disc, so a
-                            # handful of recomputations covers it; beyond that we keep the stale key
-    while heap and len(chosen) < budget and rejects < MAX_REJECTS:
-        neg, i = heapq.heappop(heap)
-        key = -neg
-        g, wx = gain_of(i)
-        if g <= 0.0:
-            dead[i] = True
-            rejects += 1
+    chosen, gains, rejected, updates = [], [], 0, 0
+    while heap and len(chosen) < budget:
+        _, pixel, i = heapq.heappop(heap)
+        good = nb[i] >= 0
+        neighbors = nb[i][good]
+        gain = float(np.sum(rho_nb[i][good] * np.maximum(kk[i][good] - cover[neighbors], 0)))
+        # Recompute stale upper bounds until this candidate really is the best.
+        if heap and gain < -heap[0][0] - 1e-10:
+            heapq.heappush(heap, (-gain, pixel, i))
+            updates += 1
             continue
-        if g < key - 1e-9 and repush[i] < MAX_REPUSH:   # stale key: true gain lower, re-queue
-            repush[i] += 1
-            heapq.heappush(heap, (-g, i))
+        if gain <= 0 or gain <= bar * (1 - discount[i]) + 1e-12:
+            rejected += 1
             continue
-        if g <= bar * (1.0 - wx) + 1e-12:
-            dead[i] = True
-            rejects += 1
-            continue
-        rejects = 0
-        px = int(cand[i])
-        chosen.append(px)
-        gains.append(g)
-        if first_gain is None:
-            first_gain = g
-        last_gain = g
-        nbi = nb[i]
-        ok = nbi >= 0
-        upd = np.maximum(m[nbi[ok]], kk[i][ok])
-        changed = upd > m[nbi[ok]]
-        m[nbi[ok][changed]] = upd[changed]
+        chosen.append(pixel)
+        gains.append(gain)
+        cover[neighbors] = np.maximum(cover[neighbors], kk[i][good])
         if len(chosen) % 5000 == 0:
-            log(f"    emitted {len(chosen)}  gain_last={g:.4f}  bar={bar:.4f}")
-    out = np.zeros(h * w, dtype=np.float32)
-    if chosen:
-        out[np.array(chosen, dtype=np.int64)] = 1.0
-    stats = dict(emitted=int(out.sum()), pool=n_pool, bar=bar, dti_projected=dti_projected,
-                 marginal_first=float(first_gain or 0.0), marginal_last=float(last_gain or 0.0),
-                 total_expected_credit=float(sum(gains)), rejects_at_stop=int(rejects),
-                 density_sum=float(dens[allow].sum()))
-    return out.reshape(h, w), stats
+            log(f"    placed {len(chosen)}; marginal expected cover {gain:.5g}")
+    out = np.zeros(dens.shape, np.float32)
+    out[chosen] = 1.0
+    stats = dict(emitted=len(chosen), requested_budget=budget, pool=len(cand), pool_restricted=len(cand) < total_candidates,
+                 bar=bar, dti_projected=dti_projected, marginal_first=gains[0] if gains else None,
+                 marginal_last=gains[-1] if gains else None, total_expected_credit=float(sum(gains)),
+                 rejects_at_stop=rejected, lazy_updates=updates, density_sum=float(dens.sum()),
+                 false_positive_discount="independent-Bernoulli approximation" if dti_projected else "unused: fixed matched budget",
+                 objective="expected triangular max-coverage surrogate; not expected DTI")
+    return out.reshape(allowed.shape), stats

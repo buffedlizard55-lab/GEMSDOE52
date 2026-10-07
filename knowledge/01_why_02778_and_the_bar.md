@@ -1,3 +1,5 @@
+> **Historical report — superseded where contradicted by R2.** See `09_r2_review.md` and `evidence/reference_forensics_r2.json`. In particular: known pixels do not pay penalties; H33 removed off-catalogue flanks; the old OOF independence report contained no negative predictions; hidden prevalence and a 0.464 ceiling are not established.
+
 # Why `h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros` scored 0.2778, and what it would take to beat it
 
 Answered at the level the question deserves: first what the file *is*, then the algebra that turns
