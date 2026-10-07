@@ -290,7 +290,7 @@ def validate():
                            "Original connected raster components are segment proxies, not authenticated geological fault IDs.",
                            "Four large folds have low inferential power; candidate and controls were fixed before scoring.",
                            "Historical scored fields already used the complete catalogue and cannot be a clean OOF comparator."])
-    write_json(EV / "h55_holdout.json", report)
+    write_json(EV / "h55_profile_holdout.json", report)
     log(f"H55 primary lift {lift:+.6f} vs {best}; fold support {support}/4; slot approval FALSE")
     return report
 
@@ -386,7 +386,7 @@ def reasoning(store, cat, prediction, classes, pa, pb, quantile_values, name):
 
 
 def build_submission():
-    holdout = json.loads((EV / "h55_holdout.json").read_text())
+    holdout = json.loads((EV / "h55_profile_holdout.json").read_text())
     if (holdout["preregistration_sha256"] != structural.digest(PREREG_PATH) or
             holdout.get("h55_preregistration_sha256") != structural.digest(H55_PREREG_PATH)):
         raise ValueError("R2/H55 preregistration changed after validation; rerun from a clean work directory")
@@ -531,6 +531,8 @@ def main():
         validate()
     if a.stage in ("build", "all"):
         build_submission()
+        from publish_h55_profile_site import publish as publish_h55_profile
+        publish_h55_profile()
 
 
 if __name__ == "__main__":

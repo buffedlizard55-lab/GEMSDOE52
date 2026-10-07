@@ -10,13 +10,23 @@ View definition (from the standing brief, and cross-checked against the band tag
 * **View B -- surface**: detrended elevation, its slope, and DEM-derived transforms (the
   laterally-persistent across-strike step and a Hessian line response).
 
-**Measured fact that changes the brief.** The brief says View B is "DEM-derived curvature and slope,
-plus any radiometric bands present in ``training_features.tif``".  Read from the file itself: the
-19 band tags contain **no radiometric band** (topographic 2, magnetic 6, gravity 3,
-geodetic_strain 3, seismic 2, subsurface 2, and a magnetic tilt/curvature band).  Radiometric data
-exists only in the *external* GeoDAWN survey layers held in this family's mirrors, so this
-repository treats radiometrics as an explicitly-labelled optional arm, never as an official input.
-See ``registry/irregularities.json`` IR-52-001.
+**SUPERSEDED — read this before using the view split below.**  This module's original note said the
+19 band tags contain *no radiometric band*, and filed band 6 in **View A** as ``A_mag_tilt_abs``
+because the file's own tag reads ``data_category = magnetic_data``, "Tilt angle or total curvature -
+magnetic field derivative for edge detection".  That tag is wrong.  Measured on the bytes
+(``evidence/h53_band6_identity.json``, 150,000-pixel sample): Spearman(band 6, GeoDAWN total-count
+grid) = **+1.0000**; Spearman(band 6, K+Th+U) = **+0.9914**, which is what a total-count channel is
+by construction; and |Spearman| <= 0.149 against all five magnetic bands in the same file
+(TMI -0.0250, TMI up-continued 150 m +0.0079, TMI horizontal gradient -0.1489, TMI vertical gradient
++0.0214, RTP -0.0914).  A magnetic-field derivative cannot be uncorrelated with the magnetic field,
+and band 6 is strictly positive (min 2.953, max 88.573) where a tilt angle is bounded by +/- pi/2.
+So the brief's clause "plus any radiometric bands present in ``training_features.tif``" resolves to
+**one band**, not to none, and the two-view split below is wrong in a way that matters: it puts a
+surface-geochemistry band inside the potential-field view, which corrupts the conditional-
+independence test the brief asks for.  See ``registry/irregularities.json`` **IR-52-019**, which
+corrects IR-52-001, and ``src/gems53/radlayers.py`` for the corrected split.  This module is kept
+byte-identical because the H52 holdout evidence and the shipped H52 raster were produced by it, and
+re-running them against a corrected split would make that evidence unverifiable.
 
 Everything is computed inside the footprint only, and NaN elsewhere.
 """
@@ -37,7 +47,8 @@ FEATURES_PATH = "data/training_features.tif"
 # evidence/band_inventory.json which is written by scripts/prepare_data.py from the same read.
 BANDS = {
     1: "mag_anom", 2: "rtp", 3: "tmi_hg", 4: "geod_2ndinv", 5: "iso_grav_slope",
-    6: "mag_tilt_curvature", 7: "geod_shearrate", 8: "geod_dilaterate", 9: "tmi_vg",
+    6: "mag_tilt_curvature",   # MIS-TAGGED IN THE SOURCE FILE: measured to be radiometric total
+                              # count, not a magnetic derivative -- see IR-52-019 and gems53 7: "geod_shearrate", 8: "geod_dilaterate", 9: "tmi_vg",
     10: "dist_to_eq", 11: "iso_grav_vg", 12: "det_elev", 13: "iso_grav_anom",
     14: "tmi", 15: "depth_to_base_surf", 16: "eq_density", 17: "cond_surf",
     18: "iso_grav_hg", 19: "det_elev_slope",

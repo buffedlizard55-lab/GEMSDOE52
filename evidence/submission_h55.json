@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-10-07T03:00:27.141925Z",
+  "generated_utc": "2026-10-07T03:13:05.292359Z",
   "file": "gems52-h55-profile-37654-7fd28c25b51a-research.tif",
   "submission_name": "GEMSDOE52-H55-PairedProfile-7fd28c25",
   "note": "H55 paired-normal profile | 37,654 metric-placed pixels | spatial holdout failed | research only; not approved for upload.",
@@ -56,7 +56,7 @@
     "validation_class": "local on-disk template/range check; not organizer upload acceptance"
   },
   "uniqueness": {
-    "n_priors_checked": 25,
+    "n_priors_checked": 27,
     "per_prior": [
       {
         "path": "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
@@ -297,6 +297,20 @@
         "novel_vs_this": 36610
       },
       {
+        "path": "/home/user/GEMSDOE52/docs/downloads/gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.tif",
+        "prior_px": 37654,
+        "new_px": 37654,
+        "binary": true,
+        "support_definition": ">0 for binary",
+        "decoded_sha256": "a7144e4955ee4b4599a249c3f38cdd0b322f353ea16d03eeb54009eb1bbfb710",
+        "intersection": 1337,
+        "jaccard": 0.018074650876694923,
+        "identical": false,
+        "subset_of_prior": false,
+        "superset_of_prior": false,
+        "novel_vs_this": 36317
+      },
+      {
         "path": "/home/user/GEMSDOE52/docs/downloads/gems52-r2-signednormal-37654-1f751ac9b6ee-zeros.tif",
         "prior_px": 37654,
         "new_px": 37654,
@@ -395,6 +409,20 @@
         "novel_vs_this": 36610
       },
       {
+        "path": "/home/user/GEMSDOE52/submission/gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.tif",
+        "prior_px": 37654,
+        "new_px": 37654,
+        "binary": true,
+        "support_definition": ">0 for binary",
+        "decoded_sha256": "a7144e4955ee4b4599a249c3f38cdd0b322f353ea16d03eeb54009eb1bbfb710",
+        "intersection": 1337,
+        "jaccard": 0.018074650876694923,
+        "identical": false,
+        "subset_of_prior": false,
+        "superset_of_prior": false,
+        "novel_vs_this": 36317
+      },
+      {
         "path": "/home/user/GEMSDOE52/submission/gems52-r2-signednormal-37654-1f751ac9b6ee-zeros.tif",
         "prior_px": 37654,
         "new_px": 37654,
@@ -415,10 +443,10 @@
     "research_publication_ok": true,
     "support_novelty_gate_ok": true,
     "gate_correction": "Original >=20% support novelty retained as a FAILED diagnostic, not silently waived for slot promotion. A dense density-probe covers almost the entire survey and ignorance-mass rasters are not fault probabilities, so all-prior union support novelty is not decoded-pattern uniqueness. Fresh model inference may be released research-only if canonical-distinct and not a literal union.",
-    "union_px": 1162974,
-    "novel_vs_all_priors": 15775,
-    "novel_fraction": 0.4189461942954268,
-    "prior_px_dropped": 1141095,
+    "union_px": 1185599,
+    "novel_vs_all_priors": 15400,
+    "novel_fraction": 0.40898709300472724,
+    "prior_px_dropped": 1163345,
     "relation_to_union": "strictly-novel-and-selective",
     "ok": true,
     "top_argument_ignored": false,

@@ -8,17 +8,19 @@
     "Confirmed the H55 profile feature implementation uses all five preregistered offsets (1,2,3,4,6 cells) and 20 scale-specific channels.",
     "Build path now writes H55-specific evidence and does not overwrite R2 evidence or latest submission pointers.",
     "Verified every A-only emitted pixel has one H55 reasoning CSV row; full file is not claimed to be co-training.",
-    "Ran the routine R2 site publisher and confirmed its integrated H55 publishing step preserves the H55 page, direct TIFF/ZIP links, audit summaries, and the full README archive."
+    "Ran the routine R2 site publisher and confirmed its integrated H55 publishing step preserves the H55 page, direct TIFF/ZIP links, audit summaries, and the full README archive.",
+    "After main advanced, merged its approved/current H55 artifact without replacing it; moved this lower-performing follow-up to its own H55-PROFILE evidence/page namespace and kept submission/LATEST.txt on the incumbent.",
+    "Re-ran the TIFF build after merging main: decoded-pattern audit now includes 27 accessible aligned prior paths, including the main H55 TIFF and its repo copy; the H55-PROFILE artifact stayed byte-identical and remains canonical-distinct."
   ],
   "pass_3": {
-    "tests": "90 passed; 42 warnings; known warnings are Rasterio Affine pending-deprecation and stress-fixture overflow in existing structure tensor test.",
-    "py_compile": "passed for scripts/check_site.py, scripts/run_structural_pipeline.py, scripts/publish_h55_site.py, src/gems52/structural.py",
+    "tests": "125 passed; 45 warnings; warnings are Rasterio Affine pending-deprecation and stress-fixture overflow in the existing structure tensor test.",
+    "py_compile": "passed for scripts/check_site.py, scripts/make_h55_page.py, scripts/run_structural_pipeline.py, scripts/publish_h55_profile_site.py, src/gems52/structural.py",
     "git_diff_check": "passed",
-    "site_checker": "passed all local links, strict JSON, TIFF receipt identity, GeoTIFF checks, single-TIFF ZIP bytes, H55 research-only status and HTTP-served download",
-    "downloads_index_pages_checked": 14,
+    "site_checker": "passed 15 pages and 90 data files, strict local links/JSON, byte-identical incumbent and H55-PROFILE TIFFs, GeoTIFF format/range/geometry, single-TIFF ZIP and failed-slot status",
+    "downloads_index_pages_checked": 15,
     "data_restore_all_hash_pins_match": true,
     "restore_receipt_path": "data/restore_receipt.json (ignored local file; not submitted to git)",
-    "site_rebuild_integration": "passed: scripts/publish_site_r2.py followed by scripts/check_site.py; full 1,539-line README retained"
+    "site_rebuild_integration": "passed: main H55 incumbent remains at submission/LATEST.txt; H55-PROFILE has separate evidence/page, download links and follow-up card."
   },
   "candidate": {
     "file": "gems52-h55-profile-37654-7fd28c25b51a-research.tif",
@@ -42,16 +44,17 @@
     "mass_outside_footprint": 0,
     "internal_mask_matches_sample": true,
     "all_only_reasoning_rows": 916,
-    "uniqueness_priors": 25,
-    "novel_fraction": 0.4189461942954268,
-    "prior_pixels_dropped": 1141095,
+    "uniqueness_priors": 27,
+    "novel_fraction": 0.40898709300472724,
+    "prior_pixels_dropped": 1163345,
     "strictly_novel_and_selective": true,
     "not_merely_view_union": true,
     "weekly_slot_approved": false,
     "weekly_slots_used": 0,
     "official_score": null,
     "upload_acceptance": null,
-    "novel_support_pixels_absent_from_prior_union": 15775
+    "novel_support_pixels_absent_from_prior_union": 15400,
+    "uniqueness_scope_note": "Recomputed after merging the main H55 incumbent into the accessible repository; includes both published and submission copies of that incumbent as separate inventory paths."
   },
   "holdout": {
     "protocol": "spatial-quadrant, whole original 8-connected component hide-and-recover, 80-pixel Euclidean training buffer",
@@ -78,7 +81,8 @@
       0.1902937919358104
     ],
     "comparison_mechanism": "No pseudo-labels or prior prediction pixels in H55 model training; new DEM profile features plus existing structural contrast; same fold/budget/kernel/placement controls.",
-    "warning": "Catalog recovery holdout only; catalogue-zero is not verified geological absence and local DTI does not forecast the hidden competition score."
+    "warning": "Catalog recovery holdout only; catalogue-zero is not verified geological absence and local DTI does not forecast the hidden competition score.",
+    "evidence_path": "evidence/h55_profile_holdout.json"
   },
   "external_data": {
     "training_features_labels_template": "restored from owner-supplied GitHub mirrors and matched repository SHA-256/byte-count pins; organizer provenance unverified",

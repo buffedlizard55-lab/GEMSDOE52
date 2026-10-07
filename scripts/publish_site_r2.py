@@ -128,11 +128,7 @@ DTI = TPw / (TPw + 0.2 FPw + 0.8 FNw)
     (DOCS / 'downloads/index.html').write_text(f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Research downloads · GEMSDOE52</title><link rel="stylesheet" href="../style.css"></head><body><main><p><a href="../index.html">← Overview</a></p><h1>Research downloads</h1>{warning}<p><a href="{r['file']}" download>Download the new R2 TIFF</a> · <a href="{r['file'].replace('.tif','.zip')}" download>Single-TIFF ZIP</a> · <a href="{why['file']}">Geological reasoning CSV</a> · <a href="{r['file'].replace('.tif','-audit.json')}">Full audit</a></p><p>Historical R1/H1 files remain for reproduction only; they are not the current candidate and have no slot approval.</p></main></body></html>''')
     # Preserve the reviewed README, archived task prompt and current H55 status block.
 
-    # The newest H55 candidate and warning are layered on top of the legacy R2 site output.
-    # Keep the current direct download visible after a routine R2 site regeneration.
-    from publish_h55_site import publish as publish_h55
-    publish_h55()
-    print('Published R2 baseline plus the H55 research-only download from audited receipts:', r['file'])
+    print('Published R2 site from audited receipts:', r['file'])
 
 
 if __name__ == '__main__':

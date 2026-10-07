@@ -197,7 +197,7 @@ def main() -> int:
     port = httpd.server_address[1]
     threading.Thread(target=httpd.serve_forever, daemon=True).start()
     try:
-        for path in ("index.html", "executive-summary.html", "feed.html", "irregularities.html",
+        for path in ("index.html", "executive-summary.html", "h55-profile.html", "feed.html", "irregularities.html",
                      "sources.html", "downloads/index.html"):
             with urlopen(f"http://127.0.0.1:{port}/{path}", timeout=10) as r:
                 body = r.read()
@@ -212,8 +212,8 @@ def main() -> int:
             else:
                 notes.append(f"the .tif serves through the site: {n:,} bytes, content-type {ctype}")
 
-        # H55 is deliberately a separate research artifact, not the incumbent pointer.
-        h55_path = DATA / "h55.json"
+        # H55-PROFILE is a separate failed-gate follow-up; never conflate it with the main H55 incumbent.
+        h55_path = DATA / "h55_profile.json"
         if h55_path.exists():
             import hashlib
             import zipfile
@@ -222,15 +222,15 @@ def main() -> int:
             h55 = json.loads(h55_path.read_text())
             h55_file = DOCS / "downloads" / h55["file"]
             if not h55.get("research_only") or h55.get("weekly_slot_approved"):
-                problems.append("h55.json: research-only/failed-slot status is missing or unsafe")
+                problems.append("h55_profile.json: research-only/failed-slot status is missing or unsafe")
             if len(h55.get("note", "")) > 200:
-                problems.append("h55.json: portal note exceeds 200 characters")
+                problems.append("h55_profile.json: portal note exceeds 200 characters")
             if not h55_file.exists() or hashlib.sha256(h55_file.read_bytes()).hexdigest() != h55.get("sha256"):
-                problems.append("h55.json: published H55 TIFF missing or differs from SHA-256 receipt")
+                problems.append("h55_profile.json: published H55 TIFF missing or differs from SHA-256 receipt")
             else:
                 with rasterio.open(h55_file) as ds:
                     a = ds.read(1)
-                    if (ds.count != 1 or ds.dtypes[0] != "float32" or ds.crs.to_epsg() != 32611
+                    if (ds.count != 1 or ds.dtypes[0] != "float32" or ds.crs is None or ds.crs.to_epsg() != 32611
                             or (ds.height, ds.width) != (3730, 3292)
                             or not np.isfinite(a).all() or float(a.min()) < 0 or float(a.max()) > 1):
                         problems.append("H55 TIFF: raster dimensions/CRS/dtype/finite [0,1] check failed")
@@ -247,7 +247,7 @@ def main() -> int:
                 with urlopen(f"http://127.0.0.1:{port}/downloads/{h55['file']}", timeout=20) as r:
                     if len(r.read()) != h55["bytes"]:
                         problems.append("served H55 TIFF byte count differs from receipt")
-                notes.append(f"H55 TIFF verified: {h55['bytes']:,} bytes, {h55['uniqueness']['n_priors_checked']} priors, research-only")
+                notes.append(f"H55-PROFILE TIFF verified: {h55['bytes']:,} bytes, {h55['uniqueness']['n_priors_checked']} priors, research-only")
     finally:
         httpd.shutdown()
 
@@ -276,7 +276,22 @@ def main() -> int:
         for p in problems[:40]:
             print("  ✗", p)
         return 1
-    print('\n✓ local links/JSON/receipt values verified; format and canonical-pattern research release verified; byte-identical TIFF serves through the site. Scientific slot gate remains closed.')
+    # The closing sentence used to assert "Scientific slot gate remains closed" unconditionally -- a
+    # success message stating a condition the script never read, which is the exact failure mode this
+    # script exists to catch in other files.  It became actively wrong the moment an artefact shipped
+    # with approved_for_weekly_slot=True (IR-52-031).  Read it, or do not print it.
+    sub_p = DATA / 'submission.json'
+    sub = json.loads(sub_p.read_text()) if sub_p.exists() else {}
+    gate = sub.get('approved_for_weekly_slot')
+    if gate is True:
+        slot = ('Scientific slot gate is OPEN for '
+                f"{sub.get('file')} ({sub.get('promotion', 'no promotion reason recorded')})")
+    elif gate is False:
+        slot = f"Scientific slot gate remains CLOSED for {sub.get('file')}."
+    else:
+        slot = 'Scientific slot gate: not recorded in docs/data/submission.json (not assumed either way).'
+    print('\n✓ local links/JSON/receipt values verified; format and canonical-pattern research release '
+          f'verified; byte-identical TIFF serves through the site. {slot}')
     return 0
 
 
