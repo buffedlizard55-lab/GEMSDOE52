@@ -36,7 +36,7 @@ import run_structural_pipeline as r2
 WORK = ROOT / "work/h55"
 EV = ROOT / "evidence"
 FEATURE_WORK = WORK / "features"
-PREREG = ROOT / "registry/h55_preregistration.json"
+PREREG = ROOT / "registry/h55_edge_preregistration.json"
 CFG = json.loads(PREREG.read_text())
 R2CFG = r2.CFG
 A_EXTRA = [
@@ -260,9 +260,9 @@ def validate():
         fold_protocol="4 outer spatial quadrants; held-out catalogue components; 80-pixel buffer",
         data_note="Weak blockwise negative-error correlation is not proof of conditional independence; catalogue-zero cells can hide faults.",
     )
-    write_json(EV / "independence_h55.json", independence)
+    write_json(EV / "h55_edge_independence.json", independence)
     exchange = run_exchange(store, cat, independence, fold_results)
-    write_json(EV / "pseudo_exchange_h55.json", exchange)
+    write_json(EV / "h55_edge_pseudo_exchange.json", exchange)
 
     arm_names = list(fold_results[0]["arms"])
     means = {name: float(np.mean([fold["arms"][name]["dti"] for fold in fold_results])) for name in arm_names}
@@ -301,7 +301,7 @@ def validate():
             "No data external to the pinned owner-mirrored 19-band cube were used; organizer authenticity of mirrored bytes is unverified.",
         ],
     )
-    write_json(EV / "holdout_h55.json", report)
+    write_json(EV / "h55_edge_holdout.json", report)
     log(f"H55 slot holdout gate: mean lift {lift:+.6f} vs {best}; positive {positive}/4; eligible={meets_mean and meets_folds}; slot approval FALSE pending release checks")
     return report
 
@@ -463,7 +463,7 @@ def feature_grid(store, name):
 
 
 def build_submission():
-    holdout_path = EV / "holdout_h55.json"
+    holdout_path = EV / "h55_edge_holdout.json"
     if not holdout_path.exists():
         raise FileNotFoundError("H55 holdout is not complete; run --stage validate first")
     holdout = json.loads(holdout_path.read_text())
@@ -579,7 +579,7 @@ def build_submission():
             raise ValueError("ZIP must contain exactly one GeoTIFF whose bytes match the release")
 
     receipt = dict(
-        generated_utc=now(), hypothesis=CFG["primary_hypothesis"], preregistration="registry/h55_preregistration.json",
+        generated_utc=now(), hypothesis=CFG["primary_hypothesis"], preregistration="registry/h55_edge_preregistration.json",
         preregistration_sha256=structural.digest(PREREG), feature_manifest_sha256=structural.digest(FEATURE_WORK / "manifest.json"),
         file=name, path=str(submission_path.relative_to(ROOT)), sha256=structural.digest(submission_path),
         decoded_prediction_sha256=decoded_hash, bytes=submission_path.stat().st_size,
@@ -612,14 +612,14 @@ def build_submission():
         ],
         generative_ai_disclosure="Generative AI was used to inspect the repository, preregister candidate hypotheses, draft and review code/documentation, and assist with analysis. All input data, feature computations, model fits, metric calculations, pixel comparisons, raster read-back checks, and reported local holdout scores were executed by the listed scripts; no hidden labels, portal scores, or prior-submission pixels were supplied as training targets. Human/domain review remains necessary; no geological truth is asserted.",
     )
-    receipt_path = EV / "submission_h55.json"
+    receipt_path = EV / "h55_edge_submission.json"
     write_json(receipt_path, receipt)
     write_json(EV / f"submission_{name_without_ext}.json", receipt)
     audit_path = EV / f"{name_without_ext}-audit.json"
     write_json(audit_path, receipt)
     shutil.copy2(audit_path, ROOT / "docs/downloads" / audit_path.name)
-    write_json(EV / "uniqueness_h55.json", uniqueness)
-    write_json(EV / "release_verification_h55.json", dict(
+    write_json(EV / "h55_edge_uniqueness.json", uniqueness)
+    write_json(EV / "h55_edge_release_verification.json", dict(
         generated_utc=now(), file=name, tiff_sha256=receipt["sha256"],
         format_ok=format_ok, decoded_readback_identical=True, exact_template_mask=True,
         zip_contains_exactly_one_tiff=True, zip_tiff_bytes_match=True,
@@ -628,8 +628,9 @@ def build_submission():
         matched_budget_max_union_not_equal=not union_cmp["equal"],
         holdout_gate=holdout_gate, slot_approved=approved, official_score=None,
     ))
-    for marker in (ROOT / "submission/H55_LATEST.txt", ROOT / "submission/LATEST.txt"):
-        marker.write_text(name + "\n")
+    # This is an archived H55-EDGE experiment, not the repository's current incumbent.
+    # Never move the global LATEST pointer from a research-only follow-up.
+    (ROOT / "submission/H55_EDGE_LATEST.txt").write_text(name + "\n")
     log(f"built {name}; format={format_ok}, canonical-pattern-unique={uniqueness['canonical_pattern_unique']}, strict uniqueness={uniqueness_ok}, slot-approved={approved}")
     return receipt
 

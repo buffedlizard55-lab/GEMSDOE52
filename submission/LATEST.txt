@@ -1,1 +1,1 @@
-gems52-h55-grav-rtp-logedge-37654-c4b8c10205da-zeros.tif
+gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.tif

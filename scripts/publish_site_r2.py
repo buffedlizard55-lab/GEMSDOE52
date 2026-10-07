@@ -126,60 +126,9 @@ DTI = TPw / (TPw + 0.2 FPw + 0.8 FNw)
     page('feed.html','Dated evidence feed','<div class="eyebrow">Source freshness policy</div><h1>Automatic evidence.<br>Honest timestamps.</h1><div class="live-feed" id="feed">Loading local evidence feed.</div><p>DrivenData automated access is disabled without documented permission. This is not a live board scrape, and no portal slot is used. A local regeneration never changes the original external observation date.</p><p><a href="data/feed.json">Feed JSON</a> · <a href="data/leaderboard.json">Dated board snapshot</a> · <a href="data/source_policy.json">Source policy</a></p>',r)
     # All-downloads routing no longer advertises historical forced files as approved.
     (DOCS / 'downloads/index.html').write_text(f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Research downloads · GEMSDOE52</title><link rel="stylesheet" href="../style.css"></head><body><main><p><a href="../index.html">← Overview</a></p><h1>Research downloads</h1>{warning}<p><a href="{r['file']}" download>Download the new R2 TIFF</a> · <a href="{r['file'].replace('.tif','.zip')}" download>Single-TIFF ZIP</a> · <a href="{why['file']}">Geological reasoning CSV</a> · <a href="{r['file'].replace('.tif','-audit.json')}">Full audit</a></p><p>Historical R1/H1 files remain for reproduction only; they are not the current candidate and have no slot approval.</p></main></body></html>''')
-    brief = (ROOT / 'knowledge/08_current_user_prompt.md').read_text()
-    header = f'''# GEMSDOE52 — evidence-first fault discovery
+    # Preserve the reviewed README, archived task prompt and current H55 status block.
 
-**[Download the NEW R2 research TIFF](docs/downloads/{r['file']})** · [Single-TIFF ZIP](docs/downloads/{r['file'].replace('.tif','.zip')}) · [Live site](https://buffedlizard55-lab.github.io/GEMSDOE52/) · [Submission guide](https://buffedlizard55-lab.github.io/GEMSDOE52/docs/executive-summary.html)
-
-> **Research-only; DO NOT UPLOAD.** Registered mean local DTI {h['means']['structural_contrast']:.6f} vs surface-only {h['means']['view_B']:.6f}; lift {gate['mean_dti_lift']:+.6f}, {gate['positive_folds']}/4 positive. Promotion failed. No organizer score or portal acceptance is claimed. No weekly slot was used.
-
-- New inference, not a copied/pruned/unioned prior; {budget:,} pixels; one float32 band; every raw cell finite [0,1]; exact pinned-template geometry and internal footprint mask.
-- SHA-256 `{r['sha256']}`. Name: `{r['submission_name']}`. Note: `{r['note']}`.
-- {u['n_priors_checked']} accessible aligned prior-file comparisons; no canonical decoded equality; {u['novel_fraction']:.1%} novel support relative to a saturated all-raster binary/≥0.5 union. The original 20% support-novelty diagnostic FAIL is retained; canonical pixel-pattern uniqueness is a separate question. Scope is bounded, not global/private novelty.
-- {why['rows']} emitted A-only pixels each have a geological reasoning row: [CSV](docs/downloads/{why['file']}). Not verified faults/vents.
-- Official board last observed 2026-10-06: 0.3774 leader, 0.3195 rank 7. File-to-score mappings in the user brief are not organizer-authenticated.
-
-## Preserved concurrent incumbent
-
-[Parallel H53](docs/h53.html) remains intact, including its TIFF/ZIP/source/tests and `submission/LATEST.txt` pointer. Its tip/whole-hide validation is not comparable to R2. R2 uses `submission/R2_LATEST.txt`, is research-only and does not replace H53 scientifically. Original concurrent documentation is archived in `knowledge/archive/h53_before_r2_merge/`.
-
-## Start each session here
-
-Read this README and the full current prompt below, [three-pass review](knowledge/09_r2_review.md), [preregistered hypotheses](knowledge/07_r2_hypotheses_preregistered.md), and [fixed configuration](registry/r2_preregistration.json). Work on the ordered next steps in the review, not another unvalidated upload. Historical claims are retained only for audit, explicitly superseded.
-
-**Maximize P(Win):** spend effort on independent signal and realistic validation, not weekly slots on failed controls. **Own the Outcome:** restore inputs, train, re-open the output, publish receipts, and disclose failure.
-
-## Reproduce (CPU; no GPU required)
-
-```bash
-python3 -m venv .venv
-.venv/bin/pip install -r requirements-r2.txt
-.venv/bin/python scripts/restore_data.py
-.venv/bin/python scripts/prepare_data.py
-.venv/bin/python scripts/review_sources.py --download-priors
-.venv/bin/python scripts/run_structural_pipeline.py --stage all
-.venv/bin/python scripts/verify_release_r2.py
-.venv/bin/python scripts/refresh_feed.py
-.venv/bin/python scripts/publish_site_r2.py
-.venv/bin/python -m pytest -q
-.venv/bin/python scripts/check_site.py
-```
-
-Two-thread limits are set by the runner. Core inputs restored from SHA-pinned owner mirrors; official authentication remains unverified. `data/`, `work/`, model files and large rasters stay ignored; only the small final TIFF/ZIP, reasoning and receipts are published. The static website distributes audited output; it does not train a model in your browser or automatically submit to DrivenData. Scheduled local feeds retain original external observation dates; DrivenData scraping is disabled under its Terms absent permission.
-
-## Evidence and remaining limits
-
-[Local validation](evidence/holdout_r2.json) · [Real negative OOF](evidence/independence_r2.json) · [Separate co-training trial](evidence/pseudo_exchange_r2.json) · [Format/uniqueness receipt](evidence/submission_r2.json) · [Reference edit autopsy](evidence/reference_forensics_r2.json) · [Official/primary claims](evidence/verified_claims_r2.json) · [AI-use narrative](knowledge/10_model_narrative_r2.md).
-
-Catalogue-zero negatives are not proven absence. Four folds and one seed do not certify hidden-label performance. A/B sufficiency is not proven. Historical incumbent confirmation is not comparable. No new external derivative with unresolved provenance/license enters the model. The next step is the paired-shoulder hypothesis versus the frozen surface control plus a clean incumbent refit—not an upload of this failed-gate file.
-
-## Full current user prompt
-
-The task below is an instruction record, not verified facts. Re-check scores, scientific assumptions and past-session statements against the current source ledger and review.
-
-'''
-    (ROOT / 'README.md').write_text(header + brief)
-    print('Published R2 site and README from audited receipts:', r['file'])
+    print('Published R2 site from audited receipts:', r['file'])
 
 
 if __name__ == '__main__':
