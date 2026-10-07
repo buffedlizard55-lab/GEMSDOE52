@@ -2,8 +2,8 @@
   "tag": "20261007T1630Z",
   "stem": "gems52-h56-cotrain-disagreement-37654px-20261007T1630Z-zeros",
   "budget": 37654,
-  "sha256": "7e90f9f3cad9b25a72e806248b536ffd9dd52d86042fef12bb49d63fd307d93f",
-  "bytes": 119298,
+  "sha256": "c391ae7a5d0d4b25c69f219110d808dffbe08fa0148c0241984eca9590edc4e6",
+  "bytes": 141106,
   "shape": [
     3730,
     3292
@@ -19,7 +19,7 @@
     4508550.0
   ],
   "positive_px": 37654,
-  "valid_px": 5165840,
+  "valid_px": 5167373,
   "value_range": [
     0.0,
     1.0
@@ -27,8 +27,8 @@
   "has_nan": false,
   "format_gate": {
     "path": "/home/user/GEMSDOE52/submission/gems52-h56-cotrain-disagreement-37654px-20261007T1630Z-zeros.tif",
-    "bytes": 119298,
-    "sha256": "7e90f9f3cad9b25a72e806248b536ffd9dd52d86042fef12bb49d63fd307d93f",
+    "bytes": 141106,
+    "sha256": "c391ae7a5d0d4b25c69f219110d808dffbe08fa0148c0241984eca9590edc4e6",
     "bands": 1,
     "dtype": "float32",
     "crs": "EPSG:32611",
@@ -66,13 +66,14 @@
     "n_nan": 0,
     "min": 0.0,
     "max": 1.0,
-    "mean": 0.0030664964579045773,
+    "mean": 0.007286874781441169,
     "n_nonzero": 37654,
     "mass": 37654.0,
     "mass_outside_footprint": 0,
     "problems": [],
     "ok": true,
-    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+    "validation_class": "local on-disk template/range check; not organizer upload acceptance",
+    "valid_px": 5167373
   },
   "uniqueness": {
     "n_priors_checked": 20,
@@ -468,5 +469,6 @@
   },
   "generated": "2026-10-07T16:39:21Z",
   "synthetic": true,
-  "synthetic_note": "Synthetic View A/B fields generated without training_features.tif; methodology is real, data are synthetic for sandbox demonstration. Replace with real derived layers via scripts/prepare_data.py on unrestricted machine."
+  "synthetic_note": "Synthetic View A/B fields generated without training_features.tif; methodology is real, data are synthetic for sandbox demonstration. Replace with real derived layers via scripts/prepare_data.py on unrestricted machine.",
+  "provenance_note": "Patched 2026-10-07 for true competition footprint (5167373) compliance: 20096 px moved from outside true footprint to inside, all inside footprint, 0 on catalogue, outside zero, verified all_checks_passed True"
 }

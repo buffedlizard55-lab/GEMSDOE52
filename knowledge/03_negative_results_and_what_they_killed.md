@@ -314,14 +314,16 @@ includes a degenerate subgroup is worse than no aggregate.** Report the n next t
 ## Added by H55 (2026-10-07). Same rule as the rest of this file: a negative result is written down with
 ## the number that makes it negative, so the next session does not re-derive it.
 
-**N-15 — the potential-field view, on its own, loses to random emission on both instruments.** With the
-view split corrected (band 6 moved out, N-18) and placement fixed (400 m hard-core, so placement is no
-longer the excuse), `A_only|hc4|37654` scores **0.02979 hide / 0.02894 tip** against matched-budget random
-**0.03948 / 0.02477**, winning **1/4** and **2/4** folds. Not promotable under any rule this repo has ever
-written. N-6 predicted this at the layer level (transform AUC ≈ 0.52 at a 300 m cell); it now holds at the
-arm level, on two instruments, at the best placement measured. *Kills:* any plan whose primary emitter is
-gravity, magnetics, strain, seismicity, basement depth or conductivity at 100 m. *Leaves open:* those layers
-as corroboration inside a Phase-2 reasoning record, where they cost nothing.
+**N-15 — the potential-field view fails the H55 promotion rule; its mean comparison with random is mixed.**
+With the view split corrected (band 6 moved out, N-18) and placement fixed (400 m hard-core),
+`A_only|hc4|37654` has mean DTI **0.02979 hide / 0.02894 tip** against matched-budget random
+**0.03948 / 0.02477**: below random on `hide`, but above random on `tip`. It wins **1/4 hide** and
+**2/4 tip** folds, so it fails the preregistered requirement of at least 3/4 wins on **each** instrument.
+This is a failure of the promotion threshold, not evidence that both instrument means are below random.
+N-6 predicted weak potential-field ranking at the layer level (transform AUC ≈ 0.52 at a 300 m cell);
+the H55 fold counts likewise do not qualify View A as the primary emitter. *Leaves open:* potential-field
+layers as corroboration inside a Phase-2 reasoning record, where they cost nothing. The separate
+conditional-independence test is recorded in `evidence/h55_verification_20261007T0150Z.json`.
 
 **N-16 — every blend of the two views scores at or below the surface view alone.** `AB_w80`
 (0.8·B + 0.2·A, both regionally centred) = 0.09112 hide / 0.05358 tip; `B_c50` alone = 0.09112 / 0.05421;

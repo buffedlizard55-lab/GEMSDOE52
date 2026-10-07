@@ -1,5 +1,7 @@
+Historical H56 core-continuation artifact — superseded by the current H56 co-training synthetic demo.
 gems52-h56-consensus-core-continuation-40517px-04c86e1888a8-zeros.tif
-short link: h56-candidate.tif (byte-identical alias)
+short link: h56-candidate.tif (byte-identical alias for this historical artifact; not the current H56 TIFF)
+Current H56: gems52-h56-cotrain-disagreement-37654px-20261007T1630Z-zeros.tif (synthetic methodology demo; not approved for upload)
 sha256 1308083dcf09b4c6fb656589ce79b3c392f5a0dd315e2ed31c8d36a47fc1d52d
 bytes 153815
 

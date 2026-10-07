@@ -487,7 +487,7 @@
         "shipped_equals": false
       }
     ],
-    "verdict": "NOT the union of the two views. The shipped set shares 5.6% of its pixels with the union of the two views' top-K sets and 18.3% with the union of their coverage-greedy emissions, and is equal to no set in the table. It is View B's own coverage-greedy emission with a thermal rank bonus. View A contributes nothing to it: A_only is below matched random on both instruments (knowledge/03 N-10), and the conditional-independence premise co-training needs is refuted at the pre-registered threshold on both instruments (evidence/h55_verification_*.json), so including View A would dilute the file on two independently measured grounds."
+    "verdict": "NOT the union of the two views. The shipped set shares 5.6% of its pixels with the union of the two views' top-K sets and 18.3% with the union of their coverage-greedy emissions, and is equal to no set in the table. It is View B's own coverage-greedy emission with a thermal rank bonus. View A contributes nothing to this emission: A_only mean DTI is 0.02979 vs matched random 0.03948 on hide and 0.02894 vs 0.02477 on tip; its fold wins are 1/4 and 2/4, so it does not pass the pre-registered \u22653/4-per-instrument gate. The registered conditional-independence test is refuted at its pre-registered threshold on both instruments (evidence/h55_verification_20261007T0150Z.json), so co-training is abandoned. These are separate findings; the fold-vs-random result is not a conditional-independence test."
   },
   "all_ok": true,
   "independence_summary": {
@@ -509,5 +509,6 @@
       "abandon_threshold": 0.6,
       "verdict": "REFUTED at the pre-registered threshold: |Spearman| reaches 0.7107 >= 0.6. Abandon co-training."
     }
-  }
+  },
+  "review_note": "2026-10-07 text-only correction: the previous union_audit.verdict incorrectly said A_only was below matched random on both instruments. The unchanged sweep values show below on hide (0.02979 vs 0.03948), above on tip (0.02894 vs 0.02477), and only 1/4 and 2/4 fold wins. No raster, hash, fold score, or uniqueness measurement was changed or recomputed in this correction."
 }

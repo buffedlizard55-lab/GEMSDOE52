@@ -29,6 +29,7 @@ from urllib.request import urlopen
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 DATA = DOCS / "data"
+H56_CURRENT_FILE = "gems52-h56-cotrain-disagreement-37654px-20261007T1630Z-zeros.tif"
 
 
 class Scan(HTMLParser):
@@ -387,6 +388,162 @@ def main() -> int:
                 if 'h55-edge.html' not in page_text:
                     problems.append(f'{page_name}: missing separate H55-EDGE archive link')
             notes.append(f"H55-EDGE verified as a separate failed-gate archive: {edge['bytes']:,} bytes, {edge_hold['positive_folds']}/4 positive folds; main incumbent unchanged")
+
+    # The latest pointer is the H56 co-training synthetic demonstration. Its download is
+    # byte-verified, but neither synthetic holdout numbers nor a local format pass open a slot.
+    h56_receipt_path = DATA / 'submission_h56.json'
+    if not current or not h56_receipt_path.exists():
+        problems.append('H56: current feed receipt or tagged H56 audit receipt is missing')
+    else:
+        h56_receipt = json.loads(h56_receipt_path.read_text())
+        latest = (ROOT / 'submission/LATEST.txt').read_text().strip()
+        h56_file = DOCS / 'downloads' / str(current.get('file', ''))
+        h56_source = ROOT / 'submission' / str(current.get('file', ''))
+        expected_sha = current.get('sha256')
+        if current.get('file') != latest or current.get('file') != H56_CURRENT_FILE:
+            problems.append('H56: current feed, submission/LATEST.txt, and expected synthetic-demo name disagree')
+        if (current.get('approved_for_weekly_slot') is not False
+                or current.get('synthetic') is not True
+                or current.get('submission_slots_used') != 0
+                or (current.get('slot_gate') or {}).get('approved_for_weekly_slot') is not False):
+            problems.append('H56: the synthetic demonstration must remain explicitly not approved with zero slots')
+        if 'SYNTHETIC' not in str(current.get('artifact_status', '')).upper():
+            problems.append('H56: current artifact is missing its synthetic-demo status label')
+        if (h56_receipt.get('sha256') != expected_sha
+                or h56_receipt.get('bytes') != current.get('bytes')
+                or h56_receipt.get('synthetic') is not True):
+            problems.append('H56: tagged receipt, current feed hash/size, or synthetic status disagree')
+        reasoning_name = Path(str((h56_receipt.get('reasoning') or {}).get('json') or '')).name
+        reasoning_source = ROOT / 'evidence' / reasoning_name
+        reasoning_public = DATA / reasoning_name
+        if (not reasoning_name.startswith('h56_reasoning_') or not reasoning_name.endswith('.json')
+                or not reasoning_source.is_file() or not reasoning_public.is_file()):
+            problems.append('H56: tagged per-candidate reasoning record is missing from evidence or published data')
+        elif reasoning_source.read_bytes() != reasoning_public.read_bytes():
+            problems.append('H56: published per-candidate reasoning JSON differs from its evidence source')
+        if not expected_sha or not h56_file.is_file() or hashlib.sha256(h56_file.read_bytes()).hexdigest() != expected_sha:
+            problems.append('H56: current downloadable TIFF is missing or differs from its audited SHA-256')
+        elif h56_file.stat().st_size != current.get('bytes'):
+            problems.append('H56: current downloadable TIFF size differs from its receipt')
+        if (not h56_source.is_file() or not h56_file.is_file()
+                or hashlib.sha256(h56_source.read_bytes()).hexdigest() != expected_sha
+                or hashlib.sha256(h56_file.read_bytes()).hexdigest() != expected_sha):
+            problems.append('H56: submission/ and docs/downloads/ do not contain the same receipt-verified TIFF')
+        fmt = h56_receipt.get('format_gate') or {}
+        uni = h56_receipt.get('uniqueness') or {}
+        holdout_note = str((h56_receipt.get('holdout') or {}).get('note', '')).lower()
+        if not fmt.get('ok') or fmt.get('mass_outside_footprint') != 0 or fmt.get('valid_px') != 5167373:
+            problems.append('H56: local format/true-footprint receipt did not pass')
+        if not uni.get('canonical_pattern_unique') or not uni.get('research_publication_ok'):
+            problems.append('H56: bounded canonical-pattern research check is missing or failed')
+        if 'synthetic' not in holdout_note or 'real holdout requires' not in holdout_note:
+            problems.append('H56: illustrative synthetic holdout is not distinguished from real-data validation')
+        if len(str(current.get('submission_note') or '')) > 200:
+            problems.append('H56: identifying note exceeds 200 characters')
+        h56_page = (DOCS / 'h56-cotrain.html').read_text() if (DOCS / 'h56-cotrain.html').exists() else ''
+        for term in ('RESEARCH-ONLY SYNTHETIC DEMO', 'do not spend a weekly slot',
+                     'do not upload until you rerun on real data'):
+            if term.casefold() not in h56_page.casefold():
+                problems.append(f'H56 co-training page: missing synthetic/no-slot warning {term!r}')
+        for page_name in ('index.html', 'executive-summary.html'):
+            text = (DOCS / page_name).read_text() if (DOCS / page_name).exists() else ''
+            if current.get('file') not in text or 'synthetic' not in text.casefold() or 'not approved' not in text.casefold():
+                problems.append(f'{page_name}: current H56 identity/synthetic/no-approval status is missing')
+        old_alias = DOCS / 'downloads/h56-candidate.tif'
+        old_page = (DOCS / 'h56.html').read_text() if (DOCS / 'h56.html').exists() else ''
+        if old_alias.exists() and old_alias.read_bytes() == h56_file.read_bytes():
+            problems.append('H56: historical short alias is ambiguously identical to the current co-training demo')
+        if 'HISTORICAL H56 CORE-CONTINUATION ARCHIVE' not in old_page:
+            problems.append('h56.html: earlier H56 page/short alias is not clearly marked historical')
+
+    # H55 is an archive: bind its corrected A-only promotion prose to the frozen sweep and keep it
+    # distinct from the registered block-error-correlation result above.
+    h55_receipt_path = ROOT / 'evidence/submission_gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.json'
+    h55_verification_path = ROOT / 'evidence/h55_verification_20261007T0150Z.json'
+    h55_sweep_path = ROOT / 'evidence/h55_sweep_hardcore.json'
+    if not h55_receipt_path.exists() or not h55_verification_path.exists() or not h55_sweep_path.exists():
+        problems.append('H55 archive: pinned submission, verification, or frozen sweep receipt is missing')
+    else:
+        h55 = json.loads(h55_receipt_path.read_text())
+        h55_verification = json.loads(h55_verification_path.read_text())
+        h55_sweep = json.loads(h55_sweep_path.read_text())
+        if h55.get('approved_for_weekly_slot') is not True:
+            problems.append('H55 archive: historical local PASS receipt changed; do not silently rewrite it')
+        if h55.get('file') == current.get('file'):
+            problems.append('H55 archive: historical H55 is conflated with the current H56 artifact')
+        if h55_verification.get('tag') != '20261007T0150Z' or h55_verification.get('all_ok') is not True:
+            problems.append('H55 archive: text-review verification is not bound to the frozen run')
+        def h55_row(mode, arm, emitter):
+            return next((row for row in (h55_sweep.get(mode, {}).get('summary') or {}).get('ranked', [])
+                         if row.get('arm') == arm and row.get('emitter') == emitter), None)
+        ah, rh = h55_row('hide', 'A_only', 'hc4|37654'), h55_row('hide', 'random', 'hc|37654')
+        at, rt = h55_row('tip', 'A_only', 'hc4|37654'), h55_row('tip', 'random', 'hc|37654')
+        if not all((ah, rh, at, rt)):
+            problems.append('H55 archive: A-only/matched-random rows are missing from the frozen sweep')
+        else:
+            if (abs(float(ah['mean_dti']) - 0.02979) > 1e-8
+                    or abs(float(rh['mean_dti']) - 0.03948) > 1e-8
+                    or abs(float(at['mean_dti']) - 0.02894) > 1e-8
+                    or abs(float(rt['mean_dti']) - 0.02477) > 1e-8
+                    or ah.get('fold_wins_vs_random') != 1
+                    or at.get('fold_wins_vs_random') != 2):
+                problems.append('H55 archive: A-only means/fold wins changed from the reviewed result')
+        ind = h55_verification.get('independence_summary') or {}
+        if (abs(float((ind.get('hide') or {}).get('max_abs_spearman_mean_overprediction', 0)) - 0.7625) > 1e-8
+                or abs(float((ind.get('tip') or {}).get('max_abs_spearman_mean_overprediction', 0)) - 0.7107) > 1e-8):
+            problems.append('H55 archive: registered block-error-correlation result changed')
+        h55_file = DOCS / 'downloads' / str(h55.get('file', ''))
+        if (not h55_file.is_file()
+                or hashlib.sha256(h55_file.read_bytes()).hexdigest() != h55.get('sha256')):
+            problems.append('H55 archive: historical TIFF is missing or differs from its local receipt')
+        elif h55_file.stat().st_size != h55.get('bytes'):
+            problems.append('H55 archive: TIFF size differs from the historical receipt')
+        if h55_file.is_file():
+            zip_path = h55_file.with_suffix('.zip')
+            if not zip_path.is_file():
+                problems.append('H55 archive: historical ZIP is missing')
+            else:
+                try:
+                    with zipfile.ZipFile(zip_path) as archive:
+                        members = [name for name in archive.namelist() if name.lower().endswith(('.tif', '.tiff'))]
+                        if len(members) != 1 or archive.read(members[0]) != h55_file.read_bytes():
+                            problems.append('H55 archive: ZIP must carry one TIFF byte-identical to the audit file')
+                except (OSError, zipfile.BadZipFile, KeyError) as exc:
+                    problems.append(f'H55 archive: invalid TIFF ZIP ({exc})')
+        h55_page = (DOCS / 'h55.html').read_text() if (DOCS / 'h55.html').exists() else ''
+        for phrase in ('H55 is historical; not the current artifact', '0.02979 vs 0.03948',
+                       '0.02894 vs 0.02477', 'below matched random on <code>hide</code>',
+                       'above matched random on <code>tip</code>', 'wins 1/4',
+                       'failing the required &ge;3/4 wins on each instrument',
+                       'not approved for upload'):
+            if phrase.casefold() not in h55_page.casefold():
+                problems.append(f'H55 archive page: missing status/correct A-only result {phrase!r}')
+        if 'below matched random on both' in h55_page.casefold():
+            problems.append('H55 archive page: stale claim says A-only is below random on both instruments')
+        home = (DOCS / 'index.html').read_text() if (DOCS / 'index.html').exists() else ''
+        if ('H55 historical archive' not in home or '0.02979' not in home or '0.02894' not in home
+                or 'H55 local PASS is not H56 approval' not in home):
+            problems.append('index.html: H55 home callout is not clearly historical or lacks corrected A-only values')
+        review = (DOCS / 'irregularities.html').read_text() if (DOCS / 'irregularities.html').exists() else ''
+        for phrase in ('<!--H55-ARCHIVE-REVIEW-->', 'Historical H55 evidence review', 'H55 is superseded',
+                       '0.02979', '0.02894', 'above random on tip', 'H55-JUNCTION remains untested',
+                       str(current.get('file'))):
+            if phrase.casefold() not in review.casefold():
+                problems.append(f'irregularities.html: missing H55 archive/current-H56 detail {phrase!r}')
+        if 'No radiometric bands in the available stack' in review:
+            problems.append('irregularities.html: obsolete H52-era radiometry statement contradicts H55 band-6 audit')
+        readme = (ROOT / 'README.md').read_text()
+        for phrase in ('H55 main candidate — historical archive', 'A-only promotion comparison',
+                       '0.02979 vs matched random 0.03948', '0.02894 vs 0.02477',
+                       '1/4 fold wins', 'Maximize P(Win)', 'Own the Outcome',
+                       'H55\'s byte-level re-audit of band 6 as GeoDAWN total-count radiometry'):
+            if phrase.casefold() not in readme.casefold():
+                problems.append(f'README.md: missing current-status/H55 correction/brief content {phrase!r}')
+        if 'resolves to none, as `knowledge/04`' in readme:
+            problems.append('README.md: original prompt interpretation still incorrectly says band 6 resolves to none')
+        latest_page = (DOCS / 'index.html').read_text() if (DOCS / 'index.html').exists() else ''
+        if latest_page.find('<!--H56BAR-->') < 0 or latest_page.find('<!--H56BAR-->') > latest_page.find('<!--H55BAR-->'):
+            problems.append('index.html: H56 current download must precede historical H55 archive')
 
     print(f"pages checked: {len(pages)}   data files: {len(list(DATA.glob('*.json')))}")
     for nse in notes:

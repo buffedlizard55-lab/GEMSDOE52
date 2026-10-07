@@ -74,6 +74,25 @@ def copy_evidence():
         for path in sorted(EV.glob(pat)):
             write(path.name, safe(json.loads(path.read_text())))
             copied.append(path.name)
+    marker = ROOT / 'submission/LATEST.txt'
+    if marker.exists():
+        current_name = marker.read_text().strip()
+        current_stem = current_name[:-4] if current_name.endswith('.tif') else current_name
+        current_receipt = EV / f'submission_{current_stem}.json'
+        if current_receipt.exists() and current_stem.startswith('gems52-h56-cotrain-'):
+            receipt = json.loads(current_receipt.read_text())
+            write('submission_h56.json', safe(receipt))
+            copied.append('submission_h56.json')
+            # The audit page links the per-candidate reasoning record from the tagged receipt.
+            # Publish only a basename under the evidence directory; never follow an arbitrary
+            # receipt path outside the repository into the static site.
+            reasoning_name = Path(str((receipt.get('reasoning') or {}).get('json') or '')).name
+            if reasoning_name.startswith('h56_reasoning_') and reasoning_name.endswith('.json'):
+                reasoning_source = EV / reasoning_name
+                if reasoning_source.is_file():
+                    DATA.mkdir(parents=True, exist_ok=True)
+                    (DATA / reasoning_name).write_bytes(reasoning_source.read_bytes())
+                    copied.append(reasoning_name)
     for path in sorted(EV.glob('h55_reasoning_*.json')):
         (DL / path.name).write_text(path.read_text())
     reasoning = EV / 'a_only_reasoning_r3.csv'
@@ -104,6 +123,9 @@ def submission_note(d):
     """
     if d.get('submission_note'):
         return str(d['submission_note'])[:200]
+    portal_note = (d.get('portal') or {}).get('note')
+    if portal_note:
+        return str(portal_note)[:200]
     n = (f"H54 revealed-core {d.get('retained_core_px', 0)}px + {d.get('novel_px', 0)}px novel "
          f"strike-continuation; 200m corridor excluded; |G|=14089")
     return n[:200]
@@ -230,15 +252,36 @@ def latest_submission():
         return dict(exists=False, file=None, note='No artifact has been built.')
     audited = [c for c in order if c[2].exists()]
     name, marker, own = (audited[0] if audited else order[0])
+    stem = name[:-4] if name.endswith('.tif') else name
     path = DL / name
     r2 = EV / 'submission_r2.json'
-    if own.exists() and json.loads(own.read_text()).get('file') == name:
-        report = json.loads(own.read_text())
+    if own.exists():
+        candidate = json.loads(own.read_text())
+        if candidate.get('file') == name or candidate.get('stem') == stem:
+            report = candidate
+            report['file'] = name
+        elif r2.exists() and json.loads(r2.read_text()).get('file') == name:
+            report = json.loads(r2.read_text())
+        else:
+            report = dict(file=name, approved_for_weekly_slot=False,
+                          promotion='historical research artifact; consult its original audit')
     elif r2.exists() and json.loads(r2.read_text()).get('file') == name:
         report = json.loads(r2.read_text())
     else:
         report = dict(file=name, approved_for_weekly_slot=False,
                       promotion='historical research artifact; consult its original audit')
+    if report.get('synthetic') is True:
+        report.update(
+            approved_for_weekly_slot=False,
+            promotion='synthetic methodology demo; not approved for portal upload',
+            artifact_status='RESEARCH ONLY — SYNTHETIC METHODOLOGY DEMO',
+            official_score_status='no portal upload or organizer score is recorded',
+            submission_slots_used=0,
+            slot_gate=dict(approved_for_weekly_slot=False,
+                           reason='Synthetic inputs are not competition data; real-data holdout has not been run. Do not upload or spend a slot.'),
+        )
+    if report.get('format_gate') and not report.get('format'):
+        report['format'] = report['format_gate']
     report['marker'] = str(marker.relative_to(ROOT))
     report['exists'] = path.exists()
     report['download'] = 'downloads/' + name
@@ -246,11 +289,14 @@ def latest_submission():
     report['submission_note'] = submission_note(report)
     report['submission_note_chars'] = len(report['submission_note'])
     if path.exists():
-        report['bytes'] = path.stat().st_size
+        actual_bytes = path.stat().st_size
         actual = file_hash(path)
-        report['published_byte_hash_matches_receipt'] = report.get('sha256') == actual
+        if report.get('bytes') is not None and int(report['bytes']) != actual_bytes:
+            raise ValueError('Published TIFF byte count differs from the audited receipt. Do not publish it.')
         if report.get('sha256') and report['sha256'] != actual:
             raise ValueError('Published TIFF differs from the audited TIFF. Do not upload it.')
+        report['bytes'] = actual_bytes
+        report['published_byte_hash_matches_receipt'] = report.get('sha256') == actual
     return report
 
 

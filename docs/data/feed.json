@@ -1,6 +1,6 @@
 {
-  "generated_utc": "2026-10-07T17:18:46Z",
-  "branch": "main",
+  "generated_utc": "2026-10-07T17:47:20Z",
+  "branch": "arena/18b4f2f5-gemsdoe52",
   "repo": "buffedlizard55-lab/GEMSDOE52",
   "evidence_copied": [
     "a_only_reasoning_r2.json",
@@ -73,6 +73,8 @@
     "submission_gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.json",
     "submission_gems52-h55-grav-rtp-logedge-37654-c4b8c10205da-zeros.json",
     "submission_gems52-h55-profile-37654-7fd28c25b51a-research.json",
+    "submission_h56.json",
+    "h56_reasoning_20261007T1630Z.json",
     "a_only_reasoning_r3.csv"
   ],
   "files": [

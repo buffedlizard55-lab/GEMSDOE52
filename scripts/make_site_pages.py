@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate docs/h54.html and insert the H54 one-click download bar into the R2 site's top pages.
+"""Generate the H54 audit page and update its subordinate archive bar without replacing H56 pages.
 
 Why this script writes one page and edits two, instead of owning the site: PR #9 (the R2 round) added
 `scripts/publish_site_r2.py`, which regenerates `index.html`, `executive-summary.html`,
@@ -10,8 +10,9 @@ current receipt; a failed-gate warning on the two top pages). An earlier version
 `validation.html`, `feed.html`, `irregularities.html` and `sources.html` from its own templates, which
 clobbered the R2 site and failed those checks. It does not do that any more.
 
-Everything here is rendered from `evidence/*.json`; no number is typed into this file. The download bar
-insertion is idempotent, so running the script twice does not stack two bars.
+The H54 archive page and bar read the dedicated `docs/data/h54_audit.json` receipt, never the current
+`docs/data/submission.json`. The H54 bar stays below the current H56 bar; the executive summary is not
+edited. The insertion is idempotent and cannot replace the current H56 guide or pointer.
 """
 from __future__ import annotations
 
@@ -24,7 +25,8 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 EV = ROOT / "evidence"
 NAV = ('<a href="index.html">Overview</a><a href="executive-summary.html">Submission&nbsp;guide</a>'
-       '<a href="h54.html">H54&nbsp;revealed-preference</a><a href="validation.html">Validation</a>'
+       '<a href="h54.html">H54&nbsp;audit archive</a><a href="h56-cotrain.html">Current H56 status</a>'
+       '<a href="validation.html">Validation</a>'
        '<a href="forensics.html">0.2778&nbsp;autopsy</a><a href="irregularities.html">Irregularities</a>'
        '<a href="sources.html">Sources</a>')
 
@@ -55,51 +57,47 @@ def page(title: str, body: str) -> str:
 
 
 def download_bar(sub: dict) -> str:
-    """The one-click bar. TIF and ZIP, at the very top, with the note to paste under the button."""
+    """Render H54's audit-only link from its separate receipt; never label it a current candidate."""
     if not sub.get("exists"):
         return ('<!--H54BAR--><div class="download-bar" id="h54-bar"><div>'
-            '<strong>H54 submission not built</strong>'
-            '<small>run <code>PYTHONPATH=src python3 scripts/build_revealed_submission.py</code>'
-            '</small></div></div><!--/H54BAR-->')
-    proj = sub.get("projected_dti") or {}
-    uni = sub.get("uniqueness") or {}
-    note = sub.get("submission_note") or ""
+            '<strong>H54 audit archive not built</strong>'
+            '<small>This historical artifact is not the current H56 candidate.</small>'
+            '</div></div><!--/H54BAR-->')
+    note = sub.get("submission_note") or "H54 legacy archive; no upload approval."
     return (
         '<!--H54BAR--><div class="download-bar" id="h54-bar"><div>'
-        f'<strong>H54 submission GeoTIFF — the candidate this round offers</strong>'
-        f'<small>{esc(sub.get("file"))}</small>'
-        f'<small>{esc(sub.get("bytes"))} bytes · 1 band · float32 · EPSG:32611 · values {{0,1}} · '
-        f'no NaN · sha256 <code>{esc((sub.get("sha256") or "")[:16])}…</code></small>'
-        f'<small>format gate {esc((sub.get("format") or {}).get("ok"))} · uniqueness gate '
-        f'{esc(uni.get("ok"))} · {esc(round(100 * float(uni.get("novel_fraction") or 0), 1))}% strictly '
-        f'novel · {esc(uni.get("prior_px_dropped"))} prior px not re-emitted</small>'
-        f'<small>notes box, verbatim ({esc(sub.get("submission_note_chars"))} chars): '
+        '<strong>H54 legacy audit GeoTIFF — historical only; not the current H56 artifact</strong>'
+        f'<small>{esc(sub.get("file"))} · {esc(sub.get("bytes"))} bytes · '
+        f'SHA-256 <code>{esc((sub.get("sha256") or "")[:16])}…</code></small>'
+        f'<small>Local format check: {esc(sub.get("format_ok"))}; global decoded-pattern uniqueness: '
+        f'{esc(sub.get("global_decoded_pattern_uniqueness", "unknown"))}; weekly-slot approval: '
+        f'{esc(sub.get("approved_for_weekly_slot"))}. Do not submit this H54 archive.</small>'
+        f'<small>Historical audit note ({esc(sub.get("submission_note_chars", len(note)))} chars): '
         f'<code>{esc(note)}</code></small></div>'
-        f'<a class="button" href="{esc(sub.get("download"))}" download>↓ Download .TIF</a>'
-        f'<a class="button" href="{esc(sub.get("download_zip"))}" download>↓ Download .ZIP</a>'
-        f'<a class="button" href="h54.html">Why this file →</a>'
-        f'<small style="width:100%">projected DTI {esc(proj.get("mean_dti"))} · '
-        f'P(beats 0.2778) {esc(proj.get("p_win"))} · worst {esc(proj.get("worst_dti"))} · best '
-        f'{esc(proj.get("best_dti"))} — an integral over a stated prior, <b>not a forecast</b></small>'
-        '</div><!--/H54BAR-->')
+        f'<a class="button" href="{esc(sub.get("download"))}" download>↓ Download H54 audit TIFF</a>'
+        f'<a class="button" href="{esc(sub.get("download_zip"))}" download>↓ Download H54 audit ZIP</a>'
+        f'<a class="button" href="h54.html">H54 audit details →</a>'
+        '<small style="width:100%">The current H56 co-training artifact is a synthetic methodology demo and is also not approved for a weekly slot; '
+        '<a href="h56-cotrain.html">read its status</a>.</small></div><!--/H54BAR-->')
 
 
 def insert_bar(path: pathlib.Path, bar: str) -> bool:
-    """Put the bar immediately inside <main>, before anything else. Idempotent."""
+    """Update the existing H54 archive slot; if missing, add only after H56 or refuse safely."""
     if not path.exists():
         return False
     s = path.read_text()
-    i = s.find("<main")
-    if i < 0:
-        return False
-    j = s.find(">", i) + 1
-    if "<!--H54BAR-->" in s and "<!--/H54BAR-->" in s:      # replace the previous bar in place
+    if "<!--H54BAR-->" in s and "<!--/H54BAR-->" in s:
         a = s.index("<!--H54BAR-->")
-        b = s.index("<!--/H54BAR-->") + len("<!--/H54BAR-->")
+        b = s.index("<!--/H54BAR-->", a) + len("<!--/H54BAR-->")
         path.write_text(s[:a] + bar + s[b:])
         return True
-    s = s[:j] + bar + s[j:]
-    path.write_text(s)
+    if path.name != "index.html":
+        return False
+    anchor = "<!--/H56BAR-->"
+    if anchor not in s:
+        return False
+    index = s.index(anchor) + len(anchor)
+    path.write_text(s[:index] + bar + s[index:])
     return True
 
 
@@ -112,11 +110,9 @@ def table(head, rows) -> str:
 
 
 def h54_body() -> str:
-    # Read the *feed* copy, not the evidence copy: scripts/refresh_feed.py enriches it with
-    # `exists`, `download`, `download_zip` and `submission_note`, which is what download_bar() needs.
-    # Reading evidence/submission_<stem>.json here rendered the "not built" branch on a page whose
-    # subject was the built file.
-    sub = json.loads((DOCS / "data/submission.json").read_text())
+    # H54 is a historical audit artifact, not the current H56 submission. Read its dedicated
+    # receipt, which already carries explicit audit-only status and direct download aliases.
+    sub = json.loads((DOCS / "data/h54_audit.json").read_text())
     cal = load("revealed_calibration")
     bud = load("revealed_budget")
     ind = load("independence_revealed")
@@ -131,12 +127,14 @@ def h54_body() -> str:
              'mapped catalogue earns exactly nothing, and bounds the credit of the double-corroborated '
              'atom this file retains.</p>')
     B.append(download_bar(sub))
-    B.append('<div class="status"><strong>Read this before spending a slot.</strong> The retained half of '
-             'this file\'s credit is bounded by exact arithmetic on published scores. The novel half\'s '
-             'credit density is <em>not</em> known and cannot be measured here: 171 features were screened '
-             'for the ability to re-rank inside the champion file and the best blocked AUC was 0.5453 '
-             '(point features) and 0.5122 (structure-tensor coherence). The budget is therefore chosen by '
-             'integrating the metric over a <em>stated prior</em> for that unknown.</div>')
+    B.append('<div class="status"><strong>Historical H54 audit only — do not spend a slot on this file.</strong> '
+             'The retained half of this file\'s credit is bounded by exact arithmetic on published scores. '
+             'The novel half\'s credit density is <em>not</em> known and cannot be measured here: 171 features '
+             'were screened for the ability to re-rank inside the champion file and the best blocked AUC was '
+             '0.5453 (point features) and 0.5122 (structure-tensor coherence). The budget is therefore chosen '
+             'by integrating the metric over a <em>stated prior</em> for that unknown. This local audit does not '
+             'establish global uniqueness or organizer approval; the current H56 is a separate synthetic demo '
+             'and is also not approved for upload.</div>')
 
     B.append("<h2>1 · The calibration, exactly</h2>")
     rows = [["|G| (hidden truth, px)", cal.get("g_estimate_px"),
@@ -244,11 +242,11 @@ def h54_body() -> str:
 def main() -> int:
     (DOCS / "h54.html").write_text(page("H54 revealed preference", h54_body()))
     print("wrote docs/h54.html")
-    sub = json.loads((DOCS / "data/submission.json").read_text())
+    sub = json.loads((DOCS / "data/h54_audit.json").read_text())
     bar = download_bar(sub)
-    for name in ("index.html", "executive-summary.html"):
-        ok = insert_bar(DOCS / name, bar)
-        print(("inserted" if ok else "SKIPPED (no <main>)") + f" the H54 bar into docs/{name}")
+    ok = insert_bar(DOCS / "index.html", bar)
+    print(("updated" if ok else "SKIPPED safely") + " the H54 audit bar in docs/index.html")
+    print("left docs/executive-summary.html (current H56 guide) untouched")
     return 0
 
 
