@@ -140,17 +140,40 @@ def derived_layers(path: str, band: int, valid: np.ndarray,
     return [val, grad, rng]
 
 
-def build_layers(work: str = "work/h57", chunk: int = 600) -> dict:
-    """Build and cache the uint8 layer stack.  Returns the layer-name index."""
+def data_root_path(path: str | Path, data_dir: str | Path = "data") -> Path:
+    """Resolve a registry-style ``data/...`` source against an isolated data root.
+
+    The default preserves the historical ``data/...`` paths and H57 cache key. Supplying
+    ``work/h58_pinned`` redirects every layer, including the external bands, without changing
+    the tracked ``data/`` tree or relying on the process working directory's ``data`` symlink.
+    """
+    p = Path(path)
+    if p.is_absolute():
+        return p
+    if p.parts and p.parts[0] == "data":
+        p = Path(*p.parts[1:])
+    return Path(data_dir) / p
+
+
+def build_layers(work: str = "work/h57", chunk: int = 600,
+                 data_dir: str | Path = "data") -> dict:
+    """Build and cache the uint8 layer stack.  Returns the layer-name index.
+
+    ``data_dir`` makes the feature stack source explicit. It is used by H58 to build only from the
+    manifest-pinned owner mirror, while the default retains the legacy H57 call signature.
+    """
     workp = Path(work)
     workp.mkdir(parents=True, exist_ok=True)
     meta_path = workp / "layers.json"
-    spec = [(p, b, n) for p, b, n in FEATURE_BANDS] + [(p, b, n) for p, b, n in EXTERNAL_BANDS]
+    base_spec = [(p, b, n) for p, b, n in FEATURE_BANDS] + [(p, b, n) for p, b, n in EXTERNAL_BANDS]
+    spec = [(str(data_root_path(p, data_dir)), b, n) for p, b, n in base_spec]
+    spec_signature = [[p, int(b), name] for p, b, name in spec]
     if meta_path.exists():
         meta = json.loads(meta_path.read_text())
-        if meta.get("spec") == spec and (workp / "layers.u8").exists():
+        if meta.get("spec") == spec_signature and (workp / "layers.u8").exists():
             return meta
-    valid = G.footprint_from("data/training_features.tif", bands="all")
+    feature_path = data_root_path("data/training_features.tif", data_dir)
+    valid = G.footprint_from(feature_path, bands="all")
     n = len(spec) * 3
     out = np.lib.format.open_memmap(workp / "layers.u8", mode="w+",
                                     dtype=np.uint8, shape=(n,) + G.SHAPE)
@@ -165,8 +188,7 @@ def build_layers(work: str = "work/h57", chunk: int = 600) -> dict:
             del arr
     out.flush()
     del out
-    meta = dict(spec=[[p, int(b), n] for p, b, n in spec], names=names,
-                footprint_px=int(valid.sum()))
+    meta = dict(spec=spec_signature, names=names, footprint_px=int(valid.sum()))
     meta_path.write_text(json.dumps(meta, indent=1))
     return meta
 

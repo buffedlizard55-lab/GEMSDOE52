@@ -21,7 +21,7 @@ def sha(path: Path) -> str:
 def _current_round(sub: dict) -> str:
     """Which round owns `submission/LATEST.txt`, read from the receipt rather than hard-coded."""
     f = sub.get("file", "")
-    for tag in ("h57", "h56", "h55", "h54"):
+    for tag in ("h58", "h57", "h56", "h55", "h54"):
         if f"-{tag}-" in f:
             return tag.upper()
     return "UNKNOWN"
