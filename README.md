@@ -4,6 +4,51 @@ Target: a **unique, downloadable single-band GeoTIFF** for [DrivenData competiti
 Prize](https://www.drivendata.org/competitions/306/competition-doe-gems/), built to beat this group's
 best of 0.2778, with the reasoning and the evidence published next to the file.
 
+## H55 — the file this branch ships, first
+
+> Three rounds have shipped into this repo in parallel (IR-52-029). `submission/LATEST.txt` — the
+> marker `scripts/refresh_feed.py` resolves to build the site's headline download — points at the
+> **H55** file below, because it is the only artefact in `submission/` whose promotion rests on 4/4
+> folds of **both** blocked instruments against a matched-budget random control *and* on the
+> pre-registered conditional-independence test actually firing. Every other artefact stays in
+> `submission/`, stays downloadable, and is now a **prior** for the uniqueness gate. Reverting is one
+> line. The parallel rounds' own sections follow unchanged.
+
+| | |
+|---|---|
+| **download** | [`docs/downloads/gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.tif`](docs/downloads/gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.tif) — click, save, upload |
+| zip | [`docs/downloads/gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.zip`](docs/downloads/gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.zip) (the raster, the note to paste, and its evidence record) |
+| **portal submission name** | `GEMSDOE52-H55 RadCorrTC-ViewB-CoverageGreedy-37654px` |
+| **portal note** (192 chars, verbatim) | `H55: band 6 of training_features is radiometric TC, not magnetics (rho 1.000 vs USGS TC). ViewB + K/Th/U + LiDAR + INGENIOUS springs. Coverage-greedy, 94% of the 9.38 kernel ceiling. |G|=8129.` |
+| full reasoning beside the note | `submission_note_long` in [`evidence/submission_gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.json`](evidence/submission_gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.json) |
+| bytes / grid | 147,617 · width **3292** × height **3730** · single band · `float32` · EPSG:32611 · 100 m |
+| values | `[0.0, 1.0]` only · **37,654 positive px** · **0 NaN** · 0 on a catalogue pixel · 0 outside the footprint |
+| sha256 | `a0f3ed4b4524ca67a0c715beca5a905eced165ee9e59be5e5831a39b7526254d` (the published bytes hash-matches the receipt: `True`) |
+| format gate | `True`, problems `[]` |
+| uniqueness gate | `True` — **strictly-novel-and-selective**: 23,008 px (61.1%) touch none of the **23** priors scanned, and 1,123,846 prior px are deliberately not re-emitted |
+| placement efficiency | `A/S` = **8.8151** = 93.97% of the exact 9.380298 kernel-disc ceiling, against **8.044** (85.8%) for the file that scored 0.2778. Every emitted pixel is 8-isolated (`max_component = 1`) |
+| selection | `evidence/h55_sweep.json`, pre-registered rule, read at build time: **`B_therm\|greedy|37654`**, rule 1 `True` |
+| **holdout** | **`hide` 0.09701** vs random 0.03948 (+146 %), **4/4** folds · **`tip` 0.0547** vs random 0.02477 (+121 %), **4/4** folds · sum **0.15171** vs the previously shipped arm's 0.0809 (**+87.5 %**) |
+| co-training premise | **REFUTED** at the pre-registered threshold on both instruments: max \|Spearman\| of per-block OOF error on labelled negatives = **0.7625** (`hide`) / **0.7107** (`tip`) vs `ABANDON_R = 0.6`, on **40 usable blocks of 62**, 4/4 folds — the test could not fire at all in H52 |
+| not merely the union | **5.6%** of the shipped pixels are in the union of the two views' top-K sets, **18.3%** in the union of their coverage-greedy emissions; equal to neither |
+| three-pass verification | `scripts/verify_h55.py` → **`PASS3_ALL_OK=True`**, 23/23 checks re-read from the bytes |
+| Phase-2 artefact | [`evidence/h55_reasoning_20261007T0150Z.json`](evidence/h55_reasoning_20261007T0150Z.json) — 510 A-confident/B-abstaining neighbourhoods at 300 m grouping; 405 with positive support, 43 linear over ≥1 km, 98 corroborated by a ≥60 °C well or spring within 5 km |
+| projection | placement gain only (the 0.2778 file's own ρ_A = 0.01287 applied to this file's measured coverage, nothing else changed): **DTI ≈ 0.3044**. Arithmetic given its assumption, **not a forecast** |
+| site page | [docs/h55.html](docs/h55.html) — every number generated from `evidence/` by `scripts/make_h55_page.py` |
+| rebuild | `python3 scripts/run_h55.py --stage build --arm auto --dti 0 --ng 8129 --budget 37654 --tag 20261007T0150Z` (reproduces the identical sha256) |
+
+**Core values, applied.** _Maximize P(Win)_: the largest measured lever was placement, not prediction —
+at fixed geology DTI is monotone in kernel-weighted coverage per emitted pixel, the family's best file
+spent 85.8 % of the ceiling that arithmetic allows, and closing that gap is worth ~+0.03 DTI before any
+new geology. No weekly slot is recommended for an idea that has not beaten the holdout best on both
+instruments in ≥3/4 folds; this one did, 4/4 and 4/4. _Own the Outcome_: the two bugs this session wrote
+(IR-52-025, IR-52-026) are published with the tests that caught them, the three mechanisms from the brief
+that failed are published with their numbers, and the one layer that did not earn its place is labelled
+neutral rather than credited.
+
+
+---
+
 ## The file — download it, submit it, nothing to configure
 
 | | |
@@ -1022,3 +1067,65 @@ Ordered by expected effect on the score the organiser actually computes.
    table is built client-side (`IR-52-016`) — the site serves a dated snapshot and says so; the H52
    artefact and its `evidence/` remain in the repo with their holdout claims labelled as not standing,
    rather than being deleted, because a removed measurement cannot be re-checked.
+
+## 7.1 H55 — limitations, and what to do next (ranked by expected value per hour)
+
+Full version with every number: [docs/h55.html §11](docs/h55.html). Limitations first, because a list of
+next steps that does not say what the current file cannot do is marketing.
+
+**Limitations.**
+
+* **Nothing here forecasts a portal score.** The instruments under-forecast the board by ~4× in absolute
+  terms (this family scores ~0.05 on `hide` folds and 0.2778 on the portal), so a fold number is a
+  *ranking* device. The only projection given a number is the placement gain in isolation (≈0.3044), and
+  its assumption — that this field's covered area is exactly as truth-enriched as the 0.2778 file's — is
+  measured in neither direction.
+* **|G| rests on owner-reported scores.** Rasters, masses and geometry are SHA-256-exact; the DTI values
+  paired with them are not organiser-authenticated (IR-52-003). `scripts/calibrate_g.py` prints every row
+  so the pairings can be re-checked by hand.
+* **The thermal layer is carried, not credited.** It won the pre-registered tie by **0.00003**. Anyone
+  reporting that this file is better *because of* the INGENIOUS springs is reporting something the
+  evidence does not say.
+* **One tuned constant was set by inspection, not by a sweep**: the coherence floor 0.30 that truncates the
+  thermal strike walk. The footprint's median coherence is 0.106, so that floor does nearly all the work
+  and only 3,340 of 5,165,840 cells survive it.
+* **The budget was chosen at fold prevalence (0.2 %), not board prevalence (≈0.157 %)**, and the rule
+  preferred the smaller mass on a near-exact tie.
+* **View A is dead at 100 m and was only tested at 100 m.** N-15 excludes it as a *primary emitter* at the
+  scale the metric scores; it does not exclude a 300 m potential-field product used to *gate* a 100 m
+  surface detection.
+* **The external layers are uint8-quantised mirrors** (1st–99th percentile) of the official grids. Sources
+  are named and reachable; a float32 re-reduction would sharpen every ratio-step layer.
+* **The register's id space collided across concurrent sessions** (IR-52-030): two sessions allocated
+  IR-52-021/022 to different findings. Both readings are recorded and cross-referenced rather than
+  silently renumbered, because renumbering someone else's citation is how a register stops being checkable.
+
+**Next, in expected-value order.**
+
+1. **Sweep the budget on the board, once.** The fold `T(S)` curve is flat between 37,654 and 70,000 px on
+   `hide` (0.0911 / 0.0920 / 0.0885), and `DTI = T/(0.2S + 0.8|G|)` is monotone increasing in `S` wherever
+   `T` grows faster than `0.2·S`. One 60–80 k file settles it, and it is the only available experiment whose
+   answer is a board number rather than a fold number.
+2. **Re-derive the fold instruments at board prevalence.** `PREVALENCE = 0.002` in `scripts/run_h55.py`
+   against a board-implied ≈0.00157: the optimal emission density moves with prevalence, so the whole
+   selection was made ~28 % off. One-line change, full re-sweep.
+3. **Sweep the coherence floor and the strike-walk length.** Both are one-line changes to
+   `gems55.thermal.build`. If longer traces help, H55-3 goes from neutral to load-bearing and the ranking
+   in `knowledge/12` changes.
+4. **Test View A as a gate, not a ranker.** Emit View B's candidates only where a 300 m potential-field
+   product is *not* actively contradictory. That is the one use of the potential-field data the
+   measurements do not already exclude, and the version of the two-view idea that survives the refutation.
+5. **Re-reduce K/Th/U/TC from the official USGS grids to float32.** Public domain, file list on ScienceBase
+   item 657e1d85d34e23d3533209f7; the ratio-step layers have never been tested at full precision.
+6. **Stop writing verification prose that no verification produced.** IR-52-031 is the third instance of
+   the same shape in three sessions (after IR-52-007 and IR-52-026): `check_site.py` printed "Scientific
+   slot gate remains closed" in its *success* message without ever opening the record that holds the flag.
+   The durable fix is a rule, not a patch — every sentence a checker prints about a value must read that
+   value, and where it cannot, it must say "not recorded" rather than guess.
+7. **Give each session its own irregularity-id prefix.** IR-52-030 is a process failure, not a code failure,
+   and it will recur on every parallel round until the id space is partitioned.
+8. **Ask the organiser the question that would settle |G|.** Forum thread 11527 asked whether labels are
+   LiDAR-scarp or geophysics-inferred and went unanswered. One confirmed number — the public test set's
+   approximate truth-pixel count, or whether out-of-footprint mass is taxed — would be worth more than any
+   remaining modelling hour, because both are already derivable from the metric algebra in `knowledge/01`
+   given the answer.

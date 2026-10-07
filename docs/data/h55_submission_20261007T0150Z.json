@@ -497,11 +497,5 @@
     "a_per_s_this_file": 8.815108454613055,
     "a_per_s_0278_file": 8.044,
     "a_per_s_ceiling": 9.380297810508184
-  },
-  "marker": "submission/LATEST.txt",
-  "exists": true,
-  "download": "downloads/gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.tif",
-  "download_zip": "downloads/gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.zip",
-  "submission_note_chars": 192,
-  "published_byte_hash_matches_receipt": true
+  }
 }

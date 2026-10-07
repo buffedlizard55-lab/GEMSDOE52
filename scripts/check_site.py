@@ -239,7 +239,22 @@ def main() -> int:
         for p in problems[:40]:
             print("  ✗", p)
         return 1
-    print('\n✓ local links/JSON/receipt values verified; format and canonical-pattern research release verified; byte-identical TIFF serves through the site. Scientific slot gate remains closed.')
+    # The closing sentence used to assert "Scientific slot gate remains closed" unconditionally -- a
+    # success message stating a condition the script never read, which is the exact failure mode this
+    # script exists to catch in other files.  It became actively wrong the moment an artefact shipped
+    # with approved_for_weekly_slot=True (IR-52-031).  Read it, or do not print it.
+    sub_p = DATA / 'submission.json'
+    sub = json.loads(sub_p.read_text()) if sub_p.exists() else {}
+    gate = sub.get('approved_for_weekly_slot')
+    if gate is True:
+        slot = ('Scientific slot gate is OPEN for '
+                f"{sub.get('file')} ({sub.get('promotion', 'no promotion reason recorded')})")
+    elif gate is False:
+        slot = f"Scientific slot gate remains CLOSED for {sub.get('file')}."
+    else:
+        slot = 'Scientific slot gate: not recorded in docs/data/submission.json (not assumed either way).'
+    print('\n✓ local links/JSON/receipt values verified; format and canonical-pattern research release '
+          f'verified; byte-identical TIFF serves through the site. {slot}')
     return 0
 
 

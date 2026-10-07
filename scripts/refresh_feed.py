@@ -53,10 +53,20 @@ def copy_evidence():
     for path in sorted(EV.glob('*_r2.json')):
         write(path.name, safe(json.loads(path.read_text())))
         copied.append(path.name)
-    for name in ('r2_preregistration', 'source_policy', 'data_manifest'):
+    for name in ('r2_preregistration', 'source_policy', 'data_manifest', 'irregularities'):
         path = ROOT / 'registry' / (name + '.json')
         if path.exists():
             write(name + '.json', safe(json.loads(path.read_text())))
+            copied.append(name + '.json')
+    # H55 publishes its own evidence the same way the R2 round publishes *_r2.json: copied on every
+    # run so the page cannot drift from the artefact, and named by round so it is never mistaken for
+    # another round's numbers.  The Phase-2 reasoning record is staged next to the raster it explains.
+    for pat in ('h55_*.json', 'submission_gems52-h55-*.json'):
+        for path in sorted(EV.glob(pat)):
+            write(path.name, safe(json.loads(path.read_text())))
+            copied.append(path.name)
+    for path in sorted(EV.glob('h55_reasoning_*.json')):
+        (DL / path.name).write_text(path.read_text())
     return copied
 
 
@@ -69,7 +79,13 @@ def file_hash(path):
 
 
 def submission_note(d):
-    """The <=200-character note that distinguishes this submission later."""
+    """The <=200-character note that distinguishes this submission later.
+
+    A record may carry both a short ``submission_note`` (what actually goes in the portal's box, which
+    is length-limited) and a ``submission_note_long`` (the full reasoning, published on the site and in
+    the evidence file).  Truncating the long one is what produced a note that ended mid-sentence, so
+    the long form is never truncated into the short field: it is offered separately.
+    """
     if d.get('submission_note'):
         return str(d['submission_note'])[:200]
     n = (f"H54 revealed-core {d.get('retained_core_px', 0)}px + {d.get('novel_px', 0)}px novel "
@@ -78,7 +94,14 @@ def submission_note(d):
 
 
 def make_zip(name):
-    """One-click ZIP beside the TIF: the raster, the note to paste, and the evidence behind it."""
+    """One-click ZIP beside the TIF: the raster, the note to paste, and the evidence behind it.
+
+    Round-agnostic on purpose.  Two rounds have shipped records with different shapes (H54 carries
+    ``retained_core_px`` / ``novel_along_strike_px`` / ``corridor_excluded_m``; H55 carries
+    ``geometry`` / ``selection`` / ``uniqueness``), and a zip that prints ``None px retained core``
+    for a round it was not written against is worse than a generic one.  So the body is assembled
+    from the keys the record actually has, and says which round it came from.
+    """
     import zipfile
     src = ROOT / 'submission' / name
     if not src.exists():
@@ -87,22 +110,70 @@ def make_zip(name):
     ev = EV / f'submission_{stem}.json'
     d = json.loads(ev.read_text()) if ev.exists() else {}
     proj = d.get('projected_dti') or {}
-    body = (
-        f"{name}\n"
-        f"sha256 {d.get('sha256')}\n"
-        f"{d.get('bytes')} bytes, 1 band, float32, EPSG:32611, values in [0,1], no NaN.\n\n"
-        f"SUBMISSION NOTE (<=200 chars, paste into the portal's notes box):\n"
-        f"{submission_note(d)}\n\n"
-        f"What it is: {d.get('budget')} emitted pixels = {d.get('retained_core_px')} px retained core "
-        f"(the double-corroborated atom A&C, whose credit the organiser's own published scores bound "
-        f"exactly) + {d.get('novel_px')} px strictly novel ({d.get('novel_along_strike_px')} along the "
-        f"recovered strike of that structure, {d.get('novel_far_px')} free candidates on the same "
-        f"fabric).\n"
-        f"Nothing is emitted within {d.get('corridor_excluded_m')} m of a mapped trace, because that "
-        f"ring's credit is exactly zero in the organiser's own scores (knowledge/10 s2).\n"
-        f"Projected DTI {proj.get('mean_dti')} (P(win over 0.2778) {proj.get('p_win')}); the "
-        f"projection is an integral over a stated prior, not a forecast - see "
-        f"evidence/revealed_budget.json.\n")
+    lines = [
+        name,
+        f"sha256 {d.get('sha256')}",
+        f"{d.get('bytes')} bytes, 1 band, float32, EPSG:32611, values in [0,1], no NaN.",
+        '',
+        "SUBMISSION NOTE (<=200 chars, paste into the portal's notes box):",
+        submission_note(d),
+        '',
+    ]
+    if d.get('submission_name'):
+        lines += [f"SUBMISSION NAME: {d['submission_name']}", '']
+    if d.get('retained_core_px') is not None:
+        lines += [
+            f"What it is: {d.get('budget')} emitted pixels = {d.get('retained_core_px')} px retained "
+            f"core (the double-corroborated atom A&C, whose credit the organiser's own published "
+            f"scores bound exactly) + {d.get('novel_px')} px strictly novel "
+            f"({d.get('novel_along_strike_px')} along the recovered strike of that structure, "
+            f"{d.get('novel_far_px')} free candidates on the same fabric).",
+            f"Nothing is emitted within {d.get('corridor_excluded_m')} m of a mapped trace, because "
+            f"that ring's credit is exactly zero in the organiser's own scores (knowledge/10 s2).",
+            f"Projected DTI {proj.get('mean_dti')} (P(win over 0.2778) {proj.get('p_win')}); the "
+            f"projection is an integral over a stated prior, not a forecast - see "
+            f"evidence/revealed_budget.json.",
+            '',
+        ]
+    geo, sel, uni = d.get('geometry') or {}, d.get('selection') or {}, d.get('uniqueness') or {}
+    if geo:
+        lines += [
+            f"What it is: {geo.get('S')} emitted pixels, every one 8-isolated "
+            f"(largest component {geo.get('max_component')}), placed by a coverage-greedy on the "
+            f"metric's own numerator.",
+            f"Placement efficiency A/S = {geo.get('A_per_S')} = "
+            f"{(geo.get('spacing_efficiency') or 0):.2%} of the exact 9.380298 kernel-disc ceiling; "
+            f"the file that scored 0.2778 reached 8.044 (85.75%).",
+        ]
+    if sel:
+        lines += [
+            f"Selected by the pre-registered rule from {sel.get('source')}: "
+            f"{sel.get('arm')}|{sel.get('emitter')}. Blocked whole-segment holdout, 4 folds x 2 "
+            f"instruments, matched-budget random control: hide {sel.get('hide')} "
+            f"({sel.get('hide_wins')}/4 folds) vs random; tip {sel.get('tip')} "
+            f"({sel.get('tip_wins')}/4). Those are recovery numbers on hidden catalogue segments, "
+            f"NOT a forecast of the portal score.",
+            f"|G| = {sel.get('n_g')} calibrated by inverting DTI = T/(0.2*S + 0.8*|G|) on 13 "
+            f"SHA-256-verified scored rasters (evidence/h55_g_calibration.json).",
+        ]
+    if uni:
+        lines += [
+            f"Uniqueness gate: {uni.get('relation_to_union')}; "
+            f"{(uni.get('novel_fraction') or 0):.1%} of this file's pixels touch none of the "
+            f"{uni.get('n_priors_checked')} priors scanned, and {uni.get('prior_px_dropped')} prior "
+            f"pixels are deliberately not re-emitted.",
+        ]
+    if d.get('projection'):
+        lines += [
+            f"Placement gain in isolation (the 0.2778 file's own rho_A = 0.01287 applied to this "
+            f"file's measured coverage, nothing else changed): DTI ~ "
+            f"{d['projection'].get('geometry_only_dti')}. Arithmetic given its assumption, and the "
+            f"assumption is stated in the evidence file.",
+        ]
+    if d.get('submission_note_long'):
+        lines += ['', 'FULL REASONING (too long for the portal box; published on the site):',
+                  str(d['submission_note_long']), '']
+    body = "\n".join(lines)
     zp = DL / f'{stem}.zip'
     with zipfile.ZipFile(zp, 'w', zipfile.ZIP_DEFLATED) as z:
         z.write(src, arcname=name)
