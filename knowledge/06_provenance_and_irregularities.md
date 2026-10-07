@@ -135,3 +135,54 @@ data feed" means live-attempted, snapshot-served for the leaderboard** — every
 from `evidence/`, which we generate ourselves, and is genuinely regenerated on every push. Closing this needs
 a data endpoint the organiser publishes; guessing at one is not a fix, so the status line stays visible
 instead.
+
+## 5. Added by H53 (2026-10-07)
+
+The machine-readable register now exists: **`registry/irregularities.json`**, 32 entries. It was
+cited by `src/gems52/features.py` from the day that file was written and did not exist until this
+session (IR-52-021); `tests/test_scripts_and_registry.py` now fails if any id cited anywhere in the
+tree is absent from it, so the reference cannot dangle again.
+
+| id | what | status |
+|---|---|---|
+| IR-52-019 | band 6 of the organiser's own feature file is radiometric total count, mis-tagged `magnetic_data` / "tilt angle or total curvature". **Corrects IR-52-001**, which asserted there is no radiometric band. | open — corrected in `src/gems53/radlayers.py` |
+| IR-52-020 | `download_competition_data.sh` passed `--group all`, a flag `restore_data.py` does not accept, so the documented one-command data placement exited 2 before fetching anything | **fixed** + test |
+| IR-52-021 | `registry/irregularities.json` cited by code, never created | **fixed** + test |
+| IR-52-022 | prose said "3730 × 3292", which is height × width; rasterio reports width 3292, height 3730 | mitigated — every H53 number names its axis |
+| IR-52-023 | \|G\| not published, and the H52 budget was inherited from an unrelated submission rather than derived | **closed** — \|G\| ≥ 8,128, estimate 8,129 |
+| IR-52-024 | the family's best file spent 85.8 % of the kernel's placement ceiling; its contiguous ancestors spent 41 % | open — largest measured lever |
+| IR-52-025 | **our own bug, found by our own test**: the coverage-greedy's running cover was updated through a fancy-indexed `out=`, i.e. into a throwaway, so it reported `A/S` 1.8–2.1 — worse than top-K — and that was mistaken for a property of greedy coverage. The claim is withdrawn. | **fixed** + test |
+| IR-52-026 | **our own bug, found by our own gate**: `gates.find_priors` scanned `docs/downloads/`, where `refresh_feed.py` stages the built raster, so the candidate was compared against a copy of itself and the gate reported `identical-to-a-prior`, novel 0 — the one false verdict that blocks a legitimate submission | **fixed** + test |
+| IR-45-001 | footprint/catalogue counts disagreeing across the family are a **mask definition**, not arithmetic: `labels ≥ 0` → 5,167,373 / 60,988; all-19-bands-finite → 5,165,840 / 60,894 | closed |
+
+Three of the eight (IR-52-020, IR-52-025, IR-52-026) are bugs in code, and two of those three are
+bugs in code written *this session*, found by tests written *this session*. That is the register
+working, not the register being depressing: IR-52-007 was the same shape last session (the gate found
+a bug in the thing that writes the gate's input), and in both cases the alternative was shipping it.
+
+### What is verified how, H53 additions
+
+| claim | verification | strength |
+|---|---|---|
+| band 6 is radiometric total count | 150,000-px Spearman against the independently reduced USGS GeoDAWN TC grid (+1.0000), against K+Th+U (+0.9914) and against all five magnetic bands in the same file (\|ρ\| ≤ 0.149); plus the sign/range argument. `evidence/h53_band6_identity.json` | **strong** — two independent sources agree exactly, and the physics (TC = window sum) is what the second correlation measures |
+| the GeoDAWN radiometric release is official, free and public domain | USGS ScienceBase item 657e1d85d34e23d3533209f7 read live 2026-10-06: Glen, J.M.G., and Earney, T.E., 2024, *GeoDAWN: Airborne magnetic and radiometric surveys of the northwestern Great Basin, Nevada and California*, USGS data release, https://doi.org/10.5066/P93LGLVQ | **strong** |
+| the INGENIOUS well/spring database is official, free and CC-BY | GDR submission 1391 read live 2026-10-06, DOI 10.15121/1881483, licence CC-BY 4.0, file URL resolves. This **discharges the blocker** `knowledge/02` H52-5 recorded | **strong** — the blocker was "host unreachable", and it is reachable |
+| \|G\| ≥ 8,128 | inversion of the published metric on 13 SHA-256-verified rasters; the geometry (`S`, `A`, sparsity) is exact because the bytes are pinned; the DTI values are owner-reported | **medium-strong** — arithmetic is exact, one input is second-hand (IR-52-003) |
+| placement gain +216 % on `hide` fold 0 | one field, one permitted set, one budget, one mask, one fold, two emitters, the tested metric | **strong for the fold** — and explicitly *not* a board forecast |
+| `A_only` is below random on both instruments | 4 folds × 2 instruments, matched-budget random in the same permitted set | **strong** |
+| the thermal layer is neutral | selection-sum margin 0.00003 over the identical field without it | **strong as a null result**; the layer is carried, not credited |
+
+### What would change our mind, H53 version
+
+1. A larger budget on the *board*. The fold `T(S)` curve is still rising at 70,000 px on `hide`
+   (0.0885 at 70k vs 0.0920 at 50k vs 0.0911 at 37,654 — i.e. flat, not rising), and the selection
+   rule preferred the smaller mass on a near-tie. If a 60–80 k file scores higher than this one, the
+   fold curve is the thing that misled us and it should be re-derived at board prevalence rather than
+   at 0.2 %.
+2. View A becoming promotable at a coarser cell. N-10 excludes it at 100 m, which is the scale the
+   metric scores; it does not exclude a 300 m potential-field product used to *gate* a 100 m surface
+   detection, which is a different experiment and has not been run.
+3. A coherence floor below 0.30 on the thermal strike walk, which would lengthen the traces. At 0.30
+   only 3,340 cells survive; the median coherence over the footprint is 0.106, so the floor is doing
+   nearly all the work and its value was set by inspection, not by a sweep. That is the weakest
+   tuned constant in the shipped pipeline and it is named here so nobody has to find it.

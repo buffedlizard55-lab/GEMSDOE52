@@ -23,6 +23,8 @@ best of 0.2778, with the reasoning and the evidence published next to the file.
 | **holdout verdict** | **cleared on both instruments, 4/4 folds each**: `hide` **0.09701** vs random 0.03948 (+146 %), `tip` **0.0547** vs random 0.02477 (+121 %). The H52 shipped arm scored 0.0518 / 0.0291 → **+87.5 % on the sum** |
 | projection | placement gain only (the 0.2778 file's own ρ_A = 0.01287 applied to this file's measured coverage, nothing else changed): **DTI ≈ 0.3044**. Not a forecast — see §4 for what is and is not claimed |
 | Phase-2 artefact | [`evidence/h53_reasoning_20261007T0150Z.json`](evidence/h53_reasoning_20261007T0150Z.json) — 510 A-confident/B-abstaining neighbourhoods at 300 m grouping, each with lat/lon, strike, elongation, extent, nine measured layer ranks, the nearest well or spring that carries a temperature, with its source DOI, and an interpretation assembled **only** from numbers in the same record. 405 carry positive support, 43 are linear over ≥1 km, 98 are corroborated by a ≥60 °C well or spring within 5 km |
+| not merely the union | the shipped pixel set shares **5.6%** of its pixels with the union of the two views' top-K sets and **18.3%** with the union of their coverage-greedy emissions, and equals no set in that table (`scripts/verify_h53.py`) |
+| three-pass verification | `scripts/verify_h53.py` → **`PASS3_ALL_OK=True`**: 22/22 re-read checks on the shipped bytes (sha256, dtype, CRS, the pinned six-number transform, range, NaN, catalogue overlap, footprint containment, both gates), the pre-registered independence test, and the union audit |
 | exact steps | [docs/executive-summary.html](docs/executive-summary.html) |
 | rebuild it | `python3 scripts/run_h53.py --stage build --arm auto --dti 0 --ng 8129 --budget 37654 --tag 20261007T0150Z` |
 
@@ -249,13 +251,22 @@ Ordered by how much of the claim is arithmetic rather than inference.
    `B_c50` / `B_c100` (rank minus its 5 km / 10 km box mean) beat the uncentred `B_only` by
    **+24 % / +18 %** on `hide` at identical emitter and budget. The maximum of a smooth field is a
    mountain; the maximum of a *locally anomalous* field is a structure.
-5. **The co-training mechanism failed a second time, with the view split corrected.** With band 6
-   moved to View B and six radiometric products plus LiDAR scarplets added, every blended arm scored
-   at or below the surface view alone: `AB_w80` 0.09112 hide / 0.05358 tip against `B_c50` 0.09112 /
-   0.05421 and `B_c100` 0.09167 / 0.05448. `A_only` — the potential-field view on its own — wins
-   **1/4** `hide` folds and **2/4** `tip` folds and is *below* matched random on both, so it is not
-   promotable at all. The brief's instruction was to abandon the method if the views' errors are
-   strongly correlated; the sharper finding is that one view has no error to correlate with.
+5. **The brief's co-training premise is now REFUTED, not merely unmeasured.** The pre-registered
+   test — correlate the two views' per-block out-of-fold error on labelled negatives across spatial
+   blocks, abandon if strongly correlated — **could not fire** in H52: fewer than three blocks were
+   usable and Spearman degenerated to 1.0 on ties, so `knowledge/03` N-1 correctly recorded the
+   premise as *unmeasured*. On the corrected split it fires: **40 usable blocks of 62** per fold, on
+   **4/4 folds of both instruments**, and the mean-over-prediction Spearman reaches
+   **0.7625** (`hide`) and
+   **0.7107** (`tip`) against a pre-registered
+   abandonment threshold of 0.6. **Verdict: refuted — abandon
+   co-training** (`evidence/h53_verification_20261007T0150Z.json`). Honest caveat, stated in the same
+   record: the *other* block statistic, false-alarm rate at a fixed global budget, correlates weakly
+   (max |ρ| 0.2493),
+   so the verdict is a property of the statistic the pre-registration named — per-block error on
+   labelled negatives — and not of every statistic one could compute. The design is abandoned on two
+   independent grounds anyway: the premise is refuted, *and* View A alone loses to random on both
+   instruments (item 6 of `knowledge/03` N-10).
 6. **The disagreement signal, used as a modulator, does not help either.** Boosting View B where
    View A is confident and B abstains (`Bdis_A`) and damping it where B is confident and A abstains
    (`Bsup_B`) both scored *below* unmodulated View B on `hide` fold 0 (0.06776 and 0.06902 against
@@ -376,3 +387,64 @@ optional corroboration, never as positive labels. See
 `docs/data/*.json` is regenerated from `evidence/` by `scripts/refresh_feed.py`;
 `.github/workflows/feed.yml` runs it nightly and on push, and the site renders only from those files.
 If a number on the site is wrong, the fix is the evidence file, never the HTML.
+
+## 7. Limitations, and what to do next — ranked by expected value per hour
+
+Stated as limitations first, because a list of next steps that does not say what the current file
+cannot do is marketing.
+
+### Limitations of the shipped file
+
+* **Nothing here forecasts a portal score.** The two instruments under-forecast the board by roughly
+  4× in absolute terms (this family scores ~0.05 on `hide` folds and 0.2778 on the portal), so a fold
+  number is a ranking device. The only projection given a number is the placement gain in isolation
+  (≈0.3044), and it assumes this field's covered area is exactly as truth-enriched as the 0.2778
+  file's — which nothing measures in either direction.
+* **|G| rests on owner-reported scores.** The rasters, their masses and their geometry are
+  SHA-256-exact; the DTI values paired with them come from this family's own GitHub Pages sites, and
+  the public board publishes no filename, hash or receipt (IR-52-003). If any pairing is wrong, the
+  calibration moves. `scripts/calibrate_g.py` prints every row so a human can re-check them by hand.
+* **The thermal layer is carried, not credited.** It won the pre-registered tie by 0.00003. Anyone
+  reporting that this file is better *because of* the INGENIOUS springs is reporting something the
+  evidence does not say (`knowledge/03` N-14).
+* **One tuned constant was set by inspection, not by a sweep**: the coherence floor 0.30 that truncates
+  the thermal strike walk. The footprint's median coherence is 0.106, so that floor is doing nearly all
+  the work, and only 3,340 of 5,165,840 cells survive it.
+* **View A is dead at 100 m and was only tested at 100 m.** N-10 excludes the potential-field view as a
+  *primary emitter* at the scale the metric scores. It does not exclude a 300 m potential-field product
+  used to *gate* a 100 m surface detection, which is a different experiment and has not been run.
+* **The budget was chosen at fold prevalence (0.2 %), not board prevalence (≈0.157 %).** The rule
+  prefers smaller mass on a tie and the tie was near-exact; `knowledge/06` §5 names this as the first
+  thing that would change our mind.
+* **External layers are uint8-quantised mirrors**, 1st–99th percentile, derived by an earlier session's
+  CI. The official sources are named and reachable, but the *bytes* used are the mirrors, and a
+  re-reduction from the USGS release could shift the ratio-step layers.
+
+### Next, in expected-value order
+
+1. **Sweep the budget on the board, once.** The fold `T(S)` curve is flat between 37,654 and 70,000 px
+   on `hide` (0.0911 / 0.0920 / 0.0885), and `DTI = T/(0.2S + 0.8|G|)` is monotone increasing in `S`
+   wherever `T` grows faster than `0.2·S`. A single 60–80 k file would settle it. This is the only
+   available experiment whose answer is a number on the board rather than a number on a fold, and it
+   costs one weekly slot.
+2. **Sweep the coherence floor and the strike-walk length.** Both are one-line changes to
+   `thermal.build`; the floor currently discards 99.94 % of thermal cells' potential extent. If longer
+   traces help, H53-3 goes from neutral to load-bearing and the ranking in `knowledge/07` changes.
+3. **Re-derive the fold instruments at board prevalence.** At 0.157 % instead of 0.2 % the optimal
+   emission density moves, and the whole selection was made at the wrong prevalence by ~28 %. Cheap:
+   `PREVALENCE` in `scripts/run_h53.py`.
+4. **Test View A as a gate, not a ranker.** Emit View B's candidates only where a 300 m
+   potential-field product is *not* actively contradictory. That is the one use of the potential-field
+   data the measurements do not already exclude, and it is the version of the two-view idea that
+   survives the refutation.
+5. **Reduce the radiometric layers from the official USGS grids rather than the uint8 mirrors.** The
+   release is public domain and the file list is on the ScienceBase item; float32 K/Th/U would sharpen
+   every ratio-step layer, which is the H53-2 hypothesis that has never been tested at full precision.
+6. **Close IR-52-016 properly.** The scheduled workflow gets HTTP 200 from the leaderboard page and
+   finds no `<tr>` rows, because the board is rendered client-side. Until there is a data endpoint, the
+   board on this site is snapshot-served and says so. Do not guess at an endpoint.
+7. **Ask the organiser the question that would settle |G|.** Forum thread 11527 asked whether labels
+   are LiDAR-scarp or geophysics-inferred and went unanswered. A question about the public test set's
+   approximate truth-pixel count, or whether out-of-footprint mass is taxed, would each be worth more
+   than any remaining modelling hour. Both are answerable from the metric algebra in
+   `knowledge/01` if the organiser will confirm one number.

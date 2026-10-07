@@ -266,3 +266,180 @@ slot only if, on **both** instruments (`hide` and `tip`), it beats the matched-b
 control in **≥ 3 of 4** folds *and* beats the best H52 arm recorded in `evidence/holdout_*.json`.
 Never pool the two instruments: `union_cor|37654` is the best `tip` arm (0.0320) and the worst
 `hide` arm (0.0001), and each is structurally blind to what the other can see (`knowledge/05` §4).
+
+---
+
+## Measured — after scoring, added to the same file rather than to a new one
+
+Both instruments, 4 folds each, whole held-out segments, prevalence matched to 0.2 % of the
+footprint, pixel-exact catalogue mask on the permitted set **and** on the score, matched-budget
+random control computed in the same permitted set on the same folds. Source:
+`evidence/h53_sweep.json` (coverage-greedy + hard-core, arms `B_c100`/`B_c50`/`B_therm`),
+`evidence/h53_sweep_hardcore.json` (hard-core, all six arms), `evidence/h53_holdout_hide.json`
+(the first single-fold run, which is where the placement effect was isolated).
+
+### The placement effect, isolated
+
+`hide` fold 0, `n_truth = 10,336`, one fitted field, one permitted set, budget 37,654 px, one mask:
+
+| emitter | A/S | % of the 9.380298 ceiling | DTI |
+|---|---|---|---|
+| top-K, rank order (what the family shipped) | 2.233 | 23.8 % | 0.03196 |
+| hard-core 200 m | 6.184 | 65.9 % | 0.05130 |
+| hard-core 300 m | 8.010 | 85.4 % | 0.06334 |
+| hard-core 400 m | 8.763 | 93.4 % | 0.10101 |
+| hard-core 500 m | 9.303 | 99.2 % | 0.07151 |
+| matched random control | ≈9.38 | 100 % | 0.04291 |
+
+Note the shape: 400 m beats 500 m even though 500 m has the higher `A/S`. Coverage per pixel is not
+the objective — *credited* mass is, and at 500 m the emission starts stepping over short traces. The
+`T/S` curve in `evidence/h53_spacing_curve.json` predicted 500–600 m for a trace the emission lies
+exactly on; with real positional error the optimum moves inward to 400 m. That is the curve doing
+its job, which is to be wrong in a measurable direction rather than to be quoted.
+
+### Arm × emitter, mean over 4 folds
+
+| arm | emitter | hide | tip | sum | hide wins | tip wins |
+|---|---|---|---|---|---|---|
+| **B_therm** | **greedy \| 37654** | **0.09701** | **0.0547** | **0.15171** | 4/4 | 4/4 |
+| B_c50 | greedy \| 37654 | 0.09699 | 0.05469 | 0.15168 | 4/4 | 4/4 |
+| B_c100 | greedy \| 37654 | 0.0967 | 0.05375 | 0.15045 | 4/4 | 4/4 |
+| B_therm | greedy \| 50000 | 0.0971 | 0.05319 | 0.15029 | 4/4 | 4/4 |
+| B_c100 | hc4 \| 37654 | 0.09167 | 0.05448 | 0.14615 | 4/4 | 4/4 |
+| B_c50 | hc4 \| 37654 | 0.09112 | 0.05421 | 0.14533 | 4/4 | 4/4 |
+| B_only (no centring) | hc4 \| 37654 | 0.07827 | 0.05251 | 0.13078 | 4/4 | 4/4 |
+| A_only (potential field) | hc4 \| 37654 | 0.02979 | 0.02894 | 0.05873 | **1/4** | **2/4** |
+| AB_w80 (0.8 B + 0.2 A) | hc4 \| 37654 | 0.09112 | 0.05358 | 0.1447 | 4/4 | 4/4 |
+| matched random | 37654 | 0.03948 | 0.02477 | 0.06425 | — | — |
+| matched random | 50000 | 0.04318 | 0.02598 | 0.06916 | — | — |
+| *reference:* H52 shipped arm | 37654 | *0.0518* | *0.0291* | *0.0809* | — | — |
+
+### What was promoted, and by which rule
+
+`_select` in `scripts/run_h53.py` implements the rule written above the sweep and reads it out of
+the evidence file at build time:
+
+```json
+{
+ "source": "evidence/h53_sweep.json",
+ "arm": "B_therm",
+ "emitter": "greedy|37654",
+ "passes_rule1": true,
+ "hide": 0.09701,
+ "tip": 0.0547,
+ "total": 0.15171,
+ "hide_wins": 4,
+ "tip_wins": 4,
+ "mass": 37654,
+ "n_g": 8129.0
+}
+```
+
+The shipped file is `gems52-h53-btherm-greedy-37654px-20261007T0150Z-zeros.tif`, sha256 `a0f3ed4b4524ca67a0c715beca5a905eced165ee9e59be5e5831a39b7526254d`, `A/S = 8.8151`
+= 93.97% of the ceiling, every emitted pixel 8-isolated
+(`max_component = 1`), 64.4% of its
+mass touching none of 18 scanned priors, and
+1,048,807 prior pixels deliberately not re-emitted. Rebuilding
+reproduces the identical sha256.
+
+### What this file is *not* claimed to score
+
+`DTI ≈ 0.3044` is the **placement gain in isolation**: take the
+0.2778 file's own measured per-covered-pixel truth density ρ_A = 0.01287, apply it to this file's
+measured coverage A = 331,924, change nothing else. That is arithmetic given its
+assumption, and the assumption is the weakest link — it says this field's covered area is exactly as
+enriched as that file's, which the folds do not establish in either direction.
+
+The fold numbers are **not** a forecast and are not offered as one. The same family scores ~0.05 on
+`hide` folds and 0.2778 on the portal, so the instruments under-forecast the board by roughly 4× in
+absolute terms; they are a *ranking* device, which is the only use this repo makes of them. The
++87.5 % on the sum against the previously shipped arm is a statement about the instruments, and
+whether it transfers is the open question. It is printed above the download button rather than below
+it for exactly that reason.
+
+### The three things that did not work, stated with their numbers
+
+1. **The potential-field view alone is not promotable.** `A_only` wins 1/4
+   `hide` folds and 2/4 `tip` folds and sits *below* matched random on both
+   (0.02979 vs 0.03948; 0.02894 vs 0.02477). The brief said to abandon
+   co-training if the two views' errors are strongly correlated; the sharper finding is that one view
+   has no error signal to correlate with. `knowledge/03` N-6 predicted this at the layer level
+   (potential-field transforms AUC ≈ 0.52); it now holds at the arm level on both instruments.
+2. **Every blend is at or below the surface view alone.** `AB_w80` 0.09112 / 0.05358
+   against `B_c50` 0.09112 / 0.05421; the geometric mean and the min were worse still
+   (`evidence/h53_holdout_hide.json`, fold 0). Mixing in a view that loses to random dilutes a view
+   that does not.
+3. **The disagreement signal, as a modulator, hurts.** Boosting View B where A is confident and B
+   abstains (`Bdis_A`) and damping it where B is confident and A abstains (`Bsup_B`) scored 0.06776
+   and 0.06902 against 0.07387 for unmodulated `B_only` on `hide` fold 0 at identical emitter and
+   budget. The *strata* remain physically real — A-only pixels do sit in deeper cover — but a real
+   description of a population is not a ranking improvement, and this is the second mechanism from
+   the brief to fail its own test (the first was the pseudo-label round, IR-52-010).
+4. **The thermal injection is neutral, and is labelled neutral.** `B_therm` beat `B_c50` — the same
+   field without it — by **0.00003** on the selection sum (0.15171 vs 0.15168), 4/4 folds each. Only
+   3,340 of 5,165,840 footprint cells carry a thermal lineament, so at a 37,654 px budget they are
+   ~9 % of the file and cannot move a mean much. The pre-registered rule picked it anyway because the
+   rule maximises the sum and was written before the numbers were seen. The gain in this file comes
+   from items 1–4 of the ranking above, **not** from H53-3, and a session that reports otherwise
+   should be corrected by pointing at this paragraph.
+
+### The brief's own test, on the corrected split: **refuted**
+
+The pre-registration said: correlate the two views' per-block out-of-fold error on labelled negatives
+across spatial blocks, and abandon co-training if the errors are strongly correlated
+(`ABANDON_R = 0.6`, `src/gems52/cotrain.py`). In H52 this test **could not
+fire** — fewer than three blocks were usable and Spearman degenerated to 1.0 on all ties — so
+`knowledge/03` N-1 recorded the premise as *unmeasured* rather than refuted, and retracted an earlier
+pair of numbers that had been asserted. On the corrected split it fires.
+
+| instrument | fold | usable blocks | Spearman, mean over-prediction on negatives | Spearman, FAR at budget 37,654 |
+|---|---|---|---|---|
+| `hide` | 0 | 40 of 62 | **+0.6341** | +0.1049 |
+| `hide` | 1 | 40 of 62 | **-0.1158** | -0.2054 |
+| `hide` | 2 | 40 of 62 | **+0.7625** | -0.0426 |
+| `hide` | 3 | 40 of 62 | **+0.5576** | +0.1328 |
+| `tip` | 0 | 40 of 62 | **+0.6034** | +0.0696 |
+| `tip` | 1 | 40 of 62 | **+0.4002** | -0.2493 |
+| `tip` | 2 | 40 of 62 | **+0.7107** | -0.0265 |
+| `tip` | 3 | 40 of 62 | **+0.5837** | +0.1559 |
+
+**Verdict: REFUTED at the pre-registered threshold on both instruments** (max |ρ| =
+0.7625 `hide`, 0.7107
+`tip`, against 0.6), 4/4 folds each. Co-training is abandoned. Two honest
+qualifications travel with that verdict:
+
+* The *other* block statistic — false-alarm rate at a fixed global budget — correlates weakly
+  (max |ρ| 0.2493,
+  and negative on three of eight folds). So the refutation is a property of the statistic the
+  pre-registration *named*, not of every statistic computable from the same arrays. Both are reported;
+  neither is hidden. Picking the flattering one after the fact is exactly what IR-52-011 and IR-52-018
+  are about.
+* View A's block-level false-alarm rate is wildly dispersed (coefficient of variation 1.35–5.22)
+  where View B's is not (0.75–1.18). A view whose error is concentrated in a handful of blocks is a
+  view that is finding a few regional anomalies and nothing else — the same reading as N-2 and N-10,
+  arrived at from a third direction.
+
+The abandonment therefore rests on two independent grounds, and the file ships a single view because
+of both: the premise co-training needs is refuted, and the view it would have leaned on is below
+matched random on both instruments.
+
+### Not merely the union of the two views
+
+The brief asks for this check explicitly, and `gates.uniqueness_report` does not answer it — that gate
+compares against *previous submissions*. `scripts/verify_h53.py` compares against the two views of
+*this* pipeline at the same budget:
+
+| compared set | px | overlap with the shipped file | % of shipped | shipped == set |
+|---|---|---|---|---|
+| top-K of View A alone | 37,654 | 307 | 0.8% | False |
+| top-K of View B alone | 37,654 | 1,836 | 4.9% | False |
+| union of the two views' top-K | 74,099 | 2,095 | 5.6% | False |
+| coverage-greedy of View A alone | 37,654 | 428 | 1.1% | False |
+| coverage-greedy of View B alone | 37,654 | 6,578 | 17.5% | False |
+| union of the two views' coverage-greedy emissions | 74,760 | 6,902 | 18.3% | False |
+
+The shipped file is View B's own coverage-greedy emission with a thermal rank bonus. It shares
+5.6%
+of its pixels with the union of the two views' top-K sets and
+18.3%
+with the union of their coverage-greedy emissions, and is equal to no set in the table.

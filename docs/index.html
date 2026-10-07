@@ -67,7 +67,11 @@ filed a <em>radiometric</em> band inside the potential-field view, added the fre
 ratios, 1&nbsp;m LiDAR scarplets and 12,570 INGENIOUS wells and springs, centred the ranking against
 its own regional trend, and emitted with a coverage-greedy that reaches <b>94 %</b> of the ceiling.</p>
 <p class="small muted">The brief's co-training mechanism was implemented and tested a second time on
-the corrected split, and failed a second time — §03 reports that as the finding, not as a footnote.</p>
+the corrected split, and this time its own pre-registered abandonment test <b>fired and refuted the
+premise</b>: the two views' block-level errors on labelled negatives correlate at up to 0.76 against a
+0.60 threshold, on 4 of 4 folds of both instruments. Co-training is abandoned on that ground and on a
+second, independent one — the potential-field view loses to random emission on both instruments.
+§03 reports both as the finding, not as a footnote.</p>
 
 <div class="banner" id="verdict"><span class="muted">Loading the pre-registered verdict from
 <code>data/</code>…</span></div>
@@ -106,6 +110,20 @@ visible as a stale timestamp rather than as a wrong claim.</p>
  <td class="num">ρ = <b>+1.0000</b> vs USGS TC grid<br>+0.9914 vs K+Th+U<br>|ρ| ≤ 0.149 vs all five
  magnetic bands</td><td><code>h53_band6_identity.json</code>; <code>IR-52-019</code> correcting
  <code>IR-52-001</code></td></tr>
+<tr class="hi"><td><b>The brief's own abandonment test, on the corrected split: it fires, and it
+ refutes.</b> Per-block out-of-fold error on labelled negatives, correlated across spatial blocks</td>
+ <td class="num"><b>40 usable blocks of 62</b> (H52 had &lt;3, so its test could not fire)<br>
+ max |Spearman| = <b>0.7625</b> hide,
+ <b>0.7107</b> tip vs a pre-registered
+ 0.6 threshold — 4/4 folds, both instruments</td>
+ <td><code>h53_verification_*.json</code>. Caveat printed in the same record: the false-alarm-rate
+ statistic correlates weakly (max |ρ|
+ 0.2493),
+ so this is the verdict of the statistic the pre-registration <em>named</em></td></tr>
+<tr><td><b>Not merely the union of the two views</b>, which is what the brief asks to be confirmed</td>
+ <td class="num">5.6 % of the shipped pixels are in the union of the two views' top-K sets; 18.3 % in
+ the union of their coverage-greedy emissions; equal to neither</td>
+ <td><code>h53_verification_*.json</code>, <code>scripts/verify_h53.py</code></td></tr>
 <tr><td><b>Negative:</b> the potential-field view on its own</td><td class="num">hide 0.0298, tip
  0.0289 — <b>below</b> random (0.0395 / 0.0248); wins 1/4 and 2/4 folds</td>
  <td><code>h53_sweep.json</code>, arm <code>A_only</code></td></tr>
