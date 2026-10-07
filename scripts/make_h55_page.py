@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
-"""Generate docs/h55.html and the H55 download bar in docs/index.html, entirely from evidence/.
+"""Legacy H55 page renderer, guarded so it cannot replace a newer current artifact.
 
-Nothing on this page is typed in by hand: every number is read out of evidence/h55_*.json, which
-scripts/run_h55.py and scripts/verify_h55.py wrote, so the page cannot drift from the artefact it
-describes.  Re-run after any rebuild:
-
-    python3 scripts/make_h55_page.py
+H55 is historical on the current tree; H56 owns the current overview and submission guide. The
+archived H55 evidence and page remain available, but this renderer may run only if both the current
+receipt and submission marker explicitly point back to this exact H55 artifact.
 """
 from __future__ import annotations
 
@@ -24,7 +22,7 @@ def j(name):
     return json.loads((EV / name).read_text())
 
 
-def main() -> int:
+def _publish_h55_from_receipt() -> int:
     ev = j(f"submission_{STEM}.json")
     ver = j(f"h55_verification_{TAG}.json")
     sw = j("h55_sweep.json")
@@ -441,6 +439,29 @@ them and drops {uni['prior_px_dropped']:,} prior px.</li>
     (DOCS / "h55.html").write_text(body)
     print(f"docs/h55.html written ({len(body):,} chars); index.html bar refreshed")
     return 0
+
+
+def main() -> int:
+    """Refuse to publish historical H55 pages over a different current artifact."""
+    current_path = DOCS / "data" / "submission.json"
+    marker_path = ROOT / "submission" / "LATEST.txt"
+    if not current_path.is_file() or not marker_path.is_file():
+        print("skipped: current receipt/marker is missing; legacy H55 pages were left untouched")
+        return 0
+    try:
+        current = json.loads(current_path.read_text())
+        marker = marker_path.read_text().strip()
+    except (OSError, json.JSONDecodeError) as error:
+        print(f"skipped: could not verify the current receipt/marker ({error}); pages left untouched")
+        return 0
+    expected = f"{STEM}.tif"
+    if current.get("file") != expected or marker != expected:
+        print(
+            "skipped: H55 is historical and does not match both the current receipt and "
+            "submission/LATEST.txt; H56/current pages were left untouched"
+        )
+        return 0
+    return _publish_h55_from_receipt()
 
 
 if __name__ == "__main__":

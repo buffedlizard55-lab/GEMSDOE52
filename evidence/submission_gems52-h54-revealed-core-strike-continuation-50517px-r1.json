@@ -435,7 +435,7 @@
     "mass_within_corridor": 0
   },
   "holdout_gates": {
-    "promoted": true,
+    "promoted": false,
     "tested": "H54 revealed-core + strike continuation",
     "explicit_selection": true,
     "instrument": "NOT the whole-component hide simulator: knowledge/10 s5 measures that it does not predict the organiser's score (Spearman -0.10, p=0.73, n=13), so the selection is made on the exact set algebra over five scored files instead, and the P(win) integral in evidence/revealed_budget.json",
@@ -453,9 +453,19 @@
       "novel_fraction": {
         "ok": true,
         "value": 0.49488291070332757
+      },
+      "spatially_blocked_holdout": {
+        "ok": false,
+        "status": "NOT PERFORMED"
+      },
+      "global_decoded_uniqueness": {
+        "ok": false,
+        "status": "NOT PERFORMED; 377 eligible inventory rasters absent locally"
       }
     },
-    "reason": "budget chosen by maximising P(DTI > 0.2778) over the exact t_core interval and a stated rho_novel prior; ties to the larger novel fraction"
+    "reason": "No comparable whole-component spatial holdout was performed. Owner-reported score/file associations and a prior-dependent scenario integral do not authorize promotion. Do not spend a weekly slot.",
+    "passed": false,
+    "approved_for_weekly_slot": false
   },
   "forced": false,
   "per_candidate_csv": "a_only_reasoning54.csv",
@@ -531,5 +541,11 @@
     ],
     "reading": "a strike undirected in [0,180); array +x is east and +y is south, so a strike near 0 or 180 deg is N-S and near 90 deg is E-W"
   },
-  "dti_against_mapped_catalogue": 0.006373001693426433
+  "dti_against_mapped_catalogue": 0.006373001693426433,
+  "artifact_status": "LEGACY RESEARCH/AUDIT ONLY \u2014 no comparable spatial holdout; not approved for weekly slot",
+  "weekly_slot_approved": false,
+  "organizer_acceptance_verified": false,
+  "global_decoded_uniqueness_verified": false,
+  "score_link_authentication": "Owner-mirrored file/score associations; no organizer receipt authenticates exact filename/hash/score.",
+  "novelty_scope": "Bounded historical local comparison only; global decoded-pattern uniqueness and all-prior support novelty unknown."
 }
