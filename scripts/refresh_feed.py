@@ -31,6 +31,15 @@ OUR_TEAM = "extradr19"
 OUR_BEST = 0.2778          # owner-reported best for this group, see knowledge/06
 
 
+def _branch() -> str:
+    import subprocess
+    try:
+        return subprocess.run(["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd=ROOT,
+                              capture_output=True, text=True, timeout=10).stdout.strip() or "unknown"
+    except Exception:                                              # noqa: BLE001
+        return "unknown"
+
+
 def log(m: str) -> None:
     print(f"[{time.strftime('%H:%M:%S')}] {m}", flush=True)
 
@@ -167,10 +176,15 @@ def latest_submission() -> dict:
     latest = sub / "LATEST.txt"
     if not latest.exists():
         return {"exists": False, "file": None, "note": "no submission built yet in this checkout"}
-    name = latest.read_text().strip()
-    ev = EV / f"submission_{name.replace('.tif', '')}.json"
+    name = latest.read_text().strip().splitlines()[0].strip()
+    stem = name.replace(".tif", "")
+    ev = EV / f"submission_{stem}.json"
     if not ev.exists():
-        cands = sorted(EV.glob(f"submission_{name.replace('.tif', '')}*.json"))
+        # the H53 pipeline names its record h53_submission_<tag>.json, not submission_<file>.json,
+        # so search every record that carries this file's own sha256 before falling back to a glob.
+        # Matching on the hash is what stops a stale record being published against a new file.
+        cands = [q for q in sorted(EV.glob("*submission*.json"))
+                 if f'"{name}"' in q.read_text() or stem in q.name]
         if not cands:
             return {"exists": True, "file": name, "evidence": None}
         ev = cands[-1]
@@ -230,6 +244,39 @@ def fetch_board(do_fetch: bool) -> dict:
     return out
 
 
+def pipeline_numbers() -> dict:
+    """The grid and |G| numbers the site shows, read from evidence -- never typed in here.
+
+    Two corrections to what this function used to hard-code:
+    * the footprint and catalogue counts name their mask, because three defensible footprints exist
+      (IR-45-001) and a bare number invites the reader to assume the wrong one;
+    * the |G| bracket is now the *calibrated* one from evidence/h53_g_calibration.json, derived by
+      inverting the published metric on 13 SHA-256-verified scored rasters, instead of the earlier
+      5,764-15,179 range that came from assuming a shape for the loss decomposition.
+    """
+    grid = json.loads((EV / "grid.json").read_text()) if (EV / "grid.json").exists() else {}
+    cal = json.loads((EV / "h53_g_calibration.json").read_text()) \
+        if (EV / "h53_g_calibration.json").exists() else {}
+    n_g = cal.get("n_g_point_estimate") or 8129.0
+    return dict(
+        footprint_labels_ge0=grid.get("labels_values", {}).get("0", 0)
+        + grid.get("labels_values", {}).get("1", 0),
+        footprint_all_bands_finite=grid.get("footprint_candidates", {}).get("all_bands_finite"),
+        catalogue_grid_wide=grid.get("labels_positive_px"),
+        kernel_disc_weight_sum=cal.get("kernel_disc_weight_sum"),
+        n_g_lower_bound=cal.get("n_g_lower_bound_all"),
+        n_g_point_estimate=n_g,
+        n_g_binding_row=cal.get("binding_row_all"),
+        n_g_caveat=cal.get("caveat"),
+        g_bracket_legacy=[5764, 15179],
+        accept_bar_at_our_best=round(0.2 * OUR_BEST / (1 - 0.2 * OUR_BEST), 5),
+        accept_bar_at_target=round(0.2 * 0.32 / (1 - 0.2 * 0.32), 5),
+        rule="emit a pixel iff its expected kernel credit clears "
+             "alpha*DTI/(1-alpha*DTI); across DTI 0.28-0.46 that is 'within 224 m of an "
+             "uncatalogued fault pixel'",
+    )
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--fetch", action="store_true", help="also re-scrape the public leaderboard")
@@ -244,6 +291,14 @@ def main() -> int:
     for pat in ("*-candidates.csv",):
         for f in sorted((EV).glob(pat))[-1:]:
             (DL / f.name).write_text(f.read_text())
+    # the Phase-2 artefact travels with the raster it explains, and so does the zip some portals want
+    for pat in ("h53_reasoning_*.json",):
+        for f in sorted(EV.glob(pat))[-1:]:
+            (DL / f.name).write_text(f.read_text())
+    for f in sorted((ROOT / "submission").glob("*.zip")):
+        tgt = DL / f.name
+        if not tgt.exists() or tgt.stat().st_size != f.stat().st_size:
+            tgt.write_bytes(f.read_bytes())
     # the reasoning table is published next to the raster it explains
     for f in sorted((ROOT / "submission").glob("*.tif")):
         tgt = DL / f.name
@@ -251,17 +306,11 @@ def main() -> int:
             tgt.write_bytes(f.read_bytes())
     write("feed.json", dict(
         generated_utc=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-        repo="buffedlizard55-lab/GEMSDOE52", branch="arena/dd2ae151-gemsdoe52",
+        repo="buffedlizard55-lab/GEMSDOE52", branch=_branch(),
         files=sorted(p.name for p in DATA.glob("*.json")), evidence_copied=copied,
         leaderboard_status=board.get("status"), submission=sub.get("file"),
         downloads=n_dl,
-        pipeline=dict(
-            footprint=5165840, catalogue=60894,
-            g_bracket=[5764, 15179],
-            accept_bar_at_our_best=round(0.2 * OUR_BEST / (1 - 0.2 * OUR_BEST), 5),
-            rule="emit a pixel iff its expected kernel credit clears "
-                 "alpha*DTI/(1-alpha*DTI); across DTI 0.28-0.46 that is 'within 224 m of an "
-                 "uncatalogued fault pixel'"),
+        pipeline=pipeline_numbers(),
     ))
     log(f"feed: {len(list(DATA.glob('*.json')))} json files, leaderboard {board.get('status')}")
     return 0

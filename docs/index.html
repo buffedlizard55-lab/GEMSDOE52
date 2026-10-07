@@ -36,14 +36,21 @@ repo <code>buffedlizard55-lab/GEMSDOE52</code> · <span data-feed-stamp>loading 
     Nothing to configure, nothing to check by hand: the file is produced by
     <code>scripts/build_submission.py</code> and gated by <code>src/gems52/gates.py</code> before it
     is written.</p>
-    <p class="small"><strong>What is in it.</strong> {0,1} mass on pixels the metric's own acceptance
-    rule says are worth paying for, placed off the pixel-exact catalogue mask where a potential-field
-    view is confident and the surface view withholds. <a href="method.html">Method</a> ·
-    <a href="executive-summary.html">exact instructions</a> ·
-    <a href="validation.html">what the blocked holdout said, including the part that failed</a>.</p>
+    <p class="small"><strong>What is in it.</strong> 37,654 pixels of {0,1} mass, every one of them
+    8-isolated, placed off the pixel-exact catalogue mask by a coverage-greedy on the metric's own
+    numerator — 94 % of the 9.380298 kernel-disc coverage ceiling, against 85.8 % for the file that
+    scored 0.2778. The field is the <em>surface</em> view with its view split corrected: band 6 of the
+    official <code>training_features.tif</code> turns out to be the GeoDAWN aeroradiometric total-count
+    grid, not the magnetic derivative its own TIFF tag claims, so it belongs here and not in the
+    potential-field view. <a href="method.html">Method</a> ·
+    <a href="executive-summary.html">exact instructions, submission name and note</a> ·
+    <a href="validation.html">what the blocked holdout said, including the parts that failed</a>.</p>
   </div>
   <div class="dl">
-    <!--DOWNLOAD-->
+    <!-- The button below is static on purpose: if docs/data/submission.json fails to load, or JS is
+         off, the download must still work. render.js replaces it with the same target plus the hash. -->
+    <a class="dlbtn" href="downloads/gems52-h53-btherm-greedy-37654px-20261007T0150Z-zeros.tif" download>
+      Download the submission<small>gems52-h53-btherm-greedy-37654px-20261007T0150Z-zeros.tif</small></a>
     <div class="dlmeta" id="dlmeta">reading <code>data/submission.json</code>…</div>
   </div>
 </section>
@@ -51,11 +58,16 @@ repo <code>buffedlizard55-lab/GEMSDOE52</code> · <span data-feed-stamp>loading 
 <div class="kpis" id="kpis"></div>
 
 <h2><span class="num">01</span> The one-sentence version</h2>
-<p>Two models are fitted on the same unlabelled pixels — View&nbsp;A on the gravity, magnetic,
-conductivity and seismicity layers, View&nbsp;B on slope, curvature, scarp and stream-power from the
-elevation model — and the useful output is not their agreement, it is <em>where they disagree with
-conviction</em>: a gravity or magnetic offset with no scarp is a fault under cover, which is exactly
-the population the LiDAR-derived catalogue is structurally unable to contain.</p>
+<p>Most of the score still available in this competition is <em>placement</em>, not prediction: under
+the published metric a sparse emission collapses to <code>DTI = T / (0.2·S + 0.8·|G|)</code>, one
+isolated pixel can contribute at most <b>9.380298</b> of kernel-weighted coverage, and this group's
+best file was spending only <b>85.8 %</b> of that ceiling — so we calibrated <code>|G| ≥ 8,128</code>
+by inverting the metric on thirteen hash-verified scored rasters, corrected a two-view split that had
+filed a <em>radiometric</em> band inside the potential-field view, added the free USGS GeoDAWN K/Th/U
+ratios, 1&nbsp;m LiDAR scarplets and 12,570 INGENIOUS wells and springs, centred the ranking against
+its own regional trend, and emitted with a coverage-greedy that reaches <b>94 %</b> of the ceiling.</p>
+<p class="small muted">The brief's co-training mechanism was implemented and tested a second time on
+the corrected split, and failed a second time — §03 reports that as the finding, not as a footnote.</p>
 
 <div class="banner" id="verdict"><span class="muted">Loading the pre-registered verdict from
 <code>data/</code>…</span></div>
@@ -71,6 +83,51 @@ visible as a stale timestamp rather than as a wrong claim.</p>
 </div>
 
 <h2><span class="num">03</span> What the holdout said, before the tuning</h2>
+<div class="banner" data-holdout-verdict>loading the selection and the holdout verdict from
+<code>data/submission.json</code>…</div>
+<h3>03a · H53 — this session, on the corrected view split</h3>
+<table><thead><tr><th>finding</th><th class="num">number</th><th>where it is measured</th></tr></thead><tbody>
+<tr class="hi"><td>Placement, everything else held identical (field, permitted set, budget 37,654,
+ mask, fold): rank-order top-K → 400 m hard-core cut</td><td class="num"><b>0.03196 → 0.10101</b>
+ (+216 %)<br>A/S 2.233 → 8.763</td><td><code>h53_holdout_hide.json</code> fold 0; matched random
+ 0.04291</td></tr>
+<tr><td>Coverage-greedy on the metric's numerator, the emitter that ships</td><td class="num">A/S
+ <b>8.8151</b> = 93.97 % of the 9.380298 ceiling<br>0.2778 file: 8.044 = 85.75 %</td>
+ <td><code>h53_submission_*.json</code>, <code>h53_spacing_curve.json</code>,
+ <code>h53_g_calibration.json</code></td></tr>
+<tr><td>Regional centring of the rank field (subtract its own 5 km / 10 km box mean)</td>
+ <td class="num">hide 0.0797 → <b>0.0911 / 0.0917</b></td><td><code>h53_sweep_hide.json</code>,
+ arms <code>B_only</code> vs <code>B_c50</code> / <code>B_c100</code> at <code>hc4|50000</code></td></tr>
+<tr><td>|G|, the hidden truth count nobody publishes, recovered by inverting the metric on our own
+ scored history</td><td class="num"><b>≥ 8,128</b>, estimate <b>8,129</b><br>(knowledge/01's
+ independent decomposition: 8,000)</td><td><code>h53_g_calibration.json</code>; binding row
+ <code>hedge-v2</code></td></tr>
+<tr><td>Band 6 of the official feature file is radiometric total count, not a magnetic derivative</td>
+ <td class="num">ρ = <b>+1.0000</b> vs USGS TC grid<br>+0.9914 vs K+Th+U<br>|ρ| ≤ 0.149 vs all five
+ magnetic bands</td><td><code>h53_band6_identity.json</code>; <code>IR-52-019</code> correcting
+ <code>IR-52-001</code></td></tr>
+<tr><td><b>Negative:</b> the potential-field view on its own</td><td class="num">hide 0.0298, tip
+ 0.0289 — <b>below</b> random (0.0395 / 0.0248); wins 1/4 and 2/4 folds</td>
+ <td><code>h53_sweep.json</code>, arm <code>A_only</code></td></tr>
+<tr><td><b>Negative:</b> every blend of the two views, and both disagreement modulators</td>
+ <td class="num"><code>AB_w80</code> 0.09112 / 0.05358 ≤ <code>B_c50</code>;
+ <code>Bdis_A</code> and <code>Bsup_B</code> both below unmodulated View B</td>
+ <td><code>h53_sweep.json</code>, <code>h53_holdout_hide.json</code></td></tr>
+<tr><td><b>Neutral, and labelled neutral:</b> the thermal lineament injection</td>
+ <td class="num">selection sum 0.15171 vs 0.15168 without it — a margin of <b>0.00003</b>, which is
+ not a signal</td><td><code>h53_sweep.json</code>; the pre-registered rule picked it anyway because
+ the rule was written first</td></tr>
+</tbody></table>
+<p class="small">Phase-2 reviewers verify faults, not pixels, so every A-confident / B-abstaining
+emitted neighbourhood carries its own record — 510 of them, grouped at 300 m, with coordinates,
+strike, elongation, extent, nine measured layer ranks, the nearest temperature-bearing well or spring
+and its DOI, and an interpretation assembled <em>only</em> from numbers in the same record. 405 carry
+positive support, 43 are linear over ≥1 km, 98 are corroborated by a ≥60 °C well or spring within
+5 km; the rest say so explicitly rather than flattering themselves.
+<a href="downloads/h53_reasoning_20261007T0150Z.json"><code>h53_reasoning_20261007T0150Z.json</code></a></p>
+
+<h3>03b · H52 — the previous session, kept because its evidence is still load-bearing for what NOT
+to retry</h3>
 <p>Written in plain terms, because the interesting result is a negative one:</p>
 <ul class="tight">
   <li><strong>The co-training round, as such, did not help.</strong> Adding a view's confident
@@ -131,5 +188,5 @@ the perfect-precision counterfactual (0.464 at this budget) and the acceptance-b
 </div></footer>
 <script src="site.js"></script>
 <script src="render.js"></script>
-</body>
+<script src="exec.js"></script></body>
 </html>

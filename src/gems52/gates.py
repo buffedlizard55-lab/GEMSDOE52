@@ -135,6 +135,14 @@ def find_priors(roots: list[Path], exclude: Path | None = None, *,
                 continue
             if exclude and p.resolve() == Path(exclude).resolve():
                 continue
+            # ... and never a *copy* of the candidate either.  scripts/refresh_feed.py stages every
+            # built raster into docs/downloads/ so the site can serve it, and docs/downloads/ is one
+            # of the roots this function scans; without the basename check the file is compared
+            # against itself and reports "identical-to-a-prior, novel = 0", which is the one verdict
+            # that would stop a legitimate submission.  Caught by scripts/check_site.py on the H53
+            # build, not by reasoning about it.
+            if exclude and p.name == Path(exclude).name:
+                continue
             if p.stat().st_size < min_bytes:
                 continue
             k = str(p.resolve())

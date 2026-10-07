@@ -350,8 +350,5 @@
   "a_per_s_this_file": 8.815108454613055,
   "a_per_s_0278_file": 8.044,
   "a_per_s_ceiling": 9.380297810508184
- },
- "exists": true,
- "download": "downloads/gems52-h53-btherm-greedy-37654px-20261007T0150Z-zeros.tif",
- "size_bytes_local": 147617
+ }
 }

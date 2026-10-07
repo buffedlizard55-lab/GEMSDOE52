@@ -120,3 +120,23 @@ def test_accept_bar_matches_the_derived_rule():
 
 def test_official_grid_constants_are_pinned():
     assert SHAPE == (3730, 3292)
+
+
+def test_find_priors_never_returns_a_copy_of_the_candidate(tmp_path):
+    """refresh_feed.py stages built rasters into docs/downloads/, which find_priors also scans.
+    Without a basename check the candidate is compared against itself and the gate reports
+    identical-to-a-prior / novel = 0 -- the one false verdict that would block a real submission."""
+    sub = tmp_path / "submission"
+    dl = tmp_path / "docs" / "downloads"
+    sub.mkdir(parents=True)
+    dl.mkdir(parents=True)
+    arr = (np.random.default_rng(0).random((40, 40)) > 0.9).astype(np.float32)
+    out = write_tif(sub, "candidate-x.tif", arr)
+    write_tif(dl, "candidate-x.tif", arr)                      # the staged copy
+    write_tif(dl, "some-earlier-file.tif", arr * 0.0)          # a genuine prior
+    found = gates.find_priors([sub, dl], exclude=out, min_bytes=1)
+    names = [q.name for q in found]
+    assert "candidate-x.tif" not in names
+    assert "some-earlier-file.tif" in names
+    uni = gates.uniqueness_report(arr > 0, found)
+    assert not any(r.get("identical") for r in uni["per_prior"])
