@@ -50,10 +50,12 @@ def copy_evidence():
     # Historical evidence remains in Git for audit, but is not silently promoted
     # as current just because this scheduled publisher ran.
     copied = []
-    for path in sorted(EV.glob('*_r2.json')):
+    for path in sorted(EV.glob('*_r[23]*.json')):
         write(path.name, safe(json.loads(path.read_text())))
         copied.append(path.name)
-    for name in ('r2_preregistration', 'h55_preregistration', 'h55_edge_preregistration', 'source_policy', 'data_manifest', 'irregularities'):
+    for name in ('r2_preregistration', 'r3_preregistration', 'h55_preregistration',
+                 'h55_edge_preregistration', 'source_policy', 'data_manifest',
+                 'irregularities', 'leaderboard_snapshot_2026-10-07'):
         path = ROOT / 'registry' / (name + '.json')
         if path.exists():
             if name in ('h55_preregistration', 'h55_edge_preregistration'):
@@ -74,6 +76,13 @@ def copy_evidence():
             copied.append(path.name)
     for path in sorted(EV.glob('h55_reasoning_*.json')):
         (DL / path.name).write_text(path.read_text())
+    reasoning = EV / 'a_only_reasoning_r3.csv'
+    if reasoning.exists():
+        target = DL / reasoning.name
+        DL.mkdir(parents=True, exist_ok=True)
+        if not target.exists() or target.read_bytes() != reasoning.read_bytes():
+            target.write_bytes(reasoning.read_bytes())
+        copied.append(reasoning.name)
     return copied
 
 
@@ -260,8 +269,9 @@ def parse_board(text):
 
 
 def fetch_board(do_fetch=False):
-    snap = ROOT / 'registry/leaderboard_snapshot_2026-10-06.json'
-    out = json.loads(snap.read_text()) if snap.exists() else dict(rows=[])
+    snapshots = sorted((ROOT / 'registry').glob('leaderboard_snapshot_*.json'))
+    snap = snapshots[-1] if snapshots else None
+    out = json.loads(snap.read_text()) if snap and snap.exists() else dict(rows=[])
     out.update(source=BOARD, owner_best_reported=OUR_BEST,
                artifact_score_authenticated=False,
                note='Dated participant-level observation; no filename/hash/receipt attribution. Participant identity is not authenticated as the user\'s team.')
@@ -339,10 +349,11 @@ def main():
         generated_utc=time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
         branch=current_branch(args.branch), repo='buffedlizard55-lab/GEMSDOE52',
         evidence_copied=copied,
-        files=sorted({p.name for pat in ('*_r2.json', 'h55_*.json', 'submission_gems52-h55-*.json')
+        files=sorted({p.name for pat in ('*_r[23]*.json', 'h55_*.json', 'submission_gems52-h55-*.json')
                       for p in DATA.glob(pat)}),
         submission=sub.get('file'), downloads=len(list(DL.glob('*.tif'))),
-        leaderboard_status=board['status'], leaderboard_last_observed_utc=board.get('fetched_utc'),
+        leaderboard_status=board['status'],
+        leaderboard_last_observed_utc=board.get('fetched_utc') or board.get('observed_date_utc'),
         prior_entries=len(entries), eligible_prior_rasters=sum(bool(r.get('eligible_prior')) for r in entries),
         scientific_gate=sub.get('approved_for_weekly_slot', False), slots_used=0,
         freshness_note='Local evidence refresh is automatic; the board is a dated snapshot. No automatic portal submission.'))

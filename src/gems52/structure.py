@@ -91,17 +91,32 @@ def structure_tensor(a: np.ndarray, valid: np.ndarray, sigma_tensor_m: float = 3
     gx = np.where(valid, gx, 0.0)
     st = _sigma_px(sigma_tensor_m)
 
-    # the three independent tensor entries, each smoothed by the same Gaussian
-    gygy = ndimage.gaussian_filter(gy * gy, st, truncate=3.0, mode="nearest")
-    gxgx = ndimage.gaussian_filter(gx * gx, st, truncate=3.0, mode="nearest")
-    gygx = ndimage.gaussian_filter(gy * gx, st, truncate=3.0, mode="nearest")
+    # Scale gradients before forming the tensor products. The unit direction and coherence are
+    # invariant to this common positive factor, while squaring raw float32 gradients can overflow
+    # even when every input sample is finite (e.g. the 1e30 regression below). Keep the scale in
+    # float64, but retain the large per-pixel arrays in their input dtype.
+    gradient_scale = max(float(np.max(np.abs(gx))), float(np.max(np.abs(gy)))) if gx.size else 0.0
+    if not np.isfinite(gradient_scale):
+        raise ValueError("structure tensor received non-finite gradients inside the footprint")
+    normalizer = max(gradient_scale, float(np.finfo(np.float32).tiny)) if gradient_scale else 1.0
+    with np.errstate(over="raise", invalid="raise", divide="raise"):
+        gy = gy / normalizer
+        gx = gx / normalizer
+        # The three independent, dimensionless tensor entries, smoothed identically.
+        gygy = ndimage.gaussian_filter(gy * gy, st, truncate=3.0, mode="nearest")
+        gxgx = ndimage.gaussian_filter(gx * gx, st, truncate=3.0, mode="nearest")
+        gygx = ndimage.gaussian_filter(gy * gx, st, truncate=3.0, mode="nearest")
     del gy, gx
 
     trace = gygy + gxgx
-    energy = trace
-    # Density normalisation: the Gaussian is mass-preserving, so the entries carry the physical
-    # gradient power; dividing by the mean keeps the decomposition in a range where float32 (the
-    # caller's dtype) cannot cancel the small eigenvalue away.
+    # Restore physical gradient power for the public energy output. Saturation is explicit only for
+    # pathological finite float32 magnitudes whose squared derivative cannot be represented by the
+    # module's float32 output; ordinary competition inputs retain their numeric scale.
+    with np.errstate(over="ignore", under="ignore", invalid="raise"):
+        energy64 = trace.astype(np.float64) * (normalizer * normalizer)
+        energy = np.clip(energy64, 0.0, np.finfo(np.float32).max).astype(np.float32)
+    # Density normalisation: the Gaussian is mass-preserving, so dividing by the mean keeps the
+    # dimensionless decomposition in a range where float32 cannot cancel the small eigenvalue away.
     scale = float(np.mean(trace)) if trace.size else 1.0
     scale = scale if scale > 0 else 1.0
     Jxx, Jyy, Jxy = gxgx / scale, gygy / scale, gygx / scale

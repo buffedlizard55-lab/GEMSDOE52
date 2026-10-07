@@ -11,7 +11,7 @@
 - Inputs were SHA-pinned owner mirrors, not organizer-authenticated. No external raster or ComCat data entered this model.
 - [Preregistered hypotheses](knowledge/12_hypotheses_H55_preregistered.md) · [holdout](evidence/h55_profile_holdout.json) · [TIFF/uniqueness receipt](evidence/submission_h55.json) · [3-pass review](evidence/h55_review_receipt.json).
 
-**Next-session start:** read this README and the full current task prompt below; the H55 candidate failed its promotion gate. A download link is not approval to spend a contest slot.
+**Next-session start:** read this README and the full current task prompt below. The H55-PROFILE follow-up failed its promotion gate; the separate main H55 incumbent is not superseded by that failure. A download link is not approval to spend a contest slot.
 <!--/H55PROFILEREADME-->
 
 ## H55-EDGE — failed protocol-subset result, preserved as a separate archive
@@ -61,6 +61,18 @@ best of 0.2778, with the reasoning and the evidence published next to the file.
 | projection | placement gain only (the 0.2778 file's own ρ_A = 0.01287 applied to this file's measured coverage, nothing else changed): **DTI ≈ 0.3044**. Arithmetic given its assumption, **not a forecast** |
 | site page | [docs/h55.html](docs/h55.html) — every number generated from `evidence/` by `scripts/make_h55_page.py` |
 | rebuild | `python3 scripts/run_h55.py --stage build --arm auto --dti 0 --ng 8129 --budget 37654 --tag 20261007T0150Z` (reproduces the identical sha256) |
+
+## R3-H1 follow-up — a separate research artifact, DO NOT UPLOAD
+
+The R3 branch separately ranked four geological hypotheses and tested its top candidate, paired DEM-profile shoulders, against the View B single-view baseline on four spatially blocked, buffered whole-component folds. It **failed** the preregistered promotion gate: mean lift +0.00022491 (required +0.005), positive in 2/4 folds (required 3/4). It did not replace the H55 headline artifact above, and **no submission slot was used**. The unique TIFF below is published only for research and audit; it is not a recommendation to upload.
+
+- **R3 research TIFF:** [`docs/downloads/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.tif`](docs/downloads/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.tif) · [ZIP + receipt](docs/downloads/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.zip)
+- Label: `GEMSDOE52-R3-H1-PairedProfile-e4267714` · note (117 chars): `R3-H1 paired DEM profile | local lift +0.000225 vs B (2/4 folds; gate FAIL) | research-only; NOT approved for upload.`
+- Grid/range: one `float32` band, 3292 × 3730, EPSG:32611, exact sample affine transform/mask, values `{0,1}`, 37,654 positive cells; SHA-256 `0a28426785c4125d4560d6279cc763570f791cd1fdb7fb788ba60d6024e1f9db`.
+- Uniqueness: 12 aligned accessible priors checked; 27,838 cells (73.9%) fall outside their support union; not a copy or a View A/B union. This is bounded to the accessible inventory.
+- [R3 fold-by-fold result and download](docs/r3.html) · [four ranked hypotheses](docs/r3-hypotheses.html) · [full audit/limitations](knowledge/13_r3_h1_validation.md).
+
+**Leaderboard correction (one-off official observation, 2026-10-07):** 0.2778 was rank #13, 0.3195 was #7, and 0.3774 was #1. The public board reports participant-level best scores, not artifact filenames or hashes; the local filename-to-score attribution remains owner-reported. See `registry/leaderboard_snapshot_2026-10-07.json`. Recurring DrivenData scraping remains disabled under the reviewed Terms of Use.
 
 **Core values, applied.** _Maximize P(Win)_: the largest measured lever was placement, not prediction —
 at fixed geology DTI is monotone in kernel-weighted coverage per emitted pixel, the family's best file
