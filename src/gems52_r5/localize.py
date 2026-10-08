@@ -64,15 +64,19 @@ def component_folds(cat: np.ndarray, valid: np.ndarray, n_folds: int = 4,
     if n == 0:
         return np.full(cat.shape, -1, np.int16)
     rng = np.random.default_rng(seed)
+    # bincount is indexed by component id, and ids run 1..n, so every per-component array here is
+    # length n+1 with slot 0 unused; slicing [1:] *after* the division, never before, is what keeps
+    # the two sides the same length (an earlier version sliced ``sizes`` first and then divided a
+    # length-(n+1) centroid sum by a length-n size vector)
     sizes = np.bincount(comp.ravel(), minlength=n + 1)[1:]
     # centroid block, so the four folds are geographically interleaved rather than quartered
     ys, xs = np.nonzero(comp)
     cids = comp[ys, xs]
-    cy = np.bincount(cids, weights=ys, minlength=n + 1) / np.maximum(sizes, 1)
-    cx = np.bincount(cids, weights=xs, minlength=n + 1) / np.maximum(sizes, 1)
+    cy = np.bincount(cids, weights=ys, minlength=n + 1)[1:] / np.maximum(sizes, 1)
+    cx = np.bincount(cids, weights=xs, minlength=n + 1)[1:] / np.maximum(sizes, 1)
     h, w = cat.shape
-    block = (np.clip(cy[1:] // max(h / n_folds, 1), 0, n_folds - 1) * n_folds
-             + np.clip(cx[1:] // max(w / n_folds, 1), 0, n_folds - 1))
+    block = (np.clip(cy // max(h / n_folds, 1), 0, n_folds - 1) * n_folds
+             + np.clip(cx // max(w / n_folds, 1), 0, n_folds - 1))
     jitter = rng.random(n)
     uniq_ids = np.arange(1, n + 1)
     fold_of = np.zeros(n + 1, np.int16)
@@ -148,39 +152,57 @@ def assay(emitted: np.ndarray, fold: dict) -> dict:
 
 
 def place_dots(score: np.ndarray, allowed: np.ndarray, budget: int, min_sep_px: float = 3.0,
-               jitter_seed: int | None = None) -> np.ndarray:
+               jitter_seed: int | None = None, prefilter: bool = True,
+               scan_cap: int | None = None) -> np.ndarray:
     """Top-``budget`` dots by ``score`` inside ``allowed``, thinned to ``min_sep_px`` separation.
 
-    Two stages, because a pure greedy scan in rank order costs ~20 microseconds per rejected
-    candidate and the top of a trace field rejects most of what it scans:
+    Two modes, because they answer different questions and the localisation assay has to be able to
+    compare them:
 
-    1. a ``maximum_filter`` of radius ``ceil(min_sep_px)`` keeps only local maxima, which removes
-       the bulk of the competition at vectorised speed;
-    2. an exact greedy pass over the surviving peaks, in rank order, enforces the Euclidean
-       separation on the lattice (a Chebyshev local maximum can still be 2.83 px from its diagonal
-       neighbour, and 2.83 px is inside the kernel, so stage 1 alone is not sufficient).
+    ``prefilter=True`` (peak mode) -- a ``maximum_filter`` of radius ``ceil(min_sep)-1`` keeps only
+      local maxima of the rank field first, which is vectorised and cheap, and then an exact greedy
+      pass enforces the Euclidean separation.  Peaks of a smooth field are scattered, so this mode
+      spends its budget on the *strongest places*, not on following a trace.
+    ``prefilter=False`` (ridge mode) -- no peak test: the greedy walks the candidate pool in rank
+      order and accepts a pixel whenever nothing accepted is within ``min_sep_px``.  On a one-pixel
+      wide trace this walks *along* the trace and lands dots every ``min_sep_px`` pixels, which is
+      what fills the kernel ribbon (:func:`gems52_r5.traces.ribbon_credit`).
 
-    Ties break by row-major index, or by a fixed seeded key at 1e-9 scale if ``jitter_seed`` is
-    given, so a plateau cannot be split by floating-point accident.  A shortfall is recorded on the
-    function object rather than silently filled by relaxing the separation.
+    Ties break by row-major index, which is deterministic and needs no RNG stream; pass
+    ``jitter_seed`` only to randomise them (the key is added at 1e-9, which needs the float64 score
+    to be visible at all, so it cannot be combined with a float32 field).
+    A shortfall is recorded on the function object rather than silently filled by relaxing the
+    separation, and ``scan_cap`` bounds the greedy walk so a million-pixel pool cannot stall it.
     """
-    s = np.where(allowed, np.nan_to_num(score, nan=-np.inf), -np.inf).astype(np.float64)
+    # one float64 allocation, not three: ``np.where(...).astype(float64)`` on a float32 field
+    # peaked at ~300 MB of temporaries per call, and stage 5 makes 280 of them.
+    s = np.full(score.shape, -np.inf, np.float64)
+    np.copyto(s, score, where=allowed)
+    s[~np.isfinite(s)] = -np.inf
     if jitter_seed is not None:
         rng = np.random.default_rng(jitter_seed)
-        s = s + rng.random(s.shape) * 1e-9
+        s += rng.random(s.shape) * 1e-9
     if budget <= 0 or not np.isfinite(s).any():
         place_dots.last_shortfall = (0, int(budget), 0)
         return np.zeros(s.shape, bool)
     r = max(int(np.ceil(min_sep_px)), 1)
-    peaks = s >= ndimage.maximum_filter(s, size=2 * r + 1, mode="nearest")
-    peaks &= np.isfinite(s)
-    idx = np.flatnonzero(peaks.ravel())
+    r_pre = max(r - 1, 1) if prefilter else 0
+    if r_pre:
+        peaks = (s >= ndimage.maximum_filter(s, size=2 * r_pre + 1, mode="nearest")) & np.isfinite(s)
+        idx = np.flatnonzero(peaks.ravel())
+    else:
+        idx = np.flatnonzero(np.isfinite(s).ravel())
     if idx.size == 0:
         place_dots.last_shortfall = (0, int(budget), 0)
         return np.zeros(s.shape, bool)
     vals = s.ravel()[idx]
-    if idx.size > budget:
-        part = np.argpartition(vals, -budget)[-budget:]
+    # The greedy walk rejects most of what it scans (a ranked field is spatially clustered, and
+    # random-sequential adsorption accepts only ~1 pixel in 7 at a 3-px exclusion), so cutting the
+    # candidate list to ``budget`` would cap the emission at ~budget/7.  Cut to ``scan_cap``
+    # instead and let the greedy stop when the budget is actually reached.
+    cap = int(scan_cap) if scan_cap else max(40 * budget, 300_000)
+    if idx.size > cap:
+        part = np.argpartition(vals, -cap)[-cap:]
         idx, vals = idx[part], vals[part]
     order = np.lexsort((idx, -vals))
     idx = idx[order]

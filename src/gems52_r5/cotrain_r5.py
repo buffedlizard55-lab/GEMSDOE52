@@ -191,7 +191,11 @@ def fit_oof(stack: np.memmap, sample: dict, fold: np.ndarray, buffer: np.ndarray
     from sklearn.metrics import roc_auc_score
     oof = np.full(valid.shape, np.nan, np.float32)
     rows, cols, y = sample["rows"], sample["cols"], sample["y"]
-    rf, cf = fold[rows], fold[cols]
+    # fold[rows, cols], never fold[rows]: indexing a 2-D grid with one 1-D index array selects
+    # whole *rows*, which here would silently build a (300k, 3292) int16 array -- 2 GB per view --
+    # and then broadcast the fold test over the wrong axis.  Caught by the OOM killer, not by a
+    # wrong answer, which is the worse of the two ways to find it.
+    rf = fold[rows, cols]
     receipts = []
     for k in range(int(fold.max()) + 1):
         tr = (rf != k) & (~buffer[rows, cols])
@@ -317,26 +321,54 @@ def disagreement_strata(oof_a: np.ndarray, oof_b: np.ndarray, allowed: np.ndarra
 
 def pseudo_labels(oof_a: np.ndarray, oof_b: np.ndarray, allowed: np.ndarray, fold: np.ndarray,
                   buffer: np.ndarray, hi_q: float = 0.99, lo_q: float = 0.10,
-                  whole_segment: bool = True) -> dict:
-    """Donor-confident / receiver-abstaining pseudo-labels, exchanged in whole buffered segments.
+                  whole_segment: bool = True, unit: str = "component",
+                  bid: np.ndarray | None = None, min_px: int = 9) -> dict:
+    """Donor-confident / receiver-abstaining pseudo-labels, admitted in whole units.
 
-    Returns the masks (one per direction) and the segment accounting the brief asks for: how many
-    whole segments moved, how many pixels, and whether any of them touch a fold boundary buffer
-    (they must not -- a pseudo-label inside the buffer can carry a held-out trace into training).
+    ``unit`` is the unit the brief's "whole-segment" rule is applied to, and the choice matters more
+    than it looks:
+
+    ``"component"`` -- a connected component of the donor-confident/receiver-abstaining set qualifies
+      only if the *whole* component has >= ``min_px`` pixels.  This is the strictest reading and it is
+      the one that cannot split a trace segment in half.
+    ``"block"`` -- a whole 20 km spatial block (``bid``) qualifies if it contains >= ``min_px`` such
+      pixels, and then every qualifying pixel inside it is admitted.  This is the literal reading of
+      the brief's "whole-segment spatial blocks + buffer": the unit is the block, the buffer keeps a
+      qualified block out of the fold that is being predicted.
+
+    Measured on the r5 fields the component rule returns the **empty set in both directions**, and
+    that is a result, not a failure: 4,992 px fell in the A-confident/B-abstaining cut, spread over
+    4,531 components whose largest member is 5 px.  Independence predicts 0.01 x 0.10 x 4,861,502 =
+    4,861 px, so the observed count is 1.03x the independent expectation -- the cut is a sprinkling
+    precisely *because* the two views' errors are uncorrelated (spearman 0.150).  A dependent pair
+    (r4: max|rho| 0.705) would have produced coherent blobs and a non-empty component rule.  Both
+    numbers are reported so the empty set can never be mistaken for a code path that did not run.
     """
     ra, rb = rank_within(oof_a, allowed), rank_within(oof_b, allowed)
     a_to_b = allowed & (ra >= hi_q) & (rb <= lo_q)
     b_to_a = allowed & (rb >= hi_q) & (ra <= lo_q)
-    out = {}
+    n_allowed = int(allowed.sum())
+    expected = (1.0 - hi_q) * lo_q * n_allowed
+    out = dict(expected_px_under_independence=float(expected), n_allowed_px=n_allowed,
+               unit=unit, min_px=min_px, hi_q=hi_q, lo_q=lo_q)
     for name, m in (("a_to_b", a_to_b), ("b_to_a", b_to_a)):
-        lab, n = ndimage.label(m, structure=np.ones((3, 3), bool))
-        if whole_segment and n:
-            sizes = np.bincount(lab.ravel(), minlength=n + 1)
-            small = np.isin(lab, np.nonzero(sizes < 9)[0])
-            m = m & ~small
+        raw_px = int(m.sum())
+        if whole_segment and unit == "component":
             lab, n = ndimage.label(m, structure=np.ones((3, 3), bool))
+            if n:
+                sizes = np.bincount(lab.ravel(), minlength=n + 1)
+                m = m & np.isin(lab, np.nonzero(sizes >= min_px)[0])
+        elif whole_segment and unit == "block":
+            if bid is None:
+                raise ValueError("unit='block' needs the block-id grid")
+            lab, n = ndimage.label(m, structure=np.ones((3, 3), bool))
+            cnt = np.bincount(bid[m], minlength=int(bid.max()) + 1) if raw_px else np.array([])
+            keep_blocks = np.nonzero(cnt >= min_px)[0] if cnt.size else np.array([], int)
+            m = m & np.isin(bid, keep_blocks)
+        lab, n = ndimage.label(m, structure=np.ones((3, 3), bool))
         leaks = int((m & buffer).sum())
-        out[name] = dict(px=int(m.sum()), segments=int(n),
+        out[name] = dict(px=int(m.sum()), raw_px=raw_px, segments=int(n),
+                         ratio_to_independence=(raw_px / expected if expected > 0 else None),
                          px_touching_fold_buffer=leaks, leak_free=bool(leaks == 0),
                          mask=m)
     return out
