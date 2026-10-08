@@ -1,6 +1,6 @@
 {
  "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified.",
- "generated": "2026-10-08T23:36:22Z",
+ "generated": "2026-10-08T23:47:41Z",
  "entries": [
   {
    "id": "IR-30-029",
@@ -1157,6 +1157,14 @@
     "git history: PR #38 (H60C) merged before this round's PR",
     "evidence/h60d_build.json (rebuilt prior inventory)"
    ]
+  },
+  {
+   "id": "IR-H60D-007",
+   "date": "2026-10-08",
+   "status": "open, owner review required",
+   "summary": "Strict lane gate re-run on shipped H60D file: 99.95% of dots within 3 px of calibration lattice 13gems_20261001_r13-lattice-s5_v2_nan-outside.tif (>70% STOP). Earlier 'lane clean' used exemption H60-6, withdrawn to match the literal 'any registry raster' rule. On this footprint the rule makes every non-empty dot raster fail.",
+   "evidence": "evidence/h60d_strict_lane_recheck.json; knowledge/32_h60d_strict_lane_recheck.md",
+   "action": "Owner decision: keep the literal rule (no dot raster can pass) or pre-register a new exemption. No slot used; no rule changed silently."
   },
   {
    "id": "IR-R4-001",

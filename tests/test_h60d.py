@@ -234,9 +234,9 @@ def test_calibration_basenames_reads_the_manifest(tmp_path):
     assert h60d.calibration_basenames(tmp_path / "missing.json") == set()
 
 
-def test_lane_gate_proximity_excludes_calibration_but_spearman_still_applies(tmp_path):
+def test_lane_gate_calibration_is_not_exempt(tmp_path):
     # a dense "calibration lattice" prior: every dot of the run is within 3 px of it
-    # (raw proximity 1.0 > 0.70), but the run is NOT a duplicate: rank correlation ~ 0
+    # (proximity 1.0 > 0.70): strict protocol says duplicate even with low correlation
     rng = np.random.default_rng(11)
     prior = np.zeros((60, 60), np.float32)
     prior[::2, ::2] = 1.0                      # dense regular lattice
@@ -248,10 +248,10 @@ def test_lane_gate_proximity_excludes_calibration_but_spearman_still_applies(tmp
     rep = h60d.lane_drift_report(surface, dots, [cal], np.ones((60, 60), bool),
                                 calibration={"lattice.tif"})
     assert rep["dots_max_within_3px_frac"] == pytest.approx(1.0)      # raw, reported
-    assert rep["dots_max_within_3px_frac_gate"] == pytest.approx(0.0)   # excluded from gate
-    assert rep["calibration_rasters_excluded_from_proximity"] == ["lattice.tif"]
-    assert rep["lane_drift_detected"] is False                          # proximity only
-    assert rep["dots_check_passed"] is True
+    assert rep["dots_max_within_3px_frac_gate"] == pytest.approx(1.0)   # no exemption
+    assert rep["calibration_rasters_excluded_from_proximity"] == []
+    assert rep["lane_drift_detected"] is True                           # proximity trips gate
+    assert rep["dots_check_passed"] is False
     # the Spearman components still apply to a calibration raster: an identical surface
     # must flag drift even when the raster is calibration
     rep2 = h60d.lane_drift_report(prior, dots, [cal], np.ones((60, 60), bool),
