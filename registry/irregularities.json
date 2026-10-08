@@ -696,6 +696,32 @@
     "docs/data/submission.json"
    ],
    "disposition": "The view-B round remains downloadable research; no upload or weekly slot approved without a registered holdout. If its owner record can produce one, the gate reopens identically to H59's."
+  },
+  {
+   "id": "IR-R4-001",
+   "round": "R4",
+   "session": "2026-10-08",
+   "severity": "critical",
+   "status": "open",
+   "disposition": "workaround",
+   "title": "A workspace reset wiped every uncommitted artifact of round 4, and .gitignore left work/ and data/ unprotected",
+   "what_it_is": "At roughly 13:06-13:07 on 2026-10-08 the sandbox was reset to the git HEAD state. Destroyed: src/gems52_r4/ (7 modules), tests/test_r4.py (58 tests), scripts/run_r4.py and five publisher/writer scripts, knowledge/20-23_r4*.md, every evidence/r4_*.json receipt, the whole of work/ (74-layer stack.f32, 3.6 GB, OOF and full-field predictions, pseudo-truth fields) and data/external/ (24 restored layers), plus /home/user/.venv. Survived: everything tracked in git at 3bf8ada, including scripts/restore_data.py and registry/data_manifest.json, which is why the data turned out to be fully re-restorable.",
+   "how_we_know": "pgrep showed no live pipeline; ls evidence/r4_*.json returned nothing; git status --short was empty with HEAD still at 3bf8ada; git fsck --lost-found reported no dangling objects; git stash list was empty; find /home/user -name '*r4*' returned nothing; and all 21 prior arena/* remote branches were fetched and grepped with 0 hits for gems52_r4.",
+   "handling": "Recovery is by rebuild, committing after every stage rather than at the end. Root cause kept visible: .gitignore lists /data/ and /work/, so no artifact outside git was ever protected, and the round's code had not been committed. The rebuild writes findings into knowledge/ before it writes code, so a second reset cannot take the conclusions and the implementation together.",
+   "evidence": "evidence/r4_reset_forensics.json"
+  },
+  {
+   "id": "IR-R4-002",
+   "round": "R4",
+   "session": "2026-10-08",
+   "severity": "medium",
+   "status": "open",
+   "disposition": "disclosed",
+   "title": "Band 10 (dist_to_eq) carries distances larger than the grid can physically contain",
+   "what_it_is": "Inside the footprint, band 10 of data/training_features.tif has median 622.8 m and p99 50.2 km, which are plausible, but a maximum of 4,962,515 m. The grid is 3730 x 3292 px at 100 m, so its diagonal is about 492 km; 0.41% of footprint pixels (21,326 of 5,165,840) exceed 329 km and are therefore impossible as a distance-to-nearest-earthquake measured on this grid.",
+   "how_we_know": "Read band 10 directly with rasterio, applied the official nodata sentinel filter, and took percentiles over the 5,165,840-px footprint: min 0.0, p1 118.3, p50 622.8, p99 50,237.2, max 4,962,515.0, with mean(v > 329000) = 0.0041287.",
+   "handling": "Layers derived from band 10 are rank-encoded before any learner sees them, so the tail is compressed to a single extreme rank rather than dominating a linear model; the layer A_eq_dist_negrank is kept but must not be read as a physical distance. Flagged because any future use of band 10 as a metres-valued quantity (a buffer, a threshold, a decay length) would silently mis-handle those pixels.",
+   "evidence": "evidence/r4_layers_smoke.json"
   }
  ]
 }
