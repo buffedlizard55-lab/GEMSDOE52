@@ -1,6 +1,6 @@
 {
  "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified.",
- "generated": "2026-10-08T22:07:54Z",
+ "generated": "2026-10-08T22:32:19Z",
  "entries": [
   {
    "id": "IR-30-029",
@@ -1087,17 +1087,72 @@
    "disposition": "Do not use CTD5 values as valid promotion evidence; new preregistration and experiment required."
   },
   {
+   "id": "IR-UNQ-001",
+   "round": "H60C (audit 2026-10-08)",
+   "severity": "critical",
+   "status": "resolved in current presentation; H60C remains research-only and not submission-unique",
+   "title": "H60C is full-array-distinct but fails the final-dot uniqueness gate",
+   "what_it_is": "35,185 emitted cells, of which 28,292 (80.4%) lie inside the support of some prior submission and 25,781 (73.3%) inside data/reference/h33-2-b2-zeros.tif alone; support Jaccard is 0.590876 with the H57 credited-core alternate. The full H60C decoded array is distinct in the checked inventory (maximum Spearman 0.741333), but 99.8749% of final dots lie within 3 px of the spacing-five lattice, above the frozen >70% stop threshold. The raster also reuses a 25,517-px prior-supported core; decoded distinction does not make it submission-unique.",
+   "how_we_know": "evidence/uniqueness_audit_h60c_20261008.json (scripts/audit_uniqueness.py). Cross-checked by direct pixel arithmetic: data/reference/h33-2-b2-zeros.tif (37,654 px) is an exact subset of data/scored/gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif (44,090 px); the difference is 6,436 px.",
+   "handling": "README, the H60C audit, generated H60C status page, status receipt and publisher identify it as format-checked locally but not submission-unique. Research download only; no portal upload steps or copyable portal name/note are generated, and no slot is selected or spent.",
+   "disposition": "Do not present H60C as a unique submission. CTD5 is full-array-distinct, but its final dots fail the proximity gate and its legacy holdout is invalid for promotion."
+  },
+  {
+   "id": "IR-UNQ-002",
+   "round": "CTD5 / shared lane gate",
+   "severity": "high",
+   "status": "open - prospective policy review; threshold NOT changed",
+   "title": "Dot-proximity gate is practically unpassable against the registry's s5 lattice",
+   "what_it_is": "The 13GEMSDOE spacing-five lattice (data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif, 206,895 px) is within 3 px of 99.87% of the 5,167,373-px sample footprint (5,160,724 px). The 6,649 uncovered px are 99% within 3 px of the footprint edge (6,580 px). A dot raster passes only if at least 30% of its dots lie on that rim.",
+   "how_we_know": "Distance-transform check on the finite footprint of data/sample_submission.tif (SHA-256 pin verified by scripts/restore_data.py). evidence/uniqueness_audit_ctd5_20261008.json reports near_3px_fraction 1.0 for CTD5 and 0.9987 for H60C.",
+   "handling": "Threshold and gate unchanged. Reported as FAIL with measured coverage. Not reported as proof that any raster is a duplicate of the lattice.",
+   "disposition": "The full-sample geometry leaves 6,649 uncovered rim cells, so the numeric gate is not mathematically impossible: a raster would need at least 30% of its dots on that rim. Do not alter the registry or steer a candidate after seeing results. Any future shared-selector decision must be prospective; the current CTD5 and H60C candidates still fail."
+  },
+  {
+   "id": "IR-UNQ-003",
+   "round": "CTD5 saturation receipt",
+   "severity": "medium",
+   "status": "open - three footprint counts in the repository; reconciliation not done",
+   "title": "Three different 'footprint' pixel counts are in use",
+   "what_it_is": "The competition sample finite footprint is 5,167,373 px (used by H60/H60C receipts and by the gate audit here). The CTD5 feature-derived mask has footprint_pixels 5,164,300 and eligible_pixels 4,593,171 (docs/data/ctd5_masks.json), and the saturation receipt (docs/data/ctd5_registry_saturation.json) reports its 100% coverage on the 4,593,171 eligible set. The saturation receipt is therefore not on the same footprint as the competition sample.",
+   "how_we_know": "docs/data/ctd5_masks.json (footprint_pixels, eligible_pixels), docs/data/ctd5_registry_saturation.json (eligible_pixels), and the sample footprint recomputed in this audit (5,167,373 px).",
+   "handling": "Both numbers are kept. The README uses 5,167,373 px and states the 4,593,171 figure is the CTD5 eligible set. The rule for deriving the CTD5 eligible set was not re-audited in this session.",
+   "disposition": "Review: explain why CTD5 eligibility removes 571,129 px from its 5,164,300-px feature footprint (a further 3,073 px separate the feature footprint from the 5,167,373-px sample footprint; 574,202 px in total), then either reproduce the saturation receipt on the sample footprint or retire it."
+  },
+  {
+   "id": "IR-UNQ-004",
+   "round": "Session 2026-10-08 (leaderboard review)",
+   "severity": "high",
+   "status": "open - external verification impossible from this sandbox",
+   "title": "Live competition and leaderboard pages cannot be verified from this sandbox",
+   "what_it_is": "The sandbox allows only github.com, codeload.github.com, api.github.com, registry.npmjs.org, pypi.org and files.pythonhosted.org. drivendata.org, usgs.gov, gbcge.org, epsg.io and wikipedia are not on that list. The brief quotes several different 'current top' values (0.3774 and 0.3195), and the owner-reported 0.2778 for H33. None of these is organizer-confirmed here.",
+   "how_we_know": "Network policy of this session. The only score source available is the owner-supplied brief and owner repositories; registry/leaderboard_snapshot_2026-10-07.json is an owner snapshot, not an organizer feed.",
+   "handling": "No leaderboard number is written as ORGANIZER-CONFIRMED. 0.2778 stays OWNER-REPORTED.",
+   "disposition": "Human to paste the current leaderboard page text or an organizer receipt into registry/ if comparison is required. No credentials are needed for this."
+  },
+  {
+   "id": "IR-UNQ-005",
+   "round": "publish_h60c_site.py (2026-10-08)",
+   "severity": "high",
+   "status": "resolved in this session",
+   "title": "H60C publisher overwrote the CTD5 submission guide (docs/executive-summary.html)",
+   "what_it_is": "scripts/publish_h60c_site.py wrote docs/executive-summary.html as an H60C download guide on every run. That broke the CTD5 release contract (scripts/check_ctd5_release.py and scripts/check_site.py reported failures) and made the guide present a non-unique file as the default download.",
+   "how_we_know": "Re-running the publisher produced a diff in docs/executive-summary.html; check_site.py then reported 4 problems and check_ctd5_release.py failed its 'DO NOT SUBMIT' assertion.",
+   "handling": "Publisher writes the separate docs/h60c-submission-status.html and does not touch the CTD5 executive-summary.html. H60C's dedicated status page is research-only, not an upload guide; the H60C audit links there for the no-submit decision. Site/release checks enforce this separation.",
+   "disposition": "Closed. Any future publisher must not write shared guide pages without the release checks."
+  },
+  {
    "id": "IR-CTD5-013",
    "title": "H60C historical page overstated owner-reported score arithmetic as organizer-measured and called an unapproved archive a submission TIFF",
-   "status": "fixed in current presentation; historical receipts unchanged",
-   "what_it_is": "The H60C page headline said |G| was measured from the organiser's own scores, while the score/file mapping is owner-reported and no organizer submission-page receipt is available. Its primary download button said \u201csubmission TIFF,\u201d although no selector approval was recorded. The stored optional note has 182 characters.",
-   "how_we_know": "Compared docs/h60c.html and README.md with docs/data/h60c_submission.json, docs/data/h60c_build.json, evidence/ctd5_sources.json and the current CTD5 run card. The H60C note_chars field is 182; the score attribution remains owner-reported.",
-   "disposition": "Added a prominent download-for-research / do-not-submit status, made the score-derived |G| conditional, labeled the artifact as historical research, and kept the old receipt and raster bytes unchanged. H60C has no current slot approval.",
+   "status": "presentation corrected; no raster or score evidence changed",
+   "what_it_is": "The H60C audit once described conditional arithmetic from owner-reported scores as measured from organizer scores and called an unapproved archive a submission TIFF. The earlier generated status page also exposed portal upload steps and a copyable name/note despite no selector approval; the archived page records that the old optional note was 182 characters.",
+   "how_we_know": "Compared the reviewed historical docs/h60c.html and README.md with the H60C build and uniqueness receipts, the prior generated status page, and the current no-submit status receipt. No organizer score or submission-page receipt authenticates the score/file mapping.",
+   "disposition": "The historical page labels score-derived values as conditional and owner-reported; the generated H60C status page and machine receipt now state research-download-only / do-not-submit and expose no portal name or note. No raster, owner-reported score, or model output changed. H60C has no slot approval.",
    "evidence": [
     "docs/h60c.html",
+    "docs/h60c-submission-status.html",
     "docs/data/h60c_submission.json",
-    "docs/data/h60c_build.json",
-    "README.md"
+    "evidence/uniqueness_audit_h60c_20261008.json"
    ]
   },
   {
@@ -1148,6 +1203,24 @@
     "docs/archive-h60-cotrain-overview.html",
     "docs/h60.html",
     "tests/test_ctd5.py"
+   ]
+  },
+  {
+   "id": "IR-UNQ-006",
+   "round": "H60C site publisher / merge review 2026-10-08",
+   "severity": "high",
+   "status": "corrected in status page and publisher; no upload authorization",
+   "title": "The H60C status page gave portal upload steps despite a failed uniqueness gate",
+   "what_it_is": "docs/h60c-submission-status.html and scripts/publish_h60c_site.py stated that H60C could be downloaded and then walked readers through account login, selecting the file, pasting a note, and submitting. The page also disclosed that H60C was not unique and said the weekly slot was not recommended; the contradictory operational upload instructions still risked being read as permission.",
+   "how_we_know": "Inspected the generated HTML and publisher, the 2026-10-08 uniqueness audit (80.4% of H60C cells inside prior support; 99.8749% directed 3px proximity to the spacing-five lattice), and the generated status receipt (submission_ok=false; no organizer confirmation).",
+   "handling": "The page and publisher now state research download only / do not submit, show the support-overlap and dot-gate failures, remove account/upload instructions and copyable submission fields, and preserve the CTD5 executive summary unchanged.",
+   "disposition": "No competition slot, upload, raster, or model state is changed. H60C remains a research archive, not a submission candidate.",
+   "evidence": [
+    "docs/h60c-submission-status.html",
+    "docs/data/h60c_submission.json",
+    "submission/H60C_LATEST.txt",
+    "scripts/publish_h60c_site.py",
+    "evidence/uniqueness_audit_h60c_20261008.json"
    ]
   }
  ]

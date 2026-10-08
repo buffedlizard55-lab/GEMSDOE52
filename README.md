@@ -12,11 +12,45 @@
 - **HOLDOUT-DTI:** `gems52-pooled-hide-v1`, **0.018848**, **95% CI [0.012421, 0.026020]**, **53,186 withheld positives**. **Descriptive only:** a fold emitted 2,041/3,058 requested nodes; the candidate/control comparison is not matched-budget eligible. The surface-only control's HOLDOUT-DTI is 0.106749, 95% CI [0.089076, 0.124951], same evaluator and withheld positives. No leaderboard forecast.
 - **Uniqueness diagnostic:** 541 files / 360 decoded rasters; exact maximum Spearman 0.068203 before placement and 0.013418 after. No identical array, no A/B union. **Maximum directed proximity 100% > 70% → duplicate/STOP.**
 - **Concurrent closure audit:** one newly merged H60 raster was also checked against the unchanged surface and dots, bringing the total to **542 files / 361 decoded patterns**. Its near-dot fraction was 27.1917%, below the rule; the earlier 100% duplicate/STOP remains. [Reconciliation receipt](evidence/ctd5_parallel_reconciliation.json).
-- **Why the proximity gate cannot pass this registry:** the registered spacing-five lattice covers **every eligible pixel** within three pixels. No nonempty raster on this footprint can satisfy the literal rule with that prior included. We did not quietly drop it or change the threshold. [Measured saturation proof](evidence/ctd5_registry_saturation.json).
+- **Why the proximity gate is highly restrictive on this footprint, but not mathematically impossible (corrected 2026-10-08):** the earlier receipt measured coverage on a 4,593,171-px "eligible" footprint and reported 100%. On the competition sample's finite footprint (**5,167,373 px**, `data/sample_submission.tif`), the 13GEMSDOE spacing-five lattice is within 3 px of **99.87 %** of cells (5,160,724 px). The **6,649** uncovered cells are **99 % within 3 px of the survey edge** (6,580 px). A dot raster could pass this numerical gate only if at least 30 % of its dots sit on the uncovered border rim. That is a prospective selector/geological question, not a reason to retune this stopped candidate. CTD5 itself has 100 % of its dots within 3 px and fails. We did not change the threshold. The 4,593,171-px footprint discrepancy is logged as **IR-UNQ-003** for review. [Original receipt](evidence/ctd5_registry_saturation.json) · [Re-run audit](evidence/uniqueness_audit_ctd5_20261008.json).
 
 > **Final validation correction:** CTD5’s legacy evaluation halo used withheld fault-tail locations to extend placement regions. The arithmetic below is exploratory, **not strict holdout-valid promotion evidence**. The shared default splitter is now label-blind v2. No refit, new placement, or revised performance number was produced after STOP. [Correction receipt](evidence/ctd5_validation_scope_correction.json).
 
 A second concurrent H60 artifact was checked against the unchanged output: closure scope is now **543 files / 362 decoded patterns**, with the same maximum correlations and 100% near-dot STOP. Its code, artifacts and historical pages are preserved. [Second check](evidence/ctd5_second_parallel_check.json).
+
+## Session 2026-10-08 — H60C continuation (co-training lane), re-verified on fresh bytes
+
+**DOWNLOAD FOR RESEARCH: YES · SUBMIT: NO.** This session re-verified the co-training-lane artifact on the
+**freshly restored 2026-10-08 SHA-pinned bytes** (not from prior evidence) and added three new hypotheses;
+the top-ranked candidate was evaluated on holdout and was negative. Nothing was promoted; **no competition slot was used.** [Run card](evidence/h60c_lane_run_card.json) · [lane verification](evidence/h60c_lane_verification.json) · [set-algebra receipts](evidence/h60c_identify_20261008.json) · [new hypotheses](knowledge/30_hypotheses_h60c_new.md)
+
+- **Lane artifact re-verified** (`scripts/verify_lane_h60c.py`): format-valid (EPSG:32611, 3,730×3,292, exact
+  sample transform, all-finite `{0,1}`, zero mass outside footprint); **full-array-distinct from the 13 manifest-pinned registry rasters** (max tie-aware
+  Spearman **0.00048**, 0 exact matches, not a literal union); this does not override the near-dot gate.
+- **Lane uniqueness gate still fails** (the decisive fact, re-measured): max directed ≤3px dot proximity to one
+  registry raster = **1.0** (> 0.70). On the finite sample footprint, the 13GEMSDOE spacing-5 lattice covers **99.87 %** of cells within 3 px, leaving a narrow boundary rim. A raster would need ≥30 % of its dots on that rim to pass the numeric gate; CTD5 has 100 % near the lattice and fails. Do not re-place this stopped candidate to chase the rim. → **DUPLICATE/STOP, research-only.**
+- **Why 0.2778 / can it beat 0.3195 — re-derived from bytes** (`scripts/h60_forensics.py`, `h60_identify.py`):
+  **|G| = 14,088.7 px**; the champion's entire credit sits in the **25,517-px** 5-family core (density 0.205);
+  the identified DTI interval of that core **P1 = A∩C is [0.2524, 0.3196]** — its top (0.3196) is the
+  "0.3195 current best." Beating it would need pixels denser than 0.205, which **no held measurement shows**;
+  the champion's extra 12,137 px carry zero credit. (All scores are **owner-reported, not organizer-confirmed**.)
+- **New hypothesis evaluated on the holdout (negative)** (`scripts/n2_holdout.py`, `HOLDOUT-DTI`, evaluator
+  `gems52-pooled-hide-v1`, α=0.2, β=0.8, 300 m triangular kernel, 36,439 withheld positives, 15k-dot
+  budget): edge-edge coincidence candidate DTI **0.00857 (95% CI [0.00614, 0.01131])** vs surface
+  control DTI **0.01890 (95% CI [0.01211, 0.02703])**; paired DTI delta **−0.01033 (95% CI
+  [−0.01848, −0.00347])** → **negative** (does not beat the control). The simulator is a defective board
+  predictor (Spearman ≈ −0.10), so even a win would not authorise a slot.
+
+## Which file is submission-unique? — audit of 2026-10-08
+
+Every number below is from a receipt in `evidence/`, produced by `scripts/audit_uniqueness.py`, which runs the repo's shared `lane_uniqueness_report` against every accessible prior raster (31 distinct files after byte-dedupe; the candidate's own byte-identical copies excluded and listed).
+
+| file | full-array pattern distinct in checked inventory? | max Jaccard to a prior | share of its cells inside prior support | surface rank ρ max (gate ≤0.90) | dot ≤3 px max (gate ≤0.70) | submission verdict |
+|---|---|---:|---:|---:|---:|---|
+| `ctd5-research.tif` (CTD5) | **yes** | 0.0034 | 16.4 % | 0.0037 | 100 % (lattice) | **not submission-unique: dot gate fails** · research-only · holdout invalid |
+| `h60c-candidate.tif` (H60C) | **yes**, but predominantly prior-supported | 0.5909 | 80.4 % | 0.7413 | 99.87 % (lattice), 80.7 % (`h19-5`) | **not submission-unique: dot gate fails** · research-only · format-valid locally |
+
+Consequences: (1) **no file in this repository is simultaneously unique and holdout-validated**; (2) the proximity gate is highly restrictive on this footprint, but a numerical pass is possible only with at least 30% of candidate dots on the uncovered rim (see above); this is not permission to steer a stopped candidate there; (3) the only route to a *unique, competitive* file is a new validated signal, not a re-weighting of prior pixels. Neither file is approved for a competition slot. Competition upload is not performed by this repository. Run card for this audit: [evidence/session_2026-10-08_run_card.json](evidence/session_2026-10-08_run_card.json) (verdict negative; `submit_ok: false`; 0 slots used). Reproduce: `.venv/bin/python scripts/audit_uniqueness.py <file.tif> evidence/<receipt>.json`.
 
 ## H60C archive — conditional score arithmetic; research only, not approved to submit
 
@@ -25,7 +59,9 @@ A second concurrent H60 artifact was checked against the unchanged output: closu
 [A-only geological reasoning CSV](docs/downloads/h60c-a-only-reasoning.csv) ·
 [H60 research audit (not upload approval)](docs/h60c.html) · [current CTD5 submission status](docs/executive-summary.html) ·
 [ranked hypotheses](knowledge/25_hypotheses_H60_preregistered.md) ·
-[build receipt](docs/data/h60c_build.json)
+[build receipt](docs/data/h60c_build.json) · [fresh uniqueness audit](evidence/uniqueness_audit_h60c_20261008.json) · [research-only gate status](docs/h60c-submission-status.html)
+
+> **Not a unique submission.** The full-array pattern is not identical to a prior, but the support audit finds 28,292 of 35,185 cells (80.4%) inside at least one prior and 25,781 (73.3%) inside the H33 raster; maximum Jaccard is 0.590876 with the H57 credited-core alternate. Directed 3-pixel dot proximity is 99.8749% to the s5 lattice (>70% stop). H60C is a prior-support derivative, not a unique submission candidate; do not upload it.
 
 ### What the owner-reported 0.2778 pair suggests — conditional arithmetic, not verified truth
 
@@ -101,7 +137,7 @@ rejected bytes and portal receipt were not available.
 
 ## Start here every session
 
-Read the **complete current prompt below**, [working agreement](AGENTS.md), [frozen ranked hypotheses](knowledge/25_ctd5_preregistered.md), [results and limitations](knowledge/27_ctd5_results_and_limits.md), [three-pass review](knowledge/28_ctd5_three_pass_review.md), and [latest repository review](knowledge/30_repo_review_2026-10-08.md). The older README is preserved unchanged in [the history archive](knowledge/archive/README_before_ctd5.md); its conflicting “current” pointers and scientific/score claims are **not current authority**.
+Read the **complete current prompt below**, [working agreement](AGENTS.md), [frozen ranked hypotheses](knowledge/25_ctd5_preregistered.md), [results and limitations](knowledge/27_ctd5_results_and_limits.md), and [three-pass review](knowledge/28_ctd5_three_pass_review.md). The older README is preserved unchanged in [the history archive](knowledge/archive/README_before_ctd5.md); its conflicting “current” pointers and scientific/score claims are **not current authority**.
 
 **Maximize P(Win):** do not consume a scarce slot to make a failed research run look successful. **Own the Outcome:** publish the real file, failure diagnostics, provenance boundaries and reproduction—not only a promising story.
 

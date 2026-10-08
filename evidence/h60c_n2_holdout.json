@@ -1,0 +1,121 @@
+{
+  "evidence_class": "HOLDOUT-DTI (defective board predictor; necessary-not-sufficient gate)",
+  "hypothesis": "N2: pixel-level DEM-edge x radiometric-edge orientation-consistent coincidence",
+  "control": "singleB: logistic regression on View-B bands (DEM, slope, radiometric)",
+  "budget": 15000,
+  "block_side": 200,
+  "n_folds": 4,
+  "prevalence": 0.002,
+  "mode": "hide",
+  "prior_ctd5_singleB_ref": "0.106749 (CTD5, exploratory legacy-v1; different feature stack/folds)",
+  "pooled": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "alpha": 0.2,
+    "beta": 0.8,
+    "triangular_radius_m": 300.0,
+    "pooled": true,
+    "scores": {
+      "singleB": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.01890009395957329,
+        "ci95": [
+          0.012107117499640142,
+          0.027034885317358332
+        ],
+        "withheld_positive_pixels": 36439,
+        "tpw": 776.175360920416,
+        "fpw": 58804.20089748095,
+        "fnw": 35662.82463907958
+      },
+      "N2": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.008571084756532137,
+        "ci95": [
+          0.006135264371006567,
+          0.011308004018106395
+        ],
+        "withheld_positive_pixels": 36439,
+        "tpw": 352.6937333178009,
+        "fpw": 59637.570208949444,
+        "fnw": 36086.3062666822
+      }
+    },
+    "best_comparable_control": "singleB",
+    "paired_differences": {
+      "singleB": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "delta": -0.010329009203041152,
+        "ci95": [
+          -0.018475610931469044,
+          -0.0034677890201231954
+        ],
+        "withheld_positive_pixels": 36439
+      }
+    },
+    "bootstrap": {
+      "method": "paired physical spatial-cluster percentile",
+      "clusters": 162,
+      "draws": 1000,
+      "seed": 520810,
+      "confidence": 0.95,
+      "caveat": "Conditional on fitted folds, catalogue labels and fixed budgets; not a leaderboard interval."
+    },
+    "implementation_sha256": {
+      "evaluate_holdout.py": "ffb084fdf34bb30438485b89caeb1228a6680abfd9f9f0472f4355845da05cc6",
+      "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+      "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+      "spatial.py": "fad7b09db9efc512247b9a176a7e7ce8631e287592b4e07902d0b9c38bed00f8"
+    }
+  },
+  "per_fold": [
+    {
+      "fold": 0,
+      "singleB": {
+        "dti": 0.01215,
+        "emitted": 15000
+      },
+      "N2": {
+        "dti": 0.00732,
+        "emitted": 15000
+      }
+    },
+    {
+      "fold": 1,
+      "singleB": {
+        "dti": 0.01853,
+        "emitted": 15000
+      },
+      "N2": {
+        "dti": 0.0094,
+        "emitted": 15000
+      }
+    },
+    {
+      "fold": 2,
+      "singleB": {
+        "dti": 0.02114,
+        "emitted": 15000
+      },
+      "N2": {
+        "dti": 0.01071,
+        "emitted": 15000
+      }
+    },
+    {
+      "fold": 3,
+      "singleB": {
+        "dti": 0.02651,
+        "emitted": 15000
+      },
+      "N2": {
+        "dti": 0.00592,
+        "emitted": 15000
+      }
+    }
+  ],
+  "verdict_note": "N2 must beat singleB AND the prior 0.1067 holdout best to be promotable; even a holdout win does not authorise a slot (simulator defect + lane uniqueness gate)."
+}

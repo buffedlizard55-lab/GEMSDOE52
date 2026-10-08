@@ -264,14 +264,44 @@ def test_h60c_archive_labels_score_attribution_and_submission_status():
     assert 'not comparable HOLDOUT-DTI' in page
     assert 'Download the submission TIFF' not in page
     assert 'measured from the organiser\'s own scores' not in page
+    assert 'href="h60c-submission-status.html"' in page
+    status_page=(ROOT/'docs/h60c-submission-status.html').read_text()
+    assert 'DOWNLOAD FOR LOCAL RESEARCH: YES' in status_page
+    assert 'SUBMIT TO COMPETITION: NO' in status_page
+    assert 'DO NOT SUBMIT' in status_page
+    assert '99.8749%' in status_page and '80.4093%' in status_page and '73.2727%' in status_page
+    assert 'not organizer-confirmed' in status_page
+    for unsafe in ('Submit submission', 'Exact portal steps', 'Copy name', 'Copy note',
+                   'id="submission-name"', 'id="submission-note"', 'data-copy='):
+        assert unsafe not in status_page
+
+    spec=importlib.util.spec_from_file_location('publish_h60c_site', ROOT/'scripts/publish_h60c_site.py')
+    publisher=importlib.util.module_from_spec(spec); spec.loader.exec_module(publisher)
+    build=json.loads((ROOT/'docs/data/h60c_build.json').read_text())
+    audit=json.loads((ROOT/'evidence/uniqueness_audit_h60c_20261008.json').read_text())
+    shared_pages=[ROOT/'docs/executive-summary.html', ROOT/'docs/h60c.html', ROOT/'docs/index.html']
+    before={path:path.read_bytes() for path in shared_pages}
+    publisher.main()
+    assert {path:path.read_bytes() for path in shared_pages} == before
+    assert status_page == publisher.render_status_page(build,audit) + '\n'
     receipt=json.loads((ROOT/'docs/data/h60c_submission.json').read_text())
-    assert receipt['note_chars']==182  # historical artifact; not an upload note
+    assert receipt == publisher.status_record(build,audit)
+    assert receipt['status']=='RESEARCH DOWNLOAD ONLY — DO NOT SUBMIT'
+    assert receipt['submission_ok'] is False and receipt['no_slot_authorized'] is True
+    assert receipt['uniqueness_diagnostic']['final_dot_gate_failed'] is True
+    assert 'submission_name' not in receipt and 'submission_note' not in receipt
+    latest=(ROOT/'submission/H60C_LATEST.txt').read_text()
+    assert latest.startswith('RESEARCH DOWNLOAD ONLY — DO NOT SUBMIT\n')
+    assert 'submission_ok: false' in latest and 'name ' not in latest and 'note ' not in latest
+
     downloads=(ROOT/'docs/downloads/index.html').read_text()
     assert downloads.index('id="h60c-archive"') < downloads.index('</main>')
     assert downloads.rsplit('</html>',1)[1].strip()==''
     assert 'DO NOT SUBMIT' in downloads and 'NOT APPROVED' in downloads
+    assert '../h60c-submission-status.html' in downloads
     overview=(ROOT/'docs/index.html').read_text()
     assert 'Download H60C for research only — DO NOT SUBMIT' in overview
+    assert 'href="h60c-submission-status.html"' in overview
 
 
 def test_legacy_h60_archive_withdraws_organizer_acceptance_claim():
