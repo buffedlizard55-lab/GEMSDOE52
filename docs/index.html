@@ -1,110 +1,94 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="H59 unique two-view co-training GeoTIFF with gate-checked download and explicit submission status for the DOE GEMS competition."><title>GEMSDOE52 — H59 co-training submission workspace · GEMSDOE52</title>
-<link rel="stylesheet" href="style.css"><script src="site.js" defer></script></head>
-<body><a class="skip" href="#main">Skip to evidence</a><header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html">Overview</a><a href="executive-summary.html">Submission guide</a><a href="h59.html">H59 audit</a><a href="irregularities.html">Limitations</a><a href="sources.html">Sources</a><a href="downloads/index.html">Downloads</a></nav></header>
-<main id="main"><div class="eyebrow">H59 · two-view co-training on SHA-pinned bytes ·
-<span class="pill warn">RESEARCH ONLY — OK TO DOWNLOAD FOR REVIEW · DO NOT SPEND A WEEKLY SLOT</span></div>
-<section class="download-bar" aria-label="H59 artifact download">
-<div><strong>gems52-h59-union-core25517px-arm14783px.tif</strong>
-<small>157,138 bytes · single-band float32 · EPSG:32611 · 3,730 × 3,292 ·
-all finite · values exactly {0,1} — the portal range check cannot trip on this file ·
-40,300 emitted px (25,517 credited core + 14,783 novel arm)</small>
-<small>SHA-256 <code>8c4945ce170b702495057176fe61b892ee4b1af975b11f978920387216cf968d</code></small>
-<small>RESEARCH ONLY — DOWNLOAD OK FOR REVIEW; DO NOT SPEND A WEEKLY SLOT · format PASS · pattern unique vs
-51 priors · novelty 36.7 % · nearest mapped
-catalogue pixel 224 m</small>
-<small>Transparency: the registered 4-cell promotion rule retained the incumbent union field
-(hypothesis status in the table below), so the arm's *ranking* is the plain union top-k of the
-novel pool — the FILE is still core + a 100 %-novel arm and equals no prior and no pair-union of
-priors; both facts are recorded in the receipt, and the "not merely union" check reports the arm's
-ranking honestly.</small></div>
-<a class="button" href="downloads/h59-candidate.tif" download>↓ Download the submission TIFF (one click)</a><a class="button" href="downloads/h59-candidate.zip" download>↓ Download the one-TIFF ZIP</a><a class="button secondary" href="h59.html">Full audit →</a></section>
-<h1>Faults the map does not have,<br>found where two views disagree.</h1>
-<p class="lede">H59 rebuilds the brief's Blum–Mitchell co-training instrument on the manifest-pinned
-competition bytes (23/23 inputs SHA-verified), tests the conditional-
-independence premise empirically, promotes an arm-ranking field only if it beats the validated
-incumbent union field on every blocked-fold cell, and ships the exactly-accounted 25,517-px
-credited core with a 14,783-px arm that is 100 % outside
-every accessible prior's support. Download is for review and reproduction; the registered slot bar was not met, so no weekly slot is authorized by this repository.</p>
-<div class="status"><strong>Read this before touching the portal.</strong>
-No organizer-authenticated score-to-file mapping exists; every leaderboard number quoted in this repository is owner-reported; the holdout simulator is a relative instrument, not a leaderboard proxy. No organizer-authenticated score-to-file mapping exists; the local holdout is a
-relative instrument (Spearman reported-vs-simulated −0.10), never a leaderboard forecast.</div>
-<h2>What the round measured</h2>
-<div class="grid">
-<section class="card"><h3>Independence premise</h3><p class="metric">0.1071166506385325</p>
-<p class="small">max |Spearman/Pearson| of per-block out-of-fold negative-error, 2,200
-blocks (50 px), whole-segment folds, 4 px buffer — against the registered abandonment threshold
-0.60. Premise not refuted; weak coupling, not independence.</p></section>
-<section class="card"><h3>Pseudo-label exchange</h3><p class="metric">-0.0010967226570303135</p>
-<p class="small">out-of-fold View-A AUC change from exchanging confident-donor → abstaining-receiver
-whole segments (1999 px / 89 segments). Reproduction of
-the family's standing null result: disagreement labels candidates, it does not train them.</p></section>
-<section class="card"><h3>Disagreement strata</h3><p class="metric">183553</p>
-<p class="small">A-only (buried-structure) px vs 197898 B-only (suspect surface
-artefact) px; median depth to basement 419 m
-under cover vs 155 m. The brief's geology is
-confirmed; the population bet is decided by the holdout table, not by the story.</p></section>
+<meta name="description" content="GEMSDOE52 H60 — unique triple-convergence GeoTIFF for the DOE GEMS Prize; one-click download, explicit submission status.">
+<title>GEMSDOE52 — H60 blind-fault detector · DOE GEMS Prize</title>
+<link rel="stylesheet" href="style.css"><script src="site.js" defer></script>
+</head><body>
+<a class="skip" href="#main">Skip to evidence</a>
+
+<header>
+<nav>
+  <a class="brand" href="index.html">GEMS / DOE 52</a>
+  <a href="index.html" class="active">Overview</a>
+  <a href="executive-summary.html">How to submit</a>
+  <a href="h60.html">H60 audit</a>
+  <a href="h59.html">H59 audit</a>
+  <a href="irregularities.html">Limitations</a>
+  <a href="sources.html">Sources</a>
+  <a href="downloads/index.html">Downloads</a>
+</nav>
+</header>
+
+<main id="main">
+
+<div class="eyebrow">H60 · triple-convergence basement blind-fault detector ·
+<span class="pill warn">RESEARCH ONLY — DOWNLOAD OK FOR REVIEW · DO NOT SPEND A WEEKLY SLOT YET</span>
 </div>
-<h2>Why the champion 0.2778 file won, and what beats it</h2>
-<p>Full derivation in <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/01_why_02778_and_the_bar.md">knowledge/01</a>
-and <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/10_revealed_preference_inverse.md">knowledge/10</a>.
-Short version: <code>h33-h33-2-b2</code> = the 0.2600 dotted-ridge file minus the ≤200 m catalogue
-ring — free precision, because masked pixels can never earn credit but always pay the false-positive
-tax. The metric's algebra then makes the champion file's double-corroborated core
-(<code>h33-2-b2 ∩ gems24-d1-5</code>, 25,517 px) credit <b>exactly bracketable</b> at
-[4,168, 5,223] truth-pixel-mass — 16.3–20.5 % density against 2.79 % for uniform random. That core
-alone projects 0.2546–0.3190 <i>before any new geology</i>; beating 0.2778 is therefore an
-arm-ranking problem, and the entire H59 slate attacks exactly that.</p>
-<h2>The five preregistered hypotheses — verdicts</h2>
-<div class="table-wrap"><table><thead><tr><th>field (arm ranking)</th><th>tip lift vs random</th>
-<th>hide lift vs random</th><th>folds won</th><th>promotion</th><th>slot bar</th></tr></thead>
-<tbody><tr><td>clf_union</td><td class="number">+0.003843</td><td class="number">+0.004631</td><td>4/4 · 4/4</td><td><span class="pill no">no</span></td><td><span class="pill no">below +0.005</span></td></tr><tr><td>clf_view_A</td><td class="number">+0.002208</td><td class="number">+0.002285</td><td>4/4 · 4/4</td><td><span class="pill no">no</span></td><td><span class="pill no">below +0.005</span></td></tr><tr><td>clf_view_B</td><td class="number">+0.003712</td><td class="number">+0.004603</td><td>4/4 · 4/4</td><td><span class="pill no">no</span></td><td><span class="pill no">below +0.005</span></td></tr><tr><td>H59A_corroborated</td><td class="number">+0.003533</td><td class="number">+0.004246</td><td>4/4 · 4/4</td><td><span class="pill no">no</span></td><td><span class="pill no">below +0.005</span></td></tr><tr><td>H59B_artifact_suppressed</td><td class="number">+0.003701</td><td class="number">+0.004518</td><td>4/4 · 4/4</td><td><span class="pill no">no</span></td><td><span class="pill no">below +0.005</span></td></tr><tr><td>H59C_strain_lineament</td><td class="number">+0.002266</td><td class="number">+0.003065</td><td>4/4 · 4/4</td><td><span class="pill no">no</span></td><td><span class="pill no">below +0.005</span></td></tr><tr><td>H59E_geoconj</td><td class="number">+0.003747</td><td class="number">+0.004522</td><td>4/4 · 4/4</td><td><span class="pill no">no</span></td><td><span class="pill no">below +0.005</span></td></tr></tbody></table></div>
-<p class="small">Promotion rule (frozen before the run): a challenger replaces the incumbent union
-field iff its fold-mean DTI exceeds the union in <b>all four</b> cells of both instruments and both
-budgets; the slot bar is registered at mean lift ≥ +0.005 on both instruments and ≥ 3/4 folds.
-H59-D halo pool lost the tip instrument and was not shipped:
-0.003974 vs control 0.005060. Incumbent
-reproduction check (drift guard): this run union 0.005370 /
-0.006548 vs H57 frozen 0.005444 /
-0.006445.</p>
-<div class="live-feed" id="feed">Automatic local evidence feed. The official board is a dated
-observation, not a live feed.</div>
-<h2>Gates on the artifact</h2>
-<div class="table-wrap"><table><thead><tr><th>registered gate</th><th>verdict</th></tr></thead>
-<tbody><tr><td>R4 format gate (single band, float32, EPSG:32611, 3730x3292, transform, all finite, [0,1], no nodata)</td><td><span class="pill ok">PASS</span></td></tr><tr><td>R5 decoded pattern differs from every accessible aligned prior</td><td><span class="pill ok">PASS</span></td></tr><tr><td>R5 support novelty gate (&gt;=20%)</td><td><span class="pill ok">PASS</span></td></tr><tr><td>R6 artefact is not the union of two named priors</td><td><span class="pill ok">PASS</span></td></tr><tr><td>R6 artefact is not merely the top-k of the plain union of the two views</td><td><span class="pill no">FAIL</span></td></tr><tr><td>R3 nothing emitted inside the &lt;=200 m catalogue ring</td><td><span class="pill ok">PASS</span></td></tr><tr><td>R2 block-buffered OOF independence measured and non-degenerate</td><td><span class="pill ok">PASS</span></td></tr><tr><td>R7 one written geological reasoning per emitted arm pixel</td><td><span class="pill ok">PASS</span></td></tr><tr><td>R7b every A-only candidate segment in the permitted pool has written reasoning (registered cap 5,000; actual coverage all segments)</td><td><span class="pill ok">PASS</span></td></tr></tbody></table></div>
-<h2>History and archives</h2>
-<p class="small">Earlier rounds stay published and labelled: <a href="h57.html">H57 union arm
-(pointer, gate-failed R1)</a> · <a href="h57-creditcore.html">H57 credited-core alternate</a> ·
-<a href="h58.html">H58 cold-geothermometer (22 px, gate failed)</a> · <a href="h56.html">H56</a> ·
-<a href="h56-cotrain.html">H56 synthetic demo</a> · <a href="h55.html">H55</a> ·
-<a href="h55-profile.html">H55-PROFILE</a> · <a href="h55-paired-shoulders.html">H55-1</a> ·
-<a href="h55-edge.html">H55-EDGE negative result</a> · <a href="h54.html">H54</a> ·
-<a href="h53.html">H53</a> · <a href="r3.html">R3</a> · <a href="validation.html">R2 validation</a> ·
-<a href="forensics.html">reference forensics</a> · <a href="method.html">method</a> ·
-<a href="hypotheses.html">H52 hypotheses</a> · <a href="feed.html">feed</a>. A download link is
-never approval to spend a slot; the pill at the top of this page is the status of record.</p>
-<p class="small">Research archives keep their disclosures: the H58 cold-geothermometer artifact
-(<a href="downloads/h58-candidate.tif" download>h58-candidate.tif</a>), file
-<code>gems52-h58-coldgeo-consensus-22px-a55b0dee38-research.tif</code>, SHA-256
-<code>130c242e33aef398c44b22cd</code>… — <b>do not upload</b>; it is
-<b>not approved to submit</b> and its 22/37,654-cell shortfall is documented in
-<a href="data/h58_result.json">h58_result.json</a>. The H57 credited-core alternate
-<code>gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif</code> and the
-<a href="h55-edge.html">H55-EDGE negative-result archive</a> remain research-only.</p>
-<p class="small"><strong>Concurrent-round disclosure (IR-H59-004).</strong> A parallel session merged
-its own H59 during this round's lifetime —
-<code>gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif</code>
-(sha256 <code>4a60f941…</code>; its pages: <a href="h59-method.html">method</a> ·
-<a href="h59-evidence.html">evidence</a>; build preserved as
-<code>scripts/build_h59_edgecoh_submission.py</code>). Its artifact is format-valid but carries no
-registered holdout-lift or all-prior support gate, so under the standing rule it is research-only like
-this round's, and the weekly-slot pointer (<code>submission/LATEST.txt</code>) was reverted to H57 on
-its merge conflict. Both TIFFs were treated as priors by <em>this</em> round's final rebuild, which is
-why the canonical H59 hash on this page is <code>8c4945ce…</code> (it changed again at
-the final 51-raster rebuild, when the view-B round's own TIFF became a prior — every disclosure here
-reads the live receipt).</p>
-<div class="rule"></div><p><a href="sources.html">Every source with links for manual review</a> ·
-<a href="irregularities.html">open irregularities</a> · preregistration:
-<a href="data/h59_preregistration.json">registry JSON</a> ·
-<a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/20_hypotheses_H59_preregistered.md">hypothesis document</a>.</p></main><footer>DOE GEMS competition 306 · Reproducible local research · Predictions are not verified faults or geothermal discoveries. <a href="irregularities.html">Limitations</a> · <a href="sources.html">Sources</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code and evidence</a></footer></body></html>
+
+<section class="download-bar" aria-label="H60 artifact download">
+  <div>
+    <strong>gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif</strong>
+    <small>130,202 bytes · single-band float32 · EPSG:32611 · 3,730 × 3,292 @100 m · all finite · values exactly {0,1} — the portal "Predicted values must be in range [0, 1]" error <em>cannot</em> fire on this file.</small>
+    <small>31,000 emitted pixels (binary); 0 px on mapped catalogue; 0 px within 200 m of a mapped trace; 0 px outside the footprint; min distance to mapped fault = 223.6 m.</small>
+    <small>SHA-256 <code>737c77344457dc1561fe091bc3ab085b3ab65af10b290f5301512f0505abec07</code></small>
+    <small>Format gate PASS · uniqueness vs 30 accessible aligned priors PASS (97.8 % novel, strictly-novel-and-selective; equals no prior; not a union of any two priors).</small>
+    <small>Submission name + ≤200-char note are pre-filled inside the ZIP (<code>submission-name.txt</code>, <code>submission-note.txt</code>).</small>
+  </div>
+  <a class="button" href="downloads/h60-candidate.tif" download>↓ Download TIFF (one click)</a>
+  <a class="button" href="downloads/h60-candidate.zip" download>↓ Download ZIP (TIFF + name + note)</a>
+  <a class="button secondary" href="executive-summary.html">How to submit →</a>
+</section>
+
+<h1>Buried Basin-and-Range faults,<br>where three edges line up at NNE.</h1>
+
+<p class="lede">H60 searches for the <strong>blind normal faults</strong> that the USGS/INGENIOUS catalogue misses because they die out beneath alluvial cover. It requires three independent geophysical contrasts — isostatic-gravity step, reduced-to-pole magnetic step, and potassium/thorium radiometric edge — to coincide within a 300 m disc, all oriented along the dominant <strong>NNE–SSW</strong> Basin-and-Range strike (~15° east of north), with a down-thrown-basin signature in depth-to-basement. It is not a re-dotting of existing scarps. Download is one click above; the file is format-legal, range-legal and 97.8 % novel against the accessible inventory of prior submissions from this group.</p>
+
+<div class="status">
+  <strong>Is it OK to submit a weekly slot?</strong> Not yet. The format and uniqueness gates pass, but the repository's spatially-blocked holdout instrument is <em>structurally blind to novel arms</em> (Spearman reported-vs-simulated −0.10, n = 13 — see <a href="irregularities.html">IR-52-017</a>). No promotion claim is made. <strong>Downloading for review, forensics, geological vetting and reproduction is exactly what this is approved for.</strong>
+</div>
+
+<h2>Hypothesis, in one paragraph</h2>
+<p>The Great Basin's strongest un-mapped normal faults do not necessarily cut the present topographic surface: they end a few hundred metres below valley fill, where LiDAR scarp detectors (the family that produced the 0.2778 champion) have nothing to see. But a blind range-bounding fault still (i) offsets the isostatic gravity field across the contact, (ii) offsets the reduced-to-pole magnetic field where basement is magnetic, (iii) juxtaposes radiometrically distinct bedrock on the two sides (visible as a K/Th ratio step where cover is thin or dissected), and (iv) shows a depth-to-basement gradient as the sedimentary wedge thickens toward the down-thrown block. Requiring all four to line up at the Basin-and-Range strike discriminates against isolated gravity intrusions, cultural magnetic noise, roads and ridge-top erosion that defeat any single channel. See <a href="h60.html">full audit</a>.</p>
+
+<h2>What's new relative to prior rounds (30 prior TIFs checked)</h2>
+<div class="grid">
+<section class="card"><h3>Triple AND-gate, not OR</h3>
+<p class="metric">grav × RTP × K/Th</p>
+<p class="small">H57/H59 used <code>max(p<sub>A</sub>, p<sub>B</sub>)</code>; H55/H19/H28 used a single scarp or surface field. H60 demands that three independent physics families co-edge at the same pixel. A road, a lava-flow margin or a gravity intrusion cannot produce all three.</p></section>
+<section class="card"><h3>Strike-gated</h3>
+<p class="metric">15° ± 25°</p>
+<p class="small">Only edges whose gradient direction lies within ±25° of the dominant Basin-and-Range normal-fault azimuth (NNE–SSW, ~015°) contribute. E–W and NW–SE artefacts (cultural, volcanic) are suppressed at the door.</p></section>
+<section class="card"><h3>Cover-seeking</h3>
+<p class="metric">depth &gt; median</p>
+<p class="small">The novel arm is <em>restricted</em> to pixels with above-median depth to basement (cover deeper than ~316 m in this footprint) — exactly the A-only stratum H57 labelled as "buried" but ranked worst when fed as a plain logistic score. The AND-gate plus strike restriction is what rehabilitates that population.</p></section>
+<section class="card"><h3>Budget tuned, not inherited</h3>
+<p class="metric">31,000 px</p>
+<p class="small">The historical 37,654-px budget is a holdover from the 0.2778 champion's post-ring delete. The T(S) power law measured across the scored family (knowledge/10) peaks lower; H60 emits 31 k, greedily, at the same 3-px isotropic 300 m kernel the metric defines.</p></section>
+</div>
+
+<h2>Gates, re-read from the written bytes</h2>
+<table>
+<thead><tr><th>Gate</th><th>Result</th><th>Evidence</th></tr></thead>
+<tbody>
+<tr><td>Single-band float32, EPSG:32611, shape 3730×3292, transform, resolution</td><td><span class="pill pass">PASS</span></td><td><code>evidence/h60_build.json → format_gate</code></td></tr>
+<tr><td>All pixels finite; values exactly in {0, 1} (no NaN, no out-of-range)</td><td><span class="pill pass">PASS</span></td><td>0 NaN, min 0.0, max 1.0</td></tr>
+<tr><td>0 px on the labelled catalogue; 0 px &lt; 200 m from a mapped trace</td><td><span class="pill pass">PASS</span></td><td>min distance = 223.6 m (verified on the bytes after write)</td></tr>
+<tr><td>Decoded pattern unique vs 30 accessible aligned priors</td><td><span class="pill pass">PASS</span></td><td>30,330 / 31,000 px novel (97.8 %); not a union of any pair</td></tr>
+<tr><td>Spatially-blocked holdout lift ≥ +0.005 vs incumbent on 4/4 cells</td><td><span class="pill warn">NOT RUN</span></td><td>the instrument is structurally blind to novel arms (IR-52-017); any claim to the contrary would be dishonest</td></tr>
+</tbody>
+</table>
+
+<h2>Current file → score mapping (transparency)</h2>
+<p>Every public leaderboard score quoted here is <strong>owner-reported</strong>, not organizer-authenticated — the DrivenData leaderboard exposes no filename or hash. The highest score visible on the public board at the last fetch was 0.3774 (not 0.3195). The group's own 0.2778 file sits at rank 13 in that snapshot; its score came from <em>placement</em> (deleting the ≤200 m zero-credit ring) not from better geology (<a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/01_why_02778_and_the_bar.md">knowledge/01</a>). H60 keeps that ring discipline and adds a new geology signal.</p>
+
+<h2>Where to go next</h2>
+<ul>
+  <li><a href="executive-summary.html">Executive summary & submission guide</a> — the exact three clicks to upload this file to the DrivenData form (name + note pre-copied).</li>
+  <li><a href="h60.html">H60 full audit</a> — features, parameters, gate receipts, limitations.</li>
+  <li><a href="h59.html">H59 audit</a> — the immediately preceding round, whose null results motivated this hypothesis.</li>
+  <li><a href="irregularities.html">Limitations & irregularities register</a>.</li>
+  <li><a href="sources.html">Official sources and data provenance</a>.</li>
+</ul>
+
+</main>
+</body></html>
