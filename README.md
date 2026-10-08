@@ -18,6 +18,29 @@
 
 A second concurrent H60 artifact was checked against the unchanged output: closure scope is now **543 files / 362 decoded patterns**, with the same maximum correlations and 100% near-dot STOP. Its code, artifacts and historical pages are preserved. [Second check](evidence/ctd5_second_parallel_check.json).
 
+## Session 2026-10-08 — H60C continuation (co-training lane), re-verified on fresh bytes
+
+**DOWNLOAD FOR RESEARCH: YES · SUBMIT: NO.** This session re-verified the co-training-lane artifact on the
+**freshly restored 2026-10-08 SHA-pinned bytes** (not from prior evidence) and added three new hypotheses
+with the top one holdout-validated. Nothing was promoted; **no competition slot was used.** [Run card](evidence/h60c_lane_run_card.json) · [lane verification](evidence/h60c_lane_verification.json) · [set-algebra receipts](evidence/h60c_identify_20261008.json) · [new hypotheses](knowledge/30_hypotheses_h60c_new.md)
+
+- **Lane artifact re-verified** (`scripts/verify_lane_h60c.py`): format-valid (EPSG:32611, 3,730×3,292, exact
+  sample transform, all-finite `{0,1}`, zero mass outside footprint); **decoded-pattern-unique** (max tie-aware
+  Spearman **0.00048** vs the 13 manifest-pinned registry rasters, 0 exact matches, not a literal union).
+- **Lane uniqueness gate still fails** (the decisive fact, re-measured): max directed ≤3px dot proximity to one
+  registry raster = **1.0** (> 0.70). The 13GEMSDOE spacing-5 lattice saturates **99.87 %** of the eligible
+  footprint within 3px, so *no non-empty raster on this frozen footprint can pass the >70% rule*. → **DUPLICATE/STOP, research-only.**
+- **Why 0.2778 / can it beat 0.3195 — re-derived from bytes** (`scripts/h60_forensics.py`, `h60_identify.py`):
+  **|G| = 14,088.7 px**; the champion's entire credit sits in the **25,517-px** 5-family core (density 0.205);
+  the identified DTI interval of that core **P1 = A∩C is [0.2524, 0.3196]** — its top (0.3196) is the
+  "0.3195 current best." Beating it would need pixels denser than 0.205, which **no held measurement shows**;
+  the champion's extra 12,137 px carry zero credit. (All scores are **owner-reported, not organizer-confirmed**.)
+- **New hypothesis validated on the holdout** (`scripts/n2_holdout.py`, HOLDOUT-DTI, `gems52-pooled-hide-v1`,
+  36,439 withheld, 15k-dot budget): edge-edge coincidence candidate **0.00857 [0.00614, 0.01131]** vs surface
+  control **0.01890 [0.01211, 0.02703]**; paired delta **−0.01033 [−0.01848, −0.00347]** → **negative** (does
+  not beat the control). The simulator is a defective board predictor (Spearman ≈ −0.10), so even a win would
+  not authorise a slot.
+
 ## Which file is unique? — audit of 2026-10-08
 
 Every number below is from a receipt in `evidence/`, produced by `scripts/audit_uniqueness.py`, which runs the repo's shared `lane_uniqueness_report` against every accessible prior raster (31 distinct files after byte-dedupe; the candidate's own byte-identical copies excluded and listed).

@@ -1,0 +1,91 @@
+{
+  "run_id": "h60c-lane-20261008",
+  "generated_utc": "2026-10-08T22:07:57.547826+00:00",
+  "lane": "two-view co-training / disagreement (View A geophysical, View B surface)",
+  "hypothesis": "Blum-Mitchell co-training: confident-A/abstain-B (buried structure) and confident-B/abstain-A (surface artefact) as the discovery signal; validated here against the surface control and three new hypotheses.",
+  "mechanism": "One confident-to-abstaining pseudo-label exchange on whole spatial blocks; asymmetric OOF disagreement; 3px sparse placement. This session re-verified the lane artifact on freshly restored bytes and ran a new edge-edge-coincidence candidate (H60C-N1) on the shared hide-and-recover holdout.",
+  "named_non_fault_process": "A non-fault basin-fill density boundary or volcanic lithologic contact (mimics a gravity/mag edge); a road cut or graded fan margin (mimics a surface edge).",
+  "holdout_dti": {
+    "evidence_class": "HOLDOUT-DTI (defective board predictor, Spearman~-0.10; necessary-not-sufficient)",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "candidate": "H60C-N1 edge-edge coincidence",
+    "dti": 0.008571084756532137,
+    "ci95": [
+      0.006135264371006567,
+      0.011308004018106395
+    ],
+    "withheld_positive_pixels": 36439,
+    "control": "singleB (logistic on DEM/slope/radiometric)",
+    "control_dti": 0.01890009395957329,
+    "control_ci95": [
+      0.012107117499640142,
+      0.027034885317358332
+    ],
+    "paired_delta_vs_control": -0.010329009203041152,
+    "paired_delta_ci95": [
+      -0.018475610931469044,
+      -0.0034677890201231954
+    ],
+    "verdict": "candidate LOSES to the surface control -> not promotable"
+  },
+  "set_algebra_anchor": {
+    "evidence_class": "organizer-tied (recomputed 2026-10-08 from restored SHA-pinned bytes; NOT organizer-authenticated)",
+    "G_px": 14088.7,
+    "P1_AandC_dti_interval": [
+      0.2524,
+      0.3196
+    ],
+    "champion_A_dti_interval": [
+      0.2772,
+      0.2784
+    ],
+    "note": "0.3195 (user-reported best) == identified DTI_hi of the dense core P1; champion wastes 12,137 zero-credit px."
+  },
+  "correlation_overlap_vs_registry": {
+    "evidence_class": "uniqueness diagnostic, not a score",
+    "registry_rasters_checked": 13,
+    "max_spearman": 0.00048352350452555135,
+    "max_near_3px_fraction": 1.0,
+    "lattice_saturation_frac_within_3px": 0.9987132726822701,
+    "lane_gate_pass": false,
+    "duplicate_log_and_stop": true
+  },
+  "raster_sha256": "a6e6e44aebaf057989e254bd5ce3729e5a94836c0e5687a95e91e3fc8a40c686",
+  "raster_file": "gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif",
+  "validator_output": {
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "min": 0.0,
+    "max": 1.0,
+    "n_nan": 0,
+    "mass_outside_footprint": 0,
+    "ok": true,
+    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "submission_name": "H60C-lane-ctd5-cover-disagreement-b58bae0f0e",
+  "submission_note": "H60C co-training lane; fresh 2026-10-08 byte re-verify; unique, format-valid; fails 70pct 3px gate. Research only.",
+  "submission_note_chars": 114,
+  "unique_not_a_copy": true,
+  "format_valid": true,
+  "download_ok": true,
+  "submission_ok": false,
+  "verdict": "negative (research-only; lane uniqueness gate impassable on this footprint; no weekly slot used)",
+  "new_hypotheses_doc": "knowledge/30_hypotheses_h60c_new.md",
+  "lane_verification_receipt": "evidence/h60c_lane_verification.json",
+  "n2_holdout_receipt": "evidence/h60c_n2_holdout.json",
+  "set_algebra_receipts": [
+    "evidence/h60c_forensics_20261008.json",
+    "evidence/h60c_identify_20261008.json"
+  ]
+}
