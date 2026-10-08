@@ -72,7 +72,7 @@ def copy_evidence():
     # H55 publishes its own evidence the same way the R2 round publishes *_r2.json: copied on every
     # run so the page cannot drift from the artefact, and named by round so it is never mistaken for
     # another round's numbers.  The Phase-2 reasoning record is staged next to the raster it explains.
-    for pat in ('h55_*.json', 'h58_*.json', 'h59_*.json', 'submission_gems52-h55-*.json',
+    for pat in ('ctd5_*.json', 'h55_*.json', 'h58_*.json', 'h59_*.json', 'submission_gems52-h55-*.json',
                 'submission_gems52-h58-*.json', 'submission_gems52-h59-*.json'):
         for path in sorted(EV.glob(pat)):
             write(path.name, safe(json.loads(path.read_text())))
@@ -124,14 +124,16 @@ def submission_note(d):
     the evidence file).  Truncating the long one is what produced a note that ended mid-sentence, so
     the long form is never truncated into the short field: it is offered separately.
     """
+    # The artifact's own note wins over a legacy synthesized submission_note.
+    if d.get('note'):
+        return str(d['note'])[:200]
     if d.get('submission_note'):
         return str(d['submission_note'])[:200]
     portal_note = (d.get('portal') or {}).get('note')
     if portal_note:
         return str(portal_note)[:200]
-    n = (f"H54 revealed-core {d.get('retained_core_px', 0)}px + {d.get('novel_px', 0)}px novel "
-         f"strike-continuation; 200m corridor excluded; |G|=14089")
-    return n[:200]
+    return 'Research artifact; no submission note recorded. Not upload approval.'
+
 
 
 def make_zip(name):
@@ -149,6 +151,16 @@ def make_zip(name):
         return None
     stem = name[:-4] if name.endswith('.tif') else name
     zp = DL / f'{stem}.zip'
+    # Preserve immutable historical bundles when their TIFF payload is unchanged.
+    # H58 retains its stricter one-member check below; CTD5 uses submission_writer.
+    if zp.exists() and not stem.startswith('gems52-h58-'):
+        try:
+            with zipfile.ZipFile(zp) as existing:
+                names=[n for n in existing.namelist() if n.lower().endswith(('.tif','.tiff'))]
+                if len(names)==1 and existing.read(names[0])==src.read_bytes() and existing.testzip() is None:
+                    return str(zp)
+        except (OSError,KeyError,zipfile.BadZipFile):
+            pass
     if stem.startswith('gems52-h58-'):
         # H58's portal ZIP is intentionally a single member: exactly one GeoTIFF. The short portal
         # note and full evidence are published alongside it, not bundled as extra upload files.
@@ -233,6 +245,16 @@ def make_zip(name):
                   str(d['submission_note_long']), '']
     body = "\n".join(lines)
     zp = DL / f'{stem}.zip'
+    # Preserve immutable historical bundles when their TIFF payload is unchanged.
+    # H58 retains its stricter one-member check below; CTD5 uses submission_writer.
+    if zp.exists() and not stem.startswith('gems52-h58-'):
+        try:
+            with zipfile.ZipFile(zp) as existing:
+                names=[n for n in existing.namelist() if n.lower().endswith(('.tif','.tiff'))]
+                if len(names)==1 and existing.read(names[0])==src.read_bytes() and existing.testzip() is None:
+                    return str(zp)
+        except (OSError,KeyError,zipfile.BadZipFile):
+            pass
     expected_members = [name, 'SUBMISSION_NOTE.txt'] + (['evidence.json'] if ev.exists() else [])
     # Preserve a byte-identical, already-valid archive rather than changing ZIP timestamps on every
     # scheduled refresh. Rebuild only when a member, note, or receipt actually changes.
@@ -386,6 +408,28 @@ def current_branch(explicit=None):
     return 'detached or unknown (not assumed)'
 
 
+def research_status():
+    """Read the research card, not LATEST, and verify its exact published bytes.
+
+    Hash identity preserves the previous on-disk validator result without importing
+    scientific dependencies into the scheduled stdlib-only feed. Never promotes.
+    """
+    p = EV / 'ctd5_run_card.json'
+    if not p.exists():
+        return None
+    card = json.loads(p.read_text())
+    path = DL / card['raster_file']
+    matches = path.is_file() and file_hash(path) == card['raster_sha256']
+    if not matches:
+        raise ValueError('CTD5 research download differs from its audited bytes')
+    return dict(run_id=card['run_id'], file=card['raster_file'],
+                download='downloads/ctd5-research.tif', sha256=card['raster_sha256'],
+                hash_verified=matches, verdict=card['verdict'],
+                approved_for_weekly_slot=False, submit_ok=False,
+                measurement_utc=card['generated_utc'],
+                note='Research only; local evidence refresh is not a fresh organizer or leaderboard observation.')
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--fetch', action='store_true', help='Only honored with recorded written permission; otherwise no DrivenData request.')
@@ -449,6 +493,7 @@ def main():
         leaderboard_last_observed_utc=board.get('fetched_utc') or board.get('observed_date_utc'),
         prior_entries=len(entries), eligible_prior_rasters=sum(bool(r.get('eligible_prior')) for r in entries),
         scientific_gate=sub.get('approved_for_weekly_slot', False), slots_used=0,
+        latest_research=research_status(),
         freshness_note='Local evidence refresh is automatic; the board is a dated snapshot. No automatic portal submission.'))
     log('Feed updated. ' + board['status'])
     return 1 if board.get('fetch_error') else 0

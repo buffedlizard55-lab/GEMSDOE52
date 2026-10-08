@@ -1,0 +1,70 @@
+{
+  "file": "gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif",
+  "sha256": "a6e6e44aebaf057989e254bd5ce3729e5a94836c0e5687a95e91e3fc8a40c686",
+  "bytes": 83917,
+  "submission_name": "CTD5-cover-matched-disagreement-b58bae0f0e",
+  "note": "CTD5: cover-matched geophysics to surface abstention; one pseudo-label round. Research only; no prior pixels reused.",
+  "note_chars": 116,
+  "validator": {
+    "path": "/home/user/GEMSDOE52/submission/gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif",
+    "bytes": 83917,
+    "sha256": "a6e6e44aebaf057989e254bd5ce3729e5a94836c0e5687a95e91e3fc8a40c686",
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "ref_bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "nodata": null,
+    "blocksize": [
+      256,
+      256
+    ],
+    "fixture_grid": false,
+    "has_validity_mask": false,
+    "nan_pixels": 0,
+    "infinity_pixels": 0,
+    "n_nan": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.0009772655321285129,
+    "n_nonzero": 12000,
+    "mass": 12000.0,
+    "mass_outside_footprint": 0,
+    "problems": [],
+    "ok": true,
+    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "zip_file": "gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.zip",
+  "zip_sha256": "5bf48b9330891a775d33d1553b8121d9894fad729ae01b6bf85bbb16ff521728",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "status": "research-only; local format validation is not organizer acceptance",
+  "metadata": {
+    "new_model_inference": true,
+    "prior_prediction_inputs": false,
+    "hypothesis": "CTD5-H1",
+    "prediction_source": "buffered spatial out-of-fold mosaic",
+    "pseudo_rounds": 1
+  }
+}
