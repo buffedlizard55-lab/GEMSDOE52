@@ -1,6 +1,6 @@
 {
-  "about": "Dated irregularities with entry-level provenance. Historical claims and inherited/reconstructed entries are retained for audit, not all freshly verified. Later correction fields supersede incompatible earlier interpretations.",
-  "generated": "2026-10-08T03:44:41Z",
+  "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified.",
+  "generated": "2026-10-08T19:32:31Z",
   "entries": [
     {
       "id": "IR-30-029",
@@ -393,92 +393,26 @@
       ]
     },
     {
+      "id": "IR-52-034",
+      "round": "R4",
+      "session": "2026-10-08",
+      "severity": "high",
+      "status": "open",
+      "disposition": "disclosed",
+      "title": "The organiser's band-6 tag is contradicted by the survey contractor's own read-me: band 6 is radiometric total count, and the competition grid is node-aligned to the survey grid",
+      "what_it_is": "Band 6 of data/training_features.tif is tagged data_category = magnetic_data, 'Tilt angle or total curvature - magnetic field derivative for edge detection'. The GeoDAWN contractor read-me (NV5 / EDCON-PRJ, December 2022, Task Order 140G0221F0024) lists tc_raw and tccorr under Radiometrics and contains no tilt-angle channel anywhere in its channel inventory, so the tag does not correspond to any product the survey delivered. The same document gives the survey's Area 2 origin as 243200.0 / 4135400.0 at 100 m spacing, which is node-aligned to the competition grid rather than pixel-aligned.",
+      "how_we_know": "Two independent lines. First, the contractor read-me's own channel inventory. Second, measured on the bytes: Spearman(band 6, GeoDAWN total-count grid) = +1.0000; Spearman(band 6, K+Th+U) = +0.9915, which is what a total-count channel is by construction; and |Spearman| <= 0.148 against all five magnetic bands in the same file. Band 6 is also strictly positive (range 2.953 to 88.573), where a tilt angle is bounded by +/-pi/2. Independently corroborated by IR-52-019.",
+      "handling": "Band 6 is assigned to View B (as B_band6_TC), not to the potential-field view. A radiometric band inside View A would corrupt the conditional-independence test the two views are required to pass. Enforced by tests/test_r4.py::test_band6_is_in_view_b.",
+      "evidence": "evidence/h53_band6_identity.json and the GeoDAWN read-me, both of which were in data/external/audit_sources/ when first recorded",
+      "provenance_warning": "This entry was reconstructed on 2026-10-08 after the workspace reset (IR-R4-001) destroyed data/external/audit_sources/GeoDAWN_ReadMe.pdf together with the uncommitted register entry. The measured half (the Spearman evidence and the positivity argument) is reproducible from committed code; the documentary half rests on the session record and should be re-verified against a re-fetched copy of the read-me before being relied on."
+    },
+    {
       "id": "IR-52-04",
       "title": "Alias form of IR-52-004",
       "status": "alias",
       "what_it_is": "Unpadded citation of IR-52-004. docs/forensics.html, src/gems52_h1/ and evidence/prepared_manifest.json use the two-digit form; the register uses three.",
       "how_we_know": "grep -o \"IR-52-0[0-9]\" over the tree; both forms resolve to the same entry.",
       "disposition": "alias of IR-52-004 - kept as its own id so the citation test can resolve it rather than so it can drift. The rules document's domain differs from the one cited in the brief ( docs.nlr.gov vs the live www.nlr.gov )."
-    },
-    {
-      "id": "IR-H57-001",
-      "round": "H57",
-      "session": "2026-10-07",
-      "severity": "high",
-      "title": "The owner's stated target is the board's rank 7, not the board's top",
-      "observation": "The brief for this round stated the current highest score is 0.3195. registry/leaderboard_snapshot_2026-10-07.json, captured from the official competition page on the same date, records rank 1 = 0.3774 (team xiaofanhu), rank 7 = 0.3195 (team DARD), and the owner-reported extradr19 best of 0.2778 at rank 13.",
-      "handling": "Every H57 page states all three numbers and labels them: 0.3195 is the working target, 0.3774 is the observed top, and 0.2778 is the owner's own reported best. No target is silently upgraded to 'the highest score right now'.",
-      "unverifiable": "The board reports team-level best scores only. It carries no filenames, hashes, upload receipts or causal attribution, so no score is bound to any file in this repository.",
-      "status": "flagged; no automated DrivenData access performed",
-      "what_it_is": "registry/leaderboard_snapshot_2026-10-07.json, captured from the official competition page on the same date, records rank 1 = 0.3774 (team xiaofanhu), rank 7 = 0.3195 (team DARD), and the owner-reported extradr19 best of 0.2778 at rank 13. The round's brief stated the current highest score is 0.3195.",
-      "how_we_know": "Every H57 page states all three numbers with their owners: 0.3195 is the working target, 0.3774 is the observed top, 0.2778 is the owner's own reported best. No target is silently upgraded to 'the highest score right now'.",
-      "disposition": "The board reports team-level best scores only - no filenames, hashes, upload receipts or causal attribution - so no score is bound to any file here. Flagged in README section H57 and on docs/h57.html."
-    },
-    {
-      "id": "IR-H57-002",
-      "round": "H57",
-      "session": "2026-10-07",
-      "severity": "high",
-      "title": "A required-novel arm cannot be scored by the repository's own simulator",
-      "observation": "With the mapped-catalogue halo excluded from the candidate pool, the View A field scores 0.000358 against a matched random control of 0.001713. Excluding the catalogue removes every pixel the truth can occupy.",
-      "handling": "No arm-selection number in this repository is presented as evidence about novel mass. evidence/h57_build.json and the site both state that rho_novel is a prior, and the projection is printed as a curve rather than a point.",
-      "unverifiable": "Credit from faults nobody has mapped is, by construction, unmeasurable here.",
-      "status": "disclosed in the artefact receipt, the audit page and the submission guide",
-      "what_it_is": "With the mapped-catalogue halo excluded from the candidate pool, the View A field scores 0.000358 against a matched random control of 0.001713: excluding the catalogue removes every pixel the truth can occupy.",
-      "how_we_know": "No arm-selection number in this repository is presented as evidence about novel mass. evidence/h57_build.json and the site state that rho_novel is a prior, and the projection is printed as a curve rather than a point.",
-      "disposition": "Credit from faults nobody has mapped is by construction unmeasurable here. Measured during scripts/validate_h57.py development and recorded in evidence/h57_validation.json caveats."
-    },
-    {
-      "id": "IR-H57-003",
-      "round": "H57",
-      "session": "2026-10-07",
-      "severity": "medium",
-      "title": "Three instrument defects produced confident wrong answers before they were caught",
-      "observation": "(1) Layers.matrix reshaped a layer-major memmap into a (layers*rows, cols) matrix; scikit-learn accepted it and reported 3,292 features instead of 39. (2) make_folds buffered on the component fold id, which is -1 off-catalogue, marking the whole grid as boundary and leaving 0 catalogue pixels in training on every fold. (3) The arm's legal set ANDed the catalogue visibility mask into the grid, restricting every arm to still-mapped faults; all arms then scored exactly 0.0000.",
-      "handling": "All three fixed in src/gems52/h57.py with a regression test for each the axis convention in particular, which had none.",
-      "status": "fixed; tests added",
-      "what_it_is": "(1) Layers.matrix reshaped a layer-major memmap into a (layers*rows, cols) matrix; scikit-learn accepted it and reported 3,292 features instead of 39. (2) make_folds buffered on the component fold id, which is -1 off-catalogue, marking the whole grid as boundary and leaving 0 catalogue pixels in training on every fold. (3) The arm's legal set ANDed the catalogue visibility mask into the grid, restricting every arm to still-mapped faults; all arms then scored exactly 0.0000.",
-      "how_we_know": "All three fixed in src/gems52/h57.py with a regression test for each, the axis convention in particular, which had none.",
-      "disposition": "Each was caught by a symptom that should have been impossible (a feature-count complaint, a single-class classifier, a uniformly zero DTI) and re-run only after the fix. Recorded so the same traps are not re-entered."
-    },
-    {
-      "id": "IR-H57-004",
-      "round": "H57",
-      "session": "2026-10-07",
-      "severity": "medium",
-      "title": "Registered rule R1's lift threshold and the way earlier rounds applied it disagree",
-      "observation": "R1 freezes 'mean lift >= +0.005 AND >= 3/4 folds positive'. The H53 coincidence gate was accepted on a +0.0030 tip lift. H57's best measured lift is +0.0048.",
-      "handling": "R1 is applied exactly as written and reported as NOT met, even though a looser historical precedent would have passed. The threshold was not moved to fit the result.",
-      "status": "flagged; gate reported as failed",
-      "what_it_is": "R1 freezes 'mean lift >= +0.005 AND >= 3/4 folds positive'. The H53 coincidence gate was accepted on a +0.0030 tip lift. H57's best measured lift is +0.0048.",
-      "how_we_know": "R1 is applied exactly as written and reported as NOT met, even though a looser historical precedent would have passed. The threshold was not moved to fit the result.",
-      "disposition": "registry/h57_preregistration.json R1 against evidence/h57_validation.json and evidence/h57_slot_gate.json."
-    },
-    {
-      "id": "IR-H57-005",
-      "round": "H57",
-      "session": "2026-10-07",
-      "severity": "medium",
-      "title": "The competition's submission domain is not the all-band finite footprint",
-      "observation": "sample_submission.tif has 5,167,373 finite cells against 5,165,840 for the all-band finite footprint: the sample domain is 1,533 cells larger and is not a subset of it. 217 emitted cells in the first H57 build fell outside the sample domain.",
-      "handling": "The artefact is clipped to the sample_submission.tif finite mask, and the number of clipped cells is reported in evidence/h57_build.json rather than hidden.",
-      "status": "fixed",
-      "what_it_is": "sample_submission.tif has 5,167,373 finite cells against 5,165,840 for the all-band finite footprint: the sample domain is 1,533 cells larger and is not a subset of it. 217 emitted cells in the first H57 build fell outside the sample domain.",
-      "how_we_know": "The artefact is clipped to the sample_submission.tif finite mask, and the number of clipped cells is reported in evidence/h57_build.json rather than hidden.",
-      "disposition": "scripts/prepare_data.py evidence/grid.json against data/sample_submission.tif; the clip count is in evidence/h57_build.json clipping_to_sample_domain_px."
-    },
-    {
-      "id": "IR-H57-006",
-      "round": "H57",
-      "session": "2026-10-07",
-      "severity": "medium",
-      "title": "Two established bets in this brief failed their own holdouts",
-      "observation": "The anisotropic along-strike placement gained +0.000055 (tip) and +0.000031 (hide) at 2/4 folds, and the A-only buried-structure stratum scored 0.000785 against a matched random control of 0.001057, the worst of eight arms.",
-      "handling": "Both are recorded as refutations in evidence/h57_slot_gate.json, knowledge/18, and on the audit page. The artefact ships neither.",
-      "status": "disclosed",
-      "what_it_is": "The anisotropic along-strike placement gained +0.000055 (tip) and +0.000031 (hide) at 2/4 folds, and the A-only buried-structure stratum scored 0.000785 against a matched random control of 0.001057, the worst of eight arms.",
-      "how_we_know": "Both are recorded as refutations in evidence/h57_slot_gate.json, knowledge/18 and on the audit page. The artefact ships neither.",
-      "disposition": "evidence/h57_validation.json placement and evidence/h57_strata.json combined."
     },
     {
       "id": "IR-57-101",
@@ -529,69 +463,6 @@
       "disposition": "Inner imports removed in the credited-core alternate branch; the repaired checker runs to completion here and its H57-creditcore block verifies the alternate's bytes, gates, disclosure text and non-pointer status."
     },
     {
-      "id": "IR-H58-001",
-      "round": "H58",
-      "session": "2026-10-07",
-      "severity": "critical",
-      "title": "Tracked core rasters differ materially from manifest-pinned owner mirrors; the sample copy also contradicts the official description",
-      "what_it_is": "The tracked training, label, and sample rasters differ materially from the manifest-pinned owner-mirror copies in decoded pixel content, while their grid profiles match. The staged sample has ones on the staged labels, contrary to the official page's 'total fault absence' description.",
-      "observation": "The 23-file staged owner mirror passes manifest byte/hash verification, but the three tracked core rasters fail those pins and differ by decoded pixels despite identical grid metadata. training_features.tif has 97,207,447/233,304,040 decoded value mismatches (97,120,016 where both are valid; 87,431 validity-mask mismatches). labels.tif differs at 120,650 pixels despite equal class counts; positive masks intersect at only 663 pixels. sample_submission.tif differs at 60,988 cells: the staged mirror has ones exactly on the staged labels, contrary to the official page description of a sample predicting total fault absence.",
-      "how_we_know": "Streaming Rasterio pixelwise comparison of data/{training_features,labels,sample_submission}.tif and work/h58_pinned copies; byte/SHA and decoded mismatch counts are recorded in evidence/h58_preflight_integrity.json. The staging restore receipt records all 23 manifest pins passing.",
-      "evidence": [
-        "evidence/h58_preflight_integrity.json",
-        "evidence/h58_restore_receipt.json",
-        "work/h58_pinned/restore_receipt.json",
-        "registry/data_manifest.json",
-        "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/"
-      ],
-      "handling": "Do not overwrite tracked TIFFs. The H58 runner read the separate work/h58_pinned data root and recorded hashes. The sample was used only for grid profile/finite domain, never for its pixel values. H58 refit View A, View B, and the union on the same staged bytes and folds; it did not reuse the old H57 result, whose input-hash linkage is absent. The H58 promotion gate still failed on severe support shortfall (IR-H58-002). Owner-mirror pin integrity is not organizer authentication.",
-      "unverifiable": "Which of the two pixel-level raster versions is the organizer-authentic competition input cannot be established from the staged GitHub mirror or the current tracked files. The raw official competition download is login-walled; the sample semantic conflict also remains unresolved.",
-      "status": "open - critical provenance issue; blocks any upload approval",
-      "disposition": "Use the staged files only for a clearly labelled owner-mirror research run. No weekly slot is authorized until organizer provenance/label alignment is resolved, even if a local holdout result is positive. Previous H57 scores are historical and not a pinned-data baseline until rerun."
-    },
-    {
-      "id": "IR-H58-002",
-      "what_it_is": "The frozen H58-A emitter produced only 22 of 37,654 requested nodes despite 123,173 positive F_geo support cells, so its primary holdout folds are not budget-comparable.",
-      "round": "H58",
-      "session": "2026-10-08",
-      "severity": "high",
-      "title": "The registered H58-A emitter produced a severe F_geo support shortfall",
-      "observation": "The frozen field has 123,173 positive-support pixels, but the output contains only 22 of the requested 37,654 cells (shortfall 37,632). Every primary hide and block fold is budget-incomparable; the local gate is false. The recorded negative mean lifts are not comparable-budget estimates and must not be treated as evidence against the geological hypothesis.",
-      "how_we_know": "evidence/h58_result.json and evidence/h58_holdout.json; the exact run source is bound by the code hashes in the result and was committed at b475f46. src/gems52/h57.py applies a 5-pixel square local-maximum filter before the 3-pixel Euclidean greedy exclusion. On the smooth radial F_geo field this leaves essentially site peaks, explaining the sparse output.",
-      "handling": "No zero-score backfill, threshold change, or post-result rerun was made. The TIFF is retained as a decoded-pattern-unique research artifact only; submission/LATEST.txt remains on H57 and no weekly slot was used. Any corrected emitter requires a fresh registration and a new complete run; it cannot replace this failed result.",
-      "status": "open \u2014 registered local gate failed on support capacity; no promotion",
-      "evidence": [
-        "evidence/h58_result.json",
-        "evidence/h58_holdout.json",
-        "evidence/h58_postrun_review.json",
-        "evidence/h58_postmerge_uniqueness.json",
-        "registry/h58_preregistration.json",
-        "scripts/run_h58.py",
-        "src/gems52/h57.py",
-        "submission/gems52-h58-coldgeo-consensus-22px-a55b0dee38-research.tif"
-      ],
-      "disposition": "Report the run as under-budget and non-comparable. Do not interpret its mean DTI deficit as a matched-budget refutation. Resolve by a separately preregistered, code-reviewed follow-up; do not alter the frozen H58 result."
-    },
-    {
-      "id": "IR-H58-003",
-      "what_it_is": "The pseudo-AUC proxy-negative mask used cross-connected raster dilation rather than the preregistered 500 m Euclidean catalogue clearance.",
-      "round": "H58",
-      "session": "2026-10-08",
-      "severity": "medium",
-      "title": "Pseudo-AUC proxy-negative clearance did not implement a 500 m Euclidean exclusion",
-      "observation": "scripts/run_h58.py built the catalogue clearance with scipy.ndimage.binary_dilation(iterations=5) and its default cross-shaped connectivity. Pixels such as offset (3,3), about 424 m on this grid, remain eligible as proxy negatives despite being inside the preregistered 500 m Euclidean exclusion. The reported pseudo-AUC values therefore do not satisfy the frozen mask exactly.",
-      "how_we_know": "The run source bound in evidence/h58_result.json; compare the `cat_clearance` construction with `knowledge/19_hypotheses_H58_preregistered.md` and `registry/h58_preregistration.json`, which require at least 500 m from every catalogue pixel.",
-      "handling": "Treat pseudo-AUC numbers as exploratory and do not use them to support a co-training conclusion. The primary same-fold holdout gate does not use these AUC values and independently failed on budget comparability. No post-result mask edit or rerun was made.",
-      "status": "open \u2014 pseudo-AUC diagnostic mask is nonconforming",
-      "evidence": [
-        "evidence/h58_result.json",
-        "evidence/h58_holdout.json",
-        "scripts/run_h58.py",
-        "registry/h58_preregistration.json"
-      ],
-      "disposition": "Keep the raw values for audit with this limitation attached. A future diagnostic must use a Euclidean 500 m raster dilation and a newly frozen protocol; it cannot overwrite this run."
-    },
-    {
       "id": "IR-57-107",
       "round": "H57",
       "session": "2026-10-08",
@@ -609,135 +480,6 @@
         "registry/irregularities.json"
       ],
       "disposition": "A registered comparable hide/block holdout and organizer-authenticated input/label provenance are absent for this alternate. Preserve its file/analysis but keep the slot gate closed."
-    },
-    {
-      "id": "IR-H59-001",
-      "round": "H59",
-      "session": "2026-10-08",
-      "severity": "medium",
-      "title": "A second H59 build contaminated its own prior-scan and drifted the arm by 10 px",
-      "what_it_is": "build_h59_submission.py scans submission/ and docs/downloads/ for aligned priors; after the first build, its own outputs sat in those roots, so run 2 treated run 1's TIFF as prior support (47 -> 50 priors) and emitted a 14,777-px arm instead of 14,787 - the artifact was not a fixed point, which had been the claim made while proving determinism.",
-      "how_we_know": "Measured live in this session: same saved fields, same seed, different arm; the two stems differed (arm14787px vs arm14777px) while the receipts both said 'deterministic'.",
-      "handling": "prior_inventory() now excludes any path named gems52-h59* or h59-candidate*; the rebuild was re-run and verified byte-identical (sha256 e884f84a... both times, n_priors back to 47); a regression test (tests/test_h59.py::test_h59_prior_inventory_excludes_its_own_round) pins the self-exclusion.",
-      "status": "resolved - fixed in the build and covered by a test; the episode is itself the lesson: a prior scan must always exclude the round it is building",
-      "evidence": [
-        "evidence/h59_build.json",
-        "tests/test_h59.py",
-        "scripts/build_h59_submission.py"
-      ],
-      "disposition": "Keep self-exclusion permanent; any future round copying this builder must inherit the filter or repeat the bug."
-    },
-    {
-      "id": "IR-H59-002",
-      "round": "H59",
-      "session": "2026-10-08",
-      "severity": "high",
-      "title": "Portal rejection 'Predicted values must be in range [0, 1]' reported by the owner",
-      "what_it_is": "The owner reported the DrivenData validator rejecting a submission with exactly that message. Every raster this repository ever served as a primary download that could produce it is one carrying non-finite pixels \u2014 every comparison against a NaN is False, so a single such pixel trips the range check, and the historical '-nan' alias exports (knowledge/09) plus a research-only NaN-bearing alias previously linked prominently on the site match the error exactly.",
-      "how_we_know": "Re-read of the served artifacts: the shipped H59/H57/H56 canonical files are all-finite {0,1} (verified from bytes); the demoted alias tif re-reads with NaN outside the footprint; the error string is what the portal returns for both non-finite and out-of-range values.",
-      "handling": "The site now leads with one-click all-finite artifacts (docs/executive-summary.html), the NaN-bearing alias is demoted and labelled, and gems52.grid.write_geotiff refuses to emit non-finite/out-of-range arrays at the source, with the build's format gate verifying the re-read bytes. If the owner re-submits the exact H59 bytes (sha256 e884f84a...) and STILL sees the range error, that would be new information: this file provably contains only 0.0 and 1.0, so the rejection would then point at transport corruption or the wrong file being uploaded, and the owner-side sha256 check in the ZIP's STATUS.txt is the first diagnostic.",
-      "status": "mitigated at source - open until an owner upload of the H59 bytes confirms it",
-      "evidence": [
-        "docs/executive-summary.html",
-        "scripts/build_h59_submission.py",
-        "src/gems52/grid.py",
-        "evidence/h59_format_gate.json"
-      ],
-      "disposition": "Never ship a primary download that re-reads non-finite; verify the uploaded file's sha256 equals the receipt's before reporting any portal rejection as unexplained."
-    },
-    {
-      "id": "IR-H59-003",
-      "round": "H59",
-      "session": "2026-10-08",
-      "severity": "low",
-      "title": "docs/submission/LATEST.txt had drifted to a two-rounds-old pointer",
-      "what_it_is": "The site-side pointer file still named a retired H53 artifact while the repository pointer (submission/LATEST.txt) named H57; a reader following the docs-tree link got a file whose receipt no longer matched docs/data/submission.json.",
-      "how_we_know": "Direct comparison during the H59 build; no test covered the docs-side copy.",
-      "handling": "docs/submission/LATEST.txt is now a copy of the root pointer (H57, since the slot gate keeps LATEST there); the H59 build updates both together when and only when approval flips.",
-      "status": "resolved - pointers mirrored",
-      "evidence": [
-        "submission/LATEST.txt",
-        "docs/submission/LATEST.txt"
-      ],
-      "disposition": "If a future round automates docs/submission/, mirror rather than recompute."
-    },
-    {
-      "id": "IR-H59-004",
-      "round": "H59",
-      "session": "2026-10-08",
-      "severity": "high",
-      "title": "Two concurrent sessions both labelled a round 'H59'; the parallel one moved submission/LATEST.txt without a slot-gate receipt",
-      "what_it_is": "While this session's H59 co-training round was running (its preflight at 02:2x UTC), a parallel session merged PR #27 with its own H59 (multi-scale edge coherence + A-only boost, gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif, sha256 4a60f941...) and repointed submission/LATEST.txt at it. Its receipt records format checks and novelty against h33 only (0.988 vs one prior) but no blocked holdout lift, no support-union gate over all priors, and no registered slot bar - the same approval-without-comparable-evidence pattern as IR-57-107. The collision also invalidated this session's determinism claim mid-flight: the prior-count grew from 47 to 49 rasters, so the fixed-point rebuild had to be redone honestly.",
-      "how_we_know": "git log on main (7c8c9d4 merge of PR #27, commit 9583756 dated 02:26:47Z); the parallel receipt evidence/gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.json has no slot-gate fields; docs/data/submission.json on main still described the H57 pointer, so LATEST and the current-round receipt were decoupled by that move.",
-      "handling": "The merge of main into this branch (1) keeps every parallel-session artifact, page and receipt byte-intact (its TIFFs, h59-method.html, h59-evidence.html and its build script, now preserved verbatim as scripts/build_h59_edgecoh_submission.py); (2) reverts submission/LATEST.txt and docs/submission/LATEST.txt to the H57 pointer, because under the standing rule an artifact without a registered comparable holdout may not be the current pointer; (3) treats the parallel TIFF as a genuine prior: this session's build excluded only its own exact filenames (prefix exclusion would have wrongly hidden a real prior), re-ran against 49 rasters, and re-published (new canonical sha256 e87ee46c... - the honest consequence of a larger prior set, not a drift); (4) publishes disclosure paragraphs on index/executive-summary/downloads.",
-      "status": "reconciled - both rounds published; pointer discipline restored; future rounds must use unique round labels (adopt: date-prefixed ids) to prevent label collisions",
-      "evidence": [
-        "evidence/gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.json",
-        "scripts/build_h59_edgecoh_submission.py",
-        "evidence/h59_build.json",
-        "submission/LATEST.txt"
-      ],
-      "disposition": "No upload or weekly slot is approved for EITHER H59 artifact; the parallel round remains downloadable research whose local numbers are format/uniqueness-only. The label collision itself is recorded so neither session's receipts can later be mistaken for the other's."
-    },
-    {
-      "id": "IR-H59-005",
-      "round": "H59",
-      "session": "2026-10-08",
-      "severity": "high",
-      "title": "A third concurrent 'H59' (view-B field) reached main moving the LATEST pointer and overwriting the short-path alias",
-      "what_it_is": "PR #30 (commit 867a2de) published gems52-h59-cotrain-view_B-37654px-20261008T033705Z-54debe0d-zeros.tif, rewrote docs/data/submission.json to describe it as the current round, pointed submission/LATEST.txt at it, and replaced docs/downloads/h59-candidate.zip with its own copy. The artifact itself checks out byte-honest (single-band float32, all finite, {0,1}, 37,654 px, EPSG:32611, 3730x3292 - re-verified during this merge), but its receipt carries no blocked-holdout lift, no all-prior support gate and no registered slot bar, and it reuses this session's scripts/run_h59.py path for a different 816-line program while borrowing this round's registration prose.",
-      "how_we_know": "git log origin/main (079f0b5 merge of PR #30; 867a2de file list) and the pre-merge submission.json/LATEST.txt contents on main; the run-script divergence measured as 484 insertions / 755 deletions against this session's runner.",
-      "handling": "Merge resolution on arena/3d4a53e2-gemsdoe52: (1) the view-B TIFF, ZIP, receipt and pages stay in the tree under their own names, and its runner is preserved verbatim as scripts/run_h59_viewb.py with a provenance note; (2) submission/LATEST.txt, docs/data/submission.json and the h59-candidate short paths are restored to this branch's state (H57 pointer; h59-candidate = the union artifact); (3) the pointer revert follows the same standing rule applied in IR-H59-004 and IR-57-107 - a format-valid artifact without a registered comparable holdout cannot be the current pointer; (4) the view-B TIFF is inside this round's 49-raster prior scan, so the canonical union artifact is novel against it by construction (the 03:49Z rebuild predates the merge by minutes - final hashes after this merge re-verified below by re-running the fixed-point build).",
-      "status": "reconciled - three concurrent rounds all published and labelled; pointer discipline restored; IR-H59-004's unique-label recommendation now has two confirmed collisions behind it",
-      "evidence": [
-        "evidence/submission_gems52-h59-cotrain-view_B-37654px-20261008T033705Z-54debe0d-zeros.json",
-        "scripts/run_h59_viewb.py",
-        "submission/LATEST.txt",
-        "docs/data/submission.json"
-      ],
-      "disposition": "The view-B round remains downloadable research; no upload or weekly slot approved without a registered holdout. If its owner record can produce one, the gate reopens identically to H59's."
-    },
-    {
-      "id": "IR-R4-001",
-      "round": "R4",
-      "session": "2026-10-08",
-      "severity": "critical",
-      "status": "open",
-      "disposition": "workaround",
-      "title": "A workspace reset wiped every uncommitted artifact of round 4, and .gitignore left work/ and data/ unprotected",
-      "what_it_is": "At roughly 13:06-13:07 on 2026-10-08 the sandbox was reset to the git HEAD state. Destroyed: src/gems52_r4/ (7 modules), tests/test_r4.py (58 tests), scripts/run_r4.py and five publisher/writer scripts, knowledge/20-23_r4*.md, every evidence/r4_*.json receipt, the whole of work/ (74-layer stack.f32, 3.6 GB, OOF and full-field predictions, pseudo-truth fields) and data/external/ (24 restored layers), plus /home/user/.venv. Survived: everything tracked in git at 3bf8ada, including scripts/restore_data.py and registry/data_manifest.json, which is why the data turned out to be fully re-restorable.",
-      "how_we_know": "pgrep showed no live pipeline; ls evidence/r4_*.json returned nothing; git status --short was empty with HEAD still at 3bf8ada; git fsck --lost-found reported no dangling objects; git stash list was empty; find /home/user -name '*r4*' returned nothing; and all 21 prior arena/* remote branches were fetched and grepped with 0 hits for gems52_r4.",
-      "handling": "Recovery is by rebuild, committing after every stage rather than at the end. Root cause kept visible: .gitignore lists /data/ and /work/, so no artifact outside git was ever protected, and the round's code had not been committed. The rebuild writes findings into knowledge/ before it writes code, so a second reset cannot take the conclusions and the implementation together.",
-      "evidence": "evidence/r4_reset_forensics.json"
-    },
-    {
-      "id": "IR-R4-002",
-      "round": "R4",
-      "session": "2026-10-08",
-      "severity": "medium",
-      "status": "open",
-      "disposition": "disclosed",
-      "title": "Band 10 (dist_to_eq) carries distances larger than the grid can physically contain",
-      "what_it_is": "Inside the footprint, band 10 of data/training_features.tif has median 622.8 m and p99 50.2 km, which are plausible, but a maximum of 4,962,515 m. The grid is 3730 x 3292 px at 100 m, so its diagonal is about 492 km; 0.41% of footprint pixels (21,326 of 5,165,840) exceed 329 km and are therefore impossible as a distance-to-nearest-earthquake measured on this grid.",
-      "how_we_know": "Read band 10 directly with rasterio, applied the official nodata sentinel filter, and took percentiles over the 5,165,840-px footprint: min 0.0, p1 118.3, p50 622.8, p99 50,237.2, max 4,962,515.0, with mean(v > 329000) = 0.0041287.",
-      "handling": "Layers derived from band 10 are rank-encoded before any learner sees them, so the tail is compressed to a single extreme rank rather than dominating a linear model; the layer A_eq_dist_negrank is kept but must not be read as a physical distance. Flagged because any future use of band 10 as a metres-valued quantity (a buffer, a threshold, a decay length) would silently mis-handle those pixels.",
-      "evidence": "evidence/r4_layers_smoke.json",
-      "correction_ctd5": "The numerical tail may warrant provenance review, but the stated physical impossibility does not follow: the nearest earthquake may be outside the grid. Do not use the grid diagonal as a universal distance bound."
-    },
-    {
-      "id": "IR-52-034",
-      "round": "R4",
-      "session": "2026-10-08",
-      "severity": "high",
-      "status": "open",
-      "disposition": "disclosed",
-      "title": "The organiser's band-6 tag is contradicted by the survey contractor's own read-me: band 6 is radiometric total count, and the competition grid is node-aligned to the survey grid",
-      "what_it_is": "Band 6 of data/training_features.tif is tagged data_category = magnetic_data, 'Tilt angle or total curvature - magnetic field derivative for edge detection'. The GeoDAWN contractor read-me (NV5 / EDCON-PRJ, December 2022, Task Order 140G0221F0024) lists tc_raw and tccorr under Radiometrics and contains no tilt-angle channel anywhere in its channel inventory, so the tag does not correspond to any product the survey delivered. The same document gives the survey's Area 2 origin as 243200.0 / 4135400.0 at 100 m spacing, which is node-aligned to the competition grid rather than pixel-aligned.",
-      "how_we_know": "Two independent lines. First, the contractor read-me's own channel inventory. Second, measured on the bytes: Spearman(band 6, GeoDAWN total-count grid) = +1.0000; Spearman(band 6, K+Th+U) = +0.9915, which is what a total-count channel is by construction; and |Spearman| <= 0.148 against all five magnetic bands in the same file. Band 6 is also strictly positive (range 2.953 to 88.573), where a tilt angle is bounded by +/-pi/2. Independently corroborated by IR-52-019.",
-      "handling": "Band 6 is assigned to View B (as B_band6_TC), not to the potential-field view. A radiometric band inside View A would corrupt the conditional-independence test the two views are required to pass. Enforced by tests/test_r4.py::test_band6_is_in_view_b.",
-      "evidence": "evidence/h53_band6_identity.json and the GeoDAWN read-me, both of which were in data/external/audit_sources/ when first recorded",
-      "provenance_warning": "This entry was reconstructed on 2026-10-08 after the workspace reset (IR-R4-001) destroyed data/external/audit_sources/GeoDAWN_ReadMe.pdf together with the uncommitted register entry. The measured half (the Spearman evidence and the positivity argument) is reproducible from committed code; the documentary half rests on the session record and should be re-verified against a re-fetched copy of the read-me before being relied on.",
-      "correction_ctd5": "Assignment to B is provisional. A contractor inventory lacking a derived tilt product does not prove organizers could not derive one. Mirror correlation supports a channel-identity audit; it is not independent primary-source authentication."
     },
     {
       "id": "IR-CTD5-001",
@@ -879,7 +621,354 @@
       "how_we_know": "Upstream commit 647ac2fb0797264c241edd71aafdebdf743d98f3; evidence/ctd5_parallel_reconciliation.json",
       "handling": "Retain H60 TIFF/code/build and archive its landing/guide/README; preserve its unapproved upstream pointer. Normalize only public JSON missing correlations to null, add fail-closed per-artifact receipt, retain historical H57 checks, compare fixed CTD5 surface/dots to the new H60 raster. No model refit or placement change.",
       "disposition": "CTD5 negative; H60 unapproved; separate research download links."
+    },
+    {
+      "id": "IR-H57-001",
+      "round": "H57",
+      "session": "2026-10-07",
+      "severity": "high",
+      "title": "The owner's stated target is the board's rank 7, not the board's top",
+      "observation": "The brief for this round stated the current highest score is 0.3195. registry/leaderboard_snapshot_2026-10-07.json, captured from the official competition page on the same date, records rank 1 = 0.3774 (team xiaofanhu), rank 7 = 0.3195 (team DARD), and the owner-reported extradr19 best of 0.2778 at rank 13.",
+      "handling": "Every H57 page states all three numbers and labels them: 0.3195 is the working target, 0.3774 is the observed top, and 0.2778 is the owner's own reported best. No target is silently upgraded to 'the highest score right now'.",
+      "unverifiable": "The board reports team-level best scores only. It carries no filenames, hashes, upload receipts or causal attribution, so no score is bound to any file in this repository.",
+      "status": "flagged; no automated DrivenData access performed",
+      "what_it_is": "registry/leaderboard_snapshot_2026-10-07.json, captured from the official competition page on the same date, records rank 1 = 0.3774 (team xiaofanhu), rank 7 = 0.3195 (team DARD), and the owner-reported extradr19 best of 0.2778 at rank 13. The round's brief stated the current highest score is 0.3195.",
+      "how_we_know": "Every H57 page states all three numbers with their owners: 0.3195 is the working target, 0.3774 is the observed top, 0.2778 is the owner's own reported best. No target is silently upgraded to 'the highest score right now'.",
+      "disposition": "The board reports team-level best scores only - no filenames, hashes, upload receipts or causal attribution - so no score is bound to any file here. Flagged in README section H57 and on docs/h57.html."
+    },
+    {
+      "id": "IR-H57-002",
+      "round": "H57",
+      "session": "2026-10-07",
+      "severity": "high",
+      "title": "A required-novel arm cannot be scored by the repository's own simulator",
+      "observation": "With the mapped-catalogue halo excluded from the candidate pool, the View A field scores 0.000358 against a matched random control of 0.001713. Excluding the catalogue removes every pixel the truth can occupy.",
+      "handling": "No arm-selection number in this repository is presented as evidence about novel mass. evidence/h57_build.json and the site both state that rho_novel is a prior, and the projection is printed as a curve rather than a point.",
+      "unverifiable": "Credit from faults nobody has mapped is, by construction, unmeasurable here.",
+      "status": "disclosed in the artefact receipt, the audit page and the submission guide",
+      "what_it_is": "With the mapped-catalogue halo excluded from the candidate pool, the View A field scores 0.000358 against a matched random control of 0.001713: excluding the catalogue removes every pixel the truth can occupy.",
+      "how_we_know": "No arm-selection number in this repository is presented as evidence about novel mass. evidence/h57_build.json and the site state that rho_novel is a prior, and the projection is printed as a curve rather than a point.",
+      "disposition": "Credit from faults nobody has mapped is by construction unmeasurable here. Measured during scripts/validate_h57.py development and recorded in evidence/h57_validation.json caveats."
+    },
+    {
+      "id": "IR-H57-003",
+      "round": "H57",
+      "session": "2026-10-07",
+      "severity": "medium",
+      "title": "Three instrument defects produced confident wrong answers before they were caught",
+      "observation": "(1) Layers.matrix reshaped a layer-major memmap into a (layers*rows, cols) matrix; scikit-learn accepted it and reported 3,292 features instead of 39. (2) make_folds buffered on the component fold id, which is -1 off-catalogue, marking the whole grid as boundary and leaving 0 catalogue pixels in training on every fold. (3) The arm's legal set ANDed the catalogue visibility mask into the grid, restricting every arm to still-mapped faults; all arms then scored exactly 0.0000.",
+      "handling": "All three fixed in src/gems52/h57.py with a regression test for each the axis convention in particular, which had none.",
+      "status": "fixed; tests added",
+      "what_it_is": "(1) Layers.matrix reshaped a layer-major memmap into a (layers*rows, cols) matrix; scikit-learn accepted it and reported 3,292 features instead of 39. (2) make_folds buffered on the component fold id, which is -1 off-catalogue, marking the whole grid as boundary and leaving 0 catalogue pixels in training on every fold. (3) The arm's legal set ANDed the catalogue visibility mask into the grid, restricting every arm to still-mapped faults; all arms then scored exactly 0.0000.",
+      "how_we_know": "All three fixed in src/gems52/h57.py with a regression test for each, the axis convention in particular, which had none.",
+      "disposition": "Each was caught by a symptom that should have been impossible (a feature-count complaint, a single-class classifier, a uniformly zero DTI) and re-run only after the fix. Recorded so the same traps are not re-entered."
+    },
+    {
+      "id": "IR-H57-004",
+      "round": "H57",
+      "session": "2026-10-07",
+      "severity": "medium",
+      "title": "Registered rule R1's lift threshold and the way earlier rounds applied it disagree",
+      "observation": "R1 freezes 'mean lift >= +0.005 AND >= 3/4 folds positive'. The H53 coincidence gate was accepted on a +0.0030 tip lift. H57's best measured lift is +0.0048.",
+      "handling": "R1 is applied exactly as written and reported as NOT met, even though a looser historical precedent would have passed. The threshold was not moved to fit the result.",
+      "status": "flagged; gate reported as failed",
+      "what_it_is": "R1 freezes 'mean lift >= +0.005 AND >= 3/4 folds positive'. The H53 coincidence gate was accepted on a +0.0030 tip lift. H57's best measured lift is +0.0048.",
+      "how_we_know": "R1 is applied exactly as written and reported as NOT met, even though a looser historical precedent would have passed. The threshold was not moved to fit the result.",
+      "disposition": "registry/h57_preregistration.json R1 against evidence/h57_validation.json and evidence/h57_slot_gate.json."
+    },
+    {
+      "id": "IR-H57-005",
+      "round": "H57",
+      "session": "2026-10-07",
+      "severity": "medium",
+      "title": "The competition's submission domain is not the all-band finite footprint",
+      "observation": "sample_submission.tif has 5,167,373 finite cells against 5,165,840 for the all-band finite footprint: the sample domain is 1,533 cells larger and is not a subset of it. 217 emitted cells in the first H57 build fell outside the sample domain.",
+      "handling": "The artefact is clipped to the sample_submission.tif finite mask, and the number of clipped cells is reported in evidence/h57_build.json rather than hidden.",
+      "status": "fixed",
+      "what_it_is": "sample_submission.tif has 5,167,373 finite cells against 5,165,840 for the all-band finite footprint: the sample domain is 1,533 cells larger and is not a subset of it. 217 emitted cells in the first H57 build fell outside the sample domain.",
+      "how_we_know": "The artefact is clipped to the sample_submission.tif finite mask, and the number of clipped cells is reported in evidence/h57_build.json rather than hidden.",
+      "disposition": "scripts/prepare_data.py evidence/grid.json against data/sample_submission.tif; the clip count is in evidence/h57_build.json clipping_to_sample_domain_px."
+    },
+    {
+      "id": "IR-H57-006",
+      "round": "H57",
+      "session": "2026-10-07",
+      "severity": "medium",
+      "title": "Two established bets in this brief failed their own holdouts",
+      "observation": "The anisotropic along-strike placement gained +0.000055 (tip) and +0.000031 (hide) at 2/4 folds, and the A-only buried-structure stratum scored 0.000785 against a matched random control of 0.001057, the worst of eight arms.",
+      "handling": "Both are recorded as refutations in evidence/h57_slot_gate.json, knowledge/18, and on the audit page. The artefact ships neither.",
+      "status": "disclosed",
+      "what_it_is": "The anisotropic along-strike placement gained +0.000055 (tip) and +0.000031 (hide) at 2/4 folds, and the A-only buried-structure stratum scored 0.000785 against a matched random control of 0.001057, the worst of eight arms.",
+      "how_we_know": "Both are recorded as refutations in evidence/h57_slot_gate.json, knowledge/18 and on the audit page. The artefact ships neither.",
+      "disposition": "evidence/h57_validation.json placement and evidence/h57_strata.json combined."
+    },
+    {
+      "id": "IR-H58-001",
+      "round": "H58",
+      "session": "2026-10-07",
+      "severity": "critical",
+      "title": "Tracked core rasters differ materially from manifest-pinned owner mirrors; the sample copy also contradicts the official description",
+      "what_it_is": "The tracked training, label, and sample rasters differ materially from the manifest-pinned owner-mirror copies in decoded pixel content, while their grid profiles match. The staged sample has ones on the staged labels, contrary to the official page's 'total fault absence' description.",
+      "observation": "The 23-file staged owner mirror passes manifest byte/hash verification, but the three tracked core rasters fail those pins and differ by decoded pixels despite identical grid metadata. training_features.tif has 97,207,447/233,304,040 decoded value mismatches (97,120,016 where both are valid; 87,431 validity-mask mismatches). labels.tif differs at 120,650 pixels despite equal class counts; positive masks intersect at only 663 pixels. sample_submission.tif differs at 60,988 cells: the staged mirror has ones exactly on the staged labels, contrary to the official page description of a sample predicting total fault absence.",
+      "how_we_know": "Streaming Rasterio pixelwise comparison of data/{training_features,labels,sample_submission}.tif and work/h58_pinned copies; byte/SHA and decoded mismatch counts are recorded in evidence/h58_preflight_integrity.json. The staging restore receipt records all 23 manifest pins passing.",
+      "evidence": [
+        "evidence/h58_preflight_integrity.json",
+        "evidence/h58_restore_receipt.json",
+        "work/h58_pinned/restore_receipt.json",
+        "registry/data_manifest.json",
+        "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/"
+      ],
+      "handling": "Do not overwrite tracked TIFFs. The H58 runner read the separate work/h58_pinned data root and recorded hashes. The sample was used only for grid profile/finite domain, never for its pixel values. H58 refit View A, View B, and the union on the same staged bytes and folds; it did not reuse the old H57 result, whose input-hash linkage is absent. The H58 promotion gate still failed on severe support shortfall (IR-H58-002). Owner-mirror pin integrity is not organizer authentication.",
+      "unverifiable": "Which of the two pixel-level raster versions is the organizer-authentic competition input cannot be established from the staged GitHub mirror or the current tracked files. The raw official competition download is login-walled; the sample semantic conflict also remains unresolved.",
+      "status": "open - critical provenance issue; blocks any upload approval",
+      "disposition": "Use the staged files only for a clearly labelled owner-mirror research run. No weekly slot is authorized until organizer provenance/label alignment is resolved, even if a local holdout result is positive. Previous H57 scores are historical and not a pinned-data baseline until rerun."
+    },
+    {
+      "id": "IR-H58-002",
+      "what_it_is": "The frozen H58-A emitter produced only 22 of 37,654 requested nodes despite 123,173 positive F_geo support cells, so its primary holdout folds are not budget-comparable.",
+      "round": "H58",
+      "session": "2026-10-08",
+      "severity": "high",
+      "title": "The registered H58-A emitter produced a severe F_geo support shortfall",
+      "observation": "The frozen field has 123,173 positive-support pixels, but the output contains only 22 of the requested 37,654 cells (shortfall 37,632). Every primary hide and block fold is budget-incomparable; the local gate is false. The recorded negative mean lifts are not comparable-budget estimates and must not be treated as evidence against the geological hypothesis.",
+      "how_we_know": "evidence/h58_result.json and evidence/h58_holdout.json; the exact run source is bound by the code hashes in the result and was committed at b475f46. src/gems52/h57.py applies a 5-pixel square local-maximum filter before the 3-pixel Euclidean greedy exclusion. On the smooth radial F_geo field this leaves essentially site peaks, explaining the sparse output.",
+      "handling": "No zero-score backfill, threshold change, or post-result rerun was made. The TIFF is retained as a decoded-pattern-unique research artifact only; submission/LATEST.txt remains on H57 and no weekly slot was used. Any corrected emitter requires a fresh registration and a new complete run; it cannot replace this failed result.",
+      "status": "open \u2014 registered local gate failed on support capacity; no promotion",
+      "evidence": [
+        "evidence/h58_result.json",
+        "evidence/h58_holdout.json",
+        "evidence/h58_postrun_review.json",
+        "evidence/h58_postmerge_uniqueness.json",
+        "registry/h58_preregistration.json",
+        "scripts/run_h58.py",
+        "src/gems52/h57.py",
+        "submission/gems52-h58-coldgeo-consensus-22px-a55b0dee38-research.tif"
+      ],
+      "disposition": "Report the run as under-budget and non-comparable. Do not interpret its mean DTI deficit as a matched-budget refutation. Resolve by a separately preregistered, code-reviewed follow-up; do not alter the frozen H58 result."
+    },
+    {
+      "id": "IR-H58-003",
+      "what_it_is": "The pseudo-AUC proxy-negative mask used cross-connected raster dilation rather than the preregistered 500 m Euclidean catalogue clearance.",
+      "round": "H58",
+      "session": "2026-10-08",
+      "severity": "medium",
+      "title": "Pseudo-AUC proxy-negative clearance did not implement a 500 m Euclidean exclusion",
+      "observation": "scripts/run_h58.py built the catalogue clearance with scipy.ndimage.binary_dilation(iterations=5) and its default cross-shaped connectivity. Pixels such as offset (3,3), about 424 m on this grid, remain eligible as proxy negatives despite being inside the preregistered 500 m Euclidean exclusion. The reported pseudo-AUC values therefore do not satisfy the frozen mask exactly.",
+      "how_we_know": "The run source bound in evidence/h58_result.json; compare the `cat_clearance` construction with `knowledge/19_hypotheses_H58_preregistered.md` and `registry/h58_preregistration.json`, which require at least 500 m from every catalogue pixel.",
+      "handling": "Treat pseudo-AUC numbers as exploratory and do not use them to support a co-training conclusion. The primary same-fold holdout gate does not use these AUC values and independently failed on budget comparability. No post-result mask edit or rerun was made.",
+      "status": "open \u2014 pseudo-AUC diagnostic mask is nonconforming",
+      "evidence": [
+        "evidence/h58_result.json",
+        "evidence/h58_holdout.json",
+        "scripts/run_h58.py",
+        "registry/h58_preregistration.json"
+      ],
+      "disposition": "Keep the raw values for audit with this limitation attached. A future diagnostic must use a Euclidean 500 m raster dilation and a newly frozen protocol; it cannot overwrite this run."
+    },
+    {
+      "id": "IR-H59-001",
+      "round": "H59",
+      "session": "2026-10-08",
+      "severity": "medium",
+      "title": "A second H59 build contaminated its own prior-scan and drifted the arm by 10 px",
+      "what_it_is": "build_h59_submission.py scans submission/ and docs/downloads/ for aligned priors; after the first build, its own outputs sat in those roots, so run 2 treated run 1's TIFF as prior support (47 -> 50 priors) and emitted a 14,777-px arm instead of 14,787 - the artifact was not a fixed point, which had been the claim made while proving determinism.",
+      "how_we_know": "Measured live in this session: same saved fields, same seed, different arm; the two stems differed (arm14787px vs arm14777px) while the receipts both said 'deterministic'.",
+      "handling": "prior_inventory() now excludes any path named gems52-h59* or h59-candidate*; the rebuild was re-run and verified byte-identical (sha256 e884f84a... both times, n_priors back to 47); a regression test (tests/test_h59.py::test_h59_prior_inventory_excludes_its_own_round) pins the self-exclusion.",
+      "status": "resolved - fixed in the build and covered by a test; the episode is itself the lesson: a prior scan must always exclude the round it is building",
+      "evidence": [
+        "evidence/h59_build.json",
+        "tests/test_h59.py",
+        "scripts/build_h59_submission.py"
+      ],
+      "disposition": "Keep self-exclusion permanent; any future round copying this builder must inherit the filter or repeat the bug."
+    },
+    {
+      "id": "IR-H59-002",
+      "round": "H59",
+      "session": "2026-10-08",
+      "severity": "high",
+      "title": "Portal rejection 'Predicted values must be in range [0, 1]' reported by the owner",
+      "what_it_is": "The owner reported the DrivenData validator rejecting a submission with exactly that message. Every raster this repository ever served as a primary download that could produce it is one carrying non-finite pixels \u2014 every comparison against a NaN is False, so a single such pixel trips the range check, and the historical '-nan' alias exports (knowledge/09) plus a research-only NaN-bearing alias previously linked prominently on the site match the error exactly.",
+      "how_we_know": "Re-read of the served artifacts: the shipped H59/H57/H56 canonical files are all-finite {0,1} (verified from bytes); the demoted alias tif re-reads with NaN outside the footprint; the error string is what the portal returns for both non-finite and out-of-range values.",
+      "handling": "The site now leads with one-click all-finite artifacts (docs/executive-summary.html), the NaN-bearing alias is demoted and labelled, and gems52.grid.write_geotiff refuses to emit non-finite/out-of-range arrays at the source, with the build's format gate verifying the re-read bytes. If the owner re-submits the exact H59 bytes (sha256 e884f84a...) and STILL sees the range error, that would be new information: this file provably contains only 0.0 and 1.0, so the rejection would then point at transport corruption or the wrong file being uploaded, and the owner-side sha256 check in the ZIP's STATUS.txt is the first diagnostic.",
+      "status": "mitigated at source - open until an owner upload of the H59 bytes confirms it",
+      "evidence": [
+        "docs/executive-summary.html",
+        "scripts/build_h59_submission.py",
+        "src/gems52/grid.py",
+        "evidence/h59_format_gate.json"
+      ],
+      "disposition": "Never ship a primary download that re-reads non-finite; verify the uploaded file's sha256 equals the receipt's before reporting any portal rejection as unexplained."
+    },
+    {
+      "id": "IR-H59-003",
+      "round": "H59",
+      "session": "2026-10-08",
+      "severity": "low",
+      "title": "docs/submission/LATEST.txt had drifted to a two-rounds-old pointer",
+      "what_it_is": "The site-side pointer file still named a retired H53 artifact while the repository pointer (submission/LATEST.txt) named H57; a reader following the docs-tree link got a file whose receipt no longer matched docs/data/submission.json.",
+      "how_we_know": "Direct comparison during the H59 build; no test covered the docs-side copy.",
+      "handling": "docs/submission/LATEST.txt is now a copy of the root pointer (H57, since the slot gate keeps LATEST there); the H59 build updates both together when and only when approval flips.",
+      "status": "resolved - pointers mirrored",
+      "evidence": [
+        "submission/LATEST.txt",
+        "docs/submission/LATEST.txt"
+      ],
+      "disposition": "If a future round automates docs/submission/, mirror rather than recompute."
+    },
+    {
+      "id": "IR-H59-004",
+      "round": "H59",
+      "session": "2026-10-08",
+      "severity": "high",
+      "title": "Two concurrent sessions both labelled a round 'H59'; the parallel one moved submission/LATEST.txt without a slot-gate receipt",
+      "what_it_is": "While this session's H59 co-training round was running (its preflight at 02:2x UTC), a parallel session merged PR #27 with its own H59 (multi-scale edge coherence + A-only boost, gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif, sha256 4a60f941...) and repointed submission/LATEST.txt at it. Its receipt records format checks and novelty against h33 only (0.988 vs one prior) but no blocked holdout lift, no support-union gate over all priors, and no registered slot bar - the same approval-without-comparable-evidence pattern as IR-57-107. The collision also invalidated this session's determinism claim mid-flight: the prior-count grew from 47 to 49 rasters, so the fixed-point rebuild had to be redone honestly.",
+      "how_we_know": "git log on main (7c8c9d4 merge of PR #27, commit 9583756 dated 02:26:47Z); the parallel receipt evidence/gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.json has no slot-gate fields; docs/data/submission.json on main still described the H57 pointer, so LATEST and the current-round receipt were decoupled by that move.",
+      "handling": "The merge of main into this branch (1) keeps every parallel-session artifact, page and receipt byte-intact (its TIFFs, h59-method.html, h59-evidence.html and its build script, now preserved verbatim as scripts/build_h59_edgecoh_submission.py); (2) reverts submission/LATEST.txt and docs/submission/LATEST.txt to the H57 pointer, because under the standing rule an artifact without a registered comparable holdout may not be the current pointer; (3) treats the parallel TIFF as a genuine prior: this session's build excluded only its own exact filenames (prefix exclusion would have wrongly hidden a real prior), re-ran against 49 rasters, and re-published (new canonical sha256 e87ee46c... - the honest consequence of a larger prior set, not a drift); (4) publishes disclosure paragraphs on index/executive-summary/downloads.",
+      "status": "reconciled - both rounds published; pointer discipline restored; future rounds must use unique round labels (adopt: date-prefixed ids) to prevent label collisions",
+      "evidence": [
+        "evidence/gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.json",
+        "scripts/build_h59_edgecoh_submission.py",
+        "evidence/h59_build.json",
+        "submission/LATEST.txt"
+      ],
+      "disposition": "No upload or weekly slot is approved for EITHER H59 artifact; the parallel round remains downloadable research whose local numbers are format/uniqueness-only. The label collision itself is recorded so neither session's receipts can later be mistaken for the other's."
+    },
+    {
+      "id": "IR-H59-005",
+      "round": "H59",
+      "session": "2026-10-08",
+      "severity": "high",
+      "title": "A third concurrent 'H59' (view-B field) reached main moving the LATEST pointer and overwriting the short-path alias",
+      "what_it_is": "PR #30 (commit 867a2de) published gems52-h59-cotrain-view_B-37654px-20261008T033705Z-54debe0d-zeros.tif, rewrote docs/data/submission.json to describe it as the current round, pointed submission/LATEST.txt at it, and replaced docs/downloads/h59-candidate.zip with its own copy. The artifact itself checks out byte-honest (single-band float32, all finite, {0,1}, 37,654 px, EPSG:32611, 3730x3292 - re-verified during this merge), but its receipt carries no blocked-holdout lift, no all-prior support gate and no registered slot bar, and it reuses this session's scripts/run_h59.py path for a different 816-line program while borrowing this round's registration prose.",
+      "how_we_know": "git log origin/main (079f0b5 merge of PR #30; 867a2de file list) and the pre-merge submission.json/LATEST.txt contents on main; the run-script divergence measured as 484 insertions / 755 deletions against this session's runner.",
+      "handling": "Merge resolution on arena/3d4a53e2-gemsdoe52: (1) the view-B TIFF, ZIP, receipt and pages stay in the tree under their own names, and its runner is preserved verbatim as scripts/run_h59_viewb.py with a provenance note; (2) submission/LATEST.txt, docs/data/submission.json and the h59-candidate short paths are restored to this branch's state (H57 pointer; h59-candidate = the union artifact); (3) the pointer revert follows the same standing rule applied in IR-H59-004 and IR-57-107 - a format-valid artifact without a registered comparable holdout cannot be the current pointer; (4) the view-B TIFF is inside this round's 49-raster prior scan, so the canonical union artifact is novel against it by construction (the 03:49Z rebuild predates the merge by minutes - final hashes after this merge re-verified below by re-running the fixed-point build).",
+      "status": "reconciled - three concurrent rounds all published and labelled; pointer discipline restored; IR-H59-004's unique-label recommendation now has two confirmed collisions behind it",
+      "evidence": [
+        "evidence/submission_gems52-h59-cotrain-view_B-37654px-20261008T033705Z-54debe0d-zeros.json",
+        "scripts/run_h59_viewb.py",
+        "submission/LATEST.txt",
+        "docs/data/submission.json"
+      ],
+      "disposition": "The view-B round remains downloadable research; no upload or weekly slot approved without a registered holdout. If its owner record can produce one, the gate reopens identically to H59's."
+    },
+    {
+      "id": "IR-H60-001",
+      "round": "H60",
+      "session": "2026-10-08",
+      "severity": "high",
+      "status": "closed",
+      "disposition": "fixed this session",
+      "title": "The data/*.tif in this checkout were placeholder bytes, not the manifest-pinned rasters",
+      "what_it_is": "Before this session data/training_features.tif was 3,357,961 bytes with band 1 ranging only from the nodata sentinel to 0.0; the manifest pins 418,912,844 bytes and sha256 4371c82e3b8339b8. labels.tif was 152,999 bytes against a pinned 425,830, sample_submission.tif 97,091 against 1,599,597.",
+      "how_we_know": "sha256sum of the three files versus registry/data_manifest.json, then scripts/prepare_data.py which asserts bytes, sha, shape, transform and CRS and exits non-zero on any mismatch. It printed PREPARE_OK=True only after scripts/restore_data.py repopulated data/.",
+      "handling": "scripts/download_competition_data.sh (which calls scripts/restore_data.py) is now the mandatory first step, and it works from this sandbox through api.github.com. Every H60 receipt records the pins it ran against.",
+      "evidence": "data/restore_receipt.json, evidence/grid.json"
+    },
+    {
+      "id": "IR-H60-002",
+      "round": "H60",
+      "session": "2026-10-08",
+      "severity": "medium",
+      "status": "open",
+      "disposition": "disclosed",
+      "title": "The |G| = 14,088.7 anchor is an assumption, not a measurement",
+      "what_it_is": "knowledge/01 and scripts/h57_common.py both use G_ANCHOR = 14088.7 px of hidden truth. Deriving it requires assuming M = T (emitted hit-mass equals credited mass) for both members of the nested prior pair, on top of assuming the deleted 100-200 m ring carried no hit-mass.",
+      "how_we_know": "Re-derived from the restored bytes in knowledge/27 s3. Keeping only 'the ring carried no hit-mass' gives T_ref <= 5,223 and, through the champion's own score equation, |G| between 18,006 (M_ref = 0) and 27,418 (M_ref = S_ref).",
+      "handling": "H60 quotes the bracket, never the point value. Any receipt that still cites 14,088.7 is citing an assumption; it is left in place for the historical rounds that used it.",
+      "evidence": "knowledge/27_why_02778_h60.md, work/f2_inversion.py"
+    },
+    {
+      "id": "IR-H60-003",
+      "round": "H60",
+      "session": "2026-10-08",
+      "severity": "high",
+      "status": "open",
+      "disposition": "disclosed; workflow changed",
+      "title": "The hide-and-recover instrument ranks the 0.2778 champion below a random placeholder",
+      "what_it_is": "Scored against the same four whole-block holdout folds, data/reference/h33-2-b2-zeros.tif (owner-reported board 0.2778) reaches a mean DTI of 0.00479, while the random PLACEHOLDER raster (board 0.0107) reaches 0.02229 and Hedge-v2 (board 0.1563) reaches 0.34082.",
+      "how_we_know": "work/f4_champion_control.py, receipt evidence/h60_prior_control.json. Spearman(board, instrument) over all 13 priors = -0.099, p = 0.748, n = 13 (evidence/h60_instrument_verdict.json): no usable rank information, and not a demonstrable inversion either.",
+      "handling": "Hide-and-recover is retained for what it can do - show that a ranking beats matched-budget noise on held-out catalogue segments - and is no longer allowed to authorise a submission slot. The budget amendment (evidence/h60_budget_amendment.json) is derived from the board's own mass/score relation instead, with the numbers attached.",
+      "evidence": "evidence/h60_prior_control.json, evidence/h60_instrument_verdict.json, issue #31"
+    },
+    {
+      "id": "IR-H60-004",
+      "round": "H60",
+      "session": "2026-10-08",
+      "severity": "medium",
+      "status": "closed",
+      "disposition": "killed",
+      "title": "Thirteen public scores cannot localise the hidden truth",
+      "what_it_is": "The metric linearises in a relaxed truth density, so 13 scores give 13 linear constraints. Under a uniform-truth assumption the implied |G| ranges from 11,349 to 499,618 across the 13 priors, with several priors admitting no solution; allowing the density to vary over 12,051 blocks with box bounds, the equality system is infeasible at every N from 1,000 to 60,000.",
+      "how_we_know": "work/f3_tomography.py, using W_i = max-convolution and K_i = sum-convolution of each prior with the exact triangular kernel.",
+      "handling": "Killed. The first-order E[max] ~ sum approximation for M fails exactly where the truth is concentrated, which is where faults are. No further attempt will be made to invert public scores into a truth map.",
+      "evidence": "work/f3_tomography.py output, knowledge/27 s4"
+    },
+    {
+      "id": "IR-H60-005",
+      "round": "H60",
+      "session": "2026-10-08",
+      "severity": "low",
+      "status": "open",
+      "disposition": "disclosed",
+      "title": "sample_submission.tif is the catalogue, not the 'total fault absence' the problem page describes",
+      "what_it_is": "The official page says 'A sample submission that predicts total fault absence is provided'. The restored file carries 60,988 pixels equal to 1, exactly the 60,988 positives of labels.tif.",
+      "how_we_know": "scripts/prepare_data.py: sample_submission_positive_px = 60988 and sample_submission_ones_on_labels = 60988.",
+      "handling": "Used only as a geometry template (shape, CRS, transform, finite domain) by gems52.gates.format_report. Never used as a label or as a prediction.",
+      "evidence": "evidence/grid.json"
+    },
+    {
+      "id": "IR-H60-006",
+      "round": "H60",
+      "session": "2026-10-08",
+      "severity": "high",
+      "status": "closed",
+      "disposition": "fixed this session",
+      "title": "A parallel session's H60 round broke the site checker and the current-pointer convention on main",
+      "what_it_is": "PR #34 (merged to main as 7c28389 while this round was running) overwrote docs/data/submission.json with a different schema that has no 'file' and no 'download' key, replaced docs/index.html and docs/executive-summary.html wholesale, and wrote NaN into docs/data/submission_h60.json.",
+      "how_we_know": "Measured, not inferred.  scripts/check_site.py crashes on origin/main with KeyError: 'download' at line 885.  Run inside a worktree of the pre-PR-#34 commit 24c2630 it exits 0 with the '\u2713 ... slot gate remains CLOSED' verdict; run on the merged tree before this fix it reported 9 problems, including 'data/submission_h60.json: invalid JSON (non-JSON constant NaN)' and six missing H57/H58/H55-EDGE archive links.  Three committed tests (test_current_submission_gate, test_h55_publication, test_h59) failed with KeyError: 'file' on main.",
+      "handling": "docs/data/submission.json and submission/LATEST.txt restored to the H57 pointer, which is the last slot-gated round and what the repository convention requires: the pointer only advances when the slot gate is met, and neither H60 artefact is slot-approved.  scripts/publish_h60_site.py now inserts a marked <!--H60-ARTIFACT--> block instead of replacing the shared pages, the same convention insert_h55_review uses.  The parallel round's artefact, builder, receipt and audit page are preserved under distinct names (submission/gems52-h60-triple-conv-..., scripts/build_h60_tc_submission.py, evidence/h60_tc_build.json, docs/h60-triple-convergence.html); the NaN was re-encoded as null with a note, never deleted.  After the fix check_site exits 0 and pytest reports 242 passed.",
+      "evidence": "scripts/check_site.py output on 24c2630 vs origin/main vs the merged tree; docs/data/submission_h60.json, evidence/h60_tc_build.json",
+      "provenance_warning": "The comparison worktrees were created outside the repository (/tmp/base24 at 24c2630, /tmp/mainchk at origin/main).  An earlier attempt to run check_site.py from the working tree against the /tmp/mainchk directory checked the wrong tree, because the script derives ROOT from __file__; that reading was discarded."
+    },
+    {
+      "id": "IR-H60-007",
+      "round": "H60",
+      "session": "2026-10-08",
+      "severity": "medium",
+      "status": "closed",
+      "disposition": "fixed this session",
+      "title": "The uniqueness gate compared the artefact against its own canonical download alias",
+      "what_it_is": "gems52.gates.find_priors excludes copies of the candidate by *basename* (IR-52-026), which covers docs/downloads/<name>.tif.  It cannot cover the canonical alias the round's short alias (now docs/downloads/h60-cotrain-candidate.tif), whose basename differs from the artefact's.  Once the alias exists, any later run of the gate counts the artefact as a prior and reports the one verdict that would stop a legitimate submission.",
+      "how_we_know": "Measured on the merged tree: n_priors_checked 58, canonical_pattern_unique False, novel_fraction 0.0, support_novelty_gate_ok False.  Excluding only the alias and re-running: n_priors_checked 57, canonical_pattern_unique True, novel_fraction 0.4694, support_novelty_gate_ok True.  The alias was confirmed byte-identical to submission/<name>.tif by SHA-256 before it was excluded.",
+      "handling": "scripts/build_h60_submission.py now resolves the round's short alias and drops it from the prior pool.  Pinned by tests/test_h60.py::test_the_canonical_alias_is_not_counted_as_a_prior, which asserts both the gate verdict and the byte-identity that makes the exclusion legitimate rather than a way of hiding a real duplicate.",
+      "evidence": "evidence/h60_uniqueness.json (superseded values retained in h60_artifact.json.uniqueness_regate)"
+    },
+    {
+      "id": "IR-R4-001",
+      "round": "R4",
+      "session": "2026-10-08",
+      "severity": "critical",
+      "status": "open",
+      "disposition": "workaround",
+      "title": "A workspace reset wiped every uncommitted artifact of round 4, and .gitignore left work/ and data/ unprotected",
+      "what_it_is": "At roughly 13:06-13:07 on 2026-10-08 the sandbox was reset to the git HEAD state. Destroyed: src/gems52_r4/ (7 modules), tests/test_r4.py (58 tests), scripts/run_r4.py and five publisher/writer scripts, knowledge/20-23_r4*.md, every evidence/r4_*.json receipt, the whole of work/ (74-layer stack.f32, 3.6 GB, OOF and full-field predictions, pseudo-truth fields) and data/external/ (24 restored layers), plus /home/user/.venv. Survived: everything tracked in git at 3bf8ada, including scripts/restore_data.py and registry/data_manifest.json, which is why the data turned out to be fully re-restorable.",
+      "how_we_know": "pgrep showed no live pipeline; ls evidence/r4_*.json returned nothing; git status --short was empty with HEAD still at 3bf8ada; git fsck --lost-found reported no dangling objects; git stash list was empty; find /home/user -name '*r4*' returned nothing; and all 21 prior arena/* remote branches were fetched and grepped with 0 hits for gems52_r4.",
+      "handling": "Recovery is by rebuild, committing after every stage rather than at the end. Root cause kept visible: .gitignore lists /data/ and /work/, so no artifact outside git was ever protected, and the round's code had not been committed. The rebuild writes findings into knowledge/ before it writes code, so a second reset cannot take the conclusions and the implementation together.",
+      "evidence": "evidence/r4_reset_forensics.json"
+    },
+    {
+      "id": "IR-R4-002",
+      "round": "R4",
+      "session": "2026-10-08",
+      "severity": "medium",
+      "status": "open",
+      "disposition": "disclosed",
+      "title": "Band 10 (dist_to_eq) carries distances larger than the grid can physically contain",
+      "what_it_is": "Inside the footprint, band 10 of data/training_features.tif has median 622.8 m and p99 50.2 km, which are plausible, but a maximum of 4,962,515 m. The grid is 3730 x 3292 px at 100 m, so its diagonal is about 492 km; 0.41% of footprint pixels (21,326 of 5,165,840) exceed 329 km and are therefore impossible as a distance-to-nearest-earthquake measured on this grid.",
+      "how_we_know": "Read band 10 directly with rasterio, applied the official nodata sentinel filter, and took percentiles over the 5,165,840-px footprint: min 0.0, p1 118.3, p50 622.8, p99 50,237.2, max 4,962,515.0, with mean(v > 329000) = 0.0041287.",
+      "handling": "Layers derived from band 10 are rank-encoded before any learner sees them, so the tail is compressed to a single extreme rank rather than dominating a linear model; the layer A_eq_dist_negrank is kept but must not be read as a physical distance. Flagged because any future use of band 10 as a metres-valued quantity (a buffer, a threshold, a decay length) would silently mis-handle those pixels.",
+      "evidence": "evidence/r4_layers_smoke.json"
     }
-  ],
-  "latest_review_utc": "2026-10-08T18:57:00Z"
+  ]
 }
