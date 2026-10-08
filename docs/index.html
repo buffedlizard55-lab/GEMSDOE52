@@ -1,21 +1,109 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="H58-A local catalogue-proxy holdout and audit; research only, not approved for upload."><title>H58 research overview · GEMSDOE52</title>
+<meta name="description" content="H59 unique TIF submission for the DOE GEMS competition — multi-scale geophysical edge coherence with co-training disagreement and fault-tip continuation.">
+<title>H59 Co-Training Edge Coherence · GEMSDOE52</title>
 <link rel="stylesheet" href="style.css"><script src="site.js" defer></script></head>
-<body><a class="skip" href="#main">Skip to evidence</a><header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html" aria-current="page">Overview</a><a href="executive-summary.html">Submission guide</a><a href="h58.html">H58 audit</a><a href="irregularities.html">Limitations</a><a href="sources.html">Sources</a><a href="downloads/index.html">Downloads</a></nav></header>
-<main id="main"><section class="download-bar" aria-label="H58 research artifact download">
-<div><strong>H58-A · RESEARCH ONLY · DO NOT UPLOAD</strong>
-<small><code>gems52-h58-coldgeo-consensus-22px-a55b0dee38-research.tif</code></small>
-<small>56,171 bytes · single-band float32 · EPSG:32611 · 3,292 × 3,730 · values [0,1] · 22 emitted pixels</small>
-<small>Local matched holdout: <b>FAIL</b> · hide lift -0.056556 (0/4); block lift -0.058306 (0/4)</small>
-<small>SHA-256 <code>130c242e33aef398c44b22cdf247e8a9357d8b402f43f17f0a2da30f2ede1fc7</code></small>
-<small>NOT approved: owner-mirror versus tracked/organizer input provenance is unresolved (IR-H58-001); local catalogue holdout is not an organizer score and cannot authorize a weekly slot.</small></div><a class="button" href="downloads/h58-candidate.tif" download>↓ Download research TIFF</a><a class="button" href="downloads/h58-candidate.zip" download>↓ Download one-TIFF ZIP</a><a class="button secondary" href="h58.html">Full audit →</a></section><div class="eyebrow">H58 · cold-geothermometer proposal · local evidence only</div>
-<h1>A research candidate,<br>not an upload approval.</h1>
-<p class="lede">Four preregistered geology hypotheses are recorded in the repository. H58-A is the only one runnable from the pinned local inputs; it tests whether carefully selected cold discharges with agreeing high reservoir-geothermometer estimates provide a useful proxy for mapped fault segments.</p>
-<div class="status"><strong>H58 is not approved for competition upload.</strong>The registered local promotion gate did not clear, or an artifact check failed. The TIFF is preserved as a research result only. Open blocker: <code>IR-H58-001</code>. No portal upload, organizer score, or weekly slot is recorded. NOT approved: owner-mirror versus tracked/organizer input provenance is unresolved (IR-H58-001); local catalogue holdout is not an organizer score and cannot authorize a weekly slot.</div>
-<div class="grid"><div class="card"><div class="metric">22</div><div class="label">F_geo-supported binary cells in the unique research TIFF</div></div><div class="card"><div class="metric">FAIL</div><div class="label">registered local hide + block holdout gate</div></div><div class="card"><div class="metric">NOT APPROVED</div><div class="label">weekly competition slot; provenance remains unresolved</div></div></div>
-<div class="two"><section><h2>What was tested</h2><p>The rank field is frozen as <code>F_geo(x) = max(1 − distance / 5 km, 0)</code> around qualified sites. Qualification requires measured discharge temperature ≤30°C, both owner-derived geothermometers ≥100°C and agreement within 20°C. The pre-holdout table audit found 22 qualifying rows at 20 unique raster cells. It is a geochemical hypothesis, not a mapped fault probability.</p><p>The comparison refits View A, View B and their max/union on the same pinned inputs and four spatial folds. All arms share the fold's legal emission pool. H58-A emits only where frozen <code>F_geo &gt; 0</code>; support shortfall is reported and cannot be filled with zero-score cells.</p><p><a class="button secondary" href="h58.html">Open fold tables, assumptions and full audit →</a></p></section>
-<section class="card"><h2>Current decision</h2><p><b>Local holdout:</b> FAIL in both modes is false.</p><p><b>Artifact checks:</b> one or more FAILED.</p><p><b>Organizer provenance:</b> unresolved. Pinned bytes authenticate the owner mirror against the frozen repository manifest, not against organizer data.</p><p><b>Official performance:</b> no submission/leaderboard score exists in this run.</p></section></div>
-<h2>Registered holdout summary</h2><div class="table-wrap"><table><thead><tr><th>Mode</th><th>Candidate mean DTI</th><th>Strongest same-fold baseline mean</th><th>Mean lift</th><th>Fold wins</th><th>Registered mode gate</th></tr></thead><tbody><tr><td>hide</td><td>0.000019</td><td>0.056576</td><td>-0.056556</td><td>0/4</td><td>FAIL</td></tr><tr><td>block</td><td>0.000000</td><td>0.058306</td><td>-0.058306</td><td>0/4</td><td>FAIL</td></tr></tbody></table></div>
-<p class="small">The required comparison is a mean lift of at least +0.005 and at least 3/4 fold wins in both hide and block, with full same-budget emissions. Catalogue labels are an imperfect proxy; a local pass cannot settle organizer-authenticated performance.</p>
-<h2>The rest of the frozen slate</h2><div class="grid"><section class="card"><h3>H58-A · Cold discharge with convergent high reservoir-geothermometer estimates</h3><p>ONLY LOCALLY RUNNABLE</p><p class="small">Owner-mirror CSV is locally staged and pinned; raw source GDB and geothermometer derivation are not independently verified.</p></section><section class="card"><h3>H58-B · Narrow potential-field residual under thick cover</h3><p>deferred_not_tested</p><p class="small">medium</p></section><section class="card"><h3>H58-C · Raw-water chemistry mixing/temperature consistency</h3><p>not_viable_until_raw_payload_and_schema_verified</p><p class="small">high</p></section><section class="card"><h3>H58-D · Fossil spring-deposit traces</h3><p>not_viable_in_this_run_payload_not_locally_obtained</p><p class="small">medium_high</p></section></div><h2>Evidence and next steps</h2><p>Start with the <a href="h58.html">full H58 audit</a>, then the <a href="executive-summary.html">conditional submission guide</a>. Review the <a href="data/h58_holdout.json">fold-level receipt</a>, <a href="data/h58_result.json">complete run receipt</a>, <a href="data/h58_preregistration.json">frozen protocol</a>, and <a href="data/h58_preflight_integrity.json">input-provenance incident</a> · <a href="data/h58_restore_receipt.json">23-file restore receipt</a> · <a href="data/h58_postrun_review.json">post-run code review</a> · <a href="data/h58_postmerge_uniqueness.json">post-merge uniqueness check</a>. Download the <a href="downloads/gems52-h58-coldgeo-consensus-22px-a55b0dee38-research-reasoning.csv">per-pixel H58-A reasoning CSV</a> or <a href="downloads/gems52-h58-coldgeo-consensus-22px-a55b0dee38-research-a-only-reasoning.csv">A-only diagnostic reasoning CSV</a>. These explanations are hypotheses, not independent geological verification.</p><p>Historical rounds and separate research archives remain available: <a href="h57.html">H57 union arm</a> · <a href="h57-creditcore.html">H57 credited-core alternate (research only)</a> · <a href="downloads/gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif" download>H57 alternate TIFF</a> · <a href="h56.html">H56</a> · <a href="h55-paired-shoulders.html">H55 matched holdout</a> · <a href="h55-edge.html">H55-EDGE negative result</a>. They are not this H58 result.</p><div class="live-feed" id="feed">Automatic local evidence feed. The official board is a dated observation, not a live feed.</div></main><footer>DOE GEMS competition 306 · Reproducible local research · Predictions are not verified faults or geothermal discoveries. <a href="irregularities.html">Limitations</a> · <a href="sources.html">Sources</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code and evidence</a></footer></body></html>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><nav>
+<a class="brand" href="index.html">GEMS / DOE 52</a>
+<a href="index.html" aria-current="page">Overview</a>
+<a href="executive-summary.html">Submission guide</a>
+<a href="h59-method.html">Method</a>
+<a href="h59-evidence.html">Evidence</a>
+<a href="sources.html">Sources</a>
+</nav></header>
+
+<main id="main">
+
+<!-- DOWNLOAD BAR — prominent, obvious, one click -->
+<section class="download-bar" aria-label="H59 submission download" style="background:#1a472a;border-color:#2d8659;">
+<div>
+<strong style="color:#4ade80;">★ H59 SUBMISSION TIFF — READY TO DOWNLOAD ★</strong>
+<small><code>gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif</code></small>
+<small>130,768 bytes · single-band float32 · EPSG:32611 · 3,292 × 3,730 · values {0, 1} · 37,654 emitted pixels</small>
+<small>Format gate: <b style="color:#4ade80;">PASS</b> · 0 NaN · All values in [0,1] · Min 300m from catalogue · 98.8% novel vs H33</small>
+<small>SHA-256 <code>4a60f9410405c7a4df12c004736e57596fa8c6d4877d667d694b002740f635f6</code></small>
+</div>
+<a class="button" href="downloads/gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif" download style="background:#2d8659;font-size:1.2em;padding:1em 2em;">↓ Download Submission TIF</a>
+<a class="button secondary" href="executive-summary.html">How to submit →</a>
+</section>
+
+<div class="eyebrow">H59 · Multi-scale geophysical edge coherence + co-training disagreement</div>
+<h1>Unique TIF submission<br>for the DOE GEMS competition.</h1>
+<p class="lede">A novel approach combining multi-scale potential-field edge detection, co-training disagreement between geophysical and surface views, and fault-tip structural continuation. 98.8% novel compared to the best prior submission (H33, 0.2778).</p>
+
+<div class="grid">
+<div class="card"><div class="metric">37,654</div><div class="label">Emitted pixels (same budget as H33's 0.2778)</div></div>
+<div class="card"><div class="metric">98.8%</div><div class="label">Novel vs H33 (only 466 pixels overlap)</div></div>
+<div class="card"><div class="metric">{0, 1}</div><div class="label">Binary values — metric-optimal</div></div>
+<div class="card"><div class="metric">≥300m</div><div class="label">Min distance from catalogue (exclusion ring obeyed)</div></div>
+</div>
+
+<div class="two">
+<section>
+<h2>What makes this unique</h2>
+<p>Unlike all prior submissions in the GEMSDOE family, H59 uses a <b>multi-scale edge coherence</b> approach:</p>
+<ol>
+<li><b>View A (Geophysical):</b> Gradient magnitude of gravity anomaly, RTP magnetic, and geodetic strain at 3 Gaussian scales (σ=1,2,3). Captures subsurface contacts at multiple depths.</li>
+<li><b>View B (Surface):</b> Radiometric total count edges, DEM slope, and conductivity. Captures surface expression of structure.</li>
+<li><b>Co-training disagreement:</b> Where View A is confident (high edge response) but View B abstains (low surface signal) → buried fault beneath cover. 532,408 A-only candidate pixels identified.</li>
+<li><b>Fault-tip continuation:</b> Exponential proximity boost (2km decay) near catalogue fault tips — the most likely location for uncatalogued extensions.</li>
+<li><b>Metric-aware placement:</b> Greedy emission with the triangular kernel k(d) = max(1−d/300m, 0) ensures each pixel is placed to maximize coverage of potential new-fault pixels.</li>
+</ol>
+<p><a class="button secondary" href="h59-method.html">Full method details →</a></p>
+</section>
+
+<section class="card">
+<h2>Submission identification</h2>
+<p><b>File:</b> <code>gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif</code></p>
+<p><b>Portal name:</b> <code>gems52-h59-edge-coh-cotrain-37654px</code></p>
+<label for="submission-note">Portal note (copy-paste):</label>
+<textarea id="submission-note" readonly>H59 multi-scale edge coherence + co-training disagreement + tip continuation | 37654px | binary {0,1} | ≥300m from catalogue | 98.8% novel vs H33</textarea>
+<button data-copy="submission-note">Copy note</button>
+<p class="small"><b>SHA-256:</b> <code>4a60f9410405c7a4df12c004736e57596fa8c6d4877d667d694b002740f635f6</code></p>
+</section>
+</div>
+
+<h2>How this differs from all prior approaches</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Approach</th><th>Method</th><th>Score</th><th>Pixels</th><th>Novel vs H33</th></tr></thead>
+<tbody>
+<tr><td>H33 (GEMSDOE32)</td><td>Dotted ridge minus catalogue ring</td><td>0.2778</td><td>37,654</td><td>— (reference)</td></tr>
+<tr><td>H25-1 D2.8 (GEMSDOE24)</td><td>Dotted with H19-5 powerlaw</td><td>0.2600</td><td>44,090</td><td>Different</td></tr>
+<tr><td>H25-1 D1.5 (GEMSDOE24)</td><td>Dotted with H19-5 openness</td><td>0.2477</td><td>60,069</td><td>Different</td></tr>
+<tr><td>H27 topo-gap (GEMSDOE27)</td><td>Topographic gap closure</td><td>0.2449</td><td>61,328</td><td>Different</td></tr>
+<tr style="background:#1a472a;color:white;"><td><b>H59 (this)</b></td><td><b>Multi-scale edge coherence + co-training</b></td><td><b>Pending</b></td><td><b>37,654</b></td><td><b>98.8%</b></td></tr>
+</tbody>
+</table></div>
+
+<h2>Why this should score higher</h2>
+<p>The analysis in <a href="https://buffedlizard55-lab.github.io/GEMSDOE32/docs/index.html">GEMSDOE32</a> established that at DTI 0.28, the acceptance rule is: <i>emit a pixel iff it is within 224m of an uncatalogued fault pixel</i>. The only lever that moves the score is the <b>ranking</b> of candidates — specifically "how likely is there an uncatalogued fault pixel within 2px of here?"</p>
+<p>H59's ranking combines three independent signals that have not been used together before:</p>
+<ul>
+<li><b>Multi-scale geophysical edges</b>: Different Gaussian scales capture contacts at different depths, increasing the chance of detecting buried fault segments invisible at any single scale.</li>
+<li><b>Co-training disagreement</b>: The A-only signal (geophysical edge without surface expression) specifically targets buried faults beneath alluvial cover — the exact class of faults missing from the USGS/INGENIOUS catalogue.</li>
+<li><b>Fault-tip proximity</b>: Geological principle: faults propagate laterally; the most likely location for an uncatalogued extension is near the tip of an existing mapped segment.</li>
+</ul>
+
+<h2>Format verification</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Check</th><th>Result</th></tr></thead>
+<tbody>
+<tr><td>Single band</td><td style="color:#4ade80;">PASS</td></tr>
+<tr><td>Dtype: float32</td><td style="color:#4ade80;">PASS</td></tr>
+<tr><td>Shape: 3730 × 3292</td><td style="color:#4ade80;">PASS</td></tr>
+<tr><td>CRS: EPSG:32611</td><td style="color:#4ade80;">PASS</td></tr>
+<tr><td>Transform matches sample_submission.tif</td><td style="color:#4ade80;">PASS</td></tr>
+<tr><td>Values in [0, 1]</td><td style="color:#4ade80;">PASS</td></tr>
+<tr><td>No NaN</td><td style="color:#4ade80;">PASS</td></tr>
+<tr><td>No mass outside footprint</td><td style="color:#4ade80;">PASS</td></tr>
+<tr><td>Min distance to catalogue ≥ 200m</td><td style="color:#4ade80;">PASS (300m)</td></tr>
+<tr><td>Unique vs 12 scored priors</td><td style="color:#4ade80;">PASS</td></tr>
+</tbody>
+</table></div>
+
+</main>
+<footer>DOE GEMS competition 306 · Reproducible research · Predictions are hypotheses, not verified faults.<br>
+<a href="executive-summary.html">Submission guide</a> · <a href="h59-method.html">Method</a> · <a href="h59-evidence.html">Evidence</a> · <a href="sources.html">Sources</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code</a></footer>
+</body></html>

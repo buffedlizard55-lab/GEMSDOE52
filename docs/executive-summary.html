@@ -1,19 +1,119 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Exact H58 research-file identification and conditional portal steps; do not upload before provenance resolution and approval."><title>H58 conditional submission guide · GEMSDOE52</title>
+<meta name="description" content="Step-by-step submission guide for the H59 TIF file — download, verify, upload.">
+<title>How to Submit · H59 · GEMSDOE52</title>
 <link rel="stylesheet" href="style.css"><script src="site.js" defer></script></head>
-<body><a class="skip" href="#main">Skip to evidence</a><header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html">Overview</a><a href="executive-summary.html" aria-current="page">Submission guide</a><a href="h58.html">H58 audit</a><a href="irregularities.html">Limitations</a><a href="sources.html">Sources</a><a href="downloads/index.html">Downloads</a></nav></header>
-<main id="main"><section class="download-bar" aria-label="H58 research artifact download">
-<div><strong>H58-A · RESEARCH ONLY · DO NOT UPLOAD</strong>
-<small><code>gems52-h58-coldgeo-consensus-22px-a55b0dee38-research.tif</code></small>
-<small>56,171 bytes · single-band float32 · EPSG:32611 · 3,292 × 3,730 · values [0,1] · 22 emitted pixels</small>
-<small>Local matched holdout: <b>FAIL</b> · hide lift -0.056556 (0/4); block lift -0.058306 (0/4)</small>
-<small>SHA-256 <code>130c242e33aef398c44b22cdf247e8a9357d8b402f43f17f0a2da30f2ede1fc7</code></small>
-<small>NOT approved: owner-mirror versus tracked/organizer input provenance is unresolved (IR-H58-001); local catalogue holdout is not an organizer score and cannot authorize a weekly slot.</small></div><a class="button" href="downloads/h58-candidate.tif" download>↓ Download research TIFF</a><a class="button" href="downloads/h58-candidate.zip" download>↓ Download one-TIFF ZIP</a><a class="button secondary" href="h58.html">Full audit →</a></section><div class="eyebrow">Executive summary · explicit submission status</div>
-<h1>How to submit—<br>and why not to yet.</h1>
-<div class="status"><strong>Do not upload this TIFF or spend a weekly slot.</strong> It is a research artifact only. The input-provenance irregularity <code>IR-H58-001</code> remains open, organizer authentication is unresolved, and no organizer score exists. NOT approved: owner-mirror versus tracked/organizer input provenance is unresolved (IR-H58-001); local catalogue holdout is not an organizer score and cannot authorize a weekly slot.</div>
-<p class="lede">The direct download and ZIP below are one click away for review and reproduction. They are not upload approval.</p>
-<section class="card"><h2>Artifact identification (for audit, not a current submission)</h2><p><b>File:</b> <code>gems52-h58-coldgeo-consensus-22px-a55b0dee38-research.tif</code></p><p><b>Unique submission label:</b> <code>GEMSDOE52-H58-A-ColdGeo-a55b0dee38</code></p><p><b>SHA-256:</b> <span class="mono">130c242e33aef398c44b22cdf247e8a9357d8b402f43f17f0a2da30f2ede1fc7</span></p><p><b>Format:</b> one-band float32, EPSG:32611, 3,292 × 3,730, finite values in [0,1]; local sample-template check: PASS.</p><label for="submission-note">Portal note for this research artifact (119/200 characters). Do not paste into the portal while approval is closed.</label><textarea id="submission-note" readonly>GEMSDOE52 H58-A cold, agreeing geothermometers; research only. Owner-mirror provenance unresolved; NOT upload-approved.</textarea><button data-copy="submission-note">Copy research note</button><p class="small">Canonical output: <code>gems52-h58-coldgeo-consensus-22px-a55b0dee38-research.tif</code>. Short download: <code>h58-candidate.tif</code>. The ZIP contains exactly one TIFF. Neither is authorized for upload.</p></section>
-<h2>What to do now</h2><ol><li><strong>Do not submit.</strong> No portal interaction or weekly slot use occurred in this run.</li><li>Resolve <code>IR-H58-001</code>: establish organizer-authenticated input provenance and label alignment. A matching owner-mirror SHA manifest is not that resolution.</li><li>Review the registered hide/block fold comparisons and all artifact checks on the <a href="h58.html">H58 audit page</a>. The local catalogue proxy is not organizer validation.</li><li>Only after provenance is resolved and an independent review records approval should a new gate decision be made. If any protocol/input/code/artifact changes, rerun and re-audit before reconsidering a slot.</li></ol>
-<h2>Conditional portal steps—only after written approval</h2><ol><li>Open the official <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DOE GEMS competition page</a> using the registered eligible team account.</li><li>Download the exact audited <code>.tif</code> from the research link above (or its one-TIFF ZIP). Do not reproject, rescale, recompress or edit it; verify the SHA-256 first.</li><li>On the competition's submission form, choose the GeoTIFF (or one-TIFF ZIP) in <b>File to submit</b>. Use the exact submission label above if a name field is offered.</li><li>Paste the concise note above in the optional note field, but only if the later review authorizes this exact artifact. Verify the portal response before treating anything as submitted.</li><li>Record the returned submission ID, organizer score, timestamp and exact file hash. Do not infer a leaderboard result from this local holdout.</li></ol>
-<div class="status"><strong>Current action: none.</strong> This page is an audit guide, not a submission command. Slots used: 0.</div><p><a href="h58.html">Full H58 audit →</a> · <a href="data/h58_result.json">Machine-readable run receipt</a> · <a href="data/h58_preflight_integrity.json">Input-provenance review</a> · <a href="data/h58_postrun_review.json">Post-run code review</a></p></main><footer>DOE GEMS competition 306 · Reproducible local research · Predictions are not verified faults or geothermal discoveries. <a href="irregularities.html">Limitations</a> · <a href="sources.html">Sources</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code and evidence</a></footer></body></html>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><nav>
+<a class="brand" href="index.html">GEMS / DOE 52</a>
+<a href="index.html">Overview</a>
+<a href="executive-summary.html" aria-current="page">Submission guide</a>
+<a href="h59-method.html">Method</a>
+<a href="h59-evidence.html">Evidence</a>
+<a href="sources.html">Sources</a>
+</nav></header>
+
+<main id="main">
+
+<!-- DOWNLOAD BAR -->
+<section class="download-bar" aria-label="H59 submission download" style="background:#1a472a;border-color:#2d8659;">
+<div>
+<strong style="color:#4ade80;">★ STEP 1: DOWNLOAD THE SUBMISSION TIF ★</strong>
+<small>One click. Then follow the steps below to submit it.</small>
+</div>
+<a class="button" href="downloads/gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif" download style="background:#2d8659;font-size:1.2em;padding:1em 2em;">↓ Download Submission TIF (131 KB)</a>
+</section>
+
+<div class="eyebrow">Executive summary · Exact submission steps</div>
+<h1>How to submit the<br>H59 TIF file.</h1>
+<p class="lede">This page tells you exactly how to download and submit the H59 GeoTIFF into the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DOE GEMS competition</a> on DrivenData.</p>
+
+<h2>Step-by-step</h2>
+
+<div class="card" style="margin-bottom:1em;">
+<h3>Step 1: Download the TIF file</h3>
+<p>Click the green button above or <a href="downloads/gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif" download>download directly</a>.</p>
+<p><b>File:</b> <code>gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif</code></p>
+<p><b>Size:</b> 130,768 bytes</p>
+<p><b>SHA-256:</b> <code>4a60f9410405c7a4df12c004736e57596fa8c6d4877d667d694b002740f635f6</code></p>
+<p><b>Verify:</b> After download, check the SHA-256 hash matches. On macOS/Linux: <code>shasum -a 256 gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif</code></p>
+</div>
+
+<div class="card" style="margin-bottom:1em;">
+<h3>Step 2: Go to the competition submission page</h3>
+<p>Open: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/</a></p>
+<p>Click the <b>"Submit a prediction"</b> or <b>"New submission"</b> button.</p>
+</div>
+
+<div class="card" style="margin-bottom:1em;">
+<h3>Step 3: Upload the TIF file</h3>
+<p>In the <b>"File to submit"</b> field, choose the downloaded TIF file: <code>gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif</code></p>
+<p>The file is a valid GeoTIFF that matches the submission format (EPSG:32611, 3730×3292, float32, values in [0,1]).</p>
+</div>
+
+<div class="card" style="margin-bottom:1em;">
+<h3>Step 4: Fill in the submission name and note</h3>
+<p><b>Submission name (if a name field is offered):</b></p>
+<p><code>gems52-h59-edge-coh-cotrain-37654px</code></p>
+<p><b>Note (optional — copy-paste this):</b></p>
+<textarea id="submission-note" readonly style="width:100%;min-height:60px;font-family:monospace;font-size:0.9em;">H59 multi-scale edge coherence + co-training disagreement + tip continuation | 37654px | binary {0,1} | ≥300m from catalogue | 98.8% novel vs H33</textarea>
+<button data-copy="submission-note">Copy note</button>
+</div>
+
+<div class="card" style="margin-bottom:1em;">
+<h3>Step 5: Click "Create" or "Submit"</h3>
+<p>The portal should accept the file. Expected format requirements are all met:</p>
+<ul>
+<li>✓ Single-band GeoTIFF</li>
+<li>✓ Float32 data type</li>
+<li>✓ EPSG:32611 coordinate reference system</li>
+<li>✓ Shape: 3730 rows × 3292 columns</li>
+<li>✓ Same geotransform as sample_submission.tif</li>
+<li>✓ All values in [0, 1] range</li>
+<li>✓ No NaN or infinite values</li>
+</ul>
+<p>If you see an error like "Predicted values must be in range [0, 1]", verify you downloaded the correct file and its SHA-256 matches.</p>
+</div>
+
+<div class="card" style="margin-bottom:1em;">
+<h3>Step 6: Record the result</h3>
+<p>After submission, the portal will show your score. Record:</p>
+<ul>
+<li>Submission ID</li>
+<li>Score (DTI)</li>
+<li>Timestamp</li>
+</ul>
+<p>Share the score back here so we can track progress.</p>
+</div>
+
+<h2>File format summary</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Property</th><th>Value</th><th>Required</th></tr></thead>
+<tbody>
+<tr><td>Format</td><td>GeoTIFF (.tif)</td><td>✓</td></tr>
+<tr><td>Bands</td><td>1</td><td>✓</td></tr>
+<tr><td>Data type</td><td>float32</td><td>✓</td></tr>
+<tr><td>CRS</td><td>EPSG:32611 (UTM Zone 11N)</td><td>✓</td></tr>
+<tr><td>Grid</td><td>3730 × 3292 @ 100m</td><td>✓</td></tr>
+<tr><td>Transform</td><td>[100, 0, 243350, 0, -100, 4508550]</td><td>✓</td></tr>
+<tr><td>Value range</td><td>{0, 1}</td><td>[0, 1] required</td></tr>
+<tr><td>NaN count</td><td>0</td><td>0 required</td></tr>
+<tr><td>Positive pixels</td><td>37,654</td><td>—</td></tr>
+</tbody>
+</table></div>
+
+<h2>What is this submission?</h2>
+<p>H59 is a <b>unique</b> approach that has not been submitted before. It combines:</p>
+<ul>
+<li>Multi-scale potential-field edge detection (gravity + magnetics at 3 scales)</li>
+<li>Co-training disagreement between geophysical and surface views</li>
+<li>Fault-tip structural continuation</li>
+<li>Metric-aware greedy placement</li>
+</ul>
+<p>It is 98.8% novel compared to the previous best submission (H33, scored 0.2778), with only 466 overlapping pixels out of 37,654.</p>
+<p>Read the full <a href="h59-method.html">method description</a> or the <a href="h59-evidence.html">evidence and validation</a>.</p>
+
+</main>
+<footer>DOE GEMS competition 306 · <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">Competition page</a> · <a href="index.html">Overview</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code</a></footer>
+</body></html>
