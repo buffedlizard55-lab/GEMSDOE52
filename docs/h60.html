@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>H60 audit · triple-convergence basement blind-fault detector · GEMSDOE52</title>
+<link rel="stylesheet" href="style.css"><script src="site.js" defer></script>
+</head><body><!--CTD5-ARCHIVE-NOTICE--><aside style="padding:14px 22px;background:#fff1de;color:#6e421d;border-bottom:1px solid #dcc8a8;font:14px/1.6 system-ui">Historical research archive, not current upload approval. <a href="index.html" style="color:#126954">Current CTD5 file and failed gates</a>. Older score, provenance and “safe to submit” statements may be superseded; no organizer score is newly confirmed here.</aside>
+<a class="skip" href="#main">Skip to audit</a>
+<header><nav>
+<a class="brand" href="index.html">GEMS / DOE 52</a>
+<a href="index.html">Overview</a>
+<a href="executive-summary.html">How to submit</a>
+<a href="h60.html" class="active">H60 audit</a>
+<a href="h59.html">H59 audit</a>
+<a href="irregularities.html">Limitations</a>
+<a href="sources.html">Sources</a>
+<a href="downloads/index.html">Downloads</a>
+</nav></header>
+
+<main id="main">
+
+<h1>H60 audit</h1>
+<p class="lede">Triple-convergence, strike-gated, depth-cover weighted blind-fault detector. Built
+from the manifest-pinned competition bytes on 2026-10-08. This page renders only what is in
+<code>evidence/h60_build.json</code>; no number is hand-typed.</p>
+
+<section class="download-bar">
+<div>
+  <strong>gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif</strong>
+  <small>130,202 bytes · SHA-256 <code>737c77344457dc1561fe091bc3ab085b3ab65af10b290f5301512f0505abec07</code></small>
+</div>
+<a class="button" href="downloads/h60-candidate.tif" download>↓ TIFF</a>
+<a class="button" href="downloads/h60-candidate.zip" download>↓ ZIP + name/note</a>
+</section>
+
+<h2>Hypotheses tested and how they differ from previous rounds</h2>
+<p>The session preregistered five candidate hypotheses before any fit ran. The one implemented here is <strong>H60-1 (triple-convergence blind-fault AND-gate)</strong>; the other four were deprioritized by expected-DTI/implementation-cost ranking (see table below) and are not in the build.</p>
+<table>
+<thead><tr><th>#</th><th>Hypothesis</th><th>Why it should catch new faults</th><th>Layers</th><th>Expected lift</th><th>Cost</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>H60-1</td><td>Strike-gated triple edge AND (grav × RTP × K/Th) + depth gradient</td><td>Blind Basin-and-Range faults offset gravity, magnetics and radiometric contacts under cover; surface scarps are absent.</td><td>gravity (b13, b11, b5, b18), RTP (b2) + TMI (b14, b3, b9), K/Th from USGS GeoDAWN, depth-to-basement (b15)</td><td>high (physics AND-gate rejects the artefact classes that defeated single-view detectors)</td><td>med (uses existing 100 m cube + already-pinned GeoDAWN rad layers)</td><td><span class="pill pass">implemented</span></td></tr>
+<tr><td>H60-2</td><td>InSAR lineament rate (10× strain resolution)</td><td>Shallow creep produces line-of-sight rate steps at the 10–30 m scale missed by band 4/7/8.</td><td>ASF Sentinel-1 InSAR time series (free, but egress-blocked here; requires ~20 GB download)</td><td>high, conditional on obtainability</td><td>high; data not reachable from sandbox</td><td><span class="pill warn">blocked on egress</span></td></tr>
+<tr><td>H60-3</td><td>LiDAR intensity/return-width road veto</td><td>Discriminates road cuts from real scarps; H59-B (λ=0.5 blanket veto) failed because it was blind to which B pixels were roads.</td><td>USGS 3DEP 1 m LAS intensity (public domain; 100s of GB; bandwidth-blocked)</td><td>med (B-only artefact suppression)</td><td>very high; TB-scale LAS</td><td>deferred</td></tr>
+<tr><td>H60-4</td><td>Conductivity-plumb geothermal conjunction</td><td>Fluidized fault zones show elevated conductivity directly under a potential-field edge; H59-E was statistically neutral on the union field.</td><td>band 17 (cond_surf) co-located with triple-edge</td><td>low (tested and null in H59)</td><td>low</td><td>folded into blend (0.15 weight) but not primary</td></tr>
+<tr><td>H60-5</td><td>Earthquake lineament density (ComCat events)</td><td>Seismicity alignments along unmapped faults.</td><td>USGS ComCat (API egress-blocked; the provided b10/b16 proxies are already in View A)</td><td>low</td><td>low (features already used)</td><td>in View A</td></tr>
+</tbody>
+</table>
+
+<h2>Method</h2>
+<ol>
+  <li><strong>Footprint</strong> = pixels where all 19 competition bands are finite: 5,165,840 px, measured from the bytes.</li>
+  <li><strong>View A (geophysical / subsurface)</strong>: isostatic gravity, RTP magnetics, TMI, three strain channels, distance-to-earthquake, earthquake density, depth to basement, conductivity, and the gradient magnitude of each — 15 features total. Band 6 (radiometric total count, per IR-52-019) is in View B, not A.</li>
+  <li><strong>View B (surface / geochem / geomorph)</strong>: detrended elevation and slope, slope edge, the in-cube radiometric TC band, USGS GeoDAWN K/Th/U/TC + ratio layers, and the 12 LiDAR-scarp features already in the repo — 26 features.</li>
+  <li><strong>Per-view learners</strong>: L2-regularised logistic regression, class-weight balanced, trained on labelled catalogue positives vs labelled negatives drawn ≥300 m from any positive (4 px collar), with a 4×4 spatial-block split and 4 px buffer. The fit is only used as a blend term, not as a gate.</li>
+  <li><strong>Triple-convergence physics score</strong>: geometric mean of (rank-gravity-edge × g-strike-weight), (rank-RTP-edge × rtp-strike-weight), (rank-K/Th-edge × k-strike-weight), zeroed unless all three exceed 0.10. Strike weight = cos²-window within ±25° of azimuth 015° (NNE–SSW Basin-and-Range normal-fault strike).</li>
+  <li><strong>Cover weighting</strong>: pixels whose depth-to-basement exceeds the footprint median (~316 m) use 0.55×triple + 0.20×p<sub>A</sub> + 0.10×p<sub>B</sub> + 0.15×depth-edge; shallower pixels use a less-aggressive blend. This deliberately seeks blind faults under cover rather than emergent scarps.</li>
+  <li><strong>Forbidden zones</strong>: outside the sample-submission footprint; within 2 px (200 m) of any labelled catalogue pixel; within a 1-px dilation of any pixel emitted by any of the 30 accessible prior TIFs (this is how we guarantee novelty against the group's earlier work).</li>
+  <li><strong>Emission</strong>: lazy greedy under the triangular 300 m kernel (3 px isotropic), fixed budget 31,000 (tuned off the T(S) power law rather than inherited), pool size 500k.</li>
+</ol>
+
+<h2>Gate results</h2>
+<div id="gates"></div>
+
+<h2>Independence premise (Blum &amp; Mitchell)</h2>
+<p>With 4×4 blocks and 4 px buffer, only 2 blocks survived the ≥50-negative-pixel threshold for the per-block error-correlation diagnostic. The test is therefore <strong>undefined</strong> at the pre-registered granularity, which is itself a form of abandonment (the co-training exchange was not used as the training signal; the two views are blend components only, not pseudo-labelling donors). Pixel-level Spearman/Pearson were measured for completeness but the per-block number is what the brief's abandonment rule references.</p>
+
+<h2>Not-merely-the-union check</h2>
+<p>The candidate's positive support is 31,000 px. Against the binary union of all 30 accessible priors, 30,330 px (97.8 %) are new and 1,516,095 prior pixels were deliberately dropped. The canonical decoded-pattern hash differs from every prior raster; no prior is a subset and none is a superset. The "equals a literal union of priors" bit is 0.</p>
+
+<h2>Why the "submit?" flag is NO</h2>
+<p>Nothing in this repository's local holdout instrument currently predicts the organiser's score. Spearman ρ(reported, simulated) = −0.10 across 13 scored files (IR-52-017): the file that won on the board ranked <em>last</em> on the simulator, so passing a local holdout is not evidence of gain, and failing one is not evidence of loss. The honest course is to (a) ship a format-valid, unique, physics-principled candidate that a human geologist can audit; (b) disclose the instrument limitation; and (c) leave the weekly-slot decision to a human who is looking at the actual geological field evidence, not to an assertion from the code.</p>
+
+<h2>Reproducibility</h2>
+<pre><code>PYTHONPATH=src python3 scripts/build_h60_submission.py</code></pre>
+<p>Running this end-to-end on pinned bytes (SHA-256 recorded in <code>registry/data_manifest.json</code>) reproduces the TIFF byte-for-byte. The build also re-reads its own output and re-runs every gate before declaring success; if a gate fails, the script exits non-zero and no receipt is written.</p>
+
+</main>
+</body></html>

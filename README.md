@@ -11,6 +11,7 @@
 - **Note (116 / 140 chars):** `CTD5: cover-matched geophysics to surface abstention; one pseudo-label round. Research only; no prior pixels reused.`
 - **HOLDOUT-DTI:** `gems52-pooled-hide-v1`, **0.018848**, **95% CI [0.012421, 0.026020]**, **53,186 withheld positives**. **Descriptive only:** a fold emitted 2,041/3,058 requested nodes; the candidate/control comparison is not matched-budget eligible. The surface-only control's HOLDOUT-DTI is 0.106749, 95% CI [0.089076, 0.124951], same evaluator and withheld positives. No leaderboard forecast.
 - **Uniqueness diagnostic:** 541 files / 360 decoded rasters; exact maximum Spearman 0.068203 before placement and 0.013418 after. No identical array, no A/B union. **Maximum directed proximity 100% > 70% → duplicate/STOP.**
+- **Concurrent closure audit:** one newly merged H60 raster was also checked against the unchanged surface and dots, bringing the total to **542 files / 361 decoded patterns**. Its near-dot fraction was 27.1917%, below the rule; the earlier 100% duplicate/STOP remains. [Reconciliation receipt](evidence/ctd5_parallel_reconciliation.json).
 - **Why the proximity gate cannot pass this registry:** the registered spacing-five lattice covers **every eligible pixel** within three pixels. No nonempty raster on this footprint can satisfy the literal rule with that prior included. We did not quietly drop it or change the threshold. [Measured saturation proof](evidence/ctd5_registry_saturation.json).
 
 ## Start here every session
@@ -58,7 +59,7 @@ Individual stages: `scripts/run_ctd5.py canary`, `fit`, conditional `exchange`, 
 
 Next: resolve universal-coverage registry policy **prospectively in the shared selector**; authenticate the organizer inputs/score receipts; verify band identity and upstream model lineage; pre-register a capacity-feasible holdout comparison. Do not repeat this failed placement or silently switch lanes. External official hosts and the authenticated submission page are inaccessible here, so a fresh leaderboard top, current weekly allowance and organizer provenance are unresolved. No passwords/tokens are needed in chat.
 
-`submission/LATEST.txt` remains the historical, unapproved H57 selector pointer; it is not the current research link and does not authorize upload. CTD5 has its own `submission/CTD5_RESEARCH_LATEST.txt` and `docs/data/ctd5_run_card.json`.
+`submission/LATEST.txt` was advanced to unapproved H60 by concurrent upstream PR #34. That upstream marker is retained, not selected or promoted by CTD5; it is not this session’s research link and does not authorize upload. The H57 archive is retained. CTD5 has its own `submission/CTD5_RESEARCH_LATEST.txt` and `docs/data/ctd5_run_card.json`.
 
 ## Complete current prompt — read before working
 

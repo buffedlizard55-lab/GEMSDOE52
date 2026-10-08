@@ -58,7 +58,7 @@ Receipts: `evidence/ctd5_holdout.json`, `ctd5_post_holdout.json`, `ctd5_pseudo_e
 
 ## 4. The uniqueness rule really fired — no workaround
 
-The source audit read all **52 supplied owner repositories**. It downloaded **526 distinct Git blobs**; **524** are aligned single-band predictions. With local historical submissions, the gate processed **541** files, **360** distinct decoded arrays. This is not a claim to cover private, release-only or externally stored artifacts. No URLs were provided for 53GEMSDOE / 54GEMSDOE.
+The source audit read all **52 supplied owner repositories**. It downloaded **526 distinct Git blobs**; **524** are aligned single-band predictions. With local historical submissions, the gate processed **541** files, **360** distinct decoded arrays. One H60 raster arrived through upstream PR #34 after the frozen scan. A supplemental check against the unchanged field/dots raises the closure total to 542 files / 361 decoded patterns; its three-pixel fraction is 0.271917 and does not change the original STOP. This is not a claim to cover private, release-only or externally stored artifacts. No URLs were provided for 53GEMSDOE / 54GEMSDOE.
 
 Exact tie-aware Spearman over **4,593,171 eligible pixels**:
 

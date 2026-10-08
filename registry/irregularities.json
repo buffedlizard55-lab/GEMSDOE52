@@ -868,6 +868,17 @@
    "evidence": "src/gems52/features.py; scripts/download_competition_data.sh; tests/test_ctd5.py",
    "handling": "Restored the three mapping keys and preserved comma-separated --only IDs; new tests exercise the wrapper. No model rerun or changed placement followed this repair.",
    "disposition": "Restored the three mapping keys and preserved comma-separated --only IDs; new tests exercise the wrapper. No model rerun or changed placement followed this repair."
+  },
+  {
+   "id": "IR-CTD5-011",
+   "round": "CTD5",
+   "severity": "high",
+   "status": "reconciled; no promotion",
+   "title": "Concurrent H60 merge moved the global pointer and published non-JSON NaN correlations",
+   "what_it_is": "Main advanced via PR #34 while CTD5 ran. H60 owns its upstream marker, lacks a comparable holdout and has insufficient-block independence values serialized as NaN.",
+   "how_we_know": "Upstream commit 647ac2fb0797264c241edd71aafdebdf743d98f3; evidence/ctd5_parallel_reconciliation.json",
+   "handling": "Retain H60 TIFF/code/build and archive its landing/guide/README; preserve its unapproved upstream pointer. Normalize only public JSON missing correlations to null, add fail-closed per-artifact receipt, retain historical H57 checks, compare fixed CTD5 surface/dots to the new H60 raster. No model refit or placement change.",
+   "disposition": "CTD5 negative; H60 unapproved; separate research download links."
   }
  ],
  "latest_review_utc": "2026-10-08T18:57:00Z"

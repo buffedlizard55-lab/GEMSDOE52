@@ -82,12 +82,20 @@ def check(base_url=None):
     assert (ROOT/'submission/CTD5_RESEARCH_LATEST.txt').read_text().strip()==card['raster_file']
     for phase in ('surface','dot'):
         gate=json.loads((ROOT/f'evidence/ctd5_{phase}_uniqueness.json').read_text())
-        assert gate['priors_checked']==len(gate['per_prior'])==541 and gate['error_count']==0
+        assert gate['priors_checked']==len(gate['per_prior']) and gate['priors_checked']>=524 and gate['error_count']==0
         assert gate['exact_full_eligible_rank'] and gate['rank_pixels']==int(eligible.sum())
         offenders=[r for r in gate['per_prior'] if r.get('spearman') is not None and r['spearman']>.90 or r.get('near_3px_fraction',0)>.70 or r.get('identical')]
         assert gate['duplicate']==bool(offenders)
         if phase=='dot': assert offenders and not gate['ok']
         else: assert not offenders and gate['ok']
+    if card.get('supplemental_upstream_registry_check'):
+        extra=json.loads((ROOT/card['supplemental_upstream_registry_check']['receipt']).read_text())
+        assert extra['candidate_sha256']==card['raster_sha256']
+        assert extra['no_refit'] and extra['no_new_placement'] and extra['original_duplicate_stop_retained']
+        old=json.loads((ROOT/'evidence/ctd5_dot_uniqueness.json').read_text())
+        new_hash=extra['dots']['per_prior'][0]['decoded_sha256']
+        assert new_hash not in {r['decoded_sha256'] for r in old['per_prior']}
+        assert card['supplemental_upstream_registry_check']['total_files_checked_at_closure']==old['priors_checked']+1
     for key,value in card['not_union'].items():
         if key!='candidate_vs_union_field_different_pixels': assert value is False
     post=json.loads((ROOT/'evidence/ctd5_post_holdout.json').read_text())

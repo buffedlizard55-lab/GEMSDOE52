@@ -197,3 +197,36 @@ def test_current_readme_contains_the_complete_preserved_brief():
     brief=(ROOT/'knowledge/26_current_user_brief.md').read_text()
     assert brief[brief.index('```text'):] in (ROOT/'README.md').read_text()
     assert 'PARALLEL-RUN PROTOCOL' in brief and '0.3774' in brief and '0.3195' in brief
+
+
+def test_feed_does_not_repackage_unchanged_historical_payload(tmp_path,monkeypatch):
+    spec=importlib.util.spec_from_file_location('ctd5_feed_preserve',ROOT/'scripts/refresh_feed.py')
+    mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)
+    (tmp_path/'submission').mkdir();dl=tmp_path/'downloads';dl.mkdir()
+    name='historical-candidate.tif';(tmp_path/'submission'/name).write_bytes(b'fixture raster')
+    archive=dl/'historical-candidate.zip'
+    with zipfile.ZipFile(archive,'w') as z:
+        z.writestr(name,b'fixture raster');z.writestr('old-note.txt','Preserve historical record.')
+    before=archive.read_bytes()
+    monkeypatch.setattr(mod,'ROOT',tmp_path);monkeypatch.setattr(mod,'DL',dl)
+    assert mod.make_zip(name)==str(archive)
+    assert archive.read_bytes()==before
+
+
+def test_concurrent_h60_missing_correlations_not_zero_or_approval():
+    def reject(value): raise ValueError(value)
+    old=json.loads((ROOT/'docs/data/submission_h60.json').read_text(),parse_constant=reject)
+    assert old['independence_test']['n_blocks']==2
+    assert old['independence_test']['pearson_r'] is None
+    assert old['independence_test']['spearman_rho'] is None
+    current=json.loads((ROOT/'docs/data/submission.json').read_text())
+    assert current['approved_for_weekly_slot'] is False and current['promoted'] is False
+    assert current['file']==(ROOT/'submission/LATEST.txt').read_text().strip()
+
+
+def test_source_commit_references_all_resolve_but_no_scores_are_authenticated():
+    r=json.loads((ROOT/'evidence/ctd5_source_commit_resolution.json').read_text())
+    assert r['all_commit_refs_resolved'] and len(r['entries'])==53
+    assert all(x['ok'] and x['requested']==x['returned_commit'] for x in r['entries'])
+    s=json.loads((ROOT/'evidence/ctd5_sources.json').read_text())
+    assert s['organizer_confirmed_scores']==[]

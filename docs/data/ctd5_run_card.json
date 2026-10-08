@@ -50,7 +50,7 @@
     "final_max_near_3px_fraction": 1.0,
     "lane_gate_pass": false,
     "decoded_identical_priors": 0,
-    "scope": "Supplied aligned immutable public inventory only; private/release/external artifacts not proven absent."
+    "scope": "Supplied aligned immutable public inventory only; private/release/external artifacts not proven absent. Frozen 541-file receipt plus one later H60 raster checked separately at closure; see supplemental_upstream_registry_check."
   },
   "raster_sha256": "a6e6e44aebaf057989e254bd5ce3729e5a94836c0e5687a95e91e3fc8a40c686",
   "raster_file": "gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif",
@@ -144,5 +144,15 @@
   "excluded_local_malformed_priors": [],
   "post_build_seconds": 336.1210388850002,
   "matched_budget_comparison_valid": false,
-  "comparison_warning": "Descriptive HOLDOUT-DTI only: fold 1 emitted 2,041/3,058 requested dots. The single-B control is the best evaluated control; a matched-budget improvement is not established."
+  "comparison_warning": "Descriptive HOLDOUT-DTI only: fold 1 emitted 2,041/3,058 requested dots. The single-B control is the best evaluated control; a matched-budget improvement is not established.",
+  "supplemental_upstream_registry_check": {
+    "receipt": "evidence/ctd5_parallel_reconciliation.json",
+    "additional_distinct_rasters": 1,
+    "total_files_checked_at_closure": 542,
+    "total_distinct_decoded_at_closure": 361,
+    "additional_surface_spearman": 0.014560583321505678,
+    "additional_dot_spearman": 0.004100756899671539,
+    "additional_near_3px_fraction": 0.27191666666666664,
+    "all_pass": true
+  }
 }

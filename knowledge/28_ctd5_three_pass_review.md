@@ -28,7 +28,13 @@
 
 ## Concurrent-main integration and remote checks
 
-Main advanced during the run with PR #34 (H60). Its code, TIFF and historical narrative must be preserved; CTD5 must not silently select a replacement competition slot. The integration, supplemental fixed-output comparison, and remote PR/CI outcome are recorded below once actually checked. No completed merge or CI result is implied by this paragraph.
+Main advanced via PR #34 (`647ac2f`) while CTD5 was running. Integration preserved H60's code, TIFF, ZIP and raw build receipt, archived its README/landing/guide, and retained its upstream **unapproved** marker without selecting CTD5 for a slot. H60's public JSON NaN correlations became null (not zero); the raw receipt remains unchanged. A per-artifact closed-gate receipt prevents the feed from inventing approval or falling back to an unrelated round. Historical H57 integrity checks now read the H57 receipt even when a later round owns the pointer.
+
+A supplemental comparison against the already-fixed CTD5 surface and final dots found H60 Spearman 0.014561 / 0.004101 and directed proximity 0.271917. There was no refit, new hypothesis or new placement. The original lattice duplicate STOP remains. Closure scope: **542 files / 361 decoded patterns**. See `evidence/ctd5_parallel_reconciliation.json` and IR-CTD5-011.
+
+Final post-integration local validation: **249 tests passed**, 42 deprecation warnings, no failures; static site and independent CTD5 checks passed. All **53** stored owner/official-reference source commit IDs were separately resolved through the GitHub commit API. The H60 supplemental array was verified distinct from the 360 original decoded priors.
+
+Remote CI/PR status is reported from the actual GitHub check and merge receipts, not predicted in this document. The optional full reproduction workflow was added but **not** launched for another scientific run after the stop.
 
 ## Remaining limitations
 

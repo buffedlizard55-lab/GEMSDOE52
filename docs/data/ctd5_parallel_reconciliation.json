@@ -1,0 +1,81 @@
+{
+  "checked_utc": "2026-10-08T19:09:03.668068+00:00",
+  "upstream_commit": "647ac2fb0797264c241edd71aafdebdf743d98f3",
+  "upstream_pr": 34,
+  "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE52/blob/647ac2fb0797264c241edd71aafdebdf743d98f3/submission/gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif",
+  "prior_file": "gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif",
+  "prior_sha256": "737c77344457dc1561fe091bc3ab085b3ab65af10b290f5301512f0505abec07",
+  "candidate_sha256": "a6e6e44aebaf057989e254bd5ce3729e5a94836c0e5687a95e91e3fc8a40c686",
+  "surface": {
+    "phase": "surface",
+    "rule": "STOP at rho >0.90 or directed <=3px dot proximity >0.70; no lane retuning",
+    "evidence_class": "uniqueness diagnostic, not a score",
+    "priors_checked": 1,
+    "distinct_decoded_priors": 1,
+    "candidate_decoded_sha256": "6a12b7a828a8569ddbe42a99c1ab8ed792d8126902ac5d3e2689a652b4b18efe",
+    "rank_pixels": 4593171,
+    "exact_full_eligible_rank": true,
+    "max_spearman": 0.014560583321505678,
+    "max_near_3px_fraction": null,
+    "rank_threshold": 0.9,
+    "near_threshold": 0.7,
+    "duplicate": false,
+    "offender_count": 0,
+    "error_count": 0,
+    "ok": true,
+    "scope": "Supplied aligned immutable public inventory only; private/release/external artifacts not proven absent.",
+    "per_prior": [
+      {
+        "path": "submission/gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif",
+        "decoded_sha256": "328bfcb8873e31f899f24a2574b719436e593f29a1b1d20a35dd670765565078",
+        "binary_on_footprint": true,
+        "spearman": 0.014560583321505678,
+        "identical": false,
+        "constant_prior": false,
+        "rank_duplicate": false
+      }
+    ]
+  },
+  "dots": {
+    "phase": "dots",
+    "rule": "STOP at rho >0.90 or directed <=3px dot proximity >0.70; no lane retuning",
+    "evidence_class": "uniqueness diagnostic, not a score",
+    "priors_checked": 1,
+    "distinct_decoded_priors": 1,
+    "candidate_decoded_sha256": "b58bae0f0e32960f146608b947b59e683fd239eb49f9ddee0ad9bfa677b6201f",
+    "rank_pixels": 4593171,
+    "exact_full_eligible_rank": true,
+    "max_spearman": 0.004100756899671539,
+    "max_near_3px_fraction": 0.27191666666666664,
+    "rank_threshold": 0.9,
+    "near_threshold": 0.7,
+    "duplicate": false,
+    "offender_count": 0,
+    "error_count": 0,
+    "ok": true,
+    "scope": "Supplied aligned immutable public inventory only; private/release/external artifacts not proven absent.",
+    "per_prior": [
+      {
+        "path": "submission/gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif",
+        "decoded_sha256": "328bfcb8873e31f899f24a2574b719436e593f29a1b1d20a35dd670765565078",
+        "binary_on_footprint": true,
+        "spearman": 0.004100756899671539,
+        "identical": false,
+        "constant_prior": false,
+        "rank_duplicate": false,
+        "candidate_dots": 12000,
+        "prior_proposals": 31000,
+        "near_3px_fraction": 0.27191666666666664,
+        "positive_support_near_3px_fraction": 0.27191666666666664,
+        "support_rule": ">0 binary; >=0.5 continuous (shared template)",
+        "near_duplicate": false
+      }
+    ]
+  },
+  "no_refit": true,
+  "no_new_placement": true,
+  "original_duplicate_stop_retained": true,
+  "pointer_policy": "Inherited H60 pointer unchanged from main; explicitly unapproved. CTD5 has a separate research marker.",
+  "preservation": "H60 code, TIFF, ZIP, original build receipt and archived README/landing/guide retained.",
+  "corrections": "Published H60 NaN correlations converted to null, not zero. H60 has no comparable holdout receipt; no weekly approval inferred."
+}

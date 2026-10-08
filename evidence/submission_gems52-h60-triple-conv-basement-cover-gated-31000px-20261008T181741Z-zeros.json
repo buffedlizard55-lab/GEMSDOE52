@@ -64,12 +64,5 @@
   "official_score_status": "No organizer submission receipt available.",
   "verdict": "research only; not approved for weekly slot",
   "pointer_origin": "Inherited unchanged from upstream PR #34 (647ac2f); not selected or promoted by CTD5.",
-  "reason": "No registered comparable pooled holdout-DTI + CI; an insufficient-block independence statistic is not positive evidence.",
-  "marker": "submission/LATEST.txt",
-  "exists": true,
-  "download": "downloads/gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif",
-  "download_zip": "downloads/gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.zip",
-  "submission_note": "H60 concurrent triple-convergence research artifact. No registered comparable holdout lift; not approved for submission.",
-  "submission_note_chars": 120,
-  "published_byte_hash_matches_receipt": true
+  "reason": "No registered comparable pooled holdout-DTI + CI; an insufficient-block independence statistic is not positive evidence."
 }
