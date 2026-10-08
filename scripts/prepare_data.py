@@ -11,6 +11,7 @@ Measured quantities are written to ``evidence/grid.json`` and ``evidence/band_in
 from __future__ import annotations
 
 import json
+import argparse
 import sys
 from pathlib import Path
 
@@ -40,7 +41,13 @@ def audit(path: Path, expect_bytes: int | None = None, expect_sha: str | None = 
     return d
 
 
-def main() -> int:
+def main(argv=None) -> int:
+    global DATA, OUT
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--data-dir', default='data')
+    parser.add_argument('--out-dir', default='evidence')
+    args = parser.parse_args(argv)
+    DATA, OUT = Path(args.data_dir), Path(args.out_dir)
     OUT.mkdir(parents=True, exist_ok=True)
     pins = json.loads(Path("registry/data_manifest.json").read_text())
     pin = {f["id"]: f for f in pins["files"]}
@@ -85,7 +92,7 @@ def main() -> int:
             v = a[allb & np.isfinite(a)]
             res.append(dict(band=i, name=None, min=float(v.min()), p50=float(np.percentile(v, 50)),
                             p99=float(np.percentile(v, 99)), max=float(v.max()),
-                            mean=float(v.mean()), nan_in_footprint=int((~np.isfinite(a)).sum())))
+                            mean=float(v.mean()), nan_in_footprint=int((~np.isfinite(a[allb])).sum())))
     rep["footprint_candidates"] = dict(band1_finite=int(band1_finite.sum()),
                                         all_bands_finite=int(allb.sum()))
     with rasterio.open(sample) as src:

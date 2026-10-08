@@ -1,0 +1,43 @@
+{
+  "reviewed_utc": "2026-10-08T19:25:14.461814+00:00",
+  "python": "3.11.2",
+  "packages": {
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "scikit-learn": "1.7.2",
+    "rasterio": "1.4.3",
+    "pytest": "8.4.2"
+  },
+  "code_hash_scope": "Reviewed release hashes, not a claimed independently timestamped pre-fit code commit. Registration was hash-frozen before fits. Post-fit edits affected setup ID lookup, validation, metadata, publication and integration only; no model, score transform, budget or candidate placement changed.",
+  "code_sha256": {
+    "src/gems52/structural.py": "9f1dc2710d15bb41109a9f0af926b100a100604672b2b77b45f2e0d7c4e29f50",
+    "src/gems52/evaluate_holdout.py": "ffb084fdf34bb30438485b89caeb1228a6680abfd9f9f0472f4355845da05cc6",
+    "src/gems52/submission_writer.py": "528f367a0da11c824dd9f975e7d2eb0a1d8214bc36995aca04c79c48f345335c",
+    "src/gems52/gates.py": "d2fa9daf1da378dde0bebf0bd3e4c2e8728fb22a4362417a620bb4022bea3000",
+    "src/gems52/holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+    "src/gems52/metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+    "src/gems52/spatial.py": "3776a6be457268a548b7d9931263bc6b5c1e5a431cb1ee727a22caacffc17c34",
+    "src/gems52/nodes.py": "e59c35c312f6415a2fbd166c9dc0f46bcd4d7a629439499c5beee841d5e9599b",
+    "scripts/run_ctd5.py": "1b42f7d91d029d3f5b053f67f2be262182e3cef450d1394d7aeafba02bf4daee",
+    "scripts/build_ctd5_submission.py": "4a34af3444a4a82d11f28d5b2fd6d18b4535b9b03360c2a2805844f53e4a26c9",
+    "scripts/check_ctd5_release.py": "0eb6d2d740a2a158c4735d133a676162e129649f8463c7932b481cbf10ea06e2",
+    "scripts/publish_ctd5.py": "7f8f8042e4468993a60d43f248c2019adef5918dcb530ee74b76dffdf535f095"
+  },
+  "tests": {
+    "tests": 249,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 8.644
+  },
+  "scientific_experiments": 2,
+  "limit_experiments": 3,
+  "geological_hypotheses_tested": 1,
+  "pseudo_rounds": 1,
+  "experiment_stopped_utc": "2026-10-08T18:31:08Z",
+  "stop_reason": "Final dot proximity failed; no candidate search afterwards.",
+  "scientific_execution_within_two_hours": true,
+  "submitted_to_competition": false,
+  "source_commit_refs_verified": 53,
+  "scope_limit": "No fresh official non-GitHub hosts, organizer input authentication, hidden truth, or submission-page receipt."
+}

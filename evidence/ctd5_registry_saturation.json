@@ -1,0 +1,11 @@
+{
+  "evidence_class": "registry geometry audit, not a score",
+  "prior_blob": "81c802618e6d46c6d62289d856ae74439439bbc6",
+  "prior_source": "https://github.com/buffedlizard55-lab/13GEMSDOE/blob/92ee6f074323f161eed837b80ec3ee5b662e26f5/docs/downloads/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+  "prior_support_pixels": 206895,
+  "eligible_pixels": 4593171,
+  "eligible_pixels_within_3px": 4593171,
+  "eligible_fraction_within_3px": 1.0,
+  "all_eligible_pixels_covered": true,
+  "implication": "For this frozen eligible footprint every possible nonempty dot set has 100% directed <=3px overlap with this prior. The requested >70% gate cannot pass. Log duplicate and stop; do not secretly exclude this prior or alter the threshold."
+}

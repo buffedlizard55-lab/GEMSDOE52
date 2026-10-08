@@ -1,0 +1,30 @@
+name: Reproduce CTD5 research GeoTIFF
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - run: python -m pip install -r requirements-r2.txt
+      - name: Restore pinned inputs and reproduce the negative result (no upload)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash scripts/reproduce_ctd5.sh
+      - name: Export research artifact and audit receipts only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: CTD5-RESEARCH-ONLY-DO-NOT-SUBMIT
+          path: |
+            submission/*ctd5*.tif
+            submission/*ctd5*.zip
+            evidence/ctd5_*.json
+          if-no-files-found: error

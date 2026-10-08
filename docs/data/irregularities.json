@@ -1,5 +1,5 @@
 {
-  "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified.",
+  "about": "Dated irregularities with entry-level provenance. Historical claims and inherited/reconstructed entries are retained for audit, not all freshly verified. Later correction fields supersede incompatible earlier interpretations.",
   "generated": "2026-10-08T03:44:41Z",
   "entries": [
     {
@@ -696,6 +696,190 @@
         "docs/data/submission.json"
       ],
       "disposition": "The view-B round remains downloadable research; no upload or weekly slot approved without a registered holdout. If its owner record can produce one, the gate reopens identically to H59's."
+    },
+    {
+      "id": "IR-R4-001",
+      "round": "R4",
+      "session": "2026-10-08",
+      "severity": "critical",
+      "status": "open",
+      "disposition": "workaround",
+      "title": "A workspace reset wiped every uncommitted artifact of round 4, and .gitignore left work/ and data/ unprotected",
+      "what_it_is": "At roughly 13:06-13:07 on 2026-10-08 the sandbox was reset to the git HEAD state. Destroyed: src/gems52_r4/ (7 modules), tests/test_r4.py (58 tests), scripts/run_r4.py and five publisher/writer scripts, knowledge/20-23_r4*.md, every evidence/r4_*.json receipt, the whole of work/ (74-layer stack.f32, 3.6 GB, OOF and full-field predictions, pseudo-truth fields) and data/external/ (24 restored layers), plus /home/user/.venv. Survived: everything tracked in git at 3bf8ada, including scripts/restore_data.py and registry/data_manifest.json, which is why the data turned out to be fully re-restorable.",
+      "how_we_know": "pgrep showed no live pipeline; ls evidence/r4_*.json returned nothing; git status --short was empty with HEAD still at 3bf8ada; git fsck --lost-found reported no dangling objects; git stash list was empty; find /home/user -name '*r4*' returned nothing; and all 21 prior arena/* remote branches were fetched and grepped with 0 hits for gems52_r4.",
+      "handling": "Recovery is by rebuild, committing after every stage rather than at the end. Root cause kept visible: .gitignore lists /data/ and /work/, so no artifact outside git was ever protected, and the round's code had not been committed. The rebuild writes findings into knowledge/ before it writes code, so a second reset cannot take the conclusions and the implementation together.",
+      "evidence": "evidence/r4_reset_forensics.json"
+    },
+    {
+      "id": "IR-R4-002",
+      "round": "R4",
+      "session": "2026-10-08",
+      "severity": "medium",
+      "status": "open",
+      "disposition": "disclosed",
+      "title": "Band 10 (dist_to_eq) carries distances larger than the grid can physically contain",
+      "what_it_is": "Inside the footprint, band 10 of data/training_features.tif has median 622.8 m and p99 50.2 km, which are plausible, but a maximum of 4,962,515 m. The grid is 3730 x 3292 px at 100 m, so its diagonal is about 492 km; 0.41% of footprint pixels (21,326 of 5,165,840) exceed 329 km and are therefore impossible as a distance-to-nearest-earthquake measured on this grid.",
+      "how_we_know": "Read band 10 directly with rasterio, applied the official nodata sentinel filter, and took percentiles over the 5,165,840-px footprint: min 0.0, p1 118.3, p50 622.8, p99 50,237.2, max 4,962,515.0, with mean(v > 329000) = 0.0041287.",
+      "handling": "Layers derived from band 10 are rank-encoded before any learner sees them, so the tail is compressed to a single extreme rank rather than dominating a linear model; the layer A_eq_dist_negrank is kept but must not be read as a physical distance. Flagged because any future use of band 10 as a metres-valued quantity (a buffer, a threshold, a decay length) would silently mis-handle those pixels.",
+      "evidence": "evidence/r4_layers_smoke.json",
+      "correction_ctd5": "The numerical tail may warrant provenance review, but the stated physical impossibility does not follow: the nearest earthquake may be outside the grid. Do not use the grid diagonal as a universal distance bound."
+    },
+    {
+      "id": "IR-52-034",
+      "round": "R4",
+      "session": "2026-10-08",
+      "severity": "high",
+      "status": "open",
+      "disposition": "disclosed",
+      "title": "The organiser's band-6 tag is contradicted by the survey contractor's own read-me: band 6 is radiometric total count, and the competition grid is node-aligned to the survey grid",
+      "what_it_is": "Band 6 of data/training_features.tif is tagged data_category = magnetic_data, 'Tilt angle or total curvature - magnetic field derivative for edge detection'. The GeoDAWN contractor read-me (NV5 / EDCON-PRJ, December 2022, Task Order 140G0221F0024) lists tc_raw and tccorr under Radiometrics and contains no tilt-angle channel anywhere in its channel inventory, so the tag does not correspond to any product the survey delivered. The same document gives the survey's Area 2 origin as 243200.0 / 4135400.0 at 100 m spacing, which is node-aligned to the competition grid rather than pixel-aligned.",
+      "how_we_know": "Two independent lines. First, the contractor read-me's own channel inventory. Second, measured on the bytes: Spearman(band 6, GeoDAWN total-count grid) = +1.0000; Spearman(band 6, K+Th+U) = +0.9915, which is what a total-count channel is by construction; and |Spearman| <= 0.148 against all five magnetic bands in the same file. Band 6 is also strictly positive (range 2.953 to 88.573), where a tilt angle is bounded by +/-pi/2. Independently corroborated by IR-52-019.",
+      "handling": "Band 6 is assigned to View B (as B_band6_TC), not to the potential-field view. A radiometric band inside View A would corrupt the conditional-independence test the two views are required to pass. Enforced by tests/test_r4.py::test_band6_is_in_view_b.",
+      "evidence": "evidence/h53_band6_identity.json and the GeoDAWN read-me, both of which were in data/external/audit_sources/ when first recorded",
+      "provenance_warning": "This entry was reconstructed on 2026-10-08 after the workspace reset (IR-R4-001) destroyed data/external/audit_sources/GeoDAWN_ReadMe.pdf together with the uncommitted register entry. The measured half (the Spearman evidence and the positivity argument) is reproducible from committed code; the documentary half rests on the session record and should be re-verified against a re-fetched copy of the read-me before being relied on.",
+      "correction_ctd5": "Assignment to B is provisional. A contractor inventory lacking a derived tilt product does not prove organizers could not derive one. Mirror correlation supports a channel-identity audit; it is not independent primary-source authentication."
+    },
+    {
+      "id": "IR-CTD5-001",
+      "round": "CTD5",
+      "session": "2026-10-08",
+      "severity": "high",
+      "status": "corrected or bounded in current pipeline",
+      "title": "Tracked core TIFFs were small placeholders, not the manifest-pinned training inputs",
+      "what_it_is": "Tracked core TIFFs were small placeholders, not the manifest-pinned training inputs",
+      "how_we_know": "evidence/ctd5_input_integrity.json",
+      "evidence": "evidence/ctd5_input_integrity.json",
+      "handling": "Restored all 23 pins; placed real core data locally; removed misleading tracked placeholder TIFFs from Git. Raw data remain ignored. No placeholder trained CTD5.",
+      "disposition": "Restored all 23 pins; placed real core data locally; removed misleading tracked placeholder TIFFs from Git. Raw data remain ignored. No placeholder trained CTD5."
+    },
+    {
+      "id": "IR-CTD5-002",
+      "round": "CTD5",
+      "session": "2026-10-08",
+      "severity": "high",
+      "status": "corrected or bounded in current pipeline",
+      "title": "Requested shared evaluator/writer names and feature cache were missing; band-6 view split was wrong",
+      "what_it_is": "Requested shared evaluator/writer names and feature cache were missing; band-6 view split was wrong",
+      "how_we_know": "src/gems52/structural.py; src/gems52/evaluate_holdout.py; src/gems52/submission_writer.py",
+      "evidence": "src/gems52/structural.py; src/gems52/evaluate_holdout.py; src/gems52/submission_writer.py",
+      "handling": "Rehydrated the existing shared builder once; added adapters to the shared exact metric/mask/writer rather than private forks. Band 6 provisionally B only; primary identity unresolved. Optional profile computation and read-only memmaps bound memory.",
+      "disposition": "Rehydrated the existing shared builder once; added adapters to the shared exact metric/mask/writer rather than private forks. Band 6 provisionally B only; primary identity unresolved. Optional profile computation and read-only memmaps bound memory."
+    },
+    {
+      "id": "IR-CTD5-003",
+      "round": "CTD5",
+      "session": "2026-10-08",
+      "severity": "high",
+      "status": "disclosed; negative/no promotion",
+      "title": "Owner H33 score attribution conflicts with current source-page unscored disclaimer",
+      "what_it_is": "Owner H33 score attribution conflicts with current source-page unscored disclaimer",
+      "how_we_know": "evidence/ctd5_sources.json; evidence/ctd5_reference_forensics.json",
+      "evidence": "evidence/ctd5_sources.json; evidence/ctd5_reference_forensics.json",
+      "handling": "Retain attribution as OWNER-REPORTED, NOT ORGANIZER-CONFIRMED; no submission-page receipt or fresh leaderboard top was obtained.",
+      "disposition": "Retain attribution as OWNER-REPORTED, NOT ORGANIZER-CONFIRMED; no submission-page receipt or fresh leaderboard top was obtained."
+    },
+    {
+      "id": "IR-CTD5-004",
+      "round": "CTD5",
+      "session": "2026-10-08",
+      "severity": "critical",
+      "status": "disclosed; negative/no promotion",
+      "title": "Registered three-pixel uniqueness rule is saturated by a survey-wide historical lattice",
+      "what_it_is": "Registered three-pixel uniqueness rule is saturated by a survey-wide historical lattice",
+      "how_we_know": "evidence/ctd5_registry_saturation.json; evidence/ctd5_dot_uniqueness.json",
+      "evidence": "evidence/ctd5_registry_saturation.json; evidence/ctd5_dot_uniqueness.json",
+      "handling": "All 4,593,171 eligible pixels lie within three pixels of the spacing-five lattice. CTD5 logged duplicate/STOP, kept only a negative research artifact, and did not exclude a prior or retune.",
+      "disposition": "All 4,593,171 eligible pixels lie within three pixels of the spacing-five lattice. CTD5 logged duplicate/STOP, kept only a negative research artifact, and did not exclude a prior or retune."
+    },
+    {
+      "id": "IR-CTD5-005",
+      "round": "CTD5",
+      "session": "2026-10-08",
+      "severity": "high",
+      "status": "disclosed; negative/no promotion",
+      "title": "Disagreement method cannot fill one fixed holdout budget",
+      "what_it_is": "Disagreement method cannot fill one fixed holdout budget",
+      "how_we_know": "evidence/ctd5_post_holdout.json",
+      "evidence": "evidence/ctd5_post_holdout.json",
+      "handling": "Fold 1 emitted 2,041/3,058 requested candidate dots; controls fill the budget. HOLDOUT-DTI is descriptive, not a valid matched-budget promotion comparison. No budget rescue or zero-score fill.",
+      "disposition": "Fold 1 emitted 2,041/3,058 requested candidate dots; controls fill the budget. HOLDOUT-DTI is descriptive, not a valid matched-budget promotion comparison. No budget rescue or zero-score fill."
+    },
+    {
+      "id": "IR-CTD5-006",
+      "round": "CTD5",
+      "session": "2026-10-08",
+      "severity": "high",
+      "status": "corrected or bounded in current pipeline",
+      "title": "Historical exact-ring-credit, hidden-count and globally optimal spacing claims are not established",
+      "what_it_is": "Historical exact-ring-credit, hidden-count and globally optimal spacing claims are not established",
+      "how_we_know": "knowledge/27_ctd5_results_and_limits.md; src/gems52/nodes.py",
+      "evidence": "knowledge/27_ctd5_results_and_limits.md; src/gems52/nodes.py",
+      "handling": "Recomputed H33 set relation, corrected current interpretation and shared placement documentation. Preserve archive with explicit warning. No inference of a verified geothermal resource.",
+      "disposition": "Recomputed H33 set relation, corrected current interpretation and shared placement documentation. Preserve archive with explicit warning. No inference of a verified geothermal resource."
+    },
+    {
+      "id": "IR-CTD5-007",
+      "round": "CTD5",
+      "session": "2026-10-08",
+      "severity": "high",
+      "status": "disclosed; negative/no promotion",
+      "title": "Core integrity pins and old source reviews are not current official-host authentication",
+      "what_it_is": "Core integrity pins and old source reviews are not current official-host authentication",
+      "how_we_know": "evidence/ctd5_claims.json; evidence/ctd5_input_integrity.json",
+      "evidence": "evidence/ctd5_claims.json; evidence/ctd5_input_integrity.json",
+      "handling": "Official GitHub reference source freshly read; other official URLs retained with dated/unavailable labels. No invented current cap, portal success, field observation or third-party-data license verification.",
+      "disposition": "Official GitHub reference source freshly read; other official URLs retained with dated/unavailable labels. No invented current cap, portal success, field observation or third-party-data license verification."
+    },
+    {
+      "id": "IR-CTD5-008",
+      "round": "CTD5",
+      "session": "2026-10-08",
+      "severity": "medium",
+      "status": "corrected or bounded in current pipeline",
+      "title": "Scheduled feed synthesized an H54 note for later artifacts lacking submission_note",
+      "what_it_is": "Scheduled feed synthesized an H54 note for later artifacts lacking submission_note",
+      "how_we_know": "scripts/refresh_feed.py; tests/test_ctd5.py",
+      "evidence": "scripts/refresh_feed.py; tests/test_ctd5.py",
+      "handling": "Prefer the artifact note, otherwise preserve explicit submission_note, otherwise a neutral missing-note statement. Publish CTD5 research status separately; no selector pointer movement.",
+      "disposition": "Prefer the artifact note, otherwise preserve explicit submission_note, otherwise a neutral missing-note statement. Publish CTD5 research status separately; no selector pointer movement."
+    },
+    {
+      "id": "IR-CTD5-009",
+      "round": "CTD5",
+      "session": "2026-10-08",
+      "severity": "medium",
+      "status": "corrected or bounded in current pipeline",
+      "title": "Legacy guide falsely guaranteed the range error could not occur and attributed it to NaNs",
+      "what_it_is": "Legacy guide falsely guaranteed the range error could not occur and attributed it to NaNs",
+      "how_we_know": "docs/executive-summary.html; evidence/ctd5_submission.json",
+      "evidence": "docs/executive-summary.html; evidence/ctd5_submission.json",
+      "handling": "New guide states only local read-back facts. The rejected bytes/receipt are absent, so the historical cause and organizer acceptance remain unknown.",
+      "disposition": "New guide states only local read-back facts. The rejected bytes/receipt are absent, so the historical cause and organizer acceptance remain unknown."
+    },
+    {
+      "id": "IR-CTD5-010",
+      "round": "CTD5",
+      "session": "2026-10-08",
+      "severity": "medium",
+      "status": "corrected or bounded in current pipeline",
+      "title": "Legacy band-name mapping swallowed keys 7\u20139 into an inline comment; download --only joined comma IDs with spaces",
+      "what_it_is": "Legacy band-name mapping swallowed keys 7\u20139 into an inline comment; download --only joined comma IDs with spaces",
+      "how_we_know": "src/gems52/features.py; scripts/download_competition_data.sh; tests/test_ctd5.py",
+      "evidence": "src/gems52/features.py; scripts/download_competition_data.sh; tests/test_ctd5.py",
+      "handling": "Restored the three mapping keys and preserved comma-separated --only IDs; new tests exercise the wrapper. No model rerun or changed placement followed this repair.",
+      "disposition": "Restored the three mapping keys and preserved comma-separated --only IDs; new tests exercise the wrapper. No model rerun or changed placement followed this repair."
+    },
+    {
+      "id": "IR-CTD5-011",
+      "round": "CTD5",
+      "severity": "high",
+      "status": "reconciled; no promotion",
+      "title": "Concurrent H60 merge moved the global pointer and published non-JSON NaN correlations",
+      "what_it_is": "Main advanced via PR #34 while CTD5 ran. H60 owns its upstream marker, lacks a comparable holdout and has insufficient-block independence values serialized as NaN.",
+      "how_we_know": "Upstream commit 647ac2fb0797264c241edd71aafdebdf743d98f3; evidence/ctd5_parallel_reconciliation.json",
+      "handling": "Retain H60 TIFF/code/build and archive its landing/guide/README; preserve its unapproved upstream pointer. Normalize only public JSON missing correlations to null, add fail-closed per-artifact receipt, retain historical H57 checks, compare fixed CTD5 surface/dots to the new H60 raster. No model refit or placement change.",
+      "disposition": "CTD5 negative; H60 unapproved; separate research download links."
     }
-  ]
+  ],
+  "latest_review_utc": "2026-10-08T18:57:00Z"
 }

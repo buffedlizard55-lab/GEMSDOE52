@@ -1,0 +1,65 @@
+{
+  "checked_date_utc": "2026-10-08",
+  "claims": [
+    {
+      "claim": "Official baseline offers CPU and GPU options; GPU is not mandatory for this boosting run.",
+      "status": "Official GitHub source read this session",
+      "url": "https://github.com/drivendataorg/gems-prize-reference-solution/blob/aebe92f7c8a990f0e3443451b7a825d9afd6336b/README.md",
+      "evidence": "Source blob a8814f99c395d12a8e1c3731c738e61d7dca06b5; actual CTD5 fits ran on CPU."
+    },
+    {
+      "claim": "The target is fault prediction; a raster does not establish a geothermal reservoir.",
+      "status": "Prior dated official-source audit; not freshly fetched",
+      "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/",
+      "evidence": "evidence/verified_claims_r2.json C01/C02; official reference notebook describes fault detection."
+    },
+    {
+      "claim": "DTI uses the requested 300 m triangular kernel with alpha .2 and beta .8.",
+      "status": "User specification + prior dated source audit + independently tested local arithmetic",
+      "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/",
+      "evidence": "evidence/verified_claims_r2.json C03; tests/test_metric.py and tests/test_ctd5.py."
+    },
+    {
+      "claim": "Known catalogue pixels are excluded pixel-exactly; off-catalogue flanks are not automatically exempt.",
+      "status": "Prior dated organizer-staff statement, not a fresh portal retrieval",
+      "url": "https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516/4",
+      "evidence": "evidence/verified_claims_r2.json C05/C06."
+    },
+    {
+      "claim": "Co-training assumptions are not established by weak proxy-negative error correlation.",
+      "status": "Primary-paper link + prior dated literature review; empirical diagnostic measured here",
+      "url": "https://doi.org/10.1145/279943.279962",
+      "evidence": "Blum & Mitchell COLT 1998; CTD5 independence and transfer receipts."
+    },
+    {
+      "claim": "GeoDAWN is an official magnetic/radiometric data source; no fresh raw official-host download occurred here.",
+      "status": "Official source identified; sandbox-host access restricted",
+      "url": "https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and",
+      "evidence": "DOI 10.5066/P93LGLVQ. Band-6 identity remains disputed; no external radiometric layer trained this run."
+    },
+    {
+      "claim": "Integrated structural/geophysical evidence can motivate blind-system investigations; it does not confirm these candidates.",
+      "status": "Prior dated official-publication review; hypothesis support only",
+      "url": "https://www.usgs.gov/publications/discovering-blind-geothermal-systems-great-basin-region-integrated-geologic-and",
+      "evidence": "DOI 10.2172/1724080; no field validation in CTD5."
+    },
+    {
+      "claim": "INGENIOUS is an official free-data starting point, not independent proof of a proposed fault.",
+      "status": "Official source identified; raw download and current terms not reverified here",
+      "url": "https://gdr.openei.org/submissions/1391",
+      "evidence": "DOI 10.15121/1881483. No external chemistry, fault or vent features used in CTD5."
+    },
+    {
+      "claim": "Competition rules and current allowance must be checked before an independently approved upload.",
+      "status": "Rules link retained; current submission-page cap/receipt unavailable",
+      "url": "https://docs.nlr.gov/docs/fy26osti/96647.pdf",
+      "evidence": "No submission-page receipt, no upload, no slot consumed. Generative-AI assistance disclosed in the research narrative."
+    },
+    {
+      "claim": "Core input files match the manifest pins, not authenticated organizer downloads.",
+      "status": "Locally verified bytes; organizer provenance unresolved",
+      "url": "https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/registry/data_manifest.json",
+      "evidence": "evidence/ctd5_input_integrity.json; 23 mirrored inputs restored and SHA-checked."
+    }
+  ]
+}

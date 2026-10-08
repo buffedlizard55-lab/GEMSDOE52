@@ -1,30 +1,14 @@
-"""Sparse **node** emission for a dilated, non-differentiable truth set.
+"""Sparse node placement using a fixed, testable spacing heuristic.
 
-Why nodes, derived rather than asserted
----------------------------------------
-``gems52.metric`` defines (and ``tests/test_metric.py`` pins):
+The distance kernel is inside the metric, so spreading a prediction over a wide
+area can add false-positive mass without useful marginal coverage. It does NOT
+follow that every disc is dominated by its centroid, or that 3 px is a universal
+optimum: a new dot can increase the maximum cover of a different truth pixel.
+This module implements a registered spacing rule; holdout evidence must decide
+whether that rule helps at the chosen budget. It never knows the hidden truth.
 
-    FPw = sum_x p(x) [1 - max_g k(d(x,g))]        q_x := max_g k(d(x,g))
-    DTI = T / ( 0.2 * sum_x (1 - q_x) + 0.8*|G| + 0.2*T )
-
-Now consider emitting a *disc* of radius r around a point c instead of the point itself.  Take a
-21-pixel disc (1-px radius).  Every pixel in it that is not the peak pays the full
-``0.2 * (1 - q)`` tax, while the truth pixel it was supposed to cover was already covered by the peak
-at weight 1.  Concretely, for a 3-px-radius truth pixel the extra tax of a neighbouring pixel 2 px
-away is ``0.2 * (1 - min(1, 1/3)) = 0.133``, and the extra credit is exactly 0.  The emitted disc is
-therefore *strictly dominated* by its own centroid for this metric: same numerator, larger
-denominator.  The official metric's dilation, in other words, is inside the metric, not in the
-submission -- the organiser already gives 300 m of slack, and adding 100-300 m of thickness on top of
-it converts free slack into taxable area.
-
-That is why the emission in this module is a set of **nodes**, and it is also why node emission needs
-its own validation: a node set has ~1/21 the pixels of a filled disc, so a recall-oriented reading
-("did we find the fault?") and the metric's own credit are different questions, and both are reported.
-
-Everything here is metric-aware in the sense that matters: the *tax* of a candidate set is computed
-from the actual geometry (an exact Euclidean distance transform to the chosen nodes), not modelled,
-and greedy selection is delegated to ``gems52.emit.greedy_emit``, which carries the marginal
-acceptance rule ``gain > alpha*DTI/(1-alpha*DTI) * (1 - wmax)`` that the metric implies.
+``gems52.metric.dti`` remains the scoring authority. The independent binary-node
+expression below is regression-tested against it, including the empty-set case.
 """
 
 from __future__ import annotations
@@ -203,17 +187,11 @@ def spacing_stats(nodes: np.ndarray, sample: int = 200_000, seed: int = 0) -> di
 
 def spacing_select(score: np.ndarray, allowed: np.ndarray, k: int, min_px: float = 3.0,
                    log=None) -> np.ndarray:
-    """Greedy top-k under a **minimum separation**, because separation is what the metric rewards.
+    """Greedy top-k with fixed minimum separation, a metric-motivated heuristic.
 
-    Measured on the current best submission (`data/reference/h33-2-b2-zeros.tif`): 37,654 pixels, all
-    isolated singles, **median nearest-neighbour distance 3.0 px** -- a dot lattice at the kernel radius
-    300 m.  That is not a stylistic choice, it is the metric's optimum: two dots closer than the kernel
-    radius cover the same truth pixels, so the second pays the ``0.2 * (1 - q)`` tax for no new credit,
-    while dots further apart than ~2 px leave truth pixels between them half-covered.  The family's own
-    sweep says the same thing in its filenames: ``dotted ... d1-5`` scored 0.2477, ``d2-8`` 0.2600.
-
-    Implementation is a greedy over descending score with a bucket grid of cell size ``min_px``, so the
-    separation check touches at most 9 buckets per candidate (no KD-tree build over 320 k points).
+    Separation reduces redundant local coverage but can also reduce useful recall;
+    3 px is not a proven optimum. Scores and spacing are fixed before evaluation.
+    A bucket grid checks all neighbouring buckets exactly; ties use flat index.
     """
     idx = np.flatnonzero(allowed.ravel())
     if idx.size == 0 or k <= 0:
