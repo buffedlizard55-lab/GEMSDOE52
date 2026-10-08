@@ -1,7 +1,7 @@
 {
  "path": "/home/user/GEMSDOE52/submission/gems52-h59-union-core25517px-arm14787px.tif",
- "bytes": 157167,
- "sha256": "e884f84af2a98010cac929187dfbd88bdbd4c520a707d84a95ee4e45e0eeb744",
+ "bytes": 157161,
+ "sha256": "e87ee46cb73259ab6048d8c1b123a040d0a95e2d09b2bab809c0e841e16f2460",
  "bands": 1,
  "dtype": "float32",
  "crs": "EPSG:32611",

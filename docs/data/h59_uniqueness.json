@@ -1,5 +1,5 @@
 {
- "n_priors_checked": 47,
+ "n_priors_checked": 49,
  "per_prior": [
   {
    "path": "/home/user/GEMSDOE52/submission/gems52-h52-cotrain-disagreement-emission-composite-37654px-r1.tif",
@@ -140,6 +140,20 @@
    "subset_of_prior": false,
    "superset_of_prior": false,
    "novel_vs_this": 40304
+  },
+  {
+   "path": "/home/user/GEMSDOE52/submission/gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif",
+   "prior_px": 37654,
+   "new_px": 40304,
+   "binary": true,
+   "support_definition": ">0 for binary",
+   "decoded_sha256": "bcae3da984ca465aea4578a5e6e15b068f102185d99b5ec68f0c69c96749df03",
+   "intersection": 304,
+   "jaccard": 0.003914801555618513,
+   "identical": false,
+   "subset_of_prior": false,
+   "superset_of_prior": false,
+   "novel_vs_this": 40000
   },
   {
    "path": "/home/user/GEMSDOE52/submission/gems52-r2-signednormal-37654-1f751ac9b6ee-zeros.tif",
@@ -336,6 +350,20 @@
    "subset_of_prior": false,
    "superset_of_prior": false,
    "novel_vs_this": 40304
+  },
+  {
+   "path": "/home/user/GEMSDOE52/docs/downloads/gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif",
+   "prior_px": 37654,
+   "new_px": 40304,
+   "binary": true,
+   "support_definition": ">0 for binary",
+   "decoded_sha256": "bcae3da984ca465aea4578a5e6e15b068f102185d99b5ec68f0c69c96749df03",
+   "intersection": 304,
+   "jaccard": 0.003914801555618513,
+   "identical": false,
+   "subset_of_prior": false,
+   "superset_of_prior": false,
+   "novel_vs_this": 40000
   },
   {
    "path": "/home/user/GEMSDOE52/docs/downloads/gems52-r2-signednormal-37654-1f751ac9b6ee-zeros.tif",
@@ -660,16 +688,16 @@
    "novel_vs_this": 14787
   }
  ],
- "candidate_decoded_sha256": "0a1b7753c1d16a9d82a3a440a7fe3284bdc7f11e48181f322b81435907ece1e5",
+ "candidate_decoded_sha256": "c557b6c1165d04c10c39eae1e98545d4aeacfa5fc36c9e537e6f33d5bad9a8b4",
  "canonical_pattern_unique": true,
  "equals_literal_prior_union": false,
  "research_publication_ok": true,
  "support_novelty_gate_ok": true,
  "gate_correction": "Original >=20% support novelty retained as a FAILED diagnostic, not silently waived for slot promotion. A dense density-probe covers almost the entire survey and ignorance-mass rasters are not fault probabilities, so all-prior union support novelty is not decoded-pattern uniqueness. Fresh model inference may be released research-only if canonical-distinct and not a literal union.",
- "union_px": 1292267,
+ "union_px": 1319687,
  "novel_vs_all_priors": 14787,
  "novel_fraction": 0.36688666137356096,
- "prior_px_dropped": 1266750,
+ "prior_px_dropped": 1294170,
  "relation_to_union": "strictly-novel-and-selective",
  "ok": true,
  "top_argument_ignored": false,

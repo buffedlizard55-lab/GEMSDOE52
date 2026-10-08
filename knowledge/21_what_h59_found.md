@@ -95,7 +95,9 @@ Status, per the registered rules: format PASS (0 problems, all finite {0,1} — 
 "Predicted values must be in range [0,1]" rejection is impossible for this file, because
 `gems52.grid.write_geotiff` refuses to emit a non-finite or out-of-range array (and the build's format
 gate then verifies the re-read bytes));
-uniqueness PASS vs 47 accessible aligned priors; **slot bar FAIL** (lift +0.0038/+0.0046 < +0.005);
+uniqueness PASS vs 49 accessible aligned priors (47 at first build; two genuine priors —
+the parallel session's TIFFs, IR-H59-004 — entered the scan at the merge and the artifact was
+re-derived against them); **slot bar FAIL** (lift +0.0038/+0.0046 < +0.005);
 R6 not-merely-union: the file is not the union of any two priors and not equal to any prior, but the
 arm's *ranking field* is honestly reported as the plain union, so the literal "is the arm more than
 top-k of the union" check is marked FAIL rather than argued around. Net: **download for review and

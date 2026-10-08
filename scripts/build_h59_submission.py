@@ -72,12 +72,14 @@ def prior_inventory(extra_roots=(), *, pinned=True):
     """
     roots = [r for r in extra_roots if Path(r).exists()]
     found = gates.find_priors(roots)
-    keep = []
-    for path in found:
-        nm = Path(path).name
-        if nm.startswith("gems52-h59") or nm.startswith("h59-candidate"):
-            continue                       # never let this round's own outputs contaminate the pool
-        keep.append(path)
+    # Exclusion is by EXACT own-round names, never by prefix: a parallel session published its own
+    # H59-labelled round (gems52-h59-edge-coh-cotrain-…) to main during this build's lifetime, and a
+    # prefix filter would have silently treated that genuine prior as our own output. Their artifact
+    # must be inside the support union and the uniqueness scan (IR-H59-004).
+    own = ("gems52-h59-union-core25517px-arm14787px.tif", "h59-candidate.tif",
+           "h59-candidate.zip", "STATUS.txt")
+    keep = [p for p in found if Path(p).name not in own
+            and not Path(p).name.startswith("gems52-h59-union-core25517px-arm")]
     return keep
 
 

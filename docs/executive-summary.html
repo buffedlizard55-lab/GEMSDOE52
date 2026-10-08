@@ -8,15 +8,15 @@
 <div class="status"><strong>RESEARCH ONLY — OK TO DOWNLOAD FOR REVIEW · DO NOT SPEND A WEEKLY SLOT</strong> This artifact is <b>not approved to spend a weekly submission slot</b>: at least one registered gate decision did not clear the bar on the blocked holdout. Downloading it for review, reproduction or audit is explicitly allowed and encouraged.</div>
 <section class="download-bar" aria-label="H59 download">
 <div><strong>gems52-h59-union-core25517px-arm14787px.tif</strong>
-<small>157,167 bytes · SHA-256 <code>e884f84af2a98010cac929187dfbd88bdbd4c520a707d84a95ee4e45e0eeb744</code></small>
-<small>format gate: 0 problems · decoded-pattern unique vs 47 priors · support-novel 36.7 % · arm-outside-union-top-k 0 px</small></div>
+<small>157,161 bytes · SHA-256 <code>e87ee46cb73259ab6048d8c1b123a040d0a95e2d09b2bab809c0e841e16f2460</code></small>
+<small>format gate: 0 problems · decoded-pattern unique vs 49 priors · support-novel 36.7 % · arm-outside-union-top-k 0 px</small></div>
 <a class="button" href="downloads/h59-candidate.tif" download>↓ Download the submission TIFF (one click)</a><a class="button" href="downloads/h59-candidate.zip" download>↓ Download the one-TIFF ZIP</a><a class="button secondary" href="h59.html">Full audit →</a></section>
 <h2>Is it OK to download and submit this file?</h2>
 <div class="table-wrap"><table><thead><tr><th>question</th><th>answer of record</th></tr></thead><tbody>
 <tr><td>OK to <b>download</b>?</td><td><span class="pill ok">YES</span> — always; the file and every receipt are published for audit.</td></tr>
 <tr><td>Format-safe for the portal?</td><td><span class="pill ok">YES</span> — all finite, values {0,1}, exact grid/transform/CRS; the “must be in range [0,1]” rejection cannot occur (that error came from NaN-bearing exports).</td></tr>
-<tr><td>Unique submission?</td><td><span class="pill ok">YES</span> — decoded pixel pattern differs from all 47 accessible aligned priors (this repo's archives + the restored scored family); arm 100 % outside their support union; not any prior, not any pair-union. The scan supersedes the brief's count: all 38 listed prior
-submissions are inside the 47 rasters compared, plus this repository's own
+<tr><td>Unique submission?</td><td><span class="pill ok">YES</span> — decoded pixel pattern differs from all 49 accessible aligned priors (this repo's archives + the restored scored family); arm 100 % outside their support union; not any prior, not any pair-union. The scan supersedes the brief's count: all 38 listed prior
+submissions are inside the 49 rasters compared, plus this repository's own
 archived rounds.</td></tr>
 <tr><td>OK to spend the <b>weekly slot</b> on it?</td><td><span class="pill warn">NO</span> — the registered promotion + slot gates decide; see the audit page for the exact failed bar.</td></tr>
 <tr><td>Is it a verified fault map?</td><td><span class="pill no">NO</span> — every pixel is a hypothesis for Phase-2 review; reasoning + falsifiers ship with it.</td></tr>
@@ -31,7 +31,7 @@ archived rounds.</td></tr>
 <li>Submit, then record the returned submission ID, the timestamp, and the file hash next to this page's receipt. The first scored upload of this file closes its review window — one attempt per file, so re-verify the hash first.</li>
 </ol>
 <label for="submission-name">Submission name (54 chars)</label>
-<input id="submission-name" readonly value="gems52-h59-union-core25517px-arm14787px-e884f84a-zeros" style="width:100%;font:13px/1.6 ui-monospace,monospace;border:1px solid var(--line);border-radius:8px;padding:12px;background:#fff">
+<input id="submission-name" readonly value="gems52-h59-union-core25517px-arm14787px-e87ee46c-zeros" style="width:100%;font:13px/1.6 ui-monospace,monospace;border:1px solid var(--line);border-radius:8px;padding:12px;background:#fff">
 <button data-copy="submission-name">Copy name</button>
 <label for="submission-note">Portal note (143 chars)</label>
 <textarea id="submission-note" readonly>H59 union arm 14787px outside all prior support + 25,517px credited core; all finite binary [0,1]; 200m ring excluded; not a verified fault map</textarea>
@@ -52,6 +52,16 @@ input integrity: <a href="data/h59_preflight_integrity.json">h59_preflight_integ
 <a href="data/h58_result.json">h58_result.json</a>. The H57 credited-core alternate
 <code>gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif</code> and the
 <a href="h55-edge.html">H55-EDGE negative-result archive</a> remain research-only.</p>
+<p class="small"><strong>Concurrent-round disclosure (IR-H59-004).</strong> A parallel session merged
+its own H59 during this round's lifetime —
+<code>gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif</code>
+(sha256 <code>4a60f941…</code>; its pages: <a href="h59-method.html">method</a> ·
+<a href="h59-evidence.html">evidence</a>; build preserved as
+<code>scripts/build_h59_edgecoh_submission.py</code>). Its artifact is format-valid but carries no
+registered holdout-lift or all-prior support gate, so under the standing rule it is research-only like
+this round's, and the weekly-slot pointer (<code>submission/LATEST.txt</code>) was reverted to H57 on
+its merge conflict. Both TIFFs were treated as priors by <em>this</em> round's final rebuild, which is
+why the canonical H59 hash on this page is <code>e87ee46c…</code>.</p>
 <div class="status"><strong>Honest limits.</strong> Inputs are SHA-pinned owner mirrors, not
 organizer-authenticated downloads; owner-reported sibling scores (incl. 0.2778 and 0.2477) are not
 organizer-verified; the local holdout ranks arms relative to each other and cannot certify a novel

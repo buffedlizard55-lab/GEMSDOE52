@@ -99,11 +99,13 @@ def test_h59_prior_inventory_excludes_its_own_round(monkeypatch, tmp_path) -> No
     spec.loader.exec_module(m)
     made = []
     for nm in ("gems52-h59-union-core25517px-arm14787px.tif", "h59-candidate.tif",
-               "h59-candidate.zip", "gems52-h57-union-novel-core25517px-arm14804px.tif"):
+               "h59-candidate.zip", "gems52-h57-union-novel-core25517px-arm14804px.tif",
+               "gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif"):
         q = tmp_path / nm
         q.write_bytes(b"x")
         made.append(q)
     monkeypatch.setattr(m.gates, "find_priors", lambda roots: [str(q) for q in made])
     kept = [Path(str(q)).name for q in m.prior_inventory()]
     assert "gems52-h57-union-novel-core25517px-arm14804px.tif" in kept
-    assert not any(k.startswith(("gems52-h59", "h59-candidate")) for k in kept)
+    assert "gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif" in kept
+    assert not any(k.startswith(("gems52-h59-union", "h59-candidate")) for k in kept)

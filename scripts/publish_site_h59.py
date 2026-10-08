@@ -200,6 +200,16 @@ never approval to spend a slot; the pill at the top of this page is the status o
 <a href="data/h58_result.json">h58_result.json</a>. The H57 credited-core alternate
 <code>gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif</code> and the
 <a href="h55-edge.html">H55-EDGE negative-result archive</a> remain research-only.</p>
+<p class="small"><strong>Concurrent-round disclosure (IR-H59-004).</strong> A parallel session merged
+its own H59 during this round's lifetime —
+<code>gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif</code>
+(sha256 <code>4a60f941…</code>; its pages: <a href="h59-method.html">method</a> ·
+<a href="h59-evidence.html">evidence</a>; build preserved as
+<code>scripts/build_h59_edgecoh_submission.py</code>). Its artifact is format-valid but carries no
+registered holdout-lift or all-prior support gate, so under the standing rule it is research-only like
+this round's, and the weekly-slot pointer (<code>submission/LATEST.txt</code>) was reverted to H57 on
+its merge conflict. Both TIFFs were treated as priors by <em>this</em> round's final rebuild, which is
+why the canonical H59 hash on this page is <code>e87ee46c…</code>.</p>
 <div class="rule"></div><p><a href="sources.html">Every source with links for manual review</a> ·
 <a href="irregularities.html">open irregularities</a> · preregistration:
 <a href="data/h59_preregistration.json">registry JSON</a> ·
@@ -269,6 +279,16 @@ input integrity: <a href="data/h59_preflight_integrity.json">h59_preflight_integ
 <a href="data/h58_result.json">h58_result.json</a>. The H57 credited-core alternate
 <code>gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif</code> and the
 <a href="h55-edge.html">H55-EDGE negative-result archive</a> remain research-only.</p>
+<p class="small"><strong>Concurrent-round disclosure (IR-H59-004).</strong> A parallel session merged
+its own H59 during this round's lifetime —
+<code>gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif</code>
+(sha256 <code>4a60f941…</code>; its pages: <a href="h59-method.html">method</a> ·
+<a href="h59-evidence.html">evidence</a>; build preserved as
+<code>scripts/build_h59_edgecoh_submission.py</code>). Its artifact is format-valid but carries no
+registered holdout-lift or all-prior support gate, so under the standing rule it is research-only like
+this round's, and the weekly-slot pointer (<code>submission/LATEST.txt</code>) was reverted to H57 on
+its merge conflict. Both TIFFs were treated as priors by <em>this</em> round's final rebuild, which is
+why the canonical H59 hash on this page is <code>e87ee46c…</code>.</p>
 <div class="status"><strong>Honest limits.</strong> Inputs are SHA-pinned owner mirrors, not
 organizer-authenticated downloads; owner-reported sibling scores (incl. 0.2778 and 0.2477) are not
 organizer-verified; the local holdout ranks arms relative to each other and cannot certify a novel
@@ -370,7 +390,10 @@ Format-safe (all finite, values {{0,1}}) either way; the distinction is the regi
 download>h58-candidate.tif</a> — <b>do not upload</b>, <b>not approved to submit</b>.
 The <a href="../h55-edge.html">H55-EDGE archive</a> and the H57 credited-core alternate
 <code>gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif</code> are likewise
-research-only.</p><p class="small">Older rounds are research archives, none slot-approved: <a href="gems52-h57-union-novel-core25517px-arm14804px.tif" download>H57 TIFF</a> ·
+research-only.</p><p class="small">The parallel-session H59 (multi-scale edge coherence,
+<code>gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif</code>, sha256
+<code>4a60f941…</code>, <a href="../h59-evidence.html">evidence page</a>) is also research-only
+(no registered holdout lift; pointer reverted per IR-H59-004) and is inside this round's prior scan.</p><p class="small">Older rounds are research archives, none slot-approved: <a href="gems52-h57-union-novel-core25517px-arm14804px.tif" download>H57 TIFF</a> ·
 <a href="gems52-h58-coldgeo-consensus-22px-a55b0dee38-research.tif" download>H58 research TIFF</a> ·
 <a href="../h57.html">H57 audit</a> · <a href="../h58.html">H58 audit</a> · full list on the
 <a href="../index.html">overview</a>.</p>'''

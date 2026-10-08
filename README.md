@@ -11,7 +11,7 @@
 > pool are all recorded as refuted — so the union ranking is retained and `H59` ships
 > `gems52-h59-union-core25517px-arm14787px.tif` (40,304 px: exactly-accounted 25,517-px core + a
 > 14,787-px arm, 100 % outside every accessible prior's support, all finite {0,1}, format gate 0
-> problems, unique against 47 aligned priors) with **reasoning for every emitted arm pixel and for all
+> problems, unique against 49 aligned priors) with **reasoning for every emitted arm pixel and for all
 > 6,018 A-only pool segments**. The registered slot bar (mean lift ≥ +0.005 vs random on both
 > instruments) came in at +0.0038 tip / +0.0046 hide → **research-only: download OK for review, DO NOT
 > spend a weekly slot**. `submission/LATEST.txt` and `docs/data/submission.json` therefore stay on H57;
@@ -33,10 +33,16 @@
   the site says so in one sentence and the receipts carry the whole argument. Downloading, reviewing and
   reproducing it is exactly what it is approved for.
 - **Identifiers to paste (verbatim from `evidence/h59_build.json`).** Name (54 chars):
-  `gems52-h59-union-core25517px-arm14787px-e884f84a-zeros`. Note (143 chars): `H59 union arm 14787px
+  `gems52-h59-union-core25517px-arm14787px-e87ee46c-zeros`. Note (143 chars): `H59 union arm 14787px
   outside all prior support + 25,517px credited core; all finite binary [0,1]; 200m ring excluded; not a
   verified fault map` — both ≤ 200 characters, and the site's one-click ZIP carries them as paste-ready
   text files (`submission-name.txt`, `submission-note.txt`).
+- **Concurrent H59 (IR-H59-004).** A parallel session merged its own H59 during this round
+  (`gems52-h59-edge-coh-cotrain-37654px-…`, format-valid, novelty vs h33 only, no slot-gate receipt) and
+  had repointed `submission/LATEST.txt` at it. The merge of main into this branch preserves its artifact,
+  pages and script (`scripts/build_h59_edgecoh_submission.py`) verbatim, reverts the pointer under the
+  standing no-holdout rule, and **treats its TIFF as a prior**: this README's numbers and the canonical
+  hash `e87ee46c…` come from the rebuilt 49-prior scan.
 - **Method, honestly:** per the brief, two views were **actually trained** on the same unlabelled pixels —
   View A (gravity/magnetics/strain/seismicity/depth/conductivity, 38 features) and View B (DEM slope/
   curvature + 14 external LiDAR/radiometric bands outside the official cube, 46 features), whole-segment
@@ -45,7 +51,7 @@
   as a reward; corroboration was tested as a *transform* (H59-A) and refuted. Pseudo-labels were applied
   per protocol (confident-to-abstain, whole segments) and **ran without effect** — recorded as the null it
   is, not hidden.
-- **Gates:** format PASS · uniqueness vs 47 aligned priors PASS (decoded pattern matches none; 36.7 % of
+- **Gates:** format PASS · uniqueness vs all 49 accessible aligned priors PASS (incl. the parallel session's TIFF) (decoded pattern matches none; 36.7 % of
   emitted mass novel to all priors' support; ≥ 20 % support gate PASS) · ring gate PASS (nearest emitted
   pixel to a mapped trace 223.6 m; zero emitted px inside 100–200 m) · independence premise measured, not
   assumed (0.1071 < 0.60) · slot bar FAIL → RESEARCH ONLY · promotion rule fired exactly as registered

@@ -660,6 +660,24 @@
     "docs/submission/LATEST.txt"
    ],
    "disposition": "If a future round automates docs/submission/, mirror rather than recompute."
+  },
+  {
+   "id": "IR-H59-004",
+   "round": "H59",
+   "session": "2026-10-08",
+   "severity": "high",
+   "title": "Two concurrent sessions both labelled a round 'H59'; the parallel one moved submission/LATEST.txt without a slot-gate receipt",
+   "what_it_is": "While this session's H59 co-training round was running (its preflight at 02:2x UTC), a parallel session merged PR #27 with its own H59 (multi-scale edge coherence + A-only boost, gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif, sha256 4a60f941...) and repointed submission/LATEST.txt at it. Its receipt records format checks and novelty against h33 only (0.988 vs one prior) but no blocked holdout lift, no support-union gate over all priors, and no registered slot bar - the same approval-without-comparable-evidence pattern as IR-57-107. The collision also invalidated this session's determinism claim mid-flight: the prior-count grew from 47 to 49 rasters, so the fixed-point rebuild had to be redone honestly.",
+   "how_we_know": "git log on main (7c8c9d4 merge of PR #27, commit 9583756 dated 02:26:47Z); the parallel receipt evidence/gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.json has no slot-gate fields; docs/data/submission.json on main still described the H57 pointer, so LATEST and the current-round receipt were decoupled by that move.",
+   "handling": "The merge of main into this branch (1) keeps every parallel-session artifact, page and receipt byte-intact (its TIFFs, h59-method.html, h59-evidence.html and its build script, now preserved verbatim as scripts/build_h59_edgecoh_submission.py); (2) reverts submission/LATEST.txt and docs/submission/LATEST.txt to the H57 pointer, because under the standing rule an artifact without a registered comparable holdout may not be the current pointer; (3) treats the parallel TIFF as a genuine prior: this session's build excluded only its own exact filenames (prefix exclusion would have wrongly hidden a real prior), re-ran against 49 rasters, and re-published (new canonical sha256 e87ee46c... - the honest consequence of a larger prior set, not a drift); (4) publishes disclosure paragraphs on index/executive-summary/downloads.",
+   "status": "reconciled - both rounds published; pointer discipline restored; future rounds must use unique round labels (adopt: date-prefixed ids) to prevent label collisions",
+   "evidence": [
+    "evidence/gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.json",
+    "scripts/build_h59_edgecoh_submission.py",
+    "evidence/h59_build.json",
+    "submission/LATEST.txt"
+   ],
+   "disposition": "No upload or weekly slot is approved for EITHER H59 artifact; the parallel round remains downloadable research whose local numbers are format/uniqueness-only. The label collision itself is recorded so neither session's receipts can later be mistaken for the other's."
   }
  ]
 }
