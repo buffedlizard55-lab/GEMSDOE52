@@ -195,7 +195,15 @@ def main() -> int:
 
     # ---------------------------------------------------------------------- receipts
     prior_roots = ["data/scored", "data/reference", "submission", "docs/downloads"]
-    priors = GT.find_priors(prior_roots, exclude=SUB / f"{name}.tif")
+    # find_priors already excludes copies by *basename* (IR-52-026), which covers
+    # docs/downloads/<name>.tif.  It cannot cover the canonical alias
+    # docs/downloads/h60-candidate.tif, whose basename differs from the artefact's; without
+    # this exclusion a second run of the builder compares the artefact against its own
+    # served alias and reports novel_fraction = 0.0 and pattern_unique = False, the one
+    # verdict that would stop a legitimate submission.  Measured, not reasoned about.
+    alias = (DL / "h60-candidate.tif").resolve()
+    priors = [p for p in GT.find_priors(prior_roots, exclude=SUB / f"{name}.tif")
+              if Path(p).resolve() != alias]
     uniq = GT.uniqueness_report(arr, priors)
     fmt = GT.format_report(SUB / f"{name}.tif", ROOT / "data/sample_submission.tif",
                            footprint=foot)

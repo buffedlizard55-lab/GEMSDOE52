@@ -170,3 +170,43 @@ def test_metric_identity_used_by_the_amendment():
     T, S, M, G = d["tpw"], 1.0, 1.0, 1
     assert abs(d["dti"] - T / (0.2 * T + 0.2 * (S - M) + 0.8 * G)) < 1e-12
     assert abs(d["dti"] - 1.0) < 1e-12          # a perfect 1-px prediction scores 1.0
+
+
+def test_the_canonical_alias_is_not_counted_as_a_prior():
+    """Measured after merging a parallel round: re-running the gate with
+    docs/downloads/h60-candidate.tif present reported novel_fraction = 0.0 and
+    pattern_unique = False, because the alias is a copy of the candidate under a
+    different basename and find_priors' basename exclusion (IR-52-026) cannot see it.
+
+    That is the one verdict that would stop a legitimate submission, so it is pinned here.
+    """
+    import sys as _sys
+    _sys.path.insert(0, str(ROOT / "src"))
+    from gems52 import gates as GT
+    art = json.loads(ART.read_text())
+    arr = rasterio.open(ROOT / "submission" / f"{art['name']}.tif").read(1)
+    roots = ["data/scored", "data/reference", "submission", "docs/downloads"]
+    roots = [str(ROOT / r) for r in roots if (ROOT / r).exists()]
+    alias = (ROOT / "docs/downloads/h60-candidate.tif").resolve()
+    naive = [p for p in GT.find_priors(roots, exclude=ROOT / "submission" / f"{art['name']}.tif")
+             if Path(p).resolve() != alias]
+    uniq = GT.uniqueness_report(arr, naive)
+    assert uniq["canonical_pattern_unique"] is True
+    assert uniq["novel_fraction"] >= 0.20
+    assert uniq["support_novelty_gate_ok"] is True
+    # ... and the alias really is a byte-identical copy, which is why it has to be excluded
+    import hashlib
+    a = hashlib.sha256((ROOT / "submission" / f"{art['name']}.tif").read_bytes()).hexdigest()
+    assert hashlib.sha256(alias.read_bytes()).hexdigest() == a
+
+
+def test_uniqueness_is_still_true_against_the_parallel_h60_round():
+    """A second H60 artefact (PR #34, 31,000 px) landed on the same canonical paths.
+    Both must remain distinct; the alias points at the co-training round."""
+    u = json.loads((EV / "h60_uniqueness.json").read_text())
+    rows = [r for r in u["per_prior"]
+            if "triple-conv" in r["path"] and r["path"].startswith("submission/")]
+    assert rows, "the parallel round's artefact was not checked"
+    assert rows[0]["identical"] is False
+    assert rows[0]["jaccard"] < 0.05
+    assert u["canonical_pattern_unique"] is True

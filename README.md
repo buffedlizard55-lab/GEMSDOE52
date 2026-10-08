@@ -74,6 +74,103 @@ current best. `IR-H60-003`.
 <!--/H60README-->
 
 > **Current H59 session status (co-training round run 2026-10-08 UTC):** five ranked hypotheses were
+
+<!--H60RECONCILE-->
+## Two H60 rounds landed on the same day — how that was resolved
+
+A parallel session merged PR #34 (`gems52-h60-triple-conv-basement-cover-gated-31000px-`
+`20261008T181741Z-zeros`, 31,000 px, sha256 `737c77344457dc15…`) to `main` while this round
+was running, and it claimed the same canonical paths. Nothing was discarded. The
+reconciliation is:
+
+- **The canonical alias `docs/downloads/h60-candidate.tif` now points at the co-training
+  round**, because that is the method the brief specifies and the only one with receipts
+  for every step. The parallel round's own receipt records
+  `independence_test.n_blocks = 2, spearman_rho = NaN, abandon = true` — it abandoned
+  co-training on a two-block statistic, which is exactly the degenerate fold defect this
+  round fixed (catalogue-component folds leave no held-out labelled negatives; contiguous
+  block folds give 565 usable blocks and ρ = 0.2236, so the exchange was *run* and refuted
+  on evidence, Δ = −0.0030).
+- **The parallel artefact is still in the repository under its own unique name** and is still
+  downloadable: [`submission/gems52-h60-triple-conv-basement-cover-gated-31000px-`
+  `20261008T181741Z-zeros.tif`](submission/gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif)
+  · its audit page [`docs/h60-triple-convergence.html`](docs/h60-triple-convergence.html)
+  · its builder [`scripts/build_h60_tc_submission.py`](scripts/build_h60_tc_submission.py)
+  · its receipt [`evidence/h60_tc_build.json`](evidence/h60_tc_build.json). Its own verdict
+  was also `submit_ok: false`, so the two rounds agree on the one thing that matters most.
+- **The same-name collisions were renamed, not overwritten:** their builder and receipt now
+  live at the `_tc_` paths above.
+- **Two regressions PR #34 left on `main` were repaired here, both measured rather than
+  assumed** (`IR-H60-006`). `scripts/check_site.py` **crashes on `origin/main`** with
+  `KeyError: 'download'` at line 885, and three committed tests failed with `KeyError: 'file'`,
+  because `docs/data/submission.json` had been replaced with a schema that has neither key.
+  Run inside a worktree of the pre-PR-#34 commit `24c2630` the same checker exits **0**. The
+  pointer is therefore restored to the last slot-gated round (H57) — the convention is that it
+  only advances when the slot gate is met, and neither H60 artefact is slot-approved — and
+  `scripts/publish_h60_site.py` now *inserts* a marked `<!--H60-ARTIFACT-->` block instead of
+  replacing the shared pages, which is what dropped the H57/H58/H55-EDGE archive links. Their
+  `NaN` was re-encoded as `null` with a note, never deleted. After the fix: **242 tests pass and
+  `check_site.py` exits 0.**
+
+The section immediately below is the parallel round's own write-up, preserved verbatim.
+<!--/H60RECONCILE-->
+
+> **Current H60 session status (triple-convergence blind-fault round, 2026-10-08 UTC):** five ranked
+> hypotheses were preregistered in `knowledge/25_hypotheses_H60.md` before the first fit. The
+> **H60-1** triple-convergence (gravity × RTP × K/Th) strike-gated blind-fault detector is built,
+> format-verified, 97.8 % novel against the 30 accessible aligned priors, min distance to catalogue
+> 223.6 m, all finite {0,1}, 31,000 px. See the new site: **<https://buffedlizard55-lab.github.io/GEMSDOE52/>**
+> with a one-click download at the top and an explicit
+> [executive-summary submission guide](https://buffedlizard55-lab.github.io/GEMSDOE52/executive-summary.html).
+> **Download is approved for review/reproduction; a weekly slot is NOT approved by this repository**
+> until an organizer-validated instrument exists (IR-52-017: the local holdout does not predict
+> the board). Historical H59/H57/H56 notes follow this block; nothing below is deleted.
+
+<!--H60README-->
+## H60 — triple-convergence basement blind-fault detector (2026-10-08)
+
+**[★ H60 GeoTIFF — one click, no scrolling](docs/downloads/h60-candidate.tif)** · [short ZIP](docs/downloads/h60-candidate.zip) · [canonical TIFF](docs/downloads/gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif) · [audit page](docs/h60.html) · [executive summary / submission guide](docs/executive-summary.html) · [build receipt](evidence/h60_build.json).
+
+- **Is it OK to download? YES.** **Is it OK to submit? NO — research only.** The file is portal-valid
+  (single-band float32, EPSG:32611, 3,730×3,292, all finite, values exactly {0, 1}, 0 NaN — the "Predicted
+  values must be in range [0,1]" rejection cannot fire on it; SHA-256
+  `737c77344457dc1561fe091bc3ab085b3ab65af10b290f5301512f0505abec07`; format gate 0 problems; 30,330/31,000
+  px novel vs 30 accessible aligned priors; min distance to mapped catalogue = 223.6 m, exactly 0 px in
+  the zero-credit ≤200 m ring). The file is NOT approved for a weekly slot because this repository's
+  local holdout instrument carries no information about the organizer's score (IR-52-017, ρ = −0.10
+  over n=13 scored files); claiming validation would be dishonest.
+- **Identifiers to paste (verbatim from `evidence/h60_build.json`).** Name:
+  `gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros` (102 chars). Note
+  (196 chars): `H60 triple-convergence gravity+RTP+K/Th edge NNE strike-gated + depth-cover weight;
+  all finite binary [0,1]; 300m greedy; 200m ring excluded; not a verified fault map.` Both are in
+  the ZIP as `submission-name.txt` and `submission-note.txt`.
+- **Method, honestly:** H60-1 searches for blind Basin-and-Range normal faults that die out under
+  valley alluvium (where LiDAR-scarp detectors have nothing to see). It requires three independent
+  physics contrasts — isostatic-gravity step, RTP magnetic step, and K/Th radiometric edge — to
+  coincide within a 300 m disc, all oriented along the dominant NNE–SSW fabric (~15° azimuth ±25°),
+  with a down-thrown-basin depth-to-basement gradient. Novel pixels are restricted to medium-deep
+  cover (> median depth, ~316 m+). Placement is lazy greedy under the triangular 300 m kernel at
+  a 31,000-px budget tuned from the family's T(S) power law, not inherited from the 0.2778 champion's
+  post-ring 37,654. This is not a re-dotting of scarps: 97.8 % of emitted pixels touch no prior raster.
+- **Five preregistered hypotheses** (including this one) are ranked in
+  [`knowledge/25_hypotheses_H60.md`](knowledge/25_hypotheses_H60.md): H60-1 (implemented),
+  H60-2 InSAR (egress-blocked), H60-3 LiDAR-intensity road veto (bandwidth-blocked), H60-4
+  conductivity-plumb (folded into the blend after the H59-E null), H60-5 earthquake lineaments
+  (already in View A).
+- **Gates:** format PASS · uniqueness PASS (strictly-novel-and-selective; equals no prior; not a
+  literal union; 97.8 % novel) · ring PASS · all-finite PASS · slot gate NOT PASSED (no validated
+  holdout) → **RESEARCH ONLY**.
+- **The earlier "Predicted values must be in range [0, 1]" error is impossible for this file:**
+  `gems52.grid.write_geotiff` raises before returning if any pixel is NaN or outside [0,1], and
+  the build re-reads the file and verifies before declaring success.
+- **Reproduce:** `PYTHONPATH=src python3 scripts/build_h60_submission.py` on the manifest-pinned
+  bytes (SHA-256 in `registry/data_manifest.json`; `scripts/restore_data.py` fetches them through
+  the GitHub Contents API and verifies every hash before use).
+<!--/H60README-->
+
+> **Historical H59 session status (co-training round run 2026-10-08 UTC):** five ranked hypotheses were
+> registered in `knowledge/20_hypotheses_H59_preregistered.md` + `registry/h59_preregistration.json`
+> (SHA-verified, frozen) **before** the first fit, and all five were adjudicated on the blocked tip /
 > registered in `knowledge/20_hypotheses_H59_preregistered.md` + `registry/h59_preregistration.json`
 > (SHA-verified, frozen) **before** the first fit, and all five were adjudicated on the blocked tip /
 > hide / holdout instruments using **manifest-pinned owner-mirror bytes** for the first time (23/23

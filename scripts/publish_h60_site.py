@@ -29,6 +29,31 @@ def fnum(x, n=4):
     return "n/a" if x is None else (f"{x:,.0f}" if n == 0 else f"{x:.{n}f}")
 
 
+def insert_block(path, marker, body):
+    """Insert an idempotent marked block at the top of <main id="main">.
+
+    docs/index.html and docs/executive-summary.html are shared with every previous round, and
+    scripts/check_site.py asserts that the H57 alternate, H58 and separate H55-EDGE archive
+    links survive on them.  PR #34 replaced both pages wholesale, dropped those links, and
+    turned a passing checker into 9 failures.  Inserting a marked block keeps the archive
+    intact and is idempotent, the same convention insert_h55_review already uses.
+    """
+    html = path.read_text()
+    open_m, close_m = f"<!--{marker}-->", f"<!--/{marker}-->"
+    block = f"{open_m}\n{body}\n{close_m}"
+    if open_m in html:
+        i = html.index(open_m)
+        j = html.index(close_m) + len(close_m)
+        html = html[:i] + block + html[j:]
+    else:
+        anchor = '<main id="main">'
+        if anchor not in html:
+            raise ValueError(f"{path}: no <main id=\"main\"> anchor to insert into")
+        i = html.index(anchor) + len(anchor)
+        html = html[:i] + block + html[i:]
+    path.write_text(html)
+
+
 def main() -> int:
     art = rd("h60_artifact.json") or {}
     build = rd("h60_build.json") or {}
@@ -290,10 +315,7 @@ for Geothermal Energy</a>.</li>
 </ul>
 """
 
-    (DOCS / "index.html").write_text(page(
-        "GEMSDOE52 — H60 submission", idx,
-        "H60 unique two-view co-training GeoTIFF for the DOE GEMS fault-mapping prize, with a "
-        "range-proof download and an explicit submit/do-not-submit verdict."))
+    insert_block(DOCS / "index.html", "H60-ARTIFACT", idx)
 
     # =========================================================== executive summary
     exe = f"""
@@ -370,8 +392,7 @@ the first fit.</li>
 <li><code>knowledge/27_why_02778_h60.md</code> — the metric forensics on the restored bytes.</li>
 </ul>
 """
-    (DOCS / "executive-summary.html").write_text(page(
-        "GEMSDOE52 — how to submit", exe, "Step-by-step submission guide for the DOE GEMS competition."))
+    insert_block(DOCS / "executive-summary.html", "H60-ARTIFACT", exe)
 
     # ==================================================================== audit page
     aud = f"""
@@ -431,8 +452,8 @@ relation: {esc(uniq.get('relation_to_union'))}</p>
         independence=indep, pseudo=pseudo, holdout_mean=hold.get("mean_dti"),
         fold_wins=hold.get("fold_wins_vs_random"), selection=selj, views=views,
         strata=strata, folds=folds, preregistration=pre), indent=1, default=str))
-    print(f"[site] docs/index.html, docs/executive-summary.html, docs/h60.html written; "
-          f"verdict={verdict}")
+    print(f"[site] H60 block inserted into docs/index.html and docs/executive-summary.html, "
+          f"docs/h60.html written; verdict={verdict}")
     return 0
 
 

@@ -21,11 +21,29 @@
  "format_problems": [],
  "uniqueness": {
   "pattern_unique": true,
-  "novel_fraction": 0.47787751633292613,
+  "novel_fraction": 0.46943219843841294,
   "literal_union": false,
   "support_gate_ok": true,
-  "priors_checked": 55
+  "priors_checked": 57
  },
  "ok_to_download": true,
- "generated_utc": "20261008T185134Z"
+ "generated_utc": "20261008T185134Z",
+ "uniqueness_regate": {
+  "at_utc": "2026-10-08T19:32:16Z",
+  "reason": "re-run after merging PR #34, which added a second H60 artefact (gems52-h60-triple-conv-basement-cover-gated-31000px) to the prior pool, and after fixing the canonical-alias self-comparison bug (IR-H60-007)",
+  "superseded": {
+   "pattern_unique": true,
+   "novel_fraction": 0.47787751633292613,
+   "literal_union": false,
+   "support_gate_ok": true,
+   "priors_checked": 55
+  },
+  "now": {
+   "pattern_unique": true,
+   "novel_fraction": 0.46943219843841294,
+   "literal_union": false,
+   "support_gate_ok": true,
+   "priors_checked": 57
+  }
+ }
 }

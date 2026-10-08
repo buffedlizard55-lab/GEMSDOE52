@@ -1,6 +1,6 @@
 {
  "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified.",
- "generated": "2026-10-08T19:13:56Z",
+ "generated": "2026-10-08T19:32:31Z",
  "entries": [
   {
    "id": "IR-30-029",
@@ -801,6 +801,33 @@
    "how_we_know": "scripts/prepare_data.py: sample_submission_positive_px = 60988 and sample_submission_ones_on_labels = 60988.",
    "handling": "Used only as a geometry template (shape, CRS, transform, finite domain) by gems52.gates.format_report. Never used as a label or as a prediction.",
    "evidence": "evidence/grid.json"
+  },
+  {
+   "id": "IR-H60-006",
+   "round": "H60",
+   "session": "2026-10-08",
+   "severity": "high",
+   "status": "closed",
+   "disposition": "fixed this session",
+   "title": "A parallel session's H60 round broke the site checker and the current-pointer convention on main",
+   "what_it_is": "PR #34 (merged to main as 7c28389 while this round was running) overwrote docs/data/submission.json with a different schema that has no 'file' and no 'download' key, replaced docs/index.html and docs/executive-summary.html wholesale, and wrote NaN into docs/data/submission_h60.json.",
+   "how_we_know": "Measured, not inferred.  scripts/check_site.py crashes on origin/main with KeyError: 'download' at line 885.  Run inside a worktree of the pre-PR-#34 commit 24c2630 it exits 0 with the '\u2713 ... slot gate remains CLOSED' verdict; run on the merged tree before this fix it reported 9 problems, including 'data/submission_h60.json: invalid JSON (non-JSON constant NaN)' and six missing H57/H58/H55-EDGE archive links.  Three committed tests (test_current_submission_gate, test_h55_publication, test_h59) failed with KeyError: 'file' on main.",
+   "handling": "docs/data/submission.json and submission/LATEST.txt restored to the H57 pointer, which is the last slot-gated round and what the repository convention requires: the pointer only advances when the slot gate is met, and neither H60 artefact is slot-approved.  scripts/publish_h60_site.py now inserts a marked <!--H60-ARTIFACT--> block instead of replacing the shared pages, the same convention insert_h55_review uses.  The parallel round's artefact, builder, receipt and audit page are preserved under distinct names (submission/gems52-h60-triple-conv-..., scripts/build_h60_tc_submission.py, evidence/h60_tc_build.json, docs/h60-triple-convergence.html); the NaN was re-encoded as null with a note, never deleted.  After the fix check_site exits 0 and pytest reports 242 passed.",
+   "evidence": "scripts/check_site.py output on 24c2630 vs origin/main vs the merged tree; docs/data/submission_h60.json, evidence/h60_tc_build.json",
+   "provenance_warning": "The comparison worktrees were created outside the repository (/tmp/base24 at 24c2630, /tmp/mainchk at origin/main).  An earlier attempt to run check_site.py from the working tree against the /tmp/mainchk directory checked the wrong tree, because the script derives ROOT from __file__; that reading was discarded."
+  },
+  {
+   "id": "IR-H60-007",
+   "round": "H60",
+   "session": "2026-10-08",
+   "severity": "medium",
+   "status": "closed",
+   "disposition": "fixed this session",
+   "title": "The uniqueness gate compared the artefact against its own canonical download alias",
+   "what_it_is": "gems52.gates.find_priors excludes copies of the candidate by *basename* (IR-52-026), which covers docs/downloads/<name>.tif.  It cannot cover the canonical alias docs/downloads/h60-candidate.tif, whose basename differs from the artefact's.  Once the alias exists, any later run of the gate counts the artefact as a prior and reports the one verdict that would stop a legitimate submission.",
+   "how_we_know": "Measured on the merged tree: n_priors_checked 58, canonical_pattern_unique False, novel_fraction 0.0, support_novelty_gate_ok False.  Excluding only the alias and re-running: n_priors_checked 57, canonical_pattern_unique True, novel_fraction 0.4694, support_novelty_gate_ok True.  The alias was confirmed byte-identical to submission/<name>.tif by SHA-256 before it was excluded.",
+   "handling": "scripts/build_h60_submission.py now resolves docs/downloads/h60-candidate.tif and drops it from the prior pool.  Pinned by tests/test_h60.py::test_the_canonical_alias_is_not_counted_as_a_prior, which asserts both the gate verdict and the byte-identity that makes the exclusion legitimate rather than a way of hiding a real duplicate.",
+   "evidence": "evidence/h60_uniqueness.json (superseded values retained in h60_artifact.json.uniqueness_regate)"
   }
  ]
 }

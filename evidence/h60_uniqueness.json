@@ -1,5 +1,5 @@
 {
- "n_priors_checked": 55,
+ "n_priors_checked": 57,
  "per_prior": [
   {
    "path": "data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
@@ -366,6 +366,20 @@
    "novel_vs_this": 36669
   },
   {
+   "path": "submission/gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif",
+   "prior_px": 31000,
+   "new_px": 37654,
+   "binary": true,
+   "support_definition": ">0 for binary",
+   "decoded_sha256": "328bfcb8873e31f899f24a2574b719436e593f29a1b1d20a35dd670765565078",
+   "intersection": 325,
+   "jaccard": 0.004756399186289863,
+   "identical": false,
+   "subset_of_prior": false,
+   "superset_of_prior": false,
+   "novel_vs_this": 37329
+  },
+  {
    "path": "submission/gems52-r2-signednormal-37654-1f751ac9b6ee-zeros.tif",
    "prior_px": 37654,
    "new_px": 37654,
@@ -618,6 +632,20 @@
    "novel_vs_this": 36669
   },
   {
+   "path": "docs/downloads/gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif",
+   "prior_px": 31000,
+   "new_px": 37654,
+   "binary": true,
+   "support_definition": ">0 for binary",
+   "decoded_sha256": "328bfcb8873e31f899f24a2574b719436e593f29a1b1d20a35dd670765565078",
+   "intersection": 325,
+   "jaccard": 0.004756399186289863,
+   "identical": false,
+   "subset_of_prior": false,
+   "superset_of_prior": false,
+   "novel_vs_this": 37329
+  },
+  {
    "path": "docs/downloads/gems52-r2-signednormal-37654-1f751ac9b6ee-zeros.tif",
    "prior_px": 37654,
    "new_px": 37654,
@@ -778,10 +806,10 @@
  "research_publication_ok": true,
  "support_novelty_gate_ok": true,
  "gate_correction": "Original >=20% support novelty retained as a FAILED diagnostic, not silently waived for slot promotion. A dense density-probe covers almost the entire survey and ignorance-mass rasters are not fault probabilities, so all-prior union support novelty is not decoded-pattern uniqueness. Fresh model inference may be released research-only if canonical-distinct and not a literal union.",
- "union_px": 1365956,
- "novel_vs_all_priors": 17994,
- "novel_fraction": 0.47787751633292613,
- "prior_px_dropped": 1346296,
+ "union_px": 1396286,
+ "novel_vs_all_priors": 17676,
+ "novel_fraction": 0.46943219843841294,
+ "prior_px_dropped": 1376308,
  "relation_to_union": "strictly-novel-and-selective",
  "ok": true,
  "top_argument_ignored": false,
