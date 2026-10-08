@@ -203,3 +203,26 @@ control comparison and the artifact. The failure was mechanical (a RuntimeError)
 score-motivated: no threshold, weight, ranking or pool rule changed, and the whole pipeline was
 rerun end-to-end so no pre-amendment measurement survives into the receipts. `result_informed:
 false` for the capacity cause; the superseded run's log is preserved in the repository history.
+
+**Amendment 3 (2026-10-08, logic-consistency fix; recorded after the second full run, before any
+artifact was published or offered for download):** the not-the-union gate and the slot rule as
+originally written are **unsatisfiable by construction when a single view wins** the frozen
+decision rule — a single-view emission trivially equals that view's own emission, and a single
+view cannot beat itself by +0.003, even though the decision rule explicitly allows (and under
+independence-abandonment *requires*) a single view to ship. Fixed semantics: (i) the gate forbids
+equality with the **set-union of the two views' same-budget emissions** (the brief's literal
+"merely the union of the two views") and with the union-field emission; equality with a
+constituent view's own emission is *reported* and expected exactly when that view ships;
+(ii) when the shipped field is itself the strongest single view, the +0.003 single-view lift
+requirement is replaced by the incumbent comparison the brief actually names — the shipped
+**artifact as-is** must beat the **owner-reported-0.2778 reference emission scored as-is** on
+identical rebuilt folds (same visible-mask and region rules) on BOTH instruments at mean DTI,
+a like-for-like comparison inside one emission regime. The first implementation of that
+comparison mistakenly measured the ring-free fold-legal arm emissions against the
+ring-respecting incumbent — a regime mismatch (the catalogue-truth proxy awards credit only
+within the metric's 3 px hit radius, which the 200 m ring pushes most emissions beyond); the
+corrected implementation scores both rasters as-is and records each emission's
+distance-to-catalogue regime. The comparison is a labelled post-hoc diagnostic in every
+receipt; it never influences the shipped field, the emitter, the pools or any frozen number.
+No DTI number changed under this amendment; the full pipeline was rerun so every receipt is
+written by one run. `result_informed: false`.

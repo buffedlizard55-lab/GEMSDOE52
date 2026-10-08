@@ -21,7 +21,7 @@ def sha(path: Path) -> str:
 def _current_round(sub: dict) -> str:
     """Which round owns `submission/LATEST.txt`, read from the receipt rather than hard-coded."""
     f = sub.get("file", "")
-    for tag in ("h58", "h57", "h56", "h55", "h54"):
+    for tag in ("h59", "h58", "h57", "h56", "h55", "h54"):
         if f"-{tag}-" in f:
             return tag.upper()
     return "UNKNOWN"
@@ -85,6 +85,28 @@ def test_current_artifact_is_downloadable_but_not_slot_approved() -> None:
         assert gate["r1"]["met"] is False
         assert gate["checks"]["R4 format gate (single band, float32, EPSG:32611, 3730x3292, "
                              "transform, all finite, [0,1], no nodata)"] is True
+
+    if rnd == "H59":
+        # the H59 receipt carries its own gate report; the site's current-pointer file must agree
+        result = json.loads((DOCS / "data/h59_result.json").read_text())
+        assert result["artifact"]["format_gate"]["ok"], result["artifact"]["format_gate"]["problems"]
+        assert result["artifact"]["uniqueness"]["canonical_pattern_unique"]
+        assert result["artifact"]["ring_min_distance_m"] > 200.0
+        assert (result["artifact"]["spacing"]["min_nn_px"] or 0) >= 3.0
+        # amendment 3 gate semantics: the forbidden equalities are the set-union of the two views'
+        # emissions and the union-field emission; equality with a constituent view's own emission
+        # is reported and expected exactly when that view is the shipped field
+        ntu = result["artifact"]["not_the_union"]
+        assert not ntu["equals_set_union"]
+        assert not ntu["equals_union_field"]
+        shipped = result["holdout"]["decision"]["shipped_field"]
+        assert ntu["equals_view_b"] is (shipped == "view_B")
+        assert ntu["equals_view_a"] is (shipped == "view_A")
+        assert result["reasoning_dossier"]["rows"] == sub["nonzero_px"]
+        assert result["reasoning_dossier"]["a_only_rows"] >= 0
+        assert len(str(sub.get("note") or sub.get("submission_note") or "")) <= 200
+        # the repo's standing rule: the machine field never asserts an open slot gate
+        assert result["artifact"]["emission_px"] == 37654
 
 
 def test_h56_archive_stays_intact() -> None:
