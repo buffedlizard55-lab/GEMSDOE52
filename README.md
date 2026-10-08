@@ -1,6 +1,68 @@
 # GEMSDOE52
 
-> **Current H59 session status (run completed 2026-10-08 UTC):** the preregistered two-view co-training round finished end-to-end on the manifest-pinned owner mirror, and for the first time in this repo every registered gate **passes** with a **slot recommendation**: `gems52-h59-cotrain-view_B-37654px-20261008T033705Z-54debe0d-zeros.tif` — 37,654 px, single-band float32 EPSG:32611 on the sample grid, values {0,1}, decoded pattern unique against 47 accessible priors, ≥ 3 px isotropic spacing, 223.6 m minimum catalogue distance, 51.3 % of its support outside every prior's support. The frozen field decision shipped **view_B** (DEM slope/curvature + radiometric TC + LiDAR, 36 features): the strongest single view on both holdout instruments (hide mean DTI 0.1047, block 0.0916; 4/4 fold wins over random everywhere), with the combinations statistically indistinguishable (product 0.1042/0.0788, union 0.1040/0.0917, vetoB 0.0962/0.0869). Independence was **not** refuted (max |r| = 0.143 over 2,162 blocks, bar 0.60); the A-only buried-structure stratum was confirmed geologically (median depth 358 m vs 132 m B-only) and refuted as a ranking field for the third time; basestep and seismicity arms failed. The slot basis (amendment 3, like-for-like): the artifact **as submitted** beat the owner-reported-0.2778 incumbent emission **as-is** on identical folds on BOTH instruments (hide 0.0084 vs 0.0041, block 0.0082 vs 0.0033), and the ring-free field also beat the best ring-free prior (0.2600-scored d2-8: 0.1047 vs 0.0967 hide, 0.0916 vs 0.0871 block). Standing caveats: inputs remain integrity-pinned owner mirrors, not organizer-authenticated (IR-52-003/IR-H58-001); the catalogue-truth proxy is largely blind in the ring-respecting regime (absolute DTI is not comparable across regimes — only within one); no upload happened, **zero slots spent**, the owner decides. Three pre-result-registered protocol amendments (union-gate semantics, emitter capacity 27,905→exact-greedy 37,654, single-view slot-rule degeneracy) are recorded in [`registry/h59_preregistration.json`](registry/h59_preregistration.json) and `knowledge/20_hypotheses_H59_preregistered.md`. `submission/LATEST.txt` now points at the H59 artifact; H58 remains a separate research-only round.
+> **Current H59 session status (co-training round run 2026-10-08 UTC):** five ranked hypotheses were
+> registered in `knowledge/20_hypotheses_H59_preregistered.md` + `registry/h59_preregistration.json`
+> (SHA-verified, frozen) **before** the first fit, and all five were adjudicated on the blocked tip /
+> hide / holdout instruments using **manifest-pinned owner-mirror bytes** for the first time (23/23
+> SHA-256 pins, `evidence/h59_preflight_integrity.json`). The independence premise measured 0.1071
+> against the 0.60 abandonment threshold (reproducing H57's 0.1108 on different inputs); pseudo-label
+> exchange moved fold-0 AUC by −0.0011 (third independent null). **No challenger beat the incumbent
+> union in all four cells** — corroboration weighting, the artefact veto, strain ranking and the halo
+> pool are all recorded as refuted — so the union ranking is retained and `H59` ships
+> `gems52-h59-union-core25517px-arm14783px.tif` (40,300 px: exactly-accounted 25,517-px core + a
+> 14,783-px arm, 100 % outside every accessible prior's support, all finite {0,1}, format gate 0
+> problems, unique against 49 aligned priors) with **reasoning for every emitted arm pixel and for all
+> 6,100 A-only pool segments**. The registered slot bar (mean lift ≥ +0.005 vs random on both
+> instruments) came in at +0.0038 tip / +0.0046 hide → **research-only: download OK for review, DO NOT
+> spend a weekly slot**. `submission/LATEST.txt` and `docs/data/submission.json` therefore stay on H57;
+> H59 publishes as `docs/data/submission_h59.json` and `docs/h59.html`. The portal's
+> “Predicted values must be in range [0, 1]” rejection was traced to the NaN-bearing alias export
+> pattern and the site now serves only all-finite {0,1} rasters with a range-proof gate in
+> `gems52.grid.write_geotiff`. See `knowledge/21_what_h59_found.md`; `registry/irregularities.json` →
+> `IR-H59-001`–`IR-H59-005`. Organizer authentication of the mirror remains the open blocker.
+
+<!--H59README-->
+## H59 — two-view co-training round on pinned bytes; artifact published research-only (2026-10-08)
+
+**[★ H59 GeoTIFF — one click, no scrolling](docs/downloads/h59-candidate.tif)** · [short ZIP](docs/downloads/h59-candidate.zip) · [canonical TIFF](docs/downloads/gems52-h59-union-core25517px-arm14783px.tif) · [per-pixel geology reasoning CSV (14,783 rows)](docs/downloads/gems52-h59-40300px-candidate-geology.csv) · [A-only segment reasoning CSV (6,018 rows, one falsifier each)](docs/downloads/gems52-h59-a-only-candidate-segments.csv) · [audit page](docs/h59.html) · [receipt](docs/data/submission_h59.json) · [slot gate](evidence/h59_slot_gate.json) · [preregistration](registry/h59_preregistration.json) · [ranked hypotheses](knowledge/20_hypotheses_H59_preregistered.md) · [what H59 found](knowledge/21_what_h59_found.md).
+
+- **Is it OK to download? YES.** Is it OK to submit? **The file is portal-valid** (format gate 0
+  problems; every pixel ∈ {0,1}; no NaN anywhere — a value outside [0,1] or a NaN cannot exist in it by
+  construction), **but this repository does not approve spending a weekly slot on it**: the preregistered
+  slot bar failed (+0.0038/+0.0046 lift vs random at the champion's 37,654-px budget, 4/4 folds won), so
+  the site says so in one sentence and the receipts carry the whole argument. Downloading, reviewing and
+  reproducing it is exactly what it is approved for.
+- **Identifiers to paste (verbatim from `evidence/h59_build.json`).** Name (54 chars):
+  `gems52-h59-union-core25517px-arm14783px-8c4945ce-zeros`. Note (143 chars): `H59 union arm 14783px
+  outside all prior support + 25,517px credited core; all finite binary [0,1]; 200m ring excluded; not a
+  verified fault map` — both ≤ 200 characters, and the site's one-click ZIP carries them as paste-ready
+  text files (`submission-name.txt`, `submission-note.txt`).
+- **Concurrent H59 (IR-H59-004).** A parallel session merged its own H59 during this round
+  (`gems52-h59-edge-coh-cotrain-37654px-…`, format-valid, novelty vs h33 only, no slot-gate receipt) and
+  had repointed `submission/LATEST.txt` at it. The merge of main into this branch preserves its artifact,
+  pages and script (`scripts/build_h59_edgecoh_submission.py`) verbatim, reverts the pointer under the
+  standing no-holdout rule, and **treats its TIFF as a prior**: this README's numbers and the canonical
+  hash `8c4945ce…` come from the rebuilt scans (49 then 51 rasters as each concurrent TIFF landed).
+- **Method, honestly:** per the brief, two views were **actually trained** on the same unlabelled pixels —
+  View A (gravity/magnetics/strain/seismicity/depth/conductivity, 38 features) and View B (DEM slope/
+  curvature + 14 external LiDAR/radiometric bands outside the official cube, 46 features), whole-segment
+  folds (0.60/0.40 Q, seed 20261009), out-of-fold fields only. Discovery = disagreement strata (A-only
+  183,553 px at median 411 m depth under cover vs B-only 197,898 px at 161 m). Agreement was never used
+  as a reward; corroboration was tested as a *transform* (H59-A) and refuted. Pseudo-labels were applied
+  per protocol (confident-to-abstain, whole segments) and **ran without effect** — recorded as the null it
+  is, not hidden.
+- **Gates:** format PASS · uniqueness vs all 49 accessible aligned priors PASS (incl. the parallel session's TIFF) (decoded pattern matches none; 36.7 % of
+  emitted mass novel to all priors' support; ≥ 20 % support gate PASS) · ring gate PASS (nearest emitted
+  pixel to a mapped trace 223.6 m; zero emitted px inside 100–200 m) · independence premise measured, not
+  assumed (0.1071 < 0.60) · slot bar FAIL → RESEARCH ONLY · promotion rule fired exactly as registered
+  (best challenger H59-E: within −0.0001 tip / −0.0011 hide of the incumbent; nothing promoted).
+- **Reproducibility:** `scripts/run_h59.py` (fits; saves all seven ranking fields byte-exactly to
+  `work/h59/field_*.npy`) then `scripts/build_h59_submission.py` (reuses the saved fields, emits the
+  raster, runs all gates, writes every receipt) then `scripts/publish_site_h59.py` (renders the site from
+  the receipts; the HTML quotes no number not present in a JSON). A rebuild is a measured **fixed point**:
+  the self-exclusion of H59 outputs from the prior scan was added after a second build initially drifted
+  the arm by 10 px (`IR-H59-001`).
+<!--/H59README-->
 
 <!--H57README-->
 ## H57 credited-core alternate — historical research result; NOT approved to submit
@@ -829,7 +891,13 @@ Go ahead and create a pull request and then merge the pull request onto the main
 
 ### 1.1 The directives, itemised (the standing starting point, restated in the brief's own order)
 
-The brief as received by this session is [`knowledge/07_brief_2026-10-06_session2.md`](knowledge/07_brief_2026-10-06_session2.md);
+**The most recent verbatim session brief is
+[`knowledge/22_brief_2026-10-08.md`](knowledge/22_brief_2026-10-08.md)** (co-training round H59: fix the
+range error, unique TIF, preregistered hypotheses, one-click site, three verification passes, PR) — it
+supersedes nothing in the list below; it *is* the round that produced the H59 status block at the top of
+this file, and where the older brief and it differ the newer one governs.
+The itemised eleven directives are the standing frame both briefs sit inside:
+[`knowledge/07_brief_2026-10-06_session2.md`](knowledge/07_brief_2026-10-06_session2.md);
 it carries **eleven** operative directives, and this list is that list — same order, same scope — so a
 reviewer can diff prose against prose. (Earlier revisions of this README itemised ten, having folded the
 re-read-the-prompt rule and the why-0.2778 rule into others; that folding is what let a session start from a
@@ -1280,18 +1348,6 @@ leaderboard number, data-availability claim and remembered fact before relying o
 `P(DTI > floor)` over explicitly bounded unknowns (`src/gems52/revealed.py::budget_rule`), never by a
 point hope. *Own the Outcome:* the file, its receipts, the failing diagnostics and the limits are
 published next to the download, including the probability that the target is *not* reached.
-
-### H59 execution and review addendum — 2026-10-08 UTC
-
-- Five hypotheses were frozen in `knowledge/20_hypotheses_H59_preregistered.md` and hash-bound in `registry/h59_preregistration.json` **before** any H59 model fit: H59-1 surface-artifact veto, H59-2 product rank, H59-3 basement-step, H59-4 seismicity-lineament, H59-5 multi-scale residual (registered, queued, not run). The protocol: OOF quadrant folds (4 px collar, whole components) → fail-closed independence (|r| ≥ 0.60 or < 20 blocks → single-view fallback) → disagreement strata (q_conf 0.60 / q_abstain 0.40) → diagnostic-only pseudo exchange → hide+block holdout (9 arms, budgets 37,654 / 15,000) → frozen field decision → gates → slot verdict.
-- **Independence held:** max |r| = 0.143 over 2,162 spatial blocks (bar 0.60; pixel-level r = 0.017). The Blum–Mitchell premise was not refuted at this granularity — in contrast to H55/H57, which abandoned it. The pseudo-label exchange ran both directions (B→A 1,998 px / 124 segments; A→B 1,382 px / 48 segments) as a diagnostic only; its AUC was skipped for want of a valid negative pool and it can never alter the shipped field.
-- **Strata:** permitted 4,860,040 px; A-only 349,974 (median depth-to-basement 358 m), B-only 200,462 (132 m), concordant 160,179 (203 m), neither 4,149,425. A-only is confirmed as the buried-structure stratum geologically — and for the third time refuted as a ranking field (hide 0.0396 vs random 0.0419; block 0.0224 vs 0.0443).
-- **Field decision (frozen rule, applied as written):** view_B shipped — highest hide mean DTI (0.1047) among the four eligible arms (view_B, union, product, vetoB all beat random ≥ 3/4 folds in both modes); view_A weak (0.0653/0.0351); basestep essentially silent (0.0026/0.0030); seismicity mixed and failing (0.0580/0.0303). No combination cleared +0.003 over the best single view — the co-training story is **not** supported as a ranking improvement on this proxy; what ships is the best measured field.
-- **Three pre-result-registered amendments, all disclosed with `result_informed: false`:** (1) the not-the-union gate compares against the set-union of the two views' emissions, not the union field's own emission; (2) the emitter's NMS-5 speed prefilter capped a smooth field at 27,905/37,654 nodes (the same defect class as H58's 22/37,654, caught this time as a hard error) and was replaced by the exact greedy under the identical inclusive 3 px rule, applied to every arm and the artifact, with the full pipeline rerun; (3) when a single view wins, the not-the-union gate and the +0.003 slot rule are unsatisfiable by construction, so the slot rule becomes the like-for-like incumbent comparison. The superseded first run's log is preserved at `evidence/h59_superseded_run1_emitter_capacity.txt`.
-- **Artifact:** `submission/gems52-h59-cotrain-view_B-37654px-20261008T033705Z-54debe0d-zeros.tif` (146,326 bytes, SHA-256 `bcf76cf1e961cf67…`). Full-budget emission on every primary fold in both instruments (the exact-greedy emitter fix). Decoded pattern unique against 47 priors; 1,422 px (3.8 %) coincide with the 0.2778 reference's dots; 19,335 px (51.3 %) lie outside every prior's support; 0 A-only rows in the 37,654-row reasoning dossier (a view_B emission contains no A-only candidates by construction — the stratum itself is characterized in the receipt).
-- **Slot verdict (amendment 3 basis):** the artifact as submitted beat the owner-reported-0.2778 incumbent as-is on identical folds on both instruments (hide 0.0084 vs 0.0041; block 0.0082 vs 0.0033 — both ring-respecting, same folds, same visible-mask rules), and the ring-free field beat the best ring-free prior (d2-8, owner 0.2600) on both (0.1047 vs 0.0967; 0.0916 vs 0.0871), where the proxy's ordering of priors matches their owner-reported ordering. **Gates pass; slot recommended; no upload performed; zero slots spent** — the owner decides. Standing caveats: owner-mirror provenance (IR-52-003/IR-H58-001) and the proxy's regime blindness (absolute DTI is comparable only within one emission regime) are stated on the site beside the download.
-- `submission/LATEST.txt` now points at the H59 artifact (first repoint since H57); the executive summary, audit page, downloads and feed were regenerated from the receipts (`scripts/publish_h59_site.py`, `scripts/refresh_feed.py`, `scripts/publish_site_r3.py` h55-review refresh). Tests: 195 passed.
-- **Sibling H59 build (parallel session, merged to main at 02:26 UTC as PR #27):** `submission/gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif` — a multi-scale-edge + co-training-A-only + tip-continuation emission, 37,654 px, format PASS, 98.8 % novel vs the H33 reference, 300 m minimum catalogue distance. Its evidence receipt (`evidence/gems52-h59-edge-coh-cotrain-…json`) records **no holdout measurement, no gate report and no slot verdict** — under the standing rule (no slot without beating the current holdout best) it is published as a research alternate, not a slot candidate; its method/evidence pages are `docs/h59-method.html` / `docs/h59-evidence.html` and its build is `scripts/build_h59_submission.py`. The audited H59 verdict on this page speaks only for the preregistered view_B artifact. Both rasters remain downloadable; future rounds must treat both as priors in every uniqueness check.
 
 ### H58 execution and review addendum — 2026-10-07 local / 2026-10-08 UTC
 

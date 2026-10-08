@@ -37,14 +37,23 @@ def test_current_artifact_is_downloadable_but_not_slot_approved() -> None:
     rnd = _current_round(sub)
 
     assert (ROOT / "submission/LATEST.txt").read_text().strip() == sub["file"]
-    assert sub["approved_for_weekly_slot"] is False, "the slot gate must never be asserted open"
-    assert sub.get("promoted") is False
+    if rnd == "H59":
+        # approval may only mirror the mechanical registered gate (tests/test_h59.py re-verifies
+        # that it cannot be asserted); the pointer test stays fully round-agnostic
+        slot = json.loads((ROOT / "evidence/h59_slot_gate.json").read_text())
+        mechanical = bool(slot["slot_bar_met"] and slot["checks_pass"])
+        assert sub["approved_for_weekly_slot"] == mechanical
+        assert sub.get("promoted_field") == slot["shipped_field"]
+    else:
+        assert sub["approved_for_weekly_slot"] is False, "the slot gate must never be asserted open"
+        assert sub.get("promoted") is False
 
     canonical = DOWNLOADS / sub["file"]
     # the scheduled feed rewrites docs/data/submission.json from evidence/submission_<stem>.json,
     # so the short aliases follow the repository convention rather than a publisher-only key
-    short = DOWNLOADS / "h57-candidate.tif" if "-h57-" in sub["file"] \
-        else DOWNLOADS / Path(sub["short_tif"]).name
+    short = (DOWNLOADS / "h57-candidate.tif" if "-h57-" in sub["file"]
+             else DOWNLOADS / "h59-candidate.tif" if "-h59-" in sub["file"]
+             else DOWNLOADS / Path(sub["short_tif"]).name)
     assert canonical.exists(), f"{rnd}: canonical download missing"
     assert sha(canonical) == sub["sha256"]
     assert short.read_bytes() == canonical.read_bytes()
@@ -54,8 +63,9 @@ def test_current_artifact_is_downloadable_but_not_slot_approved() -> None:
     # adds SUBMISSION_NOTE.txt / evidence.json beside the TIFF, so archive-level byte equality with
     # the short alias is reported by check_site as a note, not demanded here.
     canonical_zip = DOWNLOADS / (sub["file"][:-4] + ".zip")
-    short_zip = DOWNLOADS / "h57-candidate.zip" if "-h57-" in sub["file"] \
-        else DOWNLOADS / Path(sub["short_zip"]).name
+    short_zip = (DOWNLOADS / "h57-candidate.zip" if "-h57-" in sub["file"]
+                 else DOWNLOADS / "h59-candidate.zip" if "-h59-" in sub["file"]
+                 else DOWNLOADS / Path(sub["short_zip"]).name)
     for zp in (canonical_zip, short_zip):
         with zipfile.ZipFile(zp) as archive:
             tiffs = [n for n in archive.namelist() if n.lower().endswith((".tif", ".tiff"))]

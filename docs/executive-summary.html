@@ -1,34 +1,72 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="H59 artifact identification, one-click download, and the generated submit / do-not-submit verdict."><title>H59 submission guide · GEMSDOE52</title>
+<meta name="description" content="Exact H59 artifact identification, gate status, and portal steps for the single-band GeoTIFF; the file is all-finite [0,1] so the range error cannot occur."><title>How to submit the H59 artifact · GEMSDOE52 · GEMSDOE52</title>
 <link rel="stylesheet" href="style.css"><script src="site.js" defer></script></head>
-<body><a class="skip" href="#main">Skip to evidence</a><header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html">Overview</a><a href="executive-summary.html" aria-current="page">Submission guide</a><a href="h59.html">H59 audit</a><a href="irregularities.html">Limitations</a><a href="sources.html">Sources</a><a href="downloads/index.html">Downloads</a></nav></header>
-<main id="main"><section class="download-bar" aria-label="H59 artifact download">
-<div><strong>H59 · two-view co-training, disagreement-labelled · OK TO DOWNLOAD AND SUBMIT</strong>
-<small><code>gems52-h59-cotrain-view_B-37654px-20261008T033705Z-54debe0d-zeros.tif</code></small>
-<small>146,326 bytes · single-band float32 · EPSG:32611 · 3,292 × 3,730 · values exactly {0,1} · 0 NaN · 37,654 emitted pixels</small>
-<small>Shipped field <b>view_B</b> · gates PASS · pattern unique vs 47 accessible priors: YES · min distance to a mapped fault 223.6 m</small>
-<small>SHA-256 <code>bcf76cf1e961cf67cb4d018dcbcfd7c01124f28a8b99251fafe4c8a336e45bab</code></small></div><a class="button" href="downloads/h59-candidate.tif" download>↓ Download the H59 TIFF</a><a class="button" href="downloads/h59-candidate.zip" download>↓ Download one-TIFF ZIP</a><a class="button secondary" href="h59.html">Full audit →</a></section>
-<div class="eyebrow">Executive summary · how to submit (or why not)</div>
-<h1>OK TO DOWNLOAD AND SUBMIT — gates pass; this is the round&#x27;s recommended weekly-slot candidate.</h1>
-<div class="status"><strong>OK TO DOWNLOAD AND SUBMIT — gates pass; this is the round&#x27;s recommended weekly-slot candidate.</strong> All registered gates passed on re-read bytes. The shipped &lt;b&gt;view_B&lt;/b&gt; field is itself the strongest single view on both instruments (4/4 fold wins over random everywhere), and the artifact, scored as-is on the identical folds, beat the owner-reported-0.2778 incumbent emission as-is on BOTH instruments (hide 0.008365 vs 0.004068; block 0.008176 vs 0.003317). Amendment 3, slot basis: amendment 3: shipped field is itself the strongest single view, so the slot rule is the like-for-like incumbent comparison (this artifact as submitted vs the 0.2778 emission, as-is, identical folds): beaten on both instruments = True. The standing caveat: inputs are integrity-pinned owner mirrors, not organizer-authenticated, and every 0.25–0.28 score this family holds was built on the same mirrors. A weekly slot is the owner&#x27;s decision; no upload happened in this round.</div>
-<p class="lede">The direct TIFF and one-TIFF ZIP below are one click away. The portal accepts a single-band GeoTIFF (or a ZIP containing exactly one) on EPSG:32611, 3,292 × 3,730, 100 m, values in [0, 1]. This file is float32, values exactly {0, 1}, 0 NaN — the historical <em>"Predicted values must be in range [0, 1]"</em> rejection cannot recur.</p>
-<section class="card"><h2>Artifact identification</h2>
-<p><b>File:</b> <code>gems52-h59-cotrain-view_B-37654px-20261008T033705Z-54debe0d-zeros.tif</code> (short link <code>downloads/h59-candidate.tif</code>)</p>
-<p><b>Submission name:</b> <code>gems52-h59-cotrain-view_B-37654px-54debe0d-zeros</code></p>
-<p><b>SHA-256:</b> <span class="mono">bcf76cf1e961cf67cb4d018dcbcfd7c01124f28a8b99251fafe4c8a336e45bab</span></p>
-<p><b>Format:</b> one band float32 · EPSG:32611 · 3,292 × 3,730 · 100 m · 37,654 emitted px · values {0,1} · all finite</p>
-<label for="submission-note">Portal note (≤ 200 characters, copy-paste)</label>
-<textarea id="submission-note" readonly>H59 two-view co-training (view_B field), disagreement strata labelled; 37654 px outside the 200m ring; not a verified fault map.</textarea>
-<button data-copy="submission-note">Copy note</button></section>
-<h2>Submission steps (only if you accept the verdict above)</h2>
+<body><a class="skip" href="#main">Skip to evidence</a><header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html">Overview</a><a href="executive-summary.html">Submission guide</a><a href="h59.html">H59 audit</a><a href="irregularities.html">Limitations</a><a href="sources.html">Sources</a><a href="downloads/index.html">Downloads</a></nav></header>
+<main id="main"><div class="eyebrow">Executive summary · H59 · explicit submission status</div>
+<h1>Download, verify, submit —<br>in that order.</h1>
+<div class="status"><strong>RESEARCH ONLY — OK TO DOWNLOAD FOR REVIEW · DO NOT SPEND A WEEKLY SLOT</strong> This artifact is <b>not approved to spend a weekly submission slot</b>: at least one registered gate decision did not clear the bar on the blocked holdout. Downloading it for review, reproduction or audit is explicitly allowed and encouraged.</div>
+<section class="download-bar" aria-label="H59 download">
+<div><strong>gems52-h59-union-core25517px-arm14783px.tif</strong>
+<small>157,138 bytes · SHA-256 <code>8c4945ce170b702495057176fe61b892ee4b1af975b11f978920387216cf968d</code></small>
+<small>format gate: 0 problems · decoded-pattern unique vs 51 priors · support-novel 36.7 % · arm-outside-union-top-k 0 px</small></div>
+<a class="button" href="downloads/h59-candidate.tif" download>↓ Download the submission TIFF (one click)</a><a class="button" href="downloads/h59-candidate.zip" download>↓ Download the one-TIFF ZIP</a><a class="button secondary" href="h59.html">Full audit →</a></section>
+<h2>Is it OK to download and submit this file?</h2>
+<div class="table-wrap"><table><thead><tr><th>question</th><th>answer of record</th></tr></thead><tbody>
+<tr><td>OK to <b>download</b>?</td><td><span class="pill ok">YES</span> — always; the file and every receipt are published for audit.</td></tr>
+<tr><td>Format-safe for the portal?</td><td><span class="pill ok">YES</span> — all finite, values {0,1}, exact grid/transform/CRS; the “must be in range [0,1]” rejection cannot occur (that error came from NaN-bearing exports).</td></tr>
+<tr><td>Unique submission?</td><td><span class="pill ok">YES</span> — decoded pixel pattern differs from all 51 accessible aligned prior rasters (this repo's archives + the restored scored family); arm 100 % outside their support union; not any prior, not any pair-union. The scan supersedes the brief's count: all 38 listed prior
+submissions are inside the 51 rasters compared (50 distinct artifacts; both
+concurrent-session TIFFs included), plus this repository's own
+archived rounds.</td></tr>
+<tr><td>OK to spend the <b>weekly slot</b> on it?</td><td><span class="pill warn">NO</span> — the registered promotion + slot gates decide; see the audit page for the exact failed bar.</td></tr>
+<tr><td>Is it a verified fault map?</td><td><span class="pill no">NO</span> — every pixel is a hypothesis for Phase-2 review; reasoning + falsifiers ship with it.</td></tr>
+</tbody></table></div>
+<h2>Exact portal steps</h2>
 <ol>
-<li>Download the exact TIFF above (or its one-TIFF ZIP) and verify the SHA-256 matches. Do not reproject, rescale, recompress or edit it.</li>
-<li>Open the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DOE GEMS competition page</a> with the registered team account and choose <b>Submit file</b>.</li>
-<li>Select the GeoTIFF in <b>File to submit</b>; paste the note above into the optional note field.</li>
-<li>Record the returned submission ID, score and timestamp beside this receipt. The local holdout is not a forecast of that number.</li>
+<li>Use the registered eligible account on the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DOE GEMS competition page</a> → <b>Submit submission</b>.</li>
+<li>Download the audited file (single click): <a href="downloads/h59-candidate.tif" download>gems52-h59 · .tif</a> or the <a href="downloads/h59-candidate.zip" download>one-TIFF .zip</a>. Do not reproject, rescale, rename the payload, or open it in software that rewrites it.</li>
+<li><b>Why the range error cannot happen with this file:</b> the earlier portal error “Predicted values must be in range [0, 1]” is triggered by non-finite pixels (the historical <code>-nan</code> exports carried NaN outside the footprint). This artifact was written through <code>gems52.grid.write_geotiff</code>, which refuses to emit unless the re-read bytes are single-band float32, <b>all finite</b>, values exactly {0,1}, EPSG:32611, 3,730 × 3,292, transform <code>[100, 0, 243350, 0, −100, 4508550]</code> — the receipt below proves it.</li>
+<li>On the submission form, set <b>File to submit</b> to the downloaded .tif (or the .zip; it holds exactly one TIFF, verified byte-identical).</li>
+<li>Paste the unique submission name and the note (fields below; ≤ 200 characters each, counted).</li>
+<li>Submit, then record the returned submission ID, the timestamp, and the file hash next to this page's receipt. The first scored upload of this file closes its review window — one attempt per file, so re-verify the hash first.</li>
 </ol>
-<h2>Why this file exists (one paragraph)</h2>
-<p>The best score this family holds is 0.2778 (owner-reported, <code>h33-2-b2</code>): a 37,654-px dotted emission ranked by a surface field with every pixel inside 200 m of a mapped trace deleted. That file's entire credit comes from off-catalogue structure, and the metric's acceptance rule barely moves from 0.28 to the 0.46 ceiling — the only live lever is <em>ranking</em>. H59 rebuilds the ranking from two independent views and labels its own disagreement strata, so the buried-fault candidates carry written geology for Phase-2 review instead of silent mass.</p>
-<div class="status"><strong>Slots used by this round: 0.</strong> No portal upload, no organizer score, no leaderboard claim. Local gates are not organizer validation.</div>
-<p><a href="h59.html">Full H59 audit →</a> · <a href="data/h59_result.json">Machine-readable receipt</a> · <a href="irregularities.html">Limitations register</a></p></main><footer>DOE GEMS competition 306 · Reproducible local research · Predictions are not verified faults or geothermal discoveries. <a href="irregularities.html">Limitations</a> · <a href="sources.html">Sources</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code and evidence</a></footer></body></html>
+<label for="submission-name">Submission name (54 chars)</label>
+<input id="submission-name" readonly value="gems52-h59-union-core25517px-arm14783px-8c4945ce-zeros" style="width:100%;font:13px/1.6 ui-monospace,monospace;border:1px solid var(--line);border-radius:8px;padding:12px;background:#fff">
+<button data-copy="submission-name">Copy name</button>
+<label for="submission-note">Portal note (143 chars)</label>
+<textarea id="submission-note" readonly>H59 union arm 14783px outside all prior support + 25,517px credited core; all finite binary [0,1]; 200m ring excluded; not a verified fault map</textarea>
+<button data-copy="submission-note">Copy note</button>
+<h2>Machine-readable proof</h2>
+<p class="small">Format receipt: <a href="data/h59_format_gate.json">h59_format_gate.json</a> ·
+uniqueness: <a href="data/h59_uniqueness.json">h59_uniqueness.json</a> ·
+artifact: <a href="data/submission_h59.json">submission_h59.json</a> ·
+slot gate: <a href="data/h59_slot_gate.json">h59_slot_gate.json</a> ·
+frozen protocol: <a href="data/h59_preregistration.json">h59_preregistration.json</a> ·
+input integrity: <a href="data/h59_preflight_integrity.json">h59_preflight_integrity.json</a>
+(23/23 pins match; tracked <code>data/*.tif</code> recorded as grid stubs and never used).</p>
+<p class="small">Research archives keep their disclosures: the H58 cold-geothermometer artifact
+(<a href="downloads/h58-candidate.tif" download>h58-candidate.tif</a>), file
+<code>gems52-h58-coldgeo-consensus-22px-a55b0dee38-research.tif</code>, SHA-256
+<code>130c242e33aef398c44b22cd</code>… — <b>do not upload</b>; it is
+<b>not approved to submit</b> and its 22/37,654-cell shortfall is documented in
+<a href="data/h58_result.json">h58_result.json</a>. The H57 credited-core alternate
+<code>gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif</code> and the
+<a href="h55-edge.html">H55-EDGE negative-result archive</a> remain research-only.</p>
+<p class="small"><strong>Concurrent-round disclosure (IR-H59-004).</strong> A parallel session merged
+its own H59 during this round's lifetime —
+<code>gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif</code>
+(sha256 <code>4a60f941…</code>; its pages: <a href="h59-method.html">method</a> ·
+<a href="h59-evidence.html">evidence</a>; build preserved as
+<code>scripts/build_h59_edgecoh_submission.py</code>). Its artifact is format-valid but carries no
+registered holdout-lift or all-prior support gate, so under the standing rule it is research-only like
+this round's, and the weekly-slot pointer (<code>submission/LATEST.txt</code>) was reverted to H57 on
+its merge conflict. Both TIFFs were treated as priors by <em>this</em> round's final rebuild, which is
+why the canonical H59 hash on this page is <code>8c4945ce…</code> (it changed again at
+the final 51-raster rebuild, when the view-B round's own TIFF became a prior — every disclosure here
+reads the live receipt).</p>
+<div class="status"><strong>Honest limits.</strong> Inputs are SHA-pinned owner mirrors, not
+organizer-authenticated downloads; owner-reported sibling scores (incl. 0.2778 and 0.2477) are not
+organizer-verified; the local holdout ranks arms relative to each other and cannot certify a novel
+arm's hidden-truth density — the projection {"rho_0.03": 0.2658, "rho_0.05": 0.2811, "rho_0.07": 0.2964, "rho_0.09": 0.3117, "rho_0.12": 0.3347, "rho_0.14": 0.35} is conditional
+arithmetic, not a forecast.</div></main><footer>DOE GEMS competition 306 · Reproducible local research · Predictions are not verified faults or geothermal discoveries. <a href="irregularities.html">Limitations</a> · <a href="sources.html">Sources</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code and evidence</a></footer></body></html>
