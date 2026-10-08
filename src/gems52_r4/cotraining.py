@@ -130,6 +130,26 @@ def block_error_table(score: np.ndarray, pos: np.ndarray, allowed: np.ndarray,
     return out
 
 
+def topk_mask(r: np.ndarray, mask: np.ndarray, k: int) -> np.ndarray:
+    """Boolean mask of **exactly** the ``k`` highest-ranked pixels in ``mask``.
+
+    A quantile threshold cannot guarantee an exact count: every pixel tied at the
+    boundary value is included, which is how an emitter asked for 37,654 px shipped
+    37,655.  Submissions are compared like-for-like at a fixed budget, so the count has
+    to be exact; boundary ties are broken by ``argpartition``, deterministically.
+    """
+    m = np.asarray(mask, dtype=bool) & np.isfinite(r)
+    idx = np.flatnonzero(m.ravel())
+    if idx.size == 0 or k <= 0:
+        return np.zeros(np.asarray(r).shape, dtype=bool)
+    k = min(int(k), idx.size)
+    vals = np.asarray(r).ravel()[idx]
+    part = np.argpartition(vals, -k)[-k:]
+    out = np.zeros(np.asarray(r).shape, dtype=bool)
+    out.ravel()[idx[part]] = True
+    return out
+
+
 def _threshold_for_topk(r: np.ndarray, mask: np.ndarray, k: int):
     """Rank value at which exactly ``k`` masked pixels are at or above it, or None."""
     v = r[mask & np.isfinite(r)]

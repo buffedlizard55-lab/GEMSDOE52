@@ -269,8 +269,8 @@ def stage_arms(args):
                          seed=20261008 + f["fold"])
         bid = np.load(CACHE / "bid.npy")
         flat_fold = np.zeros(valid.shape, dtype=np.int8)   # no inner CV here
-        pa = M.fit_view(stack, idxA, sample, bid, flat_fold, log=lambda *a, **kw: None)
-        pb = M.fit_view(stack, idxB, sample, bid, flat_fold, log=lambda *a, **kw: None)
+        pa = M.fit_view(stack, idxA, sample, bid, flat_fold, log=lambda *a, **kw: None, cv=False)
+        pb = M.fit_view(stack, idxB, sample, bid, flat_fold, log=lambda *a, **kw: None, cv=False)
         fa = M.full_fit_predict(stack, idxA, pa["model"], valid, log=lambda *a, **kw: None)
         fb = M.full_fit_predict(stack, idxB, pb["model"], valid, log=lambda *a, **kw: None)
         np.save(CACHE / f"fold{f['fold']}_A.npy", fa)
@@ -282,7 +282,11 @@ def stage_arms(args):
 
         for name in A.arm_names() + ["random"]:
             if name == "random":
-                field = A.random_control(valid.shape, allowed, int(BUDGETS[1]),
+                # ONE field of iid uniform scores over every allowed pixel: its top-k
+                # is then a uniform random subset of size k for every k at once.
+                # Generating the control at a single fixed budget made it understate
+                # random at budgets above that size.
+                field = A.random_control(valid.shape, allowed, int(allowed.sum()),
                                          seed=20261008 + f["fold"])
             else:
                 field = A.build_arm(name, fa, fb)
@@ -315,11 +319,10 @@ def _recovery(field, truth, allowed, budgets):
     n_truth = int(truth.sum())
     out = {}
     for k in budgets:
-        thr = C._threshold_for_topk(r, allowed, int(k))
-        if thr is None or n_truth == 0:
+        picked = C.topk_mask(r, allowed, int(k))
+        if n_truth == 0 or not picked.any():
             out[k] = {"capture": None, "picked": 0}
             continue
-        picked = allowed & (r >= thr)
         out[k] = {"capture": float((picked & truth).sum()) / n_truth,
                   "picked": int(picked.sum())}
     return out
@@ -374,17 +377,16 @@ def stage_emit(args):
     sample = _sample(valid, cat)
     bid = np.load(CACHE / "bid.npy")
     flat = np.zeros(valid.shape, dtype=np.int8)
-    pa = M.fit_view(stack, idxA, sample, bid, flat, log=lambda *a, **kw: None)
+    pa = M.fit_view(stack, idxA, sample, bid, flat, log=lambda *a, **kw: None, cv=False)
     fa = M.full_fit_predict(stack, idxA, pa["model"], valid, log=lambda *a, **kw: None)
-    pb = M.fit_view(stack, idxB, sample, bid, flat, log=lambda *a, **kw: None)
+    pb = M.fit_view(stack, idxB, sample, bid, flat, log=lambda *a, **kw: None, cv=False)
     fb = M.full_fit_predict(stack, idxB, pb["model"], valid, log=lambda *a, **kw: None)
     field = A.random_control(valid.shape, valid, args.budget) if best == "random" \
         else A.build_arm(best, fa, fb)
     allowed = valid & (edt >= 200.0)
     field = np.where(allowed, field, np.nan)
     r = C._rank_within(field, allowed)
-    thr = C._threshold_for_topk(r, allowed, args.budget)
-    mask = allowed & (r >= thr)
+    mask = C.topk_mask(r, allowed, args.budget)
     out = np.where(mask, 1.0, 0.0).astype(np.float32)
     name = f"gems52-r4-{best}-{args.budget}px-{args.tag}.tif"
     dest = REPO / "submission" / name

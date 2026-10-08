@@ -404,3 +404,21 @@ def test_jsonable_replaces_nan_with_none():
     assert out == {"a": None, "b": [1.0, None], "c": 2.5}
     import json
     json.dumps(out, allow_nan=False), "must survive a strict dump"
+
+
+def test_topk_mask_returns_exactly_k_even_with_ties():
+    """A quantile threshold shipped 37,655 px when 37,654 were asked for."""
+    r = np.zeros((4, 4), np.float32)
+    r[:2, :] = 1.0                       # eight pixels tied at the top value
+    m = np.ones((4, 4), dtype=bool)
+    for k in (1, 3, 8, 16, 20):
+        assert int(C.topk_mask(r, m, k).sum()) == min(k, 16)
+
+
+def test_topk_mask_respects_the_allowed_mask():
+    r = np.arange(16, dtype=np.float32).reshape(4, 4)
+    allowed = np.zeros((4, 4), dtype=bool)
+    allowed[0, :] = True                # only four candidates, all low-ranked
+    sel = C.topk_mask(r, allowed, 10)
+    assert int(sel.sum()) == 4
+    assert sel[0, :].all() and not sel[1:, :].any()
