@@ -45,11 +45,20 @@ def test_h59_receipts_exist_and_agree_with_bytes() -> None:
     assert int(np.count_nonzero(a)) == b["nonzero_px"]
     assert b["core_px"] + b["arm_px"] == b["nonzero_px"]
 
-    # the ring rule re-measured, not trusted
-    with rasterio.open(ROOT / "work/h59_pinned/labels.tif") as ds:
+    # The ring rule re-measured, not trusted.
+    #
+    # The staging directory is a restore_data.py target and is git-ignored, so it is
+    # absent in a clean checkout. The guard below used to test only whether the catalogue
+    # had any True pixel, which meant rasterio.open had already raised FileNotFoundError
+    # before the guard could fire -- this test failed CI on every clean run. The
+    # existence check has to come first; the intent of the original comment is unchanged.
+    pinned = ROOT / "work/h59_pinned" / "labels.tif"
+    if not pinned.exists():
+        return                          # pinned staging absent in this checkout (CI keeps only core)
+    with rasterio.open(pinned) as ds:
         cat = ds.read(1) == 1
     if not cat.any():
-        return                          # pinned staging absent in this checkout (CI keeps only core)
+        return                          # staging present but carries no catalogue
     dcat = ndimage.distance_transform_edt(~cat, sampling=100.0)
     ys, xs = np.nonzero(a > 0)
     assert float(dcat[ys, xs].min()) >= 200.0
