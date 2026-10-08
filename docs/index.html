@@ -1,49 +1,106 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="New fault-prediction research TIFF, spatial validation and auditable source evidence. No unsupported leaderboard forecast."><title>Fault mapping, evidence first · GEMSDOE52</title><link rel="stylesheet" href="style.css"><script src="site.js" defer></script></head><body><a class="skip" href="#main">Skip to evidence</a><header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html">Overview</a><a href="executive-summary.html">Submission guide</a><a href="validation.html">Validation</a><a href="forensics.html">0.2778 autopsy</a><a href="sources.html">Sources</a><a href="h53.html">Parallel H53</a><a href="r3-hypotheses.html">R3 hypotheses</a></nav></header><main id="main"><!--H56BAR--><div class="download-bar" id="h56-bar" style="border:2px solid #0a0; background:#f0fff0"><div>
-<strong>★ H56 Co-training (NEW) — synthetic demo of View A vs View B disagreement ★</strong>
-<small><code>gems52-h56-cotrain-disagreement-37654px-20261007T1630Z-zeros.tif</code> — <b>UNIQUE</b>, click to download</small>
-<small>141,106 bytes · 1 band · float32 · EPSG:32611 · 3730×3292 · 100 m · values 0.0–1.0 · <b>0 NaN</b> · 37,654 positive px · 0 on catalogue · sha256 <code>c391ae7a5d0d4b25c…</code></small>
-<small>format gate <b>PASS</b> (problems []) · uniqueness gate <b>PASS</b> · <b>96.7%</b> strictly novel vs 20 priors · 327,930 prior px deliberately dropped · <b>PASS: not merely union</b> (37.1% vs topK, 6.4% vs greedy)</small>
-<small>View A (potential-field): grav 13/11/18/5 + mag 1/2/3/9/14 + strain 4/7/8 + seismic 10/16 + depth 15 + cond 17 · View B (surface): DEM 12/19 + <b>radiometric TC band 6</b> (ρ 1.000 vs USGS TC, IR-52-019) + 6 external K/Th/U + LiDAR · strata: A-only 65,599 / B-only 64,214 / concordant 1,101</small>
-<small>independence test: max |Spearman| <b>0.008</b> vs ABANDON 0.60 → <b>proceed (weak correlation, not proof)</b> · 4672 blocks · pseudo-label: whole 50×50 blocks + buffer, A-confident/B-abstain only · A-only = buried fault beneath cover (372 neighborhoods, each with geological reasoning)</small>
-<small>placement: greedy_emit R=3 (300 m kernel) budget 37,654 · total expected credit 40,205 · all 8-isolated · hide-and-recover synthetic demo: ViewB 0.039 vs cotrain 0.097 (illustrative; real holdout requires data/training_features.tif)</small>
-<small>portal name: <code>GEMSDOE52-H56-CoTrain-Disagreement-37654px</code></small>
-<small>portal note (≤200 chars): <code>H56 co-training disagreement | A-only 65599 B-only 64214 | independence r=0.008 (&lt;0.6) | greedy 37654px | synthetic demo</code></small>
-<small style="color:#a00"><b>RESEARCH-ONLY SYNTHETIC DEMO</b> — methodology is real (Blum & Mitchell COLT ’98, doi:10.1145/279943.279962), data are synthetic for sandbox. <b>Download is ready for review; NOT APPROVED FOR UPLOAD</b> (values in [0,1], correct grid), and <b>do not spend a weekly slot</b> until you rerun on real data via <code>bash scripts/download_competition_data.sh && python scripts/prepare_data.py && python scripts/build_h56_cotrain.py</code> on an unrestricted machine and pass a real spatial holdout. See <a href="h56-cotrain.html">H56 audit</a> and <a href="../knowledge/13_hypotheses_H56_cotrain.md">4 ranked hypotheses</a>.</small>
-</div>
-<a class="button" href="downloads/gems52-h56-cotrain-disagreement-37654px-20261007T1630Z-zeros.tif" download style="background:#0a0; color:#fff">↓ Download .TIF (H56 — unique)</a>
-<a class="button" href="downloads/gems52-h56-cotrain-disagreement-37654px-20261007T1630Z-zeros.zip" download>↓ Download .ZIP</a>
-<a class="button" href="downloads/gems52-h56-cotrain-disagreement-37654px-20261007T1630Z-zeros-a-only-reasoning.csv" download>↓ A-only reasoning CSV (372 rows)</a>
-<a class="button secondary" href="h56-cotrain.html">Validation &amp; hypotheses →</a>
-</div><!--/H56BAR--><!--H55BAR--><div class="download-bar" id="h55-bar"><div>
-<strong>H55 historical archive &mdash; superseded by the current H56 synthetic demo; not current submission advice</strong>
-<small><code>gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.tif</code></small>
-<small>147,617 bytes &middot; 1 band &middot; float32 &middot; EPSG:32611 &middot;
-width 3292 &times; height 3730 &middot; values 0.0&ndash;1.0
-&middot; <b>0 NaN</b> &middot; 37,654 positive px &middot; 0 on a catalogue pixel &middot;
-sha256 <code>a0f3ed4b4524ca67&hellip;</code></small>
-<small>format gate <b>True</b> (problems []) &middot;
-uniqueness gate <b>True</b> &middot; <b>61.1%</b> strictly novel
-against 23 scanned priors &middot; 1,123,846 prior px deliberately
-not re-emitted</small>
-<small>placement efficiency <code>A/S</code> = <b>8.8151</b> =
-93.97% of the exact 9.380298 kernel-disc ceiling &mdash; the
-file that scored 0.2778 reached 8.044
-(85.8%); every emitted pixel is 8-isolated (largest
-component 1)</small>
-<small>historical View-B holdout, 4 folds &times; 2 instruments, matched-budget random control: <code>hide</code>
-<b>0.09701</b> vs 0.03948 (4/4) &middot; <code>tip</code>
-<b>0.0547</b> vs 0.02477 (4/4)</small>
-<small>A-only, separate promotion test: hide 0.02979 vs random 0.03948 (below), 1/4 folds; tip 0.02894 vs 0.02477 (above), 2/4. Promotion gate fails; distinct from the registered block-correlation test.</small>
-<small><b>Historical only.</b> H55 local PASS is not H56 approval. Current H56 is a synthetic method demo and is not approved for a weekly slot.</small>
-<small>portal name: <code>GEMSDOE52-H55 RadCorrTC-ViewB-CoverageGreedy-37654px</code></small>
-<small>notes box, verbatim (192 chars):
-<code>H55: band 6 of training_features is radiometric TC, not magnetics (rho 1.000 vs USGS TC). ViewB + K/Th/U + LiDAR + INGENIOUS springs. Coverage-greedy, 94% of the 9.38 kernel ceiling. |G|=8129.</code></small>
-</div>
-<a class="button" href="downloads/gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.tif" download>&darr; Download archived H55 .TIF</a>
-<a class="button" href="downloads/gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.zip" download>&darr; Download H55 archive .ZIP</a>
-<a class="button" href="h55.html">H55 archive analysis &rarr;</a>
-<small style="width:100%">placement gain in isolation &mdash; the 0.2778 file's own measured
-&rho;<sub>A</sub> = 0.01287 applied to this file's measured coverage, nothing else changed &mdash;
-<b>DTI &asymp; 0.3044</b>. Arithmetic given its assumption, <b>not a forecast</b>:
-the instruments under-forecast the board by ~4&times; in absolute terms.</small>
-</div><!--/H55BAR--><!--H55PROFILE--><section class="card" id="h55-profile-followup"><h2>H55-PROFILE follow-up — research only, not promoted</h2><p>The five-scale paired-normal DEM profile candidate is a separate experiment. Its frozen spatial holdout failed the required mean-lift gate (+0.002300 vs +0.005); it does not replace the main H55 download or <code>submission/LATEST.txt</code>.</p><p><a class="button" href="downloads/gems52-h55-profile-37654-7fd28c25b51a-research.tif" download>Download H55-PROFILE research TIFF</a> <a href="downloads/gems52-h55-profile-37654-7fd28c25b51a-research.zip" download>single-TIFF ZIP</a> · <a href="h55-profile.html">Full follow-up audit</a></p></section><!--/H55PROFILE--><!--H55EDGE-ARCHIVE--><section id="h55-edge-archive" class="card"><h2>H55-EDGE potential-field experiment — failed gates, research only</h2><p>Mean spatial holdout lift +0.000546, positive in 2/4 folds; required +0.005 and 3/4. Strict support-novelty gate also failed. No slot or score.</p><p><a href="downloads/gems52-h55-grav-rtp-logedge-37654-c4b8c10205da-zeros.tif" download>Download research TIFF</a> · <a href="downloads/gems52-h55-grav-rtp-logedge-37654-c4b8c10205da-zeros.zip" download>one-TIFF ZIP</a> · <a href="downloads/gems52-h55-grav-rtp-logedge-37654-c4b8c10205da-zeros-a-only-reasoning.csv">A-only reasoning CSV</a> · <a href="h55-edge.html">Full H55-EDGE audit</a></p></section><!--/H55EDGE-ARCHIVE--><!--R3-H1-RESEARCH-BAR--><section class="download-bar" id="r3-h1-research-bar" aria-label="Research-only R3 artifact download"><div><strong>R3-H1 research GeoTIFF — NOT APPROVED FOR UPLOAD</strong><small>gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.tif</small><small>138077 bytes · single-band float32 · EPSG:32611 · finite [0,1] · sha256 <code>0a28426785c4125d…</code></small><small>on-disk format gate: PASS · canonical pattern unique: PASS · all-prior ≥20% support-novelty diagnostic: PASS (73.9% support outside comparison union)</small><small>submission note (117 chars): <code>R3-H1 paired DEM profile | local lift +0.000225 vs B (2/4 folds; gate FAIL) | research-only; NOT approved for upload.</code></small></div><a class="button" href="downloads/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.tif" download>↓ Download .TIF</a><a class="button" href="downloads/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.zip" download>↓ Download .ZIP</a><a class="button secondary" href="r3.html">Validation details →</a><small style="width:100%"><strong>Research-only:</strong> the registered spatial-holdout gate failed; no weekly submission slot has been used. Do not upload this file.</small></section><!--/R3-H1-RESEARCH-BAR--><!--H54BAR--><div class="download-bar" id="h54-bar"><div><strong>H54 legacy audit GeoTIFF — historical only; not the current H56 artifact</strong><small>gems52-h54-revealed-core-strike-continuation-50517px-r1.tif · 313431 bytes · SHA-256 <code>15210d91fa0c939b…</code></small><small>Local format check: True; global decoded-pattern uniqueness: unknown; bounded local prior audit only; weekly-slot approval: False. Do not submit this H54 archive.</small><small>Historical audit note (91 chars): <code>H54 legacy research/audit only; no comparable spatial holdout; not approved for submission.</code></small></div><a class="button" href="downloads/h54-audit-only.tif" download>↓ Download H54 audit TIFF</a><a class="button" href="downloads/h54-audit-only.zip" download>↓ Download H54 audit ZIP</a><a class="button" href="h54.html">H54 audit details →</a><small style="width:100%">The current H56 co-training artifact is a synthetic methodology demo and is also not approved for a weekly slot; <a href="h56-cotrain.html">read its status</a>.</small></div><!--/H54BAR--><div class="download-bar"><div><strong>Historical R2 research GeoTIFF</strong><small>gems52-r2-signednormal-37654-1f751ac9b6ee-zeros.tif</small><small>FORMAT CHECKED · UNSCORED · NOT APPROVED FOR A WEEKLY SLOT</small></div><a class="button" href="downloads/gems52-r2-signednormal-37654-1f751ac9b6ee-zeros.tif" download>↓ Download .TIF</a></div><div class="eyebrow">New model. Independent inference. Evidence first.</div><h1>Fault discovery,<br>without the false certainty.</h1><p class="lede">Geophysical–surface structural contrast on the Great Basin grid. A genuinely new prediction, a measured failed gate, and the evidence needed to decide what to try next.</p><div class="status"><strong>Research-only. Do not upload this run.</strong>The registered candidate did not beat the strongest comparable baseline. Download for review/reproduction, not permission to spend a competition slot. No organizer score or portal acceptance is claimed.</div><div class="grid"><div class="card"><div class="metric">37,654</div><div class="label">new, kernel-placed unit predictions</div></div><div class="card"><div class="metric">0.19317</div><div class="label">mean local catalogue-holdout DTI</div></div><div class="card"><div class="metric">0 / 3</div><div class="label">weekly slots used by this work / official weekly limit</div></div></div><div class="two"><div><h2>What changed</h2><p>Signed gravity–cover normals, persistent gradients and surface curvature replace the old ad-hoc rank blend. The file was inferred from a newly fitted model using competition feature/label rasters only. No prior submission supplies a pixel or model feature.</p><p>Measured comparison: <strong>0.19317</strong> versus <strong>0.19467</strong> for surface-only; paired lift <strong>-0.00150</strong>, 2/4 folds positive. Local catalogue scores are not public leaderboard scores.</p><div class="actions"><a href="method.html">Read the method →</a> <a href="validation.html">Inspect every fold →</a></div><h2>Unique, not a renamed reference</h2><p>395 aligned accessible prior files compared. No canonical decoded match. <strong>0.0%</strong> of emitted support is outside the binary / ≥0.5 continuous diagnostic union (the original 20% support-novelty diagnostic FAILED);  5,326,233 prior-union cells are not emitted. A dense historical density-probe fills nearly the whole footprint, so zero support novelty against that union does not mean the sparse decoded pattern was copied. Independently placed A/B outputs are also not simply unioned; a same-budget max-view union differs at 32,553 emitted positions.</p><p class="small">Bounded audit, not global novelty or proof of new faults. NaN/sentinel prior cells are normalized to zero and values compared at float32 precision. See full comparison scope and exclusions.</p><a href="data/uniqueness_r2.json">Open every comparison →</a><h2>How 0.2778 was reached</h2><p>Reference bytes show exactly <strong>2,545 off-catalogue flank dots removed</strong> within 200 m of known traces. None were on the known mask. Staff confirm that known pixels do not pay penalties. Reduced weak flank mass is a plausible mechanism, not a reconstruction of hidden scoring.</p><a href="forensics.html">Read the corrected autopsy →</a></div><figure><img src="assets/prediction-r2.png" alt="North-up template grid: known catalogue traces blue, new research predictions amber, survey footprint grey-green."><figcaption>Actual R2 output · north up · 4× max-pooling for display. Blue: known catalogue; amber: research proposals. Not verified fault discoveries or geothermal vents.</figcaption></figure></div><h2>Every A-only proposal gets a reason</h2><p>925 emitted A-only pixels have individual coordinate, score, physical-signature, alternative-explanation and verification-status rows. These are falsifiable hypotheses, not expert certification.</p><a href="downloads/gems52-r2-signednormal-37654-1f751ac9b6ee-zeros-candidates.csv">Download geological reasoning CSV →</a><div class="live-feed" id="feed">Automatic local evidence feed. The official board is a dated observation, not a live feed.</div><p class="small">Last official board observation: 2026-10-06, leader 0.3774; the brief’s 0.3195 was rank 7. DrivenData automatic access is disabled under its Terms; no artificial freshness is reported.</p></main><footer>Competition 306 · Reproducible CPU research · Fault predictions, not confirmed geothermal vents. <a href="irregularities.html">Limitations &amp; review</a> · <a href="method.html">Method</a> · <a href="hypotheses.html">Hypotheses</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code &amp; complete prompt</a></footer></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="H57 real-raster fault-mapping experiment: downloadable research GeoTIFF, spatial holdout, exact-pattern audit, and explicit no-submit decision.">
+  <title>H57 research artifact · GEMSDOE52</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to evidence</a>
+<header><nav aria-label="Main navigation">
+  <a class="brand" href="index.html">GEMS / DOE 52</a>
+  <a href="executive-summary.html">Submission guide</a>
+  <a href="h57.html">H57 audit</a>
+  <a href="forensics.html">H33 autopsy</a>
+  <a href="r3-hypotheses.html">Hypotheses</a>
+  <a href="sources.html">Sources</a>
+  <a href="irregularities.html">Limitations</a>
+</nav></header>
+<main id="main">
+  <section class="download-bar" aria-label="H57 research artifact downloads">
+    <div>
+      <strong>H57 real-raster co-training artifact · downloadable for research</strong>
+      <small>Single-band float32 GeoTIFF · EPSG:32611 · 100 m · 37,654 binary predictions · exact decoded pattern differs from 567 unique aligned prior contents in the accessible scan.</small>
+      <small>File: <code>gems52-h57-cotrain-disagreement-37654px-20261007T220849Z-1632bb37bb.tif</code></small>
+      <small>SHA-256: <code>a153cda1aae9f77249154b31a06d85f286cd669d56961dded0f0d79547018d7d</code></small>
+    </div>
+    <a class="button" href="downloads/gems52-h57-cotrain-disagreement-37654px-20261007T220849Z-1632bb37bb.tif" download>↓ Download research TIFF</a>
+    <a class="button secondary" href="downloads/gems52-h57-cotrain-disagreement-37654px-20261007T220849Z-1632bb37bb.zip" download>↓ One-TIFF ZIP</a>
+    <a class="button secondary" href="downloads/gems52-h57-cotrain-disagreement-37654px-20261007T220849Z-1632bb37bb-a-only-reasoning.csv" download>A-only reasoning CSV</a>
+  </section>
+
+  <div class="status" role="alert" style="border:2px solid #9c3f32;background:#fff0ec;color:#70251d">
+    <strong>DO NOT SUBMIT — not approved for a weekly slot.</strong>
+    The preregistered four-fold spatial holdout failed: H57 co-training mean DTI was 0.110665 versus 0.151305 for the strongest matched baseline (View B), a paired mean lift of −0.040641 and 0/4 positive folds. The artifact is available to inspect; a download link is not submission approval. No portal was contacted and no slot was used.
+  </div>
+
+  <div class="eyebrow">Great Basin · fault mapping · evidence before claims</div>
+  <h1>A fresh model output.<br>A failed promotion test.</h1>
+  <p class="lede">This is a real-raster H57 experiment on the competition’s fault-mapping grid—not a geothermal-vent detector. It tests whether asymmetric disagreement between corrected geophysical and surface/radiometric views finds catalogue-missing faults. The result is a useful negative: co-training loses to the single-view baseline on all four folds.</p>
+
+  <div class="grid">
+    <div class="card"><div class="metric">−0.040641</div><div class="label">mean DTI lift vs strongest matched baseline (View B)</div></div>
+    <div class="card"><div class="metric">0 / 4</div><div class="label">paired folds improved; promotion requires at least 3 / 4</div></div>
+    <div class="card"><div class="metric">0 / 3</div><div class="label">weekly slots used by this work / stated weekly limit</div></div>
+  </div>
+
+  <section class="card">
+    <h2>Four-fold spatial holdout</h2>
+    <p>All arms use the same buffered spatial folds and metric-aware emission budget. DTI values are local holdout diagnostics against catalogue-zero proxies—not organizer scores, confirmed absences, or public leaderboard forecasts.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Fold</th><th>View A</th><th>View B</th><th>Matched max-union</th><th>H57 co-training</th></tr></thead>
+      <tbody>
+        <tr><td>0</td><td class="number">0.066070</td><td class="number">0.142012</td><td class="number">0.110424</td><td class="number">0.099392</td></tr>
+        <tr><td>1</td><td class="number">0.099929</td><td class="number">0.180944</td><td class="number">0.177622</td><td class="number">0.132206</td></tr>
+        <tr><td>2</td><td class="number">0.087929</td><td class="number">0.133520</td><td class="number">0.129540</td><td class="number">0.101599</td></tr>
+        <tr><td>3</td><td class="number">0.089644</td><td class="number">0.148745</td><td class="number">0.134601</td><td class="number">0.109462</td></tr>
+        <tr class="primary"><td><strong>Mean</strong></td><td class="number"><strong>0.085893</strong></td><td class="number"><strong>0.151305</strong></td><td class="number"><strong>0.138047</strong></td><td class="number"><strong>0.110665</strong></td></tr>
+      </tbody>
+    </table></div>
+    <p><strong>Decision:</strong> abandon co-training as a submission candidate. Its measured maximum blockwise proxy-error correlation was only 0.105 (below the registered 0.6 stop threshold), so the exchange was run; weak correlation is not proof of conditional independence. The resulting model nevertheless loses badly on every fold. The frozen View-B fallback is the better measured arm, but it has not cleared the separate promotion hurdles and is not being substituted post hoc.</p>
+  </section>
+
+  <div class="two">
+    <section>
+      <h2>Artifact gates are not all the same</h2>
+      <ul>
+        <li><strong>Format: PASS.</strong> Read back from disk: one float32 band, EPSG:32611, exact 3730×3292 grid and 100 m transform, in-footprint values [0,1], 37,654 positive cells, and NaN only outside the sample-template mask.</li>
+        <li><strong>Exact-pattern uniqueness: PASS within checked scope.</strong> Canonical decoded raster hash differs from all 567 unique byte contents among 772 aligned paths (205 byte-identical path aliases collapsed). This scan covered local archives and 55 public sibling repositories (774 TIFF paths fetched, zero fetch errors, no truncated Git trees). Private, deleted, unlinked, or otherwise inaccessible files cannot be ruled out.</li>
+        <li><strong>Support novelty: FAIL (0%).</strong> Every selected cell is touched by at least one prior’s proposal support; the prior union covers 5,364,328 cells. This is a separate strict ≥20% diagnostic, and it fails because the comparison union is saturated by broad/dense exploratory maps. It is disclosed, not re-labelled as a pass.</li>
+        <li><strong>Not merely the views’ union: PASS.</strong> The candidate differs from the same-budget max-union in 35,236 of its 37,654 cells and from the literal union of View A/B. This is a structural comparison, not evidence of geological correctness.</li>
+        <li><strong>Promotion: FAIL.</strong> The spatial performance gate fails; the support-novelty diagnostic also fails; no independent confirmation or organizer-format acceptance was obtained. Upload is unauthorized.</li>
+      </ul>
+    </section>
+    <section>
+      <h2>What the TIFF represents</h2>
+      <p>The raster is a new inference from SHA-pinned owner-maintained mirrors of the competition rasters; those input bytes were not authenticated by DrivenData. The public sibling TIFF corpus was consulted only after prediction generation, for comparison—not as a model feature or training label.</p>
+      <p>View A uses potential-field/subsurface predictors. View B includes topographic predictors and band 6, assigned as radiometric-total-count-like only as a measured working hypothesis: its provenance tag conflicts with the spectral comparison, and the official survey page does not establish the exact competition-band mapping.</p>
+      <p>The A-only reasoning CSV describes all 1,137 connected components (36,540 candidate pixels), with measured band context and alternatives. Of 37,654 emitted cells, 3,030 came from A-only components; none are verified faults. B-only candidates are retained as possible surface artifacts, not asserted to be artifacts.</p>
+    </section>
+  </div>
+
+  <section class="card">
+    <h2>Why the owner-reported H33 score was 0.2778—and what we can actually establish</h2>
+    <p>The official task is fault mapping. The leaderboard exposes team-level scores, not upload filenames or raster hashes; the H33 filename-to-0.2778 association is therefore owner-reported, not independently authenticated from the public board. The 7 October snapshot lists 0.2778 at rank 13, 0.3195 at rank 7, and 0.3774 at rank 1—not 0.3195 as the overall high.</p>
+    <p>We fetched the named H33 raster and checked its bytes: 37,654 binary cells, zero on the supplied mapped-catalogue pixels, and a nearest mapped-catalogue distance of about 223.6 m. A sibling H27-4 artifact has 40,199 cells; H33 removes exactly 2,545 off-catalogue cells within 200 m, adds none, and leaves no H33 cells within that ring. The owner-reported paired score is 0.2708→0.2778 (+2.5849%). This is consistent with reducing weak incremental-cover/false-positive mass, but hidden truth and an authenticated upload receipt are unavailable, so it is not causal proof.</p>
+    <p>The metric weights fault pixels within a 300 m triangular kernel and penalizes unsupported prediction mass (α=0.2, β=0.8). At this sparse binary budget, placement and spatial coverage matter; removing mass can help if it mostly removes false-positive tax, but that is a testable explanation, not proof of why H33 scored as it did. See the <a href="forensics.html">byte-level H33 autopsy</a> and <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">official metric description</a>.</p>
+  </section>
+
+  <section class="card">
+    <h2>Research priority</h2>
+    <p>The preregistered hypothesis ranking remains in <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/17_hypotheses_H57_preregistered.md">H57’s hypothesis record</a>. H57-H1, asymmetric corrected-view disagreement, was tested first and lost. Next candidates are: (1) conductivity termination at an independent potential-field intersection; (2) radiometric flank contrast aligned with a structural step; (3) LiDAR scarp asymmetry cross-checked against deep structure; and (4) thermal-well/spring context for Phase 2 only, never as fault labels. Their costs, failure modes, trusted source links, and preregistered scope are in the record. Do not change hypotheses or spend a slot without a new preregistration and spatially blocked validation.</p>
+  </section>
+
+  <div class="actions">
+    <a class="button" href="h57.html">Full H57 audit & fold evidence →</a>
+    <a class="button secondary" href="executive-summary.html">How a future approved file is submitted →</a>
+    <a class="button secondary" href="data/h57_submission.json">Open artifact receipt</a>
+    <a class="button secondary" href="data/h57_execution_provenance.json">Open execution history</a>
+  </div>
+  <section class="card" id="historical-archives"><h2>Historical research archives</h2><p>These earlier experiments are not current submission advice: <a href="h56-cotrain.html">H56 synthetic method demo</a> · <a href="h55.html">H55 archive</a> · <a href="h55-profile.html">H55-PROFILE</a> · <a href="h55-edge.html">H55-EDGE</a> · <a href="r3.html">R3-H1</a>. No official score or portal acceptance is claimed for H57. Read the <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/README.md">complete README and preserved prompt</a> for the full project record.</p></section>
+</main>
+<footer>DOE GEMS Competition 306 · Research only · A mapped or predicted line is not a confirmed fault or geothermal vent. <a href="irregularities.html">Limitations &amp; provenance</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Source repository</a></footer>
+</body>
+</html>

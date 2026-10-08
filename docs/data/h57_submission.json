@@ -48568,10 +48568,5 @@
       "disposition": "The exact SHA-pinned core input files used for H57 are not present in this checkout; the small files under data/ have different hashes and sizes. A clean reproduction cannot be run without restoring the exact pinned inputs."
     },
     "overall_disposition": "H57 remains RESEARCH ONLY \u2014 DO NOT SUBMIT. The spatial result is a failed no-go in its recorded receipt, but source/input reconciliation and the train-boundary component interpretation remain unresolved; do not treat it as promotion evidence or spend a weekly slot."
-  },
-  "marker": "submission/LATEST.txt",
-  "exists": true,
-  "download": "downloads/gems52-h57-cotrain-disagreement-37654px-20261007T220849Z-1632bb37bb.tif",
-  "download_zip": "downloads/gems52-h57-cotrain-disagreement-37654px-20261007T220849Z-1632bb37bb.zip",
-  "published_byte_hash_matches_receipt": true
+  }
 }

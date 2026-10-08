@@ -1,0 +1,115 @@
+{
+  "experiment": "H57 real-raster holdout",
+  "registered_utc": "2026-10-07T21:00:07Z",
+  "registration_sha256": "1fe3a3615651366d9cb296cd65adb40459462e357bf3a7aadf83292cfdf0061c",
+  "input_sha256": {
+    "training_features.tif": {
+      "bytes": 418912844,
+      "sha256": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5"
+    },
+    "labels.tif": {
+      "bytes": 425830,
+      "sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093"
+    },
+    "sample_submission.tif": {
+      "bytes": 1599597,
+      "sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc"
+    }
+  },
+  "feature_manifest_sha256": "c387f52e7c39c1cd5499244c413ec64ad279ca3fd2050fe73b069acf3f0b92e9",
+  "successful_holdout_generated_utc": "2026-10-07T21:59:47.429673Z",
+  "holdout_code_sha256": {
+    "scripts/run_h57_real.py": "f9e1c0f08ebb6d56aa86394abbf3a2680e33d547b33713fad56ac3f1e3823716",
+    "src/gems52/h57.py": "581051bafcc510e79946104233ad60a6e0bd9b92715216140215baaa2b584bf9",
+    "src/gems52/spatial.py": "88161ed73b7cd1ad37b2b816204ff2f827593599a75eb29f5373bfdc79e41dbc",
+    "src/gems52/emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9",
+    "src/gems52/metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a"
+  },
+  "attempts": [
+    {
+      "stage": "prepare",
+      "status": "initial invocation failed after successful feature-cache write",
+      "failure": "stage dispatcher fell through to require a provisional holdout receipt; fixed; no model fit or score."
+    },
+    {
+      "stage": "validate",
+      "status": "interrupted by kernel OOM after fold 3 score logs, before holdout JSON write",
+      "failure": "unneeded full strata arrays were retained in per-fold metadata and expanded by JSON conversion; no promotion decision or artifact."
+    },
+    {
+      "stage": "validate",
+      "status": "interrupted by kernel OOM after fold 3 score logs, before holdout JSON write",
+      "failure": "same full-strata serialization defect remained after first memory-bounding edit; no promotion decision or artifact."
+    },
+    {
+      "stage": "validate",
+      "status": "completed",
+      "failure": null,
+      "fold_results_sha256": "b45cd01fd6797832af17e995e971dfec041ae53d34660389862090df276be62b",
+      "note": "The completed run used the same frozen registration, inputs, cache, seeds, splits, models, pseudo-label rows and metrics. The output-only metadata fix removed full arrays from JSON; all four scores match both interrupted logs exactly."
+    }
+  ],
+  "interpretation": "The two killed attempts are implementation failures, not failed model experiments. Only the completed receipt is used for the predeclared gate.",
+  "portal_contacted": false,
+  "submission_slots_used": 0,
+  "post_execution_review": {
+    "reviewed_utc": "2026-10-07",
+    "runner_source_reconciliation": {
+      "recorded_holdout_runner_sha256": "f9e1c0f08ebb6d56aa86394abbf3a2680e33d547b33713fad56ac3f1e3823716",
+      "recorded_artifact_build_runner_sha256": "6f6aaca215578213de68d7da5310648d558b0d85c842245939c559020342221c",
+      "current_checkout_runner_sha256": "f0c4a72e1ce9f60bca54ae38e377b9bcf68de892cb89a3541322b67a0b66cfac",
+      "runner_hashes_reconciled": false,
+      "historical_runner_snapshots_available": false,
+      "disposition": "The three hashes differ and no immutable source snapshots mapping them to the executed code were found. The holdout runner-to-result and artifact-build runner-to-TIFF provenance cannot be fully reconciled from this checkout.",
+      "matching_or_reviewed_modules": {
+        "src/gems52/h57.py": {
+          "recorded_sha256": "581051bafcc510e79946104233ad60a6e0bd9b92715216140215baaa2b584bf9",
+          "current_checkout_sha256": "581051bafcc510e79946104233ad60a6e0bd9b92715216140215baaa2b584bf9",
+          "matches_recorded_holdout": true
+        },
+        "src/gems52/spatial.py": {
+          "recorded_sha256": "88161ed73b7cd1ad37b2b816204ff2f827593599a75eb29f5373bfdc79e41dbc",
+          "pre_review_checkout_sha256": "88161ed73b7cd1ad37b2b816204ff2f827593599a75eb29f5373bfdc79e41dbc",
+          "current_checkout_sha256": "5faed874eede30c3bbb9977a70a64894daf5720d545923fb1ac3fd87d52ec814",
+          "review_change": "Documentation-only clarification of train-domain component boundary semantics; computational logic unchanged in this review.",
+          "matches_recorded_holdout_after_review": false
+        }
+      }
+    },
+    "pseudo_component_boundary_review": {
+      "registered_training_domain_only": true,
+      "prediction_domain": "Both per-view score rasters are generated only on the training mask; values outside it are non-finite.",
+      "connected_component_domain": "Finite confident-disagreement candidate pixels inside the observed training-domain field.",
+      "enforced_within_observed_field": [
+        "selected pseudo pixels remain in the training mask",
+        "forbidden known-label collar candidate pixels reject their observed component",
+        "each selected component stays in one 50x50-pixel block",
+        "components are not trimmed to satisfy the cap"
+      ],
+      "unobserved_boundary": "The selector cannot detect whether an observed candidate component continues beyond a training/evaluation boundary or into an area where predictions were not generated.",
+      "interpretation": "Whole-component compliance is established only relative to the train-only confidence-disagreement field. No pseudo pixels enter the evaluation region or its training buffer, but completeness across an unscored boundary is not established; the earlier broad wording was too strong.",
+      "effect_on_result": "This is a protocol-semantics/provenance limitation, not evidence of evaluation-label leakage. It further blocks using H57 as a promotable submission result."
+    },
+    "input_restore_review": {
+      "pinned_input_directory_present": false,
+      "expected_directory": "/tmp/gems52-restored-core",
+      "current_repository_data_matches_pins": false,
+      "current_repository_data": {
+        "training_features.tif": {
+          "bytes": 3357961,
+          "sha256": "9c450a754ed9586972877ced6865e619d5c35c6905970184908bc3d0518435ea"
+        },
+        "labels.tif": {
+          "bytes": 152999,
+          "sha256": "488dcb3386dc45cab38ef07021e91b629cb621f6a484ca42d53f2c45cd96347e"
+        },
+        "sample_submission.tif": {
+          "bytes": 97091,
+          "sha256": "9d35c34ae2293f00e7a9185f67c2428cc94d9bdbeb8166be885da5e6f6270291"
+        }
+      },
+      "disposition": "The exact SHA-pinned core input files used for H57 are not present in this checkout; the small files under data/ have different hashes and sizes. A clean reproduction cannot be run without restoring the exact pinned inputs."
+    },
+    "overall_disposition": "H57 remains RESEARCH ONLY — DO NOT SUBMIT. The spatial result is a failed no-go in its recorded receipt, but source/input reconciliation and the train-boundary component interpretation remain unresolved; do not treat it as promotion evidence or spend a weekly slot."
+  }
+}

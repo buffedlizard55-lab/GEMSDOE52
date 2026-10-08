@@ -474,18 +474,25 @@ def insert_h55_review(h55_archive: dict, verification: dict, sweep: dict,
         h55_status = "The H55 archive receipt does not establish a local slot decision; do not infer approval."
 
     current_file = str(current_submission.get("file") or "not recorded")
-    if current_submission.get("synthetic") or current_submission.get("synthetic_demo"):
+    if current_submission.get("candidate_arm") == "h57_disagreement_cotrain":
+        current_status = (
+            f"The current pointer is <code>{esc(current_file)}</code>, a real-raster H57 research artifact. "
+            "Its preregistered four-fold spatial holdout failed (co-training lost to View B on all four folds), "
+            "and the separate support-novelty diagnostic failed. It is downloadable for research only; "
+            "do not upload or spend a slot. See the <a href=\"h57.html\">H57 audit and current status</a>."
+        )
+    elif current_submission.get("synthetic") or current_submission.get("synthetic_demo"):
         current_status = (
             f"The current pointer is <code>{esc(current_file)}</code>, a synthetic methodology demo. "
             "Its illustrative holdout figures are not real-data validation; its weekly-slot gate is closed. "
             "Do not upload or spend a slot until a real-data build passes the preregistered comparable spatial holdout. "
-            'See the <a href="h56-cotrain.html">current H56 status and audit</a>.'
+            'See the <a href="h56-cotrain.html">historical H56 synthetic-demo status</a>.'
         )
     elif current_submission.get("approved_for_weekly_slot") is False:
         current_status = (
             f"The current pointer is <code>{esc(current_file)}</code>; its receipt explicitly closes the "
             "weekly-slot gate. No comparable spatial holdout is recorded, so do not upload or spend a slot. "
-            'See the <a href="h56-cotrain.html">current H56 status and review</a>.'
+            'See the <a href="h56-cotrain.html">historical H56 synthetic-demo status</a>.'
         )
     elif current_submission.get("approved_for_weekly_slot") is True:
         current_status = (
@@ -502,7 +509,7 @@ def insert_h55_review(h55_archive: dict, verification: dict, sweep: dict,
     block = (
         '<!--H55-ARCHIVE-REVIEW--><section id="h55-archive-review" class="card">'
         '<div class="eyebrow">Historical H55 evidence review · 2026-10-07</div>'
-        '<h2>H55 archive: findings and promotion decision do not carry forward to H56</h2>'
+        '<h2>H55 archive: findings and promotion decisions do not carry forward to later candidates</h2>'
         f'<p><strong>{esc(h55_status)}</strong> H55 file: <code>{esc(h55_archive.get("file"))}</code>. '
         f'{current_status} <a href="h55.html">Open the full H55 archive analysis</a>.</p>'
         '<p>Band 6 was re-audited as GeoDAWN total-count radiometry, not a magnetic derivative, despite its TIFF tag. '
@@ -513,7 +520,7 @@ def insert_h55_review(h55_archive: dict, verification: dict, sweep: dict,
         'Catalogue-zero pixels are incomplete-label proxies; this is not proof of geological absence or '
         'conditional independence.</p>'
         f'<p>{esc(a_only_comparison_summary(sweep))}</p>'
-        '<p>H55-JUNCTION remains untested. This archival review creates no TIFF and uses no weekly slot. '
+        '<p>H55-JUNCTION remains untested historically; this archival review creates no TIFF and uses no weekly slot. '
         '<a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/12_hypotheses_H55_preregistered.md">'
         'Open the frozen H55 hypothesis register</a>.</p>'
         '</section><!--/H55-ARCHIVE-REVIEW-->'
@@ -625,8 +632,8 @@ def insert_r3_download_section(sub: dict) -> None:
 
 
 def main() -> int:
-    # H55's evidence is historical and must not be inferred from docs/data/submission.json, which now
-    # belongs to the current H56 candidate. Load its immutable evidence receipts by their exact tag.
+    # H55/R3 evidence is historical and must not be inferred from docs/data/submission.json, which
+    # follows submission/LATEST.txt. Load historical receipts by exact round/tag; preserve the current page's top download.
     r3 = load("submission_r3")
     current = load("submission")
     h55_archive = load_evidence(f"submission_{H55_STEM}.json")
@@ -653,7 +660,7 @@ def main() -> int:
     if current.get("file") != latest:
         raise ValueError("docs/data/submission.json does not match submission/LATEST.txt")
     if current.get("approved_for_weekly_slot") is not False:
-        raise ValueError("the current H56 slot gate must remain explicitly closed in this publication pass")
+        raise ValueError("the current artifact must remain explicitly unapproved in this historical publication pass")
     if h55_archive.get("file") != f"{H55_STEM}.tif" or h55_archive.get("approved_for_weekly_slot") is not True:
         raise ValueError("the H55 archive receipt is not the expected historical, locally reviewed artifact")
     if h55_verification.get("tag") != H55_TAG or h55_verification.get("all_ok") is not True:
@@ -665,12 +672,13 @@ def main() -> int:
     (DOCS / "r3.html").write_text(render_r3(r3, holdout, independence, cotrain, board), encoding="utf-8")
     (DOCS / "r3-hypotheses.html").write_text(render_hypotheses(r3, holdout), encoding="utf-8")
     insert_h55_review(h55_archive, h55_verification, h55_sweep, current)
-    insert_r3_home_bar(r3)
+    if current.get("candidate_arm") != "h57_disagreement_cotrain":
+        insert_r3_home_bar(r3)
     insert_r3_download_section(r3)
     for name in ("index.html", "validation.html", "forensics.html", "hypotheses.html", "sources.html",
                  "irregularities.html", "feed.html", "h54.html", "executive-summary.html"):
         insert_nav_link(DOCS / name)
-    print("wrote R3 research pages and H55 archive review; H56 current guide/status and pointer remain intact")
+    print("wrote historical R3 pages and H55 archive review; preserved the current H57 top download and status")
     return 0
 
 if __name__ == "__main__":

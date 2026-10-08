@@ -1,4 +1,4 @@
-"""Publication regressions for archived H55 claims under the current H56 site state."""
+"""Publication regressions for archived H55 claims under the current H57 site state."""
 from __future__ import annotations
 
 import json
@@ -61,7 +61,7 @@ def test_h55_verification_keeps_a_only_gate_separate_from_independence() -> None
     assert "below matched random on both" not in verification["union_audit"]["verdict"]
 
 
-def test_h55_archive_review_is_idempotent_and_carries_h56_status(monkeypatch, tmp_path) -> None:
+def test_h55_archive_review_is_idempotent_and_carries_h57_status(monkeypatch, tmp_path) -> None:
     monkeypatch.setattr(publish_site_r3, "DOCS", tmp_path)
     page = tmp_path / "irregularities.html"
     page.write_text(
@@ -84,9 +84,10 @@ def test_h55_archive_review_is_idempotent_and_carries_h56_status(monkeypatch, tm
     assert "H55 is superseded" in result
     current = _json(DATA / "submission.json")
     assert current["file"] in result
-    assert "synthetic methodology demo" in result
-    assert "h56-cotrain.html" in result
-    assert "weekly-slot gate" in result and "Do not upload or spend a slot" in result
+    assert "real-raster H57 research artifact" in result
+    assert "h57.html" in result
+    assert "four-fold spatial holdout failed" in result
+    assert "do not upload or spend a slot" in result.lower()
     assert "0.02979" in result and "0.02894" in result
     assert "below random on hide and above random on tip" in result
     assert "H55-JUNCTION remains untested" in result

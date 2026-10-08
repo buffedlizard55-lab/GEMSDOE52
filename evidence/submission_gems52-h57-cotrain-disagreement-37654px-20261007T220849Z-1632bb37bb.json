@@ -5,7 +5,7 @@
   "submission_name": "GEMSDOE52-H57-cotrain-disagreement-37654px",
   "submission_note": "H57 co-training | 37,654 metric-placed px | local gate FAIL (-0.0406 DTI vs best; 0/4) | research only; DO NOT upload.",
   "submission_note_chars": 118,
-  "status": "RESEARCH ONLY \u2014 DO NOT SUBMIT; no portal upload authorized",
+  "status": "RESEARCH ONLY — DO NOT SUBMIT; no portal upload authorized",
   "candidate_arm": "h57_disagreement_cotrain",
   "decoded_pattern_sha256": "1632bb37bbcc0ae138e624ec7acb86308d03600e48a068772380973d81425b57",
   "sha256": "a153cda1aae9f77249154b31a06d85f286cd669d56961dded0f0d79547018d7d",
@@ -48507,7 +48507,7 @@
     "reason": "Corrected prior scan to exclude this exact artifact and staged aliases by basename; pixels and model unchanged.",
     "candidate_sha256": "a153cda1aae9f77249154b31a06d85f286cd669d56961dded0f0d79547018d7d"
   },
-  "artifact_status": "RESEARCH ONLY \u2014 DO NOT SUBMIT; no portal upload authorized",
+  "artifact_status": "RESEARCH ONLY — DO NOT SUBMIT; no portal upload authorized",
   "approved_for_weekly_slot": false,
   "post_execution_review": {
     "reviewed_utc": "2026-10-07",
@@ -48567,11 +48567,6 @@
       },
       "disposition": "The exact SHA-pinned core input files used for H57 are not present in this checkout; the small files under data/ have different hashes and sizes. A clean reproduction cannot be run without restoring the exact pinned inputs."
     },
-    "overall_disposition": "H57 remains RESEARCH ONLY \u2014 DO NOT SUBMIT. The spatial result is a failed no-go in its recorded receipt, but source/input reconciliation and the train-boundary component interpretation remain unresolved; do not treat it as promotion evidence or spend a weekly slot."
-  },
-  "marker": "submission/LATEST.txt",
-  "exists": true,
-  "download": "downloads/gems52-h57-cotrain-disagreement-37654px-20261007T220849Z-1632bb37bb.tif",
-  "download_zip": "downloads/gems52-h57-cotrain-disagreement-37654px-20261007T220849Z-1632bb37bb.zip",
-  "published_byte_hash_matches_receipt": true
+    "overall_disposition": "H57 remains RESEARCH ONLY — DO NOT SUBMIT. The spatial result is a failed no-go in its recorded receipt, but source/input reconciliation and the train-boundary component interpretation remain unresolved; do not treat it as promotion evidence or spend a weekly slot."
+  }
 }

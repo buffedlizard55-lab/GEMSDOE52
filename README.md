@@ -1,6 +1,24 @@
 # GEMSDOE52
 
-## H56 Co-training — NEW unique TIF, downloadable now (synthetic demo)
+## H57 real-raster co-training artifact — DOWNLOADABLE, DO NOT SUBMIT
+
+**[Download H57 research GeoTIFF](docs/downloads/gems52-h57-cotrain-disagreement-37654px-20261007T220849Z-1632bb37bb.tif)** · [one-TIFF ZIP](docs/downloads/gems52-h57-cotrain-disagreement-37654px-20261007T220849Z-1632bb37bb.zip) · [A-only component reasoning (1,137 components)](docs/downloads/gems52-h57-cotrain-disagreement-37654px-20261007T220849Z-1632bb37bb-a-only-reasoning.csv) · [full H57 audit](docs/h57.html) · [submission guide](docs/executive-summary.html).
+
+> **DO NOT SUBMIT.** The preregistered four-fold spatial holdout failed: H57 co-training mean DTI **0.110665**, strongest matched baseline View B **0.151305**, mean paired lift **−0.040641**, positive folds **0/4** (required ≥+0.005 and ≥3/4). It also failed the registered historical internal holdout floor. The TIFF is downloadable for research/review only. No portal was contacted; no weekly slot was used; no official score is claimed.
+
+- **Unique local file name:** `gems52-h57-cotrain-disagreement-37654px-20261007T220849Z-1632bb37bb.tif` · **portal identifier if a future approved file uses this arm:** `GEMSDOE52-H57-cotrain-disagreement-37654px` · **note (118 chars; explicitly do not submit):** `H57 co-training | 37,654 metric-placed px | local gate FAIL (-0.0406 DTI vs best; 0/4) | research only; DO NOT upload.`
+- **On-disk format:** single-band float32, EPSG:32611, 3730×3292 @100 m; [0,1] values ({0,1}); 37,654 positive cells; NaN only outside the sample-template mask. SHA-256 `a153cda1aae9f77249154b31a06d85f286cd669d56961dded0f0d79547018d7d`; canonical decoded-pattern SHA-256 `1632bb37bbcc0ae138e624ec7acb86308d03600e48a068772380973d81425b57`.
+- **Accessible-scope exact-pattern gate:** PASS after a review correction. 772 aligned raster paths from local and public sources reduced to **567 unique byte contents** (205 exact-byte duplicate paths collapsed); the candidate decoded pattern matches none. Public scan covered 55 owner repositories, fetched 774/774 TIFF paths, 0 errors, 0 truncated trees. Private/unlinked/uncommitted assets are not covered.
+- **Separate support-novelty gate:** FAIL (0% novel support against union of priors; requirement ≥20%). The prior union is broad/dense and covers 5,364,328 cells. This diagnostic remains a failure; it is not confused with exact-pattern uniqueness. **Not merely the view union:** PASS; candidate differs from same-budget max-union in 35,236 of 37,654 cells.
+- **A-only review:** 1,137 components/36,540 cells are documented with model scores, coordinates, map distances, band context, gradients, tentative covered-fault hypothesis, competing explanations and an unverified status; 3,030 A-only cells were emitted. B-only candidates are separately documented as possible artifacts, not automatically labelled false.
+- **No-go on co-training:** OOF negative-proxy-error Spearman correlation max |r|=0.1052 on 2,281 spatial blocks (registered stop threshold 0.6); this diagnostic did not establish conditional independence. Exchange was allowed by the frozen rule, but the co-training arm lost to View B in all four folds. Abandon this candidate configuration rather than tuning against the failed folds.
+- **H33 0.2778:** the score-to-file attribution is owner-reported because the official board reports team-level best scores, not TIFF hashes. The fetched H33 bytes contain 37,654 binary cells, 0 on the supplied catalogue, nearest catalogue cell ≈223.6 m. Compared with the fetched H27-4 base, H33 removes exactly 2,545 cells, all off-mask and within 200 m, adds none, and leaves no H33 cells within 200 m. The owner-reported pair is 0.2708→0.2778 (+2.5849%); it is compatible with reducing low-incremental-cover false-positive mass, but hidden-test truth and an organizer file-to-score receipt are absent, so causation is not established. The 2026-10-07 official-board snapshot lists 0.2778 at rank 13, 0.3195 at rank 7, and 0.3774 at rank 1. See [H33 autopsy](docs/forensics.html), [official metric](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/), and [dated board snapshot](docs/data/leaderboard_snapshot_2026-10-07.json).
+- **Inputs:** SHA-pinned owner-maintained mirrors, not organizer-authenticated. No external geological/LiDAR/well/spring/competitor rasters entered model fitting. Public sibling TIFs were scanned only after inference, for exact-pattern/support comparisons. GEMS is a fault-mapping task; geothermal resource setting is not the prediction label.
+- The full current brief is preserved below; read it first in future sessions. H57's immutable registration, fold receipt, code hashes, input hashes, public inventory and execution history are linked from the [audit page](docs/h57.html). Five hypotheses and citations are in [`knowledge/17_hypotheses_H57_preregistered.md`](knowledge/17_hypotheses_H57_preregistered.md); H57-H1 was tested and failed.
+
+---
+
+## H56 Co-training — archived synthetic methodology demo (not current submission advice)
 
 **[★ Download the unique H56 Co-training TIFF — 37,654 px, one click ★](docs/downloads/gems52-h56-cotrain-disagreement-37654px-20261007T1630Z-zeros.tif)** · [single-TIFF ZIP](docs/downloads/gems52-h56-cotrain-disagreement-37654px-20261007T1630Z-zeros.zip) · [A-only reasoning CSV (372 neighborhoods)](docs/downloads/gems52-h56-cotrain-disagreement-37654px-20261007T1630Z-zeros-a-only-reasoning.csv) · [full H56 audit & how to submit](docs/h56-cotrain.html) · [4 ranked hypotheses, preregistered](knowledge/13_hypotheses_H56_cotrain.md)
 
@@ -11,17 +29,17 @@
 - **Placement:** metric-aware `greedy_emit` R=3 (300 m kernel `k(d)=max(1-d/300,0)`) budget 37,654, pool 400k, bar 0 (fixed budget), expected credit 40,205, all 8-isolated.
 - **Hide-and-recover:** synthetic demo reports View B 0.039 vs cotrain 0.097 illustratively; **real** validation requires `data/training_features.tif` on an unrestricted machine — this file is a **methodology demo**.
 - **Is it OK to download? YES — one click above, file is valid [0,1] and correctly gridded.** **Is it OK to submit to the portal? NOT YET — do not spend a weekly slot (3 per 7 days).** Rerun on real data first: `bash scripts/download_competition_data.sh && python scripts/prepare_data.py && python scripts/build_h56_cotrain.py` on an unrestricted machine, then verify a real spatial holdout (≥0.005 lift, 3/4 folds) before uploading. Until then, download for review/reproduction only. No organizer score is claimed.
-- **How H33’s 0.2778 worked:** 2,545 off-catalogue flank dots within 200 m removed (0 on-mask), as in `docs/forensics.html` — pruning weak FP flank mass where `c` (incremental cover) is tiny relative to `f`. Beating it likely needs **new geology**, not just post-processing: radiometric lithology, LiDAR scarps, or spring chemistry that the old surface-only model misses. See `knowledge/13_hypotheses_H56_cotrain.md` for 4 new ranked ideas and `docs/h56-cotrain.html` for the full audit.
+- **H33 score attribution and limits:** see the byte-level [H33 autopsy](docs/forensics.html). The owner-reported H27-4→H33 edit removes 2,545 off-mask cells within 200 m and reports 0.2708→0.2778; hidden truth and organizer upload hashes are unavailable, so this metric-consistent explanation is not causal proof.
 
-> `submission/LATEST.txt` now points at this H56 file (the only artefact whose evidence is built from the current synthetic co-training run). H55, H55-PROFILE, H55-EDGE and R3-H1 remain in `submission/` and `docs/downloads/` as priors for the uniqueness gate; reverting is one line. The download bar at the top of `docs/index.html` and `docs/executive-summary.html` is the same file.
+> `submission/LATEST.txt` now points at the H57 research artifact described at the top of this README. H57 is not approved for a portal slot. H56 remains a historical synthetic methodology demo; H55, H55-PROFILE, H55-EDGE and R3-H1 are historical comparison artifacts. The H57 one-click download and explicit no-submit status are at the top of `docs/index.html` and `docs/executive-summary.html`.
 
 ## H55 main candidate — historical archive, not current upload advice
 
-The archived H55 local receipt and four-fold View-B holdout are **historical**; they are not H56 validation or approval. The separate A-only promotion comparison was mixed: **hide 0.02979 vs matched random 0.03948 (below), 1/4 folds; tip 0.02894 vs 0.02477 (above), 2/4 folds**. A-only fails the preregistered ≥3/4-wins-per-instrument rule. This is distinct from co-training's registered block-error-correlation test. H55 is superseded. Current H56 is a **synthetic methodology demo**; neither H55's local gate nor H56's downloadable TIFF authorizes a weekly submission. See [H55 archive](docs/h55.html) and [H56 current status](docs/h56-cotrain.html).
+The archived H55 local receipt and four-fold View-B holdout are **historical**; they are not H56 validation or approval. The separate A-only promotion comparison was mixed: **hide 0.02979 vs matched random 0.03948 (below), 1/4 folds; tip 0.02894 vs 0.02477 (above), 2/4 folds**. A-only fails the preregistered ≥3/4-wins-per-instrument rule. This is distinct from co-training's registered block-error-correlation test. H55 is superseded. H56 is a **historical synthetic methodology demo**; the current H57 research artifact failed its local spatial gate, so neither H55 nor H56 authorizes a weekly submission. See [H55 archive](docs/h55.html) and [H56 historical status](docs/h56-cotrain.html).
 
 ## H55-1 paired DEM shoulders — preregistered spatial holdout failed; no artifact promoted
 
-This is a separate historical experiment, **not** the current H56 output and not the main H55-PROFILE candidate. The preregistered matched four-fold holdout scored the paired-shoulder view against a freshly refit View-B baseline on identical rows/seeds. Mean View-B DTI was **0.19467088**; paired shoulders **0.19703176**; lift **+0.00236088**, positive in **4/4** folds. The frozen gate required mean lift ≥**+0.005** and ≥3/4 positive folds, so it **failed**. Catalogue-zero proxies are not verified geological absence, and these are not portal/leaderboard scores.
+This is a separate historical experiment, **not** the archived H56 output and not the main H55-PROFILE candidate. The preregistered matched four-fold holdout scored the paired-shoulder view against a freshly refit View-B baseline on identical rows/seeds. Mean View-B DTI was **0.19467088**; paired shoulders **0.19703176**; lift **+0.00236088**, positive in **4/4** folds. The frozen gate required mean lift ≥**+0.005** and ≥3/4 positive folds, so it **failed**. Catalogue-zero proxies are not verified geological absence, and these are not portal/leaderboard scores.
 
 | fold | matched View-B | H55-1 paired shoulders | lift |
 |---:|---:|---:|---:|
@@ -37,22 +55,22 @@ Audit: [full H55-1 page and ranked hypotheses](docs/h55-paired-shoulders.html) �
 <!--H55PROFILEREADME-->
 ## H55-PROFILE follow-up — generated, but not promoted
 
-**[Download the unique H55-PROFILE research TIFF](docs/downloads/gems52-h55-profile-37654-7fd28c25b51a-research.tif)** · [single-TIFF ZIP](docs/downloads/gems52-h55-profile-37654-7fd28c25b51a-research.zip) · [experiment page](docs/h55-profile.html). This separate follow-up neither changes nor overrides the current H56 pointer; H55 main is historical.
+**[Download the unique H55-PROFILE research TIFF](docs/downloads/gems52-h55-profile-37654-7fd28c25b51a-research.tif)** · [single-TIFF ZIP](docs/downloads/gems52-h55-profile-37654-7fd28c25b51a-research.zip) · [experiment page](docs/h55-profile.html). This separate follow-up neither changes nor overrides the archived H56 pointer; H55 main is historical.
 
 - Unique identifier: `GEMSDOE52-H55-PairedProfile-7fd28c25`; optional portal note (122 chars): `H55 paired-normal profile | 37,654 metric-placed pixels | spatial holdout failed | research only; not approved for upload.`
 - Local format/range/geometry and decoded-pattern uniqueness checks passed against 27 accessible aligned priors. Bounded audit only; not proof against private/unlinked site assets.
-- **Do not submit:** holdout mean lift +0.002300, 3/4 folds positive; pre-registered +0.005 lift threshold failed. No official score/upload acceptance and no weekly slot used. The current H56 marker remains unchanged; the main H55 file is historical.
+- **Do not submit:** holdout mean lift +0.002300, 3/4 folds positive; pre-registered +0.005 lift threshold failed. No official score/upload acceptance and no weekly slot used. The archived H56 marker remains unchanged; H57 is the current research-only pointer; the main H55 file is historical.
 - Inputs were SHA-pinned owner mirrors, not organizer-authenticated. No external raster or ComCat data entered this model.
 - [Preregistered hypotheses](knowledge/12_hypotheses_H55_preregistered.md) · [holdout](evidence/h55_profile_holdout.json) · [TIFF/uniqueness receipt](evidence/submission_h55.json) · [3-pass review](evidence/h55_review_receipt.json).
 
-**Next-session start:** read this README and the full current task prompt below. The H55-PROFILE follow-up failed its promotion gate; the main H55 file is historical and superseded by current H56; H55-PROFILE remains a separate failed-gate record. A download link is not approval to spend a contest slot.
+**Next-session start:** read this README and the full current task prompt below. The H55-PROFILE follow-up failed its promotion gate; the main H55 file is historical and superseded by archived H56; H57 is the current research-only artifact; H55-PROFILE remains a separate failed-gate record. A download link is not approval to spend a contest slot.
 <!--/H55PROFILEREADME-->
 
 ## H55-EDGE — failed protocol-subset result, preserved as a separate archive
 
 **[H55-EDGE research TIFF](docs/downloads/gems52-h55-grav-rtp-logedge-37654-c4b8c10205da-zeros.tif)** · [one-TIFF ZIP](docs/downloads/gems52-h55-grav-rtp-logedge-37654-c4b8c10205da-zeros.zip) · [page and complete audit](docs/h55-edge.html) · [A-only reasoning CSV](docs/downloads/gems52-h55-grav-rtp-logedge-37654-c4b8c10205da-zeros-a-only-reasoning.csv).
 
-- This is a separate failed experiment; it does **not** replace current H56 or change `submission/LATEST.txt`. H55 main is historical.
+- This is a separate failed experiment; it does **not** replace archived H56 or change `submission/LATEST.txt`. H55 main is historical.
 - The four-fold spatial result was +0.000546 mean lift over View B, positive in 2/4 folds; the frozen promotion gate required +0.005 and 3/4. The strict support-novelty diagnostic also failed. No portal upload, official score, or weekly slot use occurred.
 - **Protocol deviation:** the frozen H55-EDGE registration lists new LoG transforms for gravity bands 13/11/18 and RTP bands 2/9. The executed transform used bands 13 and 2 only. Preserve [the original registration](registry/h55_edge_preregistration.json) and [post-run deviation receipt](evidence/h55_edge_protocol_deviation.json); this result covers only the implemented subset and must not be retrofitted to claim a full-specification test.
 - **Execution provenance:** the pre-merge source snapshot, relevant code hashes, and limits on rerunning the old implementation are recorded in [the provenance receipt](evidence/h55_edge_execution_provenance.json) and [commit 709ac3b](https://github.com/buffedlizard55-lab/GEMSDOE52/commit/709ac3b376e9f4d102de41865ae30f4a3dd0b728). Later main-branch H55/R2 changes mean a rerun from the merged tree is not the original experiment; large ignored inputs and feature caches are not committed.
@@ -65,7 +83,7 @@ best of 0.2778, with the reasoning and the evidence published next to the file.
 
 ## H55 — historical main-candidate archive
 
-> **Historical artifact:** this file's local receipt and validation tests document the H55 run, not current approval. The H55 TIFF is archived and superseded. `submission/LATEST.txt` points to H56 co-training, a synthetic methodology demo that is not approved for a weekly slot until rebuilt from real data and it passes the preregistered real-data spatial holdout. H55's local PASS and View-B fold results cannot be substituted for H56 validation; the H55 A-only promotion comparison separately failed. No organizer score/upload receipt is recorded for H55.
+> **Historical artifact:** this file's local receipt and validation tests document the H55 run, not current approval. The H55 TIFF is archived and superseded. `submission/LATEST.txt` points to H57 co-training, a real-raster research artifact that failed its preregistered spatial holdout and is not approved for a weekly slot. H56 is an archived synthetic methodology demo. H55's local PASS and View-B fold results cannot be substituted for H56 validation; the H55 A-only promotion comparison separately failed. No organizer score/upload receipt is recorded for H55.
 
 | | |
 |---|---|
@@ -93,7 +111,7 @@ best of 0.2778, with the reasoning and the evidence published next to the file.
 
 ## R3-H1 follow-up — a separate research artifact, DO NOT UPLOAD
 
-The R3 branch separately ranked four geological hypotheses and tested its top candidate, paired DEM-profile shoulders, against the View B single-view baseline on four spatially blocked, buffered whole-component folds. It **failed** the preregistered promotion gate: mean lift +0.00022491 (required +0.005), positive in 2/4 folds (required 3/4). It remains separate from historical H55 and current H56 synthetic demo; **R3 remains research-only, and no submission slot was used**. The unique TIFF below is published only for research and audit; it is not a recommendation to upload.
+The R3 branch separately ranked four geological hypotheses and tested its top candidate, paired DEM-profile shoulders, against the View B single-view baseline on four spatially blocked, buffered whole-component folds. It **failed** the preregistered promotion gate: mean lift +0.00022491 (required +0.005), positive in 2/4 folds (required 3/4). It remains separate from historical H55 and archived H56 synthetic demo; **R3 remains research-only, and no submission slot was used**. The unique TIFF below is published only for research and audit; it is not a recommendation to upload.
 
 - **R3 research TIFF:** [`docs/downloads/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.tif`](docs/downloads/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.tif) · [ZIP + receipt](docs/downloads/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.zip)
 - Label: `GEMSDOE52-R3-H1-PairedProfile-e4267714` · note (117 chars): `R3-H1 paired DEM profile | local lift +0.000225 vs B (2/4 folds; gate FAIL) | research-only; NOT approved for upload.`
@@ -106,7 +124,7 @@ The R3 branch separately ranked four geological hypotheses and tested its top ca
 **Core values, applied.** _Maximize P(Win)_: the largest measured lever was placement, not prediction —
 at fixed geology DTI is monotone in kernel-weighted coverage per emitted pixel, the family's best file
 spent 85.8 % of the ceiling that arithmetic allows, and closing that gap is worth ~+0.03 DTI before any
-new geology. The historical H55 View-B arm won 4/4 folds on each local instrument, but that is not an organizer score or a validation result for current H56. H56 is a synthetic methodology demo, so no weekly slot is recommended until a real-data spatial holdout passes. _Own the Outcome_: the two bugs this session wrote
+new geology. The historical H55 View-B arm won 4/4 folds on each local instrument, but that is not an organizer score or a validation result for archived H56. H56 is a synthetic methodology demo, so no weekly slot is recommended until a real-data spatial holdout passes. _Own the Outcome_: the two bugs this session wrote
 (IR-52-025, IR-52-026) are published with the tests that caught them, the three mechanisms from the brief
 that failed are published with their numbers, and the one layer that did not earn its place is labelled
 neutral rather than credited.
@@ -116,7 +134,7 @@ neutral rather than credited.
 
 ## H54 — historical audit artifact (not current submission advice)
 
-This H54 TIFF and ZIP are retained for audit and reproducibility only. H54 has no comparable current spatial holdout, and the reviewed artifact record says global decoded-pattern uniqueness is unknown. The current pointer is H56, a synthetic methodology demo that is itself **not approved for upload**. Do not use this H54 archive as a current submission recommendation.
+This H54 TIFF and ZIP are retained for audit and reproducibility only. H54 has no comparable current spatial holdout, and the reviewed artifact record says global decoded-pattern uniqueness is unknown. The current pointer is H57, a real-raster research artifact whose spatial gate failed and which is **not approved for upload**; H56 is a synthetic methodology demo. Do not use this H54 archive as a current submission recommendation.
 
 | | |
 |---|---|
@@ -126,7 +144,7 @@ This H54 TIFF and ZIP are retained for audit and reproducibility only. H54 has n
 | bytes / shape | 313,431 · 3730 × 3292 · single band · `float32` · EPSG:32611 · 100 m cells |
 | values | {0, 1} only — 50,517 positive px, 0 outside the valid footprint, 0 on the catalogue, 0 within 200 m of a mapped trace, **no NaN** (verified by reading the written file back, not by trusting the writer) |
 | sha256 | `15210d91fa0c939b254d058876b47268e650176e08bf0eed10437ced8d476e36` |
-| notes box (≤200 chars) | `H54 revealed-core 25517px + 25000px novel strike-continuation; 200m corridor excluded; \|G\|=14089` — 96 chars, recorded in the separate H54 audit receipt, not the current H56 submission receipt |
+| notes box (≤200 chars) | `H54 revealed-core 25517px + 25000px novel strike-continuation; 200m corridor excluded; \|G\|=14089` — 96 chars, recorded in the separate H54 audit receipt, not the archived H56 submission receipt |
 | format gate | `True` (`src/gems52/gates.py`, checked on the written bytes) |
 | uniqueness gate | `True` — strictly-novel-and-selective: **25,000 px (49.5 %)** touch no prior of this family — including the sibling round's `gems52-h53-coincidence-gated-singles` raster, which is a prior too — and **1,112,457** prior px are deliberately **not** re-emitted, so it is not "the union" either |
 | what it is | 25,517 px **retained core** = the double-corroborated atom `A & C`, whose credit the organiser's own published scores bound exactly at 4,168–5,223 (density 16.3–20.5 %, central 20.1 %); plus 25,000 px **strictly novel** = 10,419 along the strike recovered from that core and 14,581 free candidates on the same fabric, every one an isolated dot |
@@ -136,9 +154,7 @@ This H54 TIFF and ZIP are retained for audit and reproducibility only. H54 has n
 | holdout verdict | The two-instrument holdout this repo used to select with **does not predict the organiser's score** (Spearman −0.1045, p = 0.734, n = 13; the group's best file ranks *last* of 13 on it). It is reported, labelled broken, and no longer selects anything — `IR-52-017`, `knowledge/03` N-9 |
 | archived audit detail | [docs/h54.html](docs/h54.html); no H54 upload is recommended |
 | rebuild it | `PYTHONPATH=src python3 scripts/build_revealed_submission.py --tag r1`   # idempotent: rerunning reproduces the same sha256 even after the previous output has been published into `docs/downloads/` |
-The site is the product: [docs/index.html](docs/index.html) renders every number from
-`docs/data/*.json`, which `scripts/refresh_feed.py` regenerates and a committed GitHub Actions workflow
-refreshes on a schedule, so **nothing on the page needs hand-checking**.
+The H57 overview and audit pages publish the local receipts and clearly label owner-mirror, holdout, novelty, and portal limitations. Older pages/feeds below describe historical runs and must not be interpreted as current H57 approval.
 
 **Core values this repo is run by — _Maximize P(Win)_, _Own the Outcome_.**
 
@@ -876,7 +892,7 @@ PYTHONPATH=src python3 scripts/build_submission.py --mode tip --arm <winner> --e
 PYTHONPATH=src python3 scripts/refresh_feed.py   # regenerate the site's data/*.json
 ```
 
-The H53 artefact — the one the site offers at the top — is built by a single idempotent command:
+The H53 artifact is a historical experiment. The current top-of-site artifact is H57 and is research-only; the H53 rebuild command below reproduces that separate archive:
 
 ```bash
 python3 scripts/restore_data.py                                   # 23 pinned inputs -> data/
@@ -1065,78 +1081,38 @@ optional corroboration, never as positive labels. See
 
 ## 6. No manual steps
 
-`docs/data/*.json` is regenerated from `evidence/` by `scripts/refresh_feed.py`;
-`.github/workflows/feed.yml` runs it nightly and on push, and the site renders only from those files.
-If a number on the site is wrong, the fix is the evidence file, never the HTML.
+The legacy historical pages use `scripts/refresh_feed.py` for their own `docs/data/*.json` receipts. The current H57 overview/audit use the H57 run receipts copied into `docs/data/h57_*.json`; no recurring leaderboard scrape or portal upload is performed. If a number changes, trace it to the H57 evidence receipt and its input/code hashes, not to hand-edited prose.
 
 ## 6.1 Current artifact and archive ownership
 
-Do not infer scientific approval from a pointer, a download link, or a local format pass. The current
-`submission/LATEST.txt` artifact is the H56 co-training **synthetic methodology demo**; its weekly-slot
-gate is explicitly **closed** until a real-data rebuild and a comparable, preregistered spatial holdout
-passes. H55 is a historical archive and R3 is a separate research-only release.
+Never infer scientific approval from a pointer, a download link, a local format pass, or an exact-pattern pass. `submission/LATEST.txt` points to the H57 co-training raster below, and `submission/H57_RESEARCH_LATEST.txt` records the research-only pointer. The scientific gate failed. No weekly slot is authorized or used.
 
 | scope | generator / evidence | artifact and status |
 |---|---|---|
-| **H56 current artifact** | `docs/data/submission.json`, `docs/data/submission_h56.json`, `evidence/submission_gems52-h56-cotrain-disagreement-37654px-20261007T1630Z-zeros.json`, `docs/h56-cotrain.html` | `submission/LATEST.txt` points to the unique H56 synthetic demo. Safe to download for review/reproduction; **NOT approved for upload** and no weekly slot may be spent until real-data validation passes. |
-| **H55 main candidate (historical)** | `evidence/submission_gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.json`, `evidence/h55_verification_20261007T0150Z.json`, `docs/h55.html` | Superseded by H56. The local H55 receipt records its own historical result, not an organizer score. A-only means/wins are mixed and fail the distinct 3/4-wins-per-instrument rule; see the page and frozen sweep. |
-| **H55-PROFILE / H55-EDGE** | Separate registrations, output and holdout receipts/pages | Research-only follow-ups; neither replaces H56 or changes the current pointer. H55-EDGE also has a separately disclosed protocol-subset deviation and failed gates. |
-| **H55-1 paired shoulders** | `src/gems52/h55_paired_shoulders.py`, scoped runner/checker and tests, `registry/h55_paired_shoulders_preregistration.json`, `evidence/h55_paired_shoulders_*.json` | Failed mean-lift gate (+0.002361 vs +0.005); no TIFF, no slot. Historical source/hash and the protocol-gate preservation gap remain disclosed. |
-| **H54 legacy audit** | `scripts/build_revealed_submission.py`, `scripts/refresh_feed.py`, `scripts/make_site_pages.py`; `docs/h54.html` and `evidence/h54_artifact_review_2026-10-07.json` | Separate audit marker `submission/H54_RESEARCH_LATEST.txt`, not the current pointer. Its download/ZIP are retained for audit; no comparable holdout and no upload approval. |
-| **R3-H1** | `docs/r3.html`, `docs/r3-hypotheses.html`, separate R3 receipt and holdout | **Research-only**, failed the preregistered gate; zero weekly slots. It remains separate from historical H55 and current H56. |
-| **local evidence feed** | `scripts/refresh_feed.py` writes `docs/data/`; scheduled workflow does not scrape DrivenData or upload | H56 comes from the current marker/receipt; H54 has its own audit receipt/marker. A feed refresh must preserve the current H56 status and byte-identical downloads. |
-| **research pages** | `scripts/make_site_pages.py`, `scripts/publish_site_r3.py` | Scoped H54/H55-1/R3 research pages and the receipt-backed historical H55 review; must not replace the current H56 guide, pointer, or synthetic/not-approved warning. |
-| **legacy H55 renderer** | `scripts/make_h55_page.py` | Receipt/marker guard skips while H56 is current; it must not overwrite H56 pages or submission pointers. |
+| **H57 current research artifact — DO NOT SUBMIT** | `scripts/run_h57_real.py`, `evidence/h57_holdout.json`, `evidence/h57_submission.json`, `evidence/h57_execution_provenance.json`, `docs/h57.html` | Co-training DTI 0.110665 vs View B 0.151305; paired mean lift −0.040641, 0/4. Local format and accessible-scope exact decoded-pattern checks pass; ≥20% support-novelty diagnostic fails at 0%; not-merely-union passes. No official score/portal contact/slot use. Execution runner hashes differ and no historical source snapshots or exact pinned input files are present in this checkout; the train-only pseudo-component selector cannot establish continuation across the masked boundary. Treat results as a failed research no-go, not promotion evidence. |
+| **H56 historical synthetic methodology demo** | `docs/h56-cotrain.html`, archived H56 receipts | Synthetic demonstration only; it is not real-data validation or current upload advice. |
+| **H55 / H55-PROFILE / H55-EDGE** | Separate archived runners, preregistrations and receipts | Historical experiments; cannot establish H57 approval. H55-EDGE has a separately disclosed protocol-subset deviation and failed gates. |
+| **H55-1 paired shoulders** | Scoped runner/checker and separate receipt | Failed mean-lift gate (+0.002361 vs +0.005); no TIFF, no slot. |
+| **H54 legacy audit** | `scripts/build_revealed_submission.py`, `docs/h54.html`, H54 evidence | Separate audit marker; no comparable holdout, no upload approval. |
+| **R3-H1** | `docs/r3.html`, `docs/r3-hypotheses.html`, separate R3 receipts | Research-only, failed the preregistered gate; zero slots. |
+| **H57 evidence bundle** | `docs/data/h57_holdout.json`, `h57_submission.json`, `h57_preregistration.json`, `h57_prior_inventory.json`, `h57_public_repo_priors.json`, `h57_candidate_local_gates.json`, `h57_execution_provenance.json` | Static copies from the persistent `evidence/`/`registry/` receipts. Public/local path counts and unique-content counts are separate fields. |
+| **portal and leaderboard** | Official pages linked on the H57 site; dated observation `registry/leaderboard_snapshot_2026-10-07.json` | No portal was contacted. Snapshot is participant-level: 0.2778 rank 13, 0.3195 rank 7, 0.3774 rank 1; file-to-score attribution remains unauthenticated. |
 
-`scripts/check_site.py` verifies links, JSON, byte identity, format/uniqueness receipts, the current H56
-slot status, separate research-release status, and H55's historical A-only result. A local format or
-uniqueness check is not a real-data holdout, organizer acceptance, or upload approval.
+`scripts/check_site.py` verifies local links, HTML/JS syntax, JSON receipts and artifact bytes. The corrected H57 scanner excludes the candidate and staged aliases from its own prior comparison; `tests/test_h57_runner.py` pins that regression. A format check and exact-pattern uniqueness check do not override the failed spatial promotion gate or the failed support-novelty diagnostic.
 
-## 7. Remaining work, limitations, and what would change the answer
+## 7. Remaining work after H57 (ordered, no slot spent)
 
-Ordered by expected effect on the score the organiser actually computes.
+1. **Do not rescue H57-H1 by tuning on its four failed folds.** The co-training arm lost to the matched View-B baseline by −0.040641 mean DTI and in all 4/4 folds. Treat the preregistered result as a no-go. Any changed learner, threshold, or training recipe needs a new registration and fresh spatial blocks.
+2. **Test H57-H2: conductivity termination at independent potential-field intersections.** Band 17 plus magnetic/gravity bands and basement depth; add a preregistered cross-field geometry transform. Require the same buffered folds, a same-row View-B control, a matched max-union, and a ≥+0.005/3-of-4 gate. Main confounds: lithology, inversion smoothing, salinity/clay and shared source data.
+3. **Then H57-H3: radiometric flank contrast aligned with a structural step.** Resolve band-6 provenance before treating it as radiometry. If external K/Th/U/ratios are proposed, first pin official source/license/coverage and avoid their use as labels. A radiometric contact alone is not a fault.
+4. **Only then H57-H4: LiDAR scarp asymmetry cross-checked against deep structure.** Verify freely accessible official acquisition coverage and terms before feature work. Roads, channels, fan margins and DEM artifacts need explicit controls; candidate scarps require independent geological review.
+5. **Keep H57-H5 resource context out of fault labels.** Wells/springs may prioritize Phase-2 review only; geothermal occurrence is not the competition's fault target and cannot validate a fault prediction.
+6. **Strengthen provenance and promotion.** Reconcile the H57 runner hashes and train-boundary pseudo-component semantics, restore the exact SHA-pinned input bytes, and run a fresh preregistered holdout from immutable source snapshots before treating the scores as reproducible. Organizer-authenticated core inputs, an independent second-raster review, successful portal-format acceptance and a private-slot authorization are absent. Do not infer the hidden score from catalogue-zero holds. Public-prior exact-pattern coverage is broad but cannot include inaccessible assets; current exact pattern is distinct within scope, while the separate 20% support-novelty test still fails.
+7. **Maintain explicit submission discipline.** Current `submission/LATEST.txt` is a research-only H57 output; no upload has occurred. Before any future slot, require an artifact receipt with `approved_for_weekly_slot: true`, all local gates, a comparable passing spatial holdout, independent confirmation, and an authorized human portal action.
 
-1. **Recover the `h19-5` field, not its emission.** The single highest-value artefact this group could
-   produce next is the top 16,678 px of the *ranked field* behind `gems19-h19-5`, worth ≈0.2975 by the
-   same algebra that predicts eight published scores to within 4 %. We hold only its thresholded
-   emission, and `knowledge/07` §6 measures that no feature computable from the provided grids
-   re-ranks inside it (best blocked AUC 0.5453 over 63 point features, 0.5122 over 108 structure-tensor
-   features). If any sibling checkout still holds the field array, this is a one-command win.
-2. **Get real egress.** Only `pypi.org` and `api.github.com` respond from this sandbox;
-   `raw.githubusercontent.com` and `drivendata.org` both die at HTTP 000. That blocks three things at
-   once: the live board (so every file→score mapping here stays owner-reported, `IR-52-003`), USGS
-   ComCat event-level seismicity (`knowledge/04` D-1 — service and licence verified live, 7,519 events
-   for a comparable query, no authentication), and the QFaults **trace geometry**. The restored
-   `gdr_qfaults_traces.csv` carries 1,126 traces with `slip_rate`, `recency`, `slip_sense` and
-   `map_scale` but **centroids only** — 376 in the footprint, 77 on the mapped catalogue, mean distance
-   to it 595 m, so the layer is largely independent of the labels and worth rasterising the moment a
-   polyline is obtainable.
-3. **Separate the two readings of the dead ring.** Either the organiser's mask is a ~2 px buffer
-   (contradicting the staff reading recorded in `knowledge/01` §1 and `knowledge/02` H52-2) or the
-   hidden truth never comes within 200 m of the mapped catalogue. One question in the discussion forum
-   resolves it, and the answer changes whether the 1–2 px corridor is emittable at all. Both readings
-   give the same rule today, so this is not blocking — but it is the cheapest large uncertainty left.
-4. **Replace the broken instrument rather than only labelling it.** `IR-52-017` says the whole-component
-   hide simulator carries no information about the real score. A calibrated replacement needs a
-   pseudo-truth that reproduces the hidden truth's *measured* statistics — ~14,089 px, ≥200 m from the
-   mapped catalogue, NNE–SSW linear traces — and any such construction embeds the hypothesis it is meant
-   to test. Until one exists, every claim here rests on the set algebra, and the algebra only covers
-   artefacts the organiser has already scored.
-5. **`ρ_novel` is a prior, and that is the whole risk.** The retained half of this file's credit is
-   bounded exactly; the novel half's is not, and `knowledge/07` §6 explains why nothing available here
-   can measure it. The budget was chosen so the retained core carries the score if the novel half is
-   worthless (worst case 0.2301 against a 0.2778 floor), and the projection is an integral over a
-   stated prior — printed on the overview page, never described as a forecast.
-6. **Approximations to tighten if the arithmetic is ever reused elsewhere.** `M = T` (licensed by the
-   >200 m dot separation, not exact); additivity across disjoint atoms (submodularity alone gives weaker
-   bounds); `|G|` *defined* by "the ring earns nothing", so a ring that earns a little moves every
-   credit in §3 of `knowledge/07` down with it.
-7. **Small, open, and worth a look.** `refresh_feed.py` still cannot parse the live board because the
-   table is built client-side (`IR-52-016`) — the site serves a dated snapshot and says so; the H52
-   artefact and its `evidence/` remain in the repo with their holdout claims labelled as not standing,
-   rather than being deleted, because a removed measurement cannot be re-checked.
+Hypothesis details, per-hypothesis physical alternatives, implementation cost, and trusted links are in [`knowledge/17_hypotheses_H57_preregistered.md`](knowledge/17_hypotheses_H57_preregistered.md). The task/format/metric and external-source links are also available on [the H57 audit page](docs/h57.html).
 
-## 7.1 H55 — limitations, and what to do next (ranked by expected value per hour)
+## 7.1 Historical H55 analysis — retained for audit, not current H57 advice
 
 Full version with every number: [docs/h55.html §11](docs/h55.html). Limitations first, because a list of
 next steps that does not say what the current file cannot do is marketing.
