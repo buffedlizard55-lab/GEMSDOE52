@@ -96,6 +96,8 @@ def check_h57_creditcore(DATA, DOCS, ROOT, notes):
     if current.get("file") == name:
         problems.append("H57 alternate: it must not silently be the current pointer")
     fmt, uni = r.get("format_gate") or {}, r.get("uniqueness") or {}
+    if r.get("approved_for_weekly_slot") is not False or r.get("submission_slots_used") != 0:
+        problems.append("H57 alternate: research archive must remain not-approved and zero-slot")
     if not fmt.get("ok") or fmt.get("problems") or fmt.get("mass_outside_footprint"):
         problems.append("H57 alternate: format gate receipt missing or failed")
     if not uni.get("ok") or int(uni.get("novel_vs_all_priors") or 0) <= 0:
@@ -103,9 +105,11 @@ def check_h57_creditcore(DATA, DOCS, ROOT, notes):
     if "REFUTED" not in _json.dumps(r.get("co_training_disclosure") or {}).upper():
         problems.append("H57 alternate: the refuted co-training arm is not disclosed")
     page = (DOCS / "h57-creditcore.html").read_text() if (DOCS / "h57-creditcore.html").exists() else ""
-    for term in ("ABANDON", "not proven", "Submit: YES"):
+    for term in ("ABANDON", "not proven", "do not upload", "IR-57-107"):
         if term.casefold() not in page.casefold():
             problems.append(f"H57 alternate page: missing disclosure {term!r}")
+    if "submit: yes" in page.casefold():
+        problems.append("H57 alternate page: unsafe submission approval text remains")
     home = (DOCS / "index.html").read_text() if (DOCS / "index.html").exists() else ""
     if name not in home:
         problems.append("H57 alternate: not linked from the home page")
@@ -236,7 +240,9 @@ def check_h57(DATA, DOCS, ROOT, notes):
         notes.append(f"H57 dossier: {len(rows):,} rows, strata {counts}")
 
     # the pages must name the verdict and the byte-identical short paths
-    for page in ("h57.html", "executive-summary.html", "index.html"):
+    h57_pages = (("h57.html",) if (DATA / "h58_result.json").is_file()
+                 else ("h57.html", "executive-summary.html", "index.html"))
+    for page in h57_pages:
         path = DOCS / page
         if not path.exists():
             problems.append(f"H57: {page} is missing")
@@ -250,6 +256,274 @@ def check_h57(DATA, DOCS, ROOT, notes):
             problems.append(f"H57: {page} does not state the slot-gate verdict")
     notes.append(f"H57 slot gate: {gate['verdict']} — R1 lift met: {gate['r1']['lift_met']}, "
                  f"folds met: {gate['r1']['folds_met']}")
+    return problems
+
+
+def check_h58(DATA, DOCS, ROOT, notes, *, current_round=False):
+    """Recheck H58 receipts, fold gate, decoded TIFF, one-TIFF ZIP and public links.
+
+    H58 can be published as a research-only result while the global submission pointer remains on
+    the incumbent. In that case validate its per-artifact receipt and assert it was not promoted.
+    """
+    problems = []
+    required = ("h58_result.json", "h58_holdout.json", "h58_preregistration.json",
+                "h58_preflight_integrity.json", "h58_restore_receipt.json", "h58_postrun_review.json",
+                "h58_postmerge_uniqueness.json")
+    for name in required:
+        if not (DATA / name).is_file():
+            problems.append(f"H58: {name} missing from docs/data")
+    try:
+        result = json.loads((DATA / "h58_result.json").read_text())
+        filename = str(result["artifact"]["file"])
+        sub_path = (DATA / "submission.json" if current_round else
+                    DATA / f"submission_{Path(filename).stem}.json")
+        sub = json.loads(sub_path.read_text())
+        holdout = json.loads((DATA / "h58_holdout.json").read_text())
+        prereg = json.loads((DATA / "h58_preregistration.json").read_text())
+        preflight = json.loads((DATA / "h58_preflight_integrity.json").read_text())
+        postrun = json.loads((DATA / "h58_postrun_review.json").read_text())
+        restore = json.loads((DATA / "h58_restore_receipt.json").read_text())
+        postmerge = json.loads((DATA / "h58_postmerge_uniqueness.json").read_text())
+        import numpy as np
+        import rasterio
+
+        if sub.get("file") != filename or result.get("round") != "H58":
+            problems.append("H58: per-artifact receipt and result receipt name different rounds/files")
+        if (postrun.get("execution", {}).get("code_hashes") != result.get("code_hashes")
+                or postrun.get("verified_run_facts", {}).get("tiff_sha256") != result.get("artifact", {}).get("sha256")
+                or postrun.get("verified_run_facts", {}).get("local_research_gate_passed") is not False):
+            problems.append("H58: independent post-run review differs from execution hashes, TIFF receipt, or failed gate")
+        latest_name = (ROOT / "submission/LATEST.txt").read_text().strip()
+        if current_round and latest_name != filename:
+            problems.append("H58: current result TIFF differs from submission/LATEST.txt")
+        if not current_round and latest_name == filename:
+            problems.append("H58: failed/research-only artifact unexpectedly occupies the global submission pointer")
+        canonical = DOCS / "downloads" / filename
+        short_tif = DOCS / "downloads/h58-candidate.tif"
+        zip_path = DOCS / "downloads" / (Path(filename).stem + ".zip")
+        short_zip = DOCS / "downloads/h58-candidate.zip"
+        pm_candidate = ROOT / postmerge.get("candidate", {}).get("path", "")
+        pm_prior = ROOT / postmerge.get("additional_upstream_prior", {}).get("path", "")
+        if not pm_candidate.is_file() or not pm_prior.is_file():
+            problems.append("H58: supplemental post-merge uniqueness input is missing")
+        else:
+            with rasterio.open(pm_candidate) as ds_a, rasterio.open(pm_prior) as ds_b:
+                arr_a, arr_b = ds_a.read(1), ds_b.read(1)
+                if (ds_a.transform != ds_b.transform or ds_a.crs != ds_b.crs
+                        or arr_a.shape != arr_b.shape):
+                    problems.append("H58: supplemental prior grid differs from the H58 raster")
+                digest_a = hashlib.sha256(arr_a.astype("<f4", copy=False).tobytes()).hexdigest()
+                digest_b = hashlib.sha256(arr_b.astype("<f4", copy=False).tobytes()).hexdigest()
+                mask_a, mask_b = arr_a > 0, arr_b > 0
+                overlap = int(np.logical_and(mask_a, mask_b).sum())
+                union = int(np.logical_or(mask_a, mask_b).sum())
+                jaccard = overlap / union if union else 1.0
+                if (hashlib.sha256(pm_candidate.read_bytes()).hexdigest()
+                        != postmerge.get("candidate", {}).get("file_sha256")
+                        or hashlib.sha256(pm_prior.read_bytes()).hexdigest()
+                        != postmerge.get("additional_upstream_prior", {}).get("file_sha256")
+                        or digest_a != result["artifact"].get("decoded_prediction_sha256")
+                        or digest_a != postmerge.get("candidate", {}).get("decoded_float32_sha256")
+                        or digest_b != postmerge.get("additional_upstream_prior", {}).get("decoded_float32_sha256")
+                        or overlap != postmerge.get("support_intersection_pixels")
+                        or union != postmerge.get("support_union_pixels")
+                        or abs(jaccard - float(postmerge.get("support_jaccard", -1))) > 1e-12
+                        or np.array_equal(arr_a, arr_b)
+                        or postmerge.get("additional_pattern_unique") is not True):
+                    problems.append("H58: supplemental post-merge decoded-pattern audit disagrees with current bytes")
+                else:
+                    notes.append("H58 supplemental uniqueness: zero support overlap with the newly merged H57 credited-core raster")
+        for path, label in ((canonical, "canonical TIFF"), (short_tif, "short TIFF alias"),
+                            (zip_path, "single-TIFF ZIP"), (short_zip, "short ZIP alias")):
+            if not path.is_file():
+                problems.append(f"H58: {label} missing ({path.name})")
+        if current_round and sub.get("download") != f"downloads/{filename}":
+            problems.append("H58: submission.json download path is not the canonical TIFF")
+        if (canonical.is_file() and short_tif.is_file()
+                and canonical.read_bytes() != short_tif.read_bytes()):
+            problems.append("H58: h58-candidate.tif is not byte-identical to the canonical TIFF")
+        if (zip_path.is_file() and short_zip.is_file()
+                and zip_path.read_bytes() != short_zip.read_bytes()):
+            problems.append("H58: h58-candidate.zip is not byte-identical to the canonical ZIP")
+        if canonical.is_file():
+            actual_sha = hashlib.sha256(canonical.read_bytes()).hexdigest()
+            expected_sha = result["artifact"]["sha256"]
+            if (actual_sha != expected_sha or actual_sha != sub.get("sha256")
+                    or canonical.stat().st_size != result["artifact"]["bytes"]
+                    or canonical.stat().st_size != sub.get("bytes")):
+                problems.append("H58: published TIFF size/SHA-256 differs from the independent receipts")
+            else:
+                notes.append(f"H58 TIFF verified byte-for-byte: {filename} ({canonical.stat().st_size:,} bytes, {actual_sha[:16]}…)")
+            with rasterio.open(canonical) as ds:
+                arr = ds.read(1)
+                transform = tuple(ds.transform)[:6]
+                expected_transform = (100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)
+                if (ds.count != 1 or ds.dtypes[0] != "float32" or ds.crs is None
+                        or ds.crs.to_epsg() != 32611 or (ds.height, ds.width) != (3730, 3292)
+                        or transform != expected_transform or not np.isfinite(arr).all()
+                        or float(arr.min()) < 0.0 or float(arr.max()) > 1.0
+                        or set(np.unique(arr).tolist()) - {0.0, 1.0}
+                        or int(np.count_nonzero(arr)) != int(result["artifact"]["emitted_pixels"])
+                        or (int(result["artifact"]["emitted_pixels"]) > 0 and float(arr.max()) != 1.0)
+                        or (int(result["artifact"]["emitted_pixels"]) == 0 and float(arr.max()) != 0.0)):
+                    problems.append("H58: TIFF read-back failed single-band float32/template-grid/finite [0,1]/binary/count checks")
+                decoded_hash = hashlib.sha256(arr.astype("<f4", copy=False).tobytes()).hexdigest()
+                if decoded_hash != result["artifact"].get("decoded_prediction_sha256"):
+                    problems.append("H58: decoded TIFF pixels differ from the model-prediction digest")
+            if result["artifact"].get("format_gate", {}).get("ok") is not True:
+                problems.append("H58: local raster/template format gate failed")
+            if result["artifact"].get("uniqueness", {}).get("canonical_pattern_unique") is not True:
+                problems.append("H58: decoded-pattern uniqueness against the accessible prior inventory failed")
+            if result["artifact"].get("uniqueness", {}).get("candidate_decoded_sha256") != decoded_hash:
+                problems.append("H58: uniqueness receipt digest differs from decoded TIFF pixels")
+        if zip_path.is_file() and canonical.is_file():
+            with zipfile.ZipFile(zip_path) as archive:
+                if (archive.namelist() != [filename] or archive.read(filename) != canonical.read_bytes()
+                        or archive.testzip() is not None):
+                    problems.append("H58: portal ZIP must contain exactly one TIFF byte-identical to the canonical download")
+        note = str(sub.get("submission_note") or sub.get("note") or "")
+        if len(note) > 200:
+            problems.append(f"H58: portal note is {len(note)} characters (limit 200)")
+        if (sub.get("approved_for_weekly_slot") is not False
+                or result.get("approved_for_weekly_slot") is not False
+                or sub.get("promoted") is not False
+                or result.get("submission_slots_used") != 0
+                or result.get("portal", {}).get("uploaded") is not False
+                or result.get("portal", {}).get("score") is not None):
+            problems.append("H58: research artifact must remain unapproved, unpromoted, unuploaded and zero-slot")
+
+        # Recompute the registered, same-fold comparison from raw fold rows instead of trusting
+        # the runner's summary flag. Every arm must share one legal pool/budget within a comparison.
+        rows = holdout.get("rows", [])
+        modes = result.get("holdout", {}).get("mode_summary", result.get("holdout", {}).get("modes", {}))
+        gate_cfg = prereg.get("promotion_gate", {})
+        min_lift = float(gate_cfg.get("minimum_mean_dti_lift", 0.005))
+        min_wins = int(str(gate_cfg.get("minimum_fold_wins", "3/4")).split("/")[0])
+        mode_passes = {}
+        for mode in ("hide", "block"):
+            primary = [r for r in rows if r.get("mode") == mode and r.get("budget_label") == "primary"]
+            recalculated, wins, comparable = [], 0, True
+            summary = modes.get(mode, {})
+            for fold_id in range(4):
+                fold_rows = [r for r in primary if int(r.get("fold", -1)) == fold_id]
+                by_arm = {r.get("arm"): r for r in fold_rows}
+                names = ("H58-A F_geo", "View A", "View B", "Max(View A, View B)")
+                if any(name not in by_arm for name in names):
+                    problems.append(f"H58: {mode} fold {fold_id} is missing a registered arm row")
+                    comparable = False
+                    continue
+                legal_counts = {int(r["legal_pixels"]) for r in by_arm.values()}
+                budgets = {int(r["requested_budget"]) for r in by_arm.values()}
+                if len(legal_counts) != 1 or len(budgets) != 1:
+                    problems.append(f"H58: {mode} fold {fold_id} arms do not share a legal pool and requested budget")
+                    comparable = False
+                baseline = max((by_arm[n] for n in names[1:]), key=lambda r: float(r["dti"]))
+                candidate = by_arm[names[0]]
+                lift = float(candidate["dti"]) - float(baseline["dti"])
+                win = lift > 1e-12
+                fold_comparable = (int(candidate["emitted"]) == int(candidate["requested_budget"])
+                                   and int(baseline["emitted"]) == int(baseline["requested_budget"]))
+                comparable = comparable and fold_comparable
+                wins += int(win)
+                recalculated.append((lift, win, fold_comparable, baseline["arm"]))
+            if len(recalculated) != 4:
+                mode_passes[mode] = False
+                continue
+            mean_lift = float(np.mean([row[0] for row in recalculated]))
+            passed = bool(comparable and mean_lift >= min_lift and wins >= min_wins)
+            mode_passes[mode] = passed
+            if summary.get("fold_wins") != wins or abs(float(summary.get("mean_lift_vs_strongest_same_fold_baseline", 0)) - mean_lift) > 1e-10:
+                problems.append(f"H58: {mode} summary disagrees with recomputed fold lifts/wins")
+            if summary.get("all_primary_folds_budget_comparable") is not comparable or summary.get("local_research_gate") is not passed:
+                problems.append(f"H58: {mode} registered gate summary disagrees with its raw fold rows")
+            fold_summaries = {int(row["fold"]): row for row in summary.get("folds", [])}
+            for fold_id, (lift, win, comp, baseline_name) in enumerate(recalculated):
+                recorded = fold_summaries.get(fold_id, {})
+                if (recorded.get("strongest_baseline") != baseline_name
+                        or recorded.get("strict_win") is not win
+                        or recorded.get("budget_comparable") is not comp
+                        or abs(float(recorded.get("lift", 0)) - lift) > 1e-10):
+                    problems.append(f"H58: {mode} fold {fold_id} comparison summary differs from raw rows")
+            notes.append(f"H58 {mode} holdout recomputed: mean lift {mean_lift:+.6f}, {wins}/4 wins, budget comparable={comparable}, gate={'PASS' if passed else 'FAIL'}")
+        aggregate_pass = all(mode_passes.get(name, False) for name in ("hide", "block"))
+        if result.get("holdout", {}).get("local_promotion_gate", {}).get("holdout_pass_both_modes") is not aggregate_pass:
+            problems.append("H58: aggregate hide/block holdout gate disagrees with recomputed mode gates")
+        artifact_gates = result.get("artifact", {}).get("artifact_gates", {})
+        composite = bool(aggregate_pass and artifact_gates and all(artifact_gates.values()))
+        if result.get("local_research_gate_passed") is not composite:
+            problems.append("H58: local research gate does not equal holdout pass plus every artifact gate")
+        if result.get("artifact", {}).get("support_shortfall", 0) > 0:
+            if artifact_gates.get("candidate_support_capacity") is not False or composite:
+                problems.append("H58: an F_geo support shortfall must fail comparability; never backfill with zero-score pixels")
+
+        # Verify both per-pixel reasoning files, including the absence of the forbidden label-distance field.
+        for label, key, expected_rows, require_positive_field in (
+                ("H58-A", "reasoning", int(result["artifact"]["emitted_pixels"]), True),
+                ("A-only", "a_only_reasoning", None, False)):
+            receipt = result["artifact"].get(key, {})
+            path = DOCS / "downloads" / Path(str(receipt.get("path", ""))).name
+            if not path.is_file():
+                problems.append(f"H58: {label} reasoning CSV is missing ({path.name})")
+                continue
+            with path.open(newline="", encoding="utf-8") as stream:
+                dossier_rows = list(csv.DictReader(stream))
+            if (len(dossier_rows) != int(receipt.get("rows", -1))
+                    or receipt.get("one_reason_per_emitted_candidate") is not True
+                    or (expected_rows is not None and len(dossier_rows) != expected_rows)):
+                problems.append(f"H58: {label} reasoning CSV row count differs from its receipt/emission")
+            if dossier_rows and ("dist_known_fault_px" in dossier_rows[0]
+                                 or any(not row.get("alternative_and_falsifier")
+                                        or "not an independently mapped" not in row.get("verification_status", "").lower()
+                                        for row in dossier_rows)):
+                problems.append(f"H58: {label} reasoning lacks falsifiers/verification caveats or exposed a forbidden field")
+            if require_positive_field and dossier_rows:
+                if any(float(row["F_geo"]) <= 0 for row in dossier_rows):
+                    problems.append("H58: H58-A reasoning includes an emission outside frozen F_geo > 0 support")
+            if hashlib.sha256(path.read_bytes()).hexdigest() != receipt.get("sha256"):
+                problems.append(f"H58: {label} reasoning CSV hash differs from its receipt")
+
+        # Re-bind the public preregistration, preflight and 23 input hashes to their frozen files.
+        reg_path = ROOT / "registry/h58_preregistration.json"
+        manifest_path = ROOT / "registry/data_manifest.json"
+        doc_name = prereg.get("hypothesis_document")
+        doc_path = ROOT / str(doc_name)
+        if hashlib.sha256(reg_path.read_bytes()).hexdigest() != result.get("preregistration", {}).get("registry_sha256"):
+            problems.append("H58: result is not bound to the current frozen preregistration registry bytes")
+        if hashlib.sha256(doc_path.read_bytes()).hexdigest() != prereg.get("hypothesis_document_sha256"):
+            problems.append("H58: preregistration hypothesis-document SHA-256 does not match its file")
+        if hashlib.sha256(manifest_path.read_bytes()).hexdigest() != prereg.get("data_integrity", {}).get("manifest_sha256"):
+            problems.append("H58: pinned data manifest bytes differ from the preregistration")
+        if hashlib.sha256((ROOT / prereg["preflight_evidence"]).read_bytes()).hexdigest() != prereg.get("preflight_sha256"):
+            problems.append("H58: preflight evidence SHA-256 does not match the preregistration")
+        manifest_count = len(json.loads(manifest_path.read_text()).get("files", []))
+        if len(result.get("manifest_inputs", [])) != manifest_count or not all(
+                item.get("matches_pin") is True for item in result.get("manifest_inputs", [])):
+            problems.append("H58: one or more owner-mirror input pins are missing or unverified")
+        if (restore.get("all_ok") is not True or len(restore.get("files", [])) != manifest_count
+                or not all(item.get("matches_pin") is True for item in restore.get("files", []))):
+            problems.append("H58: public restore receipt does not verify every manifest-pinned input")
+        if "not organizer authentication" not in str(preflight.get("scope", "")).lower():
+            problems.append("H58: preflight must continue to disclose unresolved organizer provenance")
+        if DATA.joinpath("h58_preregistration.json").read_bytes() != reg_path.read_bytes():
+            problems.append("H58: published preregistration bytes differ from the frozen registry")
+
+        for page_name in ("h58.html", "index.html", "executive-summary.html", "downloads/index.html"):
+            page = DOCS / page_name
+            if not page.is_file():
+                problems.append(f"H58: {page_name} is missing")
+                continue
+            text = page.read_text(encoding="utf-8", errors="replace")
+            if "h58-candidate.tif" not in text:
+                problems.append(f"H58: {page_name} lacks the prominent short download path")
+            if filename not in text or str(result["artifact"]["sha256"])[:24] not in text:
+                problems.append(f"H58: {page_name} does not identify the unique TIFF and its SHA prefix")
+            if "do not upload" not in text.casefold() and "not approved to submit" not in text.casefold():
+                problems.append(f"H58: {page_name} does not clearly state the research-only/no-upload status")
+        if "local catalogue-proxy" not in (DOCS / "h58.html").read_text().casefold():
+            problems.append("H58: audit page must distinguish catalogue-proxy scores from organizer validation")
+        notes.append("H58 provenance: 23 owner-mirror SHA pins verified; organizer authentication remains unresolved; no slot used")
+    except Exception as exc:  # noqa: BLE001
+        problems.append(f"H58: receipt/site validation raised {type(exc).__name__}: {exc}")
     return problems
 
 
@@ -409,8 +683,9 @@ def main() -> int:
 
         sub_path = DATA / 'submission.json'
         sub = json.loads(sub_path.read_text()) if sub_path.exists() else {}
-        current_round = ('H56' if str(sub.get('file', '')).startswith('gems52-h56-')
+        current_round = ('H58' if str(sub.get('file', '')).startswith('gems52-h58-')
                          else 'H57' if str(sub.get('file', '')).startswith('gems52-h57-')
+                         else 'H56' if str(sub.get('file', '')).startswith('gems52-h56-')
                          else 'OTHER')
         notes.append(f'current round dispatched from docs/data/submission.json: {current_round} '
                      f"({sub.get('file')})")
@@ -420,6 +695,9 @@ def main() -> int:
             if sub.get('file') != marker:
                 problems.append(f'{current_round}: docs/data/submission.json does not match '
                                 'submission/LATEST.txt')
+        if (DATA / "h58_result.json").is_file():
+            problems.extend(check_h58(DATA, DOCS, ROOT, notes,
+                                      current_round=(current_round == "H58")))
         if current_round == 'H57':
             problems.extend(check_h57(DATA, DOCS, ROOT, notes))
             problems.extend(check_h57_creditcore(DATA, DOCS, ROOT, notes))
@@ -592,10 +870,13 @@ def main() -> int:
     port = httpd.server_address[1]
     threading.Thread(target=httpd.serve_forever, daemon=True).start()
     try:
-        for path in ("index.html", "executive-summary.html", "h56.html", "h54.html",
-                     "h55-paired-shoulders.html", "h55.html", "h55-profile.html", "h55-edge.html",
-                     "r3.html", "r3-hypotheses.html", "feed.html", "irregularities.html", "sources.html",
-                     "downloads/index.html"):
+        page_paths = ("index.html", "executive-summary.html", "h56.html", "h54.html",
+                      "h55-paired-shoulders.html", "h55.html", "h55-profile.html", "h55-edge.html",
+                      "r3.html", "r3-hypotheses.html", "feed.html", "irregularities.html", "sources.html",
+                      "downloads/index.html")
+        if (DOCS / "h58.html").is_file():
+            page_paths = ("index.html", "executive-summary.html", "h58.html") + page_paths[2:]
+        for path in page_paths:
             with urlopen(f"http://127.0.0.1:{port}/{path}", timeout=10) as r:
                 body = r.read()
                 if r.status != 200 or len(body) < 200:
@@ -617,6 +898,19 @@ def main() -> int:
                         problems.append(f"served {short_name}: response differs from its byte-identical alias")
                     elif short_name.endswith('.tif') and hashlib.sha256(body).hexdigest() != sub.get('sha256'):
                         problems.append('served H56 short-path TIFF differs from the audited SHA-256')
+                    else:
+                        notes.append(f"short path serves byte-identically: {short_name}")
+        h58_result_path = DATA / "h58_result.json"
+        if h58_result_path.is_file():
+            h58_sha = json.loads(h58_result_path.read_text()).get("artifact", {}).get("sha256")
+            for short_name in ('downloads/h58-candidate.tif', 'downloads/h58-candidate.zip'):
+                with urlopen(f"http://127.0.0.1:{port}/{short_name}", timeout=20) as r:
+                    body = r.read()
+                    local = DOCS / short_name
+                    if body != local.read_bytes():
+                        problems.append(f"served {short_name}: response differs from its byte-identical alias")
+                    elif short_name.endswith('.tif') and hashlib.sha256(body).hexdigest() != h58_sha:
+                        problems.append('served H58 short-path TIFF differs from the audited SHA-256')
                     else:
                         notes.append(f"short path serves byte-identically: {short_name}")
 

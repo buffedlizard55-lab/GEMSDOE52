@@ -236,3 +236,13 @@ def test_layers_matrix_is_pixel_major(tmp_path):
     assert m.shape == (2 * 6, 2)
     assert np.allclose(m[:, 0], 0.0)          # a_val is layer 0
     assert np.allclose(m[:, 1], 120 / 255.0)  # b_val is layer 2
+
+
+def test_data_root_path_redirects_data_sources_without_touching_the_default():
+    from pathlib import Path
+
+    assert h57.data_root_path("data/training_features.tif") == Path("data/training_features.tif")
+    assert h57.data_root_path("data/external/geodawn_rad_u8.tif", "work/h58_pinned") == \
+        Path("work/h58_pinned/external/geodawn_rad_u8.tif")
+    absolute = Path("/tmp/pinned/training_features.tif")
+    assert h57.data_root_path(absolute, "ignored") == absolute

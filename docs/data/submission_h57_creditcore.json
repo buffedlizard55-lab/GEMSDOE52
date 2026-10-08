@@ -505,16 +505,16 @@
   "a_only_rows": 823,
   "columns": "per-cell claim + alternative + A/B/joint probabilities + disagreement_class (A-only/B-only/views-agree)"
  },
- "artifact_status": "CURRENT \u2014 REAL-DATA CANDIDATE: format and uniqueness gates PASS; the co-training arm behind the novel ranking is REFUTED and disclosed.",
- "approved_for_weekly_slot": true,
+ "artifact_status": "HISTORICAL RESEARCH ONLY \u2014 format and decoded-pattern checks pass; no registered comparable hide/block holdout cleared the weekly-slot gate.",
+ "approved_for_weekly_slot": false,
  "synthetic": false,
  "submission_slots_used": 0,
- "promotion": "credited-core continuation of the five top-scoring priors + minimum-mass novel arm; format and uniqueness gates re-read from the emitted bytes",
+ "promotion": "not promoted: no registered matched-budget hide/block holdout; owner-mirror input provenance is not organizer authentication",
  "slot_gate": {
-  "approved_for_weekly_slot": true,
-  "basis": "format gate PASS (problems []), uniqueness gate PASS (23.9% novel vs 23 priors, 1,191,851 prior px dropped), and the ranked arm measured more selective per cell than the union arm on both available instruments (9.24% vs 5.80% within 3 px of the catalogue; 24.43% vs 10.58% within 3 px of uncatalogued SGMC).",
+  "approved_for_weekly_slot": false,
+  "basis": "No comparable matched-budget holdout exists for this alternate. The reported enrichment controls and format/uniqueness checks do not substitute for the registered lift-and-fold gate or resolve input provenance.",
   "not_measured": "NO held-out lift measurement exists for this arm: its parent two-view co-training arm failed its pre-registered independence test (Spearman 0.637 > 0.6). The registered lift rule is therefore unmet for this file as well as for the union arm - stated, not hidden.",
-  "caveat": "Not proven to beat the standing 0.2778; metric bracket 0.227-0.336."
+  "caveat": "Not proven to beat the standing 0.2778; metric bracket 0.227-0.336. Owner-mirror hashes do not authenticate organizer bytes."
  },
  "submission_note": "H57 credited-core continuation 25517px + 8000 novel (23.9% vs 23 priors) | co-training arm refuted (rho .637), ranker reuse disclosed",
  "provenance_note": "Owner-restored mirrors (integrity-pinned, not organizer-authenticated); the novel arm is ranked by the refuted two-view joint model, disclosed here and on every page that links the file."

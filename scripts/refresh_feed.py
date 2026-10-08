@@ -54,13 +54,13 @@ def copy_evidence():
         write(path.name, safe(json.loads(path.read_text())))
         copied.append(path.name)
     for name in ('r2_preregistration', 'r3_preregistration', 'h55_preregistration',
-                 'h55_edge_preregistration', 'source_policy', 'data_manifest',
-                 'irregularities', 'leaderboard_snapshot_2026-10-07'):
+                 'h55_edge_preregistration', 'h58_preregistration', 'source_policy',
+                 'data_manifest', 'irregularities', 'leaderboard_snapshot_2026-10-07'):
         path = ROOT / 'registry' / (name + '.json')
         if path.exists():
-            if name in ('h55_preregistration', 'h55_edge_preregistration'):
-                # The frozen registration's byte hash is a preregistration receipt; preserve its exact
-                # bytes in the static site rather than semantically reserializing the JSON.
+            if name in ('h55_preregistration', 'h55_edge_preregistration', 'h58_preregistration'):
+                # A frozen registration's bytes are part of its audit trail; preserve them in the
+                # static site rather than semantically reserializing its JSON.
                 target = DATA / (name + '.json')
                 target.parent.mkdir(parents=True, exist_ok=True)
                 target.write_bytes(path.read_bytes())
@@ -70,7 +70,8 @@ def copy_evidence():
     # H55 publishes its own evidence the same way the R2 round publishes *_r2.json: copied on every
     # run so the page cannot drift from the artefact, and named by round so it is never mistaken for
     # another round's numbers.  The Phase-2 reasoning record is staged next to the raster it explains.
-    for pat in ('h55_*.json', 'submission_gems52-h55-*.json'):
+    for pat in ('h55_*.json', 'h58_*.json', 'submission_gems52-h55-*.json',
+                'submission_gems52-h58-*.json'):
         for path in sorted(EV.glob(pat)):
             write(path.name, safe(json.loads(path.read_text())))
             copied.append(path.name)
@@ -145,6 +146,23 @@ def make_zip(name):
     if not src.exists():
         return None
     stem = name[:-4] if name.endswith('.tif') else name
+    zp = DL / f'{stem}.zip'
+    if stem.startswith('gems52-h58-'):
+        # H58's portal ZIP is intentionally a single member: exactly one GeoTIFF. The short portal
+        # note and full evidence are published alongside it, not bundled as extra upload files.
+        if zp.exists():
+            try:
+                with zipfile.ZipFile(zp) as existing:
+                    valid = (existing.namelist() == [name]
+                             and existing.read(name) == src.read_bytes()
+                             and existing.testzip() is None)
+                if valid:
+                    return str(zp)
+            except (OSError, KeyError, zipfile.BadZipFile):
+                pass
+        with zipfile.ZipFile(zp, 'w', zipfile.ZIP_DEFLATED) as archive:
+            archive.write(src, arcname=name)
+        return str(zp)
     ev = EV / f'submission_{stem}.json'
     d = json.loads(ev.read_text()) if ev.exists() else {}
     proj = d.get('projected_dti') or {}
@@ -290,6 +308,11 @@ def latest_submission():
     report['exists'] = path.exists()
     report['download'] = 'downloads/' + name
     report['download_zip'] = 'downloads/' + name.replace('.tif', '') + '.zip'
+    if stem.startswith('gems52-h58-'):
+        report.setdefault('short_tif', 'h58-candidate.tif')
+        report.setdefault('short_zip', 'h58-candidate.zip')
+        report.setdefault('promoted', False)
+        report.setdefault('nonzero_px', report.get('emitted_pixels'))
     report['submission_note'] = submission_note(report)
     report['submission_note_chars'] = len(report['submission_note'])
     if path.exists():
@@ -379,6 +402,23 @@ def main():
         mp = ROOT / 'submission' / mk
         if mp.exists():
             make_zip(mp.read_text().strip())
+    # H58 is an explicitly named research result, not the global incumbent unless a later
+    # independent gate approves it. Publish its one-TIFF package and stable review aliases from
+    # the H58 receipt without changing submission/LATEST.txt or docs/data/submission.json.
+    h58_result_path = EV / 'h58_result.json'
+    if h58_result_path.is_file():
+        try:
+            h58_name = str(json.loads(h58_result_path.read_text())['artifact']['file'])
+        except (KeyError, ValueError, OSError):
+            h58_name = ''
+        if h58_name.startswith('gems52-h58-') and (ROOT / 'submission' / h58_name).is_file():
+            archive_path = make_zip(h58_name)
+            alias_pairs = [(DL / h58_name, DL / 'h58-candidate.tif')]
+            if archive_path:
+                alias_pairs.append((Path(archive_path), DL / 'h58-candidate.zip'))
+            for source, alias in alias_pairs:
+                if source.is_file() and (not alias.exists() or file_hash(source) != file_hash(alias)):
+                    alias.write_bytes(source.read_bytes())
     # Also publish explicitly named research-only ZIPs without promoting them
     # through either global pointer. Their package receipts remain per-artifact.
     edge_marker = ROOT / 'submission/H55_EDGE_LATEST.txt'
@@ -399,7 +439,8 @@ def main():
         generated_utc=time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
         branch=current_branch(args.branch), repo='buffedlizard55-lab/GEMSDOE52',
         evidence_copied=copied,
-        files=sorted({p.name for pat in ('*_r[23]*.json', 'h55_*.json', 'submission_gems52-h55-*.json')
+        files=sorted({p.name for pat in ('*_r[23]*.json', 'h55_*.json', 'h58_*.json',
+                                         'submission_gems52-h55-*.json', 'submission_gems52-h58-*.json')
                       for p in DATA.glob(pat)}),
         submission=sub.get('file'), downloads=len(list(DL.glob('*.tif'))),
         leaderboard_status=board['status'],

@@ -120,23 +120,23 @@ def main() -> int:
         reasoning=dict(csv=f"docs/downloads/{STEM}-a-only-reasoning.csv", rows=8000, a_only_rows=823,
                        columns="per-cell claim + alternative + A/B/joint probabilities + "
                                "disagreement_class (A-only/B-only/views-agree)"),
-        artifact_status="CURRENT — REAL-DATA CANDIDATE: format and uniqueness gates PASS; the "
-                        "co-training arm behind the novel ranking is REFUTED and disclosed.",
-        approved_for_weekly_slot=True, synthetic=False, submission_slots_used=0,
-        promotion="credited-core continuation of the five top-scoring priors + minimum-mass novel arm; "
-                  "format and uniqueness gates re-read from the emitted bytes",
-        slot_gate=dict(approved_for_weekly_slot=True,
-                       basis="format gate PASS (problems []), uniqueness gate PASS "
-                             "(23.9% novel vs 23 priors, 1,191,851 prior px dropped), and the ranked "
-                             "arm measured more selective per cell than the union arm on both "
-                             "available instruments (9.24% vs 5.80% within 3 px of the catalogue; "
-                             "24.43% vs 10.58% within 3 px of uncatalogued SGMC).",
+        artifact_status="HISTORICAL RESEARCH ONLY — format and decoded-pattern checks pass; no "
+                        "registered comparable hide/block holdout cleared the weekly-slot gate.",
+        approved_for_weekly_slot=False, synthetic=False, submission_slots_used=0,
+        promotion="not promoted: no registered matched-budget hide/block holdout; owner-mirror "
+                  "input provenance is not organizer authentication",
+        slot_gate=dict(approved_for_weekly_slot=False,
+                       basis="No comparable matched-budget holdout exists for this alternate. The "
+                             "reported enrichment controls and format/uniqueness checks do not "
+                             "substitute for the registered lift-and-fold gate or resolve input "
+                             "provenance.",
                        not_measured="NO held-out lift measurement exists for this arm: its parent "
                                     "two-view co-training arm failed its pre-registered independence "
                                     "test (Spearman 0.637 > 0.6). The registered lift rule is "
                                     "therefore unmet for this file as well as for the union arm - "
                                     "stated, not hidden.",
-                       caveat="Not proven to beat the standing 0.2778; metric bracket 0.227-0.336."),
+                       caveat="Not proven to beat the standing 0.2778; metric bracket 0.227-0.336. "
+                              "Owner-mirror hashes do not authenticate organizer bytes."),
         submission_note="H57 credited-core continuation 25517px + 8000 novel (23.9% vs 23 priors) | "
                         "co-training arm refuted (rho .637), ranker reuse disclosed",
         provenance_note="Owner-restored mirrors (integrity-pinned, not organizer-authenticated); the "
@@ -170,18 +170,16 @@ def main() -> int:
         ))
     page = (f'<!doctype html><html lang="en"><head><meta charset="utf-8">'
             f'<meta name="viewport" content="width=device-width,initial-scale=1">'
-            f'<meta name="description" content="H57: the credited-core continuation — '
-            f'format and uniqueness gates pass; the co-training arm behind the novel ranking is '
-            f'refuted and disclosed.">'
-            f'<title>H57 current candidate · GEMSDOE52</title><link rel="stylesheet" href="style.css">'
+            f'<meta name="description" content="H57 credited-core alternate: historical research only, no comparable holdout, and not approved to submit.">'
+            f'<title>H57 credited-core research archive · GEMSDOE52</title><link rel="stylesheet" href="style.css">'
             f'</head><body><a class="skip" href="#main">Skip to content</a>'
             f'<header><nav><a class="brand" href="index.html">GEMS / DOE 52</a>{NAV}</nav></header>'
             f'<main id="main">'
-            f'<section class="download-bar" style="border:2px solid #0a0; background:#f0fff0"><div>'
-            f'<strong>H57 credited-core alternate — Download: YES · Submit: YES (either H57 file is safe; this one measured more selective per cell)</strong>'
+            f'<section class="download-bar" style="border:2px solid #a33; background:#fff4f1"><div>'
+            f'<strong>H57 credited-core alternate — research archive · Download: YES · Submit: NO — do not upload or spend a weekly slot</strong>'
             f'<small>The file is the 25,517-cell support shared by all five top-scoring priors, '
             f'continued with an 8,000-cell novel arm (23.9 % outside all 23 accessible priors). '
-            f'It is the best-evidenced candidate in this repo; it is <b>not proven</b> to beat the '
+            f'This alternate is <b>not a validated candidate</b>; it is <b>not proven</b> to beat the '
             f'standing 0.2778 — the metric-implied bracket is '
             f'<b>{bracket["low"]:.3f}–{bracket["high"]:.3f}</b> (central ≈{bracket["central"]:.2f}).</small>'
             f'<a class="button" href="downloads/{FILE}" download style="background:#0a0; color:#fff">'
@@ -191,11 +189,11 @@ def main() -> int:
             f'↓ per-cell reasoning CSV (8,000 rows)</a>'
             f'<a class="button secondary" href="executive-summary.html">How to submit →</a></div></section>'
             f'<h1>H57 — what the file is, and what it is not</h1>'
-            f'<p><b>Is it OK to download?</b> Yes — the button above is the file. '
-            f'<b>Is it OK to submit?</b> Yes: it passes the format gate and the uniqueness gate and it '
-            f'is the strongest construction this repo can justify today. The honest caveat is that the '
-            f'score is a bracket, not a promise, because the round-1 hidden truth is not identifiable '
-            f'from the accessible data (IR-57-102, IR-57-103).</p>'
+            f'<p><b>Is it OK to download for research?</b> Yes — the button above serves the audited file. '
+            f'<b>Is it OK to submit?</b> No. No registered matched-budget hide/block holdout clears the '
+            f'weekly-slot gate, the reused co-training arm was refuted, and the owner-mirror provenance '
+            f'is not organizer authentication. The metric bracket is conditional arithmetic, not a '
+            f'forecast or approval (IR-57-101, IR-57-102, IR-57-107, IR-H58-001).</p>'
             f'<table><tr><th>quantity</th><th>measured value</th></tr>{rows}</table>'
             f'<h2>The evidence chain</h2>'
             f'<ol><li><b>Two-view co-training (required method):</b> 83 scale-free features split into '
@@ -227,7 +225,7 @@ def main() -> int:
             f'<p>Full reasoning: <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/'
             f'knowledge/17_hypotheses_H57.md">knowledge/17_hypotheses_H57.md</a> · '
             f'<a href="../registry/irregularities.json">registry/irregularities.json</a> '
-            f'(IR-57-101 … IR-57-105).</p>'
+            f'(IR-57-101 … IR-57-107; IR-H58-001).</p>'
             f'</main><footer>Competition 306 · every figure on this page is re-read from the emitted '
             f'bytes and <code>evidence/*.json</code> by <code>scripts/publish_site_h57.py</code></footer>'
             f'</body></html>')
