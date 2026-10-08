@@ -85,6 +85,43 @@ def main() -> None:
     ntu = artifact["not_the_union"]
     primary = artifact["emission_px"]
 
+    # ---- sibling H59 builds (parallel sessions): published as research alternates -------------
+    # This round's verdict speaks only for the preregistered artifact above.  Any other H59
+    # raster found beside it is linked here with its own evidence status, never a slot verdict.
+    sibling_items = []
+    for ev_path in sorted(EV.glob("gems52-h59-*.json")):
+        try:
+            sib = json.loads(ev_path.read_text())
+        except ValueError:
+            continue
+        sib_sha = str(sib.get("sha256") or "")
+        if sib_sha == artifact["sha256"] or not sib.get("format_ok"):
+            continue
+        sib_tif = ROOT / "submission" / (ev_path.stem + ".tif")
+        if not sib_tif.is_file():
+            continue
+        sib_pages = []
+        for page in ("h59-method.html", "h59-evidence.html"):
+            if (DOCS / page).is_file():
+                sib_pages.append(f'<a href="{page}">{page.split(".")[0].replace("-", " ")}</a>')
+        has_holdout = bool(sib.get("holdout") or sib.get("slot_recommended") is not None)
+        sibling_items.append(
+            f"<li><code>{e(ev_path.stem)}.tif</code> — {int(sib.get('n_positive') or 0):,} px, "
+            f"format ok, min catalogue distance {e(sib.get('min_dist_to_catalogue_m'))} m; "
+            f"evidence receipt records "
+            f"{'a holdout measurement' if has_holdout else 'NO holdout measurement, NO gate report and NO slot verdict'}"
+            f" — published as a research alternate, not a slot candidate"
+            + (f" ({' · '.join(sib_pages)})" if sib_pages else "") + ".</li>")
+    sibling_html = ""
+    if sibling_items:
+        sibling_html = (
+            "<h2>Other H59 builds from parallel sessions</h2>"
+            "<p>These rasters exist in the repository and remain downloadable; the verdict on this "
+            "page speaks only for the preregistered artifact above. Under the standing rule — no "
+            "weekly slot without beating the current holdout best — a build with no holdout "
+            "measurement cannot be a slot candidate.</p><ul>"
+            + "".join(sibling_items) + "</ul>")
+
     # ---- the one-line verdict, generated from the receipt booleans -------------------------
     diag = result.get("posthoc_incumbent_diagnostic") or {}
     incumbent_beaten = diag.get("incumbent_beaten_both_modes")
@@ -274,6 +311,7 @@ def main() -> None:
 <p>Two prior rounds measured this exchange as noise (H52 N-1, H57 §3); H59 runs it because the brief asks, in both directions, with whole segments inside single 50×50 blocks, no catalogue/corridor pixel, ≥ 80 px from evaluation, cap 2,000 px, weight 0.25, and AUC negatives ≥ 500 m <em>Euclidean</em> from every catalogue pixel (fixing IR-H58-003).</p>
 <h2>Uniqueness and the "not a copy" question</h2>
 <p>Every emitted pixel was computed from the H59 fields on this staging — no prior raster was read into any emission mask. The decoded pattern matches none of the {int(artifact['uniqueness']['n_priors_checked'])} accessible aligned priors (canonical bytes compared, not hashes). {float(nov['emission_novel_fraction'])*100:.1f}% of the emitted support lies outside every prior's support; {int(nov.get('overlap_with_reference_px', 0)):,} px coincide with the 0.2778 reference's dots — two independent methods agreeing on where the structure is, which is evidence, not copying: the pattern as a whole is what uniqueness means, and it differs from every prior.</p>
+{sibling_html}
 <h2>Reproducibility</h2>
 <p><code>PYTHONPATH=src python scripts/run_h59.py --data-root work/h59_pinned --work-dir work/h59</code> after <code>python scripts/restore_data.py --target-dir work/h59_pinned</code>. Preregistration: <a href="data/h59_preregistration.json">frozen protocol</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/20_hypotheses_H59_preregistered.md">hypothesis slate</a>. Receipts: <a href="data/h59_result.json">run receipt</a> · <a href="downloads/{e(stem)}-reasoning.csv">per-pixel reasoning CSV</a>. Runtime {float(result["runtime_s"])/60:.1f} min, seed {int(result.get("seed", 20261008))}, zero portal contacts.</p>'''
 
@@ -346,6 +384,7 @@ def main() -> None:
 <div class="two"><section><h2>What was tested</h2><p>Five preregistered geological hypotheses; four ran (H59-1 B-only veto, H59-2 agreement product, H59-3 basement-step buttress, H59-4 seismicity lineaments) against the re-measured single-view and union baselines on whole-segment, 80 px-buffered hide and block folds, with matched budgets, a shared emitter and a seeded random control. The frozen decision rule shipped <b>{e(shipped)}</b>.</p><p><a class="button secondary" href="h59.html">Open the fold tables, strata, independence test and full audit →</a></p></section>
 <section class="card"><h2>Current decision</h2><p><b>Shipped field:</b> {e(shipped)}.</p><p><b>Gates:</b> {"PASS" if gates_ok else "one or more FAILED"} (format, uniqueness vs {int(artifact['uniqueness']['n_priors_checked'])} priors, not-the-union, 200 m ring, 3 px spacing).</p><p><b>Slot verdict:</b> {e(submission["verdict"])}.</p><p><b>Organizer provenance:</b> unresolved — integrity-pinned owner mirror (IR-52-003 / IR-H58-001).</p></section></div>
 <h2>Arm means on the two instruments (primary budget)</h2>{arm_table}
+{sibling_html}
 <h2>Evidence</h2><p><a href="h59.html">Full H59 audit</a> · <a href="executive-summary.html">Submission guide with the verdict</a> · <a href="data/h59_result.json">run receipt</a> · <a href="data/h59_preregistration.json">frozen protocol</a> · <a href="downloads/{e(stem)}-reasoning.csv">per-pixel reasoning CSV ({int(result['reasoning_dossier']['rows']):,} rows)</a>. Historical rounds: <a href="h58.html">H58</a> · <a href="h57.html">H57</a> · <a href="h56-cotrain.html">H56</a> · <a href="h55.html">H55</a>.</p><div class="live-feed" id="feed">Automatic local evidence feed. The official board is a dated observation, not a live feed.</div>'''
     (DOCS / "index.html").write_text(shell(
         "H59 overview",

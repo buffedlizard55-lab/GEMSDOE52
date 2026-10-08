@@ -73,7 +73,8 @@ def copy_evidence():
     # run so the page cannot drift from the artefact, and named by round so it is never mistaken for
     # another round's numbers.  The Phase-2 reasoning record is staged next to the raster it explains.
     for pat in ('h55_*.json', 'h58_*.json', 'h59_*.json', 'submission_gems52-h55-*.json',
-                'submission_gems52-h58-*.json', 'submission_gems52-h59-*.json'):
+                'submission_gems52-h58-*.json', 'submission_gems52-h59-*.json',
+                'gems52-h59-*.json'):
         for path in sorted(EV.glob(pat)):
             write(path.name, safe(json.loads(path.read_text())))
             copied.append(path.name)

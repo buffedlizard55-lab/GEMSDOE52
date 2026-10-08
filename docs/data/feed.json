@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-10-08T03:47:02Z",
+  "generated_utc": "2026-10-08T03:50:18Z",
   "branch": "arena/687a0515-gemsdoe52",
   "repo": "buffedlizard55-lab/GEMSDOE52",
   "evidence_copied": [
@@ -85,6 +85,7 @@
     "submission_gems52-h55-profile-37654-7fd28c25b51a-research.json",
     "submission_gems52-h58-coldgeo-consensus-22px-a55b0dee38-research.json",
     "submission_gems52-h59-cotrain-view_B-37654px-20261008T033705Z-54debe0d-zeros.json",
+    "gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.json",
     "a_only_reasoning_r3.csv"
   ],
   "files": [
@@ -168,7 +169,7 @@
     "verified_claims_r3.json"
   ],
   "submission": "gems52-h59-cotrain-view_B-37654px-20261008T033705Z-54debe0d-zeros.tif",
-  "downloads": 23,
+  "downloads": 24,
   "leaderboard_status": "dated snapshot; automated DrivenData access disabled by Terms-of-Use policy",
   "leaderboard_last_observed_utc": "2026-10-07",
   "prior_entries": 395,
