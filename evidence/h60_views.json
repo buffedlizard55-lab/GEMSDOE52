@@ -1,0 +1,99 @@
+{
+ "folds": [
+  {
+   "fold": 0,
+   "n_pos": 43644,
+   "n_neg": 130932,
+   "view_A_layers": 30,
+   "view_B_layers": 17,
+   "auc_A_heldout": 0.5534418008899709,
+   "auc_B_heldout": 0.6512159523135137
+  },
+  {
+   "fold": 1,
+   "n_pos": 43313,
+   "n_neg": 129939,
+   "view_A_layers": 30,
+   "view_B_layers": 17,
+   "auc_A_heldout": 0.5722053498208309,
+   "auc_B_heldout": 0.6699805648575243
+  },
+  {
+   "fold": 2,
+   "n_pos": 43326,
+   "n_neg": 129978,
+   "view_A_layers": 30,
+   "view_B_layers": 17,
+   "auc_A_heldout": 0.6114558423630605,
+   "auc_B_heldout": 0.6879991240626206
+  },
+  {
+   "fold": 3,
+   "n_pos": 43528,
+   "n_neg": 130584,
+   "view_A_layers": 30,
+   "view_B_layers": 17,
+   "auc_A_heldout": 0.5871196155687798,
+   "auc_B_heldout": 0.671388084081006
+  }
+ ],
+ "fit_px": [
+  3769885,
+  3441402,
+  3640971,
+  3948710
+ ],
+ "mean_auc_A": 0.5810556521606606,
+ "mean_auc_B": 0.6701459313286662,
+ "layers_A": [
+  "b01_rank",
+  "b02_rank",
+  "b03_rank",
+  "b04_rank",
+  "b05_rank",
+  "b07_rank",
+  "b08_rank",
+  "b09_rank",
+  "b10_rank",
+  "b11_rank",
+  "b13_rank",
+  "b14_rank",
+  "b15_rank",
+  "b16_rank",
+  "b17_rank",
+  "b18_rank",
+  "b02_gradmag",
+  "b13_gradmag",
+  "b14_gradmag",
+  "b15_gradmag",
+  "b17_gradmag",
+  "b15_step_nne",
+  "b15_step_nw",
+  "b13_step_nne",
+  "b02_ridge_nne",
+  "b02_ridge_nw",
+  "b14_ridge_nne",
+  "b05_ridge_nne",
+  "b17_ridge_nne",
+  "node_nne_x_nw_A"
+ ],
+ "layers_B": [
+  "b06_rank",
+  "b12_rank",
+  "b19_rank",
+  "b12_slope",
+  "b12_aspect_sin",
+  "b12_aspect_cos",
+  "b12_curv_profile",
+  "b12_curv_plan",
+  "b12_curv_mean",
+  "b12_openness",
+  "b06_gradmag",
+  "b06_ridge_nne",
+  "b06_ridge_nw",
+  "b19_ridge_nne",
+  "b12_ridge_nne",
+  "b12_ridge_nw",
+  "node_nne_x_nw"
+ ]
+}

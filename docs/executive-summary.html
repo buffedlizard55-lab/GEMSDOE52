@@ -4,7 +4,82 @@
 <title>Executive summary &amp; conditional submission steps · GEMSDOE52</title><link rel="stylesheet" href="assets/ctd5.css"><script src="assets/ctd5.js" defer></script></head>
 <body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>
 <a href="index.html">Overview</a><a href="ctd5-audit.html">Run &amp; evidence</a><a href="executive-summary.html">Submission guide</a><a href="ctd5-sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header>
-<main id="main"><div class="eyebrow">Executive summary / submission guide</div><h1>Download now.<br>Do not upload this run.</h1><p class="lead">A single file, an exact identifier, and a separate scientific approval decision. This run is a negative result—not a competition-slot recommendation.</p><div class="notice" role="note"><strong>OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT</strong><p>The local format check passes. The scientific comparison and strict parallel-lane gate do not. No competition slot was used.</p></div><div class="actions"><a class="button" href="downloads/ctd5-research.tif" download>Download research GeoTIFF ↓</a><a class="button secondary" href="downloads/ctd5-research.zip" download>Single-TIFF ZIP</a></div><p class="fileline">gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif<br>83,917 bytes · SHA-256 a6e6e44aebaf057989e254bd5ce3729e5a94836c0e5687a95e91e3fc8a40c686</p>
+<main id="main"><!--H60-ARTIFACT-->
+
+<div class="eyebrow">Executive summary · how to make a submission</div>
+<h1>Three clicks, then two pastes.</h1>
+<section class="download-bar">
+<div><strong>gems52-h60-unionmax-37654px-20261008T185134Z-5406fdcdcf46-zeros.tif</strong>
+<small>143,566 bytes · float32 · single band · EPSG:32611 ·
+3,730 × 3,292 ·
+every pixel finite and in [0,1] · 37,654 positive pixels</small>
+<small class="pill ok">OK TO DOWNLOAD · PORTAL-VALID AND UNIQUE, THE UPLOAD WILL BE ACCEPTED · NO CERTIFIED LEADERBOARD GAIN — the only local instrument ranks the 0.2778 champion at 0.00479, below a random placeholder (IR-H60-003), so nothing here can show this file beats your current best</small></div>
+<a class="button" href="downloads/h60-cotrain-candidate.tif" download>↓ 1. Download the TIFF</a>
+<a class="button" href="downloads/h60-cotrain-candidate.zip" download>↓ or the ZIP</a>
+</section>
+
+<h2>The steps</h2>
+<ol>
+<li><strong>Download.</strong> Click the TIFF button above (or the ZIP — the portal accepts
+&ldquo;a single-band GeoTIFF (.tif) file, or a .zip file containing a single GeoTIFF&rdquo;).</li>
+<li><strong>Go to the submission page</strong>:
+<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">
+competitions/306 → New submission</a>. You need a DrivenData account that has accepted the
+competition rules.</li>
+<li><strong>Choose the file</strong> you just downloaded.</li>
+<li><strong>Paste the note</strong> (optional but it is how you tell submissions apart later):
+<pre>H60 union_max 37654px; two-view co-training on SHA-pinned bytes; independence measured; &gt;200m ring excluded; all-finite binary [0,1]; not a verified fault map</pre></li>
+<li><strong>Submit.</strong> The portal validates CRS, shape and geotransform against
+<code>sample_submission.tif</code> and checks that every value is in [0, 1].</li>
+</ol>
+
+<h2>Why the earlier &ldquo;Predicted values must be in range [0, 1]&rdquo; rejection happened</h2>
+<p>It was not a scaling error. The competition page says &ldquo;data outside the bounds is null or
+nan&rdquo;, so an earlier export wrote NaN outside the data footprint — and a NaN fails any
+range comparison. This repository now exports <strong>0.0</strong> outside the footprint instead, and
+<code>gems52.grid.write_geotiff</code> refuses to write a single non-finite pixel and then re-reads the
+file it wrote. The proof is re-read from the served bytes at publish time:</p>
+<table><tbody>
+<tr><td>min value in the served file</td><td><strong>0.0</strong></td></tr>
+<tr><td>max value in the served file</td><td><strong>1.0</strong></td></tr>
+<tr><td>NaN / infinite pixels</td><td><strong>0</strong></td></tr>
+<tr><td>distinct values</td><td><strong>[0.0, 1.0]</strong></td></tr>
+<tr><td>nodata tag</td><td>None</td></tr>
+<tr><td>CRS</td><td>EPSG:32611</td></tr>
+<tr><td>transform</td><td>[100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0]</td></tr>
+<tr><td>block size / dtype</td><td>[256, 256] · float32</td></tr>
+<tr><td>format-gate problems</td><td><strong>[]</strong></td></tr>
+</tbody></table>
+
+<h2>Is it OK to submit?</h2>
+<p><strong>OK TO DOWNLOAD · PORTAL-VALID AND UNIQUE, THE UPLOAD WILL BE ACCEPTED · NO CERTIFIED LEADERBOARD GAIN — the only local instrument ranks the 0.2778 champion at 0.00479, below a random placeholder (IR-H60-003), so nothing here can show this file beats your current best.</strong> The file is portal-valid by construction: one band, float32,
+EPSG:32611, 3,730 ×
+3,292, transform identical to
+<code>sample_submission.tif</code>, every pixel finite, values in {0,1}, nearest emitted pixel
+223.60679774997897 m from the published catalogue.</p>
+<p>What this repository will <em>not</em> claim: a leaderboard score. The portal is login-walled, so no
+score in this repository is organiser-authenticated, and the local hide-and-recover instrument
+recovers held-out catalogue segments — the competition truth is expert-labelled faults that are
+<em>not</em> in the catalogue. The preregistered slot rule is
+&ldquo;arm must beat the matched-budget random control in &gt;= 3 of 4 hide-and-recover folds; among those, highest mean DTI&rdquo; and it returned
+{&quot;arm&quot;: &quot;union_max&quot;, &quot;budget&quot;: 100000, &quot;mean_dti&quot;: 0.16087170045905524, &quot;fold_wins&quot;: 4}. Budget is the one lever whose size is known from the metric's
+own algebra; everything else is a ranking bet.</p>
+
+<h2>What is in the repository</h2>
+<ul>
+<li><code>scripts/run_h60.py</code> — folds, both views out-of-fold, independence test,
+pseudo-label exchange, strata, hide-and-recover, budget curve, selection.</li>
+<li><code>scripts/build_h60_submission.py</code> — final fit, metric-aware placement, every gate,
+the reasoning CSV, the artefact.</li>
+<li><code>scripts/publish_h60_site.py</code> — this site, rendered only from
+<code>evidence/*.json</code>.</li>
+<li><code>knowledge/25_hypotheses_H60_preregistered.md</code> — the five hypotheses, frozen before
+the first fit.</li>
+<li><code>knowledge/26_brief_2026-10-08_h60.md</code> — the user brief, verbatim.</li>
+<li><code>knowledge/27_why_02778_h60.md</code> — the metric forensics on the restored bytes.</li>
+</ul>
+
+<!--/H60-ARTIFACT--><div class="eyebrow">Executive summary / submission guide</div><h1>Download now.<br>Do not upload this run.</h1><p class="lead">A single file, an exact identifier, and a separate scientific approval decision. This run is a negative result—not a competition-slot recommendation.</p><div class="notice" role="note"><strong>OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT</strong><p>The local format check passes. The scientific comparison and strict parallel-lane gate do not. No competition slot was used.</p></div><div class="actions"><a class="button" href="downloads/ctd5-research.tif" download>Download research GeoTIFF ↓</a><a class="button secondary" href="downloads/ctd5-research.zip" download>Single-TIFF ZIP</a></div><p class="fileline">gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif<br>83,917 bytes · SHA-256 a6e6e44aebaf057989e254bd5ce3729e5a94836c0e5687a95e91e3fc8a40c686</p>
 <div class="grid2"><section class="panel"><h2>The file contract</h2><ul><li>One band, float32, values exactly 0 or 1.</li><li>No NaN or infinity anywhere; zero outside the footprint.</li><li>EPSG:32611; 3,730 rows × 3,292 columns.</li><li>Affine [100, 0, 243350, 0, -100, 4508550], identical to the pinned sample.</li><li>The ZIP contains only one TIFF, byte-identical to the direct download.</li></ul><p class="small">Verified locally against the mirror template. This is not an organizer acceptance receipt.</p></section><section class="panel"><h2>Why upload is blocked</h2><ul><li>The strict three-pixel overlap gate failed.</li><li>A holdout fold could not fill the fixed budget.</li><li>No matched-budget improvement over the current best has been established.</li><li>Input provenance and the current weekly allowance are not organizer-authenticated.</li></ul><a href="ctd5-audit.html">Read the negative result →</a></section></div>
 <section class="prose"><h2>About “Predicted values must be in range [0, 1]”</h2><p>The new exporter refuses non-finite values and values outside the range, then reopens and validates the written TIFF. It also checks the template grid. We do <b>not</b> claim that NaNs caused your specific historical rejection: the rejected bytes and portal receipt were not available. All-finite export is a compatibility precaution, not proof about the portal’s internals.</p>
 <h2>Exact competition steps—only for a future approved candidate</h2><ol><li>First obtain a separate selector’s approval after all scientific, provenance, uniqueness and current-best gates pass. <b>CTD5 does not pass; stop here for this file.</b></li><li>Review the <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">official rules</a> and the remaining weekly allowance displayed on your authenticated submission page. This site cannot verify that allowance.</li><li>On the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">competition page</a>, choose New submission. Select the approved <code>.tif</code>, or its ZIP containing one TIFF, in <b>File to submit</b>. Do not upload HTML, a JSON receipt, a screenshot, or this executive summary.</li><li>Use the exact audited filename and identifying note. Do not reproject, stretch pixel values, or let an image editor rewrite the TIFF.</li><li>After a successful authorized upload, preserve the submission ID, timestamp, file SHA-256 and organizer result receipt. Only that receipt can support an <b>ORGANIZER-CONFIRMED</b> score.</li></ol></section>

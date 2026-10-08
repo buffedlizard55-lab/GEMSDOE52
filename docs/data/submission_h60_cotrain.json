@@ -1,0 +1,48 @@
+{
+  "round": "H60",
+  "arm": "h60-cotrain",
+  "file": "gems52-h60-unionmax-37654px-20261008T185134Z-5406fdcdcf46-zeros.tif",
+  "stem": "gems52-h60-unionmax-37654px-20261008T185134Z-5406fdcdcf46-zeros",
+  "submission_name": "gems52-h60-unionmax-37654px-20261008T185134Z-5406fdcdcf46-zeros",
+  "note": "H60 union_max 37654px; two-view co-training on SHA-pinned bytes; independence measured; >200m ring excluded; all-finite binary [0,1]; not a verified fault map",
+  "note_chars": 158,
+  "bytes": 143566,
+  "sha256": "59abe557302c158463911f388bcf2ec7edafc511e6948f431f3fee339f947333",
+  "nonzero_px": 37654,
+  "verdict": "PORTAL-VALID AND UNIQUE; NO CERTIFIED LEADERBOARD GAIN (IR-H60-003)",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "promoted_field": null,
+  "reason_not_promoted": "the only local instrument ranks the 0.2778 champion at 0.00479, below a random placeholder's 0.02229; Spearman(board, instrument) = -0.099 over 13 priors, so no candidate can be promoted on it",
+  "champion_is_the_pointer": false,
+  "current_slot_gated_pointer": "gems52-h57-union-novel-core25517px-arm14804px.tif",
+  "format": {},
+  "uniqueness": {
+    "canonical_pattern_unique": true,
+    "novel_fraction": 0.46943219843841294,
+    "equals_literal_prior_union": false,
+    "support_novelty_gate_ok": true,
+    "n_priors_checked": 57
+  },
+  "budget_amendment": {
+    "registered_budget": 100000,
+    "amended_budget": 37654,
+    "decision": "emit at 37654 px: the mass of the highest owner-reported off-catalogue score (0.2778), because across the six off-catalogue scored priors the board is strictly decreasing in mass (Spearman -1.000) while the hide-and-recover instrument -- on which the champion itself scores 0.00479, below a random placeholder -- is not correlated with the board at all (Spearman -0.099, p=0.748)"
+  },
+  "instrument_verdict": {
+    "champion_instrument_dti": 0.004789982030808221,
+    "placeholder_instrument_dti": 0.022290651222503993,
+    "spearman_board_vs_instrument": -0.09903723261853131,
+    "p_value": 0.7475313978174702,
+    "n": 13
+  },
+  "build": {
+    "arm": "union_max",
+    "budget": 37654,
+    "emitted_px": 37654,
+    "nearest_emitted_to_catalogue_m": 223.60679774997897
+  },
+  "download": "downloads/gems52-h60-unionmax-37654px-20261008T185134Z-5406fdcdcf46-zeros.tif",
+  "canonical_alias": "downloads/h60-cotrain-candidate.tif",
+  "published_at_utc": "2026-10-08T19:28:34Z"
+}
