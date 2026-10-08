@@ -33,7 +33,7 @@
 > `registry/leaderboard_snapshot_2026-10-08.json`).
 >
 > Round record `knowledge/27_r5_findings.md`; five new ranked hypotheses with a frozen validation gate
-> for the top one `knowledge/32_hypotheses_R5.md`; A-only reasoning for all 4,164 candidate segments
+> for the top one `knowledge/33_hypotheses_R5.md`; A-only reasoning for all 4,164 candidate segments
 > of ≥3 px `docs/downloads/a_only_reasoning_r5.csv` (18,123 one- and two-pixel components accounted
 > for in aggregate, not dropped). New irregularities `IR-R5-001`–`IR-R5-008` in
 > `registry/irregularities.json`, including one that is **open and unexplained**: two runs of identical

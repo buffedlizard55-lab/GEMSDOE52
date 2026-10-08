@@ -1,6 +1,6 @@
 {
  "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified.",
- "generated": "2026-10-08T23:47:41Z",
+ "generated": "2026-10-08T23:49:37Z",
  "entries": [
   {
    "id": "IR-30-029",
@@ -1160,11 +1160,21 @@
   },
   {
    "id": "IR-H60D-007",
-   "date": "2026-10-08",
+   "round": "H60D",
+   "session": "2026-10-08",
+   "severity": "high",
    "status": "open, owner review required",
-   "summary": "Strict lane gate re-run on shipped H60D file: 99.95% of dots within 3 px of calibration lattice 13gems_20261001_r13-lattice-s5_v2_nan-outside.tif (>70% STOP). Earlier 'lane clean' used exemption H60-6, withdrawn to match the literal 'any registry raster' rule. On this footprint the rule makes every non-empty dot raster fail.",
+   "disposition": "disclosed; owner decision required. No slot used; no rule changed silently. Schema repaired on the R5 merge so the register satisfies the repository's own test -- summary/evidence/action are preserved verbatim below and as top-level keys.",
+   "title": "The shipped H60D file is 99.95% within 3 px of a calibration lattice, so the strict lane gate STOPs it; the earlier 'lane clean' verdict rested on a withdrawn exemption",
+   "what_it_is": "Strict lane gate re-run on shipped H60D file: 99.95% of dots within 3 px of calibration lattice 13gems_20261001_r13-lattice-s5_v2_nan-outside.tif (>70% STOP). Earlier 'lane clean' used exemption H60-6, withdrawn to match the literal 'any registry raster' rule. On this footprint the rule makes every non-empty dot raster fail.",
+   "how_we_know": "Strict lane gate re-run, receipt evidence/h60d_strict_lane_recheck.json; knowledge/32_h60d_strict_lane_recheck.md. The comparison raster is 13gems_20261001_r13-lattice-s5_v2_nan-outside.tif and the STOP threshold is 70%. The earlier pass used exemption H60-6, withdrawn to match the literal 'any registry raster' rule.",
+   "handling": "Owner decision: keep the literal rule (no dot raster can pass) or pre-register a new exemption. No slot used; no rule changed silently.",
    "evidence": "evidence/h60d_strict_lane_recheck.json; knowledge/32_h60d_strict_lane_recheck.md",
-   "action": "Owner decision: keep the literal rule (no dot raster can pass) or pre-register a new exemption. No slot used; no rule changed silently."
+   "provenance_warning": "On this footprint the literal rule makes every non-empty dot raster fail, which is a property of the rule and not only of this file; that is the owner decision the entry asks for.",
+   "summary": "Strict lane gate re-run on shipped H60D file: 99.95% of dots within 3 px of calibration lattice 13gems_20261001_r13-lattice-s5_v2_nan-outside.tif (>70% STOP). Earlier 'lane clean' used exemption H60-6, withdrawn to match the literal 'any registry raster' rule. On this footprint the rule makes every non-empty dot raster fail.",
+   "evidence_verbatim": "evidence/h60d_strict_lane_recheck.json; knowledge/32_h60d_strict_lane_recheck.md",
+   "action": "Owner decision: keep the literal rule (no dot raster can pass) or pre-register a new exemption. No slot used; no rule changed silently.",
+   "date": "2026-10-08"
   },
   {
    "id": "IR-R4-001",
@@ -1358,7 +1368,21 @@
    "how_we_know": "Re-running the publisher produced a diff in docs/executive-summary.html; check_site.py then reported 4 problems and check_ctd5_release.py failed its 'DO NOT SUBMIT' assertion.",
    "handling": "Publisher now writes docs/h60c-submission-status.html and no longer touches executive-summary.html; executive-summary.html restored byte-for-byte from HEAD; H60C 'How to submit' button repointed. check_site.py reports 0 failure marks; pytest 264 passed.",
    "disposition": "Closed. Any future publisher must not write shared guide pages without the release checks."
+  },
+  {
+   "id": "IR-R5-009",
+   "round": "R5",
+   "session": "2026-10-08",
+   "severity": "medium",
+   "status": "closed",
+   "disposition": "repaired on merge; recorded so the gate that should have caught it is fixed",
+   "title": "main merged a register entry (IR-H60D-007, PR #44) that fails main's own register schema test",
+   "what_it_is": "tests/test_scripts_and_registry.py::test_irregularities_register_exists_and_is_valid_json requires id, what_it_is, how_we_know and disposition on every entry. IR-H60D-007 was committed with the keys id, date, status, summary, evidence and action, so the repository's own test suite fails on origin/main as of 479519c.",
+   "how_we_know": "Verified directly: origin/main's register has 104 entries and exactly one fails the schema assertion, and origin/main carries the same assertion at line 81 of the test file. Found by running the full suite after merging main into this branch, not by reading the diff.",
+   "handling": "The entry was repaired on the R5 merge by mapping summary -> what_it_is and evidence/action -> how_we_know/handling, with the original three keys preserved verbatim alongside, and with the repair stated in the entry's own disposition. No content was dropped or paraphrased. The test was NOT relaxed. Whatever CI ran on PR #44 did not execute this test against the merged register, which is the process gap worth closing: the register schema test belongs in the pre-merge path, not only in a branch's own suite.",
+   "evidence": "registry/irregularities.json (IR-H60D-007), tests/test_scripts_and_registry.py:81",
+   "provenance_warning": "A green PR check is not evidence that the merged tree passes the suite."
   }
  ],
- "merge_note": "R5 session merge of 2026-10-08: entries from the CTD5/H60/H60C/H60D rounds on main and IR-R5-001..008 from this branch are unioned by id; no entry was dropped and none was rewritten except where the same id existed on both sides."
+ "merge_note": "R5 session merges of 2026-10-08: entries from the CTD5/H60/H60C/H60D rounds on main and IR-R5-001..009 from this branch are unioned by id; no entry was dropped. One entry (IR-H60D-007) arrived with a non-conforming key set and was schema-repaired with its original wording preserved verbatim -- see IR-R5-009."
 }

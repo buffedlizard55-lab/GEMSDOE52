@@ -1,4 +1,4 @@
-# 32 · R5-H1…R5-H6 — five new geological hypotheses and one scoring item, ranked, with the gate that decides the first one
+# 33 · R5-H1…R5-H6 — five new geological hypotheses and one scoring item, ranked, with the gate that decides the first one
 
 **On the name.** An earlier draft of this file called these R5-H1…R5-H6. `main` already carries three
 parallel rounds named H60, H60C and H60D (with their own preregistrations, scripts, site pages and an

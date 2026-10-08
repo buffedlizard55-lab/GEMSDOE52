@@ -143,7 +143,7 @@ legitimate way to grow `S` is to have pixels above the bar.
 entire GeoDAWN area" with expanded labels (`knowledge/25` §5). If the whole-area `|G|` is 2× the
 effective public one, `S*` is 33,400; if 4×, 66,800. One file serves both rounds, so the shipped
 budget is a bet on the round whose `|G|` can be measured. It is placed on the measurable one, and the
-bet is written down (`knowledge/32` R5-H6).
+bet is written down (`knowledge/33` R5-H6).
 
 ## 5. Why no instrument in this repo can rank a novel field — replicated this round on new data
 
