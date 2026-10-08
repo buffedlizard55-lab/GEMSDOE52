@@ -329,6 +329,9 @@ def main() -> int:
     shutil.copy2(out_zip, dl / f"{stem}.zip")
     shutil.copy2(out_zip, dl / "h60-candidate.zip")
     shutil.copy2(reasoning_csv, dl / f"{stem}-a-only-reasoning.csv")
+    # stable alias: the README and site link this name so the link survives a re-build
+    # (the stem embeds the arm size, which changes whenever the arm budget changes)
+    shutil.copy2(reasoning_csv, dl / "h60-a-only-reasoning.csv")
     (dl / "index.html").write_text(
         "<!doctype html><meta charset=utf-8><title>H60 downloads</title>"
         f"<p><a href='h60-candidate.tif'>h60-candidate.tif</a> ({out_tif.stat().st_size} bytes) — "
