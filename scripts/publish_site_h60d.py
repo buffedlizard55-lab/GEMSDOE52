@@ -248,7 +248,7 @@ non-calibration priors is <b>{lane['dots_max_within_3px_frac_gate']:.4f}</b>
 (bar {lane['max_dots_frac']}) —
 {pill('ok', 'clean') if lane['dots_check_passed'] else pill('no', 'DRIFT')}.
 Both Spearman components apply to every prior, calibration included; raw readings are
-reported per prior in <a href="data/h60_lane_gate.json">the gate receipt</a>.
+reported per prior in <a href="data/h60d_lane_gate.json">the gate receipt</a>.
 Uniqueness: decoded pattern distinct from all {uniq['n_priors_checked']} accessible aligned
 priors; support novelty {uniq['novel_fraction']:.1%};
 not a literal prior union: {str(not uniq['equals_literal_prior_union']).lower()}.
@@ -275,13 +275,13 @@ CRS/shape/transform match: {str(fmt['crs'] == 'EPSG:32611' and fmt['width'] == 3
 <h2>Receipts</h2>
 <p class="small"><a href="data/h60d_preflight_integrity.json">input integrity (23/23 pins)</a> ·
 <a href="data/h60d_cotrain.json">co-training + independence + canary + strata</a> ·
-<a href="data/h60_validation.json">holdout validation</a> ·
+<a href="data/h60d_validation.json">holdout validation</a> ·
 <a href="data/h60d_build.json">build receipt</a> ·
 <a href="data/h60d_format_gate.json">format gate</a> ·
 <a href="data/h60d_uniqueness.json">uniqueness gate</a> ·
 <a href="data/h60d_lane_gate.json">lane drift gate</a> ·
 <a href="data/h60d_slot_gate.json">slot gate</a> ·
-<a href="data/h60_run_card.json">run card</a> ·
+<a href="data/h60d_run_card.json">run card</a> ·
 <a href="data/h60d_preregistration.json">frozen preregistration</a> ·
 <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/30_hypotheses_H60D_preregistered.md">hypothesis document</a> ·
 <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/31_what_h60D_found.md">what H60D found</a>.</p>
@@ -313,33 +313,42 @@ These are hypotheses for Phase-2 review, not verified faults.</p>
         f' NO</b> — NEGATIVE RESULT: the disagreement field does not beat the union or the'
         f' surface view on the holdout; the registered promotion/slot bar was not met.</p>\n')
     assert '</body></html>' in dl, "downloads index: closing body not found"
-    assert 'h60d-candidate.tif' not in dl, "downloads index: H60D block already present"
-    dl = dl.replace('</body></html>', h60d_block + '</body></html>')
-    dl_path.write_text(dl)
-    print("updated docs/downloads/index.html (additive H60D block)")
+    if 'h60d-candidate.tif' in dl:
+        print("downloads index: H60D block already present (skipped)")
+    else:
+        dl = dl.replace('</body></html>', h60d_block + '</body></html>')
+        dl_path.write_text(dl)
+        print("updated docs/downloads/index.html (additive H60D block)")
 
     # ------------------------------------------------------- docs/index.html (additive)
     idx_path = DOCS / "index.html"
     idx = idx_path.read_text()
     anchor = '<details><summary>Preserved research archives'
     assert anchor in idx, "index.html: preserved-archives anchor not found"
-    assert 'h60d.html' not in idx, "index.html: H60D line already present"
-    idx_line = (
+    if 'h60d.html' in idx:
+        print("index.html: H60D line already present (skipped)")
+        idx_line = None
+    else:
+        idx_line = (
         '<p class="small">A fourth, independent H60-family round is at '
         '<a href="h60d.html">H60D</a> — co-training with disagreement as the discovery '
         'signal, artifact <code>' + esc(fname) + '</code>, '
         '<a href="downloads/h60d-candidate.tif" download>download</a>. '
         'NEGATIVE RESULT — download for review only; do not spend a weekly slot.</p>\n')
-    idx = idx.replace(anchor, idx_line + anchor, 1)
-    idx_path.write_text(idx)
-    print("updated docs/index.html (additive concurrent-round line)")
+    if idx_line is not None:
+        idx = idx.replace(anchor, idx_line + anchor, 1)
+        idx_path.write_text(idx)
+        print("updated docs/index.html (additive concurrent-round line)")
 
     # ------------------------------------------- docs/executive-summary.html (additive)
     ex_path = DOCS / "executive-summary.html"
     ex = ex_path.read_text()
     assert '</main>' in ex, "executive-summary: </main> not found"
-    assert 'h60d.html' not in ex, "executive-summary: H60D note already present"
-    ex_note = (
+    if 'h60d.html' in ex:
+        print("executive-summary: H60D note already present (skipped)")
+        ex_note = None
+    else:
+        ex_note = (
         '<p class="small"><b>H60D (co-training, disagreement as the discovery signal):</b> '
         'NEGATIVE RESULT — the disagreement field does not beat the union or the surface view '
         'on the holdout; the promotion/slot bar was not met. '
@@ -347,9 +356,10 @@ These are hypotheses for Phase-2 review, not verified faults.</p>
         'Audit: <a href="h60d.html">h60d.html</a> · '
         'TIFF: <a href="downloads/h60d-candidate.tif" download>h60d-candidate.tif</a> · '
         'receipt: <a href="data/submission_h60d.json">submission_h60d.json</a>.</p>\n')
-    ex = ex.replace('</main>', ex_note + '</main>', 1)
-    ex_path.write_text(ex)
-    print("updated docs/executive-summary.html (additive H60D note)")
+    if ex_note is not None:
+        ex = ex.replace('</main>', ex_note + '</main>', 1)
+        ex_path.write_text(ex)
+        print("updated docs/executive-summary.html (additive H60D note)")
 
     return 0
 

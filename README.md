@@ -26,7 +26,7 @@
 > corrections were registered before shipping (H60-5: the artifact is placed by the registered scoring
 > emitter `h57.iso_select`, not `greedy_emit`, whose coverage surrogate was measured anti-correlated
 > with the holdout truth on the novel pool; H60-6: the lane-drift 3-px proximity component excludes
-> manifest-classified calibration rasters — the raw 0.8392 reading against the dense calibration
+> manifest-classified calibration rasters — the raw 0.8390 reading against the dense calibration
 > lattice is geometry, not duplication). See `knowledge/31_what_h60D_found.md`;
 > `registry/irregularities.json` → `IR-H60D-001`–`IR-H60D-005`. Organizer authentication of the mirror
 > remains the open blocker.
@@ -134,7 +134,7 @@ sensitivity table, is on the audit page.
 <!--H60DREADME-->
 ## H60D — co-training with disagreement as the discovery signal; NEGATIVE result, artifact published research-only (2026-10-08)
 
-**[★ H60 GeoTIFF — one click, no scrolling](docs/downloads/h60d-candidate.tif)** · [short ZIP](docs/downloads/h60d-candidate.zip) · [canonical TIFF](docs/downloads/gems52-h60d-dis_contrast-arm37654px.tif) · [per-pixel geology reasoning CSV (37,654 rows)](docs/downloads/gems52-h60d-37654px-candidate-geology.csv) · [A-only segment reasoning CSV (11,064 rows, one falsifier each)](docs/downloads/gems52-h60d-a-only-candidate-segments.csv) · [audit page](docs/h60d.html) · [receipt](docs/data/submission_h60d.json) · [run card](docs/data/h60d_run_card.json) · [slot gate](docs/data/h60d_slot_gate.json) · [validation](docs/data/h60d_validation.json) · [co-training E1](docs/data/h60d_cotrain.json) · [same-seed control](docs/data/h60d_cotrain_control.json) · [preregistration](registry/h60d_preregistration.json) · [ranked hypotheses](knowledge/30_hypotheses_H60D_preregistered.md) · [what H60D found](knowledge/31_what_h60D_found.md).
+**[★ H60 GeoTIFF — one click, no scrolling](docs/downloads/h60d-candidate.tif)** · [short ZIP](docs/downloads/h60d-candidate.zip) · [canonical TIFF](docs/downloads/gems52-h60d-dis_contrast-arm37654px.tif) · [per-pixel geology reasoning CSV (37,654 rows)](docs/downloads/gems52-h60d-37654px-candidate-geology.csv) · [A-only segment reasoning CSV (11,196 rows, one falsifier each)](docs/downloads/gems52-h60d-a-only-candidate-segments.csv) · [audit page](docs/h60d.html) · [receipt](docs/data/submission_h60d.json) · [run card](docs/data/h60d_run_card.json) · [slot gate](docs/data/h60d_slot_gate.json) · [validation](docs/data/h60d_validation.json) · [co-training E1](docs/data/h60d_cotrain.json) · [same-seed control](docs/data/h60d_cotrain_control.json) · [preregistration](registry/h60d_preregistration.json) · [ranked hypotheses](knowledge/30_hypotheses_H60D_preregistered.md) · [what H60D found](knowledge/31_what_h60D_found.md).
 
 - **Is it OK to download? YES.** Is it OK to submit? **The file is portal-valid** (format gate 0
   problems; every pixel ∈ {0,1}; no NaN anywhere — a value outside [0,1] or a NaN cannot exist in it
@@ -144,7 +144,7 @@ sensitivity table, is on the audit page.
   +0.005 bar), so the site says so in one sentence and the receipts carry the whole argument.
   Downloading, reviewing and reproducing it is exactly what it is approved for.
 - **Identifiers to paste (verbatim from `evidence/h60d_build.json`).** Name (49 chars):
-  `gems52-h60d-dis_contrast-arm37654px-0add72cd-zeros`. Note (138 chars): `H60D co-training
+  `gems52-h60d-dis_contrast-arm37654px-18bd0efd-zeros`. Note (139 chars): `H60D co-training
   disagreement arm max(pA-pB,0); outside all prior support and the 200 m ring; finite binary [0,1];
   not a verified fault map` — both ≤ 200 characters, and the site's one-click ZIP carries them as
   paste-ready text files (`submission-name.txt`, `submission-note.txt`).
@@ -156,7 +156,7 @@ sensitivity table, is on the audit page.
   the random control but lose to the surface view and the union on every fold, both instruments, both
   budgets (15,000 px ordering identical). The shipped raster itself scores hide pooled 0.003514
   [0.003234, 0.003847] on the required-novel pool — above the matched novel-pool random control
-  (0.001402) but below the novel-pool union (0.003872) and view_B (0.004239). The B-only product
+  (0.001080) but below the novel-pool union (0.003384) and view_B (0.004239). The B-only product
   (0.006409) ranks like View B itself and is registered characterization-only (H60-4): it is the
   surface view's own confident core — the suspect-artifact population — and can never ship.
 - **Method, honestly:** two logistic views (A: potential-field/subsurface, B: surface DEM +
@@ -170,19 +170,26 @@ sensitivity table, is on the audit page.
 - **Placement (registered correction H60-5):** the artifact is the top-k of the shipped field by the
   registered scoring emitter `h57.iso_select` (3 px inclusive, 5 px NMS, 37,654 px budget). The
   originally preregistered `greedy_emit` coverage surrogate was measured **anti-correlated** with the
-  holdout truth on the required-novel pool (hide pooled 2.6e-05, ~50× below the matched novel-pool
+  holdout truth on the required-novel pool (hide pooled 2.2e-05, ~50× below the matched novel-pool
   random control; its dots sit on the field's broad plateaus, mean field 0.349) — so it is retained
-  only as a disclosed, scored diagnostic in the receipts. 24,272 of the 37,654 emitted px are
+  only as a disclosed, scored diagnostic in the receipts. 24,217 of the 37,654 emitted px are
   positive-field crests; 13,382 are zero-field budget fill (disclosed — the field's confident
   novel-pool support is below the budget).
-- **Gates:** format PASS · uniqueness vs all 55 accessible aligned priors PASS (decoded pattern
+- **Gates:** format PASS · uniqueness vs all 68 accessible aligned priors PASS (decoded pattern
   matches none; 100 % of emitted px novel to all priors' support; not a literal prior union) · lane
-  drift PASS (surface max |Spearman| 0.0979, dots 0.0094, bar 0.90; 3-px proximity 0.1598 excl.
-  manifest-classified calibration rasters, bar 0.70 — raw 0.8392 vs the dense calibration lattice is
+  drift PASS (surface max |Spearman| 0.0979, dots 0.0094, bar 0.90; 3-px proximity 0.1592 excl.
+  manifest-classified calibration rasters, bar 0.70 — raw 0.8390 vs the dense calibration lattice is
   reported, correction H60-6) · not-merely-union PASS (99.2 % outside the union field's greedy
   emission, 99.1 % outside its iso top-k) · ring gate PASS (nearest emitted pixel to a mapped trace
   223.6 m; zero emitted px inside 100–200 m) · independence measured, not assumed (0.176 < 0.60) ·
   leakage canary clean · slot bar FAIL → RESEARCH ONLY · verdict **negative**.
+- **Re-measured after the merge:** the renamed round was rebuilt against the merged prior
+  inventory (68 accessible aligned priors — every H60C/CTD5/concurrent-H60 raster on main is a
+  genuine prior), so the final artifact is `gems52-h60d-dis_contrast-arm37654px.tif`
+  (144,504 bytes, sha256 `18bd0efd582f107ccb988fc20016203c323846bf63d3ecea1f75a0670e4586e8`,
+  37,654 px, pattern-unique vs 68 priors, 100 % support novelty, lane gate clean, shipped-raster
+  hide pooled HOLDOUT-DTI 0.003136 [0.002937, 0.003414] — above novel-pool random 0.001080,
+  below novel-pool union 0.003384). Verdict unchanged: **negative**.
 - **Reproducibility:** `scripts/run_h60d_cotrain.py` (E1 fit + co-training + independence + canary;
   E2 holdout arm comparison; checkpointed, cached stages skip) → `scripts/run_h60d_cotrain_control.py`
   (same-seed control) → `scripts/build_h60d_submission.py` (E3: emits the raster, runs all gates,

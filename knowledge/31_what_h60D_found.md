@@ -83,9 +83,9 @@ Three honest readings:
    union is not even the best single field this round; adding the geophysical view to the surface view
    dilutes the ranking on withheld catalogue truth.
 3. **The disagreement signal is real but weak and non-novel.** Restricted to the required-novel pool
-   (outside every prior's support), the shipped raster scores hide pooled **0.003514**
-   [0.003234, 0.003847] — above the matched novel-pool random control (0.001402) but below the
-   novel-pool union (0.003872) and view_B (0.004239). The field's confident novel-pool support is
+   (outside every prior's support), the shipped raster scores hide pooled **0.003136**
+   [0.002937, 0.003414] — above the matched novel-pool random control (0.001080) but below the
+   novel-pool union (0.003384) and view_B (0.004239). The field's confident novel-pool support is
    only **24,272 positive-field crests**; the remaining 13,382 of the 37,654 budget is zero-field
    fill (disclosed in the receipt). The disagreement field re-ranks ground that priors already
    cover; on genuinely novel ground it carries signal above random but below the surface view.
@@ -94,7 +94,7 @@ Three honest readings:
 
 The preregistered artifact placement was `greedy_emit` (coverage surrogate). The build's own
 diagnostic falsified it **for this field on this pool**: the greedy dots sit on the field's broad
-plateaus (mean field 0.349) and score hide pooled **2.6e-05** — ~50× BELOW the matched novel-pool
+plateaus (mean field 0.349) and score hide pooled **2.2e-05** — ~50× BELOW the matched novel-pool
 random control — while the same field placed by the scoring emitter scores 3.5e-03. Gain favours
 broad moderate plateaus over thin high crests, and the plateau mass is anti-correlated with the
 withheld truth. A greedy-placed raster would not have externalized the measured field.
@@ -104,26 +104,42 @@ read and of the H57 champion artifact); `greedy_emit` is retained as a disclosed
 
 ## 4. The artifact (E3) — unique, review-only
 
-`gems52-h60d-dis_contrast-arm37654px.tif` — 144,529 bytes, sha256
-`0add72cd69542f19…` (pre-rename build; the renamed round re-measured every gate — see the receipts) (full hash in the receipts), 37,654 px, values exactly {0,1}, single-band
+`gems52-h60d-dis_contrast-arm37654px.tif` — 144,504 bytes, sha256
+`18bd0efd582f107c…` (full hash in the receipts), 37,654 px, values exactly {0,1}, single-band
 float32, EPSG:32611, 3730×3292, all finite; portal name
-`gems52-h60d-dis_contrast-arm37654px-0add72cd-zeros`, note ≤ 140 chars. Reproducible: the rebuild
+`gems52-h60d-dis_contrast-arm37654px-18bd0efd-zeros`, note ≤ 140 chars. Reproducible: the rebuild
 after the IR-H60-002 fix reproduces the identical sha256 (fixed point).
 
 | gate | result |
 | --- | --- |
 | format | PASS (0 problems, 0 NaN, values in [0,1], CRS/shape/transform match) |
-| uniqueness | pattern unique vs **55** accessible aligned priors; support novelty **100 %**; not a literal prior union |
+| uniqueness | pattern unique vs **68** accessible aligned priors; support novelty **100 %**; not a literal prior union |
 | lane drift, surface | max |Spearman| **0.0979** (bar 0.90) — clean |
-| lane drift, dots | max |Spearman| **0.0094**; 3-px proximity raw **0.8392** vs the calibration lattice, **0.1598** excl. calibration (bar 0.70) — clean (H60-6) |
-| not merely union | 37,364/37,654 px (99.2 %) outside the union field's greedy emission; 37,314 (99.1 %) outside its iso top-k |
+| lane drift, dots | max |Spearman| **0.0094**; 3-px proximity raw **0.8390** vs the calibration lattice, **0.1592** excl. calibration (bar 0.70) — clean (H60-6) |
+| not merely union | 37,331/37,654 px (99.1 %) outside the union field's greedy emission; 37,282 (99.1 %) outside its iso top-k |
 | 200 m ring | min distance to a mapped catalogue pixel **223.6 m** |
-| reasoning | 37,654 per-pixel geological reasoning rows + 11,064 A-only candidate-segment dossiers |
+| reasoning | 37,654 per-pixel geological reasoning rows + 11,196 A-only candidate-segment dossiers |
 | slot gate | **CLOSED** — promotion/slot bar not met; DOWNLOAD OK FOR REVIEW, DO NOT SPEND A WEEKLY SLOT |
 
 `submission/LATEST.txt` stays on H57; H60 publishes via `docs/data/submission_h60d.json` +
 `submission/H60D_LATEST.txt`. The site's top download bar points at `downloads/h60-candidate.tif/.zip`
 with the unmistakable status line.
+
+## 4b. Re-measured after the merge (the renamed round's final numbers)
+
+After the rename (IR-H60D-006) and the merge of main, the artifact was rebuilt against the
+**merged prior inventory**: every H60C / CTD5 / concurrent-H60 raster on main is now a genuine
+prior, so the accessible aligned prior count rose from 55 to **68** and the legal pool shrank
+accordingly. All gates were re-run and re-measured: the artifact is
+`gems52-h60d-dis_contrast-arm37654px.tif` (144,504 bytes, sha256
+`18bd0efd582f107ccb988fc20016203c323846bf63d3ecea1f75a0670e4586e8`, 37,654 px), pattern-unique
+vs all 68 priors with 100 % support novelty; lane gate clean (surface |ρ| 0.0979, dots |ρ|
+0.0094, 3-px proximity 0.1592 excl. calibration, raw 0.8390 vs the calibration lattice);
+not-merely-union 37,331/37,654 px (99.1 %) outside the union field's greedy emission;
+shipped raster hide pooled HOLDOUT-DTI **0.003136** [0.002937, 0.003414] — above the matched
+novel-pool random control (0.001080), below the novel-pool union (0.003384) and view_B
+(0.003576); greedy_emit diagnostic 2.2e-05; 24,217 positive-field crests + 13,437 zero-field
+budget fill; 11,196 A-only candidate segments. The verdict is unchanged: **negative**.
 
 ## 5. Incidents and registered corrections this round
 
@@ -136,7 +152,7 @@ with the unmistakable status line.
 - **IR-H60D-003** — the marginal acceptance radius was logged in pixels under a metre label
   (2.8 "m" instead of 283.3 m); fixed (×100 m).
 - **IR-H60D-004 / H60-5** — the greedy-vs-iso placement divergence (section 3).
-- **IR-H60D-005 / H60-6** — the lane-drift 3-px proximity gate fired at 0.8392 against an
+- **IR-H60D-005 / H60-6** — the lane-drift 3-px proximity gate fired at 0.8390 against an
   owner-supplied **calibration** lattice (manifest id `calib_…`, source `inputs/calibration/`; the
   regular 5-px lattice that reaches 99.8 % of the A/S ceiling). Its 3-px dilation covers about half
   the grid, so any pool placement reads 70–84 % against it by geometry, not duplication.
@@ -144,7 +160,7 @@ with the unmistakable status line.
   classified manifest-driven (`h60.calibration_basenames`), never hand-picked; raw readings still
   reported; both Spearman components apply to every prior; the uniqueness gate (the actual
   duplication control) is unchanged and passes decisively. Gate value over the 49 non-calibration
-  priors: 0.1598.
+  priors: 0.1592.
 
 ## 6. What this means for the board question
 

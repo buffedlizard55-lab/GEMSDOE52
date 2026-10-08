@@ -1,11 +1,12 @@
 {
   "schema_version": 1,
-  "round": "H60",
-  "version": "gems52-h60-cotrain-disagreement-discovery-v1",
+  "round": "H60D",
+  "version": "gems52-h60d-cotrain-disagreement-discovery-v1",
   "status": "frozen_preregistration_with_registered_correction_H60-5",
   "registered_utc_date": "2026-10-08",
   "lane": "co-training between a geophysical view and a surface view, disagreement as the discovery signal (Blum & Mitchell COLT '98, doi:10.1145/279943.279962)",
-  "hypothesis_document": "knowledge/25_hypotheses_H60_preregistered.md",
+  "hypothesis_document": "knowledge/30_hypotheses_H60D_preregistered.md",
+  "hypothesis_document_renamed_from": "knowledge/25_hypotheses_H60_preregistered.md (renamed to H60D when a parallel H60 session, later branded H60C, merged first and occupied the plain h60 file names)",
   "hypothesis_document_sha256": "6ce875d384d4344bdd8a668bd7670fc5259b74f19059fb3b8b05c16ca5257d60",
   "evaluator_version": {
     "metric": "gems52.metric.dti (alpha 0.2, beta 0.8, R 300 m triangular kernel, lattice-exact offsets)",
@@ -123,5 +124,6 @@
       "hypothesis_document_sha256_amended": "e64ba69ad0d2fdcb3aaa0bdee79c18d4e2a8969a0d672fc7eaf2e137578cb712"
     }
   ],
-  "hypothesis_document_sha256_amended": "e64ba69ad0d2fdcb3aaa0bdee79c18d4e2a8969a0d672fc7eaf2e137578cb712"
+  "hypothesis_document_sha256_amended": "a718dc71421c807c7c307d9378775effa13d4c2da9789d288ed3eaaad11c6478",
+  "round_rename_note": "round relabeled H60 -> H60D and the document moved to knowledge/30_hypotheses_H60D_preregistered.md when a parallel H60 session (later branded H60C) merged to main first (PR #38) and occupied the plain h60 file names; see registry/irregularities.json IR-H60D-006. Hypotheses, protocol, corrections and all measured numbers are unchanged."
 }

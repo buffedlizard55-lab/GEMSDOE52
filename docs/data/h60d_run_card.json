@@ -1,5 +1,5 @@
 {
- "round": "H60",
+ "round": "H60D",
  "lane": "co-training, disagreement as the discovery signal (Blum & Mitchell COLT '98, doi:10.1145/279943.279962)",
  "hypothesis": "H60-1/H60-2: the disagreement between the geophysical view (A) and the surface view (B) is the discovery signal \u2014 where A is confident and B abstains, a fault may be buried beneath cover and absent from the USGS/INGENIOUS catalogue; the shipped field is the disagreement 'dis_contrast'",
  "mechanism": "two logistic views fitted out-of-fold on hide-and-recover whole-segment folds (independence premise measured, exchange licensed); the ranking field is the disagreement product/contrast, NOT the union; the artifact is the top-k of that field (registered scoring emitter h57.iso_select, correction H60-5) outside the 200 m ring and all prior support \u2014 the preregistered greedy_emit coverage placement is retained as a scored diagnostic and was anti-correlated with the holdout truth on this pool",
@@ -12,26 +12,26 @@
  "holdout_dti": {
   "shipped_raster": {
    "hide": {
-    "pooled_dti": 0.003514,
-    "tpw": 208.25,
-    "fpw": 150459.14,
-    "fnw": 36202.75,
+    "pooled_dti": 0.003136,
+    "tpw": 185.82,
+    "fpw": 150474.22,
+    "fnw": 36225.18,
     "n_truth": 36411,
-    "fold_mean_dti": 0.003518,
-    "ci95_lo": 0.003234,
-    "ci95_hi": 0.003847,
+    "fold_mean_dti": 0.003133,
+    "ci95_lo": 0.002937,
+    "ci95_hi": 0.003414,
     "withheld_positives": 36411,
     "label": "HOLDOUT-DTI of the SHIPPED raster (evaluator gems52.metric.dti alpha 0.2 beta 0.8 R 300 m triangular lattice-exact; holdout.make_folds whole-segment hide-and-recover, 4 folds, buffer 4 px, prevalence 0.002, seed 20261009; pooled = metric components pooled across folds; CI = fold bootstrap 10k resamples)"
    },
    "tip": {
-    "pooled_dti": 0.002935,
-    "tpw": 133.48,
-    "fpw": 150501.01,
-    "fnw": 19049.52,
+    "pooled_dti": 0.002694,
+    "tpw": 122.52,
+    "fpw": 150509.21,
+    "fnw": 19060.48,
     "n_truth": 19183,
-    "fold_mean_dti": 0.002802,
-    "ci95_lo": 0.002016,
-    "ci95_hi": 0.003511,
+    "fold_mean_dti": 0.002585,
+    "ci95_lo": 0.001895,
+    "ci95_hi": 0.003162,
     "withheld_positives": 19183,
     "label": "HOLDOUT-DTI of the SHIPPED raster (evaluator gems52.metric.dti alpha 0.2 beta 0.8 R 300 m triangular lattice-exact; holdout.make_folds whole-segment hide-and-recover, 4 folds, buffer 4 px, prevalence 0.002, seed 20261009; pooled = metric components pooled across folds; CI = fold bootstrap 10k resamples)"
    }
@@ -40,115 +40,115 @@
    {
     "mode": "hide",
     "fold": 0,
-    "dti": 0.003165,
-    "tpw": 50.0856169852019,
-    "fpw": 37615.92609625339,
-    "fnw": 10311.914383014799,
+    "dti": 0.002961,
+    "tpw": 46.852885409185966,
+    "fpw": 37617.5424620414,
+    "fnw": 10315.147114590814,
     "n_truth": 10362,
     "emitted": 37654
    },
    {
     "mode": "hide",
     "fold": 1,
-    "dti": 0.003304,
-    "tpw": 52.24258157279963,
-    "fpw": 37614.02920628405,
-    "fnw": 10296.7574184272,
+    "dti": 0.002913,
+    "tpw": 46.06850382361873,
+    "fpw": 37618.58148763447,
+    "fnw": 10302.931496176381,
     "n_truth": 10349,
     "emitted": 37654
    },
    {
     "mode": "hide",
     "fold": 2,
-    "dti": 0.004028,
-    "tpw": 63.72328435334793,
-    "fpw": 37605.6355423781,
-    "fnw": 10295.276715646653,
+    "dti": 0.003565,
+    "tpw": 56.39579909426384,
+    "fpw": 37610.72299191734,
+    "fnw": 10302.604200905736,
     "n_truth": 10359,
     "emitted": 37654
    },
    {
     "mode": "hide",
     "fold": 3,
-    "dti": 0.003575,
-    "tpw": 42.201241094244196,
-    "fpw": 37623.55039752609,
-    "fnw": 5298.798758905756,
+    "dti": 0.003092,
+    "tpw": 36.50514057547381,
+    "fpw": 37627.37005763859,
+    "fnw": 5304.494859424526,
     "n_truth": 5341,
     "emitted": 37654
    },
    {
     "mode": "tip",
     "fold": 0,
-    "dti": 0.002569,
-    "tpw": 27.46192656385162,
-    "fpw": 37630.571478430014,
-    "fnw": 3919.5380734361484,
+    "dti": 0.002482,
+    "tpw": 26.526421666097598,
+    "fpw": 37630.82612243752,
+    "fnw": 3920.4735783339024,
     "n_truth": 3947,
     "emitted": 37654
    },
    {
     "mode": "tip",
     "fold": 1,
-    "dti": 0.003803,
-    "tpw": 54.01422840377754,
-    "fpw": 37608.33310576528,
-    "fnw": 8284.985771596223,
+    "dti": 0.003348,
+    "tpw": 47.55962647326824,
+    "fpw": 37613.31160399845,
+    "fnw": 8291.440373526731,
     "n_truth": 8339,
     "emitted": 37654
    },
    {
     "mode": "tip",
     "fold": 2,
-    "dti": 0.003219,
-    "tpw": 37.66397869613829,
-    "fpw": 37621.3621221539,
-    "fnw": 5172.336021303861,
+    "dti": 0.002975,
+    "tpw": 34.80570365521958,
+    "fpw": 37622.99893750498,
+    "fnw": 5175.19429634478,
     "n_truth": 5210,
     "emitted": 37654
    },
    {
     "mode": "tip",
     "fold": 3,
-    "dti": 0.001615,
-    "tpw": 14.344408432228304,
-    "fpw": 37640.74221977771,
-    "fnw": 1672.6555915677718,
+    "dti": 0.001535,
+    "tpw": 13.632236757384742,
+    "fpw": 37642.07263077363,
+    "fnw": 1673.3677632426152,
     "n_truth": 1687,
     "emitted": 37654
    }
   ],
   "greedy_diagnostic_holdout": {
    "hide": {
-    "fold_mean_dti": 2.6e-05,
+    "fold_mean_dti": 2.2e-05,
     "folds": [
-     4.3e-05,
-     3.6e-05,
-     2.5e-05,
+     3.3e-05,
+     4.5e-05,
+     1.1e-05,
      0.0
     ],
     "label": "HOLDOUT-DTI of the greedy_emit DIAGNOSTIC placement of the same field on the same pool (correction H60-5: retained as a disclosed diagnostic; the coverage surrogate selects the field's broad-plateau mass, which is anti-correlated with the holdout truth on the required-novel pool)"
    },
    "tip": {
-    "fold_mean_dti": 4e-05,
+    "fold_mean_dti": 2.8e-05,
     "folds": [
-     5.4e-05,
-     7.2e-05,
-     3.4e-05,
+     4.3e-05,
+     6.2e-05,
+     5e-06,
      0.0
     ],
     "label": "HOLDOUT-DTI of the greedy_emit DIAGNOSTIC placement of the same field on the same pool (correction H60-5: retained as a disclosed diagnostic; the coverage surrogate selects the field's broad-plateau mass, which is anti-correlated with the holdout truth on the required-novel pool)"
    }
   },
   "novel_pool_controls_pooled_means": {
-   "hide|random_novelpool": 0.001402,
-   "hide|clf_union_novelpool": 0.003872,
-   "hide|view_B_novelpool": 0.004239,
-   "hide|dis_contrast_novelpool": 0.003518,
-   "tip|random_novelpool": 0.001083,
-   "tip|clf_union_novelpool": 0.003178,
-   "tip|view_B_novelpool": 0.003514,
-   "tip|dis_contrast_novelpool": 0.002802
+   "hide|random_novelpool": 0.00108,
+   "hide|clf_union_novelpool": 0.003384,
+   "hide|view_B_novelpool": 0.003576,
+   "hide|dis_contrast_novelpool": 0.003133,
+   "tip|random_novelpool": 0.00105,
+   "tip|clf_union_novelpool": 0.002959,
+   "tip|view_B_novelpool": 0.003127,
+   "tip|dis_contrast_novelpool": 0.002585
   },
   "field_validation": {
    "pooled_dti": 0.004109,
@@ -368,9 +368,9 @@
   },
   "lane_gate_dots": {
    "dots_max_abs_spearman": 0.0094,
-   "dots_max_within_3px_frac": 0.8392,
+   "dots_max_within_3px_frac": 0.839,
    "dots_max_within_3px_prior": "/home/user/GEMSDOE52/work/pinned/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
-   "dots_max_within_3px_frac_gate": 0.1598,
+   "dots_max_within_3px_frac_gate": 0.1592,
    "dots_max_within_3px_gate_prior": "/home/user/GEMSDOE52/submission/gems52-h56-consensus-core-continuation-40517px-04c86e1888a8-zeros.tif",
    "calibration_rasters_excluded_from_proximity": [
     "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
@@ -384,24 +384,24 @@
    "lane_drift_detected": false
   },
   "uniqueness": {
-   "n_priors_checked": 55,
+   "n_priors_checked": 68,
    "canonical_pattern_unique": true,
    "support_novelty_gate_ok": true,
    "novel_fraction": 1.0,
    "equals_literal_prior_union": false
   },
   "not_merely_union": {
-   "outside_union_greedy_px": 37364,
-   "outside_union_topk_px": 37314,
+   "outside_union_greedy_px": 37331,
+   "outside_union_topk_px": 37282,
    "arm_px": 37654
   }
  },
- "raster_sha256": "0add72cd69542f19586e94ab3cd9c51fbe5c3ae72fba51f684bd6f510d502fd5",
+ "raster_sha256": "18bd0efd582f107ccb988fc20016203c323846bf63d3ecea1f75a0670e4586e8",
  "validator_output": {
   "format_gate": {
-   "path": "/home/user/GEMSDOE52/submission/gems52-h60-dis_contrast-arm37654px.tif",
-   "bytes": 144529,
-   "sha256": "0add72cd69542f19586e94ab3cd9c51fbe5c3ae72fba51f684bd6f510d502fd5",
+   "path": "/home/user/GEMSDOE52/submission/gems52-h60d-dis_contrast-arm37654px.tif",
+   "bytes": 144504,
+   "sha256": "18bd0efd582f107ccb988fc20016203c323846bf63d3ecea1f75a0670e4586e8",
    "bands": 1,
    "dtype": "float32",
    "crs": "EPSG:32611",
@@ -451,9 +451,9 @@
   "values_in_0_1": true,
   "crs_shape_transform_match": true,
   "recheck": {
-   "path": "/home/user/GEMSDOE52/submission/gems52-h60-dis_contrast-arm37654px.tif",
-   "bytes": 144529,
-   "sha256": "0add72cd69542f19586e94ab3cd9c51fbe5c3ae72fba51f684bd6f510d502fd5",
+   "path": "/home/user/GEMSDOE52/submission/gems52-h60d-dis_contrast-arm37654px.tif",
+   "bytes": 144504,
+   "sha256": "18bd0efd582f107ccb988fc20016203c323846bf63d3ecea1f75a0670e4586e8",
    "bands": 1,
    "dtype": "float32",
    "height": 3730,
@@ -481,16 +481,16 @@
    "unique_values": 2
   }
  },
- "submission_name": "gems52-h60-dis_contrast-arm37654px-0add72cd-zeros",
- "submission_note": "H60 co-training disagreement arm max(pA-pB,0); outside all prior support and the 200 m ring; finite binary [0,1]; not a verified fault map",
- "submission_note_chars": 138,
+ "submission_name": "gems52-h60d-dis_contrast-arm37654px-18bd0efd-zeros",
+ "submission_note": "H60D co-training disagreement arm max(pA-pB,0); outside all prior support and the 200 m ring; finite binary [0,1]; not a verified fault map",
+ "submission_note_chars": 139,
  "verdict": "negative",
  "number_labels": "every holdout number is HOLDOUT-DTI (evaluator version, withheld positives, 95% CI); every leaderboard number anywhere in this repo is owner-reported; none is ORGANIZER-CONFIRMED (no submission-page receipt exists); a projection is never written as a score",
  "evaluator_version": {
   "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
   "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
   "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
-  "h60.py": "7fd2b31ee98994c1b4323d7e88b49986aef2a7bebdd846d283f80f64a94a6e91",
+  "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
   "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
  },
  "negative_result_is_a_deliverable": true,
@@ -507,9 +507,9 @@
  "champion_owner_reported": 0.2778,
  "board_top_owner_reported_2026_10_07": 0.3774,
  "preregistration": {
-  "document": "knowledge/25_hypotheses_H60_preregistered.md",
+  "document": "knowledge/30_hypotheses_H60D_preregistered.md",
   "sha256_frozen": "6ce875d384d4344bdd8a668bd7670fc5259b74f19059fb3b8b05c16ca5257d60",
-  "sha256_amended": "e64ba69ad0d2fdcb3aaa0bdee79c18d4e2a8969a0d672fc7eaf2e137578cb712",
+  "sha256_amended": "a718dc71421c807c7c307d9378775effa13d4c2da9789d288ed3eaaad11c6478",
   "registered_corrections": [
    "H60-5: artifact placed by the registered scoring emitter h57.iso_select instead of greedy_emit (placement diagnostic falsified the coverage surrogate on the required-novel pool); no gate outcome changes",
    "H60-6: the lane-drift 3-px proximity component excludes calibration rasters (registry/data_manifest.json ids calib_* / inputs/calibration/* \u2014 owner-supplied metric-calibration inputs such as the dense regular 5-px lattice whose dilation covers about half the grid, so any pool placement reads 70-84% against it by geometry, not duplication); raw readings still reported; both Spearman components apply to every prior"

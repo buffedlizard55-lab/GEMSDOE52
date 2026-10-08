@@ -1,7 +1,7 @@
 {
- "path": "/home/user/GEMSDOE52/submission/gems52-h60-dis_contrast-arm37654px.tif",
- "bytes": 144529,
- "sha256": "0add72cd69542f19586e94ab3cd9c51fbe5c3ae72fba51f684bd6f510d502fd5",
+ "path": "/home/user/GEMSDOE52/submission/gems52-h60d-dis_contrast-arm37654px.tif",
+ "bytes": 144504,
+ "sha256": "18bd0efd582f107ccb988fc20016203c323846bf63d3ecea1f75a0670e4586e8",
  "bands": 1,
  "dtype": "float32",
  "crs": "EPSG:32611",
