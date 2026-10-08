@@ -1,0 +1,519 @@
+{
+ "round": "H60D",
+ "lane": "co-training, disagreement as the discovery signal (Blum & Mitchell COLT '98, doi:10.1145/279943.279962)",
+ "hypothesis": "H60-1/H60-2: the disagreement between the geophysical view (A) and the surface view (B) is the discovery signal \u2014 where A is confident and B abstains, a fault may be buried beneath cover and absent from the USGS/INGENIOUS catalogue; the shipped field is the disagreement 'dis_contrast'",
+ "mechanism": "two logistic views fitted out-of-fold on hide-and-recover whole-segment folds (independence premise measured, exchange licensed); the ranking field is the disagreement product/contrast, NOT the union; the artifact is the top-k of that field (registered scoring emitter h57.iso_select, correction H60-5) outside the 200 m ring and all prior support \u2014 the preregistered greedy_emit coverage placement is retained as a scored diagnostic and was anti-correlated with the holdout truth on this pool",
+ "named_non_fault_processes_that_could_mimic_it": [
+  "alluvial-fan / basin-margin gravel wedges (density and susceptibility contrasts with no fault)",
+  "airborne-survey drape and terrain clearance over steep topography (GeoDAWN magnetics are airborne; ridge-flank gradients mimic structure)",
+  "anthropogenic compaction (roads, canal levees) \u2014 conductivity/strain anomalies with no fault",
+  "groundwater salinity boundaries \u2014 surface-conductivity steps unrelated to faulting"
+ ],
+ "holdout_dti": {
+  "shipped_raster": {
+   "hide": {
+    "pooled_dti": 0.003136,
+    "tpw": 185.82,
+    "fpw": 150474.22,
+    "fnw": 36225.18,
+    "n_truth": 36411,
+    "fold_mean_dti": 0.003133,
+    "ci95_lo": 0.002937,
+    "ci95_hi": 0.003414,
+    "withheld_positives": 36411,
+    "label": "HOLDOUT-DTI of the SHIPPED raster (evaluator gems52.metric.dti alpha 0.2 beta 0.8 R 300 m triangular lattice-exact; holdout.make_folds whole-segment hide-and-recover, 4 folds, buffer 4 px, prevalence 0.002, seed 20261009; pooled = metric components pooled across folds; CI = fold bootstrap 10k resamples)"
+   },
+   "tip": {
+    "pooled_dti": 0.002694,
+    "tpw": 122.52,
+    "fpw": 150509.21,
+    "fnw": 19060.48,
+    "n_truth": 19183,
+    "fold_mean_dti": 0.002585,
+    "ci95_lo": 0.001895,
+    "ci95_hi": 0.003162,
+    "withheld_positives": 19183,
+    "label": "HOLDOUT-DTI of the SHIPPED raster (evaluator gems52.metric.dti alpha 0.2 beta 0.8 R 300 m triangular lattice-exact; holdout.make_folds whole-segment hide-and-recover, 4 folds, buffer 4 px, prevalence 0.002, seed 20261009; pooled = metric components pooled across folds; CI = fold bootstrap 10k resamples)"
+   }
+  },
+  "shipped_raster_folds": [
+   {
+    "mode": "hide",
+    "fold": 0,
+    "dti": 0.002961,
+    "tpw": 46.852885409185966,
+    "fpw": 37617.5424620414,
+    "fnw": 10315.147114590814,
+    "n_truth": 10362,
+    "emitted": 37654
+   },
+   {
+    "mode": "hide",
+    "fold": 1,
+    "dti": 0.002913,
+    "tpw": 46.06850382361873,
+    "fpw": 37618.58148763447,
+    "fnw": 10302.931496176381,
+    "n_truth": 10349,
+    "emitted": 37654
+   },
+   {
+    "mode": "hide",
+    "fold": 2,
+    "dti": 0.003565,
+    "tpw": 56.39579909426384,
+    "fpw": 37610.72299191734,
+    "fnw": 10302.604200905736,
+    "n_truth": 10359,
+    "emitted": 37654
+   },
+   {
+    "mode": "hide",
+    "fold": 3,
+    "dti": 0.003092,
+    "tpw": 36.50514057547381,
+    "fpw": 37627.37005763859,
+    "fnw": 5304.494859424526,
+    "n_truth": 5341,
+    "emitted": 37654
+   },
+   {
+    "mode": "tip",
+    "fold": 0,
+    "dti": 0.002482,
+    "tpw": 26.526421666097598,
+    "fpw": 37630.82612243752,
+    "fnw": 3920.4735783339024,
+    "n_truth": 3947,
+    "emitted": 37654
+   },
+   {
+    "mode": "tip",
+    "fold": 1,
+    "dti": 0.003348,
+    "tpw": 47.55962647326824,
+    "fpw": 37613.31160399845,
+    "fnw": 8291.440373526731,
+    "n_truth": 8339,
+    "emitted": 37654
+   },
+   {
+    "mode": "tip",
+    "fold": 2,
+    "dti": 0.002975,
+    "tpw": 34.80570365521958,
+    "fpw": 37622.99893750498,
+    "fnw": 5175.19429634478,
+    "n_truth": 5210,
+    "emitted": 37654
+   },
+   {
+    "mode": "tip",
+    "fold": 3,
+    "dti": 0.001535,
+    "tpw": 13.632236757384742,
+    "fpw": 37642.07263077363,
+    "fnw": 1673.3677632426152,
+    "n_truth": 1687,
+    "emitted": 37654
+   }
+  ],
+  "greedy_diagnostic_holdout": {
+   "hide": {
+    "fold_mean_dti": 2.2e-05,
+    "folds": [
+     3.3e-05,
+     4.5e-05,
+     1.1e-05,
+     0.0
+    ],
+    "label": "HOLDOUT-DTI of the greedy_emit DIAGNOSTIC placement of the same field on the same pool (correction H60-5: retained as a disclosed diagnostic; the coverage surrogate selects the field's broad-plateau mass, which is anti-correlated with the holdout truth on the required-novel pool)"
+   },
+   "tip": {
+    "fold_mean_dti": 2.8e-05,
+    "folds": [
+     4.3e-05,
+     6.2e-05,
+     5e-06,
+     0.0
+    ],
+    "label": "HOLDOUT-DTI of the greedy_emit DIAGNOSTIC placement of the same field on the same pool (correction H60-5: retained as a disclosed diagnostic; the coverage surrogate selects the field's broad-plateau mass, which is anti-correlated with the holdout truth on the required-novel pool)"
+   }
+  },
+  "novel_pool_controls_pooled_means": {
+   "hide|random_novelpool": 0.00108,
+   "hide|clf_union_novelpool": 0.003384,
+   "hide|view_B_novelpool": 0.003576,
+   "hide|dis_contrast_novelpool": 0.003133,
+   "tip|random_novelpool": 0.00105,
+   "tip|clf_union_novelpool": 0.002959,
+   "tip|view_B_novelpool": 0.003127,
+   "tip|dis_contrast_novelpool": 0.002585
+  },
+  "field_validation": {
+   "pooled_dti": 0.004109,
+   "tpw": 243.55,
+   "fpw": 150434.21,
+   "fnw": 36167.45,
+   "n_truth": 36411,
+   "n_folds": 4,
+   "fold_mean_dti": 0.004075,
+   "ci95_lo": 0.003597,
+   "ci95_hi": 0.004948,
+   "withheld_positives": 36411,
+   "label": "HOLDOUT-DTI (gems52.metric.dti alpha 0.2 beta 0.8 R 300 m triangular, lattice-exact; holdout.make_folds whole-segment hide-and-recover, 4 folds, buffer 4 px, prevalence 0.002, seed 20261009; pooled = metric components pooled across folds; CI = fold bootstrap, 10k resamples)"
+  },
+  "field_table_hide": {
+   "dis_B_product": 0.006412,
+   "view_B": 0.006411,
+   "clf_union": 0.006164,
+   "dis_contrast": 0.004075,
+   "view_A": 0.003948,
+   "dis_product": 0.003126,
+   "random": 0.001775
+  },
+  "field_table_tip": {
+   "dis_B_product": 0.005209,
+   "view_B": 0.00516,
+   "clf_union": 0.004975,
+   "view_A": 0.003649,
+   "dis_contrast": 0.003182,
+   "dis_product": 0.002773,
+   "random": 0.001698
+  },
+  "gates": {
+   "dis_contrast": {
+    "hide37654_fold_mean": 0.004075,
+    "beats_union_hide": false,
+    "beats_view_A_hide": true,
+    "beats_view_B_hide": false,
+    "folds_won_vs_union": 0,
+    "folds_won_vs_view_A": 2,
+    "folds_won_vs_view_B": 0,
+    "mean_lift_vs_random_at_37654": {
+     "hide": 0.0023,
+     "tip": 0.001485
+    },
+    "folds_won_vs_random_at_37654": {
+     "hide": 4,
+     "tip": 4
+    },
+    "slot_bar_met": false,
+    "characterization_only": false,
+    "promotion_rule": "promotes iff hide@37654 fold-mean beats union AND view_A AND view_B, wins >=3/4 folds against each, and mean lift vs random >= +0.005 on BOTH instruments; H60-4 (B-only) is scored for the record and never ships",
+    "promotes": false
+   }
+  },
+  "cotreatment": {
+   "arms": [
+    {
+     "mode": "hide",
+     "fold": 0,
+     "budget": 37654,
+     "arm": "random",
+     "dti": 0.002142,
+     "n_truth": 10362
+    },
+    {
+     "mode": "hide",
+     "fold": 0,
+     "budget": 37654,
+     "arm": "view_A_round0",
+     "dti": 0.004585,
+     "emitted": 11935,
+     "n_truth": 10362
+    },
+    {
+     "mode": "hide",
+     "fold": 0,
+     "budget": 37654,
+     "arm": "view_B_round0",
+     "dti": 0.005556,
+     "emitted": 27101,
+     "n_truth": 10362
+    },
+    {
+     "mode": "hide",
+     "fold": 0,
+     "budget": 37654,
+     "arm": "clf_union_round0",
+     "dti": 0.005311,
+     "emitted": 24251,
+     "n_truth": 10362
+    },
+    {
+     "mode": "hide",
+     "fold": 0,
+     "budget": 37654,
+     "arm": "cotrain_A_round1",
+     "dti": 0.004737,
+     "emitted": 10640,
+     "n_truth": 10362
+    },
+    {
+     "mode": "hide",
+     "fold": 0,
+     "budget": 37654,
+     "arm": "cotrain_B_round1",
+     "dti": 0.00589,
+     "emitted": 29117,
+     "n_truth": 10362
+    },
+    {
+     "mode": "hide",
+     "fold": 0,
+     "budget": 37654,
+     "arm": "cotrain_union_round1",
+     "dti": 0.006102,
+     "emitted": 25403,
+     "n_truth": 10362
+    },
+    {
+     "mode": "tip",
+     "fold": 0,
+     "budget": 37654,
+     "arm": "random",
+     "dti": 0.00176,
+     "n_truth": 3947
+    },
+    {
+     "mode": "tip",
+     "fold": 0,
+     "budget": 37654,
+     "arm": "view_A_round0",
+     "dti": 0.003994,
+     "emitted": 11935,
+     "n_truth": 3947
+    },
+    {
+     "mode": "tip",
+     "fold": 0,
+     "budget": 37654,
+     "arm": "view_B_round0",
+     "dti": 0.004522,
+     "emitted": 27101,
+     "n_truth": 3947
+    },
+    {
+     "mode": "tip",
+     "fold": 0,
+     "budget": 37654,
+     "arm": "clf_union_round0",
+     "dti": 0.004313,
+     "emitted": 24251,
+     "n_truth": 3947
+    },
+    {
+     "mode": "tip",
+     "fold": 0,
+     "budget": 37654,
+     "arm": "cotrain_A_round1",
+     "dti": 0.004464,
+     "emitted": 10640,
+     "n_truth": 3947
+    },
+    {
+     "mode": "tip",
+     "fold": 0,
+     "budget": 37654,
+     "arm": "cotrain_B_round1",
+     "dti": 0.00469,
+     "emitted": 29117,
+     "n_truth": 3947
+    },
+    {
+     "mode": "tip",
+     "fold": 0,
+     "budget": 37654,
+     "arm": "cotrain_union_round1",
+     "dti": 0.004992,
+     "emitted": 25403,
+     "n_truth": 3947
+    }
+   ],
+   "note": "paired read on fold 0 only: the round-1 fields are the treated models; the round-0 fields on the same rows are the control; both are out-of-fold for fold 0's segments"
+  },
+  "cotreatment_control": {
+   "hide": {
+    "seed_effect_union": 0.000892,
+    "exchange_effect_union": -0.000101,
+    "seed_effect_A": -9e-06,
+    "exchange_effect_A": 0.000161,
+    "seed_effect_B": 0.000498,
+    "exchange_effect_B": -0.000164,
+    "round0_union": 0.005311,
+    "control_union": 0.006203,
+    "round1_union": 0.006102
+   },
+   "tip": {
+    "seed_effect_union": 0.000901,
+    "exchange_effect_union": -0.000222,
+    "seed_effect_A": 0.000213,
+    "exchange_effect_A": 0.000257,
+    "seed_effect_B": 0.000439,
+    "exchange_effect_B": -0.000271,
+    "round0_union": 0.004313,
+    "control_union": 0.005214,
+    "round1_union": 0.004992
+   }
+  },
+  "label": "every number here is HOLDOUT-DTI (evaluator version pinned below; withheld positives per cell; 95% fold-bootstrap CI); nothing here is a leaderboard score or forecast"
+ },
+ "correlation_overlap_vs_registry": {
+  "lane_gate_surface": {
+   "surface_max_abs_spearman": 0.0979,
+   "surface_max_abs_spearman_prior": "/home/user/GEMSDOE52/work/pinned/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+   "surface_check_passed": true,
+   "lane_drift_detected": false
+  },
+  "lane_gate_dots": {
+   "dots_max_abs_spearman": 0.0094,
+   "dots_max_within_3px_frac": 0.839,
+   "dots_max_within_3px_prior": "/home/user/GEMSDOE52/work/pinned/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+   "dots_max_within_3px_frac_gate": 0.1592,
+   "dots_max_within_3px_gate_prior": "/home/user/GEMSDOE52/submission/gems52-h56-consensus-core-continuation-40517px-04c86e1888a8-zeros.tif",
+   "calibration_rasters_excluded_from_proximity": [
+    "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    "8GEMSDOE_Hedge-v2_submission.tif",
+    "gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif",
+    "gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif",
+    "gemsdoe-ens12-adopted-7f00890a.tif",
+    "gemsdoe9-PLACEHOLDER-2314b599.tif"
+   ],
+   "dots_check_passed": true,
+   "lane_drift_detected": false
+  },
+  "uniqueness": {
+   "n_priors_checked": 68,
+   "canonical_pattern_unique": true,
+   "support_novelty_gate_ok": true,
+   "novel_fraction": 1.0,
+   "equals_literal_prior_union": false
+  },
+  "not_merely_union": {
+   "outside_union_greedy_px": 37331,
+   "outside_union_topk_px": 37282,
+   "arm_px": 37654
+  }
+ },
+ "raster_sha256": "18bd0efd582f107ccb988fc20016203c323846bf63d3ecea1f75a0670e4586e8",
+ "validator_output": {
+  "format_gate": {
+   "path": "/home/user/GEMSDOE52/submission/gems52-h60d-dis_contrast-arm37654px.tif",
+   "bytes": 144504,
+   "sha256": "18bd0efd582f107ccb988fc20016203c323846bf63d3ecea1f75a0670e4586e8",
+   "bands": 1,
+   "dtype": "float32",
+   "crs": "EPSG:32611",
+   "width": 3292,
+   "height": 3730,
+   "bounds": [
+    243350.0,
+    4135550.0,
+    572550.0,
+    4508550.0
+   ],
+   "ref_bounds": [
+    243350.0,
+    4135550.0,
+    572550.0,
+    4508550.0
+   ],
+   "transform": [
+    100.0,
+    0.0,
+    243350.0,
+    0.0,
+    -100.0,
+    4508550.0
+   ],
+   "nodata": null,
+   "blocksize": [
+    256,
+    256
+   ],
+   "fixture_grid": false,
+   "has_validity_mask": false,
+   "nan_pixels": 0,
+   "infinity_pixels": 0,
+   "n_nan": 0,
+   "min": 0.0,
+   "max": 1.0,
+   "mean": 0.0030664964579045773,
+   "n_nonzero": 37654,
+   "mass": 37654.0,
+   "mass_outside_footprint": 0,
+   "problems": [],
+   "ok": true,
+   "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "no_nan_inside_footprint": true,
+  "values_in_0_1": true,
+  "crs_shape_transform_match": true,
+  "recheck": {
+   "path": "/home/user/GEMSDOE52/submission/gems52-h60d-dis_contrast-arm37654px.tif",
+   "bytes": 144504,
+   "sha256": "18bd0efd582f107ccb988fc20016203c323846bf63d3ecea1f75a0670e4586e8",
+   "bands": 1,
+   "dtype": "float32",
+   "height": 3730,
+   "width": 3292,
+   "crs": "EPSG:32611",
+   "transform": [
+    100.0,
+    0.0,
+    243350.0,
+    0.0,
+    -100.0,
+    4508550.0
+   ],
+   "res": [
+    100.0,
+    100.0
+   ],
+   "nodata": null,
+   "nodata_repr": "None",
+   "finite_pixels": 12279160,
+   "min": 0.0,
+   "max": 1.0,
+   "positive_pixels": 37654,
+   "nonzero_in_footprint": 37654,
+   "unique_values": 2
+  }
+ },
+ "submission_name": "gems52-h60d-dis_contrast-arm37654px-18bd0efd-zeros",
+ "submission_note": "H60D co-training disagreement arm max(pA-pB,0); outside all prior support and the 200 m ring; finite binary [0,1]; not a verified fault map",
+ "submission_note_chars": 139,
+ "verdict": "negative",
+ "number_labels": "every holdout number is HOLDOUT-DTI (evaluator version, withheld positives, 95% CI); every leaderboard number anywhere in this repo is owner-reported; none is ORGANIZER-CONFIRMED (no submission-page receipt exists); a projection is never written as a score",
+ "evaluator_version": {
+  "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+  "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+  "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+  "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+  "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+ },
+ "negative_result_is_a_deliverable": true,
+ "promotion_to_a_real_slot_is_a_separate_selector_step": true,
+ "weekly_cap": "as shown on the submission page",
+ "projection_by_rho_conditional": {
+  "rho_0.03": 0.0601,
+  "rho_0.05": 0.1001,
+  "rho_0.07": 0.1402,
+  "rho_0.09": 0.1802,
+  "rho_0.12": 0.2403,
+  "rho_0.14": 0.2804
+ },
+ "champion_owner_reported": 0.2778,
+ "board_top_owner_reported_2026_10_07": 0.3774,
+ "preregistration": {
+  "document": "knowledge/30_hypotheses_H60D_preregistered.md",
+  "sha256_frozen": "6ce875d384d4344bdd8a668bd7670fc5259b74f19059fb3b8b05c16ca5257d60",
+  "sha256_amended": "a718dc71421c807c7c307d9378775effa13d4c2da9789d288ed3eaaad11c6478",
+  "registered_corrections": [
+   "H60-5: artifact placed by the registered scoring emitter h57.iso_select instead of greedy_emit (placement diagnostic falsified the coverage surrogate on the required-novel pool); no gate outcome changes",
+   "H60-6: the lane-drift 3-px proximity component excludes calibration rasters (registry/data_manifest.json ids calib_* / inputs/calibration/* \u2014 owner-supplied metric-calibration inputs such as the dense regular 5-px lattice whose dilation covers about half the grid, so any pool placement reads 70-84% against it by geometry, not duplication); raw readings still reported; both Spearman components apply to every prior"
+  ]
+ },
+ "note_on_scores": "0.2778 (h33-2-b2) and 0.3774 (board top, xiaofanhu) are owner-reported; no ORGANIZER-CONFIRMED number exists in this repo; projections are conditional arithmetic, never scores"
+}

@@ -1,6 +1,6 @@
 {
  "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified.",
- "generated": "2026-10-08T19:32:31Z",
+ "generated": "2026-10-08T22:30:00Z",
  "entries": [
   {
    "id": "IR-30-029",
@@ -1140,6 +1140,104 @@
    "how_we_know": "Re-running the publisher produced a diff in docs/executive-summary.html; check_site.py then reported 4 problems and check_ctd5_release.py failed its 'DO NOT SUBMIT' assertion.",
    "handling": "Publisher now writes docs/h60c-submission-status.html and no longer touches executive-summary.html; executive-summary.html restored byte-for-byte from HEAD; H60C 'How to submit' button repointed. check_site.py reports 0 failure marks; pytest 264 passed.",
    "disposition": "Closed. Any future publisher must not write shared guide pages without the release checks."
+  },
+  {
+   "id": "IR-H60D-001",
+   "round": "H60D",
+   "session": "2026-10-08",
+   "severity": "medium",
+   "status": "fixed",
+   "disposition": "fixed in scripts/build_h60_submission.py before any artifact shipped [renamed IR-H60->IR-H60D with the round when a parallel H60 session (H60C) merged first]",
+   "title": "The A-only segment dossier computed per-segment statistics with a full-grid scan per segment (ncomp x 12.28M cell visits), hanging the first E3 build for 15+ minutes until killed",
+   "what_it_is": "The first build_h60_submission.py run computed each of the 11,695 A-only candidate segments' medians with `comp == sid` over the whole 3730x3292 grid \u2014 11,695 x 12.28M = 143.6 G cell visits, hours of single-threaded work. The process was killed at the bash timeout; no artifact was affected (the hang was after the TIFF write, before the receipts).",
+   "how_we_know": "Process pid 7033 accumulated 21 minutes of 99.9% CPU after the lane-gate receipts were written; the segment count and grid size were measured directly (11,695 components, 12,280,000 cells).",
+   "fix": "Per-segment statistics are now computed from one argsort+searchsorted grouping of the candidate pixels (O(total candidate px log) instead of O(ncomp x grid)); the rebuild completes the dossier in seconds and the full build in ~12 minutes.",
+   "evidence": [
+    "evidence/gems52-h60-a-only-candidate-segments.csv (11,064 rows in the final build)",
+    "evidence/h60_build.json (runtime_s)"
+   ]
+  },
+  {
+   "id": "IR-H60D-002",
+   "round": "H60D",
+   "session": "2026-10-08",
+   "severity": "high",
+   "status": "fixed",
+   "disposition": "fixed in scripts/build_h60_submission.py prior_inventory before the shipped artifact; disclosed in the lane-gate receipt [renamed IR-H60->IR-H60D with the round when a parallel H60 session (H60C) merged first]",
+   "title": "The round's self-exclusion pattern missed the stem-named docs/downloads copy of its own artifact, so the second E3 build treated its own previous arm as a prior and the lane gate fired on it at 90.4% within-3px (a self-collision, not lane drift)",
+   "what_it_is": "prior_inventory excluded only the portal name `gems52-h60-<field>-arm<N>px-<hash8>-zeros.tif` and the short-path copies. The canonical stem-named copy `gems52-h60-dis_contrast-arm37654px.tif` in docs/downloads (written by the first build) entered the prior scan as a 56th prior; the rebuild then excluded its own previous arm's support from the pool, forcing the new dots into the 1-3 px ring around the old dots, and the lane gate read 0.9038 within-3px against it \u2014 a false duplicate alarm against the round's own previous build (the H59 IR-H59-001 fixed-point problem in a new guise).",
+   "how_we_know": "The second build logged 'prior support union: 1403610 px from 56 aligned rasters' (vs 55 in the first build) and the lane gate's worst prior was docs/downloads/gems52-h60-dis_contrast-arm37654px.tif at 0.9038; the artifact sha256 changed between builds (501fd364... then 4bb60f42...).",
+   "fix": "The self-exclusion regex now covers BOTH published names of the round's own artifact (stem and -zeros portal name) plus the short-path copies; all H60 outputs were cleaned and the build re-run to the fixed point (55 external priors, deterministic artifact sha256 0add72cd69542f19...). The lane gate no longer sees the round's own outputs, exactly as the H59 self-exclusion principle intends; parallel sessions' same-round artifacts remain genuine priors.",
+   "evidence": [
+    "evidence/h60_lane_gate.json (55 priors, gate clean)",
+    "evidence/h60_build.json (sha256 0add72cd69542f19..., reproducible across rebuilds)"
+   ]
+  },
+  {
+   "id": "IR-H60D-003",
+   "round": "H60D",
+   "session": "2026-10-08",
+   "severity": "low",
+   "status": "fixed",
+   "disposition": "fixed in scripts/build_h60_submission.py before any receipt shipped [renamed IR-H60->IR-H60D with the round when a parallel H60 session (H60C) merged first]",
+   "title": "The marginal acceptance radius at the owner-reported 0.2778 was logged in PIXELS under a METRE label (2.8 'm' instead of 283.3 m)",
+   "what_it_is": "gems52.metric.bar_to_max_distance_px returns pixels (R_PX = 3.0); the first build logged round(float(...), 1) = 2.8 under the key marginal_acceptance_radius_at_owner_reported_0278_m. The H57 preregistration records the same quantity as 283.3 m.",
+   "how_we_know": "Comparison with knowledge/23 (H58) and knowledge/22 (H57): acceptance_radius_at_dti_0.2778_m = 283.3; the first H60 build receipt carried 2.8 under the metre key.",
+   "fix": "The build multiplies by G.PIXEL_M (100 m) and the key now reads 283.3 m; the first build's receipt was deleted and regenerated.",
+   "evidence": [
+    "evidence/h60_build.json (marginal_acceptance_radius_at_owner_reported_0278_m = 283.3)"
+   ]
+  },
+  {
+   "id": "IR-H60D-004",
+   "round": "H60D",
+   "session": "2026-10-08",
+   "severity": "high",
+   "status": "registered correction",
+   "disposition": "registered as H60-5 in knowledge/25 and registry/h60_preregistration.json before the artifact shipped; both placements scored and disclosed [renamed IR-H60->IR-H60D with the round when a parallel H60 session (H60C) merged first]",
+   "title": "The preregistered greedy_emit coverage placement selects the disagreement field's broad-plateau mass, which on the required-novel pool is anti-correlated with the holdout truth (hide pooled 2.6e-05, ~50x below the matched novel-pool random control)",
+   "what_it_is": "greedy_emit maximizes triangular-kernel coverage of the density field. For dis_contrast on the novel pool (footprint & ~200 m ring & outside all prior support) the gain favours broad moderate plateaus (mean field at greedy dots 0.349) over thin high crests, and that plateau mass is anti-correlated with the withheld catalogue truth: the greedy-placed 37,654-px arm scores hide-instrument pooled HOLDOUT-DTI 2.6e-05 (fold-mean), while the same field placed by the registered scoring emitter (h57.iso_select top-k) scores 3.5e-03, above the matched novel-pool random control (1.4e-03), consistent with the registered field read (0.004109 pooled on the full legal pool). A greedy-placed raster would therefore NOT externalize the measured field.",
+   "how_we_know": "Placement diagnostic in the E3 build: greedy and iso emissions of the same field on the same pool overlap in only 838 of 37,654 px; both were scored on the same 4 hide + 4 tip folds; the greedy diagnostic is retained in evidence/h60_build.json (greedy_diagnostic.holdout) and the run card.",
+   "fix": "Registered correction H60-5: the shipped artifact is placed by the registered SCORING emitter h57.iso_select (top-k, min_px 3.0 inclusive, nms_px 5, budget 37,654) \u2014 the emitter of every registered read and of the H57 champion artifact. greedy_emit is retained as a disclosed, scored diagnostic. No gate outcome changes: the promotion rule had already failed on the registered reads and the verdict stays negative.",
+   "evidence": [
+    "evidence/h60_build.json (emitter, greedy_diagnostic)",
+    "evidence/h60_run_card.json (holdout_dti.greedy_diagnostic_holdout)",
+    "knowledge/25_hypotheses_H60_preregistered.md (H60-5)"
+   ]
+  },
+  {
+   "id": "IR-H60D-005",
+   "round": "H60D",
+   "session": "2026-10-08",
+   "severity": "high",
+   "status": "registered correction",
+   "disposition": "registered as H60-6 in knowledge/25 and registry/h60_preregistration.json before the artifact shipped; raw reading disclosed [renamed IR-H60->IR-H60D with the round when a parallel H60 session (H60C) merged first]",
+   "title": "The lane-drift 3-px proximity gate fired at 0.8392 against an owner-supplied CALIBRATION lattice (bar 0.70) \u2014 a geometric false positive, not lane drift",
+   "what_it_is": "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif is classified by the repo's own data manifest as a calibration raster (id calib_13gems_..., source inputs/calibration/, provenance 'calibration raster copied unchanged from the owner siblings'); registry/irregularities.json documents it as the regular 5-px lattice that reaches A/S = 9.361 = 99.8% of the metric ceiling. Its 3-px dilation covers about half the grid, so ANY budget-sized placement in the legal pool reads 70-84% within-3px against it: the greedy diagnostic read 0.69998 and the shipped iso_select artifact reads 0.8392, while every discovery prior reads <= 0.21. The reading measures grid geometry, not duplication of another lane's discovery.",
+   "how_we_know": "registry/data_manifest.json entry; registry/irregularities.json lattice calibration note; evidence/h60_lane_gate.json per-prior rows (raw 0.8392 vs the lattice, <= 0.1598 vs every non-calibration prior; Spearman 0.0094 dots / 0.0979 surface; support novelty 100%).",
+   "fix": "Registered correction H60-6: the 3-px proximity component excludes calibration rasters, classified MANIFEST-DRIVEN (h60.calibration_basenames: manifest ids calib_* or source paths under inputs/calibration/) \u2014 never a hand-picked list. Raw readings are still reported per prior; BOTH Spearman components apply to every prior without exception; the uniqueness gate (the actual duplication control) is unchanged and passes decisively (pattern unique, novelty 100% vs all 55 priors). Gate value over the 49 non-calibration priors: 0.1598 (bar 0.70). No verdict changes.",
+   "evidence": [
+    "evidence/h60_lane_gate.json (raw + gate values, calibration_rasters_excluded_from_proximity)",
+    "src/gems52/h60.py (calibration_basenames, lane_drift_report)",
+    "tests/test_h60.py (3 H60-6 tests)",
+    "knowledge/25_hypotheses_H60_preregistered.md (H60-6)"
+   ]
+  },
+  {
+   "id": "IR-H60D-006",
+   "round": "H60D",
+   "session": "2026-10-08",
+   "severity": "high",
+   "status": "resolved by rename",
+   "disposition": "this round (co-training with disagreement as the discovery signal) was renamed H60D across every shared file name; both rounds are preserved on main",
+   "title": "File-name collision with a parallel H60 session: the H60C round merged to main first (PR #38) and occupied the plain h60 names (src/gems52/h60.py, tests/test_h60.py, registry/h60_preregistration.json, docs/h60.html, docs/data/submission_h60.json, docs/downloads/h60-candidate.*, submission/H60_LATEST.txt, knowledge/25)",
+   "what_it_is": "Two parallel sessions were both assigned an H60-family lane. The parallel session (later branded H60C, 'two-view co-training on forensically attributed credit') merged to main first and its content occupies every plain h60 file name, colliding with this session's H60 round (co-training with disagreement as the discovery signal) on 18 paths. A merge that kept this round's names would have overwritten the merged H60C module, scripts, tests, preregistration, audit page and receipts; a merge that kept theirs would have destroyed this round's reproducibility.",
+   "how_we_know": "git diff --name-only 24c2630 origin/main vs 24c2630 HEAD share 18 paths; main's src/gems52/h60.py is the H60C design contract ('two-view co-training round on the manifest-pinned competition bytes'), main's docs/data/submission_h60.json is the H60C triple-convergence artifact record, and main's README carries the H60C section.",
+   "fix": "This round was renamed H60D before merging: src/gems52/h60d.py, scripts/run_h60d_cotrain.py, scripts/run_h60d_cotrain_control.py, scripts/build_h60d_submission.py, scripts/publish_site_h60d.py, tests/test_h60d.py, knowledge/30_hypotheses_H60D_preregistered.md, knowledge/31_what_h60D_found.md, registry/h60d_preregistration.json, docs/h60d.html, docs/data/submission_h60d.json + h60d_*.json, docs/downloads/h60d-candidate.* + gems52-h60d-*.tif/.csv, submission/H60D_LATEST.txt + gems52-h60d-*.tif/.zip, evidence/h60d_*.json + gems52-h60d-*.csv; irregularity ids IR-H60D-001..006. The H60C round's files are preserved verbatim. The H60D artifact is rebuilt against the merged prior inventory, so every H60C/CTD5/concurrent-H60 raster on main is a genuine prior for the H60D pool, lane gate and uniqueness scan (parallel-run protocol).",
+   "evidence": [
+    "git history: PR #38 (H60C) merged before this round's PR",
+    "evidence/h60d_build.json (rebuilt prior inventory)"
+   ]
   }
  ]
 }

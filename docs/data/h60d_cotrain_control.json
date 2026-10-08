@@ -1,0 +1,177 @@
+{
+ "round": "H60D-cotrain-control-v1",
+ "seed": 20261009,
+ "runtime_s": 237.5,
+ "purpose": "isolate the seed effect from the exchange effect on the treated fold: control = same-seed (SEED+7) refit with NO pseudo-labels",
+ "rows": [
+  {
+   "mode": "hide",
+   "fold": 0,
+   "budget": 37654,
+   "arm": "view_A_round0",
+   "dti": 0.004585,
+   "n_truth": 10362
+  },
+  {
+   "mode": "hide",
+   "fold": 0,
+   "budget": 37654,
+   "arm": "view_B_round0",
+   "dti": 0.005556,
+   "n_truth": 10362
+  },
+  {
+   "mode": "hide",
+   "fold": 0,
+   "budget": 37654,
+   "arm": "clf_union_round0",
+   "dti": 0.005311,
+   "n_truth": 10362
+  },
+  {
+   "mode": "hide",
+   "fold": 0,
+   "budget": 37654,
+   "arm": "view_A_control",
+   "dti": 0.004576,
+   "n_truth": 10362
+  },
+  {
+   "mode": "hide",
+   "fold": 0,
+   "budget": 37654,
+   "arm": "view_B_control",
+   "dti": 0.006054,
+   "n_truth": 10362
+  },
+  {
+   "mode": "hide",
+   "fold": 0,
+   "budget": 37654,
+   "arm": "clf_union_control",
+   "dti": 0.006203,
+   "n_truth": 10362
+  },
+  {
+   "mode": "hide",
+   "fold": 0,
+   "budget": 37654,
+   "arm": "cotrain_A_round1",
+   "dti": 0.004737,
+   "n_truth": 10362
+  },
+  {
+   "mode": "hide",
+   "fold": 0,
+   "budget": 37654,
+   "arm": "cotrain_B_round1",
+   "dti": 0.00589,
+   "n_truth": 10362
+  },
+  {
+   "mode": "hide",
+   "fold": 0,
+   "budget": 37654,
+   "arm": "cotrain_union_round1",
+   "dti": 0.006102,
+   "n_truth": 10362
+  },
+  {
+   "mode": "tip",
+   "fold": 0,
+   "budget": 37654,
+   "arm": "view_A_round0",
+   "dti": 0.003994,
+   "n_truth": 3947
+  },
+  {
+   "mode": "tip",
+   "fold": 0,
+   "budget": 37654,
+   "arm": "view_B_round0",
+   "dti": 0.004522,
+   "n_truth": 3947
+  },
+  {
+   "mode": "tip",
+   "fold": 0,
+   "budget": 37654,
+   "arm": "clf_union_round0",
+   "dti": 0.004313,
+   "n_truth": 3947
+  },
+  {
+   "mode": "tip",
+   "fold": 0,
+   "budget": 37654,
+   "arm": "view_A_control",
+   "dti": 0.004207,
+   "n_truth": 3947
+  },
+  {
+   "mode": "tip",
+   "fold": 0,
+   "budget": 37654,
+   "arm": "view_B_control",
+   "dti": 0.004961,
+   "n_truth": 3947
+  },
+  {
+   "mode": "tip",
+   "fold": 0,
+   "budget": 37654,
+   "arm": "clf_union_control",
+   "dti": 0.005214,
+   "n_truth": 3947
+  },
+  {
+   "mode": "tip",
+   "fold": 0,
+   "budget": 37654,
+   "arm": "cotrain_A_round1",
+   "dti": 0.004464,
+   "n_truth": 3947
+  },
+  {
+   "mode": "tip",
+   "fold": 0,
+   "budget": 37654,
+   "arm": "cotrain_B_round1",
+   "dti": 0.00469,
+   "n_truth": 3947
+  },
+  {
+   "mode": "tip",
+   "fold": 0,
+   "budget": 37654,
+   "arm": "cotrain_union_round1",
+   "dti": 0.004992,
+   "n_truth": 3947
+  }
+ ],
+ "readout": {
+  "hide": {
+   "seed_effect_union": 0.000892,
+   "exchange_effect_union": -0.000101,
+   "seed_effect_A": -9e-06,
+   "exchange_effect_A": 0.000161,
+   "seed_effect_B": 0.000498,
+   "exchange_effect_B": -0.000164,
+   "round0_union": 0.005311,
+   "control_union": 0.006203,
+   "round1_union": 0.006102
+  },
+  "tip": {
+   "seed_effect_union": 0.000901,
+   "exchange_effect_union": -0.000222,
+   "seed_effect_A": 0.000213,
+   "exchange_effect_A": 0.000257,
+   "seed_effect_B": 0.000439,
+   "exchange_effect_B": -0.000271,
+   "round0_union": 0.004313,
+   "control_union": 0.005214,
+   "round1_union": 0.004992
+  }
+ },
+ "interpretation": "exchange effect = round1 - control; seed effect = control - round0. A positive exchange effect that survives the control is the only co-training gain this round can claim; the AUC readout in evidence/h60_cotrain.json remains the registered primary and is null-to-negative."
+}
