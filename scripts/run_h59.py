@@ -798,6 +798,7 @@ def main() -> int:
                  "research only - do not spend a slot"),
         approved_for_weekly_slot=False, promoted=False, submission_slots_used=0,
         gates_ok=gates_ok,
+        slot_recommended=slot_recommended,
         slot_basis=slot_basis,
         incumbent_beaten_both_modes=beats_incumbent,
         format_ok=artifact["format_gate"]["ok"],

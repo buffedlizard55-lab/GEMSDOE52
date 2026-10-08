@@ -492,11 +492,11 @@ def insert_h55_review(h55_archive: dict, verification: dict, sweep: dict,
     elif current_submission.get("slot_recommended") is True:
         current_status = (
             f"The current pointer is <code>{esc(current_file)}</code>; its receipt records every gate "
-            "passing and a slot RECOMMENDATION under the round's registered rule, while the machine "
-            "field that actually asserts a spent slot stays closed (no upload happened; slots used: 0). "
-            "The owner decides; no agent may upload or spend a slot on this file's behalf — do not "
-            "upload or spend a slot without the owner's explicit decision. "
-            f'See the <a href="{page_href}">current {esc(rnd)} status and audit</a>.'
+            "passing and its weekly-slot gate carrying a RECOMMENDATION under the round's registered "
+            "rule, while the machine field that actually asserts a spent slot stays closed "
+            "(no upload happened; slots used: 0). The owner decides; no agent may upload or spend a "
+            "slot on this file's behalf — do not upload or spend a slot without the owner's explicit "
+            f'decision. See the <a href="{page_href}">current {esc(rnd)} status and audit</a>.'
         )
     elif current_submission.get("approved_for_weekly_slot") is False:
         current_status = (

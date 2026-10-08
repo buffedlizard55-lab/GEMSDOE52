@@ -23,6 +23,8 @@
   "ring_min_distance_m": 223.60679774997897,
   "reasoning_csv": "evidence/gems52-h59-cotrain-view_B-37654px-20261008T033705Z-54debe0d-zeros-reasoning.csv",
   "official_score_status": "no portal upload or organizer score is recorded",
+  "slot_recommended": true,
+  "field_sync_note": "slot_recommended/slot_basis synced from evidence/h59_result.json (same run, field omitted from the per-artifact receipt by oversight); verdict string already matched; no measurement changed",
   "marker": "submission/LATEST.txt",
   "exists": true,
   "download": "downloads/gems52-h59-cotrain-view_B-37654px-20261008T033705Z-54debe0d-zeros.tif",
