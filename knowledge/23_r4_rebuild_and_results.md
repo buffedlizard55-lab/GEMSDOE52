@@ -141,7 +141,67 @@ before:
 - The training-exclusion mask and the emission-allowed mask are separate objects.
   Conflating them is the bug above.
 
-Results are in `evidence/r4_arms.json` once the stage completes.
+### Results — `evidence/r4_arms.json`
+
+Four whole-segment folds. **Truth survival 1.0000 on every fold** (15,224 / 15,224 /
+15,223 / 15,223 held-out pixels, ~4.99 M allowed pixels each). Budget held constant by
+construction, so the confound that disqualified the instrument cannot enter.
+
+| Arm | Mean capture | @20k | @37,654 | @70k |
+|---|---:|---:|---:|---:|
+| **B_only** | **0.10055** | 0.06485 | 0.09638 | 0.14041 |
+| max | 0.07607 | 0.04741 | 0.07198 | 0.10881 |
+| union_top10 | 0.07607 | 0.04741 | 0.07198 | 0.10881 |
+| cotrain_disagreement | 0.05827 | 0.03692 | 0.05537 | 0.08252 |
+| B_where_A_abstains | 0.04346 | 0.02892 | 0.04178 | 0.05968 |
+| B_gated_by_A | 0.04328 | 0.02851 | 0.04055 | 0.06078 |
+| B_minus_A | 0.03633 | 0.02309 | 0.03394 | 0.05196 |
+| mean / rank_sum / consensus_top50 | 0.03310 | 0.01606 | 0.03032 | 0.05291 |
+| geom_mean | 0.03301 | 0.01603 | 0.03032 | 0.05270 |
+| min / intersect_top10 | 0.03060 | 0.01493 | 0.02747 | 0.04940 |
+| A_gated_by_B | 0.02326 | 0.01056 | 0.01895 | 0.04028 |
+| A_where_B_abstains | 0.02068 | 0.00923 | 0.01746 | 0.03536 |
+| A_only | 0.01944 | 0.01085 | 0.01770 | 0.02976 |
+| agreement | 0.00874 | 0.00407 | 0.00757 | 0.01458 |
+| **random** | **0.00812** | 0.00387 | 0.00779 | 0.01269 |
+| A_minus_B | 0.00181 | 0.00054 | 0.00158 | 0.00332 |
+
+**B_only wins by a wide margin: 12.4× random and 5.2× A_only.** Every view-B-led arm
+beats every view-A-led arm, which is consistent with the blocked AUCs (B 0.7779 vs A
+0.6005).
+
+Two results that differ from the pre-reset session, recorded rather than smoothed over:
+
+- **"Every consensus/intersection arm is worse than random" did not reproduce.** Here
+  `intersect_top10` (0.03060) and `consensus_top50` (0.03310) both beat random (0.00812)
+  by roughly 4×. The pre-reset run had them at 0.0224–0.0255 against a random of 0.02875.
+  I do not know why; the random control is the suspicious one, since it is the number
+  that moved most (0.02875 → 0.00812) and it is the arm most sensitive to how the allowed
+  mask is built. Treat the pre-reset consensus finding as unconfirmed.
+- **A_only is much weaker here** (0.01944 vs the pre-reset 0.01228 — same direction,
+  different magnitude).
+
+### The emitted raster
+
+`submission/gems52-r4-B_only-37654px-b-only-research.tif` — **exactly 37,654 px**,
+sha256 `c6b9351f…45e0`. All seven gates pass (`evidence/r4_gates.json`): single band,
+all finite, binary {0,1}, 3730×3292, EPSG:32611, **minimum distance to the catalogue
+200.0 m**, budget as requested.
+
+Against all 16 prior submissions the maximum Jaccard is **0.0430** (0.0338 against their
+union), so this is a genuinely new field and not a recombination of shipped ones.
+
+**Is it OK to submit?** Beats random 12.4× and A_only 5.2× on a spatially-blocked,
+matched-budget holdout — so yes on the evidence we can actually gather. But the one assay
+that could have compared it against the champion (0.2778) is the instrument that uniform
+random defeats, so **it is not established as better than the incumbent**, and it is
+labelled `research` for that reason. Per the standing rule about not spending a
+submission slot on an unproven idea, I would not burn a slot on it yet.
+
+Two bugs found by insisting on exactness here, both now fixed and tested: a quantile
+threshold shipped **37,655** px when 37,654 were asked for (ties at the boundary), and
+the random control was generated at a single fixed budget so it understated what random
+achieves at 70,000 px.
 
 ---
 

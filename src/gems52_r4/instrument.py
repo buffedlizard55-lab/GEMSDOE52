@@ -26,7 +26,6 @@ promote anything, and does not.
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 
 import numpy as np
@@ -100,7 +99,7 @@ def build_pseudo_truth(catalogue: np.ndarray, valid: np.ndarray, seed: int = 520
     if mode not in ("dispersed", "clustered"):
         raise ValueError(f"mode must be 'dispersed' or 'clustered', got {mode!r}")
     iso = component_isolation(catalogue, valid)
-    lab, n, sizes = iso["labels"], iso["n"], iso["sizes"]
+    lab, n = iso["labels"], iso["n"]
     if n == 0:
         raise ValueError("catalogue has no components inside the footprint")
     rng = np.random.default_rng(seed)

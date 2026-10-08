@@ -238,37 +238,45 @@ def _new_model(seed: int = 20261008):
 
 
 def fit_view(stack, layer_idx: list[int], sample: dict, bid: np.ndarray,
-             fold: np.ndarray, seed: int = 20261008, log=print) -> dict:
+             fold: np.ndarray, seed: int = 20261008, log=print, cv: bool = True) -> dict:
     """Fit one view, returning out-of-fold scores and the blocked AUC.
 
     Out-of-fold means blocked out-of-fold: for each of the k folds the model is fitted
     on the other k-1 folds' blocks and scored on the held-out blocks, so no prediction
     ever comes from a model that saw a neighbouring part of the same structure.
+
+    ``cv=False`` skips the cross-validation and returns only the full fit.  That is what
+    the outer whole-segment holdout needs: it already holds out entire catalogue
+    segments, so an inner block CV would be a second, redundant split -- and passing an
+    all-zero fold array to request "no CV" silently produced an empty training set.
     """
     rows, cols, y = sample["rows"], sample["cols"], sample["y"]
     X = gather(stack, rows, cols)[:, layer_idx]
     s_bid = bid[rows, cols]
     s_fold = fold[rows, cols]
     oof = np.full(y.shape, np.nan, dtype=np.float32)
-    for f in np.unique(s_fold):
-        if f < 0:
-            continue
-        tr = s_fold != f
-        te = s_fold == f
-        if tr.sum() == 0 or te.sum() == 0:
-            continue
-        m = _new_model(seed + int(f))
-        m.fit(X[tr], y[tr])
-        oof[te] = m.predict_proba(X[te])[:, 1].astype(np.float32)
-        del m
-    scored = np.isfinite(oof)
-    res = blocked_auc(y[scored], oof[scored], s_bid[scored])
+    res = None
+    if cv:
+        for f in np.unique(s_fold):
+            if f < 0:
+                continue
+            tr = s_fold != f
+            te = s_fold == f
+            if tr.sum() == 0 or te.sum() == 0:
+                continue
+            m = _new_model(seed + int(f))
+            m.fit(X[tr], y[tr])
+            oof[te] = m.predict_proba(X[te])[:, 1].astype(np.float32)
+            del m
+        scored = np.isfinite(oof)
+        if scored.any():
+            res = blocked_auc(y[scored], oof[scored], s_bid[scored])
     full = _new_model(seed)
     full.fit(X, y)
     del X
-    return {"oof": oof, "blocked_auc": res, "model": full,
+    return {"oof": oof if cv else None, "blocked_auc": res, "model": full,
             "n_train": int(y.size), "n_layers": len(layer_idx),
-            "oof_rows": rows[scored], "oof_cols": cols[scored]}
+            "oof_rows": rows, "oof_cols": cols}
 
 
 def full_fit_predict(stack, layer_idx: list[int], model, valid: np.ndarray,

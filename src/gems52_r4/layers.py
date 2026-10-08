@@ -37,7 +37,7 @@ import numpy as np
 from scipy import ndimage
 
 from gems52 import transform as Gtr
-from gems52.grid import SHAPE, PIXEL_M
+from gems52.grid import PIXEL_M
 
 
 # --------------------------------------------------------------------------------------
