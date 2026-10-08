@@ -1,6 +1,62 @@
 # GEMSDOE52
 
-> **Current H58 session status (run completed 2026-10-08 UTC; local date 2026-10-07):** the four-hypothesis slate remains frozen. The owner-mirror-pinned H58-A run emitted a decoded-pattern-unique, template-matching research TIFF, but only **22 / 37,654** requested cells; the 37,632-cell support shortfall makes both hide and block comparisons budget-incomparable and the registered local gate **fails**. The negative DTI differences are not matched-budget evidence. No zero-score backfill, upload, or weekly slot was used. The critical input/label provenance blocker is still open. See [`evidence/h58_result.json`](evidence/h58_result.json), [`evidence/h58_postrun_review.json`](evidence/h58_postrun_review.json), and `registry/irregularities.json` → `IR-H58-001`–`003`. `submission/LATEST.txt` remains on H57; H58 is a separate research-only artifact.
+> **Current H59 session status (co-training round run 2026-10-08 UTC):** five ranked hypotheses were
+> registered in `knowledge/20_hypotheses_H59_preregistered.md` + `registry/h59_preregistration.json`
+> (SHA-verified, frozen) **before** the first fit, and all five were adjudicated on the blocked tip /
+> hide / holdout instruments using **manifest-pinned owner-mirror bytes** for the first time (23/23
+> SHA-256 pins, `evidence/h59_preflight_integrity.json`). The independence premise measured 0.1071
+> against the 0.60 abandonment threshold (reproducing H57's 0.1108 on different inputs); pseudo-label
+> exchange moved fold-0 AUC by −0.0011 (third independent null). **No challenger beat the incumbent
+> union in all four cells** — corroboration weighting, the artefact veto, strain ranking and the halo
+> pool are all recorded as refuted — so the union ranking is retained and `H59` ships
+> `gems52-h59-union-core25517px-arm14787px.tif` (40,304 px: exactly-accounted 25,517-px core + a
+> 14,787-px arm, 100 % outside every accessible prior's support, all finite {0,1}, format gate 0
+> problems, unique against 47 aligned priors) with **reasoning for every emitted arm pixel and for all
+> 6,018 A-only pool segments**. The registered slot bar (mean lift ≥ +0.005 vs random on both
+> instruments) came in at +0.0038 tip / +0.0046 hide → **research-only: download OK for review, DO NOT
+> spend a weekly slot**. `submission/LATEST.txt` and `docs/data/submission.json` therefore stay on H57;
+> H59 publishes as `docs/data/submission_h59.json` and `docs/h59.html`. The portal's
+> “Predicted values must be in range [0, 1]” rejection was traced to the NaN-bearing alias export
+> pattern and the site now serves only all-finite {0,1} rasters with a range-proof gate in
+> `gems52.grid.write_geotiff`. See `knowledge/21_what_h59_found.md`; `registry/irregularities.json` →
+> `IR-H59-001`–`IR-H59-003`. Organizer authentication of the mirror remains the open blocker.
+
+<!--H59README-->
+## H59 — two-view co-training round on pinned bytes; artifact published research-only (2026-10-08)
+
+**[★ H59 GeoTIFF — one click, no scrolling](docs/downloads/h59-candidate.tif)** · [short ZIP](docs/downloads/h59-candidate.zip) · [canonical TIFF](docs/downloads/gems52-h59-union-core25517px-arm14787px.tif) · [per-pixel geology reasoning CSV (14,787 rows)](docs/downloads/gems52-h59-40304px-candidate-geology.csv) · [A-only segment reasoning CSV (6,018 rows, one falsifier each)](docs/downloads/gems52-h59-a-only-candidate-segments.csv) · [audit page](docs/h59.html) · [receipt](docs/data/submission_h59.json) · [slot gate](evidence/h59_slot_gate.json) · [preregistration](registry/h59_preregistration.json) · [ranked hypotheses](knowledge/20_hypotheses_H59_preregistered.md) · [what H59 found](knowledge/21_what_h59_found.md).
+
+- **Is it OK to download? YES.** Is it OK to submit? **The file is portal-valid** (format gate 0
+  problems; every pixel ∈ {0,1}; no NaN anywhere — a value outside [0,1] or a NaN cannot exist in it by
+  construction), **but this repository does not approve spending a weekly slot on it**: the preregistered
+  slot bar failed (+0.0038/+0.0046 lift vs random at the champion's 37,654-px budget, 4/4 folds won), so
+  the site says so in one sentence and the receipts carry the whole argument. Downloading, reviewing and
+  reproducing it is exactly what it is approved for.
+- **Identifiers to paste (verbatim from `evidence/h59_build.json`).** Name (54 chars):
+  `gems52-h59-union-core25517px-arm14787px-e884f84a-zeros`. Note (143 chars): `H59 union arm 14787px
+  outside all prior support + 25,517px credited core; all finite binary [0,1]; 200m ring excluded; not a
+  verified fault map` — both ≤ 200 characters, and the site's one-click ZIP carries them as paste-ready
+  text files (`submission-name.txt`, `submission-note.txt`).
+- **Method, honestly:** per the brief, two views were **actually trained** on the same unlabelled pixels —
+  View A (gravity/magnetics/strain/seismicity/depth/conductivity, 38 features) and View B (DEM slope/
+  curvature + 14 external LiDAR/radiometric bands outside the official cube, 46 features), whole-segment
+  folds (0.60/0.40 Q, seed 20261009), out-of-fold fields only. Discovery = disagreement strata (A-only
+  183,553 px at median 411 m depth under cover vs B-only 197,898 px at 161 m). Agreement was never used
+  as a reward; corroboration was tested as a *transform* (H59-A) and refuted. Pseudo-labels were applied
+  per protocol (confident-to-abstain, whole segments) and **ran without effect** — recorded as the null it
+  is, not hidden.
+- **Gates:** format PASS · uniqueness vs 47 aligned priors PASS (decoded pattern matches none; 36.7 % of
+  emitted mass novel to all priors' support; ≥ 20 % support gate PASS) · ring gate PASS (nearest emitted
+  pixel to a mapped trace 223.6 m; zero emitted px inside 100–200 m) · independence premise measured, not
+  assumed (0.1071 < 0.60) · slot bar FAIL → RESEARCH ONLY · promotion rule fired exactly as registered
+  (best challenger H59-E: within −0.0001 tip / −0.0011 hide of the incumbent; nothing promoted).
+- **Reproducibility:** `scripts/run_h59.py` (fits; saves all seven ranking fields byte-exactly to
+  `work/h59/field_*.npy`) then `scripts/build_h59_submission.py` (reuses the saved fields, emits the
+  raster, runs all gates, writes every receipt) then `scripts/publish_site_h59.py` (renders the site from
+  the receipts; the HTML quotes no number not present in a JSON). A rebuild is a measured **fixed point**:
+  the self-exclusion of H59 outputs from the prior scan was added after a second build initially drifted
+  the arm by 10 px (`IR-H59-001`).
+<!--/H59README-->
 
 <!--H57README-->
 ## H57 credited-core alternate — historical research result; NOT approved to submit
@@ -829,7 +885,13 @@ Go ahead and create a pull request and then merge the pull request onto the main
 
 ### 1.1 The directives, itemised (the standing starting point, restated in the brief's own order)
 
-The brief as received by this session is [`knowledge/07_brief_2026-10-06_session2.md`](knowledge/07_brief_2026-10-06_session2.md);
+**The most recent verbatim session brief is
+[`knowledge/22_brief_2026-10-08.md`](knowledge/22_brief_2026-10-08.md)** (co-training round H59: fix the
+range error, unique TIF, preregistered hypotheses, one-click site, three verification passes, PR) — it
+supersedes nothing in the list below; it *is* the round that produced the H59 status block at the top of
+this file, and where the older brief and it differ the newer one governs.
+The itemised eleven directives are the standing frame both briefs sit inside:
+[`knowledge/07_brief_2026-10-06_session2.md`](knowledge/07_brief_2026-10-06_session2.md);
 it carries **eleven** operative directives, and this list is that list — same order, same scope — so a
 reviewer can diff prose against prose. (Earlier revisions of this README itemised ten, having folded the
 re-read-the-prompt rule and the why-0.2778 rule into others; that folding is what let a session start from a

@@ -54,11 +54,13 @@ def copy_evidence():
         write(path.name, safe(json.loads(path.read_text())))
         copied.append(path.name)
     for name in ('r2_preregistration', 'r3_preregistration', 'h55_preregistration',
-                 'h55_edge_preregistration', 'h58_preregistration', 'source_policy',
-                 'data_manifest', 'irregularities', 'leaderboard_snapshot_2026-10-07'):
+                 'h55_edge_preregistration', 'h58_preregistration', 'h59_preregistration',
+                 'source_policy', 'data_manifest', 'irregularities',
+                 'leaderboard_snapshot_2026-10-07'):
         path = ROOT / 'registry' / (name + '.json')
         if path.exists():
-            if name in ('h55_preregistration', 'h55_edge_preregistration', 'h58_preregistration'):
+            if name in ('h55_preregistration', 'h55_edge_preregistration',
+                        'h58_preregistration', 'h59_preregistration'):
                 # A frozen registration's bytes are part of its audit trail; preserve them in the
                 # static site rather than semantically reserializing its JSON.
                 target = DATA / (name + '.json')
@@ -70,8 +72,8 @@ def copy_evidence():
     # H55 publishes its own evidence the same way the R2 round publishes *_r2.json: copied on every
     # run so the page cannot drift from the artefact, and named by round so it is never mistaken for
     # another round's numbers.  The Phase-2 reasoning record is staged next to the raster it explains.
-    for pat in ('h55_*.json', 'h58_*.json', 'submission_gems52-h55-*.json',
-                'submission_gems52-h58-*.json'):
+    for pat in ('h55_*.json', 'h58_*.json', 'h59_*.json', 'submission_gems52-h55-*.json',
+                'submission_gems52-h58-*.json', 'submission_gems52-h59-*.json'):
         for path in sorted(EV.glob(pat)):
             write(path.name, safe(json.loads(path.read_text())))
             copied.append(path.name)
