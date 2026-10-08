@@ -12,15 +12,30 @@
 - **HOLDOUT-DTI:** `gems52-pooled-hide-v1`, **0.018848**, **95% CI [0.012421, 0.026020]**, **53,186 withheld positives**. **Descriptive only:** a fold emitted 2,041/3,058 requested nodes; the candidate/control comparison is not matched-budget eligible. The surface-only control's HOLDOUT-DTI is 0.106749, 95% CI [0.089076, 0.124951], same evaluator and withheld positives. No leaderboard forecast.
 - **Uniqueness diagnostic:** 541 files / 360 decoded rasters; exact maximum Spearman 0.068203 before placement and 0.013418 after. No identical array, no A/B union. **Maximum directed proximity 100% > 70% → duplicate/STOP.**
 - **Concurrent closure audit:** one newly merged H60 raster was also checked against the unchanged surface and dots, bringing the total to **542 files / 361 decoded patterns**. Its near-dot fraction was 27.1917%, below the rule; the earlier 100% duplicate/STOP remains. [Reconciliation receipt](evidence/ctd5_parallel_reconciliation.json).
-- **Why the proximity gate cannot pass this registry:** the registered spacing-five lattice covers **every eligible pixel** within three pixels. No nonempty raster on this footprint can satisfy the literal rule with that prior included. We did not quietly drop it or change the threshold. [Measured saturation proof](evidence/ctd5_registry_saturation.json).
+- **Why the proximity gate effectively cannot pass this registry (corrected 2026-10-08):** the earlier receipt measured coverage on a 4,593,171-px "eligible" footprint and reported 100%. On the competition sample's finite footprint (**5,167,373 px**, `data/sample_submission.tif`), the 13GEMSDOE spacing-five lattice is within 3 px of **99.87 %** of cells (5,160,724 px). The **6,649** uncovered cells are **99 % within 3 px of the survey edge** (6,580 px). A dot raster therefore passes only if ≥30 % of its dots sit on that border rim, which no geological candidate would do. We did not change the threshold. The 4,593,171-px footprint discrepancy is logged as **IR-UNQ-003** for review. [Original receipt](evidence/ctd5_registry_saturation.json) · [Re-run audit](evidence/uniqueness_audit_ctd5_20261008.json).
 
 > **Final validation correction:** CTD5’s legacy evaluation halo used withheld fault-tail locations to extend placement regions. The arithmetic below is exploratory, **not strict holdout-valid promotion evidence**. The shared default splitter is now label-blind v2. No refit, new placement, or revised performance number was produced after STOP. [Correction receipt](evidence/ctd5_validation_scope_correction.json).
 
 A second concurrent H60 artifact was checked against the unchanged output: closure scope is now **543 files / 362 decoded patterns**, with the same maximum correlations and 100% near-dot STOP. Its code, artifacts and historical pages are preserved. [Second check](evidence/ctd5_second_parallel_check.json).
 
+## Which file is unique? — audit of 2026-10-08
+
+Every number below is from a receipt in `evidence/`, produced by `scripts/audit_uniqueness.py`, which runs the repo's shared `lane_uniqueness_report` against every accessible prior raster (31 distinct files after byte-dedupe; the candidate's own byte-identical copies excluded and listed).
+
+| file | decoded-unique? | max Jaccard to a prior | share of its cells inside prior support | surface rank ρ max (gate ≤0.90) | dot ≤3 px max (gate ≤0.70) | verdict |
+|---|---|---:|---:|---:|---:|---|
+| `ctd5-research.tif` (CTD5) | **yes** | 0.0034 | 16.4 % | 0.0037 | 100 % (lattice) | unique · research-only · holdout negative |
+| `h60c-candidate.tif` (H60C) | no (copy of prior core) | 0.59 | 80.4 % | 0.7413 | 99.87 % (lattice), 80.7 % (`h19-5`) | **not unique** · format-valid |
+
+Consequences: (1) **no file in this repository is simultaneously unique and holdout-validated**; (2) the proximity gate is practically unpassable on this footprint (see the CTD5 bullet above); (3) the only route to a *unique, competitive* file is a new validated signal, not a re-weighting of prior pixels. Neither file is approved for a competition slot. Competition upload is not performed by this repository. Run card for this audit: [evidence/session_2026-10-08_run_card.json](evidence/session_2026-10-08_run_card.json) (verdict negative; `submit_ok: false`; 0 slots used). Reproduce: `.venv/bin/python scripts/audit_uniqueness.py <file.tif> evidence/<receipt>.json`.
+
 ## H60C — the round that answers "why 0.2778" with arithmetic, and ships a bar-sized emission
 
-**[★ H60 GeoTIFF — one click, no scrolling](docs/downloads/h60c-candidate.tif)** ·
+> **⚠ CORRECTION 2026-10-08 — H60C is NOT a unique submission.** Its 35,185 emitted cells are 80.4 % inside the support of prior submissions (73.3 % inside `h33-2-b2` alone; max single-file Jaccard 0.59 with `gems57` H57). Its dot phase is 99.87 % within 3 px of the s5 lattice and 80.7 % near `h19-5`. It is format-valid (single-band float32, EPSG:32611, values in {0,1}), so the file **downloads without a format error**, but it **does not satisfy "unique, not a copy of a previous submission."** Do not present it as the unique submission. [Receipt](evidence/uniqueness_audit_h60c_20261008.json) · [IR-UNQ-001](registry/irregularities.json).
+>
+> **The file that is actually decoded-unique is CTD5** (max Jaccard 0.0034 to any prior; surface-rank ρ 0.0037). It is a negative research result with a holdout DTI below its own surface control. See the section "Which file is unique" below.
+
+**[H60C GeoTIFF — format-valid, NOT unique (see correction above)](docs/downloads/h60c-candidate.tif)** ·
 [one-TIFF ZIP](docs/downloads/h60c-candidate.zip) ·
 [A-only geological reasoning CSV](docs/downloads/h60c-a-only-reasoning.csv) ·
 [H60 audit page](docs/h60c.html) · [how to submit](docs/executive-summary.html) ·
@@ -87,7 +102,7 @@ arm as a priced bet, sized at the bar, and publishes the full projection table r
 
 ### Is it OK to download? Is it OK to submit?
 
-**Download: YES, always.** The file is portal-safe by construction — single-band float32,
+**Download (format-valid): YES. Unique submission: NO (corrected 2026-10-08, see the correction above).** The file is portal-safe by construction — single-band float32,
 EPSG:32611, 3,730 × 3,292, transform identical to `sample_submission.tif`, every pixel finite and
 in `{0, 1}`, no nodata tag. The "Predicted values must be in range [0, 1]" rejection is caused by
 NaN-bearing exports and **cannot occur** with this file; `gems52.grid.write_geotiff` refuses to
