@@ -1,0 +1,177 @@
+{
+  "evidence_class": "uniqueness diagnostic, not a score",
+  "candidate": "submission/gems52-h60c-core25517px-arm9668px.tif",
+  "candidate_file_sha256": "1e1e7835af72701150dc1c0a9042bed2cd149e88305659760b889d842116c239",
+  "candidate_nonzero": 35185,
+  "sample": "data/sample_submission.tif",
+  "footprint_px": 5167373,
+  "priors_offered": 61,
+  "self_copies_excluded": [
+    "docs/downloads/gems52-h60c-core25517px-arm9668px.tif",
+    "docs/downloads/h60c-candidate.tif"
+  ],
+  "priors_after_byte_dedupe": 31,
+  "phases": {
+    "surface": {
+      "phase": "surface",
+      "rule": "STOP at rho >0.90 or directed <=3px dot proximity >0.70; no lane retuning",
+      "evidence_class": "uniqueness diagnostic, not a score",
+      "priors_checked": 31,
+      "distinct_decoded_priors": 30,
+      "candidate_decoded_sha256": "9dbab0309f67348745684c0ba2df32d77516df121fa46d151a0669f0c83e61d5",
+      "rank_pixels": 5167373,
+      "exact_full_eligible_rank": true,
+      "max_spearman": 0.7413328244101393,
+      "max_near_3px_fraction": null,
+      "rank_threshold": 0.9,
+      "near_threshold": 0.7,
+      "duplicate": false,
+      "offender_count": 0,
+      "error_count": 0,
+      "ok": true,
+      "scope": "Supplied aligned immutable public inventory only; private/release/external artifacts not proven absent.",
+      "top_spearman": [
+        {
+          "path": "submission/gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif",
+          "spearman": 0.741333
+        },
+        {
+          "path": "data/reference/h33-2-b2-zeros.tif",
+          "spearman": 0.706231
+        },
+        {
+          "path": "docs/downloads/gemsdoe52-cotrain-anchored-hybrid-20261006-zeros.tif",
+          "spearman": 0.676297
+        },
+        {
+          "path": "submission/gems52-h59-union-core25517px-arm14783px.tif",
+          "spearman": 0.675284
+        },
+        {
+          "path": "submission/gems52-h57-union-novel-core25517px-arm14804px.tif",
+          "spearman": 0.675106
+        }
+      ],
+      "top_near_3px": [],
+      "offenders": []
+    },
+    "dots": {
+      "phase": "dots",
+      "rule": "STOP at rho >0.90 or directed <=3px dot proximity >0.70; no lane retuning",
+      "evidence_class": "uniqueness diagnostic, not a score",
+      "priors_checked": 31,
+      "distinct_decoded_priors": 30,
+      "candidate_decoded_sha256": "9dbab0309f67348745684c0ba2df32d77516df121fa46d151a0669f0c83e61d5",
+      "rank_pixels": 5167373,
+      "exact_full_eligible_rank": true,
+      "max_spearman": 0.7413328244101393,
+      "max_near_3px_fraction": 0.9987494671024585,
+      "rank_threshold": 0.9,
+      "near_threshold": 0.7,
+      "duplicate": true,
+      "offender_count": 12,
+      "error_count": 0,
+      "ok": false,
+      "scope": "Supplied aligned immutable public inventory only; private/release/external artifacts not proven absent.",
+      "top_spearman": [
+        {
+          "path": "submission/gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif",
+          "spearman": 0.741333
+        },
+        {
+          "path": "data/reference/h33-2-b2-zeros.tif",
+          "spearman": 0.706231
+        },
+        {
+          "path": "docs/downloads/gemsdoe52-cotrain-anchored-hybrid-20261006-zeros.tif",
+          "spearman": 0.676297
+        },
+        {
+          "path": "submission/gems52-h59-union-core25517px-arm14783px.tif",
+          "spearman": 0.675284
+        },
+        {
+          "path": "submission/gems52-h57-union-novel-core25517px-arm14804px.tif",
+          "spearman": 0.675106
+        }
+      ],
+      "top_near_3px": [
+        {
+          "path": "data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+          "near_3px_fraction": 0.998749
+        },
+        {
+          "path": "data/scored/gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif",
+          "near_3px_fraction": 0.80702
+        },
+        {
+          "path": "data/scored/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+          "near_3px_fraction": 0.802643
+        },
+        {
+          "path": "data/scored/gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+          "near_3px_fraction": 0.799403
+        },
+        {
+          "path": "docs/downloads/gemsdoe52-cotrain-anchored-hybrid-20261006-zeros.tif",
+          "near_3px_fraction": 0.794657
+        }
+      ],
+      "offenders": [
+        "submission/gems52-h54-revealed-core-strike-continuation-50517px-r1.tif",
+        "submission/gems52-h56-consensus-core-continuation-40517px-04c86e1888a8-zeros.tif",
+        "submission/gems52-h57-union-novel-core25517px-arm14804px.tif",
+        "submission/gems52-h59-union-core25517px-arm14783px.tif",
+        "submission/gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif",
+        "docs/downloads/gems52-h53-revealed-core-strike-continuation-50517px-r1.tif",
+        "docs/downloads/gemsdoe52-cotrain-anchored-hybrid-20261006-zeros.tif",
+        "data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+        "data/scored/gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif",
+        "data/scored/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+        "data/scored/gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+        "data/reference/h33-2-b2-zeros.tif"
+      ]
+    }
+  },
+  "max_jaccard": 0.590876,
+  "max_jaccard_prior": "submission/gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif",
+  "candidate_px_inside_any_prior_support": 28292,
+  "share_of_candidate_px_inside_any_prior_support": 0.804093,
+  "top_overlaps": [
+    {
+      "path": "submission/gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif",
+      "prior_support": 33517,
+      "intersection": 25517,
+      "jaccard": 0.590876,
+      "share_of_candidate_in_prior": 0.725224
+    },
+    {
+      "path": "data/reference/h33-2-b2-zeros.tif",
+      "prior_support": 37654,
+      "intersection": 25781,
+      "jaccard": 0.547856,
+      "share_of_candidate_in_prior": 0.732727
+    },
+    {
+      "path": "docs/downloads/gemsdoe52-cotrain-anchored-hybrid-20261006-zeros.tif",
+      "prior_support": 40704,
+      "intersection": 25683,
+      "jaccard": 0.511552,
+      "share_of_candidate_in_prior": 0.729942
+    },
+    {
+      "path": "submission/gems52-h59-union-core25517px-arm14783px.tif",
+      "prior_support": 40300,
+      "intersection": 25517,
+      "jaccard": 0.510667,
+      "share_of_candidate_in_prior": 0.725224
+    },
+    {
+      "path": "submission/gems52-h57-union-novel-core25517px-arm14804px.tif",
+      "prior_support": 40321,
+      "intersection": 25517,
+      "jaccard": 0.510452,
+      "share_of_candidate_in_prior": 0.725224
+    }
+  ]
+}
