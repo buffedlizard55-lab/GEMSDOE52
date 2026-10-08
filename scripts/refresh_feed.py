@@ -402,13 +402,22 @@ def main():
         mp = ROOT / 'submission' / mk
         if mp.exists():
             make_zip(mp.read_text().strip())
-    current_marker = ROOT / 'submission/LATEST.txt'
-    if current_marker.exists():
-        current_name = current_marker.read_text().strip()
-        if current_name.startswith('gems52-h58-'):
-            for source, alias in ((DL / current_name, DL / 'h58-candidate.tif'),
-                                  (DL / (Path(current_name).stem + '.zip'), DL / 'h58-candidate.zip')):
-                if source.exists() and (not alias.exists() or file_hash(source) != file_hash(alias)):
+    # H58 is an explicitly named research result, not the global incumbent unless a later
+    # independent gate approves it. Publish its one-TIFF package and stable review aliases from
+    # the H58 receipt without changing submission/LATEST.txt or docs/data/submission.json.
+    h58_result_path = EV / 'h58_result.json'
+    if h58_result_path.is_file():
+        try:
+            h58_name = str(json.loads(h58_result_path.read_text())['artifact']['file'])
+        except (KeyError, ValueError, OSError):
+            h58_name = ''
+        if h58_name.startswith('gems52-h58-') and (ROOT / 'submission' / h58_name).is_file():
+            archive_path = make_zip(h58_name)
+            alias_pairs = [(DL / h58_name, DL / 'h58-candidate.tif')]
+            if archive_path:
+                alias_pairs.append((Path(archive_path), DL / 'h58-candidate.zip'))
+            for source, alias in alias_pairs:
+                if source.is_file() and (not alias.exists() or file_hash(source) != file_hash(alias)):
                     alias.write_bytes(source.read_bytes())
     # Also publish explicitly named research-only ZIPs without promoting them
     # through either global pointer. Their package receipts remain per-artifact.

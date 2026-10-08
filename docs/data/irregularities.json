@@ -479,6 +479,68 @@
       "what_it_is": "The anisotropic along-strike placement gained +0.000055 (tip) and +0.000031 (hide) at 2/4 folds, and the A-only buried-structure stratum scored 0.000785 against a matched random control of 0.001057, the worst of eight arms.",
       "how_we_know": "Both are recorded as refutations in evidence/h57_slot_gate.json, knowledge/18 and on the audit page. The artefact ships neither.",
       "disposition": "evidence/h57_validation.json placement and evidence/h57_strata.json combined."
+    },
+    {
+      "id": "IR-H58-001",
+      "round": "H58",
+      "session": "2026-10-07",
+      "severity": "critical",
+      "title": "Tracked core rasters differ materially from manifest-pinned owner mirrors; the sample copy also contradicts the official description",
+      "what_it_is": "The tracked training, label, and sample rasters differ materially from the manifest-pinned owner-mirror copies in decoded pixel content, while their grid profiles match. The staged sample has ones on the staged labels, contrary to the official page's 'total fault absence' description.",
+      "observation": "The 23-file staged owner mirror passes manifest byte/hash verification, but the three tracked core rasters fail those pins and differ by decoded pixels despite identical grid metadata. training_features.tif has 97,207,447/233,304,040 decoded value mismatches (97,120,016 where both are valid; 87,431 validity-mask mismatches). labels.tif differs at 120,650 pixels despite equal class counts; positive masks intersect at only 663 pixels. sample_submission.tif differs at 60,988 cells: the staged mirror has ones exactly on the staged labels, contrary to the official page description of a sample predicting total fault absence.",
+      "how_we_know": "Streaming Rasterio pixelwise comparison of data/{training_features,labels,sample_submission}.tif and work/h58_pinned copies; byte/SHA and decoded mismatch counts are recorded in evidence/h58_preflight_integrity.json. The staging restore receipt records all 23 manifest pins passing.",
+      "evidence": [
+        "evidence/h58_preflight_integrity.json",
+        "evidence/h58_restore_receipt.json",
+        "work/h58_pinned/restore_receipt.json",
+        "registry/data_manifest.json",
+        "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/"
+      ],
+      "handling": "Do not overwrite tracked TIFFs. The H58 runner read the separate work/h58_pinned data root and recorded hashes. The sample was used only for grid profile/finite domain, never for its pixel values. H58 refit View A, View B, and the union on the same staged bytes and folds; it did not reuse the old H57 result, whose input-hash linkage is absent. The H58 promotion gate still failed on severe support shortfall (IR-H58-002). Owner-mirror pin integrity is not organizer authentication.",
+      "unverifiable": "Which of the two pixel-level raster versions is the organizer-authentic competition input cannot be established from the staged GitHub mirror or the current tracked files. The raw official competition download is login-walled; the sample semantic conflict also remains unresolved.",
+      "status": "open - critical provenance issue; blocks any upload approval",
+      "disposition": "Use the staged files only for a clearly labelled owner-mirror research run. No weekly slot is authorized until organizer provenance/label alignment is resolved, even if a local holdout result is positive. Previous H57 scores are historical and not a pinned-data baseline until rerun."
+    },
+    {
+      "id": "IR-H58-002",
+      "what_it_is": "The frozen H58-A emitter produced only 22 of 37,654 requested nodes despite 123,173 positive F_geo support cells, so its primary holdout folds are not budget-comparable.",
+      "round": "H58",
+      "session": "2026-10-08",
+      "severity": "high",
+      "title": "The registered H58-A emitter produced a severe F_geo support shortfall",
+      "observation": "The frozen field has 123,173 positive-support pixels, but the output contains only 22 of the requested 37,654 cells (shortfall 37,632). Every primary hide and block fold is budget-incomparable; the local gate is false. The recorded negative mean lifts are not comparable-budget estimates and must not be treated as evidence against the geological hypothesis.",
+      "how_we_know": "evidence/h58_result.json and evidence/h58_holdout.json; the exact run source is bound by the code hashes in the result and was committed at b475f46. src/gems52/h57.py applies a 5-pixel square local-maximum filter before the 3-pixel Euclidean greedy exclusion. On the smooth radial F_geo field this leaves essentially site peaks, explaining the sparse output.",
+      "handling": "No zero-score backfill, threshold change, or post-result rerun was made. The TIFF is retained as a decoded-pattern-unique research artifact only; submission/LATEST.txt remains on H57 and no weekly slot was used. Any corrected emitter requires a fresh registration and a new complete run; it cannot replace this failed result.",
+      "status": "open \u2014 registered local gate failed on support capacity; no promotion",
+      "evidence": [
+        "evidence/h58_result.json",
+        "evidence/h58_holdout.json",
+        "evidence/h58_postrun_review.json",
+        "registry/h58_preregistration.json",
+        "scripts/run_h58.py",
+        "src/gems52/h57.py",
+        "submission/gems52-h58-coldgeo-consensus-22px-a55b0dee38-research.tif"
+      ],
+      "disposition": "Report the run as under-budget and non-comparable. Do not interpret its mean DTI deficit as a matched-budget refutation. Resolve by a separately preregistered, code-reviewed follow-up; do not alter the frozen H58 result."
+    },
+    {
+      "id": "IR-H58-003",
+      "what_it_is": "The pseudo-AUC proxy-negative mask used cross-connected raster dilation rather than the preregistered 500 m Euclidean catalogue clearance.",
+      "round": "H58",
+      "session": "2026-10-08",
+      "severity": "medium",
+      "title": "Pseudo-AUC proxy-negative clearance did not implement a 500 m Euclidean exclusion",
+      "observation": "scripts/run_h58.py built the catalogue clearance with scipy.ndimage.binary_dilation(iterations=5) and its default cross-shaped connectivity. Pixels such as offset (3,3), about 424 m on this grid, remain eligible as proxy negatives despite being inside the preregistered 500 m Euclidean exclusion. The reported pseudo-AUC values therefore do not satisfy the frozen mask exactly.",
+      "how_we_know": "The run source bound in evidence/h58_result.json; compare the `cat_clearance` construction with `knowledge/19_hypotheses_H58_preregistered.md` and `registry/h58_preregistration.json`, which require at least 500 m from every catalogue pixel.",
+      "handling": "Treat pseudo-AUC numbers as exploratory and do not use them to support a co-training conclusion. The primary same-fold holdout gate does not use these AUC values and independently failed on budget comparability. No post-result mask edit or rerun was made.",
+      "status": "open \u2014 pseudo-AUC diagnostic mask is nonconforming",
+      "evidence": [
+        "evidence/h58_result.json",
+        "evidence/h58_holdout.json",
+        "scripts/run_h58.py",
+        "registry/h58_preregistration.json"
+      ],
+      "disposition": "Keep the raw values for audit with this limitation attached. A future diagnostic must use a Euclidean 500 m raster dilation and a newly frozen protocol; it cannot overwrite this run."
     }
   ]
 }

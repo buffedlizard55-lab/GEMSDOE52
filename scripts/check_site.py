@@ -190,7 +190,9 @@ def check_h57(DATA, DOCS, ROOT, notes):
         notes.append(f"H57 dossier: {len(rows):,} rows, strata {counts}")
 
     # the pages must name the verdict and the byte-identical short paths
-    for page in ("h57.html", "executive-summary.html", "index.html"):
+    h57_pages = (("h57.html",) if (DATA / "h58_result.json").is_file()
+                 else ("h57.html", "executive-summary.html", "index.html"))
+    for page in h57_pages:
         path = DOCS / page
         if not path.exists():
             problems.append(f"H57: {page} is missing")
@@ -207,28 +209,43 @@ def check_h57(DATA, DOCS, ROOT, notes):
     return problems
 
 
-def check_h58(DATA, DOCS, ROOT, notes):
-    """Recheck H58 receipts, fold gate, decoded TIFF, one-TIFF ZIP and public links."""
+def check_h58(DATA, DOCS, ROOT, notes, *, current_round=False):
+    """Recheck H58 receipts, fold gate, decoded TIFF, one-TIFF ZIP and public links.
+
+    H58 can be published as a research-only result while the global submission pointer remains on
+    the incumbent. In that case validate its per-artifact receipt and assert it was not promoted.
+    """
     problems = []
     required = ("h58_result.json", "h58_holdout.json", "h58_preregistration.json",
-                "h58_preflight_integrity.json")
+                "h58_preflight_integrity.json", "h58_restore_receipt.json", "h58_postrun_review.json")
     for name in required:
         if not (DATA / name).is_file():
             problems.append(f"H58: {name} missing from docs/data")
     try:
-        sub = json.loads((DATA / "submission.json").read_text())
         result = json.loads((DATA / "h58_result.json").read_text())
+        filename = str(result["artifact"]["file"])
+        sub_path = (DATA / "submission.json" if current_round else
+                    DATA / f"submission_{Path(filename).stem}.json")
+        sub = json.loads(sub_path.read_text())
         holdout = json.loads((DATA / "h58_holdout.json").read_text())
         prereg = json.loads((DATA / "h58_preregistration.json").read_text())
         preflight = json.loads((DATA / "h58_preflight_integrity.json").read_text())
+        postrun = json.loads((DATA / "h58_postrun_review.json").read_text())
+        restore = json.loads((DATA / "h58_restore_receipt.json").read_text())
         import numpy as np
         import rasterio
 
-        filename = str(result["artifact"]["file"])
         if sub.get("file") != filename or result.get("round") != "H58":
-            problems.append("H58: current submission pointer and result receipt name different rounds/files")
-        if (ROOT / "submission/LATEST.txt").read_text().strip() != filename:
-            problems.append("H58: result TIFF differs from submission/LATEST.txt")
+            problems.append("H58: per-artifact receipt and result receipt name different rounds/files")
+        if (postrun.get("execution", {}).get("code_hashes") != result.get("code_hashes")
+                or postrun.get("verified_run_facts", {}).get("tiff_sha256") != result.get("artifact", {}).get("sha256")
+                or postrun.get("verified_run_facts", {}).get("local_research_gate_passed") is not False):
+            problems.append("H58: independent post-run review differs from execution hashes, TIFF receipt, or failed gate")
+        latest_name = (ROOT / "submission/LATEST.txt").read_text().strip()
+        if current_round and latest_name != filename:
+            problems.append("H58: current result TIFF differs from submission/LATEST.txt")
+        if not current_round and latest_name == filename:
+            problems.append("H58: failed/research-only artifact unexpectedly occupies the global submission pointer")
         canonical = DOCS / "downloads" / filename
         short_tif = DOCS / "downloads/h58-candidate.tif"
         zip_path = DOCS / "downloads" / (Path(filename).stem + ".zip")
@@ -237,7 +254,7 @@ def check_h58(DATA, DOCS, ROOT, notes):
                             (zip_path, "single-TIFF ZIP"), (short_zip, "short ZIP alias")):
             if not path.is_file():
                 problems.append(f"H58: {label} missing ({path.name})")
-        if sub.get("download") != f"downloads/{filename}":
+        if current_round and sub.get("download") != f"downloads/{filename}":
             problems.append("H58: submission.json download path is not the canonical TIFF")
         if (canonical.is_file() and short_tif.is_file()
                 and canonical.read_bytes() != short_tif.read_bytes()):
@@ -295,7 +312,7 @@ def check_h58(DATA, DOCS, ROOT, notes):
         # Recompute the registered, same-fold comparison from raw fold rows instead of trusting
         # the runner's summary flag. Every arm must share one legal pool/budget within a comparison.
         rows = holdout.get("rows", [])
-        modes = result.get("holdout", {}).get("modes", {})
+        modes = result.get("holdout", {}).get("mode_summary", result.get("holdout", {}).get("modes", {}))
         gate_cfg = prereg.get("promotion_gate", {})
         min_lift = float(gate_cfg.get("minimum_mean_dti_lift", 0.005))
         min_wins = int(str(gate_cfg.get("minimum_fold_wins", "3/4")).split("/")[0])
@@ -395,9 +412,13 @@ def check_h58(DATA, DOCS, ROOT, notes):
             problems.append("H58: pinned data manifest bytes differ from the preregistration")
         if hashlib.sha256((ROOT / prereg["preflight_evidence"]).read_bytes()).hexdigest() != prereg.get("preflight_sha256"):
             problems.append("H58: preflight evidence SHA-256 does not match the preregistration")
-        if len(result.get("manifest_inputs", [])) != len(json.loads(manifest_path.read_text()).get("files", [])) or not all(
+        manifest_count = len(json.loads(manifest_path.read_text()).get("files", []))
+        if len(result.get("manifest_inputs", [])) != manifest_count or not all(
                 item.get("matches_pin") is True for item in result.get("manifest_inputs", [])):
             problems.append("H58: one or more owner-mirror input pins are missing or unverified")
+        if (restore.get("all_ok") is not True or len(restore.get("files", [])) != manifest_count
+                or not all(item.get("matches_pin") is True for item in restore.get("files", []))):
+            problems.append("H58: public restore receipt does not verify every manifest-pinned input")
         if "not organizer authentication" not in str(preflight.get("scope", "")).lower():
             problems.append("H58: preflight must continue to disclose unresolved organizer provenance")
         if DATA.joinpath("h58_preregistration.json").read_bytes() != reg_path.read_bytes():
@@ -591,8 +612,9 @@ def main() -> int:
             if sub.get('file') != marker:
                 problems.append(f'{current_round}: docs/data/submission.json does not match '
                                 'submission/LATEST.txt')
-        if current_round == 'H58':
-            problems.extend(check_h58(DATA, DOCS, ROOT, notes))
+        if (DATA / "h58_result.json").is_file():
+            problems.extend(check_h58(DATA, DOCS, ROOT, notes,
+                                      current_round=(current_round == "H58")))
         if current_round == 'H57':
             problems.extend(check_h57(DATA, DOCS, ROOT, notes))
         if current_round == 'H56':
@@ -768,7 +790,7 @@ def main() -> int:
                       "h55-paired-shoulders.html", "h55.html", "h55-profile.html", "h55-edge.html",
                       "r3.html", "r3-hypotheses.html", "feed.html", "irregularities.html", "sources.html",
                       "downloads/index.html")
-        if current_round == "H58":
+        if (DOCS / "h58.html").is_file():
             page_paths = ("index.html", "executive-summary.html", "h58.html") + page_paths[2:]
         for path in page_paths:
             with urlopen(f"http://127.0.0.1:{port}/{path}", timeout=10) as r:
@@ -794,14 +816,16 @@ def main() -> int:
                         problems.append('served H56 short-path TIFF differs from the audited SHA-256')
                     else:
                         notes.append(f"short path serves byte-identically: {short_name}")
-        if current_round == 'H58':
+        h58_result_path = DATA / "h58_result.json"
+        if h58_result_path.is_file():
+            h58_sha = json.loads(h58_result_path.read_text()).get("artifact", {}).get("sha256")
             for short_name in ('downloads/h58-candidate.tif', 'downloads/h58-candidate.zip'):
                 with urlopen(f"http://127.0.0.1:{port}/{short_name}", timeout=20) as r:
                     body = r.read()
                     local = DOCS / short_name
                     if body != local.read_bytes():
                         problems.append(f"served {short_name}: response differs from its byte-identical alias")
-                    elif short_name.endswith('.tif') and hashlib.sha256(body).hexdigest() != sub.get('sha256'):
+                    elif short_name.endswith('.tif') and hashlib.sha256(body).hexdigest() != h58_sha:
                         problems.append('served H58 short-path TIFF differs from the audited SHA-256')
                     else:
                         notes.append(f"short path serves byte-identically: {short_name}")
