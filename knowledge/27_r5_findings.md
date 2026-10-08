@@ -242,6 +242,59 @@ gate 0 problems, pattern-unique against 55 priors, minimum distance to a mapped 
 median 2,360 m. Portal note (≤200 chars) and the exact upload steps are in
 `docs/executive-summary.html`.
 
+## 6.1 The output is not the union of the two views — measured, and what that costs the story
+
+The brief asks for this confirmation explicitly, and `gems52.gates` does not test it (the uniqueness
+gate compares against *prior submissions*, a different question). `scripts/run_r5_union_check.py`
+compares the shipped emission against every set "the union of the two views" could mean
+(`evidence/r5_not_the_union.json`):
+
+| comparison set | px in set | shared with the emission | fraction of the 16,681 emitted | Jaccard |
+| --- | --- | --- | --- | --- |
+| disagreement union (A-only ∪ B-only) | 87,471 | 332 | **0.0199** | 0.0032 |
+| top-S of the pointwise max of the two propensity ranks | 16,681 | 71 | 0.0043 | 0.0021 |
+| half from each view's own top-S/2 | 16,662 | 71 | 0.0043 | 0.0021 |
+| view A's own top-S | 16,681 | 75 | 0.0045 | 0.0023 |
+| view B's own top-S | 16,681 | 57 | 0.0034 | 0.0017 |
+| A-only alone | 43,672 | 181 | 0.0109 | 0.0030 |
+| B-only alone | 43,799 | 151 | 0.0091 | 0.0025 |
+
+and the Spearman correlation between the emitted pixels' own score and each view's propensity is
+**+0.023** (A), **−0.012** (B), **+0.005** (pointwise max) — indistinguishable from zero.
+
+So the confirmation the brief asks for is as strong as it can be, and it has to be read together with
+what it implies: **the shipped emission is not a co-training product.** Co-training was built, run and
+measured exactly as the brief specifies (§8), and then its ranking lost. The habitat candidate N6 —
+the pointwise maximum of the two out-of-fold propensities — has the second-smallest coherence lift of
+the seven candidates (+0.1898 against N5's +0.4726), fails the credited-azimuth condition, and
+overlaps the emission by 0.3 %. Its propensity field is also the worst of the candidates on the
+localisation assay (simDTI 0.0003 against 0.0275 for uniform random), which §5 explains rather than
+excuses. The honest summary is: **the brief's method was executed, its independence premise held, its
+pseudo-label exchange measurably harmed the weaker view, and its propensity ranking was not selected**
+— three findings, all reported, none of them a reason to pretend the shipped file came out of
+co-training. What shipped came out of the six-family corroboration detector and the §7 coherence
+instrument.
+
+## 6.2 What the disagreement signal did and did not say
+
+The brief's reading is that A-confident/B-abstaining means "buried beneath cover" and
+B-confident/A-abstaining means "suspect surface artifacts such as roads or erosion lines". Measured on
+the restored bytes (`evidence/r5_cotrain.json → disagreement`):
+
+| stratum | px | median `depth_to_base_surf` | median `det_elev_slope` |
+| --- | --- | --- | --- |
+| A-only | 43,672 | 301.2 | **3.58** |
+| B-only | 43,799 | 287.4 | **4.47** |
+| both confident | 482 | 259.8 | 4.55 |
+
+The B-only side behaves as the brief predicts: it sits on ground **25 % steeper** than the A-only side
+(4.47 against 3.58, footprint median 3.75), which is where erosion lines, drainage and roads cut
+rather than where a buried front would be. The A-only side does **not** behave as the brief predicts:
+its median modelled basement depth is 301.2 m against 287.4 m for B-only — a 14 m difference on a field
+whose footprint median is 316 m and whose p99 is 3,420 m. **"A-only means deeper burial" is not
+supported by these bytes**, and the A-only reasoning CSV is written accordingly: its burial clause is
+conditional on each row's own measured depth and says so when the row is shallower than median.
+
 ## 7. The choice this round did **not** make, and what it would have been worth
 
 The arithmetic in §2 point 3 says a core+novel composite — P1's 25,502 exactly-accounted px plus

@@ -117,7 +117,56 @@ TRUE</td></tr>
 0.0892 / 0.2974 / 0.3866.
 The |G| cap does not bind anywhere in this prior (it would take κ = 3.24).</p>
 
-<h2>6 · Irregularities this round added</h2>
+<h2>6 · The output is not merely the union of the two views</h2>
+<p class="small">The brief asks for this confirmation and the uniqueness gate does not test it — that
+gate compares against prior submissions. <code>scripts/run_r5_union_check.py</code> compares against
+every set the phrase could mean; receipt <code>evidence/r5_not_the_union.json</code>.</p>
+<div class="table-wrap"><table><thead><tr><th>comparison set</th><th>px in set</th>
+<th>shared with the emission</th><th>fraction of the 16,681 emitted</th><th>Jaccard</th></tr></thead><tbody>
+<tr><td>disagreement union A only or B only</td><td>87,471</td><td>332</td><td>0.0199</td><td>0.0032</td></tr><tr><td>topS of pointwise max rank S16681</td><td>16,681</td><td>71</td><td>0.0043</td><td>0.0021</td></tr><tr><td>half from each view S8340 each</td><td>16,662</td><td>71</td><td>0.0043</td><td>0.0021</td></tr><tr><td>view A top S16681</td><td>16,681</td><td>75</td><td>0.0045</td><td>0.0023</td></tr><tr><td>view B top S16681</td><td>16,681</td><td>57</td><td>0.0034</td><td>0.0017</td></tr><tr><td>A only only</td><td>43,672</td><td>181</td><td>0.0109</td><td>0.0030</td></tr><tr><td>B only only</td><td>43,799</td><td>151</td><td>0.0091</td><td>0.0025</td></tr>
+</tbody></table></div>
+<p class="small">Spearman between the emitted pixels' own score and each view's propensity:
++0.0231 (view A),
+-0.0120 (view B),
++0.0052 (pointwise max) —
+indistinguishable from zero. Not the union of the two views under any of the four readings. The largest overlap is 0.0199 of the emitted pixels (disagreement_union_A_only_or_B_only), and the largest Jaccard is 0.0032. The emission is a six-family corroboration rank gated by the network's own strike coherence and walked along 1-px ridges; the two co-training propensities enter it only through the family responses and the persistence maps, which is why the rank correlations are modest rather than near 1.</p>
+<div class="status"><strong>Read this with the table.</strong> The confirmation is as strong as it can
+be, and it implies something the site will not hide: <b>the shipped emission is not a co-training
+product.</b> The brief's method was built, run and measured — the independence premise held at
+0.2276, the pseudo-label exchange moved view A
+-0.0247 AUC — and then the co-training propensity ranking (candidate
+<code>N6_habitat</code>) lost on the frozen rule: coherence lift
++0.1897
+against +0.4726 for the chosen field, dominant strike outside the
+credited band, and 0.3 % overlap with what shipped. What shipped came from the six-family
+corroboration detector and the strike-coherence instrument.</div>
+
+<h2>6b · What the disagreement signal did and did not say</h2>
+<div class="table-wrap"><table><thead><tr><th>stratum</th><th>px</th>
+<th>median depth_to_base_surf</th><th>median det_elev_slope</th></tr></thead><tbody>
+<tr><td>A-only (potential field confident, surface abstains)</td>
+<td>43,672</td>
+<td>301.2</td>
+<td><b>3.58</b></td></tr>
+<tr><td>B-only (surface confident, potential field abstains)</td>
+<td>43,799</td>
+<td>287.4</td>
+<td><b>4.47</b></td></tr>
+<tr><td>both confident</td><td>482</td>
+<td>259.8</td>
+<td>4.55</td></tr>
+</tbody></table></div>
+<p class="small">The B-only side behaves as the brief predicts — 25 % steeper ground than A-only
+(footprint median slope 3.75), which is where erosion lines and drainage cut. The A-only side does
+<b>not</b>: its median modelled basement depth is
+301.2 against
+287.4 for B-only, a
+13.8 m
+difference on a field whose footprint median is 316 m and whose p99 is 3,420 m. “A-only means buried
+under deeper cover” is not supported by these bytes, so the reasoning CSV makes its burial clause
+conditional on each row's own measured depth and says so when a row is shallower than median.</p>
+
+<h2>7 · Irregularities this round added</h2>
 <p class="small"><code>IR-R5-001</code> R4 excluded the LiDAR bands on a false premise — bands 9–12 do
 carry descriptions (<code>relief</code>, <code>coh100</code>, <code>strike</code>, <code>valid</code>).
 <code>IR-R5-002</code> <code>fold[rows]</code> on a 2-D grid selects whole rows: ~4 GB, an OOM kill,

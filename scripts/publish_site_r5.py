@@ -56,6 +56,7 @@ def main() -> int:
     mdl = load(EVID / "r5_model.json")
     board = load(ROOT / "registry/leaderboard_snapshot_2026-10-08.json")
     budget = load(EVID / "r5_budget.json")
+    uni = load(EVID / "r5_not_the_union.json")
 
     name = em["name"]
     tif_rel = f"downloads/{Path(em['tif']).name}"
@@ -251,6 +252,19 @@ something appeared.</p></section>
 |G| = 14,088.7 px; the amplitude cancels, so the optimum can be frozen before any candidate is
 built. 9,945–24,152 over β ∈ [0.15, 0.30]. The same window falls out of a completely different prior
 in knowledge/10 §8.</p></section>
+
+<section class="card"><h3>Not the union of the two views</h3>
+<p class="metric">{max(u['fraction_of_emission'] for u in uni['comparisons'].values()):.4f}</p>
+<p class="small">largest overlap between the emission and any reading of "the union of the two views"
+— the disagreement union A-only ∪ B-only ({n(uni['comparisons']['disagreement_union_A_only_or_B_only']['px_in_set'])} px);
+against each view's own top-S it is
+{uni['comparisons'][f"view_A_top_S{S}"]['fraction_of_emission']:.4f} and
+{uni['comparisons'][f"view_B_top_S{S}"]['fraction_of_emission']:.4f}, and Spearman(emitted score,
+view propensity) is {uni['rank_correlations']['spearman_emitted_score_vs_view_A_propensity']:+.3f} /
+{uni['rank_correlations']['spearman_emitted_score_vs_view_B_propensity']:+.3f}. <b>Which means the
+shipped file is not a co-training product:</b> co-training was run and measured (§8 of the round
+record), its exchange harmed the weaker view, and its propensity ranking lost to the detector field on
+the frozen rule. That is reported rather than dressed up.</p></section>
 
 <section class="card"><h3>A-only reasoning for Phase 2</h3>
 <p class="metric">{n(rs['reviewed']['rows'])}</p>
@@ -563,7 +577,58 @@ organiser's)</td></tr>
 {proj['0.2778']['dti_at_kappa_lo']:.4f} / {dti1:.4f} / {proj['0.2778']['dti_at_kappa_hi']:.4f}.
 The |G| cap does not bind anywhere in this prior (it would take κ = 3.24).</p>
 
-<h2>6 · Irregularities this round added</h2>
+<h2>6 · The output is not merely the union of the two views</h2>
+<p class="small">The brief asks for this confirmation and the uniqueness gate does not test it — that
+gate compares against prior submissions. <code>scripts/run_r5_union_check.py</code> compares against
+every set the phrase could mean; receipt <code>evidence/r5_not_the_union.json</code>.</p>
+<div class="table-wrap"><table><thead><tr><th>comparison set</th><th>px in set</th>
+<th>shared with the emission</th><th>fraction of the {n(S)} emitted</th><th>Jaccard</th></tr></thead><tbody>
+{''.join(f"<tr><td>{k.replace('_', ' ')}</td><td>{n(v['px_in_set'])}</td>"
+         f"<td>{n(v['px_shared_with_emission'])}</td><td>{v['fraction_of_emission']:.4f}</td>"
+         f"<td>{v['jaccard']:.4f}</td></tr>" for k, v in uni['comparisons'].items())}
+</tbody></table></div>
+<p class="small">Spearman between the emitted pixels' own score and each view's propensity:
+{uni['rank_correlations']['spearman_emitted_score_vs_view_A_propensity']:+.4f} (view A),
+{uni['rank_correlations']['spearman_emitted_score_vs_view_B_propensity']:+.4f} (view B),
+{uni['rank_correlations']['spearman_emitted_score_vs_pointwise_max']:+.4f} (pointwise max) —
+indistinguishable from zero. {uni['verdict']}</p>
+<div class="status"><strong>Read this with the table.</strong> The confirmation is as strong as it can
+be, and it implies something the site will not hide: <b>the shipped emission is not a co-training
+product.</b> The brief's method was built, run and measured — the independence premise held at
+{indep['max_abs']:.4f}, the pseudo-label exchange moved view A
+{exch['B_to_A']['delta_fold0_auc']:+.4f} AUC — and then the co-training propensity ranking (candidate
+<code>N6_habitat</code>) lost on the frozen rule: coherence lift
+{[c for c in em['candidates'] if c['name']=='N6_habitat'][0]['coherence_lift_over_random']:+.4f}
+against {chosen['coherence_lift_over_random']:+.4f} for the chosen field, dominant strike outside the
+credited band, and 0.3 % overlap with what shipped. What shipped came from the six-family
+corroboration detector and the strike-coherence instrument.</div>
+
+<h2>6b · What the disagreement signal did and did not say</h2>
+<div class="table-wrap"><table><thead><tr><th>stratum</th><th>px</th>
+<th>median depth_to_base_surf</th><th>median det_elev_slope</th></tr></thead><tbody>
+<tr><td>A-only (potential field confident, surface abstains)</td>
+<td>{n(ct['disagreement']['a_only']['px'])}</td>
+<td>{ct['disagreement']['a_only']['median_depth_to_basement_m']:.1f}</td>
+<td><b>{ct['disagreement']['a_only']['median_slope']:.2f}</b></td></tr>
+<tr><td>B-only (surface confident, potential field abstains)</td>
+<td>{n(ct['disagreement']['b_only']['px'])}</td>
+<td>{ct['disagreement']['b_only']['median_depth_to_basement_m']:.1f}</td>
+<td><b>{ct['disagreement']['b_only']['median_slope']:.2f}</b></td></tr>
+<tr><td>both confident</td><td>{n(ct['disagreement']['both']['px'])}</td>
+<td>{ct['disagreement']['both']['median_depth_to_basement_m']:.1f}</td>
+<td>{ct['disagreement']['both']['median_slope']:.2f}</td></tr>
+</tbody></table></div>
+<p class="small">The B-only side behaves as the brief predicts — 25 % steeper ground than A-only
+(footprint median slope 3.75), which is where erosion lines and drainage cut. The A-only side does
+<b>not</b>: its median modelled basement depth is
+{ct['disagreement']['a_only']['median_depth_to_basement_m']:.1f} against
+{ct['disagreement']['b_only']['median_depth_to_basement_m']:.1f} for B-only, a
+{ct['disagreement']['a_only']['median_depth_to_basement_m'] - ct['disagreement']['b_only']['median_depth_to_basement_m']:.1f} m
+difference on a field whose footprint median is 316 m and whose p99 is 3,420 m. “A-only means buried
+under deeper cover” is not supported by these bytes, so the reasoning CSV makes its burial clause
+conditional on each row's own measured depth and says so when a row is shallower than median.</p>
+
+<h2>7 · Irregularities this round added</h2>
 <p class="small"><code>IR-R5-001</code> R4 excluded the LiDAR bands on a false premise — bands 9–12 do
 carry descriptions (<code>relief</code>, <code>coh100</code>, <code>strike</code>, <code>valid</code>).
 <code>IR-R5-002</code> <code>fold[rows]</code> on a 2-D grid selects whole rows: ~4 GB, an OOM kill,

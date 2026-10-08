@@ -69,6 +69,64 @@
 <li><a href="https://buffedlizard55-lab.github.io/GEMSDOE28/">GEMSDOE28</a> — R1 solo (0.2708), H36 (0.2710)</li>
 <li><a href="https://buffedlizard55-lab.github.io/GEMSDOE19/docs/index.html">GEMSDOE19</a> — H19-5 powerlaw (0.1922)</li>
 </ul>
+<h2>Official clarifications fetched and verified 2026-10-08</h2>
+<p>Every item below was read directly from the organiser's own pages or from a DrivenData staff post
+(forum account <code>chrisk-dd</code>, flair <code>drivendata-staff</code>, <code>staff/moderator/admin:
+true</code> in the forum JSON) on 2026-10-08, and is quoted verbatim with its consequence in
+<code>knowledge/25_official_clarifications_2026-10-08.md</code>. Nothing here is remembered or
+reconstructed.</p>
+<ul>
+<li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Problem
+description (page 967)</a> — the distance-weighted Tversky index verbatim (&alpha;=0.2, &beta;=0.8,
+k(d)=max(1&minus;d/R,0), R=300&nbsp;m=3&nbsp;px), the four submission-format clauses, the two-round
+prize structure, and the sentence that decides this family's whole strategy: the test faults are
+&ldquo;not contained within the current public USGS database&rdquo;, and &ldquo;portions of the existing
+fault data may be misaligned from the true location of the surface fault, <b>which is the prediction
+target</b>&rdquo;.</li>
+<li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">Public
+leaderboard</a> — fetched 2026-10-08; #1 xiaofanhu 0.3774, #7 DARD 0.3195, #13 extradr19 0.2778. Rows
+preserved in <code>registry/leaderboard_snapshot_2026-10-08.json</code>. <b>The brief's stated bar of
+0.3195 is rank 7, not the top</b> (<code>IR-R5-005</code>).</li>
+<li><a href="https://community.drivendata.org/t/11516">Forum 11516 — are known USGS/INGENIOUS faults
+masked when scoring?</a> staff, 2026-09-16 and 2026-09-21: masked pixels &ldquo;do not count towards
+penalty terms&rdquo;; &ldquo;the mask is indeed pixel-exact&rdquo;; a prediction near a known trace but
+far from new-fault truth &ldquo;will be fully penalized&rdquo;; and &ldquo;a new-fault ground truth pixel
+can indeed lie within 300m of a known fault trace &hellip; identifying these corrections is one outcome
+we are aiming for&rdquo;. This corrects the repo's blanket 200&nbsp;m exclusion rule
+(<code>IR-R5-006</code>) and the mechanism claimed in <code>knowledge/01</code> §1
+(<code>IR-R5-007</code>).</li>
+<li><a href="https://community.drivendata.org/t/11550">Forum 11550 — leaderboard aggregation</a> staff,
+2026-10-01: &ldquo;pooling over all pixels in the public subset and computing a single Tversky
+index&rdquo;; chunking undisclosed; &ldquo;the final re-evaluation will be on the entire GeoDAWN
+area&rdquo;. Confirms the repo's pooled-DTI algebra and makes the budget round-dependent
+(<code>knowledge/26</code> H60-F).</li>
+<li><a href="https://community.drivendata.org/t/11527">Forum 11527 — how were the new test faults
+identified?</a> staff, 2026-09-23: data sources, fault types and coverage are <b>not</b> shared; and
+&ldquo;the largest prize pool (Phase 2) will use a test set that is updated by expert review of all
+Phase 1 submissions, so your fault predictions have an impact on final evaluation even if they are not
+the most performant in Phase 1&rdquo;.</li>
+<li><a href="https://community.drivendata.org/t/11557">Forum 11557 — units of
+<code>deq_n100a15</code> and meaning of <code>ieq_n100a15</code></a> staff, 2026-10-07: both are
+&ldquo;the INGENIOUS earthquake rate density layers &hellip; clipped to the GeoDAWN area and re-gridded
+to 100m&rdquo;, with the upstream detail in <code>eq_rate_density_details.docx</code> inside
+&ldquo;Earthquake Density Models.zip&rdquo; at
+<a href="https://gdr.openei.org/submissions/1391">the INGENIOUS GDR submission 1391</a>. Closes
+<code>IR-R4-002</code>; obtainability of that archive was <b>not</b> tested from this sandbox
+(<code>gdr.openei.org</code> is not on its allowed host list) and is not claimed.</li>
+<li><a href="https://community.drivendata.org/c/gems-prize-challenge/111">Forum category index</a> —
+the route to every staff answer above.</li>
+<li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/rules/">Competition
+rules</a> and the
+<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/">data page</a> — the
+data page is login-gated from this sandbox, which is why the competition rasters here are
+manifest-pinned owner-mirror bytes and not organiser-authenticated
+(<code>knowledge/06</code>).</li>
+<li><a href="https://github.com/drivendataorg/gems-prize-reference-solution">Organiser's reference
+solution</a>, <a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">USGS
+GeoDAWN surveys</a>, <a href="https://gbcge.org/current-projects/ingenious/">INGENIOUS</a>,
+<a href="https://epsg.io/32611">EPSG:32611</a>,
+<a href="https://en.wikipedia.org/wiki/Tversky_index">Tversky index</a>.</li>
+</ul>
 </main>
 <footer>DOE GEMS competition 306 · <a href="index.html">Overview</a> · <a href="executive-summary.html">Submit</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code</a></footer>
 </body></html>
