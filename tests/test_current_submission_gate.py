@@ -79,16 +79,37 @@ def test_current_h57_is_downloadable_but_not_slot_approved() -> None:
     assert abs(mean_b - 0.15130526541812087) < 1e-12
     assert receipt["slot_gate"]["positive_paired_folds"] == 0
     assert receipt["slot_gate"]["mean_lift_over_strongest_matched_baseline"] < 0
-    provenance_review = receipt["post_execution_review"]
-    runner_review = provenance_review["runner_source_reconciliation"]
-    assert runner_review["runner_hashes_reconciled"] is False
-    assert runner_review["current_checkout_runner_sha256"] == sha(ROOT / "scripts/run_h57_real.py")
-    assert provenance_review["input_restore_review"]["current_repository_data_matches_pins"] is False
-    boundary_review = provenance_review["pseudo_component_boundary_review"]
-    assert "cannot detect" in boundary_review["unobserved_boundary"]
-    assert "only relative to the train-only" in boundary_review["interpretation"]
-    assert "Source/reproduction limitation" in page
-    assert "continues across the masked" in page
+
+
+def test_h57_unreconciled_provenance_and_train_boundary_limits_are_explicit() -> None:
+    provenance = json.loads((ROOT / "docs/data/h57_execution_provenance.json").read_text())
+    review = provenance["post_execution_review"]
+    runner = review["runner_source_reconciliation"]
+    boundary = review["pseudo_component_boundary_review"]
+    inputs = review["input_restore_review"]
+
+    assert runner["runner_hashes_reconciled"] is False
+    assert runner["historical_runner_snapshots_available"] is False
+    assert len({runner["recorded_holdout_runner_sha256"],
+                runner["recorded_artifact_build_runner_sha256"],
+                runner["current_checkout_runner_sha256"]}) == 3
+    assert runner["current_checkout_runner_sha256"] == sha(ROOT / "scripts/run_h57_real.py")
+    assert runner["matching_or_reviewed_modules"]["src/gems52/h57.py"]["matches_recorded_holdout"] is True
+    spatial = runner["matching_or_reviewed_modules"]["src/gems52/spatial.py"]
+    assert spatial["current_checkout_sha256"] == sha(ROOT / "src/gems52/spatial.py")
+    assert spatial["review_change"].startswith("Documentation-only")
+    assert boundary["registered_training_domain_only"] is True
+    assert "cannot detect" in boundary["unobserved_boundary"]
+    assert inputs["pinned_input_directory_present"] is False
+    assert inputs["current_repository_data_matches_pins"] is False
+
+    page = (DOCS / "h57.html").read_text().lower()
+    irregularities = (DOCS / "irregularities.html").read_text().lower()
+    assert "execution provenance is not fully reconciled" in page
+    assert "runner hashes differ" in page
+    assert "no pseudo pixels entered the evaluation region" in page
+    assert "runner provenance is unresolved" in irregularities
+    assert "clean reproduction is not possible" in irregularities
 
 
 def test_h56_is_a_historical_synthetic_demo_not_current() -> None:

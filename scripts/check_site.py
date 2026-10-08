@@ -453,6 +453,37 @@ def main() -> int:
                 or inventory.get('aligned_unique_byte_contents') != 567
                 or inventory.get('exact_byte_duplicate_paths_collapsed') != 205):
             problems.append('H57: final aligned prior inventory does not distinguish paths from unique bytes')
+        provenance_path = DATA / 'h57_execution_provenance.json'
+        if not provenance_path.is_file():
+            problems.append('H57: execution provenance review is missing')
+        else:
+            provenance = json.loads(provenance_path.read_text())
+            review = provenance.get('post_execution_review') or {}
+            runner_review = review.get('runner_source_reconciliation') or {}
+            component_review = review.get('pseudo_component_boundary_review') or {}
+            input_review = review.get('input_restore_review') or {}
+            actual_runner_sha = hashlib.sha256((ROOT / 'scripts/run_h57_real.py').read_bytes()).hexdigest()
+            actual_h57_module_sha = hashlib.sha256((ROOT / 'src/gems52/h57.py').read_bytes()).hexdigest()
+            actual_spatial_sha = hashlib.sha256((ROOT / 'src/gems52/spatial.py').read_bytes()).hexdigest()
+            if (runner_review.get('current_checkout_runner_sha256') != actual_runner_sha
+                    or runner_review.get('runner_hashes_reconciled') is not False
+                    or runner_review.get('historical_runner_snapshots_available') is not False):
+                problems.append('H57: runner source mismatch must be recorded against the current file and remain unresolved')
+            if (actual_h57_module_sha != provenance.get('holdout_code_sha256', {}).get('src/gems52/h57.py')
+                    or runner_review.get('matching_or_reviewed_modules', {}).get('src/gems52/h57.py', {}).get('matches_recorded_holdout') is not True):
+                problems.append('H57: recorded modeling-module source hash does not match the current file')
+            spatial_review = runner_review.get('matching_or_reviewed_modules', {}).get('src/gems52/spatial.py', {})
+            if (spatial_review.get('current_checkout_sha256') != actual_spatial_sha
+                    or not spatial_review.get('review_change', '').startswith('Documentation-only')):
+                problems.append('H57: spatial train-boundary documentation review is missing or stale')
+            if (component_review.get('registered_training_domain_only') is not True
+                    or not component_review.get('unobserved_boundary')
+                    or not component_review.get('interpretation')):
+                problems.append('H57: training-only pseudo-component boundary limitation is not disclosed')
+            if (input_review.get('pinned_input_directory_present') is not False
+                    or input_review.get('current_repository_data_matches_pins') is not False):
+                problems.append('H57: unavailable/mismatched SHA-pinned input restore is not disclosed')
+            notes.append('H57 reproducibility warning retained: runner hashes differ, exact pinned inputs are absent, and train-boundary component completeness is unresolved')
         prereg_path = DATA / 'h57_preregistration.json'
         prereg_sha = hashlib.sha256(prereg_path.read_bytes()).hexdigest() if prereg_path.exists() else None
         if not prereg_sha or prereg_sha != h57.get('preregistration_sha256'):
@@ -505,29 +536,6 @@ def main() -> int:
         latest_page = (DOCS / 'index.html').read_text()
         if latest_page.find(h57.get('file', '')) < 0 or latest_page.find('DO NOT SUBMIT') < 0:
             problems.append('index.html: one-click H57 download/no-submit status is missing from the top page')
-        provenance_path = DATA / 'h57_execution_provenance.json'
-        if not provenance_path.is_file():
-            problems.append('H57: execution provenance review is missing')
-        else:
-            provenance = json.loads(provenance_path.read_text())
-            review = provenance.get('post_execution_review') or {}
-            runner_review = review.get('runner_source_reconciliation') or {}
-            spatial_review = (runner_review.get('matching_or_reviewed_modules') or {}).get('src/gems52/spatial.py') or {}
-            input_review = review.get('input_restore_review') or {}
-            boundary_review = review.get('pseudo_component_boundary_review') or {}
-            current_runner_hash = hashlib.sha256((ROOT / 'scripts/run_h57_real.py').read_bytes()).hexdigest()
-            current_spatial_hash = hashlib.sha256((ROOT / 'src/gems52/spatial.py').read_bytes()).hexdigest()
-            if runner_review.get('current_checkout_runner_sha256') != current_runner_hash:
-                problems.append('H57: provenance review current runner hash does not match the checked-out runner')
-            if runner_review.get('runner_hashes_reconciled') is not False or runner_review.get('historical_runner_snapshots_available') is not False:
-                problems.append('H57: unresolved runner-hash limitation must remain explicitly disclosed')
-            if spatial_review.get('current_checkout_sha256') != current_spatial_hash:
-                problems.append('H57: provenance review spatial-helper hash does not match the checked-out file')
-            if input_review.get('pinned_input_directory_present') is not False or input_review.get('current_repository_data_matches_pins') is not False:
-                problems.append('H57: missing exact pinned inputs must remain disclosed')
-            if not boundary_review.get('unobserved_boundary') or not boundary_review.get('interpretation'):
-                problems.append('H57: train-only pseudo-component boundary limitation is not documented')
-            notes.append('H57 provenance review retained: runner hashes unresolved, pinned inputs absent, train-domain component completeness limited; no-go unchanged')
         notes.append(f"H57 research artifact audited: exact pattern unique across 567 contents, 0% support novelty, spatial gate failed, 0 slots")
 
     # H55 is an archive: bind its corrected A-only promotion prose to the frozen sweep and keep it
