@@ -1,0 +1,64 @@
+{
+ "schema_version": 1,
+ "round": "H60",
+ "frozen_utc": "2026-10-08T18:30:00Z",
+ "hypothesis_document": "knowledge/25_hypotheses_H60_preregistered.md",
+ "hypothesis_document_sha256": "eaf26b5e4e7be2634780ee6d24855a30c312f2d6d1327272ff98628b7d230ed6",
+ "note": "Frozen before the first H60 fit. The runner records these hashes in its receipt and refuses to continue if either has moved.",
+ "instruments": {
+  "primary": "organiser-score set algebra: |G| from the exact A subset B nesting, per-file credit T_i = score_i*(0.2*S_i + 0.8*|G|), and LP-identified intervals on candidate emission sets",
+  "disqualified": "local hide-and-recover simulator -- measured Spearman -0.10 against the reported board, and uniform random beats the champion at matched budget (R4 section 3, knowledge/10 section 5)",
+  "reported_anyway": "hide-and-recover is still run because the brief requires the single-view bias comparison; it cannot promote anything"
+ },
+ "constants": {
+  "G_px": 14088.7,
+  "alpha": 0.2,
+  "beta": 0.8,
+  "R_m": 300.0,
+  "pixel_m": 100.0,
+  "corridor_m": 200.0,
+  "dot_spacing_px": 3,
+  "marginal_bar_at_dti_0.32": 0.068,
+  "independence_abandon_threshold": 0.6,
+  "cmax_credit_per_px": 3.0,
+  "lp_slack": {
+   "abs": 4.0,
+   "rel": 0.002
+  }
+ },
+ "views": {
+  "A_potential_field_subsurface_bands": [
+   1,
+   2,
+   3,
+   9,
+   14,
+   13,
+   11,
+   18,
+   5,
+   4,
+   7,
+   8,
+   10,
+   16,
+   15,
+   17
+  ],
+  "B_surface_bands": [
+   12,
+   19,
+   6
+  ],
+  "band6_note": "organiser describes band 6 as a magnetic tilt derivative; measured range 2.95-88.6 identifies it as radiometric total count (IR-52-019/IR-52-034), so it belongs to the surface view"
+ },
+ "decision_rules": [
+  "recompute |G| from the A subset B nesting on restored bytes; never copy it",
+  "ship the core only if its identified DTI_lo is within 0.02 of the champion's 0.2772 and its mid-interval estimate exceeds it",
+  "admit an arm pixel only if its estimated credit density >= 0.064",
+  "emit nothing within 200 m of a mapped catalogue pixel",
+  "no NaN anywhere; values exactly {0,1}; single-band float32 on the sample grid",
+  "abandon the pseudo-label exchange if max|rho| > 0.60 and fall back to the plain two-view rank",
+  "publish research-only unless a candidate beats the champion on a validated instrument"
+ ]
+}
