@@ -230,3 +230,26 @@ def test_source_commit_references_all_resolve_but_no_scores_are_authenticated():
     assert all(x['ok'] and x['requested']==x['returned_commit'] for x in r['entries'])
     s=json.loads((ROOT/'evidence/ctd5_sources.json').read_text())
     assert s['organizer_confirmed_scores']==[]
+
+
+def test_corrected_shared_evaluation_geometry_cannot_reveal_hidden_tails():
+    eligible=np.ones((120,120),bool)
+    a=np.zeros_like(eligible);a[10:105,58]=True;a[20:40,90]=True
+    b=np.zeros_like(eligible);b[12:95,62]=True;b[80:110,30]=True
+    fa=list(spatial.folds(a,eligible,buffer_px=5));fb=list(spatial.folds(b,eligible,buffer_px=5))
+    for x,y in zip(fa,fb):
+        assert np.array_equal(x['region'],y['region'])
+        assert np.array_equal(x['region'],x['quadrant']&eligible)
+        assert x['receipt']['evaluation_region_label_blind']
+        assert not (x['train']&x['held_all']).any()
+    # A crossing component is fully hidden in both intersected quadrants.
+    assert fa[0]['held_all'][90,58] and fa[2]['held_all'][20,58]
+    counts=sum(f['truth'].astype(int) for f in fa)
+    assert np.all(counts[a]==1)
+
+
+def test_ctd5_legacy_assay_cannot_be_mistaken_for_validated_promotion():
+    c=json.loads((ROOT/'evidence/ctd5_run_card.json').read_text())
+    assert c['strict_holdout_valid'] is False
+    assert 'withheld labels' in c['validation_warning']
+    assert not c['submit_ok'] and c['verdict']=='negative'

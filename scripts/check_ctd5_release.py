@@ -123,7 +123,7 @@ def check(base_url=None):
         bands=1,crs='EPSG:32611',shape=[3730,3292],transform=[100,0,243350,0,-100,4508550],
         finite_inside_footprint=True,finite_everywhere=True,min=0.,max=1.,grid_matches_template=True,
         positive_pixels=12000,positive_outside_footprint=0,min_dot_spacing_px=float(dist[:,1].min()),
-        served=served,verdict='negative',submit_ok=False,
+        served=served,verdict='negative',submit_ok=False,strict_holdout_valid=False,
         note='Local independent byte/receipt checks; no organizer or geological acceptance inferred.')
 
 

@@ -42,12 +42,13 @@
     },
     {
       "path": "data/ctd5_run_card.json",
-      "bytes": 5909,
+      "bytes": 6723,
       "content_type": "application/json",
-      "sha256": "3e18438cc29d580c3101416887f8801f7ac13f004b577ea7fda71ee08385319d"
+      "sha256": "4af8dfd31c10f8a0fde13d0fc13cee7c721b64243a5221e7db428a0ff2cc5cf9"
     }
   ],
   "verdict": "negative",
   "submit_ok": false,
+  "strict_holdout_valid": false,
   "note": "Local independent byte/receipt checks; no organizer or geological acceptance inferred."
 }

@@ -767,5 +767,6 @@
   "independence_allows_exchange": true,
   "seconds": 103.16744826700005,
   "historical_comparability": "Historical mean-DTI/tip/translated-truth/capture assays are not pooled-DTI comparators; single views and union re-fit on identical inputs/folds here.",
-  "organizer_authenticated_inputs": false
+  "organizer_authenticated_inputs": false,
+  "strict_holdout_warning": "Legacy v1 evaluation tail halos depend on withheld labels; placement geometry may leak location. Values are exploratory, not strict promotion evidence. Shared default splitter corrected to label-blind v2; no refit, new placement or new score after STOP."
 }
