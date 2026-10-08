@@ -1,6 +1,61 @@
 # GEMSDOE52
 
-> **Current H59 session status (co-training round run 2026-10-08 UTC):** five ranked hypotheses were
+> **Current H60 session status (triple-convergence blind-fault round, 2026-10-08 UTC):** five ranked
+> hypotheses were preregistered in `knowledge/25_hypotheses_H60.md` before the first fit. The
+> **H60-1** triple-convergence (gravity × RTP × K/Th) strike-gated blind-fault detector is built,
+> format-verified, 97.8 % novel against the 30 accessible aligned priors, min distance to catalogue
+> 223.6 m, all finite {0,1}, 31,000 px. See the new site: **<https://buffedlizard55-lab.github.io/GEMSDOE52/>**
+> with a one-click download at the top and an explicit
+> [executive-summary submission guide](https://buffedlizard55-lab.github.io/GEMSDOE52/executive-summary.html).
+> **Download is approved for review/reproduction; a weekly slot is NOT approved by this repository**
+> until an organizer-validated instrument exists (IR-52-017: the local holdout does not predict
+> the board). Historical H59/H57/H56 notes follow this block; nothing below is deleted.
+
+<!--H60README-->
+## H60 — triple-convergence basement blind-fault detector (2026-10-08)
+
+**[★ H60 GeoTIFF — one click, no scrolling](docs/downloads/h60-candidate.tif)** · [short ZIP](docs/downloads/h60-candidate.zip) · [canonical TIFF](docs/downloads/gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif) · [audit page](docs/h60.html) · [executive summary / submission guide](docs/executive-summary.html) · [build receipt](evidence/h60_build.json).
+
+- **Is it OK to download? YES.** **Is it OK to submit? NO — research only.** The file is portal-valid
+  (single-band float32, EPSG:32611, 3,730×3,292, all finite, values exactly {0, 1}, 0 NaN — the "Predicted
+  values must be in range [0,1]" rejection cannot fire on it; SHA-256
+  `737c77344457dc1561fe091bc3ab085b3ab65af10b290f5301512f0505abec07`; format gate 0 problems; 30,330/31,000
+  px novel vs 30 accessible aligned priors; min distance to mapped catalogue = 223.6 m, exactly 0 px in
+  the zero-credit ≤200 m ring). The file is NOT approved for a weekly slot because this repository's
+  local holdout instrument carries no information about the organizer's score (IR-52-017, ρ = −0.10
+  over n=13 scored files); claiming validation would be dishonest.
+- **Identifiers to paste (verbatim from `evidence/h60_build.json`).** Name:
+  `gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros` (102 chars). Note
+  (196 chars): `H60 triple-convergence gravity+RTP+K/Th edge NNE strike-gated + depth-cover weight;
+  all finite binary [0,1]; 300m greedy; 200m ring excluded; not a verified fault map.` Both are in
+  the ZIP as `submission-name.txt` and `submission-note.txt`.
+- **Method, honestly:** H60-1 searches for blind Basin-and-Range normal faults that die out under
+  valley alluvium (where LiDAR-scarp detectors have nothing to see). It requires three independent
+  physics contrasts — isostatic-gravity step, RTP magnetic step, and K/Th radiometric edge — to
+  coincide within a 300 m disc, all oriented along the dominant NNE–SSW fabric (~15° azimuth ±25°),
+  with a down-thrown-basin depth-to-basement gradient. Novel pixels are restricted to medium-deep
+  cover (> median depth, ~316 m+). Placement is lazy greedy under the triangular 300 m kernel at
+  a 31,000-px budget tuned from the family's T(S) power law, not inherited from the 0.2778 champion's
+  post-ring 37,654. This is not a re-dotting of scarps: 97.8 % of emitted pixels touch no prior raster.
+- **Five preregistered hypotheses** (including this one) are ranked in
+  [`knowledge/25_hypotheses_H60.md`](knowledge/25_hypotheses_H60.md): H60-1 (implemented),
+  H60-2 InSAR (egress-blocked), H60-3 LiDAR-intensity road veto (bandwidth-blocked), H60-4
+  conductivity-plumb (folded into the blend after the H59-E null), H60-5 earthquake lineaments
+  (already in View A).
+- **Gates:** format PASS · uniqueness PASS (strictly-novel-and-selective; equals no prior; not a
+  literal union; 97.8 % novel) · ring PASS · all-finite PASS · slot gate NOT PASSED (no validated
+  holdout) → **RESEARCH ONLY**.
+- **The earlier "Predicted values must be in range [0, 1]" error is impossible for this file:**
+  `gems52.grid.write_geotiff` raises before returning if any pixel is NaN or outside [0,1], and
+  the build re-reads the file and verifies before declaring success.
+- **Reproduce:** `PYTHONPATH=src python3 scripts/build_h60_submission.py` on the manifest-pinned
+  bytes (SHA-256 in `registry/data_manifest.json`; `scripts/restore_data.py` fetches them through
+  the GitHub Contents API and verifies every hash before use).
+<!--/H60README-->
+
+> **Historical H59 session status (co-training round run 2026-10-08 UTC):** five ranked hypotheses were
+> registered in `knowledge/20_hypotheses_H59_preregistered.md` + `registry/h59_preregistration.json`
+> (SHA-verified, frozen) **before** the first fit, and all five were adjudicated on the blocked tip /
 > registered in `knowledge/20_hypotheses_H59_preregistered.md` + `registry/h59_preregistration.json`
 > (SHA-verified, frozen) **before** the first fit, and all five were adjudicated on the blocked tip /
 > hide / holdout instruments using **manifest-pinned owner-mirror bytes** for the first time (23/23
