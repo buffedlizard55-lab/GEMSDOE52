@@ -1,0 +1,31 @@
+{
+ "name": "gems52-h60-unionmax-37654px-20261008T185134Z-5406fdcdcf46-zeros",
+ "note": "H60 union_max 37654px; two-view co-training on SHA-pinned bytes; independence measured; >200m ring excluded; all-finite binary [0,1]; not a verified fault map",
+ "tif_sha256": "59abe557302c158463911f388bcf2ec7edafc511e6948f431f3fee339f947333",
+ "bytes": 143566,
+ "emitted_px": 37654,
+ "zip_bytes": 110885,
+ "range_proof_from_served_bytes": {
+  "served_path": "/home/user/GEMSDOE52/docs/downloads/gems52-h60-unionmax-37654px-20261008T185134Z-5406fdcdcf46-zeros.tif",
+  "min": 0.0,
+  "max": 1.0,
+  "n_nan": 0,
+  "all_finite": true,
+  "values_set": [
+   0.0,
+   1.0
+  ],
+  "in_range": true
+ },
+ "format_gate_ok": true,
+ "format_problems": [],
+ "uniqueness": {
+  "pattern_unique": true,
+  "novel_fraction": 0.47787751633292613,
+  "literal_union": false,
+  "support_gate_ok": true,
+  "priors_checked": 55
+ },
+ "ok_to_download": true,
+ "generated_utc": "20261008T185134Z"
+}

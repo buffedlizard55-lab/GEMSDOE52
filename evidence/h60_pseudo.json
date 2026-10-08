@@ -1,0 +1,18 @@
+{
+ "pseudo_positive_px": 808,
+ "pseudo_negative_px": 772,
+ "segment_px": 87500,
+ "thresholds": {
+  "confident_A": 0.6643701195716858,
+  "confident_B": 0.6938461065292358,
+  "abstain_A": 0.18575453758239746,
+  "abstain_B": 0.2298794388771057
+ },
+ "rule": "top-0.5% in one view & below-60th-percentile in the other, whole 50x50 segments, outside 300 m of any labelled pixel",
+ "fold0_viewB_auc": {
+  "base": 0.6536351381520762,
+  "with_pseudo": 0.6506390937633526
+ },
+ "auc_delta": -0.0029960443887235844,
+ "verdict": "refuted: the exchange did not move held-out AUC by more than +0.002"
+}

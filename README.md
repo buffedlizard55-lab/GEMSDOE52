@@ -1,5 +1,78 @@
 # GEMSDOE52
 
+> **Read first, every session:** `AGENTS.md`, then `knowledge/26_brief_2026-10-08_h60.md`
+> (the user's brief, verbatim), `knowledge/25_hypotheses_H60_preregistered.md` (the frozen
+> hypothesis register), `knowledge/27_why_02778_h60.md` (the metric forensics), and
+> `registry/irregularities.json` → `IR-H60-001` … `IR-H60-005`.
+
+<!--H60README-->
+## H60 — the current round: unique two-view co-training artefact on SHA-verified bytes (2026-10-08)
+
+**[★ Download the H60 GeoTIFF — one click](docs/downloads/h60-candidate.tif)** ·
+[single-TIFF ZIP](docs/downloads/h60-candidate.zip) ·
+[per-pixel geology reasoning CSV (37,654 rows)](docs/downloads/gems52-h60-unionmax-37654px-20261008T185134Z-5406fdcdcf46-zeros-geology.csv) ·
+**[how to submit](docs/executive-summary.html)** · [full audit](docs/h60.html) ·
+[artefact receipt](docs/data/../data/h60_artifact.json) ·
+[preregistration](registry/h60_preregistration.json) ·
+[budget amendment](evidence/h60_budget_amendment.json).
+
+**Is it OK to download? YES. Will the portal accept it? YES — format gate 0 problems, every
+pixel finite and in {0,1}, values exactly {0,1}, EPSG:32611, 3,730 × 3,292, transform
+identical to `sample_submission.tif`, decoded pattern identical to none of
+55 aligned priors, 47.8% of its support novel
+against their union, and not a literal union of them.**
+
+**Is a leaderboard gain certified? NO, and this is the round's central finding.** The only
+local instrument — whole-block hide-and-recover — ranks the 0.2778 champion at
+**0.00479**, *below a random placeholder's*
+0.02229; Spearman(board, instrument) over all 13 scored priors is
+-0.099 (p = 0.748, n = 13). An instrument on which
+the incumbent loses to noise cannot promote a challenger, so this repository does not authorise
+a weekly slot. Upload it if you want the measurement; do not treat it as an improvement on your
+current best. `IR-H60-003`.
+
+- **Identifiers to paste.** Name (63 chars): `gems52-h60-unionmax-37654px-20261008T185134Z-5406fdcdcf46-zeros`.
+  Note (158 chars): `H60 union_max 37654px; two-view co-training on SHA-pinned bytes; independence measured; >200m ring excluded; all-finite binary [0,1]; not a verified fault map`. Both are in the ZIP as
+  `submission-name.txt` / `submission-note.txt`.
+- **The data blocker is closed.** All 23 manifest entries were restored through the GitHub
+  Contents API and SHA-verified; `scripts/prepare_data.py` prints `PREPARE_OK=True` against
+  `4371c82e3b8339b8…` (418,912,844 bytes). What was in `data/` before that was a
+  3,357,961-byte placeholder — `IR-H60-001`. Organiser authentication is still open.
+- **Independence, measured as the brief asks.** Per-block false-alarm rate at a matched 1 %
+  global rate, out-of-fold, labelled negatives only, 565 blocks of 100 px:
+  Spearman **0.2236**; mean-score-on-negatives
+  0.4176; pixel-level 0.2686 —
+  all below the 0.60 abandonment threshold, so pseudo-labelling was **run**, not skipped. On
+  this 47-layer plan the premise survives; on the R4/H55 plans it did not (0.705–0.763), and
+  both measurements stand.
+- **Pseudo-labels, run and refuted.** 808 positive /
+  772 negative pseudo-labels from whole 50×50 segments outside 300 m of
+  any label; fold-0 held-out View-B AUC 0.6536 →
+  0.6506 (Δ -0.0030). Fourth independent null.
+- **Discovery strata are physical.** A-only 174,029 px at a median basement depth
+  of 377 m; B-only 204,360 px at
+  183 m. The geophysics-only population really is
+  deeper under cover.
+- **Hide-and-recover, matched budget.** `union_max` wins
+  4/4 folds against the matched-budget random control with mean DTI
+  0.16087. View B (surface + radiometric) blocked AUC
+  0.6701 vs View A (potential field / subsurface) 0.5811.
+- **Budget, amended with the numbers attached.** The registered rule picked
+  100,000 px; the six off-catalogue scored priors show the board
+  *strictly decreasing in mass* (Spearman -1.000),
+  so the artefact is emitted at **37,654 px** — the mass of the best
+  off-catalogue score ever recorded. `evidence/h60_budget_amendment.json`, per N-4.
+- **Why 0.2778 happened, re-derived on the restored bytes.** The file is 37,654 px, **0** of
+  them within 200 m of the published catalogue, median 1,965 m away. It is an exact subset of
+  `gems24-…-d2-8` (44,090 px, 0.2600); the 6,436-px difference lies entirely 100–200 m from the
+  catalogue, and deleting it raised the score 2.6 % relative. `T ≤ 5,223`, and dropping the
+  `M = T` assumption that produced the old `|G| = 14,088.7` anchor brackets the hidden truth at
+  **≈ 18,000–27,400 px**. `IR-H60-002`.
+- **Killed this round:** recovering the hidden truth from the 13 public scores
+  (uniform-truth `|G|` spans 11,349–499,618 across priors; the block LP is infeasible at every
+  `N` tested). `IR-H60-004`.
+<!--/H60README-->
+
 > **Current H59 session status (co-training round run 2026-10-08 UTC):** five ranked hypotheses were
 > registered in `knowledge/20_hypotheses_H59_preregistered.md` + `registry/h59_preregistration.json`
 > (SHA-verified, frozen) **before** the first fit, and all five were adjudicated on the blocked tip /

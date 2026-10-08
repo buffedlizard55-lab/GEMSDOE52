@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Full H60 audit trail: gates, receipts, per-prior uniqueness."><title>GEMSDOE52 — H60 audit</title>
+<style>:root{--ink:#18332e;--muted:#62736b;--paper:#f6f7f1;--card:#fff;--line:#dce4dc;--green:#17654e;--lime:#d7ebbc;--amber:#8c5a13;--red:#9c3f32}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}a{color:var(--green);text-underline-offset:4px}a:hover{color:#0b3e2e}header{background:rgba(246,247,241,.97);border-bottom:1px solid var(--line)}nav{max-width:1160px;margin:auto;padding:21px 28px;display:flex;align-items:center;gap:24px;flex-wrap:wrap}nav .brand{text-decoration:none;font-weight:800;letter-spacing:.05em;margin-right:auto}nav a:not(.brand){font-size:13px;text-decoration:none;font-weight:600}main,.wrap{max-width:1160px;margin:auto;padding:34px 28px 64px}.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:11px;font-weight:750;color:var(--muted)}h1{font:500 clamp(34px,5.4vw,67px)/1.1 Georgia,"Times New Roman",serif;letter-spacing:-.035em;margin:17px 0 22px;max-width:900px}h2{font:500 30px/1.2 Georgia,serif;letter-spacing:-.02em;margin:36px 0 18px}h3{font-size:18px;line-height:1.3;margin:0 0 12px}.lede{font-size:18px;color:var(--muted);max-width:790px}.download-bar{background:var(--green);color:white;padding:23px 27px;border-radius:13px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-bottom:30px}.download-bar strong{font-size:16px}.download-bar small{display:block;color:#d8e9df;font-size:12px;max-width:710px;overflow-wrap:anywhere}.download-bar .button{background:var(--lime);color:var(--ink);margin-left:auto}.button,button{border:0;border-radius:8px;padding:12px 18px;display:inline-block;text-decoration:none;font-family:inherit;font-size:13px;font-weight:700;line-height:1.4;cursor:pointer;background:var(--green);color:#fff}.button.secondary{background:#e9eee7;color:var(--ink)}.button:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid #ddbc66;outline-offset:4px}.status{border:1px solid #e6d1a8;background:#fff8e8;color:#6a481c;border-radius:8px;padding:15px 19px;margin:20px 0}.status strong{display:block}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:25px 0}.two{display:grid;grid-template-columns:1.12fr 1fr;gap:35px;align-items:start}.card{border:1px solid var(--line);border-radius:12px;background:var(--card);padding:23px}.metric{font-size:31px;line-height:1.2;font-weight:650;letter-spacing:-.045em}.label{font-size:12px;color:var(--muted);margin-top:6px}.small,small{font-size:13px;color:var(--muted)}.card p:last-child{margin-bottom:0}.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:white;margin:20px 0}table{border-collapse:collapse;width:100%;font-size:13px;text-align:left}td,th{padding:13px 16px;border-bottom:1px solid var(--line);vertical-align:top}th{background:#edf1e9;text-transform:uppercase;letter-spacing:.05em;font-size:10px;color:var(--muted);white-space:nowrap}tr:last-child td{border:0}tr.primary{background:#f1f7e8}td.number{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}code{background:#eaf0e6;border-radius:4px;padding:2px 5px;font:12px/1.8 ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere}pre{background:#18332e;color:#ecf4e6;border-radius:10px;padding:23px;overflow:auto;font:13px/1.8 ui-monospace,monospace}pre code{background:none;color:inherit}textarea{width:100%;font:13px/1.6 ui-monospace,monospace;border:1px solid var(--line);border-radius:8px;background:#fff;resize:vertical;padding:12px;min-height:62px;color:var(--ink)}figure{margin:0;background:#edf1e9;padding:16px;border-radius:12px;border:1px solid var(--line)}figure img{width:100%;height:auto;max-height:730px;object-fit:contain;display:block}figcaption{font-size:12px;color:var(--muted);padding-top:13px}ul,ol{padding-left:23px}li{margin:9px 0}.rule{border-top:1px solid var(--line);margin:34px 0}.pill{display:inline-block;border-radius:4px;background:#e8eee1;padding:3px 7px;font-size:10px;font-weight:800;letter-spacing:.03em}.pill.warn{background:#f8e9c7;color:#72460c}.pill.ok{background:#ddecda;color:#23553e}.pill.no{background:#f5ded7;color:var(--red)}footer{border-top:1px solid var(--line);max-width:1160px;margin:auto;padding:26px 28px;color:var(--muted);font-size:12px}.skip{position:absolute;top:-60px;background:white;padding:9px;z-index:10}.skip:focus{top:0}.mono{font-family:ui-monospace,monospace;font-size:12px;overflow-wrap:anywhere}.actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:20px}.sources td:first-child{min-width:180px}.sources td:nth-child(2){min-width:250px}.live-feed{background:#edf1e7;padding:16px;border-radius:10px;font-size:13px;margin:25px 0}.compact{max-width:820px}.muted{color:var(--muted)}@media(max-width:760px){nav{padding:17px 20px;gap:15px}nav .brand{width:100%}main,.wrap{padding:23px 20px 45px}.download-bar{padding:19px}.download-bar .button{margin:0}.grid,.two{grid-template-columns:1fr}.grid{gap:10px}.metric{font-size:28px}h2{font-size:27px}td,th{padding:11px 13px}h1{font-size:42px}.lede{font-size:16px}footer{padding:20px}.card{padding:20px}}
+</style></head>
+<body><a class="skip" href="#main">Skip to content</a>
+<header><nav><a class="brand" href="index.html">GEMS / DOE 52</a>
+<a href="index.html">Overview</a><a href="executive-summary.html">How to submit</a>
+<a href="h60.html">H60 audit</a><a href="h59.html">H59 (previous)</a>
+<a href="irregularities.html">Limitations</a><a href="sources.html">Sources</a></nav></header>
+<main id="main">
+<div class="eyebrow">H60 audit · every gate, every receipt</div>
+<h1>Audit</h1>
+<h2>Artefact</h2>
+<table><tbody>
+<tr><td>name</td><td><code>gems52-h60-unionmax-37654px-20261008T185134Z-5406fdcdcf46-zeros</code></td></tr>
+<tr><td>note</td><td>H60 union_max 37654px; two-view co-training on SHA-pinned bytes; independence measured; &gt;200m ring excluded; all-finite binary [0,1]; not a verified fault map</td></tr>
+<tr><td>tif sha256</td><td><code>59abe557302c158463911f388bcf2ec7edafc511e6948f431f3fee339f947333</code></td></tr>
+<tr><td>bytes</td><td>143,566</td></tr>
+<tr><td>emitted px</td><td>37,654</td></tr>
+<tr><td>arm / budget</td><td>union_max / 37654</td></tr>
+<tr><td>nearest emitted pixel to a mapped trace</td><td>223.60679774997897 m</td></tr>
+<tr><td>emitted outside footprint / outside submission domain</td>
+<td>0 / 0</td></tr>
+</tbody></table>
+
+<h2>Format gate (re-read from the bytes)</h2>
+<pre>{
+ &quot;path&quot;: &quot;/home/user/GEMSDOE52/submission/gems52-h60-unionmax-37654px-20261008T185134Z-5406fdcdcf46-zeros.tif&quot;,
+ &quot;bytes&quot;: 143566,
+ &quot;sha256&quot;: &quot;59abe557302c158463911f388bcf2ec7edafc511e6948f431f3fee339f947333&quot;,
+ &quot;bands&quot;: 1,
+ &quot;dtype&quot;: &quot;float32&quot;,
+ &quot;crs&quot;: &quot;EPSG:32611&quot;,
+ &quot;width&quot;: 3292,
+ &quot;height&quot;: 3730,
+ &quot;bounds&quot;: [
+  243350.0,
+  4135550.0,
+  572550.0,
+  4508550.0
+ ],
+ &quot;ref_bounds&quot;: [
+  243350.0,
+  4135550.0,
+  572550.0,
+  4508550.0
+ ],
+ &quot;transform&quot;: [
+  100.0,
+  0.0,
+  243350.0,
+  0.0,
+  -100.0,
+  4508550.0
+ ],
+ &quot;nodata&quot;: null,
+ &quot;blocksize&quot;: [
+  256,
+  256
+ ],
+ &quot;fixture_grid&quot;: false,
+ &quot;has_validity_mask&quot;: false,
+ &quot;nan_pixels&quot;: 0,
+ &quot;infinity_pixels&quot;: 0,
+ &quot;n_nan&quot;: 0,
+ &quot;min&quot;: 0.0,
+ &quot;max&quot;: 1.0,
+ &quot;mean&quot;: 0.0030664964579045773,
+ &quot;n_nonzero&quot;: 37654,
+ &quot;mass&quot;: 37654.0,
+ &quot;mass_outside_footprint&quot;: 0,
+ &quot;problems&quot;: [],
+ &quot;ok&quot;: true,
+ &quot;validation_class&quot;: &quot;local on-disk template/range check; not organizer upload acceptance&quot;
+}</pre>
+
+<h2>Uniqueness gate — 55 aligned priors, all checked</h2>
+<p class="small">Rule: distinct decoded values from every supplied prior, &gt;=20% new support against binary/&gt;=0.5 continuous proposal union, and selective prior-pixel removal. Scope: Only the supplied, aligned accessible inventory; not a proof against all private/unlinked submissions.</p>
+<table><thead><tr><th>prior</th><th>prior px</th><th>intersection</th><th>Jaccard</th><th>identical</th></tr></thead>
+<tbody><tr><td>13gems_20261001_r13-lattice-s5_v2_nan-outside.tif</td><td>206,895</td><td>1,512</td><td>0.0062</td><td>no</td></tr><tr><td>8GEMSDOE_Hedge-v2_submission.tif</td><td>227,507</td><td>3,657</td><td>0.0140</td><td>no</td></tr><tr><td>gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif</td><td>174,232</td><td>4,467</td><td>0.0215</td><td>no</td></tr><tr><td>gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif</td><td>69,281</td><td>1,567</td><td>0.0149</td><td>no</td></tr><tr><td>gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif</td><td>123,939</td><td>3,670</td><td>0.0232</td><td>no</td></tr><tr><td>gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif</td><td>123,779</td><td>3,677</td><td>0.0233</td><td>no</td></tr><tr><td>gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif</td><td>121,131</td><td>3,603</td><td>0.0232</td><td>no</td></tr><tr><td>gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif</td><td>60,069</td><td>1,638</td><td>0.0170</td><td>no</td></tr><tr><td>gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif</td><td>44,090</td><td>1,090</td><td>0.0135</td><td>no</td></tr><tr><td>gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif</td><td>61,328</td><td>1,664</td><td>0.0171</td><td>no</td></tr><tr><td>gemsdoe-ens12-adopted-7f00890a.tif</td><td>172,974</td><td>3,657</td><td>0.0177</td><td>no</td></tr><tr><td>gemsdoe9-PLACEHOLDER-2314b599.tif</td><td>343,816</td><td>1,358</td><td>0.0036</td><td>no</td></tr><tr><td>h33-2-b2-zeros.tif</td><td>37,654</td><td>1,090</td><td>0.0147</td><td>no</td></tr><tr><td>gems52-h52-cotrain-disagreement-emission-composite-37654px-r1.tif</td><td>37,654</td><td>1,477</td><td>0.0200</td><td>no</td></tr><tr><td>gems52-h53-coincidence-gated-singles-37654px-r1.tif</td><td>37,654</td><td>463</td><td>0.0062</td><td>no</td></tr><tr><td>gems52-h54-revealed-core-strike-continuation-50517px-r1.tif</td><td>50,517</td><td>1,035</td><td>0.0119</td><td>no</td></tr><tr><td>gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.tif</td><td>37,654</td><td>1,071</td><td>0.0144</td><td>no</td></tr><tr><td>gems52-h55-grav-rtp-logedge-37654-c4b8c10205da-zeros.tif</td><td>37,654</td><td>1,863</td><td>0.0254</td><td>no</td></tr><tr><td>gems52-h55-profile-37654-7fd28c25b51a-research.tif</td><td>37,654</td><td>1,716</td><td>0.0233</td><td>no</td></tr><tr><td>gems52-h56-consensus-core-continuation-40517px-04c86e1888a8-zeros.tif</td><td>40,517</td><td>866</td><td>0.0112</td><td>no</td></tr><tr><td>gems52-h56-cotrain-disagreement-37654px-20261007T1630Z-zeros.tif</td><td>37,654</td><td>292</td><td>0.0039</td><td>no</td></tr><tr><td>gems52-h57-union-novel-core25517px-arm14804px.tif</td><td>40,321</td><td>966</td><td>0.0125</td><td>no</td></tr><tr><td>gems52-h58-coldgeo-consensus-22px-a55b0dee38-research.tif</td><td>22</td><td>0</td><td>0.0000</td><td>no</td></tr><tr><td>gems52-h59-cotrain-view_B-37654px-20261008T033705Z-54debe0d-zeros.tif</td><td>37,654</td><td>1,671</td><td>0.0227</td><td>no</td></tr><tr><td>gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif</td><td>37,654</td><td>393</td><td>0.0052</td><td>no</td></tr><tr><td>gems52-h59-union-core25517px-arm14783px.tif</td><td>40,300</td><td>985</td><td>0.0128</td><td>no</td></tr><tr><td>gems52-r2-signednormal-37654-1f751ac9b6ee-zeros.tif</td><td>37,654</td><td>1,807</td><td>0.0246</td><td>no</td></tr><tr><td>gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.tif</td><td>37,654</td><td>1,451</td><td>0.0196</td><td>no</td></tr><tr><td>gems52-r4-B_only-37654px-b-only-research.tif</td><td>37,654</td><td>3,029</td><td>0.0419</td><td>no</td></tr><tr><td>gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif</td><td>33,517</td><td>969</td><td>0.0138</td><td>no</td></tr><tr><td>gems52-h52-cotrain-disagreement-emission-composite-37654px-r1.tif</td><td>37,654</td><td>1,477</td><td>0.0200</td><td>no</td></tr><tr><td>gems52-h53-coincidence-gated-singles-37654px-r1.tif</td><td>37,654</td><td>463</td><td>0.0062</td><td>no</td></tr><tr><td>gems52-h53-revealed-core-strike-continuation-50517px-r1.tif</td><td>50,517</td><td>1,016</td><td>0.0117</td><td>no</td></tr><tr><td>gems52-h54-revealed-core-strike-continuation-50517px-r1.tif</td><td>50,517</td><td>1,035</td><td>0.0119</td><td>no</td></tr><tr><td>gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.tif</td><td>37,654</td><td>1,071</td><td>0.0144</td><td>no</td></tr><tr><td>gems52-h55-grav-rtp-logedge-37654-c4b8c10205da-zeros.tif</td><td>37,654</td><td>1,863</td><td>0.0254</td><td>no</td></tr><tr><td>gems52-h55-profile-37654-7fd28c25b51a-research.tif</td><td>37,654</td><td>1,716</td><td>0.0233</td><td>no</td></tr><tr><td>gems52-h56-consensus-core-continuation-40517px-04c86e1888a8-zeros.tif</td><td>40,517</td><td>866</td><td>0.0112</td><td>no</td></tr><tr><td>gems52-h56-cotrain-disagreement-37654px-20261007T1630Z-zeros.tif</td><td>37,654</td><td>292</td><td>0.0039</td><td>no</td></tr><tr><td>gems52-h57-union-novel-core25517px-arm14804px.tif</td><td>40,321</td><td>966</td><td>0.0125</td><td>no</td></tr><tr><td>gems52-h58-coldgeo-consensus-22px-a55b0dee38-research.tif</td><td>22</td><td>0</td><td>0.0000</td><td>no</td></tr><tr><td>gems52-h59-cotrain-view_B-37654px-20261008T033705Z-54debe0d-zeros.tif</td><td>37,654</td><td>1,671</td><td>0.0227</td><td>no</td></tr><tr><td>gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif</td><td>37,654</td><td>393</td><td>0.0052</td><td>no</td></tr><tr><td>gems52-h59-union-core25517px-arm14783px.tif</td><td>40,300</td><td>985</td><td>0.0128</td><td>no</td></tr><tr><td>gems52-r2-signednormal-37654-1f751ac9b6ee-zeros.tif</td><td>37,654</td><td>1,807</td><td>0.0246</td><td>no</td></tr><tr><td>gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.tif</td><td>37,654</td><td>1,451</td><td>0.0196</td><td>no</td></tr><tr><td>gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif</td><td>33,517</td><td>969</td><td>0.0138</td><td>no</td></tr><tr><td>gemsdoe52-cotrain-anchored-hybrid-20261006-zeros.tif</td><td>40,704</td><td>1,123</td><td>0.0145</td><td>no</td></tr><tr><td>gemsdoe52-cotrain-disagree-submodular-20261006-nan.tif</td><td>41,200</td><td>398</td><td>0.0051</td><td>no</td></tr><tr><td>gemsdoe52-cotrain-disagree-submodular-20261006-zeros.tif</td><td>41,200</td><td>398</td><td>0.0051</td><td>no</td></tr><tr><td>h54-audit-only.tif</td><td>50,517</td><td>1,035</td><td>0.0119</td><td>no</td></tr><tr><td>h56-candidate.tif</td><td>40,517</td><td>866</td><td>0.0112</td><td>no</td></tr><tr><td>h57-candidate.tif</td><td>40,321</td><td>966</td><td>0.0125</td><td>no</td></tr><tr><td>h58-candidate.tif</td><td>22</td><td>0</td><td>0.0000</td><td>no</td></tr><tr><td>h59-candidate.tif</td><td>40,300</td><td>985</td><td>0.0128</td><td>no</td></tr></tbody></table>
+<p>novel vs all priors: 17994 px
+(0.4779) · prior px dropped: 1346296 ·
+relation: strictly-novel-and-selective</p>
+
+<h2>Emitter</h2>
+<pre>{
+ &quot;emitted&quot;: 37654,
+ &quot;requested_budget&quot;: 37654,
+ &quot;pool&quot;: 400000,
+ &quot;pool_restricted&quot;: true,
+ &quot;bar&quot;: 0.0,
+ &quot;dti_projected&quot;: 0.0,
+ &quot;marginal_first&quot;: 8.120381355285645,
+ &quot;marginal_last&quot;: 2.1512370109558105,
+ &quot;total_expected_credit&quot;: 137057.43188381195,
+ &quot;rejects_at_stop&quot;: 0,
+ &quot;lazy_updates&quot;: 621064,
+ &quot;density_sum&quot;: 2307445.5,
+ &quot;false_positive_discount&quot;: &quot;unused: fixed matched budget&quot;,
+ &quot;objective&quot;: &quot;expected triangular max-coverage surrogate; not expected DTI&quot;
+}</pre>
+
+<h2>Not merely the union of the two views</h2>
+<pre>{
+ &quot;fraction_inside_topk_viewA&quot;: 0.11624263026504489,
+ &quot;fraction_inside_topk_viewB&quot;: 0.14933340415360918,
+ &quot;fraction_inside_topk_union_of_views&quot;: 0.2542093801455357,
+ &quot;fraction_outside_both_topk&quot;: 0.7457906198544644,
+ &quot;note&quot;: &quot;the emitter maximises expected triangular max-coverage of the selected field, so it spreads a hard-core pattern rather than taking a top-K; the fraction outside both views&#x27; own top-K is the honest measure&quot;
+}</pre>
+
+<h2>Independence test (the brief's own criterion)</h2>
+<pre>{
+ &quot;statistic_named_by_the_brief&quot;: &quot;per-block false-alarm rate at a matched global rate of 0.01, out-of-fold, labelled negatives only, 100x100 px blocks&quot;,
+ &quot;threshold_view_A&quot;: 0.6028575897216797,
+ &quot;threshold_view_B&quot;: 0.622976874113083,
+ &quot;n_blocks_used&quot;: 565,
+ &quot;n_blocks_rejected_small&quot;: 18,
+ &quot;min_block_pixels&quot;: 200,
+ &quot;spearman_false_alarm&quot;: 0.22356190285209032,
+ &quot;spearman_mean_score_on_negatives&quot;: 0.41763151749186467,
+ &quot;spearman_pixel_score&quot;: 0.26857156905313545,
+ &quot;abandon_threshold&quot;: 0.6,
+ &quot;abandoned&quot;: false,
+ &quot;reading&quot;: &quot;the premise is judged on the statistic the brief names (per-block false-alarm rate); the mean-score-on-negatives and pixel-level correlations are reported beside it, not instead of it&quot;,
+ &quot;n_negative_pixels&quot;: 1600000
+}</pre>
+
+<h2>Pseudo-label exchange</h2>
+<pre>{
+ &quot;pseudo_positive_px&quot;: 808,
+ &quot;pseudo_negative_px&quot;: 772,
+ &quot;segment_px&quot;: 87500,
+ &quot;thresholds&quot;: {
+  &quot;confident_A&quot;: 0.6643701195716858,
+  &quot;confident_B&quot;: 0.6938461065292358,
+  &quot;abstain_A&quot;: 0.18575453758239746,
+  &quot;abstain_B&quot;: 0.2298794388771057
+ },
+ &quot;rule&quot;: &quot;top-0.5% in one view &amp; below-60th-percentile in the other, whole 50x50 segments, outside 300 m of any labelled pixel&quot;,
+ &quot;fold0_viewB_auc&quot;: {
+  &quot;base&quot;: 0.6536351381520762,
+  &quot;with_pseudo&quot;: 0.6506390937633526
+ },
+ &quot;auc_delta&quot;: -0.0029960443887235844,
+ &quot;verdict&quot;: &quot;refuted: the exchange did not move held-out AUC by more than +0.002&quot;
+}</pre>
+
+<h2>Hide-and-recover, all folds</h2>
+<pre>{
+ &quot;ring_m&quot;: 200.0,
+ &quot;budgets&quot;: [
+  10000,
+  20000,
+  37654,
+  60000,
+  100000
+ ],
+ &quot;folds&quot;: [
+  {
+   &quot;fold&quot;: 0,
+   &quot;allowed&quot;: 4938579,
+   &quot;truth&quot;: 15135,
+   &quot;survival&quot;: 0.994383878427486
+  },
+  {
+   &quot;fold&quot;: 1,
+   &quot;allowed&quot;: 4939200,
+   &quot;truth&quot;: 15191,
+   &quot;survival&quot;: 0.9961819498387203
+  },
+  {
+   &quot;fold&quot;: 2,
+   &quot;allowed&quot;: 4938058,
+   &quot;truth&quot;: 15296,
+   &quot;survival&quot;: 0.993527719665272
+  },
+  {
+   &quot;fold&quot;: 3,
+   &quot;allowed&quot;: 4938908,
+   &quot;truth&quot;: 15366,
+   &quot;survival&quot;: 0.9919302355850579
+  }
+ ],
+ &quot;mean_dti&quot;: {
+  &quot;A_only&quot;: {
+   &quot;10000&quot;: 0.06232848251429344,
+   &quot;20000&quot;: 0.09822594705163386,
+   &quot;37654&quot;: 0.12903078004763954,
+   &quot;60000&quot;: 0.14497881999281512,
+   &quot;100000&quot;: 0.1516412884258951
+  },
+  &quot;B_only&quot;: {
+   &quot;10000&quot;: 0.08129578113468175,
+   &quot;20000&quot;: 0.10440811910378804,
+   &quot;37654&quot;: 0.1221941372194439,
+   &quot;60000&quot;: 0.12824523931853504,
+   &quot;100000&quot;: 0.1258932036723448
+  },
+  &quot;union_max&quot;: {
+   &quot;10000&quot;: 0.09128210085826473,
+   &quot;20000&quot;: 0.11923536613364416,
+   &quot;37654&quot;: 0.1448308013961151,
+   &quot;60000&quot;: 0.15937426903328208,
+   &quot;100000&quot;: 0.16087170045905524
+  },
+  &quot;A_where_B_abstains&quot;: {
+   &quot;10000&quot;: 0.058623801517400716,
+   &quot;20000&quot;: 0.09109941203195518,
+   &quot;37654&quot;: 0.11825752039330371,
+   &quot;60000&quot;: 0.134613444856497,
+   &quot;100000&quot;: 0.13902492601459054
+  },
+  &quot;B_where_A_abstains&quot;: {
+   &quot;10000&quot;: 0.057463769398969716,
+   &quot;20000&quot;: 0.07486838259495202,
+   &quot;37654&quot;: 0.08830378354770942,
+   &quot;60000&quot;: 0.09296716052833777,
+   &quot;100000&quot;: 0.09195532110965374
+  },
+  &quot;disagreement_sum&quot;: {
+   &quot;10000&quot;: 0.023743106991947194,
+   &quot;20000&quot;: 0.04037577270886337,
+   &quot;37654&quot;: 0.0545295767983299,
+   &quot;60000&quot;: 0.06433135425316991,
+   &quot;100000&quot;: 0.07157574539030309
+  },
+  &quot;random&quot;: {
+   &quot;10000&quot;: 0.020201093559076115,
+   &quot;20000&quot;: 0.033927685981161054,
+   &quot;37654&quot;: 0.05107709488261674,
+   &quot;60000&quot;: 0.0647369665937229,
+   &quot;100000&quot;: 0.07611858863816089
+  }
+ },
+ &quot;fold_wins_vs_random&quot;: {
+  &quot;A_only@10000&quot;: 3,
+  &quot;A_only@20000&quot;: 3,
+  &quot;A_only@37654&quot;: 3,
+  &quot;A_only@60000&quot;: 3,
+  &quot;A_only@100000&quot;: 3,
+  &quot;B_only@10000&quot;: 4,
+  &quot;B_only@20000&quot;: 4,
+  &quot;B_only@37654&quot;: 4,
+  &quot;B_only@60000&quot;: 4,
+  &quot;B_only@100000&quot;: 4,
+  &quot;union_max@10000&quot;: 4,
+  &quot;union_max@20000&quot;: 4,
+  &quot;union_max@37654&quot;: 4,
+  &quot;union_max@60000&quot;: 4,
+  &quot;union_max@100000&quot;: 4,
+  &quot;A_where_B_abstains@10000&quot;: 3,
+  &quot;A_where_B_abstains@20000&quot;: 3,
+  &quot;A_where_B_abstains@37654&quot;: 3,
+  &quot;A_where_B_abstains@60000&quot;: 3,
+  &quot;A_where_B_abstains@100000&quot;: 3,
+  &quot;B_where_A_abstains@10000&quot;: 4,
+  &quot;B_where_A_abstains@20000&quot;: 4,
+  &quot;B_where_A_abstains@37654&quot;: 4,
+  &quot;B_where_A_abstains@60000&quot;: 4,
+  &quot;B_where_A_abstains@100000&quot;: 4,
+  &quot;disagreement_sum@10000&quot;: 1,
+  &quot;disagreement_sum@20000&quot;: 3,
+  &quot;disagreement_sum@37654&quot;: 3,
+  &quot;disagreement_sum@60000&quot;: 2,
+  &quot;disagreement_sum@100000&quot;: 2
+ },
+ &quot;capture_at_37654&quot;: {
+  &quot;A_only&quot;: 0.16033961435446265,
+  &quot;B_only&quot;: 0.15606255053293633,
+  &quot;union_max&quot;: 0.18277336942308262,
+  &quot;A_where_B_abstains&quot;: 0.14862039207344527,
+  &quot;B_where_A_abstains&quot;: 0.11338737374466158,
+  &quot;disagreement_sum&quot;: 0.07023601548087272,
+  &quot;random&quot;: 0.0665025546871393
+ }
+}</pre>
+
+<h2>Selection</h2>
+<pre>{
+ &quot;promotion_rule&quot;: &quot;arm must beat the matched-budget random control in &gt;= 3 of 4 hide-and-recover folds; among those, highest mean DTI&quot;,
+ &quot;selected&quot;: {
+  &quot;arm&quot;: &quot;union_max&quot;,
+  &quot;budget&quot;: 100000,
+  &quot;mean_dti&quot;: 0.16087170045905524,
+  &quot;fold_wins&quot;: 4
+ },
+ &quot;random_mean_at_each_budget&quot;: {
+  &quot;10000&quot;: 0.020201093559076115,
+  &quot;20000&quot;: 0.033927685981161054,
+  &quot;37654&quot;: 0.05107709488261674,
+  &quot;60000&quot;: 0.0647369665937229,
+  &quot;100000&quot;: 0.07611858863816089
+ },
+ &quot;note&quot;: &quot;hide-and-recover measures recovery of held-out CATALOGUE segments; the competition truth is expert-labelled faults that are NOT in the catalogue, so this is an instrument, not a score forecast&quot;
+}</pre>
+
+<h2>Inputs</h2>
+<pre>{
+ &quot;path&quot;: &quot;data/training_features.tif&quot;,
+ &quot;bytes&quot;: 418912844,
+ &quot;sha256&quot;: &quot;4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5&quot;,
+ &quot;bands&quot;: 19,
+ &quot;dtype&quot;: &quot;float32&quot;,
+ &quot;height&quot;: 3730,
+ &quot;width&quot;: 3292,
+ &quot;crs&quot;: &quot;EPSG:32611&quot;,
+ &quot;transform&quot;: [
+  100.0,
+  0.0,
+  243350.0,
+  0.0,
+  -100.0,
+  4508550.0
+ ],
+ &quot;res&quot;: [
+  100.0,
+  100.0
+ ],
+ &quot;nodata&quot;: -3.4028234663852886e+38,
+ &quot;nodata_repr&quot;: &quot;-3.4028234663852886e+38&quot;,
+ &quot;finite_pixels&quot;: 12279160,
+ &quot;min&quot;: -3.4028234663852886e+38,
+ &quot;max&quot;: 2109.447509765625,
+ &quot;positive_pixels&quot;: 1490289,
+ &quot;nonzero_in_footprint&quot;: 1490289,
+ &quot;unique_values&quot;: 4925614
+}</pre>
+</main>
+<footer><p>Every number on these pages is read from a JSON receipt in <code>evidence/</code> at
+build time by <code>scripts/publish_h60_site.py</code>. Nothing here is organiser-authenticated:
+the DrivenData portal is login-walled, so leaderboard scores quoted anywhere in this repository
+are owner-reported filename attributions.</p></footer>
+</body></html>

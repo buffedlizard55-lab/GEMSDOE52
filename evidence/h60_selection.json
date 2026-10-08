@@ -1,0 +1,17 @@
+{
+ "promotion_rule": "arm must beat the matched-budget random control in >= 3 of 4 hide-and-recover folds; among those, highest mean DTI",
+ "selected": {
+  "arm": "union_max",
+  "budget": 100000,
+  "mean_dti": 0.16087170045905524,
+  "fold_wins": 4
+ },
+ "random_mean_at_each_budget": {
+  "10000": 0.020201093559076115,
+  "20000": 0.033927685981161054,
+  "37654": 0.05107709488261674,
+  "60000": 0.0647369665937229,
+  "100000": 0.07611858863816089
+ },
+ "note": "hide-and-recover measures recovery of held-out CATALOGUE segments; the competition truth is expert-labelled faults that are NOT in the catalogue, so this is an instrument, not a score forecast"
+}

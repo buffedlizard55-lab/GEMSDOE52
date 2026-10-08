@@ -1,0 +1,39 @@
+{
+ "round": "H60",
+ "generated_utc": "20261008T185134Z",
+ "arm": "union_max",
+ "budget": 37654,
+ "emitted_px": 37654,
+ "selection": {
+  "arm": "union_max",
+  "budget": 100000,
+  "mean_dti": 0.16087170045905524,
+  "fold_wins": 4
+ },
+ "emit_stats": {
+  "emitted": 37654,
+  "requested_budget": 37654,
+  "pool": 400000,
+  "pool_restricted": true,
+  "bar": 0.0,
+  "dti_projected": 0.0,
+  "marginal_first": 8.120381355285645,
+  "marginal_last": 2.1512370109558105,
+  "total_expected_credit": 137057.43188381195,
+  "rejects_at_stop": 0,
+  "lazy_updates": 621064,
+  "density_sum": 2307445.5,
+  "false_positive_discount": "unused: fixed matched budget",
+  "objective": "expected triangular max-coverage surrogate; not expected DTI"
+ },
+ "not_merely_union_of_the_two_views": {
+  "fraction_inside_topk_viewA": 0.11624263026504489,
+  "fraction_inside_topk_viewB": 0.14933340415360918,
+  "fraction_inside_topk_union_of_views": 0.2542093801455357,
+  "fraction_outside_both_topk": 0.7457906198544644,
+  "note": "the emitter maximises expected triangular max-coverage of the selected field, so it spreads a hard-core pattern rather than taking a top-K; the fraction outside both views' own top-K is the honest measure"
+ },
+ "nearest_emitted_to_catalogue_m": 223.60679774997897,
+ "emitted_outside_footprint": 0,
+ "emitted_outside_submission_domain": 0
+}
