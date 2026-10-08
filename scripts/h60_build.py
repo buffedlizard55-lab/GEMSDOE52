@@ -6,8 +6,8 @@ What ships, and why each part is there
 **Core — `P1 = A ∩ C`, 25,517 px.**
 `A = h33-2-b2` (reported 0.2778) and `C = gems24-d1-5` (0.2477) are two independent thinnings of the
 same parent field `E = h19-5` (0.1922).  Solving the twelve organiser-scored files for `|G|`
-(`scripts/h60_forensics.py`) and then bounding atom credit by linear programming
-(`scripts/h60_identify.py`) gives `P1`'s credit as **[4,132.6, 5,233.6]** on an identified set, i.e.
+(`scripts/h60c_forensics.py`) and then bounding atom credit by linear programming
+(`scripts/h60c_identify.py`) gives `P1`'s credit as **[4,132.6, 5,233.6]** on an identified set, i.e.
 `DTI(P1) ∈ [0.2524, 0.3196]` against a *certain* 0.2772 – 0.2784 for the champion file `A`.  `P1`'s
 credit density is at least 1.9× `P2 = A \\ C`'s on every point of that set, and `P1` beats `A` iff
 `t(P2) < 674.6`, which covers 64 % of `P2`'s identified range.  Expected `DTI(P1) = 0.2868`.
@@ -148,14 +148,14 @@ def main() -> int:
     # The novelty carrier must sit outside EVERY accessible prior, not just the twelve scored
     # ones: docs/downloads holds this repository's own earlier rounds (59 priors in total, union
     # 1,368,014 px).  Using the twelve-prior union here reported a novelty fraction of 0.0000.
-    # This round's own in-progress artefacts are NOT previous submissions.  `h60-candidate.*` is a
+    # This round's own in-progress artefacts are NOT previous submissions.  `h60c-candidate.*` is a
     # copy of the previous iterate and any earlier `gems52-h60-*` stem is this round's scratch;
     # leaving them in the inventory makes the novelty check circular.  Drop them before scanning.
     _stale = []
     for _d in (ROOT / "submission", DOCS / "downloads"):
         if _d.is_dir():
             for _f in _d.iterdir():
-                if _f.is_file() and (_f.name.startswith("gems52-h60-") or _f.name.startswith("h60-candidate.")):
+                if _f.is_file() and (_f.name.startswith("gems52-h60c-") or _f.name.startswith("h60c-candidate.")):
                     _f.unlink(); _stale.append(str(_f.relative_to(ROOT)))
     if _stale:
         log(f"dropped {len(_stale)} in-progress H60 artefacts before prior scan")
@@ -252,7 +252,7 @@ def main() -> int:
     log(f"total emitted {n_emit} px (core {int((emit & core).sum())})")
 
     # ---------- write the GeoTIFF ----------
-    stem = f"gems52-h60-core{int((emit&core).sum())}px-arm{int(n_emit-(emit&core).sum())}px"
+    stem = f"gems52-h60c-core{int((emit&core).sum())}px-arm{int(n_emit-(emit&core).sum())}px"
     out_tif = ROOT / "submission" / f"{stem}.tif"
     arr = emit.astype(np.float32)
     rep = GR.write_geotiff(out_tif, arr)
@@ -325,18 +325,18 @@ def main() -> int:
     dl = DOCS / "downloads"
     dl.mkdir(exist_ok=True)
     shutil.copy2(out_tif, dl / f"{stem}.tif")
-    shutil.copy2(out_tif, dl / "h60-candidate.tif")
+    shutil.copy2(out_tif, dl / "h60c-candidate.tif")
     shutil.copy2(out_zip, dl / f"{stem}.zip")
-    shutil.copy2(out_zip, dl / "h60-candidate.zip")
+    shutil.copy2(out_zip, dl / "h60c-candidate.zip")
     shutil.copy2(reasoning_csv, dl / f"{stem}-a-only-reasoning.csv")
     # stable alias: the README and site link this name so the link survives a re-build
     # (the stem embeds the arm size, which changes whenever the arm budget changes)
-    shutil.copy2(reasoning_csv, dl / "h60-a-only-reasoning.csv")
+    shutil.copy2(reasoning_csv, dl / "h60c-a-only-reasoning.csv")
     (dl / "index.html").write_text(
         "<!doctype html><meta charset=utf-8><title>H60 downloads</title>"
-        f"<p><a href='h60-candidate.tif'>h60-candidate.tif</a> ({out_tif.stat().st_size} bytes) — "
+        f"<p><a href='h60c-candidate.tif'>h60c-candidate.tif</a> ({out_tif.stat().st_size} bytes) — "
         f"SHA-256 <code>{rep['sha256']}</code></p>"
-        f"<p><a href='h60-candidate.zip'>h60-candidate.zip</a></p>"
+        f"<p><a href='h60c-candidate.zip'>h60c-candidate.zip</a></p>"
         f"<p><a href='{stem}-a-only-reasoning.csv'>A-only geological reasoning CSV</a></p>")
 
     receipt = dict(
@@ -349,7 +349,7 @@ def main() -> int:
         tier3_rule=(f"pA>=q{RELAX_A_Q} ({thrA_rlx:.4f}) & pB<=q{RELAX_B_Q} ({thrB_rlx:.4f}) "
                     f"& ridge>=q{RIDGE_Q} ({thr_ridge:.5f}) & outside every prior & 3px spaced"),
         prior_audit_note=("Prior inventory = 55 accessible artefacts (H53-H59). This round's own "
-                          "in-progress copies (gems52-h60-*, h60-candidate.*) and competition inputs "
+                          "in-progress copies (gems52-h60-*, h60c-candidate.*) and competition inputs "
                           "are excluded: they are not previous submissions and would make the "
                           "novelty check circular."),
         G_px=G_PX, T_core_identified=[T_lo, T_hi],
@@ -364,7 +364,7 @@ def main() -> int:
         runtime_s=round(time.time() - t0, 1),
     )
     (ROOT / "submission" / f"{stem}.json").write_text(json.dumps(receipt, indent=1))
-    (DOCS / "data" / "h60_build.json").write_text(json.dumps(receipt, indent=1))
+    (DOCS / "data" / "h60c_build.json").write_text(json.dumps(receipt, indent=1))
     (DOCS / "data" / f"submission_{stem}.json").write_text(json.dumps(receipt, indent=1))
     log(f"wrote receipts; total {time.time()-t0:.0f}s")
     return 0

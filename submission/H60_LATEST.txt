@@ -1,5 +1,0 @@
-gems52-h60-core25517px-arm9668px.tif
-sha256 1e1e7835af72701150dc1c0a9042bed2cd149e88305659760b889d842116c239
-bytes 146181
-name gems52-h60-core25517px-arm9668px-1e1e7835-zeros
-note H60: 25517px measured-credit core (h33-2-b2 x d1-5) + 9668px bar-sized arm; 3px dot spacing; nothing within 200m of a mapped trace; all finite binary [0,1]; not a verified fault map

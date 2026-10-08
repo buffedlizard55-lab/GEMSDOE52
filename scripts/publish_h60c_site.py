@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Publish the H60 audit page and repoint the site's download bar, guide and index at H60.
+"""Publish the H60C audit page and repoint the site's download bar, guide and index at H60C.
 
 Every number written into HTML is read from a receipt under docs/data/ or submission/ -- the page
 never re-states a figure from memory.  If a receipt is missing the publisher fails loudly rather
@@ -16,9 +16,9 @@ ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 SUB = ROOT / "submission"
 
-REQUIRED = ["docs/data/h60_build.json", "docs/data/h60_forensics.json",
-            "docs/data/h60_identify.json", "docs/data/h60_cotrain.json",
-            "docs/data/h60_ladder.json"]
+REQUIRED = ["docs/data/h60c_build.json", "docs/data/h60c_forensics.json",
+            "docs/data/h60c_identify.json", "docs/data/h60c_cotrain.json",
+            "docs/data/h60c_ladder.json"]
 
 
 def esc(x) -> str:
@@ -42,7 +42,7 @@ def fmt_rows(rows, header, keys=None):
 
 def nav(active="h60"):
     items = [("index.html", "Overview"), ("executive-summary.html", "Submission guide"),
-             ("h60.html", "H60 audit"), ("hypotheses.html", "Hypotheses"),
+             ("h60c.html", "H60C audit"), ("hypotheses.html", "Hypotheses"),
              ("irregularities.html", "Limitations"), ("sources.html", "Sources"),
              ("downloads/index.html", "Downloads")]
     a = "".join(f'<a href="{u}"{" aria-current=page" if u == active else ""}>{t}</a>'
@@ -71,16 +71,16 @@ def foot():
 def main() -> int:
     for r in REQUIRED:                      # fail fast, before any HTML is written
         load(r)
-    b = load("docs/data/h60_build.json")
-    f = load("docs/data/h60_forensics.json")
-    ident = load("docs/data/h60_identify.json")
-    ct = load("docs/data/h60_cotrain.json")
-    lad = load("docs/data/h60_ladder.json")
+    b = load("docs/data/h60c_build.json")
+    f = load("docs/data/h60c_forensics.json")
+    ident = load("docs/data/h60c_identify.json")
+    ct = load("docs/data/h60c_cotrain.json")
+    lad = load("docs/data/h60c_ladder.json")
 
     stem = b["stem"]
     sha = b["sha256"]
-    name = f"gems52-h60-core{b['core_px']}px-arm{b['emitted_px']-b['core_px']}px-{sha[:8]}-zeros"
-    note = (f"H60: {b['core_px']}px measured-credit core (h33-2-b2 x d1-5) + "
+    name = f"gems52-h60c-core{b['core_px']}px-arm{b['emitted_px']-b['core_px']}px-{sha[:8]}-zeros"
+    note = (f"H60C: {b['core_px']}px measured-credit core (h33-2-b2 x d1-5) + "
             f"{b['emitted_px']-b['core_px']}px bar-sized arm; 3px dot spacing; nothing within "
             f"200m of a mapped trace; all finite binary [0,1]; not a verified fault map")
     note = note[:200]
@@ -88,7 +88,7 @@ def main() -> int:
     fmt, uniq, nu = b["format"], b["uniqueness"], b["not_the_union"]
     indep = b["independence"]
 
-    # ------------------------- h60.html -------------------------
+    # ------------------------- h60c.html -------------------------
     proj_rows = []
     for k, v in b["projection_by_rho"].items():
         lab, rho = k.rsplit("_rho", 1)
@@ -109,17 +109,17 @@ def main() -> int:
                  for r in f["files"]]
 
     page = []
-    page.append(head(f"H60 audit — {stem} · GEMSDOE52",
-                     "H60: measured |G|, LP-bounded credit, two-view co-training, and a bar-sized "
+    page.append(head(f"H60C audit — {stem} · GEMSDOE52",
+                     "H60C: measured |G|, LP-bounded credit, two-view co-training, and a bar-sized "
                      "emission with explicit download and submission status."))
-    page.append(nav("h60.html"))
+    page.append(nav("h60c.html"))
     page.append('<main id="main">')
-    page.append('<div class="eyebrow">H60 · why 0.2778 won, and what the bar to beat it actually is'
+    page.append('<div class="eyebrow">H60C · why 0.2778 won, and what the bar to beat it actually is'
                 '</div>')
     page.append('<h1>|G| = 14,089 hidden-truth pixels,<br>measured from the organiser\'s own '
                 'scores.</h1>')
 
-    page.append('<section class="download-bar" aria-label="H60 download">')
+    page.append('<section class="download-bar" aria-label="H60C download">')
     page.append(f'<div><strong>{esc(stem)}.tif</strong>')
     page.append(f'<small>{b["bytes"]:,} bytes · single-band float32 · EPSG:32611 · '
                 f'{fmt["width"]} × {fmt["height"]} · all finite · values exactly {{0,1}}</small>')
@@ -127,9 +127,9 @@ def main() -> int:
     page.append(f'<small>{b["emitted_px"]:,} emitted px = {b["core_px"]:,} measured-credit core + '
                 f'{b["emitted_px"]-b["core_px"]:,} bar-sized arm · nearest mapped catalogue pixel '
                 f'{nu["min_distance_to_catalogue_m"]} m</small></div>')
-    page.append('<a class="button" href="downloads/h60-candidate.tif" download>'
+    page.append('<a class="button" href="downloads/h60c-candidate.tif" download>'
                 '↓ Download the submission TIFF (one click)</a>')
-    page.append('<a class="button" href="downloads/h60-candidate.zip" download>'
+    page.append('<a class="button" href="downloads/h60c-candidate.zip" download>'
                 '↓ Download the one-TIFF ZIP</a>')
     page.append('<a class="button secondary" href="executive-summary.html">How to submit →</a>')
     page.append('</section>')
@@ -166,7 +166,7 @@ def main() -> int:
     page.append('<div class="status"><strong>The load-bearing consequence.</strong> '
                 'Every set that is not itself one of the scored files has a lower bound of zero. '
                 'No measurement available in this repository can certify that any arm clears the '
-                'bar. That is why H60 sizes its arm at the bar and publishes the projection table '
+                'bar. That is why H60C sizes its arm at the bar and publishes the projection table '
                 'instead of a single forecast.</div>')
 
     page.append('<h2>4 · The marginal rule that sizes the emission</h2>')
@@ -178,7 +178,7 @@ def main() -> int:
     page.append(f'<p><b>Dot spacing.</b> On the 100 m integer lattice, sampling a straight trace '
                 f'every 3 px returns 2.333 credit per dot and covers 77.8 % of the trace; the '
                 f'champion\'s <code>d2-8</code> (2.8 px) returns 2.147 and covers 76.7 %. Spacing '
-                f'3 strictly dominates 2.8 — fewer dots, more coverage — so the whole H60 '
+                f'3 strictly dominates 2.8 — fewer dots, more coverage — so the whole H60C '
                 f'emission uses {b["dot_spacing_px"]} px.</p>')
 
     page.append('<h2>5 · The two-view co-training the brief requires</h2>')
@@ -271,48 +271,48 @@ def main() -> int:
                 'pixel is a hypothesis for Phase-2 review, not a verified fault.</div>')
 
     page.append('<h2>9 · Receipts</h2>')
-    page.append('<p class="small">build: <a href="data/h60_build.json">h60_build.json</a> · '
-                'forensics: <a href="data/h60_forensics.json">h60_forensics.json</a> · '
-                'identified intervals: <a href="data/h60_identify.json">h60_identify.json</a> · '
-                'co-training: <a href="data/h60_cotrain.json">h60_cotrain.json</a> · '
-                'corroboration ladder (refuted): <a href="data/h60_ladder.json">h60_ladder.json</a> '
-                '· preregistration: <a href="data/h60_preregistration.json">'
-                'h60_preregistration.json</a></p>')
+    page.append('<p class="small">build: <a href="data/h60c_build.json">h60c_build.json</a> · '
+                'forensics: <a href="data/h60c_forensics.json">h60c_forensics.json</a> · '
+                'identified intervals: <a href="data/h60c_identify.json">h60c_identify.json</a> · '
+                'co-training: <a href="data/h60c_cotrain.json">h60c_cotrain.json</a> · '
+                'corroboration ladder (refuted): <a href="data/h60c_ladder.json">h60c_ladder.json</a> '
+                '· preregistration: <a href="data/h60c_preregistration.json">'
+                'h60c_preregistration.json</a></p>')
     page.append('</main>')
     page.append(foot())
-    (DOCS / "h60.html").write_text("\n".join(page))
-    print("wrote docs/h60.html")
+    (DOCS / "h60c.html").write_text("\n".join(page))
+    print("wrote docs/h60c.html")
 
     # ---------------- repoint index / executive summary ----------------
     idx = (DOCS / "index.html").read_text()
-    idx = idx.replace('<a href="h59.html">H59 audit</a>', '<a href="h60.html">H60 audit</a>')
+    idx = idx.replace('<a href="h59.html">H59 audit</a>', '<a href="h60c.html">H60C audit</a>')
     (DOCS / "index.html").write_text(idx)
 
     es = []
-    es.append(head("How to submit the H60 artifact · GEMSDOE52",
-                   "Exact H60 artifact identification, gate status, and the portal steps for the "
+    es.append(head("How to submit the H60C artifact · GEMSDOE52",
+                   "Exact H60C artifact identification, gate status, and the portal steps for the "
                    "single-band GeoTIFF; the file is all-finite [0,1] so the range error cannot "
                    "occur."))
     es.append(nav("executive-summary.html"))
-    es.append('<main id="main"><div class="eyebrow">Executive summary · H60 · explicit submission '
+    es.append('<main id="main"><div class="eyebrow">Executive summary · H60C · explicit submission '
               'status</div>')
     es.append('<h1>Download, verify, submit —<br>in that order.</h1>')
     es.append('<div class="status"><strong>DOWNLOAD: YES — ALWAYS. WEEKLY SLOT: READ THE AUDIT '
               'FIRST.</strong> The file is portal-valid by construction. Whether it is worth one '
               'of the three submissions allowed every seven days is a separate question, and the '
-              'answer with its sensitivity table is on the <a href="h60.html">H60 audit page</a>.'
+              'answer with its sensitivity table is on the <a href="h60c.html">H60C audit page</a>.'
               '</div>')
-    es.append('<section class="download-bar" aria-label="H60 download">')
+    es.append('<section class="download-bar" aria-label="H60C download">')
     es.append(f'<div><strong>{esc(stem)}.tif</strong>')
     es.append(f'<small>{b["bytes"]:,} bytes · SHA-256 <code>{esc(sha)}</code></small>')
     es.append(f'<small>format gate: {len(fmt["problems"])} problems · all finite · values '
               f'{{0,1}} · {uniq["n_priors_checked"]} priors compared · '
               f'nearest mapped catalogue pixel {nu["min_distance_to_catalogue_m"]} m</small></div>')
-    es.append('<a class="button" href="downloads/h60-candidate.tif" download>'
+    es.append('<a class="button" href="downloads/h60c-candidate.tif" download>'
               '↓ Download the submission TIFF (one click)</a>')
-    es.append('<a class="button" href="downloads/h60-candidate.zip" download>'
+    es.append('<a class="button" href="downloads/h60c-candidate.zip" download>'
               '↓ Download the one-TIFF ZIP</a>')
-    es.append('<a class="button secondary" href="h60.html">Full audit →</a></section>')
+    es.append('<a class="button secondary" href="h60c.html">Full audit →</a></section>')
     es.append('<h2>Is it OK to download and submit this file?</h2>')
     es.append('<div class="table-wrap"><table><thead><tr><th>question</th>'
               '<th>answer of record</th></tr></thead><tbody>')
@@ -339,7 +339,7 @@ def main() -> int:
         ("OK to spend the <b>weekly slot</b>?",
          '<span class="pill warn">DECIDE FROM THE AUDIT</span> — the core is the best-measured '
          'mass this repository has; the arm\'s density is not measured and cannot be. See '
-         '<a href="h60.html">§8</a>.'),
+         '<a href="h60c.html">§8</a>.'),
         ("Is it a verified fault map?",
          '<span class="pill no">NO</span> — every pixel is a hypothesis for Phase-2 review; '
          'written reasoning and an explicit falsifier ship with each A-only candidate.'),
@@ -351,8 +351,8 @@ def main() -> int:
               '<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DOE GEMS '
               'competition page</a> → <b>Submit submission</b>.</li>')
     es.append('<li>Download the audited file with the button above '
-              '(<a href="downloads/h60-candidate.tif" download>.tif</a> or the '
-              '<a href="downloads/h60-candidate.zip" download>.zip</a>, which holds exactly one '
+              '(<a href="downloads/h60c-candidate.tif" download>.tif</a> or the '
+              '<a href="downloads/h60c-candidate.zip" download>.zip</a>, which holds exactly one '
               'TIFF). Do not reproject, rescale, or open it in software that rewrites it.</li>')
     es.append('<li><b>Why the range error cannot happen:</b> the portal rejects rasters containing '
               'values outside [0, 1], which historically came from NaN written outside the '
@@ -373,11 +373,11 @@ def main() -> int:
     es.append(f'<textarea id="submission-note" readonly>{esc(note)}</textarea>')
     es.append('<button data-copy="submission-note">Copy note</button>')
     es.append('<h2>Machine-readable proof</h2><p class="small">'
-              'build: <a href="data/h60_build.json">h60_build.json</a> · '
-              'forensics: <a href="data/h60_forensics.json">h60_forensics.json</a> · '
-              'identified intervals: <a href="data/h60_identify.json">h60_identify.json</a> · '
-              'co-training: <a href="data/h60_cotrain.json">h60_cotrain.json</a> · '
-              'ladder (refuted): <a href="data/h60_ladder.json">h60_ladder.json</a></p>')
+              'build: <a href="data/h60c_build.json">h60c_build.json</a> · '
+              'forensics: <a href="data/h60c_forensics.json">h60c_forensics.json</a> · '
+              'identified intervals: <a href="data/h60c_identify.json">h60c_identify.json</a> · '
+              'co-training: <a href="data/h60c_cotrain.json">h60c_cotrain.json</a> · '
+              'ladder (refuted): <a href="data/h60c_ladder.json">h60c_ladder.json</a></p>')
     es.append('<div class="status"><strong>Honest limits.</strong> Inputs are SHA-pinned owner '
               'mirrors of a login-walled portal, not organiser-authenticated downloads. Every '
               'leaderboard number in this repository (0.2778, 0.2600, 0.3195, 0.3774) is '
@@ -389,15 +389,15 @@ def main() -> int:
     (DOCS / "executive-summary.html").write_text("\n".join(es))
     print("wrote docs/executive-summary.html")
 
-    (SUB / "H60_LATEST.txt").write_text(
+    (SUB / "H60C_LATEST.txt").write_text(
         f"{stem}.tif\nsha256 {sha}\nbytes {b['bytes']}\n"
         f"name {name}\nnote {note}\n")
-    (DOCS / "data" / "h60_submission.json").write_text(json.dumps(
-        dict(round="H60", stem=stem, file=f"{stem}.tif", submission_name=name, note=note,
+    (DOCS / "data" / "h60c_submission.json").write_text(json.dumps(
+        dict(round="H60C", stem=stem, file=f"{stem}.tif", submission_name=name, note=note,
              note_chars=len(note), bytes=b["bytes"], sha256=sha,
              emitted_px=b["emitted_px"], core_px=b["core_px"],
              format=fmt, uniqueness=uniq, not_the_union=nu), indent=1))
-    print("wrote submission/H60_LATEST.txt and docs/data/h60_submission.json")
+    print("wrote submission/H60C_LATEST.txt and docs/data/h60c_submission.json")
     return 0
 
 

@@ -1,11 +1,11 @@
 {
  "round": "H60",
- "run_utc": "20261008T194017Z",
- "stem": "gems52-h60-core25517px-arm9668px",
- "file": "gems52-h60-core25517px-arm9668px.tif",
+ "run_utc": "20261008T195056Z",
+ "stem": "gems52-h60c-core25517px-arm9668px",
+ "file": "gems52-h60c-core25517px-arm9668px.tif",
  "bytes": 146181,
  "sha256": "1e1e7835af72701150dc1c0a9042bed2cd149e88305659760b889d842116c239",
- "zip_bytes": 113968,
+ "zip_bytes": 113970,
  "emitted_px": 35185,
  "core_px": 25517,
  "tier1_px": 2581,
@@ -13,7 +13,7 @@
  "tier3_px": 4760,
  "tier3_posthoc": true,
  "tier3_rule": "pA>=q0.9 (0.3709) & pB<=q0.6 (0.1987) & ridge>=q0.9 (0.00589) & outside every prior & 3px spaced",
- "prior_audit_note": "Prior inventory = 55 accessible artefacts (H53-H59). This round's own in-progress copies (gems52-h60-*, h60-candidate.*) and competition inputs are excluded: they are not previous submissions and would make the novelty check circular.",
+ "prior_audit_note": "Prior inventory = 55 accessible artefacts (H53-H59). This round's own in-progress copies (gems52-h60-*, h60c-candidate.*) and competition inputs are excluded: they are not previous submissions and would make the novelty check circular.",
  "G_px": 14088.7,
  "T_core_identified": [
   4132.6,
@@ -21,7 +21,7 @@
  ],
  "marginal_bar_at_dti_032": 0.0684,
  "format": {
-  "path": "/home/user/GEMSDOE52/submission/gems52-h60-core25517px-arm9668px.tif",
+  "path": "/home/user/GEMSDOE52/submission/gems52-h60c-core25517px-arm9668px.tif",
   "bytes": 146181,
   "sha256": "1e1e7835af72701150dc1c0a9042bed2cd149e88305659760b889d842116c239",
   "bands": 1,
@@ -1069,5 +1069,5 @@
  ],
  "dot_spacing_px": 3,
  "corridor_m": 200.0,
- "runtime_s": 61.7
+ "runtime_s": 61.1
 }

@@ -1,39 +1,39 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Exact H60 artifact identification, gate status, and the portal steps for the single-band GeoTIFF; the file is all-finite [0,1] so the range error cannot occur."><title>How to submit the H60 artifact · GEMSDOE52</title><link rel="stylesheet" href="style.css"><script src="site.js" defer></script></head><body><a class="skip" href="#main">Skip to evidence</a>
-<header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html">Overview</a><a href="executive-summary.html" aria-current=page>Submission guide</a><a href="h60.html">H60 audit</a><a href="hypotheses.html">Hypotheses</a><a href="irregularities.html">Limitations</a><a href="sources.html">Sources</a><a href="downloads/index.html">Downloads</a></nav></header>
-<main id="main"><div class="eyebrow">Executive summary · H60 · explicit submission status</div>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Exact H60C artifact identification, gate status, and the portal steps for the single-band GeoTIFF; the file is all-finite [0,1] so the range error cannot occur."><title>How to submit the H60C artifact · GEMSDOE52</title><link rel="stylesheet" href="style.css"><script src="site.js" defer></script></head><body><a class="skip" href="#main">Skip to evidence</a>
+<header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html">Overview</a><a href="executive-summary.html" aria-current=page>Submission guide</a><a href="h60c.html">H60C audit</a><a href="hypotheses.html">Hypotheses</a><a href="irregularities.html">Limitations</a><a href="sources.html">Sources</a><a href="downloads/index.html">Downloads</a></nav></header>
+<main id="main"><div class="eyebrow">Executive summary · H60C · explicit submission status</div>
 <h1>Download, verify, submit —<br>in that order.</h1>
-<div class="status"><strong>DOWNLOAD: YES — ALWAYS. WEEKLY SLOT: READ THE AUDIT FIRST.</strong> The file is portal-valid by construction. Whether it is worth one of the three submissions allowed every seven days is a separate question, and the answer with its sensitivity table is on the <a href="h60.html">H60 audit page</a>.</div>
-<section class="download-bar" aria-label="H60 download">
-<div><strong>gems52-h60-core25517px-arm9668px.tif</strong>
+<div class="status"><strong>DOWNLOAD: YES — ALWAYS. WEEKLY SLOT: READ THE AUDIT FIRST.</strong> The file is portal-valid by construction. Whether it is worth one of the three submissions allowed every seven days is a separate question, and the answer with its sensitivity table is on the <a href="h60c.html">H60C audit page</a>.</div>
+<section class="download-bar" aria-label="H60C download">
+<div><strong>gems52-h60c-core25517px-arm9668px.tif</strong>
 <small>146,181 bytes · SHA-256 <code>1e1e7835af72701150dc1c0a9042bed2cd149e88305659760b889d842116c239</code></small>
 <small>format gate: 0 problems · all finite · values {0,1} · 55 priors compared · nearest mapped catalogue pixel 223.6 m</small></div>
-<a class="button" href="downloads/h60-candidate.tif" download>↓ Download the submission TIFF (one click)</a>
-<a class="button" href="downloads/h60-candidate.zip" download>↓ Download the one-TIFF ZIP</a>
-<a class="button secondary" href="h60.html">Full audit →</a></section>
+<a class="button" href="downloads/h60c-candidate.tif" download>↓ Download the submission TIFF (one click)</a>
+<a class="button" href="downloads/h60c-candidate.zip" download>↓ Download the one-TIFF ZIP</a>
+<a class="button secondary" href="h60c.html">Full audit →</a></section>
 <h2>Is it OK to download and submit this file?</h2>
 <div class="table-wrap"><table><thead><tr><th>question</th><th>answer of record</th></tr></thead><tbody>
 <tr><td>OK to <b>download</b>?</td><td><span class="pill ok">YES</span> — always; the file and every receipt are published for audit.</td></tr>
 <tr><td>Format-safe for the portal?</td><td><span class="pill ok">YES</span> — single-band float32, EPSG:32611, 3730 × 3292, transform [100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0], all pixels finite and in {0,1}. The “Predicted values must be in range [0, 1]” rejection is triggered by NaN-bearing exports and cannot occur here: <code>gems52.grid.write_geotiff</code> refuses to write otherwise.</td></tr>
 <tr><td>Unique submission?</td><td><span class="pill ok">YES</span> — decoded pattern differs from all 55 aligned priors compared; novel fraction 20.1 %; equals the union of no pair of priors; 7,087 px sit outside every prior's support.</td></tr>
 <tr><td>Not merely the union of the two views?</td><td><span class="pill ok">YES</span> — Jaccard with the top-K of the plain union max(p<sub>A</sub>, p<sub>B</sub>) is 0.0172, and with the top-K of the A-only field 0.0451.</td></tr>
-<tr><td>OK to spend the <b>weekly slot</b>?</td><td><span class="pill warn">DECIDE FROM THE AUDIT</span> — the core is the best-measured mass this repository has; the arm's density is not measured and cannot be. See <a href="h60.html">§8</a>.</td></tr>
+<tr><td>OK to spend the <b>weekly slot</b>?</td><td><span class="pill warn">DECIDE FROM THE AUDIT</span> — the core is the best-measured mass this repository has; the arm's density is not measured and cannot be. See <a href="h60c.html">§8</a>.</td></tr>
 <tr><td>Is it a verified fault map?</td><td><span class="pill no">NO</span> — every pixel is a hypothesis for Phase-2 review; written reasoning and an explicit falsifier ship with each A-only candidate.</td></tr>
 </tbody></table></div>
 <h2>Exact portal steps</h2><ol>
 <li>Use the registered eligible account on the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DOE GEMS competition page</a> → <b>Submit submission</b>.</li>
-<li>Download the audited file with the button above (<a href="downloads/h60-candidate.tif" download>.tif</a> or the <a href="downloads/h60-candidate.zip" download>.zip</a>, which holds exactly one TIFF). Do not reproject, rescale, or open it in software that rewrites it.</li>
+<li>Download the audited file with the button above (<a href="downloads/h60c-candidate.tif" download>.tif</a> or the <a href="downloads/h60c-candidate.zip" download>.zip</a>, which holds exactly one TIFF). Do not reproject, rescale, or open it in software that rewrites it.</li>
 <li><b>Why the range error cannot happen:</b> the portal rejects rasters containing values outside [0, 1], which historically came from NaN written outside the footprint. This artifact is written through <code>gems52.grid.write_geotiff</code>, which re-reads the bytes and refuses to emit unless they are single-band float32, all finite, within [0,1], on the sample grid, and carry no nodata tag.</li>
 <li>Set <b>File to submit</b> to the downloaded .tif (or the .zip).</li>
 <li>Paste the submission name and the note below (both ≤ 200 characters).</li>
 <li>Submit, then record the returned submission ID, timestamp and file hash next to the receipt. One scored upload per file — re-verify the hash first.</li></ol>
-<label for="submission-name">Submission name (47 chars)</label>
-<input id="submission-name" readonly value="gems52-h60-core25517px-arm9668px-1e1e7835-zeros" style="width:100%;font:13px/1.6 ui-monospace,monospace;border:1px solid var(--line);border-radius:8px;padding:12px;background:#fff">
+<label for="submission-name">Submission name (48 chars)</label>
+<input id="submission-name" readonly value="gems52-h60c-core25517px-arm9668px-1e1e7835-zeros" style="width:100%;font:13px/1.6 ui-monospace,monospace;border:1px solid var(--line);border-radius:8px;padding:12px;background:#fff">
 <button data-copy="submission-name">Copy name</button>
-<label for="submission-note">Portal note (181 chars)</label>
-<textarea id="submission-note" readonly>H60: 25517px measured-credit core (h33-2-b2 x d1-5) + 9668px bar-sized arm; 3px dot spacing; nothing within 200m of a mapped trace; all finite binary [0,1]; not a verified fault map</textarea>
+<label for="submission-note">Portal note (182 chars)</label>
+<textarea id="submission-note" readonly>H60C: 25517px measured-credit core (h33-2-b2 x d1-5) + 9668px bar-sized arm; 3px dot spacing; nothing within 200m of a mapped trace; all finite binary [0,1]; not a verified fault map</textarea>
 <button data-copy="submission-note">Copy note</button>
-<h2>Machine-readable proof</h2><p class="small">build: <a href="data/h60_build.json">h60_build.json</a> · forensics: <a href="data/h60_forensics.json">h60_forensics.json</a> · identified intervals: <a href="data/h60_identify.json">h60_identify.json</a> · co-training: <a href="data/h60_cotrain.json">h60_cotrain.json</a> · ladder (refuted): <a href="data/h60_ladder.json">h60_ladder.json</a></p>
+<h2>Machine-readable proof</h2><p class="small">build: <a href="data/h60c_build.json">h60c_build.json</a> · forensics: <a href="data/h60c_forensics.json">h60c_forensics.json</a> · identified intervals: <a href="data/h60c_identify.json">h60c_identify.json</a> · co-training: <a href="data/h60c_cotrain.json">h60c_cotrain.json</a> · ladder (refuted): <a href="data/h60c_ladder.json">h60c_ladder.json</a></p>
 <div class="status"><strong>Honest limits.</strong> Inputs are SHA-pinned owner mirrors of a login-walled portal, not organiser-authenticated downloads. Every leaderboard number in this repository (0.2778, 0.2600, 0.3195, 0.3774) is owner-reported; the board publishes no filename. |G| = 14,088.7 px rests on one nested pair of files. No organiser score is claimed for this or any other file produced here.</div>
 </main>
 <footer>DOE GEMS competition 306 · Reproducible local research · Predictions are hypotheses for Phase-2 review, not verified faults or geothermal discoveries. <a href="irregularities.html">Limitations</a> · <a href="sources.html">Sources</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code and evidence</a></footer></body></html>

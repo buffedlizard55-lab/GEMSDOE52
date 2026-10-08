@@ -1,8 +1,8 @@
 {
  "schema_version": 1,
- "round": "H60",
+ "round": "H60C",
  "frozen_utc": "2026-10-08T18:30:00Z",
- "hypothesis_document": "knowledge/25_hypotheses_H60_preregistered.md",
+ "hypothesis_document": "knowledge/29_hypotheses_H60C_preregistered.md",
  "hypothesis_document_sha256": "eaf26b5e4e7be2634780ee6d24855a30c312f2d6d1327272ff98628b7d230ed6",
  "note": "Frozen before the first H60 fit. The runner records these hashes in its receipt and refuses to continue if either has moved.",
  "instruments": {
