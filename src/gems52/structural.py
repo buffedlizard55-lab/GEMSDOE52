@@ -21,8 +21,11 @@ import numpy as np
 import rasterio
 from scipy import ndimage as ndi
 
-A_BANDS = [i for i in range(1, 20) if i not in (12, 19)]
-B_BANDS = [12, 19]
+# CTD5 shared-template correction: band 6 is tagged as magnetic, but pinned
+# mirror measurements match total-count radiometrics. Keep the disputed channel
+# in B, never in both views. This is provisional identity, not authenticated units.
+A_BANDS = [i for i in range(1, 20) if i not in (6, 12, 19)]
+B_BANDS = [6, 12, 19]
 SCALES = (1, 3, 8)
 SUPPORT_PX = 36
 
@@ -216,7 +219,8 @@ def save_array(path, a):
     tmp.replace(path)
 
 
-def build(features="data/training_features.tif", sample="data/sample_submission.tif", dest="work/r2/features", log=print):
+def build(features="data/training_features.tif", sample="data/sample_submission.tif", dest="work/r2/features", log=print,
+          include_optional_profiles=True):
     dest = Path(dest)
     dest.mkdir(parents=True, exist_ok=True)
     with rasterio.open(sample) as ref:
@@ -322,22 +326,23 @@ def build(features="data/training_features.tif", sample="data/sample_submission.
             put(f"B_{name}_local_residual", residual, "B")
             put(f"B_{name}_local_sd", sd, "B")
 
-        # R3-H1: paired flank geometry is kept out of the old view_B and
-        # structural_contrast definitions so their baselines remain comparable.
-        pair_concordance, shoulder_asymmetry = paired_scarp_profile(elev, valid, sigma=2.0, offset_px=2.0)
-        put("B_paired_profile_concordance_200m", pair_concordance, "H2")
-        put("B_paired_shoulder_asymmetry_200m", shoulder_asymmetry, "H2")
-        del pair_concordance, shoulder_asymmetry
+        if include_optional_profiles:
+            # R3-H1: paired flank geometry is kept out of the old view_B and
+            # structural_contrast definitions so their baselines remain comparable.
+            pair_concordance, shoulder_asymmetry = paired_scarp_profile(elev, valid, sigma=2.0, offset_px=2.0)
+            put("B_paired_profile_concordance_200m", pair_concordance, "H2")
+            put("B_paired_shoulder_asymmetry_200m", shoulder_asymmetry, "H2")
+            del pair_concordance, shoulder_asymmetry
 
-        # H55 paired-normal scales remain a separate, optional view; neither profile
-        # family leaks into the original view_B or structural_contrast baseline.
-        suffixes = ("normal_signed_step", "paired_flank_contrast",
-                    "paired_flank_asymmetry", "tangent_step_persistence")
-        for offset in (1, 2, 3, 4, 6):
-            scale_features = normal_profile(elev, valid, offset_px=offset)
-            for suffix, values in zip(suffixes, scale_features):
-                put(f"H55_{suffix}_{offset}px", values, "H55")
-            del scale_features, values
+            # H55 paired-normal scales remain a separate, optional view; neither profile
+            # family leaks into the original view_B or structural_contrast baseline.
+            suffixes = ("normal_signed_step", "paired_flank_contrast",
+                        "paired_flank_asymmetry", "tangent_step_persistence")
+            for offset in (1, 2, 3, 4, 6):
+                scale_features = normal_profile(elev, valid, offset_px=offset)
+                for suffix, values in zip(suffixes, scale_features):
+                    put(f"H55_{suffix}_{offset}px", values, "H55")
+                del scale_features, values
 
         put("C_gravity_surface_direction", cosine(gx, gy, surf_x, surf_y), "C")
         put("C_cover_surface_direction", cosine(dx, dy, surf_x, surf_y), "C")
@@ -346,7 +351,8 @@ def build(features="data/training_features.tif", sample="data/sample_submission.
         put("C_signed_cover_surface_silence", np.maximum(anti3, 0) * logcover / (1 + np.abs(slope)), "C")
         put("C_cover_persistent_gravity", gcoh * logcover, "C")
 
-    manifest = dict(version="h55-profile-v1", template=template,
+    manifest = dict(version="structural-core-v2-band6-B", template=template,
+                    include_optional_profiles=bool(include_optional_profiles),
                     feature_names=names, view_A=view_a, view_B=view_b,
                     view_B_paired_shoulder=view_b + h2_features, h2_features=h2_features,
                     view_B_h55=view_b + profile, raw_fusion=raw,
@@ -359,7 +365,8 @@ def build(features="data/training_features.tif", sample="data/sample_submission.
                     r3_h1_profile=dict(band=12, context_band=19, gaussian_sigma_px=2.0,
                                        offset_px=2.0, support_px=10, external_data_used=False),
                     inputs={"features_sha256": digest(features), "sample_sha256": digest(sample)},
-                    external_data_used=False, radiometric_bands_present=False,
+                    external_data_used=False, radiometric_bands_present=None,
+                    band6_policy="B only; source tag disputed, TC concordance on mirror bytes; primary identity unverified",
                     caveat="Catalogue-zero is not verified fault absence; gravity and modelled depth are not independent evidence; R3 paired-flank and H55 paired-normal features are geomorphic hypotheses, not fault labels.")
     (dest / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     return manifest
@@ -368,9 +375,9 @@ def build(features="data/training_features.tif", sample="data/sample_submission.
 class FeatureStore:
     """Verified read-only column arrays; gather one model chunk at a time.
 
-    Feature columns are loaded on demand. Ordinary array loads avoid unverified
-    memmap behavior on the sandbox filesystem; the available feature set depends
-    on which preregistered hypothesis extensions were built.
+    Feature columns are SHA-verified before read-only memory mapping. This bounds
+    memory without silently accepting stale arrays. The available feature set
+    depends on which preregistered hypothesis extensions were built.
     """
     def __init__(self, directory="work/r2/features"):
         self.directory = Path(directory)
@@ -393,7 +400,7 @@ class FeatureStore:
                 path = self.directory / (name + ".npy")
                 if digest(path) != self.manifest["feature_sha256"][name]:
                     raise ValueError(f"feature byte-integrity failure: {name}")
-                self.columns[name] = np.load(path, allow_pickle=False)
+                self.columns[name] = np.load(path, allow_pickle=False, mmap_mode="r")
             out[:, j] = self.columns[name][rows]
         return out
 
@@ -402,7 +409,7 @@ class FeatureStore:
             path = self.directory / (name + ".npy")
             if digest(path) != self.manifest["feature_sha256"][name]:
                 raise ValueError(f"feature byte-integrity failure: {name}")
-            self.columns[name] = np.load(path, allow_pickle=False)
+            self.columns[name] = np.load(path, allow_pickle=False, mmap_mode="r")
         out = np.zeros(self.valid.size, np.float32)
         out[self.flat_idx] = self.columns[name]
         return out.reshape(self.valid.shape)

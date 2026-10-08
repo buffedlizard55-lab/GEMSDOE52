@@ -174,8 +174,8 @@ uniqueness: pattern unique vs {esc((art.get('uniqueness') or {}).get('priors_che
 novel support {fnum((art.get('uniqueness') or {}).get('novel_fraction'), 4)},
 literal union of priors = {esc((art.get('uniqueness') or {}).get('literal_union'))}</small>
 </div>
-<a class="button" href="downloads/h60-candidate.tif" download>↓ Download the submission TIFF (one click)</a>
-<a class="button" href="downloads/h60-candidate.zip" download>↓ Download the one-TIFF ZIP</a>
+<a class="button" href="downloads/h60-cotrain-candidate.tif" download>↓ Download the submission TIFF (one click)</a>
+<a class="button" href="downloads/h60-cotrain-candidate.zip" download>↓ Download the one-TIFF ZIP</a>
 <a class="button secondary" href="executive-summary.html">How to submit →</a>
 </section>
 
@@ -327,8 +327,8 @@ for Geothermal Energy</a>.</li>
 {grid.get('labels', {}).get('height', 3730):,} × {grid.get('labels', {}).get('width', 3292):,} ·
 every pixel finite and in [0,1] · {npx:,} positive pixels</small>
 <small class="pill {verdict_class}">{esc(verdict)}</small></div>
-<a class="button" href="downloads/h60-candidate.tif" download>↓ 1. Download the TIFF</a>
-<a class="button" href="downloads/h60-candidate.zip" download>↓ or the ZIP</a>
+<a class="button" href="downloads/h60-cotrain-candidate.tif" download>↓ 1. Download the TIFF</a>
+<a class="button" href="downloads/h60-cotrain-candidate.zip" download>↓ or the ZIP</a>
 </section>
 
 <h2>The steps</h2>

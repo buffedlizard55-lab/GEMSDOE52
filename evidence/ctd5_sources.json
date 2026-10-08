@@ -1,0 +1,1758 @@
+{
+  "generated_utc": "2026-10-08T18:05:23.572774+00:00",
+  "scope": "All supplied owner repository main trees; source not deployed HTTP; no release/private/unlinked external storage audit.",
+  "unavailable_unspecified_sites": [
+    "53GEMSDOE (no supplied URL)",
+    "54GEMSDOE (no supplied URL)"
+  ],
+  "sites": [
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE/docs/index.html",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "dcbbb192e56b2b32c0a131eba791dc363305d4a3",
+      "pages": [
+        {
+          "path": "docs/index.html",
+          "blob": "82ac28947c0d29a942c2ffa1811479129854d535",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE/blob/dcbbb192e56b2b32c0a131eba791dc363305d4a3/docs/index.html",
+          "title": "Overview \u2014 GEMS Prize",
+          "score_excerpts": [
+            "The bar, from the competition itself: the best public leaderboard score is 0.2854 DW-Tversky (50 ranked entrants, median 0.1134), read from the leaderboard at 2026-09-21T04:09:25+00:00. This repository is not on it yet \u2014 see Verification.",
+            "own 300 m tolerance, and widening the band to 16 px lifts the score from 0.0247 to 0.0713 \u2014",
+            "the first measured policy here that beats the constant-ones baseline (0.0585). 74% of the truth has"
+          ]
+        },
+        {
+          "path": "index.html",
+          "blob": "1952217bc20614ca49ac34ebb7a8bd5f83aec545",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE/blob/dcbbb192e56b2b32c0a131eba791dc363305d4a3/index.html",
+          "title": "GEMS Prize \u2014 working notes",
+          "score_excerpts": []
+        }
+      ],
+      "prediction_paths": 0,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/6GEMSDOE",
+      "supplied_url": "https://buffedlizard55-lab.github.io/6GEMSDOE/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "e2fe3f41c6f5dd2dcb2fc91958ee67698f114ada",
+      "pages": [
+        {
+          "path": "index.html",
+          "blob": "97b65791585e3606f15573293c7a80cb4f20441a",
+          "source_url": "https://github.com/buffedlizard55-lab/6GEMSDOE/blob/e2fe3f41c6f5dd2dcb2fc91958ee67698f114ada/index.html",
+          "title": "GEMS Prize \u2014 6GEMSDOE entry",
+          "score_excerpts": [
+            "Blocked-CV proxy DTI 0.1698 against the public catalogue \u2014 a",
+            "The closed form c/(c+\u03b1(1\u2212c)) for the \"predict everywhere\" case gives 0.0564.",
+            "soft@0.30.1119",
+            "hard@0.30.1648",
+            "topk_hard@0.030.1682",
+            "topk_hard@0.050.1730",
+            "topk_hard@0.0050.09310.09790.050246.8%",
+            "catalogue a 5% budget is nominally best (0.1750),"
+          ]
+        }
+      ],
+      "prediction_paths": 1,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE3",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE3/docs/index.html",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "512371de5d30162813803cdccbd4931ceeb065c7",
+      "pages": [
+        {
+          "path": "docs/index.html",
+          "blob": "fc6a841de96b73d95297ebea1ed1c57b0819e5df",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE3/blob/512371de5d30162813803cdccbd4931ceeb065c7/docs/index.html",
+          "title": "Mission control \u00b7 GEMSDOE3",
+          "score_excerpts": [
+            "0.5000%0.03020.00930.09640.03140.10370.0341",
+            "0.7500%0.04000.00850.13660.03170.14400.0338",
+            "1.0000%0.05530.00910.17030.03150.17650.0330",
+            "1.5000%0.08400.01000.21510.02970.18670.0258",
+            "2.0000%0.10730.01060.22220.02520.17900.0199",
+            "3.0000%0.14260.01120.20830.01790.17780.0190",
+            "4.0000%0.16260.01110.20840.01790.17780.0190",
+            "5.0000%0.17390.01090.20840.01790.17780.0190"
+          ]
+        },
+        {
+          "path": "index.html",
+          "blob": "de9c42e016b5cd2042baa28ba141eee5f841abd4",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE3/blob/512371de5d30162813803cdccbd4931ceeb065c7/index.html",
+          "title": "Riftline \u00b7 GEMS3",
+          "score_excerpts": []
+        }
+      ],
+      "prediction_paths": 10,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE2",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE2/docs/index.html",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "d11f1117d8cb1192e7e69687947efdcb2f9ed9e6",
+      "pages": [
+        {
+          "path": "docs/index.html",
+          "blob": "4d4dfca59d7f8f03129dfe02508477f16205f8f4",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE2/blob/d11f1117d8cb1192e7e69687947efdcb2f9ed9e6/docs/index.html",
+          "title": "Overview \u2014 GEMS Prize",
+          "score_excerpts": [
+            "third-party protocol (L 0.1222 vs 0.1189/0.1188), on the held-out segments with the",
+            "catalogue charged (S 0.1128) and under the organizers' mask (P 0.0903 vs 0.0887/0.0831),",
+            "truth population (I), where the 6-fold arm alone wins 0.1173 to 0.0955 \u2014 which is why",
+            "Measured on the local stand-in populationsL 0.1222 \u00b7 S 0.1128 \u00b7 I 0.0955 \u00b7 P (organizers\u2019 mask applied) 0.0903 against a same-size uniform random emission at 0.0648 (1.39\u00d7 lift) \u00b7 183,642 emitted px, 7,693 of them on the supplied catalogue, where the platform pays nothing.",
+            "1GEMSDOE2 dual-family fault uniongemsdoe2-dual-family-union-20260925T160406Z-f68e590f.tif \u00b7 568,065 B \u00b7 183,642 pxNote: GEMSDOE2 dual-family fault union | 11-fold ensemble union 6-fold blend, catalogue-masked | f68e590fL 0.1222 \u00b7 S 0.1128 \u00b7 I 0.0955 \u00b7 P 0.0903the best local evidence this repository has: the highest platform-masked (P 0.0903) and catalogue-charged (S 0.1128) score of every candidate those populations can rank, built from two independent detector familiesif it scores at or below 0",
+            "2GEMSDOE2 precision armgemsdoe2-precision-arm-20260925T160406Z-8bce5dfe.tif \u00b7 284,520 B \u00b7 21,492 pxNote: GEMSDOE2 precision arm | 6-fold blend, highest independent-split score, thinnest emission | 8bce5dfeL 0.1188 \u00b7 S 0.1119 \u00b7 I 0.1173 \u00b7 P 0.0831per-pixel value against coverage: the thinnest arm of the three model candidates (21,492 px, 3.45\u00d7 the random floor where the union is 1.39\u00d7)compare with arm 1. Much lower \u2192 the board rewards coverage and the union's extra pixels were buying something. C",
+            "3GEMSDOE2 extension arm not locally rankablegemsdoe2-extension-arm-20260925T160406Z-ad5ba911.tif \u00b7 486,705 B \u00b7 292,190 pxNote: GEMSDOE2 extension arm | union + 300 m corridor on known traces, bets on corrections/extensions | ad5ba911L 0.2549 \u00b7 S 0.1800 \u00b7 I 0.1429 \u00b7 P 0.1700the population the organizers named and no local protocol can see: new-fault truth within 300 m of a known trace (corrections / extensions of existing traces). It is arm 1 plus a one-pixel corridor along the supplied catalogue",
+            "4GEMSDOE2 recall armgemsdoe2-recall-arm-20260925T160406Z-7f00890a.tif \u00b7 570,890 B \u00b7 172,974 pxNote: GEMSDOE2 recall arm | 11-fold U-Net ensemble, widest coverage | 7f00890aL 0.1189 \u00b7 S 0.1110 \u00b7 I 0.0939 \u00b7 P 0.0887the spare slot, if the week's plan has one: the 11-fold ensemble on its own, i.e. arm 1 minus the second familyonly informative if arm 1 landed above the previous score \u2014 it separates \"the union helped\" from \"the ensemble alone would have scored the same\"."
+          ]
+        },
+        {
+          "path": "index.html",
+          "blob": "1035128e6f75790c19cdaa4fa4ae9ca2685c67c8",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE2/blob/d11f1117d8cb1192e7e69687947efdcb2f9ed9e6/index.html",
+          "title": "GEMS Prize \u2014 working notes",
+          "score_excerpts": []
+        }
+      ],
+      "prediction_paths": 8,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE4",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE4/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "5dc28f67a096c511b0aafbf06c235146c5dcf50e",
+      "pages": [
+        {
+          "path": "index.html",
+          "blob": "205ad579fbb99f80249d6ba50bb8a87db2495fdb",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE4/blob/5dc28f67a096c511b0aafbf06c235146c5dcf50e/index.html",
+          "title": "GEMS Prize \u2014 working notes",
+          "score_excerpts": []
+        },
+        {
+          "path": "docs/index.html",
+          "blob": "17ec246c2bcb5e68e6e6433367eb11eb5596d16d",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE4/blob/5dc28f67a096c511b0aafbf06c235146c5dcf50e/docs/index.html",
+          "title": "Overview \u2014 GEMS Prize",
+          "score_excerpts": [
+            "Selected on fold 0 by the proxy DTI (0.2856); measured on fold 1, which the sweep",
+            "never scored, at proxy DTI 0.2221 and catalogue DTI 0.1439. The whole-grid numbers above are the ones the",
+            "proxy_only460, 10.0085, 0.0094, 0.1623, 0.2126held out-0.1785",
+            "seed420, 10.0071, 0.0095, 0.0239, 0.0326held out-0.0199",
+            "seed432, 30.0233, 0.0501, 0.0222, 0.0080IN-SAMPLE+0.0216",
+            "seed440, 10.0240, 0.0613, 0.1017, 0.1556held out-0.0860",
+            "seed452, 30.0083, 0.0167, 0.0104, 0.0027IN-SAMPLE+0.0060",
+            "0.0138, controls -0.0948, so the"
+          ]
+        }
+      ],
+      "prediction_paths": 0,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/5GEMSDOE",
+      "supplied_url": "https://buffedlizard55-lab.github.io/5GEMSDOE/docs/index.html",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "f0dd3472d5307c296ee875d826412c49a153f74d",
+      "pages": [
+        {
+          "path": "docs/index.html",
+          "blob": "19ba5a7a2ae32fb6d5bef8401fd8d10501f93b83",
+          "source_url": "https://github.com/buffedlizard55-lab/5GEMSDOE/blob/f0dd3472d5307c296ee875d826412c49a153f74d/docs/index.html",
+          "title": "Overview \u2014 GEMS Prize",
+          "score_excerpts": [
+            "The bar, from the competition itself: the best public leaderboard score is 0.3049 DW-Tversky (50 ranked entrants), read from the leaderboard at 2026-09-26. (The older committed reading for this repository was 0.2854 at 2026-09-21T04:09:25+00:00: the bar moved +0.0195.) This site's own best file is 0.1563 \u2014 see Verification and Strategy 5.",
+            "own 300 m tolerance, and widening the band to 16 px lifts the score from 0.0247 to 0.0713 \u2014",
+            "the first measured policy here that beats the constant-ones baseline (0.0585). 74% of the truth has"
+          ]
+        },
+        {
+          "path": "index.html",
+          "blob": "18c93fa80d083521037e191d727dda0bc59db882",
+          "source_url": "https://github.com/buffedlizard55-lab/5GEMSDOE/blob/f0dd3472d5307c296ee875d826412c49a153f74d/index.html",
+          "title": "GEMS Prize \u2014 working notes",
+          "score_excerpts": []
+        }
+      ],
+      "prediction_paths": 8,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/7GEMSDOE",
+      "supplied_url": "https://buffedlizard55-lab.github.io/7GEMSDOE/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "9d8b5d55b674629f7b0e0e486269917c0fa2dade",
+      "pages": [
+        {
+          "path": "index.html",
+          "blob": "5df43eb49ded30600933094acd5c16bf5985458e",
+          "source_url": "https://github.com/buffedlizard55-lab/7GEMSDOE/blob/9d8b5d55b674629f7b0e0e486269917c0fa2dade/index.html",
+          "title": "Executive summary \u00b7 7GEMSDOE",
+          "score_excerpts": [
+            "Recommended next upload (a decisive leaderboard test, not a proven winner): a thin-line map from a model trained only on 1 m lidar scarp descriptors. Group best is 0.1563; leader 0.3049. Exact submission instructions \u2192",
+            "76,859 emitted pixels (binary 1.0; 0.0 elsewhere inside the footprint; NaN outside), all inside lidar coverage; dispersion index 6.70 (line-like). Catalogue-based calibration with a 50% transfer discount predicts only ~0.09, below 0.1563; we still recommend it because that calibration is biased against lidar-mapped faults. Visible false-positive classes: closed loops (hills, shorelines) and arcuate range-front edges. Record the score with the SHA-256.",
+            "The previously omitted official Th/K, U/K and U/Th grids beat the stronger comparator in only 1/5 folds at 1% and 1/5 at 2%; the frozen rule fails. Upward-continued TMI is nearly redundant with supplied band 14 (rank correlation 0.9933). Stop tuning radiometrics; preserve them only as future corroboration.",
+            "The latest verified public feed (2026-09-26T22:59:17.423882+00:00) has 109 ranks; leader DARD is 0.3049. The team's best known public result remains 0.1563. See machine-readable current snapshot.",
+            "We have not beaten 0.3049, obtained private labels, run a region-wide 1 m DEM detector, or verified an actual new fault in the field."
+          ]
+        },
+        {
+          "path": "docs/index.html",
+          "blob": "17f136b9ea9d8b8ceba142801e1c53ecd5e3b5f6",
+          "source_url": "https://github.com/buffedlizard55-lab/7GEMSDOE/blob/9d8b5d55b674629f7b0e0e486269917c0fa2dade/docs/index.html",
+          "title": "7GEMSDOE",
+          "score_excerpts": []
+        }
+      ],
+      "prediction_paths": 4,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/8GEMSDOE",
+      "supplied_url": "https://buffedlizard55-lab.github.io/8GEMSDOE/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "e24abefab237115d67e0afb2acfde01c6304783f",
+      "pages": [
+        {
+          "path": "index.html",
+          "blob": "c91b990cecdb263c6c25c5de5d22d99be0633604",
+          "source_url": "https://github.com/buffedlizard55-lab/8GEMSDOE/blob/e24abefab237115d67e0afb2acfde01c6304783f/index.html",
+          "title": "8GEMSDOE \u2014 Apex Geothermal Fault Discovery & Submission Hub",
+          "score_excerpts": [
+            "Ready for immediate upload to the DrivenData GEMS Prize Challenge. Verified against all 13 format gates, and the only artifact here whose score has a proven floor: it contains the byte-verified 0.1563 leaderboard pattern plus the whole catalogue, which carries zero false-positive weight. Full argument: executive summary.",
+            "\u2713 227,507 Positive px \u00b7 Floor 0.1563 by Proof",
+            "Single-band float32 GeoTIFF (736 KB) \u00b7 sha256 052688eafb\u2026 \u00b7 verified 0.1563 emission \u222a full USGS/INGENIOUS catalogue at p=1.0 \u00b7 pixel-identical to the independently built sibling candidate (0 differing px)",
+            "Targeting Top of Leaderboard (> 0.3049)",
+            "Current top score is 0.3049 (held by DARD); the best verified pattern this group has on the board is 0.1563. Closing a +0.1486 gap needs a genuinely better detector of traces nobody has mapped, not a better-fitting proxy. What we measured this session, in one place:",
+            "In-file features alone are at or below random for the real task \u2014 but adding the external channels turns that around. Clean protocol (whole fault systems held out, models retrained inside each fold, exact kernel metric, 15,000 pseudo-truth pixels, budget-matched random control). Fold 0 DTI at a 3% budget: random 0.0813, in-file base 0.0727, base+H11 0.0705, catalogue halos r1\u2013r5 only 0.027\u20130.044 \u2014 then base+10 m scarp 0.0810, +radiometric 0.0850, +our structural-coherence planes 0.0895. Fold 1 r",
+            "Local proxies are contaminated and must not rank artifacts. The most catalogue-faithful artifact (hgb88) has the highest proxy score (0.1527) and the lowest public score (0.0286). Any protocol whose truth is derived from the catalogue rewards memorising it.",
+            "The missing external channel is real, free, official and now on-grid. 9 topo/scarp bands from the USGS 3DEP 1/3\u2033 (~10 m) seamless DEM plus 7 radiometric bands (K, Th, U, TC, U/K, Th/K, U/Th) from the USGS GeoDAWN release (DOI 10.5066/P93LGLVQ), sha256-verified through a git bridge and re-gridded to EPSG:32611. Coverage is 100% of the scored footprint (radiometric 99.975%) \u2014 an earlier \u201c42.08%\u201d figure on this page was our own census bug: labels.tif is finite everywhere with a -1 sentinel, and 42."
+          ]
+        },
+        {
+          "path": "docs/index.html",
+          "blob": "c91b990cecdb263c6c25c5de5d22d99be0633604",
+          "source_url": "https://github.com/buffedlizard55-lab/8GEMSDOE/blob/e24abefab237115d67e0afb2acfde01c6304783f/docs/index.html",
+          "title": "8GEMSDOE \u2014 Apex Geothermal Fault Discovery & Submission Hub",
+          "score_excerpts": [
+            "Ready for immediate upload to the DrivenData GEMS Prize Challenge. Verified against all 13 format gates, and the only artifact here whose score has a proven floor: it contains the byte-verified 0.1563 leaderboard pattern plus the whole catalogue, which carries zero false-positive weight. Full argument: executive summary.",
+            "\u2713 227,507 Positive px \u00b7 Floor 0.1563 by Proof",
+            "Single-band float32 GeoTIFF (736 KB) \u00b7 sha256 052688eafb\u2026 \u00b7 verified 0.1563 emission \u222a full USGS/INGENIOUS catalogue at p=1.0 \u00b7 pixel-identical to the independently built sibling candidate (0 differing px)",
+            "Targeting Top of Leaderboard (> 0.3049)",
+            "Current top score is 0.3049 (held by DARD); the best verified pattern this group has on the board is 0.1563. Closing a +0.1486 gap needs a genuinely better detector of traces nobody has mapped, not a better-fitting proxy. What we measured this session, in one place:",
+            "In-file features alone are at or below random for the real task \u2014 but adding the external channels turns that around. Clean protocol (whole fault systems held out, models retrained inside each fold, exact kernel metric, 15,000 pseudo-truth pixels, budget-matched random control). Fold 0 DTI at a 3% budget: random 0.0813, in-file base 0.0727, base+H11 0.0705, catalogue halos r1\u2013r5 only 0.027\u20130.044 \u2014 then base+10 m scarp 0.0810, +radiometric 0.0850, +our structural-coherence planes 0.0895. Fold 1 r",
+            "Local proxies are contaminated and must not rank artifacts. The most catalogue-faithful artifact (hgb88) has the highest proxy score (0.1527) and the lowest public score (0.0286). Any protocol whose truth is derived from the catalogue rewards memorising it.",
+            "The missing external channel is real, free, official and now on-grid. 9 topo/scarp bands from the USGS 3DEP 1/3\u2033 (~10 m) seamless DEM plus 7 radiometric bands (K, Th, U, TC, U/K, Th/K, U/Th) from the USGS GeoDAWN release (DOI 10.5066/P93LGLVQ), sha256-verified through a git bridge and re-gridded to EPSG:32611. Coverage is 100% of the scored footprint (radiometric 99.975%) \u2014 an earlier \u201c42.08%\u201d figure on this page was our own census bug: labels.tif is finite everywhere with a -1 sentinel, and 42."
+          ]
+        }
+      ],
+      "prediction_paths": 5,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE9",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE9/docs/index.html",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "1fdfddcefd291889e618adf8c42922e4893d514d",
+      "pages": [
+        {
+          "path": "docs/index.html",
+          "blob": "f53017599c9b70ea19ccb3ffac4d09cb048978d8",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE9/blob/1fdfddcefd291889e618adf8c42922e4893d514d/docs/index.html",
+          "title": "Overview \u2014 GEMSDOE9",
+          "score_excerpts": [
+            "Why 0.1563 keeps repeating",
+            "0.1563 = \u03c1 / (0.2\u00b7\u03c1 + 0.8)   \u2192   \u03c1 = 0.1291",
+            "So 0.1563 is the fingerprint of a catalogue copy: 12.9% weighted",
+            "0.1563; copy it slightly differently and you still get 0.1563. Three unrelated",
+            "0.3049 \u2192 \u03c1 \u2265 0.2598   (2.01\u00d7 the 0.1563 recall)",
+            "Known catalogue, nothing else (\u03c6 = 0 exactly)0.2544\u2014",
+            "+ a blind 3 px halo, no detector0.2935+0.0391",
+            "+ a detector-gated halo, chance detector0.3519+0.0975"
+          ]
+        },
+        {
+          "path": "index.html",
+          "blob": "f087d84331026c3d60d097a5950e8c6776311c50",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE9/blob/1fdfddcefd291889e618adf8c42922e4893d514d/index.html",
+          "title": "GEMSDOE9 \u2014 Geothermal Fault Discovery Beyond the Catalogue | DOE GEMS Prize",
+          "score_excerpts": [
+            "instructions, the metric algebra that explains the 0.1563 plateau, and the official",
+            "Why 0.1563"
+          ]
+        }
+      ],
+      "prediction_paths": 1,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/11GEMSDOE",
+      "supplied_url": "https://buffedlizard55-lab.github.io/11GEMSDOE/docs/index.html",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "7d8133c69cb39363f394fc2d4a6d4919112c4270",
+      "pages": [
+        {
+          "path": "docs/index.html",
+          "blob": "3a492629171d968ead077d08650fe9e544aeea94",
+          "source_url": "https://github.com/buffedlizard55-lab/11GEMSDOE/blob/7d8133c69cb39363f394fc2d4a6d4919112c4270/docs/index.html",
+          "title": "11GEMSDOE \u00b7 GEMS Prize submission",
+          "score_excerpts": [
+            "1DARD0.3049",
+            "Public values change and are not the private or final-round score. extradr19 \u2014 the account our team's published anchor associates with 0.1563 \u2014 sits at rank 24 with 2 submissions. Source: official DrivenData leaderboard \u2197",
+            "WHY 0.1563 KEPT COMING BACK",
+            "8GEMSDOE shows the same 0.1563 from a different raster, and unrelated competitors sit at 0.1563 too. Every one of our files was tuned against the mapped catalogue \u2014 which the organisers confirmed is excluded from scoring. We were optimising a shortcut the contest is built to punish.",
+            "Re-scored on a leakage-free holdout \u2014 faults in blocks the model never saw, with a 1.2 km collar and the official mask applied. A model that only reproduces the training catalogue scores 0.0000 on it, so the split carries no shortcut. Our historical files score 0.18\u20130.45 there and still only 0.1563 on the leaderboard, because they were fitted on the very traces being held out. That gap is the finding.Open the re-scoring \u2197",
+            "Emission geometry moved the holdout from 0.0943 at 40% emitted area to 0.1324 at 6% \u2014 a 40% relative gain from a shaping parameter, an order of magnitude larger than every model variant we tried. The metric charges every pixel of area at \u03b1=0.2 and forgives 300 m of positional error; those two facts set the optimum. See the sweep.",
+            "0.1366 is a holdout score on held-out mapped faults. The private set is faults an expert judged to be missing from the map, which may be subtler. Four folds cannot separate arms 0.004 apart."
+          ]
+        },
+        {
+          "path": "index.html",
+          "blob": "ee6c77dbdafeacf390c00f17028adb262e0ba46b",
+          "source_url": "https://github.com/buffedlizard55-lab/11GEMSDOE/blob/7d8133c69cb39363f394fc2d4a6d4919112c4270/index.html",
+          "title": "11GEMSDOE \u00b7 Project status",
+          "score_excerpts": []
+        }
+      ],
+      "prediction_paths": 1,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/12GEMSDOE",
+      "supplied_url": "https://buffedlizard55-lab.github.io/12GEMSDOE/docs/index.html",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "2977dacad8d8dcc3e82dbae91f2720f516df1991",
+      "pages": [
+        {
+          "path": "docs/index.html",
+          "blob": "94a280ece41bce578eda7bb73fa9de3bcb063d3b",
+          "source_url": "https://github.com/buffedlizard55-lab/12GEMSDOE/blob/2977dacad8d8dcc3e82dbae91f2720f516df1991/docs/index.html",
+          "title": "12GEMSDOE \u00b7 Geothermal Fault Discovery Workbench",
+          "score_excerpts": [
+            "103,347 predicted fault pixels (exactly 2.000 % of the survey footprint), laid down by non-maximum suppression with a 5 \u00d7 5 exclusion box \u2014 no two predictions inside one 300 m credit cell. Model: multi25 + H28 + H32 (12 label-free channels from the USGS 3DEP 1/3\u2033 \u224810 m DEM: slope, horizontal gradient at 20/50/200 m, micro-relief, curvature and one-sided scarp asymmetry per 100 m cell). On the frozen masked holdout, NMS-3 @2 %: dense truth 0.22143 \u2192 0.24586 (+0.0244, 4/4 folds), sparse truth 0.11",
+            "Top 6 + watched accounts. Account ownership of the 0.1563 / 0.1461 / 0.1193 rows is not verified. Phase-1 prizes go to the top 5 of this board; Phase-2 uses an expanded expert truth set.",
+            "Masked-protocol folds won by Multi-Physics 25 vs raw19 (+0.00469 mean DTI; probe 0.0000). This is a proxy result, not a hidden-label score.",
+            "Upload receipts are absent; the third 0.1563 row cannot be byte-attributed.",
+            "Of valid footprint pixels differ from the shared 0.1563 file (373,847 px; off-label correlation 0.07). Unique SHA-256 (06ca61e5).",
+            "Same model, same features, only the emission changed: 5 \u00d7 5 non-maximum suppression instead of top-k. Dense truth 0.0907 \u2192 0.2214; sparse truth 0.0449 \u2192 0.1118; off-catalogue 0.0676 \u2192 0.1938. Round-6 adds H28 magnetic texture: dense 0.22138 \u2192 0.22143 (3/4, mean +0.00005 \u2014 noise-level), sparse 0.11178 \u2192 0.11438 (3/4). Round-7 adds H32 10 m DEM scarp channels: dense 0.22143 \u2192 0.24586 (4/4), sparse 0.11438 \u2192 0.12732 (4/4).",
+            "0.3168",
+            "Re-fetched 2026-09-28 from the official leaderboard: #1 DARD 0.3168 (11 subs), #2 alexoktaba 0.2993, #3 HardcoreTechGod 0.2854, #5 cutoff 0.2806. Three rows still tie at exactly 0.1563 (#26\u201328)."
+          ]
+        },
+        {
+          "path": "index.html",
+          "blob": "34aeeb88e98af2d9103a4cf222372cac5c82cc69",
+          "source_url": "https://github.com/buffedlizard55-lab/12GEMSDOE/blob/2977dacad8d8dcc3e82dbae91f2720f516df1991/index.html",
+          "title": "12GEMS research workbench",
+          "score_excerpts": []
+        }
+      ],
+      "prediction_paths": 7,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/15GEMSDOE",
+      "supplied_url": "https://buffedlizard55-lab.github.io/15GEMSDOE/docs/index.html",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "8c94b0f83f22999032ba8a29c523af7ae6cf5e76",
+      "pages": [
+        {
+          "path": "docs/index.html",
+          "blob": "1c0b2b77c09590726acf9d1fb39147df9068cbca",
+          "source_url": "https://github.com/buffedlizard55-lab/15GEMSDOE/blob/8c94b0f83f22999032ba8a29c523af7ae6cf5e76/docs/index.html",
+          "title": "15GEMSDOE - 15GEMSDOE",
+          "score_excerpts": [
+            "The score was audited before any model was fitted: all 7 checks pass against the problem page's own worked example (0.6027 \u2192 0.60).",
+            "Why the group kept seeing 0.1563",
+            "(2) Different rasters, the same bet. The score only pays outside the 300 m free zone of the shipped mask, so two files with different footprints can be the same submission. The chargeable-support audit finds a 15-file family sharing one chargeable pixel set (ens12, the hedge candidate, 8GEMSDOE Hedge-v2, the dilational variants, the GEMSDOE2 arms) at Jaccard \u2265 0.96, with %s identical pixels between the two files that both scored 0.1563. The rank-correlation gate was blind to this; the gate now i"
+          ]
+        },
+        {
+          "path": "index.html",
+          "blob": "f6347f32db7a2306cc5ba9725d565b86d18aad82",
+          "source_url": "https://github.com/buffedlizard55-lab/15GEMSDOE/blob/8c94b0f83f22999032ba8a29c523af7ae6cf5e76/index.html",
+          "title": "15GEMSDOE - DOE GEMS Prize",
+          "score_excerpts": []
+        }
+      ],
+      "prediction_paths": 4,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/14GEMSDOE",
+      "supplied_url": "https://buffedlizard55-lab.github.io/14GEMSDOE/docs/index.html",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "88dd365dc7469c316f0f7c3bdd18fd90c5825a07",
+      "pages": [
+        {
+          "path": "docs/index.html",
+          "blob": "afc35026fae795048a92d73a13001c60df370466",
+          "source_url": "https://github.com/buffedlizard55-lab/14GEMSDOE/blob/88dd365dc7469c316f0f7c3bdd18fd90c5825a07/docs/index.html",
+          "title": "14GEMSDOE \u2014 GEMS Prize submission builder",
+          "score_excerpts": [
+            "Why the team kept scoring 0.1563 \u2014 and what changes now",
+            "not proven. A repeated four-decimal leaderboard score \u2014 including 0.1563 \u2014 does",
+            "dense 0.0385\u21920.0624 (+0.0239), sparse 0.0151\u21920.0217 (+0.0066), far 0.0003\u21920.0040 (+0.0037), 4/4 folds wins on both sparse and far \u2014 first arm to meet the promote rule on real data",
+            "shore 0.0452/0.0191/0.0038 (4/4 sparse & far \u2014 far \u2248 13\u00d7 baseline, strongest far arm of the project); condbase 0.0397/0.0166/0.0022 (3/4 sparse, 4/4 far). R6-2 xsec killed by rule (sparse 2/4) despite far 4/4",
+            "interim 2-fold: 0.0675/0.0212/0.0068 (fold0) and 0.0767/0.0268/0.0095 (fold1) \u2014 beats horse and curvature single arms on all three protocols; full 4-fold re-running after an OOM at fold 2 (the first two folds reproduced exactly)",
+            "Full gates: artifacts/holdout_round6_horse.json, artifacts/holdout_round6_rest.json, fields in artifacts/real_fields/, submission GEMS_r5-geom-horse-ensemble_20260929T080858Z_76116a29.tif (finite, [0,1], EPSG:32611, official-economics budget q 0.0225). No slot spent yet \u2014 the artifact is the single upload candidate. External slip/dilation source verified: DOI 10.5066/P9YL58W6 (USGS ScienceBase, 27 MB shapefile, public domain).",
+            "Two official statements reframe the hidden truth: C28 \u2014 \"portions of the existing fault data may be misaligned from the true location of the surface fault, which is the prediction target\" \u2014 and C21 \u2014 continuations past mapped tips and splays are scoring truth. No R1\u2013R6 arm models misregistration or buried continuation. Five candidates pre-registered (round-7 page): R7-1 expression-aligned traces (misregistration correction, validated via a new --misreg-px stress protocol), R7-2 buried continuati",
+            "+0.0979 combined holdout DTI over the baseline, and the only"
+          ]
+        },
+        {
+          "path": "index.html",
+          "blob": "c683fc447c5050129ad508a231a56768b949e226",
+          "source_url": "https://github.com/buffedlizard55-lab/14GEMSDOE/blob/88dd365dc7469c316f0f7c3bdd18fd90c5825a07/index.html",
+          "title": "14GEMSDOE \u2014 GEMS Prize submission builder",
+          "score_excerpts": []
+        }
+      ],
+      "prediction_paths": 1,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/17GEMSDOE",
+      "supplied_url": "https://buffedlizard55-lab.github.io/17GEMSDOE/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "6fc71d19d49dca4960d5434bd81b6dd06fcc030a",
+      "pages": [
+        {
+          "path": "index.html",
+          "blob": "dbe994b55c63ab418194a83369d6548384749c7a",
+          "source_url": "https://github.com/buffedlizard55-lab/17GEMSDOE/blob/6fc71d19d49dca4960d5434bd81b6dd06fcc030a/index.html",
+          "title": "17GEMSDOE &middot; download the submission",
+          "score_excerpts": [
+            "Short commentA-verified 0.1563-support rebuild (all-finite [0,1], 172,974 px, c5ea501e, 20260930)"
+          ]
+        },
+        {
+          "path": "docs/index.html",
+          "blob": "bcccffb20273508f28fb5a3af7943542c3372817",
+          "source_url": "https://github.com/buffedlizard55-lab/17GEMSDOE/blob/6fc71d19d49dca4960d5434bd81b6dd06fcc030a/docs/index.html",
+          "title": "Download the submission &middot; 17GEMSDOE",
+          "score_excerpts": [
+            "strategy from the 3.3% catalogue reference. Holdout DTI 0.1524",
+            "without corridor blanking (vs 0.1390 for D alone, 0.1245 for E alone at the",
+            "F-ensemble-2pct: mean(D-supervised + E-multiscale-proba), binary top-k at 2% density (103,347px), holdout_DTII=0.1524, 0210da43",
+            "recovered them at 0.2795 mean DTI against the current",
+            "best of 0.1253 under the strict per-fold protocol. 3.3% density binary.",
+            "D-supervised-expression: HistGB on 14 bands+2 gradmag, no location features, 0/1 top-k at 3.3% density (170,401 px), hide-and-recover mean dense DTI 0.2795 vs gate 0.1253, 86125863",
+            "Safe upload \u2014 reproduces the known 0.1563",
+            "The rebuilt support of the field that already holds 0.1563. Every format check"
+          ]
+        }
+      ],
+      "prediction_paths": 5,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/18GEMSDOE",
+      "supplied_url": "https://buffedlizard55-lab.github.io/18GEMSDOE/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "809482f4634e49eb552547554f0682cdcbb4d467",
+      "pages": [
+        {
+          "path": "index.html",
+          "blob": "6ed69098fcbd97315d6a260aa3056897bfb5a4aa",
+          "source_url": "https://github.com/buffedlizard55-lab/18GEMSDOE/blob/809482f4634e49eb552547554f0682cdcbb4d467/index.html",
+          "title": "Home \u2014 18GEMSDOE",
+          "score_excerpts": [
+            "0.3168",
+            "0.3042",
+            "0.2919",
+            "0.2901",
+            "0.2854",
+            "0.2843",
+            "0.2742",
+            "0.2710"
+          ]
+        }
+      ],
+      "prediction_paths": 1,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/19GEMSDOE",
+      "supplied_url": "https://buffedlizard55-lab.github.io/19GEMSDOE/docs/index.html",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "a3aca62fdb2be428f4245e22570cbc54082b2c15",
+      "pages": [
+        {
+          "path": "docs/index.html",
+          "blob": "d30ffaf577753292540e5c846492a1e2ec1d3779",
+          "source_url": "https://github.com/buffedlizard55-lab/19GEMSDOE/blob/a3aca62fdb2be428f4245e22570cbc54082b2c15/docs/index.html",
+          "title": "19GEMSDOE Submission Hub &amp; Executive Summary \u00b7 19GEMSDOE",
+          "score_excerpts": [
+            "DOE GEMS Prize \u00b7 DrivenData #306Ends Dec 3, 2026 23:59 UTC \u00b7 Limit: 3 uploads / rolling 7 daysGroup Best: 0.1855 (16GEMSDOE) \u00b7 Leader: 0.3168Competition",
+            "Ready-to-upload single-band float32 GeoTIFF submissions for the DOE GEMS Geothermal Fault Discovery Challenge (these new 19GEMSDOE candidates are validated on the 4-quadrant spatially blocked holdout and are not live-scored yet). Every file is strictly verified in [0.0, 1.0] across all 5,167,373 scored footprint pixels (eliminating the \"Predicted values must be in range [0, 1]\" error), satisfies all 4 independent physical lines of reasoning (Power-Law Fault Population Scaling, Backward Thermal/G",
+            "Unique vs Historic Group Registry: distinct against all 23 historic group submissions \u2014 nearest historic entry is 16GEMSDOE (Jaccard overlap 0.7192 < 0.80 duplicate threshold).",
+            "Validation Summary: Clears the pre-registered 4-quadrant holdout gate against H16-1 (0.1855 LB) on 4/4 Dense folds (+0.00141) and 4/4 Sparse folds (+0.00096) at the exact same 2.50% per-quadrant budget (123,779 novel scored pixels).",
+            "Unique vs Historic Group Registry: distinct against all 23 historic group submissions \u2014 nearest historic entry is 16GEMSDOE (Jaccard overlap 0.5917 < 0.80 duplicate threshold).",
+            "Validation Summary: Clears the pre-registered 4-quadrant holdout gate (+0.00069 Dense, +0.00126 Sparse, 4/4 Sparse fold wins) while remaining strictly DISTINCT (Jaccard 0.7772 vs H19-4, 0.5917 vs H16-1).",
+            "0.3168",
+            "Account DARD (prompt snapshot: 0.3049; latest manual snapshot: 0.3168)"
+          ]
+        },
+        {
+          "path": "index.html",
+          "blob": "3ef18d715753b8914328ea4037cb9a6eb8589dd9",
+          "source_url": "https://github.com/buffedlizard55-lab/19GEMSDOE/blob/a3aca62fdb2be428f4245e22570cbc54082b2c15/index.html",
+          "title": "19GEMSDOE",
+          "score_excerpts": []
+        }
+      ],
+      "prediction_paths": 7,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE10",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE10/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "4d08f51aa59bf57b4041474ff1463c9e737c8090",
+      "pages": [
+        {
+          "path": "index.html",
+          "blob": "54eb012daedeae81a61eb8564d6a942794daedd9",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE10/blob/4d08f51aa59bf57b4041474ff1463c9e737c8090/index.html",
+          "title": "GEMSDOE10 \u2014 submission hub",
+          "score_excerpts": []
+        },
+        {
+          "path": "docs/index.html",
+          "blob": "d5703e93e3911f41aca47ec5e0cba00886cd6984",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE10/blob/4d08f51aa59bf57b4041474ff1463c9e737c8090/docs/index.html",
+          "title": "Submission hub \u00b7 GEMSDOE10",
+          "score_excerpts": [
+            "Note: H20: 3DEP 10 m DEM scarp channels (13, label-free) + H16 endpoint-continuation + 107 baseline, 130-feature HGB, thin10_binary (skeleton of top-10%); spatial holdout vs H16 incumbent dev +0.0147 / confirm +0.0141 (reports/h20_blocked.json)",
+            "Note: H16 endpoint-continuation features (tmi/det_elev/rtp ray channels), 117-feature HGB, topk06_binary; spatial holdout dev +0.0037 / confirm +0.0007 vs matched baselines (reports/h16_blocked.json)",
+            "Leaderboard probe. All seven scored group artifacts are binary. The worst (0.0286) put 68.2% of its pixels within 300 m of known faults; the best (0.1563) put 18.5% there and 59.1% beyond 1 km. Inverting the seven scores bounds the hidden new-fault density to roughly 0.13\u20130.6% of the scored area \u2014 2\u20138\u00d7 sparser than the catalogue our local folds score against.",
+            "H28 along-strike dotting: eligible (selected ridge20_d3; density-matched \u0394 vs H25/ridge15 \u2014 development +0.0319, confirmation +0.0371)H29 km-scale line support: not eligible (selected ridge30_d3; density-matched \u0394 vs H25 under its own v5 policy \u2014 development +0.0013, confirmation -0.0060)Density-matched fold tables \u2192 \u00b7 Probe data \u2192"
+          ]
+        }
+      ],
+      "prediction_paths": 4,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/13GEMSDOE",
+      "supplied_url": "https://buffedlizard55-lab.github.io/13GEMSDOE/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "92ee6f074323f161eed837b80ec3ee5b662e26f5",
+      "pages": [
+        {
+          "path": "index.html",
+          "blob": "672bf417101af4fd8665f0e43214794a3105968b",
+          "source_url": "https://github.com/buffedlizard55-lab/13GEMSDOE/blob/92ee6f074323f161eed837b80ec3ee5b662e26f5/index.html",
+          "title": "Submission download \u00b7 13GEMSDOE",
+          "score_excerpts": [
+            "Repeated 0.1563 investigated",
+            "0.3168 public leader",
+            "DARD, reviewed 2026-10-01. The brief\u2019s 0.3049 target is stale. This is an account/team best, not an artifact receipt.Open official leaderboard \u2197"
+          ]
+        },
+        {
+          "path": "docs/index.html",
+          "blob": "503afb79dbfb0dfbd687e46aded0579c4ab06459",
+          "source_url": "https://github.com/buffedlizard55-lab/13GEMSDOE/blob/92ee6f074323f161eed837b80ec3ee5b662e26f5/docs/index.html",
+          "title": "Overview \u00b7 13GEMSDOE",
+          "score_excerpts": [
+            "Repeated 0.1563 investigated",
+            "0.3168 public leader",
+            "DARD, reviewed 2026-10-01. The brief\u2019s 0.3049 target is stale. This is an account/team best, not an artifact receipt.Open official leaderboard \u2197"
+          ]
+        }
+      ],
+      "prediction_paths": 26,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/16GEMSDOE",
+      "supplied_url": "https://buffedlizard55-lab.github.io/16GEMSDOE/docs/index.html",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "2565805c0731a870335e54a64dce6fba01377e63",
+      "pages": [
+        {
+          "path": "docs/index.html",
+          "blob": "851b2fc245c231408c3837df153577d174f11ce3",
+          "source_url": "https://github.com/buffedlizard55-lab/16GEMSDOE/blob/2565805c0731a870335e54a64dce6fba01377e63/docs/index.html",
+          "title": "Download your GEMS submission \u00b7 16GEMSDOE",
+          "score_excerpts": [
+            "Why the score 0.1563 kept repeating",
+            "0.3168",
+            "0.1563",
+            "2.03\u00d7 below the leader; gap 0.1605. See Results."
+          ]
+        },
+        {
+          "path": "index.html",
+          "blob": "45fdaeb942be7ba063c375daa9ed5471486c3ab6",
+          "source_url": "https://github.com/buffedlizard55-lab/16GEMSDOE/blob/2565805c0731a870335e54a64dce6fba01377e63/index.html",
+          "title": "16GEMSDOE",
+          "score_excerpts": []
+        }
+      ],
+      "prediction_paths": 9,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE21",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE21/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "43e8510cfb37b85460a986d4d1b7796625de0d31",
+      "pages": [
+        {
+          "path": "index.html",
+          "blob": "c1b7afd2f3605ed35200f10bcb286d4baf55659c",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE21/blob/43e8510cfb37b85460a986d4d1b7796625de0d31/index.html",
+          "title": "Download &amp; evidence \u00b7 GEMSDOE21",
+          "score_excerpts": [
+            "123,779predicted pixels0.1894\u2020reported historical score",
+            "The reported rise from 0.1855 to 0.1894 is +0.0039. Code inspection and fresh pixel comparisons expose what changed \u2014 not which change caused the hidden-score gain.Scarp-arm blend weight92% lidar / 85.6% gapH16 \u2194 H19 scored-mask overlap71.92% JaccardAdded / removed selected pixels20,153 / 20,313Corroboration gateAttenuates to 35%; not hard rejection"
+          ]
+        },
+        {
+          "path": "docs/index.html",
+          "blob": "901bee8f2ca9a121701f6389cb016b7e866dca46",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE21/blob/43e8510cfb37b85460a986d4d1b7796625de0d31/docs/index.html",
+          "title": "Download &amp; evidence \u00b7 GEMSDOE21",
+          "score_excerpts": [
+            "123,779predicted pixels0.1894\u2020reported historical score",
+            "The reported rise from 0.1855 to 0.1894 is +0.0039. Code inspection and fresh pixel comparisons expose what changed \u2014 not which change caused the hidden-score gain.Scarp-arm blend weight92% lidar / 85.6% gapH16 \u2194 H19 scored-mask overlap71.92% JaccardAdded / removed selected pixels20,153 / 20,313Corroboration gateAttenuates to 35%; not hard rejection"
+          ]
+        }
+      ],
+      "prediction_paths": 3,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/20GEMSDOE",
+      "supplied_url": "https://buffedlizard55-lab.github.io/20GEMSDOE/docs/index.html",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "50edbbad9bb05541f8a8ca8e62b75210fb5b2954",
+      "pages": [
+        {
+          "path": "docs/index.html",
+          "blob": "187b5d283f7e1a84fc7aec350e1f61dd18a74e78",
+          "source_url": "https://github.com/buffedlizard55-lab/20GEMSDOE/blob/50edbbad9bb05541f8a8ca8e62b75210fb5b2954/docs/index.html",
+          "title": "Research &amp; GeoTIFF Download Hub \u00b7 20GEMSDOE",
+          "score_excerpts": [
+            "DOE GEMS Prize \u00b7 DrivenData #306Website close Dec 3, 2026 23:59 UTC (PDF differs; safety target 22:00 UTC, F45) \u00b7 Limit: 3 uploads / rolling 7 daysManual snapshot 2026-10-01: leader 0.3168 \u00b7 group-linked best 0.1894Competition",
+            "0.3168",
+            "Leader DARD (rank 1). The starting value 0.3049 is stale.",
+            "0.1894",
+            "Why the historical 0.1563 score repeated",
+            "The archived GEMSDOE1 and 5GEMSDOE rasters are byte-identical; 8GEMSDOE has a different file hash but matches their predictions at all official scored pixels after the pixel-exact known-fault mask. The archived 17GEMSDOE raster also matches on scored pixels, but is distinct from 17GEMSDOE-F (reported 0.0187). GEMSDOE2 is a 0.9464-Jaccard near-duplicate with a reported 0.1560. This is an artifact-level explanation, not proof of model lineage or account attribution. See the scored-pixel comparison"
+          ]
+        },
+        {
+          "path": "index.html",
+          "blob": "833cbd6d672fd7f787f9e442a07a19f9eacfd55e",
+          "source_url": "https://github.com/buffedlizard55-lab/20GEMSDOE/blob/50edbbad9bb05541f8a8ca8e62b75210fb5b2954/index.html",
+          "title": "20GEMSDOE",
+          "score_excerpts": []
+        }
+      ],
+      "prediction_paths": 7,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE22",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE22/docs/index.html",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "96481093a7f73e5c13669e45574213d70c204ba0",
+      "pages": [
+        {
+          "path": "docs/index.html",
+          "blob": "cfce060899ee88bdd716de5c145abb081657cb4f",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE22/blob/96481093a7f73e5c13669e45574213d70c204ba0/docs/index.html",
+          "title": "19GEMSDOE Submission Hub &amp; Executive Summary \u00b7 GEMSDOE22",
+          "score_excerpts": [
+            "DOE GEMS Prize \u00b7 DrivenData #306Ends Dec 3, 2026 23:59 UTC \u00b7 Limit: 3 uploads / rolling 7 daysGroup Best: 0.1922 (19GEMSDOE h19-5) \u00b7 0.1894 (h19-4) \u00b7 0.1855 (16GEMSDOE) \u00b7 Leader: 0.3168Competition",
+            "Ready-to-upload single-band float32 GeoTIFF submissions for the DOE GEMS Geothermal Fault Discovery Challenge. The H23 candidates apply a DTI-optimal emission policy (6.50% / 10.00% instead of the historic 2.4%) on top of the fractal fault-population spatial statistic (Bour & Davy 1999 D=1.62 + Ripley K(r)) used as both a geometric prior and a post-hoc artifact audit. Measured on the 4-quadrant spatially blocked holdout, H23-A raises the primary SGMC gate by +0.0598 but fails the secondary per-f",
+            "Upload #1 \u00b7 Primary Recommended (H23-A DTI-Optimal Emission 6.50% \u00b7 SGMC DTI 0.21390 (+0.0598) \u00b7 Bour & Davy D=1.62 clustering prior \u00b7 DISTINCT J=0.65)",
+            "Unique vs Historic Group Registry: distinct against all 23 historic group submissions \u2014 nearest historic entry is h23-b (Jaccard overlap 0.6500 < 0.80 duplicate threshold).",
+            "Unique vs Historic Group Registry: distinct against all 23 historic group submissions \u2014 nearest historic entry is h23-a (Jaccard overlap 0.6500 < 0.80 duplicate threshold).",
+            "0.3168",
+            "Account DARD (prompt snapshot: 0.3049; latest manual snapshot: 0.3168)",
+            "0.1922"
+          ]
+        },
+        {
+          "path": "index.html",
+          "blob": "3ef18d715753b8914328ea4037cb9a6eb8589dd9",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE22/blob/96481093a7f73e5c13669e45574213d70c204ba0/index.html",
+          "title": "19GEMSDOE",
+          "score_excerpts": []
+        }
+      ],
+      "prediction_paths": 17,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE23",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE23/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "cd37dbb4b226495bc295749ade0b7aa39ee7d5e2",
+      "pages": [
+        {
+          "path": "index.html",
+          "blob": "fdd697b4d9216231c0d818edcced49adb373bd94",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE23/blob/cd37dbb4b226495bc295749ade0b7aa39ee7d5e2/index.html",
+          "title": "GEMSDOE23 \u00b7 QA candidate and evidence",
+          "score_excerpts": [
+            "\u2b07 Reference h19-5 .tif (0.1922)",
+            "\u2b07 Reference h19-5 .tif (live 0.1922)",
+            "H29 \u00b7 de-aliased lattice-regime emission (H24 ranking) (all-finite) \u00b7 H24 \u00b7 superseded (comb at 400 m, 931 dots too close) \u00b7 h19-5 live-scored reference (0.1922)",
+            "H29/H30 have no live score, and no independent uncatalogued-fault holdout has approved their placement. The downloadable H30 raster is QA-only; conditional metric scenarios are not a score forecast. The live leader in the latest official capture is 0.3774.",
+            "Both H30 GeoTIFF variants pass the strict 10/10 template comparison against the restored official data/sample_submission.tif (SHA-256 2176d08e\u2026) and the independent stdlib LZW/value audit. However, placement has not beaten a verified current-best OOF baseline on independent uncatalogued-fault truth. Do not spend a submission slot. Conditional scenario calculations are not a predicted DTI. Latest public leader: 0.3774 (xiaofanhu).",
+            "In the one controlled pair (same score, same 155,021 pixels) dispersal raised K\u0304 2.7\u00d7 and lowered skill 2.6\u00d7, leaving TP \u2014 and DTI (0.1152 \u2192 0.1193) \u2014 unchanged. The \u201c0.12\u20130.34 projected\u201d headline assumed skill would transfer; no score forecast is supported.",
+            "lattice-type skill 2.0 (nodes/discovery/r13 measured 1.9-2.7)0.0810.1180.153",
+            "pindrop-nodes skill 2.70.1080.1580.204"
+          ]
+        },
+        {
+          "path": "docs/index.html",
+          "blob": "7fe5b3f889175d7b8aac5ed2fab03e9b37328b7d",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE23/blob/cd37dbb4b226495bc295749ade0b7aa39ee7d5e2/docs/index.html",
+          "title": "GEMSDOE23 \u00b7 QA candidate and evidence",
+          "score_excerpts": [
+            "\u2b07 Reference h19-5 .tif (0.1922)",
+            "\u2b07 Reference h19-5 .tif (live 0.1922)",
+            "H29 \u00b7 de-aliased lattice-regime emission (H24 ranking) (all-finite) \u00b7 H24 \u00b7 superseded (comb at 400 m, 931 dots too close) \u00b7 h19-5 live-scored reference (0.1922)",
+            "H29/H30 have no live score, and no independent uncatalogued-fault holdout has approved their placement. The downloadable H30 raster is QA-only; conditional metric scenarios are not a score forecast. The live leader in the latest official capture is 0.3774.",
+            "Both H30 GeoTIFF variants pass the strict 10/10 template comparison against the restored official data/sample_submission.tif (SHA-256 2176d08e\u2026) and the independent stdlib LZW/value audit. However, placement has not beaten a verified current-best OOF baseline on independent uncatalogued-fault truth. Do not spend a submission slot. Conditional scenario calculations are not a predicted DTI. Latest public leader: 0.3774 (xiaofanhu).",
+            "In the one controlled pair (same score, same 155,021 pixels) dispersal raised K\u0304 2.7\u00d7 and lowered skill 2.6\u00d7, leaving TP \u2014 and DTI (0.1152 \u2192 0.1193) \u2014 unchanged. The \u201c0.12\u20130.34 projected\u201d headline assumed skill would transfer; no score forecast is supported.",
+            "lattice-type skill 2.0 (nodes/discovery/r13 measured 1.9-2.7)0.0810.1180.153",
+            "pindrop-nodes skill 2.70.1080.1580.204"
+          ]
+        }
+      ],
+      "prediction_paths": 7,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE24",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE24/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "07345ea0604953d7efb858d9cfbc21e20c7aca0b",
+      "pages": [
+        {
+          "path": "index.html",
+          "blob": "6629ac242c0540bff33436c6d5bb70c7b0ddb9bc",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/07345ea0604953d7efb858d9cfbc21e20c7aca0b/index.html",
+          "title": "Overview \u00b7 GEMS DOE 24",
+          "score_excerpts": [
+            "One click gets the recommended submission GeoTIFF. It is a new, unscored candidate: the best owner-reported prediction (H19-5, reported 0.1922) re-emitted as a label-free, dot-thinned subset \u2014 60,069 pixels, 50% of the original \u2014 because at the truth density the owner's own scores imply, false-positive mass dominates the metric.\u2193 Download submission .tif (1.56 MiB)How to submit, step by step \u2197",
+            "LOCAL SPARSE-HOLDOUT DTINot leaderboard scoresH19-5 as emitted0.0710Primary (dot-thinned)0.0962Alternate (sparser)0.1008",
+            "The owner's spacing-5 lattice scored 0.0904. A uniform lattice earns the same expected credit wherever truth is, so that one number gives the hidden truth density (\u22480.24% of cells). In the first-order model the false-positive term is about 67% of H19-5's DTI denominator.03 \u00b7 The precedent",
+            "Same probability surface, solid \u2192 dotted: owner-reported 0.1280 \u2192 0.1839 (+44%) with 60% fewer pixels. H19-4/H19-5 were never dotted. This session tests that on the best surface, under frozen rules.",
+            "Official leader snapshot: DARD 0.3195 (#5 is 0.2919; owner-reported best 0.1922)Human-read leaderboard snapshot, not a permanent result \u00b7 2026-10-02"
+          ]
+        },
+        {
+          "path": "docs/index.html",
+          "blob": "ef45ef1ab9037bcd3ddd962f020a205992ef3298",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/07345ea0604953d7efb858d9cfbc21e20c7aca0b/docs/index.html",
+          "title": "Overview \u00b7 GEMS DOE 24",
+          "score_excerpts": [
+            "One click gets the recommended submission GeoTIFF. It is a new, unscored candidate: the best owner-reported prediction (H19-5, reported 0.1922) re-emitted as a label-free, dot-thinned subset \u2014 60,069 pixels, 50% of the original \u2014 because at the truth density the owner's own scores imply, false-positive mass dominates the metric.\u2193 Download submission .tif (1.56 MiB)How to submit, step by step \u2197",
+            "LOCAL SPARSE-HOLDOUT DTINot leaderboard scoresH19-5 as emitted0.0710Primary (dot-thinned)0.0962Alternate (sparser)0.1008",
+            "The owner's spacing-5 lattice scored 0.0904. A uniform lattice earns the same expected credit wherever truth is, so that one number gives the hidden truth density (\u22480.24% of cells). In the first-order model the false-positive term is about 67% of H19-5's DTI denominator.03 \u00b7 The precedent",
+            "Same probability surface, solid \u2192 dotted: owner-reported 0.1280 \u2192 0.1839 (+44%) with 60% fewer pixels. H19-4/H19-5 were never dotted. This session tests that on the best surface, under frozen rules.",
+            "Official leader snapshot: DARD 0.3195 (#5 is 0.2919; owner-reported best 0.1922)Human-read leaderboard snapshot, not a permanent result \u00b7 2026-10-02"
+          ]
+        }
+      ],
+      "prediction_paths": 8,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE25",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE25/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "c5ab517ab66eb6be3e993b6bda8117d53e8afc14",
+      "pages": [
+        {
+          "path": "index.html",
+          "blob": "8709487d0b1f6681f9b88a64d2565196cd6d7999",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE25/blob/c5ab517ab66eb6be3e993b6bda8117d53e8afc14/index.html",
+          "title": "Start here \u00b7 GEMSDOE25",
+          "score_excerpts": [
+            "Owner-mirrored H19-5 raster thinned by deterministic Poisson-disk dotting to 44,090 pixels (73% of the 0.2477-labelled mirror; 36% of H19-5). Conditional on unverified owner-reported score anchors, the H28 model estimates DTI 0.2510 and this file is its best point in the tested dot_thin(H19-5, d) sweep (d=1.8\u20134.0 px); this is a model output, not a competition score. The model-implied 12,691 truth count and 1.85-px concentration are fitted latent parameters, not verified hidden labels. This file ",
+            "+0.046arithmetic gap to the supplied #5 claim (0.2941); +0.072 (+29 %) to the supplied #1 claim",
+            "Local audit of the reported 0.2477 raster (score unverified)",
+            "Unverified score inputs: the 0.0904 lattice and 0.1922\u21920.2477 values are supplied/owner-reported claims. Under those assumptions, estimated |G| is \u224812,503 px and each emitted pixel needs \u22650.052 credit per unit of false-positive mass. No organizer page or receipt was accessed.",
+            "The fitted model matches selected owner-reported anchors conditionally; this is not score verification. Predicted vs reported: lattice-s5 0.0914 / 0.0904 \u00b7 h19-5 0.1903 / 0.1922 \u00b7 d1-5 0.2437 / 0.2477.",
+            "Monte-Carlo of the published metric agrees with the analytic expectation to \u22640.0020.",
+            "Conditional model arithmetic against the unverified 0.3195 claim. Matching that owner-reported number at this budget would need 1.29\u00d7 the credit density",
+            "(0.1400 vs 0.1084 per emitted pixel); this is not a verified score comparison or proof that all emission changes are exhausted. In the catalogue-gap proxy, the 30-arm holdout factorial found spacing 2.4\u20133.0 px near-optimal, 6 px costs 0.045 DTI,"
+          ]
+        },
+        {
+          "path": "docs/index.html",
+          "blob": "f936a6d9ceb03250200a2ad0a0c78be8f3a96e08",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE25/blob/c5ab517ab66eb6be3e993b6bda8117d53e8afc14/docs/index.html",
+          "title": "Start here \u00b7 GEMSDOE25",
+          "score_excerpts": [
+            "Owner-mirrored H19-5 raster thinned by deterministic Poisson-disk dotting to 44,090 pixels (73% of the 0.2477-labelled mirror; 36% of H19-5). Conditional on unverified owner-reported score anchors, the H28 model estimates DTI 0.2510 and this file is its best point in the tested dot_thin(H19-5, d) sweep (d=1.8\u20134.0 px); this is a model output, not a competition score. The model-implied 12,691 truth count and 1.85-px concentration are fitted latent parameters, not verified hidden labels. This file ",
+            "+0.046arithmetic gap to the supplied #5 claim (0.2941); +0.072 (+29 %) to the supplied #1 claim",
+            "Local audit of the reported 0.2477 raster (score unverified)",
+            "Unverified score inputs: the 0.0904 lattice and 0.1922\u21920.2477 values are supplied/owner-reported claims. Under those assumptions, estimated |G| is \u224812,503 px and each emitted pixel needs \u22650.052 credit per unit of false-positive mass. No organizer page or receipt was accessed.",
+            "The fitted model matches selected owner-reported anchors conditionally; this is not score verification. Predicted vs reported: lattice-s5 0.0914 / 0.0904 \u00b7 h19-5 0.1903 / 0.1922 \u00b7 d1-5 0.2437 / 0.2477.",
+            "Monte-Carlo of the published metric agrees with the analytic expectation to \u22640.0020.",
+            "Conditional model arithmetic against the unverified 0.3195 claim. Matching that owner-reported number at this budget would need 1.29\u00d7 the credit density",
+            "(0.1400 vs 0.1084 per emitted pixel); this is not a verified score comparison or proof that all emission changes are exhausted. In the catalogue-gap proxy, the 30-arm holdout factorial found spacing 2.4\u20133.0 px near-optimal, 6 px costs 0.045 DTI,"
+          ]
+        }
+      ],
+      "prediction_paths": 2,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE26",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE26/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "ba071a372c970531fca4d024b7fc06631d9ce604",
+      "pages": [
+        {
+          "path": "index.html",
+          "blob": "c58554f2172f35c31f866d8233a80a8ec0f798c1",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE26/blob/ba071a372c970531fca4d024b7fc06631d9ce604/index.html",
+          "title": "Download &amp; evidence \u00b7 GEMS DOE 26",
+          "score_excerpts": [
+            "Confirmation uses 30 new seed-offset draws over the same known catalogue and four revealed quadrants. New draw seeds do not create independent truth. DILCOND beat the raw head by +0.0032 pooled sparse (4/4 quadrant wins) but loses all four confirmation quadrants to H25 (\u22120.019398 pooled sparse).H27-DILCOND feature receipt \u2197Selection draws \u2197Confirmation draws \u2197Full gate, nuisance audit & TIFF checks \u2197",
+            "Owner-reported 0.1922 \u2192 0.2477. The leaderboard snapshot confirms a score row\u2014not which file produced it. Scores across older protocols are not interchangeable.All reported files \u2192"
+          ]
+        },
+        {
+          "path": "docs/index.html",
+          "blob": "c4c91e9b0e9d4b665d8bcf2fdcdc0c898329e8bd",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE26/blob/ba071a372c970531fca4d024b7fc06631d9ce604/docs/index.html",
+          "title": "Download &amp; evidence \u00b7 GEMS DOE 26",
+          "score_excerpts": [
+            "Confirmation uses 30 new seed-offset draws over the same known catalogue and four revealed quadrants. New draw seeds do not create independent truth. DILCOND beat the raw head by +0.0032 pooled sparse (4/4 quadrant wins) but loses all four confirmation quadrants to H25 (\u22120.019398 pooled sparse).H27-DILCOND feature receipt \u2197Selection draws \u2197Confirmation draws \u2197Full gate, nuisance audit & TIFF checks \u2197",
+            "Owner-reported 0.1922 \u2192 0.2477. The leaderboard snapshot confirms a score row\u2014not which file produced it. Scores across older protocols are not interchangeable.All reported files \u2192"
+          ]
+        }
+      ],
+      "prediction_paths": 5,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE27",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE27/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "a233ed923802b04df5fd36165a3804326bf84a83",
+      "pages": [
+        {
+          "path": "index.html",
+          "blob": "a3cffb7e7f9898a48423ac2794992c7e98a915af",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE27/blob/a233ed923802b04df5fd36165a3804326bf84a83/index.html",
+          "title": "Submit \u00b7 27GEMSDOE",
+          "score_excerpts": [
+            "27GEMSDOE \u00b7 DrivenData #306 DOE GEMS. The owner's 0.2477 file plus one controlled change: 1,259 topology gap-closure dots on 345 links.",
+            "27GEMSDOE T-v2 A/B | 0.2477 base (dotted H19-5 d1.5) + 1259 dots on 345 aligned 1-4 km gap links; A/B vs 0.2477 | id 5512495c6bd1 | not yet live-scored",
+            "61,328emitted pixels = 60,069 (the 0.2477 emission, nothing removed) + 1,259",
+            "+0.0115 / +0.0141paired DTI gain on honest 4-fold spatial-CV OOF detector (T-v2 solo / T-v2 + H27-4 in Slot 3)",
+            "All 20 of the owner's scored rasters were recovered from the sibling repositories and authenticated by SHA-256, then inverted against the official metric. Two instruments came out of it, and both reproduce the live anchors exactly.12,226hidden-truth pixels |G|, from a blind spacing-5 lattice whose credit is pure geometry. The sibling's independent estimate: 12,503 \u2014 2.2\u00a0% apart\u22120.1\u00a0% / +4.0\u00a0%error of the retention rule on two independent live solid\u2192dotted pairs (H19-5\u2192d1.5, H25-ctx\u2192h28)0.2550cei",
+            "No submission in the group's history has ever earned more than 0.508|G| of credit. 0.3195 at 60,069\u00a0px needs 0.570|G|. That is now an arithmetic statement, not an opinion \u2014 see the inversion.",
+            "The far-field / bedrock-map habitat is live-refuted. The group's own h18-4 file (57,783 px of USGS State Geologic Map Compilation faults, all \u2265300\u00a0m from the catalogue, owner-reported 0.0360) was hash-authenticated and inverted: concentration 1.62\u00d7 blind (exact bracket 0.76\u20131.65\u00d7) against 5.3\u20136.0\u00d7 for the family that produced 0.2477, and its 1-px lines cover less DTI kernel mass than a uniform spray of the same size (c\u00a0=\u00a00.0384 vs 0.1050). Never emit on an \u201cindependent second catalogue\u201d. details",
+            "The holdout can no longer see what matters. 100% of hidden truth in every gate here lies at distance 0 from the published catalogue and 99.6% of credit is earned within 200\u00a0m of it, while the live 0.2477 emission puts 81.4% of its dots \u2265300\u00a0m away. Two Addendum-D arms passed both registered criteria on that proxy (+SGMC features: out-of-fold PR-AUC 0.0246\u21920.0428, paired DTI +0.0285 in 4/4 folds) and are not promoted: their whole gain is catalogue proximity, and their far-field behaviour is the h"
+          ]
+        },
+        {
+          "path": "docs/index.html",
+          "blob": "2ca9e3083ff955f3279b8d50b7927a6e991bd65f",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE27/blob/a233ed923802b04df5fd36165a3804326bf84a83/docs/index.html",
+          "title": "Submit \u00b7 27GEMSDOE",
+          "score_excerpts": [
+            "27GEMSDOE \u00b7 DrivenData #306 DOE GEMS. The owner's 0.2477 file plus one controlled change: 1,259 topology gap-closure dots on 345 links.",
+            "27GEMSDOE T-v2 A/B | 0.2477 base (dotted H19-5 d1.5) + 1259 dots on 345 aligned 1-4 km gap links; A/B vs 0.2477 | id 5512495c6bd1 | not yet live-scored",
+            "61,328emitted pixels = 60,069 (the 0.2477 emission, nothing removed) + 1,259",
+            "+0.0115 / +0.0141paired DTI gain on honest 4-fold spatial-CV OOF detector (T-v2 solo / T-v2 + H27-4 in Slot 3)",
+            "All 20 of the owner's scored rasters were recovered from the sibling repositories and authenticated by SHA-256, then inverted against the official metric. Two instruments came out of it, and both reproduce the live anchors exactly.12,226hidden-truth pixels |G|, from a blind spacing-5 lattice whose credit is pure geometry. The sibling's independent estimate: 12,503 \u2014 2.2\u00a0% apart\u22120.1\u00a0% / +4.0\u00a0%error of the retention rule on two independent live solid\u2192dotted pairs (H19-5\u2192d1.5, H25-ctx\u2192h28)0.2550cei",
+            "No submission in the group's history has ever earned more than 0.508|G| of credit. 0.3195 at 60,069\u00a0px needs 0.570|G|. That is now an arithmetic statement, not an opinion \u2014 see the inversion.",
+            "The far-field / bedrock-map habitat is live-refuted. The group's own h18-4 file (57,783 px of USGS State Geologic Map Compilation faults, all \u2265300\u00a0m from the catalogue, owner-reported 0.0360) was hash-authenticated and inverted: concentration 1.62\u00d7 blind (exact bracket 0.76\u20131.65\u00d7) against 5.3\u20136.0\u00d7 for the family that produced 0.2477, and its 1-px lines cover less DTI kernel mass than a uniform spray of the same size (c\u00a0=\u00a00.0384 vs 0.1050). Never emit on an \u201cindependent second catalogue\u201d. details",
+            "The holdout can no longer see what matters. 100% of hidden truth in every gate here lies at distance 0 from the published catalogue and 99.6% of credit is earned within 200\u00a0m of it, while the live 0.2477 emission puts 81.4% of its dots \u2265300\u00a0m away. Two Addendum-D arms passed both registered criteria on that proxy (+SGMC features: out-of-fold PR-AUC 0.0246\u21920.0428, paired DTI +0.0285 in 4/4 folds) and are not promoted: their whole gain is catalogue proximity, and their far-field behaviour is the h"
+          ]
+        }
+      ],
+      "prediction_paths": 12,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE28",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE28/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "1a31b37ba373d8e259dd18266d47ea99838ee053",
+      "pages": [
+        {
+          "path": "index.html",
+          "blob": "54e8926873ee667c09b81754af3d8dfa7d2a6687",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE28/blob/1a31b37ba373d8e259dd18266d47ea99838ee053/index.html",
+          "title": "Overview | GEMSDOE28",
+          "score_excerpts": [
+            "Current status (2026-10-03): the prominent one-click file below is H36-1: re-pack the H19-5 surface from packing rung 2.828 to rung 3.0 (a 41,333-px re-layout, not a thinning) and apply the H27-4 blind 1-px catalogue-flank prune (gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif, 37,660 px), and it was validated on a 4-fold spatially blocked holdout (evidence/h36_1_holdout.json): 0.002599 mean \u0394DTI, 10/10 seeds and 4/4 spatial folds improving over the same-run d=2.8 control. It is built",
+            "validated on a 4-fold spatially blocked holdout (evidence/h36_1_holdout.json): 0.002599 mean \u0394DTI, 10/10 seeds and 4/4 spatial folds improving over the same-run d=2.8 control. Built on the owner-reported 0.2600 d=2.8 base (e56ea318af89) without T-v2 gap closure. This file is a research/reference artifact, not one of the four weekly slots inherited from the predecessor campaign.",
+            "Why dotted-h19-5-d2-8 scored 0.2600, why T-v2 scored 0.2449, and how to beat 0.2600.",
+            "Why e56ea318af89 (d=2.8) achieved 0.2600",
+            "Priority-ordered Poisson-disk thinning of the 6-expert scarp/geophysics ridge surface H19-5 (121,131 px, live 0.1922) at min_dist=2.8 px emits 44,090 off-catalogue dots (0.8532% footprint). Under the 300 m (3 px) linear tolerance kernel, dots spaced at 2.83\u20133.0 px along a 1D fault crest overlap at 1.41\u20131.50 px midpoints with k \u2265 0.50, retaining 90.63% of d=1.5 live credit (4,791.0 vs 5,286.1 px at |G| = 12,226 px) while cutting 15,979 redundant dots (\u221226.60% FP mass) and reducing kernel crowding",
+            "Why 5512495c6bd1 (T-v2) scored 0.2449 & how we beat 0.2600",
+            "Adding 1,259 straight-line T-v2 gap-closure dots onto d=1.5 (60,069 \u2192 61,328 px) earned only +2.65 px of live credit (0.00210 credit/dot vs 0.0495 break-even), lowering live DTI by \u22120.0028; 26GEMSDOE dilcond-oof-v1 (47629f496133) scored 0.1223. Conversely, 3,891 dots (8.83%) of the 0.2600 d=2.8 file sit at dcat = 100 m beside masked known faults due to 100\u2013400 m USGS-vs-LiDAR scarp offsets (Hermant et al., 2025). Pruning the 2,434 mid-segment flank-shadow dots while protecting fault tips and sha",
+            "Manual note (196 / 200 characters):28GEMSDOE H38-1 hf+euler+r3.0 | H36-1+H38-1 hf_resid+SI0 Euler ridge: LOSFO +0.00075 (16/20, c/d 0.0699, 265-269), OOF +0.00054 (8/10, 4/4, 270-279) | id 56a9f473edc7 | UNSCORED, not slot-approvedCopy note"
+          ]
+        },
+        {
+          "path": "docs/index.html",
+          "blob": "de1f9129472d608b958fdff0104f0d371ab5a1d1",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE28/blob/1a31b37ba373d8e259dd18266d47ea99838ee053/docs/index.html",
+          "title": "Overview | GEMSDOE28",
+          "score_excerpts": [
+            "Current status (2026-10-03): the prominent one-click file below is H36-1: re-pack the H19-5 surface from packing rung 2.828 to rung 3.0 (a 41,333-px re-layout, not a thinning) and apply the H27-4 blind 1-px catalogue-flank prune (gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif, 37,660 px), and it was validated on a 4-fold spatially blocked holdout (evidence/h36_1_holdout.json): 0.002599 mean \u0394DTI, 10/10 seeds and 4/4 spatial folds improving over the same-run d=2.8 control. It is built",
+            "validated on a 4-fold spatially blocked holdout (evidence/h36_1_holdout.json): 0.002599 mean \u0394DTI, 10/10 seeds and 4/4 spatial folds improving over the same-run d=2.8 control. Built on the owner-reported 0.2600 d=2.8 base (e56ea318af89) without T-v2 gap closure. This file is a research/reference artifact, not one of the four weekly slots inherited from the predecessor campaign.",
+            "Why dotted-h19-5-d2-8 scored 0.2600, why T-v2 scored 0.2449, and how to beat 0.2600.",
+            "Why e56ea318af89 (d=2.8) achieved 0.2600",
+            "Priority-ordered Poisson-disk thinning of the 6-expert scarp/geophysics ridge surface H19-5 (121,131 px, live 0.1922) at min_dist=2.8 px emits 44,090 off-catalogue dots (0.8532% footprint). Under the 300 m (3 px) linear tolerance kernel, dots spaced at 2.83\u20133.0 px along a 1D fault crest overlap at 1.41\u20131.50 px midpoints with k \u2265 0.50, retaining 90.63% of d=1.5 live credit (4,791.0 vs 5,286.1 px at |G| = 12,226 px) while cutting 15,979 redundant dots (\u221226.60% FP mass) and reducing kernel crowding",
+            "Why 5512495c6bd1 (T-v2) scored 0.2449 & how we beat 0.2600",
+            "Adding 1,259 straight-line T-v2 gap-closure dots onto d=1.5 (60,069 \u2192 61,328 px) earned only +2.65 px of live credit (0.00210 credit/dot vs 0.0495 break-even), lowering live DTI by \u22120.0028; 26GEMSDOE dilcond-oof-v1 (47629f496133) scored 0.1223. Conversely, 3,891 dots (8.83%) of the 0.2600 d=2.8 file sit at dcat = 100 m beside masked known faults due to 100\u2013400 m USGS-vs-LiDAR scarp offsets (Hermant et al., 2025). Pruning the 2,434 mid-segment flank-shadow dots while protecting fault tips and sha",
+            "Manual note (196 / 200 characters):28GEMSDOE H38-1 hf+euler+r3.0 | H36-1+H38-1 hf_resid+SI0 Euler ridge: LOSFO +0.00075 (16/20, c/d 0.0699, 265-269), OOF +0.00054 (8/10, 4/4, 270-279) | id 56a9f473edc7 | UNSCORED, not slot-approvedCopy note"
+          ]
+        }
+      ],
+      "prediction_paths": 22,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE29",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE29/docs/index.html",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "bbf6d0e1ab64d322b7f0fa2051d323ed8a6acd3d",
+      "pages": [
+        {
+          "path": "docs/index.html",
+          "blob": "757fa55d335db3d04c84471d36d30794983e5df6",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE29/blob/bbf6d0e1ab64d322b7f0fa2051d323ed8a6acd3d/docs/index.html",
+          "title": "Overview | GEMSDOE29",
+          "score_excerpts": [
+            "Gate evidence: FAILED the H34 slot bar when re-scored on that protocol (draws 20/21): A4 mean DTI 0.14597 against a bar of 0.16402, worst fold -0.00920, SGMC positive on 0 of 4 folds (evidence/h41a4_h34protocol/summary.json, knowledge/28_h41a4_results_2026-10-03.md). Its own-fold gates did pass - screen (draws 28/29) +0.0073436 = G1, confirmation (draws 30/31) +0.0077283 = G2 - but the +0.0073 was measured against C0_base on H41's own folds, not against the best control on the slot-bar protocol.",
+            "Do not spend a weekly submission slot on any file from this page: the repository recommends none. session 5 re-scored the H41 union arm on the spent draws 20/21 that define the slot bar: mean paired gain +0.001183 (bar +0.005), worst fold -0.009202, SGMC second proxy -0.007180 with 0/4 folds positive, while the frozen controls reproduced the stored H34 cells exactly (max |delta| = 0.0e+00) \u2014 G1, G3 failed, no promotion, no candidate file, no slot; session 5 closed the data-placement blocker with"
+          ]
+        },
+        {
+          "path": "index.html",
+          "blob": "e8bcbdf54990d2c0569060a008133df832ba377a",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE29/blob/bbf6d0e1ab64d322b7f0fa2051d323ed8a6acd3d/index.html",
+          "title": "GEMSDOE29 \u2014 opening research site",
+          "score_excerpts": []
+        }
+      ],
+      "prediction_paths": 13,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE30",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE30/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "1f9ac110d5f1a4fac7957fe814267a0be964dd20",
+      "pages": [
+        {
+          "path": "index.html",
+          "blob": "22c5749f58ac55cfe5508a97d5bdfa37810c88f0",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE30/blob/1f9ac110d5f1a4fac7957fe814267a0be964dd20/index.html",
+          "title": "GEMSDOE30 \u00b7 Fault discovery, verified",
+          "score_excerpts": [
+            "What is and is not claimed. Format is locally verified against the SHA-256-pinned organizer template; local verification is not organizer acceptance. The prediction content is the owner's highest-reported artifact (0.2600, D2.8) re-encoded without changing a single in-footprint value \u2014 this is not a new model and no new score is claimed for it. Read the verified range-error root cause and the score analysis before spending a weekly slot.",
+            "0.3195",
+            "Is zero-outside legal? Yes, on two verified grounds. The organizer's own reference solution \u2197 writes its example prediction with no nodata value at all and finite sigmoid output everywhere. And the owner ledger records r7-nms3-dem10-scarp_0c9199f14e62 = 0.1294 alongside \u2026_allfinite = 0.1294 \u2014 the identical score for the NaN-outside and all-finite encodings, which shows outside-footprint cells carry no scoring weight. A NaN-outside twin with bit-identical in-footprint values is also linked if you",
+            "1) EDGE: a metric-exact emitter that beats every belief-ordered baseline on the same field (registered JSON \u00b7 preregistration). The published index pays a dot only when its kernel credit clears k > 0.2\u00b7s/(1\u22120.2\u00b7s) (0.055 at the owner-reported 0.2600 operating point, 0.068 at the public leader's 0.3195), so emission is a coverage problem, not a calibration problem. src/gemsdoe30/emitter_opt.py implements the expected-marginal-credit greedy dT(x) = \u03a3\u03b4 \u03c0(x+\u03b4)\u00b7max(0, k(\u03b4) \u2212 C(x+\u03b4)) and stops exactly",
+            "2) IR-30-039 \u2014 the catalogue proxy ranks the owner's dot-thinning family backwards. Measured this session on hash-verified bytes: full-catalogue proxy DTI is 0.16635 for the 121,131-dot parent, 0.17193 for the 60,069-dot d1.5 step, 0.16177 for the 44,090-dot d2.8 step \u2014 while the owner-reported scores for the same three artifacts rise 0.1922 \u2192 0.2477 \u2192 0.2600. The official metric deletes USGS/INGENIOUS pixels from every term, so a catalogue frame pays for exactly the dots the competition removes",
+            "4) The 0.3195 gap is a coverage gap, and it is now quantified. At s = 0.3195 a dot pays iff it lands within \u2248280 m of a scored truth pixel; under the owner-model hidden mass (12,691 px) the leader's statistics require T = 3,466 + 0.0683\u00b7F, i.e. roughly one emitted dot in eight to one in five within 300 m of a hidden fault \u2014 27\u201334 % weighted coverage of the hidden truth. With perfect knowledge the same metric ceilings near 0.78, so the remaining gap is evidence, not emission. The unique strategy ",
+            "2) Placement-policy tests (H-33-01) & 1.5 km coherence gate re-test (H-32-05b, fixing IR-30-029). On held-out catalogue components at N = 15,000 Poisson-thinned dots, near-splay placement (300\u20131,500 m) scores 0.07234 (screen) and 0.07434 (confirm) \u2014 2.7\u00d7 uniform-domain placement (0.02674) and 18.6\u00d7 far-basin placement (0.00389). On the OOF model score surface at 40,000 dots (h33-01-placement-policy-holdout.md), whole-domain score-first thinning (0.07608) beats blind random by +35 % and beats ban",
+            "3) 1 m LiDAR scarp dipole + 500 m strike continuity (H-31-02r) & three-check verification (holdout report \u00b7 3-check report). The transform beats its step_max_only ablation by +22.4 % (screen) and +20.2 % (confirm). Spatial validation is split: it trails the dispersed control on the catalogue component proxy (0.03323 vs 0.03585, \u22120.00261, 2/4 quadrants; three-check \u0394DTI \u22120.00073), but beats spacing/distance-matched controls on four independent SGMC frames (+86.1 % to +91.6 % in the preregistered "
+          ]
+        }
+      ],
+      "prediction_paths": 11,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE31",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE31/docs/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "cf13282fcd86290f1539f0a86446c8ba7205a79b",
+      "pages": [
+        {
+          "path": "docs/index.html",
+          "blob": "329989c5110f32a833b172b860e48221b563dafa",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE31/blob/cf13282fcd86290f1539f0a86446c8ba7205a79b/docs/index.html",
+          "title": "Overview \u00b7 GEMSDOE31",
+          "score_excerpts": [
+            "Portal note: h27-4 r1 solo d=2.8 dot set (40199 px); owner-reported live 0.2708; format re-verified against the competition grid template",
+            "Why the 0.2708 submission scores",
+            "Detection gap0.0938",
+            "off-catalogue proxy DTI for the incumbent dot set, versus 0.0781 for the best full-coverage",
+            "A_competition1919 planes0.50190,3200.1063190,3200.05160.0234",
+            "B_19_plus_lidar31 planes0.50224,5320.1232224,5320.05570.0231",
+            "C_19_plus_radiometric28 planes0.50265,5440.1182265,5440.06290.0239",
+            "D_19_plus_lidar_radiometric40 planes0.50221,3350.1335221,3350.05120.0214"
+          ]
+        },
+        {
+          "path": "index.html",
+          "blob": "406fd5ff8373e1822055e7e03b25c06dd5aa82df",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE31/blob/cf13282fcd86290f1539f0a86446c8ba7205a79b/index.html",
+          "title": "GEMSDOE31 \u00b7 opening the research site",
+          "score_excerpts": []
+        }
+      ],
+      "prediction_paths": 7,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE32",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE32/docs/index.html",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "0d6a6243147cd63a2000412d575d4c80a36d3a62",
+      "pages": [
+        {
+          "path": "docs/index.html",
+          "blob": "6cb5c2061e4f11b79bbe4c88937a44b0bfc1dd1d",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE32/blob/0d6a6243147cd63a2000412d575d4c80a36d3a62/docs/index.html",
+          "title": "GEMSDOE32 - a fault-discovery system for the DOE GEMS Prize \u00b7 GEMSDOE32",
+          "score_excerpts": [
+            "GEMSDOE32 H33-2-B2 | flank B=2 prune on the 0.2708 base: 37,654 dots, 0 within 200 m of the catalogue; live-mirror +0.00487 in 4/4 folds, safety 2.08, projected 0.2747; UNSCORED",
+            "Already-scored fallback: 0.2708 anchor (already-scored base)",
+            "Status. PRIMARY = H33-2-B2 (Tier 1: live-anchored gate). 0.2708 base with every dot at d(catalogue) <= 2 px deleted (37,654 dots). 37,654 dots, 0 on the catalogue. Live mirror (spatially blocked, off-catalogue truth, validated on the known live orderings) +0.004870 in 4 quadrants over the 0.2708 base; live-anchored safety factor 2.08; projected live DTI 0.2747 (a MODEL, not a score). NO ORGANISER SCORE EXISTS for this or any artifact in this repository.",
+            "0.0548\u00a0credit per dot; this repository derives the same number from the published",
+            "formula, 0.2\u00b70.26 = 0.0520. Two independent routes, one answer.",
+            "Can we beat 0.3262? Only by raising the",
+            "+0.0100 mean, 4/4 folds positive",
+            "\u22120.0033, 0/12 draws positive"
+          ]
+        },
+        {
+          "path": "index.html",
+          "blob": "2f8c363aae18e9e33c013d0b20465b1854852db4",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE32/blob/0d6a6243147cd63a2000412d575d4c80a36d3a62/index.html",
+          "title": "GEMSDOE32 \u2014 download the submission GeoTIFF",
+          "score_excerpts": [
+            "GEMSDOE32 H33-2-B2 | flank B=2 prune on the 0.2708 base: 37,654 dots, 0 within 200 m of the catalogue; live-mirror +0.00487 in 4/4 folds, safety 2.08, projected 0.2747; UNSCORED",
+            "Already-scored fallback: 0.2708 anchor (already-scored base)",
+            "Status. PRIMARY = H33-2-B2 (Tier 1: live-anchored gate). 0.2708 base with every dot at d(catalogue) <= 2 px deleted (37,654 dots). 37,654 dots, 0 on the catalogue. Live mirror (spatially blocked, off-catalogue truth, validated on the known live orderings) +0.004870 in 4 quadrants over the 0.2708 base; live-anchored safety factor 2.08; projected live DTI 0.2747 (a MODEL, not a score). NO ORGANISER SCORE EXISTS for this or any artifact in this repository."
+          ]
+        }
+      ],
+      "prediction_paths": 27,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE33",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE33/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "f52533110fe62cd03e77f1228e9e5ecac412c463",
+      "pages": [
+        {
+          "path": "index.html",
+          "blob": "48a4c81ca99bf768f0b7a484514aa454a284e2da",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE33/blob/f52533110fe62cd03e77f1228e9e5ecac412c463/index.html",
+          "title": "GEMSDOE33",
+          "score_excerpts": []
+        },
+        {
+          "path": "docs/index.html",
+          "blob": "b8eaa3f0d1a7c1b03cfe8377b07cfdc95a4d366b",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE33/blob/f52533110fe62cd03e77f1228e9e5ecac412c463/docs/index.html",
+          "title": "GEMSDOE33 \u00b7 Overview &amp; Unique Submission",
+          "score_excerpts": [
+            "Projected Live DTI0.2725 \u2013 0.2760 (beating the H27-4 0.2708 benchmark)",
+            "0.2708",
+            "0.2725 - 0.2760",
+            "0.3195",
+            "2026-10-04 at the owner's request. At that observation, the brief's claim that 0.3195 was",
+            "No organizer receipt or verified account/file record ties the brief's 0.2708 claim to",
+            "PhD Analysis: Why H27-4 Scored 0.2708 and How GEMSDOE33 Beats It",
+            "Under the competition's Distance-Tolerance Intersection (DTI) metric, each emitted dot carries a false positive denominator penalty of 0.2 \u00b7 FP. In dotted-h19-5-d2-8 (44,090 dots, score 0.2600), exactly 3,891 dots sat at d_cat = 100 m (1 pixel) alongside masked known faults due to USGS scarp digitization offsets. Because known faults are masked from evaluation, these dots produced near-zero true positive credit (e = 0.004) while incurring full false positive penalties."
+          ]
+        }
+      ],
+      "prediction_paths": 8,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE34",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE34/docs/index.html",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "cfa8f6b626401a38259a4b809d1bfe7d65d682e6",
+      "pages": [
+        {
+          "path": "docs/index.html",
+          "blob": "af7aba88683e7a28fd9c86238445a2d39c919b8d",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE34/blob/cfa8f6b626401a38259a4b809d1bfe7d65d682e6/docs/index.html",
+          "title": "GEMSDOE34 \u2014 Fault Prediction System \u2014 GEMSDOE34",
+          "score_excerpts": [
+            "projected 0.2346 \u00b1 0.0275",
+            "0.2778 artifact. Its pixels are new: the closest of 302 historical rasters",
+            "It is not predicted to beat 0.2778. Predicted 0.2346, which is also what the model predicts for the 0.2778 artifact itself (LOO 0.2345). This design reproduces a known-good family; it does not exceed it.",
+            "deliberately zero pixels on the USGS/INGENIOUS catalogue: those pixels are masked out of evaluation, so a catalogue carpet is metrically inert and is the mechanism behind the 0.1563 three-way tie",
+            "0.1563 Collapse Mechanism54,533 px100.00% On Inert Known-Fault Mask",
+            "Mathematical & Empirical Diagnosis of the 0.1563 Score Collapse:",
+            "GEMSDOE1, 5GEMSDOE, and 8GEMSDOE scored identically at 0.1563 because two files are byte-identical clones, and 8GEMSDOE added 54,533 pixels of which 100.00% sit on the known-fault catalogue mask. Under DrivenData's official masking rule (\"known USGS/INGENIOUS faults are excluded from penalty terms\"), additions on the mask are metrically inert. Because their non-mask payloads were 100% byte-identical (166,519 px), the score was mathematically locked at 0.1563.",
+            "Analysis of the 0.2778 High Score & Strategy to Target >0.3195:"
+          ]
+        },
+        {
+          "path": "index.html",
+          "blob": "3fc96e189ae03f0658454a819726edbba070c7bf",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE34/blob/cfa8f6b626401a38259a4b809d1bfe7d65d682e6/index.html",
+          "title": "GEMSDOE34 \u2014 fault-prediction submission",
+          "score_excerpts": []
+        }
+      ],
+      "prediction_paths": 7,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE35",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE35/docs/index.html",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "cd4f9f62c46597dd1e45e6289b1b4c6774c86f82",
+      "pages": [
+        {
+          "path": "docs/index.html",
+          "blob": "9dba984390e2d009719732c75c4b5bc31e7d49fe",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE35/blob/cd4f9f62c46597dd1e45e6289b1b4c6774c86f82/docs/index.html",
+          "title": "GEMSDOE35 \u2014 GEMS Fault Discovery &amp; Latin Hypercube Design",
+          "score_excerpts": [
+            "0.2778 Analysis",
+            "H35-06 beat both single-scale tmi_hg baseline (+0.0146 mean \u0394DTI) and the H35-01 incumbent (+0.0083 mean \u0394DTI) across 5/6 spatial tiles at matched emitted mass.",
+            "Understanding the 0.2778 Score & Exceeding 0.3262",
+            "Across the GEMSDOE series, scores jumped from 0.1892 (continuous ridges) to 0.2477 ($d=1.5$ px), 0.2600 ($d=2.8$ px), 0.2708 (solo dotted $d=2.8$ px), and 0.2778 (GEMSDOE32 H33-2-B2). At spacing $d \\approx 2.8$ pixels (~280 m), any ground-truth fault segment remains within \u2264140 m of a predicted point ($k(d) \\ge 0.533$ to $1.0$), capturing ~85% of $TP$ credit while reducing total emitted positive mass by ~65%. H33-2-B2 achieved 0.2778 by truncating low-confidence flank pixels to zero, cutting dif",
+            "3. How to Surpass 0.2778 and Reach Top Leaderboard Scores (> 0.3262)",
+            "To exceed 0.2778 and beat the current leaderboard leader (0.3262):",
+            "Add Independent Geomorphic Scarp Curvature (H35-06): Quaternary fault scarps directly express surface tectonic rupture. H35-06 passed our spatial promotion gate with +0.0146 mean \u0394DTI vs baseline and +0.0083 vs H35-01 across 5/6 spatial tiles.",
+            "Official Public LeaderboardSnapshot: Rank 1 nchuzhoy (0.3262), Rank 2 kinghorton42 (0.3222), Rank 3 DARD (0.3195)\u2197"
+          ]
+        },
+        {
+          "path": "index.html",
+          "blob": "4845c36ae15a7424b5b86cceb052352d155c316c",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE35/blob/cd4f9f62c46597dd1e45e6289b1b4c6774c86f82/index.html",
+          "title": "GEMSDOE35 \u2014 Project site",
+          "score_excerpts": []
+        }
+      ],
+      "prediction_paths": 4,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE36",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE36/docs/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "c9ad59ec6f969ed931d089a03044c1567a633e84",
+      "pages": [
+        {
+          "path": "docs/index.html",
+          "blob": "1d05d2eb6ab533319f17306b9465e43b48ecfacb",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE36/blob/c9ad59ec6f969ed931d089a03044c1567a633e84/docs/index.html",
+          "title": "GEMS DOE 36 \u2014 Anderson-PINN Multi-Physics Fault Discovery",
+          "score_excerpts": [
+            "Anderson-PINN: 38,854 positive dots \u00b7 0 on-catalogue \u00b7 100% cells finite in [0, 1] with nodata=None (fixing the portal range error). Holdout Mirror: 0.269908 (+0.001987 vs 0.2778 base). Projected live score: 0.2798.",
+            "Submission Name:GEMSDOE36-Anderson-PINN-MultiPhysics-20261004Submission Note:GEMSDOE36 Anderson PINN | H36-1/3 GDR geotherm conduit + B=2 catalogue-flank prune: 38,854 dots; 0 on-cat; LM holdout 0.2699 (+0.0020 vs 0.2778 base, 1/4 quads); projected 0.2798",
+            "Why GEMSDOE32 Reached 0.2778 & The Path to 0.3195",
+            "Why 0.2778 Succeeded: Submodular Flank Pruning",
+            "In GEMSDOE32, applying a catalogue-flank exclusion buffer (B = 2 pixels / 200 m) pruned 2,545 redundant dots from the 40,199 base, eliminating 509 penalty units from the denominator and raising the score from 0.2708 to 0.2778.",
+            "Why 0.2778 Plateaued: 26.5% Kinematic Violations",
+            "An orientation audit of all 37,654 dots in the 0.2778 submission revealed critical kinematic defects:",
+            "Targeting 0.3195: Pruning kinematically forbidden dots via Raissi et al. (2019) PINN loss and reallocating budget to 465 high-temperature GDR 1391 blind geothermal conduits bridges the gap to the 0.3195 global optimum."
+          ]
+        },
+        {
+          "path": "index.html",
+          "blob": "7418f17985fd2b2328d14c922782cae4c8311b8f",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE36/blob/c9ad59ec6f969ed931d089a03044c1567a633e84/index.html",
+          "title": "GEMS DOE 36 \u2014 Redirecting to project site",
+          "score_excerpts": []
+        }
+      ],
+      "prediction_paths": 4,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE37",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE37/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "8d07e2a111b68c49b3588c5f4409be11ae7ba9b5",
+      "pages": [
+        {
+          "path": "index.html",
+          "blob": "2ecc73cb6a44afbc5b7eca3e42cb22994049170a",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE37/blob/8d07e2a111b68c49b3588c5f4409be11ae7ba9b5/index.html",
+          "title": "GEMS Prospectivity Lab \u2014 GEMSDOE37",
+          "score_excerpts": []
+        },
+        {
+          "path": "docs/index.html",
+          "blob": "358bd86e3fde05c1a4ceea09bae38d66b9d9570e",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE37/blob/8d07e2a111b68c49b3588c5f4409be11ae7ba9b5/docs/index.html",
+          "title": "GEMS DOE Prospectivity Lab \u2014 GEMSDOE37",
+          "score_excerpts": [
+            "0.2486 vs 0.1530",
+            "Quadrant holdout, budget 160,000: supervised physics ranker versus the unsupervised persistence consensus used by every earlier GEMSDOE submission. Uniform random placement scores 0.1957 \u2014 the unsupervised surface is below random.",
+            "0.0688",
+            "2. The 0.2778 map was read, not assumed",
+            "94 label-free features \u2014 raw bands, multi-scale gradient and Hessian-ridge responses, scales-survived counts, and H0 superlevel-set persistence per physics family \u2014 fitted with gradient boosting. On a blocked holdout it scores 0.2486 against 0.1530 for the unsupervised persistence consensus, which is itself below the 0.1957 random floor.",
+            "Training positives are the catalogue, so a distance-to-catalogue feature separates them perfectly and the booster discards all 94 physics columns. The physics+geometry and geometry-only arms come out bit-identical at 0.0688 versus 0.1973. Label-free features are not a style choice here; they are a requirement.",
+            "Open the official DrivenData leaderboard \u2197 for the current values. A one-time review on 2026-10-05 found the task's stated 0.3195 was not the highest score in that snapshot; see the evidence-graded analysis for the caveat.",
+            "The leaderboard does not expose model or TIFF filenames. The H33 0.2778 pairing remains user-reported; the owner page describes a 0.2747 projection and an unscored proxy.Read the score autopsy \u2192"
+          ]
+        }
+      ],
+      "prediction_paths": 5,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE38",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE38/docs/index.html",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "526d65add01b32bc7354264703501692aec0ef95",
+      "pages": [
+        {
+          "path": "docs/index.html",
+          "blob": "f6180143065a3590b427fadea4e7ddec26ef7ea4",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE38/blob/526d65add01b32bc7354264703501692aec0ef95/docs/index.html",
+          "title": "Measured-data research \u00b7 GEMSDOE38",
+          "score_excerpts": [
+            "Do not submit this file from the current evidence. Leaderboard snapshot: 0.3262 on 2026-10-05; no score is claimed for this candidate.GeoDAWN / Nevada\u2013California100m gridCandidate pixels over measured TMIDownsampled display; not confirmed faults or geothermal vents.",
+            "The user-reported H33-2-B2 0.2778 mapping is not tied to an organizer-exposed file hash; GEMSDOE32's own holdout evidence has missing tracked inputs and conflicting logged/code fold settings.",
+            "Leaderboard observation: 0.3262 \u00b7 2026-10-05 \u00b7 research-tool snapshot. Source register and freshness.Maximize P(Win). Own the Outcome.Evidence before a submission slot.Research snapshot \u00b7 05 Oct 2026Code, user brief & audit trail \u2197"
+          ]
+        },
+        {
+          "path": "index.html",
+          "blob": "ac4d946eb003196218ce450269cb1598bb57690d",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE38/blob/526d65add01b32bc7354264703501692aec0ef95/index.html",
+          "title": "GEMSDOE38",
+          "score_excerpts": []
+        }
+      ],
+      "prediction_paths": 6,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE39",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE39/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "381c6a923ffea8fbcd87eb2d5825449f09f29f0e",
+      "pages": [
+        {
+          "path": "index.html",
+          "blob": "51b9fb96935a2c6dcf22e292a5215a3636ec791f",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE39/blob/381c6a923ffea8fbcd87eb2d5825449f09f29f0e/index.html",
+          "title": "GEMSDOE39 | Open the research site",
+          "score_excerpts": []
+        },
+        {
+          "path": "docs/index.html",
+          "blob": "9c008c1218cd657f9e815566a286003eb305d913",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE39/blob/381c6a923ffea8fbcd87eb2d5825449f09f29f0e/docs/index.html",
+          "title": "GEMSDOE39 | Unique GEMS-DOE submission",
+          "score_excerpts": [
+            "0.1461credit per dot(best prior artifact 0.1051)",
+            "0.3006 is our own instrument's prediction, computed from a model fitted on 12 owner-reported live scores, and",
+            "it is an extrapolation: the fitted per-dot-credit range is [0.0480, 0.1051] and this file measures 0.1461.",
+            "The live board's best as of 2026-10-05 is 0.3262",
+            "with 0.3195 at rank\u00a0#3.",
+            "(RMSE 0.0364 / 0.0397). We then measured a second new quantity \u2014 the density of off-catalogue faults as a",
+            "score (0.3006) is above the family's best-ever 0.2778.",
+            "champion 0.2778 submission put ~31\u00a0% of its dots beyond 3\u00a0km and had no far-field suppression at all."
+          ]
+        }
+      ],
+      "prediction_paths": 7,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE40",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE40/docs/index.html",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "0d2ab31e0b75e29c627ee93614940904b457f8c6",
+      "pages": [
+        {
+          "path": "docs/index.html",
+          "blob": "19a9e0e8cf1be1c4276729196a36b4a8c74409f7",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE40/blob/0d2ab31e0b75e29c627ee93614940904b457f8c6/docs/index.html",
+          "title": "Euler depth-cluster submission GeoTIFF \u00b7 GEMSDOE40",
+          "score_excerpts": [
+            "H41 \u2014 this file0.13660.12840.09870.2282",
+            "H33-B2 \u2014 best owner-scored file (0.2778)0.09020.09130.07280.1820",
+            "H40-E \u2014 sibling repository Euler arm (never scored)0.13950.14660.14250.2810",
+            "A spatially blocked logistic discriminant (OOF AUC 0.7488) ranks the support; 3-px Poisson-disk thinning emits 40,000 dots.",
+            "02 / WHY 0.2778 WAS THE BEST SO FAR",
+            "At the same 37,654-dot budget a scattered control scores 0.0778 while the structure-aligned file scores 0.2778.",
+            "Answer in one sentence: 0.2778 is what a small, well-placed, catalogue-aware dot set scores; beating it requires better localisation per unit mass, not more dots. Public board at the dated 2026-10-06 observation: 0.3345 (#1, alexoktaba); this repository\u2019s best scored row is rank 13 at 0.2778. The older \u201c0.3195\u201d target was rank 4 in that same observation."
+          ]
+        },
+        {
+          "path": "index.html",
+          "blob": "c6d09d474d439568f0e5b916cfa0504f37d4ab7b",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE40/blob/0d2ab31e0b75e29c627ee93614940904b457f8c6/index.html",
+          "title": "GEMSDOE40 \u00b7 H41 Euler depth-cluster submission",
+          "score_excerpts": []
+        }
+      ],
+      "prediction_paths": 30,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE41",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE41/docs/index.html",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "aee9fc5ee0d11ed7532cf5d8042f376ca68b1357",
+      "pages": [
+        {
+          "path": "docs/index.html",
+          "blob": "e26138f1c3dccc0233314c8de3cdce50db07c645",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE41/blob/aee9fc5ee0d11ed7532cf5d8042f376ca68b1357/docs/index.html",
+          "title": "Structural transfer, honestly tested \u00b7 GEMSDOE41",
+          "score_excerpts": [
+            "On four strand-blocked folds it scores 0.5606",
+            "0.0323 \u2014 a factor of",
+            "than basin-margin/H42's (20 km four-colour blocks). 0.5606 and",
+            "0.2507 are not comparable and neither is a score. The two instruments have not been cross-calibrated.",
+            "The SGMC independent-map instrument disagrees with it (it rewards high terrain instead) \u2014 both measurements are published in the gate receipt, and the hidden-truth association from 16 archived artifacts is used as the tie-breaker. 0.2778 remains user-reported without an organizer receipt; current leaderboard standings are unknown.",
+            "Slope \u00d7 (1 \u2212 detrended elevation), i.e. steep terrain at low relief position: the range-front setting where Great Basin geothermal systems sit. (slope^0.5 \u00b7 (1\u2212det)^1.5)^0.5502",
+            "Blocked-holdout promotionarm a or b beats density/evidence/random in \u22653 of 4 folds (3 px guard)FAIL \u2014 0/4; junction arm 0.0002 cpm vs evidence control 0.0791",
+            "Uniqueness vs familyno byte-equality with any shipped raster of the project familyPASS \u2014 max Jaccard 0.0323"
+          ]
+        },
+        {
+          "path": "index.html",
+          "blob": "6afb59835c6231c9f2d92cf3c2b47b679a21d665",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE41/blob/aee9fc5ee0d11ed7532cf5d8042f376ca68b1357/index.html",
+          "title": "GEMSDOE41",
+          "score_excerpts": []
+        }
+      ],
+      "prediction_paths": 15,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE42",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE42/docs/index.html",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "13de50d79a668530c52d17c0aacba62c840fc903",
+      "pages": [
+        {
+          "path": "docs/index.html",
+          "blob": "6fc8701f96efbb5ccaf2de8ea1fd57622b52bf82",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE42/blob/13de50d79a668530c52d17c0aacba62c840fc903/docs/index.html",
+          "title": "GEMSDOE42 &mdash; cross-scale worm &times; persistence submission for DOE GEMS",
+          "score_excerpts": [
+            "0.0248,",
+            "max |Spearman| = 0.0248",
+            "Can we beat 0.3195? The short, honest answer",
+            "(h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros, public score 0.2778) scored what",
+            "1nchuzhoy0.3262",
+            "2kinghorton420.3222",
+            "3alexoktaba0.3220",
+            "4DARD0.3195"
+          ]
+        }
+      ],
+      "prediction_paths": 2,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE43",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE43/docs/index.html",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "e641e0c1dd7cf4cb7a4013440e39fa8541250139",
+      "pages": [
+        {
+          "path": "docs/index.html",
+          "blob": "c2b7507bc0b896f12e94f08f2eb86b07e5b2d79c",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE43/blob/e641e0c1dd7cf4cb7a4013440e39fa8541250139/docs/index.html",
+          "title": "GEMSDOE43 \u00b7 Auditable GEMS research and submission",
+          "score_excerpts": [
+            "Per-fold gradient boosting on 21 features (19 bands + scarp + validity flag). Mean 0.262666, wins folds 0\u20133 (+0.0176, +0.0110, +0.0081, +0.0109). Corrected gate (folds 1\u20133): 3/3.Review the frozen operator \u2192",
+            "#1 alexoktaba 0.3345 \u00b7 #2 nchuzhoy 0.3262 \u00b7 #3 kinghorton42 0.3222 \u00b7 #4 Batik Shirt Brothers 0.3218 \u00b7 #5 DARD 0.3195. The brief's \u201c0.3195 is the highest\u201d is stale (IR-43-001); no GEMSDOE row is visible (IR-43-010). Full table + terms \u2192"
+          ]
+        },
+        {
+          "path": "index.html",
+          "blob": "7e5927b94110d94e53b7984bceaaba6e02b9b5e7",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE43/blob/e641e0c1dd7cf4cb7a4013440e39fa8541250139/index.html",
+          "title": "GEMSDOE43 \u00b7 project site",
+          "score_excerpts": []
+        }
+      ],
+      "prediction_paths": 4,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE44",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE44/docs/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "c1019c4b534e327952f638a8bdce2ecc74923f50",
+      "pages": [
+        {
+          "path": "docs/index.html",
+          "blob": "4a1b1e11bcba6775cf4f9eb725f3eff331346dec",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE44/blob/c1019c4b534e327952f638a8bdce2ecc74923f50/docs/index.html",
+          "title": "Executive summary \u2014 the one-click submission \u00b7 GEMSDOE44",
+          "score_excerpts": [
+            "Executive summary Two-stage method Validation Why 0.2778 Hypotheses Data How to submit Leaderboard Limitations & flags",
+            "the family's habitat-only emissions (0.0041, 0.1223, 0.1352) failed: a basin-scale favouritability",
+            "0.0683 and a Stage-B-ungated emission scores",
+            "0.3716 on frame P, against this file's",
+            "0.3081 \u2014 Jaccard 0.0056 and",
+            "0.3818 respectively. Both stages are load-bearing.",
+            "max Jaccard vs any local prior artifact0.0199 over 114 artifacts",
+            "0.2267 credit per dot on frame P (real USGS SGMC faults absent from the"
+          ]
+        }
+      ],
+      "prediction_paths": 11,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE45",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE45/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "f90a332ab577877eaa4f533748cc1a24dc58741d",
+      "pages": [
+        {
+          "path": "index.html",
+          "blob": "d44e32d60f3d22d9addd2692c06f5ea8eb3950d3",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE45/blob/f90a332ab577877eaa4f533748cc1a24dc58741d/index.html",
+          "title": "GEMSDOE45 \u2014 research submission",
+          "score_excerpts": []
+        },
+        {
+          "path": "docs/index.html",
+          "blob": "408122e8f518d4681c9373f7ac405271c27c108f",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE45/blob/f90a332ab577877eaa4f533748cc1a24dc58741d/docs/index.html",
+          "title": "GEMSDOE45 \u2014 GEMS Prize Challenge work",
+          "score_excerpts": []
+        }
+      ],
+      "prediction_paths": 13,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE46",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE46/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "537700976521311457fc74679095a17837429e4b",
+      "pages": [
+        {
+          "path": "index.html",
+          "blob": "8b12c9632c167d627212ede8ca9acd076379588c",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE46/blob/537700976521311457fc74679095a17837429e4b/index.html",
+          "title": "GEMSDOE46 \u2014 R11F submission, gate and receipts",
+          "score_excerpts": [
+            "three known live orderings (0.2600 / 0.2708 / 0.2778) and that only the stratified version --",
+            "incumbent-0.27780.095390.088524,737.510.5 %0.0551",
+            "r11-shipped-440900.166160.166199,213.714.3 %0.0769",
+            "r11-fused-reemitted-376540.143290.138777,487.513.3 %0.0704",
+            "uniform-random-376540.069210.068353,653.16.9 %0.0363",
+            "own dots is 0.5069 -- chance -- so the candidate wins by putting dots where the",
+            "proxy DTI 0.0946) -- re-selects the mass",
+            "10,00010,0002,902.31,952.41.4870.24320.2070"
+          ]
+        },
+        {
+          "path": "docs/index.html",
+          "blob": "dd28c96babe54b282a43f9c209396ce05270125f",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE46/blob/537700976521311457fc74679095a17837429e4b/docs/index.html",
+          "title": "GEMSDOE46 \u2014 R11F submission, gate and receipts",
+          "score_excerpts": [
+            "three known live orderings (0.2600 / 0.2708 / 0.2778) and that only the stratified version --",
+            "incumbent-0.27780.095390.088524,737.510.5 %0.0551",
+            "r11-shipped-440900.166160.166199,213.714.3 %0.0769",
+            "r11-fused-reemitted-376540.143290.138777,487.513.3 %0.0704",
+            "uniform-random-376540.069210.068353,653.16.9 %0.0363",
+            "own dots is 0.5069 -- chance -- so the candidate wins by putting dots where the",
+            "proxy DTI 0.0946) -- re-selects the mass",
+            "10,00010,0002,902.31,952.41.4870.24320.2070"
+          ]
+        }
+      ],
+      "prediction_paths": 37,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE47",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE47/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "5558d6d3daef3fe0a7b26b6928d7335645c5ae99",
+      "pages": [
+        {
+          "path": "index.html",
+          "blob": "797cf22c196d637a9bb190c118243d8c78640851",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE47/blob/5558d6d3daef3fe0a7b26b6928d7335645c5ae99/index.html",
+          "title": "GEMSDOE47 \u2014 evidence before a slot",
+          "score_excerpts": [
+            "A genuinely new field: the per-cell maximum of the ranks of eight scarp channels of the owner-derived 1\u00a0m lidar stack (H60\u2019s six plus slope-excess ex_max and local relief relief), masked against roads and mine claims, emitted as 37,654 unit dots at 2.8\u00a0px (280\u00a0m) over the noise-masked off-catalogue domain. It passed the preregistered four-condition gate (beats the H50 anchor by +68\u00a0%, certified split-conformal floor 0.0993 DTI at \u2265{COV:.2%} coverage, beats the mass-matched random control on both",
+            "Spacing 2.8 px / 280 m \u00b7 selected by split conformal prediction (Lei et al. JASA 2018, Algorithm 2) as the spacing with the greatest CERTIFIED lower bound \u00b7 max-residual rank 20 of 22 \u00b7 finite-sample coverage at least 90.91% (confidence level 90.91%) \u00b7 certified holdout floor 0.0993 DTI \u00b7 conditional on block exchangeability",
+            "OK to download: YES \u00b7 gate-passing valid submission \u00b7 recommended for submission: NO \u2014 H60 above remains the local candidate. Uniqueness: 41 prior rasters compared, zero exact matches, maximum mask Jaccard 0.3066 (closest prior: the H60 incumbent, expected \u2014 H74 extends H60\u2019s channel set). Encoding caveat: the all-finite file is the direct answer to the portal\u2019s \u201cPredicted values must be in range [0, 1]\u201d rejection (every value finite and inside [0,1]); the NaN-outside sibling matches the publish",
+            "The H71 scarp-consensus field \u2014 the per-cell count of the six lidar scarp channels that fire above their frozen thresholds, amplitude-tie-broken \u2014 is the strongest arm of the session-6 second slate: on the frozen 41-block holdout it reaches 0.2919 pooled DTI on the primary lidar-peak instrument against the H60 incumbent\u2019s 0.2879 (+1.4\u00a0%) and 0.1984 on the independent SGMC off-catalogue population against 0.1938 (+2.4\u00a0%) \u2014 the only arm of the round to beat the incumbent on both. Its operating poi",
+            "Why it is not the file to submit: its 37,654-dot emission at 2\u00a0px overlaps the H60 incumbent artifact at mask Jaccard 0.5119 \u2265 0.5, failing frozen condition 6 (bounded uniqueness) \u2014 this repository will not recommend spending a slot on an emission that shares most of its dots with the standing incumbent. It is unique against every scored prior submission (maximum mask Jaccard 0.0067 across the restored scored family rasters; 39 priors compared, zero exact matches); the overlap is exclusively wit",
+            "The 0.0989005 lower bound uses rank 20/22 (90.91% marginal coverage) conditional on block-score exchangeability. That assumption is unverified; the number is not a private-score or leaderboard guarantee. Details and deviations: H60 evidence page. A later preregistered challenger round (8 Oct 2026, extended 1.4\u20133.2 px sweep) tested six alternatives; none beat H60 on both instruments, so H60 remains the current local candidate: H65 round evidence. A second preregistered slate the same day (H71\u2013H74",
+            "H47-C1 remains a negative research screen; H60 does not change that result. C1 pooled public-catalogue proxy DTI was 0.177872 versus a 0.180216 baseline, only 11/22 truth-bearing blocks improved (15 required), and the assumption-conditional lower-bound estimate was 0.0000. Do not upload C1 or spend a slot on it. H47-QC and H49 are also retained research artifacts, not current recommendations; see the artifact register.",
+            "The saved official leaderboard observation checked 7 October 2026 has rank 1 at 0.3774; 0.3195 was rank 7. It is participant-level, dated, and not mapped to a TIFF hash. The H33-2-B2 / 0.2778 association remains unverified. Open official leaderboard \u2197"
+          ]
+        },
+        {
+          "path": "docs/index.html",
+          "blob": "a10708fd71ca3521b4a2e1c5a485ccc5ee99eb63",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE47/blob/5558d6d3daef3fe0a7b26b6928d7335645c5ae99/docs/index.html",
+          "title": "GEMSDOE47 \u2014 evidence before a slot",
+          "score_excerpts": [
+            "A genuinely new field: the per-cell maximum of the ranks of eight scarp channels of the owner-derived 1\u00a0m lidar stack (H60\u2019s six plus slope-excess ex_max and local relief relief), masked against roads and mine claims, emitted as 37,654 unit dots at 2.8\u00a0px (280\u00a0m) over the noise-masked off-catalogue domain. It passed the preregistered four-condition gate (beats the H50 anchor by +68\u00a0%, certified split-conformal floor 0.0993 DTI at \u2265{COV:.2%} coverage, beats the mass-matched random control on both",
+            "Spacing 2.8 px / 280 m \u00b7 selected by split conformal prediction (Lei et al. JASA 2018, Algorithm 2) as the spacing with the greatest CERTIFIED lower bound \u00b7 max-residual rank 20 of 22 \u00b7 finite-sample coverage at least 90.91% (confidence level 90.91%) \u00b7 certified holdout floor 0.0993 DTI \u00b7 conditional on block exchangeability",
+            "OK to download: YES \u00b7 gate-passing valid submission \u00b7 recommended for submission: NO \u2014 H60 above remains the local candidate. Uniqueness: 41 prior rasters compared, zero exact matches, maximum mask Jaccard 0.3066 (closest prior: the H60 incumbent, expected \u2014 H74 extends H60\u2019s channel set). Encoding caveat: the all-finite file is the direct answer to the portal\u2019s \u201cPredicted values must be in range [0, 1]\u201d rejection (every value finite and inside [0,1]); the NaN-outside sibling matches the publish",
+            "The H71 scarp-consensus field \u2014 the per-cell count of the six lidar scarp channels that fire above their frozen thresholds, amplitude-tie-broken \u2014 is the strongest arm of the session-6 second slate: on the frozen 41-block holdout it reaches 0.2919 pooled DTI on the primary lidar-peak instrument against the H60 incumbent\u2019s 0.2879 (+1.4\u00a0%) and 0.1984 on the independent SGMC off-catalogue population against 0.1938 (+2.4\u00a0%) \u2014 the only arm of the round to beat the incumbent on both. Its operating poi",
+            "Why it is not the file to submit: its 37,654-dot emission at 2\u00a0px overlaps the H60 incumbent artifact at mask Jaccard 0.5119 \u2265 0.5, failing frozen condition 6 (bounded uniqueness) \u2014 this repository will not recommend spending a slot on an emission that shares most of its dots with the standing incumbent. It is unique against every scored prior submission (maximum mask Jaccard 0.0067 across the restored scored family rasters; 39 priors compared, zero exact matches); the overlap is exclusively wit",
+            "The 0.0989005 lower bound uses rank 20/22 (90.91% marginal coverage) conditional on block-score exchangeability. That assumption is unverified; the number is not a private-score or leaderboard guarantee. Details and deviations: H60 evidence page. A later preregistered challenger round (8 Oct 2026, extended 1.4\u20133.2 px sweep) tested six alternatives; none beat H60 on both instruments, so H60 remains the current local candidate: H65 round evidence. A second preregistered slate the same day (H71\u2013H74",
+            "H47-C1 remains a negative research screen; H60 does not change that result. C1 pooled public-catalogue proxy DTI was 0.177872 versus a 0.180216 baseline, only 11/22 truth-bearing blocks improved (15 required), and the assumption-conditional lower-bound estimate was 0.0000. Do not upload C1 or spend a slot on it. H47-QC and H49 are also retained research artifacts, not current recommendations; see the artifact register.",
+            "The saved official leaderboard observation checked 7 October 2026 has rank 1 at 0.3774; 0.3195 was rank 7. It is participant-level, dated, and not mapped to a TIFF hash. The H33-2-B2 / 0.2778 association remains unverified. Open official leaderboard \u2197"
+          ]
+        }
+      ],
+      "prediction_paths": 30,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE48",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE48/docs/index.html",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "36d9785e28a81e859c71f4058c639ffba4b7f327",
+      "pages": [
+        {
+          "path": "docs/index.html",
+          "blob": "42507fc4f02789bf677f84e32d71693f2f2f0184",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE48/blob/36d9785e28a81e859c71f4058c639ffba4b7f327/docs/index.html",
+          "title": "GEMSDOE48 \u2014 Pignistic DS Fusion Submission",
+          "score_excerpts": [
+            "Combining the two strongest independently-built families \u2014 the spacing-tuned dotted B2 (0.2778) and the fault-tip/step-over H33-D (0.2632) \u2014 via Dempster's rule with pignistic conflict-pricing, producing a submission that explicitly preserves disagreement rather than averaging it away.",
+            "This is a unique, competition-format GeoTIFF. It is the first-ever pignistic conflict-priced Dempster\u2013Shafer fusion of the genuine dotted B2 family (0.2778) and the genuine tip/step-over H33-D family (0.2632). Download below, then upload to the DrivenData submission page.",
+            "Score: 0.2778 (owner-reported, highest in campaign)",
+            "Score: 0.2632 (owner-reported)",
+            "GEMSDOE32B2 dotted family (flank-pruned)0.2778",
+            "GEMSDOE36Anderson geothermal pinning0.2750",
+            "GEMSDOE28 (H36)Rung-30 blind0.2710",
+            "GEMSDOE28 (H27)Solo D2.80.2708"
+          ]
+        },
+        {
+          "path": "index.html",
+          "blob": "8024b35c1ebfa18caa3117facb692b1c91c000bb",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE48/blob/36d9785e28a81e859c71f4058c639ffba4b7f327/index.html",
+          "title": "GEMSDOE48",
+          "score_excerpts": []
+        }
+      ],
+      "prediction_paths": 96,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE49",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE49/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "8ab48f22d02d8be3b8e01d843ed7dc7967b87c44",
+      "pages": [
+        {
+          "path": "index.html",
+          "blob": "415e02e0b8e15ad409af121d4e89febdcb80b905",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE49/blob/8ab48f22d02d8be3b8e01d843ed7dc7967b87c44/index.html",
+          "title": "GEMSDOE49 \u2014 DOE GEMS Prize submission",
+          "score_excerpts": []
+        },
+        {
+          "path": "docs/index.html",
+          "blob": "6133d12759382441cc3884b6b849fe23f623cbe5",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE49/blob/8ab48f22d02d8be3b8e01d843ed7dc7967b87c44/docs/index.html",
+          "title": "Submission \u2014 DOE GEMS Prize",
+          "score_excerpts": [
+            "OKFamily selection (leave-one-fold-out): gate_ortho_w0.25 0.1074 vs best single layer single:det_elev_slope 0.0991 (+0.0083)4 spatially blocked folds over 3,118 catalogue segments removed whole; geometry chosen on three folds, scored on the fourth.",
+            "OKShipped placement, both arms re-measured under the same rule: 0.1131 vs 0.1029 collared (+0.0102); 0.1181 vs 0.1111 unrestricted (+0.0070)300 m catalogue buffer at 300 m dot separation. The buffer is a placement rule, so the baseline was given it too before the margin was believed.",
+            "OKRelabel check: UNIQUE against 131 prior submission rastersmax support Jaccard 0.0223, max top-25k Jaccard 0.0161 \u2014 far below the relabel thresholds.",
+            "no-information control range (cross-gradient 0.0715",
+            "vs random 0.0718, uniform lattice",
+            "0.0693). The measured reason is"
+          ]
+        }
+      ],
+      "prediction_paths": 4,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE50",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE50/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "74668975f7a83d90094184b0905f94d9698c8a3a",
+      "pages": [
+        {
+          "path": "index.html",
+          "blob": "cb0fa0b3221607055c15877622ea129801a872a7",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE50/blob/74668975f7a83d90094184b0905f94d9698c8a3a/index.html",
+          "title": "Download and executive summary \u00b7 GEMSDOE50",
+          "score_excerpts": [
+            "Skip to contentCurrent main recommendation: H59 sharpened topographic-scarp scatter (selected by H61) \u2014 format and novelty gates passed, 0.2303 off-catalogue proxy DTI (1.86\u00d7 matched-mass uniform), 4/4 spatial folds.Download the GeoTIFFEvidence & how to submitGEMSDOE50 / ResearchOverviewResultsMethods & sourcesSubmission guide",
+            "YES OK to download and submit (it uses one of your weekly slots). This is the highest-ranked file that reuses no prior prediction pixel (charter item 2): on the repository\u2019s frozen spatially-blocked gate it scores 0.2125 (matched uniform 0.1286, positive in 4/4 macrofolds), ahead of H60-union and H57 (0.2025); this session\u2019s independent instrument agrees (0.2492 pooled, 0.2527 inside the fold cores, vs H57 0.2178 / 0.2118; folds NW 0.2256, NE 0.2806, SW 0.1093, SE 0.2855). It uses no earthquake ",
+            "Read before submitting. (1) The lead over H57 is real on the pooled scores but not uniform: it wins 2 of 4 macrofolds against H57 and the paired 16-subtile interval is [-0.0225, +0.0539], which includes zero. (2) 4,753 of its dots lie within 300\u00a0m of the supplied catalogue (0 on catalogue pixels); the GEMSDOE32 B2 result suggests such dots may cost false-positive weight on the hidden labels. (3) Every number here is a proxy (USGS SGMC faults away from the given catalogue), not the organizers\u2019 ex",
+            "Uniqueness. 0 of its dots sit on any of the 1,405,451 pixels of the 61 registered prior artifacts (the charter rule). Against the wider corpus of 309 distinct rasters from all 54 sibling repositories plus this one \u2014 which also holds archives and dense ensemble rasters never registered as submissions \u2014 it is not a copy of anything: largest exact-pixel Jaccard 0.1868 and largest share of its dots on one file 47\u00a0%, both against gemsdoe50-h59-topo-lineament-scatter-180k-20261007T170212Z-a (the same ",
+            "Built as specified: 63,081 screened USGS ComCat earthquakes, declustered with the Zaliapin\u2013Ben-Zion nearest-neighbour method (12,450 background events kept), a 2-D triangle test (my unverified adaptation of the Ouillon\u2013Sornette 3-D tetrahedron test), local 2-D covariance with location-error removal, corridors as wide as the catalogue location error plus up-dip copies, and dots snapped to the H57 ridge. Result: only 31 lineations and 326 dots; holdout DTI 0.0002, credit/dot 0.0232 versus 0.1267 f",
+            "\u201cNEW: H60 seismicity KDE\u201d banner (a third session, PR #28) was removed from the top: its files score 0.0744 and 0.0428 on the frozen-frame instrument, reuse 14,392 and 10,392 prior pixels, are ComCat-derived, and quote a 0.54 \u201cmodelled\u201d score from the retracted transfer model. Its hand-edited pages also broke main\u2019s CI; fixed here. Its guide remains at docs/submission-h60.html with a warning.",
+            "Leaderboard coincidence: five owner-reported corpus scores (0.2778, 0.2750, 0.2710, 0.2708, 0.2600) equal the public scores of five different leaderboard accounts. Please check this against rules \u00a73.4 (limits per participating entity).",
+            "Offline proxy, not organizer score: frozen local DTI 0.2025 vs matched uniform 0.1053, positive in 4/4 macrofolds. Earlier transfer-model probabilities are assumption-dependent and are not scores; see the dated H57 verdict and supersession. Public leaderboard snapshot (2026-10-07): xiaofanhu 0.3774 rank 1; extradr19 0.2778 rank 13. Neither row is crosswalked to a local TIFF hash; see the score-provenance review."
+          ]
+        },
+        {
+          "path": "docs/index.html",
+          "blob": "cbfcd5b87d47118a24d6c0eff9dc1d4c5ad32377",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE50/blob/74668975f7a83d90094184b0905f94d9698c8a3a/docs/index.html",
+          "title": "GEMSDOE50 documents &middot; GEMSDOE50",
+          "score_excerpts": [
+            "YES OK to download and submit (it uses one of your weekly slots). This is the highest-ranked file that reuses no prior prediction pixel (charter item 2): on the repository\u2019s frozen spatially-blocked gate it scores 0.2125 (matched uniform 0.1286, positive in 4/4 macrofolds), ahead of H60-union and H57 (0.2025); this session\u2019s independent instrument agrees (0.2492 pooled, 0.2527 inside the fold cores, vs H57 0.2178 / 0.2118; folds NW 0.2256, NE 0.2806, SW 0.1093, SE 0.2855). It uses no earthquake ",
+            "Read before submitting. (1) The lead over H57 is real on the pooled scores but not uniform: it wins 2 of 4 macrofolds against H57 and the paired 16-subtile interval is [-0.0225, +0.0539], which includes zero. (2) 4,753 of its dots lie within 300\u00a0m of the supplied catalogue (0 on catalogue pixels); the GEMSDOE32 B2 result suggests such dots may cost false-positive weight on the hidden labels. (3) Every number here is a proxy (USGS SGMC faults away from the given catalogue), not the organizers\u2019 ex",
+            "Uniqueness. 0 of its dots sit on any of the 1,405,451 pixels of the 61 registered prior artifacts (the charter rule). Against the wider corpus of 309 distinct rasters from all 54 sibling repositories plus this one \u2014 which also holds archives and dense ensemble rasters never registered as submissions \u2014 it is not a copy of anything: largest exact-pixel Jaccard 0.1868 and largest share of its dots on one file 47\u00a0%, both against gemsdoe50-h59-topo-lineament-scatter-180k-20261007T170212Z-a (the same ",
+            "Built as specified: 63,081 screened USGS ComCat earthquakes, declustered with the Zaliapin\u2013Ben-Zion nearest-neighbour method (12,450 background events kept), a 2-D triangle test (my unverified adaptation of the Ouillon\u2013Sornette 3-D tetrahedron test), local 2-D covariance with location-error removal, corridors as wide as the catalogue location error plus up-dip copies, and dots snapped to the H57 ridge. Result: only 31 lineations and 326 dots; holdout DTI 0.0002, credit/dot 0.0232 versus 0.1267 f",
+            "\u201cNEW: H60 seismicity KDE\u201d banner (a third session, PR #28) was removed from the top: its files score 0.0744 and 0.0428 on the frozen-frame instrument, reuse 14,392 and 10,392 prior pixels, are ComCat-derived, and quote a 0.54 \u201cmodelled\u201d score from the retracted transfer model. Its hand-edited pages also broke main\u2019s CI; fixed here. Its guide remains at docs/submission-h60.html with a warning.",
+            "Leaderboard coincidence: five owner-reported corpus scores (0.2778, 0.2750, 0.2710, 0.2708, 0.2600) equal the public scores of five different leaderboard accounts. Please check this against rules \u00a73.4 (limits per participating entity)."
+          ]
+        }
+      ],
+      "prediction_paths": 46,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE51",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE51/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "51028ff37fc28fc9b3c83dfc1f426195195f3878",
+      "pages": [
+        {
+          "path": "index.html",
+          "blob": "e809c1f3f4fa5b0b733d7025ac819faff026f11e",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE51/blob/51028ff37fc28fc9b3c83dfc1f426195195f3878/index.html",
+          "title": "GEMSDOE51 \u2014 submission, results and evidence",
+          "score_excerpts": []
+        },
+        {
+          "path": "docs/index.html",
+          "blob": "9386f2eae9c1992c81b6a7f3a9e1266011fb0e66",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE51/blob/51028ff37fc28fc9b3c83dfc1f426195195f3878/docs/index.html",
+          "title": "GEMSDOE51 \u2014 DOE GEMS Prize",
+          "score_excerpts": [
+            "H53-F operating pointadopted arm r3.47_f2.00 (mean 0.284924); rule: adopt a non-default point only if it beats the (3.47, 2.0) gated mean by >= +0.0020 with >= 4/6 folds",
+            "Separate componentwise budget-q10 H53-A variant: this is not the finite-lag H53-A result above, and not H53-K2x. Its own Stage 1 measured q10 area 0.9164, held-trace recall 0.9165, lift 0.9996, and tile Spearman +0.0608; these show no meaningful residual enrichment. Its separate Stage-2 q10 mean was 0.2665098 vs frozen 0.2853406 (\u0394 -0.0188308; 0/6 folds positive). Fresh-baseline drift -0.000025448 exceeded the fixed tolerance; the broad family audit is FAIL: containment 1.000 > 0.6 (containment ",
+            "max support Jaccard 0.2140 (limit 0.50),",
+            "max containment 0.3526 (limit 0.60);",
+            "max Jaccard 0.3216, cosine",
+            "0.4867.",
+            "max support Jaccard 0.1955,",
+            "max containment 0.3527."
+          ]
+        }
+      ],
+      "prediction_paths": 10,
+      "status": "source_read"
+    },
+    {
+      "repository": "buffedlizard55-lab/GEMSDOE52",
+      "supplied_url": "https://buffedlizard55-lab.github.io/GEMSDOE52/",
+      "source_class": "owner source, NOT organizer-confirmed",
+      "deployed_http_verified": false,
+      "commit": "24c2630a9dfd69e6cef52495d8e3066d7d37b9d4",
+      "pages": [
+        {
+          "path": "index.html",
+          "blob": "53926a24b33ab3b9e802d6352ac0bc29d173b546",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE52/blob/24c2630a9dfd69e6cef52495d8e3066d7d37b9d4/index.html",
+          "title": "GEMSDOE52 \u2014 GEMS Prize submission workspace",
+          "score_excerpts": []
+        },
+        {
+          "path": "docs/index.html",
+          "blob": "3479c89fd6ab0c0613c3189f00f463b5c84a8614",
+          "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE52/blob/24c2630a9dfd69e6cef52495d8e3066d7d37b9d4/docs/index.html",
+          "title": "GEMSDOE52 \u2014 H59 co-training submission workspace \u00b7 GEMSDOE52",
+          "score_excerpts": [
+            "Why the champion 0.2778 file won, and what beats it",
+            "Short version: h33-h33-2-b2 = the 0.2600 dotted-ridge file minus the \u2264200 m catalogue",
+            "alone projects 0.2546\u20130.3190 before any new geology; beating 0.2778 is therefore an"
+          ]
+        }
+      ],
+      "prediction_paths": 42,
+      "status": "source_read"
+    }
+  ],
+  "unique_git_blobs": 526,
+  "organizer_confirmed_scores": [],
+  "network_policy": "Only allowed GitHub API; no automated DrivenData access."
+}

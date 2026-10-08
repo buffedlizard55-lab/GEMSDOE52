@@ -1,0 +1,20 @@
+{
+  "run_id": "ctd5-a24c35d1",
+  "registered_utc": "2026-10-08T18:08:01.790814+00:00",
+  "hypothesis": "CTD5-H1",
+  "hypothesis_document": "knowledge/25_ctd5_preregistered.md",
+  "hypothesis_sha256": "73efaa7ebace563f904151b6316782544aa52e9f951af9f3c649eaece6e92ab2",
+  "max_experiments": 3,
+  "planned_experiments": 1,
+  "max_seconds": 7200,
+  "seed": 520810,
+  "global_budget": 12000,
+  "buffer_px": 80,
+  "feature_support_px": 36,
+  "independence_abandon_at": 0.6,
+  "rank_duplicate_above": 0.9,
+  "near_dot_duplicate_above": 0.7,
+  "canary_auc_alarm_above": 0.9,
+  "pseudo_rounds_if_allowed": 1,
+  "submission_slots_used": 0
+}

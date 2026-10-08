@@ -1,2 +1,7 @@
 # H58 reasoning exports intentionally use RFC 4180 CRLF record endings; retain them and do not flag CR as trailing whitespace.
 docs/downloads/*h58*reasoning.csv whitespace=cr-at-eol
+
+# Preserve RFC 4180 review exports and verbatim historical Markdown.
+evidence/*ctd5*.csv whitespace=cr-at-eol
+docs/downloads/*ctd5*.csv whitespace=cr-at-eol
+knowledge/archive/*.md whitespace=-blank-at-eol,-blank-at-eof

@@ -1,5 +1,5 @@
 {
- "n_priors_checked": 57,
+ "n_priors_checked": 62,
  "per_prior": [
   {
    "path": "data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
@@ -182,6 +182,20 @@
    "subset_of_prior": false,
    "superset_of_prior": false,
    "novel_vs_this": 36564
+  },
+  {
+   "path": "submission/gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif",
+   "prior_px": 12000,
+   "new_px": 37654,
+   "binary": true,
+   "support_definition": ">0 for binary",
+   "decoded_sha256": "b58bae0f0e32960f146608b947b59e683fd239eb49f9ddee0ad9bfa677b6201f",
+   "intersection": 90,
+   "jaccard": 0.0018158340731175854,
+   "identical": false,
+   "subset_of_prior": false,
+   "superset_of_prior": false,
+   "novel_vs_this": 37564
   },
   {
    "path": "submission/gems52-h52-cotrain-disagreement-emission-composite-37654px-r1.tif",
@@ -436,6 +450,34 @@
    "novel_vs_this": 36685
   },
   {
+   "path": "docs/downloads/ctd5-research.tif",
+   "prior_px": 12000,
+   "new_px": 37654,
+   "binary": true,
+   "support_definition": ">0 for binary",
+   "decoded_sha256": "b58bae0f0e32960f146608b947b59e683fd239eb49f9ddee0ad9bfa677b6201f",
+   "intersection": 90,
+   "jaccard": 0.0018158340731175854,
+   "identical": false,
+   "subset_of_prior": false,
+   "superset_of_prior": false,
+   "novel_vs_this": 37564
+  },
+  {
+   "path": "docs/downloads/gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif",
+   "prior_px": 12000,
+   "new_px": 37654,
+   "binary": true,
+   "support_definition": ">0 for binary",
+   "decoded_sha256": "b58bae0f0e32960f146608b947b59e683fd239eb49f9ddee0ad9bfa677b6201f",
+   "intersection": 90,
+   "jaccard": 0.0018158340731175854,
+   "identical": false,
+   "subset_of_prior": false,
+   "superset_of_prior": false,
+   "novel_vs_this": 37564
+  },
+  {
    "path": "docs/downloads/gems52-h52-cotrain-disagreement-emission-composite-37654px-r1.tif",
    "prior_px": 37654,
    "new_px": 37654,
@@ -674,6 +716,20 @@
    "novel_vs_this": 36203
   },
   {
+   "path": "docs/downloads/gems52-r4-B_only-37654px-b-only-research.tif",
+   "prior_px": 37654,
+   "new_px": 37654,
+   "binary": true,
+   "support_definition": ">0 for binary",
+   "decoded_sha256": "aad6a84cb25b775b6ec337b304f5fe20627273866792513ceea048c9cc41d767",
+   "intersection": 3029,
+   "jaccard": 0.04190705460783907,
+   "identical": false,
+   "subset_of_prior": false,
+   "superset_of_prior": false,
+   "novel_vs_this": 34625
+  },
+  {
    "path": "docs/downloads/gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif",
    "prior_px": 33517,
    "new_px": 37654,
@@ -798,6 +854,20 @@
    "subset_of_prior": false,
    "superset_of_prior": false,
    "novel_vs_this": 36669
+  },
+  {
+   "path": "docs/downloads/h60-candidate.tif",
+   "prior_px": 31000,
+   "new_px": 37654,
+   "binary": true,
+   "support_definition": ">0 for binary",
+   "decoded_sha256": "328bfcb8873e31f899f24a2574b719436e593f29a1b1d20a35dd670765565078",
+   "intersection": 325,
+   "jaccard": 0.004756399186289863,
+   "identical": false,
+   "subset_of_prior": false,
+   "superset_of_prior": false,
+   "novel_vs_this": 37329
   }
  ],
  "candidate_decoded_sha256": "5406fdcdcf46b0b1b005af09dcb8cca680920827ab11e1f277079c6637be6076",
@@ -806,10 +876,10 @@
  "research_publication_ok": true,
  "support_novelty_gate_ok": true,
  "gate_correction": "Original >=20% support novelty retained as a FAILED diagnostic, not silently waived for slot promotion. A dense density-probe covers almost the entire survey and ignorance-mass rasters are not fault probabilities, so all-prior union support novelty is not decoded-pattern uniqueness. Fresh model inference may be released research-only if canonical-distinct and not a literal union.",
- "union_px": 1396286,
- "novel_vs_all_priors": 17676,
- "novel_fraction": 0.46943219843841294,
- "prior_px_dropped": 1376308,
+ "union_px": 1405815,
+ "novel_vs_all_priors": 17610,
+ "novel_fraction": 0.4676793966112498,
+ "prior_px_dropped": 1385771,
  "relation_to_union": "strictly-novel-and-selective",
  "ok": true,
  "top_argument_ignored": false,

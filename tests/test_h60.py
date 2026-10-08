@@ -174,7 +174,7 @@ def test_metric_identity_used_by_the_amendment():
 
 def test_the_canonical_alias_is_not_counted_as_a_prior():
     """Measured after merging a parallel round: re-running the gate with
-    docs/downloads/h60-candidate.tif present reported novel_fraction = 0.0 and
+    docs/downloads/h60-cotrain-candidate.tif present reported novel_fraction = 0.0 and
     pattern_unique = False, because the alias is a copy of the candidate under a
     different basename and find_priors' basename exclusion (IR-52-026) cannot see it.
 
@@ -187,7 +187,7 @@ def test_the_canonical_alias_is_not_counted_as_a_prior():
     arr = rasterio.open(ROOT / "submission" / f"{art['name']}.tif").read(1)
     roots = ["data/scored", "data/reference", "submission", "docs/downloads"]
     roots = [str(ROOT / r) for r in roots if (ROOT / r).exists()]
-    alias = (ROOT / "docs/downloads/h60-candidate.tif").resolve()
+    alias = (ROOT / "docs/downloads/h60-cotrain-candidate.tif").resolve()
     naive = [p for p in GT.find_priors(roots, exclude=ROOT / "submission" / f"{art['name']}.tif")
              if Path(p).resolve() != alias]
     uniq = GT.uniqueness_report(arr, naive)

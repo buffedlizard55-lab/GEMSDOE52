@@ -47,8 +47,8 @@ FEATURES_PATH = "data/training_features.tif"
 # evidence/band_inventory.json which is written by scripts/prepare_data.py from the same read.
 BANDS = {
     1: "mag_anom", 2: "rtp", 3: "tmi_hg", 4: "geod_2ndinv", 5: "iso_grav_slope",
-    6: "mag_tilt_curvature",   # MIS-TAGGED IN THE SOURCE FILE: measured to be radiometric total
-                              # count, not a magnetic derivative -- see IR-52-019 and gems53 7: "geod_shearrate", 8: "geod_dilaterate", 9: "tmi_vg",
+    6: "mag_tilt_curvature",   # Disputed source identity; legacy A assignment is archived.
+    7: "geod_shearrate", 8: "geod_dilaterate", 9: "tmi_vg",
     10: "dist_to_eq", 11: "iso_grav_vg", 12: "det_elev", 13: "iso_grav_anom",
     14: "tmi", 15: "depth_to_base_surf", 16: "eq_density", 17: "cond_surf",
     18: "iso_grav_hg", 19: "det_elev_slope",

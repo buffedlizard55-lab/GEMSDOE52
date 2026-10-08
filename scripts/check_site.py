@@ -123,8 +123,12 @@ def check_h57_creditcore(DATA, DOCS, ROOT, notes):
 def check_h57(DATA, DOCS, ROOT, notes):
     """Every H57 gate re-read from the bytes, so the round can be audited on its own terms."""
     problems = []
-    sub = json.loads((DATA / "submission.json").read_text())
     b = json.loads((DATA / "h57_build.json").read_text())
+    filename = Path(b['artefact']).name
+    # Archive checks must use their own receipt, never another round's global pointer.
+    receipt = ROOT / 'evidence' / ('submission_' + Path(filename).stem + '.json')
+    sub = json.loads(receipt.read_text())
+    sub.update(download='downloads/' + filename, download_zip='downloads/' + Path(filename).stem + '.zip')
     gate = json.loads((DATA / "h57_slot_gate.json").read_text())
     # The scheduled feed owns docs/data/submission.json and rewrites it from
     # evidence/submission_<stem>.json, so anything round-specific that the feed does not copy
@@ -683,7 +687,8 @@ def main() -> int:
 
         sub_path = DATA / 'submission.json'
         sub = json.loads(sub_path.read_text()) if sub_path.exists() else {}
-        current_round = ('H58' if str(sub.get('file', '')).startswith('gems52-h58-')
+        current_round = ('H60' if str(sub.get('file', '')).startswith('gems52-h60-')
+                         else 'H58' if str(sub.get('file', '')).startswith('gems52-h58-')
                          else 'H57' if str(sub.get('file', '')).startswith('gems52-h57-')
                          else 'H56' if str(sub.get('file', '')).startswith('gems52-h56-')
                          else 'OTHER')
@@ -698,7 +703,7 @@ def main() -> int:
         if (DATA / "h58_result.json").is_file():
             problems.extend(check_h58(DATA, DOCS, ROOT, notes,
                                       current_round=(current_round == "H58")))
-        if current_round == 'H57':
+        if (DATA / 'h57_build.json').is_file():
             problems.extend(check_h57(DATA, DOCS, ROOT, notes))
             problems.extend(check_h57_creditcore(DATA, DOCS, ROOT, notes))
         if current_round == 'H56':

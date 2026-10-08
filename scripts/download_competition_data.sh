@@ -16,7 +16,7 @@ echo "[GEMSDOE52] Restoring and SHA-256 verifying competition data into: $TARGET
 # parses this line's argv against restore_data.py's real parser so it cannot regress.
 EXTRA_ARGS=()
 if [ "${GEMS_SKIP_LARGE:-0}" = "1" ]; then EXTRA_ARGS+=(--skip-large); fi
-if [ "${GEMS_ONLY:-}" != "" ]; then IFS=',' read -r -a _only <<< "$GEMS_ONLY"; EXTRA_ARGS+=(--only "${_only[*]}"); fi
+if [ "${GEMS_ONLY:-}" != "" ]; then EXTRA_ARGS+=(--only "$GEMS_ONLY"); fi
 python3 "$ROOT/scripts/restore_data.py" --target-dir "$TARGET_DIR" ${EXTRA_ARGS[@]+"${EXTRA_ARGS[@]}"}
 
 echo "[GEMSDOE52] Competition data placement and SHA-256 verification succeeded."

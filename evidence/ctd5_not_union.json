@@ -1,0 +1,8 @@
+{
+  "surface_equals_maximum": false,
+  "dots_equal_union_field": false,
+  "dots_equal_set_union": false,
+  "dots_equal_view_A": false,
+  "dots_equal_view_B": false,
+  "candidate_vs_union_field_different_pixels": 23798
+}

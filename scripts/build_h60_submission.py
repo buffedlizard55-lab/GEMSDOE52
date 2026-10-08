@@ -197,11 +197,11 @@ def main() -> int:
     prior_roots = ["data/scored", "data/reference", "submission", "docs/downloads"]
     # find_priors already excludes copies by *basename* (IR-52-026), which covers
     # docs/downloads/<name>.tif.  It cannot cover the canonical alias
-    # docs/downloads/h60-candidate.tif, whose basename differs from the artefact's; without
+    # docs/downloads/h60-cotrain-candidate.tif, whose basename differs from the artefact's; without
     # this exclusion a second run of the builder compares the artefact against its own
     # served alias and reports novel_fraction = 0.0 and pattern_unique = False, the one
     # verdict that would stop a legitimate submission.  Measured, not reasoned about.
-    alias = (DL / "h60-candidate.tif").resolve()
+    alias = (DL / "h60-cotrain-candidate.tif").resolve()
     priors = [p for p in GT.find_priors(prior_roots, exclude=SUB / f"{name}.tif")
               if Path(p).resolve() != alias]
     uniq = GT.uniqueness_report(arr, priors)
@@ -323,8 +323,8 @@ def main() -> int:
                    "Single-band float32 GeoTIFF, EPSG:32611, 3730x3292 at 100 m.\n"
                    f"Every pixel is finite and in {{0,1}}; {n_px} pixels are 1.\n"
                    "Submit the .tif (or this .zip) on the competition submission page.\n")
-    for dst in (DL / f"{name}.tif", DL / f"{name}.zip", DL / "h60-candidate.tif",
-                DL / "h60-candidate.zip"):
+    for dst in (DL / f"{name}.tif", DL / f"{name}.zip", DL / "h60-cotrain-candidate.tif",
+                DL / "h60-cotrain-candidate.zip"):
         shutil.copy2(zpath if dst.suffix == ".zip" else SUB / f"{name}.tif", dst)
     shutil.copy2(csv_path, DL / f"{name}-geology.csv")
 
