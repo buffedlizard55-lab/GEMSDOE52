@@ -86,6 +86,13 @@ def main() -> int:
     note = note[:200]
 
     fmt, uniq, nu = b["format"], b["uniqueness"], b["not_the_union"]
+    aud = json.loads((ROOT / "evidence/uniqueness_audit_h60c_20261008.json").read_text())
+    aud_pct = 100.0 * aud["share_of_candidate_px_inside_any_prior_support"]
+    aud_h33 = [100.0 * o["share_of_candidate_in_prior"] for o in aud["top_overlaps"]
+               if o["path"] == "data/reference/h33-2-b2-zeros.tif"]
+    if not aud_h33:
+        raise SystemExit("uniqueness receipt lacks h33-2-b2 overlap; refusing to publish a placeholder")
+    aud_h33 = aud_h33[0]
     indep = b["independence"]
 
     # ------------------------- h60c.html -------------------------
@@ -128,10 +135,10 @@ def main() -> int:
                 f'{b["emitted_px"]-b["core_px"]:,} bar-sized arm · nearest mapped catalogue pixel '
                 f'{nu["min_distance_to_catalogue_m"]} m</small></div>')
     page.append('<a class="button" href="downloads/h60c-candidate.tif" download>'
-                '↓ Download the submission TIFF (one click)</a>')
+                '↓ Download the TIFF (format-valid · NOT a unique submission)</a>')
     page.append('<a class="button" href="downloads/h60c-candidate.zip" download>'
                 '↓ Download the one-TIFF ZIP</a>')
-    page.append('<a class="button secondary" href="executive-summary.html">How to submit →</a>')
+    page.append('<a class="button secondary" href="h60c-submission-status.html">H60C status &amp; submit rule →</a>')
     page.append('</section>')
 
     page.append('<h2>1 · Why <code>h33-h33-2-b2</code> scored 0.2778</h2>')
@@ -309,7 +316,7 @@ def main() -> int:
               f'{{0,1}} · {uniq["n_priors_checked"]} priors compared · '
               f'nearest mapped catalogue pixel {nu["min_distance_to_catalogue_m"]} m</small></div>')
     es.append('<a class="button" href="downloads/h60c-candidate.tif" download>'
-              '↓ Download the submission TIFF (one click)</a>')
+              '↓ Download the TIFF (format-valid · NOT a unique submission)</a>')
     es.append('<a class="button" href="downloads/h60c-candidate.zip" download>'
               '↓ Download the one-TIFF ZIP</a>')
     es.append('<a class="button secondary" href="h60c.html">Full audit →</a></section>')
@@ -318,7 +325,7 @@ def main() -> int:
               '<th>answer of record</th></tr></thead><tbody>')
     for q, a in [
         ("OK to <b>download</b>?",
-         '<span class="pill ok">YES</span> — always; the file and every receipt are published for '
+         '<span class="pill ok">YES</span> — the file is format-valid and downloading it submits nothing; every receipt is published for '
          'audit.'),
         ("Format-safe for the portal?",
          '<span class="pill ok">YES</span> — single-band float32, EPSG:32611, '
@@ -327,19 +334,19 @@ def main() -> int:
          'NaN-bearing exports and cannot occur here: ' 
          '<code>gems52.grid.write_geotiff</code> refuses to write otherwise.'),
         ("Unique submission?",
-         f'<span class="pill ok">YES</span> — decoded pattern differs from all '
-         f'{uniq["n_priors_checked"]} aligned priors compared; novel fraction '
-         f'{uniq["novel_fraction"]*100:.1f} %; equals the union of no pair of priors; '
-         f'{nu["novel_vs_every_prior_support_px"]:,} px sit outside every prior\'s support.'),
+         f'<span class="pill bad">NO</span> — the decoded pattern is not byte-identical to any prior, '
+         f'but it is a derivative: {aud_pct:.1f} % of its cells lie inside prior-submission support and '
+         f'{aud_h33:.1f} % inside <code>h33-2-b2</code> alone (receipt: <code>evidence/uniqueness_audit_h60c_20261008.json</code>, '
+         'IR-UNQ-001).'),
         ("Not merely the union of the two views?",
          f'<span class="pill ok">YES</span> — Jaccard with the top-K of the plain union '
          f'max(p<sub>A</sub>, p<sub>B</sub>) is '
          f'{nu["jaccard_vs_topK_of_plain_union_max_pA_pB"]}, and with the top-K of the A-only '
          f'field {nu["jaccard_vs_topK_of_A_only_field"]}.'),
         ("OK to spend the <b>weekly slot</b>?",
-         '<span class="pill warn">DECIDE FROM THE AUDIT</span> — the core is the best-measured '
-         'mass this repository has; the arm\'s density is not measured and cannot be. See '
-         '<a href="h60c.html">§8</a>.'),
+         '<span class="pill bad">NO — NOT RECOMMENDED</span> — it fails the brief\'s unique-submission rule '
+         '(a derivative of prior pixels), and no holdout measurement beats the bar; the arm\'s density is '
+         'not measured and cannot be. See <a href="h60c.html">§8</a>.'),
         ("Is it a verified fault map?",
          '<span class="pill no">NO</span> — every pixel is a hypothesis for Phase-2 review; '
          'written reasoning and an explicit falsifier ship with each A-only candidate.'),
@@ -386,8 +393,11 @@ def main() -> int:
               'produced here.</div>')
     es.append('</main>')
     es.append(foot())
-    (DOCS / "executive-summary.html").write_text("\n".join(es))
-    print("wrote docs/executive-summary.html")
+    # The executive summary is the CTD5-era submission guide and is governed by the CTD5 release
+    # contract (scripts/check_ctd5_release.py, scripts/check_site.py). This publisher no longer
+    # overwrites it; H60C status and its download live on docs/h60c.html (IR-UNQ-001).
+    (DOCS / "h60c-submission-status.html").write_text("\n".join(es))
+    print("wrote docs/h60c-submission-status.html")
 
     (SUB / "H60C_LATEST.txt").write_text(
         f"{stem}.tif\nsha256 {sha}\nbytes {b['bytes']}\n"

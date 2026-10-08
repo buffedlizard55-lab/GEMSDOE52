@@ -1,0 +1,166 @@
+{
+  "evidence_class": "uniqueness diagnostic, not a score",
+  "candidate": "submission/gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif",
+  "candidate_file_sha256": "a6e6e44aebaf057989e254bd5ce3729e5a94836c0e5687a95e91e3fc8a40c686",
+  "candidate_nonzero": 12000,
+  "sample": "data/sample_submission.tif",
+  "footprint_px": 5167373,
+  "priors_offered": 61,
+  "self_copies_excluded": [
+    "docs/downloads/ctd5-research.tif",
+    "docs/downloads/gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif"
+  ],
+  "priors_after_byte_dedupe": 31,
+  "phases": {
+    "surface": {
+      "phase": "surface",
+      "rule": "STOP at rho >0.90 or directed <=3px dot proximity >0.70; no lane retuning",
+      "evidence_class": "uniqueness diagnostic, not a score",
+      "priors_checked": 31,
+      "distinct_decoded_priors": 30,
+      "candidate_decoded_sha256": "b58bae0f0e32960f146608b947b59e683fd239eb49f9ddee0ad9bfa677b6201f",
+      "rank_pixels": 5167373,
+      "exact_full_eligible_rank": true,
+      "max_spearman": 0.0037491418696865343,
+      "max_near_3px_fraction": null,
+      "rank_threshold": 0.9,
+      "near_threshold": 0.7,
+      "duplicate": false,
+      "offender_count": 0,
+      "error_count": 0,
+      "ok": true,
+      "scope": "Supplied aligned immutable public inventory only; private/release/external artifacts not proven absent.",
+      "top_spearman": [
+        {
+          "path": "submission/gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif",
+          "spearman": 0.003749
+        },
+        {
+          "path": "submission/gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif",
+          "spearman": 0.003194
+        },
+        {
+          "path": "docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-nan.tif",
+          "spearman": 0.000602
+        },
+        {
+          "path": "docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-zeros.tif",
+          "spearman": 0.000602
+        },
+        {
+          "path": "submission/gems52-h60-unionmax-37654px-20261008T185134Z-5406fdcdcf46-zeros.tif",
+          "spearman": 0.000121
+        }
+      ],
+      "top_near_3px": [],
+      "offenders": []
+    },
+    "dots": {
+      "phase": "dots",
+      "rule": "STOP at rho >0.90 or directed <=3px dot proximity >0.70; no lane retuning",
+      "evidence_class": "uniqueness diagnostic, not a score",
+      "priors_checked": 31,
+      "distinct_decoded_priors": 30,
+      "candidate_decoded_sha256": "b58bae0f0e32960f146608b947b59e683fd239eb49f9ddee0ad9bfa677b6201f",
+      "rank_pixels": 5167373,
+      "exact_full_eligible_rank": true,
+      "max_spearman": 0.0037491418696865343,
+      "max_near_3px_fraction": 1.0,
+      "rank_threshold": 0.9,
+      "near_threshold": 0.7,
+      "duplicate": true,
+      "offender_count": 1,
+      "error_count": 0,
+      "ok": false,
+      "scope": "Supplied aligned immutable public inventory only; private/release/external artifacts not proven absent.",
+      "top_spearman": [
+        {
+          "path": "submission/gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif",
+          "spearman": 0.003749
+        },
+        {
+          "path": "submission/gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif",
+          "spearman": 0.003194
+        },
+        {
+          "path": "docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-nan.tif",
+          "spearman": 0.000602
+        },
+        {
+          "path": "docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-zeros.tif",
+          "spearman": 0.000602
+        },
+        {
+          "path": "submission/gems52-h60-unionmax-37654px-20261008T185134Z-5406fdcdcf46-zeros.tif",
+          "spearman": 0.000121
+        }
+      ],
+      "top_near_3px": [
+        {
+          "path": "data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+          "near_3px_fraction": 1.0
+        },
+        {
+          "path": "submission/gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif",
+          "near_3px_fraction": 0.271917
+        },
+        {
+          "path": "data/scored/8GEMSDOE_Hedge-v2_submission.tif",
+          "near_3px_fraction": 0.255833
+        },
+        {
+          "path": "data/scored/gemsdoe-ens12-adopted-7f00890a.tif",
+          "near_3px_fraction": 0.21
+        },
+        {
+          "path": "docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-nan.tif",
+          "near_3px_fraction": 0.197833
+        }
+      ],
+      "offenders": [
+        "data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif"
+      ]
+    }
+  },
+  "max_jaccard": 0.00336,
+  "max_jaccard_prior": "submission/gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif",
+  "candidate_px_inside_any_prior_support": 1965,
+  "share_of_candidate_px_inside_any_prior_support": 0.16375,
+  "top_overlaps": [
+    {
+      "path": "submission/gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif",
+      "prior_support": 31000,
+      "intersection": 144,
+      "jaccard": 0.00336,
+      "share_of_candidate_in_prior": 0.012
+    },
+    {
+      "path": "submission/gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif",
+      "prior_support": 37654,
+      "intersection": 155,
+      "jaccard": 0.003131,
+      "share_of_candidate_in_prior": 0.012917
+    },
+    {
+      "path": "data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "prior_support": 206895,
+      "intersection": 482,
+      "jaccard": 0.002207,
+      "share_of_candidate_in_prior": 0.040167
+    },
+    {
+      "path": "docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-nan.tif",
+      "prior_support": 41200,
+      "intersection": 109,
+      "jaccard": 0.002053,
+      "share_of_candidate_in_prior": 0.009083
+    },
+    {
+      "path": "docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-zeros.tif",
+      "prior_support": 41200,
+      "intersection": 109,
+      "jaccard": 0.002053,
+      "share_of_candidate_in_prior": 0.009083
+    }
+  ]
+}

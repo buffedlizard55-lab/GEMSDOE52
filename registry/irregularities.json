@@ -1087,6 +1087,61 @@
    "disposition": "Do not use CTD5 values as valid promotion evidence; new preregistration and experiment required."
   },
   {
+   "id": "IR-UNQ-001",
+   "round": "H60C (audit 2026-10-08)",
+   "severity": "critical",
+   "status": "open - README correction published; H60C generator text still to be corrected",
+   "title": "H60C is presented as the headline download but is not a unique submission",
+   "what_it_is": "35,185 emitted cells, of which 28,292 (80.4%) lie inside the support of some prior submission; 25,781 (73.3%) inside data/reference/h33-2-b2-zeros.tif alone; max single-file Jaccard 0.5909 with the H57 file gems57-h57-credit-core25517-plus-novel8000 (its 25,517-px core is shared). The 25,517-px core is the measured-credit core of prior submissions, so the file is a derivative of prior pixels, not a new prediction.",
+   "how_we_know": "evidence/uniqueness_audit_h60c_20261008.json (scripts/audit_uniqueness.py). Cross-checked by direct pixel arithmetic: data/reference/h33-2-b2-zeros.tif (37,654 px) is an exact subset of data/scored/gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif (44,090 px); the difference is 6,436 px.",
+   "handling": "README states H60C is format-valid but NOT unique. Its download is format-valid only. No slot is spent. H60C is not offered as meeting the unique-submission requirement.",
+   "disposition": "Do not present H60C as the unique submission. CTD5 is the only decoded-unique file; its negative holdout is reported with it."
+  },
+  {
+   "id": "IR-UNQ-002",
+   "round": "CTD5 / shared lane gate",
+   "severity": "high",
+   "status": "open - needs an explicit policy decision; threshold NOT changed",
+   "title": "Dot-proximity gate is practically unpassable against the registry's s5 lattice",
+   "what_it_is": "The 13GEMSDOE spacing-five lattice (data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif, 206,895 px) is within 3 px of 99.87% of the 5,167,373-px sample footprint (5,160,724 px). The 6,649 uncovered px are 99% within 3 px of the footprint edge (6,580 px). A dot raster passes only if at least 30% of its dots lie on that rim.",
+   "how_we_know": "Distance-transform check on the finite footprint of data/sample_submission.tif (SHA-256 pin verified by scripts/restore_data.py). evidence/uniqueness_audit_ctd5_20261008.json reports near_3px_fraction 1.0 for CTD5 and 0.9987 for H60C.",
+   "handling": "Threshold and gate unchanged. Reported as FAIL with measured coverage. Not reported as proof that any raster is a duplicate of the lattice.",
+   "disposition": "Organizer-policy / human decision: either exclude the lattice from the proximity registry prospectively (recorded before any new candidate is built), or accept that no dot candidate can pass the literal gate."
+  },
+  {
+   "id": "IR-UNQ-003",
+   "round": "CTD5 saturation receipt",
+   "severity": "medium",
+   "status": "open - three footprint counts in the repository; reconciliation not done",
+   "title": "Three different 'footprint' pixel counts are in use",
+   "what_it_is": "The competition sample finite footprint is 5,167,373 px (used by H60/H60C receipts and by the gate audit here). The CTD5 feature-derived mask has footprint_pixels 5,164,300 and eligible_pixels 4,593,171 (docs/data/ctd5_masks.json), and the saturation receipt (docs/data/ctd5_registry_saturation.json) reports its 100% coverage on the 4,593,171 eligible set. The saturation receipt is therefore not on the same footprint as the competition sample.",
+   "how_we_know": "docs/data/ctd5_masks.json (footprint_pixels, eligible_pixels), docs/data/ctd5_registry_saturation.json (eligible_pixels), and the sample footprint recomputed in this audit (5,167,373 px).",
+   "handling": "Both numbers are kept. The README uses 5,167,373 px and states the 4,593,171 figure is the CTD5 eligible set. The rule for deriving the CTD5 eligible set was not re-audited in this session.",
+   "disposition": "Review: explain why CTD5 eligibility removes 571,129 px from its 5,164,300-px feature footprint (a further 3,073 px separate the feature footprint from the 5,167,373-px sample footprint; 574,202 px in total), then either reproduce the saturation receipt on the sample footprint or retire it."
+  },
+  {
+   "id": "IR-UNQ-004",
+   "round": "Session 2026-10-08 (leaderboard review)",
+   "severity": "high",
+   "status": "open - external verification impossible from this sandbox",
+   "title": "Live competition and leaderboard pages cannot be verified from this sandbox",
+   "what_it_is": "The sandbox allows only github.com, codeload.github.com, api.github.com, registry.npmjs.org, pypi.org and files.pythonhosted.org. drivendata.org, usgs.gov, gbcge.org, epsg.io and wikipedia are not on that list. The brief quotes several different 'current top' values (0.3774 and 0.3195), and the owner-reported 0.2778 for H33. None of these is organizer-confirmed here.",
+   "how_we_know": "Network policy of this session. The only score source available is the owner-supplied brief and owner repositories; registry/leaderboard_snapshot_2026-10-07.json is an owner snapshot, not an organizer feed.",
+   "handling": "No leaderboard number is written as ORGANIZER-CONFIRMED. 0.2778 stays OWNER-REPORTED.",
+   "disposition": "Human to paste the current leaderboard page text or an organizer receipt into registry/ if comparison is required. No credentials are needed for this."
+  },
+  {
+   "id": "IR-UNQ-005",
+   "round": "publish_h60c_site.py (2026-10-08)",
+   "severity": "high",
+   "status": "resolved in this session",
+   "title": "H60C publisher overwrote the CTD5 submission guide (docs/executive-summary.html)",
+   "what_it_is": "scripts/publish_h60c_site.py wrote docs/executive-summary.html as an H60C download guide on every run. That broke the CTD5 release contract (scripts/check_ctd5_release.py and scripts/check_site.py reported failures) and made the guide present a non-unique file as the default download.",
+   "how_we_know": "Re-running the publisher produced a diff in docs/executive-summary.html; check_site.py then reported 4 problems and check_ctd5_release.py failed its 'DO NOT SUBMIT' assertion.",
+   "handling": "Publisher now writes docs/h60c-submission-status.html and no longer touches executive-summary.html; executive-summary.html restored byte-for-byte from HEAD; H60C 'How to submit' button repointed. check_site.py reports 0 failure marks; pytest 264 passed.",
+   "disposition": "Closed. Any future publisher must not write shared guide pages without the release checks."
+  },
+  {
    "id": "IR-H60D-001",
    "round": "H60D",
    "session": "2026-10-08",
