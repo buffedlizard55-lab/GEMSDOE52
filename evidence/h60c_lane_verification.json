@@ -1,0 +1,315 @@
+{
+  "artifact": "gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif",
+  "footprint_px": 5167373,
+  "grid": [
+    3730,
+    3292
+  ],
+  "crs_transform_ok": true,
+  "format_gate": {
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "min": 0.0,
+    "max": 1.0,
+    "n_nan": 0,
+    "n_nonzero": 12000,
+    "mass": 12000.0,
+    "mass_outside_footprint": 0,
+    "sha256": "a6e6e44aebaf057989e254bd5ce3729e5a94836c0e5687a95e91e3fc8a40c686",
+    "bytes": 83917,
+    "ok": true,
+    "problems": []
+  },
+  "registry_missing": [],
+  "lane_gate_surface": {
+    "priors_checked": 13,
+    "distinct_decoded": 13,
+    "max_spearman": 0.00048352350452555135,
+    "max_near_3px_fraction": null,
+    "duplicate": false,
+    "offender_count": 0,
+    "ok": true,
+    "per_prior": [
+      {
+        "registry": "A_h33_2_b2 (owner-reported 0.2778)",
+        "path": "h33-2-b2-zeros.tif",
+        "spearman": -0.001959037340451822,
+        "near_3px": null,
+        "rank_duplicate": false,
+        "near_duplicate": false,
+        "identical": false
+      },
+      {
+        "registry": "B_d2_8 (owner-reported 0.2600)",
+        "path": "gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+        "spearman": -0.0022900321146962803,
+        "near_3px": null,
+        "rank_duplicate": false,
+        "near_duplicate": false,
+        "identical": false
+      },
+      {
+        "registry": "C_d1_5 (owner-reported 0.2477)",
+        "path": "gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+        "spearman": -0.003019274010872359,
+        "near_3px": null,
+        "rank_duplicate": false,
+        "near_duplicate": false,
+        "identical": false
+      },
+      {
+        "registry": "D_gems27_tgc (owner-reported 0.2449)",
+        "path": "gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
+        "spearman": -0.0028742809639280506,
+        "near_3px": null,
+        "rank_duplicate": false,
+        "near_duplicate": false,
+        "identical": false
+      },
+      {
+        "registry": "E_h19_5 (owner-reported 0.1922)",
+        "path": "gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif",
+        "spearman": -0.0042861424221987,
+        "near_3px": null,
+        "rank_duplicate": false,
+        "near_duplicate": false,
+        "identical": false
+      },
+      {
+        "registry": "F_h19_4 (owner-reported 0.1894)",
+        "path": "gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif",
+        "spearman": -0.0047183787470047355,
+        "near_3px": null,
+        "rank_duplicate": false,
+        "near_duplicate": false,
+        "identical": false
+      },
+      {
+        "registry": "G_h16_1 (owner-reported 0.1855)",
+        "path": "gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif",
+        "spearman": -0.0047514479965604685,
+        "near_3px": null,
+        "rank_duplicate": false,
+        "near_duplicate": false,
+        "identical": false
+      },
+      {
+        "registry": "H_gems10_h28 (owner-reported 0.1839)",
+        "path": "gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif",
+        "spearman": -0.0005903843433750487,
+        "near_3px": null,
+        "rank_duplicate": false,
+        "near_duplicate": false,
+        "identical": false
+      },
+      {
+        "registry": "I_Hedge-v2 (owner-reported 0.1563)",
+        "path": "8GEMSDOE_Hedge-v2_submission.tif",
+        "spearman": -0.004690221594608039,
+        "near_3px": null,
+        "rank_duplicate": false,
+        "near_duplicate": false,
+        "identical": false
+      },
+      {
+        "registry": "K_gems10_h25 (owner-reported 0.1280)",
+        "path": "gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif",
+        "spearman": -0.0021519483361736717,
+        "near_3px": null,
+        "rank_duplicate": false,
+        "near_duplicate": false,
+        "identical": false
+      },
+      {
+        "registry": "L_13gems_lattice_s5 (owner-reported 0.0904)",
+        "path": "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+        "spearman": 3.148640309199487e-05,
+        "near_3px": null,
+        "rank_duplicate": false,
+        "near_duplicate": false,
+        "identical": false
+      },
+      {
+        "registry": "M_gemsdoe9 (owner-reported 0.0107)",
+        "path": "gemsdoe9-PLACEHOLDER-2314b599.tif",
+        "spearman": 0.00048352350452555135,
+        "near_3px": null,
+        "rank_duplicate": false,
+        "near_duplicate": false,
+        "identical": false
+      },
+      {
+        "registry": "ens12_adopted (owner-reported 0.1563)",
+        "path": "gemsdoe-ens12-adopted-7f00890a.tif",
+        "spearman": -0.002518876758613162,
+        "near_3px": null,
+        "rank_duplicate": false,
+        "near_duplicate": false,
+        "identical": false
+      }
+    ]
+  },
+  "lane_gate_dots": {
+    "priors_checked": 13,
+    "distinct_decoded": 13,
+    "max_spearman": 0.00048352350452555135,
+    "max_near_3px_fraction": 1.0,
+    "duplicate": true,
+    "offender_count": 1,
+    "ok": false,
+    "per_prior": [
+      {
+        "registry": "A_h33_2_b2 (owner-reported 0.2778)",
+        "path": "h33-2-b2-zeros.tif",
+        "spearman": -0.001959037340451822,
+        "near_3px": 0.10633333333333334,
+        "rank_duplicate": false,
+        "near_duplicate": false,
+        "identical": false
+      },
+      {
+        "registry": "B_d2_8 (owner-reported 0.2600)",
+        "path": "gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+        "spearman": -0.0022900321146962803,
+        "near_3px": 0.11433333333333333,
+        "rank_duplicate": false,
+        "near_duplicate": false,
+        "identical": false
+      },
+      {
+        "registry": "C_d1_5 (owner-reported 0.2477)",
+        "path": "gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+        "spearman": -0.003019274010872359,
+        "near_3px": 0.12016666666666667,
+        "rank_duplicate": false,
+        "near_duplicate": false,
+        "identical": false
+      },
+      {
+        "registry": "D_gems27_tgc (owner-reported 0.2449)",
+        "path": "gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
+        "spearman": -0.0028742809639280506,
+        "near_3px": 0.12641666666666668,
+        "rank_duplicate": false,
+        "near_duplicate": false,
+        "identical": false
+      },
+      {
+        "registry": "E_h19_5 (owner-reported 0.1922)",
+        "path": "gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif",
+        "spearman": -0.0042861424221987,
+        "near_3px": 0.13675,
+        "rank_duplicate": false,
+        "near_duplicate": false,
+        "identical": false
+      },
+      {
+        "registry": "F_h19_4 (owner-reported 0.1894)",
+        "path": "gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif",
+        "spearman": -0.0047183787470047355,
+        "near_3px": 0.14533333333333334,
+        "rank_duplicate": false,
+        "near_duplicate": false,
+        "identical": false
+      },
+      {
+        "registry": "G_h16_1 (owner-reported 0.1855)",
+        "path": "gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif",
+        "spearman": -0.0047514479965604685,
+        "near_3px": 0.15633333333333332,
+        "rank_duplicate": false,
+        "near_duplicate": false,
+        "identical": false
+      },
+      {
+        "registry": "H_gems10_h28 (owner-reported 0.1839)",
+        "path": "gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif",
+        "spearman": -0.0005903843433750487,
+        "near_3px": 0.2664166666666667,
+        "rank_duplicate": false,
+        "near_duplicate": false,
+        "identical": false
+      },
+      {
+        "registry": "I_Hedge-v2 (owner-reported 0.1563)",
+        "path": "8GEMSDOE_Hedge-v2_submission.tif",
+        "spearman": -0.004690221594608039,
+        "near_3px": 0.25583333333333336,
+        "rank_duplicate": false,
+        "near_duplicate": false,
+        "identical": false
+      },
+      {
+        "registry": "K_gems10_h25 (owner-reported 0.1280)",
+        "path": "gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif",
+        "spearman": -0.0021519483361736717,
+        "near_3px": 0.2505833333333333,
+        "rank_duplicate": false,
+        "near_duplicate": false,
+        "identical": false
+      },
+      {
+        "registry": "L_13gems_lattice_s5 (owner-reported 0.0904)",
+        "path": "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+        "spearman": 3.148640309199487e-05,
+        "near_3px": 1.0,
+        "rank_duplicate": false,
+        "near_duplicate": true,
+        "identical": false
+      },
+      {
+        "registry": "M_gemsdoe9 (owner-reported 0.0107)",
+        "path": "gemsdoe9-PLACEHOLDER-2314b599.tif",
+        "spearman": 0.00048352350452555135,
+        "near_3px": 0.06775,
+        "rank_duplicate": false,
+        "near_duplicate": false,
+        "identical": false
+      },
+      {
+        "registry": "ens12_adopted (owner-reported 0.1563)",
+        "path": "gemsdoe-ens12-adopted-7f00890a.tif",
+        "spearman": -0.002518876758613162,
+        "near_3px": 0.21,
+        "rank_duplicate": false,
+        "near_duplicate": false,
+        "identical": false
+      }
+    ]
+  },
+  "novelty": {
+    "n_priors_checked": 13,
+    "canonical_pattern_unique": true,
+    "equals_literal_prior_union": false,
+    "research_publication_ok": true,
+    "relation_to_union": "strictly-novel-and-selective",
+    "novel_fraction": 0.873
+  },
+  "registry_saturation": {
+    "lattice": "13GEMSDOE spacing-5 (owner-reported 0.0904)",
+    "eligible_px": 5167373,
+    "eligible_px_within_3px_of_lattice": 5160724,
+    "eligible_fraction_within_3px": 0.9987132726822701,
+    "implication": "the >70% directed <=3px lane gate is impassable for ANY nonempty prediction on this frozen footprint"
+  },
+  "verdict": {
+    "unique_not_a_copy": true,
+    "lane_uniqueness_gate_pass": false,
+    "format_valid": true,
+    "duplicate_log_and_stop": true,
+    "download_ok": true,
+    "submission_ok": false,
+    "reason": "Decoded predictions are newly inferred (not a copy, not a literal prior union), but the frozen 13GEMSDOE spacing-5 lattice saturates the eligible footprint so the >70% directed <=3px lane gate fires for every nonempty raster -> log duplicate and stop. Research-only; no weekly slot used."
+  }
+}
