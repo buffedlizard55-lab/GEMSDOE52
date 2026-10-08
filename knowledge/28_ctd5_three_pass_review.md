@@ -39,3 +39,11 @@ Remote CI/PR status is reported from the actual GitHub check and merge receipts,
 ## Remaining limitations
 
 CTD5 is a **negative** deliverable. It does not meet the requested strict unique-lane submission condition, and no matched-budget improvement is established. Organizer-authenticated inputs, score receipts, current weekly allowance, band identity and geological field validation remain unresolved. The default feature footprint and OOF model seams limit generalization. Prior source summaries from non-GitHub hosts remain dated; they are not fresh official verification. See `knowledge/27_ctd5_results_and_limits.md` and the single `evidence/ctd5_run_card.json` for the scientific verdict.
+
+## Final scope correction — no post-stop rerun
+
+A final inspection found that the inherited v1 split extends evaluation/placement masks along withheld fault tails. This exposes label-informed geometry even though no training component overlaps truth. The affected geometry is recorded in `ctd5_validation_scope_correction.json`: 2,381 extra eligible pixels and 217 withheld positives across the four folds. No effect size or corrected DTI is claimed.
+
+The shared `spatial.folds` now has label-blind fixed quadrants, hides every intersecting original component in full, and buffers the full hidden extent. A synthetic regression proves that moving hidden traces cannot change the evaluation region. The old helper is explicitly reproduction-only for the rejected CTD5 receipt. The TIFF and its hash did not change; no model was fitted or new placement made. `strict_holdout_valid=false` is explicit in the run card and on the current pages.
+
+Post-correction validation: **264 tests passed**, no failures; site checker and unchanged-TIFF release checker passed. Second concurrent H60 result preserved and audited separately, bringing closure scope to 543 files / 362 decoded patterns. Corrected v2 full-data scientific evaluation was deliberately NOT run after STOP.

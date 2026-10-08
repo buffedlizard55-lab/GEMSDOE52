@@ -154,7 +154,7 @@ def main():
     if not budget_complete: blockers.append('one or more holdout candidate folds could not fill their fixed dot budget')
     if int((emitted>0).sum()) != reg['global_budget']: blockers.append('final positive-support capacity below registered budget')
     if not dot_receipt['ok']: blockers.append('strict parallel-lane duplicate/inventory gate failed')
-    blockers += ['owner-mirror inputs are not organizer-authenticated','private/release/external registry coverage unknown','no separate selector decision or current weekly-cap receipt']
+    blockers += ['legacy label-informed evaluation tail halos invalidate strict hide-and-recover promotion evidence', 'owner-mirror inputs are not organizer-authenticated','private/release/external registry coverage unknown','no separate selector decision or current weekly-cap receipt']
     card=dict(run_id=reg['run_id'],generated_utc=datetime.now(timezone.utc).isoformat(),
         hypothesis='CTD5-H1: cover-matched geophysical-to-surface-abstention transfer',
         mechanism='Training-only cover-stratified class weights; one whole-component confident-to-abstaining exchange; asymmetric OOF disagreement; 3px sparse placement.',
@@ -162,6 +162,8 @@ def main():
         holdout_dti=holdout['scores']['disagreement'],best_comparable_control=dict(name=best,**holdout['scores'][best]),
         paired_delta_vs_best=delta,holdout_budgets_complete=budget_complete,
         matched_budget_comparison_valid=budget_complete,
+        strict_holdout_valid=False,
+        validation_warning='Legacy v1 evaluation tail halos depend on withheld labels; placement geometry may leak location. Exploratory only, not strict promotion evidence. Shared default splitter is corrected v2; no rerun after STOP.',
         comparison_warning='Descriptive HOLDOUT-DTI only: a candidate fold missed its budget. Best control means best evaluated control, not a valid matched-budget win.' if not budget_complete else None,
         correlation_overlap_vs_registry=dict(priors_checked=dot_receipt['priors_checked'],distinct_decoded_priors=dot_receipt['distinct_decoded_priors'],
             surface_max_spearman=surface_receipt['max_spearman'],final_max_spearman=dot_receipt['max_spearman'],

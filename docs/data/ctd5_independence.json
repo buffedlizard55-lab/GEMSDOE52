@@ -20874,5 +20874,6 @@
   ],
   "evidence_class": "HOLDOUT-DTI diagnostic: OOF negative errors; not a DTI score",
   "evaluator_version": "gems52-pooled-hide-v1",
-  "withheld_positive_pixels": 53186
+  "withheld_positive_pixels": 53186,
+  "strict_holdout_warning": "Legacy v1 evaluation tail halos depend on withheld labels; placement geometry may leak location. Values are exploratory, not strict promotion evidence. Shared default splitter corrected to label-blind v2; no refit, new placement or new score after STOP."
 }

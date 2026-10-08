@@ -1074,6 +1074,17 @@
    "how_we_know": "Read band 10 directly with rasterio, applied the official nodata sentinel filter, and took percentiles over the 5,165,840-px footprint: min 0.0, p1 118.3, p50 622.8, p99 50,237.2, max 4,962,515.0, with mean(v > 329000) = 0.0041287.",
    "handling": "Layers derived from band 10 are rank-encoded before any learner sees them, so the tail is compressed to a single extreme rank rather than dominating a linear model; the layer A_eq_dist_negrank is kept but must not be read as a physical distance. Flagged because any future use of band 10 as a metres-valued quantity (a buffer, a threshold, a decay length) would silently mis-handle those pixels.",
    "evidence": "evidence/r4_layers_smoke.json"
+  },
+  {
+   "id": "IR-CTD5-012",
+   "round": "CTD5",
+   "severity": "critical",
+   "status": "shared default fixed; historical assay invalid; no rerun",
+   "title": "Legacy holdout evaluation halos follow withheld fault tails",
+   "what_it_is": "Outside fixed quadrants the evaluation/placement extent follows hidden labels plus a 3px halo, exposing location to emission even without training overlap.",
+   "how_we_know": "src/gems52/spatial.py legacy helper; evidence/ctd5_validation_scope_correction.json",
+   "handling": "Default folds are now label-blind v2; all intersecting segments are hidden whole and buffered. Retain legacy helper only for reproducing rejected CTD5. Flag strict_holdout_valid=false everywhere; no post-stop refit or new placement.",
+   "disposition": "Do not use CTD5 values as valid promotion evidence; new preregistration and experiment required."
   }
  ]
 }

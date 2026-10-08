@@ -1,0 +1,74 @@
+{
+  "upstream_commit": "66bc75dfc56f5b917770ae9af3b7d68d0bbb7767",
+  "prior_path": "submission/gems52-h60-unionmax-37654px-20261008T185134Z-5406fdcdcf46-zeros.tif",
+  "prior_sha256": "59abe557302c158463911f388bcf2ec7edafc511e6948f431f3fee339f947333",
+  "surface": {
+    "phase": "surface",
+    "rule": "STOP at rho >0.90 or directed <=3px dot proximity >0.70; no lane retuning",
+    "evidence_class": "uniqueness diagnostic, not a score",
+    "priors_checked": 1,
+    "distinct_decoded_priors": 1,
+    "candidate_decoded_sha256": "6a12b7a828a8569ddbe42a99c1ab8ed792d8126902ac5d3e2689a652b4b18efe",
+    "rank_pixels": 4593171,
+    "exact_full_eligible_rank": true,
+    "max_spearman": -0.0015944197133758698,
+    "max_near_3px_fraction": null,
+    "rank_threshold": 0.9,
+    "near_threshold": 0.7,
+    "duplicate": false,
+    "offender_count": 0,
+    "error_count": 0,
+    "ok": true,
+    "scope": "Supplied aligned immutable public inventory only; private/release/external artifacts not proven absent.",
+    "per_prior": [
+      {
+        "path": "submission/gems52-h60-unionmax-37654px-20261008T185134Z-5406fdcdcf46-zeros.tif",
+        "decoded_sha256": "5406fdcdcf46b0b1b005af09dcb8cca680920827ab11e1f277079c6637be6076",
+        "binary_on_footprint": true,
+        "spearman": -0.0015944197133758698,
+        "identical": false,
+        "constant_prior": false,
+        "rank_duplicate": false
+      }
+    ]
+  },
+  "dots": {
+    "phase": "dots",
+    "rule": "STOP at rho >0.90 or directed <=3px dot proximity >0.70; no lane retuning",
+    "evidence_class": "uniqueness diagnostic, not a score",
+    "priors_checked": 1,
+    "distinct_decoded_priors": 1,
+    "candidate_decoded_sha256": "b58bae0f0e32960f146608b947b59e683fd239eb49f9ddee0ad9bfa677b6201f",
+    "rank_pixels": 4593171,
+    "exact_full_eligible_rank": true,
+    "max_spearman": 0.00041582989445626046,
+    "max_near_3px_fraction": 0.16791666666666666,
+    "rank_threshold": 0.9,
+    "near_threshold": 0.7,
+    "duplicate": false,
+    "offender_count": 0,
+    "error_count": 0,
+    "ok": true,
+    "scope": "Supplied aligned immutable public inventory only; private/release/external artifacts not proven absent.",
+    "per_prior": [
+      {
+        "path": "submission/gems52-h60-unionmax-37654px-20261008T185134Z-5406fdcdcf46-zeros.tif",
+        "decoded_sha256": "5406fdcdcf46b0b1b005af09dcb8cca680920827ab11e1f277079c6637be6076",
+        "binary_on_footprint": true,
+        "spearman": 0.00041582989445626046,
+        "identical": false,
+        "constant_prior": false,
+        "rank_duplicate": false,
+        "candidate_dots": 12000,
+        "prior_proposals": 37654,
+        "near_3px_fraction": 0.16791666666666666,
+        "positive_support_near_3px_fraction": 0.16791666666666666,
+        "support_rule": ">0 binary; >=0.5 continuous (shared template)",
+        "near_duplicate": false
+      }
+    ]
+  },
+  "new_fits": 0,
+  "new_placements": 0,
+  "original_negative_stop_retained": true
+}
