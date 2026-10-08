@@ -1,6 +1,6 @@
 {
   "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified.",
-  "generated": "2026-10-07T02:35Z + H57 session 2026-10-07",
+  "generated": "2026-10-08T00:03Z + H58 run/post-run audit",
   "entries": [
     {
       "id": "IR-30-029",
@@ -481,6 +481,54 @@
       "disposition": "evidence/h57_validation.json placement and evidence/h57_strata.json combined."
     },
     {
+      "id": "IR-57-101",
+      "title": "The two-view co-training arm is refuted by its own pre-registered test (credited-core alternate round)",
+      "status": "open / disclosed",
+      "what_it_is": "H57-2 proposed a Blum & Mitchell two-view co-training emission. Its frozen validation (independence Spearman < 0.6 to proceed) returned Spearman 0.637 / Pearson 0.706 on 33 spatial blocks, and the joint model's top-5000 catalogue density (0.0236) did not beat the View-B single view (0.0244). The arm is ABANDONED as a scored candidate.",
+      "how_we_know": "evidence/gems57_validate.json (scripts/build_h57_cotrain.py --stage validate, exit 0); density and independence blocks recorded there; scripts/build_h57_emit.py carries the same disclosure in every artifact it writes.",
+      "disposition": "Not promoted. `--stage cotrain` / `--stage build` were deliberately never run. work/cache/gridscore_joint.npy is reused ONLY as ranker material for the H57 novel arm; the shipped metric bracket credits it with no validated gain, and the site/README/LATEST.txt state the refutation next to the download button."
+    },
+    {
+      "id": "IR-57-102",
+      "title": "The prior family's per-cell credit allocation is under-determined; only an interval is knowable (credited-core alternate round)",
+      "status": "open / quantified",
+      "what_it_is": "Thirteen owner-reported scores plus the |G| = 14,088.7 px anchor identify the family's total credit but not its per-cell allocation: 574 coverage patterns vs 13 equations. A linear program gives the honest interval for the 25,517-cell credited core: [4,079.1, 5,249.2] px of credit (0.5 % slack on the 4-decimal reported scores). Adding 'more detectors agreeing implies not-less credit' makes the system INFEASIBLE \u2014 the reported scores contradict that monotone-consensus model.",
+      "how_we_know": "evidence/gems57_credit_lp2.json, evidence/gems57_credit_robust.json, work/credit_lp.py (the coarser coverage-count model is also infeasible, same reason); scipy HiGHS linprog.",
+      "disposition": "Every projection in the README/site/knowledge is published as a bracket (0.227-0.336 for the shipped file), not as a point forecast. The pair identity T(ref) = T(d2-8) = 5,223.13 is still exact and is what pins the anchor."
+    },
+    {
+      "id": "IR-57-103",
+      "title": "The round-1 private truth is NOT the public labels \u2014 both public proxies mis-rank the family (credited-core alternate round)",
+      "status": "open / disclosed",
+      "what_it_is": "If the round-1 hidden truth were labels.tif, the 0.2778 champion (whose cells are all >=2.83 px from every label pixel by design) would project to DTI 0.0049 against it, and h28 (reported 0.1839, the weakest of the family) would project to 0.1984, the strongest. Both orderings are contradicted by the actual report. Likewise the uncatalogued-SGMC proxy has no rank correlation with the reported scores (Spearman 0.193, p = 0.53).",
+      "how_we_know": "work/emit_decision.py -> evidence/gems57_emit_decision.json (exact metric on candidate layouts); evidence/gems57_instrument_validation.json (13 paired proxy/score rows).",
+      "disposition": "Neither public proxy may select or rank a candidate. Selection this session therefore rested on (a) the reported-score inversion, (b) the containment lattice, and (c) the frozen two-view gates \u2014 with the residual uncertainty published as a bracket."
+    },
+    {
+      "id": "IR-57-104",
+      "title": "Every stored prior file is inside [0,1]; the portal's earlier range rejection is not reproducible (credited-core alternate round)",
+      "status": "closed / re-audited",
+      "what_it_is": "The brief records a failed upload with 'Predicted values must be in range [0, 1]'. Re-reading all thirteen files in data/scored/ this session: min 0.000, max 1.000, 0 NaN inside the footprint, 0 values outside [0,1] in every one.",
+      "how_we_know": "work/instrument_validation.py -> evidence/gems57_instrument_validation.json (per-file audit loop, rasterio reads of the stored bytes).",
+      "disposition": "The H57 writer keeps the accepted-file byte format (all-finite float32, {0,1} values, 0 outside the footprint, nodata unset) and the format gate is run on the emitted file before publication: evidence/gems57_format_report.json, problems []."
+    },
+    {
+      "id": "IR-57-105",
+      "title": "Malformed <meta> tag in docs/executive-summary.html (pre-existing, fixed) (credited-core alternate round)",
+      "status": "closed / fixed",
+      "what_it_is": "The page's description <meta> tag was never closed with '>' (present in HEAD before this session), so the document head could parse as body text in some browsers and the H57/H56 status statement in it was not machine-readable.",
+      "how_we_know": "git show HEAD:docs/executive-summary.html vs the fixed file; html.parser tag-balance check flagged an unmatched </title>.",
+      "disposition": "Closing '>' added and the description updated to say H57 is the current file. Tag-balance check re-run clean."
+    },
+    {
+      "id": "IR-57-106",
+      "title": "scripts/check_site.py could not run to completion at its previous HEAD (local import shadowing) \u2014 credited-core alternate round",
+      "status": "closed / fixed",
+      "what_it_is": "check_site.py imported hashlib at module level and then re-imported it inside main() three times, which makes hashlib a local name for the whole function: the first use raised UnboundLocalError and the script aborted before running any later invariant, including the H57 ones.",
+      "how_we_know": "python scripts/check_site.py on the pre-merge tree -> UnboundLocalError: cannot access local variable 'hashlib' where it is not associated with a value; the three inner imports are visible in that revision of the file.",
+      "disposition": "Inner imports removed in the credited-core alternate branch; the repaired checker runs to completion here and its H57-creditcore block verifies the alternate's bytes, gates, disclosure text and non-pointer status."
+    },
+    {
       "id": "IR-H58-001",
       "round": "H58",
       "session": "2026-10-07",
@@ -516,6 +564,7 @@
         "evidence/h58_result.json",
         "evidence/h58_holdout.json",
         "evidence/h58_postrun_review.json",
+        "evidence/h58_postmerge_uniqueness.json",
         "registry/h58_preregistration.json",
         "scripts/run_h58.py",
         "src/gems52/h57.py",
@@ -541,6 +590,25 @@
         "registry/h58_preregistration.json"
       ],
       "disposition": "Keep the raw values for audit with this limitation attached. A future diagnostic must use a Euclidean 500 m raster dilation and a newly frozen protocol; it cannot overwrite this run."
+    },
+    {
+      "id": "IR-57-107",
+      "round": "H57",
+      "session": "2026-10-08",
+      "severity": "high",
+      "title": "The credited-core alternate was marked upload-approved without the registered comparable holdout",
+      "what_it_is": "The upstream H57 credited-core alternate receipt set approved_for_weekly_slot=true while its own slot_gate.not_measured says no held-out lift measurement exists. The standing no-slot rule requires a comparable matched-budget spatial holdout; the H58 preflight independently leaves organizer input provenance unresolved.",
+      "how_we_know": "docs/data/submission_h57_creditcore.json, scripts/publish_site_h57_creditcore.py, evidence/gems57_validate.json, README.md H57 acceptance sections, and IR-H58-001.",
+      "handling": "This branch supersedes that approval text: the H57 alternate remains downloadable as a research archive, approved_for_weekly_slot=false, and it does not replace submission/LATEST.txt. Do not upload or spend a weekly slot based on format, uniqueness, enrichment controls, or a metric bracket alone.",
+      "status": "open \u2014 research-only correction; no comparable holdout approval",
+      "evidence": [
+        "docs/data/submission_h57_creditcore.json",
+        "docs/h57-creditcore.html",
+        "scripts/publish_site_h57_creditcore.py",
+        "evidence/gems57_validate.json",
+        "registry/irregularities.json"
+      ],
+      "disposition": "A registered comparable hide/block holdout and organizer-authenticated input/label provenance are absent for this alternate. Preserve its file/analysis but keep the slot gate closed."
     }
   ]
 }

@@ -495,10 +495,11 @@ def insert_h55_review(h55_archive: dict, verification: dict, sweep: dict,
             f'See the <a href="{page_href}">current {esc(rnd)} status and review</a>.'
         )
     elif current_submission.get("approved_for_weekly_slot") is True:
+        page = "h57.html" if current_file.startswith("gems57-h57") else "h56.html"
         current_status = (
-            f"The current pointer is <code>{esc(current_file)}</code> and its local receipt records a pass; "
-            "that still does not establish organizer approval or portal acceptance. See the current "
-            '<a href="h56.html">artifact status page</a>.'
+            f"The current pointer is <code>{esc(current_file)}</code> and its local receipt records a pass "
+            f"(format and uniqueness gates re-read from the bytes); that still does not establish organizer "
+            f'approval or portal acceptance. See the current <a href="{page}">artifact status page</a>.'
         )
     else:
         current_status = (

@@ -70,6 +70,56 @@ class Scan(HTMLParser):
             self.scratch.append(data)
 
 
+def check_h57_creditcore(DATA, DOCS, ROOT, notes):
+    """The H57 credited-core alternate: verify its bytes, gates and page, never its promotion.
+
+    It is published beside the union arm and must never silently take the current pointer; this
+    check therefore asserts the pointer still names a different file and that the alternate's own
+    receipts agree with its bytes.
+    """
+    import hashlib
+    import json as _json
+    problems = []
+    receipt_path = DATA / "submission_h57_creditcore.json"
+    if not receipt_path.exists():
+        return []
+    r = _json.loads(receipt_path.read_text())
+    name = str(r.get("file", ""))
+    dl = DOCS / "downloads" / name
+    src = ROOT / "submission" / name
+    sha = hashlib.sha256(dl.read_bytes()).hexdigest() if dl.exists() else None
+    if not name.startswith("gems57-h57-credit-core"):
+        problems.append("H57 alternate: unexpected file name")
+    if sha != r.get("sha256") or (not src.exists() or hashlib.sha256(src.read_bytes()).hexdigest() != sha):
+        problems.append("H57 alternate: published bytes differ from its receipt")
+    current = _json.loads((DATA / "submission.json").read_text()) if (DATA / "submission.json").exists() else {}
+    if current.get("file") == name:
+        problems.append("H57 alternate: it must not silently be the current pointer")
+    fmt, uni = r.get("format_gate") or {}, r.get("uniqueness") or {}
+    if r.get("approved_for_weekly_slot") is not False or r.get("submission_slots_used") != 0:
+        problems.append("H57 alternate: research archive must remain not-approved and zero-slot")
+    if not fmt.get("ok") or fmt.get("problems") or fmt.get("mass_outside_footprint"):
+        problems.append("H57 alternate: format gate receipt missing or failed")
+    if not uni.get("ok") or int(uni.get("novel_vs_all_priors") or 0) <= 0:
+        problems.append("H57 alternate: uniqueness gate receipt missing or failed")
+    if "REFUTED" not in _json.dumps(r.get("co_training_disclosure") or {}).upper():
+        problems.append("H57 alternate: the refuted co-training arm is not disclosed")
+    page = (DOCS / "h57-creditcore.html").read_text() if (DOCS / "h57-creditcore.html").exists() else ""
+    for term in ("ABANDON", "not proven", "do not upload", "IR-57-107"):
+        if term.casefold() not in page.casefold():
+            problems.append(f"H57 alternate page: missing disclosure {term!r}")
+    if "submit: yes" in page.casefold():
+        problems.append("H57 alternate page: unsafe submission approval text remains")
+    home = (DOCS / "index.html").read_text() if (DOCS / "index.html").exists() else ""
+    if name not in home:
+        problems.append("H57 alternate: not linked from the home page")
+    if not problems:
+        notes.append(f"H57 credited-core alternate verified beside the union arm: {name} "
+                     f"({r.get('bytes'):,} bytes, "
+                     f"{r.get('uniqueness', {}).get('novel_vs_all_priors'):,} novel px)")
+    return problems
+
+
 def check_h57(DATA, DOCS, ROOT, notes):
     """Every H57 gate re-read from the bytes, so the round can be audited on its own terms."""
     problems = []
@@ -217,7 +267,8 @@ def check_h58(DATA, DOCS, ROOT, notes, *, current_round=False):
     """
     problems = []
     required = ("h58_result.json", "h58_holdout.json", "h58_preregistration.json",
-                "h58_preflight_integrity.json", "h58_restore_receipt.json", "h58_postrun_review.json")
+                "h58_preflight_integrity.json", "h58_restore_receipt.json", "h58_postrun_review.json",
+                "h58_postmerge_uniqueness.json")
     for name in required:
         if not (DATA / name).is_file():
             problems.append(f"H58: {name} missing from docs/data")
@@ -232,6 +283,7 @@ def check_h58(DATA, DOCS, ROOT, notes, *, current_round=False):
         preflight = json.loads((DATA / "h58_preflight_integrity.json").read_text())
         postrun = json.loads((DATA / "h58_postrun_review.json").read_text())
         restore = json.loads((DATA / "h58_restore_receipt.json").read_text())
+        postmerge = json.loads((DATA / "h58_postmerge_uniqueness.json").read_text())
         import numpy as np
         import rasterio
 
@@ -250,6 +302,37 @@ def check_h58(DATA, DOCS, ROOT, notes, *, current_round=False):
         short_tif = DOCS / "downloads/h58-candidate.tif"
         zip_path = DOCS / "downloads" / (Path(filename).stem + ".zip")
         short_zip = DOCS / "downloads/h58-candidate.zip"
+        pm_candidate = ROOT / postmerge.get("candidate", {}).get("path", "")
+        pm_prior = ROOT / postmerge.get("additional_upstream_prior", {}).get("path", "")
+        if not pm_candidate.is_file() or not pm_prior.is_file():
+            problems.append("H58: supplemental post-merge uniqueness input is missing")
+        else:
+            with rasterio.open(pm_candidate) as ds_a, rasterio.open(pm_prior) as ds_b:
+                arr_a, arr_b = ds_a.read(1), ds_b.read(1)
+                if (ds_a.transform != ds_b.transform or ds_a.crs != ds_b.crs
+                        or arr_a.shape != arr_b.shape):
+                    problems.append("H58: supplemental prior grid differs from the H58 raster")
+                digest_a = hashlib.sha256(arr_a.astype("<f4", copy=False).tobytes()).hexdigest()
+                digest_b = hashlib.sha256(arr_b.astype("<f4", copy=False).tobytes()).hexdigest()
+                mask_a, mask_b = arr_a > 0, arr_b > 0
+                overlap = int(np.logical_and(mask_a, mask_b).sum())
+                union = int(np.logical_or(mask_a, mask_b).sum())
+                jaccard = overlap / union if union else 1.0
+                if (hashlib.sha256(pm_candidate.read_bytes()).hexdigest()
+                        != postmerge.get("candidate", {}).get("file_sha256")
+                        or hashlib.sha256(pm_prior.read_bytes()).hexdigest()
+                        != postmerge.get("additional_upstream_prior", {}).get("file_sha256")
+                        or digest_a != result["artifact"].get("decoded_prediction_sha256")
+                        or digest_a != postmerge.get("candidate", {}).get("decoded_float32_sha256")
+                        or digest_b != postmerge.get("additional_upstream_prior", {}).get("decoded_float32_sha256")
+                        or overlap != postmerge.get("support_intersection_pixels")
+                        or union != postmerge.get("support_union_pixels")
+                        or abs(jaccard - float(postmerge.get("support_jaccard", -1))) > 1e-12
+                        or np.array_equal(arr_a, arr_b)
+                        or postmerge.get("additional_pattern_unique") is not True):
+                    problems.append("H58: supplemental post-merge decoded-pattern audit disagrees with current bytes")
+                else:
+                    notes.append("H58 supplemental uniqueness: zero support overlap with the newly merged H57 credited-core raster")
         for path, label in ((canonical, "canonical TIFF"), (short_tif, "short TIFF alias"),
                             (zip_path, "single-TIFF ZIP"), (short_zip, "short ZIP alias")):
             if not path.is_file():
@@ -617,6 +700,7 @@ def main() -> int:
                                       current_round=(current_round == "H58")))
         if current_round == 'H57':
             problems.extend(check_h57(DATA, DOCS, ROOT, notes))
+            problems.extend(check_h57_creditcore(DATA, DOCS, ROOT, notes))
         if current_round == 'H56':
             sub = json.loads(sub_path.read_text())
             if sub.get('file') != marker:
