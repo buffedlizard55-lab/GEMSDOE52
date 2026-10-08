@@ -1,0 +1,166 @@
+{
+  "evidence_class": "uniqueness diagnostic, not a score",
+  "candidate": "submission/gems52-h60d-dis_contrast-arm37654px.tif",
+  "candidate_file_sha256": "18bd0efd582f107ccb988fc20016203c323846bf63d3ecea1f75a0670e4586e8",
+  "candidate_nonzero": 37654,
+  "sample": "data/sample_submission.tif",
+  "footprint_px": 5167373,
+  "priors_offered": 58,
+  "self_copies_excluded": [
+    "docs/downloads/gems52-h60d-dis_contrast-arm37654px.tif",
+    "docs/downloads/h60d-candidate.tif"
+  ],
+  "priors_after_byte_dedupe": 26,
+  "phases": {
+    "surface": {
+      "phase": "surface",
+      "rule": "STOP at rho >0.90 or directed <=3px dot proximity >0.70; no lane retuning",
+      "evidence_class": "uniqueness diagnostic, not a score",
+      "priors_checked": 26,
+      "distinct_decoded_priors": 25,
+      "candidate_decoded_sha256": "c6dd3257d3116ae833e0e96f9ebb5074d2a4d3e8b840a15782e649312c79fee4",
+      "rank_pixels": 5167373,
+      "exact_full_eligible_rank": true,
+      "max_spearman": -0.0001767812215031405,
+      "max_near_3px_fraction": null,
+      "rank_threshold": 0.9,
+      "near_threshold": 0.7,
+      "duplicate": false,
+      "offender_count": 0,
+      "error_count": 0,
+      "ok": true,
+      "scope": "Supplied aligned immutable public inventory only; private/release/external artifacts not proven absent.",
+      "top_spearman": [
+        {
+          "path": "submission/gems52-h58-coldgeo-consensus-22px-a55b0dee38-research.tif",
+          "spearman": -0.000177
+        },
+        {
+          "path": "submission/gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif",
+          "spearman": -0.004134
+        },
+        {
+          "path": "submission/gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif",
+          "spearman": -0.006656
+        },
+        {
+          "path": "submission/gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif",
+          "spearman": -0.006923
+        },
+        {
+          "path": "submission/gems52-h60c-core25517px-arm9668px.tif",
+          "spearman": -0.007094
+        }
+      ],
+      "top_near_3px": [],
+      "offenders": []
+    },
+    "dots": {
+      "phase": "dots",
+      "rule": "STOP at rho >0.90 or directed <=3px dot proximity >0.70; no lane retuning",
+      "evidence_class": "uniqueness diagnostic, not a score",
+      "priors_checked": 26,
+      "distinct_decoded_priors": 25,
+      "candidate_decoded_sha256": "c6dd3257d3116ae833e0e96f9ebb5074d2a4d3e8b840a15782e649312c79fee4",
+      "rank_pixels": 5167373,
+      "exact_full_eligible_rank": true,
+      "max_spearman": -0.0001767812215031405,
+      "max_near_3px_fraction": 0.9994688479311626,
+      "rank_threshold": 0.9,
+      "near_threshold": 0.7,
+      "duplicate": true,
+      "offender_count": 1,
+      "error_count": 0,
+      "ok": false,
+      "scope": "Supplied aligned immutable public inventory only; private/release/external artifacts not proven absent.",
+      "top_spearman": [
+        {
+          "path": "submission/gems52-h58-coldgeo-consensus-22px-a55b0dee38-research.tif",
+          "spearman": -0.000177
+        },
+        {
+          "path": "submission/gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif",
+          "spearman": -0.004134
+        },
+        {
+          "path": "submission/gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif",
+          "spearman": -0.006656
+        },
+        {
+          "path": "submission/gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif",
+          "spearman": -0.006923
+        },
+        {
+          "path": "submission/gems52-h60c-core25517px-arm9668px.tif",
+          "spearman": -0.007094
+        }
+      ],
+      "top_near_3px": [
+        {
+          "path": "data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+          "near_3px_fraction": 0.999469
+        },
+        {
+          "path": "submission/gems52-h59-union-core25517px-arm14783px.tif",
+          "near_3px_fraction": 0.183088
+        },
+        {
+          "path": "submission/gems52-h57-union-novel-core25517px-arm14804px.tif",
+          "near_3px_fraction": 0.18269
+        },
+        {
+          "path": "submission/gems52-h56-consensus-core-continuation-40517px-04c86e1888a8-zeros.tif",
+          "near_3px_fraction": 0.178573
+        },
+        {
+          "path": "submission/gems52-h54-revealed-core-strike-continuation-50517px-r1.tif",
+          "near_3px_fraction": 0.166569
+        }
+      ],
+      "offenders": [
+        "data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif"
+      ]
+    }
+  },
+  "max_jaccard": 0.0,
+  "max_jaccard_prior": "submission/gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif",
+  "candidate_px_inside_any_prior_support": 0,
+  "share_of_candidate_px_inside_any_prior_support": 0.0,
+  "top_overlaps": [
+    {
+      "path": "submission/gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif",
+      "prior_support": 12000,
+      "intersection": 0,
+      "jaccard": 0.0,
+      "share_of_candidate_in_prior": 0.0
+    },
+    {
+      "path": "submission/gems52-h52-cotrain-disagreement-emission-composite-37654px-r1.tif",
+      "prior_support": 37654,
+      "intersection": 0,
+      "jaccard": 0.0,
+      "share_of_candidate_in_prior": 0.0
+    },
+    {
+      "path": "submission/gems52-h53-coincidence-gated-singles-37654px-r1.tif",
+      "prior_support": 37654,
+      "intersection": 0,
+      "jaccard": 0.0,
+      "share_of_candidate_in_prior": 0.0
+    },
+    {
+      "path": "submission/gems52-h54-revealed-core-strike-continuation-50517px-r1.tif",
+      "prior_support": 50517,
+      "intersection": 0,
+      "jaccard": 0.0,
+      "share_of_candidate_in_prior": 0.0
+    },
+    {
+      "path": "submission/gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.tif",
+      "prior_support": 37654,
+      "intersection": 0,
+      "jaccard": 0.0,
+      "share_of_candidate_in_prior": 0.0
+    }
+  ]
+}

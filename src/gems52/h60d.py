@@ -246,97 +246,74 @@ def lane_drift_report(surface: np.ndarray, dots: np.ndarray | None, priors,
                       valid: np.ndarray, *, max_rank_corr: float = LANE_MAX_RANK_CORR,
                       max_dots_frac: float = LANE_MAX_DOTS_FRAC,
                       proximity_px: int = LANE_PROXIMITY_PX,
-                      calibration: set | None = None) -> dict:
-    """The lane gate, on the surface before placement AND on the final dots.
+                      calibration: set | None = None, sample=None) -> dict:
+    """Compatibility adapter to the shared strict gate; calibration grants no exemption.
 
-    For every registry raster: Spearman rank correlation with ``surface`` (and with ``dots``
-    when given), and — for the dots — the fraction of the run's dots within ``proximity_px``
-    of that raster's dots.  Drift = any rank correlation > ``max_rank_corr`` OR any dots
-    fraction > ``max_dots_frac``: the run has drifted into another lane; log it as a duplicate
-    and stop.
-
-    Registered correction H60-6: the 3-px proximity COMPONENT excludes calibration rasters
-    (``calibration`` = :func:`calibration_basenames`; the manifest-driven classification,
-    never a hand-picked list).  A calibration raster is an owner-supplied metric-calibration
-    input — e.g. a dense regular lattice whose 3-px dilation covers about half the grid — so
-    ANY budget-sized placement in the legal pool reads 70-84 % against it by pure geometry;
-    that reading measures grid geometry, not duplication of another lane's discovery.  The
-    raw proximity reading is still reported for every prior, calibration included, and BOTH
-    Spearman components apply to every prior without exception.
+    Production callers supply the competition sample. For older synthetic callers,
+    the first prior defines the reference grid. Missing/unaligned inputs fail closed.
+    Diagnostics are never rounded before a threshold decision.
     """
-    surface = np.asarray(surface, np.float32)
-    calibration = calibration or set()
-    rows = []
-    rank_surf = _rank_once(np.where(valid, surface, 0.0))
-    rank_dots = _rank_once(np.asarray(dots, np.float32)) if dots is not None else None
-    my_dots = np.asarray(dots, bool) if dots is not None else None
-    n_dots = int(my_dots.sum()) if my_dots is not None else 0
-    worst_corr, worst_frac = -1.0, 0.0
-    worst_corr_prior = worst_frac_prior = None
-    worst_frac_gate, worst_frac_gate_prior = 0.0, None
-    for path in priors:
+    from .gates import lane_uniqueness_report
+
+    if proximity_px != 3:
+        raise ValueError("the registered shared gate requires Euclidean radius 3 px")
+    priors = list(priors)
+    reference = sample if sample is not None else (priors[0] if priors else None)
+    reports = {}
+    for phase, arr in (("surface", surface), ("dots", dots)):
+        if arr is None:
+            continue
         try:
-            v = _read_prior_values(path)
-            if v.shape != surface.shape:
-                rows.append(dict(path=str(path), error="shape mismatch"))
-                continue
-            is_calib = Path(str(path)).name in calibration
-            prior_dots = v > 0
-            sc = _spearman_with_ranks(rank_surf, np.where(valid, v, 0.0))
-            row = dict(path=str(path), surface_spearman=round(float(sc), 4),
-                       calibration_raster=bool(is_calib))
-            if rank_dots is not None:
-                dc = _spearman_with_ranks(rank_dots, v)
-                row["dots_spearman"] = round(float(dc), 4)
-                near = ndimage.binary_dilation(prior_dots, iterations=proximity_px)
-                frac = float((my_dots & near).sum()) / max(n_dots, 1)
-                row["dots_within_3px_frac"] = round(frac, 4)
-                if frac > worst_frac:
-                    worst_frac, worst_frac_prior = frac, str(path)
-                if not is_calib and frac > worst_frac_gate:
-                    worst_frac_gate, worst_frac_gate_prior = frac, str(path)
-            if np.isfinite(sc) and abs(sc) > worst_corr:
-                worst_corr, worst_corr_prior = abs(float(sc)), str(path)
-            rows.append(row)
-        except Exception as exc:
-            rows.append(dict(path=str(path), error=f"{type(exc).__name__}: {str(exc)[:160]}"))
-    surface_ok = all(abs(r.get("surface_spearman", 0.0)) <= max_rank_corr for r in rows
-                     if "surface_spearman" in r)
-    dots_ok = True
-    if my_dots is not None:
-        dots_ok = (all(abs(r.get("dots_spearman", 0.0)) <= max_rank_corr for r in rows
-                       if "dots_spearman" in r)
-                   and all(r.get("dots_within_3px_frac", 0.0) <= max_dots_frac
-                           for r in rows
-                           if "dots_within_3px_frac" in r and not r["calibration_raster"]))
-    drift = bool(rows) and not (surface_ok and dots_ok)
+            if reference is None:
+                raise ValueError("no registry/reference supplied")
+            reports[phase] = lane_uniqueness_report(
+                arr, valid, priors, sample=reference, phase=phase,
+                rank_limit=max_rank_corr, near_limit=max_dots_frac)
+        except (ValueError, OSError, rasterio.errors.RasterioError) as exc:
+            reports[phase] = dict(ok=False, duplicate=False, per_prior=[],
+                                  error=f"{type(exc).__name__}: {exc}")
+    rows = []
+    dot_rows = {r['path']: r for r in reports.get('dots', {}).get('per_prior', [])}
+    for r in reports['surface']['per_prior']:
+        row = dict(path=r['path'], calibration_raster=Path(r['path']).name in (calibration or set()))
+        if r.get('spearman') is not None:
+            row['surface_spearman'] = r['spearman']
+        d = dot_rows.get(r['path'], {})
+        if d.get('spearman') is not None:
+            row['dots_spearman'] = d['spearman']
+        if d.get('near_3px_fraction') is not None:
+            row['dots_within_3px_frac'] = d['near_3px_fraction']
+        if r.get('error') or d.get('error'):
+            row['error'] = r.get('error') or d['error']
+        rows.append(row)
+
+    def maximum(key, absolute=False):
+        available = [r for r in rows if key in r]
+        if not available:
+            return None, None
+        row = max(available, key=lambda r: abs(r[key]) if absolute else r[key])
+        return (abs(row[key]) if absolute else row[key]), row['path']
+
+    sc, sp = maximum('surface_spearman', True)
+    dc, _ = maximum('dots_spearman', True)
+    near, np_ = maximum('dots_within_3px_frac')
+    ok = all(r['ok'] for r in reports.values())
+    duplicate = any(r['duplicate'] for r in reports.values())
     return dict(max_rank_corr=max_rank_corr, max_dots_frac=max_dots_frac,
-                proximity_px=proximity_px, n_priors=len(rows),
-                calibration_rasters_excluded_from_proximity=sorted(calibration),
-                proximity_correction=("H60-6: calibration rasters (registry/data_manifest.json "
-                                      "ids calib_* / inputs/calibration/*) are excluded from "
-                                      "the 3-px proximity component only; their raw "
-                                      "readings are reported and both Spearman components "
-                                      "apply to every prior"),
-                surface_max_abs_spearman=round(worst_corr, 4),
-                surface_max_abs_spearman_prior=worst_corr_prior,
-                dots_max_abs_spearman=round(max(
-                    [abs(r.get("dots_spearman", 0.0)) for r in rows if "dots_spearman" in r]
-                    or [0.0]), 4),
-                dots_max_within_3px_frac=round(worst_frac, 4),
-                dots_max_within_3px_prior=worst_frac_prior,
-                dots_max_within_3px_frac_gate=round(worst_frac_gate, 4),
-                dots_max_within_3px_gate_prior=worst_frac_gate_prior,
-                surface_check_passed=bool(surface_ok),
-                dots_check_passed=bool(dots_ok) if my_dots is not None else None,
-                lane_drift_detected=drift,
-                verdict=("DUPLICATE LANE: rank correlation or dot proximity exceeded the "
-                         "registered thresholds — log as duplicate and stop" if drift else
-                         "lane clean: no registry raster exceeds the rank-correlation or "
-                         "dot-proximity thresholds, on the surface and on the final dots"),
-                per_prior=rows,
-                scope="Only the supplied, aligned accessible inventory; not a proof against "
-                      "private/unlinked artifacts")
+                proximity_px=3, n_priors=len(priors),
+                calibration_rasters_excluded_from_proximity=[],
+                proximity_correction="H60-6 withdrawn: shared strict gate includes EVERY supplied registry raster; Euclidean <=3 px on the valid footprint",
+                surface_max_abs_spearman=sc, surface_max_abs_spearman_prior=sp,
+                dots_max_abs_spearman=dc, dots_max_within_3px_frac=near,
+                dots_max_within_3px_prior=np_, dots_max_within_3px_frac_gate=near,
+                dots_max_within_3px_gate_prior=np_,
+                surface_check_passed=reports['surface']['ok'],
+                dots_check_passed=reports['dots']['ok'] if dots is not None else None,
+                lane_drift_detected=not ok, duplicate=duplicate,
+                verdict=("DUPLICATE LANE: stop" if duplicate else
+                         "INCOMPLETE AUDIT: stop" if not ok else "lane clean within supplied registry"),
+                per_prior=rows, shared_reports=reports,
+                scope="Supplied aligned inventory only; no proof against unavailable priors")
 
 
 # --------------------------------------------------------------------------------------------
