@@ -1,0 +1,11 @@
+{
+  "a_only_segments": 1521,
+  "a_only_pool_pixels": 21111,
+  "emitted_reasoning_rows": 12000,
+  "emitted_a_only_rows": 3234,
+  "segment_csv": "gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e-a-only-segments.csv",
+  "pixel_csv": "gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e-emitted-pixels.csv",
+  "every_a_only_segment_documented": true,
+  "every_emitted_pixel_documented": true,
+  "units_warning": "Band 15/19 native units not independently authenticated; UTM coordinates are metres. Operating ranks are not probabilities."
+}

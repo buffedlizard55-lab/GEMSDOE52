@@ -43,3 +43,8 @@ jobs:
           exit "${status:-0}"
       - name: Verify all local website links JSON and download bytes
         run: python scripts/check_site.py
+      - name: Verify current CTD5 research download and closed submission gate
+        env:
+          OPENBLAS_NUM_THREADS: '1'
+          OMP_NUM_THREADS: '2'
+        run: python scripts/check_ctd5_release.py

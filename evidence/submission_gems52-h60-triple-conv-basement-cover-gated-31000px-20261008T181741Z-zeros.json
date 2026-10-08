@@ -1,0 +1,68 @@
+{
+  "round": "H60",
+  "file": "gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif",
+  "stem": "gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros",
+  "bytes": 130202,
+  "sha256": "737c77344457dc1561fe091bc3ab085b3ab65af10b290f5301512f0505abec07",
+  "nonzero_px": 31000,
+  "short_tif": "h60-candidate.tif",
+  "short_zip": "h60-candidate.zip",
+  "note": "H60 concurrent triple-convergence research artifact. No registered comparable holdout lift; not approved for submission.",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "format": {
+    "path": "submission/gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif",
+    "bytes": 130202,
+    "sha256": "737c77344457dc1561fe091bc3ab085b3ab65af10b290f5301512f0505abec07",
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "ref_bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "nodata": null,
+    "blocksize": [
+      256,
+      256
+    ],
+    "fixture_grid": false,
+    "has_validity_mask": false,
+    "nan_pixels": 0,
+    "infinity_pixels": 0,
+    "n_nan": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.0025246026925742626,
+    "n_nonzero": 31000,
+    "mass": 31000.0,
+    "problems": [],
+    "ok": true,
+    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "source_build": "evidence/h60_build.json",
+  "source_build_is_archival": true,
+  "official_score_status": "No organizer submission receipt available.",
+  "verdict": "research only; not approved for weekly slot",
+  "pointer_origin": "Inherited unchanged from upstream PR #34 (647ac2f); not selected or promoted by CTD5.",
+  "reason": "No registered comparable pooled holdout-DTI + CI; an insufficient-block independence statistic is not positive evidence."
+}

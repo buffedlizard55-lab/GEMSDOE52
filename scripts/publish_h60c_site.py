@@ -276,7 +276,7 @@ def main() -> int:
                 'identified intervals: <a href="data/h60c_identify.json">h60c_identify.json</a> · '
                 'co-training: <a href="data/h60c_cotrain.json">h60c_cotrain.json</a> · '
                 'corroboration ladder (refuted): <a href="data/h60c_ladder.json">h60c_ladder.json</a> '
-                '· preregistration: <a href="data/h60c_preregistration.json">'
+                '· preregistration: <a href="../registry/h60c_preregistration.json">'
                 'h60c_preregistration.json</a></p>')
     page.append('</main>')
     page.append(foot())

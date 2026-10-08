@@ -1,0 +1,41 @@
+{
+ "round": "H60",
+ "created_utc": "2026-10-08T18:25:36+00:00",
+ "hypotheses_file": "knowledge/25_hypotheses_H60_preregistered.md",
+ "sha256": "896fcfceb299480d586fcc76c867f2978d0025196dd3dd3d001d42ae44c54032",
+ "bytes": 9740,
+ "frozen_before_first_fit": true,
+ "ids": [
+  "H60-1",
+  "H60-2",
+  "H60-3",
+  "H60-4",
+  "H60-5"
+ ],
+ "rank": [
+  "H60-1 metric-algebra-optimal budget",
+  "H60-2 strike-oriented ridge energy (radiometric TC)",
+  "H60-3 strike-projected basement steps",
+  "H60-4 dilational intersection nodes",
+  "H60-5 rank-encoded seismicity"
+ ],
+ "gates": {
+  "independence_abandon_abs_spearman": 0.6,
+  "pseudo_label_adopt_min_auc_delta": 0.002,
+  "holdout_min_fold_wins_vs_random": 3,
+  "holdout_folds": 4,
+  "ring_gate_m": 200.0,
+  "uniqueness_min_novel_support_fraction": 0.2
+ },
+ "inputs_pinned": {
+  "training_features_sha256": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+  "labels_sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+  "sample_submission_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+  "restored_from": "buffedlizard55-lab sibling mirrors via the GitHub Contents API; integrity-pinned, NOT organiser-authenticated"
+ },
+ "not_claimed": [
+  "no organiser-authenticated score-to-file mapping",
+  "no guaranteed leaderboard gain",
+  "hide-and-recover measures held-out catalogue segments, not the expert-labelled new-fault truth"
+ ]
+}
