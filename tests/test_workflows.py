@@ -54,6 +54,15 @@ def test_feed_workflow_declares_the_steps_the_site_relies_on():
     assert "schedule" in trig and "workflow_dispatch" in trig
 
 
+def test_verify_workflow_runs_on_the_active_arena_branch():
+    """The task branch must receive the same push-time regression checks as main."""
+    doc = yaml.safe_load((WF / "verify.yml").read_text())
+    trig = doc.get("on") or doc.get(True)
+    branches = trig["push"]["branches"]
+    assert "main" in branches
+    assert "arena/fd8325b7-gemsdoe52" in branches
+
+
 def test_feed_workflow_is_dependency_free():
     """The fetcher is stdlib-only so a package index outage cannot freeze the leaderboard feed."""
     text = (WF / "feed.yml").read_text()

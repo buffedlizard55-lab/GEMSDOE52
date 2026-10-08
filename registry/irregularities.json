@@ -1,6 +1,6 @@
 {
  "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified.",
- "generated": "2026-10-08T19:32:31Z",
+ "generated": "2026-10-08T22:07:54Z",
  "entries": [
   {
    "id": "IR-30-029",
@@ -1085,6 +1085,70 @@
    "how_we_know": "src/gems52/spatial.py legacy helper; evidence/ctd5_validation_scope_correction.json",
    "handling": "Default folds are now label-blind v2; all intersecting segments are hidden whole and buffered. Retain legacy helper only for reproducing rejected CTD5. Flag strict_holdout_valid=false everywhere; no post-stop refit or new placement.",
    "disposition": "Do not use CTD5 values as valid promotion evidence; new preregistration and experiment required."
+  },
+  {
+   "id": "IR-CTD5-013",
+   "title": "H60C historical page overstated owner-reported score arithmetic as organizer-measured and called an unapproved archive a submission TIFF",
+   "status": "fixed in current presentation; historical receipts unchanged",
+   "what_it_is": "The H60C page headline said |G| was measured from the organiser's own scores, while the score/file mapping is owner-reported and no organizer submission-page receipt is available. Its primary download button said \u201csubmission TIFF,\u201d although no selector approval was recorded. The stored optional note has 182 characters.",
+   "how_we_know": "Compared docs/h60c.html and README.md with docs/data/h60c_submission.json, docs/data/h60c_build.json, evidence/ctd5_sources.json and the current CTD5 run card. The H60C note_chars field is 182; the score attribution remains owner-reported.",
+   "disposition": "Added a prominent download-for-research / do-not-submit status, made the score-derived |G| conditional, labeled the artifact as historical research, and kept the old receipt and raster bytes unchanged. H60C has no current slot approval.",
+   "evidence": [
+    "docs/h60c.html",
+    "docs/data/h60c_submission.json",
+    "docs/data/h60c_build.json",
+    "README.md"
+   ]
+  },
+  {
+   "id": "IR-CTD5-014",
+   "title": "H60C page conflated OOF score-level correlation with independence and showed fold-mean DTI without current pooled-evidence labels",
+   "status": "presentation corrected; no retrospective score or refit",
+   "what_it_is": "The H60C page described its primary rho_block_mean_oof_probability statistic as an independence test and said the Blum\u2013Mitchell premise was not refuted. That statistic is correlation of block-mean OOF scores, not per-pixel OOF errors. Its hide-and-recover table is a mean of fold DTIs and does not provide the current protocol's pooled TPw/FPw/FNw, evaluator, withheld-positive count and 95% CI context.",
+   "how_we_know": "Inspected docs/data/h60c_cotrain.json fields independence.rho_block_mean_oof_probability, independence.rho_block_fp_rate_all_blocks and hide_and_recover, then compared the page wording with the current brief and CTD5 validation-scope correction.",
+   "disposition": "The H60C page now labels the score-level correlation as a dependence diagnostic, states that proxy correlations do not prove conditional independence, and labels the old fold mean non-comparable to current HOLDOUT-DTI. No old metric was recomputed or upgraded.",
+   "evidence": [
+    "docs/h60c.html",
+    "docs/data/h60c_cotrain.json",
+    "evidence/ctd5_validation_scope_correction.json"
+   ]
+  },
+  {
+   "id": "IR-CTD5-015",
+   "title": "H60C archive section was emitted outside the downloads page main/footer structure",
+   "status": "fixed",
+   "what_it_is": "The H60C archive heading and links appeared after the closing </footer> and </main> markers, immediately before </body>, which left the section outside the document main content.",
+   "how_we_know": "Inspected the prior docs/downloads/index.html structure; after the edit, the H60C section precedes </main> and only whitespace follows </html>. A regression test asserts both conditions.",
+   "disposition": "Moved the existing H60C archive section into <main>, made its no-upload status explicit, and added a regression test. No downloads or raster content changed.",
+   "evidence": [
+    "docs/downloads/index.html",
+    "tests/test_ctd5.py"
+   ]
+  },
+  {
+   "id": "IR-CTD5-016",
+   "title": "The verification workflow push filter omitted the fixed Arena session branch",
+   "status": "fixed",
+   "what_it_is": "The push trigger in .github/workflows/verify.yml listed main and other Arena refs but not arena/fd8325b7-gemsdoe52, so branch pushes on this session could miss the push-time verification job.",
+   "how_we_know": "Compared the workflow push branches with the active session branch supplied by the repository environment. A new test asserts the fixed branch is covered.",
+   "disposition": "Added arena/fd8325b7-gemsdoe52 to the workflow filter and added a workflow regression test; pull_request triggers remain enabled.",
+   "evidence": [
+    ".github/workflows/verify.yml",
+    "tests/test_workflows.py"
+   ]
+  },
+  {
+   "id": "IR-H60-008",
+   "title": "Historical H60 co-training page promised organizer upload acceptance and overstated proxy diagnostics",
+   "status": "corrected in archive presentation; historical raster and receipts unchanged",
+   "what_it_is": "docs/archive-h60-cotrain-overview.html had an inner pill reading \u201cPORTAL-VALID AND UNIQUE, THE UPLOAD WILL BE ACCEPTED,\u201d labeled the H60 TIFF as a submission file, and directed readers to submission instructions. Its page-level archive warning did not resolve the contradictory call to action. It also called a thresholded block-correlation result an independence premise and showed legacy catalogue hide-and-recover DTI without the current HOLDOUT-DTI evaluator / withheld-positive / CI label.",
+   "how_we_know": "Inspected the archived H60 HTML and its linked local receipts. The page itself records the hide-and-recover truth as held-out catalogue segments, explicitly distinct from the competition truth; the format validation class says it is a local on-disk check, not organizer upload acceptance.",
+   "disposition": "The H60 page now says download for research only / do not submit, withdraws the acceptance promise, relabels the TIFF/ZIP and note as archived research materials, states that the recorded correlation does not prove conditional independence, and labels old fold DTI as not current HOLDOUT-DTI. No TIFF, score receipt, model output, or slot state changed.",
+   "evidence": [
+    "docs/archive-h60-cotrain-overview.html",
+    "docs/h60.html",
+    "tests/test_ctd5.py"
+   ]
   }
  ]
 }

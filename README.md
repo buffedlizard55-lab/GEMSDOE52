@@ -18,39 +18,45 @@
 
 A second concurrent H60 artifact was checked against the unchanged output: closure scope is now **543 files / 362 decoded patterns**, with the same maximum correlations and 100% near-dot STOP. Its code, artifacts and historical pages are preserved. [Second check](evidence/ctd5_second_parallel_check.json).
 
-## H60C — the round that answers "why 0.2778" with arithmetic, and ships a bar-sized emission
+## H60C archive — conditional score arithmetic; research only, not approved to submit
 
-**[★ H60 GeoTIFF — one click, no scrolling](docs/downloads/h60c-candidate.tif)** ·
-[one-TIFF ZIP](docs/downloads/h60c-candidate.zip) ·
+**[H60C historical research GeoTIFF — download only, do not upload](docs/downloads/h60c-candidate.tif)** ·
+[H60C research ZIP](docs/downloads/h60c-candidate.zip) ·
 [A-only geological reasoning CSV](docs/downloads/h60c-a-only-reasoning.csv) ·
-[H60 audit page](docs/h60c.html) · [how to submit](docs/executive-summary.html) ·
+[H60 research audit (not upload approval)](docs/h60c.html) · [current CTD5 submission status](docs/executive-summary.html) ·
 [ranked hypotheses](knowledge/25_hypotheses_H60_preregistered.md) ·
 [build receipt](docs/data/h60c_build.json)
 
-### Why `h33-h33-2-b2` scored 0.2778 — measured, not inferred
+### What the owner-reported 0.2778 pair suggests — conditional arithmetic, not verified truth
 
-`h33-2-b2` is **not a better detector** than the file it came from. It is `gems24-d2-8` (reported
-0.2600) **with 6,436 pixels deleted**. Those 6,436 pixels are exactly the ones lying within
-100–200 m of the mapped USGS/INGENIOUS catalogue, and inverting the published metric on that nested
-pair gives their credit as **exactly zero**. Removing 14.6 % of the file's mass raised its score by
-**+6.8 %**, because a masked pixel can never earn credit but always pays the false-positive tax.
-That single edit is the whole story of the score, and the same algebra yields
+The mapping of `h33-h33-2-b2` to score **0.2778** is owner-reported, not organizer-confirmed; the
+source repository itself says no organizer score is recorded. On the mirrored bytes, the H33 raster
+is a subset of `gems24-d2-8` (owner-reported **0.2600**) with 6,436 cells removed, near the mapped
+USGS/INGENIOUS catalogue. Under the assumption that both file-to-score mappings are correct and
+that the stated competition metric applies, the rounded score pair is consistent with a score lift
+from deleting low-value predictions. It does **not** prove that every deleted cell had exactly zero
+credit, that the hidden truth count is known, or that the score mapping is authentic.
 
-> **|G| = 14,088.7 px** — the size of the hidden, expert-drawn, off-catalogue truth (0.273 % of the
-> 5,167,373-px footprint, against 1.18 % for the catalogue itself).
+The often-repeated **|G| ≈ 14,089 px** is a conditional estimate obtained by inverting those
+owner-reported, four-decimal values under additional assumptions; it is not an organizer measurement
+or a verified hidden-truth count. `scripts/h60_forensics.py` reproduces the arithmetic on the
+integrity-pinned owner mirrors, but byte integrity does not authenticate the score attribution.
 
-Everything in H60 is downstream of those two numbers. They are recomputed from restored,
-SHA-256-pinned bytes by `scripts/h60_forensics.py`; nothing is copied from a prior note.
+### Does H60C establish a score above the leaderboard? No — only sensitivity arithmetic
 
-### Can a submission beat 0.3195? — the honest arithmetic
+The user's supplied **0.3195** target is not the highest row in the dated snapshot stored here:
+the 2026-10-07 snapshot records a public top row of **0.3774**. Neither snapshot value is an
+organizer receipt for any local file, and no fresher authenticated leaderboard or file-linked
+receipt is available in this checkout.
 
-With `DTI = T / (0.2·S + 0.8·|G|)` (exact for sparse dot emissions, where `M ≈ T`), the marginal
-rule is: **emit a pixel iff its expected incremental credit `c > α·DTI/(1 − α·DTI)`**, which at
-`DTI ≈ 0.32` is **`c > 0.068`** — about 2.7× what uniform random achieves (measured 0.024–0.028).
+The displayed relationship `DTI ≈ T / (0.2·S + 0.8·|G|)` is a simplifying sparse-emission
+accounting approximation, not a substitute for the organizer's distance-weighted metric. Any
+`DTI ≈ 0.32`, **c > 0.068**, or random-baseline comparisons below are sensitivity calculations from
+owner-reported inputs, not HOLDOUT-DTI or ORGANIZER-CONFIRMED scores.
 
-Measured credit density of everything we hold:
+Conditional credit-density calculations from owner-reported score/file attributions (not ORGANIZER-CONFIRMED):
 
-| set | px | credit | density | × random |
+| set | px | inferred credit | calculated density | × random |
 |---|---:|---:|---:|---:|
 | `P1 = A ∩ C` (this round's core) | 25,517 | 4,133 – 5,233 | **0.163 – 0.205** | 6.8 – 8.5× |
 | `A` champion `h33-2-b2` | 37,654 | 5,223.1 | 0.1387 | 5.7× |
@@ -58,50 +64,44 @@ Measured credit density of everything we hold:
 | `I` `Hedge-v2` (off-catalogue) | 166,519 | 8,873.5 | 0.0533 | 2.6× |
 | uniform random | — | — | 0.024 – 0.028 | 1× |
 
-`P1` beats the champion iff `t(A \ C) < 674.6`, which covers 64 % of that atom's identified range;
-expected `DTI(P1) = 0.2868` against a *certain* `0.2772–0.2784` for `A`. **`P1` alone does not
-reach 0.3195.** Reaching it requires arm mass at density above the 0.068 bar, and no measurement
-available in this repository can certify that — the twelve scored files leave every non-file subset
-**set-identified with a lower bound of zero** (`scripts/h60_identify.py`). H60 therefore ships the
-arm as a priced bet, sized at the bar, and publishes the full projection table rather than a hope.
+Under the conditional identified-set model, `P1` beats `A` only if `t(A \ C) < 674.6`; this is a projection over assumed atom-credit ranges, not HOLDOUT-DTI or an organizer score. The earlier `DTI(P1) = 0.2868` value is also a projection, not an observed result. Neither value establishes a score above any leaderboard entry. No data here certify the novel arm: the identified lower bound for every non-file subset is zero (`scripts/h60_identify.py`). H60C exported the arm as an explicitly unapproved research hypothesis, not a priced or slot-approved bet.
 
-### What is new in H60 relative to every earlier round in this repository
+### What H60C explored (historical calculations, not verified score results)
 
-1. **`|G|` and per-file credit are re-derived from the bytes**, and candidate emissions are then
-   bounded by **linear programming over the identified set** — not by a point estimate. Earlier
-   rounds used NNLS, which silently selects one corner of a large polytope and invents information.
+1. **Conditional per-file credit accounting** was derived from owner-mirrored raster bytes and
+   owner-reported scores, then bounded with linear programming over a set of assumptions. These
+   are not organizer-confirmed credits or measurements of hidden truth; the lower bound for a novel
+   subset remains zero.
 2. **A parametric corroboration ladder was preregistered and refuted.** Four coefficients cannot
-   reproduce the twelve measured credits (median |rel.err| 0.22, leave-one-file-out 0.28, and
+   reproduce the twelve owner-score-derived credit estimates (median |rel.err| 0.22, leave-one-file-out 0.28, and
    `M` missed by a factor of 11). It is recorded as a negative result in
    `knowledge/27_what_h60_found.md`; the free-form 13-parameter version was refuted first.
-3. **A measured, previously unnoticed defect in the champion's own recipe.** On the 100 m integer
+3. **A computationally measured, previously unnoticed geometric difference in the champion's dot recipe (not a score claim).** On the 100 m integer
    lattice, sampling a straight trace every **3 px returns 2.333 credit per dot and covers 77.8 %
    of the trace**, while the champion's `d2-8` (2.8 px) returns 2.147 and covers 76.7 %. Spacing 3
    strictly dominates spacing 2.8 — fewer dots, more coverage — so H60 uses 3 px.
 4. **Two files with byte-identical decoded content** (`8GEMSDOE_Hedge-v2_submission.tif` and
-   `gemsdoe-ens12-adopted-7f00890a.tif`, 166,519 off-catalogue px each) both report **0.1563**.
-   That is the first internal consistency check on the owner-reported file-to-score mapping
-   (see `registry/irregularities.json`).
-5. **The 0.2778 / 0.2600 pair is the only nested cross-check of `|G|`, and it is tight**: publication
-   rounding to four decimals moves `|G|` by only ±70 px.
+   `gemsdoe-ens12-adopted-7f00890a.tif`, 166,519 off-catalogue px each) both carry the same
+   **owner-reported 0.1563** score label. This is an internal consistency check on the owner-mirror
+   attributions, not organizer confirmation (see `registry/irregularities.json`).
+5. The reported **0.2778 / 0.2600** pair gives only a conditional, rounded-data sensitivity range
+   for `|G|`; it is not a verified or organizer-authenticated cross-check.
 
-### Is it OK to download? Is it OK to submit?
+### H60C file status
 
-**Download: YES, always.** The file is portal-safe by construction — single-band float32,
-EPSG:32611, 3,730 × 3,292, transform identical to `sample_submission.tif`, every pixel finite and
-in `{0, 1}`, no nodata tag. The "Predicted values must be in range [0, 1]" rejection is caused by
-NaN-bearing exports and **cannot occur** with this file; `gems52.grid.write_geotiff` refuses to
-write it otherwise.
-
-**Spend a weekly submission slot: read `docs/h60c.html` first.** The core is the best-measured mass
-this repository has. The arm's density is not measured and cannot be. The decision, with its full
-sensitivity table, is on the audit page.
+**Download for research: YES. Submit: NO — this archive has no selector approval.** The file has a
+local format record, but that is not organizer acceptance. The H60C audit's stored submission note
+is 182 characters (above this project's 140-character convention), its arm-credit lower bound is
+zero, its score-to-file mappings are owner-reported, and the page has no organizer receipt. Do not
+upload it. The current CTD5 research TIFF is separately labeled on the landing page and is also
+**not approved for submission**. The historical range-error cause remains unknown because the
+rejected bytes and portal receipt were not available.
 
 <!--/H60README-->
 
 ## Start here every session
 
-Read the **complete current prompt below**, [working agreement](AGENTS.md), [frozen ranked hypotheses](knowledge/25_ctd5_preregistered.md), [results and limitations](knowledge/27_ctd5_results_and_limits.md), and [three-pass review](knowledge/28_ctd5_three_pass_review.md). The older README is preserved unchanged in [the history archive](knowledge/archive/README_before_ctd5.md); its conflicting “current” pointers and scientific/score claims are **not current authority**.
+Read the **complete current prompt below**, [working agreement](AGENTS.md), [frozen ranked hypotheses](knowledge/25_ctd5_preregistered.md), [results and limitations](knowledge/27_ctd5_results_and_limits.md), [three-pass review](knowledge/28_ctd5_three_pass_review.md), and [latest repository review](knowledge/30_repo_review_2026-10-08.md). The older README is preserved unchanged in [the history archive](knowledge/archive/README_before_ctd5.md); its conflicting “current” pointers and scientific/score claims are **not current authority**.
 
 **Maximize P(Win):** do not consume a scarce slot to make a failed research run look successful. **Own the Outcome:** publish the real file, failure diagnostics, provenance boundaries and reproduction—not only a promising story.
 

@@ -1,15 +1,15 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="New geophysical/surface disagreement GeoTIFF with explicit failed scientific and lane gates. Research download only; do not submit.">
-<title>Research download &amp; explicit submission status · GEMSDOE52</title><link rel="stylesheet" href="assets/ctd5.css"><script src="assets/ctd5.js" defer></script></head>
-<body><!--CTD5-ARCHIVE-NOTICE--><aside style="padding:14px 22px;background:#fff1de;color:#6e421d;border-bottom:1px solid #dcc8a8;font:14px/1.6 system-ui">Historical research archive, not current upload approval. <a href="index.html" style="color:#126954">Current CTD5 file and failed gates</a>. Older score, provenance and “safe to submit” statements may be superseded; no organizer score is newly confirmed here.</aside><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>
+<meta name="description" content="Historical H60 two-view co-training archive. Research download only; not approved for competition submission.">
+<title>Historical H60 analysis · research only, not approved to submit · GEMSDOE52</title><link rel="stylesheet" href="assets/ctd5.css"><script src="assets/ctd5.js" defer></script></head>
+<body><!--CTD5-ARCHIVE-NOTICE--><aside style="padding:14px 22px;background:#fff1de;color:#6e421d;border-bottom:1px solid #dcc8a8;font:14px/1.6 system-ui"><strong>HISTORICAL H60 ARCHIVE — DOWNLOAD FOR RESEARCH ONLY; DO NOT SUBMIT.</strong> This page's old “UPLOAD WILL BE ACCEPTED” statement is withdrawn: a local format check is not organizer acceptance or selector approval. H60C is a separate artifact. <a href="index.html" style="color:#126954">Current CTD5 file and failed gates</a>. No organizer score or upload receipt is newly confirmed here.</aside><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>
 <a href="index.html">Overview</a><a href="ctd5-audit.html">Run &amp; evidence</a><a href="executive-summary.html">Submission guide</a><a href="ctd5-sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header>
 <main id="main"><!--H60-ARTIFACT-->
 
 <div class="eyebrow">H60 · two-view co-training on SHA-verified competition bytes ·
-<span class="pill ok">OK TO DOWNLOAD · PORTAL-VALID AND UNIQUE, THE UPLOAD WILL BE ACCEPTED · NO CERTIFIED LEADERBOARD GAIN — the only local instrument ranks the 0.2778 champion at 0.00479, below a random placeholder (IR-H60-003), so nothing here can show this file beats your current best</span></div>
+<span class="pill warn">H60 ARCHIVE · DOWNLOAD FOR RESEARCH ONLY · DO NOT SUBMIT — format and decoded-pattern checks do not establish organizer or selector approval</span></div>
 
-<section class="download-bar" aria-label="submission download">
+<section class="download-bar" aria-label="historical H60 research download">
 <div>
 <strong>gems52-h60-unionmax-37654px-20261008T185134Z-5406fdcdcf46-zeros.tif</strong>
 <small>143,566 bytes · single-band float32 · EPSG:32611 ·
@@ -28,36 +28,30 @@ uniqueness: pattern unique vs 62 aligned priors =
 novel support 0.4677,
 literal union of priors = False</small>
 </div>
-<a class="button" href="downloads/h60-cotrain-candidate.tif" download>↓ Download the submission TIFF (one click)</a>
-<a class="button" href="downloads/h60-cotrain-candidate.zip" download>↓ Download the one-TIFF ZIP</a>
-<a class="button secondary" href="executive-summary.html">How to submit →</a>
+<a class="button" href="downloads/h60-cotrain-candidate.tif" download>↓ Download historical H60 research TIFF — DO NOT SUBMIT</a>
+<a class="button" href="downloads/h60-cotrain-candidate.zip" download>↓ Download historical H60 research ZIP — DO NOT SUBMIT</a>
+<a class="button secondary" href="index.html">Current CTD5 status →</a>
 </section>
 
 <section class="card">
-<h3>Paste these into the submission form</h3>
-<p><strong>Note (optional):</strong></p>
+<h3>Archived H60 note — do not paste into a submission form</h3>
+<p><strong>Historical optional note, preserved for provenance only:</strong></p>
 <pre>H60 union_max 37654px; two-view co-training on SHA-pinned bytes; independence measured; &gt;200m ring excluded; all-finite binary [0,1]; not a verified fault map</pre>
-<p class="small">158 characters (the form allows 200). The ZIP also carries
-<code>submission-name.txt</code> and <code>submission-note.txt</code>.</p>
+<p class="small">158 characters, above the current project convention of 140. The ZIP carries historical note files; neither this note nor the archive is approved for upload. “Independence measured” refers only to recorded proxy diagnostics, not proof of conditional independence.</p>
 </section>
 
-<h1>Why the 0.2778 file scored what it did, and what would actually beat it.</h1>
-<p class="lede">The metric is a distance-weighted Tversky index. With
-<code>FNw = |G| − TPw</code> it collapses to
-<code>DTI = T / (0.2·T + 0.2·(S − M) + 0.8·|G|)</code>, where <code>T</code> is credited mass,
-<code>S</code> is emitted mass and <code>M</code> is emitted mass that sits within 300 m of a truth
-pixel. Every emitted pixel that is <em>not</em> near a fault costs 0.2 in the denominator. That single
-identity, measured against the restored bytes of the 0.2778 file, is the whole story.</p>
+<h1>Historical H60 co-training analysis: assumptions, diagnostics, and limits.</h1>
+<p class="lede">This archived page contains conditional accounting based on owner-reported file-to-score attributions, plus legacy catalogue hide-and-recover diagnostics. Those values are not organizer-confirmed scores. Legacy fold DTI here is <strong>not current HOLDOUT-DTI</strong>: the table does not supply the current evaluator version, withheld-positive count, or a 95% CI. The published distance-weighted Tversky identity is useful for sensitivity analysis under its assumptions, but it does not authenticate a score mapping or reveal the hidden truth.</p>
 
 <div class="grid">
-<section class="card"><h3>Independence premise</h3>
+<section class="card"><h3>Correlation screen, not proof of independence</h3>
 <p class="metric">0.2236</p>
 <p class="small">Spearman of per-block false-alarm rate at a fixed budget, out-of-fold,
 labelled negatives only, 565 blocks of 50 px — the statistic the
 brief names — against the registered abandonment threshold 0.6.
 Mean-score-on-negatives correlation 0.4176;
 pixel-level 0.2686.
-<strong>Abandon pseudo-labelling: False.</strong></p></section>
+The registered abandon threshold was not triggered for this proxy; it does <strong>not</strong> establish conditional independence or sufficient views.</p></section>
 
 <section class="card"><h3>Pseudo-label exchange</h3>
 <p class="metric">-0.0030</p>
@@ -103,7 +97,7 @@ triangular max-coverage, so it spreads a hard-core pattern instead of taking a t
 <h2>The control that decides whether any of this can be trusted</h2>
 <p>All thirteen scored priors, scored against the same four hide-and-recover folds
 (<code>evidence/h60_prior_control.json</code>):</p>
-<table><thead><tr><th>prior</th><th>owner-reported board</th><th>hide-and-recover DTI</th><th>mean px</th></tr></thead>
+<table><thead><tr><th>prior</th><th>owner-reported board (not organizer-confirmed)</th><th>legacy catalogue hide-and-recover DTI (not HOLDOUT-DTI)</th><th>mean px</th></tr></thead>
 <tbody><tr class="hi"><td>champion_h33_2_b2</td><td>0.2778</td><td>0.00479</td><td>37,654</td></tr><tr><td>gems24-h25-1-dotted-h19-5-d2-8-202</td><td>0.2600</td><td>0.11632</td><td>39,257</td></tr><tr><td>gems24-h25-1-dotted-h19-5-d1-5-202</td><td>0.2477</td><td>0.11447</td><td>53,486</td></tr><tr><td>gems27-topo-gap-closure-t-v2-on-d1</td><td>0.2449</td><td>0.11432</td><td>54,666</td></tr><tr><td>gems19-h19-5-powerlaw-budget-multi</td><td>0.1922</td><td>0.08973</td><td>108,124</td></tr><tr><td>gems19-h19-4-multiline-corroborate</td><td>0.1894</td><td>0.08967</td><td>110,628</td></tr><tr><td>gems16-h16-1-topo-geophys-baseline</td><td>0.1855</td><td>0.08927</td><td>110,882</td></tr><tr><td>gems10-h28-dotted-ridge-20260928T0</td><td>0.1839</td><td>0.24561</td><td>58,856</td></tr><tr><td>gemsdoe-ens12-adopted-7f00890a</td><td>0.1563</td><td>0.11224</td><td>151,774</td></tr><tr><td>8GEMSDOE_Hedge-v2_submission</td><td>0.1563</td><td>0.34082</td><td>165,323</td></tr><tr><td>gems10-h25-ctx-ridge-20260927T2329</td><td>0.1280</td><td>0.20610</td><td>140,807</td></tr><tr><td>13gems_20261001_r13-lattice-s5_v2_</td><td>0.0904</td><td>0.10820</td><td>197,757</td></tr><tr><td>gemsdoe9-PLACEHOLDER-2314b599</td><td>0.0107</td><td>0.02229</td><td>139,883</td></tr></tbody></table>
 <p class="small"><strong>The 0.2778 champion scores 0.00479
 on this instrument — below the random placeholder's

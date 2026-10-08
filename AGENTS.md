@@ -11,8 +11,9 @@ This session's working branch is fixed by Arena. Do not change branches. Keep ra
 ## Current CTD5 continuation
 
 Read the entire current prompt in `README.md` (also `knowledge/26_current_user_brief.md`),
-`knowledge/25_ctd5_preregistered.md`, `knowledge/27_ctd5_results_and_limits.md`, and the
-three-pass review. CTD5 is negative and stopped: a registered survey-wide lattice makes
-the >70% near-dot gate impossible on this footprint. Do not quietly exclude it, tune a
+`knowledge/25_ctd5_preregistered.md`, `knowledge/27_ctd5_results_and_limits.md`, the
+three-pass review, and the latest repository review at
+`knowledge/30_repo_review_2026-10-08.md`. CTD5 is negative and stopped: a registered survey-wide
+lattice makes the >70% near-dot gate impossible on this footprint. Do not quietly exclude it, tune a
 new placement, promote CTD5, or treat the archival H57 LATEST pointer as upload approval.
 Raw input pins authenticate mirror bytes only. Preserve dated source and score caveats.

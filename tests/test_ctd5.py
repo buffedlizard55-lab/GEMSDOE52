@@ -253,3 +253,33 @@ def test_ctd5_legacy_assay_cannot_be_mistaken_for_validated_promotion():
     assert c['strict_holdout_valid'] is False
     assert 'withheld labels' in c['validation_warning']
     assert not c['submit_ok'] and c['verdict']=='negative'
+
+
+def test_h60c_archive_labels_score_attribution_and_submission_status():
+    page=(ROOT/'docs/h60c.html').read_text()
+    assert 'DOWNLOAD FOR RESEARCH: YES' in page
+    assert 'SUBMIT TO COMPETITION: NO' in page and 'NOT APPROVED' in page
+    assert 'owner-reported, not organizer-confirmed' in page
+    assert 'not a correlation of per-pixel OOF errors' in page
+    assert 'not comparable HOLDOUT-DTI' in page
+    assert 'Download the submission TIFF' not in page
+    assert 'measured from the organiser\'s own scores' not in page
+    receipt=json.loads((ROOT/'docs/data/h60c_submission.json').read_text())
+    assert receipt['note_chars']==182  # historical artifact; not an upload note
+    downloads=(ROOT/'docs/downloads/index.html').read_text()
+    assert downloads.index('id="h60c-archive"') < downloads.index('</main>')
+    assert downloads.rsplit('</html>',1)[1].strip()==''
+    assert 'DO NOT SUBMIT' in downloads and 'NOT APPROVED' in downloads
+    overview=(ROOT/'docs/index.html').read_text()
+    assert 'Download H60C for research only — DO NOT SUBMIT' in overview
+
+
+def test_legacy_h60_archive_withdraws_organizer_acceptance_claim():
+    page=(ROOT/'docs/archive-h60-cotrain-overview.html').read_text()
+    assert 'HISTORICAL H60 ARCHIVE — DOWNLOAD FOR RESEARCH ONLY; DO NOT SUBMIT.' in page
+    assert 'old “UPLOAD WILL BE ACCEPTED” statement is withdrawn' in page
+    assert 'PORTAL-VALID AND UNIQUE, THE UPLOAD WILL BE ACCEPTED' not in page
+    assert 'Download the submission TIFF' not in page
+    assert 'How to submit →' not in page
+    assert 'not current HOLDOUT-DTI' in page
+    assert 'not proof of conditional independence' in page
