@@ -152,12 +152,19 @@
     "emitter": "gems52.h57.iso_select, isotropic 3 px minimum separation, NMS 5",
     "emission_pool": "valid footprint AND sample-submission finite domain AND NOT the <= 200 m catalogue ring"
   },
-  "field_decision_rule": {
+    "field_decision_rule": {
     "eligibility": "beat the random control on >= 3/4 folds in BOTH modes at the primary budget",
-    "shipped": "eligible field with the highest mean hide-DTI at the primary budget; ties broken by block mean, then simplicity (single view < union < product/vetoB < layer fields)",
+    "shippable_fields": "view_A, view_B, union, product, vetoB, basestep, seismicity (the a_only_stratum arm is a labelled diagnostic and random is a control; neither can ship)",
+    "shipped": "eligible shippable field with the highest mean hide-DTI at the primary budget; ties broken by block mean, then simplicity (single view < union < product/vetoB < layer fields)",
     "if_independence_abandoned": "shipped field is the best single view",
     "if_no_candidate_beats_union": "union ships and candidates are recorded as refutations",
     "no_post_hoc_tuning": "no threshold, weight or parameter may change after any holdout result is seen"
+  },
+  "protocol_amendment": {
+    "date": "2026-10-08",
+    "timing": "after the runner was written, BEFORE any H59 model fit, holdout score or output was computed",
+    "reason": "Two pre-result clarifications: (1) the not-the-union gate forbids equality with the view_A emission, the view_B emission, or their set-union; equality with the union FIELD's own emission is reported, not gated, because that field is itself the round's registered combination and would otherwise fail its own gate by construction if it won; (2) the a_only_stratum arm is a diagnostic and can never be the shipped field (its support cannot carry the 37,654-px budget, and the registration labels it a diagnostic).",
+    "result_informed": false
   },
   "artifact": {
     "budget_px": 37654,
@@ -169,11 +176,12 @@
   "gates": {
     "format": "single band float32, EPSG:32611, exact transform/shape, values in [0,1], all finite, all emitted inside the valid footprint",
     "uniqueness": "decoded pattern differs from every accessible aligned prior; inventory scope disclosed",
-    "not_the_union": "decoded pattern differs from same-budget iso-emissions of view_A, view_B, union, and the set-union of the view_A and view_B emissions",
+    "not_the_union": "decoded pattern differs from the same-budget iso-emissions of view_A and view_B and from the SET-UNION of those two emissions; the comparison against the union-field's own emission is REPORTED but is not a gate, because max(p_A, p_B) is itself the round's co-training combination -- the forbidden thing is lazily taking the union of the two views' separate emissions",
     "ring": "minimum distance to a mapped catalogue pixel > 200 m",
     "spacing": "nearest-neighbour spacing >= 3 px",
     "novelty_reporting": "support-novelty fraction vs prior support union and overlap with the 0.2778 reference reported as numbers, no threshold",
-    "reasoning": "one row per emitted pixel; written geological reasoning plus explicit falsifier for every A-only pixel"
+    "reasoning": "one row per emitted pixel; written geological reasoning plus explicit falsifier for every A-only pixel",
+    "shippable_fields": "view_A, view_B, union, product, vetoB, basestep, seismicity; a_only_stratum is a diagnostic arm and is never the shipped field; random is a control"
   },
   "slot_verdict_rule": {
     "recommended": "all gates pass AND shipped field beats the strongest same-fold single-view baseline by >= +0.003 mean DTI on BOTH instruments at primary budget with >= 3/4 strict fold wins on both AND full-budget emission on every primary fold AND independence gate did not abandon the method",

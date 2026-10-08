@@ -179,3 +179,14 @@ or the INGENIOUS GDR submission
 `registry/h59_preregistration.json` are committed before `src/gems52/h59.py`, `scripts/run_h59.py`
 or any H59 result exists. No result informed any number above. Preserve all thresholds after
 opening results; store outputs in new evidence files; never retrofit this registration.
+
+**Pre-result protocol amendment (2026-10-08, recorded before any H59 model fit, holdout score or
+output existed):** two clarifications frozen in `registry/h59_preregistration.json` →
+`protocol_amendment`. (1) The *not-the-union* gate forbids the decoded pattern equalling the
+view_A emission, the view_B emission, or the **set-union of those two emissions**; equality with
+the union **field's** own emission is *reported, not gated* — `max(p_A, p_B)` is itself this
+round's registered co-training combination and would otherwise fail its own gate by construction
+if it won the holdout. (2) The `a_only_stratum` arm is a labelled diagnostic and can never be the
+shipped field (its support cannot carry the 37,654-px budget and the registration labels it a
+diagnostic); the shippable fields are view_A, view_B, union, product, vetoB, basestep,
+seismicity. `result_informed: false`.
