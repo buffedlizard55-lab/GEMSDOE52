@@ -190,3 +190,16 @@ if it won the holdout. (2) The `a_only_stratum` arm is a labelled diagnostic and
 shipped field (its support cannot carry the 37,654-px budget and the registration labels it a
 diagnostic); the shippable fields are view_A, view_B, union, product, vetoB, basestep,
 seismicity. `result_informed: false`.
+
+**Emitter amendment 2 (2026-10-08, recorded after the first full run failed at the artifact
+stage, before any artifact or amended number was accepted):** the registered emitter reference
+("h57.iso_select, isotropic 3 px, NMS 5") embeds an NMS-5 *speed prefilter* that is an
+approximation inside that function, not part of the 3 px separation rule. On a smooth
+probability field it caps the emission below the registered budget — measured: **27,905 nodes
+against the 37,654 request** on the View-B field, a hard error under the registration's own
+"exactly 37,654 nodes". The emitter is replaced by the **exact greedy under the same inclusive
+3 px separation** (`gems52.h59.iso_select_exact`), applied identically to every arm, every
+control comparison and the artifact. The failure was mechanical (a RuntimeError), not
+score-motivated: no threshold, weight, ranking or pool rule changed, and the whole pipeline was
+rerun end-to-end so no pre-amendment measurement survives into the receipts. `result_informed:
+false` for the capacity cause; the superseded run's log is preserved in the repository history.

@@ -193,6 +193,53 @@ def emit(field: np.ndarray, pool: np.ndarray, budget: int = BUDGET_PRIMARY,
     return h57.iso_select(f, support, budget, min_px=min_px, nms_px=nms_px)
 
 
+def iso_select_exact(score: np.ndarray, allowed: np.ndarray, k: int,
+                     min_px: float = 3.0) -> np.ndarray:
+    """Exact greedy node selection under an isotropic minimum separation -- no NMS prefilter.
+
+    ``h57.iso_select`` first suppresses non-maxima at ``nms_px`` for speed.  That prefilter is an
+    approximation, and on a smooth field it silently CAPS the emission below the requested budget
+    (measured on the H59 run: 27,905 nodes against a 37,654 request for the View-B field), because
+    a candidate whose higher neighbour is itself blocked by an earlier node would still have been
+    taken by the pure greedy.  This function is the pure greedy: candidates in strict score order,
+    each taken unless an already-taken node lies within ``min_px`` (inclusive, the metric's own
+    k(3px)=0 rule).  It reaches any budget the pool can physically carry, which the incumbent
+    37,654-px family proves this pool can.
+
+    Registered use: H59's emitter amendment (registry/h59_preregistration.json), applied
+    identically to every arm and to the artifact.
+    """
+    shape = np.shape(score)
+    out = np.zeros(shape, bool)
+    ys, xs = np.nonzero(allowed)
+    if ys.size == 0 or k <= 0:
+        return out
+    f = np.nan_to_num(np.asarray(score, np.float64), nan=-np.inf, posinf=-np.inf,
+                      neginf=-np.inf)
+    order = np.argsort(-f[ys, xs], kind="stable")
+    ys = ys[order].tolist()
+    xs = xs[order].tolist()
+    r = int(math.ceil(min_px))
+    lim = min_px + 1e-9
+    offs = [(oy, ox) for oy in range(-r, r + 1) for ox in range(-r, r + 1)
+            if 0 < (oy * oy + ox * ox) ** 0.5 <= lim]
+    h, w = shape
+    blocked = np.zeros(shape, bool)
+    taken = 0
+    for y, x in zip(ys, xs):
+        if blocked[y, x]:
+            continue
+        out[y, x] = True
+        taken += 1
+        if taken >= k:
+            break
+        for oy, ox in offs:
+            py, px = y + oy, x + ox
+            if 0 <= py < h and 0 <= px < w:
+                blocked[py, px] = True
+    return out
+
+
 def spacing_stats(emitted: np.ndarray) -> dict:
     """Nearest-neighbour spacing of the emitted cells, in pixels (exact k-d tree)."""
     ys, xs = np.nonzero(emitted)
@@ -208,9 +255,10 @@ def spacing_stats(emitted: np.ndarray) -> dict:
 def not_the_union_checks(emission: np.ndarray, pa: np.ndarray, pb: np.ndarray,
                          pool: np.ndarray, budget: int = BUDGET_PRIMARY) -> dict:
     """The brief's 'not merely the union of the two views' gate, measured, not asserted."""
-    em_a = emit(pa, pool, budget)
-    em_b = emit(pb, pool, budget)
-    em_u = emit(np.maximum(np.nan_to_num(pa, nan=0.0), np.nan_to_num(pb, nan=0.0)), pool, budget)
+    em_a = iso_select_exact(np.nan_to_num(pa, nan=0.0), pool, budget)
+    em_b = iso_select_exact(np.nan_to_num(pb, nan=0.0), pool, budget)
+    em_u = iso_select_exact(np.maximum(np.nan_to_num(pa, nan=0.0),
+                                       np.nan_to_num(pb, nan=0.0)), pool, budget)
     set_union = em_a | em_b
 
     def jac(a: np.ndarray, b: np.ndarray) -> float:

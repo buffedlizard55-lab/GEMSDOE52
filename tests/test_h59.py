@@ -62,14 +62,14 @@ def test_not_the_union_checks() -> None:
     pa = rng.random(shape).astype(np.float32)
     pb = rng.random(shape).astype(np.float32)
     pool = np.ones(shape, bool)
-    em_union = h59.emit(np.maximum(pa, pb), pool, budget=20)
+    em_union = h59.iso_select_exact(np.maximum(pa, pb), pool, 20)
     checks = h59.not_the_union_checks(em_union, pa, pb, pool, budget=20)
     # the union-field emission legitimately equals its own field's emission (reported, not gated)
     assert checks["equals_union_field"] is True
     assert checks["equals_set_union"] is False        # a max-ranking is not the set union
     assert checks["equals_view_a"] is False
     assert checks["equals_view_b"] is False
-    em_a = h59.emit(pa, pool, budget=20)
+    em_a = h59.iso_select_exact(pa, pool, 20)
     checks_a = h59.not_the_union_checks(em_a, pa, pb, pool, budget=20)
     assert checks_a["equals_view_a"] is True          # a field's own emission is caught
 
@@ -78,6 +78,25 @@ def test_utmxy_uses_pinned_transform() -> None:
     east, north = h59._utmxy(np.array([0]), np.array([0]))
     assert east[0] == pytest.approx(243350.0 + 50.0)
     assert north[0] == pytest.approx(4508550.0 - 50.0)
+
+
+def test_iso_select_exact_reaches_budget_and_keeps_spacing() -> None:
+    """The exact greedy reaches any budget the pool can carry -- the NMS-5 prefilter of
+    h57.iso_select capped a smooth field at 27,905/37,654 (the H59 emitter amendment)."""
+    rng = np.random.default_rng(7)
+    # a smooth single-peak field: the worst case for local-maximum prefilters
+    yy, xx = np.mgrid[0:120, 0:120]
+    field = np.exp(-(((yy - 60) ** 2 + (xx - 60) ** 2) / 800.0)).astype(np.float32)
+    pool = np.ones(field.shape, bool)
+    nodes = h59.iso_select_exact(field, pool, 400)
+    assert int(nodes.sum()) == 400                      # full budget on a smooth field
+    s = h59.spacing_stats(nodes)
+    assert s["min_nn_px"] >= 3.0                        # inclusive 3 px rule holds everywhere
+    # greedy order property: the field maximum is always taken
+    assert nodes[60, 60]
+    # a tiny k and a zero budget behave
+    assert int(h59.iso_select_exact(field, pool, 0).sum()) == 0
+    assert int(h59.iso_select_exact(field, ~pool, 5).sum()) == 0
 
 
 # --------------------------------------------------------------------------------------------

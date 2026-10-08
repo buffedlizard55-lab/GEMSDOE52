@@ -201,8 +201,10 @@ def pseudo_exchange(fold0: dict, layers: h57.Layers, idx_a: np.ndarray, idx_b: n
     from sklearn.metrics import roc_auc_score
     region0 = fold0["region"]
     evaluation = catalogue & region0 & valid
-    forbidden = (catalogue | corridor | ~region0
-                 | ndimage.binary_dilation(evaluation, structure=h58._disk(80)))
+    # 80 px Euclidean buffer around the evaluation catalogue, via EDT (a 161x161 structuring
+    # element in binary_dilation exhausts this box's memory -- measured, not assumed)
+    eval_far = ndimage.distance_transform_edt(~evaluation) > 80.0
+    forbidden = (catalogue | corridor | ~region0 | ~eval_far)
     ed_cat = ndimage.distance_transform_edt(~catalogue)          # pixels, Euclidean
     report = dict(directions=[])
     for direction, donor, receiver, idx_rec, idx_don in (
@@ -309,7 +311,7 @@ def score_instrument(mode: str, folds: list[dict], layers: h57.Layers, idx_a, id
                 else:
                     f = np.nan_to_num(field, nan=0.0, posinf=0.0, neginf=0.0)
                     support = legal & (f > 0)
-                    nodes = h57.iso_select(f, support, budget, min_px=3.0, nms_px=5)
+                    nodes = h59.iso_select_exact(f, support, budget)
                 if np.any(nodes & ~legal) or np.any(nodes & visible_collar):
                     raise AssertionError(f"{mode}/fold{number}/{arm}: emitted outside legal pool")
                 prediction = nodes.astype(np.float32)
@@ -436,7 +438,8 @@ FIELD_BUILDERS = {
 def build_artifact(shipped: str, ctx: dict, pool: np.ndarray, catalogue: np.ndarray,
                    valid: np.ndarray, sample_path: Path, out_dir: Path) -> dict:
     field = FIELD_BUILDERS[shipped](ctx).astype(np.float32)
-    emission = h59.emit(field, pool, budget=h59.BUDGET_PRIMARY)
+    f = np.nan_to_num(field, nan=0.0, posinf=0.0, neginf=0.0)
+    emission = h59.iso_select_exact(f, pool & (f > 0), h59.BUDGET_PRIMARY)
     n = int(emission.sum())
     if n != h59.BUDGET_PRIMARY:
         raise RuntimeError(f"emission shortfall: {n} != {h59.BUDGET_PRIMARY}")
@@ -555,12 +558,12 @@ def main() -> int:
     pa0 = np.nan_to_num(pa_oof, nan=0.0)
     pb0 = np.nan_to_num(pb_oof, nan=0.0)
     strata = h57.disagreement(pa0, pb0, permitted, q_conf=Q_CONF, q_abstain=Q_ABSTAIN)
-    depth = h59.layer_float(layers, "A_depth_to_base_val")
+    depth_raw = G.read_band(feature_path, 15)          # metres, not the rank layer
     strata["median_depth_to_basement_m"] = {
-        k: float(np.median(depth[m])) for k, m in
+        k: float(np.median(depth_raw[m])) for k, m in
         (("a_only", strata["masks"]["a_only"]), ("b_only", strata["masks"]["b_only"]),
          ("concordant", strata["masks"]["concordant"]), ("permitted", permitted)) if m.any()}
-    del depth
+    del depth_raw
     log(f"strata {strata['counts']}; median depth {strata['median_depth_to_basement_m']}")
 
     # ---- stage 5: pseudo exchange (diagnostic) ---------------------------------------------------
@@ -582,6 +585,13 @@ def main() -> int:
         fold_receipts.extend(fr)
         del folds
     summary = summarize(rows)
+
+    # checkpoint: a late-stage failure must never discard measured fold rows again
+    write_json(ROOT / "evidence/h59_holdout_checkpoint.json", dict(
+        rows=rows, fold_receipts=fold_receipts, summary=summary,
+        independence=dict(measured=ind["measured"], allow_exchange=ind["allow_exchange"],
+                          max_abs_correlation=ind["max_abs_correlation"], n_blocks=ind["n_blocks"]),
+        note="checkpoint written before the frozen field decision and the artifact build"))
 
     # ---- stage 7: frozen field decision ------------------------------------------------------------
     decision = decide_field(summary, independence_ok)
