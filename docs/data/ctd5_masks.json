@@ -1,0 +1,11 @@
+{
+  "path": "evidence/ctd5_masks.npz",
+  "sha256": "2b7dd2d344adf5f01e0c1fc242abe43677be255cd80cbcc437e2c5f320b70aed",
+  "bytes": 48177,
+  "source_features_sha256": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+  "footprint_pixels": 5164300,
+  "eligible_pixels": 4593171,
+  "bitorder": "big",
+  "organizer_authenticated": false,
+  "purpose": "Compact derived audit masks; not labels, features, or prior prediction inputs."
+}

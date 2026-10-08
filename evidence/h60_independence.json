@@ -1,0 +1,15 @@
+{
+ "statistic_named_by_the_brief": "per-block false-alarm rate at a matched global rate of 0.01, out-of-fold, labelled negatives only, 100x100 px blocks",
+ "threshold_view_A": 0.6028575897216797,
+ "threshold_view_B": 0.622976874113083,
+ "n_blocks_used": 565,
+ "n_blocks_rejected_small": 18,
+ "min_block_pixels": 200,
+ "spearman_false_alarm": 0.22356190285209032,
+ "spearman_mean_score_on_negatives": 0.41763151749186467,
+ "spearman_pixel_score": 0.26857156905313545,
+ "abandon_threshold": 0.6,
+ "abandoned": false,
+ "reading": "the premise is judged on the statistic the brief names (per-block false-alarm rate); the mean-score-on-negatives and pixel-level correlations are reported beside it, not instead of it",
+ "n_negative_pixels": 1600000
+}

@@ -1,0 +1,265 @@
+{
+ "seed": 20261008,
+ "bands_A": [
+  1,
+  2,
+  3,
+  9,
+  14,
+  13,
+  11,
+  18,
+  5,
+  4,
+  7,
+  8,
+  10,
+  16,
+  15,
+  17
+ ],
+ "bands_B": [
+  12,
+  19,
+  6
+ ],
+ "features_A": [
+  "A_b1_rank",
+  "A_b2_rank",
+  "A_b2_grad",
+  "A_b3_rank",
+  "A_b9_rank",
+  "A_b14_rank",
+  "A_b14_grad",
+  "A_b13_rank",
+  "A_b13_grad",
+  "A_b11_rank",
+  "A_b18_rank",
+  "A_b5_rank",
+  "A_b4_rank",
+  "A_b7_rank",
+  "A_b8_rank",
+  "A_b10_rank",
+  "A_b16_rank",
+  "A_b15_rank",
+  "A_b15_grad",
+  "A_b17_rank"
+ ],
+ "features_B": [
+  "B_b12_rank",
+  "B_b12_grad",
+  "B_b12_range5",
+  "B_b12_lap",
+  "B_b19_rank",
+  "B_b19_grad",
+  "B_b19_range5",
+  "B_b19_lap",
+  "B_b6_rank",
+  "B_b6_grad",
+  "B_b6_range5",
+  "B_b6_lap"
+ ],
+ "thresholds": {
+  "confident_quantile": 0.95,
+  "abstain_quantile": 0.5,
+  "confident_quantile_value": {
+   "A": 0.4829595386981964,
+   "B": 0.41339415311813354
+  },
+  "abstain_quantile_value": {
+   "A": 0.13010253012180328,
+   "B": 0.16561532020568848
+  }
+ },
+ "buffer_px": 4,
+ "training": {
+  "positives": 48000,
+  "negatives": 192000
+ },
+ "in_sample_auc": {
+  "A": 0.933837754123264,
+  "B": 0.7788504929470486
+ },
+ "independence": {
+  "n_blocks": 2128,
+  "block_side_px": 50,
+  "min_n_per_block": 400,
+  "threshold": 0.6,
+  "rho_block_mean_oof_probability": 0.11751027780525529,
+  "rho_block_fp_rate_all_blocks": 0.04689593919864583,
+  "rho_block_fp_rate_nonzero_blocks": -0.20193020355253913,
+  "n_nonzero_fp_blocks": 1066,
+  "fires": false,
+  "mean_oof_a": 0.15069347708219052,
+  "mean_oof_b": 0.17234750803979287,
+  "note": "Primary statistic: Spearman correlation, across 50x50 px blocks, of the two views' mean out-of-fold probability on labelled negatives (outside the catalogue and a 4 px buffer). It is continuous and defined on every block, unlike the thresholded confident-positive rate, which is zero on most blocks and therefore discards them."
+ },
+ "strata_counts": {
+  "a_only": 58563,
+  "b_only": 75211,
+  "concordant": 43668,
+  "neither": 4691536
+ },
+ "hide_and_recover": [
+  {
+   "fold": 0,
+   "arm": "A",
+   "budget": 40000,
+   "n_held": 15257,
+   "survival": 1.0,
+   "dti": 0.006685573067948917,
+   "tpw": 134.88698085823304
+  },
+  {
+   "fold": 0,
+   "arm": "B",
+   "budget": 40000,
+   "n_held": 15257,
+   "survival": 1.0,
+   "dti": 0.06615583892027321,
+   "tpw": 1331.0052918926078
+  },
+  {
+   "fold": 0,
+   "arm": "union",
+   "budget": 40000,
+   "n_held": 15257,
+   "survival": 1.0,
+   "dti": 0.0365661837099369,
+   "tpw": 737.7929859907254
+  },
+  {
+   "fold": 0,
+   "arm": "random",
+   "budget": 40000,
+   "n_held": 15257,
+   "survival": 1.0,
+   "dti": 0.054341857861665906,
+   "tpw": 1105.335257184489
+  },
+  {
+   "fold": 1,
+   "arm": "A",
+   "budget": 40000,
+   "n_held": 13771,
+   "survival": 1.0,
+   "dti": 0.0041396520633952705,
+   "tpw": 78.63786415542329
+  },
+  {
+   "fold": 1,
+   "arm": "B",
+   "budget": 40000,
+   "n_held": 13771,
+   "survival": 1.0,
+   "dti": 0.05880665330416636,
+   "tpw": 1115.0678895728536
+  },
+  {
+   "fold": 1,
+   "arm": "union",
+   "budget": 40000,
+   "n_held": 13771,
+   "survival": 1.0,
+   "dti": 0.031662599581732224,
+   "tpw": 600.862163179429
+  },
+  {
+   "fold": 1,
+   "arm": "random",
+   "budget": 40000,
+   "n_held": 13771,
+   "survival": 1.0,
+   "dti": 0.04836065839010498,
+   "tpw": 925.154068679338
+  },
+  {
+   "fold": 2,
+   "arm": "A",
+   "budget": 40000,
+   "n_held": 16190,
+   "survival": 1.0,
+   "dti": 0.026493834573936562,
+   "tpw": 550.6733599591487
+  },
+  {
+   "fold": 2,
+   "arm": "B",
+   "budget": 40000,
+   "n_held": 16190,
+   "survival": 1.0,
+   "dti": 0.07181577534828355,
+   "tpw": 1502.6104028845384
+  },
+  {
+   "fold": 2,
+   "arm": "union",
+   "budget": 40000,
+   "n_held": 16190,
+   "survival": 1.0,
+   "dti": 0.05606437983393493,
+   "tpw": 1168.9362944010863
+  },
+  {
+   "fold": 2,
+   "arm": "random",
+   "budget": 40000,
+   "n_held": 16190,
+   "survival": 1.0,
+   "dti": 0.05157251138167523,
+   "tpw": 1087.4252013993987
+  },
+  {
+   "fold": 3,
+   "arm": "A",
+   "budget": 40000,
+   "n_held": 15676,
+   "survival": 1.0,
+   "dti": 0.008707142963175462,
+   "tpw": 178.23314564008476
+  },
+  {
+   "fold": 3,
+   "arm": "B",
+   "budget": 40000,
+   "n_held": 15676,
+   "survival": 1.0,
+   "dti": 0.04692292679104376,
+   "tpw": 963.6267470323038
+  },
+  {
+   "fold": 3,
+   "arm": "union",
+   "budget": 40000,
+   "n_held": 15676,
+   "survival": 1.0,
+   "dti": 0.01901860017234884,
+   "tpw": 390.4818653689208
+  },
+  {
+   "fold": 3,
+   "arm": "random",
+   "budget": 40000,
+   "n_held": 15676,
+   "survival": 1.0,
+   "dti": 0.052091919302635535,
+   "tpw": 1076.7475938143762
+  }
+ ],
+ "n_components": 3199,
+ "runtime_s": 1461.9,
+ "independence_primary": {
+  "n_blocks": 2128,
+  "block_side_px": 50,
+  "min_n_per_block": 400,
+  "threshold": 0.6,
+  "rho_block_mean_oof_probability": 0.11751027780525529,
+  "rho_block_fp_rate_all_blocks": 0.04689593919864583,
+  "rho_block_fp_rate_nonzero_blocks": -0.20193020355253913,
+  "n_nonzero_fp_blocks": 1066,
+  "fires": false,
+  "mean_oof_a": 0.15069347708219052,
+  "mean_oof_b": 0.17234750803979287,
+  "note": "Primary statistic: Spearman correlation, across 50x50 px blocks, of the two views' mean out-of-fold probability on labelled negatives (outside the catalogue and a 4 px buffer). It is continuous and defined on every block, unlike the thresholded confident-positive rate, which is zero on most blocks and therefore discards them."
+ }
+}

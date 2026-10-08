@@ -1,0 +1,24 @@
+{
+ "thresholds": {
+  "confident_A": 0.3792351186275482,
+  "confident_B": 0.3979969024658203,
+  "abstain_A": 0.18575453758239746,
+  "abstain_B": 0.2298794388771057
+ },
+ "definition": "confident = the view's own top decile; abstains = below its own 60th percentile; both computed over the footprint",
+ "A_only": {
+  "px": 174029,
+  "median_depth_to_basement": 376.9520568847656,
+  "mean_depth_to_basement": -Infinity
+ },
+ "B_only": {
+  "px": 204360,
+  "median_depth_to_basement": 183.3488006591797,
+  "mean_depth_to_basement": 376.33184814453125
+ },
+ "concordant": {
+  "px": 128032,
+  "median_depth_to_basement": 296.380859375,
+  "mean_depth_to_basement": -Infinity
+ }
+}

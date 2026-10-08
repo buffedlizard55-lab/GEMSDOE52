@@ -1,0 +1,1 @@
+H60 union_max 37654px; two-view co-training on SHA-pinned bytes; independence measured; >200m ring excluded; all-finite binary [0,1]; not a verified fault map

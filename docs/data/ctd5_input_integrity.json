@@ -1,0 +1,33 @@
+{
+  "inputs": [
+    {
+      "id": "training_features",
+      "checkout_bytes": 3357961,
+      "checkout_sha256": "9c450a754ed9586972877ced6865e619d5c35c6905970184908bc3d0518435ea",
+      "staged_sha256": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+      "expected": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+      "staged_matches": true,
+      "checkout_used": false
+    },
+    {
+      "id": "labels",
+      "checkout_bytes": 152999,
+      "checkout_sha256": "488dcb3386dc45cab38ef07021e91b629cb621f6a484ca42d53f2c45cd96347e",
+      "staged_sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+      "expected": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+      "staged_matches": true,
+      "checkout_used": false
+    },
+    {
+      "id": "sample_submission",
+      "checkout_bytes": 97091,
+      "checkout_sha256": "9d35c34ae2293f00e7a9185f67c2428cc94d9bdbeb8166be885da5e6f6270291",
+      "staged_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+      "expected": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+      "staged_matches": true,
+      "checkout_used": false
+    }
+  ],
+  "organizer_authenticated": false,
+  "restore_receipt": "work/ctd5/input/restore_receipt.json"
+}

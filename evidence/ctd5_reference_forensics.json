@@ -1,0 +1,18 @@
+{
+  "evidence_class": "decoded raster forensics; NOT ORGANIZER-CONFIRMED scores",
+  "base_path": "work/ctd5/priors/7e422e07d5d3aac9ceb187a154bacc0f72a79f5c.tif",
+  "base_sha256": "2fc94a38d77f74d4f4ed1a97a83e7bb71a1ceea090515ec641e6681cc47c44c8",
+  "reference_path": "work/ctd5/input/reference/h33-2-b2-zeros.tif",
+  "reference_sha256": "c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9",
+  "base_positive_pixels": 40199,
+  "reference_positive_pixels": 37654,
+  "removed_pixels": 2545,
+  "added_pixels": 0,
+  "removed_on_known_fault": 0,
+  "removed_off_fault_within_200m": 2545,
+  "reference_equals_base_pruned_at_200m": true,
+  "reference_nearest_catalogue_m": 223.60679774997897,
+  "organizer_receipt_available": false,
+  "source_conflict": "GEMSDOE32 current source says NO ORGANISER SCORE EXISTS; user attributes a score. No receipt resolves the conflict.",
+  "interpretation": "Off-catalogue mass was removed, not pixel-exact masked pixels. A score gain would be consistent with FP reduction outweighing lost maximum-cover credit. Hidden terms/causality/hidden truth count not identifiable from these files."
+}

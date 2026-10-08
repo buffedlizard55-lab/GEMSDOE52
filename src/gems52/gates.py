@@ -192,3 +192,101 @@ def write_report(path, report):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(report, indent=2, allow_nan=False) + "\n")
+
+
+def lane_uniqueness_report(candidate, footprint, priors, *, sample, phase,
+                           rank_limit=0.90, near_limit=0.70, log=None):
+    """Strict parallel-lane gate on ALL supplied rasters, not a top-eight subset.
+
+    Spearman is exact with average ranks over the common eligible footprint.
+    Binary ranks have an analytic correlation expression; continuous priors use
+    scipy's tie-aware ranks. Final directed dot proximity is exact lattice <=3 px,
+    not Jaccard or an approximate sample. Dense continuous maps use the template's
+    >=0.5 proposal convention and disclose >0 sensitivity separately.
+    """
+    from scipy.stats import rankdata
+    if phase not in ('surface', 'dots'):
+        raise ValueError('phase must be surface or dots')
+    c = np.asarray(candidate, np.float32)
+    fp = np.asarray(footprint, bool)
+    if c.shape != fp.shape or c.ndim != 2 or not np.isfinite(c).all() or (c < 0).any() or (c > 1).any():
+        raise ValueError('finite, normalized matching arrays required')
+    vals = c[fp]
+    if not vals.size or np.ptp(vals) == 0:
+        raise ValueError('empty or constant candidate has no rank-uniqueness evidence')
+    rc = rankdata(vals).astype(np.float64)
+    rc -= rc.mean()
+    ss = float(np.dot(rc, rc))
+    n = len(rc)
+    decoded = hashlib.sha256(c.astype('<f4').tobytes()).hexdigest()
+    yy, xx = np.nonzero((c > 0) & fp) if phase == 'dots' else (np.array([], int), np.array([], int))
+    with rasterio.open(sample) as ref:
+        grid_meta = (ref.shape, ref.crs, ref.transform)
+    offsets = [(dy, dx) for dy in range(-3, 4) for dx in range(-3, 4) if dy*dy + dx*dx <= 9]
+    seen, rows = {}, []
+    for number, path in enumerate(priors):
+        row = dict(path=str(path))
+        try:
+            with rasterio.open(path) as ds:
+                if ds.count != 1 or (ds.shape, ds.crs, ds.transform) != grid_meta:
+                    raise ValueError('unaligned or multiband prior')
+                old = canonical(ds.read(1))
+            digest = hashlib.sha256(old.tobytes()).hexdigest()
+            row['decoded_sha256'] = digest
+            if digest in seen:
+                row.update({k: v for k, v in seen[digest].items() if k != 'path'})
+                row['same_decoded_as'] = seen[digest]['path']
+                rows.append(row)
+                continue
+            v = old[fp]
+            binary = bool(np.all((v == 0) | (v == 1)))
+            if binary:
+                pos = v > 0
+                np_ = int(pos.sum())
+                rho = (float(rc[pos].sum() / np.sqrt(ss * (np_ * (n-np_) / n)))
+                       if 0 < np_ < n else None)
+            elif np.ptp(v) == 0:
+                rho = None
+            else:
+                ro = rankdata(v).astype(np.float64)
+                ro -= ro.mean()
+                rho = float(np.dot(rc, ro) / np.sqrt(ss * np.dot(ro, ro)))
+                del ro
+            row.update(binary_on_footprint=binary, spearman=rho,
+                       identical=decoded == digest,
+                       constant_prior=rho is None,
+                       rank_duplicate=rho is not None and rho > rank_limit)
+            if phase == 'dots':
+                proposal = old > 0 if binary else old >= .5
+                near, positive_near = np.zeros(len(yy), bool), np.zeros(len(yy), bool)
+                for dy, dx in offsets:
+                    y, x = yy + dy, xx + dx
+                    ok = (y >= 0) & (y < c.shape[0]) & (x >= 0) & (x < c.shape[1])
+                    near[ok] |= proposal[y[ok], x[ok]]
+                    positive_near[ok] |= old[y[ok], x[ok]] > 0
+                fraction = float(near.mean()) if len(yy) else None
+                row.update(candidate_dots=len(yy), prior_proposals=int(proposal.sum()),
+                    near_3px_fraction=fraction,
+                    positive_support_near_3px_fraction=float(positive_near.mean()) if len(yy) else None,
+                    support_rule='>0 binary; >=0.5 continuous (shared template)',
+                    near_duplicate=fraction is not None and fraction > near_limit)
+            seen[digest] = dict(row)
+        except Exception as exc:
+            row['error'] = f'{type(exc).__name__}: {exc}'
+        rows.append(row)
+        if log and number % 40 == 0:
+            log(f'{phase} registry gate: {number+1}/{len(priors)} rasters')
+    offenders = [r for r in rows if r.get('rank_duplicate') or r.get('near_duplicate') or r.get('identical')]
+    errors = [r for r in rows if r.get('error')]
+    ranks = [r['spearman'] for r in rows if r.get('spearman') is not None]
+    near = [r['near_3px_fraction'] for r in rows if r.get('near_3px_fraction') is not None]
+    return dict(phase=phase, rule='STOP at rho >0.90 or directed <=3px dot proximity >0.70; no lane retuning',
+        evidence_class='uniqueness diagnostic, not a score', priors_checked=len(rows),
+        distinct_decoded_priors=len(seen), candidate_decoded_sha256=decoded,
+        rank_pixels=n, exact_full_eligible_rank=True, max_spearman=max(ranks) if ranks else None,
+        max_near_3px_fraction=max(near) if near else None,
+        rank_threshold=rank_limit, near_threshold=near_limit,
+        duplicate=bool(offenders), offender_count=len(offenders), error_count=len(errors),
+        ok=bool(rows) and not offenders and not errors,
+        scope='Supplied aligned immutable public inventory only; private/release/external artifacts not proven absent.',
+        per_prior=rows)
