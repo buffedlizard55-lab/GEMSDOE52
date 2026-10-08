@@ -21,9 +21,31 @@ def e(v) -> str:
     return html.escape(str(v), quote=True)
 
 
+MIRROR_NAMES = ("h59_preflight_integrity.json", "h59_cotrain.json", "h59_validation.json",
+                "h59_build.json", "h59_format_gate.json", "h59_uniqueness.json",
+                "h59_slot_gate.json", "submission_h59.json")
+
+
 def load(name: str, docs_dir: bool = True):
+    """Render from the EVIDENCE directory: it is the write-once origin of every number.
+
+    docs/data mirrors are byte-copies (see main()) so a scheduled feed or a textual merge can
+    never be the version a page renders from — only the version it links to."""
     base = DAD if docs_dir else ROOT / "evidence"
-    return json.loads((base / name).read_text())
+    path = base / name
+    if not path.is_file() and not docs_dir:
+        path = DAD / name        # submission_h59.json is authored by the build straight into docs/data
+    return json.loads(path.read_text())
+
+
+def mirror_receipts():
+    DAD.mkdir(parents=True, exist_ok=True)
+    for name in MIRROR_NAMES:
+        src = ROOT / "evidence" / name
+        if not src.exists() and name == "submission_h59.json":
+            src = ROOT / "evidence" / "submission_h59.json"
+        if src.is_file():
+            (DAD / name).write_bytes(src.read_bytes())
 
 
 def nav(active: str = "") -> str:
@@ -54,14 +76,15 @@ def shell(title: str, desc: str, content: str, active: str = "") -> str:
 
 
 def main() -> int:
-    build = load("h59_build.json")
-    slot = load("h59_slot_gate.json")
-    fmt = load("h59_format_gate.json")
-    uniq = load("h59_uniqueness.json")
-    val = load("h59_validation.json")
-    cot = load("h59_cotrain.json")
-    pre = load("h59_preflight_integrity.json")
-    sub59 = load("submission_h59.json")
+    mirror_receipts()
+    build = load("h59_build.json", docs_dir=False)
+    slot = load("h59_slot_gate.json", docs_dir=False)
+    fmt = load("h59_format_gate.json", docs_dir=False)
+    uniq = load("h59_uniqueness.json", docs_dir=False)
+    val = load("h59_validation.json", docs_dir=False)
+    cot = load("h59_cotrain.json", docs_dir=False)
+    pre = load("h59_preflight_integrity.json", docs_dir=False)
+    sub59 = load("submission_h59.json", docs_dir=False)
     approved = bool(build["approved_for_weekly_slot"])
 
     status = ("APPROVED — OK TO DOWNLOAD AND SUBMIT" if approved
