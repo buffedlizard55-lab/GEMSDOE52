@@ -82,11 +82,10 @@ is a property of the field, not of the run.
 
 ## 5. What shipped
 
-`gems52-h59-union-core25517px-arm14787px.tif` — 40,304 px: the exactly-accounted P1 core + a 14,787-px
+`gems52-h59-union-core25517px-arm14787px.tif` — 40,300 px: the exactly-accounted P1 core + a 14,783-px
 arm = the retained union field's top-k inside the novel pool (outside every accessible prior's support,
 100 % of arm px; ≥ 3 px from the core; outside the 200 m ring; file min distance to catalogue 223.6 m
-inherited from the core and re-measured). 14,787 written reasoning rows + 6,018 A-only segment rows (all
-segments, exceeding the registered 5,000 cap — an expansion of coverage, disclosed here and in
+inherited from the core and re-measured). 14,783 written reasoning rows + every A-only pool segment row exceeding the registered 5,000 cap — an expansion of coverage, disclosed here and in
 `evidence/h59_build.json`). Determinism was *broken and then fixed* during this session: a rebuild
 initially shifted the arm by 10 px because build outputs had entered the prior-scan roots (recorded as
 IR-H59-001); self-exclusion now makes the build a measured fixed point (byte-identical across rebuilds).
@@ -95,9 +94,9 @@ Status, per the registered rules: format PASS (0 problems, all finite {0,1} — 
 "Predicted values must be in range [0,1]" rejection is impossible for this file, because
 `gems52.grid.write_geotiff` refuses to emit a non-finite or out-of-range array (and the build's format
 gate then verifies the re-read bytes));
-uniqueness PASS vs 49 accessible aligned priors (47 at first build; two genuine priors —
-the parallel session's TIFFs, IR-H59-004 — entered the scan at the merge and the artifact was
-re-derived against them); **slot bar FAIL** (lift +0.0038/+0.0046 < +0.005);
+uniqueness PASS vs 49 accessible aligned priors (47 at first build; the parallel sessions' genuine TIFFs entered
+the scan as their rounds merged — IR-H59-004/005 — and the artifact was re-derived against 49 then
+51 rasters, 50 distinct artifacts); **slot bar FAIL** (lift +0.0038/+0.0046 < +0.005);
 R6 not-merely-union: the file is not the union of any two priors and not equal to any prior, but the
 arm's *ranking field* is honestly reported as the plain union, so the literal "is the arm more than
 top-k of the union" check is marked FAIL rather than argued around. Net: **download for review and

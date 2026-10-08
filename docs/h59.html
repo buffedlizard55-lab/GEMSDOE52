@@ -32,17 +32,17 @@ promoted for the shipped arm: <code>clf_union</code>. H59-D halo rule:
 <tbody><tr><td>R4 format gate (single band, float32, EPSG:32611, 3730x3292, transform, all finite, [0,1], no nodata)</td><td><span class="pill ok">PASS</span></td></tr><tr><td>R5 decoded pattern differs from every accessible aligned prior</td><td><span class="pill ok">PASS</span></td></tr><tr><td>R5 support novelty gate (&gt;=20%)</td><td><span class="pill ok">PASS</span></td></tr><tr><td>R6 artefact is not the union of two named priors</td><td><span class="pill ok">PASS</span></td></tr><tr><td>R6 artefact is not merely the top-k of the plain union of the two views</td><td><span class="pill no">FAIL</span></td></tr><tr><td>R3 nothing emitted inside the &lt;=200 m catalogue ring</td><td><span class="pill ok">PASS</span></td></tr><tr><td>R2 block-buffered OOF independence measured and non-degenerate</td><td><span class="pill ok">PASS</span></td></tr><tr><td>R7 one written geological reasoning per emitted arm pixel</td><td><span class="pill ok">PASS</span></td></tr><tr><td>R7b every A-only candidate segment in the permitted pool has written reasoning (registered cap 5,000; actual coverage all segments)</td><td><span class="pill ok">PASS</span></td></tr></tbody></table></div>
 <h2>Set relations and budget</h2>
 <p class="small">{
-"arm_px": 14787,
-"arm_outside_prior_support_px": 14787,
+"arm_px": 14783,
+"arm_outside_prior_support_px": 14783,
 "arm_outside_prior_support_frac": 1.0,
 "arm_outside_union_topk_px": 0,
 "arm_outside_union_topk_frac": 0.0,
 "field_shipped": "clf_union",
 "field_is_plain_union": true,
 "halo_rule_shipped": false,
-"arm_on_A_only_pixels_px": 646,
-"arm_on_B_only_pixels_px": 5105,
-"arm_in_halo_px": 6371,
+"arm_on_A_only_pixels_px": 781,
+"arm_on_B_only_pixels_px": 5084,
+"arm_in_halo_px": 6367,
 "file_equals_prior_A": false,
 "file_equals_prior_B": false,
 "file_equals_prior_C": false,
@@ -70,8 +70,8 @@ measurement; a required-novel arm cannot be scored by this simulator at all.</p>
 <a href="data/h59_uniqueness.json">uniqueness</a> ·
 <a href="data/h59_slot_gate.json">slot gate</a> ·
 <a href="data/submission_h59.json">submission receipt</a> ·
-downloads: <a href="downloads/gems52-h59-union-core25517px-arm14787px.tif" download>canonical TIFF</a> ·
-<a href="downloads/gems52-h59-union-core25517px-arm14787px.zip" download>ZIP</a> ·
-<a href="downloads/gems52-h59-40304px-candidate-geology.csv" download>per-pixel reasoning CSV</a> ·
+downloads: <a href="downloads/gems52-h59-union-core25517px-arm14783px.tif" download>canonical TIFF</a> ·
+<a href="downloads/gems52-h59-union-core25517px-arm14783px.zip" download>ZIP</a> ·
+<a href="downloads/gems52-h59-40300px-candidate-geology.csv" download>per-pixel reasoning CSV</a> ·
 <a href="downloads/gems52-h59-a-only-candidate-segments.csv" download>A-only segment dossier</a></p>
 <div class="status"><strong>RESEARCH ONLY — DOWNLOAD OK FOR REVIEW; DO NOT SPEND A WEEKLY SLOT</strong> No organizer-authenticated score-to-file mapping exists; every leaderboard number quoted in this repository is owner-reported; the holdout simulator is a relative instrument, not a leaderboard proxy.</div></main><footer>DOE GEMS competition 306 · Reproducible local research · Predictions are not verified faults or geothermal discoveries. <a href="irregularities.html">Limitations</a> · <a href="sources.html">Sources</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code and evidence</a></footer></body></html>

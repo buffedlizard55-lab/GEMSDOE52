@@ -232,7 +232,9 @@ its own H59 during this round's lifetime —
 registered holdout-lift or all-prior support gate, so under the standing rule it is research-only like
 this round's, and the weekly-slot pointer (<code>submission/LATEST.txt</code>) was reverted to H57 on
 its merge conflict. Both TIFFs were treated as priors by <em>this</em> round's final rebuild, which is
-why the canonical H59 hash on this page is <code>e87ee46c…</code>.</p>
+why the canonical H59 hash on this page is <code>{build["sha256"][:8]}…</code> (it changed again at
+the final 51-raster rebuild, when the view-B round's own TIFF became a prior — every disclosure here
+reads the live receipt).</p>
 <div class="rule"></div><p><a href="sources.html">Every source with links for manual review</a> ·
 <a href="irregularities.html">open irregularities</a> · preregistration:
 <a href="data/h59_preregistration.json">registry JSON</a> ·
@@ -279,8 +281,9 @@ why the canonical H59 hash on this page is <code>e87ee46c…</code>.</p>
 <div class="table-wrap"><table><thead><tr><th>question</th><th>answer of record</th></tr></thead><tbody>
 <tr><td>OK to <b>download</b>?</td><td><span class="pill ok">YES</span> — always; the file and every receipt are published for audit.</td></tr>
 <tr><td>Format-safe for the portal?</td><td><span class="pill {"ok" if not fmt["problems"] else "no"}">{"YES" if not fmt["problems"] else "NO"}</span> — all finite, values {{0,1}}, exact grid/transform/CRS; the “must be in range [0,1]” rejection cannot occur (that error came from NaN-bearing exports).</td></tr>
-<tr><td>Unique submission?</td><td><span class="pill {"ok" if uniq["canonical_pattern_unique"] else "no"}">{"YES" if uniq["canonical_pattern_unique"] else "NO"}</span> — decoded pixel pattern differs from all {uniq["n_priors_checked"]} accessible aligned priors (this repo's archives + the restored scored family); arm {100 * build["not_the_union"]["arm_outside_prior_support_frac"]:.0f} % outside their support union; not any prior, not any pair-union. The scan supersedes the brief's count: all 38 listed prior
-submissions are inside the {uniq["n_priors_checked"]} rasters compared, plus this repository's own
+<tr><td>Unique submission?</td><td><span class="pill {"ok" if uniq["canonical_pattern_unique"] else "no"}">{"YES" if uniq["canonical_pattern_unique"] else "NO"}</span> — decoded pixel pattern differs from all {uniq["n_priors_checked"]} accessible aligned prior rasters (this repo's archives + the restored scored family); arm {100 * build["not_the_union"]["arm_outside_prior_support_frac"]:.0f} % outside their support union; not any prior, not any pair-union. The scan supersedes the brief's count: all 38 listed prior
+submissions are inside the {uniq["n_priors_checked"]} rasters compared (50 distinct artifacts; both
+concurrent-session TIFFs included), plus this repository's own
 archived rounds.</td></tr>
 <tr><td>OK to spend the <b>weekly slot</b> on it?</td><td><span class="pill {status_cls}">{"YES" if approved else "NO"}</span> — the registered promotion + slot gates decide; {"all bars met" if approved else "see the audit page for the exact failed bar"}.</td></tr>
 <tr><td>Is it a verified fault map?</td><td><span class="pill no">NO</span> — every pixel is a hypothesis for Phase-2 review; reasoning + falsifiers ship with it.</td></tr>
@@ -311,7 +314,9 @@ its own H59 during this round's lifetime —
 registered holdout-lift or all-prior support gate, so under the standing rule it is research-only like
 this round's, and the weekly-slot pointer (<code>submission/LATEST.txt</code>) was reverted to H57 on
 its merge conflict. Both TIFFs were treated as priors by <em>this</em> round's final rebuild, which is
-why the canonical H59 hash on this page is <code>e87ee46c…</code>.</p>
+why the canonical H59 hash on this page is <code>{build["sha256"][:8]}…</code> (it changed again at
+the final 51-raster rebuild, when the view-B round's own TIFF became a prior — every disclosure here
+reads the live receipt).</p>
 <div class="status"><strong>Honest limits.</strong> Inputs are SHA-pinned owner mirrors, not
 organizer-authenticated downloads; owner-reported sibling scores (incl. 0.2778 and 0.2477) are not
 organizer-verified; the local holdout ranks arms relative to each other and cannot certify a novel

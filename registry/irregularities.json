@@ -678,6 +678,24 @@
     "submission/LATEST.txt"
    ],
    "disposition": "No upload or weekly slot is approved for EITHER H59 artifact; the parallel round remains downloadable research whose local numbers are format/uniqueness-only. The label collision itself is recorded so neither session's receipts can later be mistaken for the other's."
+  },
+  {
+   "id": "IR-H59-005",
+   "round": "H59",
+   "session": "2026-10-08",
+   "severity": "high",
+   "title": "A third concurrent 'H59' (view-B field) reached main moving the LATEST pointer and overwriting the short-path alias",
+   "what_it_is": "PR #30 (commit 867a2de) published gems52-h59-cotrain-view_B-37654px-20261008T033705Z-54debe0d-zeros.tif, rewrote docs/data/submission.json to describe it as the current round, pointed submission/LATEST.txt at it, and replaced docs/downloads/h59-candidate.zip with its own copy. The artifact itself checks out byte-honest (single-band float32, all finite, {0,1}, 37,654 px, EPSG:32611, 3730x3292 - re-verified during this merge), but its receipt carries no blocked-holdout lift, no all-prior support gate and no registered slot bar, and it reuses this session's scripts/run_h59.py path for a different 816-line program while borrowing this round's registration prose.",
+   "how_we_know": "git log origin/main (079f0b5 merge of PR #30; 867a2de file list) and the pre-merge submission.json/LATEST.txt contents on main; the run-script divergence measured as 484 insertions / 755 deletions against this session's runner.",
+   "handling": "Merge resolution on arena/3d4a53e2-gemsdoe52: (1) the view-B TIFF, ZIP, receipt and pages stay in the tree under their own names, and its runner is preserved verbatim as scripts/run_h59_viewb.py with a provenance note; (2) submission/LATEST.txt, docs/data/submission.json and the h59-candidate short paths are restored to this branch's state (H57 pointer; h59-candidate = the union artifact); (3) the pointer revert follows the same standing rule applied in IR-H59-004 and IR-57-107 - a format-valid artifact without a registered comparable holdout cannot be the current pointer; (4) the view-B TIFF is inside this round's 49-raster prior scan, so the canonical union artifact is novel against it by construction (the 03:49Z rebuild predates the merge by minutes - final hashes after this merge re-verified below by re-running the fixed-point build).",
+   "status": "reconciled - three concurrent rounds all published and labelled; pointer discipline restored; IR-H59-004's unique-label recommendation now has two confirmed collisions behind it",
+   "evidence": [
+    "evidence/submission_gems52-h59-cotrain-view_B-37654px-20261008T033705Z-54debe0d-zeros.json",
+    "scripts/run_h59_viewb.py",
+    "submission/LATEST.txt",
+    "docs/data/submission.json"
+   ],
+   "disposition": "The view-B round remains downloadable research; no upload or weekly slot approved without a registered holdout. If its owner record can produce one, the gate reopens identically to H59's."
   }
  ]
 }

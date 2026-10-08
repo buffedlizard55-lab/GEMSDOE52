@@ -156,16 +156,20 @@ def data_root_path(path: str | Path, data_dir: str | Path = "data") -> Path:
 
 
 def build_layers(work: str = "work/h57", chunk: int = 600,
-                 data_dir: str | Path = "data") -> dict:
+                 data_dir: str | Path = "data",
+                 spec: list[tuple[str, int, str]] | None = None) -> dict:
     """Build and cache the uint8 layer stack.  Returns the layer-name index.
 
-    ``data_dir`` makes the feature stack source explicit. It is used by H58 to build only from the
-    manifest-pinned owner mirror, while the default retains the legacy H57 call signature.
+    ``data_dir`` makes the feature stack source explicit. It is used by H58/H59 to build only from
+    the manifest-pinned owner mirror, while the default retains the legacy H57 call signature.
+    ``spec`` overrides the band inventory (H59 extends View A with the strain/seismicity bands);
+    the default is the frozen H57 inventory so the historical H57 cache key is unchanged.
     """
     workp = Path(work)
     workp.mkdir(parents=True, exist_ok=True)
     meta_path = workp / "layers.json"
-    base_spec = [(p, b, n) for p, b, n in FEATURE_BANDS] + [(p, b, n) for p, b, n in EXTERNAL_BANDS]
+    base_spec = ([(p, b, n) for p, b, n in FEATURE_BANDS] + [(p, b, n) for p, b, n in EXTERNAL_BANDS]
+                 if spec is None else list(spec))
     spec = [(str(data_root_path(p, data_dir)), b, n) for p, b, n in base_spec]
     spec_signature = [[p, int(b), name] for p, b, name in spec]
     if meta_path.exists():

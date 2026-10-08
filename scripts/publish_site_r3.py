@@ -478,7 +478,8 @@ def insert_h55_review(h55_archive: dict, verification: dict, sweep: dict,
     # written for.  A hard-coded "H56" link survived the H57 round and pointed readers at the wrong
     # audit page; the round is now read from the receipt.
     rnd = str(current_submission.get("round") or "H56").upper()
-    page_href = "h57.html" if rnd == "H57" else (
+    round_pages = {"H59": "h59.html", "H58": "h58.html", "H57": "h57.html"}
+    page_href = round_pages.get(rnd) or (
         "h56-cotrain.html" if current_submission.get("synthetic")
         or current_submission.get("synthetic_demo") else "h56.html")
     if current_submission.get("synthetic") or current_submission.get("synthetic_demo"):
@@ -487,6 +488,15 @@ def insert_h55_review(h55_archive: dict, verification: dict, sweep: dict,
             "Its illustrative holdout figures are not real-data validation; its weekly-slot gate is closed. "
             "Do not upload or spend a slot until a real-data build passes the preregistered comparable spatial holdout. "
             f'See the <a href="{page_href}">current {esc(rnd)} status and audit</a>.'
+        )
+    elif current_submission.get("slot_recommended") is True:
+        current_status = (
+            f"The current pointer is <code>{esc(current_file)}</code>; its receipt records every gate "
+            "passing and its weekly-slot gate carrying a RECOMMENDATION under the round's registered "
+            "rule, while the machine field that actually asserts a spent slot stays closed "
+            "(no upload happened; slots used: 0). The owner decides; no agent may upload or spend a "
+            "slot on this file's behalf — do not upload or spend a slot without the owner's explicit "
+            f'decision. See the <a href="{page_href}">current {esc(rnd)} status and audit</a>.'
         )
     elif current_submission.get("approved_for_weekly_slot") is False:
         current_status = (
