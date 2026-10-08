@@ -15,7 +15,8 @@
     "withheld_positive_pixels": 53186,
     "tpw": 845.1222060647225,
     "fpw": 10607.190104526808,
-    "fnw": 52340.87779393524
+    "fnw": 52340.87779393524,
+    "assay_status": "exploratory legacy-v1 result; strict validation invalid"
   },
   "best_comparable_control": {
     "name": "single_B",
@@ -112,6 +113,7 @@
   "approved_for_weekly_slot": false,
   "submission_slots_used": 0,
   "reasons": [
+    "legacy label-informed evaluation tail halos invalidate strict hide-and-recover promotion evidence",
     "candidate did not beat the strongest comparable control with registered lift and paired CI",
     "one or more holdout candidate folds could not fill their fixed dot budget",
     "strict parallel-lane duplicate/inventory gate failed",
@@ -154,5 +156,15 @@
     "additional_dot_spearman": 0.004100756899671539,
     "additional_near_3px_fraction": 0.27191666666666664,
     "all_pass": true
+  },
+  "strict_holdout_valid": false,
+  "validation_warning": "Legacy v1 evaluation tail halos depend on withheld labels; placement geometry may leak location. Values are exploratory, not strict promotion evidence. Shared default splitter corrected to label-blind v2; no refit, new placement or new score after STOP.",
+  "post_merge_registry_check": {
+    "receipt": "evidence/ctd5_second_parallel_check.json",
+    "total_files_checked_at_closure": 543,
+    "total_distinct_decoded_at_closure": 362,
+    "max_surface_spearman": 0.06820261812919536,
+    "max_final_spearman": 0.013417664874618504,
+    "max_near_3px_fraction": 1.0
   }
 }

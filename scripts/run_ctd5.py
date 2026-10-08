@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Frozen cover-matched disagreement experiment. Never uploads or selects a slot."""
+"""Reproduce rejected CTD5-v1, including its disclosed legacy split limitation.
+
+NEVER use this historical driver as a promotion-valid assay. The shared default
+spatial.folds is corrected label-blind v2; this driver deliberately preserves v1
+for audit/reproduction. No refit was performed after the CTD5 lane stop.
+"""
 from __future__ import annotations
 import argparse
 import csv
@@ -124,7 +129,7 @@ def stage_canary():
     reg, store, cat = setup()
     names = store.manifest['view_A'] + store.manifest['view_B']
     all_rows, fold_receipts = [], []
-    for fold in spatial.folds(cat, store.valid, buffer_px=reg['buffer_px']):
+    for fold in spatial.legacy_component_tail_folds(cat, store.valid, buffer_px=reg['buffer_px']):
         f = fold['fold']; log('canary fold', f, fold['receipt'])
         train_rows, train_y = sample_train(fold, cat, SEED + f)
         rng = np.random.default_rng(SEED + 50 + f)
@@ -202,7 +207,7 @@ def stage_fit():
     full_distance = ndi.distance_transform_edt(~cat).astype(np.float32)
     # Teachers are predicted only on these outer OOF regions unless exchange later passes.
     import joblib
-    for fold in spatial.folds(cat, store.valid, buffer_px=reg['buffer_px']):
+    for fold in spatial.legacy_component_tail_folds(cat, store.valid, buffer_px=reg['buffer_px']):
         f = fold['fold']; log('fit fold', f, fold['receipt'])
         rows, y = sample_train(fold, cat, SEED + f)
         rng = np.random.default_rng(SEED + 500 + f)
@@ -288,7 +293,7 @@ def stage_exchange():
                'disagreement': np.zeros(store.valid.shape, np.float32)}
     all_receipts, scores, errors, accumulated = [], [], [], None
     full_distance = ndi.distance_transform_edt(~cat).astype(np.float32)
-    for fold in spatial.folds(cat, store.valid, buffer_px=reg['buffer_px']):
+    for fold in spatial.legacy_component_tail_folds(cat, store.valid, buffer_px=reg['buffer_px']):
         f = fold['fold']; log('exchange fold', f)
         rows, y = sample_train(fold, cat, SEED+f)
         rng = np.random.default_rng(SEED+500+f)

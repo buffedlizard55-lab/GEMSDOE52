@@ -37,7 +37,9 @@ Read the frozen hypotheses/protocol in `knowledge/25_ctd5_preregistered.md` and 
 - Executed exactly **one** pseudo-label exchange, **14,919** total receiver-training pixels across folds and directions. Donor rank at least .95, receiver rank .35–.65, whole connected segments, wholly inside training and a single 50×50 block, no overlap with evaluation or sampled training labels. No second exchange or post-result hyperparameter search.
 - Used the template's 3 px sparse-node placement. It is a fixed metric-motivated **heuristic**, not a theorem about optimal spacing. No zero-score fill.
 
-## 3. HOLDOUT-DTI — descriptive results, not a promotion claim
+## 3. HOLDOUT-DTI — exploratory legacy-v1 values, not strict validation
+
+**Post-run validity correction:** the inherited splitter added 300 m halos around withheld component tails outside fixed quadrants. That exposes held-label-informed geometry to placement. Although training excludes the whole components, this is not a label-blind evaluation domain. These values are retained only as exploratory historical measurements, not strict hide-and-recover evidence. The shared default now uses fixed quadrants, hides every intersecting component in full and buffers its full extent. No new fits, placements or corrected scores were produced after the registered STOP. A new prospectively registered run is required.
 
 Every entry below is **HOLDOUT-DTI**, evaluator **`gems52-pooled-hide-v1`**, **53,186 withheld positive pixels**, pooled TPw/FPw/FNw, alpha **0.2**, beta **0.8**, **300 m triangular kernel**. Intervals are conditional **95%** paired physical-spatial-cluster bootstrap intervals, **148** active 20 km clusters / **1,000** draws. They are not organizer scores or leaderboard intervals.
 

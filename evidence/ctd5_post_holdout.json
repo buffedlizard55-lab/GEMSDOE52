@@ -82,7 +82,8 @@
       "withheld_positive_pixels": 53186,
       "tpw": 845.1222060647225,
       "fpw": 10607.190104526808,
-      "fnw": 52340.87779393524
+      "fnw": 52340.87779393524,
+      "assay_status": "exploratory legacy-v1 result; strict validation invalid"
     }
   },
   "best_comparable_control": "single_B",
@@ -224,5 +225,7 @@
   ],
   "all_candidate_budgets_complete": false,
   "artifact_field": "post_mosaic_disagreement",
-  "seconds": 159.93791261399997
+  "seconds": 159.93791261399997,
+  "strict_holdout_valid": false,
+  "validation_warning": "Legacy v1 evaluation tail halos depend on withheld labels; placement geometry may leak location. Values are exploratory, not strict promotion evidence. Shared default splitter corrected to label-blind v2; no refit, new placement or new score after STOP."
 }

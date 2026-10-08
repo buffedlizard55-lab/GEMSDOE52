@@ -59,7 +59,7 @@
     "ok": true,
     "validation_class": "local on-disk template/range check; not organizer upload acceptance"
   },
-  "source_build": "evidence/h60_build.json",
+  "source_build": "evidence/h60_tc_build.json",
   "source_build_is_archival": true,
   "official_score_status": "No organizer submission receipt available.",
   "verdict": "research only; not approved for weekly slot",
