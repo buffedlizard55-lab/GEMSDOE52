@@ -1,0 +1,121 @@
+{
+ "independence": {
+  "n_blocks": 159,
+  "median_px_per_block": 39217.0,
+  "spearman": 0.22757361145636523,
+  "pearson": 0.10675180649965643,
+  "max_abs": 0.22757361145636523,
+  "threshold": 0.6,
+  "independent": true,
+  "verdict": "independent",
+  "mean_error_a": 0.010922740385238144,
+  "mean_error_b": 0.010026075247758651,
+  "definition": "per-block false-positive rate on labelled negatives at each view's own global top-1% OOF rank threshold"
+ },
+ "disagreement": {
+  "a_only": {
+   "px": 43672,
+   "median_depth_to_basement_m": 301.2216491699219,
+   "median_slope": 3.5796360969543457
+  },
+  "b_only": {
+   "px": 43799,
+   "median_depth_to_basement_m": 287.3934326171875,
+   "median_slope": 4.474645614624023
+  },
+  "both": {
+   "px": 482,
+   "median_depth_to_basement_m": 259.80328369140625,
+   "median_slope": 4.552196025848389
+  },
+  "thresholds": {
+   "hi_q": 0.99,
+   "lo_q": 0.9
+  },
+  "reading": "A-only = confident potential-field/subsurface, abstaining surface view: a trace with no topographic expression, i.e. buried beneath cover. B-only = confident surface, abstaining potential field: a linear feature with no subsurface counterpart, i.e. suspect road, canal, erosion line or non-tectonic scarp."
+ },
+ "pseudo_labels_block_unit": {
+  "expected_px_under_independence": 4861.502000000004,
+  "n_allowed_px": 4861502,
+  "unit": "block",
+  "min_px": 9,
+  "hi_q": 0.99,
+  "lo_q": 0.1,
+  "a_to_b": {
+   "px": 4948,
+   "raw_px": 4992,
+   "segments": 4488,
+   "ratio_to_independence": 1.0268431443615564,
+   "px_touching_fold_buffer": 489,
+   "leak_free": false
+  },
+  "b_to_a": {
+   "px": 4691,
+   "raw_px": 4754,
+   "segments": 4614,
+   "ratio_to_independence": 0.9778870809885496,
+   "px_touching_fold_buffer": 373,
+   "leak_free": false
+  }
+ },
+ "pseudo_labels_component_unit": {
+  "expected_px_under_independence": 4861.502000000004,
+  "n_allowed_px": 4861502,
+  "unit": "component",
+  "min_px": 9,
+  "hi_q": 0.99,
+  "lo_q": 0.1,
+  "a_to_b": {
+   "px": 0,
+   "raw_px": 4992,
+   "segments": 0,
+   "ratio_to_independence": 1.0268431443615564,
+   "px_touching_fold_buffer": 0,
+   "leak_free": true
+  },
+  "b_to_a": {
+   "px": 0,
+   "raw_px": 4754,
+   "segments": 0,
+   "ratio_to_independence": 0.9778870809885496,
+   "px_touching_fold_buffer": 0,
+   "leak_free": true
+  }
+ },
+ "pseudo_label_reading": "the component rule returns the empty set in both directions, and that is a measurement: the donor-confident/receiver-abstaining cut is a sprinkling whose largest connected piece is 5 px, at 1.03x the count independence predicts. The block rule (the brief's literal 'whole-segment spatial blocks') is non-empty and is what the exchange below runs on",
+ "exchange": {
+  "A_to_B": {
+   "pseudo_px": 4948,
+   "segments": 4488,
+   "leak_free": false,
+   "measured_on": "the original labelled fold-0 rows only, before and after; the pseudo-labels themselves are never scored, because that would measure donor-reproduction, not gain",
+   "fold0_auc_before": 0.6948212459786304,
+   "fold0_auc_after": 0.6977268682590402,
+   "fold0_auc_including_pseudo": 0.6861748593457443,
+   "delta_fold0_auc": 0.002905622280409803
+  },
+  "B_to_A": {
+   "pseudo_px": 4691,
+   "segments": 4614,
+   "leak_free": false,
+   "measured_on": "the original labelled fold-0 rows only, before and after; the pseudo-labels themselves are never scored, because that would measure donor-reproduction, not gain",
+   "fold0_auc_before": 0.6142871327870196,
+   "fold0_auc_after": 0.5895669603471039,
+   "fold0_auc_including_pseudo": 0.5670972850608191,
+   "delta_fold0_auc": -0.024720172439915755
+  }
+ },
+ "seconds": 108.90155982971191,
+ "verdict": "co-training premise independent; pseudo-label exchange measured, not assumed",
+ "inputs": {
+  "footprint_px": 5165840,
+  "catalogue_px": 60988,
+  "legal_off_ring_px": 4861502,
+  "corrob_ge2_tau99": 365136,
+  "corrob_ge3_tau99": 76636,
+  "corrob_ge2_tau95": 2244206,
+  "labels_sha": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+  "features_sha": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+  "sample_sha": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc"
+ }
+}

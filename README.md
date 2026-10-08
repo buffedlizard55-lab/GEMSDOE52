@@ -1,5 +1,63 @@
 # GEMSDOE52 — a new research GeoTIFF, not an approved submission
 
+> **Current R5 session status (2026-10-08 UTC): a strictly-novel unique TIF is published, both gates
+> green, no weekly slot authorised.** `submission/gems52-r5-novel-n5_strike_ridge-16681px-20261008T220210Z-33b27433-zeros.tif`
+> — 16,681 px, 99,210 bytes, single-band float32, EPSG:32611, transform identical to
+> `sample_submission.tif`, values exactly {0,1}, **all 12,279,160 cells finite** (so the portal's
+> "Predicted values must be in range [0, 1]" rejection cannot occur), **novel fraction 1.0000 against
+> all 55 rasters this repository has ever produced** and 1.0000 against the 13 organiser-scored files
+> separately, minimum distance to a mapped trace 223.6 m. Re-running the build reproduces the bytes
+> exactly. Portal name = the file stem; note (185/200 chars) in `docs/data/submission_r5.json`.
+> **OK to download: YES. Portal-acceptable: YES. Slot-approved: NO** — P(DTI > 0.2778) = 0.366,
+> P(> 0.3195) = 0.226, P(> 0.3774) = 0.031 under the frozen prior, and the hide-and-recover instrument
+> is disqualified (`knowledge/10` §5) and was reproduced as disqualified on new data this round
+> (habitat 0.0003 < random 0.0275 < trace 0.0395, an order the board inverts), so the standing
+> "beat the holdout best first" rule cannot be satisfied by any candidate. Site: `docs/index.html`,
+> submission steps `docs/executive-summary.html`, audit `docs/r5.html`, verified by
+> `scripts/check_site.py` (0 problems, and it now re-derives R5's format and novelty claims from the
+> bytes instead of reading the receipt).
+>
+> **Official sources were reachable this session and were used** (`knowledge/25`, every item quoted
+> verbatim with a URL): the metric and the four submission-format clauses; that the truth is
+> expert-mapped faults **not in the USGS database**; that the public score is a **single pooled
+> Tversky index** over the public subset and the final re-evaluation is **on the entire GeoDAWN
+> area**; that the known-fault mask is **pixel-exact** and that new-fault truth **may lie within 300 m
+> of a known trace** because "identifying these corrections is one outcome we are aiming for"; that
+> Phase 2's larger pool is scored on a label set updated by **expert review of every submission**, so
+> predictions matter there "even if they are not the most performant in Phase 1"; and that bands 10
+> and 16 are the INGENIOUS earthquake-rate-density layers. Three repo claims are corrected as a
+> result: the blanket "emit nothing within 200 m of a mapped trace" rule is a *family* measurement,
+> not an organiser rule (`IR-R5-006`); `knowledge/01` §1 attributes the champion's +6.8 % to masked
+> pixels, which pay no tax (`IR-R5-007`); and **0.3195 is rank 7, not the board top — the top is
+> 0.3774** (`IR-R5-005`, board fetched 2026-10-08, rows preserved in
+> `registry/leaderboard_snapshot_2026-10-08.json`).
+>
+> Round record `knowledge/27_r5_findings.md`; five new ranked hypotheses with a frozen validation gate
+> for the top one `knowledge/33_hypotheses_R5.md`; A-only reasoning for all 4,164 candidate segments
+> of ≥3 px `docs/downloads/a_only_reasoning_r5.csv` (18,123 one- and two-pixel components accounted
+> for in aggregate, not dropped). New irregularities `IR-R5-001`–`IR-R5-008` in
+> `registry/irregularities.json`, including one that is **open and unexplained**: two runs of identical
+> stage-3 code logged different independence numbers and both saved propensity fields carry 620
+> impossible zeros outside the footprint (`IR-R5-003`) — bounded, no downstream effect, published
+> numbers reproduce from disk. Tests 240 passed / 2 skipped (`tests/test_r5.py` adds 15, including
+> regressions for the `fold[rows]` OOM and the `component_folds` slice).
+>
+> **Standing starting point, read every session:** this session's brief verbatim is
+> `knowledge/22_brief_2026-10-08.md`; §1.0 below holds the previous session's brief, which differs
+> only in wording. Read those two, `knowledge/07_r2_hypotheses_preregistered.md`, `knowledge/25`
+> (official clarifications), `knowledge/27` (this round) and the newest irregularities before touching
+> anything. `scripts/refresh_feed.py` was deliberately **not** run: it rewrites
+> `docs/data/submission.json` from `latest_submission()`, which would conflate the H57 incumbent
+> pointer with R5 and trip the repo's own site checks; R5 publishes `docs/data/submission_r5.json`
+> instead, exactly as H59 did.
+
+> `submission/LATEST.txt` and `docs/data/submission.json` are **not** moved by this round: they stay on
+> the incumbent recorded on `main` (the H60/CTD5 rounds merged in parallel on 2026-10-08). R5 publishes
+> `docs/data/submission_r5.json`, `docs/r5.html` and `submission/R5_LATEST.txt`, exactly as H59 did.
+
+<!--R5README-->
+
+
 > **Lane-gate correction (2026-10-08):** the shipped H60D file was re-checked under the strict all-registry rule: 99.95% dot proximity to the calibration lattice → DUPLICATE/STOP. See `knowledge/32_h60d_strict_lane_recheck.md` and IR-H60D-007. No submission is approved; no slot used.
 
 > **Current H60D session status (co-training with disagreement as the discovery signal, run

@@ -4,7 +4,78 @@
 <title>Executive summary &amp; conditional submission steps · GEMSDOE52</title><link rel="stylesheet" href="assets/ctd5.css"><script src="assets/ctd5.js" defer></script></head>
 <body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>
 <a href="index.html">Overview</a><a href="ctd5-audit.html">Run &amp; evidence</a><a href="executive-summary.html">Submission guide</a><a href="ctd5-sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header>
-<main id="main"><div class="eyebrow">Executive summary / submission guide</div><h1>Download now.<br>Do not upload this run.</h1><p class="lead">A single file, an exact identifier, and a separate scientific approval decision. This run is a negative result—not a competition-slot recommendation.</p><div class="notice" role="note"><strong>OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT</strong><p>The local format check passes. The legacy holdout is not strict-valid, and the scientific comparison and parallel-lane gate do not pass. No competition slot was used. NO CERTIFIED LEADERBOARD GAIN.</p></div><div class="actions"><a class="button" href="downloads/ctd5-research.tif" download>Download research GeoTIFF ↓</a><a class="button secondary" href="downloads/ctd5-research.zip" download>Single-TIFF ZIP</a></div><p class="fileline">gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif<br>83,917 bytes · SHA-256 a6e6e44aebaf057989e254bd5ce3729e5a94836c0e5687a95e91e3fc8a40c686</p>
+<main id="main">
+<!--R5:START-->
+
+<section class="download-bar" id="r5" aria-label="R5 strictly-novel artifact">
+<div><div class="eyebrow">R5 · strictly-novel emission
+<span class="pill ok">OK TO DOWNLOAD</span><span class="pill warn">NOT SLOT-APPROVED</span></div>
+<strong>gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif</strong>
+<small>99,231 bytes · SHA-256 <code>d2bfb0f79328399354943bd166f2d2a206e9a49da46b4f1e8ccba0e4f0d8d002</code> · 16,681 px · novel fraction
+1.0000 against 71
+rasters · all cells finite, values exactly {0,1}, so the portal's “Predicted values must be in range
+[0, 1]” rejection cannot occur on this file</small></div>
+<a class="button" href="downloads/gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif" download>↓ Download the R5 TIFF (one click)</a>
+<a class="button" href="downloads/r5-candidate.tif" download>↓ Same file, short name</a>
+<a class="button secondary" href="r5.html">R5 audit →</a></section>
+<h3>R5 — is it OK to download and submit?</h3>
+<div class="table-wrap"><table><thead><tr><th>question</th><th>answer of record</th></tr></thead><tbody>
+<tr><td>OK to <b>download</b>?</td><td><span class="pill ok">YES</span> — TRUE.</td></tr>
+<tr><td>Will the portal <b>accept</b> it?</td><td><span class="pill ok">YES</span> —
+TRUE. Single layer, float32, values in [0,1], EPSG:32611, 100 m, same bounds as
+the training data, transform <code>[100, 0, 243350, 0, −100, 4508550]</code> identical to
+<code>sample_submission.tif</code>, all 12,279,160 cells finite, no nodata tag. Verified by
+re-reading the written bytes, not by trusting the writer.</td></tr>
+<tr><td><b>Unique</b>?</td><td><span class="pill ok">YES</span> — decoded-pixel comparison against all
+71 rasters this repository has produced: novel fraction
+1.0000, not equal to the literal prior union, relation
+<code>strictly-novel-and-selective</code>.</td></tr>
+<tr><td>Not merely the <b>union of the two views</b>?</td><td><span class="pill ok">CONFIRMED</span> —
+largest overlap with any reading of the union is
+0.0200 of the emitted pixels
+(Jaccard ≤ 0.0032), and Spearman(emitted score,
+view propensity) is
++0.028 /
+-0.007.
+<code>evidence/r5_not_the_union.json</code>.</td></tr>
+<tr><td>OK to spend the <b>weekly slot</b>?</td><td><span class="pill warn">NO — NOT ON THE EVIDENCE
+AVAILABLE</span>. P(DTI &gt; 0.2778) = 0.366, P(&gt; 0.3195) = 0.226,
+P(&gt; 0.3774) = 0.031; DTI at κ=1 is 0.2974. The standing rule — do not spend a slot on an
+idea that has not beaten the holdout best — cannot be satisfied by anything, because the hide-and-recover
+instrument is disqualified (Spearman −0.1045, p = 0.734, n = 13) and R5 reproduced that on new data.</td></tr>
+<tr><td>Any argument for submitting anyway?</td><td><span class="pill ok">YES, ONE</span> — the
+organiser's own: Phase 2 ($250k) re-scores a label set “updated by expert review of all Phase 1
+submissions”, and staff state predictions matter there “even if they are not the most performant in
+Phase 1”. This file is 16,681 strictly novel candidates, each with written geological reasoning in
+<a href="downloads/a_only_reasoning_r5.csv">a_only_reasoning_r5.csv</a>.</td></tr>
+</tbody></table></div>
+<h4>Exact portal steps for the R5 file</h4>
+<ol>
+<li>Sign in to the eligible account at the
+<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">competition page</a> →
+<b>Submit</b>. Slot limits and deadlines are on
+<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/rules/">the rules page</a>;
+this repository cannot see the account and does not guess the remaining count.</li>
+<li>Click <a href="downloads/gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif" download>↓ Download the R5 TIFF</a>. Do not reproject, rescale, re-save or
+rename the payload.</li>
+<li>Set <b>File to submit</b> to that <code>.tif</code>.</li>
+<li>Set the submission <b>name</b> to <code>gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros</code> (71 characters).</li>
+<li>Paste this <b>note</b> (185 of 200 characters): <code>R5 novel 16,681px: six-family trace rank, ridge-walked, gated by strike coherence x the credited 010-020deg azimuth. 100% novel vs 55 repo rasters, off the 200m ring. Research artifact.</code></li>
+<li>Submit. The expected score is an interval, not a point:
+0.0892–0.3866 with 0.2974 at κ=1.
+If the returned score lands outside it, that is information about the prior and belongs in
+<code>registry/irregularities.json</code>, not in a re-tune.</li>
+<li>One submission must be selected for <b>both</b> rounds before the deadline, without knowing the
+private-set score.</li>
+</ol>
+<p class="small">If a file is ever rejected with “Predicted values must be in range [0, 1]”, check in
+this order: (1) non-finite or out-of-range cells —
+<code>python -c "import rasterio,numpy as np;a=rasterio.open('F.tif').read(1);print(np.isfinite(a).all(),a.min(),a.max(),a.dtype)"</code>,
+which reports <code>True 0.0 1.0 float32</code> for this
+artifact; (2) CRS/transform against <code>data/sample_submission.tif</code>; (3) band count and dtype;
+(4) if a ZIP is used, that it holds exactly one TIFF byte-identical to the canonical download.</p>
+
+<!--R5:END--><div class="eyebrow">Executive summary / submission guide</div><h1>Download now.<br>Do not upload this run.</h1><p class="lead">A single file, an exact identifier, and a separate scientific approval decision. This run is a negative result—not a competition-slot recommendation.</p><div class="notice" role="note"><strong>OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT</strong><p>The local format check passes. The legacy holdout is not strict-valid, and the scientific comparison and parallel-lane gate do not pass. No competition slot was used. NO CERTIFIED LEADERBOARD GAIN.</p></div><div class="actions"><a class="button" href="downloads/ctd5-research.tif" download>Download research GeoTIFF ↓</a><a class="button secondary" href="downloads/ctd5-research.zip" download>Single-TIFF ZIP</a></div><p class="fileline">gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif<br>83,917 bytes · SHA-256 a6e6e44aebaf057989e254bd5ce3729e5a94836c0e5687a95e91e3fc8a40c686</p>
 <div class="grid2"><section class="panel"><h2>The file contract</h2><ul><li>One band, float32, values exactly 0 or 1.</li><li>No NaN or infinity anywhere; zero outside the footprint.</li><li>EPSG:32611; 3,730 rows × 3,292 columns.</li><li>Affine [100, 0, 243350, 0, -100, 4508550], identical to the pinned sample.</li><li>The ZIP contains only one TIFF, byte-identical to the direct download.</li></ul><p class="small">Verified locally against the mirror template. This is not an organizer acceptance receipt.</p></section><section class="panel"><h2>Why upload is blocked</h2><ul><li>The strict three-pixel overlap gate failed.</li><li>Legacy held-tail-informed evaluation geometry invalidates strict holdout evidence.</li><li>A holdout fold could not fill the fixed budget.</li><li>No matched-budget improvement over the current best has been established.</li><li>Input provenance and the current weekly allowance are not organizer-authenticated.</li></ul><a href="ctd5-audit.html">Read the negative result →</a></section></div>
 <section class="prose"><h2>About “Predicted values must be in range [0, 1]”</h2><p>The new exporter refuses non-finite values and values outside the range, then reopens and validates the written TIFF. It also checks the template grid. We do <b>not</b> claim that NaNs caused your specific historical rejection: the rejected bytes and portal receipt were not available. All-finite export is a compatibility precaution, not proof about the portal’s internals.</p>
 <h2>Exact competition steps—only for a future approved candidate</h2><ol><li>First obtain a separate selector’s approval after all scientific, provenance, uniqueness and current-best gates pass. <b>CTD5 does not pass; stop here for this file.</b></li><li>Review the <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">official rules</a> and the remaining weekly allowance displayed on your authenticated submission page. This site cannot verify that allowance.</li><li>On the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">competition page</a>, choose New submission. Select the approved <code>.tif</code>, or its ZIP containing one TIFF, in <b>File to submit</b>. Do not upload HTML, a JSON receipt, a screenshot, or this executive summary.</li><li>Use the exact audited filename and identifying note. Do not reproject, stretch pixel values, or let an image editor rewrite the TIFF.</li><li>After a successful authorized upload, preserve the submission ID, timestamp, file SHA-256 and organizer result receipt. Only that receipt can support an <b>ORGANIZER-CONFIRMED</b> score.</li></ol></section>
