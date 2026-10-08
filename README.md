@@ -1,25 +1,98 @@
 # GEMSDOE52
 
-> **Current H59 session status (co-training round run 2026-10-08 UTC):** five ranked hypotheses were
-> registered in `knowledge/20_hypotheses_H59_preregistered.md` + `registry/h59_preregistration.json`
-> (SHA-verified, frozen) **before** the first fit, and all five were adjudicated on the blocked tip /
-> hide / holdout instruments using **manifest-pinned owner-mirror bytes** for the first time (23/23
-> SHA-256 pins, `evidence/h59_preflight_integrity.json`). The independence premise measured 0.1071
-> against the 0.60 abandonment threshold (reproducing H57's 0.1108 on different inputs); pseudo-label
-> exchange moved fold-0 AUC by −0.0011 (third independent null). **No challenger beat the incumbent
-> union in all four cells** — corroboration weighting, the artefact veto, strain ranking and the halo
-> pool are all recorded as refuted — so the union ranking is retained and `H59` ships
-> `gems52-h59-union-core25517px-arm14783px.tif` (40,300 px: exactly-accounted 25,517-px core + a
-> 14,783-px arm, 100 % outside every accessible prior's support, all finite {0,1}, format gate 0
-> problems, unique against 49 aligned priors) with **reasoning for every emitted arm pixel and for all
-> 6,100 A-only pool segments**. The registered slot bar (mean lift ≥ +0.005 vs random on both
-> instruments) came in at +0.0038 tip / +0.0046 hide → **research-only: download OK for review, DO NOT
-> spend a weekly slot**. `submission/LATEST.txt` and `docs/data/submission.json` therefore stay on H57;
-> H59 publishes as `docs/data/submission_h59.json` and `docs/h59.html`. The portal's
-> “Predicted values must be in range [0, 1]” rejection was traced to the NaN-bearing alias export
-> pattern and the site now serves only all-finite {0,1} rasters with a range-proof gate in
-> `gems52.grid.write_geotiff`. See `knowledge/21_what_h59_found.md`; `registry/irregularities.json` →
-> `IR-H59-001`–`IR-H59-005`. Organizer authentication of the mirror remains the open blocker.
+> **Current H60 session status (co-training with disagreement as the discovery signal, run
+> 2026-10-08 UTC):** hypotheses H60-1…H60-4 were registered in
+> `knowledge/25_hypotheses_H60_preregistered.md` + `registry/h60_preregistration.json` (SHA-verified,
+> frozen) **before** the first fit, and all were adjudicated on the hide/tip holdout instruments using
+> the **manifest-pinned owner-mirror bytes** (23/23 SHA-256 pins,
+> `evidence/h60_preflight_integrity.json`). The Blum & Mitchell independence premise **measured**
+> max |r| = 0.176 against the 0.60 abandonment threshold (exchange licensed); the leakage canary is
+> clean (worst of 75 layers, single-feature holdout AUC 0.7136 < 0.90). One co-training round in
+> **both** directions moved fold-0 AUC by −0.0067 / −0.0104 — the **fourth and fifth independent
+> nulls** for the pseudo-label exchange — and a same-seed no-pseudo control
+> (`evidence/h60_cotrain_control.json`) isolates the exchange effect as null (−0.0002…+0.0003; the
+> apparent gain was the seed). **Verdict: NEGATIVE.** The disagreement fields beat View A and random
+> but lose to View B and the union on every fold, both instruments, both budgets (hide pooled
+> HOLDOUT-DTI at 37,654 px: view_B 0.006419 [0.005873, 0.006892] > union 0.006140 > **dis_contrast
+> 0.004109 [0.003597, 0.004948]** > view_A 0.004031 > dis_product 0.003196 > random 0.001802; 36,411
+> withheld positives, 4 whole-segment folds, evaluator pinned). The lane ships the best measured
+> A-side disagreement field as `gems52-h60-dis_contrast-arm37654px.tif` (37,654 px, pure disagreement
+> arm, 100 % outside every accessible prior's support, all finite {0,1}, format gate 0 problems,
+> pattern-unique vs 55 aligned priors, 99.2 % outside the union field's own emission, lane gate clean,
+> nearest mapped catalogue pixel 223.6 m) with **reasoning for every emitted pixel and for all 11,064
+> A-only pool segments**. The registered promotion/slot bar failed → **research-only: download OK for
+> review, DO NOT spend a weekly slot**. `submission/LATEST.txt` and `docs/data/submission.json` stay
+> on H57; H60 publishes as `docs/data/submission_h60.json` and `docs/h60.html`. Two evidence-based
+> corrections were registered before shipping (H60-5: the artifact is placed by the registered scoring
+> emitter `h57.iso_select`, not `greedy_emit`, whose coverage surrogate was measured anti-correlated
+> with the holdout truth on the novel pool; H60-6: the lane-drift 3-px proximity component excludes
+> manifest-classified calibration rasters — the raw 0.8392 reading against the dense calibration
+> lattice is geometry, not duplication). See `knowledge/26_what_h60_found.md`;
+> `registry/irregularities.json` → `IR-H60-001`–`IR-H60-005`. Organizer authentication of the mirror
+> remains the open blocker.
+
+<!--H60README-->
+## H60 — co-training with disagreement as the discovery signal; NEGATIVE result, artifact published research-only (2026-10-08)
+
+**[★ H60 GeoTIFF — one click, no scrolling](docs/downloads/h60-candidate.tif)** · [short ZIP](docs/downloads/h60-candidate.zip) · [canonical TIFF](docs/downloads/gems52-h60-dis_contrast-arm37654px.tif) · [per-pixel geology reasoning CSV (37,654 rows)](docs/downloads/gems52-h60-37654px-candidate-geology.csv) · [A-only segment reasoning CSV (11,064 rows, one falsifier each)](docs/downloads/gems52-h60-a-only-candidate-segments.csv) · [audit page](docs/h60.html) · [receipt](docs/data/submission_h60.json) · [run card](docs/data/h60_run_card.json) · [slot gate](docs/data/h60_slot_gate.json) · [validation](docs/data/h60_validation.json) · [co-training E1](docs/data/h60_cotrain.json) · [same-seed control](docs/data/h60_cotrain_control.json) · [preregistration](registry/h60_preregistration.json) · [ranked hypotheses](knowledge/25_hypotheses_H60_preregistered.md) · [what H60 found](knowledge/26_what_h60_found.md).
+
+- **Is it OK to download? YES.** Is it OK to submit? **The file is portal-valid** (format gate 0
+  problems; every pixel ∈ {0,1}; no NaN anywhere — a value outside [0,1] or a NaN cannot exist in it
+  by construction), **but this repository does not approve spending a weekly slot on it**: the
+  preregistered promotion rule failed on every clause (the disagreement fields do not beat the union
+  AND both views; mean lift vs random at 37,654 px is +0.0023 hide / +0.0016 tip, far below the
+  +0.005 bar), so the site says so in one sentence and the receipts carry the whole argument.
+  Downloading, reviewing and reproducing it is exactly what it is approved for.
+- **Identifiers to paste (verbatim from `evidence/h60_build.json`).** Name (49 chars):
+  `gems52-h60-dis_contrast-arm37654px-0add72cd-zeros`. Note (138 chars): `H60 co-training
+  disagreement arm max(pA-pB,0); outside all prior support and the 200 m ring; finite binary [0,1];
+  not a verified fault map` — both ≤ 200 characters, and the site's one-click ZIP carries them as
+  paste-ready text files (`submission-name.txt`, `submission-note.txt`).
+- **The result, honestly (all HOLDOUT-DTI, evaluator pinned, 36,411 withheld positives, 4
+  whole-segment hide-and-recover folds, 95 % fold-bootstrap CI).** Hide pooled at 37,654 px: view_B
+  0.006419 [0.005873, 0.006892] > clf_union 0.006140 [0.005598, 0.006610] > **dis_contrast 0.004109
+  [0.003597, 0.004948]** > view_A 0.004031 [0.003438, 0.004445] > dis_product 0.003196 [0.002582,
+  0.003578] > random 0.001802 [0.001508, 0.001944]. The A-side disagreement fields beat View A and
+  the random control but lose to the surface view and the union on every fold, both instruments, both
+  budgets (15,000 px ordering identical). The shipped raster itself scores hide pooled 0.003514
+  [0.003234, 0.003847] on the required-novel pool — above the matched novel-pool random control
+  (0.001402) but below the novel-pool union (0.003872) and view_B (0.004239). The B-only product
+  (0.006409) ranks like View B itself and is registered characterization-only (H60-4): it is the
+  surface view's own confident core — the suspect-artifact population — and can never ship.
+- **Method, honestly:** two logistic views (A: potential-field/subsurface, B: surface DEM +
+  radiometric bands) fitted **out-of-fold** on whole-segment folds; discovery signal = disagreement
+  (A-confident/B-abstains → buried fault; B-confident/A-abstains → suspect surface artifact). The
+  independence premise was **measured** (max |r| 0.176 < 0.60) before any exchange; one co-training
+  round ran in both directions (confident-to-abstain pseudo-labels, whole segments) and moved fold-0
+  AUC by −0.0067 / −0.0104 — null — with a same-seed no-pseudo control isolating the exchange effect
+  as null. The leakage canary is clean (worst layer AUC 0.7136). The strata reproduce the cover
+  geology (A-only 301,390 px at median 341.7 m depth vs B-only 197,479 px at 106.5 m).
+- **Placement (registered correction H60-5):** the artifact is the top-k of the shipped field by the
+  registered scoring emitter `h57.iso_select` (3 px inclusive, 5 px NMS, 37,654 px budget). The
+  originally preregistered `greedy_emit` coverage surrogate was measured **anti-correlated** with the
+  holdout truth on the required-novel pool (hide pooled 2.6e-05, ~50× below the matched novel-pool
+  random control; its dots sit on the field's broad plateaus, mean field 0.349) — so it is retained
+  only as a disclosed, scored diagnostic in the receipts. 24,272 of the 37,654 emitted px are
+  positive-field crests; 13,382 are zero-field budget fill (disclosed — the field's confident
+  novel-pool support is below the budget).
+- **Gates:** format PASS · uniqueness vs all 55 accessible aligned priors PASS (decoded pattern
+  matches none; 100 % of emitted px novel to all priors' support; not a literal prior union) · lane
+  drift PASS (surface max |Spearman| 0.0979, dots 0.0094, bar 0.90; 3-px proximity 0.1598 excl.
+  manifest-classified calibration rasters, bar 0.70 — raw 0.8392 vs the dense calibration lattice is
+  reported, correction H60-6) · not-merely-union PASS (99.2 % outside the union field's greedy
+  emission, 99.1 % outside its iso top-k) · ring gate PASS (nearest emitted pixel to a mapped trace
+  223.6 m; zero emitted px inside 100–200 m) · independence measured, not assumed (0.176 < 0.60) ·
+  leakage canary clean · slot bar FAIL → RESEARCH ONLY · verdict **negative**.
+- **Reproducibility:** `scripts/run_h60_cotrain.py` (E1 fit + co-training + independence + canary;
+  E2 holdout arm comparison; checkpointed, cached stages skip) → `scripts/run_h60_cotrain_control.py`
+  (same-seed control) → `scripts/build_h60_submission.py` (E3: emits the raster, runs all gates,
+  writes every receipt) → `scripts/publish_site_h60.py` (renders the site from the receipts; the HTML
+  quotes no number not present in a JSON). A rebuild is a measured **fixed point**: the artifact
+  sha256 `0add72cd69542f19586e94ab3cd9c51fbe5c3ae72fba51f684bd6f510d502fd5` reproduces byte-exactly
+  across rebuilds (the self-exclusion of H60 outputs — BOTH published names — was widened after a
+  second build initially treated its own previous stem-named `docs/downloads` copy as a prior,
+  `IR-H60-002`).
+<!--/H60README-->
 
 <!--H59README-->
 ## H59 — two-view co-training round on pinned bytes; artifact published research-only (2026-10-08)

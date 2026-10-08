@@ -1,0 +1,71 @@
+{
+ "shipped_field": "dis_contrast",
+ "promotion_met": false,
+ "gates": {
+  "dis_contrast": {
+   "hide37654_fold_mean": 0.004075,
+   "beats_union_hide": false,
+   "beats_view_A_hide": true,
+   "beats_view_B_hide": false,
+   "folds_won_vs_union": 0,
+   "folds_won_vs_view_A": 2,
+   "folds_won_vs_view_B": 0,
+   "mean_lift_vs_random_at_37654": {
+    "hide": 0.0023,
+    "tip": 0.001485
+   },
+   "folds_won_vs_random_at_37654": {
+    "hide": 4,
+    "tip": 4
+   },
+   "slot_bar_met": false,
+   "characterization_only": false,
+   "promotion_rule": "promotes iff hide@37654 fold-mean beats union AND view_A AND view_B, wins >=3/4 folds against each, and mean lift vs random >= +0.005 on BOTH instruments; H60-4 (B-only) is scored for the record and never ships",
+   "promotes": false
+  }
+ },
+ "slot_bar_met": false,
+ "checks": {
+  "R4 format gate (single band, float32, EPSG:32611, 3730x3292, transform, all finite, [0,1], no nodata, no mass outside footprint)": true,
+  "R5 decoded pattern differs from every accessible aligned prior": true,
+  "R5 support novelty gate (>=20%)": true,
+  "lane drift gate on the surface (max|rho| <= 0.90)": true,
+  "lane drift gate on the final dots (max|rho| <= 0.90 and <=70% within 3 px)": true,
+  "R6 artifact is not the top-k of the plain union of the two views": true,
+  "R6 artifact is not any prior and not any pair-union of priors": true,
+  "R3 nothing emitted inside the <=200 m catalogue ring": true,
+  "R2 independence measured and non-degenerate (exchange licensed)": true,
+  "leakage canary clean (no layer AUC > 0.90)": true,
+  "R7 one written geological reasoning per emitted pixel": true,
+  "R7b every A-only candidate segment in the legal pool has written reasoning": true
+ },
+ "checks_pass": true,
+ "shipped_raster_holdout": {
+  "hide": {
+   "pooled_dti": 0.003514,
+   "tpw": 208.25,
+   "fpw": 150459.14,
+   "fnw": 36202.75,
+   "n_truth": 36411,
+   "fold_mean_dti": 0.003518,
+   "ci95_lo": 0.003234,
+   "ci95_hi": 0.003847,
+   "withheld_positives": 36411,
+   "label": "HOLDOUT-DTI of the SHIPPED raster (evaluator gems52.metric.dti alpha 0.2 beta 0.8 R 300 m triangular lattice-exact; holdout.make_folds whole-segment hide-and-recover, 4 folds, buffer 4 px, prevalence 0.002, seed 20261009; pooled = metric components pooled across folds; CI = fold bootstrap 10k resamples)"
+  },
+  "tip": {
+   "pooled_dti": 0.002935,
+   "tpw": 133.48,
+   "fpw": 150501.01,
+   "fnw": 19049.52,
+   "n_truth": 19183,
+   "fold_mean_dti": 0.002802,
+   "ci95_lo": 0.002016,
+   "ci95_hi": 0.003511,
+   "withheld_positives": 19183,
+   "label": "HOLDOUT-DTI of the SHIPPED raster (evaluator gems52.metric.dti alpha 0.2 beta 0.8 R 300 m triangular lattice-exact; holdout.make_folds whole-segment hide-and-recover, 4 folds, buffer 4 px, prevalence 0.002, seed 20261009; pooled = metric components pooled across folds; CI = fold bootstrap 10k resamples)"
+  }
+ },
+ "note": "No organizer-authenticated score-to-file mapping exists; every leaderboard number quoted in this repository is owner-reported; the holdout simulator is a relative instrument, not a leaderboard proxy.",
+ "verdict": "NEGATIVE RESULT \u2014 DOWNLOAD OK FOR REVIEW; DO NOT SPEND A WEEKLY SLOT (the registered promotion/slot bar was not met)"
+}

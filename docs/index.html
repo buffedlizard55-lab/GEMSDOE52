@@ -2,24 +2,16 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="H59 unique two-view co-training GeoTIFF with gate-checked download and explicit submission status for the DOE GEMS competition."><title>GEMSDOE52 — H59 co-training submission workspace · GEMSDOE52</title>
 <link rel="stylesheet" href="style.css"><script src="site.js" defer></script></head>
-<body><a class="skip" href="#main">Skip to evidence</a><header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html">Overview</a><a href="executive-summary.html">Submission guide</a><a href="h59.html">H59 audit</a><a href="irregularities.html">Limitations</a><a href="sources.html">Sources</a><a href="downloads/index.html">Downloads</a></nav></header>
-<main id="main"><div class="eyebrow">H59 · two-view co-training on SHA-pinned bytes ·
-<span class="pill warn">RESEARCH ONLY — OK TO DOWNLOAD FOR REVIEW · DO NOT SPEND A WEEKLY SLOT</span></div>
-<section class="download-bar" aria-label="H59 artifact download">
-<div><strong>gems52-h59-union-core25517px-arm14783px.tif</strong>
-<small>157,138 bytes · single-band float32 · EPSG:32611 · 3,730 × 3,292 ·
-all finite · values exactly {0,1} — the portal range check cannot trip on this file ·
-40,300 emitted px (25,517 credited core + 14,783 novel arm)</small>
-<small>SHA-256 <code>8c4945ce170b702495057176fe61b892ee4b1af975b11f978920387216cf968d</code></small>
-<small>RESEARCH ONLY — DOWNLOAD OK FOR REVIEW; DO NOT SPEND A WEEKLY SLOT · format PASS · pattern unique vs
-51 priors · novelty 36.7 % · nearest mapped
-catalogue pixel 224 m</small>
-<small>Transparency: the registered 4-cell promotion rule retained the incumbent union field
-(hypothesis status in the table below), so the arm's *ranking* is the plain union top-k of the
-novel pool — the FILE is still core + a 100 %-novel arm and equals no prior and no pair-union of
-priors; both facts are recorded in the receipt, and the "not merely union" check reports the arm's
-ranking honestly.</small></div>
-<a class="button" href="downloads/h59-candidate.tif" download>↓ Download the submission TIFF (one click)</a><a class="button" href="downloads/h59-candidate.zip" download>↓ Download the one-TIFF ZIP</a><a class="button secondary" href="h59.html">Full audit →</a></section>
+<body><a class="skip" href="#main">Skip to evidence</a><header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html">Overview</a><a href="executive-summary.html">Submission guide</a><a href="h60.html">H60 audit</a><a href="h60.html">H60 audit</a><a href="h60.html">H60 audit</a><a href="h59.html">H59 audit</a><a href="irregularities.html">Limitations</a><a href="sources.html">Sources</a><a href="downloads/index.html">Downloads</a></nav></header>
+<main id="main"><div class="eyebrow">H60 · co-training, disagreement as the discovery signal · <span class="pill warn">NEGATIVE RESULT — OK TO DOWNLOAD FOR REVIEW · DO NOT SPEND A WEEKLY SLOT</span></div>
+<section class="download-bar" aria-label="H60 artifact download">
+<div><strong>gems52-h60-dis_contrast-arm37654px.tif</strong>
+<small>144,529 bytes · single-band float32 · EPSG:32611 · 3,730 × 3,292 ·
+all finite · values exactly {0,1} — the portal range check cannot trip on this file · 37,654 emitted px (pure disagreement arm, no credited core)</small>
+<small>SHA-256 <code>0add72cd69542f19586e94ab3cd9c51fbe5c3ae72fba51f684bd6f510d502fd5</code></small>
+<small>NEGATIVE RESULT — DOWNLOAD OK FOR REVIEW; DO NOT SPEND A WEEKLY SLOT (the registered promotion/slot bar was not met) · format PASS · pattern unique vs 55 priors · lane gate clean (max |ρ| 0.0094, dots-within-3px 16.0% excl. calibration rasters; raw 83.9% vs the calibration lattice) · nearest mapped catalogue pixel 223.6 m</small>
+<small>Transparency: the registered promotion bar was NOT met — the shipped field is the lane's disagreement ranking (dis_contrast), not the union; the FILE is a pure disagreement arm, 100 % outside every accessible prior's support, and equals no prior and no pair-union of priors.</small></div>
+<a class="button" href="downloads/h60-candidate.tif" download>↓ Download the submission TIFF (one click)</a><a class="button" href="downloads/h60-candidate.zip" download>↓ Download the one-TIFF ZIP</a><a class="button secondary" href="h60.html">Full audit →</a></section>
 <h1>Faults the map does not have,<br>found where two views disagree.</h1>
 <p class="lede">H59 rebuilds the brief's Blum–Mitchell co-training instrument on the manifest-pinned
 competition bytes (23/23 inputs SHA-verified), tests the conditional-
@@ -73,6 +65,69 @@ observation, not a live feed.</div>
 <h2>Gates on the artifact</h2>
 <div class="table-wrap"><table><thead><tr><th>registered gate</th><th>verdict</th></tr></thead>
 <tbody><tr><td>R4 format gate (single band, float32, EPSG:32611, 3730x3292, transform, all finite, [0,1], no nodata)</td><td><span class="pill ok">PASS</span></td></tr><tr><td>R5 decoded pattern differs from every accessible aligned prior</td><td><span class="pill ok">PASS</span></td></tr><tr><td>R5 support novelty gate (&gt;=20%)</td><td><span class="pill ok">PASS</span></td></tr><tr><td>R6 artefact is not the union of two named priors</td><td><span class="pill ok">PASS</span></td></tr><tr><td>R6 artefact is not merely the top-k of the plain union of the two views</td><td><span class="pill no">FAIL</span></td></tr><tr><td>R3 nothing emitted inside the &lt;=200 m catalogue ring</td><td><span class="pill ok">PASS</span></td></tr><tr><td>R2 block-buffered OOF independence measured and non-degenerate</td><td><span class="pill ok">PASS</span></td></tr><tr><td>R7 one written geological reasoning per emitted arm pixel</td><td><span class="pill ok">PASS</span></td></tr><tr><td>R7b every A-only candidate segment in the permitted pool has written reasoning (registered cap 5,000; actual coverage all segments)</td><td><span class="pill ok">PASS</span></td></tr></tbody></table></div>
+<h2>H60 — co-training with disagreement as the discovery signal (2026-10-08)</h2>
+<p class="small">The lane's own method paragraph, executed end to end on the manifest-pinned
+bytes: two views (A potential-field/subsurface, B surface) fitted out-of-fold on
+hide-and-recover whole-segment folds; independence measured at max |r|
+<b>0.1760</b> (bar 0.6, exchange licensed); leakage
+canary clean (worst layer AUC 0.7136 &lt; 0.9); arms ranked
+by the disagreement itself. Full audit: <a href="h60.html">h60.html</a> ·
+<a href="data/submission_h60.json">receipt</a> ·
+<a href="data/h60_run_card.json">run card</a> ·
+<a href="data/h60_preregistration.json">frozen preregistration</a>.</p>
+<div class="table-wrap"><table><thead><tr><th>field (arm ranking)</th><th>hide pooled DTI</th>
+<th>95 % CI</th><th>lift vs random (hide)</th><th>promotion</th></tr></thead><tbody>
+<tr><td>dis_B_product</td><td class="number">0.006409</td><td class="number">0.005822–0.006850</td><td class="number">+0.004636</td><td><span class="pill no">no</span></td></tr><tr><td>view_B</td><td class="number">0.006419</td><td class="number">0.005873–0.006892</td><td class="number">+0.004636</td><td><span class="pill no">no</span></td></tr><tr><td>clf_union</td><td class="number">0.006140</td><td class="number">0.005598–0.006610</td><td class="number">+0.004389</td><td><span class="pill no">no</span></td></tr><tr><td>dis_contrast</td><td class="number">0.004109</td><td class="number">0.003597–0.004948</td><td class="number">+0.002300</td><td><span class="pill no">no</span></td></tr><tr><td>view_A</td><td class="number">0.004031</td><td class="number">0.003438–0.004445</td><td class="number">+0.002173</td><td><span class="pill no">no</span></td></tr><tr><td>dis_product</td><td class="number">0.003196</td><td class="number">0.002582–0.003578</td><td class="number">+0.001351</td><td><span class="pill no">no</span></td></tr>
+</tbody></table></div>
+<p class="small">HOLDOUT-DTI (evaluator gems52.metric.dti α 0.2 β 0.8 R 300 m triangular,
+lattice-exact; whole-segment hide-and-recover, 4 folds; pooled across folds; CI = fold
+bootstrap). Shipped raster: hide 0.003514 · tip
+0.002935 — HOLDOUT-DTI of the exact file above. These are
+relative-instrument readings, never leaderboard scores; the board numbers quoted anywhere on
+this site (0.2778 owner-reported h33-2-b2; 0.3774 owner-reported board top) are not
+organizer-confirmed.</p>
+<h2>H60 — co-training with disagreement as the discovery signal (2026-10-08)</h2>
+<p class="small">The lane's own method paragraph, executed end to end on the manifest-pinned
+bytes: two views (A potential-field/subsurface, B surface) fitted out-of-fold on
+hide-and-recover whole-segment folds; independence measured at max |r|
+<b>0.1760</b> (bar 0.6, exchange licensed); leakage
+canary clean (worst layer AUC 0.7136 &lt; 0.9); arms ranked
+by the disagreement itself. Full audit: <a href="h60.html">h60.html</a> ·
+<a href="data/submission_h60.json">receipt</a> ·
+<a href="data/h60_run_card.json">run card</a> ·
+<a href="data/h60_preregistration.json">frozen preregistration</a>.</p>
+<div class="table-wrap"><table><thead><tr><th>field (arm ranking)</th><th>hide pooled DTI</th>
+<th>95 % CI</th><th>lift vs random (hide)</th><th>promotion</th></tr></thead><tbody>
+<tr><td>dis_B_product</td><td class="number">0.006409</td><td class="number">0.005822–0.006850</td><td class="number">+0.004636</td><td><span class="pill no">no</span></td></tr><tr><td>view_B</td><td class="number">0.006419</td><td class="number">0.005873–0.006892</td><td class="number">+0.004636</td><td><span class="pill no">no</span></td></tr><tr><td>clf_union</td><td class="number">0.006140</td><td class="number">0.005598–0.006610</td><td class="number">+0.004389</td><td><span class="pill no">no</span></td></tr><tr><td>dis_contrast</td><td class="number">0.004109</td><td class="number">0.003597–0.004948</td><td class="number">+0.002300</td><td><span class="pill no">no</span></td></tr><tr><td>view_A</td><td class="number">0.004031</td><td class="number">0.003438–0.004445</td><td class="number">+0.002173</td><td><span class="pill no">no</span></td></tr><tr><td>dis_product</td><td class="number">0.003196</td><td class="number">0.002582–0.003578</td><td class="number">+0.001351</td><td><span class="pill no">no</span></td></tr>
+</tbody></table></div>
+<p class="small">HOLDOUT-DTI (evaluator gems52.metric.dti α 0.2 β 0.8 R 300 m triangular,
+lattice-exact; whole-segment hide-and-recover, 4 folds; pooled across folds; CI = fold
+bootstrap). Shipped raster: hide 0.003514 · tip
+0.002935 — HOLDOUT-DTI of the exact file above. These are
+relative-instrument readings, never leaderboard scores; the board numbers quoted anywhere on
+this site (0.2778 owner-reported h33-2-b2; 0.3774 owner-reported board top) are not
+organizer-confirmed.</p>
+<h2>H60 — co-training with disagreement as the discovery signal (2026-10-08)</h2>
+<p class="small">The lane's own method paragraph, executed end to end on the manifest-pinned
+bytes: two views (A potential-field/subsurface, B surface) fitted out-of-fold on
+hide-and-recover whole-segment folds; independence measured at max |r|
+<b>0.1760</b> (bar 0.6, exchange licensed); leakage
+canary clean (worst layer AUC 0.7136 &lt; 0.9); arms ranked
+by the disagreement itself. Full audit: <a href="h60.html">h60.html</a> ·
+<a href="data/submission_h60.json">receipt</a> ·
+<a href="data/h60_run_card.json">run card</a> ·
+<a href="data/h60_preregistration.json">frozen preregistration</a>.</p>
+<div class="table-wrap"><table><thead><tr><th>field (arm ranking)</th><th>hide pooled DTI</th>
+<th>95 % CI</th><th>lift vs random (hide)</th><th>promotion</th></tr></thead><tbody>
+<tr><td>dis_B_product</td><td class="number">0.006409</td><td class="number">0.005822–0.006850</td><td class="number">+0.004636</td><td><span class="pill no">no</span></td></tr><tr><td>view_B</td><td class="number">0.006419</td><td class="number">0.005873–0.006892</td><td class="number">+0.004636</td><td><span class="pill no">no</span></td></tr><tr><td>clf_union</td><td class="number">0.006140</td><td class="number">0.005598–0.006610</td><td class="number">+0.004389</td><td><span class="pill no">no</span></td></tr><tr><td>dis_contrast</td><td class="number">0.004109</td><td class="number">0.003597–0.004948</td><td class="number">+0.002300</td><td><span class="pill no">no</span></td></tr><tr><td>view_A</td><td class="number">0.004031</td><td class="number">0.003438–0.004445</td><td class="number">+0.002173</td><td><span class="pill no">no</span></td></tr><tr><td>dis_product</td><td class="number">0.003196</td><td class="number">0.002582–0.003578</td><td class="number">+0.001351</td><td><span class="pill no">no</span></td></tr>
+</tbody></table></div>
+<p class="small">HOLDOUT-DTI (evaluator gems52.metric.dti α 0.2 β 0.8 R 300 m triangular,
+lattice-exact; whole-segment hide-and-recover, 4 folds; pooled across folds; CI = fold
+bootstrap). Shipped raster: hide 0.003514 · tip
+0.002935 — HOLDOUT-DTI of the exact file above. These are
+relative-instrument readings, never leaderboard scores; the board numbers quoted anywhere on
+this site (0.2778 owner-reported h33-2-b2; 0.3774 owner-reported board top) are not
+organizer-confirmed.</p>
 <h2>History and archives</h2>
 <p class="small">Earlier rounds stay published and labelled: <a href="h57.html">H57 union arm
 (pointer, gate-failed R1)</a> · <a href="h57-creditcore.html">H57 credited-core alternate</a> ·
