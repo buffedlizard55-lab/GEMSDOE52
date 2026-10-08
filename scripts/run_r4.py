@@ -54,7 +54,7 @@ LABELS = REPO / "data" / "labels.tif"
 BUDGETS = (20_000, 37_654, 70_000)
 
 
-def log(*a):
+def log(*a, **kw):
     print(*a, flush=True)
 
 
@@ -269,10 +269,10 @@ def stage_arms(args):
                          seed=20261008 + f["fold"])
         bid = np.load(CACHE / "bid.npy")
         flat_fold = np.zeros(valid.shape, dtype=np.int8)   # no inner CV here
-        pa = M.fit_view(stack, idxA, sample, bid, flat_fold, log=lambda *a: None)
-        pb = M.fit_view(stack, idxB, sample, bid, flat_fold, log=lambda *a: None)
-        fa = M.full_fit_predict(stack, idxA, pa["model"], valid, log=lambda *a: None)
-        fb = M.full_fit_predict(stack, idxB, pb["model"], valid, log=lambda *a: None)
+        pa = M.fit_view(stack, idxA, sample, bid, flat_fold, log=lambda *a, **kw: None)
+        pb = M.fit_view(stack, idxB, sample, bid, flat_fold, log=lambda *a, **kw: None)
+        fa = M.full_fit_predict(stack, idxA, pa["model"], valid, log=lambda *a, **kw: None)
+        fb = M.full_fit_predict(stack, idxB, pb["model"], valid, log=lambda *a, **kw: None)
         np.save(CACHE / f"fold{f['fold']}_A.npy", fa)
         np.save(CACHE / f"fold{f['fold']}_B.npy", fb)
         res["per_fold"].append({"fold": f["fold"], "n_truth": f["n_truth"],
@@ -374,10 +374,10 @@ def stage_emit(args):
     sample = _sample(valid, cat)
     bid = np.load(CACHE / "bid.npy")
     flat = np.zeros(valid.shape, dtype=np.int8)
-    pa = M.fit_view(stack, idxA, sample, bid, flat, log=lambda *a: None)
-    fa = M.full_fit_predict(stack, idxA, pa["model"], valid, log=lambda *a: None)
-    pb = M.fit_view(stack, idxB, sample, bid, flat, log=lambda *a: None)
-    fb = M.full_fit_predict(stack, idxB, pb["model"], valid, log=lambda *a: None)
+    pa = M.fit_view(stack, idxA, sample, bid, flat, log=lambda *a, **kw: None)
+    fa = M.full_fit_predict(stack, idxA, pa["model"], valid, log=lambda *a, **kw: None)
+    pb = M.fit_view(stack, idxB, sample, bid, flat, log=lambda *a, **kw: None)
+    fb = M.full_fit_predict(stack, idxB, pb["model"], valid, log=lambda *a, **kw: None)
     field = A.random_control(valid.shape, valid, args.budget) if best == "random" \
         else A.build_arm(best, fa, fb)
     allowed = valid & (edt >= 200.0)

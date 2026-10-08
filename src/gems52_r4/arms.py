@@ -85,9 +85,9 @@ def build_arm(name: str, a: np.ndarray, b: np.ndarray) -> np.ndarray:
     elif name == "agreement":
         out[both] = 1.0 - np.abs(ra[both] - rb[both])
     elif name == "A_where_B_abstains":
-        out[both] = _deferral(ra, rb, both)
+        out[both] = _deferral(ra, rb, both)[both]
     elif name == "B_where_A_abstains":
-        out[both] = _deferral(rb, ra, both)
+        out[both] = _deferral(rb, ra, both)[both]
     elif name == "cotrain_disagreement":
         out[both] = np.abs(ra[both] - rb[both]) * np.minimum(ra[both], rb[both])
     else:
@@ -150,10 +150,8 @@ def random_control(shape, valid: np.ndarray, budget: int, seed: int = 20261008) 
     rng = np.random.default_rng(seed)
     pick = rng.choice(idx, size=n, replace=False)
     out = np.full(shape, np.nan, dtype=np.float32)
-    flat = out.ravel()
-    flat[pick] = _rank_within(np.arange(idx.size, dtype=np.float32).reshape(-1),
-                              np.ones(idx.size, dtype=bool))[rng.permutation(idx.size)]
-    return out.reshape(shape)
+    out.ravel()[pick] = rng.random(n).astype(np.float32)
+    return out
 
 
 def not_merely_union(new_mask: np.ndarray, base_masks: list[np.ndarray],
