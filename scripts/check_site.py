@@ -527,6 +527,114 @@ def check_h58(DATA, DOCS, ROOT, notes, *, current_round=False):
     return problems
 
 
+def check_r5(DATA, DOCS, ROOT, problems, notes):
+    """R5's claims, re-derived rather than trusted: bytes, format, novelty, and the page text.
+
+    The receipt says the file is all-finite {0,1}, EPSG:32611, on the sample grid, 100% novel against
+    every raster the repository has produced, and portal-acceptable.  Each of those is re-measured here
+    from the bytes on disk, because a receipt that is only ever read is a claim, not a check -- and the
+    whole reason this script exists is that "the site says so" has been wrong before (IR-52-031).
+    """
+    import numpy as np
+    import rasterio
+    sys.path.insert(0, str(ROOT / "src"))
+    from gems52 import gates as G
+
+    rec_path = DATA / "submission_r5.json"
+    if not rec_path.is_file():
+        problems.append("R5: docs/data/submission_r5.json is missing")
+        return
+    rec = json.loads(rec_path.read_text())
+    stem, sha, nbytes = rec["stem"], rec["sha256"], rec["bytes"]
+
+    # 1. every copy on disk is the same bytes as the receipt
+    copies = [ROOT / "submission" / f"{stem}.tif", DOCS / "downloads" / f"{stem}.tif",
+              DOCS / "downloads" / "r5-candidate.tif"]
+    for c in copies:
+        if not c.is_file():
+            problems.append(f"R5: missing artifact copy {c.relative_to(ROOT)}")
+            continue
+        b = c.read_bytes()
+        if hashlib.sha256(b).hexdigest() != sha:
+            problems.append(f"R5: {c.relative_to(ROOT)} does not match the receipt SHA-256")
+        if len(b) != nbytes:
+            problems.append(f"R5: {c.relative_to(ROOT)} is {len(b)} bytes, receipt says {nbytes}")
+    if len(copies) == 3 and all(c.is_file() for c in copies):
+        notes.append(f"R5 download verified byte-identical in 3 places: {stem}.tif "
+                     f"({nbytes:,} bytes, {sha[:16]}...)")
+
+    # 2. the format clauses the organiser publishes, read back off the file
+    with rasterio.open(copies[0]) as ds:
+        a = ds.read(1)
+        crs, tr = str(ds.crs), tuple(float(v) for v in ds.transform)[:6]
+        count, dtype, shape = ds.count, ds.dtypes[0], (ds.height, ds.width)
+    with rasterio.open(ROOT / "data/sample_submission.tif") as ds2:
+        tr_ref = tuple(float(v) for v in ds2.transform)[:6]
+        crs_ref, shape_ref = str(ds2.crs), (ds2.height, ds2.width)
+    finite = np.isfinite(a)
+    nz = int((a > 0).sum())
+    vals = np.unique(a[finite])
+    for label, ok in (
+            ("single band", count == 1), ("float32", dtype == "float32"),
+            ("all cells finite", bool(finite.all())),
+            ("values inside {0,1}", bool(np.isin(vals, [0.0, 1.0]).all())),
+            ("min >= 0 and max <= 1", bool(a.min() >= 0.0 and a.max() <= 1.0)),
+            (f"CRS {crs} == sample {crs_ref}", crs == crs_ref),
+            ("transform == sample_submission", tr == tr_ref),
+            (f"shape {shape} == sample {shape_ref}", shape == shape_ref)):
+        if not ok:
+            problems.append(f"R5 format: {label} FAILED")
+    if nz != int(rec["nonzero_px"]):
+        problems.append(f"R5 format: {nz} positive px on disk, receipt says {rec['nonzero_px']}")
+    if len(rec["note"]) > 200:
+        problems.append(f"R5: the portal note is {len(rec['note'])} chars, over the 200 limit")
+    notes.append(f"R5 on-disk read-back: {nz:,} px, values exactly {list(vals)}, "
+                 f"{int(finite.sum()):,} finite cells, CRS {crs}, transform matches the fixture, "
+                 f"note {len(rec['note'])}/200 chars")
+
+    # 3. novelty, recomputed against every raster in the repo -- not read from the receipt
+    with rasterio.open(ROOT / "data/sample_submission.tif") as ds3:
+        valid_shape = (ds3.height, ds3.width)
+    priors = G.find_priors([ROOT / "data/scored", ROOT / "data/reference", ROOT / "submission",
+                            ROOT / "docs/downloads"], exclude=copies[0])
+    # gates.find_priors excludes by resolved path and by basename, which covers the canonical file but
+    # not this round's short alias or an earlier build of the same deterministic emission.  Comparing a
+    # file with a byte-identical copy of itself reports "identical-to-a-prior, novel = 0", which is the
+    # one verdict that would stop a legitimate submission (IR-52-026); drop self-copies by hash.
+    priors = [q for q in priors
+              if hashlib.sha256(q.read_bytes()).hexdigest() != sha and not q.name.startswith("gems52-r5-novel-")]
+    uni = G.uniqueness_report((a > 0).astype(np.float32), priors)
+    claimed = rec["novelty"]["novel_vs_all_repo_rasters"]
+    if abs(uni["novel_fraction"] - claimed) > 1e-9:
+        problems.append(f"R5 novelty: recomputed {uni['novel_fraction']:.6f} != receipt {claimed}")
+    if not uni["canonical_pattern_unique"]:
+        problems.append("R5 novelty: the decoded pattern matches a prior raster")
+    if uni["equals_literal_prior_union"]:
+        problems.append("R5 novelty: the file is the literal union of the priors")
+    notes.append(f"R5 novelty recomputed against {uni['n_priors_checked']} rasters: novel fraction "
+                 f"{uni['novel_fraction']:.4f}, pattern unique "
+                 f"{uni['canonical_pattern_unique']}, relation {uni['relation_to_union']}")
+
+    # 4. the pages must say what the receipts say, in words a reader cannot miss
+    for page_name in ("index.html", "executive-summary.html", "r5.html"):
+        page = DOCS / page_name
+        if not page.is_file():
+            problems.append(f"R5: {page_name} is missing")
+            continue
+        text = page.read_text(encoding="utf-8", errors="replace")
+        low = text.casefold()
+        for term, why in ((f"{stem}.tif", "the unique TIFF is not named"),
+                          (sha[:24], "the SHA-256 prefix is missing"),
+                          ("r5-candidate.tif", "the short download path is missing"),
+                          ("ok to download", "the download verdict is missing")):
+            if term.casefold() not in low:
+                problems.append(f"R5 {page_name}: {why}")
+        if "not slot-approved" not in low and "do not spend" not in low and "no — not on the evidence" not in low:
+            problems.append(f"R5 {page_name}: does not state plainly that no weekly slot is approved")
+        if f"{rec['p_beat_02778']:.3f}" not in text:
+            problems.append(f"R5 {page_name}: P(beating 0.2778) is not published on the page")
+
+
 def main() -> int:
     problems: list[str] = []
     notes: list[str] = []
@@ -870,7 +978,7 @@ def main() -> int:
     port = httpd.server_address[1]
     threading.Thread(target=httpd.serve_forever, daemon=True).start()
     try:
-        page_paths = ("index.html", "executive-summary.html", "h56.html", "h54.html",
+        page_paths = ("index.html", "executive-summary.html", "r5.html", "h56.html", "h54.html",
                       "h55-paired-shoulders.html", "h55.html", "h55-profile.html", "h55-edge.html",
                       "r3.html", "r3-hypotheses.html", "feed.html", "irregularities.html", "sources.html",
                       "downloads/index.html")
@@ -881,6 +989,19 @@ def main() -> int:
                 body = r.read()
                 if r.status != 200 or len(body) < 200:
                     problems.append(f"served {path}: status {r.status}, {len(body)} bytes")
+        r5_path = DATA / "submission_r5.json"
+        if r5_path.is_file():
+            r5 = json.loads(r5_path.read_text())
+            for rel in (r5["download"], "downloads/r5-candidate.tif"):
+                with urlopen(f"http://127.0.0.1:{port}/{rel}", timeout=20) as r:
+                    body = r.read()
+                    if len(body) != r5["bytes"]:
+                        problems.append(f"served {rel}: {len(body)} bytes != {r5['bytes']} in the receipt")
+                    elif hashlib.sha256(body).hexdigest() != r5["sha256"]:
+                        problems.append(f"served {rel}: SHA-256 differs from the audited artifact")
+                    else:
+                        notes.append(f"R5 {rel} serves byte-identically: {len(body):,} bytes, "
+                                     f"content-type {r.headers.get('Content-Type', '')}")
         sub = json.loads((DATA / "submission.json").read_text())
         with urlopen(f"http://127.0.0.1:{port}/{sub['download']}", timeout=20) as r:
             n = len(r.read())
@@ -1072,6 +1193,7 @@ def main() -> int:
                      "(informational; receipts stay authoritative)")
         notes.extend("  " + x for x in typed_numbers[:4])
 
+    check_r5(DATA, DOCS, ROOT, problems, notes)
     print(f"pages checked: {len(pages)}   data files: {len(list(DATA.glob('*.json')))}")
     for nse in notes:
         print("  note:", nse)

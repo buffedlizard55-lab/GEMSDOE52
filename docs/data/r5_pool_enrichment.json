@@ -1,0 +1,249 @@
+{
+ "generated_utc": "2026-10-08T23:12:03Z",
+ "inputs": {
+  "footprint_px": 5165840,
+  "legal_off_ring_px": 4861502,
+  "catalogue_px": 60988,
+  "champion_name": "h33-2-b2-zeros.tif",
+  "n_scored_files": 13,
+  "note": "supports are masked to the footprint here, so the atom sizes are a few px smaller than knowledge/10 \u00a73, which counted the whole raster; both are reported"
+ },
+ "pools": {
+  "pool_C2": {
+   "px": 653593,
+   "fraction_of_legal": 0.134442606420814
+  },
+  "pool_C3": {
+   "px": 107579,
+   "fraction_of_legal": 0.02212875773783493
+  }
+ },
+ "atoms": {
+  "P1": {
+   "px_in_raster": 25502,
+   "px_off_ring": 25502,
+   "pool_C2": {
+    "px": 5024,
+    "fraction": 0.19700415653674222,
+    "enrichment": 1.4653402056198357
+   },
+   "pool_C3": {
+    "px": 915,
+    "fraction": 0.03587953885969728,
+    "enrichment": 1.621398692360926
+   },
+   "credit_bounds_px": [
+    4168.0,
+    5223.0
+   ],
+   "credit_density_bounds": [
+    0.16343816171280684,
+    0.20480746608109168
+   ]
+  },
+  "P2": {
+   "px_in_raster": 12136,
+   "px_off_ring": 12136,
+   "pool_C2": {
+    "px": 2768,
+    "fraction": 0.22808174027686223,
+    "enrichment": 1.6964989473869
+   },
+   "pool_C3": {
+    "px": 481,
+    "fraction": 0.039634146341463415,
+    "enrichment": 1.79106964841946
+   },
+   "credit_bounds_px": [
+    0.0,
+    1055.0
+   ],
+   "credit_density_bounds": [
+    0.0,
+    0.08693144363876071
+   ]
+  },
+  "P3": {
+   "px_in_raster": 4332,
+   "px_off_ring": 0,
+   "pool_C2": {
+    "px": 0,
+    "fraction": 0.0,
+    "enrichment": 0.0
+   },
+   "pool_C3": {
+    "px": 0,
+    "fraction": 0.0,
+    "enrichment": 0.0
+   },
+   "credit_bounds_px": [
+    0.0,
+    0.0
+   ],
+   "credit_density_bounds": [
+    0.0,
+    0.0
+   ]
+  },
+  "P4": {
+   "px_in_raster": 2104,
+   "px_off_ring": 0,
+   "pool_C2": {
+    "px": 0,
+    "fraction": 0.0,
+    "enrichment": 0.0
+   },
+   "pool_C3": {
+    "px": 0,
+    "fraction": 0.0,
+    "enrichment": 0.0
+   },
+   "credit_bounds_px": [
+    0.0,
+    0.0
+   ],
+   "credit_density_bounds": [
+    0.0,
+    0.0
+   ]
+  },
+  "P5": {
+   "px_in_raster": 30217,
+   "px_off_ring": 25780,
+   "pool_C2": {
+    "px": 5680,
+    "fraction": 0.22032583397982933,
+    "enrichment": 1.6388095994672651
+   },
+   "pool_C3": {
+    "px": 1013,
+    "fraction": 0.03929402637703646,
+    "enrichment": 1.775699605127539
+   },
+   "credit_bounds_px": [
+    544.0,
+    1599.0
+   ],
+   "credit_density_bounds": [
+    0.018003110831651056,
+    0.052917232021709636
+   ]
+  },
+  "P6": {
+   "px_in_raster": 46815,
+   "px_off_ring": 40362,
+   "pool_C2": {
+    "px": 8984,
+    "fraction": 0.22258560031712998,
+    "enrichment": 1.6556180086275831
+   },
+   "pool_C3": {
+    "px": 1581,
+    "fraction": 0.03917050691244239,
+    "enrichment": 1.7701177524967933
+   },
+   "credit_bounds_px": [
+    0.0,
+    1055.0
+   ],
+   "credit_density_bounds": [
+    0.0,
+    0.02253551212218306
+   ]
+  }
+ },
+ "extra_sets": {
+  "A_champion": {
+   "px_in_raster": 37638,
+   "px_off_ring": 37638,
+   "pool_C2": {
+    "px": 7792,
+    "fraction": 0.2070248153461927,
+    "enrichment": 1.5398750504597607
+   },
+   "pool_C3": {
+    "px": 1396,
+    "fraction": 0.03709017482331686,
+    "enrichment": 1.6761074102185798
+   }
+  },
+  "B": {
+   "px_in_raster": 44074,
+   "px_off_ring": 37638,
+   "pool_C2": {
+    "px": 7792,
+    "fraction": 0.2070248153461927,
+    "enrichment": 1.5398750504597607
+   },
+   "pool_C3": {
+    "px": 1396,
+    "fraction": 0.03709017482331686,
+    "enrichment": 1.6761074102185798
+   }
+  },
+  "C": {
+   "px_in_raster": 60051,
+   "px_off_ring": 51282,
+   "pool_C2": {
+    "px": 10704,
+    "fraction": 0.20872820872820874,
+    "enrichment": 1.5525450918057633
+   },
+   "pool_C3": {
+    "px": 1928,
+    "fraction": 0.03759603759603759,
+    "enrichment": 1.6989673817865194
+   }
+  },
+  "E": {
+   "px_in_raster": 121106,
+   "px_off_ring": 103780,
+   "pool_C2": {
+    "px": 22456,
+    "fraction": 0.21638080555020234,
+    "enrichment": 1.6094660116370887
+   },
+   "pool_C3": {
+    "px": 3990,
+    "fraction": 0.03844671420312199,
+    "enrichment": 1.7374095129338065
+   }
+  },
+  "E_tail": {
+   "px_in_raster": 77032,
+   "px_off_ring": 66142,
+   "pool_C2": {
+    "px": 14664,
+    "fraction": 0.22170481690907443,
+    "enrichment": 1.6490666375146292
+   },
+   "pool_C3": {
+    "px": 2594,
+    "fraction": 0.0392186507816516,
+    "enrichment": 1.7722933770745297
+   }
+  }
+ },
+ "pool_credit_density_bounds": {
+  "pool_C2": {
+   "credit_from_family_atoms_lower": 923.3709939689195,
+   "credit_from_family_atoms_upper": 1772.6078643724975,
+   "pool_px": 653593,
+   "rho_lower": 0.0014127614493559745,
+   "rho_upper": 0.0027120973822738273,
+   "fraction_of_pool_inside_family_emission": 0.03435777310956513,
+   "reference_rho_uniform_random": 0.0279
+  },
+  "pool_C3": {
+   "credit_from_family_atoms_lower": 167.78306923968077,
+   "credit_from_family_atoms_upper": 318.44665655760605,
+   "pool_px": 107579,
+   "rho_lower": 0.001559626592919443,
+   "rho_upper": 0.0029601191362404007,
+   "fraction_of_pool_inside_family_emission": 0.03708902295057585,
+   "reference_rho_uniform_random": 0.0279
+  }
+ },
+ "reading": "Every atom is enriched inside the pool by about the same factor (1.5-1.8x) whatever its credit density, from P1 at 0.163-0.205 down to P6 at 0-0.023. The pool therefore identifies where this family emits, not which emissions were right: knowledge/10 \u00a76's 'habitat is not credit', reproduced with a detector that did not exist when \u00a76 was written. The lower bound on the pool's own credit density is trivial (0.0014-0.0030) because only 3.4% of pool pixels are inside the family's emission at all, so the remaining 96.6% is novel mass with an unmeasured density -- which is why nothing in R5 claims a measured rho for the shipped file and the projection is a prior instead.",
+ "seconds": 3.700352191925049
+}

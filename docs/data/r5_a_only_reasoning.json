@@ -1,0 +1,75 @@
+{
+ "generated_utc": "2026-10-08T20:03:10Z",
+ "a_only_definition": "View A propensity in its top 1 % over the legal (off-ring) set AND View B propensity below its 90th percentile, per cotrain_r5.disagreement_strata",
+ "a_only_px": 43672,
+ "components_total": 22287,
+ "reviewed": {
+  "min_px": 3,
+  "components": 4164,
+  "px": 21356,
+  "csv": "docs/downloads/a_only_reasoning_r5.csv",
+  "rows": 4164,
+  "rows_carrying_emitted_dots": 465,
+  "emitted_dots_on_a_only": 1834.0
+ },
+ "below_review_resolution": {
+  "components": 18123,
+  "px": 22316,
+  "why": "1-2 px specks of a continuous propensity field are not geological structures; they are reported in aggregate so nothing is dropped silently",
+  "mean_view_A_percentile": 0.6820320845040815,
+  "median_min_distance_to_catalogue_m": 2140.09345590327
+ },
+ "strongest_family_counts": {
+  "mag": 1077,
+  "grav": 1149,
+  "strain": 1090,
+  "sub": 848
+ },
+ "evidence_grade_counts": {
+  "strong": 100,
+  "moderate": 1510,
+  "weak": 2554
+ },
+ "strict_abstention_count": 1779,
+ "abstention_note": "the loose reading (View B < 90th percentile) is what defines the stratum; strict_abstention_count is how many reviewed candidates also fall inside the strict 40th-80th percentile band, which is the reading 'abstains' usually means to a geologist",
+ "strike_histogram_10deg": [
+  701,
+  197,
+  159,
+  83,
+  371,
+  101,
+  146,
+  157,
+  69,
+  725,
+  228,
+  189,
+  112,
+  416,
+  102,
+  161,
+  177,
+  70
+ ],
+ "credited_strike_band_deg": "010-020 geographic azimuth (knowledge/10 \u00a77)",
+ "bands_reported": {
+  "rtp_magnetics": "features band 2 = rtp",
+  "tmi_horizontal_gradient": "features band 3 = tmi_hg",
+  "isostatic_gravity_slope": "features band 5 = iso_grav_anom_slope",
+  "isostatic_gravity_vertical_gradient": "features band 11 = iso_grav_anom_vg",
+  "isostatic_gravity_anomaly": "features band 13 = iso_grav_anom",
+  "depth_to_base_surf_band15": "features band 15 = depth_to_base_surf",
+  "isostatic_gravity_horizontal_gradient": "features band 18 = iso_grav_anom_hg",
+  "det_elev_band12": "features band 12 = det_elev",
+  "det_elev_slope_band19": "features band 19 = det_elev_slope",
+  "radiometric_total_count": "features band 6 = tc",
+  "geodetic_shear_rate": "features band 7 = geod_shearrate",
+  "geodetic_dilatation_rate": "features band 8 = geod_dilaterate",
+  "radiometric_K": "rad band 1 = rad_K",
+  "radiometric_Th": "rad band 2 = rad_Th",
+  "radiometric_U": "rad band 3 = rad_U",
+  "lidar_relief": "lidar band 9 = relief"
+ },
+ "seconds": 48.59042143821716
+}

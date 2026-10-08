@@ -83,8 +83,9 @@ G_PX = R.G_PX                 # 14,088.7, exact from the nested-pair identity
 BETA = 0.2284                 # measured credit-curve exponent (knowledge/10 §4)
 C_FIELD = 471.6               # measured credit-curve amplitude for this family's field
 CORRIDOR_M = 200.0
-CHAMPION = 0.2778
-BOARD = 0.3195
+CHAMPION = 0.2778          # extradr19, rank 13 -- this family's best, owner-reported
+BOARD = 0.3195               # DARD, rank 7 -- the bar the current brief states
+BOARD_TOP = 0.3774           # xiaofanhu, rank 1 -- the actual board top, fetched 2026-10-08
 CREDITED_STRIKE_DEG = (100.0, 110.0)     # array convention, knowledge/10 §7
 BAND_TOL_DEG = 5.0
 MIN_SEP = 3.0
@@ -178,16 +179,32 @@ def main() -> int:
     # of them or it does not mean anything.
     prior_paths = G.find_priors([ROOT / "data/scored", ROOT / "data/reference", ROOT / "submission",
                                  ROOT / "docs/downloads"])
+    # ... minus this round's own builds and their short alias.  The emission is deterministic, so a
+    # rebuild that counted its own previous output as a prior would place its dots somewhere else and
+    # stop reproducing -- the same self-comparison trap that gates.py records as IR-52-026, arriving
+    # from the other direction.  Every other round stays a prior.
+    SELF = ("gems52-r5-novel-", "r5-candidate.tif")
+    n_all = len(prior_paths)
+    prior_paths = [q for q in prior_paths if not q.name.startswith(SELF[0]) and q.name != SELF[1]]
+    n_self = n_all - len(prior_paths)
     prior_union = np.zeros(valid.shape, bool)
     for pp in prior_paths:
         with rasterio.open(pp) as ds:
             a = G.canonical(ds.read(1))
         prior_union |= (a > 0) if bool(np.isin(a, [0, 1]).all()) else (a >= 0.5)
         del a
-    scored_union = np.load(WORK / "prior_union.npy")       # the 13 organiser-scored files only
+    # the 13 organiser-scored supports, recomputed from the restored bytes rather than read from a
+    # cache in the gitignored work/ tree: a fresh checkout has no such file, and a script that only
+    # runs where its author left a cache behind is not reproducible
+    supp = R.load_supports(ROOT / "data")
+    scored_union = np.zeros(valid.shape, bool)
+    for m in supp.values():
+        scored_union |= m & valid
+    del supp
     novel = legal & ~prior_union
     log(f"[inputs] footprint {int(valid.sum()):,} px, legal (off-ring) {int(legal.sum()):,} px")
-    log(f"[inputs] {len(prior_paths)} repo rasters -> prior union {int(prior_union.sum()):,} px "
+    log(f"[inputs] {len(prior_paths)} repo rasters ({n_self} of this round's own builds excluded so a "
+        f"rebuild reproduces) -> prior union {int(prior_union.sum()):,} px "
         f"({int((prior_union & legal).sum()):,} of them legal); the 13 organiser-scored files alone "
         f"cover {int((scored_union & legal).sum()):,} legal px")
     log(f"[inputs] strictly-novel pool {int(novel.sum()):,} px "
@@ -311,11 +328,14 @@ def main() -> int:
         f"strike {chosen['dominant_strike_deg_array']:.1f} deg, in credited band "
         f"{chosen['in_credited_band']}); {len(in_band)}/{len(ranked)} candidates inside the band")
 
-    proj = {f"{t:g}": win_probability(s_star, t) for t in (CHAMPION, BOARD)}
+    # all three bars, because the brief's stated target is rank 7 and not the top (IR-R5-005)
+    proj = {f"{t:g}": win_probability(s_star, t) for t in (CHAMPION, BOARD, BOARD_TOP)}
     proj_curve = []
     for s in (5_000, 10_000, budget_star(), 25_000, 40_000, 60_000, 100_000, 166_000):
         wc, wb = win_probability(s, CHAMPION), win_probability(s, BOARD)
+        wt = win_probability(s, BOARD_TOP)
         proj_curve.append(dict(budget=s, p_beat_champion=wc["p_win"], p_beat_board=wb["p_win"],
+                               p_beat_board_top=wt["p_win"], kappa_needed_board_top=wt["kappa_needed"],
                                kappa_needed_champion=wc["kappa_needed"],
                                kappa_needed_board=wb["kappa_needed"],
                                dti_at_kappa1=wc["dti_at_kappa1"],
@@ -323,8 +343,11 @@ def main() -> int:
                                dti_at_kappa_hi=wc["dti_at_kappa_hi"]))
     log(f"[prior] kappa ~ U{KAPPA} on T = kappa*{C_FIELD}*S^{BETA}: "
         f"P(DTI>{CHAMPION}) = {proj[f'{CHAMPION:g}']['p_win']:.3f}, "
-        f"P(DTI>{BOARD}) = {proj[f'{BOARD:g}']['p_win']:.3f}; "
-        f"DTI at kappa=1 is {proj[f'{CHAMPION:g}']['dti_at_kappa1']:.4f}")
+        f"P(DTI>{BOARD}) = {proj[f'{BOARD:g}']['p_win']:.3f}, "
+        f"P(DTI>{BOARD_TOP}) = {proj[f'{BOARD_TOP:g}']['p_win']:.3f}; "
+        f"DTI at kappa=1 is {proj[f'{CHAMPION:g}']['dti_at_kappa1']:.4f}, "
+        f"at kappa={KAPPA[0]} {proj[f'{CHAMPION:g}']['dti_at_kappa_lo']:.4f}, "
+        f"at kappa={KAPPA[1]} {proj[f'{CHAMPION:g}']['dti_at_kappa_hi']:.4f}")
 
     receipt = dict(
         generated_utc=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
@@ -398,6 +421,7 @@ def main() -> int:
         distance_to_catalogue_m=dict(min=float(d_emit.min()) if d_emit.size else None,
                                      median=float(np.median(d_emit)) if d_emit.size else None),
         novelty=dict(novel_vs_all_repo_rasters=uniq["novel_fraction"],
+                     own_builds_excluded_from_prior_scan=n_self,
                      n_repo_rasters=uniq["n_priors_checked"],
                      novel_vs_13_organiser_scored=float(
                          (emission[dots & ~scored_union].sum()) / max(int(dots.sum()), 1)),
