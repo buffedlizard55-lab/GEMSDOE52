@@ -1,6 +1,6 @@
 {
   "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified.",
-  "generated": "2026-10-08T00:03Z + H58 run/post-run audit",
+  "generated": "2026-10-08T03:55Z + H59 run/post-run audit",
   "entries": [
     {
       "id": "IR-30-029",
@@ -609,6 +609,67 @@
         "registry/irregularities.json"
       ],
       "disposition": "A registered comparable hide/block holdout and organizer-authenticated input/label provenance are absent for this alternate. Preserve its file/analysis but keep the slot gate closed."
+    },
+    {
+      "id": "IR-H59-001",
+      "round": "H59",
+      "session": "2026-10-08",
+      "severity": "medium",
+      "title": "The registered emitter's NMS prefilter silently capped full-budget emission",
+      "what_it_is": "h57.iso_select's NMS-5 prefilter is a speed approximation, not part of the 3 px separation rule; on smooth probability fields it removed candidates the pure greedy would have taken, capping the View-B field at 27,905 of 37,654 requested nodes.",
+      "observation": "The first H59 run crashed at the artifact stage with 'emission shortfall: 27905 != 37654'. The same defect class as H58's 22/37,654 (IR-H58-002), but here it was caught as a hard error instead of silently emitting short. The incumbent family proves the pool can carry 37,654 nodes at 3 px separation.",
+      "resolution": "Emitter amendment 2 (registry/h59_preregistration.json): the exact greedy under the identical inclusive 3 px rule (gems52.h59.iso_select_exact) applied identically to every arm, control and the artifact; full pipeline rerun end-to-end; every primary fold then emitted at full budget. The superseded run's log is preserved at evidence/h59_superseded_run1_emitter_capacity.txt. Any future emitter must either be exact or fail loudly on shortfall.",
+      "status": "resolved_pre_receipt",
+      "how_we_know": "scripts/run_h59.py first run RuntimeError and /tmp/h59_run.log (preserved as evidence/h59_superseded_run1_emitter_capacity.txt); src/gems52/h59.py iso_select_exact docstring; registry/h59_preregistration.json amendment 2.",
+      "disposition": "Fail loudly on any emission shortfall; never publish an under-budget artifact. Resolved by emitter amendment 2 before any H59 receipt was written: exact greedy everywhere, full pipeline rerun, every primary fold at full budget.",
+      "handling": "No under-budget artifact was published. The superseded run's log is preserved at evidence/h59_superseded_run1_emitter_capacity.txt; h57.iso_select itself is unchanged so H57/H58 receipts stay valid; H59 uses h59.iso_select_exact.",
+      "evidence": [
+        "evidence/h59_superseded_run1_emitter_capacity.txt",
+        "registry/h59_preregistration.json",
+        "src/gems52/h59.py",
+        "scripts/run_h59.py",
+        "tests/test_h59.py"
+      ]
+    },
+    {
+      "id": "IR-H59-002",
+      "round": "H59",
+      "session": "2026-10-08",
+      "severity": "medium",
+      "title": "The catalogue-truth holdout proxy is regime-blind for ring-respecting emissions",
+      "what_it_is": "The local DTI proxy awards credit only within the metric's 3 px hit radius of hidden catalogue components; the 200 m catalogue ring (2 px) pushes ring-respecting emissions beyond most of that radius, so absolute DTI is not comparable across emission regimes.",
+      "observation": "Scored as-is on identical folds: the owner-reported-0.2778 incumbent (ring-respecting, min catalogue distance 223.6 m) measures 0.0041/0.0033 hide/block while the owner-reported-0.2600 prior (dots at 1 px from the catalogue) measures 0.0967/0.0871. The proxy inverts the leaderboard ordering across regimes; within the ring-free regime its ordering matches the owner-reported ordering (0.2600 > 0.2477 -> 0.0967 > 0.0911). An earlier draft of the H59 incumbent comparison mistakenly compared ring-free arm emissions against the ring-respecting incumbent; it was corrected to as-is vs as-is before any receipt was published (amendment 3 records both the fix and the caveat).",
+      "resolution": "The published incumbent comparison is like-for-like (artifact as submitted vs incumbent as-is, identical folds, visible-mask and region rules), each emission's distance-to-catalogue regime is recorded in the receipt, and the proxy caveat is stated on the audit page. Comparisons across regimes are forbidden in future rounds.",
+      "status": "registered_standing_limitation",
+      "how_we_know": "evidence/h59_result.json posthoc_incumbent_diagnostic (mean_dti and emission_regime per raster); work/h59_pinned reference/scored rasters; the owner-reported scores are family-site claims, not organizer-authenticated.",
+      "disposition": "Never compare DTI across emission regimes; record each emission's distance-to-catalogue regime beside its score. The H59 slot verdict uses only the like-for-like as-is comparison, and the audit page states the caveat in plain language.",
+      "handling": "The regime-mismatch draft comparison was corrected before publication; no receipt carrying it was ever published. The proxy caveat and per-emission regime stats are part of evidence/h59_result.json and the published audit page.",
+      "evidence": [
+        "evidence/h59_result.json",
+        "registry/h59_preregistration.json",
+        "scripts/run_h59.py",
+        "docs/h59.html"
+      ]
+    },
+    {
+      "id": "IR-H59-003",
+      "round": "H59",
+      "session": "2026-10-08",
+      "severity": "low",
+      "title": "The not-the-union gate and slot rule were unsatisfiable by construction when a single view wins",
+      "what_it_is": "As originally registered, a single-view emission necessarily equals that view's own emission (failing the not-the-union gate) and cannot beat itself by +0.003 (failing the slot rule), even though the decision rule explicitly allows - and under independence-abandonment requires - a single view to ship.",
+      "observation": "The second H59 run shipped view_B (the strongest single view) and recorded gates_ok=false purely from equals_view_b=true, with every substantive gate passing.",
+      "resolution": "Amendment 3 (registry/h59_preregistration.json): the gate forbids equality with the set-union of the two views' emissions and with the union-field emission; equality with a constituent view's own emission is reported and expected exactly when that view ships. When the shipped field is itself the strongest single view, the slot rule becomes the like-for-like incumbent comparison. Disclosed with result_informed=false; full pipeline rerun so one run wrote every receipt.",
+      "status": "resolved_pre_receipt",
+      "how_we_know": "evidence/h59_result.json second-run gates (superseded, uncommitted path only documented in the run log) and the final receipt's slot_basis; registry/h59_preregistration.json amendment 3; knowledge/20_hypotheses_H59_preregistered.md.",
+      "disposition": "Gate semantics must be satisfiable by every outcome the decision rule can legally produce; a gate that fails by construction is a registration defect, not evidence. Resolved by amendment 3 before any artifact was published or offered for download.",
+      "handling": "No DTI number changed under the amendment; the full pipeline was rerun so one run wrote every receipt. equals_view_a/equals_view_b remain reported fields, and the shipped single view is named in every receipt.",
+      "evidence": [
+        "registry/h59_preregistration.json",
+        "knowledge/20_hypotheses_H59_preregistered.md",
+        "evidence/h59_result.json",
+        "tests/test_current_submission_gate.py"
+      ]
     }
   ]
 }

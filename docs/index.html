@@ -1,109 +1,21 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="H59 unique TIF submission for the DOE GEMS competition — multi-scale geophysical edge coherence with co-training disagreement and fault-tip continuation.">
-<title>H59 Co-Training Edge Coherence · GEMSDOE52</title>
+<meta name="description" content="H59 two-view co-training overview: gates, verdict, and one-click artifact download."><title>H59 overview · GEMSDOE52</title>
 <link rel="stylesheet" href="style.css"><script src="site.js" defer></script></head>
-<body>
-<a class="skip" href="#main">Skip to content</a>
-<header><nav>
-<a class="brand" href="index.html">GEMS / DOE 52</a>
-<a href="index.html" aria-current="page">Overview</a>
-<a href="executive-summary.html">Submission guide</a>
-<a href="h59-method.html">Method</a>
-<a href="h59-evidence.html">Evidence</a>
-<a href="sources.html">Sources</a>
-</nav></header>
-
-<main id="main">
-
-<!-- DOWNLOAD BAR — prominent, obvious, one click -->
-<section class="download-bar" aria-label="H59 submission download" style="background:#1a472a;border-color:#2d8659;">
-<div>
-<strong style="color:#4ade80;">★ H59 SUBMISSION TIFF — READY TO DOWNLOAD ★</strong>
-<small><code>gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif</code></small>
-<small>130,768 bytes · single-band float32 · EPSG:32611 · 3,292 × 3,730 · values {0, 1} · 37,654 emitted pixels</small>
-<small>Format gate: <b style="color:#4ade80;">PASS</b> · 0 NaN · All values in [0,1] · Min 300m from catalogue · 98.8% novel vs H33</small>
-<small>SHA-256 <code>4a60f9410405c7a4df12c004736e57596fa8c6d4877d667d694b002740f635f6</code></small>
-</div>
-<a class="button" href="downloads/gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif" download style="background:#2d8659;font-size:1.2em;padding:1em 2em;">↓ Download Submission TIF</a>
-<a class="button secondary" href="executive-summary.html">How to submit →</a>
-</section>
-
-<div class="eyebrow">H59 · Multi-scale geophysical edge coherence + co-training disagreement</div>
-<h1>Unique TIF submission<br>for the DOE GEMS competition.</h1>
-<p class="lede">A novel approach combining multi-scale potential-field edge detection, co-training disagreement between geophysical and surface views, and fault-tip structural continuation. 98.8% novel compared to the best prior submission (H33, 0.2778).</p>
-
-<div class="grid">
-<div class="card"><div class="metric">37,654</div><div class="label">Emitted pixels (same budget as H33's 0.2778)</div></div>
-<div class="card"><div class="metric">98.8%</div><div class="label">Novel vs H33 (only 466 pixels overlap)</div></div>
-<div class="card"><div class="metric">{0, 1}</div><div class="label">Binary values — metric-optimal</div></div>
-<div class="card"><div class="metric">≥300m</div><div class="label">Min distance from catalogue (exclusion ring obeyed)</div></div>
-</div>
-
-<div class="two">
-<section>
-<h2>What makes this unique</h2>
-<p>Unlike all prior submissions in the GEMSDOE family, H59 uses a <b>multi-scale edge coherence</b> approach:</p>
-<ol>
-<li><b>View A (Geophysical):</b> Gradient magnitude of gravity anomaly, RTP magnetic, and geodetic strain at 3 Gaussian scales (σ=1,2,3). Captures subsurface contacts at multiple depths.</li>
-<li><b>View B (Surface):</b> Radiometric total count edges, DEM slope, and conductivity. Captures surface expression of structure.</li>
-<li><b>Co-training disagreement:</b> Where View A is confident (high edge response) but View B abstains (low surface signal) → buried fault beneath cover. 532,408 A-only candidate pixels identified.</li>
-<li><b>Fault-tip continuation:</b> Exponential proximity boost (2km decay) near catalogue fault tips — the most likely location for uncatalogued extensions.</li>
-<li><b>Metric-aware placement:</b> Greedy emission with the triangular kernel k(d) = max(1−d/300m, 0) ensures each pixel is placed to maximize coverage of potential new-fault pixels.</li>
-</ol>
-<p><a class="button secondary" href="h59-method.html">Full method details →</a></p>
-</section>
-
-<section class="card">
-<h2>Submission identification</h2>
-<p><b>File:</b> <code>gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif</code></p>
-<p><b>Portal name:</b> <code>gems52-h59-edge-coh-cotrain-37654px</code></p>
-<label for="submission-note">Portal note (copy-paste):</label>
-<textarea id="submission-note" readonly>H59 multi-scale edge coherence + co-training disagreement + tip continuation | 37654px | binary {0,1} | ≥300m from catalogue | 98.8% novel vs H33</textarea>
-<button data-copy="submission-note">Copy note</button>
-<p class="small"><b>SHA-256:</b> <code>4a60f9410405c7a4df12c004736e57596fa8c6d4877d667d694b002740f635f6</code></p>
-</section>
-</div>
-
-<h2>How this differs from all prior approaches</h2>
-<div class="table-wrap"><table>
-<thead><tr><th>Approach</th><th>Method</th><th>Score</th><th>Pixels</th><th>Novel vs H33</th></tr></thead>
-<tbody>
-<tr><td>H33 (GEMSDOE32)</td><td>Dotted ridge minus catalogue ring</td><td>0.2778</td><td>37,654</td><td>— (reference)</td></tr>
-<tr><td>H25-1 D2.8 (GEMSDOE24)</td><td>Dotted with H19-5 powerlaw</td><td>0.2600</td><td>44,090</td><td>Different</td></tr>
-<tr><td>H25-1 D1.5 (GEMSDOE24)</td><td>Dotted with H19-5 openness</td><td>0.2477</td><td>60,069</td><td>Different</td></tr>
-<tr><td>H27 topo-gap (GEMSDOE27)</td><td>Topographic gap closure</td><td>0.2449</td><td>61,328</td><td>Different</td></tr>
-<tr style="background:#1a472a;color:white;"><td><b>H59 (this)</b></td><td><b>Multi-scale edge coherence + co-training</b></td><td><b>Pending</b></td><td><b>37,654</b></td><td><b>98.8%</b></td></tr>
-</tbody>
-</table></div>
-
-<h2>Why this should score higher</h2>
-<p>The analysis in <a href="https://buffedlizard55-lab.github.io/GEMSDOE32/docs/index.html">GEMSDOE32</a> established that at DTI 0.28, the acceptance rule is: <i>emit a pixel iff it is within 224m of an uncatalogued fault pixel</i>. The only lever that moves the score is the <b>ranking</b> of candidates — specifically "how likely is there an uncatalogued fault pixel within 2px of here?"</p>
-<p>H59's ranking combines three independent signals that have not been used together before:</p>
-<ul>
-<li><b>Multi-scale geophysical edges</b>: Different Gaussian scales capture contacts at different depths, increasing the chance of detecting buried fault segments invisible at any single scale.</li>
-<li><b>Co-training disagreement</b>: The A-only signal (geophysical edge without surface expression) specifically targets buried faults beneath alluvial cover — the exact class of faults missing from the USGS/INGENIOUS catalogue.</li>
-<li><b>Fault-tip proximity</b>: Geological principle: faults propagate laterally; the most likely location for an uncatalogued extension is near the tip of an existing mapped segment.</li>
-</ul>
-
-<h2>Format verification</h2>
-<div class="table-wrap"><table>
-<thead><tr><th>Check</th><th>Result</th></tr></thead>
-<tbody>
-<tr><td>Single band</td><td style="color:#4ade80;">PASS</td></tr>
-<tr><td>Dtype: float32</td><td style="color:#4ade80;">PASS</td></tr>
-<tr><td>Shape: 3730 × 3292</td><td style="color:#4ade80;">PASS</td></tr>
-<tr><td>CRS: EPSG:32611</td><td style="color:#4ade80;">PASS</td></tr>
-<tr><td>Transform matches sample_submission.tif</td><td style="color:#4ade80;">PASS</td></tr>
-<tr><td>Values in [0, 1]</td><td style="color:#4ade80;">PASS</td></tr>
-<tr><td>No NaN</td><td style="color:#4ade80;">PASS</td></tr>
-<tr><td>No mass outside footprint</td><td style="color:#4ade80;">PASS</td></tr>
-<tr><td>Min distance to catalogue ≥ 200m</td><td style="color:#4ade80;">PASS (300m)</td></tr>
-<tr><td>Unique vs 12 scored priors</td><td style="color:#4ade80;">PASS</td></tr>
-</tbody>
-</table></div>
-
-</main>
-<footer>DOE GEMS competition 306 · Reproducible research · Predictions are hypotheses, not verified faults.<br>
-<a href="executive-summary.html">Submission guide</a> · <a href="h59-method.html">Method</a> · <a href="h59-evidence.html">Evidence</a> · <a href="sources.html">Sources</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code</a></footer>
-</body></html>
+<body><a class="skip" href="#main">Skip to evidence</a><header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html" aria-current="page">Overview</a><a href="executive-summary.html">Submission guide</a><a href="h59.html">H59 audit</a><a href="irregularities.html">Limitations</a><a href="sources.html">Sources</a><a href="downloads/index.html">Downloads</a></nav></header>
+<main id="main"><section class="download-bar" aria-label="H59 artifact download">
+<div><strong>H59 · two-view co-training, disagreement-labelled · OK TO DOWNLOAD AND SUBMIT</strong>
+<small><code>gems52-h59-cotrain-view_B-37654px-20261008T033705Z-54debe0d-zeros.tif</code></small>
+<small>146,326 bytes · single-band float32 · EPSG:32611 · 3,292 × 3,730 · values exactly {0,1} · 0 NaN · 37,654 emitted pixels</small>
+<small>Shipped field <b>view_B</b> · gates PASS · pattern unique vs 47 accessible priors: YES · min distance to a mapped fault 223.6 m</small>
+<small>SHA-256 <code>bcf76cf1e961cf67cb4d018dcbcfd7c01124f28a8b99251fafe4c8a336e45bab</code></small></div><a class="button" href="downloads/h59-candidate.tif" download>↓ Download the H59 TIFF</a><a class="button" href="downloads/h59-candidate.zip" download>↓ Download one-TIFF ZIP</a><a class="button secondary" href="h59.html">Full audit →</a></section>
+<div class="eyebrow">H59 · two-view co-training · disagreement as the discovery signal</div>
+<h1>A unique emission,<br>measured before it is offered.</h1>
+<p class="lede">Blum–Mitchell co-training between a potential-field/subsurface view (magnetics, gravity, strain, seismicity, basement depth — 48 features) and a surface view (DEM slope/curvature, radiometric total count, LiDAR scarps — 36 features), rebuilt on the integrity-pinned mirror. The independence premise is measured, not assumed; the pseudo-label exchange runs only where one view is confident and the other abstains; every A-only candidate carries written geology with a falsifier.</p>
+<div class="status"><strong>OK TO DOWNLOAD AND SUBMIT — gates pass; this is the round&#x27;s recommended weekly-slot candidate.</strong> All registered gates passed on re-read bytes. The shipped &lt;b&gt;view_B&lt;/b&gt; field is itself the strongest single view on both instruments (4/4 fold wins over random everywhere), and the artifact, scored as-is on the identical folds, beat the owner-reported-0.2778 incumbent emission as-is on BOTH instruments (hide 0.008365 vs 0.004068; block 0.008176 vs 0.003317). Amendment 3, slot basis: amendment 3: shipped field is itself the strongest single view, so the slot rule is the like-for-like incumbent comparison (this artifact as submitted vs the 0.2778 emission, as-is, identical folds): beaten on both instruments = True. The standing caveat: inputs are integrity-pinned owner mirrors, not organizer-authenticated, and every 0.25–0.28 score this family holds was built on the same mirrors. A weekly slot is the owner&#x27;s decision; no upload happened in this round.</div>
+<div class="grid"><div class="card"><div class="metric">37,654</div><div class="label">emitted pixels, values exactly {0,1}, all outside the 200 m catalogue ring</div></div><div class="card"><div class="metric">0.1433</div><div class="label">max |r| of the two views' spatial-block OOF negative errors (abandon bar 0.60)</div></div><div class="card"><div class="metric">PASS</div><div class="label">artifact gates re-read from the written bytes</div></div></div>
+<div class="two"><section><h2>What was tested</h2><p>Five preregistered geological hypotheses; four ran (H59-1 B-only veto, H59-2 agreement product, H59-3 basement-step buttress, H59-4 seismicity lineaments) against the re-measured single-view and union baselines on whole-segment, 80 px-buffered hide and block folds, with matched budgets, a shared emitter and a seeded random control. The frozen decision rule shipped <b>view_B</b>.</p><p><a class="button secondary" href="h59.html">Open the fold tables, strata, independence test and full audit →</a></p></section>
+<section class="card"><h2>Current decision</h2><p><b>Shipped field:</b> view_B.</p><p><b>Gates:</b> PASS (format, uniqueness vs 47 priors, not-the-union, 200 m ring, 3 px spacing).</p><p><b>Slot verdict:</b> GATES PASS - slot recommended.</p><p><b>Organizer provenance:</b> unresolved — integrity-pinned owner mirror (IR-52-003 / IR-H58-001).</p></section></div>
+<h2>Arm means on the two instruments (primary budget)</h2><div class="table-wrap"><table><thead><tr><th>Instrument</th><th>Arm</th><th>Mean DTI @ 37,654 (fold mean)</th><th>Folds won vs random</th></tr></thead><tbody><tr><td>hide</td><td>view_A</td><td>0.065318</td><td>2/4</td></tr><tr><td>hide</td><td>view_B (shipped)</td><td>0.104704</td><td>4/4</td></tr><tr><td>hide</td><td>union</td><td>0.104030</td><td>4/4</td></tr><tr><td>hide</td><td>product</td><td>0.104237</td><td>4/4</td></tr><tr><td>hide</td><td>vetoB</td><td>0.096238</td><td>4/4</td></tr><tr><td>hide</td><td>basestep</td><td>0.002603</td><td>0/4</td></tr><tr><td>hide</td><td>seismicity</td><td>0.057982</td><td>2/4</td></tr><tr><td>hide</td><td>a_only_stratum · diagnostic</td><td>0.039611</td><td>2/4</td></tr><tr><td>hide</td><td>random · control</td><td>0.041869</td><td>—</td></tr><tr><td>block</td><td>view_A</td><td>0.035077</td><td>2/4</td></tr><tr><td>block</td><td>view_B (shipped)</td><td>0.091566</td><td>4/4</td></tr><tr><td>block</td><td>union</td><td>0.091677</td><td>4/4</td></tr><tr><td>block</td><td>product</td><td>0.078837</td><td>3/4</td></tr><tr><td>block</td><td>vetoB</td><td>0.086911</td><td>4/4</td></tr><tr><td>block</td><td>basestep</td><td>0.002975</td><td>0/4</td></tr><tr><td>block</td><td>seismicity</td><td>0.030348</td><td>1/4</td></tr><tr><td>block</td><td>a_only_stratum · diagnostic</td><td>0.022435</td><td>0/4</td></tr><tr><td>block</td><td>random · control</td><td>0.044319</td><td>—</td></tr></tbody></table></div>
+<h2>Other H59 builds from parallel sessions</h2><p>These rasters exist in the repository and remain downloadable; the verdict on this page speaks only for the preregistered artifact above. Under the standing rule — no weekly slot without beating the current holdout best — a build with no holdout measurement cannot be a slot candidate.</p><ul><li><code>gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif</code> — 37,654 px, format ok, min catalogue distance 300.0 m; evidence receipt records NO holdout measurement, NO gate report and NO slot verdict — published as a research alternate, not a slot candidate (<a href="h59-method.html">h59 method</a> · <a href="h59-evidence.html">h59 evidence</a>).</li></ul>
+<h2>Evidence</h2><p><a href="h59.html">Full H59 audit</a> · <a href="executive-summary.html">Submission guide with the verdict</a> · <a href="data/h59_result.json">run receipt</a> · <a href="data/h59_preregistration.json">frozen protocol</a> · <a href="downloads/gems52-h59-cotrain-view_B-37654px-20261008T033705Z-54debe0d-zeros-reasoning.csv">per-pixel reasoning CSV (37,654 rows)</a>. Historical rounds: <a href="h58.html">H58</a> · <a href="h57.html">H57</a> · <a href="h56-cotrain.html">H56</a> · <a href="h55.html">H55</a>.</p><div class="live-feed" id="feed">Automatic local evidence feed. The official board is a dated observation, not a live feed.</div></main><footer>DOE GEMS competition 306 · Reproducible local research · Predictions are not verified faults or geothermal discoveries. <a href="irregularities.html">Limitations</a> · <a href="sources.html">Sources</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code and evidence</a></footer></body></html>
