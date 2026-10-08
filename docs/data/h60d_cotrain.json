@@ -1,5 +1,5 @@
 {
- "round": "H60-cotrain-v1",
+ "round": "H60D-cotrain-v1",
  "seed": 20261009,
  "runtime_s": 187.6,
  "lane": "co-training, disagreement as the discovery signal",

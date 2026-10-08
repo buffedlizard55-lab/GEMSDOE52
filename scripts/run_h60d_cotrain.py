@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """H60 — co-training with disagreement as the discovery signal (this session's lane).
 
-Runs strictly under ``registry/h60_preregistration.json`` (frozen before this file executed);
-the hypothesis text is ``knowledge/25_hypotheses_H60_preregistered.md``.
+Runs strictly under ``registry/h60d_preregistration.json`` (frozen before this file executed);
+the hypothesis text is ``knowledge/30_hypotheses_H60D_preregistered.md``.
 
 Stages (each checkpointed under work/h60 / evidence so an interrupted run resumes):
 
@@ -43,7 +43,7 @@ sys.path.insert(0, str(ROOT / "src"))
 from gems52 import grid as G                       # noqa: E402
 from gems52 import h57                              # noqa: E402
 from gems52 import h58                              # noqa: E402
-from gems52 import h60                              # noqa: E402
+from gems52 import h60d                              # noqa: E402
 from gems52 import holdout as HO                    # noqa: E402
 from gems52 import metric as M                      # noqa: E402
 from gems52 import spatial                          # noqa: E402
@@ -51,7 +51,7 @@ from gems52 import spatial                          # noqa: E402
 DATA = ROOT / "work/pinned"
 WORK = ROOT / "work/h60"
 EV = ROOT / "evidence"
-PREREG = json.loads((ROOT / "registry/h60_preregistration.json").read_text())
+PREREG = json.loads((ROOT / "registry/h60d_preregistration.json").read_text())
 SEED = int(PREREG["protocol"]["seed"])
 Q_CONF = float(PREREG["protocol"]["thresholds"]["q_conf"])
 Q_ABSTAIN = float(PREREG["protocol"]["thresholds"]["q_abstain"])
@@ -65,7 +65,7 @@ N_BOOT = 10000
 
 
 def log(m: str) -> None:
-    print(f"[h60 {time.strftime('%H:%M:%S')}] {m}", flush=True)
+    print(f"[h60d {time.strftime('%H:%M:%S')}] {m}", flush=True)
 
 
 def done(path: Path) -> bool:
@@ -74,7 +74,7 @@ def done(path: Path) -> bool:
 
 # ----------------------------------------------------------------------------------------------- preflight
 def stage_preflight() -> None:
-    out = EV / "h60_preflight_integrity.json"
+    out = EV / "h60d_preflight_integrity.json"
     if done(out):
         log("preflight cached")
         return
@@ -83,7 +83,7 @@ def stage_preflight() -> None:
         receipts = h58.verify_manifest(ROOT / "registry/data_manifest.json", DATA)
         all_ok = len(receipts) == 23 and all(r["matches_pin"] for r in receipts)
     except Exception as exc:
-        h60.write_json(EV / "h60_preflight_integrity.json",
+        h60d.write_json(EV / "h60d_preflight_integrity.json",
                        dict(round="H60-preflight", pinned_all_ok=False, error=str(exc)[:400]))
         raise
     tracked = {}
@@ -106,7 +106,7 @@ def stage_preflight() -> None:
                files=[r for r in receipts])
     if not all_ok:
         raise SystemExit("preflight FAILED: a pinned input does not match its manifest entry")
-    h60.write_json(out, rec)
+    h60d.write_json(out, rec)
     log(f"preflight OK: {len(receipts)}/23 pins match; tracked stubs recorded as not pinned")
 
 
@@ -187,7 +187,7 @@ def pixel_corr(pa, pb, mask):
 
 
 def stage_cotrain() -> None:
-    out = EV / "h60_cotrain.json"
+    out = EV / "h60d_cotrain.json"
     if done(out):
         log("cotrain cached")
         return
@@ -244,7 +244,7 @@ def stage_cotrain() -> None:
         for i, nm in enumerate(layers.names):
             yield nm, np.asarray(mm[i], dtype=np.float32) / 255.0
 
-    canary = h60.canary_report(layer_iter(), folds)
+    canary = h60d.canary_report(layer_iter(), folds)
     log(f"leakage canary: {canary['n_layers']} layers, worst {canary['worst_layer']} "
         f"AUC {canary['worst_auc']} -> {canary['verdict'][:60]} ({time.time() - t1:.0f}s)")
 
@@ -325,8 +325,8 @@ def stage_cotrain() -> None:
                abandonment=("co-training abandoned by the registered independence rule"
                             if abandon else None),
                disagreement_fields={k: str(v.__doc__ or "").strip().splitlines()[0]
-                                    for k, v in h60.DISAGREEMENT_FIELDS.items()})
-    h60.write_json(out, rep)
+                                    for k, v in h60d.DISAGREEMENT_FIELDS.items()})
+    h60d.write_json(out, rep)
     log(f"wrote {out.name} in {time.time() - t0:.0f}s")
 
 
@@ -343,7 +343,7 @@ def score_cell(field, legal, truth, region, valid, visible, k):
 
 
 def stage_validate() -> None:
-    out = EV / "h60_validation.json"
+    out = EV / "h60d_validation.json"
     if done(out):
         log("validation cached")
         return
@@ -364,9 +364,9 @@ def stage_validate() -> None:
         "view_A": pa,
         "view_B": pb,
         "clf_union": np.maximum(pa, pb),
-        "dis_product": h60.dis_product(pa, pb),
-        "dis_contrast": h60.dis_contrast(pa, pb),
-        "dis_B_product": h60.dis_b_product(pa, pb),
+        "dis_product": h60d.dis_product(pa, pb),
+        "dis_contrast": h60d.dis_contrast(pa, pb),
+        "dis_B_product": h60d.dis_b_product(pa, pb),
     }
     for nm, fv in fields.items():
         np.save(WORK / f"field_{nm}.npy", fv.astype(np.float32))
@@ -469,8 +469,8 @@ def stage_validate() -> None:
                 rs = cells(mode, k, f"RANK_{n}" if n != "random" else "random")
                 if not rs:
                     continue
-                pl = h60.pooled_dti(rs)
-                ci = h60.bootstrap_ci([r["dti"] for r in rs], n_boot=N_BOOT, seed=SEED)
+                pl = h60d.pooled_dti(rs)
+                ci = h60d.bootstrap_ci([r["dti"] for r in rs], n_boot=N_BOOT, seed=SEED)
                 pooled[f"{mode}@{k}|{n}"] = dict(
                     pooled_dti=round(pl["dti"], 6), tpw=round(pl["tpw"], 2),
                     fpw=round(pl["fpw"], 2), fnw=round(pl["fnw"], 2), n_truth=pl["n_truth"],
@@ -544,11 +544,11 @@ def stage_validate() -> None:
         f"(verdict {'promote' if promoted else 'negative'})")
 
     rep = dict(round="H60-validation-v1", seed=SEED, runtime_s=round(time.time() - t0, 1),
-               protocol="registry/h60_preregistration.json -> protocol",
+               protocol="registry/h60d_preregistration.json -> protocol",
                field_table=table, pooled_dti=pooled, gates=gates,
                promoted_field=best, promoted_any=bool(promoted),
                cotreatment=cotrain, results=results,
-               evaluator_version=h60.evaluator_version(),
+               evaluator_version=h60d.evaluator_version(),
                caveats=[
                    "Simulator truth is the mapped catalogue minus visible; relative instrument "
                    "only (Spearman(reported, simulated DTI) = -0.1045, knowledge/10 s5).",
@@ -558,7 +558,7 @@ def stage_validate() -> None:
                    "A required-novel arm cannot be scored by this simulator at all "
                    "(knowledge/18 s6); pooled DTI here measures the field's ranking on "
                    "catalogue truth, not the hidden competition truth."])
-    h60.write_json(out, rep)
+    h60d.write_json(out, rep)
     log(f"wrote {out.name} in {time.time() - t0:.0f}s")
 
 

@@ -1,15 +1,19 @@
-# 26 — What H60 actually found (session 2026-10-08)
+# 31 — What H60D actually found (session 2026-10-08)
 
-Preregistered in [`25_hypotheses_H60_preregistered.md`](25_hypotheses_H60_preregistered.md), frozen in
-[`registry/h60_preregistration.json`](../registry/h60_preregistration.json) (sha256
+Renamed from `knowledge/26_what_h60_found.md` with the round (H60 → H60D) when a parallel
+H60 session (H60C) merged to `main` first and occupied the plain `h60` file names — see
+`registry/irregularities.json` → `IR-H60D-006`.  Every number is unchanged.
+
+Preregistered in [`30_hypotheses_H60D_preregistered.md`](30_hypotheses_H60D_preregistered.md), frozen in
+[`registry/h60d_preregistration.json`](../registry/h60d_preregistration.json) (sha256
 `6ce875d3…`, amended `e64ba69a…` by registered corrections H60-5 and H60-6 — both evidence-based, both
 registered before the artifact shipped, neither changing any gate outcome) before any H60 fit ran.
 Every number below was computed on the manifest-pinned bytes (`work/pinned`, 23/23 SHA-256 verified in
-`evidence/h60_preflight_integrity.json`); the tracked `data/*.tif` stubs were measured and recorded as
-unused. Receipts: `evidence/h60_cotrain.json` (E1), `evidence/h60_cotrain_control.json` (same-seed
-control), `evidence/h60_validation.json` (E2), `evidence/h60_build.json` + `evidence/h60_format_gate.json`
-+ `evidence/h60_uniqueness.json` + `evidence/h60_lane_gate.json` + `evidence/h60_lane_surface.json` +
-`evidence/h60_slot_gate.json` + `evidence/h60_run_card.json` (E3). Site: `docs/h60.html`.
+`evidence/h60d_preflight_integrity.json`); the tracked `data/*.tif` stubs were measured and recorded as
+unused. Receipts: `evidence/h60d_cotrain.json` (E1), `evidence/h60d_cotrain_control.json` (same-seed
+control), `evidence/h60d_validation.json` (E2), `evidence/h60d_build.json` + `evidence/h60d_format_gate.json`
++ `evidence/h60d_uniqueness.json` + `evidence/h60d_lane_gate.json` + `evidence/h60d_lane_surface.json` +
+`evidence/h60d_slot_gate.json` + `evidence/h60d_run_card.json` (E3). Site: `docs/h60d.html`.
 
 **Verdict: NEGATIVE.** The disagreement between the two views — the Blum & Mitchell co-training
 discovery signal — does **not** rank buried-structure candidates better than the surface view alone or
@@ -28,15 +32,15 @@ Per-50×50-block out-of-fold errors on labelled negatives, 4 hide folds (8,588 b
 | pixel-level Pearson / Spearman | 0.1503 / 0.1464 |
 | abandonment threshold | 0.60 |
 
-`measured=true, allow_exchange=true` (`evidence/h60_cotrain.json`). The two views' errors are
+`measured=true, allow_exchange=true` (`evidence/h60d_cotrain.json`). The two views' errors are
 near-independent, so the co-training exchange was licensed and run in **both** directions
 (registered correction of H59's donor-self refit): `A_labels_B` 1,997 px / 79 whole segments,
 fold-0 AUC 0.6659 → 0.6592 (Δ −0.0067); `B_labels_A` 1,997 px / 103 segments, AUC 0.6006 → 0.5901
 (Δ −0.0104). **Fourth and fifth independent nulls for the pseudo-label exchange.** The same-seed
-control (`scripts/run_h60_cotrain_control.py`: both views refit on the fold-0 fit region with the
+control (`scripts/run_h60d_cotrain_control.py`: both views refit on the fold-0 fit region with the
 round-1 seed `SEED+7` and NO pseudo-labels) separates the seed effect from the exchange effect:
 seed effect up to +0.0009 on the union field, **exchange effect −0.0002…+0.0003 (null)** on both
-instruments (`evidence/h60_cotrain_control.json`). The apparent round-1 gain in the un-controlled
+instruments (`evidence/h60d_cotrain_control.json`). The apparent round-1 gain in the un-controlled
 readout was the seed, not the exchange.
 
 **Leakage canary: clean.** Worst of all 75 cached layers, single-feature AUC against the holdout
@@ -96,14 +100,14 @@ broad moderate plateaus over thin high crests, and the plateau mass is anti-corr
 withheld truth. A greedy-placed raster would not have externalized the measured field.
 **Correction H60-5:** the artifact is placed by `h57.iso_select` (the emitter of every registered
 read and of the H57 champion artifact); `greedy_emit` is retained as a disclosed, scored diagnostic
-(both reads in `evidence/h60_build.json` and the run card). No gate outcome changes.
+(both reads in `evidence/h60d_build.json` and the run card). No gate outcome changes.
 
 ## 4. The artifact (E3) — unique, review-only
 
-`gems52-h60-dis_contrast-arm37654px.tif` — 144,529 bytes, sha256
-`0add72cd69542f19…` (full hash in the receipts), 37,654 px, values exactly {0,1}, single-band
+`gems52-h60d-dis_contrast-arm37654px.tif` — 144,529 bytes, sha256
+`0add72cd69542f19…` (pre-rename build; the renamed round re-measured every gate — see the receipts) (full hash in the receipts), 37,654 px, values exactly {0,1}, single-band
 float32, EPSG:32611, 3730×3292, all finite; portal name
-`gems52-h60-dis_contrast-arm37654px-0add72cd-zeros`, note ≤ 140 chars. Reproducible: the rebuild
+`gems52-h60d-dis_contrast-arm37654px-0add72cd-zeros`, note ≤ 140 chars. Reproducible: the rebuild
 after the IR-H60-002 fix reproduces the identical sha256 (fixed point).
 
 | gate | result |
@@ -117,22 +121,22 @@ after the IR-H60-002 fix reproduces the identical sha256 (fixed point).
 | reasoning | 37,654 per-pixel geological reasoning rows + 11,064 A-only candidate-segment dossiers |
 | slot gate | **CLOSED** — promotion/slot bar not met; DOWNLOAD OK FOR REVIEW, DO NOT SPEND A WEEKLY SLOT |
 
-`submission/LATEST.txt` stays on H57; H60 publishes via `docs/data/submission_h60.json` +
-`submission/H60_LATEST.txt`. The site's top download bar points at `downloads/h60-candidate.tif/.zip`
+`submission/LATEST.txt` stays on H57; H60 publishes via `docs/data/submission_h60d.json` +
+`submission/H60D_LATEST.txt`. The site's top download bar points at `downloads/h60-candidate.tif/.zip`
 with the unmistakable status line.
 
 ## 5. Incidents and registered corrections this round
 
-- **IR-H60-001** — the A-only segment dossier hung the first build (per-segment full-grid scans,
+- **IR-H60D-001** — the A-only segment dossier hung the first build (per-segment full-grid scans,
   143.6 G cell visits); fixed with vectorised grouped statistics. No artifact affected.
-- **IR-H60-002** — the self-exclusion pattern missed the stem-named `docs/downloads` copy of the
+- **IR-H60D-002** — the self-exclusion pattern missed the stem-named `docs/downloads` copy of the
   round's own artifact; the second build treated its own previous arm as a prior and the lane gate
   fired on it at 90.4 % (a self-collision, not drift). Fixed by widening the pattern to both
   published names; rebuilt to the fixed point.
-- **IR-H60-003** — the marginal acceptance radius was logged in pixels under a metre label
+- **IR-H60D-003** — the marginal acceptance radius was logged in pixels under a metre label
   (2.8 "m" instead of 283.3 m); fixed (×100 m).
-- **IR-H60-004 / H60-5** — the greedy-vs-iso placement divergence (section 3).
-- **IR-H60-005 / H60-6** — the lane-drift 3-px proximity gate fired at 0.8392 against an
+- **IR-H60D-004 / H60-5** — the greedy-vs-iso placement divergence (section 3).
+- **IR-H60D-005 / H60-6** — the lane-drift 3-px proximity gate fired at 0.8392 against an
   owner-supplied **calibration** lattice (manifest id `calib_…`, source `inputs/calibration/`; the
   regular 5-px lattice that reaches 99.8 % of the A/S ceiling). Its 3-px dilation covers about half
   the grid, so any pool placement reads 70–84 % against it by geometry, not duplication.
@@ -146,7 +150,7 @@ with the unmistakable status line.
 
 The standing question — why `h33` scored 0.2778 and whether > 0.2778 is generatable — is answered in
 `knowledge/21` and is **not re-litigated here**: the champion is the h27-4 core minus the ≤200 m ring,
-|G| = 14,088.7 px, and no local measurement can certify a novel arm's hidden-truth density. H60 adds
+|G| = 14,088.7 px, and no local measurement can certify a novel arm's hidden-truth density. H60D adds
 one new fact: the lane's discovery signal (view disagreement) produces a **pure novel arm** whose
 holdout read (0.0035) sits between the novel-pool random control (0.0014) and the novel-pool union
 (0.0039) — the disagreement field is a genuine but weak ranker of withheld catalogue truth on novel

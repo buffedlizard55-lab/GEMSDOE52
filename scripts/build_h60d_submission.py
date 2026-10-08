@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Build the H60 submission: the pure disagreement-discovery arm, placed by the repo's
+"""Build the H60D submission: the pure disagreement-discovery arm, placed by the repo's
 metric-aware placement, on the pinned bytes, with every gate written to receipts.
 
-Registered in ``registry/h60_preregistration.json`` (frozen before this script existed); the
-field shipped is the one the registered promotion gate in ``scripts/run_h60_cotrain.py``
+Registered in ``registry/h60d_preregistration.json`` (frozen before this script existed); the
+field shipped is the one the registered promotion gate in ``scripts/run_h60d_cotrain.py``
 selected — and if no disagreement field promoted, the best measured one ships with verdict
 **negative** (negative results are deliverables; promotion to a real slot is a separate
 selector step).
@@ -15,13 +15,13 @@ shared pixels with any prior artifact.
 Outputs (all measured from bytes, never quoted from prose):
   submission/<stem>.tif                      the canonical single-band float32 GeoTIFF
   submission/<stem>.zip                      one-TIFF zip for the portal (name/note/STATUS)
-  docs/downloads/<stem>.tif|zip + h60-candidate.<ext>   site copies (short paths)
-  evidence/gems52-h60-<n>px-candidate-geology.csv        one reasoning row per emitted pixel
-  evidence/gems52-h60-a-only-candidate-segments.csv      every A-only whole-segment candidate
-  evidence/h60_build.json / h60_format_gate.json / h60_uniqueness.json / h60_lane_gate.json
-  evidence/h60_slot_gate.json / h60_run_card.json
-  docs/data/submission_h60.json + docs/data/h60_*.json     the machine-readable receipts
-  submission/H60_LATEST.txt                  the round pointer (LATEST.txt only if approved)
+  docs/downloads/<stem>.tif|zip + h60d-candidate.<ext>   site copies (short paths)
+  evidence/gems52-h60d-<n>px-candidate-geology.csv        one reasoning row per emitted pixel
+  evidence/gems52-h60d-a-only-candidate-segments.csv      every A-only whole-segment candidate
+  evidence/h60d_build.json / h60d_format_gate.json / h60d_uniqueness.json / h60d_lane_gate.json
+  evidence/h60d_slot_gate.json / h60d_run_card.json
+  docs/data/submission_h60d.json + docs/data/h60_*.json     the machine-readable receipts
+  submission/H60D_LATEST.txt                  the round pointer (LATEST.txt only if approved)
 """
 from __future__ import annotations
 
@@ -46,7 +46,7 @@ from gems52 import emit as E                       # noqa: E402
 from gems52 import gates                            # noqa: E402
 from gems52 import grid as G                       # noqa: E402
 from gems52 import h57                              # noqa: E402
-from gems52 import h60                              # noqa: E402
+from gems52 import h60d                              # noqa: E402
 from gems52 import holdout as HO                    # noqa: E402
 from gems52 import metric as M                      # noqa: E402
 
@@ -62,7 +62,7 @@ CHAMPION_OWNER_REPORTED = 0.2778   # owner-reported h33-2-b2 score; used ONLY to
 
 
 def log(m: str) -> None:
-    print(f"[h60-build {time.strftime('%H:%M:%S')}] {m}", flush=True)
+    print(f"[h60d-build {time.strftime('%H:%M:%S')}] {m}", flush=True)
 
 
 def read_mask(path: Path, thresh: float = 0.5) -> np.ndarray:
@@ -76,23 +76,23 @@ def prior_inventory(field: str, extra_roots=()):
     """Accessible aligned priors with this round's OWN outputs excluded.
 
     Self-exclusion is by the round's exact artifact pattern — BOTH published names of the
-    round's own artifact: the portal name ``gems52-h60-<field>-arm<N>px-<hash8>-zeros.tif``
-    AND the canonical stem name ``gems52-h60-<field>-arm<N>px.tif`` that `submission/` and
-    `docs/downloads/` carry — plus the short-path copies.  Never a bare ``gems52-h60-``
+    round's own artifact: the portal name ``gems52-h60d-<field>-arm<N>px-<hash8>-zeros.tif``
+    AND the canonical stem name ``gems52-h60d-<field>-arm<N>px.tif`` that `submission/` and
+    `docs/downloads/` carry — plus the short-path copies.  Never a bare ``gems52-h60d-``
     prefix, because a parallel session's same-round artifact is a genuine prior (the H59
     lesson, IR-H59-004).  Without self-exclusion of BOTH names a rebuild sees its own
     previous TIFF in the support union and the arm drifts run-to-run (IR-H59-001; the
-    stem-name miss is IR-H60-002 — the lane gate fired on the round's own previous build
+    stem-name miss is IR-H60D-002 — the lane gate fired on the round's own previous build
     at 90.4 % within-3px before the pattern was widened).
     """
     roots = [r for r in extra_roots if Path(r).exists()]
     found = gates.find_priors(roots)
     own_re = re.compile(
-        rf"^gems52-h60-{re.escape(field)}-arm\d+px(-[0-9a-f]{{8}}-zeros)?\.tif$")
+        rf"^gems52-h60d-{re.escape(field)}-arm\d+px(-[0-9a-f]{{8}}-zeros)?\.tif$")
     keep = []
     for p in found:
         n = Path(p).name
-        if n in ("h60-candidate.tif", "h60-candidate.zip", "STATUS.txt"):
+        if n in ("h60d-candidate.tif", "h60d-candidate.zip", "STATUS.txt"):
             continue
         if own_re.match(n):
             continue
@@ -110,7 +110,7 @@ def main() -> int:
 
     pa = np.nan_to_num(np.load(WORK / "pa_oof.npy"), nan=0.0).astype(np.float32)
     pb = np.nan_to_num(np.load(WORK / "pb_oof.npy"), nan=0.0).astype(np.float32)
-    cotrain_receipt = json.loads((EV / "h60_cotrain.json").read_text())
+    cotrain_receipt = json.loads((EV / "h60d_cotrain.json").read_text())
     strata_counts = cotrain_receipt["strata"]["counts"]
     depth_medians = cotrain_receipt["strata"]["median_depth_to_basement_m"]
     a_only = np.load(WORK / "stratum_a_only.npy")
@@ -122,9 +122,9 @@ def main() -> int:
         "view_A": pa,
         "view_B": pb,
         "clf_union": np.maximum(pa, pb),
-        "dis_product": h60.dis_product(pa, pb),
-        "dis_contrast": h60.dis_contrast(pa, pb),
-        "dis_B_product": h60.dis_b_product(pa, pb),
+        "dis_product": h60d.dis_product(pa, pb),
+        "dis_contrast": h60d.dis_contrast(pa, pb),
+        "dis_B_product": h60d.dis_b_product(pa, pb),
     }
     if promoted not in fields:
         raise SystemExit(f"unexpected promoted field {promoted!r}")
@@ -135,7 +135,7 @@ def main() -> int:
         log(f"shipped field recomputed from the OOF bytes; agreement with the validated "
             f"cache pearson {agree:.6f}")
 
-    val = json.loads((EV / "h60_validation.json").read_text())
+    val = json.loads((EV / "h60d_validation.json").read_text())
     promoted_any = bool(val["promoted_any"])
 
     priors = prior_inventory(promoted, [str(ROOT / "submission"), str(DL), str(ROOT / "docs"),
@@ -154,15 +154,15 @@ def main() -> int:
     log(f"legal pool: {int(pool.sum())} px (footprint & ~200 m ring & outside prior support)")
 
     # ---- lane drift gate on the SURFACE, before placement (lane protocol item 1) --------------
-    lane_surface = h60.lane_drift_report(field_arr, None, priors, valid,
-                                         calibration=h60.calibration_basenames(
+    lane_surface = h60d.lane_drift_report(field_arr, None, priors, valid,
+                                         calibration=h60d.calibration_basenames(
                                              ROOT / "registry/data_manifest.json"))
-    h60.write_json(EV / "h60_lane_surface.json", lane_surface)
+    h60d.write_json(EV / "h60d_lane_surface.json", lane_surface)
     log(f"lane gate on surface: max|rho|={lane_surface['surface_max_abs_spearman']} "
         f"(bar {lane_surface['max_rank_corr']}) -> "
         f"{'DRIFT' if lane_surface['lane_drift_detected'] else 'clean'}")
     if lane_surface["lane_drift_detected"]:
-        h60.write_json(EV / "h60_run_card.json", h60.run_card(
+        h60d.write_json(EV / "h60d_run_card.json", h60d.run_card(
             hypothesis="co-training disagreement discovery (H60-1/2)",
             mechanism="pA*(1-pB) / max(pA-pB,0) ranking of buried-under-cover candidates",
             mimic_processes=["alluvial-fan gravel wedges", "airborne drape over steep terrain",
@@ -182,7 +182,7 @@ def main() -> int:
     # The originally preregistered greedy_emit coverage surrogate is retained as a DISCLOSED
     # DIAGNOSTIC: this round's placement measurement showed it selects the field's
     # broad-plateau mass on the required-novel pool, which is anti-correlated with the
-    # holdout truth (see knowledge/25 H60-5).  Both placements are emitted and scored.
+    # holdout truth (see knowledge/30, correction H60-5).  Both placements are emitted and scored.
     density = np.where(pool, field_arr, 0.0).astype(np.float32)
     density = np.maximum(density, 0.0)
     arm = h57.iso_select(density, pool, BUDGET, min_px=3.0, nms_px=5)
@@ -225,30 +225,30 @@ def main() -> int:
     log(f"emitted {total} px; clipped {clipped} px to the sample-submission domain; "
         f"min distance to a mapped catalogue pixel {dmin_cat:.1f} m")
 
-    stem = f"gems52-h60-{promoted}-arm{total}px"
+    stem = f"gems52-h60d-{promoted}-arm{total}px"
     path = ROOT / "submission" / f"{stem}.tif"
     q = G.write_geotiff(path, arr)
     log(f"wrote {path.name}: {q['bytes']} bytes, sha256 {q['sha256'][:16]}…")
 
     fmt = gates.format_report(path, DATA / "sample_submission.tif", footprint=valid_sub)
     uniq = gates.uniqueness_report(arr, priors)
-    h60.write_json(EV / "h60_format_gate.json", fmt)
-    h60.write_json(EV / "h60_uniqueness.json", uniq)
+    h60d.write_json(EV / "h60d_format_gate.json", fmt)
+    h60d.write_json(EV / "h60d_uniqueness.json", uniq)
     log(f"format problems: {fmt['problems']}; pattern_unique={uniq['canonical_pattern_unique']}, "
         f"novel_frac={uniq['novel_fraction']:.4f}, n_priors={uniq['n_priors_checked']}")
 
     # ---- lane drift gate on the FINAL DOTS (lane protocol item 1) -------------------------------
-    # H60-6: calibration rasters are excluded from the 3-px proximity component only
+    # correction H60-6: calibration rasters are excluded from the 3-px proximity component only
     # (manifest-driven; raw readings still reported; both Spearman components apply to all).
-    calib = h60.calibration_basenames(ROOT / "registry/data_manifest.json")
-    lane_dots = h60.lane_drift_report(field_arr, arm_b, priors, valid, calibration=calib)
-    h60.write_json(EV / "h60_lane_gate.json", lane_dots)
+    calib = h60d.calibration_basenames(ROOT / "registry/data_manifest.json")
+    lane_dots = h60d.lane_drift_report(field_arr, arm_b, priors, valid, calibration=calib)
+    h60d.write_json(EV / "h60d_lane_gate.json", lane_dots)
     log(f"lane gate on dots: max|rho|={lane_dots['dots_max_abs_spearman']}, "
         f"raw max within-3px frac={lane_dots['dots_max_within_3px_frac']} "
         f"(gate value excl. calibration: {lane_dots['dots_max_within_3px_frac_gate']}) -> "
         f"{'DRIFT' if lane_dots['lane_drift_detected'] else 'clean'}")
     if lane_dots["lane_drift_detected"]:
-        h60.write_json(EV / "h60_run_card.json", h60.run_card(
+        h60d.write_json(EV / "h60d_run_card.json", h60d.run_card(
             hypothesis="co-training disagreement discovery (H60-1/2)",
             mechanism="pA*(1-pB) / max(pA-pB,0) ranking of buried-under-cover candidates",
             mimic_processes=["alluvial-fan gravel wedges", "airborne drape over steep terrain",
@@ -260,8 +260,8 @@ def main() -> int:
             verdict="negative — DUPLICATE LANE: the lane-drift gate on the final dots "
                     "exceeded the registered thresholds; logged as duplicate and stopped "
                     "before shipping"))
-        h60.write_json(EV / "h60_format_gate.json", fmt)
-        h60.write_json(EV / "h60_uniqueness.json", uniq)
+        h60d.write_json(EV / "h60d_format_gate.json", fmt)
+        h60d.write_json(EV / "h60d_uniqueness.json", uniq)
         raise SystemExit("lane drift on the final dots: logged as duplicate and stopped")
 
     # ---- score the SHIPPED raster on the holdout (the field is OOF, so this is proper) -----------
@@ -332,8 +332,8 @@ def main() -> int:
     shipped_pooled, shipped_ci = {}, {}
     for mode in ("hide", "tip"):
         rs = [r for r in shipped if r["mode"] == mode]
-        pl = h60.pooled_dti(rs)
-        ci = h60.bootstrap_ci([r["dti"] for r in rs], n_boot=10000, seed=20261009)
+        pl = h60d.pooled_dti(rs)
+        ci = h60d.bootstrap_ci([r["dti"] for r in rs], n_boot=10000, seed=20261009)
         shipped_pooled[mode] = dict(
             pooled_dti=round(pl["dti"], 6), tpw=round(pl["tpw"], 2), fpw=round(pl["fpw"], 2),
             fnw=round(pl["fnw"], 2), n_truth=pl["n_truth"], fold_mean_dti=round(ci["mean"], 6),
@@ -383,7 +383,7 @@ def main() -> int:
                 f"view is confident (p_A={pa_:.2f}) while the surface view abstains "
                 f"(p_B={pb_:.2f}); the A-only stratum's median depth to basement is "
                 f"{depth_medians['a_only']:.0f} m against {depth_medians['b_only']:.0f} m "
-                f"for B-only (evidence/h60_cotrain.json), so the reading is a fault trace masked "
+                f"for B-only (evidence/h60d_cotrain.json), so the reading is a fault trace masked "
                 f"at the surface rather than absent")
         elif b_only[r, c]:
             parts.append(
@@ -430,7 +430,7 @@ def main() -> int:
                                "concordant" if strat_conc[r, c] else "neither"),
             in_prior_support=bool(support[r, c]),
             geological_reasoning=reason(r, c)))
-    csv_path = EV / f"gems52-h60-{total}px-candidate-geology.csv"
+    csv_path = EV / f"gems52-h60d-{total}px-candidate-geology.csv"
     with csv_path.open("w", newline="") as f:
         f.write("# H60 disagreement-arm candidates, one written geological reasoning row per "
                 "emitted pixel. View A = potential-field and subsurface bands; View B = surface "
@@ -492,7 +492,7 @@ def main() -> int:
                     f"no gradient break within 300 m; or a DEM/road-layer match that shows the "
                     f"linear fabric is anthropogenic."),
             ))
-    seg_path = EV / "gems52-h60-a-only-candidate-segments.csv"
+    seg_path = EV / "gems52-h60d-a-only-candidate-segments.csv"
     with seg_path.open("w", newline="") as f:
         f.write("# H60 A-only candidate dossier: every whole 8-connected segment of the A-only "
                 "population inside the legal pool, ranked by mean shipped-field mass; one "
@@ -537,9 +537,9 @@ def main() -> int:
             bool(not uniq["equals_literal_prior_union"]),
         "R3 nothing emitted inside the <=200 m catalogue ring": bool(dmin_cat >= 200.0),
         "R2 independence measured and non-degenerate (exchange licensed)": bool(
-            json.loads((EV / "h60_cotrain.json").read_text())["independence"]["measured"]),
+            json.loads((EV / "h60d_cotrain.json").read_text())["independence"]["measured"]),
         "leakage canary clean (no layer AUC > 0.90)": bool(
-            not json.loads((EV / "h60_cotrain.json").read_text())["leakage_canary"]["leakage_detected"]),
+            not json.loads((EV / "h60d_cotrain.json").read_text())["leakage_canary"]["leakage_detected"]),
         "R7 one written geological reasoning per emitted pixel": bool(len(rows_out) == total),
         "R7b every A-only candidate segment in the legal pool has written reasoning":
             bool(len(seg_rows) >= 1),
@@ -556,20 +556,20 @@ def main() -> int:
                        if (slot["slot_bar_met"] and slot["checks_pass"]) else
                        "NEGATIVE RESULT — DOWNLOAD OK FOR REVIEW; DO NOT SPEND A WEEKLY SLOT "
                        "(the registered promotion/slot bar was not met)")
-    h60.write_json(EV / "h60_slot_gate.json", slot)
+    h60d.write_json(EV / "h60d_slot_gate.json", slot)
     approved = bool(slot["slot_bar_met"] and slot["checks_pass"])
     log(f"slot gate: {slot['verdict']}")
 
     name = f"{stem}-{q['sha256'][:8]}-zeros"
     # 138 chars — fits the lane's 140-char limit WITHOUT mid-token truncation
     # (the first build's note truncated "[0,1]" to "[0"; fixed before shipping).
-    note = ("H60 co-training disagreement arm max(pA-pB,0); outside all prior support and "
+    note = ("H60D co-training disagreement arm max(pA-pB,0); outside all prior support and "
             "the 200 m ring; finite binary [0,1]; not a verified fault map")
     assert len(name) <= 200, "portal name limit"
     assert len(note) <= 140, "lane note limit"
 
     # ---- run card (lane protocol item 5) -----------------------------------------------------------
-    card = h60.run_card(
+    card = h60d.run_card(
         hypothesis=("H60-1/H60-2: the disagreement between the geophysical view (A) and the "
                     "surface view (B) is the discovery signal — where A is confident and B "
                     "abstains, a fault may be buried beneath cover and absent from the "
@@ -601,7 +601,7 @@ def main() -> int:
             field_table_tip=val["field_table"].get(f"tip@{BUDGET}"),
             gates={promoted: g},
             cotreatment=val.get("cotreatment"),
-            cotreatment_control=json.loads((EV / "h60_cotrain_control.json").read_text())["readout"],
+            cotreatment_control=json.loads((EV / "h60d_cotrain_control.json").read_text())["readout"],
             label=("every number here is HOLDOUT-DTI (evaluator version pinned below; "
                    "withheld positives per cell; 95% fold-bootstrap CI); nothing here is a "
                    "leaderboard score or forecast")),
@@ -642,10 +642,10 @@ def main() -> int:
             champion_owner_reported=CHAMPION_OWNER_REPORTED,
             board_top_owner_reported_2026_10_07=0.3774,
             preregistration=dict(
-                document="knowledge/25_hypotheses_H60_preregistered.md",
+                document="knowledge/30_hypotheses_H60D_preregistered.md",
                 sha256_frozen=("6ce875d384d4344bdd8a668bd7670fc5259b74f19059fb3b8b05c16"
                                "ca5257d60"),
-                sha256_amended=(json.loads((ROOT / "registry/h60_preregistration.json")
+                sha256_amended=(json.loads((ROOT / "registry/h60d_preregistration.json")
                                            .read_text())
                                 ["hypothesis_document_sha256_amended"]),
                 registered_corrections=[
@@ -663,7 +663,7 @@ def main() -> int:
             note_on_scores=("0.2778 (h33-2-b2) and 0.3774 (board top, xiaofanhu) are "
                             "owner-reported; no ORGANIZER-CONFIRMED number exists in this "
                             "repo; projections are conditional arithmetic, never scores")))
-    h60.write_json(EV / "h60_run_card.json", card)
+    h60d.write_json(EV / "h60d_run_card.json", card)
     log(f"run card verdict: {card['verdict']}")
 
     # ---- identifiers, copies, one-click zip, pointers, receipts ----------------------------------
@@ -672,7 +672,7 @@ def main() -> int:
     zf = ROOT / "submission" / f"{stem}.zip"
     readme = ("Paste-ready DrivenData fields for this artifact (competition 306, 'Make a\n"
               "submission' dialog). The status line is part of the record: do not spend a\n"
-              "weekly slot unless evidence/h60_slot_gate.json says slot_bar_met=true.\n")
+              "weekly slot unless evidence/h60d_slot_gate.json says slot_bar_met=true.\n")
     with zipfile.ZipFile(zf, "w", zipfile.ZIP_DEFLATED) as z:
         z.write(path, path.name)
         z.writestr("submission-name.txt", name + "\n")
@@ -680,13 +680,13 @@ def main() -> int:
         z.writestr("STATUS.txt", slot["verdict"] + "\n")
         z.writestr("README-paste-these.txt", readme)
     shutil.copy2(zf, DL / zf.name)
-    shutil.copy2(path, DL / "h60-candidate.tif")
-    shutil.copy2(zf, DL / "h60-candidate.zip")
+    shutil.copy2(path, DL / "h60d-candidate.tif")
+    shutil.copy2(zf, DL / "h60d-candidate.zip")
     shutil.copy2(csv_path, DL / csv_path.name)
     shutil.copy2(seg_path, DL / seg_path.name)
     zip_stats = dict(bytes=zf.stat().st_size, sha256=hashlib.sha256(zf.read_bytes()).hexdigest(),
                      contents=[i.filename for i in zipfile.ZipFile(zf).infolist()])
-    (ROOT / "submission" / "H60_LATEST.txt").write_text(path.name + "\n")
+    (ROOT / "submission" / "H60D_LATEST.txt").write_text(path.name + "\n")
     if approved:
         (ROOT / "submission" / "LATEST.txt").write_text(path.name + "\n")
         (ROOT / "docs" / "submission").mkdir(exist_ok=True)
@@ -694,10 +694,10 @@ def main() -> int:
         log("submission/LATEST.txt moved to H60 (slot gate met)")
     else:
         log("promotion/slot bar not met: submission/LATEST.txt left on its previous pointer; "
-            "H60 ships with an explicit negative-result status")
+            "H60D ships with an explicit negative-result status")
 
     receipt = dict(
-        round="H60", lane="co-training, disagreement as the discovery signal",
+        round="H60D", lane="co-training, disagreement as the discovery signal",
         file=path.name, stem=stem, submission_name=name, note=note, note_chars=len(note),
         bytes=int(q["bytes"]), sha256=q["sha256"], nonzero_px=total, verdict=slot["verdict"],
         approved_for_weekly_slot=approved, promoted_field=promoted,
@@ -726,10 +726,10 @@ def main() -> int:
         novel_pool_controls=novel_controls, novel_pool_pooled_means=novel_pooled,
         projection_by_rho_conditional=proj,
         marginal_acceptance_radius_at_owner_reported_0278_m=round(accept_radius_m, 1),
-        receipts=["h60_preflight_integrity.json", "h60_cotrain.json", "h60_cotrain_control.json",
-                  "h60_validation.json", "h60_build.json", "h60_format_gate.json",
-                  "h60_uniqueness.json", "h60_lane_gate.json", "h60_slot_gate.json",
-                  "h60_run_card.json"],
+        receipts=["h60d_preflight_integrity.json", "h60d_cotrain.json", "h60d_cotrain_control.json",
+                  "h60d_validation.json", "h60d_build.json", "h60d_format_gate.json",
+                  "h60d_uniqueness.json", "h60d_lane_gate.json", "h60d_slot_gate.json",
+                  "h60d_run_card.json"],
         candidate_geology_dossier=f"evidence/{csv_path.name}",
         a_only_segment_dossier=f"evidence/{seg_path.name}",
         official_score_status="no portal upload or organizer score is recorded",
@@ -738,17 +738,17 @@ def main() -> int:
         min_distance_to_catalogue_m=round(dmin_cat, 1),
         clipping_to_sample_domain_px=clipped,
         strata_counts_recomputed=strata_counts)
-    h60.write_json(EV / "h60_build.json", receipt)
-    (DAD / "submission_h60.json").write_text(json.dumps(
+    h60d.write_json(EV / "h60d_build.json", receipt)
+    (DAD / "submission_h60d.json").write_text(json.dumps(
         {**{k: v for k, v in receipt.items() if k not in ("format", "runtime_s")},
          "download": f"downloads/{path.name}", "approved_for_weekly_slot": approved},
         indent=2, allow_nan=False, default=str) + "\n")
-    for nm in ("h60_build", "h60_format_gate", "h60_uniqueness", "h60_lane_gate",
-               "h60_slot_gate", "h60_run_card", "h60_cotrain", "h60_cotrain_control",
-               "h60_validation", "h60_preflight_integrity", "h60_lane_surface"):
+    for nm in ("h60d_build", "h60d_format_gate", "h60d_uniqueness", "h60d_lane_gate",
+               "h60d_slot_gate", "h60d_run_card", "h60d_cotrain", "h60d_cotrain_control",
+               "h60d_validation", "h60d_preflight_integrity", "h60d_lane_surface"):
         shutil.copy2(EV / f"{nm}.json", DAD / f"{nm}.json")
-    shutil.copy2(ROOT / "registry/h60_preregistration.json", DAD / "h60_preregistration.json")
-    log("receipts written; publication of H60 pages is scripts/publish_site_h60.py")
+    shutil.copy2(ROOT / "registry/h60d_preregistration.json", DAD / "h60d_preregistration.json")
+    log("receipts written; publication of H60 pages is scripts/publish_site_h60d.py")
     return 0
 
 

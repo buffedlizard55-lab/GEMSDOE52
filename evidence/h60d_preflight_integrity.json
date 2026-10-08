@@ -1,5 +1,5 @@
 {
- "round": "H60-preflight",
+ "round": "H60D-preflight",
  "observed_utc": "2026-10-08T18:34:45Z",
  "manifest": "registry/data_manifest.json",
  "data_root": "work/pinned",
@@ -23,7 +23,7 @@
    "local_matches_manifest": false
   }
  },
- "tracked_policy": "No H60 number is computed from tracked data/*.tif; the tracked training_features.tif is a 19-band all-zero grid stub",
+ "tracked_policy": "No H60D number is computed from tracked data/*.tif; the tracked training_features.tif is a 19-band all-zero grid stub",
  "files": [
   {
    "id": "training_features",

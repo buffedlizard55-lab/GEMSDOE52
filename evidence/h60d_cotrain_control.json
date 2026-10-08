@@ -1,5 +1,5 @@
 {
- "round": "H60-cotrain-control-v1",
+ "round": "H60D-cotrain-control-v1",
  "seed": 20261009,
  "runtime_s": 237.5,
  "purpose": "isolate the seed effect from the exchange effect on the treated fold: control = same-seed (SEED+7) refit with NO pseudo-labels",

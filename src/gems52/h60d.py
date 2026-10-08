@@ -346,7 +346,7 @@ def evaluator_version() -> dict:
     """SHA-256 pins of the evaluator modules, so every HOLDOUT-DTI number names its
     evaluator version exactly."""
     out = {}
-    for name in ("metric.py", "holdout.py", "h57.py", "h60.py", "emit.py"):
+    for name in ("metric.py", "holdout.py", "h57.py", "h60d.py", "emit.py"):
         p = Path(__file__).resolve().parent / name
         out[name] = hashlib.sha256(p.read_bytes()).hexdigest()
     return out
@@ -359,7 +359,7 @@ def run_card(*, hypothesis: str, mechanism: str, mimic_processes: list[str],
     """Assemble the lane protocol's closing JSON card.  ``holdout`` must already carry the
     HOLDOUT-DTI label, the evaluator version, the withheld positives and the 95 % CI."""
     card = dict(
-        round="H60",
+        round="H60D",
         lane="co-training, disagreement as the discovery signal (Blum & Mitchell COLT '98, "
              "doi:10.1145/279943.279962)",
         hypothesis=hypothesis,

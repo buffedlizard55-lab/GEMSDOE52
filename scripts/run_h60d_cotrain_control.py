@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """H60 co-training control: same-seed refit WITHOUT pseudo-labels, on the treated fold.
 
-The round-1 refits in ``run_h60_cotrain.py`` used ``SEED + 7`` while the round-0 fits used
+The round-1 refits in ``run_h60d_cotrain.py`` used ``SEED + 7`` while the round-0 fits used
 ``SEED + fold``; a DTI difference between round 0 and round 1 on the treated fold is
 therefore confounded with the seed change.  This control refits both views on the fold-0
 fit region with the SAME seed as the round-1 refits (``SEED + 7``) and NO pseudo-labels,
 and scores the identical cells.  Exchange effect = round1 − control; seed effect =
-control − round0.  Registered in ``registry/h60_preregistration.json`` (H60-3 readout).
+control − round0.  Registered in ``registry/h60d_preregistration.json`` (H60-3 readout).
 """
 from __future__ import annotations
 
@@ -24,21 +24,21 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from gems52 import grid as G                       # noqa: E402
 from gems52 import h57                              # noqa: E402
-from gems52 import h60                              # noqa: E402
+from gems52 import h60d                              # noqa: E402
 from gems52 import holdout as HO                    # noqa: E402
 from gems52 import metric as M                      # noqa: E402
 
 DATA = ROOT / "work/pinned"
 WORK = ROOT / "work/h60"
 EV = ROOT / "evidence"
-PREREG = json.loads((ROOT / "registry/h60_preregistration.json").read_text())
+PREREG = json.loads((ROOT / "registry/h60d_preregistration.json").read_text())
 SEED = int(PREREG["protocol"]["seed"])
 N_NEG_TRAIN = int(PREREG["protocol"]["thresholds"]["neg_train"])
 BUDGET = 37654
 
 
 def log(m: str) -> None:
-    print(f"[h60-ctrl {time.strftime('%H:%M:%S')}] {m}", flush=True)
+    print(f"[h60d-ctrl {time.strftime('%H:%M:%S')}] {m}", flush=True)
 
 
 def _gather(layers, idx, flat_idx, width):
@@ -80,7 +80,7 @@ def score_cell(field, legal, truth, region, valid, visible, k):
 
 
 def main() -> int:
-    out = EV / "h60_cotrain_control.json"
+    out = EV / "h60d_cotrain_control.json"
     if out.exists():
         log("control cached")
         return 0
@@ -145,7 +145,7 @@ def main() -> int:
             round0_union=d(mode, "clf_union_round0"),
             control_union=d(mode, "clf_union_control"),
             round1_union=d(mode, "cotrain_union_round1"))
-    rep = dict(round="H60-cotrain-control-v1", seed=SEED,
+    rep = dict(round="H60D-cotrain-control-v1", seed=SEED,
                runtime_s=round(time.time() - t0, 1),
                purpose=("isolate the seed effect from the exchange effect on the treated "
                         "fold: control = same-seed (SEED+7) refit with NO pseudo-labels"),
@@ -153,9 +153,9 @@ def main() -> int:
                interpretation=("exchange effect = round1 - control; seed effect = control - "
                                "round0. A positive exchange effect that survives the control "
                                "is the only co-training gain this round can claim; the AUC "
-                               "readout in evidence/h60_cotrain.json remains the registered "
+                               "readout in evidence/h60d_cotrain.json remains the registered "
                                "primary and is null-to-negative."))
-    h60.write_json(out, rep)
+    h60d.write_json(out, rep)
     log(f"wrote {out.name} in {time.time() - t0:.0f}s")
     return 0
 

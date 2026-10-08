@@ -1,8 +1,8 @@
 {
- "round": "H60-validation-v1",
+ "round": "H60D-validation-v1",
  "seed": 20261009,
  "runtime_s": 481.4,
- "protocol": "registry/h60_preregistration.json -> protocol",
+ "protocol": "registry/h60d_preregistration.json -> protocol",
  "field_table": {
   "hide@15000": {
    "view_B": 0.00519,

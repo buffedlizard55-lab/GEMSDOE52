@@ -1,4 +1,13 @@
-# 25 — H60 preregistered hypotheses: co-training with disagreement as the discovery signal
+# 30 — H60D preregistered hypotheses: co-training with disagreement as the discovery signal
+
+> **Renamed from `knowledge/25_hypotheses_H60_preregistered.md` (round label H60 → H60D).**
+> A parallel session running its own H60 lane (later branded H60C) merged to `main` first
+> (PR #38) and occupied the plain `h60` file names (`src/gems52/h60.py`,
+> `tests/test_h60.py`, `registry/h60d_preregistration.json`, `docs/h60.html`, …).  To preserve
+> BOTH rounds, this round was renamed H60D across every shared file name; its artifact,
+> receipts, module, scripts, tests and pages all carry the `h60d`/`H60D` tag.  The hypotheses,
+> protocol, registered corrections (H60-5, H60-6) and every measured number are unchanged.
+> See `registry/irregularities.json` → `IR-H60D-006`.
 
 **Lane (fixed by the session brief, verbatim method paragraph):** co-training between a
 geophysical view and a surface view, with disagreement as the discovery signal (Blum & Mitchell,
@@ -13,7 +22,7 @@ hide-and-recover segments. Normalize to [0,1], write the GeoTIFF, apply the repo
 placement, run the uniqueness gate, and confirm the output isn't merely the union of the two views.
 
 **Written and frozen before any H60 fit ran.** Machine-readable twin:
-`registry/h60_preregistration.json` (SHA-256 recorded there). Prior rounds this builds on:
+`registry/h60d_preregistration.json` (SHA-256 recorded there). Prior rounds this builds on:
 H57 (`knowledge/18`), H59 (`knowledge/21`). What is NEW here, and why it is not a re-run:
 
 - H59 scored arms ranked by `max(pA, pB)` and by *multiplicative reweightings of that union*
@@ -174,7 +183,7 @@ correction changes no gate outcome**: the promotion rule already failed on the r
 reads before any artifact was built, the verdict stays negative, and the slot gate stays
 failed. Original frozen document sha256
 `6ce875d384d4344bdd8a668bd7670fc5259b74f19059fb3b8b05c16ca5257d60` is retained above; the
-amended document's sha256 is recorded in `registry/h60_preregistration.json` and the run card.
+amended document's sha256 is recorded in `registry/h60d_preregistration.json` and the run card.
 
 ### H60-6 — the lane-drift 3-px proximity component excludes calibration rasters
 
