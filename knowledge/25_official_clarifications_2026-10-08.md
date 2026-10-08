@@ -143,11 +143,11 @@ What each one does to a standing repo claim:
 
 | Repo claim | Status after S3/S5 | Where it is corrected |
 | --- | --- | --- |
-| "emit nothing inside 200 m of a mapped trace … the single change with the largest measured effect in this repo's history" (`knowledge/10` §2) | **Too strong.** The mask is pixel-exact, so the 100–200 m corridor is *evaluated* mass, and the organiser says truth can sit there and that finding it is a goal. What is measured is narrower: *this family's* 6,436 corridor pixels earned 0–85 credit, a density ≤0.0132 against 0.0279 for uniform random. | `IR-R5-006`; `knowledge/26` H60-A proposes the correction detector the corridor actually needs |
+| "emit nothing inside 200 m of a mapped trace … the single change with the largest measured effect in this repo's history" (`knowledge/10` §2) | **Too strong.** The mask is pixel-exact, so the 100–200 m corridor is *evaluated* mass, and the organiser says truth can sit there and that finding it is a goal. What is measured is narrower: *this family's* 6,436 corridor pixels earned 0–85 credit, a density ≤0.0132 against 0.0279 for uniform random. | `IR-R5-006`; `knowledge/32` R5-H1 proposes the correction detector the corridor actually needs |
 | `|G| = 14,088.7` is "exact" (`knowledge/10` §2) | **Exact only given "the corridor earned zero".** Solving `T_B − T_A = 200.62 − 0.01424·|G|` with the independent bracket `|G| ≥ 8,128` bounds the corridor's credit at 0–85 px, so `|G| ∈ [14,030, 14,089]` rather than being a single number. The bound is tight enough to keep every downstream figure. | `knowledge/27` §3 |
 | "deleting 2,545 masked pixels raised the score by 2.6 % … a pixel the organiser has masked can never earn credit but can always pay the false-positive tax" (`knowledge/01` §1) | **Wrong mechanism.** Masked pixels pay nothing (S3 answer 1). The gain came from the 6,436 *unmasked* corridor pixels. The set arithmetic reconciles: A emits 40,199 px of which 2,545 are masked → 37,654 evaluated; B emits 46,635 of which the same 2,545 are masked → 44,090 evaluated; difference 6,436. | `IR-R5-007`; `knowledge/27` §2 |
 | DTI is one pooled index over the evaluated footprint | **Confirmed** (S5). No per-chunk averaging, so there is no reason to spread mass thinly across chunks to avoid a zero-scoring chunk. | — |
-| The budget rule optimises against `|G| = 14,088.7` | **Round-dependent.** The DTI-optimal budget for a credit curve `T = c·S^β` is `S* = 4|G|β/(1−β)`, which scales *linearly* in `|G|`. The final round is scored on the entire GeoDAWN area with an expanded label set, so its `|G|` is larger by an unknown factor and its optimal budget is larger by the same factor. | `knowledge/27` §6, `knowledge/26` H60-E |
+| The budget rule optimises against `|G| = 14,088.7` | **Round-dependent.** The DTI-optimal budget for a credit curve `T = c·S^β` is `S* = 4|G|β/(1−β)`, which scales *linearly* in `|G|`. The final round is scored on the entire GeoDAWN area with an expanded label set, so its `|G|` is larger by an unknown factor and its optimal budget is larger by the same factor. | `knowledge/27` §6, `knowledge/32` R5-H5 |
 
 ## 6. The nineteen bands, as the file itself describes them (S7), against the organiser's list (S1)
 
@@ -165,7 +165,7 @@ verbatim, because two of them are wrong and one organiser-listed product is miss
 | 7 | `geod_shearrate` | geodetic | "Geodetic shear rate - rate of angular deformation from GPS/InSAR" | strain family |
 | 8 | `geod_dilaterate` | geodetic | "Geodetic dilatation rate - rate of volumetric strain (expansion/contraction)" | strain family |
 | 9 | `tmi_vg` | magnetic_data | "Total magnetic intensity vertical gradient - rate of change in vertical direction" | mag family |
-| 10 | `deq_n100a15` | **seismic** | "Distance to earthquake (n=100km radius, a=15° azimuth parameters)" | **nowhere — see H60-B** |
+| 10 | `deq_n100a15` | **seismic** | "Distance to earthquake (n=100km radius, a=15° azimuth parameters)" | **nowhere — see R5-H2** |
 | 11 | `iso_grav_anom_vg` | gravity | "Isostatic gravity anomaly vertical gradient - vertical rate of change" | grav family |
 | 12 | `det_elev` | topographic | "Detrended elevation - topography with regional trends removed" | View B, topo family |
 | 13 | `iso_grav_anom` | gravity | "Isostatic gravity anomaly - gravity after compensating for topographic mass" | View A, grav family |
@@ -195,7 +195,7 @@ Three findings from putting S7 next to S1 and S6:
   earthquake inside the 100 km / 15° sector, not a corrupted depth. Its footprint distribution
   (p1 118, median 623, p75 1,685, p99 50,237, max ~4.96 × 10⁶ — quoted by the asker in S6 and
   consistent with the bytes) is why it must be rank-encoded before any model sees it, and why R5 left
-  it out. It is the only organiser band used nowhere in R5. See H60-B.
+  it out. It is the only organiser band used nowhere in R5. See R5-H2.
 * **One product S1 lists is not in the file.** S1 promises magnetics "including reduced-to-pole
   magnetic anomaly, total magnetic intensity, the vertical and horizontal slope of total magnetic
   intensity, **and the top-of-crustal magnetic source depth estimate**". The five magnetic bands are

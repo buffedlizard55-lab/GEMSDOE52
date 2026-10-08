@@ -1,189 +1,53 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="R5 strictly-novel 16,681 px GeoTIFF for the DOE GEMS prize: one-click download, explicit OK-to-download and OK-to-submit verdict, all gates and probabilities from receipts."><title>GEMSDOE52 — R5 strictly-novel submission</title>
-<link rel="stylesheet" href="style.css"><script src="site.js" defer></script></head>
-<body><a class="skip" href="#main">Skip to evidence</a><header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html">Overview</a><a href="executive-summary.html">Submission guide</a><a href="r5.html">R5 audit</a><a href="h59.html">H59</a><a href="irregularities.html">Limitations</a><a href="sources.html">Sources</a><a href="downloads/index.html">Downloads</a></nav></header>
-<main id="main"><div class="eyebrow">R5 · two-view co-training + six-family trace detector ·
-fetched and verified against the organiser's own pages on 2026-10-08
+<meta name="description" content="New geophysical/surface disagreement GeoTIFF with explicit failed scientific and lane gates. Research download only; do not submit.">
+<title>Research download &amp; explicit submission status · GEMSDOE52</title><link rel="stylesheet" href="assets/ctd5.css"><script src="assets/ctd5.js" defer></script></head>
+<body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>
+<a href="index.html">Overview</a><a href="ctd5-audit.html">Run &amp; evidence</a><a href="executive-summary.html">Submission guide</a><a href="ctd5-sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header>
+<main id="main"><section class="hero"><div><div class="eyebrow">DOE GEMS / CTD5 research record</div><h1>A new GeoTIFF.<br>A clear stop decision.</h1><p class="lead">Geophysics meets surface evidence. We generated a new disagreement prediction, tested it, and kept the failed gates visible.</p><div class="notice" role="note"><strong>OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT</strong><p>The local format check passes. The legacy holdout is not strict-valid, and the scientific comparison and parallel-lane gate do not pass. No competition slot was used. NO CERTIFIED LEADERBOARD GAIN.</p></div><div class="actions"><a class="button" href="downloads/ctd5-research.tif" download>Download research GeoTIFF ↓</a><a class="button secondary" href="downloads/ctd5-research.zip" download>Single-TIFF ZIP</a></div><p class="fileline">gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif<br>83,917 bytes · SHA-256 a6e6e44aebaf057989e254bd5ce3729e5a94836c0e5687a95e91e3fc8a40c686</p><p class="small"><a href="executive-summary.html">What exactly can I upload—and when? →</a></p></div>
+<aside class="panel" aria-label="Submission readiness"><div class="label">Readiness / measured, not promised</div><div class="status-line"><span>Single-band GeoTIFF</span><span class="good">PASS</span></div><div class="status-line"><span>Finite values in [0, 1]</span><span class="good">PASS</span></div><div class="status-line"><span>CRS, shape &amp; transform</span><span class="good">PASS</span></div><div class="status-line"><span>Copied prior prediction?</span><span class="good">NO</span></div><div class="status-line"><span>Strict near-dot uniqueness</span><span class="bad">FAIL / STOP</span></div><div class="status-line"><span>Scientific promotion</span><span class="bad">NOT APPROVED</span></div><p class="fine">A valid file is not an approved competition entry. The independent selector has not assigned a slot.</p><a class="small" href="data/ctd5_run_card.json">Inspect the complete JSON run card ↗</a></aside></section>
+<!--R5:START-->
+
+<section class="download-bar" aria-label="R5 strictly-novel artifact">
+<div><div class="eyebrow">R5 · strictly-novel emission · this session's round
 <span class="pill ok">OK TO DOWNLOAD</span>
 <span class="pill warn">PORTAL-ACCEPTABLE · NOT SLOT-APPROVED</span></div>
+<strong>gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif</strong>
+<small>99,231 bytes · single-band float32 · EPSG:32611 · all 12,279,160 cells
+finite · values exactly {0,1} · 16,681 emitted px · <b>novel fraction
+1.0000</b> against 71
+rasters · nearest mapped trace 223.6 m ·
+SHA-256 <code>d2bfb0f79328399354943bd1…</code></small></div>
+<a class="button" href="downloads/gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif" download>↓ Download the R5 TIFF (one click)</a>
+<a class="button" href="downloads/r5-candidate.tif" download>↓ Same file, short name</a>
+<a class="button secondary" href="r5.html">R5 audit →</a></section>
+<div class="status"><strong>R5 in one paragraph.</strong> Co-training was run exactly as the brief
+specifies and reported honestly: the independence premise <b>holds</b> (max |ρ| 0.2276
+against the 0.60 abandonment threshold), the pseudo-label exchange <b>harmed</b> the weaker view
+(-0.0247 AUC against +0.0029 the other
+way), the connected-component reading of “whole segment” returns the <b>empty set</b> as a measurement,
+and the co-training propensity ranking then <b>lost</b> to the six-family detector on the frozen rule —
+so the shipped file is not a co-training product and the site does not imply otherwise. Emission:
+16,681 px at the derived optimum S* = 4|G|β/(1−β) = 16,681, chosen on strike coherence
+(0.5326 against the credited cloud's 0.5309
+and a random control's 0.3886) with its dominant strike
+95° inside the credited band. Overlap with any reading of “the
+union of the two views” is at most
+0.0200 of the emitted pixels.
+<b>P(DTI &gt; 0.2778) = 0.366, P(&gt; 0.3195) = 0.226, P(&gt; 0.3774) = 0.031</b> —
+the board top is 0.3774, not the 0.3195 the brief states (rank 7, fetched
+2026-10-08). No weekly slot is authorised: the promotion instrument is disqualified
+and this round reproduced that on new data. Full record: <a href="r5.html">R5 audit</a>,
+<a href="executive-summary.html#r5">submission steps</a>,
+<code>knowledge/27_r5_findings.md</code>,
+<a href="downloads/a_only_reasoning_r5.csv">reasoning for all 4,164 A-only
+candidates</a>.</div>
 
-<section class="download-bar" aria-label="R5 submission download">
-<div><strong>gems52-r5-novel-n5_strike_ridge-16681px-20261008T220210Z-33b27433-zeros.tif</strong>
-<small>99,210 bytes · single-band float32 · EPSG:32611 · 12,279,160 cells all
-finite · values exactly {0,1} · nodata tag <code>None</code> · 16,681 emitted px ·
-min distance to a mapped trace 223.6 m</small>
-<small>SHA-256 <code>33b274331bcf0244f8dee42d963fce4cc5aa73ba5cbcc5e63dbf4fe9c4018761</code></small>
-<small>uniqueness: pattern-unique against <b>55</b> rasters ·
-novel fraction <b>1.0000</b> · equals the literal prior union:
-false · format gate
-PASS (0 problems)</small></div>
-<a class="button" href="downloads/gems52-r5-novel-n5_strike_ridge-16681px-20261008T220210Z-33b27433-zeros.tif" download>↓ Download the submission TIFF (one click)</a>
-<a class="button" href="downloads/r5-candidate.tif" download>↓ Same file, short name (r5-candidate.tif)</a>
-<a class="button secondary" href="executive-summary.html">How to submit it →</a>
-<a class="button secondary" href="r5.html">Full audit →</a></section>
-
-<div class="status"><strong>Is it OK to download? YES. Is it OK to submit?</strong>
-The portal will accept it — every format clause the organiser publishes is verified against the
-written bytes, and the “Predicted values must be in range [0, 1]” rejection cannot occur because all
-12,279,160 cells are finite and in {0,1}.
-<b>Whether to spend a weekly slot on it is a different question and the answer is no, not on the
-evidence available:</b> P(DTI &gt; 0.2778) = <b>0.366</b>, P(DTI &gt; 0.3195) =
-<b>0.226</b>, P(DTI &gt; 0.3774) = <b>0.031</b> under the frozen prior, and the
-standing rule — do not spend a slot on an idea that has not beaten the holdout best — cannot be
-satisfied by anything, because the holdout instrument is disqualified and R5 reproduced the
-disqualification on new data. The one argument for submitting anyway is the organiser's own: the
-Final Prize Round ($250k) re-scores a test set “updated by expert review of all Phase 1
-submissions”, so predictions matter there “even if they are not the most performant in Phase 1”.
-This file is 16,681 strictly novel, individually reasoned candidates, which is what that round asks
-for. <a href="executive-summary.html">The decision table is on the submission guide.</a></div>
-
-<h1>16,681 pixels this repository has<br>never emitted, aimed at faults the map does not have.</h1>
-<p class="lede">R5 rebuilt the brief's Blum–Mitchell instrument on the restored competition bytes,
-tested the conditional-independence premise instead of assuming it, measured both readings of the
-“whole-segment” pseudo-label rule, reproduced the disqualification of this repo's promotion
-instrument on new data, and then chose an emission by a rule frozen before the candidates existed:
-strict novelty against every raster this repo has produced, a budget derived from the measured credit
-curve rather than tuned, and selection on the one property of the credited cloud that has ever
-measured positive — strike coherence.</p>
-
-<div class="grid">
-<section class="card"><h3>Independence premise</h3><p class="metric">0.2276</p>
-<p class="small">max |ρ| of per-block false-positive rate on labelled negatives at each view's own
-top-1&nbsp;% threshold, over 159 blocks — against the 0.60 abandonment threshold.
-<b>Premise holds this round</b> (spearman 0.2276, pearson 0.1068);
-R4's score-level version of the same test fired at 0.7051. Both are published.</p></section>
-
-<section class="card"><h3>Co-training exchange</h3>
-<p class="metric">-0.0247</p>
-<p class="small">fold-0 out-of-fold AUC change for view A trained on view B's confident
-pseudo-labels (B→A: 0.6143 → 0.5896);
-the other direction moved +0.0029
-(0.6948 → 0.6977). <b>The brief's bias-amplification
-warning is confirmed on real bytes:</b> teaching the weaker view from the stronger one costs eight
-times what the reverse gains.</p></section>
-
-<section class="card"><h3>Pseudo-labels, component reading</h3>
-<p class="metric">0 px</p>
-<p class="small">Empty in both directions, and that is a measurement, not a failure: the
-donor-confident ∧ receiver-abstaining cut is 4,992 raw px /
-4,754 px the other way, whose largest connected piece is 5 px, at
-1.027× the count independence predicts
-(4,862 px). The whole-block
-reading admits 4,948 / 4,691 px. Neither was tuned until
-something appeared.</p></section>
-
-<section class="card"><h3>Emission coherence vs the credited cloud</h3>
-<p class="metric">0.5350</p>
-<p class="small">structure-tensor coherence at σ=4 px of the emitted cloud, against
-<b>0.5309</b> for the champion's own 37,638-dot cloud and
-<b>0.3886</b> for a random control at this budget. Fraction above 0.8:
-0.2520 here, 0.1585 credited,
-0.0227 random. Dominant strike
-95° in both this file and the credited cloud.</p></section>
-
-<section class="card"><h3>Budget, derived not tuned</h3><p class="metric">16,681 px</p>
-<p class="small">S* = 4|G|β/(1−β) with the measured credit-curve exponent β = 0.2284 and
-|G| = 14,088.7 px; the amplitude cancels, so the optimum can be frozen before any candidate is
-built. 9,945–24,152 over β ∈ [0.15, 0.30]. The same window falls out of a completely different prior
-in knowledge/10 §8.</p></section>
-
-<section class="card"><h3>Not the union of the two views</h3>
-<p class="metric">0.0199</p>
-<p class="small">largest overlap between the emission and any reading of "the union of the two views"
-— the disagreement union A-only ∪ B-only (87,471 px);
-against each view's own top-S it is
-0.0045 and
-0.0034, and Spearman(emitted score,
-view propensity) is +0.023 /
--0.012. <b>Which means the
-shipped file is not a co-training product:</b> co-training was run and measured (§8 of the round
-record), its exchange harmed the weaker view, and its propensity ranking lost to the detector field on
-the frozen rule. That is reported rather than dressed up.</p></section>
-
-<section class="card"><h3>A-only reasoning for Phase 2</h3>
-<p class="metric">4,164</p>
-<p class="small">candidate segments of ≥3 px, one CSV row each with measured geometry, per-family
-response percentiles, band values quoted against the footprint's own distribution, an evidence grade
-(100 strong / 1510 moderate /
-2554 weak) and five named competing explanations. The
-18,123 components of 1–2 px are accounted for in aggregate
-rather than dropped. <a href="downloads/a_only_reasoning_r5.csv">a_only_reasoning_r5.csv</a></p></section>
-</div>
-
-<h2>The board as fetched on 2026-10-08, and why the brief's bar is the wrong one</h2>
-<p>The brief states the leaderboard best is 0.3195. The organiser's own board, fetched
-2026-10-08 from <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/</a>, puts 0.3195 at
-<b>rank 7</b> and the top at <b>0.3774</b>. Ranks 8–22 span 0.2707–0.2888 — fifteen teams
-inside 0.018 — with a gap of 0.031 above them: a shared ceiling, and this family is inside it.
-Every projection on this site carries all three bars.</p>
-<div class="table-wrap"><table><thead><tr><th>rank</th><th>team</th><th>best public DW-Tversky</th>
-<th>submissions</th></tr></thead><tbody><tr><td>1</td><td>xiaofanhu</td><td><b>0.3774</b></td><td>13</td></tr><tr><td>2</td><td>alexoktaba</td><td><b>0.3345</b></td><td>25</td></tr><tr><td>3</td><td>nchuzhoy</td><td><b>0.3262</b></td><td>6</td></tr><tr><td>4</td><td>joeyfezster</td><td><b>0.3260</b></td><td>24</td></tr><tr><td>5</td><td>kinghorton42</td><td><b>0.3222</b></td><td>9</td></tr><tr><td>6</td><td>Batik Shirt Brothers</td><td><b>0.3221</b></td><td>23</td></tr><tr><td>7</td><td>DARD</td><td><b>0.3195</b></td><td>16</td></tr><tr><td>8</td><td>ndavis7</td><td><b>0.2888</b></td><td>9</td></tr><tr><td>9</td><td>mzoorob</td><td><b>0.2884</b></td><td>27</td></tr><tr><td>10</td><td>GrigorSargsyan</td><td><b>0.2876</b></td><td>14</td></tr><tr><td>11</td><td>HardcoreTechGod</td><td><b>0.2854</b></td><td>6</td></tr><tr><td>12</td><td>op01</td><td><b>0.2797</b></td><td>8</td></tr><tr><td>13</td><td>extradr19</td><td><b>0.2778</b></td><td>12</td></tr></tbody></table></div>
-<p class="small">Rows 14–22 continue to 0.2707; the full fetch is preserved row by row in
-<code>registry/leaderboard_snapshot_2026-10-08.json</code>. Team↔file association is owner-reported;
-the board publishes no filenames, hashes or receipts.</p>
-
-<h2>How the emission was chosen</h2>
-<div class="table-wrap"><table><thead><tr><th>candidate</th><th>what it is</th>
-<th>mean coh σ4</th><th>frac &gt; 0.8</th><th>strike</th><th>in credited band</th>
-<th>lift over random</th></tr></thead><tbody><tr><td><code>N3_ridge_C3</code></td><td>the same rank, walked along the >=3-family ridge network</td><td>0.6035</td><td>0.4197</td><td>75°</td><td>no</td><td>+0.7088</td></tr><tr><td><code>N5_strike_ridge</code></td><td>N4's score walked along the >=2-family ridge network</td><td>0.5350</td><td>0.2520</td><td>95°</td><td>yes</td><td>+0.4726</td></tr><tr><td><code>N2_ridge_C2</code></td><td>the same rank, walked along the >=2-family ridge network (1-px wide)</td><td>0.4991</td><td>0.2165</td><td>95°</td><td>yes</td><td>+0.4012</td></tr><tr><td><code>N6_habitat</code></td><td>the two-view co-training propensity (contrast: knowledge/10 §6 says habitat != credit)</td><td>0.4408</td><td>0.0633</td><td>85°</td><td>no</td><td>+0.1897</td></tr><tr><td><code>N1_trace_field</code></td><td>six-family corroborated trace rank + persistence, peaks over the whole novel set</td><td>0.4047</td><td>0.0640</td><td>95°</td><td>yes</td><td>+0.1543</td></tr><tr><td><code>N4_strike_gated</code></td><td>trace rank gated by the network's own coherence x credited-azimuth match</td><td>0.3922</td><td>0.0412</td><td>5°</td><td>no</td><td>+0.1190</td></tr><tr><td><code>N9_random_control</code></td><td>uniform random over the strictly-novel pool (the control everything is lift over)</td><td>0.2997</td><td>0.0147</td><td>95°</td><td>yes</td><td>+0.0000</td></tr></tbody></table></div>
-<p class="small">Frozen rule R3: the largest coherence lift over the random control at the same
-budget, subject to the dominant strike falling inside the credited band (095–115°, array convention,
-from knowledge/10 §7). <code>N3_ridge_C3</code> has the largest lift but fails the azimuth condition
-and could only place 9,259 of
-16,681 dots from the ≥3-family network. The hide-and-recover assay is reported in
-<code>evidence/r5_budget.json</code> and promotes nothing: on it the champion family's habitat field
-scores 0.0003 against 0.0275 for uniform random and 0.0395 for the trace field, an order the board
-inverts completely.</p>
-
-<h2>What is not true, stated before it is asked</h2>
-<ul>
-<li><b>No organiser authentication of anything.</b> The bytes are integrity-pinned to a 23-file
-SHA-256 manifest from an owner mirror; every score is owner-reported; <code>|G|</code>, ρ and every
-projection inherit that.</li>
-<li><b>The file is not a predicted winner.</b> Central expectation at κ=1 is DTI 0.2974 —
-comparable to the family's 0.2778, not above it. P(beating the board top) is 0.031.</li>
-<li><b>The promotion instrument is broken and is reported broken.</b> A high assay score here is
-evidence about mechanism, never a leaderboard forecast.</li>
-<li><b>Two runs of identical stage-3 code logged different numbers</b>, and both saved propensity
-fields carry 620 impossible zeros outside the footprint. Neither is explained; both are bounded; the
-published numbers reproduce exactly from the arrays on disk. <code>IR-R5-003</code>.</li>
-<li><b>The 200 m exclusion ring is a family measurement, not an organiser rule.</b> Staff confirmed the
-mask is pixel-exact and that new-fault truth may lie within 300 m of a known trace — “identifying
-these corrections is one outcome we are aiming for”. <code>IR-R5-006</code>, and the top-ranked next
-experiment in <code>knowledge/26</code>.</li>
-</ul>
-
-<p class="small">Round record: <code>knowledge/27_r5_findings.md</code> · official clarifications with
-verbatim quotes and links: <code>knowledge/25</code> · five new ranked hypotheses:
-<code>knowledge/26</code> · irregularities: <a href="irregularities.html">Limitations</a> ·
-sources: <a href="sources.html">Sources</a>.</p>
-
-<h2>Previously published artifacts — all research-only, none of them this round's file</h2>
-<div class="table-wrap"><table><thead><tr><th>round</th><th>artifact</th><th>SHA-256 prefix</th>
-<th>status</th></tr></thead><tbody>
-<tr><td>R5 (this round)</td><td><a href="downloads/gems52-r5-novel-n5_strike_ridge-16681px-20261008T220210Z-33b27433-zeros.tif" download>gems52-r5-novel-n5_strike_ridge-16681px-20261008T220210Z-33b27433-zeros.tif</a></td>
-<td><code>33b274331bcf0244f8dee42d</code></td><td>strictly novel, format-verified, not slot-approved</td></tr>
-<tr><td>H59</td><td><a href="h59.html">gems52-h59-union-core25517px-arm14783px.tif</a></td><td><code>8c4945ce170b702495057176</code></td>
-<td>research only — <b>do not upload</b>, registered slot gate not met</td></tr>
-<tr><td>H58</td><td><a href="h58.html">gems52-h58-coldgeo-consensus-22px-a55b0dee38-research.tif</a> ·
-<a href="downloads/h58-candidate.tif" download>downloads/h58-candidate.tif</a></td>
-<td><code>130c242e33aef398c44b22cd</code></td>
-<td>research only — <b>do not upload</b>; 22 of 37,654 requested nodes emitted, support-capacity
-failure (<code>IR-H58-002</code>), not approved to submit</td></tr>
-<tr><td>H57 credited-core alternate</td><td><a href="h57-creditcore.html">gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif</a></td>
-<td><code>88b6fe79e01b1573c85e3202</code></td>
-<td>ABANDONED / not proven — <b>do not upload</b> (<code>IR-57-107</code>); the refuted co-training
-arm is disclosed on its page</td></tr>
-<tr><td>H57 union arm (the incumbent marker)</td><td><a href="h57.html">gems52-h57-union-novel-core25517px-arm14804px.tif</a></td>
-<td><code>5fadcaefd64db0cb553bf16d</code></td>
-<td>published, not slot-approved; <code>submission/LATEST.txt</code> and
-<code>docs/data/submission.json</code> still point here</td></tr>
-<tr><td>H55-EDGE (separate failed-gate archive)</td><td><a href="h55-edge.html">h55-edge.html</a></td>
-<td>—</td><td>protocol deviation recorded; not the current H55 candidate — <b>do not upload</b></td></tr>
-</tbody></table></div>
-<p class="small">Every one of these is a research artifact: none is a verified fault map, none is
-approved to spend a weekly submission slot, and each page carries its own failed gate. They are
-listed so the record stays complete and so no reader mistakes an archive for the current file.</p>
-
-</main></body></html>
+<!--R5:END-->
+<hr class="divider"><div class="section-head"><h2>What the holdout actually says</h2><a href="ctd5-audit.html">Read the method &amp; limitations →</a></div><p class="small"><b>HOLDOUT-DTI — exploratory legacy-v1, NOT strict holdout-valid</b> · gems52-pooled-hide-v1 · 53,186 withheld positives · pooled terms · 300 m triangular kernel · α 0.2 / β 0.8. 95% CI: paired 20 km cluster bootstrap. Not an organizer score.</p><p class="small"><b>Validation failure:</b> Legacy evaluation halos depended on withheld fault tails, revealing location to the placement domain. Shared splitter v2 is corrected; no post-stop refit or revised score exists. <a href="data/ctd5_validation_scope_correction.json">Scope correction</a>. <b>Budget-comparison failure:</b> fold 1 emitted only 2,041 of 3,058 requested candidate dots; controls filled their budgets. These are descriptive results, not a valid matched-budget promotion test. The final TIFF contains 12,000 dots.</p>
+<div class="table-wrap"><table><thead><tr><th>Procedure</th><th>HOLDOUT-DTI</th><th>95% CI</th></tr></thead><tbody><tr class=""><td>Surface-only control</td><td class="numeric">0.106749</td><td class="numeric">[0.089076, 0.124951]</td></tr><tr class=""><td>Disagreement before transfer</td><td class="numeric">0.021217</td><td class="numeric">[0.014514, 0.028823]</td></tr><tr class="highlight"><td>Disagreement after one exchange</td><td class="numeric">0.018848</td><td class="numeric">[0.012421, 0.026020]</td></tr></tbody></table></div>
+<hr class="divider"><div class="cards"><section class="card"><div class="eyebrow">01 / newly inferred</div><h3>No inherited prediction core</h3><span class="num">0 copied priors</span><p>Prior rasters enter only the audit. The new file is not a renamed prior, not a retained “credited core,” and not the union of the two views.</p></section><section class="card"><div class="eyebrow">02 / scope disclosed</div><h3>The lane rule stopped the run</h3><span class="num">541 rasters checked</span><p>A survey-wide lattice is within three pixels of every eligible cell. The literal overlap gate fails even though no decoded prediction is identical.</p></section><section class="card"><div class="eyebrow">03 / review, not discovery</div><h3>Geology for every A-only segment</h3><span class="num">1,521 review records</span><p>Measured context, a named non-fault mimic and a falsifier—not invented field observations. All 12,000 emitted cells have a record too.</p></section></div>
+<hr class="divider"><div class="grid2"><section><div class="eyebrow">The H33 question</div><h2>Better placement is plausible.<br>A higher score is not proven.</h2><p>Re-reading the files shows H33 removed 2,545 off-catalogue flank dots from its immediate parent and added none. This can reduce false-positive mass, but hidden credit is unknown.</p><p class="small">The supplied <b>0.2778</b> association is <b>OWNER-REPORTED, NOT ORGANIZER-CONFIRMED</b>. GEMSDOE32’s source instead says “NO ORGANISER SCORE EXISTS.” We did not turn that conflict into a score claim.</p><a href="ctd5-audit.html#h33">The exact evidence and metric argument →</a></section><figure style="margin:0"><img class="map" src="assets/ctd5-prediction.png" width="530" height="600" alt="Unverified CTD5 predictions over the eligible raster footprint; no geographic feature is asserted to be a verified fault."><figcaption class="legend"><span><i class="swatch"></i>Emitted predictions</span><span><i class="swatch amber"></i>Strict A-only subset</span></figcaption><p class="fine">Actual raster preview, north up. Enlarged display pixels; not a verified fault or geothermal-resource map.</p></figure></div>
+<div class="feed" id="local-feed">Automatic local evidence checks. Submission gate: CLOSED. Organizer results are not a live feed.</div><p class="small">Concurrent closure: the later H60 artifact was checked separately against unchanged CTD5 predictions. Initial closure: 542 files / 361 patterns; a second concurrent H60 then brought the total to 543 files / 362 patterns. The original duplicate STOP remains. <a href="data/ctd5_parallel_reconciliation.json">First supplemental audit</a> · <a href="data/ctd5_second_parallel_check.json">Second supplemental audit</a>. The inherited H60 pointer is unapproved, not selected by this session. <a href="h60.html">Preserved H60 archive</a>. A third, independent H60 round is at <a href="h60c.html">H60C</a> — preregistered two-view co-training on forensically attributed credit, artifact <code>gems52-h60c-core25517px-arm9668px.tif</code>, <a href="downloads/h60c-candidate.tif" download>download</a>.</p><p class="small">A fourth, independent H60-family round is at <a href="h60d.html">H60D</a> — co-training with disagreement as the discovery signal, artifact <code>gems52-h60d-dis_contrast-arm37654px.tif</code>, <a href="downloads/h60d-candidate.tif" download>download</a>. NEGATIVE RESULT — download for review only; do not spend a weekly slot.</p>
+<details><summary>Preserved research archives — do not upload</summary><p class="small">None of these historical files is current approval. H58: <a href="downloads/h58-candidate.tif" download>gems52-h58-coldgeo-consensus-22px-a55b0dee38-research.tif</a>, SHA-256 <code>130c242e33aef398c44b22cd</code>…; research only, not approved to submit. <a href="h58.html">H58 negative-result audit</a>.</p><p class="small"><a href="downloads/gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif" download>gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif</a> is the unapproved H57 alternate; <a href="h57-creditcore.html">historical audit</a>. <a href="h55-edge.html">H55-EDGE negative-result archive</a> · <a href="archive-h59-overview.html">Former H59 landing page, historical claims superseded</a>.</p></details><p class="small">Concurrent H60 co-training result: <a href="h60.html">audit</a> · <a href="downloads/h60-cotrain-candidate.tif" download>research-only TIFF</a>. The separate <a href="h60-triple-convergence.html">H60 triple-convergence archive</a> is also preserved. Neither is approval.</p></main><footer>Independent competition research, not an official DOE or DrivenData site. Predictions are not verified faults or geothermal discoveries.<br>
+<a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code &amp; reproducibility</a> · <a href="ctd5-audit.html#limitations">Limitations</a> · <a href="data/ctd5_run_card.json">JSON run card</a> · CTD5 / 2026-10-08</footer></body></html>

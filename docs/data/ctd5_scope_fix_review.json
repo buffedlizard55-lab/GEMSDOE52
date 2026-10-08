@@ -1,0 +1,24 @@
+{
+  "reviewed_utc": "2026-10-08T19:48:30.723093+00:00",
+  "tests": {
+    "tests": "264",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "26.911"
+  },
+  "scope": "Shared evaluation-domain correction, synthetic regression and artifact checks only. No post-stop science run.",
+  "new_fits": 0,
+  "new_placements": 0,
+  "original_tiff_sha256": "a6e6e44aebaf057989e254bd5ce3729e5a94836c0e5687a95e91e3fc8a40c686",
+  "strict_holdout_valid": false,
+  "corrected_split_version": "label-blind-quadrants-v2",
+  "corrected_full_data_assay_run": false,
+  "code_sha256": {
+    "src/gems52/spatial.py": "fad7b09db9efc512247b9a176a7e7ce8631e287592b4e07902d0b9c38bed00f8",
+    "scripts/run_ctd5.py": "a9fd2a9f57e4e06f127021434c15ae689d9b9e63b799045b666241d86e9ada61",
+    "scripts/build_ctd5_submission.py": "625e1821d7577c106c845dc0ea52265c0a788314a45e8b8705125e11885c008b",
+    "scripts/check_ctd5_release.py": "338deb1ee54857d4de46687305569b3b83ae083e489d7e98a8e86949dbe0be8c",
+    "scripts/publish_ctd5.py": "7568b251f904fb58d82d1914aceca7ce56201f34c044d931200bf6255168adb7"
+  }
+}

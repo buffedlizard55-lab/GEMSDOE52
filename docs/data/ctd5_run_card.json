@@ -1,0 +1,170 @@
+{
+  "run_id": "ctd5-a24c35d1",
+  "generated_utc": "2026-10-08T18:31:08.001658+00:00",
+  "hypothesis": "CTD5-H1: cover-matched geophysical-to-surface-abstention transfer",
+  "mechanism": "Training-only cover-stratified class weights; one whole-component confident-to-abstaining exchange; asymmetric OOF disagreement; 3px sparse placement.",
+  "named_non_fault_process": "Non-fault basin-fill density boundary or volcanic lithologic contact.",
+  "holdout_dti": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.018847816838617946,
+    "ci95": [
+      0.012420590248817922,
+      0.0260198339801589
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 845.1222060647225,
+    "fpw": 10607.190104526808,
+    "fnw": 52340.87779393524,
+    "assay_status": "exploratory legacy-v1 result; strict validation invalid"
+  },
+  "best_comparable_control": {
+    "name": "single_B",
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.10674884686006925,
+    "ci95": [
+      0.08907613942070203,
+      0.12495141671953973
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 4853.224990866048,
+    "fpw": 9722.560356691452,
+    "fnw": 48332.77500913397
+  },
+  "paired_delta_vs_best": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "delta": -0.0879010300214513,
+    "ci95": [
+      -0.10758002423905719,
+      -0.06921549030360896
+    ],
+    "withheld_positive_pixels": 53186
+  },
+  "holdout_budgets_complete": false,
+  "correlation_overlap_vs_registry": {
+    "priors_checked": 541,
+    "distinct_decoded_priors": 360,
+    "surface_max_spearman": 0.06820261812919536,
+    "final_max_spearman": 0.013417664874618504,
+    "final_max_near_3px_fraction": 1.0,
+    "lane_gate_pass": false,
+    "decoded_identical_priors": 0,
+    "scope": "Supplied aligned immutable public inventory only; private/release/external artifacts not proven absent. Frozen 541-file receipt plus one later H60 raster checked separately at closure; see supplemental_upstream_registry_check."
+  },
+  "raster_sha256": "a6e6e44aebaf057989e254bd5ce3729e5a94836c0e5687a95e91e3fc8a40c686",
+  "raster_file": "gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif",
+  "validator_output": {
+    "path": "/home/user/GEMSDOE52/submission/gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif",
+    "bytes": 83917,
+    "sha256": "a6e6e44aebaf057989e254bd5ce3729e5a94836c0e5687a95e91e3fc8a40c686",
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "ref_bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "nodata": null,
+    "blocksize": [
+      256,
+      256
+    ],
+    "fixture_grid": false,
+    "has_validity_mask": false,
+    "nan_pixels": 0,
+    "infinity_pixels": 0,
+    "n_nan": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.0009772655321285129,
+    "n_nonzero": 12000,
+    "mass": 12000.0,
+    "mass_outside_footprint": 0,
+    "problems": [],
+    "ok": true,
+    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "submission_name": "CTD5-cover-matched-disagreement-b58bae0f0e",
+  "note": "CTD5: cover-matched geophysics to surface abstention; one pseudo-label round. Research only; no prior pixels reused.",
+  "note_chars": 116,
+  "verdict": "negative",
+  "download_ok": true,
+  "submit_ok": false,
+  "approved_for_weekly_slot": false,
+  "submission_slots_used": 0,
+  "reasons": [
+    "legacy label-informed evaluation tail halos invalidate strict hide-and-recover promotion evidence",
+    "candidate did not beat the strongest comparable control with registered lift and paired CI",
+    "one or more holdout candidate folds could not fill their fixed dot budget",
+    "strict parallel-lane duplicate/inventory gate failed",
+    "owner-mirror inputs are not organizer-authenticated",
+    "private/release/external registry coverage unknown",
+    "no separate selector decision or current weekly-cap receipt"
+  ],
+  "not_union": {
+    "surface_equals_maximum": false,
+    "dots_equal_union_field": false,
+    "dots_equal_set_union": false,
+    "dots_equal_view_A": false,
+    "dots_equal_view_B": false,
+    "candidate_vs_union_field_different_pixels": 23798
+  },
+  "reasoning": {
+    "a_only_segments": 1521,
+    "a_only_pool_pixels": 21111,
+    "emitted_reasoning_rows": 12000,
+    "emitted_a_only_rows": 3234,
+    "segment_csv": "gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e-a-only-segments.csv",
+    "pixel_csv": "gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e-emitted-pixels.csv",
+    "every_a_only_segment_documented": true,
+    "every_emitted_pixel_documented": true,
+    "units_warning": "Band 15/19 native units not independently authenticated; UTM coordinates are metres. Operating ranks are not probabilities."
+  },
+  "experiment_count": 2,
+  "experiment_count_note": "Conservative count: baseline and single predeclared exchange; one geological hypothesis, no post-result tuning.",
+  "independent_method_error_gate": 0.09850684267007018,
+  "excluded_local_malformed_priors": [],
+  "post_build_seconds": 336.1210388850002,
+  "matched_budget_comparison_valid": false,
+  "comparison_warning": "Descriptive HOLDOUT-DTI only: fold 1 emitted 2,041/3,058 requested dots. The single-B control is the best evaluated control; a matched-budget improvement is not established.",
+  "supplemental_upstream_registry_check": {
+    "receipt": "evidence/ctd5_parallel_reconciliation.json",
+    "additional_distinct_rasters": 1,
+    "total_files_checked_at_closure": 542,
+    "total_distinct_decoded_at_closure": 361,
+    "additional_surface_spearman": 0.014560583321505678,
+    "additional_dot_spearman": 0.004100756899671539,
+    "additional_near_3px_fraction": 0.27191666666666664,
+    "all_pass": true
+  },
+  "strict_holdout_valid": false,
+  "validation_warning": "Legacy v1 evaluation tail halos depend on withheld labels; placement geometry may leak location. Values are exploratory, not strict promotion evidence. Shared default splitter corrected to label-blind v2; no refit, new placement or new score after STOP.",
+  "post_merge_registry_check": {
+    "receipt": "evidence/ctd5_second_parallel_check.json",
+    "total_files_checked_at_closure": 543,
+    "total_distinct_decoded_at_closure": 362,
+    "max_surface_spearman": 0.06820261812919536,
+    "max_final_spearman": 0.013417664874618504,
+    "max_near_3px_fraction": 1.0
+  }
+}

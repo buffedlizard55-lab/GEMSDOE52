@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-08T23:12:03Z",
+ "generated_utc": "2026-10-08T23:42:24Z",
  "inputs": {
   "footprint_px": 5165840,
   "legal_off_ring_px": 4861502,
@@ -245,5 +245,5 @@
   }
  },
  "reading": "Every atom is enriched inside the pool by about the same factor (1.5-1.8x) whatever its credit density, from P1 at 0.163-0.205 down to P6 at 0-0.023. The pool therefore identifies where this family emits, not which emissions were right: knowledge/10 \u00a76's 'habitat is not credit', reproduced with a detector that did not exist when \u00a76 was written. The lower bound on the pool's own credit density is trivial (0.0014-0.0030) because only 3.4% of pool pixels are inside the family's emission at all, so the remaining 96.6% is novel mass with an unmeasured density -- which is why nothing in R5 claims a measured rho for the shipped file and the projection is a prior instead.",
- "seconds": 3.700352191925049
+ "seconds": 3.505106210708618
 }

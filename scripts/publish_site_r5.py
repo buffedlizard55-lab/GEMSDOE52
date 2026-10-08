@@ -27,10 +27,10 @@ DL = DOCS / "downloads"
 EVID = ROOT / "evidence"
 
 NAV = ('<header><nav><a class="brand" href="index.html">GEMS / DOE 52</a>'
-       '<a href="index.html">Overview</a><a href="executive-summary.html">Submission guide</a>'
-       '<a href="r5.html">R5 audit</a><a href="h59.html">H59</a>'
+       '<a href="index.html">Overview</a><a href="ctd5-audit.html">Run &amp; evidence</a>'
+       '<a href="executive-summary.html">Submission guide</a><a href="r5.html">R5 audit</a>'
        '<a href="irregularities.html">Limitations</a><a href="sources.html">Sources</a>'
-       '<a href="downloads/index.html">Downloads</a></nav></header>')
+       '<a href="downloads/index.html">Archive</a></nav></header>')
 HEAD = ('<!doctype html>\n<html lang="en"><head><meta charset="utf-8">'
         '<meta name="viewport" content="width=device-width,initial-scale=1">\n'
         '<meta name="description" content="{desc}"><title>{title}</title>\n'
@@ -153,303 +153,134 @@ approved to spend a weekly submission slot, and each page carries its own failed
 listed so the record stays complete and so no reader mistakes an archive for the current file.</p>
 """
 
-    # ---------------------------------------------------------------- index
-    bar_rows = "".join(
-        f'<tr><td>{r["rank"]}</td><td>{r["team"]}</td><td><b>{r["score"]:.4f}</b></td>'
-        f'<td>{r["submissions"]}</td></tr>' for r in rows[:13])
-    cand_rows = "".join(
-        f'<tr><td><code>{c["name"]}</code></td><td>{c["what"]}</td>'
-        f'<td>{c["mean_coherence_sigma4"]:.4f}</td><td>{c["frac_coh_above_0.8_sigma4"]:.4f}</td>'
-        f'<td>{c["dominant_strike_deg_array"]:.0f}°</td>'
-        f'<td>{"yes" if c["in_credited_band"] else "no"}</td>'
-        f'<td>{c["coherence_lift_over_random"]:+.4f}</td></tr>'
-        for c in sorted(em["candidates"], key=lambda c: -c["coherence_lift_over_random"]))
-    index = HEAD.format(
-        desc="R5 strictly-novel 16,681 px GeoTIFF for the DOE GEMS prize: one-click download, "
-             "explicit OK-to-download and OK-to-submit verdict, all gates and probabilities from receipts.",
-        title="GEMSDOE52 — R5 strictly-novel submission") + f"""
-<main id="main"><div class="eyebrow">R5 · two-view co-training + six-family trace detector ·
-fetched and verified against the organiser's own pages on {board['observed_date_utc']}
+    # ---------------------------------------------------------------- index and guide: inject, do not
+    # overwrite.  Parallel sessions own the front page (main currently leads with the CTD5/H60 record and
+    # keeps one page per round), so R5 adds a marked fragment and leaves everything else alone.  The
+    # markers make this idempotent: re-running replaces the fragment instead of stacking a second copy.
+    START, END = "<!--R5:START-->", "<!--R5:END-->"
+
+    def inject(page: Path, fragment: str, anchor: str) -> str:
+        text = page.read_text(encoding="utf-8")
+        block = f"{START}\n{fragment}\n{END}"
+        if START in text and END in text:
+            a, b = text.index(START), text.index(END) + len(END)
+            return text[:a] + block + text[b:]
+        if anchor not in text:
+            raise SystemExit(f"{page.name}: injection anchor not found; the page was restructured -- "
+                             f"repoint the anchor rather than silently dropping the R5 block")
+        return text.replace(anchor, anchor + "\n" + block, 1)
+
+    index_fragment = f"""
+<section class="download-bar" aria-label="R5 strictly-novel artifact">
+<div><div class="eyebrow">R5 · strictly-novel emission · this session's round
 <span class="pill ok">OK TO DOWNLOAD</span>
 <span class="pill warn">PORTAL-ACCEPTABLE · NOT SLOT-APPROVED</span></div>
-
-<section class="download-bar" aria-label="R5 submission download">
-<div><strong>{name}.tif</strong>
-<small>{n(em['bytes'])} bytes · single-band float32 · EPSG:32611 · {n(v['finite_pixels'])} cells all
-finite · values exactly {{0,1}} · nodata tag <code>{v['nodata_tag']}</code> · {n(S)} emitted px ·
-min distance to a mapped trace {n(em['distance_to_catalogue_m']['min'], 1)} m</small>
-<small>SHA-256 <code>{em['sha256']}</code></small>
-<small>uniqueness: pattern-unique against <b>{em['uniqueness_gate']['n_priors_checked']}</b> rasters ·
-novel fraction <b>{em['uniqueness_gate']['novel_fraction']:.4f}</b> · equals the literal prior union:
-{str(em['uniqueness_gate']['equals_literal_prior_union']).lower()} · format gate
-{em['format_gate']['ok'] and 'PASS (0 problems)' or 'FAIL'}</small></div>
-<a class="button" href="{tif_rel}" download>↓ Download the submission TIFF (one click)</a>
-<a class="button" href="downloads/r5-candidate.tif" download>↓ Same file, short name (r5-candidate.tif)</a>
-<a class="button secondary" href="executive-summary.html">How to submit it →</a>
-<a class="button secondary" href="r5.html">Full audit →</a></section>
-
-<div class="status"><strong>Is it OK to download? YES. Is it OK to submit?</strong>
-The portal will accept it — every format clause the organiser publishes is verified against the
-written bytes, and the “Predicted values must be in range [0, 1]” rejection cannot occur because all
-{n(v['finite_pixels'])} cells are finite and in {{0,1}}.
-<b>Whether to spend a weekly slot on it is a different question and the answer is no, not on the
-evidence available:</b> P(DTI &gt; 0.2778) = <b>{p_champ:.3f}</b>, P(DTI &gt; 0.3195) =
-<b>{p_board:.3f}</b>, P(DTI &gt; 0.3774) = <b>{p_top:.3f}</b> under the frozen prior, and the
-standing rule — do not spend a slot on an idea that has not beaten the holdout best — cannot be
-satisfied by anything, because the holdout instrument is disqualified and R5 reproduced the
-disqualification on new data. The one argument for submitting anyway is the organiser's own: the
-Final Prize Round ($250k) re-scores a test set “updated by expert review of all Phase 1
-submissions”, so predictions matter there “even if they are not the most performant in Phase 1”.
-This file is {n(S)} strictly novel, individually reasoned candidates, which is what that round asks
-for. <a href="executive-summary.html">The decision table is on the submission guide.</a></div>
-
-<h1>16,681 pixels this repository has<br>never emitted, aimed at faults the map does not have.</h1>
-<p class="lede">R5 rebuilt the brief's Blum–Mitchell instrument on the restored competition bytes,
-tested the conditional-independence premise instead of assuming it, measured both readings of the
-“whole-segment” pseudo-label rule, reproduced the disqualification of this repo's promotion
-instrument on new data, and then chose an emission by a rule frozen before the candidates existed:
-strict novelty against every raster this repo has produced, a budget derived from the measured credit
-curve rather than tuned, and selection on the one property of the credited cloud that has ever
-measured positive — strike coherence.</p>
-
-<div class="grid">
-<section class="card"><h3>Independence premise</h3><p class="metric">{indep['max_abs']:.4f}</p>
-<p class="small">max |ρ| of per-block false-positive rate on labelled negatives at each view's own
-top-1&nbsp;% threshold, over {indep['n_blocks']} blocks — against the 0.60 abandonment threshold.
-<b>Premise holds this round</b> (spearman {indep['spearman']:.4f}, pearson {indep['pearson']:.4f});
-R4's score-level version of the same test fired at 0.7051. Both are published.</p></section>
-
-<section class="card"><h3>Co-training exchange</h3>
-<p class="metric">{exch['B_to_A']['delta_fold0_auc']:+.4f}</p>
-<p class="small">fold-0 out-of-fold AUC change for view A trained on view B's confident
-pseudo-labels (B→A: {exch['B_to_A']['fold0_auc_before']:.4f} → {exch['B_to_A']['fold0_auc_after']:.4f});
-the other direction moved {exch['A_to_B']['delta_fold0_auc']:+.4f}
-({exch['A_to_B']['fold0_auc_before']:.4f} → {exch['A_to_B']['fold0_auc_after']:.4f}). <b>The brief's bias-amplification
-warning is confirmed on real bytes:</b> teaching the weaker view from the stronger one costs eight
-times what the reverse gains.</p></section>
-
-<section class="card"><h3>Pseudo-labels, component reading</h3>
-<p class="metric">{pl_c['a_to_b']['px']} px</p>
-<p class="small">Empty in both directions, and that is a measurement, not a failure: the
-donor-confident ∧ receiver-abstaining cut is {n(pl_c['a_to_b']['raw_px'])} raw px /
-{n(pl_c['b_to_a']['raw_px'])} px the other way, whose largest connected piece is 5 px, at
-{pl_c['a_to_b']['ratio_to_independence']:.3f}× the count independence predicts
-({n(pl_c['expected_px_under_independence'], 0)} px). The whole-block
-reading admits {n(pl_b['a_to_b']['px'])} / {n(pl_b['b_to_a']['px'])} px. Neither was tuned until
-something appeared.</p></section>
-
-<section class="card"><h3>Emission coherence vs the credited cloud</h3>
-<p class="metric">{chosen['mean_coherence_sigma4']:.4f}</p>
-<p class="small">structure-tensor coherence at σ=4 px of the emitted cloud, against
-<b>{champ['mean_coherence_sigma4']:.4f}</b> for the champion's own 37,638-dot cloud and
-<b>{rnd['mean_coherence_sigma4']:.4f}</b> for a random control at this budget. Fraction above 0.8:
-{chosen['frac_coh_above_0.8_sigma4']:.4f} here, {champ['frac_coh_above_0.8_sigma4']:.4f} credited,
-{rnd['frac_coh_above_0.8_sigma4']:.4f} random. Dominant strike
-{chosen['dominant_strike_deg_array']:.0f}° in both this file and the credited cloud.</p></section>
-
-<section class="card"><h3>Budget, derived not tuned</h3><p class="metric">{n(em['budget_star'])} px</p>
-<p class="small">S* = 4|G|β/(1−β) with the measured credit-curve exponent β = 0.2284 and
-|G| = 14,088.7 px; the amplitude cancels, so the optimum can be frozen before any candidate is
-built. 9,945–24,152 over β ∈ [0.15, 0.30]. The same window falls out of a completely different prior
-in knowledge/10 §8.</p></section>
-
-<section class="card"><h3>Not the union of the two views</h3>
-<p class="metric">{max(u['fraction_of_emission'] for u in uni['comparisons'].values()):.4f}</p>
-<p class="small">largest overlap between the emission and any reading of "the union of the two views"
-— the disagreement union A-only ∪ B-only ({n(uni['comparisons']['disagreement_union_A_only_or_B_only']['px_in_set'])} px);
-against each view's own top-S it is
-{uni['comparisons'][f"view_A_top_S{S}"]['fraction_of_emission']:.4f} and
-{uni['comparisons'][f"view_B_top_S{S}"]['fraction_of_emission']:.4f}, and Spearman(emitted score,
-view propensity) is {uni['rank_correlations']['spearman_emitted_score_vs_view_A_propensity']:+.3f} /
-{uni['rank_correlations']['spearman_emitted_score_vs_view_B_propensity']:+.3f}. <b>Which means the
-shipped file is not a co-training product:</b> co-training was run and measured (§8 of the round
-record), its exchange harmed the weaker view, and its propensity ranking lost to the detector field on
-the frozen rule. That is reported rather than dressed up.</p></section>
-
-<section class="card"><h3>A-only reasoning for Phase 2</h3>
-<p class="metric">{n(rs['reviewed']['rows'])}</p>
-<p class="small">candidate segments of ≥3 px, one CSV row each with measured geometry, per-family
-response percentiles, band values quoted against the footprint's own distribution, an evidence grade
-({rs['evidence_grade_counts']['strong']} strong / {rs['evidence_grade_counts']['moderate']} moderate /
-{rs['evidence_grade_counts']['weak']} weak) and five named competing explanations. The
-{n(rs['below_review_resolution']['components'])} components of 1–2 px are accounted for in aggregate
-rather than dropped. <a href="downloads/a_only_reasoning_r5.csv">a_only_reasoning_r5.csv</a></p></section>
-</div>
-
-<h2>The board as fetched on {board['observed_date_utc']}, and why the brief's bar is the wrong one</h2>
-<p>The brief states the leaderboard best is 0.3195. The organiser's own board, fetched
-{board['observed_date_utc']} from <a href="{board['source']}">{board['source']}</a>, puts 0.3195 at
-<b>rank 7</b> and the top at <b>{board['top']:.4f}</b>. Ranks 8–22 span 0.2707–0.2888 — fifteen teams
-inside 0.018 — with a gap of 0.031 above them: a shared ceiling, and this family is inside it.
-Every projection on this site carries all three bars.</p>
-<div class="table-wrap"><table><thead><tr><th>rank</th><th>team</th><th>best public DW-Tversky</th>
-<th>submissions</th></tr></thead><tbody>{bar_rows}</tbody></table></div>
-<p class="small">Rows 14–22 continue to 0.2707; the full fetch is preserved row by row in
-<code>registry/leaderboard_snapshot_2026-10-08.json</code>. Team↔file association is owner-reported;
-the board publishes no filenames, hashes or receipts.</p>
-
-<h2>How the emission was chosen</h2>
-<div class="table-wrap"><table><thead><tr><th>candidate</th><th>what it is</th>
-<th>mean coh σ4</th><th>frac &gt; 0.8</th><th>strike</th><th>in credited band</th>
-<th>lift over random</th></tr></thead><tbody>{cand_rows}</tbody></table></div>
-<p class="small">Frozen rule R3: the largest coherence lift over the random control at the same
-budget, subject to the dominant strike falling inside the credited band (095–115°, array convention,
-from knowledge/10 §7). <code>N3_ridge_C3</code> has the largest lift but fails the azimuth condition
-and could only place {n([c for c in em['candidates'] if c['name']=='N3_ridge_C3'][0]['placed'])} of
-{n(em['budget_star'])} dots from the ≥3-family network. The hide-and-recover assay is reported in
-<code>evidence/r5_budget.json</code> and promotes nothing: on it the champion family's habitat field
-scores 0.0003 against 0.0275 for uniform random and 0.0395 for the trace field, an order the board
-inverts completely.</p>
-
-<h2>What is not true, stated before it is asked</h2>
-<ul>
-<li><b>No organiser authentication of anything.</b> The bytes are integrity-pinned to a 23-file
-SHA-256 manifest from an owner mirror; every score is owner-reported; <code>|G|</code>, ρ and every
-projection inherit that.</li>
-<li><b>The file is not a predicted winner.</b> Central expectation at κ=1 is DTI {dti1:.4f} —
-comparable to the family's 0.2778, not above it. P(beating the board top) is {p_top:.3f}.</li>
-<li><b>The promotion instrument is broken and is reported broken.</b> A high assay score here is
-evidence about mechanism, never a leaderboard forecast.</li>
-<li><b>Two runs of identical stage-3 code logged different numbers</b>, and both saved propensity
-fields carry 620 impossible zeros outside the footprint. Neither is explained; both are bounded; the
-published numbers reproduce exactly from the arrays on disk. <code>IR-R5-003</code>.</li>
-<li><b>The 200 m exclusion ring is a family measurement, not an organiser rule.</b> Staff confirmed the
-mask is pixel-exact and that new-fault truth may lie within 300 m of a known trace — “identifying
-these corrections is one outcome we are aiming for”. <code>IR-R5-006</code>, and the top-ranked next
-experiment in <code>knowledge/26</code>.</li>
-</ul>
-
-<p class="small">Round record: <code>knowledge/27_r5_findings.md</code> · official clarifications with
-verbatim quotes and links: <code>knowledge/25</code> · five new ranked hypotheses:
-<code>knowledge/26</code> · irregularities: <a href="irregularities.html">Limitations</a> ·
-sources: <a href="sources.html">Sources</a>.</p>
-{ARCHIVE}
-</main></body></html>
+<strong>{name}.tif</strong>
+<small>{n(em['bytes'])} bytes · single-band float32 · EPSG:32611 · all {n(v['finite_pixels'])} cells
+finite · values exactly {{0,1}} · {n(S)} emitted px · <b>novel fraction
+{em['uniqueness_gate']['novel_fraction']:.4f}</b> against {em['uniqueness_gate']['n_priors_checked']}
+rasters · nearest mapped trace {n(em['distance_to_catalogue_m']['min'], 1)} m ·
+SHA-256 <code>{em['sha256'][:24]}…</code></small></div>
+<a class="button" href="{tif_rel}" download>↓ Download the R5 TIFF (one click)</a>
+<a class="button" href="downloads/r5-candidate.tif" download>↓ Same file, short name</a>
+<a class="button secondary" href="r5.html">R5 audit →</a></section>
+<div class="status"><strong>R5 in one paragraph.</strong> Co-training was run exactly as the brief
+specifies and reported honestly: the independence premise <b>holds</b> (max |ρ| {indep['max_abs']:.4f}
+against the 0.60 abandonment threshold), the pseudo-label exchange <b>harmed</b> the weaker view
+({exch['B_to_A']['delta_fold0_auc']:+.4f} AUC against {exch['A_to_B']['delta_fold0_auc']:+.4f} the other
+way), the connected-component reading of “whole segment” returns the <b>empty set</b> as a measurement,
+and the co-training propensity ranking then <b>lost</b> to the six-family detector on the frozen rule —
+so the shipped file is not a co-training product and the site does not imply otherwise. Emission:
+{n(S)} px at the derived optimum S* = 4|G|β/(1−β) = {n(em['budget_star'])}, chosen on strike coherence
+({chosen['mean_coherence_sigma4']:.4f} against the credited cloud's {champ['mean_coherence_sigma4']:.4f}
+and a random control's {rnd['mean_coherence_sigma4']:.4f}) with its dominant strike
+{chosen['dominant_strike_deg_array']:.0f}° inside the credited band. Overlap with any reading of “the
+union of the two views” is at most
+{max(u['fraction_of_emission'] for u in uni['comparisons'].values()):.4f} of the emitted pixels.
+<b>P(DTI &gt; 0.2778) = {p_champ:.3f}, P(&gt; 0.3195) = {p_board:.3f}, P(&gt; 0.3774) = {p_top:.3f}</b> —
+the board top is 0.3774, not the 0.3195 the brief states (rank 7, fetched
+{board['observed_date_utc']}). No weekly slot is authorised: the promotion instrument is disqualified
+and this round reproduced that on new data. Full record: <a href="r5.html">R5 audit</a>,
+<a href="executive-summary.html#r5">submission steps</a>,
+<code>knowledge/27_r5_findings.md</code>,
+<a href="downloads/a_only_reasoning_r5.csv">reasoning for all {n(rs['reviewed']['rows'])} A-only
+candidates</a>.</div>
 """
-    (DOCS / "index.html").write_text(index)
 
-    # ---------------------------------------------------------------- executive summary
-    ex = HEAD.format(
-        desc="Exactly how to submit the R5 GeoTIFF to competition 306: portal steps, the required name, "
-             "a note under 200 characters, and the format clauses that make the range error impossible.",
-        title="How to submit the R5 artifact · GEMSDOE52") + f"""
-<main id="main"><div class="eyebrow">Executive summary · R5 · explicit submission status
+    exec_fragment = f"""
+<section class="download-bar" id="r5" aria-label="R5 strictly-novel artifact">
+<div><div class="eyebrow">R5 · strictly-novel emission
 <span class="pill ok">OK TO DOWNLOAD</span><span class="pill warn">NOT SLOT-APPROVED</span></div>
-<h1>Download, verify, then decide —<br>in that order.</h1>
-
-<section class="download-bar" aria-label="R5 download">
-<div><strong>{name}.tif</strong>
-<small>{n(em['bytes'])} bytes · SHA-256 <code>{em['sha256']}</code> · {n(S)} px ·
-novel fraction {em['uniqueness_gate']['novel_fraction']:.4f} against
-{em['uniqueness_gate']['n_priors_checked']} rasters</small>
-<small>Short alias <code>downloads/r5-candidate.tif</code> is byte-identical:
-{str(bool(same)).lower()}</small></div>
-<a class="button" href="{tif_rel}" download>↓ Download the submission TIFF (one click)</a>
-<a class="button secondary" href="r5.html">Full audit →</a></section>
-
-<h2>Is it OK to download and submit this file?</h2>
+<strong>{name}.tif</strong>
+<small>{n(em['bytes'])} bytes · SHA-256 <code>{em['sha256']}</code> · {n(S)} px · novel fraction
+{em['uniqueness_gate']['novel_fraction']:.4f} against {em['uniqueness_gate']['n_priors_checked']}
+rasters · all cells finite, values exactly {{0,1}}, so the portal's “Predicted values must be in range
+[0, 1]” rejection cannot occur on this file</small></div>
+<a class="button" href="{tif_rel}" download>↓ Download the R5 TIFF (one click)</a>
+<a class="button" href="downloads/r5-candidate.tif" download>↓ Same file, short name</a>
+<a class="button secondary" href="r5.html">R5 audit →</a></section>
+<h3>R5 — is it OK to download and submit?</h3>
 <div class="table-wrap"><table><thead><tr><th>question</th><th>answer of record</th></tr></thead><tbody>
-<tr><td>OK to <b>download</b>?</td><td><span class="pill ok">YES</span> — {str(bool(ok_dl)).upper()}.
-The file and every receipt are published for audit.</td></tr>
+<tr><td>OK to <b>download</b>?</td><td><span class="pill ok">YES</span> — {str(bool(ok_dl)).upper()}.</td></tr>
 <tr><td>Will the portal <b>accept</b> it?</td><td><span class="pill ok">YES</span> —
-{str(bool(ok_sub)).upper()}. Every clause of the organiser's published submission format is verified
-against the written bytes: single layer, float32, values in [0,1], EPSG:32611, 100 m, same bounds as
+{str(bool(ok_sub)).upper()}. Single layer, float32, values in [0,1], EPSG:32611, 100 m, same bounds as
 the training data, transform <code>[100, 0, 243350, 0, −100, 4508550]</code> identical to
-<code>sample_submission.tif</code>, all {n(v['finite_pixels'])} cells finite, no nodata tag.
-The “Predicted values must be in range [0, 1]” rejection needs a non-finite or out-of-range cell;
-<code>gems52.grid.write_geotiff</code> raises before writing if either exists and then re-reads the
-file, so a published file cannot carry the defect.</td></tr>
-<tr><td>Is it a <b>unique</b> submission?</td><td><span class="pill ok">YES</span> — measured, not
-named. Decoded pixel pattern differs from all {em['uniqueness_gate']['n_priors_checked']} rasters this
-repository has ever produced (the 13 organiser-scored files and every research artifact in
-<code>submission/</code> and <code>docs/downloads/</code>); novel fraction
-<b>{em['uniqueness_gate']['novel_fraction']:.4f}</b>; not equal to the literal union of priors;
-relation to the union: <code>{em['novelty']['relation_to_union']}</code>. An earlier build of this
-file reported 0.8021 because it excluded only the 13 scored priors — 19.8 % of its pixels had been
-emitted by this repo's own never-submitted research files. The exclusion set was widened and the file
-was rebuilt.</td></tr>
+<code>sample_submission.tif</code>, all {n(v['finite_pixels'])} cells finite, no nodata tag. Verified by
+re-reading the written bytes, not by trusting the writer.</td></tr>
+<tr><td><b>Unique</b>?</td><td><span class="pill ok">YES</span> — decoded-pixel comparison against all
+{em['uniqueness_gate']['n_priors_checked']} rasters this repository has produced: novel fraction
+{em['uniqueness_gate']['novel_fraction']:.4f}, not equal to the literal prior union, relation
+<code>{em['novelty']['relation_to_union']}</code>.</td></tr>
+<tr><td>Not merely the <b>union of the two views</b>?</td><td><span class="pill ok">CONFIRMED</span> —
+largest overlap with any reading of the union is
+{max(u['fraction_of_emission'] for u in uni['comparisons'].values()):.4f} of the emitted pixels
+(Jaccard ≤ {max(u['jaccard'] for u in uni['comparisons'].values()):.4f}), and Spearman(emitted score,
+view propensity) is
+{uni['rank_correlations']['spearman_emitted_score_vs_view_A_propensity']:+.3f} /
+{uni['rank_correlations']['spearman_emitted_score_vs_view_B_propensity']:+.3f}.
+<code>evidence/r5_not_the_union.json</code>.</td></tr>
 <tr><td>OK to spend the <b>weekly slot</b>?</td><td><span class="pill warn">NO — NOT ON THE EVIDENCE
-AVAILABLE</span>. The standing rule is not to spend a slot on an idea that has not beaten the holdout
-best. The hide-and-recover holdout is disqualified as a leaderboard proxy (Spearman −0.1045,
-p = 0.734, n = 13) and R5 reproduced that on new data, so <b>no candidate can clear the bar and none
-is claimed to</b>. Probabilities under the frozen prior: P(DTI &gt; 0.2778) = {p_champ:.3f},
-P(&gt; 0.3195) = {p_board:.3f}, P(&gt; 0.3774) = {p_top:.3f}; DTI at κ=1 is {dti1:.4f}.</td></tr>
-<tr><td>Is there an argument for submitting anyway?</td><td><span class="pill ok">YES, ONE</span> —
-the organiser's own. The Final Prize Round ($250k, five times the Initial Round) re-scores against a
-label set “updated by expert review of all Phase 1 submissions”, and staff state that “your fault
-predictions have an impact on final evaluation even if they are not the most performant in Phase 1”.
-This file is {n(S)} strictly novel candidates, each with written geological reasoning in
-<a href="downloads/a_only_reasoning_r5.csv">a_only_reasoning_r5.csv</a>, which is the input that round
-asks for. One file must serve both rounds, and the choice between them is the owner's, not the
-repository's.</td></tr>
-<tr><td>Is it a verified fault map?</td><td><span class="pill no">NO</span> — every pixel is a
-hypothesis for expert review, with five named competing explanations per candidate.</td></tr>
+AVAILABLE</span>. P(DTI &gt; 0.2778) = {p_champ:.3f}, P(&gt; 0.3195) = {p_board:.3f},
+P(&gt; 0.3774) = {p_top:.3f}; DTI at κ=1 is {dti1:.4f}. The standing rule — do not spend a slot on an
+idea that has not beaten the holdout best — cannot be satisfied by anything, because the hide-and-recover
+instrument is disqualified (Spearman −0.1045, p = 0.734, n = 13) and R5 reproduced that on new data.</td></tr>
+<tr><td>Any argument for submitting anyway?</td><td><span class="pill ok">YES, ONE</span> — the
+organiser's own: Phase 2 ($250k) re-scores a label set “updated by expert review of all Phase 1
+submissions”, and staff state predictions matter there “even if they are not the most performant in
+Phase 1”. This file is {n(S)} strictly novel candidates, each with written geological reasoning in
+<a href="downloads/a_only_reasoning_r5.csv">a_only_reasoning_r5.csv</a>.</td></tr>
 </tbody></table></div>
-
-<h2>Exact portal steps</h2>
+<h4>Exact portal steps for the R5 file</h4>
 <ol>
 <li>Sign in to the eligible account at the
-<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DOE GEMS competition
-page</a> and open <b>Submit</b>. The submission limit and the round deadlines are on
+<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">competition page</a> →
+<b>Submit</b>. Slot limits and deadlines are on
 <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/rules/">the rules page</a>;
-this repository cannot see the account and does not guess the remaining slot count.</li>
-<li>Click <a href="{tif_rel}" download>↓ Download the submission TIFF</a>. Do not reproject, rescale,
-re-save or rename the payload; the file is written to the exact competition grid and any rewrite risks
-the format clauses above.</li>
-<li>Set <b>File to submit</b> to the downloaded <code>.tif</code>.</li>
-<li>Set the submission <b>name</b> to
-<code>{name}</code>
-({len(name)} characters). It carries the round, the selection rule, the pixel count, the UTC build
-stamp and the SHA-256 prefix, so two submissions of this family can never be confused on disk.</li>
-<li>Paste this <b>note</b> ({len(NOTE)} of 200 characters):<br>
-<code>{NOTE}</code></li>
-<li>Submit. The expected public score is <b>not</b> a point value: under the frozen prior the
-interval is {proj['0.2778']['dti_at_kappa_lo']:.4f}–{proj['0.2778']['dti_at_kappa_hi']:.4f} with
-{dti1:.4f} at κ=1, and P(beating 0.2778) is {p_champ:.3f}. If the returned score lands outside that
-interval, that is information about the prior, and it belongs in
-<code>registry/irregularities.json</code> rather than in a re-tune.</li>
-<li>Before the deadline, remember that <b>one</b> submission must be selected for scoring across both
-rounds, without knowing the private-set performance (problem description). Selecting this file selects
-the Phase-2 discovery argument above; selecting a higher-Phase-1 file selects the other.</li>
+this repository cannot see the account and does not guess the remaining count.</li>
+<li>Click <a href="{tif_rel}" download>↓ Download the R5 TIFF</a>. Do not reproject, rescale, re-save or
+rename the payload.</li>
+<li>Set <b>File to submit</b> to that <code>.tif</code>.</li>
+<li>Set the submission <b>name</b> to <code>{name}</code> ({len(name)} characters).</li>
+<li>Paste this <b>note</b> ({len(NOTE)} of 200 characters): <code>{NOTE}</code></li>
+<li>Submit. The expected score is an interval, not a point:
+{proj['0.2778']['dti_at_kappa_lo']:.4f}–{proj['0.2778']['dti_at_kappa_hi']:.4f} with {dti1:.4f} at κ=1.
+If the returned score lands outside it, that is information about the prior and belongs in
+<code>registry/irregularities.json</code>, not in a re-tune.</li>
+<li>One submission must be selected for <b>both</b> rounds before the deadline, without knowing the
+private-set score.</li>
 </ol>
-
-<h2>If the portal rejects a file, check these four things in this order</h2>
-<ol>
-<li><b>“Predicted values must be in range [0, 1]”</b> — the file contains a NaN, an inf, or a value
-outside [0,1]. Historically this came from exports that wrote NaN outside the survey footprint
-(the <code>-nan</code> family of files). Verify with
-<code>python -c "import rasterio,numpy as np;a=rasterio.open('F.tif').read(1);print(np.isfinite(a).all(),a.min(),a.max(),a.dtype)"</code>.
-This artifact reports <code>{str(bool(v['all_finite']))} {v['min']} {v['max']} {v['dtype']}</code>
-from the bytes on disk.</li>
-<li><b>Grid or CRS mismatch</b> — compare the transform and CRS with
-<code>data/sample_submission.tif</code>; this file's are
-<code>{v['crs']}</code> and <code>{v['transform']}</code>.</li>
-<li><b>More than one band, or a wrong dtype</b> — the format requires a single float32 layer; this
-file is single-band float32 by construction.</li>
-<li><b>A ZIP containing more than the TIFF</b> — if a ZIP is used it must hold exactly one TIFF,
-byte-identical to the canonical download.</li>
-</ol>
-
-<h2>Budget sensitivity, for the round that pays five times as much</h2>
-<p class="small">Staff confirmed the public and private scores are a single pooled Tversky index over
-their respective subsets and that “the final re-evaluation will be on the entire GeoDAWN area”. The
-DTI-optimal budget scales linearly in |G|, so the final round's larger truth set favours a larger
-emission, and one file must serve both. The table is the bet, printed.</p>
-<div class="table-wrap"><table><thead><tr><th>S (px)</th><th>DTI at κ=1</th>
-<th>P(&gt;0.2778)</th><th>P(&gt;0.3195)</th><th>P(&gt;0.3774)</th></tr></thead><tbody>
-{''.join(f"<tr><td>{n(c['budget'])}</td><td>{c['dti_at_kappa1']:.4f}</td>"
-         f"<td>{c['p_beat_champion']:.3f}</td><td>{c['p_beat_board']:.3f}</td>"
-         f"<td>{c['p_beat_board_top']:.3f}</td></tr>" for c in em['projection_budget_curve'])}
-</tbody></table></div>
-{ARCHIVE}
-<p class="small">Shipped budget: <b>{n(em['budget_star'])} px</b>, the frozen
-<code>S* = 4|G|β/(1−β)</code> for the round whose |G| can be measured. κ is the field-quality factor
-on the measured credit curve <code>T = κ·471.6·S^0.2284</code>, prior κ ~ U[0.3, 1.3]; κ=1 means “as
-good as this family's own field at the same budget”, and the repo's 13 scored files span κ ≈ 0.1 to
-≈ 1.0.</p>
-</main></body></html>
+<p class="small">If a file is ever rejected with “Predicted values must be in range [0, 1]”, check in
+this order: (1) non-finite or out-of-range cells —
+<code>python -c "import rasterio,numpy as np;a=rasterio.open('F.tif').read(1);print(np.isfinite(a).all(),a.min(),a.max(),a.dtype)"</code>,
+which reports <code>{str(bool(v['all_finite']))} {v['min']} {v['max']} {v['dtype']}</code> for this
+artifact; (2) CRS/transform against <code>data/sample_submission.tif</code>; (3) band count and dtype;
+(4) if a ZIP is used, that it holds exactly one TIFF byte-identical to the canonical download.</p>
 """
-    (DOCS / "executive-summary.html").write_text(ex)
+
+    (DOCS / "index.html").write_text(
+        inject(DOCS / "index.html", index_fragment, "</section>"))
+    (DOCS / "executive-summary.html").write_text(
+        inject(DOCS / "executive-summary.html", exec_fragment, '<main id="main">'))
 
     # ---------------------------------------------------------------- audit page
     audit = HEAD.format(

@@ -2,13 +2,13 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="R5 audit trail: co-training receipt, independence test, pseudo-label readings, the disqualified promotion instrument, the frozen emission rules and every gate."><title>R5 audit · GEMSDOE52</title>
 <link rel="stylesheet" href="style.css"><script src="site.js" defer></script></head>
-<body><a class="skip" href="#main">Skip to evidence</a><header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html">Overview</a><a href="executive-summary.html">Submission guide</a><a href="r5.html">R5 audit</a><a href="h59.html">H59</a><a href="irregularities.html">Limitations</a><a href="sources.html">Sources</a><a href="downloads/index.html">Downloads</a></nav></header>
+<body><a class="skip" href="#main">Skip to evidence</a><header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html">Overview</a><a href="ctd5-audit.html">Run &amp; evidence</a><a href="executive-summary.html">Submission guide</a><a href="r5.html">R5 audit</a><a href="irregularities.html">Limitations</a><a href="sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header>
 <main id="main"><div class="eyebrow">R5 audit · every number below is read from a receipt</div>
 <h1>What was run, what it returned,<br>and what it does not license.</h1>
 <section class="download-bar" aria-label="R5 download">
-<div><strong>gems52-r5-novel-n5_strike_ridge-16681px-20261008T220210Z-33b27433-zeros.tif</strong><small>99,210 bytes · SHA-256
-<code>33b274331bcf0244f8dee42d963fce4cc5aa73ba5cbcc5e63dbf4fe9c4018761</code> · 16,681 px · re-running the build reproduces these bytes exactly</small></div>
-<a class="button" href="downloads/gems52-r5-novel-n5_strike_ridge-16681px-20261008T220210Z-33b27433-zeros.tif" download>↓ Download the submission TIFF (one click)</a>
+<div><strong>gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif</strong><small>99,231 bytes · SHA-256
+<code>d2bfb0f79328399354943bd166f2d2a206e9a49da46b4f1e8ccba0e4f0d8d002</code> · 16,681 px · re-running the build reproduces these bytes exactly</small></div>
+<a class="button" href="downloads/gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif" download>↓ Download the submission TIFF (one click)</a>
 <a class="button" href="downloads/r5-candidate.tif" download>↓ Same file, short name (r5-candidate.tif)</a>
 <a class="button secondary" href="executive-summary.html">How to submit →</a></section>
 <div class="status"><strong>Verdict of record.</strong> OK to download: <b>YES</b>. Portal-acceptable:
@@ -20,7 +20,7 @@ for expert review, not a verified fault.</div>
 
 <h2>1 · The frozen rules, printed before the results</h2>
 <div class="table-wrap"><table><thead><tr><th>rule</th><th>text</th></tr></thead><tbody>
-<tr><td><code>R1_strict_novelty</code></td><td>no pixel emitted by any of the 13 restored scored priors (union 1,365,956 px) and none within 200 m of the mapped catalogue</td></tr><tr><td><code>R2_budget</code></td><td>S* = 4|G|beta/(1-beta) with the measured beta=0.2284 and |G|=14088.7</td></tr><tr><td><code>R3_choice</code></td><td>largest coherence lift over the random control, subject to the dominant strike falling in the credited band 095-115 deg (array convention)</td></tr><tr><td><code>R4_prior</code></td><td>kappa ~ U(0.3, 1.3) on T(S) = kappa*471.6*S^0.2284</td></tr>
+<tr><td><code>R1_strict_novelty</code></td><td>no pixel emitted by any of the 13 restored scored priors (union 1,467,623 px) and none within 200 m of the mapped catalogue</td></tr><tr><td><code>R2_budget</code></td><td>S* = 4|G|beta/(1-beta) with the measured beta=0.2284 and |G|=14088.7</td></tr><tr><td><code>R3_choice</code></td><td>largest coherence lift over the random control, subject to the dominant strike falling in the credited band 095-115 deg (array convention)</td></tr><tr><td><code>R4_prior</code></td><td>kappa ~ U(0.3, 1.3) on T(S) = kappa*471.6*S^0.2284</td></tr>
 </tbody></table></div>
 
 <h2>2 · Co-training, as the brief specifies it</h2>
@@ -65,7 +65,7 @@ it is the next implementation item, not a result.</p>
 <div class="table-wrap"><table><thead><tr><th>candidate</th><th>what it is</th><th>placed</th>
 <th>mean coh σ4</th><th>σ6</th><th>σ10</th><th>frac&gt;0.8</th><th>strike</th><th>in band</th>
 <th>lift</th></tr></thead><tbody>
-<tr><td><code>N3_ridge_C3</code></td><td>the same rank, walked along the >=3-family ridge network</td><td>9,259</td><td>0.6035</td><td>0.6021</td><td>0.6109</td><td>0.4197</td><td>75°</td><td>no</td><td>+0.7088</td></tr><tr><td><code>N5_strike_ridge</code></td><td>N4's score walked along the >=2-family ridge network</td><td>16,681</td><td>0.5350</td><td>0.5193</td><td>0.5043</td><td>0.2520</td><td>95°</td><td>yes</td><td>+0.4726</td></tr><tr><td><code>N2_ridge_C2</code></td><td>the same rank, walked along the >=2-family ridge network (1-px wide)</td><td>16,681</td><td>0.4991</td><td>0.5147</td><td>0.5381</td><td>0.2165</td><td>95°</td><td>yes</td><td>+0.4012</td></tr><tr><td><code>N6_habitat</code></td><td>the two-view co-training propensity (contrast: knowledge/10 §6 says habitat != credit)</td><td>16,681</td><td>0.4408</td><td>0.4912</td><td>0.5420</td><td>0.0633</td><td>85°</td><td>no</td><td>+0.1897</td></tr><tr><td><code>N1_trace_field</code></td><td>six-family corroborated trace rank + persistence, peaks over the whole novel set</td><td>16,681</td><td>0.4047</td><td>0.4490</td><td>0.4935</td><td>0.0640</td><td>95°</td><td>yes</td><td>+0.1543</td></tr><tr><td><code>N4_strike_gated</code></td><td>trace rank gated by the network's own coherence x credited-azimuth match</td><td>16,681</td><td>0.3922</td><td>0.4092</td><td>0.4249</td><td>0.0412</td><td>5°</td><td>no</td><td>+0.1190</td></tr><tr><td><code>N9_random_control</code></td><td>uniform random over the strictly-novel pool (the control everything is lift over)</td><td>16,681</td><td>0.2997</td><td>0.3746</td><td>0.4261</td><td>0.0147</td><td>95°</td><td>yes</td><td>+0.0000</td></tr>
+<tr><td><code>N3_ridge_C3</code></td><td>the same rank, walked along the >=3-family ridge network</td><td>9,165</td><td>0.6010</td><td>0.5990</td><td>0.6087</td><td>0.4145</td><td>75°</td><td>no</td><td>+0.7016</td></tr><tr><td><code>N5_strike_ridge</code></td><td>N4's score walked along the >=2-family ridge network</td><td>16,681</td><td>0.5326</td><td>0.5181</td><td>0.5047</td><td>0.2472</td><td>95°</td><td>yes</td><td>+0.4658</td></tr><tr><td><code>N2_ridge_C2</code></td><td>the same rank, walked along the >=2-family ridge network (1-px wide)</td><td>16,681</td><td>0.4965</td><td>0.5129</td><td>0.5353</td><td>0.2119</td><td>95°</td><td>yes</td><td>+0.3944</td></tr><tr><td><code>N6_habitat</code></td><td>the two-view co-training propensity (contrast: knowledge/10 §6 says habitat != credit)</td><td>16,681</td><td>0.4394</td><td>0.4896</td><td>0.5400</td><td>0.0647</td><td>85°</td><td>no</td><td>+0.1902</td></tr><tr><td><code>N1_trace_field</code></td><td>six-family corroborated trace rank + persistence, peaks over the whole novel set</td><td>16,681</td><td>0.4041</td><td>0.4492</td><td>0.4941</td><td>0.0636</td><td>95°</td><td>yes</td><td>+0.1538</td></tr><tr><td><code>N4_strike_gated</code></td><td>trace rank gated by the network's own coherence x credited-azimuth match</td><td>16,681</td><td>0.3926</td><td>0.4089</td><td>0.4255</td><td>0.0421</td><td>5°</td><td>no</td><td>+0.1207</td></tr><tr><td><code>N9_random_control</code></td><td>uniform random over the strictly-novel pool (the control everything is lift over)</td><td>16,681</td><td>0.3000</td><td>0.3747</td><td>0.4256</td><td>0.0140</td><td>95°</td><td>yes</td><td>+0.0000</td></tr>
 <tr><td><i>champion cloud</i></td><td><i>the 0.2778 file's own 37,638 dots, as the reference</i></td>
 <td>37,638</td><td><b>0.5309</b></td>
 <td>0.5488</td><td>0.5657</td>
@@ -78,12 +78,12 @@ it is the next implementation item, not a result.</p>
 <td>—</td><td>—</td></tr>
 </tbody></table></div>
 <p class="small">Coherence depends on dot density as well as arrangement, so the shipped file's
-0.2520 above 0.8 is <b>not</b> comparable to the champion's
+0.2472 above 0.8 is <b>not</b> comparable to the champion's
 0.1585 at 2.3× the dots; the comparison that decides is against the
 random control at the same budget. Chosen: <code>N5_strike_ridge</code>, lift
-+0.4726, strike 95° inside
++0.4658, strike 95° inside
 the credited band. Placed 16,681 of 16,681 requested dots; candidate
-pool seen 465,850.</p>
+pool seen 450,390.</p>
 
 <h2>4 · The gates, read off the written bytes</h2>
 <div class="table-wrap"><table><thead><tr><th>check</th><th>value</th></tr></thead><tbody>
@@ -94,14 +94,14 @@ none</td></tr>
 0, nodata tag <code>None</code>, dtype float32</td></tr>
 <tr><td>grid</td><td>EPSG:32611, transform [100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0]</td></tr>
 <tr><td>uniqueness</td><td>pattern unique true
-against 55 rasters; novel fraction
+against 71 rasters; novel fraction
 1.0000; equals the literal prior union
 false; prior union
-1,365,956 px</td></tr>
+1,467,623 px</td></tr>
 <tr><td>novelty vs the 13 organiser-scored files alone</td>
 <td>1.0000</td></tr>
 <tr><td>distance to the mapped catalogue</td><td>min 223.6 m,
-median 2,360.1 m (the organiser's mask is pixel-exact; the
+median 2,402.1 m (the organiser's mask is pixel-exact; the
 200 m ring is this repository's own rule, and <code>IR-R5-006</code> records that it is not the
 organiser's)</td></tr>
 <tr><td>OK to download / OK to submit (portal-acceptable)</td><td>TRUE /
@@ -123,21 +123,21 @@ gate compares against prior submissions. <code>scripts/run_r5_union_check.py</co
 every set the phrase could mean; receipt <code>evidence/r5_not_the_union.json</code>.</p>
 <div class="table-wrap"><table><thead><tr><th>comparison set</th><th>px in set</th>
 <th>shared with the emission</th><th>fraction of the 16,681 emitted</th><th>Jaccard</th></tr></thead><tbody>
-<tr><td>disagreement union A only or B only</td><td>87,471</td><td>332</td><td>0.0199</td><td>0.0032</td></tr><tr><td>topS of pointwise max rank S16681</td><td>16,681</td><td>71</td><td>0.0043</td><td>0.0021</td></tr><tr><td>half from each view S8340 each</td><td>16,662</td><td>71</td><td>0.0043</td><td>0.0021</td></tr><tr><td>view A top S16681</td><td>16,681</td><td>75</td><td>0.0045</td><td>0.0023</td></tr><tr><td>view B top S16681</td><td>16,681</td><td>57</td><td>0.0034</td><td>0.0017</td></tr><tr><td>A only only</td><td>43,672</td><td>181</td><td>0.0109</td><td>0.0030</td></tr><tr><td>B only only</td><td>43,799</td><td>151</td><td>0.0091</td><td>0.0025</td></tr>
+<tr><td>disagreement union A only or B only</td><td>87,471</td><td>333</td><td>0.0200</td><td>0.0032</td></tr><tr><td>topS of pointwise max rank S16681</td><td>16,681</td><td>70</td><td>0.0042</td><td>0.0021</td></tr><tr><td>half from each view S8340 each</td><td>16,662</td><td>70</td><td>0.0042</td><td>0.0021</td></tr><tr><td>view A top S16681</td><td>16,681</td><td>72</td><td>0.0043</td><td>0.0022</td></tr><tr><td>view B top S16681</td><td>16,681</td><td>59</td><td>0.0035</td><td>0.0018</td></tr><tr><td>A only only</td><td>43,672</td><td>177</td><td>0.0106</td><td>0.0029</td></tr><tr><td>B only only</td><td>43,799</td><td>156</td><td>0.0094</td><td>0.0026</td></tr>
 </tbody></table></div>
 <p class="small">Spearman between the emitted pixels' own score and each view's propensity:
-+0.0231 (view A),
--0.0120 (view B),
-+0.0052 (pointwise max) —
-indistinguishable from zero. Not the union of the two views under any of the four readings. The largest overlap is 0.0199 of the emitted pixels (disagreement_union_A_only_or_B_only), and the largest Jaccard is 0.0032. The emission is a six-family corroboration rank gated by the network's own strike coherence and walked along 1-px ridges; the two co-training propensities enter it only through the family responses and the persistence maps, which is why the rank correlations are modest rather than near 1.</p>
++0.0275 (view A),
+-0.0072 (view B),
++0.0119 (pointwise max) —
+indistinguishable from zero. Not the union of the two views under any of the four readings. The largest overlap is 0.0200 of the emitted pixels (disagreement_union_A_only_or_B_only), and the largest Jaccard is 0.0032. The emission is a six-family corroboration rank gated by the network's own strike coherence and walked along 1-px ridges; the two co-training propensities enter it only through the family responses and the persistence maps, which is why the rank correlations are modest rather than near 1.</p>
 <div class="status"><strong>Read this with the table.</strong> The confirmation is as strong as it can
 be, and it implies something the site will not hide: <b>the shipped emission is not a co-training
 product.</b> The brief's method was built, run and measured — the independence premise held at
 0.2276, the pseudo-label exchange moved view A
 -0.0247 AUC — and then the co-training propensity ranking (candidate
 <code>N6_habitat</code>) lost on the frozen rule: coherence lift
-+0.1897
-against +0.4726 for the chosen field, dominant strike outside the
++0.1902
+against +0.4658 for the chosen field, dominant strike outside the
 credited band, and 0.3 % overlap with what shipped. What shipped came from the six-family
 corroboration detector and the strike-coherence instrument.</div>
 

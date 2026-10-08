@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-08T20:03:10Z",
+ "generated_utc": "2026-10-08T23:42:20Z",
  "a_only_definition": "View A propensity in its top 1 % over the legal (off-ring) set AND View B propensity below its 90th percentile, per cotrain_r5.disagreement_strata",
  "a_only_px": 43672,
  "components_total": 22287,
@@ -9,8 +9,8 @@
   "px": 21356,
   "csv": "docs/downloads/a_only_reasoning_r5.csv",
   "rows": 4164,
-  "rows_carrying_emitted_dots": 465,
-  "emitted_dots_on_a_only": 1834.0
+  "rows_carrying_emitted_dots": 463,
+  "emitted_dots_on_a_only": 1830.0
  },
  "below_review_resolution": {
   "components": 18123,
@@ -71,5 +71,5 @@
   "radiometric_U": "rad band 3 = rad_U",
   "lidar_relief": "lidar band 9 = relief"
  },
- "seconds": 48.59042143821716
+ "seconds": 47.7768337726593
 }

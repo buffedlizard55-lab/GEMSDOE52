@@ -1,12 +1,12 @@
 {
  "round": "R5",
- "file": "gems52-r5-novel-n5_strike_ridge-16681px-20261008T220210Z-33b27433-zeros.tif",
- "stem": "gems52-r5-novel-n5_strike_ridge-16681px-20261008T220210Z-33b27433-zeros",
- "submission_name": "gems52-r5-novel-n5_strike_ridge-16681px-20261008T220210Z-33b27433-zeros",
+ "file": "gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif",
+ "stem": "gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros",
+ "submission_name": "gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros",
  "note": "R5 novel 16,681px: six-family trace rank, ridge-walked, gated by strike coherence x the credited 010-020deg azimuth. 100% novel vs 55 repo rasters, off the 200m ring. Research artifact.",
  "note_chars": 185,
- "bytes": 99210,
- "sha256": "33b274331bcf0244f8dee42d963fce4cc5aa73ba5cbcc5e63dbf4fe9c4018761",
+ "bytes": 99231,
+ "sha256": "d2bfb0f79328399354943bd166f2d2a206e9a49da46b4f1e8ccba0e4f0d8d002",
  "nonzero_px": 16681,
  "verdict": "FORMAT-VALID AND UNIQUE \u2014 OK TO DOWNLOAD; PORTAL-ACCEPTABLE; NOT SLOT-APPROVED BECAUSE NO PROMOTION INSTRUMENT IN THIS REPO CAN RANK A NOVEL FIELD",
  "approved_for_weekly_slot": false,
@@ -22,9 +22,10 @@
  "budget_rule": "S* = 4|G|beta/(1-beta) with the measured beta=0.2284 and |G|=14088.7",
  "novelty": {
   "novel_vs_all_repo_rasters": 1.0,
-  "n_repo_rasters": 55,
+  "own_builds_excluded_from_prior_scan": 0,
+  "n_repo_rasters": 71,
   "novel_vs_13_organiser_scored": 1.0,
-  "union_px": 1365956,
+  "union_px": 1467623,
   "relation_to_union": "strictly-novel-and-selective",
   "support_novelty_gate_ok": true
  },
@@ -35,7 +36,7 @@
  "uniqueness": {
   "ok": true,
   "pattern_unique": true,
-  "n_priors_checked": 55,
+  "n_priors_checked": 71,
   "novel_fraction": 1.0,
   "equals_literal_prior_union": false,
   "relation": "strictly-novel-and-selective"
@@ -63,7 +64,7 @@
  },
  "distance_to_catalogue_m": {
   "min": 223.60679774997897,
-  "median": 2360.084744241189
+  "median": 2402.082429892863
  },
  "candidate": "N5_strike_ridge",
  "candidate_row": {
@@ -71,47 +72,47 @@
   "what": "N4's score walked along the >=2-family ridge network",
   "placed": 16681,
   "requested": 16681,
-  "candidates_seen": 465850,
+  "candidates_seen": 450390,
   "pool": "ridge",
   "prefilter": false,
   "novel_fraction": 1.0,
   "min_distance_to_prior_px": 1.0,
   "n_dots": 16681,
-  "mean_coherence_sigma4": 0.5350075960159302,
-  "frac_coh_above_0.8_sigma4": 0.25196331155206525,
-  "mean_coherence_sigma6": 0.519349217414856,
-  "frac_coh_above_0.8_sigma6": 0.24147233379293806,
-  "mean_coherence_sigma10": 0.504258930683136,
-  "frac_coh_above_0.8_sigma10": 0.21287692584377435,
+  "mean_coherence_sigma4": 0.5326048135757446,
+  "frac_coh_above_0.8_sigma4": 0.24716743600503566,
+  "mean_coherence_sigma6": 0.5181288719177246,
+  "frac_coh_above_0.8_sigma6": 0.24105269468257298,
+  "mean_coherence_sigma10": 0.5047341585159302,
+  "frac_coh_above_0.8_sigma10": 0.21281697739943647,
   "dominant_strike_deg_array": 95.0,
-  "dominant_strike_frac": 0.09675678916132126,
+  "dominant_strike_frac": 0.09705653138301061,
   "strike_hist_10deg": [
-   925,
-   495,
-   612,
-   653,
-   814,
-   786,
-   1155,
+   920,
+   502,
+   602,
+   632,
+   810,
+   767,
+   1163,
+   1338,
+   1503,
+   1619,
    1285,
-   1495,
-   1614,
-   1271,
-   1098,
-   1007,
-   947,
-   588,
-   536,
-   552,
-   848
+   1107,
+   1037,
+   939,
+   573,
+   525,
+   513,
+   846
   ],
-  "frac_in_credited_band": 0.15838378994065103,
+  "frac_in_credited_band": 0.1584437383849889,
   "in_credited_band": true,
   "median_distance_to_prior_px": 1.0,
   "min_distance_to_catalogue_m": 223.60679774997897,
-  "median_distance_to_catalogue_m": 2360.084744241189,
-  "coherence_lift_over_random": 0.4726192499459858,
-  "coherence_lift_over_random_sigma10": 0.07811868190765381
+  "median_distance_to_catalogue_m": 2402.082429892863,
+  "coherence_lift_over_random": 0.46584469188060784,
+  "coherence_lift_over_random_sigma10": 0.07915693521499634
  },
  "reference_champion_cloud": {
   "n_dots": 37638,
@@ -180,7 +181,7 @@
   "in_credited_band": true
  },
  "frozen_rules": {
-  "R1_strict_novelty": "no pixel emitted by any of the 13 restored scored priors (union 1,365,956 px) and none within 200 m of the mapped catalogue",
+  "R1_strict_novelty": "no pixel emitted by any of the 13 restored scored priors (union 1,467,623 px) and none within 200 m of the mapped catalogue",
   "R2_budget": "S* = 4|G|beta/(1-beta) with the measured beta=0.2284 and |G|=14088.7",
   "R3_choice": "largest coherence lift over the random control, subject to the dominant strike falling in the credited band 095-115 deg (array convention)",
   "R4_prior": "kappa ~ U(0.3, 1.3) on T(S) = kappa*471.6*S^0.2284"
@@ -345,8 +346,8 @@
    "px": 21356,
    "csv": "docs/downloads/a_only_reasoning_r5.csv",
    "rows": 4164,
-   "rows_carrying_emitted_dots": 465,
-   "emitted_dots_on_a_only": 1834.0
+   "rows_carrying_emitted_dots": 463,
+   "emitted_dots_on_a_only": 1830.0
   },
   "below_review_resolution": {
    "components": 18123,
@@ -363,8 +364,8 @@
   "strict_abstention_count": 1779,
   "abstention_note": "the loose reading (View B < 90th percentile) is what defines the stratum; strict_abstention_count is how many reviewed candidates also fall inside the strict 40th-80th percentile band, which is the reading 'abstains' usually means to a geologist"
  },
- "download": "downloads/gems52-r5-novel-n5_strike_ridge-16681px-20261008T220210Z-33b27433-zeros.tif",
+ "download": "downloads/gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif",
  "download_short": "downloads/r5-candidate.tif",
  "short_alias_byte_identical": true,
- "generated_utc": "2026-10-08T23:16:31Z"
+ "generated_utc": "2026-10-08T23:44:04Z"
 }

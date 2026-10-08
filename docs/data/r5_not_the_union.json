@@ -1,65 +1,65 @@
 {
- "generated_utc": "2026-10-08T23:15:25Z",
- "emission": "gems52-r5-novel-n5_strike_ridge-16681px-20261008T220210Z-33b27433-zeros",
+ "generated_utc": "2026-10-08T23:41:32Z",
+ "emission": "gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros",
  "emitted_px": 16681,
  "comparisons": {
   "disagreement_union_A_only_or_B_only": {
    "px_in_set": 87471,
-   "px_shared_with_emission": 332,
-   "fraction_of_emission": 0.01990288352017265,
-   "fraction_of_set": 0.0037955436659006985,
-   "jaccard": 0.0031978424195723367
+   "px_shared_with_emission": 333,
+   "fraction_of_emission": 0.01996283196451052,
+   "fraction_of_set": 0.0038069760263401585,
+   "jaccard": 0.003207505369922654
   },
   "topS_of_pointwise_max_rank_S16681": {
    "px_in_set": 16681,
-   "px_shared_with_emission": 71,
-   "fraction_of_emission": 0.0042563395479887295,
-   "fraction_of_set": 0.0042563395479887295,
-   "jaccard": 0.002132708539845604
+   "px_shared_with_emission": 70,
+   "fraction_of_emission": 0.00419639110365086,
+   "fraction_of_set": 0.00419639110365086,
+   "jaccard": 0.0021026072329688814
   },
   "half_from_each_view_S8340_each": {
    "px_in_set": 16662,
-   "px_shared_with_emission": 71,
-   "fraction_of_emission": 0.0042563395479887295,
-   "fraction_of_set": 0.0042611931340775415,
-   "jaccard": 0.0021339264246213034
+   "px_shared_with_emission": 70,
+   "fraction_of_emission": 0.00419639110365086,
+   "fraction_of_set": 0.004201176329372224,
+   "jaccard": 0.002103807892285036
   },
   "view_A_top_S16681": {
    "px_in_set": 16681,
-   "px_shared_with_emission": 75,
-   "fraction_of_emission": 0.004496133325340207,
-   "fraction_of_set": 0.004496133325340207,
-   "jaccard": 0.0022531318532760538
+   "px_shared_with_emission": 72,
+   "fraction_of_emission": 0.004316287992326599,
+   "fraction_of_set": 0.004316287992326599,
+   "jaccard": 0.0021628116551516974
   },
   "view_B_top_S16681": {
    "px_in_set": 16681,
-   "px_shared_with_emission": 57,
-   "fraction_of_emission": 0.003417061327258558,
-   "fraction_of_set": 0.003417061327258558,
-   "jaccard": 0.0017114547365260472
+   "px_shared_with_emission": 59,
+   "fraction_of_emission": 0.0035369582159342967,
+   "fraction_of_set": 0.0035369582159342967,
+   "jaccard": 0.0017716121670720356
   },
   "A_only_only": {
    "px_in_set": 43672,
-   "px_shared_with_emission": 181,
-   "fraction_of_emission": 0.010850668425154367,
-   "fraction_of_set": 0.004144531965561458,
-   "jaccard": 0.003008043608322808
+   "px_shared_with_emission": 177,
+   "fraction_of_emission": 0.010610874647802889,
+   "fraction_of_set": 0.004052940098919216,
+   "jaccard": 0.002941371975538421
   },
   "B_only_only": {
    "px_in_set": 43799,
-   "px_shared_with_emission": 151,
-   "fraction_of_emission": 0.009052215095018284,
-   "fraction_of_set": 0.0034475672960569874,
-   "jaccard": 0.0025029422002685276
+   "px_shared_with_emission": 156,
+   "fraction_of_emission": 0.009351957316707632,
+   "fraction_of_set": 0.003561725153542318,
+   "jaccard": 0.00258603540879252
   }
  },
  "rank_correlations": {
-  "spearman_emitted_score_vs_view_A_propensity": 0.023058240560943584,
-  "spearman_emitted_score_vs_view_B_propensity": -0.012043392314333502,
-  "spearman_emitted_score_vs_pointwise_max": 0.005182500303581385,
+  "spearman_emitted_score_vs_view_A_propensity": 0.027532966038791372,
+  "spearman_emitted_score_vs_view_B_propensity": -0.007212979259218927,
+  "spearman_emitted_score_vs_pointwise_max": 0.011930013056300367,
   "spearman_trace_field_vs_view_A_over_legal": 0.003942815462655372,
   "spearman_trace_field_vs_view_B_over_legal": 0.0007427098569877752
  },
- "verdict": "Not the union of the two views under any of the four readings. The largest overlap is 0.0199 of the emitted pixels (disagreement_union_A_only_or_B_only), and the largest Jaccard is 0.0032. The emission is a six-family corroboration rank gated by the network's own strike coherence and walked along 1-px ridges; the two co-training propensities enter it only through the family responses and the persistence maps, which is why the rank correlations are modest rather than near 1.",
- "seconds": 23.124318599700928
+ "verdict": "Not the union of the two views under any of the four readings. The largest overlap is 0.0200 of the emitted pixels (disagreement_union_A_only_or_B_only), and the largest Jaccard is 0.0032. The emission is a six-family corroboration rank gated by the network's own strike coherence and walked along 1-px ridges; the two co-training propensities enter it only through the family responses and the persistence maps, which is why the rank correlations are modest rather than near 1.",
+ "seconds": 24.159205198287964
 }

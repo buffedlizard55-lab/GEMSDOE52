@@ -1,0 +1,90 @@
+{
+ "rows": [
+  {
+   "prior": "champion_h33_2_b2",
+   "board": 0.2778,
+   "instrument": 0.004789982030808221,
+   "mean_px": 37654.0
+  },
+  {
+   "prior": "gems24-h25-1-dotted-h19-5-d2-8-202",
+   "board": 0.26,
+   "instrument": 0.11632436315994016,
+   "mean_px": 39257.25
+  },
+  {
+   "prior": "gems24-h25-1-dotted-h19-5-d1-5-202",
+   "board": 0.2477,
+   "instrument": 0.11446938398381472,
+   "mean_px": 53486.25
+  },
+  {
+   "prior": "gems27-topo-gap-closure-t-v2-on-d1",
+   "board": 0.2449,
+   "instrument": 0.11431922140619902,
+   "mean_px": 54665.75
+  },
+  {
+   "prior": "gems19-h19-5-powerlaw-budget-multi",
+   "board": 0.1922,
+   "instrument": 0.0897307957062671,
+   "mean_px": 108123.75
+  },
+  {
+   "prior": "gems19-h19-4-multiline-corroborate",
+   "board": 0.1894,
+   "instrument": 0.08967399989955402,
+   "mean_px": 110627.75
+  },
+  {
+   "prior": "gems16-h16-1-topo-geophys-baseline",
+   "board": 0.1855,
+   "instrument": 0.08926636155349724,
+   "mean_px": 110881.5
+  },
+  {
+   "prior": "gems10-h28-dotted-ridge-20260928T0",
+   "board": 0.1839,
+   "instrument": 0.24560579106757183,
+   "mean_px": 58856.25
+  },
+  {
+   "prior": "gemsdoe-ens12-adopted-7f00890a",
+   "board": 0.1563,
+   "instrument": 0.1122361890479579,
+   "mean_px": 151774.0
+  },
+  {
+   "prior": "8GEMSDOE_Hedge-v2_submission",
+   "board": 0.1563,
+   "instrument": 0.34081776040114925,
+   "mean_px": 165323.0
+  },
+  {
+   "prior": "gems10-h25-ctx-ridge-20260927T2329",
+   "board": 0.128,
+   "instrument": 0.20610298208662953,
+   "mean_px": 140807.0
+  },
+  {
+   "prior": "13gems_20261001_r13-lattice-s5_v2_",
+   "board": 0.0904,
+   "instrument": 0.10819761826695079,
+   "mean_px": 197757.0
+  },
+  {
+   "prior": "gemsdoe9-PLACEHOLDER-2314b599",
+   "board": 0.0107,
+   "instrument": 0.022290651222503993,
+   "mean_px": 139883.25
+  }
+ ],
+ "spearman_board_vs_instrument": -0.09903723261853131,
+ "p_value": 0.7475313978174702,
+ "n": 13,
+ "champion_instrument_dti": 0.004789982030808221,
+ "placeholder_instrument_dti": 0.022290651222503993,
+ "champion_scores_below_random_placeholder": true,
+ "board_source": "owner-reported filename attribution, NOT organiser-authenticated",
+ "verdict": "the hide-and-recover instrument ranks the 0.2778 champion below a random placeholder and is not correlated with the owner-reported board across the 13 priors, so it cannot rank candidates for this competition; it measures how much mass a field puts near the published catalogue, and the board does not reward that.  Not a demonstrable inversion at n=13 either."
+}

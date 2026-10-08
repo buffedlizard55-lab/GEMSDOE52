@@ -21,7 +21,7 @@ def sha(path: Path) -> str:
 def _current_round(sub: dict) -> str:
     """Which round owns `submission/LATEST.txt`, read from the receipt rather than hard-coded."""
     f = sub.get("file", "")
-    for tag in ("h59", "h58", "h57", "h56", "h55", "h54"):
+    for tag in ("h60", "h59", "h58", "h57", "h56", "h55", "h54"):
         if f"-{tag}-" in f:
             return tag.upper()
     return "UNKNOWN"
@@ -79,7 +79,7 @@ def test_current_artifact_is_downloadable_but_not_slot_approved() -> None:
         assert ds.crs.to_epsg() == 32611
         assert (ds.height, ds.width) == (3730, 3292)
         assert tuple(ds.transform)[:6] == (100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)
-        assert np.isfinite(data).all(), "NaN is the mechanism behind the historical [0,1] rejection"
+        assert np.isfinite(data).all(), "local all-finite policy; historical portal rejection cause is unconfirmed"
         assert set(np.unique(data).tolist()) == {0.0, 1.0}
         assert int(np.count_nonzero(data)) == sub["nonzero_px"]
 

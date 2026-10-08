@@ -1,0 +1,35 @@
+{
+  "identified_utc": "2026-10-08T19:42:08.167538+00:00",
+  "issue": "Evaluation/placement domain outside fixed quadrants followed withheld segment tails. This is a held-label-informed spatial selection mechanism, despite no component overlap in training.",
+  "original_metric_arithmetic_unchanged": true,
+  "strict_holdout_valid": false,
+  "original_scores_retained_as_exploratory": true,
+  "rows": [
+    {
+      "fold": 0,
+      "label_informed_extra_evaluation_pixels": 909,
+      "withheld_positive_pixels_in_extra": 81
+    },
+    {
+      "fold": 1,
+      "label_informed_extra_evaluation_pixels": 229,
+      "withheld_positive_pixels_in_extra": 3
+    },
+    {
+      "fold": 2,
+      "label_informed_extra_evaluation_pixels": 960,
+      "withheld_positive_pixels_in_extra": 108
+    },
+    {
+      "fold": 3,
+      "label_informed_extra_evaluation_pixels": 283,
+      "withheld_positive_pixels_in_extra": 25
+    }
+  ],
+  "fix": "Shared spatial.folds now uses label-blind quadrants, hides every intersecting component in full, and buffers both region and tails. Legacy helper remains explicitly reproduction-only.",
+  "new_models_fit": 0,
+  "new_placements": 0,
+  "corrected_protocol_evaluated": false,
+  "reason": "Do not retrain or rescue a candidate after the registered duplicate STOP.",
+  "requires_future_preregistration_and_rerun": true
+}

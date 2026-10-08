@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "sha256": "a6e6e44aebaf057989e254bd5ce3729e5a94836c0e5687a95e91e3fc8a40c686",
+  "rows": {
+    "segment_csv": 1521,
+    "pixel_csv": 12000
+  },
+  "bands": 1,
+  "crs": "EPSG:32611",
+  "shape": [
+    3730,
+    3292
+  ],
+  "transform": [
+    100,
+    0,
+    243350,
+    0,
+    -100,
+    4508550
+  ],
+  "finite_inside_footprint": true,
+  "finite_everywhere": true,
+  "min": 0.0,
+  "max": 1.0,
+  "grid_matches_template": true,
+  "positive_pixels": 12000,
+  "positive_outside_footprint": 0,
+  "min_dot_spacing_px": 3.0,
+  "served": [
+    {
+      "path": "downloads/ctd5-research.tif",
+      "bytes": 83917,
+      "content_type": "image/tiff",
+      "sha256": "a6e6e44aebaf057989e254bd5ce3729e5a94836c0e5687a95e91e3fc8a40c686"
+    },
+    {
+      "path": "downloads/ctd5-research.zip",
+      "bytes": 38440,
+      "content_type": "application/zip",
+      "sha256": "5bf48b9330891a775d33d1553b8121d9894fad729ae01b6bf85bbb16ff521728"
+    },
+    {
+      "path": "data/ctd5_run_card.json",
+      "bytes": 6723,
+      "content_type": "application/json",
+      "sha256": "4af8dfd31c10f8a0fde13d0fc13cee7c721b64243a5221e7db428a0ff2cc5cf9"
+    }
+  ],
+  "verdict": "negative",
+  "submit_ok": false,
+  "strict_holdout_valid": false,
+  "note": "Local independent byte/receipt checks; no organizer or geological acceptance inferred."
+}

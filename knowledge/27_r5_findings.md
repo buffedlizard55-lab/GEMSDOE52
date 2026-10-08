@@ -95,7 +95,7 @@ The interval is 0.4 % wide, so every downstream figure is unaffected; the *word*
 earned and is corrected here. Independently: the organiser says the truth is "faults that are not
 contained within the current public USGS database" (`knowledge/25` §1), so `|G|` counts expert-mapped
 **new** faults only, and the mask is pixel-exact on the known ones — which is why `|G|` is a small
-number and why the catalogue's own 60,988 px are irrelevant to it except as geometry (§H60-A).
+number and why the catalogue's own 60,988 px are irrelevant to it except as geometry (§R5-H1).
 
 ## 4. What it would take to beat each bar
 
@@ -143,7 +143,7 @@ legitimate way to grow `S` is to have pixels above the bar.
 entire GeoDAWN area" with expanded labels (`knowledge/25` §5). If the whole-area `|G|` is 2× the
 effective public one, `S*` is 33,400; if 4×, 66,800. One file serves both rounds, so the shipped
 budget is a bet on the round whose `|G|` can be measured. It is placed on the measurable one, and the
-bet is written down (`knowledge/26` H60-F).
+bet is written down (`knowledge/32` R5-H6).
 
 ## 5. Why no instrument in this repo can rank a novel field — replicated this round on new data
 
@@ -185,14 +185,20 @@ bytes.
 the script's docstring and in `evidence/r5_novel_emission.json → frozen_rules`; the numbers below are
 what came out.
 
-**R1 — strictly novel.** No pixel emitted by any of the **55** rasters this repo has ever produced
-(the 13 organiser-scored files *and* every research artifact in `submission/` and `docs/downloads/`;
-their union is 1,365,956 px), and no pixel within 200 m of a mapped trace. Measured result:
-`novel_fraction = 1.0000` against all 55, and 1.0000 against the 13 scored files separately. The
-first build of this file reported 0.8021, because it excluded only the 13 scored priors and 19.8 % of
-its pixels turned out to have been emitted by this repo's own never-submitted research artifacts;
-the exclusion set was widened and the file was rebuilt. That is the difference between "unique" as a
-claim and unique as a measurement.
+**R1 — strictly novel.** No pixel emitted by any of the **71**
+rasters this repo has ever produced (the 13 organiser-scored files *and* every research artifact in
+`submission/` and `docs/downloads/`, including the CTD5, H60, H60C and H60D rounds merged from `main`
+in parallel with this one; their union is 1,467,623 px), and no pixel within 200 m of
+a mapped trace. Measured result: `novel_fraction = 1.0000` against
+all 71, and
+1.0000 against the 13 scored files separately. The rule was
+enforced twice by rebuild rather than argued about. The first build reported 0.8021 because it excluded
+only the 13 scored priors — 19.8 % of its pixels had been emitted by this repo's own never-submitted
+research artifacts — and the second build reported 0.9582 after `main`'s four parallel rounds landed,
+i.e. 4.2 % of the emission had been emitted by another session's artifact hours earlier. Both times the
+exclusion set was widened and the file was rebuilt. That is the difference between "unique" as a claim
+and unique as a measurement, and it is why `scripts/check_site.py` recomputes novelty from the bytes on
+every run instead of reading the receipt.
 
 **R2 — the budget is derived, not tuned.** `S* = 4|G|β/(1−β) = 16,681 px` (§4a).
 
@@ -202,18 +208,18 @@ budget:
 
 | candidate | what it is | mean coh σ4 | frac > 0.8 | dominant strike | in credited band | lift over random |
 | --- | --- | --- | --- | --- | --- | --- |
-| N9 random control | uniform over the novel pool | 0.2997 | 0.0147 | 95° | — | — |
-| N1 trace field | six-family rank + persistence, peaks | 0.4047 | 0.0640 | 95° | yes | +0.1543 |
-| N4 strike-gated field | N1 × network coherence × azimuth match | 0.3922 | 0.0412 | 5° | no | +0.1198 |
-| N6 habitat | two-view co-training propensity | 0.4408 | 0.0633 | 85° | no | +0.1898 |
-| N2 ridge C≥2 | N1's rank walked along the ≥2-family network | 0.4991 | 0.2165 | 95° | yes | +0.4159 |
-| N3 ridge C≥3 | same on the ≥3-family network (capacity 9,259 of 16,681) | 0.6035 | 0.4197 | 75° | no | +0.7088 |
-| **N5 strike ridge** | **N4's score walked along the ≥2-family network** | **0.5350** | **0.2520** | **95°** | **yes** | **+0.4726** |
+| N3_ridge_C3 | the same rank walked along the ≥3-family network | 0.6010 | 0.4145 | 75° | no | +0.7016 |
+| **N5_strike_ridge** | N4's score walked along the ≥2-family ridge network | **0.5326** | 0.2472 | 95° | yes | +0.4658 |
+| N2_ridge_C2 | the same rank walked along the ≥2-family network | 0.4965 | 0.2119 | 95° | yes | +0.3944 |
+| N6_habitat | the two-view co-training propensity (contrast) | 0.4394 | 0.0647 | 85° | no | +0.1902 |
+| N1_trace_field | six-family rank + persistence, peaks | 0.4041 | 0.0636 | 95° | yes | +0.1538 |
+| N4_strike_gated | trace rank × network coherence × credited-azimuth match | 0.3926 | 0.0421 | 5° | no | +0.1207 |
+| N9_random_control | uniform random over the strictly-novel pool (the control) | 0.3000 | 0.0140 | 95° | yes | +0.0000 |
 | *reference: the champion's own cloud* | *37,638 dots, scored 0.2778* | *0.5309* | *0.1585* | *95°* | *yes* | — |
 
-N3 has the largest lift but fails the azimuth condition (75°, twenty degrees off the credited fabric)
-and could not fill the budget from the ≥3-family network; N5 is the largest lift inside the band. Its
-coherence (0.5350) is within 0.004 of the credited cloud's (0.5309) and its high-coherence fraction is
+N3 has the largest lift but fails the azimuth condition (75°, off the credited fabric)
+and could only place 9,165 of 16,681 dots from the ≥3-family network; N5 is the largest lift inside the band. Its
+coherence (0.5326) is within 0.0018 of the credited cloud's (0.5309) and its high-coherence fraction is
 1.6× the credited cloud's, at 2.3× fewer dots — so the comparison is stated with the density
 difference attached rather than as a match.
 
@@ -231,12 +237,15 @@ champion, and an outside-family PINN file also sits at ≈ 1.0):
 | **P(DTI > 0.3195)** | **0.226** (needs κ ≥ 1.074, credit ≥ 4,667) |
 | **P(DTI > 0.3774)** | **0.031** (needs κ ≥ 1.269, credit ≥ 5,513) |
 
-Re-running the script reproduces the file **bit for bit** (SHA-256 prefix `33b27433` both times,
-99,210 bytes, 16,681 px), so the emission is deterministic end to end and the only thing a re-run
-changes is the UTC stamp in its name.
+The build is deterministic: two runs against the same prior set produced byte-identical files (SHA-256
+prefix `33b27433` twice, 99,210 bytes). The shipped file is a *later* build, SHA-256 `d2bfb0f7`,
+because the prior set changed underneath it when `main`'s four parallel rounds (CTD5, H60, H60C, H60D)
+merged: the same rule, the same candidate, the same budget and the same 16,681 px, with
+different pixels exactly where another session had already emitted. Against a fixed prior set the build
+reproduces bit for bit.
 
-**Shipped:** `submission/gems52-r5-novel-n5_strike_ridge-16681px-20261008T220210Z-33b27433-zeros.tif`
-— 16,681 px, 99,210 bytes, float32 single band, EPSG:32611, transform identical to
+**Shipped:** `submission/gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif`
+— 16,681 px, 99,231 bytes, float32 single band, EPSG:32611, transform identical to
 `sample_submission.tif`, values exactly {0, 1}, all 12,279,160 cells finite, no nodata tag, format
 gate 0 problems, pattern-unique against 55 priors, minimum distance to a mapped trace 223.6 m,
 median 2,360 m. Portal note (≤200 chars) and the exact upload steps are in
@@ -251,22 +260,22 @@ compares the shipped emission against every set "the union of the two views" cou
 
 | comparison set | px in set | shared with the emission | fraction of the 16,681 emitted | Jaccard |
 | --- | --- | --- | --- | --- |
-| disagreement union (A-only ∪ B-only) | 87,471 | 332 | **0.0199** | 0.0032 |
-| top-S of the pointwise max of the two propensity ranks | 16,681 | 71 | 0.0043 | 0.0021 |
-| half from each view's own top-S/2 | 16,662 | 71 | 0.0043 | 0.0021 |
-| view A's own top-S | 16,681 | 75 | 0.0045 | 0.0023 |
-| view B's own top-S | 16,681 | 57 | 0.0034 | 0.0017 |
-| A-only alone | 43,672 | 181 | 0.0109 | 0.0030 |
-| B-only alone | 43,799 | 151 | 0.0091 | 0.0025 |
+| disagreement union (A-only ∪ B-only) | 87,471 | 333 | **0.0200** | 0.0032 |
+| top-S of the pointwise max of the two propensity ranks | 16,681 | 70 | **0.0042** | 0.0021 |
+| half from each view's own top-S/2 | 16,662 | 70 | **0.0042** | 0.0021 |
+| view A's own top-S | 16,681 | 72 | **0.0043** | 0.0022 |
+| view B's own top-S | 16,681 | 59 | **0.0035** | 0.0018 |
+| A-only alone | 43,672 | 177 | **0.0106** | 0.0029 |
+| B-only alone | 43,799 | 156 | **0.0094** | 0.0026 |
 
 and the Spearman correlation between the emitted pixels' own score and each view's propensity is
-**+0.023** (A), **−0.012** (B), **+0.005** (pointwise max) — indistinguishable from zero.
+**+0.028** (A), **-0.007** (B), **+0.012** (pointwise max) — indistinguishable from zero.
 
 So the confirmation the brief asks for is as strong as it can be, and it has to be read together with
 what it implies: **the shipped emission is not a co-training product.** Co-training was built, run and
 measured exactly as the brief specifies (§8), and then its ranking lost. The habitat candidate N6 —
 the pointwise maximum of the two out-of-fold propensities — has the second-smallest coherence lift of
-the seven candidates (+0.1898 against N5's +0.4726), fails the credited-azimuth condition, and
+the seven candidates (+0.1902 against N5's +0.4658), fails the credited-azimuth condition, and
 overlaps the emission by 0.3 %. Its propensity field is also the worst of the candidates on the
 localisation assay (simDTI 0.0003 against 0.0275 for uniform random), which §5 explains rather than
 excuses. The honest summary is: **the brief's method was executed, its independence premise held, its
@@ -369,8 +378,7 @@ propensity over the whole footprint.
   (100 strong / 1,510 moderate / 2,554 weak), a reasoning sentence whose every clause is conditional
   on that row's numbers, and five named competing explanations. The 18,123 components of 1–2 px
   (22,316 px) are below review resolution and are accounted for in aggregate in
-  `evidence/r5_a_only_reasoning.json` rather than dropped silently. 465 of the reviewed candidates
-  carry 1,834 of the emitted dots.
+  `evidence/r5_a_only_reasoning.json` rather than dropped silently. 463 of the reviewed candidates carry 1830 of the emitted dots.
 
 ## 9. Limitations, and what would change the answer
 
@@ -383,14 +391,14 @@ propensity over the whole footprint.
    is not a predicted winner, and the site says so in the first line a visitor reads.
 3. **The effective `|G|` is the public chunk's.** The chunking is undisclosed by explicit refusal, so
    the ratio between it and the final round's whole-area `|G|` is unknown, and with it the correct
-   budget for the round that pays five times as much (§4c, H60-F).
+   budget for the round that pays five times as much (§4c, R5-H6).
 4. **Two runs of identical stage-3 code logged different numbers**, and both saved propensity fields
    carry 620 impossible zeros in the out-of-footprint prefix of row 0. Neither is explained; both are
    bounded; the published stage-3 numbers reproduce exactly from the arrays on disk (`IR-R5-003`).
 5. **`8GEMSDOE_Hedge-v2` and `gemsdoe-ens12-adopted` have identical evaluated support and an
    identical reported score**, so the inversions have n = 12 distinct observations, not 13
    (`IR-R5-004`).
-6. **What would change the answer, in order of value:** (i) H60-A's §A-gate passing — that would put a
+6. **What would change the answer, in order of value:** (i) R5-H1's §A-gate passing — that would put a
    measured perpendicular-error number behind the only officially confirmed truth population, and is
    worth more than any further tuning of what exists; (ii) an organiser-side receipt for one
    submission, which would turn every ρ in this file from an inversion into a measurement; (iii) the

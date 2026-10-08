@@ -1,0 +1,66 @@
+{
+ "csv": "/home/user/GEMSDOE52/evidence/h60-37654px-candidate-geology.csv",
+ "rows": 37654,
+ "a_only_rows": 6856,
+ "stratum_cut_points": {
+  "confident_A": 0.3792351186275482,
+  "confident_B": 0.3979969024658203,
+  "abstain_A": 0.18575453758239746,
+  "abstain_B": 0.2298794388771057
+ },
+ "budget_amendment": {
+  "amends": "registry/h60_preregistration.json",
+  "reason": "N-4: recorded as an amendment with the fitted numbers, never applied silently",
+  "registered_choice": {
+   "arm": "union_max",
+   "budget": 100000,
+   "mean_dti": 0.16087170045905524,
+   "fold_wins": 4
+  },
+  "registered_budget": 100000,
+  "amended_budget": 37654,
+  "arm_unchanged": "union_max",
+  "evidence": {
+   "champion_instrument_dti": 0.004789982030808221,
+   "placeholder_instrument_dti": 0.022290651222503993,
+   "champion_scores_below_random_placeholder": true,
+   "spearman_board_vs_instrument": -0.09903723261853131,
+   "spearman_p_value": 0.7475313978174702,
+   "off_catalogue_family": [
+    {
+     "board": 0.2778,
+     "mean_px": 37654
+    },
+    {
+     "board": 0.26,
+     "mean_px": 39257
+    },
+    {
+     "board": 0.2477,
+     "mean_px": 53486
+    },
+    {
+     "board": 0.2449,
+     "mean_px": 54666
+    },
+    {
+     "board": 0.1922,
+     "mean_px": 108124
+    },
+    {
+     "board": 0.1855,
+     "mean_px": 110882
+    }
+   ],
+   "spearman_board_vs_mass_off_catalogue": -1.0
+  },
+  "decision": "emit at 37654 px: the mass of the highest owner-reported off-catalogue score (0.2778), because across the six off-catalogue scored priors the board is strictly decreasing in mass (Spearman -1.000) while the hide-and-recover instrument -- on which the champion itself scores 0.00479, below a random placeholder -- is not correlated with the board at all (Spearman -0.099, p=0.748)",
+  "not_claimed": "this is a budget choice, not a score forecast; no organiser-authenticated score-to-file mapping exists"
+ },
+ "scope": "one row per emitted pixel; these are hypotheses for Phase-2 geological review, not verified faults",
+ "metric_note": {
+  "dti_identity": "DTI = T / (0.2*T + 0.2*(S - M) + 0.8*|G|) with S = emitted mass",
+  "S": 37654,
+  "note": "T, M and |G| are properties of the hidden truth and are NOT known here; no score is projected in this receipt"
+ }
+}

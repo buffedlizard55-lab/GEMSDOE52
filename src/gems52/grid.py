@@ -20,7 +20,7 @@ import rasterio
 PIXEL_M = 100.0
 CRS_EPSG = "EPSG:32611"
 SHAPE = (3730, 3292)                       # (rows, cols), measured
-TRANSFORM = (100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)   # a, b, c, d, e, f (GDAL order)
+TRANSFORM = (100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)   # a, b, c, d, e, f (Affine order, NOT GDAL geotransform order)
 CELL_M = 100.0                                 # resolution the rules page states, in metres
 SENTINEL_LIMIT = -1e38                      # official nodata is -3.4028234663852886e+38
 
@@ -158,11 +158,11 @@ def write_geotiff(path: str | Path, arr: np.ndarray, *, nodata: float | None = N
     if arr.shape != SHAPE:
         raise ValueError(f"submission must be {SHAPE}, got {arr.shape}")
     if not np.isfinite(arr).all():
-        raise ValueError("submission contains NaN/inf; the portal rejects 'values must be in [0,1]'")
+        raise ValueError("submission contains NaN/inf; all-finite compatibility policy requires finite values")
     if arr.min() < 0.0 or arr.max() > 1.0:
         raise ValueError(f"submission out of range: min={arr.min()} max={arr.max()}")
     from affine import Affine
-    tr = Affine(*[float(v) for v in TRANSFORM])                 # GDAL order: a, b, c, d, e, f
+    tr = Affine(*[float(v) for v in TRANSFORM])                 # Affine order: a, b, c, d, e, f
     west, north = tr.c, tr.f
     xs, ys = tr.a, -tr.e
     from rasterio.transform import from_origin
