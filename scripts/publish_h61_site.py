@@ -123,6 +123,23 @@ def main() -> int:
                       f'{esc(h58["file"])}</a>, SHA-256 <code>{esc(h58["sha256"][:24])}</code>…; '
                       f'research only, do not upload, not approved to submit. '
                       f'<a href="h58.html">H58 negative-result audit</a>.')
+    # Concurrent-round disclosure: the merged site checker requires the R5 artefact identification on
+    # the landing and guide pages.  Rendered from R5's own receipt, never hand-typed here.
+    r5_id = ""
+    r5p = DATA / "submission_r5.json"
+    if r5p.exists():
+        r5 = json.loads(r5p.read_text())
+        short = r5.get("download_short") or "downloads/r5-candidate.tif"
+        r5_id = (f'R5 (concurrent round): <a href="{esc(short)}" download>'
+                 f'{esc(r5["stem"])}.tif</a>, SHA-256 <code>{esc(r5["sha256"][:24])}</code>…, '
+                 f'{int(r5.get("nonzero_px") or 0):,} px — ok to download, <b>not slot-approved</b>; '
+                 f'its receipt publishes P(beating 0.2778) = {r5["p_beat_02778"]:.3f} and '
+                 f'P(beating 0.3195) = {r5["p_beat_03195"]:.3f}, with <a href="r5.html">its own audit '
+                 f'page</a> and short path <code>r5-candidate.tif</code>. Its budget rule scales on '
+                 f'|G| = 14,088.7 px, which H61 measures as outside the identified interval '
+                 f'[5,949.3, 12,512.1] px — IR-H61-001 and IR-H61-010 in '
+                 f'<a href="irregularities.html">the irregularity register</a>. Do not spend a weekly '
+                 f'slot on either round.')
     no_upload = ("Do not upload this file to the competition portal." if not submit_ok
                  else "Upload is permitted only through the authenticated submission page.")
     banner_cls = "good" if submit_ok else "bad"
@@ -224,6 +241,8 @@ def main() -> int:
 <details><summary>Preserved research archives — none of these is an approval</summary>
 <p class="small"><a href="archive-ctd5-overview.html">CTD5 landing page (negative, lane-saturated)</a> · <a href="ctd5-audit.html">CTD5 run &amp; evidence</a> · <a href="ctd5-sources.html">CTD5 sources</a> · <a href="h60c.html">H60C</a> · <a href="h60.html">H60</a> · <a href="h60-triple-convergence.html">H60 triple convergence</a> · <a href="h59.html">H59</a> · <a href="archive-h59-overview.html">H59 landing archive</a> · <a href="h58.html">H58</a> · <a href="h57.html">H57</a> · <a href="h57-creditcore.html">H57 credit core</a> · <a href="h56-cotrain.html">H56 co-training</a> · <a href="h56.html">H56</a> · <a href="h55.html">H55</a> · <a href="h55-edge.html">H55-EDGE negative archive</a> · <a href="h55-profile.html">H55 profile</a> · <a href="h55-paired-shoulders.html">H55 paired shoulders</a> · <a href="h54.html">H54</a> · <a href="h53.html">H53</a> · <a href="r3.html">R3</a> · <a href="r3-hypotheses.html">R3 hypotheses</a> · <a href="hypotheses.html">Hypotheses</a> · <a href="method.html">Method</a> · <a href="validation.html">Validation</a> · <a href="sources.html">Sources</a> · <a href="irregularities.html">Irregularities</a> · <a href="forensics.html">Forensics</a> · <a href="feed.html">Feed</a></p>
 <p class="small">{h58_id}</p>
+<p class="small">{r5_id}</p>
+<p class="small">Concurrent rounds preserved: <a href="archive-main-index-20261008.html">main landing page of 2026-10-08</a> · <a href="r5.html">R5 audit</a> · <a href="h60d.html">H60D audit</a> · <a href="downloads/h60d-candidate.tif" download>H60D research TIFF</a>.</p>
 <p class="small">Historical downloads: <a href="downloads/ctd5-research.tif" download>CTD5 research TIFF</a> · <a href="downloads/h60c-candidate.tif" download>H60C candidate</a> · <a href="downloads/h58-candidate.tif" download>H58 research</a> · <a href="downloads/gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif" download>H57 credit core</a> · <a href="downloads/index.html">full archive index</a></p></details>
 '''
     page += "</main>" + FOOT
@@ -341,7 +360,9 @@ PYTHONPATH=src .venv/bin/python -m gems52.external # add the shared external Geo
 .venv/bin/python scripts/check_site.py &amp;&amp; .venv/bin/python -m pytest -q</pre>
 <p class="small">GitHub Pages is static: it serves the generated file, it does not train a model in your browser. Reproduction regenerates the same negative research result; it never uploads, promotes or spends a slot.</p></section>
 <details><summary>Preserved research archives — do not upload</summary><p class="small"><a href="archive-ctd5-overview.html">CTD5 landing page</a> · <a href="ctd5-audit.html">CTD5 audit</a> · <a href="h60c.html">H60C</a> · <a href="h60.html">H60</a> · <a href="h60-triple-convergence.html">H60 triple convergence</a> · <a href="h59.html">H59</a> · <a href="archive-h59-overview.html">H59 archive</a> · <a href="h58.html">H58</a> · <a href="h57.html">H57</a> · <a href="h57-creditcore.html">H57 credit core</a> · <a href="h56-cotrain.html">H56</a> · <a href="h55.html">H55</a> · <a href="h55-edge.html">H55-EDGE</a> · <a href="h55-profile.html">H55 profile</a> · <a href="h55-paired-shoulders.html">H55 paired shoulders</a> · <a href="h54.html">H54</a> · <a href="h53.html">H53</a> · <a href="r3.html">R3</a> · <a href="r3-hypotheses.html">R3 hypotheses</a> · <a href="hypotheses.html">Hypotheses</a> · <a href="method.html">Method</a> · <a href="validation.html">Validation</a> · <a href="sources.html">Sources</a> · <a href="irregularities.html">Irregularities</a> · <a href="forensics.html">Forensics</a> · <a href="feed.html">Feed</a> · <a href="downloads/index.html">download archive</a> · <a href="downloads/ctd5-research.tif" download>CTD5 TIFF</a> · <a href="downloads/h58-candidate.tif" download>H58 TIFF</a> · <a href="downloads/gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif" download>H57 TIFF</a></p>
-<p class="small">{h58_id}</p></details>'''
+<p class="small">{h58_id}</p>
+<p class="small">{r5_id}</p>
+<p class="small">Concurrent rounds preserved: <a href="archive-main-index-20261008.html">main landing page of 2026-10-08</a> · <a href="r5.html">R5 audit</a> · <a href="h60d.html">H60D audit</a>.</p></details>'''
     ex += "</main>" + FOOT
     (DOCS / "executive-summary.html").write_text(ex)
 

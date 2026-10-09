@@ -25,6 +25,10 @@ def main() -> int:
     card, sub, foren = load("run_card"), load("submission"), load("forensics")
     hold, exch, can = load("holdout"), load("pseudo_exchange"), load("canary")
     proj, lane = load("projection"), load("lane_dots")
+    try:
+        closure = load("concurrent_closure")
+    except Exception:                                            # noqa: BLE001
+        closure = None
     lanes = load("lane_surface")
     try:
         lane_an = load("lane_analysis")
@@ -222,6 +226,15 @@ champion and 0.8087 against `h19-5`, with Spearman 0.7083: DUPLICATE/STOP under 
 *and* under the policy, because those priors are informative. H60C's published gate used
 support-novelty and Jaccard and never applied the brief's rule; it is flagged as IR-H61-007 and is
 neither promoted nor deleted here.
+
+**Concurrent closure.** The parallel R5 and H60D rounds merged into `main` after the census was
+frozen, so the unchanged emission was re-checked against the
+{closure["new_decoded_patterns_checked"] if closure else 0} newly added decoded patterns
+(`scripts/h61_concurrent_closure.py`): verdict **{closure["verdict_on_new_rasters"] if closure else "n/a"}**,
+max near-dot {f(closure["max_near_3px_fraction"]) if closure else "n/a"} (H60D, coverage
+{f([r["coverage_3px_of_eligible"] for r in closure["rows"]][0]) if closure and closure["rows"] else "n/a"}),
+max Spearman {f(closure["max_spearman"]) if closure else "n/a"}. The artefact was not rebuilt,
+re-placed or re-tuned for that check, and a pass there does not overturn the recorded STOP.
 
 ## 5 · Not the union of the two views
 

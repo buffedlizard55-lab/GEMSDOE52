@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-10-09T00:16:44Z",
- "branch": "arena/51669021-gemsdoe52",
+ "generated_utc": "2026-10-09T00:24:35Z",
+ "branch": "arena/b64de1f3-gemsdoe52",
  "repo": "buffedlizard55-lab/GEMSDOE52",
  "evidence_copied": [
   "a_only_reasoning_r2.json",
@@ -64,11 +64,14 @@
   "ctd5_registry_saturation.json",
   "ctd5_release_check.json",
   "ctd5_run_card.json",
+  "ctd5_scope_fix_review.json",
+  "ctd5_second_parallel_check.json",
   "ctd5_software_review.json",
   "ctd5_source_commit_resolution.json",
   "ctd5_sources.json",
   "ctd5_submission.json",
   "ctd5_surface_uniqueness.json",
+  "ctd5_validation_scope_correction.json",
   "h55_band6_identity.json",
   "h55_edge_execution_provenance.json",
   "h55_edge_holdout.json",
@@ -212,9 +215,9 @@
   "verified_claims_r3.json"
  ],
  "submission": "gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif",
- "downloads": 34,
+ "downloads": 38,
  "leaderboard_status": "dated snapshot; automated DrivenData access disabled by Terms-of-Use policy",
- "leaderboard_last_observed_utc": "2026-10-07",
+ "leaderboard_last_observed_utc": "2026-10-08",
  "prior_entries": 395,
  "eligible_prior_rasters": 389,
  "scientific_gate": "CLOSED \u2014 H61 verdict is negative; research download only",
@@ -243,5 +246,17 @@
   "slots_used": 0,
   "evidence": "evidence/h61_run_card.json"
  },
- "freshness_note": "Local evidence feed only. It is not a live leaderboard and it never reports an organiser score; every number is HOLDOUT-DTI, MEASURED-FROM-PINNED-BYTES, OWNER-REPORTED or PROJECTION and is labelled as such."
+ "freshness_note": "Local evidence feed only. It is not a live leaderboard and it never reports an organiser score; every number is HOLDOUT-DTI, MEASURED-FROM-PINNED-BYTES, OWNER-REPORTED or PROJECTION and is labelled as such.",
+ "previous_research": {
+  "run_id": "ctd5-a24c35d1",
+  "file": "gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif",
+  "download": "downloads/ctd5-research.tif",
+  "sha256": "a6e6e44aebaf057989e254bd5ce3729e5a94836c0e5687a95e91e3fc8a40c686",
+  "hash_verified": true,
+  "verdict": "negative",
+  "approved_for_weekly_slot": false,
+  "submit_ok": false,
+  "measurement_utc": "2026-10-08T18:31:08.001658+00:00",
+  "note": "Research only; local evidence refresh is not a fresh organizer or leaderboard observation."
+ }
 }

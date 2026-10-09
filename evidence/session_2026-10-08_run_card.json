@@ -1,0 +1,137 @@
+{
+ "run_id": "session-2026-10-08-uniqueness-audit",
+ "evidence_class": "audit receipt; no new model fitted; no score claimed",
+ "budget": {
+  "experiments": 2,
+  "experiment_note": "2 = uniqueness gate audit of two candidate files (CTD5, H60C) plus footprint/nesting pixel checks; no new candidate built, no model trained",
+  "hours_limit": 2
+ },
+ "hypothesis": "Unique-submission requirement: at least one format-valid GeoTIFF in the repo is decoded-distinct from every accessible prior submission.",
+ "mechanism": "Compare each candidate with 31 byte-distinct accessible prior rasters using the shared lane_uniqueness_report (surface rank, dot proximity) and direct pixel overlap.",
+ "named_non_fault_process": "Dense or lattice-like priors (13GEMSDOE s5 lattice, h19-5 family) can make any dot raster look 'near' by construction; a high overlap can reflect shared inherited cores, not shared geology.",
+ "files": {
+  "CTD5": {
+   "path": "submission/gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif",
+   "sha256": "a6e6e44aebaf057989e254bd5ce3729e5a94836c0e5687a95e91e3fc8a40c686",
+   "decoded_unique": true,
+   "max_jaccard_prior": 0.00336,
+   "share_px_inside_any_prior": 0.16375,
+   "surface_max_rho": 0.0037491,
+   "dot_max_near_3px": 1.0,
+   "receipt": "evidence/uniqueness_audit_ctd5_20261008.json"
+  },
+  "H60C": {
+   "path": "submission/gems52-h60c-core25517px-arm9668px.tif",
+   "sha256": "1e1e7835af72701150dc1c0a9042bed2cd149e88305659760b889d842116c239",
+   "decoded_unique": "distinct bytes, but 80.4% of cells inside prior support",
+   "max_jaccard_prior": 0.590876,
+   "share_px_inside_any_prior": 0.804093,
+   "surface_max_rho": 0.7413329,
+   "dot_max_near_3px": 0.9987495,
+   "receipt": "evidence/uniqueness_audit_h60c_20261008.json"
+  }
+ },
+ "holdout_dti": {
+  "CTD5_disagreement_after_exchange": {
+   "value": 0.018848,
+   "ci95": [
+    0.012421,
+    0.02602
+   ],
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems52-pooled-hide-v1",
+   "withheld_positives": 53186,
+   "strict_holdout_valid": false,
+   "source": "evidence/ctd5_post_holdout.json"
+  },
+  "CTD5_best_comparable_control_surface_only_B": {
+   "value": 0.106749,
+   "ci95": [
+    0.089076,
+    0.124951
+   ],
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems52-pooled-hide-v1",
+   "withheld_positives": 53186,
+   "source": "evidence/ctd5_post_holdout.json"
+  },
+  "H60C": "none measured for the emitted file; any figure is a projection and is not written as a score",
+  "H33_0.2778": "ORGANIZER-CONFIRMED: no. OWNER-REPORTED only (brief; GEMSDOE32 source says no organiser score exists)"
+ },
+ "validator_output": {
+  "tool": "src/gems52/gates.py format_report against data/sample_submission.tif (SHA-256 pin verified)",
+  "CTD5": {
+   "bands": 1,
+   "dtype": "float32",
+   "crs": "EPSG:32611",
+   "shape": [
+    3730,
+    3292
+   ],
+   "transform_matches_sample": true,
+   "nan_pixels": 0,
+   "inf_pixels": 0,
+   "min": 0.0,
+   "max": 1.0,
+   "nonzero": 12000,
+   "problems": [],
+   "ok": true
+  },
+  "H60C": {
+   "bands": 1,
+   "dtype": "float32",
+   "crs": "EPSG:32611",
+   "shape": [
+    3730,
+    3292
+   ],
+   "transform_matches_sample": true,
+   "nan_pixels": 0,
+   "inf_pixels": 0,
+   "min": 0.0,
+   "max": 1.0,
+   "nonzero": 35185,
+   "problems": [],
+   "ok": true
+  },
+  "scope": "local format/range check; not organizer upload acceptance"
+ },
+ "footprint": {
+  "sample_finite_px": 5167373,
+  "ctd5_feature_footprint_px": 5164300,
+  "ctd5_eligible_px": 4593171,
+  "source": "data/sample_submission.tif; docs/data/ctd5_masks.json"
+ },
+ "lattice_coverage_on_sample_footprint": {
+  "lattice": "data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+  "covered_within_3px": 5160724,
+  "fraction": 0.998713,
+  "uncovered_px": 6649,
+  "uncovered_within_3px_of_edge": 6580
+ },
+ "submission_name": "CTD5-cover-matched-disagreement-b58bae0f0e",
+ "note": "CTD5: cover-matched geophysics to surface abstention; one pseudo-label round. Research only; no prior pixels reused.",
+ "note_chars": 116,
+ "verdict": "negative",
+ "download_ok": "format-valid research download only (CTD5 is the only decoded-unique file)",
+ "submit_ok": false,
+ "approved_for_weekly_slot": false,
+ "submission_slots_used": 0,
+ "reasons": [
+  "CTD5 holdout DTI 0.018848 is below its own surface-only control 0.106749 (non-overlapping CIs).",
+  "CTD5 holdout is legacy-v1 exploratory: strict_holdout_valid False.",
+  "Dot proximity gate fails (lattice coverage 99.87% of the sample footprint; 99% of the uncovered rim is at the survey edge).",
+  "H60C is a derivative of prior pixels (80.4% inside prior support) and fails the unique-submission rule."
+ ],
+ "not_verified_from_this_sandbox": [
+  "drivendata.org competition/leaderboard pages",
+  "organizer upload receipts",
+  "the 0.3195 and 0.3774 leaderboard values in the brief"
+ ],
+ "irregularities": [
+  "IR-UNQ-001",
+  "IR-UNQ-002",
+  "IR-UNQ-003",
+  "IR-UNQ-004"
+ ]
+}

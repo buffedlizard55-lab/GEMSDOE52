@@ -29,6 +29,10 @@ def block() -> str:
     card["validator"] = {**sub["receipt"]["validator"], **card["validator"]}
     hold, exch, can = load("holdout"), load("pseudo_exchange"), load("canary")
     proj, lane, lanes = load("projection"), load("lane_dots"), load("lane_surface")
+    try:
+        closure = load("concurrent_closure")
+    except Exception:                                            # noqa: BLE001
+        closure = None
     fit = load("fit_checkpoint")
     G = foren["G_identification"]["masked"]
     sc = hold["pooled"]["scores"]
@@ -94,6 +98,12 @@ def block() -> str:
   policy `{lanes["policy"]["verdict"]}`. Decoded-pattern uniqueness
   {"PASS" if sub["uniqueness_summary"]["canonical_pattern_unique"] else "FAIL"}; literal union of priors
   {"YES" if sub["uniqueness_summary"]["equals_literal_prior_union"] else "NO"}.
+- **Concurrent closure:** after the parallel R5 and H60D rounds merged into `main`, the *unchanged*
+  emission was re-checked against the {closure["new_decoded_patterns_checked"] if closure else 0} newly added
+  decoded patterns: verdict **{closure["verdict_on_new_rasters"] if closure else "n/a"}**, max near-dot
+  {f(closure["max_near_3px_fraction"]) if closure else "n/a"}, max Spearman
+  {f(closure["max_spearman"]) if closure else "n/a"} ([receipt](evidence/h61_concurrent_closure.json)).
+  A pass here does not overturn the original lane STOP; the artefact was not rebuilt or re-tuned for it.
 - **PROJECTION, never a score:** at {int(proj["G_lower"]["emitted_px"]):,} dots the break-even credit
   density to match the reported champion is
   {f(proj["G_lower"]["breakeven_credit_density_to_match_champion"])}–{f(proj["G_upper"]["breakeven_credit_density_to_match_champion"])}

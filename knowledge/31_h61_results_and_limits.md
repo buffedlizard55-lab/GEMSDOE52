@@ -184,6 +184,15 @@ champion and 0.8087 against `h19-5`, with Spearman 0.7083: DUPLICATE/STOP under 
 support-novelty and Jaccard and never applied the brief's rule; it is flagged as IR-H61-007 and is
 neither promoted nor deleted here.
 
+**Concurrent closure.** The parallel R5 and H60D rounds merged into `main` after the census was
+frozen, so the unchanged emission was re-checked against the
+2 newly added decoded patterns
+(`scripts/h61_concurrent_closure.py`): verdict **PASS**,
+max near-dot 0.1894 (H60D, coverage
+0.1713),
+max Spearman 0.0037. The artefact was not rebuilt,
+re-placed or re-tuned for that check, and a pass there does not overturn the recorded STOP.
+
 ## 5 · Not the union of the two views
 
 72,966 cells differ from the `max(A, B)`

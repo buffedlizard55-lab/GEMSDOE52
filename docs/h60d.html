@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="H60D two-view co-training round: independence test, leakage canary, disagreement fields, holdout validation and every gate, rendered from the receipts."><title>H60D audit — co-training with disagreement as the discovery signal · GEMSDOE52</title><link rel="stylesheet" href="style.css"><script src="site.js" defer></script></head>
+<body><a class="skip" href="#main">Skip to evidence</a><header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html">Overview</a><a href="executive-summary.html">Submission guide</a><a href="h60d.html" aria-current="page">H60D audit</a><a href="h60c.html">H60C audit</a><a href="h59.html">H59 audit</a><a href="irregularities.html">Limitations</a><a href="sources.html">Sources</a><a href="downloads/index.html">Downloads</a></nav></header>
+<div style="background:#fdecea;border:2px solid #b3261e;padding:12px 16px;margin:12px 0;font-weight:600">LANE GATE CORRECTION (2026-10-08): the strict parallel-lane rule applies to EVERY registry raster. Re-run on the shipped file (<a href="data/h60d_strict_lane_recheck.json">receipt</a>): final-dot proximity 0.9995 against the calibration lattice, above the 0.70 bar → DUPLICATE / STOP. The "lane clean" wording below used a calibration exemption that is withdrawn. Research download only. Do not submit; no weekly slot was used.</div><main id="main">
+<div class="eyebrow">H60D · co-training, disagreement as the discovery signal · <span class="pill warn">NEGATIVE RESULT — OK TO DOWNLOAD FOR REVIEW · DO NOT SPEND A WEEKLY SLOT</span></div>
+<h1>The discovery signal is disagreement.</h1>
+<p class="lede">Two views were trained out-of-fold on hide-and-recover whole-segment folds —
+View A (potential-field/subsurface: gravity, magnetics, strain, seismicity, depth,
+conductivity) and View B (surface: DEM slope/elevation, radiometric total count, restored
+1 m LiDAR scarp stack and GeoDAWN radiometrics). The Blum–Mitchell independence premise was
+measured, not assumed; the leakage canary ran on every cached layer; and the arms were ranked
+by the <b>disagreement itself</b> — <code>pA·(1−pB)</code> and <code>max(pA−pB,0)</code> —
+against the single-view baselines and the union incumbent on the exact DTI. The shipped file
+is the pure disagreement arm: no credited core, every pixel outside the 200 m ring and outside
+all accessible prior support.</p>
+<section class="download-bar" aria-label="H60D artifact download">
+<div><strong>gems52-h60d-dis_contrast-arm37654px.tif</strong>
+<small>144,504 bytes · single-band float32 · EPSG:32611 · 3,730 × 3,292 ·
+all finite · values exactly {0,1} — the portal range check cannot trip on this file ·
+37,654 emitted px · SHA-256 <code>18bd0efd582f107ccb988fc20016203c323846bf63d3ecea1f75a0670e4586e8</code></small>
+<small>NEGATIVE RESULT — DOWNLOAD OK FOR REVIEW; DO NOT SPEND A WEEKLY SLOT (the registered promotion/slot bar was not met)</small></div>
+<a class="button" href="downloads/h60d-candidate.tif" download>↓ Download the submission TIFF (one click)</a>
+<a class="button" href="downloads/h60d-candidate.zip" download>↓ Download the one-TIFF ZIP</a></section>
+<h2>Premises, measured</h2>
+<div class="grid">
+<section class="card"><h3>Independence premise</h3>
+<p class="metric">0.1760</p>
+<p class="small">max |correlation| of the two views' per-50×50-block out-of-fold errors on
+labelled negatives (8588 blocks, 18,048,996 negative
+predictions; pixel-level Pearson +0.1503 / Spearman
++0.1464) against the registered abandonment threshold
+0.6. weak proxy negative-error correlation; not proof of conditional feature independence.</p></section>
+<section class="card"><h3>Leakage canary</h3>
+<p class="metric">0.7136</p>
+<p class="small">worst single-layer holdout AUC of 75 cached layers
+(layer <code>B_lidar_step_max_grad</code>) against the registered leakage bar
+0.9. no single layer exceeds AUC 0.90 on the holdout; no leakage detected at this granularity</p></section>
+<section class="card"><h3>A-only stratum</h3>
+<p class="metric">301,390</p>
+<p class="small">A-only (buried-structure) px vs 197,479 B-only
+(suspect surface artefact) px; median depth to basement 342 m under cover
+vs 107 m.</p></section>
+</div>
+<h2>The co-training round (H60-3, both directions)</h2><div class="table-wrap"><table><thead><tr><th>exchange</th><th>pseudo px</th><th>whole segments</th><th>fold-0 AUC before → after</th><th>Δ AUC</th></tr></thead><tbody><tr><td>A_labels_B</td><td class="number">1997</td><td class="number">79</td><td class="number">0.6659 → 0.6592</td><td class="number">-0.0067</td></tr>
+<tr><td>B_labels_A</td><td class="number">1997</td><td class="number">103</td><td class="number">0.6006 → 0.5901</td><td class="number">-0.0104</td></tr></tbody></table></div><p class="small">Registered correction of the H59 exchange direction: the donor view's confident predictions label the <b>other</b> view (Blum–Mitchell), not the donor itself. Whole 8-connected segments, one 50×50 block each, entirely inside the fold-0 fit region (≥400 m buffer around every held segment), never on a catalogue or corridor pixel. The paired holdout read of the treated fold is in <a href="data/h60d_validation.json">h60d_validation.json</a> (<code>cotreatment</code>).</p>
+<h2>Holdout validation (HOLDOUT-DTI, evaluator version pinned in the receipt)</h2>
+<p class="small">Whole-segment hide-and-recover folds (4 folds, 4 px buffer, prevalence 0.002,
+seed 20261009), visible catalogue masked pixel-exactly, exact DTI (α 0.2, β 0.8, 300 m
+triangular kernel, lattice-exact), isotropic 3 px emitter, budget 37,654 px, identical pool.
+HOLDOUT-DTI numbers are relative-instrument readings — never leaderboard scores.</p>
+<div class="table-wrap"><table><thead><tr><th>field (arm ranking)</th>
+<th>tip lift vs random</th><th>hide lift vs random</th><th>folds won (tip · hide)</th>
+<th>promotion</th><th>slot bar</th></tr></thead>
+<tbody>
+<tr><td>dis_B_product</td><td class="number">+0.003511</td><td class="number">+0.004636</td><td>4/4 · 4/4</td><td><span class="pill no">no</span></td><td><span class="pill no">below +0.005</span></td></tr>
+<tr><td>view_B</td><td class="number">+0.003462</td><td class="number">+0.004636</td><td>4/4 · 4/4</td><td><span class="pill no">no</span></td><td><span class="pill no">below +0.005</span></td></tr>
+<tr><td>clf_union</td><td class="number">+0.003277</td><td class="number">+0.004389</td><td>4/4 · 4/4</td><td><span class="pill no">no</span></td><td><span class="pill no">below +0.005</span></td></tr>
+<tr><td>dis_contrast</td><td class="number">+0.001485</td><td class="number">+0.002300</td><td>4/4 · 4/4</td><td><span class="pill no">no</span></td><td><span class="pill no">below +0.005</span></td></tr>
+<tr><td>view_A</td><td class="number">+0.001952</td><td class="number">+0.002173</td><td>4/4 · 4/4</td><td><span class="pill no">no</span></td><td><span class="pill no">below +0.005</span></td></tr>
+<tr><td>dis_product</td><td class="number">+0.001075</td><td class="number">+0.001351</td><td>4/4 · 4/4</td><td><span class="pill no">no</span></td><td><span class="pill no">below +0.005</span></td></tr>
+</tbody></table></div>
+<p class="small">Pooled DTI (metric components pooled across folds) and fold-bootstrap 95 % CIs
+are in <a href="data/h60d_validation.json">h60d_validation.json</a>; the SHIPPED raster's own
+holdout read is <b>hide 0.003136</b>
+(95 % CI 0.002937–0.003414,
+36,411 withheld positives) and <b>tip
+0.002694</b> — HOLDOUT-DTI of the exact file on this page.</p>
+<h2>Gates on the artifact</h2>
+<div class="table-wrap"><table><thead><tr><th>registered gate</th><th>verdict</th></tr></thead>
+<tbody>
+<tr><td>R4 format gate (single band, float32, EPSG:32611, 3730x3292, transform, all finite, [0,1], no nodata, no mass outside footprint)</td><td><span class="pill ok">PASS</span></td></tr>
+<tr><td>R5 decoded pattern differs from every accessible aligned prior</td><td><span class="pill ok">PASS</span></td></tr>
+<tr><td>R5 support novelty gate (&gt;=20%)</td><td><span class="pill ok">PASS</span></td></tr>
+<tr><td>lane drift gate on the surface (max|rho| &lt;= 0.90)</td><td><span class="pill ok">PASS</span></td></tr>
+<tr><td>lane drift gate on the final dots (max|rho| &lt;= 0.90 and &lt;=70% within 3 px)</td><td><span class="pill ok">PASS</span></td></tr>
+<tr><td>R6 artifact is not the top-k of the plain union of the two views</td><td><span class="pill ok">PASS</span></td></tr>
+<tr><td>R6 artifact is not any prior and not any pair-union of priors</td><td><span class="pill ok">PASS</span></td></tr>
+<tr><td>R3 nothing emitted inside the &lt;=200 m catalogue ring</td><td><span class="pill ok">PASS</span></td></tr>
+<tr><td>R2 independence measured and non-degenerate (exchange licensed)</td><td><span class="pill ok">PASS</span></td></tr>
+<tr><td>leakage canary clean (no layer AUC &gt; 0.90)</td><td><span class="pill ok">PASS</span></td></tr>
+<tr><td>R7 one written geological reasoning per emitted pixel</td><td><span class="pill ok">PASS</span></td></tr>
+<tr><td>R7b every A-only candidate segment in the legal pool has written reasoning</td><td><span class="pill ok">PASS</span></td></tr>
+</tbody></table></div>
+<h2>Lane drift gate (parallel-run protocol)</h2>
+<p class="small">Surface check before placement: max |Spearman| vs any registry raster
+<b>0.0979</b> (bar 0.9) —
+<span class="pill ok">clean</span>.
+Final-dots check: max |Spearman| <b>0.0094</b> (bar
+0.9).  Dots within 3 px of one registry raster's dots:
+<b>0.8390</b> raw — that maximum is against
+<code>13gems_20261001_r13-lattice-s5_v2_nan-outside.tif</code>, an owner-supplied
+CALIBRATION lattice (registry/data_manifest.json id <code>calib_…</code>,
+source <code>inputs/calibration/</code>) whose 3-px dilation covers about half the grid,
+so any budget-sized placement reads 70-84 % against it by geometry, not duplication.
+Registered correction H60-6 excludes calibration rasters from the proximity component
+only; the gate value over the 62
+non-calibration priors is <b>0.1592</b>
+(bar 0.7) —
+<span class="pill ok">clean</span>.
+Both Spearman components apply to every prior, calibration included; raw readings are
+reported per prior in <a href="data/h60d_lane_gate.json">the gate receipt</a>.
+Uniqueness: decoded pattern distinct from all 68 accessible aligned
+priors; support novelty 100.0%;
+not a literal prior union: true.
+Not merely the union of the two views: 37,331
+of 37,654 emitted px lie outside the union field's own greedy emission.</p>
+<h2>Run card (lane protocol item 5)</h2>
+<div class="table-wrap"><table><tbody>
+<tr><td>hypothesis</td><td>H60-1/H60-2: the disagreement between the geophysical view (A) and the surface view (B) is the discovery signal — where A is confident and B abstains, a fault may be buried beneath cover and absent from the USGS/INGENIOUS catalogue; the shipped field is the disagreement 'dis_contrast'</td></tr>
+<tr><td>mechanism</td><td>two logistic views fitted out-of-fold on hide-and-recover whole-segment folds (independence premise measured, exchange licensed); the ranking field is the disagreement product/contrast, NOT the union; the artifact is the top-k of that field (registered scoring emitter h57.iso_select, correction H60-5) outside the 200 m ring and all prior support — the preregistered greedy_emit coverage placement is retained as a scored diagnostic and was anti-correlated with the holdout truth on this pool</td></tr>
+<tr><td>non-fault processes that could mimic it</td><td>alluvial-fan / basin-margin gravel wedges (density and susceptibility contrasts with no fault); airborne-survey drape and terrain clearance over steep topography (GeoDAWN magnetics are airborne; ridge-flank gradients mimic structure); anthropogenic compaction (roads, canal levees) — conductivity/strain anomalies with no fault; groundwater salinity boundaries — surface-conductivity steps unrelated to faulting</td></tr>
+<tr><td>holdout DTI + CI</td><td>HOLDOUT-DTI hide 0.003136
+(95 % CI 0.002937–0.003414,
+36,411 withheld positives); tip
+0.002694; evaluator version pinned by SHA-256 in
+<a href="data/h60d_run_card.json">h60d_run_card.json</a></td></tr>
+<tr><td>raster sha256</td><td class="mono">18bd0efd582f107ccb988fc20016203c323846bf63d3ecea1f75a0670e4586e8</td></tr>
+<tr><td>validator output</td><td>format problems: 0;
+no NaN (True); values in [0,1] (0.0–1.0);
+CRS/shape/transform match: true</td></tr>
+<tr><td>submission name</td><td class="mono">gems52-h60d-dis_contrast-arm37654px-18bd0efd-zeros</td></tr>
+<tr><td>note (≤140 chars)</td><td>H60D co-training disagreement arm max(pA-pB,0); outside all prior support and the 200 m ring; finite binary [0,1]; not a verified fault map (139 chars)</td></tr>
+<tr><td>verdict</td><td><span class="pill warn">negative</span></td></tr>
+</tbody></table></div>
+<h2>Receipts</h2>
+<p class="small"><a href="data/h60d_preflight_integrity.json">input integrity (23/23 pins)</a> ·
+<a href="data/h60d_cotrain.json">co-training + independence + canary + strata</a> ·
+<a href="data/h60d_validation.json">holdout validation</a> ·
+<a href="data/h60d_build.json">build receipt</a> ·
+<a href="data/h60d_format_gate.json">format gate</a> ·
+<a href="data/h60d_uniqueness.json">uniqueness gate</a> ·
+<a href="data/h60d_lane_gate.json">lane drift gate</a> ·
+<a href="data/h60d_slot_gate.json">slot gate</a> ·
+<a href="data/h60d_run_card.json">run card</a> ·
+<a href="data/h60d_preregistration.json">frozen preregistration</a> ·
+<a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/30_hypotheses_H60D_preregistered.md">hypothesis document</a> ·
+<a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/31_what_h60D_found.md">what H60D found</a>.</p>
+<p class="small">Downloads: <a href="downloads/gems52-h60d-37654px-candidate-geology.csv" download>per-pixel
+geology reasoning CSV</a> · <a href="downloads/h60d-candidate.tif" download>TIFF</a> ·
+<a href="downloads/h60d-candidate.zip" download>ZIP</a>. Every emitted pixel carries a written geological
+reasoning + falsifier; every A-only candidate segment in the legal pool has a dossier row.
+These are hypotheses for Phase-2 review, not verified faults.</p>
+</main><footer>DOE GEMS competition 306 · Reproducible local research · Predictions are not verified faults or geothermal discoveries. <a href="irregularities.html">Limitations</a> · <a href="sources.html">Sources</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code and evidence</a></footer></body></html>
