@@ -1,0 +1,246 @@
+{
+ "round": "H74",
+ "generated_utc": "2026-10-09T18:17:49+00:00",
+ "hypothesis": "H74-A (the deferred H70-E variant): a DEFORMATION-ONLY View A2 (geodetic strain bands 4/7/8 + seismicity bands 10/16, with gradient/coherence transforms) is a sufficient, transferable view where every mixed potential-field+deformation View A failed (five consecutive OOF AUC ~0.52); the brief's literal discovery stratum -- strict A2-only (A2 confident at operating rank >= 0.95, View B abstaining in [0.35, 0.65]) -- is isolated as a standalone emission arm and built as the candidate, after the co-training exchange.",
+ "mechanism": "Blum & Mitchell co-training (doi:10.1145/279943.279962) on the A2/B pair: one whole-segment confident-to-abstaining pseudo-label round per direction per fold, then the disagreement stratum A2-confident & B-abstaining is emitted as buried-beneath-cover active-fault candidates.",
+ "named_non_fault_mimic": "anthropogenic subsidence from groundwater withdrawal; irrigation-related aquifer compaction; volcanic inflation/deflation (magma movement without discrete faulting); post-seismic afterslip or viscoelastic relaxation; seasonal hydrological loading; a strain transient on a creeping aseismic fault segment",
+ "independence": {
+  "max_abs_rho": 0.07652951278931874,
+  "threshold": 0.6,
+  "allow_exchange": true,
+  "negative_class": "held-out catalogue-zero proxies, not verified absence"
+ },
+ "canary": {
+  "max_alarm_across_folds": 0.6686779701695234,
+  "any_alarm": false,
+  "max_fitted_top5_heldout_auc": 0.6665553748712185,
+  "alarm_threshold": 0.9
+ },
+ "sufficiency_S1": {
+  "stage": "sufficiency",
+  "started_utc": "2026-10-09T16:49:58+00:00",
+  "evidence_class": "PREMISE-AUC (View A2 out-of-quadrant diagnostic), not a DTI score",
+  "view_A2_oof_auc_per_fold": [
+   0.501892,
+   0.501088,
+   0.523448,
+   0.551321
+  ],
+  "view_B_oof_auc_per_fold": [
+   0.662501,
+   0.768441,
+   0.61122,
+   0.695178
+  ],
+  "mean_view_A2_oof_auc": 0.519437,
+  "min_fold_view_A2_oof_auc": 0.501088,
+  "mean_view_B_oof_auc": 0.684335,
+  "S1_thresholds": {
+   "mean_min": 0.6,
+   "fold_min": 0.55
+  },
+  "prior_view_A_mean_oof_auc": {
+   "H61": 0.5163,
+   "H63": 0.5362,
+   "H64": 0.523,
+   "H65": 0.5202,
+   "H70": 0.5166,
+   "H71": 0.5163
+  },
+  "S1_pass": false,
+  "finished_utc": "2026-10-09T16:49:58+00:00"
+ },
+ "holdout_dti": {
+  "evidence_class": "HOLDOUT-DTI",
+  "evaluator_version": "gems52-pooled-hide-v1",
+  "alpha": 0.2,
+  "beta": 0.8,
+  "triangular_radius_m": 300,
+  "withheld_positive_pixels": 53186,
+  "matched_budget_per_fold_per_arm": 9400,
+  "candidate_a_only": {
+   "dti": 0.050047893189376365,
+   "ci95": [
+    0.03528546871706435,
+    0.06561138785382334
+   ]
+  },
+  "single_B_baseline": {
+   "dti": 0.1745172875994316,
+   "ci95": [
+    0.15231581471183422,
+    0.19629866582738847
+   ]
+  },
+  "single_A2": {
+   "dti": 0.06999973085653832,
+   "ci95": [
+    0.05482600405348239,
+    0.08663302798725958
+   ]
+  },
+  "union_max": {
+   "dti": 0.14859872715515812,
+   "ci95": [
+    0.12872088762387426,
+    0.16843449558048537
+   ]
+  },
+  "disagreement_pre": {
+   "dti": 0.039788557234212714,
+   "ci95": [
+    0.029721187108091435,
+    0.05179920049468115
+   ]
+  },
+  "disagreement_post": {
+   "dti": 0.03578888792807972,
+   "ci95": [
+    0.026034082477254243,
+    0.04625516958624124
+   ]
+  },
+  "single_B_veto_Bonly": {
+   "dti": 0.167025936816186,
+   "ci95": [
+    0.14622068672868777,
+    0.18738369385434508
+   ]
+  },
+  "concordant": {
+   "dti": 0.11851106274208055,
+   "ci95": [
+    0.09765746122434127,
+    0.1392081596771208
+   ]
+  },
+  "random": {
+   "dti": 0.08042564781050282,
+   "ci95": [
+    0.0702226099128376,
+    0.09097325665223467
+   ]
+  },
+  "paired_candidate_minus_single_B": {
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems52-pooled-hide-v1",
+   "delta": -0.12446939441005525,
+   "ci95": [
+    -0.14915010463175343,
+    -0.09943580843460838
+   ],
+   "withheld_positive_pixels": 53186
+  },
+  "control_reproduction": {
+   "single_B_h74": 0.1745172875994316,
+   "single_B_committed": 0.174517,
+   "abs_difference": 2.8759943160316936e-07,
+   "tolerance": 0.001,
+   "pass_": true,
+   "note": "H61/H63/H64/H70 measured 0.1742-0.1746 on the identical splitter, sampler and learner; View B and its columns are byte-identical"
+  }
+ },
+ "correlation_overlap_vs_registry": {
+  "lane_surface_literal": "PASS",
+  "lane_surface_policy": "PASS",
+  "lane_dots_literal": "DUPLICATE/STOP",
+  "lane_dots_policy": "DUPLICATE/STOP",
+  "lane_dots_policy_max_near_3px": 0.883495145631068,
+  "lane_dots_literal_max_near_3px": 1.0,
+  "lane_dots_policy_max_spearman": -1.7870836975627033e-05,
+  "lane_valid_emission_exists": false,
+  "audit_surface": {
+   "max_spearman": 0.005828986527850223,
+   "ok": true
+  },
+  "audit_dots": {
+   "max_near_3px": 1.0,
+   "ok": false
+  },
+  "audit_max_jaccard": 0.000141,
+  "audit_share_of_candidate_inside_any_prior": 1.0,
+  "uniqueness_tier1": {
+   "canonical_pattern_unique": true,
+   "equals_literal_prior_union": false,
+   "novel_fraction": 0.0,
+   "n_priors_checked": 560
+  },
+  "uniqueness_tier2": {
+   "novel_fraction": 1.0,
+   "equals_literal_prior_union": false,
+   "n_priors_checked": 523,
+   "informative_rasters": 523
+  },
+  "registry_rasters": 560,
+  "informative_rasters": 523,
+  "probe_rasters": 35
+ },
+ "not_the_union": {
+  "dots_shared_with_union_max": 25,
+  "jaccard_with_union_max": 0.017642907551164433,
+  "dots_shared_with_single_A2": 81,
+  "dots_shared_with_single_B": 0,
+  "jaccard_with_single_A2": 0.05951506245407789,
+  "jaccard_with_single_B": 0.0,
+  "spearman_field_vs_unionmax": 0.17485832205054266,
+  "emitted_cells_that_are_strict_a2_only": 721,
+  "verdict": "the strict A2-only emission is not max(A2,B), not either single view, and not their union",
+  "not_union_pass": true
+ },
+ "placement": {
+  "mode": "fallback-duplicate",
+  "stratum_px": 1965,
+  "budget": 721,
+  "lane_valid_emission_exists": false
+ },
+ "raster": {
+  "file": "gems52-h74-a2deform-cotrain-721px-20261009T174546Z.tif",
+  "sha256": "0dea78bc8e276a8276de94a169e59ffac43234cef6a6f978f13f0788c6232f26",
+  "bytes": 58475,
+  "zip_sha256": "b497b05c0eed1f87b9c87b016363583dbf29c5a3f763e3f96ff012799903ce35",
+  "emitted_cells": 721
+ },
+ "validator": {
+  "ok": true,
+  "problems": [],
+  "nan_pixels": 0,
+  "infinity_pixels": 0,
+  "value_range": [
+   0.0,
+   1.0
+  ],
+  "crs": "EPSG:32611",
+  "shape": [
+   3730,
+   3292
+  ],
+  "transform": [
+   100.0,
+   0.0,
+   243350.0,
+   0.0,
+   -100.0,
+   4508550.0
+  ],
+  "matches_sample_submission": true,
+  "mass_outside_footprint": 0,
+  "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+ },
+ "submission_name": "gems52-h74-a2deform-cotrain-721px-20261009T174546Z",
+ "note": "H74 deformation-only View A2; A2-only stratum, 721 dots, lane-DUPLICATE; holdout does NOT beat single_B; research only, not slot-approved",
+ "note_chars": 137,
+ "champion_reference": {
+  "name": "ref_h33_2_b2",
+  "reported_score": 0.2778,
+  "evidence_class": "OWNER-REPORTED, NOT ORGANIZER-CONFIRMED"
+ },
+ "leaderboard_top_public_board": {
+  "score": 0.3774,
+  "team": "xiaofanhu",
+  "evidence_class": "PUBLIC BOARD 2026-10-09, NOT ORGANIZER-CONFIRMED"
+ },
+ "experiments_used": "3 of 3 (E1 features+canary+fit+sufficiency, E2 exchange+holdout, E3 build+audit)",
+ "submission_slots_used": 0,
+ "verdict": "NEGATIVE, research-only. DOWNLOAD YES (format-valid and unique on decoded pixels); SUBMIT NO. Failed gates: lane_policy, S1, holdout_beats_single_B. No weekly slot spent by this lane.",
+ "verdict_promote": false
+}

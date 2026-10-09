@@ -9,6 +9,38 @@ Keep known-catalogue labels separate from verified fault absence, public partici
 This session's working branch is fixed by Arena. Do not change branches. Keep raw competition data and large intermediate arrays under ignored `data/` and `work/`. Publish small audit receipts, the unique compressed prediction raster and its review table.
 
 <!--H67-AGENTS-->
+## Current H74 continuation (2026-10-09)
+
+Read `README.md`'s H74 block first, then `knowledge/63_hypotheses_H74_preregistered.md` (frozen,
+SHA-256 pinned in `registry/h74_preregistration.json`) and `knowledge/64_h74_results_and_limits.md`.
+H74 executed the deferred **H70-E** variant — a **deformation-only View A2** (geodetic strain bands
+4/7/8 + seismicity bands 10/16, 22 channels) with View B unchanged — the lane's only untested View A
+half. **Verdict: NEGATIVE, research-only. DOWNLOAD YES; SUBMIT NO. Slots used: 0. Experiments used:
+3 of 3.** The lane's attribution question is now closed: View A2 out-of-quadrant AUC mean **0.5194**,
+min fold **0.5011** → S1 sufficiency **FAIL** (sixth consecutive failure; the deformation half alone
+is as non-transferable as the mixed View A, so the failure is common to both halves of the
+subsurface stack on this grid, not attributable to the potential-field channels). Independence on the
+A2/B pair held with the lane's lowest measured correlation (max |ρ| **0.0765** < 0.60 → exchange
+allowed); the exchange moved 15,986 whole-segment pseudo pixels and **dropped** View A2's OOF AUC
+(0.5019→0.4759, 0.5011→0.4741, 0.5234→0.4796, 0.5513→~0.48) — the donor labels amplify the
+deformation view's bias, the brief's own warning. HOLDOUT-DTI (gems52-pooled-hide-v1, 9,400
+dots/fold/arm, 53,186 withheld positives): `a_only` **0.050048** [0.035285, 0.065611] vs `single_B`
+**0.174517** [0.152316, 0.196299] (control reproduced to 2.9e-07), paired Δ **−0.124469**
+[−0.149150, −0.099436] — the strict A2-only stratum is again anti-informative (below random
+0.080426); `single_B_veto_Bonly` 0.167026 and `concordant` 0.118511 both lose to `single_B` again.
+Leakage canary max alarm AUC **0.6687**, no alarm. The build emitted the strict A2-only stratum
+(1,965 candidate cells after exact novelty) at **721 dots** (candidate exhaustion; every budget probe
+placed 721) with the measured worst informative near-dot share **0.9945** → **no lane-valid emission
+exists**; dots lane literal **DUPLICATE/STOP** (lattice probe), policy **DUPLICATE/STOP** (max near
+**0.8835**); surface lane PASS/PASS (max ρ 0.0110). The file is format-valid, canonical-pattern
+unique, tier-2 novel_fraction **1.0**, not the prior union, and every one of its 721 cells is a
+strict A2-only candidate with a written geological reasoning row
+(`docs/downloads/h74-a-only-reasoning.csv`). Do **not** re-run the co-training lane with another View
+A rebuild — both halves are now measured (potential-field: H61/H63/H64/H65/H70; deformation-only:
+H74). H74-D (radiometric-cover gating) and H74-E (H65 operator on the strain bands) remain deferred.
+IR-H74-001 (build CSR orientation crash, fixed, regression-tested) is in
+`registry/irregularities.json`.
+
 ## Current H73 continuation (2026-10-09)
 
 - **H69 file verdict (H73 audit):** DOWNLOAD NO, SUBMIT NO. The literal lane rule returns DUPLICATE/STOP (14 universal-coverage probes), and a policy PASS does not waive it. This file is a research copy only.
@@ -65,48 +97,6 @@ weekly slot**. IR-H67-001 … -010 are in `registry/irregularities.json`; -002, 
 a shared instrument must be read. Use `scripts/h67_uniqueness_aligned.py` (alignment-filtered corpus) for any
 uniqueness check; do not fork a checker.
 <!--/H67-AGENTS-->
-
-## Current H66cover continuation (2026-10-09; namespaced after the parallel-session H66 label collision, IR-H66-015)
-
-Read `README.md`'s H66cover block first (it sits directly below the H71 block), then
-`knowledge/43_h66cover_hypotheses_preregistered.md` (frozen; SHA-256 pinned in
-`registry/h66cover_preregistration.json` together with the dated amendment
-`knowledge/43_h66cover_amendment_2026-10-09_budget.md`) and `knowledge/44_h66cover_results_and_limits.md`.
-**H66cover is COMPLETE and NEGATIVE, research-only.** Verdict: DOWNLOAD YES (format-valid, unique on
-decoded pixels), SUBMIT NO (lane policy DUPLICATE/STOP on the dots phase, and the holdout does not beat
-single_B). The shipped artefact is `gems52-h66-covergate-cotrain-633px.tif` (633 dots, SHA-256
-`0ce05c52…7629`), published one-click at `docs/downloads/h66cover-candidate.tif` with the explicit
-DO-NOT-SUBMIT status on its own pages (`docs/h66cover.html`, `docs/h66cover-executive-summary.html`).
-Experiments used: 3 of 3 (E1 canary+fit+independence, E2 exchange+holdout, E3 build+gates+GeoTIFF);
-the round is closed — do not re-tune it.
-
-Namespacing (IR-H66-015): parallel sessions merged other rounds under the "H66" label first
-(PR #56, structural coherence — the site's bare `h66-*` pages and `docs/downloads/h66-candidate.*`
-are that round's; PR #58 added H65halo and the thermal-upflow H67; a later round renamed itself H71
-the same way). This round's shared file names therefore carry the `h66cover` prefix and its
-irregularity IDs are IR-H66-011 … -015. Before taking a round label, check
-`registry/*_preregistration.json` and the `IR-H66-*` ID space.
-
-Facts the next round must respect:
-
-- The cover gate lifted the A-only arm from 0.0315 to 0.0457 (+45% relative) but it remains far below
-  single_B 0.1745; the paired CI excludes 0. The co-training/disagreement lane has now failed in every
-  variant (H61, H63, H64, H65, H66 structural, H66cover): **View A cannot be repaired by gating,
-  capacity cuts, or cross-strike features — stop proposing View A repairs.**
-- The H66cover emission is 633 dots because the frozen A-only gate has only 1,657 exact-novel cells
-  (IR-H66-013); the template budget is a cap, not a target (amendment `knowledge/43_h66cover_…`).
-- 100% of the H66cover dots fall within 3 px of the H64 raster's dots (IR-H66-014): the A-only stratum
-  sits inside the H64 disagreement emission's 3 px halo, so **no lane-valid A-only candidate exists in
-  this field** — a lane-valid candidate needs a stratum outside every informative prior's halo.
-- The surface lane passes for H66cover (literal 0.0336 / policy 0.0126) — rank-unique vs the registry;
-  the DOTS lane is what fails.
-- H66-B/C/D/E are registered and deferred (`knowledge/43_h66cover` §2). H66-C needs bulk ComCat
-  seismicity, which is not ingestible from the sandbox.
-- The global pointers `docs/data/submission.json` and `submission/LATEST.txt` stay at main's H60
-  artefact; this round's pointer is `submission/H66COVER_LATEST.txt`.
-- Slots used: 0. No organizer receipt exists for any file in this repository; every score is
-  OWNER-REPORTED.
-<!--/H66COVER-AGENTS-->
 
 ## Current H65 continuation (2026-10-09; the protocol body keeps the H62 label, see knowledge/41a)
 
