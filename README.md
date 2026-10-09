@@ -1,3 +1,49 @@
+<!--H66-README-->
+# GEMSDOE52 — H66: structural coherence with multi-data consensus (NEW HYPOTHESIS)
+
+**[★ Download the H66 GeoTIFF — one click](docs/downloads/h66-candidate.tif)** ·
+[single-TIFF ZIP](docs/downloads/h66-candidate.zip) ·
+**[Executive summary / exact submission steps](docs/h66-executive-summary.html)** ·
+[Audit page](docs/h66-audit.html) · [Run card](submission/gems52-h66-structural-coherence-25000px.json)
+
+> **DOWNLOAD: YES (research). SUBMIT: NOT YET APPROVED — pending holdout validation.**
+> Verdict `RESEARCH ONLY, pending validation`. The file is format-valid, pattern-unique vs 48 priors,
+> and passes the lane gate (max Spearman 0.0033, max near-3px 0.1194). It has NOT yet been validated on
+> the hide-and-recover holdout. **NO CERTIFIED LEADERBOARD GAIN. Competition slots used: 0.**
+
+- **File:** `gems52-h66-structural-coherence-25000px.tif` — 88,070 bytes, 25,000 emitted cells
+- **SHA-256:** `23915c13d1b2f9b3f6c5628158cd2576030d356c465e5c385c7c2b95ff7ef664`
+- **Name (62 characters):** `gems52-h66-structural-coherence-25000px-20261009T030000Z`
+- **Note (114 characters):** `H66 structural coherence: multi-data consensus with strike alignment; 3px dots; >200m off catalogue; research-only`
+- **Local validator:** one float32 band; values exactly {0, 1}; 0 NaN; EPSG:32611; shape 3,730 × 3,292 and transform identical to `data/sample_submission.tif`. Local validator only, not an organiser acceptance receipt.
+
+## What makes H66 different
+
+H66 uses a **multi-data consensus** approach that requires agreement among multiple independent data types:
+
+1. **Geophysical edge product** (gravity × magnetics): requires BOTH gravity AND magnetic gradients to be present
+2. **LiDAR scarp density**: combined step, exposure, upface, and relief features
+3. **Radiometric anomaly**: K/Th and U/K deviations from background (hydrothermal alteration indicator)
+4. **Structural coherence**: multi-scale structure tensor coherence from DEM
+5. **Strike alignment weighting**: favors structures aligned with Basin-and-Range trend (~100°)
+
+This is fundamentally different from prior submissions that used simple two-view concordance (min of View A and View B) or disagreement. H66 requires consensus among 4+ independent data types with strike alignment.
+
+## H66 gate results
+
+| Gate | Result |
+|------|--------|
+| Format (float32, EPSG:32611, correct shape/transform) | PASS |
+| Values exactly {0,1}, 0 NaN | PASS |
+| Decoded-pattern uniqueness (vs 48 priors) | PASS |
+| Support novelty (>20% against prior union) | PASS (90.56%) |
+| Not literal union of priors | PASS |
+| Lane gate (max Spearman < 0.90) | PASS (0.0033) |
+| Lane gate (max near-3px < 0.70) | PASS (0.1194) |
+| Holdout validated | NOT YET |
+
+<!--/H66-README-->
+
 <!--H65-README-->
 # Current status — H65 (2026-10-09; first written as H62): NEGATIVE at the premise gate, nothing submitted
 

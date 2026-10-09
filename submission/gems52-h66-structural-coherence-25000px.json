@@ -1,0 +1,37 @@
+{
+  "file": "gems52-h66-structural-coherence-25000px.tif",
+  "sha256": "23915c13d1b2f9b3f6c5628158cd2576030d356c465e5c385c7c2b95ff7ef664",
+  "bytes": 88070,
+  "submission_name": "gems52-h66-structural-coherence-25000px-20261009T030000Z",
+  "note": "H66 structural coherence: multi-data consensus with strike alignment; 3px dots; >200m off catalogue; research-only",
+  "note_chars": 114,
+  "zip_file": "gems52-h66-structural-coherence-25000px.zip",
+  "zip_sha256": "941ba3da21071cd5dc3bba015e7f334be10f1564e355681d5f5b37890da91c53",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "status": "research-only; local format validation is not organizer acceptance",
+  "prediction": {
+    "shape": [
+      3730,
+      3292
+    ],
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "resolution": 100.0,
+    "positive_pixels": 25000,
+    "unique_values": [
+      0.0,
+      1.0
+    ],
+    "nan_count": 0
+  }
+}
