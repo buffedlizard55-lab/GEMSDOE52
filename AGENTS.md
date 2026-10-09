@@ -34,9 +34,9 @@ the >70% near-dot gate impossible on this footprint. Do not quietly exclude it, 
 new placement, promote CTD5, or treat the archival H57 LATEST pointer as upload approval.
 Raw input pins authenticate mirror bytes only. Preserve dated source and score caveats.
 
-### H65 (2026-10-09) — the lane rule is satisfiable, and the lever is cross-family consensus
+### H69 (2026-10-09) — the lane rule is satisfiable, and the lever is cross-family consensus
 
-Measured this round, all reproducible from `evidence/h65_placement.json` and `scripts/run_h65.py`:
+Measured this round, all reproducible from `evidence/h69_placement.json` and `scripts/run_h69.py`:
 
 * **`gems52.gates.lane_report`'s probe classification was not the whole story.** H61 concluded the
   literal 70 % rule was unsatisfiable because of universal-coverage probes. It is also unsatisfiable for
@@ -59,13 +59,13 @@ Measured this round, all reproducible from `evidence/h65_placement.json` and `sc
   from the catalogue) and surfaces as "insufficient training classes", or, on a screen that only computes
   an AUC, as a silently wrong sufficiency number. This round produced View A mean AUC 0.6636 that way
   before the mistake was caught; the committed instrument gives **0.5281**. The wrong number is recorded in
-  `knowledge/42` §2.1 so nobody resurrects it.
-* **`spatial.whole_pseudo_segments` can return zero labels.** With H65's views it returned **0 pixels in
+  `knowledge/53` §2.1 so nobody resurrects it.
+* **`spatial.whole_pseudo_segments` can return zero labels.** With H69's views it returned **0 pixels in
   all four folds**, so `disagreement_post` is bit-identical to `disagreement_pre` and the paired CI is
   exactly [0, 0]. Same class as `IR-H58-002`; check the count before interpreting a "post-exchange" arm.
 * **A round must exclude its own artefacts from its registry.** `gates.find_priors` sweeps `submission/`,
   so a second attempt at the same stage finds the first attempt's GeoTIFF as a "prior" and reports
-  identical-to-a-prior. `scripts/run_h65.py` filters `gems52-h65-*` and says so.
+  identical-to-a-prior. `scripts/run_h69.py` filters `gems52-h69-*` and says so.
 * **Cache the lane reports.** Two `lane_report` phases over 566 rasters cost ~13 min; they are now cached
   against the SHA-256 of the emission plus the prior count, which is the difference between a fixable
   crash and a lost quarter-hour.
