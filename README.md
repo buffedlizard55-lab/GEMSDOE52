@@ -1,3 +1,26 @@
+<!--H81-README-->
+# Current status — H81 (2026-10-09): one negative experiment; the H75 file is research-only (lane AND support-novelty fail)
+
+> **DOWNLOAD: the H75 file, research copy only.  SUBMIT TO THE COMPETITION: NO.**
+> The H75 GeoTIFF is format-valid and its canonical pattern is unique, but two gates fail that the earlier READMEs did not report:
+> (1) the **lane gate** fails on the final dots (literal near-dot share 1.000; policy 0.922 > 0.70; 38 offenders), and
+> (2) the **support-novelty gate** fails: novel fraction **0.0**, so every dot's support lies inside the union of the 566 priors (IR-H81-001).
+> A submission would need an explicit owner override of both gates. **Slots used this round: 0.**
+
+**★ [Download the H75 GeoTIFF (research copy)](docs/downloads/h75-candidate.tif)** · [ZIP](docs/downloads/h75-candidate.zip) · **[Executive summary / exact submission status](docs/h75-executive-summary.html)** · **[H81 status page](docs/h81.html)**
+
+- **H81-1 (band-18 DVA added to View B): NEGATIVE.** HOLDOUT-DTI B_DVA18 **0.188333** [0.167850, 0.209106] vs B_DVA (H75) 0.186352 — paired **+0.001980 [−0.001462, +0.005216]**; the CI includes zero, so the preregistered promotion rule fails. Canary max AUC 0.596 (no alarm). Label: HOLDOUT-DTI, 53,186 withheld positives, evaluator gems52-pooled-hide-v1.
+- **H75 reproduced from restored bytes:** SHA-256 `b97691584d514ab1925d9fff2b61c410be86bdc0bc8c844dfdaa6257a4ea7a16`; the regenerated placement is pixel-identical; validator PASS (float32, EPSG:32611, transform and shape match, values {0,1}, 0 NaN in the footprint).
+- **Corrections to H75 (IR-H81-003):** the committed single_B holdout (0.174517) depended on process state; the fresh value is **0.174571**, matching the H71 and H73 receipts. The paired H75 gain is corrected to **+0.011781 [0.006700, 0.017313]** (was +0.011835). The promotion rule still holds.
+- **Ranked candidates (3–5, with layers, signatures, mimics, costs):** [`knowledge/69_h81_hypotheses_ranked.md`](knowledge/69_h81_hypotheses_ranked.md). Next: the antithetic basement step on band 15 (untested), then the magnetic-gradient DVA behind a flight-line artefact check. The biggest blocker is the lane rule, which is an owner decision.
+- **Leaderboard context (verified against the 2026-10-08 snapshot):** top **0.3774** (xiaofanhu, rank 1); **0.3195** is rank 7 (DARD), not the highest, as the brief says (IR-H81-005); 0.2778 is rank 13 (extradr19, owner-reported, not linked to a file; [knowledge/49](knowledge/49_why_02778_phd_answer.md) re-measured the bytes: the 0.2778 file is the 0.2600 file minus its 6,436 px in the 100–200 m catalogue ring).
+- **Verification:** 450 passed / 2 skipped (pinned stack). Run card: [`evidence/h81_run_card.json`](evidence/h81_run_card.json). Results and limits: [`knowledge/71_h81_results_and_limits.md`](knowledge/71_h81_results_and_limits.md). Preregistration: [`knowledge/68`](knowledge/70_h81_preregistered.md), pinned in `registry/h81_preregistration.json`. Eleven new irregularities: `registry/irregularities.json` IR-H81-001 … -011.
+- **Provenance flag (IR-H81-006):** the restored competition rasters come from the owner's sibling GitHub mirrors, not the DrivenData portal (login-walled). They are integrity-pinned, not organiser-authenticated. Check data-use terms before any submission.
+- **Reproduce (exact order, each stage its own process):** `bash scripts/download_competition_data.sh` → `PYTHONPATH=src python -m gems52.external` → build the store (`structural.build(dest='work/r2/features', include_optional_profiles=False)`) → `PYTHONPATH=src python scripts/fetch_prior_inventory.py` (about 35 min) → `python scripts/run_h75.py fit|holdout|build` → `python scripts/h75_gates.py` → `python scripts/run_h81.py all`. Use the pinned stack in `requirements-r2.txt`.
+
+---
+
+<!--/H81-README-->
 <!--H77cond-README-->
 ## H77cond — conditional co-training sufficiency (S1′) and the B-core + A-rescue swap
 
@@ -45,7 +68,7 @@ All use the pinned mirror of the competition's 19-band feature raster; no new ex
 <!--H75-README-->
 # Current status — H75 (2026-10-09): variogram-anisotropy ranker beats single_B on the holdout; lane rule still fails
 
-> **DOWNLOAD: YES** (format-valid, decoded-unique). **SUBMIT: research-only** — the holdout gate PASSES (first time in this
+> **[SUPERSEDED by H81 above: the support-novelty gate fails (0.0) and the lane gate fails on both readings.]** **DOWNLOAD: YES** (format-valid, decoded-unique). **SUBMIT: research-only** — the holdout gate PASSES (first time in this
 > repo), the protocol's near-dot lane gate FAILS (0.922 > 0.70). Submitting needs an explicit owner override of the lane rule.
 > If overridden, use H75, not H72-v3 (H72-v3 holdout 0.031 is below random 0.080 — IR-H75-001). Slots used: 0.
 

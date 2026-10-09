@@ -1,0 +1,28 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>H81 status · GEMSDOE52</title>
+<style>body{font-family:-apple-system,sans-serif;max-width:800px;margin:40px auto;padding:20px;line-height:1.6}
+.card{border:2px solid #dc2626;border-radius:8px;padding:16px;background:#fef2f2}table{border-collapse:collapse;width:100%}td,th{border:1px solid #d1d5db;padding:6px 8px;font-size:.92em;text-align:left}
+code{word-break:break-all}a{color:#1d4ed8}</style></head><body>
+<p><a href="index.html">← Overview</a> · <a href="h75-executive-summary.html">H75 executive summary</a></p>
+<h1>H81 — status (2026-10-09)</h1>
+<div class="card"><h2>Download: the H75 file, research copy only</h2>
+<p><a href="downloads/h75-candidate.tif">downloads/h75-candidate.tif</a> (SHA-256 <code>b97691584d514ab1925d9fff2b61c410be86bdc0bc8c844dfdaa6257a4ea7a16</code>)</p>
+<p><b>Submit to the competition: NO.</b> Two gates fail: the lane gate (final dots: literal 1.000, policy 0.922 vs 0.70) and the support-novelty gate (novel fraction 0.0; every dot lies inside the union of the 566 priors).</p></div>
+<h2>What was measured this round</h2>
+<table><tr><th>Item</th><th>Label</th><th>Result</th></tr>
+<tr><td>H81-1: band-18 DVA added to View B</td><td>HOLDOUT-DTI</td><td>NEGATIVE. B_DVA18 0.188333 [0.167850, 0.209106]; paired vs B_DVA +0.001980 [−0.001462, +0.005216]</td></tr>
+<tr><td>Leakage canary, band-18 channels alone</td><td>PREMISE-AUC</td><td>max 0.596 (alarm at 0.90): no alarm</td></tr>
+<tr><td>H75 file reproduced from restored bytes</td><td>MEASURED</td><td>pixel-identical; validator PASS (float32, EPSG:32611, {0,1}, 0 NaN in footprint)</td></tr>
+<tr><td>H75 single_B holdout corrected</td><td>HOLDOUT-DTI</td><td>0.174571 (committed 0.174517 depended on process state; IR-H81-003)</td></tr>
+<tr><td>Competition board, top / 0.3195 / 0.2778</td><td>PUBLIC snapshot 2026-10-08</td><td>0.3774 rank 1 · 0.3195 rank 7 · 0.2778 rank 13 (owner-reported file match)</td></tr>
+</table>
+<h2>Sources to check by hand</h2>
+<ul>
+<li>Official problem description, metric and submission format: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">drivendata.org … /page/967/</a></li>
+<li>Competition rules (linked from the rules page): <a href="https://www.herox.com/GEMSPrize/resource/2274">herox.com/GEMSPrize/resource/2274</a></li>
+<li>Leaderboard: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">drivendata.org … /leaderboard/</a> (client-rendered; the snapshot is in <code>registry/leaderboard_snapshot_2026-10-08.json</code>)</li>
+<li>USGS 3DEP (free, no use restrictions, per the page): <a href="https://www.usgs.gov/3d-elevation-program">usgs.gov/3d-elevation-program</a></li>
+</ul>
+<h2>Detail</h2>
+<p><a href="../knowledge/69_h81_hypotheses_ranked.md">Ranked candidate hypotheses</a> · <a href="../knowledge/70_h81_preregistered.md">Preregistration</a> · <a href="../knowledge/71_h81_results_and_limits.md">Results and limits</a> · <a href="../evidence/h81_run_card.json">Run card (JSON)</a> · <a href="../evidence/h75_gates.json">H75 lane and uniqueness receipt</a></p>
+</body></html>

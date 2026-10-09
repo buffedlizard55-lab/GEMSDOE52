@@ -1,0 +1,121 @@
+{
+ "round": "H81",
+ "date_utc": "2026-10-09",
+ "experiments_used": "1 of 3 (H81-1). H75 reproduction runs are not counted.",
+ "slots_used": 0,
+ "hypothesis": "Adding directional variogram anisotropy of band 18 (iso_grav_anom_hg), 4 channels, to H75's View B (which already has DVA of bands 12, 19, 13) improves hide-and-recover recovery over B_DVA.",
+ "mechanism": "A fault damage zone makes the local texture of the gravity horizontal-gradient field direction-dependent (strike-parallel smooth, strike-normal rough) at 200-400 m lags.",
+ "named_non_fault_mimic": "Bedding-parallel density contrasts in sediments and topographic-compensation residuals along range fronts also give anisotropic gravity-gradient texture.",
+ "holdout": {
+  "evaluator": "gems52-pooled-hide-v1",
+  "withheld_positives": 53186,
+  "budget_dots_per_fold": 9400,
+  "B_DVA18": {
+   "label": "HOLDOUT-DTI",
+   "dti": 0.188333,
+   "ci95": [
+    0.16785,
+    0.209106
+   ]
+  },
+  "B_DVA_H75": {
+   "label": "HOLDOUT-DTI",
+   "dti": 0.186352,
+   "ci95": [
+    0.164675,
+    0.207868
+   ]
+  },
+  "single_B": {
+   "label": "HOLDOUT-DTI",
+   "dti": 0.174571,
+   "ci95": [
+    0.152316,
+    0.196299
+   ]
+  },
+  "random": {
+   "label": "HOLDOUT-DTI",
+   "dti": 0.080426,
+   "ci95": [
+    0.070223,
+    0.090973
+   ]
+  },
+  "paired_B_DVA18_minus_B_DVA": {
+   "label": "HOLDOUT-DTI",
+   "delta": 0.00198,
+   "ci95": [
+    -0.001462,
+    0.005216
+   ]
+  }
+ },
+ "leakage_canary": {
+  "label": "PREMISE-AUC",
+  "max_auc_band18_channels_alone": 0.5964,
+  "alarm_at": 0.9,
+  "alarm": false
+ },
+ "promotion_rule": "paired CI lower bound > 0 and canary < 0.90",
+ "verdict_H81_1": "NEGATIVE (CI lower bound -0.00146 < 0). No file emitted.",
+ "lane_and_overlap_of_shipped_H75_file": {
+  "surface_literal": "PASS (max Spearman 0.4657)",
+  "dots_literal": "DUPLICATE/STOP (max 3 px near-dot share 1.000)",
+  "dots_policy": "DUPLICATE/STOP (max 0.9220; 38 informative offenders of 552)",
+  "dots_spearman_max": 0.108,
+  "priors_checked": 566,
+  "source": "evidence/h75_gates.json (re-run 2026-10-09)"
+ },
+ "uniqueness_of_shipped_H75_file": {
+  "canonical_decoded_pattern_unique": true,
+  "support_novelty_novel_fraction": 0.0,
+  "support_novelty_gate_ok": false,
+  "relation_to_union": "subset-of-union",
+  "verdict": "NOT CONFIRMED on support. Canonical pattern unique only (IR-H81-001)."
+ },
+ "raster_sha256_shipped_H75": "b97691584d514ab1925d9fff2b61c410be86bdc0bc8c844dfdaa6257a4ea7a16",
+ "raster_file": "submission/gems52-h75-dva-variogram-anisotropy-B-37654px-20261009.tif",
+ "validator_output_H75_from_disk": {
+  "count": 1,
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "shape": [
+   3730,
+   3292
+  ],
+  "crs_match": true,
+  "shape_match": true,
+  "transform_match": true,
+  "nan_inside_footprint": 0,
+  "values": [
+   0.0,
+   1.0
+  ],
+  "ones": 37654,
+  "outside_footprint_values": "0 (official text says null or nan; IR-H81-004)",
+  "PASS": true
+ },
+ "submission_name_and_note_for_shipped_H75_file": {
+  "name": "h75-dva-variogram-anisotropy-B-37654px-20261009",
+  "note": "H75: View-B + directional variogram anisotropy (det_elev/slope/grav); 200m ring cut; binary 37654 dots; holdout +0.012 vs B"
+ },
+ "H81_submission": "none (no emission: holdout gate failed)",
+ "owner_facing_verdict": {
+  "H75_file_download": "YES, research copy only",
+  "H75_file_submit": "NO (lane gate fails on literal and policy readings; support novelty 0.0)",
+  "H81_1": "NEGATIVE, nothing to download or submit"
+ },
+ "board_context": "PUBLIC board 2026-10-08 snapshot: top 0.3774 (xiaofanhu), 0.3195 rank 7 (DARD), 0.2778 rank 13 (extradr19, owner-reported file match). Holdout does not forecast board (R4 Spearman -0.10).",
+ "reproduction": [
+  "bash scripts/download_competition_data.sh",
+  "PYTHONPATH=src python -m gems52.external",
+  "PYTHONPATH=src python -c \"from gems52 import structural; structural.build(dest='work/r2/features', include_optional_profiles=False)\"",
+  "PYTHONPATH=src python scripts/fetch_prior_inventory.py",
+  "python scripts/run_h75.py fit",
+  "python scripts/run_h75.py holdout",
+  "python scripts/run_h75.py build",
+  "python scripts/h75_gates.py",
+  "python scripts/run_h81.py all"
+ ]
+}
