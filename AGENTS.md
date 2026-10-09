@@ -8,6 +8,20 @@ Keep known-catalogue labels separate from verified fault absence, public partici
 
 This session's working branch is fixed by Arena. Do not change branches. Keep raw competition data and large intermediate arrays under ignored `data/` and `work/`. Publish small audit receipts, the unique compressed prediction raster and its review table.
 
+## Current H66 continuation (2026-10-09)
+
+Read `README.md`'s H66 block first, then `knowledge/43_hypotheses_H66_preregistered.md` (frozen; SHA-256
+`1da0fa6c…72eaa1c`, pinned in `registry/h66_preregistration.json`) and `knowledge/44_h66_results_and_limits.md`.
+H66 is **negative**: the strict A-only discovery stratum measured purely scores HOLDOUT-DTI 0.0174, below
+uniform random; the B-only veto and concordant variants both lose to single_B; independence held (max |rho|
+0.1337); View A sufficiency failed for the fifth consecutive round (0.5166); and no lane-valid emission exists
+from the stratum (610 placeable cells, worst informative near-dot share 1.0; IR-H66-001). Experiments used: 3 of 3.
+Do not re-run the co-training lane with another View A rebuild; H66-E (deformation-only View A2) is the only
+untested variant and needs its own round. The shared H61 stages were reused, not forked; use
+`scripts/audit_uniqueness.py` for uniqueness checks. `docs/downloads/h66-candidate.tif` is research-only:
+DOWNLOAD YES, SUBMIT NO, slots used 0. `knowledge/26_current_user_brief.md` must carry the current prompt
+verbatim (two tests enforce it).
+
 ## Current H65 continuation (2026-10-09; the protocol body keeps the H62 label, see knowledge/41a)
 
 Read `README.md`'s H65 block first, then `knowledge/41_hypotheses_H65_preregistered.md` (frozen;

@@ -1,0 +1,69 @@
+{
+ "file": "gems52-h66-aonly-cotrain-610px-20261009T055521Z.tif",
+ "sha256": "ea9774a871929427e60261cdfe2f64fdab0d0c8c2253cf2eac119cc404e28af3",
+ "bytes": 58363,
+ "submission_name": "gems52-h66-aonly-cotrain-610px-20261009T055521Z",
+ "note": "H66 strict A-only co-training discovery stratum; constrained placement at 610 dots, lane-DUPLICATE; research only, not slot-approved",
+ "note_chars": 132,
+ "validator": {
+  "path": "/home/user/GEMSDOE52/submission/gems52-h66-aonly-cotrain-610px-20261009T055521Z.tif",
+  "bytes": 58363,
+  "sha256": "ea9774a871929427e60261cdfe2f64fdab0d0c8c2253cf2eac119cc404e28af3",
+  "bands": 1,
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "width": 3292,
+  "height": 3730,
+  "bounds": [
+   243350.0,
+   4135550.0,
+   572550.0,
+   4508550.0
+  ],
+  "ref_bounds": [
+   243350.0,
+   4135550.0,
+   572550.0,
+   4508550.0
+  ],
+  "transform": [
+   100.0,
+   0.0,
+   243350.0,
+   0.0,
+   -100.0,
+   4508550.0
+  ],
+  "nodata": null,
+  "blocksize": [
+   256,
+   256
+  ],
+  "fixture_grid": false,
+  "has_validity_mask": false,
+  "nan_pixels": 0,
+  "infinity_pixels": 0,
+  "n_nan": 0,
+  "min": 0.0,
+  "max": 1.0,
+  "mean": 4.967766653862782e-05,
+  "n_nonzero": 610,
+  "mass": 610.0,
+  "mass_outside_footprint": 0,
+  "problems": [],
+  "ok": true,
+  "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+ },
+ "zip_file": "gems52-h66-aonly-cotrain-610px-20261009T055521Z.zip",
+ "zip_sha256": "fe8319ce5abf01fbfa9c886aba58d422d13ee17554dd3a245afc83f3f633c2f7",
+ "approved_for_weekly_slot": false,
+ "promoted": false,
+ "submission_slots_used": 0,
+ "status": "research-only; local format validation is not organizer acceptance",
+ "metadata": {
+  "round": "H66",
+  "preregistration": "1da0fa6cef50118cbdb5ebd4ed7a3e3e3077e5578c8cc62dafcb6bb7072eaa1c",
+  "budget": 610,
+  "candidate_arm": "a_only"
+ }
+}

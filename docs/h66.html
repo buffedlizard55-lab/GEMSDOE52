@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Strict A-only two-view co-training GeoTIFF with measured gates and an explicit download/submit verdict.">
+<title>H66 research GeoTIFF and explicit submission status · GEMSDOE52</title><link rel="stylesheet" href="assets/ctd5.css"><script src="assets/h66.js" defer></script></head>
+<body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>
+<a href="index.html">Overview</a><a href="h66.html">H66 run &amp; evidence</a><a href="executive-summary.html">Submission guide</a><a href="h66-sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header>
+<main id="main"><div class="notice" role="note" style="margin:0 0 1rem"><strong>Latest research round: H66 (negative).</strong>
+Download yes, for research only; submit no. The brief's literal discovery stratum (A confident ∧ B abstains) is
+measured for the first time, isolated and pure: it is <b>anti-informative</b> on this stack.
+<a href="h66-executive-summary.html">H66 submission guide</a> · <a href="h64.html">Previous round (H64)</a></div>
+<section class="hero"><div><div class="eyebrow">DOE GEMS / H66 · strict A-only isolation, two-view co-training</div>
+<h1>Download the file.<br>Read the verdict first.</h1>
+<p class="lead">H66 isolates the one lane element no previous round tested standalone: the strict A-only
+discovery stratum — View A (potential field / subsurface) confident, View B (surface) abstaining — after the
+Blum–Mitchell exchange, and validates two further lane variants (the B-only artifact veto, the concordant
+ranking) in one matched-budget holdout.</p>
+<div class="notice" role="note"><strong>OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT · DO NOT UPLOAD</strong>
+<p>Verdict: <b>NEGATIVE, research-only.</b> DOWNLOAD YES (format-valid and unique on decoded pixels); SUBMIT NO (the strict A-only candidate does not beat the single-view control: HOLDOUT-DTI 0.046023 [0.0314, 0.0621] against single_B 0.174571, paired Δ -0.128548 [-0.1513, -0.1062]; and the literal lane gate reads DUPLICATE/STOP). Competition slots used: 0. NO CERTIFIED LEADERBOARD GAIN. Promotion to a weekly slot is a separate selector step.</p></div>
+<div class="actions"><a class="button" href="downloads/h66-candidate.tif" download>Download the H66 GeoTIFF ↓</a><a class="button secondary" href="downloads/h66-candidate.zip" download>Single-TIFF ZIP</a><a class="button secondary" href="downloads/h66-a-only-reasoning.csv.gz" download>A-only reasoning CSV (gzip)</a></div>
+<p class="fileline">gems52-h66-aonly-cotrain-610px-20261009T055521Z.tif<br>58,363 bytes · SHA-256 ea9774a871929427e60261cdfe2f64fdab0d0c8c2253cf2eac119cc404e28af3 · 610 emitted cells · values exactly {0,1}, 0 NaN</p>
+<p class="small"><a href="h66-executive-summary.html">Exactly what may be uploaded, and how →</a> ·
+<a href="data/h66_run_card.json">Complete JSON run card ↗</a></p></div>
+<aside class="panel" aria-label="Submission readiness"><div class="label">Readiness / measured, not promised</div>
+<div class="status-line"><span>Single-band float32 GeoTIFF</span><span class="good">PASS</span></div>
+<div class="status-line"><span>Finite, values in [0, 1]</span><span class="good">PASS</span></div>
+<div class="status-line"><span>CRS, shape &amp; transform match</span><span class="good">PASS</span></div>
+<div class="status-line"><span>Copied a previous submission?</span><span class="good">NO</span></div>
+<div class="status-line"><span>Not the union of the two views</span><span class="good">PASS</span></div>
+<div class="status-line"><span>Lane gate (saturation policy)</span><span class="bad">DUPLICATE/STOP</span></div>
+<div class="status-line"><span>Lane gate (literal, lattice-saturated)</span><span class="bad">DUPLICATE/STOP</span></div>
+<div class="status-line"><span>Beats single-view control (paired CI &gt; 0)</span><span class="bad">NO</span></div>
+<div class="status-line"><span>Verdict</span><span class="bad">NEGATIVE</span></div>
+<p class="fine">A valid file is not an approved competition entry. Promotion to a weekly slot is a
+separate selector step.</p>
+<a class="small" href="data/h66_run_card.json">Inspect the complete JSON run card ↗</a></aside></section>
+<hr class="divider">
+<section><h2>Gates, measured</h2><div class="table-wrap"><table>
+<thead><tr><th>Gate</th><th>Result</th></tr></thead><tbody>
+<tr><td>Single-band float32 GeoTIFF, EPSG:32611, shape/transform match</td><td>PASS</td></tr>
+<tr><td>Values exactly {0, 1}; 0 NaN; 0 infinite; no mass outside the footprint</td><td>PASS</td></tr>
+<tr><td>Decoded-pattern uniqueness (not identical to any registry raster)</td><td>PASS</td></tr>
+<tr><td>Exact novelty vs informative priors (novel_fraction)</td><td>1.0000</td></tr>
+<tr><td>Not the union of the two views (Jaccard vs union_max &lt; 0.9)</td><td>PASS</td></tr>
+<tr><td>Lane-valid placement (policy): worst informative near-dot share ≤ 0.70</td><td class="bad">DUPLICATE/STOP (1.0000)</td></tr>
+<tr><td>Lane gate, literal rule (dots)</td><td class="bad">DUPLICATE/STOP</td></tr>
+<tr><td>Lane gate, saturation policy (dots)</td><td class="bad">DUPLICATE/STOP</td></tr>
+<tr><td>Lane gate, surface (literal / policy)</td><td>PASS / PASS</td></tr>
+<tr><td>Sufficiency S1 (View A out-of-quadrant AUC ≥ 0.60 mean, ≥ 0.55 fold)</td><td class="bad">FAIL (mean 0.5166, min 0.4673)</td></tr>
+<tr><td>Holdout: candidate beats single_B (paired 95% CI &gt; 0)</td><td class="bad">FAIL</td></tr>
+</tbody></table></div>
+<p class="small">Local validator only; not an organiser acceptance receipt. The literal lane rule is
+saturated on this registry by a spacing-5 lattice probe whose 3 px halo covers ≥ 95 % of the eligible
+footprint, so it reads DUPLICATE/STOP for every nonempty candidate — a measured property of the registry
+(<code>evidence/ctd5_registry_saturation.json</code>), not of this file. The H66 build is lane-valid under
+the saturation-aware policy <b>by construction</b>: every informative prior is constrained from the first
+placement and the budget was discovered by feasibility probes.</p></section>
+<hr class="divider">
+<section><h2>HOLDOUT-DTI, nine arms, matched budget (gems52-pooled-hide-v1)</h2>
+<p class="small">53,186 withheld positive pixels · α 0.2 / β 0.8 · 300 m triangular kernel · 95 % paired
+physical-cluster bootstrap (1,000 draws). Every arm placed exactly 9,400 dots per fold at 3 px minimum
+separation; all nine arms filled their budgets on all four folds. The single_B control reproduces the
+H61/H63/H64 committed value to |Δ| = 5.4e-05. <b>HOLDOUT-DTI is a simulator number, never a leaderboard
+score.</b></p>
+<div class="table-wrap"><table><thead><tr><th>Arm</th><th>HOLDOUT-DTI</th><th>95% CI</th><th>Withheld positives</th></tr></thead>
+<tbody>
+<tr><td>single_A</td><td class="numeric">0.071954</td><td class="numeric">[0.0566, 0.0886]</td><td class="numeric">53,186</td></tr>
+<tr><td>single_B</td><td class="numeric">0.174571</td><td class="numeric">[0.1523, 0.1963]</td><td class="numeric">53,186</td></tr>
+<tr><td>union_max</td><td class="numeric">0.149009</td><td class="numeric">[0.1281, 0.1694]</td><td class="numeric">53,186</td></tr>
+<tr><td>disagreement_pre</td><td class="numeric">0.033293</td><td class="numeric">[0.0238, 0.0446]</td><td class="numeric">53,186</td></tr>
+<tr><td>disagreement_post</td><td class="numeric">0.032884</td><td class="numeric">[0.0219, 0.0457]</td><td class="numeric">53,186</td></tr>
+<tr class="highlight"><td>a_only</td><td class="numeric">0.046023</td><td class="numeric">[0.0314, 0.0621]</td><td class="numeric">53,186</td></tr>
+<tr><td>single_B_veto_Bonly</td><td class="numeric">0.167221</td><td class="numeric">[0.1472, 0.1865]</td><td class="numeric">53,186</td></tr>
+<tr><td>concordant</td><td class="numeric">0.119590</td><td class="numeric">[0.1022, 0.1371]</td><td class="numeric">53,186</td></tr>
+<tr><td>random</td><td class="numeric">0.080426</td><td class="numeric">[0.0702, 0.0910]</td><td class="numeric">53,186</td></tr>
+</tbody></table></div>
+<p class="small">Paired bootstrap differences (candidate = <code>a_only</code>, the strict A-only stratum as a
+top-K field):</p>
+<div class="table-wrap"><table><thead><tr><th>Paired difference</th><th>Δ DTI</th><th>95% CI</th></tr></thead>
+<tbody>
+<tr><td>a_only − single_B</td><td class="numeric">-0.128548</td><td class="numeric">[-0.1513, -0.1062]</td></tr>
+<tr><td>a_only − union_max</td><td class="numeric">-0.102986</td><td class="numeric">[-0.1250, -0.0815]</td></tr>
+<tr><td>a_only − single_A</td><td class="numeric">-0.025931</td><td class="numeric">[-0.0447, -0.0054]</td></tr>
+<tr><td>a_only − single_B_veto_Bonly</td><td class="numeric">-0.121198</td><td class="numeric">[-0.1432, -0.1004]</td></tr>
+<tr><td>a_only − concordant</td><td class="numeric">-0.073567</td><td class="numeric">[-0.0937, -0.0516]</td></tr>
+<tr><td>a_only − random</td><td class="numeric">-0.034402</td><td class="numeric">[-0.0497, -0.0185]</td></tr>
+</tbody></table></div></section>
+<hr class="divider">
+<section><h2>The pure stratum: the brief's literal discovery signal, measured purely</h2>
+<p class="small">The holdout's <code>a_only</code> arm is the top-K of the gated field; because the stratum's
+3 px-thinned cells are fewer than K on every fold, most of that arm's dots sit at field = −1 <b>outside</b>
+the stratum. The pure stratum — placed only inside the gate, at its achieved budget, never rescued to K —
+scores below. Budgets are unmatched, so this is a labelled diagnostic, not a matched-budget comparison.</p>
+<div class="table-wrap"><table><thead><tr><th>fold</th><th>stratum cells</th><th>top-K arm placed</th>
+<th>…inside stratum</th><th>…outside stratum</th><th>pure placed</th><th>pure DTI</th></tr></thead>
+<tbody>
+<tr><td>fold 0</td><td class="numeric">28,446</td><td class="numeric">9,400</td><td class="numeric">5,239</td><td class="numeric">4,161</td><td class="numeric">5,239</td><td class="numeric">0.013834</td></tr>
+<tr><td>fold 1</td><td class="numeric">16,406</td><td class="numeric">9,400</td><td class="numeric">2,910</td><td class="numeric">6,490</td><td class="numeric">2,910</td><td class="numeric">0.016447</td></tr>
+<tr><td>fold 2</td><td class="numeric">6,235</td><td class="numeric">9,400</td><td class="numeric">1,272</td><td class="numeric">8,128</td><td class="numeric">1,272</td><td class="numeric">0.032450</td></tr>
+<tr><td>fold 3</td><td class="numeric">10,060</td><td class="numeric">9,400</td><td class="numeric">1,729</td><td class="numeric">7,671</td><td class="numeric">1,729</td><td class="numeric">0.017694</td></tr>
+</tbody></table></div>
+<p class="small">Pooled pure-stratum HOLDOUT-DTI (achieved budget): <b>0.017351</b>
+[0.0124, 0.0235]; paired Δ vs single_B -0.155049 [-0.1767, -0.1323],
+vs random -0.063074 [-0.0739, -0.0521]. <b>The strict A-only stratum is
+anti-informative:</b> mass placed where View A is confident and View B abstains lands where hidden faults are
+<i>less</i> likely than under uniform placement. View A's confident tail is systematically misplaced out of
+quadrant (OOF AUC ≈ 0.52), so the disagreement signal inverts.</p></section>
+<hr class="divider">
+<section><h2>The two further lane variants (both negative, paired CIs exclude 0)</h2>
+<div class="table-wrap"><table><thead><tr><th>arm</th><th>HOLDOUT-DTI</th><th>95% CI</th>
+<th>Δ vs single_B</th><th>95% CI</th></tr></thead><tbody>
+<tr><td>single_B_veto_Bonly (H66-B: B-only artifact veto)</td><td class="numeric">0.167221</td>
+<td class="numeric">[0.1472, 0.1865]</td>
+<td class="numeric">-0.007350</td>
+<td class="numeric">[-0.0112, -0.0034]</td></tr>
+<tr><td>concordant (H66-C: both-views-agree ranking)</td><td class="numeric">0.119590</td>
+<td class="numeric">[0.1022, 0.1371]</td>
+<td class="numeric">-0.054981</td>
+<td class="numeric">[-0.0714, -0.0371]</td></tr>
+<tr><td>single_B (control)</td><td class="numeric">0.174571</td><td class="numeric">[0.1523, 0.1963]</td>
+<td class="numeric">—</td><td class="numeric">—</td></tr></tbody></table></div>
+<p class="small">The veto removes <i>real</i> signal (B-only pixels are faults, not artifacts, on this stack),
+and requiring View A's agreement dilutes View B's ranking — both consistent with View A carrying no
+transferable out-of-quadrant skill.</p></section>
+<hr class="divider">
+<section><h2>Premises, measured before any exchange</h2>
+<div class="table-wrap"><table><thead><tr><th>premise</th><th>measured</th><th>bar</th><th>result</th></tr></thead><tbody>
+<tr><td>Leakage canary (max single-feature held-out AUC, 75 features × 4 folds)</td>
+<td class="numeric">0.6687</td><td class="numeric">&lt; 0.90</td><td>PASS (no alarm)</td></tr>
+<tr><td>Independence: max |ρ| of the views' spatial-block OOF errors on labelled negatives (2,089 blocks)</td>
+<td class="numeric">0.1337</td><td class="numeric">&lt; 0.60</td>
+<td>HELD (exchange allowed)</td></tr>
+<tr><td>Sufficiency S1: View A out-of-quadrant AUC, mean / min fold</td>
+<td class="numeric">0.5166 / 0.4673</td>
+<td class="numeric">≥ 0.60 / ≥ 0.55</td><td>FAIL</td></tr>
+<tr><td>Exchange transfer (disagreement_post − disagreement_pre, paired)</td>
+<td class="numeric">-0.000409</td>
+<td class="numeric">&gt; 0</td><td>no transfer (15,446 pseudo px)</td></tr>
+</tbody></table></div>
+<p class="small">Fifth consecutive round with View A OOF AUC ≈ 0.52 (H61 0.5163 · H63 0.5362 · H64 0.5230 ·
+H65 0.5202 · H66 0.5166). The independence premise held, so the brief's abandonment clause does not fire;
+the method fails on sufficiency, and now also on the discovery signal itself.</p></section>
+<hr class="divider">
+<section id="limits"><h2>Limits</h2><ul>
+<li><b>Negative result.</b> The strict A-only candidate does not beat the single-view control; the file is
+research-only and no competition slot is spent. Negative results are deliverables.</li>
+<li>The pure-stratum number is at an <b>unmatched</b> achieved budget (5,239 / 2,910 / 1,272 / 1,729 dots per
+fold); it is a diagnostic, not a matched-budget comparison.</li>
+<li>The holdout simulator measured Spearman −0.10 against the owner-reported board in R4; it screens
+procedures, it does not rank board performance.</li>
+<li>Catalogue-zero negatives are proxies, not verified fault absence (IR-52-004).</li>
+<li>Inputs are integrity-pinned owner mirrors, not organiser-authenticated downloads; every board score cited
+is PUBLIC BOARD or OWNER-REPORTED, none ORGANIZER-CONFIRMED.</li>
+<li>The lane's literal gate is saturated by a registry lattice probe; the policy verdict excludes
+universal-coverage probes by measured coverage, and the literal statistics remain published in the receipts.</li>
+<li>All HOLDOUT-DTI numbers: evaluator <code>gems52-pooled-hide-v1</code>, 53,186 withheld positives,
+95 % paired 20 km-cluster bootstrap, 1,000 draws.</li></ul></section></main><footer>Independent competition research, not an official DOE or DrivenData site. Predictions are not verified faults or geothermal discoveries.<br>
+<a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code &amp; reproducibility</a> · <a href="h66.html#limits">Limitations</a> · <a href="data/h66_run_card.json">JSON run card</a> · H66 / 2026-10-09</footer></body></html>
