@@ -1,0 +1,65 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DOE GEMS · H74 conditional co-training</title><link rel="stylesheet" href="assets/ctd5.css"></head><body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a><a href="index.html">Overview</a><a href="h74-executive-summary.html">How to submit</a><a href="h71.html">H71 (earlier)</a><a href="downloads/index.html">Archive</a></nav></header><main id="main">
+<div class="eyebrow">Executive summary · submission guide</div>
+<h1>Is this file OK to download and submit?</h1>
+<div class="notice" role="note" style="background:#fff1de;border-left:6px solid #12331f;padding:18px 20px;margin:18px 0"><div style="font-size:1.35rem;font-weight:700;letter-spacing:.01em">SAFE TO DOWNLOAD — DO NOT SUBMIT IT</div><p style="margin:.5rem 0 0"><b>Can I download this file?</b> Yes — the on-disk validator passes: one float32 band, every value in [0,1], no NaN, grid identical to sample_submission.tif.</p><p style="margin:.35rem 0 0"><b>Can I submit this file to DrivenData?</b> NO. Download it, read it, cite it; do not spend a weekly slot on it.</p><p style="margin:.35rem 0 0"><b>Why:</b> the frozen promote rule requires format AND uniqueness AND the final-dot lane AND not-the-union AND conditional sufficiency AND a holdout paired CI lower bound above single_B; failing clauses: c5_S1_conditional, c6_beats_single_B -&gt; do not spend a weekly slot</p><p style="margin:.35rem 0 0"><b>Verdict recorded in the run card:</b> <b>NEGATIVE, research-only</b></p></div>
+<div class="actions"><a class="button" href="downloads/h74-candidate.tif" download>Download the H74 GeoTIFF ↓</a><a class="button secondary" href="downloads/h74-candidate.zip" download>Single-TIFF ZIP</a><a class="button secondary" href="downloads/h74-a-only-reasoning.csv" download>A-only reasoning CSV</a></div>
+<p class="fileline">gems74-line-support-B-cotrain-37654px-20261009T193810Z.tif<br>137,255 bytes · SHA-256 49ad60980f8bf768b94a2753581cae9ba572c75564d862089cec8093bcf317ad · 37,654 emitted cells · values exactly {0,1}, 1 band, 0 NaN</p>
+<section class="prose">
+<h2>The file contract, checked on disk by the shared validator</h2><ul>
+<li>One band, float32, every value in [0, 1] — in practice exactly 0 or 1. The portal rule
+<em>“Predicted values must be in range [0, 1]”</em> is satisfied.</li>
+<li>No NaN and no infinite values anywhere in the file. Outside-footprint cells are encoded 0.0, not NaN
+(a NaN file is both unwritable and unsubmittable).</li>
+<li>EPSG:32611 · 3730×3292 · geotransform identical to the pinned
+<code>sample_submission.tif</code>.</li>
+<li>37,654 emitted cells, all more than 200 m from a mapped USGS/INGENIOUS trace, minimum 3 px (300 m)
+separation so no two dots compete for the same kernel credit.</li>
+<li>SHA-256 <code>49ad60980f8bf768b94a2753581cae9ba572c75564d862089cec8093bcf317ad</code> · 137,255 bytes.</li>
+<li>Local validator only. This is <b>not</b> an organiser acceptance receipt.</li></ul>
+
+<h2>Exactly how to submit — the three form fields</h2>
+<p>The DrivenData submission form for this competition has three things to fill in. Here is what each one wants and
+exactly what to paste.</p>
+<ol>
+<li><b>File to submit.</b> Upload a single-band GeoTIFF, or a ZIP containing exactly one GeoTIFF. Use
+<a href="downloads/h74-candidate.tif" download><code>h74-candidate.tif</code></a> or
+<a href="downloads/h74-candidate.zip" download><code>h74-candidate.zip</code></a> — the ZIP holds that one TIFF and
+nothing else, verified byte-for-byte.</li>
+<li><b>Submission name (must be unique).</b> Every submission needs a name you have not used before. Paste:<br>
+<code>gems74-line-support-B-cotrain-37654px-20261009T193810Z</code></li>
+<li><b>Note (≤ 140 characters).</b> A short line distinguishing this entry from your others. Paste
+(137 characters):<br><code>H74 RESEARCH ONLY-DO NOT SUBMIT: co-training trace-integrated View B 600m chord; 37654px binary; &gt;200m off catalogue; lane-feasible c&lt;=50</code></li>
+</ol>
+<ol start="4">
+<li>Open the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">competition
+submission page</a> (login required) and upload.</li>
+<li><b>Only do this if the verdict box at the top of this page says the file may be submitted.</b>
+It currently says DO NOT SUBMIT. This round spends no weekly slot. Download it, read the evidence, and keep your slot.</li>
+</ol>
+
+<h2>Why the verdict reads the way it does</h2>
+<p>the frozen promote rule requires format AND uniqueness AND the final-dot lane AND not-the-union AND conditional sufficiency AND a holdout paired CI lower bound above single_B; failing clauses: c5_S1_conditional, c6_beats_single_B -&gt; do not spend a weekly slot</p>
+<div class="table-wrap"><table><thead><tr><th>Clause</th><th>Result</th></tr></thead>
+<tbody><tr><td>1 · Format: single-band float32 GeoTIFF, EPSG:32611, 3730×3292, transform of sample_submission.tif, every value in [0,1], no NaN</td><td><b>PASS</b></td></tr><tr><td>2 · Uniqueness: decoded pattern differs from every one of the 643 comparable registry rasters and is not the literal union of them</td><td><b>PASS</b></td></tr><tr><td>3 · Parallel-lane gate on the final dots (saturation policy: Spearman ≤ 0.90 and ≤ 70% of dots within 3 px of any informative prior)</td><td><b>PASS</b></td></tr><tr><td>4 · Not merely the union of the two views</td><td><b>PASS</b></td></tr><tr><td>5 · Conditional sufficiency S1′: View A&#x27;s out-of-quadrant AUC on truth inside View B&#x27;s blind band ≥ 0.60 and ≥ 0.05 above its AUC on surface-expressed truth</td><td><b>FAIL</b></td></tr><tr><td>6 · HOLDOUT-DTI: the shipped arm&#x27;s paired 95% CI against single_B has a lower bound above zero</td><td><b>FAIL</b></td></tr></tbody></table></div>
+<p class="small">The standing rule in this repository: <b>never spend a competition upload slot on a candidate that
+has not beaten the current comparable holdout best.</b> The comparable best is <code>single_B</code> at
+0.174517 HOLDOUT-DTI; the shipped arm <code>line_support_B</code> measured
+0.172426 with a paired 95% CI of [-0.005873, 0.001289] against it.</p>
+
+<h2>What you are downloading</h2>
+<p>A 37,654-cell binary prediction raster produced by co-training View A (potential-field / subsurface:
+gravity, magnetics, strain, seismicity) against View B (surface: DEM curvature and slope plus the radiometric bands
+of <code>training_features.tif</code>), following Blum &amp; Mitchell, <i>Combining Labeled and Unlabeled Data with
+Co-Training</i>, COLT ’98, pp. 92–100,
+<a href="https://doi.org/10.1145/279943.279962">doi:10.1145/279943.279962</a>. The two feature views are disjoint by
+construction and verified disjoint at load time. Disagreement between them is used to stratify where the budget is
+spent, never to manufacture training labels.</p>
+</section>
+
+<section><h2>Earlier rounds still on this site</h2><p class="small">Each is a separate artefact with its own
+receipt. None of them is the H74 file and none is approved for a weekly slot.</p><ul>
+<li><b>H71, negative. Do not upload.</b> <a href="h71.html">H71 landing</a> · <a href="h71-executive-summary.html">H71 guide</a></li>
+<li><b>H64, negative. Do not upload.</b> <a href="h64.html">H64 landing</a></li>
+<li><b>H61, negative; its file is a measured lane duplicate.</b> <a href="archive-h61-landing.html">H61 landing</a></li>
+<li><b>H58, research-only.</b> <a href="h58.html">H58 page</a></li></ul></section>
+</main></body></html>

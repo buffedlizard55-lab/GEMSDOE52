@@ -174,8 +174,25 @@ def uniqueness_report(emitted, priors, top=None):
     ok = bool(priors) and n_new > 0 and not any(r.get("identical") or r.get("error") for r in rows) and fraction >= 0.2 and dropped > 0
     pattern_unique = bool(priors) and n_new > 0 and not any(r.get('identical') or r.get('error') for r in rows)
     literal_union = novel == 0 and dropped == 0
+    # H74 repair (shared tool, not a fork): `canonical_pattern_unique` above is False both when a
+    # prior is byte-identical AND when a prior could not be read or compared at all.  Those are
+    # different facts and conflating them reports a readable, demonstrably distinct raster as
+    # "not unique" because some unrelated file in the inventory is off-grid.  The original key and
+    # `ok` keep their exact previous meaning (still conservative, still fail-closed); the three keys
+    # below separate the two conditions so a caller can say which one actually fired.
+    incomparable = [dict(path=r['path'], error=r['error']) for r in rows if r.get('error')]
+    identical_rows = [r['path'] for r in rows if r.get('identical')]
+    comparable = [r for r in rows if not r.get('error')]
     return dict(n_priors_checked=len(rows), per_prior=rows, candidate_decoded_sha256=decoded_hash,
                 canonical_pattern_unique=pattern_unique,
+                identical_to_a_prior=bool(identical_rows),
+                identical_prior_paths=identical_rows,
+                distinct_from_every_comparable_prior=bool(comparable) and n_new > 0 and not identical_rows,
+                audit_complete=not incomparable,
+                n_priors_compared=len(comparable), incomparable_priors=incomparable,
+                key_semantics=('canonical_pattern_unique is False if ANY prior is byte-identical OR '
+                               'unreadable; distinct_from_every_comparable_prior isolates the first '
+                               'condition and audit_complete isolates the second'),
                 equals_literal_prior_union=literal_union,
                 research_publication_ok=pattern_unique and not literal_union,
                 support_novelty_gate_ok=ok,
@@ -406,8 +423,14 @@ def lane_report(candidate, eligible, priors, *, sample, phase="dots",
                 cov = registry_coverage(proposal, e, radius_px)
                 if coverage_cache is not None:
                     coverage_cache[digest] = cov
-            halo = ndi.binary_dilation(proposal, structure=disk)
-            near = float((dots & halo).sum()) / n_dots if n_dots else None
+            # The surface phase has no dots, so `near` is None and the dilation is pure cost --
+            # about 3.5 minutes per report on this registry.  Skipping it changes no output value.
+            if n_dots:
+                halo = ndi.binary_dilation(proposal, structure=disk)
+                near = float((dots & halo).sum()) / n_dots
+                del halo
+            else:
+                near = None
             row.update(binary_on_eligible=binary, spearman=rho, identical=decoded == digest,
                        constant_prior=rho is None, prior_proposals=int(proposal.sum()),
                        prior_support_rule=">0 for binary; >=0.5 for continuous (shared template)",

@@ -1,40 +1,38 @@
+<!--H74-README-->
+## H74 — conditional co-training sufficiency (S1′) and the B-core + A-rescue swap
+
+**Verdict: NEGATIVE, research-only.** Download OK: **True**. Spend a weekly slot: **False**.
+The frozen promote rule requires format AND uniqueness AND the final-dot lane AND not-the-union AND conditional sufficiency AND a holdout paired CI lower bound above single_B; failing clauses: c5_S1_conditional, c6_beats_single_B -> do not spend a weekly slot
+
+* One-click download: [`docs/downloads/h74-candidate.tif`](docs/downloads/h74-candidate.tif)
+  (137,255 bytes, SHA-256 `49ad60980f8bf768b94a2753581cae9ba572c75564d862089cec8093bcf317ad`, 37,654 cells, values exactly {0,1},
+  0 NaN, EPSG:32611, grid identical to `sample_submission.tif`).
+* Pages: [`docs/h74.html`](docs/h74.html) · [exact submission steps](docs/h74-executive-summary.html).
+* Submission name: `gems74-line-support-B-cotrain-37654px-20261009T193810Z` · note (137 chars): `H74 RESEARCH ONLY-DO NOT SUBMIT: co-training trace-integrated View B 600m chord; 37654px binary; >200m off catalogue; lane-feasible c<=50`
+* New science: **S1′**, View A's out-of-quadrant AUC restricted to truth inside View B's blind band —
+  0.4893 against the 0.60 bar
+  (global S1 for comparison: 0.5163); conditional margin
+  -0.0543 against +0.05.
+* Shipped arm `line_support_B`: HOLDOUT-DTI 0.172426 [0.150155, 0.195030] vs the `single_B` control
+  0.174517 [0.152316, 0.196299]; paired Δ -0.002091
+  [-0.005873, 0.001289]. HOLDOUT-DTI, not a leaderboard score.
+* Receipts: [`evidence/h74_run_card.json`](evidence/h74_run_card.json),
+  [`knowledge/63_hypotheses_H74_preregistered.md`](knowledge/63_hypotheses_H74_preregistered.md),
+  [`knowledge/64_h74_results_and_limits.md`](knowledge/64_h74_results_and_limits.md).
+<!--/H74-README-->
+
 <!--H72-README-->
-# Current status — H72 (2026-10-09): Three unique GeoTIFF candidates generated, one recommended for download
+# H72 (2026-10-09): NO FILE WAS PRODUCED — superseded by H74
 
-> **DOWNLOAD: YES — all three files are format-valid and unique on decoded pixels. SUBMIT: v3 RECOMMENDED (at your own risk); SPSC and MRAEC NOT RECOMMENDED.** No holdout beats single_B (0.1746); holdout DTI does NOT predict competition board score (Spearman −0.10, measured R4). The v3 submission uses the proven h19-5 ranker enhanced with multi-scale DEM edges and LiDAR scarp features, with the 200m catalogue ring mask.
+> **DOWNLOAD: nothing to download. SUBMIT: no.** H72 stopped at the final-dot parallel-lane gate and
+> never wrote a GeoTIFF: literal near-dot share 1.00000, saturation-aware 0.914359, support novelty
+> 0.0, relation `subset-of-union`. An earlier revision of this block advertised three candidate
+> downloads (`h72-candidate-v3`, `-spsc`, `-mraec`) and recommended submitting one of them. **Those
+> files were never created**, the links 404'd, and the recommendation was never backed by a holdout
+> result that beat `single_B`. Corrected 2026-10-09 in the H74 session; the dead buttons on
+> `docs/h72-executive-summary.html` were removed at the same time.
 
-**★ [Download H72-v3 GeoTIFF (recommended)](docs/downloads/h72-candidate-v3.tif)** ·
-[ZIP](docs/downloads/h72-candidate-v3.zip) ·
-[Download H72-SPSC (spring-based)](docs/downloads/h72-candidate-spsc.tif) ·
-[Download H72-MRAEC (edge coherence)](docs/downloads/h72-candidate-mraec.tif) ·
-**[Executive summary / exact submission steps](docs/h72-executive-summary.html)** ·
-[Landing page](index.html)
-
-### H72-v3 (recommended)
-- **File:** `gems52-h72-v3-enhanced-h19-5-37654px-20261009T164122Z-534693a7481b.tif` — 137,899 bytes, 37,654 emitted cells
-- **SHA-256:** `8149c9343e5438553385e5d4ce8aca43682ad1f833df0ea033f4e5bd019c037f`
-- **Name (60 chars):** `h72-v3-enhanced-h19-5-37654px-20261009T164122Z-534693a7481b`
-- **Note (140 chars):** `H72-v3: h19-5 rank enhanced with multi-scale DEM edges + LiDAR scarp; 37654px budget; 200m ring masked; binary {0,1}`
-- **Local validator:** one float32 band; values exactly {0, 1}; 0 NaN; EPSG:32611; shape 3,730 × 3,292. PASS.
-- **Uniqueness:** decoded pattern unique; rank correlation vs h19-5 = 0.2010; near-dot vs h19-5 = 57.85% (<70% lane limit).
-- **Method:** h19-5 proven ranker (60%) + multi-scale Gaussian edge coherence at 5 scales (25%) + LiDAR scarp features (15%). 200m catalogue ring masked. Binary {0,1} emission at 3px minimum spacing.
-
-### H72 hypotheses tested
-| # | Hypothesis | Mechanism | Holdout DTI | Verdict |
-|---|---|---|---|---|
-| H72-v3 | Enhanced h19-5 ranking | Proven ranker + multi-scale structural edges + LiDAR | 0.031 | research |
-| H72-SPSC | Spring-proximity structural coherence | Hot spring kernel density + gravity edge + slope + LiDAR | 0.027 | research |
-| H72-MRAEC | Multi-band radiometric alteration edge coherence | Gradient direction coherence across K/Th/U/gravity/magnetic bands | 0.023 | research |
-
-### Key findings
-- All three submissions pass format gates, uniqueness gates, and rank correlation checks.
-- All three score below random on the hide-and-recover holdout (0.023-0.031 vs ~0.080 random).
-- The holdout does NOT predict competition board score (Spearman −0.10, measured R4).
-- The competition tests against unmapped faults (~0.15% prevalence), while the holdout tests against major catalogue faults (~1% prevalence).
-- The co-training lane remains closed: View A sufficiency failed 5 consecutive times (AUC ≈ 0.52).
-- Spring data (GDR 1391, DOI 10.15121/1881483, CC BY 4.0) is now SHA-256 verified and usable.
-
----
+The newest downloadable research file is **H74** — see the block above.
 
 <!--/H72-README-->
 <!--H71-README-->

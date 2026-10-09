@@ -9,6 +9,54 @@ Keep known-catalogue labels separate from verified fault absence, public partici
 This session's working branch is fixed by Arena. Do not change branches. Keep raw competition data and large intermediate arrays under ignored `data/` and `work/`. Publish small audit receipts, the unique compressed prediction raster and its review table.
 
 <!--H67-AGENTS-->
+## Current H74 continuation (2026-10-09) — READ THIS FIRST
+
+Read `README.md`'s H74 block, then `knowledge/63_hypotheses_H74_preregistered.md` (frozen, SHA-256
+`d117b265…e3b55`, pinned in `registry/h74_preregistration.json`), its dated amendment
+`knowledge/63a_h74_amendment_shipped_arm_rule.md` (shipped-arm rule, written before any holdout number
+existed), and `knowledge/64_h74_results_and_limits.md`.
+
+**The co-training lane is now closed with a mechanism, not just a failed threshold. Stop re-opening it.**
+
+1. **The rescue argument is dead.** Every earlier round closed the lane on S1 — View A's out-of-quadrant
+   AUC on *all* held-out truth is ~0.52. The standing rescue was "the catalogue only contains
+   surface-expressed faults, so S1 measures the wrong population". H74 tested that directly (S1′: View A's
+   AUC restricted to truth inside View B's blind band `rank_B ∈ [0.35, 0.65]`). Result, in **all four folds
+   without exception**: `AUC(A | B-dark) < AUC(A | B-blind) < AUC(A | B-bright)` —
+   0.4685 < 0.4893 < 0.5436 pooled, margin **−0.0543** against a required **+0.05**. View A is *least*
+   informative exactly where View B is blind. A buried-fault population visible only to potential fields
+   would have produced the reverse ordering. View A's apparent skill is a shadow of the same
+   surface-expressed structures View B reads directly.
+2. **Independence was never the problem.** Spatial-block OOF error correlation on labelled negatives:
+   max |ρ| **0.1333** over 2,089 blocks, far inside the 0.60 abandon bar. Co-training's *independence*
+   precondition holds on this data; its *sufficiency* precondition is refuted, now conditionally as well
+   as globally. Do not re-run the independence screen expecting it to be the blocker.
+3. **Dose-response, measured.** Handing φ of the budget from View B to View A costs DTI linearly:
+   swap_010 0.168343 (Δ −0.006175, CI [−0.009869, −0.002305]), swap_025 0.160427 (Δ −0.014091),
+   swap_050 0.152317 (Δ −0.022201) against `single_B` 0.174517. Roughly **−0.00083 DTI per 1 %** of budget
+   transferred. There is no φ > 0 worth paying for.
+4. **`line_support_B` is a free null and is reusable.** Replacing a rank field by the max over 12
+   orientations of its mean along a 7 px (600 m) chord measured 0.172426, paired Δ −0.002091 with CI
+   **[−0.005873, +0.001289]** — straddles zero, i.e. no measurable cost — while moving the spatial pattern
+   substantially. **Use it as a near-free degree of freedom when a future round needs to dodge the lane's
+   70 % near-dot rule without paying DTI.** `H.line_support` in `scripts/run_h74.py` is unit-tested
+   (`_shift0` is zero-filled, never wrapped).
+5. **Controls reproduced exactly**, so the instrument is sound and these numbers are comparable to H70:
+   `single_B` 0.1745172876 vs the committed 0.174517 (|Δ| **2.9e-07**), `single_A` 0.071954,
+   `disagreement_pre` 0.033293, `random` 0.080426 — all identical to H70 to six decimals.
+6. **Reusable tooling added this round.** `scripts/h74_build.py` has `_place` (greedy + 3 px hard core +
+   exact per-prior near-dot quota) which is **verified bit-identical to `gems52.nodes.spacing_select`**
+   when the quota is off, `_bit_transpose` (per-pixel prior bitmap; turns the quota lookup from a
+   cache-hostile strided gather into a 19-byte contiguous read), `_exclusion_stamp` (matches
+   `spacing_select`'s strict `<` rule, unlike `gates._disk`'s `<=`), and `_disagreement_audit`
+   (cardinal-orientation falsifier for the brief's B-only "roads/erosion" reading).
+7. **Band labels: check `src/gems52_h1/spec.py` `OFFICIAL_BANDS` before naming any band.** IR-52-01 bit
+   this round: band 6 `tc` is a **magnetic** tilt/total-curvature derivative, *not* radiometric total
+   count. True gamma-ray channels exist only in the external GeoDAWN layers (`X_rad_*`).
+
+Experiments used: 3 of 3. Slots used: 0. Verdict: **negative, research-only** — see the README H74 block
+for the DOWNLOAD/SUBMIT decision on the emitted file.
+
 ## Current H73 continuation (2026-10-09)
 
 - **H69 file verdict (H73 audit):** DOWNLOAD NO, SUBMIT NO. The literal lane rule returns DUPLICATE/STOP (14 universal-coverage probes), and a policy PASS does not waive it. This file is a research copy only.

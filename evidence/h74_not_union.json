@@ -1,0 +1,8 @@
+{
+ "jaccard_vs_union_max": 0.0036650540428877962,
+ "jaccard_vs_single_B": 0.0060382601261087954,
+ "jaccard_vs_single_A": 0.003504563928309681,
+ "dots_in_A_only_stratum": 431,
+ "rule": "PASS if the emission is not the union placement and not a relabelled single view",
+ "pass_": true
+}

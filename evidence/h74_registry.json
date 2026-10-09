@@ -1,0 +1,26 @@
+{
+ "stage": "registry",
+ "rasters_found": 644,
+ "distinct_decoded": 384,
+ "measured": 368,
+ "universal_coverage_probes": 13,
+ "informative": 355,
+ "probe_threshold": 0.95,
+ "quota_priors_packed": 150,
+ "legal_px": 4325298,
+ "valid_px": 4593171,
+ "consensus_max": 280,
+ "consensus_median": 55.0,
+ "errors": [
+  {
+   "path": "/home/user/GEMSDOE52/work/h74/priors/7c12ed8a4164ce549fc8c3114eb30eb7f898af09.tif",
+   "error": "unaligned or multiband"
+  },
+  {
+   "path": "/home/user/GEMSDOE52/work/h74/priors/a97c7b2a513225c9f9f2b35736afe5abf4d2a491.tif",
+   "error": "unaligned or multiband"
+  }
+ ],
+ "scope": "Supplied, aligned, publicly mirrored inventory only; private/unlinked artefacts are not proven absent.",
+ "seconds": 326.3
+}
