@@ -1,0 +1,69 @@
+{
+ "evidence_class": "SUFFICIENCY SCREEN - View A out-of-quadrant AUC against the held-out truth",
+ "instrument": "spatial.folds(label-blind quadrants, buffer_px=80) + the H61 learner",
+ "thresholds": {
+  "mean": 0.6,
+  "fold": 0.55
+ },
+ "pass_": false,
+ "summary": {
+  "A": {
+   "folds": [
+    0.520916,
+    0.602216,
+    0.489598,
+    0.499754
+   ],
+   "mean": 0.528121,
+   "minimum": 0.489598
+  },
+  "B": {
+   "folds": [
+    0.648692,
+    0.720552,
+    0.620992,
+    0.659696
+   ],
+   "mean": 0.662483,
+   "minimum": 0.620992
+  }
+ },
+ "folds": [
+  {
+   "fold": 0,
+   "n_pos": 20000,
+   "n_neg": 40000,
+   "view_A_oof_auc": 0.520916,
+   "view_B_oof_auc": 0.648692
+  },
+  {
+   "fold": 1,
+   "n_pos": 12579,
+   "n_neg": 40000,
+   "view_A_oof_auc": 0.602216,
+   "view_B_oof_auc": 0.720552
+  },
+  {
+   "fold": 2,
+   "n_pos": 9433,
+   "n_neg": 40000,
+   "view_A_oof_auc": 0.489598,
+   "view_B_oof_auc": 0.620992
+  },
+  {
+   "fold": 3,
+   "n_pos": 9585,
+   "n_neg": 40000,
+   "view_A_oof_auc": 0.499754,
+   "view_B_oof_auc": 0.659696
+  }
+ ],
+ "mean_only_reading": false,
+ "fold_floor_reading": false,
+ "comparison": {
+  "H61": 0.5163,
+  "H63": 0.5362,
+  "H64": 0.523
+ },
+ "note": "the frozen gate is conjunctive (mean AND every fold), so a mean that clears 0.60 with one fold below 0.55 is still a FAIL and is not retro-tuned; both readings are published"
+}

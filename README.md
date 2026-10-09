@@ -1,3 +1,152 @@
+<!--H65-README-->
+# GEMSDOE52 — H65: a unique, lane-feasible GeoTIFF, and the verdict on whether it may be submitted
+
+**[★ Download the H65 GeoTIFF — one click](docs/downloads/h65-candidate.tif)** ·
+[single-TIFF ZIP](docs/downloads/h65-candidate.zip) ·
+[A-only geological reasoning CSV](docs/downloads/h65-a-only-reasoning.csv.gz) ·
+**[Executive summary / exactly how to submit](docs/h65-executive-summary.html)** ·
+[Landing page](docs/index.html) · [Method, results and limits](docs/h65.html) ·
+[Sources with links](docs/h65-sources.html) · [Run card](evidence/h65_run_card.json) ·
+[Results and limits](knowledge/42_h65_results_and_limits.md) ·
+[Preregistration](knowledge/41_hypotheses_H65_preregistered.md) ·
+[Preregistration AMENDMENT](knowledge/41b_h65_prereg_amendment_placement.md)
+
+> **DOWNLOAD: YES — the file is portal-safe by construction. SUBMIT TO THE COMPETITION: NO.**
+> Verdict `negative`. Format PASS, decoded-pattern uniqueness PASS over
+> 566 registry rasters, and for the first time in this repository the
+> **lane rule is satisfied by construction**: max informative near-dot
+> **0.6985** and max Spearman **0.0096** against
+> literal limits of 0.70 and 0.90 (H63 measured 0.8188, H64 0.888 and both shipped DUPLICATE). It is still
+> **not** submit-eligible, for two reasons that are not waivable: S1 sufficiency FAILED (View A
+> out-of-quadrant AUC 0.5281, min fold
+> 0.4896, bar 0.60 / 0.55) and the HOLDOUT-DTI paired difference against
+> `single_B` is -0.101474
+> [-0.123610,
+> -0.080051]. **NO CERTIFIED LEADERBOARD GAIN.**
+> Competition slots used: **0**.
+
+- **File:** `gems52-h65-cotrain-basementview-consensus-lanefeasible-37600px-20261009T062239Z.tif` — 147,247 bytes, 37,600 emitted cells, values exactly {0, 1}
+- **SHA-256:** `9501c1c88fa1b80ac76b0d2652afb6234c470f8583a2d634dd62fc23c6ae8461`
+- **Submission name:** `gems52-h65-cotrain-basementview-consensus-lanefeasible-37600px-20261009T062239Z`
+- **Submission note (127/140 chars):** `H65 co-training, novel-only 37600px, consensus-restricted lane-feasible; max near-dot 0.698; research, not a verified fault map`
+- **Grid:** EPSG:32611, 3,730 × 3,292, transform `[100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0]`,
+  single band float32, **0 NaN and 0 infinite pixels anywhere**, min 0.0 max 1.0 — verified by re-reading the
+  written file, not from the array in memory. The portal's *"Predicted values must be in range [0, 1]"*
+  rejection cannot fire on this file: `gems52.grid.write_geotiff` refuses to write unless the array is
+  float32, exactly 3,730 × 3,292, finite everywhere and inside [0, 1].
+
+## The measured answer to "why did `h33-h33-2-b2` score 0.2778, and can we beat it?"
+
+Re-derived from restored, SHA-256-verified bytes this session (`work/h65/probe.py`,
+`evidence/h61_forensics.json`), not copied from an earlier round's prose.
+
+1. **It is precision, not detection.** The reported-0.2778 file (37,654 px) is a *strict subset* of the
+   reported-0.2600 file (44,090 px), which is a strict subset of the reported-0.1922 parent field
+   (121,131 px). It added **zero** pixels and deleted 6,436, every one between 100 m and 200 m of a mapped
+   trace; its own nearest dot is 223.6 m away. For a binary dot emission with `M = T` the metric collapses
+   to `DTI = T / (0.2·S + 0.8·|G|)`, so deleting mass that earns no credit removes denominator and no
+   numerator.
+2. **Its credit is concentrated, and the concentration is measurable.** `P1 = A ∩ C` is 25,517 px carrying
+   credit density 0.163–0.205 against 0.0279 for uniform random over the legal set; the ≤ 200 m corridor
+   atoms carry **exactly zero**.
+3. **`|G|` is an interval, [5,949.3, 12,512.1] px**, not the 14,088.7 point value: that point requires the
+   champion's deleted 6,436 px to earn exactly zero credit, and 25 credit of ring income moves it to 12,333.
+4. **Two routes beat it, and only two.** (a) *Recombination of existing public mass* — this has an exact
+   credit bound and the projection clears 0.2778 across the whole bracket
+   (P = 0.68 / 0.74 /
+   0.79 at |G| low/mid/high). It is **not shipped**: this repository
+   already corrected such a file as NOT unique (H60C correction, `IR-H61-007`, `IR-UNQ-001`), and sizing a
+   file to land 0.005 under the 0.70 threshold a previous round was corrected for exceeding is re-tuning a
+   negative result into a positive. (b) *A detector above 0.0907–0.1295 credit density on novel mass* — no
+   instrument here can certify it, and this round's novel field is ranked by a view at chance.
+5. **The top of the board (0.3774) needs `T ≈ 6,620` at `S = 37,654`, `|G| = 12,512`** (density 0.176) —
+   a detector better than anything this family has published. The highest-upside un-run idea remains
+   **R5-H1, the trace-correction corridor** (`knowledge/33`), whose target population the organiser has
+   confirmed exists and whose frozen §A-gate has never been executed.
+
+## H65 results, each labelled
+
+| arm | HOLDOUT-DTI | 95 % CI |
+|---|---:|---|
+| `single_A` | 0.071893 | [0.058418, 0.085832] |
+| `single_B` | 0.137947 | [0.117079, 0.158755] |
+| `union_max` | 0.125726 | [0.105934, 0.144232] |
+| `disagreement_pre` | 0.036473 | [0.027471, 0.045996] |
+| `disagreement_post` | 0.036473 | [0.027471, 0.045996] |
+| `random` | 0.072032 | [0.063558, 0.080098] |
+
+Evaluator `gems52-pooled-hide-v1`, 60,894 withheld positives,
+161 physical 20 km clusters,
+1000 paired draws, every arm at a matched 9,400-dot-per-fold budget with
+3 px separation. **HOLDOUT-DTI is an instrument reading, never a forecast**: `knowledge/10` §5 measured
+Spearman ρ = −0.1045 (p = 0.734, n = 13) between this simulator and the organiser's reported scores, and
+the reported champion ranks 13th of 13 here while ranking 1st on the board.
+
+**PROJECTION (never a score)** for the shipped novel-only file, integrating `t_core = 0` and
+ρ_novel ~ U[0.02795, 0.13871] over
+`|G|`: P(DTI > 0.2778) = 0.435 / 0.261 /
+0.087 at |G| = 5,949.3 / 9,230.7 / 12,512.1; mean DTI 0.2102.
+
+## What is new, and what is now closed
+
+1. **NEW — the lane is satisfiable, and here is the construction.** Place in field-rank order with hard-core
+   3 px spacing; measure the directed 3 px near-dot count of *every* informative prior; put every prior above
+   `floor(0.6985·S)` under an exact quota (packed halos, a lazy forbidden mask, counts that can never pass
+   the cap); re-place; re-measure all 551 informative priors. Converged
+   in 2 rounds to max near-dot 0.6985.
+2. **NEW — the committed whole-segment pseudo-label rule yields exactly zero labels** on these views in all
+   four folds, so `disagreement_post` is bit-identical to `disagreement_pre` and the paired CI is exactly
+   [0, 0]. The co-training mechanism **cannot be executed as specified** here — a stronger statement than
+   "it was executed and did not help". Same class as `IR-H58-002`.
+3. **CLOSED — rebuilding View A as basement-surface differential geometry does not rescue sufficiency.**
+   18 derivative/band-pass channels (|∇| and ∇² of band 15, DoG isostatic residual, gravity/RTP gradient
+   coherence, conductivity edge, strain, seismicity) give View A out-of-quadrant AUC
+   0.5281 against H61 0.5163, H63 0.5362, H64 0.5230. Fourth failure.
+4. **RETRACTED, on the record.** An early sufficiency reading of View A mean **0.6636** came from the wrong
+   splitter (`holdout.make_folds(mode="block")` with prevalence-thinned truth). It is not comparable to
+   anything in this repository and must not be quoted. The committed instrument gives
+   0.5281.
+5. **The instrument control did not reproduce, and that is reported rather than hidden.** The preregistered
+   clause (`single_B` = 0.1745172876 ± 0.001) is unsatisfiable for a round that changes View B's channel set;
+   the model-free `random` arm measured 0.072032 against H64's 0.080426
+   (|Δ| = 0.0084). Cause: `structural.FeatureStore.valid` lives under
+   git-ignored `work/r2/features` and is absent in a fresh sandbox. Within-round paired comparisons are exact;
+   across-round levels are approximate.
+6. **Exact support novelty is impossible on this registry**: the union of every informative prior's 3 px halo
+   covers 100 % of the 4,859,987 px legal set (`work/h65/probe.py`, `novel_pool_exactly_novel = 0`). The
+   ≥ 20 % diagnostic fails for every nonempty candidate ever built here and is reported as a failed
+   diagnostic, never waived.
+7. **Band 6 metadata contradicts its bytes** (tag says magnetic tilt angle; ρ = 0.99995 against external
+   radiometric total count, ρ = 0.0175 against tilt). The external GeoDAWN radiometric raster carries **no
+   band tags at all**; this session identified its total-count band as band 4 (ρ = 0.99995 vs organiser band 6)
+   and averaged the other three into one contrast channel whose identity is UNVERIFIED.
+
+## Standing starting point
+
+The full user brief is preserved verbatim in [`knowledge/00_brief_as_received.md`](knowledge/00_brief_as_received.md)
+and is the standing starting point for every session; `AGENTS.md` records the working agreement and the
+authoritative shared-instrument repairs. Read those two, plus
+[`knowledge/03_negative_results_and_what_they_killed.md`](knowledge/03_negative_results_and_what_they_killed.md)
+and this block, before proposing anything.
+
+## Reproduce H65
+
+```bash
+python3 -m venv .venv && .venv/bin/pip install -r requirements-r2.txt
+bash scripts/download_competition_data.sh
+.venv/bin/python scripts/prepare_data.py
+.venv/bin/python scripts/fetch_prior_inventory.py --out work/h65/priors --receipt work/h65/prior_fetch_receipt.json
+.venv/bin/python work/h65/probe.py
+.venv/bin/python scripts/run_h65.py --stage features
+.venv/bin/python scripts/run_h65.py --stage lane
+.venv/bin/python scripts/run_h65.py --stage place
+.venv/bin/python scripts/run_h65.py --stage gates
+.venv/bin/python scripts/publish_h65_site.py
+```
+
+<!--/H65-README-->
+
+
 <!--H64-README-->
 # GEMSDOE52 — H64: a unique GeoTIFF, and the verdict on whether it may be submitted
 

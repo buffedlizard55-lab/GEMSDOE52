@@ -1,0 +1,18 @@
+{
+ "evidence_class": "A-only discovery set (View A >= 95th percentile, View B abstaining 35th-65th)",
+ "rule": "the committed spatial.whole_pseudo_segments receiver interval, applied grid-wide over the legal set",
+ "n_pixels": 63328,
+ "n_segments": 5686,
+ "n_segments_written": 2348,
+ "min_segment_px": 3,
+ "csv": "evidence/h65_a_only_geological_reasoning.csv",
+ "segment_size_quantiles": {
+  "0.5": 2.0,
+  "0.9": 17.0,
+  "0.99": 171.29999999999927
+ },
+ "largest_segment_px": 1837,
+ "caveat": "measured context plus a template mechanism, NOT field-verified geology; the named mimic is a lithologic contact or basin axis with a density/magnetisation contrast and no relief",
+ "s1_status": "FAIL (View A mean 0.5281, min fold 0.4896) - so this set is reported as the lane's discovery signal and is NOT promoted to the emission",
+ "promotion": "none: zero pseudo-labels survived the whole-segment rule in every fold"
+}
