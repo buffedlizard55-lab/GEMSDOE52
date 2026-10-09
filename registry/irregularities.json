@@ -2288,6 +2288,61 @@
    "disposition": "resolved; both rounds' artefacts and receipts are preserved under distinct names"
   },
   {
+   "id": "IR-H66-011",
+   "round": "H66cover",
+   "severity": "low",
+   "status": "closed - measured, control valid",
+   "title": "Post-exchange refit nondeterminism ~1e-3 on disagreement_post; the six frozen arms match H61 to 1e-6",
+   "what_it_is": "The H66cover holdout's frozen comparison arm disagreement_post measured 0.031535 against H61's committed 0.030584 (~1e-3 refit spread on this machine). The six frozen arms (single_A, single_B, union_max, disagreement_pre, random, and the refit controls) match H61 to 1e-6, so the control is valid and no verdict depends on the difference.",
+   "how_we_know": "evidence/h66cover_holdout.json vs evidence/h61_holdout.json; the paired h66a-vs-single_B comparison uses single_B, which matches to 1e-6.",
+   "handling": "Disclosed in the run card; the H66cover verdict (paired CI excludes 0) does not depend on the 1e-3 difference.",
+   "disposition": "Closed. Renumbered from IR-H66-001 after the parallel-session label collision (IR-H66-015)."
+  },
+  {
+   "id": "IR-H66-012",
+   "round": "H66cover",
+   "severity": "low",
+   "status": "closed - corrected against the live board",
+   "title": "The brief's '0.3195 is the highest score' is wrong: live board top is 0.3774 (xiaofanhu), 0.3195 is rank 7 (DARD), 0.2778 is rank 13",
+   "what_it_is": "The user brief states 0.3195 is the highest leaderboard score. The live DrivenData board on 2026-10-09 shows rank 1 xiaofanhu 0.3774, rank 7 DARD 0.3195, rank 13 extradr19 0.2778.",
+   "how_we_know": "Live fetch of https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/ on 2026-10-09 (PUBLIC BOARD, not ORGANIZER-CONFIRMED); recorded in README.md and knowledge/44_h66cover_results_and_limits.md.",
+   "handling": "The README H66cover block and the site state the live board values with the OWNER-REPORTED label. (Same finding as IR-H65-002, registered independently in this round.)",
+   "disposition": "Closed. Renumbered from IR-H66-002 after the parallel-session label collision (IR-H66-015)."
+  },
+  {
+   "id": "IR-H66-013",
+   "round": "H66cover",
+   "severity": "medium",
+   "status": "closed - declared by dated amendment knowledge/43_h66cover_amendment_2026-10-09_budget.md",
+   "title": "The frozen H66cover-A field cannot fill the 37,600-dot template budget: the A-only gate has 1,657 exact-novel cells",
+   "what_it_is": "After the exact-novelty mask (the lane's uniqueness rule) the allowed domain shrank from 4,325,298 to 164,794 cells; the A-only gate (rankA >= 0.95 and 0.35 <= rankB <= 0.65) contains 1,657 of them. Placing the template budget over the whole allowed domain would emit -1 (non-gate) cells and falsify the preregistered claim that every emitted cell is an A-only candidate.",
+   "how_we_know": "scripts/run_h66cover.py build stage: 'H66-A gate cells (A-confident & B-abstain, exact-novel): 1657'; evidence/h66cover_novelty.json.",
+   "handling": "Dated amendment knowledge/43_h66cover_amendment_2026-10-09_budget.md (pinned in registry/h66cover_preregistration.json): the emission domain is the gate support and the budget is a cap; the holdout comparison is unchanged and the size difference is disclosed in the run card.",
+   "disposition": "Closed. The shipped file is smaller than the template budget for a stated, measured reason. Renumbered from IR-H66-003 after the parallel-session label collision (IR-H66-015)."
+  },
+  {
+   "id": "IR-H66-014",
+   "round": "H66cover",
+   "severity": "high",
+   "status": "open - lane duplicate under the 70% share rule",
+   "title": "100% of the H66cover emission's 633 dots fall within 3 px of the H64 raster's dots (share 1.0 > 0.70)",
+   "what_it_is": "The cover-gated A-only field places 633 dots after exact novelty and 3 px spacing; every one of them lies within 3 px of a positive pixel of gems52-h64-sufgate-cotrain-37600px (an informative registry raster). The lane's per-raster 70% share rule is therefore violated and the lane gate reads DUPLICATE/STOP on the dots phase (the surface phase passes, max Spearman 0.0336).",
+   "how_we_know": "evidence/h66cover_novelty.json worst_raster_near_dots (count 633, share 1.0000) and evidence/h66cover_lane_dots.json policy/literal near offenders, measured by gems52.gates.lane_report on the final raster.",
+   "handling": "Frozen protocol resolution: the file is generated and published research-only with the DUPLICATE label; it is NOT submittable. No emission shrinking was attempted: the protocol says log it as a duplicate and stop, and a share-driven subset would be a post hoc placement change. The A-only gate stratum is almost entirely inside the 3 px halo of the H64 disagreement emission, which is expected: both are A-high/B-low selections from the same fitted views.",
+   "disposition": "Open. A lane-valid A-only candidate would need a gate stratum outside every informative prior's 3 px halo; none was found in this field. Renumbered from IR-H66-004 after the parallel-session label collision (IR-H66-015)."
+  },
+  {
+   "id": "IR-H66-015",
+   "round": "H66cover",
+   "severity": "high",
+   "status": "closed - resolved by namespacing, disclosed here",
+   "title": "Three parallel sessions used the round label 'H66'; this round's shared file names are namespaced to h66cover-* and its irregularity IDs renumbered to IR-H66-011..015",
+   "what_it_is": "A parallel session merged PR #56 ('H66 structural coherence') and another merged PR #58 (H65halo + a thermal-upflow round renamed H67) while this session ran its own H66 (cover-gated co-training, the user-briefed lane). The colliding names were: knowledge/43_hypotheses_H66_preregistered.md, knowledge/44_h66_results_and_limits.md, registry/h66_preregistration.json, scripts/run_h66.py, tests/test_h66.py, evidence/h66_*.json, docs/data/h66_*.json, docs/h66.html, docs/h66-executive-summary.html, docs/downloads/h66-candidate.tif/.zip, and the irregularity IDs IR-H66-001..004 (main already had IR-H66-001..010 from the parallel rounds).",
+   "how_we_know": "git history: PR #56 (2af65e2), PR #58 (445e85c, 93e4e42 'Rename this round H66 -> H67'), and this session's commit. The parallel rounds' own precedent (0580c89): 'Main's H66 files kept byte-identical; this round's published artefacts renamed to h66cotrain-*'.",
+   "handling": "This round keeps every one of main's files byte-identical and renames its own to the h66cover-* prefix (runner run_h66cover.py, publisher publish_h66cover_site.py, README splicer h66cover_readme.py, tests test_h66cover.py, prereg knowledge/43_h66cover_hypotheses_preregistered.md + amendment, results note knowledge/44_h66cover_results_and_limits.md, registry h66cover_preregistration.json, receipts evidence/h66cover_*.json + docs/data/h66cover_*.json, pages docs/h66cover.html + docs/h66cover-executive-summary.html, downloads docs/downloads/h66cover-candidate.tif/.zip + h66cover-a-only-reasoning.csv, pointer submission/H66COVER_LATEST.txt). Its irregularity entries are renumbered IR-H66-011..015. The raster stem gems52-h66-covergate-cotrain-633px and its receipts were already unique and are unchanged. The receipts' scientific content is unchanged; only file-path fields (short_alias/short_tif/short_zip), the round tag (H66 -> H66cover) and IR citations were migrated mechanically, and every changed field was re-verified. The global pointers docs/data/submission.json and submission/LATEST.txt stay at main's H60 artefact.",
+   "disposition": "Closed. The README H66cover block and AGENTS.md H66cover section state the namespacing; future rounds should check registry/h66_preregistration.json and the IR-H66-* ID space before taking the H66 label."
+  },
+  {
    "id": "IR-H74-001",
    "round": "H74",
    "severity": "medium",

@@ -1,0 +1,6 @@
+{
+  "file": "evidence/h72_a_only_reasoning_candidate.csv",
+  "rows": 5056,
+  "rationale": "one row per proposed dot, including all three raw preregistered channels and the OOF A/B ranks",
+  "caveat": "unreleased candidate diagnostic, not a submission TIFF; geological interpretation is a testable hypothesis, not fault confirmation"
+}

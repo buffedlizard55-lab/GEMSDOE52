@@ -1,0 +1,14 @@
+{
+  "method": "candidate emitted only from the strict preregistered A-only disagreement stratum; compared to matched-mass single-view and max(A,B) placements",
+  "candidate_dots": 5056,
+  "every_dot_in_strict_a_only_stratum": true,
+  "equals_single_A": false,
+  "equals_single_B": false,
+  "equals_union_max": false,
+  "jaccard_single_A": 0.05873730499424144,
+  "jaccard_single_B": 0.0,
+  "jaccard_union_max": 0.025141930251419302,
+  "cells_different_from_union": 9616,
+  "not_union_pass": true,
+  "evidence_class": "placement/method diagnostic, not a score"
+}

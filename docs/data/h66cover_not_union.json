@@ -1,0 +1,14 @@
+{
+ "cells_differing_from_view_A": 1160,
+ "cells_differing_from_view_B": 1266,
+ "cells_differing_from_union_max": 1220,
+ "dots_shared_with_view_A": 53,
+ "dots_shared_with_view_B": 0,
+ "dots_shared_with_union_max": 23,
+ "jaccard_with_union_max": 0.01850362027353178,
+ "spearman_field_vs_unionmax": 0.15602659388172324,
+ "emitted_cells_inside_a_only_gate": 633,
+ "gate_cells_total": 1657,
+ "not_union_pass": true,
+ "verdict": "the emission is not max(A,B), not either single view, and not their union; every emitted cell lies inside the A-only (A-confident, B-abstaining) gate"
+}

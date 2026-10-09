@@ -1,0 +1,203 @@
+{
+ "round": "H66cover",
+ "generated_utc": "2026-10-09T06:09:26+00:00",
+ "lane": "two-view co-training (Blum & Mitchell 1998, doi:10.1145/279943.279962); View A potential-field/subsurface, View B surface; disagreement as the discovery signal; cover-gated A-only emission (H66-A)",
+ "hypothesis": "Where the potential-field/subsurface view is confident and the surface view abstains, the fault may be buried beneath cover; gating the disagreement signal by modelled cover thickness concentrates the emission on thick-cover A-only segments, the stratum a surface-mapped catalogue structurally cannot contain.",
+ "mechanism": "Blum-Mitchell two-view co-training, H61 views/learner/seed reused unchanged; one confident-to-abstaining whole-segment pseudo-label round after a measured independence screen; the shipped field is (rankA - rankB) * log1p(cover) inside rankA >= 0.95 and 0.35 <= rankB <= 0.65, placed by nodes.spacing_select at 3 px separation.",
+ "named_non_fault_process": "basin-fill density boundary or volcanic lithologic contact; buried palaeo-channel or alluvial-fan margin; road/erosion lineament; upward-continued flight-line artefact",
+ "independence": {
+  "max_abs_rho": 0.13306525528756755,
+  "threshold": 0.6,
+  "allow_exchange": true,
+  "blocks": 2089,
+  "note": "spatial-block OOF errors on held-out catalogue-zero negatives; proxies, not verified absence"
+ },
+ "canary": {
+  "max_raw_auc": 0.6686779701695234,
+  "alarm": 0.9,
+  "any_alarm": false
+ },
+ "holdout_dti": {
+  "evidence_class": "HOLDOUT-DTI",
+  "evaluator": "gems52-pooled-hide-v1",
+  "withheld_positive_pixels": 53186,
+  "candidate": 0.04574497225787749,
+  "ci95": [
+   0.031302675903594666,
+   0.062135027592458626
+  ],
+  "single_B_baseline": {
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems52-pooled-hide-v1",
+   "dti": 0.1745172875994316,
+   "ci95": [
+    0.15231581471183422,
+    0.19629866582738847
+   ],
+   "withheld_positive_pixels": 53186,
+   "tpw": 8902.354204271809,
+   "fpw": 33410.159873156495,
+   "fnw": 44283.645795728204
+  },
+  "controls": {
+   "single_A": {
+    "dti": 0.07195422771451437,
+    "ci95": [
+     0.05663648302475561,
+     0.08856584503981733
+    ]
+   },
+   "single_B": {
+    "dti": 0.1745172875994316,
+    "ci95": [
+     0.15231581471183422,
+     0.19629866582738847
+    ]
+   },
+   "union_max": {
+    "dti": 0.14898105801367592,
+    "ci95": [
+     0.12808382678188485,
+     0.16941832452005812
+    ]
+   },
+   "disagreement_pre": {
+    "dti": 0.033293417665161515,
+    "ci95": [
+     0.023815312334713765,
+     0.044556311894923775
+    ]
+   },
+   "disagreement_post": {
+    "dti": 0.03153546905480036,
+    "ci95": [
+     0.02045946157302967,
+     0.04421730418248213
+    ]
+   },
+   "random": {
+    "dti": 0.08042564781050282,
+    "ci95": [
+     0.0702226099128376,
+     0.09097325665223467
+    ]
+   }
+  },
+  "paired_h66a_minus_single_B": {
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems52-pooled-hide-v1",
+   "delta": -0.12877231534155412,
+   "ci95": [
+    -0.15167951061996912,
+    -0.10603072706215226
+   ],
+   "withheld_positive_pixels": 53186
+  },
+  "all_arms_filled_budget": true,
+  "budget_per_arm_per_fold": 9400,
+  "pseudo_label_pixels": 15443,
+  "frozen_comparison_candidate": "disagreement_post",
+  "simulator_validity": "R4 measured Spearman -0.10 between this simulator and the owner-reported board; it screens procedures and does not promote."
+ },
+ "correlation_overlap_vs_registry": {
+  "lane_surface_literal": "PASS",
+  "lane_surface_policy": "PASS",
+  "lane_dots_literal": "DUPLICATE/STOP",
+  "lane_dots_policy": "DUPLICATE/STOP",
+  "lane_dots_policy_max_near": 1.0,
+  "lane_dots_policy_max_near_source": "/home/user/GEMSDOE52/submission/gems52-h64-sufgate-cotrain-37600px-20261009T022631Z.tif",
+  "lane_surface_policy_max_spearman": 0.012602137058011716,
+  "informative_priors": 539,
+  "universal_coverage_probes": 14,
+  "uniqueness_canonical_pattern_unique": true,
+  "novel_fraction_all_priors": 0.0,
+  "novel_fraction_informative": 1.0,
+  "equals_literal_prior_union": false
+ },
+ "not_the_union": {
+  "cells_differing_from_view_A": 1160,
+  "cells_differing_from_view_B": 1266,
+  "cells_differing_from_union_max": 1220,
+  "dots_shared_with_view_A": 53,
+  "dots_shared_with_view_B": 0,
+  "dots_shared_with_union_max": 23,
+  "jaccard_with_union_max": 0.01850362027353178,
+  "spearman_field_vs_unionmax": 0.15602659388172324,
+  "emitted_cells_inside_a_only_gate": 633,
+  "gate_cells_total": 1657,
+  "not_union_pass": true,
+  "verdict": "the emission is not max(A,B), not either single view, and not their union; every emitted cell lies inside the A-only (A-confident, B-abstaining) gate"
+ },
+ "projection": {
+  "G_lower": {
+   "G_px": 5949.282184328427,
+   "emitted_px": 633.0,
+   "breakeven_credit_density_to_match_champion": 2.144293764052369,
+   "dti_if_density_equals_holdout_arm": 0.47072278596943157
+  },
+  "G_upper": {
+   "G_px": 12512.133928571544,
+   "emitted_px": 633.0,
+   "breakeven_credit_density_to_match_champion": 4.448445693974313,
+   "dti_if_density_equals_holdout_arm": 0.22690350832401074
+  },
+  "evidence_class": "PROJECTION FROM OWNER-REPORTED SCORES AND A LOCAL SIMULATOR; NOT A SCORE, NOT ORGANIZER-CONFIRMED, NOT A LEADERBOARD FORECAST",
+  "formula": "DTI = T/(0.2*(T+S-M)+0.8*(|G|-T)) with M~T for sparse dots => DTI = d*S/(0.2S+0.8|G|)",
+  "holdout_arm_density": 3.633433889674623,
+  "holdout_arm_density_caveat": "HOLDOUT-DTI measures recovery of withheld *catalogue* components in a simulator that measured Spearman -0.10 against the owner-reported board in round R4; it is not a density estimate for hidden off-catalogue expert-drawn truth.",
+  "champion": {
+   "id": "ref_h33_2_b2",
+   "reported": 0.2778,
+   "evidence_class": "OWNER-REPORTED, NOT ORGANIZER-CONFIRMED"
+  }
+ },
+ "raster": {
+  "file": "gems52-h66-covergate-cotrain-633px.tif",
+  "sha256": "0ce05c52194a8d234aac98684bee6f96bad9c7c5c5c2f79cf580a5df72707629",
+  "bytes": 58473,
+  "zip_sha256": "6a843782cd982b76a01393476168693f5b242c928410dbc9a91f1a8ad05f28de",
+  "download": "docs/downloads/gems52-h66-covergate-cotrain-633px.tif",
+  "short_alias": "docs/downloads/h66cover-candidate.tif"
+ },
+ "validator": {
+  "ok": true,
+  "problems": [],
+  "nan_inside_footprint": null,
+  "value_range": [
+   0.0,
+   1.0
+  ],
+  "crs": "EPSG:32611",
+  "shape": null,
+  "transform": [
+   100.0,
+   0.0,
+   243350.0,
+   0.0,
+   -100.0,
+   4508550.0
+  ]
+ },
+ "submission_name": "gems52-h66-covergate-cotrain-633px-20261009T055503Z",
+ "note": "H66 co-training disagreement, cover-gated A-only (buried-beneath-cover) arm; 3px dots; >200m off catalogue; research only, not slot-approved",
+ "note_chars": 140,
+ "counts": {
+  "budget_template": 37600,
+  "budget_target": 1657,
+  "placed": 633,
+  "gate_cells": 1657,
+  "prior_rasters": 553,
+  "informative_rasters": 516,
+  "probe_rasters": 35,
+  "budget_note": "the frozen gate field is positive on 1657 exact-novel cells; the template budget 37600 is a cap; the shipped emission is 633 cells (IR-H66-013)"
+ },
+ "champion_reference": {
+  "name": "ref_h33_2_b2",
+  "reported_score": 0.2778,
+  "evidence_class": "OWNER-REPORTED, NOT ORGANIZER-CONFIRMED"
+ },
+ "submission_slots_used": 0,
+ "verdict": "NEGATIVE, research-only. DOWNLOAD YES (format-valid and unique on decoded pixels); SUBMIT NO (gates: format=True lane_policy=False unique=True not_union=True beats_single_B=False). No certified leaderboard gain.",
+ "promote": false,
+ "round_note": "Label namespaced after a parallel-session collision: the site's h66-* names belong to the structural-coherence H66 (PR #56); this round is the cover-gated co-training H66. See IR-H66-015."
+}

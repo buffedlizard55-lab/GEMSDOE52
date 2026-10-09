@@ -1,0 +1,74 @@
+{
+  "round": "H72",
+  "preregistered_utc": "2026-10-09T16:34:13+00:00",
+  "hypothesis_document": "knowledge/59_hypotheses_H72_preregistered.md",
+  "hypothesis_sha256": "66901a785f9550f2f712f8b971ec6a0280485be3361eb4bf3368c5722157f53c",
+  "hypothesis_bytes": 12550,
+  "lane": "Two-view geophysical/subsurface and surface co-training; H72 isolates the registered strain-only View A, keeps View B fixed, and uses A-confident/B-abstaining disagreement.",
+  "frozen_before_any_fit": true,
+  "runner": "scripts/run_h72.py",
+  "runner_refuses_if_hash_moves": true,
+  "shared_tools_to_reuse": [
+    "scripts/run_h61.py setup/sample_train/learner/stage_canary/stage_fit/stage_exchange (shared stages, redirected to H72 storage)",
+    "src/gems52/spatial.py::folds and whole_pseudo_segments",
+    "src/gems52/evaluate_holdout.py (gems52-pooled-hide-v1)",
+    "src/gems52/metric.py",
+    "src/gems52/nodes.py::spacing_select",
+    "src/gems52/submission_writer.py",
+    "src/gems52/gates.py and scripts/audit_uniqueness.py",
+    "src/gems52/structural.py::build / FeatureStore and src/gems52/external.py (one shared build only because ignored cache absent)"
+  ],
+  "view_A_features": [
+    "raw_band_04",
+    "raw_band_07",
+    "raw_band_08"
+  ],
+  "view_B": "exact shared H61/H71 view_B_with_external feature list; no changes",
+  "thresholds": {
+    "canary_auc_alarm": 0.9,
+    "independence_abandon_max_abs_rho": 0.6,
+    "donor_rank_min": 0.95,
+    "receiver_rank_interval": [
+      0.35,
+      0.65
+    ],
+    "buffer_px": 80,
+    "negative_error_block_side_px": 50,
+    "pseudo_min_pixels": 5,
+    "pseudo_cap_per_fold": 2000,
+    "matched_budget_dots_per_fold_per_arm": 1264,
+    "minimum_dot_separation_px": 3.0,
+    "catalogue_exclusion_m": 200.0,
+    "triangular_kernel_radius_m": 300.0,
+    "alpha": 0.2,
+    "beta": 0.8,
+    "bootstrap_draws": 1000,
+    "bootstrap_block_px": 200,
+    "lane_spearman_stop": 0.9,
+    "lane_near_dot_fraction_stop": 0.7,
+    "lane_near_dot_radius_px": 3.0,
+    "min_novel_fraction_for_research_release": 0.2,
+    "final_output_dots_total": 5056
+  },
+  "budget": {
+    "max_experiments": 3,
+    "max_wall_clock_hours": 2,
+    "experiments": [
+      "E1: per-feature canary, premise diagnostics and shared view fits",
+      "E2: spatial-block independence screen, at most one whole-segment exchange, matched-budget hide-and-recover",
+      "E3: pre-placement lane surface gate; if it passes, metric-aware placement, final dot gate, uniqueness/not-union, TIFF + reasoning"
+    ]
+  },
+  "lane_stop_rule": "If surface max Spearman >0.90, record duplicate and stop before placement. If any final-dot directed <=3 px share >0.70, record duplicate and stop without tuning/re-placement.",
+  "promotion_rule": "Only pass to separate selector if holdout paired candidate-minus-single_B 95% CI lower bound >0, candidate and all controls fill identical preregistered budgets, canary and independence pass, lane literal gates pass, decoded uniqueness and not-union pass, and format/reasoning checks pass. No weekly slot is selected or used by this runner.",
+  "verdict_rule": "Run card is negative unless every preregistered gate passes; a passing result is selector-eligible only, not competition-slot approval.",
+  "data_provenance": "SHA-256-pinned owner mirrors, not organizer-authenticated. At preregistration, work/r2/features was absent; the approved contingency is one call to the shared builder/extension, with no private feature implementation.",
+  "amendments": [
+    {
+      "document": "knowledge/59a_h72_budget_amendment.md",
+      "sha256": "867fc0cf4e00e9b60bfae86eb68680fe005577c3e8f84014c85d5051924d8414",
+      "bytes": 978,
+      "purpose": "freeze 5,056-dot final target before any H72 fit; fill failure is negative; no after-fit budget search"
+    }
+  ]
+}

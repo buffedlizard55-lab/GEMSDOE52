@@ -41,6 +41,20 @@ H74). H74-D (radiometric-cover gating) and H74-E (H65 operator on the strain ban
 IR-H74-001 (build CSR orientation crash, fixed, regression-tested) is in
 `registry/irregularities.json`.
 
+## Current H73 continuation (2026-10-09)
+
+- **H69 file verdict (H73 audit):** DOWNLOAD NO, SUBMIT NO. The literal lane rule returns DUPLICATE/STOP (14 universal-coverage probes), and a policy PASS does not waive it. This file is a research copy only.
+
+
+Read `README.md`'s H73 block first, then `knowledge/61_hypotheses_H73_preregistered.md` (frozen), its dated amendment
+`knowledge/61a_h73_preregistration_amendment_quota_placement.md` (quota placement adopted BEFORE any holdout or shipped
+placement), and `knowledge/62_h73_results_and_limits.md`. H73 is **negative at the lane gate**: a surface-only emission
+cannot be made lane-feasible on this 350-distinct-prior registry with plain greedy (best 0.8916) or with per-prior quotas
+(best 0.7043, short fill). No H73 file was emitted. The instrument control reproduces (`single_B` 0.174571, |Δ| 3.6e-07).
+Experiments used: 1 of 3. Slots used: 0. Do not re-run the quota placement at the same budget expecting a different result;
+the denominator effect is the finding. The `scripts/run_h73.py` runner refuses to run if `knowledge/61` or `61a` moved.
+The DOWNLOAD/SUBMIT decision for the repo's existing lane-feasible file is in the README H73 block; it is still NO for submission.
+
 ## Current H71 continuation (2026-10-09)
 
 Read `README.md`'s H71 block first, then `knowledge/57_hypotheses_H71_preregistered.md` (frozen, SHA-256

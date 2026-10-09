@@ -1,0 +1,94 @@
+{
+  "stage": "choose",
+  "finished_utc": "2026-10-09T16:51:25+00:00",
+  "trials": [
+    {
+      "T": 1000000000,
+      "pool_px": 4592949,
+      "filled": true,
+      "dots": 37600,
+      "max_near_share": 0.9377127659574468
+    },
+    {
+      "T": 400,
+      "pool_px": 4592949,
+      "filled": true,
+      "dots": 37600,
+      "max_near_share": 0.9377127659574468
+    },
+    {
+      "T": 300,
+      "pool_px": 4592949,
+      "filled": true,
+      "dots": 37600,
+      "max_near_share": 0.9377127659574468
+    },
+    {
+      "T": 200,
+      "pool_px": 4517736,
+      "filled": true,
+      "dots": 37600,
+      "max_near_share": 0.9314893617021277
+    },
+    {
+      "T": 150,
+      "pool_px": 4109473,
+      "filled": true,
+      "dots": 37600,
+      "max_near_share": 0.8915691489361702
+    },
+    {
+      "T": 120,
+      "pool_px": 3808830,
+      "filled": true,
+      "dots": 37600,
+      "max_near_share": 0.8970744680851064
+    },
+    {
+      "T": 100,
+      "pool_px": 3664087,
+      "filled": true,
+      "dots": 37600,
+      "max_near_share": 0.9013297872340426
+    },
+    {
+      "T": 80,
+      "pool_px": 3408077,
+      "filled": true,
+      "dots": 37600,
+      "max_near_share": 0.9038563829787234
+    },
+    {
+      "T": 60,
+      "pool_px": 2930680,
+      "filled": true,
+      "dots": 37600,
+      "max_near_share": 0.9036968085106383
+    },
+    {
+      "T": 50,
+      "pool_px": 2561858,
+      "filled": true,
+      "dots": 37600,
+      "max_near_share": 0.9028723404255319
+    },
+    {
+      "T": 40,
+      "pool_px": 2105247,
+      "filled": true,
+      "dots": 37600,
+      "max_near_share": 0.8998670212765958
+    },
+    {
+      "T": 30,
+      "pool_px": 1630718,
+      "filled": true,
+      "dots": 37600,
+      "max_near_share": 0.8934840425531915
+    }
+  ],
+  "chosen": null,
+  "n_informative_supports": 350,
+  "limit": 0.7,
+  "note": "fast KD-tree screen; the authoritative lane_report runs once in build"
+}

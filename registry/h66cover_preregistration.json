@@ -1,0 +1,69 @@
+{
+ "round": "H66cover",
+ "preregistered_utc": "2026-10-09T04:40:00+00:00",
+ "hypothesis_document": "knowledge/43_h66cover_hypotheses_preregistered.md",
+ "hypothesis_sha256": "20aa00ead913cdc3e99a4065aa69a7ef6d49916a867667a187c8cb806655e67e",
+ "hypothesis_bytes": 15076,
+ "lane": "two-view co-training (Blum & Mitchell 1998, doi:10.1145/279943.279962); View A potential-field/subsurface, View B surface; disagreement as the discovery signal; cover-gated A-only emission (H66-A)",
+ "frozen_before_any_fit": true,
+ "runner": "scripts/run_h66cover.py",
+ "runner_refuses_if_hash_moves": true,
+ "shared_tools_to_reuse": [
+  "src/gems52/spatial.py::folds (label-blind-quadrants-v2)",
+  "src/gems52/evaluate_holdout.py (gems52-pooled-hide-v1)",
+  "src/gems52/metric.py",
+  "src/gems52/nodes.py::spacing_select",
+  "src/gems52/submission_writer.py",
+  "src/gems52/gates.py",
+  "src/gems52/structural.py::build + FeatureStore",
+  "src/gems52/external.py (shared external-geodawn-v1 extension)",
+  "scripts/run_h61.py stages canary/fit/exchange (reused unchanged)"
+ ],
+ "thresholds": {
+  "canary_auc_alarm": 0.9,
+  "independence_abandon_max_abs_rho": 0.6,
+  "donor_rank_min": 0.95,
+  "receiver_rank_interval": [
+   0.35,
+   0.65
+  ],
+  "buffer_px": 80,
+  "block_side_px": 50,
+  "min_pseudo_pixels": 5,
+  "pseudo_cap_per_fold": 2000,
+  "budget_dots_per_fold_per_arm": 9400,
+  "min_dot_separation_px": 3.0,
+  "catalogue_exclusion_m": 200.0,
+  "bootstrap_draws": 1000,
+  "bootstrap_block_px": 200,
+  "lane_near_dot_fraction": 0.7,
+  "lane_near_dot_radius_px": 3.0,
+  "lane_rank_correlation": 0.9,
+  "universal_coverage_probe_threshold": 0.95
+ },
+ "h66a_field": {
+  "rank_source": "post-exchange OOF mosaic (pred_post_{A,B}_f{fold})",
+  "cover_prior": "raw_band_15 log1p, min-max normalised over the allowed domain",
+  "gate": "rankA >= 0.95 and 0.35 <= rankB <= 0.65",
+  "formula": "(rankA - rankB) * cover_norm inside the gate, -1 elsewhere",
+  "placement": "gems52.nodes.spacing_select, min 3 px separation, 9400 dots per fold per arm"
+ },
+ "budget": {
+  "max_experiments": 3,
+  "experiments": [
+   "E1 leakage canary + fit + independence screen (mandated empirical test)",
+   "E2 one pseudo-label exchange + hide-and-recover holdout, 7 arms (6 H61 arms + h66a_cover_gated_a_only)",
+   "E3 build + gates + unique GeoTIFF + run card"
+  ],
+  "deferred": "H66-B two-round exchange; H66-C strain-seismicity View A; H66-D long-wavelength deep-edge View A; H66-E B-only control"
+ },
+ "verdict_rule": "promote only if format+lane(policy)+unique+not-union pass AND h66a beats single_B on the pooled holdout with the paired 95% CI entirely above 0; otherwise negative/research-only",
+ "amendments": [
+  {
+   "document": "knowledge/43_h66cover_amendment_2026-10-09_budget.md",
+   "sha256": "c50bbaf820d5af6d820f82edf6a6c728d9d033267a0f3e9f84d14c90353c0e65",
+   "note": "budget-as-cap over the gate support; written when the build stage first ran"
+  }
+ ],
+ "namespace_note": "Namespaced h66cover-* after a parallel-session label collision (IR-H66-015); the site's h66-* names belong to the structural-coherence H66 (PR #56)."
+}
