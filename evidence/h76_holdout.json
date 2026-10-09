@@ -4,12 +4,12 @@
  "min_separation_px": 3.0,
  "budget_note": "9,400 dots per fold per arm, the committed H61/H71 control budget",
  "arms": [
-  "h74_A_basement_curv_thincover",
-  "h74_B_dilatation_gradient",
-  "h74_C_cond_basement_coincidence",
-  "h74_D_antithetic_margin",
-  "h74_E_lidar_rad_discordance",
-  "h74_F_rank_fusion",
+  "h76_A_basement_curv_thincover",
+  "h76_B_dilatation_gradient",
+  "h76_C_cond_basement_coincidence",
+  "h76_D_antithetic_margin",
+  "h76_E_lidar_rad_discordance",
+  "h76_F_rank_fusion",
   "single_B",
   "random"
  ],
@@ -19,32 +19,32 @@
    "allowed_px": 2265054,
    "truth_px": 27309,
    "arms": {
-    "h74_A_basement_curv_thincover": {
+    "h76_A_basement_curv_thincover": {
      "dti": 0.03875501686501175,
      "tpw": 923.6033127110825,
      "emitted": 9400
     },
-    "h74_B_dilatation_gradient": {
+    "h76_B_dilatation_gradient": {
      "dti": 0.03580637520655362,
      "tpw": 852.6738525818554,
      "emitted": 9400
     },
-    "h74_C_cond_basement_coincidence": {
+    "h76_C_cond_basement_coincidence": {
      "dti": 0.03432086949234908,
      "tpw": 816.9917392081381,
      "emitted": 9400
     },
-    "h74_D_antithetic_margin": {
+    "h76_D_antithetic_margin": {
      "dti": 0.028603888284721237,
      "tpw": 680.5655086347084,
      "emitted": 9400
     },
-    "h74_E_lidar_rad_discordance": {
+    "h76_E_lidar_rad_discordance": {
      "dti": 0.04300486628621857,
      "tpw": 1025.775654600154,
      "emitted": 9400
     },
-    "h74_F_rank_fusion": {
+    "h76_F_rank_fusion": {
      "dti": 0.042234558600267355,
      "tpw": 1006.8496071698252,
      "emitted": 9400
@@ -66,32 +66,32 @@
    "allowed_px": 1170301,
    "truth_px": 10677,
    "arms": {
-    "h74_A_basement_curv_thincover": {
+    "h76_A_basement_curv_thincover": {
      "dti": 0.09370025837232078,
      "tpw": 986.5999558200842,
      "emitted": 9400
     },
-    "h74_B_dilatation_gradient": {
+    "h76_B_dilatation_gradient": {
      "dti": 0.05126451005232251,
      "tpw": 536.9694719199043,
      "emitted": 9400
     },
-    "h74_C_cond_basement_coincidence": {
+    "h76_C_cond_basement_coincidence": {
      "dti": 0.04447464405302673,
      "tpw": 465.3395329579126,
      "emitted": 9400
     },
-    "h74_D_antithetic_margin": {
+    "h76_D_antithetic_margin": {
      "dti": 0.04098649987578694,
      "tpw": 428.6525270197845,
      "emitted": 9400
     },
-    "h74_E_lidar_rad_discordance": {
+    "h76_E_lidar_rad_discordance": {
      "dti": 0.08336185271581925,
      "tpw": 877.2860505338222,
      "emitted": 9400
     },
-    "h74_F_rank_fusion": {
+    "h76_F_rank_fusion": {
      "dti": 0.06643618151144141,
      "tpw": 697.1014049513257,
      "emitted": 9400
@@ -113,32 +113,32 @@
    "allowed_px": 471065,
    "truth_px": 6813,
    "arms": {
-    "h74_A_basement_curv_thincover": {
+    "h76_A_basement_curv_thincover": {
      "dti": 0.13149751856912142,
      "tpw": 977.6718653577639,
      "emitted": 9400
     },
-    "h74_B_dilatation_gradient": {
+    "h76_B_dilatation_gradient": {
      "dti": 0.15319368458960103,
      "tpw": 1141.1836957333012,
      "emitted": 9400
     },
-    "h74_C_cond_basement_coincidence": {
+    "h76_C_cond_basement_coincidence": {
      "dti": 0.12036075242440869,
      "tpw": 892.1643608877403,
      "emitted": 9400
     },
-    "h74_D_antithetic_margin": {
+    "h76_D_antithetic_margin": {
      "dti": 0.06286091757057045,
      "tpw": 463.3803523872133,
      "emitted": 9400
     },
-    "h74_E_lidar_rad_discordance": {
+    "h76_E_lidar_rad_discordance": {
      "dti": 0.18298209931245912,
      "tpw": 1370.6958334667195,
      "emitted": 9400
     },
-    "h74_F_rank_fusion": {
+    "h76_F_rank_fusion": {
      "dti": 0.10849399759488149,
      "tpw": 804.2692273610268,
      "emitted": 9400
@@ -160,32 +160,32 @@
    "allowed_px": 686529,
    "truth_px": 8387,
    "arms": {
-    "h74_A_basement_curv_thincover": {
+    "h76_A_basement_curv_thincover": {
      "dti": 0.12329339518657696,
      "tpw": 1073.9781867096676,
      "emitted": 9400
     },
-    "h74_B_dilatation_gradient": {
+    "h76_B_dilatation_gradient": {
      "dti": 0.10551795616883637,
      "tpw": 916.6837787830539,
      "emitted": 9400
     },
-    "h74_C_cond_basement_coincidence": {
+    "h76_C_cond_basement_coincidence": {
      "dti": 0.10628022317714038,
      "tpw": 922.4560568618928,
      "emitted": 9400
     },
-    "h74_D_antithetic_margin": {
+    "h76_D_antithetic_margin": {
      "dti": 0.07168183047195026,
      "tpw": 619.822764408322,
      "emitted": 9400
     },
-    "h74_E_lidar_rad_discordance": {
+    "h76_E_lidar_rad_discordance": {
      "dti": 0.12742474112292132,
      "tpw": 1111.7584208557084,
      "emitted": 9400
     },
-    "h74_F_rank_fusion": {
+    "h76_F_rank_fusion": {
      "dti": 0.11646997301213996,
      "tpw": 1013.1958822432825,
      "emitted": 9400
@@ -211,7 +211,7 @@
   "triangular_radius_m": 300.0,
   "pooled": true,
   "scores": {
-   "h74_A_basement_curv_thincover": {
+   "h76_A_basement_curv_thincover": {
     "evidence_class": "HOLDOUT-DTI",
     "evaluator_version": "gems52-pooled-hide-v1",
     "dti": 0.07844195126037197,
@@ -224,7 +224,7 @@
     "fpw": 35828.23443099471,
     "fnw": 49224.14667940142
    },
-   "h74_B_dilatation_gradient": {
+   "h76_B_dilatation_gradient": {
     "evidence_class": "HOLDOUT-DTI",
     "evaluator_version": "gems52-pooled-hide-v1",
     "dti": 0.06836947711247139,
@@ -237,7 +237,7 @@
     "fpw": 35932.0203892327,
     "fnw": 49738.489200981894
    },
-   "h74_C_cond_basement_coincidence": {
+   "h76_C_cond_basement_coincidence": {
     "evidence_class": "HOLDOUT-DTI",
     "evaluator_version": "gems52-pooled-hide-v1",
     "dti": 0.06149694797906258,
@@ -250,7 +250,7 @@
     "fpw": 35956.23432410256,
     "fnw": 50089.04831008432
    },
-   "h74_D_antithetic_margin": {
+   "h76_D_antithetic_margin": {
     "evidence_class": "HOLDOUT-DTI",
     "evaluator_version": "gems52-pooled-hide-v1",
     "dti": 0.04361332710781773,
@@ -263,7 +263,7 @@
     "fpw": 36411.194110893965,
     "fnw": 50993.57884754997
    },
-   "h74_E_lidar_rad_discordance": {
+   "h76_E_lidar_rad_discordance": {
     "evidence_class": "HOLDOUT-DTI",
     "evaluator_version": "gems52-pooled-hide-v1",
     "dti": 0.08668384862998904,
@@ -276,7 +276,7 @@
     "fpw": 35830.86990066082,
     "fnw": 48800.48404054362
    },
-   "h74_F_rank_fusion": {
+   "h76_F_rank_fusion": {
     "evidence_class": "HOLDOUT-DTI",
     "evaluator_version": "gems52-pooled-hide-v1",
     "dti": 0.0698077282127469,
@@ -318,7 +318,7 @@
   },
   "best_comparable_control": "single_B",
   "paired_differences": {
-   "h74_A_basement_curv_thincover": {
+   "h76_A_basement_curv_thincover": {
     "evidence_class": "HOLDOUT-DTI",
     "evaluator_version": "gems52-pooled-hide-v1",
     "delta": -0.008634223047625067,
@@ -328,7 +328,7 @@
     ],
     "withheld_positive_pixels": 53186
    },
-   "h74_B_dilatation_gradient": {
+   "h76_B_dilatation_gradient": {
     "evidence_class": "HOLDOUT-DTI",
     "evaluator_version": "gems52-pooled-hide-v1",
     "delta": 0.0014382511002755116,
@@ -338,7 +338,7 @@
     ],
     "withheld_positive_pixels": 53186
    },
-   "h74_C_cond_basement_coincidence": {
+   "h76_C_cond_basement_coincidence": {
     "evidence_class": "HOLDOUT-DTI",
     "evaluator_version": "gems52-pooled-hide-v1",
     "delta": 0.008310780233684326,
@@ -348,7 +348,7 @@
     ],
     "withheld_positive_pixels": 53186
    },
-   "h74_D_antithetic_margin": {
+   "h76_D_antithetic_margin": {
     "evidence_class": "HOLDOUT-DTI",
     "evaluator_version": "gems52-pooled-hide-v1",
     "delta": 0.026194401104929176,
@@ -358,7 +358,7 @@
     ],
     "withheld_positive_pixels": 53186
    },
-   "h74_E_lidar_rad_discordance": {
+   "h76_E_lidar_rad_discordance": {
     "evidence_class": "HOLDOUT-DTI",
     "evaluator_version": "gems52-pooled-hide-v1",
     "delta": -0.016876120417242138,

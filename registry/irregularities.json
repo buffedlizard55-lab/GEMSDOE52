@@ -1,6 +1,6 @@
 {
  "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified. | H61 merge: IR-H61-001..009 appended from the H61 branch; main's repaired schema and numbering retained.",
- "generated": "2026-10-09T19:55:00+00:00 (H74 additions)",
+ "generated": "2026-10-09T19:55:00+00:00 (H76 additions)",
  "entries": [
   {
    "id": "IR-30-029",
@@ -2343,63 +2343,63 @@
    "disposition": "Closed. The README H66cover block and AGENTS.md H66cover section state the namespacing; future rounds should check registry/h66_preregistration.json and the IR-H66-* ID space before taking the H66 label."
   },
   {
-   "id": "IR-H74-001",
-   "round": "H74",
+   "id": "IR-H76-001",
+   "round": "H76",
    "severity": "high",
-   "status": "closed - root index.html is now the single H74 entry point",
+   "status": "closed - root index.html is now the single H76 entry point",
    "title": "The page GitHub Pages actually serves contradicted docs/index.html about whether a TIFF exists",
    "what_it_is": "GitHub Pages for this repository is configured as branch=main, path=/ (measured through api.github.com/repos/buffedlizard55-lab/GEMSDOE52/pages), so the served landing page is the ROOT index.html. That page advertised three downloadable H72 candidates, while docs/index.html carried the banner 'Current result: H72 - NEGATIVE STOP. NO H72 TIFF WAS WRITTEN OR PUBLISHED.' Both were on main at the same commit. A visitor could only ever see one of them.",
    "how_we_know": "api.github.com pages endpoint (source.branch=main, source.path=/) plus reading both files at HEAD 66dfe7a. buffedlizard55-lab.github.io is not inside the sandbox egress allowlist, so the served bytes could not be fetched directly; the Pages configuration is the authority for which file is served.",
    "impact": "The download/submit verdict the brief demands be 'obvious' was ambiguous, and one of the two pages pointed at files the other said did not exist.",
-   "disposition": "The root index.html is now the single H74 entry point and states one download and one verdict. docs/index.html keeps its own historical banners; the two pages no longer disagree about which round is current."
+   "disposition": "The root index.html is now the single H76 entry point and states one download and one verdict. docs/index.html keeps its own historical banners; the two pages no longer disagree about which round is current."
   },
   {
-   "id": "IR-H74-002",
-   "round": "H74",
+   "id": "IR-H76-002",
+   "round": "H76",
    "severity": "high",
    "status": "open - historical artefact retained and labelled, not deleted",
    "title": "One downloadable raster fails the portal's stated [0,1] rule and is still linked from docs/h60.html",
    "what_it_is": "docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-nan.tif holds 7,111,787 non-finite pixels. It is the only one of the 105 rasters in submission/ and docs/downloads/ that does; every other file has values exactly {0,1}.",
    "how_we_know": "Decoded all 105 files with rasterio in this session and counted non-finite pixels and finite values outside [0,1].",
    "impact": "Downloading that file and uploading it reproduces the brief's reported 'Predicted values must be in range [0, 1]' rejection.",
-   "disposition": "Retained as a historical artefact and labelled DO-NOT-UPLOAD on the H60 page. The H74 download path serves only the portal-exact artefact, and grid.write_geotiff_portal_exact refuses to write a file that could reproduce this rejection."
+   "disposition": "Retained as a historical artefact and labelled DO-NOT-UPLOAD on the H60 page. The H76 download path serves only the portal-exact artefact, and grid.write_geotiff_portal_exact refuses to write a file that could reproduce this rejection."
   },
   {
-   "id": "IR-H74-003",
-   "round": "H74",
+   "id": "IR-H76-003",
+   "round": "H76",
    "severity": "medium",
    "status": "open - disclosed, not repaired",
    "title": "The H72 run card and the H72 site page describe different artefacts",
    "what_it_is": "evidence/h72_run_card.json pins thresholds.final_output_dots_total = 5056 and describes a strict A-confident/B-abstaining emission, while the README H72 block and the served root index.html advertised gems52-h72-v3-enhanced-h19-5-37654px (37,654 cells, an h19-5 rank blend). The receipt and the published file are not the same object.",
    "how_we_know": "Read evidence/h72_run_card.json and the H72 README block at HEAD; decoded the shipped h72-candidate-v3.tif and counted 37,654 emitted cells.",
    "impact": "A reader cannot tell which H72 artefact the H72 receipts certify.",
-   "disposition": "Disclosed, not repaired: the H72 receipts are left byte-identical so the round that produced them stays auditable. The H72 files are not on the H74 download path."
+   "disposition": "Disclosed, not repaired: the H72 receipts are left byte-identical so the round that produced them stays auditable. The H72 files are not on the H76 download path."
   },
   {
-   "id": "IR-H74-004",
-   "round": "H74",
+   "id": "IR-H76-004",
+   "round": "H76",
    "severity": "high",
    "status": "closed - gems52.grid.write_geotiff_portal_exact added to the shared template",
    "title": "Every GeoTIFF this repository has shipped used a different container profile from the organiser's own template",
    "what_it_is": "sample_submission.tif and all eleven owner-scored rasters restored into data/scored/ are LZW-compressed, stripped (blocksize 3292x1), float32, with nodata=nan declared and NaN outside the footprint. grid.write_geotiff instead produced deflate-compressed, tiled 256x256, all-finite files with nodata=None and zeros outside the footprint.",
    "how_we_know": "rasterio profiles read from data/sample_submission.tif, all eleven data/scored/*.tif, and the shipped docs/downloads artefacts, in this session.",
    "impact": "Both variants have scored historically, so neither is provably rejected - but a portal reader that does not honour a nodata declaration turns every outside-footprint NaN into a failed [0,1] range test. The new writer matches the template's container exactly and re-reads its output, so the unknown is removed rather than guessed at.",
-   "disposition": "gems52.grid.write_geotiff_portal_exact added to the shared template, with regression tests in tests/test_h74.py. Historical files are unchanged; new rounds must use the new writer."
+   "disposition": "gems52.grid.write_geotiff_portal_exact added to the shared template, with regression tests in tests/test_h76.py. Historical files are unchanged; new rounds must use the new writer."
   },
   {
-   "id": "IR-H74-005",
-   "round": "H74",
+   "id": "IR-H76-005",
+   "round": "H76",
    "severity": "medium",
    "status": "open - untested as a training target",
    "title": "SGMC and labels.tif are 95% disjoint, giving an off-catalogue validation target the shared instrument does not use",
    "what_it_is": "data/external/derived_sgmc_faults_100m_u8.tif holds 83,593 px on the same grid and transform as labels.tif, but only 3,978 px are shared. 79,615 px of expert-compiled trace are absent from the competition catalogue (median distance to it 1,612.5 m, 2,052 components). The shared hide-and-recover instrument hides CATALOGUE faults, which is a different task from finding faults the catalogue lacks - and the competition scores the latter.",
-   "how_we_know": "Set arithmetic on the two restored, SHA-verified rasters (work/h74/offcatalogue_truth.py).",
+   "how_we_know": "Set arithmetic on the two restored, SHA-verified rasters (work/h76/offcatalogue_truth.py).",
    "impact": "This is the most likely reason holdout DTI correlates negatively with board score (Spearman -0.10, measured in R4). A previous round measured that emitting the SGMC off-catalogue lines directly scores 0.0512, so they are not the hidden truth; using them as a supervised TARGET for an off-catalogue detector has not been tried.",
    "disposition": "Open. Building an off-catalogue validation instrument on the SGMC-disjoint traces is the highest-value unbuilt tool in this repository and is carried forward to the next round."
   },
   {
-   "id": "IR-H74-006",
-   "round": "H74",
+   "id": "IR-H76-006",
+   "round": "H76",
    "severity": "medium",
    "status": "open - disclosed; the re-run receipts are kept because they are what the committed script emits",
    "title": "main's committed H61 canary receipt does not match what its own unchanged script produces",

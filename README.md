@@ -1,5 +1,5 @@
-<!--H74-README-->
-# Current status — H74 (2026-10-09): a unique, lane-feasible, portal-exact GeoTIFF — download YES, submit NO
+<!--H76-README-->
+# Current status — H76 (2026-10-09): a unique, lane-feasible, portal-exact GeoTIFF — download YES, submit NO
 
 > **DOWNLOAD: YES. SUBMIT TO THE COMPETITION: NO.** The file passes every format rule the portal
 > states, is decoded-unique against 105 registry rasters, and is only the second lane-feasible file
@@ -8,16 +8,16 @@
 > file's support was deliberately restricted to pixels the entire prior submission family avoided.
 > **Competition slots used: 0.** No organiser receipt exists for any file in this repository.
 
-**★ [Download the H74 GeoTIFF — one click](docs/downloads/h74-candidate.tif)** ·
-[single-TIFF ZIP](docs/downloads/h74-candidate.zip) ·
-**[Executive summary / exactly how to submit](docs/h74-executive-summary.html)** ·
-[Landing page](index.html) · [Build receipt](evidence/h74_build.json) ·
-[Holdout receipt](evidence/h74_holdout.json) · [Budget sweep](evidence/h74_budget_sweep.json)
+**★ [Download the H76 GeoTIFF — one click](docs/downloads/h76-candidate.tif)** ·
+[single-TIFF ZIP](docs/downloads/h76-candidate.zip) ·
+**[Executive summary / exactly how to submit](docs/h76-executive-summary.html)** ·
+[Landing page](index.html) · [Build receipt](evidence/h76_build.json) ·
+[Holdout receipt](evidence/h76_holdout.json) · [Budget sweep](evidence/h76_budget_sweep.json)
 
-- **File:** `gems52-h74-viewb-boardplaced-37654px-20261009T194504Z.tif` — 1,558,626 bytes, 37,654 emitted cells
+- **File:** `gems52-h76-viewb-boardplaced-37654px-20261009T194504Z.tif` — 1,558,626 bytes, 37,654 emitted cells
 - **SHA-256:** `f7f234af958b5645b0ca65c8969906c6b526ef3da9afa693b0171d1902452f49`
-- **Submission name (53 chars):** `gems52-h74-viewb-boardplaced-37654px-20261009T194504Z`
-- **Note (135 chars):** `H74: View-B OOF surface rank; 200m catalogue ring out; binary {0,1}; 3px spacing; K=37654; consensus<=1 lane-feasible; portal-exact LZW`
+- **Submission name (53 chars):** `gems52-h76-viewb-boardplaced-37654px-20261009T194504Z`
+- **Note (135 chars):** `H76: View-B OOF surface rank; 200m catalogue ring out; binary {0,1}; 3px spacing; K=37654; consensus<=1 lane-feasible; portal-exact LZW`
 
 ## The portal rejection is fixed at the writer, not discovered at the portal
 
@@ -40,12 +40,12 @@ does not honour a nodata declaration turns every outside-footprint NaN into a fa
 **`gems52.grid.write_geotiff_portal_exact`** (new, in the shared template, not a fork) now writes the
 template's own container and re-reads its output, refusing to write a file that fails any of:
 single band, float32, EPSG:32611, 3,730 × 3,292, pinned transform, no finite value outside [0, 1], no
-non-finite pixel inside the footprint, no positive mass outside it. The H74 artefact passes all 13
-independent checks (`docs/h74-executive-summary.html` §2 has the 30-second verification snippet).
+non-finite pixel inside the footprint, no positive mass outside it. The H76 artefact passes all 13
+independent checks (`docs/h76-executive-summary.html` §2 has the 30-second verification snippet).
 
 ## E1 · board forensics on all 13 owner-scored rasters — `|G|` pinned independently
 
-`scripts/run_h74.py`'s companion measurement is `work/h74/board_forensics.py`, run on bytes restored
+`scripts/run_h76.py`'s companion measurement is `work/h76/board_forensics.py`, run on bytes restored
 and SHA-256-verified this session (23/23 pins, `ALL_VERIFIED=True`).
 
 The champion `h33-2-b2` (0.2778) is a **strict subset** of the 0.2600 file; the 6,436 pixels it deleted
@@ -110,7 +110,7 @@ H61/H71 control, so the new numbers are directly comparable.
 
 Budget chosen by measurement, not tradition: the pooled holdout for the `single_B` ranking rises
 monotonically to **K = 37,654 → 0.253693** [0.236989, 0.269552] and flattens (25,517 → 0.239134;
-20,000 → 0.226134). `evidence/h74_budget_sweep.json`.
+20,000 → 0.226134). `evidence/h76_budget_sweep.json`.
 
 | Gate | Measured | Limit | Verdict |
 |---|---|---|---|
@@ -133,7 +133,7 @@ concentrated in the support the family converged on, so a deliberately non-overl
 Note also that `0.253693` is the holdout DTI of the *unrestricted* field; it is **not** a projection for
 this consensus-restricted artefact and is not presented as one.
 
-## What H74 changed that the next round must keep
+## What H76 changed that the next round must keep
 
 1. **Data placement is no longer a blocker.** All 23 manifest entries restore from the owner's
    hash-pinned sibling repositories through the GitHub Contents API and verify by SHA-256 —
@@ -154,35 +154,35 @@ this consensus-restricted artefact and is not presented as one.
 
 ## Irregularities flagged this round
 
-- **IR-H74-001** — the site served by GitHub Pages (`main:/`, i.e. the root `index.html`) and
+- **IR-H76-001** — the site served by GitHub Pages (`main:/`, i.e. the root `index.html`) and
   `docs/index.html` contradicted each other: the root page advertised three H72 downloads while
   `docs/index.html` said "NO H72 TIFF WAS WRITTEN OR PUBLISHED". Both were on `main`. Only one is
-  served; the root page is now the single H74 entry point.
-- **IR-H74-002** — `docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-nan.tif` is the one
+  served; the root page is now the single H76 entry point.
+- **IR-H76-002** — `docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-nan.tif` is the one
   downloadable raster that fails the portal's stated `[0, 1]` rule (7,111,787 NaN pixels). It is still
   linked from `docs/h60.html`. Left in place as a historical artefact and labelled, not deleted.
-- **IR-H74-003** — `evidence/h72_run_card.json` describes a 5,056-dot final output while the README's
+- **IR-H76-003** — `evidence/h72_run_card.json` describes a 5,056-dot final output while the README's
   H72 block and the served root page advertised 37,654 dots for `h72-candidate-v3`. The receipt and the
   site described different artefacts.
-- **IR-H74-004** — the repo's submission container (tiled/deflate/nodata=None) has never matched the
+- **IR-H76-004** — the repo's submission container (tiled/deflate/nodata=None) has never matched the
   organiser template's (stripped/LZW/nodata=nan), across every shipped file. Fixed by
   `write_geotiff_portal_exact`; historical files are unchanged.
-- **IR-H74-005** — SGMC and `labels.tif` are 95 % disjoint (79,615 off-catalogue px). The shared
+- **IR-H76-005** — SGMC and `labels.tif` are 95 % disjoint (79,615 off-catalogue px). The shared
   hide-and-recover instrument hides *catalogue* faults while the competition scores faults the
   catalogue lacks; that mismatch is the likeliest cause of the measured Spearman −0.10. Untested as a
   training target.
-- **IR-H74-006** — main's committed `evidence/h61_canary.json` carries
+- **IR-H76-006** — main's committed `evidence/h61_canary.json` carries
   `"HOLDOUT-DTI diagnostic AUC"` while the **unmodified** `scripts/run_h61.py` line 212 emits
   `"LEAKAGE-CANARY AUC"`. A receipt can therefore drift from the code that generates it with no test
   noticing. Every AUC in the re-run is bit-identical to the committed value, so only provenance is
   affected; the regenerated receipts are kept and the drift disclosed.
-- **IR-H74-007** — `docs/h72-executive-summary.html` linked its six download files without the
+- **IR-H76-007** — `docs/h72-executive-summary.html` linked its six download files without the
   `downloads/` prefix, so all six were dead links on the served site. Found by `check_site.py` and fixed.
 
-**Still open:** a candidate that beats `single_B` on the holdout (nothing in H55–H74 has); the
+**Still open:** a candidate that beats `single_B` on the holdout (nothing in H55–H76 has); the
 0.2778 file-to-score organiser receipt; an off-catalogue validation instrument built on the
 SGMC-disjoint traces; any road/hydrography layer (still outside the sandbox egress allowlist).
-<!--/H74-README-->
+<!--/H76-README-->
 <!--H72-README-->
 # Current status — H72 (2026-10-09): Three unique GeoTIFF candidates generated, one recommended for download
 

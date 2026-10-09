@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""H74-E3a: budget sweep of the one field that survives E2, on the SHARED holdout.
+"""H76-E3a: budget sweep of the one field that survives E2, on the SHARED holdout.
 
-The board algebra (measured on organiser-scored bytes, evidence/h74_board_forensics.json) says
+The board algebra (measured on organiser-scored bytes, evidence/h76_board_forensics.json) says
 DTI = T/(0.2*S + 0.8*|G|) with |G| pinned at 14,088.7, so the emission budget is a real decision
 variable, not a tradition.  This measures where the shared instrument's DTI peaks for the
 single_B ranking, so the shipped budget is chosen by a measurement rather than copied from the
@@ -62,8 +62,8 @@ def main() -> int:
     best = max(summ["scores"].items(), key=lambda kv: kv[1]["dti"])[0]
     log(f"\n  best pooled budget: K={int(best)}")
     out["best_budget"] = int(best)
-    (EVID / "h74_budget_sweep.json").write_text(json.dumps(out, indent=1, default=str))
-    log(f"wrote {EVID/'h74_budget_sweep.json'}")
+    (EVID / "h76_budget_sweep.json").write_text(json.dumps(out, indent=1, default=str))
+    log(f"wrote {EVID/'h76_budget_sweep.json'}")
     return 0
 
 

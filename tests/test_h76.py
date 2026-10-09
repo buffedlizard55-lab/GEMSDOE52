@@ -1,8 +1,8 @@
-"""H74: the portal-exact writer contract and the shipped artefact.
+"""H76: the portal-exact writer contract and the shipped artefact.
 
 These tests exist because the brief reported a portal rejection --
 "Predicted values must be in range [0, 1]" -- and the structural cause was a container profile this
-repository had never matched to the organiser's own template (IR-H74-004).  They pin the writer's
+repository had never matched to the organiser's own template (IR-H76-004).  They pin the writer's
 behaviour and re-read the shipped file from disk, so neither can regress silently.
 """
 from __future__ import annotations
@@ -18,7 +18,7 @@ from gems52 import grid
 
 ROOT = Path(__file__).resolve().parents[1]
 SAMPLE = ROOT / "data" / "sample_submission.tif"
-BUILD = ROOT / "evidence" / "h74_build.json"
+BUILD = ROOT / "evidence" / "h76_build.json"
 
 
 def _template_profile():
@@ -82,10 +82,10 @@ def test_portal_exact_writer_is_fail_closed(tmp_path):
         grid.write_geotiff_portal_exact(tmp_path / "e.tif", np.zeros(grid.SHAPE, np.float64), fp, SAMPLE)
 
 
-def test_shipped_h74_artefact_passes_every_portal_rule():
+def test_shipped_h76_artefact_passes_every_portal_rule():
     """Re-read the published file: this is the file the site tells the user to upload."""
     card = json.loads(BUILD.read_text())
-    for rel in (Path("submission") / card["file"], Path("docs/downloads/h74-candidate.tif")):
+    for rel in (Path("submission") / card["file"], Path("docs/downloads/h76-candidate.tif")):
         path = ROOT / rel
         assert path.exists(), f"missing published artefact {rel}"
         with rasterio.open(path) as ds:
@@ -102,7 +102,7 @@ def test_shipped_h74_artefact_passes_every_portal_rule():
 
     import hashlib
     a = (ROOT / "submission" / card["file"]).read_bytes()
-    b = (ROOT / "docs/downloads/h74-candidate.tif").read_bytes()
+    b = (ROOT / "docs/downloads/h76-candidate.tif").read_bytes()
     assert hashlib.sha256(a).hexdigest() == card["sha256"]
     assert hashlib.sha256(b).hexdigest() == card["sha256"], "the download copy must be the same bytes"
     assert card["submit_ok"] is False, "the round does not approve a weekly slot"
@@ -110,7 +110,7 @@ def test_shipped_h74_artefact_passes_every_portal_rule():
     assert len(card["note"]) <= 140 and len(card["submission_name"]) <= 140
 
 
-def test_shipped_h74_artefact_is_lane_feasible_and_unique():
+def test_shipped_h76_artefact_is_lane_feasible_and_unique():
     card = json.loads(BUILD.read_text())
     assert card["uniqueness"]["canonical_pattern_unique"] is True
     assert card["uniqueness"]["equals_literal_prior_union"] is False
@@ -122,14 +122,14 @@ def test_shipped_h74_artefact_is_lane_feasible_and_unique():
     assert card["footprint"]["min_dot_distance_to_catalogue_m"] >= 200.0
 
 
-def test_every_new_h74_arm_is_reported_as_losing_to_the_control():
+def test_every_new_h76_arm_is_reported_as_losing_to_the_control():
     """The negative result is the deliverable; it must not be quietly dropped or re-spun."""
-    hold = json.loads((ROOT / "evidence" / "h74_holdout.json").read_text())
+    hold = json.loads((ROOT / "evidence" / "h76_holdout.json").read_text())
     scores = hold["pooled"]["scores"]
     control = scores["single_B"]["dti"]
     assert abs(control - 0.174571) < 1e-5, "the control must reproduce its committed value"
-    new = [k for k in scores if k.startswith("h74_")]
+    new = [k for k in scores if k.startswith("h76_")]
     assert len(new) == 6
     for arm in new:
         assert scores[arm]["dti"] < control, f"{arm} must stay below the control"
-    assert scores["h74_D_antithetic_margin"]["dti"] < scores["random"]["dti"]
+    assert scores["h76_D_antithetic_margin"]["dti"] < scores["random"]["dti"]

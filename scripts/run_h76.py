@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""H74-E2: rank new off-catalogue detector fields on the SHARED hide-and-recover holdout.
+"""H76-E2: rank new off-catalogue detector fields on the SHARED hide-and-recover holdout.
 
 Reuses the template instruments -- run_h61.setup() (feature store, label-blind quadrant folds,
 200 m visible-catalogue ring), gems52.nodes.spacing_select (metric-motivated placement) and
@@ -26,7 +26,7 @@ sys.path.insert(0, str(ROOT / "scripts")); sys.path.insert(0, str(ROOT / "src"))
 import run_h61 as base                                             # noqa: E402
 from gems52 import nodes, evaluate_holdout as evaluator             # noqa: E402
 
-EVID = ROOT / "evidence"; WORK = ROOT / "work/h74"
+EVID = ROOT / "evidence"; WORK = ROOT / "work/h76"
 EVID.mkdir(exist_ok=True); WORK.mkdir(parents=True, exist_ok=True)
 SEED = 520810
 K = 9400           # the committed control budget -> comparable to single_B = 0.174571
@@ -96,61 +96,61 @@ def main() -> int:
     flat = store.flat_idx
     shape = eligible.shape
     npix = int(eligible.size)
-    log(f"H74-E2: {len(folds)} label-blind folds, eligible {int(eligible.sum())} px, "
+    log(f"H76-E2: {len(folds)} label-blind folds, eligible {int(eligible.sum())} px, "
         f"ring {ring_px} px, budget {K} dots/arm/fold")
     for f in folds:
         need = ROOT / "work/h61" / f"pred_pre_B_f{f['fold']}.npy"
         if not need.exists():
             raise SystemExit(f"missing {need}: run  python scripts/run_h61.py fit  first")
 
-    # ---- H74-A: basement-surface curvature, gated to THIN sedimentary cover (band 15)
+    # ---- H76-A: basement-surface curvature, gated to THIN sedimentary cover (band 15)
     b15 = read_band(FEATURES, 15, eligible)
     med15 = float(np.nanmedian(b15))
     curv15 = hessian_abs_lmin(b15)
     thin = np.zeros(shape, np.float32)
     thin[np.isfinite(b15) & (b15 <= np.float32(med15))] = 1.0
-    m15 = grad_mag(b15)                       # kept: band-15 slope for H74-C and H74-D
+    m15 = grad_mag(b15)                       # kept: band-15 slope for H76-C and H76-D
     A = rank_grid(curv15, eligible) * (np.float32(0.35) + np.float32(0.65) * thin)
     del curv15, thin; gc.collect()
-    log(f"  built H74-A (basement curvature x thin cover; median cover {med15:.1f})")
+    log(f"  built H76-A (basement curvature x thin cover; median cover {med15:.1f})")
 
-    # ---- H74-B: dilatation strain-partition boundary -- |grad| of band 8, not its magnitude
+    # ---- H76-B: dilatation strain-partition boundary -- |grad| of band 8, not its magnitude
     b08 = read_band(FEATURES, 8, eligible)
     B = rank_grid(grad_mag(b08), eligible)
     del b08; gc.collect()
-    log("  built H74-B (geodetic dilatation gradient)")
+    log("  built H76-B (geodetic dilatation gradient)")
 
-    # ---- H74-C: conductivity-gradient x basement-step coincidence
+    # ---- H76-C: conductivity-gradient x basement-step coincidence
     b17 = read_band(FEATURES, 17, eligible)
     C = rank_grid(grad_mag(b17), eligible) * rank_grid(m15, eligible)
     del b17; gc.collect()
-    log("  built H74-C (conductivity gradient x basement step)")
+    log("  built H76-C (conductivity gradient x basement step)")
 
-    # ---- H74-D: antithetic margin -- basement step gated to the basin floor (band 12 low)
+    # ---- H76-D: antithetic margin -- basement step gated to the basin floor (band 12 low)
     b12 = read_band(FEATURES, 12, eligible)
     floor = rank_grid(-b12, eligible)
     del b12; gc.collect()
     D = rank_grid(m15, eligible) * (np.float32(0.30) + np.float32(0.70) * floor)
     del m15, floor; gc.collect()
-    log("  built H74-D (basement step x basin floor)")
+    log("  built H76-D (basement step x basin floor)")
 
-    # ---- H74-E: LiDAR scarp x radiometric-K discordance
+    # ---- H76-E: LiDAR scarp x radiometric-K discordance
     lid = read_band(ROOT / "data/external/lidar_scarp_features_u8.tif", 1, eligible)
     rl = rank_grid(np.nan_to_num(lid, nan=0.0), eligible)
     del lid
     kb = read_band(ROOT / "data/external/geodawn_rad_u8.tif", 1, eligible)
     E = np.float32(0.5) * rl + np.float32(0.5) * rank_grid(grad_mag(kb), eligible)
     del rl, kb; gc.collect()
-    log("  built H74-E (LiDAR scarp + radiometric K gradient)")
+    log("  built H76-E (LiDAR scarp + radiometric K gradient)")
 
-    # ---- H74-F: equal-weight percentile-rank fusion of the four new structural fields
+    # ---- H76-F: equal-weight percentile-rank fusion of the four new structural fields
     F = ((rank_grid(A, eligible) + rank_grid(B, eligible) +
           rank_grid(C, eligible) + rank_grid(D, eligible)) * np.float32(0.25))
-    log("  built H74-F (rank fusion of A-D)")
+    log("  built H76-F (rank fusion of A-D)")
 
-    NEW = {"h74_A_basement_curv_thincover": A, "h74_B_dilatation_gradient": B,
-           "h74_C_cond_basement_coincidence": C, "h74_D_antithetic_margin": D,
-           "h74_E_lidar_rad_discordance": E, "h74_F_rank_fusion": F}
+    NEW = {"h76_A_basement_curv_thincover": A, "h76_B_dilatation_gradient": B,
+           "h76_C_cond_basement_coincidence": C, "h76_D_antithetic_margin": D,
+           "h76_E_lidar_rad_discordance": E, "h76_F_rank_fusion": F}
     del A, B, C, D, E, F; gc.collect()
 
     out = dict(stage="holdout", budget_per_arm_per_fold=K, min_separation_px=MIN_PX,
@@ -187,18 +187,18 @@ def main() -> int:
         del fields, rB, rnd, allowed_idx; gc.collect()
         out["folds"].append(rec)
 
-    summ = evaluator.pooled_summary(terms, draws=1000, seed=SEED, candidate="h74_F_rank_fusion")
+    summ = evaluator.pooled_summary(terms, draws=1000, seed=SEED, candidate="h76_F_rank_fusion")
     out["pooled"] = json.loads(json.dumps(summ, default=str))
     log("\n=== POOLED HOLDOUT-DTI (evaluator %s, %d folds, %s) ==="
         % (evaluator.VERSION, len(folds), BUDGET_NOTE))
     for arm, row in sorted(summ["scores"].items(), key=lambda kv: -kv[1]["dti"]):
         log(f"  {arm:32s} DTI {row['dti']:.6f}  95% CI [{row['ci95'][0]:.6f}, {row['ci95'][1]:.6f}]"
             f"  withheld_pos_px={row['withheld_positive_pixels']}")
-    log("\n  paired deltas vs candidate 'h74_F_rank_fusion':")
+    log("\n  paired deltas vs candidate 'h76_F_rank_fusion':")
     for arm, row in summ["paired_differences"].items():
         log(f"    {arm:32s} delta {row['delta']:+.6f}  95% CI [{row['ci95'][0]:+.6f}, {row['ci95'][1]:+.6f}]")
-    (EVID / "h74_holdout.json").write_text(json.dumps(out, indent=1, default=str))
-    log(f"\nwrote {EVID/'h74_holdout.json'}")
+    (EVID / "h76_holdout.json").write_text(json.dumps(out, indent=1, default=str))
+    log(f"\nwrote {EVID/'h76_holdout.json'}")
     return 0
 
 
