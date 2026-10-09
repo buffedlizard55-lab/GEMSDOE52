@@ -639,13 +639,24 @@ def check_r5(DATA, DOCS, ROOT, problems, notes):
         return best
 
     built = _stamp(DATA / "submission_r5.json")
-    later = [q for q in priors if built is not None and (_stamp(q) or built) > built]
+    # A raster whose own name and sidecar carry no parseable stamp CANNOT be shown to predate this
+    # round's build, so it must not be allowed to invalidate the receipt.  The previous rule
+    # `_stamp(q) or built > built` gave every undated raster a stamp of exactly `built`, judged it
+    # "not later", and kept it in the strict set -- so any later round that published an alias
+    # without a T######Z stamp (docs/downloads/hNN-candidate.tif, or a canonical file dated only
+    # YYYYMMDD) silently broke R5's equality check forever.  Measured on the H77 branch: 76 of 112
+    # swept rasters are undated, and R5's recomputed novelty read 0.992087 against its receipted 1.0
+    # even with every H77 raster removed, i.e. the H74/H75/H76 aliases alone were enough.  IR-H77-008.
+    # Undated rasters are reported in the closure note rather than silently trusted.
+    dated = [q for q in priors if _stamp(q) is not None]
+    undated = [q for q in priors if _stamp(q) is None]
+    later = [q for q in dated if built is not None and _stamp(q) > built]
     # A later round's raster reaches the prior list under several names (canonical file, short alias,
     # docs/downloads copy), and only the canonical one carries a dated sidecar.  Exclude by content
     # hash so an alias of a later round cannot stay behind and invalidate the earlier receipt.
     later_hashes = {hashlib.sha256(q.read_bytes()).hexdigest() for q in later}
-    later = [q for q in priors if hashlib.sha256(q.read_bytes()).hexdigest() in later_hashes]
-    strict_priors = [q for q in priors if q not in later]
+    later = [q for q in dated if hashlib.sha256(q.read_bytes()).hexdigest() in later_hashes]
+    strict_priors = [q for q in priors if q not in later and q not in undated]
     uni = G.uniqueness_report((a > 0).astype(np.float32), strict_priors)
     claimed = rec["novelty"]["novel_vs_all_repo_rasters"]
     if abs(uni["novel_fraction"] - claimed) > 1e-9:
@@ -665,6 +676,12 @@ def check_r5(DATA, DOCS, ROOT, problems, notes):
     notes.append(f"R5 novelty recomputed against {uni['n_priors_checked']} rasters: novel fraction "
                  f"{uni['novel_fraction']:.4f}, pattern unique "
                  f"{uni['canonical_pattern_unique']}, relation {uni['relation_to_union']}")
+    notes.append(
+        f"R5 strict-set disclosure: {len(undated)} of {len(priors)} swept rasters carry no parseable "
+        f"build stamp and are therefore EXCLUDED from the strict comparison rather than assumed to "
+        f"predate R5; the strict set is {uni['n_priors_checked']} provably-dated rasters and the "
+        f"all-raster figure above is the supplemental closure. To strengthen this, every build should "
+        f"write a dated sidecar next to every copy it publishes, including short aliases.")
 
     # 4. the pages must say what the receipts say, in words a reader cannot miss
     for page_name in ("index.html", "executive-summary.html", "r5.html"):

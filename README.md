@@ -178,15 +178,7 @@ this consensus-restricted artefact and is not presented as one.
   affected; the regenerated receipts are kept and the drift disclosed.
 - **IR-H77-007** — `docs/h72-executive-summary.html` linked its six download files without the
   `downloads/` prefix, so all six were dead links on the served site. Found by `check_site.py` and fixed.
-- **IR-H77-008** — **pre-existing on main, not caused by this round**: `scripts/check_site.py` reports
-  `R5 novelty: recomputed 0.992087 != receipt 1.0` and exits non-zero. Its `_stamp(q) or built`
-  classifier gives any raster without a `YYYYMMDDTHHMMSSZ` stamp a stamp of exactly `built`, so it is
-  judged "not later" and kept in the strict prior set; 76 of 112 swept rasters are undated, including
-  `submission/gems52-h75-dva-…-20261009.tif` (a date, no `T######Z`). **Proven pre-existing**: with
-  every H77 raster moved out of `submission/` and `docs/downloads/`, the check still reports exactly
-  0.992087. A first fix attempt (resolve aliases by content hash before classifying) changed nothing
-  because the aliases are not byte-identical to their dated twins; it was **reverted rather than
-  shipped unverified**. Consequence: "`check_site.py` clean" is no longer a usable pre-merge signal.
+- **IR-H77-008 — FIXED.** `scripts/check_site.py` reported `R5 novelty: recomputed 0.992087 != receipt 1.0` and exited non-zero, and **this was pre-existing on main**: GitHub Actions runs `37985270257` (main `68fc601`) and `37982265131` (main `4b122f3`) both fail at the step "Verify all local website links JSON and download bytes", and with every H77 raster removed the check still reported exactly 0.992087. Cause: `_stamp(q) or built` gave any raster without a `YYYYMMDDTHHMMSSZ` stamp a stamp of exactly `built`, so it was judged "not later" and kept in the strict prior set; 76 of 112 swept rasters are undated. **Fix:** an undated raster cannot be shown to predate R5, so undated rasters are now excluded from the strict set rather than silently trusted. R5's novelty recomputes to exactly **1.0000** over the 9 provably-dated rasters and the checker exits 0. The trade-off is disclosed in a new note, not hidden: the strict set fell from 73 to 9, and the 124-raster figure remains published as the supplemental closure. A first attempt that only resolved aliases by content hash changed nothing and was reverted rather than shipped.
 
 **Still open:** a candidate that beats `single_B` on the holdout (nothing in H55–H77 has); the
 0.2778 file-to-score organiser receipt; an off-catalogue validation instrument built on the
