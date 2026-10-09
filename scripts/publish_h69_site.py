@@ -600,7 +600,7 @@ def main():
                     "DOWNLOAD YES &middot; THE PORTAL WILL ACCEPT THIS FILE YES &middot; SPEND A SLOT NO")
     notice = (
         '<!--H69-NOTICE--><div class="notice" role="note" style="margin:0 0 1rem;padding:1.1rem 1.2rem">'
-        '<strong style="font-size:1.05rem">Latest research round: H69 (2026-10-09) &mdash; '
+        '<strong style="font-size:1.05rem">Round H69 (this branch, 2026-10-09) &mdash; '
         f'{verdict_word}.</strong><br>'
         f'<a class="button" style="margin:.6rem .5rem .3rem 0" href="downloads/h69-candidate.tif" download>'
         f'&#11015; Download the H69 GeoTIFF ({n(fmt["bytes"])} bytes)</a>'
