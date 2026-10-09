@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""H76 independent re-check of the H75 GeoTIFF and of the 0.2778 arithmetic.
+"""H77 independent re-check of the H75 GeoTIFF and of the 0.2778 arithmetic.
 
 Purpose: re-measure, from restored bytes, every claim the H75 receipt and knowledge/49 make about the
 shipped file, instead of trusting the stored JSON.  Read-only: writes one receipt, changes no candidate.
@@ -33,7 +33,7 @@ TEMPLATE = ROOT / "data/sample_submission.tif"
 LABELS = ROOT / "data/labels.tif"
 REF = ROOT / "data/reference/h33-2-b2-zeros.tif"
 SCORED = sorted((ROOT / "data/scored").glob("*.tif"))
-OUT = ROOT / "evidence/h76_verify_h75.json"
+OUT = ROOT / "evidence/h77_verify_h75.json"
 
 # owner-reported (public board / owner notes), attached to scored files by name token only
 REPORTED = {
@@ -70,7 +70,7 @@ def near3(dots: np.ndarray, prior: np.ndarray) -> float:
 
 
 def main() -> int:
-    rec: dict = {"round": "H76", "label_scope": "MEASURED here from bytes; scores OWNER-REPORTED"}
+    rec: dict = {"round": "H77", "label_scope": "MEASURED here from bytes; scores OWNER-REPORTED"}
 
     with rasterio.open(H75) as h, rasterio.open(TEMPLATE) as t, rasterio.open(LABELS) as lb:
         raw = h.read(1)
@@ -161,7 +161,7 @@ def main() -> int:
     # Pixel-wise identity against the full 565-raster census is NOT re-run here (needs the 524 published blobs);
     # the H75 receipt records decoded_unique=true over 565 priors. This check is limited to the restored 13.
     rec["census_scope"] = ("13 restored rasters (1 reference + 12 scored). The 565-raster census is in "
-                           "evidence/h75_build.json and was NOT re-run in H76.")
+                           "evidence/h75_build.json and was NOT re-run in H77.")
 
     # Verdicts (repo thresholds: rank 0.90, near-dot 0.70)
     # Universal-coverage probes (gates.PROBE_COVERAGE = 0.95: the prior's 3 px halo covers >=95% of the

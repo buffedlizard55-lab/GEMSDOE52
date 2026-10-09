@@ -1,5 +1,5 @@
 {
- "round": "H76",
+ "round": "H77",
  "label_scope": "MEASURED here from bytes; scores OWNER-REPORTED",
  "file": {
   "path": "submission/gems52-h75-dva-variogram-anisotropy-B-37654px-20261009T200333Z.tif",
@@ -236,7 +236,7 @@
  "max_phi_restored_priors": 0.0640391346555117,
  "max_near3px_restored_priors": 1.0,
  "n_restored_priors": 13,
- "census_scope": "13 restored rasters (1 reference + 12 scored). The 565-raster census is in evidence/h75_build.json and was NOT re-run in H76.",
+ "census_scope": "13 restored rasters (1 reference + 12 scored). The 565-raster census is in evidence/h75_build.json and was NOT re-run in H77.",
  "lane_policy_check_restored_set": {
   "rank_limit": 0.9,
   "near_limit": 0.7,

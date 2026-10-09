@@ -1,7 +1,7 @@
-# 67 · H76 — verification of the shipped GeoTIFF, the 0.2778 mechanism, five new hypotheses, and an unambiguous submission status (2026-10-09)
+# 67 · H77 — verification of the shipped GeoTIFF, the 0.2778 mechanism, five new hypotheses, and an unambiguous submission status (2026-10-09)
 
-**Labels used below.** `MEASURED-H76` = re-computed in this session from restored bytes (script `scripts/h76_verify_h75.py`,
-receipt `evidence/h76_verify_h75.json`). `HOLDOUT-DTI` = evaluator `gems52-pooled-hide-v1`, value carried from the H75
+**Labels used below.** `MEASURED-H77` = re-computed in this session from restored bytes (script `scripts/h77_verify_h75.py`,
+receipt `evidence/h77_verify_h75.json`). `HOLDOUT-DTI` = evaluator `gems52-pooled-hide-v1`, value carried from the H75
 receipt, **not re-run** this session. `OWNER-REPORTED` = a public score attached to a file by the owner's own
 notes or the owner's list, **not** an organizer receipt. `ORGANIZER-CONFIRMED` = **none exists anywhere in this repo.**
 `SOURCE` = official page fetched or searched in this session (links in §9).
@@ -12,9 +12,9 @@ notes or the owner's list, **not** an organizer receipt. `ORGANIZER-CONFIRMED` =
 
 | Question | Answer | Basis |
 |---|---|---|
-| Is there a unique GeoTIFF to download? | **YES — `submission/gems52-h75-dva-variogram-anisotropy-B-37654px-20261009T200333Z.tif`** (142,941 bytes, SHA-256 `b97691584d514ab1925d9fff2b61c410be86bdc0bc8c844dfdaa6257a4ea7a16`). Format-valid and not identical to any of the 13 restored rasters. | MEASURED-H76 §1, §4 |
+| Is there a unique GeoTIFF to download? | **YES — `submission/gems52-h75-dva-variogram-anisotropy-B-37654px-20261009T200333Z.tif`** (142,941 bytes, SHA-256 `b97691584d514ab1925d9fff2b61c410be86bdc0bc8c844dfdaa6257a4ea7a16`). Format-valid and not identical to any of the 13 restored rasters. | MEASURED-H77 §1, §4 |
 | Is it OK to **submit** it to the competition? | **NOT under the repo's own rules.** The parallel-run lane rule fails: 0.922 of dots lie within 3 px of one registry raster (limit 0.70). Submitting is an **owner override** decision. It is not a validator decision. | receipt `evidence/h75_gates.json`; §5 |
-| Does the file pass the official format? | Yes on every item the official page lists **except one convention question** (zeros, not NaN, outside the 5,167,373-px footprint; §3.3). Values are exactly {0, 1}, so the `Predicted values must be in range [0, 1]` rule is met. | MEASURED-H76 §1; SOURCE §9 |
+| Does the file pass the official format? | Yes on every item the official page lists **except one convention question** (zeros, not NaN, outside the 5,167,373-px footprint; §3.3). Values are exactly {0, 1}, so the `Predicted values must be in range [0, 1]` rule is met. | MEASURED-H77 §1; SOURCE §9 |
 | Did this session generate a *new* raster? | **No.** Only one holdout-positive ranker exists (H75). Any new raster would be either unvalidated or a lane duplicate, and this round had no validated candidate. §6 explains. | §6 |
 | Slots used this round | **0.** No submission was made, and nothing was uploaded to DrivenData. | — |
 | Does H75 beat 0.2778 or 0.3195? | **Unknown.** Holdout says H75 beats its own control `single_B` by +0.0118 [0.0068, 0.0174] (HOLDOUT-DTI). No organizer score exists for any file. Holdout DTI does not predict the board (repo measurement R4, Spearman −0.10). | §4, §5 |
@@ -24,7 +24,7 @@ decide the override. The site header now says this in the first screen (docs/ind
 
 ---
 
-## 1. The shipped file, re-measured from disk (MEASURED-H76)
+## 1. The shipped file, re-measured from disk (MEASURED-H77)
 
 | Property | Value | Check |
 |---|---|---|
@@ -53,12 +53,12 @@ only possible if the ring earned less credit than it cost in false-positive mass
 is below break-even at every |G| in the repo's identified interval. The mechanism is measured. The organizer's
 attribution of the score is not.
 
-### 2.1 Pixel identities (MEASURED-H76)
+### 2.1 Pixel identities (MEASURED-H77)
 * `h33-2-b2` (reference, 37,654 px, SHA `c55bafc4…ab6fa9`) ⊂ `d2-8` (44,090 px): **subset = True**.
 * Pixels in `d2-8` but not in the reference: **6,436** (14.6 % of `d2-8`). All lie **100.0 – 200.0 m** from the catalogue (median 100 m).
 * The reference has **0** dots within 200 m of the catalogue.
 
-### 2.2 Credit density the ring must have had (MEASURED-H76, approximation stated)
+### 2.2 Credit density the ring must have had (MEASURED-H77, approximation stated)
 Approximation: `DTI ≈ T / (0.2·S + 0.8·|G|)` (valid for dots more than 200 m apart; mass M ≈ T). Inputs: the two owner-reported
 scores and the two dot counts. Solve for credited mass T; the ring's credit is the difference.
 
@@ -69,7 +69,7 @@ scores and the two dot counts. Solve for credited mass T; the ring's credit is t
 | 14,088.7 (superseded point estimate, shown for completeness) | 0.0007 | ≈ 0 | 0.052 |
 
 **Read:** a deleted pixel is worth more than break-even only if its credit density exceeds 0.052. Every measured
-bound is below it. So deleting the ring raised DTI. Recorded in `evidence/h76_verify_h75.json → ring_credit_density_implied`.
+bound is below it. So deleting the ring raised DTI. Recorded in `evidence/h77_verify_h75.json → ring_credit_density_implied`.
 
 ### 2.3 What it implies (interpretation, labelled as inference)
 * One owner-reported pair is consistent with **hidden faults rarely lying 100–200 m from a catalogue trace**. The competition's
@@ -112,9 +112,9 @@ The problem page says "A sample submission that **predicts total fault absence**
 
 ---
 
-## 4. Uniqueness and overlap (MEASURED-H76, restored subset; the full census is a receipt)
+## 4. Uniqueness and overlap (MEASURED-H77, restored subset; the full census is a receipt)
 
-| Comparison | Result (MEASURED-H76) |
+| Comparison | Result (MEASURED-H77) |
 |---|---|
 | H75 pattern identical to any of 13 restored rasters | **No** (`identical_pattern = False` for all) |
 | H75 equal to the union of the 13 restored rasters | **No** |
@@ -138,7 +138,7 @@ rank correlation > 0.90, or > 70 % of dots within 3 px of one registry raster's 
 | Dots max Spearman | 0.108 | PASS | same |
 | Dots max near-dot (3 px) — informative priors | **0.922** (38 offenders; worst is a non-probe prior) | **FAIL (> 0.70)** | same |
 | Literal max near-dot incl. 7 universal-coverage probes | 1.000 | probes cannot localise a lane (`gates.PROBE_COVERAGE = 0.95`) | same |
-| Restored 13-raster subset, informative max near-dot | 0.664 | PASS **on this subset only** | MEASURED-H76 |
+| Restored 13-raster subset, informative max near-dot | 0.664 | PASS **on this subset only** | MEASURED-H77 |
 
 **Important nuance (flag for review).** The subset check passes, but the verdict is set by the **565-raster census**, of which
 only 13 rasters are restored here. None of the 38 informative offenders is among the 13 restored rasters (their census
@@ -171,11 +171,11 @@ the family) against *implementation cost* (L / M / H). No number below is a scor
 
 | Rank | ID | Layer(s) and physical signature | Why it should catch a fault the catalogue lacks | How it differs from what is implemented | Mimic (named non-fault process) | Expected gain / cost | Data access (verified) | Validatable here? |
 |---|---|---|---|---|---|---|---|---|
-| **1** | **H76-1 · strike-aligned directional variogram (DVA+)** | `det_elev`, `det_elev_slope`, `iso_grav_anom` (as H75); add bands 15 (depth-to-basement) and 18 (grav HG), per H75 next steps. Directional semivariance at 200/400 m lags, azimuth **aligned to the regional NNE Basin-and-Range strike** rather than four fixed azimuths. | A 300–900 m damage zone makes local texture strike-parallel-smooth and strike-normal-rough. Aligning the azimuth to the regional fault set tests the *family* of hidden faults, not just any anisotropy. | H75 already has 4-azimuth DVA (README H75 block: "lags 200/400 m, 4 azimuths"). H76-1 adds a strike prior and two bands. Same learner, same holdout. | Linear drainage incision, roads and range-front bajada edges make anisotropic topographic texture. Bedding in gravity. | **L–M / L** (H75 measured +0.0118 over control) | Competition inputs: owner mirror (§8.2). Feature store must be rebuilt. | **Yes**, if the training raster is restored (redistribution question first). |
-| 2 | **H76-2 · INGENIOUS 2 m shallow-temperature probes as a cover test** | GDR 1391 `2m Temperature Probes.zip` (1.03 MB, CC BY 4.0). Shallow temperature anomaly after removing a background (elevation, slope, albedo, vegetation covariates), tested for alignment with candidate structures. | Hot fluid rising along a permeable fault in cover warms the ground at 2 m. This is a physical measurement independent of mapped traces, and it targets the brief's "fault buried beneath cover" case. | Not used anywhere in `src/` or `scripts/` (grep, this session). The repo's shallow-temperature knowledge is only the r3 list entry. | Shallow groundwater, irrigation, soil moisture, vegetation, cold-air drainage; **non-random probe placement** (sites chosen where anomalies were expected). | **M / M** | GDR 1391 (CC BY 4.0). **Not obtainable from this sandbox** (`gdr.openei.org` returns 000; fetch tool HTTP 500). Owner must download and pin SHA-256. | No, until the owner supplies the zip. Sparse points need declustering and a background model before any holdout. |
-| 3 | **H76-3 · Landsat TIRS night-time surface-temperature residual** | USGS Landsat C2 L2 **ST** (public domain). TIRS is 100 m native (resampled to 30 m by USGS), which matches the 100 m competition grid. Night-time ST residual after elevation, slope, albedo and thermal-inertia correction, following the Coolbaugh et al. (2007) ASTER method. | Surface heat from the subsurface reaches the surface along fault pathways. A residual at night, after removing the solar-heating terms, is the physical signature. | No Landsat or thermal-residual feature exists in this repo (grep: 0 hits in `src/` and `scripts/`). | Thermal-inertia contrasts (lithology, dark basalt, playa, water bodies), irrigation, roads (the brief names roads as a surface artifact), cold-air pooling. | **M–H / H** | USGS Collection 2 L2 ST: public domain (SOURCE). Download is through EarthExplorer or an AWS mirror (SOURCE: USGS page); whether an account is required is **to be confirmed by the owner**. **Neither route is reachable from this sandbox** (usgs.gov returns 000). | No. Scene selection, cloud masking and day/night compositing are required first. |
-| 4 | **H76-4 · paleo spring-deposit (sinter/tufa) proximity as a fossil-upflow prior** | GDR 1391 `Paleo Geothermal Features.zip` (82 kB, CC BY 4.0): mapped sinter and tufa deposits. Distance to deposits, tested as a *positive* prior along structures. | Fossil springs mark past upflow. Their alignment with structure is the signature. | Planned as H58-D and never validated (`knowledge/19`, `scripts/publish_h58_site.py`). Not in the feature store. | **Wave (shoreline) tufa** forms along former lake margins, not over faults, so it lies on a lake-level contour. Spring-fed tufa *columns* are the fault-linked form (SOURCE: Coolbaugh et al. 2009 as summarised in the ResearchGate record). A shoreline-elevation test must separate the two. | **L–M / L–M** | GDR 1391, 82 kB, CC BY 4.0. **Not obtainable from this sandbox** (same gdr.openei.org failure). | No, until the owner supplies the file. |
-| 5 | **H76-5 · USGS Great Basin conductive heat-flow residual** | USGS heat-flow maps, DOI 10.5066/P9BZPVUC (public; in GDR 1391 "Heat Flow Maps"). Residual = observed-minus-background heat flow (per the USGS description). | Hydrothermal convection shows as a positive residual above background conduction. | Proposed as H72-D and judged not viable (`knowledge/59`). Not in the feature store. | Regional groundwater and basin-fill thermal conductivity contrasts. | **L / L** | Public USGS data release (SOURCE). Not reachable from this sandbox. | No. Grid is km-scale; the 100 m dot metric cannot resolve the faults it would point to. Rank last for that reason. |
+| **1** | **H77-1 · strike-aligned directional variogram (DVA+)** | `det_elev`, `det_elev_slope`, `iso_grav_anom` (as H75); add bands 15 (depth-to-basement) and 18 (grav HG), per H75 next steps. Directional semivariance at 200/400 m lags, azimuth **aligned to the regional NNE Basin-and-Range strike** rather than four fixed azimuths. | A 300–900 m damage zone makes local texture strike-parallel-smooth and strike-normal-rough. Aligning the azimuth to the regional fault set tests the *family* of hidden faults, not just any anisotropy. | H75 already has 4-azimuth DVA (README H75 block: "lags 200/400 m, 4 azimuths"). H77-1 adds a strike prior and two bands. Same learner, same holdout. | Linear drainage incision, roads and range-front bajada edges make anisotropic topographic texture. Bedding in gravity. | **L–M / L** (H75 measured +0.0118 over control) | Competition inputs: owner mirror (§8.2). Feature store must be rebuilt. | **Yes**, if the training raster is restored (redistribution question first). |
+| 2 | **H77-2 · INGENIOUS 2 m shallow-temperature probes as a cover test** | GDR 1391 `2m Temperature Probes.zip` (1.03 MB, CC BY 4.0). Shallow temperature anomaly after removing a background (elevation, slope, albedo, vegetation covariates), tested for alignment with candidate structures. | Hot fluid rising along a permeable fault in cover warms the ground at 2 m. This is a physical measurement independent of mapped traces, and it targets the brief's "fault buried beneath cover" case. | Not used anywhere in `src/` or `scripts/` (grep, this session). The repo's shallow-temperature knowledge is only the r3 list entry. | Shallow groundwater, irrigation, soil moisture, vegetation, cold-air drainage; **non-random probe placement** (sites chosen where anomalies were expected). | **M / M** | GDR 1391 (CC BY 4.0). **Not obtainable from this sandbox** (`gdr.openei.org` returns 000; fetch tool HTTP 500). Owner must download and pin SHA-256. | No, until the owner supplies the zip. Sparse points need declustering and a background model before any holdout. |
+| 3 | **H77-3 · Landsat TIRS night-time surface-temperature residual** | USGS Landsat C2 L2 **ST** (public domain). TIRS is 100 m native (resampled to 30 m by USGS), which matches the 100 m competition grid. Night-time ST residual after elevation, slope, albedo and thermal-inertia correction, following the Coolbaugh et al. (2007) ASTER method. | Surface heat from the subsurface reaches the surface along fault pathways. A residual at night, after removing the solar-heating terms, is the physical signature. | No Landsat or thermal-residual feature exists in this repo (grep: 0 hits in `src/` and `scripts/`). | Thermal-inertia contrasts (lithology, dark basalt, playa, water bodies), irrigation, roads (the brief names roads as a surface artifact), cold-air pooling. | **M–H / H** | USGS Collection 2 L2 ST: public domain (SOURCE). Download is through EarthExplorer or an AWS mirror (SOURCE: USGS page); whether an account is required is **to be confirmed by the owner**. **Neither route is reachable from this sandbox** (usgs.gov returns 000). | No. Scene selection, cloud masking and day/night compositing are required first. |
+| 4 | **H77-4 · paleo spring-deposit (sinter/tufa) proximity as a fossil-upflow prior** | GDR 1391 `Paleo Geothermal Features.zip` (82 kB, CC BY 4.0): mapped sinter and tufa deposits. Distance to deposits, tested as a *positive* prior along structures. | Fossil springs mark past upflow. Their alignment with structure is the signature. | Planned as H58-D and never validated (`knowledge/19`, `scripts/publish_h58_site.py`). Not in the feature store. | **Wave (shoreline) tufa** forms along former lake margins, not over faults, so it lies on a lake-level contour. Spring-fed tufa *columns* are the fault-linked form (SOURCE: Coolbaugh et al. 2009 as summarised in the ResearchGate record). A shoreline-elevation test must separate the two. | **L–M / L–M** | GDR 1391, 82 kB, CC BY 4.0. **Not obtainable from this sandbox** (same gdr.openei.org failure). | No, until the owner supplies the file. |
+| 5 | **H77-5 · USGS Great Basin conductive heat-flow residual** | USGS heat-flow maps, DOI 10.5066/P9BZPVUC (public; in GDR 1391 "Heat Flow Maps"). Residual = observed-minus-background heat flow (per the USGS description). | Hydrothermal convection shows as a positive residual above background conduction. | Proposed as H72-D and judged not viable (`knowledge/59`). Not in the feature store. | Regional groundwater and basin-fill thermal conductivity contrasts. | **L / L** | Public USGS data release (SOURCE). Not reachable from this sandbox. | No. Grid is km-scale; the 100 m dot metric cannot resolve the faults it would point to. Rank last for that reason. |
 
 **Considered and rejected for this round**
 * *Phase congruency / scale-space ridges on existing DEM.* Overlaps the 16 curvature and 13 structure-tensor files already in `src/`/`scripts/`. Low novelty.
@@ -184,7 +184,7 @@ the family) against *implementation cost* (L / M / H). No number below is a scor
 * *GDR 1391 MT electrical conductance, detrended elevation, gravity and magnetics, earthquake density, geodetic shear.* All are already in the competition feature stack (problem page feature list). Not new.
 * *GDR 1391 well and spring chemistry (19.85 MB).* Could support geothermometry (H58-C, never run). Deferred; it is a well-and-spring product, not a fault product, and needs a temperature model first.
 
-**Top candidate and why.** H76-1 is ranked first because it is the only candidate with a measured positive holdout behaviour
+**Top candidate and why.** H77-1 is ranked first because it is the only candidate with a measured positive holdout behaviour
 in this family (H75), it is the cheapest to validate, and its mimic set is named. Its gain is expected to be small.
 **It is not validated in this session.** Validation requires a preregistration (`knowledge/68`, not written this round), the training raster
 (§8.2), and a run of the H75 instrument with the strike prior. That is the next session's first step.
@@ -195,7 +195,7 @@ in this family (H75), it is the cheapest to validate, and its mimic set is named
 
 ### 8.1 Sandbox egress (MEASURED this session)
 * `api.github.com` → 200. `gdr.openei.org` → 000 (no connection). `www.usgs.gov` → 000. The allowlist is GitHub, PyPI and npm only.
-* Consequence: every GDR 1391 file and every USGS raster is **owner-download only**. H76-2, H76-3, H76-4, H76-5 cannot be validated here.
+* Consequence: every GDR 1391 file and every USGS raster is **owner-download only**. H77-2, H77-3, H77-4, H77-5 cannot be validated here.
 
 ### 8.2 Competition-input provenance (flag for review)
 * The DrivenData data tab is login-walled (SOURCE: the repo's data-manifest note).
@@ -234,15 +234,16 @@ in this family (H75), it is the cheapest to validate, and its mimic set is named
 
 ---
 
-## 10. Irregularities (flagged for review; recorded in `registry/irregularities.json` as IR-H76-001…008)
+## 10. Irregularities (flagged for review; recorded in `registry/irregularities.json` as IR-H77-001…009)
 
-* **IR-H76-001** — The brief says 0.3195 is "the highest score right now." The 2026-10-08 snapshot shows 0.3774 (xiaofanhu) at rank 1. 0.3195 is rank 7 (DARD). Owner-reported public values, not organizer-confirmed.
-* **IR-H76-002** — The official sample is described as "total fault absence." The repo's template is the catalogue itself (60,988 ones = catalogue positives).
-* **IR-H76-003** — H75's zeros outside the domain versus the official "null or nan" (7,111,787 px). Open owner decision (§3.3).
-* **IR-H76-004** — The H75 executive summary said the zeros "fix" the "must be in range" error. That was not verified: the cause of the earlier error on another file is unknown. Corrected in this round's edit.
-* **IR-H76-005** — The lane verdict depends on the 565-raster census. The 13 restored rasters are census members (decoded digests match), and their near-dot values match this session's measurements, but none of the 38 offenders is among them (their maximum is 0.664, under 0.70). The subset therefore cannot show a pass. The receipt is the authority (§5).
-* **IR-H76-006** — Competition inputs are restored from the owner's public GitHub mirrors. Redistribution compliance is unverified (§8.2).
-* **IR-H76-007** — The 0.2778 file ↔ score link is OWNER-REPORTED and the board is team-level. The mechanism in §2 is measured on bytes, but the score attribution is not (§2.3).
+* **IR-H77-001** — The brief says 0.3195 is "the highest score right now." The 2026-10-08 snapshot shows 0.3774 (xiaofanhu) at rank 1. 0.3195 is rank 7 (DARD). Owner-reported public values, not organizer-confirmed.
+* **IR-H77-002** — The official sample is described as "total fault absence." The repo's template is the catalogue itself (60,988 ones = catalogue positives).
+* **IR-H77-003** — H75's zeros outside the domain versus the official "null or nan" (7,111,787 px). Open owner decision (§3.3).
+* **IR-H77-004** — The H75 executive summary said the zeros "fix" the "must be in range" error. That was not verified: the cause of the earlier error on another file is unknown. Corrected in this round's edit.
+* **IR-H77-005** — The lane verdict depends on the 565-raster census. The 13 restored rasters are census members (decoded digests match), and their near-dot values match this session's measurements, but none of the 38 offenders is among them (their maximum is 0.664, under 0.70). The subset therefore cannot show a pass. The receipt is the authority (§5).
+* **IR-H77-006** — Competition inputs are restored from the owner's public GitHub mirrors. Redistribution compliance is unverified (§8.2).
+* **IR-H77-007** — The 0.2778 file ↔ score link is OWNER-REPORTED and the board is team-level. The mechanism in §2 is measured on bytes, but the score attribution is not (§2.3).
 
-* **IR-H76-008** — `scripts/check_site.py` failed (exit 1) on R5's novelty: recomputed 0.992087 vs receipt 1.0. Cause: the H75 raster was dated only by day (`20261009`), so the checker could not date it and counted it as present when R5 was built (build time 2026-10-08T23:51:56Z). With H75 moved out, the check gives 1.0000 over 58 rasters, and the check passes. Fix (disposition below): the H75 raster, sidecar and zip were renamed with the UTC write time `…20261009T200333Z` (the file's own mtime, 2026-10-09 20:03:33 UTC). The TIF bytes are unchanged (SHA-256 `b97691584d…`). The zip was rebuilt with the new inner name; its SHA-256 is now `7ff4e50d…` (the old zip `c9285571…` no longer exists). The restored owner rasters in `data/scored` and `data/reference` were removed from the git-ignored `data/` after the census check, to match CI, which restores only the template and labels. Re-restore with `scripts/restore_data.py` to reproduce.
+* **IR-H77-008** — `scripts/check_site.py` failed (exit 1) on R5's novelty: recomputed 0.992087 vs receipt 1.0. Cause: the H75 raster was dated only by day (`20261009`), so the checker could not date it and counted it as present when R5 was built (build time 2026-10-08T23:51:56Z). With H75 moved out, the check gives 1.0000 over 58 rasters, and the check passes. Fix (disposition below): the H75 raster, sidecar and zip were renamed with the UTC write time `…20261009T200333Z` (the file's own mtime, 2026-10-09 20:03:33 UTC). The TIF bytes are unchanged (SHA-256 `b97691584d…`). The zip was rebuilt with the new inner name; its SHA-256 is now `7ff4e50d…` (the old zip `c9285571…` no longer exists). The restored owner rasters in `data/scored` and `data/reference` were removed from the git-ignored `data/` after the census check, to match CI, which restores only the template and labels. Re-restore with `scripts/restore_data.py` to reproduce.
 
+* **IR-H77-009** — `origin/main` (after PR #76) fails `scripts/check_site.py`: R5 novelty 0.991607 != receipt 1.0. Cause: PR #76's H76 gravity raster is undated, so the checker counts it as present at R5's build. It shares 8 exact dots with R5. On this branch the value is 0.999520. Not caused by this PR, and not changed here: the true build time is not recorded in the repo. Owner or that round's author must date it (§ registry IR-H77-009).

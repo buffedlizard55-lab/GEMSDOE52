@@ -2379,19 +2379,19 @@
    "measured_effect": "No measured number changed: link targets and the verbatim prompt text only."
   },
   {
-   "id": "IR-H76-001",
-   "round": "H76",
+   "id": "IR-H77-001",
+   "round": "H77",
    "severity": "medium",
    "status": "open - flagged for review",
    "title": "The brief says 0.3195 is the highest score; the dated snapshot shows 0.3774 at rank 1 and 0.3195 at rank 7",
    "what_it_is": "The user brief states that 0.3195 is 'the highest score right now'. The 2026-10-08 snapshot (registry/leaderboard_snapshot_2026-10-08.json) lists 0.3774 (xiaofanhu) at rank 1, 0.3195 at rank 7 (DARD), and 0.2778 at rank 13 (extradr19).",
    "how_we_know": "Dated snapshot in the repo; the public leaderboard chunk was read via fetch_page on 2026-10-09 (values not organizer-confirmed). The portal was not re-fetched.",
-   "handling": "Recorded as the top score being 0.3774. The bar used for H76 decisions is 0.3774 (top) and 0.3195 (rank 7), each labelled as owner-reported.",
+   "handling": "Recorded as the top score being 0.3774. The bar used for H77 decisions is 0.3774 (top) and 0.3195 (rank 7), each labelled as owner-reported.",
    "disposition": "Open. Owner to confirm the current top and the bar. No submission decision depends on the brief's wording."
   },
   {
-   "id": "IR-H76-002",
-   "round": "H76",
+   "id": "IR-H77-002",
+   "round": "H77",
    "severity": "medium",
    "status": "open - flagged for review",
    "title": "Official sample is described as 'total fault absence', but the repo template holds 60,988 catalogue positives",
@@ -2401,8 +2401,8 @@
    "disposition": "Open. Owner to confirm the template convention before any future template-derived submission."
   },
   {
-   "id": "IR-H76-003",
-   "round": "H76",
+   "id": "IR-H77-003",
+   "round": "H77",
    "severity": "high",
    "status": "open - owner decision required",
    "title": "H75 writes 0 outside the domain (7,111,787 px); the official text allows null or NaN",
@@ -2412,30 +2412,30 @@
    "disposition": "Owner decision pending (knowledge/67 \u00a73.3; IR-H73-001). Submit one file only."
   },
   {
-   "id": "IR-H76-004",
-   "round": "H76",
+   "id": "IR-H77-004",
+   "round": "H77",
    "severity": "high",
    "status": "resolved - text corrected",
    "title": "The H75 executive summary said zeros 'fix' the 'must be in range' error; that was not verified",
    "what_it_is": "docs/h75-executive-summary.html stated that zeros fix the 'Predicted values must be in range [0, 1]' error. The cause of that error on the earlier file is unknown; the claim was not verified.",
    "how_we_know": "Re-read of the page and of the H75 file: the file meets the [0,1] rule (values {0,1}, no NaN). Nothing in the repo shows the cause of the earlier error.",
    "handling": "Sentence replaced with a verified statement and an explicit note that the cause is unknown.",
-   "disposition": "Resolved in the H76 site edit."
+   "disposition": "Resolved in the H77 site edit."
   },
   {
-   "id": "IR-H76-005",
-   "round": "H76",
+   "id": "IR-H77-005",
+   "round": "H77",
    "severity": "high",
    "status": "open - lane gate fails",
    "title": "The lane verdict depends on the 565-raster census; the 13 restored rasters cannot show a pass",
    "what_it_is": "The lane check of H75 uses the 565-raster census: near-dot 0.922 across 38 informative offenders (limit 0.70). Only 13 census rasters are restored here, and none of the 38 offenders is among them.",
-   "how_we_know": "Decoded SHA-256 of each restored raster matches its census record; near-dot values match this session's independent measurement to three decimals. Verifier output: evidence/h76_verify_h75.json.",
+   "how_we_know": "Decoded SHA-256 of each restored raster matches its census record; near-dot values match this session's independent measurement to three decimals. Verifier output: evidence/h77_verify_h75.json.",
    "handling": "The census receipt is the authority. The H75 run card records the lane FAIL. No slot is used.",
    "disposition": "Open. Owner override required to submit (lane-rule scope, knowledge/67 \u00a75)."
   },
   {
-   "id": "IR-H76-006",
-   "round": "H76",
+   "id": "IR-H77-006",
+   "round": "H77",
    "severity": "high",
    "status": "open - owner decision required",
    "title": "Competition inputs are restored from the owner's public GitHub mirrors; redistribution is unverified",
@@ -2445,8 +2445,8 @@
    "disposition": "Open. Owner to confirm the compliance position before any further mirror use (knowledge/67 \u00a78.2)."
   },
   {
-   "id": "IR-H76-007",
-   "round": "H76",
+   "id": "IR-H77-007",
+   "round": "H77",
    "severity": "medium",
    "status": "open - owner-reported link",
    "title": "The 0.2778 file to score link is owner-reported and the board is team-level",
@@ -2456,8 +2456,8 @@
    "disposition": "Open. Owner to confirm the attribution from a submission-page receipt."
   },
   {
-   "id": "IR-H76-008",
-   "round": "H76",
+   "id": "IR-H77-008",
+   "round": "H77",
    "severity": "medium",
    "status": "resolved - renamed with UTC write time",
    "title": "check_site R5 novelty failed (0.992 vs receipt 1.0) because the H75 raster could not be dated",
@@ -2465,6 +2465,17 @@
    "how_we_know": "check_site.py output before and after moving the H75 files out; the R5 receipt value is 1.0 (evidence/r5_novel_emission.json).",
    "handling": "Renamed the H75 raster, sidecar and zip to the UTC write time ...20261009T200333Z (the file mtime, 2026-10-09 20:03:33 UTC). TIF SHA-256 unchanged (b97691584d...). Zip rebuilt; new SHA-256 7ff4e50d.... Old zip SHA c9285571... is retired. Restored owner rasters in data/scored and data/reference were removed from the git-ignored data/ to match CI (which restores only the template and labels).",
    "disposition": "Resolved. check_site exit 0; tests/test_h75.py, tests/test_ctd5.py, tests/test_gems52_h1_pipeline.py pass (32). The old file name was never submitted to the competition."
+  },
+  {
+   "id": "IR-H77-009",
+   "round": "H77",
+   "severity": "high",
+   "status": "open - owner decision required",
+   "title": "origin/main fails scripts/check_site.py (R5 novelty 0.991607 != receipt 1.0) since PR #76 merged an undated H76 raster",
+   "what_it_is": "PR #76 (H76 gravity-surface abstention, research-only) added submission/gems52-h76-gravity-surface-abstention-research-only.tif and docs/downloads/h76-candidate.tif. Neither name nor sidecar carries a build time, so check_site counts them as present when R5 was built (2026-10-08T23:51:56Z). The H76 raster shares 8 exact dots with R5, so R5's novelty is 0.999520 on this branch and 0.991607 on origin/main, against a receipt of 1.0.",
+   "how_we_know": "check_site.py run on a temporary worktree of origin/main (exit 1, 0.991607) and on this branch (exit 1, 0.999520). Exact overlap computed from decoded rasters: 8 shared dots with R5 (16,681 R5 dots). The raster's sidecar has no timestamp.",
+   "handling": "Not changed here. Dating another round's artifact would need its real build time, which is not recorded anywhere in the repo; inventing one would be a fabrication. Our H77 PR does not alter this raster.",
+   "disposition": "Open. Owner or the H76 round's author to record the true build time in the sidecar (or otherwise date it) so check_site can exclude it from R5's build-time set, or to accept R5's receipt as scoped to the build-time set. Until then check_site exits 1 on main."
   }
  ],
  "merge_note": "Merged registry/irregularities.json: main's entries (including the parallel H66 round's IR-H66-001..010) plus this round's IR-H67-001..011. This round was labelled H66 in its own receipts and was renamed H67 before merge because main merged a different H66 first (PR #56); the IDs were renumbered wholesale so no ID carries two meanings. See knowledge/45a_amendment_2026-10-09_H67_rename.md. IR-H67-002 (in-domain nodata sentinels collapse every rank channel) and IR-H67-008 (probe classification flips with the structuring element, and this round's lane verdict depends on it) are the two that change a result; IR-H67-005 and IR-H67-007 change how a shared instrument must be read."

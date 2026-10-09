@@ -1,0 +1,122 @@
+{
+  "round": "H77",
+  "date_utc": "2026-10-09",
+  "branch": "arena/7ab2a01e-gemsdoe52",
+  "scope": "verification of H75 (download-ready, submit-blocked); 0.2778 mechanism; five ranked hypotheses; site and README",
+  "decision": {
+    "download": "YES",
+    "submit": "NOT APPROVED",
+    "reason": "lane check FAIL (near-dot 0.922 > 0.70)",
+    "owner_override_required": true
+  },
+  "submission_slots_used": 0,
+  "experiments_used": {
+    "of": 3,
+    "new_raster_generated": false,
+    "co_training_run": false,
+    "hide_and_recover_run": false,
+    "validated_hypothesis": null
+  },
+  "time_budget": {
+    "limit_hours": 2,
+    "status": "approximately exhausted; not formally tracked"
+  },
+  "lane_check": {
+    "rule": "duplicate if rank corr > 0.90 or > 70% of dots within 3 px of one registry raster",
+    "authority": "evidence/h75_gates.json (565-raster census)",
+    "surface_max_spearman": 0.466,
+    "dots_max_spearman": 0.108,
+    "dots_max_near3px": 0.922,
+    "offenders": 38,
+    "result": "FAIL",
+    "restored_subset_result": "PASS (max near-3px 0.664), not authoritative",
+    "universal_probe_note": "literal max 1.000 from 7 universal-coverage probes, excluded by PROBE_COVERAGE 0.95"
+  },
+  "leakage_canary": {
+    "status": "NOT RUN",
+    "reason": "no model trained this round; H75 receipt not re-run"
+  },
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator": "gems52-pooled-hide-v1",
+    "withheld_positives": 53186,
+    "source": "evidence/h75_holdout.json (receipt values, not re-run)",
+    "B_DVA": {
+      "value": 0.186352,
+      "ci95": [
+        0.164675,
+        0.207868
+      ]
+    },
+    "single_B": {
+      "value": 0.174517,
+      "ci95": [
+        0.152316,
+        0.196299
+      ]
+    },
+    "paired_gain": {
+      "value": 0.011835,
+      "ci95": [
+        0.006791,
+        0.017362
+      ]
+    },
+    "random": {
+      "value": 0.080426,
+      "ci95": [
+        0.070223,
+        0.090973
+      ]
+    }
+  },
+  "organizer_confirmed": {
+    "labels": "ORGANIZER-CONFIRMED",
+    "values": []
+  },
+  "owner_reported": {
+    "labels": "OWNER-REPORTED",
+    "values": {
+      "top_public": 0.3774,
+      "rank7_DARD": 0.3195,
+      "rank13_extradr19": 0.2778
+    }
+  },
+  "h75_file": {
+    "name": "h75-dva-variogram-anisotropy-B-37654px-20261009T200333Z",
+    "sha256": "b97691584d514ab1925d9fff2b61c410be86bdc0bc8c844dfdaa6257a4ea7a16",
+    "bytes": 142941,
+    "zip_sha256": "7ff4e50dbff3bc3c61164dc0d6e59054f7a7e14b548040fb664b0c9154d2917f",
+    "values": [
+      0,
+      1
+    ],
+    "nan": 0,
+    "ones": 37654,
+    "out_of_domain_zeros": 7111787,
+    "catalogue_min_dist_m": 223.6,
+    "catalogue_median_dist_m": 1552.4
+  },
+  "checks": {
+    "check_site": "scripts/check_site.py exit 1 on the merged branch: R5 novelty 0.999520 != 1.0 (IR-H77-009, inherited from origin/main, where it is 0.991607). Pre-merge (H75-only tree) exit 0.",
+    "tests": "pytest -q (full suite, .venv with pinned scikit-image 0.25.2): 444 passed, 6 skipped, 56 warnings in 57.51s",
+    "restore": "ALL_VERIFIED=True for 15 targets (partial restore; training_features.tif not restored)"
+  },
+  "hypotheses": [
+    "H77-1 strike-aligned directional variogram DVA+ (rank 1, unvalidated)",
+    "H77-2 INGENIOUS 2 m probes",
+    "H77-3 Landsat TIRS night ST residual",
+    "H77-4 paleo sinter/tufa proximity",
+    "H77-5 Great Basin heat-flow residual"
+  ],
+  "irregularities": "IR-H77-001..009 in registry/irregularities.json and knowledge/67 \u00a710",
+  "open_owner_decisions": [
+    "lane override for submission",
+    "zeros vs NaN outside the footprint",
+    "lane-rule scope",
+    "redistribution of mirrored competition inputs (IR-H77-006)",
+    "download and pin GDR 1391 2 m probes and paleo zips"
+  ],
+  "next_step": "Owner decision on the training raster to validate H77-1 on the spatial-block holdout before any slot.",
+  "merge_note": "Merged with main's PR #76 (its H76 round). Our round is renamed H77 per the repo's precedent (registry merge_note for H66/H67). main's H76 files are untouched."
+}
