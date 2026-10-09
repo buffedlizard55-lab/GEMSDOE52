@@ -1,0 +1,65 @@
+{
+ "evidence_class": "CONDITIONAL-INDEPENDENCE PROXY on held-out labelled negatives",
+ "pre_exchange": {
+  "n_blocks": 2283,
+  "n_negative_predictions": 5163953,
+  "negative_class": "held-out catalogue-zero proxies, not verified absence",
+  "threshold": 0.6,
+  "minimum_blocks": 20,
+  "tests": {
+   "negative_mean_squared_error": {
+    "n": 2283,
+    "pearson": 0.1085088995712287,
+    "spearman": 0.1241280173709444
+   },
+   "negative_false_positive_rate": {
+    "n": 2283,
+    "pearson": 0.14075953456731502,
+    "spearman": 0.22711585572154128
+   }
+  },
+  "max_abs_correlation": 0.22711585572154128,
+  "measured": true,
+  "allow_exchange": true,
+  "reason": "weak proxy negative-error correlation; not proof of conditional feature independence"
+ },
+ "n_blocks": 2283,
+ "abandon_threshold": 0.6,
+ "allow_exchange": true,
+ "exchange_log": [
+  {
+   "fold": 0,
+   "ran": false,
+   "pseudo_a_to_b": 0,
+   "pseudo_b_to_a": 0,
+   "segments_a_to_b": [],
+   "segments_b_to_a": []
+  },
+  {
+   "fold": 1,
+   "ran": false,
+   "pseudo_a_to_b": 0,
+   "pseudo_b_to_a": 0,
+   "segments_a_to_b": [],
+   "segments_b_to_a": []
+  },
+  {
+   "fold": 2,
+   "ran": false,
+   "pseudo_a_to_b": 0,
+   "pseudo_b_to_a": 0,
+   "segments_a_to_b": [],
+   "segments_b_to_a": []
+  },
+  {
+   "fold": 3,
+   "ran": false,
+   "pseudo_a_to_b": 0,
+   "pseudo_b_to_a": 0,
+   "segments_a_to_b": [],
+   "segments_b_to_a": []
+  }
+ ],
+ "total_pseudo_pixels": 0,
+ "caveat": "a proxy diagnostic over 50 px spatial blocks of percentile-ranked OOF fields, not proof of conditional feature independence"
+}
