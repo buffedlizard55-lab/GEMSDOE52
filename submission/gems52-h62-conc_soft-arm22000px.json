@@ -1,0 +1,69 @@
+{
+  "file": "gems52-h62-conc_soft-arm22000px.tif",
+  "sha256": "de47952fe9c0fc15c1aaacd63a04f6c0a6aa15b094f2367ed631c6920e91c1fd",
+  "bytes": 114669,
+  "submission_name": "gems52-h62-conc_soft-arm22000px-20261009T011349Z-zeros",
+  "note": "H62 two-view co-training: conc_soft ranking, 22000 px, derived budget, >=200 m off catalogue. Research review copy.",
+  "note_chars": 115,
+  "validator": {
+    "path": "/home/user/GEMSDOE52/submission/gems52-h62-conc_soft-arm22000px.tif",
+    "bytes": 114669,
+    "sha256": "de47952fe9c0fc15c1aaacd63a04f6c0a6aa15b094f2367ed631c6920e91c1fd",
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "ref_bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "nodata": null,
+    "blocksize": [
+      256,
+      256
+    ],
+    "fixture_grid": false,
+    "has_validity_mask": false,
+    "nan_pixels": 0,
+    "infinity_pixels": 0,
+    "n_nan": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.0017916534561663866,
+    "n_nonzero": 22000,
+    "mass": 22000.0,
+    "mass_outside_footprint": 0,
+    "problems": [],
+    "ok": true,
+    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "zip_file": "gems52-h62-conc_soft-arm22000px.zip",
+  "zip_sha256": "ea7fd5ef29e53fefc1e109ee59f0b9fbad71ffe9405fccae2cc53fdb1b14a7dc",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "status": "research-only; local format validation is not organizer acceptance",
+  "metadata": {
+    "round": "H62",
+    "field": "conc_soft",
+    "budget_px": 22000,
+    "ring_min_m": 223.6
+  }
+}
