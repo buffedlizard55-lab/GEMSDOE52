@@ -1,7 +1,7 @@
 {
- "round": "H72",
+ "round": "H74",
  "generated_utc": "2026-10-09T18:17:49+00:00",
- "hypothesis": "H72-A (the deferred H70-E variant): a DEFORMATION-ONLY View A2 (geodetic strain bands 4/7/8 + seismicity bands 10/16, with gradient/coherence transforms) is a sufficient, transferable view where every mixed potential-field+deformation View A failed (five consecutive OOF AUC ~0.52); the brief's literal discovery stratum -- strict A2-only (A2 confident at operating rank >= 0.95, View B abstaining in [0.35, 0.65]) -- is isolated as a standalone emission arm and built as the candidate, after the co-training exchange.",
+ "hypothesis": "H74-A (the deferred H70-E variant): a DEFORMATION-ONLY View A2 (geodetic strain bands 4/7/8 + seismicity bands 10/16, with gradient/coherence transforms) is a sufficient, transferable view where every mixed potential-field+deformation View A failed (five consecutive OOF AUC ~0.52); the brief's literal discovery stratum -- strict A2-only (A2 confident at operating rank >= 0.95, View B abstaining in [0.35, 0.65]) -- is isolated as a standalone emission arm and built as the candidate, after the co-training exchange.",
  "mechanism": "Blum & Mitchell co-training (doi:10.1145/279943.279962) on the A2/B pair: one whole-segment confident-to-abstaining pseudo-label round per direction per fold, then the disagreement stratum A2-confident & B-abstaining is emitted as buried-beneath-cover active-fault candidates.",
  "named_non_fault_mimic": "anthropogenic subsidence from groundwater withdrawal; irrigation-related aquifer compaction; volcanic inflation/deflation (magma movement without discrete faulting); post-seismic afterslip or viscoelastic relaxation; seasonal hydrological loading; a strain transient on a creeping aseismic fault segment",
  "independence": {
@@ -132,7 +132,7 @@
    "withheld_positive_pixels": 53186
   },
   "control_reproduction": {
-   "single_B_h72": 0.1745172875994316,
+   "single_B_h74": 0.1745172875994316,
    "single_B_committed": 0.174517,
    "abs_difference": 2.8759943160316936e-07,
    "tolerance": 0.001,
@@ -194,7 +194,7 @@
   "lane_valid_emission_exists": false
  },
  "raster": {
-  "file": "gems52-h72-a2deform-cotrain-721px-20261009T174546Z.tif",
+  "file": "gems52-h74-a2deform-cotrain-721px-20261009T174546Z.tif",
   "sha256": "0dea78bc8e276a8276de94a169e59ffac43234cef6a6f978f13f0788c6232f26",
   "bytes": 58475,
   "zip_sha256": "b497b05c0eed1f87b9c87b016363583dbf29c5a3f763e3f96ff012799903ce35",
@@ -226,8 +226,8 @@
   "mass_outside_footprint": 0,
   "validation_class": "local on-disk template/range check; not organizer upload acceptance"
  },
- "submission_name": "gems52-h72-a2deform-cotrain-721px-20261009T174546Z",
- "note": "H72 deformation-only View A2; A2-only stratum, 721 dots, lane-DUPLICATE; holdout does NOT beat single_B; research only, not slot-approved",
+ "submission_name": "gems52-h74-a2deform-cotrain-721px-20261009T174546Z",
+ "note": "H74 deformation-only View A2; A2-only stratum, 721 dots, lane-DUPLICATE; holdout does NOT beat single_B; research only, not slot-approved",
  "note_chars": 137,
  "champion_reference": {
   "name": "ref_h33_2_b2",

@@ -2288,16 +2288,28 @@
    "disposition": "resolved; both rounds' artefacts and receipts are preserved under distinct names"
   },
   {
-   "id": "IR-H72-001",
-   "round": "H72",
+   "id": "IR-H74-001",
+   "round": "H74",
    "severity": "medium",
    "status": "resolved - regression test added",
-   "title": "H72 build's candidate x prior CSR was built transposed, crashing the first build inside the shared greedy",
-   "what_it_is": "scripts/run_h72.py built the lane-constraint membership as (informative priors x candidates) and passed it to run_h70.lane_valid_greedy, which expects (candidates x priors) \u2014 row j lists the priors whose 3 px halo contains candidate j (H70 stacks priors x candidates and transposes). The first H72 build crashed on the first budget probe with IndexError (index 534 out of bounds for axis 0 with size 523) after the registry classification, before any receipt was written.",
-   "how_we_know": "work/h72_e3_build.log traceback: run_h72.py line in greedy -> run_h70.lane_valid_greedy 'counts[hit]' IndexError; registry 560 rasters -> 523 informative, 35 probes; strict A2-only candidate cells 1,965.",
-   "handling": "Fixed once in scripts/run_h72.py (vstack then transpose; near_counts uses HITS.T @ v). No shared tool was forked or modified \u2014 run_h70.lane_valid_greedy is unchanged. Regression test tests/test_h72.py::test_lane_constraint_csr_orientation_matches_brute_force checks the orientation against brute-force halo membership on a synthetic registry and asserts the greedy runs clean. The build was re-run from scratch; no receipt from the crashed attempt exists.",
+   "title": "H74 build's candidate x prior CSR was built transposed, crashing the first build inside the shared greedy",
+   "what_it_is": "scripts/run_h74.py built the lane-constraint membership as (informative priors x candidates) and passed it to run_h70.lane_valid_greedy, which expects (candidates x priors) \u2014 row j lists the priors whose 3 px halo contains candidate j (H70 stacks priors x candidates and transposes). The first H74 build crashed on the first budget probe with IndexError (index 534 out of bounds for axis 0 with size 523) after the registry classification, before any receipt was written.",
+   "how_we_know": "work/h74_e3_build.log traceback: run_h74.py line in greedy -> run_h70.lane_valid_greedy 'counts[hit]' IndexError; registry 560 rasters -> 523 informative, 35 probes; strict A2-only candidate cells 1,965.",
+   "handling": "Fixed once in scripts/run_h74.py (vstack then transpose; near_counts uses HITS.T @ v). No shared tool was forked or modified \u2014 run_h70.lane_valid_greedy is unchanged. Regression test tests/test_h74.py::test_lane_constraint_csr_orientation_matches_brute_force checks the orientation against brute-force halo membership on a synthetic registry and asserts the greedy runs clean. The build was re-run from scratch; no receipt from the crashed attempt exists.",
    "measured_effect": "No measured number changed: the crash preceded every receipt. The re-run reproduces the same candidate set (1,965 strict A2-only cells after exact novelty).",
-   "disposition": "Fixed once in scripts/run_h72.py (the round's own build code; no shared tool forked or modified). Regression test added in tests/test_h72.py. The crashed build wrote no receipt; the re-run is the only build. Closed."
+   "disposition": "Fixed once in scripts/run_h74.py (the round's own build code; no shared tool forked or modified). Regression test added in tests/test_h74.py. The crashed build wrote no receipt; the re-run is the only build. Closed."
+  },
+  {
+   "id": "IR-H74-002",
+   "round": "H74",
+   "severity": "high",
+   "status": "resolved - round renamed at merge",
+   "title": "Namespace collision: this session's round was also numbered H72 by a parallel session that merged to main first",
+   "what_it_is": "This session preregistered and completed its deformation-only View A2 round as H72 (knowledge/59, runner scripts/run_h72.py, unique GeoTIFF built, NEGATIVE verdict, slots 0). Before this branch was pushed, a parallel session's H72 round (strain-only View A: raw bands 4/7/8 alone, no derived transforms, no seismicity channels, no file emitted) merged to main via PR #67, and an H73 round merged after it. Three sessions had therefore used the number H72, and this branch's PR #68 reported mergeable=CONFLICTING.",
+   "how_we_know": "git fetch origin main; git log origin/main shows the merged strain-only H72 (knowledge/59 on main) and the H72->H73 rename commit ('identifier collision with main's H72 round'); gh pr view 68 reported mergeStateStatus=DIRTY, mergeable=CONFLICTING.",
+   "handling": "This session's round was renamed H74 with identifier-only edits (h72->h74, H72->H74, knowledge 59/60/60b -> 63/64/64b, evidence/docs-data h72_* -> h74_*, scripts -> run_h74/publish_h74_site, tests/test_h74.py, src/gems52/h74.py, submission prefix gems52-h72- -> gems52-h74-, IR-H72-001 -> IR-H74-001), following the IR-H71-005 precedent. The git-ignored feature store was rebuilt cleanly (structural.build is deterministic; columns byte-identical) so the extension tag reads +h74-deformation-v1, and the features-stage receipt was regenerated. The two H72-labelled rounds are distinct protocols: main's H72 isolates the three raw strain bands and emitted no file; H74 is the knowledge/54 H70-E variant (strain bands 4/7/8 plus seismicity bands 10/16 with gradient/coherence transforms, 22 channels) and built the round's GeoTIFF. No measured number, threshold or conclusion changed.",
+   "disposition": "Renamed to H74; preregistration re-pinned (registry/h74_preregistration.json, rename_note recorded); runner, publisher, tests, store module, receipts, docs pages and the submission prefix renamed; the PR branch was rebased onto the updated main with both rounds' README/AGENTS blocks kept. Closed.",
+   "measured_effect": "No measured number changed: the rename is identifier-only. The built GeoTIFF's SHA-256 (0dea78bc...) is unchanged by the file rename; the pixels never changed."
   }
  ],
  "merge_note": "Merged registry/irregularities.json: main's entries (including the parallel H66 round's IR-H66-001..010) plus this round's IR-H67-001..011. This round was labelled H66 in its own receipts and was renamed H67 before merge because main merged a different H66 first (PR #56); the IDs were renumbered wholesale so no ID carries two meanings. See knowledge/45a_amendment_2026-10-09_H67_rename.md. IR-H67-002 (in-domain nodata sentinels collapse every rank channel) and IR-H67-008 (probe classification flips with the structuring element, and this round's lane verdict depends on it) are the two that change a result; IR-H67-005 and IR-H67-007 change how a shared instrument must be read."

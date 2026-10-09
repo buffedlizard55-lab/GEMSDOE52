@@ -745,9 +745,9 @@
  "exchange_allowed": true,
  "independence_max_abs_rho": 0.07652951278931874,
  "new_arms": {
-  "a_only": "rankA2_post - rankB_post gated to rankA2_post >= 0.95 & rankB_post in [0.35, 0.65] (H72-A: the brief's literal discovery stratum on the deformation pair, isolated)",
-  "single_B_veto_Bonly": "rankB_pre gated to NOT(rankB_pre >= 0.95 & rankA2_pre in [0.35, 0.65]) (H72-B: the brief's artifact clause as a veto, with View A2's abstention)",
-  "concordant": "min(rankA2_pre, rankB_pre) gated to rankA2_pre >= 0.95 & rankB_pre >= 0.95 (H72-C: the concordant ranking on the deformation pair)"
+  "a_only": "rankA2_post - rankB_post gated to rankA2_post >= 0.95 & rankB_post in [0.35, 0.65] (H74-A: the brief's literal discovery stratum on the deformation pair, isolated)",
+  "single_B_veto_Bonly": "rankB_pre gated to NOT(rankB_pre >= 0.95 & rankA2_pre in [0.35, 0.65]) (H74-B: the brief's artifact clause as a veto, with View A2's abstention)",
+  "concordant": "min(rankA2_pre, rankB_pre) gated to rankA2_pre >= 0.95 & rankB_pre >= 0.95 (H74-C: the concordant ranking on the deformation pair)"
  },
  "capacity_note": "every arm is placed by nodes.spacing_select on a field that is finite over the whole allowed domain; an arm that cannot fill K is reported with its achieved budget and is not eligible to beat the control at matched budget",
  "pooled": {
@@ -1649,7 +1649,7 @@
   }
  },
  "control": {
-  "single_B_h72": 0.1745172875994316,
+  "single_B_h74": 0.1745172875994316,
   "single_B_committed": 0.174517,
   "abs_difference": 2.8759943160316936e-07,
   "tolerance": 0.001,

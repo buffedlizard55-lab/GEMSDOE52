@@ -1,16 +1,16 @@
 {
- "round": "H72",
+ "round": "H74",
  "preregistered_utc": "2026-10-09T17:05:00+00:00",
- "hypothesis_document": "knowledge/59_hypotheses_H72_preregistered.md",
- "hypothesis_sha256": "733de92cd7fed46f8ae977ce3184867e8e3452c78835c076c9704f732ca839e2",
- "hypothesis_bytes": 21566,
+ "hypothesis_document": "knowledge/63_hypotheses_H74_preregistered.md",
+ "hypothesis_sha256": "0162acd9bfa804b8941d662c5acba1507d74c2146e3c5f64435d0f321d8657f1",
+ "hypothesis_bytes": 23456,
  "lane": "two-view co-training (Blum & Mitchell 1998, doi:10.1145/279943.279962); View A2 deformation-only (geodetic strain bands 4/7/8 + seismicity bands 10/16), View B surface unchanged; disagreement as the discovery signal; the strict A2-only stratum built with the lane-valid constrained placement",
  "frozen_before_any_fit": true,
- "runner": "scripts/run_h72.py",
+ "runner": "scripts/run_h74.py",
  "runner_refuses_if_hash_moves": true,
  "shared_tools_to_reuse": [
   "scripts/run_h61.py stages (setup, sample_train, learner, stage_canary, stage_fit, stage_exchange) run UNCHANGED via a setup wrapper that substitutes the View A2 list; no forked stage",
-  "src/gems52/h72.py::extend_store (idempotent shared-store extension, +h72-deformation-v1)",
+  "src/gems52/h74.py::extend_store (idempotent shared-store extension, +h74-deformation-v1)",
   "src/gems52/spatial.py::folds (label-blind-quadrants-v2)",
   "src/gems52/evaluate_holdout.py (gems52-pooled-hide-v1)",
   "src/gems52/metric.py",
@@ -56,5 +56,6 @@
   ]
  },
  "verdict_rule": "eligible for the selector only if format + policy lane + uniqueness (both tiers) + not-the-union + S1 sufficiency + holdout-beats-single_B all pass; otherwise negative/research-only (DOWNLOAD yes, SUBMIT no); this lane spends no weekly slot",
- "executes": "H70-E (knowledge/54, deferred RANK 5): deformation-only View A2, the lane's only untested View A variant"
+ "executes": "H70-E (knowledge/54, deferred RANK 5): deformation-only View A2, the lane's only untested View A variant",
+ "rename_note": "Round first frozen and completed in this session as H72 (knowledge/59, runner scripts/run_h72.py, submission prefix gems52-h72-). At merge time a parallel session's H72 round (strain-only View A: raw bands 4/7/8, no file emitted; PR #67) had already merged to main, so this round was renamed H74 with identifier-only edits; no measured number, threshold or conclusion changed. See knowledge/63 section 8 (rename record) and IR-H74-002. The shared-store extension tag was +h72-deformation-v1 at run time and is +h74-deformation-v1 after the rename; the git-ignored store was rebuilt cleanly (deterministic; byte-identical columns)."
 }

@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
-"""H72 -- deformation-only View A2 (the deferred H70-E variant) in the two-view co-training lane.
+"""H74 -- deformation-only View A2 (the deferred H70-E variant) in the two-view co-training lane.
 
-Preregistered in ``knowledge/59_hypotheses_H72_preregistered.md`` and pinned by
-``registry/h72_preregistration.json``; this runner refuses to start if the hash has moved.
+Preregistered in ``knowledge/63_hypotheses_H74_preregistered.md`` and pinned by
+``registry/h74_preregistration.json``; this runner refuses to start if the hash has moved.
 
 Lane: the brief's co-training paragraph.  View A2 is DEFORMATION-ONLY (geodetic strain bands
 4/7/8 + seismicity bands 10/16, with gradient/coherence transforms), View B is surface (DEM
 curvature and slope plus the radiometric channels), unchanged, and disagreement is the discovery
-signal.  H72 attributes the lane's five consecutive View A sufficiency failures: every previous
+signal.  H74 attributes the lane's five consecutive View A sufficiency failures: every previous
 View A mixed potential-field and deformation channels; none tested the deformation half alone.
 
 What is shared and what is not
 ------------------------------
-* Shared, not forked: ``src/gems52/h72.py::extend_store`` adds the 17 deformation columns to the
-  shared store ONCE, idempotently (version tag ``+h72-deformation-v1``; the canonical
+* Shared, not forked: ``src/gems52/h74.py::extend_store`` adds the 17 deformation columns to the
+  shared store ONCE, idempotently (version tag ``+h74-deformation-v1``; the canonical
   ``view_A_with_external`` / ``view_B_with_external`` are untouched).  ``run_h61`` supplies
   ``setup`` (pins, cached store, label-blind-quadrant folds, buffer 80 px), ``sample_train``,
   ``learner``, ``stage_canary``, ``stage_fit`` and ``stage_exchange`` (independence screen +
@@ -30,7 +30,7 @@ What is shared and what is not
 
 Stages (checkpointed, resumable, never silently re-tuned)
 ---------------------------------------------------------
-    features    E1: extend the shared store with the H72 deformation columns (once)
+    features    E1: extend the shared store with the H74 deformation columns (once)
     canary      E1: base.stage_canary (leakage canary, alarm 0.90, on the A2+B features)
     fit         E1: base.stage_fit (both views, every fold; H61 learner unchanged)
     sufficiency E1: S1 screen on View A2 out-of-quadrant AUC (reported for the verdict rule)
@@ -41,7 +41,7 @@ Stages (checkpointed, resumable, never silently re-tuned)
 
 Nothing here uploads or spends a competition slot; promotion is the separate selector step.
 
-Usage: ``python scripts/run_h72.py [features|canary|fit|sufficiency|exchange|holdout|build|audit|all]``
+Usage: ``python scripts/run_h74.py [features|canary|fit|sufficiency|exchange|holdout|build|audit|all]``
 """
 from __future__ import annotations
 
@@ -75,18 +75,18 @@ import run_h70 as h70                                                # noqa: E40
 import build_h61_submission as b61                                   # noqa: E402  (prior census helper only)
 from gems52 import evaluate_holdout as evaluator                     # noqa: E402
 from gems52 import gates, nodes, spatial, structural, submission_writer  # noqa: E402
-from gems52 import h72 as h72_ext                                   # noqa: E402
+from gems52 import h74 as h74_ext                                   # noqa: E402
 
 SEED = base.SEED
-WORK = ROOT / "work/h72"
+WORK = ROOT / "work/h74"
 EVID = ROOT / "evidence"
 DOCS = ROOT / "docs/data"
 DOWN = ROOT / "docs/downloads"
 SUBM = ROOT / "submission"
-REG_PATH = ROOT / "registry/h72_preregistration.json"
+REG_PATH = ROOT / "registry/h74_preregistration.json"
 STAGE_EV = WORK / "stage_evidence"          # the shared exchange stage reads one receipt by a fixed name
 CENSUS = ROOT / "work/h61/prior_fetch_receipt.json"
-PREFIX = "gems52-h72-"
+PREFIX = "gems52-h74-"
 ARMS = ("single_A2", "single_B", "union_max", "disagreement_pre", "disagreement_post",
         "a_only", "single_B_veto_Bonly", "concordant", "random")
 CANDIDATES = ("a_only", "single_B_veto_Bonly", "concordant", "disagreement_post")
@@ -104,12 +104,12 @@ def now() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
-def write_h72(name: str, obj) -> Path:
+def write_h74(name: str, obj) -> Path:
     EVID.mkdir(parents=True, exist_ok=True)
-    p = EVID / f"h72_{name}.json"
+    p = EVID / f"h74_{name}.json"
     p.write_text(json.dumps(obj, indent=1, allow_nan=False, default=str) + "\n")
     DOCS.mkdir(parents=True, exist_ok=True)
-    (DOCS / f"h72_{name}.json").write_text(p.read_text())
+    (DOCS / f"h74_{name}.json").write_text(p.read_text())
     return p
 
 
@@ -122,19 +122,19 @@ def check_prereg() -> dict:
     reg = json.loads(REG_PATH.read_text())
     doc = ROOT / reg["hypothesis_document"]
     if sha(doc) != reg["hypothesis_sha256"]:
-        raise SystemExit("H72 preregistered document changed after registration; refusing to run")
+        raise SystemExit("H74 preregistered document changed after registration; refusing to run")
     return reg
 
 
 def redirect() -> None:
-    """Point the shared H61 stages at H72 storage and substitute the View A2 list.  Nothing under
+    """Point the shared H61 stages at H74 storage and substitute the View A2 list.  Nothing under
     ``evidence/h61_*`` is written and no shared stage is forked: ``base.setup`` is wrapped so the
     canonical setup checks (pins, store, cross-view overlap on the canonical lists) still run,
     and only the returned View A list is replaced by ``manifest["view_A2_deformation"]``."""
     WORK.mkdir(parents=True, exist_ok=True)
     STAGE_EV.mkdir(parents=True, exist_ok=True)
     base.WORK = WORK
-    base.write = write_h72
+    base.write = write_h74
     base.EVID = STAGE_EV
     orig_setup = base.setup
 
@@ -142,11 +142,11 @@ def redirect() -> None:
         reg, store, cat, eligible, folds, va, vb, ring_px = orig_setup()
         va2 = list(store.manifest["view_A2_deformation"])
         if set(va2) & set(vb):
-            raise SystemExit(f"H72 cross-view feature overlap: {sorted(set(va2) & set(vb))}")
+            raise SystemExit(f"H74 cross-view feature overlap: {sorted(set(va2) & set(vb))}")
         missing = [n for n in va2 if n not in store.manifest["feature_sha256"]]
         if missing:
-            raise SystemExit(f"H72 View A2 columns missing from the store: {missing}; "
-                             "run the features stage (gems52.h72.extend_store)")
+            raise SystemExit(f"H74 View A2 columns missing from the store: {missing}; "
+                             "run the features stage (gems52.h74.extend_store)")
         return reg, store, cat, eligible, folds, va2, vb, ring_px
 
     base.setup = setup_a2
@@ -154,9 +154,9 @@ def redirect() -> None:
 
 # ------------------------------------------------------------------ E1: features
 def stage_features(reg) -> dict:
-    log("=== H72 E1: shared-store extension with the deformation columns (once, idempotent) ===")
+    log("=== H74 E1: shared-store extension with the deformation columns (once, idempotent) ===")
     t0 = time.time()
-    summary = h72_ext.extend_store(ROOT / "work/r2/features",
+    summary = h74_ext.extend_store(ROOT / "work/r2/features",
                                    ROOT / "data/training_features.tif", log=log)
     rec = dict(stage="features", finished_utc=now(), seconds=round(time.time() - t0, 1), **summary)
     store = structural.FeatureStore(ROOT / "work/r2/features")
@@ -168,7 +168,7 @@ def stage_features(reg) -> dict:
     rec["canonical_views_unchanged"] = bool(
         len(store.manifest["view_A_with_external"]) == 36
         and len(store.manifest["view_B_with_external"]) == 37)
-    write_h72("features", rec)
+    write_h74("features", rec)
     log(f"store {rec['store_version']}: {rec['store_features']} features; "
         f"View A2 = {rec['view_A2_channel_count']} deformation channels; "
         f"canonical views unchanged: {rec['canonical_views_unchanged']}")
@@ -179,7 +179,7 @@ def stage_features(reg) -> dict:
 def stage_sufficiency(reg) -> dict:
     _, store, cat, eligible, folds, va, vb, _ = base.setup()
     th = reg["thresholds"]
-    fit = json.loads((EVID / "h72_fit_checkpoint.json").read_text())
+    fit = json.loads((EVID / "h74_fit_checkpoint.json").read_text())
     aucs = [r["view_A"]["heldout_region_auc"] for r in fit["folds"]]
     aucs_b = [r["view_B"]["heldout_region_auc"] for r in fit["folds"]]
     rec = dict(stage="sufficiency", started_utc=now(),
@@ -196,7 +196,7 @@ def stage_sufficiency(reg) -> dict:
     rec["S1_pass"] = bool(rec["mean_view_A2_oof_auc"] >= th["S1_sufficiency_mean_oof_auc_min"]
                           and rec["min_fold_view_A2_oof_auc"] >= th["S1_sufficiency_min_fold_oof_auc"])
     rec["finished_utc"] = now()
-    write_h72("sufficiency", rec)
+    write_h74("sufficiency", rec)
     log(f"S1 sufficiency (View A2 deformation-only): mean {rec['mean_view_A2_oof_auc']:.4f} "
         f"min {rec['min_fold_view_A2_oof_auc']:.4f} -> {'PASS' if rec['S1_pass'] else 'FAIL'} "
         f"(View B mean {rec['mean_view_B_oof_auc']:.4f})")
@@ -222,13 +222,13 @@ def stage_holdout(reg) -> dict:
                independence_max_abs_rho=(ex.get("independence_pre") or {}).get("max_abs_correlation"),
                new_arms={
                    "a_only": f"rankA2_post - rankB_post gated to rankA2_post >= {donor} & rankB_post in "
-                             f"[{lo}, {hi}] (H72-A: the brief's literal discovery stratum on the "
+                             f"[{lo}, {hi}] (H74-A: the brief's literal discovery stratum on the "
                              "deformation pair, isolated)",
                    "single_B_veto_Bonly": f"rankB_pre gated to NOT(rankB_pre >= {donor} & rankA2_pre in "
-                                          f"[{lo}, {hi}]) (H72-B: the brief's artifact clause as a veto, "
+                                          f"[{lo}, {hi}]) (H74-B: the brief's artifact clause as a veto, "
                                           "with View A2's abstention)",
                    "concordant": "min(rankA2_pre, rankB_pre) gated to rankA2_pre >= 0.95 & rankB_pre >= 0.95 "
-                                 "(H72-C: the concordant ranking on the deformation pair)"},
+                                 "(H74-C: the concordant ranking on the deformation pair)"},
                capacity_note=("every arm is placed by nodes.spacing_select on a field that is finite over "
                               "the whole allowed domain; an arm that cannot fill K is reported with its "
                               "achieved budget and is not eligible to beat the control at matched budget"))
@@ -253,13 +253,13 @@ def stage_holdout(reg) -> dict:
         rng = np.random.default_rng(SEED + 500 + f)
         rnd = np.zeros(eligible.shape, np.float32)
         rnd.ravel()[allowed_idx] = rng.random(len(allowed_idx), dtype=np.float32)
-        # H72-A: strict A2-only stratum on the post-exchange (co-trained) operating ranks
+        # H74-A: strict A2-only stratum on the post-exchange (co-trained) operating ranks
         gate_a = (r_post["A"] >= donor) & (r_post["B"] >= lo) & (r_post["B"] <= hi) & allowed
         f_a = np.where(gate_a, r_post["A"] - r_post["B"], -1.0)
-        # H72-B: single_B minus the B-only stratum (artifact veto, View A2's abstention)
+        # H74-B: single_B minus the B-only stratum (artifact veto, View A2's abstention)
         veto = (r_pre["B"] >= donor) & (r_pre["A"] >= lo) & (r_pre["A"] <= hi)
         f_bv = np.where(allowed & ~veto, r_pre["B"], -1.0)
-        # H72-C: concordant ranking (soft min), strict stratum size as a diagnostic
+        # H74-C: concordant ranking (soft min), strict stratum size as a diagnostic
         f_cc = np.where(allowed, np.minimum(r_pre["A"], r_pre["B"]), -1.0)
         strict_cc = int(((r_pre["A"] >= donor) & (r_pre["B"] >= donor) & allowed).sum())
         fields = {
@@ -314,7 +314,7 @@ def stage_holdout(reg) -> dict:
     sB = pooled["a_only"]["scores"]["single_B"]["dti"]
     committed = float(reg["thresholds"]["single_B_control_holdout_dti"])
     tol = float(reg["thresholds"]["single_B_control_abs_tolerance"])
-    out["control"] = dict(single_B_h72=sB, single_B_committed=committed, abs_difference=abs(sB - committed),
+    out["control"] = dict(single_B_h74=sB, single_B_committed=committed, abs_difference=abs(sB - committed),
                           tolerance=tol, pass_=bool(abs(sB - committed) <= tol),
                           note="H61/H63/H64/H70 measured 0.1742-0.1746 on the identical splitter, "
                                "sampler and learner; View B and its columns are byte-identical")
@@ -326,7 +326,7 @@ def stage_holdout(reg) -> dict:
                caveat="HOLDOUT-DTI on the corrected label-blind-quadrants-v2 splitter. This simulator "
                       "measured Spearman -0.10 against the owner-reported board in round R4, so it "
                       "screens procedures; it does not by itself promote anything.")
-    write_h72("holdout", out)
+    write_h74("holdout", out)
     if not out["control"]["pass_"]:
         raise SystemExit(f"single_B control outside tolerance: {out['control']}; pipeline defect, stopping")
     for arm in ARMS:
@@ -336,7 +336,7 @@ def stage_holdout(reg) -> dict:
     out["holdout_eligible"] = bool(pooled["a_only"]["scores"]["a_only"]["dti"]
                                    > pooled["a_only"]["scores"]["single_B"]["dti"]
                                    and float(pd["ci95"][0]) > 0.0)
-    write_h72("holdout", out)
+    write_h74("holdout", out)
     log(f"candidate a_only vs single_B: delta {pd['delta']:+.6f} CI [{pd['ci95'][0]:+.6f}, "
         f"{pd['ci95'][1]:+.6f}] -> holdout_eligible={out['holdout_eligible']}")
     return out
@@ -345,7 +345,7 @@ def stage_holdout(reg) -> dict:
 # ------------------------------------------------------------------ E3: build (lane-valid placement)
 def stage_build(reg, s1: dict, exch: dict) -> dict:
     th = reg["thresholds"]
-    log("=== H72 E3: build — OOF mosaic, strict A2-only stratum, lane-valid placement, gates, GeoTIFF ===")
+    log("=== H74 E3: build — OOF mosaic, strict A2-only stratum, lane-valid placement, gates, GeoTIFF ===")
     store = structural.FeatureStore(ROOT / "work/r2/features")
     eligible = store.valid
     flat, inv, shape = store.flat_idx, store.inverse, eligible.shape
@@ -415,7 +415,7 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
                             "see knowledge/39c")
     log(f"novelty exact: allowed {n_allowed_pre_novelty} -> {int(allowed.sum())}")
 
-    # ---- the H72-A candidate field: strict A2-only on the post-exchange operating ranks -------
+    # ---- the H74-A candidate field: strict A2-only on the post-exchange operating ranks -------
     lo, hi = th["receiver_rank_interval"]
     donor = float(th["donor_rank_min"])
     idx = np.flatnonzero(allowed.ravel())
@@ -552,7 +552,7 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
                                        and not_union["jaccard_with_single_A2"] < 0.9
                                        and not_union["jaccard_with_single_B"] < 0.9
                                        and not_union["emitted_cells_that_are_strict_a2_only"] == n_dots)
-    write_h72("not_union", not_union)
+    write_h74("not_union", not_union)
 
     # ---- surface lane gate before the dots gate (the brief: check on the surface AND on the dots)
     priors = priors_all
@@ -561,7 +561,7 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
                     max(1e-9, float(np.ptp(field[allowed]))), 0.0).astype(np.float32)
     surf_digest = hashlib.sha256(surf.astype("<f4").tobytes()).hexdigest()
     lane_surface = None
-    cached_path = EVID / "h72_lane_surface.json"
+    cached_path = EVID / "h74_lane_surface.json"
     if cached_path.exists():
         prev = json.loads(cached_path.read_text())
         if prev.get("candidate_decoded_sha256") == surf_digest:
@@ -571,7 +571,7 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
         lane_surface = gates.lane_report(surf, allowed, priors,
                                          sample=ROOT / "data/sample_submission.tif",
                                          phase="surface", log=log, coverage_cache=cov_cache)
-        write_h72("lane_surface", lane_surface)
+        write_h74("lane_surface", lane_surface)
     # seed the coverage cache from the surface report so the dots phase does not re-dilate
     # every prior's support a second time
     for r in lane_surface.get("per_prior", []):
@@ -590,24 +590,24 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
     # ---- the TIF, the single-TIFF ZIP and the on-disk validator ------------------------------
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     mode_word = "lanevalid" if lane_valid_exists else "fallback-duplicate"
-    stem = f"gems52-h72-a2deform-cotrain-{n_dots}px-{stamp}"
+    stem = f"gems52-h74-a2deform-cotrain-{n_dots}px-{stamp}"
     path = SUBM / f"{stem}.tif"
     SUBM.mkdir(exist_ok=True)
-    hold = json.loads((EVID / "h72_holdout.json").read_text())
+    hold = json.loads((EVID / "h74_holdout.json").read_text())
     cand_dti = hold["pooled"]["a_only"]["scores"]["a_only"]["dti"]
     cand_ci = hold["pooled"]["a_only"]["scores"]["a_only"]["ci95"]
     sB = hold["pooled"]["a_only"]["scores"]["single_B"]["dti"]
     beats = bool(hold.get("holdout_eligible", False))
     mode_note = "lane-valid" if lane_valid_exists else "lane-DUPLICATE"
     beat_word = "beats" if beats else "does NOT beat"
-    note = (f"H72 deformation-only View A2; A2-only stratum, {n_dots} dots, {mode_note}; "
+    note = (f"H74 deformation-only View A2; A2-only stratum, {n_dots} dots, {mode_note}; "
             f"holdout {beat_word} single_B; research only, not slot-approved")
     assert len(note) <= 140, len(note)
     name = stem
     receipt = submission_writer.write_submission(
         path, pred, sample=ROOT / "data/sample_submission.tif", footprint=sub_finite,
         note=note[:140], name=name[:140],
-        metadata=dict(round="H72", preregistration=reg["hypothesis_sha256"], budget=n_dots,
+        metadata=dict(round="H74", preregistration=reg["hypothesis_sha256"], budget=n_dots,
                       candidate_arm="a_only", view_A="deformation-only A2",
                       placement=mode_word))
     fmt = receipt["validator"]
@@ -615,7 +615,7 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
                                   phase="dots", log=log, coverage_cache=cov_cache)
     uniq = gates.uniqueness_report(pred, [p for p in priors if p != path], top=None)   # tier 1: exact, all priors
     uniq_inf = gates.uniqueness_report(pred, [p for p in informative if p != path], top=None)  # tier 2: novelty
-    write_h72("lane_dots", lane_dots)
+    write_h74("lane_dots", lane_dots)
     log(f"dots lane: literal {lane_dots['literal']['verdict']} (max near "
         f"{lane_dots['literal']['max_near_3px_fraction']}), policy {lane_dots['policy']['verdict']} "
         f"(max near {lane_dots['policy']['max_near_3px_fraction']})")
@@ -626,7 +626,7 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
            "raw_band_15", "raw_band_19", "raw_band_13", "X_rad_ThK_rank", "X_rad_K_rank")
     ctx_rows = store.gather(ys * W_ + xs, list(CTX))
     ctx = {n: ctx_rows[:, j] for j, n in enumerate(CTX)}
-    csv_path = DOWN / "h72-a-only-reasoning.csv"
+    csv_path = DOWN / "h74-a-only-reasoning.csv"
     DOWN.mkdir(parents=True, exist_ok=True)
     with csv_path.open("w", newline="") as fh:
         w = csv.writer(fh)
@@ -650,7 +650,7 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
                 round(float(ctx["raw_band_15"][i]), 1), round(float(ctx["raw_band_19"][i]), 4),
                 round(float(ctx["raw_band_13"][i]), 4),
                 round(float(ctx["X_rad_ThK_rank"][i]), 4), round(float(ctx["X_rad_K_rank"][i]), 4),
-                "Buried or cover-hidden ACTIVE fault (H72-A): the deformation-only view is confident "
+                "Buried or cover-hidden ACTIVE fault (H74-A): the deformation-only view is confident "
                 "(geodetic second invariant / shear / dilatation gradients and their coherence, "
                 "earthquake-density kernel edge) while the surface view abstains (no DEM scarp, no "
                 "slope lineament, no radiometric lineament) -- consistent with a young blind fault "
@@ -669,11 +669,11 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
         fh_out.write(fh_in.read())
 
     # ---- publish the download set -------------------------------------------------------------
-    shutil.copyfile(path, DOWN / "h72-candidate.tif")
-    shutil.copyfile(path.with_suffix(".zip"), DOWN / "h72-candidate.zip")
-    shutil.copyfile(path.with_suffix(".json"), DOWN / "h72-candidate-receipt.json")
-    for src_p, dst in ((path, DOWN / "h72-candidate.tif"),
-                       (path.with_suffix(".zip"), DOWN / "h72-candidate.zip")):
+    shutil.copyfile(path, DOWN / "h74-candidate.tif")
+    shutil.copyfile(path.with_suffix(".zip"), DOWN / "h74-candidate.zip")
+    shutil.copyfile(path.with_suffix(".json"), DOWN / "h74-candidate-receipt.json")
+    for src_p, dst in ((path, DOWN / "h74-candidate.tif"),
+                       (path.with_suffix(".zip"), DOWN / "h74-candidate.zip")):
         if sha(src_p) != sha(dst):
             raise IOError(f"published copy mismatch: {dst}")
 
@@ -706,16 +706,16 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
         exchange=dict(total_pseudo_pixels=exch.get("total_pseudo_pixels"),
                       allowed_exchange=exch.get("allowed_exchange"),
                       independence_max_abs_rho=(exch.get("independence_pre") or {}).get("max_abs_correlation")))
-    write_h72("build", card)
+    write_h74("build", card)
     return card
 
 
 # ------------------------------------------------------------------ E3: audit + run card
 def stage_audit(reg) -> dict:
-    log("=== H72 audit: scripts/audit_uniqueness.py with the census receipt ===")
-    build = json.loads((EVID / "h72_build.json").read_text())
+    log("=== H74 audit: scripts/audit_uniqueness.py with the census receipt ===")
+    build = json.loads((EVID / "h74_build.json").read_text())
     tif = SUBM / build["file"]
-    audit_path = EVID / "h72_audit_uniqueness.json"
+    audit_path = EVID / "h74_audit_uniqueness.json"
     cmd = [sys.executable, str(ROOT / "scripts/audit_uniqueness.py"),
            str(tif.relative_to(ROOT)), str(audit_path.relative_to(ROOT)), str(CENSUS.relative_to(ROOT))]
     r = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
@@ -724,18 +724,18 @@ def stage_audit(reg) -> dict:
         log(r.stderr[-2000:])
         raise SystemExit("audit_uniqueness.py failed")
     audit = json.loads(audit_path.read_text())
-    (DOCS / "h72_audit_uniqueness.json").write_text(audit_path.read_text())
+    (DOCS / "h74_audit_uniqueness.json").write_text(audit_path.read_text())
     card = make_run_card(reg, build, audit)
-    write_h72("run_card", card)
+    write_h74("run_card", card)
     log(f"verdict: {card['verdict']}")
     return card
 
 
 def make_run_card(reg, build, audit) -> dict:
     th = reg["thresholds"]
-    hold = json.loads((EVID / "h72_holdout.json").read_text())
-    s1 = json.loads((EVID / "h72_sufficiency.json").read_text())
-    can = json.loads((EVID / "h72_canary.json").read_text())
+    hold = json.loads((EVID / "h74_holdout.json").read_text())
+    s1 = json.loads((EVID / "h74_sufficiency.json").read_text())
+    can = json.loads((EVID / "h74_canary.json").read_text())
     pooled = hold["pooled"]["a_only"]
     fmt = build["validator"]
     receipt = build["submission_receipt"]
@@ -762,9 +762,9 @@ def make_run_card(reg, build, audit) -> dict:
                    f"No weekly slot spent by this lane.")
     s = pooled["scores"]["a_only"]
     return dict(
-        round="H72",
+        round="H74",
         generated_utc=now(),
-        hypothesis="H72-A (the deferred H70-E variant): a DEFORMATION-ONLY View A2 (geodetic strain "
+        hypothesis="H74-A (the deferred H70-E variant): a DEFORMATION-ONLY View A2 (geodetic strain "
                    "bands 4/7/8 + seismicity bands 10/16, with gradient/coherence transforms) is a "
                    "sufficient, transferable view where every mixed potential-field+deformation View A "
                    "failed (five consecutive OOF AUC ~0.52); the brief's literal discovery stratum -- "
@@ -866,32 +866,32 @@ def main(argv) -> int:
         raise SystemExit(f"unknown stage {stage!r}")
     reg = check_prereg()
     redirect()
-    load = lambda name: json.loads((EVID / f"h72_{name}.json").read_text())   # noqa: E731
+    load = lambda name: json.loads((EVID / f"h74_{name}.json").read_text())   # noqa: E731
     if stage in ("features", "all"):
         stage_features(reg)
     if stage in ("canary", "all"):
-        log("=== H72 E1: canary (shared H61 stage, View A2 list substituted; not forked) ===")
+        log("=== H74 E1: canary (shared H61 stage, View A2 list substituted; not forked) ===")
         base.stage_canary()
     if stage in ("fit", "all"):
-        log("=== H72 E1: fit (shared H61 stage; sampler and learner unchanged) ===")
+        log("=== H74 E1: fit (shared H61 stage; sampler and learner unchanged) ===")
         base.stage_fit()
     if stage in ("sufficiency", "all"):
         stage_sufficiency(reg)
     if stage in ("exchange", "all"):
-        log("=== H72 E2: exchange (shared H61 stage: independence screen + one round per direction) ===")
+        log("=== H74 E2: exchange (shared H61 stage: independence screen + one round per direction) ===")
         ex = base.stage_exchange()
         # the round holdout stage reads this exact file name from STAGE_EV
         (STAGE_EV / "h61_pseudo_exchange.json").write_text(json.dumps(ex, default=str) + "\n")
     if stage in ("holdout", "all"):
-        log("=== H72 E2: holdout (nine arms, matched budget) ===")
+        log("=== H74 E2: holdout (nine arms, matched budget) ===")
         stage_holdout(reg)
     if stage in ("build", "all"):
-        log("=== H72 E3: build (strict A2-only, lane-valid placement) ===")
+        log("=== H74 E3: build (strict A2-only, lane-valid placement) ===")
         s1 = load("sufficiency")
         exch = json.loads((STAGE_EV / "h61_pseudo_exchange.json").read_text())
         stage_build(reg, s1, exch)
     if stage in ("audit", "all"):
-        log("=== H72 E3: audit (census uniqueness) + run card ===")
+        log("=== H74 E3: audit (census uniqueness) + run card ===")
         stage_audit(reg)
     return 0
 

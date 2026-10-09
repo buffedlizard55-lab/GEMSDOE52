@@ -1,21 +1,21 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="assets/ctd5.css"></head><body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a><a href="index.html">Overview</a><a href="h72-executive-summary.html">Submission guide</a><a href="h71.html">H71 (previous)</a><a href="downloads/index.html">Archive</a></nav></header><main id="main">
-<section class="hero"><div><div class="eyebrow">DOE GEMS / H72 · deformation-only View A2 co-training (the deferred H70-E variant)</div>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="assets/ctd5.css"></head><body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a><a href="index.html">Overview</a><a href="h74-executive-summary.html">Submission guide</a><a href="h71.html">H71 (previous)</a><a href="downloads/index.html">Archive</a></nav></header><main id="main">
+<section class="hero"><div><div class="eyebrow">DOE GEMS / H74 · deformation-only View A2 co-training (the deferred H70-E variant)</div>
 <h1>Download the file.<br>Read the verdict first.</h1>
-<p class="lead">A unique, lane-checked research file and a negative verdict. H72 executes the one lane variant no previous round tested: a View A
+<p class="lead">A unique, lane-checked research file and a negative verdict. H74 executes the one lane variant no previous round tested: a View A
 built <b>only</b> from the deformation bands (geodetic strain 4/7/8, seismicity 10/16), with View B
 (surface) unchanged. Five consecutive mixed potential-field+deformation View A rebuilds all failed the
-Blum&ndash;Mitchell sufficiency screen out of quadrant (AUC &asymp; 0.52); H72 attributes the failure to one
+Blum&ndash;Mitchell sufficiency screen out of quadrant (AUC &asymp; 0.52); H74 attributes the failure to one
 half. The emission is the lane's discovery signal on the deformation pair — the strict A2-only stratum
 (A2 confident, B abstaining: a young blind fault straining beneath cover) — placed with the lane-valid
 constrained placement, and every emitted dot carries written geological reasoning.</p>
 <div class="notice" role="note"><strong>OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT · DO NOT UPLOAD</strong>
 <p>Verdict: <b>NEGATIVE, research-only. DOWNLOAD YES (format-valid and unique on decoded pixels); SUBMIT NO. Failed gates: lane_policy, S1, holdout_beats_single_B. No weekly slot spent by this lane.</b></p></div>
-<div class="actions"><a class="button" href="downloads/h72-candidate.tif" download>Download the H72 GeoTIFF ↓</a>
-<a class="button secondary" href="downloads/h72-candidate.zip" download>Single-TIFF ZIP</a>
-<a class="button secondary" href="downloads/h72-a-only-reasoning.csv" download>Geological reasoning CSV</a></div>
-<p class="fileline">gems52-h72-a2deform-cotrain-721px-20261009T174546Z.tif<br>58,475 bytes · SHA-256 0dea78bc8e276a8276de94a169e59ffac43234cef6a6f978f13f0788c6232f26 · 721 emitted cells · values exactly {0,1}, 0 NaN</p>
-<p class="small"><a href="h72-executive-summary.html">How to submit, and whether this file may be submitted →</a>
-· <a href="data/h72_run_card.json">Complete JSON run card ↗</a></p></section>
+<div class="actions"><a class="button" href="downloads/h74-candidate.tif" download>Download the H74 GeoTIFF ↓</a>
+<a class="button secondary" href="downloads/h74-candidate.zip" download>Single-TIFF ZIP</a>
+<a class="button secondary" href="downloads/h74-a-only-reasoning.csv" download>Geological reasoning CSV</a></div>
+<p class="fileline">gems52-h74-a2deform-cotrain-721px-20261009T174546Z.tif<br>58,475 bytes · SHA-256 0dea78bc8e276a8276de94a169e59ffac43234cef6a6f978f13f0788c6232f26 · 721 emitted cells · values exactly {0,1}, 0 NaN</p>
+<p class="small"><a href="h74-executive-summary.html">How to submit, and whether this file may be submitted →</a>
+· <a href="data/h74_run_card.json">Complete JSON run card ↗</a></p></section>
 <hr class="divider">
 <section><h2>Gates, measured</h2><div class="table-wrap"><table><thead><tr><th>Gate</th><th>Result</th></tr></thead>
 <tbody><tr><td>Format gate (single-band float32 GeoTIFF, EPSG:32611, shape and transform as pinned)</td><td>PASS</td></tr><tr><td>Values exactly {0, 1}; 0 NaN; 0 infinite</td><td>PASS</td></tr><tr><td>Decoded-pattern uniqueness (not identical to any of the 560 registry rasters)</td><td>PASS</td></tr><tr><td>Support novelty vs the 523 informative registry rasters</td><td>1.0000</td></tr><tr><td>Not the union of the two views</td><td>PASS</td></tr><tr><td>Lane gate, literal, surface / dots</td><td>PASS / DUPLICATE/STOP</td></tr><tr><td>Lane gate, saturation policy, surface / dots</td><td>PASS / DUPLICATE/STOP</td></tr><tr><td>Lane policy max near-dot share (bar 0.70)</td><td>0.8835</td></tr><tr><td>Audit (audit_uniqueness.py, census): surface max Spearman / dots max near-3px</td><td>0.0058 / 1.0000</td></tr><tr><td>S1 sufficiency (View A2 out-of-quadrant AUC mean ≥ 0.60, min fold ≥ 0.55)</td><td>FAIL (0.5194 / 0.5011)</td></tr><tr><td>Holdout beats single_B (paired CI lower bound &gt; 0)</td><td>FAIL</td></tr></tbody></table></div>
@@ -54,11 +54,11 @@ holdout table above is the measured comparison.</li>
 (extradr19): <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">official
 leaderboard</a> (public board, not organiser-confirmed).</li>
 <li>Attribution caveat: the 0.2778 and 0.2600 figures are owner-reported, not organiser-confirmed (IR-H61-004).</li></ul>
-<p class="small"><a href="../knowledge/59_hypotheses_H72_preregistered.md">Ranked hypotheses and the frozen protocol →</a> ·
-<a href="../knowledge/60_h72_results_and_limits.md">Results and limits →</a> ·
+<p class="small"><a href="../knowledge/63_hypotheses_H74_preregistered.md">Ranked hypotheses and the frozen protocol →</a> ·
+<a href="../knowledge/64_h74_results_and_limits.md">Results and limits →</a> ·
 <a href="h71.html">H71 landing (previous round) →</a></p></section>
 
-<section><h2>Earlier rounds still on this site</h2><p class="small">Each is a separate artefact with its own receipt. None of them is the H72 file, and none is approved for a slot.</p>
+<section><h2>Earlier rounds still on this site</h2><p class="small">Each is a separate artefact with its own receipt. None of them is the H74 file, and none is approved for a slot.</p>
 <ul>
 <li><b>H71, previous round, negative. Do not upload.</b> <a href="h71.html">H71 landing</a> · <a href="h71-executive-summary.html">H71 submission guide</a></li>
 <li><b>H70, negative; its 610-px file is a measured lane duplicate. Do not upload.</b> <a href="h70.html">H70 landing</a></li>

@@ -1,20 +1,20 @@
-# 60 · H72 results and limits (rendered from the receipts by `scripts/publish_h72_site.py`)
+# 60 · H74 results and limits (rendered from the receipts by `scripts/publish_h74_site.py`)
 
 **Verdict: `NEGATIVE, research-only. DOWNLOAD YES (format-valid and unique on decoded pixels); SUBMIT NO. Failed gates: lane_policy, S1, holdout_beats_single_B. No weekly slot spent by this lane.`**
 
-Artefact `gems52-h72-a2deform-cotrain-721px-20261009T174546Z.tif`, SHA-256 `0dea78bc8e276a8276de94a169e59ffac43234cef6a6f978f13f0788c6232f26`, 58475 bytes, 721 emitted cells,
+Artefact `gems52-h74-a2deform-cotrain-721px-20261009T174546Z.tif`, SHA-256 `0dea78bc8e276a8276de94a169e59ffac43234cef6a6f978f13f0788c6232f26`, 58475 bytes, 721 emitted cells,
 every one a strict A2-only discovery candidate with a written geological reasoning row
-(`docs/downloads/h72-a-only-reasoning.csv`). Pre-registration: `knowledge/59_hypotheses_H72_preregistered.md`
-(SHA-256 in `registry/h72_preregistration.json`).
+(`docs/downloads/h74-a-only-reasoning.csv`). Pre-registration: `knowledge/63_hypotheses_H74_preregistered.md`
+(SHA-256 in `registry/h74_preregistration.json`).
 
-## 1 · What H72 changed
+## 1 · What H74 changed
 
-H72 executes the deferred **H70-E** variant: a **deformation-only View A2** built from the geodetic
+H74 executes the deferred **H70-E** variant: a **deformation-only View A2** built from the geodetic
 strain bands (4 second invariant, 7 shear, 8 dilatation) and the seismicity bands (10 distance, 16
 density), with gradient transforms at the shared scales and strain coherence — 22 channels — while
 View B (surface, 37 channels) is unchanged. Every previous View A mixed potential-field and
 deformation channels; none isolated the deformation half, so the five sufficiency failures
-(H61 0.5163 · H63 0.5362 · H64 0.5230 · H65 0.5202 · H70 0.5166) could not be attributed. H72
+(H61 0.5163 · H63 0.5362 · H64 0.5230 · H65 0.5202 · H70 0.5166) could not be attributed. H74
 attributes them on the A2/B pair and re-runs the lane's full mandated protocol: independence screen,
 one whole-segment confident-to-abstaining exchange per direction, nine-arm matched-budget
 hide-and-recover holdout against the single-view baseline, then the strict A2-only discovery stratum

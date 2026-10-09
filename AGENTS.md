@@ -9,11 +9,11 @@ Keep known-catalogue labels separate from verified fault absence, public partici
 This session's working branch is fixed by Arena. Do not change branches. Keep raw competition data and large intermediate arrays under ignored `data/` and `work/`. Publish small audit receipts, the unique compressed prediction raster and its review table.
 
 <!--H67-AGENTS-->
-## Current H72 continuation (2026-10-09)
+## Current H74 continuation (2026-10-09)
 
-Read `README.md`'s H72 block first, then `knowledge/59_hypotheses_H72_preregistered.md` (frozen,
-SHA-256 pinned in `registry/h72_preregistration.json`) and `knowledge/60_h72_results_and_limits.md`.
-H72 executed the deferred **H70-E** variant — a **deformation-only View A2** (geodetic strain bands
+Read `README.md`'s H74 block first, then `knowledge/63_hypotheses_H74_preregistered.md` (frozen,
+SHA-256 pinned in `registry/h74_preregistration.json`) and `knowledge/64_h74_results_and_limits.md`.
+H74 executed the deferred **H70-E** variant — a **deformation-only View A2** (geodetic strain bands
 4/7/8 + seismicity bands 10/16, 22 channels) with View B unchanged — the lane's only untested View A
 half. **Verdict: NEGATIVE, research-only. DOWNLOAD YES; SUBMIT NO. Slots used: 0. Experiments used:
 3 of 3.** The lane's attribution question is now closed: View A2 out-of-quadrant AUC mean **0.5194**,
@@ -35,10 +35,10 @@ exists**; dots lane literal **DUPLICATE/STOP** (lattice probe), policy **DUPLICA
 **0.8835**); surface lane PASS/PASS (max ρ 0.0110). The file is format-valid, canonical-pattern
 unique, tier-2 novel_fraction **1.0**, not the prior union, and every one of its 721 cells is a
 strict A2-only candidate with a written geological reasoning row
-(`docs/downloads/h72-a-only-reasoning.csv`). Do **not** re-run the co-training lane with another View
+(`docs/downloads/h74-a-only-reasoning.csv`). Do **not** re-run the co-training lane with another View
 A rebuild — both halves are now measured (potential-field: H61/H63/H64/H65/H70; deformation-only:
-H72). H72-D (radiometric-cover gating) and H72-E (H65 operator on the strain bands) remain deferred.
-IR-H72-001 (build CSR orientation crash, fixed, regression-tested) is in
+H74). H74-D (radiometric-cover gating) and H74-E (H65 operator on the strain bands) remain deferred.
+IR-H74-001 (build CSR orientation crash, fixed, regression-tested) is in
 `registry/irregularities.json`.
 
 ## Current H71 continuation (2026-10-09)

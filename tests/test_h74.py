@@ -1,4 +1,4 @@
-"""Tests for the H72 round: frozen protocol, deformation-only View A2, gate logic.
+"""Tests for the H74 round: frozen protocol, deformation-only View A2, gate logic.
 
 These tests need no competition raster. The feature-store checks skip cleanly when work/ is absent.
 """
@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 sys.path.insert(0, str(ROOT / "src"))
 
-REG = ROOT / "registry/h72_preregistration.json"
+REG = ROOT / "registry/h74_preregistration.json"
 
 
 def _sha(p: Path) -> str:
@@ -57,15 +57,15 @@ def test_thresholds_are_the_preregistered_values():
 
 def test_runner_refuses_if_preregistration_moves(tmp_path):
     import importlib.util
-    spec = importlib.util.spec_from_file_location("run_h72", ROOT / "scripts/run_h72.py")
+    spec = importlib.util.spec_from_file_location("run_h74", ROOT / "scripts/run_h74.py")
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     reg = json.loads(REG.read_text())
-    assert mod.check_prereg()["round"] == "H72"
+    assert mod.check_prereg()["round"] == "H74"
     # a moved document must be refused
     bad = json.loads(REG.read_text())
     bad["hypothesis_sha256"] = "0" * 64
-    p = tmp_path / "h72_preregistration.json"
+    p = tmp_path / "h74_preregistration.json"
     p.write_text(json.dumps(bad))
     old = mod.REG_PATH
     mod.REG_PATH = p
@@ -78,11 +78,11 @@ def test_runner_refuses_if_preregistration_moves(tmp_path):
 
 
 def test_view_a2_is_deformation_only_and_disjoint_from_view_b():
-    """The H72 View A2 list: the five deformation raw bands + the 17 derived columns, no View B name."""
-    from gems52 import h72
-    raw = {f"raw_band_{b:02d}" for b, _d in h72.DEF_BANDS}
-    derived = set(h72.def_feature_names())
-    va2 = set(h72.view_A2_deformation_names({"feature_names": sorted(raw | derived),
+    """The H74 View A2 list: the five deformation raw bands + the 17 derived columns, no View B name."""
+    from gems52 import h74
+    raw = {f"raw_band_{b:02d}" for b, _d in h74.DEF_BANDS}
+    derived = set(h74.def_feature_names())
+    va2 = set(h74.view_A2_deformation_names({"feature_names": sorted(raw | derived),
                                              "feature_sha256": {}}))
     assert raw <= va2 and derived <= va2
     assert len(va2) == 22
@@ -100,15 +100,15 @@ def test_store_extension_is_registered_and_idempotent_when_present():
         pytest.skip("feature store not built in this sandbox")
     m = json.loads(store.read_text())
     if "view_A2_deformation" not in m:
-        pytest.skip("H72 store extension not run in this sandbox")
+        pytest.skip("H74 store extension not run in this sandbox")
     va2 = m["view_A2_deformation"]
     assert len(va2) == 22
     vb = set(m["view_B_with_external"])
     assert not (set(va2) & vb)
-    # the canonical views are untouched by the H72 extension
+    # the canonical views are untouched by the H74 extension
     assert len(m["view_A_with_external"]) == 36
     assert len(m["view_B_with_external"]) == 37
-    assert "+h72-deformation-v1" in m["version"]
+    assert "+h74-deformation-v1" in m["version"]
     assert "+external-geodawn-v1" in m["version"]
     # every View A2 column exists on disk with a manifest hash
     for n in va2:
@@ -118,7 +118,7 @@ def test_store_extension_is_registered_and_idempotent_when_present():
 
 
 def test_candidate_field_is_finite_only_on_the_a2_only_stratum():
-    """The H72 build field: rankA2 - rankB on the strict A2-only stratum, -1.0 elsewhere.
+    """The H74 build field: rankA2 - rankB on the strict A2-only stratum, -1.0 elsewhere.
 
     The build's candidate cells are ``field > -1.0`` — exactly the stratum, because on the
     stratum rankA2 >= 0.95 and rankB <= 0.65, so the difference is >= 0.30 > -1.  Placement is
@@ -147,9 +147,9 @@ def test_candidate_field_is_finite_only_on_the_a2_only_stratum():
 
 
 def test_lane_constraint_csr_orientation_matches_brute_force():
-    """Regression (IR-H72-001): the candidate x prior CSR must be oriented so that row j lists the
+    """Regression (IR-H74-001): the candidate x prior CSR must be oriented so that row j lists the
     priors whose 3 px halo contains candidate j — the orientation run_h70.lane_valid_greedy expects.
-    A transposed build crashed the first H72 build with an IndexError inside the greedy."""
+    A transposed build crashed the first H74 build with an IndexError inside the greedy."""
     import scipy.sparse as sp
     from scipy import ndimage as ndi
     from gems52 import gates
@@ -172,7 +172,7 @@ def test_lane_constraint_csr_orientation_matches_brute_force():
     cys, cxs = np.mgrid[5:115:7, 5:105:7]
     cand = (cys * shape[1] + cxs).ravel()
     W_ = shape[1]
-    # H72 construction: one sparse row per prior over the candidates, vstacked, transposed
+    # H74 construction: one sparse row per prior over the candidates, vstacked, transposed
     rows_sp = [sp.csr_matrix(ndi.binary_dilation(s, structure=gates._disk(gates.NEAR_RADIUS_PX))
                              .ravel()[cand].astype(np.float32)) for s in priors]
     HITS = sp.vstack(rows_sp, format="csr").T.tocsr()
@@ -200,7 +200,7 @@ def test_lane_constraint_csr_orientation_matches_brute_force():
 
 
 def test_holdout_receipt_is_consistent_when_present():
-    p = ROOT / "evidence/h72_holdout.json"
+    p = ROOT / "evidence/h74_holdout.json"
     if not p.exists():
         pytest.skip("holdout receipt not produced yet")
     h = json.loads(p.read_text())
@@ -224,7 +224,7 @@ def test_holdout_receipt_is_consistent_when_present():
 
 
 def test_sufficiency_receipt_is_consistent_when_present():
-    p = ROOT / "evidence/h72_sufficiency.json"
+    p = ROOT / "evidence/h74_sufficiency.json"
     if not p.exists():
         pytest.skip("sufficiency receipt not produced yet")
     s = json.loads(p.read_text())
@@ -235,8 +235,8 @@ def test_sufficiency_receipt_is_consistent_when_present():
 
 
 def test_build_receipts_are_consistent_when_present():
-    b = ROOT / "evidence/h72_build.json"
-    nu = ROOT / "evidence/h72_not_union.json"
+    b = ROOT / "evidence/h74_build.json"
+    nu = ROOT / "evidence/h74_not_union.json"
     if not (b.exists() and nu.exists()):
         pytest.skip("build receipts not produced yet")
     build, not_union = json.loads(b.read_text()), json.loads(nu.read_text())
@@ -257,11 +257,11 @@ def test_build_receipts_are_consistent_when_present():
 
 
 def test_run_card_verdict_rule_when_present():
-    p = ROOT / "evidence/h72_run_card.json"
+    p = ROOT / "evidence/h74_run_card.json"
     if not p.exists():
         pytest.skip("run card not produced yet")
     card = json.loads(p.read_text())
-    assert card["round"] == "H72"
+    assert card["round"] == "H74"
     assert card["submission_slots_used"] == 0
     assert card["experiments_used"].startswith("3 of 3")
     assert len(card["note"]) == card["note_chars"] <= 140

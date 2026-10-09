@@ -1,9 +1,9 @@
-"""Shared extension: add the H72 deformation-only View A2 columns to the template store.
+"""Shared extension: add the H74 deformation-only View A2 columns to the template store.
 
 Why this is a *shared* module and not a round-private fork
 ---------------------------------------------------------
 The parallel-run protocol says: reuse the template's cached feature stack, and if a shared tool
-is missing something, fix it once in the template.  H72 executes the deferred H70-E variant
+is missing something, fix it once in the template.  H74 executes the deferred H70-E variant
 (``knowledge/54``, RANK 5): a View A built **only** from the deformation bands of
 ``training_features.tif`` — geodetic second invariant (band 4), shear rate (7), dilatation rate
 (8), distance to earthquake (10) and earthquake intensity/density (16).  Five consecutive View A
@@ -57,17 +57,17 @@ DEF_BANDS = (
 GRAD_SIGMAS = (1, 3, 8)           # the template's shared scales (structural.SCALES)
 COHERENCE_BANDS = (4, 7)          # coherence of the two shear-strain gradients at sigma 3
 COHERENCE_SIGMA = 3.0
-VERSION_TAG = "+h72-deformation-v1"
+VERSION_TAG = "+h74-deformation-v1"
 
 
 def grad_feature_names() -> list[str]:
     """The 15 gradient-magnitude columns, in (band, sigma) order."""
-    return [f"H72_def_grad_{b:02d}_{s}" for b, _d in DEF_BANDS for s in GRAD_SIGMAS]
+    return [f"H74_def_grad_{b:02d}_{s}" for b, _d in DEF_BANDS for s in GRAD_SIGMAS]
 
 
 def coherence_feature_names() -> list[str]:
     """The 2 structure-coherence columns."""
-    return [f"H72_def_coherence_{b:02d}" for b in COHERENCE_BANDS]
+    return [f"H74_def_coherence_{b:02d}" for b in COHERENCE_BANDS]
 
 
 def def_feature_names() -> list[str]:
@@ -75,11 +75,11 @@ def def_feature_names() -> list[str]:
 
 
 def view_A2_deformation_names(manifest: dict) -> list[str]:
-    """H72's View A2: the five raw deformation bands + the 17 derived H72 columns (22 channels).
+    """H74's View A2: the five raw deformation bands + the 17 derived H74 columns (22 channels).
 
-    The raw bands are already store columns tagged in the template's ``view_A``; the H72 columns
+    The raw bands are already store columns tagged in the template's ``view_A``; the H74 columns
     are registered by :func:`register_columns`.  No View B name may appear (the caller asserts),
-    and the canonical ``view_A_with_external`` / ``view_B_with_external`` are NOT modified: H72
+    and the canonical ``view_A_with_external`` / ``view_B_with_external`` are NOT modified: H74
     reads its View A list from ``manifest["view_A2_deformation"]`` through a setup wrapper, so
     the H61 setup checks keep running on the canonical lists.
     """
@@ -93,11 +93,11 @@ def deformation_columns(field: np.ndarray, valid: np.ndarray, band: int,
     out: dict[str, np.ndarray] = {}
     for sigma in GRAD_SIGMAS:
         _gx, _gy, mag, _s = structural.normals(field, valid, float(sigma))
-        out[f"H72_def_grad_{band:02d}_{sigma}"] = mag
+        out[f"H74_def_grad_{band:02d}_{sigma}"] = mag
         del _gx, _gy, _s
     if band in COHERENCE_BANDS:
         gx, gy, _mag, _s = structural.normals(field, valid, COHERENCE_SIGMA)
-        out[f"H72_def_coherence_{band:02d}"] = structural.coherence(gx, gy, valid)
+        out[f"H74_def_coherence_{band:02d}"] = structural.coherence(gx, gy, valid)
         del gx, gy, _mag, _s
     return out
 
@@ -121,7 +121,7 @@ def register_columns(store_dir: str | Path, columns: dict[str, np.ndarray], log=
     for name, values in columns.items():
         col = np.asarray(values, np.float32).ravel()[flat_idx]
         if not np.isfinite(col).all():
-            raise ValueError(f"nonfinite H72 feature inside eligible footprint: {name}")
+            raise ValueError(f"nonfinite H74 feature inside eligible footprint: {name}")
         dest = store / (name + ".npy")
         if dest.exists() and name in hashes and structural.digest(dest) == hashes[name]:
             skipped.append(name)
@@ -131,20 +131,20 @@ def register_columns(store_dir: str | Path, columns: dict[str, np.ndarray], log=
         if name not in names:
             names.append(name)
         added.append(name)
-        log(f"h72 feature {name}")
+        log(f"h74 feature {name}")
     va2 = view_A2_deformation_names({**manifest, "feature_names": names, "feature_sha256": hashes})
     vb = set(manifest["view_B_with_external"])
     overlap = sorted(set(va2) & vb)
     if overlap:
-        raise ValueError(f"H72 cross-view feature overlap: {overlap}")
+        raise ValueError(f"H74 cross-view feature overlap: {overlap}")
     if not set(va2) <= set(names):
-        raise ValueError("H72 View A2 references columns that are not in the store")
+        raise ValueError("H74 View A2 references columns that are not in the store")
     manifest.update(
         version=(manifest["version"] + VERSION_TAG
                  if VERSION_TAG not in manifest["version"] else manifest["version"]),
         feature_names=names, feature_sha256=hashes,
         view_A2_deformation=va2,
-        h72_deformation=dict(
+        h74_deformation=dict(
             bands=[dict(band=b, description=d) for b, d in DEF_BANDS],
             grad_sigmas_px=list(GRAD_SIGMAS), coherence_bands=list(COHERENCE_BANDS),
             coherence_sigma=COHERENCE_SIGMA,
@@ -191,7 +191,7 @@ def extend_store(store_dir: str | Path = "work/r2/features",
             for name, values in deformation_columns(a, valid, band, log=log).items():
                 columns[name] = values
             del a
-            log(f"h72 deformation columns for band {band}")
+            log(f"h74 deformation columns for band {band}")
     summary = register_columns(store, columns, log=log)
     summary["inputs"] = {"features_sha256": structural.digest(features)}
     return summary

@@ -1,12 +1,12 @@
-# Current user brief — 2026-10-09, H72 session (refreshed)
+# Current user brief — 2026-10-09, H74 session (refreshed)
 
 The task text below is preserved as instructions, not as verified factual claims. In particular, the score attributions, current-leaderboard statements, data-access statements and earlier-session claims must be independently checked. This brief supersedes incompatible older briefs. URLs and repeated instructions are retained. Refreshed 2026-10-09 with the current prompt verbatim; the 2026-10-08 text is preserved at [knowledge/archive/26_current_user_brief_2026-10-08.md](archive/26_current_user_brief_2026-10-08.md) and a dated copy of the current text is kept at [knowledge/36_current_user_brief_2026-10-09.md](35_current_user_brief_2026-10-09.md). The README carries this same prompt verbatim under "Complete current prompt".
 
 Refreshed in the H70 session: the closing core-values paragraph arrived with that session's prompt; a dated copy is at [knowledge/56_current_user_brief_2026-10-09_H70.md](56_current_user_brief_2026-10-09_H70.md).
 
-Refreshed in the H72 session (2026-10-09): the recurring prompt's score list gained the GEMSDOE53 and
+Refreshed in the H74 session (2026-10-09): the recurring prompt's score list gained the GEMSDOE53 and
 GEMSDOE54 entries and the empty 55/56/57GEMSDOE placeholders; no instruction changed. A dated copy of
-this text is kept at [knowledge/60b_current_user_brief_2026-10-09_H72.md](60b_current_user_brief_2026-10-09_H72.md).
+this text is kept at [knowledge/64b_current_user_brief_2026-10-09_H74.md](60b_current_user_brief_2026-10-09_H74.md).
 
 ```text
 Review the repo. 

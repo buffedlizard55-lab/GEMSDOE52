@@ -1,13 +1,13 @@
 {
   "evidence_class": "uniqueness diagnostic, not a score",
-  "candidate": "submission/gems52-h72-a2deform-cotrain-721px-20261009T174546Z.tif",
+  "candidate": "submission/gems52-h74-a2deform-cotrain-721px-20261009T174546Z.tif",
   "candidate_file_sha256": "0dea78bc8e276a8276de94a169e59ffac43234cef6a6f978f13f0788c6232f26",
   "candidate_nonzero": 721,
   "sample": "data/sample_submission.tif",
   "footprint_px": 5167373,
   "priors_offered": 633,
   "self_copies_excluded": [
-    "docs/downloads/h72-candidate.tif"
+    "docs/downloads/h74-candidate.tif"
   ],
   "priors_after_byte_dedupe": 543,
   "phases": {
