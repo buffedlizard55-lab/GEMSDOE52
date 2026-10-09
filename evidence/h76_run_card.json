@@ -1,0 +1,43 @@
+{
+  "hypothesis": "Gravity-gradient high with quiet surface slope may signal covered density discontinuity (untrained exploratory proxy)",
+  "mechanism": "band 18 gravity horizontal gradient P>95 with band 19 detrended slope P<30; >200m mapped-fault exclusion; 3px node spacing",
+  "named_non_fault_mimic": "intrusive or lithologic density contact; erosion can also suppress a surface scarp",
+  "holdout_DTI": null,
+  "holdout_CI95": null,
+  "withheld_positives": null,
+  "evaluator": "gems52-pooled-hide-v1 not run for H76; no promotion permitted",
+  "surface_correlation_max_local": 0.03643733211401534,
+  "dots_correlation_max_local": 0.010508071815351227,
+  "dots_near_3px_max_local": 0.47833333333333333,
+  "registry_scope": "locally tracked submission/*.tif only",
+  "full_registry_checked": false,
+  "raster_sha256": "bd64f0121502488ead1f91cb97530a7e9ae5fce89b9f0afc10a95466e35c98c2",
+  "validator": {
+    "ok": true,
+    "nan_pixels": 0,
+    "infinity_pixels": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "shape": [
+      3730,
+      3292
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "mass_outside_footprint": 0
+  },
+  "submission_name": "h76-gravity-surface-abstention-research-only",
+  "note": "H76 exploratory gravity edge with quiet slope; unvalidated, research-only; do not spend competition slot",
+  "verdict": "negative: DOWNLOAD YES, SUBMIT NO; no holdout, no full-census uniqueness, not co-training",
+  "experiments_used": 1,
+  "weekly_slots_used": 0
+}

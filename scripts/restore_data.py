@@ -162,6 +162,10 @@ def main() -> int:
     tdir = Path(args.target_dir)
     tdir.mkdir(parents=True, exist_ok=True)
     only = {s.strip() for s in args.only.split(",") if s.strip()}
+    known = {f["id"] for f in manifest["files"]}
+    unknown = only - known
+    if unknown:
+        ap.error(f"unknown --only id(s): {', '.join(sorted(unknown))}; use manifest ids, not filenames")
     tc = TreeCache()
 
     receipt_path = tdir / "restore_receipt.json"

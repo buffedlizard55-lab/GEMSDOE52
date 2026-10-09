@@ -1,0 +1,66 @@
+{
+  "file": "gems52-h76-gravity-surface-abstention-research-only.tif",
+  "sha256": "bd64f0121502488ead1f91cb97530a7e9ae5fce89b9f0afc10a95466e35c98c2",
+  "bytes": 60802,
+  "submission_name": "h76-gravity-surface-abstention-research-only",
+  "note": "H76 exploratory gravity edge with quiet slope; unvalidated, research-only; do not spend competition slot",
+  "note_chars": 104,
+  "validator": {
+    "path": "/home/user/GEMSDOE52/submission/gems52-h76-gravity-surface-abstention-research-only.tif",
+    "bytes": 60802,
+    "sha256": "bd64f0121502488ead1f91cb97530a7e9ae5fce89b9f0afc10a95466e35c98c2",
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "ref_bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "nodata": null,
+    "blocksize": [
+      256,
+      256
+    ],
+    "fixture_grid": false,
+    "has_validity_mask": false,
+    "nan_pixels": 0,
+    "infinity_pixels": 0,
+    "n_nan": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.0002443163830321282,
+    "n_nonzero": 3000,
+    "mass": 3000.0,
+    "mass_outside_footprint": 0,
+    "problems": [],
+    "ok": true,
+    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "zip_file": "gems52-h76-gravity-surface-abstention-research-only.zip",
+  "zip_sha256": "3ef23ffec278e91d00cffcbec0c12ad8e2d34c940190f5e88a66a0ff010e1d9c",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "status": "research-only; local format validation is not organizer acceptance",
+  "metadata": {
+    "holdout": "not measured"
+  }
+}
