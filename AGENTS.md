@@ -16,26 +16,26 @@ slots 0. File `docs/downloads/h75-candidate.tif` is DOWNLOAD YES, SUBMIT researc
 Next: preregister a registry restricted to scored submissions, then retest the lane.
 
 <!--H67-AGENTS-->
-## Current H76 continuation (2026-10-09) — READ THIS FIRST
+## Current H77cond continuation (2026-10-09) — READ THIS FIRST
 
-> **Identifier note.** This round was executed as "H74" and renamed to **H76** at merge time: a
+> **Identifier note.** This round was executed as "H74" and renamed to **H77cond** at merge time: a
 > parallel session running the same brief merged its own H74 into `main` first (directional
 > variogram anisotropy), and H75 was taken by a third. The rename is identifier-only — the
 > preregistration document's bytes are unchanged and its pinned SHA-256
 > `d117b265…e3b55` still validates, so the "frozen before any fit" claim is intact.
-> Same remedy as IR-H66-015 / commit `9d891a6`. See `registry/h76_preregistration.json`
+> Same remedy as IR-H66-015 / commit `9d891a6`. See `registry/h77cond_preregistration.json`
 > → `identifier_rename`.
 
-Read `README.md`'s H76 block, then `knowledge/67_hypotheses_H76_preregistered.md` (frozen, SHA-256
-`d117b265…e3b55`, pinned in `registry/h76_preregistration.json`), its dated amendment
-`knowledge/67a_h76_amendment_shipped_arm_rule.md` (shipped-arm rule, written before any holdout number
-existed), and `knowledge/68_h76_results_and_limits.md`.
+Read `README.md`'s H77cond block, then `knowledge/67_hypotheses_H77cond_preregistered.md` (frozen, SHA-256
+`d117b265…e3b55`, pinned in `registry/h77cond_preregistration.json`), its dated amendment
+`knowledge/67a_h77cond_amendment_shipped_arm_rule.md` (shipped-arm rule, written before any holdout number
+existed), and `knowledge/68_h77cond_results_and_limits.md`.
 
 **The co-training lane is now closed with a mechanism, not just a failed threshold. Stop re-opening it.**
 
 1. **The rescue argument is dead.** Every earlier round closed the lane on S1 — View A's out-of-quadrant
    AUC on *all* held-out truth is ~0.52. The standing rescue was "the catalogue only contains
-   surface-expressed faults, so S1 measures the wrong population". H76 tested that directly (S1′: View A's
+   surface-expressed faults, so S1 measures the wrong population". H77cond tested that directly (S1′: View A's
    AUC restricted to truth inside View B's blind band `rank_B ∈ [0.35, 0.65]`). Result, in **all four folds
    without exception**: `AUC(A | B-dark) < AUC(A | B-blind) < AUC(A | B-bright)` —
    0.4685 < 0.4893 < 0.5436 pooled, margin **−0.0543** against a required **+0.05**. View A is *least*
@@ -54,12 +54,12 @@ existed), and `knowledge/68_h76_results_and_limits.md`.
    orientations of its mean along a 7 px (600 m) chord measured 0.172426, paired Δ −0.002091 with CI
    **[−0.005873, +0.001289]** — straddles zero, i.e. no measurable cost — while moving the spatial pattern
    substantially. **Use it as a near-free degree of freedom when a future round needs to dodge the lane's
-   70 % near-dot rule without paying DTI.** `H.line_support` in `scripts/run_h76.py` is unit-tested
+   70 % near-dot rule without paying DTI.** `H.line_support` in `scripts/run_h77cond.py` is unit-tested
    (`_shift0` is zero-filled, never wrapped).
 5. **Controls reproduced exactly**, so the instrument is sound and these numbers are comparable to H70:
    `single_B` 0.1745172876 vs the committed 0.174517 (|Δ| **2.9e-07**), `single_A` 0.071954,
    `disagreement_pre` 0.033293, `random` 0.080426 — all identical to H70 to six decimals.
-6. **Reusable tooling added this round.** `scripts/h76_build.py` has `_place` (greedy + 3 px hard core +
+6. **Reusable tooling added this round.** `scripts/h77cond_build.py` has `_place` (greedy + 3 px hard core +
    exact per-prior near-dot quota) which is **verified bit-identical to `gems52.nodes.spacing_select`**
    when the quota is off, `_bit_transpose` (per-pixel prior bitmap; turns the quota lookup from a
    cache-hostile strided gather into a 19-byte contiguous read), `_exclusion_stamp` (matches
@@ -69,7 +69,7 @@ existed), and `knowledge/68_h76_results_and_limits.md`.
    this round: band 6 `tc` is a **magnetic** tilt/total-curvature derivative, *not* radiometric total
    count. True gamma-ray channels exist only in the external GeoDAWN layers (`X_rad_*`).
 
-Experiments used: 3 of 3. Slots used: 0. Verdict: **negative, research-only** — see the README H76 block
+Experiments used: 3 of 3. Slots used: 0. Verdict: **negative, research-only** — see the README H77cond block
 for the DOWNLOAD/SUBMIT decision on the emitted file.
 
 ## Current H74 continuation (2026-10-09)

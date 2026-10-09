@@ -1,7 +1,7 @@
 {
- "round": "H76",
+ "round": "H77cond",
  "preregistered_utc": "2026-10-09T18:53:37.213950+00:00",
- "hypothesis_document": "knowledge/67_hypotheses_H76_preregistered.md",
+ "hypothesis_document": "knowledge/67_hypotheses_H77cond_preregistered.md",
  "hypothesis_sha256": "d117b265d44aed769ec19e9a38f10ad5aa53793feca52be0e6a8579dfc8e3b55",
  "hypothesis_bytes": 14230,
  "lane": "two-view co-training (Blum & Mitchell 1998, doi:10.1145/279943.279962); View A potential-field/subsurface, View B surface; disagreement as the discovery signal",
@@ -77,12 +77,12 @@
  },
  "identifier_rename": {
   "from": "H74",
-  "to": "H76",
+  "to": "H77cond",
   "date": "2026-10-09",
   "reason": "a parallel session running the same brief merged its own round under the label H74 first (origin/main 2fc03cd, directional variogram anisotropy), and H75 was taken by another. This is an IDENTIFIER-ONLY rename, the same remedy the repository applied at IR-H66-015 and commit 9d891a6.",
   "previous_document_path": "knowledge/63_hypotheses_H74_preregistered.md",
   "content_unchanged": true,
   "hypothesis_sha256_before_and_after": "d117b265d44aed769ec19e9a38f10ad5aa53793feca52be0e6a8579dfc8e3b55",
-  "verification": "sha256 of knowledge/67_hypotheses_H76_preregistered.md still equals the value frozen before any model was fitted, so the preregistration claim is intact"
+  "verification": "sha256 of knowledge/67_hypotheses_H77cond_preregistered.md still equals the value frozen before any model was fitted, so the preregistration claim is intact"
  }
 }

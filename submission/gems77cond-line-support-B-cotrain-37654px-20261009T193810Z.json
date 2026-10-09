@@ -1,12 +1,12 @@
 {
-  "file": "gems76-line-support-B-cotrain-37654px-20261009T193810Z.tif",
+  "file": "gems77cond-line-support-B-cotrain-37654px-20261009T193810Z.tif",
   "sha256": "49ad60980f8bf768b94a2753581cae9ba572c75564d862089cec8093bcf317ad",
   "bytes": 137255,
-  "submission_name": "gems76-line-support-B-cotrain-37654px-20261009T193810Z",
-  "note": "H76 RESEARCH ONLY-DO NOT SUBMIT: co-training trace-integrated View B 600m chord; 37654px binary; >200m off catalogue; lane-feasible c<=50",
-  "note_chars": 137,
+  "submission_name": "gems77cond-line-support-B-cotrain-37654px-20261009T193810Z",
+  "note": "H77cond RESEARCH ONLY-DO NOT SUBMIT: co-training trace-integrated View B 600m chord; 37654px binary; >200m off catalogue; lane c<=50",
+  "note_chars": 132,
   "validator": {
-    "path": "submission/gems76-line-support-B-cotrain-37654px-20261009T193810Z.tif",
+    "path": "submission/gems77cond-line-support-B-cotrain-37654px-20261009T193810Z.tif",
     "bytes": 137255,
     "sha256": "49ad60980f8bf768b94a2753581cae9ba572c75564d862089cec8093bcf317ad",
     "bands": 1,
@@ -54,18 +54,18 @@
     "ok": true,
     "validation_class": "local on-disk template/range check; not organizer upload acceptance"
   },
-  "zip_file": "gems76-line-support-B-cotrain-37654px-20261009T193810Z.zip",
+  "zip_file": "gems77cond-line-support-B-cotrain-37654px-20261009T193810Z.zip",
   "zip_sha256": "fb0bce04e9e878b60084497bda7bf72ec6af3c7b0e7d929b99ac5d7b87e96d69",
   "approved_for_weekly_slot": false,
   "promoted": false,
   "submission_slots_used": 0,
   "status": "research-only; local format validation is not organizer acceptance",
   "metadata": {
-    "round": "H76",
+    "round": "H77cond",
     "arm": "line_support_B",
     "consensus_threshold": 50,
     "dots": 37654,
     "holdout_evaluator": "gems52-pooled-hide-v1",
-    "identifier_rename": "H74 -> H76, see registry/h76_preregistration.json"
+    "identifier_rename": "H74 -> H77cond, see registry/h77cond_preregistration.json"
   }
 }

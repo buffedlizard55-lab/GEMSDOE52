@@ -628,7 +628,7 @@ def check_r5(DATA, DOCS, ROOT, problems, notes):
                 txt = src.name
             cands += _re.findall(r"(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})Z?", txt)
             cands += _re.findall(r"(\d{8}T\d{6})Z", txt)
-            # IR-H76-002: a date-only stamp must still count.  H75 shipped
+            # IR-H77cond-002: a date-only stamp must still count.  H75 shipped
             # "gems52-h75-dva-variogram-anisotropy-B-37654px-20261009.tif" -- a date with no
             # THHMMSS part -- so the two patterns above found nothing, _stamp returned None, and
             # the file was treated as PRE-dating every earlier round.  That silently back-dated a

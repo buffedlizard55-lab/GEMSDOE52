@@ -1,31 +1,31 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DOE GEMS · H76 conditional co-training</title><link rel="stylesheet" href="assets/ctd5.css"></head><body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a><a href="index.html">Overview</a><a href="h76-executive-summary.html">How to submit</a><a href="h71.html">H71 (earlier)</a><a href="downloads/index.html">Archive</a></nav></header><main id="main">
-<section class="hero"><div><div class="eyebrow">DOE GEMS / H76 · conditional co-training sufficiency,
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DOE GEMS · H77cond conditional co-training</title><link rel="stylesheet" href="assets/ctd5.css"></head><body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a><a href="index.html">Overview</a><a href="h77cond-executive-summary.html">How to submit</a><a href="h71.html">H71 (earlier)</a><a href="downloads/index.html">Archive</a></nav></header><main id="main">
+<section class="hero"><div><div class="eyebrow">DOE GEMS / H77cond · conditional co-training sufficiency,
 B-core + A-rescue swap</div>
 <h1>Download the file.<br>The verdict is right here.</h1>
 <p class="lead">The co-training lane (Blum &amp; Mitchell, COLT&nbsp;’98) has been closed five times in this
 repository by one gate: View A (gravity, magnetics, strain, seismicity) does not predict mapped faults on its own.
-H76 asks whether that gate was measuring the wrong thing. Mapped faults are <em>surface-expressed by selection</em> —
-they are in the catalogue because somebody saw them — which is exactly View B’s domain. So H76 re-tests sufficiency
+H77cond asks whether that gate was measuring the wrong thing. Mapped faults are <em>surface-expressed by selection</em> —
+they are in the catalogue because somebody saw them — which is exactly View B’s domain. So H77cond re-tests sufficiency
 <b>conditionally</b>: View A’s out-of-quadrant AUC restricted to held-out truth that lies inside View B’s blind band.
 The shipped raster is the first properly nested co-training arm: View B’s ranking with the weakest φ of its budget
 swapped for View A’s confident cells where View B abstains.</p>
 <div class="notice" role="note" style="background:#fff1de;border-left:6px solid #12331f;padding:18px 20px;margin:18px 0"><div style="font-size:1.35rem;font-weight:700;letter-spacing:.01em">SAFE TO DOWNLOAD — DO NOT SUBMIT IT</div><p style="margin:.5rem 0 0"><b>Can I download this file?</b> Yes — the on-disk validator passes: one float32 band, every value in [0,1], no NaN, grid identical to sample_submission.tif.</p><p style="margin:.35rem 0 0"><b>Can I submit this file to DrivenData?</b> NO. Download it, read it, cite it; do not spend a weekly slot on it.</p><p style="margin:.35rem 0 0"><b>Why:</b> the frozen promote rule requires format AND uniqueness AND the final-dot lane AND not-the-union AND conditional sufficiency AND a holdout paired CI lower bound above single_B; failing clauses: c5_S1_conditional, c6_beats_single_B -&gt; do not spend a weekly slot</p><p style="margin:.35rem 0 0"><b>Verdict recorded in the run card:</b> <b>NEGATIVE, research-only</b></p></div>
-<div class="actions"><a class="button" href="downloads/h76-candidate.tif" download>Download the H76 GeoTIFF ↓</a><a class="button secondary" href="downloads/h76-candidate.zip" download>Single-TIFF ZIP</a><a class="button secondary" href="downloads/h76-a-only-reasoning.csv" download>A-only reasoning CSV</a></div>
-<p class="fileline">gems76-line-support-B-cotrain-37654px-20261009T193810Z.tif<br>137,255 bytes · SHA-256 49ad60980f8bf768b94a2753581cae9ba572c75564d862089cec8093bcf317ad · 37,654 emitted cells · values exactly {0,1}, 1 band, 0 NaN</p>
-<p class="small"><a href="h76-executive-summary.html">How to submit, and whether this file may be submitted →</a>
-· <a href="data/h76_run_card.json">Complete JSON run card ↗</a>
-· <a href="../knowledge/67_hypotheses_H76_preregistered.md">Preregistered hypotheses ↗</a></p></section>
+<div class="actions"><a class="button" href="downloads/h77cond-candidate.tif" download>Download the H77cond GeoTIFF ↓</a><a class="button secondary" href="downloads/h77cond-candidate.zip" download>Single-TIFF ZIP</a><a class="button secondary" href="downloads/h77cond-a-only-reasoning.csv" download>A-only reasoning CSV</a></div>
+<p class="fileline">gems77cond-line-support-B-cotrain-37654px-20261009T193810Z.tif<br>137,255 bytes · SHA-256 49ad60980f8bf768b94a2753581cae9ba572c75564d862089cec8093bcf317ad · 37,654 emitted cells · values exactly {0,1}, 1 band, 0 NaN</p>
+<p class="small"><a href="h77cond-executive-summary.html">How to submit, and whether this file may be submitted →</a>
+· <a href="data/h77cond_run_card.json">Complete JSON run card ↗</a>
+· <a href="../knowledge/67_hypotheses_H77cond_preregistered.md">Preregistered hypotheses ↗</a></p></section>
 <hr class="divider">
 <section><h2>The six frozen promotion clauses</h2>
-<p class="small">Written into <code>knowledge/67_hypotheses_H76_preregistered.md</code> (SHA-256
+<p class="small">Written into <code>knowledge/67_hypotheses_H77cond_preregistered.md</code> (SHA-256
 <code>d117b265d44aed76…</code>, pinned in
-<code>registry/h76_preregistration.json</code>) before a single model was fitted. All six must pass for the file to
+<code>registry/h77cond_preregistration.json</code>) before a single model was fitted. All six must pass for the file to
 be recommended for a weekly slot.</p>
 <div class="table-wrap"><table><thead><tr><th>Clause</th><th>Result</th></tr></thead>
 <tbody><tr><td>1 · Format: single-band float32 GeoTIFF, EPSG:32611, 3730×3292, transform of sample_submission.tif, every value in [0,1], no NaN</td><td><b>PASS</b></td></tr><tr><td>2 · Uniqueness: decoded pattern differs from every one of the 643 comparable registry rasters and is not the literal union of them</td><td><b>PASS</b></td></tr><tr><td>3 · Parallel-lane gate on the final dots (saturation policy: Spearman ≤ 0.90 and ≤ 70% of dots within 3 px of any informative prior)</td><td><b>PASS</b></td></tr><tr><td>4 · Not merely the union of the two views</td><td><b>PASS</b></td></tr><tr><td>5 · Conditional sufficiency S1′: View A&#x27;s out-of-quadrant AUC on truth inside View B&#x27;s blind band ≥ 0.60 and ≥ 0.05 above its AUC on surface-expressed truth</td><td><b>FAIL</b></td></tr><tr><td>6 · HOLDOUT-DTI: the shipped arm&#x27;s paired 95% CI against single_B has a lower bound above zero</td><td><b>FAIL</b></td></tr></tbody></table></div></section>
 <hr class="divider">
 <section><h2>Did View A ever have a chance? The conditional sufficiency test</h2>
-<p>This is the new science in H76 and it is reported whether it helps or not.</p>
+<p>This is the new science in H77cond and it is reported whether it helps or not.</p>
 <div class="table-wrap"><table><thead><tr><th>Measurement</th><th>Value</th><th>Bar</th></tr></thead><tbody>
 <tr><td>View A out-of-quadrant AUC, all held-out truth (the gate that closed H61/H63/H64/H65/H70)</td>
 <td class="numeric">0.5163</td><td class="numeric">0.60</td></tr>
@@ -50,7 +50,7 @@ rank) and are a <b>diagnostic, not an unbiased population estimate</b>. S1′ co
 <tbody><tr><td>0</td><td class='numeric'>27,309</td><td class='numeric'>0.5062</td><td class='numeric'>0.6625</td><td class='numeric'>0.4554</td><td class='numeric'>0.4854</td><td class='numeric'>0.5339</td><td class='numeric'>-0.0484</td></tr><tr><td>1</td><td class='numeric'>10,677</td><td class='numeric'>0.6011</td><td class='numeric'>0.7684</td><td class='numeric'>0.5685</td><td class='numeric'>0.5714</td><td class='numeric'>0.6139</td><td class='numeric'>-0.0425</td></tr><tr><td>2</td><td class='numeric'>6,813</td><td class='numeric'>0.4668</td><td class='numeric'>0.6112</td><td class='numeric'>0.4250</td><td class='numeric'>0.4278</td><td class='numeric'>0.5108</td><td class='numeric'>-0.0830</td></tr><tr><td>3</td><td class='numeric'>8,387</td><td class='numeric'>0.4910</td><td class='numeric'>0.6952</td><td class='numeric'>0.4251</td><td class='numeric'>0.4727</td><td class='numeric'>0.5158</td><td class='numeric'>-0.0431</td></tr></tbody></table></div>
 <p><b>In every fold, without exception, the ordering is A∣B-dark &lt; A∣B-blind &lt; A∣B-bright.</b>
 View A is <em>least</em> informative exactly where View B is blind, and <em>most</em> informative exactly where
-View B is already confident. That is the opposite of the hypothesis H76 was built to test. It does not merely fail
+View B is already confident. That is the opposite of the hypothesis H77cond was built to test. It does not merely fail
 the bar — it forecloses the rescue argument that kept this lane open for six rounds: View A's apparent skill is a
 shadow of the same surface-expressed structures View B reads directly, not an independent subsurface channel that
 the catalogue under-samples. A buried-fault population that only gravity and magnetics can see would have produced
@@ -133,7 +133,7 @@ single most expensive lesson in this repository: full co-training with pseudo-la
 cells, of which the shipped raster emits 76.
 <b>Every candidate gets a row, whether or not the shipped arm emits it</b> — the reasoning requirement is about
 the lane's discovery claims, not about which arm won the holdout.
-Each has a row in <a href="downloads/h76-a-only-reasoning.csv" download>the reasoning CSV</a> carrying its UTM 11N
+Each has a row in <a href="downloads/h77cond-a-only-reasoning.csv" download>the reasoning CSV</a> carrying its UTM 11N
 coordinates, both views’ out-of-fold ranks, measured depth-to-basement / gravity / RTP-magnetic / slope /
 radiometric percentiles, distance to the nearest mapped trace, a written interpretation, a <b>named non-fault
 process that could mimic it</b>, and the falsifier a Phase-2 reviewer would apply. Named mimics:
@@ -186,12 +186,12 @@ so no number on this page describes the file you can download. That is the main 
 essentially the whole legal footprint, so <b>no</b> raster can show novel support. The meaningful uniqueness
 statement is the decoded-pattern one: distinct from every one of the 643 comparable
 rasters.</li></ul>
-<p class="small"><a href="../knowledge/67_hypotheses_H76_preregistered.md">Ranked hypotheses and the frozen
-protocol →</a> · <a href="../knowledge/67a_h76_amendment_shipped_arm_rule.md">Shipped-arm amendment →</a> ·
-<a href="../knowledge/68_h76_results_and_limits.md">Results and limits →</a></p></section>
+<p class="small"><a href="../knowledge/67_hypotheses_H77cond_preregistered.md">Ranked hypotheses and the frozen
+protocol →</a> · <a href="../knowledge/67a_h77cond_amendment_shipped_arm_rule.md">Shipped-arm amendment →</a> ·
+<a href="../knowledge/68_h77cond_results_and_limits.md">Results and limits →</a></p></section>
 
 <section><h2>Earlier rounds still on this site</h2><p class="small">Each is a separate artefact with its own
-receipt. None of them is the H76 file and none is approved for a weekly slot.</p><ul>
+receipt. None of them is the H77cond file and none is approved for a weekly slot.</p><ul>
 <li><b>H71, negative. Do not upload.</b> <a href="h71.html">H71 landing</a> · <a href="h71-executive-summary.html">H71 guide</a></li>
 <li><b>H64, negative. Do not upload.</b> <a href="h64.html">H64 landing</a></li>
 <li><b>H61, negative; its file is a measured lane duplicate.</b> <a href="archive-h61-landing.html">H61 landing</a></li>

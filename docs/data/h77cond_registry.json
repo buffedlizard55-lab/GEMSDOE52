@@ -13,11 +13,11 @@
  "consensus_median": 55.0,
  "errors": [
   {
-   "path": "/home/user/GEMSDOE52/work/h76/priors/7c12ed8a4164ce549fc8c3114eb30eb7f898af09.tif",
+   "path": "/home/user/GEMSDOE52/work/h77cond/priors/7c12ed8a4164ce549fc8c3114eb30eb7f898af09.tif",
    "error": "unaligned or multiband"
   },
   {
-   "path": "/home/user/GEMSDOE52/work/h76/priors/a97c7b2a513225c9f9f2b35736afe5abf4d2a491.tif",
+   "path": "/home/user/GEMSDOE52/work/h77cond/priors/a97c7b2a513225c9f9f2b35736afe5abf4d2a491.tif",
    "error": "unaligned or multiband"
   }
  ],

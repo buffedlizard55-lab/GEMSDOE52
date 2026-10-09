@@ -1,14 +1,14 @@
-<!--H76-README-->
-## H76 — conditional co-training sufficiency (S1′) and the B-core + A-rescue swap
+<!--H77cond-README-->
+## H77cond — conditional co-training sufficiency (S1′) and the B-core + A-rescue swap
 
 **Verdict: NEGATIVE, research-only.** Download OK: **True**. Spend a weekly slot: **False**.
 the frozen promote rule requires format AND uniqueness AND the final-dot lane AND not-the-union AND conditional sufficiency AND a holdout paired CI lower bound above single_B; failing clauses: c5_S1_conditional, c6_beats_single_B -> do not spend a weekly slot
 
-* One-click download: [`docs/downloads/h76-candidate.tif`](docs/downloads/h76-candidate.tif)
+* One-click download: [`docs/downloads/h77cond-candidate.tif`](docs/downloads/h77cond-candidate.tif)
   (137,255 bytes, SHA-256 `49ad60980f8bf768b94a2753581cae9ba572c75564d862089cec8093bcf317ad`, 37,654 cells, values exactly {0,1},
   0 NaN, EPSG:32611, grid identical to `sample_submission.tif`).
-* Pages: [`docs/h76.html`](docs/h76.html) · [exact submission steps](docs/h76-executive-summary.html).
-* Submission name: `gems76-line-support-B-cotrain-37654px-20261009T193810Z` · note (137 chars): `H76 RESEARCH ONLY-DO NOT SUBMIT: co-training trace-integrated View B 600m chord; 37654px binary; >200m off catalogue; lane-feasible c<=50`
+* Pages: [`docs/h77cond.html`](docs/h77cond.html) · [exact submission steps](docs/h77cond-executive-summary.html).
+* Submission name: `gems77cond-line-support-B-cotrain-37654px-20261009T193810Z` · note (132 chars): `H77cond RESEARCH ONLY-DO NOT SUBMIT: co-training trace-integrated View B 600m chord; 37654px binary; >200m off catalogue; lane c<=50`
 * New science: **S1′**, View A's out-of-quadrant AUC restricted to truth inside View B's blind band —
   0.4893 against the 0.60 bar
   (global S1 for comparison: 0.5163); conditional margin
@@ -16,10 +16,10 @@ the frozen promote rule requires format AND uniqueness AND the final-dot lane AN
 * Shipped arm `line_support_B`: HOLDOUT-DTI 0.172426 [0.150155, 0.195030] vs the `single_B` control
   0.174517 [0.152316, 0.196299]; paired Δ -0.002091
   [-0.005873, 0.001289]. HOLDOUT-DTI, not a leaderboard score.
-* Receipts: [`evidence/h76_run_card.json`](evidence/h76_run_card.json),
-  [`knowledge/67_hypotheses_H76_preregistered.md`](knowledge/67_hypotheses_H76_preregistered.md),
-  [`knowledge/68_h76_results_and_limits.md`](knowledge/68_h76_results_and_limits.md).
-<!--/H76-README-->
+* Receipts: [`evidence/h77cond_run_card.json`](evidence/h77cond_run_card.json),
+  [`knowledge/67_hypotheses_H77cond_preregistered.md`](knowledge/67_hypotheses_H77cond_preregistered.md),
+  [`knowledge/68_h77cond_results_and_limits.md`](knowledge/68_h77cond_results_and_limits.md).
+<!--/H77cond-README-->
 
 <!--H75-README-->
 # Current status — H75 (2026-10-09): variogram-anisotropy ranker beats single_B on the holdout; lane rule still fails

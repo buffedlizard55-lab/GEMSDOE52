@@ -9,7 +9,7 @@
  "n_priors_compared": 643,
  "incomparable_priors": [
   {
-   "path": "/home/user/GEMSDOE52/work/h76/priors/a97c7b2a513225c9f9f2b35736afe5abf4d2a491.tif",
+   "path": "/home/user/GEMSDOE52/work/h77cond/priors/a97c7b2a513225c9f9f2b35736afe5abf4d2a491.tif",
    "error": "ValueError: not aligned single-band prediction (1 bands, (32, 48))"
   }
  ],

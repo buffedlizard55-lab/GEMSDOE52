@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-"""Render the H76 landing page, executive summary / submission guide, results note, README block
+"""Render the H77cond landing page, executive summary / submission guide, results note, README block
 and the site banners.
 
-Every number on the published pages is read from ``evidence/h76_*.json`` or the writer's own
+Every number on the published pages is read from ``evidence/h77cond_*.json`` or the writer's own
 receipt.  Nothing is typed by hand, so a page cannot disagree with the evidence it cites, and
 nothing here uploads anything or changes a verdict -- it only reports the verdict the run card
 already holds.
 
-Run after ``scripts/run_h76.py card``:
-    .venv/bin/python scripts/publish_h76_site.py
+Run after ``scripts/run_h77cond.py card``:
+    .venv/bin/python scripts/publish_h77cond_site.py
 """
 from __future__ import annotations
 
@@ -45,12 +45,12 @@ def ci(a) -> str:
 
 
 def main() -> int:
-    card = load("h76_run_card.json")
-    hold = load("h76_holdout.json")
-    place = load("h76_placement.json")
-    s1 = load("h76_sufficiency.json")
-    exch = load("h76_pseudo_exchange.json")
-    dis = load("h76_disagreement.json")
+    card = load("h77cond_run_card.json")
+    hold = load("h77cond_holdout.json")
+    place = load("h77cond_placement.json")
+    s1 = load("h77cond_sufficiency.json")
+    exch = load("h77cond_pseudo_exchange.json")
+    dis = load("h77cond_disagreement.json")
     stem = card["submission_name"]
     val = card["validator"]
     arm = place["shipped_arm"]
@@ -66,17 +66,17 @@ def main() -> int:
     DOWN.mkdir(parents=True, exist_ok=True)
     DAD.mkdir(parents=True, exist_ok=True)
     for ext in (".tif", ".zip"):
-        shutil.copy(SUBM / f"{stem}{ext}", DOWN / f"h76-candidate{ext}")
+        shutil.copy(SUBM / f"{stem}{ext}", DOWN / f"h77cond-candidate{ext}")
         shutil.copy(SUBM / f"{stem}{ext}", DOWN / f"{stem}{ext}")
-    for f in sorted(EVID.glob("h76_*.json")):
+    for f in sorted(EVID.glob("h77cond_*.json")):
         shutil.copy(f, DAD / f.name)
-    csv_src = DOWN / "h76-a-only-reasoning.csv"
-    csv_link = "h76-a-only-reasoning.csv"
+    csv_src = DOWN / "h77cond-a-only-reasoning.csv"
+    csv_link = "h77cond-a-only-reasoning.csv"
     if csv_src.exists() and csv_src.stat().st_size > 8_000_000:
         gz = csv_src.with_suffix(".csv.gz")
         with csv_src.open("rb") as a, gzip.open(gz, "wb", compresslevel=6) as b:
             shutil.copyfileobj(a, b)
-        csv_link = "h76-a-only-reasoning.csv.gz"
+        csv_link = "h77cond-a-only-reasoning.csv.gz"
 
     fileline = (f"{esc(stem)}.tif<br>{fi(card['raster_bytes'])} bytes · SHA-256 "
                 f"{esc(card['raster_sha256'])} · {fi(n_dots)} emitted cells · values exactly "
@@ -160,23 +160,23 @@ def main() -> int:
 
     head = ('<!doctype html><html lang="en"><head><meta charset="utf-8">'
             '<meta name="viewport" content="width=device-width,initial-scale=1">'
-            '<title>DOE GEMS · H76 conditional co-training</title>'
+            '<title>DOE GEMS · H77cond conditional co-training</title>'
             '<link rel="stylesheet" href="assets/ctd5.css"></head><body>'
             '<a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation">'
             '<a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>'
-            '<a href="index.html">Overview</a><a href="h76-executive-summary.html">How to submit</a>'
+            '<a href="index.html">Overview</a><a href="h77cond-executive-summary.html">How to submit</a>'
             '<a href="h71.html">H71 (earlier)</a><a href="downloads/index.html">Archive</a>'
             '</nav></header><main id="main">')
     tail = "</main></body></html>\n"
-    buttons = (f'<div class="actions"><a class="button" href="downloads/h76-candidate.tif" download>'
-               f'Download the H76 GeoTIFF ↓</a>'
-               f'<a class="button secondary" href="downloads/h76-candidate.zip" download>Single-TIFF ZIP</a>'
+    buttons = (f'<div class="actions"><a class="button" href="downloads/h77cond-candidate.tif" download>'
+               f'Download the H77cond GeoTIFF ↓</a>'
+               f'<a class="button secondary" href="downloads/h77cond-candidate.zip" download>Single-TIFF ZIP</a>'
                f'<a class="button secondary" href="downloads/{esc(csv_link)}" download>'
                f'A-only reasoning CSV</a></div>')
 
     earlier = """
 <section><h2>Earlier rounds still on this site</h2><p class="small">Each is a separate artefact with its own
-receipt. None of them is the H76 file and none is approved for a weekly slot.</p><ul>
+receipt. None of them is the H77cond file and none is approved for a weekly slot.</p><ul>
 <li><b>H71, negative. Do not upload.</b> <a href="h71.html">H71 landing</a> · <a href="h71-executive-summary.html">H71 guide</a></li>
 <li><b>H64, negative. Do not upload.</b> <a href="h64.html">H64 landing</a></li>
 <li><b>H61, negative; its file is a measured lane duplicate.</b> <a href="archive-h61-landing.html">H61 landing</a></li>
@@ -184,33 +184,33 @@ receipt. None of them is the H76 file and none is approved for a weekly slot.</p
 """
 
     index = head + f"""
-<section class="hero"><div><div class="eyebrow">DOE GEMS / H76 · conditional co-training sufficiency,
+<section class="hero"><div><div class="eyebrow">DOE GEMS / H77cond · conditional co-training sufficiency,
 B-core + A-rescue swap</div>
 <h1>Download the file.<br>The verdict is right here.</h1>
 <p class="lead">The co-training lane (Blum &amp; Mitchell, COLT&nbsp;’98) has been closed five times in this
 repository by one gate: View A (gravity, magnetics, strain, seismicity) does not predict mapped faults on its own.
-H76 asks whether that gate was measuring the wrong thing. Mapped faults are <em>surface-expressed by selection</em> —
-they are in the catalogue because somebody saw them — which is exactly View B’s domain. So H76 re-tests sufficiency
+H77cond asks whether that gate was measuring the wrong thing. Mapped faults are <em>surface-expressed by selection</em> —
+they are in the catalogue because somebody saw them — which is exactly View B’s domain. So H77cond re-tests sufficiency
 <b>conditionally</b>: View A’s out-of-quadrant AUC restricted to held-out truth that lies inside View B’s blind band.
 The shipped raster is the first properly nested co-training arm: View B’s ranking with the weakest φ of its budget
 swapped for View A’s confident cells where View B abstains.</p>
 {big}
 {buttons}
 <p class="fileline">{fileline}</p>
-<p class="small"><a href="h76-executive-summary.html">How to submit, and whether this file may be submitted →</a>
-· <a href="data/h76_run_card.json">Complete JSON run card ↗</a>
-· <a href="../knowledge/67_hypotheses_H76_preregistered.md">Preregistered hypotheses ↗</a></p></section>
+<p class="small"><a href="h77cond-executive-summary.html">How to submit, and whether this file may be submitted →</a>
+· <a href="data/h77cond_run_card.json">Complete JSON run card ↗</a>
+· <a href="../knowledge/67_hypotheses_H77cond_preregistered.md">Preregistered hypotheses ↗</a></p></section>
 <hr class="divider">
 <section><h2>The six frozen promotion clauses</h2>
-<p class="small">Written into <code>knowledge/67_hypotheses_H76_preregistered.md</code> (SHA-256
+<p class="small">Written into <code>knowledge/67_hypotheses_H77cond_preregistered.md</code> (SHA-256
 <code>{esc(card['preregistration']['sha256'][:16])}…</code>, pinned in
-<code>registry/h76_preregistration.json</code>) before a single model was fitted. All six must pass for the file to
+<code>registry/h77cond_preregistration.json</code>) before a single model was fitted. All six must pass for the file to
 be recommended for a weekly slot.</p>
 <div class="table-wrap"><table><thead><tr><th>Clause</th><th>Result</th></tr></thead>
 <tbody>{clause_rows}</tbody></table></div></section>
 <hr class="divider">
 <section><h2>Did View A ever have a chance? The conditional sufficiency test</h2>
-<p>This is the new science in H76 and it is reported whether it helps or not.</p>
+<p>This is the new science in H77cond and it is reported whether it helps or not.</p>
 <div class="table-wrap"><table><thead><tr><th>Measurement</th><th>Value</th><th>Bar</th></tr></thead><tbody>
 <tr><td>View A out-of-quadrant AUC, all held-out truth (the gate that closed H61/H63/H64/H65/H70)</td>
 <td class="numeric">{s1['mean_auc_A']:.4f}</td><td class="numeric">0.60</td></tr>
@@ -235,7 +235,7 @@ rank) and are a <b>diagnostic, not an unbiased population estimate</b>. S1′ co
 <tbody>{fold_rows}</tbody></table></div>
 <p>{'<b>In every fold, without exception, the ordering is A∣B-dark &lt; A∣B-blind &lt; A∣B-bright.</b>' if order_ok else 'The ordering is not monotone across all folds.'}
 View A is <em>least</em> informative exactly where View B is blind, and <em>most</em> informative exactly where
-View B is already confident. That is the opposite of the hypothesis H76 was built to test. It does not merely fail
+View B is already confident. That is the opposite of the hypothesis H77cond was built to test. It does not merely fail
 the bar — it forecloses the rescue argument that kept this lane open for six rounds: View A's apparent skill is a
 shadow of the same surface-expressed structures View B reads directly, not an independent subsurface channel that
 the catalogue under-samples. A buried-fault population that only gravity and magnetics can see would have produced
@@ -371,9 +371,9 @@ so no number on this page describes the file you can download. That is the main 
 essentially the whole legal footprint, so <b>no</b> raster can show novel support. The meaningful uniqueness
 statement is the decoded-pattern one: distinct from every one of the {fi(reg['priors_compared'])} comparable
 rasters.</li></ul>
-<p class="small"><a href="../knowledge/67_hypotheses_H76_preregistered.md">Ranked hypotheses and the frozen
-protocol →</a> · <a href="../knowledge/67a_h76_amendment_shipped_arm_rule.md">Shipped-arm amendment →</a> ·
-<a href="../knowledge/68_h76_results_and_limits.md">Results and limits →</a></p></section>
+<p class="small"><a href="../knowledge/67_hypotheses_H77cond_preregistered.md">Ranked hypotheses and the frozen
+protocol →</a> · <a href="../knowledge/67a_h77cond_amendment_shipped_arm_rule.md">Shipped-arm amendment →</a> ·
+<a href="../knowledge/68_h77cond_results_and_limits.md">Results and limits →</a></p></section>
 {earlier}""" + tail
 
     exec_html = head + f"""
@@ -400,8 +400,8 @@ separation so no two dots compete for the same kernel credit.</li>
 exactly what to paste.</p>
 <ol>
 <li><b>File to submit.</b> Upload a single-band GeoTIFF, or a ZIP containing exactly one GeoTIFF. Use
-<a href="downloads/h76-candidate.tif" download><code>h76-candidate.tif</code></a> or
-<a href="downloads/h76-candidate.zip" download><code>h76-candidate.zip</code></a> — the ZIP holds that one TIFF and
+<a href="downloads/h77cond-candidate.tif" download><code>h77cond-candidate.tif</code></a> or
+<a href="downloads/h77cond-candidate.zip" download><code>h77cond-candidate.zip</code></a> — the ZIP holds that one TIFF and
 nothing else, verified byte-for-byte.</li>
 <li><b>Submission name (must be unique).</b> Every submission needs a name you have not used before. Paste:<br>
 <code>{esc(card['submission_name'])}</code></li>
@@ -435,8 +435,8 @@ spent, never to manufacture training labels.</p>
 </section>
 {earlier}""" + tail
 
-    (DOCS / "h76.html").write_text(index)
-    (DOCS / "h76-executive-summary.html").write_text(exec_html)
+    (DOCS / "h77cond.html").write_text(index)
+    (DOCS / "h77cond-executive-summary.html").write_text(exec_html)
 
     # ------------------------------------------------------------------ knowledge note
     rows_md = ""
@@ -446,19 +446,19 @@ spent, never to manufacture training labels.</p>
         shipped = " **(shipped)**" if a == arm else ""
         rows_md += (f"| `{a}`{shipped} | {sc[a]['dti']:.6f} | "
                     f"{ci(sc[a]['ci95'])} | {delta} |\n")
-    kn = f"""# 64 · H76 results and limits (rendered from the receipts by `scripts/publish_h76_site.py`)
+    kn = f"""# 64 · H77cond results and limits (rendered from the receipts by `scripts/publish_h77cond_site.py`)
 
 **Verdict: `{verdict}`** · download OK: **{download_ok}** · spend a weekly slot: **{promote}**
 
 Artefact `{stem}.tif`, SHA-256 `{card['raster_sha256']}`, {card['raster_bytes']} bytes, {n_dots} emitted cells.
-Preregistration `knowledge/67_hypotheses_H76_preregistered.md`
-(SHA-256 `{card['preregistration']['sha256']}`, pinned in `registry/h76_preregistration.json`),
-amendment `knowledge/67a_h76_amendment_shipped_arm_rule.md`.
+Preregistration `knowledge/67_hypotheses_H77cond_preregistered.md`
+(SHA-256 `{card['preregistration']['sha256']}`, pinned in `registry/h77cond_preregistration.json`),
+amendment `knowledge/67a_h77cond_amendment_shipped_arm_rule.md`.
 
-## 1 · What H76 changed
+## 1 · What H77cond changed
 
 Five rounds closed this lane on one gate: View A's out-of-quadrant AUC on *all* held-out truth is ~0.52, below the
-0.60 sufficiency bar. H76's claim is that this gate is confounded: the catalogue's faults are surface-expressed by
+0.60 sufficiency bar. H77cond's claim is that this gate is confounded: the catalogue's faults are surface-expressed by
 selection, so "View A cannot predict mapped faults" and "View A is uninformative" are not the same statement. The
 new test **S1′** restricts View A's AUC to held-out truth inside View B's blind band and requires it to beat both an
 absolute bar and View A's own AUC on surface-expressed truth.
@@ -481,7 +481,7 @@ Conditional AUCs are label-selected diagnostics, not unbiased estimates.
 {fold_md}
 {'**In every fold, without exception, A∣B-dark < A∣B-blind < A∣B-bright.**' if order_ok else '**The ordering is not monotone across all folds.**'}
 View A is least informative exactly where View B is blind and most informative where View B is already confident —
-the reverse of the H76 hypothesis. This does not merely fail the bar, it forecloses the rescue argument that kept
+the reverse of the H77cond hypothesis. This does not merely fail the bar, it forecloses the rescue argument that kept
 the lane open for six rounds: View A's apparent skill is a shadow of the same surface-expressed structures View B
 reads directly, not an independent subsurface channel that the catalogue under-samples. A buried-fault population
 visible only to gravity and magnetics would have produced the reverse ordering.
@@ -530,34 +530,34 @@ per-prior near-dot quota {place['quota']} over {place['quota_priors']} packed in
 * Registry scope: the supplied, aligned, publicly mirrored inventory only; private or unlinked artefacts are not
   proven absent.
 """
-    (ROOT / "knowledge/68_h76_results_and_limits.md").write_text(kn)
+    (ROOT / "knowledge/68_h77cond_results_and_limits.md").write_text(kn)
 
     # ------------------------------------------------------------------ banners (idempotent)
     short = "PROMOTE-ELIGIBLE · selector decides" if promote else "DO NOT SUBMIT"
-    banner = (f'<!--H76-BANNER--><div class="notice" role="note" style="margin:0 0 1rem;'
-              f'background:{colour}"><strong>Latest research round: H76 — {esc(short)}.</strong> '
+    banner = (f'<!--H77cond-BANNER--><div class="notice" role="note" style="margin:0 0 1rem;'
+              f'background:{colour}"><strong>Latest research round: H77cond — {esc(short)}.</strong> '
               f'Conditional co-training sufficiency (S1′) and the first nested B-core + A-rescue arm. '
-              f'<a href="downloads/h76-candidate.tif" download>Download the H76 GeoTIFF</a> '
+              f'<a href="downloads/h77cond-candidate.tif" download>Download the H77cond GeoTIFF</a> '
               f'({fi(card["raster_bytes"])} bytes, SHA-256 <code>{esc(card["raster_sha256"][:16])}…</code>, '
-              f'{fi(n_dots)} cells) · <a href="h76-executive-summary.html">Read the verdict and the exact '
-              f'submission steps first</a> · <a href="h76.html">Run &amp; evidence</a>. Historical downloads '
-              f'below are not upload approval.</div><!--/H76-BANNER-->')
-    dl_rows = (f'<!--H76-DL--><tr><td><a href="h76-candidate.tif" download>h76-candidate.tif</a></td>'
+              f'{fi(n_dots)} cells) · <a href="h77cond-executive-summary.html">Read the verdict and the exact '
+              f'submission steps first</a> · <a href="h77cond.html">Run &amp; evidence</a>. Historical downloads '
+              f'below are not upload approval.</div><!--/H77cond-BANNER-->')
+    dl_rows = (f'<!--H77cond-DL--><tr><td><a href="h77cond-candidate.tif" download>h77cond-candidate.tif</a></td>'
                f'<td class="number">{fi(card["raster_bytes"])}</td>'
                f'<td class="mono">{esc(card["raster_sha256"])}</td>'
-               f'<td>H76 · conditional co-training, {esc(arm)} · {fi(n_dots)} px · newest round; '
-               f'<a href="../h76.html">evidence</a></td></tr>\n'
+               f'<td>H77cond · conditional co-training, {esc(arm)} · {fi(n_dots)} px · newest round; '
+               f'<a href="../h77cond.html">evidence</a></td></tr>\n'
                f'<tr><td><a href="{esc(stem)}.tif" download>{esc(stem)}.tif</a></td>'
                f'<td class="number">{fi(card["raster_bytes"])}</td>'
                f'<td class="mono">{esc(card["raster_sha256"])}</td>'
                f'<td>canonical filename, byte-identical</td></tr>\n'
-               f'<tr><td><a href="h76-candidate.zip" download>h76-candidate.zip</a></td>'
+               f'<tr><td><a href="h77cond-candidate.zip" download>h77cond-candidate.zip</a></td>'
                f'<td class="number">single-TIFF ZIP</td><td class="mono">portal-accepted wrapper</td>'
                f'<td>holds exactly one TIFF, byte-identical</td></tr>\n'
                f'<tr><td><a href="{esc(csv_link)}" download>{esc(csv_link)}</a></td>'
                f'<td class="number">CSV</td><td class="mono">—</td>'
                f'<td>{fi(card["a_only_reasoning"]["n_a_only_candidates"])} A-only reasoning rows '
-               f'(interpretation + named non-fault mimic + falsifier)</td></tr><!--/H76-DL-->')
+               f'(interpretation + named non-fault mimic + falsifier)</td></tr><!--/H77cond-DL-->')
 
     def splice(path: Path, anchor: str, block: str, start: str, end: str):
         text = path.read_text()
@@ -572,19 +572,19 @@ per-prior near-dot quota {place['quota']} over {place['quota_priors']} packed in
             text = text.replace(anchor, anchor + block, 1)
         path.write_text(text)
 
-    splice(DOCS / "index.html", '<main id="main">', banner, "<!--H76-BANNER-->", "<!--/H76-BANNER-->")
+    splice(DOCS / "index.html", '<main id="main">', banner, "<!--H77cond-BANNER-->", "<!--/H77cond-BANNER-->")
     splice(DOCS / "executive-summary.html", '<main id="main">', banner,
-           "<!--H76-BANNER-->", "<!--/H76-BANNER-->")
-    splice(DOWN / "index.html", "<tbody>", dl_rows, "<!--H76-DL-->", "<!--/H76-DL-->")
+           "<!--H77cond-BANNER-->", "<!--/H77cond-BANNER-->")
+    splice(DOWN / "index.html", "<tbody>", dl_rows, "<!--H77cond-DL-->", "<!--/H77cond-DL-->")
 
     text = (DOWN / "index.html").read_text()
-    notice_new = (f'<!--H76-DOWNLOAD-NOTICE--><aside style="padding:20px;background:{colour};color:#12331f;'
-                  f'font:16px/1.6 system-ui"><b>Latest research: H76 — {esc(short)}.</b> '
-                  f'<a href="h76-candidate.tif" download>Download the H76 GeoTIFF</a> '
+    notice_new = (f'<!--H77cond-DOWNLOAD-NOTICE--><aside style="padding:20px;background:{colour};color:#12331f;'
+                  f'font:16px/1.6 system-ui"><b>Latest research: H77cond — {esc(short)}.</b> '
+                  f'<a href="h77cond-candidate.tif" download>Download the H77cond GeoTIFF</a> '
                   f'({fi(card["raster_bytes"])} bytes, {fi(n_dots)} cells) · '
-                  f'<a href="../h76-executive-summary.html">Verdict and exact submission steps</a> · '
-                  f'<a href="../h76.html">Run &amp; evidence</a>. Historical downloads below are not upload '
-                  f'approval.</aside><!--/H76-DOWNLOAD-NOTICE-->')
+                  f'<a href="../h77cond-executive-summary.html">Verdict and exact submission steps</a> · '
+                  f'<a href="../h77cond.html">Run &amp; evidence</a>. Historical downloads below are not upload '
+                  f'approval.</aside><!--/H77cond-DOWNLOAD-NOTICE-->')
     m = re.search(r"<!--H[0-9A-Za-z]+-DOWNLOAD-NOTICE-->.*?<!--/H[0-9A-Za-z]+-DOWNLOAD-NOTICE-->", text, re.S)
     text = (text[:m.start()] + notice_new + text[m.end():]) if m else text.replace(
         "<body>", "<body>" + notice_new, 1)
@@ -593,16 +593,16 @@ per-prior near-dot quota {place['quota']} over {place['quota_priors']} packed in
     # ------------------------------------------------------------------ README block
     readme = ROOT / "README.md"
     rtext = readme.read_text()
-    block = f"""<!--H76-README-->
-## H76 — conditional co-training sufficiency (S1′) and the B-core + A-rescue swap
+    block = f"""<!--H77cond-README-->
+## H77cond — conditional co-training sufficiency (S1′) and the B-core + A-rescue swap
 
 **Verdict: {verdict}.** Download OK: **{download_ok}**. Spend a weekly slot: **{promote}**.
 {card['submit_recommendation_reason']}
 
-* One-click download: [`docs/downloads/h76-candidate.tif`](docs/downloads/h76-candidate.tif)
+* One-click download: [`docs/downloads/h77cond-candidate.tif`](docs/downloads/h77cond-candidate.tif)
   ({card['raster_bytes']:,} bytes, SHA-256 `{card['raster_sha256']}`, {n_dots:,} cells, values exactly {{0,1}},
   0 NaN, EPSG:32611, grid identical to `sample_submission.tif`).
-* Pages: [`docs/h76.html`](docs/h76.html) · [exact submission steps](docs/h76-executive-summary.html).
+* Pages: [`docs/h77cond.html`](docs/h77cond.html) · [exact submission steps](docs/h77cond-executive-summary.html).
 * Submission name: `{card['submission_name']}` · note ({card['note_chars']} chars): `{card['submission_note']}`
 * New science: **S1′**, View A's out-of-quadrant AUC restricted to truth inside View B's blind band —
   {(f"{s1['mean_auc_A_blind']:.4f}" if s1['mean_auc_A_blind'] is not None else 'n/a')} against the 0.60 bar
@@ -611,15 +611,15 @@ per-prior near-dot quota {place['quota']} over {place['quota_priors']} packed in
 * Shipped arm `{arm}`: HOLDOUT-DTI {sc[arm]['dti']:.6f} {ci(sc[arm]['ci95'])} vs the `single_B` control
   {sc['single_B']['dti']:.6f} {ci(sc['single_B']['ci95'])}; paired Δ {pairs[arm]['delta']:+.6f}
   {ci(pairs[arm]['ci95'])}. HOLDOUT-DTI, not a leaderboard score.
-* Receipts: [`evidence/h76_run_card.json`](evidence/h76_run_card.json),
-  [`knowledge/67_hypotheses_H76_preregistered.md`](knowledge/67_hypotheses_H76_preregistered.md),
-  [`knowledge/68_h76_results_and_limits.md`](knowledge/68_h76_results_and_limits.md).
-<!--/H76-README-->
+* Receipts: [`evidence/h77cond_run_card.json`](evidence/h77cond_run_card.json),
+  [`knowledge/67_hypotheses_H77cond_preregistered.md`](knowledge/67_hypotheses_H77cond_preregistered.md),
+  [`knowledge/68_h77cond_results_and_limits.md`](knowledge/68_h77cond_results_and_limits.md).
+<!--/H77cond-README-->
 
 """
-    if "<!--H76-README-->" in rtext:
-        i = rtext.index("<!--H76-README-->")
-        j = rtext.index("<!--/H76-README-->") + len("<!--/H76-README-->\n\n")
+    if "<!--H77cond-README-->" in rtext:
+        i = rtext.index("<!--H77cond-README-->")
+        j = rtext.index("<!--/H77cond-README-->") + len("<!--/H77cond-README-->\n\n")
         rtext = rtext[:i] + block + rtext[j:]
     else:
         lines = rtext.split("\n")
@@ -627,8 +627,8 @@ per-prior near-dot quota {place['quota']} over {place['quota_priors']} packed in
         rtext = "\n".join(lines[:k]) + ("\n\n" if k else "") + block + "\n".join(lines[k:])
     readme.write_text(rtext)
 
-    print("published:", DOCS / "h76.html", DOCS / "h76-executive-summary.html",
-          ROOT / "knowledge/68_h76_results_and_limits.md", "README block")
+    print("published:", DOCS / "h77cond.html", DOCS / "h77cond-executive-summary.html",
+          ROOT / "knowledge/68_h77cond_results_and_limits.md", "README block")
     return 0
 
 

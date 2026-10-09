@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""H76 — conditional-sufficiency co-training ("B-core + A-rescue swap"), lane-feasible build.
+"""H77cond — conditional-sufficiency co-training ("B-core + A-rescue swap"), lane-feasible build.
 
-Read ``knowledge/67_hypotheses_H76_preregistered.md`` first.  This runner recomputes that file's
-SHA-256 against ``registry/h76_preregistration.json`` at start-up and refuses to run if it moved,
+Read ``knowledge/67_hypotheses_H77cond_preregistered.md`` first.  This runner recomputes that file's
+SHA-256 against ``registry/h77cond_preregistration.json`` at start-up and refuses to run if it moved,
 which is what "frozen before any fit" has to mean mechanically.
 
 Lane: the brief's co-training paragraph (Blum & Mitchell, COLT '98, doi:10.1145/279943.279962).
@@ -25,7 +25,7 @@ What is ROUND-SPECIFIC
 the conditional sufficiency test S1', the swap arms, the line-support arm, the registry consensus
 pass, the lane-feasible placement, the reasoning CSV and the run card.
 
-Stages (checkpointed under ``work/h76``; receipts under ``evidence/h76_*.json``)
+Stages (checkpointed under ``work/h77cond``; receipts under ``evidence/h77cond_*.json``)
     diag       E1  canary + fit + S1 + S1' + independence screen
     exchange   E2a one whole-segment confident-to-abstaining pseudo-label round, then refit
     holdout    E2b matched-budget hide-and-recover: 6 controls + 3 swap arms + line-support arm
@@ -33,7 +33,7 @@ Stages (checkpointed under ``work/h76``; receipts under ``evidence/h76_*.json``)
     build      E3  stitch OOF -> shipped field -> lane-feasible placement -> gates -> GeoTIFF
     card            run card + reasoning CSV + site data
 
-Usage:  python scripts/run_h76.py [diag|exchange|holdout|registry|build|all]
+Usage:  python scripts/run_h77cond.py [diag|exchange|holdout|registry|build|all]
 
 Nothing here produces an ORGANIZER-CONFIRMED number.  Every DTI printed is HOLDOUT-DTI.
 """
@@ -65,14 +65,14 @@ import run_h61 as base                                                # noqa: E4
 from gems52 import evaluate_holdout as evaluator                      # noqa: E402
 from gems52 import gates, nodes, spatial, submission_writer           # noqa: E402
 
-WORK = ROOT / "work/h76"
+WORK = ROOT / "work/h77cond"
 EVID = ROOT / "evidence"
 DOCS = ROOT / "docs/data"
 SUBM = ROOT / "submission"
 DOWN = ROOT / "docs/downloads"
 PRIORS = WORK / "priors"
-REG_PATH = ROOT / "registry/h76_preregistration.json"
-PREFIX = "gems52-h76-"
+REG_PATH = ROOT / "registry/h77cond_preregistration.json"
+PREFIX = "gems52-h77cond-"
 SEED = base.SEED
 T0 = time.time()
 
@@ -109,9 +109,9 @@ def _json_default(o):
 def write_ev(name: str, obj) -> Path:
     EVID.mkdir(parents=True, exist_ok=True)
     DOCS.mkdir(parents=True, exist_ok=True)
-    p = EVID / f"h76_{name}.json"
+    p = EVID / f"h77cond_{name}.json"
     p.write_text(json.dumps(obj, indent=1, allow_nan=False, default=_json_default) + "\n")
-    (DOCS / f"h76_{name}.json").write_text(p.read_text())
+    (DOCS / f"h77cond_{name}.json").write_text(p.read_text())
     return p
 
 
@@ -340,7 +340,7 @@ def stage_exchange(reg):
     th = reg["thresholds"]
     h61_reg, store, cat, eligible, folds, va, vb, ring_px = setup()
     flat, inv = store.flat_idx, store.inverse
-    indep = json.loads((EVID / "h76_independence.json").read_text())
+    indep = json.loads((EVID / "h77cond_independence.json").read_text())
     allowed_exchange = bool(indep["allow_exchange"])
     ex = dict(stage="exchange", started_utc=now(), allowed_exchange=allowed_exchange,
               independence_max_abs_rho=indep["max_abs_correlation"],
@@ -430,7 +430,7 @@ def _shift0(a: np.ndarray, oy: int, ox: int) -> np.ndarray:
 
 def line_support(field: np.ndarray, allowed: np.ndarray, n_orient: int = 12,
                  chord_px: int = 7) -> np.ndarray:
-    """H76-B: max over orientations of the mean field value along a chord through the pixel.
+    """H77cond-B: max over orientations of the mean field value along a chord through the pixel.
 
     The metric credits a truth TRACE, so a dot's expected credit scales with the expected trace
     length inside its 300 m disc, not with the point probability.  Exact integer-offset sampling
@@ -612,23 +612,23 @@ def main() -> int:
     for s in order:
         log(f"=== stage {s} ===")
         if s == "diag":
-            if (EVID / "h76_independence.json").exists():
+            if (EVID / "h77cond_independence.json").exists():
                 log("diag already complete; skipping")
                 continue
             stage_diag(reg)
         elif s == "exchange":
-            if (EVID / "h76_pseudo_exchange.json").exists():
+            if (EVID / "h77cond_pseudo_exchange.json").exists():
                 log("exchange already complete; skipping")
                 continue
             stage_exchange(reg)
         elif s == "holdout":
-            if (EVID / "h76_holdout.json").exists():
+            if (EVID / "h77cond_holdout.json").exists():
                 log("holdout already complete; skipping")
                 continue
             stage_holdout(reg)
         elif s in ("registry", "build", "card"):
-            import h76_build
-            getattr(h76_build, f"stage_{s}")(reg, args)
+            import h77cond_build
+            getattr(h77cond_build, f"stage_{s}")(reg, args)
     log("ALL STAGES DONE")
     return 0
 

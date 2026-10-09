@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""H76 build stages: registry census, lane-feasible placement, gates, GeoTIFF, reasoning, run card.
+"""H77cond build stages: registry census, lane-feasible placement, gates, GeoTIFF, reasoning, run card.
 
-Imported by ``scripts/run_h76.py``; not meant to be run on its own (it needs that runner's
+Imported by ``scripts/run_h77cond.py``; not meant to be run on its own (it needs that runner's
 preregistration check).  Everything here uses the shared gates/placer/writer, never a private fork.
 """
 from __future__ import annotations
@@ -17,7 +17,7 @@ import numpy as np
 import rasterio
 from scipy import ndimage as ndi
 
-import run_h76 as H                      # the runner: constants, logging, receipts
+import run_h77cond as H                      # the runner: constants, logging, receipts
 from gems52 import gates, nodes, submission_writer
 
 ROOT = H.ROOT
@@ -37,7 +37,7 @@ NEAR_TARGET = 0.6985                      # enforced margin strictly below the b
 # =================================================================================================
 # registry census: coverage, universal-probe classification, cross-family consensus
 # =================================================================================================
-ROUND_TOKENS = ("h76", "gems74")
+ROUND_TOKENS = ("h77cond", "gems74")
 
 
 def prior_paths() -> list[Path]:
@@ -276,7 +276,7 @@ def stage_build(reg, args):
     th = reg["thresholds"]
     t0 = time.time()
     h61_reg, store, cat, eligible, folds, va, vb, ring_px = H.setup()
-    hold = json.loads((EVID / "h76_holdout.json").read_text())
+    hold = json.loads((EVID / "h77cond_holdout.json").read_text())
     scores = hold["pooled"]["scores"]
     pairs = hold["pooled"]["paired_vs_single_B"]
     arm = max(CANDIDATE_ARMS, key=lambda a: scores[a]["dti"])
@@ -332,7 +332,7 @@ def stage_build(reg, args):
             break
     if chosen is None:
         raise SystemExit("no consensus threshold produced a lane-feasible full budget; "
-                         "search table in evidence/h76_placement.json")
+                         "search table in evidence/h77cond_placement.json")
     c_best, em, core, rescue, field = chosen
     pool_best = base_pool & (consensus <= c_best)
     # The brief requires written geological reasoning for EVERY A-only candidate.  That list is a
@@ -470,37 +470,53 @@ def stage_card(reg, args):
     a_only = np.load(WORK / "a_only_candidates.npy")
     rA = np.load(WORK / "rA_oof.npy")
     rB = np.load(WORK / "rB_oof.npy")
-    place = json.loads((EVID / "h76_placement.json").read_text())
-    hold = json.loads((EVID / "h76_holdout.json").read_text())
-    s1 = json.loads((EVID / "h76_sufficiency.json").read_text())
-    indep = json.loads((EVID / "h76_independence.json").read_text())
-    canary = json.loads((EVID / "h76_canary.json").read_text())
+    place = json.loads((EVID / "h77cond_placement.json").read_text())
+    hold = json.loads((EVID / "h77cond_holdout.json").read_text())
+    s1 = json.loads((EVID / "h77cond_sufficiency.json").read_text())
+    indep = json.loads((EVID / "h77cond_independence.json").read_text())
+    canary = json.loads((EVID / "h77cond_canary.json").read_text())
     arm = place["shipped_arm"]
     S = int(pred.sum())
     sample = ROOT / "data/sample_submission.tif"
     st = (args.stamp or "").strip() or H.stamp()
 
-    name = f"gems76-{arm.replace('_','-')}-cotrain-{S}px-{st}"
+    name = f"gems77cond-{arm.replace('_','-')}-cotrain-{S}px-{st}"
     tif = SUBM / f"{name}.tif"
     what = ("trace-integrated View B 600m chord" if arm == "line_support_B"
             else f"B-core+A-rescue swap phi={int(arm.split('_')[1])/100:g}")
     verdict_tag = "RESEARCH ONLY-DO NOT SUBMIT" if not beats else "selector-eligible"
-    note = (f"H76 {verdict_tag}: co-training {what}; {S}px binary; >200m off catalogue; "
-            f"lane-feasible c<={place['consensus_threshold']}")
-    if len(note) > 140:                       # must never truncate away the verdict word
-        raise SystemExit(f"submission note is {len(note)} chars: {note}")
+    # The note must never be truncated: a [:140] slice once silently cut the words "do not
+    # submit" off a research-only file.  It must also survive a round-label rename -- "H77cond"
+    # is 4 characters longer than "H77cond" and pushed the full form to 141.  So instead of either
+    # truncating or hard-failing, step through progressively more compact VARIANTS that all keep
+    # the verdict first and every fact intact, and only give up if even the shortest overflows.
+    c = place["consensus_threshold"]
+    variants = [
+        f"H77cond {verdict_tag}: co-training {what}; {S}px binary; >200m off catalogue; "
+        f"lane-feasible c<={c}",
+        f"H77cond {verdict_tag}: co-training {what}; {S}px binary; >200m off catalogue; lane c<={c}",
+        f"H77cond {verdict_tag}: cotrain {what}; {S}px binary; >200m off catalogue; lane c<={c}",
+        f"H77cond {verdict_tag}: cotrain {what}; {S}px binary; lane c<={c}",
+    ]
+    note = next((v for v in variants if len(v) <= 140), "")
+    if not note:                              # must never truncate away the verdict word
+        raise SystemExit(f"submission note is {len(variants[-1])} chars even at its most "
+                         f"compact: {variants[-1]}")
+    if note != variants[0]:
+        log(f"NOTE: full form was {len(variants[0])} chars (>140); used compact variant "
+            f"{variants.index(note)} at {len(note)} chars")
 
     # ---- 1. format + packaging (shared fail-closed writer) --------------------------------------
     receipt = submission_writer.write_submission(
         tif, pred.astype(np.float32), sample, valid, note=note, name=name,
-        metadata=dict(round="H76", arm=arm, consensus_threshold=place["consensus_threshold"],
+        metadata=dict(round="H77cond", arm=arm, consensus_threshold=place["consensus_threshold"],
                       dots=S, holdout_evaluator=hold["pooled"]["implementation_sha256"]))
     fmt = receipt["validator"]
     log(f"FORMAT gate ok={fmt['ok']} sha256 {receipt['sha256'][:16]}…")
 
     # ---- 2. uniqueness + lane, against the whole accessible registry ----------------------------
     priors = prior_paths()
-    own = {tif.resolve(), (DOWN / "h76-candidate.tif").resolve(),
+    own = {tif.resolve(), (DOWN / "h77cond-candidate.tif").resolve(),
            (DOWN / f"{name}.tif").resolve()}
     clash = [str(p) for p in priors if p.resolve() in own or p.name == tif.name]
     if clash:
@@ -558,7 +574,7 @@ def stage_card(reg, args):
 
     # ---- 4. per-dot geological reasoning for every A-only candidate ------------------------------
     reasoning_rows, reasoning_summary = _reasoning(a_only, pred, rA, rB, cat, store, eligible)
-    csv_path = DOWN / "h76-a-only-reasoning.csv"
+    csv_path = DOWN / "h77cond-a-only-reasoning.csv"
     DOWN.mkdir(parents=True, exist_ok=True)
     with csv_path.open("w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=list(reasoning_rows[0].keys()) if reasoning_rows else
@@ -584,12 +600,12 @@ def stage_card(reg, args):
     failing = [k for k, v in clauses.items() if not v]
 
     card = dict(
-        round="H76", generated_utc=H.now(), runner="scripts/run_h76.py",
+        round="H77cond", generated_utc=H.now(), runner="scripts/run_h77cond.py",
         preregistration=dict(document=reg["hypothesis_document"], sha256=reg["hypothesis_sha256"],
                              frozen_before_any_fit=True),
         hypothesis=("The co-training sufficiency gate that closed this lane five times is measured "
                     "against a target the catalogue systematically under-samples: mapped faults are "
-                    "surface-expressed by selection, which is View B's domain. H76 tests sufficiency "
+                    "surface-expressed by selection, which is View B's domain. H77cond tests sufficiency "
                     "CONDITIONALLY (View A's AUC restricted to truth pixels inside View B's blind "
                     "band) and emits the first nested arm: View B's ranking with the weakest phi of "
                     "its budget swapped for View A's confident cells where View B abstains."),
@@ -677,9 +693,9 @@ def stage_card(reg, args):
 
     # ---- 6. publish the one-click download ------------------------------------------------------
     DOWN.mkdir(parents=True, exist_ok=True)
-    (DOWN / "h76-candidate.tif").write_bytes(tif.read_bytes())
-    (DOWN / "h76-candidate.zip").write_bytes(tif.with_suffix(".zip").read_bytes())
-    (SUBM / "H76_LATEST.txt").write_text(
+    (DOWN / "h77cond-candidate.tif").write_bytes(tif.read_bytes())
+    (DOWN / "h77cond-candidate.zip").write_bytes(tif.with_suffix(".zip").read_bytes())
+    (SUBM / "H77COND_LATEST.txt").write_text(
         f"{tif.name}\n# site pointer, NOT an upload approval. Verdict: {verdict}. "
         f"Download OK: {fmt['ok']}. Spend a weekly slot: {promote}.\n")
     (SUBM / f"{name}-run-card.json").write_text(
