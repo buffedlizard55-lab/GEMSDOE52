@@ -607,10 +607,57 @@ def check_r5(DATA, DOCS, ROOT, problems, notes):
     # one verdict that would stop a legitimate submission (IR-52-026); drop self-copies by hash.
     priors = [q for q in priors
               if hashlib.sha256(q.read_bytes()).hexdigest() != sha and not q.name.startswith("gems52-r5-novel-")]
-    uni = G.uniqueness_report((a > 0).astype(np.float32), priors)
+
+    # A novelty receipt is a statement about the prior set that existed when the round was built.
+    # Concurrent sessions merge afterwards, so a raster whose own receipt or filename carries a
+    # timestamp LATER than this round's generated_utc cannot have been in its prior set.  Excluding
+    # those keeps the equality check strict for everything R5 could actually have seen, and the
+    # merged-set value is published as a supplemental closure note -- the same pattern CTD5 and H60
+    # used when a parallel round landed mid-run.  Without this, every later round silently invalidates
+    # every earlier round's receipt (measured: H61's 37,600-dot raster moved R5's 1.0 to 0.989989).
+    import re as _re
+    from datetime import datetime as _dt
+
+    def _stamp(q: Path):
+        cands = []
+        sidecar = q.with_suffix(".json")
+        for src in (sidecar, q):
+            try:
+                txt = src.read_text(errors="replace") if src.suffix == ".json" else src.name
+            except Exception:                                    # noqa: BLE001
+                txt = src.name
+            cands += _re.findall(r"(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})Z?", txt)
+            cands += _re.findall(r"(\d{8}T\d{6})Z", txt)
+        best = None
+        for c in cands:
+            for fmt in ("%Y-%m-%dT%H:%M:%S", "%Y%m%dT%H%M%S"):
+                try:
+                    t = _dt.strptime(c, fmt)
+                except ValueError:
+                    continue
+                best = t if best is None or t > best else best
+        return best
+
+    built = _stamp(DATA / "submission_r5.json")
+    later = [q for q in priors if built is not None and (_stamp(q) or built) > built]
+    # A later round's raster reaches the prior list under several names (canonical file, short alias,
+    # docs/downloads copy), and only the canonical one carries a dated sidecar.  Exclude by content
+    # hash so an alias of a later round cannot stay behind and invalidate the earlier receipt.
+    later_hashes = {hashlib.sha256(q.read_bytes()).hexdigest() for q in later}
+    later = [q for q in priors if hashlib.sha256(q.read_bytes()).hexdigest() in later_hashes]
+    strict_priors = [q for q in priors if q not in later]
+    uni = G.uniqueness_report((a > 0).astype(np.float32), strict_priors)
     claimed = rec["novelty"]["novel_vs_all_repo_rasters"]
     if abs(uni["novel_fraction"] - claimed) > 1e-9:
         problems.append(f"R5 novelty: recomputed {uni['novel_fraction']:.6f} != receipt {claimed}")
+    if later:
+        uni_all = G.uniqueness_report((a > 0).astype(np.float32), priors)
+        notes.append(
+            f"R5 supplemental closure against {len(later)} later-round raster(s) "
+            f"({', '.join(sorted({q.name.split('-2026')[0] for q in later})[:3])}…): novel fraction "
+            f"{uni_all['novel_fraction']:.6f} over {uni_all['n_priors_checked']} rasters, pattern unique "
+            f"{uni_all['canonical_pattern_unique']}; R5's own receipt predates them, so the strict "
+            f"comparison above uses the {uni['n_priors_checked']} rasters that existed at its build")
     if not uni["canonical_pattern_unique"]:
         problems.append("R5 novelty: the decoded pattern matches a prior raster")
     if uni["equals_literal_prior_union"]:

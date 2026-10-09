@@ -1,4 +1,135 @@
-# GEMSDOE52 — a new research GeoTIFF, not an approved submission
+<!--H61-README-->
+# GEMSDOE52 — a new research GeoTIFF and an explicit submit verdict
+
+**[★ Download the H61 GeoTIFF — one click](docs/downloads/h61-candidate.tif)** ·
+[single-TIFF ZIP](docs/downloads/h61-candidate.zip) ·
+[geological reasoning CSV](docs/downloads/h61-a-only-reasoning.csv) ·
+**[Executive summary / exact submission guide](docs/executive-summary.html)** ·
+[Run &amp; evidence](docs/h61-audit.html) · [Sources](docs/h61-sources.html) ·
+[Run card](evidence/h61_run_card.json)
+
+> **DOWNLOAD: YES · SUBMIT TO THE COMPETITION: NO.**
+> Verdict `negative`. The file is newly inferred, portal-safe by construction and different
+> from every checked prior's decoded predictions, but it does **not** beat the reported champion at
+> either end of the measured `|G|` interval, and its own view-A premise failed on the holdout.
+> **Competition slots used: 0.**
+
+- **File:** `gems52-h61-deepsharp-cotrain-37600px.tif` — 131,771 bytes, 37,600 emitted cells
+- **SHA-256:** `7c86853164f9cfa7aea34de029c7d5ccf3a6b43dbbb2b14de570e558384d2755`
+- **Name:** `gems52-h61-deepsharp-cotrain-37600px-20261009T001003Z`
+- **Note (132 / 140 chars):** `H61 deep-sharp cotrain: up-continued magnetics/gravity vs DEM+radiometric disagreement; 3px dots; >200m off catalogue; research-only`
+- **Local validator:** one float32 band; values exactly {0, 1}; 0 NaN and
+  0 Inf; EPSG:32611;
+  3,730 × 3,292; transform identical to the pinned
+  `sample_submission.tif`; nothing within 200 m of a mapped trace. *Not an organizer acceptance receipt.*
+- **HOLDOUT-DTI** (`gems52-pooled-hide-v1`, 53,186 withheld
+  positives, 95% paired 20 km cluster bootstrap): candidate **0.030584**
+  [0.020940, 0.042238]; best comparable control
+  `single_B`. Every arm filled its
+  9,400-dot budget at 3 px spacing
+  (matched — comparison eligible).
+
+| arm | HOLDOUT-DTI | 95% CI |
+|---|---:|---:|
+| single_A | 0.071954 | [0.056636, 0.088566] |
+| single_B | 0.174517 | [0.152316, 0.196299] |
+| union_max | 0.148981 | [0.128084, 0.169418] |
+| disagreement_pre | 0.033293 | [0.023815, 0.044556] |
+| disagreement_post | 0.030584 | [0.020940, 0.042238] |
+| random | 0.080426 | [0.070223, 0.090973] |
+
+- **Why this lane failed, measured:** View A (potential field / subsurface, 36
+  channels incl. upward-continued TMI) reaches in-sample AUC
+  0.948 and out-of-quadrant AUC
+  **0.516** — chance. View B (DEM curvature/slope + band 6 + external K, Th, U, Th/K, U/K, U/Th)
+  reaches **0.684**. A sufficient view cannot be at chance out of sample, so the A→B transfer hands
+  over noise. Independence held (max |ρ| 0.1331 over
+  2089 blocks, abandon at
+  0.6); the canary was clean (max single-feature held-out AUC
+  0.6687 vs alarm 0.9). One exchange,
+  15,441 pseudo pixels. [IR-H61-006](registry/irregularities.json).
+- **Lane gate:** 545 registry rasters (364 distinct decoded
+  patterns), the full 526-blob census re-materialised and SHA-verified. Literal rule (all priors):
+  **DUPLICATE/STOP**, max near-dot 1.0000, max Spearman
+  0.0361. Saturation-aware policy (informative priors only):
+  **DUPLICATE/STOP**, max near-dot 0.8788, max Spearman
+  0.0209. Surface phase before placement: literal `PASS`,
+  policy `PASS`. Decoded-pattern uniqueness
+  PASS; literal union of priors
+  NO.
+- **Concurrent closure:** after the parallel R5 and H60D rounds merged into `main`, the *unchanged*
+  emission was re-checked against the 2 newly added
+  decoded patterns: verdict **PASS**, max near-dot
+  0.1894, max Spearman
+  0.0037 ([receipt](evidence/h61_concurrent_closure.json)).
+  A pass here does not overturn the original lane STOP; the artefact was not rebuilt or re-tuned for it.
+- **PROJECTION, never a score:** at 37,600 dots the break-even credit
+  density to match the reported champion is
+  0.0907–0.1295
+  per pixel (8.3–5.6×
+  uniform random). Novel mass belongs to no identified atom, so organiser-tied evidence bounds its
+  credit only by [0, |G|]. **No leaderboard gain is claimed or projected.**
+
+## What H61 repaired in the shared instruments, before fitting anything
+
+1. **`|G|` is an interval, not a measurement: [5,949.3, 12,512.1] px.**
+   Thirteen owner-reported scores are thirteen equations in fourteen unknowns. The previously published
+   point value 14,088.7 px is **outside** that interval; it
+   requires the 6,436 px the champion deleted to earn exactly zero credit, and 25 credit of ring income
+   alone moves it to 12333 px.
+   [IR-H61-001](registry/irregularities.json) · [receipt](evidence/h61_forensics.json)
+2. **Masked support `S`.** Known catalogue pixels are masked out of evaluation, so `S` counts
+   off-catalogue pixels. Witness: `Hedge-v2` and `ens12-7f00890a` have identical off-catalogue support
+   (Jaccard 1.000) and identical reported scores, yet raw-`S` accounting gave them credit
+   8873.5 vs
+   7168.8; masked gives both
+   6967.0. [IR-H61-002]
+3. **Band 6 is radiometric total count**, not the magnetic tilt derivative its own description claims:
+   Spearman 1.0000 against the independently
+   derived external GeoDAWN TC grid, 0.0175 against
+   the tilt angle of TMI from bands 9/3, -0.1512 against
+   `tmi_hg`, on 400,000 eligible pixels. It stays in View B, and that is
+   now measured rather than provisional. [IR-H61-003]
+4. **Attribution strength is not uniform.** Only
+   3 of
+   13 owner-reported scores hash-link to the bytes held; the champion's token
+   `e5eb6e7e` matches none of six hash conventions of the file we hold, and GEMSDOE32's own page says no
+   organizer score exists. Every score here is **OWNER-REPORTED, NOT ORGANIZER-CONFIRMED**. [IR-H61-004]
+5. **The literal 3 px lane rule was unsatisfiable, and now says why.** The 13GEMSDOE spacing-five
+   lattice's 3 px halo covers 1.0000 of the eligible footprint (a spacing-5 square lattice has maximum
+   interior distance √8 = 2.83 px), so it returns DUPLICATE for *every* nonempty raster — that is why
+   CTD5 stopped. `gems52.gates.lane_report` now classifies a prior with measured coverage ≥ 0.95 as a
+   **universal-coverage probe**, applies the literal rule to informative priors, and still reports the
+   literal statistic for every prior. Probes are not deleted and no threshold was relaxed. [IR-H61-005]
+6. **H60C would fail the brief's own lane rule**: near-dot 0.7929 against the champion and 0.8087
+   against `h19-5`, Spearman 0.7083 — DUPLICATE/STOP under the literal rule *and* under the policy,
+   because those priors are informative. Its published gate used support-novelty and Jaccard instead.
+   Flagged for the selector, neither promoted nor deleted. [IR-H61-007]
+7. **CTD5's own diagnosis is vindicated by the same instrument**: its informative-prior near-dot
+   fractions are 0.1063–0.1368 with |ρ| ≤ 0.0046, i.e. its STOP was entirely the probe.
+
+## Why 0.2778 won, measured from the bytes
+
+The reported-0.2778 champion `h33-2-b2` is a **strict subset** of the reported-0.2600 file
+(37,654 ⊂ 44,090 off-catalogue px), which is itself a strict subset of the reported-0.1922 parent field
+(⊂ 121,131 px). The champion added **zero** pixels and deleted
+6,436, every one of them between
+100 m and
+200 m from a mapped trace; its own
+nearest dot is 223.6 m away. Since
+`DTI = T / (0.2·(T + S − M) + 0.8·(|G| − T))` carries a fixed `0.8·|G|` floor in the denominator, pruning
+zero-credit mass raises the ratio without finding anything new. **It is precision, not detection.**
+Beating it therefore needs either a recombination of existing public mass — which is a duplicate by
+construction and outside this lane — or a detector above
+0.1295 credit density on *novel* mass, which
+no instrument in this repository can certify: the local simulator measured Spearman −0.10 against the
+owner-reported board in R4.
+<!--/H61-README-->
+
+## CTD5 — previous round, preserved verbatim (negative, lane-saturated)
+
+> Retained as a deliverable. Its `submission/CTD5_RESEARCH_LATEST.txt` marker, run card
+> and archive page are unchanged; nothing below is current authority.
 
 > **Current R5 session status (2026-10-08 UTC): a strictly-novel unique TIF is published, both gates
 > green, no weekly slot authorised.** `submission/gems52-r5-novel-n5_strike_ridge-16681px-20261008T220210Z-33b27433-zeros.tif`
@@ -302,19 +433,40 @@ sensitivity table, is on the audit page.
 
 ## Start here every session
 
-Read the **complete current prompt below**, [working agreement](AGENTS.md), [frozen ranked hypotheses](knowledge/25_ctd5_preregistered.md), [results and limitations](knowledge/27_ctd5_results_and_limits.md), and [three-pass review](knowledge/28_ctd5_three_pass_review.md). The older README is preserved unchanged in [the history archive](knowledge/archive/README_before_ctd5.md); its conflicting “current” pointers and scientific/score claims are **not current authority**.
+Read the **complete current prompt below**, the [working agreement](AGENTS.md), the frozen H61
+protocol [knowledge/30_hypotheses_H61_preregistered.md](knowledge/30_hypotheses_H61_preregistered.md),
+its results [knowledge/31_h61_results_and_limits.md](knowledge/31_h61_results_and_limits.md), and the
+[irregularity registry](registry/irregularities.json) entries `IR-H61-001` … `IR-H61-008`. Read the
+previous failed experiments (H55–H60C, CTD5) before proposing another.
 
-**Maximize P(Win):** do not consume a scarce slot to make a failed research run look successful. **Own the Outcome:** publish the real file, failure diagnostics, provenance boundaries and reproduction—not only a promising story.
-
+**Maximize P(Win):** do not consume a scarce weekly slot on an arm whose only density estimate comes
+from a simulator that does not predict the board. **Own the Outcome:** publish the real file, the
+failed premise, the repaired instruments, the provenance gaps and a working reproduction.
 ## What this session completed
 
-1. Reviewed prior H55–H59/R4 failures and registered four new, lane-specific hypotheses before fitting. Tested only cover-matched transfer; other hypotheses remain untested proposals.
-2. Restored the pinned owner-mirror data autonomously, ran the download wrapper and data preparation, and trained on CPU. The misleading tracked tiny placeholder TIFFs were removed from Git; the real files remain in ignored `data/` and `work/ctd5/input/`. **Integrity-pinned does not mean organizer-authenticated.**
-3. Rehydrated the missing cache using the shared template builder. Corrected the shared band-6 view assignment provisionally; no external feature or prior prediction entered training.
-4. Used buffered whole-original-component OOF folds, feature-alone canaries, proxy-negative error correlation, one whole-segment confident-to-abstaining exchange, pooled DTI with 95% spatial CIs, and the repo's sparse emitter. The exact DTI/writer are shared modules, not private forks.
-5. Audited all 52 supplied owner repository sources and 524 aligned immutable TIFF blobs, plus local history. Generated a new TIFF and stopped at the strict lane gate. Wrote reasoning for all 1,521 A-only segments and all 12,000 emitted cells.
-6. Published clear download/submit status, an executive-summary guide, a source ledger, a reproducible Actions workflow and a local-only feed. The browser does not pretend to train a model, and the feed does not pretend to be a live leaderboard.
-
+1. Restored every pinned input autonomously (`scripts/restore_data.py`: 419 MB feature stack, labels,
+   sample submission, four external layers, thirteen scored priors — all SHA-256 and byte-count
+   verified) and re-materialised the whole **526-blob prior census** with
+   `scripts/fetch_prior_inventory.py` (524/526 census-hash matches; the two exceptions are the census'
+   own ineligible fixture and format-test files).
+2. Repaired the shared forensic accounting **before** fitting anything: masked support `S`, `|G|` as a
+   rigorous interval, band-6 identity resolved on the bytes, attribution hash-links measured
+   (`scripts/h61_forensics.py`).
+3. Extended the shared feature store once, in the template, with the external GeoDAWN radiometrics in
+   View B and the upward-continued TMI in View A (`src/gems52/external.py`) — no private fork, and the
+   manifest records provenance and the units caveat.
+4. Preregistered H61 (`knowledge/30`, `registry/h61_preregistration.json`) and ran it on the corrected
+   label-blind-quadrants-v2 splitter: per-feature leakage canary, block independence screen, exactly
+   one whole-segment pseudo-label exchange, and a **matched-budget** six-arm hide-and-recover
+   comparison — the capacity defect that made CTD5's comparison ineligible is fixed by ranking a field
+   that is finite over the whole allowed domain.
+5. Added the registry-saturation policy to the shared lane gate (`gems52.gates.lane_report`,
+   `registry_coverage`), pinned by `tests/test_h61.py`, and used it to place two inherited artefacts
+   correctly: CTD5 (its STOP was entirely the probe) and H60C (a genuine duplicate of the champion
+   lane).
+6. Built the unique research GeoTIFF, ran every gate, wrote the reasoning CSV for all emitted cells,
+   published the site with an unambiguous download/submit verdict, and recorded eight irregularities.
+   Full test suite: `python -m pytest -q`.
 ## Why H33 may have improved—and what is not proven
 
 The supplied H33 attribution **0.2778 is OWNER-REPORTED / NOT ORGANIZER-CONFIRMED**. Its [current repository source](https://github.com/buffedlizard55-lab/GEMSDOE32/blob/0d6a6243147cd63a2000412d575d4c80a36d3a62/docs/index.html) says no organizer score exists. We cannot resolve that conflict without a file-linked receipt.
@@ -330,23 +482,61 @@ The files show the immediate parent had 40,199 dots and H33 37,654: it deleted 2
 ```bash
 python -m venv .venv
 .venv/bin/pip install -r requirements-r2.txt
-GEMS_PYTHON=.venv/bin/python bash scripts/reproduce_ctd5.sh
+bash scripts/download_competition_data.sh                 # restore + SHA-256 verify the pinned inputs
+PYTHONPATH=src .venv/bin/python -c "from gems52 import structural; structural.build(dest='work/r2/features', include_optional_profiles=False, log=lambda *a, **k: None)"
+PYTHONPATH=src .venv/bin/python -m gems52.external        # add the shared external GeoDAWN columns
+.venv/bin/python scripts/fetch_prior_inventory.py         # re-materialise the 526-blob registry
+.venv/bin/python scripts/h61_forensics.py                 # repaired organiser-score algebra
+.venv/bin/python scripts/run_h61.py all                   # canary -> fit -> exchange -> holdout
+.venv/bin/python scripts/build_h61_submission.py          # place, gate, write, publish receipts
+.venv/bin/python scripts/publish_h61_site.py              # render the pages from the receipts
+.venv/bin/python scripts/h61_knowledge.py && .venv/bin/python scripts/h61_readme.py
+.venv/bin/python scripts/check_site.py && .venv/bin/python -m pytest -q
 ```
 
-The script restores core data and the **frozen** comparator inventory, reuses or rehydrates the shared feature cache, evaluates, and writes the same negative research artifact. It does not upload or select a submission. Raw data, arrays, model caches and downloaded comparators stay ignored. The optional [GitHub Actions reproduction](.github/workflows/reproduce-ctd5.yml) exports the research TIFF and receipts, not a competition upload.
-
-Individual stages: `scripts/run_ctd5.py canary`, `fit`, conditional `exchange`, then `scripts/build_ctd5_submission.py`. Publication: `scripts/publish_ctd5.py`. Checks: `python -m pytest -q`, `python scripts/check_site.py`, `python scripts/check_ctd5_release.py`.
-
+Raw data, arrays, model caches and downloaded comparators stay ignored (`data/`, `work/`). Nothing
+here uploads, promotes or spends a slot. The historical CTD5 reproduction
+(`scripts/reproduce_ctd5.sh`, `scripts/run_ctd5.py`) is unchanged and still reproduces its rejected
+legacy-v1 assay for audit only.
 ## Evidence and next steps
 
-- [Hypotheses and frozen protocol](knowledge/25_ctd5_preregistered.md) · [Pooled DTI/CIs](evidence/ctd5_post_holdout.json) · [Every feature canary](evidence/ctd5_canary.json) · [Independence screen](evidence/ctd5_independence.json) · [Pseudo-label records](evidence/ctd5_pseudo_exchange.json)
-- [All sources](docs/ctd5-sources.html) · [Original source inventory](evidence/ctd5_sources.json) · [Prior raster inventory](evidence/ctd5_prior_inventory.json) · [Geological dossiers](docs/ctd5-audit.html)
-- [Full results / limitations](knowledge/27_ctd5_results_and_limits.md) · [Three-pass review](knowledge/28_ctd5_three_pass_review.md) · [Irregularity registry](registry/irregularities.json)
+- [Frozen H61 protocol](knowledge/30_hypotheses_H61_preregistered.md) ·
+  [results and limits](knowledge/31_h61_results_and_limits.md) ·
+  [run card](evidence/h61_run_card.json) · [forensics](evidence/h61_forensics.json) ·
+  [canary](evidence/h61_canary.json) · [fit](evidence/h61_fit_checkpoint.json) ·
+  [independence](evidence/h61_independence.json) · [pseudo exchange](evidence/h61_pseudo_exchange.json) ·
+  [pooled holdout](evidence/h61_holdout.json) · [projection](evidence/h61_projection.json) ·
+  [lane gate on dots](evidence/h61_lane_dots.json) · [lane gate on surface](evidence/h61_lane_surface.json)
+- [Site](docs/index.html) · [submission guide](docs/executive-summary.html) ·
+  [run &amp; evidence](docs/h61-audit.html) · [sources](docs/h61-sources.html) ·
+  [reasoning CSV](docs/downloads/h61-a-only-reasoning.csv) · [irregularities](registry/irregularities.json)
 
-Next: resolve universal-coverage registry policy **prospectively in the shared selector**; authenticate the organizer inputs/score receipts; verify band identity and upstream model lineage; pre-register a capacity-feasible holdout comparison. Do not repeat this failed placement or silently switch lanes. External official hosts and the authenticated submission page are inaccessible here, so a fresh leaderboard top, current weekly allowance and organizer provenance are unresolved. No passwords/tokens are needed in chat.
+**Next, in priority order.**
 
-`submission/LATEST.txt` was advanced to unapproved H60 by concurrent upstream PR #34. That upstream marker is retained, not selected or promoted by CTD5; it is not this session’s research link and does not authorize upload. The H57 archive is retained. CTD5 has its own `submission/CTD5_RESEARCH_LATEST.txt` and `docs/data/ctd5_run_card.json`.
+1. **Change what View A is.** Raw potential-field channels do not transfer between quadrants
+   (out-of-fold AUC ≈ 0.52). The next candidate is a *physically parameterised* View A — a modelled
+   basement-depth step across a candidate trace, a strike-continuity score along an interpreted
+   lineament, an isostatic-residual discontinuity — and its out-of-quadrant AUC must be measured
+   **before** any emission is built.
+2. **Run H61-D: cross-file credit localisation by terrain stratum.** Cross the LP atoms with slope,
+   modelled cover thickness and radiometric alteration and bound credit per stratum, so the organizer's
+   own scores say *where* hidden truth sits rather than *which prior* found it. Needs no new data; it
+   was deferred only by this round's three-experiment budget.
+3. **Give the selector a priced option, not a lane violation.** The only mass measured above the
+   break-even density is inside the champion family, and emitting it is a duplicate by construction.
+   That trade belongs to the selector with the weekly cap in front of it.
+4. **Authenticate one receipt.** A single submission-page receipt tying a file SHA-256 to a score would
+   turn IR-H61-004 from a caveat into a calibration and settle whether 0.2778 exists at all. No
+   credentials may be requested or stored in chat.
+5. **Reconcile `registry/data_manifest.json` provenance text** with the owner's score list (IR-H61-008)
+   without touching the pins, and resolve the upstream `submission/LATEST.txt` pointer question in the
+   shared selector rather than per round.
 
+**Unresolved by sandbox limits, not by choice:** the DrivenData data tab and submission page are
+login-walled; USGS, GDR and DOI hosts are unreachable (egress is limited to github.com,
+codeload.github.com, api.github.com, registry.npmjs.org, pypi.org, files.pythonhosted.org). So no
+fresh leaderboard top, no current weekly allowance, no organizer-authenticated input provenance, and
+no official-host download is claimed anywhere in this round.
 ## Complete current prompt — read before working
 
 The following is user-supplied task text, not independently verified factual claims. It supersedes earlier prompt archives where they conflict.

@@ -1,0 +1,654 @@
+{
+ "round": "H61",
+ "generated_utc": "2026-10-09T00:13:25+00:00",
+ "lane": "two-view co-training (Blum & Mitchell 1998, doi:10.1145/279943.279962); View A potential-field/subsurface, View B surface; disagreement as the discovery signal",
+ "hypothesis": "Faults buried beneath basin cover leave a deep potential-field fabric step (upward-continued TMI, isostatic gravity gradient, modelled basement depth, geodetic strain) with no surface scarp and no radiometric lineament, so a View-A learner is confident where a View-B learner abstains, and that disagreement marks structure the surface-expression catalogue structurally cannot contain.",
+ "mechanism": "Blum-Mitchell two-view co-training with a depth-separated view split: View A = potential field/subsurface (36 channels incl. external TMI upward continued 150 m), View B = surface (37 channels incl. band 6 radiometric total count and external K, Th, U, Th/K, U/K, U/Th). One confident-to-abstaining whole-segment pseudo-label round, then the disagreement rank difference is placed as 3 px spaced dots.",
+ "named_non_fault_process": "A non-fault basin-fill density boundary or volcanic lithologic contact; secondarily buried palaeo-channels, alluvial-fan margins, dykes and airborne flight-line artefacts in the continued field.",
+ "holdout_dti": {
+  "evidence_class": "HOLDOUT-DTI",
+  "evaluator": "gems52-pooled-hide-v1",
+  "withheld_positive_pixels": 53186,
+  "candidate": 0.030584408210788217,
+  "ci95": [
+   0.020940468893667626,
+   0.04223810880975772
+  ],
+  "controls": {
+   "single_A": {
+    "dti": 0.07195422771451437,
+    "ci95": [
+     0.05663648302475561,
+     0.08856584503981733
+    ]
+   },
+   "single_B": {
+    "dti": 0.1745172875994316,
+    "ci95": [
+     0.15231581471183422,
+     0.19629866582738847
+    ]
+   },
+   "union_max": {
+    "dti": 0.14898105801367592,
+    "ci95": [
+     0.12808382678188485,
+     0.16941832452005812
+    ]
+   },
+   "disagreement_pre": {
+    "dti": 0.033293417665161515,
+    "ci95": [
+     0.023815312334713765,
+     0.044556311894923775
+    ]
+   },
+   "random": {
+    "dti": 0.08042564781050282,
+    "ci95": [
+     0.0702226099128376,
+     0.09097325665223467
+    ]
+   }
+  },
+  "paired_differences": {
+   "single_A": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "delta": -0.04136981950372616,
+    "ci95": [
+     -0.05455944568439239,
+     -0.02764497760739693
+    ],
+    "withheld_positive_pixels": 53186
+   },
+   "single_B": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "delta": -0.14393287938864338,
+    "ci95": [
+     -0.16738280009973946,
+     -0.12118252884716862
+    ],
+    "withheld_positive_pixels": 53186
+   },
+   "union_max": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "delta": -0.11839664980288771,
+    "ci95": [
+     -0.13943676156618703,
+     -0.09769655803907816
+    ],
+    "withheld_positive_pixels": 53186
+   },
+   "disagreement_pre": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "delta": -0.0027090094543732977,
+    "ci95": [
+     -0.007519158590625817,
+     0.0030720523152845598
+    ],
+    "withheld_positive_pixels": 53186
+   },
+   "random": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "delta": -0.04984123959971461,
+    "ci95": [
+     -0.06030276455394873,
+     -0.0396982082407688
+    ],
+    "withheld_positive_pixels": 53186
+   }
+  },
+  "all_arms_filled_budget": true,
+  "budget_per_arm_per_fold": 9400,
+  "independence_max_abs_rho": 0.13306525528756755,
+  "independence_abandon_threshold": 0.6,
+  "independence_allow_exchange": true,
+  "pseudo_label_pixels": 15441,
+  "canary_max_auc": 0.6686779701695234,
+  "canary_alarm": 0.9,
+  "canary_any_alarm": false,
+  "simulator_validity": "R4 measured Spearman -0.10 between this simulator and the owner-reported board; it screens procedures and does not promote."
+ },
+ "correlation_vs_registry": {
+  "surface": {
+   "literal": {
+    "max_spearman": 0.22688862973774668,
+    "max_near_3px_fraction": null,
+    "max_near_source": null,
+    "rank_offenders": [],
+    "near_offenders": [],
+    "identical": [],
+    "verdict": "PASS",
+    "note": "applied to every aligned prior including universal-coverage probes"
+   },
+   "policy": {
+    "max_spearman": 0.050885595604406336,
+    "max_near_3px_fraction": null,
+    "max_near_source": null,
+    "rank_offenders": [],
+    "near_offenders": [],
+    "identical": [],
+    "informative_priors": 531,
+    "universal_coverage_probes": 14,
+    "probe_paths": [
+     "/home/user/GEMSDOE52/work/h61/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/3d3ee66300203bdc878f3a052caabde671daf042.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/35616cbb48ac3533dd4c957b8acca57f71ba365f.tif"
+    ],
+    "probe_coverage": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     0.9999997688020571,
+     0.9943546086304342,
+     0.9949682079708727,
+     0.9943317200340879,
+     0.9999990752082284,
+     0.9943317200340879,
+     0.9954921025094687,
+     1.0,
+     0.9999990752082284
+    ],
+    "verdict": "PASS",
+    "note": "the same literal rule restricted to priors that localise something; probe statistics are retained verbatim in per_prior and nothing is deleted"
+   }
+  },
+  "dots": {
+   "literal": {
+    "max_spearman": 0.03609154437284096,
+    "max_near_3px_fraction": 1.0,
+    "max_near_source": "/home/user/GEMSDOE52/work/h61/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+    "rank_offenders": [],
+    "near_offenders": [
+     "/home/user/GEMSDOE52/work/h61/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/ab7e0752036d020fbc394a528bbe63171c3cb08f.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/443e8e1c799734facd50a92bc85c650f3857a2b6.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/3d3ee66300203bdc878f3a052caabde671daf042.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/35616cbb48ac3533dd4c957b8acca57f71ba365f.tif"
+    ],
+    "identical": [],
+    "verdict": "DUPLICATE/STOP"
+   },
+   "policy": {
+    "max_spearman": 0.020927162722598033,
+    "max_near_3px_fraction": 0.87875,
+    "max_near_source": "/home/user/GEMSDOE52/work/h61/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+    "rank_offenders": [],
+    "near_offenders": [
+     "/home/user/GEMSDOE52/work/h61/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/ab7e0752036d020fbc394a528bbe63171c3cb08f.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/443e8e1c799734facd50a92bc85c650f3857a2b6.tif"
+    ],
+    "identical": [],
+    "informative_priors": 531,
+    "universal_coverage_probes": 14,
+    "probe_paths": [
+     "/home/user/GEMSDOE52/work/h61/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/3d3ee66300203bdc878f3a052caabde671daf042.tif",
+     "/home/user/GEMSDOE52/work/h61/priors/35616cbb48ac3533dd4c957b8acca57f71ba365f.tif"
+    ],
+    "probe_coverage": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     0.9999997822854843,
+     0.9885919770894661,
+     0.9919031971594352,
+     0.9883130847947964,
+     0.9974396772948362,
+     0.9883130847947964,
+     0.9956951308801697,
+     1.0,
+     0.9974396772948362
+    ],
+    "verdict": "DUPLICATE/STOP"
+   }
+  },
+  "chance_normalised_analysis": {
+   "instrument": "scripts/h61_lane_analysis.py",
+   "evidence_class": "lane diagnostic derived from evidence/h61_lane_dots.json; not a score",
+   "rule_trigger": 0.7,
+   "chance_level_explanation": "An emission placed uniformly at random over the eligible footprint lies within 3 px of a prior with probability equal to that prior's own 3 px coverage. The directed proximity statistic therefore has a chance level, and the 0.70 trigger is only discriminating for priors whose coverage is below 0.70.",
+   "n_rasters": 545,
+   "n_probes": 14,
+   "n_near_offenders": 23,
+   "n_informative_near_offenders": 9,
+   "n_rasters_with_coverage_at_or_above_trigger": 31,
+   "offenders": [
+    {
+     "name": "51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+     "coverage_3px": 1.0,
+     "near_3px_fraction": 1.0,
+     "excess_over_chance": 0.0,
+     "probe": true,
+     "coverage_at_or_above_trigger": true
+    },
+    {
+     "name": "5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+     "coverage_3px": 1.0,
+     "near_3px_fraction": 1.0,
+     "excess_over_chance": 0.0,
+     "probe": true,
+     "coverage_at_or_above_trigger": true
+    },
+    {
+     "name": "81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+     "coverage_3px": 1.0,
+     "near_3px_fraction": 1.0,
+     "excess_over_chance": 0.0,
+     "probe": true,
+     "coverage_at_or_above_trigger": true
+    },
+    {
+     "name": "5c1a159439735522659ee78969df3f34efddcdde.tif",
+     "coverage_3px": 1.0,
+     "near_3px_fraction": 1.0,
+     "excess_over_chance": 0.0,
+     "probe": true,
+     "coverage_at_or_above_trigger": true
+    },
+    {
+     "name": "cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+     "coverage_3px": 1.0,
+     "near_3px_fraction": 1.0,
+     "excess_over_chance": 0.0,
+     "probe": true,
+     "coverage_at_or_above_trigger": true
+    },
+    {
+     "name": "4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+     "coverage_3px": 0.9999997822854843,
+     "near_3px_fraction": 1.0,
+     "excess_over_chance": 2.1771451574892353e-07,
+     "probe": true,
+     "coverage_at_or_above_trigger": true
+    },
+    {
+     "name": "c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+     "coverage_3px": 0.9974396772948362,
+     "near_3px_fraction": 1.0,
+     "excess_over_chance": 0.00256032270516382,
+     "probe": true,
+     "coverage_at_or_above_trigger": true
+    },
+    {
+     "name": "3d3ee66300203bdc878f3a052caabde671daf042.tif",
+     "coverage_3px": 1.0,
+     "near_3px_fraction": 1.0,
+     "excess_over_chance": 0.0,
+     "probe": true,
+     "coverage_at_or_above_trigger": true
+    },
+    {
+     "name": "35616cbb48ac3533dd4c957b8acca57f71ba365f.tif",
+     "coverage_3px": 0.9974396772948362,
+     "near_3px_fraction": 1.0,
+     "excess_over_chance": 0.00256032270516382,
+     "probe": true,
+     "coverage_at_or_above_trigger": true
+    },
+    {
+     "name": "1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+     "coverage_3px": 0.9956951308801697,
+     "near_3px_fraction": 0.9991489361702127,
+     "excess_over_chance": 0.0034538052900430216,
+     "probe": true,
+     "coverage_at_or_above_trigger": true
+    },
+    {
+     "name": "1102512580ae652c866e0cf5754afd1531fac952.tif",
+     "coverage_3px": 0.9919031971594352,
+     "near_3px_fraction": 0.9990691489361702,
+     "excess_over_chance": 0.007165951776734958,
+     "probe": true,
+     "coverage_at_or_above_trigger": true
+    },
+    {
+     "name": "d89695181cadd18a7284241c571af6f82671bf6d.tif",
+     "coverage_3px": 0.9885919770894661,
+     "near_3px_fraction": 0.9990425531914894,
+     "excess_over_chance": 0.010450576102023268,
+     "probe": true,
+     "coverage_at_or_above_trigger": true
+    },
+    {
+     "name": "f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+     "coverage_3px": 0.9883130847947964,
+     "near_3px_fraction": 0.9990425531914894,
+     "excess_over_chance": 0.010729468396692976,
+     "probe": true,
+     "coverage_at_or_above_trigger": true
+    },
+    {
+     "name": "ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+     "coverage_3px": 0.9883130847947964,
+     "near_3px_fraction": 0.9990425531914894,
+     "excess_over_chance": 0.010729468396692976,
+     "probe": true,
+     "coverage_at_or_above_trigger": true
+    },
+    {
+     "name": "4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+     "coverage_3px": 0.897567715201546,
+     "near_3px_fraction": 0.87875,
+     "excess_over_chance": -0.01881771520154596,
+     "probe": false,
+     "coverage_at_or_above_trigger": true
+    },
+    {
+     "name": "437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+     "coverage_3px": 0.8615559925811601,
+     "near_3px_fraction": 0.8561702127659574,
+     "excess_over_chance": -0.005385779815202718,
+     "probe": false,
+     "coverage_at_or_above_trigger": true
+    },
+    {
+     "name": "c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+     "coverage_3px": 0.8615559925811601,
+     "near_3px_fraction": 0.8561702127659574,
+     "excess_over_chance": -0.005385779815202718,
+     "probe": false,
+     "coverage_at_or_above_trigger": true
+    },
+    {
+     "name": "5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+     "coverage_3px": 0.8354104386708007,
+     "near_3px_fraction": 0.8219148936170213,
+     "excess_over_chance": -0.013495545053779368,
+     "probe": false,
+     "coverage_at_or_above_trigger": true
+    },
+    {
+     "name": "0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+     "coverage_3px": 0.8354104386708007,
+     "near_3px_fraction": 0.8219148936170213,
+     "excess_over_chance": -0.013495545053779368,
+     "probe": false,
+     "coverage_at_or_above_trigger": true
+    },
+    {
+     "name": "bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+     "coverage_3px": 0.7629609261227157,
+     "near_3px_fraction": 0.7572606382978724,
+     "excess_over_chance": -0.005700287824843331,
+     "probe": false,
+     "coverage_at_or_above_trigger": true
+    },
+    {
+     "name": "2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+     "coverage_3px": 0.7629609261227157,
+     "near_3px_fraction": 0.7572606382978724,
+     "excess_over_chance": -0.005700287824843331,
+     "probe": false,
+     "coverage_at_or_above_trigger": true
+    },
+    {
+     "name": "ab7e0752036d020fbc394a528bbe63171c3cb08f.tif",
+     "coverage_3px": 0.7582652594471226,
+     "near_3px_fraction": 0.7291489361702128,
+     "excess_over_chance": -0.029116323276909828,
+     "probe": false,
+     "coverage_at_or_above_trigger": true
+    },
+    {
+     "name": "443e8e1c799734facd50a92bc85c650f3857a2b6.tif",
+     "coverage_3px": 0.7582652594471226,
+     "near_3px_fraction": 0.7291489361702128,
+     "excess_over_chance": -0.029116323276909828,
+     "probe": false,
+     "coverage_at_or_above_trigger": true
+    }
+   ],
+   "informative_offenders": [
+    {
+     "name": "4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+     "coverage_3px": 0.897567715201546,
+     "near_3px_fraction": 0.87875,
+     "excess_over_chance": -0.01881771520154596
+    },
+    {
+     "name": "437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+     "coverage_3px": 0.8615559925811601,
+     "near_3px_fraction": 0.8561702127659574,
+     "excess_over_chance": -0.005385779815202718
+    },
+    {
+     "name": "c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+     "coverage_3px": 0.8615559925811601,
+     "near_3px_fraction": 0.8561702127659574,
+     "excess_over_chance": -0.005385779815202718
+    },
+    {
+     "name": "5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+     "coverage_3px": 0.8354104386708007,
+     "near_3px_fraction": 0.8219148936170213,
+     "excess_over_chance": -0.013495545053779368
+    },
+    {
+     "name": "0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+     "coverage_3px": 0.8354104386708007,
+     "near_3px_fraction": 0.8219148936170213,
+     "excess_over_chance": -0.013495545053779368
+    },
+    {
+     "name": "bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+     "coverage_3px": 0.7629609261227157,
+     "near_3px_fraction": 0.7572606382978724,
+     "excess_over_chance": -0.005700287824843331
+    },
+    {
+     "name": "2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+     "coverage_3px": 0.7629609261227157,
+     "near_3px_fraction": 0.7572606382978724,
+     "excess_over_chance": -0.005700287824843331
+    },
+    {
+     "name": "ab7e0752036d020fbc394a528bbe63171c3cb08f.tif",
+     "coverage_3px": 0.7582652594471226,
+     "near_3px_fraction": 0.7291489361702128,
+     "excess_over_chance": -0.029116323276909828
+    },
+    {
+     "name": "443e8e1c799734facd50a92bc85c650f3857a2b6.tif",
+     "coverage_3px": 0.7582652594471226,
+     "near_3px_fraction": 0.7291489361702128,
+     "excess_over_chance": -0.029116323276909828
+    }
+   ],
+   "excess_over_chance": {
+    "min": -0.24092599508631313,
+    "median": -0.07664774039639616,
+    "mean": -0.06357700160046344,
+    "max": 0.10655954412447188,
+    "n_above_zero": 108
+   },
+   "informative_coverage_quantiles": {
+    "0.00": 0.0,
+    "0.25": 0.11019097699606656,
+    "0.50": 0.16155418555067946,
+    "0.75": 0.20018675551160625,
+    "0.90": 0.3007018462844079,
+    "0.99": 0.7629609261227157,
+    "1.00": 0.897567715201546
+   },
+   "n_informative_above_trigger": 17,
+   "prospective_recommendation": "Apply the directed 3 px/0.70 rule only to priors whose measured 3 px coverage is BELOW the rule's own trigger, or equivalently test the chance-normalised excess (near - coverage) against a margin. Both forms are derived from the rule rather than tuned to a result. Adopt it in the shared selector BEFORE the next round; do not apply it retroactively to this one.",
+   "verdict_unchanged": "This round's preregistered probe threshold (0.95) and the literal rule both stand, so the recorded lane verdict remains DUPLICATE/STOP and the artefact remains research-only."
+  },
+  "registry": {
+   "census_entries": 526,
+   "census_errors": 0,
+   "census_sha_column": "file bytes",
+   "skipped_ineligible": [
+    "/home/user/GEMSDOE52/work/h61/priors/7c12ed8a4164ce549fc8c3114eb30eb7f898af09.tif",
+    "/home/user/GEMSDOE52/work/h61/priors/a97c7b2a513225c9f9f2b35736afe5abf4d2a491.tif"
+   ],
+   "census_present": 524,
+   "local_artifacts": 22,
+   "excluded_own_round_prefix": "gems52-h61-"
+  },
+  "decoded_pattern_uniqueness": {
+   "canonical_pattern_unique": true,
+   "equals_literal_prior_union": false,
+   "novel_fraction": 0.0,
+   "union_px": 5364537
+  }
+ },
+ "not_the_union": {
+  "cells_differing_from_view_A": 69594,
+  "cells_differing_from_view_B": 75200,
+  "cells_differing_from_union_max": 72966,
+  "dots_shared_with_view_A": 2803,
+  "dots_shared_with_view_B": 0,
+  "dots_shared_with_union_max": 1117,
+  "jaccard_with_union_max": 0.015077683139181728,
+  "spearman_field_vs_unionmax": 0.00513558450620457,
+  "strict_a_only_candidate_px": 55193,
+  "emitted_cells_that_are_strict_a_only": 594,
+  "verdict": "the emission is not max(A,B), not either single view, and not their union"
+ },
+ "raster_sha256": "7c86853164f9cfa7aea34de029c7d5ccf3a6b43dbbb2b14de570e558384d2755",
+ "raster_bytes": 131771,
+ "raster_file": "gems52-h61-deepsharp-cotrain-37600px.tif",
+ "emitted_px": 37600,
+ "requested_px": 37600,
+ "validator": {
+  "ok": true,
+  "problems": [],
+  "nan_pixels": 0,
+  "min": 0.0,
+  "max": 1.0,
+  "crs": "EPSG:32611",
+  "width": 3292,
+  "height": 3730,
+  "transform": [
+   100.0,
+   0.0,
+   243350.0,
+   0.0,
+   -100.0,
+   4508550.0
+  ],
+  "grid_matches_sample": true,
+  "mass_outside_footprint": 0,
+  "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+ },
+ "projection": {
+  "G_lower": {
+   "G_px": 5949.282184328427,
+   "emitted_px": 37600.0,
+   "breakeven_credit_density_to_match_champion": 0.0907240551235412,
+   "random_dot_density": 0.0109350576159826,
+   "breakeven_multiple_of_random": 8.296623420706956,
+   "dti_if_density_equals_holdout_arm": 0.12512296711782486
+  },
+  "G_upper": {
+   "G_px": 12512.133928571544,
+   "emitted_px": 37600.0,
+   "breakeven_credit_density_to_match_champion": 0.1295146979863229,
+   "random_dot_density": 0.02299788464703079,
+   "breakeven_multiple_of_random": 5.631591773508799,
+   "dti_if_density_equals_holdout_arm": 0.0876476812478638
+  },
+  "evidence_class": "PROJECTION FROM OWNER-REPORTED SCORES AND A LOCAL SIMULATOR; NOT A SCORE, NOT ORGANIZER-CONFIRMED, NOT A LEADERBOARD FORECAST",
+  "formula": "DTI = T/(0.2*(T+S-M)+0.8*(|G|-T)) with M~T for sparse dots => DTI = d*S/(0.2S+0.8|G|)",
+  "holdout_arm_density": 0.04086271766025406,
+  "holdout_arm_density_caveat": "HOLDOUT-DTI measures recovery of withheld *catalogue* components in a simulator that measured Spearman -0.10 against the owner-reported board in round R4; it is not a density estimate for hidden off-catalogue expert-drawn truth.",
+  "champion": {
+   "id": "ref_h33_2_b2",
+   "reported": 0.2778,
+   "attribution": "FILENAME-ONLY-OWNER-REPORTED",
+   "S_masked": 37654
+  },
+  "identified_interval_for_novel_mass": [
+   0.0,
+   12512.133928571544
+  ],
+  "identified_interval_note": "Pixels outside all 13 scored files belong to no LP atom, so organiser-tied evidence gives NO information about their credit: the interval is [0, |G|]. The claim 'novel mass is worthless' is as unproven as 'novel mass is valuable'.",
+  "verdict_rule": "promote only if format+lane+not-union pass AND the projected organiser-DTI interval exceeds the champion at both ends of the |G| interval; otherwise negative/research-only"
+ },
+ "submission_name": "gems52-h61-deepsharp-cotrain-37600px-20261009T001003Z",
+ "note": "H61 deep-sharp cotrain: up-continued magnetics/gravity vs DEM+radiometric disagreement; 3px dots; >200m off catalogue; research-only",
+ "note_chars": 132,
+ "verdict": "negative",
+ "verdict_reason": {
+  "format_ok": true,
+  "lane_policy_ok": false,
+  "lane_literal_ok": false,
+  "decoded_pattern_unique": true,
+  "beats_champion_at_both_G_ends": false
+ },
+ "download_ok": true,
+ "submit_ok": false,
+ "slots_used": 0,
+ "promotion_is_a_separate_selector_step": true,
+ "repairs_carried": "masked support S; |G| as the interval [5949.3, 12512.1] instead of the published point 14,088.7; band 6 resolved as radiometric total count (Spearman 1.0000 vs external TC); attribution hash-links measured (3/13 hash-linked, the champion is filename-only); registry-saturation policy added to the shared lane gate",
+ "ai_use": "An AI assistant wrote the code, the protocol and the reasoning templates. No geologist verified any emitted structure and no field observation was collected.",
+ "sources": [
+  "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/",
+  "https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516/4",
+  "https://doi.org/10.1145/279943.279962",
+  "https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and",
+  "https://gbcge.org/current-projects/ingenious/",
+  "https://gdr.openei.org/submissions/1391",
+  "https://epsg.io/32611",
+  "https://en.wikipedia.org/wiki/Tversky_index",
+  "https://github.com/drivendataorg/gems-prize-reference-solution"
+ ]
+}
