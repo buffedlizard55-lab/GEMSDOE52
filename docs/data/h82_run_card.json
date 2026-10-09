@@ -1,11 +1,11 @@
 {
  "round": "H82",
- "generated_utc": "2026-10-09T21:34:23+00:00",
+ "generated_utc": "2026-10-09T21:58:21+00:00",
  "preregistration": {
   "document": "h82_preregistration.json",
-  "sha256": "fe7050eb40ecf23ff717514ac5067cbc7d45cfa1f844c6d12fa0ee85d6b3b571",
+  "sha256": "e979a1773eb629a3d274f0a030a9d65eac6c2d859d6693a9f657bae2840d4852",
   "hypothesis_document": "knowledge/72_hypotheses_H82_preregistered.md",
-  "hypothesis_document_sha256": "fe7050eb40ecf23ff717514ac5067cbc7d45cfa1f844c6d12fa0ee85d6b3b571",
+  "hypothesis_document_sha256": "e979a1773eb629a3d274f0a030a9d65eac6c2d859d6693a9f657bae2840d4852",
   "frozen_before_any_fit": true,
   "amendment": "72a: XVSA_visible_tensor_mag demoted to a diagnostic before any fit because it is monotone in distance-to-visible-catalogue and would trip the 0.90 canary by construction"
  },
@@ -29426,10 +29426,10 @@
   "not_union_pass": true
  },
  "raster": {
-  "file": "submission/gems52-h82-dva2vsa-B-37654px-20261009T213414Z.tif",
+  "file": "submission/gems52-h82-dva2vsa-B-37654px-20261009T215811Z.tif",
   "bytes": 140555,
   "sha256": "17c3f8325ac6f267b1b8cc58bc6fd9495c118c30de64d5f78293d19d7f20c907",
-  "name": "h82-dva2vsa-B-37654px-20261009T213414Z",
+  "name": "h82-dva2vsa-B-37654px-20261009T215811Z",
   "note": "H82: View-B + 50 DVA-2 + 10 variogram/strike-alignment channels; 8-dir integer fan, lags 100-600m; 200m catalogue ring excluded; binary dots",
   "note_chars": 140,
   "emitted_cells": 37654,
@@ -29437,7 +29437,7 @@
    "tif": "docs/downloads/h82-candidate.tif",
    "zip": "docs/downloads/h82-candidate.zip",
    "tif_sha256": "17c3f8325ac6f267b1b8cc58bc6fd9495c118c30de64d5f78293d19d7f20c907",
-   "zip_sha256": "9a20bbcd44ab970be47751ea547622a4b8703e1375857502ea8eb4e1077c6627"
+   "zip_sha256": "b89875580382af6486fde53ef01128c4a8b2a2829d516b685373d41b1a8d777d"
   }
  },
  "validator": {
@@ -29466,7 +29466,7 @@
   "PASS": true,
   "range_rule_source": "official: values between 0 and 1, single layer float32, EPSG:32611, 100 m, same bounds as the training data (https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/)"
  },
- "reasoning_csv": "docs/downloads/gems52-h82-dva2vsa-B-37654px-20261009T213414Z-reasoning.csv",
+ "reasoning_csv": "docs/downloads/gems52-h82-dva2vsa-B-37654px-20261009T215811Z-reasoning.csv",
  "verdict": "NEGATIVE / RESEARCH-ONLY: download is safe, submission is not recommended",
  "verdict_promote": false,
  "verdict_reasons": {

@@ -1,0 +1,1 @@
+H77: View-B OOF surface rank; 200m catalogue ring out; binary {0,1}; 3px spacing; K=37654; consensus<=1 lane-feasible; portal-exact LZW

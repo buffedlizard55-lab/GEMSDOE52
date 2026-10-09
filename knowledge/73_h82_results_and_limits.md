@@ -4,6 +4,15 @@ Round **H82** — extended directional variogram anisotropy (DVA-2) plus variogr
 run inside the assigned **co-training lane** (View A subsurface/geophysical vs View B surface, Blum &
 Mitchell 1998, doi:10.1145/279943.279962).
 
+> **This round was executed as H76 and renamed H82 at merge** (IR-H82-008): `origin/main` already held an
+> H76 round plus H77, H77cond and H81 from three parallel sessions. The rename is identifier-only and that
+> is provable, not asserted — the rebuilt GeoTIFF carries the identical SHA-256
+> `17c3f8325ac6f267b1b8cc58bc6fd9495c118c30de64d5f78293d19d7f20c907` and the identical 37,654 emitted
+> cells. Only the ZIP's SHA-256 changed, because a ZIP stores its inner member's filename. Where this
+> document or the receipts say H82, the run that produced the numbers was labelled H76 at the time; the
+> preregistration keeps `pre_rename_sha256` beside the post-rename hash so the frozen text is still tied to
+> the executed run. `knowledge/67`→`72` and `knowledge/68`→`73` for the same reason.
+
 Frozen before any fit: `knowledge/72_hypotheses_H82_preregistered.md`
 (SHA-256 `fe7050eb40ecf23ff717514ac5067cbc7d45cfa1f844c6d12fa0ee85d6b3b571`, pinned in
 `registry/h82_preregistration.json`, amendment 72a included).

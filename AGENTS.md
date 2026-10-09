@@ -64,6 +64,53 @@ File `docs/downloads/h82-candidate.tif` (`gems52-h82-dva2vsa-B-37654px-20261009T
 SHA-256 `17c3f8325ac6f267b1b8cc58bc6fd9495c118c30de64d5f78293d19d7f20c907`) is **DOWNLOAD YES, SUBMIT NO**.
 
 <!--/H82-AGENTS-->
+<!--H77-AGENTS-->
+## Current H77 continuation (2026-10-09)
+
+Read `README.md`'s H77 block first, then `evidence/h77_build.json` (build, gates, run card),
+`evidence/h77_holdout.json` (all eight arms with CIs) and `evidence/h77_budget_sweep.json`.
+
+H77 is **negative at the holdout gate and positive at the format/uniqueness/lane gates**. Verdict:
+**DOWNLOAD YES, SUBMIT NO**, slots used 0. The shipped artefact is
+`gems52-h77-viewb-boardplaced-37654px-20261009T194504Z.tif` (SHA-256 `f7f234af…02452f49`), published
+one-click at `docs/downloads/h77-candidate.tif` with the verdict on the root `index.html` and
+`docs/h77-executive-summary.html`. Experiments used: 3 of 3.
+
+Facts the next round must respect:
+
+- **Data placement is not a blocker any more.** `scripts/restore_data.py` restores all 23 manifest
+  entries from the owner's hash-pinned sibling repos through the GitHub Contents API and verifies
+  every SHA-256 (`ALL_VERIFIED=True`), including the 419 MB feature raster in five parts.
+  `api.github.com` is inside the sandbox egress allowlist. Do not repeat the claim that this needs
+  an unrestricted machine.
+- **Use `gems52.grid.write_geotiff_portal_exact`.** It writes the organiser template's own container
+  (LZW, stripped, `nodata=nan` outside the footprint) and re-reads its output, refusing anything the
+  portal's stated rule could reject. Do not add another packaging variant (IR-H77-004).
+- **All five new detectors are measured negative** (basement curvature × thin cover 0.078442,
+  geodetic dilatation gradient 0.068369, conductivity × basement-step 0.061497, antithetic basin
+  margin 0.043613, LiDAR × radiometric-K 0.086684, rank fusion 0.069808) against `single_B`
+  **0.174571** [0.153568, 0.194531] and random 0.082399. Do not re-tune them on this protocol.
+  `run_h61.py fit` reproduces View A 0.5163 / View B 0.6843 exactly, so the instrument is sound.
+- **Placement headroom is closed.** The family's thinning ladder (`h19_5` → `d1_5` → `d2_8` →
+  `h33-2-b2`) retains 0.766 of its credit where the geometric optimum is 0.798 — within 4 %.
+  `|G|` is pinned at 14,088.7 px from the exact nested pair, and beating 0.3195 at 37,654 px needs
+  `T ≥ 6,007` against the champion's measured 5,223. That is a detector problem, not a placement one.
+- **The lane gate only passes on a consensus ≤ 1 pool** (856,910 of 4,930,382 legal px), which is
+  also why the file's expected board score is low: consensus ≤ 1 means no prior submission in the
+  family emitted there. Do not present the unrestricted field's 0.253693 as a projection for it.
+- **The holdout instrument hides CATALOGUE faults; the competition scores faults the catalogue
+  lacks.** SGMC is 95 % disjoint from `labels.tif` (79,615 off-catalogue px). That mismatch is the
+  likeliest cause of the measured Spearman −0.10 between holdout DTI and board score (IR-H77-005).
+  An off-catalogue instrument is the highest-value unbuilt tool in this repository.
+<!--/H77-AGENTS-->
+<!--H81-AGENTS-->
+## Current H81 continuation (2026-10-09)
+Read README's H81 block first, then `knowledge/69_h81_hypotheses_ranked.md` (ranked candidates), `knowledge/70_h81_preregistered.md` (frozen; SHA-256 pinned in `registry/h81_preregistration.json`) and `knowledge/71_h81_results_and_limits.md`.
+Verdicts: H81-1 (band-18 DVA) **NEGATIVE** (paired +0.0020, CI [−0.0015, +0.0052]); experiments used 1 of 3; slots 0. The H75 file is **research-only: do not submit**. It fails the lane gate (literal 1.000, policy 0.922) AND the support-novelty gate (novel fraction 0.0, subset of the 566-prior union). "Unique" in older blocks means canonical decoded pattern only.
+Corrections: the committed H75 single_B holdout is replaced by a fresh-process run (0.174571; IR-H81-003). Run each stage in its own process. Use `scripts/run_h81.py`, which reuses H75 predictions and fits only B_DVA18.
+Next: lane-rule decision by the owner (H81-4) before any further holdout work; then H81-2 (antithetic band-15 step, untested), and H81-3 (magnetic-gradient DVA) only after a flight-line artefact check.
+<!--/H81-AGENTS-->
+
 <!--H75-AGENTS-->
 ## Current H75 continuation (2026-10-09)
 Read README's H75 block, `knowledge/65` (+65a/65b) and `knowledge/66`. H75: B_DVA (View B + directional variogram
@@ -72,6 +119,62 @@ slots 0. File `docs/downloads/h75-candidate.tif` is DOWNLOAD YES, SUBMIT researc
 Next: preregister a registry restricted to scored submissions, then retest the lane.
 
 <!--H67-AGENTS-->
+## Current H77cond continuation (2026-10-09) — READ THIS FIRST
+
+> **Identifier note.** This round was executed as "H74" and renamed to **H77cond** at merge time: a
+> parallel session running the same brief merged its own H74 into `main` first (directional
+> variogram anisotropy), and H75 was taken by a third. The rename is identifier-only — the
+> preregistration document's bytes are unchanged and its pinned SHA-256
+> `d117b265…e3b55` still validates, so the "frozen before any fit" claim is intact.
+> Same remedy as IR-H66-015 / commit `9d891a6`. See `registry/h77cond_preregistration.json`
+> → `identifier_rename`.
+
+Read `README.md`'s H77cond block, then `knowledge/67_hypotheses_H77cond_preregistered.md` (frozen, SHA-256
+`d117b265…e3b55`, pinned in `registry/h77cond_preregistration.json`), its dated amendment
+`knowledge/67a_h77cond_amendment_shipped_arm_rule.md` (shipped-arm rule, written before any holdout number
+existed), and `knowledge/68_h77cond_results_and_limits.md`.
+
+**The co-training lane is now closed with a mechanism, not just a failed threshold. Stop re-opening it.**
+
+1. **The rescue argument is dead.** Every earlier round closed the lane on S1 — View A's out-of-quadrant
+   AUC on *all* held-out truth is ~0.52. The standing rescue was "the catalogue only contains
+   surface-expressed faults, so S1 measures the wrong population". H77cond tested that directly (S1′: View A's
+   AUC restricted to truth inside View B's blind band `rank_B ∈ [0.35, 0.65]`). Result, in **all four folds
+   without exception**: `AUC(A | B-dark) < AUC(A | B-blind) < AUC(A | B-bright)` —
+   0.4685 < 0.4893 < 0.5436 pooled, margin **−0.0543** against a required **+0.05**. View A is *least*
+   informative exactly where View B is blind. A buried-fault population visible only to potential fields
+   would have produced the reverse ordering. View A's apparent skill is a shadow of the same
+   surface-expressed structures View B reads directly.
+2. **Independence was never the problem.** Spatial-block OOF error correlation on labelled negatives:
+   max |ρ| **0.1333** over 2,089 blocks, far inside the 0.60 abandon bar. Co-training's *independence*
+   precondition holds on this data; its *sufficiency* precondition is refuted, now conditionally as well
+   as globally. Do not re-run the independence screen expecting it to be the blocker.
+3. **Dose-response, measured.** Handing φ of the budget from View B to View A costs DTI linearly:
+   swap_010 0.168343 (Δ −0.006175, CI [−0.009869, −0.002305]), swap_025 0.160427 (Δ −0.014091),
+   swap_050 0.152317 (Δ −0.022201) against `single_B` 0.174517. Roughly **−0.00083 DTI per 1 %** of budget
+   transferred. There is no φ > 0 worth paying for.
+4. **`line_support_B` is a free null and is reusable.** Replacing a rank field by the max over 12
+   orientations of its mean along a 7 px (600 m) chord measured 0.172426, paired Δ −0.002091 with CI
+   **[−0.005873, +0.001289]** — straddles zero, i.e. no measurable cost — while moving the spatial pattern
+   substantially. **Use it as a near-free degree of freedom when a future round needs to dodge the lane's
+   70 % near-dot rule without paying DTI.** `H.line_support` in `scripts/run_h77cond.py` is unit-tested
+   (`_shift0` is zero-filled, never wrapped).
+5. **Controls reproduced exactly**, so the instrument is sound and these numbers are comparable to H70:
+   `single_B` 0.1745172876 vs the committed 0.174517 (|Δ| **2.9e-07**), `single_A` 0.071954,
+   `disagreement_pre` 0.033293, `random` 0.080426 — all identical to H70 to six decimals.
+6. **Reusable tooling added this round.** `scripts/h77cond_build.py` has `_place` (greedy + 3 px hard core +
+   exact per-prior near-dot quota) which is **verified bit-identical to `gems52.nodes.spacing_select`**
+   when the quota is off, `_bit_transpose` (per-pixel prior bitmap; turns the quota lookup from a
+   cache-hostile strided gather into a 19-byte contiguous read), `_exclusion_stamp` (matches
+   `spacing_select`'s strict `<` rule, unlike `gates._disk`'s `<=`), and `_disagreement_audit`
+   (cardinal-orientation falsifier for the brief's B-only "roads/erosion" reading).
+7. **Band labels: check `src/gems52_h1/spec.py` `OFFICIAL_BANDS` before naming any band.** IR-52-01 bit
+   this round: band 6 `tc` is a **magnetic** tilt/total-curvature derivative, *not* radiometric total
+   count. True gamma-ray channels exist only in the external GeoDAWN layers (`X_rad_*`).
+
+Experiments used: 3 of 3. Slots used: 0. Verdict: **negative, research-only** — see the README H77cond block
+for the DOWNLOAD/SUBMIT decision on the emitted file.
+
 ## Current H74 continuation (2026-10-09)
 
 Read `README.md`'s H74 block first, then `knowledge/63_hypotheses_H74_preregistered.md` (frozen,

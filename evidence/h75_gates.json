@@ -8,16 +8,16 @@
    "/home/user/GEMSDOE52/work/h61/priors/a97c7b2a513225c9f9f2b35736afe5abf4d2a491.tif"
   ],
   "census_present": 524,
-  "local_artifacts": 41
+  "local_artifacts": 43
  },
- "n_priors": 565,
+ "n_priors": 566,
  "lane_surface": {
   "phase": "surface",
   "instrument": "gems52.gates.lane_report (H61 shared-template repair)",
   "evidence_class": "uniqueness/lane diagnostic, not a score",
   "rule": "STOP at Spearman > 0.9 or directed <= 3 px dot proximity > 0.7; probes classified by measured coverage >= 0.95",
-  "priors_checked": 565,
-  "distinct_decoded_priors": 384,
+  "priors_checked": 566,
+  "distinct_decoded_priors": 385,
   "candidate_decoded_sha256": "2fe6f93e95db842779284183f9394600a49facc99ade39c3b73de02aab691d8e",
   "rank_pixels": 4593171,
   "exact_full_eligible_rank": true,
@@ -40,7 +40,7 @@
    "rank_offenders": [],
    "near_offenders": [],
    "identical": [],
-   "informative_priors": 551,
+   "informative_priors": 552,
    "universal_coverage_probes": 14,
    "probe_paths": [
     "/home/user/GEMSDOE52/work/h61/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
@@ -9221,6 +9221,22 @@
     "near_duplicate": false
    },
    {
+    "path": "/home/user/GEMSDOE52/submission/gems52-h74-a2deform-cotrain-721px-20261009T174546Z.tif",
+    "decoded_sha256": "8275e1273ac1322c4c625f4a52cd79e99657e152f4141fc48009e6e0310d1cd1",
+    "binary_on_eligible": true,
+    "spearman": -0.007170933340738205,
+    "identical": false,
+    "constant_prior": false,
+    "prior_proposals": 721,
+    "prior_support_rule": ">0 for binary; >=0.5 for continuous (shared template)",
+    "coverage_3px_of_eligible": 0.0035883706485127596,
+    "universal_coverage_probe": false,
+    "near_3px_fraction": null,
+    "candidate_dots": 0,
+    "rank_duplicate": false,
+    "near_duplicate": false
+   },
+   {
     "path": "/home/user/GEMSDOE52/submission/gems52-r2-signednormal-37654-1f751ac9b6ee-zeros.tif",
     "decoded_sha256": "1f751ac9b6eea960c2559519f438afae7be7ea33f4f018e4a32d7149d50e3854",
     "binary_on_eligible": true,
@@ -9311,8 +9327,8 @@
   "instrument": "gems52.gates.lane_report (H61 shared-template repair)",
   "evidence_class": "uniqueness/lane diagnostic, not a score",
   "rule": "STOP at Spearman > 0.9 or directed <= 3 px dot proximity > 0.7; probes classified by measured coverage >= 0.95",
-  "priors_checked": 565,
-  "distinct_decoded_priors": 384,
+  "priors_checked": 566,
+  "distinct_decoded_priors": 385,
   "candidate_decoded_sha256": "4de1dbaf93de68d63603998e32ba49141ffc31dc33dd583e001c9780f12d217c",
   "rank_pixels": 4593171,
   "exact_full_eligible_rank": true,
@@ -9427,7 +9443,7 @@
     "/home/user/GEMSDOE52/work/h61/priors/93baa81db8295cf7fee042dd2c753465d2d73a3c.tif"
    ],
    "identical": [],
-   "informative_priors": 551,
+   "informative_priors": 552,
    "universal_coverage_probes": 14,
    "probe_paths": [
     "/home/user/GEMSDOE52/work/h61/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
@@ -18608,6 +18624,22 @@
     "near_duplicate": false
    },
    {
+    "path": "/home/user/GEMSDOE52/submission/gems52-h74-a2deform-cotrain-721px-20261009T174546Z.tif",
+    "decoded_sha256": "8275e1273ac1322c4c625f4a52cd79e99657e152f4141fc48009e6e0310d1cd1",
+    "binary_on_eligible": true,
+    "spearman": -0.000946423630402011,
+    "identical": false,
+    "constant_prior": false,
+    "prior_proposals": 721,
+    "prior_support_rule": ">0 for binary; >=0.5 for continuous (shared template)",
+    "coverage_3px_of_eligible": 0.0035883706485127596,
+    "universal_coverage_probe": false,
+    "near_3px_fraction": 0.0003452488447442503,
+    "candidate_dots": 37654,
+    "rank_duplicate": false,
+    "near_duplicate": false
+   },
+   {
     "path": "/home/user/GEMSDOE52/submission/gems52-r2-signednormal-37654-1f751ac9b6ee-zeros.tif",
     "decoded_sha256": "1f751ac9b6eea960c2559519f438afae7be7ea33f4f018e4a32d7149d50e3854",
     "binary_on_eligible": true,
@@ -18694,7 +18726,7 @@
   ]
  },
  "uniqueness": {
-  "n_priors_checked": 565,
+  "n_priors_checked": 566,
   "per_prior": [
    {
     "path": "/home/user/GEMSDOE52/work/h61/priors/3957f33ad98537c14db71425667dcbf199629af2.tif",
@@ -26535,6 +26567,20 @@
     "subset_of_prior": false,
     "superset_of_prior": false,
     "novel_vs_this": 35942
+   },
+   {
+    "path": "/home/user/GEMSDOE52/submission/gems52-h74-a2deform-cotrain-721px-20261009T174546Z.tif",
+    "prior_px": 721,
+    "new_px": 37654,
+    "binary": true,
+    "support_definition": ">0 for binary",
+    "decoded_sha256": "8275e1273ac1322c4c625f4a52cd79e99657e152f4141fc48009e6e0310d1cd1",
+    "intersection": 1,
+    "jaccard": 2.6059310991817377e-05,
+    "identical": false,
+    "subset_of_prior": false,
+    "superset_of_prior": false,
+    "novel_vs_this": 37653
    },
    {
     "path": "/home/user/GEMSDOE52/submission/gems52-r2-signednormal-37654-1f751ac9b6ee-zeros.tif",

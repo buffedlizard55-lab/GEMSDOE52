@@ -1,0 +1,78 @@
+{
+ "stage": "sufficiency",
+ "started_utc": "2026-10-09T19:06:56+00:00",
+ "evidence_class": "PREMISE-AUC (diagnostic, not a DTI score)",
+ "bar_mean": 0.6,
+ "bar_fold": 0.55,
+ "blind_band": [
+  0.35,
+  0.65
+ ],
+ "bar_conditional": 0.6,
+ "margin_required": 0.05,
+ "folds": [
+  {
+   "fold": 0,
+   "n_truth": 27309,
+   "n_neg": 1941302,
+   "auc_A_all": 0.506234,
+   "auc_B_all": 0.662501,
+   "n_truth_blind": 6814,
+   "n_truth_darkB": 5406,
+   "n_truth_brightB": 15089,
+   "auc_A_blind": 0.485413,
+   "auc_A_darkB": 0.45539,
+   "auc_A_brightB": 0.533853
+  },
+  {
+   "fold": 1,
+   "n_truth": 10677,
+   "n_neg": 1032665,
+   "auc_A_all": 0.601066,
+   "auc_B_all": 0.768441,
+   "n_truth_blind": 1767,
+   "n_truth_darkB": 1358,
+   "n_truth_brightB": 7552,
+   "auc_A_blind": 0.571405,
+   "auc_A_darkB": 0.568465,
+   "auc_A_brightB": 0.613868
+  },
+  {
+   "fold": 2,
+   "n_truth": 6813,
+   "n_neg": 393204,
+   "auc_A_all": 0.466819,
+   "auc_B_all": 0.61122,
+   "n_truth_blind": 2005,
+   "n_truth_darkB": 1556,
+   "n_truth_brightB": 3252,
+   "auc_A_blind": 0.427838,
+   "auc_A_darkB": 0.425032,
+   "auc_A_brightB": 0.510846
+  },
+  {
+   "fold": 3,
+   "n_truth": 8387,
+   "n_neg": 595321,
+   "auc_A_all": 0.491043,
+   "auc_B_all": 0.695178,
+   "n_truth_blind": 2070,
+   "n_truth_darkB": 1305,
+   "n_truth_brightB": 5012,
+   "auc_A_blind": 0.472691,
+   "auc_A_darkB": 0.42506,
+   "auc_A_brightB": 0.515803
+  }
+ ],
+ "finished_utc": "2026-10-09T19:07:01+00:00",
+ "mean_auc_A": 0.5162905,
+ "min_fold_auc_A": 0.466819,
+ "mean_auc_B": 0.6843349999999999,
+ "mean_auc_A_blind": 0.48933675,
+ "mean_auc_A_brightB": 0.5435925,
+ "mean_auc_A_darkB": 0.46848675,
+ "conditional_margin": -0.05425575000000005,
+ "S1_global_pass": false,
+ "S1_conditional_pass": false,
+ "interpretation": "S1_global repeats the gate that failed in H61/H63/H64/H65/H70. S1_conditional is the new test: if View A is informative about mapped faults that the surface view cannot see, its AUC restricted to blind-band truth must exceed both the bar and its AUC on surface-expressed truth. Conditional AUCs are computed on a label-selected subset and are a diagnostic, not an unbiased population estimate."
+}

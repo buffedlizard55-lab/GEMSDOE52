@@ -1,0 +1,17 @@
+{
+ "round": "H81",
+ "hypothesis_document": "knowledge/70_h81_preregistered.md",
+ "hypothesis_sha256": "43128dee6091792e98bc7a1cd38bae104414d8ffc8cb532f50e7272bf4f91472",
+ "frozen_utc": "2026-10-09",
+ "candidate": "H81-1 DVA on band 18 iso_grav_anom_hg added to View B (H75 DVA channels kept)",
+ "reused_arms": [
+  "single_B",
+  "B_DVA"
+ ],
+ "new_arms": [
+  "B_DVA18"
+ ],
+ "promote_rule": "paired CI lower bound (B_DVA18-B_DVA) > 0 and canary max < 0.90",
+ "pre_rename_sha256": "a32ad616e76090a3ebb54a23ef0007f023d9561304afc9d450bd0e26392754dc",
+ "rename_note": "identifier-only H76->H81 rename (main already holds H76 from another session, and H77cond); text otherwise unchanged apart from identifiers; pre-rename hash kept"
+}
