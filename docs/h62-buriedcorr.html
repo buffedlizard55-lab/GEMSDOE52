@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="H62 buried structural corridors — co-training lane audit with measured gates.">
+<title>H62 audit · GEMSDOE52</title><link rel="stylesheet" href="assets/ctd5.css"></head>
+<body><a class="skip" href="#main">Skip to content</a>
+<header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>
+<a href="index.html">Overview</a><a href="h62-buriedcorr.html">Run &amp; evidence</a><a href="executive-summary.html">Submission guide</a><a href="sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header>
+<main id="main">
+<h1>H62 — buried structural corridors</h1>
+<div class="notice" role="note"><strong>DOWNLOAD FOR REVIEW: YES · SUBMIT TO COMPETITION: NO — DO NOT SUBMIT this run</strong><p>DOWNLOAD FOR REVIEW: YES. SUBMIT TO COMPETITION: NO — preregistered promotion bar not met; research artifact only · NO CERTIFIED LEADERBOARD GAIN · do not upload research archives</p></div>
+<p class="fileline">gems52-h62-buriedcorr-37626px.tif · 37,626 emitted px · SHA-256 6b494e7d1abc476555778c699e8d51a6cbd10658f57dfb60f1ccafc3f91924eb</p>
+<div class="actions"><a class="button" href="downloads/h62-buriedcorr-candidate.tif" download>Download GeoTIFF ↓</a>
+<a class="button secondary" href="downloads/h62-buriedcorr-candidate.zip" download>Single-TIFF ZIP</a></div>
+
+<h2>Hypothesis and mechanism</h2>
+<p>H62-1: the co-training discovery signal (A confident, B abstains) becomes a buried-fault candidate only when it is explained by burial (depth to basement &gt;= 200 m), carried by a potential-field edge (gradient &gt;= P75) and persistent along strike (line-persistence corridor); such corridors target faults missing from the surface-mapped USGS/INGENIOUS catalogue</p>
+<p><b>Mechanism.</b> two logistic views fitted out-of-fold on hide-and-recover whole-segment folds (independence premise MEASURED first); disagreement field max(pA-pB,0) gated by cover -&gt; edge -&gt; line persistence (morphological line opening at half-widths 2-4 px, component length &gt;= 15 px and elongation &gt;= 3); placed by the registered scoring emitter h57.iso_select on the required-novel pool outside the 200 m ring; binary {0,1} emission (metric-optimal) with zeros everywhere else</p>
+<p><b>Named non-fault mimics.</b> buried paleochannels and basin-fill edges (density contrasts that are not faults); lithologic contacts and dike swarms (linear susceptibility/density steps); alluvial-fan / basin-margin gravel wedges (density contrasts with no fault); airborne-survey drape and terrain clearance over steep topography (GeoDAWN magnetics are airborne; ridge-flank gradients mimic structure)</p>
+
+<h2>Lane gates (measured)</h2>
+<ul>
+<li>Independence (Blum &amp; Mitchell premise): block OOF negative-error max |r| = <b>0.1763</b> &lt; 0.60 → exchange licensed. 36,411 withheld positives, 4 whole-segment hide folds.</li>
+<li>Leakage canary: worst single layer <b>B_lidar_step_max_grad</b> AUC 0.7136 &lt; 0.90 → clean.</li>
+<li>Format gate: 0 problems · finite in [0,1] · EPSG:32611 · 3730×3292 · transform matches the sample.</li>
+<li>Uniqueness: decoded pattern unique vs 80 accessible priors · novel fraction 1.0.</li>
+<li>Lane drift: surface max |ρ| = 0.038359105086417475 (bar 0.90) · dots max |ρ| = 0.018381217758944413 · within-3px (excl. calibration, H60-6) = 0.9994418752989954 (bar 0.70); raw incl. calibration = 0.9994418752989954.</li>
+<li>Not-merely-union: 37252 of 37626 emitted px outside the union field's matched-budget top-k.</li>
+</ul>
+
+<h2>HOLDOUT-DTI (evaluator pinned; catalogue truth — not a leaderboard score)</h2>
+<p class="small">hide pooled @ 37,654 px, 4 whole-segment folds, α 0.2 / β 0.8 / 300 m triangular kernel; 36,411 withheld positives.</p>
+<table><thead><tr><th>field</th><th>hide pooled DTI @37,654</th></tr></thead><tbody><tr><td>H62_1_corridors</td><td class='numeric'>0.003598</td></tr><tr><td>view_B</td><td class='numeric'>0.006443</td></tr><tr><td>clf_union</td><td class='numeric'>0.006201</td></tr><tr><td>dis_contrast</td><td class='numeric'>0.004123</td></tr><tr><td>view_A</td><td class='numeric'>0.003948</td></tr><tr><td>random</td><td class='numeric'>0.001775</td></tr></tbody></table>
+<table><thead><tr><th>field</th><th>hide pooled DTI @15,000</th></tr></thead><tbody><tr><td>H62_1_corridors</td><td class='numeric'>0.002072</td></tr><tr><td>view_B</td><td class='numeric'>0.005196</td></tr><tr><td>clf_union</td><td class='numeric'>0.005038</td></tr><tr><td>dis_contrast</td><td class='numeric'>0.001765</td></tr><tr><td>view_A</td><td class='numeric'>0.003948</td></tr><tr><td>random</td><td class='numeric'>0.001099</td></tr></tbody></table>
+<p class="small">Shipped raster, required-novel pool, hide pooled: 0.002247 [0.001112, 0.003675] (HOLDOUT-DTI, CI = fold bootstrap 10k).</p>
+<p class="small">Preregistered bars: H62=0.0034096770461912174 · ungated dis_contrast=0.0041452505756723965 · random=0.0018016061023552242 · weak-surface subgroup H62=0.0046935591647732445 vs view_B=0.006149648312436708 (fold wins 0) → <b>fail</b>.</p>
+
+<h2>Why 0.2778 and can it be beaten?</h2>
+<p>The 0.2778 champion is d2-8 minus its 100–200 m catalogue ring — deleting 6,436 uncreditable pixels raised the score 6.8% (OWNER-REPORTED numbers; nested-pair algebra, knowledge/27). The board is strictly decreasing in emitted mass among off-catalogue files (Spearman −1.0, six scored files). Credit-density arithmetic: the marginal bar at DTI≈0.32 is ≈0.068 hit-mass per emitted pixel. H62 spends its 37,654-px budget on persisted buried-corridor crests — pixels no surface-mapped catalogue can contain — with zero tax (≥200 m from any mapped trace) and zero reused prior mass.</p>
+
+<h2>Run card</h2>
+<p class="small">Verdict: <b>negative</b> · submission name <code>gems52-h62-buriedcorr-37626px-6b494e7d-zeros</code> (44 chars) · note (138/140): <code>H62 buried corridors: cover/edge/persistence gates on A-only disagreement; finite binary [0,1]; off-prior; hypotheses, not verified faults</code>. Full JSON: <a href="data/h62_run_card.json">data/h62_run_card.json</a>.</p>
+<p class="small">Review tables: <a href="downloads/gems52-h62-37627px-candidate-geology.csv">per-pixel geological reasoning (37,627 rows)</a> · <a href="downloads/gems52-h62-a-only-candidate-segments.csv">A-only corridor segments (1,120 rows, one falsifier each)</a>.</p>
+<p class="small">Qualification:  — every HOLDOUT-DTI number is labelled; every leaderboard number in this repository is OWNER-REPORTED, not ORGANIZER-CONFIRMED. Projections are never written as scores.</p>
+</main><footer>Independent competition research, not an official DOE or DrivenData site. Predictions are not verified faults or geothermal discoveries.<br>
+<a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code &amp; reproducibility</a> · H62 / 2026-10-09</footer></body></html>

@@ -68,8 +68,14 @@ def log(m: str) -> None:
     print(f"[h60d {time.strftime('%H:%M:%S')}] {m}", flush=True)
 
 
-def done(path: Path) -> bool:
-    return path.exists()
+def done(path: Path, work_artifact: Path | None = None) -> bool:
+    """Checkpoint test.  H62 shared-tool fix (IR-H62-001): an evidence receipt alone is NOT a
+    valid checkpoint — if the work cache has been wiped (e.g. a fresh checkout, where ``work/``
+    is gitignored but ``evidence/`` is tracked), the stage must re-run rather than skip and
+    leave later stages without ``work/h60`` arrays.  Pass the required work artifact."""
+    if not path.exists():
+        return False
+    return work_artifact is None or work_artifact.exists()
 
 
 # ----------------------------------------------------------------------------------------------- preflight
@@ -188,7 +194,7 @@ def pixel_corr(pa, pb, mask):
 
 def stage_cotrain() -> None:
     out = EV / "h60d_cotrain.json"
-    if done(out):
+    if done(out, WORK / "pa_oof.npy") and (WORK / "pb_oof.npy").exists():
         log("cotrain cached")
         return
     t0 = time.time()
@@ -344,7 +350,7 @@ def score_cell(field, legal, truth, region, valid, visible, k):
 
 def stage_validate() -> None:
     out = EV / "h60d_validation.json"
-    if done(out):
+    if done(out, WORK / "pa_oof.npy"):
         log("validation cached")
         return
     t0 = time.time()

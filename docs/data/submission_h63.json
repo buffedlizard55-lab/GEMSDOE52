@@ -1,0 +1,157 @@
+{
+ "exists": true,
+ "round": "H63",
+ "file": "gems52-h63-stepview-cotrain-37600px.tif",
+ "download": "downloads/h63-candidate.tif",
+ "bytes": 140421,
+ "sha256": "aa41d0cd4658b2f0887180bf85132453dbf8f9408272d2c880d1fe4e822caa9f",
+ "emitted_px": 37600,
+ "submission_name": "gems52-h63-stepview-cotrain-37600px-20261009T014832Z",
+ "note": "H63 cotrain: step-normalised potential-field A vs DEM+radiometric B disagreement; 3px dots; >200m off catalogue; research-only",
+ "note_chars": 126,
+ "verdict": "negative",
+ "download_ok": true,
+ "submit_ok": false,
+ "approved_for_weekly_slot": false,
+ "promoted": false,
+ "weekly_submission_slots_used": 0,
+ "slots_used": 0,
+ "artifact_status": "RESEARCH ONLY \u2014 H63 verdict is negative; not an approved competition entry",
+ "format": {
+  "path": "/home/user/GEMSDOE52/submission/gems52-h63-stepview-cotrain-37600px.tif",
+  "bytes": 140421,
+  "sha256": "aa41d0cd4658b2f0887180bf85132453dbf8f9408272d2c880d1fe4e822caa9f",
+  "bands": 1,
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "width": 3292,
+  "height": 3730,
+  "bounds": [
+   243350.0,
+   4135550.0,
+   572550.0,
+   4508550.0
+  ],
+  "ref_bounds": [
+   243350.0,
+   4135550.0,
+   572550.0,
+   4508550.0
+  ],
+  "transform": [
+   100.0,
+   0.0,
+   243350.0,
+   0.0,
+   -100.0,
+   4508550.0
+  ],
+  "nodata": null,
+  "blocksize": [
+   256,
+   256
+  ],
+  "fixture_grid": false,
+  "has_validity_mask": false,
+  "nan_pixels": 0,
+  "infinity_pixels": 0,
+  "n_nan": 0,
+  "min": 0.0,
+  "max": 1.0,
+  "mean": 0.003062098752707243,
+  "n_nonzero": 37600,
+  "mass": 37600.0,
+  "mass_outside_footprint": 0,
+  "problems": [],
+  "ok": true,
+  "validation_class": "local on-disk template/range check; not organizer upload acceptance",
+  "grid_matches_sample": true
+ },
+ "uniqueness": {
+  "n_priors_checked": 549,
+  "canonical_pattern_unique": true,
+  "equals_literal_prior_union": false,
+  "novel_fraction": 0.0,
+  "union_px": 5364867,
+  "relation_to_union": "subset-of-union",
+  "ok": false
+ },
+ "lane": {
+  "literal": "DUPLICATE/STOP",
+  "policy": "DUPLICATE/STOP",
+  "max_near_3px_fraction_literal": 1.0,
+  "max_near_3px_fraction_policy": 0.8913297872340425,
+  "universal_coverage_probes": 14,
+  "priors_checked": 549
+ },
+ "holdout": {
+  "evidence_class": "HOLDOUT-DTI",
+  "evaluator": "gems52-pooled-hide-v1",
+  "dti": 0.04025690885595976,
+  "ci95": [
+   0.03210579911766438,
+   0.04866412085586052
+  ],
+  "withheld_positive_pixels": 53186,
+  "best_comparable_control": "single_B",
+  "all_arms_filled_budget": true
+ },
+ "sufficiency_screen": {
+  "mean_oof_auc_view_A": 0.5362169527533447,
+  "mean_oof_auc_view_B": 0.6862340481081096,
+  "bar": 0.6,
+  "view_A_sufficient": false,
+  "h61_baseline_view_A": 0.5163
+ },
+ "projection": {
+  "G_lower": {
+   "G_px": 5949.282184328427,
+   "emitted_px": 37600.0,
+   "breakeven_credit_density_to_match_champion": 0.0907240551235412,
+   "random_dot_density": 0.0109350576159826,
+   "breakeven_multiple_of_random": 8.296623420706956,
+   "dti_if_density_equals_holdout_arm": 0.16489166246487877
+  },
+  "G_upper": {
+   "G_px": 12512.133928571544,
+   "emitted_px": 37600.0,
+   "breakeven_credit_density_to_match_champion": 0.1295146979863229,
+   "random_dot_density": 0.02299788464703079,
+   "breakeven_multiple_of_random": 5.631591773508799,
+   "dti_if_density_equals_holdout_arm": 0.11550534809922339
+  },
+  "evidence_class": "PROJECTION FROM OWNER-REPORTED SCORES AND A LOCAL SIMULATOR; NOT A SCORE, NOT ORGANIZER-CONFIRMED, NOT A LEADERBOARD FORECAST",
+  "formula": "DTI = T/(0.2*(T+S-M)+0.8*(|G|-T)) with M~T for sparse dots => DTI = d*S/(0.2S+0.8|G|)",
+  "holdout_arm_density": 0.05385039695779702,
+  "holdout_arm_density_caveat": "HOLDOUT-DTI measures recovery of withheld *catalogue* components in a simulator that measured Spearman -0.10 against the owner-reported board in round R4; it is not a density estimate for hidden off-catalogue expert-drawn truth.",
+  "champion": {
+   "id": "ref_h33_2_b2",
+   "reported": 0.2778,
+   "attribution": "FILENAME-ONLY-OWNER-REPORTED",
+   "S_masked": 37654
+  },
+  "identified_interval_for_novel_mass": [
+   0.0,
+   12512.133928571544
+  ],
+  "identified_interval_note": "Pixels outside all 13 scored files belong to no LP atom, so organiser-tied evidence gives NO information about their credit: the interval is [0, |G|]. The claim 'novel mass is worthless' is as unproven as 'novel mass is valuable'.",
+  "verdict_rule": "promote only if format+lane(policy)+decoded-pattern uniqueness+not-union pass AND the projected organiser-DTI interval exceeds the champion's owner-reported 0.2778 at both ends of the |G| interval; otherwise negative/research-only (DOWNLOAD YES, SUBMIT NO); promotion to a weekly slot is a separate selector step and this round spends 0 slots"
+ },
+ "not_the_union": {
+  "cells_differing_from_view_A": 68654,
+  "cells_differing_from_view_B": 75200,
+  "cells_differing_from_union_max": 72344,
+  "dots_shared_with_view_A": 3273,
+  "dots_shared_with_view_B": 0,
+  "dots_shared_with_union_max": 1428,
+  "jaccard_with_union_max": 0.01935693759149813,
+  "spearman_field_vs_unionmax": -0.0007324943192655074,
+  "strict_a_only_candidate_px": 68395,
+  "emitted_cells_that_are_strict_a_only": 118,
+  "verdict": "the emission is not max(A,B), not either single view, and not their union"
+ },
+ "view_comparison": {
+  "not_copied_or_literal_union": true
+ },
+ "generated_utc": "2026-10-09T01:58:44Z"
+}

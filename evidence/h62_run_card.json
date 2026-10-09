@@ -1,0 +1,503 @@
+{
+ "round": "H62",
+ "lane": "co-training between a geophysical view and a surface view; Blum & Mitchell COLT '98, doi:10.1145/279943.279962",
+ "hypothesis": "Two views that err near-independently corroborate: pixels that both the potential-field/subsurface view and the surface view vouch for, ranked by their joint confidence min(pA,pB), should carry a higher density of real, unmapped fault pixels than either view alone - the opposite cell of the 2x2 confidence table from the one every prior round in this lane shipped.",
+ "mechanism": "Two independent thinnings of one detector intersect in an atom carrying 16.3-20.5% credit density against 0-8.7% for singly-selected atoms (knowledge/10 s3); Blum-Mitchell conditional independence is a strictly stronger independence than two thinnings of one field, and it measures here at max|r| = 0.176 against a 0.60 abandonment bar.",
+ "named_non_fault_processes_that_could_mimic_it": [
+  "a resistant lithologic contact (welded tuff or carbonate) that stands up as a ridge AND carries a magnetic susceptibility contrast: straight, laterally persistent, geologically real, and not a fault",
+  "a fluvial or glacial escarpment along a stratigraphic contact"
+ ],
+ "holdout_dti": {
+  "label": "HOLDOUT-DTI",
+  "evaluator_version": {
+   "metric": "gems52.metric.dti (alpha 0.2, beta 0.8, R 300 m triangular kernel, lattice-exact offsets)",
+   "metric_py_sha256": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+   "holdout": "gems52.holdout.make_folds(mode=hide, n_folds=4, buffer_px=4, prevalence=0.002, seed=20261010); mask_visible pixel-exact",
+   "holdout_py_sha256": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+   "h57_py_sha256": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+   "pooling": "per-fold DTI plus pooled DTI (TPw/FPw/FNw/n_truth component sums pooled across folds); fold-bootstrap 95% CI (10k resamples)",
+   "known_defect": "Spearman(owner-reported board score, hide-and-recover DTI) = -0.1045, p = 0.734, n = 13; the 0.2778 champion ranks 13/13 on this instrument. It is reported because the lane requires it and because it is the only instrument that can detect leakage; it is NOT a board proxy."
+  },
+  "field": "conc_soft",
+  "budget_px": 25000,
+  "pooled_dti": 0.008467,
+  "ci_lo": 0.003427681031065764,
+  "ci_hi": 0.01160125773156484,
+  "withheld_positives": 36474,
+  "n_folds": 4,
+  "lift_over_random": 0.007191,
+  "instrument_status": "the hide-and-recover instrument is reported because the lane requires it and because it is the only leakage detector available; it is NOT a board proxy (Spearman(owner-reported, simulated) = -0.1045, n = 13)"
+ },
+ "instruments": {
+  "instrument2_revealed": {
+   "label": "revealed-preference co-location; NOT a holdout score",
+   "winner_field": "conc_soft",
+   "colocation_fraction": 0.15995454545454546,
+   "random_baseline": 0.11288733899905494,
+   "lift": 1.41693963975787,
+   "implied_credit_density_bracket": {
+    "rho_core": 0.184,
+    "rho_novel_bracket": [
+     0.0279,
+     0.1387
+    ],
+    "rho_lo": 0.05286890454545455,
+    "rho_hi": 0.1459459409090909
+   },
+   "limits": "similarity statistic to one specific prior file; rho_P1 rests on owner-reported scores; read only together with the uniqueness gate"
+  },
+  "disagreement_read": {
+   "note": "the lane's designated discovery signal measured BELOW the matched random control on Instrument 2",
+   "dis_contrast": {
+    "field": "dis_contrast",
+    "emitted": 22000,
+    "colocation": 0.06804545454545455,
+    "random_baseline": 0.11288733899905494,
+    "lift": 0.6027731289336549,
+    "union_overlap": 0.0035,
+    "disqualified_as_union": false,
+    "implied_rho": {
+     "rho_core": 0.184,
+     "rho_novel_bracket": [
+      0.0279,
+      0.1387
+     ],
+     "rho_lo": 0.03852189545454546,
+     "rho_hi": 0.14178245909090909
+    }
+   },
+   "dis_product": {
+    "field": "dis_product",
+    "emitted": 22000,
+    "colocation": 0.07422727272727273,
+    "random_baseline": 0.11288733899905494,
+    "lift": 0.6575340811948286,
+    "union_overlap": 0.0035,
+    "disqualified_as_union": false,
+    "implied_rho": {
+     "rho_core": 0.184,
+     "rho_novel_bracket": [
+      0.0279,
+      0.1387
+     ],
+     "rho_lo": 0.039486877272727275,
+     "rho_hi": 0.14206249545454547
+    }
+   },
+   "cover_A_only": {
+    "field": "cover_A_only",
+    "emitted": 22000,
+    "colocation": 0.10495454545454545,
+    "random_baseline": 0.11288733899905494,
+    "lift": 0.9297282262577214,
+    "union_overlap": 0.004,
+    "disqualified_as_union": false,
+    "implied_rho": {
+     "rho_core": 0.184,
+     "rho_novel_bracket": [
+      0.0279,
+      0.1387
+     ],
+     "rho_lo": 0.04428340454545455,
+     "rho_hi": 0.1434544409090909
+    }
+   }
+  }
+ },
+ "correlation_overlap_vs_registry": {
+  "n_priors": 77,
+  "pattern_unique": true,
+  "support_novelty_fraction": 0.6046,
+  "equals_literal_prior_union": false,
+  "lane_surface_max_abs_spearman": 0.07845945985377721,
+  "lane_dots_max_abs_spearman": 0.02315507939228921,
+  "lane_dots_max_within_3px_frac_gate": 0.9998636363636364,
+  "lane_dots_max_within_3px_frac_raw": 0.9998636363636364,
+  "lane_drift_detected": true,
+  "lane_drift_binding_prior": "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+  "lane_drift_is_registry_saturation": true,
+  "repaired_gate_present": true,
+  "repaired_gate": {
+   "instrument": "gems52.gates.lane_report (H61 shared-template repair)",
+   "priors_checked": 77,
+   "distinct_decoded_priors": 40,
+   "literal_verdict": "DUPLICATE/STOP",
+   "literal_max_spearman": 0.02315507939228921,
+   "literal_max_near_3px_fraction": 0.9998636363636364,
+   "policy_verdict": "PASS",
+   "policy_max_spearman": 0.02315507939228921,
+   "policy_max_near_3px_fraction": 0.453,
+   "n_informative_priors": 76,
+   "n_universal_coverage_probes": 1,
+   "ok": true
+  },
+  "not_merely_union_fraction": 0.9761
+ },
+ "raster_sha256": "de47952fe9c0fc15c1aaacd63a04f6c0a6aa15b094f2367ed631c6920e91c1fd",
+ "validator_output": {
+  "path": "/home/user/GEMSDOE52/submission/gems52-h62-conc_soft-arm22000px.tif",
+  "bytes": 114669,
+  "sha256": "de47952fe9c0fc15c1aaacd63a04f6c0a6aa15b094f2367ed631c6920e91c1fd",
+  "bands": 1,
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "width": 3292,
+  "height": 3730,
+  "bounds": [
+   243350.0,
+   4135550.0,
+   572550.0,
+   4508550.0
+  ],
+  "ref_bounds": [
+   243350.0,
+   4135550.0,
+   572550.0,
+   4508550.0
+  ],
+  "transform": [
+   100.0,
+   0.0,
+   243350.0,
+   0.0,
+   -100.0,
+   4508550.0
+  ],
+  "nodata": null,
+  "blocksize": [
+   256,
+   256
+  ],
+  "fixture_grid": false,
+  "has_validity_mask": false,
+  "nan_pixels": 0,
+  "infinity_pixels": 0,
+  "n_nan": 0,
+  "min": 0.0,
+  "max": 1.0,
+  "mean": 0.0017916534561663866,
+  "n_nonzero": 22000,
+  "mass": 22000.0,
+  "mass_outside_footprint": 0,
+  "problems": [],
+  "ok": true,
+  "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+ },
+ "submission_name": "gems52-h62-conc_soft-arm22000px-20261009T011349Z-zeros",
+ "submission_note": "H62 two-view co-training: conc_soft ranking, 22000 px, derived budget, >=200 m off catalogue. Research review copy.",
+ "submission_note_chars": 115,
+ "verdict": "negative",
+ "promotion_scope": "NEGATIVE. The concordance ranking beat BOTH single-view baselines and the union on pooled hide-and-recover HOLDOUT-DTI, which is the comparison the brief asks for. But the repository's STRICT lane gate (h60d.lane_drift_report, after the H60D recheck withdrew the calibration exemption H60-6) returns DUPLICATE/STOP: 99.99% of this file's dots lie within 3 px of data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif. That reading is a property of the registry, not of this file: a spacing-5 square lattice has maximum interior distance sqrt(8) = 2.83 px < 3 px, so its 3 px halo covers 99.90% of the eligible footprint and the statistic is ~1.0 for EVERY nonempty candidate, including pure noise. The coverage-aware repair (gates.lane_report, added to the shared template by main's H61) measures that saturation, excludes the one universal-coverage probe, and returns PASS on the remaining 76 informative priors: max |Spearman| 0.023, max 3 px proximity 0.453. Both readings are published and neither is suppressed. Following this repository's settled convention (CTD5 and H60D were both stopped on the same statistic, and main's H61 published FAIL/STOP on its own front page), the strict gate governs the submit decision: DO NOT SUBMIT, no slot is allocated, and the file is a research review copy.",
+ "number_labels": "every holdout number is HOLDOUT-DTI (evaluator version, withheld positives, 95% CI); every leaderboard number anywhere in this repo is owner-reported; none is ORGANIZER-CONFIRMED (no submission-page receipt exists); a projection is never written as a score",
+ "evaluator_version": {
+  "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+  "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+  "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+  "h62.py": "166d3e4c9749a0f4bda704cd7b07034bfbb03949132132df5238192e03cee64c",
+  "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+ },
+ "build": {
+  "round": "H62-build",
+  "observed_utc": "2026-10-09T01:16:59Z",
+  "budget_px": 22000,
+  "budget_basis": "registered correction H62-2",
+  "cover_threshold_m": 600.1210327148438,
+  "candidates": [
+   {
+    "field": "view_A",
+    "emitted": 22000,
+    "colocation": 0.12145454545454545,
+    "random_baseline": 0.11288733899905494,
+    "lift": 1.075891650307766,
+    "union_overlap": 0.078,
+    "disqualified_as_union": false,
+    "implied_rho": {
+     "rho_core": 0.184,
+     "rho_novel_bracket": [
+      0.0279,
+      0.1387
+     ],
+     "rho_lo": 0.04685905454545455,
+     "rho_hi": 0.1442018909090909
+    }
+   },
+   {
+    "field": "view_B",
+    "emitted": 22000,
+    "colocation": 0.30154545454545456,
+    "random_baseline": 0.11288733899905494,
+    "lift": 2.6712070389751945,
+    "union_overlap": 0.9301,
+    "disqualified_as_union": true,
+    "implied_rho": {
+     "rho_core": 0.184,
+     "rho_novel_bracket": [
+      0.0279,
+      0.1387
+     ],
+     "rho_lo": 0.07497124545454545,
+     "rho_hi": 0.15236000909090908
+    }
+   },
+   {
+    "field": "clf_union",
+    "emitted": 22000,
+    "colocation": 0.29363636363636364,
+    "random_baseline": 0.11288733899905494,
+    "lift": 2.601145232405752,
+    "union_overlap": 1.0,
+    "disqualified_as_union": true,
+    "implied_rho": {
+     "rho_core": 0.184,
+     "rho_novel_bracket": [
+      0.0279,
+      0.1387
+     ],
+     "rho_lo": 0.07373663636363637,
+     "rho_hi": 0.15200172727272726
+    }
+   },
+   {
+    "field": "dis_contrast",
+    "emitted": 22000,
+    "colocation": 0.06804545454545455,
+    "random_baseline": 0.11288733899905494,
+    "lift": 0.6027731289336549,
+    "union_overlap": 0.0035,
+    "disqualified_as_union": false,
+    "implied_rho": {
+     "rho_core": 0.184,
+     "rho_novel_bracket": [
+      0.0279,
+      0.1387
+     ],
+     "rho_lo": 0.03852189545454546,
+     "rho_hi": 0.14178245909090909
+    }
+   },
+   {
+    "field": "dis_product",
+    "emitted": 22000,
+    "colocation": 0.07422727272727273,
+    "random_baseline": 0.11288733899905494,
+    "lift": 0.6575340811948286,
+    "union_overlap": 0.0035,
+    "disqualified_as_union": false,
+    "implied_rho": {
+     "rho_core": 0.184,
+     "rho_novel_bracket": [
+      0.0279,
+      0.1387
+     ],
+     "rho_lo": 0.039486877272727275,
+     "rho_hi": 0.14206249545454547
+    }
+   },
+   {
+    "field": "conc_soft",
+    "emitted": 22000,
+    "colocation": 0.15995454545454546,
+    "random_baseline": 0.11288733899905494,
+    "lift": 1.41693963975787,
+    "union_overlap": 0.0239,
+    "disqualified_as_union": false,
+    "implied_rho": {
+     "rho_core": 0.184,
+     "rho_novel_bracket": [
+      0.0279,
+      0.1387
+     ],
+     "rho_lo": 0.05286890454545455,
+     "rho_hi": 0.1459459409090909
+    }
+   },
+   {
+    "field": "conc_min",
+    "emitted": 22000,
+    "colocation": 0.14745454545454545,
+    "random_baseline": 0.11288733899905494,
+    "lift": 1.3062097730532907,
+    "union_overlap": 0.0201,
+    "disqualified_as_union": false,
+    "implied_rho": {
+     "rho_core": 0.184,
+     "rho_novel_bracket": [
+      0.0279,
+      0.1387
+     ],
+     "rho_lo": 0.05091765454545454,
+     "rho_hi": 0.1453796909090909
+    }
+   },
+   {
+    "field": "conc_corrob",
+    "emitted": 22000,
+    "colocation": 0.10895454545454546,
+    "random_baseline": 0.11288733899905494,
+    "lift": 0.9651617836031868,
+    "union_overlap": 0.007,
+    "disqualified_as_union": false,
+    "implied_rho": {
+     "rho_core": 0.184,
+     "rho_novel_bracket": [
+      0.0279,
+      0.1387
+     ],
+     "rho_lo": 0.04490780454545455,
+     "rho_hi": 0.14363564090909092
+    }
+   },
+   {
+    "field": "cover_A_only",
+    "emitted": 22000,
+    "colocation": 0.10495454545454545,
+    "random_baseline": 0.11288733899905494,
+    "lift": 0.9297282262577214,
+    "union_overlap": 0.004,
+    "disqualified_as_union": false,
+    "implied_rho": {
+     "rho_core": 0.184,
+     "rho_novel_bracket": [
+      0.0279,
+      0.1387
+     ],
+     "rho_lo": 0.04428340454545455,
+     "rho_hi": 0.1434544409090909
+    }
+   }
+  ],
+  "winner": "conc_soft",
+  "winner_selection_rule": "highest Instrument-2 co-location lift among candidates whose dot set overlaps clf_union's top-k by <= 70% (correction H62-3)",
+  "union_disqualifier_threshold": 0.7,
+  "not_merely_union": {
+   "budget": 22000,
+   "union_emitted": 22000,
+   "emitted": 22000,
+   "outside_union_topk": 21474,
+   "outside_union_fraction": 0.9761,
+   "verdict": "not merely the union"
+  },
+  "ring_min_distance_to_catalogue_m": 223.6,
+  "ring_rule_ok": true,
+  "reasoning_rows": 22000,
+  "a_only_segments_total": 8523,
+  "a_only_dossier_rows": 3580,
+  "a_only_dossier_cap": 20000,
+  "dossier_note": "dossier rows are written for every A-only component of >=3 px in the legal pool; smaller components are counted in a_only_segments_total and dropped",
+  "corrections": [
+   {
+    "id": "H62-1",
+    "summary": "the hard corroboration intersection is structurally unusable at this budget (k^2/n = 185 at k=30,000); the soft joint-confidence ranking min(pA,pB) is registered instead"
+   },
+   {
+    "id": "H62-2",
+    "summary": "emission budget 22,000 px: the gamma fit's unclamped argmax 102,519 px lies outside the measured range, while the board's own published record (Spearman -1.000, n=6, mass vs score) is a direct measurement and governs"
+   },
+   {
+    "id": "H62-3",
+    "summary": "view_B and clf_union are disqualified as 'merely the union': their dot sets overlap by 93-100% and their reads differ by 3%"
+   },
+   {
+    "id": "H62-4",
+    "summary": "the |G| bracket the preregistered 22,000 px fallback rested on (18,000-19,300 px) is DISJOINT from the measured bracket [5,949.3, 12,512.1] px (main's H61 forensics, independently re-derived here). The emission is NOT changed: the two gamma-based rules now bracket 22,000 px (this round's gamma 0.6453 clamps to 30,000; the champion-family gamma 0.2284 clamps to 15,000), and the direct board measurement (score strictly decreasing in emitted mass) favours the LOW end. The budget's derivational support is therefore weakened and 15,000 px is the value the evidence favours - IR-H62-005"
+   }
+  ],
+  "g_bracket_px": [
+   5949.282184328427,
+   12512.133928571544
+  ],
+  "g_legacy_anchor_px": 14088.7,
+  "g_sensitivity": [
+   {
+    "g_px": 5949.282184328427,
+    "s_star_unclamped": 43291.18685117558,
+    "s_star_clamped": 30000
+   },
+   {
+    "g_px": 12512.133928571544,
+    "s_star_unclamped": 91047.13997859712,
+    "s_star_clamped": 30000
+   },
+   {
+    "g_px": 14088.7,
+    "s_star_unclamped": 102519.35028343367,
+    "s_star_clamped": 30000
+   }
+  ]
+ },
+ "cotrain": {
+  "independence": {
+   "n_blocks": 8588,
+   "n_negative_predictions": 18048996,
+   "negative_class": "held-out catalogue-zero proxies, not verified absence",
+   "threshold": 0.6,
+   "minimum_blocks": 20,
+   "tests": {
+    "negative_mean_squared_error": {
+     "n": 8588,
+     "pearson": 0.15615432258056539,
+     "spearman": 0.15309098887990497
+    },
+    "negative_false_positive_rate": {
+     "n": 8588,
+     "pearson": 0.11471882073152385,
+     "spearman": 0.1757144177181826
+    }
+   },
+   "max_abs_correlation": 0.1757144177181826,
+   "measured": true,
+   "allow_exchange": true,
+   "reason": "weak proxy negative-error correlation; not proof of conditional feature independence",
+   "pixel_level": {
+    "n": 4519160,
+    "pearson": 0.15607103777362896,
+    "spearman": 0.15116628172554378
+   },
+   "q_conf": 0.6,
+   "block_px": 50,
+   "min_negatives_per_block": 300
+  },
+  "leakage_canary": {
+   "threshold": 0.9,
+   "n_layers": 75,
+   "worst_layer": "B_lidar_step_max_grad",
+   "worst_auc": 0.7177,
+   "leakage_detected": false,
+   "verdict": "no single layer exceeds AUC 0.90 on the holdout; no leakage detected at this granularity"
+  },
+  "strata": {
+   "allowed": 4861502,
+   "a_only": 290785,
+   "b_only": 193959,
+   "concordant": 141530,
+   "neither": 4235228
+  },
+  "depth_medians": {
+   "a_only": 340.5487060546875,
+   "b_only": 108.0527114868164,
+   "concordant": 227.65139770507812,
+   "neither": 330.2393798828125,
+   "permitted": 315.98773193359375
+  },
+  "corroboration_probe": {
+   "n_thin_a": 6307,
+   "n_thin_b": 31083,
+   "n_corroborated": 92,
+   "expected_under_independence": 40.32508492231413,
+   "corroboration_lift": 2.281458307582912
+  }
+ },
+ "corrections": [
+  "H62-1",
+  "H62-2",
+  "H62-3",
+  "H62-4"
+ ],
+ "slot_decision": "research review copy; promotion to a real weekly slot is a separate selector step within the cap on the submission page",
+ "champion_owner_reported": 0.2778,
+ "g_bracket_px": [
+  5949.282184328427,
+  12512.133928571544
+ ],
+ "g_legacy_anchor_px": 14088.7
+}
