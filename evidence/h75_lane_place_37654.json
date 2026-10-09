@@ -1,0 +1,23 @@
+{
+ "ok": false,
+ "worst": 0.7350382062580177,
+ "rounds": [
+  {
+   "round": 0,
+   "dots": 37654,
+   "quotas": 0,
+   "worst": 0.9219737610877994,
+   "new_offenders": 23
+  },
+  {
+   "round": 1,
+   "dots": 35858,
+   "quotas": 23,
+   "worst": 0.7350382062580177,
+   "new_offenders": 0
+  }
+ ],
+ "quota_cap": 26357,
+ "quota_priors": 23,
+ "spacing_ok": true
+}
