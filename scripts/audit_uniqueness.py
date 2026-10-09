@@ -8,6 +8,12 @@ file is never compared against itself.  Output is a JSON receipt; it is a unique
 a score.  Requires ``data/sample_submission.tif`` (run scripts/restore_data.py --only sample_submission).
 
     .venv/bin/python scripts/audit_uniqueness.py submission/<file>.tif evidence/<receipt>.json
+
+Optional third argument: the 526-blob census receipt (``work/h61/prior_fetch_receipt.json``). With it,
+the registry is the full census (via ``build_h61_submission.prior_paths``, the same function the H61
+build uses) plus the local globs above, so the audit covers every prior the lane gate covers.
+
+    .venv/bin/python scripts/audit_uniqueness.py <file.tif> evidence/<receipt>.json work/h61/prior_fetch_receipt.json
 """
 from __future__ import annotations
 
@@ -24,6 +30,7 @@ import rasterio
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from gems52.gates import lane_uniqueness_report  # noqa: E402
+sys.path.insert(0, str(ROOT / "scripts"))
 
 SAMPLE = ROOT / "data" / "sample_submission.tif"
 PRIOR_GLOBS = ["submission/**/*.tif", "docs/downloads/*.tif", "data/scored/*.tif",
@@ -34,9 +41,10 @@ def sha256_file(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def main(cand_arg: str, out_arg: str) -> int:
+def main(cand_arg: str, out_arg: str, census_arg: str | None = None) -> int:
     cand_path = (ROOT / cand_arg).resolve()
     out_path = (ROOT / out_arg).resolve()
+    census_meta = None
     with rasterio.open(SAMPLE) as ds:
         footprint = np.isfinite(ds.read(1))
     with rasterio.open(cand_path) as ds:
@@ -44,6 +52,15 @@ def main(cand_arg: str, out_arg: str) -> int:
     cand_sha = sha256_file(cand_path)
 
     priors, excluded = [], []
+    if census_arg:
+        import build_h61_submission as _b          # same census logic as the H61 build (no fork)
+        census_paths, census_meta = _b.prior_paths(ROOT / census_arg, ())
+        for p in census_paths:
+            p = Path(p).resolve()
+            if p != cand_path and sha256_file(p) != cand_sha:
+                priors.append(p)
+            elif p != cand_path:
+                excluded.append(str(p.relative_to(ROOT)))
     for pat in PRIOR_GLOBS:
         for p in sorted(glob.glob(str(ROOT / pat), recursive=True)):
             p = Path(p).resolve()
@@ -71,6 +88,11 @@ def main(cand_arg: str, out_arg: str) -> int:
         self_copies_excluded=excluded, priors_after_byte_dedupe=len(unique_priors),
         phases={},
     )
+    if census_meta is not None:
+        receipt["census"] = dict(census_receipt=census_arg, **{k: v for k, v in census_meta.items()
+                                                               if k != "skipped_ineligible"})
+        receipt["census"]["census_errors_note"] = ("blobs that failed the API fetch are covered by byte-identical "
+                                                   "local copies in docs/downloads (matched by decoded file SHA-256)")
     for phase in ("surface", "dots"):
         rep = lane_uniqueness_report(cand, footprint, [str(p) for p in unique_priors],
                                      sample=str(SAMPLE), phase=phase)
@@ -85,6 +107,17 @@ def main(cand_arg: str, out_arg: str) -> int:
         rep["offenders"] = [os.path.relpath(r["path"], ROOT) for r in rows
                             if r.get("rank_duplicate") or r.get("near_duplicate") or r.get("identical")]
         receipt["phases"][phase] = rep
+
+    # Repository lane policy (gems52.gates.lane_report, the same function the H61 build uses): literal verdict
+    # over every prior, plus the measured universal-coverage-probe policy. Both are reported; neither replaces the other.
+    from gems52 import gates as _gates
+    pol = _gates.lane_report(cand, footprint, [str(p) for p in unique_priors], sample=str(SAMPLE), phase="dots")
+    per = pol.pop("per_prior")
+    pol["probe_coverage"] = [dict(path=os.path.relpath(r["path"], ROOT), coverage_3px_of_eligible=r.get("coverage_3px_of_eligible"))
+                             for r in per if r.get("universal_coverage_probe")]
+    pol["informative_near_offenders_over_70pct"] = [os.path.relpath(r["path"], ROOT) for r in per
+                                                   if r.get("near_duplicate") and not r.get("universal_coverage_probe")]
+    receipt["lane_policy_dots"] = pol
 
     # Decoded-pixel overlap (binary support > 0) against every same-grid prior.
     support = cand > 0
@@ -113,6 +146,10 @@ def main(cand_arg: str, out_arg: str) -> int:
     out_path.write_text(json.dumps(receipt, indent=2, allow_nan=False) + "\n")
     print(json.dumps({k: receipt[k] for k in ["candidate", "priors_after_byte_dedupe",
                                               "max_jaccard", "share_of_candidate_px_inside_any_prior_support"]}, indent=1))
+    print("lane_policy_dots literal", pol["literal"]["verdict"], pol["literal"]["max_near_3px_fraction"],
+          "policy", pol["policy"]["verdict"], pol["policy"]["max_near_3px_fraction"],
+          "probes", pol["policy"]["universal_coverage_probes"],
+          "informative_over_70", len(pol["informative_near_offenders_over_70pct"]))
     for ph in ("surface", "dots"):
         r = receipt["phases"][ph]
         print(ph, "max_spearman", r["max_spearman"], "max_near_3px", r["max_near_3px_fraction"],
@@ -121,7 +158,7 @@ def main(cand_arg: str, out_arg: str) -> int:
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
+    if len(sys.argv) not in (3, 4):
         print(__doc__)
         raise SystemExit(2)
-    raise SystemExit(main(sys.argv[1], sys.argv[2]))
+    raise SystemExit(main(sys.argv[1], sys.argv[2], sys.argv[3] if len(sys.argv) > 3 else None))

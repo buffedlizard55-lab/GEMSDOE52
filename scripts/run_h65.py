@@ -1,64 +1,50 @@
 #!/usr/bin/env python3
-"""H65 -- the R5-H1 trace-correction corridor: run the frozen spatially-blocked A-gate.
+"""H62 -- physically specified View A (cross-strike, regionally detrended basement and gravity offsets).
 
-Preregistered in ``knowledge/41_hypotheses_H65_preregistered.md`` (SHA-256 pinned in
-``registry/h65_preregistration.json``); this runner refuses to start if the hash moves.
+Frozen protocol: knowledge/41_hypotheses_H65_preregistered.md (SHA-256 in registry/h65_preregistration.json). The file keeps its original H62 label; see knowledge/41a.
+This runner refuses to start if either hash has moved.
 
-What is shared and what is round-specific
------------------------------------------
-* Shared, not forked: ``gems52.grid`` (band/footprint readers, sentinel rule),
-  ``gems52_r5.cotrain_r5`` (the 20 km block grid and whole-block folds, seed 20261009),
-  and later -- in ``scripts/build_h65_submission.py`` -- ``gems52.gates``,
-  ``gems52.submission_writer`` and the frozen prior census of
-  ``scripts/fetch_prior_inventory.py``.  No private fork of any shared instrument exists.
-* Round-specific: the perpendicular-offset estimator and the four gate conditions G1-G4,
-  both frozen in the preregistration, including the A1 calibration that reads the
-  undocumented LiDAR ``strike`` band's angular convention from the data before any gate
-  statistic exists.
+Stages (E2 of the preregistered budget; E3 is conditional and is NOT implemented here):
+    features  build the eight H62-A layers once, on the shared feature-store footprint
+    canary    raw and fitted single-feature leakage canary on every fold's held-out sample
+    premise   fit H62-A on each label-blind fold, measure out-of-quadrant AUC, apply the premise gate
 
-Hypothesis (R5-H1, rank 1 of knowledge/41): the mapped traces are partly misaligned from the
-true surface faults (organiser, forum 11516: corrections-to-existing-traces are part of the
-new-fault truth).  A scarp measured by LiDAR -- one-sided downface/upface step, strike
-agreement, detrended-elevation crest -- locates the true trace at a signed perpendicular
-offset of -3..+3 px (the metric's whole kernel support) from the mapped line.
+Reuse, not forks: folds, sampler, learner and held-out definition come from scripts/run_h61.py
+(stage setup), the feature footprint from gems52.structural.FeatureStore, and the H61 controls are
+read from the stored receipt evidence/h61_fit_checkpoint.json without refitting.
 
-Stage ``gate`` evaluates, per the prereg:
-  G1 >= 200 held-out traces;          G2 median |offset| <= 1.0 px;
-  G3 beats best constant-offset control by >= 0.3 px (control fitted on the other 3 folds);
-  G4 fraction of traces whose argmax offset is 0 <= 0.5.
-
-Usage:  python scripts/run_h65.py gate
-Exit code is 0 whether the gate passes or fails; the verdict lives in the receipt.
+Nothing here writes a raster, touches submission/, or uploads anything.
 """
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import sys
+import time
 from datetime import datetime, timezone
 from pathlib import Path
+
+import numpy as np
+from scipy import ndimage as ndi
+from sklearn.metrics import roc_auc_score
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
-import numpy as np                                                  # noqa: E402
-from scipy import ndimage                                           # noqa: E402
+import run_h61 as h61                                              # noqa: E402  (shared fold/sampler/learner)
+from gems52 import structural                                      # noqa: E402
 
-from gems52 import grid                                             # noqa: E402
-from gems52_r5 import cotrain_r5 as C                               # noqa: E402
-
-REG = ROOT / "registry/h65_preregistration.json"
-PREREG = ROOT / "knowledge/41_hypotheses_H65_preregistered.md"
-WORK = ROOT / "work/h65"
+WORK = ROOT / "work/h62"
+FEAT = WORK / "feat"
 EVID = ROOT / "evidence"
-
-MIN_TRACE_PX = 10
-WINDOW_R = 5                    # Chebyshev radius of the per-pixel PCA window
-WINDOW_MIN_PX = 5
-OFFSETS = np.arange(-3, 4)      # frozen: the metric's whole kernel support, 0 included
-FOLDS = 4
-SEED = C.SEED                   # 20261009, the shared fold seed -- not round-specific
+REG = ROOT / "registry/h65_preregistration.json"
+SEED = h61.SEED
+SIGMA_PX = 15.0
+OFFSETS_PX = (3, 6)
+STRIKES = {"nne": 15.0, "nw": 315.0}
+BANDS = (15, 13)
 
 
 def log(*a, **k):
@@ -66,291 +52,240 @@ def log(*a, **k):
 
 
 def now() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
 def sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    h = hashlib.sha256()
+    with open(path, "rb") as fh:
+        for chunk in iter(lambda: fh.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
 
 
-def check_prereg() -> None:
-    card = json.loads(REG.read_text())
-    got = sha256(PREREG)
-    if got != card["preregistration_sha256"]:
-        raise SystemExit(
-            f"preregistration hash moved: registry pins {card['preregistration_sha256'][:12]}…, "
-            f"file is {got[:12]}…  Re-pin deliberately (with an amendment note) or restore the file."
-        )
-    log(f"[prereg] OK  sha256={got[:16]}…  (frozen {card['created_utc']})")
+def check_registration() -> dict:
+    reg = json.loads(REG.read_text())
+    doc = ROOT / reg["hypothesis_document"]
+    if sha256(doc) != reg["hypothesis_sha256"]:
+        raise SystemExit("H62 hypothesis document changed after registration; refusing to run")
+    if reg.get("stages_not_authorised") is None or "emission" not in reg["stages_not_authorised"]:
+        raise SystemExit("registration does not forbid emission; refusing to run")
+    return reg
 
 
-def load_layers() -> dict:
-    """The exact layers the preregistration names; nothing else."""
-    import rasterio
-
-    layers = {}
-    with rasterio.open(ROOT / "data/labels.tif") as src:
-        cat = src.read(1) == 1
-    valid = grid.footprint_from(ROOT / "data/training_features.tif", bands="all")
-    lid = ROOT / "data/external/lidar_scarp_features_u8.tif"
-    with rasterio.open(lid) as src:
-        names = {i + 1: src.descriptions[i] for i in range(src.count)}
-        expect = {6: "downface_max", 7: "upface_max", 11: "strike", 12: "valid"}
-        for b, n in expect.items():
-            assert names[b] == n, f"LiDAR band {b} is {names[b]!r}, expected {n!r}"
-        layers["down"] = src.read(6).astype(np.float32)
-        layers["up"] = src.read(7).astype(np.float32)
-        layers["strike"] = src.read(11).astype(np.float32)
-        layers["lid_valid"] = src.read(12) > 0
-    layers["det"] = grid.read_band(ROOT / "data/training_features.tif", 12)  # det_elev
-    layers["cat"] = cat & valid
-    layers["valid"] = valid
-    return layers
+def feature_names() -> list[str]:
+    return [f"H62_b{b:02d}_{tag}_d{d}" for b in BANDS for tag in STRIKES for d in OFFSETS_PX]
 
 
-def traces_of(cat: np.ndarray) -> list[dict]:
-    lab, n = ndimage.label(cat, structure=np.ones((3, 3), bool))
-    sizes = np.bincount(lab.ravel())
-    out = []
-    for i in range(1, n + 1):
-        if sizes[i] < MIN_TRACE_PX:
-            continue
-        rows, cols = np.nonzero(lab == i)
-        out.append(dict(id=i, rows=rows, cols=cols, npx=int(sizes[i])))
+def normal_rowcol(az_deg: float) -> tuple[float, float]:
+    """Unit normal to a strike of compass azimuth az, in (row, col) with row increasing south.
+
+    Strike (north, east) = (cos a, sin a); normal (north, east) = (-sin a, cos a);
+    row = -north, so the normal in (row, col) is (sin a, cos a).
+    """
+    a = np.deg2rad(az_deg)
+    return float(np.sin(a)), float(np.cos(a))
+
+
+def fill_nearest(arr: np.ndarray, valid: np.ndarray) -> np.ndarray:
+    """Replace off-footprint values by the nearest footprint value.
+
+    Without this, the zero fill outside the footprint would create artificial steps along the
+    survey boundary and the symmetric difference would respond to the boundary, not the basement.
+    """
+    idx = ndi.distance_transform_edt(~valid, return_distances=False, return_indices=True)
+    return arr[tuple(idx)]
+
+
+def build_features(store) -> dict:
+    FEAT.mkdir(parents=True, exist_ok=True)
+    valid = store.valid.astype(bool)
+    w = valid.astype(np.float32)
+    w_s = {}
+    man = dict(stage="features", generated_utc=now(), sigma_px=SIGMA_PX, offsets_px=list(OFFSETS_PX),
+               strikes_deg=STRIKES, bands=list(BANDS), footprint_px=int(valid.sum()),
+               operator="O = | D - G_sigma(D) |, D = | z(p + d n) - z(p - d n) |, n = unit normal to strike, "
+                        "G_sigma = normalised Gaussian over the footprint",
+               files={}, stats={})
+    for b in BANDS:
+        raw = store.feature_grid(f"raw_band_{b:02d}").astype(np.float32)
+        z = fill_nearest(raw, valid).astype(np.float32)
+        for tag, az in STRIKES.items():
+            n0, n1 = normal_rowcol(az)
+            for d in OFFSETS_PX:
+                p = ndi.shift(z, (-n0 * d, -n1 * d), order=1, mode="nearest")
+                m = ndi.shift(z, (n0 * d, n1 * d), order=1, mode="nearest")
+                D = np.abs(p - m).astype(np.float32)
+                del p, m
+                if (b, SIGMA_PX) not in w_s:
+                    w_s[(b, SIGMA_PX)] = ndi.gaussian_filter(w, SIGMA_PX)
+                G = ndi.gaussian_filter(D * w, SIGMA_PX) / np.maximum(w_s[(b, SIGMA_PX)], 1e-6)
+                O = np.where(valid, np.abs(D - G), 0.0).astype(np.float32)
+                name = f"H62_b{b:02d}_{tag}_d{d}"
+                path = FEAT / f"{name}.npy"
+                np.save(path, O)
+                vals = O[valid]
+                man["files"][name] = dict(path=str(path.relative_to(ROOT)), sha256=sha256(path))
+                man["stats"][name] = dict(finite_in_footprint=int(np.isfinite(vals).sum()),
+                                          nan_in_footprint=int((~np.isfinite(vals)).sum()),
+                                          min=float(vals.min()), p50=float(np.median(vals)),
+                                          p99=float(np.quantile(vals, 0.99)), max=float(vals.max()))
+                log(f"[features] {name}: p50 {man['stats'][name]['p50']:.4g} "
+                    f"p99 {man['stats'][name]['p99']:.4g} nan {man['stats'][name]['nan_in_footprint']}")
+                del D, G, O, vals
+        del z
+        del raw
+    (FEAT / "manifest.json").write_text(json.dumps(man, indent=1) + "\n")
+    return man
+
+
+def load_features(names: list[str]) -> dict:
+    out = {}
+    man = json.loads((FEAT / "manifest.json").read_text())
+    for n in names:
+        path = ROOT / man["files"][n]["path"]
+        if sha256(path) != man["files"][n]["sha256"]:
+            raise SystemExit(f"H62 feature byte-integrity failure: {n}")
+        out[n] = np.load(path, mmap_mode="r")
     return out
 
 
-def assign_folds(traces: list[dict], valid: np.ndarray) -> None:
-    bid = C.block_ids(valid.shape, valid, C.BLOCK_M)
-    fold_map = C.make_folds(bid, FOLDS, seed=SEED)
-    for t in traces:
-        f = fold_map[t["rows"], t["cols"]]
-        f = f[f >= 0]
-        cnt = np.bincount(f, minlength=FOLDS)
-        t["fold"] = int(np.argmax(cnt))          # modal fold; ties -> smallest id
-        t["cross_fold"] = bool((cnt > 0).sum() > 1)
+def stage_features() -> dict:
+    store = structural.FeatureStore(ROOT / h61.STORE)
+    man = build_features(store)
+    log(f"features written: {len(man['files'])} layers")
+    return man
 
 
-def pixel_strikes(t: dict, shape: tuple[int, int]) -> np.ndarray:
-    """Frozen PCA strike (degrees, axial [0,180), raster frame: 0=+col, 90=+row(down))."""
-    m = np.zeros(shape, bool)
-    m[t["rows"], t["cols"]] = True
-    out = np.full(t["rows"].shape, np.nan, np.float64)
-    r0, r1 = int(t["rows"].min()), int(t["rows"].max())
-    c0, c1 = int(t["cols"].min()), int(t["cols"].max())
-    for k in range(t["rows"].size):
-        r, c = int(t["rows"][k]), int(t["cols"][k])
-        rs, re = max(0, r - WINDOW_R), min(shape[0], r + WINDOW_R + 1)
-        cs, ce = max(0, c - WINDOW_R), min(shape[1], c + WINDOW_R + 1)
-        win = m[rs:re, cs:ce]
-        if win.sum() < WINDOW_MIN_PX:
-            continue
-        yy, xx = np.nonzero(win)
-        yy = yy.astype(np.float64) + rs
-        xx = xx.astype(np.float64) + cs
-        yy -= yy.mean()
-        xx -= xx.mean()
-        cxx = float((xx * xx).mean())
-        cyy = float((yy * yy).mean())
-        cxy = float((xx * yy).mean())
-        theta = 0.5 * np.arctan2(2.0 * cxy, cxx - cyy)     # radians, from +col axis
-        out[k] = np.degrees(theta) % 180.0
+def stage_canary() -> dict:
+    _h61, store, cat, eligible, folds, va, vb, ring_px = h61.setup()
+    reg = check_registration()                       # H62 thresholds, not H61's
+    names = feature_names()
+    F = load_features(names)
+    th = reg["thresholds"]
+    rng = np.random.default_rng(SEED)
+    catd = ndi.distance_transform_edt(~cat)
+    out = dict(stage="canary", started_utc=now(), alarm_auc=th["canary_auc_alarm"],
+               evidence_class="HOLDOUT-DTI diagnostic AUC (not a DTI score)", folds=[])
+    for fold in folds:
+        region = fold["region"]
+        pos = np.flatnonzero((fold["truth"] & region).ravel())
+        neg = np.flatnonzero((region & ~cat & (catd > 5)).ravel())
+        pos = rng.choice(pos, min(20000, len(pos)), replace=False)
+        neg = rng.choice(neg, min(40000, len(neg)), replace=False)
+        rows = np.concatenate([pos, neg])
+        y = np.concatenate([np.ones(len(pos), np.int8), np.zeros(len(neg), np.int8)])
+        per = {}
+        for n in names:
+            x = np.asarray(F[n].ravel()[rows], np.float64)
+            auc = float(roc_auc_score(y, x))
+            per[n] = dict(auc=auc, direction_insensitive=max(auc, 1 - auc))
+        ranked = sorted(per.items(), key=lambda kv: -kv[1]["direction_insensitive"])
+        tr_rows, tr_y = h61.sample_train(fold, cat, np.random.default_rng(SEED + 900 + fold["fold"]))
+        fitted = {}
+        for n, _ in ranked[:5]:
+            m = h61.learner(SEED + 1)
+            m.fit(np.asarray(F[n].ravel()[tr_rows], np.float32)[:, None], tr_y)
+            fitted[n] = float(roc_auc_score(y, m.predict_proba(
+                np.asarray(F[n].ravel()[rows], np.float32)[:, None])[:, 1]))
+        alarms = [n for n, r in per.items() if r["direction_insensitive"] > th["canary_auc_alarm"]]
+        out["folds"].append(dict(fold=fold["fold"], n_pos=int(len(pos)), n_neg=int(len(neg)),
+                                 max_direction_insensitive_auc=ranked[0][1]["direction_insensitive"],
+                                 top5=[(n, r["direction_insensitive"]) for n, r in ranked[:5]],
+                                 fitted_top5_heldout=fitted, alarms=alarms, per_feature=per))
+        log(f"fold {fold['fold']} canary max AUC {ranked[0][1]['direction_insensitive']:.4f} "
+            f"({ranked[0][0]}) alarms={alarms}")
+    out.update(finished_utc=now(),
+               any_alarm=bool(any(r["alarms"] for r in out["folds"])),
+               dropped_features=sorted({n for r in out["folds"] for n in r["alarms"]}),
+               max_raw_auc_any_feature=max(r["max_direction_insensitive_auc"] for r in out["folds"]),
+               max_fitted_top5_heldout_auc=max(max(r["fitted_top5_heldout"].values()) for r in out["folds"]),
+               interpretation="AUC above the alarm means leakage until proven otherwise; catalogue-zero "
+                              "negatives are proxies, not verified fault absence.")
+    write("canary", out)
     return out
 
 
-def sample_at(rows: np.ndarray, cols: np.ndarray, layers: dict) -> tuple[np.ndarray, np.ndarray]:
-    """Valid sample mask + linear indices for float positions rounded to nearest cell."""
-    rr = np.rint(rows).astype(np.int64)
-    cc = np.rint(cols).astype(np.int64)
-    h, w = layers["valid"].shape
-    ok = (rr >= 0) & (rr < h) & (cc >= 0) & (cc < w)
-    rrc = np.clip(rr, 0, h - 1)
-    ccc = np.clip(cc, 0, w - 1)
-    ok &= layers["valid"][rrc, ccc]
-    ok &= layers["lid_valid"][rrc, ccc]
-    return ok, rrc * w + ccc
+def write(name: str, obj) -> Path:
+    EVID.mkdir(parents=True, exist_ok=True)
+    p = EVID / f"h65_{name}.json"
+    p.write_text(json.dumps(obj, indent=1, allow_nan=False, default=str) + "\n")
+    return p
 
 
-def run_gate() -> dict:
-    check_prereg()
-    WORK.mkdir(parents=True, exist_ok=True)
-    t_start = datetime.now(timezone.utc)
-
-    layers = load_layers()
-    cat, valid = layers["cat"], layers["valid"]
-    log(f"[grid] footprint {int(valid.sum()):,} px, catalogue {int(cat.sum()):,} px")
-    traces = traces_of(cat)
-    assign_folds(traces, valid)
-    log(f"[traces] {len(traces)} traces with >= {MIN_TRACE_PX} px; "
-        f"cross-fold {sum(t['cross_fold'] for t in traces)}")
-
-    # ---- pass 1: strikes + raw terms at every (pixel, offset); full-length per trace
-    thetas: list[np.ndarray] = []
-    per_off = {int(o): dict(ok=[], t1=[], t3=[], band=[]) for o in OFFSETS}
-    cal_p, cal_l = [], []            # A1-calibration pairs at offset 0
-    lid_valid_flat = layers["lid_valid"].ravel()
-    valid_flat = layers["valid"].ravel()
-    down_flat, up_flat = layers["down"].ravel(), layers["up"].ravel()
-    det_flat, strike_flat = layers["det"].ravel(), layers["strike"].ravel()
-
-    for t in traces:
-        n = int(t["npx"])
-        th = pixel_strikes(t, valid.shape)
-        thetas.append(th)
-        r, c = t["rows"].astype(np.float64), t["cols"].astype(np.float64)
-        has = np.isfinite(th)
-        # normal to the PCA direction d=(dr,dc)=(sin th, cos th)  ->  n=(cos th, -sin th)
-        ndr = np.cos(np.radians(th))
-        ndc = -np.sin(np.radians(th))
-        for o in OFFSETS:
-            rr_o, cc_o = r + o * ndr, c + o * ndc
-            ok, lin = sample_at(rr_o, cc_o, layers)
-            ok_m, lin_m = sample_at(r + (o - 1) * ndr, c + (o - 1) * ndc, layers)
-            ok_p, lin_p = sample_at(r + (o + 1) * ndr, c + (o + 1) * ndc, layers)
-            ok3 = ok & ok_m & ok_p & has
-            t1 = np.zeros(n, np.float64)
-            t3 = np.zeros(n, np.float64)
-            band = np.zeros(n, np.float64)
-            if ok3.any():
-                t1[ok3] = np.abs(down_flat[lin[ok3]] - up_flat[lin[ok3]])
-                t3[ok3] = (2.0 * det_flat[lin[ok3]]
-                           - det_flat[lin_m[ok3]] - det_flat[lin_p[ok3]])
-                band[ok3] = strike_flat[lin[ok3]] * (180.0 / 255.0)
-            per_off[int(o)]["ok"].append(ok3)
-            per_off[int(o)]["t1"].append(t1)
-            per_off[int(o)]["t3"].append(t3)
-            per_off[int(o)]["band"].append(band)
-            if o == 0:
-                cal_p.append(th[ok3])
-                cal_l.append(band[ok3])
-    for o in OFFSETS:
-        for k in ("ok", "t1", "t3", "band"):
-            per_off[int(o)][k] = np.concatenate(per_off[int(o)][k])
-
-    # ---- footprint-wide t1 percentiles (frozen: over valid AND LiDAR-valid cells)
-    fp_ok = valid_flat & lid_valid_flat
-    t1_fp = np.abs(down_flat[fp_ok].astype(np.float64) - up_flat[fp_ok].astype(np.float64))
-    p1a, p9a = np.percentile(t1_fp, [1, 99])
-    del t1_fp
-    # t3 is directional: its frozen percentile population is the pooled sampled cells of
-    # this run (all offsets).  Deviation from the prereg's letter for t3 only; logged.
-    t3_all = np.concatenate([per_off[int(o)]["t3"] for o in OFFSETS])
-    p1c, p9c = np.percentile(t3_all, [1, 99])
-    del t3_all
-    log(f"[norm] t1 footprint p01={p1a:.1f} p99={p9a:.1f} | t3 pooled p01={p1c:.2f} p99={p9c:.2f}")
-
-    # ---- A1 calibration: read the band's convention from the data (prereg amendment)
-    tp = np.concatenate(cal_p)
-    lb = np.concatenate(cal_l)
-    encodings = {"theta": (1.0, 0.0), "neg": (-1.0, 0.0),
-                 "theta+90": (1.0, 90.0), "neg+90": (-1.0, 90.0)}
-    cal = {}
-    for name, (sg, sh) in encodings.items():
-        z = np.exp(1j * np.radians(2.0 * ((tp - (lb * sg + sh)) % 180.0)))
-        cal[name] = float(np.abs(z.mean()))
-    best = max(cal, key=cal.get)
-    sign, shift = encodings[best]
-    r_best = cal[best]
-    t2_uninformative = bool(r_best < 0.10)
-    log("[A1] circular resultant length by encoding: " +
-        ", ".join(f"{k}={v:.4f}" for k, v in cal.items()) + f"  -> {best} (r={r_best:.4f})")
-
-    # ---- pass 2: normalised votes and trace estimates
-    starts = np.concatenate([[0], np.cumsum([int(t["npx"]) for t in traces])])
-    for ti, t in enumerate(traces):
-        n = int(t["npx"])
-        th = thetas[ti]
-        scores = np.full((n, len(OFFSETS)), -np.inf)
-        okany = np.zeros(n, bool)
-        for j, o in enumerate(OFFSETS):
-            base = int(starts[ti])
-            sl = slice(base, base + n)
-            ok = per_off[int(o)]["ok"][sl]
-            if not ok.any():
-                continue
-            t1n = np.clip((per_off[int(o)]["t1"][sl][ok] - p1a) / max(p9a - p1a, 1e-9), 0, 1)
-            t3n = np.clip((per_off[int(o)]["t3"][sl][ok] - p1c) / max(p9c - p1c, 1e-9), 0, 1)
-            band = per_off[int(o)]["band"][sl][ok]
-            dth = (th[ok] - (band * sign + shift)) % 180.0
-            t2n = (np.cos(2.0 * np.radians(dth)) + 1.0) / 2.0
-            scores[np.nonzero(ok)[0], j] = (t1n + t2n + t3n) / 3.0
-            okany |= ok
-        vote = np.full(n, -99, np.int64)
-        vote[okany] = OFFSETS[np.argmax(scores[okany], axis=1)]
-        v = vote[vote != -99]
-        t["offset"] = int(np.median(v)) if v.size else None
-        t["n_votes"] = int(v.size)
-
-    done = [t for t in traces if t["offset"] is not None]
-    log(f"[votes] traces with >=1 valid vote: {len(done)}/{len(traces)}")
-
-    # ---- the four frozen conditions
-    offs = np.array([t["offset"] for t in done])
-    folds = np.array([t["fold"] for t in done])
-    g1 = len(done)
-    g2 = float(np.median(np.abs(offs)))
-    g4 = float((offs == 0).mean())
-    ctrl = np.zeros(offs.shape)          # G3: control fitted on the other three folds
-    for f in range(FOLDS):
-        other = offs[folds != f]
-        ctrl[folds == f] = float(np.median(other)) if other.size else 0.0
-    est_mae = float(np.median(np.abs(offs)))
-    ctrl_mae = float(np.median(np.abs(offs - ctrl)))
-    g3_margin = ctrl_mae - est_mae
-
-    hist = {int(o): int((offs == o).sum()) for o in np.unique(offs)}
-    okc = dict(G1=bool(g1 >= 200), G2=bool(g2 <= 1.0), G3=bool(g3_margin >= 0.3),
-               G4=bool(g4 <= 0.5))
-    receipt = dict(
-        round="H65", stage="gate", started_utc=t_start.strftime("%Y-%m-%dT%H:%M:%SZ"),
-        finished_utc=now(),
-        preregistration_sha256=sha256(PREREG),
-        evaluator="h65-a-gate-v1 (geometric; 20 km whole-block trace folds, seed 20261009)",
-        grid=dict(shape=list(valid.shape), footprint_px=int(valid.sum()),
-                  catalogue_px=int(cat.sum())),
-        traces=dict(n=len(traces), scored=len(done), min_px=MIN_TRACE_PX,
-                    cross_fold=int(sum(t["cross_fold"] for t in traces)),
-                    per_fold={int(f): int((folds == f).sum()) for f in range(FOLDS)}),
-        A1_calibration=dict(resultant_lengths=cal, chosen=best, r_best=r_best,
-                            t2_uninformative=t2_uninformative,
-                            note="band 11 convention read from data before any gate "
-                                 "statistic; prereg knowledge/41 amendment"),
-        normalization=dict(t1_population="footprint valid & lidar-valid (frozen)",
-                           t1_p01=float(p1a), t1_p99=float(p9a),
-                           t3_population="pooled sampled cells, all offsets (directional "
-                                         "quantity; deviation from the prereg letter, logged)",
-                           t3_p01=float(p1c), t3_p99=float(p9c)),
-        conditions=dict(
-            G1_traces=dict(value=g1, threshold=200, op=">=", ok=okc["G1"]),
-            G2_median_abs_offset_px=dict(value=g2, threshold=1.0, op="<=", ok=okc["G2"]),
-            G3_beats_constant_control_px=dict(value=g3_margin, est_mae=est_mae,
-                                              ctrl_mae=ctrl_mae, threshold=0.3, op=">=",
-                                              ok=okc["G3"]),
-            G4_argmax_zero_fraction=dict(value=g4, threshold=0.5, op="<=", ok=okc["G4"]),
-        ),
-        offset_histogram=hist,
-        per_fold_median_offset={int(f): (float(np.median(offs[folds == f]))
-                                         if (folds == f).any() else None)
-                                for f in range(FOLDS)},
-        verdict="PASS" if all(okc.values()) else "FAIL",
-    )
-    (WORK / "gate.json").write_text(json.dumps(receipt, indent=2))
-    (EVID / "h65_gate.json").write_text(json.dumps(receipt, indent=2))
-    np.save(WORK / "trace_offsets.npy",
-            np.array([(t["id"], t["fold"], t["offset"], t["npx"], t["n_votes"])
-                      for t in done], dtype=np.float64))
-    log(f"[gate] G1={g1} (>=200: {okc['G1']})  G2={g2:.3f} px (<=1.0: {okc['G2']})")
-    log(f"[gate] G3 margin={g3_margin:.3f} px (est {est_mae:.3f} vs ctrl {ctrl_mae:.3f}; "
-        f">=0.3: {okc['G3']})  G4 frac0={g4:.3f} (<=0.5: {okc['G4']})")
-    log(f"[gate] VERDICT: {receipt['verdict']}  receipt={EVID / 'h65_gate.json'}")
-    return receipt
+def stage_premise() -> dict:
+    _h61, store, cat, eligible, folds, va, vb, ring_px = h61.setup()
+    reg = check_registration()                       # H62 thresholds, not H61's
+    names = feature_names()
+    F = load_features(names)
+    flat = store.flat_idx
+    catd = ndi.distance_transform_edt(~cat)
+    inv = store.inverse
+    out = dict(stage="premise", started_utc=now(), view_A_features=names, n_A=len(names),
+               seed=SEED, learner="run_h61.learner", folds=[])
+    X_all = np.empty((len(flat), len(names)), np.float32)
+    for j, n in enumerate(names):
+        X_all[:, j] = np.asarray(F[n].ravel()[flat], np.float32)
+    if not np.isfinite(X_all).all():
+        raise SystemExit("non-finite H62 features inside the eligible footprint")
+    for fold in folds:
+        rng = np.random.default_rng(SEED + fold["fold"])
+        rows, y = h61.sample_train(fold, cat, rng)
+        X = np.stack([np.asarray(F[n].ravel()[rows], np.float32) for n in names], 1)
+        m = h61.learner(SEED)
+        t0 = time.time()
+        m.fit(X, y)
+        in_auc = float(roc_auc_score(y, m.predict_proba(X)[:, 1]))
+        del X
+        pred = np.empty(len(flat), np.float32)
+        for i in range(0, len(flat), 250_000):
+            pred[i:i + 250_000] = m.predict_proba(X_all[i:i + 250_000])[:, 1].astype(np.float32)
+        pos_idx = inv[np.flatnonzero((fold["truth"] & fold["region"]).ravel())]
+        neg_idx = inv[np.flatnonzero((fold["region"] & ~cat & (catd > 5)).ravel())]
+        yy = np.r_[np.ones(len(pos_idx)), np.zeros(len(neg_idx))]
+        oof = float(roc_auc_score(yy, np.r_[pred[pos_idx], pred[neg_idx]]))
+        out["folds"].append(dict(fold=fold["fold"], n_train=int(len(rows)), n_pos_train=int(y.sum()),
+                                 in_sample_auc=in_auc, heldout_region_auc=oof,
+                                 n_region_pos=int(len(pos_idx)), n_region_neg=int(len(neg_idx)),
+                                 fit_seconds=round(time.time() - t0, 1)))
+        np.save(WORK / f"pred_h62A_f{fold['fold']}.npy", pred)
+        log(f"fold {fold['fold']}: in-AUC {in_auc:.4f} OOF-region-AUC {oof:.4f}")
+    aucs = [f["heldout_region_auc"] for f in out["folds"]]
+    h61_fit = json.loads((EVID / "h61_fit_checkpoint.json").read_text())
+    control = {
+        "source": "evidence/h61_fit_checkpoint.json (stored H61 receipt, not refitted)",
+        "view_A_oof_by_fold": [f["view_A"]["heldout_region_auc"] for f in h61_fit["folds"]],
+        "view_B_oof_by_fold": [f["view_B"]["heldout_region_auc"] for f in h61_fit["folds"]],
+    }
+    control["view_A_mean"] = float(np.mean(control["view_A_oof_by_fold"]))
+    control["view_B_mean"] = float(np.mean(control["view_B_oof_by_fold"]))
+    th = reg["thresholds"]
+    mean_auc, min_auc = float(np.mean(aucs)), float(np.min(aucs))
+    passed = bool(mean_auc >= th["premise_mean_oof_auc_min"] and min_auc >= th["premise_min_fold_auc_min"])
+    out.update(finished_utc=now(), h62_A_mean_oof_auc=mean_auc, h62_A_min_fold_oof_auc=min_auc,
+               h61_control=control,
+               gate=dict(mean_threshold=th["premise_mean_oof_auc_min"], min_fold_threshold=th["premise_min_fold_auc_min"],
+                         premise_passed=passed),
+               verdict="PREMISE PASS -> E3 holdout comparison authorised (not run)" if passed
+               else "NEGATIVE -> H62-A does not carry out-of-quadrant information; no holdout arm, "
+                    "no emission, no slot",
+               caveat="Premise AUC only. It does not measure detection of faults, fault truth, "
+                      "or any competition score. Catalogue-zero is not verified fault absence.")
+    write("premise", out)
+    return out
 
 
 def main() -> int:
-    stage = sys.argv[1] if len(sys.argv) > 1 else "gate"
-    if stage != "gate":
-        raise SystemExit(f"unknown stage {stage!r}; this runner implements 'gate' only")
-    run_gate()
+    ap = argparse.ArgumentParser()
+    ap.add_argument("stage", choices=["features", "canary", "premise", "all"])
+    args = ap.parse_args()
+    reg = check_registration()
+    stages = ["features", "canary", "premise"] if args.stage == "all" else [args.stage]
+    for s in stages:
+        t0 = time.time()
+        log(f"=== H62 stage {s} ===")
+        {"features": stage_features, "canary": stage_canary, "premise": stage_premise}[s]()
+        log(f"--- stage {s} done in {time.time() - t0:.1f}s")
     return 0
 
 

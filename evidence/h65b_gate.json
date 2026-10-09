@@ -1,10 +1,10 @@
 {
-  "round": "H65",
+  "round": "H65b",
   "stage": "gate",
-  "started_utc": "2026-10-09T03:49:58Z",
-  "finished_utc": "2026-10-09T03:52:22Z",
-  "preregistration_sha256": "40202b57a8d0962f9b2d9b7f109084394730459a393983469b89f270856d4597",
-  "evaluator": "h65-a-gate-v1 (geometric; 20 km whole-block trace folds, seed 20261009)",
+  "started_utc": "2026-10-09T05:50:44Z",
+  "finished_utc": "2026-10-09T05:52:39Z",
+  "preregistration_sha256": "ac8e41eed97360699be72b221216b3ad79335e86b9d697f3b75b379d41c6ea9c",
+  "evaluator": "h65b-a-gate-v1 (geometric; 20 km whole-block trace folds, seed 20261009)",
   "grid": {
     "shape": [
       3730,

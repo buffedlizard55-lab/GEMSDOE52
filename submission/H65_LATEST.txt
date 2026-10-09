@@ -1,7 +1,8 @@
-H65 research artefact (NOT an upload approval; verdict NEGATIVE, SUBMIT NO)
-file:      submission/gems52-h65-band10-valley-15000px-20261009T050550Z.tif
-sha256:    eefc7b1210f71872024d057cb09ec88341628bb7d70d7e71c99425c44714fc1e
-served:    docs/downloads/h65-candidate.tif (byte-identical)
-name:      gems52-h65-band10-valley-15000px-20261009T050550Z
-note:      H65 band-10 deq valley lines: HOLDOUT-DTI 0.00446 [0,0.00909] vs single_B 0.01890; SUBMIT NO; research-only
-run card:  evidence/h65_run_card.json   ·   pages: docs/h65.html, docs/executive-summary.html
+H65b research artefact (NOT an upload approval; verdict NEGATIVE, SUBMIT NO)
+label note: renamed H65 -> H65b at merge time (label collision with a parallel round on main); see registry/h65b_preregistration.json
+file:      submission/gems52-h65b-band10-valley-15000px-20261009T055809Z.tif
+sha256:    eefc7b1210f71872024d057cb09ec88341628bb7d70d7e71c99425c44714fc1e  (byte-identical TIF across the rename)
+served:    docs/downloads/h65b-candidate.tif (byte-identical)
+name:      gems52-h65b-band10-valley-15000px-20261009T055809Z
+note:      H65b band-10 deq valley lines: HOLDOUT-DTI 0.00446 [0,0.00909] vs single_B 0.01890; SUBMIT NO; research-only
+run card:  evidence/h65b_run_card.json   ·   pages: docs/h65b.html, docs/h65b-executive-summary.html

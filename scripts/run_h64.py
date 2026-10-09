@@ -70,6 +70,20 @@ NOVELTY_RADIUS_PX = 3
 MAX_NOVELTY_ITER = 12
 NOVELTY_MIN_PX = 3.0
 PREFIX = "gems52-h64-"
+# Round identity.  H64 defaults; run_h65 overrides these (one build implementation, two round names,
+# no fork).  Every output name below is derived from TAG / PREFIX / ROUND_NAME so that a second round
+# cannot overwrite the H64 receipts.
+TAG = "h64"
+ROUND_NAME = "H64"
+CARD_TEXT = dict(
+    hypothesis=("Sufficiency-gated co-training: a lower-capacity View A that generalises out of quadrant "
+                "makes the exchange licensed; then disagreement ranks buried-cover candidates."),
+    mechanism="Blum-Mitchell needs sufficient views. View A capacity is the single change (knowledge/39 §4).",
+    named_non_fault_mimic=("basin-margin or basement-high gravity/magnetic gradient, lithologic contact, "
+                           "volcanic or basin-fill density boundary, upward-continued flight-line artefact"),
+    note_body="co-train, A capacity cut, 3px dots, >200m off catalogue",
+    note_exact_only="exact-novel vs registry; lane DUPLICATE (70% rule)",
+)
 CHAMPION_REF = ("ref_h33_2_b2", 0.2778)
 
 
@@ -83,10 +97,10 @@ def now() -> str:
 
 def write_h64(name: str, obj) -> Path:
     EVID.mkdir(parents=True, exist_ok=True)
-    p = EVID / f"h64_{name}.json"
+    p = EVID / f"{TAG}_{name}.json"
     p.write_text(json.dumps(obj, indent=1, allow_nan=False, default=str) + "\n")
     DOCS.mkdir(parents=True, exist_ok=True)
-    (DOCS / f"h64_{name}.json").write_text(p.read_text())
+    (DOCS / f"{TAG}_{name}.json").write_text(p.read_text())
     return p
 
 
@@ -111,7 +125,7 @@ def check_prereg() -> dict:
 
 def control_and_verdict(reg) -> dict:
     """Amended single_B control (|delta| <= tolerance) and the frozen verdict rule (knowledge/39 §4)."""
-    rec = json.loads((EVID / "h64_holdout.json").read_text())
+    rec = json.loads((EVID / f"{TAG}_holdout.json").read_text())
     pooled = rec["pooled"]
     sB = float(pooled["scores"]["single_B"]["dti"])
     ref = float(reg["thresholds"]["single_B_h61_control_holdout_dti"])
@@ -462,22 +476,22 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
 
     # the TIF and its single-band validator
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    stem = f"gems52-h64-sufgate-cotrain-{BUDGET}px-{stamp}"
+    stem = f"{PREFIX}sufgate-cotrain-{BUDGET}px-{stamp}"
     path = SUBM / f"{stem}.tif"
     SUBM.mkdir(exist_ok=True)
     s1_word = "S1 pass" if s1["S1_pass"] else "S1 fail"
     if EXACT_ONLY:
-        note = (f"H64 {s1_word}; exact-novel vs registry; lane DUPLICATE (70% rule); "
+        note = (f"{ROUND_NAME} {s1_word}; {CARD_TEXT['note_exact_only']}; "
                 f"research only, do not submit")
     else:
-        note = (f"H64 {s1_word}: co-train, A capacity cut, 3px dots, >200m off catalogue; "
+        note = (f"{ROUND_NAME} {s1_word}: {CARD_TEXT['note_body']}; "
                 f"research only, not slot-approved")
     assert len(note) <= 140, len(note)
     name = stem
     receipt = submission_writer.write_submission(
         path, pred, sample=ROOT / "data/sample_submission.tif", footprint=sub_finite,
         note=note[:140], name=name[:140],
-        metadata=dict(round="H64", preregistration=reg["hypothesis_sha256"], budget=BUDGET))
+        metadata=dict(round=ROUND_NAME, preregistration=reg["hypothesis_sha256"], budget=BUDGET))
     fmt = receipt["validator"]
     lane_dots = gates.lane_report(pred, eligible, priors, sample=ROOT / "data/sample_submission.tif",
                                   phase="dots", log=log)
@@ -491,7 +505,7 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
            "X_mag_TMI_up150_grad3", "raw_band_13", "raw_band_17")
     ctx_rows = store.gather(ys * shape[1] + xs, list(CTX))
     ctx = {n: ctx_rows[:, j] for j, n in enumerate(CTX)}
-    csv_path = DOWN / "h64-a-only-reasoning.csv"
+    csv_path = DOWN / f"{TAG}-a-only-reasoning.csv"
     DOWN.mkdir(parents=True, exist_ok=True)
     with csv_path.open("w", newline="") as fh:
         w = csv.writer(fh)
@@ -525,15 +539,13 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
     log(f"reasoning rows: {n_dots} -> {csv_path}")
 
     # the H61 run card records these; H64 keeps the same fields
-    hold = json.loads((EVID / "h64_holdout.json").read_text()) if (EVID / "h64_holdout.json").exists() else None
+    hold = json.loads((EVID / f"{TAG}_holdout.json").read_text()) if (EVID / f"{TAG}_holdout.json").exists() else None
     card = dict(
-        round="H64",
+        round=ROUND_NAME,
         generated_utc=now(),
-        hypothesis="Sufficiency-gated co-training: a lower-capacity View A that generalises out of "
-                   "quadrant makes the exchange licensed; then disagreement ranks buried-cover candidates.",
-        mechanism="Blum-Mitchell needs sufficient views. View A capacity is the single change (knowledge/39 §4).",
-        named_non_fault_mimic="basin-margin or basement-high gravity/magnetic gradient, lithologic contact, "
-                              "volcanic or basin-fill density boundary, upward-continued flight-line artefact",
+        hypothesis=CARD_TEXT["hypothesis"],
+        mechanism=CARD_TEXT["mechanism"],
+        named_non_fault_mimic=CARD_TEXT["named_non_fault_mimic"],
         sufficiency_S1=dict(mean_view_A_oof_auc=s1["mean_view_A_oof_auc"],
                             min_fold=s1["min_fold_view_A_oof_auc"], S1_pass=s1["S1_pass"]),
         exchange=dict(skipped=exch.get("skipped", False), total_pseudo_pixels=exch.get("total_pseudo_pixels")),
@@ -572,7 +584,7 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
                                           and (uniq_inf.get("novel_fraction") or 0.0) >= 1.0),
                              not_union_ok=not_union["not_union_pass"],
                              s1=s1["S1_pass"],
-                             holdout_ok=bool(json.loads((EVID / "h64_control_and_verdict.json").read_text())
+                             holdout_ok=bool(json.loads((EVID / f"{TAG}_control_and_verdict.json").read_text())
                                              ["holdout_eligible"])))
     write_h64("run_card", card)
     return card
@@ -597,7 +609,7 @@ def main(argv) -> int:
         raise SystemExit(f"unknown stage {stage!r}")
     reg = check_prereg()
     redirect()
-    load = lambda name: json.loads((EVID / f"h64_{name}.json").read_text())   # noqa: E731
+    load = lambda name: json.loads((EVID / f"{TAG}_{name}.json").read_text())   # noqa: E731
     if stage in ("fit", "all"):
         log("=== H64 stage fit (View A learner changed; View B identical to H61) ===")
         base.stage_fit()

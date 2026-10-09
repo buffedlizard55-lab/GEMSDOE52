@@ -1,53 +1,49 @@
 {
-  "round": "H65",
-  "created_utc": "2026-10-09T03:44:53Z",
-  "status": "PREREGISTERED",
-  "preregistration_file": "knowledge/41_hypotheses_H65_preregistered.md",
-  "preregistration_sha256": "ba254e5dbc1e5492ce28343b5a9f1706711d94e9feaf76c84d27d37ea57672c5",
+  "round": "H62",
+  "preregistered_utc": "2026-10-09T00:45:54+00:00",
+  "hypothesis_document": "knowledge/41_hypotheses_H65_preregistered.md",
+  "hypothesis_sha256": "4d9d559fe6e4b42cffef206d366ccf785b1eda2146a686be98e376a1352bef71",
+  "hypothesis_bytes": 11936,
+  "lane": "two-view co-training (Blum & Mitchell 1998, doi:10.1145/279943.279962); View A potential-field/subsurface, View B surface; disagreement as the discovery signal",
+  "frozen_before_any_fit": true,
   "runner": "scripts/run_h65.py",
-  "runner_checks_prereg_hash": true,
-  "hypothesis": "R5-H1 trace-correction corridor: LiDAR one-sided scarp step + LiDAR/trace strike agreement + det_elev second difference locate a signed perpendicular offset -3..+3 px where the mapped trace is misaligned; the organiser confirms corrections-to-existing-traces are part of the new-fault truth (forum 11516, 2026-09-21).",
-  "gate_conditions_frozen": {
-    "G1_min_held_out_traces": 200,
-    "G2_median_abs_offset_px_max": 1.0,
-    "G3_beats_constant_offset_control_by_px_min": 0.3,
-    "G4_argmax_zero_fraction_max": 0.5
-  },
-  "decision_rule": "PASS -> frozen emission build; FAIL -> negative receipt, no corridor build. No re-tuning after numbers.",
-  "budget": {
-    "experiments": 3,
-    "wall_clock_hours": 2
-  },
-  "lane": {
-    "rank_correlation_limit": 0.9,
-    "near_dot_limit": 0.7,
-    "near_radius_px": 3,
-    "action_on_breach": "log DUPLICATE and stop"
-  },
-  "reuse": [
-    "gems52.gates",
-    "gems52.submission_writer",
-    "gems52.grid",
-    "gems52_r5.cotrain_r5.make_folds/block_ids",
-    "scripts/fetch_prior_inventory.py census",
-    "evidence/ctd5_prior_inventory.json"
+  "runner_refuses_if_hash_moves": true,
+  "operator_audit": "scripts/h65_operator_audit.py -> evidence/h65_operator_audit.json",
+  "shared_tools_to_reuse": [
+    "scripts/run_h61.py::setup (label-blind-quadrants-v2 folds, pin checks, feature-store checks)",
+    "scripts/run_h61.py::sample_train, learner (identical sampler and learner)",
+    "src/gems52/structural.py FeatureStore (raw_band_13, raw_band_15, eligibility mask)",
+    "src/gems52/spatial.py::folds"
   ],
-  "co_training_lane_status": "frozen NEGATIVE x6 (H56, H60D, H61, H62, H62b, H63, H64); not re-run per AGENTS.md; brief's 3-5 new hypotheses ranked in knowledge/41 instead",
-  "amendments": [
-    {
-      "what": "A1 calibration: LiDAR strike band angular frame read from data before any gate statistic; 4 candidate encodings, largest circular resultant length wins; all four r_e logged; r_e<0.10 => t2 reported uninformative, gate still evaluated, no re-weighting",
-      "when_utc": "2026-10-09T03:46:00Z",
-      "reason": "band 11 convention undocumented and never previously read in this repo"
+  "thresholds": {
+    "canary_auc_alarm": 0.9,
+    "premise_mean_oof_auc_min": 0.6,
+    "premise_min_fold_auc_min": 0.55,
+    "offset_distances_px": [
+      3,
+      6
+    ],
+    "detrend_sigma_px": 15,
+    "strike_azimuths_deg": {
+      "nne": 15.0,
+      "nw": 315.0
     },
-    {
-      "what": "E2 amendment: after E1 (R5-H1 gate) FAIL, run R5-H2a convention-free band-10 valley-line detector on the shared hide-and-recover instrument (arms candidate/single_B/random, budget 15000, canary AUC alarm 0.90); file build + gates frozen in knowledge/41 section 5",
-      "when_utc": "2026-10-09T04:08:00Z",
-      "reason": "E1 cancelled the corridor build per the frozen decision rule; budget allows the rank-2 hypothesis; band 10 never read by any repo script"
-    },
-    {
-      "what": "E2 amendment 2: exact tie-aware rank replaces template rank01 for band 10 only (equal-width bins collapse 66.6% of footprint into first bin -- measured); template tool untouched to preserve committed receipts; run 1 voided and kept as evidence/h65_e2_holdout_invalid_run1.json",
-      "when_utc": "2026-10-09T04:16:00Z",
-      "reason": "void run 1: ridge_px=0 (empty field) due to rank01 bin collapse on band 10's 4.96e6 m tail"
-    }
-  ]
+    "bands": [
+      15,
+      13
+    ]
+  },
+  "stages_authorised": [
+    "operator_audit",
+    "canary",
+    "premise_fit"
+  ],
+  "stages_not_authorised": [
+    "emission",
+    "holdout_arms",
+    "submission",
+    "upload"
+  ],
+  "budget": "3 experiments: E1 operator audit (done as receipt), E2 premise fit, E3 conditional on premise pass (not run here)",
+  "amendment_before_fit": "Section 1 residual description clarified after a discretisation check (no ramp, nearest-neighbour shift); no fit, score or artefact existed at amendment time. Hash recorded post-amendment, at 2026-10-09T00:46:39+00:00"
 }

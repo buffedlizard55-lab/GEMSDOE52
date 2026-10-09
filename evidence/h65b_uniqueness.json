@@ -1,5 +1,5 @@
 {
-  "n_priors_checked": 603,
+  "n_priors_checked": 608,
   "per_prior": [
     {
       "path": "/home/user/GEMSDOE52/work/h61/priors/00294d5b5520168dc8bdf3be015b47cdaaf4c0e5.tif",
@@ -7692,6 +7692,34 @@
       "novel_vs_this": 14181
     },
     {
+      "path": "/home/user/GEMSDOE52/submission/gems52-h66-localA-cotrain-37600px.tif",
+      "prior_px": 37600,
+      "new_px": 15000,
+      "binary": true,
+      "support_definition": ">0 for binary",
+      "decoded_sha256": "9aabf2c230f63c2ab0f6a8b4373d7cbba2f85bc94200a0657dfe56c173da8d4c",
+      "intersection": 103,
+      "jaccard": 0.001962016877154885,
+      "identical": false,
+      "subset_of_prior": false,
+      "superset_of_prior": false,
+      "novel_vs_this": 14897
+    },
+    {
+      "path": "/home/user/GEMSDOE52/submission/gems52-h66-structural-coherence-25000px.tif",
+      "prior_px": 25000,
+      "new_px": 15000,
+      "binary": true,
+      "support_definition": ">0 for binary",
+      "decoded_sha256": "d9c3e63b222ee60f9cc841b9c07ef01b68c1525244b837def2e2e285111df2a4",
+      "intersection": 28,
+      "jaccard": 0.0007004903432402681,
+      "identical": false,
+      "subset_of_prior": false,
+      "superset_of_prior": false,
+      "novel_vs_this": 14972
+    },
+    {
       "path": "/home/user/GEMSDOE52/submission/gems52-r2-signednormal-37654-1f751ac9b6ee-zeros.tif",
       "prior_px": 37654,
       "new_px": 15000,
@@ -8112,6 +8140,20 @@
       "novel_vs_this": 14911
     },
     {
+      "path": "/home/user/GEMSDOE52/docs/downloads/gems52-h64-sufgate-cotrain-37600px-20261009T022631Z.tif",
+      "prior_px": 37600,
+      "new_px": 15000,
+      "binary": true,
+      "support_definition": ">0 for binary",
+      "decoded_sha256": "ba2b533065b5f6fc8b68dbbbe9f3230195b01d6b9ebdfc6e73398088e26363d7",
+      "intersection": 819,
+      "jaccard": 0.01581661227091018,
+      "identical": false,
+      "subset_of_prior": false,
+      "superset_of_prior": false,
+      "novel_vs_this": 14181
+    },
+    {
       "path": "/home/user/GEMSDOE52/docs/downloads/gems52-r2-signednormal-37654-1f751ac9b6ee-zeros.tif",
       "prior_px": 37654,
       "new_px": 15000,
@@ -8420,6 +8462,34 @@
       "novel_vs_this": 14181
     },
     {
+      "path": "/home/user/GEMSDOE52/docs/downloads/h66-candidate.tif",
+      "prior_px": 25000,
+      "new_px": 15000,
+      "binary": true,
+      "support_definition": ">0 for binary",
+      "decoded_sha256": "d9c3e63b222ee60f9cc841b9c07ef01b68c1525244b837def2e2e285111df2a4",
+      "intersection": 28,
+      "jaccard": 0.0007004903432402681,
+      "identical": false,
+      "subset_of_prior": false,
+      "superset_of_prior": false,
+      "novel_vs_this": 14972
+    },
+    {
+      "path": "/home/user/GEMSDOE52/docs/downloads/h66cotrain-candidate.tif",
+      "prior_px": 37600,
+      "new_px": 15000,
+      "binary": true,
+      "support_definition": ">0 for binary",
+      "decoded_sha256": "9aabf2c230f63c2ab0f6a8b4373d7cbba2f85bc94200a0657dfe56c173da8d4c",
+      "intersection": 103,
+      "jaccard": 0.001962016877154885,
+      "identical": false,
+      "subset_of_prior": false,
+      "superset_of_prior": false,
+      "novel_vs_this": 14897
+    },
+    {
       "path": "/home/user/GEMSDOE52/docs/downloads/r5-candidate.tif",
       "prior_px": 16681,
       "new_px": 15000,
@@ -8440,10 +8510,10 @@
   "research_publication_ok": false,
   "support_novelty_gate_ok": false,
   "gate_correction": "Original >=20% support novelty retained as a FAILED diagnostic, not silently waived for slot promotion. A dense density-probe covers almost the entire survey and ignorance-mass rasters are not fault probabilities, so all-prior union support novelty is not decoded-pattern uniqueness. Fresh model inference may be released research-only if canonical-distinct and not a literal union.",
-  "union_px": 5364867,
+  "union_px": 5373804,
   "novel_vs_all_priors": 0,
   "novel_fraction": 0.0,
-  "prior_px_dropped": 5349867,
+  "prior_px_dropped": 5358804,
   "relation_to_union": "subset-of-union",
   "ok": false,
   "top_argument_ignored": false,

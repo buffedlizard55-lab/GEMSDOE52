@@ -1,123 +1,137 @@
 {
-  "round": "H65",
-  "generated_utc": "2026-10-09T05:29:51Z",
-  "hypothesis": "R5-H2a: fault traces are valley lines of the band-10 distance-to-earthquake field deq_n100a15 (never previously read in this repo); R5-H1 trace-correction corridor was gate-refuted first (E1 FAIL, G3 margin 0.000 px)",
-  "mechanism": "v = 1 - exact rank(band 10); sigma-1 smoothing; non-maximum suppression along the gradient; 90th-percentile ridge threshold; top-15,000 cells, >=3 px apart, off-catalogue, tier-2 novel vs 526-raster registry",
-  "named_mimic": "seismicity aligned by a non-fault process ( swarm triggered by geothermal or mining activity; range-front event clustering on a fold), and the band's own 15-deg sector convention, which is undocumented",
-  "e1_r5h1_gate": {
-    "verdict": "FAIL",
-    "conditions": {
-      "G1_traces": true,
-      "G2_median_abs_offset_px": true,
-      "G3_beats_constant_control_px": false,
-      "G4_argmax_zero_fraction": true
-    }
-  },
-  "holdout_dti": {
-    "label": "HOLDOUT-DTI, evaluator gems52-pooled-hide-v1 (this run's config: 4 hide folds, buffer 4, prevalence 0.002, seed 0; 36439 withheld positives)",
-    "candidate": [
-      0.0044559375635245925,
-      0.0,
-      0.009093901638765644
+  "round": "H62",
+  "date_utc": "2026-10-09",
+  "branch": "arena/dfeab8a9-gemsdoe52",
+  "experiments": {
+    "limit": 3,
+    "used": 2,
+    "run": [
+      "E1 operator audit (SYNTHETIC)",
+      "E2 premise fit (PREMISE-AUC)"
     ],
-    "singleB": [
-      0.01890009395957329,
-      0.012107117499640142,
-      0.027034885317358332
-    ],
-    "random": [
-      0.025773347611525277,
-      0.023249567556731916,
-      0.028174660367557346
-    ],
-    "paired_candidate_minus_singleB": {
-      "evidence_class": "HOLDOUT-DTI",
-      "evaluator_version": "gems52-pooled-hide-v1",
-      "delta": -0.014444156396048697,
-      "ci95": [
-        -0.024908873094383863,
-        -0.006198956096802302
-      ],
-      "withheld_positive_pixels": 36439
-    },
-    "leakage_canary": {
-      "per_fold_auc": [
-        0.49483,
-        0.48689,
-        0.49538,
-        0.48678
-      ],
-      "max_auc": 0.49538,
-      "alarm_090": false,
-      "rule": "AUC > 0.90 means leakage until proven otherwise"
-    },
-    "reading": "candidate < single_B and < random: negative"
-  },
-  "registry": {
-    "priors": 603,
-    "novelty": {
-      "n_priors": 603,
-      "informative": 588,
-      "probes": 14,
-      "errors": 1,
-      "union_px": 4348258
-    },
-    "lane_surface": {
-      "literal": {
-        "max_spearman": 0.041553093965445195,
-        "max_near": null,
-        "verdict": "PASS"
-      },
-      "policy": {
-        "max_spearman": 0.041553093965445195,
-        "max_near": null,
-        "verdict": "PASS"
-      },
-      "ok": false,
-      "duplicate": false
-    },
-    "lane_dots": {
-      "literal": {
-        "max_spearman": 0.029989873116100456,
-        "max_near": 1.0,
-        "verdict": "DUPLICATE/STOP"
-      },
-      "policy": {
-        "max_spearman": 0.029989873116100456,
-        "max_near": 0.9004666666666666,
-        "verdict": "DUPLICATE/STOP"
-      },
-      "ok": false,
-      "duplicate": true
-    },
-    "late_novelty_collisions_after_full_prior_set": 1842
-  },
-  "raster_sha256": "eefc7b1210f71872024d057cb09ec88341628bb7d70d7e71c99425c44714fc1e",
-  "validator": {
-    "ok": true,
-    "problems": [],
-    "shape": [
-      3730,
-      3292
-    ],
-    "crs": "EPSG:32611",
-    "dtype": "float32",
-    "nan": 0,
-    "vmin": 0.0,
-    "vmax": 1.0,
-    "transform_match": true
-  },
-  "submission": {
-    "name": "gems52-h65-band10-valley-15000px-20261009T050550Z",
-    "note": "H65 band-10 deq valley lines: HOLDOUT-DTI 0.00446 [0,0.00909] vs single_B 0.01890; SUBMIT NO; research-only",
-    "note_chars": 107,
-    "file": "gems52-h65-band10-valley-15000px-20261009T050550Z.tif",
-    "bytes": 82253
+    "not_authorised": [
+      "E3 holdout arm (requires premise pass)"
+    ]
   },
   "budget": {
-    "experiments_used": 3,
-    "wall_clock_started": "2026-10-09T03:44Z",
-    "note": "E1 R5-H1 gate (FAIL); E2 R5-H2a holdout (negative); E3 build+gates"
+    "limit_minutes": 120,
+    "session_start_utc_proxy": "2026-10-09T00:37Z (.venv creation)",
+    "note": "approximate; check at close"
   },
-  "verdict": "NEGATIVE (DOWNLOAD YES for research; SUBMIT NO - holdout does not beat single_B)"
+  "hypothesis": {
+    "id": "H62-A",
+    "rank": 1,
+    "title": "cross-strike, regionally detrended basement and gravity offsets as View A",
+    "protocol": "knowledge/41_hypotheses_H65_preregistered.md",
+    "protocol_sha256": "4d9d559fe6e4b42cffef206d366ccf785b1eda2146a686be98e376a1352bef71",
+    "protocol_sha256_check": "4d9d559fe6e4b42cffef206d366ccf785b1eda2146a686be98e376a1352bef71",
+    "layers": [
+      "raw_band_15",
+      "raw_band_13"
+    ],
+    "normals_deg": [
+      15,
+      315
+    ],
+    "offsets_px": [
+      3,
+      6
+    ],
+    "detrend_px": 15
+  },
+  "physical_signature": "basement step or offset across a strike-parallel trace: a cross-strike symmetric difference of the band response",
+  "premise": {
+    "label": "PREMISE-AUC (not HOLDOUT-DTI)",
+    "mean_oof_auc": 0.5202,
+    "min_fold_auc": 0.4706,
+    "gate": {
+      "mean_min": 0.6,
+      "min_fold_min": 0.55
+    },
+    "premise_passed": false,
+    "receipt": "evidence/h65_premise.json"
+  },
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "status": "NOT RUN",
+    "evaluator_version": null,
+    "withheld_positive_count": null,
+    "ci95": null,
+    "reason": "premise gate failed before the hide-and-recover arm"
+  },
+  "leakage_canary": {
+    "alarm_auc": 0.9,
+    "max_raw_single_feature_auc": 0.5904,
+    "max_fitted_top5_heldout_auc": 0.5439,
+    "any_alarm": false,
+    "receipt": "evidence/h65_canary.json"
+  },
+  "operator_audit": {
+    "label": "SYNTHETIC",
+    "receipt": "evidence/h65_operator_audit.json",
+    "h60_3_on_over_cross_d3": 1.5045449977825765e-05,
+    "finding": "H60-3 does not detect a cross-strike step (IR-H62-001)"
+  },
+  "independence_test": {
+    "status": "NOT RUN",
+    "reason": "no fit passed the premise gate"
+  },
+  "candidate_emitted": false,
+  "submission": {
+    "decision": "NONE",
+    "slots_used": 0,
+    "file": null,
+    "note": "no candidate passed the premise gate"
+  },
+  "existing_h61_file": {
+    "path": "docs/downloads/h61-candidate.tif",
+    "sha256": "7c86853164f9cfa7aea34de029c7d5ccf3a6b43dbbb2b14de570e558384d2755",
+    "download_for_research": true,
+    "submit": false,
+    "lane": {
+      "surface_phase": "PASS (max spearman 0.0342)",
+      "dots_literal": "DUPLICATE/STOP (max near-dot 1.0000)",
+      "dots_policy": "DUPLICATE/STOP (max near-dot 0.87875; 9 informative priors > 0.70)"
+    },
+    "uniqueness_receipt": "evidence/h61_uniqueness_census_20261009.json",
+    "irregularity": "IR-H62-004"
+  },
+  "leaderboard": {
+    "label": "PUBLIC BOARD (not ORGANIZER-CONFIRMED)",
+    "observed_utc": "2026-10-09",
+    "top": {
+      "team": "xiaofanhu",
+      "score": 0.3774
+    },
+    "dard_rank7": {
+      "team": "DARD",
+      "score": 0.3195
+    },
+    "extradr19_rank13": {
+      "score": 0.2778,
+      "file_link": "not linked (IR-H62-003)"
+    },
+    "source": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/"
+  },
+  "irregularities_logged": [
+    "IR-H62-001",
+    "IR-H62-002",
+    "IR-H62-003",
+    "IR-H62-004",
+    "IR-H62-005",
+    "IR-H62-006",
+    "IR-H62-007"
+  ],
+  "tests": {
+    "tests/test_h62.py": "8 passed",
+    "full_suite": "309 passed"
+  },
+  "verdict": "NEGATIVE at the premise gate. H62 not promoted. No submission. No slot used.",
+  "not_verified": [
+    "knowledge/34 section 4 items 4-6 (see 34a)",
+    "H60 outputs using b15_step_* (not re-run)",
+    "H62-B/C/D (not tested)",
+    "portal error text (not reproduced)"
+  ],
+  "protocol_file_note": "knowledge/41 keeps the H62 label in its body (byte-identical to the pre-rename freeze); renamed at path level to H65 (see knowledge/41a)."
 }
