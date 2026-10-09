@@ -124,12 +124,14 @@ implementation in `src/` or `scripts/`) and against the access test below. Ranki
   0.072032; this round's control gives `single_B` = 0.174571 (reproduces H71 to 3.6e-07) and `random` = 0.080426 (reproduces
   H64). H69 says its View-B channel set changed, which would explain the gap, but the change is not in this round's
   receipts. Cross-round holdout comparisons that use H69's `single_B` are declared differences, not reproductions.
-* **IR-H73-011 — the H69 file passes the informative-prior lane policy and fails the literal lane rule, and the
-  difference is entirely universal-coverage probes.** Audit (`evidence/h73_audit_h69_file.json`): literal max near-dot
-  share 1.0 (14 probes, each covering ≥ 95 % of the footprint, so every dot is "within 3 px" of them); informative-prior
-  policy max 0.6985 (PASS at 0.70). Also, 100 % of its dots lie inside *some* prior's support, which is the same probe
-  saturation, not evidence of a duplicate. Max Jaccard with any of 542 distinct priors is 0.0092. The brief's literal
-  rule is the user's to read. **Decision for review, not made here.**
+* **IR-H73-011 — the H69 file fails the literal lane rule, so it is not cleared for download as a submission file.**
+  Audit (`evidence/h73_audit_h69_file.json`): the literal rule returns **DUPLICATE/STOP** with max near-dot share 1.0 on
+  14 probe priors. Each of those priors covers 99.9–100 % of the eligible footprint within 3 px (`probe_coverage`), so
+  every dot is "within 3 px" of them. The informative-prior policy (528 informative priors) returns PASS at max 0.6985.
+  The run's own rule states that a policy PASS never waives a literal duplicate/STOP (`scripts/run_h73.py` docstring;
+  AGENTS.md, H73 section). The verdict is therefore **DOWNLOAD NO** (research copy only). The earlier H69 verdict
+  (DOWNLOAD YES) is superseded. Max Jaccard with the priors is 0.0092: 542 priors are byte-distinct and 378 are
+  decoded-distinct.
 
 ## 6 · Reproduce
 

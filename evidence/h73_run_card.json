@@ -85,7 +85,7 @@
     },
     "dots_lane": {
       "literal_max_near_share": 1.0,
-      "literal_verdict": "DUPLICATE/STOP (driven by universal-coverage probes, 14 of 542 distinct priors)",
+      "literal_verdict": "DUPLICATE/STOP (driven by universal-coverage probes, 14 probe priors among 378 decoded-distinct priors (542 byte-distinct))",
       "policy_max_near_share_informative": 0.6984840425531915,
       "policy_verdict": "PASS"
     },
@@ -117,7 +117,10 @@
       "note": "does not reproduce today's single_B (0.174571); flagged IR-H73-010"
     },
     "submit": "NO",
-    "download": "YES (format valid, unique by Jaccard, lane policy PASS on informative priors, literal lane rule FAIL on probes; user decision)"
+    "download": "YES (format valid, unique by Jaccard, lane policy PASS on informative priors, literal lane rule FAIL on probes; user decision)",
+    "literal_verdict": "DUPLICATE/STOP (driven by universal-coverage probes, 14 probe priors among 378 decoded-distinct priors (542 byte-distinct))",
+    "download_verdict": "NO \u2014 research copy only; literal lane DUPLICATE/STOP is not waived by the policy PASS (IR-H73-011)",
+    "submit_verdict": "NO"
   },
   "irregularities": "see knowledge/60 section 5 (IR-H73-001..010)",
   "next": "validate the top unrun hypothesis (directional variogram anisotropy) on the holdout against single_B before any lane work; add a denominator-aware quota placement as a separate preregistered placement round"

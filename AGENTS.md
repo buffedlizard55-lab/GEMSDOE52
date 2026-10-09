@@ -11,6 +11,9 @@ This session's working branch is fixed by Arena. Do not change branches. Keep ra
 <!--H67-AGENTS-->
 ## Current H73 continuation (2026-10-09)
 
+- **H69 file verdict (H73 audit):** DOWNLOAD NO, SUBMIT NO. The literal lane rule returns DUPLICATE/STOP (14 universal-coverage probes), and a policy PASS does not waive it. This file is a research copy only.
+
+
 Read `README.md`'s H73 block first, then `knowledge/61_hypotheses_H73_preregistered.md` (frozen), its dated amendment
 `knowledge/61a_h73_preregistration_amendment_quota_placement.md` (quota placement adopted BEFORE any holdout or shipped
 placement), and `knowledge/62_h73_results_and_limits.md`. H73 is **negative at the lane gate**: a surface-only emission

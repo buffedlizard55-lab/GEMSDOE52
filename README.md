@@ -1,13 +1,9 @@
 <!--H73-README-->
-# Current status — H73 (2026-10-09): NEGATIVE at the lane gate · SUBMIT NO · DOWNLOAD only with the caveats below
+# Current status — H73 (2026-10-09): NEGATIVE at the lane gate · SUBMIT NO · DOWNLOAD NO (research copy only; not lane-cleared)
 
 > **SUBMIT TO THE COMPETITION: NO.** Competition slots used this session: **0**. No H73 file was emitted.
 >
-> **DOWNLOAD (research only):** [the H69 GeoTIFF](docs/downloads/h69-candidate.tif) is the one file in this repository that
-> passes the format check, is not identical to any of 542 distinct registry priors (max Jaccard 0.0092), and passes the
-> informative-prior lane policy (max near-dot share 0.6985 < 0.70). Its holdout is **negative**: HOLDOUT-DTI 0.036473
-> [0.027471, 0.045996] against single_B 0.137947 on H69's own receipt. The literal lane rule fails only on universal-coverage
-> probes; that reading is yours to make (IR-H73-011).
+> **DOWNLOAD: NO — not as a unique submission file. Research copy only.** The H69 file in this repository ([`docs/downloads/h69-candidate.tif`](docs/downloads/h69-candidate.tif)) is format-valid (float32, {0,1}, no NaN) and not identical to any registry prior (max Jaccard 0.0092 against 542 byte-distinct priors, 378 decoded-distinct). It **fails the literal lane rule**: DUPLICATE/STOP on 14 universal-coverage probe priors (IR-H73-011). The frozen rules do not waive a literal STOP for a policy PASS, so it is not cleared. Its holdout is also negative: HOLDOUT-DTI 0.036473 [0.027471, 0.045996] against single_B 0.137947 on H69's own receipt, which uses a different withheld-positive count from this round's control (IR-H73-010).
 
 **What H73 measured (one experiment, 1 of 3 used).** The hypothesis: a surface-only ranking, emitted under the lane rule,
 keeps ≥ 90 % of the best measured holdout arm. It cannot be emitted lane-feasible on this registry.
@@ -1482,7 +1478,9 @@ build is a measured fixed point.
 > 0.9959 — zero-copy claims are point-in-time against a live registry (IR-H62-010), so the receipts
 > record their measurement context rather than chasing every concurrent publication with a rebuild.
 
-> **IS IT OK TO DOWNLOAD? YES. IS IT OK TO SUBMIT? NO.** The file is portal-safe by construction
+> **CORRECTION 2026-10-09 (H73 audit, `evidence/h73_audit_h69_file.json`): the download verdict for this file is NO.** The literal lane rule returns DUPLICATE/STOP on 14 universal-coverage probe priors, and the frozen rules do not waive a literal STOP. This file is a research copy only. The H69 holdout and single_B figures below are H69's own receipt and do not reproduce this round's control (IR-H73-010).
+>
+> **IS IT OK TO DOWNLOAD? YES. IS IT OK TO SUBMIT? NO.** (original H69 verdict, superseded by the correction above) The file is portal-safe by construction
 > (single-band float32, EPSG:32611, 3,730 × 3,292, exact sample transform, **every cell finite
 > and in {0, 1}**, zeros outside footprint — the portal error *"Predicted values must be in
 > range [0, 1]"* cannot occur on it; `gems52.grid.write_geotiff` refuses anything else), it is
