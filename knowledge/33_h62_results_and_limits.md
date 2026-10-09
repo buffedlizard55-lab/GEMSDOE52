@@ -165,3 +165,10 @@ promotion bar had already failed on clauses (a) and (b), so the verdict is uncha
 Shipped-raster HOLDOUT-DTI of the current candidate (recomputed): hide pooled **0.002247**
 [0.001112, 0.003675] (36,411 withheld positives); tip pooled 0.001663. E1/E2 numbers above are
 untouched by the merge (holdout machinery is registry-independent).
+
+Second re-measure (after the H63 round merged, PR #48): the candidate's novel fraction against the
+then-current registry (83 priors) is **0.9959** (pattern still unique) — ~155 of its pixels now lie
+inside the H63 emission's support. This is IR-H62-010's point again: zero-copy claims are
+registry-relative and decaying by construction as concurrent rounds publish; the build-time claim
+(1.0000 vs 80) stands as the measured certification of the shipped bytes, and no further rebuild is
+chased (the emission is a function of the registry; nothing was submitted).

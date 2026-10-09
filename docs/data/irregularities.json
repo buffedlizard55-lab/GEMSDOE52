@@ -1534,6 +1534,28 @@
    "disposition": "Disclosed as correction H62-4 rather than silently re-emitting. Under the measured bracket the two available gamma rules disagree: this round's own gamma = 0.6453 clamps S* to 30,000 px at every |G| in the bracket, while the champion-family gamma = 0.2284 gives S* = 7,044-14,815 px and clamps to 15,000 px. The direct board measurement - score strictly decreasing in emitted mass across the six off-catalogue scored priors (Spearman -1.000, n = 6) - breaks the tie toward the LOW end, so 15,000 px is the value the evidence favours and 22,000 px is above it. The shipped file is left at 22,000 px (the preregistered fallback, which sits between the two model answers) rather than churned a second time after the review; the budget is now the weakest link in this round and is the first item for the next session."
   },
   {
+   "id": "IR-H63-001",
+   "round": "H63",
+   "severity": "medium",
+   "status": "corrected in the results document; the preregistration file itself is frozen and hash-pinned",
+   "title": "The H63 preregistration overclaimed the persistence term's discrimination of isolated contrasts",
+   "what_it_is": "knowledge/37 section 2 (H63-A) says the along-tangent persistence 'averages |step| along the local tangent (faults are along-strike continuous; point noise, flight-line artefacts and isolated boulders are not)'. Measured on synthetic fields (tests/test_h63.py): the magnitude column fires on an isolated 5x5 blob as strongly as on a step edge (blob max 0.238 vs edge max 0.159 in the test field), and the persistence ratio of an 8 px-tall edge segment to a long edge is 0.99 vs 1.00 at the tested scales. The term is a contrast-and-continuity feature with weak discrimination at short along-strike scales, not a boulder suppressor.",
+   "how_we_know": "Direct measurement: h63.step_columns on synthetic plane+edge+blob fields; the assertions are pinned in tests/test_h63.py::test_step_columns_detect_a_synthetic_step_edge.",
+   "handling": "Recorded and corrected where it is not frozen: knowledge/38 section 4 states the weak discrimination explicitly, and the test docstring pins the honest contract (a contrast detector, not a fault detector). The preregistration document is hash-pinned by registry/h63_preregistration.json, so the correction lives in the results document rather than in a retro-edited protocol.",
+   "disposition": "Any future round citing the persistence term must cite the measured discrimination limits, not the preregistration's rhetoric."
+  },
+  {
+   "id": "IR-H63-002",
+   "round": "H63",
+   "severity": "high",
+   "status": "lane-level negative result; recorded as a deliverable",
+   "title": "Second consecutive View-A sufficiency failure: the co-training lane's A premise has now failed twice",
+   "what_it_is": "H61 measured a raw-value potential-field View A at mean out-of-fold AUC 0.5163 (in-sample 0.948); H63 measured a step-normalised potential-field View A (38 channels, no raw band values) at 0.5362 on the identical splitter. Both parameterisations are at chance out of quadrant, both far below View B (0.6843 / 0.6862) and below the 0.60 sufficiency bar. Independence held in both rounds (max |rho| 0.1331 / 0.1817), so the failure is sufficiency, not independence. The disagreement arm scored below uniform random in both rounds (H61 0.030584 vs random 0.080426; H63 0.040257 vs random 0.078257).",
+   "how_we_know": "evidence/h61_fit_checkpoint.json, evidence/h63_fit_checkpoint.json (sufficiency_screen), evidence/h61_holdout.json, evidence/h63_holdout.json (pooled scores and paired differences, 53,186 withheld positives, matched 9,400-dot budgets).",
+   "handling": "Recorded as a negative deliverable; the H63 artefact is published research-only (DOWNLOAD YES, SUBMIT NO, slots used 0). No re-tuning of either round into a positive result, and no promotion of either artefact. Round label renamed H62 -> H63 after a parallel session's H62 merged to main first (PR #46); the measured numbers are unchanged.",
+   "disposition": "Do not propose a third View-A parameterisation without new evidence (new data, a different splitter test, or an organiser-authenticated calibration). The lane's own falsification condition has fired twice; the next in-lane candidates are the B-only direction (H63-B) and the credit-localisation analysis (H63-E), both preregistered in knowledge/37 section 2."
+  },
+  {
    "id": "IR-H62-006",
    "title": "Stale evidence checkpoints survive a wiped work cache (shared template bug, fixed)",
    "status": "fixed in scripts/run_h60d_cotrain.py done()",
@@ -1615,5 +1637,5 @@
    "disposition": "The H62-buriedcorr candidate is the re-measured 37,626 px file (sha 6b494e7d..., novel_fraction 1.0 vs 80 priors). The 37,627 px freeze is kept with a dated sidecar (submission/gems52-h62-buriedcorr-37627px.json) that marks it superseded and records the 0.9924 re-measure; it is not the current candidate. The proximity gate outcome is reported as DRIFT-flagged under the literal preregistered rule with the registry-saturation explanation, not laundered: the artifact's verdict remains NEGATIVE/not-slot-approved regardless. Build scripts now emit dated sidecars so scripts/check_site.py classifies these rasters as later-round (the R5/H61 convention), which keeps earlier rounds' novelty receipts from being silently invalidated. No leaderboard claim changes: no organizer-confirmed score exists for any file."
   }
  ],
- "merge_note": "R5/H61/H62 sessions of 2026-10-08/09: entries from the CTD5/H60/H60C/H60D rounds on main, IR-R5-001..009, IR-H61-001..009/011, the parallel H62 concordance-corroboration round (IR-H62-001..005), and this H62 buriedcorr round (IR-H62-006..010, renumbered from 001..004 at merge time because the parallel round's IDs landed first) are unioned by id; no entry was dropped or edited."
+ "merge_note": "R5/H61/H62/H63 sessions of 2026-10-08/09: entries from the CTD5/H60/H60C/H60D rounds on main, IR-R5-001..009, IR-H61-001..009/011, the H62 concordance-corroboration round (IR-H62-001..005), the H63 step-normalised round (IR-H63-001..002), and the H62 buriedcorr round (IR-H62-006..010, renumbered from 001..004 at merge time because the concordance round's IDs landed first) are unioned by id; no entry was dropped or edited."
 }
