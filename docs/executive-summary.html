@@ -4,7 +4,39 @@
 <title>Executive summary — how to submit, and whether this file may be submitted · GEMSDOE52</title><link rel="stylesheet" href="assets/ctd5.css"><script src="assets/h63.js" defer></script></head>
 <body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>
 <a href="index.html">Overview</a><a href="h63-audit.html">Run &amp; evidence</a><a href="executive-summary.html">Submission guide</a><a href="h63-sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header>
-<main id="main"><div class="notice" role="note" style="margin:0 0 1rem"><strong>Latest research round: H64 (negative).</strong> Download yes, for research only; submit no. Unique research GeoTIFF on decoded pixels, lane DUPLICATE under the 70% rule. <a href="h64.html">H64 landing</a> · <a href="h64-executive-summary.html">H64 submission guide</a></div><div class="eyebrow">Executive summary / submission guide</div>
+<main id="main"><div class="notice" role="note" style="margin:0 0 1rem"><strong>Latest research round: H65halo (negative, no file).</strong> Do not upload anything from this round. The H64 file is downloadable for research only and is DUPLICATE under the lane rule. <a href="h65halo.html">H65halo landing</a> · <a href="h64.html">H64 landing</a> · <a href="executive-summary.html">Submission guide</a></div><div class="eyebrow">Executive summary / submission guide</div>
+<!--H65-STATUS-->
+<section class="status-2026-10-09" aria-label="Current submission answer">
+<h2>Current answer · 2026-10-09 (after H65)</h2>
+<div class="notice" role="note"><strong>DO NOT UPLOAD anything from this round.</strong>
+<p>No candidate passes the repo's gates. H65 is negative and built no file. The H64 file is downloadable for research and is <b>not</b> a submission candidate: its lane check is DUPLICATE under the 70% rule.</p></div>
+<div class="grid2"><section class="panel"><h3>Downloadable research file (not approved)</h3>
+<p class="fileline">gems52-h64-sufgate-cotrain-37600px-20261009T022631Z.tif<br>133,668 bytes · SHA-256 739a8e7c4b54436508fc2b9da6b8ddc56e44a0d1ad273dc88c07a2003637f8bb · 37,600 emitted cells</p>
+<div class="actions"><a class="button secondary" href="downloads/h64-candidate.tif" download>Download H64 GeoTIFF (research)</a> <a class="button secondary" href="downloads/h64-candidate.zip" download>Single-TIFF ZIP</a></div>
+<p class="small">Format-valid, exact-unique on decoded pixels, and DUPLICATE under the lane rule. Do not submit.</p></section>
+<section class="panel"><h3>Before any upload, all of these must be true</h3><ul>
+<li>Format: single-band float32 GeoTIFF (or a ZIP of exactly one GeoTIFF), EPSG:32611, 100 m, the training-data bounds, NaN or null outside the bounds, values in [0, 1] (page 967).</li>
+<li>Lane gate passes on the surface and on the final dots (no registry raster with rank correlation above 0.90, and not more than 70% of dots within 3 px of one registry raster's dots).</li>
+<li>Not the union of the two views; exact-unique against every prior submission in the registry.</li>
+<li>The holdout beats the single-view control with a CI lower bound above zero, and a separate selector approves the slot.</li>
+</ul></section></div>
+<h3>Exact steps when a candidate has passed every gate above</h3>
+<ol>
+<li>Read the <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">official rules (NLR, Sept 2026)</a>. They allow three submissions per week and require a narrative disclosure of generative-AI use (Appendix A).</li>
+<li>Check the remaining weekly allowance on your authenticated submission page. This site cannot read it.</li>
+<li>Open the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">competition page</a> and submit the <code>.tif</code>, or its single-TIFF ZIP. Never upload HTML, JSON or a screenshot.</li>
+<li>Paste the unique name and note verbatim (the note must be at most 140 characters). Do not reproject, rescale or re-save the TIFF.</li>
+<li>Keep the submission id, timestamp, SHA-256 and the organiser's result. Only that receipt supports an ORGANIZER-CONFIRMED score.</li>
+</ol>
+<h3>Premise corrections (verified 2026-10-09)</h3>
+<ul>
+<li>The public board's top score is <b>0.3774</b> (xiaofanhu). 0.3195 is DARD at rank 7, not the top. <a href="data/leaderboard_snapshot_2026-10-09.json">Leaderboard receipt</a>.</li>
+<li>0.2778 is <b>owner-reported</b> for GEMSDOE32's <code>h33-2-b2</code>, not organiser-confirmed. The public board also shows 0.2778 for <code>extradr19</code> (rank 15 in the fetch). The board does not identify files, so it does not confirm either attribution.</li>
+<li>Masking is confirmed by staff: known USGS/INGENIOUS pixels are masked, and the buffer does not apply to known faults (forum topic 11516, posts of 16 and 21 Sep). Staff also say new-fault pixels can lie within 300 m of known traces.</li>
+</ul>
+<p class="small">Round page: <a href="h65halo.html">H65halo (negative, no file)</a> · sources: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">page 967 (metric and format)</a> · <a href="https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516">forum topic 11516 (masking)</a> · <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">leaderboard</a></p>
+</section>
+<!--/H65-STATUS-->
 <h1>Download in one click.<br>Do not upload this run.</h1>
 <p class="lead">The file, its exact identifier, and the frozen verdict. Promotion to a weekly slot is a separate selector decision, never a property of a valid file.</p>
 <div class="notice" role="note"><strong>OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT</strong><p>Do not upload this file to the competition portal. Verdict: <b>negative</b>. Format gate PASS; decoded-pattern uniqueness PASS; lane gate (policy) DUPLICATE/STOP; projected DTI above the champion at both ends of |G|: NO. Slots used: 0. NO CERTIFIED LEADERBOARD GAIN.</p></div>
