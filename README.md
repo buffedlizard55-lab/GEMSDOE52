@@ -1,5 +1,5 @@
 <!--H65B-README-->
-# GEMSDOE52 — H65: a new unique GeoTIFF (first band-10 detector), and the explicit submit verdict
+# GEMSDOE52 — H65b: the first band-10 detector, a new unique GeoTIFF, and the explicit submit verdict
 
 **[★ Download the H65b GeoTIFF — one click](docs/downloads/h65b-candidate.tif)** ·
 [single-TIFF ZIP](docs/downloads/h65b-candidate.zip) ·
