@@ -1,0 +1,25 @@
+{
+  "file": "gems52-h62-buriedcorr-37627px.tif",
+  "sha256": "1f25c4fbeaf1aaf945b789bdb480971178bd0247c02da53617d20ee3d24dd8d2",
+  "bytes": 107698,
+  "generated_utc": "2026-10-09T00:55:00Z",
+  "submission_name": "gems52-h62-buriedcorr-37627px-1f25c4fb-zeros",
+  "note": "H62 buried corridors: cover/edge/persistence gates on A-only disagreement; finite binary [0,1]; off-prior; hypotheses, not verified faults",
+  "note_chars": 138,
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "status": "research-only; local format validation is not organizer acceptance",
+  "metadata": {
+    "round": "H62-buriedcorr",
+    "field": "cover/edge/persistence-gated A-only disagreement",
+    "emitted_px": 37627,
+    "positive_field_crests": 1707,
+    "zero_field_fill": 35920,
+    "ring_min_m": 223.6,
+    "priors_checked_at_build": 71,
+    "novel_fraction_at_build": 1.0,
+    "role": "PRE-MERGE FREEZE, superseded: re-measured against the merged registry its novel fraction is 0.9924 (pattern still unique); kept for provenance, not the current candidate",
+    "superseded_by": "gems52-h62-buriedcorr-37626px.tif"
+  }
+}

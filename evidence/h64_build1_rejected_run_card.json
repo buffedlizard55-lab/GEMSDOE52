@@ -1,0 +1,229 @@
+{
+ "round": "H64",
+ "generated_utc": "2026-10-09T01:24:18+00:00",
+ "hypothesis": "Sufficiency-gated co-training: a lower-capacity View A that generalises out of quadrant makes the exchange licensed; then disagreement ranks buried-cover candidates.",
+ "mechanism": "Blum-Mitchell needs sufficient views. View A capacity is the single change (knowledge/39 \u00a74).",
+ "named_non_fault_mimic": "basin-margin or basement-high gravity/magnetic gradient, lithologic contact, volcanic or basin-fill density boundary, upward-continued flight-line artefact",
+ "sufficiency_S1": {
+  "mean_view_A_oof_auc": 0.5230469927534889,
+  "min_fold": 0.46810702700719214,
+  "S1_pass": false
+ },
+ "exchange": {
+  "skipped": true,
+  "total_pseudo_pixels": 0
+ },
+ "holdout_dti": {
+  "evidence_class": "HOLDOUT-DTI",
+  "evaluator_version": "gems52-pooled-hide-v1",
+  "alpha": 0.2,
+  "beta": 0.8,
+  "triangular_radius_m": 300.0,
+  "pooled": true,
+  "scores": {
+   "single_A": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.06510092317545893,
+    "ci95": [
+     0.04864341103047507,
+     0.08165936851602962
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 3280.6223380153733,
+    "fpw": 35939.7260916907,
+    "fnw": 49905.37766198465
+   },
+   "single_B": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.1745172875994316,
+    "ci95": [
+     0.15231581471183422,
+     0.19629866582738847
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 8902.354204271809,
+    "fpw": 33410.159873156495,
+    "fnw": 44283.645795728204
+   },
+   "union_max": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.14965945709931078,
+    "ci95": [
+     0.1286753965705682,
+     0.17104811552506338
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 7613.565921995252,
+    "fpw": 34005.44158721456,
+    "fnw": 45572.43407800476
+   },
+   "disagreement_pre": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.03123315247442798,
+    "ci95": [
+     0.021219145932465305,
+     0.04330904506718273
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 1569.0290837038012,
+    "fpw": 36867.04071367532,
+    "fnw": 51616.97091629621
+   },
+   "disagreement_post": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.03123315247442798,
+    "ci95": [
+     0.021219145932465305,
+     0.04330904506718273
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 1569.0290837038012,
+    "fpw": 36867.04071367532,
+    "fnw": 51616.97091629621
+   },
+   "random": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.08042564781050282,
+    "ci95": [
+     0.0702226099128376,
+     0.09097325665223467
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 4067.2229486710503,
+    "fpw": 36044.86583622452,
+    "fnw": 49118.777051328965
+   }
+  },
+  "best_comparable_control": "single_B",
+  "paired_differences": {
+   "single_A": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "delta": -0.03386777070103095,
+    "ci95": [
+     -0.04462080751741186,
+     -0.022982442127492907
+    ],
+    "withheld_positive_pixels": 53186
+   },
+   "single_B": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "delta": -0.14328413512500363,
+    "ci95": [
+     -0.16556391819773872,
+     -0.12145711933733887
+    ],
+    "withheld_positive_pixels": 53186
+   },
+   "union_max": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "delta": -0.1184263046248828,
+    "ci95": [
+     -0.1375950682779028,
+     -0.10026142130438517
+    ],
+    "withheld_positive_pixels": 53186
+   },
+   "disagreement_pre": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "delta": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "withheld_positive_pixels": 53186
+   },
+   "random": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "delta": -0.04919249533607484,
+    "ci95": [
+     -0.059196850527664546,
+     -0.03880646028347366
+    ],
+    "withheld_positive_pixels": 53186
+   }
+  },
+  "bootstrap": {
+   "method": "paired physical spatial-cluster percentile",
+   "clusters": 153,
+   "draws": 1000,
+   "seed": 61052,
+   "confidence": 0.95,
+   "caveat": "Conditional on fitted folds, catalogue labels and fixed budgets; not a leaderboard interval."
+  },
+  "implementation_sha256": {
+   "evaluate_holdout.py": "ffb084fdf34bb30438485b89caeb1228a6680abfd9f9f0472f4355845da05cc6",
+   "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+   "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+   "spatial.py": "fad7b09db9efc512247b9a176a7e7ce8631e287592b4e07902d0b9c38bed00f8"
+  }
+ },
+ "correlation_overlap_vs_registry": {
+  "lane_dots_literal": "DUPLICATE/STOP",
+  "lane_dots_policy": "DUPLICATE/STOP",
+  "lane_surface_literal": "PASS",
+  "lane_surface_policy": "PASS",
+  "uniqueness_canonical_pattern_unique": true,
+  "novel_fraction": 0.0,
+  "equals_literal_prior_union": false
+ },
+ "not_the_union": {
+  "dots_shared_with_union_max": 887,
+  "jaccard_with_union_max": 0.011936000430611065,
+  "spearman_field_vs_unionmax": 0.014797805540114312,
+  "strict_a_only_candidate_px": 56159,
+  "emitted_cells_that_are_strict_a_only": 296,
+  "verdict": "emission is not max(A,B), not either single view, and not their union",
+  "not_union_pass": true
+ },
+ "raster": {
+  "file": "gems52-h64-sufgate-cotrain-37600px-20261009T011359Z.tif",
+  "sha256": "4aff8657389b60c4f2de09f8d2bec076e08b8e7e865460b3273862b841e1e28c",
+  "bytes": 130023,
+  "zip_sha256": "48ec78af625d8d27b383f602a0dcdd46cf46fde48eb4c3b6a659cd1316d8d73b"
+ },
+ "validator": {
+  "ok": true,
+  "problems": [],
+  "nan_inside_footprint": null,
+  "value_range": [
+   0.0,
+   1.0
+  ],
+  "crs": "EPSG:32611",
+  "shape": null,
+  "transform": [
+   100.0,
+   0.0,
+   243350.0,
+   0.0,
+   -100.0,
+   4508550.0
+  ]
+ },
+ "submission_name": "gems52-h64-sufgate-cotrain-37600px-20261009T011359Z",
+ "note": "H64 S1 fail: co-train, A capacity cut, 3px dots, >200m off catalogue; research only, not slot-approved",
+ "note_chars": 102,
+ "counts": {
+  "budget": 37600,
+  "placed": 37600,
+  "prior_rasters": 548
+ },
+ "champion_reference": {
+  "name": "ref_h33_2_b2",
+  "reported_score": 0.2778,
+  "evidence_class": "OWNER-REPORTED, NOT ORGANIZER-CONFIRMED"
+ },
+ "submission_slots_used": 0,
+ "verdict": "NEGATIVE, research-only (DOWNLOAD YES if format-valid and unique; SUBMIT NO). gates: format=True lane=False unique=True not_union=True S1=False holdout_beats_single_B=False"
+}
