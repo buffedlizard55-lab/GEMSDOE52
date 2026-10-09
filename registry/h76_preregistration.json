@@ -1,0 +1,15 @@
+{
+ "round": "H76",
+ "hypothesis_document": "knowledge/68_h76_preregistered.md",
+ "hypothesis_sha256": "a32ad616e76090a3ebb54a23ef0007f023d9561304afc9d450bd0e26392754dc",
+ "frozen_utc": "2026-10-09",
+ "candidate": "H76-1 DVA on band 18 iso_grav_anom_hg added to View B (H75 DVA channels kept)",
+ "reused_arms": [
+  "single_B",
+  "B_DVA"
+ ],
+ "new_arms": [
+  "B_DVA18"
+ ],
+ "promote_rule": "paired CI lower bound (B_DVA18-B_DVA) > 0 and canary max < 0.90"
+}

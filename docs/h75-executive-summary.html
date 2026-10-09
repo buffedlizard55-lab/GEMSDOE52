@@ -8,6 +8,7 @@ table{border-collapse:collapse;width:100%}td,th{border:1px solid #d1d5db;padding
 <div class="card"><h2>Download</h2>
 <a class="btn" href="downloads/h75-candidate.tif">⬇ h75-candidate.tif (143 KB)</a> <a class="btn" href="downloads/h75-candidate.zip">⬇ ZIP</a>
 <p><b>Is it OK to download?</b> YES — validated from disk: 1 band float32, EPSG:32611, 3730×3292, transform matches sample_submission, 0 NaN, values exactly {0,1} (fixes the "Predicted values must be in range [0, 1]" error).</p>
+<div class="warn"><b>H76 correction (2026-10-09):</b> the support-novelty gate FAILS (novel fraction 0.0; every dot lies inside the union of the 566 priors), and the lane gate fails on both readings (literal 1.000; policy 0.922). The corrected paired holdout gain is +0.011781 [0.006700, 0.017313]. See <a href="h76.html">H76 status</a>.</div>
 <p><b>Is it OK to submit?</b> HOLDOUT says YES (first arm to beat single_B: +0.0118, 95% CI [0.0068, 0.0174]). The protocol's lane rule says NO (0.922 of dots within 3 px of one dense registry raster &gt; 0.70). <b>Status: research-only; submitting requires an explicit owner override of the lane rule.</b> If you override it, this is the best-holdout file in the repo; prefer it over H72-v3 (holdout 0.031, below random).</p></div>
 <h2>How to submit (exact steps)</h2><ol>
 <li>Open <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">the submissions page</a> (login required) → <i>Submit file</i>.</li>
