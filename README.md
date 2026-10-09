@@ -1,3 +1,60 @@
+<!--H65B-README-->
+# GEMSDOE52 — H65b: the first band-10 detector, a new unique GeoTIFF, and the explicit submit verdict
+
+**[★ Download the H65b GeoTIFF — one click](docs/downloads/h65b-candidate.tif)** ·
+[single-TIFF ZIP](docs/downloads/h65b-candidate.zip) ·
+[per-dot reasoning CSV](docs/downloads/h65b-reasoning.csv) ·
+**[Executive summary / exact submission steps](docs/executive-summary.html)** ·
+[H65b round page](docs/h65b.html) · [Run card](evidence/h65b_run_card.json) ·
+[Results and limits](knowledge/46_h65b_results_and_limits.md) ·
+[Preregistration](knowledge/45_h65b_preregistered.md)
+
+> **DOWNLOAD: YES, for research (format-valid; 0 identical decoded priors of 603 checked).**
+> **SUBMIT TO THE COMPETITION: NO — do not upload.** Verdict `NEGATIVE`. The E2 holdout arm does
+> not beat single_B (0.00446 [0.00000, 0.00909] vs 0.01890 [0.01211, 0.02703], paired Δ −0.01444
+> [−0.02491, −0.00620]; 36,439 withheld positives), and the dots-phase lane near-dot rule reads
+> DUPLICATE/STOP on this saturated registry (largest informative prior covers 99.2% of the
+> footprint with its 3 px halo). **Competition slots used: 0. NO CERTIFIED LEADERBOARD GAIN.**
+
+- **File:** `gems52-h65b-band10-valley-15000px-20261009T055809Z.tif` — 82,253 bytes, 15,000 emitted cells
+- **SHA-256:** `eefc7b1210f71872024d057cb09ec88341628bb7d70d7e71c99425c44714fc1e`
+- **Name (49 characters):** `gems52-h65b-band10-valley-15000px-20261009T055809Z`
+- **Note (108 characters):** `H65b band-10 deq valley lines: HOLDOUT-DTI 0.00446 [0,0.00909] vs single_B 0.01890; SUBMIT NO; research-only`
+- **Local validator:** one float32 band; values exactly {0, 1}; 0 NaN; EPSG:32611; shape 3,730 × 3,292 and
+  transform identical to `data/sample_submission.tif` (`evidence/h65b_format.json`). Local validation only,
+  not an organiser acceptance receipt.
+
+A parallel session published a different round under the H65 label (knowledge/41/42 on main;
+IR-H65-001..007), so this round is republished **H65b** per the H63 rename precedent — preregistration
+moved to knowledge/45, E1/E2 re-run under the new label with **bit-identical numbers**, artefact rebuilt
+under `gems52-h65b-` with a byte-identical TIF.
+
+## What this round tested, in the frozen order (rename: H65 → H65b, protocol unchanged)
+
+1. **E1 — R5-H1 trace-correction corridor (rank 1): gate FAIL.** The spatially-blocked §A-gate
+   (20 km whole-block trace folds, seed 20261009) passed G1 (1,584 traces), G2 (median |ô| 1.000 px)
+   and G4 (frac-0 0.356) but **failed G3: margin 0.000 px vs the 0.300 px requirement** — the LiDAR
+   one-sided scarp step + strike agreement + det-elev crest estimator is exactly as good as a constant
+   global shift, so it localises nothing. The corridor stays excluded, now on gate evidence rather
+   than an inherited rule. Receipt: `evidence/h65b_gate.json`.
+2. **E2 — R5-H2a band-10 valley lines (rank 2): HOLDOUT-DTI negative.** Band 10 `deq_n100a15` had
+   never been read by any script in this repository; the convention-free detector (exact-rank
+   inversion, σ-1 smoothing, gradient NMS, p90 ridge threshold) is below single_B **and below random**
+   on the shared hide-and-recover holdout; leakage canary clean (max AUC 0.495). Receipt:
+   `evidence/h65b_e2_holdout.json` (void first run kept as `..._invalid_run1.json`: the template's
+   equal-width `rank01` collapses 66.6% of the footprint into its first bin on band 10's 4.96e6 m
+   tail — measured; the shared tool was deliberately left untouched and the round used an exact
+   tie-aware rank, recorded as amendment 2 in the prereg).
+3. **E3 — the artefact above + all gates.** Uniqueness: 0 identical decoded priors (603 checked;
+   plain novel-fraction 0.0 because 14 universal-coverage probes cover ≥95% of the footprint —
+   the H64 frozen novelty rule excludes them; per-prior rows retained). Lane surface PASS;
+   lane dots DUPLICATE/STOP (saturation; logged, stopped, no re-tuning, IR-H65B-001).
+
+The five ranked candidate hypotheses of this session, with layers, signatures, and why each could
+catch a catalogue-missing fault: `knowledge/45_h65b_preregistered.md`. Rank 3 (basement-depth
+step gated by conductivity), rank 4 (spring alignments) and rank 5 (upward-continued HGM) were not run:
+the three-experiment budget closed after E1/E2/E3, and the queue is recorded for the next session.
+
 <!--H67-README-->
 # Current status — H67 (2026-10-09): a unique GeoTIFF was built, and the verdict is DO NOT SUBMIT
 
