@@ -1,0 +1,123 @@
+{
+  "round": "H65",
+  "generated_utc": "2026-10-09T05:29:51Z",
+  "hypothesis": "R5-H2a: fault traces are valley lines of the band-10 distance-to-earthquake field deq_n100a15 (never previously read in this repo); R5-H1 trace-correction corridor was gate-refuted first (E1 FAIL, G3 margin 0.000 px)",
+  "mechanism": "v = 1 - exact rank(band 10); sigma-1 smoothing; non-maximum suppression along the gradient; 90th-percentile ridge threshold; top-15,000 cells, >=3 px apart, off-catalogue, tier-2 novel vs 526-raster registry",
+  "named_mimic": "seismicity aligned by a non-fault process ( swarm triggered by geothermal or mining activity; range-front event clustering on a fold), and the band's own 15-deg sector convention, which is undocumented",
+  "e1_r5h1_gate": {
+    "verdict": "FAIL",
+    "conditions": {
+      "G1_traces": true,
+      "G2_median_abs_offset_px": true,
+      "G3_beats_constant_control_px": false,
+      "G4_argmax_zero_fraction": true
+    }
+  },
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI, evaluator gems52-pooled-hide-v1 (this run's config: 4 hide folds, buffer 4, prevalence 0.002, seed 0; 36439 withheld positives)",
+    "candidate": [
+      0.0044559375635245925,
+      0.0,
+      0.009093901638765644
+    ],
+    "singleB": [
+      0.01890009395957329,
+      0.012107117499640142,
+      0.027034885317358332
+    ],
+    "random": [
+      0.025773347611525277,
+      0.023249567556731916,
+      0.028174660367557346
+    ],
+    "paired_candidate_minus_singleB": {
+      "evidence_class": "HOLDOUT-DTI",
+      "evaluator_version": "gems52-pooled-hide-v1",
+      "delta": -0.014444156396048697,
+      "ci95": [
+        -0.024908873094383863,
+        -0.006198956096802302
+      ],
+      "withheld_positive_pixels": 36439
+    },
+    "leakage_canary": {
+      "per_fold_auc": [
+        0.49483,
+        0.48689,
+        0.49538,
+        0.48678
+      ],
+      "max_auc": 0.49538,
+      "alarm_090": false,
+      "rule": "AUC > 0.90 means leakage until proven otherwise"
+    },
+    "reading": "candidate < single_B and < random: negative"
+  },
+  "registry": {
+    "priors": 603,
+    "novelty": {
+      "n_priors": 603,
+      "informative": 588,
+      "probes": 14,
+      "errors": 1,
+      "union_px": 4348258
+    },
+    "lane_surface": {
+      "literal": {
+        "max_spearman": 0.041553093965445195,
+        "max_near": null,
+        "verdict": "PASS"
+      },
+      "policy": {
+        "max_spearman": 0.041553093965445195,
+        "max_near": null,
+        "verdict": "PASS"
+      },
+      "ok": false,
+      "duplicate": false
+    },
+    "lane_dots": {
+      "literal": {
+        "max_spearman": 0.029989873116100456,
+        "max_near": 1.0,
+        "verdict": "DUPLICATE/STOP"
+      },
+      "policy": {
+        "max_spearman": 0.029989873116100456,
+        "max_near": 0.9004666666666666,
+        "verdict": "DUPLICATE/STOP"
+      },
+      "ok": false,
+      "duplicate": true
+    },
+    "late_novelty_collisions_after_full_prior_set": 1842
+  },
+  "raster_sha256": "eefc7b1210f71872024d057cb09ec88341628bb7d70d7e71c99425c44714fc1e",
+  "validator": {
+    "ok": true,
+    "problems": [],
+    "shape": [
+      3730,
+      3292
+    ],
+    "crs": "EPSG:32611",
+    "dtype": "float32",
+    "nan": 0,
+    "vmin": 0.0,
+    "vmax": 1.0,
+    "transform_match": true
+  },
+  "submission": {
+    "name": "gems52-h65-band10-valley-15000px-20261009T050550Z",
+    "note": "H65 band-10 deq valley lines: HOLDOUT-DTI 0.00446 [0,0.00909] vs single_B 0.01890; SUBMIT NO; research-only",
+    "note_chars": 107,
+    "file": "gems52-h65-band10-valley-15000px-20261009T050550Z.tif",
+    "bytes": 82253
+  },
+  "budget": {
+    "experiments_used": 3,
+    "wall_clock_started": "2026-10-09T03:44Z",
+    "note": "E1 R5-H1 gate (FAIL); E2 R5-H2a holdout (negative); E3 build+gates"
+  },
+  "verdict": "NEGATIVE (DOWNLOAD YES for research; SUBMIT NO - holdout does not beat single_B)"
+}
