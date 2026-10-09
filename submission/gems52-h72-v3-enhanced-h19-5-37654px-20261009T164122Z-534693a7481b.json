@@ -1,0 +1,16 @@
+{
+  "hypothesis": "H72-v3: enhance h19-5 proven ranking with multi-scale DEM edges and LiDAR scarp",
+  "mechanism": "h19-5 base ranker (proven 0.1922) + multi-scale structural edges + LiDAR scarp",
+  "named_mimic": "Drainage patterns, alluvial fans, lithological contacts",
+  "budget": 37654,
+  "n_emitted": 37654,
+  "sha256": "8149c9343e5438553385e5d4ce8aca43682ad1f833df0ea033f4e5bd019c037f",
+  "bytes": 137899,
+  "format_ok": true,
+  "holdout_dti": 0.03051082985126809,
+  "single_B_dti": 0.011393605418998958,
+  "max_rank_corr": 0.20100323876551832,
+  "submission_name": "h72-v3-enhanced-h19-5-37654px-20261009T164122Z-534693a7481b",
+  "note": "H72-v3: h19-5 rank enhanced with multi-scale DEM edges + LiDAR scarp; 37654px budget; 200m ring masked; binary {0,1}",
+  "verdict": "PENDING"
+}

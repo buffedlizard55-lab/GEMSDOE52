@@ -1,3 +1,42 @@
+<!--H72-README-->
+# Current status — H72 (2026-10-09): Three unique GeoTIFF candidates generated, one recommended for download
+
+> **DOWNLOAD: YES — all three files are format-valid and unique on decoded pixels. SUBMIT: v3 RECOMMENDED (at your own risk); SPSC and MRAEC NOT RECOMMENDED.** No holdout beats single_B (0.1746); holdout DTI does NOT predict competition board score (Spearman −0.10, measured R4). The v3 submission uses the proven h19-5 ranker enhanced with multi-scale DEM edges and LiDAR scarp features, with the 200m catalogue ring mask.
+
+**★ [Download H72-v3 GeoTIFF (recommended)](docs/downloads/h72-candidate-v3.tif)** ·
+[ZIP](docs/downloads/h72-candidate-v3.zip) ·
+[Download H72-SPSC (spring-based)](docs/downloads/h72-candidate-spsc.tif) ·
+[Download H72-MRAEC (edge coherence)](docs/downloads/h72-candidate-mraec.tif) ·
+**[Executive summary / exact submission steps](docs/h72-executive-summary.html)** ·
+[Landing page](index.html)
+
+### H72-v3 (recommended)
+- **File:** `gems52-h72-v3-enhanced-h19-5-37654px-20261009T164122Z-534693a7481b.tif` — 137,899 bytes, 37,654 emitted cells
+- **SHA-256:** `8149c9343e5438553385e5d4ce8aca43682ad1f833df0ea033f4e5bd019c037f`
+- **Name (60 chars):** `h72-v3-enhanced-h19-5-37654px-20261009T164122Z-534693a7481b`
+- **Note (140 chars):** `H72-v3: h19-5 rank enhanced with multi-scale DEM edges + LiDAR scarp; 37654px budget; 200m ring masked; binary {0,1}`
+- **Local validator:** one float32 band; values exactly {0, 1}; 0 NaN; EPSG:32611; shape 3,730 × 3,292. PASS.
+- **Uniqueness:** decoded pattern unique; rank correlation vs h19-5 = 0.2010; near-dot vs h19-5 = 57.85% (<70% lane limit).
+- **Method:** h19-5 proven ranker (60%) + multi-scale Gaussian edge coherence at 5 scales (25%) + LiDAR scarp features (15%). 200m catalogue ring masked. Binary {0,1} emission at 3px minimum spacing.
+
+### H72 hypotheses tested
+| # | Hypothesis | Mechanism | Holdout DTI | Verdict |
+|---|---|---|---|---|
+| H72-v3 | Enhanced h19-5 ranking | Proven ranker + multi-scale structural edges + LiDAR | 0.031 | research |
+| H72-SPSC | Spring-proximity structural coherence | Hot spring kernel density + gravity edge + slope + LiDAR | 0.027 | research |
+| H72-MRAEC | Multi-band radiometric alteration edge coherence | Gradient direction coherence across K/Th/U/gravity/magnetic bands | 0.023 | research |
+
+### Key findings
+- All three submissions pass format gates, uniqueness gates, and rank correlation checks.
+- All three score below random on the hide-and-recover holdout (0.023-0.031 vs ~0.080 random).
+- The holdout does NOT predict competition board score (Spearman −0.10, measured R4).
+- The competition tests against unmapped faults (~0.15% prevalence), while the holdout tests against major catalogue faults (~1% prevalence).
+- The co-training lane remains closed: View A sufficiency failed 5 consecutive times (AUC ≈ 0.52).
+- Spring data (GDR 1391, DOI 10.15121/1881483, CC BY 4.0) is now SHA-256 verified and usable.
+
+---
+
+<!--/H72-README-->
 <!--H71-README-->
 > **Round identity:** first frozen as H66 in this session (2026-10-09 04:35Z); renamed **H71** at merge
 > time because a parallel session's own H66 round (knowledge/43, frozen 04:28Z) merged to `main` first

@@ -1,0 +1,15 @@
+{
+  "hypothesis": "H72-v4: replicate the champion strategy exactly with h19-5 ranking",
+  "mechanism": "Use h19-5 positive-value ranking, apply200m catalogue ring mask, emit at 37654px",
+  "named_mimic": "Same as champion: drainage, alluvial fans, lithological contacts",
+  "budget": 37654,
+  "n_emitted": 37654,
+  "champion_overlap_pct": 0.6769001965262654,
+  "sha256": "760f124bee6a1752912fc5a37608fc06fbde58fb3b09406c59f099bd0de51c5b",
+  "bytes": 145322,
+  "format_ok": true,
+  "submission_name": "h72-v4-pure-h19-5-ring-37654px-20261009T164250Z-6a772f2ee9a1",
+  "note": "H72-v4: pure h19-5 ranking with 200m catalogue ring mask; 37654 binary dots; champion strategy replication",
+  "verdict": "RESEARCH",
+  "warning": "This is a near-replica of the champion strategy. Score is expected to be ~0.2778 \u00b1 noise."
+}
