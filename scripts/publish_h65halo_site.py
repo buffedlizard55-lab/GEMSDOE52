@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """Render the H65 run card, the H65 round page, the leaderboard receipt and the status notices.
 
-Every number written here is read from ``evidence/h65_*.json``, ``evidence/h64_run_card.json`` or
-``registry/h65_preregistration.json``.  The leaderboard rows are the only typed-in values: they are
+Every number written here is read from ``evidence/h65halo_*.json``, ``evidence/h64_run_card.json`` or
+``registry/h65halo_preregistration.json``.  The leaderboard rows are the only typed-in values: they are
 transcribed from the DrivenData leaderboard page fetched during this session, and the page is cited.
 Nothing here uploads, promotes or changes a verdict.
 
-Run after ``scripts/run_h65.py holdout`` and ``scripts/run_h65.py verdict``:
-    .venv/bin/python scripts/publish_h65_site.py
+Run after ``scripts/run_h65halo.py holdout`` and ``scripts/run_h65halo.py verdict``:
+    .venv/bin/python scripts/publish_h65halo_site.py
 """
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ DATA = DOCS / "data"
 STAMP = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 NOTE = "H65 halo soft targets: NEGATIVE, no raster built; holdout below single_B; do not submit"
-NAME = "gems52-h65-halo-cotrain-NOT-BUILT"
+NAME = "gems52-h65halo-cotrain-NOT-BUILT"
 assert len(NOTE) <= 140, len(NOTE)
 
 LEADERBOARD_URL = "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/"
@@ -53,12 +53,12 @@ def ci(c) -> str:
 
 
 def build_run_card():
-    hold = load("h65_holdout.json")
-    ctl = load("h65_control_and_verdict.json")
-    suff = load("h65_sufficiency.json")
-    canary = load("h65_canary.json")
-    exch = load("h65_pseudo_exchange.json")
-    reg = json.loads((ROOT / "registry/h65_preregistration.json").read_text())
+    hold = load("h65halo_holdout.json")
+    ctl = load("h65halo_control_and_verdict.json")
+    suff = load("h65halo_sufficiency.json")
+    canary = load("h65halo_canary.json")
+    exch = load("h65halo_pseudo_exchange.json")
+    reg = json.loads((ROOT / "registry/h65halo_preregistration.json").read_text())
     h64 = load("h64_run_card.json")
     sB = hold["pooled_soft_candidate_single_B"]
     sD = hold["pooled_soft_candidate_disagreement_post"]
@@ -81,7 +81,7 @@ def build_run_card():
         named_non_fault_mimic=("basin-margin gravity gradient or lithologic contact running parallel to a mapped "
                                "trace within 300 m; flight-line or DEM artefact along a road or canal."),
         preregistration=dict(document=reg["hypothesis_document"], sha256=reg["hypothesis_sha256"],
-                             registry=str(Path("registry/h65_preregistration.json"))),
+                             registry=str(Path("registry/h65halo_preregistration.json"))),
         sufficiency_S1=dict(mean_view_A_oof_auc=suff["mean_view_A_oof_auc"],
                             min_fold_view_A_oof_auc=suff["min_fold_view_A_oof_auc"],
                             S1_pass=suff["S1_pass"],
@@ -188,7 +188,7 @@ def round_page(card, hold) -> str:
 <link rel="stylesheet" href="assets/ctd5.css"></head>
 <body><a class="skip" href="#main">Skip to content</a>
 <header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>
-<a href="index.html">Overview</a><a href="executive-summary.html">Submission guide</a><a href="h65.html">H65</a><a href="h64.html">H64</a><a href="downloads/index.html">Archive</a></nav></header>
+<a href="index.html">Overview</a><a href="executive-summary.html">Submission guide</a><a href="h65halo.html">H65</a><a href="h64.html">H64</a><a href="downloads/index.html">Archive</a></nav></header>
 <main id="main">
 <div class="eyebrow">DOE GEMS · H65 · one experiment · 1 of 3 used</div>
 <h1>Halo soft targets: negative.</h1>
@@ -222,10 +222,10 @@ The fold-0 hard-control predictions are not bit-identical to a standalone refit 
 <li>S1 failed, so the co-training arm was not exercised beyond pre := post.</li>
 <li>No lane check, no file, no validator output: nothing here is a submission candidate.</li>
 </ul>
-<p class="small">Receipts: <a href="data/h65_run_card.json">h65_run_card.json</a> · <a href="data/h65_holdout.json">h65_holdout.json</a> · <a href="data/h65_sufficiency.json">h65_sufficiency.json</a> · <a href="data/h65_control_and_verdict.json">h65_control_and_verdict.json</a> · <a href="data/h65_canary.json">h65_canary.json</a> · <a href="data/h65_verdict.json">h65_verdict.json</a> · <a href="data/leaderboard_snapshot_2026-10-09.json">leaderboard receipt</a> · pre-registration <code>{esc(card['preregistration']['sha256'][:16])}…</code> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/41_hypotheses_H65_preregistered.md">knowledge/41</a></p>
+<p class="small">Receipts: <a href="data/h65halo_run_card.json">h65halo_run_card.json</a> · <a href="data/h65halo_holdout.json">h65halo_holdout.json</a> · <a href="data/h65halo_sufficiency.json">h65halo_sufficiency.json</a> · <a href="data/h65halo_control_and_verdict.json">h65halo_control_and_verdict.json</a> · <a href="data/h65halo_canary.json">h65halo_canary.json</a> · <a href="data/h65halo_verdict.json">h65halo_verdict.json</a> · <a href="data/leaderboard_snapshot_2026-10-09.json">leaderboard receipt</a> · pre-registration <code>{esc(card['preregistration']['sha256'][:16])}…</code> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/41b_hypotheses_H65halo_preregistered.md">knowledge/41</a></p>
 </main>
 <footer>Independent competition research, not an official DOE or DrivenData site. Predictions are not verified faults or geothermal discoveries.<br>
-<a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code &amp; reproducibility</a> · <a href="data/h65_run_card.json">JSON run card</a> · H65 / {STAMP[:10]}</footer>
+<a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code &amp; reproducibility</a> · <a href="data/h65halo_run_card.json">JSON run card</a> · H65 / {STAMP[:10]}</footer>
 </body></html>
 """
 
@@ -259,14 +259,14 @@ STATUS_BLOCK = """<!--H65-STATUS-->
 <li>0.2778 is <b>owner-reported</b> for GEMSDOE32's <code>h33-2-b2</code>, not organiser-confirmed. The public board also shows 0.2778 for <code>extradr19</code> (rank 15 in the fetch). The board does not identify files, so it does not confirm either attribution.</li>
 <li>Masking is confirmed by staff: known USGS/INGENIOUS pixels are masked, and the buffer does not apply to known faults (forum topic 11516, posts of 16 and 21 Sep). Staff also say new-fault pixels can lie within 300 m of known traces.</li>
 </ul>
-<p class="small">Round page: <a href="h65.html">H65 (negative, no file)</a> · sources: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">page 967 (metric and format)</a> · <a href="https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516">forum topic 11516 (masking)</a> · <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">leaderboard</a></p>
+<p class="small">Round page: <a href="h65halo.html">H65 (negative, no file)</a> · sources: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">page 967 (metric and format)</a> · <a href="https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516">forum topic 11516 (masking)</a> · <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">leaderboard</a></p>
 </section>
 <!--/H65-STATUS-->"""
 
 
 NOTICE_BLOCK = ('<div class="notice" role="note" style="margin:0 0 1rem"><strong>Latest research round: H65 '
                 '(negative, no file).</strong> Do not upload anything from this round. The H64 file is downloadable for '
-                'research only and is DUPLICATE under the lane rule. <a href="h65.html">H65 landing</a> · '
+                'research only and is DUPLICATE under the lane rule. <a href="h65halo.html">H65 landing</a> · '
                 '<a href="h64.html">H64 landing</a> · <a href="executive-summary.html">Submission guide</a></div>')
 
 
@@ -291,15 +291,15 @@ def patch_pages():
 
 def main() -> int:
     card = build_run_card()
-    hold = load("h65_holdout.json")
-    write_json(EVID / "h65_run_card.json", card)
-    write_json(DATA / "h65_run_card.json", card)
+    hold = load("h65halo_holdout.json")
+    write_json(EVID / "h65halo_run_card.json", card)
+    write_json(DATA / "h65halo_run_card.json", card)
     write_json(DATA / "leaderboard_snapshot_2026-10-09.json", build_leaderboard_receipt())
-    for name in ("h65_holdout.json", "h65_sufficiency.json", "h65_control_and_verdict.json",
-                 "h65_canary.json", "h65_verdict.json", "h65_pseudo_exchange.json"):
+    for name in ("h65halo_holdout.json", "h65halo_sufficiency.json", "h65halo_control_and_verdict.json",
+                 "h65halo_canary.json", "h65halo_verdict.json", "h65halo_pseudo_exchange.json"):
         DATA.mkdir(parents=True, exist_ok=True)
         (DATA / name).write_text((EVID / name).read_text())
-    (DOCS / "h65.html").write_text(round_page(card, hold))
+    (DOCS / "h65halo.html").write_text(round_page(card, hold))
     patch_pages()
     print("H65 site rendered:", card["verdict"][:60], "| note chars", card["note_chars"])
     return 0

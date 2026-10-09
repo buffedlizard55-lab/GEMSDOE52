@@ -3,14 +3,14 @@
 Pinned here, because each one could silently change a receipt or a verdict:
 
 1. ``run_h61.external_applied`` accepts a store that the H63 step extension has also extended
-   (IR-H65-001).  Before the fix, H61/H64 rejected the store that H63 had extended.
+   (IR-H65halo-001).  Before the fix, H61/H64 rejected the store that H63 had extended.
 2. ``run_h61.sample_for_fit`` default is the H61 hard sample with unit weights, so the H61/H63/H64
    fit path is unchanged.
-3. ``run_h65.sample_soft_halo``: the hard part equals H61's draw, every halo pixel is outside the
+3. ``run_h65halo.sample_soft_halo``: the hard part equals H61's draw, every halo pixel is outside the
    full catalogue and strictly within 300 m of the visible catalogue, and each halo pixel's two
    weighted copies (label 1 with t, label 0 with 1 - t) carry total mass 1.
 4. The H65 preregistration hash matches the frozen document.
-5. The marginal acceptance bar is alpha * DTI (IR-H65-002): at the H64 baseline DTI 0.2778 a dot of
+5. The marginal acceptance bar is alpha * DTI (IR-H65halo-002): at the H64 baseline DTI 0.2778 a dot of
    credit 0.0572 raises DTI, and at DTI 0.2941 the same dot does not.  The prose form
    alpha*DTI/(1-alpha*DTI) predicts the opposite at 0.2778, so this test pins the code, not the prose.
 6. The H64 build defaults still write H64 names and the original H64 card wording.
@@ -32,7 +32,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from gems52 import metric as M  # noqa: E402
 
 
-# ---------------------------------------------------------------- 1. external guard (IR-H65-001)
+# ---------------------------------------------------------------- 1. external guard (IR-H65halo-001)
 def test_external_guard_accepts_a_store_extended_by_the_h63_step_layer():
     import run_h61 as base
     extended = "structural-core-v2-band6-B+external-geodawn-v1+h63-step-v1"
@@ -78,7 +78,7 @@ def test_default_sample_for_fit_is_the_h61_hard_sample_with_unit_weights():
 # ---------------------------------------------------------------- 3. soft halo invariants
 def test_soft_halo_hard_part_is_identical_and_halo_is_metric_weighted():
     import run_h61 as base
-    import run_h65 as h65
+    import run_h65halo as h65
     fold, cat = _synthetic_fold()
     rows0, y0 = base.sample_train(fold, cat, np.random.default_rng(61052))
     rows, y, w = h65.sample_soft_halo(fold, cat, np.random.default_rng(61052))
@@ -111,8 +111,8 @@ def _distance_m(mask):
 
 
 # ---------------------------------------------------------------- 4. prereg pinned
-def test_h65_preregistration_hash_is_pinned():
-    reg = json.loads((ROOT / "registry/h65_preregistration.json").read_text())
+def test_h65halo_preregistration_hash_is_pinned():
+    reg = json.loads((ROOT / "registry/h65halo_preregistration.json").read_text())
     doc = ROOT / reg["hypothesis_document"]
     assert hashlib.sha256(doc.read_bytes()).hexdigest() == reg["hypothesis_sha256"]
     assert reg["budget"]["max_experiments"] == 1

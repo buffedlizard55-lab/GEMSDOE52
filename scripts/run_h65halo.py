@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """H65 -- metric-kernel halo targets for both co-training views (one experiment).
 
-Preregistered in ``knowledge/41_hypotheses_H65_preregistered.md`` and pinned by
-``registry/h65_preregistration.json``; this runner refuses to start if either hash has moved.
+Preregistered in ``knowledge/41b_hypotheses_H65halo_preregistered.md`` and pinned by
+``registry/h65halo_preregistration.json``; this runner refuses to start if either hash has moved.
 
 What is shared and what is not
 ------------------------------
@@ -19,7 +19,7 @@ What is shared and what is not
 * Holdout: the six H61 arms on the soft fields, plus ``single_B_hard``, evaluated by the shared
   evaluator.  Paired differences come from ``evaluate_holdout.pooled_summary``.
 
-Stages (checkpointed; each writes ``evidence/h65_*.json``)
+Stages (checkpointed; each writes ``evidence/h65halo_*.json``)
 ------
     canary       single-feature leakage canary on every fold (alarm 0.90)
     fit          soft-halo fit of both views on every fold, plus the hard B control
@@ -29,7 +29,7 @@ Stages (checkpointed; each writes ``evidence/h65_*.json``)
     all          the above in order
 
 Nothing here uploads, promotes or spends a weekly slot.
-Usage: ``python scripts/run_h65.py [canary|fit|sufficiency|exchange|holdout|all]``
+Usage: ``python scripts/run_h65halo.py [canary|fit|sufficiency|exchange|holdout|all]``
 """
 from __future__ import annotations
 
@@ -62,7 +62,7 @@ WORK = ROOT / "work/h65"
 STAGE_EV = WORK / "stage_evidence"
 EVID = ROOT / "evidence"
 DOCS = ROOT / "docs/data"
-REG_PATH = ROOT / "registry/h65_preregistration.json"
+REG_PATH = ROOT / "registry/h65halo_preregistration.json"
 HALO_MAX = 30000                 # per fold; sampled from the halo pool with its own generator
 HALO_SEED_OFFSET = 900           # rng = default_rng(SEED + 900 + fold)
 ARMS = ("single_A", "single_B", "union_max", "disagreement_pre", "disagreement_post", "random")
@@ -92,12 +92,12 @@ def sha(path) -> str:
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def write_h65(name: str, obj) -> Path:
+def write_halo(name: str, obj) -> Path:
     EVID.mkdir(parents=True, exist_ok=True)
-    p = EVID / f"h65_{name}.json"
+    p = EVID / f"h65halo_{name}.json"
     p.write_text(json.dumps(obj, indent=1, allow_nan=False, default=str) + "\n")
     DOCS.mkdir(parents=True, exist_ok=True)
-    (DOCS / f"h65_{name}.json").write_text(p.read_text())
+    (DOCS / f"h65halo_{name}.json").write_text(p.read_text())
     return p
 
 
@@ -116,15 +116,15 @@ def redirect() -> None:
     WORK.mkdir(parents=True, exist_ok=True)
     STAGE_EV.mkdir(parents=True, exist_ok=True)
     base.WORK = WORK
-    base.write = write_h65
+    base.write = write_halo
     base.EVID = STAGE_EV             # stage_holdout reads "h61_pseudo_exchange.json" by its fixed name
     base.sample_for_fit = sample_soft_halo
     # one build implementation (run_h64.stage_build), with H65 names: TAG drives every receipt name
     h64.WORK = WORK
     h64.STAGE_EV = STAGE_EV
-    h64.TAG = "h65"
-    h64.PREFIX = "gems52-h65-"
-    h64.ROUND_NAME = "H65"
+    h64.TAG = "h65halo"
+    h64.PREFIX = "gems52-h65halo-"
+    h64.ROUND_NAME = "H65halo"
     h64.CARD_TEXT = CARD_TEXT
     h64.BUDGET = int(os.environ.get("H65_BUDGET", "37600"))
     h64.FEASIBILITY_ONLY = os.environ.get("H65_FEASIBILITY_ONLY") == "1"
@@ -168,7 +168,7 @@ HALO_LOG: dict = {}
 def stage_fit_soft() -> dict:
     out = base.stage_fit()
     out["halo"] = dict(sampler="sample_soft_halo", **HALO_LOG)
-    write_h65("fit_soft_checkpoint", out)
+    write_halo("fit_soft_checkpoint", out)
     return out
 
 
@@ -190,7 +190,7 @@ def stage_fit_hard_control() -> dict:
         rec["folds"].append(dict(fold=fold["fold"], n_train=int(len(rows)), seconds=round(time.time() - t0, 1)))
         log(f"hard control fold {fold['fold']} view B fitted ({rec['folds'][-1]['seconds']}s)")
     rec["finished_utc"] = now()
-    write_h65("fit_hard_control", rec)
+    write_halo("fit_hard_control", rec)
     return rec
 
 
@@ -281,13 +281,13 @@ def stage_holdout(reg) -> dict:
                all_arms_filled=bool(all(a["arms"][arm]["filled"] for a in out["folds"] for arm in names)),
                caveat=("HOLDOUT-DTI on the label-blind-quadrants-v2 splitter; conditional on fitted folds, catalogue "
                        "labels and fixed budgets; not a leaderboard interval."))
-    write_h65("holdout", out)
+    write_halo("holdout", out)
     return out
 
 
 def stage_verdict(reg) -> dict:
     """Frozen verdict rule (knowledge/41 section 6).  Writes the receipt; never uploads."""
-    hold = json.loads((EVID / "h65_holdout.json").read_text())
+    hold = json.loads((EVID / "h65halo_holdout.json").read_text())
     sB = hold["pooled_soft_candidate_single_B"]
     sD = hold["pooled_soft_candidate_disagreement_post"]
     soft_vs_hard = sB["paired_differences"][CONTROL]
@@ -295,8 +295,8 @@ def stage_verdict(reg) -> dict:
     control_dti = sB["scores"][CONTROL]["dti"]
     h61_ref = float(reg["thresholds"]["single_B_h61_control_holdout_dti"])
     tol = float(reg["thresholds"]["single_B_control_abs_tolerance"])
-    s1 = json.loads((EVID / "h65_sufficiency.json").read_text())
-    exch = json.loads((EVID / "h65_pseudo_exchange.json").read_text())
+    s1 = json.loads((EVID / "h65halo_sufficiency.json").read_text())
+    exch = json.loads((EVID / "h65halo_pseudo_exchange.json").read_text())
     out = dict(
         evidence_class="HOLDOUT-DTI",
         control=dict(single_B_hard_h65=control_dti, single_B_h61_committed=h61_ref,
@@ -316,10 +316,10 @@ def stage_verdict(reg) -> dict:
         and cand_vs_B["ci95"][0] > 0.0 and out["control"]["pass_"])
     out["slot_used"] = 0
     out["upload"] = "none"
-    write_h65("verdict", out)
+    write_halo("verdict", out)
     holdout_eligible = bool(out["control"]["pass_"] and cand_vs_B["delta"] > 0
                             and out["candidate"]["dti"] > out["single_B_soft_dti"] and cand_vs_B["ci95"][0] > 0.0)
-    write_h65("control_and_verdict", dict(
+    write_halo("control_and_verdict", dict(
         control=out["control"], candidate_arm="disagreement_post", candidate_dti=out["candidate"]["dti"],
         paired_delta_vs_single_B=cand_vs_B, holdout_eligible=holdout_eligible,
         note="holdout part of the frozen rule only; S1, lane, not-union, format and uniqueness are "
@@ -328,8 +328,8 @@ def stage_verdict(reg) -> dict:
 
 
 def stage_build(reg) -> dict:
-    s1 = json.loads((EVID / "h65_sufficiency.json").read_text())
-    exch = json.loads((EVID / "h65_pseudo_exchange.json").read_text())
+    s1 = json.loads((EVID / "h65halo_sufficiency.json").read_text())
+    exch = json.loads((EVID / "h65halo_pseudo_exchange.json").read_text())
     return h64.stage_build(reg, s1, exch)
 
 
@@ -358,7 +358,7 @@ def main() -> int:
         elif s == "sufficiency":
             stage_sufficiency(reg)
         elif s == "exchange":
-            stage_exchange(reg, json.loads((EVID / "h65_sufficiency.json").read_text()))
+            stage_exchange(reg, json.loads((EVID / "h65halo_sufficiency.json").read_text()))
         elif s == "holdout":
             stage_holdout(reg)
         elif s == "verdict":
@@ -367,7 +367,7 @@ def main() -> int:
             try:
                 stage_build(reg)
             except SystemExit as e:           # the shared build stops with a message; record it
-                write_h65("build_stop", dict(stopped=True, message=str(e), utc=now()))
+                write_halo("build_stop", dict(stopped=True, message=str(e), utc=now()))
                 log(f"BUILD STOP: {e}")
                 raise
         log(f"--- stage {s} done in {time.time() - t0:.1f}s")

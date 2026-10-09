@@ -86,7 +86,7 @@ three rules in this order:
 
 `K = 37654` is not a guess: it is the exact footprint mass the 0.2778 file used, i.e. 2.5–3.6× a fold's
 held-out truth, and the metric analysis in `knowledge/01` says an all-or-nothing emission at that scale is
-where the credit/penalty trade-off is closest to the accept-bar (`gain > α·DTI` — corrected from α·DTI/(1−α·DTI), IR-H65-002, `knowledge/42` §4 — which across
+where the credit/penalty trade-off is closest to the accept-bar (`gain > α·DTI` — corrected from α·DTI/(1−α·DTI), IR-H65halo-002, `knowledge/42` §4 — which across
 DTI 0.28–0.46 accepts exactly the pixels within ~2.24 px of a probable uncatalogued fault pixel — no
 score-dependent knob exists to tune).
 
