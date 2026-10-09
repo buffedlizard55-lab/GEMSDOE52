@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Sources behind the H66 (structural coherence) round, and the pinned inputs every round in this repository shares.">
+<title>H66 sources for manual review · GEMSDOE52</title><link rel="stylesheet" href="assets/ctd5.css"></head>
+<body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>
+<a href="index.html">Overview</a><a href="h67.html">H67 run &amp; evidence</a><a href="h67-executive-summary.html">H67 submit guide</a><a href="h66-audit.html">H66 audit</a><a href="h66-executive-summary.html">H66 submit guide</a><a href="h66-sources.html">H66 sources</a><a href="downloads/index.html">Archive</a></nav></header>
+<main id="main"><div class="eyebrow">H66 / sources</div><h1>Every input, pinned and checkable</h1>
+
+<div class="notice" role="note"><strong>Provenance of this page.</strong>
+<p>The H66 (structural coherence) round's two pages linked here, and the link was dead when that round
+merged. This page was added by the <b>H67</b> session to close the dead link, not to author the H66
+round's source list. It therefore lists only (a) the H66 round's own committed receipts and notes, which
+are the authoritative record of what it used, and (b) the pinned inputs and official sources that every
+round in this repository shares. Nothing here is a claim about H66 that its own receipts do not make.</p></div>
+
+<section class="prose"><h2>The H66 round's own record</h2>
+<ul>
+<li><a href="../knowledge/43_hypotheses_H66_preregistered.md">knowledge/43_hypotheses_H66_preregistered.md</a> — the frozen H66 protocol.</li>
+<li><a href="../knowledge/43_h66_summary.md">knowledge/43_h66_summary.md</a> — H66 summary.</li>
+<li><a href="../knowledge/44_h66_results_and_limits.md">knowledge/44_h66_results_and_limits.md</a> — H66 results and limits.</li>
+<li><a href="../registry/h66_preregistration.json">registry/h66_preregistration.json</a> — registered protocol hash and thresholds.</li>
+<li><a href="../evidence/h66_run_card.json">evidence/h66_run_card.json</a> — the H66 run card.</li>
+<li><a href="../evidence/h66_stage_summary.json">evidence/h66_stage_summary.json</a> ·
+<a href="../evidence/h66_canary.json">canary</a> ·
+<a href="../evidence/h66_independence.json">independence</a> ·
+<a href="../evidence/h66_holdout.json">holdout</a> ·
+<a href="../evidence/h66_pseudo_exchange.json">pseudo-exchange</a> ·
+<a href="../evidence/h66_fit_checkpoint.json">fit checkpoint</a> ·
+<a href="../evidence/h66_diagnostic_hgb_local.json">local-scale diagnostic</a> ·
+<a href="../evidence/h66_lane_surface.json">lane surface</a> ·
+<a href="../evidence/h66_lane_dots.json">lane dots</a> ·
+<a href="../evidence/h66_uniqueness_audit.json">uniqueness audit</a> ·
+<a href="../evidence/h66_format_validator.json">format validator</a> ·
+<a href="../evidence/h66_submission_receipt.json">submission receipt</a></li>
+<li><a href="../scripts/run_h66.py">scripts/run_h66.py</a> — the runner that produced them.</li>
+</ul>
+
+<h2>Pinned inputs shared by every round</h2>
+<ul>
+<li><a href="../registry/data_manifest.json">registry/data_manifest.json</a> — 23 pinned mirrors with
+SHA-256; <a href="../scripts/restore_data.py">scripts/restore_data.py</a> re-verifies them before any
+measurement. The H67 preflight re-checked all 23 with 0 mismatches
+(<a href="../evidence/h67_preflight.json">evidence/h67_preflight.json</a>).</li>
+<li><a href="../evidence/band_inventory.json">evidence/band_inventory.json</a> — the 19 bands of
+<code>training_features.tif</code> as the file describes them. Band 6 is a radiometric total count, not a
+magnetic tilt derivative; that was measured, not assumed.</li>
+<li><a href="../evidence/ctd5_prior_inventory.json">evidence/ctd5_prior_inventory.json</a> — the frozen
+526-blob census of every prior submission raster reachable from the owner's repositories, with the two
+ineligible entries flagged. This is the corpus every uniqueness and lane check runs against.</li>
+<li><a href="../registry/irregularities.json">registry/irregularities.json</a> — the irregularities
+register (IR-H66-001…010 are the H66 round's; IR-H67-001…011 are H67's).</li>
+<li><a href="../registry/source_policy.json">registry/source_policy.json</a> — what may be cited as a
+source, and what may not.</li>
+</ul>
+
+<h2>Official and external sources, for manual review</h2>
+<ul>
+<li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Competition
+problem page 967</a> — task definition, the distance-weighted Tversky metric (α 0.2, β 0.8, 300 m
+triangular kernel), the submission format (single-band float32, values in [0, 1], EPSG:32611, 100 m, same
+bounds as the training data, null outside), and the two-round prize structure in which the Final Round
+re-scores the same single submission against an expanded, expert-verified label set.</li>
+<li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">Public
+leaderboard</a> — JavaScript-rendered; it cannot be read by a page fetch, so every score quoted in this
+repository is labelled OWNER-REPORTED or PUBLIC BOARD and never ORGANIZER-CONFIRMED.</li>
+<li><a href="https://github.com/drivendataorg/gems-prize-reference-solution">Reference solution
+repository</a> (DrivenData).</li>
+<li><a href="https://community.drivendata.org/c/gems-prize-challenge/111">Competition forum</a>.</li>
+<li><a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">USGS
+GeoDAWN airborne magnetic and radiometric surveys, northwestern Great Basin, Nevada</a> — DOI
+10.5066/P93LGLVQ. The source of the radiometric and magnetic grids behind the feature bands.</li>
+<li><a href="https://gbcge.org/current-projects/ingenious/">INGENIOUS / Great Basin Center for Geothermal
+Energy</a> — the thermal-spring and well inventory used as an external layer.</li>
+<li><a href="https://epsg.io/32611">EPSG:32611</a> — WGS 84 / UTM zone 11N, the competition's CRS.</li>
+<li><a href="https://doi.org/10.1145/279943.279962">Blum &amp; Mitchell, "Combining Labeled and Unlabeled
+Data with Co-Training", COLT '98</a> — the method the co-training lane is built on, and whose sufficiency
+and conditional-independence assumptions this repository tests rather than assumes.</li>
+<li><a href="https://www.usgs.gov/3d-elevation-program">USGS 3D Elevation Program (1 m DEM)</a> — named in
+<a href="../knowledge/45_hypotheses_H67_preregistered.md">knowledge/45</a> as the free official source the
+drainage-deflection hypothesis would require, and checked: not obtainable from this sandbox.</li>
+</ul>
+
+<h2>How to re-verify any number on this site</h2>
+<ol>
+<li><code>.venv/bin/python scripts/restore_data.py</code> — restores and SHA-256-verifies the pinned mirrors.</li>
+<li><code>.venv/bin/python scripts/run_h67.py</code> — re-runs the H67 round end to end; it is a fixed point
+on decoded pixels (SHA-256 <code>969bb11b7403d9c7…</code> from two independent runs).</li>
+<li><code>.venv/bin/python scripts/h67_board_algebra.py</code> — re-derives the 0.2778 board algebra from the
+restored bytes.</li>
+<li><code>.venv/bin/python -m pytest -q</code> and <code>.venv/bin/python scripts/check_site.py</code> —
+the repository's own guards.</li>
+</ol>
+<p class="small">Local format validation is not organiser acceptance, and no number on this site is an
+organiser-confirmed score.</p>
+</section>
+</main></body></html>

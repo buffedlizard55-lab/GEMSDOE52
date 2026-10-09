@@ -1,0 +1,148 @@
+{
+ "source": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
+ "evidence_class": "ORGANIZER-PUBLISHED (public board; board is a live page, not a frozen snapshot)",
+ "fetched_during_session_utc_date": "2026-10-09",
+ "note": "Transcribed from the fetched page, ranks 1-22. Rank 23 is cut off in the fetch. The board does not identify files, so no score is attributed to a file from this page.",
+ "rows": [
+  {
+   "rank": 1,
+   "participant": "xiaofanhu",
+   "best_public_dw_tversky": 0.3774,
+   "submissions": 13
+  },
+  {
+   "rank": 2,
+   "participant": "alexoktaba",
+   "best_public_dw_tversky": 0.3345,
+   "submissions": 25
+  },
+  {
+   "rank": 3,
+   "participant": "nchuzhoy",
+   "best_public_dw_tversky": 0.3262,
+   "submissions": 6
+  },
+  {
+   "rank": 4,
+   "participant": "joeyfezster",
+   "best_public_dw_tversky": 0.326,
+   "submissions": 25
+  },
+  {
+   "rank": 5,
+   "participant": "kinghorton42",
+   "best_public_dw_tversky": 0.3222,
+   "submissions": 9
+  },
+  {
+   "rank": 6,
+   "participant": "Batik Shirt Brothers",
+   "best_public_dw_tversky": 0.3221,
+   "submissions": 24
+  },
+  {
+   "rank": 7,
+   "participant": "DARD",
+   "best_public_dw_tversky": 0.3195,
+   "submissions": 16
+  },
+  {
+   "rank": 8,
+   "participant": "JerryDataWorks",
+   "best_public_dw_tversky": 0.2948,
+   "submissions": 17
+  },
+  {
+   "rank": 9,
+   "participant": "mzoorob",
+   "best_public_dw_tversky": 0.2902,
+   "submissions": 28
+  },
+  {
+   "rank": 10,
+   "participant": "notmyfault",
+   "best_public_dw_tversky": 0.2901,
+   "submissions": 18
+  },
+  {
+   "rank": 11,
+   "participant": "ndavis7",
+   "best_public_dw_tversky": 0.2888,
+   "submissions": 10
+  },
+  {
+   "rank": 12,
+   "participant": "GrigorSargsyan",
+   "best_public_dw_tversky": 0.2876,
+   "submissions": 14
+  },
+  {
+   "rank": 13,
+   "participant": "HardcoreTechGod",
+   "best_public_dw_tversky": 0.2854,
+   "submissions": 6
+  },
+  {
+   "rank": 14,
+   "participant": "op01",
+   "best_public_dw_tversky": 0.2797,
+   "submissions": 8
+  },
+  {
+   "rank": 15,
+   "participant": "extradr19",
+   "best_public_dw_tversky": 0.2778,
+   "submissions": 13
+  },
+  {
+   "rank": 16,
+   "participant": "arnofault",
+   "best_public_dw_tversky": 0.2764,
+   "submissions": 2
+  },
+  {
+   "rank": 17,
+   "participant": "faultsofthy",
+   "best_public_dw_tversky": 0.2764,
+   "submissions": 3
+  },
+  {
+   "rank": 18,
+   "participant": "No Fault of Our Own",
+   "best_public_dw_tversky": 0.2761,
+   "submissions": 25
+  },
+  {
+   "rank": 19,
+   "participant": "newway",
+   "best_public_dw_tversky": 0.2752,
+   "submissions": 6
+  },
+  {
+   "rank": 20,
+   "participant": "wbg1",
+   "best_public_dw_tversky": 0.275,
+   "submissions": 15
+  },
+  {
+   "rank": 21,
+   "participant": "raboush2",
+   "best_public_dw_tversky": 0.2747,
+   "submissions": 9
+  },
+  {
+   "rank": 22,
+   "participant": "li002666",
+   "best_public_dw_tversky": 0.2726,
+   "submissions": 4
+  }
+ ],
+ "facts": {
+  "top_score": 0.3774,
+  "top_participant": "xiaofanhu",
+  "dard_rank": 7,
+  "dard_score": 0.3195,
+  "extradr19_rank": 15,
+  "extradr19_score": 0.2778
+ }
+}

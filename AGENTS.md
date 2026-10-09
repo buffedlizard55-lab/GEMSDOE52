@@ -8,6 +8,20 @@ Keep known-catalogue labels separate from verified fault absence, public partici
 
 This session's working branch is fixed by Arena. Do not change branches. Keep raw competition data and large intermediate arrays under ignored `data/` and `work/`. Publish small audit receipts, the unique compressed prediction raster and its review table.
 
+<!--H67-AGENTS-->
+## Current H67 continuation (2026-10-09)
+
+Read `README.md`'s H67 block first, then `knowledge/45_hypotheses_H67_preregistered.md` (frozen before any
+fit), `knowledge/48_h67_results_and_limits.md` (rendered from the receipts) and
+`knowledge/49_why_02778_phd_answer.md` (the board algebra, re-measured from restored bytes by
+`scripts/h67_board_algebra.py`). H67-A is **negative**: the lane rule fires on the final dots
+(84.08 % within 3 px of one informative registry raster) and the hide-and-recover instrument puts it below
+uniform random. A unique GeoTIFF exists and is published research-only; **do not submit it, do not spend a
+weekly slot**. IR-H67-001 … -010 are in `registry/irregularities.json`; -002, -005, -007 and -008 change how
+a shared instrument must be read. Use `scripts/h67_uniqueness_aligned.py` (alignment-filtered corpus) for any
+uniqueness check; do not fork a checker.
+<!--/H67-AGENTS-->
+
 ## Current H65 continuation (2026-10-09; the protocol body keeps the H62 label, see knowledge/41a)
 
 Read `README.md`'s H65 block first, then `knowledge/41_hypotheses_H65_preregistered.md` (frozen;
@@ -43,3 +57,39 @@ three-pass review. CTD5 is negative and stopped: a registered survey-wide lattic
 the >70% near-dot gate impossible on this footprint. Do not quietly exclude it, tune a
 new placement, promote CTD5, or treat the archival H57 LATEST pointer as upload approval.
 Raw input pins authenticate mirror bytes only. Preserve dated source and score caveats.
+
+### H69 (2026-10-09) — the lane rule is satisfiable, and the lever is cross-family consensus
+
+Measured this round, all reproducible from `evidence/h69_placement.json` and `scripts/run_h69.py`:
+
+* **`gems52.gates.lane_report`'s probe classification was not the whole story.** H61 concluded the
+  literal 70 % rule was unsatisfiable because of universal-coverage probes. It is also unsatisfiable for
+  any emission ranked by this family's own habitat signal: an unconstrained greedy over the legal set puts
+  **96.14 %** of its dots within 3 px of one informative raster, with **84 of 343** informative priors above
+  the limit.
+* **A per-prior quota does not converge.** `S/quota` is structurally ≈ 1.34, so the achieved share is
+  pinned near **0.745 at every budget** (24,500 → 32,871; 22,960 → 30,864; 21,558 → 29,069). A quota
+  computed against a *target* budget is also the wrong denominator: at quota 26,263 only 35,149 dots were
+  placeable, an achieved share of 0.7472.
+* **Excluding offenders' halos is not available:** the union of the 84 offenders' 3 px halos leaves
+  **361 px** of the 4,859,987 px legal set.
+* **What works:** restrict the pool to pixels of low **cross-family consensus** — the count of distinct
+  decoded prior patterns whose 3 px halo covers the pixel. At `consensus ≤ 60` (2,741,649 px pool) the
+  greedy fills the whole 37,600-dot budget at a worst informative near-dot share of **0.6985**, verified
+  exactly against all 343 informative priors. Search the threshold from the loosest end and take the
+  largest feasible one, so the field keeps as much signal as the lane allows.
+* **`eligible` in the committed instrument is the valid footprint *including* catalogue pixels.** Passing
+  the off-catalogue set empties both training classes (`spatial.folds` builds `truth = held_all & region`
+  from the catalogue) and surfaces as "insufficient training classes", or, on a screen that only computes
+  an AUC, as a silently wrong sufficiency number. This round produced View A mean AUC 0.6636 that way
+  before the mistake was caught; the committed instrument gives **0.5281**. The wrong number is recorded in
+  `knowledge/53` §2.1 so nobody resurrects it.
+* **`spatial.whole_pseudo_segments` can return zero labels.** With H69's views it returned **0 pixels in
+  all four folds**, so `disagreement_post` is bit-identical to `disagreement_pre` and the paired CI is
+  exactly [0, 0]. Same class as `IR-H58-002`; check the count before interpreting a "post-exchange" arm.
+* **A round must exclude its own artefacts from its registry.** `gates.find_priors` sweeps `submission/`,
+  so a second attempt at the same stage finds the first attempt's GeoTIFF as a "prior" and reports
+  identical-to-a-prior. `scripts/run_h69.py` filters `gems52-h69-*` and says so.
+* **Cache the lane reports.** Two `lane_report` phases over 566 rasters cost ~13 min; they are now cached
+  against the SHA-256 of the emission plus the prior count, which is the difference between a fixable
+  crash and a lost quarter-hour.

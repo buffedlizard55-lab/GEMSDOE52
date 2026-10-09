@@ -1,0 +1,669 @@
+{
+ "evidence_class": "LEAKAGE CANARY - each channel fitted alone, out-of-quadrant, per fold",
+ "alarm_threshold": 0.9,
+ "n_channels": 26,
+ "n_folds": 4,
+ "max_alarm_across_folds": 0.622413,
+ "worst": {
+  "channel": "b_ext_rad_contrast_unverified",
+  "view": "B",
+  "auc_alone": 0.622413,
+  "leakage": false
+ },
+ "any_alarm": false,
+ "interpretation": "a single channel above 0.90 would mean the held-out segment is visible in one feature, i.e. leakage, until proven otherwise",
+ "folds": [
+  {
+   "fold": 0,
+   "n_pos": 20000,
+   "n_neg": 40000,
+   "channels": [
+    {
+     "channel": "a_b15_cover_level",
+     "view": "A",
+     "auc_alone": 0.516518,
+     "leakage": false
+    },
+    {
+     "channel": "a_grad_basement_s2",
+     "view": "A",
+     "auc_alone": 0.525795,
+     "leakage": false
+    },
+    {
+     "channel": "a_grad_basement_s4",
+     "view": "A",
+     "auc_alone": 0.525935,
+     "leakage": false
+    },
+    {
+     "channel": "a_grad_basement_s8",
+     "view": "A",
+     "auc_alone": 0.526315,
+     "leakage": false
+    },
+    {
+     "channel": "a_lap_basement_s3",
+     "view": "A",
+     "auc_alone": 0.504863,
+     "leakage": false
+    },
+    {
+     "channel": "a_dog_isograv_signed",
+     "view": "A",
+     "auc_alone": 0.500791,
+     "leakage": false
+    },
+    {
+     "channel": "a_dog_isograv_abs",
+     "view": "A",
+     "auc_alone": 0.483543,
+     "leakage": false
+    },
+    {
+     "channel": "a_isograv_level",
+     "view": "A",
+     "auc_alone": 0.451409,
+     "leakage": false
+    },
+    {
+     "channel": "a_isograv_hg_b18",
+     "view": "A",
+     "auc_alone": 0.465211,
+     "leakage": false
+    },
+    {
+     "channel": "a_isograv_vg_b11",
+     "view": "A",
+     "auc_alone": 0.513775,
+     "leakage": false
+    },
+    {
+     "channel": "a_isograv_slope_b5",
+     "view": "A",
+     "auc_alone": 0.530947,
+     "leakage": false
+    },
+    {
+     "channel": "a_gradcoh_grav_rtp",
+     "view": "A",
+     "auc_alone": 0.506466,
+     "leakage": false
+    },
+    {
+     "channel": "a_rtp_b2",
+     "view": "A",
+     "auc_alone": 0.505859,
+     "leakage": false
+    },
+    {
+     "channel": "a_tmi_b14",
+     "view": "A",
+     "auc_alone": 0.496654,
+     "leakage": false
+    },
+    {
+     "channel": "a_grad_conductivity_s3",
+     "view": "A",
+     "auc_alone": 0.501451,
+     "leakage": false
+    },
+    {
+     "channel": "a_strain_invariant_b4",
+     "view": "A",
+     "auc_alone": 0.577873,
+     "leakage": false
+    },
+    {
+     "channel": "a_strain_dilatation_b8",
+     "view": "A",
+     "auc_alone": 0.49456,
+     "leakage": false
+    },
+    {
+     "channel": "a_seismic_density_b16",
+     "view": "A",
+     "auc_alone": 0.553491,
+     "leakage": false
+    },
+    {
+     "channel": "b_delev_level_b12",
+     "view": "B",
+     "auc_alone": 0.50094,
+     "leakage": false
+    },
+    {
+     "channel": "b_delev_slope_b19",
+     "view": "B",
+     "auc_alone": 0.553142,
+     "leakage": false
+    },
+    {
+     "channel": "b_grad_delev_s2",
+     "view": "B",
+     "auc_alone": 0.577805,
+     "leakage": false
+    },
+    {
+     "channel": "b_lap_delev_s3",
+     "view": "B",
+     "auc_alone": 0.539178,
+     "leakage": false
+    },
+    {
+     "channel": "b_roughness_contrast",
+     "view": "B",
+     "auc_alone": 0.473423,
+     "leakage": false
+    },
+    {
+     "channel": "b_rad_tc_band6",
+     "view": "B",
+     "auc_alone": 0.457904,
+     "leakage": false
+    },
+    {
+     "channel": "b_ext_rad_tc",
+     "view": "B",
+     "auc_alone": 0.457842,
+     "leakage": false
+    },
+    {
+     "channel": "b_ext_rad_contrast_unverified",
+     "view": "B",
+     "auc_alone": 0.526924,
+     "leakage": false
+    }
+   ]
+  },
+  {
+   "fold": 1,
+   "n_pos": 12579,
+   "n_neg": 40000,
+   "channels": [
+    {
+     "channel": "a_b15_cover_level",
+     "view": "A",
+     "auc_alone": 0.517134,
+     "leakage": false
+    },
+    {
+     "channel": "a_grad_basement_s2",
+     "view": "A",
+     "auc_alone": 0.54549,
+     "leakage": false
+    },
+    {
+     "channel": "a_grad_basement_s4",
+     "view": "A",
+     "auc_alone": 0.554599,
+     "leakage": false
+    },
+    {
+     "channel": "a_grad_basement_s8",
+     "view": "A",
+     "auc_alone": 0.554439,
+     "leakage": false
+    },
+    {
+     "channel": "a_lap_basement_s3",
+     "view": "A",
+     "auc_alone": 0.528036,
+     "leakage": false
+    },
+    {
+     "channel": "a_dog_isograv_signed",
+     "view": "A",
+     "auc_alone": 0.534629,
+     "leakage": false
+    },
+    {
+     "channel": "a_dog_isograv_abs",
+     "view": "A",
+     "auc_alone": 0.522723,
+     "leakage": false
+    },
+    {
+     "channel": "a_isograv_level",
+     "view": "A",
+     "auc_alone": 0.482342,
+     "leakage": false
+    },
+    {
+     "channel": "a_isograv_hg_b18",
+     "view": "A",
+     "auc_alone": 0.57747,
+     "leakage": false
+    },
+    {
+     "channel": "a_isograv_vg_b11",
+     "view": "A",
+     "auc_alone": 0.536705,
+     "leakage": false
+    },
+    {
+     "channel": "a_isograv_slope_b5",
+     "view": "A",
+     "auc_alone": 0.58465,
+     "leakage": false
+    },
+    {
+     "channel": "a_gradcoh_grav_rtp",
+     "view": "A",
+     "auc_alone": 0.510544,
+     "leakage": false
+    },
+    {
+     "channel": "a_rtp_b2",
+     "view": "A",
+     "auc_alone": 0.496663,
+     "leakage": false
+    },
+    {
+     "channel": "a_tmi_b14",
+     "view": "A",
+     "auc_alone": 0.507028,
+     "leakage": false
+    },
+    {
+     "channel": "a_grad_conductivity_s3",
+     "view": "A",
+     "auc_alone": 0.499144,
+     "leakage": false
+    },
+    {
+     "channel": "a_strain_invariant_b4",
+     "view": "A",
+     "auc_alone": 0.540156,
+     "leakage": false
+    },
+    {
+     "channel": "a_strain_dilatation_b8",
+     "view": "A",
+     "auc_alone": 0.546224,
+     "leakage": false
+    },
+    {
+     "channel": "a_seismic_density_b16",
+     "view": "A",
+     "auc_alone": 0.548541,
+     "leakage": false
+    },
+    {
+     "channel": "b_delev_level_b12",
+     "view": "B",
+     "auc_alone": 0.448534,
+     "leakage": false
+    },
+    {
+     "channel": "b_delev_slope_b19",
+     "view": "B",
+     "auc_alone": 0.55916,
+     "leakage": false
+    },
+    {
+     "channel": "b_grad_delev_s2",
+     "view": "B",
+     "auc_alone": 0.603925,
+     "leakage": false
+    },
+    {
+     "channel": "b_lap_delev_s3",
+     "view": "B",
+     "auc_alone": 0.522523,
+     "leakage": false
+    },
+    {
+     "channel": "b_roughness_contrast",
+     "view": "B",
+     "auc_alone": 0.456093,
+     "leakage": false
+    },
+    {
+     "channel": "b_rad_tc_band6",
+     "view": "B",
+     "auc_alone": 0.419982,
+     "leakage": false
+    },
+    {
+     "channel": "b_ext_rad_tc",
+     "view": "B",
+     "auc_alone": 0.419932,
+     "leakage": false
+    },
+    {
+     "channel": "b_ext_rad_contrast_unverified",
+     "view": "B",
+     "auc_alone": 0.548817,
+     "leakage": false
+    }
+   ]
+  },
+  {
+   "fold": 2,
+   "n_pos": 9433,
+   "n_neg": 40000,
+   "channels": [
+    {
+     "channel": "a_b15_cover_level",
+     "view": "A",
+     "auc_alone": 0.459998,
+     "leakage": false
+    },
+    {
+     "channel": "a_grad_basement_s2",
+     "view": "A",
+     "auc_alone": 0.478351,
+     "leakage": false
+    },
+    {
+     "channel": "a_grad_basement_s4",
+     "view": "A",
+     "auc_alone": 0.483033,
+     "leakage": false
+    },
+    {
+     "channel": "a_grad_basement_s8",
+     "view": "A",
+     "auc_alone": 0.485102,
+     "leakage": false
+    },
+    {
+     "channel": "a_lap_basement_s3",
+     "view": "A",
+     "auc_alone": 0.48242,
+     "leakage": false
+    },
+    {
+     "channel": "a_dog_isograv_signed",
+     "view": "A",
+     "auc_alone": 0.461561,
+     "leakage": false
+    },
+    {
+     "channel": "a_dog_isograv_abs",
+     "view": "A",
+     "auc_alone": 0.528196,
+     "leakage": false
+    },
+    {
+     "channel": "a_isograv_level",
+     "view": "A",
+     "auc_alone": 0.44291,
+     "leakage": false
+    },
+    {
+     "channel": "a_isograv_hg_b18",
+     "view": "A",
+     "auc_alone": 0.484618,
+     "leakage": false
+    },
+    {
+     "channel": "a_isograv_vg_b11",
+     "view": "A",
+     "auc_alone": 0.531191,
+     "leakage": false
+    },
+    {
+     "channel": "a_isograv_slope_b5",
+     "view": "A",
+     "auc_alone": 0.454688,
+     "leakage": false
+    },
+    {
+     "channel": "a_gradcoh_grav_rtp",
+     "view": "A",
+     "auc_alone": 0.51282,
+     "leakage": false
+    },
+    {
+     "channel": "a_rtp_b2",
+     "view": "A",
+     "auc_alone": 0.553013,
+     "leakage": false
+    },
+    {
+     "channel": "a_tmi_b14",
+     "view": "A",
+     "auc_alone": 0.461084,
+     "leakage": false
+    },
+    {
+     "channel": "a_grad_conductivity_s3",
+     "view": "A",
+     "auc_alone": 0.529523,
+     "leakage": false
+    },
+    {
+     "channel": "a_strain_invariant_b4",
+     "view": "A",
+     "auc_alone": 0.591089,
+     "leakage": false
+    },
+    {
+     "channel": "a_strain_dilatation_b8",
+     "view": "A",
+     "auc_alone": 0.453175,
+     "leakage": false
+    },
+    {
+     "channel": "a_seismic_density_b16",
+     "view": "A",
+     "auc_alone": 0.505174,
+     "leakage": false
+    },
+    {
+     "channel": "b_delev_level_b12",
+     "view": "B",
+     "auc_alone": 0.542318,
+     "leakage": false
+    },
+    {
+     "channel": "b_delev_slope_b19",
+     "view": "B",
+     "auc_alone": 0.603755,
+     "leakage": false
+    },
+    {
+     "channel": "b_grad_delev_s2",
+     "view": "B",
+     "auc_alone": 0.615135,
+     "leakage": false
+    },
+    {
+     "channel": "b_lap_delev_s3",
+     "view": "B",
+     "auc_alone": 0.598612,
+     "leakage": false
+    },
+    {
+     "channel": "b_roughness_contrast",
+     "view": "B",
+     "auc_alone": 0.4913,
+     "leakage": false
+    },
+    {
+     "channel": "b_rad_tc_band6",
+     "view": "B",
+     "auc_alone": 0.414187,
+     "leakage": false
+    },
+    {
+     "channel": "b_ext_rad_tc",
+     "view": "B",
+     "auc_alone": 0.414037,
+     "leakage": false
+    },
+    {
+     "channel": "b_ext_rad_contrast_unverified",
+     "view": "B",
+     "auc_alone": 0.587001,
+     "leakage": false
+    }
+   ]
+  },
+  {
+   "fold": 3,
+   "n_pos": 9585,
+   "n_neg": 40000,
+   "channels": [
+    {
+     "channel": "a_b15_cover_level",
+     "view": "A",
+     "auc_alone": 0.528812,
+     "leakage": false
+    },
+    {
+     "channel": "a_grad_basement_s2",
+     "view": "A",
+     "auc_alone": 0.564944,
+     "leakage": false
+    },
+    {
+     "channel": "a_grad_basement_s4",
+     "view": "A",
+     "auc_alone": 0.572068,
+     "leakage": false
+    },
+    {
+     "channel": "a_grad_basement_s8",
+     "view": "A",
+     "auc_alone": 0.580942,
+     "leakage": false
+    },
+    {
+     "channel": "a_lap_basement_s3",
+     "view": "A",
+     "auc_alone": 0.5252,
+     "leakage": false
+    },
+    {
+     "channel": "a_dog_isograv_signed",
+     "view": "A",
+     "auc_alone": 0.501555,
+     "leakage": false
+    },
+    {
+     "channel": "a_dog_isograv_abs",
+     "view": "A",
+     "auc_alone": 0.494525,
+     "leakage": false
+    },
+    {
+     "channel": "a_isograv_level",
+     "view": "A",
+     "auc_alone": 0.481598,
+     "leakage": false
+    },
+    {
+     "channel": "a_isograv_hg_b18",
+     "view": "A",
+     "auc_alone": 0.513265,
+     "leakage": false
+    },
+    {
+     "channel": "a_isograv_vg_b11",
+     "view": "A",
+     "auc_alone": 0.575982,
+     "leakage": false
+    },
+    {
+     "channel": "a_isograv_slope_b5",
+     "view": "A",
+     "auc_alone": 0.569609,
+     "leakage": false
+    },
+    {
+     "channel": "a_gradcoh_grav_rtp",
+     "view": "A",
+     "auc_alone": 0.499974,
+     "leakage": false
+    },
+    {
+     "channel": "a_rtp_b2",
+     "view": "A",
+     "auc_alone": 0.504074,
+     "leakage": false
+    },
+    {
+     "channel": "a_tmi_b14",
+     "view": "A",
+     "auc_alone": 0.490823,
+     "leakage": false
+    },
+    {
+     "channel": "a_grad_conductivity_s3",
+     "view": "A",
+     "auc_alone": 0.491183,
+     "leakage": false
+    },
+    {
+     "channel": "a_strain_invariant_b4",
+     "view": "A",
+     "auc_alone": 0.5211,
+     "leakage": false
+    },
+    {
+     "channel": "a_strain_dilatation_b8",
+     "view": "A",
+     "auc_alone": 0.577874,
+     "leakage": false
+    },
+    {
+     "channel": "a_seismic_density_b16",
+     "view": "A",
+     "auc_alone": 0.585658,
+     "leakage": false
+    },
+    {
+     "channel": "b_delev_level_b12",
+     "view": "B",
+     "auc_alone": 0.47132,
+     "leakage": false
+    },
+    {
+     "channel": "b_delev_slope_b19",
+     "view": "B",
+     "auc_alone": 0.574477,
+     "leakage": false
+    },
+    {
+     "channel": "b_grad_delev_s2",
+     "view": "B",
+     "auc_alone": 0.595035,
+     "leakage": false
+    },
+    {
+     "channel": "b_lap_delev_s3",
+     "view": "B",
+     "auc_alone": 0.525182,
+     "leakage": false
+    },
+    {
+     "channel": "b_roughness_contrast",
+     "view": "B",
+     "auc_alone": 0.463096,
+     "leakage": false
+    },
+    {
+     "channel": "b_rad_tc_band6",
+     "view": "B",
+     "auc_alone": 0.373226,
+     "leakage": false
+    },
+    {
+     "channel": "b_ext_rad_tc",
+     "view": "B",
+     "auc_alone": 0.373013,
+     "leakage": false
+    },
+    {
+     "channel": "b_ext_rad_contrast_unverified",
+     "view": "B",
+     "auc_alone": 0.622413,
+     "leakage": false
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,54 @@
+{
+  "round": "H65b",
+  "created_utc": "2026-10-09T03:44:53Z",
+  "status": "PREREGISTERED",
+  "preregistration_file": "knowledge/45_h65b_preregistered.md",
+  "preregistration_sha256": "ac8e41eed97360699be72b221216b3ad79335e86b9d697f3b75b379d41c6ea9c",
+  "runner": "scripts/run_h65b.py",
+  "runner_checks_prereg_hash": true,
+  "hypothesis": "R5-H1 trace-correction corridor: LiDAR one-sided scarp step + LiDAR/trace strike agreement + det_elev second difference locate a signed perpendicular offset -3..+3 px where the mapped trace is misaligned; the organiser confirms corrections-to-existing-traces are part of the new-fault truth (forum 11516, 2026-09-21).",
+  "gate_conditions_frozen": {
+    "G1_min_held_out_traces": 200,
+    "G2_median_abs_offset_px_max": 1.0,
+    "G3_beats_constant_offset_control_by_px_min": 0.3,
+    "G4_argmax_zero_fraction_max": 0.5
+  },
+  "decision_rule": "PASS -> frozen emission build; FAIL -> negative receipt, no corridor build. No re-tuning after numbers.",
+  "budget": {
+    "experiments": 3,
+    "wall_clock_hours": 2
+  },
+  "lane": {
+    "rank_correlation_limit": 0.9,
+    "near_dot_limit": 0.7,
+    "near_radius_px": 3,
+    "action_on_breach": "log DUPLICATE and stop"
+  },
+  "reuse": [
+    "gems52.gates",
+    "gems52.submission_writer",
+    "gems52.grid",
+    "gems52_r5.cotrain_r5.make_folds/block_ids",
+    "scripts/fetch_prior_inventory.py census",
+    "evidence/ctd5_prior_inventory.json"
+  ],
+  "co_training_lane_status": "frozen NEGATIVE x6 (H56, H60D, H61, H62, H62b, H63, H64); not re-run per AGENTS.md; brief's 3-5 new hypotheses ranked in knowledge/41 instead",
+  "amendments": [
+    {
+      "what": "A1 calibration: LiDAR strike band angular frame read from data before any gate statistic; 4 candidate encodings, largest circular resultant length wins; all four r_e logged; r_e<0.10 => t2 reported uninformative, gate still evaluated, no re-weighting",
+      "when_utc": "2026-10-09T03:46:00Z",
+      "reason": "band 11 convention undocumented and never previously read in this repo"
+    },
+    {
+      "what": "E2 amendment: after E1 (R5-H1 gate) FAIL, run R5-H2a convention-free band-10 valley-line detector on the shared hide-and-recover instrument (arms candidate/single_B/random, budget 15000, canary AUC alarm 0.90); file build + gates frozen in knowledge/41 section 5",
+      "when_utc": "2026-10-09T04:08:00Z",
+      "reason": "E1 cancelled the corridor build per the frozen decision rule; budget allows the rank-2 hypothesis; band 10 never read by any repo script"
+    },
+    {
+      "what": "E2 amendment 2: exact tie-aware rank replaces template rank01 for band 10 only (equal-width bins collapse 66.6% of footprint into first bin -- measured); template tool untouched to preserve committed receipts; run 1 voided and kept as evidence/h65_e2_holdout_invalid_run1.json",
+      "when_utc": "2026-10-09T04:16:00Z",
+      "reason": "void run 1: ridge_px=0 (empty field) due to rank01 bin collapse on band 10's 4.96e6 m tail"
+    }
+  ],
+  "rename_note": "2026-10-09: the parallel-session label H65 was already taken on main (knowledge/41/42, IR-H65-001..007); this round is republished as H65b per the H63 rename precedent. Protocol sentences unchanged; artefact rebuilt under gems52-h65b- with identical gates."
+}

@@ -1,0 +1,89 @@
+{
+ "round": "H66",
+ "preregistered_utc": "2026-10-09T04:28:58+00:00",
+ "hypothesis_document": "knowledge/43_hypotheses_H66_preregistered.md",
+ "hypothesis_sha256": "e21187387a3b646ee6fafa30aacc6229c9575d455360f0f84a3331f5fb1aa0a9",
+ "hypothesis_bytes": 13397,
+ "lane": "two-view co-training (Blum & Mitchell 1998, doi:10.1145/279943.279962); View A = local-scale potential-field channels (H66-A), View B = surface (H61 unchanged)",
+ "frozen_before_any_fit": true,
+ "runner": "scripts/run_h66.py",
+ "runner_refuses_if_hash_moves": true,
+ "inherited_thresholds_from": {
+  "path": "registry/h61_preregistration.json",
+  "sha256": "3135e37afb3e1f88429b09337676b02b449d9d43a991e3985163f2db0e3ec4c1"
+ },
+ "view_A_feature_rule": {
+  "scale_suffixes": [
+   "_1",
+   "_3",
+   "_1_3",
+   "grad1",
+   "grad3",
+   "_coherence"
+  ],
+  "exclude_prefixes": [
+   "raw_band_"
+  ],
+  "exclude_substrings": [
+   "rank"
+  ],
+  "expected_count": 14,
+  "expected_names": [
+   "A_RTP_grad_1",
+   "A_RTP_grad_3",
+   "A_gravity_grad_1",
+   "A_gravity_grad_3",
+   "A_cover_grad_1",
+   "A_cover_grad_3",
+   "A_gravity_cover_signed_1",
+   "A_gravity_cover_signed_3",
+   "A_gravity_persistence_1_3",
+   "A_cover_persistence_1_3",
+   "A_gravity_coherence",
+   "A_cover_coherence",
+   "X_mag_TMI_up150_grad1",
+   "X_mag_TMI_up150_grad3"
+  ]
+ },
+ "view_A_learner": {
+  "kind": "Pipeline(SimpleImputer(median), StandardScaler, LogisticRegression(C=1.0, max_iter=2000))"
+ },
+ "diagnostic_learner": {
+  "kind": "HistGradientBoostingClassifier(max_depth=3, max_iter=150, learning_rate=0.05, min_samples_leaf=200, l2_regularization=1.0)",
+  "gating": false
+ },
+ "thresholds_inherited": {
+  "premise_mean_min": 0.6,
+  "premise_min_min": 0.55,
+  "canary_auc_alarm": 0.9,
+  "budget_dots_per_fold_per_arm": 9400,
+  "emission_budget_global": 37600,
+  "min_dot_separation_px": 3.0,
+  "catalogue_exclusion_m": 200.0,
+  "bootstrap_draws": 1000,
+  "bootstrap_seed": 520810,
+  "lane_rank_correlation": 0.9,
+  "lane_near_dot_fraction": 0.7,
+  "lane_near_dot_radius_px": 3.0,
+  "universal_coverage_probe_threshold": 0.95
+ },
+ "reference_control": {
+  "name": "single_B",
+  "holdout_dti_h61": 0.174517,
+  "ci95_h61": [
+   0.152316,
+   0.196299
+  ]
+ },
+ "budget": {
+  "E1": "canary+fit+premise",
+  "E2": "exchange+holdout+emission+gates",
+  "E3": "reserved, not authorised unless E1 passes",
+  "max_experiments": 2
+ },
+ "verdict_rule": "research-only unless premise PASS AND holdout disagreement_post DTI > single_B DTI with paired 95% CI excluding 0 AND format PASS AND lane literal+policy PASS AND uniqueness PASS. Even then eligible only; promotion is a separate selector step; nothing uploads; no weekly slot used.",
+ "fail_closed": [
+  "premise FAIL -> verdict NEGATIVE",
+  "reproduction mismatch of single_B vs H61 -> stop and report"
+ ]
+}

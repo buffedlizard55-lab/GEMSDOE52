@@ -1,0 +1,204 @@
+{
+  "round": "H65b",
+  "stage": "E2-holdout",
+  "finished_utc": null,
+  "evidence_class": "HOLDOUT-DTI (defective board predictor; necessary-not-sufficient gate)",
+  "evaluator_version": "gems52-pooled-hide-v1",
+  "hypothesis": "R5-H2a: valley lines of the band-10 distance-to-earthquake rank field (sigma-1 smooth, gradient NMS, p90 threshold)",
+  "control": "singleB: logistic regression on View-B ranks (DEM, slope, radiometric)",
+  "random_arm": "uniform random field, matched budget",
+  "budget": 15000,
+  "block_side": 200,
+  "n_folds": 4,
+  "prevalence": 0.002,
+  "mode": "hide",
+  "field_meta": {
+    "band": 10,
+    "band_name": "deq_n100a15",
+    "rank": "exact tie-aware rankdata/footprint (amendment 2)",
+    "sigma_px": 1.0,
+    "threshold_percentile": 90.0,
+    "threshold_value": 0.8992227911949158,
+    "ridge_px": 268267
+  },
+  "leakage_canary": {
+    "per_fold_auc": [
+      0.49483,
+      0.48689,
+      0.49538,
+      0.48678
+    ],
+    "max_auc": 0.49538,
+    "alarm_090": false,
+    "rule": "AUC > 0.90 means leakage until proven otherwise"
+  },
+  "reference_bar": {
+    "arm": "single_B committed (H61/H64 receipt)",
+    "value": 0.174517,
+    "label": "HOLDOUT-DTI, evaluator gems52-pooled-hide-v1, 53,186 withheld positives"
+  },
+  "pooled": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "alpha": 0.2,
+    "beta": 0.8,
+    "triangular_radius_m": 300.0,
+    "pooled": true,
+    "scores": {
+      "candidate": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.0044559375635245925,
+        "ci95": [
+          0.0,
+          0.009093901638765644
+        ],
+        "withheld_positive_pixels": 36439,
+        "tpw": 183.0,
+        "fpw": 59404.99033999166,
+        "fnw": 36256.0
+      },
+      "singleB": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.01890009395957329,
+        "ci95": [
+          0.012107117499640142,
+          0.027034885317358332
+        ],
+        "withheld_positive_pixels": 36439,
+        "tpw": 776.175360920416,
+        "fpw": 58804.20089748095,
+        "fnw": 35662.82463907958
+      },
+      "random": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.025773347611525277,
+        "ci95": [
+          0.023249567556731916,
+          0.028174660367557346
+        ],
+        "withheld_positive_pixels": 36439,
+        "tpw": 1064.0061054708722,
+        "fpw": 59595.96311753225,
+        "fnw": 35374.9938945291
+      }
+    },
+    "best_comparable_control": "random",
+    "paired_differences": {
+      "singleB": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "delta": -0.014444156396048697,
+        "ci95": [
+          -0.024908873094383863,
+          -0.006198956096802302
+        ],
+        "withheld_positive_pixels": 36439
+      },
+      "random": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "delta": -0.021317410048000685,
+        "ci95": [
+          -0.026496559370827268,
+          -0.016393987895657335
+        ],
+        "withheld_positive_pixels": 36439
+      }
+    },
+    "bootstrap": {
+      "method": "paired physical spatial-cluster percentile",
+      "clusters": 162,
+      "draws": 1000,
+      "seed": 520810,
+      "confidence": 0.95,
+      "caveat": "Conditional on fitted folds, catalogue labels and fixed budgets; not a leaderboard interval."
+    },
+    "implementation_sha256": {
+      "evaluate_holdout.py": "ffb084fdf34bb30438485b89caeb1228a6680abfd9f9f0472f4355845da05cc6",
+      "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+      "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+      "spatial.py": "fad7b09db9efc512247b9a176a7e7ce8631e287592b4e07902d0b9c38bed00f8"
+    }
+  },
+  "per_fold": [
+    {
+      "fold": 0,
+      "arm": "candidate",
+      "dti": 0.0,
+      "emitted": 15000
+    },
+    {
+      "fold": 0,
+      "arm": "singleB",
+      "dti": 0.01215,
+      "emitted": 15000
+    },
+    {
+      "fold": 0,
+      "arm": "random",
+      "dti": 0.02564,
+      "emitted": 15000
+    },
+    {
+      "fold": 1,
+      "arm": "candidate",
+      "dti": 0.01077,
+      "emitted": 15000
+    },
+    {
+      "fold": 1,
+      "arm": "singleB",
+      "dti": 0.01853,
+      "emitted": 15000
+    },
+    {
+      "fold": 1,
+      "arm": "random",
+      "dti": 0.02428,
+      "emitted": 15000
+    },
+    {
+      "fold": 2,
+      "arm": "candidate",
+      "dti": 0.0,
+      "emitted": 15000
+    },
+    {
+      "fold": 2,
+      "arm": "singleB",
+      "dti": 0.02114,
+      "emitted": 15000
+    },
+    {
+      "fold": 2,
+      "arm": "random",
+      "dti": 0.03092,
+      "emitted": 15000
+    },
+    {
+      "fold": 3,
+      "arm": "candidate",
+      "dti": 0.0085,
+      "emitted": 15000
+    },
+    {
+      "fold": 3,
+      "arm": "singleB",
+      "dti": 0.02651,
+      "emitted": 15000
+    },
+    {
+      "fold": 3,
+      "arm": "random",
+      "dti": 0.02032,
+      "emitted": 15000
+    }
+  ],
+  "caveats": [
+    "knowledge/10 section 5: this instrument cannot rank novel fields",
+    "holdout withholds ~1.04% of the footprint vs ~0.12-0.25% true prevalence"
+  ]
+}

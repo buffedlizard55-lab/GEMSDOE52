@@ -1,0 +1,34 @@
+{
+ "generated_utc": "2026-10-09T05:52:50Z",
+ "evidence_class": "MEASURED on data/external/gdr_wellspring_in_footprint.csv + pinned labels/sample",
+ "source_csv_sha256": "122718e65bdf55aab0ee12ad20d80062f0deb1de957225a61ad880dd5dc196ea",
+ "unique_sites": 12570,
+ "sites_inside_eligible": 12570,
+ "evidence_sites": 1156,
+ "legal_seeds": 952,
+ "composition": {
+  "measured_temp_ge_60": 412,
+  "measured_temp_lt_60": 484,
+  "only_chemical_geothermometer": 235,
+  "no_measured_temp": 56,
+  "class_hot": 739,
+  "class_warm": 158,
+  "reservoir_T_ge_150": 88,
+  "reservoir_T_120_150": 87,
+  "reservoir_T_100_120": 131,
+  "no_usable_geothermometer": 646,
+  "d_cat_median_m": 2002.5,
+  "d_cat_min_m": 300.0,
+  "d_cat_max_m": 14303.1,
+  "blocks_1km": 592
+ },
+ "caveat": "\"only_chemical_geothermometer\" sites are the class H58 measured as nearly worthless (22 px survived its holdout); they are admitted by the frozen seed rule and are named here rather than hidden. The seed rule was frozen before this count was taken.",
+ "footprint": "gems52.grid.footprint_from(training_features.tif, bands=\"all\") AND labels>=0 (the same sentinel-aware eligible the pipeline uses)",
+ "eligible_cells": 5164300,
+ "cross_check": {
+  "pipeline_receipt": "evidence/h67_build.json",
+  "pipeline_legal_seeds": 952,
+  "pipeline_blocks_1km": 592,
+  "first_attempt_used_the_sample_footprint_and_over_counted_by_8": true
+ }
+}
