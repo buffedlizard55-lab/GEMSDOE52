@@ -31,13 +31,40 @@ def test_value_range_is_checked(tmp_path):
     assert any("[0,1]" in p for p in r["problems"])
 
 
-def test_nan_pixels_are_flagged_as_the_portal_failure_they_cause(tmp_path):
-    """NaN is the mechanism behind 'Predicted values must be in range [0, 1]', so it must be caught."""
+def test_nan_inside_sample_footprint_is_rejected(tmp_path):
+    """NaN is allowed only where the official sample itself marks data as missing."""
     ref = np.ones((6, 6), dtype=np.float32)
     sample = write_tif(tmp_path, "sample.tif", ref)
-    r = gates.format_report(write_tif(tmp_path, "n.tif", np.full((6, 6), np.nan, np.float32)), sample)
-    assert r["nan_pixels"] == 36
-    assert any("NaN" in p for p in r["problems"])
+    candidate = np.zeros((6, 6), np.float32)
+    candidate[2, 3] = np.nan
+    r = gates.format_report(write_tif(tmp_path, "n.tif", candidate), sample)
+    assert r["nan_pixels"] == 1
+    assert r["nan_inside_footprint"] == 1
+    assert any("NaN pixels inside" in p for p in r["problems"])
+
+
+def test_nan_outside_sample_footprint_matches_official_template(tmp_path):
+    ref = np.ones((6, 6), dtype=np.float32)
+    ref[5, :] = np.nan
+    sample = write_tif(tmp_path, "sample.tif", ref, nodata=np.nan)
+    candidate = np.zeros((6, 6), np.float32)
+    candidate[5, :] = np.nan
+    r = gates.format_report(write_tif(tmp_path, "valid.tif", candidate, nodata=np.nan), sample)
+    assert r["ok"], r["problems"]
+    assert r["mask_matches_template"] is True
+    assert r["nan_inside_footprint"] == 0
+    assert r["nan_outside_footprint"] == 6
+
+
+def test_finite_data_outside_sample_footprint_is_rejected(tmp_path):
+    ref = np.ones((6, 6), dtype=np.float32)
+    ref[5, :] = np.nan
+    sample = write_tif(tmp_path, "sample.tif", ref, nodata=np.nan)
+    candidate = np.zeros((6, 6), np.float32)  # tempting, but these are data not NoData
+    r = gates.format_report(write_tif(tmp_path, "finite.tif", candidate, nodata=np.nan), sample)
+    assert not r["ok"]
+    assert r["finite_outside_footprint"] == 6
+    assert any("expected null/NaN" in p for p in r["problems"])
 
 
 def test_all_nan_file_fails_even_though_minmax_cannot_see_it(tmp_path):
@@ -61,7 +88,7 @@ def test_mass_outside_the_footprint_is_caught(tmp_path):
     footprint[3:, 3:] = True                       # the emitted pixel is outside it
     r = gates.format_report(write_tif(tmp_path, "m.tif", a), sample, footprint=footprint)
     assert r["mass_outside_footprint"] == 1
-    assert any("outside the valid footprint" in p for p in r["problems"])
+    assert any("outside the model footprint" in p for p in r["problems"])
 
 
 def test_a_clean_file_on_the_fixture_grid_passes(tmp_path):

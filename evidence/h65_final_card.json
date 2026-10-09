@@ -1,0 +1,96 @@
+{
+  "round": "H65",
+  "run_id": "h65-no-candidate-closeout-20261009",
+  "generated_utc": "2026-10-09",
+  "protocol": {
+    "file": "knowledge/41_hypotheses_H65_preregistered.md",
+    "sha256": "4d9d559fe6e4b42cffef206d366ccf785b1eda2146a686be98e376a1352bef71",
+    "original_protocol_label": "H62",
+    "rename_note": "H65 is the path-level round label; the frozen body remains byte-identical, as documented in knowledge/41a_amendment_2026-10-09_H65_sources.md."
+  },
+  "hypothesis": {
+    "id": "H65-A",
+    "title": "Cross-strike, regionally detrended basement and gravity offsets as View A",
+    "mechanism": "A buried fault may make a localized step in basement depth and/or isostatic gravity across its trace. The registered operator compares both sides along NNE/NW normals at 3 and 6 pixels after a 15-pixel regional detrend, then tests View A against the surface View B. This is a structural hypothesis, not a fault detector.",
+    "named_non_fault_mimic": "Basin-margin or flexural hinge without displacement; basement lithology/density contact; model-grid or interpolation seam.",
+    "layers": ["training_features.tif band 15 (modelled basement depth; interpretation not independently authenticated)", "training_features.tif band 13 (isostatic gravity)"]
+  },
+  "premise_auc": {
+    "label": "PREMISE-AUC (not HOLDOUT-DTI and not an organizer score)",
+    "mean_oof_auc": 0.5202,
+    "minimum_fold_auc": 0.4706,
+    "gate": {"mean_minimum": 0.6, "minimum_fold_minimum": 0.55},
+    "passed": false,
+    "receipt": "evidence/h65_premise.json"
+  },
+  "leakage_canary": {
+    "label": "PREMISE-AUC input canary",
+    "alarm_threshold_auc": 0.9,
+    "maximum_single_feature_auc": 0.5904,
+    "any_alarm": false,
+    "receipt": "evidence/h65_canary.json"
+  },
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "status": "NOT RUN",
+    "evaluator_version": null,
+    "withheld_positive_count": null,
+    "ci95": null,
+    "reason": "H65-A failed its prerequisite premise gate. No hide-and-recover arm was authorized or evaluated."
+  },
+  "correlation_overlap_vs_registry": {
+    "candidate_status": "NOT APPLICABLE — no candidate raster was emitted; no candidate registry comparison was run.",
+    "candidate_max_spearman": null,
+    "candidate_max_directed_dot_overlap_within_3px": null,
+    "candidate_registry_check_passed": null,
+    "existing_h61_reference_only": {
+      "file": "docs/downloads/h61-candidate.tif",
+      "sha256": "7c86853164f9cfa7aea34de029c7d5ccf3a6b43dbbb2b14de570e558384d2755",
+      "surface_max_spearman": 0.0342,
+      "surface_offenders": 0,
+      "literal_max_near_dot_fraction": 1.0,
+      "policy_max_near_dot_fraction": 0.87875,
+      "policy_informative_priors_over_0_70": 9,
+      "verdict": "DUPLICATE/STOP; historical reference only, not H65 candidate evidence",
+      "receipt": "evidence/h61_uniqueness_census_20261009.json"
+    }
+  },
+  "raster": {
+    "emitted": false,
+    "file": null,
+    "sha256": null,
+    "reason": "No candidate was authorized after the failed premise gate."
+  },
+  "validator": {
+    "status": "NOT RUN — no candidate raster exists.",
+    "nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "single_band_float32": null,
+    "crs_epsg_32611": null,
+    "shape_matches_sample": null,
+    "transform_matches_sample": null
+  },
+  "submission": {
+    "name": null,
+    "note": null,
+    "note_characters": 0,
+    "slots_used": 0,
+    "approved_for_weekly_slot": false,
+    "download_current_candidate": false,
+    "submit": false
+  },
+  "current_marker_pointer": {
+    "path": "submission/LATEST.txt",
+    "file": "gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif",
+    "sha256": "737c77344457dc1561fe091bc3ab085b3ab65af10b290f5301512f0505abec07",
+    "role": "unchanged historical marker pointer; not a current H65 result or submission approval"
+  },
+  "decision": {
+    "verdict": "NEGATIVE",
+    "promote": false,
+    "summary": "H65-A premise failed. No HOLDOUT-DTI, no candidate GeoTIFF, no current download, no submission, and no slot used.",
+    "organizer_confirmed_score": null
+  },
+  "source_followup": "knowledge/43_source_followup_and_format_gate_2026-10-09.md",
+  "candidate_prior_art_decision": "knowledge/44_candidate_prior_art_decision_2026-10-09.md"
+}

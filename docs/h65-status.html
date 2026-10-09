@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="H65 negative result: no current competition GeoTIFF exists. Audited sources, format-mask correction, prior-art decision, and explicit no-submit verdict.">
+<title>H65 status — no current GeoTIFF · GEMSDOE52</title>
+<link rel="stylesheet" href="style.css">
+<script src="site.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><nav>
+<a class="brand" href="index.html">GEMS / DOE 52</a>
+<a href="index.html">Overview</a>
+<a href="h65-status.html" aria-current="page">Current H65 status</a>
+<a href="executive-summary.html">Submission guide</a>
+<a href="downloads/index.html">Archive</a>
+<a href="sources.html">Sources</a>
+<a href="irregularities.html">Limitations</a>
+</nav></header>
+<main id="main">
+<div class="eyebrow">Current research decision · 2026-10-09 UTC</div>
+<h1>H65 is negative.<br>No submission TIFF exists.</h1>
+<div class="status" role="alert">
+<strong>CURRENT H65 RESULT: NEGATIVE · CURRENT DOWNLOAD: NO · SUBMIT: NO.</strong>
+<p>H65-A failed its registered premise gate. No hide-and-recover arm was run, no H65 GeoTIFF was written, and no competition slot was used. Do not submit an archived raster. The unchanged <code>submission/LATEST.txt</code> pointer names H60 only as a historical marker; it is not a current candidate or promotion decision.</p>
+</div>
+<p id="feed" class="live-feed">Loading dated local evidence status…</p>
+
+<section class="card">
+<div class="eyebrow">What was actually measured</div>
+<h2>Premise failed before candidate construction</h2>
+<p><strong>PREMISE-AUC (not HOLDOUT-DTI and not a leaderboard score):</strong> H65-A's out-of-quadrant mean AUC was <strong>0.5202</strong> and its minimum fold was <strong>0.4706</strong>. The preregistered gates were mean ≥0.60 and minimum fold ≥0.55. Both were required; the premise failed. The single-feature leakage-canary maximum was 0.5904 against an alarm threshold of 0.90.</p>
+<p><strong>HOLDOUT-DTI:</strong> not run. The prerequisite gate failed, so the hide-and-recover arm was not authorized. There is no withheld-positive count or 95% CI for H65.</p>
+<p><strong>Registry check:</strong> no H65 raster exists, so candidate rank-correlation and 3-pixel dot-overlap are not applicable—not a pass. The separate H61 reference raster is a measured <strong>DUPLICATE/STOP</strong> under the literal and repository-policy dot rules.</p>
+<p><a href="data/h65_final_card.json">Final H65 no-raster JSON card</a> · <a href="data/h65_run_card.json">Frozen run card (body retains the original H62 label)</a> · <a href="h63-audit.html">Historical H63 audit</a> · <a href="h64.html">Historical H64 audit</a></p>
+</section>
+
+<section class="card">
+<div class="eyebrow">Official format follow-up</div>
+<h2>Shared writer now preserves the sample NoData mask</h2>
+<p>The fetched DrivenData problem page says cells outside the data bounds should be null/NaN. In this checkout, the pinned sample template has <code>nodata=NaN</code>, 5,167,373 finite cells and 7,111,787 NaN cells. The H60 marker TIFF and archived H63 TIFF instead have no nodata tag and finite zeros outside that sample mask. The shared writer and local gate have now been repaired centrally to copy the sample mask and reject NaN inside the valid footprint.</p>
+<p>This is a format discrepancy, not a confirmed explanation for the user's historical “Predicted values must be in range [0, 1]” message. The rejected bytes and organizer receipt are unavailable. No historical TIFF was altered, no candidate was written, and local checks do not prove portal acceptance. See the <a href="irregularities.html">IR-H65-008 record</a> and the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">official specification</a>.</p>
+</section>
+
+<section class="card">
+<div class="eyebrow">Source and data provenance</div>
+<h2>Official listings checked; mirror provenance kept separate</h2>
+<ul>
+<li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">DrivenData scoring/output rules</a> and the <a href="https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516/4">organizer-staff pixel-exact mask clarification</a> were fetched and summarized in the source note. Nearby known-fault pixels are not exempt under the 300 m kernel.</li>
+<li><a href="https://gdr.openei.org/submissions/1391">Official GDR 1391</a>, DOI <a href="https://doi.org/10.15121/1881483">10.15121/1881483</a>, lists publicly accessible CC BY 4.0 well/spring and Quaternary-volcanic resources. The landing page was fetched, but the binary ZIPs were not downloaded or checksummed here.</li>
+<li>Derived GDR well/spring and vent CSVs were restored from the owner GitHub mirror and match repository manifest pins. Those pins authenticate mirror bytes only, not their extraction from the official archive. The well/spring CSV repeats sites and contains label-derived <code>dist_known_fault_px</code>; that field is prohibited from any future feature or filter.</li>
+<li>Official <a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">USGS GeoDAWN</a>, <a href="https://www.usgs.gov/3d-elevation-program/about-3dep-products-services">USGS 3DEP</a>, and the <a href="https://www.usgs.gov/publications/discovering-blind-geothermal-systems-great-basin-region-integrated-geologic-and">USGS blind-geothermal report</a> were fetched. Their physical context supports hypothesis testing, not fault confirmation or predictions about hidden labels.</li>
+</ul>
+<p><a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/43_source_followup_and_format_gate_2026-10-09.md">Full source and mask audit (repository)</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/44_candidate_prior_art_decision_2026-10-09.md">Candidate/prior-art decision (repository)</a> · <a href="sources.html">Source index</a></p>
+</section>
+
+<section class="card">
+<div class="eyebrow">Prior art and next gate</div>
+<h2>No fresh, viable candidate selected</h2>
+<p>The repository's co-training View-A sufficiency tests repeatedly failed. Existing registers already cover magnetic tilt edges, spring alignments, scarp profiles, drainage effects, and junction/termination geometry. The remaining exact untested queue is documented without relabeling old ideas as new. R3-H3 (connected drainage deflection conditional on a subsurface edge) is untested but preregistered at 6–10 CPU hours, beyond the session cap. H64-H3 spring alignment is prior art; raw GDR archive bytes remain unauthenticated. No candidate was placed or holdout-validated.</p>
+<p>Do not infer a candidate pass from no statistic. A future lane experiment must first measure each view's spatial-block OOF error correlation on labeled-negative proxies and meet the registered sufficiency/canary rules. Pseudo-label exchange remains stopped if either view is insufficient, correlation is strong/undefined, or leakage is detected.</p>
+<p><a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/44_candidate_prior_art_decision_2026-10-09.md">Read the ranked untested-prior-art queue and decision</a></p>
+</section>
+
+<section class="card">
+<div class="eyebrow">Three review passes</div>
+<ol>
+<li><strong>Pass 1 — science/provenance (PASS):</strong> rechecked the H65 stop, fetched official scoring/mask sources, documented GDR listing/license and mirror-byte limits, and reconciled prior registrations. No model was rerun.</li>
+<li><strong>Pass 2 — shared implementation (PASS):</strong> repaired the shared output path for template-masked NaN and added regression tests for matching masks, NaN inside, and finite values outside. Historical TIFFs remain unchanged.</li>
+<li><strong>Pass 3 — release/audit (PASS):</strong> refreshed the H65 no-candidate feed and landing/source/submission pages, verified the unchanged H60 pointer hash as archival only, and completed 350 tests (1 optional-cache skip) plus the 56-page site check.</li>
+</ol>
+<p><a href="data/h65_release_review.json">Complete three-pass review receipt</a></p>
+</section>
+
+<section class="card">
+<h2>If a future artifact is approved</h2>
+<p><strong>These are future steps only. There is no file to upload now.</strong> A separate selector must approve a candidate after its comparable blocked holdout, canary, registry uniqueness, non-union and validator gates pass. Only then: open the official <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">competition portal</a>, upload the approved one-band GeoTIFF (or a ZIP containing exactly that TIFF), use the receipt's exact submission name and a ≤140-character note, and retain the organizer receipt. A local format pass is not organizer acceptance; only the receipt can be labelled <code>ORGANIZER-CONFIRMED</code>.</p>
+</section>
+</main>
+<footer>Independent research; not an official DOE or DrivenData page. Model candidates are not verified faults or geothermal discoveries. <a href="index.html">Overview</a> · <a href="downloads/index.html">Historical download archive</a> · <a href="irregularities.html">Limitations</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code &amp; evidence</a></footer>
+</body>
+</html>

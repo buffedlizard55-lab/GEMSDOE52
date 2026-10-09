@@ -15,10 +15,13 @@ from gems52.structural import A_BANDS, B_BANDS
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def tif(path, a, transform=None):
-    with rasterio.open(path, 'w', driver='GTiff', width=a.shape[1], height=a.shape[0],
-                       count=1, dtype='float32', crs='EPSG:32611',
-                       transform=transform or Affine(100, 0, 243350, 0, -100, 4508550)) as ds:
+def tif(path, a, transform=None, nodata=None):
+    profile = dict(driver='GTiff', width=a.shape[1], height=a.shape[0], count=1,
+                   dtype='float32', crs='EPSG:32611',
+                   transform=transform or Affine(100, 0, 243350, 0, -100, 4508550))
+    if nodata is not None:
+        profile['nodata'] = nodata
+    with rasterio.open(path, 'w', **profile) as ds:
         ds.write(a.astype('float32'), 1)
     return path
 
@@ -109,6 +112,26 @@ def test_submission_zip_contains_only_one_tif_and_note_limit(tmp_path, monkeypat
     a[1, 1] = np.inf
     with pytest.raises(ValueError, match='normalized'):
         submission_writer.write_submission(tmp_path/'bad.tif', a, ref, np.ones(shape, bool), name='name', note='note')
+
+
+def test_submission_writer_copies_sample_nan_mask_outside_only(tmp_path, monkeypatch):
+    shape = (20, 20)
+    monkeypatch.setattr(grid, 'SHAPE', shape)
+    sample_array = np.zeros(shape, np.float32)
+    sample_array[0, :] = np.nan
+    ref = tif(tmp_path/'sample.tif', sample_array, nodata=np.nan)
+    prediction = np.zeros(shape, np.float32)
+    footprint = np.ones(shape, bool)
+    footprint[0, :] = False
+    receipt = submission_writer.write_submission(tmp_path/'candidate.tif', prediction, ref, footprint,
+                                                  name='mask test', note='Research only.')
+    assert receipt['validator']['ok'], receipt['validator']['problems']
+    with rasterio.open(tmp_path/'candidate.tif') as ds:
+        arr = ds.read(1)
+        assert np.isnan(ds.nodata)
+        assert np.isnan(arr[0, :]).all()
+        assert np.isfinite(arr[1:, :]).all()
+        assert np.array_equal(ds.dataset_mask() > 0, np.isfinite(sample_array))
 
 
 def test_whole_component_and_euclidean_buffer_never_leak():

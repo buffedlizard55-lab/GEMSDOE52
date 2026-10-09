@@ -1,0 +1,102 @@
+{
+  "round": "H65",
+  "review_id": "h65-three-pass-release-review-20261009",
+  "review_date_utc": "2026-10-09",
+  "scope": "Three-pass source, shared-implementation, and release review of a negative no-raster closeout. No candidate, holdout, model rerun, TIFF rewrite, or submission was performed.",
+  "passes": [
+    {
+      "pass": 1,
+      "name": "science, protocol, and provenance",
+      "status": "PASS",
+      "checks": [
+        "H65-A premise failure and no-HOLDOUT-DTI authorization boundary preserved.",
+        "Official DrivenData metric/output specification and staff pixel-exact mask clarification fetched and recorded.",
+        "GDR listing/license and USGS context checked with binary-source authentication limits explicit.",
+        "Prior art retained as prior art; no candidate described as novel or approved without evidence."
+      ],
+      "receipts": [
+        "evidence/h65_final_card.json",
+        "knowledge/43_source_followup_and_format_gate_2026-10-09.md",
+        "knowledge/44_candidate_prior_art_decision_2026-10-09.md",
+        "registry/irregularities.json"
+      ]
+    },
+    {
+      "pass": 2,
+      "name": "shared output-mask implementation",
+      "status": "PASS",
+      "checks": [
+        "Shared grid writer, submission writer, and format gate preserve the sample template's NaN mask and valid zeros.",
+        "Synthetic regression tests cover matching masks, NaN inside the valid sample, and finite pixels outside.",
+        "Historical H60/H61/H63 rasters were not rewritten; their known mask mismatch now fails the current gate."
+      ],
+      "receipts": [
+        "src/gems52/grid.py",
+        "src/gems52/submission_writer.py",
+        "src/gems52/gates.py",
+        "tests/test_gates.py",
+        "tests/test_ctd5.py",
+        "tests/test_h61.py",
+        "tests/test_h63.py"
+      ]
+    },
+    {
+      "pass": 3,
+      "name": "feed, site, and final acceptance audit",
+      "status": "PASS",
+      "checks": [
+        "Current feed, landing page, source index, submission guide, and archive clearly state H65 NEGATIVE; current download NO; submit NO.",
+        "H60 submission/LATEST.txt pointer and raster hash verified intact and labelled archival only.",
+        "Static-site local links, data JSON, page assets, receipt consistency, and H65 no-raster status verified."
+      ]
+    }
+  ],
+  "automated_checks": {
+    "pytest": {
+      "command": ".venv/bin/python -m pytest -q",
+      "status": "PASS",
+      "passed": 350,
+      "failed": 0,
+      "skipped": 1,
+      "warnings": 59,
+      "skip_reason": "tests/test_h65.py skips the optional H62 feature-cache assertion because work/h62/feat/manifest.json is absent; no model was rerun."
+    },
+    "site": {
+      "command": ".venv/bin/python scripts/check_site.py",
+      "status": "PASS",
+      "pages_checked": 56,
+      "data_files_checked": 279,
+      "h65_closeout": "PASS — negative premise gate, no candidate/holdout/slot, H60 marker archival only"
+    },
+    "diff_whitespace": {
+      "command": "git diff --check",
+      "status": "PASS"
+    },
+    "python_and_javascript_syntax": {
+      "status": "PASS",
+      "checked": [
+        "scripts/refresh_feed.py",
+        "scripts/check_site.py",
+        "docs/site.js",
+        "docs/assets/h63.js",
+        "docs/assets/h61.js",
+        "docs/assets/ctd5.js"
+      ]
+    }
+  },
+  "final_decision": {
+    "verdict": "NEGATIVE",
+    "candidate_raster_exists": false,
+    "holdout_dti_status": "NOT RUN",
+    "download_current_candidate": false,
+    "submit": false,
+    "slots_used": 0,
+    "organizer_confirmed_score": null,
+    "release_review_is_submission_approval": false
+  },
+  "limitations": [
+    "The historical portal range-rejection bytes and organizer receipt remain unavailable; the sample-mask discrepancy is not asserted as its cause.",
+    "The public leaderboard was not refreshed; its dated snapshot is retained without a fresh timestamp or score attribution.",
+    "The one skipped test depends on an absent optional feature cache, and the 59 warnings are Rasterio pending-deprecation warnings."
+  ]
+}

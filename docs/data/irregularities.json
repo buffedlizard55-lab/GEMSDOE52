@@ -1,6 +1,6 @@
 {
- "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified. | H61 merge: IR-H61-001..009 appended from the H61 branch; main's repaired schema and numbering retained.",
- "generated": "2026-10-09T00:48:30Z",
+ "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified. | H61 merge: IR-H61-001..009 appended from the H61 branch; main's repaired schema and numbering retained. H65 source/output-mask follow-up appended as IR-H65-008/-009 on 2026-10-09.",
+ "generated": "2026-10-09T04:35:14Z",
  "entries": [
   {
    "id": "IR-30-029",
@@ -1635,7 +1635,106 @@
    "suggestion_or_fix": "freeze a registry snapshot (list of hashes) with any registry-relative artifact; treat the 3 px proximity component as descriptive-only until its geometry and chance level are corrected (IR-H62-004) or drop it from gating (IR-H61-005)",
    "what_it_is": "H62-buriedcorr froze gems52-h62-buriedcorr-37627px.tif (sha 1f25c4fb...) at 2026-10-09T00:55Z and certified it: decoded-pattern-unique vs 71 accessible priors, novel_fraction 1.0, dots proximity 0.0094. A concurrent arena session's H61/H62-concordance/R5 files then merged into the same tree. The required-novel pool excludes every prior's support, so the identical pipeline on the identical work-cache inputs re-emitted 37,626 px (sha 6b494e7d...) with novel_fraction 1.0 vs 80 priors. The frozen 37,627 file re-measured against the merged registry is still pattern-unique but its novel fraction is 0.9924 (~287 px now inside the new priors' supports). Separately, the preregistered 3 px proximity gate (drop if > 0.30, H60-6 exclusion) now reads 0.9994 for ANY lattice-placed emission because the concurrent emissions are lattice-dense over the same eligible area - the same unsatisfiability the sibling round registered as IR-H61-005/IR-H61-009...",
    "disposition": "The H62-buriedcorr candidate is the re-measured 37,626 px file (sha 6b494e7d..., novel_fraction 1.0 vs 80 priors). The 37,627 px freeze is kept with a dated sidecar (submission/gems52-h62-buriedcorr-37627px.json) that marks it superseded and records the 0.9924 re-measure; it is not the current candidate. The proximity gate outcome is reported as DRIFT-flagged under the literal preregistered rule with the registry-saturation explanation, not laundered: the artifact's verdict remains NEGATIVE/not-slot-approved regardless. Build scripts now emit dated sidecars so scripts/check_site.py classifies these rasters as later-round (the R5/H61 convention), which keeps earlier rounds' novelty receipts from being silently invalidated. No leaderboard claim changes: no organizer-confirmed score exists for any file."
+  },
+  {
+   "id": "IR-H65-001",
+   "round": "H65",
+   "severity": "medium",
+   "status": "open - mis-specified operator; not used in H65",
+   "title": "H60-3 'strike-projected basement step' is a second difference ALONG strike and does not detect a step across the trace",
+   "what_it_is": "src/gems52/h60.py (build_stack, H60-3 block) computes |d1 + d2 - 2*arr| with d1, d2 shifted along the strike unit vector. A basement step across a strike-parallel trace is constant along the trace, so its along-strike second difference is zero by construction; a ramp is also cancelled. The layers b15_step_nne/nw and b13_step_nne exist in evidence/h60_views.json. registry/h60_preregistration.json (line 18) names them 'H60-3 strike-projected basement steps'.",
+   "how_we_know": "scripts/h65_operator_audit.py -> evidence/h65_operator_audit.json: synthetic 400x400 px grid, 200 m step across a NNE trace. H60-3 on-trace mean 2.96e-05 vs cross-strike symmetric difference (d=3 px) 1.970 in the same grid units (ratio 1.5e-05). Scratch check: the residual persists with no ramp (2.96e-05 order-1, 2.07e-05 nearest) and vanishes for a pure ramp, so it comes from the discrete step, not from the ramp.",
+   "handling": "H65 replaces the operator with a cross-strike symmetric difference, regionally detrended. H60 outputs are not edited or withdrawn here; any H60 result that uses b15_step_* as a feature is affected and needs re-running before it is cited.",
+   "disposition": "Open for review. Check whether any submitted H60 or H60C/H60D artefact used b15_step_* features (evidence/h60_views.json)."
+  },
+  {
+   "id": "IR-H65-002",
+   "round": "H65",
+   "severity": "high",
+   "status": "open - brief claim contradicted by the live public board",
+   "title": "Brief states '0.3195 is the highest score right now'; the live public board shows 0.3774 at #1",
+   "what_it_is": "The brief says 0.3195 is the highest score. The DrivenData leaderboard, fetched live on 2026-10-09 (https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/), shows #1 xiaofanhu 0.3774 and #7 DARD 0.3195. The 2026-10-08 snapshot (registry/leaderboard_snapshot_2026-10-08.json) gives #2 alexoktaba 0.3345 and the same #1 and #7 rows.",
+   "how_we_know": "Live fetch 2026-10-09 (chunk 0 of the public leaderboard, no login) for #1 and #7; registry/leaderboard_snapshot_2026-10-08.json for #2.",
+   "handling": "The bar used in this repository is stated as the measured holdout comparable, not as the board top. Both figures are recorded; 0.3195 is treated as the DARD row, not as the top.",
+   "disposition": "Reviewer to confirm the bar the brief intends (board top 0.3774 vs DARD 0.3195)."
+  },
+  {
+   "id": "IR-H65-003",
+   "round": "H65",
+   "severity": "medium",
+   "status": "open - board entry not linked to any file",
+   "title": "The public board lists 0.2778 under team 'extradr19' (#13); no file is linked to that row",
+   "what_it_is": "The live board shows #13 extradr19, 0.2778. The 2026-10-08 snapshot gives 12 submissions for that row. The repository's 0.2778 attribution to gemsdoe32-h33-h33-2-b2 (token e5eb6e7e) is owner-reported (IR-H61-004). The board row proves a 0.2778 exists for that team; it does not prove the file or the token.",
+   "how_we_know": "Live fetch 2026-10-09 of the public leaderboard; token mismatch recorded in IR-H61-004.",
+   "handling": "Recorded as: board row 0.2778 exists under team extradr19; file attribution remains OWNER-REPORTED, NOT ORGANIZER-CONFIRMED.",
+   "disposition": "Open. Needs a submission-page receipt to link the file to the row."
+  },
+  {
+   "id": "IR-H65-004",
+   "round": "H65",
+   "severity": "high",
+   "status": "open - measured DUPLICATE under literal and policy; download-for-research label still on the site",
+   "title": "H61 one-click file is 'DOWNLOAD FOR RESEARCH' on the site, but the lane rule classes it DUPLICATE/STOP",
+   "what_it_is": "The brief's lane rule: rank-correlation above 0.90 or more than 70% of dots within 3 px of one registry raster means 'log it as a duplicate and stop'. Measured 2026-10-09 with the census (evidence/h61_uniqueness_census_20261009.json, 530 priors after byte dedupe): literal DUPLICATE/STOP (max near-dot 1.0000, from 14 universal-coverage probes); repository policy DUPLICATE/STOP (max near-dot 0.87875 against work/h61/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif; 9 informative priors above 0.70, 14 probes excluded by 3 px coverage >= 0.95). Surface phase passes (max Spearman 0.0342). The repository's probe policy (IR-H61-005) is the reason the literal result is not read as the verdict; it does not turn 9 informative conflicts into a pass. The executive summary and index still show 'OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT' for H61.",
+   "how_we_know": "evidence/h61_uniqueness_census_20261009.json (lane_policy_dots, phases.dots); scripts/audit_uniqueness.py; README.md lines 53-55; docs/executive-summary.html.",
+   "handling": "Download-for-research and submit-no are both kept. The file is not offered as a lane-valid submission. H65 makes no emission.",
+   "disposition": "Reviewer decision: under the brief's literal rule the H61 file is a duplicate and should not be downloaded as a lane output. Confirm before any further use."
+  },
+  {
+   "id": "IR-H65-005",
+   "round": "H65",
+   "severity": "low",
+   "status": "closed - covered by byte-identical local copies",
+   "title": "7 of 524 eligible census priors returned HTTP 403 from the Git Data API",
+   "what_it_is": "scripts/fetch_prior_inventory.py materialised 519 of 526 census blobs; 7 failed with HTTP 403. The 7 are all repository-local rasters: docs/downloads/gems52-r2-signednormal-37654-1f751ac9b6ee-zeros.tif, docs/downloads/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.tif, docs/downloads/gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif, docs/downloads/gemsdoe52-cotrain-anchored-hybrid-20261006-zeros.tif, docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-nan.tif, docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-zeros.tif, submission/gems52-r4-B_only-37654px-b-only-research.tif.",
+   "how_we_know": "work/h61/prior_fetch_receipt.json (n_errors 7, n_fetched 519); local copies compared by SHA-256 against the census in this session.",
+   "handling": "The uniqueness audit includes the local copies through the PRIOR_GLOBS. Coverage is 524 of 524 eligible priors.",
+   "disposition": "Closed for the uniqueness audit. Still open as a fetch problem for the 403 blobs; the API access change is not explained."
+  },
+  {
+   "id": "IR-H65-006",
+   "round": "H65",
+   "severity": "low",
+   "status": "superseded - follow-up source check is recorded in IR-H65-008",
+   "title": "H61 one-click TIFF has no nodata tag; sample_submission.tif declares nodata NaN",
+   "what_it_is": "docs/downloads/h61-candidate.tif: float32, values exactly 0 or 1, nodata tag None. data/sample_submission.tif: float32, nodata NaN. The organiser's nodata wording was not checked in this session.",
+   "how_we_know": "Independent rasterio read in this session: dtype float32, EPSG:32611, shape (3730, 3292), nodata None; NaN count 0, Inf count 0, unique values {0, 1}. The sample's nodata is NaN (same read).",
+   "handling": "Not changed. The file's bytes are the audited bytes (sha256 7c86853164f9cfa7aea34de029c7d5ccf3a6b43dbbb2b14de570e558384d2755).",
+   "disposition": "This entry records the initial metadata-only review. The official null/NaN wording and the shared-writer discrepancy were subsequently confirmed; see IR-H65-008. The historical TIFF is not changed."
+  },
+  {
+   "id": "IR-H65-007",
+   "round": "H65",
+   "severity": "low",
+   "status": "open - user-reported rejection not reproduced",
+   "title": "User-reported portal error 'Predicted values must be in range [0, 1]' cannot be reproduced from the repository",
+   "what_it_is": "The user reported the error on an earlier submission. The repository's existing files are float32, finite and inside [0,1] (checked for the H61 file). The rejected bytes and portal receipt are not in this sandbox.",
+   "how_we_know": "Independent validator read of docs/downloads/h61-candidate.tif (this session); the rejected file was never provided.",
+   "handling": "The repository does not claim the NaN explanation. Recorded as not reproduced.",
+   "disposition": "Open. Needs the rejected file or the portal's exact error receipt."
+  },
+  {
+   "id": "IR-H65-008",
+   "round": "H65",
+   "severity": "medium",
+   "status": "open - shared writer repaired; historical TIFFs unchanged; no organizer receipt",
+   "title": "Historical all-finite GeoTIFF writer does not preserve the official sample NoData mask",
+   "what_it_is": "The official DrivenData page says cells outside data bounds should be null/NaN. The pinned sample_submission.tif has nodata=NaN, 5,167,373 finite cells and 7,111,787 NaN cells. The H60 marker TIFF and archived H63 TIFF have nodata=None and finite zero values outside that mask. The earlier local all-finite check was not an organizer acceptance test.",
+   "how_we_know": "Fetched https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/ and read data/sample_submission.tif, submission/gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif, and docs/downloads/h63-candidate.tif with rasterio in this checkout.",
+   "handling": "Updated the shared submission_writer to reproduce the sample mask, updated gates.format_report to allow NaN only outside the sample footprint and compare NoData masks/metadata, and added synthetic tests. No competition TIF was generated; historical files were not modified; no portal upload was made.",
+   "disposition": "Open pending review and any actual organizer receipt. Do not present a historical all-finite archive or the unchanged H60 marker as a current approved submission. The user's previous range rejection remains unreproduced; this mask discrepancy is not claimed as its cause."
+  },
+  {
+   "id": "IR-H65-009",
+   "round": "H65",
+   "severity": "low",
+   "status": "open - official metadata verified; binary source bytes not authenticated",
+   "title": "GDR 1391-derived owner-mirror CSVs are not byte-verified against the official archives",
+   "what_it_is": "The official GDR 1391 page lists public CC BY 4.0 well/spring and Quaternary-volcanic resources and direct download URLs. The repository holds derived well/spring and vent CSV mirrors whose bytes match the repository manifest, but neither official ZIP archive was downloaded/hashed in this session.",
+   "how_we_know": "Fetched https://gdr.openei.org/submissions/1391 and https://creativecommons.org/licenses/by/4.0/. Restored the two derived CSVs via the manifest-pinned GitHub mirror and verified their byte count/SHA-256 against registry/data_manifest.json. Fetch attempts for the official ZIP URLs failed; see knowledge/43_source_followup_and_format_gate_2026-10-09.md.",
+   "handling": "No model used these rows. Never use the label-derived dist_known_fault_px column. Keep GDR attribution and source-byte limitation explicit; a manifest match proves only the owner-mirror bytes.",
+   "disposition": "Open. If the data are used in a future experiment, acquire and compare official resource bytes or retain this provenance limitation; do not call the derived CSV organizer-authenticated."
   }
  ],
- "merge_note": "R5/H61/H62/H63 sessions of 2026-10-08/09: entries from the CTD5/H60/H60C/H60D rounds on main, IR-R5-001..009, IR-H61-001..009/011, the H62 concordance-corroboration round (IR-H62-001..005), the H63 step-normalised round (IR-H63-001..002), and the H62 buriedcorr round (IR-H62-006..010, renumbered from 001..004 at merge time because the concordance round's IDs landed first) are unioned by id; no entry was dropped or edited."
+ "merge_note": "Merged registry/irregularities.json: main's entries (including the parallel session's IR-H62-001..005) plus this round's IR-H63-001/002 (renamed from IR-H62-001/002 when the round was renamed H62 -> H63 after the parallel session's H62 merged first)."
 }

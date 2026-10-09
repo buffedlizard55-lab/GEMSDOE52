@@ -1,57 +1,29 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="One-click download, the exact file contract, and the explicit submit verdict for the H63 artefact.">
-<title>Executive summary — how to submit, and whether this file may be submitted · GEMSDOE52</title><link rel="stylesheet" href="assets/ctd5.css"><script src="assets/h63.js" defer></script></head>
+<meta name="description" content="Current H65 verdict: no GeoTIFF exists; submission is not approved. Future upload steps are shown only after selection approval.">
+<title>Current submission guide — H65 has no file · GEMSDOE52</title><link rel="stylesheet" href="assets/ctd5.css"><script src="assets/h63.js" defer></script></head>
 <body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>
-<a href="index.html">Overview</a><a href="h63-audit.html">Run &amp; evidence</a><a href="executive-summary.html">Submission guide</a><a href="h63-sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header>
-<main id="main"><div class="notice" role="note" style="margin:0 0 1rem"><strong>Latest research round: H64 (negative).</strong> Download yes, for research only; submit no. Unique research GeoTIFF on decoded pixels, lane DUPLICATE under the 70% rule. <a href="h64.html">H64 landing</a> · <a href="h64-executive-summary.html">H64 submission guide</a></div><div class="eyebrow">Executive summary / submission guide</div>
-<h1>Download in one click.<br>Do not upload this run.</h1>
-<p class="lead">The file, its exact identifier, and the frozen verdict. Promotion to a weekly slot is a separate selector decision, never a property of a valid file.</p>
-<div class="notice" role="note"><strong>OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT</strong><p>Do not upload this file to the competition portal. Verdict: <b>negative</b>. Format gate PASS; decoded-pattern uniqueness PASS; lane gate (policy) DUPLICATE/STOP; projected DTI above the champion at both ends of |G|: NO. Slots used: 0. NO CERTIFIED LEADERBOARD GAIN.</p></div>
-<div class="actions"><a class="button" href="downloads/h63-candidate.tif" download>Download the H63 GeoTIFF ↓</a><a class="button secondary" href="downloads/h63-candidate.zip" download>Single-TIFF ZIP</a><a class="button secondary" href="downloads/h63-a-only-reasoning.csv" download>Reasoning CSV</a></div>
-<p class="fileline">gems52-h63-stepview-cotrain-37600px.tif<br>140,421 bytes · SHA-256 aa41d0cd4658b2f0887180bf85132453dbf8f9408272d2c880d1fe4e822caa9f</p>
-<div class="grid2"><section class="panel"><h2>The file contract (verified on disk)</h2><ul>
-<li>One band, float32, values exactly 0 or 1.</li>
-<li>0 NaN and 0 infinite pixels anywhere in the file.</li>
-<li>EPSG:32611; 3,730 rows × 3,292 columns.</li>
-<li>Affine [100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0], identical to the pinned <code>sample_submission.tif</code>: yes.</li>
-<li>37,600 emitted cells, all more than 200 m from any mapped trace, 3 px minimum separation.</li>
-<li>The ZIP holds exactly one TIFF, byte-identical to the direct download.</li></ul>
-<p class="small">Local validator only. This is not an organiser acceptance receipt.</p></section>
-<section class="panel"><h2>Why upload is blocked</h2><ul>
-<li>The projected DTI does not exceed the reported champion at both ends of the measured |G| interval — its lower end is 0, because novel mass belongs to no identified atom.</li>
-<li>The sufficiency screen measures the premise before it is trusted: step-normalised View A mean out-of-fold AUC 0.536 against a bar of 0.60 (H61's raw-value View A: 0.5163; View B: 0.686).</li>
-<li>The holdout simulator measured Spearman −0.10 against the owner-reported board in R4; it cannot promote anything on its own.</li>
-<li>Inputs are pinned owner mirrors, not organiser-authenticated downloads, and the current weekly allowance is not observable from this sandbox.</li>
-<li>Lane gate, literal rule over every prior: DUPLICATE/STOP (max near-dot 1.0000); saturation-aware policy: DUPLICATE/STOP (max near-dot 0.8913).</li></ul>
-<a href="h63-audit.html">Read the full run and its limits →</a></section></div>
-<section class="prose"><h2>About “Predicted values must be in range [0, 1]”</h2>
-<p>That portal rejection is a property of the uploaded bytes, and this exporter makes it unreachable: <code>gems52.grid.write_geotiff</code> refuses to write unless the array is float32, finite everywhere, inside [0, 1], exactly 3,730 × 3,292 and on the pinned EPSG:32611 affine; <code>gems52.submission_writer</code> then reopens the written file, re-validates it against <code>sample_submission.tif</code>, and fails closed. The public specification permits null/NaN outside the footprint, so all-finite export is our compatibility precaution — we do <b>not</b> claim that NaN caused your specific historical rejection, because the rejected bytes and the portal receipt were never available here.</p>
-<h2>Exact competition steps — only for an approved candidate</h2><ol>
-<li>Obtain the separate selector's approval after the scientific, provenance, uniqueness and current-best gates pass. <b>H63 is negative; stop here for this file.</b></li>
-<li>Check the <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">official rules</a> and the remaining weekly allowance shown on your authenticated <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">submission page</a>. This site cannot read that allowance.</li>
-<li>On the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">competition page</a> choose <b>New submission</b> and select the <code>.tif</code> (or its single-TIFF ZIP) in <b>File to submit</b>. Never upload HTML, a JSON receipt or a screenshot.</li>
-<li>Paste the unique name and note below verbatim. Do not reproject, rescale, stretch or re-save the TIFF in an image editor.</li>
-<li>After an authorised upload, keep the submission id, timestamp, file SHA-256 and the organiser's result. Only that receipt supports an <b>ORGANIZER-CONFIRMED</b> score.</li></ol></section>
-<h2>Identification for this artefact</h2><p class="small">Copying these fields is not permission to upload the file.</p>
-<label for="submission-name">Unique name (52 / 140 characters)</label>
-<input id="submission-name" readonly value="gems52-h63-stepview-cotrain-37600px-20261009T014832Z"><div class="copy-row"><button class="copy" data-copy-id="submission-name">Copy name</button></div>
-<label for="submission-note">Note · 126 / 140 characters</label>
-<textarea id="submission-note" readonly rows="3">H63 cotrain: step-normalised potential-field A vs DEM+radiometric B disagreement; 3px dots; &gt;200m off catalogue; research-only</textarea><div class="copy-row"><button class="copy" data-copy-id="submission-note">Copy note</button></div>
-<p class="copy-status" id="copy-status" aria-live="polite"></p>
-<section class="prose"><h2>Reproduce it</h2><pre class="code">python -m venv .venv
-.venv/bin/pip install -r requirements-r2.txt
-bash scripts/download_competition_data.sh          # restore + SHA-256 verify the pinned inputs
-PYTHONPATH=src .venv/bin/python -c "from gems52 import structural; structural.build(dest='work/r2/features', include_optional_profiles=False, log=lambda *a, **k: None)"
-PYTHONPATH=src .venv/bin/python -m gems52.external # add the shared external GeoDAWN columns
-PYTHONPATH=src .venv/bin/python -c "from gems52 import h63; h63.extend_store()"   # add the H63 step columns
-.venv/bin/python scripts/fetch_prior_inventory.py --out work/h63/priors --receipt work/h63/prior_fetch_receipt.json
-.venv/bin/python scripts/run_h63.py all            # canary -> fit -> exchange -> holdout
-.venv/bin/python scripts/build_h63_submission.py   # place, gate, write, publish receipts
-.venv/bin/python scripts/publish_h63_site.py       # this page
-.venv/bin/python scripts/check_site.py &amp;&amp; .venv/bin/python -m pytest -q</pre>
-<p class="small">GitHub Pages is static: it serves the generated file, it does not train a model in your browser. Reproduction regenerates the same research result; it never uploads, promotes or spends a slot.</p></section>
-<details><summary>Preserved research archives — do not upload</summary>
+<a href="index.html">Overview</a><a href="h65-status.html">Current H65 status</a><a href="executive-summary.html">Submission guide</a><a href="sources.html">Sources</a><a href="downloads/index.html">Historical archive</a></nav></header>
+<main id="main">
+<div class="eyebrow">Current verdict · H65 · 2026-10-09</div>
+<h1>No candidate file exists.<br>Do not submit an archive.</h1>
+<div class="notice" role="alert"><strong>CURRENT H65 RESULT: NEGATIVE · CURRENT DOWNLOAD: NO · SUBMIT: NO.</strong><p>H65-A failed its preregistered premise gate. No H65 candidate GeoTIFF was written, no hide-and-recover HOLDOUT-DTI arm ran, and no competition slot was used. <code>submission/LATEST.txt</code> still points to an H60 historical marker only; it is not the current research result or upload approval.</p></div>
+<p class="lead">This guide is a clear no-submit verdict, not a download page. Historical TIFFs remain archived for audit; none is a substitute for a newly validated candidate.</p>
+<section class="panel"><h2>H65 measured status</h2><ul>
+<li><strong>PREMISE-AUC</strong> (not a score): mean 0.5202, minimum fold 0.4706; preregistered thresholds were ≥0.60 and ≥0.55. The premise failed.</li>
+<li><strong>HOLDOUT-DTI:</strong> not run because the premise gate failed; no withheld-positive count or 95% CI exists for H65.</li>
+<li><strong>Candidate registry gate:</strong> not applicable because no candidate raster exists. No uniqueness pass is claimed.</li>
+<li><strong>Format validator:</strong> not run on an H65 file because no file exists.</li>
+<li><strong>Submission name/note:</strong> none; no slot approval and zero slots used.</li>
+</ul><p><a href="h65-status.html">Full H65 status and source audit →</a> · <a href="data/h65_final_card.json">No-raster JSON closeout card</a> · <a href="data/h65_run_card.json">Frozen run card (body retains H62 label)</a></p></section>
+<section class="prose"><h2>Format correction for a future artifact</h2><p>The official DrivenData page says cells outside the data bounds should be null/NaN; the pinned sample template has <code>nodata=NaN</code>. Earlier H60/H63 files used finite zeros outside that mask, and their old all-finite local gate did not compare it. The shared writer and gate have now been fixed centrally to preserve the template mask, with synthetic regression tests. No old TIFF was rewritten. This discrepancy is <strong>not</strong> proven to be the cause of the user-reported range error; the rejected bytes and organizer receipt are unavailable. Local checks are not organizer acceptance. See <a href="irregularities.html">IR-H65-008</a> and <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">the official specification</a>.</p></section>
+<section class="prose"><h2>Steps for a future separately approved file</h2><p><strong>Do not perform these steps for any current archive.</strong> Only after a separate selector approves a new candidate based on its spatially blocked holdout and all required gates:</p><ol>
+<li>Read the candidate's final run card and confirm <code>promote=true</code>, current registry uniqueness, a valid template-mask check, and a submission note ≤140 characters.</li>
+<li>Open the official <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">competition portal</a> and verify the remaining weekly allowance on the authenticated submission page.</li>
+<li>Choose <b>New submission</b> and upload exactly the approved one-band GeoTIFF (or a ZIP containing exactly one TIFF). Do not reproject, rescale, stretch, or re-save it in an image editor.</li>
+<li>Use the exact approved submission name and note, then retain the organizer's submission ID, timestamp and receipt. Only that receipt may be labelled <code>ORGANIZER-CONFIRMED</code>.</li>
+</ol></section>
+<details><summary>Historical research archives and prior instructions — do not upload</summary>
 <!--H62B-GUIDE--><hr class="divider">
 <div class="eyebrow">Concurrent file · H62-buriedcorr</div>
 <h1>Executive summary — how to submit</h1>

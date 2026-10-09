@@ -137,19 +137,19 @@ def _fallback(o):
     return str(o)
 
 
-def write_geotiff(path: str | Path, arr: np.ndarray, *, nodata: float | None = None) -> dict:
-    """Write a single-band float32 GeoTIFF on the pinned competition grid, then re-read it.
+def write_geotiff(path: str | Path, arr: np.ndarray, *, nodata: float | None = None,
+                  valid_mask: np.ndarray | None = None) -> dict:
+    """Write one float32 GeoTIFF on the pinned competition grid, then re-read it.
+
+    With no ``valid_mask`` this remains a finite-array utility. The shared submission writer passes
+    the finite-data mask from ``sample_submission.tif`` and writes NaN/nodata only outside that
+    mask, matching the official template. Non-finite values inside the template footprint, or
+    finite values outside it, are rejected. This local format check is not an organizer receipt.
 
     The re-read is the contract: the writer returns what the *file* says, not what the array said.
-    Tiled (256 px) with deflate + horizontal predictor is what this family has actually shipped:
-    it is byte-small for a 0/1 emission, GDAL-legal, and reads back identical.  The block size is a
-    power of two so it cannot trip the TileWidth rules that killed an earlier write in this family.
-
-    The affine is built from the pinned six numbers and then *asserted* against them, because the
-    first version of this writer passed ``from_origin`` the wrong two indices and produced a file
-    whose bounds were ``[-1.68e10, 100]`` instead of the competition box.  The submission gate caught
-    it by comparing to ``data/sample_submission.tif``; the assert is what stops it ever reaching a
-    gate again.  Read the receipt, not the log.
+    Tiled (256 px) with deflate + horizontal predictor is GDAL-legal and byte-small for a sparse
+    emission. The affine is built from the pinned six numbers and then asserted; the first version
+    passed ``from_origin`` the wrong indices and produced bounds outside the competition box.
     """
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -157,10 +157,25 @@ def write_geotiff(path: str | Path, arr: np.ndarray, *, nodata: float | None = N
         raise TypeError(f"submission must be float32, got {arr.dtype}")
     if arr.shape != SHAPE:
         raise ValueError(f"submission must be {SHAPE}, got {arr.shape}")
-    if not np.isfinite(arr).all():
-        raise ValueError("submission contains NaN/inf; all-finite compatibility policy requires finite values")
-    if arr.min() < 0.0 or arr.max() > 1.0:
-        raise ValueError(f"submission out of range: min={arr.min()} max={arr.max()}")
+    if valid_mask is None:
+        check = arr
+        if not np.isfinite(arr).all():
+            raise ValueError("array contains NaN/inf; pass the sample template valid_mask for outside-footprint NaN")
+    else:
+        valid_mask = np.asarray(valid_mask, dtype=bool)
+        if valid_mask.shape != arr.shape:
+            raise ValueError(f"valid_mask must be {arr.shape}, got {valid_mask.shape}")
+        if nodata is None or not np.isnan(float(nodata)):
+            raise ValueError("template-masked output requires NaN nodata metadata")
+        if not np.isfinite(arr[valid_mask]).all():
+            raise ValueError("submission contains NaN/inf inside the sample footprint")
+        if not np.isnan(arr[~valid_mask]).all():
+            raise ValueError("all cells outside the sample footprint must be NaN")
+        check = arr[valid_mask]
+        if not check.size:
+            raise ValueError("sample template has no valid pixels")
+    if check.min() < 0.0 or check.max() > 1.0:
+        raise ValueError(f"submission out of range: min={check.min()} max={check.max()}")
     from affine import Affine
     tr = Affine(*[float(v) for v in TRANSFORM])                 # Affine order: a, b, c, d, e, f
     west, north = tr.c, tr.f

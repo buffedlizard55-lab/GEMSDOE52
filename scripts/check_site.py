@@ -686,6 +686,107 @@ def check_r5(DATA, DOCS, ROOT, problems, notes):
             problems.append(f"R5 {page_name}: P(beating 0.2778) is not published on the page")
 
 
+def check_h65_current(DATA, DOCS, ROOT, notes):
+    """Check the no-raster H65 result and ensure the H60 marker stays archival."""
+    problems = []
+    final_path = ROOT / 'evidence/h65_final_card.json'
+    published_path = DATA / 'h65_final_card.json'
+    release_path = ROOT / 'evidence/h65_release_review.json'
+    published_release_path = DATA / 'h65_release_review.json'
+    feed_path = DATA / 'feed.json'
+    submission_path = DATA / 'submission.json'
+    for path, label in ((final_path, 'evidence/h65_final_card.json'),
+                        (published_path, 'docs/data/h65_final_card.json'),
+                        (release_path, 'evidence/h65_release_review.json'),
+                        (published_release_path, 'docs/data/h65_release_review.json'),
+                        (feed_path, 'docs/data/feed.json'),
+                        (submission_path, 'docs/data/submission.json')):
+        if not path.is_file():
+            problems.append(f'H65: required current-status file missing: {label}')
+    if problems:
+        return problems
+    if final_path.read_bytes() != published_path.read_bytes():
+        problems.append('H65: published no-raster card differs from the evidence card bytes')
+    if release_path.read_bytes() != published_release_path.read_bytes():
+        problems.append('H65: published three-pass review differs from its evidence receipt')
+    release = json.loads(release_path.read_text())
+    release_tests = release.get('automated_checks', {}).get('pytest', {})
+    release_site = release.get('automated_checks', {}).get('site', {})
+    if (release.get('round') != 'H65' or len(release.get('passes') or []) != 3
+            or any(p.get('status') != 'PASS' for p in release.get('passes') or [])
+            or release.get('final_decision', {}).get('candidate_raster_exists') is not False
+            or release.get('final_decision', {}).get('submit') is not False
+            or release_tests.get('status') != 'PASS' or release_tests.get('failed') != 0
+            or int(release_tests.get('passed') or 0) < 350
+            or release_site.get('status') != 'PASS'
+            or int(release_site.get('pages_checked') or 0) < 56
+            or int(release_site.get('data_files_checked') or 0) < 1):
+        problems.append('H65: three-pass release review is incomplete, stale, or implies a candidate/approval')
+    card = json.loads(final_path.read_text())
+    feed = json.loads(feed_path.read_text())
+    sub = json.loads(submission_path.read_text())
+    latest = feed.get('latest_research') or {}
+    holdout = card.get('holdout_dti') or {}
+    raster = card.get('raster') or {}
+    decision = card.get('decision') or {}
+    pointer = card.get('current_marker_pointer') or {}
+    marker_path = ROOT / 'submission/LATEST.txt'
+    marker = marker_path.read_text().strip() if marker_path.is_file() else None
+    if (card.get('round') != 'H65' or decision.get('verdict') != 'NEGATIVE'
+            or decision.get('promote') is not False or raster.get('emitted') is not False
+            or raster.get('file') is not None or raster.get('sha256') is not None):
+        problems.append('H65: final card no longer asserts a negative no-raster result')
+    if (holdout.get('status') != 'NOT RUN' or holdout.get('evaluator_version') is not None
+            or holdout.get('withheld_positive_count') is not None or holdout.get('ci95') is not None):
+        problems.append('H65: HOLDOUT-DTI must remain explicitly not run with null evaluator/count/CI')
+    if (feed.get('current_round') != 'H65' or feed.get('current_verdict') != 'NEGATIVE'
+            or feed.get('current_candidate_exists') is not False
+            or feed.get('current_download_ok') is not False
+            or feed.get('current_submit_ok') is not False
+            or feed.get('submission') is not None):
+        problems.append('H65: current feed must say no candidate, no download, no submit, and no submission object')
+    if (latest.get('round') != 'H65' or latest.get('verdict') != 'NEGATIVE'
+            or latest.get('candidate_raster_exists') is not False or latest.get('file') is not None
+            or latest.get('download') is not None or latest.get('download_ok') is not False
+            or latest.get('submit_ok') is not False or latest.get('hash_verified') is not None
+            or latest.get('holdout_dti', {}).get('status') != 'NOT RUN'):
+        problems.append('H65: latest-research feed record is not an explicit no-candidate/no-score closeout')
+    if marker != pointer.get('file') or sub.get('file') != marker:
+        problems.append('H65: submission/LATEST.txt and its archival H60 pointer receipt changed unexpectedly')
+    if (sub.get('current_research_round') != 'H65' or sub.get('current_research_verdict') != 'NEGATIVE'
+            or sub.get('is_archival_pointer') is not True or sub.get('current_candidate_exists') is not False
+            or sub.get('download_current_candidate') is not False or sub.get('submit_ok') is not False
+            or sub.get('approved_for_weekly_slot') is not False):
+        problems.append('H65: docs/data/submission.json does not mark H60 as archival-only under the H65 no-submit result')
+    pointer_file = ROOT / 'submission' / str(pointer.get('file') or '')
+    pointer_hash = hashlib.sha256(pointer_file.read_bytes()).hexdigest() if pointer_file.is_file() else None
+    if (pointer_hash != pointer.get('sha256') or feed.get('marker_pointer', {}).get('sha256_verified') is not True
+            or feed.get('marker_pointer', {}).get('status', '').find('ARCHIVAL ONLY') < 0):
+        problems.append('H65: H60 marker pointer is not verifiably preserved and marked archival-only')
+    for folder in (ROOT / 'submission', DOCS / 'downloads'):
+        if list(folder.glob('*h65*.tif')) or list(folder.glob('*H65*.tif')):
+            problems.append(f'H65: unexpected H65 TIFF found in {folder.relative_to(ROOT)} despite no-raster card')
+    home = (DOCS / 'index.html').read_text() if (DOCS / 'index.html').is_file() else ''
+    status = (DOCS / 'h65-status.html').read_text() if (DOCS / 'h65-status.html').is_file() else ''
+    guide = (DOCS / 'executive-summary.html').read_text() if (DOCS / 'executive-summary.html').is_file() else ''
+    sources = (DOCS / 'sources.html').read_text() if (DOCS / 'sources.html').is_file() else ''
+    archive = (DOCS / 'downloads/index.html').read_text() if (DOCS / 'downloads/index.html').is_file() else ''
+    for page_name, text in (('index.html', home), ('h65-status.html', status),
+                            ('executive-summary.html', guide), ('sources.html', sources),
+                            ('downloads/index.html', archive)):
+        if 'H65' not in text or 'NEGATIVE' not in text:
+            problems.append(f'H65: {page_name} does not visibly identify the current negative result')
+    if 'CURRENT DOWNLOAD: NO' not in home or 'SUBMIT: NO' not in home:
+        problems.append('H65: home page lacks an unmistakable no-download/no-submit verdict')
+    if 'CURRENT DOWNLOAD: NO' not in status or 'SUBMIT: NO' not in status:
+        problems.append('H65: status page lacks an unmistakable no-download/no-submit verdict')
+    if 'CURRENT DOWNLOAD: NO' not in guide or 'SUBMIT: NO' not in guide:
+        problems.append('H65: submission guide lacks an unmistakable no-download/no-submit verdict')
+    if not problems:
+        notes.append('H65 closeout verified: negative premise gate, no candidate/holdout/slot, H60 marker retained as archival only')
+    return problems
+
+
 def main() -> int:
     problems: list[str] = []
     notes: list[str] = []
@@ -830,6 +931,9 @@ def main() -> int:
             if abs(float(d.get("top", top)) - float(top)) > 1e-9:
                 problems.append("leaderboard.json: 'top' disagrees with row 1")
 
+    if (ROOT / 'evidence/h65_final_card.json').is_file():
+        problems.extend(check_h65_current(DATA, DOCS, ROOT, notes))
+
     # Current H56 is intentionally downloadable but explicitly not slot-approved. Re-check the decision,
     # decoded-pattern review, A-only scope, and byte-identical aliases together; a report that contradicts
     # any one of them must stop publication.
@@ -842,7 +946,8 @@ def main() -> int:
 
         sub_path = DATA / 'submission.json'
         sub = json.loads(sub_path.read_text()) if sub_path.exists() else {}
-        current_round = ('H60' if str(sub.get('file', '')).startswith('gems52-h60-')
+        current_round = ('H65' if sub.get('current_research_round') == 'H65'
+                         else 'H60' if str(sub.get('file', '')).startswith('gems52-h60-')
                          else 'H58' if str(sub.get('file', '')).startswith('gems52-h58-')
                          else 'H57' if str(sub.get('file', '')).startswith('gems52-h57-')
                          else 'H56' if str(sub.get('file', '')).startswith('gems52-h56-')
@@ -1030,7 +1135,7 @@ def main() -> int:
     port = httpd.server_address[1]
     threading.Thread(target=httpd.serve_forever, daemon=True).start()
     try:
-        page_paths = ("index.html", "executive-summary.html", "r5.html", "h56.html", "h54.html",
+        page_paths = ("index.html", "h65-status.html", "executive-summary.html", "r5.html", "h56.html", "h54.html",
                       "h55-paired-shoulders.html", "h55.html", "h55-profile.html", "h55-edge.html",
                       "r3.html", "r3-hypotheses.html", "feed.html", "irregularities.html", "sources.html",
                       "downloads/index.html")
@@ -1268,8 +1373,12 @@ def main() -> int:
         slot = f"Scientific slot gate remains CLOSED for {sub.get('file')}."
     else:
         slot = 'Scientific slot gate: not recorded in docs/data/submission.json (not assumed either way).'
-    print('\n✓ local links/JSON/receipt values verified; format and canonical-pattern research release '
-          f'verified; byte-identical TIFF serves through the site. {slot}')
+    if sub.get('current_research_round') == 'H65':
+        print('\n✓ local links/JSON and H65 no-raster/no-submit receipt verified; the unchanged H60 marker '
+              'and TIFF are intact as archival only, not a current candidate or upload approval.')
+    else:
+        print('\n✓ local links/JSON/receipt values verified; format and canonical-pattern research release '
+              f'verified; byte-identical TIFF serves through the site. {slot}')
     return 0
 
 

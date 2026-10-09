@@ -1,41 +1,31 @@
 <!--H65-README-->
-# Current status — H65 (2026-10-09; first written as H62): NEGATIVE at the premise gate, nothing submitted
+# Current status — H65 (2026-10-09): NEGATIVE, no candidate GeoTIFF
 
-> The protocol file keeps its original H62 label in its body (byte-identical). This round is H65 in filenames; see [`knowledge/41a`](knowledge/41a_amendment_2026-10-09_H65_sources.md).
+> **CURRENT DOWNLOAD: NO · SUBMIT TO THE COMPETITION: NO.** H65-A failed its preregistered premise gate. No H65 raster exists, no H65 holdout arm ran, and no weekly slot was used. `submission/LATEST.txt` remains an H60 archival pointer; it is not a new result or upload approval. H61 is a measured lane duplicate.
+>
+> **Current site:** [H65 status and evidence](docs/h65-status.html) · [submission guide — no file to upload](docs/executive-summary.html) · [dated local feed](docs/feed.html) · [historical download archive](docs/downloads/index.html). Archive downloads are for audit only; none is current upload approval.
 
-> **SUBMIT TO THE COMPETITION: NO.** No new GeoTIFF was produced. The one-click file below is the H61 file,
-> and it is a **measured lane duplicate** (see IR-H65-004), not a lane-valid unique submission.
-
-**What was tested.** H65-A, the only hypothesis run this round. A cross-strike, regionally detrended offset of
-`raw_band_15` and `raw_band_13` as View A, with label-blind quadrant folds (buffer 80 px).
-Preregistered in [`knowledge/34`](knowledge/41_hypotheses_H65_preregistered.md) (SHA-256 `4d9d559f…2bef71`).
-A dated amendment that corrects its source list, without editing the frozen file, is in
-[`knowledge/34a`](knowledge/41a_amendment_2026-10-09_H65_sources.md).
+The frozen protocol keeps its original H62 label inside its byte-identical body; this round is named H65 in filenames. See [`knowledge/41a`](knowledge/41a_amendment_2026-10-09_H65_sources.md). H65-A tested cross-strike, regionally detrended offsets of band 15 and band 13 as View A on label-blind quadrant folds (80-px buffer).
 
 | Check | Label | Result | Receipt |
 |---|---|---|---|
-| Operator audit (H60-3 vs cross-strike) | SYNTHETIC | H60-3 responds at 1.5e-05 of cross-strike on a step; it is not a step detector | [`evidence/h65_operator_audit.json`](evidence/h65_operator_audit.json) |
-| Premise (out-of-quadrant AUC) | PREMISE-AUC | mean **0.5202**, min fold **0.4706**; gate needs ≥ 0.60 and ≥ 0.55 → **FAIL** | [`evidence/h65_premise.json`](evidence/h65_premise.json) |
-| Leakage canary (alarm > 0.90) | PREMISE-AUC | max single-feature 0.5904; no alarm | [`evidence/h65_canary.json`](evidence/h65_canary.json) |
-| HOLDOUT-DTI (hide-and-recover) | HOLDOUT-DTI | **not run** (premise gate failed) | — |
-| Uniqueness of the H61 file, census of 530 priors | diagnostic | surface PASS (max ρ 0.034); dots **DUPLICATE/STOP** (literal 1.0000; policy 0.87875, 9 informative priors above 0.70) | [`evidence/h61_uniqueness_census_20261009.json`](evidence/h61_uniqueness_census_20261009.json) |
+| Operator audit | SYNTHETIC | H60-3 along-strike second difference responds at ~1.5e-05 of the registered cross-strike step operator on the synthetic step | [`evidence/h65_operator_audit.json`](evidence/h65_operator_audit.json) |
+| View-A premise | PREMISE-AUC (not a score) | mean **0.5202**, minimum fold **0.4706**; gates ≥0.60 and ≥0.55 → **FAIL** | [`evidence/h65_premise.json`](evidence/h65_premise.json) |
+| Leakage canary | PREMISE-AUC inputs | max raw-feature AUC **0.5904**; alarm threshold 0.90; no alarm | [`evidence/h65_canary.json`](evidence/h65_canary.json) |
+| Spatial hide-and-recover | HOLDOUT-DTI | **NOT RUN**; prerequisite failed | — |
+| H61 uniqueness (reference only) | registry diagnostic | surface max Spearman 0.0342; dots **DUPLICATE/STOP** (literal 1.0000; policy 0.87875) | [`evidence/h61_uniqueness_census_20261009.json`](evidence/h61_uniqueness_census_20261009.json) |
 
-**Verdict: H65 not promoted.** Experiments used: 2 of 3 (E3 not authorised). Run card:
-[`evidence/h65_run_card.json`](evidence/h65_run_card.json). Full note: [`knowledge/35`](knowledge/42_h65_results_and_limits.md).
-Tests: `tests/test_h65.py` 8 passed; full suite 309 passed.
+**Final verdict: NEGATIVE.** Original run card: [`evidence/h65_run_card.json`](evidence/h65_run_card.json). No-raster closeout card with explicit nulls for unavailable DTI, raster hash and validator fields: [`evidence/h65_final_card.json`](evidence/h65_final_card.json). Frozen H65 results: [`knowledge/42_h65_results_and_limits.md`](knowledge/42_h65_results_and_limits.md).
 
-**Leaderboard correction (PUBLIC BOARD, not ORGANIZER-CONFIRMED).** The brief says 0.3195 is the highest score.
-It is not. On the live DrivenData board on 2026-10-09 the top is **0.3774** (xiaofanhu), and 0.3195 is rank 7 (DARD):
-[leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/). The 0.2778 row is
-rank 13 (extradr19) and is not linked to any file (IR-H65-003).
+**Source follow-up.** The official scoring page, pixel-exact organizer mask clarification, USGS GeoDAWN/3DEP pages, USGS blind-geothermal report, GDR 1391/CC BY 4.0 metadata, and author-hosted co-training paper were fetched and recorded in [`knowledge/43`](knowledge/43_source_followup_and_format_gate_2026-10-09.md). The official GDR landing page is accessible, but its binary ZIPs were not obtained here; the restored derived CSVs are owner-mirror bytes, not source-authenticated. Do not use `dist_known_fault_px`.
 
-**Irregularities logged this round:** IR-H65-001 (H60-3 operator mis-specified), -002 (the brief's "highest score"
-claim), -003 (0.2778 row not linked to a file), -004 (H61 lane status under the literal rule and the policy),
--005 (7 census blobs HTTP 403, covered by byte-identical local copies), -006 (H61 file has no nodata tag;
-sample declares NaN), -007 (portal error not reproduced).
+**Submission-format correction.** The pinned template uses NaN outside its finite-data mask, while the historical H60/H63 TIFFs used finite zeros there. The shared writer and format gate were corrected to preserve the template mask. This does not explain the earlier user-reported portal range rejection and is not organizer acceptance; no historical TIFF was rewritten. See IR-H65-008, [`knowledge/43`](knowledge/43_source_followup_and_format_gate_2026-10-09.md), and the shared writer tests.
 
-**Still open:** a unique, lane-valid candidate; a HOLDOUT-DTI number for any H65 arm; the source items 4–6 in
-`knowledge/34` §4 (unopened); the 0.2778 file-to-row receipt; the portal error text.
+**Candidate decision.** The repository does not contain 3–5 genuinely new, viable candidates that can be ranked without relabeling prior art. The untested-prior-art queue and stop reasons are documented in [`knowledge/44`](knowledge/44_candidate_prior_art_decision_2026-10-09.md); R3-H3 exceeds the time cap, GDR spring alignment was already preregistered in H64, and junction/termination and scarp-profile families recur in older registers. No candidate was selected, validated or promoted.
+
+**Three-pass release review complete:** source/protocol, shared output-mask implementation, and feed/site release checks all passed. Full suite: **350 passed, 1 skipped, 0 failed** (59 Rasterio deprecation warnings); site check: **56 pages and 278 JSON files**. The skip is an optional H62 cache check; no model was rerun. See [`evidence/h65_release_review.json`](evidence/h65_release_review.json).
+
+**Irregularities:** IR-H65-001..007 remain historical records; IR-H65-006 is superseded by follow-up IR-H65-008 (official mask wording confirmed; historical files unchanged), and IR-H65-009 records the GDR source-byte gap. The user's earlier range-error receipt is still unavailable and the cause remains unverified (IR-H65-007).
 <!--/H65-README-->
 
 <!--H64-README-->

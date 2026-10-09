@@ -1,4 +1,4 @@
-"""Tests for the H62 round: frozen protocol, operator audit, gate logic.
+"""Tests for the path-level H65 closeout of the frozen H62-labeled protocol.
 
 These tests need no competition raster. The feature-store checks skip cleanly when work/ is absent.
 """
@@ -99,3 +99,36 @@ def test_features_have_no_nan_inside_footprint_when_built():
     for name, st in man["stats"].items():
         assert st["nan_in_footprint"] == 0, name
         assert np.isfinite(st["min"]) and np.isfinite(st["max"]), name
+
+
+def test_h65_feed_keeps_negative_no_raster_decision_explicit():
+    from refresh_feed import h65_latest_research
+
+    card = json.loads((ROOT / "evidence/h65_final_card.json").read_text())
+    latest = h65_latest_research(card)
+    assert latest["round"] == "H65"
+    assert latest["verdict"] == "NEGATIVE"
+    assert latest["candidate_raster_exists"] is False
+    assert latest["file"] is None and latest["download"] is None
+    assert latest["download_ok"] is False and latest["submit_ok"] is False
+    assert latest["hash_verified"] is None
+    assert latest["premise_auc"]["label"] == "PREMISE-AUC (not a score)"
+    assert latest["holdout_dti"] == {
+        "label": "HOLDOUT-DTI", "status": "NOT RUN", "evaluator_version": None,
+        "withheld_positive_count": None, "ci95": None,
+    }
+
+
+def test_published_h65_feed_does_not_promote_archival_h60_pointer():
+    feed = json.loads((ROOT / "docs/data/feed.json").read_text())
+    sub = json.loads((ROOT / "docs/data/submission.json").read_text())
+    latest = feed["latest_research"]
+    assert feed["current_round"] == "H65"
+    assert feed["current_candidate_exists"] is False
+    assert feed["submission"] is None
+    assert latest["round"] == "H65" and latest["file"] is None
+    assert feed["marker_pointer"]["file"] == sub["file"]
+    assert feed["marker_pointer"]["status"].startswith("ARCHIVAL ONLY")
+    assert sub["current_candidate_exists"] is False
+    assert sub["download_current_candidate"] is False
+    assert sub["submit_ok"] is False

@@ -5,6 +5,7 @@ import hashlib
 import json
 import zipfile
 import numpy as np
+import rasterio
 from . import gates, grid
 
 
@@ -17,8 +18,23 @@ def write_submission(path, prediction, sample, footprint, *, note, name, metadat
     fp = np.asarray(footprint, bool)
     if fp.shape != p.shape or np.any((p > 0) & ~fp):
         raise ValueError('invalid footprint or positive mass outside footprint')
+    template_valid = grid.footprint_from(sample, bands='all')
+    if template_valid.shape != p.shape or np.any(fp & ~template_valid):
+        raise ValueError('model footprint must be a subset of the sample-submission valid-data mask')
+    with rasterio.open(sample) as sample_src:
+        template_nodata = sample_src.nodata
     path = Path(path)
-    grid.write_geotiff(path, p.astype(np.float32), nodata=None)
+    if template_nodata is None and template_valid.all():
+        # Tiny/full-grid fixtures may have no nodata cells; preserve that template contract.
+        grid.write_geotiff(path, p.astype(np.float32), nodata=None)
+    else:
+        if template_nodata is None or not np.isnan(template_nodata):
+            raise ValueError('sample template has outside cells but does not declare NaN nodata')
+        # Competition sample uses NaN nodata outside its data polygon. Preserve its validity mask;
+        # keep zeros (valid probabilities) elsewhere within the raster footprint.
+        output = p.astype(np.float32, copy=True)
+        output[~template_valid] = np.nan
+        grid.write_geotiff(path, output, nodata=np.nan, valid_mask=template_valid)
     report = gates.format_report(path, sample, footprint=fp)
     if not report['ok']:
         raise ValueError(f'on-disk validator rejected output: {report["problems"]}')

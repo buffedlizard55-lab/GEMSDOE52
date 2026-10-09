@@ -180,26 +180,21 @@ def test_h63_preregistration_binds_to_the_frozen_document():
     assert reg["thresholds"]["sufficiency_screen_min_mean_oof_auc"] == 0.6
 
 
-def test_h63_artefact_is_portal_safe_if_present():
+def test_h63_archival_raster_is_rejected_for_sample_mask_mismatch():
     sample = ROOT / "data/sample_submission.tif"
     cands = sorted((ROOT / "submission").glob("gems52-h63-*.tif"))
     if not cands or not sample.exists():
         pytest.skip("H63 artefact or pinned sample not present in this checkout")
     path = cands[-1]
     rep = gates.format_report(path, sample, footprint=None)
-    assert rep["ok"], rep["problems"]
-    assert rep["nan_pixels"] == 0 and rep["infinity_pixels"] == 0
-    assert rep["min"] >= 0.0 and rep["max"] <= 1.0
-    assert rep["bands"] == 1 and rep["dtype"] == "float32"
-    with rasterio.open(path) as src:
-        a = src.read(1)
-    assert set(np.unique(a)).issubset({0.0, 1.0})
-    zip_path = path.with_suffix(".zip")
-    if zip_path.exists():
-        with zipfile.ZipFile(zip_path) as z:
-            assert z.namelist() == [path.name]
-            assert z.read(path.name) == path.read_bytes()
-
+    assert rep["ok"] is False
+    assert rep["mask_matches_template"] is False
+    assert rep["template_valid_pixels"] == 5_167_373
+    assert rep["finite_outside_footprint"] == 7_111_787
+    assert rep["nan_outside_footprint"] == 0
+    assert "candidate valid-data mask differs from sample_submission.tif" in rep["problems"]
+    assert "all cells outside the sample footprint must be NaN" in rep["problems"]
+    # H63 remains unchanged historical research; its prior all-finite gate is superseded by H65.
 
 def test_h63_run_card_verdict_is_consistent_if_present():
     card_path = ROOT / "evidence/h63_run_card.json"

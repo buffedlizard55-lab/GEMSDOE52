@@ -125,23 +125,19 @@ def test_g_interval_excludes_the_superseded_point_value():
     assert d["band6_identity"]["best_external_match"]["spearman"] > 0.999
 
 
-def test_h61_artefact_is_portal_safe_if_present():
+def test_h61_archival_raster_is_rejected_for_sample_mask_mismatch():
     sample = ROOT / "data/sample_submission.tif"
     cands = sorted((ROOT / "submission").glob("gems52-h61-*.tif"))
     if not cands or not sample.exists():
         pytest.skip("H61 artefact or pinned sample not present in this checkout")
     path = cands[-1]
     rep = gates.format_report(path, sample, footprint=None)
-    assert rep["ok"], rep["problems"]
-    assert rep["nan_pixels"] == 0 and rep["infinity_pixels"] == 0
-    assert rep["min"] >= 0.0 and rep["max"] <= 1.0
-    assert rep["bands"] == 1 and rep["dtype"] == "float32"
-    with rasterio.open(path) as src:
-        a = src.read(1)
-    assert set(np.unique(a)).issubset({0.0, 1.0})
-    zip_path = path.with_suffix(".zip")
-    if zip_path.exists():
-        import zipfile
-        with zipfile.ZipFile(zip_path) as z:
-            assert z.namelist() == [path.name]
-            assert z.read(path.name) == path.read_bytes()
+    assert rep["ok"] is False
+    assert rep["mask_matches_template"] is False
+    assert rep["template_valid_pixels"] == 5_167_373
+    assert rep["finite_outside_footprint"] == 7_111_787
+    assert rep["nan_outside_footprint"] == 0
+    assert "candidate valid-data mask differs from sample_submission.tif" in rep["problems"]
+    assert "all cells outside the sample footprint must be NaN" in rep["problems"]
+    # This is a historical incompatibility discovered later, not a mutation or a claim about the
+    # separate portal range rejection. Keep the old bytes as an archive and fail the current gate.

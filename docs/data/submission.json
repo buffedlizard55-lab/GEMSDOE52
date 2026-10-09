@@ -57,7 +57,8 @@
     "mass": 31000.0,
     "problems": [],
     "ok": true,
-    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+    "validation_class": "historical local range/grid check only; not current template-mask compliance or organizer acceptance",
+    "historical_sample_mask_status": "MISMATCH \u2014 H65 follow-up found finite zeros outside the sample NaN footprint; the original local gate did not compare the masks"
   },
   "source_build": "evidence/h60_tc_build.json",
   "source_build_is_archival": true,
@@ -71,5 +72,13 @@
   "download_zip": "downloads/gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.zip",
   "submission_note": "H60 concurrent triple-convergence research artifact. No registered comparable holdout lift; not approved for submission.",
   "submission_note_chars": 120,
-  "published_byte_hash_matches_receipt": true
+  "published_byte_hash_matches_receipt": true,
+  "current_research_round": "H65",
+  "current_research_verdict": "NEGATIVE",
+  "artifact_status": "ARCHIVAL POINTER ONLY \u2014 H60 is historical; H65 has no candidate raster",
+  "is_archival_pointer": true,
+  "current_candidate_exists": false,
+  "download_current_candidate": false,
+  "submit_ok": false,
+  "archival_mask_caveat": "The historical local format check did not compare the official sample NaN mask; see IR-H65-008."
 }

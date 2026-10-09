@@ -19,13 +19,14 @@ if (target) {
   fetch('data/feed.json', {cache: 'no-cache'})
     .then(r => { if (!r.ok) throw new Error('feed unavailable'); return r.json(); })
     .then(data => {
-      const latest = data.latest_research;
-      if (!latest || typeof latest.submit_ok !== 'boolean') {
-        throw new Error('research feed has no usable receipt');
-      }
-      // No innerHTML or portal access; never turn a timestamp into a new measured score.
-      target.textContent = `Local evidence refresh: ${data.generated_utc}. Latest artefact ${latest.run_id}: download ${latest.download_ok ? 'OK' : 'NOT OK'}, submit ${latest.submit_ok ? 'OK' : 'NOT OK'}, hash verified ${latest.hash_verified ? 'yes' : 'no'}. ` +
-        'Organizer results are not live; nothing here uploads to the portal.';
+      const latest = data.latest_research || {};
+      const round = data.current_round || latest.round || 'not recorded';
+      const verdict = data.current_verdict || latest.verdict || 'not recorded';
+      const candidate = data.current_candidate_exists ?? latest.candidate_raster_exists;
+      const download = data.current_download_ok ?? latest.download_ok;
+      const submit = data.current_submit_ok ?? latest.submit_ok;
+      const holdout = (latest.holdout_dti || {}).status || 'not recorded';
+      target.textContent = `Current research ${round}: ${verdict}; candidate GeoTIFF ${candidate === false ? 'NO' : candidate === true ? 'YES' : 'not recorded'}, current download ${download === false ? 'NO' : download === true ? 'YES' : 'not recorded'}, submit ${submit === false ? 'NO' : submit === true ? 'YES' : 'not recorded'}, HOLDOUT-DTI ${holdout}. Feed generated ${data.generated_utc || 'at an unknown time'}. The historical marker is not current upload approval.`;
     })
     .catch(() => {
       target.textContent = 'Live local-feed check unavailable. The dated audit below remains available. Submission gate stays CLOSED.';

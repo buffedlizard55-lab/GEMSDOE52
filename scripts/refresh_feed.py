@@ -430,11 +430,129 @@ def research_status():
                 note='Research only; local evidence refresh is not a fresh organizer or leaderboard observation.')
 
 
+def h65_latest_research(card):
+    """Build the current H65 feed record without treating an archival pointer as a candidate."""
+    if card.get('round') != 'H65':
+        raise ValueError('H65 closeout card has the wrong round label')
+    raster = card.get('raster') or {}
+    holdout = card.get('holdout_dti') or {}
+    submission = card.get('submission') or {}
+    decision = card.get('decision') or {}
+    if (raster.get('emitted') is not False or raster.get('file') is not None
+            or raster.get('sha256') is not None or holdout.get('status') != 'NOT RUN'
+            or submission.get('submit') is not False or submission.get('slots_used') != 0
+            or decision.get('verdict') != 'NEGATIVE' or decision.get('promote') is not False):
+        raise ValueError('H65 closeout no longer describes a negative no-raster/no-slot decision')
+    premise = card.get('premise_auc') or {}
+    return dict(
+        run_id=card.get('run_id'), round='H65', verdict='NEGATIVE',
+        candidate_raster_exists=False, file=None, download=None, bytes=None, sha256=None,
+        download_ok=False, submit_ok=False, hash_verified=None, slots_used=0,
+        premise_auc=dict(label='PREMISE-AUC (not a score)',
+                         mean_oof_auc=premise.get('mean_oof_auc'),
+                         minimum_fold_auc=premise.get('minimum_fold_auc'),
+                         passed=premise.get('passed')),
+        holdout_dti=dict(label='HOLDOUT-DTI', status='NOT RUN',
+                         evaluator_version=holdout.get('evaluator_version'),
+                         withheld_positive_count=holdout.get('withheld_positive_count'),
+                         ci95=holdout.get('ci95')),
+        evidence='data/h65_final_card.json')
+
+
+def refresh_h65_feed(branch=None):
+    """Publish H65's negative status while preserving LATEST as an explicitly archival H60 pointer.
+
+    This path intentionally does not stage/repackage TIFFs, inspect or rewrite a submission marker,
+    contact DrivenData, or derive an H65 candidate from an older raster. Once the marker changes in a
+    future round, this frozen H65 path stops applying and that round must publish its own decision.
+    """
+    card_path = EV / 'h65_final_card.json'
+    card = json.loads(card_path.read_text())
+    latest = h65_latest_research(card)
+    marker_path = ROOT / 'submission/LATEST.txt'
+    pointer = dict(card.get('current_marker_pointer') or {})
+    marker_name = marker_path.read_text().strip() if marker_path.is_file() else None
+    pointer_path = ROOT / 'submission' / str(pointer.get('file') or '')
+    actual_hash = file_hash(pointer_path) if pointer_path.is_file() else None
+    pointer.update(
+        marker_file=marker_name,
+        marker_matches_closeout=(marker_name == pointer.get('file')),
+        present=pointer_path.is_file(),
+        actual_sha256=actual_hash,
+        sha256_verified=bool(actual_hash and actual_hash == pointer.get('sha256')),
+        status='ARCHIVAL ONLY — not the current H65 candidate or an upload approval')
+
+    copied = []
+    for name in ('h65_final_card.json', 'h65_run_card.json', 'h65_premise.json',
+                 'h65_canary.json', 'h65_operator_audit.json', 'h65_release_review.json'):
+        source = EV / name
+        if source.is_file():
+            (DATA / name).write_bytes(source.read_bytes())
+            copied.append(name)
+    irregularities = ROOT / 'registry/irregularities.json'
+    if irregularities.is_file():
+        (DATA / 'irregularities.json').write_bytes(irregularities.read_bytes())
+        copied.append('irregularities.json')
+
+    # submission.json remains the audited H60 marker receipt for compatibility with the archive
+    # validator; its archival role is explicit, and it is not named as H65's current submission.
+    sub_path = DATA / 'submission.json'
+    sub = json.loads(sub_path.read_text()) if sub_path.is_file() else {}
+    if marker_name and sub.get('file') != marker_name:
+        raise ValueError('docs/data/submission.json does not match the unchanged LATEST marker')
+    sub.update(
+        current_research_round='H65', current_research_verdict='NEGATIVE',
+        artifact_status='ARCHIVAL POINTER ONLY — H60 is historical; H65 has no candidate raster',
+        is_archival_pointer=True, current_candidate_exists=False,
+        download_current_candidate=False, submit_ok=False,
+        approved_for_weekly_slot=False, submission_slots_used=0,
+        archival_mask_caveat='The historical local format check did not compare the official sample NaN mask; see IR-H65-008.')
+    if isinstance(sub.get('format'), dict):
+        sub['format']['historical_sample_mask_status'] = (
+            'MISMATCH — H65 follow-up found finite zeros outside the sample NaN footprint; '
+            'the original local gate did not compare the masks')
+        sub['format']['validation_class'] = (
+            'historical local range/grid check only; not current template-mask compliance or organizer acceptance')
+    write('submission.json', safe(sub))
+
+    leaderboard_path = DATA / 'leaderboard.json'
+    board = json.loads(leaderboard_path.read_text()) if leaderboard_path.is_file() else {}
+    inventory_path = EV / 'prior_inventory_r2.json'
+    inventory = json.loads(inventory_path.read_text()) if inventory_path.is_file() else {}
+    entries = inventory.get('entries', [])
+    board_status = board.get('status', 'dated snapshot unavailable; no live fetch attempted')
+    generated = time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())
+    download_count = len(list(DL.glob('*.tif')))
+    feed = dict(
+        generated_utc=generated, branch=current_branch(branch),
+        repo='buffedlizard55-lab/GEMSDOE52', current_round='H65',
+        current_verdict='NEGATIVE', current_candidate_exists=False,
+        current_download_ok=False, current_submit_ok=False,
+        evidence_copied=copied, files=sorted(copied),
+        submission=None, marker_pointer=pointer, downloads=download_count,
+        leaderboard_status=board_status,
+        leaderboard_last_observed_utc=board.get('fetched_utc') or board.get('observed_at_utc') or board.get('observed_date_utc'),
+        prior_entries=len(entries), eligible_prior_rasters=sum(bool(r.get('eligible_prior')) for r in entries),
+        scientific_gate='CLOSED — H65 NEGATIVE; no candidate raster and no HOLDOUT-DTI',
+        slots_used=0, latest_research=latest,
+        freshness_note=('H65 is the current negative research decision: no candidate GeoTIFF, no HOLDOUT-DTI, '
+                        'no current download, no submission, and zero slots. The board timestamp is the last '
+                        'dated observation; this local feed refresh is not an organizer score or receipt.'))
+    write('feed.json', feed)
+    log('H65 negative status feed updated; no TIFF was staged or submission pointer changed. ' + board_status)
+    return 0
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--fetch', action='store_true', help='Only honored with recorded written permission; otherwise no DrivenData request.')
     parser.add_argument('--branch', help='Actual Actions ref, if Git is checked out detached.')
     args = parser.parse_args()
+    h65_card = EV / 'h65_final_card.json'
+    h65_marker = (ROOT / 'submission/LATEST.txt').read_text().strip() if (ROOT / 'submission/LATEST.txt').is_file() else None
+    archived_marker = (json.loads(h65_card.read_text()).get('current_marker_pointer') or {}).get('file') if h65_card.is_file() else None
+    if h65_card.is_file() and h65_marker == archived_marker:
+        return refresh_h65_feed(args.branch)
     copied = copy_evidence()
     DL.mkdir(parents=True, exist_ok=True)
     # Stage the rasters and the one-click ZIP BEFORE the report is written: the report points into
