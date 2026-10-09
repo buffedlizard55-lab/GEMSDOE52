@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""H61 -- two-view co-training with corroboration (not disagreement) as the discovery operator.
+"""H62 -- two-view co-training with corroboration (not disagreement) as the discovery operator.
 
-Runs strictly under ``registry/h61_preregistration.json``, frozen before this file executed; the
-hypothesis text is ``knowledge/32_hypotheses_H61_preregistered.md`` whose SHA-256 is checked against
+Runs strictly under ``registry/h62_preregistration.json``, frozen before this file executed; the
+hypothesis text is ``knowledge/32_hypotheses_H62_preregistered.md`` whose SHA-256 is checked against
 the registry at start-up.
 
 Stages (each checkpointed, so an interrupted run resumes):
@@ -13,7 +13,7 @@ Stages (each checkpointed, so an interrupted run resumes):
               the Blum-Mitchell independence test on 50 px block OOF negative errors; the
               per-layer leakage canary; the 2x2 confidence strata with cover-thickness depth
               statistics.  The pseudo-label exchange is NOT re-run (five prior independent
-              nulls, H61-E).
+              nulls, H62-E).
   validate    E2: matched-budget arms scored on Instrument 1 (pooled HOLDOUT-DTI, fold-bootstrap
               95 % CI) and Instrument 2 (revealed-preference co-location with the atom of
               measured credit), plus the preregistered budget rule derived from the measured
@@ -41,15 +41,15 @@ from gems52 import grid as G                        # noqa: E402
 from gems52 import h57                              # noqa: E402
 from gems52 import h58                              # noqa: E402
 from gems52 import h60d                             # noqa: E402
-from gems52 import h61                              # noqa: E402
+from gems52 import h62                              # noqa: E402
 from gems52 import holdout as HO                    # noqa: E402
 from gems52 import metric as M                      # noqa: E402
 from gems52 import spatial                          # noqa: E402
 
 DATA = ROOT / "data"
-WORK = ROOT / "work/h61"
+WORK = ROOT / "work/h62"
 EV = ROOT / "evidence"
-PREREG = json.loads((ROOT / "registry/h61_preregistration.json").read_text())
+PREREG = json.loads((ROOT / "registry/h62_preregistration.json").read_text())
 SEED = int(PREREG["protocol"]["seed"])
 TH = PREREG["protocol"]["thresholds"]
 Q_CONF = float(TH["q_conf"])
@@ -63,7 +63,7 @@ N_BOOT = 10000
 
 
 def log(m: str) -> None:
-    print(f"[h61 {time.strftime('%H:%M:%S')}] {m}", flush=True)
+    print(f"[h62 {time.strftime('%H:%M:%S')}] {m}", flush=True)
 
 
 def done(path: Path) -> bool:
@@ -89,7 +89,7 @@ def stage_registry_check() -> None:
 
 # ----------------------------------------------------------------------------------- preflight
 def stage_preflight() -> None:
-    out = EV / "h61_preflight_integrity.json"
+    out = EV / "h62_preflight_integrity.json"
     if done(out):
         log("preflight cached")
         return
@@ -103,7 +103,7 @@ def stage_preflight() -> None:
         d = h58.sha256_file(p)
         tracked[name] = dict(local_bytes=p.stat().st_size, local_sha256=d,
                              local_matches_manifest=bool(d == pin["expected_sha256"]))
-    rec = dict(round="H61-preflight",
+    rec = dict(round="H62-preflight",
                observed_utc=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
                manifest="registry/data_manifest.json", data_root=str(DATA.relative_to(ROOT)),
                pinned_files_verified=len(receipts), pinned_all_ok=bool(all_ok),
@@ -114,7 +114,7 @@ def stage_preflight() -> None:
                files=[r for r in receipts])
     if not all_ok:
         raise SystemExit("preflight FAILED: a pinned input does not match its manifest entry")
-    h61.write_json(out, rec)
+    h62.write_json(out, rec)
     log(f"preflight OK: {len(receipts)}/23 pins match")
 
 
@@ -171,7 +171,7 @@ def block_error_rows(pa, pb, neg_mask, fold):
 
 
 def stage_cotrain() -> None:
-    out = EV / "h61_cotrain.json"
+    out = EV / "h62_cotrain.json"
     if done(out):
         log("cotrain cached")
         return
@@ -213,7 +213,7 @@ def stage_cotrain() -> None:
     log(f"OOF fields saved ({time.time() - t0:.0f}s)")
 
     # ---- the Blum-Mitchell premise, tested empirically -------------------------------------
-    ind = spatial.independence(neg_rows, threshold=h61.ABANDON_R, min_blocks=20)
+    ind = spatial.independence(neg_rows, threshold=h62.ABANDON_R, min_blocks=20)
     pa_f = np.nan_to_num(pa_oof, nan=0.0)
     pb_f = np.nan_to_num(pb_oof, nan=0.0)
     m = valid & ~cat_dil & np.isfinite(pa_oof) & np.isfinite(pb_oof)
@@ -252,7 +252,7 @@ def stage_cotrain() -> None:
 
     # ---- the corroboration operator on the full grid ---------------------------------------
     k_probe = 60000
-    th = h61.independent_thinning(pa_f, pb_f, permitted, Q_CONF, k_probe, h57.iso_select)
+    th = h62.independent_thinning(pa_f, pb_f, permitted, Q_CONF, k_probe, h57.iso_select)
     log(f"independent thinning at k={k_probe}: A {th['n_thin_a']} dots, B {th['n_thin_b']} dots, "
         f"corroborated {th['n_corroborated']} (independence null "
         f"{th['expected_under_independence']:.1f}, lift "
@@ -261,7 +261,7 @@ def stage_cotrain() -> None:
     np.save(WORK / "thin_b.npy", th["thin_b"])
     np.save(WORK / "corroborated.npy", th["corroborated"])
 
-    rep = dict(round="H61-cotrain-v1", seed=SEED, runtime_s=round(time.time() - t0, 1),
+    rep = dict(round="H62-cotrain-v1", seed=SEED, runtime_s=round(time.time() - t0, 1),
                lane=PREREG["lane"], data_root=str(DATA.relative_to(ROOT)),
                qualification=("pinned owner-mirror bytes, SHA-verified; not "
                               "organizer-authenticated"),
@@ -275,12 +275,12 @@ def stage_cotrain() -> None:
                                     if not isinstance(v, np.ndarray)},
                cotraining_exchange=dict(
                    ran=False,
-                   reason=("H61-E: not re-run. Five independent prior reproductions (H56, H57, "
+                   reason=("H62-E: not re-run. Five independent prior reproductions (H56, H57, "
                            "H59, H60D x2 directions) returned nulls; the premise test is still "
                            "run above because the concordance hypothesis rests on the same "
                            "conditional-independence premise.")),
                view_a_layers=h57.VIEW_A_LAYERS, view_b_layers=h57.VIEW_B_LAYERS)
-    h61.write_json(out, rep)
+    h62.write_json(out, rep)
     log(f"wrote {out.name} in {time.time() - t0:.0f}s")
 
 
@@ -297,24 +297,24 @@ def score_cell(field, legal, fold, valid, k):
 
 def build_fields(pa, pb, depth, permitted) -> dict:
     corrob = np.load(WORK / "corroborated.npy")
-    conc_cell = h61.concordant_cell(pa, pb, permitted, Q_CONF)
+    conc_cell = h62.concordant_cell(pa, pb, permitted, Q_CONF)
     fields = {
         "view_A": pa.astype(np.float32),
         "view_B": pb.astype(np.float32),
         "clf_union": np.maximum(pa, pb).astype(np.float32),
         "dis_contrast": h60d.dis_contrast(pa, pb),
         "dis_product": h60d.dis_product(pa, pb),
-        "conc_min": np.where(conc_cell, h61.concordance_surface(pa, pb), 0.0).astype(np.float32),
-        "conc_corrob": np.where(corrob, h61.concordance_surface(pa, pb), 0.0).astype(np.float32),
+        "conc_min": np.where(conc_cell, h62.concordance_surface(pa, pb), 0.0).astype(np.float32),
+        "conc_corrob": np.where(corrob, h62.concordance_surface(pa, pb), 0.0).astype(np.float32),
     }
-    cc, thr = h61.cover_conditioned_disagreement(pa, pb, depth, permitted, Q_CONF, Q_ABSTAIN,
+    cc, thr = h62.cover_conditioned_disagreement(pa, pb, depth, permitted, Q_CONF, Q_ABSTAIN,
                                                  COVER_Q)
     fields["cover_A_only"] = cc
     return fields, thr
 
 
 def stage_validate() -> None:
-    out = EV / "h61_validation.json"
+    out = EV / "h62_validation.json"
     if done(out):
         log("validation cached")
         return
@@ -343,14 +343,14 @@ def stage_validate() -> None:
 
     rng = np.random.default_rng(SEED)
     flat_pool = np.flatnonzero(permitted.ravel())
-    grid = list(h61.GAMMA_GRID)
+    grid = list(h62.GAMMA_GRID)
     rev_rows = []
     for name, fld in fields.items():
         row = dict(field=name)
         for k in grid:
             nodes = h57.iso_select(np.where(permitted, fld, 0.0).astype(np.float32),
                                    permitted, k, min_px=3.0, nms_px=3)
-            row[f"f_{k}"] = h61.revealed_colocation(nodes, p1, permitted)
+            row[f"f_{k}"] = h62.revealed_colocation(nodes, p1, permitted)
         rev_rows.append(row)
     # matched random controls at the same budgets
     rev_rand = {}
@@ -358,7 +358,7 @@ def stage_validate() -> None:
         take = rng.choice(flat_pool, size=k, replace=False)
         rnd = np.zeros(G.SHAPE, bool)
         rnd.ravel()[take] = True
-        rev_rand[f"f_{k}"] = h61.revealed_colocation(rnd, p1, permitted)
+        rev_rand[f"f_{k}"] = h62.revealed_colocation(rnd, p1, permitted)
     log(f"instrument 2 done ({time.time() - t0:.0f}s)")
 
     # ---------------- Instrument 1: HOLDOUT-DTI, whole-segment hide folds --------------------
@@ -411,11 +411,11 @@ def stage_validate() -> None:
                                        ["f_25000"]["lift"] or 0.0)))
     pts = [(k, rev_rows[[r["field"] for r in rev_rows].index(best)][f"f_{k}"]["fraction"])
            for k in grid]
-    budget = h61.budget_from_gamma(pts)
+    budget = h62.budget_from_gamma(pts)
     log(f"instrument-2 leader: {best}; gamma fit -> budget {budget['budget_px']} px "
         f"({time.time() - t0:.0f}s)")
 
-    rec = dict(round="H61-validate-v1", seed=SEED, runtime_s=round(time.time() - t0, 1),
+    rec = dict(round="H62-validate-v1", seed=SEED, runtime_s=round(time.time() - t0, 1),
                instrument1_holdout=dict(
                    label="HOLDOUT-DTI",
                    evaluator_version=PREREG["evaluator_version"],
@@ -437,7 +437,7 @@ def stage_validate() -> None:
                budget_rule=budget,
                instrument2_leader=best,
                promotion_lift_bar=LIFT_BAR)
-    h61.write_json(out, rec)
+    h62.write_json(out, rec)
     log(f"wrote {out.name} in {time.time() - t0:.0f}s")
 
 

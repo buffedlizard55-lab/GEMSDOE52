@@ -1240,35 +1240,35 @@
    ]
   },
   {
-   "id": "IR-H61-001",
+   "id": "IR-H62-001",
    "title": "The two footprints are not nested: 1,540 training-footprint pixels are not in the submission domain and 3,073 submission-domain pixels are not in the training footprint",
    "status": "open - handled, disclosed",
    "what_it_is": "The all-19-band finite footprint of data/training_features.tif (5,165,840 px) and the finite domain of data/sample_submission.tif (5,167,373 px) are NOT nested in either direction: 1,540 px are finite in every competition band but not finite in the sample, and 3,073 px are finite in the sample but not in every band. Their intersection is 5,164,300 px. Every earlier round in this repository computed features on the all-19-band footprint and then handed the emission to submission_writer with the sample domain as the footprint, which raises 'invalid footprint or positive mass outside footprint' the moment a selected pixel falls in the 1,540-px gap.",
-   "how_we_know": "Measured in this session on the manifest-pinned bytes (scripts/build_h61_submission.py start-up log line 'footprint: all-19-band 5,165,840 px, sample domain 5,167,373 px, intersection 5,164,300 px'). The build failed with that exact ValueError on the first run before the fix; see the IR-H61-001 marker in scripts/build_h61_submission.py.",
+   "how_we_know": "Measured in this session on the manifest-pinned bytes (scripts/build_h62_submission.py start-up log line 'footprint: all-19-band 5,165,840 px, sample domain 5,167,373 px, intersection 5,164,300 px'). The build failed with that exact ValueError on the first run before the fix; see the IR-H62-001 marker in scripts/build_h62_submission.py.",
    "disposition": "The emission domain is now the intersection of the two masks, used both as the candidate pool and as the footprint handed to the validator. The gap is 0.03 % of the grid, so no earlier measured number changes materially, but any future round that emits on the raw training footprint will hit the same fail-closed error."
   },
   {
-   "id": "IR-H61-002",
+   "id": "IR-H62-002",
    "title": "The corroboration operator is structurally unable to fill a usable budget",
    "status": "open - by construction, not tunable",
    "what_it_is": "Two independent thinnings of k dots inside a pool of n intersect in k^2/n dots. At k = 30,000 and n = 4,861,502 that is 185 px even under perfect independence, and at the preregistered q_conf = 0.60 with k = 60,000 the measured intersection is 92 px (View A's confident set thins to 6,307 dots against View B's 31,083). The hard intersection therefore cannot be an emission at any budget this competition scores; conc_corrob's grid is 92 positive pixels and every larger emission from it is zero-field fill.",
-   "how_we_know": "evidence/h61_cotrain.json -> corroboration_probe; evidence/h61_validation.json -> conc_corrob row (Instrument-2 lift 0.97-0.99x, i.e. indistinguishable from the matched random control at every budget).",
+   "how_we_know": "evidence/h62_cotrain.json -> corroboration_probe; evidence/h62_validation.json -> conc_corrob row (Instrument-2 lift 0.97-0.99x, i.e. indistinguishable from the matched random control at every budget).",
    "disposition": "Registered as correction H61-1 before the artifact shipped: the operator is delivered as a ranking on the joint confidence min(pA,pB), and the hard intersection is published as the measured structural negative. Do not attempt to rescue it by lowering q_conf - the k^2/n ceiling is what binds."
   },
   {
-   "id": "IR-H61-003",
+   "id": "IR-H62-003",
    "title": "The two instruments disagree in sign on which field is best, and neither is a board proxy",
    "status": "open - irreducible with the data available",
    "what_it_is": "On the registered hide-and-recover instrument (HOLDOUT-DTI) the ranking is view_A 0.010332 > conc_soft 0.008467 > clf_union 0.008390 > view_B 0.007970. On the revealed-preference instrument the ranking is view_B 2.67x > clf_union 2.60x > conc_soft 1.42x > view_A 1.08x random. The two orderings are almost inverses. The first instrument is known to be uninformative about the board (Spearman(owner-reported, simulated) = -0.1045, n = 13; the 0.2778 champion ranks 13/13 on it); the second is a similarity statistic to one specific prior file.",
-   "how_we_know": "evidence/h61_validation.json, both instrument tables, computed this session on the manifest-pinned bytes with the evaluator modules pinned by SHA-256.",
+   "how_we_know": "evidence/h62_validation.json, both instrument tables, computed this session on the manifest-pinned bytes with the evaluator modules pinned by SHA-256.",
    "disposition": "Both orderings are published side by side and neither is presented as a leaderboard forecast. The shipped field is chosen by the preregistered rule (highest revealed-preference lift among fields that are not merely the union), and the register's verdict 'promote' is explicitly scoped to the registered instrument only. Resolving the conflict needs an organizer-authenticated label set, which this sandbox cannot obtain."
   },
   {
-   "id": "IR-H61-004",
+   "id": "IR-H62-004",
    "title": "The lane-drift 3 px proximity component uses a 25-cell L1 diamond, not the metric's 29-cell Euclidean disc",
    "status": "open - carried forward, disclosed",
    "what_it_is": "h60d.lane_drift_report measures 'dots within 3 px' with scipy.ndimage.binary_dilation(prior_dots, iterations=3), whose default structure is the 4-connected cross. Three iterations therefore produce the 25-cell L1 diamond, whereas the competition metric's kernel k(d) = max(1 - d/R, 0) with R = 3 px covers the 29-cell Euclidean disc. Every near-dot fraction this repository has reported is consequently a LOWER bound on the fraction of dots within the metric's own 300 m acceptance radius.",
-   "how_we_know": "Measured: the dilation of a single pixel on a 20x20 grid covers 25 of 400 cells, not 29; pinned by tests/test_h61.py::test_revealed_colocation_matches_a_hand_computation. The metric's disc is enumerated by gems52.metric._offsets (29 offsets at |offset| <= 3 px).",
+   "how_we_know": "Measured: the dilation of a single pixel on a 20x20 grid covers 25 of 400 cells, not 29; pinned by tests/test_h62.py::test_revealed_colocation_matches_a_hand_computation. The metric's disc is enumerated by gems52.metric._offsets (29 offsets at |offset| <= 3 px).",
    "disposition": "Disclosed rather than silently widened: changing the structure now would make every prior round's proximity number unverifiable, and the reading is conservative in the direction that matters (a run that passes at 0.2781 on the diamond would read higher on the disc, so the gate is not being made easier to pass without saying so). H61's worst gate value is 0.2781 against a 0.70 bar, so theconclusion does not change under the wider disc."
   }
  ]

@@ -1,8 +1,8 @@
-# 32 — H61: five candidate hypotheses, ranked; the top one preregistered
+# 32 — H62: five candidate hypotheses, ranked; the top one preregistered
 
 Session 2026-10-08/09. Lane: *co-training between a geophysical view and a surface view, with
 disagreement as the discovery signal* (Blum & Mitchell, COLT '98, pp. 92–100,
-doi:10.1145/279943.279962). Everything below is written **before** any H61 fit ran.
+doi:10.1145/279943.279962). Everything below is written **before** any H62 fit ran.
 
 Standing facts inherited from earlier rounds, all measured on the manifest-pinned bytes and all
 labelled as such:
@@ -27,7 +27,7 @@ Each names the layers, the physical signature, why it should find a **catalogue-
 rather than one already in the USGS/INGENIOUS compilation, and how it differs from everything
 already implemented here.
 
-### H61-A — cover-thickness-conditioned buried disagreement  *(rank 2)*
+### H62-A — cover-thickness-conditioned buried disagreement  *(rank 2)*
 
 * **Layers.** View-A out-of-fold confidence `pA`, View-B out-of-fold confidence `pB`, and
   `training_features.tif` band 15 *depth to basement surface*.
@@ -56,7 +56,7 @@ already implemented here.
 * **Cost.** One mask. **Expected DTI change:** small but positive; a precision filter, not a new
   detector.
 
-### H61-B — two-view concordance under independent thinning (co-training corroboration)  *(rank 1)*
+### H62-B — two-view concordance under independent thinning (co-training corroboration)  *(rank 1)*
 
 * **Layers.** Both views' out-of-fold confidence surfaces, plus the metric's own 3 px lattice.
 * **Signature.** `concordance = min(pA, pB)` restricted to `pA ≥ q_conf ∧ pB ≥ q_conf`, then
@@ -86,7 +86,7 @@ already implemented here.
 * **Cost.** Low (no new data). **Expected DTI change:** the largest of the five, because it acts
   on credit density, which is the only quantity the metric rewards.
 
-### H61-C — B-only rehabilitated: structured surface lineaments the geophysics cannot resolve *(rank 3)*
+### H62-C — B-only rehabilitated: structured surface lineaments the geophysics cannot resolve *(rank 3)*
 
 * **Layers.** View B (LiDAR scarp products, detrended-elevation slope, radiometric), View A, and a
   structure-tensor coherence/strike field on the DEM.
@@ -109,7 +109,7 @@ already implemented here.
   veto, and why the round reports B-only as characterization if the mimic cannot be excluded.
 * **Cost.** Medium (needs the coherence/strike field). **Expected DTI change:** high variance.
 
-### H61-D — InSAR line-of-sight strain rate at 10× the geodetic resolution  *(rank 4 — NOT VIABLE HERE)*
+### H62-D — InSAR line-of-sight strain rate at 10× the geodetic resolution  *(rank 4 — NOT VIABLE HERE)*
 
 * **Layers.** A free, official InSAR displacement time series (e.g. the ESA Sentinel-1-derived
   products distributed through ASF/NASA, or the USGS/Nevada Bureau wide-area products).
@@ -126,7 +126,7 @@ already implemented here.
   cannot be performed or hash-pinned here. **Not proposed as viable this session**; the specific
   free official source is named so a later session on an unrestricted machine can fetch it.
 
-### H61-E — a further pseudo-label exchange round  *(rank 5 — DO NOT RUN)*
+### H62-E — a further pseudo-label exchange round  *(rank 5 — DO NOT RUN)*
 
 Already null in **five** independent reproductions (H56, H57, H59, H60D ×2 directions), each with a
 whole-segment buffered exchange. Re-running it would consume the round's budget on a
@@ -138,11 +138,11 @@ measured null. Recorded here only so it is not re-proposed.
 
 | rank | candidate | expected effect | cost | verdict |
 |---|---|---|---|---|
-| 1 | **H61-B** concordance under independent thinning | acts on credit density; corroboration is the largest measured effect in this repo | low | **preregistered, run** |
-| 2 | **H61-A** cover-conditioned buried disagreement | precision filter on the lane's own discovery cell | very low | **preregistered, run** |
-| 3 | **H61-C** rehabilitated structured B-only | high variance; the brief's own warning applies | medium | run as a characterization arm if budget allows |
-| 4 | H61-D InSAR strain rate | would be large | blocked | not viable: hosts unreachable |
-| 5 | H61-E pseudo-label exchange | null ×5 | low | do not run |
+| 1 | **H62-B** concordance under independent thinning | acts on credit density; corroboration is the largest measured effect in this repo | low | **preregistered, run** |
+| 2 | **H62-A** cover-conditioned buried disagreement | precision filter on the lane's own discovery cell | very low | **preregistered, run** |
+| 3 | **H62-C** rehabilitated structured B-only | high variance; the brief's own warning applies | medium | run as a characterization arm if budget allows |
+| 4 | H62-D InSAR strain rate | would be large | blocked | not viable: hosts unreachable |
+| 5 | H62-E pseudo-label exchange | null ×5 | low | do not run |
 
 ---
 
@@ -213,7 +213,7 @@ clamped values are reported.
 
 1. **Leakage.** Any layer with holdout AUC > 0.90: stop, report, trust nothing built on it.
 2. **Independence.** `spatial.independence` on 50 px block OOF negative-error rows; abandon the
-   co-training exchange at max |r| ≥ 0.60. The exchange is **not** re-run this round (H61-E); the
+   co-training exchange at max |r| ≥ 0.60. The exchange is **not** re-run this round (H62-E); the
    test is still run because the concordance hypothesis *depends* on the same premise.
 3. **Promotion.** The concordance field promotes iff, at the derived budget, its
    `f` (Instrument 2) exceeds `f` of `view_A`, `view_B`, `clf_union` and `dis_contrast`, **and**

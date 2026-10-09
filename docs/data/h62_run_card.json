@@ -1,5 +1,5 @@
 {
- "round": "H61",
+ "round": "H62",
  "lane": "co-training between a geophysical view and a surface view; Blum & Mitchell COLT '98, doi:10.1145/279943.279962",
  "hypothesis": "Two views that err near-independently corroborate: pixels that both the potential-field/subsurface view and the surface view vouch for, ranked by their joint confidence min(pA,pB), should carry a higher density of real, unmapped fault pixels than either view alone - the opposite cell of the 2x2 confidence table from the one every prior round in this lane shipped.",
  "mechanism": "Two independent thinnings of one detector intersect in an atom carrying 16.3-20.5% credit density against 0-8.7% for singly-selected atoms (knowledge/10 s3); Blum-Mitchell conditional independence is a strictly stronger independence than two thinnings of one field, and it measures here at max|r| = 0.176 against a 0.60 abandonment bar.",
@@ -118,7 +118,7 @@
  },
  "raster_sha256": "1bc5b50c014e70692919c1f604939c02ba6915fcf038f34327cd745e78de6ea7",
  "validator_output": {
-  "path": "/home/user/GEMSDOE52/submission/gems52-h61-conc_soft-arm22000px.tif",
+  "path": "/home/user/GEMSDOE52/submission/gems52-h62-conc_soft-arm22000px.tif",
   "bytes": 114669,
   "sha256": "1bc5b50c014e70692919c1f604939c02ba6915fcf038f34327cd745e78de6ea7",
   "bands": 1,
@@ -166,8 +166,8 @@
   "ok": true,
   "validation_class": "local on-disk template/range check; not organizer upload acceptance"
  },
- "submission_name": "gems52-h61-conc_soft-arm22000px-20261009T002039Z-zeros",
- "submission_note": "H61 two-view co-training: conc_soft ranking, 22000 px, derived budget, >=200 m off catalogue. Research review copy.",
+ "submission_name": "gems52-h62-conc_soft-arm22000px-20261009T002039Z-zeros",
+ "submission_note": "H62 two-view co-training: conc_soft ranking, 22000 px, derived budget, >=200 m off catalogue. Research review copy.",
  "submission_note_chars": 115,
  "verdict": "promote",
  "promotion_scope": "'promote' is a verdict on the registered instrument only: it means the concordance ranking beat BOTH single-view baselines and the union on pooled hide-and-recover HOLDOUT-DTI. It does NOT mean a weekly slot is allocated, and it does NOT mean the artifact beats the surface view on the revealed-preference instrument, where it does not.",
@@ -176,14 +176,14 @@
   "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
   "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
   "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
-  "h61.py": "f8f0c885799d5e638835e14e53825cfd09843aea84ff3aba583bc6dbf2940962",
+  "h62.py": "f8f0c885799d5e638835e14e53825cfd09843aea84ff3aba583bc6dbf2940962",
   "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
  },
  "build": {
-  "round": "H61-build",
+  "round": "H62-build",
   "observed_utc": "2026-10-09T00:25:16Z",
   "budget_px": 22000,
-  "budget_basis": "registered correction H61-2",
+  "budget_basis": "registered correction H62-2",
   "cover_threshold_m": 600.1210327148438,
   "candidates": [
    {
@@ -350,7 +350,7 @@
    }
   ],
   "winner": "conc_soft",
-  "winner_selection_rule": "highest Instrument-2 co-location lift among candidates whose dot set overlaps clf_union's top-k by <= 70% (correction H61-3)",
+  "winner_selection_rule": "highest Instrument-2 co-location lift among candidates whose dot set overlaps clf_union's top-k by <= 70% (correction H62-3)",
   "union_disqualifier_threshold": 0.7,
   "not_merely_union": {
    "budget": 22000,
@@ -369,15 +369,15 @@
   "dossier_note": "dossier rows are written for every A-only component of >=3 px in the legal pool; smaller components are counted in a_only_segments_total and dropped",
   "corrections": [
    {
-    "id": "H61-1",
+    "id": "H62-1",
     "summary": "the hard corroboration intersection is structurally unusable at this budget (k^2/n = 185 at k=30,000); the soft joint-confidence ranking min(pA,pB) is registered instead"
    },
    {
-    "id": "H61-2",
+    "id": "H62-2",
     "summary": "emission budget 22,000 px: the gamma fit's unclamped argmax 102,519 px lies outside the measured range, while the board's own published record (Spearman -1.000, n=6, mass vs score) is a direct measurement and governs"
    },
    {
-    "id": "H61-3",
+    "id": "H62-3",
     "summary": "view_B and clf_union are disqualified as 'merely the union': their dot sets overlap by 93-100% and their reads differ by 3%"
    }
   ]
@@ -445,9 +445,9 @@
   }
  },
  "corrections": [
-  "H61-1",
-  "H61-2",
-  "H61-3"
+  "H62-1",
+  "H62-2",
+  "H62-3"
  ],
  "slot_decision": "research review copy; promotion to a real weekly slot is a separate selector step within the cap on the submission page",
  "champion_owner_reported": 0.2778

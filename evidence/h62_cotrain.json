@@ -1,5 +1,5 @@
 {
- "round": "H61-cotrain-v1",
+ "round": "H62-cotrain-v1",
  "seed": 20261010,
  "runtime_s": 153.3,
  "lane": "co-training between a geophysical view and a surface view, with disagreement as the discovery signal (Blum & Mitchell COLT '98, doi:10.1145/279943.279962)",
@@ -495,7 +495,7 @@
  },
  "cotraining_exchange": {
   "ran": false,
-  "reason": "H61-E: not re-run. Five independent prior reproductions (H56, H57, H59, H60D x2 directions) returned nulls; the premise test is still run above because the concordance hypothesis rests on the same conditional-independence premise."
+  "reason": "H62-E: not re-run. Five independent prior reproductions (H56, H57, H59, H60D x2 directions) returned nulls; the premise test is still run above because the concordance hypothesis rests on the same conditional-independence premise."
  },
  "view_a_layers": [
   "A_mag_anom",

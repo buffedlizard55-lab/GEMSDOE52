@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Register one extra ranking field into the H61 validation receipt (both instruments).
+"""Register one extra ranking field into the H62 validation receipt (both instruments).
 
 Why this exists
 ---------------
-``evidence/h61_cotrain.json`` measured that View A's confident set at the *absolute* bar
+``evidence/h62_cotrain.json`` measured that View A's confident set at the *absolute* bar
 ``q_conf = 0.60`` thins to only 6,307 dots against View B's 31,083 at the same bar, and the
 independently-thinned intersection is 92 px -- two orders of magnitude below any usable budget.
 That is a structural property of the operator, not a tuning accident: two independent thinnings of
@@ -36,14 +36,14 @@ sys.path.insert(0, str(ROOT / "src"))
 from gems52 import grid as G                        # noqa: E402
 from gems52 import h57                              # noqa: E402
 from gems52 import h60d                             # noqa: E402
-from gems52 import h61                              # noqa: E402
+from gems52 import h62                              # noqa: E402
 from gems52 import holdout as HO                    # noqa: E402
 from gems52 import metric as M                      # noqa: E402
 
 DATA = ROOT / "data"
-WORK = ROOT / "work/h61"
+WORK = ROOT / "work/h62"
 EV = ROOT / "evidence"
-PREREG = json.loads((ROOT / "registry/h61_preregistration.json").read_text())
+PREREG = json.loads((ROOT / "registry/h62_preregistration.json").read_text())
 SEED = int(PREREG["protocol"]["seed"])
 TH = PREREG["protocol"]["thresholds"]
 Q_CONF = float(TH["q_conf"])
@@ -51,12 +51,12 @@ N_BOOT = 10000
 
 
 def log(m: str) -> None:
-    print(f"[h61-extra {time.strftime('%H:%M:%S')}] {m}", flush=True)
+    print(f"[h62-extra {time.strftime('%H:%M:%S')}] {m}", flush=True)
 
 
 def main() -> int:
     t0 = time.time()
-    val = json.loads((EV / "h61_validation.json").read_text())
+    val = json.loads((EV / "h62_validation.json").read_text())
     valid = G.footprint_from(DATA / "training_features.tif", bands="all")
     with rasterio.open(DATA / "labels.tif") as src:
         cat = src.read(1) == 1
@@ -65,7 +65,7 @@ def main() -> int:
     corridor = ndimage.binary_dilation(cat, iterations=h57.CORRIDOR_PX)
     permitted = valid & ~corridor
 
-    extra = {"conc_soft": h61.concordance_surface(pa, pb)}
+    extra = {"conc_soft": h62.concordance_surface(pa, pb)}
 
     with rasterio.open(DATA / "reference/h33-2-b2-zeros.tif") as src:
         ref = src.read(1) > 0
@@ -76,13 +76,13 @@ def main() -> int:
     rows = []
     for name, fld in extra.items():
         row = dict(field=name)
-        for k in h61.GAMMA_GRID:
+        for k in h62.GAMMA_GRID:
             nodes = h57.iso_select(np.where(permitted, fld, 0.0).astype(np.float32),
                                    permitted, k, min_px=3.0, nms_px=3)
-            row[f"f_{k}"] = h61.revealed_colocation(nodes, p1, permitted)
+            row[f"f_{k}"] = h62.revealed_colocation(nodes, p1, permitted)
         rows.append(row)
         log(f"{name}: " + ", ".join(
-            f"{k//1000}k={row[f'f_{k}']['lift']:.2f}x" for k in h61.GAMMA_GRID))
+            f"{k//1000}k={row[f'f_{k}']['lift']:.2f}x" for k in h62.GAMMA_GRID))
 
     budgets = [int(k.split("|")[1]) for k in val["instrument1_holdout"]["arms"]]
     budgets = sorted({int(b) for b in budgets if True})
@@ -120,7 +120,7 @@ def main() -> int:
                                            [c["emitted"] for c in sub])), 1),
                                        lift_over_random=round(pooled["dti"] - rnd, 6))
 
-    out = dict(round="H61-validate-extra-fields", seed=SEED,
+    out = dict(round="H62-validate-extra-fields", seed=SEED,
                runtime_s=round(time.time() - t0, 1),
                reason=("the hard corroboration intersection is structurally unusable at this "
                        "budget (k^2/n = 185 at k=30,000, n=4,861,502); the joint-confidence "
@@ -128,7 +128,7 @@ def main() -> int:
                        "promotion decision compares like with like"),
                instrument1_holdout=dict(arms=arms),
                instrument2_revealed=dict(per_field=rows))
-    h61.write_json(EV / "h61_validation_extra.json", out)
+    h62.write_json(EV / "h62_validation_extra.json", out)
 
     # merge into the main receipt so every downstream reader sees one table
     for r in rows:
@@ -139,7 +139,7 @@ def main() -> int:
             val["instrument2_revealed"]["per_field"].append(r)
     val["instrument1_holdout"]["arms"].update(arms)
     val["registered_corrections"] = [
-        dict(id="H61-1",
+        dict(id="H62-1",
              registered_utc_date="2026-10-09",
              summary=("The corroboration operator cannot be delivered as a hard intersection: "
                       "two independent thinnings of k dots in a pool of n intersect in k^2/n, "
@@ -147,8 +147,8 @@ def main() -> int:
                       "intersection at q_conf=0.60 is 92 px. The soft form, ranking on the joint "
                       "confidence min(pA,pB), is registered on both instruments and can promote; "
                       "the hard form is reported as the measured structural negative."))]
-    h61.write_json(EV / "h61_validation.json", val)
-    log(f"wrote h61_validation_extra.json and merged into h61_validation.json "
+    h62.write_json(EV / "h62_validation.json", val)
+    log(f"wrote h62_validation_extra.json and merged into h62_validation.json "
         f"({time.time() - t0:.0f}s)")
     return 0
 

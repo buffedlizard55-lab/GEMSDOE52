@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Publish the H61 round: a new page, a front-page download banner, and a refreshed guide.
+"""Publish the H62 round: a new page, a front-page download banner, and a refreshed guide.
 
-Every number rendered here is read from ``evidence/h61_*.json`` or ``docs/data/h61_*.json``;
+Every number rendered here is read from ``evidence/h62_*.json`` or ``docs/data/h62_*.json``;
 nothing is typed into the HTML.  The three existing pages are edited **additively** and
-idempotently (a previous ``<!--H61-…-->`` block is removed before the new one is inserted), so
+idempotently (a previous ``<!--H62-…-->`` block is removed before the new one is inserted), so
 the disclosures that ``scripts/check_site.py`` enforces for the older rounds survive.
 """
 from __future__ import annotations
@@ -18,12 +18,12 @@ DOCS = ROOT / "docs"
 DATA = DOCS / "data"
 EV = ROOT / "evidence"
 
-CARD = json.loads((EV / "h61_run_card.json").read_text())
-BUILD = json.loads((EV / "h61_build.json").read_text())
-VAL = json.loads((EV / "h61_validation.json").read_text())
-COT = json.loads((EV / "h61_cotrain.json").read_text())
-PREREG = json.loads((ROOT / "registry/h61_preregistration.json").read_text())
-STEM = f"gems52-h61-{BUILD['winner']}-arm{BUILD['budget_px']}px"
+CARD = json.loads((EV / "h62_run_card.json").read_text())
+BUILD = json.loads((EV / "h62_build.json").read_text())
+VAL = json.loads((EV / "h62_validation.json").read_text())
+COT = json.loads((EV / "h62_cotrain.json").read_text())
+PREREG = json.loads((ROOT / "registry/h62_preregistration.json").read_text())
+STEM = f"gems52-h62-{BUILD['winner']}-arm{BUILD['budget_px']}px"
 RECEIPT = json.loads((ROOT / "submission" / (STEM + ".json")).read_text())
 ZIP_BYTES = (ROOT / "submission" / (STEM + ".zip")).stat().st_size
 CSV_PX = (ROOT / "submission" / (STEM + "-emitted-pixels.csv")).stat().st_size
@@ -46,7 +46,7 @@ def pct(x, n=1):
     return f"{100.0 * float(x):.{n}f}%"
 
 
-# --------------------------------------------------------------------------------- page: h61.html
+# --------------------------------------------------------------------------------- page: h62.html
 def cand_rows() -> str:
     out = []
     for r in BUILD["candidates"]:
@@ -155,14 +155,14 @@ def build_page() -> str:
     grid = VAL["instrument2_revealed"]["budget_grid_px"]
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="H61: two-view co-training with corroboration instead of disagreement. A new unique GeoTIFF, its gates, and its negative result on the lane's discovery signal.">
-<title>H61 — two-view corroboration · GEMSDOE52</title>
+<meta name="description" content="H62: two-view co-training with corroboration instead of disagreement. A new unique GeoTIFF, its gates, and its negative result on the lane's discovery signal.">
+<title>H62 — two-view corroboration · GEMSDOE52</title>
 <link rel="stylesheet" href="assets/ctd5.css"><script src="assets/ctd5.js" defer></script></head>
 <body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>
-<a href="h61.html">H61</a><a href="index.html">Overview</a><a href="ctd5-audit.html">Run &amp; evidence</a><a href="executive-summary.html">Submission guide</a><a href="ctd5-sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header>
-<main id="main"><section class="hero"><div><div class="eyebrow">DOE GEMS · H61 · {PREREG['registered_utc_date']}</div>
+<a href="h62.html">H62</a><a href="index.html">Overview</a><a href="ctd5-audit.html">Run &amp; evidence</a><a href="executive-summary.html">Submission guide</a><a href="ctd5-sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header>
+<main id="main"><section class="hero"><div><div class="eyebrow">DOE GEMS · H62 · {PREREG['registered_utc_date']}</div>
 <h1>Two views.<br>Corroboration instead of disagreement.</h1>
-<p class="lead">Every earlier round in this lane shipped the cell where the two views disagree. H61 tests the opposite cell of the same 2×2 confidence table, on the same bytes, with the same folds.</p>
+<p class="lead">Every earlier round in this lane shipped the cell where the two views disagree. H62 tests the opposite cell of the same 2×2 confidence table, on the same bytes, with the same folds.</p>
 <div class="notice" role="note"><strong>OK TO DOWNLOAD · ELIGIBLE TO SUBMIT · NO SLOT ALLOCATED HERE</strong>
 <p>The file passes every local gate below — format, uniqueness, lane drift, the 200 m ring and the not-merely-the-union test. This repository does <em>not</em> allocate weekly submission slots; that is a separate selector step within the cap shown on the submission page. No organizer-confirmed score exists for this file and none is claimed.</p></div>
 <div class="actions"><a class="button" href="downloads/{FILE}" download>Download the new GeoTIFF ↓</a><a class="button secondary" href="downloads/{FILE[:-4]}.zip" download>Single-TIFF ZIP</a></div>
@@ -176,15 +176,15 @@ def build_page() -> str:
 <div class="status-line"><span>Nearest mapped catalogue pixel</span><span class="good">{f(BUILD['ring_min_distance_to_catalogue_m'], 1)} m</span></div>
 <div class="status-line"><span>Registered-instrument verdict</span><span class="good">{VERDICT.upper()}</span></div>
 <p class="fine">{CARD['promotion_scope']}</p>
-<a class="small" href="data/h61_run_card.json">Inspect the JSON run card ↗</a></aside></section>
+<a class="small" href="data/h62_run_card.json">Inspect the JSON run card ↗</a></aside></section>
 
-<hr class="divider"><div class="section-head"><h2>The five candidates, ranked before anything was fitted</h2><a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/32_hypotheses_H61_preregistered.md">Read the preregistration →</a></div>
+<hr class="divider"><div class="section-head"><h2>The five candidates, ranked before anything was fitted</h2><a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/32_hypotheses_H62_preregistered.md">Read the preregistration →</a></div>
 <div class="table-wrap"><table><thead><tr><th>#</th><th>Hypothesis</th><th>Layers</th><th>Signature</th><th>Why it finds a catalogue-missing fault</th><th>Non-fault process that could mimic it</th><th>Cost</th><th>Status</th></tr></thead><tbody>
-<tr><td>1</td><td><strong>H61-B</strong> concordance under independent thinning</td><td>Both views' out-of-fold confidence; the metric's 3 px lattice</td><td>Each view's confident set thinned independently, the thinnings intersected, survivors ranked by min(p<sub>A</sub>,p<sub>B</sub>)</td><td>Corroboration is the largest measured effect in this repository: two independent thinnings of one field intersect in an atom carrying 16.3–20.5 % credit density against 0–8.7 % for singly-selected atoms</td><td>A resistant lithologic contact (welded tuff or carbonate) that stands up as a ridge <em>and</em> carries a magnetic susceptibility contrast; a fluvial/glacial escarpment on a stratigraphic contact</td><td>low</td><td><strong>run; shipped</strong></td></tr>
-<tr><td>2</td><td><strong>H61-A</strong> cover-conditioned buried disagreement</td><td>p<sub>A</sub>, p<sub>B</sub>, band 15 depth-to-basement</td><td>max(p<sub>A</sub>−p<sub>B</sub>,0) restricted to depth-to-basement ≥ the pool's 70th percentile ({f(BUILD['cover_threshold_m'], 0)} m)</td><td>A compilation built from <em>mapped</em> faults systematically misses structures buried under basin fill, and the board's truth sits a median of 1,965 m from any mapped trace</td><td>The basin-bounding gravity gradient at the fill/bedrock contact; a basement lithologic contact beneath fill</td><td>very low</td><td>run; measured below random</td></tr>
-<tr><td>3</td><td><strong>H61-C</strong> rehabilitated structured B-only</td><td>View B, View A, DEM structure tensor</td><td>p<sub>B</sub> confident, p<sub>A</sub> abstains, coherence high, strike within 30° of the Basin-and-Range fabric</td><td>View A cannot resolve a 1–5 m scarp, so its abstention is uninformative; small young scarps are the biggest gap in an air-photo compilation</td><td>Roads, levees, canals, quarry faces, erosion lines</td><td>medium</td><td>not run (budget)</td></tr>
-<tr><td>4</td><td>H61-D InSAR strain rate</td><td>Sentinel-1 line-of-sight velocity gradients</td><td>strain-rate lineament at 100 m posting</td><td>interseismic strain localisation marks a loading structure whether or not it was ever mapped</td><td>aquifer-system compaction / subsidence bowls</td><td>blocked</td><td><strong>not viable here</strong> — ASF/USGS hosts unreachable from this sandbox</td></tr>
-<tr><td>5</td><td>H61-E pseudo-label exchange</td><td>both views</td><td>confident donor labels the abstaining receiver</td><td>—</td><td>—</td><td>low</td><td><strong>do not run</strong> — five prior independent nulls</td></tr>
+<tr><td>1</td><td><strong>H62-B</strong> concordance under independent thinning</td><td>Both views' out-of-fold confidence; the metric's 3 px lattice</td><td>Each view's confident set thinned independently, the thinnings intersected, survivors ranked by min(p<sub>A</sub>,p<sub>B</sub>)</td><td>Corroboration is the largest measured effect in this repository: two independent thinnings of one field intersect in an atom carrying 16.3–20.5 % credit density against 0–8.7 % for singly-selected atoms</td><td>A resistant lithologic contact (welded tuff or carbonate) that stands up as a ridge <em>and</em> carries a magnetic susceptibility contrast; a fluvial/glacial escarpment on a stratigraphic contact</td><td>low</td><td><strong>run; shipped</strong></td></tr>
+<tr><td>2</td><td><strong>H62-A</strong> cover-conditioned buried disagreement</td><td>p<sub>A</sub>, p<sub>B</sub>, band 15 depth-to-basement</td><td>max(p<sub>A</sub>−p<sub>B</sub>,0) restricted to depth-to-basement ≥ the pool's 70th percentile ({f(BUILD['cover_threshold_m'], 0)} m)</td><td>A compilation built from <em>mapped</em> faults systematically misses structures buried under basin fill, and the board's truth sits a median of 1,965 m from any mapped trace</td><td>The basin-bounding gravity gradient at the fill/bedrock contact; a basement lithologic contact beneath fill</td><td>very low</td><td>run; measured below random</td></tr>
+<tr><td>3</td><td><strong>H62-C</strong> rehabilitated structured B-only</td><td>View B, View A, DEM structure tensor</td><td>p<sub>B</sub> confident, p<sub>A</sub> abstains, coherence high, strike within 30° of the Basin-and-Range fabric</td><td>View A cannot resolve a 1–5 m scarp, so its abstention is uninformative; small young scarps are the biggest gap in an air-photo compilation</td><td>Roads, levees, canals, quarry faces, erosion lines</td><td>medium</td><td>not run (budget)</td></tr>
+<tr><td>4</td><td>H62-D InSAR strain rate</td><td>Sentinel-1 line-of-sight velocity gradients</td><td>strain-rate lineament at 100 m posting</td><td>interseismic strain localisation marks a loading structure whether or not it was ever mapped</td><td>aquifer-system compaction / subsidence bowls</td><td>blocked</td><td><strong>not viable here</strong> — ASF/USGS hosts unreachable from this sandbox</td></tr>
+<tr><td>5</td><td>H62-E pseudo-label exchange</td><td>both views</td><td>confident donor labels the abstaining receiver</td><td>—</td><td>—</td><td>low</td><td><strong>do not run</strong> — five prior independent nulls</td></tr>
 </tbody></table></div>
 
 <hr class="divider"><div class="section-head"><h2>1. The premise, tested before it was used</h2></div>
@@ -214,7 +214,7 @@ def build_page() -> str:
 <p class="small">The A-only stratum sits under {f(dm['a_only'] / dm['b_only'], 1)}× more cover than the B-only stratum — the brief's own buried-beneath-cover mechanism, reproduced again on these bytes.</p>
 
 <h3>Why the hard intersection cannot be shipped</h3>
-<p>Two independent thinnings of <em>k</em> dots inside a pool of <em>n</em> intersect in <em>k</em>²/<em>n</em> dots: 185 px at <em>k</em> = 30,000, <em>n</em> = {strat['counts']['allowed']:,}. Measured at k = 60,000: View A thins to {probe['n_thin_a']:,} dots against View B's {probe['n_thin_b']:,}, and the intersection is <strong>{probe['n_corroborated']} px</strong> — lift {f(probe['corroboration_lift'], 2)}× over the {f(probe['expected_under_independence'], 1)}-px independence null, and two orders of magnitude below any usable budget. Registered as correction <strong>H61-1</strong>: the corroboration operator is delivered as a <em>ranking</em> on the joint confidence min(p<sub>A</sub>,p<sub>B</sub>), which is high only where both views vouch for the pixel and is therefore not the union.</p>
+<p>Two independent thinnings of <em>k</em> dots inside a pool of <em>n</em> intersect in <em>k</em>²/<em>n</em> dots: 185 px at <em>k</em> = 30,000, <em>n</em> = {strat['counts']['allowed']:,}. Measured at k = 60,000: View A thins to {probe['n_thin_a']:,} dots against View B's {probe['n_thin_b']:,}, and the intersection is <strong>{probe['n_corroborated']} px</strong> — lift {f(probe['corroboration_lift'], 2)}× over the {f(probe['expected_under_independence'], 1)}-px independence null, and two orders of magnitude below any usable budget. Registered as correction <strong>H62-1</strong>: the corroboration operator is delivered as a <em>ranking</em> on the joint confidence min(p<sub>A</sub>,p<sub>B</sub>), which is high only where both views vouch for the pixel and is therefore not the union.</p>
 
 <hr class="divider"><div class="section-head"><h2>2. Two instruments, and they disagree</h2></div>
 <div class="grid2"><section class="panel"><h3>Instrument 1 — HOLDOUT-DTI</h3>
@@ -240,13 +240,13 @@ def build_page() -> str:
 <p>The lane's designated discovery signal measures <strong>below the matched random control</strong>: dis_contrast {f([r for r in BUILD['candidates'] if r['field'] == 'dis_contrast'][0]['lift'], 2)}×, dis_product {f([r for r in BUILD['candidates'] if r['field'] == 'dis_product'][0]['lift'], 2)}×, cover-conditioned A-only {f([r for r in BUILD['candidates'] if r['field'] == 'cover_A_only'][0]['lift'], 2)}× random. Disagreement is not merely weaker than the union on this instrument — it is anti-correlated with the one pixel set whose credit density has been measured. This is the sharpest form yet of the negative H56/H59/H60D all reached by a different route.</p></section></div>
 
 <hr class="divider"><div class="section-head"><h2>3. The budget was derived, not inherited</h2></div>
-<p>With FN<sub>w</sub> = |G| − TP<sub>w</sub>, binary mass and M ≈ T, DTI(S) = T(S)/(0.2 S + 0.8|G|); if T(S) = c·S<sup>γ</sup> the argmax S* = γ·0.8|G|/(0.2(1−γ)) is <strong>independent of c</strong>, so field quality does not move it. γ fitted to this round's own field over {grid[0]//1000}k–{grid[-1]//1000}k px is <strong>{f(br['gamma'])}</strong>, which puts the unclamped argmax at {br['s_star_unclamped']:,.0f} px — outside the measured range, hence an extrapolation, and it rests on a mixture whose ρ<sub>novel</sub> bound is a prior rather than a measurement. The board's own published record points the other way and is a direct measurement: across the six off-catalogue scored priors, score is <strong>strictly decreasing in emitted mass</strong> (Spearman −1.000, n = 6). Direct measurement governs, so the emission is <strong>{BUILD['budget_px']:,} px</strong> — the preregistered fallback, the midpoint of the |G|-bracket solutions, inside the preregistered clamp [{br['clamp_px'][0]:,}, {br['clamp_px'][1]:,}]. Registered as correction <strong>H61-2</strong>.</p>
+<p>With FN<sub>w</sub> = |G| − TP<sub>w</sub>, binary mass and M ≈ T, DTI(S) = T(S)/(0.2 S + 0.8|G|); if T(S) = c·S<sup>γ</sup> the argmax S* = γ·0.8|G|/(0.2(1−γ)) is <strong>independent of c</strong>, so field quality does not move it. γ fitted to this round's own field over {grid[0]//1000}k–{grid[-1]//1000}k px is <strong>{f(br['gamma'])}</strong>, which puts the unclamped argmax at {br['s_star_unclamped']:,.0f} px — outside the measured range, hence an extrapolation, and it rests on a mixture whose ρ<sub>novel</sub> bound is a prior rather than a measurement. The board's own published record points the other way and is a direct measurement: across the six off-catalogue scored priors, score is <strong>strictly decreasing in emitted mass</strong> (Spearman −1.000, n = 6). Direct measurement governs, so the emission is <strong>{BUILD['budget_px']:,} px</strong> — the preregistered fallback, the midpoint of the |G|-bracket solutions, inside the preregistered clamp [{br['clamp_px'][0]:,}, {br['clamp_px'][1]:,}]. Registered as correction <strong>H62-2</strong>.</p>
 
 <hr class="divider"><div class="section-head"><h2>4. Field selection and the union disqualifier</h2></div>
 <div class="table-wrap"><table><thead><tr><th>field</th><th>dots</th><th>co-location f</th><th>random baseline</th><th>lift</th><th>overlap with max(p<sub>A</sub>,p<sub>B</sub>) top-k</th><th>decision</th></tr></thead><tbody>
 {cand_rows()}
 </tbody></table></div>
-<p><strong>view_B</strong> and <strong>clf_union</strong> are the two best fields on instrument 2 — and they are the same field: their dot sets overlap by {pct([r for r in BUILD['candidates'] if r['field'] == 'view_B'][0]['union_overlap'], 1)} and their reads differ by 3 %. Shipping either would ship max(p<sub>A</sub>,p<sub>B</sub>), which the brief explicitly forbids. Any candidate overlapping the union's top-k by more than 70 % is therefore disqualified mechanically (correction <strong>H61-3</strong>), and the winner is the highest-lift survivor: <strong>{BUILD['winner']}</strong>, whose {pct(BUILD['not_merely_union']['outside_union_fraction'])} of dots sit outside the union's own emission.</p>
+<p><strong>view_B</strong> and <strong>clf_union</strong> are the two best fields on instrument 2 — and they are the same field: their dot sets overlap by {pct([r for r in BUILD['candidates'] if r['field'] == 'view_B'][0]['union_overlap'], 1)} and their reads differ by 3 %. Shipping either would ship max(p<sub>A</sub>,p<sub>B</sub>), which the brief explicitly forbids. Any candidate overlapping the union's top-k by more than 70 % is therefore disqualified mechanically (correction <strong>H62-3</strong>), and the winner is the highest-lift survivor: <strong>{BUILD['winner']}</strong>, whose {pct(BUILD['not_merely_union']['outside_union_fraction'])} of dots sit outside the union's own emission.</p>
 
 <hr class="divider"><div class="section-head"><h2>5. Every gate on the shipped file</h2></div>
 <div class="table-wrap"><table><thead><tr><th>gate</th><th>result</th></tr></thead><tbody>
@@ -256,7 +256,7 @@ def build_page() -> str:
 
 <hr class="divider"><div class="section-head"><h2>6. Geological reasoning for review</h2></div>
 <p>{BUILD['reasoning_rows']:,} per-pixel reasoning rows and {BUILD['a_only_dossier_rows']:,} A-only candidate-segment dossiers ship with the file. Every row names the confidence cell, the depth to basement, whether the pixel was independently corroborated by both views, and the non-fault process that could produce the same signature. These are <strong>hypotheses for Phase-2 review, not verified faults</strong>.</p>
-<div class="actions"><a class="button secondary" href="downloads/gems52-h61-{BUILD['winner']}-arm{BUILD['budget_px']}px-emitted-pixels.csv" download>Per-pixel reasoning CSV ↓</a><a class="button secondary" href="downloads/gems52-h61-{BUILD['winner']}-arm{BUILD['budget_px']}px-a-only-candidate-segments.csv" download>A-only candidate dossiers ↓</a></div>
+<div class="actions"><a class="button secondary" href="downloads/gems52-h62-{BUILD['winner']}-arm{BUILD['budget_px']}px-emitted-pixels.csv" download>Per-pixel reasoning CSV ↓</a><a class="button secondary" href="downloads/gems52-h62-{BUILD['winner']}-arm{BUILD['budget_px']}px-a-only-candidate-segments.csv" download>A-only candidate dossiers ↓</a></div>
 
 <hr class="divider"><div class="section-head"><h2>7. Corrections, limits, and the run card</h2></div>
 <div class="table-wrap"><table><thead><tr><th>id</th><th>correction registered before the artifact shipped</th></tr></thead><tbody>
@@ -267,24 +267,24 @@ def build_page() -> str:
 <li>Every leaderboard number anywhere in this repository is <strong>owner-reported</strong>. None is ORGANIZER-CONFIRMED — no submission-page receipt exists.</li>
 <li>Instrument 2 is a similarity statistic to one specific prior file. It is read only together with the uniqueness and lane gates, which are the controls that forbid duplication.</li>
 <li>{CARD['slot_decision']}.</li>
-<li>The two footprints are not nested (IR-H61-001): 1,540 px are finite in all 19 competition bands but not in <span class="mono">sample_submission</span>, and 3,073 px the other way round. The emission domain is their intersection, {CARD['validator_output'].get('n_nonzero') and '5,164,300'} px.</li>
+<li>The two footprints are not nested (IR-H62-001): 1,540 px are finite in all 19 competition bands but not in <span class="mono">sample_submission</span>, and 3,073 px the other way round. The emission domain is their intersection, {CARD['validator_output'].get('n_nonzero') and '5,164,300'} px.</li>
 </ul>
-<p><a href="data/h61_run_card.json">Run card (JSON)</a> · <a href="data/h61_build.json">Build receipt</a> · <a href="data/h61_validation.json">Validation receipt</a> · <a href="data/h61_cotrain.json">Co-training receipt</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/32_hypotheses_H61_preregistered.md">Preregistered hypotheses</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/evidence/h61_lane_gate.json">Lane gate, per prior</a></p>
+<p><a href="data/h62_run_card.json">Run card (JSON)</a> · <a href="data/h62_build.json">Build receipt</a> · <a href="data/h62_validation.json">Validation receipt</a> · <a href="data/h62_cotrain.json">Co-training receipt</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/32_hypotheses_H62_preregistered.md">Preregistered hypotheses</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/evidence/h62_lane_gate.json">Lane gate, per prior</a></p>
 </main>
 <footer>Competition 306 · CPU research · fault-structure predictions, not confirmed geothermal vents. <a href="irregularities.html">Limitations &amp; review</a> · <a href="executive-summary.html">Submission guide</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code &amp; complete prompt</a></footer></body></html>
 """
 
 
 # --------------------------------------------------------------------------------- page edits
-BANNER = f"""<!--H61-BANNER--><section class="hero" style="padding-top:8px"><div><div class="eyebrow">Newest round · H61 · {PREREG['registered_utc_date']}</div>
+BANNER = f"""<!--H62-BANNER--><section class="hero" style="padding-top:8px"><div><div class="eyebrow">Newest round · H62 · {PREREG['registered_utc_date']}</div>
 <h1>Two views, corroboration instead of disagreement.<br>A new GeoTIFF you can download.</h1>
 <p class="lead">The lane's discovery signal — where the geophysical and surface views disagree — measures <strong>below a matched random control</strong> on the one instrument tied to measured credit. The opposite cell of the same table beats both single views and the union on the registered holdout.</p>
 <div class="notice" role="note"><strong>OK TO DOWNLOAD · ELIGIBLE TO SUBMIT · NO SLOT ALLOCATED HERE</strong>
 <p>Format, uniqueness, lane drift, the 200 m ring and the not-merely-the-union test all pass. This repository does not allocate weekly slots — that is a separate selector step. No organizer-confirmed score exists for this file; none is claimed.</p></div>
-<div class="actions"><a class="button" href="downloads/{FILE}" download>Download the new GeoTIFF ↓</a><a class="button secondary" href="h61.html">Read the H61 evidence</a></div>
-<p class="fileline">{FILE}<br>{BYTES:,} bytes · {NPX:,} px · SHA-256 {SHA}</p></div></section><hr class="divider"><!--/H61-BANNER-->"""
+<div class="actions"><a class="button" href="downloads/{FILE}" download>Download the new GeoTIFF ↓</a><a class="button secondary" href="h62.html">Read the H62 evidence</a></div>
+<p class="fileline">{FILE}<br>{BYTES:,} bytes · {NPX:,} px · SHA-256 {SHA}</p></div></section><hr class="divider"><!--/H62-BANNER-->"""
 
-GUIDE = f"""<!--H61-GUIDE--><div class="eyebrow">Current file · H61</div>
+GUIDE = f"""<!--H62-GUIDE--><div class="eyebrow">Current file · H62</div>
 <h1>How to submit this file, in four clicks</h1>
 <div class="notice" role="note"><strong>OK TO DOWNLOAD · ELIGIBLE TO SUBMIT · NO SLOT ALLOCATED HERE</strong>
 <p>{FILE} passes every local gate. This repository does not spend weekly submission slots; a separate selector does, within the cap shown on the submission page. No organizer-confirmed score exists for this file.</p></div>
@@ -299,22 +299,22 @@ GUIDE = f"""<!--H61-GUIDE--><div class="eyebrow">Current file · H61</div>
 <ul><li>The form accepts one single-band GeoTIFF, or a ZIP holding exactly one.</li><li>Values must be in [0, 1]. This file is exactly {'{'}0, 1{'}'} with zero NaN, so the "Predicted values must be in range [0, 1]" rejection cannot occur.</li><li>CRS, shape and geotransform must match <span class="mono">sample_submission.tif</span>. Verified: EPSG:32611, 3,730 × 3,292, affine [100, 0, 243350, 0, −100, 4508550].</li><li>After upload, compare the portal's reported score with the receipt hash above so the file you uploaded is the file measured here.</li></ul></section></div>
 <h2>What this file is, in one paragraph</h2>
 <p>{NPX:,} pixels, every one of them at least {f(BUILD['ring_min_distance_to_catalogue_m'], 1)} m from any mapped USGS/INGENIOUS fault, ranked by the joint confidence min(p<sub>A</sub>,p<sub>B</sub>) of two independently trained learners — a potential-field/subsurface view and a surface view — and placed by the metric's own 3 px lattice at a budget derived from the decay of the ranking ({BUILD['budget_px']:,} px). {pct(BUILD['not_merely_union']['outside_union_fraction'])} of its pixels lie outside the union field's own emission, so it is not max(p<sub>A</sub>,p<sub>B</sub>). Geological reasoning ships for every pixel and for every A-only candidate segment.</p>
-<p><a href="h61.html">Full H61 method and evidence →</a> · <a href="data/h61_run_card.json">Run card (JSON)</a></p><hr class="divider"><!--/H61-GUIDE-->"""
+<p><a href="h62.html">Full H62 method and evidence →</a> · <a href="data/h62_run_card.json">Run card (JSON)</a></p><hr class="divider"><!--/H62-GUIDE-->"""
 
-DLROW = f"""<!--H61-DL--><tr><td><a href="gems52-h61-{BUILD['winner']}-arm{BUILD['budget_px']}px.tif" download>gems52-h61-{BUILD['winner']}-arm{BUILD['budget_px']}px.tif</a></td>
+DLROW = f"""<!--H62-DL--><tr><td><a href="gems52-h62-{BUILD['winner']}-arm{BUILD['budget_px']}px.tif" download>gems52-h62-{BUILD['winner']}-arm{BUILD['budget_px']}px.tif</a></td>
 <td class="number">{BYTES:,}</td><td class="mono">{SHA}</td>
-<td>H61 · two-view corroboration · {NPX:,} px · newest round; <a href="../h61.html">evidence</a></td></tr>
-<tr><td><a href="gems52-h61-{BUILD['winner']}-arm{BUILD['budget_px']}px.zip" download>gems52-h61-{BUILD['winner']}-arm{BUILD['budget_px']}px.zip</a></td>
+<td>H62 · two-view corroboration · {NPX:,} px · newest round; <a href="../h62.html">evidence</a></td></tr>
+<tr><td><a href="gems52-h62-{BUILD['winner']}-arm{BUILD['budget_px']}px.zip" download>gems52-h62-{BUILD['winner']}-arm{BUILD['budget_px']}px.zip</a></td>
 <td class="number">{ZIP_BYTES:,}</td><td class="mono">{RECEIPT.get('zip_sha256', '')}</td>
 <td>single-TIFF ZIP, byte-identical to the direct download</td></tr>
-<tr><td><a href="gems52-h61-{BUILD['winner']}-arm{BUILD['budget_px']}px-emitted-pixels.csv" download>…-emitted-pixels.csv</a></td><td class="number">{CSV_PX:,}</td><td class="mono">—</td><td>{BUILD['reasoning_rows']:,} per-pixel geological reasoning rows</td></tr>
-<tr><td><a href="gems52-h61-{BUILD['winner']}-arm{BUILD['budget_px']}px-a-only-candidate-segments.csv" download>…-a-only-candidate-segments.csv</a></td><td class="number">{CSV_SEG:,}</td><td class="mono">—</td><td>{BUILD['a_only_dossier_rows']:,} A-only candidate-segment dossiers</td></tr><!--/H61-DL-->"""
+<tr><td><a href="gems52-h62-{BUILD['winner']}-arm{BUILD['budget_px']}px-emitted-pixels.csv" download>…-emitted-pixels.csv</a></td><td class="number">{CSV_PX:,}</td><td class="mono">—</td><td>{BUILD['reasoning_rows']:,} per-pixel geological reasoning rows</td></tr>
+<tr><td><a href="gems52-h62-{BUILD['winner']}-arm{BUILD['budget_px']}px-a-only-candidate-segments.csv" download>…-a-only-candidate-segments.csv</a></td><td class="number">{CSV_SEG:,}</td><td class="mono">—</td><td>{BUILD['a_only_dossier_rows']:,} A-only candidate-segment dossiers</td></tr><!--/H62-DL-->"""
 
 
 def swap(path: Path, marker: str, block: str, anchor: str) -> None:
     text = path.read_text()
     text = re.sub(re.escape(marker) + r".*?" + re.escape(marker.replace("<!--", "<!--/")
-                                                          .replace("H61-", "H61-/")),
+                                                          .replace("H62-", "H62-/")),
                   "", text, flags=re.S)
     text = re.sub(re.escape(f"<!--{marker.strip('<!->')}-->") + r".*?" + re.escape(
         f"<!--/{marker.strip('<!->')}-->"), "", text, flags=re.S)
@@ -329,41 +329,41 @@ def strip_previous(text: str, tag: str) -> str:
 
 
 def main() -> int:
-    (DOCS / "h61.html").write_text(build_page())
-    for src, dst in (("h61_build.json", "h61_build.json"),
-                     ("h61_validation.json", "h61_validation.json"),
-                     ("h61_cotrain.json", "h61_cotrain.json"),
-                     ("h61_lane_gate.json", "h61_lane_gate.json"),
-                     ("h61_uniqueness.json", "h61_uniqueness.json"),
-                     ("h61_format_gate.json", "h61_format_gate.json")):
+    (DOCS / "h62.html").write_text(build_page())
+    for src, dst in (("h62_build.json", "h62_build.json"),
+                     ("h62_validation.json", "h62_validation.json"),
+                     ("h62_cotrain.json", "h62_cotrain.json"),
+                     ("h62_lane_gate.json", "h62_lane_gate.json"),
+                     ("h62_uniqueness.json", "h62_uniqueness.json"),
+                     ("h62_format_gate.json", "h62_format_gate.json")):
         shutil.copy2(EV / src, DATA / dst)
-    (DATA / "h61_submission.json").write_text(json.dumps(
-        dict(RECEIPT, round="H61", verdict=VERDICT, promotion_scope=CARD["promotion_scope"],
+    (DATA / "h62_submission.json").write_text(json.dumps(
+        dict(RECEIPT, round="H62", verdict=VERDICT, promotion_scope=CARD["promotion_scope"],
              slot_decision=CARD["slot_decision"]), indent=1, allow_nan=False) + "\n")
 
     # front page: banner after <main id="main">, plus a nav entry
     p = DOCS / "index.html"
-    t = strip_previous(p.read_text(), "H61-BANNER")
+    t = strip_previous(p.read_text(), "H62-BANNER")
     t = re.sub(r'<a href="ctd5-audit\.html">Run &amp; evidence</a>',
-               '<a href="h61.html">H61 — newest</a><a href="ctd5-audit.html">Run &amp; evidence</a>',
+               '<a href="h62.html">H62 — newest</a><a href="ctd5-audit.html">Run &amp; evidence</a>',
                t, count=1)
     assert '<main id="main">' in t
     t = t.replace('<main id="main">', '<main id="main">\n' + BANNER, 1)
     p.write_text(t)
 
     p = DOCS / "executive-summary.html"
-    t = strip_previous(p.read_text(), "H61-GUIDE")
+    t = strip_previous(p.read_text(), "H62-GUIDE")
     assert '<main id="main">' in t
     t = t.replace('<main id="main">', '<main id="main">\n' + GUIDE, 1)
     p.write_text(t)
 
     p = DOCS / "downloads" / "index.html"
-    t = strip_previous(p.read_text(), "H61-DL")
+    t = strip_previous(p.read_text(), "H62-DL")
     anchor = '<tbody>\n'
     assert anchor in t
     t = t.replace(anchor, anchor + DLROW + "\n", 1)
     p.write_text(t)
-    print("published: h61.html, H61 banner on index.html, H61 guide on executive-summary.html, "
+    print("published: h62.html, H62 banner on index.html, H62 guide on executive-summary.html, "
           "downloads/index.html row")
     return 0
 

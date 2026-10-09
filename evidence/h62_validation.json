@@ -1,5 +1,5 @@
 {
- "round": "H61-validate-v1",
+ "round": "H62-validate-v1",
  "seed": 20261010,
  "runtime_s": 232.6,
  "instrument1_holdout": {
@@ -691,7 +691,7 @@
  "promotion_lift_bar": 0.005,
  "registered_corrections": [
   {
-   "id": "H61-1",
+   "id": "H62-1",
    "registered_utc_date": "2026-10-09",
    "summary": "The corroboration operator cannot be delivered as a hard intersection: two independent thinnings of k dots in a pool of n intersect in k^2/n, which is 185 px at k=30,000 and n=4,861,502, and the measured intersection at q_conf=0.60 is 92 px. The soft form, ranking on the joint confidence min(pA,pB), is registered on both instruments and can promote; the hard form is reported as the measured structural negative."
   }

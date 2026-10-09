@@ -1,5 +1,5 @@
 {
- "round": "H61-validate-extra-fields",
+ "round": "H62-validate-extra-fields",
  "seed": 20261010,
  "runtime_s": 101.5,
  "reason": "the hard corroboration intersection is structurally unusable at this budget (k^2/n = 185 at k=30,000, n=4,861,502); the joint-confidence ranking min(pA,pB) is registered on the same two instruments so the promotion decision compares like with like",

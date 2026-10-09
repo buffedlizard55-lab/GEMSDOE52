@@ -1,12 +1,12 @@
 {
- "file": "gems52-h61-conc_soft-arm22000px.tif",
+ "file": "gems52-h62-conc_soft-arm22000px.tif",
  "sha256": "1bc5b50c014e70692919c1f604939c02ba6915fcf038f34327cd745e78de6ea7",
  "bytes": 114669,
- "submission_name": "gems52-h61-conc_soft-arm22000px-20261009T002039Z-zeros",
- "note": "H61 two-view co-training: conc_soft ranking, 22000 px, derived budget, >=200 m off catalogue. Research review copy.",
+ "submission_name": "gems52-h62-conc_soft-arm22000px-20261009T002039Z-zeros",
+ "note": "H62 two-view co-training: conc_soft ranking, 22000 px, derived budget, >=200 m off catalogue. Research review copy.",
  "note_chars": 115,
  "validator": {
-  "path": "/home/user/GEMSDOE52/submission/gems52-h61-conc_soft-arm22000px.tif",
+  "path": "/home/user/GEMSDOE52/submission/gems52-h62-conc_soft-arm22000px.tif",
   "bytes": 114669,
   "sha256": "1bc5b50c014e70692919c1f604939c02ba6915fcf038f34327cd745e78de6ea7",
   "bands": 1,
@@ -54,19 +54,19 @@
   "ok": true,
   "validation_class": "local on-disk template/range check; not organizer upload acceptance"
  },
- "zip_file": "gems52-h61-conc_soft-arm22000px.zip",
+ "zip_file": "gems52-h62-conc_soft-arm22000px.zip",
  "zip_sha256": "2bea31c613e488c9d1f54ed17cd18e946aa2c5cabd51f72b3e193bd41ac3b266",
  "approved_for_weekly_slot": false,
  "promoted": false,
  "submission_slots_used": 0,
  "status": "research-only; local format validation is not organizer acceptance",
  "metadata": {
-  "round": "H61",
+  "round": "H62",
   "field": "conc_soft",
   "budget_px": 22000,
   "ring_min_m": 223.6
  },
- "round": "H61",
+ "round": "H62",
  "verdict": "promote",
  "promotion_scope": "'promote' is a verdict on the registered instrument only: it means the concordance ranking beat BOTH single-view baselines and the union on pooled hide-and-recover HOLDOUT-DTI. It does NOT mean a weekly slot is allocated, and it does NOT mean the artifact beats the surface view on the revealed-preference instrument, where it does not.",
  "slot_decision": "research review copy; promotion to a real weekly slot is a separate selector step within the cap on the submission page"

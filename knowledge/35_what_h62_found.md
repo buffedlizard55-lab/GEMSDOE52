@@ -1,21 +1,21 @@
-# 33 — What H61 actually found (session 2026-10-09)
+# 33 — What H62 actually found (session 2026-10-09)
 
-Preregistered in [`32_hypotheses_H61_preregistered.md`](32_hypotheses_H61_preregistered.md)
-(sha256 `fd781e4f…`, frozen before any fit; verified at start-up by `scripts/run_h61.py`) and in
-[`registry/h61_preregistration.json`](../registry/h61_preregistration.json). Every number below was
+Preregistered in [`34_hypotheses_H62_preregistered.md`](34_hypotheses_H62_preregistered.md)
+(sha256 `fd781e4f…`, frozen before any fit; verified at start-up by `scripts/run_h62.py`) and in
+[`registry/h62_preregistration.json`](../registry/h62_preregistration.json). Every number below was
 computed this session on the manifest-pinned bytes (`data/`, 23/23 SHA-256 pins verified in
-`evidence/h61_preflight_integrity.json`) with the evaluator modules pinned by SHA-256
+`evidence/h62_preflight_integrity.json`) with the evaluator modules pinned by SHA-256
 (`metric.py 3d454119…`, `holdout.py f6706d78…`, `h57.py 729a7623…`).
 
-Receipts: `evidence/h61_cotrain.json` (E1), `evidence/h61_validation.json` +
-`evidence/h61_validation_extra.json` (E2), `evidence/h61_build.json` +
-`evidence/h61_format_gate.json` + `evidence/h61_uniqueness.json` + `evidence/h61_lane_gate.json` +
-`evidence/h61_run_card.json` (E3). Site: `docs/h61.html`.
+Receipts: `evidence/h62_cotrain.json` (E1), `evidence/h62_validation.json` +
+`evidence/h62_validation_extra.json` (E2), `evidence/h62_build.json` +
+`evidence/h62_format_gate.json` + `evidence/h62_uniqueness.json` + `evidence/h62_lane_gate.json` +
+`evidence/h62_run_card.json` (E3). Site: `docs/h62.html`.
 
-**Artifact:** `gems52-h61-conc_soft-arm22000px.tif` — 114,669 bytes, sha256
+**Artifact:** `gems52-h62-conc_soft-arm22000px.tif` — 114,669 bytes, sha256
 `1bc5b50c014e70692919c1f604939c02ba6915fcf038f34327cd745e78de6ea7`, 22,000 px, values exactly
 {0,1}, single-band float32, EPSG:32611, 3730×3292, all finite. Reproducible: the rebuild after the
-H61-2/H61-3 corrections and the IR-H61-001 footprint fix reproduces the identical sha256 — the
+H62-2/H62-3 corrections and the IR-H62-001 footprint fix reproduces the identical sha256 — the
 build is a measured fixed point.
 
 ---
@@ -43,13 +43,13 @@ k = 30,000, n = 4,861,502**, even under perfect independence. Measured at the pr
 `q_conf = 0.60` with `k = 60,000`: View A's confident set thins to **6,307** dots against View B's
 **31,083**, and the intersection is **92 px** — a 2.28× lift over the 40.3-px independence null,
 which is real corroboration, but two orders of magnitude below any budget this competition scores.
-Registered as **correction H61-1** before the artifact shipped: the operator is delivered as a
+Registered as **correction H62-1** before the artifact shipped: the operator is delivered as a
 *ranking* on the joint confidence `min(pA,pB)`, and `conc_corrob` is published as the measured
 structural negative (Instrument-2 lift 0.97–0.99× — indistinguishable from random at every budget).
 
 The reason View A thins so far below View B is not a tuning accident: at one absolute probability
 bar the two views are not comparable, because View A is the weaker detector. That is itself the
-asymmetry H61-C was written to test and could not be run.
+asymmetry H62-C was written to test and could not be run.
 
 ## 3. Instrument 1 — pooled HOLDOUT-DTI (hide-and-recover, 25,000 px, 36,474 withheld positives)
 
@@ -63,7 +63,7 @@ asymmetry H61-C was written to test and could not be run.
 | dis_product | 0.003797 | [0.001795, 0.005335] | +0.002521 |
 | conc_corrob | 0.003007 | [0.001398, 0.005507] | +0.001731 |
 | dis_contrast | 0.003388 | [0.001761, 0.004660] | +0.002112 |
-| cover_A_only (H61-A) | 0.002929 | [0.001470, 0.005349] | +0.001653 |
+| cover_A_only (H62-A) | 0.002929 | [0.001470, 0.005349] | +0.001653 |
 | random | 0.001276 | [0.001129, 0.001376] | 0 |
 
 **The registered comparison the brief asks for — against a single-view baseline on
@@ -101,7 +101,7 @@ measured credit: `dis_contrast` 0.60–0.64×, `dis_product` 0.64–0.67×, and 
 cover-conditioned variant `cover_A_only` 0.86–0.95×. H56, H59 and H60D each reached a negative for
 the disagreement fields by a different route; this is the sharpest form of it, because the
 comparison is against a pixel set whose credit density is *measured* rather than projected.
-H61-A is therefore **refuted**: restricting the buried-fault cell to thick cover does not rescue
+H62-A is therefore **refuted**: restricting the buried-fault cell to thick cover does not rescue
 it — it moves it from 0.60× to 0.93×, i.e. from clearly anti-correlated to merely random.
 
 Two honest readings of the top of that table: (a) the surface view is by far the strongest single
@@ -112,7 +112,7 @@ on this instrument while winning on the other.
 ## 5. The instruments disagree in sign, and that is registered, not resolved
 
 hide: `view_A > conc_soft > clf_union > view_B` · revealed: `view_B > clf_union > conc_soft >
-view_A`. Almost inverses. Recorded as **IR-H61-003**. Neither is presented as a forecast; the
+view_A`. Almost inverses. Recorded as **IR-H62-003**. Neither is presented as a forecast; the
 orderings are published side by side and the round's verdict is scoped explicitly to the
 registered instrument. Closing this needs an organizer-authenticated label set, which the sandbox
 cannot obtain.
@@ -127,7 +127,7 @@ published record is a direct measurement and points the other way: **score is st
 in emitted mass across the six off-catalogue scored priors (Spearman −1.000, n = 6)**.
 Direct measurement governs, so the emission is **22,000 px** — the preregistered fallback, the
 midpoint of the |G|-bracket solutions (21,300–22,870 px), inside the preregistered clamp
-[15,000, 30,000]. Registered as **correction H61-2**, with the unclamped value published.
+[15,000, 30,000]. Registered as **correction H62-2**, with the unclamped value published.
 
 ## 7. Field selection, and the union disqualifier
 
@@ -147,7 +147,7 @@ midpoint of the |G|-bracket solutions (21,300–22,870 px), inside the preregist
 93–100 % of their dots coincide and their reads differ by 3 %. Shipping either would ship
 `max(pA,pB)`, which the brief explicitly forbids ("confirm the output isn't merely the union of the
 two views"). Any candidate overlapping the union's top-k by more than 70 % is therefore
-disqualified mechanically — **correction H61-3** — and the winner is the highest-lift survivor.
+disqualified mechanically — **correction H62-3** — and the winner is the highest-lift survivor.
 
 ## 8. Every gate on the shipped file
 
@@ -170,9 +170,9 @@ It did **not** beat the surface view on the revealed-preference instrument, and 
 allocated: promotion to a real slot is a separate selector step within the cap on the submission
 page. No organizer-confirmed score exists for this file and none is claimed.
 
-**Negative results this round, all deliverables:** H61-A (cover-conditioned buried disagreement)
+**Negative results this round, all deliverables:** H62-A (cover-conditioned buried disagreement)
 refuted — below random; the hard corroboration intersection refuted — structurally unable to fill a
-budget (IR-H61-002); the disagreement family as a whole measured below the matched random control
+budget (IR-H62-002); the disagreement family as a whole measured below the matched random control
 on the instrument tied to measured credit, which is the fourth independent confirmation of what
 H56/H59/H60D found.
 
@@ -180,16 +180,16 @@ H56/H59/H60D found.
 
 | id | statement |
 |---|---|
-| IR-H61-001 | The all-19-band training footprint and the `sample_submission` domain are **not nested** (1,540 px one way, 3,073 px the other; intersection 5,164,300 px). The first build failed closed on it; the emission domain is now their intersection. Any future round emitting on the raw training footprint hits the same error. |
-| IR-H61-002 | The corroboration operator is structurally unable to fill a usable budget (`k²/n` = 185 at k = 30,000). Registered as correction H61-1; do not try to rescue it by lowering `q_conf`. |
-| IR-H61-003 | The two instruments disagree in sign on the best field. Both orderings published; neither is a forecast. |
+| IR-H62-001 | The all-19-band training footprint and the `sample_submission` domain are **not nested** (1,540 px one way, 3,073 px the other; intersection 5,164,300 px). The first build failed closed on it; the emission domain is now their intersection. Any future round emitting on the raw training footprint hits the same error. |
+| IR-H62-002 | The corroboration operator is structurally unable to fill a usable budget (`k²/n` = 185 at k = 30,000). Registered as correction H62-1; do not try to rescue it by lowering `q_conf`. |
+| IR-H62-003 | The two instruments disagree in sign on the best field. Both orderings published; neither is a forecast. |
 
 ## 11. Three passes
 
-1. **Implement + verify:** E1/E2/E3 built and run; the run failed closed on IR-H61-001 rather than
+1. **Implement + verify:** E1/E2/E3 built and run; the run failed closed on IR-H62-001 rather than
    emitting on a wrong domain; all receipts written.
 2. **Bug review + fix:** the footprint non-nesting (fixed at the source, domain = intersection),
-   the self-exclusion over-reach (restricted to this build's own basenames so a parallel H61
+   the self-exclusion over-reach (restricted to this build's own basenames so a parallel H62
    artifact stays a genuine prior), the holdout budget label (taken from the receipt key, not from
    an identity test on dicts), and the missing download copy of the reasoning CSV (caught by
    `scripts/check_site.py`) were all found by review or by the site checker and fixed.

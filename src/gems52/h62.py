@@ -1,8 +1,8 @@
-"""H61 -- two-view co-training, corroboration instead of disagreement.
+"""H62 -- two-view co-training, corroboration instead of disagreement.
 
-Preregistered in ``knowledge/32_hypotheses_H61_preregistered.md`` and frozen in
-``registry/h61_preregistration.json`` (sha256 of the document is checked against the registry by
-``scripts/run_h61.py`` before any fit runs).
+Preregistered in ``knowledge/32_hypotheses_H62_preregistered.md`` and frozen in
+``registry/h62_preregistration.json`` (sha256 of the document is checked against the registry by
+``scripts/run_h62.py`` before any fit runs).
 
 Why this round exists
 ---------------------
@@ -24,12 +24,12 @@ corroborate more than two thinnings of one view, which share every systematic er
 What is here
 ------------
 ``concordance_surface`` / ``independent_thinning`` / ``concordance_corroboration``
-    the H61-B field: each view's confident set is thinned to the metric's own 3 px lattice
+    the H62-B field: each view's confident set is thinned to the metric's own 3 px lattice
     *independently*, the two thinnings are intersected, and the survivors are ranked by the joint
     confidence ``min(pA,pB)``.  Not the union ``max(pA,pB)``: the union is large wherever either
     view fires, this is large only where both fired and neither view's own thinning dropped it.
 ``cover_conditioned_disagreement``
-    H61-A: the lane's own discovery cell ``max(pA-pB,0)`` restricted to the thick-cover regime
+    H62-A: the lane's own discovery cell ``max(pA-pB,0)`` restricted to the thick-cover regime
     (depth to basement above a preregistered quantile of the legal pool).
 ``revealed_colocation``
     Instrument 2: the fraction of a dot set inside the metric's acceptance radius of ``P1``, the
@@ -52,7 +52,7 @@ from pathlib import Path
 import numpy as np
 from scipy import ndimage
 
-# Registered lane thresholds (registry/h61_preregistration.json -> decision_rules).
+# Registered lane thresholds (registry/h62_preregistration.json -> decision_rules).
 LANE_MAX_RANK_CORR = 0.90
 LANE_MAX_DOTS_FRAC = 0.70
 LANE_PROXIMITY_PX = 3
@@ -65,7 +65,7 @@ GAMMA_GRID = (8000, 12000, 17000, 25000, 38000)
 
 
 # --------------------------------------------------------------------------------------------
-# H61-B: concordance under independent thinning
+# H62-B: concordance under independent thinning
 # --------------------------------------------------------------------------------------------
 def concordance_surface(pa: np.ndarray, pb: np.ndarray) -> np.ndarray:
     """``min(pA, pB)``: the joint-confidence surface, before any cell restriction.
@@ -113,7 +113,7 @@ def independent_thinning(pa: np.ndarray, pb: np.ndarray, allowed: np.ndarray,
 
 def concordance_corroboration(pa: np.ndarray, pb: np.ndarray, allowed: np.ndarray,
                               q_conf: float, k: int, select) -> np.ndarray:
-    """The H61-B ranking surface: joint confidence, supported only on the corroborated set.
+    """The H62-B ranking surface: joint confidence, supported only on the corroborated set.
 
     Zero outside the independently-corroborated pixels, ``min(pA,pB)`` on them.  Emitting top-k of
     this field is *not* the union of the two views: the union's confident mass is exactly the set
@@ -125,7 +125,7 @@ def concordance_corroboration(pa: np.ndarray, pb: np.ndarray, allowed: np.ndarra
 
 
 # --------------------------------------------------------------------------------------------
-# H61-A: cover-thickness-conditioned buried disagreement
+# H62-A: cover-thickness-conditioned buried disagreement
 # --------------------------------------------------------------------------------------------
 def cover_conditioned_disagreement(pa: np.ndarray, pb: np.ndarray, depth: np.ndarray,
                                    allowed: np.ndarray, q_conf: float, q_abstain: float,
@@ -293,7 +293,7 @@ def concordant_note(depth_m: float) -> str:
 # --------------------------------------------------------------------------------------------
 def evaluator_version() -> dict:
     out = {}
-    for name in ("metric.py", "holdout.py", "h57.py", "h61.py", "emit.py"):
+    for name in ("metric.py", "holdout.py", "h57.py", "h62.py", "emit.py"):
         p = Path(__file__).resolve().parent / name
         out[name] = hashlib.sha256(p.read_bytes()).hexdigest()
     return out
@@ -305,7 +305,7 @@ def run_card(*, hypothesis: str, mechanism: str, mimic_processes: list[str],
              submission_note: str, verdict: str, extra: dict | None = None,
              promotion_scope: str | None = None) -> dict:
     card = dict(
-        round="H61",
+        round="H62",
         lane=("co-training between a geophysical view and a surface view; Blum & Mitchell "
               "COLT '98, doi:10.1145/279943.279962"),
         hypothesis=hypothesis,

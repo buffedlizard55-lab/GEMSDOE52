@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""H61 E3 -- place, gate, write and publish this round's unique GeoTIFF.
+"""H62 E3 -- place, gate, write and publish this round's unique GeoTIFF.
 
 Reads the two E1/E2 receipts and never re-fits.  Every gate is written to ``evidence/``.
 
@@ -7,7 +7,7 @@ Field selection (mechanical, from the receipts)
 -----------------------------------------------
 1. Every candidate field is emitted at the registered budget on the legal pool (footprint minus the
    <=200 m catalogue ring) with the registered scoring emitter ``h57.iso_select``.
-2. **Union disqualifier (correction H61-3).**  Any candidate whose dots overlap the ``clf_union``
+2. **Union disqualifier (correction H62-3).**  Any candidate whose dots overlap the ``clf_union``
    top-k at the same budget by more than 70 % is *the union* for the purposes of the brief's
    "confirm the output isn't merely the union of the two views" and is removed.
 3. **Winner** = highest revealed-preference co-location lift among the survivors.
@@ -40,42 +40,42 @@ from gems52 import gates                            # noqa: E402
 from gems52 import grid as G                        # noqa: E402
 from gems52 import h57                              # noqa: E402
 from gems52 import h60d                             # noqa: E402
-from gems52 import h61                              # noqa: E402
+from gems52 import h62                              # noqa: E402
 from gems52 import submission_writer                # noqa: E402
 
 DATA = ROOT / "data"
-WORK = ROOT / "work/h61"
+WORK = ROOT / "work/h62"
 EV = ROOT / "evidence"
 DL = ROOT / "docs/downloads"
 DAD = ROOT / "docs/data"
-PREREG = json.loads((ROOT / "registry/h61_preregistration.json").read_text())
+PREREG = json.loads((ROOT / "registry/h62_preregistration.json").read_text())
 SEED = int(PREREG["protocol"]["seed"])
 Q_CONF = float(PREREG["protocol"]["thresholds"]["q_conf"])
 Q_ABSTAIN = float(PREREG["protocol"]["thresholds"]["q_abstain"])
 COVER_Q = float(PREREG["protocol"]["thresholds"]["cover_depth_quantile"])
-BUDGET = 22000                 # registered correction H61-2
-UNION_DISQUALIFY = 0.70        # correction H61-3
+BUDGET = 22000                 # registered correction H62-2
+UNION_DISQUALIFY = 0.70        # correction H62-3
 RING_PX = h57.CORRIDOR_PX      # 2 px = 200 m
 CHAMPION_OWNER_REPORTED = 0.2778
 STAMP = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
 
 
 def log(m: str) -> None:
-    print(f"[h61-build {time.strftime('%H:%M:%S')}] {m}", flush=True)
+    print(f"[h62-build {time.strftime('%H:%M:%S')}] {m}", flush=True)
 
 
 def prior_inventory(field: str, budget: int, extra_roots=()):
     """Accessible aligned priors with this round's OWN outputs excluded, by exact basename.
 
     Self-exclusion is deliberately by the basenames this build writes and nothing else.  A bare
-    ``gems52-h61-`` prefix would also exclude a *parallel* H61 session's artifact, which is a
+    ``gems52-h62-`` prefix would also exclude a *parallel* H62 session's artifact, which is a
     genuine prior the lane gate exists to compare against (the IR-H60D-002 lesson, inverted).
     """
     roots = [r for r in extra_roots if Path(r).exists()]
     found = gates.find_priors(roots)
-    own = {f"gems52-h61-{field}-arm{int(budget)}px.tif",
-           f"gems52-h61-{field}-arm{int(budget)}px.zip",
-           "h61-candidate.tif", "h61-candidate.zip", "STATUS.txt"}
+    own = {f"gems52-h62-{field}-arm{int(budget)}px.tif",
+           f"gems52-h62-{field}-arm{int(budget)}px.zip",
+           "h62-candidate.tif", "h62-candidate.zip", "STATUS.txt"}
     return [p for p in found if Path(p).name not in own]
 
 
@@ -90,12 +90,12 @@ def main() -> int:
         cat = src.read(1) == 1
     with rasterio.open(DATA / "sample_submission.tif") as src:
         valid_sub = np.isfinite(src.read(1))
-    # The two footprints are NOT nested (IR-H61-001): 1,540 px are finite in all 19 competition
+    # The two footprints are NOT nested (IR-H62-001): 1,540 px are finite in all 19 competition
     # bands but not in sample_submission, and 3,073 px are the other way round.  The submission
     # format is defined by sample_submission, so the emission domain is the INTERSECTION.
     domain = valid & valid_sub
     log(f"footprint: all-19-band {int(valid.sum())} px, sample domain {int(valid_sub.sum())} px, "
-        f"intersection {int(domain.sum())} px (IR-H61-001)")
+        f"intersection {int(domain.sum())} px (IR-H62-001)")
     depth = G.read_band(DATA / "training_features.tif", 15)
 
     pa = np.nan_to_num(np.load(WORK / "pa_oof.npy"), nan=0.0).astype(np.float32)
@@ -112,8 +112,8 @@ def main() -> int:
 
     # ------------------------------------------------------------------ candidate fields
     corrob = np.load(WORK / "corroborated.npy")
-    conc_cell = h61.concordant_cell(pa, pb, permitted, Q_CONF)
-    cover_f, cover_thr = h61.cover_conditioned_disagreement(pa, pb, depth, permitted, Q_CONF,
+    conc_cell = h62.concordant_cell(pa, pb, permitted, Q_CONF)
+    cover_f, cover_thr = h62.cover_conditioned_disagreement(pa, pb, depth, permitted, Q_CONF,
                                                             Q_ABSTAIN, COVER_Q)
     fields = {
         "view_A": pa,
@@ -121,9 +121,9 @@ def main() -> int:
         "clf_union": np.maximum(pa, pb).astype(np.float32),
         "dis_contrast": h60d.dis_contrast(pa, pb),
         "dis_product": h60d.dis_product(pa, pb),
-        "conc_soft": h61.concordance_surface(pa, pb),
-        "conc_min": np.where(conc_cell, h61.concordance_surface(pa, pb), 0.0).astype(np.float32),
-        "conc_corrob": np.where(corrob, h61.concordance_surface(pa, pb), 0.0).astype(np.float32),
+        "conc_soft": h62.concordance_surface(pa, pb),
+        "conc_min": np.where(conc_cell, h62.concordance_surface(pa, pb), 0.0).astype(np.float32),
+        "conc_corrob": np.where(corrob, h62.concordance_surface(pa, pb), 0.0).astype(np.float32),
         "cover_A_only": cover_f,
     }
 
@@ -137,14 +137,14 @@ def main() -> int:
     for name, fld in fields.items():
         d = emit(fld)
         dots[name] = d
-        col = h61.revealed_colocation(d, p1, permitted)
+        col = h62.revealed_colocation(d, p1, permitted)
         ov = float((d & union_dots).sum()) / max(int(d.sum()), 1)
         rows.append(dict(field=name, emitted=int(d.sum()),
                          colocation=col["fraction"], random_baseline=col["random_baseline"],
                          lift=col["lift"],
                          union_overlap=round(ov, 4),
                          disqualified_as_union=bool(ov > UNION_DISQUALIFY),
-                         implied_rho=h61.implied_credit_density(col["fraction"])))
+                         implied_rho=h62.implied_credit_density(col["fraction"])))
     for r in rows:
         log(f"  {r['field']:14s} n={r['emitted']:6d} f={r['colocation']:.4f} "
             f"lift={r['lift']:.2f}x union_overlap={r['union_overlap']:.3f}"
@@ -165,16 +165,16 @@ def main() -> int:
     pred = np.where(domain, out_dots.astype(np.float32), 0.0)
 
     # ------------------------------------------------------------------ write + gates
-    stem = f"gems52-h61-{winner['field']}-arm{int(out_dots.sum())}px"
+    stem = f"gems52-h62-{winner['field']}-arm{int(out_dots.sum())}px"
     tif = ROOT / "submission" / f"{stem}.tif"
-    name = f"gems52-h61-{winner['field']}-arm{int(out_dots.sum())}px-{STAMP}-zeros"
-    note = (f"H61 two-view co-training: {winner['field']} ranking, {int(out_dots.sum())} px, "
+    name = f"gems52-h62-{winner['field']}-arm{int(out_dots.sum())}px-{STAMP}-zeros"
+    note = (f"H62 two-view co-training: {winner['field']} ranking, {int(out_dots.sum())} px, "
             f"derived budget, >=200 m off catalogue. Research review copy.")
     if len(note) > 140:
         note = note[:140]
     receipt = submission_writer.write_submission(
         tif, pred, DATA / "sample_submission.tif", domain, note=note, name=name,
-        metadata=dict(round="H61", field=winner["field"], budget_px=int(out_dots.sum()),
+        metadata=dict(round="H62", field=winner["field"], budget_px=int(out_dots.sum()),
                       ring_min_m=round(min_dist_m, 1)))
     log(f"wrote {tif.name}: {receipt['bytes']} bytes, sha256 {receipt['sha256'][:16]}…")
 
@@ -207,7 +207,7 @@ def main() -> int:
     # ------------------------------------------------------------------ reasoning rows
     ys, xs = np.nonzero(out_dots)
     tr = G.TRANSFORM
-    cell_txt = [h61.cell_of(float(pa[y, x]), float(pb[y, x]), Q_CONF, Q_ABSTAIN)
+    cell_txt = [h62.cell_of(float(pa[y, x]), float(pb[y, x]), Q_CONF, Q_ABSTAIN)
                 for y, x in zip(ys[:0], xs[:0])]   # placeholder to keep memory flat
     reasoning_csv = ROOT / "submission" / f"{stem}-emitted-pixels.csv"
     with reasoning_csv.open("w", newline="") as fh:
@@ -217,9 +217,9 @@ def main() -> int:
                     "interpretation", "status"])
         for y, x in zip(ys, xs):
             a, b, d = float(pa[y, x]), float(pb[y, x]), float(depth[y, x])
-            cell = h61.cell_of(a, b, Q_CONF, Q_ABSTAIN)
-            note_txt = (h61.concordant_note(d) if cell == "concordant"
-                        else h61.a_only_note(d, cover_thr))
+            cell = h62.cell_of(a, b, Q_CONF, Q_ABSTAIN)
+            note_txt = (h62.concordant_note(d) if cell == "concordant"
+                        else h62.a_only_note(d, cover_thr))
             w.writerow([int(y), int(x), round(tr[2] + 100.0 * x + 50.0, 1),
                         round(tr[5] - 100.0 * y - 50.0, 1), round(a, 4), round(b, 4),
                         round(d, 1), cell, bool(corrob[y, x]), note_txt,
@@ -252,25 +252,25 @@ def main() -> int:
                         round(tr[5] - 100.0 * gy.mean() - 50.0, 1),
                         round(dm, 1), round(float(np.median(pa[gy, gx])), 4),
                         round(float(np.median(pb[gy, gx])), 4),
-                        bool(dm >= cover_thr), h61.a_only_note(dm, cover_thr),
+                        bool(dm >= cover_thr), h62.a_only_note(dm, cover_thr),
                         "HYPOTHESIS FOR PHASE-2 REVIEW; not a verified fault"])
             written += 1
     log(f"A-only segment dossiers: {written} of {ncomp} (cap {cap}) -> {dossier_csv.name}")
 
     # ------------------------------------------------------------------ receipts
-    val = json.loads((EV / "h61_validation.json").read_text())
-    cot = json.loads((EV / "h61_cotrain.json").read_text())
+    val = json.loads((EV / "h62_validation.json").read_text())
+    cot = json.loads((EV / "h62_cotrain.json").read_text())
     hide_key = f"{winner['field']}|25000"
     if hide_key not in val["instrument1_holdout"]["arms"]:
         hide_key = f"{winner['field']}|15000"
     hide = val["instrument1_holdout"]["arms"][hide_key]
-    build = dict(round="H61-build", observed_utc=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-                 budget_px=BUDGET, budget_basis="registered correction H61-2",
+    build = dict(round="H62-build", observed_utc=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                 budget_px=BUDGET, budget_basis="registered correction H62-2",
                  cover_threshold_m=cover_thr,
                  candidates=rows, winner=winner["field"],
                  winner_selection_rule=("highest Instrument-2 co-location lift among candidates "
                                         "whose dot set overlaps clf_union's top-k by <= 70% "
-                                        "(correction H61-3)"),
+                                        "(correction H62-3)"),
                  union_disqualifier_threshold=UNION_DISQUALIFY,
                  not_merely_union=not_union,
                  ring_min_distance_to_catalogue_m=round(min_dist_m, 1),
@@ -281,22 +281,22 @@ def main() -> int:
                                "the legal pool; smaller components are counted in "
                                "a_only_segments_total and dropped"),
                  corrections=[
-                     dict(id="H61-1", summary=("the hard corroboration intersection is "
+                     dict(id="H62-1", summary=("the hard corroboration intersection is "
                           "structurally unusable at this budget (k^2/n = 185 at k=30,000); the "
                           "soft joint-confidence ranking min(pA,pB) is registered instead")),
-                     dict(id="H61-2", summary=("emission budget 22,000 px: the gamma fit's "
+                     dict(id="H62-2", summary=("emission budget 22,000 px: the gamma fit's "
                           "unclamped argmax 102,519 px lies outside the measured range, while the "
                           "board's own published record (Spearman -1.000, n=6, mass vs score) is a "
                           "direct measurement and governs")),
-                     dict(id="H61-3", summary=("view_B and clf_union are disqualified as 'merely "
+                     dict(id="H62-3", summary=("view_B and clf_union are disqualified as 'merely "
                           "the union': their dot sets overlap by 93-100% and their reads differ "
                           "by 3%")),
                  ])
-    h61.write_json(EV / "h61_build.json", build)
-    h61.write_json(EV / "h61_format_gate.json", receipt["validator"])
-    h61.write_json(EV / "h61_uniqueness.json",
+    h62.write_json(EV / "h62_build.json", build)
+    h62.write_json(EV / "h62_format_gate.json", receipt["validator"])
+    h62.write_json(EV / "h62_uniqueness.json",
                    {k: v for k, v in uniq.items() if k != "per_prior"} | {"n_priors": len(priors)})
-    h61.write_json(EV / "h61_lane_gate.json", lane)
+    h62.write_json(EV / "h62_lane_gate.json", lane)
 
     holdout_read = dict(
         label="HOLDOUT-DTI",
@@ -314,7 +314,7 @@ def main() -> int:
                     and uniq["canonical_pattern_unique"]
                     and not uniq["equals_literal_prior_union"]
                     and not_union["outside_union_fraction"] >= 0.30)
-    card = h61.run_card(
+    card = h62.run_card(
         hypothesis=("Two views that err near-independently corroborate: pixels that both the "
                     "potential-field/subsurface view and the surface view vouch for, ranked by "
                     "their joint confidence min(pA,pB), should carry a higher density of real, "
@@ -375,14 +375,14 @@ def main() -> int:
                                 strata=cot["strata"]["counts"],
                                 depth_medians=cot["strata"]["median_depth_to_basement_m"],
                                 corroboration_probe=cot["corroboration_probe"]),
-                   corrections=["H61-1", "H61-2", "H61-3"],
+                   corrections=["H62-1", "H62-2", "H62-3"],
                    slot_decision=("research review copy; promotion to a real weekly slot is a "
                                   "separate selector step within the cap on the submission page"),
                    champion_owner_reported=CHAMPION_OWNER_REPORTED))
-    h61.write_json(EV / "h61_run_card.json", card)
-    h61.write_json(DAD / "h61_run_card.json", card)
+    h62.write_json(EV / "h62_run_card.json", card)
+    h62.write_json(DAD / "h62_run_card.json", card)
     (WORK / "promoted_field.txt").write_text(winner["field"] + "\n")
-    (ROOT / "submission" / "H61_LATEST.txt").write_text(tif.name + "\n")
+    (ROOT / "submission" / "H62_LATEST.txt").write_text(tif.name + "\n")
 
     # publish copies for the site
     for src_p, dst_name in ((tif, f"{stem}.tif"),
@@ -391,8 +391,8 @@ def main() -> int:
                             (reasoning_csv, f"{stem}-emitted-pixels.csv")):
         if src_p.exists():
             shutil.copy2(src_p, DL / dst_name)
-    shutil.copy2(tif, DL / "h61-candidate.tif")
-    shutil.copy2(tif.with_suffix(".zip"), DL / "h61-candidate.zip")
+    shutil.copy2(tif, DL / "h62-candidate.tif")
+    shutil.copy2(tif.with_suffix(".zip"), DL / "h62-candidate.zip")
     log(f"published to docs/downloads in {time.time() - t0:.0f}s")
     log(f"VERDICT: {'promote' if promoted else 'negative'}  field={winner['field']}  "
         f"dots={int(out_dots.sum())}  sha256={receipt['sha256']}")

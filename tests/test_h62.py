@@ -1,4 +1,4 @@
-"""H61 unit and receipt tests.
+"""H62 unit and receipt tests.
 
 The pure-function tests need no rasters and run in CI.  The artifact test reads the shipped
 GeoTIFF only if it is present on disk (the CI workflow restores the small pinned inputs only), so
@@ -17,14 +17,14 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from gems52 import h61  # noqa: E402
+from gems52 import h62  # noqa: E402
 
 
 # --------------------------------------------------------------------------- the two-view fields
 def test_concordance_surface_is_the_minimum_not_the_union():
     pa = np.array([[0.9, 0.1], [0.7, 0.4]], np.float32)
     pb = np.array([[0.2, 0.8], [0.7, 0.4]], np.float32)
-    out = h61.concordance_surface(pa, pb)
+    out = h62.concordance_surface(pa, pb)
     assert np.allclose(out, [[0.2, 0.1], [0.7, 0.4]], atol=1e-6)
     assert not np.allclose(out, np.maximum(pa, pb))       # never the union
 
@@ -33,7 +33,7 @@ def test_concordant_cell_requires_both_views_confident():
     pa = np.array([[0.9, 0.9], [0.5, 0.9]], np.float32)
     pb = np.array([[0.9, 0.5], [0.9, 0.9]], np.float32)
     allowed = np.ones((2, 2), bool)
-    cell = h61.concordant_cell(pa, pb, allowed, 0.6)
+    cell = h62.concordant_cell(pa, pb, allowed, 0.6)
     assert cell.tolist() == [[True, False], [False, True]]
     # and the cell is a subset of the union's confident set, never a superset
     assert (cell & ~(np.maximum(pa, pb) >= 0.6)).sum() == 0
@@ -66,7 +66,7 @@ def test_independent_thinning_uses_each_view_alone_and_reports_the_null():
             blocked[max(0, y - 3):y + 4, max(0, x - 3):x + 4] = True
         return out
 
-    th = h61.independent_thinning(pa, pb, allowed, 0.6, 200, select)
+    th = h62.independent_thinning(pa, pb, allowed, 0.6, 200, select)
     assert th["n_thin_a"] == th["n_thin_b"] > 0
     assert th["n_corroborated"] == th["n_thin_a"]        # identical fields corroborate fully
     assert th["corroboration_lift"] > 1.0
@@ -74,7 +74,7 @@ def test_independent_thinning_uses_each_view_alone_and_reports_the_null():
 
 
 def test_corroboration_null_scales_as_k_squared_over_n():
-    """The structural limit filed as IR-H61-002: two independent thinnings intersect in k^2/n."""
+    """The structural limit filed as IR-H62-002: two independent thinnings intersect in k^2/n."""
     n, k = 4_861_502, 30_000
     assert 180 < k * k / n < 190
 
@@ -88,7 +88,7 @@ def test_cover_conditioned_disagreement_uses_a_pool_quantile():
     depth[:, :5] = 100.0
     depth[:, 5:] = 900.0
     allowed = np.ones(shape, bool)
-    out, thr = h61.cover_conditioned_disagreement(pa, pb, depth, allowed, 0.6, 0.4, 0.70)
+    out, thr = h62.cover_conditioned_disagreement(pa, pb, depth, allowed, 0.6, 0.4, 0.70)
     assert thr == pytest.approx(900.0)                     # the 70th percentile of the pool
     assert out[:, :5].sum() == 0                           # thin cover: the cell is not licensed
     assert out[:, 5:].sum() > 0                            # thick cover: buried-fault candidate
@@ -103,18 +103,18 @@ def test_revealed_colocation_matches_a_hand_computation():
     dots[6, 6] = True                       # sqrt(2) away, inside r = 3
     dots[15, 15] = True                     # far away
     pool = np.ones((20, 20), bool)
-    r = h61.revealed_colocation(dots, grid, pool)
+    r = h62.revealed_colocation(dots, grid, pool)
     assert r["n_dots"] == 3
     assert r["colocated"] == 2
     assert r["fraction"] == pytest.approx(2 / 3)
     # scipy's binary_dilation default structure is the 4-connected cross, so three iterations
-    # give the 25-cell L1 diamond, not the 29-cell Euclidean disc (IR-H61-004).
+    # give the 25-cell L1 diamond, not the 29-cell Euclidean disc (IR-H62-004).
     assert r["random_baseline"] == pytest.approx(25 / 400)
     assert r["lift"] > 1.0
 
 
 def test_implied_credit_density_is_a_bracket_within_the_measured_bounds():
-    d = h61.implied_credit_density(0.30)
+    d = h62.implied_credit_density(0.30)
     assert 0.0279 <= d["rho_lo"] <= d["rho_hi"] <= 0.184
 
 
@@ -122,33 +122,33 @@ def test_implied_credit_density_is_a_bracket_within_the_measured_bounds():
 def test_budget_argmax_is_independent_of_field_scale():
     """c cancels: only the decay exponent gamma moves S*."""
     pts = [(8000, 0.40), (12000, 0.36), (17000, 0.33), (25000, 0.29), (38000, 0.22)]
-    a = h61.budget_from_gamma(pts, clamp=(0, 10**9))
-    b = h61.budget_from_gamma([(s, 10.0 * f) for s, f in pts], clamp=(0, 10**9))
+    a = h62.budget_from_gamma(pts, clamp=(0, 10**9))
+    b = h62.budget_from_gamma([(s, 10.0 * f) for s, f in pts], clamp=(0, 10**9))
     assert a["budget_px"] == b["budget_px"]
     assert a["ok"] is True
 
 
 def test_budget_rule_falls_back_when_the_fit_is_impossible():
-    assert h61.budget_from_gamma([(8000, 0.4)])["budget_px"] == h61.BUDGET_FALLBACK
+    assert h62.budget_from_gamma([(8000, 0.4)])["budget_px"] == h62.BUDGET_FALLBACK
     # a non-decaying field has gamma > 1 and the formula does not apply
-    bad = h61.budget_from_gamma([(8000, 0.1), (12000, 0.2), (17000, 0.4)])
-    assert bad["budget_px"] == h61.BUDGET_FALLBACK
+    bad = h62.budget_from_gamma([(8000, 0.1), (12000, 0.2), (17000, 0.4)])
+    assert bad["budget_px"] == h62.BUDGET_FALLBACK
 
 
 # --------------------------------------------------------------------------- reasoning rows
 def test_cell_of_partitions_the_confidence_table():
-    assert h61.cell_of(0.9, 0.9, 0.6, 0.4) == "concordant"
-    assert h61.cell_of(0.9, 0.1, 0.6, 0.4) == "A-only (buried candidate)"
-    assert h61.cell_of(0.1, 0.9, 0.6, 0.4) == "B-only (surface-only; artefact-suspect)"
-    assert h61.cell_of(0.5, 0.5, 0.6, 0.4) == "neither"
+    assert h62.cell_of(0.9, 0.9, 0.6, 0.4) == "concordant"
+    assert h62.cell_of(0.9, 0.1, 0.6, 0.4) == "A-only (buried candidate)"
+    assert h62.cell_of(0.1, 0.9, 0.6, 0.4) == "B-only (surface-only; artefact-suspect)"
+    assert h62.cell_of(0.5, 0.5, 0.6, 0.4) == "neither"
 
 
 def test_a_only_note_names_the_non_fault_alternative_and_never_claims_a_fault():
-    thin = h61.a_only_note(50.0, 600.0)
-    thick = h61.a_only_note(900.0, 600.0)
+    thin = h62.a_only_note(50.0, 600.0)
+    thick = h62.a_only_note(900.0, 600.0)
     assert "lithologic contact" in thin and "gravity gradient" in thin
     assert "buried-structure candidate" in thick
-    row = h61.reasoning_row(row=1, col=2, easting=3.0, northing=4.0, pa=0.9, pb=0.1,
+    row = h62.reasoning_row(row=1, col=2, easting=3.0, northing=4.0, pa=0.9, pb=0.1,
                             depth_m=900.0, cell="A-only (buried candidate)",
                             corroborated=False, notes=thick)
     assert row["status"].startswith("HYPOTHESIS FOR PHASE-2 REVIEW")
@@ -161,8 +161,8 @@ def _evidence(name: str):
     return json.loads(p.read_text()) if p.exists() else None
 
 
-def test_h61_preregistration_is_intact():
-    reg = json.loads((ROOT / "registry/h61_preregistration.json").read_text())
+def test_h62_preregistration_is_intact():
+    reg = json.loads((ROOT / "registry/h62_preregistration.json").read_text())
     doc = ROOT / reg["hypothesis_document"]
     assert hashlib.sha256(doc.read_bytes()).hexdigest() == reg["hypothesis_document_sha256"]
     for key, pinned in reg["evaluator_version"].items():
@@ -172,11 +172,11 @@ def test_h61_preregistration_is_intact():
         assert hashlib.sha256(mod.read_bytes()).hexdigest() == pinned
 
 
-def test_h61_round_facts_are_recorded_and_consistent():
-    cot, val = _evidence("h61_cotrain.json"), _evidence("h61_validation.json")
+def test_h62_round_facts_are_recorded_and_consistent():
+    cot, val = _evidence("h62_cotrain.json"), _evidence("h62_validation.json")
     if cot is None or val is None:
-        pytest.skip("H61 receipts not present in this checkout")
-    pre = _evidence("h61_preflight_integrity.json")
+        pytest.skip("H62 receipts not present in this checkout")
+    pre = _evidence("h62_preflight_integrity.json")
     if pre is not None:
         assert pre["pinned_all_ok"] is True
         assert pre["pinned_files_verified"] == 23
@@ -192,14 +192,14 @@ def test_h61_round_facts_are_recorded_and_consistent():
     assert arms["conc_soft|25000"]["pooled_dti"] > arms["view_B|25000"]["pooled_dti"]
 
 
-def test_h61_shipped_artifact_if_present():
-    build = _evidence("h61_build.json")
+def test_h62_shipped_artifact_if_present():
+    build = _evidence("h62_build.json")
     if build is None:
-        pytest.skip("H61 build receipt not present in this checkout")
-    stem = f"gems52-h61-{build['winner']}-arm{build['budget_px']}px"
+        pytest.skip("H62 build receipt not present in this checkout")
+    stem = f"gems52-h62-{build['winner']}-arm{build['budget_px']}px"
     tif = ROOT / "submission" / (stem + ".tif")
     if not tif.exists():
-        pytest.skip("H61 GeoTIFF not restored in this checkout")
+        pytest.skip("H62 GeoTIFF not restored in this checkout")
     receipt = json.loads((ROOT / "submission" / (stem + ".json")).read_text())
     assert hashlib.sha256(tif.read_bytes()).hexdigest() == receipt["sha256"]
     assert receipt["validator"]["ok"] is True
@@ -207,8 +207,8 @@ def test_h61_shipped_artifact_if_present():
     assert receipt["validator"]["min"] >= 0.0 and receipt["validator"]["max"] <= 1.0
     assert build["ring_rule_ok"] is True
     assert build["not_merely_union"]["outside_union_fraction"] >= 0.30
-    assert build["winner"] not in ("view_B", "clf_union")   # the union disqualifier, H61-3
-    card = _evidence("h61_run_card.json")
+    assert build["winner"] not in ("view_B", "clf_union")   # the union disqualifier, H62-3
+    card = _evidence("h62_run_card.json")
     assert card["raster_sha256"] == receipt["sha256"]
     assert len(card["submission_note"]) <= 140
     assert len(card["submission_name"]) <= 140
