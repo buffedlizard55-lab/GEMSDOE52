@@ -1,194 +1,38 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
+<html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>GEMSDOE52 — H77 submission file: download YES, submit NO</title>
-<meta name="description" content="One GeoTIFF, one click. DOWNLOAD: YES (format-valid, portal-exact, unique, lane-feasible). SUBMIT TO THE COMPETITION: NO (holdout negative; no slot approval).">
+<title>GEMSDOE52 — DOE GEMS competition #306 — H82 candidate</title>
 <style>
-:root{--ok:#16a34a;--no:#dc2626;--warn:#d97706;--ink:#0f172a;--mut:#475569;--line:#e2e8f0}
-*{box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  margin:0;color:var(--ink);line-height:1.6;background:#f8fafc}
-.wrap{max-width:900px;margin:0 auto;padding:24px 20px 80px}
-h1{font-size:1.7em;margin:.2em 0 .1em;line-height:1.25}
-h2{font-size:1.2em;margin:1.6em 0 .4em}
-a{color:#1d4ed8}
-.top{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:18px;
-  box-shadow:0 1px 3px rgba(15,23,42,.06)}
-.verdict{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
-@media(max-width:640px){.verdict{grid-template-columns:1fr}}
-.v{border-radius:10px;padding:14px 16px;border:2px solid}
-.v b{display:block;font-size:1.05em;letter-spacing:.02em}
-.v span{font-size:.92em;color:var(--mut)}
-.v.ok{border-color:var(--ok);background:#f0fdf4}
-.v.no{border-color:var(--no);background:#fef2f2}
-.btn{display:inline-block;padding:16px 26px;border-radius:10px;text-decoration:none;font-weight:800;
-  font-size:1.15em;margin:10px 10px 4px 0}
-.btn-go{background:var(--ok);color:#fff}
-.btn-alt{background:#fff;color:var(--ink);border:2px solid var(--line);font-size:1em;padding:12px 18px}
-code{background:#f1f5f9;padding:2px 6px;border-radius:5px;font-size:.92em;word-break:break-all}
-table{border-collapse:collapse;width:100%;margin:10px 0;background:#fff}
-th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;font-size:.92em;vertical-align:top}
-th{background:#f1f5f9;white-space:nowrap}
-.pass{color:var(--ok);font-weight:700}
-.fail{color:var(--no);font-weight:700}
-.note{background:#fffbeb;border-left:4px solid var(--warn);padding:14px 16px;margin:14px 0;border-radius:0 8px 8px 0}
-.mut{color:var(--mut);font-size:.9em}
-.small{font-size:.86em;color:var(--mut)}
-ul{margin:.4em 0 .4em 1.2em;padding:0}
-li{margin:.25em 0}
-</style>
-</head>
-<body>
-<div class="wrap">
-
-<div class="top">
-  <p class="mut" style="margin:0">DOE GEMS · DrivenData competition 306 · round <b>H77</b> · built 2026-10-09</p>
-  <h1>Your submission file is ready. One click.</h1>
-
-  <div class="verdict">
-    <div class="v ok"><b>⬇ DOWNLOAD: YES</b>
-      <span>Format-valid and portal-exact. Every check below was run on the bytes on disk, not asserted.</span></div>
-    <div class="v no"><b>⛔ SUBMIT TO THE COMPETITION: NO</b>
-      <span>The holdout does not show this field beating the bar, and no weekly slot is approved. Slots used: 0.</span></div>
-  </div>
-
-  <a class="btn btn-go" href="docs/downloads/h77-candidate.tif" download>⬇ Download the GeoTIFF (1.49 MB)</a>
-  <a class="btn btn-alt" href="docs/downloads/h77-candidate.zip" download>Single-TIFF ZIP</a>
-  <a class="btn btn-alt" href="docs/h77-executive-summary.html">📋 Exactly how to submit →</a>
-
-  <table>
-    <tr><th>File</th><td><code>gems52-h77-viewb-boardplaced-37654px-20261009T194504Z.tif</code></td></tr>
-    <tr><th>SHA-256</th><td><code>f7f234af958b5645b0ca65c8969906c6b526ef3da9afa693b0171d1902452f49</code></td></tr>
-    <tr><th>Submission name<br><span class="mut">(53 chars)</span></th>
-        <td><code>gems52-h77-viewb-boardplaced-37654px-20261009T194504Z</code></td></tr>
-    <tr><th>Note<br><span class="mut">(135 chars)</span></th>
-        <td><code>H77: View-B OOF surface rank; 200m catalogue ring out; binary {0,1}; 3px spacing; K=37654; consensus&lt;=1 lane-feasible; portal-exact LZW</code></td></tr>
-  </table>
-
-  <div class="note">
-    <b>Why “submit: no”, in one line.</b> All five new geological detectors this round scored
-    <i>below</i> the repository's own control on the hide-and-recover holdout, and this file's dots are
-    deliberately placed on support the entire prior submission family avoided — which is unique and
-    lane-clean, but is not where the measured credit is. A format-valid file is not an approved entry.
-    <a href="docs/h77-executive-summary.html">Full reasoning and the exact numbers →</a>
-  </div>
-</div>
-
-<h2>Why the earlier “Predicted values must be in range [0, 1]” rejection cannot fire on this file</h2>
-<p>Every one of the 13 checks below was executed against the written bytes and the organiser's own
-<code>sample_submission.tif</code>. The last row is the fix: this repository previously wrote
-<i>tiled, deflate-compressed, all-finite</i> rasters, while the organiser's template and all eleven
-owner-scored rasters are <i>stripped, LZW, NaN-outside with <code>nodata=nan</code></i>. This file now
-matches the template's container exactly, so a portal reader that does not honour a nodata declaration
-has nothing left to trip on.</p>
-<table>
-  <tr><th>Check (read from the file)</th><th>Result</th></tr>
-  <tr><td>Single band, float32</td><td class="pass">PASS</td></tr>
-  <tr><td>CRS = EPSG:32611, matches template</td><td class="pass">PASS</td></tr>
-  <tr><td>Shape 3,730 × 3,292, matches template</td><td class="pass">PASS</td></tr>
-  <tr><td>Geotransform identical to template</td><td class="pass">PASS</td></tr>
-  <tr><td>No finite value outside [0, 1]</td><td class="pass">PASS — values are exactly {0, 1}</td></tr>
-  <tr><td>No non-finite pixel inside the footprint</td><td class="pass">PASS — 0</td></tr>
-  <tr><td>No positive mass outside the footprint</td><td class="pass">PASS — 0</td></tr>
-  <tr><td>Container profile (LZW, stripped, nodata=nan)</td><td class="pass">PASS — identical to <code>sample_submission.tif</code></td></tr>
-  <tr><td>Emitted cells / min distance to a mapped trace</td><td>37,654 dots · 200.0 m minimum · 2,308.7 m median</td></tr>
-</table>
-
-<h2>Uniqueness and the parallel-run lane rule — measured, not claimed</h2>
-<table>
-  <tr><th>Gate</th><th>Measured result</th><th>Limit</th><th>Verdict</th></tr>
-  <tr><td>Decoded-pattern uniqueness vs 105 registry rasters</td>
-      <td>canonical pattern unique; <b>35,960 of 37,654 dots (95.50%)</b> exact-novel; not the prior union</td>
-      <td>not a copy</td><td class="pass">PASS</td></tr>
-  <tr><td>Lane, surface (before placement) — max rank correlation</td><td>0.1296</td><td>0.90</td><td class="pass">PASS</td></tr>
-  <tr><td>Lane, final dots — max rank correlation</td><td><b>0.0026</b></td><td>0.90</td><td class="pass">PASS</td></tr>
-  <tr><td>Lane, final dots — max share within 3 px of one prior</td><td><b>12.17%</b> (nearest prior: the H69 raster)</td>
-      <td>70%</td><td class="pass">PASS</td></tr>
-  <tr><td>Beats the control on the hide-and-recover holdout</td>
-      <td>no new arm does; best new arm 0.086684 vs control 0.174571</td><td>must beat</td><td class="fail">FAIL</td></tr>
-</table>
-<p class="small">The lane rule is the parallel-run protocol's own rule, not an organiser rule. Both the
-literal and the probe-policy reading of it PASS here — only the second lane-feasible file this
-repository has produced (H69 was the first, at 0.6985; this one is 0.1217).</p>
-
-<h2>What this round actually measured</h2>
-<table>
-  <tr><th>#</th><th>Hypothesis (new to this repository)</th><th>Layers</th><th>Pooled HOLDOUT-DTI [95% CI]</th></tr>
-  <tr><td>control</td><td><b>single_B</b> — shared View-B surface model (reproduces its committed value exactly)</td>
-      <td>DEM curvature/slope + radiometrics + LiDAR</td><td><b>0.174571</b> [0.153568, 0.194531]</td></tr>
-  <tr><td>—</td><td>uniform random placement</td><td>—</td><td>0.082399 [0.072700, 0.092084]</td></tr>
-  <tr><td>E</td><td>LiDAR scarp × radiometric-K discordance</td><td>LiDAR + band 6/K</td><td>0.086684 [0.071135, 0.104422]</td></tr>
-  <tr><td>A</td><td>Basement-surface curvature, gated to thin sedimentary cover</td><td>band 15</td><td>0.078442 [0.066089, 0.090756]</td></tr>
-  <tr><td>F</td><td>Equal-weight rank fusion of A–D</td><td>bands 8/15/17</td><td>0.069808 [0.057725, 0.081007]</td></tr>
-  <tr><td>B</td><td>Geodetic dilatation strain-partition boundary</td><td>band 8</td><td>0.068369 [0.056286, 0.080578]</td></tr>
-  <tr><td>C</td><td>Conductivity-gradient × basement-step coincidence</td><td>bands 15 + 17</td><td>0.061497 [0.049564, 0.073368]</td></tr>
-  <tr><td>D</td><td>Antithetic basin-margin pairing</td><td>bands 12 + 15</td><td>0.043613 [0.029332, 0.058720]</td></tr>
-</table>
-<p class="small">Evaluator <code>gems52-pooled-hide-v1</code>, 4 label-blind folds, 53,186 withheld
-positive pixels, 9,400 dots per arm per fold, 1,000 paired block-bootstrap draws.
-<b>Verdict: NEGATIVE.</b> No new detector beats the control; only arm E separates from random and its
-interval overlaps random's.</p>
-
-<h2>The two measurements that explain the leaderboard</h2>
-<ul>
-  <li><b>|G| is pinned at 14,088.7 truth pixels</b>, derived independently this session from one exact
-      nested pair of owner-scored rasters. The champion deleted 6,436 pixels from the 0.2600 file and
-      scored 0.2778; those pixels all sit 100–200 m from a mapped trace and earned <b>exactly zero</b>
-      credit. That single measurement fixes |G| and proves the 200 m exclusion is free precision.</li>
-  <li><b>DTI = T / (0.2·S + 0.8·|G|)</b>, so the score is set by credited mass <i>T</i> and emitted mass
-      <i>S</i> alone. At the champion's budget, beating 0.3195 needs <i>T</i> ≥ 6,007 — 15% more credit
-      from the same mass. That is a better detector, and this round measured five that are not.</li>
-</ul>
-
-
-<h2>Three parallel rounds from today, and why their verdicts differ</h2>
-<p>This repository ran four rounds on 2026-10-09. They fail <i>different</i> gates, which is worth
-stating plainly because it is the whole difficulty: no round passes both the holdout and the lane rule.</p>
-<table>
-  <tr><th>Round</th><th>Holdout gate</th><th>Lane gate</th><th>Verdict</th></tr>
-  <tr><td><b>H77</b> (this page's download)<br><span class="mut">View-B OOF rank, consensus-restricted placement</span></td>
-      <td class="fail">FAIL — no new arm beats <code>single_B</code></td>
-      <td class="pass">PASS — 12.17 % near-dot, 0.0026 rank corr</td>
-      <td>download YES · submit NO</td></tr>
-  <tr><td><b>H76</b> (parallel session)<br><span class="mut">unsupervised gravity-high / slope-quiet screen, 3,000 dots</span></td>
-      <td class="fail">not measured — no buffered holdout run</td>
-      <td>not certified against the full census (43 local rasters only)</td>
-      <td><a href="docs/downloads/h76-candidate.tif">download</a> · <a href="docs/h76-executive-summary.html">details</a> · submit NO</td></tr>
-  <tr><td><b>H75</b> (parallel session)<br><span class="mut">directional variogram anisotropy ranker</span></td>
-      <td class="pass">PASS — 0.1864 vs 0.1745, paired +0.0118, CI [0.0068, 0.0174]</td>
-      <td class="fail">FAIL — 92.2 % of dots within 3 px of one prior (limit 70 %)</td>
-      <td><a href="docs/downloads/h75-candidate.tif">download</a> · <a href="docs/h75-executive-summary.html">details</a> · submit research-only</td></tr>
-  <tr><td><b>H74</b> (parallel session)<br><span class="mut">deformation-only View A2, 721 dots</span></td>
-      <td class="fail">FAIL</td><td class="fail">FAIL</td>
-      <td><a href="docs/downloads/h74-candidate.tif">download</a> · <a href="docs/h74-executive-summary.html">details</a> · submit NO</td></tr>
-</table>
-<div class="note"><b>Read this before choosing a file.</b> H75 is the only round in this repository that
-has beaten the control on the shared holdout, and it is the one candidate worth an owner's attention.
-It fails the parallel-run <i>lane</i> rule, which is this project's own protocol, not an organiser
-rule — so overriding it is an owner decision, not something this page can make. H77 (the download at
-the top) is the reverse case: it passes every gate the protocol defines and beats nothing on the
-holdout. <b>No file here is approved for a weekly slot, and slots used remain 0.</b> Holdout DTI is a
-HOLDOUT-DTI measurement against catalogue faults, not a projected board score; this repository
-measured Spearman −0.10 between the two.</div>
-
-<p class="mut">Sources for manual review:
-<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">official problem &amp; metric</a> ·
-<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">leaderboard</a> ·
-<a href="https://github.com/drivendataorg/gems-prize-reference-solution">reference solution</a> ·
-<a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">USGS GeoDAWN</a> ·
-<a href="https://epsg.io/32611">EPSG:32611</a> ·
-<a href="https://en.wikipedia.org/wiki/Tversky_index">Tversky index</a></p>
-
-<p class="small">
-<a href="docs/h77-executive-summary.html">Executive summary / submission steps</a> ·
-<a href="docs/index.html">Full research site</a> ·
-<a href="evidence/h77_build.json">build receipt</a> ·
-<a href="evidence/h77_holdout.json">holdout receipt</a> ·
-<a href="evidence/h77_budget_sweep.json">budget sweep</a> ·
-<a href="README.md">README (full brief + method)</a>
-</p>
-</div>
-</body>
-</html>
+body{margin:0;font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+color:#14181d;background:#fff}
+main{max-width:760px;margin:0 auto;padding:36px 20px 70px}
+h1{font-size:26px;margin:0 0 10px}
+.v{border-radius:10px;padding:14px 16px;margin:16px 0;font-weight:700;
+background:#fdecea;color:#b3261e;
+border:1px solid #f0c4bf}
+a.b{display:inline-block;background:#1f4e79;color:#fff;text-decoration:none;font-weight:700;
+padding:13px 20px;border-radius:8px;margin:6px 8px 6px 0}
+a.s{background:#eef2f6;color:#1f4e79}
+code{background:#f2f4f7;padding:1px 5px;border-radius:4px;font-size:13.5px}
+small{color:#5b6672}
+</style></head><body><main>
+<h1>H82 candidate raster &mdash; DOE GEMS competition #306</h1>
+<div class="v">OK TO DOWNLOAD: yes
+&nbsp;&middot;&nbsp; OK TO SUBMIT: no — research artefact only</div>
+<a class="b" href="docs/downloads/h82-candidate.tif" download>Download h82-candidate.tif &#8595;</a>
+<a class="b s" href="docs/downloads/h82-candidate.zip" download>ZIP</a>
+<a class="b s" href="docs/index.html">Full site</a>
+<a class="b s" href="docs/h82-executive-summary.html">How to submit</a>
+<a class="b s" href="docs/validator.html">Check a file in your browser</a>
+<p><small>140,555 bytes &middot; 37,654 emitted cells, values exactly {0,1}
+&middot; SHA-256 <code>17c3f8325ac6f267b1b8cc58bc6fd9495c118c30de64d5f78293d19d7f20c907</code> &middot; EPSG:32611, 3730&times;3292 at 100 m
+&middot; submission name <code>h82-dva2vsa-B-37654px-20261009T215811Z</code></small></p>
+<p><small>HOLDOUT-DTI (evaluator gems52-pooled-hide-v1,
+53,186 withheld positives): primary arm
+0.150591 [0.131262, 0.169201] vs control single_B 0.174910;
+paired -0.024319 [-0.039025, -0.006869]. A holdout number is never a board forecast. Verdict:
+NEGATIVE / RESEARCH-ONLY: download is safe, submission is not recommended.</small></p>
+<p><small>This page is a research artefact. It is not an organiser acceptance receipt, and it does not
+claim a leaderboard gain. Sources and verification status:
+<a href="docs/h82-sources.html">docs/h82-sources.html</a>.</small></p>
+</main></body></html>

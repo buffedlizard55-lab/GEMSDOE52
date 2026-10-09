@@ -621,7 +621,11 @@ def check_r5(DATA, DOCS, ROOT, problems, notes):
     def _stamp(q: Path):
         cands = []
         sidecar = q.with_suffix(".json")
-        for src in (sidecar, q):
+        # docs/downloads' short aliases carry their receipt as "<alias>-receipt.json"
+        # (h61/h63/h70/h74-candidate-receipt.json); without this the alias looks undated, is treated
+        # as contemporaneous with R5, and silently invalidates R5's novelty receipt.
+        receipt = q.with_name(q.stem + "-receipt.json")
+        for src in (sidecar, receipt, q):
             try:
                 txt = src.read_text(errors="replace") if src.suffix == ".json" else src.name
             except Exception:                                    # noqa: BLE001
@@ -645,6 +649,10 @@ def check_r5(DATA, DOCS, ROOT, problems, notes):
                 except ValueError:
                     continue
                 best = t if best is None or t > best else best
+        # NOTE: a second, post-loop date-only fallback that this branch had carried was removed at the
+        # merge. main's IR-H77cond-002 fix above already accepts a delimited YYYYMMDD inside the per-source
+        # loop, which is strictly better: the fallback only ever saw the LAST src's text, so it could miss
+        # a date that the sidecar carried. Same defect, same conclusion (R5 1.000000), one implementation.
         return best
 
     # IR-H77cond-003: filenames are not a reliable oracle for "when did this raster appear".

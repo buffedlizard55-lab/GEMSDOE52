@@ -1,3 +1,38 @@
+<!--H82-README-->
+# Current status — H82 (2026-10-09): NEGATIVE — the frozen primary arm lost to its own control; the 8-direction fan helped, the strike-alignment channels hurt
+
+> **DOWNLOAD: YES** (format-valid, decoded-unique, 0 NaN, values exactly {0,1}). **SUBMIT: NO — research artefact only.**
+> The pre-registered primary `B_DVA2_VSA` is **worse** than `single_B` on the hide-and-recover instrument
+> (paired -0.024319, 95% CI [-0.039025, -0.006869] — entirely below zero), and the literal
+> lane rule on the final dots is **DUPLICATE/STOP** against the full census. Slots used: **0**.
+> The attribution arm `B_DVA2` measured the best HOLDOUT-DTI this repository has ever produced
+> (0.189200), but attribution arms are **not promotable post hoc** by the frozen rule — it must be
+> pre-registered fresh as H77's primary before any fit.
+
+**★ [Download H82 GeoTIFF](docs/downloads/h82-candidate.tif)** · [ZIP](docs/downloads/h82-candidate.zip) · **[Executive summary / how to submit](docs/h82-executive-summary.html)** · **[Check any file in your browser](docs/validator.html)** · [Full result](docs/h82.html) · [Hypotheses](docs/h82-hypotheses.html) · [Sources](docs/h82-sources.html)
+
+- **File:** `submission/gems52-h82-dva2vsa-B-37654px-20261009T213414Z.tif` — 140,555 bytes, SHA-256 `17c3f8325ac6f267b1b8cc58bc6fd9495c118c30de64d5f78293d19d7f20c907`
+- **Submission name:** `h82-dva2vsa-B-37654px-20261009T213414Z`
+- **Note (140/140):** `H82: View-B + 50 DVA-2 + 10 variogram/strike-alignment channels; 8-dir integer fan, lags 100-600m; 200m catalogue ring excluded; binary dots`
+- **Validator (from disk):** 1 band float32, EPSG:32611, 3730×3292, transform/bounds match the organiser template, 0 NaN, 0 infinite, values exactly {0,1}, 37,654 ones. **PASS.** Also decoded independently in the browser by `docs/assets/tifcheck.js` (new this round).
+- **HOLDOUT-DTI** (`gems52-pooled-hide-v1`, 53,186 withheld positive px, 9400 dots/fold/arm, α 0.2 / β 0.8, R 300 m, 1000 paired cluster-bootstrap draws):
+  `B_DVA2` **0.189200** [0.1679, 0.2091] · `B_DVA` 0.187587 [0.1665, 0.2092] · `single_B` 0.174910 [0.1529, 0.1960] · **primary `B_DVA2_VSA` 0.150591 [0.1313, 0.1692]** · `B_VSA` 0.142148 [0.1244, 0.1600] · `random` 0.080426 · `single_A` 0.073062. A holdout number is never a board forecast (Spearman −0.10 vs the board, `knowledge/10` §5).
+- **Controls:** `single_B` 0.174910 vs committed 0.174517 (|Δ| 3.9e-04, tol 1e−3) **PASS**; `B_DVA` 0.187587 vs 0.186352 (|Δ| 1.2e-03) **FAIL** → IR-H82-004, any claim needing an exact H75 replay is not certified.
+- **Out-of-quadrant AUC (mean of 4 folds):** `B_DVA2` 0.7124 > `B_DVA` 0.7051 > `single_B` 0.6848 > `B_DVA2_VSA` 0.6720 > `B_VSA` 0.6511 > `single_A` 0.5113. `B_DVA2` beats `single_B` in 4/4 folds.
+- **Leakage canary:** max direction-insensitive single-channel AUC over all 60 new learner channels = **0.6235** (bar 0.90) → **no alarm**. `XVSA_visible_tensor_mag` was demoted to a diagnostic *before any fit* (amendment 72a).
+- **View independence (the lane's mandated test):** max |ρ| **0.1317** over 2,089 spatial blocks / 4,095,103 proxy negatives (bar 0.60) → `allow_exchange=true`, with the instrument's own caveat that proxy-negative error correlation is not proof of conditional feature independence. Thresholds inherited verbatim from `registry/h74_preregistration.json`, not re-tuned. **Exchange still not run:** View A sufficiency failed a 7th time (mean 0.5113, min fold 0.4309).
+- **Lane:** surface literal **PASS** (max ρ 0.3806); dots literal **DUPLICATE/STOP** (max ρ 0.0551, near-3px 1.0000) against 567 census rasters. Scored-only 13-raster registry: surface PASS (ρ 0.1379), dots literal DUPLICATE/STOP, dots **policy PASS** (near-3px 1.0000). A restricted PASS never waives a literal full-census DUPLICATE/STOP.
+- **First lane-feasible full budget:** `run_h73.place_lane` against the scored-only supports filled **37,654/37,654** dots at worst share **0.4445** (bar 0.70), spacing OK. H75 short-filled at 35,858 with worst 0.7350. The emitted raster is still the pre-registered unconstrained placement; the quota-placed variant is saved at `work/h82/dots_lane_restricted.npy` for H77 to pre-register.
+- **Not the union:** shared cells with the union-max placement 1,562/37,654 (Jaccard 0.0212), with View-A-only 512, with View-B-only 1,965; identical to none of them → **PASS**.
+- **Placement:** 37,654 binary cells at 3 px spacing from a 4,325,298-px pool; 200 m catalogue ring excluded; min catalogue distance 223.6 m, median 1562 m, 10.80% inside the metric's 300 m kernel. Marginal rule at a board DTI of 0.2778: emit only within 2.24 px = 224 m (`knowledge/49` §2).
+- **Method:** 60 new learner channels — 50 DVA-2 (aniso + log-variance of the semivariance over an 8-direction integer fan at lags 100–600 m on bands 12/19/13/15/18, γ normalised by the exact offset length so H75's 12 channels are recoverable as a control) + 10 VSA (cos 2·(θ_max − ψ − π/2) against the fold's regional and local strike, both measured from *visible* catalogue only). Strike measured, not assumed: 166.7–171.8° compass, R 0.37–0.45 (`knowledge/73` §5).
+- **New this round:** `docs/validator.html` + `docs/assets/tifcheck.js` — a browser-side pre-submission checker that decodes every pixel locally (TIFF none/LZW/DEFLATE, predictor 1/2, strips and tiles, ZIP) and reports each published rule as PASS/FAIL. Its decoder is pinned by test against rasterio-measured pixel counts. `docs/index.html` is now current-first with all previous rounds collapsed into one verbatim archive.
+- Docs: [preregistration](knowledge/72_hypotheses_H82_preregistered.md) (SHA-256 `fe7050eb40ecf23f…`, frozen before any fit) · [results & limits](knowledge/73_h82_results_and_limits.md) · [run card](evidence/h82_run_card.json) · [irregularities IR-H82-001…006](registry/irregularities.json).
+- Reproduce: `python3 scripts/restore_data.py --target-dir data` → build the store → `python -m gems52.external` → `python scripts/fetch_prior_inventory.py` → `python scripts/run_h82.py {channels,fit,holdout,independence,build,lane,write,card}` → `python scripts/publish_h82_site.py` → `python scripts/check_site.py` → `python -m pytest -q`.
+
+---
+
+<!--/H82-README-->
 <!--H77-README-->
 # Current status — H77 (2026-10-09): a unique, lane-feasible, portal-exact GeoTIFF — download YES, submit NO
 
