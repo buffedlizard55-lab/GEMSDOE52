@@ -1,13 +1,25 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GEMSDOE52 — H75 / H74 GeoTIFF downloads and submission status</title>
 <style>body{font-family:-apple-system,sans-serif;max-width:760px;margin:40px auto;padding:20px;line-height:1.6}.card{border:2px solid #2563eb;border-radius:8px;padding:16px;margin:16px 0;background:#eff6ff}
-.btn{display:inline-block;padding:12px 22px;border-radius:6px;text-decoration:none;font-weight:700;background:#22c55e;color:#fff;margin:6px 6px 6px 0}.b2{background:#3b82f6}code{word-break:break-all}</style></head><body>
+.btn{display:inline-block;padding:12px 22px;border-radius:6px;text-decoration:none;font-weight:700;background:#22c55e;color:#fff;margin:6px 6px 6px 0}.b2{background:#3b82f6}code{word-break:break-all}</style></head><body><!--H76-START-HERE--><section aria-labelledby="start-here" style="border:3px solid #16a34a;background:#f0fdf4;border-radius:10px;padding:1.1rem 1.3rem;margin:0 0 1.2rem;font-size:1.02rem">
+<h2 id="start-here" style="margin:0 0 .4rem;font-size:1.35rem">START HERE · Submission file for the GEMS competition</h2>
+<p style="margin:.2rem 0 .6rem"><a href="docs/downloads/h75-candidate.tif" download style="display:inline-block;padding:.7rem 1.1rem;background:#16a34a;color:#fff;border-radius:7px;font-weight:700;text-decoration:none">⬇ Download the GeoTIFF (h75-candidate.tif, 143 KB)</a>
+&nbsp;<a href="docs/downloads/h75-candidate.zip" download>ZIP</a> · <a href="docs/h75-executive-summary.html">How to submit (step by step)</a> · <a href="knowledge/67_h76_verification_hypotheses_and_status.md">H76 verification record</a></p>
+<div class="status-line" style="display:flex;gap:1rem;flex-wrap:wrap"><span><b>Download:</b> <span style="color:#15803d;font-weight:700">YES</span> — format-valid, unique vs every raster restored in this session</span></div>
+<div class="status-line" style="display:flex;gap:1rem;flex-wrap:wrap"><span><b>Submit to the competition:</b> <span style="color:#b91c1c;font-weight:700">NOT APPROVED</span> — the parallel-run lane rule fails (0.922 &gt; 0.70). Needs an explicit owner override.</span></div>
+<div class="status-line" style="display:flex;gap:1rem;flex-wrap:wrap"><span><b>Name:</b> <code>h75-dva-variogram-anisotropy-B-37654px-20261009T200333Z</code></span></div>
+<div class="status-line" style="display:flex;gap:1rem;flex-wrap:wrap"><span><b>Note:</b> <code>H75: View-B + directional variogram anisotropy (det_elev/slope/grav); 200m ring cut; binary 37654 dots; holdout +0.012 vs B</code></span></div>
+<div class="status-line" style="display:flex;gap:1rem;flex-wrap:wrap"><span><b>Values:</b> float32, exactly {0, 1}, no NaN, EPSG:32611, 3730×3292, template transform</span></div>
+<div class="status-line" style="display:flex;gap:1rem;flex-wrap:wrap"><span><b>Holdout (HOLDOUT-DTI, not a score):</b> 0.1864 vs control 0.1745; paired +0.0118 [0.0068, 0.0174]</span></div>
+<div class="status-line" style="display:flex;gap:1rem;flex-wrap:wrap"><span><b>Organizer score / slots used:</b> <span>none / 0</span></span></div>
+<p class="small" style="margin:.6rem 0 0">Open decisions for the owner: (1) lane override for submission; (2) zeros vs NaN outside the footprint (both numerically safe; submit one file only). SHA-256 <code>b97691584d514ab1925d9fff2b61c410be86bdc0bc8c844dfdaa6257a4ea7a16</code>. Local checks are not organizer acceptance.</p>
+</section><!--/H76-START-HERE-->
 <h1>GEMSDOE52 — DOE GEMS fault-prediction submissions</h1>
 <div class="card"><h2>H75 (newest, 2026-10-09): variogram-anisotropy ranker — best holdout in repo</h2>
 <a class="btn" href="docs/downloads/h75-candidate.tif" download>⬇ Download H75 TIF (143 KB)</a><a class="btn b2" href="docs/h75-executive-summary.html">How to submit</a>
 <p><b>Download:</b> YES — 1 band float32, EPSG:32611, 3730×3292, 0 NaN, values {0,1}. <b>Submit:</b> research-only — holdout gate PASSES
 (HOLDOUT-DTI 0.1864 vs single_B 0.1745, paired +0.0118, 95% CI [0.0068, 0.0174]); lane near-dot gate FAILS (0.922 &gt; 0.70). Needs an owner override.</p>
-<p><b>Name:</b> <code>h75-dva-variogram-anisotropy-B-37654px-20261009</code><br><b>Note:</b> <code>H75: View-B + directional variogram anisotropy (det_elev/slope/grav); 200m ring cut; binary 37654 dots; holdout +0.012 vs B</code><br>SHA-256 <code>b97691584d514ab1925d9fff2b61c410be86bdc0bc8c844dfdaa6257a4ea7a16</code></p></div>
+<p><b>Name:</b> <code>h75-dva-variogram-anisotropy-B-37654px-20261009T200333Z</code><br><b>Note:</b> <code>H75: View-B + directional variogram anisotropy (det_elev/slope/grav); 200m ring cut; binary 37654 dots; holdout +0.012 vs B</code><br>SHA-256 <code>b97691584d514ab1925d9fff2b61c410be86bdc0bc8c844dfdaa6257a4ea7a16</code></p></div>
 <div class="card" style="border-color:#9ca3af;background:#f9fafb"><h2>H74 (parallel session): deformation-only View A2, 721 dots</h2>
 <p><a href="docs/downloads/h74-candidate.tif" download>Download H74 GeoTIFF</a> · <a href="docs/h74-executive-summary.html">H74 how to submit</a> · <a href="docs/index.html">Full research site</a>. Verdict there: DOWNLOAD YES, SPEND A SLOT NO.</p></div>
 <p><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">Competition</a> · <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Problem & metric</a> · <a href="README.md">README</a></p>
