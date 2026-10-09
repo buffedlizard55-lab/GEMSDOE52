@@ -191,15 +191,15 @@ owner-reported board in R4.
 
 > **Lane-gate correction (2026-10-08):** the shipped H60D file was re-checked under the strict all-registry rule: 99.95% dot proximity to the calibration lattice → DUPLICATE/STOP. See `knowledge/32_h60d_strict_lane_recheck.md` and IR-H60D-007. No submission is approved; no slot used.
 
-> **NEWEST ROUND — H62 (2026-10-09). [Download the new unique GeoTIFF](docs/downloads/gems52-h62-conc_soft-arm22000px.tif)** · [single-TIFF ZIP](docs/downloads/gems52-h62-conc_soft-arm22000px.zip) · **[Executive summary / exact submission steps](docs/executive-summary.html)** · [H62 method & evidence](docs/h62.html) · [Run card](evidence/h62_run_card.json)
+> **NEWEST ROUND — H62 (2026-10-09). [Download the research GeoTIFF](docs/downloads/gems52-h62-conc_soft-arm22000px.tif)** · [single-TIFF ZIP](docs/downloads/gems52-h62-conc_soft-arm22000px.zip) · **[H62 method & evidence](docs/h62.html)** · [Submission guide](docs/executive-summary.html) · [Run card](evidence/h62_run_card.json) · [what it found](knowledge/35_what_h62_found.md)
 >
-> **OK TO DOWNLOAD: YES. ELIGIBLE TO SUBMIT: the file passes every local gate. WEEKLY SLOT: not allocated here** — promotion to a real slot is a separate selector step, and no organizer-confirmed score exists for this file.
+> **OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT · NO WEEKLY SLOT ALLOCATED.** Format, the 200 m ring, not-merely-the-union, decoded-pattern uniqueness and the leakage canary all pass. **The lane's strict duplicated-ness gate does not**: 99.99 % of this file's dots lie within 3 px of a spacing-5 square lattice whose 3 px halo covers 99.90 % of the eligible footprint, so that statistic reads ≈1.0 for *any* nonempty candidate. The coverage-aware repair returns PASS on the 76 priors that actually localise something. Both readings are published, neither is suppressed, and the strict gate governs — the same convention that stopped CTD5 and H60D. No organizer-confirmed score exists for this file and none is claimed.
 >
-> **What it is.** 22,000 pixels, every one at least 223.6 m from any mapped USGS/INGENIOUS fault, ranked by the **joint confidence** `min(pA,pB)` of two independently trained views (A = potential-field/subsurface, B = surface) and placed by the metric's own 3 px lattice at a **derived** budget of 22,000 px. 97.6 % of its pixels lie outside `max(pA,pB)`'s own top-k, so it is not merely the union of the two views.
+> **What it is.** 22,000 pixels, every one at least 223.6 m from any mapped USGS/INGENIOUS fault, ranked by the **joint confidence** `min(pA,pB)` of two independently trained views (A = potential-field/subsurface, B = surface) and placed by the metric's own 3 px lattice at a derived budget of 22,000 px. 97.6 % of its pixels lie outside `max(pA,pB)`'s own top-k, so it is not merely the union of the two views.
 >
-> **File:** `gems52-h62-conc_soft-arm22000px.tif` · **SHA-256:** `1bc5b50c014e70692919c1f604939c02ba6915fcf038f34327cd745e78de6ea7` · 114,669 bytes · all-finite `{0,1}` · EPSG:32611 · 3,730 × 3,292 · transform matches the pinned sample · nearest mapped catalogue pixel **223.6 m**.
+> **File:** `gems52-h62-conc_soft-arm22000px.tif` · **SHA-256:** `de47952fe9c0fc15c1aaacd63a04f6c0a6aa15b094f2367ed631c6920e91c1fd` · 114,669 bytes · all-finite `{0,1}` · EPSG:32611 · 3,730 × 3,292 · transform matches the pinned sample · nearest mapped catalogue pixel **223.6 m**.
 >
-> **The result.** The lane's own discovery signal — where the two views *disagree* — measures **below a matched random control** on the instrument tied to measured credit (`dis_contrast` 0.60×, `dis_product` 0.66×, cover-conditioned A-only 0.93× random). The **concordance** cell — the opposite corner of the same 2×2 confidence table — beats both single-view baselines and the union on the registered holdout instrument (pooled **HOLDOUT-DTI 0.008467**, 95 % CI [0.003428, 0.011601], 36,474 withheld positives, vs `clf_union` 0.008390 and `view_B` 0.007970). **Verdict: promote, scoped to the registered instrument; no slot allocated.** See [`knowledge/35_what_h62_found.md`](knowledge/35_what_h62_found.md).
+> **The result.** The lane's own discovery signal — where the two views *disagree* — measures **below a matched random control** on the instrument tied to measured credit (`dis_contrast` 0.60×, `dis_product` 0.66×, cover-conditioned A-only 0.93× random). The **concordance** cell — the opposite corner of the same 2×2 confidence table — beats both single-view baselines and the union on the registered holdout instrument (pooled **HOLDOUT-DTI 0.008467**, 95 % CI [0.003427, 0.011601], 36,474 withheld positives, vs `clf_union` 0.008390 and `view_B` 0.007970). **Verdict: negative — the measurement is positive, the gate is not.**
 
 > **Current H60D session status (co-training with disagreement as the discovery signal, run
 > 2026-10-08 UTC):** hypotheses H60-1…H60-4 were registered in
@@ -443,7 +443,7 @@ sensitivity table, is on the audit page.
 
 ## Session 2026-10-09 — H62: two-view co-training with corroboration instead of disagreement
 
-**DOWNLOAD: YES · SUBMIT: the file is eligible and no local gate blocks it · WEEKLY SLOT: not allocated by this repository.**
+**DOWNLOAD: YES (research copy) · SUBMIT: NO — the strict lane gate returns DUPLICATE/STOP · WEEKLY SLOT: not allocated and not recommended.**
 Preregistered in [`knowledge/34_hypotheses_H62_preregistered.md`](knowledge/34_hypotheses_H62_preregistered.md) and
 [`registry/h62_preregistration.json`](registry/h62_preregistration.json) **before** the first fit; every number recomputed
 on the 2026-10-09 SHA-pinned bytes (23/23 pins, [`evidence/h62_preflight_integrity.json`](evidence/h62_preflight_integrity.json)).
@@ -476,11 +476,13 @@ and the named non-fault process that could mimic it:
 3. **The two instruments disagree in sign** (`IR-H62-003`): hide-and-recover ranks `view_A > conc_soft > clf_union > view_B`,
    revealed preference ranks `view_B > clf_union > conc_soft > view_A`. Both orderings are published; neither is a forecast.
 
-**Three corrections were registered before the artifact shipped** — H62-1 (the operator form), H62-2 (the emission budget is
+**Four corrections are registered** — H62-1 (the operator form), H62-2 (the emission budget is
 **derived**, 22,000 px: the γ-fit's unclamped argmax of 102,519 px lies outside its measured range, while the board's own
 published record — score strictly decreasing in emitted mass, Spearman −1.000, n = 6 — is a direct measurement and governs),
-and H62-3 (`view_B` and `clf_union` are the *same field*: 93–100 % of their dots coincide, so shipping either would ship the
-union the brief forbids; the highest-lift non-union field ships instead).
+H62-3 (`view_B` and `clf_union` are the *same field*: 93–100 % of their dots coincide, so shipping either would ship the
+union the brief forbids; the highest-lift non-union field ships instead), and **H62-4** (the |G| bracket the 22,000 px budget was derived from,
+18,000–19,300 px, is **disjoint** from the measured bracket [5,949.3, 12,512.1] px — see IR-H62-005 below; the emission is unchanged but its
+derivational support is gone, and 15,000 px is what the evidence favours).
 
 **Gates, all measured:** format PASS (0 problems); 0 px mass outside the emission domain; nearest catalogue pixel
 223.6 m (ring rule ≥ 200 m); pattern-unique vs **71** aligned priors with
@@ -1186,6 +1188,16 @@ not a better model, it is **credit density × budget discipline**: `DTI = T / (0
 instrument in this repository can certify that a novel field reaches it — the hide-and-recover simulator ranks the
 champion 13th of 13, and the revealed-preference instrument is a similarity statistic to one prior file. Both orderings
 are published in [`evidence/h62_validation.json`](evidence/h62_validation.json) and neither is a forecast.
+
+One caveat on that arithmetic, registered as **correction H62-4 / IR-H62-005**: the constant `|G|` (the number of
+positives the scorer knows about) is **not** identified as a point. On the pinned bytes it is bounded by `T ≤ |G|`
+(→ `|G| ≥ 5,949.3 px`) and by monotone credit on the nested pair `d15 ⊂ gems27_tgc_v2_d15` (→ `|G| ≤ 12,512.1 px`).
+The value 14,088.7 px used here is a valid but *non-binding* upper bound from a weaker nested pair, and treating it as a
+point silently assumes the champion's 6,436 deleted ring pixels earn zero credit. Under the measured bracket the two
+available γ rules disagree (this round's γ = 0.6453 clamps to 30,000 px; the champion-family γ = 0.2284 clamps to
+15,000 px), and the direct board measurement — score strictly decreasing in emitted mass — favours the low end.
+**The shipped file stays at 22,000 px, which sits between those two answers, but the budget is the weakest number in
+this round and 15,000 px is what the evidence favours.**
 Full derivation: [`knowledge/27_why_02778_h60.md`](knowledge/27_why_02778_h60.md) and
 [`knowledge/10_revealed_preference_inverse.md`](knowledge/10_revealed_preference_inverse.md).
 

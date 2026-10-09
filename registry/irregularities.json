@@ -1,6 +1,6 @@
 {
  "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified. | H61 merge: IR-H61-001..009 appended from the H61 branch; main's repaired schema and numbering retained.",
- "generated": "2026-10-09T00:32:45Z",
+ "generated": "2026-10-09T00:48:30Z",
  "entries": [
   {
    "id": "IR-30-029",
@@ -1524,6 +1524,14 @@
    "how_we_know": "Direct test on the merged tree: submission/R5_LATEST.txt versus ls submission/*.tif and docs/data/submission_r5.json -> file / sha256 / generated_utc 2026-10-08T23:51:56Z.",
    "handling": "Recorded, not repaired: a round marker belongs to its own round, and editing another round's pointer is how a stale artefact gets promoted by accident. H61 publishes its own marker submission/H61_LATEST.txt and leaves submission/LATEST.txt on the H60 pointer that docs/data/submission.json also names, so scripts/check_site.py stays consistent.",
    "disposition": "R5's owner or the shared selector should advance the marker to the d2bfb0f7 bytes, or delete it. Until then no tool should treat R5_LATEST.txt as identifying a file that exists."
+  },
+  {
+   "id": "IR-H62-005",
+   "title": "This round preregistered its emission budget on a |G| bracket that is disjoint from the measured one",
+   "status": "open - disclosed as correction H62-4; the emission was not changed",
+   "what_it_is": "registry/h62_preregistration.json derives the 22,000 px emission budget from the champion-family decay gamma = 0.2284 evaluated over a |G| bracket of 18,000-19,300 px, which yields S* = 21,300-22,870 px. That bracket is DISJOINT from the interval |G| is actually identified to live in. |G| is bounded below by T <= |G| applied to the largest off-catalogue support (calib_8GEMSDOE_Hedge-v2, 166,519 px at score 0.1563 -> |G| >= 5,949.3 px) and above by monotone credit on the tightest nested scored pair (d15 60,069 px subset gems27_tgc_v2_d15 61,328 px, 0.2477 > 0.2449 -> |G| <= 12,512.1 px). The legacy point |G| = 14,088.7 px used by knowledge/10 and carried into this round is a valid but NON-BINDING upper bound (it comes from the weaker nested pair h33-2-b2 subset d28); treating it as a point value additionally assumes the champion's 6,436 deleted ring pixels earn exactly zero credit, and it falls to 7,066 px if they earn 100 px.",
+   "how_we_know": "Independently re-derived in this checkout: the subset relation d15 subset gems27 and the 166,519 px off-catalogue support were recomputed from the manifest-pinned bytes directly, and both bounds reproduce evidence/h61_forensics.json (main's H61) to four decimal places. The nested-pair algebra is G <= 0.25*(s_y*S_y - s_x*S_x)/(s_x - s_y) from DTI = T/(0.2 S + 0.8|G|) with T monotone in support; the lower-bound algebra is G >= 0.2*s*S/(1 - 0.8*s) from T <= |G|. Recorded in the build receipt as g_bracket_px and g_sensitivity.",
+   "disposition": "Disclosed as correction H62-4 rather than silently re-emitting. Under the measured bracket the two available gamma rules disagree: this round's own gamma = 0.6453 clamps S* to 30,000 px at every |G| in the bracket, while the champion-family gamma = 0.2284 gives S* = 7,044-14,815 px and clamps to 15,000 px. The direct board measurement - score strictly decreasing in emitted mass across the six off-catalogue scored priors (Spearman -1.000, n = 6) - breaks the tie toward the LOW end, so 15,000 px is the value the evidence favours and 22,000 px is above it. The shipped file is left at 22,000 px (the preregistered fallback, which sits between the two model answers) rather than churned a second time after the review; the budget is now the weakest link in this round and is the first item for the next session."
   }
  ]
 }

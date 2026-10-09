@@ -4,7 +4,24 @@
 <title>Executive summary — how to submit, and whether this file may be submitted · GEMSDOE52</title><link rel="stylesheet" href="assets/ctd5.css"><script src="assets/h61.js" defer></script></head>
 <body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>
 <a href="index.html">Overview</a><a href="h61-audit.html">Run &amp; evidence</a><a href="executive-summary.html">Submission guide</a><a href="h61-sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header>
-<main id="main"><div class="eyebrow">Executive summary / submission guide</div>
+<main id="main">
+<!--H62-GUIDE--><div class="eyebrow">Current file · H62</div>
+<h1>How to submit this file, in four clicks</h1>
+<div class="notice bad" role="note"><strong>OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT</strong>
+<p>gems52-h62-conc_soft-arm22000px.tif passes format, the 200 m ring, not-merely-the-union, decoded-pattern uniqueness and the leakage canary. It does <strong>not</strong> pass the strict lane gate (100.0% of dots within 3 px of the spacing-5 lattice). No weekly slot is allocated or recommended. No organizer-confirmed score exists for this file.</p></div>
+<div class="actions"><a class="button" href="downloads/gems52-h62-conc_soft-arm22000px.tif" download>1 · Download the GeoTIFF ↓</a><a class="button secondary" href="downloads/gems52-h62-conc_soft-arm22000px.zip" download>or the single-TIFF ZIP</a></div>
+<p class="fileline">gems52-h62-conc_soft-arm22000px.tif<br>114,669 bytes · 22,000 px · SHA-256 de47952fe9c0fc15c1aaacd63a04f6c0a6aa15b094f2367ed631c6920e91c1fd</p>
+<div class="grid2"><section class="panel"><h2>2 · Open the submission form</h2>
+<p><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">drivendata.org/competitions/306/…/submissions</a> → <strong>New submission</strong> → <strong>File to submit</strong> → choose the <span class="mono">.tif</span> (or the ZIP; both contain the same single GeoTIFF).</p>
+<h2>3 · Paste the note</h2>
+<p class="mono">H62 two-view co-training: conc_soft ranking, 22000 px, derived budget, >=200 m off catalogue. Research review copy.</p>
+<p class="small">115 / 140 characters — the portal's limit.</p></section>
+<section class="panel"><h2>4 · Submit, then verify</h2>
+<ul><li>The form accepts one single-band GeoTIFF, or a ZIP holding exactly one.</li><li>Values must be in [0, 1]. This file is exactly {0, 1} with zero NaN, so the "Predicted values must be in range [0, 1]" rejection cannot occur.</li><li>CRS, shape and geotransform must match <span class="mono">sample_submission.tif</span>. Verified: EPSG:32611, 3,730 × 3,292, affine [100, 0, 243350, 0, −100, 4508550].</li><li>After upload, compare the portal's reported score with the receipt hash above so the file you uploaded is the file measured here.</li></ul></section></div>
+<h2>What this file is, in one paragraph</h2>
+<p>22,000 pixels, every one of them at least 223.6 m from any mapped USGS/INGENIOUS fault, ranked by the joint confidence min(p<sub>A</sub>,p<sub>B</sub>) of two independently trained learners — a potential-field/subsurface view and a surface view — and placed by the metric's own 3 px lattice at a budget derived from the decay of the ranking (22,000 px). 97.6% of its pixels lie outside the union field's own emission, so it is not max(p<sub>A</sub>,p<sub>B</sub>). Geological reasoning ships for every pixel and for every A-only candidate segment.</p>
+<p><a href="h62.html">Full H62 method and evidence →</a> · <a href="data/h62_run_card.json">Run card (JSON)</a></p><hr class="divider"><!--/H62-GUIDE-->
+<div class="eyebrow">Executive summary / submission guide</div>
 <h1>Download in one click.<br>Do not upload this run.</h1>
 <p class="lead">The file, its exact identifier, and the frozen verdict. Promotion to a weekly slot is a separate selector decision, never a property of a valid file.</p>
 <div class="notice" role="note"><strong>OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT</strong><p>Do not upload this file to the competition portal. Verdict: <b>negative</b>. Format gate PASS; decoded-pattern uniqueness PASS; lane gate (policy) DUPLICATE/STOP; projected DTI above the champion at both ends of |G|: NO. Slots used: 0. NO CERTIFIED LEADERBOARD GAIN.</p></div>

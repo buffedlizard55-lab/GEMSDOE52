@@ -135,6 +135,28 @@ def test_budget_rule_falls_back_when_the_fit_is_impossible():
     assert bad["budget_px"] == h62.BUDGET_FALLBACK
 
 
+# --------------------------------------------------------------------------- the |G| bracket
+def test_g_bracket_is_the_measured_interval_and_the_legacy_point_sits_outside_it():
+    """IR-H62-005: |G| is identified only as an interval; 14,088.7 px is a non-binding bound."""
+    lo, hi = h62.G_BRACKET_PX
+    assert 5_949.0 < lo < 5_950.0      # T <= |G| on calib_8GEMSDOE_Hedge-v2 (166,519 px @ 0.1563)
+    assert 12_512.0 < hi < 12_513.0    # monotone credit on d15 (60,069 @ 0.2477) subset gems27
+    assert h62.G_ANCHOR_PX > hi        # the legacy point is OUTSIDE the identified interval
+
+
+def test_budget_argmax_is_linear_in_g():
+    pts = [(8000, 0.39375), (12000, 0.36258), (17000, 0.33135), (25000, 0.28568), (38000, 0.22468)]
+    lo = h62.budget_from_gamma(pts, g_anchor=h62.G_BRACKET_PX[0])
+    hi = h62.budget_from_gamma(pts, g_anchor=h62.G_BRACKET_PX[1])
+    lo, hi = h62.G_BRACKET_PX
+    b_lo = h62.budget_from_gamma(pts, g_anchor=lo)
+    b_hi = h62.budget_from_gamma(pts, g_anchor=hi)
+    assert b_lo["ok"] and b_hi["ok"]
+    assert b_hi["s_star_unclamped"] / b_lo["s_star_unclamped"] == pytest.approx(hi / lo, rel=1e-9)
+    # the whole bracket is reported, not one contested point
+    assert [round(r["g_px"], 1) for r in b_hi["g_sensitivity"]] == [5949.3, 12512.1, 14088.7]
+
+
 # --------------------------------------------------------------------------- reasoning rows
 def test_cell_of_partitions_the_confidence_table():
     assert h62.cell_of(0.9, 0.9, 0.6, 0.4) == "concordant"
@@ -212,4 +234,18 @@ def test_h62_shipped_artifact_if_present():
     assert card["raster_sha256"] == receipt["sha256"]
     assert len(card["submission_note"]) <= 140
     assert len(card["submission_name"]) <= 140
-    assert card["correlation_overlap_vs_registry"]["lane_drift_detected"] is False
+    ro = card["correlation_overlap_vs_registry"]
+    # the strict gate counts every registry raster (H60-6 withdrawn by the H60D recheck), so it
+    # stops on the spacing-5 lattice; the coverage-aware repair is published beside it, never
+    # instead of it.
+    assert ro["lane_drift_detected"] is True
+    assert ro["lane_dots_max_within_3px_frac_gate"] == ro["lane_dots_max_within_3px_frac_raw"]
+    assert ro["lane_drift_is_registry_saturation"] is True
+    assert ro["repaired_gate"]["policy_verdict"] == "PASS"
+    assert ro["repaired_gate"]["n_universal_coverage_probes"] >= 1
+    assert ro["pattern_unique"] is True
+    assert card["verdict"] == "negative"
+    assert "DO NOT SUBMIT" in card["promotion_scope"]
+    # the artifact survived the strict gate's stop, so it must not be presented as submittable
+    assert receipt["submission_slots_used"] == 0
+    assert receipt["promoted"] is False

@@ -36,6 +36,14 @@ NPX = int(CARD["validator_output"]["n_nonzero"])
 NAME = CARD["submission_name"]
 NOTE = CARD["submission_note"]
 VERDICT = CARD["verdict"]
+RO = CARD["correlation_overlap_vs_registry"]
+LANE = json.loads((EV / "h62_lane_gate.json").read_text())
+_RG = (LANE.get("repaired_gate") or {}).get("policy") or {}
+RG = dict(policy_verdict=_RG.get("verdict", "not computed"),
+          informative_priors=_RG.get("informative_priors", 0),
+          universal_coverage_probes=_RG.get("universal_coverage_probes", 0),
+          probe_paths=_RG.get("probe_paths") or ["(none measured)"],
+          probe_coverage=_RG.get("probe_coverage") or [0.0])
 
 
 def f(x, n=4):
@@ -130,6 +138,13 @@ def gate_rows() -> str:
          f"PASS — {pct(b['not_merely_union']['outside_union_fraction'])} of dots outside "
          f"max(pA,pB)'s own top-k" if b["not_merely_union"]["outside_union_fraction"] >= 0.30
          else "FAIL", b["not_merely_union"]["outside_union_fraction"] >= 0.30),
+        ("Repaired shared-template lane gate (H61's gates.lane_report), informative priors only",
+         (f"{ro['repaired_gate']['policy_verdict']} — "
+          f"max |ρ| {f(ro['repaired_gate']['policy_max_spearman'])}, "
+          f"3 px {pct(ro['repaired_gate']['policy_max_near_3px_fraction'])}, "
+          f"{ro['repaired_gate']['n_informative_priors']} informative priors")
+         if ro.get("repaired_gate") else "not computed",
+         bool(ro.get("repaired_gate")) and ro["repaired_gate"]["policy_verdict"] == "PASS"),
         ("Leakage canary (worst single-layer holdout AUC ≤ 0.90)",
          f"PASS — {COT['leakage_canary']['worst_auc']} "
          f"({COT['leakage_canary']['worst_layer']})"
@@ -163,22 +178,24 @@ def build_page() -> str:
 <main id="main"><section class="hero"><div><div class="eyebrow">DOE GEMS · H62 · {PREREG['registered_utc_date']}</div>
 <h1>Two views.<br>Corroboration instead of disagreement.</h1>
 <p class="lead">Every earlier round in this lane shipped the cell where the two views disagree. H62 tests the opposite cell of the same 2×2 confidence table, on the same bytes, with the same folds.</p>
-<div class="notice" role="note"><strong>OK TO DOWNLOAD · ELIGIBLE TO SUBMIT · NO SLOT ALLOCATED HERE</strong>
-<p>The file passes every local gate below — format, uniqueness, lane drift, the 200 m ring and the not-merely-the-union test. This repository does <em>not</em> allocate weekly submission slots; that is a separate selector step within the cap shown on the submission page. No organizer-confirmed score exists for this file and none is claimed.</p></div>
+<div class="notice bad" role="note"><strong>OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT · NO SLOT ALLOCATED</strong>
+<p>The file passes format, the 200 m ring, not-merely-the-union, decoded-pattern uniqueness and the leakage canary. <strong>It does not pass the lane's strict duplicated-ness gate:</strong> {pct(RO['lane_dots_max_within_3px_frac_gate'])} of its dots lie within 3 px of a spacing-5 square lattice whose 3 px halo covers {pct(RG['probe_coverage'][0])} of the eligible footprint, so that statistic reads ~1.0 for <em>any</em> nonempty candidate. The coverage-aware repair returns {RG['policy_verdict']} on the {RG['informative_priors']} priors that localise something. Both readings are published below; neither is suppressed. No organizer-confirmed score exists for this file and none is claimed.</p></div>
 <div class="actions"><a class="button" href="downloads/{FILE}" download>Download the new GeoTIFF ↓</a><a class="button secondary" href="downloads/{FILE[:-4]}.zip" download>Single-TIFF ZIP</a></div>
 <p class="fileline">{FILE}<br>{BYTES:,} bytes · {NPX:,} emitted pixels · SHA-256 {SHA}</p>
-<p class="small"><a href="executive-summary.html">Exactly how to upload it — the three clicks →</a></p></div>
+<p class="small"><a href="executive-summary.html">What the statuses mean, and why this one says do not submit →</a></p></div>
 <aside class="panel" aria-label="Gates"><div class="label">Every gate, measured</div>
 <div class="status-line"><span>Format (CRS / shape / transform / range)</span><span class="good">PASS</span></div>
 <div class="status-line"><span>Unique vs {CARD['correlation_overlap_vs_registry']['n_priors']} aligned priors</span><span class="good">YES</span></div>
 <div class="status-line"><span>Lane drift (surface / dots)</span><span class="good">{f(CARD['correlation_overlap_vs_registry']['lane_surface_max_abs_spearman'])} / {f(CARD['correlation_overlap_vs_registry']['lane_dots_max_abs_spearman'])}</span></div>
 <div class="status-line"><span>Not merely the union</span><span class="good">{pct(BUILD['not_merely_union']['outside_union_fraction'])} outside</span></div>
 <div class="status-line"><span>Nearest mapped catalogue pixel</span><span class="good">{f(BUILD['ring_min_distance_to_catalogue_m'], 1)} m</span></div>
-<div class="status-line"><span>Registered-instrument verdict</span><span class="good">{VERDICT.upper()}</span></div>
+<div class="status-line"><span>Registered-instrument verdict</span><span class="{'good' if VERDICT == 'promote' else 'bad'}">{VERDICT.upper()}</span></div>
+<div class="status-line"><span>Strict lane gate (all registry rasters)</span><span class="bad">DUPLICATE / STOP</span></div>
+<div class="status-line"><span>Coverage-aware gate (informative priors)</span><span class="{'good' if RG['policy_verdict'] == 'PASS' else 'bad'}">{RG['policy_verdict']}</span></div>
 <p class="fine">{CARD['promotion_scope']}</p>
 <a class="small" href="data/h62_run_card.json">Inspect the JSON run card ↗</a></aside></section>
 
-<hr class="divider"><div class="section-head"><h2>The five candidates, ranked before anything was fitted</h2><a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/32_hypotheses_H62_preregistered.md">Read the preregistration →</a></div>
+<hr class="divider"><div class="section-head"><h2>The five candidates, ranked before anything was fitted</h2><a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/34_hypotheses_H62_preregistered.md">Read the preregistration →</a></div>
 <div class="table-wrap"><table><thead><tr><th>#</th><th>Hypothesis</th><th>Layers</th><th>Signature</th><th>Why it finds a catalogue-missing fault</th><th>Non-fault process that could mimic it</th><th>Cost</th><th>Status</th></tr></thead><tbody>
 <tr><td>1</td><td><strong>H62-B</strong> concordance under independent thinning</td><td>Both views' out-of-fold confidence; the metric's 3 px lattice</td><td>Each view's confident set thinned independently, the thinnings intersected, survivors ranked by min(p<sub>A</sub>,p<sub>B</sub>)</td><td>Corroboration is the largest measured effect in this repository: two independent thinnings of one field intersect in an atom carrying 16.3–20.5 % credit density against 0–8.7 % for singly-selected atoms</td><td>A resistant lithologic contact (welded tuff or carbonate) that stands up as a ridge <em>and</em> carries a magnetic susceptibility contrast; a fluvial/glacial escarpment on a stratigraphic contact</td><td>low</td><td><strong>run; shipped</strong></td></tr>
 <tr><td>2</td><td><strong>H62-A</strong> cover-conditioned buried disagreement</td><td>p<sub>A</sub>, p<sub>B</sub>, band 15 depth-to-basement</td><td>max(p<sub>A</sub>−p<sub>B</sub>,0) restricted to depth-to-basement ≥ the pool's 70th percentile ({f(BUILD['cover_threshold_m'], 0)} m)</td><td>A compilation built from <em>mapped</em> faults systematically misses structures buried under basin fill, and the board's truth sits a median of 1,965 m from any mapped trace</td><td>The basin-bounding gravity gradient at the fill/bedrock contact; a basement lithologic contact beneath fill</td><td>very low</td><td>run; measured below random</td></tr>
@@ -235,7 +252,7 @@ def build_page() -> str:
 </tbody></table></div>
 
 <div class="grid2"><section class="panel"><h3>What instrument 1 says</h3>
-<p>The concordance ranking <strong>beats both single-view baselines and the union</strong> on the registered instrument: {f(VAL['instrument1_holdout']['arms']['conc_soft|25000']['pooled_dti'], 6)} against {f(VAL['instrument1_holdout']['arms']['clf_union|25000']['pooled_dti'], 6)} for max(p<sub>A</sub>,p<sub>B</sub>) and {f(VAL['instrument1_holdout']['arms']['view_B|25000']['pooled_dti'], 6)} for the surface view alone. That is the comparison the brief asks for — "compare against a single-view baseline on hide-and-recover segments" — and it is why the verdict is <strong>{VERDICT}</strong>. View A alone is higher still ({f(VAL['instrument1_holdout']['arms']['view_A|25000']['pooled_dti'], 6)}), so the concordance is not the best single field here.</p></section>
+<p>The concordance ranking <strong>beats both single-view baselines and the union</strong> on the registered instrument: {f(VAL['instrument1_holdout']['arms']['conc_soft|25000']['pooled_dti'], 6)} against {f(VAL['instrument1_holdout']['arms']['clf_union|25000']['pooled_dti'], 6)} for max(p<sub>A</sub>,p<sub>B</sub>) and {f(VAL['instrument1_holdout']['arms']['view_B|25000']['pooled_dti'], 6)} for the surface view alone. That is the comparison the brief asks for — "compare against a single-view baseline on hide-and-recover segments" — and it is the round's one positive measurement. It is <strong>not</strong> enough to promote the file, because the strict lane gate stops it first. View A alone is higher still ({f(VAL['instrument1_holdout']['arms']['view_A|25000']['pooled_dti'], 6)}), so the concordance is not the best single field here.</p></section>
 <section class="panel"><h3>What instrument 2 says — and the disagreement fields</h3>
 <p>The lane's designated discovery signal measures <strong>below the matched random control</strong>: dis_contrast {f([r for r in BUILD['candidates'] if r['field'] == 'dis_contrast'][0]['lift'], 2)}×, dis_product {f([r for r in BUILD['candidates'] if r['field'] == 'dis_product'][0]['lift'], 2)}×, cover-conditioned A-only {f([r for r in BUILD['candidates'] if r['field'] == 'cover_A_only'][0]['lift'], 2)}× random. Disagreement is not merely weaker than the union on this instrument — it is anti-correlated with the one pixel set whose credit density has been measured. This is the sharpest form yet of the negative H56/H59/H60D all reached by a different route.</p></section></div>
 
@@ -252,7 +269,8 @@ def build_page() -> str:
 <div class="table-wrap"><table><thead><tr><th>gate</th><th>result</th></tr></thead><tbody>
 {gate_rows()}
 </tbody></table></div>
-<p class="small">The dots-within-3 px reading against the whole prior inventory, calibration rasters included, is {pct(CARD['correlation_overlap_vs_registry']['lane_dots_max_within_3px_frac_raw'])}; the gate value excludes manifest-classified calibration rasters, whose regular lattice geometry covers about half the grid and makes the raw reading a fact about grid geometry rather than duplication (registered correction H60-6, carried forward).</p>
+<p class="small"><strong>Correction H62-4 (IR-H62-005):</strong> the emission budget's |G| constant is identified only as an interval — <strong>[{f(BUILD['g_bracket_px'][0], 1)}, {f(BUILD['g_bracket_px'][1], 1)}] px</strong> — not as the point {f(BUILD['g_legacy_anchor_px'], 1)} px this round carried in, which is a valid but non-binding upper bound. Under the measured bracket the two available γ rules disagree (this round's γ clamps to 30,000 px, the champion-family γ clamps to 15,000 px) and the direct board measurement favours the low end, so <strong>15,000 px is what the evidence favours</strong>. The file is left at 22,000 px, between the two answers: the budget is the weakest number in this round.</p>
+<p class="small">The dots-within-3 px reading against the whole prior inventory, calibration rasters included, is {pct(CARD['correlation_overlap_vs_registry']['lane_dots_max_within_3px_frac_raw'])}; the strict gate now counts <em>every</em> supplied registry raster: the H60D strict recheck withdrew the calibration exemption (H60-6), so calibration rasters are no longer excluded. That is why the gate value and the raw value are the same number. The coverage-aware repair <code>gates.lane_report</code> reports the same statistic a second way — restricted to the {RG['informative_priors']} priors whose measured 3 px coverage of the eligible footprint is below 95%, with the {RG['universal_coverage_probes']} universal-coverage probe ({RG['probe_paths'][0].rsplit('/', 1)[-1]}, coverage {pct(RG['probe_coverage'][0])}) identified by measurement rather than excluded by class. Both readings are published; neither is suppressed.</p>
 
 <hr class="divider"><div class="section-head"><h2>6. Geological reasoning for review</h2></div>
 <p>{BUILD['reasoning_rows']:,} per-pixel reasoning rows and {BUILD['a_only_dossier_rows']:,} A-only candidate-segment dossiers ship with the file. Every row names the confidence cell, the depth to basement, whether the pixel was independently corroborated by both views, and the non-fault process that could produce the same signature. These are <strong>hypotheses for Phase-2 review, not verified faults</strong>.</p>
@@ -269,7 +287,7 @@ def build_page() -> str:
 <li>{CARD['slot_decision']}.</li>
 <li>The two footprints are not nested (IR-H62-001): 1,540 px are finite in all 19 competition bands but not in <span class="mono">sample_submission</span>, and 3,073 px the other way round. The emission domain is their intersection, {CARD['validator_output'].get('n_nonzero') and '5,164,300'} px.</li>
 </ul>
-<p><a href="data/h62_run_card.json">Run card (JSON)</a> · <a href="data/h62_build.json">Build receipt</a> · <a href="data/h62_validation.json">Validation receipt</a> · <a href="data/h62_cotrain.json">Co-training receipt</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/32_hypotheses_H62_preregistered.md">Preregistered hypotheses</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/evidence/h62_lane_gate.json">Lane gate, per prior</a></p>
+<p><a href="data/h62_run_card.json">Run card (JSON)</a> · <a href="data/h62_build.json">Build receipt</a> · <a href="data/h62_validation.json">Validation receipt</a> · <a href="data/h62_cotrain.json">Co-training receipt</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/34_hypotheses_H62_preregistered.md">Preregistered hypotheses</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/evidence/h62_lane_gate.json">Lane gate, per prior</a></p>
 </main>
 <footer>Competition 306 · CPU research · fault-structure predictions, not confirmed geothermal vents. <a href="irregularities.html">Limitations &amp; review</a> · <a href="executive-summary.html">Submission guide</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code &amp; complete prompt</a></footer></body></html>
 """
@@ -279,15 +297,15 @@ def build_page() -> str:
 BANNER = f"""<!--H62-BANNER--><section class="hero" style="padding-top:8px"><div><div class="eyebrow">Newest round · H62 · {PREREG['registered_utc_date']}</div>
 <h1>Two views, corroboration instead of disagreement.<br>A new GeoTIFF you can download.</h1>
 <p class="lead">The lane's discovery signal — where the geophysical and surface views disagree — measures <strong>below a matched random control</strong> on the one instrument tied to measured credit. The opposite cell of the same table beats both single views and the union on the registered holdout.</p>
-<div class="notice" role="note"><strong>OK TO DOWNLOAD · ELIGIBLE TO SUBMIT · NO SLOT ALLOCATED HERE</strong>
-<p>Format, uniqueness, lane drift, the 200 m ring and the not-merely-the-union test all pass. This repository does not allocate weekly slots — that is a separate selector step. No organizer-confirmed score exists for this file; none is claimed.</p></div>
+<div class="notice bad" role="note"><strong>OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT</strong>
+<p>The strict lane gate returns DUPLICATE/STOP on a lattice-saturated registry ({pct(RO['lane_dots_max_within_3px_frac_gate'])} of dots within 3 px of the spacing-5 lattice, which covers {pct(RG['probe_coverage'][0])} of the eligible footprint). No weekly slot is allocated and none should be spent. No organizer-confirmed score exists for this file.</p></div>
 <div class="actions"><a class="button" href="downloads/{FILE}" download>Download the new GeoTIFF ↓</a><a class="button secondary" href="h62.html">Read the H62 evidence</a></div>
 <p class="fileline">{FILE}<br>{BYTES:,} bytes · {NPX:,} px · SHA-256 {SHA}</p></div></section><hr class="divider"><!--/H62-BANNER-->"""
 
 GUIDE = f"""<!--H62-GUIDE--><div class="eyebrow">Current file · H62</div>
 <h1>How to submit this file, in four clicks</h1>
-<div class="notice" role="note"><strong>OK TO DOWNLOAD · ELIGIBLE TO SUBMIT · NO SLOT ALLOCATED HERE</strong>
-<p>{FILE} passes every local gate. This repository does not spend weekly submission slots; a separate selector does, within the cap shown on the submission page. No organizer-confirmed score exists for this file.</p></div>
+<div class="notice bad" role="note"><strong>OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT</strong>
+<p>{FILE} passes format, the 200 m ring, not-merely-the-union, decoded-pattern uniqueness and the leakage canary. It does <strong>not</strong> pass the strict lane gate ({pct(RO['lane_dots_max_within_3px_frac_gate'])} of dots within 3 px of the spacing-5 lattice). No weekly slot is allocated or recommended. No organizer-confirmed score exists for this file.</p></div>
 <div class="actions"><a class="button" href="downloads/{FILE}" download>1 · Download the GeoTIFF ↓</a><a class="button secondary" href="downloads/{FILE[:-4]}.zip" download>or the single-TIFF ZIP</a></div>
 <p class="fileline">{FILE}<br>{BYTES:,} bytes · {NPX:,} px · SHA-256 {SHA}</p>
 <div class="grid2"><section class="panel"><h2>2 · Open the submission form</h2>
@@ -344,9 +362,11 @@ def main() -> int:
     # front page: banner after <main id="main">, plus a nav entry
     p = DOCS / "index.html"
     t = strip_previous(p.read_text(), "H62-BANNER")
-    t = re.sub(r'<a href="ctd5-audit\.html">Run &amp; evidence</a>',
-               '<a href="h62.html">H62 — newest</a><a href="ctd5-audit.html">Run &amp; evidence</a>',
-               t, count=1)
+    # main rewrites the front page between rounds, so the nav anchor is matched on whichever
+    # "Run & evidence" entry the current index.html happens to carry.
+    m = re.search(r'<a href="[^"]+\.html">Run &amp; evidence</a>', t)
+    if m and 'h62.html">H62' not in t:
+        t = t[:m.start()] + '<a href="h62.html">H62 — newest</a>' + t[m.start():]
     assert '<main id="main">' in t
     t = t.replace('<main id="main">', '<main id="main">\n' + BANNER, 1)
     p.write_text(t)

@@ -129,6 +129,39 @@ Direct measurement governs, so the emission is **22,000 px** — the preregister
 midpoint of the |G|-bracket solutions (21,300–22,870 px), inside the preregistered clamp
 [15,000, 30,000]. Registered as **correction H62-2**, with the unclamped value published.
 
+### 6b. …and the |G| the budget rests on turned out to be wrong (**correction H62-4**, `IR-H62-005`)
+
+Those |G|-bracket solutions were computed over a |G| bracket of **18,000–19,300 px**. That bracket is
+**disjoint** from the interval |G| is actually identified to live in. |G| is bounded by two
+assumption-free constraints on the pinned bytes:
+
+* **lower:** `T ≤ |G|` (credit cannot exceed the number of positives) applied to the largest
+  off-catalogue support — `calib_8GEMSDOE_Hedge-v2`, 166,519 px at score 0.1563 — gives
+  **|G| ≥ 5,949.3 px**;
+* **upper:** credit is monotone in support, so on the nested pair `d15` (60,069 px, 0.2477) ⊂
+  `gems27_tgc_v2_d15` (61,328 px, 0.2449) the inequality `T_sub ≤ T_sup` gives **|G| ≤ 12,512.1 px**.
+
+Both were re-derived in this checkout from the manifest-pinned bytes; the subset relation and the
+166,519-px support were recomputed directly and both bounds reproduce `evidence/h61_forensics.json`
+(main's H61) to four decimals. The value this round carried in, **|G| = 14,088.7 px** (`knowledge/10`
+§2), is a *valid but non-binding* upper bound — it comes from the weaker nested pair
+`h33-2-b2 ⊂ d28` — and using it as a point value additionally assumes the champion's 6,436 deleted
+ring pixels earn exactly zero credit; it falls to 7,066 px if they earn 100 px.
+
+Because `S*` is **linear in |G|**, the consequence is exact:
+
+| γ | \|G\| = 5,949.3 | \|G\| = 12,512.1 | \|G\| = 14,088.7 |
+|---|---:|---:|---:|
+| 0.6453 (this round's own field) | 43,294 → clamp **30,000** | 91,052 → clamp **30,000** | 102,525 → clamp **30,000** |
+| 0.2284 (champion family) | 7,044 → clamp **15,000** | 14,815 → clamp **15,000** | 16,681 |
+
+**The two γ rules now disagree, and the direct measurement breaks the tie toward the low end.**
+The emission is **not** changed: 22,000 px is the preregistered fallback, it sits between the two
+model answers, and churning the file a second time after review would replace one unmeasured
+judgement with another. But the budget's *derivational* support is now the weakest link in this
+round, and **15,000 px is the value the assembled evidence favours**. That is the first item for the
+next session, not a silent footnote.
+
 ## 7. Field selection, and the union disqualifier
 
 | field | dots | f | lift | overlap with `max(pA,pB)` top-k | decision |
@@ -156,25 +189,49 @@ disqualified mechanically — **correction H62-3** — and the winner is the hig
 | format | **PASS**, 0 problems — 1 band float32, EPSG:32611, 3730×3292, transform matches, values {0,1}, 0 NaN |
 | mass outside the emission domain | 0 px |
 | 200 m ring | **PASS** — nearest mapped catalogue pixel **223.6 m** |
-| uniqueness | pattern-unique vs **71** accessible aligned priors; support novelty **61.4 %**; not a literal prior union |
-| lane drift, ranking surface | max \|Spearman\| **0.1401** (bar 0.90) |
-| lane drift, final dots | max \|Spearman\| **0.0263**; 3-px proximity **0.2781** excl. calibration (bar 0.70); raw 0.8416 incl. the calibration lattice (H60-6) |
+| uniqueness | pattern-unique vs **77** accessible aligned priors; support novelty **60.5 %**; not a literal prior union |
+| leakage canary | worst of 75 layers, AUC **0.7177** |
+| Blum–Mitchell independence premise | max \|r\| **0.1757** (abandonment bar 0.60) |
 | not merely the union | **21,474 / 22,000 px (97.6 %)** outside `max(pA,pB)`'s own top-k |
-| reasoning | 22,000 per-pixel rows + 3,580 A-only candidate-segment dossiers (of 8,523 components; the rest are < 3 px and are counted, not written) |
+| lane drift, ranking surface | max \|Spearman\| **0.0785** (bar 0.90) |
+| lane drift, final dots, Spearman | max \|Spearman\| **0.0232** (bar 0.90) |
+| **lane drift, dots within 3 px — STRICT GATE** | **FAIL / DUPLICATE-STOP — 99.99 %** |
+| lane drift, dots within 3 px — coverage-aware repair (`gates.lane_report`) | **PASS — 45.3 %** on the 76 priors that localise something |
 
-## 9. Verdict, scoped
+**Why the strict gate fails, and why that is a fact about the registry.** After the H60D strict
+recheck, `h60d.lane_drift_report` counts *every* supplied registry raster — the calibration
+exemption (H60-6) was withdrawn. The binding raster is
+`data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif`, a spacing-5 square lattice. Its
+maximum interior distance is √8 = 2.83 px < 3 px, so its 3 px halo covers **99.90 %** of the
+eligible footprint and the "70 % of your dots within 3 px" statistic reads ≈1.0 for *every*
+nonempty candidate, including pure noise. `gates.lane_report` — the repair main's H61 added to the
+shared template — measures that coverage, classifies the lattice as the one universal-coverage
+probe, and re-runs the identical rule on the 76 priors that do localise something: max |Spearman|
+0.023, max 3 px proximity **0.453**.
 
-**`promote`, scoped to the registered instrument.** The concordance ranking beat both single-view
-baselines and the union on pooled hide-and-recover HOLDOUT-DTI — the comparison the brief asks for.
-It did **not** beat the surface view on the revealed-preference instrument, and no weekly slot is
-allocated: promotion to a real slot is a separate selector step within the cap on the submission
-page. No organizer-confirmed score exists for this file and none is claimed.
+Both readings are published, neither is suppressed, and the strict one governs the submit decision
+because that is this repository's settled convention: CTD5 and H60D were stopped on the same
+statistic, and main's H61 prints FAIL/STOP on its own front page rather than letting the repair
+overturn it.
 
-**Negative results this round, all deliverables:** H62-A (cover-conditioned buried disagreement)
-refuted — below random; the hard corroboration intersection refuted — structurally unable to fill a
-budget (IR-H62-002); the disagreement family as a whole measured below the matched random control
-on the instrument tied to measured credit, which is the fourth independent confirmation of what
-H56/H59/H60D found.
+**Reproducibility.** The round was rebuilt from scratch after the merge — the layer stack, all four
+folds, both instruments — and every measured statistic reproduced exactly: max |r| 0.1757144177181826,
+canary 0.7177, the 2×2 strata, the 92-px corroboration intersection, all eight candidate lifts, the
+winner. The emitted raster is stable to **21,998 of 22,000 dots**; two dots at the top grid edge
+(columns 661 and 721) moved down by exactly one row, which is a tie-break at the resolution of the
+ranking. The shipped sha256 is `de47952fe9c0fc15c1aaacd63a04f6c0a6aa15b094f2367ed631c6920e91c1fd`.
+
+## 9. Verdict: negative — OK to download for research, do not submit
+
+**The one positive measurement stands.** The concordance ranking beat both single-view baselines and
+the union on pooled hide-and-recover HOLDOUT-DTI — the comparison the brief asks for — and the lane's
+designated discovery signal measured below a matched random control on the instrument tied to measured
+credit, which is the fourth independent confirmation of what H56/H59/H60D found.
+
+**But the file does not clear the gate that decides whether a slot may be spent.** The strict lane gate
+returns DUPLICATE/STOP at 99.99 % near-dot proximity to a lattice that saturates the registry (§8).
+So: **research review copy; no weekly slot allocated and none recommended.** No organizer-confirmed
+score exists for this file and none is claimed.
 
 ## 10. Incidents registered
 
@@ -183,15 +240,26 @@ H56/H59/H60D found.
 | IR-H62-001 | The all-19-band training footprint and the `sample_submission` domain are **not nested** (1,540 px one way, 3,073 px the other; intersection 5,164,300 px). The first build failed closed on it; the emission domain is now their intersection. Any future round emitting on the raw training footprint hits the same error. |
 | IR-H62-002 | The corroboration operator is structurally unable to fill a usable budget (`k²/n` = 185 at k = 30,000). Registered as correction H62-1; do not try to rescue it by lowering `q_conf`. |
 | IR-H62-003 | The two instruments disagree in sign on the best field. Both orderings published; neither is a forecast. |
+| IR-H62-005 | This round's emission budget was derived from a \|G\| bracket (18,000–19,300 px) that is **disjoint** from the measured one ([5,949.3, 12,512.1] px). Registered as correction H62-4; the emission is unchanged but its derivational support is gone and 15,000 px is what the evidence favours. |
 
 ## 11. Three passes
 
 1. **Implement + verify:** E1/E2/E3 built and run; the run failed closed on IR-H62-001 rather than
    emitting on a wrong domain; all receipts written.
-2. **Bug review + fix:** the footprint non-nesting (fixed at the source, domain = intersection),
-   the self-exclusion over-reach (restricted to this build's own basenames so a parallel H62
-   artifact stays a genuine prior), the holdout budget label (taken from the receipt key, not from
-   an identity test on dicts), and the missing download copy of the reasoning CSV (caught by
-   `scripts/check_site.py`) were all found by review or by the site checker and fixed.
-3. **Full re-check:** the rebuilt artifact is byte-identical (`1bc5b50c…`), which establishes the
-   build as a fixed point; `scripts/check_site.py` passes with 0 problems; `pytest -q` green.
+2. **Bug review + fix:** the footprint non-nesting (fixed at the source, domain = intersection);
+   the self-exclusion over-reach (restricted to this build's own basenames so a parallel artifact
+   stays a genuine prior); the holdout budget label (taken from the receipt key, not from an
+   identity test on dicts); the missing download copy of the reasoning CSV (caught by
+   `scripts/check_site.py`); the layer-stack stage that was being run by hand and is now
+   `stage_layers` inside `scripts/run_h62.py` so the round is reproducible from the committed
+   scripts alone.
+3. **Full re-check against the merged repository.** This is where the round changed verdict. Merging
+   main brought (a) a **second, independently developed round also called H61**, which this round was
+   renamed H62 to coexist with, following the repository's own H60 → H60C → H60D precedent;
+   (b) main's H61 measurement that `|G|` is identified only as the interval [5,949.3, 12,512.1] px,
+   which invalidates the bracket this round's budget was derived from (correction H62-4, IR-H62-005);
+   (c) two new prior rasters; and (d) the withdrawal of the calibration exemption (H60-6) in
+   `h60d.lane_drift_report`, which is what turns the strict lane gate from 0.2781 into 0.99986 and
+   the verdict from promote into DUPLICATE/STOP. Every stage was re-run from an empty `work/h62`
+   afterwards: all measured statistics reproduced exactly and the emitted raster reproduced to
+   21,998 of 22,000 dots. `scripts/check_site.py` passes with 0 problems; `pytest -q` green.

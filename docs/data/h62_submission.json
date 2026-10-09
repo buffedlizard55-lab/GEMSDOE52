@@ -1,14 +1,14 @@
 {
  "file": "gems52-h62-conc_soft-arm22000px.tif",
- "sha256": "1bc5b50c014e70692919c1f604939c02ba6915fcf038f34327cd745e78de6ea7",
+ "sha256": "de47952fe9c0fc15c1aaacd63a04f6c0a6aa15b094f2367ed631c6920e91c1fd",
  "bytes": 114669,
- "submission_name": "gems52-h62-conc_soft-arm22000px-20261009T002039Z-zeros",
+ "submission_name": "gems52-h62-conc_soft-arm22000px-20261009T011349Z-zeros",
  "note": "H62 two-view co-training: conc_soft ranking, 22000 px, derived budget, >=200 m off catalogue. Research review copy.",
  "note_chars": 115,
  "validator": {
   "path": "/home/user/GEMSDOE52/submission/gems52-h62-conc_soft-arm22000px.tif",
   "bytes": 114669,
-  "sha256": "1bc5b50c014e70692919c1f604939c02ba6915fcf038f34327cd745e78de6ea7",
+  "sha256": "de47952fe9c0fc15c1aaacd63a04f6c0a6aa15b094f2367ed631c6920e91c1fd",
   "bands": 1,
   "dtype": "float32",
   "crs": "EPSG:32611",
@@ -55,7 +55,7 @@
   "validation_class": "local on-disk template/range check; not organizer upload acceptance"
  },
  "zip_file": "gems52-h62-conc_soft-arm22000px.zip",
- "zip_sha256": "2bea31c613e488c9d1f54ed17cd18e946aa2c5cabd51f72b3e193bd41ac3b266",
+ "zip_sha256": "ea7fd5ef29e53fefc1e109ee59f0b9fbad71ffe9405fccae2cc53fdb1b14a7dc",
  "approved_for_weekly_slot": false,
  "promoted": false,
  "submission_slots_used": 0,
@@ -67,7 +67,7 @@
   "ring_min_m": 223.6
  },
  "round": "H62",
- "verdict": "promote",
- "promotion_scope": "'promote' is a verdict on the registered instrument only: it means the concordance ranking beat BOTH single-view baselines and the union on pooled hide-and-recover HOLDOUT-DTI. It does NOT mean a weekly slot is allocated, and it does NOT mean the artifact beats the surface view on the revealed-preference instrument, where it does not.",
+ "verdict": "negative",
+ "promotion_scope": "NEGATIVE. The concordance ranking beat BOTH single-view baselines and the union on pooled hide-and-recover HOLDOUT-DTI, which is the comparison the brief asks for. But the repository's STRICT lane gate (h60d.lane_drift_report, after the H60D recheck withdrew the calibration exemption H60-6) returns DUPLICATE/STOP: 99.99% of this file's dots lie within 3 px of data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif. That reading is a property of the registry, not of this file: a spacing-5 square lattice has maximum interior distance sqrt(8) = 2.83 px < 3 px, so its 3 px halo covers 99.90% of the eligible footprint and the statistic is ~1.0 for EVERY nonempty candidate, including pure noise. The coverage-aware repair (gates.lane_report, added to the shared template by main's H61) measures that saturation, excludes the one universal-coverage probe, and returns PASS on the remaining 76 informative priors: max |Spearman| 0.023, max 3 px proximity 0.453. Both readings are published and neither is suppressed. Following this repository's settled convention (CTD5 and H60D were both stopped on the same statistic, and main's H61 published FAIL/STOP on its own front page), the strict gate governs the submit decision: DO NOT SUBMIT, no slot is allocated, and the file is a research review copy.",
  "slot_decision": "research review copy; promotion to a real weekly slot is a separate selector step within the cap on the submission page"
 }

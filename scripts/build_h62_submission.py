@@ -190,6 +190,22 @@ def main() -> int:
     lane = h60d.lane_drift_report(
         np.where(permitted, field_arr, 0.0).astype(np.float32), out_dots, priors, domain,
         calibration=h60d.calibration_basenames(ROOT / "registry/data_manifest.json"))
+    # The shared template's repaired gate (src/gems52/gates.py, added by main's H61): the same
+    # literal statistics, plus a MEASURED classification of priors whose 3 px halo covers most of
+    # the eligible footprint and therefore localises nothing.  Reported alongside, never instead.
+    lane2 = None
+    try:
+        lane2 = gates.lane_report(pred, domain, priors, sample=str(DATA / "sample_submission.tif"),
+                                  phase="dots")
+        log(f"repaired lane gate: literal={lane2['literal']['verdict']} "
+            f"policy={lane2['policy']['verdict']} "
+            f"informative={lane2['policy']['informative_priors']} "
+            f"probes={lane2['policy']['universal_coverage_probes']}")
+    except Exception as exc:                                   # never let a gate addition abort
+        log(f"repaired lane gate unavailable: {exc}")
+    if lane2 is not None:
+        lane["repaired_gate"] = {k: v for k, v in lane2.items() if k != "per_prior"}
+
     log(f"lane gate: surface max|rho|={lane['surface_max_abs_spearman']} "
         f"dots max|rho|={lane['dots_max_abs_spearman']} "
         f"3px frac (gate)={lane['dots_max_within_3px_frac_gate']} "
@@ -291,7 +307,27 @@ def main() -> int:
                      dict(id="H62-3", summary=("view_B and clf_union are disqualified as 'merely "
                           "the union': their dot sets overlap by 93-100% and their reads differ "
                           "by 3%")),
+                     dict(id="H62-4", summary=("the |G| bracket the preregistered 22,000 px "
+                          "fallback rested on (18,000-19,300 px) is DISJOINT from the measured "
+                          "bracket [5,949.3, 12,512.1] px (main's H61 forensics, independently "
+                          "re-derived here). The emission is NOT changed: the two gamma-based "
+                          "rules now bracket 22,000 px (this round's gamma 0.6453 clamps to "
+                          "30,000; the champion-family gamma 0.2284 clamps to 15,000), and the "
+                          "direct board measurement (score strictly decreasing in emitted mass) "
+                          "favours the LOW end. The budget's derivational support is therefore "
+                          "weakened and 15,000 px is the value the evidence favours - IR-H62-005")),
                  ])
+    # |G| sensitivity (IR-H62-005): refit the SAME points the validation stage used, but anchor
+    # on the measured |G| bracket instead of the legacy point.
+    g_sens = None
+    try:
+        pts = [(int(a), float(b)) for a, b in val["budget_rule"]["points"]]
+        g_sens = h62.budget_from_gamma(pts, g_anchor=h62.G_BRACKET_PX[1]).get("g_sensitivity")
+    except Exception:
+        g_sens = None
+    build["g_bracket_px"] = list(h62.G_BRACKET_PX)
+    build["g_legacy_anchor_px"] = h62.G_ANCHOR_PX
+    build["g_sensitivity"] = g_sens
     h62.write_json(EV / "h62_build.json", build)
     h62.write_json(EV / "h62_format_gate.json", receipt["validator"])
     h62.write_json(EV / "h62_uniqueness.json",
@@ -357,16 +393,48 @@ def main() -> int:
             lane_dots_max_within_3px_frac_gate=lane["dots_max_within_3px_frac_gate"],
             lane_dots_max_within_3px_frac_raw=lane["dots_max_within_3px_frac"],
             lane_drift_detected=bool(lane["lane_drift_detected"]),
+            lane_drift_binding_prior=(lane.get("dots_max_within_3px_prior") or ""),
+            lane_drift_is_registry_saturation=bool(
+                lane2 is not None
+                and lane2["policy"]["max_near_3px_fraction"] is not None
+                and lane2["policy"]["max_near_3px_fraction"] <= 0.70),
+            repaired_gate_present=bool(lane2 is not None),
+            repaired_gate=(None if lane2 is None else
+                           {"instrument": lane2["instrument"],
+                            "priors_checked": lane2["priors_checked"],
+                            "distinct_decoded_priors": lane2["distinct_decoded_priors"],
+                            "literal_verdict": lane2["literal"]["verdict"],
+                            "literal_max_spearman": lane2["literal"]["max_spearman"],
+                            "literal_max_near_3px_fraction": lane2["literal"]["max_near_3px_fraction"],
+                            "policy_verdict": lane2["policy"]["verdict"],
+                            "policy_max_spearman": lane2["policy"]["max_spearman"],
+                            "policy_max_near_3px_fraction": lane2["policy"]["max_near_3px_fraction"],
+                            "n_informative_priors": lane2["policy"]["informative_priors"],
+                            "n_universal_coverage_probes": lane2["policy"]["universal_coverage_probes"],
+                            "ok": bool(lane2["ok"])}),
             not_merely_union_fraction=not_union["outside_union_fraction"]),
         raster_sha256=receipt["sha256"],
         validator=receipt["validator"],
         submission_name=name, submission_note=note,
         verdict=("promote" if promoted else "negative"),
-        promotion_scope=("'promote' is a verdict on the registered instrument only: it means the "
-                         "concordance ranking beat BOTH single-view baselines and the union on "
-                         "pooled hide-and-recover HOLDOUT-DTI. It does NOT mean a weekly slot is "
-                         "allocated, and it does NOT mean the artifact beats the surface view on "
-                         "the revealed-preference instrument, where it does not."),
+        promotion_scope=(
+            "NEGATIVE. The concordance ranking beat BOTH single-view baselines and the union on "
+            "pooled hide-and-recover HOLDOUT-DTI, which is the comparison the brief asks for. "
+            "But the repository's STRICT lane gate (h60d.lane_drift_report, after the H60D "
+            "recheck withdrew the calibration exemption H60-6) returns DUPLICATE/STOP: 99.99% "
+            "of this file's dots lie within 3 px of "
+            "data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif. That reading is a "
+            "property of the registry, not of this file: a spacing-5 square lattice has maximum "
+            "interior distance sqrt(8) = 2.83 px < 3 px, so its 3 px halo covers 99.90% of the "
+            "eligible footprint and the statistic is ~1.0 for EVERY nonempty candidate, "
+            "including pure noise. The coverage-aware repair (gates.lane_report, added to the "
+            "shared template by main's H61) measures that saturation, excludes the one "
+            "universal-coverage probe, and returns PASS on the remaining 76 informative priors: "
+            "max |Spearman| 0.023, max 3 px proximity 0.453. Both readings are published and "
+            "neither is suppressed. Following this repository's settled convention (CTD5 and "
+            "H60D were both stopped on the same statistic, and main's H61 published FAIL/STOP "
+            "on its own front page), the strict gate governs the submit decision: DO NOT SUBMIT, "
+            "no slot is allocated, and the file is a research review copy."),
         extra=dict(build=build,
                    cotrain=dict(independence={k: v for k, v in cot["independence"].items()
                                               if k != "blocks"},
@@ -375,10 +443,12 @@ def main() -> int:
                                 strata=cot["strata"]["counts"],
                                 depth_medians=cot["strata"]["median_depth_to_basement_m"],
                                 corroboration_probe=cot["corroboration_probe"]),
-                   corrections=["H62-1", "H62-2", "H62-3"],
+                   corrections=["H62-1", "H62-2", "H62-3", "H62-4"],
                    slot_decision=("research review copy; promotion to a real weekly slot is a "
                                   "separate selector step within the cap on the submission page"),
-                   champion_owner_reported=CHAMPION_OWNER_REPORTED))
+                   champion_owner_reported=CHAMPION_OWNER_REPORTED,
+                   g_bracket_px=list(h62.G_BRACKET_PX),
+                   g_legacy_anchor_px=h62.G_ANCHOR_PX))
     h62.write_json(EV / "h62_run_card.json", card)
     h62.write_json(DAD / "h62_run_card.json", card)
     (WORK / "promoted_field.txt").write_text(winner["field"] + "\n")

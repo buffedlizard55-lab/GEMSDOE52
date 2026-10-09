@@ -58,7 +58,15 @@ LANE_MAX_DOTS_FRAC = 0.70
 LANE_PROXIMITY_PX = 3
 LEAKAGE_AUC_MAX = 0.90
 ABANDON_R = 0.60
-G_ANCHOR_PX = 14088.7          # registered |G| (knowledge/10 s2); the bracket is disclosed
+G_ANCHOR_PX = 14088.7          # legacy point value (knowledge/10 s2); CONTESTED -- see below
+# Measured bounds on |G| (main's H61 forensics, evidence/h61_forensics.json, independently
+# re-derived in this checkout): T <= |G| on calib_8GEMSDOE_Hedge-v2 gives |G| >= 5,949.3 px and
+# monotone credit on the nested pair d15 subset gems27_tgc_v2_d15 (0.2477 > 0.2449) gives
+# |G| <= 12,512.1 px.  The legacy point 14,088.7 lies OUTSIDE that interval: it additionally
+# assumes the 6,436 ring pixels the champion deleted earn exactly zero credit, and it falls to
+# 7,066 px if they earn 100 px.  Registered as IR-H62-005.
+G_BRACKET_PX = (5949.282184328427, 12512.133928571544)
+G_SENSITIVITY_PX = (G_BRACKET_PX[0], G_BRACKET_PX[1], G_ANCHOR_PX)
 BUDGET_CLAMP = (15000, 30000)
 BUDGET_FALLBACK = 22000
 GAMMA_GRID = (8000, 12000, 17000, 25000, 38000)
@@ -233,6 +241,19 @@ def budget_from_gamma(points: list[tuple[int, float]], g_anchor: float = G_ANCHO
     out.update(s_star_unclamped=float(s_star), budget_px=clamped,
                clamped=bool(clamped != int(round(s_star))),
                reason=("argmax of DTI(S) = c S^gamma / (0.2 S + 0.8 |G|); independent of c"))
+    # |G| sensitivity (IR-H62-005): S* is linear in |G|, so the whole measured bracket is
+    # reported rather than one contested point.
+    sens = []
+    for g in G_SENSITIVITY_PX:
+        star = gamma * 0.8 * g / (0.2 * (1.0 - gamma))
+        sens.append(dict(g_px=float(g),
+                         s_star_unclamped=float(star),
+                         s_star_clamped=int(min(max(int(round(star)), int(clamp[0])), int(clamp[1])))))
+    out.update(g_sensitivity=sens,
+               g_note=("|G| is only identified as an interval [5,949.3, 12,512.1] px; the legacy "
+                       "point 14,088.7 px sits outside it and needs an unproven zero-credit "
+                       "assumption on the champion's 6,436 deleted ring pixels. S* is linear in "
+                       "|G|, so the clamped answer is reported over the whole bracket."))
     return out
 
 

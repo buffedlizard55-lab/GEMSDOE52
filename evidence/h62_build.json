@@ -1,6 +1,6 @@
 {
  "round": "H62-build",
- "observed_utc": "2026-10-09T00:25:16Z",
+ "observed_utc": "2026-10-09T01:16:59Z",
  "budget_px": 22000,
  "budget_basis": "registered correction H62-2",
  "cover_threshold_m": 600.1210327148438,
@@ -26,9 +26,9 @@
   {
    "field": "view_B",
    "emitted": 22000,
-   "colocation": 0.3015,
+   "colocation": 0.30154545454545456,
    "random_baseline": 0.11288733899905494,
-   "lift": 2.6708043849144505,
+   "lift": 2.6712070389751945,
    "union_overlap": 0.9301,
    "disqualified_as_union": true,
    "implied_rho": {
@@ -37,16 +37,16 @@
      0.0279,
      0.1387
     ],
-    "rho_lo": 0.07496415000000001,
-    "rho_hi": 0.15235795
+    "rho_lo": 0.07497124545454545,
+    "rho_hi": 0.15236000909090908
    }
   },
   {
    "field": "clf_union",
    "emitted": 22000,
-   "colocation": 0.29368181818181816,
+   "colocation": 0.29363636363636364,
    "random_baseline": 0.11288733899905494,
-   "lift": 2.6015478864664954,
+   "lift": 2.601145232405752,
    "union_overlap": 1.0,
    "disqualified_as_union": true,
    "implied_rho": {
@@ -55,8 +55,8 @@
      0.0279,
      0.1387
     ],
-    "rho_lo": 0.07374373181818182,
-    "rho_hi": 0.15200378636363637
+    "rho_lo": 0.07373663636363637,
+    "rho_hi": 0.15200172727272726
    }
   },
   {
@@ -198,6 +198,32 @@
   {
    "id": "H62-3",
    "summary": "view_B and clf_union are disqualified as 'merely the union': their dot sets overlap by 93-100% and their reads differ by 3%"
+  },
+  {
+   "id": "H62-4",
+   "summary": "the |G| bracket the preregistered 22,000 px fallback rested on (18,000-19,300 px) is DISJOINT from the measured bracket [5,949.3, 12,512.1] px (main's H61 forensics, independently re-derived here). The emission is NOT changed: the two gamma-based rules now bracket 22,000 px (this round's gamma 0.6453 clamps to 30,000; the champion-family gamma 0.2284 clamps to 15,000), and the direct board measurement (score strictly decreasing in emitted mass) favours the LOW end. The budget's derivational support is therefore weakened and 15,000 px is the value the evidence favours - IR-H62-005"
+  }
+ ],
+ "g_bracket_px": [
+  5949.282184328427,
+  12512.133928571544
+ ],
+ "g_legacy_anchor_px": 14088.7,
+ "g_sensitivity": [
+  {
+   "g_px": 5949.282184328427,
+   "s_star_unclamped": 43291.18685117558,
+   "s_star_clamped": 30000
+  },
+  {
+   "g_px": 12512.133928571544,
+   "s_star_unclamped": 91047.13997859712,
+   "s_star_clamped": 30000
+  },
+  {
+   "g_px": 14088.7,
+   "s_star_unclamped": 102519.35028343367,
+   "s_star_clamped": 30000
   }
  ]
 }

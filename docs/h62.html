@@ -8,19 +8,21 @@
 <main id="main"><section class="hero"><div><div class="eyebrow">DOE GEMS · H62 · 2026-10-09</div>
 <h1>Two views.<br>Corroboration instead of disagreement.</h1>
 <p class="lead">Every earlier round in this lane shipped the cell where the two views disagree. H62 tests the opposite cell of the same 2×2 confidence table, on the same bytes, with the same folds.</p>
-<div class="notice" role="note"><strong>OK TO DOWNLOAD · ELIGIBLE TO SUBMIT · NO SLOT ALLOCATED HERE</strong>
-<p>The file passes every local gate below — format, uniqueness, lane drift, the 200 m ring and the not-merely-the-union test. This repository does <em>not</em> allocate weekly submission slots; that is a separate selector step within the cap shown on the submission page. No organizer-confirmed score exists for this file and none is claimed.</p></div>
+<div class="notice bad" role="note"><strong>OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT · NO SLOT ALLOCATED</strong>
+<p>The file passes format, the 200 m ring, not-merely-the-union, decoded-pattern uniqueness and the leakage canary. <strong>It does not pass the lane's strict duplicated-ness gate:</strong> 100.0% of its dots lie within 3 px of a spacing-5 square lattice whose 3 px halo covers 99.9% of the eligible footprint, so that statistic reads ~1.0 for <em>any</em> nonempty candidate. The coverage-aware repair returns PASS on the 76 priors that localise something. Both readings are published below; neither is suppressed. No organizer-confirmed score exists for this file and none is claimed.</p></div>
 <div class="actions"><a class="button" href="downloads/gems52-h62-conc_soft-arm22000px.tif" download>Download the new GeoTIFF ↓</a><a class="button secondary" href="downloads/gems52-h62-conc_soft-arm22000px.zip" download>Single-TIFF ZIP</a></div>
-<p class="fileline">gems52-h62-conc_soft-arm22000px.tif<br>114,669 bytes · 22,000 emitted pixels · SHA-256 1bc5b50c014e70692919c1f604939c02ba6915fcf038f34327cd745e78de6ea7</p>
-<p class="small"><a href="executive-summary.html">Exactly how to upload it — the three clicks →</a></p></div>
+<p class="fileline">gems52-h62-conc_soft-arm22000px.tif<br>114,669 bytes · 22,000 emitted pixels · SHA-256 de47952fe9c0fc15c1aaacd63a04f6c0a6aa15b094f2367ed631c6920e91c1fd</p>
+<p class="small"><a href="executive-summary.html">What the statuses mean, and why this one says do not submit →</a></p></div>
 <aside class="panel" aria-label="Gates"><div class="label">Every gate, measured</div>
 <div class="status-line"><span>Format (CRS / shape / transform / range)</span><span class="good">PASS</span></div>
-<div class="status-line"><span>Unique vs 71 aligned priors</span><span class="good">YES</span></div>
-<div class="status-line"><span>Lane drift (surface / dots)</span><span class="good">0.1401 / 0.0263</span></div>
+<div class="status-line"><span>Unique vs 77 aligned priors</span><span class="good">YES</span></div>
+<div class="status-line"><span>Lane drift (surface / dots)</span><span class="good">0.0785 / 0.0232</span></div>
 <div class="status-line"><span>Not merely the union</span><span class="good">97.6% outside</span></div>
 <div class="status-line"><span>Nearest mapped catalogue pixel</span><span class="good">223.6 m</span></div>
-<div class="status-line"><span>Registered-instrument verdict</span><span class="good">PROMOTE</span></div>
-<p class="fine">'promote' is a verdict on the registered instrument only: it means the concordance ranking beat BOTH single-view baselines and the union on pooled hide-and-recover HOLDOUT-DTI. It does NOT mean a weekly slot is allocated, and it does NOT mean the artifact beats the surface view on the revealed-preference instrument, where it does not.</p>
+<div class="status-line"><span>Registered-instrument verdict</span><span class="bad">NEGATIVE</span></div>
+<div class="status-line"><span>Strict lane gate (all registry rasters)</span><span class="bad">DUPLICATE / STOP</span></div>
+<div class="status-line"><span>Coverage-aware gate (informative priors)</span><span class="good">PASS</span></div>
+<p class="fine">NEGATIVE. The concordance ranking beat BOTH single-view baselines and the union on pooled hide-and-recover HOLDOUT-DTI, which is the comparison the brief asks for. But the repository's STRICT lane gate (h60d.lane_drift_report, after the H60D recheck withdrew the calibration exemption H60-6) returns DUPLICATE/STOP: 99.99% of this file's dots lie within 3 px of data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif. That reading is a property of the registry, not of this file: a spacing-5 square lattice has maximum interior distance sqrt(8) = 2.83 px < 3 px, so its 3 px halo covers 99.90% of the eligible footprint and the statistic is ~1.0 for EVERY nonempty candidate, including pure noise. The coverage-aware repair (gates.lane_report, added to the shared template by main's H61) measures that saturation, excludes the one universal-coverage probe, and returns PASS on the remaining 76 informative priors: max |Spearman| 0.023, max 3 px proximity 0.453. Both readings are published and neither is suppressed. Following this repository's settled convention (CTD5 and H60D were both stopped on the same statistic, and main's H61 published FAIL/STOP on its own front page), the strict gate governs the submit decision: DO NOT SUBMIT, no slot is allocated, and the file is a research review copy.</p>
 <a class="small" href="data/h62_run_card.json">Inspect the JSON run card ↗</a></aside></section>
 
 <hr class="divider"><div class="section-head"><h2>The five candidates, ranked before anything was fitted</h2><a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/34_hypotheses_H62_preregistered.md">Read the preregistration →</a></div>
@@ -98,7 +100,7 @@
 </tbody></table></div>
 
 <div class="grid2"><section class="panel"><h3>What instrument 1 says</h3>
-<p>The concordance ranking <strong>beats both single-view baselines and the union</strong> on the registered instrument: 0.008467 against 0.008390 for max(p<sub>A</sub>,p<sub>B</sub>) and 0.007970 for the surface view alone. That is the comparison the brief asks for — "compare against a single-view baseline on hide-and-recover segments" — and it is why the verdict is <strong>promote</strong>. View A alone is higher still (0.010332), so the concordance is not the best single field here.</p></section>
+<p>The concordance ranking <strong>beats both single-view baselines and the union</strong> on the registered instrument: 0.008467 against 0.008390 for max(p<sub>A</sub>,p<sub>B</sub>) and 0.007970 for the surface view alone. That is the comparison the brief asks for — "compare against a single-view baseline on hide-and-recover segments" — and it is the round's one positive measurement. It is <strong>not</strong> enough to promote the file, because the strict lane gate stops it first. View A alone is higher still (0.010332), so the concordance is not the best single field here.</p></section>
 <section class="panel"><h3>What instrument 2 says — and the disagreement fields</h3>
 <p>The lane's designated discovery signal measures <strong>below the matched random control</strong>: dis_contrast 0.60×, dis_product 0.66×, cover-conditioned A-only 0.93× random. Disagreement is not merely weaker than the union on this instrument — it is anti-correlated with the one pixel set whose credit density has been measured. This is the sharpest form yet of the negative H56/H59/H60D all reached by a different route.</p></section></div>
 
@@ -109,7 +111,7 @@
 <div class="table-wrap"><table><thead><tr><th>field</th><th>dots</th><th>co-location f</th><th>random baseline</th><th>lift</th><th>overlap with max(p<sub>A</sub>,p<sub>B</sub>) top-k</th><th>decision</th></tr></thead><tbody>
 <tr><td class='mono'>view_A</td><td class='number'>22,000</td><td class='number'>0.1215</td><td class='number'>0.1129</td><td class='number'>1.08×</td><td class='number'>7.8%</td><td>—</td></tr>
 <tr><td class='mono'>view_B</td><td class='number'>22,000</td><td class='number'>0.3015</td><td class='number'>0.1129</td><td class='number'>2.67×</td><td class='number'>93.0%</td><td class="bad">UNION — disqualified</td></tr>
-<tr><td class='mono'>clf_union</td><td class='number'>22,000</td><td class='number'>0.2937</td><td class='number'>0.1129</td><td class='number'>2.60×</td><td class='number'>100.0%</td><td class="bad">UNION — disqualified</td></tr>
+<tr><td class='mono'>clf_union</td><td class='number'>22,000</td><td class='number'>0.2936</td><td class='number'>0.1129</td><td class='number'>2.60×</td><td class='number'>100.0%</td><td class="bad">UNION — disqualified</td></tr>
 <tr><td class='mono'>dis_contrast</td><td class='number'>22,000</td><td class='number'>0.0680</td><td class='number'>0.1129</td><td class='number'>0.60×</td><td class='number'>0.4%</td><td>—</td></tr>
 <tr><td class='mono'>dis_product</td><td class='number'>22,000</td><td class='number'>0.0742</td><td class='number'>0.1129</td><td class='number'>0.66×</td><td class='number'>0.4%</td><td>—</td></tr>
 <tr><td class='mono'>conc_soft</td><td class='number'>22,000</td><td class='number'>0.1600</td><td class='number'>0.1129</td><td class='number'>1.42×</td><td class='number'>2.4%</td><td class="good">SHIPPED</td></tr>
@@ -125,16 +127,18 @@
 <tr><td>No NaN/infinity inside the footprint; values in [0, 1]</td><td class='good'>PASS — 0 NaN, [0.0, 1.0]</td></tr>
 <tr><td>Zero mass outside the emission domain</td><td class='good'>PASS</td></tr>
 <tr><td>No emitted pixel within 200 m of a mapped catalogue pixel</td><td class='good'>PASS — nearest 223.6 m</td></tr>
-<tr><td>Decoded pattern unique vs every accessible aligned prior</td><td class='good'>PASS — 71 priors</td></tr>
-<tr><td>Support novelty against the prior union</td><td class='good'>61.4% ≥ 20 %</td></tr>
-<tr><td>Lane drift, ranking surface (max |Spearman| ≤ 0.90)</td><td class='good'>PASS — 0.1401</td></tr>
-<tr><td>Lane drift, final dots (max |Spearman| ≤ 0.90)</td><td class='good'>PASS — 0.0263</td></tr>
-<tr><td>Lane drift, dots within 3 px of one raster (≤ 70 %)</td><td class='good'>PASS — 27.8% excl. calibration</td></tr>
+<tr><td>Decoded pattern unique vs every accessible aligned prior</td><td class='good'>PASS — 77 priors</td></tr>
+<tr><td>Support novelty against the prior union</td><td class='good'>60.5% ≥ 20 %</td></tr>
+<tr><td>Lane drift, ranking surface (max |Spearman| ≤ 0.90)</td><td class='good'>PASS — 0.0785</td></tr>
+<tr><td>Lane drift, final dots (max |Spearman| ≤ 0.90)</td><td class='good'>PASS — 0.0232</td></tr>
+<tr><td>Lane drift, dots within 3 px of one raster (≤ 70 %)</td><td class='bad'>FAIL</td></tr>
 <tr><td>Not merely the union of the two views</td><td class='good'>PASS — 97.6% of dots outside max(pA,pB)'s own top-k</td></tr>
+<tr><td>Repaired shared-template lane gate (H61's gates.lane_report), informative priors only</td><td class='good'>PASS — max |ρ| 0.0232, 3 px 45.3%, 76 informative priors</td></tr>
 <tr><td>Leakage canary (worst single-layer holdout AUC ≤ 0.90)</td><td class='good'>PASS — 0.7177 (B_lidar_step_max_grad)</td></tr>
 <tr><td>Blum–Mitchell independence premise (max |r| < 0.60)</td><td class='good'>PASS — 0.1757</td></tr>
 </tbody></table></div>
-<p class="small">The dots-within-3 px reading against the whole prior inventory, calibration rasters included, is 84.2%; the gate value excludes manifest-classified calibration rasters, whose regular lattice geometry covers about half the grid and makes the raw reading a fact about grid geometry rather than duplication (registered correction H60-6, carried forward).</p>
+<p class="small"><strong>Correction H62-4 (IR-H62-005):</strong> the emission budget's |G| constant is identified only as an interval — <strong>[5949.3, 12512.1] px</strong> — not as the point 14088.7 px this round carried in, which is a valid but non-binding upper bound. Under the measured bracket the two available γ rules disagree (this round's γ clamps to 30,000 px, the champion-family γ clamps to 15,000 px) and the direct board measurement favours the low end, so <strong>15,000 px is what the evidence favours</strong>. The file is left at 22,000 px, between the two answers: the budget is the weakest number in this round.</p>
+<p class="small">The dots-within-3 px reading against the whole prior inventory, calibration rasters included, is 100.0%; the strict gate now counts <em>every</em> supplied registry raster: the H60D strict recheck withdrew the calibration exemption (H60-6), so calibration rasters are no longer excluded. That is why the gate value and the raw value are the same number. The coverage-aware repair <code>gates.lane_report</code> reports the same statistic a second way — restricted to the 76 priors whose measured 3 px coverage of the eligible footprint is below 95%, with the 1 universal-coverage probe (13gems_20261001_r13-lattice-s5_v2_nan-outside.tif, coverage 99.9%) identified by measurement rather than excluded by class. Both readings are published; neither is suppressed.</p>
 
 <hr class="divider"><div class="section-head"><h2>6. Geological reasoning for review</h2></div>
 <p>22,000 per-pixel reasoning rows and 3,580 A-only candidate-segment dossiers ship with the file. Every row names the confidence cell, the depth to basement, whether the pixel was independently corroborated by both views, and the non-fault process that could produce the same signature. These are <strong>hypotheses for Phase-2 review, not verified faults</strong>.</p>
@@ -142,7 +146,7 @@
 
 <hr class="divider"><div class="section-head"><h2>7. Corrections, limits, and the run card</h2></div>
 <div class="table-wrap"><table><thead><tr><th>id</th><th>correction registered before the artifact shipped</th></tr></thead><tbody>
-<tr><td class='mono'>H62-1</td><td>the hard corroboration intersection is structurally unusable at this budget (k^2/n = 185 at k=30,000); the soft joint-confidence ranking min(pA,pB) is registered instead</td></tr><tr><td class='mono'>H62-2</td><td>emission budget 22,000 px: the gamma fit's unclamped argmax 102,519 px lies outside the measured range, while the board's own published record (Spearman -1.000, n=6, mass vs score) is a direct measurement and governs</td></tr><tr><td class='mono'>H62-3</td><td>view_B and clf_union are disqualified as 'merely the union': their dot sets overlap by 93-100% and their reads differ by 3%</td></tr>
+<tr><td class='mono'>H62-1</td><td>the hard corroboration intersection is structurally unusable at this budget (k^2/n = 185 at k=30,000); the soft joint-confidence ranking min(pA,pB) is registered instead</td></tr><tr><td class='mono'>H62-2</td><td>emission budget 22,000 px: the gamma fit's unclamped argmax 102,519 px lies outside the measured range, while the board's own published record (Spearman -1.000, n=6, mass vs score) is a direct measurement and governs</td></tr><tr><td class='mono'>H62-3</td><td>view_B and clf_union are disqualified as 'merely the union': their dot sets overlap by 93-100% and their reads differ by 3%</td></tr><tr><td class='mono'>H62-4</td><td>the |G| bracket the preregistered 22,000 px fallback rested on (18,000-19,300 px) is DISJOINT from the measured bracket [5,949.3, 12,512.1] px (main's H61 forensics, independently re-derived here). The emission is NOT changed: the two gamma-based rules now bracket 22,000 px (this round's gamma 0.6453 clamps to 30,000; the champion-family gamma 0.2284 clamps to 15,000), and the direct board measurement (score strictly decreasing in emitted mass) favours the LOW end. The budget's derivational support is therefore weakened and 15,000 px is the value the evidence favours - IR-H62-005</td></tr>
 </tbody></table></div>
 <ul>
 <li>The competition inputs are <strong>SHA-256-pinned owner mirrors</strong>, not organizer-authenticated downloads: the DrivenData data tab is login-walled. Every number here inherits that qualification.</li>

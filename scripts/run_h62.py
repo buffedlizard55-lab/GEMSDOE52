@@ -441,11 +441,24 @@ def stage_validate() -> None:
     log(f"wrote {out.name} in {time.time() - t0:.0f}s")
 
 
+def stage_layers() -> None:
+    """The template's cached feature stack (h57.build_layers, 75 uint8 rank layers).
+
+    Built here rather than in a separate manual command so the round is reproducible from the
+    committed scripts alone.  ``h57.build_layers`` is idempotent: it returns the cached meta
+    untouched when the spec signature and the .u8 stack already match.
+    """
+    t0 = time.time()
+    meta = h57.build_layers(work=str(WORK), chunk=600, data_dir=DATA)
+    log(f"layer stack ready: {len(meta['names'])} uint8 layers at work/h62 "
+        f"({time.time() - t0:.0f}s)")
+
+
 def main() -> int:
     WORK.mkdir(parents=True, exist_ok=True)
     EV.mkdir(parents=True, exist_ok=True)
     stage_registry_check()
-    for stage in (stage_preflight, stage_cotrain, stage_validate):
+    for stage in (stage_preflight, stage_layers, stage_cotrain, stage_validate):
         stage()
     log("ALL STAGES COMPLETE")
     return 0

@@ -105,22 +105,39 @@
   }
  },
  "correlation_overlap_vs_registry": {
-  "n_priors": 71,
+  "n_priors": 77,
   "pattern_unique": true,
-  "support_novelty_fraction": 0.6139,
+  "support_novelty_fraction": 0.6046,
   "equals_literal_prior_union": false,
-  "lane_surface_max_abs_spearman": 0.1401,
-  "lane_dots_max_abs_spearman": 0.0263,
-  "lane_dots_max_within_3px_frac_gate": 0.2781,
-  "lane_dots_max_within_3px_frac_raw": 0.8416,
-  "lane_drift_detected": false,
+  "lane_surface_max_abs_spearman": 0.07845945985377721,
+  "lane_dots_max_abs_spearman": 0.02315507939228921,
+  "lane_dots_max_within_3px_frac_gate": 0.9998636363636364,
+  "lane_dots_max_within_3px_frac_raw": 0.9998636363636364,
+  "lane_drift_detected": true,
+  "lane_drift_binding_prior": "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+  "lane_drift_is_registry_saturation": true,
+  "repaired_gate_present": true,
+  "repaired_gate": {
+   "instrument": "gems52.gates.lane_report (H61 shared-template repair)",
+   "priors_checked": 77,
+   "distinct_decoded_priors": 40,
+   "literal_verdict": "DUPLICATE/STOP",
+   "literal_max_spearman": 0.02315507939228921,
+   "literal_max_near_3px_fraction": 0.9998636363636364,
+   "policy_verdict": "PASS",
+   "policy_max_spearman": 0.02315507939228921,
+   "policy_max_near_3px_fraction": 0.453,
+   "n_informative_priors": 76,
+   "n_universal_coverage_probes": 1,
+   "ok": true
+  },
   "not_merely_union_fraction": 0.9761
  },
- "raster_sha256": "1bc5b50c014e70692919c1f604939c02ba6915fcf038f34327cd745e78de6ea7",
+ "raster_sha256": "de47952fe9c0fc15c1aaacd63a04f6c0a6aa15b094f2367ed631c6920e91c1fd",
  "validator_output": {
   "path": "/home/user/GEMSDOE52/submission/gems52-h62-conc_soft-arm22000px.tif",
   "bytes": 114669,
-  "sha256": "1bc5b50c014e70692919c1f604939c02ba6915fcf038f34327cd745e78de6ea7",
+  "sha256": "de47952fe9c0fc15c1aaacd63a04f6c0a6aa15b094f2367ed631c6920e91c1fd",
   "bands": 1,
   "dtype": "float32",
   "crs": "EPSG:32611",
@@ -166,22 +183,22 @@
   "ok": true,
   "validation_class": "local on-disk template/range check; not organizer upload acceptance"
  },
- "submission_name": "gems52-h62-conc_soft-arm22000px-20261009T002039Z-zeros",
+ "submission_name": "gems52-h62-conc_soft-arm22000px-20261009T011349Z-zeros",
  "submission_note": "H62 two-view co-training: conc_soft ranking, 22000 px, derived budget, >=200 m off catalogue. Research review copy.",
  "submission_note_chars": 115,
- "verdict": "promote",
- "promotion_scope": "'promote' is a verdict on the registered instrument only: it means the concordance ranking beat BOTH single-view baselines and the union on pooled hide-and-recover HOLDOUT-DTI. It does NOT mean a weekly slot is allocated, and it does NOT mean the artifact beats the surface view on the revealed-preference instrument, where it does not.",
+ "verdict": "negative",
+ "promotion_scope": "NEGATIVE. The concordance ranking beat BOTH single-view baselines and the union on pooled hide-and-recover HOLDOUT-DTI, which is the comparison the brief asks for. But the repository's STRICT lane gate (h60d.lane_drift_report, after the H60D recheck withdrew the calibration exemption H60-6) returns DUPLICATE/STOP: 99.99% of this file's dots lie within 3 px of data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif. That reading is a property of the registry, not of this file: a spacing-5 square lattice has maximum interior distance sqrt(8) = 2.83 px < 3 px, so its 3 px halo covers 99.90% of the eligible footprint and the statistic is ~1.0 for EVERY nonempty candidate, including pure noise. The coverage-aware repair (gates.lane_report, added to the shared template by main's H61) measures that saturation, excludes the one universal-coverage probe, and returns PASS on the remaining 76 informative priors: max |Spearman| 0.023, max 3 px proximity 0.453. Both readings are published and neither is suppressed. Following this repository's settled convention (CTD5 and H60D were both stopped on the same statistic, and main's H61 published FAIL/STOP on its own front page), the strict gate governs the submit decision: DO NOT SUBMIT, no slot is allocated, and the file is a research review copy.",
  "number_labels": "every holdout number is HOLDOUT-DTI (evaluator version, withheld positives, 95% CI); every leaderboard number anywhere in this repo is owner-reported; none is ORGANIZER-CONFIRMED (no submission-page receipt exists); a projection is never written as a score",
  "evaluator_version": {
   "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
   "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
   "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
-  "h62.py": "f8f0c885799d5e638835e14e53825cfd09843aea84ff3aba583bc6dbf2940962",
+  "h62.py": "166d3e4c9749a0f4bda704cd7b07034bfbb03949132132df5238192e03cee64c",
   "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
  },
  "build": {
   "round": "H62-build",
-  "observed_utc": "2026-10-09T00:25:16Z",
+  "observed_utc": "2026-10-09T01:16:59Z",
   "budget_px": 22000,
   "budget_basis": "registered correction H62-2",
   "cover_threshold_m": 600.1210327148438,
@@ -207,9 +224,9 @@
    {
     "field": "view_B",
     "emitted": 22000,
-    "colocation": 0.3015,
+    "colocation": 0.30154545454545456,
     "random_baseline": 0.11288733899905494,
-    "lift": 2.6708043849144505,
+    "lift": 2.6712070389751945,
     "union_overlap": 0.9301,
     "disqualified_as_union": true,
     "implied_rho": {
@@ -218,16 +235,16 @@
       0.0279,
       0.1387
      ],
-     "rho_lo": 0.07496415000000001,
-     "rho_hi": 0.15235795
+     "rho_lo": 0.07497124545454545,
+     "rho_hi": 0.15236000909090908
     }
    },
    {
     "field": "clf_union",
     "emitted": 22000,
-    "colocation": 0.29368181818181816,
+    "colocation": 0.29363636363636364,
     "random_baseline": 0.11288733899905494,
-    "lift": 2.6015478864664954,
+    "lift": 2.601145232405752,
     "union_overlap": 1.0,
     "disqualified_as_union": true,
     "implied_rho": {
@@ -236,8 +253,8 @@
       0.0279,
       0.1387
      ],
-     "rho_lo": 0.07374373181818182,
-     "rho_hi": 0.15200378636363637
+     "rho_lo": 0.07373663636363637,
+     "rho_hi": 0.15200172727272726
     }
    },
    {
@@ -379,6 +396,32 @@
    {
     "id": "H62-3",
     "summary": "view_B and clf_union are disqualified as 'merely the union': their dot sets overlap by 93-100% and their reads differ by 3%"
+   },
+   {
+    "id": "H62-4",
+    "summary": "the |G| bracket the preregistered 22,000 px fallback rested on (18,000-19,300 px) is DISJOINT from the measured bracket [5,949.3, 12,512.1] px (main's H61 forensics, independently re-derived here). The emission is NOT changed: the two gamma-based rules now bracket 22,000 px (this round's gamma 0.6453 clamps to 30,000; the champion-family gamma 0.2284 clamps to 15,000), and the direct board measurement (score strictly decreasing in emitted mass) favours the LOW end. The budget's derivational support is therefore weakened and 15,000 px is the value the evidence favours - IR-H62-005"
+   }
+  ],
+  "g_bracket_px": [
+   5949.282184328427,
+   12512.133928571544
+  ],
+  "g_legacy_anchor_px": 14088.7,
+  "g_sensitivity": [
+   {
+    "g_px": 5949.282184328427,
+    "s_star_unclamped": 43291.18685117558,
+    "s_star_clamped": 30000
+   },
+   {
+    "g_px": 12512.133928571544,
+    "s_star_unclamped": 91047.13997859712,
+    "s_star_clamped": 30000
+   },
+   {
+    "g_px": 14088.7,
+    "s_star_unclamped": 102519.35028343367,
+    "s_star_clamped": 30000
    }
   ]
  },
@@ -447,8 +490,14 @@
  "corrections": [
   "H62-1",
   "H62-2",
-  "H62-3"
+  "H62-3",
+  "H62-4"
  ],
  "slot_decision": "research review copy; promotion to a real weekly slot is a separate selector step within the cap on the submission page",
- "champion_owner_reported": 0.2778
+ "champion_owner_reported": 0.2778,
+ "g_bracket_px": [
+  5949.282184328427,
+  12512.133928571544
+ ],
+ "g_legacy_anchor_px": 14088.7
 }

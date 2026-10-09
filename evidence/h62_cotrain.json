@@ -1,7 +1,7 @@
 {
  "round": "H62-cotrain-v1",
  "seed": 20261010,
- "runtime_s": 153.3,
+ "runtime_s": 154.2,
  "lane": "co-training between a geophysical view and a surface view, with disagreement as the discovery signal (Blum & Mitchell COLT '98, doi:10.1145/279943.279962)",
  "data_root": "data",
  "qualification": "pinned owner-mirror bytes, SHA-verified; not organizer-authenticated",

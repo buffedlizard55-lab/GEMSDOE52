@@ -1,14 +1,14 @@
 {
   "file": "gems52-h62-conc_soft-arm22000px.tif",
-  "sha256": "1bc5b50c014e70692919c1f604939c02ba6915fcf038f34327cd745e78de6ea7",
+  "sha256": "de47952fe9c0fc15c1aaacd63a04f6c0a6aa15b094f2367ed631c6920e91c1fd",
   "bytes": 114669,
-  "submission_name": "gems52-h62-conc_soft-arm22000px-20261009T002039Z-zeros",
+  "submission_name": "gems52-h62-conc_soft-arm22000px-20261009T011349Z-zeros",
   "note": "H62 two-view co-training: conc_soft ranking, 22000 px, derived budget, >=200 m off catalogue. Research review copy.",
   "note_chars": 115,
   "validator": {
     "path": "/home/user/GEMSDOE52/submission/gems52-h62-conc_soft-arm22000px.tif",
     "bytes": 114669,
-    "sha256": "1bc5b50c014e70692919c1f604939c02ba6915fcf038f34327cd745e78de6ea7",
+    "sha256": "de47952fe9c0fc15c1aaacd63a04f6c0a6aa15b094f2367ed631c6920e91c1fd",
     "bands": 1,
     "dtype": "float32",
     "crs": "EPSG:32611",
@@ -55,7 +55,7 @@
     "validation_class": "local on-disk template/range check; not organizer upload acceptance"
   },
   "zip_file": "gems52-h62-conc_soft-arm22000px.zip",
-  "zip_sha256": "2bea31c613e488c9d1f54ed17cd18e946aa2c5cabd51f72b3e193bd41ac3b266",
+  "zip_sha256": "ea7fd5ef29e53fefc1e109ee59f0b9fbad71ffe9405fccae2cc53fdb1b14a7dc",
   "approved_for_weekly_slot": false,
   "promoted": false,
   "submission_slots_used": 0,

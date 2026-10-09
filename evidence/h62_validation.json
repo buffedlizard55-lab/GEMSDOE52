@@ -1,7 +1,7 @@
 {
  "round": "H62-validate-v1",
  "seed": 20261010,
- "runtime_s": 232.6,
+ "runtime_s": 230.8,
  "instrument1_holdout": {
   "label": "HOLDOUT-DTI",
   "evaluator_version": {
@@ -685,7 +685,25 @@
   "s_star_unclamped": 102519.35028343367,
   "budget_px": 30000,
   "clamped": true,
-  "reason": "argmax of DTI(S) = c S^gamma / (0.2 S + 0.8 |G|); independent of c"
+  "reason": "argmax of DTI(S) = c S^gamma / (0.2 S + 0.8 |G|); independent of c",
+  "g_sensitivity": [
+   {
+    "g_px": 5949.282184328427,
+    "s_star_unclamped": 43291.18685117558,
+    "s_star_clamped": 30000
+   },
+   {
+    "g_px": 12512.133928571544,
+    "s_star_unclamped": 91047.13997859712,
+    "s_star_clamped": 30000
+   },
+   {
+    "g_px": 14088.7,
+    "s_star_unclamped": 102519.35028343367,
+    "s_star_clamped": 30000
+   }
+  ],
+  "g_note": "|G| is only identified as an interval [5,949.3, 12,512.1] px; the legacy point 14,088.7 px sits outside it and needs an unproven zero-credit assumption on the champion's 6,436 deleted ring pixels. S* is linear in |G|, so the clamped answer is reported over the whole bracket."
  },
  "instrument2_leader": "view_B",
  "promotion_lift_bar": 0.005,
