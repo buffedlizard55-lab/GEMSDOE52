@@ -1,9 +1,9 @@
-# Current user brief — 2026-10-08, CTD5 session
+# Current user brief — 2026-10-09, H62 session (refreshed)
 
-The task text below is preserved as instructions, not as verified factual claims. In particular, the score attributions, current-leaderboard statements, data-access statements and earlier-session claims must be independently checked. This brief supersedes incompatible older briefs. URLs and repeated instructions are retained.
+The task text below is preserved as instructions, not as verified factual claims. In particular, the score attributions, current-leaderboard statements, data-access statements and earlier-session claims must be independently checked. This brief supersedes incompatible older briefs. URLs and repeated instructions are retained. Refreshed 2026-10-09 with the current prompt verbatim; the 2026-10-08 text is preserved at [knowledge/archive/26_current_user_brief_2026-10-08.md](archive/26_current_user_brief_2026-10-08.md) and a dated copy of the current text is kept at [knowledge/35_current_user_brief_2026-10-09.md](35_current_user_brief_2026-10-09.md). The README carries this same prompt verbatim under "Complete current prompt".
 
 ```text
-Review the repo.
+Review the repo. 
 
 THE FOLLOWING IS THE HIGHEST URGENCY AND MUST BE FOLLOWED!
 
@@ -43,7 +43,7 @@ Answer the question using Phd level experience, knowledge, and judgement. Then u
 
 Current competition leaderboard GEMSDOE high score:
 
-0.3774
+0.3774	
 
 [https://buffedlizard55-lab.github.io/GEMSDOE/docs/index.html](https://buffedlizard55-lab.github.io/GEMSDOE/docs/index.html)
 
@@ -103,13 +103,13 @@ Hedge-v2_submission: 0.1563
 
 ....
 
-[https://buffedlizard55-lab.github.io/11GEMSDOE/](https://buffedlizard55-lab.github.io/11GEMSDOE/)
+[https://buffedlizard55-lab.github.io/11GEMSDOE/docs/index.html](https://buffedlizard55-lab.github.io/11GEMSDOE/docs/index.html)
 
 gems-structural-area06-v1: 0.0202
 
 ....
 
-[https://buffedlizard55-lab.github.io/12GEMSDOE/](https://buffedlizard55-lab.github.io/12GEMSDOE/)
+[https://buffedlizard55-lab.github.io/12GEMSDOE/docs/index.html](https://buffedlizard55-lab.github.io/12GEMSDOE/docs/index.html)
 
 r7-nms3-dem10-scarp_0c9199f14e62:0.1294
 
@@ -117,13 +117,13 @@ r7-nms3-dem10-scarp_0c9199f14e62_allfinite:0.1294
 
 ....
 
-[https://buffedlizard55-lab.github.io/15GEMSDOE/](https://buffedlizard55-lab.github.io/15GEMSDOE/)
+[https://buffedlizard55-lab.github.io/15GEMSDOE/docs/index.html](https://buffedlizard55-lab.github.io/15GEMSDOE/docs/index.html)
 
 gems-tso1-20260929T005627Z-conj_alteration_mag: 0.0782
 
 ....
 
-[https://buffedlizard55-lab.github.io/14GEMSDOE/](https://buffedlizard55-lab.github.io/14GEMSDOE/)
+[https://buffedlizard55-lab.github.io/14GEMSDOE/docs/index.html](https://buffedlizard55-lab.github.io/14GEMSDOE/docs/index.html)
 
 GEMS_r5-geom-horse-ensemble_20260929T154852Z_ccbe1de0_site_e96e942f: 0.0020
 
@@ -153,7 +153,7 @@ h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan: 0.1922
 
 h16-continuation-20260927T065521077735Z-3431b83c7c: 0.0461
 
-h20-dem10-scarp-thin-20260927T155223039488Z-ffc91a1686: 0.0921
+h20-dem10-scarp-thin-20260927T155223039488Z-ff1ca91a1686: 0.0921
 
 H25-ctx-ridge-20260927T232947704150Z-6452ae1d00: 0.1280
 
@@ -433,21 +433,21 @@ See below for more links and information related to the competition:
 
 We need to quickly look at the results and results from the GEMSDOE websites above.
 
-Before implementing, generate 3–5 candidate geological hypotheses we haven't tried yet, each naming: the specific layer(s) involved, the physical signature being targeted (e.g., an edge-detection or curvature transform), why it should catch a fault missing from the USGS/INGENIOUS catalogue rather than one already in it, and how it differs from anything already implemented in this repo. Rank them by expected DTI improvement and implementation cost. Validate the top candidate on our spatially-blocked holdout set before touching a weekly submission slot — do not spend a submission slot on an idea that hasn't beaten the current holdout best. If a candidate can't be validated without new external data, name the specific free, official source needed and check it's obtainable before proposing the idea as viable.
+Before implementing, generate 3–5 candidate geological hypotheses we haven't tried yet, each naming: the specific layer(s) involved, the physical signature being targeted (e.g., an edge-detection or curvature transform), why it should catch a fault missing from the USGS/INGENIOUS catalogue rather than one already in it, and how it differs from anything already implemented in this repo.  Rank them by expected DTI improvement and implementation cost.  Validate the top candidate on our spatially-blocked holdout set before touching a weekly submission slot — do not spend a submission slot on an idea that hasn't beaten the current holdout best.  If a candidate can't be validated without new external data, name the specific free, official source needed and check it's obtainable before proposing the idea as viable.
 
-Work line by line verifying from official verified trusted sources, provide links for manual review.  There should be no manual input, work on your own to complete tasks.  Flag any irregularities for review.  No hallucinations.
+Work line by line verifying from official verified trusted sources, provide links for manual review.  There should be no manual input, work on your own to complete tasks.  Flag any irregularities for review.  No hallucinations.                      
 
-Verify no hallucinations.
+Verify no hallucinations.    
 
 The goal of this project is to get a full list that follow our requirements.  No hallucinations.  Verify line by line.
 
 We have a good understanding of how our hypothesis, methodology, calculations, analysis are done so we should be able to figure out a way to score higher on the leaderboard using previous results and scoring that we have across the sites listed above.  We need to come up with distinct and unique strategies to score higher in this competition leaderboard.  We need to start doing heavy and deep research into the part of the project that matters the most, which is the scientific discovery of geothermal vents.  We should store all of our information and knowledge that we can gather from official verified sources.  This will serve as a starting point for other projects as well.  We need to think outside the box but still be grounded in proper scientific research, we are ultimately aiming for a top prize that many others are competing for.  So it's important to be contrarian but be smart about it.  We need to find sources of data that others are over looking or areas of the project when it comes to geothermal vents.  We need to do deep research and critical thinking and come up with new hypothesis to test.
 
-0.3195 is the highest score right now so we need to design a new strategy, research, testing, analyzing, and generating submission system than the current website.  It should be unique, take unique approaches to generating a submission that can score higher than 0.3195.
+0.3195	is the highest score right now so we need to design a new strategy, research, testing, analyzing, and generating submission system than the current website.  It should be unique, take unique approaches to generating a submission that can score higher than 0.3195.  
 
 Put this prompt into the repo readme and read it everytime we work on the project as a starting point to make sure we are building what we are aiming for and have a strong base to continue building and improving on making something useful for everyday use.  It should solve the problem of having to manually check everything ourselves and having an up to date current feed.
 
-Review the repo.
+Review the repo. 
 
 The following is taken from the Arena AI team and I think it makes a good point on building a successful project, so let's keep the Core Values and Own the Outcome as a focal point when building, developing, researching, suggesting upgrades, and implementing the work.
 
@@ -461,13 +461,15 @@ Own the Outcome
 
 We own results end to end — not just our individual slice of the work. When problems arise and we have the means to act, we do so without waiting for permission or assignment. We treat failure and success as signals and use them to improve. At Arena, we stay accountable to the final outcome.
 
-Work line by line verifying from official verified trusted sources, provide links for manual review.  There should be no manual input, work on your own to complete tasks.  Flag any irregularities for review.  No hallucinations.
+Work line by line verifying from official verified trusted sources, provide links for manual review.  There should be no manual input, work on your own to complete tasks.  Flag any irregularities for review.  No hallucinations.                      
 
-Verify no hallucinations.
+  
+
+Verify no hallucinations.    
 
 The goal of this project is to get a full list that follow our requirements.  No hallucinations.  Verify line by line.
 
-We need to focus on being able to generate a submission into the competition.
+We need to focus on being able to generate a submission into the competition.  
 
 The site should be able to generate a TIF file that is required for submission.  It should be as easy as download to click a File to submit into the competition.  This needs to be in the executive summary or the very beginning of the site.  it should be obvious when you visit the site.
 
@@ -497,21 +499,21 @@ The goal of this project is to place top of the leaderboard in this competition.
 
 [https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/)
 
-We need to create a project that can compete and place top of the leaderboard.  We need to understand the problem, collect all the data and organize it into a clean easily auditable table with official verified links for manual verification.
+We need to create a project that can compete and place top of the leaderboard.  We need to understand the problem, collect all the data and organize it into a clean easily auditable table with official verified links for manual verification.  
 
 This is the guidelines we need to follow.[https://www.drivendata.org/competitions/306/competition-doe-gems/](https://www.drivendata.org/competitions/306/competition-doe-gems/)
 
 Get familiar with the problem through the overview and problem description,[https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/). You might also want to reference additional resources available on the about page,[https://www.drivendata.org/competitions/306/competition-doe-gems/page/968/](https://www.drivendata.org/competitions/306/competition-doe-gems/page/968/).
 
-Download the data from the data,[https://www.drivendata.org/competitions/306/competition-doe-gems/data/](https://www.drivendata.org/competitions/306/competition-doe-gems/data/), tab.
+Download the data from the data,[https://www.drivendata.org/competitions/306/competition-doe-gems/data/](https://www.drivendata.org/competitions/306/competition-doe-gems/data/), tab.  
 
 Create and train your own model. This reference solution,[https://github.com/drivendataorg/gems-prize-reference-solution](https://github.com/drivendataorg/gems-prize-reference-solution) implements a simple approach.
 
 Use your model to generate predictions that match the submission format.
 
-Tell me what are you limitations and what you need access to during this project.  We will need to find free publicly available sources and data from official and verified sources if we are to use 3rd party or external data.
+Tell me what are you limitations and what you need access to during this project.  We will need to find free publicly available sources and data from official and verified sources if we are to use 3rd party or external data.  
 
-this pdf outlines how submissions must be entered into the competition.
+this pdf outlines how submissions must be entered into the competition.  
 
 [https://docs.nlr.gov/docs/fy26osti/96647.pdf](https://docs.nlr.gov/docs/fy26osti/96647.pdf)
 
@@ -537,23 +539,23 @@ See links below for competition data:
 
 [https://www.dropbox.com/scl/fi/ig0mban712ns1atphgphe/Digital-elevation-model-links-JSON.pdf?rlkey=zm77f1vbtt2if8hlruymptnu3&amp;st=srhhir10&amp;dl=0](https://www.dropbox.com/scl/fi/ig0mban712ns1atphgphe/Digital-elevation-model-links-JSON.pdf?rlkey=zm77f1vbtt2if8hlruymptnu3&st=srhhir10&dl=0)
 
-Work line by line verifying from official verified trusted sources, provide links for manual review.  There should be no manual input, work on your own to complete tasks.  Flag any irregularities for review.  No hallucinations.
+Work line by line verifying from official verified trusted sources, provide links for manual review.  There should be no manual input, work on your own to complete tasks.  Flag any irregularities for review.  No hallucinations.                      
 
-Verify no hallucinations.
+Verify no hallucinations.    
 
 The goal of this project is to get a full list that follow our requirements.  No hallucinations.  Verify line by line.
 
 Site creation
 
-Create a github page for this repo that has clean ui, user friendly, simple and easy to use.  It should be organized and clean.
+Create a github page for this repo that has clean ui, user friendly, simple and easy to use.  It should be organized and clean.  
 
 It should include all relevant information in an easy to read format with official verified links as sources for review.  Work line by line verify everything no hallucinations.
 
 **The single remaining blocker to training is data placement**: run `bash scripts/download_competition_data.sh` on any unrestricted machine into `data/`, then `python scripts/prepare_data.py` — after that the full train→inference→validate pipeline is ready to run (GPU needed for training; metric/losses/validation all verified working here on CPU).
 
-you need to complete the above task by yourself.  Work line by line verifying from official verified trusted sources, provide links for manual review.  There should be no manual input, work on your own to complete tasks.  Flag any irregularities for review.  No hallucinations.
+you need to complete the above task by yourself.  Work line by line verifying from official verified trusted sources, provide links for manual review.  There should be no manual input, work on your own to complete tasks.  Flag any irregularities for review.  No hallucinations.                      
 
-Verify no hallucinations.
+Verify no hallucinations.    
 
 The goal of this project is to get a full list that follow our requirements.  No hallucinations.  Verify line by line.
 
@@ -567,5 +569,5 @@ Pass 3: Re-check the entire implementation against the original request. Improve
 
 Do not stop after the first pass. Each pass must build on the previous one. Before finishing, verify that the final result fully satisfies the original request.  Work line by line verify everything no hallucinations.
 
-Go ahead and create a pull request and then merge the pull request onto the main. Make suggestions for what work still needs to be done and any limitations that is in the way of a successful project.  It should be worked on in this next session or the next session.  Work line by line verify everything no hallucinations.
+Go ahead and create a pull request and then merge the pull request onto the main. Make suggestions for what work still needs to be done and any limitations that are in the way of a successful project.  It should be worked on in this next session or the next session.  Work line by line verify everything no hallucinations.
 ```

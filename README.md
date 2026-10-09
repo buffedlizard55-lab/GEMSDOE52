@@ -1,19 +1,82 @@
-<!--H61-README-->
+<!--H62-README-->
 # GEMSDOE52 — a new research GeoTIFF and an explicit submit verdict
 
-**[★ Download the H61 GeoTIFF — one click](docs/downloads/h61-candidate.tif)** ·
-[single-TIFF ZIP](docs/downloads/h61-candidate.zip) ·
-[geological reasoning CSV](docs/downloads/h61-a-only-reasoning.csv) ·
+**[★ Download the H62 GeoTIFF — one click](docs/downloads/h62-candidate.tif)** ·
+[single-TIFF ZIP](docs/downloads/h62-candidate.zip) ·
+[geological reasoning CSV](docs/downloads/h62-a-only-reasoning.csv) ·
 **[Executive summary / exact submission guide](docs/executive-summary.html)** ·
-[Run &amp; evidence](docs/h61-audit.html) · [Sources](docs/h61-sources.html) ·
-[Run card](evidence/h61_run_card.json)
+[Run &amp; evidence](docs/h62-audit.html) · [Sources](docs/h62-sources.html) ·
+[Run card](evidence/h62_run_card.json)
 
 > **DOWNLOAD: YES · SUBMIT TO THE COMPETITION: NO.**
 > Verdict `negative`. The file is newly inferred, portal-safe by construction and different
-> from every checked prior's decoded predictions, but it does **not** beat the reported champion at
-> either end of the measured `|G|` interval, and its own view-A premise failed on the holdout.
+> from every checked prior's decoded predictions, but the lane gate stops it on the final dots,
+> it does **not** beat the reported champion at either end of the measured `|G|` interval, and its
+> own view-A premise failed the sufficiency screen on the holdout.
 > **Competition slots used: 0.**
 
+- **File:** `gems52-h62-stepview-cotrain-37600px.tif` — 140,421 bytes, 37,600 emitted cells
+- **SHA-256:** `aa41d0cd4658b2f0887180bf85132453dbf8f9408272d2c880d1fe4e822caa9f`
+- **Name:** `gems52-h62-stepview-cotrain-37600px-20261009T011052Z`
+- **Note (126 / 140 chars):** `H62 cotrain: step-normalised potential-field A vs DEM+radiometric B disagreement; 3px dots; >200m off catalogue; research-only`
+- **Local validator:** one float32 band; values exactly {0, 1}; 0 NaN and
+  0 Inf; EPSG:32611;
+  3,730 × 3,292; transform identical to the pinned
+  `sample_submission.tif`; nothing within 200 m of a mapped trace. *Not an organizer acceptance receipt.*
+- **HOLDOUT-DTI** (`gems52-pooled-hide-v1`, 53,186 withheld
+  positives, 95% paired 20 km cluster bootstrap): candidate **0.040257**
+  [0.032106, 0.048664]; best comparable control
+  `single_B`. Every arm filled its
+  9,400-dot budget at 3 px spacing
+  (matched — comparison eligible).
+
+| arm | HOLDOUT-DTI | 95% CI |
+|---|---:|---:|
+| single_A | 0.084788 | [0.070929, 0.098329] |
+| single_B | 0.174193 | [0.151520, 0.193642] |
+| union_max | 0.151308 | [0.132069, 0.169142] |
+| disagreement_pre | 0.040620 | [0.032044, 0.050132] |
+| disagreement_post | 0.040257 | [0.032106, 0.048664] |
+| random | 0.078257 | [0.068163, 0.087930] |
+
+- **Why this lane failed, measured (the second time):** the step-normalised
+  View A (38 channels: matched step/persistence columns of bands 13/15/2 at σ=3, offsets 200/400 m,
+  plus template local-contrast and upward-continued-TMI channels — **no raw band values**) reaches
+  mean out-of-fold AUC **0.5362** against the preregistered sufficiency bar
+  0.60 — H61's raw-value View A measured
+  0.5163 on the identical splitter, so the step parameterisation bought +0.0199 and the premise
+  still fails. View B (unchanged) reaches **0.6862**. Independence held (max |ρ| 0.1817 over
+  2,089 blocks, abandon at
+  0.6); the canary was clean (max single-feature held-out AUC
+  0.6679 vs alarm 0.9). One exchange,
+  15,989 pseudo pixels; the exchange transferred nothing (post − pre Δ −0.0004, CI spans zero).
+  The disagreement arm is **below uniform random** (0.040257 vs
+  0.078257) and far below `single_B`
+  (0.174193): when View A is at chance out of quadrant, "A confident, B abstaining" selects A's
+  errors. [IR-H62-001](registry/irregularities.json), [IR-H62-002](registry/irregularities.json).
+- **Lane gate:** 548 registry rasters (367 distinct decoded
+  patterns), the full 526-blob census re-materialised and SHA-verified, own round excluded. Literal
+  rule (all priors): **DUPLICATE/STOP**, max near-dot 1.0000 (14 universal-coverage probes), max
+  Spearman 0.0353. Saturation-aware policy (534 informative priors):
+  **DUPLICATE/STOP**, max near-dot 0.8913 (15GEMSDOE `gems-cleanup-a-…-curv_scarp.tif`), max
+  Spearman 0.0333. Surface phase before placement: literal `PASS`,
+  policy `PASS` (max Spearman 0.1124) — the continuous surface is genuinely new; the collision
+  appears only after binarisation to 3 px dots. Decoded-pattern uniqueness
+  PASS (not identical to any prior, not the literal union);
+  support novelty against the all-prior union 0.0% (the ≥20% diagnostic **fails** and is retained,
+  not waived). Not-the-union PASS (per fold, 17,922–18,446 cells differ from the `union_max`
+  emission).
+- **PROJECTION, never a score:** at 37,600 dots the break-even credit
+  density to match the reported champion is
+  0.0907–0.1295
+  per pixel (8.3–5.6×
+  uniform random). The arm's measured holdout density is
+  0.0539 per pixel, which projects to 0.1649 / 0.1155 at the two ends of the measured `|G|` interval
+  [5,949.3, 12,512.1] px — below the champion 0.2778 at **both** ends. Novel mass belongs to no
+  identified atom, so organiser-tied evidence bounds its credit only by [0, |G|]. **No leaderboard
+  gain is claimed or projected.**
+
+## H61 — previous round, preserved (negative; raw-value View A failed sufficiency)
 - **File:** `gems52-h61-deepsharp-cotrain-37600px.tif` — 131,771 bytes, 37,600 emitted cells
 - **SHA-256:** `7c86853164f9cfa7aea34de029c7d5ccf3a6b43dbbb2b14de570e558384d2755`
 - **Name:** `gems52-h61-deepsharp-cotrain-37600px-20261009T001003Z`
@@ -69,6 +132,17 @@
   per pixel (8.3–5.6×
   uniform random). Novel mass belongs to no identified atom, so organiser-tied evidence bounds its
   credit only by [0, |G|]. **No leaderboard gain is claimed or projected.**
+
+
+**[Download the H61 GeoTIFF](docs/downloads/h61-candidate.tif)** ·
+[single-TIFF ZIP](docs/downloads/h61-candidate.zip) ·
+[geological reasoning CSV](docs/downloads/h61-a-only-reasoning.csv) ·
+[Run &amp; evidence](docs/h61-audit.html) · [H61 landing archive](docs/archive-h61-overview.html) ·
+[Run card](evidence/h61_run_card.json)
+
+> **DOWNLOAD: YES · SUBMIT TO THE COMPETITION: NO.**
+> Verdict `negative`. Newly inferred, portal-safe and decoded-pattern-unique, but the lane gate
+> stops it and it does not beat the reported champion at either end of `|G|`.
 
 ## What H61 repaired in the shared instruments, before fitting anything
 
@@ -433,40 +507,51 @@ sensitivity table, is on the audit page.
 
 ## Start here every session
 
-Read the **complete current prompt below**, the [working agreement](AGENTS.md), the frozen H61
-protocol [knowledge/30_hypotheses_H61_preregistered.md](knowledge/30_hypotheses_H61_preregistered.md),
-its results [knowledge/31_h61_results_and_limits.md](knowledge/31_h61_results_and_limits.md), and the
-[irregularity registry](registry/irregularities.json) entries `IR-H61-001` … `IR-H61-008`. Read the
-previous failed experiments (H55–H60C, CTD5) before proposing another.
+Read the **complete current prompt below** (also preserved verbatim at
+[knowledge/26_current_user_brief.md](knowledge/26_current_user_brief.md) and
+[knowledge/35_current_user_brief_2026-10-09.md](knowledge/35_current_user_brief_2026-10-09.md)), the
+[working agreement](AGENTS.md), the frozen H62 protocol
+[knowledge/34_hypotheses_H62_preregistered.md](knowledge/34_hypotheses_H62_preregistered.md), its
+results [knowledge/36_h62_results_and_limits.md](knowledge/36_h62_results_and_limits.md), the H61
+protocol and results ([knowledge/30](knowledge/30_hypotheses_H61_preregistered.md) ·
+[knowledge/31](knowledge/31_h61_results_and_limits.md)), and the
+[irregularity registry](registry/irregularities.json) entries `IR-H61-001` … `IR-H61-011` and
+`IR-H62-001` … `IR-H62-002`. Read the previous failed experiments (H55–H60C, CTD5, H61, H62) before
+proposing another — **the co-training lane's View-A sufficiency premise has now failed twice**
+(IR-H62-002); do not propose a third View-A parameterisation without new evidence.
 
 **Maximize P(Win):** do not consume a scarce weekly slot on an arm whose only density estimate comes
 from a simulator that does not predict the board. **Own the Outcome:** publish the real file, the
 failed premise, the repaired instruments, the provenance gaps and a working reproduction.
-## What this session completed
+## What this session completed (2026-10-09, H62)
 
-1. Restored every pinned input autonomously (`scripts/restore_data.py`: 419 MB feature stack, labels,
-   sample submission, four external layers, thirteen scored priors — all SHA-256 and byte-count
-   verified) and re-materialised the whole **526-blob prior census** with
-   `scripts/fetch_prior_inventory.py` (524/526 census-hash matches; the two exceptions are the census'
-   own ineligible fixture and format-test files).
-2. Repaired the shared forensic accounting **before** fitting anything: masked support `S`, `|G|` as a
-   rigorous interval, band-6 identity resolved on the bytes, attribution hash-links measured
-   (`scripts/h61_forensics.py`).
-3. Extended the shared feature store once, in the template, with the external GeoDAWN radiometrics in
-   View B and the upward-continued TMI in View A (`src/gems52/external.py`) — no private fork, and the
-   manifest records provenance and the units caveat.
-4. Preregistered H61 (`knowledge/30`, `registry/h61_preregistration.json`) and ran it on the corrected
-   label-blind-quadrants-v2 splitter: per-feature leakage canary, block independence screen, exactly
-   one whole-segment pseudo-label exchange, and a **matched-budget** six-arm hide-and-recover
-   comparison — the capacity defect that made CTD5's comparison ineligible is fixed by ranking a field
-   that is finite over the whole allowed domain.
-5. Added the registry-saturation policy to the shared lane gate (`gems52.gates.lane_report`,
-   `registry_coverage`), pinned by `tests/test_h61.py`, and used it to place two inherited artefacts
-   correctly: CTD5 (its STOP was entirely the probe) and H60C (a genuine duplicate of the champion
-   lane).
-6. Built the unique research GeoTIFF, ran every gate, wrote the reasoning CSV for all emitted cells,
-   published the site with an unambiguous download/submit verdict, and recorded eight irregularities.
-   Full test suite: `python -m pytest -q`.
+1. Preregistered H62 (`knowledge/34`, `registry/h62_preregistration.json`, SHA-256-pinned **before**
+   any fit) with the brief's 3–5 ranked candidate hypotheses; the top candidate (H62-A,
+   step-normalised potential-field View A) was implemented and the other four recorded with their
+   viability checks (H62-D's USGS 3DEP source named and marked unobtainable from this sandbox).
+2. Extended the shared feature store once, in the template, with the H62 step columns
+   (`src/gems52/h62.py`: `structural.normal_profile` applied to bands 13/15/2 at σ=3, offsets
+   200/400 m — no private fork; the manifest records provenance and the contrast-detector caveat) and
+   re-materialised the 526-blob prior census (`scripts/fetch_prior_inventory.py`, 526/526 fetched,
+   0 errors).
+3. Ran the full preregistered pipeline on the corrected label-blind-quadrants-v2 splitter: per-feature
+   leakage canary (clean, max AUC 0.6679 vs alarm 0.90), the **new sufficiency screen** (measured
+   before any exchange: step-normalised View A mean OOF AUC 0.5362 vs bar 0.60 — **premise not met**;
+   H61's raw-value View A was 0.5163), block independence screen (max |ρ| 0.1817 over 2,089 blocks —
+   held), exactly one whole-segment pseudo-label exchange (15,989 px), and a **matched-budget**
+   six-arm hide-and-recover comparison (all arms filled 9,400 dots/fold at 3 px).
+4. Built the unique research GeoTIFF, ran every gate (format PASS; surface lane PASS/PASS; dots lane
+   literal and policy DUPLICATE/STOP — max near-dot 0.8913 against an informative prior; decoded-pattern
+   uniqueness PASS; support-novelty-vs-union 0.0% retained as a failed diagnostic; not-the-union PASS),
+   wrote the geological reasoning CSV for all 37,600 emitted cells, computed the projection (never a
+   score), and recorded two irregularities (IR-H62-001: the preregistration's persistence-term claim
+   corrected by measurement; IR-H62-002: the lane's second View-A sufficiency failure).
+5. Published the site with an unambiguous download/submit verdict (DOWNLOAD YES · SUBMIT NO), preserved
+   the H61 landing page as `archive-h61-overview.html`, published `submission/H62_LATEST.txt` and
+   `docs/data/submission_h62.json` **without moving the H60 incumbent pointer**, and refreshed the
+   current user brief (knowledge/26, knowledge/35, README) to the 2026-10-09 prompt verbatim.
+6. Full gate and test suite: `scripts/check_site.py` ✓ and `python -m pytest -q` — 308 passed.
+
 ## Why H33 may have improved—and what is not proven
 
 The supplied H33 attribution **0.2778 is OWNER-REPORTED / NOT ORGANIZER-CONFIRMED**. Its [current repository source](https://github.com/buffedlizard55-lab/GEMSDOE32/blob/0d6a6243147cd63a2000412d575d4c80a36d3a62/docs/index.html) says no organizer score exists. We cannot resolve that conflict without a file-linked receipt.
@@ -485,50 +570,63 @@ python -m venv .venv
 bash scripts/download_competition_data.sh                 # restore + SHA-256 verify the pinned inputs
 PYTHONPATH=src .venv/bin/python -c "from gems52 import structural; structural.build(dest='work/r2/features', include_optional_profiles=False, log=lambda *a, **k: None)"
 PYTHONPATH=src .venv/bin/python -m gems52.external        # add the shared external GeoDAWN columns
-.venv/bin/python scripts/fetch_prior_inventory.py         # re-materialise the 526-blob registry
-.venv/bin/python scripts/h61_forensics.py                 # repaired organiser-score algebra
-.venv/bin/python scripts/run_h61.py all                   # canary -> fit -> exchange -> holdout
-.venv/bin/python scripts/build_h61_submission.py          # place, gate, write, publish receipts
-.venv/bin/python scripts/publish_h61_site.py              # render the pages from the receipts
-.venv/bin/python scripts/h61_knowledge.py && .venv/bin/python scripts/h61_readme.py
+PYTHONPATH=src .venv/bin/python -c "from gems52 import h62; h62.extend_store()"   # add the H62 step columns
+.venv/bin/python scripts/fetch_prior_inventory.py --out work/h62/priors --receipt work/h62/prior_fetch_receipt.json
+.venv/bin/python scripts/run_h62.py all                   # canary -> fit -> exchange -> holdout
+.venv/bin/python scripts/build_h62_submission.py          # place, gate, write, publish receipts
+.venv/bin/python scripts/publish_h62_site.py              # render the pages from the receipts
 .venv/bin/python scripts/check_site.py && .venv/bin/python -m pytest -q
 ```
 
 Raw data, arrays, model caches and downloaded comparators stay ignored (`data/`, `work/`). Nothing
-here uploads, promotes or spends a slot. The historical CTD5 reproduction
-(`scripts/reproduce_ctd5.sh`, `scripts/run_ctd5.py`) is unchanged and still reproduces its rejected
-legacy-v1 assay for audit only.
+here uploads, promotes or spends a slot. The H61 reproduction is identical with `h61` in place of
+`h62` (plus `scripts/h61_forensics.py` for the repaired organiser-score algebra, whose receipts H62
+inherits), and the historical CTD5 reproduction (`scripts/reproduce_ctd5.sh`, `scripts/run_ctd5.py`)
+is unchanged and still reproduces its rejected legacy-v1 assay for audit only.
+
 ## Evidence and next steps
 
-- [Frozen H61 protocol](knowledge/30_hypotheses_H61_preregistered.md) ·
-  [results and limits](knowledge/31_h61_results_and_limits.md) ·
-  [run card](evidence/h61_run_card.json) · [forensics](evidence/h61_forensics.json) ·
-  [canary](evidence/h61_canary.json) · [fit](evidence/h61_fit_checkpoint.json) ·
-  [independence](evidence/h61_independence.json) · [pseudo exchange](evidence/h61_pseudo_exchange.json) ·
-  [pooled holdout](evidence/h61_holdout.json) · [projection](evidence/h61_projection.json) ·
-  [lane gate on dots](evidence/h61_lane_dots.json) · [lane gate on surface](evidence/h61_lane_surface.json)
+- [Frozen H62 protocol](knowledge/34_hypotheses_H62_preregistered.md) ·
+  [results and limits](knowledge/36_h62_results_and_limits.md) ·
+  [run card](evidence/h62_run_card.json) · [canary](evidence/h62_canary.json) ·
+  [fit + sufficiency screen](evidence/h62_fit_checkpoint.json) ·
+  [independence](evidence/h62_independence.json) ·
+  [pseudo exchange](evidence/h62_pseudo_exchange.json) ·
+  [pooled holdout](evidence/h62_holdout.json) ·
+  [projection](evidence/h62_projection.json) ·
+  [lane gate on dots](evidence/h62_lane_dots.json) · [lane gate on surface](evidence/h62_lane_surface.json) ·
+  [submission receipt](evidence/h62_submission.json)
 - [Site](docs/index.html) · [submission guide](docs/executive-summary.html) ·
-  [run &amp; evidence](docs/h61-audit.html) · [sources](docs/h61-sources.html) ·
-  [reasoning CSV](docs/downloads/h61-a-only-reasoning.csv) · [irregularities](registry/irregularities.json)
+  [H62 run &amp; evidence](docs/h62-audit.html) · [H62 sources](docs/h62-sources.html) ·
+  [reasoning CSV](docs/downloads/h62-a-only-reasoning.csv) · [H61 landing archive](docs/archive-h61-overview.html) ·
+  [irregularities](registry/irregularities.json)
 
 **Next, in priority order.**
 
-1. **Change what View A is.** Raw potential-field channels do not transfer between quadrants
-   (out-of-fold AUC ≈ 0.52). The next candidate is a *physically parameterised* View A — a modelled
-   basement-depth step across a candidate trace, a strike-continuity score along an interpreted
-   lineament, an isostatic-residual discontinuity — and its out-of-quadrant AUC must be measured
-   **before** any emission is built.
-2. **Run H61-D: cross-file credit localisation by terrain stratum.** Cross the LP atoms with slope,
-   modelled cover thickness and radiometric alteration and bound credit per stratum, so the organizer's
-   own scores say *where* hidden truth sits rather than *which prior* found it. Needs no new data; it
-   was deferred only by this round's three-experiment budget.
-3. **Give the selector a priced option, not a lane violation.** The only mass measured above the
+1. **Stop re-parameterising View A.** Two measured sufficiency failures (raw 0.5163, step 0.5362,
+   IR-H62-002) say the potential-field channels as compiled carry no quadrant-transferable fault
+   signal at 100 m. The lane's own falsification condition has fired twice.
+2. **Run the B-only direction (H62-B, preregistered rank 2).** Where B is confident and A abstains,
+   the brief names roads/erosion lines — but a subset may be real scarps in homogeneous alluvium
+   that geophysics cannot see. `single_B` is the only view that transfers (OOF AUC 0.6862;
+   HOLDOUT-DTI 0.174193, the best measured arm in either round). Needs the optional H2/H55 profile
+   store plus its own preregistered holdout; it is the cheapest untried *emission* direction left in
+   the lane.
+3. **Run H61-D / H62-E: cross-file credit localisation by terrain stratum.** Cross the LP atoms with
+   slope, modelled cover thickness and radiometric alteration strata so the organiser's own scores
+   say *where* hidden truth sits rather than *which prior* found it. No new data needed.
+4. **Acquire sub-100 m topography when egress allows (H62-D).** The specific free official source is
+   the USGS 3DEP 1 m DEM (https://www.usgs.gov/3d-elevation-program) over the GeoDAWN footprint; it
+   was unobtainable this session (usgs.gov unreachable).
+5. **Give the selector a priced option, not a lane violation.** The only mass measured above the
    break-even density is inside the champion family, and emitting it is a duplicate by construction.
-   That trade belongs to the selector with the weekly cap in front of it.
-4. **Authenticate one receipt.** A single submission-page receipt tying a file SHA-256 to a score would
+   H62's dots additionally collide with the 15GEMSDOE/13GEMSDOE dense-dot family (policy near-dot
+   0.8913), so even a hypothetically-stronger disagreement emission would need a placement the lane
+   has not yet localised.
+6. **Authenticate one receipt.** A single submission-page receipt tying a file SHA-256 to a score would
    turn IR-H61-004 from a caveat into a calibration and settle whether 0.2778 exists at all. No
    credentials may be requested or stored in chat.
-5. **Reconcile `registry/data_manifest.json` provenance text** with the owner's score list (IR-H61-008)
+7. **Reconcile `registry/data_manifest.json` provenance text** with the owner's score list (IR-H61-008)
    without touching the pins, and resolve the upstream `submission/LATEST.txt` pointer question in the
    shared selector rather than per round.
 
@@ -537,12 +635,13 @@ login-walled; USGS, GDR and DOI hosts are unreachable (egress is limited to gith
 codeload.github.com, api.github.com, registry.npmjs.org, pypi.org, files.pythonhosted.org). So no
 fresh leaderboard top, no current weekly allowance, no organizer-authenticated input provenance, and
 no official-host download is claimed anywhere in this round.
-## Complete current prompt — read before working
 
-The following is user-supplied task text, not independently verified factual claims. It supersedes earlier prompt archives where they conflict.
+## Complete current prompt — 2026-10-09, verbatim — read before working
+
+The following is user-supplied task text, not independently verified factual claims. It supersedes earlier prompt archives where they conflict. A copy is also kept at [knowledge/35_current_user_brief_2026-10-09.md](knowledge/35_current_user_brief_2026-10-09.md).
 
 ```text
-Review the repo.
+Review the repo. 
 
 THE FOLLOWING IS THE HIGHEST URGENCY AND MUST BE FOLLOWED!
 
@@ -582,7 +681,7 @@ Answer the question using Phd level experience, knowledge, and judgement. Then u
 
 Current competition leaderboard GEMSDOE high score:
 
-0.3774
+0.3774	
 
 [https://buffedlizard55-lab.github.io/GEMSDOE/docs/index.html](https://buffedlizard55-lab.github.io/GEMSDOE/docs/index.html)
 
@@ -642,13 +741,13 @@ Hedge-v2_submission: 0.1563
 
 ....
 
-[https://buffedlizard55-lab.github.io/11GEMSDOE/](https://buffedlizard55-lab.github.io/11GEMSDOE/)
+[https://buffedlizard55-lab.github.io/11GEMSDOE/docs/index.html](https://buffedlizard55-lab.github.io/11GEMSDOE/docs/index.html)
 
 gems-structural-area06-v1: 0.0202
 
 ....
 
-[https://buffedlizard55-lab.github.io/12GEMSDOE/](https://buffedlizard55-lab.github.io/12GEMSDOE/)
+[https://buffedlizard55-lab.github.io/12GEMSDOE/docs/index.html](https://buffedlizard55-lab.github.io/12GEMSDOE/docs/index.html)
 
 r7-nms3-dem10-scarp_0c9199f14e62:0.1294
 
@@ -656,13 +755,13 @@ r7-nms3-dem10-scarp_0c9199f14e62_allfinite:0.1294
 
 ....
 
-[https://buffedlizard55-lab.github.io/15GEMSDOE/](https://buffedlizard55-lab.github.io/15GEMSDOE/)
+[https://buffedlizard55-lab.github.io/15GEMSDOE/docs/index.html](https://buffedlizard55-lab.github.io/15GEMSDOE/docs/index.html)
 
 gems-tso1-20260929T005627Z-conj_alteration_mag: 0.0782
 
 ....
 
-[https://buffedlizard55-lab.github.io/14GEMSDOE/](https://buffedlizard55-lab.github.io/14GEMSDOE/)
+[https://buffedlizard55-lab.github.io/14GEMSDOE/docs/index.html](https://buffedlizard55-lab.github.io/14GEMSDOE/docs/index.html)
 
 GEMS_r5-geom-horse-ensemble_20260929T154852Z_ccbe1de0_site_e96e942f: 0.0020
 
@@ -692,7 +791,7 @@ h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan: 0.1922
 
 h16-continuation-20260927T065521077735Z-3431b83c7c: 0.0461
 
-h20-dem10-scarp-thin-20260927T155223039488Z-ffc91a1686: 0.0921
+h20-dem10-scarp-thin-20260927T155223039488Z-ff1ca91a1686: 0.0921
 
 H25-ctx-ridge-20260927T232947704150Z-6452ae1d00: 0.1280
 
@@ -972,21 +1071,21 @@ See below for more links and information related to the competition:
 
 We need to quickly look at the results and results from the GEMSDOE websites above.
 
-Before implementing, generate 3–5 candidate geological hypotheses we haven't tried yet, each naming: the specific layer(s) involved, the physical signature being targeted (e.g., an edge-detection or curvature transform), why it should catch a fault missing from the USGS/INGENIOUS catalogue rather than one already in it, and how it differs from anything already implemented in this repo. Rank them by expected DTI improvement and implementation cost. Validate the top candidate on our spatially-blocked holdout set before touching a weekly submission slot — do not spend a submission slot on an idea that hasn't beaten the current holdout best. If a candidate can't be validated without new external data, name the specific free, official source needed and check it's obtainable before proposing the idea as viable.
+Before implementing, generate 3–5 candidate geological hypotheses we haven't tried yet, each naming: the specific layer(s) involved, the physical signature being targeted (e.g., an edge-detection or curvature transform), why it should catch a fault missing from the USGS/INGENIOUS catalogue rather than one already in it, and how it differs from anything already implemented in this repo.  Rank them by expected DTI improvement and implementation cost.  Validate the top candidate on our spatially-blocked holdout set before touching a weekly submission slot — do not spend a submission slot on an idea that hasn't beaten the current holdout best.  If a candidate can't be validated without new external data, name the specific free, official source needed and check it's obtainable before proposing the idea as viable.
 
-Work line by line verifying from official verified trusted sources, provide links for manual review.  There should be no manual input, work on your own to complete tasks.  Flag any irregularities for review.  No hallucinations.
+Work line by line verifying from official verified trusted sources, provide links for manual review.  There should be no manual input, work on your own to complete tasks.  Flag any irregularities for review.  No hallucinations.                      
 
-Verify no hallucinations.
+Verify no hallucinations.    
 
 The goal of this project is to get a full list that follow our requirements.  No hallucinations.  Verify line by line.
 
 We have a good understanding of how our hypothesis, methodology, calculations, analysis are done so we should be able to figure out a way to score higher on the leaderboard using previous results and scoring that we have across the sites listed above.  We need to come up with distinct and unique strategies to score higher in this competition leaderboard.  We need to start doing heavy and deep research into the part of the project that matters the most, which is the scientific discovery of geothermal vents.  We should store all of our information and knowledge that we can gather from official verified sources.  This will serve as a starting point for other projects as well.  We need to think outside the box but still be grounded in proper scientific research, we are ultimately aiming for a top prize that many others are competing for.  So it's important to be contrarian but be smart about it.  We need to find sources of data that others are over looking or areas of the project when it comes to geothermal vents.  We need to do deep research and critical thinking and come up with new hypothesis to test.
 
-0.3195 is the highest score right now so we need to design a new strategy, research, testing, analyzing, and generating submission system than the current website.  It should be unique, take unique approaches to generating a submission that can score higher than 0.3195.
+0.3195	is the highest score right now so we need to design a new strategy, research, testing, analyzing, and generating submission system than the current website.  It should be unique, take unique approaches to generating a submission that can score higher than 0.3195.  
 
 Put this prompt into the repo readme and read it everytime we work on the project as a starting point to make sure we are building what we are aiming for and have a strong base to continue building and improving on making something useful for everyday use.  It should solve the problem of having to manually check everything ourselves and having an up to date current feed.
 
-Review the repo.
+Review the repo. 
 
 The following is taken from the Arena AI team and I think it makes a good point on building a successful project, so let's keep the Core Values and Own the Outcome as a focal point when building, developing, researching, suggesting upgrades, and implementing the work.
 
@@ -1000,13 +1099,15 @@ Own the Outcome
 
 We own results end to end — not just our individual slice of the work. When problems arise and we have the means to act, we do so without waiting for permission or assignment. We treat failure and success as signals and use them to improve. At Arena, we stay accountable to the final outcome.
 
-Work line by line verifying from official verified trusted sources, provide links for manual review.  There should be no manual input, work on your own to complete tasks.  Flag any irregularities for review.  No hallucinations.
+Work line by line verifying from official verified trusted sources, provide links for manual review.  There should be no manual input, work on your own to complete tasks.  Flag any irregularities for review.  No hallucinations.                      
 
-Verify no hallucinations.
+  
+
+Verify no hallucinations.    
 
 The goal of this project is to get a full list that follow our requirements.  No hallucinations.  Verify line by line.
 
-We need to focus on being able to generate a submission into the competition.
+We need to focus on being able to generate a submission into the competition.  
 
 The site should be able to generate a TIF file that is required for submission.  It should be as easy as download to click a File to submit into the competition.  This needs to be in the executive summary or the very beginning of the site.  it should be obvious when you visit the site.
 
@@ -1036,21 +1137,21 @@ The goal of this project is to place top of the leaderboard in this competition.
 
 [https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/)
 
-We need to create a project that can compete and place top of the leaderboard.  We need to understand the problem, collect all the data and organize it into a clean easily auditable table with official verified links for manual verification.
+We need to create a project that can compete and place top of the leaderboard.  We need to understand the problem, collect all the data and organize it into a clean easily auditable table with official verified links for manual verification.  
 
 This is the guidelines we need to follow.[https://www.drivendata.org/competitions/306/competition-doe-gems/](https://www.drivendata.org/competitions/306/competition-doe-gems/)
 
 Get familiar with the problem through the overview and problem description,[https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/). You might also want to reference additional resources available on the about page,[https://www.drivendata.org/competitions/306/competition-doe-gems/page/968/](https://www.drivendata.org/competitions/306/competition-doe-gems/page/968/).
 
-Download the data from the data,[https://www.drivendata.org/competitions/306/competition-doe-gems/data/](https://www.drivendata.org/competitions/306/competition-doe-gems/data/), tab.
+Download the data from the data,[https://www.drivendata.org/competitions/306/competition-doe-gems/data/](https://www.drivendata.org/competitions/306/competition-doe-gems/data/), tab.  
 
 Create and train your own model. This reference solution,[https://github.com/drivendataorg/gems-prize-reference-solution](https://github.com/drivendataorg/gems-prize-reference-solution) implements a simple approach.
 
 Use your model to generate predictions that match the submission format.
 
-Tell me what are you limitations and what you need access to during this project.  We will need to find free publicly available sources and data from official and verified sources if we are to use 3rd party or external data.
+Tell me what are you limitations and what you need access to during this project.  We will need to find free publicly available sources and data from official and verified sources if we are to use 3rd party or external data.  
 
-this pdf outlines how submissions must be entered into the competition.
+this pdf outlines how submissions must be entered into the competition.  
 
 [https://docs.nlr.gov/docs/fy26osti/96647.pdf](https://docs.nlr.gov/docs/fy26osti/96647.pdf)
 
@@ -1076,23 +1177,23 @@ See links below for competition data:
 
 [https://www.dropbox.com/scl/fi/ig0mban712ns1atphgphe/Digital-elevation-model-links-JSON.pdf?rlkey=zm77f1vbtt2if8hlruymptnu3&amp;st=srhhir10&amp;dl=0](https://www.dropbox.com/scl/fi/ig0mban712ns1atphgphe/Digital-elevation-model-links-JSON.pdf?rlkey=zm77f1vbtt2if8hlruymptnu3&st=srhhir10&dl=0)
 
-Work line by line verifying from official verified trusted sources, provide links for manual review.  There should be no manual input, work on your own to complete tasks.  Flag any irregularities for review.  No hallucinations.
+Work line by line verifying from official verified trusted sources, provide links for manual review.  There should be no manual input, work on your own to complete tasks.  Flag any irregularities for review.  No hallucinations.                      
 
-Verify no hallucinations.
+Verify no hallucinations.    
 
 The goal of this project is to get a full list that follow our requirements.  No hallucinations.  Verify line by line.
 
 Site creation
 
-Create a github page for this repo that has clean ui, user friendly, simple and easy to use.  It should be organized and clean.
+Create a github page for this repo that has clean ui, user friendly, simple and easy to use.  It should be organized and clean.  
 
 It should include all relevant information in an easy to read format with official verified links as sources for review.  Work line by line verify everything no hallucinations.
 
 **The single remaining blocker to training is data placement**: run `bash scripts/download_competition_data.sh` on any unrestricted machine into `data/`, then `python scripts/prepare_data.py` — after that the full train→inference→validate pipeline is ready to run (GPU needed for training; metric/losses/validation all verified working here on CPU).
 
-you need to complete the above task by yourself.  Work line by line verifying from official verified trusted sources, provide links for manual review.  There should be no manual input, work on your own to complete tasks.  Flag any irregularities for review.  No hallucinations.
+you need to complete the above task by yourself.  Work line by line verifying from official verified trusted sources, provide links for manual review.  There should be no manual input, work on your own to complete tasks.  Flag any irregularities for review.  No hallucinations.                      
 
-Verify no hallucinations.
+Verify no hallucinations.    
 
 The goal of this project is to get a full list that follow our requirements.  No hallucinations.  Verify line by line.
 
@@ -1106,5 +1207,5 @@ Pass 3: Re-check the entire implementation against the original request. Improve
 
 Do not stop after the first pass. Each pass must build on the previous one. Before finishing, verify that the final result fully satisfies the original request.  Work line by line verify everything no hallucinations.
 
-Go ahead and create a pull request and then merge the pull request onto the main. Make suggestions for what work still needs to be done and any limitations that is in the way of a successful project.  It should be worked on in this next session or the next session.  Work line by line verify everything no hallucinations.
+Go ahead and create a pull request and then merge the pull request onto the main. Make suggestions for what work still needs to be done and any limitations that are in the way of a successful project.  It should be worked on in this next session or the next session.  Work line by line verify everything no hallucinations.
 ```

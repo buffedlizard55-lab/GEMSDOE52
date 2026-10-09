@@ -1,0 +1,86 @@
+{
+ "round": "H62",
+ "preregistered_utc": "2026-10-09T01:05:00.000000+00:00",
+ "hypothesis_document": "knowledge/34_hypotheses_H62_preregistered.md",
+ "hypothesis_sha256": "41dabafd63235695759c731b3daacb33b54790f7f54a96a8414efdcdd39f411e",
+ "hypothesis_bytes": 18626,
+ "lane": "two-view co-training (Blum & Mitchell 1998, doi:10.1145/279943.279962); View A potential-field/subsurface, View B surface; disagreement as the discovery signal",
+ "frozen_before_any_fit": true,
+ "runner": "scripts/run_h62.py",
+ "runner_refuses_if_hash_moves": true,
+ "shared_tools_to_reuse": [
+  "src/gems52/spatial.py::folds (label-blind-quadrants-v2)",
+  "src/gems52/evaluate_holdout.py (gems52-pooled-hide-v1)",
+  "src/gems52/metric.py",
+  "src/gems52/nodes.py::spacing_select",
+  "src/gems52/submission_writer.py",
+  "src/gems52/gates.py",
+  "src/gems52/structural.py::build + FeatureStore",
+  "src/gems52/external.py (shared extension)",
+  "src/gems52/h62.py (new shared extension, not a fork)"
+ ],
+ "view_definitions": {
+  "view_A": "38 channels: A_step_{grav,cover,rtp}_{signed,abs,persist}_{2,4}px (18) + template local-contrast A channels (17) + X_mag_TMI_up150_{rank,grad1,grad3} (3); NO raw_band_* channel",
+  "view_B": "unchanged from H61: manifest view_B_with_external (37 channels: raw bands 6/12/19, DEM curvature/slope/local-residual channels, external K/Th/U and Th/K, U/K, U/Th)"
+ },
+ "thresholds": {
+  "canary_auc_alarm": 0.9,
+  "sufficiency_screen_min_mean_oof_auc": 0.6,
+  "independence_abandon_max_abs_rho": 0.6,
+  "donor_rank_min": 0.95,
+  "receiver_rank_interval": [
+   0.35,
+   0.65
+  ],
+  "buffer_px": 80,
+  "block_side_px": 50,
+  "min_pseudo_pixels": 5,
+  "pseudo_cap_per_fold": 2000,
+  "budget_dots_per_fold_per_arm": 9400,
+  "min_dot_separation_px": 3.0,
+  "catalogue_exclusion_m": 200.0,
+  "bootstrap_draws": 1000,
+  "bootstrap_block_px": 200,
+  "lane_near_dot_fraction": 0.7,
+  "lane_near_dot_radius_px": 3.0,
+  "lane_rank_correlation": 0.9,
+  "universal_coverage_probe_threshold": 0.95,
+  "emission_budget_dots": 37600
+ },
+ "inherited_repairs": {
+  "R1_masked_support": "S = off-catalogue emitted pixels; witness Hedge-v2 == ens12",
+  "R2_G_interval": [
+   5949.282184328427,
+   12512.133928571544
+  ],
+  "R2_superseded_point_value": 14088.747191011253,
+  "R3_band6_identity": "radiometric total count (Spearman 1.0000 vs external TC)",
+  "R4_hash_linked_scores": [
+   "scored_d28_unscored",
+   "calib_gemsdoe-ens12-adopted-7f00890a",
+   "calib_gemsdoe9-PLACEHOLDER-2314b599"
+  ],
+  "R4_champion_attribution": "FILENAME-ONLY-OWNER-REPORTED; token e5eb6e7e matches no hash convention of the held bytes",
+  "receipts": [
+   "evidence/h61_forensics.json",
+   "evidence/h61_holdout.json",
+   "evidence/h61_pseudo_exchange.json",
+   "evidence/h61_canary.json"
+  ]
+ },
+ "budget": {
+  "max_experiments": 3,
+  "experiments": [
+   "H62-A step-normalised View A: canary + fit + sufficiency screen",
+   "H62-A exchange (iff independence allows) + matched-budget holdout",
+   "H62 build + gates + publication of the unique research GeoTIFF"
+  ],
+  "deferred": [
+   "H62-B B-only arm with surface-artefact rejection",
+   "H62-C along-strike continuity weighting of the disagreement field",
+   "H62-D sub-canopy 1 m LiDAR (USGS 3DEP; not obtainable from this sandbox)",
+   "H62-E cross-file credit localisation by terrain stratum (inherited H61-D)"
+  ]
+ },
+ "verdict_rule": "promote only if format+lane(policy)+decoded-pattern uniqueness+not-union pass AND the projected organiser-DTI interval exceeds the champion's owner-reported 0.2778 at both ends of the |G| interval; otherwise negative/research-only (DOWNLOAD YES, SUBMIT NO); promotion to a weekly slot is a separate selector step and this round spends 0 slots"
+}

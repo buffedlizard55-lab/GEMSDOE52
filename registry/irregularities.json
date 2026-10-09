@@ -1,6 +1,6 @@
 {
  "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified. | H61 merge: IR-H61-001..009 appended from the H61 branch; main's repaired schema and numbering retained.",
- "generated": "2026-10-09T00:31:49Z",
+ "generated": "2026-10-09T01:10:26Z",
  "entries": [
   {
    "id": "IR-30-029",
@@ -1492,6 +1492,28 @@
    "how_we_know": "Direct test on the merged tree: submission/R5_LATEST.txt versus ls submission/*.tif and docs/data/submission_r5.json -> file / sha256 / generated_utc 2026-10-08T23:51:56Z.",
    "handling": "Recorded, not repaired: a round marker belongs to its own round, and editing another round's pointer is how a stale artefact gets promoted by accident. H61 publishes its own marker submission/H61_LATEST.txt and leaves submission/LATEST.txt on the H60 pointer that docs/data/submission.json also names, so scripts/check_site.py stays consistent.",
    "disposition": "R5's owner or the shared selector should advance the marker to the d2bfb0f7 bytes, or delete it. Until then no tool should treat R5_LATEST.txt as identifying a file that exists."
+  },
+  {
+   "id": "IR-H62-001",
+   "round": "H62",
+   "severity": "medium",
+   "status": "corrected in the results document; the preregistration file itself is frozen and hash-pinned",
+   "title": "The H62 preregistration overclaimed the persistence term's discrimination of isolated contrasts",
+   "what_it_is": "knowledge/34 section 2 (H62-A) says the along-tangent persistence 'averages |step| along the local tangent (faults are along-strike continuous; point noise, flight-line artefacts and isolated boulders are not)'. Measured on synthetic fields (tests/test_h62.py): the magnitude column fires on an isolated 5x5 blob as strongly as on a step edge (blob max 0.238 vs edge max 0.159 in the test field), and the persistence ratio of an 8 px-tall edge segment to a long edge is 0.99 vs 1.00 at the tested scales. The term is a contrast-and-continuity feature with weak discrimination at short along-strike scales, not a boulder suppressor.",
+   "how_we_know": "Direct measurement: h62.step_columns on synthetic plane+edge+blob fields; the assertions are pinned in tests/test_h62.py::test_step_columns_detect_a_synthetic_step_edge.",
+   "handling": "Recorded and corrected where it is not frozen: knowledge/36 section 4 states the weak discrimination explicitly, and the test docstring pins the honest contract (a contrast detector, not a fault detector). The preregistration document is hash-pinned by registry/h62_preregistration.json, so the correction lives in the results document rather than in a retro-edited protocol.",
+   "disposition": "Any future round citing the persistence term must cite the measured discrimination limits, not the preregistration's rhetoric."
+  },
+  {
+   "id": "IR-H62-002",
+   "round": "H62",
+   "severity": "high",
+   "status": "lane-level negative result; recorded as a deliverable",
+   "title": "Second consecutive View-A sufficiency failure: the co-training lane's A premise has now failed twice",
+   "what_it_is": "H61 measured a raw-value potential-field View A at mean out-of-fold AUC 0.5163 (in-sample 0.948); H62 measured a step-normalised potential-field View A (38 channels, no raw band values) at 0.5362 on the identical splitter. Both parameterisations are at chance out of quadrant, both far below View B (0.6843 / 0.6862) and below the 0.60 sufficiency bar. Independence held in both rounds (max |rho| 0.1331 / 0.1817), so the failure is sufficiency, not independence. The disagreement arm scored below uniform random in both rounds (H61 0.030584 vs random 0.080426; H62 0.040257 vs random 0.078257).",
+   "how_we_know": "evidence/h61_fit_checkpoint.json, evidence/h62_fit_checkpoint.json (sufficiency_screen), evidence/h61_holdout.json, evidence/h62_holdout.json (pooled scores and paired differences, 53,186 withheld positives, matched 9,400-dot budgets).",
+   "handling": "Recorded as a negative deliverable; the H62 artefact is published research-only (DOWNLOAD YES, SUBMIT NO, slots used 0). No re-tuning of either round into a positive result, and no promotion of either artefact.",
+   "disposition": "Do not propose a third View-A parameterisation without new evidence (new data, a different splitter test, or an organiser-authenticated calibration). The lane's own falsification condition has fired twice; the next in-lane candidates are the B-only direction (H62-B) and the credit-localisation analysis (H62-E), both preregistered in knowledge/34 section 2."
   }
  ],
  "merge_note": "R5 session merges of 2026-10-08: entries from the CTD5/H60/H60C/H60D rounds on main and IR-R5-001..009 from this branch are unioned by id; no entry was dropped. One entry (IR-H60D-007) arrived with a non-conforming key set and was schema-repaired with its original wording preserved verbatim -- see IR-R5-009."

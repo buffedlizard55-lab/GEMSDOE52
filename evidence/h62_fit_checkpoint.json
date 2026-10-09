@@ -1,0 +1,211 @@
+{
+ "stage": "fit",
+ "started_utc": "2026-10-09T00:54:42+00:00",
+ "view_A_features": [
+  "A_RTP_grad_1",
+  "A_RTP_grad_3",
+  "A_cover_coherence",
+  "A_cover_grad_1",
+  "A_cover_grad_3",
+  "A_cover_grad_8",
+  "A_cover_persistence_1_3",
+  "A_cover_persistence_3_8",
+  "A_gravity_coherence",
+  "A_gravity_cover_signed_1",
+  "A_gravity_cover_signed_3",
+  "A_gravity_cover_signed_8",
+  "A_gravity_grad_1",
+  "A_gravity_grad_3",
+  "A_gravity_grad_8",
+  "A_gravity_persistence_1_3",
+  "A_gravity_persistence_3_8",
+  "A_step_cover_abs_2px",
+  "A_step_cover_abs_4px",
+  "A_step_cover_persist_2px",
+  "A_step_cover_persist_4px",
+  "A_step_cover_signed_2px",
+  "A_step_cover_signed_4px",
+  "A_step_grav_abs_2px",
+  "A_step_grav_abs_4px",
+  "A_step_grav_persist_2px",
+  "A_step_grav_persist_4px",
+  "A_step_grav_signed_2px",
+  "A_step_grav_signed_4px",
+  "A_step_rtp_abs_2px",
+  "A_step_rtp_abs_4px",
+  "A_step_rtp_persist_2px",
+  "A_step_rtp_persist_4px",
+  "A_step_rtp_signed_2px",
+  "A_step_rtp_signed_4px",
+  "X_mag_TMI_up150_grad1",
+  "X_mag_TMI_up150_grad3",
+  "X_mag_TMI_up150_rank"
+ ],
+ "view_B_features": [
+  "B_curvature_minus_1",
+  "B_curvature_minus_3",
+  "B_curvature_plus_1",
+  "B_curvature_plus_3",
+  "B_curvature_trace_1",
+  "B_curvature_trace_3",
+  "B_elevation_grad_1",
+  "B_elevation_grad_3",
+  "B_elevation_grad_8",
+  "B_elevation_local_residual",
+  "B_elevation_local_sd",
+  "B_slope_grad_1",
+  "B_slope_grad_3",
+  "B_slope_local_residual",
+  "B_slope_local_sd",
+  "B_surface_coherence",
+  "X_rad_K_grad1",
+  "X_rad_K_grad3",
+  "X_rad_K_rank",
+  "X_rad_ThK_grad1",
+  "X_rad_ThK_grad3",
+  "X_rad_ThK_rank",
+  "X_rad_Th_grad1",
+  "X_rad_Th_grad3",
+  "X_rad_Th_rank",
+  "X_rad_UK_grad1",
+  "X_rad_UK_grad3",
+  "X_rad_UK_rank",
+  "X_rad_UTh_grad1",
+  "X_rad_UTh_grad3",
+  "X_rad_UTh_rank",
+  "X_rad_U_grad1",
+  "X_rad_U_grad3",
+  "X_rad_U_rank",
+  "raw_band_06",
+  "raw_band_12",
+  "raw_band_19"
+ ],
+ "n_A": 38,
+ "n_B": 37,
+ "seed": 62052,
+ "folds": [
+  {
+   "fold": 0,
+   "n_train": 80000,
+   "n_pos": 20000,
+   "train_domain_px": 2151265,
+   "region_px": 2265162,
+   "truth_px": 27309,
+   "view_A": {
+    "fit_seconds": 2.6,
+    "predict_seconds": 26.8,
+    "in_sample_auc": 0.8317083333333333,
+    "heldout_region_auc": 0.527024812619242,
+    "n_region_pos": 27309,
+    "n_region_neg": 1941302
+   },
+   "view_B": {
+    "fit_seconds": 2.5,
+    "predict_seconds": 27.5,
+    "in_sample_auc": 0.8761994083333333,
+    "heldout_region_auc": 0.6623153209627197,
+    "n_region_pos": 27309,
+    "n_region_neg": 1941302
+   }
+  },
+  {
+   "fold": 1,
+   "n_train": 80000,
+   "n_pos": 20000,
+   "train_domain_px": 3270785,
+   "region_px": 1170352,
+   "truth_px": 10677,
+   "view_A": {
+    "fit_seconds": 1.9,
+    "predict_seconds": 24.6,
+    "in_sample_auc": 0.7858770933333333,
+    "heldout_region_auc": 0.580259256324265,
+    "n_region_pos": 10677,
+    "n_region_neg": 1032665
+   },
+   "view_B": {
+    "fit_seconds": 1.9,
+    "predict_seconds": 25.6,
+    "in_sample_auc": 0.8346151474999999,
+    "heldout_region_auc": 0.7646128939685592,
+    "n_region_pos": 10677,
+    "n_region_neg": 1032665
+   }
+  },
+  {
+   "fold": 2,
+   "n_train": 80000,
+   "n_pos": 20000,
+   "train_domain_px": 3937283,
+   "region_px": 471100,
+   "truth_px": 6813,
+   "view_A": {
+    "fit_seconds": 1.7,
+    "predict_seconds": 22.7,
+    "in_sample_auc": 0.7926261958333334,
+    "heldout_region_auc": 0.509582283586719,
+    "n_region_pos": 6813,
+    "n_region_neg": 393204
+   },
+   "view_B": {
+    "fit_seconds": 2.0,
+    "predict_seconds": 25.4,
+    "in_sample_auc": 0.8522653816666667,
+    "heldout_region_auc": 0.6186466119326255,
+    "n_region_pos": 6813,
+    "n_region_neg": 393204
+   }
+  },
+  {
+   "fold": 3,
+   "n_train": 80000,
+   "n_pos": 20000,
+   "train_domain_px": 3808782,
+   "region_px": 686557,
+   "truth_px": 8387,
+   "view_A": {
+    "fit_seconds": 1.8,
+    "predict_seconds": 22.7,
+    "in_sample_auc": 0.7850306333333333,
+    "heldout_region_auc": 0.5280014584831532,
+    "n_region_pos": 8387,
+    "n_region_neg": 595321
+   },
+   "view_B": {
+    "fit_seconds": 1.9,
+    "predict_seconds": 26.9,
+    "in_sample_auc": 0.8478897091666666,
+    "heldout_region_auc": 0.6993613655685338,
+    "n_region_pos": 8387,
+    "n_region_neg": 595321
+   }
+  }
+ ],
+ "sufficiency_screen": {
+  "evidence_class": "HOLDOUT-DTI diagnostic AUC (not a DTI score)",
+  "bar": 0.6,
+  "mean_oof_auc_view_A": 0.5362169527533447,
+  "mean_oof_auc_view_B": 0.6862340481081096,
+  "per_fold_view_A": [
+   0.527024812619242,
+   0.580259256324265,
+   0.509582283586719,
+   0.5280014584831532
+  ],
+  "per_fold_view_B": [
+   0.6623153209627197,
+   0.7646128939685592,
+   0.6186466119326255,
+   0.6993613655685338
+  ],
+  "view_A_sufficient": false,
+  "note": "H61 measured a raw-value View A at mean 0.5163 (View B 0.6843); H62 measures whether the step-normalised View A regains out-of-fold skill before any exchange is trusted."
+ },
+ "finished_utc": "2026-10-09T00:58:24+00:00",
+ "evaluator_hashes": {
+  "evaluate_holdout.py": "ffb084fdf34bb30438485b89caeb1228a6680abfd9f9f0472f4355845da05cc6",
+  "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+  "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+  "spatial.py": "fad7b09db9efc512247b9a176a7e7ce8631e287592b4e07902d0b9c38bed00f8"
+ }
+}
