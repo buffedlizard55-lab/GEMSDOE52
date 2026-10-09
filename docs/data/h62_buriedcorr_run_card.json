@@ -1,0 +1,2201 @@
+{
+ "round": "H62",
+ "lane": "co-training, disagreement as the discovery signal (Blum & Mitchell COLT '98, doi:10.1145/279943.279962)",
+ "hypothesis": "H62-1: the co-training discovery signal (A confident, B abstains) becomes a buried-fault candidate only when it is explained by burial (depth to basement >= 200 m), carried by a potential-field edge (gradient >= P75) and persistent along strike (line-persistence corridor); such corridors target faults missing from the surface-mapped USGS/INGENIOUS catalogue",
+ "mechanism": "two logistic views fitted out-of-fold on hide-and-recover whole-segment folds (independence premise MEASURED first); disagreement field max(pA-pB,0) gated by cover -> edge -> line persistence (morphological line opening at half-widths 2-4 px, component length >= 15 px and elongation >= 3); placed by the registered scoring emitter h57.iso_select on the required-novel pool outside the 200 m ring; binary {0,1} emission (metric-optimal) with zeros everywhere else",
+ "named_non_fault_processes_that_could_mimic_it": [
+  "buried paleochannels and basin-fill edges (density contrasts that are not faults)",
+  "lithologic contacts and dike swarms (linear susceptibility/density steps)",
+  "alluvial-fan / basin-margin gravel wedges (density contrasts with no fault)",
+  "airborne-survey drape and terrain clearance over steep topography (GeoDAWN magnetics are airborne; ridge-flank gradients mimic structure)"
+ ],
+ "holdout_dti": {
+  "shipped_raster": {
+   "hide": {
+    "pooled_dti": 0.002247,
+    "tpw": 133.07,
+    "fpw": 150398.41,
+    "fnw": 36277.93,
+    "withheld_positives": 36411,
+    "fold_mean_dti": 0.00239,
+    "ci95_lo": 0.001112,
+    "ci95_hi": 0.003675,
+    "label": "HOLDOUT-DTI of the SHIPPED raster (evaluator gems52.metric.dti alpha 0.2 beta 0.8 R 300 m triangular; holdout.make_folds whole-segment hide-and-recover, 4 folds, buffer 4 px, prevalence 0.002, seed 20261009; pooled = metric components pooled across folds; CI = fold bootstrap 10k)"
+   },
+   "tip": {
+    "pooled_dti": 0.001663,
+    "tpw": 75.57,
+    "fpw": 150432.62,
+    "fnw": 19107.43,
+    "withheld_positives": 19183,
+    "fold_mean_dti": 0.001708,
+    "ci95_lo": 0.001065,
+    "ci95_hi": 0.00235,
+    "label": "HOLDOUT-DTI of the SHIPPED raster (evaluator gems52.metric.dti alpha 0.2 beta 0.8 R 300 m triangular; holdout.make_folds whole-segment hide-and-recover, 4 folds, buffer 4 px, prevalence 0.002, seed 20261009; pooled = metric components pooled across folds; CI = fold bootstrap 10k)"
+   }
+  },
+  "shipped_raster_folds": [
+   {
+    "mode": "hide",
+    "fold": 0,
+    "dti": 0.001192,
+    "tpw": 18.850360045744594,
+    "fpw": 37610.50218405787,
+    "fnw": 10343.149639954256,
+    "n_truth": 10362,
+    "emitted": 37626
+   },
+   {
+    "mode": "hide",
+    "fold": 1,
+    "dti": 0.001032,
+    "tpw": 16.30391997074389,
+    "fpw": 37612.565216291696,
+    "fnw": 10332.696080029256,
+    "n_truth": 10349,
+    "emitted": 37626
+   },
+   {
+    "mode": "hide",
+    "fold": 2,
+    "dti": 0.002833,
+    "tpw": 44.799441516901545,
+    "fpw": 37592.03171115798,
+    "fnw": 10314.200558483099,
+    "n_truth": 10359,
+    "emitted": 37626
+   },
+   {
+    "mode": "hide",
+    "fold": 3,
+    "dti": 0.004502,
+    "tpw": 53.12089551213571,
+    "fpw": 37583.3111933338,
+    "fnw": 5287.879104487864,
+    "n_truth": 5341,
+    "emitted": 37626
+   },
+   {
+    "mode": "tip",
+    "fold": 0,
+    "dti": 0.000978,
+    "tpw": 10.451265529025454,
+    "fpw": 37616.146524228985,
+    "fnw": 3936.5487344709745,
+    "n_truth": 3947,
+    "emitted": 37626
+   },
+   {
+    "mode": "tip",
+    "fold": 1,
+    "dti": 0.001152,
+    "tpw": 16.350249707639254,
+    "fpw": 37609.65518090312,
+    "fnw": 8322.649750292361,
+    "n_truth": 8339,
+    "emitted": 37626
+   },
+   {
+    "mode": "tip",
+    "fold": 2,
+    "dti": 0.0025,
+    "tpw": 29.239004005590818,
+    "fpw": 37599.22979554792,
+    "fnw": 5180.760995994409,
+    "n_truth": 5210,
+    "emitted": 37626
+   },
+   {
+    "mode": "tip",
+    "fold": 3,
+    "dti": 0.0022,
+    "tpw": 19.525790325237256,
+    "fpw": 37607.586718058534,
+    "fnw": 1667.4742096747627,
+    "n_truth": 1687,
+    "emitted": 37626
+   }
+  ],
+  "novel_pool_controls_pooled_means": {
+   "hide|random_novelpool": 0.001047,
+   "hide|H62_1_novelpool": 0.002388,
+   "hide|view_B_novelpool": 0.003465,
+   "hide|clf_union_novelpool": 0.003296,
+   "tip|random_novelpool": 0.000983,
+   "tip|H62_1_novelpool": 0.001707,
+   "tip|view_B_novelpool": 0.00308,
+   "tip|clf_union_novelpool": 0.002865
+  },
+  "field_validation": {
+   "hide@15000/view_A": {
+    "dti": 0.004031149258933271,
+    "tpw": 155.95167859439795,
+    "fpw": 47633.32079178061,
+    "fnw": 36255.0483214056,
+    "n_truth": 36411,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.0034375,
+     "ci_hi": 0.0044455,
+     "n": 4,
+     "mean": 0.00394825
+    },
+    "fold_dtis": [
+     0.004585,
+     0.004306,
+     0.003754,
+     0.003148
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 36411
+   },
+   "hide@15000/view_B": {
+    "dti": 0.005359406104835356,
+    "tpw": 220.49481304868596,
+    "fpw": 59843.75786979188,
+    "fnw": 36190.50518695131,
+    "n_truth": 36411,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.0038779999999999995,
+     "ci_hi": 0.006514000000000001,
+     "n": 4,
+     "mean": 0.005196
+    },
+    "fold_dtis": [
+     0.004235,
+     0.006338,
+     0.00669,
+     0.003521
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 36411
+   },
+   "hide@15000/clf_union": {
+    "dti": 0.0052403156580274925,
+    "tpw": 215.5939553370054,
+    "fpw": 59847.43726781372,
+    "fnw": 36195.406044662996,
+    "n_truth": 36411,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.00372425,
+     "ci_hi": 0.006226000000000001,
+     "n": 4,
+     "mean": 0.0050375
+    },
+    "fold_dtis": [
+     0.004738,
+     0.006017,
+     0.006435,
+     0.00296
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 36411
+   },
+   "hide@15000/dis_contrast": {
+    "dti": 0.0018497933939037822,
+    "tpw": 76.08773168399361,
+    "fpw": 59945.39884305974,
+    "fnw": 36334.91226831601,
+    "n_truth": 36411,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.001055,
+     "ci_hi": 0.002474,
+     "n": 4,
+     "mean": 0.0017645
+    },
+    "fold_dtis": [
+     0.002362,
+     0.002586,
+     0.001221,
+     0.000889
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 36411
+   },
+   "hide@15000/H62_1_corridors": {
+    "dti": 0.0018165685490554597,
+    "tpw": 74.7193064127463,
+    "fpw": 59941.85554939778,
+    "fnw": 36336.28069358726,
+    "n_truth": 36411,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.0006945,
+     "ci_hi": 0.0036967500000000004,
+     "n": 4,
+     "mean": 0.0020717500000000002
+    },
+    "fold_dtis": [
+     0.000723,
+     0.000666,
+     0.00221,
+     0.004688
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 36411
+   },
+   "hide@15000/random": {
+    "dti": 0.0010932621103360836,
+    "tpw": 44.96685666137218,
+    "fpw": 59965.54287270605,
+    "fnw": 36366.03314333862,
+    "n_truth": 36411,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.0009865,
+     "ci_hi": 0.0012125,
+     "n": 4,
+     "mean": 0.0010995
+    },
+    "fold_dtis": [
+     0.00126,
+     0.00095,
+     0.001023,
+     0.001165
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 36411
+   },
+   "hide@37654/view_A": {
+    "dti": 0.004031149258933271,
+    "tpw": 155.95167859439795,
+    "fpw": 47633.32079178061,
+    "fnw": 36255.0483214056,
+    "n_truth": 36411,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.0034375,
+     "ci_hi": 0.0044455,
+     "n": 4,
+     "mean": 0.00394825
+    },
+    "fold_dtis": [
+     0.004585,
+     0.004306,
+     0.003754,
+     0.003148
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 36411
+   },
+   "hide@37654/view_B": {
+    "dti": 0.00645388617489337,
+    "tpw": 327.82195940292,
+    "fpw": 108000.70755173013,
+    "fnw": 36083.17804059708,
+    "n_truth": 36411,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.00588375,
+     "ci_hi": 0.0069415,
+     "n": 4,
+     "mean": 0.0064435
+    },
+    "fold_dtis": [
+     0.005582,
+     0.007094,
+     0.006789,
+     0.006309
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 36411
+   },
+   "hide@37654/clf_union": {
+    "dti": 0.006181601619997588,
+    "tpw": 300.099958220807,
+    "fpw": 96792.31098257685,
+    "fnw": 36110.90004177919,
+    "n_truth": 36411,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.005633000000000001,
+     "ci_hi": 0.006639249999999999,
+     "n": 4,
+     "mean": 0.00620125
+    },
+    "fold_dtis": [
+     0.005365,
+     0.006226,
+     0.006777,
+     0.006437
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 36411
+   },
+   "hide@37654/dis_contrast": {
+    "dti": 0.0041452505756723965,
+    "tpw": 245.66621642501508,
+    "fpw": 150432.85028809993,
+    "fnw": 36165.333783574984,
+    "n_truth": 36411,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.003692,
+     "ci_hi": 0.0049180000000000005,
+     "n": 4,
+     "mean": 0.0041225
+    },
+    "fold_dtis": [
+     0.003672,
+     0.003712,
+     0.00532,
+     0.003786
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 36411
+   },
+   "hide@37654/H62_1_corridors": {
+    "dti": 0.0034096770461912174,
+    "tpw": 202.05980866417266,
+    "fpw": 150457.3817297122,
+    "fnw": 36208.94019133583,
+    "n_truth": 36411,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.001705,
+     "ci_hi": 0.00549,
+     "n": 4,
+     "mean": 0.0035975
+    },
+    "fold_dtis": [
+     0.001517,
+     0.001893,
+     0.004607,
+     0.006373
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 36411
+   },
+   "hide@37654/random": {
+    "dti": 0.0018016061023552242,
+    "tpw": 106.75778253001096,
+    "fpw": 150534.26920102487,
+    "fnw": 36304.24221746999,
+    "n_truth": 36411,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.0015079999999999998,
+     "ci_hi": 0.0019444999999999998,
+     "n": 4,
+     "mean": 0.001775
+    },
+    "fold_dtis": [
+     0.001973,
+     0.001859,
+     0.001886,
+     0.001382
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 36411
+   },
+   "tip@15000/view_A": {
+    "dti": 0.003954481194094856,
+    "tpw": 98.45966294864888,
+    "fpw": 47660.792306686,
+    "fnw": 19084.540337051352,
+    "n_truth": 19183,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.00261325,
+     "ci_hi": 0.004682,
+     "n": 4,
+     "mean": 0.00364925
+    },
+    "fold_dtis": [
+     0.003994,
+     0.005139,
+     0.003311,
+     0.002153
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 19183
+   },
+   "tip@15000/view_B": {
+    "dti": 0.005069158579838999,
+    "tpw": 138.65378988750402,
+    "fpw": 59891.48109276968,
+    "fnw": 19044.346210112493,
+    "n_truth": 19183,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.0030359999999999996,
+     "ci_hi": 0.0060985,
+     "n": 4,
+     "mean": 0.0046295
+    },
+    "fold_dtis": [
+     0.004192,
+     0.00644,
+     0.005757,
+     0.002129
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 19183
+   },
+   "tip@15000/clf_union": {
+    "dti": 0.004980094940509227,
+    "tpw": 136.2163011185779,
+    "fpw": 59892.53097958428,
+    "fnw": 19046.783698881423,
+    "n_truth": 19183,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.00264625,
+     "ci_hi": 0.005974500000000001,
+     "n": 4,
+     "mean": 0.0045175
+    },
+    "fold_dtis": [
+     0.004467,
+     0.006326,
+     0.005623,
+     0.001654
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 19183
+   },
+   "tip@15000/dis_contrast": {
+    "dti": 0.002028993920244183,
+    "tpw": 55.49033210112131,
+    "fpw": 59955.97535172712,
+    "fnw": 19127.509667898878,
+    "n_truth": 19183,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.00096875,
+     "ci_hi": 0.002641,
+     "n": 4,
+     "mean": 0.001826
+    },
+    "fold_dtis": [
+     0.002507,
+     0.002775,
+     0.001566,
+     0.000456
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 19183
+   },
+   "tip@15000/H62_1_corridors": {
+    "dti": 0.001360340593895336,
+    "tpw": 37.20102041803351,
+    "fpw": 59965.013135127985,
+    "fnw": 19145.798979581967,
+    "n_truth": 19183,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.000725,
+     "ci_hi": 0.0022909999999999996,
+     "n": 4,
+     "mean": 0.0015079999999999998
+    },
+    "fold_dtis": [
+     0.000644,
+     0.000806,
+     0.001956,
+     0.002626
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 19183
+   },
+   "tip@15000/random": {
+    "dti": 0.001280874775611911,
+    "tpw": 35.02903687813004,
+    "fpw": 59971.69650089216,
+    "fnw": 19147.970963121872,
+    "n_truth": 19183,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.00093775,
+     "ci_hi": 0.0014222500000000001,
+     "n": 4,
+     "mean": 0.0012295
+    },
+    "fold_dtis": [
+     0.001312,
+     0.001345,
+     0.001459,
+     0.000802
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 19183
+   },
+   "tip@37654/view_A": {
+    "dti": 0.003954481194094856,
+    "tpw": 98.45966294864888,
+    "fpw": 47660.792306686,
+    "fnw": 19084.540337051352,
+    "n_truth": 19183,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.00261325,
+     "ci_hi": 0.004682,
+     "n": 4,
+     "mean": 0.00364925
+    },
+    "fold_dtis": [
+     0.003994,
+     0.005139,
+     0.003311,
+     0.002153
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 19183
+   },
+   "tip@37654/view_B": {
+    "dti": 0.005466382701600877,
+    "tpw": 202.26141944403795,
+    "fpw": 108070.54933484505,
+    "fnw": 18980.73858055596,
+    "n_truth": 19183,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.00386575,
+     "ci_hi": 0.0066315,
+     "n": 4,
+     "mean": 0.0051607499999999995
+    },
+    "fold_dtis": [
+     0.004497,
+     0.007343,
+     0.005473,
+     0.00333
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 19183
+   },
+   "tip@37654/clf_union": {
+    "dti": 0.005266115922993969,
+    "tpw": 183.02158391089037,
+    "fpw": 96857.81838695353,
+    "fnw": 18999.978416089107,
+    "n_truth": 19183,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.0038475,
+     "ci_hi": 0.00614,
+     "n": 4,
+     "mean": 0.00499375
+    },
+    "fold_dtis": [
+     0.004337,
+     0.006667,
+     0.005613,
+     0.003358
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 19183
+   },
+   "tip@37654/dis_contrast": {
+    "dti": 0.003353377899165695,
+    "tpw": 152.4901831847103,
+    "fpw": 150483.53657969396,
+    "fnw": 19030.509816815287,
+    "n_truth": 19183,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.0022515,
+     "ci_hi": 0.0041695,
+     "n": 4,
+     "mean": 0.0032105000000000002
+    },
+    "fold_dtis": [
+     0.002767,
+     0.003967,
+     0.004372,
+     0.001736
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 19183
+   },
+   "tip@37654/H62_1_corridors": {
+    "dti": 0.0023629294747799837,
+    "tpw": 107.44441312187503,
+    "fpw": 150514.80857802878,
+    "fnw": 19075.555586878127,
+    "n_truth": 19183,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.001584,
+     "ci_hi": 0.0032025000000000005,
+     "n": 4,
+     "mean": 0.00239325
+    },
+    "fold_dtis": [
+     0.001261,
+     0.001907,
+     0.003549,
+     0.002856
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 19183
+   },
+   "tip@37654/random": {
+    "dti": 0.0017993335789701812,
+    "tpw": 81.81930071813679,
+    "fpw": 150546.19241252047,
+    "fnw": 19101.180699281864,
+    "n_truth": 19183,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.0010235,
+     "ci_hi": 0.0022417500000000003,
+     "n": 4,
+     "mean": 0.00169775
+    },
+    "fold_dtis": [
+     0.001689,
+     0.002426,
+     0.001967,
+     0.000709
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 19183
+   }
+  },
+  "field_table": {
+   "hide@15000": {
+    "view_B": 0.005196,
+    "clf_union": 0.005038,
+    "view_A": 0.003948,
+    "H62_1_corridors": 0.002072,
+    "dis_contrast": 0.001765,
+    "random": 0.001099
+   },
+   "hide@37654": {
+    "view_B": 0.006443,
+    "clf_union": 0.006201,
+    "dis_contrast": 0.004123,
+    "view_A": 0.003948,
+    "H62_1_corridors": 0.003598,
+    "random": 0.001775
+   },
+   "tip@15000": {
+    "view_B": 0.004629,
+    "clf_union": 0.004517,
+    "view_A": 0.003649,
+    "dis_contrast": 0.001826,
+    "H62_1_corridors": 0.001508,
+    "random": 0.001229
+   },
+   "tip@37654": {
+    "view_B": 0.005161,
+    "clf_union": 0.004994,
+    "view_A": 0.003649,
+    "dis_contrast": 0.003211,
+    "H62_1_corridors": 0.002393,
+    "random": 0.001698
+   }
+  },
+  "weak_surface_subgroup": {
+   "hide@15000/weak/view_A": {
+    "dti": 0.004432416009050022,
+    "tpw": 273.4946231532464,
+    "fpw": 47554.92463310598,
+    "fnw": 64898.505376846755,
+    "n_truth": 65172,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.004432,
+     "ci_hi": 0.004432,
+     "n": 4,
+     "mean": 0.004432
+    },
+    "fold_dtis": [
+     0.004432,
+     0.004432,
+     0.004432,
+     0.004432
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 65172
+   },
+   "hide@15000/weak/view_B": {
+    "dti": 0.0019847537532609676,
+    "tpw": 127.31046434681485,
+    "fpw": 59905.74658780045,
+    "fnw": 65044.68953565318,
+    "n_truth": 65172,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.001985,
+     "ci_hi": 0.001985,
+     "n": 4,
+     "mean": 0.001985
+    },
+    "fold_dtis": [
+     0.001985,
+     0.001985,
+     0.001985,
+     0.001985
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 65172
+   },
+   "hide@15000/weak/clf_union": {
+    "dti": 0.002390737941175164,
+    "tpw": 153.35763590252378,
+    "fpw": 59891.486523380445,
+    "fnw": 65018.642364097475,
+    "n_truth": 65172,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.002391,
+     "ci_hi": 0.002391,
+     "n": 4,
+     "mean": 0.002391
+    },
+    "fold_dtis": [
+     0.002391,
+     0.002391,
+     0.002391,
+     0.002391
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 65172
+   },
+   "hide@15000/weak/dis_contrast": {
+    "dti": 0.002734955159136153,
+    "tpw": 175.43911555345738,
+    "fpw": 59871.463918232555,
+    "fnw": 64996.560884446546,
+    "n_truth": 65172,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.002735,
+     "ci_hi": 0.002735,
+     "n": 4,
+     "mean": 0.002735
+    },
+    "fold_dtis": [
+     0.002735,
+     0.002735,
+     0.002735,
+     0.002735
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 65172
+   },
+   "hide@15000/weak/H62_1_corridors": {
+    "dti": 0.0025185370627584113,
+    "tpw": 161.5496890286163,
+    "fpw": 59871.73612695232,
+    "fnw": 65010.450310971384,
+    "n_truth": 65172,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.002519,
+     "ci_hi": 0.002519,
+     "n": 4,
+     "mean": 0.002519
+    },
+    "fold_dtis": [
+     0.002519,
+     0.002519,
+     0.002519,
+     0.002519
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 65172
+   },
+   "hide@37654/weak/view_A": {
+    "dti": 0.004432416009050022,
+    "tpw": 273.4946231532464,
+    "fpw": 47554.92463310598,
+    "fnw": 64898.505376846755,
+    "n_truth": 65172,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.004432,
+     "ci_hi": 0.004432,
+     "n": 4,
+     "mean": 0.004432
+    },
+    "fold_dtis": [
+     0.004432,
+     0.004432,
+     0.004432,
+     0.004432
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 65172
+   },
+   "hide@37654/weak/view_B": {
+    "dti": 0.006149648312436708,
+    "tpw": 453.90137571834674,
+    "fpw": 107904.71125772424,
+    "fnw": 64718.09862428165,
+    "n_truth": 65172,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.00615,
+     "ci_hi": 0.00615,
+     "n": 4,
+     "mean": 0.00615
+    },
+    "fold_dtis": [
+     0.00615,
+     0.00615,
+     0.00615,
+     0.00615
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 65172
+   },
+   "hide@37654/weak/clf_union": {
+    "dti": 0.005689708637004538,
+    "tpw": 407.16702995677974,
+    "fpw": 96714.92126583072,
+    "fnw": 64764.83297004322,
+    "n_truth": 65172,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.00569,
+     "ci_hi": 0.00569,
+     "n": 4,
+     "mean": 0.00569
+    },
+    "fold_dtis": [
+     0.00569,
+     0.00569,
+     0.00569,
+     0.00569
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 65172
+   },
+   "hide@37654/weak/dis_contrast": {
+    "dti": 0.005249538627119779,
+    "tpw": 431.95023072568404,
+    "fpw": 150297.3774694408,
+    "fnw": 64740.049769274316,
+    "n_truth": 65172,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.00525,
+     "ci_hi": 0.00525,
+     "n": 4,
+     "mean": 0.00525
+    },
+    "fold_dtis": [
+     0.00525,
+     0.00525,
+     0.00525,
+     0.00525
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 65172
+   },
+   "hide@37654/weak/H62_1_corridors": {
+    "dti": 0.0046935591647732445,
+    "tpw": 386.1692936649819,
+    "fpw": 150307.98240404198,
+    "fnw": 64785.830706335015,
+    "n_truth": 65172,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.004694,
+     "ci_hi": 0.004694,
+     "n": 4,
+     "mean": 0.004694
+    },
+    "fold_dtis": [
+     0.004694,
+     0.004694,
+     0.004694,
+     0.004694
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 65172
+   },
+   "hide@15000/strong/view_A": {
+    "dti": 0.00473734350838325,
+    "tpw": 350.3120912243455,
+    "fpw": 47496.42490265175,
+    "fnw": 80121.68790877565,
+    "n_truth": 80472,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.004737,
+     "ci_hi": 0.004737,
+     "n": 4,
+     "mean": 0.004737
+    },
+    "fold_dtis": [
+     0.004737,
+     0.004737,
+     0.004737,
+     0.004737
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 80472
+   },
+   "hide@15000/strong/view_B": {
+    "dti": 0.009875048603872836,
+    "tpw": 754.668787847929,
+    "fpw": 59466.22916327707,
+    "fnw": 79717.33121215207,
+    "n_truth": 80472,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.009875,
+     "ci_hi": 0.009875,
+     "n": 4,
+     "mean": 0.009875
+    },
+    "fold_dtis": [
+     0.009875,
+     0.009875,
+     0.009875,
+     0.009875
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 80472
+   },
+   "hide@15000/strong/clf_union": {
+    "dti": 0.009278078026191407,
+    "tpw": 709.0181854454978,
+    "fpw": 59496.22539581442,
+    "fnw": 79762.9818145545,
+    "n_truth": 80472,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.009278,
+     "ci_hi": 0.009278,
+     "n": 4,
+     "mean": 0.009278
+    },
+    "fold_dtis": [
+     0.009278,
+     0.009278,
+     0.009278,
+     0.009278
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 80472
+   },
+   "hide@15000/strong/dis_contrast": {
+    "dti": 0.0016876597019603516,
+    "tpw": 128.91181118251706,
+    "fpw": 59907.86553811272,
+    "fnw": 80343.08818881748,
+    "n_truth": 80472,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.001688,
+     "ci_hi": 0.001688,
+     "n": 4,
+     "mean": 0.001688
+    },
+    "fold_dtis": [
+     0.001688,
+     0.001688,
+     0.001688,
+     0.001688
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 80472
+   },
+   "hide@15000/strong/H62_1_corridors": {
+    "dti": 0.00179785258901185,
+    "tpw": 137.3275366223689,
+    "fpw": 59895.6860706388,
+    "fnw": 80334.67246337763,
+    "n_truth": 80472,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.001798,
+     "ci_hi": 0.001798,
+     "n": 4,
+     "mean": 0.001798
+    },
+    "fold_dtis": [
+     0.001798,
+     0.001798,
+     0.001798,
+     0.001798
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 80472
+   },
+   "hide@37654/strong/view_A": {
+    "dti": 0.00473734350838325,
+    "tpw": 350.3120912243455,
+    "fpw": 47496.42490265175,
+    "fnw": 80121.68790877565,
+    "n_truth": 80472,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.004737,
+     "ci_hi": 0.004737,
+     "n": 4,
+     "mean": 0.004737
+    },
+    "fold_dtis": [
+     0.004737,
+     0.004737,
+     0.004737,
+     0.004737
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 80472
+   },
+   "hide@37654/strong/view_B": {
+    "dti": 0.009960913192558969,
+    "tpw": 857.3864618933335,
+    "fpw": 107630.04464507627,
+    "fnw": 79614.61353810667,
+    "n_truth": 80472,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.009961,
+     "ci_hi": 0.009961,
+     "n": 4,
+     "mean": 0.009961
+    },
+    "fold_dtis": [
+     0.009961,
+     0.009961,
+     0.009961,
+     0.009961
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 80472
+   },
+   "hide@37654/strong/clf_union": {
+    "dti": 0.009462996450650052,
+    "tpw": 793.2328029264485,
+    "fpw": 96442.24836035668,
+    "fnw": 79678.76719707355,
+    "n_truth": 80472,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.009463,
+     "ci_hi": 0.009463,
+     "n": 4,
+     "mean": 0.009463
+    },
+    "fold_dtis": [
+     0.009463,
+     0.009463,
+     0.009463,
+     0.009463
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 80472
+   },
+   "hide@37654/strong/dis_contrast": {
+    "dti": 0.005826001206231697,
+    "tpw": 550.7146349743762,
+    "fpw": 150196.47327514164,
+    "fnw": 79921.28536502563,
+    "n_truth": 80472,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.005826,
+     "ci_hi": 0.005826,
+     "n": 4,
+     "mean": 0.005826
+    },
+    "fold_dtis": [
+     0.005826,
+     0.005826,
+     0.005826,
+     0.005826
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 80472
+   },
+   "hide@37654/strong/H62_1_corridors": {
+    "dti": 0.0044654360383830985,
+    "tpw": 422.0699409917087,
+    "fpw": 150286.48878671665,
+    "fnw": 80049.93005900829,
+    "n_truth": 80472,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.004465,
+     "ci_hi": 0.004465,
+     "n": 4,
+     "mean": 0.004465
+    },
+    "fold_dtis": [
+     0.004465,
+     0.004465,
+     0.004465,
+     0.004465
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 80472
+   },
+   "tip@15000/weak/view_A": {
+    "dti": 0.004785687669915602,
+    "tpw": 182.54233380050175,
+    "fpw": 47590.3894752084,
+    "fnw": 35553.4576661995,
+    "n_truth": 35736,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.004786,
+     "ci_hi": 0.004786,
+     "n": 4,
+     "mean": 0.004786
+    },
+    "fold_dtis": [
+     0.004786,
+     0.004786,
+     0.004786,
+     0.004786
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 35736
+   },
+   "tip@15000/weak/view_B": {
+    "dti": 0.0016819239408381917,
+    "tpw": 68.27140797297642,
+    "fpw": 59944.01667171616,
+    "fnw": 35667.72859202702,
+    "n_truth": 35736,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.001682,
+     "ci_hi": 0.001682,
+     "n": 4,
+     "mean": 0.001682
+    },
+    "fold_dtis": [
+     0.001682,
+     0.001682,
+     0.001682,
+     0.001682
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 35736
+   },
+   "tip@15000/weak/clf_union": {
+    "dti": 0.00213923409936237,
+    "tpw": 86.83454034665321,
+    "fpw": 59926.24335153881,
+    "fnw": 35649.16545965335,
+    "n_truth": 35736,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.002139,
+     "ci_hi": 0.002139,
+     "n": 4,
+     "mean": 0.002139
+    },
+    "fold_dtis": [
+     0.002139,
+     0.002139,
+     0.002139,
+     0.002139
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 35736
+   },
+   "tip@15000/weak/dis_contrast": {
+    "dti": 0.004026148967857156,
+    "tpw": 163.43987550721332,
+    "fpw": 59865.521150077,
+    "fnw": 35572.56012449279,
+    "n_truth": 35736,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.004026,
+     "ci_hi": 0.004026,
+     "n": 4,
+     "mean": 0.004026
+    },
+    "fold_dtis": [
+     0.004026,
+     0.004026,
+     0.004026,
+     0.004026
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 35736
+   },
+   "tip@15000/weak/H62_1_corridors": {
+    "dti": 0.0018991080402850824,
+    "tpw": 77.08458527094875,
+    "fpw": 59928.362301851084,
+    "fnw": 35658.915414729054,
+    "n_truth": 35736,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.001899,
+     "ci_hi": 0.001899,
+     "n": 4,
+     "mean": 0.001899
+    },
+    "fold_dtis": [
+     0.001899,
+     0.001899,
+     0.001899,
+     0.001899
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 35736
+   },
+   "tip@37654/weak/view_A": {
+    "dti": 0.004785687669915602,
+    "tpw": 182.54233380050175,
+    "fpw": 47590.3894752084,
+    "fnw": 35553.4576661995,
+    "n_truth": 35736,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.004786,
+     "ci_hi": 0.004786,
+     "n": 4,
+     "mean": 0.004786
+    },
+    "fold_dtis": [
+     0.004786,
+     0.004786,
+     0.004786,
+     0.004786
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 35736
+   },
+   "tip@37654/weak/view_B": {
+    "dti": 0.005274554666122739,
+    "tpw": 265.01373038425913,
+    "fpw": 108010.04376311542,
+    "fnw": 35470.98626961574,
+    "n_truth": 35736,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.005275,
+     "ci_hi": 0.005275,
+     "n": 4,
+     "mean": 0.005275
+    },
+    "fold_dtis": [
+     0.005275,
+     0.005275,
+     0.005275,
+     0.005275
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 35736
+   },
+   "tip@37654/weak/clf_union": {
+    "dti": 0.004784318335042496,
+    "tpw": 229.63068653409888,
+    "fpw": 96809.02771244886,
+    "fnw": 35506.369313465904,
+    "n_truth": 35736,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.004784,
+     "ci_hi": 0.004784,
+     "n": 4,
+     "mean": 0.004784
+    },
+    "fold_dtis": [
+     0.004784,
+     0.004784,
+     0.004784,
+     0.004784
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 35736
+   },
+   "tip@37654/weak/dis_contrast": {
+    "dti": 0.005358454701620265,
+    "tpw": 314.65683865442327,
+    "fpw": 150349.16125046628,
+    "fnw": 35421.343161345576,
+    "n_truth": 35736,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.005358,
+     "ci_hi": 0.005358,
+     "n": 4,
+     "mean": 0.005358
+    },
+    "fold_dtis": [
+     0.005358,
+     0.005358,
+     0.005358,
+     0.005358
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 35736
+   },
+   "tip@37654/weak/H62_1_corridors": {
+    "dti": 0.0036072296675827248,
+    "tpw": 211.79219902761514,
+    "fpw": 150410.48794517684,
+    "fnw": 35524.207800972385,
+    "n_truth": 35736,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.003607,
+     "ci_hi": 0.003607,
+     "n": 4,
+     "mean": 0.003607
+    },
+    "fold_dtis": [
+     0.003607,
+     0.003607,
+     0.003607,
+     0.003607
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 35736
+   },
+   "tip@15000/strong/view_A": {
+    "dti": 0.004988954990946666,
+    "tpw": 211.2963179940938,
+    "fpw": 47568.808968110905,
+    "fnw": 40784.70368200591,
+    "n_truth": 40996,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.004989,
+     "ci_hi": 0.004989,
+     "n": 4,
+     "mean": 0.004989
+    },
+    "fold_dtis": [
+     0.004989,
+     0.004989,
+     0.004989,
+     0.004989
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 40996
+   },
+   "tip@15000/strong/view_B": {
+    "dti": 0.010851555192555304,
+    "tpw": 486.3437515770396,
+    "fpw": 59619.08073510625,
+    "fnw": 40509.65624842296,
+    "n_truth": 40996,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.010852,
+     "ci_hi": 0.010852,
+     "n": 4,
+     "mean": 0.010852
+    },
+    "fold_dtis": [
+     0.010852,
+     0.010852,
+     0.010852,
+     0.010852
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 40996
+   },
+   "tip@15000/strong/clf_union": {
+    "dti": 0.010220118426727688,
+    "tpw": 458.0306641276583,
+    "fpw": 59640.824838708286,
+    "fnw": 40537.969335872345,
+    "n_truth": 40996,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.01022,
+     "ci_hi": 0.01022,
+     "n": 4,
+     "mean": 0.01022
+    },
+    "fold_dtis": [
+     0.01022,
+     0.01022,
+     0.01022,
+     0.01022
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 40996
+   },
+   "tip@15000/strong/dis_contrast": {
+    "dti": 0.0013063068725048432,
+    "tpw": 58.52145289727195,
+    "fpw": 59953.28737668148,
+    "fnw": 40937.47854710273,
+    "n_truth": 40996,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.001306,
+     "ci_hi": 0.001306,
+     "n": 4,
+     "mean": 0.001306
+    },
+    "fold_dtis": [
+     0.001306,
+     0.001306,
+     0.001306,
+     0.001306
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 40996
+   },
+   "tip@15000/strong/H62_1_corridors": {
+    "dti": 0.0016009716011720688,
+    "tpw": 71.7194964011853,
+    "fpw": 59931.69023866085,
+    "fnw": 40924.28050359881,
+    "n_truth": 40996,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.001601,
+     "ci_hi": 0.001601,
+     "n": 4,
+     "mean": 0.001601
+    },
+    "fold_dtis": [
+     0.001601,
+     0.001601,
+     0.001601,
+     0.001601
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 40996
+   },
+   "tip@37654/strong/view_A": {
+    "dti": 0.004988954990946666,
+    "tpw": 211.2963179940938,
+    "fpw": 47568.808968110905,
+    "fnw": 40784.70368200591,
+    "n_truth": 40996,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.004989,
+     "ci_hi": 0.004989,
+     "n": 4,
+     "mean": 0.004989
+    },
+    "fold_dtis": [
+     0.004989,
+     0.004989,
+     0.004989,
+     0.004989
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 40996
+   },
+   "tip@37654/strong/view_B": {
+    "dti": 0.009988445610617432,
+    "tpw": 544.0319473918927,
+    "fpw": 107802.60316844749,
+    "fnw": 40451.96805260811,
+    "n_truth": 40996,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.009988,
+     "ci_hi": 0.009988,
+     "n": 4,
+     "mean": 0.009988
+    },
+    "fold_dtis": [
+     0.009988,
+     0.009988,
+     0.009988,
+     0.009988
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 40996
+   },
+   "tip@37654/strong/clf_union": {
+    "dti": 0.009622041751471,
+    "tpw": 502.4556491094626,
+    "fpw": 96609.71400357789,
+    "fnw": 40493.54435089054,
+    "n_truth": 40996,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.009622,
+     "ci_hi": 0.009622,
+     "n": 4,
+     "mean": 0.009622
+    },
+    "fold_dtis": [
+     0.009622,
+     0.009622,
+     0.009622,
+     0.009622
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 40996
+   },
+   "tip@37654/strong/dis_contrast": {
+    "dti": 0.004692924311536115,
+    "tpw": 295.30389408441795,
+    "fpw": 150347.43466049223,
+    "fnw": 40700.69610591558,
+    "n_truth": 40996,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.004693,
+     "ci_hi": 0.004693,
+     "n": 4,
+     "mean": 0.004693
+    },
+    "fold_dtis": [
+     0.004693,
+     0.004693,
+     0.004693,
+     0.004693
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 40996
+   },
+   "tip@37654/strong/H62_1_corridors": {
+    "dti": 0.003464340757770426,
+    "tpw": 217.98545345988495,
+    "fpw": 150411.1959591209,
+    "fnw": 40778.014546540115,
+    "n_truth": 40996,
+    "n_folds": 4,
+    "ci95": {
+     "ci_lo": 0.003464,
+     "ci_hi": 0.003464,
+     "n": 4,
+     "mean": 0.003464
+    },
+    "fold_dtis": [
+     0.003464,
+     0.003464,
+     0.003464,
+     0.003464
+    ],
+    "label": "HOLDOUT-DTI",
+    "evaluator": {
+     "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+     "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+     "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+     "h60d.py": "1e8e6064fd5a5f7f750892403290666e0ab0cabb1d93856bc73aa69968de46c3",
+     "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+    },
+    "withheld_positives": 40996
+   }
+  },
+  "preregistered_gates": {
+   "clause_a_gates_add_value": false,
+   "clause_b_weak_surface_win": false,
+   "clause_c_sanity": true,
+   "leakage_canary_clean": true,
+   "independence_ok": true,
+   "weak_subgroup_fold_wins": 0,
+   "bars": {
+    "h62": 0.0034096770461912174,
+    "dis_contrast": 0.0041452505756723965,
+    "random": 0.0018016061023552242,
+    "weak_h62": 0.0046935591647732445,
+    "weak_view_B": 0.006149648312436708
+   },
+   "verdict_so_far": "fail"
+  },
+  "label": "every number here is HOLDOUT-DTI (evaluator version pinned below; withheld positives per cell; 95% fold-bootstrap CI); nothing here is a leaderboard score or forecast"
+ },
+ "correlation_overlap_vs_registry": {
+  "lane_gate_surface": {
+   "surface_max_abs_spearman": 0.038359105086417475,
+   "surface_max_abs_spearman_prior": "/home/user/GEMSDOE52/submission/gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif",
+   "surface_check_passed": true,
+   "lane_drift_detected": false
+  },
+  "lane_gate_dots": {
+   "dots_max_abs_spearman": 0.018381217758944413,
+   "dots_max_within_3px_frac": 0.9994418752989954,
+   "dots_max_within_3px_prior": "/home/user/GEMSDOE52/work/pinned/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+   "dots_max_within_3px_frac_gate": 0.9994418752989954,
+   "dots_max_within_3px_gate_prior": "/home/user/GEMSDOE52/work/pinned/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+   "calibration_rasters_excluded_from_proximity": [],
+   "dots_check_passed": false,
+   "lane_drift_detected": true
+  },
+  "uniqueness": {
+   "n_priors_checked": 80,
+   "canonical_pattern_unique": true,
+   "novel_fraction": 1.0,
+   "equals_literal_prior_union": false
+  },
+  "not_merely_union": {
+   "arm_px": 37626,
+   "outside_union_topk_px": 37252,
+   "outside_view_A_topk_px": 37482,
+   "outside_view_B_topk_px": 37268
+  }
+ },
+ "raster_sha256": "6b494e7d1abc476555778c699e8d51a6cbd10658f57dfb60f1ccafc3f91924eb",
+ "validator_output": {
+  "format_gate": {
+   "path": "/home/user/GEMSDOE52/submission/gems52-h62-buriedcorr-37626px.tif",
+   "bytes": 107764,
+   "sha256": "6b494e7d1abc476555778c699e8d51a6cbd10658f57dfb60f1ccafc3f91924eb",
+   "bands": 1,
+   "dtype": "float32",
+   "crs": "EPSG:32611",
+   "width": 3292,
+   "height": 3730,
+   "bounds": [
+    243350.0,
+    4135550.0,
+    572550.0,
+    4508550.0
+   ],
+   "ref_bounds": [
+    243350.0,
+    4135550.0,
+    572550.0,
+    4508550.0
+   ],
+   "transform": [
+    100.0,
+    0.0,
+    243350.0,
+    0.0,
+    -100.0,
+    4508550.0
+   ],
+   "nodata": null,
+   "blocksize": [
+    256,
+    256
+   ],
+   "fixture_grid": false,
+   "has_validity_mask": false,
+   "nan_pixels": 0,
+   "infinity_pixels": 0,
+   "n_nan": 0,
+   "min": 0.0,
+   "max": 1.0,
+   "mean": 0.0030642161145806313,
+   "n_nonzero": 37626,
+   "mass": 37626.0,
+   "mass_outside_footprint": 0,
+   "problems": [],
+   "ok": true,
+   "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "no_nan_inside_footprint": true,
+  "values_in_0_1": true,
+  "crs_shape_transform_match": true,
+  "recheck": {
+   "path": "/home/user/GEMSDOE52/submission/gems52-h62-buriedcorr-37626px.tif",
+   "bytes": 107764,
+   "sha256": "6b494e7d1abc476555778c699e8d51a6cbd10658f57dfb60f1ccafc3f91924eb",
+   "bands": 1,
+   "dtype": "float32",
+   "height": 3730,
+   "width": 3292,
+   "crs": "EPSG:32611",
+   "transform": [
+    100.0,
+    0.0,
+    243350.0,
+    0.0,
+    -100.0,
+    4508550.0
+   ],
+   "res": [
+    100.0,
+    100.0
+   ],
+   "nodata": null,
+   "nodata_repr": "None",
+   "finite_pixels": 12279160,
+   "min": 0.0,
+   "max": 1.0,
+   "positive_pixels": 37626,
+   "nonzero_in_footprint": 37626,
+   "unique_values": 2
+  }
+ },
+ "submission_name": "gems52-h62-buriedcorr-37626px-6b494e7d-zeros",
+ "submission_note": "H62 buried corridors: cover/edge/persistence gates on A-only disagreement; finite binary [0,1]; off-prior; hypotheses, not verified faults",
+ "submission_note_chars": 138,
+ "verdict": "negative",
+ "number_labels": "every holdout number is HOLDOUT-DTI (evaluator version, withheld positives, 95% CI); every leaderboard number anywhere in this repo is owner-reported; none is ORGANIZER-CONFIRMED (no submission-page receipt exists); a projection is never written as a score",
+ "evaluator_version": {
+  "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+  "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+  "h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+  "h60d.py": "2c8a849c09efd41b3cb401f092c669c3a8a614b9effa11ae52efc93f2b5373fc",
+  "emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9"
+ },
+ "negative_result_is_a_deliverable": true,
+ "promotion_to_a_real_slot_is_a_separate_selector_step": true,
+ "weekly_cap": "as shown on the submission page",
+ "conditional_projection_not_a_score": {
+  "note": "conditional projection on owner-reported |G| bracket 18,000-27,400 (IR-H60-002); never a forecast or a score",
+  "rho_0.03": {
+   "G_lo": 0.0515,
+   "G_hi": 0.0383
+  },
+  "rho_0.05": {
+   "G_lo": 0.0858,
+   "G_hi": 0.0639
+  },
+  "rho_0.07": {
+   "G_lo": 0.1201,
+   "G_hi": 0.0894
+  },
+  "rho_0.09": {
+   "G_lo": 0.1544,
+   "G_hi": 0.115
+  },
+  "rho_0.12": {
+   "G_lo": 0.2059,
+   "G_hi": 0.1533
+  },
+  "rho_0.14": {
+   "G_lo": 0.2403,
+   "G_hi": 0.1789
+  }
+ },
+ "data_qualification": "pinned owner-mirror bytes, SHA-verified; NOT organizer-authenticated",
+ "download_ok": true,
+ "submit_ok": false
+}

@@ -1,0 +1,123 @@
+{
+  "round": "H62",
+  "title": "Buried structural corridors: cover-gated, edge-conditioned, persistence-filtered A-only disagreement",
+  "lane": "co-training between a geophysical view and a surface view, with disagreement as the discovery signal (Blum & Mitchell, COLT '98, doi:10.1145/279943.279962)",
+  "frozen_before_any_fit": true,
+  "written_utc": "2026-10-08T23:55:00Z",
+  "knowledge_doc": "knowledge/32_hypotheses_H62_preregistered.md",
+  "data": {
+    "root": "work/pinned",
+    "manifest": "registry/data_manifest.json",
+    "files_expected": 23,
+    "qualification": "integrity-pinned owner-mirror bytes, SHA-256 verified; NOT organizer-authenticated (DrivenData data tab is login-walled)"
+  },
+  "protocol": {
+    "seed": 20261009,
+    "feature_stack": "gems52.h57.build_layers default spec cached under work/h62 (16 training_features bands + 9 external bands, val/grad/range = 75 uint8 rank layers); same spec as H60D",
+    "views": {
+      "A": "h57.VIEW_A_LAYERS (potential-field/subsurface: gravity 5/11/13/18, magnetics 1/2/3/9/14, strain 4, seismicity 16, depth 15, conductivity 17)",
+      "B": "h57.VIEW_B_LAYERS (surface: radiometric TC 6, det_elev 12, det_elev_slope 19, external LiDAR scarp + GeoDAWN radiometric/ratio bands)"
+    },
+    "oof_folds": "holdout.make_folds(mode='hide', n_folds=4, buffer_px=4, prevalence=0.002, seed=20261009)",
+    "thresholds": {
+      "q_conf": 0.6,
+      "q_abstain": 0.4,
+      "independence_abandonment_max_abs_r": 0.6,
+      "block_px": 50,
+      "min_negatives_per_block": 300,
+      "neg_train": 60000,
+      "leakage_canary_auc_max": 0.9
+    },
+    "budgets_px": [15000, 37654],
+    "final_budget_px": 37654,
+    "emitter": "gems52.h57.iso_select(min_px=3, nms_px=5) — registered scoring emitter (H60-5)",
+    "ring": "no emission inside binary_dilation(catalogue, 2 px)",
+    "pool": "fold region & footprint & ~dilate(catalogue, 2 px)"
+  },
+  "hypotheses": [
+    {
+      "id": "H62-1",
+      "rank": 1,
+      "status": "validate_now",
+      "field": "max(pA-pB,0) OOF, gated by depth_to_basement>=200m AND potential-field edge grad>=P75 AND line-persistence corridor (line opening 2..4 px half-widths, skeleton length>=15 px, elongation>=3)",
+      "layers": "View A vs View B OOF probabilities; band 15 depth_to_base; grav_anom_grad/rtp_grad/tmi_hg_grad",
+      "physical_signature": "multi-km linear density/susceptibility step beneath cover with no DEM/LiDAR scarp",
+      "why_off_catalogue": "labels are surface-mapped (USGS quaternary faults + INGENIOUS); buried faults have no scarp, so they are the canonical faults missing from the catalogue — and the private truth is expert-drawn faults not in the USGS database (official problem page)",
+      "new_vs_repo": "H60D emitted ungated dis_contrast top-k; H52-1 used cover as population corroboration only; no round filtered a disagreement mask for line persistence or combined cover+edge+persistence on the novel pool",
+      "mimic_non_fault": "buried paleochannels and basin-fill edges, lithologic contacts, dike swarms",
+      "expected": "high",
+      "cost": "medium"
+    },
+    {
+      "id": "H62-2",
+      "rank": 2,
+      "status": "validate_if_H62-1_passes_clause_a",
+      "field": "H62-1 corridor skeleton crossings (within 2 px) AND (eq_density>=P75 OR geod_2ndinv>=P75)",
+      "layers": "band 16 eq_density; band 4 geodetic second invariant; H62-1 skeleton",
+      "physical_signature": "dilational step-overs and fault intersections localize extension, seismicity, hydrothermal upflow (INGENIOUS play-fairway logic)",
+      "why_off_catalogue": "buried intersections have no surface expression at all",
+      "new_vs_repo": "H53 nodes were azimuth-coincidence tiles; no round extracted crossing nodes of a disagreement corridor skeleton gated on seismicity/strain",
+      "mimic_non_fault": "induced seismicity clusters, quarry blasts, mining districts",
+      "expected": "medium-high",
+      "cost": "low"
+    },
+    {
+      "id": "H62-3",
+      "rank": 3,
+      "status": "proposal_only",
+      "field": "H62-1 corridors AND radiometric alteration anomaly (K>=P75 and Th/K<=P25 on ext_geodawn_rad_u8/extensions)",
+      "layers": "ext_geodawn_rad_u8, ext_geodawn_extensions_u8, band 6",
+      "physical_signature": "hydrothermal alteration halo of a convective geothermal system along buried structure",
+      "why_off_catalogue": "alteration is not a fault-map criterion; blind systems have no scarp",
+      "new_vs_repo": "sibling site GEMSDOE46 fused scarp+radiometric on surface features; inside this repo radiometric never gated A-only corridors",
+      "mimic_non_fault": "ash-flow tuffs with primary K anomalies, lithologic K variation, evaporites",
+      "expected": "medium",
+      "cost": "medium"
+    },
+    {
+      "id": "H62-4",
+      "rank": 4,
+      "status": "proposal_only",
+      "field": "3-round ratcheted co-training (thresholds 0.60/0.70/0.80), whole-segment pseudo-labels, same-seed no-exchange control per round",
+      "layers": "both views",
+      "physical_signature": "iterative Blum-Mitchell confidence accumulation",
+      "why_off_catalogue": "same argument as H60D",
+      "new_vs_repo": "H60D ran exactly one round; no ratcheted multi-round arm exists",
+      "mimic_non_fault": "self-training drift / confirmation bias (five nulls already measured for one round)",
+      "expected": "low",
+      "cost": "low"
+    },
+    {
+      "id": "H62-5",
+      "rank": 5,
+      "status": "proposal_only",
+      "field": "View A refit with B-confident/A-abstain population as hard negatives, then A-only disagreement re-ranked",
+      "layers": "both views; B-only stratum as artifact proxy (roads/quarry/erosion)",
+      "physical_signature": "de-biasing: remove surface-artifact signature from the geophysical view's confident core",
+      "why_off_catalogue": "reduces false A-only mass, raising corridor precision",
+      "new_vs_repo": "no round used the B-only population as labelled hard negatives; external roads vectors (USGS TIGER/Line) would strengthen it but are not required",
+      "mimic_non_fault": "real faults crossing roads down-weighted as artifacts",
+      "expected": "medium",
+      "cost": "low"
+    }
+  ],
+  "decision_rules": {
+    "independence_gate": "abandon co-training framing if block OOF negative-error max|Spearman| >= 0.60",
+    "leakage_canary": "single-layer holdout AUC > 0.90 flags leakage; stop",
+    "weak_surface_subgroup": "withheld segments whose mean view-B OOF probability along the segment is below the median across segments; H62-1 must beat view_B there with >=3/4 fold wins (hide instrument, matched budget)",
+    "promotion_bar_all_required": [
+      "37654px hide pooled H62-1 > ungated dis_contrast AND > matched random",
+      "weak_surface_subgroup win vs view_B with >=3/4 folds",
+      "overall hide pooled >= matched random",
+      "format gate 0 problems, all-finite {0,1}, CRS/shape/transform match",
+      "uniqueness: no decoded-pattern match; rank-corr <= 0.90 and dot proximity <= 0.70 vs registry rasters excluding manifest-classified calibration rasters (H60-6); raw proximity incl. calibration reported",
+      "not-merely-union: >=90% of emitted px outside max(pA,pB) single-view matched-budget emission union"
+    ],
+    "emitter": "h57.iso_select min_px=3 nms_px=5",
+    "ring": "binary_dilation(catalogue, 2 px) forbidden",
+    "raster_contract": "single-band float32 binary {0,1}, all finite (zeros outside footprint — portal rejects NaN with 'Predicted values must be in range [0, 1]'), EPSG:32611, 3730x3292, sample_submission transform",
+    "labelling": "every number HOLDOUT-DTI (evaluator version, withheld positives, 95% CI) or OWNER-REPORTED; projections are never scores",
+    "budget_of_work": "3 experiments (E1 baselines/canary, E2 H62-1 validation, E3 build+gates) or 2 hours",
+    "submission_slot": "never spent here; promotion is a separate selector step within the weekly cap"
+  }
+}

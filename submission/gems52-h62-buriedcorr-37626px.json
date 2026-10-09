@@ -1,0 +1,32 @@
+{
+  "file": "gems52-h62-buriedcorr-37626px.tif",
+  "sha256": "6b494e7d1abc476555778c699e8d51a6cbd10658f57dfb60f1ccafc3f91924eb",
+  "bytes": 107764,
+  "generated_utc": "2026-10-09T01:40:17Z",
+  "submission_name": "gems52-h62-buriedcorr-37626px-6b494e7d-zeros",
+  "note": "H62 buried corridors: cover/edge/persistence gates on A-only disagreement; finite binary [0,1]; off-prior; hypotheses, not verified faults",
+  "note_chars": 138,
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "status": "research-only; local format validation is not organizer acceptance",
+  "metadata": {
+    "round": "H62-buriedcorr",
+    "field": "cover/edge/persistence-gated A-only disagreement",
+    "emitted_px": 37626,
+    "positive_field_crests": 1709,
+    "zero_field_fill": 35917,
+    "ring_min_m": 223.6,
+    "priors_checked": 80,
+    "novel_fraction": 1.0,
+    "role": "current research candidate (one-click download); NOT slot-approved",
+    "supersedes": "gems52-h62-buriedcorr-37627px.tif (pre-merge freeze)",
+    "build_note": "selection is registry-dependent: the required-novel pool excludes every prior support, so when the concurrent H61/H62-concordance files joined the registry the same pipeline emitted 37,626 px instead of 37,627",
+    "recheck_after_h63_merge": {
+      "novel_fraction": 0.9959,
+      "n_priors_checked": 83,
+      "canonical_pattern_unique": true,
+      "note": "re-measured after the H63 step-normalised round's rasters joined the registry (PR #48): ~155 emitted pixels now lie inside the H63 emission's support. The 1.0000 claim above is the build-time measurement against the 80-prior registry; per IR-H62-010 zero-copy claims are point-in-time against a live registry. No rebuild was done (the emission is itself a function of the registry; the promotion bar had already failed and no slot is at stake)."
+    }
+  }
+}

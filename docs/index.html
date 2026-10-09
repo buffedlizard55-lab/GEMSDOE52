@@ -24,6 +24,39 @@
 <p class="fine">A valid file is not an approved competition entry. Promotion to a weekly slot is a separate selector step.</p>
 <a class="small" href="data/h63_run_card.json">Inspect the complete JSON run card ↗</a></aside></section>
 <hr class="divider">
+<!--H62B-BANNER--><hr class="divider">
+<div class="section-head"><h2>Concurrent round · H62-buriedcorr (disagreement arm)</h2><a href="h62-buriedcorr.html">Buriedcorr audit →</a></div>
+<p class="small">Runs the same co-training paragraph with the registered DISAGREEMENT discovery signal (the H62 banner above is the concordance arm of the same lane). Both rounds are research-only; neither is slot-approved.</p>
+<section class="hero"><div>
+<div class="eyebrow">DOE GEMS / H62-buriedcorr · co-training lane (concurrent round)</div>
+<h1>Your submission file.<br>One click.</h1>
+<p class="lead">Buried structural corridors: co-training disagreement (geophysical view confident, surface view silent) gated by cover depth, potential-field edges and line persistence. New pixels only — no prior submission is copied.</p>
+<div class="notice" role="note"><strong>DOWNLOAD FOR REVIEW: YES · SUBMIT TO COMPETITION: NO — DO NOT SUBMIT this run</strong><p>DOWNLOAD FOR REVIEW: YES. SUBMIT TO COMPETITION: NO — preregistered promotion bar not met; research artifact only · NO CERTIFIED LEADERBOARD GAIN · do not upload research archives</p></div>
+<div class="actions"><a class="button" href="downloads/h62-buriedcorr-candidate.tif" download>Download submission GeoTIFF ↓</a>
+<a class="button secondary" href="downloads/h62-buriedcorr-candidate.zip" download>Single-TIFF ZIP (paste-ready name+note)</a></div>
+<p class="fileline">gems52-h62-buriedcorr-37626px.tif<br>107,764 bytes · 37,626 emitted pixels · SHA-256 6b494e7d1abc476555778c699e8d51a6cbd10658f57dfb60f1ccafc3f91924eb</p>
+<p class="small"><a href="executive-summary.html">Exactly how to submit — step by step →</a></p>
+</div>
+<aside class="panel" aria-label="Submission readiness"><div class="label">Readiness / measured, not promised</div>
+<div class="status-line"><span>Single-band GeoTIFF</span><span class='good'>PASS</span></div>
+<div class="status-line"><span>Finite values in [0, 1] (no NaN)</span><span class="good">PASS</span></div>
+<div class="status-line"><span>CRS, shape &amp; transform</span><span class="good">PASS</span></div>
+<div class="status-line"><span>Copied prior prediction?</span><span class="good">NO — 1.0 novel</span></div>
+<div class="status-line"><span>Preregistered promotion bar</span><span class='bad'>NOT MET — research only</span></div>
+<p class="fine">A format-valid file is not automatically an approved competition entry. Promotion to a weekly slot is a separate selector step, within the weekly cap on the submission page.</p>
+<a class="small" href="data/h62_buriedcorr_run_card.json">Inspect the complete JSON run card ↗</a></aside></section>
+<hr class="divider">
+<div class="section-head"><h2>What the holdout says (HOLDOUT-DTI — not a leaderboard score)</h2><a href="h62-buriedcorr.html">Full audit →</a></div>
+<p class="small">36,411 withheld positives · 4 whole-segment hide folds · α 0.2 / β 0.8 · 300 m triangular kernel · evaluator pinned in the run card. Independent views confirmed: error correlation 0.1763 &lt; 0.60; leakage canary clean (B_lidar_step_max_grad 0.7136).</p>
+<div class="table-wrap"><table><thead><tr><th>field @ 37,654 px</th><th>hide pooled HOLDOUT-DTI</th></tr></thead><tbody><tr><td>H62_1_corridors</td><td class='numeric'>0.003598</td></tr><tr><td>view_B</td><td class='numeric'>0.006443</td></tr><tr><td>clf_union</td><td class='numeric'>0.006201</td></tr><tr><td>dis_contrast</td><td class='numeric'>0.004123</td></tr><tr><td>view_A</td><td class='numeric'>0.003948</td></tr><tr><td>random</td><td class='numeric'>0.001775</td></tr></tbody></table></div>
+<hr class="divider">
+<div class="cards">
+<section class="card"><div class="eyebrow">01 / new signal</div><h3>Buried corridors</h3><span class="num">1,709 crest pixels</span><p>Geophysical edges under ≥200 m of cover with no surface scarp — the faults a surface-mapped catalogue structurally cannot contain.</p></section>
+<section class="card"><div class="eyebrow">02 / zero-copy</div><h3>No inherited pixels</h3><span class="num">1.0 novel</span><p>Every emitted pixel lies outside every accessible prior submission's support and ≥200 m from the mapped catalogue.</p></section>
+<section class="card"><div class="eyebrow">03 / review-ready</div><h3>Geology per pixel</h3><span class="num">37,626 reasoning rows</span><p>Each emitted pixel and each A-only segment carries written geological reasoning and an explicit falsifier for Phase-2 reviewers.</p></section>
+</div>
+<!--/H62B-BANNER-->
+
 <div class="section-head"><h2>What the holdout says</h2><a href="h63-audit.html#holdout">Method &amp; limitations →</a></div>
 <p class="small"><b>HOLDOUT-DTI</b> · evaluator <code>gems52-pooled-hide-v1</code> · 53,186 withheld positive pixels · pooled TPw/FPw/FNw · α 0.2 / β 0.8 · 300 m triangular kernel · 95% paired physical-cluster bootstrap (152 clusters, 1000 draws). Every arm placed exactly 9400 dots per fold at 3 px separation: all arms filled their budget. Not an organiser score.</p>
 <div class="table-wrap"><table><thead><tr><th>Arm</th><th>HOLDOUT-DTI</th><th>95% CI</th><th>Withheld positives</th></tr></thead><tbody><tr class=""><td>single_A</td><td class="numeric">0.084788</td><td class="numeric">[0.0709, 0.0983]</td><td class="numeric">53,186</td></tr><tr class=""><td>single_B</td><td class="numeric">0.174193</td><td class="numeric">[0.1515, 0.1936]</td><td class="numeric">53,186</td></tr><tr class=""><td>union_max</td><td class="numeric">0.151308</td><td class="numeric">[0.1321, 0.1691]</td><td class="numeric">53,186</td></tr><tr class=""><td>disagreement_pre</td><td class="numeric">0.040620</td><td class="numeric">[0.0320, 0.0501]</td><td class="numeric">53,186</td></tr><tr class="highlight"><td>disagreement_post</td><td class="numeric">0.040257</td><td class="numeric">[0.0321, 0.0487]</td><td class="numeric">53,186</td></tr><tr class=""><td>random</td><td class="numeric">0.078257</td><td class="numeric">[0.0682, 0.0879]</td><td class="numeric">53,186</td></tr></tbody></table></div>
