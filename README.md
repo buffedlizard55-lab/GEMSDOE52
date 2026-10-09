@@ -1,55 +1,42 @@
 <!--H65-README-->
-# Current status — H65 (2026-10-09; first written as H62): NEGATIVE at the premise gate, nothing submitted
+# Current status — H65 (2026-10-09): NEGATIVE at the premise gate; no file emitted
 
-> The protocol file keeps its original H62 label in its body (byte-identical). This round is H65 in filenames; see [`knowledge/41a`](knowledge/41a_amendment_2026-10-09_H65_sources.md).
+> **CURRENT H65 TIFF: NONE · DOWNLOAD AN H65 TIFF: NO (none exists) · SUBMIT H65: NO.** No H65 candidate raster exists. No HOLDOUT-DTI or independence result was produced; the conditional holdout arm was not authorized; zero competition slots were used.
 
-> **SUBMIT TO THE COMPETITION: NO.** No new GeoTIFF was produced. The one-click file below is the H61 file,
-> and it is a **measured lane duplicate** (see IR-H65-004), not a lane-valid unique submission.
+H65-A tested a cross-strike, regionally detrended offset of `raw_band_15` and `raw_band_13` as View A, using label-blind quadrant folds (buffer 80 px). The frozen protocol is [`knowledge/41_hypotheses_H65_preregistered.md`](knowledge/41_hypotheses_H65_preregistered.md), SHA-256 `4d9d559f…2bef71`. The protocol keeps its original H62 label inside the frozen file; the rename and source correction are recorded in [`knowledge/41a_amendment_2026-10-09_H65_sources.md`](knowledge/41a_amendment_2026-10-09_H65_sources.md).
 
-**What was tested.** H65-A, the only hypothesis run this round. A cross-strike, regionally detrended offset of
-`raw_band_15` and `raw_band_13` as View A, with label-blind quadrant folds (buffer 80 px).
-Preregistered in [`knowledge/34`](knowledge/41_hypotheses_H65_preregistered.md) (SHA-256 `4d9d559f…2bef71`).
-A dated amendment that corrects its source list, without editing the frozen file, is in
-[`knowledge/34a`](knowledge/41a_amendment_2026-10-09_H65_sources.md).
-
-| Check | Label | Result | Receipt |
+| Check | Evidence class | Result | Receipt |
 |---|---|---|---|
-| Operator audit (H60-3 vs cross-strike) | SYNTHETIC | H60-3 responds at 1.5e-05 of cross-strike on a step; it is not a step detector | [`evidence/h65_operator_audit.json`](evidence/h65_operator_audit.json) |
-| Premise (out-of-quadrant AUC) | PREMISE-AUC | mean **0.5202**, min fold **0.4706**; gate needs ≥ 0.60 and ≥ 0.55 → **FAIL** | [`evidence/h65_premise.json`](evidence/h65_premise.json) |
-| Leakage canary (alarm > 0.90) | PREMISE-AUC | max single-feature 0.5904; no alarm | [`evidence/h65_canary.json`](evidence/h65_canary.json) |
-| HOLDOUT-DTI (hide-and-recover) | HOLDOUT-DTI | **not run** (premise gate failed) | — |
-| Uniqueness of the H61 file, census of 530 priors | diagnostic | surface PASS (max ρ 0.034); dots **DUPLICATE/STOP** (literal 1.0000; policy 0.87875, 9 informative priors above 0.70) | [`evidence/h61_uniqueness_census_20261009.json`](evidence/h61_uniqueness_census_20261009.json) |
+| Operator audit | SYNTHETIC | Prior along-strike H60-3 operator does not detect the designed cross-strike step | [`evidence/h65_operator_audit.json`](evidence/h65_operator_audit.json) |
+| H65-A premise | **PREMISE-AUC, not HOLDOUT-DTI** | Mean 0.5202; minimum fold 0.4706; registered thresholds 0.60 / 0.55; **FAIL** | [`evidence/h65_premise.json`](evidence/h65_premise.json) |
+| Leakage canary | PREMISE-AUC diagnostic | No registered alarm | [`evidence/h65_canary.json`](evidence/h65_canary.json) |
+| HOLDOUT-DTI | **HOLDOUT-DTI** | **NOT RUN**; no evaluator, withheld-positive count, DTI or CI | [`evidence/h65_run_card.json`](evidence/h65_run_card.json) |
+| H65 raster/validator/uniqueness | Not applicable | No raster emitted; no SHA, validator output, surface check or final-dot check | [`evidence/h65_continuation_card.json`](evidence/h65_continuation_card.json) |
+| Existing H61 raster | Historical diagnostic | **DUPLICATE/STOP**; not an H65 substitute | [`evidence/h61_uniqueness_census_20261009.json`](evidence/h61_uniqueness_census_20261009.json) |
 
-**Verdict: H65 not promoted.** Experiments used: 2 of 3 (E3 not authorised). Run card:
-[`evidence/h65_run_card.json`](evidence/h65_run_card.json). Full note: [`knowledge/35`](knowledge/42_h65_results_and_limits.md).
-Tests: `tests/test_h65.py` 8 passed; full suite 309 passed.
+**Verified repository tests after restoring the two small test fixtures from owner mirrors:** 345 passed, 1 skipped, 0 failed. This is software/test evidence only, not a model result or organizer validation. The pinned `training_features.tif` and reusable feature cache are absent; no new fit was started.
 
-**Leaderboard correction (PUBLIC BOARD, not ORGANIZER-CONFIRMED).** The brief says 0.3195 is the highest score.
-It is not. On the live DrivenData board on 2026-10-09 the top is **0.3774** (xiaofanhu), and 0.3195 is rank 7 (DARD):
-[leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/). The 0.2778 row is
-rank 13 (extradr19) and is not linked to any file (IR-H65-003).
+The requested provisional 4-item candidate screen, novelty comparisons, source limitations and three-pass review are in [`knowledge/43_repository_review_20261009.md`](knowledge/43_repository_review_20261009.md). None is staged or approved for implementation; all named external source pages remain unverified in this sandbox.
 
-**Irregularities logged this round:** IR-H65-001 (H60-3 operator mis-specified), -002 (the brief's "highest score"
-claim), -003 (0.2778 row not linked to a file), -004 (H61 lane status under the literal rule and the policy),
--005 (7 census blobs HTTP 403, covered by byte-identical local copies), -006 (H61 file has no nodata tag;
-sample declares NaN), -007 (portal error not reproduced).
+**Score provenance correction (IR-H65-003).** The public-board row at 0.2778 is listed under `extradr19`, but no submission-page receipt links it to `h33-2-b2` or its hash. The owner-controlled GEMSDOE32 page at [pinned commit `0d6a624`](https://github.com/buffedlizard55-lab/GEMSDOE32/blob/0d6a6243147cd63a2000412d575d4c80a36d3a62/docs/index.html) calls 0.2747 a **model projection** and says no organizer score exists. Older ring-deletion explanations in this README are historical conditional analyses, not verified explanations of an awarded score.
 
-**Still open:** a unique, lane-valid candidate; a HOLDOUT-DTI number for any H65 arm; the source items 4–6 in
-`knowledge/34` §4 (unopened); the 0.2778 file-to-row receipt; the portal error text.
+**Leaderboard snapshot (PUBLIC BOARD, not ORGANIZER-CONFIRMED).** A live observation recorded in the H65 source amendment on 2026-10-09 showed 0.3774 at #1 and 0.3195 at #7. It was not fetched again in this continuation; leaderboard rows are not submission-page receipts and may change.
+
+**Open irregularities:** IR-H65-001 through IR-H65-007 remain documented in [`registry/irregularities.json`](registry/irregularities.json). In particular, IR-H65-003 (unlinked score/file attribution), IR-H65-004 (H61 lane status), and IR-H65-007 (portal error not reproduced) remain open. No official DrivenData, USGS or GDR page was fetched in this continuation because those hosts are outside the sandbox egress allowlist.
 <!--/H65-README-->
 
 <!--H64-README-->
-# GEMSDOE52 — H64: a unique GeoTIFF, and the verdict on whether it may be submitted
+# Historical archive — H64 (2026-10-09); not the current H65 status
 
-**[★ Download the H64 GeoTIFF — one click](docs/downloads/h64-candidate.tif)** ·
+**[Archived H64 GeoTIFF — research archive only, NOT H65](docs/downloads/h64-candidate.tif)** ·
 [single-TIFF ZIP](docs/downloads/h64-candidate.zip) ·
 [A-only reasoning CSV, gzip](docs/downloads/h64-a-only-reasoning.csv.gz) ·
 **[Executive summary / exact submission steps](docs/h64-executive-summary.html)** ·
 [Landing page](docs/h64.html) · [Run card](evidence/h64_run_card.json) ·
 [Results and limits](knowledge/40_h64_results_and_limits.md)
 
-> **DOWNLOAD: YES, for research (unique on decoded pixels). SUBMIT TO THE COMPETITION: NO.**
-> Verdict `NEGATIVE, research-only`. The file is not identical, on decoded pixels, to any of the 548 registry
+> **HISTORICAL H64 ARCHIVE · H64 DOWNLOAD FOR RESEARCH ONLY · H65 DOWNLOAD: NO · H65 SUBMIT: NO.**
+> H64 verdict `NEGATIVE, research-only`; this historical file is not an H65 candidate. It is not identical, on decoded pixels, to any of the 548 registry
 > rasters (tier 1), and it shares no positive pixel with any of the 511 informative rasters (tier 2, novelty 1.0;
 > the 35 universal-coverage probes do share pixels, as they cover the footprint). It is still
 > **not** submit-eligible: the lane marks it DUPLICATE under the 70% per-raster rule (largest near-dot share
@@ -130,19 +117,18 @@ gate has not been run. Repo context: `knowledge/01`, `03`, `10`, `25`, `27`, `31
 <!--/H64-README-->
 
 <!--H63-README-->
-# GEMSDOE52 — a new research GeoTIFF and an explicit submit verdict
+# Historical archive — H63 (2026-10-09); not the current H65 status
 
-**[★ Download the H63 GeoTIFF — one click](docs/downloads/h63-candidate.tif)** ·
+**[Archived H63 GeoTIFF — research archive only, NOT H65](docs/downloads/h63-candidate.tif)** ·
 [single-TIFF ZIP](docs/downloads/h63-candidate.zip) ·
 [geological reasoning CSV](docs/downloads/h63-a-only-reasoning.csv) ·
 **[Executive summary / exact submission guide](docs/executive-summary.html)** ·
 [Run &amp; evidence](docs/h63-audit.html) · [Sources](docs/h63-sources.html) ·
 [Run card](evidence/h63_run_card.json)
 
-> **DOWNLOAD: YES · SUBMIT TO THE COMPETITION: NO.**
-> Verdict `negative`. The file is newly inferred, portal-safe by construction and different
-> from every checked prior's decoded predictions, but the lane gate stops it on the final dots,
-> it does **not** beat the reported champion at either end of the measured `|G|` interval, and its
+> **HISTORICAL H63 ARCHIVE · H63 DOWNLOAD FOR RESEARCH ONLY · H65 DOWNLOAD: NO · H65 SUBMIT: NO.**
+> H63 verdict `negative`. Its local file-format checks are not an organizer-acceptance receipt. The lane gate stopped it on the final dots;
+> it does **not** beat the owner-reported, score-derived comparison at either end of the measured `|G|` interval (the score-to-file link remains unresolved), and its
 > own view-A premise failed the sufficiency screen on the holdout.
 > **Competition slots used: 0.**
 
@@ -271,23 +257,24 @@ gate has not been run. Repo context: `knowledge/01`, `03`, `10`, `25`, `27`, `31
   credit only by [0, |G|]. **No leaderboard gain is claimed or projected.**
 
 
-**[Download the H61 GeoTIFF](docs/downloads/h61-candidate.tif)** ·
+**[Archived H61 GeoTIFF — research archive only, NOT H65](docs/downloads/h61-candidate.tif)** ·
 [single-TIFF ZIP](docs/downloads/h61-candidate.zip) ·
 [geological reasoning CSV](docs/downloads/h61-a-only-reasoning.csv) ·
 [Run &amp; evidence](docs/h61-audit.html) · [H61 landing archive](docs/archive-h61-overview.html) ·
 [Run card](evidence/h61_run_card.json)
 
-> **DOWNLOAD: YES · SUBMIT TO THE COMPETITION: NO.**
-> Verdict `negative`. Newly inferred, portal-safe and decoded-pattern-unique, but the lane gate
+> **HISTORICAL H61 ARCHIVE · H61 DOWNLOAD FOR RESEARCH ONLY · H65 DOWNLOAD: NO · H65 SUBMIT: NO.**
+> H61 verdict `negative`. Its local format/decoded-pattern checks do not establish portal acceptance; the lane gate
 > stops it and it does not beat the reported champion at either end of `|G|`.
 
 ## What H61 repaired in the shared instruments, before fitting anything
 
 1. **`|G|` is an interval, not a measurement: [5,949.3, 12,512.1] px.**
    Thirteen owner-reported scores are thirteen equations in fourteen unknowns. The previously published
-   point value 14,088.7 px is **outside** that interval; it
-   requires the 6,436 px the champion deleted to earn exactly zero credit, and 25 credit of ring income
-   alone moves it to 12333 px.
+   point value 14,088.7 px is **outside** that interval. The earlier H60 derivation tied that point
+   to an assumed zero-credit ring in an owner-reported nested pair; this does **not** establish the
+   ring's actual credit or authenticate the score-to-file mapping. The interval is itself derived
+   from owner-reported scores and is not organizer-confirmed.
    [IR-H61-001](registry/irregularities.json) · [receipt](evidence/h61_forensics.json)
 2. **Masked support `S`.** Known catalogue pixels are masked out of evaluation, so `S` counts
    off-catalogue pixels. Witness: `Hedge-v2` and `ens12-7f00890a` have identical off-catalogue support
@@ -319,22 +306,14 @@ gate has not been run. Repo context: `knowledge/01`, `03`, `10`, `25`, `27`, `31
 7. **CTD5's own diagnosis is vindicated by the same instrument**: its informative-prior near-dot
    fractions are 0.1063–0.1368 with |ρ| ≤ 0.0046, i.e. its STOP was entirely the probe.
 
-## Why 0.2778 won, measured from the bytes
+## What is measured about the `h33-2-b2` owner-mirror raster — not why any score was awarded
 
-The reported-0.2778 champion `h33-2-b2` is a **strict subset** of the reported-0.2600 file
-(37,654 ⊂ 44,090 off-catalogue px), which is itself a strict subset of the reported-0.1922 parent field
-(⊂ 121,131 px). The champion added **zero** pixels and deleted
-6,436, every one of them between
-100 m and
-200 m from a mapped trace; its own
-nearest dot is 223.6 m away. Since
-`DTI = T / (0.2·(T + S − M) + 0.8·(|G| − T))` carries a fixed `0.8·|G|` floor in the denominator, pruning
-zero-credit mass raises the ratio without finding anything new. **It is precision, not detection.**
-Beating it therefore needs either a recombination of existing public mass — which is a duplicate by
-construction and outside this lane — or a detector above
-0.1295 credit density on *novel* mass, which
-no instrument in this repository can certify: the local simulator measured Spearman −0.10 against the
-owner-reported board in R4.
+**Provenance correction (IR-H65-003):** the public-board row at 0.2778 is under `extradr19`; no submission-page receipt links it to this filename, token or hash. The owner-controlled GEMSDOE32 page at a pinned commit labels 0.2747 a model projection and says no organizer score exists. These bytes therefore do not prove the raster received either figure.
+
+On the local owner-mirror copies, decoded-pixel comparison records `h33-2-b2` as a subset of another raster and measures the locations of the differing pixels. Those are file-to-file geometry observations only. They do not show that the removed cells had zero competition credit, that the local score labels are correct, or that pruning caused a score increase. The H60 nested-pair algebra and its assumed `|G| = 14,088.7` point value are superseded as measurements by the later H61 interval analysis (`IR-H61-001`); all score-derived bounds still depend on owner-reported values and are not ORGANIZER-CONFIRMED.
+
+**Safe conclusion:** no verified causal explanation for the 0.2778 board row is available from this repository. Do not use the old “free precision” story as an established fact or a leaderboard forecast. See [`knowledge/43_repository_review_20261009.md`](knowledge/43_repository_review_20261009.md) and [`knowledge/27_why_02778_h60.md`](knowledge/27_why_02778_h60.md) (historical, conditional analysis).
+
 <!--/H61-README-->
 
 ## CTD5 — previous round, preserved verbatim (negative, lane-saturated)
@@ -342,16 +321,15 @@ owner-reported board in R4.
 > Retained as a deliverable. Its `submission/CTD5_RESEARCH_LATEST.txt` marker, run card
 > and archive page are unchanged; nothing below is current authority.
 
-> **Current R5 session status (2026-10-08 UTC): a strictly-novel unique TIF is published, both gates
-> green, no weekly slot authorised.** `submission/gems52-r5-novel-n5_strike_ridge-16681px-20261008T220210Z-33b27433-zeros.tif`
+> **Historical R5 status as recorded on 2026-10-08 UTC (not current H65 guidance).** A file was published and no weekly slot was authorized. `submission/gems52-r5-novel-n5_strike_ridge-16681px-20261008T220210Z-33b27433-zeros.tif`
 > — 16,681 px, 99,210 bytes, single-band float32, EPSG:32611, transform identical to
-> `sample_submission.tif`, values exactly {0,1}, **all 12,279,160 cells finite** (so the portal's
-> "Predicted values must be in range [0, 1]" rejection cannot occur), **novel fraction 1.0000 against
-> all 55 rasters this repository has ever produced** and 1.0000 against the 13 organiser-scored files
-> separately, minimum distance to a mapped trace 223.6 m. Re-running the build reproduces the bytes
-> exactly. Portal name = the file stem; note (185/200 chars) in `docs/data/submission_r5.json`.
-> **OK to download: YES. Portal-acceptable: YES. Slot-approved: NO** — P(DTI > 0.2778) = 0.366,
-> P(> 0.3195) = 0.226, P(> 0.3774) = 0.031 under the frozen prior, and the hide-and-recover instrument
+> `sample_submission.tif`, values exactly {0,1}, and **all 12,279,160 cells finite** (local file facts only;
+> portal acceptance and the cause of the reported range rejection were not verified). The historical
+> build receipt reported novel fraction 1.0000 against the then-accessible 55 repository rasters and
+> 1.0000 against 13 owner-labelled scored files; those labels are not organizer-authenticated. It
+> reported minimum distance to a mapped trace of 223.6 m. Re-running the build reportedly reproduced
+> the bytes. Portal name and note are archived in `docs/data/submission_r5.json`.
+> **Historical research archive: available then. Portal acceptance: NOT VERIFIED. Slot-approved: NO.** Historical model projections under the frozen prior (not HOLDOUT-DTI or scores): P(DTI > 0.2778) = 0.366, P(> 0.3195) = 0.226, P(> 0.3774) = 0.031. The hide-and-recover instrument
 > is disqualified (`knowledge/10` §5) and was reproduced as disqualified on new data this round
 > (habitat 0.0003 < random 0.0275 < trace 0.0395, an order the board inverts), so the standing
 > "beat the holdout best first" rule cannot be satisfied by any candidate. Site: `docs/index.html`,
@@ -404,7 +382,7 @@ owner-reported board in R4.
 
 > **PREVIOUS ROUND — H62 (2026-10-09, parallel session; merged to main as PR #46 before this round was renamed H63). [Download the research GeoTIFF](docs/downloads/gems52-h62-conc_soft-arm22000px.tif)** · [single-TIFF ZIP](docs/downloads/gems52-h62-conc_soft-arm22000px.zip) · **[H62 method & evidence](docs/h62.html)** · [Submission guide](docs/executive-summary.html) · [Run card](evidence/h62_run_card.json) · [what it found](knowledge/35_what_h62_found.md)
 >
-> **OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT · NO WEEKLY SLOT ALLOCATED.** Format, the 200 m ring, not-merely-the-union, decoded-pattern uniqueness and the leakage canary all pass. **The lane's strict duplicated-ness gate does not**: 99.99 % of this file's dots lie within 3 px of a spacing-5 square lattice whose 3 px halo covers 99.90 % of the eligible footprint, so that statistic reads ≈1.0 for *any* nonempty candidate. The coverage-aware repair returns PASS on the 76 priors that actually localise something. Both readings are published, neither is suppressed, and the strict gate governs — the same convention that stopped CTD5 and H60D. No organizer-confirmed score exists for this file and none is claimed.
+> **HISTORICAL H62 RESEARCH ARCHIVE · DO NOT TREAT AS CURRENT H65 OR SUBMIT · NO WEEKLY SLOT WAS ALLOCATED.** Format, the 200 m ring, not-merely-the-union, decoded-pattern uniqueness and the leakage canary all pass. **The lane's strict duplicated-ness gate does not**: 99.99 % of this file's dots lie within 3 px of a spacing-5 square lattice whose 3 px halo covers 99.90 % of the eligible footprint, so that statistic reads ≈1.0 for *any* nonempty candidate. The coverage-aware repair returns PASS on the 76 priors that actually localise something. Both readings are published, neither is suppressed, and the strict gate governs — the same convention that stopped CTD5 and H60D. No organizer-confirmed score exists for this file and none is claimed.
 >
 > **What it is.** 22,000 pixels, every one at least 223.6 m from any mapped USGS/INGENIOUS fault, ranked by the **joint confidence** `min(pA,pB)` of two independently trained views (A = potential-field/subsurface, B = surface) and placed by the metric's own 3 px lattice at a derived budget of 22,000 px. 97.6 % of its pixels lie outside `max(pA,pB)`'s own top-k, so it is not merely the union of the two views.
 >
@@ -412,7 +390,7 @@ owner-reported board in R4.
 >
 > **The result.** The lane's own discovery signal — where the two views *disagree* — measures **below a matched random control** on the instrument tied to measured credit (`dis_contrast` 0.60×, `dis_product` 0.66×, cover-conditioned A-only 0.93× random). The **concordance** cell — the opposite corner of the same 2×2 confidence table — beats both single-view baselines and the union on the registered holdout instrument (pooled **HOLDOUT-DTI 0.008467**, 95 % CI [0.003427, 0.011601], 36,474 withheld positives, vs `clf_union` 0.008390 and `view_B` 0.007970). **Verdict: negative — the measurement is positive, the gate is not.**
 
-> **Current H60D session status (co-training with disagreement as the discovery signal, run
+> **Historical H60D session status (co-training with disagreement as the discovery signal, run
 > 2026-10-08 UTC):** hypotheses H60-1…H60-4 were registered in
 > `knowledge/30_hypotheses_H60D_preregistered.md` + `registry/h60d_preregistration.json` (SHA-verified,
 > frozen) **before** the first fit, and all were adjudicated on the hide/tip holdout instruments using
@@ -446,7 +424,7 @@ owner-reported board in R4.
 
 **[Download the newly generated TIFF](docs/downloads/ctd5-research.tif)** · [single-TIFF ZIP](docs/downloads/ctd5-research.zip) · **[Executive summary / exact submission guide](docs/executive-summary.html)** · [Run card](evidence/ctd5_run_card.json)
 
-> **DOWNLOAD FOR RESEARCH: YES. SUBMIT TO COMPETITION: NO.** CTD5 is a negative result. It is newly inferred, not copied, and differs from every checked prior's decoded predictions. It nevertheless fails the requested three-pixel lane-uniqueness gate and the scientific promotion requirements. **No competition slot was used.**
+> **HISTORICAL CTD5 ARCHIVE: research-only; not H65. H65 DOWNLOAD: NO · H65 SUBMIT: NO.** CTD5 was a negative result. It was newly inferred, not copied, and differs from every checked prior's decoded predictions. It nevertheless fails the requested three-pixel lane-uniqueness gate and the scientific promotion requirements. **No competition slot was used.**
 
 - **File:** `gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif`
 - **SHA-256:** `a6e6e44aebaf057989e254bd5ce3729e5a94836c0e5687a95e91e3fc8a40c686`
@@ -462,10 +440,10 @@ owner-reported board in R4.
 
 A second concurrent H60 artifact was checked against the unchanged output: closure scope is now **543 files / 362 decoded patterns**, with the same maximum correlations and 100% near-dot STOP. Its code, artifacts and historical pages are preserved. [Second check](evidence/ctd5_second_parallel_check.json).
 
-## Session 2026-10-08 — H60C continuation (co-training lane), re-verified on fresh bytes
+## Historical session 2026-10-08 — H60C continuation (co-training lane)
 
-**DOWNLOAD FOR RESEARCH: YES · SUBMIT: NO.** This session re-verified the co-training-lane artifact on the
-**freshly restored 2026-10-08 SHA-pinned bytes** (not from prior evidence) and added three new hypotheses
+**Historical download for research only · submit: NO.** This session re-verified the co-training-lane artifact on the
+**freshly restored 2026-10-08 owner-mirror SHA-pinned bytes** (not organizer-authenticated) and added three new hypotheses
 with the top one holdout-validated. Nothing was promoted; **no competition slot was used.** [Run card](evidence/h60c_lane_run_card.json) · [lane verification](evidence/h60c_lane_verification.json) · [set-algebra receipts](evidence/h60c_identify_20261008.json) · [new hypotheses](knowledge/30_hypotheses_h60c_new.md)
 
 - **Lane artifact re-verified** (`scripts/verify_lane_h60c.py`): format-valid (EPSG:32611, 3,730×3,292, exact
@@ -474,11 +452,7 @@ with the top one holdout-validated. Nothing was promoted; **no competition slot 
 - **Lane uniqueness gate still fails** (the decisive fact, re-measured): max directed ≤3px dot proximity to one
   registry raster = **1.0** (> 0.70). The 13GEMSDOE spacing-5 lattice saturates **99.87 %** of the eligible
   footprint within 3px, so *no non-empty raster on this frozen footprint can pass the >70% rule*. → **DUPLICATE/STOP, research-only.**
-- **Why 0.2778 / can it beat 0.3195 — re-derived from bytes** (`scripts/h60_forensics.py`, `h60_identify.py`):
-  **|G| = 14,088.7 px**; the champion's entire credit sits in the **25,517-px** 5-family core (density 0.205);
-  the identified DTI interval of that core **P1 = A∩C is [0.2524, 0.3196]** — its top (0.3196) is the
-  "0.3195 current best." Beating it would need pixels denser than 0.205, which **no held measurement shows**;
-  the champion's extra 12,137 px carry zero credit. (All scores are **owner-reported, not organizer-confirmed**.)
+- **Historical H60 score algebra (conditional; not organizer-confirmed):** its `|G|` point and P1 credit interval were calculated from owner-reported scores and the disputed `h33-2-b2` file mapping. They are not measurements of an organizer score or proof that the champion's extra pixels carried zero credit. H61 later bounded `|G|` differently; IR-H65-003 leaves the score-to-file link open.
 - **New hypothesis validated on the holdout** (`scripts/n2_holdout.py`, HOLDOUT-DTI, `gems52-pooled-hide-v1`,
   36,439 withheld, 15k-dot budget): edge-edge coincidence candidate **0.00857 [0.00614, 0.01131]** vs surface
   control **0.01890 [0.01211, 0.02703]**; paired delta **−0.01033 [−0.01848, −0.00347]** → **negative** (does
@@ -496,7 +470,7 @@ Every number below is from a receipt in `evidence/`, produced by `scripts/audit_
 
 Consequences: (1) **no file in this repository is simultaneously unique and holdout-validated**; (2) the proximity gate is practically unpassable on this footprint (see the CTD5 bullet above); (3) the only route to a *unique, competitive* file is a new validated signal, not a re-weighting of prior pixels. Neither file is approved for a competition slot. Competition upload is not performed by this repository. Run card for this audit: [evidence/session_2026-10-08_run_card.json](evidence/session_2026-10-08_run_card.json) (verdict negative; `submit_ok: false`; 0 slots used). Reproduce: `.venv/bin/python scripts/audit_uniqueness.py <file.tif> evidence/<receipt>.json`.
 
-## H60C — the round that answers "why 0.2778" with arithmetic, and ships a bar-sized emission
+## H60C — historical set-algebra analysis; score provenance unresolved
 
 > **⚠ CORRECTION 2026-10-08 — H60C is NOT a unique submission.** Its 35,185 emitted cells are 80.4 % inside the support of prior submissions (73.3 % inside `h33-2-b2` alone; max single-file Jaccard 0.59 with `gems57` H57). Its dot phase is 99.87 % within 3 px of the s5 lattice and 80.7 % near `h19-5`. It is format-valid (single-band float32, EPSG:32611, values in {0,1}), so the file **downloads without a format error**, but it **does not satisfy "unique, not a copy of a previous submission."** Do not present it as the unique submission. [Receipt](evidence/uniqueness_audit_h60c_20261008.json) · [IR-UNQ-001](registry/irregularities.json).
 >
@@ -509,45 +483,17 @@ Consequences: (1) **no file in this repository is simultaneously unique and hold
 [ranked hypotheses](knowledge/25_hypotheses_H60_preregistered.md) ·
 [build receipt](docs/data/h60c_build.json)
 
-### Why `h33-h33-2-b2` scored 0.2778 — measured, not inferred
+### Historical score attribution and conditional algebra — not a verified explanation
 
-`h33-2-b2` is **not a better detector** than the file it came from. It is `gems24-d2-8` (reported
-0.2600) **with 6,436 pixels deleted**. Those 6,436 pixels are exactly the ones lying within
-100–200 m of the mapped USGS/INGENIOUS catalogue, and inverting the published metric on that nested
-pair gives their credit as **exactly zero**. Removing 14.6 % of the file's mass raised its score by
-**+6.8 %**, because a masked pixel can never earn credit but always pays the false-positive tax.
-That single edit is the whole story of the score, and the same algebra yields
+**Correction:** no submission-page receipt links the public-board row at 0.2778 to the local `h33-2-b2` raster. The live row observed in the H65 record is under `extradr19`; the owner-controlled GEMSDOE32 page says no organizer score exists and calls its 0.2747 number a model projection. The score-to-file attribution is unresolved (IR-H65-003).
 
-> **|G| = 14,088.7 px** — the size of the hidden, expert-drawn, off-catalogue truth (0.273 % of the
-> 5,167,373-px footprint, against 1.18 % for the catalogue itself).
+Local owner-mirror analysis records that one raster is a decoded-pixel subset of another, with a measured difference around the mapped catalogue. That does not establish the competition credit of those pixels, a zero-credit ring, or the causal effect of deleting it. Earlier H60 algebra conditionally assumed the disputed score-to-file mapping and the zero-credit premise; later H61 forensics superseded its point `|G|` value. Read those outputs as historical owner-reported scenarios only.
 
-Everything in H60 is downstream of those two numbers. They are recomputed from restored,
-SHA-256-pinned bytes by `scripts/h60_forensics.py`; nothing is copied from a prior note.
+No reliable answer to “why did this file earn 0.2778?” or “what submission will beat the current leader?” can be derived from those local bytes. The board moves; no H60/H61/H65 projection is a score. Current H65 is negative, with no candidate file or HOLDOUT-DTI.
 
-### Can a submission beat 0.3195? — the honest arithmetic
+### What H60 measured locally (historical; score inputs are owner-reported)
 
-With `DTI = T / (0.2·S + 0.8·|G|)` (exact for sparse dot emissions, where `M ≈ T`), the marginal
-rule is: **emit a pixel iff its expected incremental credit `c > α·DTI/(1 − α·DTI)`**, which at
-`DTI ≈ 0.32` is **`c > 0.068`** — about 2.7× what uniform random achieves (measured 0.024–0.028).
-
-Measured credit density of everything we hold:
-
-| set | px | credit | density | × random |
-|---|---:|---:|---:|---:|
-| `P1 = A ∩ C` (this round's core) | 25,517 | 4,133 – 5,233 | **0.163 – 0.205** | 6.8 – 8.5× |
-| `A` champion `h33-2-b2` | 37,654 | 5,223.1 | 0.1387 | 5.7× |
-| `E` `h19-5` parent field | 121,131 | 6,822.6 | 0.0563 | 2.2× |
-| `I` `Hedge-v2` (off-catalogue) | 166,519 | 8,873.5 | 0.0533 | 2.6× |
-| uniform random | — | — | 0.024 – 0.028 | 1× |
-
-`P1` beats the champion iff `t(A \ C) < 674.6`, which covers 64 % of that atom's identified range;
-expected `DTI(P1) = 0.2868` against a *certain* `0.2772–0.2784` for `A`. **`P1` alone does not
-reach 0.3195.** Reaching it requires arm mass at density above the 0.068 bar, and no measurement
-available in this repository can certify that — the twelve scored files leave every non-file subset
-**set-identified with a lower bound of zero** (`scripts/h60_identify.py`). H60 therefore ships the
-arm as a priced bet, sized at the bar, and publishes the full projection table rather than a hope.
-
-### What is new in H60 relative to every earlier round in this repository
+All score-derived quantities in this H60 section are conditional on unauthenticated owner-reported file-to-score mappings. They are not organizer-confirmed.
 
 1. **`|G|` and per-file credit are re-derived from the bytes**, and candidate emissions are then
    bounded by **linear programming over the identified set** — not by a point estimate. Earlier
@@ -564,16 +510,15 @@ arm as a priced bet, sized at the bar, and publishes the full projection table r
    `gemsdoe-ens12-adopted-7f00890a.tif`, 166,519 off-catalogue px each) both report **0.1563**.
    That is the first internal consistency check on the owner-reported file-to-score mapping
    (see `registry/irregularities.json`).
-5. **The 0.2778 / 0.2600 pair is the only nested cross-check of `|G|`, and it is tight**: publication
-   rounding to four decimals moves `|G|` by only ±70 px.
+5. The historical H60 calculation used a reported 0.2778 / 0.2600 nested pair. Because the file-to-score mapping and zero-credit premise are unverified, it is not an authenticated cross-check of `|G|`; see IR-H65-003 and the later H61 correction.
 
-### Is it OK to download? Is it OK to submit?
+### Historical file and portal status
 
-**Download (format-valid): YES. Unique submission: NO (corrected 2026-10-08, see the correction above).** The file is portal-safe by construction — single-band float32,
-EPSG:32611, 3,730 × 3,292, transform identical to `sample_submission.tif`, every pixel finite and
-in `{0, 1}`, no nodata tag. The "Predicted values must be in range [0, 1]" rejection is caused by
-NaN-bearing exports and **cannot occur** with this file; `gems52.grid.write_geotiff` refuses to
-write it otherwise.
+The H60C bytes passed the repository's local single-band float32/grid/range checks, and the local
+uniqueness/lane result is recorded above. This does **not** establish portal acceptance. The
+user-reported “Predicted values must be in range [0, 1]” error was not reproduced from the rejected
+file; its bytes and receipt are unavailable. Do not claim that any particular cause is impossible
+without an organizer validator receipt.
 
 **Spend a weekly submission slot: read `docs/h60c.html` first.** The core is the best-measured mass
 this repository has. The arm's density is not measured and cannot be. The decision, with its full
@@ -582,7 +527,7 @@ sensitivity table, is on the audit page.
 <!--/H60README-->
 
 <!--H60DREADME-->
-## H60D — co-training with disagreement as the discovery signal; NEGATIVE result, artifact published research-only (2026-10-08)
+## Historical H60D archive — co-training with disagreement; negative (2026-10-08)
 
 **[★ H60 GeoTIFF — one click, no scrolling](docs/downloads/h60d-candidate.tif)** · [short ZIP](docs/downloads/h60d-candidate.zip) · [canonical TIFF](docs/downloads/gems52-h60d-dis_contrast-arm37654px.tif) · [per-pixel geology reasoning CSV (37,654 rows)](docs/downloads/gems52-h60d-37654px-candidate-geology.csv) · [A-only segment reasoning CSV (11,196 rows, one falsifier each)](docs/downloads/gems52-h60d-a-only-candidate-segments.csv) · [audit page](docs/h60d.html) · [receipt](docs/data/submission_h60d.json) · [run card](docs/data/h60d_run_card.json) · [slot gate](docs/data/h60d_slot_gate.json) · [validation](docs/data/h60d_validation.json) · [co-training E1](docs/data/h60d_cotrain.json) · [same-seed control](docs/data/h60d_cotrain_control.json) · [preregistration](registry/h60d_preregistration.json) · [ranked hypotheses](knowledge/30_hypotheses_H60D_preregistered.md) · [what H60D found](knowledge/31_what_h60D_found.md).
 
@@ -652,9 +597,9 @@ sensitivity table, is on the audit page.
 <!--/H60DREADME-->
 
 
-## Session 2026-10-09 — H62: two-view co-training with corroboration instead of disagreement
+## Historical H62 session (2026-10-09) — two-view co-training with corroboration instead of disagreement
 
-**DOWNLOAD: YES (research copy) · SUBMIT: NO — the strict lane gate returns DUPLICATE/STOP · WEEKLY SLOT: not allocated and not recommended.**
+**HISTORICAL H62 ARCHIVE · research copy only; not current H65 · H65 DOWNLOAD: NO · H65 SUBMIT: NO.** H62 was DUPLICATE/STOP and not slot-approved.
 Preregistered in [`knowledge/34_hypotheses_H62_preregistered.md`](knowledge/34_hypotheses_H62_preregistered.md) and
 [`registry/h62_preregistration.json`](registry/h62_preregistration.json) **before** the first fit; every number recomputed
 on the 2026-10-09 SHA-pinned bytes (23/23 pins, [`evidence/h62_preflight_integrity.json`](evidence/h62_preflight_integrity.json)).
@@ -673,7 +618,7 @@ and the named non-fault process that could mimic it:
 | 4 | H62-D InSAR strain rate | **not viable here**: ASF/USGS hosts are unreachable from this sandbox |
 | 5 | H62-E pseudo-label exchange | **do not run** — five prior independent nulls |
 
-**Three findings.**
+**Three findings.** The revealed-preference quantities below are conditional on owner-reported scores and the unresolved mapping in IR-H65-003; they are not ORGANIZER-CONFIRMED values or a leaderboard forecast.
 
 1. **The hard corroboration intersection cannot be delivered.** Two independent thinnings of *k* dots in a pool of *n*
    intersect in *k²/n*: 185 px at *k* = 30,000, *n* = 4,861,502. Measured at `q_conf = 0.60`,
@@ -681,7 +626,7 @@ and the named non-fault process that could mimic it:
    intersection is **92 px** (lift 2.28× over the 40.3-px independence null).
    Registered as correction **H62-1**: the operator ships as a ranking on `min(pA,pB)`.
 2. **The lane's discovery signal measures below random.** On the instrument tied to the only pixel set whose credit density
-   is *measured* (P1 = the 0.2778 champion ∩ its d1-5 thinning, 25,517 px, credit density [16.3 %, 20.5 %]), the
+   is *measured* (P1 = the owner-attributed champion ∩ its d1-5 thinning, 25,517 px, conditional credit density [16.3 %, 20.5 %]), the
    disagreement fields lift 0.60–0.67× over the matched random control and the cover-conditioned variant 0.86–0.95×.
    This is the fourth independent confirmation of what H56, H59 and H60D found, and the sharpest.
 3. **The two instruments disagree in sign** (`IR-H62-003`): hide-and-recover ranks `view_A > conc_soft > clf_union > view_B`,
@@ -707,7 +652,7 @@ build is a measured fixed point.
 **Reproduce:** `python scripts/restore_data.py` → `python scripts/prepare_data.py` → `python scripts/run_h62.py` →
 `python scripts/run_h62_extra_fields.py` → `python scripts/build_h62_submission.py` → `python scripts/publish_h62_site.py`.
 
-## H62-buriedcorr — concurrent disagreement arm of the co-training lane (2026-10-09)
+## Historical H62-buriedcorr archive — concurrent disagreement arm (2026-10-09)
 
 > **H62-buriedcorr session status (co-training lane, 2026-10-09 UTC).** This round ran the brief's
 > co-training method paragraph end to end on the manifest-pinned bytes (23/23 SHA-256 verified;
@@ -731,7 +676,7 @@ build is a measured fixed point.
 > run card [`evidence/h62_buriedcorr_run_card.json`](evidence/h62_buriedcorr_run_card.json) (verdict **negative**,
 > `submit_ok: false`, 0 slots used).
 
-**[★ Download the H62 GeoTIFF — one click](docs/downloads/h62-buriedcorr-candidate.tif)** ·
+**[Archived H62 GeoTIFF — research archive only, NOT H65](docs/downloads/h62-buriedcorr-candidate.tif)** ·
 [single-TIFF ZIP with paste-ready name/note](docs/downloads/h62-buriedcorr-candidate.zip) ·
 **[Executive summary / exactly how to submit](docs/executive-summary.html)** ·
 [H62 audit page](docs/h62-buriedcorr.html) · [run card](evidence/h62_buriedcorr_run_card.json) ·
@@ -740,9 +685,9 @@ build is a measured fixed point.
 
 > **Merge amendment (2026-10-09, IR-H62-010).** A concurrent arena session's H61/H62-concordance files
 > merged into the registry while this round was in review. Because zero-copy emission is defined against
-> the live prior registry, the identical pipeline then emitted 37,626 px (this candidate) instead of the
+> the live prior registry, the identical pipeline then emitted 37,626 px (the historical H62 file) instead of the
 > pre-merge freeze's 37,627 px; the freeze (`gems52-h62-buriedcorr-37627px.tif`) is kept with a dated
-> sidecar and is **not** the current candidate. The 3 px lane-proximity gate reads 0.9994 against the
+> sidecar and is **not** the then-current H62 artifact. The 3 px lane-proximity gate reads 0.9994 against the
 > merged registry for any lattice-placed emission (the sibling round's IR-H61-005/009 and IR-H62-004):
 > it is reported as registry-saturated, not treated as evidence of copying. A second H62 (the
 > concordance-corroboration arm, `gems52-h62-conc_soft-arm22000px.tif`) occupies `submission/H62_LATEST.txt`;
@@ -752,16 +697,11 @@ build is a measured fixed point.
 > 0.9959 — zero-copy claims are point-in-time against a live registry (IR-H62-010), so the receipts
 > record their measurement context rather than chasing every concurrent publication with a rebuild.
 
-> **IS IT OK TO DOWNLOAD? YES. IS IT OK TO SUBMIT? NO.** The file is portal-safe by construction
-> (single-band float32, EPSG:32611, 3,730 × 3,292, exact sample transform, **every cell finite
-> and in {0, 1}**, zeros outside footprint — the portal error *"Predicted values must be in
-> range [0, 1]"* cannot occur on it; `gems52.grid.write_geotiff` refuses anything else), it is
-> **decoded-pattern-unique against 80 accessible priors with 100 % of its pixels outside every
-> prior's support** (no previous submission is copied), and its lane-drift gates are clean
-> (surface max |ρ| 0.048; dots 0.0094; ≤3 px proximity 0.3623 excl. calibration rasters per
-> correction H60-6, raw 0.8307 disclosed). But the **preregistered promotion bar failed**, so
-> this repository does not approve spending a weekly slot on it. Download it, review it,
-> reproduce it — that is what it is approved for.
+> **Historical H62 local-format result; not a current submission recommendation.** The archived
+> file passed this repository's single-band float32/grid/range checks and its registered promotion
+> bar failed. Local format validation is not a portal-acceptance receipt; the user-reported range
+> error was not reproduced from the rejected bytes. It is not approved for a weekly slot. See the
+> H65 current-status page before considering any archive link.
 
 - **File:** `gems52-h62-buriedcorr-37626px.tif` · **SHA-256:** `6b494e7d1abc476555778c699e8d51a6cbd10658f57dfb60f1ccafc3f91924eb` · 107,764 bytes
 - **Name (paste verbatim):** `gems52-h62-buriedcorr-37626px-6b494e7d-zeros`
@@ -773,35 +713,13 @@ build is a measured fixed point.
   overlaps the corridor population by ~99.2 % with prior submissions' support); the remaining
   35,917 are zero-field matched-budget fill, and the receipt says so.
 
-## Why did `h33-h33-2-b2` score 0.2778, and can we beat it? — the measured answer
+## Historical score-to-file question — unresolved, not a measured causal answer
 
-**Why 0.2778 (OWNER-REPORTED — see the conflict below).** The champion raster (`c55bafc470054e82…`,
-restored and re-measured byte-exactly) is `gems24-…-d2-8` (reported 0.2600) **minus 6,436 pixels
-sitting 100–200 m from the mapped catalogue**. Inverting the published metric (α 0.2, β 0.8,
-300 m triangular kernel) on that nested pair credits the deleted ring with **exactly zero**:
-a masked pixel can never earn credit but always pays the 0.2 false-positive tax. Deleting 14.6 %
-of its mass raised the reported score 6.8 %. It won by understanding the metric's tax term, not
-by a stronger detector — same mass scattered scores 0.0778 (3.6× worse). *(Provenance conflict,
-[IR-H62-009](registry/irregularities.json): GEMSDOE32's own page — read live 2026-10-08 — states
-"NO ORGANISER SCORE EXISTS for this or any artifact in this repository" and quotes a 0.2747
-MODEL projection. Nothing in this family is ORGANIZER-CONFIRMED.)*
+The public-board row discussed in earlier H60 notes is not linked by an organizer submission-page receipt to the local `h33-2-b2` raster. The row/file mapping remains OWNER-REPORTED, NOT ORGANIZER-CONFIRMED (IR-H65-003). The owner-controlled GEMSDOE32 page at a pinned commit calls 0.2747 a model projection and states no organizer score exists for a repository artifact. The board row, owner page and local raster bytes do not form a receipt chain.
 
-**Can we beat it — and the 0.3195/0.3262 leaders?** Verified leaderboard read from GEMSDOE32's
-stored 2026-10-04 snapshot: #1 nchuzhoy **0.3262**, #2 DARD **0.3195**, #3 alexoktaba 0.3042
-(owner-reported reads of the public page; this sandbox cannot authenticate the live board).
-For sparse dot emissions the metric is exactly `DTI = T / (0.2·S + 0.8·|G|)`, with the hidden
-truth bracketed at **|G| ≈ 18,000–27,400 px** once the unmeasured `M = T` assumption is dropped
-([IR-H60-002](registry/irregularities.json); GEMSDOE32's truth model infers 12,691 px — the
-spread is evidence of non-identification). The marginal acceptance bar is
-`c > α·DTI/(1−α·DTI)` ≈ **0.055 at 0.2778, 0.068 at 0.32**; measured uniform-random credit
-density is 0.024–0.028; everything we hold sits below the bar except the champion's attributed
-25,517-px core (density 0.163–0.205, identified interval [0.2524, 0.3196] — consistent with the
-0.3195–0.3262 leaders being re-weightings of that same mass). **Beating 0.32 needs new mass at
-density above ~0.07 that no instrument available here can certify** — the hide-and-recover
-instrument ranks the 0.2778 champion *below random* (0.0048 vs 0.0223; board/instrument
-Spearman −0.099 across 13 scored priors, [IR-H60-003](registry/irregularities.json)). H62's
-negative answers its part of the question honestly: geologically gated disagreement does not
-transfer to catalogue-truth ranking, and its board value is unmeasurable from public data.
+The earlier ring-deletion, “zero credit,” score inversion, and hidden-truth point estimates are conditional calculations, not an authenticated explanation. The older `[18,000, 27,400]` bracket in `knowledge/27` and the later H61 byte/score-derived interval `[5,949.3, 12,512.1]` are not interchangeable; the latter is the current repository correction but still depends on owner-reported score inputs. Do not use either as a verified organizer value or a leaderboard forecast. There is no current H65 candidate to compare or submit.
+
+Saved public-board snapshots and the previously recorded live observation remain dated public-board observations, not organizer receipts. See [`knowledge/43_repository_review_20261009.md`](knowledge/43_repository_review_20261009.md) for the current source boundary and provisional candidate screen.
 
 ## Hypotheses registered this round (top-1 validated; the rest are proposals)
 
@@ -873,7 +791,7 @@ READMEs in [knowledge/archive/](knowledge/archive/) are **not current authority*
    the concurrent H61/H62-concordance rounds the same pipeline re-emitted **37,626 px**
    (`gems52-h62-buriedcorr-37626px.tif`, unique vs **80** priors, 100 % support novelty); the
    freeze's novel fraction re-measures to 0.9924 and is kept only as a superseded provenance
-   artifact (**IR-H62-010**). The current candidate: all-finite {0,1} (portal-safe), not-merely-
+   artifact (**IR-H62-010**). The historical candidate passed local all-finite {0,1} checks (not a portal receipt), not-merely-
    union, ≥200 m from the catalogue, per-pixel + per-segment geological reasoning with falsifiers,
    run card written. **Download: YES · Submit: NO.** No competition slot used. The preregistered
    3 px lane-proximity gate now flags any lattice-placed emission as DRIFT (registry-saturated,
@@ -1598,42 +1516,18 @@ Do not stop after the first pass. Each pass must build on the previous one. Befo
 Go ahead and create a pull request and then merge the pull request onto the main. Make suggestions for what work still needs to be done and any limitations that are in the way of a successful project.  It should be worked on in this next session or the next session.  Work line by line verify everything no hallucinations.
 ```
 
-### 2026-10-09 addendum — what the prompt asks and where this repository stands
+### 2026-10-09 continuation addendum — current status and provenance corrections
 
-The prompt above is verbatim and is re-read every session. Three of its clauses are answered here with measurements,
-not intentions.
+The user-supplied prompt above is preserved verbatim as requested. Its embedded “single remaining blocker is data placement” sentence is historical and is **not** the current technical status: the small sample-grid and label fixtures were restored for tests, but the 418,912,844-byte `training_features.tif`, shared feature cache and `work/` cache are absent. Those owner-mirror pins are not organizer-authenticated. Do not claim the full pipeline is ready or start an experiment without the required inputs and a frozen protocol.
 
-**"Why did `h33-h33-2-b2` score 0.2778, and can we generate one that scores higher than 0.3195?"**
-Because it is the 0.2600 file with the ≤ 200 m ring around the mapped catalogue deleted — 6.3 % of its mass removed for
-+6.8 % score, i.e. *free precision*: a masked pixel can never earn credit and always pays the false-positive tax. It is not
-a better detector; the same 37,654 px emitted incoherently scores 0.0778, 3.6× worse. The arithmetic that beats 0.3195 is
-not a better model, it is **credit density × budget discipline**: `DTI = T / (0.2·T + 0.2·(S − M) + 0.8·|G|)`, so at
-`|G| ≈ 14,089` a 22,000-px file needs a credit density of ~16 % where the champion's own file averages 13.9 %. No
-instrument in this repository can certify that a novel field reaches it — the hide-and-recover simulator ranks the
-champion 13th of 13, and the revealed-preference instrument is a similarity statistic to one prior file. Both orderings
-are published in [`evidence/h62_validation.json`](evidence/h62_validation.json) and neither is a forecast.
+**Current round:** H65-A's PREMISE-AUC gate failed. HOLDOUT-DTI and H65 independence testing were not run; no evaluator/withheld-positive count/CI exists; no candidate raster, SHA, validator output, name or note exists. H65 download: **NO**. Submit: **NO**. Slots used: **0**. Existing H61 file is DUPLICATE/STOP and is not a substitute. See [`docs/h65.html`](docs/h65.html), [`docs/executive-summary.html`](docs/executive-summary.html), [`evidence/h65_continuation_card.json`](evidence/h65_continuation_card.json), and the machine-readable test output described in [`knowledge/43_repository_review_20261009.md`](knowledge/43_repository_review_20261009.md).
 
-One caveat on that arithmetic, registered as **correction H62-4 / IR-H62-005**: the constant `|G|` (the number of
-positives the scorer knows about) is **not** identified as a point. On the pinned bytes it is bounded by `T ≤ |G|`
-(→ `|G| ≥ 5,949.3 px`) and by monotone credit on the nested pair `d15 ⊂ gems27_tgc_v2_d15` (→ `|G| ≤ 12,512.1 px`).
-The value 14,088.7 px used here is a valid but *non-binding* upper bound from a weaker nested pair, and treating it as a
-point silently assumes the champion's 6,436 deleted ring pixels earn zero credit. Under the measured bracket the two
-available γ rules disagree (this round's γ = 0.6453 clamps to 30,000 px; the champion-family γ = 0.2284 clamps to
-15,000 px), and the direct board measurement — score strictly decreasing in emitted mass — favours the low end.
-**The shipped file stays at 22,000 px, which sits between those two answers, but the budget is the weakest number in
-this round and 15,000 px is what the evidence favours.**
-Full derivation: [`knowledge/27_why_02778_h60.md`](knowledge/27_why_02778_h60.md) and
-[`knowledge/10_revealed_preference_inverse.md`](knowledge/10_revealed_preference_inverse.md).
+**Test status after restoring the two pinned small fixtures:** `.venv/bin/python -m pytest -q` → **345 passed, 1 skipped, 0 failed**. This checks repository code and fixtures only; it is not a holdout score, model evaluation, or organizer acceptance.
 
-**"It must be obvious whether it is OK to download and submit."** The front page
-([`docs/index.html`](docs/index.html)), the H62 page ([`docs/h62.html`](docs/h62.html)) and the
-submission guide ([`docs/executive-summary.html`](docs/executive-summary.html)) each carry an unmistakable status line.
-For H62 it reads **OK TO DOWNLOAD · ELIGIBLE TO SUBMIT · NO SLOT ALLOCATED HERE**, and the guide gives the four clicks:
-download → open the DrivenData *New submission* form → paste the ≤ 140-character note → submit and compare the portal's
-reported score against the receipt hash. The portal's `"Predicted values must be in range [0, 1]"` rejection cannot occur
-for this file: `gems52.grid.write_geotiff` refuses to emit a non-finite or out-of-range array, and the format gate
-re-reads the written bytes.
+**Score provenance correction:** the public-board row at 0.2778 is not linked by a submission-page receipt to local `h33-2-b2` bytes. The owner-controlled [`GEMSDOE32` page at a pinned commit](https://github.com/buffedlizard55-lab/GEMSDOE32/blob/0d6a6243147cd63a2000412d575d4c80a36d3a62/docs/index.html) describes 0.2747 as a model projection and says no organizer score exists. Accordingly, every older ring-deletion/zero-credit explanation is conditional, not a verified cause of an awarded score. `IR-H65-003` remains open.
 
-**"Create an executive summary subpage that explains exactly how to make a submission."**
-[`docs/executive-summary.html`](docs/executive-summary.html) — file contract, the four clicks, the note text pre-written,
-and the three failure modes the submission form reports (value range, CRS/shape/geotransform, more than one TIFF in a ZIP).
+**Candidate work:** a provisional four-item, repository-level novelty screen and three-pass review are recorded in [`knowledge/43_repository_review_20261009.md`](knowledge/43_repository_review_20261009.md). It explicitly excludes preregistered near-duplicates. None of the proposed data sources was fetched or authenticated in this sandbox; none is viable or approved for implementation yet. No new experiment was run.
+
+**Official-source boundary:** this continuation did not fetch DrivenData, USGS, NASA or GDR pages because their hosts are outside the sandbox egress allowlist. The owner-controlled GitHub page above is not an official source. The public-board values in the H65 report are dated observations, not ORGANIZER-CONFIRMED receipts. See [`knowledge/41a_amendment_2026-10-09_H65_sources.md`](knowledge/41a_amendment_2026-10-09_H65_sources.md) for the per-source status.
+
+**Next gates:** verify official sources/provenance; stage the training raster and shared feature store; preregister a genuinely untried candidate; test every feature alone for leakage; run spatial-block OOF negative-error correlation and abandon exchange if strongly correlated; validate a candidate on the shared spatial holdout with evaluator version, withheld-positive count and paired 95% CI; run surface and final-dot uniqueness checks; only then ask a separate selector to check the live weekly cap. Never emit or submit a TIFF before those gates.

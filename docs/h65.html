@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="H65 is negative at its preregistered premise gate. No current TIFF, HOLDOUT-DTI, or submission is available.">
+  <title>H65 status — no candidate file to submit · GEMSDOE52</title>
+  <link rel="stylesheet" href="assets/ctd5.css">
+  <script src="assets/h65.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><nav aria-label="Main navigation">
+  <a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>
+  <a href="index.html">Overview</a>
+  <a href="h65.html" aria-current="page">H65 status</a>
+  <a href="executive-summary.html">Submission guide</a>
+  <a href="downloads/index.html">Archive</a>
+</nav></header>
+<main id="main">
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Current round · H65 · negative</div>
+      <h1>No candidate.<br>No TIFF to submit.</h1>
+      <p class="lead">The H65-A geophysical-view premise did not clear its preregistered screen. The conditional holdout arm was not authorized, so this continuation produced no competition file and no HOLDOUT-DTI result.</p>
+      <div class="notice" role="alert">
+        <strong>H65 TIFF: NONE · DOWNLOAD: NO · SUBMIT: NO · DO NOT SUBMIT AN ARCHIVE FILE</strong>
+        <p>Do not substitute an older H61–H64 raster. The H61 artifact is measured DUPLICATE/STOP; all other files in the download archive are historical research artifacts, not this H65 candidate.</p>
+      </div>
+      <p class="small"><a href="executive-summary.html">Current submission guidance →</a> · <a href="data/h65_continuation_card.json">H65 continuation card (JSON) ↗</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/41_hypotheses_H65_preregistered.md">Frozen H65 protocol (GitHub) ↗</a></p>
+    </div>
+    <aside class="panel" aria-label="H65 current decision">
+      <div class="label">Current decision</div>
+      <div class="status-line"><span>Candidate file</span><span class="bad" id="h65-file-status">No H65 TIFF was emitted.</span></div>
+      <div class="status-line"><span>HOLDOUT-DTI</span><span class="bad" id="h65-holdout-status">NOT RUN</span></div>
+      <div class="status-line"><span>Weekly slots used</span><span id="h65-slots">0</span></div>
+      <div class="status-line"><span>Download current H65 TIFF?</span><span class="bad">NO</span></div>
+      <div class="status-line"><span>Submit any archive file?</span><span class="bad">NO</span></div>
+      <p class="fine">A test-suite pass is not a model evaluation, leaderboard score, portal acceptance, or permission to spend a slot.</p>
+      <a class="small" href="data/h65_continuation_card.json">Open the complete no-emission card ↗</a>
+    </aside>
+  </section>
+
+  <hr class="divider">
+  <section class="prose" aria-labelledby="premise-title">
+    <div class="eyebrow">Scientific gate · labelled correctly</div>
+    <h2 id="premise-title">The premise failed before HOLDOUT-DTI.</h2>
+    <p>The values below are <strong>PREMISE-AUC diagnostics</strong> on the preregistered quadrant folds. They are not HOLDOUT-DTI and are not competition scores. The threshold is from the frozen H65 protocol; the values are from the existing receipt.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Measure</th><th>PREMISE-AUC / gate</th></tr></thead>
+      <tbody>
+        <tr><td>Mean out-of-quadrant View A</td><td id="h65-premise-mean">Loading receipt…</td></tr>
+        <tr><td>Minimum fold</td><td id="h65-premise-min">Loading receipt…</td></tr>
+        <tr><td>Registered thresholds</td><td id="h65-premise-thresholds">Loading receipt…</td></tr>
+        <tr><td>Preregistered decision</td><td><strong>FAIL — no hide-and-recover arm</strong></td></tr>
+      </tbody>
+    </table></div>
+    <p class="small">Receipt: <a href="data/h65_premise.json">PREMISE-AUC JSON</a> · <a href="data/h65_run_card.json">original H65 run card</a> · <a href="data/h65_canary.json">leakage-canary receipt</a>. The older run card retains its original H62 label because this protocol was renamed byte-for-byte; see the dated source amendment.</p>
+  </section>
+
+  <hr class="divider">
+  <section class="grid2">
+    <div class="panel">
+      <div class="eyebrow">What was not measured</div>
+      <h2>No DTI, no independence test, no uniqueness result.</h2>
+      <p><strong>HOLDOUT-DTI:</strong> <span id="h65-holdout-status-secondary">not run</span>. <span id="h65-holdout-evaluator">No evaluator version applies because no holdout ran.</span></p>
+      <p>H65 did not test spatial-block OOF error correlation on labeled negatives. Results from other feature sets are not transferable. No H65 raster exists, so surface-rank correlation before placement and the final-dot 3-pixel registry test were not run.</p>
+      <p>Do not use the older H61 file to fill this gap: its current census reports DUPLICATE/STOP. <a href="data/h61_uniqueness_census_20261009.json">H61 uniqueness census ↗</a></p>
+    </div>
+    <div class="panel">
+      <div class="eyebrow">Data and verification</div>
+      <h2>Fixtures restored; training input absent.</h2>
+      <p>The sample grid and labels were restored from owner-supplied GitHub mirrors and match the repository's SHA/byte pins. This establishes mirror consistency only, not organizer provenance.</p>
+      <p>The 19-band <code>training_features.tif</code>, shared feature cache, and <code>work/</code> cache were absent at this review. No fit was restarted.</p>
+      <p id="h65-tests">Loading repository-test receipt…</p>
+      <p class="fine">Repository tests are software/data checks only; their pass does not authorize training, validation, download, or submission.</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+  <section class="prose">
+    <div class="eyebrow">Source and score provenance</div>
+    <h2>Owner page is not an organizer receipt.</h2>
+    <p>The owner-controlled <a href="https://github.com/buffedlizard55-lab/GEMSDOE32/blob/0d6a6243147cd63a2000412d575d4c80a36d3a62/docs/index.html">GEMSDOE32 page at a pinned commit</a> calls its 0.2747 number a model projection and says no organizer score exists. That page does not authenticate any filename-to-score mapping.</p>
+    <p>The public-board row/file mapping discussed in older notes remains unresolved; there is no submission-page receipt connecting the 0.2778 row to <code>h33-2-b2</code>. The byte-level raster comparisons remain conditional and do not prove why a score was awarded.</p>
+    <p>The official DrivenData task/data pages and USGS source pages were not fetched during this continuation because those hosts are outside the sandbox's egress allowlist. <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Official competition description (manual review)</a> · <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/">Official data page (manual review)</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/41a_amendment_2026-10-09_H65_sources.md">H65 item-by-item source-status correction (GitHub) ↗</a>.</p>
+    <p class="small">Candidate novelty/source screen: <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/43_repository_review_20261009.md">provisional four-item slate and explicit preregistration comparison ↗</a>. None is staged or approved for implementation.</p>
+  </section>
+
+  <hr class="divider">
+  <details>
+    <summary>Historical research pages and downloads — not a current H65 submission</summary>
+    <p class="small">These are records of older negative or research-only rounds. They are not H65, do not establish a current best candidate, and must not be uploaded as a substitute. <a href="h63-audit.html">H63 audit</a> · <a href="h64.html">H64 audit</a> · <a href="downloads/index.html">Full historical download archive</a>.</p>
+  </details>
+</main>
+<footer>Independent research; not an official DOE or DrivenData site. Predictions are hypotheses, not verified faults or geothermal discoveries.<br>
+<a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code and reproducibility</a> · <a href="executive-summary.html">Submission guidance</a> · <a href="data/h65_continuation_card.json">H65 JSON card</a> · H65 / 2026-10-09</footer>
+</body>
+</html>

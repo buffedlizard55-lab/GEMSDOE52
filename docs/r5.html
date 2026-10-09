@@ -3,20 +3,16 @@
 <meta name="description" content="R5 audit trail: co-training receipt, independence test, pseudo-label readings, the disqualified promotion instrument, the frozen emission rules and every gate."><title>R5 audit · GEMSDOE52</title>
 <link rel="stylesheet" href="style.css"><script src="site.js" defer></script></head>
 <body><a class="skip" href="#main">Skip to evidence</a><header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html">Overview</a><a href="ctd5-audit.html">Run &amp; evidence</a><a href="executive-summary.html">Submission guide</a><a href="r5.html">R5 audit</a><a href="irregularities.html">Limitations</a><a href="sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header>
-<main id="main"><div class="eyebrow">R5 audit · every number below is read from a receipt</div>
+<main id="main"><div class="notice" role="alert"><strong>ARCHIVED R5 RESEARCH FILE · NOT CURRENT H65 · DO NOT SUBMIT.</strong><p>H65 has no TIFF to download or submit. R5 did not receive a weekly slot; its local file-format checks are not an organizer upload-acceptance receipt. <a href="h65.html">Current H65 status</a> · <a href="executive-summary.html">Current submission guidance</a> · <a href="downloads/index.html">Historical archive</a>.</p></div><div class="eyebrow">Historical R5 audit · every measurement below is read from a dated receipt</div>
 <h1>What was run, what it returned,<br>and what it does not license.</h1>
-<section class="download-bar" aria-label="R5 download">
+<section class="download-bar" aria-label="Archived R5 research TIFF">
 <div><strong>gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif</strong><small>99,231 bytes · SHA-256
 <code>d2bfb0f79328399354943bd166f2d2a206e9a49da46b4f1e8ccba0e4f0d8d002</code> · 16,681 px · re-running the build reproduces these bytes exactly</small></div>
-<a class="button" href="downloads/gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif" download>↓ Download the submission TIFF (one click)</a>
-<a class="button" href="downloads/r5-candidate.tif" download>↓ Same file, short name (r5-candidate.tif)</a>
-<a class="button secondary" href="executive-summary.html">How to submit →</a></section>
-<div class="status"><strong>Verdict of record.</strong> OK to download: <b>YES</b>. Portal-acceptable:
-<b>YES</b> — every published format clause is re-measured from the bytes on disk by
-<code>scripts/check_site.py</code>. Weekly submission slot approved: <b>NO — NOT SLOT-APPROVED</b>, do
-not spend a slot on this file on the strength of anything in this repository: the promotion instrument
-is disqualified and P(DTI &gt; 0.2778) = 0.366. Research artifact; every pixel is a hypothesis
-for expert review, not a verified fault.</div>
+<a class="button" href="downloads/gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif" download>↓ Archived R5 research TIFF</a>
+<a class="button" href="downloads/r5-candidate.tif" download>↓ Archived short-name copy (R5)</a>
+<a class="button secondary" href="executive-summary.html">Current H65 guidance: no file →</a></section>
+<div class="status"><strong>Historical R5 local validation, not portal acceptance.</strong> Archived research download: <b>available for review only</b>. Portal acceptance: <b>NOT VERIFIED</b> — local format checks cannot establish organizer acceptance. Weekly submission slot approved: <b>NO</b>; do not submit this file. The historical promotion instrument was disqualified. The listed P(DTI &gt; threshold) values below are model projections under their stated prior, not HOLDOUT-DTI results or organizer scores. This research artifact is a set of hypotheses for expert review, not verified faults.</div>
+<p class="small"><b>Score provenance:</b> the public-board row at 0.2778 is not linked by a submission-page receipt to the local <code>h33-2-b2</code> bytes. See <code>IR-H65-003</code>; comparisons that use this score are conditional owner-reported analyses, not an authenticated score-to-file mapping.</p>
 
 <h2>1 · The frozen rules, printed before the results</h2>
 <div class="table-wrap"><table><thead><tr><th>rule</th><th>text</th></tr></thead><tbody>
@@ -104,13 +100,13 @@ false; prior union
 median 2,402.1 m (the organiser's mask is pixel-exact; the
 200 m ring is this repository's own rule, and <code>IR-R5-006</code> records that it is not the
 organiser's)</td></tr>
-<tr><td>OK to download / OK to submit (portal-acceptable)</td><td>TRUE /
-TRUE</td></tr>
+<tr><td>Historical local format check / organizer portal acceptance</td><td>PASS / NOT VERIFIED</td></tr>
 </tbody></table></div>
 
-<h2>5 · The projection, as a probability over a bounded unknown</h2>
+<h2>5 · Historical model projection (not HOLDOUT-DTI and not a score)</h2>
+<p class="small">These are conditional model probabilities under the stated prior, not measured evaluator results. They depend on owner-reported score/file inputs whose 0.2778 attribution remains unresolved (IR-H65-003); do not treat them as a leaderboard forecast.</p>
 <div class="table-wrap"><table><thead><tr><th>bar</th><th>credit needed</th><th>κ needed</th>
-<th>P(DTI &gt; bar)</th></tr></thead><tbody>
+<th>Model projection: P(assumed DTI &gt; bar)</th></tr></thead><tbody>
 <tr><td>0.2778</td><td>4,057.9</td><td>0.9340</td><td><b>0.366</b></td></tr><tr><td>0.3195</td><td>4,667.0</td><td>1.0743</td><td><b>0.226</b></td></tr><tr><td>0.3774</td><td>5,512.7</td><td>1.2689</td><td><b>0.031</b></td></tr>
 </tbody></table></div>
 <p class="small">T(S) = κ·471.6·S^0.2284 with κ ~ U[0.3, 1.3]; DTI at κ = 0.3 / 1.0 / 1.3 is

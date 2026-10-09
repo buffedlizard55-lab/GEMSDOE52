@@ -6,11 +6,12 @@
 <header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>
 <a href="index.html">Overview</a><a href="h62-buriedcorr.html">Run &amp; evidence</a><a href="executive-summary.html">Submission guide</a><a href="sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header>
 <main id="main">
+<div class="notice" role="alert"><strong>HISTORICAL H62-BURIEDCORR ARCHIVE · NOT CURRENT H65 · DO NOT SUBMIT.</strong><p>H65 has no TIFF to download or submit. The H62 promotion bar failed; this page and any linked TIFF are preserved for research only. Local file checks do not establish portal acceptance. <a href="h65.html">Current H65 status</a> · <a href="executive-summary.html">Current submission guidance</a>.</p></div>
 <h1>H62 — buried structural corridors</h1>
-<div class="notice" role="note"><strong>DOWNLOAD FOR REVIEW: YES · SUBMIT TO COMPETITION: NO — DO NOT SUBMIT this run</strong><p>DOWNLOAD FOR REVIEW: YES. SUBMIT TO COMPETITION: NO — preregistered promotion bar not met; research artifact only · NO CERTIFIED LEADERBOARD GAIN · do not upload research archives</p></div>
+<div class="notice" role="note"><strong>HISTORICAL H62 DOWNLOAD: RESEARCH ARCHIVE ONLY · NOT H65 · DO NOT SUBMIT.</strong><p>This round's preregistered promotion bar was not met. The linked bytes are preserved for reproducibility; local format checks are not portal acceptance, and no weekly slot was authorized.</p></div>
 <p class="fileline">gems52-h62-buriedcorr-37626px.tif · 37,626 emitted px · SHA-256 6b494e7d1abc476555778c699e8d51a6cbd10658f57dfb60f1ccafc3f91924eb</p>
-<div class="actions"><a class="button" href="downloads/h62-buriedcorr-candidate.tif" download>Download GeoTIFF ↓</a>
-<a class="button secondary" href="downloads/h62-buriedcorr-candidate.zip" download>Single-TIFF ZIP</a></div>
+<div class="actions"><a class="button" href="downloads/h62-buriedcorr-candidate.tif" download>Download archived H62 research TIFF</a>
+<a class="button secondary" href="downloads/h62-buriedcorr-candidate.zip" download>Archived H62 single-TIFF ZIP</a></div>
 
 <h2>Hypothesis and mechanism</h2>
 <p>H62-1: the co-training discovery signal (A confident, B abstains) becomes a buried-fault candidate only when it is explained by burial (depth to basement &gt;= 200 m), carried by a potential-field edge (gradient &gt;= P75) and persistent along strike (line-persistence corridor); such corridors target faults missing from the surface-mapped USGS/INGENIOUS catalogue</p>
@@ -27,15 +28,13 @@
 <li>Not-merely-union: 37252 of 37626 emitted px outside the union field's matched-budget top-k.</li>
 </ul>
 
-<h2>HOLDOUT-DTI (evaluator pinned; catalogue truth — not a leaderboard score)</h2>
-<p class="small">hide pooled @ 37,654 px, 4 whole-segment folds, α 0.2 / β 0.8 / 300 m triangular kernel; 36,411 withheld positives.</p>
-<table><thead><tr><th>field</th><th>hide pooled DTI @37,654</th></tr></thead><tbody><tr><td>H62_1_corridors</td><td class='numeric'>0.003598</td></tr><tr><td>view_B</td><td class='numeric'>0.006443</td></tr><tr><td>clf_union</td><td class='numeric'>0.006201</td></tr><tr><td>dis_contrast</td><td class='numeric'>0.004123</td></tr><tr><td>view_A</td><td class='numeric'>0.003948</td></tr><tr><td>random</td><td class='numeric'>0.001775</td></tr></tbody></table>
-<table><thead><tr><th>field</th><th>hide pooled DTI @15,000</th></tr></thead><tbody><tr><td>H62_1_corridors</td><td class='numeric'>0.002072</td></tr><tr><td>view_B</td><td class='numeric'>0.005196</td></tr><tr><td>clf_union</td><td class='numeric'>0.005038</td></tr><tr><td>dis_contrast</td><td class='numeric'>0.001765</td></tr><tr><td>view_A</td><td class='numeric'>0.003948</td></tr><tr><td>random</td><td class='numeric'>0.001099</td></tr></tbody></table>
-<p class="small">Shipped raster, required-novel pool, hide pooled: 0.002247 [0.001112, 0.003675] (HOLDOUT-DTI, CI = fold bootstrap 10k).</p>
-<p class="small">Preregistered bars: H62=0.0034096770461912174 · ungated dis_contrast=0.0041452505756723965 · random=0.0018016061023552242 · weak-surface subgroup H62=0.0046935591647732445 vs view_B=0.006149648312436708 (fold wins 0) → <b>fail</b>.</p>
+<h2>HOLDOUT-DTI — historical shipped-raster result, not a competition score</h2>
+<p class="small">HOLDOUT-DTI: <b>0.002247</b>, 95% fold-bootstrap CI <b>[0.001112, 0.003675]</b>, <b>36,411 withheld positives</b>. Evaluator version: <code>gems52.metric.dti</code> (metric.py SHA-256 <code>3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a</code>); holdout implementation <code>holdout.py</code> SHA-256 <code>f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145</code>. Whole-segment hide-and-recover, 4 folds, 4 px buffer, α=0.2, β=0.8, 300 m triangular kernel; CI is 10,000-draw fold bootstrap. Receipt: <a href="data/h62_buriedcorr_run_card.json">H62 run card</a>. Catalogue-truth diagnostic only; it is not ORGANIZER-CONFIRMED and is not a leaderboard forecast.</p>
+<p class="small">The remaining arms, per-fold results, and evaluator hashes are recorded in the linked JSON validation/run-card receipts. They are deliberately not summarized here as bare point values without their uncertainty and evaluation context.</p>
 
-<h2>Why 0.2778 and can it be beaten?</h2>
-<p>The 0.2778 champion is d2-8 minus its 100–200 m catalogue ring — deleting 6,436 uncreditable pixels raised the score 6.8% (OWNER-REPORTED numbers; nested-pair algebra, knowledge/27). The board is strictly decreasing in emitted mass among off-catalogue files (Spearman −1.0, six scored files). Credit-density arithmetic: the marginal bar at DTI≈0.32 is ≈0.068 hit-mass per emitted pixel. H62 spends its 37,654-px budget on persisted buried-corridor crests — pixels no surface-mapped catalogue can contain — with zero tax (≥200 m from any mapped trace) and zero reused prior mass.</p>
+<h2>Historical score attribution — unresolved, not a causal explanation</h2>
+<p><b>IR-H65-003:</b> no submission-page receipt links the public-board 0.2778 row to the local <code>h33-2-b2</code> raster or hash. The earlier H60 nested-pair account (including the assumed zero-credit ring and score-derived mass relation) is conditional on owner-reported scores and an unverified file mapping; it does not prove why any score was awarded. The <a href="https://github.com/buffedlizard55-lab/GEMSDOE32/blob/0d6a6243147cd63a2000412d575d4c80a36d3a62/docs/index.html">owner-controlled GEMSDOE32 page at a pinned commit</a> labels 0.2747 a model projection and states that no organizer score exists. Do not use these calculations as a leaderboard forecast.</p>
+<p>H62's local geometry and holdout result are separate diagnostics: they do not establish that its emitted pixels are faults or predict a competition outcome. The hypothesis, named non-fault mimics, failed promotion gate, and receipts are preserved above and in the run card.</p>
 
 <h2>Run card</h2>
 <p class="small">Verdict: <b>negative</b> · submission name <code>gems52-h62-buriedcorr-37626px-6b494e7d-zeros</code> (44 chars) · note (138/140): <code>H62 buried corridors: cover/edge/persistence gates on A-only disagreement; finite binary [0,1]; off-prior; hypotheses, not verified faults</code>. Full JSON: <a href="data/h62_run_card.json">data/h62_run_card.json</a>.</p>

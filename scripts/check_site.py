@@ -110,9 +110,9 @@ def check_h57_creditcore(DATA, DOCS, ROOT, notes):
             problems.append(f"H57 alternate page: missing disclosure {term!r}")
     if "submit: yes" in page.casefold():
         problems.append("H57 alternate page: unsafe submission approval text remains")
-    home = (DOCS / "index.html").read_text() if (DOCS / "index.html").exists() else ""
-    if name not in home:
-        problems.append("H57 alternate: not linked from the home page")
+    archive_index = (DOCS / "downloads" / "index.html").read_text() if (DOCS / "downloads" / "index.html").exists() else ""
+    if name not in archive_index:
+        problems.append("H57 alternate: not linked from the historical downloads archive")
     if not problems:
         notes.append(f"H57 credited-core alternate verified beside the union arm: {name} "
                      f"({r.get('bytes'):,} bytes, "
@@ -511,7 +511,9 @@ def check_h58(DATA, DOCS, ROOT, notes, *, current_round=False):
         if DATA.joinpath("h58_preregistration.json").read_bytes() != reg_path.read_bytes():
             problems.append("H58: published preregistration bytes differ from the frozen registry")
 
-        for page_name in ("h58.html", "index.html", "executive-summary.html", "downloads/index.html"):
+        # Current H65 landing/guide intentionally do not promote archived H58 download links.
+        # Keep archive identity/disclosure checks on the H58 audit and historical archive index only.
+        for page_name in ("h58.html", "downloads/index.html"):
             page = DOCS / page_name
             if not page.is_file():
                 problems.append(f"H58: {page_name} is missing")
@@ -532,12 +534,11 @@ def check_h58(DATA, DOCS, ROOT, notes, *, current_round=False):
 
 
 def check_r5(DATA, DOCS, ROOT, problems, notes):
-    """R5's claims, re-derived rather than trusted: bytes, format, novelty, and the page text.
+    """R5's historical archive claims: bytes, local format, novelty, and its own audit disclosure.
 
-    The receipt says the file is all-finite {0,1}, EPSG:32611, on the sample grid, 100% novel against
-    every raster the repository has produced, and portal-acceptable.  Each of those is re-measured here
-    from the bytes on disk, because a receipt that is only ever read is a claim, not a check -- and the
-    whole reason this script exists is that "the site says so" has been wrong before (IR-52-031).
+    The receipt's local raster and novelty facts are re-measured from bytes on disk. Those checks do
+    not establish portal acceptance; only an organizer submission-page receipt could do that. R5 is
+    an archived, non-approved research result and is never the current H65 submission.
     """
     import numpy as np
     import rasterio
@@ -666,24 +667,127 @@ def check_r5(DATA, DOCS, ROOT, problems, notes):
                  f"{uni['novel_fraction']:.4f}, pattern unique "
                  f"{uni['canonical_pattern_unique']}, relation {uni['relation_to_union']}")
 
-    # 4. the pages must say what the receipts say, in words a reader cannot miss
-    for page_name in ("index.html", "executive-summary.html", "r5.html"):
-        page = DOCS / page_name
-        if not page.is_file():
-            problems.append(f"R5: {page_name} is missing")
-            continue
+    # 4. the archive audit must retain its identity and warn against current use.
+    page_name = "r5.html"
+    page = DOCS / page_name
+    if not page.is_file():
+        problems.append(f"R5: {page_name} is missing")
+    else:
         text = page.read_text(encoding="utf-8", errors="replace")
         low = text.casefold()
-        for term, why in ((f"{stem}.tif", "the unique TIFF is not named"),
+        for term, why in ((f"{stem}.tif", "the archived TIFF is not named"),
                           (sha[:24], "the SHA-256 prefix is missing"),
-                          ("r5-candidate.tif", "the short download path is missing"),
-                          ("ok to download", "the download verdict is missing")):
+                          ("r5-candidate.tif", "the historical short path is missing"),
+                          ("archived r5 research file", "the file is not marked as an archive"),
+                          ("not current h65", "the H65 boundary is missing"),
+                          ("portal acceptance: <b>not verified", "portal acceptance is overclaimed or not disclosed")):
             if term.casefold() not in low:
                 problems.append(f"R5 {page_name}: {why}")
-        if "not slot-approved" not in low and "do not spend" not in low and "no — not on the evidence" not in low:
-            problems.append(f"R5 {page_name}: does not state plainly that no weekly slot is approved")
+        if "not slot-approved" not in low and "do not submit" not in low:
+            problems.append(f"R5 {page_name}: does not state plainly that the historical file must not be submitted")
         if f"{rec['p_beat_02778']:.3f}" not in text:
-            problems.append(f"R5 {page_name}: P(beating 0.2778) is not published on the page")
+            problems.append(f"R5 {page_name}: historical model projection value is not published")
+        if "portal-acceptable" in low and "portal-acceptable: <b>yes" in low:
+            problems.append(f"R5 {page_name}: unsupported portal-acceptance claim remains")
+
+
+def check_h65_status(DATA: Path, DOCS: Path, ROOT: Path, notes: list[str]) -> list[str]:
+    """Keep the current H65 no-emission verdict explicit and tied to its evidence."""
+    problems: list[str] = []
+    feed = DATA / "h65_continuation_card.json"
+    source = ROOT / "evidence" / "h65_continuation_card.json"
+    if not feed.is_file() or not source.is_file():
+        return ["H65: continuation card is missing from evidence/ or docs/data/"]
+    if feed.read_bytes() != source.read_bytes():
+        problems.append("H65: published continuation card differs from the evidence source")
+    try:
+        card = json.loads(feed.read_text())
+        premise_receipt = json.loads((ROOT / "evidence" / "h65_premise.json").read_text())
+    except Exception as exc:  # noqa: BLE001
+        return problems + [f"H65: could not read the continuation/premise evidence ({exc})"]
+
+    premise = card.get("premise_auc") or {}
+    holdout = card.get("holdout_dti") or {}
+    raster = card.get("raster") or {}
+    validator = card.get("validator") or {}
+    submission = card.get("submission") or {}
+    independence = card.get("independence_test") or {}
+    uniqueness = card.get("registry_uniqueness") or {}
+    if card.get("status") != "NO_NEW_EXPERIMENT":
+        problems.append("H65: status is not NO_NEW_EXPERIMENT")
+    if premise.get("passed") is not False or not str(premise.get("evidence_class", "")).startswith("PREMISE-AUC"):
+        problems.append("H65: premise result is missing, mislabeled, or does not fail its gate")
+    if premise.get("mean_oof_auc") != premise_receipt.get("h62_A_mean_oof_auc"):
+        problems.append("H65: displayed premise mean differs from its evidence receipt")
+    if premise.get("minimum_fold_auc") != premise_receipt.get("h62_A_min_fold_oof_auc"):
+        problems.append("H65: displayed minimum premise fold differs from its evidence receipt")
+    if holdout.get("status") != "NOT RUN" or any(
+            holdout.get(key) is not None for key in ("dti", "evaluator_version", "withheld_positive_count", "ci95")):
+        problems.append("H65: no-emission card incorrectly records an H65 HOLDOUT-DTI result")
+    if independence.get("status") != "NOT RUN":
+        problems.append("H65: independence test must remain explicitly NOT RUN")
+    if raster.get("emitted") is not False or raster.get("filename") is not None or raster.get("sha256") is not None:
+        problems.append("H65: continuation card claims an emitted raster or hash")
+    if not str(validator.get("status", "")).startswith("NOT RUN"):
+        problems.append("H65: validator status must state NOT RUN because no raster exists")
+    if uniqueness.get("candidate_raster") is not None:
+        problems.append("H65: uniqueness receipt unexpectedly names a candidate raster")
+    if submission.get("decision") != "NO" or submission.get("current_download_available") is not False \
+            or submission.get("upload_allowed") is not False or submission.get("weekly_slots_used") != 0 \
+            or submission.get("filename") is not None or submission.get("note") is not None:
+        problems.append("H65: current download/submission decision is not an explicit no-emission stop")
+    old_h61 = (uniqueness.get("historical_h61_artifact") or {})
+    if old_h61.get("status") != "DUPLICATE/STOP" or old_h61.get("use_as_h65_substitute") is not False:
+        problems.append("H65: H61 duplicate/stop warning or no-substitution rule is missing")
+
+    for name in ("h65_premise.json", "h65_canary.json", "h65_run_card.json",
+                 "h61_uniqueness_census_20261009.json"):
+        source_path = ROOT / "evidence" / name
+        copy_path = DATA / name
+        if not source_path.is_file() or not copy_path.is_file():
+            problems.append(f"H65: evidence copy missing: {name}")
+        elif source_path.read_bytes() != copy_path.read_bytes():
+            problems.append(f"H65: docs/data/{name} differs from evidence/{name}")
+
+    status_page = DOCS / "h65.html"
+    if not status_page.is_file():
+        problems.append("H65: status page docs/h65.html is missing")
+    else:
+        text = status_page.read_text(encoding="utf-8", errors="replace")
+        for phrase in ("H65 TIFF: NONE", "DOWNLOAD: NO", "SUBMIT: NO", "PREMISE-AUC",
+                       "HOLDOUT-DTI", "NOT RUN"):
+            if phrase.casefold() not in text.casefold():
+                problems.append(f"H65 status page: missing explicit status {phrase!r}")
+        scan = Scan()
+        scan.feed(text)
+        if any(re.search(r"\.(?:tif|tiff|zip)(?:$|[?#])", href, re.I) for href in scan.hrefs):
+            problems.append("H65 status page: must not expose a candidate TIFF/ZIP download link")
+
+    for page_name in ("index.html", "executive-summary.html"):
+        page = DOCS / page_name
+        if not page.is_file():
+            problems.append(f"H65: current page docs/{page_name} is missing")
+            continue
+        text = page.read_text(encoding="utf-8", errors="replace")
+        first_archive = text.find("<details")
+        current = text if first_archive < 0 else text[:first_archive]
+        for phrase in ("H65", "DOWNLOAD: NO", "SUBMIT: NO"):
+            if phrase.casefold() not in current.casefold():
+                problems.append(f"docs/{page_name}: current section missing {phrase!r}")
+        if re.search(r"href=[\"'][^\"']+\.(?:tif|tiff|zip)(?:[?#][^\"']*)?[\"']", current, re.I):
+            problems.append(f"docs/{page_name}: current section exposes a historical TIFF/ZIP link")
+
+    archive = DOCS / "downloads" / "index.html"
+    if not archive.is_file():
+        problems.append("H65: historical downloads archive is missing")
+    else:
+        text = archive.read_text(encoding="utf-8", errors="replace")
+        if "CURRENT H65: NO TIFF" not in text or "historical archive only" not in text:
+            problems.append("downloads/index.html: H65 no-file and historical-only notice is missing")
+    if not problems:
+        notes.append("H65 current status verified against evidence: premise failed; no HOLDOUT-DTI, raster, "
+                     "download, submission, or slot; H61 remains DUPLICATE/STOP")
+    return problems
 
 
 def main() -> int:
@@ -748,7 +852,7 @@ def main() -> int:
                         problems.append(f"{rel}: inline script #{i} is unbalanced on {op}{cl} "
                                         f"({blk.count(op)} vs {blk.count(cl)})")
                         break
-        for js in (sorted(DOCS.glob("*.js")) if page.parent == DOCS and node else []):
+        for js in (sorted(DOCS.rglob("*.js")) if page.parent == DOCS and node else []):
             if str(js) in js_checked:
                 continue
             js_checked.add(str(js))
@@ -758,9 +862,8 @@ def main() -> int:
                                 f"{rc.stderr.strip().splitlines()[0] if rc.stderr else 'node --check failed'}")
 
         # 5. no hard-coded scores in prose (they belong in the JSON the feed writes)
-        if page.name != "index.html" or True:
-            for m in re.finditer(r"\b0\.\d{4}\b", re.sub(r"<script.*?</script>", "", text, flags=re.S)):
-                typed_numbers.append(f"{rel}: literal {m.group(0)} in HTML (should come from data/*.json)")
+        for m in re.finditer(r"\b0\.\d{4}\b", re.sub(r"<script.*?</script>", "", text, flags=re.S)):
+            typed_numbers.append(f"{rel}: literal {m.group(0)} in HTML (should come from data/*.json)")
 
     # 6. the JSON itself must be valid and self-consistent where we can check it
     for f in sorted(DATA.glob("*.json")):
@@ -830,9 +933,8 @@ def main() -> int:
             if abs(float(d.get("top", top)) - float(top)) > 1e-9:
                 problems.append("leaderboard.json: 'top' disagrees with row 1")
 
-    # Current H56 is intentionally downloadable but explicitly not slot-approved. Re-check the decision,
-    # decoded-pattern review, A-only scope, and byte-identical aliases together; a report that contradicts
-    # any one of them must stop publication.
+    # Preserve the legacy submission.json/LATEST pointer's own archived checks. This pointer is not
+    # H65's current status: check_h65_status() independently enforces H65's no-emission verdict above.
     try:
         import csv
         import zipfile
@@ -847,7 +949,7 @@ def main() -> int:
                          else 'H57' if str(sub.get('file', '')).startswith('gems52-h57-')
                          else 'H56' if str(sub.get('file', '')).startswith('gems52-h56-')
                          else 'OTHER')
-        notes.append(f'current round dispatched from docs/data/submission.json: {current_round} '
+        notes.append(f'legacy archive pointer in docs/data/submission.json (not the current H65 status): {current_round} '
                      f"({sub.get('file')})")
 
         if sub_path.exists():
@@ -1030,12 +1132,12 @@ def main() -> int:
     port = httpd.server_address[1]
     threading.Thread(target=httpd.serve_forever, daemon=True).start()
     try:
-        page_paths = ("index.html", "executive-summary.html", "r5.html", "h56.html", "h54.html",
+        page_paths = ("index.html", "h65.html", "executive-summary.html", "r5.html", "h56.html", "h54.html",
                       "h55-paired-shoulders.html", "h55.html", "h55-profile.html", "h55-edge.html",
                       "r3.html", "r3-hypotheses.html", "feed.html", "irregularities.html", "sources.html",
                       "downloads/index.html")
         if (DOCS / "h58.html").is_file():
-            page_paths = ("index.html", "executive-summary.html", "h58.html") + page_paths[2:]
+            page_paths = ("index.html", "h65.html", "executive-summary.html", "h58.html") + page_paths[3:]
         for path in page_paths:
             with urlopen(f"http://127.0.0.1:{port}/{path}", timeout=10) as r:
                 body = r.read()
@@ -1153,14 +1255,8 @@ def main() -> int:
         for arm, value in h['means'].items():
             if f'{value:.6f}' not in text:
                 problems.append(f'validation.html: R2 {arm} mean is not rendered from its receipt')
-        # The literal used to be the H53/H54 string 'Do not upload'.  That is a per-round status
-        # marker, not a permanent property of the site, so it is now read from the current receipt.
-        marker_needed = ('do not upload' if current_round != 'H57' else None)
-        if marker_needed:
-            for page_name in ('index.html', 'executive-summary.html'):
-                body = (DOCS / page_name).read_text()
-                if marker_needed not in body.casefold():
-                    problems.append(f'{page_name}: missing failed-gate warning {marker_needed!r}')
+        # Current upload/download guidance is enforced by check_h65_status(), not by the
+        # historical H53/H54 wording or whichever old TIFF docs/data/submission.json points to.
 
     edge_path = DATA / 'h55_edge_submission.json'
     edge_hold_path = DATA / 'h55_edge_holdout.json'
@@ -1230,7 +1326,7 @@ def main() -> int:
                 problems.append('H55-EDGE: global incumbent marker/current receipt was changed or conflated')
             if edge_marker != edge_name:
                 problems.append('H55-EDGE: experiment-specific marker is missing or points to different bytes')
-            for page_name in ('index.html', 'h55.html', 'downloads/index.html'):
+            for page_name in ('h55.html', 'downloads/index.html'):
                 page_text = (DOCS / page_name).read_text()
                 if 'h55-edge.html' not in page_text:
                     problems.append(f'{page_name}: missing separate H55-EDGE archive link')
@@ -1245,6 +1341,7 @@ def main() -> int:
                      "(informational; receipts stay authoritative)")
         notes.extend("  " + x for x in typed_numbers[:4])
 
+    problems.extend(check_h65_status(DATA, DOCS, ROOT, notes))
     check_r5(DATA, DOCS, ROOT, problems, notes)
     print(f"pages checked: {len(pages)}   data files: {len(list(DATA.glob('*.json')))}")
     for nse in notes:
@@ -1262,14 +1359,14 @@ def main() -> int:
     sub = json.loads(sub_p.read_text()) if sub_p.exists() else {}
     gate = sub.get('approved_for_weekly_slot')
     if gate is True:
-        slot = ('Scientific slot gate is OPEN for '
+        slot = ('Legacy pointer gate is OPEN for '
                 f"{sub.get('file')} ({sub.get('promotion', 'no promotion reason recorded')})")
     elif gate is False:
-        slot = f"Scientific slot gate remains CLOSED for {sub.get('file')}."
+        slot = f"Legacy pointer gate remains CLOSED for {sub.get('file')}."
     else:
-        slot = 'Scientific slot gate: not recorded in docs/data/submission.json (not assumed either way).'
-    print('\n✓ local links/JSON/receipt values verified; format and canonical-pattern research release '
-          f'verified; byte-identical TIFF serves through the site. {slot}')
+        slot = 'Legacy pointer gate: not recorded in docs/data/submission.json (not assumed either way).'
+    print('\n✓ local links/JSON/receipt values verified; legacy archived format/pattern checks and served TIFF '
+          f'verified. This does not change or imply the current H65 status. {slot}')
     return 0
 
 

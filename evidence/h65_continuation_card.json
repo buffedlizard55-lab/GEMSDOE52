@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "round": "H65-continuation-review",
+  "generated_utc": "2026-10-09T04:30:26Z",
+  "status": "NO_NEW_EXPERIMENT",
+  "hypothesis": {
+    "id": "H65-A",
+    "title": "Cross-strike, regionally detrended basement and gravity offsets as View A",
+    "mechanism": "A buried fault may offset the basement surface and produce a co-located gravity step; the potential-field view could respond where the surface view abstains.",
+    "named_non_fault_mimic": "Basin-margin density contrast or basement lithologic contact, model-construction seam, or survey/processing artifact.",
+    "preregistered_protocol": "knowledge/41_hypotheses_H65_preregistered.md",
+    "original_receipt": "evidence/h65_run_card.json"
+  },
+  "premise_auc": {
+    "evidence_class": "PREMISE-AUC (not HOLDOUT-DTI and not an organizer score)",
+    "receipt": "evidence/h65_premise.json",
+    "mean_oof_auc": 0.5202284013449225,
+    "minimum_fold_auc": 0.47060159253821654,
+    "mean_threshold": 0.6,
+    "minimum_fold_threshold": 0.55,
+    "passed": false
+  },
+  "holdout_dti": {
+    "evidence_class": "HOLDOUT-DTI",
+    "status": "NOT RUN",
+    "dti": null,
+    "evaluator_version": null,
+    "withheld_positive_count": null,
+    "ci95": null,
+    "reason": "The preregistered premise gate failed; the hide-and-recover arm was not authorized."
+  },
+  "independence_test": {
+    "status": "NOT RUN",
+    "method_required": "Spatial-block out-of-fold error correlation on labeled negatives",
+    "reason": "No H65 fit passed the premise gate, so no H65 exchange arm was authorized."
+  },
+  "registry_uniqueness": {
+    "candidate_raster": null,
+    "preplacement_surface_check": "NOT RUN — no candidate raster",
+    "final_dot_check": "NOT RUN — no candidate raster",
+    "historical_h61_artifact": {
+      "status": "DUPLICATE/STOP",
+      "receipt": "evidence/h61_uniqueness_census_20261009.json",
+      "use_as_h65_substitute": false
+    }
+  },
+  "raster": {
+    "emitted": false,
+    "filename": null,
+    "sha256": null
+  },
+  "validator": {
+    "status": "NOT RUN — no H65 raster exists",
+    "format_gate": null,
+    "decoded_pattern_uniqueness": null,
+    "lane_surface_phase": null,
+    "lane_final_dot_phase": null
+  },
+  "submission": {
+    "decision": "NO",
+    "current_download_available": false,
+    "upload_allowed": false,
+    "weekly_slots_used": 0,
+    "filename": null,
+    "note": null,
+    "verdict": "There is no current H65 file. Do not use an archived TIFF as a substitute."
+  },
+  "experiment_budget": {
+    "limit": 3,
+    "used_before_stop": 2,
+    "not_authorized": "E3 holdout arm, conditional on the failed premise gate"
+  },
+  "data_availability_at_review": {
+    "labels_tif": "present; restored from owner-supplied GitHub mirror and verified against the local manifest pin; not organizer-authenticated",
+    "sample_submission_tif": "present; restored from owner-supplied GitHub mirror and verified against the local manifest pin; not organizer-authenticated",
+    "training_features_tif": "absent",
+    "shared_feature_cache": "absent",
+    "work_cache": "absent",
+    "experiment_started": false
+  },
+  "source_review": {
+    "drivendata_task_and_data_pages": {
+      "status": "NOT FETCHED in this continuation review",
+      "reason": "The sandbox egress allowlist does not include drivendata.org."
+    },
+    "owner_project_page": {
+      "status": "FETCHED from a pinned owner-controlled GitHub commit; not an official organizer source",
+      "url": "https://github.com/buffedlizard55-lab/GEMSDOE32/blob/0d6a6243147cd63a2000412d575d4c80a36d3a62/docs/index.html",
+      "finding": "The page labels 0.2747 a model projection and states that no organizer score exists. It does not link a submission receipt to the file discussed in older local notes."
+    },
+    "leaderboard": {
+      "status": "No live fetch in this continuation review; prior saved public-board observations are not submission receipts."
+    }
+  },
+  "test_suite": {
+    "command": ".venv/bin/python -m pytest -q",
+    "passed": 345,
+    "skipped": 1,
+    "failed": 0,
+    "classification": "Repository tests only; not a model experiment, holdout score, or organizer validation."
+  },
+  "verdict": "NEGATIVE / NO NEW EXPERIMENT / NO H65 TIFF / NO HOLDOUT-DTI / DO NOT DOWNLOAD OR SUBMIT A CURRENT H65 FILE"
+}
