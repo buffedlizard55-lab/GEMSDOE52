@@ -1,0 +1,58 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="assets/ctd5.css"></head><body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a><a href="index.html">Overview</a><a href="h66cover-executive-summary.html">Submission guide</a><a href="h67.html">H67 (previous)</a><a href="downloads/index.html">Archive</a></nav></header><main id="main">
+<section class="hero"><div><div class="eyebrow">DOE GEMS / H66cover · co-training, cover-gated A-only emission</div>
+<h1>Download the file.<br>Read the verdict first.</h1>
+<p class="lead">A valid, unique file and a negative verdict. H66cover runs the brief's co-training protocol with the empirical independence
+test, one whole-segment pseudo-label exchange, and a new placement field: the disagreement signal gated by
+modelled cover thickness, so every emitted cell is an A-only (buried-beneath-cover) candidate.</p>
+<p class="small">Namespacing (IR-H66-015): a parallel session merged a different round under the "H66" label
+first (PR #56, structural coherence), so this round's files carry the <code>h66cover</code> prefix and the
+site's <code>h66-*</code> pages are that round's. This page is the cover-gated co-training round's own
+landing page.</p>
+<div class="notice" role="note"><strong>OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT · DO NOT UPLOAD</strong>
+<p>Verdict: <b>NEGATIVE, research-only. DOWNLOAD YES (format-valid and unique on decoded pixels); SUBMIT NO (gates: format=True lane_policy=False unique=True not_union=True beats_single_B=False). No certified leaderboard gain.</b></p></div>
+<div class="actions"><a class="button" href="downloads/h66cover-candidate.tif" download>Download the H66cover GeoTIFF ↓</a>
+<a class="button secondary" href="downloads/h66cover-candidate.zip" download>Single-TIFF ZIP</a>
+<a class="button secondary" href="downloads/h66cover-a-only-reasoning.csv" download>A-only reasoning CSV</a></div>
+<p class="fileline">gems52-h66-covergate-cotrain-633px.tif<br>58,473 bytes · SHA-256 0ce05c52194a8d234aac98684bee6f96bad9c7c5c5c2f79cf580a5df72707629 · 633 emitted cells · values exactly {0,1}, 0 NaN</p>
+<p class="small"><a href="h66cover-executive-summary.html">How to submit, and whether this file may be submitted →</a>
+· <a href="data/h66cover_run_card.json">Complete JSON run card ↗</a></p></section>
+<hr class="divider">
+<section><h2>Gates, measured</h2><div class="table-wrap"><table><thead><tr><th>Gate</th><th>Result</th></tr></thead>
+<tbody><tr><td>Format gate (single-band float32 GeoTIFF, EPSG:32611, shape and transform as pinned)</td><td>PASS</td></tr><tr><td>Values exactly {0, 1}; 0 NaN; 0 infinite</td><td>PASS</td></tr><tr><td>Decoded-pattern uniqueness (not identical to any registry raster)</td><td>PASS</td></tr><tr><td>Exact novelty vs the 516 informative registry rasters (share of emitted cells that are not positive in any of them)</td><td>1.0000</td></tr><tr><td>Not the union of the two views</td><td>PASS</td></tr><tr><td>Every emitted cell inside the A-only gate (A confident, B abstains)</td><td>PASS (633/633)</td></tr><tr><td>Independence screen (|rho| of block OOF errors on labelled negatives &lt; 0.60)</td><td>PASS (max |rho| 0.1331)</td></tr><tr><td>Leakage canary (max single-feature AUC &lt; 0.90)</td><td>PASS (max 0.6687)</td></tr><tr><td>Lane gate, literal, surface / dots</td><td>PASS / DUPLICATE/STOP</td></tr><tr><td>Lane gate, saturation policy, surface / dots</td><td>PASS / DUPLICATE/STOP</td></tr><tr><td>Holdout beats single_B (paired CI lower bound &gt; 0)</td><td>FAIL</td></tr></tbody></table></div>
+<p class="small">Local validator only. Not an organiser acceptance receipt. Lane gate statistics are the literal
+rule and the saturation policy from <code>gems52.gates.lane_report</code>.</p></section>
+<hr class="divider">
+<section><h2>HOLDOUT-DTI (gems52-pooled-hide-v1)</h2>
+<p class="small">53,186 withheld positive pixels · α 0.2 / β 0.8 ·
+300 m triangular kernel · 95% paired physical-cluster bootstrap,
+153 clusters, 1000 draws.
+Every arm placed 9,400 dots per fold at 3 px spacing. Best comparable control: <code>single_B</code>.</p>
+<div class="table-wrap"><table><thead><tr><th>Arm</th><th>HOLDOUT-DTI</th><th>95% CI</th><th>Withheld positives</th></tr></thead>
+<tbody><tr class='highlight'><td>h66a_cover_gated_a_only</td><td class='numeric'>0.045745</td><td class='numeric'>[0.031303, 0.062135]</td><td class='numeric'>53,186</td></tr><tr><td>single_A</td><td class='numeric'>0.071954</td><td class='numeric'>[0.056636, 0.088566]</td><td class='numeric'>53,186</td></tr><tr><td>single_B</td><td class='numeric'>0.174517</td><td class='numeric'>[0.152316, 0.196299]</td><td class='numeric'>53,186</td></tr><tr><td>union_max</td><td class='numeric'>0.148981</td><td class='numeric'>[0.128084, 0.169418]</td><td class='numeric'>53,186</td></tr><tr><td>disagreement_pre</td><td class='numeric'>0.033293</td><td class='numeric'>[0.023815, 0.044556]</td><td class='numeric'>53,186</td></tr><tr><td>disagreement_post</td><td class='numeric'>0.031535</td><td class='numeric'>[0.020459, 0.044217]</td><td class='numeric'>53,186</td></tr><tr><td>random</td><td class='numeric'>0.080426</td><td class='numeric'>[0.070223, 0.090973]</td><td class='numeric'>53,186</td></tr></tbody></table></div>
+<p class="small">Paired difference, candidate (h66a) minus single_B: <b>-0.128772</b>, 95% CI
+[-0.151680, -0.106031]. The frozen H61 comparison arm <code>disagreement_post</code> is reported alongside for continuity.</p>
+<p class="small">Independence screen (the brief's mandated test): max |Spearman rho| of the two views' 50x50 px
+block OOF errors on held-out labelled negatives = <b>0.1331</b>
+over 2,089 blocks; threshold 0.60;
+exchange allowed; 15,443 pseudo-label pixels.</p>
+<p class="small">Holdout numbers are HOLDOUT-DTI, never organiser scores, and the hide-and-recover instrument does not
+rank board performance (Spearman -0.10 against the owner-reported board, R4; <code>knowledge/10</code> section 5).</p></section>
+<hr class="divider">
+<section><h2>Projection vs the reported 0.2778 champion (a PROJECTION, never a score)</h2>
+<p class="small">Break-even credit density to match the owner-reported 0.2778 at 633 emitted px:
+<b>2.1443</b> at |G| = 5,949 and
+<b>4.4484</b> at |G| = 12,512
+(|G| is the measured interval [5,949.3, 12,512.1] px, H61 repair R2). DTI if this arm's holdout credit density held:
+<b>0.4707</b> / <b>0.2269</b>.
+The champion's score is OWNER-REPORTED, not ORGANIZER-CONFIRMED (IR-H61-004). No leaderboard gain is claimed.</p></section>
+<hr class="divider">
+<section><h2>What this does and does not show</h2><ul>
+<li>It shows the cover-gated A-only field, placed at the matched budget, against the single-view baseline on hide-and-recover segments.</li>
+<li>It does not show that potential-field data contain no fault information; six rounds of View-A variants all fail to transfer out of quadrant (AUC ~0.52).</li>
+<li><b>NO CERTIFIED LEADERBOARD GAIN.</b> Nothing on this page is an organiser score or a promise of a board gain.</li>
+<li>The best published board score is 0.3774 (rank 1, xiaofanhu), 0.3195 is rank 7 (DARD), 0.2778 is rank 13 (extradr19):
+<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">official leaderboard</a> (PUBLIC BOARD, fetched 2026-10-09).</li>
+<li>Every emitted cell carries a written geological hypothesis, a named non-fault mimic and a falsifier in the reasoning CSV, as Phase-2 review requires.</li></ul>
+<p class="small"><a href="../knowledge/43_h66cover_hypotheses_preregistered.md">Five ranked hypotheses and the frozen protocol →</a> ·
+<a href="../knowledge/44_h66cover_results_and_limits.md">Results and limits →</a> · <a href="h67.html">H67 landing (previous round) →</a></p></section>
+</main></body></html>

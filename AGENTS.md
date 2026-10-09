@@ -52,6 +52,48 @@ a shared instrument must be read. Use `scripts/h67_uniqueness_aligned.py` (align
 uniqueness check; do not fork a checker.
 <!--/H67-AGENTS-->
 
+## Current H66cover continuation (2026-10-09; namespaced after the parallel-session H66 label collision, IR-H66-015)
+
+Read `README.md`'s H66cover block first (it sits directly below the H71 block), then
+`knowledge/43_h66cover_hypotheses_preregistered.md` (frozen; SHA-256 pinned in
+`registry/h66cover_preregistration.json` together with the dated amendment
+`knowledge/43_h66cover_amendment_2026-10-09_budget.md`) and `knowledge/44_h66cover_results_and_limits.md`.
+**H66cover is COMPLETE and NEGATIVE, research-only.** Verdict: DOWNLOAD YES (format-valid, unique on
+decoded pixels), SUBMIT NO (lane policy DUPLICATE/STOP on the dots phase, and the holdout does not beat
+single_B). The shipped artefact is `gems52-h66-covergate-cotrain-633px.tif` (633 dots, SHA-256
+`0ce05c52…7629`), published one-click at `docs/downloads/h66cover-candidate.tif` with the explicit
+DO-NOT-SUBMIT status on its own pages (`docs/h66cover.html`, `docs/h66cover-executive-summary.html`).
+Experiments used: 3 of 3 (E1 canary+fit+independence, E2 exchange+holdout, E3 build+gates+GeoTIFF);
+the round is closed — do not re-tune it.
+
+Namespacing (IR-H66-015): parallel sessions merged other rounds under the "H66" label first
+(PR #56, structural coherence — the site's bare `h66-*` pages and `docs/downloads/h66-candidate.*`
+are that round's; PR #58 added H65halo and the thermal-upflow H67; a later round renamed itself H71
+the same way). This round's shared file names therefore carry the `h66cover` prefix and its
+irregularity IDs are IR-H66-011 … -015. Before taking a round label, check
+`registry/*_preregistration.json` and the `IR-H66-*` ID space.
+
+Facts the next round must respect:
+
+- The cover gate lifted the A-only arm from 0.0315 to 0.0457 (+45% relative) but it remains far below
+  single_B 0.1745; the paired CI excludes 0. The co-training/disagreement lane has now failed in every
+  variant (H61, H63, H64, H65, H66 structural, H66cover): **View A cannot be repaired by gating,
+  capacity cuts, or cross-strike features — stop proposing View A repairs.**
+- The H66cover emission is 633 dots because the frozen A-only gate has only 1,657 exact-novel cells
+  (IR-H66-013); the template budget is a cap, not a target (amendment `knowledge/43_h66cover_…`).
+- 100% of the H66cover dots fall within 3 px of the H64 raster's dots (IR-H66-014): the A-only stratum
+  sits inside the H64 disagreement emission's 3 px halo, so **no lane-valid A-only candidate exists in
+  this field** — a lane-valid candidate needs a stratum outside every informative prior's halo.
+- The surface lane passes for H66cover (literal 0.0336 / policy 0.0126) — rank-unique vs the registry;
+  the DOTS lane is what fails.
+- H66-B/C/D/E are registered and deferred (`knowledge/43_h66cover` §2). H66-C needs bulk ComCat
+  seismicity, which is not ingestible from the sandbox.
+- The global pointers `docs/data/submission.json` and `submission/LATEST.txt` stay at main's H60
+  artefact; this round's pointer is `submission/H66COVER_LATEST.txt`.
+- Slots used: 0. No organizer receipt exists for any file in this repository; every score is
+  OWNER-REPORTED.
+<!--/H66COVER-AGENTS-->
+
 ## Current H65 continuation (2026-10-09; the protocol body keeps the H62 label, see knowledge/41a)
 
 Read `README.md`'s H65 block first, then `knowledge/41_hypotheses_H65_preregistered.md` (frozen;
