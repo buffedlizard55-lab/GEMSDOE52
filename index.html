@@ -142,6 +142,33 @@ interval overlaps random's.</p>
       from the same mass. That is a better detector, and this round measured five that are not.</li>
 </ul>
 
+
+<h2>Two parallel rounds from today, and why their verdicts differ</h2>
+<p>This repository ran three rounds on 2026-10-09. Two of them are live and they fail
+<i>different</i> gates, which is worth stating plainly because it is the whole difficulty:</p>
+<table>
+  <tr><th>Round</th><th>Holdout gate</th><th>Lane gate</th><th>Verdict</th></tr>
+  <tr><td><b>H76</b> (this page's download)<br><span class="mut">View-B OOF rank, consensus-restricted placement</span></td>
+      <td class="fail">FAIL — no new arm beats <code>single_B</code></td>
+      <td class="pass">PASS — 12.17 % near-dot, 0.0026 rank corr</td>
+      <td>download YES · submit NO</td></tr>
+  <tr><td><b>H75</b> (parallel session)<br><span class="mut">directional variogram anisotropy ranker</span></td>
+      <td class="pass">PASS — 0.1864 vs 0.1745, paired +0.0118, CI [0.0068, 0.0174]</td>
+      <td class="fail">FAIL — 92.2 % of dots within 3 px of one prior (limit 70 %)</td>
+      <td><a href="docs/downloads/h75-candidate.tif">download</a> · <a href="docs/h75-executive-summary.html">details</a> · submit research-only</td></tr>
+  <tr><td><b>H74</b> (parallel session)<br><span class="mut">deformation-only View A2, 721 dots</span></td>
+      <td class="fail">FAIL</td><td class="fail">FAIL</td>
+      <td><a href="docs/downloads/h74-candidate.tif">download</a> · <a href="docs/h74-executive-summary.html">details</a> · submit NO</td></tr>
+</table>
+<div class="note"><b>Read this before choosing a file.</b> H75 is the only round in this repository that
+has beaten the control on the shared holdout, and it is the one candidate worth an owner's attention.
+It fails the parallel-run <i>lane</i> rule, which is this project's own protocol, not an organiser
+rule — so overriding it is an owner decision, not something this page can make. H76 (the download at
+the top) is the reverse case: it passes every gate the protocol defines and beats nothing on the
+holdout. <b>No file here is approved for a weekly slot, and slots used remain 0.</b> Holdout DTI is a
+HOLDOUT-DTI measurement against catalogue faults, not a projected board score; this repository
+measured Spearman −0.10 between the two.</div>
+
 <p class="mut">Sources for manual review:
 <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">official problem &amp; metric</a> ·
 <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">leaderboard</a> ·

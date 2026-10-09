@@ -1,0 +1,371 @@
+{
+  "evidence_class": "uniqueness diagnostic, not a score",
+  "candidate": "submission/gems52-h74-a2deform-cotrain-721px-20261009T174546Z.tif",
+  "candidate_file_sha256": "0dea78bc8e276a8276de94a169e59ffac43234cef6a6f978f13f0788c6232f26",
+  "candidate_nonzero": 721,
+  "sample": "data/sample_submission.tif",
+  "footprint_px": 5167373,
+  "priors_offered": 633,
+  "self_copies_excluded": [
+    "docs/downloads/h74-candidate.tif"
+  ],
+  "priors_after_byte_dedupe": 543,
+  "phases": {
+    "surface": {
+      "phase": "surface",
+      "rule": "STOP at rho >0.90 or directed <=3px dot proximity >0.70; no lane retuning",
+      "evidence_class": "uniqueness diagnostic, not a score",
+      "priors_checked": 543,
+      "distinct_decoded_priors": 379,
+      "candidate_decoded_sha256": "8275e1273ac1322c4c625f4a52cd79e99657e152f4141fc48009e6e0310d1cd1",
+      "rank_pixels": 5167373,
+      "exact_full_eligible_rank": true,
+      "max_spearman": 0.005828986527850223,
+      "max_near_3px_fraction": null,
+      "rank_threshold": 0.9,
+      "near_threshold": 0.7,
+      "duplicate": false,
+      "offender_count": 0,
+      "error_count": 0,
+      "ok": true,
+      "scope": "Supplied aligned immutable public inventory only; private/release/external artifacts not proven absent.",
+      "top_spearman": [
+        {
+          "path": "work/h61/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+          "spearman": 0.005829
+        },
+        {
+          "path": "work/h61/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+          "spearman": 0.005829
+        },
+        {
+          "path": "work/h61/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+          "spearman": 0.005784
+        },
+        {
+          "path": "work/h61/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+          "spearman": 0.005735
+        },
+        {
+          "path": "work/h61/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+          "spearman": 0.005068
+        }
+      ],
+      "top_near_3px": [],
+      "offenders": []
+    },
+    "dots": {
+      "phase": "dots",
+      "rule": "STOP at rho >0.90 or directed <=3px dot proximity >0.70; no lane retuning",
+      "evidence_class": "uniqueness diagnostic, not a score",
+      "priors_checked": 543,
+      "distinct_decoded_priors": 379,
+      "candidate_decoded_sha256": "8275e1273ac1322c4c625f4a52cd79e99657e152f4141fc48009e6e0310d1cd1",
+      "rank_pixels": 5167373,
+      "exact_full_eligible_rank": true,
+      "max_spearman": 0.005828986527850223,
+      "max_near_3px_fraction": 1.0,
+      "rank_threshold": 0.9,
+      "near_threshold": 0.7,
+      "duplicate": true,
+      "offender_count": 23,
+      "error_count": 0,
+      "ok": false,
+      "scope": "Supplied aligned immutable public inventory only; private/release/external artifacts not proven absent.",
+      "top_spearman": [
+        {
+          "path": "work/h61/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+          "spearman": 0.005829
+        },
+        {
+          "path": "work/h61/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+          "spearman": 0.005829
+        },
+        {
+          "path": "work/h61/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+          "spearman": 0.005784
+        },
+        {
+          "path": "work/h61/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+          "spearman": 0.005735
+        },
+        {
+          "path": "work/h61/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+          "spearman": 0.005068
+        }
+      ],
+      "top_near_3px": [
+        {
+          "path": "work/h61/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+          "near_3px_fraction": 1.0
+        },
+        {
+          "path": "work/h61/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+          "near_3px_fraction": 1.0
+        },
+        {
+          "path": "work/h61/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+          "near_3px_fraction": 1.0
+        },
+        {
+          "path": "work/h61/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+          "near_3px_fraction": 1.0
+        },
+        {
+          "path": "work/h61/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+          "near_3px_fraction": 1.0
+        }
+      ],
+      "offenders": [
+        "work/h61/priors/32a4a6d2d4df8ef8e880120f36d2a4d94f134f8a.tif",
+        "work/h61/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+        "work/h61/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+        "work/h61/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+        "work/h61/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+        "work/h61/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+        "work/h61/priors/bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+        "work/h61/priors/2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+        "work/h61/priors/437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+        "work/h61/priors/c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+        "work/h61/priors/5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+        "work/h61/priors/0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+        "work/h61/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+        "work/h61/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+        "work/h61/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+        "work/h61/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+        "work/h61/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+        "work/h61/priors/c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+        "work/h61/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+        "work/h61/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+        "work/h61/priors/3d3ee66300203bdc878f3a052caabde671daf042.tif",
+        "work/h61/priors/35616cbb48ac3533dd4c957b8acca57f71ba365f.tif",
+        "submission/gems52-h64-sufgate-cotrain-37600px-20261009T022631Z.tif"
+      ]
+    }
+  },
+  "census": {
+    "census_receipt": "work/h61/prior_fetch_receipt.json",
+    "census_entries": 526,
+    "census_errors": 0,
+    "census_sha_column": "file bytes",
+    "census_present": 524,
+    "local_artifacts": 0,
+    "census_errors_note": "blobs that failed the API fetch are covered by byte-identical local copies in docs/downloads (matched by decoded file SHA-256)"
+  },
+  "lane_policy_dots": {
+    "phase": "dots",
+    "instrument": "gems52.gates.lane_report (H61 shared-template repair)",
+    "evidence_class": "uniqueness/lane diagnostic, not a score",
+    "rule": "STOP at Spearman > 0.9 or directed <= 3 px dot proximity > 0.7; probes classified by measured coverage >= 0.95",
+    "priors_checked": 543,
+    "distinct_decoded_priors": 379,
+    "candidate_decoded_sha256": "8275e1273ac1322c4c625f4a52cd79e99657e152f4141fc48009e6e0310d1cd1",
+    "rank_pixels": 5167373,
+    "exact_full_eligible_rank": true,
+    "binary_spearman_method": "analytic phi (mid-rank affine)",
+    "n_dots": 721,
+    "literal": {
+      "max_spearman": 0.005828986527850223,
+      "max_near_3px_fraction": 1.0,
+      "max_near_source": "/home/user/GEMSDOE52/work/h61/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+      "rank_offenders": [],
+      "near_offenders": [
+        "/home/user/GEMSDOE52/work/h61/priors/32a4a6d2d4df8ef8e880120f36d2a4d94f134f8a.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/3d3ee66300203bdc878f3a052caabde671daf042.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/35616cbb48ac3533dd4c957b8acca57f71ba365f.tif",
+        "/home/user/GEMSDOE52/submission/gems52-h64-sufgate-cotrain-37600px-20261009T022631Z.tif"
+      ],
+      "identical": [],
+      "verdict": "DUPLICATE/STOP",
+      "note": "applied to every aligned prior including universal-coverage probes"
+    },
+    "policy": {
+      "max_spearman": -2.437476212837543e-05,
+      "max_near_3px_fraction": 0.9944521497919556,
+      "max_near_source": "/home/user/GEMSDOE52/submission/gems52-h64-sufgate-cotrain-37600px-20261009T022631Z.tif",
+      "rank_offenders": [],
+      "near_offenders": [
+        "/home/user/GEMSDOE52/work/h61/priors/32a4a6d2d4df8ef8e880120f36d2a4d94f134f8a.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+        "/home/user/GEMSDOE52/submission/gems52-h64-sufgate-cotrain-37600px-20261009T022631Z.tif"
+      ],
+      "identical": [],
+      "informative_priors": 529,
+      "universal_coverage_probes": 14,
+      "probe_paths": [
+        "/home/user/GEMSDOE52/work/h61/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/3d3ee66300203bdc878f3a052caabde671daf042.tif",
+        "/home/user/GEMSDOE52/work/h61/priors/35616cbb48ac3533dd4c957b8acca57f71ba365f.tif"
+      ],
+      "probe_coverage": [
+        1.0,
+        1.0,
+        0.9987132726822701,
+        0.9987132726822701,
+        1.0,
+        0.9999994194342077,
+        0.988265410683533,
+        0.9917604167533484,
+        0.9879739666557843,
+        0.9972862419647275,
+        0.9879739666557843,
+        0.9955909898511294,
+        1.0,
+        0.9972862419647275
+      ],
+      "verdict": "DUPLICATE/STOP",
+      "note": "the same literal rule restricted to priors that localise something; probe statistics are retained verbatim in per_prior and nothing is deleted"
+    },
+    "duplicate": true,
+    "ok": false,
+    "error_count": 0,
+    "errors": [],
+    "scope": "Supplied aligned immutable public inventory only; private/release/unlinked artifacts are not proven absent.",
+    "probe_coverage": [
+      {
+        "path": "work/h61/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+        "coverage_3px_of_eligible": 1.0
+      },
+      {
+        "path": "work/h61/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+        "coverage_3px_of_eligible": 1.0
+      },
+      {
+        "path": "work/h61/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+        "coverage_3px_of_eligible": 0.9987132726822701
+      },
+      {
+        "path": "work/h61/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+        "coverage_3px_of_eligible": 0.9987132726822701
+      },
+      {
+        "path": "work/h61/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+        "coverage_3px_of_eligible": 1.0
+      },
+      {
+        "path": "work/h61/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+        "coverage_3px_of_eligible": 0.9999994194342077
+      },
+      {
+        "path": "work/h61/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+        "coverage_3px_of_eligible": 0.988265410683533
+      },
+      {
+        "path": "work/h61/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+        "coverage_3px_of_eligible": 0.9917604167533484
+      },
+      {
+        "path": "work/h61/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+        "coverage_3px_of_eligible": 0.9879739666557843
+      },
+      {
+        "path": "work/h61/priors/c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+        "coverage_3px_of_eligible": 0.9972862419647275
+      },
+      {
+        "path": "work/h61/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+        "coverage_3px_of_eligible": 0.9879739666557843
+      },
+      {
+        "path": "work/h61/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+        "coverage_3px_of_eligible": 0.9955909898511294
+      },
+      {
+        "path": "work/h61/priors/3d3ee66300203bdc878f3a052caabde671daf042.tif",
+        "coverage_3px_of_eligible": 1.0
+      },
+      {
+        "path": "work/h61/priors/35616cbb48ac3533dd4c957b8acca57f71ba365f.tif",
+        "coverage_3px_of_eligible": 0.9972862419647275
+      }
+    ],
+    "informative_near_offenders_over_70pct": [
+      "work/h61/priors/32a4a6d2d4df8ef8e880120f36d2a4d94f134f8a.tif",
+      "work/h61/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+      "work/h61/priors/bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+      "work/h61/priors/2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+      "work/h61/priors/437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+      "work/h61/priors/c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+      "work/h61/priors/5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+      "work/h61/priors/0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+      "submission/gems52-h64-sufgate-cotrain-37600px-20261009T022631Z.tif"
+    ]
+  },
+  "max_jaccard": 0.000141,
+  "max_jaccard_prior": "work/h61/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+  "candidate_px_inside_any_prior_support": 721,
+  "share_of_candidate_px_inside_any_prior_support": 1.0,
+  "top_overlaps": [
+    {
+      "path": "work/h61/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+      "prior_support": 5106385,
+      "intersection": 721,
+      "jaccard": 0.000141,
+      "share_of_candidate_in_prior": 1.0
+    },
+    {
+      "path": "work/h61/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+      "prior_support": 5167373,
+      "intersection": 721,
+      "jaccard": 0.00014,
+      "share_of_candidate_in_prior": 1.0
+    },
+    {
+      "path": "work/h61/priors/374c88b1da2b803e2ed160de467fd71ae114010d.tif",
+      "prior_support": 5167373,
+      "intersection": 721,
+      "jaccard": 0.00014,
+      "share_of_candidate_in_prior": 1.0
+    },
+    {
+      "path": "work/h61/priors/7303cda1534398189a1e8dc603b15755b6dbeba9.tif",
+      "prior_support": 5167373,
+      "intersection": 721,
+      "jaccard": 0.00014,
+      "share_of_candidate_in_prior": 1.0
+    },
+    {
+      "path": "work/h61/priors/f79f3e81b2ebcc0428ba545a3af6dde56387f057.tif",
+      "prior_support": 5167373,
+      "intersection": 721,
+      "jaccard": 0.00014,
+      "share_of_candidate_in_prior": 1.0
+    }
+  ]
+}

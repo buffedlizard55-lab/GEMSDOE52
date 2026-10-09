@@ -1,6 +1,6 @@
 {
  "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified. | H61 merge: IR-H61-001..009 appended from the H61 branch; main's repaired schema and numbering retained.",
- "generated": "2026-10-09T19:55:00+00:00 (H76 additions)",
+ "generated": "2026-10-09T20:40:00+00:00 (H74/H75/H76 merged)",
  "entries": [
   {
    "id": "IR-30-029",
@@ -2343,6 +2343,42 @@
    "disposition": "Closed. The README H66cover block and AGENTS.md H66cover section state the namespacing; future rounds should check registry/h66_preregistration.json and the IR-H66-* ID space before taking the H66 label."
   },
   {
+   "id": "IR-H74-001",
+   "round": "H74",
+   "severity": "medium",
+   "status": "resolved - regression test added",
+   "title": "H74 build's candidate x prior CSR was built transposed, crashing the first build inside the shared greedy",
+   "what_it_is": "scripts/run_h74.py built the lane-constraint membership as (informative priors x candidates) and passed it to run_h70.lane_valid_greedy, which expects (candidates x priors) — row j lists the priors whose 3 px halo contains candidate j (H70 stacks priors x candidates and transposes). The first H74 build crashed on the first budget probe with IndexError (index 534 out of bounds for axis 0 with size 523) after the registry classification, before any receipt was written.",
+   "how_we_know": "work/h74_e3_build.log traceback: run_h74.py line in greedy -> run_h70.lane_valid_greedy 'counts[hit]' IndexError; registry 560 rasters -> 523 informative, 35 probes; strict A2-only candidate cells 1,965.",
+   "handling": "Fixed once in scripts/run_h74.py (vstack then transpose; near_counts uses HITS.T @ v). No shared tool was forked or modified — run_h70.lane_valid_greedy is unchanged. Regression test tests/test_h74.py::test_lane_constraint_csr_orientation_matches_brute_force checks the orientation against brute-force halo membership on a synthetic registry and asserts the greedy runs clean. The build was re-run from scratch; no receipt from the crashed attempt exists.",
+   "measured_effect": "No measured number changed: the crash preceded every receipt. The re-run reproduces the same candidate set (1,965 strict A2-only cells after exact novelty).",
+   "disposition": "Fixed once in scripts/run_h74.py (the round's own build code; no shared tool forked or modified). Regression test added in tests/test_h74.py. The crashed build wrote no receipt; the re-run is the only build. Closed."
+  },
+  {
+   "id": "IR-H74-002",
+   "round": "H74",
+   "severity": "high",
+   "status": "resolved - round renamed at merge",
+   "title": "Namespace collision: this session's round was also numbered H72 by a parallel session that merged to main first",
+   "what_it_is": "This session preregistered and completed its deformation-only View A2 round as H72 (knowledge/59, runner scripts/run_h72.py, unique GeoTIFF built, NEGATIVE verdict, slots 0). Before this branch was pushed, a parallel session's H72 round (strain-only View A: raw bands 4/7/8 alone, no derived transforms, no seismicity channels, no file emitted) merged to main via PR #67, and an H73 round merged after it. Three sessions had therefore used the number H72, and this branch's PR #68 reported mergeable=CONFLICTING.",
+   "how_we_know": "git fetch origin main; git log origin/main shows the merged strain-only H72 (knowledge/59 on main) and the H72->H73 rename commit ('identifier collision with main's H72 round'); gh pr view 68 reported mergeStateStatus=DIRTY, mergeable=CONFLICTING.",
+   "handling": "This session's round was renamed H74 with identifier-only edits (h72->h74, H72->H74, knowledge 59/60/60b -> 63/64/64b, evidence/docs-data h72_* -> h74_*, scripts -> run_h74/publish_h74_site, tests/test_h74.py, src/gems52/h74.py, submission prefix gems52-h72- -> gems52-h74-, IR-H72-001 -> IR-H74-001), following the IR-H71-005 precedent. The git-ignored feature store was rebuilt cleanly (structural.build is deterministic; columns byte-identical) so the extension tag reads +h74-deformation-v1, and the features-stage receipt was regenerated. The two H72-labelled rounds are distinct protocols: main's H72 isolates the three raw strain bands and emitted no file; H74 is the knowledge/54 H70-E variant (strain bands 4/7/8 plus seismicity bands 10/16 with gradient/coherence transforms, 22 channels) and built the round's GeoTIFF. No measured number, threshold or conclusion changed.",
+   "disposition": "Renamed to H74; preregistration re-pinned (registry/h74_preregistration.json, rename_note recorded); runner, publisher, tests, store module, receipts, docs pages and the submission prefix renamed; the PR branch was rebased onto the updated main with both rounds' README/AGENTS blocks kept. Closed. The single-TIFF ZIP was rebuilt after the rename so its inner TIFF carries the H74 name (zip sha256 updated in every receipt that records it; the TIF bytes and SHA-256 never changed), matching the IR-H71-005 precedent. Closed.",
+   "measured_effect": "No measured number changed: the rename is identifier-only. The built GeoTIFF's SHA-256 (0dea78bc...) is unchanged by the file rename; the pixels never changed."
+  },
+  {
+   "id": "IR-H74-003",
+   "round": "H74",
+   "severity": "medium",
+   "status": "resolved - links repaired at merge",
+   "title": "PR #70's docs/h72-executive-summary.html links its candidate files without the downloads/ prefix (six dead links; check_site exit 1)",
+   "what_it_is": "The merged main's docs/h72-executive-summary.html (from PR #70, 'H72: Generate unique TIF submissions') links h72-candidate-v3/spsc/mraec .tif/.zip with bare hrefs (e.g. href=\"h72-candidate-v3.tif\"), which resolve relative to docs/ — but the files live in docs/downloads/. scripts/check_site.py reported six dead links and exited 1 on the merged tree.",
+   "how_we_know": "check_site.py output on the merged branch: six 'dead link -> h72-candidate-*' lines for docs/h72-executive-summary.html; git ls-tree origin/main shows the six files present under docs/downloads/.",
+   "handling": "Repaired at this merge: the six hrefs now carry the downloads/ prefix (href=\"downloads/h72-candidate-*.tif/.zip\"), matching every other round's page convention. No file bytes changed; the linked files already existed. Also restored the README's verbatim prompt block, which a manual merge resolution had reverted to the pre-refresh text (the brief itself was already the refreshed one; tests test_ctd5.py::test_current_readme_contains_the_complete_preserved_brief and test_gems52_h1_pipeline.py::test_github_pages_and_readme_completeness pin the sync).",
+   "disposition": "Fixed in this merge; check_site re-run clean. Future rounds' publishers should link downloads/ from docs/ pages (the shared convention in scripts/publish_*_site.py). Closed.",
+   "measured_effect": "No measured number changed: link targets and the verbatim prompt text only."
+  },
+  {
    "id": "IR-H76-001",
    "round": "H76",
    "severity": "high",
@@ -2407,6 +2443,28 @@
    "how_we_know": "git show HEAD:evidence/h61_canary.json compared against a fresh run of `PYTHONPATH=src ./.venv/bin/python scripts/run_h61.py canary` in this session, with git diff --name-only confirming scripts/run_h61.py is unmodified.",
    "impact": "The scientific content is unaffected: every AUC in the re-run is bit-identical to the committed value (View A fold 0 heldout_region_auc 0.5062341311661124, in_sample_auc 0.9480777). Only the provenance label and float32 rounding differ. But it means a receipt in this repository can drift from the code that generates it without any test noticing.",
    "disposition": "The regenerated receipts are kept, because they are what the committed script actually emits, and the discrepancy is disclosed here rather than hidden by reverting. Recommendation for the next round: add a test that re-runs each generator's emit step against its committed receipt, or pin receipts to the script SHA that produced them."
+  },
+  {
+   "id": "IR-H76-007",
+   "round": "H76",
+   "severity": "low",
+   "status": "closed - the six hrefs now carry the downloads/ prefix",
+   "title": "Six download links on the H72 executive-summary page were dead on the served site",
+   "what_it_is": "docs/h72-executive-summary.html linked h72-candidate-{v3,spsc,mraec}.{tif,zip} with bare relative hrefs, but those files live in docs/downloads/. All six were 404s on the served site.",
+   "how_we_know": "scripts/check_site.py reported exactly these six as dead links; after prefixing them with downloads/ the same check reports no problems.",
+   "impact": "A reader following the H72 page's instructions could not download any H72 candidate.",
+   "disposition": "Fixed in this round: the six hrefs now point at downloads/. check_site.py is clean."
+  },
+  {
+   "id": "IR-H76-008",
+   "round": "H76",
+   "severity": "medium",
+   "status": "open - PRE-EXISTING on main, not caused by this round; reproduced and root-caused, not fixed",
+   "title": "scripts/check_site.py has been reporting a false R5-novelty failure since a parallel round landed an undated raster",
+   "what_it_is": "check_site.py recomputes R5's decoded-pattern novelty against the rasters it can prove predate R5's build and compares to the receipted 1.0. It now reports 0.992087 != 1.0 and exits with one problem. The classifier `_stamp(q) or built` gives any raster with no parseable YYYYMMDDTHHMMSSZ stamp in its name or sidecar a stamp of exactly `built`, so `> built` is False and it is judged NOT later and kept in the strict prior set. submission/gems52-h75-dva-variogram-anisotropy-B-37654px-20261009.tif carries the date 20261009 but no T######Z, so it is undated by that rule even though it is a 2026-10-09 round; the docs/downloads/h7{4,5,6}-candidate.tif aliases are undated too, and their bytes differ from their canonical twins so the content-hash expansion does not rescue them.",
+   "how_we_know": "Measured, not inferred. (1) Moving every H76 raster out of submission/ and docs/downloads/ and re-running scripts/check_site.py still reports exactly 'R5 novelty: recomputed 0.992087 != receipt 1.0', so this round did not cause it. (2) 76 of 112 swept rasters have no parseable stamp at all, including the H75 canonical file. (3) A first attempt to fix it by resolving aliases through content hash BEFORE classifying changed nothing (strict set still 73, still 0.992087), because the aliases are not byte-identical to their dated twins; that attempt was reverted rather than shipped unverified.",
+   "impact": "The site checker exits non-zero on main, so 'check_site.py clean' is no longer a usable pre-merge signal for any round. R5's own artefact and receipt are unaffected: it is still pattern unique and not the prior union over every set tried.",
+   "disposition": "Left as-is and disclosed. A correct fix needs R5's actual prior list (its receipt records only the count, n_repo_rasters: 71) or a round-ordering key that does not depend on a timestamp being present in the filename. Recommended: have every build write its own dated sidecar next to every copy it publishes, including short aliases, so `_stamp` always resolves."
   }
  ],
  "merge_note": "Merged registry/irregularities.json: main's entries (including the parallel H66 round's IR-H66-001..010) plus this round's IR-H67-001..011. This round was labelled H66 in its own receipts and was renamed H67 before merge because main merged a different H66 first (PR #56); the IDs were renumbered wholesale so no ID carries two meanings. See knowledge/45a_amendment_2026-10-09_H67_rename.md. IR-H67-002 (in-domain nodata sentinels collapse every rank channel) and IR-H67-008 (probe classification flips with the structuring element, and this round's lane verdict depends on it) are the two that change a result; IR-H67-005 and IR-H67-007 change how a shared instrument must be read."

@@ -1,0 +1,12 @@
+{
+ "dots_shared_with_union_max": 25,
+ "jaccard_with_union_max": 0.017642907551164433,
+ "dots_shared_with_single_A2": 81,
+ "dots_shared_with_single_B": 0,
+ "jaccard_with_single_A2": 0.05951506245407789,
+ "jaccard_with_single_B": 0.0,
+ "spearman_field_vs_unionmax": 0.17485832205054266,
+ "emitted_cells_that_are_strict_a2_only": 721,
+ "verdict": "the strict A2-only emission is not max(A2,B), not either single view, and not their union",
+ "not_union_pass": true
+}

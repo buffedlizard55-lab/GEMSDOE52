@@ -1,0 +1,37 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="assets/ctd5.css"></head><body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a><a href="index.html">Overview</a><a href="h74-executive-summary.html">Submission guide</a><a href="h71.html">H71 (previous)</a><a href="downloads/index.html">Archive</a></nav></header><main id="main">
+<div class="eyebrow">Executive summary / submission guide</div>
+<h1>How to submit, and whether this file may be submitted.</h1>
+<p class="lead">Read the verdict first. A valid file is not an approved competition entry; the selector decides
+promotion within the weekly cap shown on the submission page.</p>
+<div class="notice" role="note"><strong>OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT · DO NOT UPLOAD</strong><p>Verdict: <b>NEGATIVE, research-only. DOWNLOAD YES (format-valid and unique on decoded pixels); SUBMIT NO. Failed gates: lane_policy, S1, holdout_beats_single_B. No weekly slot spent by this lane.</b></p>
+<p>The file is new inference, not identical on decoded pixels to any registry raster, so it is safe to download
+for research. Whether it may be submitted is answered by the measured gates above; this round spends no weekly slot.</p></div>
+<div class="actions"><a class="button" href="downloads/h74-candidate.tif" download>Download the H74 GeoTIFF ↓</a>
+<a class="button secondary" href="downloads/h74-candidate.zip" download>Single-TIFF ZIP</a>
+<a class="button secondary" href="downloads/h74-a-only-reasoning.csv" download>Geological reasoning CSV</a></div>
+<p class="fileline">gems52-h74-a2deform-cotrain-721px-20261009T174546Z.tif<br>58,475 bytes · SHA-256 0dea78bc8e276a8276de94a169e59ffac43234cef6a6f978f13f0788c6232f26 · 721 emitted cells · values exactly {0,1}, 0 NaN</p>
+<section class="prose"><h2>The file contract (checked on disk)</h2><ul>
+<li>One band, float32, every value in [0, 1]; in practice exactly 0 or 1.</li>
+<li>No NaN or infinite values anywhere in the file (the portal's “Predicted values must be in range [0, 1]”
+rejection is caused by NaN/out-of-range bytes, and this file has neither).</li>
+<li>EPSG:32611, shape and geotransform identical to the pinned <code>sample_submission.tif</code>.</li>
+<li>721 emitted cells, all strict A2-only discovery candidates (View A2 confident, View B abstaining),
+all more than 200 m from a mapped trace, 3 px minimum separation.</li>
+<li>Name for the portal: <code>gems52-h74-a2deform-cotrain-721px-20261009T174546Z</code>. Note (137 characters):
+<code>H74 deformation-only View A2; A2-only stratum, 721 dots, lane-DUPLICATE; holdout does NOT beat single_B; research only, not slot-approved</code></li>
+</ul><p class="small">Local validator only; not an organiser acceptance receipt.</p>
+<h2>Exact steps, only if a later selector approves this file</h2>
+<ol><li>Open the competition submission page (login required; <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">competition page</a>).</li>
+<li>Under <b>File to submit</b>, choose the TIFF (or the ZIP with the single TIFF).</li>
+<li>Paste the name and note above into the submission form.</li>
+<li>Submit only if the selector has approved this file. This file is not approved.</li></ol></section>
+
+<section><h2>Earlier rounds still on this site</h2><p class="small">Each is a separate artefact with its own receipt. None of them is the H74 file, and none is approved for a slot.</p>
+<ul>
+<li><b>H71, previous round, negative. Do not upload.</b> <a href="h71.html">H71 landing</a> · <a href="h71-executive-summary.html">H71 submission guide</a></li>
+<li><b>H70, negative; its 610-px file is a measured lane duplicate. Do not upload.</b> <a href="h70.html">H70 landing</a></li>
+<li><b>H69, negative; the first lane-feasible file, still not slot-approved.</b> <a href="h69-overview.html">H69 overview</a></li>
+<li><b>H67, negative. Do not upload.</b> <a href="h67.html">H67 landing</a></li>
+<li><b>H65b, negative. Do not upload.</b> <a href="h65b.html">H65b round page</a></li>
+</ul></section>
+</main></body></html>
