@@ -1,20 +1,20 @@
 #!/usr/bin/env python3
-"""H62 -- step-normalised two-view co-training, matched-budget, on the corrected label-blind folds.
+"""H63 -- step-normalised two-view co-training, matched-budget, on the corrected label-blind folds.
 
 Lane: the brief's co-training paragraph.  View A is potential-field/subsurface, View B is surface
 (DEM curvature and slope plus the radiometric channels), and disagreement is the discovery signal.
-Preregistered in ``knowledge/34_hypotheses_H62_preregistered.md`` and pinned by
-``registry/h62_preregistration.json``; this runner refuses to start if either hash has moved.
+Preregistered in ``knowledge/37_hypotheses_H63_preregistered.md`` and pinned by
+``registry/h63_preregistration.json``; this runner refuses to start if either hash has moved.
 
 What is new relative to H61: View A is a *physically parameterised* view -- matched
-step/persistence columns of the subsurface fields (``src/gems52/h62.py``) plus the template's
+step/persistence columns of the subsurface fields (``src/gems52/h63.py``) plus the template's
 local-contrast and upward-continued-TMI channels, with NO raw band values.  H61 measured that a
 raw-value View A does not transfer between quadrants (mean OOF AUC 0.5163 vs View B's 0.6843), so
 this round first measures whether the step-normalised View A regains out-of-fold skill (the
 sufficiency screen) before any pseudo-label exchange.
 
 Shared tools are used, not forked: ``gems52.structural`` feature store (extended by
-``gems52.external`` and ``gems52.h62``), ``gems52.spatial.folds`` label-blind-quadrants-v2,
+``gems52.external`` and ``gems52.h63``), ``gems52.spatial.folds`` label-blind-quadrants-v2,
 ``gems52.nodes.spacing_select`` metric-aware placement, ``gems52.evaluate_holdout``
 (gems52-pooled-hide-v1), ``gems52.metric``, ``gems52.submission_writer``, ``gems52.gates``.
 
@@ -25,7 +25,7 @@ Stages (checkpointed, resumable, never silently re-tuned):
               pseudo-label round per direction, then refit
     holdout   matched-budget hide-and-recover comparison of six arms, pooled DTI + 95% CI
 
-Nothing here writes a submission; ``scripts/build_h62_submission.py`` does that.
+Nothing here writes a submission; ``scripts/build_h63_submission.py`` does that.
 """
 from __future__ import annotations
 
@@ -53,7 +53,7 @@ from sklearn.metrics import roc_auc_score                            # noqa: E40
 from gems52 import evaluate_holdout as evaluator                     # noqa: E402
 from gems52 import nodes, spatial, structural                        # noqa: E402
 
-WORK = ROOT / "work/h62"
+WORK = ROOT / "work/h63"
 EVID = ROOT / "evidence"
 DOCS = ROOT / "docs/data"
 SEED = 62052
@@ -71,9 +71,9 @@ def now() -> str:
 
 def write(name: str, obj) -> Path:
     EVID.mkdir(parents=True, exist_ok=True)
-    p = EVID / f"h62_{name}.json"
+    p = EVID / f"h63_{name}.json"
     p.write_text(json.dumps(obj, indent=1, allow_nan=False, default=str) + "\n")
-    (DOCS / f"h62_{name}.json").write_text(p.read_text())
+    (DOCS / f"h63_{name}.json").write_text(p.read_text())
     return p
 
 
@@ -85,7 +85,7 @@ def digest(path) -> str:
 # setup
 # --------------------------------------------------------------------------------------------
 def setup():
-    reg = json.loads((ROOT / "registry/h62_preregistration.json").read_text())
+    reg = json.loads((ROOT / "registry/h63_preregistration.json").read_text())
     doc = ROOT / reg["hypothesis_document"]
     if digest(doc) != reg["hypothesis_sha256"]:
         raise SystemExit("preregistered hypothesis document changed after registration")
@@ -94,23 +94,23 @@ def setup():
         if digest(ROOT / "data" / pins[key]["dest"]) != pins[key]["sha256"]:
             raise SystemExit(f"input pin mismatch: {key}")
     store = structural.FeatureStore(ROOT / STORE)
-    if not store.manifest["version"].endswith("+h62-step-v1"):
-        raise SystemExit("feature store has not been extended with the H62 step columns; "
-                         "run: PYTHONPATH=src python -c \"from gems52 import h62; h62.extend_store()\"")
+    if not store.manifest["version"].endswith("+h63-step-v1"):
+        raise SystemExit("feature store has not been extended with the H63 step columns; "
+                         "run: PYTHONPATH=src python -c \"from gems52 import h63; h63.extend_store()\"")
     if store.manifest["inputs"]["features_sha256"] != pins["training_features"]["sha256"]:
         raise SystemExit("stale feature cache: built from different bytes")
-    va = store.manifest["view_A_h62"]
+    va = store.manifest["view_A_h63"]
     vb = store.manifest["view_B_with_external"]
     if set(va) & set(vb):
         raise SystemExit(f"cross-view feature overlap: {sorted(set(va) & set(vb))}")
     if any(n.startswith("raw_band_") for n in va):
-        raise SystemExit("H62 View A must not contain raw band values")
+        raise SystemExit("H63 View A must not contain raw band values")
     if "raw_band_06" not in vb:
         raise SystemExit("band 6 (radiometric total count) is not isolated in View B")
     if not any(n.startswith("X_mag_TMI_up150") for n in va):
         raise SystemExit("View A is missing the upward-continued TMI channels")
     if "A_step_grav_abs_2px" not in va or "A_step_cover_persist_4px" not in va:
-        raise SystemExit("View A is missing the H62 step columns")
+        raise SystemExit("View A is missing the H63 step columns")
     if not any(n.startswith("X_rad_") for n in vb):
         raise SystemExit("View B is missing the external radiometric channels")
     with rasterio.open(ROOT / "data/labels.tif") as ds, \
@@ -285,7 +285,7 @@ def stage_fit():
         mean_oof_auc_view_A=mean_a, mean_oof_auc_view_B=mean_b,
         per_fold_view_A=auc_a, per_fold_view_B=auc_b,
         view_A_sufficient=bool(mean_a >= th["sufficiency_screen_min_mean_oof_auc"]),
-        note="H61 measured a raw-value View A at mean 0.5163 (View B 0.6843); H62 measures whether "
+        note="H61 measured a raw-value View A at mean 0.5163 (View B 0.6843); H63 measures whether "
              "the step-normalised View A regains out-of-fold skill before any exchange is trusted.")
     log(f"sufficiency screen: mean OOF AUC A {mean_a:.4f} (bar "
         f"{th['sufficiency_screen_min_mean_oof_auc']}) B {mean_b:.4f}")
@@ -302,7 +302,7 @@ def stage_exchange():
     th = reg["thresholds"]
     flat = store.flat_idx
     inv = store.inverse
-    fit = json.loads((EVID / "h62_fit_checkpoint.json").read_text())
+    fit = json.loads((EVID / "h63_fit_checkpoint.json").read_text())
     suff = fit["sufficiency_screen"]
     # ---- independence screen on held-out labelled negatives, before any transfer
     rows_blocks = []
@@ -420,7 +420,7 @@ def stage_holdout():
     flat, inv = store.flat_idx, store.inverse
     K = int(th["budget_dots_per_fold_per_arm"])
     min_px = float(th["min_dot_separation_px"])
-    ex = json.loads((EVID / "h62_pseudo_exchange.json").read_text())
+    ex = json.loads((EVID / "h63_pseudo_exchange.json").read_text())
     if not ex.get("allowed_exchange", False):
         log("NOTE: the independence screen fired; post-exchange arms are refits without transfer")
     out = dict(stage="holdout", started_utc=now(), budget_per_arm_per_fold=K, min_separation_px=min_px,
@@ -520,7 +520,7 @@ def main() -> int:
     stages = ["canary", "fit", "exchange", "holdout"] if args.stage == "all" else [args.stage]
     for s in stages:
         t0 = time.time()
-        log(f"=== H62 stage {s} ===")
+        log(f"=== H63 stage {s} ===")
         {"canary": stage_canary, "fit": stage_fit,
          "exchange": stage_exchange, "holdout": stage_holdout}[s]()
         log(f"--- stage {s} done in {time.time()-t0:.1f}s")

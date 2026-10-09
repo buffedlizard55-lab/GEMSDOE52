@@ -1,22 +1,22 @@
-# H62 — hypotheses and protocol, preregistered 2026-10-09 **before** any H62 fit, score or artefact
+# H63 — hypotheses and protocol, preregistered 2026-10-09 **before** any H63 fit, score or artefact
 
-Frozen file: this document's SHA-256 is recorded in `registry/h62_preregistration.json` before the
-first model is fitted, and `scripts/run_h62.py` refuses to run if either hash has moved. Nothing
-below was written after seeing an H62 result. Lane: the brief's two-view co-training paragraph
+Frozen file: this document's SHA-256 is recorded in `registry/h63_preregistration.json` before the
+first model is fitted, and `scripts/run_h63.py` refuses to run if either hash has moved. Nothing
+below was written after seeing an H63 result. Lane: the brief's two-view co-training paragraph
 (View A potential-field/subsurface, View B surface), disagreement as the discovery signal —
 Blum & Mitchell, COLT '98, pp. 92–100, doi:10.1145/279943.279962.
 
-H62 is the direct continuation of the H61 lane with the one repair H61 §8 item 1 named as the
+H63 is the direct continuation of the H61 lane with the one repair H61 §8 item 1 named as the
 obvious next candidate: **change what View A is**. H61 measured that a View A built from raw
 potential-field band values does not transfer between quadrants (mean out-of-fold AUC 0.5163
 against View B's 0.6843, in-sample 0.948), so the Blum–Mitchell sufficiency premise failed and the
-A→B pseudo-label transfer had nothing to transfer. H62 rebuilds View A as a *physically
+A→B pseudo-label transfer had nothing to transfer. H63 rebuilds View A as a *physically
 parameterised* view — matched step filters and along-strike persistence of the subsurface fields —
 and re-runs the full preregistered protocol unchanged so the comparison to H61 is exact.
 
 ---
 
-## 0 · What H62 inherits (measured in H61, not re-derived here)
+## 0 · What H63 inherits (measured in H61, not re-derived here)
 
 All receipts already committed: `evidence/h61_forensics.json`, `evidence/h61_holdout.json`,
 `evidence/h61_pseudo_exchange.json`, `evidence/h61_canary.json`.
@@ -37,7 +37,7 @@ All receipts already committed: `evidence/h61_forensics.json`, `evidence/h61_hol
 * **Evaluator**: `gems52.evaluate_holdout` (`gems52-pooled-hide-v1`), pooled TPw/FPw/FNw,
   α 0.2, β 0.8, 300 m triangular kernel, 95 % paired physical-cluster bootstrap.
 
-## 1 · What H62 changes
+## 1 · What H63 changes
 
 **View A is rebuilt; View B is byte-identical to H61's View B.**
 
@@ -56,17 +56,17 @@ All receipts already committed: `evidence/h61_forensics.json`, `evidence/h61_hol
   * external deep-magnetic channels: `X_mag_TMI_up150_rank`, `X_mag_TMI_up150_grad1`,
     `X_mag_TMI_up150_grad3` — 3 channels.
   * **No `raw_band_*` channel enters View A.** That exclusion is the defining property of the
-  round and is asserted by the runner's setup and by `tests/test_h62.py`.
+  round and is asserted by the runner's setup and by `tests/test_h63.py`.
 * **View B (37 channels, unchanged from H61)**: raw bands 6 (radiometric total count), 12
   (`det_elev`), 19 (`det_elev_slope`); the template's elevation/curvature/slope/local-residual
   channels; the external radiometric K, Th, U and Th/K, U/K, U/Th rank and gradient channels.
-* The extension is a **shared template module** `src/gems52/h62.py`, used exactly like
+* The extension is a **shared template module** `src/gems52/h63.py`, used exactly like
   `src/gems52/external.py`; there is no round-private fork. The store version becomes
-  `structural-core-v2-band6-B+external-geodawn-v1+h62-step-v1`.
+  `structural-core-v2-band6-B+external-geodawn-v1+h63-step-v1`.
 
 ## 2 · Ranked candidate hypotheses (the brief's 3–5, with layers / signature / novelty / cost)
 
-### H62-A — Step-normalised potential-field View A — RANK 1, **implemented this session**
+### H63-A — Step-normalised potential-field View A — RANK 1, **implemented this session**
 
 * **Layers.** Bands 13 `iso_grav_anom`, 15 `depth_to_base_surf`, 2 `rtp` (descriptions read from
   the restored file, verified 2026-10-09), transformed by the template's `normal_profile` matched
@@ -90,7 +90,7 @@ All receipts already committed: `evidence/h61_forensics.json`, `evidence/h61_hol
 * **How it differs from anything already implemented in this repo.** Every prior View A
   (H55, H56, H57, H59, H60, H60D, CTD5, H61) mixed raw band values; H61 is the round that
   measured the consequence. The step/persistence transform existed in the template but was
-  applied only to the DEM and tagged as a separate "H55" view; H62 applies it to the subsurface
+  applied only to the DEM and tagged as a separate "H55" view; H63 applies it to the subsurface
   fields and tags the result View A. No prior round normalised a potential-field channel by its
   along-strike behaviour.
 * **Expected DTI improvement / cost.** **None claimed a priori.** The acceptance bar from the
@@ -100,10 +100,10 @@ All receipts already committed: `evidence/h61_forensics.json`, `evidence/h61_hol
   out-of-fold AUC of the new View A across the four folds, measured before any exchange. Cost:
   medium (~1 h CPU on 2 cores, no new data).
 
-### H62-B — B-only arm with surface-artefact rejection — RANK 2, **not run this session**
+### H63-B — B-only arm with surface-artefact rejection — RANK 2, **not run this session**
 
 * **Layers.** Bands 12/19 (detrended elevation/slope), the H2 paired-profile features, band 6
-  radiometrics; the A-abstention mask from H62-A's View A.
+  radiometrics; the A-abstention mask from H63-A's View A.
 * **Signature.** The brief's other disagreement direction: where B is confident and A abstains,
   suspect roads/erosion lines — but a *subset* may be real scarps in density- and
   magnetisation-homogeneous alluvium that the geophysics cannot see. The discriminator would be
@@ -113,21 +113,21 @@ All receipts already committed: `evidence/h61_forensics.json`, `evidence/h61_hol
   shipped only the A−B field and labelled B-only as the artefact class.
 * **Why deferred.** It needs the optional H2/H55 profile features (`include_optional_profiles=
   True`, a separate store build) plus a second holdout run; that exceeds this session's
-  three-experiment budget once H62-A is implemented. Ranked second because the brief names the
+  three-experiment budget once H63-A is implemented. Ranked second because the brief names the
   direction explicitly and it is the cheapest untried *emission* direction left in the lane.
 
-### H62-C — Along-strike continuity weighting of the disagreement field — RANK 3, **not run**
+### H63-C — Along-strike continuity weighting of the disagreement field — RANK 3, **not run**
 
-* **Layers.** H62-A's own `A_step_*_persist_*` channels.
+* **Layers.** H63-A's own `A_step_*_persist_*` channels.
 * **Signature.** Weight the placed field `rank(A) − rank(B)` by the along-strike persistence of
   A's step, so isolated single-pixel disagreements cannot consume the 37,600-dot budget.
 * **Difference.** H61 placed the raw rank difference; no round has weighted disagreement by
   continuity. Cost: low (a transform of existing outputs), but it is a *placement* change, and the
   lane rule forbids post-result retuning — it needs its own preregistered holdout run.
-* **Why deferred.** Budget; also a weaker prior than H62-A because the placement heuristic
+* **Why deferred.** Budget; also a weaker prior than H63-A because the placement heuristic
   (`spacing_select` at 3 px) already suppresses isolated dots.
 
-### H62-D — Sub-canopy 1 m LiDAR scarp detection — RANK 4, **not viable this session (external data unobtainable)**
+### H63-D — Sub-canopy 1 m LiDAR scarp detection — RANK 4, **not viable this session (external data unobtainable)**
 
 * **Layers.** USGS 3DEP 1 m DEM (https://www.usgs.gov/3d-elevation-program) over the GeoDAWN
   footprint — the specific free, official source this idea needs.
@@ -143,7 +143,7 @@ All receipts already committed: `evidence/h61_forensics.json`, `evidence/h61_hol
   unreachable (verified in earlier sessions; unchanged). The 1 m DEM is therefore **not
   obtainable this session** and the idea is recorded, not proposed as viable.
 
-### H62-E — Cross-file credit localisation by terrain stratum — RANK 5, **inherited from H61-D, not run**
+### H63-E — Cross-file credit localisation by terrain stratum — RANK 5, **inherited from H61-D, not run**
 
 * The H61 round's deferred H61-D: cross the LP atoms (file-membership signatures) with slope,
   modelled cover thickness and radiometric alteration strata and bound credit per stratum, so the
@@ -197,7 +197,7 @@ All receipts already committed: `evidence/h61_forensics.json`, `evidence/h61_hol
     **DOWNLOAD: YES · SUBMIT: NO** without ambiguity. Promotion to a weekly slot is a separate
     selector step; this round spends **0** slots.
 
-## 4 · The named non-fault process that could mimic H62-A's signal
+## 4 · The named non-fault process that could mimic H63-A's signal
 
 **A non-fault basin-fill density boundary or a volcanic lithologic contact in the basement.**
 Both produce a step in modelled basement depth and an isostatic-gravity / magnetic-fabric edge
@@ -231,7 +231,7 @@ geothermal vents, and neither establishes permeability or a reservoir.
 * Staff masking clarification, thread 11516 post 4: https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516/4
 * Blum & Mitchell, COLT '98 pp. 92–100: https://doi.org/10.1145/279943.279962
 * USGS GeoDAWN airborne magnetic & radiometric survey: https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and (DOI 10.5066/P93LGLVQ)
-* USGS 3DEP (named for H62-D, not fetched): https://www.usgs.gov/3d-elevation-program
+* USGS 3DEP (named for H63-D, not fetched): https://www.usgs.gov/3d-elevation-program
 * INGENIOUS / Great Basin Center for Geothermal Energy: https://gbcge.org/current-projects/ingenious/
 * GDR submission 1391 (CC BY 4.0): https://gdr.openei.org/submissions/1391
 * EPSG:32611 (UTM zone 11N): https://epsg.io/32611 · Tversky index: https://en.wikipedia.org/wiki/Tversky_index
@@ -242,4 +242,4 @@ geothermal vents, and neither establishes permeability or a reservoir.
 
 An AI assistant wrote the code, this protocol and the candidate-review templates. No geologist
 verified any emitted structure, no field observation was collected, and no organiser score,
-acceptance or leaderboard gain is claimed for any H62 artefact.
+acceptance or leaderboard gain is claimed for any H63 artefact.

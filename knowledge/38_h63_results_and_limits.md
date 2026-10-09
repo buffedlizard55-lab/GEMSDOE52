@@ -1,4 +1,4 @@
-# H62 — results and limits (2026-10-09)
+# H63 — results and limits (2026-10-09)
 
 **Verdict: NEGATIVE.** The step-normalised View A does **not** regain transferable skill: its mean
 out-of-fold AUC inside a held-out quadrant is **0.5362** against the preregistered sufficiency bar
@@ -8,19 +8,19 @@ including uniform random**, and the single pseudo-label exchange transferred not
 result is a deliverable: this document records it, and the artefact is published research-only
 (DOWNLOAD YES · SUBMIT NO · slots used 0).
 
-Preregistration: [knowledge/34_hypotheses_H62_preregistered.md](34_hypotheses_H62_preregistered.md),
-pinned by `registry/h62_preregistration.json` (SHA-256
+Preregistration: [knowledge/37_hypotheses_H63_preregistered.md](34_hypotheses_H63_preregistered.md),
+pinned by `registry/h63_preregistration.json` (SHA-256
 `41dabafd63235695759c731b3daacb33b54790f7f54a96a8414efdcdd39f411e`) before the first fit.
-Receipts: `evidence/h62_{canary,fit_checkpoint,independence,pseudo_exchange,holdout,projection,lane_surface,lane_dots,submission,run_card}.json`.
+Receipts: `evidence/h63_{canary,fit_checkpoint,independence,pseudo_exchange,holdout,projection,lane_surface,lane_dots,submission,run_card}.json`.
 
 ---
 
-## 1 · The question H62 was built to answer
+## 1 · The question H63 was built to answer
 
 H61 §8 item 1: *change what View A is.* H61 measured a View A built from raw potential-field band
 values at mean out-of-fold AUC **0.5163** (in-sample 0.948) — chance out of quadrant — against
 View B's **0.6843**. Blum–Mitchell sufficiency failed, so the A→B pseudo-label transfer handed over
-noise and the disagreement arm scored below every control. H62 rebuilt View A as a physically
+noise and the disagreement arm scored below every control. H63 rebuilt View A as a physically
 parameterised view: matched step/persistence columns of the three subsurface fields (band 13
 `iso_grav_anom`, band 15 `depth_to_base_surf`, band 2 `rtp`) at σ = 3, offsets 200 m / 400 m, plus
 the template's local-contrast channels and the upward-continued TMI — **38 channels, no raw band
@@ -45,7 +45,7 @@ comparison is eligible).
 | 3 | 0.7850 | 0.5280 | 0.8479 | 0.6994 |
 | **mean** | 0.8013 | **0.5362** | 0.8544 | **0.6862** |
 
-View A (H62 step-normalised) **0.5362** vs the 0.60 bar: **sufficiency premise not met.**
+View A (H63 step-normalised) **0.5362** vs the 0.60 bar: **sufficiency premise not met.**
 H61's raw-value View A: 0.5163 (per-fold 0.4668–0.6011). The step parameterisation moved View A by
 +0.0199 and did not cross the bar. View B is unchanged (0.6862 vs H61's 0.6843 — same view, same
 splitter, so the protocol is exactly comparable).
@@ -114,9 +114,9 @@ and a high-A/high-B pixel share a union score but differ in disagreement score. 
 
 ### 2.6 Artefact, gates and projection
 
-Filled in from the build receipts (`evidence/h62_submission.json`, `evidence/h62_lane_*.json`,
-`evidence/h62_projection.json`, `evidence/h62_run_card.json`) — see the site audit page
-(`docs/h62-audit.html`) for the rendered tables. Headline: format gate PASS (single-band float32,
+Filled in from the build receipts (`evidence/h63_submission.json`, `evidence/h63_lane_*.json`,
+`evidence/h63_projection.json`, `evidence/h63_run_card.json`) — see the site audit page
+(`docs/h63-audit.html`) for the rendered tables. Headline: format gate PASS (single-band float32,
 values exactly {0,1}, 0 NaN/Inf, EPSG:32611, 3,730 × 3,292, transform identical to the pinned
 sample, all mass > 200 m from any mapped trace inside the sample footprint); decoded-pattern
 uniqueness PASS against the 548-raster registry (526-blob census re-materialised and SHA-verified,
@@ -127,11 +127,11 @@ measured Spearman −0.10 against the owner-reported board in R4, and its holdou
 at matched budget) projects far below the champion at both ends of the measured |G| interval
 [5,949.3, 12,512.1] px. **Verdict: negative — DOWNLOAD YES · SUBMIT NO.**
 
-## 3 · What H62 establishes (and what it does not)
+## 3 · What H63 establishes (and what it does not)
 
 **Established, measured:**
 1. The template's matched step filter transfers to the subsurface fields mechanically (finite,
-   zero outside the footprint, plane-detrended, sign-invariant — pinned by `tests/test_h62.py`).
+   zero outside the footprint, plane-detrended, sign-invariant — pinned by `tests/test_h63.py`).
 2. As a *view*, the step-normalised potential-field channels still do not transfer between
    quadrants: mean OOF AUC 0.5362, statistically indistinguishable from H61's raw-value View A
    (0.5163) and far below View B (0.6862). Two different parameterisations of View A — raw values and
@@ -145,8 +145,8 @@ at matched budget) projects far below the champion at both ends of the measured 
 5. The pipeline, gates and publication path work end to end on the repaired instruments: canary →
    fit → sufficiency screen → independence → one exchange → matched-budget holdout → placement →
    surface and dots lane gates → uniqueness → not-union → projection → verdict → site, with the
-   incumbent pointer untouched (`submission/LATEST.txt` stays on H60; H62 publishes
-   `submission/H62_LATEST.txt` and `docs/data/submission_h62.json`).
+   incumbent pointer untouched (`submission/LATEST.txt` stays on H60; H63 publishes
+   `submission/H63_LATEST.txt` and `docs/data/submission_h63.json`).
 
 **Not established:** whether *any* potential-field view can be made sufficient on this data (two
 parameterisations failed; a third is not ruled out). Whether buried faults exist that neither view
@@ -181,17 +181,17 @@ FILENAME-ONLY-OWNER-REPORTED).
    (raw 0.5163, step 0.5362) say the potential-field channels as compiled do not carry
    quadrant-transferable fault signal at 100 m. The lane's own falsification condition has fired
    twice.
-2. **Run the B-only direction (H62-B, preregistered rank 2).** Where B is confident and A abstains,
+2. **Run the B-only direction (H63-B, preregistered rank 2).** Where B is confident and A abstains,
    the brief names roads/erosion lines — but a subset may be real scarps in homogeneous alluvium
    that geophysics cannot see. `single_B` is the only view that transfers (0.6862 OOF AUC; 0.1742
    HOLDOUT-DTI, the best measured arm in either round). This is the cheapest untried *emission*
    direction in the lane and it needs the optional H2/H55 profile store plus its own preregistered
    holdout.
-3. **Run H61-D / H62-E: cross-file credit localisation by terrain stratum.** Cross the LP atoms
+3. **Run H61-D / H63-E: cross-file credit localisation by terrain stratum.** Cross the LP atoms
    with slope, modelled cover thickness and radiometric alteration strata so the organiser's own
    scores say *where* hidden truth sits. No new data; it converts owner-reported scores into a
    placement prior without emitting a duplicate.
-4. **Acquire sub-100 m topography (H62-D) when egress allows.** USGS 3DEP 1 m DEM over the GeoDAWN
+4. **Acquire sub-100 m topography (H63-D) when egress allows.** USGS 3DEP 1 m DEM over the GeoDAWN
    footprint (https://www.usgs.gov/3d-elevation-program) is the specific free official source; it
    was unobtainable this session (usgs.gov unreachable).
 5. **Authenticate one receipt.** A single submission-page receipt tying a file SHA-256 to a score
@@ -205,4 +205,4 @@ FILENAME-ONLY-OWNER-REPORTED).
 
 An AI assistant wrote the code, this protocol, the results document and the candidate-review
 templates. No geologist verified any emitted structure, no field observation was collected, and no
-organiser score, acceptance or leaderboard gain is claimed for any H62 artefact.
+organiser score, acceptance or leaderboard gain is claimed for any H63 artefact.

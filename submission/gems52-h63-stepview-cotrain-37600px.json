@@ -1,12 +1,12 @@
 {
-  "file": "gems52-h62-stepview-cotrain-37600px.tif",
+  "file": "gems52-h63-stepview-cotrain-37600px.tif",
   "sha256": "aa41d0cd4658b2f0887180bf85132453dbf8f9408272d2c880d1fe4e822caa9f",
   "bytes": 140421,
-  "submission_name": "gems52-h62-stepview-cotrain-37600px-20261009T011052Z",
-  "note": "H62 cotrain: step-normalised potential-field A vs DEM+radiometric B disagreement; 3px dots; >200m off catalogue; research-only",
+  "submission_name": "gems52-h63-stepview-cotrain-37600px-20261009T011052Z",
+  "note": "H63 cotrain: step-normalised potential-field A vs DEM+radiometric B disagreement; 3px dots; >200m off catalogue; research-only",
   "note_chars": 126,
   "validator": {
-    "path": "/home/user/GEMSDOE52/submission/gems52-h62-stepview-cotrain-37600px.tif",
+    "path": "/home/user/GEMSDOE52/submission/gems52-h63-stepview-cotrain-37600px.tif",
     "bytes": 140421,
     "sha256": "aa41d0cd4658b2f0887180bf85132453dbf8f9408272d2c880d1fe4e822caa9f",
     "bands": 1,
@@ -54,14 +54,14 @@
     "ok": true,
     "validation_class": "local on-disk template/range check; not organizer upload acceptance"
   },
-  "zip_file": "gems52-h62-stepview-cotrain-37600px.zip",
+  "zip_file": "gems52-h63-stepview-cotrain-37600px.zip",
   "zip_sha256": "062634821b9d6efd6533dd6bb6e1abcb67870168a1c2f94a93c6c83f71ca6fdc",
   "approved_for_weekly_slot": false,
   "promoted": false,
   "submission_slots_used": 0,
   "status": "research-only; local format validation is not organizer acceptance",
   "metadata": {
-    "round": "H62",
+    "round": "H63",
     "seed": 62052,
     "budget": 37600,
     "placed": 37600,

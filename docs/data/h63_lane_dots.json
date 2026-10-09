@@ -1,0 +1,338 @@
+{
+ "phase": "dots",
+ "instrument": "gems52.gates.lane_report (H61 shared-template repair)",
+ "evidence_class": "uniqueness/lane diagnostic, not a score",
+ "rule": "STOP at Spearman > 0.9 or directed <= 3 px dot proximity > 0.7; probes classified by measured coverage >= 0.95",
+ "priors_checked": 548,
+ "distinct_decoded_priors": 367,
+ "candidate_decoded_sha256": "48152ec3ee693f72d975d49ea7faa626d1021db71e97eae02c697131d6989d5f",
+ "rank_pixels": 4593171,
+ "exact_full_eligible_rank": true,
+ "binary_spearman_method": "analytic phi (mid-rank affine)",
+ "n_dots": 37600,
+ "literal": {
+  "max_spearman": 0.035334607002026314,
+  "max_near_3px_fraction": 1.0,
+  "max_near_source": "/home/user/GEMSDOE52/work/h63/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+  "rank_offenders": [],
+  "near_offenders": [
+   "/home/user/GEMSDOE52/work/h63/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/ab7e0752036d020fbc394a528bbe63171c3cb08f.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/443e8e1c799734facd50a92bc85c650f3857a2b6.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/3d3ee66300203bdc878f3a052caabde671daf042.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/35616cbb48ac3533dd4c957b8acca57f71ba365f.tif"
+  ],
+  "identical": [],
+  "verdict": "DUPLICATE/STOP",
+  "note": "applied to every aligned prior including universal-coverage probes"
+ },
+ "policy": {
+  "max_spearman": 0.03325638593722422,
+  "max_near_3px_fraction": 0.8913297872340425,
+  "max_near_source": "/home/user/GEMSDOE52/work/h63/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+  "rank_offenders": [],
+  "near_offenders": [
+   "/home/user/GEMSDOE52/work/h63/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/ab7e0752036d020fbc394a528bbe63171c3cb08f.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/443e8e1c799734facd50a92bc85c650f3857a2b6.tif"
+  ],
+  "identical": [],
+  "informative_priors": 534,
+  "universal_coverage_probes": 14,
+  "probe_paths": [
+   "/home/user/GEMSDOE52/work/h63/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/3d3ee66300203bdc878f3a052caabde671daf042.tif",
+   "/home/user/GEMSDOE52/work/h63/priors/35616cbb48ac3533dd4c957b8acca57f71ba365f.tif"
+  ],
+  "probe_coverage": [
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   0.9999997822854843,
+   0.9885919770894661,
+   0.9919031971594352,
+   0.9883130847947964,
+   0.9974396772948362,
+   0.9883130847947964,
+   0.9956951308801697,
+   1.0,
+   0.9974396772948362
+  ],
+  "verdict": "DUPLICATE/STOP",
+  "note": "the same literal rule restricted to priors that localise something; probe statistics are retained verbatim in per_prior and nothing is deleted"
+ },
+ "duplicate": true,
+ "ok": false,
+ "error_count": 0,
+ "errors": [],
+ "scope": "Supplied aligned immutable public inventory only; private/release/unlinked artifacts are not proven absent.",
+ "per_prior_trim": {
+  "n": 548,
+  "probes": [
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+    "coverage": 1.0
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+    "coverage": 1.0
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+    "coverage": 1.0
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+    "coverage": 1.0
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+    "coverage": 1.0
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+    "coverage": 0.9999997822854843
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+    "coverage": 0.9885919770894661
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+    "coverage": 0.9919031971594352
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+    "coverage": 0.9883130847947964
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+    "coverage": 0.9974396772948362
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+    "coverage": 0.9883130847947964
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+    "coverage": 0.9956951308801697
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/3d3ee66300203bdc878f3a052caabde671daf042.tif",
+    "coverage": 1.0
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/35616cbb48ac3533dd4c957b8acca57f71ba365f.tif",
+    "coverage": 0.9974396772948362
+   }
+  ],
+  "top_near": [
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+    "near": 1.0,
+    "coverage": 1.0,
+    "spearman": -0.00953797677479503
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+    "near": 1.0,
+    "coverage": 1.0,
+    "spearman": 0.009833179527298518
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+    "near": 1.0,
+    "coverage": 1.0,
+    "spearman": -0.0007690640639586202
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+    "near": 1.0,
+    "coverage": 1.0,
+    "spearman": -0.0007690640639586202
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+    "near": 1.0,
+    "coverage": 1.0,
+    "spearman": -0.027274450714901952
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+    "near": 1.0,
+    "coverage": 0.9999997822854843,
+    "spearman": 0.027273862358891825
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+    "near": 1.0,
+    "coverage": 0.9974396772948362,
+    "spearman": -0.0053379376210125895
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/3d3ee66300203bdc878f3a052caabde671daf042.tif",
+    "near": 1.0,
+    "coverage": 1.0,
+    "spearman": -0.01980295534700526
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/35616cbb48ac3533dd4c957b8acca57f71ba365f.tif",
+    "near": 1.0,
+    "coverage": 0.9974396772948362,
+    "spearman": -0.0053379374452733365
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+    "near": 0.9991223404255319,
+    "coverage": 0.9956951308801697,
+    "spearman": 0.027893863126866997
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+    "near": 0.999095744680851,
+    "coverage": 0.9919031971594352,
+    "spearman": 0.0348078198813382
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+    "near": 0.9990425531914894,
+    "coverage": 0.9885919770894661,
+    "spearman": 0.03527101149650283
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+    "near": 0.9989893617021277,
+    "coverage": 0.9883130847947964,
+    "spearman": 0.03533460698430197
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+    "near": 0.9989893617021277,
+    "coverage": 0.9883130847947964,
+    "spearman": 0.035334607002026314
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+    "near": 0.8913297872340425,
+    "coverage": 0.897567715201546,
+    "spearman": 0.022490063541778915
+   }
+  ],
+  "top_rank": [
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+    "spearman": 0.035334607002026314,
+    "coverage": 0.9883130847947964
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+    "spearman": 0.03533460698430197,
+    "coverage": 0.9883130847947964
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+    "spearman": 0.03527101149650283,
+    "coverage": 0.9885919770894661
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+    "spearman": 0.0348078198813382,
+    "coverage": 0.9919031971594352
+   },
+   {
+    "path": "/home/user/GEMSDOE52/submission/gems52-h61-deepsharp-cotrain-37600px.tif",
+    "spearman": 0.03325638593722422,
+    "coverage": 0.1389700056888803
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/d1701aad825e8f46cdbe043545825038b3d963dc.tif",
+    "spearman": 0.030310710041391905,
+    "coverage": 0.026174945369985138
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/9b69f2be32d3095042b9ccbfb5f7974dba00867b.tif",
+    "spearman": 0.030310710041391905,
+    "coverage": 0.026174945369985138
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+    "spearman": 0.027893863126866997,
+    "coverage": 0.9956951308801697
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+    "spearman": 0.027273862358891825,
+    "coverage": 0.9999997822854843
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/f2e3063e31af19d840cb25e45ba85f959544a59f.tif",
+    "spearman": 0.02504249682885409,
+    "coverage": 0.3312689642950371
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+    "spearman": 0.022490063541778915,
+    "coverage": 0.897567715201546
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/d4639f1bf50f1d4870b752fc0bf9df5ad30b9ce6.tif",
+    "spearman": 0.011472377183549211,
+    "coverage": 0.01809664826325865
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/b0a34590fa6614f45bb842c394d91b9adbc1bced.tif",
+    "spearman": 0.010201740106905019,
+    "coverage": 0.1457450637043559
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/ec2d9f440e23b315edb14f6648777473d597562d.tif",
+    "spearman": 0.010201740106905019,
+    "coverage": 0.1457450637043559
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h63/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+    "spearman": 0.009833179527298518,
+    "coverage": 1.0
+   }
+  ],
+  "errors": [],
+  "full_table": "/home/user/GEMSDOE52/evidence/h63_lane_dots.json"
+ }
+}

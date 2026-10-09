@@ -1,4 +1,4 @@
-"""Shared extension: add the H62 step-normalised potential-field columns to the template store.
+"""Shared extension: add the H63 step-normalised potential-field columns to the template store.
 
 Why this is a *shared* module and not a round-private fork
 ---------------------------------------------------------
@@ -18,7 +18,7 @@ already owns a matched step filter for exactly this geometry -- ``structural.nor
 the paired-normal profile transform (detrended cross-normal step, flank balance, and along-tangent
 persistence of |step|) -- but it was applied only to the DEM and tagged as a separate "H55"
 view.  This module applies the same transform to the three subsurface fields and tags the result
-View A, so H62's View A is a physically parameterised view with **no raw band values**.
+View A, so H63's View A is a physically parameterised view with **no raw band values**.
 
 Provenance and limits (stated, not implied)
 ------------------------------------------
@@ -51,7 +51,7 @@ STEP_FIELDS = (
 )
 STEP_OFFSETS_PX = (2, 4)          # 200 m and 400 m cross-normal sampling offsets
 STEP_SIGMA = 3.0                  # smoothing scale of the template's normal_profile
-VERSION_TAG = "+h62-step-v1"
+VERSION_TAG = "+h63-step-v1"
 
 
 def step_columns(field: np.ndarray, valid: np.ndarray, tag: str,
@@ -83,8 +83,8 @@ def step_feature_names() -> list[str]:
             for kind in ("signed", "abs", "persist")]
 
 
-def view_A_h62_names(manifest: dict) -> list[str]:
-    """H62's View A: step columns + template local-contrast A channels + external deep TMI.
+def view_A_h63_names(manifest: dict) -> list[str]:
+    """H63's View A: step columns + template local-contrast A channels + external deep TMI.
 
     ``manifest["view_A"]`` holds the template's raw A bands *and* its derived A_* contrast
     channels; only the derived ones are retained (the raw bands are the channels H61 measured as
@@ -95,7 +95,7 @@ def view_A_h62_names(manifest: dict) -> list[str]:
     external = set(manifest.get("view_A_external", []))
     names = sorted(step | retained | external)
     if any(n.startswith("raw_band_") for n in names):
-        raise ValueError("H62 View A must not contain raw band values")
+        raise ValueError("H63 View A must not contain raw band values")
     return names
 
 
@@ -118,7 +118,7 @@ def register_columns(store_dir: str | Path, columns: dict[str, np.ndarray], log=
     for name, values in columns.items():
         col = np.asarray(values, np.float32).ravel()[flat_idx]
         if not np.isfinite(col).all():
-            raise ValueError(f"nonfinite H62 feature inside eligible footprint: {name}")
+            raise ValueError(f"nonfinite H63 feature inside eligible footprint: {name}")
         dest = store / (name + ".npy")
         if dest.exists() and name in hashes and structural.digest(dest) == hashes[name]:
             skipped.append(name)
@@ -128,20 +128,20 @@ def register_columns(store_dir: str | Path, columns: dict[str, np.ndarray], log=
         if name not in names:
             names.append(name)
         added.append(name)
-        log(f"h62 feature {name}")
-    va = view_A_h62_names({**manifest, "feature_names": names, "feature_sha256": hashes})
+        log(f"h63 feature {name}")
+    va = view_A_h63_names({**manifest, "feature_names": names, "feature_sha256": hashes})
     vb = set(manifest["view_B_with_external"])
     overlap = sorted(set(va) & vb)
     if overlap:
-        raise ValueError(f"H62 cross-view feature overlap: {overlap}")
+        raise ValueError(f"H63 cross-view feature overlap: {overlap}")
     if any(n.startswith("raw_band_") for n in va):
-        raise ValueError("H62 View A must not contain raw band values")
+        raise ValueError("H63 View A must not contain raw band values")
     manifest.update(
         version=(manifest["version"] + VERSION_TAG
                  if VERSION_TAG not in manifest["version"] else manifest["version"]),
         feature_names=names, feature_sha256=hashes,
-        view_A_h62=va,
-        h62_step=dict(fields=[dict(tag=t, band=b, description=d) for t, b, d in STEP_FIELDS],
+        view_A_h63=va,
+        h63_step=dict(fields=[dict(tag=t, band=b, description=d) for t, b, d in STEP_FIELDS],
                       offsets_px=list(STEP_OFFSETS_PX), sigma=STEP_SIGMA,
                       transform="gems52.structural.normal_profile (detrended cross-normal step, "
                                 "|step| magnitude, along-tangent persistence of |step|)",
@@ -152,7 +152,7 @@ def register_columns(store_dir: str | Path, columns: dict[str, np.ndarray], log=
                              "volcanic lithologic contact produces the same signature"),
     )
     manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
-    return dict(added=added, skipped=skipped, n_features=len(names), view_A_h62=va,
+    return dict(added=added, skipped=skipped, n_features=len(names), view_A_h63=va,
                 view_A_channel_count=len(va))
 
 
@@ -161,13 +161,13 @@ def extend_store(store_dir: str | Path = "work/r2/features",
     """Compute the step columns from the pinned feature raster and register them."""
     store = Path(store_dir)
     manifest = json.loads((store / "manifest.json").read_text())
-    if not manifest["version"].endswith("+external-geodawn-v1"):
+    if "+external-geodawn-v1" not in manifest["version"]:
         raise SystemExit("the shared external extension has not run; "
                          "run: PYTHONPATH=src python -m gems52.external")
-    if VERSION_TAG in manifest["version"] and "view_A_h62" in manifest:
+    if VERSION_TAG in manifest["version"] and "view_A_h63" in manifest:
         return dict(added=[], skipped=step_feature_names(), n_features=len(manifest["feature_names"]),
-                    view_A_h62=manifest["view_A_h62"],
-                    view_A_channel_count=len(manifest["view_A_h62"]), already_extended=True)
+                    view_A_h63=manifest["view_A_h63"],
+                    view_A_channel_count=len(manifest["view_A_h63"]), already_extended=True)
     template = manifest["template"]
     valid = np.load(store / "valid.npy")
     columns: dict[str, np.ndarray] = {}
@@ -184,7 +184,7 @@ def extend_store(store_dir: str | Path = "work/r2/features",
             for name, values in step_columns(a, valid, tag).items():
                 columns[name] = values
             del a
-            log(f"h62 step columns for {tag} (band {band})")
+            log(f"h63 step columns for {tag} (band {band})")
     summary = register_columns(store, columns, log=log)
     summary["inputs"] = {"features_sha256": structural.digest(features)}
     return summary

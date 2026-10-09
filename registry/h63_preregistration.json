@@ -1,12 +1,12 @@
 {
- "round": "H62",
+ "round": "H63",
  "preregistered_utc": "2026-10-09T01:05:00.000000+00:00",
- "hypothesis_document": "knowledge/34_hypotheses_H62_preregistered.md",
- "hypothesis_sha256": "41dabafd63235695759c731b3daacb33b54790f7f54a96a8414efdcdd39f411e",
+ "hypothesis_document": "knowledge/37_hypotheses_H63_preregistered.md",
+ "hypothesis_sha256": "6ce01c29cf93f581da32b6c6a1c6eb8233c4cb72daa94df65c3a42e9dbc95aef",
  "hypothesis_bytes": 18626,
  "lane": "two-view co-training (Blum & Mitchell 1998, doi:10.1145/279943.279962); View A potential-field/subsurface, View B surface; disagreement as the discovery signal",
  "frozen_before_any_fit": true,
- "runner": "scripts/run_h62.py",
+ "runner": "scripts/run_h63.py",
  "runner_refuses_if_hash_moves": true,
  "shared_tools_to_reuse": [
   "src/gems52/spatial.py::folds (label-blind-quadrants-v2)",
@@ -17,7 +17,7 @@
   "src/gems52/gates.py",
   "src/gems52/structural.py::build + FeatureStore",
   "src/gems52/external.py (shared extension)",
-  "src/gems52/h62.py (new shared extension, not a fork)"
+  "src/gems52/h63.py (new shared extension, not a fork)"
  ],
  "view_definitions": {
   "view_A": "38 channels: A_step_{grav,cover,rtp}_{signed,abs,persist}_{2,4}px (18) + template local-contrast A channels (17) + X_mag_TMI_up150_{rank,grad1,grad3} (3); NO raw_band_* channel",
@@ -71,16 +71,17 @@
  "budget": {
   "max_experiments": 3,
   "experiments": [
-   "H62-A step-normalised View A: canary + fit + sufficiency screen",
-   "H62-A exchange (iff independence allows) + matched-budget holdout",
-   "H62 build + gates + publication of the unique research GeoTIFF"
+   "H63-A step-normalised View A: canary + fit + sufficiency screen",
+   "H63-A exchange (iff independence allows) + matched-budget holdout",
+   "H63 build + gates + publication of the unique research GeoTIFF"
   ],
   "deferred": [
-   "H62-B B-only arm with surface-artefact rejection",
-   "H62-C along-strike continuity weighting of the disagreement field",
-   "H62-D sub-canopy 1 m LiDAR (USGS 3DEP; not obtainable from this sandbox)",
-   "H62-E cross-file credit localisation by terrain stratum (inherited H61-D)"
+   "H63-B B-only arm with surface-artefact rejection",
+   "H63-C along-strike continuity weighting of the disagreement field",
+   "H63-D sub-canopy 1 m LiDAR (USGS 3DEP; not obtainable from this sandbox)",
+   "H63-E cross-file credit localisation by terrain stratum (inherited H61-D)"
   ]
  },
- "verdict_rule": "promote only if format+lane(policy)+decoded-pattern uniqueness+not-union pass AND the projected organiser-DTI interval exceeds the champion's owner-reported 0.2778 at both ends of the |G| interval; otherwise negative/research-only (DOWNLOAD YES, SUBMIT NO); promotion to a weekly slot is a separate selector step and this round spends 0 slots"
+ "verdict_rule": "promote only if format+lane(policy)+decoded-pattern uniqueness+not-union pass AND the projected organiser-DTI interval exceeds the champion's owner-reported 0.2778 at both ends of the |G| interval; otherwise negative/research-only (DOWNLOAD YES, SUBMIT NO); promotion to a weekly slot is a separate selector step and this round spends 0 slots",
+ "renamed_from": "registry/h62_preregistration.json + knowledge/34_hypotheses_H62_preregistered.md; a parallel session's H62 round merged to main first (PR #46), so this round was renamed H62 -> H63 per the repository's own precedent (their commit 'Rename this round H61 -> H62: main already shipped a different H61'). No measured number changed: the rename is a label change, and the frozen thresholds are identical."
 }

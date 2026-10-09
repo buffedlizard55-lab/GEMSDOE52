@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
-"""H62 -- build the unique research GeoTIFF, run every gate, and write the run card.
+"""H63 -- build the unique research GeoTIFF, run every gate, and write the run card.
 
-Inputs: the H62 out-of-fold mosaics produced by ``scripts/run_h62.py`` (post-exchange View A and
-View B probabilities), the shared feature store extended by ``gems52.h62``, the pinned
+Inputs: the H63 out-of-fold mosaics produced by ``scripts/run_h63.py`` (post-exchange View A and
+View B probabilities), the shared feature store extended by ``gems52.h63``, the pinned
 competition grid, and the frozen 526-blob prior census re-materialised by
 ``scripts/fetch_prior_inventory.py``.
 
 Outputs (all inside the repository except the ignored ``work/`` intermediates):
     submission/<stem>.tif + .zip + .json      the artefact, its single-TIFF ZIP and its receipt
-    submission/H62_LATEST.txt                 pointer for the site, NOT an upload approval
-    docs/downloads/h62-candidate.tif|.zip     what the page actually serves
-    docs/downloads/h62-a-only-reasoning.csv   measured geological review row per emitted cell
-    evidence/h62_submission.json              format + uniqueness + lane + projection + run card
-    evidence/h62_lane_surface.json            lane gate on the pre-placement surface
-    evidence/h62_projection.json              PROJECTION arithmetic, never written as a score
+    submission/H63_LATEST.txt                 pointer for the site, NOT an upload approval
+    docs/downloads/h63-candidate.tif|.zip     what the page actually serves
+    docs/downloads/h63-a-only-reasoning.csv   measured geological review row per emitted cell
+    evidence/h63_submission.json              format + uniqueness + lane + projection + run card
+    evidence/h63_lane_surface.json            lane gate on the pre-placement surface
+    evidence/h63_projection.json              PROJECTION arithmetic, never written as a score
 
-The verdict rule is frozen in registry/h62_preregistration.json: promote only if the format gate,
+The verdict rule is frozen in registry/h63_preregistration.json: promote only if the format gate,
 the lane gate and the not-union check all pass AND the projected organiser-DTI interval exceeds the
 champion's at BOTH ends of the measured |G| interval.  Otherwise: research-only, DOWNLOAD YES /
 SUBMIT NO.  Nothing here uploads anything or consumes a weekly slot.
@@ -40,7 +40,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from gems52 import gates, nodes, spatial, structural, submission_writer          # noqa: E402
 
-WORK = ROOT / "work/h62"
+WORK = ROOT / "work/h63"
 EVID = ROOT / "evidence"
 DOCS = ROOT / "docs/data"
 DOWN = ROOT / "docs/downloads"
@@ -60,7 +60,7 @@ def now() -> str:
 def dump(name: str, obj) -> Path:
     """Full receipt in evidence/; a trimmed copy is what the site serves."""
     EVID.mkdir(parents=True, exist_ok=True)
-    p = EVID / f"h62_{name}.json"
+    p = EVID / f"h63_{name}.json"
     p.write_text(json.dumps(obj, indent=1, allow_nan=False, default=str) + "\n")
     DOCS.mkdir(parents=True, exist_ok=True)
     slim = obj
@@ -82,7 +82,7 @@ def dump(name: str, obj) -> Path:
                             key=lambda d: -d["spearman"])[:15],
             errors=[r for r in rows if "error" in r][:10],
             full_table=str(p))
-    (DOCS / f"h62_{name}.json").write_text(json.dumps(slim, indent=1, allow_nan=False,
+    (DOCS / f"h63_{name}.json").write_text(json.dumps(slim, indent=1, allow_nan=False,
                                                       default=str) + "\n")
     return p
 
@@ -123,7 +123,7 @@ def main() -> int:
     ap.add_argument("--budget", type=int, default=37600,
                     help="total emitted dots; default matches the champion's 37,654 px mass")
     ap.add_argument("--min-px", type=float, default=3.0)
-    ap.add_argument("--census", default="work/h62/prior_fetch_receipt.json")
+    ap.add_argument("--census", default="work/h63/prior_fetch_receipt.json")
     ap.add_argument("--skip-lane", action="store_true", help="debug only; the gate is mandatory")
     ap.add_argument("--reuse-gates", action="store_true",
                     help="reuse the lane receipts already on disk instead of re-decoding the registry; "
@@ -131,14 +131,14 @@ def main() -> int:
                          "placed emission byte-for-byte, so it cannot launder a different raster")
     args = ap.parse_args()
 
-    reg = json.loads((ROOT / "registry/h62_preregistration.json").read_text())
+    reg = json.loads((ROOT / "registry/h63_preregistration.json").read_text())
     if structural.digest(ROOT / reg["hypothesis_document"]) != reg["hypothesis_sha256"]:
         raise SystemExit("preregistration moved")
     foren = json.loads((EVID / "h61_forensics.json").read_text())
-    hold = json.loads((EVID / "h62_holdout.json").read_text())
-    exch = json.loads((EVID / "h62_pseudo_exchange.json").read_text())
-    fit = json.loads((EVID / "h62_fit_checkpoint.json").read_text())
-    can = json.loads((EVID / "h62_canary.json").read_text())
+    hold = json.loads((EVID / "h63_holdout.json").read_text())
+    exch = json.loads((EVID / "h63_pseudo_exchange.json").read_text())
+    fit = json.loads((EVID / "h63_fit_checkpoint.json").read_text())
+    can = json.loads((EVID / "h63_canary.json").read_text())
     th = reg["thresholds"]
     G_lo = foren["G_identification"]["masked"]["G_lower_bound"]
     G_hi = foren["G_identification"]["masked"]["G_upper_bound"]
@@ -188,7 +188,7 @@ def main() -> int:
 
     # ---------------------------------------------------------------- lane gate on the SURFACE
     priors, pmeta = prior_paths(ROOT / args.census, ("submission",))
-    own = f"gems52-h62-"
+    own = f"gems52-h63-"
     priors = [p for p in priors if not p.name.startswith(own)]
     pmeta["excluded_own_round_prefix"] = own
     log(f"registry: {len(priors)} rasters ({pmeta})")
@@ -196,7 +196,7 @@ def main() -> int:
                              max(1e-9, float(np.ptp(field[allowed]))), 0.0).astype(np.float32)
     lane_surface = None
     if args.reuse_gates:
-        lane_surface = json.loads((EVID / "h62_lane_surface.json").read_text())
+        lane_surface = json.loads((EVID / "h63_lane_surface.json").read_text())
         want = hashlib.sha256(surface_field.astype("<f4").tobytes()).hexdigest()
         if lane_surface.get("candidate_decoded_sha256") != want:
             raise SystemExit("--reuse-gates refused: the surface receipt was computed from different "
@@ -246,12 +246,12 @@ def main() -> int:
         verdict="the emission is not max(A,B), not either single view, and not their union")
 
     # ---------------------------------------------------------------- write the artefact
-    stem = f"gems52-h62-stepview-cotrain-{n_dots}px"
+    stem = f"gems52-h63-stepview-cotrain-{n_dots}px"
     sub_name = f"{stem}-{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}"
-    note = ("H62 cotrain: step-normalised gravity/cover/RTP View A vs DEM+radiometric View B "
+    note = ("H63 cotrain: step-normalised gravity/cover/RTP View A vs DEM+radiometric View B "
             "disagreement; one pseudo-label round; 3px dots; >200m off catalogue; research-only")
     if len(note) > 140:
-        note = ("H62 cotrain: step-normalised potential-field A vs DEM+radiometric B disagreement; "
+        note = ("H63 cotrain: step-normalised potential-field A vs DEM+radiometric B disagreement; "
                 "3px dots; >200m off catalogue; research-only")
     outdir = ROOT / "submission"
     outdir.mkdir(exist_ok=True)
@@ -259,7 +259,7 @@ def main() -> int:
     receipt = submission_writer.write_submission(
         path, pred, ROOT / "data/sample_submission.tif", sub_finite,
         note=note, name=sub_name[:140],
-        metadata=dict(round="H62", seed=SEED, budget=int(args.budget), placed=n_dots,
+        metadata=dict(round="H63", seed=SEED, budget=int(args.budget), placed=n_dots,
                       min_separation_px=args.min_px, field="post-exchange disagreement rank difference",
                       views=dict(A=fit["view_A_features"], B=fit["view_B_features"]),
                       catalogue_exclusion_m=th["catalogue_exclusion_m"]))
@@ -268,7 +268,7 @@ def main() -> int:
     # ---------------------------------------------------------------- final lane gate on the DOTS
     lane_dots = None
     if args.reuse_gates:
-        lane_dots = json.loads((EVID / "h62_lane_dots.json").read_text())
+        lane_dots = json.loads((EVID / "h63_lane_dots.json").read_text())
         want = hashlib.sha256(pred.astype("<f4").tobytes()).hexdigest()
         if lane_dots.get("candidate_decoded_sha256") != want:
             raise SystemExit("--reuse-gates refused: the dots receipt was computed from different "
@@ -339,7 +339,7 @@ def main() -> int:
            "X_rad_ThK_rank", "X_rad_K_rank", "X_mag_TMI_up150_grad3", "raw_band_17")
     ctx_rows = store.gather(ys * shape[1] + xs, list(CTX))
     ctx = {n: ctx_rows[:, j] for j, n in enumerate(CTX)}
-    csv_path = DOWN / "h62-a-only-reasoning.csv"
+    csv_path = DOWN / "h63-a-only-reasoning.csv"
     DOWN.mkdir(parents=True, exist_ok=True)
     with csv_path.open("w", newline="") as fh:
         w = csv.writer(fh)
@@ -388,7 +388,7 @@ def main() -> int:
 
     # ---------------------------------------------------------------- run card
     card = dict(
-        round="H62", generated_utc=now(), lane=reg["lane"],
+        round="H63", generated_utc=now(), lane=reg["lane"],
         hypothesis=("Faults buried beneath basin cover leave a persistent cross-strike step in "
                     "modelled basement depth, isostatic gravity and magnetic fabric (the "
                     "step-normalised potential-field View A) with no surface scarp and no "
@@ -469,7 +469,7 @@ def main() -> int:
         repairs_carried=("masked support S; |G| as the interval [%.1f, %.1f] px instead of the "
                          "superseded point 14,088.7; band 6 resolved as radiometric total count "
                          "(Spearman 1.0000 vs external TC); attribution hash-links measured; "
-                         "registry-saturation policy in the shared lane gate; H62 adds the "
+                         "registry-saturation policy in the shared lane gate; H63 adds the "
                          "step-normalised View A (no raw band values) and the sufficiency screen"
                          % (G_lo, G_hi)),
         ai_use=("An AI assistant wrote the code, the protocol and the reasoning templates. No "
@@ -485,7 +485,7 @@ def main() -> int:
             "https://en.wikipedia.org/wiki/Tversky_index",
             "https://github.com/drivendataorg/gems-prize-reference-solution"])
     dump("run_card", card)
-    dump("submission", dict(round="H62", stem=stem, file=path.name,
+    dump("submission", dict(round="H63", stem=stem, file=path.name,
                             eligible_px=int(eligible.sum()), allowed_px=int(allowed.sum()),
                             catalogue_px=int(cat.sum()), footprint_px=int(sub_finite.sum()),
                             receipt=receipt,
@@ -498,17 +498,17 @@ def main() -> int:
                                 "relation_to_union", "ok")}))
 
     # ---------------------------------------------------------------- serve it
-    for suffix, dest in ((".tif", DOWN / "h62-candidate.tif"), (".zip", DOWN / "h62-candidate.zip")):
+    for suffix, dest in ((".tif", DOWN / "h63-candidate.tif"), (".zip", DOWN / "h63-candidate.zip")):
         shutil.copyfile(path.with_suffix(suffix), dest)
     if csv_path.resolve() != (DOWN / csv_path.name).resolve():
         shutil.copyfile(csv_path, DOWN / csv_path.name)
     # verify what the site will actually serve, byte for byte, before writing any pointer
     for src_p in (path, path.with_suffix(".zip")):
-        dst = DOWN / ("h62-candidate" + src_p.suffix)
+        dst = DOWN / ("h63-candidate" + src_p.suffix)
         if src_p.resolve() != dst.resolve() and hashlib.sha256(src_p.read_bytes()).hexdigest() != \
                 hashlib.sha256(dst.read_bytes()).hexdigest():
             raise SystemExit(f"served copy differs from the canonical file: {dst}")
-    (ROOT / "submission/H62_LATEST.txt").write_text(
+    (ROOT / "submission/H63_LATEST.txt").write_text(
         f"{path.name}\nsha256 {receipt['sha256']}\nbytes {receipt['bytes']}\n"
         f"name {receipt['submission_name']}\nnote {receipt['note']}\n"
         f"verdict {verdict}\ndownload_ok True\nsubmit_ok {str(promote)}\n")

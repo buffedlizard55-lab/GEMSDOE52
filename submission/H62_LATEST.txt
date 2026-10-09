@@ -1,8 +1,0 @@
-gems52-h62-stepview-cotrain-37600px.tif
-sha256 aa41d0cd4658b2f0887180bf85132453dbf8f9408272d2c880d1fe4e822caa9f
-bytes 140421
-name gems52-h62-stepview-cotrain-37600px-20261009T011052Z
-note H62 cotrain: step-normalised potential-field A vs DEM+radiometric B disagreement; 3px dots; >200m off catalogue; research-only
-verdict negative
-download_ok True
-submit_ok False

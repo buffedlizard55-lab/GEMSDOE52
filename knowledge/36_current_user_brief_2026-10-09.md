@@ -1,9 +1,9 @@
-# Current user brief — 2026-10-09, H62 session
+# Current user brief — 2026-10-09, H63 session
 
 The task text below is preserved as instructions, not as verified factual claims. In particular, the
 score attributions, current-leaderboard statements, data-access statements and earlier-session claims
 must be independently checked. This brief supersedes incompatible older briefs. URLs and repeated
-instructions are retained. This is the prompt the H62 round was run against; it is also embedded
+instructions are retained. This is the prompt the H63 round was run against; it is also embedded
 verbatim in `README.md` ("Current user brief — 2026-10-09, verbatim") per the instruction to put the
 prompt into the repo readme and read it at the start of every work session.
 

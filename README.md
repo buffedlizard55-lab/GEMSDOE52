@@ -1,12 +1,12 @@
-<!--H62-README-->
+<!--H63-README-->
 # GEMSDOE52 — a new research GeoTIFF and an explicit submit verdict
 
-**[★ Download the H62 GeoTIFF — one click](docs/downloads/h62-candidate.tif)** ·
-[single-TIFF ZIP](docs/downloads/h62-candidate.zip) ·
-[geological reasoning CSV](docs/downloads/h62-a-only-reasoning.csv) ·
+**[★ Download the H63 GeoTIFF — one click](docs/downloads/h63-candidate.tif)** ·
+[single-TIFF ZIP](docs/downloads/h63-candidate.zip) ·
+[geological reasoning CSV](docs/downloads/h63-a-only-reasoning.csv) ·
 **[Executive summary / exact submission guide](docs/executive-summary.html)** ·
-[Run &amp; evidence](docs/h62-audit.html) · [Sources](docs/h62-sources.html) ·
-[Run card](evidence/h62_run_card.json)
+[Run &amp; evidence](docs/h63-audit.html) · [Sources](docs/h63-sources.html) ·
+[Run card](evidence/h63_run_card.json)
 
 > **DOWNLOAD: YES · SUBMIT TO THE COMPETITION: NO.**
 > Verdict `negative`. The file is newly inferred, portal-safe by construction and different
@@ -15,10 +15,10 @@
 > own view-A premise failed the sufficiency screen on the holdout.
 > **Competition slots used: 0.**
 
-- **File:** `gems52-h62-stepview-cotrain-37600px.tif` — 140,421 bytes, 37,600 emitted cells
+- **File:** `gems52-h63-stepview-cotrain-37600px.tif` — 140,421 bytes, 37,600 emitted cells
 - **SHA-256:** `aa41d0cd4658b2f0887180bf85132453dbf8f9408272d2c880d1fe4e822caa9f`
-- **Name:** `gems52-h62-stepview-cotrain-37600px-20261009T011052Z`
-- **Note (126 / 140 chars):** `H62 cotrain: step-normalised potential-field A vs DEM+radiometric B disagreement; 3px dots; >200m off catalogue; research-only`
+- **Name:** `gems52-h63-stepview-cotrain-37600px-20261009T011052Z`
+- **Note (126 / 140 chars):** `H63 cotrain: step-normalised potential-field A vs DEM+radiometric B disagreement; 3px dots; >200m off catalogue; research-only`
 - **Local validator:** one float32 band; values exactly {0, 1}; 0 NaN and
   0 Inf; EPSG:32611;
   3,730 × 3,292; transform identical to the pinned
@@ -53,7 +53,7 @@
   The disagreement arm is **below uniform random** (0.040257 vs
   0.078257) and far below `single_B`
   (0.174193): when View A is at chance out of quadrant, "A confident, B abstaining" selects A's
-  errors. [IR-H62-001](registry/irregularities.json), [IR-H62-002](registry/irregularities.json).
+  errors. [IR-H63-001](registry/irregularities.json), [IR-H63-002](registry/irregularities.json).
 - **Lane gate:** 548 registry rasters (367 distinct decoded
   patterns), the full 526-blob census re-materialised and SHA-verified, own round excluded. Literal
   rule (all priors): **DUPLICATE/STOP**, max near-dot 1.0000 (14 universal-coverage probes), max
@@ -509,28 +509,28 @@ sensitivity table, is on the audit page.
 
 Read the **complete current prompt below** (also preserved verbatim at
 [knowledge/26_current_user_brief.md](knowledge/26_current_user_brief.md) and
-[knowledge/35_current_user_brief_2026-10-09.md](knowledge/35_current_user_brief_2026-10-09.md)), the
-[working agreement](AGENTS.md), the frozen H62 protocol
-[knowledge/34_hypotheses_H62_preregistered.md](knowledge/34_hypotheses_H62_preregistered.md), its
-results [knowledge/36_h62_results_and_limits.md](knowledge/36_h62_results_and_limits.md), the H61
+[knowledge/36_current_user_brief_2026-10-09.md](knowledge/36_current_user_brief_2026-10-09.md)), the
+[working agreement](AGENTS.md), the frozen H63 protocol
+[knowledge/37_hypotheses_H63_preregistered.md](knowledge/37_hypotheses_H63_preregistered.md), its
+results [knowledge/38_h63_results_and_limits.md](knowledge/38_h63_results_and_limits.md), the H61
 protocol and results ([knowledge/30](knowledge/30_hypotheses_H61_preregistered.md) ·
 [knowledge/31](knowledge/31_h61_results_and_limits.md)), and the
 [irregularity registry](registry/irregularities.json) entries `IR-H61-001` … `IR-H61-011` and
-`IR-H62-001` … `IR-H62-002`. Read the previous failed experiments (H55–H60C, CTD5, H61, H62) before
+`IR-H63-001` … `IR-H63-002`. Read the previous failed experiments (H55–H60C, CTD5, H61, H63) before
 proposing another — **the co-training lane's View-A sufficiency premise has now failed twice**
-(IR-H62-002); do not propose a third View-A parameterisation without new evidence.
+(IR-H63-002); do not propose a third View-A parameterisation without new evidence.
 
 **Maximize P(Win):** do not consume a scarce weekly slot on an arm whose only density estimate comes
 from a simulator that does not predict the board. **Own the Outcome:** publish the real file, the
 failed premise, the repaired instruments, the provenance gaps and a working reproduction.
-## What this session completed (2026-10-09, H62)
+## What this session completed (2026-10-09, H63)
 
-1. Preregistered H62 (`knowledge/34`, `registry/h62_preregistration.json`, SHA-256-pinned **before**
-   any fit) with the brief's 3–5 ranked candidate hypotheses; the top candidate (H62-A,
+1. Preregistered H63 (`knowledge/34`, `registry/h63_preregistration.json`, SHA-256-pinned **before**
+   any fit) with the brief's 3–5 ranked candidate hypotheses; the top candidate (H63-A,
    step-normalised potential-field View A) was implemented and the other four recorded with their
-   viability checks (H62-D's USGS 3DEP source named and marked unobtainable from this sandbox).
-2. Extended the shared feature store once, in the template, with the H62 step columns
-   (`src/gems52/h62.py`: `structural.normal_profile` applied to bands 13/15/2 at σ=3, offsets
+   viability checks (H63-D's USGS 3DEP source named and marked unobtainable from this sandbox).
+2. Extended the shared feature store once, in the template, with the H63 step columns
+   (`src/gems52/h63.py`: `structural.normal_profile` applied to bands 13/15/2 at σ=3, offsets
    200/400 m — no private fork; the manifest records provenance and the contrast-detector caveat) and
    re-materialised the 526-blob prior census (`scripts/fetch_prior_inventory.py`, 526/526 fetched,
    0 errors).
@@ -544,11 +544,11 @@ failed premise, the repaired instruments, the provenance gaps and a working repr
    literal and policy DUPLICATE/STOP — max near-dot 0.8913 against an informative prior; decoded-pattern
    uniqueness PASS; support-novelty-vs-union 0.0% retained as a failed diagnostic; not-the-union PASS),
    wrote the geological reasoning CSV for all 37,600 emitted cells, computed the projection (never a
-   score), and recorded two irregularities (IR-H62-001: the preregistration's persistence-term claim
-   corrected by measurement; IR-H62-002: the lane's second View-A sufficiency failure).
+   score), and recorded two irregularities (IR-H63-001: the preregistration's persistence-term claim
+   corrected by measurement; IR-H63-002: the lane's second View-A sufficiency failure).
 5. Published the site with an unambiguous download/submit verdict (DOWNLOAD YES · SUBMIT NO), preserved
-   the H61 landing page as `archive-h61-overview.html`, published `submission/H62_LATEST.txt` and
-   `docs/data/submission_h62.json` **without moving the H60 incumbent pointer**, and refreshed the
+   the H61 landing page as `archive-h61-overview.html`, published `submission/H63_LATEST.txt` and
+   `docs/data/submission_h63.json` **without moving the H60 incumbent pointer**, and refreshed the
    current user brief (knowledge/26, knowledge/35, README) to the 2026-10-09 prompt verbatim.
 6. Full gate and test suite: `scripts/check_site.py` ✓ and `python -m pytest -q` — 308 passed.
 
@@ -570,57 +570,57 @@ python -m venv .venv
 bash scripts/download_competition_data.sh                 # restore + SHA-256 verify the pinned inputs
 PYTHONPATH=src .venv/bin/python -c "from gems52 import structural; structural.build(dest='work/r2/features', include_optional_profiles=False, log=lambda *a, **k: None)"
 PYTHONPATH=src .venv/bin/python -m gems52.external        # add the shared external GeoDAWN columns
-PYTHONPATH=src .venv/bin/python -c "from gems52 import h62; h62.extend_store()"   # add the H62 step columns
-.venv/bin/python scripts/fetch_prior_inventory.py --out work/h62/priors --receipt work/h62/prior_fetch_receipt.json
-.venv/bin/python scripts/run_h62.py all                   # canary -> fit -> exchange -> holdout
-.venv/bin/python scripts/build_h62_submission.py          # place, gate, write, publish receipts
-.venv/bin/python scripts/publish_h62_site.py              # render the pages from the receipts
+PYTHONPATH=src .venv/bin/python -c "from gems52 import h63; h63.extend_store()"   # add the H63 step columns
+.venv/bin/python scripts/fetch_prior_inventory.py --out work/h63/priors --receipt work/h63/prior_fetch_receipt.json
+.venv/bin/python scripts/run_h63.py all                   # canary -> fit -> exchange -> holdout
+.venv/bin/python scripts/build_h63_submission.py          # place, gate, write, publish receipts
+.venv/bin/python scripts/publish_h63_site.py              # render the pages from the receipts
 .venv/bin/python scripts/check_site.py && .venv/bin/python -m pytest -q
 ```
 
 Raw data, arrays, model caches and downloaded comparators stay ignored (`data/`, `work/`). Nothing
 here uploads, promotes or spends a slot. The H61 reproduction is identical with `h61` in place of
-`h62` (plus `scripts/h61_forensics.py` for the repaired organiser-score algebra, whose receipts H62
+`h63` (plus `scripts/h61_forensics.py` for the repaired organiser-score algebra, whose receipts H63
 inherits), and the historical CTD5 reproduction (`scripts/reproduce_ctd5.sh`, `scripts/run_ctd5.py`)
 is unchanged and still reproduces its rejected legacy-v1 assay for audit only.
 
 ## Evidence and next steps
 
-- [Frozen H62 protocol](knowledge/34_hypotheses_H62_preregistered.md) ·
-  [results and limits](knowledge/36_h62_results_and_limits.md) ·
-  [run card](evidence/h62_run_card.json) · [canary](evidence/h62_canary.json) ·
-  [fit + sufficiency screen](evidence/h62_fit_checkpoint.json) ·
-  [independence](evidence/h62_independence.json) ·
-  [pseudo exchange](evidence/h62_pseudo_exchange.json) ·
-  [pooled holdout](evidence/h62_holdout.json) ·
-  [projection](evidence/h62_projection.json) ·
-  [lane gate on dots](evidence/h62_lane_dots.json) · [lane gate on surface](evidence/h62_lane_surface.json) ·
-  [submission receipt](evidence/h62_submission.json)
+- [Frozen H63 protocol](knowledge/37_hypotheses_H63_preregistered.md) ·
+  [results and limits](knowledge/38_h63_results_and_limits.md) ·
+  [run card](evidence/h63_run_card.json) · [canary](evidence/h63_canary.json) ·
+  [fit + sufficiency screen](evidence/h63_fit_checkpoint.json) ·
+  [independence](evidence/h63_independence.json) ·
+  [pseudo exchange](evidence/h63_pseudo_exchange.json) ·
+  [pooled holdout](evidence/h63_holdout.json) ·
+  [projection](evidence/h63_projection.json) ·
+  [lane gate on dots](evidence/h63_lane_dots.json) · [lane gate on surface](evidence/h63_lane_surface.json) ·
+  [submission receipt](evidence/h63_submission.json)
 - [Site](docs/index.html) · [submission guide](docs/executive-summary.html) ·
-  [H62 run &amp; evidence](docs/h62-audit.html) · [H62 sources](docs/h62-sources.html) ·
-  [reasoning CSV](docs/downloads/h62-a-only-reasoning.csv) · [H61 landing archive](docs/archive-h61-overview.html) ·
+  [H63 run &amp; evidence](docs/h63-audit.html) · [H63 sources](docs/h63-sources.html) ·
+  [reasoning CSV](docs/downloads/h63-a-only-reasoning.csv) · [H61 landing archive](docs/archive-h61-overview.html) ·
   [irregularities](registry/irregularities.json)
 
 **Next, in priority order.**
 
 1. **Stop re-parameterising View A.** Two measured sufficiency failures (raw 0.5163, step 0.5362,
-   IR-H62-002) say the potential-field channels as compiled carry no quadrant-transferable fault
+   IR-H63-002) say the potential-field channels as compiled carry no quadrant-transferable fault
    signal at 100 m. The lane's own falsification condition has fired twice.
-2. **Run the B-only direction (H62-B, preregistered rank 2).** Where B is confident and A abstains,
+2. **Run the B-only direction (H63-B, preregistered rank 2).** Where B is confident and A abstains,
    the brief names roads/erosion lines — but a subset may be real scarps in homogeneous alluvium
    that geophysics cannot see. `single_B` is the only view that transfers (OOF AUC 0.6862;
    HOLDOUT-DTI 0.174193, the best measured arm in either round). Needs the optional H2/H55 profile
    store plus its own preregistered holdout; it is the cheapest untried *emission* direction left in
    the lane.
-3. **Run H61-D / H62-E: cross-file credit localisation by terrain stratum.** Cross the LP atoms with
+3. **Run H61-D / H63-E: cross-file credit localisation by terrain stratum.** Cross the LP atoms with
    slope, modelled cover thickness and radiometric alteration strata so the organiser's own scores
    say *where* hidden truth sits rather than *which prior* found it. No new data needed.
-4. **Acquire sub-100 m topography when egress allows (H62-D).** The specific free official source is
+4. **Acquire sub-100 m topography when egress allows (H63-D).** The specific free official source is
    the USGS 3DEP 1 m DEM (https://www.usgs.gov/3d-elevation-program) over the GeoDAWN footprint; it
    was unobtainable this session (usgs.gov unreachable).
 5. **Give the selector a priced option, not a lane violation.** The only mass measured above the
    break-even density is inside the champion family, and emitting it is a duplicate by construction.
-   H62's dots additionally collide with the 15GEMSDOE/13GEMSDOE dense-dot family (policy near-dot
+   H63's dots additionally collide with the 15GEMSDOE/13GEMSDOE dense-dot family (policy near-dot
    0.8913), so even a hypothetically-stronger disagreement emission would need a placement the lane
    has not yet localised.
 6. **Authenticate one receipt.** A single submission-page receipt tying a file SHA-256 to a score would
@@ -638,7 +638,7 @@ no official-host download is claimed anywhere in this round.
 
 ## Complete current prompt — 2026-10-09, verbatim — read before working
 
-The following is user-supplied task text, not independently verified factual claims. It supersedes earlier prompt archives where they conflict. A copy is also kept at [knowledge/35_current_user_brief_2026-10-09.md](knowledge/35_current_user_brief_2026-10-09.md).
+The following is user-supplied task text, not independently verified factual claims. It supersedes earlier prompt archives where they conflict. A copy is also kept at [knowledge/36_current_user_brief_2026-10-09.md](knowledge/36_current_user_brief_2026-10-09.md).
 
 ```text
 Review the repo. 

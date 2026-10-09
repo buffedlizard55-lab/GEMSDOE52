@@ -1,6 +1,6 @@
-# Current user brief — 2026-10-09, H62 session (refreshed)
+# Current user brief — 2026-10-09, H63 session (refreshed)
 
-The task text below is preserved as instructions, not as verified factual claims. In particular, the score attributions, current-leaderboard statements, data-access statements and earlier-session claims must be independently checked. This brief supersedes incompatible older briefs. URLs and repeated instructions are retained. Refreshed 2026-10-09 with the current prompt verbatim; the 2026-10-08 text is preserved at [knowledge/archive/26_current_user_brief_2026-10-08.md](archive/26_current_user_brief_2026-10-08.md) and a dated copy of the current text is kept at [knowledge/35_current_user_brief_2026-10-09.md](35_current_user_brief_2026-10-09.md). The README carries this same prompt verbatim under "Complete current prompt".
+The task text below is preserved as instructions, not as verified factual claims. In particular, the score attributions, current-leaderboard statements, data-access statements and earlier-session claims must be independently checked. This brief supersedes incompatible older briefs. URLs and repeated instructions are retained. Refreshed 2026-10-09 with the current prompt verbatim; the 2026-10-08 text is preserved at [knowledge/archive/26_current_user_brief_2026-10-08.md](archive/26_current_user_brief_2026-10-08.md) and a dated copy of the current text is kept at [knowledge/36_current_user_brief_2026-10-09.md](35_current_user_brief_2026-10-09.md). The README carries this same prompt verbatim under "Complete current prompt".
 
 ```text
 Review the repo. 

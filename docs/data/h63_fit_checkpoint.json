@@ -199,7 +199,7 @@
    0.6993613655685338
   ],
   "view_A_sufficient": false,
-  "note": "H61 measured a raw-value View A at mean 0.5163 (View B 0.6843); H62 measures whether the step-normalised View A regains out-of-fold skill before any exchange is trusted."
+  "note": "H61 measured a raw-value View A at mean 0.5163 (View B 0.6843); H63 measures whether the step-normalised View A regains out-of-fold skill before any exchange is trusted."
  },
  "finished_utc": "2026-10-09T00:58:24+00:00",
  "evaluator_hashes": {
