@@ -1,48 +1,27 @@
+<!--H65HALO-README-->
+# GEMSDOE52 — H65halo: halo targets (negative), the executive answer, and corrected premises (2026-10-09)
+
+**[★ Executive summary / exact submission steps](docs/executive-summary.html)** · [H65 page](docs/h65halo.html) · [H65 run card](evidence/h65halo_run_card.json) · [Results, verification and the 0.2778 answer](knowledge/42b_h65halo_results_and_limits.md) · [Leaderboard receipt](docs/data/leaderboard_snapshot_2026-10-09.json)
+
+> **DO NOT UPLOAD anything from this round.** No candidate passes the gates. H65 built no file (verdict `NEGATIVE, research-only`; slots used 0; experiments used 1 of 3).
+> The H64 file (`docs/downloads/h64-candidate.tif`) remains a **research** download only: format-valid and exact-unique on decoded pixels, but DUPLICATE under the 70% lane rule.
+
+**H65 result (HOLDOUT-DTI, 53,186 withheld positives, 95% paired cluster bootstrap):** the mechanism test, halo soft targets minus the H61 hard control on single_B, is +0.0021 with CI [−0.0011, +0.0051], so it is **not confirmed**. The co-training candidate is 0.0364 against single_B's 0.1767 (Δ −0.1403, CI [−0.1630, −0.1184]). S1 View-A sufficiency failed (mean 0.5299; fourth failure, same learner). The exchange was skipped and post := pre.
+
+**The 0.2778 answer, corrected (BYTES-VERIFIED where marked):**
+- The 0.2778 file (`h33-2-b2`, 37,654 px) is a strict subset of its parent (44,090 px): 6,436 px removed, 0 added; removed pixels lie 100–200 m from the catalogue; the nearest kept pixel is 223.6 m away.
+- Pruning is the right mechanism, but "zero credit" was too strong. Under the sparse approximation, the owner-reported pair needs the removed ring to have carried about 0.5–3.3% of the parent's credit across the identified |G| interval. Official staff say new-fault pixels can lie within 300 m of known traces, so the ring's credit cannot be settled from the catalogue proxy.
+- The marginal acceptance bar is **α·DTI** (0.0556 at 0.2778). Earlier notes used α·DTI/(1−α·DTI); corrected in `knowledge/01`, `05` and `42` (IR-H65halo-002).
+- Premises: the board's top is **0.3774** (xiaofanhu); 0.3195 is DARD, rank 7. 0.2778 is owner-reported for GEMSDOE32, not organiser-confirmed; the public board also shows 0.2778 for `extradr19` (rank 15 on the 2026-10-09 fetch).
+
+**Official facts verified this session:** page 967 metric and format (with the page's own worked example, 0.60); forum topic 11516 masking (staff, 16 and 21 Sep: known-fault pixels are masked, pixel-exact, no buffer for known faults; new-fault pixels may lie within 300 m of known traces). The reference notebook writes float64 where the page requires float32 (IR-H65halo-004).
+
+**Limits:** the holdout cannot test R5-H1 (trace corrections), because its truth is the catalogue. The H65 hard control is not bit-reproducible across runs (IR-H65halo-006; verdict unaffected). Nothing here is a submission candidate.
+
+**Next steps:** (1) an independent corrected-fault release to test R5-H1, obtainability not yet verified; (2) pin thread counts and check bitwise refit equality before any further round; (3) a fresh round only after a candidate clears the lane gate on the surface and the final dots.
+<!--/H65HALO-README-->
+
 <!--H66-README-->
-# GEMSDOE52 — H66: structural coherence with multi-data consensus (NEW HYPOTHESIS)
-
-**[★ Download the H66 GeoTIFF — one click](docs/downloads/h66-candidate.tif)** ·
-[single-TIFF ZIP](docs/downloads/h66-candidate.zip) ·
-**[Executive summary / exact submission steps](docs/h66-executive-summary.html)** ·
-[Audit page](docs/h66-audit.html) · [Run card](submission/gems52-h66-structural-coherence-25000px.json)
-
-> **DOWNLOAD: YES (research). SUBMIT: NOT YET APPROVED — pending holdout validation.**
-> Verdict `RESEARCH ONLY, pending validation`. The file is format-valid, pattern-unique vs 48 priors,
-> and passes the lane gate (max Spearman 0.0033, max near-3px 0.1194). It has NOT yet been validated on
-> the hide-and-recover holdout. **NO CERTIFIED LEADERBOARD GAIN. Competition slots used: 0.**
-
-- **File:** `gems52-h66-structural-coherence-25000px.tif` — 88,070 bytes, 25,000 emitted cells
-- **SHA-256:** `23915c13d1b2f9b3f6c5628158cd2576030d356c465e5c385c7c2b95ff7ef664`
-- **Name (62 characters):** `gems52-h66-structural-coherence-25000px-20261009T030000Z`
-- **Note (114 characters):** `H66 structural coherence: multi-data consensus with strike alignment; 3px dots; >200m off catalogue; research-only`
-- **Local validator:** one float32 band; values exactly {0, 1}; 0 NaN; EPSG:32611; shape 3,730 × 3,292 and transform identical to `data/sample_submission.tif`. Local validator only, not an organiser acceptance receipt.
-
-## What makes H66 different
-
-H66 uses a **multi-data consensus** approach that requires agreement among multiple independent data types:
-
-1. **Geophysical edge product** (gravity × magnetics): requires BOTH gravity AND magnetic gradients to be present
-2. **LiDAR scarp density**: combined step, exposure, upface, and relief features
-3. **Radiometric anomaly**: K/Th and U/K deviations from background (hydrothermal alteration indicator)
-4. **Structural coherence**: multi-scale structure tensor coherence from DEM
-5. **Strike alignment weighting**: favors structures aligned with Basin-and-Range trend (~100°)
-
-This is fundamentally different from prior submissions that used simple two-view concordance (min of View A and View B) or disagreement. H66 requires consensus among 4+ independent data types with strike alignment.
-
-## H66 gate results
-
-| Gate | Result |
-|------|--------|
-| Format (float32, EPSG:32611, correct shape/transform) | PASS |
-| Values exactly {0,1}, 0 NaN | PASS |
-| Decoded-pattern uniqueness (vs 48 priors) | PASS |
-| Support novelty (>20% against prior union) | PASS (90.56%) |
-| Not literal union of priors | PASS |
-| Lane gate (max Spearman < 0.90) | PASS (0.0033) |
-| Lane gate (max near-3px < 0.70) | PASS (0.1194) |
-| Holdout validated | NOT YET |
-
-<!--/H66-README-->
 
 <!--H65-README-->
 # Current status — H65 (2026-10-09; first written as H62): NEGATIVE at the premise gate, nothing submitted

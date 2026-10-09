@@ -70,6 +70,8 @@ accept x  iff  gain(x) > [alpha*DTI / (1 - alpha*DTI)] * (1 - wmax(x))
 `1.000, 0.667, 0.529, 0.333, 0.255, 0.057, 0.0` (d = 0, 1, sqrt2, 2, sqrt5, 2sqrt2, 3 px), the bar
 barely moves over the whole live leaderboard:
 
+> **CORRECTION (2026-10-09, IR-H65halo-002; `knowledge/42` §4).** The bar is **alpha·DTI**, not alpha·DTI/(1−alpha·DTI). Adding a unit dot changes the denominator by alpha (alpha+beta=1), so DTI rises iff its kernel credit c exceeds alpha·DTI (`metric.credit_bar`, `tests/test_metric.py`). The bar values in the table below are the wrong form. Corrected bars: 0.0556 at DTI 0.2778, 0.0640 at 0.32, 0.0755 at 0.3774, 0.0928 at 0.464. At 0.2778 six weights clear the bar, including the 2√2 px weight 0.0572, so the largest accepting distance is 2.83 px (283 m), not 2.24 px. The 0.32, 0.3774 and 0.464 rows keep five weights and 2.24 px; the 0.05–0.20 row keeps six weights and 2.83 px.
+
 | DTI | bar | weights above bar | largest accepting distance |
 |---|---|---|---|
 | 0.05 - 0.20 | 0.010 - 0.042 | all six | 2.83 px (283 m) |

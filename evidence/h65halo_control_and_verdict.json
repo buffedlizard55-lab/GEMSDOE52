@@ -1,0 +1,23 @@
+{
+ "control": {
+  "single_B_hard_h65": 0.17457135886487102,
+  "single_B_h61_committed": 0.174517,
+  "abs_difference": 5.435886487101249e-05,
+  "tolerance": 0.001,
+  "pass_": true
+ },
+ "candidate_arm": "disagreement_post",
+ "candidate_dti": 0.036386195213459406,
+ "paired_delta_vs_single_B": {
+  "evidence_class": "HOLDOUT-DTI",
+  "evaluator_version": "gems52-pooled-hide-v1",
+  "delta": -0.14026440337136492,
+  "ci95": [
+   -0.16299811440037482,
+   -0.11839889374711146
+  ],
+  "withheld_positive_pixels": 53186
+ },
+ "holdout_eligible": false,
+ "note": "holdout part of the frozen rule only; S1, lane, not-union, format and uniqueness are decided by the shared build and verdict_text"
+}

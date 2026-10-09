@@ -77,6 +77,20 @@ def digest(path) -> str:
 # --------------------------------------------------------------------------------------------
 # setup
 # --------------------------------------------------------------------------------------------
+EXTERNAL_TAG = "+external-geodawn-v1"
+
+
+def external_applied(version: str) -> bool:
+    """True once the shared GeoDAWN external extension has run on this store.
+
+    H65 fix (IR-H65-001): the check was ``endswith(EXTERNAL_TAG)``.  The H63 step extension appends
+    ``+h63-step-v1`` after it, so a store that H63 has extended was rejected by H61/H64 even though
+    their feature lists (``view_A_with_external`` / ``view_B_with_external``) are unchanged.  The
+    predicate is now containment, which is what the guard always meant.
+    """
+    return EXTERNAL_TAG in str(version)
+
+
 def setup():
     reg = json.loads((ROOT / "registry/h61_preregistration.json").read_text())
     doc = ROOT / reg["hypothesis_document"]
@@ -87,7 +101,7 @@ def setup():
         if digest(ROOT / "data" / pins[key]["dest"]) != pins[key]["sha256"]:
             raise SystemExit(f"input pin mismatch: {key}")
     store = structural.FeatureStore(ROOT / STORE)
-    if not store.manifest["version"].endswith("+external-geodawn-v1"):
+    if not external_applied(store.manifest["version"]):
         raise SystemExit("feature store has not been extended with the shared external layers; "
                          "run: PYTHONPATH=src python -m gems52.external")
     if store.manifest["inputs"]["features_sha256"] != pins["training_features"]["sha256"]:
@@ -147,6 +161,18 @@ def learner_for(view: str, seed=SEED):
     forking the fit/exchange stages.
     """
     return learner(seed)
+
+
+def sample_for_fit(fold, cat, rng):
+    """(rows, y, sample_weight-or-None) for one fold's fit.
+
+    Shared hook (H65 added it; the default is unchanged): the default returns the H61 hard-label
+    sample with unit weights, so H61/H63/H64 receipts are reproduced bit-for-bit.  A round that
+    needs soft or weighted targets overrides this function in its own runner (see run_h65.py) and
+    returns duplicated rows with weights, which the shared fit stage passes to the learner.
+    """
+    rows, y = sample_train(fold, cat, rng)
+    return rows, y, None
 
 
 def predict_flat(store, model, names, rows, chunk=250_000) -> np.ndarray:
@@ -244,7 +270,7 @@ def stage_fit():
                n_A=len(va), n_B=len(vb), seed=SEED, folds=[])
     for fold in folds:
         rng = np.random.default_rng(SEED + fold["fold"])
-        rows, y = sample_train(fold, cat, rng)
+        rows, y, w = sample_for_fit(fold, cat, rng)
         rec = dict(fold=fold["fold"], n_train=int(len(rows)), n_pos=int(y.sum()),
                    train_domain_px=int(fold["train"].sum()), region_px=int(fold["region"].sum()),
                    truth_px=int(fold["truth"].sum()))
@@ -252,7 +278,10 @@ def stage_fit():
             t0 = time.time()
             X = store.gather(rows, names)
             m = learner_for(view, SEED)
-            m.fit(X, y)
+            if w is None:
+                m.fit(X, y)
+            else:
+                m.fit(X, y, sample_weight=w)
             in_auc = float(roc_auc_score(y, m.predict_proba(X)[:, 1]))
             del X
             t1 = time.time()
