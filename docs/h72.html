@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="H72 stopped negative at the final-dot uniqueness gate. No H72 GeoTIFF was written; download, format and approval status are explicit.">
+  <title>H72 negative result — no GeoTIFF released · GEMSDOE52</title>
+  <link rel="stylesheet" href="assets/ctd5.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><nav aria-label="Main navigation">
+  <a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>
+  <a href="index.html">Overview</a>
+  <a href="h72.html" aria-current="page">H72 result</a>
+  <a href="h72-hypotheses.html">Ranked hypotheses</a>
+  <a href="h72-executive-summary.html">Submission status</a>
+  <a href="downloads/index.html">Archive</a>
+</nav></header>
+<main id="main">
+  <div class="eyebrow">DOE GEMS / H72 · two-view co-training · final result</div>
+  <h1>Negative stop.<br>No H72 TIFF.</h1>
+  <p class="lead">The preregistered H72 candidate passed the pre-placement surface check and then failed the final-dot lane gate. That stop is terminal for this candidate. No file was written or published, and no alternate placement was tried.</p>
+
+  <section class="notice" role="alert" aria-labelledby="status-title">
+    <strong id="status-title">H72 IS NOT A SUBMISSION FILE</strong>
+    <div class="status-line"><span>H72 TIFF downloadable</span><span class="bad">NO — none was written</span></div>
+    <div class="status-line"><span>Portal-format validation</span><span class="bad">NOT ASSESSED — no TIFF exists</span></div>
+    <div class="status-line"><span>Organizer-confirmed receipt</span><span class="bad">NO — none found</span></div>
+    <div class="status-line"><span>Approved for competition submission</span><span class="bad">NO</span></div>
+    <div class="status-line"><span>Selector decision / competition slot</span><span>NONE / 0 used</span></div>
+    <p>These are distinct states: no H72 TIFF is downloadable; its portal format is not assessed; and there is no organizer submission receipt or approval. H71 and older downloadable files are separate historical research artifacts, not H72.</p>
+  </section>
+
+  <div class="actions">
+    <a class="button" href="data/h72_run_card.json">Read the authoritative H72 run card ↗</a>
+    <a class="button secondary" href="h72-executive-summary.html">Read submission status ↗</a>
+    <a class="button secondary" href="h72-hypotheses.html">Review the ranked hypotheses ↗</a>
+  </div>
+
+  <hr class="divider">
+  <section aria-labelledby="gates-title">
+    <h2 id="gates-title">Measured gates: surface passed, final dots stopped</h2>
+    <p>The lane rule was preregistered: check the normalized candidate surface before placement and check the final dots afterward. A surface pass does not waive a final-dot failure.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Check</th><th>Result</th><th>Evidence</th></tr></thead>
+      <tbody>
+        <tr><td>Pre-placement surface lane test, 619 accessible registry rasters</td><td><span class="good">PASS</span>; maximum Spearman 0.051102</td><td><a href="data/h72_lane_surface.json">Surface receipt</a>. Lane diagnostic, not a score.</td></tr>
+        <tr><td>Final-dot literal near-duplicate rule, 619 rasters</td><td><span class="bad">DUPLICATE / STOP</span>; maximum 3-px near-dot fraction 1.000000 (limit 0.70)</td><td><a href="data/h72_lane_dots.json">Final-dot receipt</a>. Literal maximum is caused by a universal-coverage probe in the supplied registry.</td></tr>
+        <tr><td>Final-dot saturation-aware policy</td><td><span class="bad">DUPLICATE / STOP</span>; maximum 3-px near-dot fraction 0.914359 (limit 0.70)</td><td>Worst informative prior is the owner-mirrored `15GEMSDOE` curvature/scarp raster; the policy does not waive the literal stop.</td></tr>
+        <tr><td>Decoded-pattern uniqueness</td><td>Pattern differs from each accessible prior, but support novelty is 0.000000; candidate support is a subset of the prior union</td><td><a href="data/h72_uniqueness.json">Uniqueness receipt</a>. Research-release novelty gate failed.</td></tr>
+        <tr><td>Not-the-union diagnostic</td><td>5,056 diagnostic points were strict A-only and differed from the single-view and union placements</td><td><a href="data/h72_not_union.json">Method diagnostic</a>. This is not a TIFF, score, or released submission.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="small">The accessible inventory contains 619 aligned registry rasters; this is not proof against private or unlinked submissions. Every lane statistic above is a <b>diagnostic, not a score</b>. The complete stop details are in <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/60_h72_results_and_limits.md">H72 results and limits</a>.</p>
+  </section>
+
+  <hr class="divider">
+  <section aria-labelledby="holdout-title">
+    <h2 id="holdout-title">HOLDOUT-DTI — internal hide-and-recover, not a leaderboard result</h2>
+    <p>Every value below is <b>HOLDOUT-DTI</b>, evaluator <code>gems52-pooled-hide-v1</code>, 53,186 withheld positives, α = 0.2, β = 0.8, 300 m triangular kernel; each interval is a 95% CI.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Arm</th><th>HOLDOUT-DTI<br>gems52-pooled-hide-v1 · 53,186 withheld positives</th><th>95% CI</th><th>Budget validity</th></tr></thead>
+      <tbody>
+        <tr><td>H72 strict A-only candidate</td><td class="numeric">0.00589479</td><td class="numeric">[0.00298176, 0.00914770]</td><td>Placed 1,264 / 1,264 / <b>1,092</b> / 1,264; target 1,264 in each fold</td></tr>
+        <tr><td>Single-B reference</td><td class="numeric">0.06146088</td><td class="numeric">[0.04892735, 0.07470335]</td><td>Not a valid matched comparison with the underfilled H72 arm</td></tr>
+      </tbody>
+    </table></div>
+    <div class="notice" role="note"><strong>NO PAIRED COMPARISON</strong><p>The A-only arm underfilled fold 2, so <code>matched_comparison_valid=false</code>. No paired H72-minus-single-B difference is reported. Do not interpret the separate estimates as a matched win/loss or as a public-board projection.</p></div>
+    <p class="small"><a href="data/h72_holdout.json">Full holdout receipt ↗</a> · <a href="data/h72_run_card.json">Run card ↗</a></p>
+  </section>
+
+  <hr class="divider">
+  <section aria-labelledby="reported-title">
+    <h2 id="reported-title">What is known about the reported 0.2778?</h2>
+    <p>This section separates public leaderboard observations from owner attribution, local mirror measurements, and organizer receipts. None substitutes for another.</p>
+    <div class="grid2">
+      <section class="panel">
+        <div class="label">PUBLIC-LEADERBOARD observation</div>
+        <div class="status-line"><span>Value / row</span><span><b>0.2778</b> · rank 13 · `extradr19`</span></div>
+        <div class="status-line"><span>Source date</span><span>Official repo snapshot: 2026-10-07</span></div>
+        <p class="small">Team-level public board row only; it contains no filename, hash, upload receipt or causal attribution. The official leaderboard fetch in H72 rendered “Loading,” so this is not a live-current confirmation. <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">Official leaderboard</a> · <a href="data/leaderboard_snapshot_2026-10-07.json">Repository snapshot</a>.</p>
+      </section>
+      <section class="panel">
+        <div class="label">OWNER/USER-REPORTED file/score match</div>
+        <p>Owner evidence reports <b>0.2778</b> for `h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros`. Its receipt and authenticated SHA fields are null. This is not organizer-confirmed.</p>
+        <div class="status-line"><span>Organizer-confirmed receipt</span><span class="bad">NONE FOUND</span></div>
+        <p class="small"><a href="data/ctd5_owner_reported_results.json">Owner-reported results record ↗</a></p>
+      </section>
+    </div>
+    <div class="notice" role="note"><strong>Local bytes provide a plausible mechanism, not a causal score explanation.</strong>
+      <p>The local H33-labelled mirror has 37,654 dots (zero on the visible catalogue) and is a strict subset of a separate 44,090-dot bitmap whose <b>0.2600 value is owner-reported</b>. The subset comparison removes 6,436 cells and adds none; the removed cells were measured 100–200 m from the visible catalogue. Pruning may improve precision under a distance-weighted metric if removed mass earns little hidden-truth credit—but hidden-truth credit is unknown. The H33 name token matches none of six local hash variants. Local byte hashes do not authenticate an upload or score.</p>
+    </div>
+    <p class="small">The old point estimate |G| = 14,088.7 is not established; the evidence-supported interval is [5,949.3, 12,512.1] under stated assumptions. The removed-flank-zero-credit assumption is unverified. See <a href="data/h61_forensics.json">forensics receipt</a> and the <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/60_h72_results_and_limits.md">full provenance discussion</a>.</p>
+  </section>
+
+  <hr class="divider">
+  <section aria-labelledby="hypothesis-title">
+    <h2 id="hypothesis-title">H72 tested one ranked geological hypothesis</h2>
+    <p>H72-A isolated a geodetic strain/shear View A (`raw_band_04`, `raw_band_07`, `raw_band_08`) against the fixed surface/radiometric View B. It looked for spatially coherent strain and shear with dilatational contrast where View B abstained—a possible concealed structure beneath cover. A broad interseismic signal, survey seam or interpolation edge can mimic this signature. This is a testable geological hypothesis, not fault confirmation.</p>
+    <p>The H72-A-only holdout was underfilled and final dots failed the lane gate. H72-B through H72-D were ranked proposals only, not tested results. Read the <a href="h72-hypotheses.html">ranked hypothesis review</a> for layers, physical signatures, alternatives, distinctions from repo work and cost.</p>
+  </section>
+
+  <hr class="divider">
+  <section aria-labelledby="sources-title">
+    <h2 id="sources-title">Official, reviewable source links</h2>
+    <ul>
+      <li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">DrivenData problem description and metric</a> — competition target, inputs and evaluation context.</li>
+      <li><a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">USGS GeoDAWN airborne magnetic and radiometric release</a> — survey context; H72 used owner-mirrored competition channels.</li>
+      <li><a href="https://gdr.openei.org/submissions/1391">DOE Geothermal Data Repository INGENIOUS record</a> — regional geodetic, seismic, magnetic and heat-flow dataset listings; this record does not authenticate the H72 mirror bytes.</li>
+      <li><a href="https://www.usgs.gov/publications/discovering-blind-geothermal-systems-great-basin-region-integrated-geologic-and">USGS blind geothermal systems report</a> — geological plausibility context, not H72 validation.</li>
+      <li>Blum &amp; Mitchell, <a href="https://doi.org/10.1145/279943.279962">co-training, COLT 1998</a> — method context, not proof that H72's views are sufficient or conditionally independent.</li>
+    </ul>
+    <p class="small">The frozen preregistration has a snapshot-date typo: it says 2026-10-09, while the committed official-board snapshot file is dated 2026-10-07. Results use the file's recorded date; the preregistration was not changed after fitting. Full correction and limits: <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/60_h72_results_and_limits.md#snapshot-date-correction">documentation note</a>.</p>
+  </section>
+
+  <section><h2>Prior round, not H72</h2><p class="small">H71 is a separate historical research file with a separate result. It is not an H72 TIFF and its own final-dot lane rule also stopped. <a href="h71.html">H71 result</a> · <a href="h71-executive-summary.html">H71 submission status</a>.</p></section>
+</main>
+<footer>Independent research; not an official DOE or DrivenData site. Predictions are not verified faults or geothermal discoveries. <a href="index.html">Overview</a> · <a href="downloads/index.html">Historical downloads</a> · <a href="data/h72_run_card.json">H72 run card</a>.</footer>
+</body></html>

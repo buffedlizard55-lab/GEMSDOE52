@@ -1,0 +1,15 @@
+{
+ "tier1_all_priors": {
+  "canonical_pattern_unique": true,
+  "identical_to_any_prior": false,
+  "equals_literal_prior_union": false,
+  "novel_fraction": 0.0,
+  "n_priors": 553
+ },
+ "tier2_informative_priors": {
+  "canonical_pattern_unique": true,
+  "novel_fraction": 1.0,
+  "equals_literal_prior_union": false,
+  "n_priors": 516
+ }
+}

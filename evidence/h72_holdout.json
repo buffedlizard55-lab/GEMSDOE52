@@ -1,0 +1,450 @@
+{
+  "stage": "E2 hide-and-recover",
+  "started_utc": "2026-10-09T16:58:07+00:00",
+  "finished_utc": "2026-10-09T16:58:07+00:00",
+  "evidence_class": "HOLDOUT-DTI",
+  "evaluator_version": "gems52-pooled-hide-v1",
+  "alpha": 0.2,
+  "beta": 0.8,
+  "triangular_radius_m": 300.0,
+  "matched_budget_dots_per_fold_per_arm": 1264,
+  "minimum_separation_px": 3.0,
+  "held_fault_components": "whole spatial segments with the registered 80 px train/evaluation buffer; catalogue features/support use fold-visible faults only",
+  "exact_visible_fault_mask": true,
+  "exchange_budget": 1,
+  "all_arms_fill_every_fold": false,
+  "matched_comparison_valid": false,
+  "folds": [
+    {
+      "fold": 0,
+      "allowed_px": 2265054,
+      "a_only_stratum_px": 29158,
+      "visible_fault_px": 32881,
+      "hidden_positive_px": 27309,
+      "arms": {
+        "a_only": {
+          "requested": 1264,
+          "placed": 1264,
+          "filled": true,
+          "withheld_positive_pixels": 27309,
+          "metric_terms_available_for_pooled_bootstrap": true,
+          "evidence_class": "placement receipt only; pooled score is in pooled.scores with 95% CI",
+          "evaluator_version": "gems52-pooled-hide-v1"
+        },
+        "single_A": {
+          "requested": 1264,
+          "placed": 1264,
+          "filled": true,
+          "withheld_positive_pixels": 27309,
+          "metric_terms_available_for_pooled_bootstrap": true,
+          "evidence_class": "placement receipt only; pooled score is in pooled.scores with 95% CI",
+          "evaluator_version": "gems52-pooled-hide-v1"
+        },
+        "single_B": {
+          "requested": 1264,
+          "placed": 1264,
+          "filled": true,
+          "withheld_positive_pixels": 27309,
+          "metric_terms_available_for_pooled_bootstrap": true,
+          "evidence_class": "placement receipt only; pooled score is in pooled.scores with 95% CI",
+          "evaluator_version": "gems52-pooled-hide-v1"
+        },
+        "union_max": {
+          "requested": 1264,
+          "placed": 1264,
+          "filled": true,
+          "withheld_positive_pixels": 27309,
+          "metric_terms_available_for_pooled_bootstrap": true,
+          "evidence_class": "placement receipt only; pooled score is in pooled.scores with 95% CI",
+          "evaluator_version": "gems52-pooled-hide-v1"
+        },
+        "disagreement_pre": {
+          "requested": 1264,
+          "placed": 1264,
+          "filled": true,
+          "withheld_positive_pixels": 27309,
+          "metric_terms_available_for_pooled_bootstrap": true,
+          "evidence_class": "placement receipt only; pooled score is in pooled.scores with 95% CI",
+          "evaluator_version": "gems52-pooled-hide-v1"
+        },
+        "disagreement_post": {
+          "requested": 1264,
+          "placed": 1264,
+          "filled": true,
+          "withheld_positive_pixels": 27309,
+          "metric_terms_available_for_pooled_bootstrap": true,
+          "evidence_class": "placement receipt only; pooled score is in pooled.scores with 95% CI",
+          "evaluator_version": "gems52-pooled-hide-v1"
+        },
+        "random": {
+          "requested": 1264,
+          "placed": 1264,
+          "filled": true,
+          "withheld_positive_pixels": 27309,
+          "metric_terms_available_for_pooled_bootstrap": true,
+          "evidence_class": "placement receipt only; pooled score is in pooled.scores with 95% CI",
+          "evaluator_version": "gems52-pooled-hide-v1"
+        }
+      },
+      "not_union": {
+        "a_only_dots": 1264,
+        "max_view_union_dots": 1264,
+        "intersection": 38,
+        "jaccard": 0.015261044176706828,
+        "exactly_equal": false,
+        "explanation": "The measured arm is ranked only inside high-A / mid-rank-B abstention; it is not the union/max of the two views."
+      }
+    },
+    {
+      "fold": 1,
+      "allowed_px": 1170301,
+      "a_only_stratum_px": 17871,
+      "visible_fault_px": 49685,
+      "hidden_positive_px": 10677,
+      "arms": {
+        "a_only": {
+          "requested": 1264,
+          "placed": 1264,
+          "filled": true,
+          "withheld_positive_pixels": 10677,
+          "metric_terms_available_for_pooled_bootstrap": true,
+          "evidence_class": "placement receipt only; pooled score is in pooled.scores with 95% CI",
+          "evaluator_version": "gems52-pooled-hide-v1"
+        },
+        "single_A": {
+          "requested": 1264,
+          "placed": 1264,
+          "filled": true,
+          "withheld_positive_pixels": 10677,
+          "metric_terms_available_for_pooled_bootstrap": true,
+          "evidence_class": "placement receipt only; pooled score is in pooled.scores with 95% CI",
+          "evaluator_version": "gems52-pooled-hide-v1"
+        },
+        "single_B": {
+          "requested": 1264,
+          "placed": 1264,
+          "filled": true,
+          "withheld_positive_pixels": 10677,
+          "metric_terms_available_for_pooled_bootstrap": true,
+          "evidence_class": "placement receipt only; pooled score is in pooled.scores with 95% CI",
+          "evaluator_version": "gems52-pooled-hide-v1"
+        },
+        "union_max": {
+          "requested": 1264,
+          "placed": 1264,
+          "filled": true,
+          "withheld_positive_pixels": 10677,
+          "metric_terms_available_for_pooled_bootstrap": true,
+          "evidence_class": "placement receipt only; pooled score is in pooled.scores with 95% CI",
+          "evaluator_version": "gems52-pooled-hide-v1"
+        },
+        "disagreement_pre": {
+          "requested": 1264,
+          "placed": 1264,
+          "filled": true,
+          "withheld_positive_pixels": 10677,
+          "metric_terms_available_for_pooled_bootstrap": true,
+          "evidence_class": "placement receipt only; pooled score is in pooled.scores with 95% CI",
+          "evaluator_version": "gems52-pooled-hide-v1"
+        },
+        "disagreement_post": {
+          "requested": 1264,
+          "placed": 1264,
+          "filled": true,
+          "withheld_positive_pixels": 10677,
+          "metric_terms_available_for_pooled_bootstrap": true,
+          "evidence_class": "placement receipt only; pooled score is in pooled.scores with 95% CI",
+          "evaluator_version": "gems52-pooled-hide-v1"
+        },
+        "random": {
+          "requested": 1264,
+          "placed": 1264,
+          "filled": true,
+          "withheld_positive_pixels": 10677,
+          "metric_terms_available_for_pooled_bootstrap": true,
+          "evidence_class": "placement receipt only; pooled score is in pooled.scores with 95% CI",
+          "evaluator_version": "gems52-pooled-hide-v1"
+        }
+      },
+      "not_union": {
+        "a_only_dots": 1264,
+        "max_view_union_dots": 1264,
+        "intersection": 26,
+        "jaccard": 0.010391686650679457,
+        "exactly_equal": false,
+        "explanation": "The measured arm is ranked only inside high-A / mid-rank-B abstention; it is not the union/max of the two views."
+      }
+    },
+    {
+      "fold": 2,
+      "allowed_px": 471065,
+      "a_only_stratum_px": 5455,
+      "visible_fault_px": 53185,
+      "hidden_positive_px": 6813,
+      "arms": {
+        "a_only": {
+          "requested": 1264,
+          "placed": 1092,
+          "filled": false,
+          "withheld_positive_pixels": 6813,
+          "metric_terms_available_for_pooled_bootstrap": true,
+          "evidence_class": "placement receipt only; pooled score is in pooled.scores with 95% CI",
+          "evaluator_version": "gems52-pooled-hide-v1"
+        },
+        "single_A": {
+          "requested": 1264,
+          "placed": 1264,
+          "filled": true,
+          "withheld_positive_pixels": 6813,
+          "metric_terms_available_for_pooled_bootstrap": true,
+          "evidence_class": "placement receipt only; pooled score is in pooled.scores with 95% CI",
+          "evaluator_version": "gems52-pooled-hide-v1"
+        },
+        "single_B": {
+          "requested": 1264,
+          "placed": 1264,
+          "filled": true,
+          "withheld_positive_pixels": 6813,
+          "metric_terms_available_for_pooled_bootstrap": true,
+          "evidence_class": "placement receipt only; pooled score is in pooled.scores with 95% CI",
+          "evaluator_version": "gems52-pooled-hide-v1"
+        },
+        "union_max": {
+          "requested": 1264,
+          "placed": 1264,
+          "filled": true,
+          "withheld_positive_pixels": 6813,
+          "metric_terms_available_for_pooled_bootstrap": true,
+          "evidence_class": "placement receipt only; pooled score is in pooled.scores with 95% CI",
+          "evaluator_version": "gems52-pooled-hide-v1"
+        },
+        "disagreement_pre": {
+          "requested": 1264,
+          "placed": 1264,
+          "filled": true,
+          "withheld_positive_pixels": 6813,
+          "metric_terms_available_for_pooled_bootstrap": true,
+          "evidence_class": "placement receipt only; pooled score is in pooled.scores with 95% CI",
+          "evaluator_version": "gems52-pooled-hide-v1"
+        },
+        "disagreement_post": {
+          "requested": 1264,
+          "placed": 1264,
+          "filled": true,
+          "withheld_positive_pixels": 6813,
+          "metric_terms_available_for_pooled_bootstrap": true,
+          "evidence_class": "placement receipt only; pooled score is in pooled.scores with 95% CI",
+          "evaluator_version": "gems52-pooled-hide-v1"
+        },
+        "random": {
+          "requested": 1264,
+          "placed": 1264,
+          "filled": true,
+          "withheld_positive_pixels": 6813,
+          "metric_terms_available_for_pooled_bootstrap": true,
+          "evidence_class": "placement receipt only; pooled score is in pooled.scores with 95% CI",
+          "evaluator_version": "gems52-pooled-hide-v1"
+        }
+      },
+      "not_union": {
+        "a_only_dots": 1092,
+        "max_view_union_dots": 1264,
+        "intersection": 41,
+        "jaccard": 0.017710583153347732,
+        "exactly_equal": false,
+        "explanation": "The measured arm is ranked only inside high-A / mid-rank-B abstention; it is not the union/max of the two views."
+      }
+    },
+    {
+      "fold": 3,
+      "allowed_px": 686529,
+      "a_only_stratum_px": 9587,
+      "visible_fault_px": 52067,
+      "hidden_positive_px": 8387,
+      "arms": {
+        "a_only": {
+          "requested": 1264,
+          "placed": 1264,
+          "filled": true,
+          "withheld_positive_pixels": 8387,
+          "metric_terms_available_for_pooled_bootstrap": true,
+          "evidence_class": "placement receipt only; pooled score is in pooled.scores with 95% CI",
+          "evaluator_version": "gems52-pooled-hide-v1"
+        },
+        "single_A": {
+          "requested": 1264,
+          "placed": 1264,
+          "filled": true,
+          "withheld_positive_pixels": 8387,
+          "metric_terms_available_for_pooled_bootstrap": true,
+          "evidence_class": "placement receipt only; pooled score is in pooled.scores with 95% CI",
+          "evaluator_version": "gems52-pooled-hide-v1"
+        },
+        "single_B": {
+          "requested": 1264,
+          "placed": 1264,
+          "filled": true,
+          "withheld_positive_pixels": 8387,
+          "metric_terms_available_for_pooled_bootstrap": true,
+          "evidence_class": "placement receipt only; pooled score is in pooled.scores with 95% CI",
+          "evaluator_version": "gems52-pooled-hide-v1"
+        },
+        "union_max": {
+          "requested": 1264,
+          "placed": 1264,
+          "filled": true,
+          "withheld_positive_pixels": 8387,
+          "metric_terms_available_for_pooled_bootstrap": true,
+          "evidence_class": "placement receipt only; pooled score is in pooled.scores with 95% CI",
+          "evaluator_version": "gems52-pooled-hide-v1"
+        },
+        "disagreement_pre": {
+          "requested": 1264,
+          "placed": 1264,
+          "filled": true,
+          "withheld_positive_pixels": 8387,
+          "metric_terms_available_for_pooled_bootstrap": true,
+          "evidence_class": "placement receipt only; pooled score is in pooled.scores with 95% CI",
+          "evaluator_version": "gems52-pooled-hide-v1"
+        },
+        "disagreement_post": {
+          "requested": 1264,
+          "placed": 1264,
+          "filled": true,
+          "withheld_positive_pixels": 8387,
+          "metric_terms_available_for_pooled_bootstrap": true,
+          "evidence_class": "placement receipt only; pooled score is in pooled.scores with 95% CI",
+          "evaluator_version": "gems52-pooled-hide-v1"
+        },
+        "random": {
+          "requested": 1264,
+          "placed": 1264,
+          "filled": true,
+          "withheld_positive_pixels": 8387,
+          "metric_terms_available_for_pooled_bootstrap": true,
+          "evidence_class": "placement receipt only; pooled score is in pooled.scores with 95% CI",
+          "evaluator_version": "gems52-pooled-hide-v1"
+        }
+      },
+      "not_union": {
+        "a_only_dots": 1264,
+        "max_view_union_dots": 1264,
+        "intersection": 37,
+        "jaccard": 0.014853472501003613,
+        "exactly_equal": false,
+        "explanation": "The measured arm is ranked only inside high-A / mid-rank-B abstention; it is not the union/max of the two views."
+      }
+    }
+  ],
+  "pooled": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "matched_comparison_valid": false,
+    "scores": {
+      "a_only": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.005894792546180385,
+        "ci95": [
+          0.0029817630161963673,
+          0.009147699521638
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 256.7488300669413,
+        "fpw": 4775.2187341397075,
+        "fnw": 52929.25116993305
+      },
+      "single_A": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.005761350677910388,
+        "ci95": [
+          0.0018167627442129295,
+          0.010882965026350404
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 251.11148346835435,
+        "fpw": 4932.504371561655,
+        "fnw": 52934.888516531646
+      },
+      "single_B": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.06146087763889319,
+        "ci95": [
+          0.048927347764089704,
+          0.0747033539342685
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 2695.7965477768657,
+        "fpw": 3870.1654426562513,
+        "fnw": 50490.20345222313
+      },
+      "union_max": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.0453418098579183,
+        "ci95": [
+          0.03541344905034398,
+          0.05671026760746378
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 1985.2578611351478,
+        "fpw": 4192.0718515615545,
+        "fnw": 51200.742138864865
+      },
+      "disagreement_pre": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.003969399264332318,
+        "ci95": [
+          0.0013535828396354014,
+          0.007389357783071491
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 172.97705925368186,
+        "fpw": 4971.2318795589445,
+        "fnw": 53013.02294074632
+      },
+      "disagreement_post": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.0026923822511044555,
+        "ci95": [
+          0.0010858256638713098,
+          0.0047339934185956145
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 117.3156025215658,
+        "fpw": 5004.484235969309,
+        "fnw": 53068.68439747844
+      },
+      "random": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.013352193842859367,
+        "ci95": [
+          0.011518385223486926,
+          0.015348808079340017
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 582.6240659536131,
+        "fpw": 4848.783215597776,
+        "fnw": 52603.37593404639
+      }
+    },
+    "paired_differences": {},
+    "reason": "at least one arm failed to fill the fixed per-fold budget; no fallback or retuning"
+  },
+  "candidate_minus_single_B": null,
+  "withheld_positive_pixels": 53186,
+  "negative_class": "held-out catalogue-zero proxies, not verified fault absence",
+  "bootstrap": {
+    "method": "paired physical 20 km block bootstrap",
+    "draws": 1000,
+    "confidence": 0.95,
+    "seed": 68252,
+    "caveat": "conditional on fixed folds/labels and not a leaderboard interval"
+  },
+  "note": "No projection to a public-board or organizer score."
+}
