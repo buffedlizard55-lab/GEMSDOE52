@@ -1,0 +1,25 @@
+{
+  "round": "H74S",
+  "generated_utc": "2026-10-09T19:53:58+00:00",
+  "status": "post-run CLI-only correction; experiment remains frozen and terminal",
+  "executed_runner_sha256": "106080fde2eb6e4a50843d10eeea6e74f02a9c35635194dd24609abd70dfdf49",
+  "reviewed_runner_sha256": "3a65ffaed77bafbf19ef0b19cbd48d85619103aa2ae79ffa882b0a0a6e0533ed",
+  "freeze_receipt_sha256": "37acccb110472dec2a486deb77f6f23ebfb8efb91532fc7cb9dece5466a7a6ab",
+  "result_run_card_sha256": "faf1445e400dbe5e745e4abb43ff9e97d70249baa03d636e80ef7100178454bb",
+  "original_process_exit_code": 1,
+  "original_process_exit_explanation": "The negative stop branches returned the run-card dict; SystemExit(dict) prints the representation and returns status 1 even though the terminal state and negative run card were written successfully.",
+  "correction": "Normalize a terminal run-card dict to process exit code 0; refuse any rerun when the tracked H74S run card exists; preserve that result card on rejected reruns.",
+  "scientific_or_method_logic_changed": false,
+  "experiment_rerun": false,
+  "experiment_state": {
+    "status": "negative",
+    "started_utc": "2026-10-09T19:23:36+00:00",
+    "finished_utc": "2026-10-09T19:51:08+00:00",
+    "experiments_completed": 3,
+    "elapsed_seconds": 1652.1,
+    "stop_reason": "literal final-dot lane DUPLICATE/STOP under the registered all-prior rule; no uniqueness waiver, second placement or TIFF"
+  },
+  "competition_slots_used": 0,
+  "organizer_confirmed": false,
+  "note": "The run card continues to identify the exact runner SHA used during the H74S experiment. This correction changes only process-status and rerun-safety handling; it did not rerun H74S or alter any measured receipt."
+}

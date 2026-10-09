@@ -1,0 +1,54 @@
+{
+  "evidence_class": "HOLDOUT-DTI",
+  "evaluator_version": "gems52-pooled-hide-v1",
+  "alpha": 0.2,
+  "beta": 0.8,
+  "triangular_radius_m": 300.0,
+  "dots_per_fold": 9400,
+  "withheld_positive_pixels": 53186,
+  "score": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.1745172875994316,
+    "ci95": [
+      0.1540243798488995,
+      0.1952693271270025
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 8902.354204271809,
+    "fpw": 33410.159873156495,
+    "fnw": 44283.645795728204
+  },
+  "target_evidence_class": "HOLDOUT-DTI reference from H71 control receipt; not a leaderboard score",
+  "reference_target": 0.174571,
+  "tolerance": 0.001,
+  "placements": [
+    {
+      "fold": 0,
+      "requested": 9400,
+      "placed": 9400,
+      "filled": true
+    },
+    {
+      "fold": 1,
+      "requested": 9400,
+      "placed": 9400,
+      "filled": true
+    },
+    {
+      "fold": 2,
+      "requested": 9400,
+      "placed": 9400,
+      "filled": true
+    },
+    {
+      "fold": 3,
+      "requested": 9400,
+      "placed": 9400,
+      "filled": true
+    }
+  ],
+  "all_filled": true,
+  "reproduces": true,
+  "note": "A control reproduction is separate from the matched 1,264-dot candidate comparison; no projection to the board."
+}

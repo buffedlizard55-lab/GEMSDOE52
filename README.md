@@ -1,54 +1,72 @@
-<!--H72-README-->
-# Current status — H72 (2026-10-09): Three unique GeoTIFF candidates generated, one recommended for download
+<!--H74S-README-->
+# Current status — H74S (2026-10-09): NEGATIVE / no TIFF / no slot
 
-> **DOWNLOAD: YES — all three files are format-valid and unique on decoded pixels. SUBMIT: v3 RECOMMENDED (at your own risk); SPSC and MRAEC NOT RECOMMENDED.** No holdout beats single_B (0.1746); holdout DTI does NOT predict competition board score (Spearman −0.10, measured R4). The v3 submission uses the proven h19-5 ranker enhanced with multi-scale DEM edges and LiDAR scarp features, with the 200m catalogue ring mask.
+> **DOWNLOAD: NO — no H74S TIFF exists. SUBMIT: NO — not selector-eligible and not organizer-confirmed. Competition slots used: 0.** The frozen two-view co-training/disagreement experiment completed within its budget and stopped at the registered final-dot lane rule. Do not upload a historical file as an H74S result.
 
-**★ [Download H72-v3 GeoTIFF (recommended)](docs/downloads/h72-candidate-v3.tif)** ·
-[ZIP](docs/downloads/h72-candidate-v3.zip) ·
-[Download H72-SPSC (spring-based)](docs/downloads/h72-candidate-spsc.tif) ·
-[Download H72-MRAEC (edge coherence)](docs/downloads/h72-candidate-mraec.tif) ·
-**[Executive summary / exact submission steps](docs/h72-executive-summary.html)** ·
-[Landing page](index.html)
+**[Detailed H74S report and source-linked three-pass review](docs/h74s.html)** ·
+[Full review / limitations](knowledge/64_h74s_three_pass_review.md) ·
+[Machine-readable run card](evidence/h74s_run_card.json) ·
+[Preregistered hypotheses and frozen protocol](knowledge/63_hypotheses_H74S_preregistered.md)
 
-### H72-v3 (recommended)
-- **File:** `gems52-h72-v3-enhanced-h19-5-37654px-20261009T164122Z-534693a7481b.tif` — 137,899 bytes, 37,654 emitted cells
-- **SHA-256:** `8149c9343e5438553385e5d4ce8aca43682ad1f833df0ea033f4e5bd019c037f`
-- **Name (60 chars):** `h72-v3-enhanced-h19-5-37654px-20261009T164122Z-534693a7481b`
-- **Note (140 chars):** `H72-v3: h19-5 rank enhanced with multi-scale DEM edges + LiDAR scarp; 37654px budget; 200m ring masked; binary {0,1}`
-- **Local validator:** one float32 band; values exactly {0, 1}; 0 NaN; EPSG:32611; shape 3,730 × 3,292. PASS.
-- **Uniqueness:** decoded pattern unique; rank correlation vs h19-5 = 0.2010; near-dot vs h19-5 = 57.85% (<70% lane limit).
-- **Method:** h19-5 proven ranker (60%) + multi-scale Gaussian edge coherence at 5 scales (25%) + LiDAR scarp features (15%). 200m catalogue ring masked. Binary {0,1} emission at 3px minimum spacing.
+## Outcome at a glance
 
-### H72 hypotheses tested
-| # | Hypothesis | Mechanism | Holdout DTI | Verdict |
-|---|---|---|---|---|
-| H72-v3 | Enhanced h19-5 ranking | Proven ranker + multi-scale structural edges + LiDAR | 0.031 | research |
-| H72-SPSC | Spring-proximity structural coherence | Hot spring kernel density + gravity edge + slope + LiDAR | 0.027 | research |
-| H72-MRAEC | Multi-band radiometric alteration edge coherence | Gradient direction coherence across K/Th/U/gravity/magnetic bands | 0.023 | research |
+- **Run:** 3 experiments, 1,652.1 seconds; terminal verdict `negative` at `E3-final-dot-lane`. Registration SHA-256: `9041c9dc04c366afd6b6c223b2ac8ce4ddc821687551a14ae99a678d9a09b38b`.
+- **Surface gate:** PASS across 693 aligned prior paths; maximum Spearman `0.033571`.
+- **Final dots:** STOP. The 5,056-dot placement had 38 literal >70%-proximity offenders; maximum share within 3 px was **100%** against a raster in the literal all-prior registry. The informative-prior policy audit also failed at **91.08%**. No waiver or second placement.
+- **HOLDOUT-DTI:** evaluator `gems52-pooled-hide-v1`, 53,186 withheld positives, 95% spatial-block CI. A-only disagreement after exchange: **0.008975 [0.004699, 0.014496]**. It filled only 1,126/1,264 dots in one fold, so the matched comparison is **invalid**; it is not a matched win. Single-B was 0.061461 [0.048927, 0.074703], random was 0.013352 [0.011518, 0.015349]. The separate 9,400-dot/fold single-B control reproduced its prior local HOLDOUT-DTI: 0.174517 [0.154024, 0.195269]. These are not leaderboard scores or projections.
+- **Not reached:** decoded-pixel uniqueness, final full-candidate not-the-union, support novelty, and TIFF format checks. The final-dot stop prevented them; no candidate file/hash is available. The four holdout disagreement arms were not equal to their max-view union, but that does not substitute for the skipped final-candidate test.
 
-### Key findings
-- All three submissions pass format gates, uniqueness gates, and rank correlation checks.
-- All three score below random on the hide-and-recover holdout (0.023-0.031 vs ~0.080 random).
-- The holdout does NOT predict competition board score (Spearman −0.10, measured R4).
-- The competition tests against unmapped faults (~0.15% prevalence), while the holdout tests against major catalogue faults (~1% prevalence).
-- The co-training lane remains closed: View A sufficiency failed 5 consecutive times (AUC ≈ 0.52).
-- Spring data (GDR 1391, DOI 10.15121/1881483, CC BY 4.0) is now SHA-256 verified and usable.
+### Integrity and post-run note
+
+The final preregistration was frozen before fitting or placement; the run card records the exact runner hash used. The core inventory plus 105 local TIFF paths and 64 refreshed public owner-mirror paths made 693 gate paths; 64/64 extensions were aligned and error-free. This is **not** an organizer-authenticated census; private/unlinked artifacts are outside its scope. No current organizer leaderboard or portal receipt was checked.
+
+The original process returned code 1 because Python `SystemExit` was given a negative run-card dict after successfully writing the terminal state/card. This was a CLI exit-status defect, not a scientific exception. `evidence/h74s_postrun_code_correction.json` records the post-run, CLI-only hardening, the original and reviewed code hashes, and explicitly confirms there was no rerun or change to method/results.
+
+## Ranked geological hypotheses
+
+Four hypotheses were preregistered; only Rank 1 was tested. Qualitative priority is not a DTI forecast.
+
+1. **H74S-A, tested:** coupled strain bands 4/7/8 and seismicity bands 10/16 in View A; unchanged surface/radiometric View B. Test for joint subsurface activity beneath a quiet surface; notable mimics include earthquake swarms and gridding seams. Verdict: negative as above.
+2. **H74S-B, untested:** seismicity-only structure (bands 10/16) against surface abstention; mimics include geothermal swarms and aftershocks.
+3. **H74S-C, untested:** conductivity/basement contrast with gravity-gradient support (bands 17/15/18/11) against terrain/radiometric abstention; mimic: lithologic or conductive basin-margin contact.
+4. **H74S-D, untested:** multiscale strain-tensor discontinuity coherence (bands 4/7/8); mimics include broad loading and interpolation seams.
+
+Details on physical signatures, missed-catalogue rationale, costs, novelty limits, and frozen fold/test rules are in the [registered hypothesis plan](knowledge/63_hypotheses_H74S_preregistered.md).
+
+## Complete task brief and acceptance criteria
+
+This is the captured work brief for H74S, organized for audit rather than presented as a verbatim quotation:
+
+1. Review the repository and propose **3–5 previously untried geological hypotheses** within the **single two-view co-training/disagreement method**. Rank by expected holdout DTI and implementation cost; give the input layers, physical signature, why each might identify catalogue-missed structure, and how it differs from prior implemented methods. Mark untested ideas and all score projections honestly.
+2. Test only the top-ranked candidate using a spatially blocked, whole-segment hide-and-recover holdout **before any submission-slot decision**. Reuse the shared cached feature stack, `evaluate_holdout.py`, and `submission_writer.py`; do not make a private duplicate method or copy an earlier submission.
+3. Explicitly test per-feature leakage (AUC >0.90 is a leakage alarm until resolved), spatial-block View-A/View-B error independence (abandon co-training if the registered threshold is exceeded), whole-segment pseudo-labeling with buffers, single-view baselines, and metric-aware placement. Use fold-visible catalogue features only, exact visible-fault masks, pooled DTI with alpha 0.2, beta 0.8, and a 300 m triangular kernel.
+4. Check lane uniqueness on the surface **before placement** and on final dots **after placement** against every aligned registry raster. Stop and record duplicate if any rank correlation is >0.90 or if >70% of candidate dots fall within 3 px of one raster. Do not waive a stop or make another placement. Compare any authorized final candidate to the views' union.
+5. Write a new competition-format TIFF only if every frozen gate passes, and require decoded-pixel uniqueness rather than a renamed/recompressed prior. Provide a JSON run card and make download-versus-submit status unambiguous. Here the final-dot stop means **no TIFF was written**; no decoded uniqueness or final union result is claimed.
+6. Label local evaluator scores `HOLDOUT-DTI`, with evaluator version, withheld-positive count, and 95% CI. Use `ORGANIZER-CONFIRMED` only with a copied organizer portal receipt. Do not present projections as scores; verify claims and cite official/trusted sources, flag source-access limits, and preserve negative results.
+7. Respect the maximum of three experiments or two hours. Do not spend a competition slot; selector eligibility is separate from organizer approval. A duplicate stop or negative holdout is a valid deliverable.
+
+## Source-linked references
+
+- [DrivenData GEMS task](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/) · [official data tab](https://www.drivendata.org/competitions/306/competition-doe-gems/data/). The data tab is login-walled in the recorded source review; no organizer score or current leaderboard was checked.
+- Blum & Mitchell, [Co-Training (COLT 1998)](https://doi.org/10.1145/279943.279962). Its view assumptions are not established by low error correlation alone.
+- [DOE GDR 1391 / INGENIOUS](https://gdr.openei.org/submissions/1391) · [USGS GeoDAWN release](https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and). H74S used cached competition/shared features, not a new external event feed.
+- Refreshed public owner-mirror commits for GEMSDOE53–57 are pinned in [`evidence/h74s_prior_extension.json`](evidence/h74s_prior_extension.json); provenance and limitations are in the [three-pass review](knowledge/64_h74s_three_pass_review.md). These mirrors are not organizer-authenticated.
+
+### Historical rounds
+
+H72, H71, and earlier round material below are historical records only. They are not H74S artifacts, not a current selector decision, and not authorization to upload or re-label an old submission. See the [research archive](docs/index.html).
 
 ---
+<!--/H74S-README-->
 
-<!--/H72-README-->
 <!--H71-README-->
 > **Round identity:** first frozen as H66 in this session (2026-10-09 04:35Z); renamed **H71** at merge
 > time because a parallel session's own H66 round (knowledge/43, frozen 04:28Z) merged to `main` first
 > (IR-H71-005). Identifier-only rename — no measured number changed.
 
-# Current status — H71 (2026-10-09): NEGATIVE verdict, one unique GeoTIFF to download, nothing submitted
+# Historical round H71 — prior negative verdict (not current; H74S is the current status)
 
-> **DOWNLOAD: YES — the file is format-valid and unique on decoded pixels. SUBMIT TO THE COMPETITION: NO.**
-> Two measured gates fail: the policy lane (max near-dot share 0.8903 > 0.70 against informative priors,
-> 17 offenders) and the holdout (the A-only candidate does **not** beat `single_B`). Verdict
-> `NEGATIVE, research-only`. **Competition slots used: 0.** The site banner and executive summary say the
-> same thing in one line each.
+> **HISTORICAL H71 ARTIFACT ONLY — not the current H74S deliverable.** The H71 research file was locally downloadable at the time, but its policy-lane and holdout gates failed. It is not selector approval, organizer confirmation, or permission to re-label/upload it as H74S. **Current H74S status: no TIFF, no download, no submission; slots used: 0.**
 
 **★ [Download the H71 GeoTIFF — one click](docs/downloads/h71-candidate.tif)** ·
 [single-TIFF ZIP](docs/downloads/h71-candidate.zip) ·
@@ -398,7 +416,7 @@ step gated by conductivity), rank 4 (spring alignments) and rank 5 (upward-conti
 the three-experiment budget closed after E1/E2/E3, and the queue is recorded for the next session.
 
 <!--H67-README-->
-# Current status — H67 (2026-10-09): a unique GeoTIFF was built, and the verdict is DO NOT SUBMIT
+# Historical round H67 — unique local research GeoTIFF; do not confuse with current H74S
 
 > **Round label.** This round was labelled H66 in its own receipts; a parallel session merged a different
 > H66 first (PR #56), so it is **H67** in filenames. The frozen protocol is byte-identical and its body
@@ -533,7 +551,7 @@ after reviewing every team's file ([problem page 967](https://www.drivendata.org
 <!--/H65HALO-README-->
 
 <!--H66-README-->
-# Current status — H66 (2026-10-09): NEGATIVE at the premise gate; research-only; NOT lane-unique
+# Historical round H66 — negative premise-gate result (H74S is current)
 
 > **SUBMIT TO THE COMPETITION: NO.** No slot used, nothing uploaded. The file below is format-valid and decoded-distinct from every
 > prior raster, but it is **DUPLICATE under the lane's dot-proximity gate**, so it is not the unique, lane-checked GeoTIFF the brief asked for.
@@ -582,7 +600,7 @@ is overstated for that file.
 <!--/H66-README-->
 
 <!--H65-README-->
-# Current status — H65 (2026-10-09; first written as H62): NEGATIVE at the premise gate, nothing submitted
+# Historical round H65 — negative premise-gate result (H74S is current)
 
 > The protocol file keeps its original H62 label in its body (byte-identical). This round is H65 in filenames; see [`knowledge/41a`](knowledge/41a_amendment_2026-10-09_H65_sources.md).
 
