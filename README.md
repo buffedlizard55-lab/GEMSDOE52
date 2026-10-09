@@ -21,6 +21,8 @@
 **Next steps:** (1) an independent corrected-fault release to test R5-H1, obtainability not yet verified; (2) pin thread counts and check bitwise refit equality before any further round; (3) a fresh round only after a candidate clears the lane gate on the surface and the final dots.
 <!--/H65HALO-README-->
 
+<!--H66-README-->
+
 <!--H65-README-->
 # Current status — H65 (2026-10-09; first written as H62): NEGATIVE at the premise gate, nothing submitted
 
