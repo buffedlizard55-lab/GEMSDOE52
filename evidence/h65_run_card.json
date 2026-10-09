@@ -22,7 +22,7 @@
     "id": "H62-A",
     "rank": 1,
     "title": "cross-strike, regionally detrended basement and gravity offsets as View A",
-    "protocol": "knowledge/34_hypotheses_H62_preregistered.md",
+    "protocol": "knowledge/41_hypotheses_H65_preregistered.md",
     "protocol_sha256": "4d9d559fe6e4b42cffef206d366ccf785b1eda2146a686be98e376a1352bef71",
     "protocol_sha256_check": "4d9d559fe6e4b42cffef206d366ccf785b1eda2146a686be98e376a1352bef71",
     "layers": [
@@ -49,7 +49,7 @@
       "min_fold_min": 0.55
     },
     "premise_passed": false,
-    "receipt": "evidence/h62_premise.json"
+    "receipt": "evidence/h65_premise.json"
   },
   "holdout_dti": {
     "label": "HOLDOUT-DTI",
@@ -64,11 +64,11 @@
     "max_raw_single_feature_auc": 0.5904,
     "max_fitted_top5_heldout_auc": 0.5439,
     "any_alarm": false,
-    "receipt": "evidence/h62_canary.json"
+    "receipt": "evidence/h65_canary.json"
   },
   "operator_audit": {
     "label": "SYNTHETIC",
-    "receipt": "evidence/h62_operator_audit.json",
+    "receipt": "evidence/h65_operator_audit.json",
     "h60_3_on_over_cross_d3": 1.5045449977825765e-05,
     "finding": "H60-3 does not detect a cross-strike step (IR-H62-001)"
   },
@@ -132,5 +132,6 @@
     "H60 outputs using b15_step_* (not re-run)",
     "H62-B/C/D (not tested)",
     "portal error text (not reproduced)"
-  ]
+  ],
+  "protocol_file_note": "knowledge/41 keeps the H62 label in its body (byte-identical to the pre-rename freeze); renamed at path level to H65 (see knowledge/41a)."
 }

@@ -1494,19 +1494,19 @@
    "disposition": "R5's owner or the shared selector should advance the marker to the d2bfb0f7 bytes, or delete it. Until then no tool should treat R5_LATEST.txt as identifying a file that exists."
   },
   {
-   "id": "IR-H62-001",
-   "round": "H62",
+   "id": "IR-H65-001",
+   "round": "H65",
    "severity": "medium",
-   "status": "open - mis-specified operator; not used in H62",
+   "status": "open - mis-specified operator; not used in H65",
    "title": "H60-3 'strike-projected basement step' is a second difference ALONG strike and does not detect a step across the trace",
    "what_it_is": "src/gems52/h60.py (build_stack, H60-3 block) computes |d1 + d2 - 2*arr| with d1, d2 shifted along the strike unit vector. A basement step across a strike-parallel trace is constant along the trace, so its along-strike second difference is zero by construction; a ramp is also cancelled. The layers b15_step_nne/nw and b13_step_nne exist in evidence/h60_views.json. registry/h60_preregistration.json (line 18) names them 'H60-3 strike-projected basement steps'.",
-   "how_we_know": "scripts/h62_operator_audit.py -> evidence/h62_operator_audit.json: synthetic 400x400 px grid, 200 m step across a NNE trace. H60-3 on-trace mean 2.96e-05 vs cross-strike symmetric difference (d=3 px) 1.970 in the same grid units (ratio 1.5e-05). Scratch check: the residual persists with no ramp (2.96e-05 order-1, 2.07e-05 nearest) and vanishes for a pure ramp, so it comes from the discrete step, not from the ramp.",
-   "handling": "H62 replaces the operator with a cross-strike symmetric difference, regionally detrended. H60 outputs are not edited or withdrawn here; any H60 result that uses b15_step_* as a feature is affected and needs re-running before it is cited.",
+   "how_we_know": "scripts/h65_operator_audit.py -> evidence/h65_operator_audit.json: synthetic 400x400 px grid, 200 m step across a NNE trace. H60-3 on-trace mean 2.96e-05 vs cross-strike symmetric difference (d=3 px) 1.970 in the same grid units (ratio 1.5e-05). Scratch check: the residual persists with no ramp (2.96e-05 order-1, 2.07e-05 nearest) and vanishes for a pure ramp, so it comes from the discrete step, not from the ramp.",
+   "handling": "H65 replaces the operator with a cross-strike symmetric difference, regionally detrended. H60 outputs are not edited or withdrawn here; any H60 result that uses b15_step_* as a feature is affected and needs re-running before it is cited.",
    "disposition": "Open for review. Check whether any submitted H60 or H60C/H60D artefact used b15_step_* features (evidence/h60_views.json)."
   },
   {
-   "id": "IR-H62-002",
-   "round": "H62",
+   "id": "IR-H65-002",
+   "round": "H65",
    "severity": "high",
    "status": "open - brief claim contradicted by the live public board",
    "title": "Brief states '0.3195 is the highest score right now'; the live public board shows 0.3774 at #1",
@@ -1516,8 +1516,8 @@
    "disposition": "Reviewer to confirm the bar the brief intends (board top 0.3774 vs DARD 0.3195)."
   },
   {
-   "id": "IR-H62-003",
-   "round": "H62",
+   "id": "IR-H65-003",
+   "round": "H65",
    "severity": "medium",
    "status": "open - board entry not linked to any file",
    "title": "The public board lists 0.2778 under team 'extradr19' (#13); no file is linked to that row",
@@ -1527,19 +1527,19 @@
    "disposition": "Open. Needs a submission-page receipt to link the file to the row."
   },
   {
-   "id": "IR-H62-004",
-   "round": "H62",
+   "id": "IR-H65-004",
+   "round": "H65",
    "severity": "high",
    "status": "open - measured DUPLICATE under literal and policy; download-for-research label still on the site",
    "title": "H61 one-click file is 'DOWNLOAD FOR RESEARCH' on the site, but the lane rule classes it DUPLICATE/STOP",
    "what_it_is": "The brief's lane rule: rank-correlation above 0.90 or more than 70% of dots within 3 px of one registry raster means 'log it as a duplicate and stop'. Measured 2026-10-09 with the census (evidence/h61_uniqueness_census_20261009.json, 530 priors after byte dedupe): literal DUPLICATE/STOP (max near-dot 1.0000, from 14 universal-coverage probes); repository policy DUPLICATE/STOP (max near-dot 0.87875 against work/h61/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif; 9 informative priors above 0.70, 14 probes excluded by 3 px coverage >= 0.95). Surface phase passes (max Spearman 0.0342). The repository's probe policy (IR-H61-005) is the reason the literal result is not read as the verdict; it does not turn 9 informative conflicts into a pass. The executive summary and index still show 'OK TO DOWNLOAD FOR RESEARCH \u00b7 DO NOT SUBMIT' for H61.",
    "how_we_know": "evidence/h61_uniqueness_census_20261009.json (lane_policy_dots, phases.dots); scripts/audit_uniqueness.py; README.md lines 53-55; docs/executive-summary.html.",
-   "handling": "Download-for-research and submit-no are both kept. The file is not offered as a lane-valid submission. H62 makes no emission.",
+   "handling": "Download-for-research and submit-no are both kept. The file is not offered as a lane-valid submission. H65 makes no emission.",
    "disposition": "Reviewer decision: under the brief's literal rule the H61 file is a duplicate and should not be downloaded as a lane output. Confirm before any further use."
   },
   {
-   "id": "IR-H62-005",
-   "round": "H62",
+   "id": "IR-H65-005",
+   "round": "H65",
    "severity": "low",
    "status": "closed - covered by byte-identical local copies",
    "title": "7 of 524 eligible census priors returned HTTP 403 from the Git Data API",
@@ -1549,8 +1549,8 @@
    "disposition": "Closed for the uniqueness audit. Still open as a fetch problem for the 403 blobs; the API access change is not explained."
   },
   {
-   "id": "IR-H62-006",
-   "round": "H62",
+   "id": "IR-H65-006",
+   "round": "H65",
    "severity": "low",
    "status": "open - metadata difference, not a format failure",
    "title": "H61 one-click TIFF has no nodata tag; sample_submission.tif declares nodata NaN",
@@ -1560,8 +1560,8 @@
    "disposition": "Reviewer to confirm against the organiser's validator text before any upload."
   },
   {
-   "id": "IR-H62-007",
-   "round": "H62",
+   "id": "IR-H65-007",
+   "round": "H65",
    "severity": "low",
    "status": "open - user-reported rejection not reproduced",
    "title": "User-reported portal error 'Predicted values must be in range [0, 1]' cannot be reproduced from the repository",

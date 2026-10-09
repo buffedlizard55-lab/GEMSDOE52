@@ -1,44 +1,44 @@
-# 35 — H62 results and limits (2026-10-09)
+# 35 — H65 results and limits (2026-10-09)
 
-**Verdict: NEGATIVE at the premise gate. H62 is not promoted.** H62-A (cross-strike, regionally
+**Verdict: NEGATIVE at the premise gate. H65 is not promoted.** H65-A (cross-strike, regionally
 detrended basement and gravity offsets as View A) has no out-of-quadrant signal above the premise
 threshold. No holdout arm was run, no GeoTIFF was emitted, and no competition slot was used.
 
-Frozen protocol: `knowledge/34_hypotheses_H62_preregistered.md`, SHA-256
+Frozen protocol: `knowledge/41_hypotheses_H65_preregistered.md`, SHA-256
 `4d9d559fe6e4b42cffef206d366ccf785b1eda2146a686be98e376a1352bef71`, pinned in
-`registry/h62_preregistration.json`. Source-claim correction (dated, does not edit the frozen file):
-`knowledge/34a_amendment_2026-10-09_H62_sources.md`.
+`registry/h65_preregistration.json`. Source-claim correction (dated, does not edit the frozen file):
+`knowledge/41a_amendment_2026-10-09_H65_sources.md`.
 
 Experiment budget: 3. Used: E1 operator audit, E2 premise. Not authorised: E3 holdout arm
 (it needs the premise gate to pass first).
 
 ## Labels used below
 
-* **PREMISE-AUC** — internal out-of-quadrant AUC of a fitted H62-A model on the label-blind
+* **PREMISE-AUC** — internal out-of-quadrant AUC of a fitted H65-A model on the label-blind
   quadrant folds (buffer 80 px). This is not HOLDOUT-DTI. Nothing here is ORGANIZER-CONFIRMED.
 * **HOLDOUT-DTI** — **not produced**. The premise gate failed before the hide-and-recover arm.
 * **SYNTHETIC** — operator check on a generated grid, not on survey data.
 
 ## E1 — H60-3 operator audit (SYNTHETIC)
 
-Receipt: `evidence/h62_operator_audit.json` (script `scripts/h62_operator_audit.py`).
+Receipt: `evidence/h65_operator_audit.json` (script `scripts/h65_operator_audit.py`).
 
 * Grid 400×400 px at 100 m; basement step of 200 m across a NNE (15°) trace.
 * H60-3 operator (`src/gems52/h60.py`: `d1 + d2 − 2·arr` with shifts along strike): on-trace mean
   2.96e-05. Far-field mean 1.0e-09.
-* H62-A cross-strike symmetric difference, d = 3 px: on-trace mean 1.970. d = 6 px: 2.000.
+* H65-A cross-strike symmetric difference, d = 3 px: on-trace mean 1.970. d = 6 px: 2.000.
 * Ratio H60-3 on-trace / cross-strike d = 3 px = **1.50e-05**.
 * A pure ramp (no step) gives a near-zero response, so the residual is discretisation of the step.
 
 **Consequence.** H60-3 does not detect a step across a strike-parallel trace. It is logged as
-IR-H62-001. H60 outputs are not edited here. Any H60 result that uses `b15_step_*` as a feature
+IR-H65-001. H60 outputs are not edited here. Any H60 result that uses `b15_step_*` as a feature
 should be treated as unverified until re-run.
 
-## E2 — H62-A premise (PREMISE-AUC)
+## E2 — H65-A premise (PREMISE-AUC)
 
-Receipt: `evidence/h62_premise.json` (runner `scripts/run_h62.py`, which refuses if the protocol hash moves).
+Receipt: `evidence/h65_premise.json` (runner `scripts/run_h65.py`, which refuses if the protocol hash moves).
 
-Features: 8 layers `H62_b{15,13}_{nne,nw}_d{3,6}` in `work/h62/feat/` (footprint 4,593,171 px, no NaN).
+Features: 8 layers `H65_b{15,13}_{nne,nw}_d{3,6}` in `work/h65/feat/` (footprint 4,593,171 px, no NaN).
 Each layer is |z(p+d·n) − z(p−d·n)| minus a 15 px detrend, on `raw_band_15` and `raw_band_13`,
 normals NNE 15° and NW 315°, d ∈ {3, 6}, nearest-valid fill.
 
@@ -52,11 +52,11 @@ normals NNE 15° and NW 315°, d ∈ {3, 6}, nearest-valid fill.
 * Mean PREMISE-AUC **0.5202**; min fold **0.4706**.
 * Gate: mean ≥ 0.60 **and** min fold ≥ 0.55. **premise_passed = False.**
 * Controls, from the stored H61 receipt (`evidence/h61_fit_checkpoint.json`, not refitted):
-  View A mean 0.5163, View B mean 0.6843. H62-A sits at View A's level, not View B's.
+  View A mean 0.5163, View B mean 0.6843. H65-A sits at View A's level, not View B's.
 
 ## Leakage canary (PREMISE-AUC inputs)
 
-Receipt: `evidence/h62_canary.json`. Alarm threshold 0.90.
+Receipt: `evidence/h65_canary.json`. Alarm threshold 0.90.
 
 * Max single-feature raw AUC: **0.5904**.
 * Max fitted top-5 held-out AUC: **0.5439**.
@@ -77,28 +77,28 @@ Receipt: `evidence/h61_uniqueness_census_20261009.json` (script `scripts/audit_u
 
 **Consequence for H61.** The one-click file is measured as a lane duplicate under both the literal
 rule and the repository's policy. The download-for-research label on the site is kept as recorded
-and is flagged as IR-H62-004. It must not be presented as a lane-valid unique submission.
+and is flagged as IR-H65-004. It must not be presented as a lane-valid unique submission.
 
 ## Leaderboard (PUBLIC BOARD, not ORGANIZER-CONFIRMED)
 
 Live fetch 2026-10-09 (chunk 0 of 3): #1 xiaofanhu **0.3774**; #7 DARD **0.3195**; #13 extradr19 **0.2778**.
 Source: https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/
 
-The brief said 0.3195 is the highest score. It is not; the top is 0.3774 (IR-H62-002). The 0.2778 row
+The brief said 0.3195 is the highest score. It is not; the top is 0.3774 (IR-H65-002). The 0.2778 row
 belongs to team extradr19; the repository's file attribution to `h33-2-b2` is owner-reported and not
-linked to that row (IR-H62-003).
+linked to that row (IR-H65-003).
 
 ## What is still open
 
 * **No unique, lane-valid GeoTIFF for submission exists in this round.** No candidate passed the premise gate,
   and the one existing file is a measured lane duplicate.
-* **HOLDOUT-DTI** for H62 has not been measured. The hide-and-recover comparison against the single-view
+* **HOLDOUT-DTI** for H65 has not been measured. The hide-and-recover comparison against the single-view
   baseline was not run.
-* **Source checks** in `knowledge/34` §4 are partly unverified (see 34a). Items 4–6 (DrivenData page 967,
+* **Source checks** in `knowledge/41` §4 are partly unverified (see `knowledge/41a`). Items 4–6 (DrivenData page 967,
   the masking thread, USGS GeoDAWN) were not opened.
 * **Public-board 0.2778 to file link** still needs a submission-page receipt.
-* **Portal error** "Predicted values must be in range [0, 1]" is not reproduced from the repository (IR-H62-007).
-* **H62-B, C, D** are not tested (see §2 of the protocol). H62-C is blocked by data egress.
+* **Portal error** "Predicted values must be in range [0, 1]" is not reproduced from the repository (IR-H65-007).
+* **H65-B, C, D** are not tested (see §2 of the protocol). H65-C is blocked by data egress.
 
 ## Hypotheses generated (3–5 required; 4 written)
 
@@ -106,11 +106,11 @@ Ranked by expected DTI gain and implementation cost (protocol §2).
 
 | rank | id | layers | status |
 |---|---|---|---|
-| 1 | H62-A | bands 15, 13 cross-strike offsets, detrended | **tested; premise failed** |
-| 2 | H62-B | tilt-angle edge ridges, bands 9 and 3 | not tested; expected gain low (N-6 AUC ≈ 0.52; overlaps H61 View A) |
-| 3 | H62-C | surface artefact veto (roads, erosion) | blocked (no roads/hydro data reachable) |
-| 4 | H62-D | credit localisation by terrain stratum | deferred; does not itself produce a file |
+| 1 | H65-A | bands 15, 13 cross-strike offsets, detrended | **tested; premise failed** |
+| 2 | H65-B | tilt-angle edge ridges, bands 9 and 3 | not tested; expected gain low (N-6 AUC ≈ 0.52; overlaps H61 View A) |
+| 3 | H65-C | surface artefact veto (roads, erosion) | blocked (no roads/hydro data reachable) |
+| 4 | H65-D | credit localisation by terrain stratum | deferred; does not itself produce a file |
 
 ## Run card
 
-`evidence/h62_run_card.json`.
+`evidence/h65_run_card.json`.

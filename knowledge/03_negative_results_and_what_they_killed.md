@@ -386,11 +386,11 @@ the claim is **withdrawn**. Fixed, the greedy reaches `A/S` = 9.27 (98.8 % of ce
 was already right. *Teaches:* `out=` with a fancy-indexed destination is a silent no-op, and the telescoping
 identity `sum(marginal gains) == Σ ρ̂·K_E` is the one-line test that catches it.
 
-**N-22 — H62-A (cross-strike, regionally detrended basement and gravity offsets as View A) fails the premise.**
+**N-22 — H65-A (cross-strike, regionally detrended basement and gravity offsets as View A) fails the premise.**
 Premise AUC mean 0.5202, min fold 0.4706 against the frozen gate (mean ≥ 0.60 and min ≥ 0.55). View A's
 level, not View B's. No leakage (canary max 0.5904 against alarm 0.90). The H60-3 "strike-projected step"
-it was meant to replace responds at 1.5e-05 of a cross-strike operator on a synthetic step (IR-H62-001),
+it was meant to replace responds at 1.5e-05 of a cross-strike operator on a synthetic step (IR-H65-001),
 so H60-3 cannot be cited as a step detector. *Kills:* "cross-strike offsets of the bands 15/13 carry out-of-quadrant
-signal" in this form. *Does not kill:* tilt edges (H62-B, untested), or View A with a different base layer.
+signal" in this form. *Does not kill:* tilt edges (H65-B, untested), or View A with a different base layer.
 *Teaches:* a synthetic operator audit before a fit would have exposed the H60-3 defect before it was cited.
-See `knowledge/35_h62_results_and_limits.md`.
+See `knowledge/42_h65_results_and_limits.md`.

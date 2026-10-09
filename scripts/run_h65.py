@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """H62 -- physically specified View A (cross-strike, regionally detrended basement and gravity offsets).
 
-Frozen protocol: knowledge/34_hypotheses_H62_preregistered.md (SHA-256 in registry/h62_preregistration.json).
+Frozen protocol: knowledge/41_hypotheses_H65_preregistered.md (SHA-256 in registry/h65_preregistration.json). The file keeps its original H62 label; see knowledge/41a.
 This runner refuses to start if either hash has moved.
 
 Stages (E2 of the preregistered budget; E3 is conditional and is NOT implemented here):
@@ -39,7 +39,7 @@ from gems52 import structural                                      # noqa: E402
 WORK = ROOT / "work/h62"
 FEAT = WORK / "feat"
 EVID = ROOT / "evidence"
-REG = ROOT / "registry/h62_preregistration.json"
+REG = ROOT / "registry/h65_preregistration.json"
 SEED = h61.SEED
 SIGMA_PX = 15.0
 OFFSETS_PX = (3, 6)
@@ -208,7 +208,7 @@ def stage_canary() -> dict:
 
 def write(name: str, obj) -> Path:
     EVID.mkdir(parents=True, exist_ok=True)
-    p = EVID / f"h62_{name}.json"
+    p = EVID / f"h65_{name}.json"
     p.write_text(json.dumps(obj, indent=1, allow_nan=False, default=str) + "\n")
     return p
 

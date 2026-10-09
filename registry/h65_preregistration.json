@@ -1,0 +1,49 @@
+{
+  "round": "H62",
+  "preregistered_utc": "2026-10-09T00:45:54+00:00",
+  "hypothesis_document": "knowledge/41_hypotheses_H65_preregistered.md",
+  "hypothesis_sha256": "4d9d559fe6e4b42cffef206d366ccf785b1eda2146a686be98e376a1352bef71",
+  "hypothesis_bytes": 11936,
+  "lane": "two-view co-training (Blum & Mitchell 1998, doi:10.1145/279943.279962); View A potential-field/subsurface, View B surface; disagreement as the discovery signal",
+  "frozen_before_any_fit": true,
+  "runner": "scripts/run_h65.py",
+  "runner_refuses_if_hash_moves": true,
+  "operator_audit": "scripts/h65_operator_audit.py -> evidence/h65_operator_audit.json",
+  "shared_tools_to_reuse": [
+    "scripts/run_h61.py::setup (label-blind-quadrants-v2 folds, pin checks, feature-store checks)",
+    "scripts/run_h61.py::sample_train, learner (identical sampler and learner)",
+    "src/gems52/structural.py FeatureStore (raw_band_13, raw_band_15, eligibility mask)",
+    "src/gems52/spatial.py::folds"
+  ],
+  "thresholds": {
+    "canary_auc_alarm": 0.9,
+    "premise_mean_oof_auc_min": 0.6,
+    "premise_min_fold_auc_min": 0.55,
+    "offset_distances_px": [
+      3,
+      6
+    ],
+    "detrend_sigma_px": 15,
+    "strike_azimuths_deg": {
+      "nne": 15.0,
+      "nw": 315.0
+    },
+    "bands": [
+      15,
+      13
+    ]
+  },
+  "stages_authorised": [
+    "operator_audit",
+    "canary",
+    "premise_fit"
+  ],
+  "stages_not_authorised": [
+    "emission",
+    "holdout_arms",
+    "submission",
+    "upload"
+  ],
+  "budget": "3 experiments: E1 operator audit (done as receipt), E2 premise fit, E3 conditional on premise pass (not run here)",
+  "amendment_before_fit": "Section 1 residual description clarified after a discretisation check (no ramp, nearest-neighbour shift); no fit, score or artefact existed at amendment time. Hash recorded post-amendment, at 2026-10-09T00:46:39+00:00"
+}

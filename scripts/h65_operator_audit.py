@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """H62 E1 -- operator audit of the H60-3 strike-projected basement step.
 
-Question (preregistered in knowledge/34_hypotheses_H62_preregistered.md, section 1): does the
+Question (preregistered in knowledge/41_hypotheses_H65_preregistered.md, section 1): does the
 H60-3 operator, a second difference taken along strike, respond to a basement *step across* a
 strike-parallel trace, where the cross-strike symmetric difference used by H62-A does?
 
@@ -10,7 +10,7 @@ through the centre, i.e. 200 m) + 0.002 * (along-strike ramp). Both operators ar
 on-trace mean is compared with the mean 20 px or more away. The H60-3 operator text is first
 checked against src/gems52/h60.py, so this audit cannot drift from the code it audits.
 
-Writes evidence/h62_operator_audit.json. Nothing here touches the competition rasters.
+Writes evidence/h65_operator_audit.json. Nothing here touches the competition rasters.
 """
 from __future__ import annotations
 
@@ -25,7 +25,7 @@ from scipy import ndimage
 
 ROOT = Path(__file__).resolve().parents[1]
 H60_SRC = ROOT / "src/gems52/h60.py"
-OUT = ROOT / "evidence/h62_operator_audit.json"
+OUT = ROOT / "evidence/h65_operator_audit.json"
 PIX = 100.0
 
 # The exact lines of the H60-3 operator as shipped (checked below, byte for byte).

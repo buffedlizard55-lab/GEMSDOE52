@@ -8,14 +8,14 @@ Keep known-catalogue labels separate from verified fault absence, public partici
 
 This session's working branch is fixed by Arena. Do not change branches. Keep raw competition data and large intermediate arrays under ignored `data/` and `work/`. Publish small audit receipts, the unique compressed prediction raster and its review table.
 
-## Current H62 continuation (2026-10-09)
+## Current H65 continuation (2026-10-09; the protocol body keeps the H62 label, see knowledge/41a)
 
-Read `README.md`'s H62 block first, then `knowledge/34_hypotheses_H62_preregistered.md` (frozen;
-SHA-256 `4d9d559f…2bef71`, pinned in `registry/h62_preregistration.json`), its dated source amendment
-`knowledge/34a_…`, and `knowledge/35_h62_results_and_limits.md`. H62-A is **negative at the premise gate**
+Read `README.md`'s H65 block first, then `knowledge/41_hypotheses_H65_preregistered.md` (frozen;
+SHA-256 `4d9d559f…2bef71`, pinned in `registry/h65_preregistration.json`), its dated source amendment
+`knowledge/41a_…`, and `knowledge/42_h65_results_and_limits.md`. H65-A is **negative at the premise gate**
 (mean 0.5202, min fold 0.4706). Do not re-tune it, do not re-run it on this protocol, and do not run a holdout
 arm on it. Experiments used: 2 of 3. E3 is not authorised. Use `scripts/audit_uniqueness.py` (with the census
-receipt as its third argument) for any uniqueness check; do not fork a checker. IR-H62-001 … -007 are open.
+receipt as its third argument) for any uniqueness check; do not fork a checker. IR-H65-001 … -007 are open.
 The H61 file is a measured lane duplicate; do not present it as lane-valid.
 
 ## Current H61 continuation

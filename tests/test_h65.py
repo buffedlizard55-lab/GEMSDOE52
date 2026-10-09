@@ -15,7 +15,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-REG = ROOT / "registry/h62_preregistration.json"
+REG = ROOT / "registry/h65_preregistration.json"
 
 
 def _sha(p: Path) -> str:
@@ -43,7 +43,7 @@ def test_thresholds_are_the_preregistered_values():
 
 
 def test_operator_audit_receipt_is_consistent():
-    p = ROOT / "evidence/h62_operator_audit.json"
+    p = ROOT / "evidence/h65_operator_audit.json"
     if not p.exists():
         pytest.skip("operator audit receipt not produced yet")
     r = json.loads(p.read_text())
@@ -57,7 +57,7 @@ def test_operator_audit_receipt_is_consistent():
 
 def test_h60_operator_text_still_matches_source():
     import importlib.util
-    spec = importlib.util.spec_from_file_location("h62_operator_audit", ROOT / "scripts/h62_operator_audit.py")
+    spec = importlib.util.spec_from_file_location("h65_operator_audit", ROOT / "scripts/h65_operator_audit.py")
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     src = mod.check_h60_source()           # raises SystemExit if the H60-3 operator text drifts
@@ -66,7 +66,7 @@ def test_h60_operator_text_still_matches_source():
 
 def test_normal_is_perpendicular_to_strike():
     import importlib.util
-    spec = importlib.util.spec_from_file_location("run_h62", ROOT / "scripts/run_h62.py")
+    spec = importlib.util.spec_from_file_location("run_h65", ROOT / "scripts/run_h65.py")
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     for az in (15.0, 315.0):
@@ -79,7 +79,7 @@ def test_normal_is_perpendicular_to_strike():
 
 def test_fill_nearest_removes_zero_fill_boundary_step():
     import importlib.util
-    spec = importlib.util.spec_from_file_location("run_h62", ROOT / "scripts/run_h62.py")
+    spec = importlib.util.spec_from_file_location("run_h65", ROOT / "scripts/run_h65.py")
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     arr = np.full((20, 20), 7.0, np.float32)
