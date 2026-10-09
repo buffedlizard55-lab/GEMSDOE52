@@ -1,0 +1,34 @@
+{
+ "path": "submission/gems52-h66-localA-cotrain-37600px.tif",
+ "bytes": 134986,
+ "sha256": "a87c55f8c4d5bbe100324941b7722a73e8e73613ab5c802194291459869ee2d5",
+ "band_count": 1,
+ "dtype": "float32",
+ "crs": "EPSG:32611",
+ "shape": [
+  3730,
+  3292
+ ],
+ "transform": [
+  100.0,
+  0.0,
+  243350.0,
+  0.0,
+  -100.0,
+  4508550.0
+ ],
+ "nodata": null,
+ "driver": "GTiff",
+ "nan_count": 0,
+ "inf_count": 0,
+ "min": 0.0,
+ "max": 1.0,
+ "ones": 37600,
+ "zeros": 12241560,
+ "other_values": 0,
+ "grid_matches_sample": true,
+ "values_exactly_01_no_nan": true,
+ "format_pass": true,
+ "sample_ones_for_reference": 60988,
+ "evidence_class": "format validator (local), not an organiser acceptance receipt"
+}

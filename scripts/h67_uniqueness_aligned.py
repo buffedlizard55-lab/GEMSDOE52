@@ -33,7 +33,7 @@ from gems52 import gates                                    # noqa: E402
 
 DATA = ROOT / "data"
 SUB = ROOT / "submission"
-WORK = ROOT / "work" / "h66
+WORK = ROOT / "work" / "h66"
 
 
 def aligned(path, ref):

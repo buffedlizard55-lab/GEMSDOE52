@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="H65: metric-kernel halo targets for both co-training views. Negative. No file built, nothing to upload.">
+<title>H65halo · halo soft targets · negative, research-only · GEMSDOE52</title>
+<link rel="stylesheet" href="assets/ctd5.css"></head>
+<body><a class="skip" href="#main">Skip to content</a>
+<header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>
+<a href="index.html">Overview</a><a href="executive-summary.html">Submission guide</a><a href="h65halo.html">H65</a><a href="h64.html">H64</a><a href="downloads/index.html">Archive</a></nav></header>
+<main id="main">
+<div class="eyebrow">DOE GEMS · H65 · one experiment · 1 of 3 used</div>
+<h1>Halo soft targets: negative.</h1>
+<p class="lead">One change to the shared template: the H61 hard-label sample is kept, and the 0–300 m halo
+around the visible catalogue is added with the official kernel weights. The learners, folds, budget and
+placement are H61's. The primary test is not confirmed, and the co-training candidate is far below the
+single-view control. No raster was built, so there is nothing to download or upload from this round.</p>
+<div class="notice" role="note"><strong>DO NOT UPLOAD · NEGATIVE · research-only</strong>
+<p>Verdict: NEGATIVE, research-only. DOWNLOAD NO (no file). SUBMIT NO. Primary test not confirmed: single_B_soft minus single_B_hard has a 95% CI that includes 0. Co-training candidate is far below single_B_soft.</p></div>
+<h2>Holdout (HOLDOUT-DTI — not a leaderboard score)</h2>
+<p class="small">Evaluator <code>gems52-pooled-hide-v1</code> · α 0.2 / β 0.8 · 300.0 m triangular kernel · 53,186 withheld positive pixels · 95% paired physical-cluster bootstrap (153 clusters, 1000 draws, seed 61052). Conditional on the fitted folds, catalogue labels and fixed budgets.</p>
+<div class="table-wrap"><table><thead><tr><th>Arm</th><th>HOLDOUT-DTI</th><th>95% CI</th></tr></thead>
+<tbody><tr><td>single_B (halo soft targets) — H65 candidate control</td><td class='numeric'>0.176651</td><td class='numeric'>0.155476, 0.197373</td></tr><tr><td>single_B_hard (H61 hard labels, re-fit this round) — pipeline control</td><td class='numeric'>0.174571</td><td class='numeric'>0.152313, 0.196302</td></tr><tr><td>union_max (pre-exchange)</td><td class='numeric'>0.157096</td><td class='numeric'>0.136519, 0.178756</td></tr><tr><td>single_A (View A, halo soft targets)</td><td class='numeric'>0.075636</td><td class='numeric'>0.058320, 0.093568</td></tr><tr><td>random (same allowed domain, same budget)</td><td class='numeric'>0.080426</td><td class='numeric'>0.070223, 0.090973</td></tr><tr><td>disagreement_post (= pre; S1 failed, exchange skipped) — candidate</td><td class='numeric'>0.036386</td><td class='numeric'>0.024983, 0.049797</td></tr></tbody></table></div>
+<h2>The primary test</h2>
+<p><b>single_B_soft − single_B_hard</b> = +0.002079, 95% CI [-0.001088, 0.005076]. The lower bound is below zero, so the mechanism is not confirmed at this resolution.</p>
+<p><b>disagreement_post − single_B_soft</b> = -0.140264, 95% CI [-0.162998, -0.118399]. The co-training candidate is far below the single-view control, so it is not eligible.</p>
+<h2>Gates</h2>
+<div class="table-wrap"><table><thead><tr><th>Gate</th><th>Result</th></tr></thead><tbody>
+<tr><td>Leakage canary (single feature AUC, alarm 0.90)</td><td class="numeric">max 0.6687 · no alarm</td></tr>
+<tr><td>S1 View-A sufficiency (mean ≥ 0.6, every fold ≥ 0.55)</td><td class="numeric">mean 0.5299 · min 0.4753 · FAIL</td></tr>
+<tr><td>Exchange</td><td>skipped (S1 failed); post-arms := pre-arms</td></tr>
+<tr><td>Control: single_B_hard vs H61 (tolerance 0.001)</td><td class="numeric">0.174571 vs 0.174517 · |Δ| 5.4e-05 · PASS</td></tr>
+<tr><td>Lane (surface and final dots) · not-union · format · exact-unique</td><td>not evaluated: no raster built (the preregistered rule builds only after a positive holdout)</td></tr>
+</tbody></table></div>
+<h2>Reproducibility note</h2>
+<p class="small">The pre-registered control reproduces H61's single_B within tolerance in both runs of the receipts.
+The fold-0 hard-control predictions are not bit-identical to a standalone refit (about 0.02% of pixels differ, maximum 0.98). Two standalone refits agree bit for bit. Cause not isolated in this round; the primary decision is unchanged between the two runs.</p>
+<h2>Limits</h2>
+<ul>
+<li>Holdout truth is the catalogue. It cannot test the trace-correction population (new-fault pixels within 300 m of known traces), which the organisers say they aim to identify. R5-H1 therefore remains untested on the holdout.</li>
+<li>S1 failed, so the co-training arm was not exercised beyond pre := post.</li>
+<li>No lane check, no file, no validator output: nothing here is a submission candidate.</li>
+</ul>
+<p class="small">Receipts: <a href="data/h65halo_run_card.json">h65halo_run_card.json</a> · <a href="data/h65halo_holdout.json">h65halo_holdout.json</a> · <a href="data/h65halo_sufficiency.json">h65halo_sufficiency.json</a> · <a href="data/h65halo_control_and_verdict.json">h65halo_control_and_verdict.json</a> · <a href="data/h65halo_canary.json">h65halo_canary.json</a> · <a href="data/h65halo_verdict.json">h65halo_verdict.json</a> · <a href="data/leaderboard_snapshot_2026-10-09.json">leaderboard receipt</a> · pre-registration <code>7ae7cd9119c8b86d…</code> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/41b_hypotheses_H65halo_preregistered.md">knowledge/41</a></p>
+</main>
+<footer>Independent competition research, not an official DOE or DrivenData site. Predictions are not verified faults or geothermal discoveries.<br>
+<a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code &amp; reproducibility</a> · <a href="data/h65halo_run_card.json">JSON run card</a> · H65 / 2026-10-09</footer>
+</body></html>

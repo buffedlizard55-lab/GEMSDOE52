@@ -39,7 +39,7 @@ from sklearn.linear_model import LogisticRegression  # noqa: E402
 from sklearn.metrics import roc_auc_score  # noqa: E402
 
 DATA = ROOT / "data"
-WORK = ROOT / "work" / "h66
+WORK = ROOT / "work" / "h66"
 EVID = ROOT / "evidence"
 SUB = ROOT / "submission"
 PROTO = ROOT / "knowledge" / "45_hypotheses_H67_preregistered.md"
@@ -646,7 +646,7 @@ def main(argv=None):
     log("wrote", outp.name, receipt["sha256"][:16], f"{receipt['bytes']} bytes")
 
     priors = sorted(str(p) for p in (WORK / "priors").glob("*.tif")) if (WORK / "priors").exists() else []
-    prior_fetch = ROOT / "work" / "h66 / "prior_fetch_receipt.json"
+    prior_fetch = ROOT / "work" / "h66" / "prior_fetch_receipt.json"
     priors = [p for p in priors]
     priors += sorted(str(p) for p in (DATA / "scored").glob("*.tif"))
     priors += sorted(str(p) for p in (DATA / "reference").glob("*.tif"))

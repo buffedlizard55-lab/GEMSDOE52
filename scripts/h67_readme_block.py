@@ -35,6 +35,12 @@ def main() -> int:
     block = f"""<!--H67-README-->
 # Current status — H67 (2026-10-09): a unique GeoTIFF was built, and the verdict is DO NOT SUBMIT
 
+> **Round label.** This round was labelled H66 in its own receipts; a parallel session merged a different
+> H66 first (PR #56), so it is **H67** in filenames. The frozen protocol is byte-identical and its body
+> still reads "H66" — SHA-256 `{card['preregistration']['protocol_sha256'][:16]}…`, unchanged. No
+> measurement was repeated or re-labelled and the decoded pixels are unchanged. Details:
+> [`knowledge/45a`](knowledge/45a_amendment_2026-10-09_H67_rename.md).
+
 > **DOWNLOAD: YES, for research. SUBMIT TO THE COMPETITION: NO — DO NOT UPLOAD.** Two independent gates
 > say no: the brief's own lane rule fires on the final dots, and the shared hide-and-recover instrument
 > puts the candidate **below uniform random** with a 95 % CI that excludes zero. Slots used: **0**.
