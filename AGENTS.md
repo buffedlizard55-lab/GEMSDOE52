@@ -9,6 +9,20 @@ Keep known-catalogue labels separate from verified fault absence, public partici
 This session's working branch is fixed by Arena. Do not change branches. Keep raw competition data and large intermediate arrays under ignored `data/` and `work/`. Publish small audit receipts, the unique compressed prediction raster and its review table.
 
 <!--H67-AGENTS-->
+## Current H70 continuation (2026-10-09)
+
+Read `README.md`'s H70 block first, then `knowledge/54_hypotheses_H70_preregistered.md` (frozen; SHA-256
+`25b6ee74…b92151`, pinned in `registry/h70_preregistration.json`) and `knowledge/55_h70_results_and_limits.md`.
+H70 is **negative**: the strict A-only discovery stratum measured purely scores HOLDOUT-DTI 0.0174, below
+uniform random; the B-only veto and concordant variants both lose to single_B; independence held (max |rho|
+0.1337); View A sufficiency failed for the fifth consecutive round (0.5166); and no lane-valid emission exists
+from the stratum (610 placeable cells, worst informative near-dot share 1.0; IR-H70-001). Experiments used: 3 of 3.
+Do not re-run the co-training lane with another View A rebuild; H70-E (deformation-only View A2) is the only
+untested variant and needs its own round. The shared H61 stages were reused, not forked; use
+`scripts/audit_uniqueness.py` for uniqueness checks. `docs/downloads/h70-candidate.tif` is research-only:
+DOWNLOAD YES, SUBMIT NO, slots used 0. `knowledge/26_current_user_brief.md` must carry the current prompt
+verbatim (two tests enforce it).
+
 ## Current H67 continuation (2026-10-09)
 
 Read `README.md`'s H67 block first, then `knowledge/45_hypotheses_H67_preregistered.md` (frozen before any

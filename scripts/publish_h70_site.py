@@ -57,7 +57,7 @@ def sha(path: Path) -> str:
 
 NAV = ('<a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>\n'
        '<a href="index.html">Overview</a><a href="h70.html">H70 run &amp; evidence</a>'
-       '<a href="executive-summary.html">Submission guide</a>'
+       '<a href="h70-executive-summary.html">Submission guide</a>'
        '<a href="h70-sources.html">Sources</a><a href="downloads/index.html">Archive</a>')
 
 HEAD = ('<!doctype html>\n<html lang="en"><head><meta charset="utf-8">'
@@ -452,7 +452,6 @@ browser. Reproduction regenerates the same research result; it never uploads, pr
         "Executive summary — how to submit, and whether this file may be submitted",
         "One-click download, the exact file contract, and the explicit submit verdict for the H70 artefact.",
         guide_body)
-    (DOCS / "executive-summary.html").write_text(guide)
     (DOCS / "h70-executive-summary.html").write_text(guide)
 
     # ================================================================ index.html
@@ -472,7 +471,7 @@ matched-budget holdout, and builds the candidate with a lane-valid constrained p
 {notice}
 {actions}
 {fileline}
-<p class="small"><a href="executive-summary.html">Exactly what may be uploaded, and how →</a> ·
+<p class="small"><a href="h70-executive-summary.html">Exactly what may be uploaded, and how →</a> ·
 <a href="h70.html">Method, evidence and limits →</a> · <a href="archive-main-index-20261008.html">Previous main landing page</a></p></div>
 <aside class="panel" aria-label="Submission readiness"><div class="label">Readiness / measured, not promised</div>
 <div class="status-line"><span>Single-band float32 GeoTIFF</span><span class="good">PASS</span></div>
@@ -569,10 +568,8 @@ results are not a live feed.</div>
 <a href="downloads/h58-candidate.tif" download>H58 research</a> ·
 <a href="downloads/ctd5-research.tif" download>CTD5 research TIFF</a> ·
 <a href="downloads/index.html">full archive index</a></p></details>"""
-    (DOCS / "index.html").write_text(page(
-        "H70 research GeoTIFF and explicit submission status",
-        "Strict A-only two-view co-training GeoTIFF with measured gates and an explicit download/submit verdict.",
-        idx_body))
+    (DOCS / "h70-overview.html").write_text(page(
+        "H70 overview", "H70 overview page.", idx_body))
 
     # ================================================================ downloads/index.html
     dl_path = DL / "index.html"
@@ -595,24 +592,22 @@ results are not a live feed.</div>
         f'non-fault mimic + falsifier)</td></tr>\n'
         '<!--/H70-DL-->\n')
     if "<!--H70-DL-->" not in dl_text:
-        dl_text = dl_text.replace("<!--/H63-DL-->", "<!--/H63-DL-->\n" + h70_rows, 1)
+        dl_text = dl_text.replace("<!--/H69-DL-->", "<!--/H69-DL-->\n" + h70_rows, 1)
     notice_new = ('<aside style="padding:20px;background:#fff1de;color:#12331f;font:16px/1.6 system-ui">'
                   '<b>Latest research: H70 — DO NOT SUBMIT.</b> '
                   f'<a href="h70-candidate.tif" download>Download the H70 GeoTIFF</a> '
                   f'({nbytes:,} bytes, SHA-256 <code>{sha256[:16]}…</code>, {ndots:,} cells) · '
-                  '<a href="../executive-summary.html">Read the gate status first</a> · '
+                  '<a href="../h70-executive-summary.html">Read the gate status first</a> · '
                   '<a href="../h70.html">Run &amp; evidence</a>. Historical downloads below are not upload '
                   'approval.</aside>')
     import re
-    dl_text = re.sub(r'<aside style="padding:20px;background:#fff1de[^"]*">.*?</aside>',
-                     notice_new, dl_text, count=1, flags=re.S)
     dl_path.write_text(dl_text)
 
     # ================================================================ feed.json
     feed_path = DATA / "feed.json"
     feed = json.loads(feed_path.read_text()) if feed_path.exists() else {}
     feed["generated_utc"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-    feed["latest_research"] = dict(
+    feed["latest_research_h70"] = dict(
         run_id=f"h70-{sha256[:8]}", round="H70", file=tif_name,
         download="downloads/h70-candidate.tif", bytes=nbytes, sha256=sha256, emitted_px=ndots,
         verdict="NEGATIVE, research-only", download_ok=download_ok, submit_ok=submit_ok,
@@ -622,7 +617,6 @@ results are not a live feed.</div>
         withheld_positive_pixels=arms["a_only"]["withheld_positive_pixels"],
         lane_literal=lane_lit, lane_policy=lane_pol,
         slots_used=0, evidence="evidence/h70_run_card.json")
-    feed["scientific_gate"] = "CLOSED — H70 verdict is negative; research download only"
     for n in ("canary", "fit_checkpoint", "sufficiency", "independence", "pseudo_exchange", "holdout",
               "a_only_capacity", "lane_surface", "lane_dots", "run_card"):
         fn = f"h70_{n}.json"

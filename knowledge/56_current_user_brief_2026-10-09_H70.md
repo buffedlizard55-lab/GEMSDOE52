@@ -1,9 +1,6 @@
-# Current user brief — 2026-10-09, H70 session (refreshed)
+# Current user brief — 2026-10-09, H70 session
 
-Dated copy of the prompt received at the start of the H70 session, preserved verbatim. The README
-carries the same text under "Complete current prompt". The 2026-10-09 H63-session copy is preserved at
-[knowledge/36_current_user_brief_2026-10-09.md](36_current_user_brief_2026-10-09.md); this copy adds the
-closing core-values paragraph that arrived with the H70 session's prompt.
+Dated verbatim copy; the README and knowledge/26 carry the same text.
 
 ```text
 Review the repo. 
