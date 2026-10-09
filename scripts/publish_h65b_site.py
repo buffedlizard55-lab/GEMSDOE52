@@ -72,7 +72,7 @@ Lane gate: surface {lane_s['policy']['verdict']}, dots {lane_d['policy']['verdic
 Competition slots used: 0.</p></div>
 <div class="actions"><a class="button" href="downloads/h65b-candidate.tif" download>Download the H65 GeoTIFF ↓</a>
 <a class="button secondary" href="downloads/h65b-candidate.zip" download>Single-TIFF ZIP</a>
-<a class="button secondary" href="downloads/h65-reasoning.csv" download>Per-dot reasoning CSV</a></div>
+<a class="button secondary" href="downloads/h65b-reasoning.csv" download>Per-dot reasoning CSV</a></div>
 <p class="fileline">{sub['file']}<br>{sub['bytes']:,} bytes · SHA-256 {sub['sha256']} ·
 {sub['metadata']['emission']['accepted']:,} emitted cells ·
 values exactly {{0,1}} · {fmt['nan_pixels']} NaN</p>

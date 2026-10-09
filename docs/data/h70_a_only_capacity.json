@@ -1,0 +1,218 @@
+{
+ "stage": "a_only_capacity",
+ "matched_budget_per_fold": 9400,
+ "evidence_class": "HOLDOUT-DTI diagnostic at an UNMATCHED (achieved) budget; not a matched-budget comparison and not a leaderboard score",
+ "folds": [
+  {
+   "fold": 0,
+   "allowed_px": 2265054,
+   "strict_a_only_cells": 28446,
+   "topk_arm": {
+    "placed": 9400,
+    "requested": 9400,
+    "inside_stratum": 5239,
+    "outside_stratum": 4161
+   },
+   "pure_stratum": {
+    "placed": 5239,
+    "requested": 9400,
+    "filled": false
+   },
+   "a_only_pure": {
+    "dti": 0.013833984606297096,
+    "tpw": 317.21481766764714,
+    "emitted": 5239
+   },
+   "single_B": {
+    "dti": 0.1132730707972452,
+    "tpw": 2720.7026359126116,
+    "emitted": 9400
+   },
+   "random": {
+    "dti": 0.04391154954444291,
+    "tpw": 1047.567157232948,
+    "emitted": 9400
+   }
+  },
+  {
+   "fold": 1,
+   "allowed_px": 1170301,
+   "strict_a_only_cells": 16406,
+   "topk_arm": {
+    "placed": 9400,
+    "requested": 9400,
+    "inside_stratum": 2910,
+    "outside_stratum": 6490
+   },
+   "pure_stratum": {
+    "placed": 2910,
+    "requested": 9400,
+    "filled": false
+   },
+   "a_only_pure": {
+    "dti": 0.016447017962047946,
+    "tpw": 150.31435692994023,
+    "emitted": 2910
+   },
+   "single_B": {
+    "dti": 0.24600739648235873,
+    "tpw": 2630.092221598621,
+    "emitted": 9400
+   },
+   "random": {
+    "dti": 0.07343361743372628,
+    "tpw": 772.1440320935346,
+    "emitted": 9400
+   }
+  },
+  {
+   "fold": 2,
+   "allowed_px": 471065,
+   "strict_a_only_cells": 6235,
+   "topk_arm": {
+    "placed": 9400,
+    "requested": 9400,
+    "inside_stratum": 1272,
+    "outside_stratum": 8128
+   },
+   "pure_stratum": {
+    "placed": 1272,
+    "requested": 9400,
+    "filled": false
+   },
+   "a_only_pure": {
+    "dti": 0.03245035922553703,
+    "tpw": 185.87499122852822,
+    "emitted": 1272
+   },
+   "single_B": {
+    "dti": 0.20208285329246078,
+    "tpw": 1514.1073383830512,
+    "emitted": 9400
+   },
+   "random": {
+    "dti": 0.16184723600024814,
+    "tpw": 1210.5504513365954,
+    "emitted": 9400
+   }
+  },
+  {
+   "fold": 3,
+   "allowed_px": 686529,
+   "strict_a_only_cells": 10060,
+   "topk_arm": {
+    "placed": 9400,
+    "requested": 9400,
+    "inside_stratum": 1729,
+    "outside_stratum": 7671
+   },
+   "pure_stratum": {
+    "placed": 1729,
+    "requested": 9400,
+    "filled": false
+   },
+   "a_only_pure": {
+    "dti": 0.01769410037560527,
+    "tpw": 125.08820146296296,
+    "emitted": 1729
+   },
+   "single_B": {
+    "dti": 0.21906740754343926,
+    "tpw": 1928.6512178692244,
+    "emitted": 9400
+   },
+   "random": {
+    "dti": 0.11891114460756524,
+    "tpw": 1036.9613080079703,
+    "emitted": 9400
+   }
+  }
+ ],
+ "pooled_unmatched_budget": {
+  "evidence_class": "HOLDOUT-DTI",
+  "evaluator_version": "gems52-pooled-hide-v1",
+  "alpha": 0.2,
+  "beta": 0.8,
+  "triangular_radius_m": 300.0,
+  "pooled": true,
+  "scores": {
+   "a_only_pure": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.017351156815899483,
+    "ci95": [
+     0.012421051740661054,
+     0.023544949086579482
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 778.4923672890781,
+    "fpw": 10811.935460519306,
+    "fnw": 52407.50763271094
+   },
+   "single_B": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.17240062268562834,
+    "ci95": [
+     0.150875522273151,
+     0.19405837969401424
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 8793.553413763517,
+    "fpw": 33494.977118290175,
+    "fnw": 44392.44658623649
+   },
+   "random": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.08042564781050282,
+    "ci95": [
+     0.0702226099128376,
+     0.09097325665223467
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 4067.2229486710503,
+    "fpw": 36044.86583622452,
+    "fnw": 49118.777051328965
+   }
+  },
+  "best_comparable_control": "single_B",
+  "paired_differences": {
+   "single_B": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "delta": -0.15504946586972884,
+    "ci95": [
+     -0.17670136519254462,
+     -0.13227733112374532
+    ],
+    "withheld_positive_pixels": 53186
+   },
+   "random": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "delta": -0.06307449099460334,
+    "ci95": [
+     -0.07385978428590448,
+     -0.05214863956642099
+    ],
+    "withheld_positive_pixels": 53186
+   }
+  },
+  "bootstrap": {
+   "method": "paired physical spatial-cluster percentile",
+   "clusters": 153,
+   "draws": 1000,
+   "seed": 61052,
+   "confidence": 0.95,
+   "caveat": "Conditional on fitted folds, catalogue labels and fixed budgets; not a leaderboard interval."
+  },
+  "implementation_sha256": {
+   "evaluate_holdout.py": "ffb084fdf34bb30438485b89caeb1228a6680abfd9f9f0472f4355845da05cc6",
+   "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+   "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+   "spatial.py": "fad7b09db9efc512247b9a176a7e7ce8631e287592b4e07902d0b9c38bed00f8"
+  }
+ },
+ "interpretation": "the pure strict A-only stratum (the brief's literal discovery signal) is placed at its achieved budget because it cannot fill the matched 9,400 dots per fold; its pooled HOLDOUT-DTI is a diagnostic at an unmatched budget, not a matched-budget comparison. The holdout's top-K a_only arm is additionally reported with its inside/outside split: most of its dots sit at field=-1 outside the stratum, so its pooled number is a mix, not the pure stratum."
+}

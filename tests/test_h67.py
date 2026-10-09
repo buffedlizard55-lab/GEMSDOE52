@@ -62,6 +62,12 @@ def test_in_domain_nodata_sentinels_exist_and_are_excluded_from_eligible():
     sentinels really are inside the organiser's domain, and `eligible` really is smaller than the
     domain because of them.
     """
+    # CI restores only sample_submission + labels (scripts/restore_data.py --only): the 419 MB
+    # feature raster is not present there, and every assertion below is defined on it.  Skip, not
+    # fail, when the full data placement has not been run (shared-tool guard, IR-H65B-001 session).
+    if not (DATA / "training_features.tif").exists():
+        import pytest
+        pytest.skip("training_features.tif not restored in this environment")
     pre = load("preflight")
     assert pre["cells_domain"] > pre["eligible"] > 0
     assert pre["in_domain_nodata_sentinel_cells"] > 0
