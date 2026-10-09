@@ -8,6 +8,13 @@ Keep known-catalogue labels separate from verified fault absence, public partici
 
 This session's working branch is fixed by Arena. Do not change branches. Keep raw competition data and large intermediate arrays under ignored `data/` and `work/`. Publish small audit receipts, the unique compressed prediction raster and its review table.
 
+<!--H74-AGENTS-->
+## Current H74 continuation (2026-10-09)
+Read README's H74 block, `knowledge/63` (+63a/63b) and `knowledge/64`. H74: B_DVA (View B + directional variogram
+anisotropy) beats single_B on the holdout (+0.0118, CI [0.0068, 0.0174]); the near-dot lane gate fails (0.922). Experiments 3/3,
+slots 0. File `docs/downloads/h74-candidate.tif` is DOWNLOAD YES, SUBMIT research-only (owner override of lane rule required).
+Next: preregister a registry restricted to scored submissions, then retest the lane.
+
 <!--H67-AGENTS-->
 ## Current H73 continuation (2026-10-09)
 

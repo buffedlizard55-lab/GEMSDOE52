@@ -1,0 +1,66 @@
+{
+  "file": "gems52-h74-dva-variogram-anisotropy-B-37654px-20261009.tif",
+  "sha256": "b97691584d514ab1925d9fff2b61c410be86bdc0bc8c844dfdaa6257a4ea7a16",
+  "bytes": 142941,
+  "submission_name": "h74-dva-variogram-anisotropy-B-37654px-20261009",
+  "note": "H74: View-B + directional variogram anisotropy (det_elev/slope/grav); 200m ring cut; binary 37654 dots; holdout +0.012 vs B",
+  "note_chars": 123,
+  "validator": {
+    "path": "/home/user/GEMSDOE52/submission/gems52-h74-dva-variogram-anisotropy-B-37654px-20261009.tif",
+    "bytes": 142941,
+    "sha256": "b97691584d514ab1925d9fff2b61c410be86bdc0bc8c844dfdaa6257a4ea7a16",
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "ref_bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "nodata": null,
+    "blocksize": [
+      256,
+      256
+    ],
+    "fixture_grid": false,
+    "has_validity_mask": false,
+    "nan_pixels": 0,
+    "infinity_pixels": 0,
+    "n_nan": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.0030664964579045773,
+    "n_nonzero": 37654,
+    "mass": 37654.0,
+    "mass_outside_footprint": 0,
+    "problems": [],
+    "ok": true,
+    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "zip_file": "gems52-h74-dva-variogram-anisotropy-B-37654px-20261009.zip",
+  "zip_sha256": "863db9f4f06d4ba925e9cd7e40d269ef521a8cf8af14319e2b78800b2a56efd1",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "status": "research-only; local format validation is not organizer acceptance",
+  "metadata": {
+    "round": "H74"
+  }
+}

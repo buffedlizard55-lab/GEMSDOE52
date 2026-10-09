@@ -1,0 +1,28 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>H74 executive summary — how to submit</title>
+<style>body{font-family:-apple-system,sans-serif;max-width:760px;margin:40px auto;padding:20px;line-height:1.6}
+.card{border:2px solid #22c55e;border-radius:8px;padding:16px;background:#f0fdf4}.warn{background:#fef3c7;border-left:4px solid #eab308;padding:12px;margin:12px 0}
+.btn{display:inline-block;padding:12px 22px;border-radius:6px;text-decoration:none;font-weight:700;background:#22c55e;color:#fff;margin:6px 6px 6px 0}
+table{border-collapse:collapse;width:100%}td,th{border:1px solid #d1d5db;padding:6px 8px;font-size:.9em}code{word-break:break-all}</style></head><body>
+<h1>H74 — Executive summary</h1>
+<div class="card"><h2>Download</h2>
+<a class="btn" href="downloads/h74-candidate.tif">⬇ h74-candidate.tif (143 KB)</a> <a class="btn" href="downloads/h74-candidate.zip">⬇ ZIP</a>
+<p><b>Is it OK to download?</b> YES — validated from disk: 1 band float32, EPSG:32611, 3730×3292, transform matches sample_submission, 0 NaN, values exactly {0,1} (fixes the "Predicted values must be in range [0, 1]" error).</p>
+<p><b>Is it OK to submit?</b> HOLDOUT says YES (first arm to beat single_B: +0.0118, 95% CI [0.0068, 0.0174]). The protocol's lane rule says NO (0.922 of dots within 3 px of one dense registry raster &gt; 0.70). <b>Status: research-only; submitting requires an explicit owner override of the lane rule.</b> If you override it, this is the best-holdout file in the repo; prefer it over H72-v3 (holdout 0.031, below random).</p></div>
+<h2>How to submit (exact steps)</h2><ol>
+<li>Open <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">the submissions page</a> (login required) → <i>Submit file</i>.</li>
+<li>File to submit: choose <code>h74-candidate.tif</code> (or the .zip).</li>
+<li>Note: paste <code>H74: View-B + directional variogram anisotropy (det_elev/slope/grav); 200m ring cut; binary 37654 dots; holdout +0.012 vs B</code></li>
+<li>Submit. The board shows the score; record it in <code>registry/</code> as ORGANIZER-CONFIRMED.</li></ol>
+<h2>Numbers (labelled)</h2><table>
+<tr><th>Arm</th><th>HOLDOUT-DTI (gems52-pooled-hide-v1, 53,186 withheld px)</th><th>95% CI</th></tr>
+<tr><td>B_DVA (this file's ranker)</td><td>0.186352</td><td>[0.164675, 0.207868]</td></tr>
+<tr><td>single_B (control)</td><td>0.174517</td><td>[0.152316, 0.196299]</td></tr>
+<tr><td>DVA only</td><td>0.165885</td><td>[0.147960, 0.184418]</td></tr>
+<tr><td>random</td><td>0.080426</td><td>[0.070223, 0.090973]</td></tr></table>
+<p>SHA-256 <code>b97691584d514ab1925d9fff2b61c410be86bdc0bc8c844dfdaa6257a4ea7a16</code>. Holdout DTI is not a leaderboard forecast. No score is ORGANIZER-CONFIRMED.</p>
+<h2>Why 0.2778 scored highest (measured)</h2><p>The 0.2778 file is the 0.2600 file with every dot 100–200 m from the catalogue deleted (6,436 px). The metric punishes
+non-credited mass, so mass already "explained" by the catalogue costs score. H74 keeps that 200 m exclusion but uses a new ranker. Details: <a href="../knowledge/49_why_02778_phd_answer.md">knowledge/49</a>, results <a href="../knowledge/64_h74_results_and_limits.md">knowledge/64</a>, run card <a href="../evidence/h74_run_card.json">evidence/h74_run_card.json</a>.</p>
+<h2>Sources</h2><ul><li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Problem description & metric</a></li>
+<li><a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">NLR GEMS report 96647</a></li><li><a href="https://doi.org/10.1145/279943.279962">Blum & Mitchell 1998</a></li></ul>
+</body></html>

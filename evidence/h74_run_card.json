@@ -1,0 +1,122 @@
+{
+ "round": "H74",
+ "hypothesis": "Directional variogram anisotropy of det_elev, det_elev_slope and isostatic gravity marks fault damage zones not in the catalogue; adding it to View B improves recovery of hidden segments",
+ "mechanism": "A 300-900 m fault damage zone makes local semivariance direction-dependent (strike-parallel smooth, strike-normal rough); statistic of the continuous field, not of mapped traces",
+ "mimic": "Linear erosion/drainage incision, roads and range-front alluvial-fan bajada edges also produce anisotropic topographic texture; bedding-parallel layering can mimic it in gravity",
+ "cotraining_lane": "not re-run: View-A sufficiency failed 5 consecutive rounds (knowledge/55); this round tests the top untested hypothesis instead",
+ "holdout": {
+  "single_B": {
+   "label": "HOLDOUT-DTI",
+   "evaluator": "gems52-pooled-hide-v1",
+   "withheld_positives": 53186,
+   "dti": 0.174517,
+   "ci95": [
+    0.152316,
+    0.196299
+   ]
+  },
+  "B_DVA": {
+   "label": "HOLDOUT-DTI",
+   "evaluator": "gems52-pooled-hide-v1",
+   "withheld_positives": 53186,
+   "dti": 0.186352,
+   "ci95": [
+    0.164675,
+    0.207868
+   ]
+  },
+  "DVA_only": {
+   "label": "HOLDOUT-DTI",
+   "evaluator": "gems52-pooled-hide-v1",
+   "withheld_positives": 53186,
+   "dti": 0.165885,
+   "ci95": [
+    0.14796,
+    0.184418
+   ]
+  },
+  "random": {
+   "label": "HOLDOUT-DTI",
+   "evaluator": "gems52-pooled-hide-v1",
+   "withheld_positives": 53186,
+   "dti": 0.080426,
+   "ci95": [
+    0.070223,
+    0.090973
+   ]
+  }
+ },
+ "paired_B_DVA_minus_single_B": {
+  "delta": 0.011835,
+  "ci95": [
+   0.006791,
+   0.017362
+  ]
+ },
+ "instrument_reproduction": {
+  "single_B": 0.174517,
+  "H71_receipt": 0.174571,
+  "abs_delta": 5.37e-05
+ },
+ "canary_max_auc": 0.6234693337723675,
+ "canary_alarm": false,
+ "lane": {
+  "surface_max_spearman": 0.46569206205005886,
+  "surface_verdict": "PASS",
+  "dots_max_spearman": 0.10802726489695418,
+  "dots_max_near_3px": 0.9219737610877994,
+  "dots_verdict": "DUPLICATE/STOP",
+  "dots_near_offenders": 38,
+  "informative_priors": 551,
+  "quota_placement_K37654": {
+   "placed": 35858,
+   "worst": 0.7350382062580177,
+   "ok": false
+  },
+  "quota_placement_K30000": {
+   "placed": 28745,
+   "worst": 0.7305618368411898,
+   "ok": false
+  }
+ },
+ "uniqueness": {
+  "decoded_unique": true,
+  "equals_union_of_priors": false,
+  "priors_checked": 565
+ },
+ "vs_0_2778_reference": {
+  "ref_h33_2_b2_0.2778": {
+   "shared_px": 1742,
+   "near3px_share": 0.6424018696552823,
+   "spearman_on_footprint": 0.043712174407433725
+  }
+ },
+ "raster_sha256": "b97691584d514ab1925d9fff2b61c410be86bdc0bc8c844dfdaa6257a4ea7a16",
+ "file": "submission/gems52-h74-dva-variogram-anisotropy-B-37654px-20261009.tif",
+ "validator": {
+  "count": 1,
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "shape": [
+   3730,
+   3292
+  ],
+  "crs_match": true,
+  "shape_match": true,
+  "transform_match": true,
+  "nan": 0,
+  "min": 0.0,
+  "max": 1.0,
+  "values": [
+   0.0,
+   1.0
+  ],
+  "ones": 37654,
+  "PASS": true
+ },
+ "submission_name": "h74-dva-variogram-anisotropy-B-37654px-20261009",
+ "note": "H74: View-B + directional variogram anisotropy (det_elev/slope/grav); 200m ring cut; binary 37654 dots; holdout +0.012 vs B",
+ "experiments_used": "3 of 3",
+ "slots_used": 0,
+ "verdict": "HOLDOUT: PROMOTE (beats single_B, CI>0). LANE: DUPLICATE/STOP on dots (near-dot 0.922>0.70). Overall: research-only per protocol; owner may override lane rule"
+}
