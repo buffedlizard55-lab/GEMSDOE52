@@ -10,9 +10,9 @@ Outputs:
     evidence/h66_*.json                      receipts (copied, names fixed)
     evidence/h66_run_card.json               one JSON run card
     evidence/h66_format_validator.json       independent read of the written GeoTIFF
-    docs/downloads/h66-candidate.tif|.zip    the file the page serves (single-band float32 GeoTIFF)
-    docs/downloads/h66-review-table.csv.gz   one row per emitted dot (position, distance, ranks)
-    docs/h66.html, docs/h66-executive-summary.html, docs/data/h66_run_card.json
+    docs/downloads/h66cotrain-candidate.tif|.zip  the file the page serves (single-band float32 GeoTIFF)
+    docs/downloads/h66cotrain-review-table.csv.gz  one row per emitted dot (position, distance, ranks)
+    docs/h66cotrain.html, docs/h66cotrain-executive-summary.html, docs/data/h66_run_card.json
 """
 from __future__ import annotations
 
@@ -151,7 +151,7 @@ def recompute(tif_pred: np.ndarray):
 def write_review_table(rec: dict, pred: np.ndarray) -> Path:
     rows, cols = np.nonzero(pred > 0)
     tr = rec["transform"]
-    out = DOWN / "h66-review-table.csv.gz"
+    out = DOWN / "h66cotrain-review-table.csv.gz"
     out.parent.mkdir(parents=True, exist_ok=True)
     with gzip.open(out, "wt", newline="") as fh:
         w = csv.writer(fh)
@@ -293,7 +293,7 @@ def render_pages(card: dict) -> None:
     lane_note = ("" if v["lane_unique"] else
                  f" · NOT LANE-UNIQUE: dots lane {esc(lane_d.get('literal'))} (literal) / {esc(lane_d.get('policy'))} (policy)")
     page = f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="assets/ctd5.css"><title>H66 · DOE GEMS</title></head><body><a class="skip" href="#main">Skip to content</a>
-<header><nav aria-label="Main navigation"><a class="brand" href="index.html">DOE GEMS</a><a href="h66-executive-summary.html">Executive summary (submitting)</a><a href="h64.html">H64</a><a href="index.html">Home</a></nav></header>
+<header><nav aria-label="Main navigation"><a class="brand" href="index.html">DOE GEMS</a><a href="h66cotrain-executive-summary.html">Executive summary (submitting)</a><a href="h64.html">H64</a><a href="index.html">Home</a></nav></header>
 <main id="main">
 <section class="hero"><div><div class="eyebrow">DOE GEMS / {esc(label)}</div>
 <h1>Download for research.<br>Do not submit.</h1>
@@ -301,11 +301,11 @@ def render_pages(card: dict) -> None:
 <div class="notice" role="note"><strong>{esc(notice)}{lane_note}</strong>
 <p>Verdict: <b>{esc(v['statement'])}</b></p>
 <p>Format gate: <b>{pct_pass(v['format_pass'])}</b> · Premise: <b>{esc(prem['verdict'])}</b> · Holdout beats single_B: <b>{'yes' if v['holdout_beats_single_B'] else 'no'}</b> · Lane gate (dots, literal / policy): <b>{esc(lane_d.get('literal'))} / {esc(lane_d.get('policy'))}</b> · Uniqueness audit: <b>{'PASS' if v['uniqueness_pass'] else 'NOT PASSED'}</b></p></div>
-<div class="actions"><a class="button" href="downloads/h66-candidate.tif" download>Download the H66 GeoTIFF ↓</a>
-<a class="button secondary" href="downloads/h66-candidate.zip" download>Single-TIFF ZIP</a>
-<a class="button secondary" href="downloads/h66-review-table.csv.gz" download>Review table (gzip CSV)</a></div>
+<div class="actions"><a class="button" href="downloads/h66cotrain-candidate.tif" download>Download the H66 GeoTIFF ↓</a>
+<a class="button secondary" href="downloads/h66cotrain-candidate.zip" download>Single-TIFF ZIP</a>
+<a class="button secondary" href="downloads/h66cotrain-review-table.csv.gz" download>Review table (gzip CSV)</a></div>
 <p class="fileline">{esc(em['file'].split('/')[-1])}<br>{fmt_['bytes']:,} bytes · SHA-256 {esc(fmt_['sha256'])} · {em['dots']:,} emitted cells · values exactly {{0, 1}}, 0 NaN · EPSG:32611 · grid identical to the sample</p>
-<p class="small"><a href="h66-executive-summary.html">How to submit, and whether this file may be submitted →</a> · <a href="data/h66_run_card.json">Complete JSON run card ↗</a> · <a href="../registry/irregularities.json">Irregularities (registry JSON) ↗</a></p></section>
+<p class="small"><a href="h66cotrain-executive-summary.html">How to submit, and whether this file may be submitted →</a> · <a href="data/h66_run_card.json">Complete JSON run card ↗</a> · <a href="../registry/irregularities.json">Irregularities (registry JSON) ↗</a></p></section>
 <hr class="divider">
 <section><h2>Gates, measured</h2><div class="table-wrap"><table><thead><tr><th>Gate</th><th>Result</th><th>Receipt</th></tr></thead><tbody>
 <tr><td>Pre-registration hash (frozen before any fit)</td><td>{esc(card['preregistration']['sha256'][:16])}… verified</td><td><code>knowledge/43_hypotheses_H66_preregistered.md</code></td></tr>
@@ -332,7 +332,7 @@ def render_pages(card: dict) -> None:
 <p class="small"><b>Reproduction note (IR-H66-010).</b> single_B reproduces H61 to within {rep['difference']:+.6f} (H61 receipt 0.174517; H66 {f6(rep['h66'])}). Fold 0 differs and folds 1–3 match to seven decimals. The B-view AUCs match H61 exactly. The cause is not established, and no verdict depends on it.</p></section>
 <hr class="divider">
 <section><h2>Why 0.2778 scored where it did (measured, not reported)</h2>
-<p>The 0.2778 champion <code>h33-2-b2</code> is a strict subset of the reported-0.2600 gems24 d2-8 raster: 37,654 of 44,090 positive pixels, zero on the catalogue. It removes 6,436 pixels, all between 100 m and 200 m from a mapped trace, and adds none. Its nearest dot is 223.6 m from the catalogue. Under the published metric, <code>DTI = T / (0.2·(T+S−M) + 0.8·|G|)</code>, an emitted pixel helps only if its credit density exceeds the bar. Removing pixels therefore raises the ratio when their expected credit is below the bar. That is consistent with the measured subset chain, but it is an inference: the hidden truth is not available to measure the removed pixels' credit. Pruning raises the ratio without finding new faults. The owner-reported score attribution is unlinked (IR-H65-003). The marginal bar at DTI 0.2778 is 0.0588 (IR-H66-002).</p>
+<p>The 0.2778 champion <code>h33-2-b2</code> is a strict subset of the reported-0.2600 gems24 d2-8 raster: 37,654 of 44,090 positive pixels, zero on the catalogue. It removes 6,436 pixels, all between 100 m and 200 m from a mapped trace, and adds none. Its nearest dot is 223.6 m from the catalogue. Under the published metric, <code>DTI = T / (0.2·(T+S−M) + 0.8·|G|)</code>, an emitted pixel helps only if its credit density exceeds the bar. Removing pixels therefore raises the ratio when their expected credit is below the bar. That is consistent with the measured subset chain, but it is an inference: the hidden truth is not available to measure the removed pixels' credit. Pruning raises the ratio without finding new faults. The owner-reported score attribution is unlinked (IR-H65-003). The marginal bar for one uncovered truth pixel of kernel weight w is w &gt; α·DTI = 0.0556 at DTI 0.2778; the repository's accept_bar form is 0.0588 (IR-H66-002).</p>
 <p class="small">Source: <code>work/h66/champion_check.json</code> (verified on restored bytes); <code>knowledge/01_why_02778_and_the_bar.md</code>, <code>README</code> section "Why 0.2778 won".</p></section>
 <hr class="divider">
 <section><h2>Hypotheses carried out of this round</h2>
@@ -347,7 +347,7 @@ def render_pages(card: dict) -> None:
 <footer class="small">Research receipts only. Public-board numbers are owner-reported and dated (snapshot 2026-10-08). The AI-use disclosure is in the executive summary. Nothing here was uploaded.</footer>
 </body></html>
 """
-    (DOCS / "h66.html").write_text(page)
+    (DOCS / "h66cotrain.html").write_text(page)
     write_exec(card)
 
 
@@ -357,7 +357,7 @@ def write_exec(card: dict) -> None:
     ho = card["holdout"]
     lane_d = card["lane_dots"]
     page = f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="assets/ctd5.css"><title>H66 executive summary · DOE GEMS</title></head><body><a class="skip" href="#main">Skip to content</a>
-<header><nav aria-label="Main navigation"><a class="brand" href="index.html">DOE GEMS</a><a href="h66.html">H66 round</a><a href="index.html">Home</a></nav></header>
+<header><nav aria-label="Main navigation"><a class="brand" href="index.html">DOE GEMS</a><a href="h66cotrain.html">H66 round</a><a href="index.html">Home</a></nav></header>
 <main id="main">
 <section class="hero"><div><div class="eyebrow">Executive summary / submission guide · H66</div>
 <h1>How to submit, and whether this file may be submitted.</h1>
@@ -372,7 +372,7 @@ def write_exec(card: dict) -> None:
 <li><b>Format.</b> Single-band float32 GeoTIFF, EPSG:32611, values exactly {{0, 1}}, no NaN, 37,600 cells. The format is valid; validity is not approval.</li></ul></section>
 <hr class="divider">
 <section><h2>Why 0.2778 scored where it did</h2>
-<p>The 0.2778 file is a strict subset of a 0.2600 raster. It removed 6,436 pixels and added none. Under the published metric, that edit is consistent with a precision effect rather than a detection; the removed pixels' credit cannot be measured because the hidden truth is withheld. The metric's marginal bar at DTI 0.2778 is 0.0588, not the 0.055 that appeared in earlier text (IR-H66-002). The README's denominator was also misquoted and is now corrected (IR-H66-003).</p>
+<p>The 0.2778 file is a strict subset of a 0.2600 raster. It removed 6,436 pixels and added none. Under the published metric, that edit is consistent with a precision effect rather than a detection; the removed pixels' credit cannot be measured because the hidden truth is withheld. The metric's marginal bar for one uncovered truth pixel of kernel weight w is w &gt; α·DTI = 0.0556 at DTI 0.2778, which the README's ≈0.055 states. The repository's accept_bar form gives 0.0588 (IR-H66-002). The README's denominator was also misquoted and is now corrected (IR-H66-003).</p>
 <p class="small">Measured in <code>work/h66/champion_check.json</code>. The score itself is owner-reported and not linked to the file on the board (IR-H65-003).</p></section>
 <hr class="divider">
 <section><h2>Can a higher score be reached?</h2>
@@ -404,7 +404,7 @@ def write_exec(card: dict) -> None:
 </main>
 <footer class="small">Research summary. Nothing here submits, uploads or uses a weekly slot.</footer></body></html>
 """
-    (DOCS / "h66-executive-summary.html").write_text(page)
+    (DOCS / "h66cotrain-executive-summary.html").write_text(page)
 
 
 def main() -> int:
@@ -440,8 +440,8 @@ def main() -> int:
 
     # downloads: the TIF, and the single-TIF ZIP the page serves
     DOWN.mkdir(parents=True, exist_ok=True)
-    shutil.copyfile(tif, DOWN / "h66-candidate.tif")
-    with zipfile.ZipFile(DOWN / "h66-candidate.zip", "w", compression=zipfile.ZIP_DEFLATED) as z:
+    shutil.copyfile(tif, DOWN / "h66cotrain-candidate.tif")
+    with zipfile.ZipFile(DOWN / "h66cotrain-candidate.zip", "w", compression=zipfile.ZIP_DEFLATED) as z:
         z.write(tif, arcname=tif.name)
 
     sub_receipt_path = tif.with_suffix(".json")

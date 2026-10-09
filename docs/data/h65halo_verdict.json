@@ -1,0 +1,35 @@
+{
+ "evidence_class": "HOLDOUT-DTI",
+ "control": {
+  "single_B_hard_h65": 0.17457135886487102,
+  "single_B_h61_committed": 0.174517,
+  "abs_difference": 5.435886487101249e-05,
+  "tolerance": 0.001,
+  "pass_": true
+ },
+ "mechanism_test": {
+  "comparison": "single_B_soft minus single_B_hard (H61 control)",
+  "delta": 0.002079239719953302,
+  "ci95": [
+   -0.0010880235725922304,
+   0.005075820943227787
+  ],
+  "confirmed": false
+ },
+ "single_B_soft_dti": 0.17665059858482432,
+ "candidate": {
+  "arm": "disagreement_post",
+  "dti": 0.036386195213459406,
+  "delta_vs_single_B_soft": -0.14026440337136492,
+  "ci95": [
+   -0.16299811440037482,
+   -0.11839889374711146
+  ]
+ },
+ "S1_pass": false,
+ "exchange_allowed": false,
+ "note": "lane, not-union, format and uniqueness are decided by the build step (not run in this receipt)",
+ "eligible_for_selector_pending_build": false,
+ "slot_used": 0,
+ "upload": "none"
+}

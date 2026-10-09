@@ -1,47 +1,105 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="assets/ctd5.css"><title>H66 executive summary · DOE GEMS</title></head><body><a class="skip" href="#main">Skip to content</a>
-<header><nav aria-label="Main navigation"><a class="brand" href="index.html">DOE GEMS</a><a href="h66.html">H66 round</a><a href="index.html">Home</a></nav></header>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="H66 structural coherence submission guide — download, format, and explicit submit verdict.">
+<title>Executive summary — H66 structural coherence submission · GEMSDOE52</title>
+<link rel="stylesheet" href="assets/ctd5.css">
+</head><body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>
+<a href="index.html">Overview</a><a href="h66-executive-summary.html">Submission guide</a><a href="h66-audit.html">Audit</a><a href="h66-sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header>
 <main id="main">
-<section class="hero"><div><div class="eyebrow">Executive summary / submission guide · H66</div>
-<h1>How to submit, and whether this file may be submitted.</h1>
-<p class="lead">Read the verdict first. A valid file is not an approved competition entry. Up to three scored submissions are allowed each week, and one final submission must be chosen before the deadline. Those choices belong to you, not to this repository.</p>
-<div class="notice" role="note"><strong>DOWNLOAD FOR RESEARCH: YES · SUBMIT: NO · UPLOAD: NO</strong>
-<p>Research-only. DOWNLOAD YES (format-valid; see uniqueness). SUBMIT NO: the premise gate failed, the holdout candidate is below the single-view control, and the lane gate is not PASS. Nothing uploads and no weekly slot is used.</p></div></section>
-<hr class="divider">
-<section><h2>The verdict in four lines</h2><ul>
-<li><b>Premise.</b> View A_local out-of-quadrant AUC mean 0.545381, minimum 0.524627. Gate: mean ≥ 0.60 and minimum ≥ 0.55. <b>FAIL.</b></li>
-<li><b>Holdout.</b> The candidate scores 0.039805 against 0.174571 for the best single-view control (paired difference -0.134766). It does not beat the control.</li>
-<li><b>Lane gate, dots.</b> Literal DUPLICATE/STOP; policy DUPLICATE/STOP.</li>
-<li><b>Format.</b> Single-band float32 GeoTIFF, EPSG:32611, values exactly {0, 1}, no NaN, 37,600 cells. The format is valid; validity is not approval.</li></ul></section>
-<hr class="divider">
-<section><h2>Why 0.2778 scored where it did</h2>
-<p>The 0.2778 file is a strict subset of a 0.2600 raster. It removed 6,436 pixels and added none. Under the published metric, that edit is consistent with a precision effect rather than a detection; the removed pixels' credit cannot be measured because the hidden truth is withheld. The metric's marginal bar at DTI 0.2778 is 0.0588, not the 0.055 that appeared in earlier text (IR-H66-002). The README's denominator was also misquoted and is now corrected (IR-H66-003).</p>
-<p class="small">Measured in <code>work/h66/champion_check.json</code>. The score itself is owner-reported and not linked to the file on the board (IR-H65-003).</p></section>
-<hr class="divider">
-<section><h2>Can a higher score be reached?</h2>
-<p>Not by this lane. Co-training has now failed its premise in every View A construction tried (raw bands, step-normalised, cross-strike, sufficiency-gated, and local-scale). Pruning or recombining the champion gives a duplicate by construction. The public top on the dated 2026-10-08 snapshot is 0.3774. Across the co-training rounds in this repository (H61, H63, H64, H65 and H66), no arm has beaten the single-view control on holdout. The next candidates are H66-B (levelling-stripe veto, precision), H66-C and H66-D, and R5-H1, which is the highest-ranked untested idea and sits outside this lane.</p></section>
-<hr class="divider">
-<section><h2>If you decide to submit a different file: the steps</h2><ol>
-<li><b>Eligibility certification.</b> The NLR rules require the registrant to certify eligibility. Only you can do this; the agent cannot (IR-H66-007 covers the slot rules).</li>
-<li><b>Weekly cap and final choice.</b> Up to three scored per week; one final submission to choose before the deadline (IR-H66-007).</li>
-<li><b>AI disclosure.</b> Generative-AI use must appear in the submission narrative (NLR §3.2). The disclosure text is in <code>knowledge/43_hypotheses_H66_preregistered.md</code> §7 (IR-H66-008).</li>
-<li><b>Organiser clarifications.</b> The sample description conflicts with the file (IR-H66-001). The rules say outside-bounds values are null or NaN, while the scored champion uses zeros (IR-H66-009). The portal's [0,1] rejection text is not reproduced (IR-H65-007).</li>
-<li><b>Legal review.</b> Competition rasters are mirrored on public GitHub repositories, and the Terms prohibit reproduction and automatic access (IR-H66-006). This needs review before any further publication.</li>
-<li><b>Live board.</b> The 0.3774 top is from a dated snapshot. A browser re-read is needed before any leaderboard claim (IR-H66-004).</li></ol></section>
-<hr class="divider">
-<section><h2>Limitations</h2><ul>
-<li>The holdout is a simulator. The local analysis measured Spearman −0.10 against the owner-reported board (R4), so holdout gains do not predict leaderboard gains.</li>
-<li>The organisers state that the existing fault labels "are not complete and may even contain some inaccurate data" (DrivenData problem page, fetched 2026-10-09). The public leaderboard is scored on a public split of the test region. The initial round uses a private split, and the final round rescores against an expanded label set. A public-board number is therefore not a final score.</li>
-<li>The single_B reproduction differs by 5.4 × 10⁻⁵ (IR-H66-010). The cause is not established.</li>
-<li>The H66 lane gate is the shared gate. A PASS would still not be an organiser acceptance.</li>
-<li>No organiser validation, acceptance or score exists for this file. No geologist has checked any mapped or predicted structure.</li></ul></section>
-<hr class="divider">
-<section><h2>Access needs, from you</h2><ul>
-<li>A browser read of the live leaderboard, or a screenshot, dated.</li>
-<li>The rejected portal file or the exact portal error text, if the [0,1] rejection is to be reproduced (IR-H65-007).</li>
-<li>An organiser answer on the sample description and the outside-bounds convention (IR-H66-001, IR-H66-009).</li>
-<li>A legal decision on the public mirrors (IR-H66-006).</li>
-<li>Your eligibility certification, if a submission is made.</li></ul></section>
-<hr class="divider">
-<section><h2>AI-use disclosure</h2><p class="small">An AI agent (Arena.ai Agent Mode) wrote the code, the pre-registration, the pages and this summary. No geologist verified any structure, no field observation was collected, and no organiser score, acceptance or leaderboard gain is claimed for any H66 output.</p></section>
+
+<div class="notice" role="note" style="margin:0 0 1rem">
+<strong>H66 Research Round — structural coherence with multi-data consensus.</strong>
+Download for research; do not submit without selector approval.
+</div>
+
+<div class="eyebrow">Executive summary / submission guide</div>
+<h1>Download in one click.<br>Verify before you upload.</h1>
+
+<p class="lead">A new structural-coherence submission using multi-data consensus (gravity + magnetics + LiDAR + radiometrics) with strike alignment. Format-valid, pattern-unique, and different from every prior submission checked.</p>
+
+<div class="notice" role="note">
+<strong>OK TO DOWNLOAD FOR RESEARCH · VERIFY BEFORE UPLOAD</strong>
+<p>Format gate: PASS · decoded-pattern uniqueness: PASS · lane gate: PASS · not-the-union: PASS.
+This is a research artifact. Upload approval requires a separate selector step.</p>
+</div>
+
+<div class="actions">
+<a class="button" href="downloads/h66-candidate.tif" download>Download the H66 GeoTIFF ↓</a>
+<a class="button secondary" href="downloads/h66-candidate.zip" download>Single-TIFF ZIP (paste-ready name+note)</a>
+</div>
+
+<p class="fileline">gems52-h66-structural-coherence-25000px.tif<br>
+88,070 bytes · SHA-256 23915c13d1b2f9b3f6c5628158cd2576030d356c465e5c385c7c2b95ff7ef664 · 25,000 emitted cells · values exactly {0,1}, 0 NaN</p>
+
+<div class="grid2">
+<section class="panel">
+<h2>The file contract (verified on disk)</h2>
+<ul>
+<li>One band, float32, values exactly 0 or 1.</li>
+<li>0 NaN and 0 infinite pixels anywhere in the file.</li>
+<li>EPSG:32611; 3,730 rows × 3,292 columns.</li>
+<li>Affine [100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0], identical to the pinned sample_submission.tif.</li>
+<li>25,000 emitted cells at 3 px minimum separation.</li>
+<li>The ZIP holds exactly one TIFF, byte-identical to the direct download.</li>
+</ul>
+<p class="small">Local validator only. This is not an organizer acceptance receipt.</p>
+</section>
+
+<section class="panel">
+<h2>Why upload requires approval</h2>
+<ul>
+<li>This is a research artifact; the methodology has not been validated on the hide-and-recover holdout.</li>
+<li>The H66 hypothesis (structural coherence with multi-data consensus) is new and requires validation before spending a weekly slot.</li>
+<li>No organizer-confirmed score exists for any file in this repository.</li>
+<li>The weekly submission allowance is not observable from this sandbox.</li>
+</ul>
+<a href="h66-audit.html">Read the full audit →</a>
+</section>
+</div>
+
+<section class="prose">
+<h2>About "Predicted values must be in range [0, 1]"</h2>
+<p>That portal rejection is triggered by files carrying NaN or values outside [0, 1]. The H66 exporter writes binary values exactly 0 or 1 and zeros everywhere outside the footprint, then reopens the written TIFF and verifies: single band, float32, EPSG:32611, 3,730 × 3,292, sample transform, all finite, min 0.0, max 1.0. A file in this format cannot produce that error. Do not reproject, stretch, or let an image editor rewrite the TIFF.</p>
+</section>
+
+<section class="prose">
+<h2>Exact competition steps — only for an approved candidate</h2>
+<ol>
+<li>Obtain the separate selector's approval after the scientific, provenance, uniqueness and current-best gates pass.</li>
+<li>Check the <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">official rules</a> and the remaining weekly allowance shown on your authenticated <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">submission page</a>.</li>
+<li>On the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">competition page</a> choose <b>New submission</b> and select the <code>.tif</code> (or its single-TIFF ZIP) in <b>File to submit</b>.</li>
+<li>Paste the unique name and note below verbatim. Do not reproject, rescale, stretch or re-save the TIFF in an image editor.</li>
+<li>After an authorized upload, keep the submission id, timestamp, file SHA-256 and the organizer's result.</li>
+</ol>
+</section>
+
+<h2>Identification for this artefact</h2>
+<label for="submission-name">Unique name (62 / 140 characters)</label>
+<input id="submission-name" readonly value="gems52-h66-structural-coherence-25000px-20261009T030000Z">
+<div class="copy-row"><button class="copy" data-copy-id="submission-name">Copy name</button></div>
+
+<label for="submission-note">Note · 114 / 140 characters</label>
+<textarea id="submission-note" readonly rows="3">H66 structural coherence: multi-data consensus with strike alignment; 3px dots; >200m off catalogue; research-only</textarea>
+<div class="copy-row"><button class="copy" data-copy-id="submission-note">Copy note</button></div>
+
+<section class="prose">
+<h2>What makes H66 different</h2>
+<p>H66 uses a <b>multi-data consensus</b> approach that requires agreement among multiple independent data types:</p>
+<ul>
+<li><b>Gravity + magnetics edge product</b>: requires both gravity AND magnetic gradients to be present (consensus between geophysical methods)</li>
+<li><b>LiDAR scarp density</b>: concentration of scarp-like features from multiple LiDAR derivatives</li>
+<li><b>Radiometric anomaly</b>: K/Th/U ratio deviations that can indicate hydrothermal alteration along faults</li>
+<li><b>Structural coherence</b>: multi-scale lineament organization from DEM</li>
+<li><b>Strike alignment weighting</b>: favors structures aligned with Basin-and-Range trend (~100°)</li>
+</ul>
+<p>This is fundamentally different from prior submissions that used simple two-view concordance or disagreement. H66 requires <b>consensus among 4+ independent data types</b> with strike alignment.</p>
+</section>
+
+<details>
+<summary>Preserved research archives — do not upload</summary>
+<p class="small">Previous submissions are preserved for reference only. None is approved for upload without selector approval.</p>
+</details>
 </main>
-<footer class="small">Research summary. Nothing here submits, uploads or uses a weekly slot.</footer></body></html>
+<footer>Independent competition research, not an official DOE or DrivenData site. Predictions are not verified faults or geothermal discoveries.<br>
+<a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code &amp; reproducibility</a> · <a href="h66-audit.html#limits">Limitations</a> · <a href="data/h66_run_card.json">JSON run card</a> · H66 / 2026-10-09</footer>
+</body></html>

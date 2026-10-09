@@ -61,15 +61,17 @@ From `work/h66/champion_check.json` (restored bytes):
   positives; reported 0.2600). It adds zero pixels.
 * The 6,436 removed pixels all lie 100–200 m from a mapped trace (min 100 m, median 100 m, max 200 m).
 * The champion's nearest dot to the catalogue is 223.6 m away. Its nearest-neighbour spacing is near 3 px (median 3.00 px).
-* Under `DTI = T / (0.2·(T+S−M) + 0.8·|G|)` (`src/gems52/metric.py`, identity (i)), an emitted pixel helps only if its credit density
-  exceeds `α·DTI/(1−α·DTI)`. At DTI 0.2778 that bar is **0.0588** (not 0.055; IR-H66-002).
+* Under `DTI = T / (0.2·(T+S−M) + 0.8·|G|)` (`src/gems52/metric.py`, identity (i)), the marginal condition is
+  `c·(1−α·DTI) > α·DTI·f` (identity (ii)). For one uncovered truth pixel of kernel weight w (f = 1−w) this is **w > α·DTI = 0.0556** at
+  DTI 0.2778, which the README's ≈0.055 states. The repository's `emit.accept_bar` gives α·DTI/(1−α·DTI) = **0.0588**, a stricter
+  variant (IR-H66-002).
 * Removing pixels raises the ratio when their expected credit is below the bar. That is consistent with the measured subset chain.
   It is an inference: the hidden truth is not available to measure the removed pixels' credit.
 
 ## Corrections made in this round
 
-* Acceptance bar at DTI 0.2778: 0.0588, not 0.055 (README "Why 0.2778", `knowledge/33_h62_results_and_limits.md`; IR-H66-002).
-* Metric denominator: `0.2·(T+S−M) + 0.8·|G|`; one README line had `0.8·(|G|−T)` (IR-H66-003).
+* Bar: the README's ≈0.055 is the metric's special case α·DTI = 0.0556, rounded. An earlier H66 draft replaced it with the repository's 0.0588 form and was wrong (IR-H66-002). The H65halo notes give the same special case.
+* Metric denominator: `0.2·(T+S−M) + 0.8·|G|`; one README line had `0.8·(|G|−T)` and is corrected (IR-H66-003).
 * Leaderboard top 0.3774 is from the dated snapshot (2026-10-08T21:40:41Z). The live page returned "Loading…" on 2026-10-09 (IR-H66-004).
 
 ## Organiser statements checked this round (DrivenData problem page, fetched 2026-10-09)

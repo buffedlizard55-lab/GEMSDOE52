@@ -1,0 +1,27 @@
+{
+ "stage": "fit_hard_control",
+ "started_utc": "2026-10-09T04:09:52+00:00",
+ "folds": [
+  {
+   "fold": 0,
+   "n_train": 80000,
+   "seconds": 103.8
+  },
+  {
+   "fold": 1,
+   "n_train": 80000,
+   "seconds": 61.9
+  },
+  {
+   "fold": 2,
+   "n_train": 80000,
+   "seconds": 66.2
+  },
+  {
+   "fold": 3,
+   "n_train": 80000,
+   "seconds": 63.9
+  }
+ ],
+ "finished_utc": "2026-10-09T04:14:51+00:00"
+}
