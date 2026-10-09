@@ -13,7 +13,7 @@ submission slot NO. Competition slots used: 0.**
 
 **The one thing that is new and true:** this is the **first file in this repository that satisfies the
 brief's lane rule** — max directed 3 px near-dot share 0.6985 against a limit of 0.70, and max rank
-correlation 0.0096 against a limit of 0.90, verified over 566 aligned registry rasters with 0 errors.
+correlation 0.0096 against a limit of 0.90, verified over 570 aligned registry rasters with 0 errors.
 H63 measured 0.8188 and H64 0.888 and both shipped files labelled DUPLICATE. The lever that made it
 possible is in §3, and its cost is quantified in §1b.
 
@@ -50,7 +50,7 @@ mass (`all_arms_filled: true`).
 |---|---|
 | Format (1 band, float32, EPSG:32611, 3,730 × 3,292, pinned transform, matches `sample_submission.tif`) | **PASS**, 0 problems |
 | Values | exactly {0.0, 1.0} ⊂ [0, 1]; **0 NaN, 0 infinite**, 0 mass outside the valid footprint |
-| Decoded-pattern uniqueness over 566 aligned priors (372 distinct decoded patterns, 0 errors) | **PASS** |
+ (372 distinct decoded patterns, 0 errors) | **PASS** |
 | Equals the literal prior union | False |
 | Lane, **saturation policy**, final dots | **PASS** — max near-dot **0.6985** (limit 0.70), max Spearman **0.0096** (limit 0.90) |
 | Lane, saturation policy, continuous surface | **PASS** — max Spearman 0.5057 |
@@ -84,6 +84,39 @@ The single most striking number in the round is the dots-phase rank correlation:
 against a limit of 0.90. The shipped emission is essentially *orthogonal* to all 372 distinct published
 prediction patterns in the family. That is exactly what the lane rule asks for, and exactly why its credit
 density cannot be certified: it is not standing where anything that has ever scored is standing.
+
+### Post-merge re-verification against the enlarged registry
+
+`origin/main` gained four more rounds (H65b, H65halo, H66, H67) while this branch was open, so the whole
+gate battery was re-run against the enlarged registry rather than trusted from the pre-merge receipt:
+**572 `.tif` files found, 570 aligned single-band
+priors used, 2 excluded as not on the competition grid,
+376 distinct decoded patterns, 15 universal-coverage
+probes, 555 informative, 0 errors.**
+
+The result did not move: lane policy **PASS**, max near-dot **0.6985**, max
+Spearman **0.0096**. None of the four new rounds became an offender, which is what the
+consensus-restricted pool predicts — an emission drawn from pixels the family did *not* agree on stays
+lane-legal when the family grows.
+
+The placement itself was computed against the pre-merge census (343 informative priors, frozen in
+`evidence/ctd5_prior_inventory.json` + `submission/` + `data/scored` + `data/reference` at that time), and
+the gate was then re-measured against 555. Both numbers are published because
+they are different registries and pretending otherwise would hide the only thing that could have broken
+this round after the fact.
+
+### Packaging
+
+The artefact is written by `gems52.submission_writer.write_submission`, the shared fail-closed packager the
+brief says to reuse, not by a hand-rolled ZIP. It delegates to the same `grid.write_geotiff`, so adopting it
+changed **nothing** about the TIFF: SHA-256 `9501c1c88fa1b80ac76b0d2652afb6234c470f8583a2d634dd62fc23c6ae8461` before and after, asserted in
+`scripts/run_h69.py` rather than assumed. What it adds is the name/note 140-character enforcement, the
+no-positive-mass-outside-footprint check, the single-TIFF ZIP roundtrip assertion, and the receipt at
+`submission/gems52-h69-cotrain-basementview-consensus-lanefeasible-37600px-20261009T062239Z.json` carrying
+`approved_for_weekly_slot=False` and
+`submission_slots_used=0`. ZIP SHA-256
+`65ccdf8d5f593f588ac48f4614fc86aee70409c38dc84b4fc52b2bb0de44137e`. `--stamp` lets an unchanged emission reproduce its published filename
+byte-for-byte instead of minting a second identical artefact.
 
 ## 2 · The three things this round actually established
 

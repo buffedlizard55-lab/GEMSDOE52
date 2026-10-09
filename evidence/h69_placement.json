@@ -1,5 +1,5 @@
 {
- "design": "novel-only (prereg amendment knowledge/52b withdrew the credited-core emission)",
+ "design": "novel-only (prereg amendment knowledge/41b withdrew the credited-core emission)",
  "S_requested": 37600,
  "S_placed": 37600,
  "cap": 26263,
@@ -162,7 +162,7 @@
  "n_quota_priors": 84,
  "base_pool_px": 4859987,
  "consensus_max_in_pool": 276.0,
- "ranking": "field = stitched per-fold operating percentile rank of View B, times View A rank^0.25, times (1 + 0.5*consensus/consensus_max); consensus counts distinct decoded prior patterns whose 3 px halo covers the pixel (H69-2)",
+ "ranking": "field = stitched per-fold operating percentile rank of View B, times View A rank^0.25, times (1 + 0.5*consensus/consensus_max); consensus counts distinct decoded prior patterns whose 3 px halo covers the pixel (H65-2)",
  "placement": "greedy top-S with hard-core 3 px spacing over a pool restricted to pixels of low cross-family consensus, under a per-prior near-dot quota of floor(0.6985*S); the directed 3 px near-dot count of ALL informative priors is then re-measured exactly",
  "exclusion_rather_than_quota": "two constructions were measured and rejected before this one. (1) A quota of floor(0.6985*S) against a TARGET S has the wrong denominator: at quota 26,263 only 35,149 dots were placeable, an achieved share of 0.7472 against a limit of 0.70. (2) Excluding the offenders' halos is not available at all: the union of the 84 offenders' 3 px halos leaves 361 px of the 4,859,987 px legal set. The shipped construction iterates the quota to a fixed point against the ACHIEVED budget.",
  "view_A_channels": 18,

@@ -1,6 +1,6 @@
 {
  "round": "H69",
- "generated_utc": "2026-10-09T06:22:43.046434+00:00",
+ "generated_utc": "2026-10-09T07:11:57.066652+00:00",
  "hypothesis": "H69-1 basement-surface differential geometry as View A, co-trained against a DEM-curvature/slope + radiometric-total-count View B, with disagreement as the discovery signal; H69-2 cross-family consensus as the credit-density proxy for the novel mass",
  "mechanism": "Blum-Mitchell two-view co-training (View A = differential geometry of the basement surface and the potential field; View B = DEM curvature/slope plus radiometric total count) for the discovery signal and the holdout arms, then a NOVEL-ONLY emission ranked by the stitched two-view operating field times cross-family consensus and placed by a greedy whose pool is restricted to low-consensus pixels so the brief's 70% per-raster near-dot rule holds against every informative prior. The pre-registered credited-core variant was withdrawn before placement; see knowledge/52b.",
  "named_non_fault_mimic": "a lithologic contact or a basin axis with a density and magnetisation contrast and no relief; on the surface view, roads and erosion lines",
@@ -249,8 +249,8 @@
   "algebra": "DTI = min(t_core + rho_novel*n_novel, |G|) / (0.2*S + 0.8*|G|)"
  },
  "registry": {
-  "n_tif_files_found": 568,
-  "n_priors": 566,
+  "n_tif_files_found": 572,
+  "n_priors": 570,
   "n_excluded_not_on_competition_grid": 2,
   "excluded_examples": [
    {
@@ -264,9 +264,9 @@
   ],
   "lane_report_error_count": 0,
   "lane_report_errors": [],
-  "distinct_decoded": 372,
+  "distinct_decoded": 376,
   "n_probes": 15,
-  "n_informative": 551
+  "n_informative": 555
  },
  "correlation_vs_registry": {
   "literal": {
@@ -299,7 +299,7 @@
   "novel_fraction_vs_binding_priors": 1.0,
   "support_novelty_20pct_diagnostic": false,
   "support_novelty_diagnostic_status": "FAILED and reported, not waived: the union of all informative priors' 3px halos covers 100% of the legal set, so no candidate on this registry can pass it (work/h69/probe.py)",
-  "union_px": 5364867,
+  "union_px": 5373804,
   "canonical_pattern_unique": true,
   "equals_literal_prior_union": false,
   "credited_core_shipped": false,
@@ -309,6 +309,17 @@
  },
  "raster_sha256": "9501c1c88fa1b80ac76b0d2652afb6234c470f8583a2d634dd62fc23c6ae8461",
  "raster_bytes": 147247,
+ "packaging": {
+  "writer": "gems52.submission_writer.write_submission (shared, fail-closed)",
+  "zip_file": "gems52-h69-cotrain-basementview-consensus-lanefeasible-37600px-20261009T062239Z.zip",
+  "zip_sha256": "65ccdf8d5f593f588ac48f4614fc86aee70409c38dc84b4fc52b2bb0de44137e",
+  "receipt_file": "gems52-h69-cotrain-basementview-consensus-lanefeasible-37600px-20261009T062239Z.json",
+  "name_chars": 79,
+  "note_chars": 127,
+  "approved_for_weekly_slot": false,
+  "submission_slots_used": 0,
+  "tiff_bytes_unchanged_by_repackaging": true
+ },
  "validator": {
   "no_nan_inside_footprint": true,
   "values_in_0_1": true,
