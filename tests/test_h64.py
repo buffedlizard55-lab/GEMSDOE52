@@ -1,4 +1,4 @@
-"""H62 regression tests: pre-registration integrity, the shared learner hook, the frozen verdict rule,
+"""H64 regression tests: pre-registration integrity, the shared learner hook, the frozen verdict rule,
 and consistency of the published card with its receipts.  Receipt-dependent tests skip if the
 receipts are not on disk (a clean clone without ``work/``/``data/`` still runs the rest)."""
 from __future__ import annotations
@@ -21,14 +21,14 @@ def _sha(p: Path) -> str:
 
 
 def test_preregistration_hash_matches_document():
-    reg = json.loads((ROOT / "registry/h62_preregistration.json").read_text())
+    reg = json.loads((ROOT / "registry/h64_preregistration.json").read_text())
     assert _sha(ROOT / reg["hypothesis_document"]) == reg["hypothesis_sha256"]
     assert reg["frozen_before_any_fit"] is True
     assert reg["runner_refuses_if_hash_moves"] is True
 
 
 def test_amendments_hash_match_documents():
-    reg = json.loads((ROOT / "registry/h62_preregistration.json").read_text())
+    reg = json.loads((ROOT / "registry/h64_preregistration.json").read_text())
     assert reg.get("amendments"), "the control-tolerance amendment must be recorded"
     for am in reg["amendments"]:
         assert _sha(ROOT / am["document"]) == am["sha256"]
@@ -42,7 +42,7 @@ def test_h61_default_learner_is_unchanged():
 
 
 def test_view_a_learner_is_the_single_preregistered_change():
-    import run_h62 as r
+    import run_h64 as r
     pa = r.view_a_learner(5).get_params()
     pb = r.base.learner(5).get_params()
     assert (pa["max_iter"], pa["max_leaf_nodes"], pa["min_samples_leaf"], pa["l2_regularization"]) == (
@@ -53,7 +53,7 @@ def test_view_a_learner_is_the_single_preregistered_change():
 
 
 def test_verdict_rule_is_conjunctive():
-    import run_h62 as r
+    import run_h64 as r
     ok = dict(fmt_ok=True, lane_ok=True, uniq_ok=True, not_union_ok=True, s1=True, holdout_ok=True)
     assert r.verdict_text(**ok).startswith("ELIGIBLE FOR SELECTOR, NOT PROMOTED")
     for k in ok:
@@ -62,28 +62,28 @@ def test_verdict_rule_is_conjunctive():
 
 
 def test_control_tolerance_is_declared_and_small():
-    reg = json.loads((ROOT / "registry/h62_preregistration.json").read_text())
+    reg = json.loads((ROOT / "registry/h64_preregistration.json").read_text())
     tol = reg["thresholds"]["single_B_control_abs_tolerance"]
     assert 0 < tol <= 0.001
     assert abs(reg["thresholds"]["single_B_h61_control_holdout_dti"] - 0.174517) < 1e-9
 
 
 def test_sufficiency_gate_thresholds_as_preregistered():
-    reg = json.loads((ROOT / "registry/h62_preregistration.json").read_text())
+    reg = json.loads((ROOT / "registry/h64_preregistration.json").read_text())
     th = reg["thresholds"]
     assert th["S1_sufficiency_mean_oof_auc_min"] == 0.60
     assert th["S1_sufficiency_min_fold_oof_auc"] == 0.55
     assert th["S2_independence_abandon_max_abs_rho"] == 0.6
 
 
-@pytest.mark.skipif(not (ROOT / "evidence/h62_run_card.json").exists(), reason="H62 build not on disk")
+@pytest.mark.skipif(not (ROOT / "evidence/h64_run_card.json").exists(), reason="H64 build not on disk")
 def test_card_matches_receipts_and_file():
-    card = json.loads((ROOT / "evidence/h62_run_card.json").read_text())
-    suf = json.loads((ROOT / "evidence/h62_sufficiency.json").read_text())
-    hold = json.loads((ROOT / "evidence/h62_holdout.json").read_text())
+    card = json.loads((ROOT / "evidence/h64_run_card.json").read_text())
+    suf = json.loads((ROOT / "evidence/h64_sufficiency.json").read_text())
+    hold = json.loads((ROOT / "evidence/h64_holdout.json").read_text())
     assert card["sufficiency_S1"]["S1_pass"] == suf["S1_pass"]
     assert card["holdout_dti"]["scores"]["single_B"]["dti"] == hold["pooled"]["scores"]["single_B"]["dti"]
-    tif = ROOT / "docs/downloads/h62-candidate.tif"
+    tif = ROOT / "docs/downloads/h64-candidate.tif"
     assert _sha(tif) == card["raster"]["sha256"]
     assert len(card["submission_name"]) <= 140 and len(card["note"]) <= 140
     # the frozen rule: a failed S1 cannot be eligible
@@ -92,10 +92,10 @@ def test_card_matches_receipts_and_file():
         assert card["exchange"]["skipped"] is True
 
 
-@pytest.mark.skipif(not (ROOT / "docs/downloads/h62-candidate.tif").exists(), reason="H62 raster not on disk")
+@pytest.mark.skipif(not (ROOT / "docs/downloads/h64-candidate.tif").exists(), reason="H64 raster not on disk")
 def test_published_raster_is_in_unit_interval_and_binary():
     import rasterio
-    with rasterio.open(ROOT / "docs/downloads/h62-candidate.tif") as ds:
+    with rasterio.open(ROOT / "docs/downloads/h64-candidate.tif") as ds:
         a = ds.read(1)
         assert ds.count == 1 and ds.crs.to_epsg() == 32611
         assert np.isfinite(a).all()

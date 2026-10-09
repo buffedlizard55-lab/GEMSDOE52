@@ -1,12 +1,12 @@
 {
-  "file": "gems52-h62-sufgate-cotrain-37600px-20261009T022631Z.tif",
+  "file": "gems52-h64-sufgate-cotrain-37600px-20261009T022631Z.tif",
   "sha256": "739a8e7c4b54436508fc2b9da6b8ddc56e44a0d1ad273dc88c07a2003637f8bb",
   "bytes": 133668,
-  "submission_name": "gems52-h62-sufgate-cotrain-37600px-20261009T022631Z",
-  "note": "H62 S1 fail; exact-novel vs registry; lane DUPLICATE (70% rule); research only, do not submit",
+  "submission_name": "gems52-h64-sufgate-cotrain-37600px-20261009T022631Z",
+  "note": "H64 S1 fail; exact-novel vs registry; lane DUPLICATE (70% rule); research only, do not submit",
   "note_chars": 93,
   "validator": {
-    "path": "/home/user/GEMSDOE52/submission/gems52-h62-sufgate-cotrain-37600px-20261009T022631Z.tif",
+    "path": "/home/user/GEMSDOE52/submission/gems52-h64-sufgate-cotrain-37600px-20261009T022631Z.tif",
     "bytes": 133668,
     "sha256": "739a8e7c4b54436508fc2b9da6b8ddc56e44a0d1ad273dc88c07a2003637f8bb",
     "bands": 1,
@@ -54,15 +54,15 @@
     "ok": true,
     "validation_class": "local on-disk template/range check; not organizer upload acceptance"
   },
-  "zip_file": "gems52-h62-sufgate-cotrain-37600px-20261009T022631Z.zip",
-  "zip_sha256": "0e7dfc6876d60fba68ef715923cb1bacc82108ffdcdb83339cdb7bfa999c0078",
+  "zip_file": "gems52-h64-sufgate-cotrain-37600px-20261009T022631Z.zip",
+  "zip_sha256": "32305f97a65f9f30b6d324bff4a92267da9feaa22d20f785d324d3781bb47e19",
   "approved_for_weekly_slot": false,
   "promoted": false,
   "submission_slots_used": 0,
   "status": "research-only; local format validation is not organizer acceptance",
   "metadata": {
-    "round": "H62",
-    "preregistration": "c1f183e6dcdee4fcebe0584f88a0b31a36533276eff3c39261b4c20117b58c5e",
+    "round": "H64",
+    "preregistration": "dbce0e3523109497d0c649e62341d3b3f7b5dd6d32a28207c2936a0b8a8e7d9c",
     "budget": 37600
   }
 }

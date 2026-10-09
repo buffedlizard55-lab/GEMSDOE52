@@ -59,7 +59,7 @@
    ]
   }
  },
- "reading": "canary identical: the feature stack is identical. Fit/exchange/holdout differ by run-to-run numerical nondeterminism (HistGradientBoosting with OpenMP reductions); see knowledge/34b. A second run of the H62 control matched the committed single_B to 2.9e-7.",
+ "reading": "canary identical: the feature stack is identical. Fit/exchange/holdout differ by run-to-run numerical nondeterminism (HistGradientBoosting with OpenMP reductions); see knowledge/39b. A second run of the H64 control matched the committed single_B to 2.9e-7.",
  "h61_build_reproduced": false,
  "note": "The H61 raster was NOT rebuilt in this check; its SHA-256 is therefore not re-verified here."
 }

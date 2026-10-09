@@ -1,12 +1,12 @@
-<!--H62-README-->
-# GEMSDOE52 — H62: a unique GeoTIFF, and the verdict on whether it may be submitted
+<!--H64-README-->
+# GEMSDOE52 — H64: a unique GeoTIFF, and the verdict on whether it may be submitted
 
-**[★ Download the H62 GeoTIFF — one click](docs/downloads/h62-candidate.tif)** ·
-[single-TIFF ZIP](docs/downloads/h62-candidate.zip) ·
-[A-only reasoning CSV, gzip](docs/downloads/h62-a-only-reasoning.csv.gz) ·
-**[Executive summary / exact submission steps](docs/executive-summary.html)** ·
-[Landing page](docs/index.html) · [Run card](evidence/h62_run_card.json) ·
-[Results and limits](knowledge/35_h62_results_and_limits.md)
+**[★ Download the H64 GeoTIFF — one click](docs/downloads/h64-candidate.tif)** ·
+[single-TIFF ZIP](docs/downloads/h64-candidate.zip) ·
+[A-only reasoning CSV, gzip](docs/downloads/h64-a-only-reasoning.csv.gz) ·
+**[Executive summary / exact submission steps](docs/h64-executive-summary.html)** ·
+[Landing page](docs/h64.html) · [Run card](evidence/h64_run_card.json) ·
+[Results and limits](knowledge/40_h64_results_and_limits.md)
 
 > **DOWNLOAD: YES, for research (unique on decoded pixels). SUBMIT TO THE COMPETITION: NO.**
 > Verdict `NEGATIVE, research-only`. The file is not identical, on decoded pixels, to any of the 548 registry
@@ -16,23 +16,23 @@
 > 0.888, against one informative raster), S1 failed, and the holdout does not beat single_B.
 > **NO CERTIFIED LEADERBOARD GAIN.** Competition slots used: **0**.
 
-- **File:** `gems52-h62-sufgate-cotrain-37600px-20261009T022631Z.tif` — 133,668 bytes, 37,600 emitted cells
+- **File:** `gems52-h64-sufgate-cotrain-37600px-20261009T022631Z.tif` — 133,668 bytes, 37,600 emitted cells
 - **SHA-256:** `739a8e7c4b54436508fc2b9da6b8ddc56e44a0d1ad273dc88c07a2003637f8bb`
-- **Name (62 characters):** `gems52-h62-sufgate-cotrain-37600px-20261009T022631Z`
-- **Note (93 characters):** `H62 S1 fail; exact-novel vs registry; lane DUPLICATE (70% rule); research only, do not submit`
+- **Name (62 characters):** `gems52-h64-sufgate-cotrain-37600px-20261009T022631Z`
+- **Note (93 characters):** `H64 S1 fail; exact-novel vs registry; lane DUPLICATE (70% rule); research only, do not submit`
 - **Local validator:** one float32 band; values exactly {0, 1}; 0 NaN; EPSG:32611; shape 3,730 × 3,292 and transform
   identical to `data/sample_submission.tif`. Local validator only, not an organiser acceptance receipt.
 
 ## Why this file is the one that is unique, and why it is not submittable
 
-- **The first H62 build was not unique.** Its canonical-pattern check passed, but `novel_fraction` was **0.0**: every
+- **The first H64 build was not unique.** Its canonical-pattern check passed, but `novel_fraction` was **0.0**: every
   emitted cell already occurred in the registry. That build is kept as a rejected receipt
-  (`evidence/h62_build1_rejected_run_card.json`); its TIF is not published. The verdict logic also ignored novelty;
-  fixed in `scripts/run_h62.py`.
-- **Declared post hoc (`knowledge/34c_novelty_rule_declaration.md`):** cells that are positive in any informative
+  (`evidence/h64_build1_rejected_run_card.json`); its TIF is not published. The verdict logic also ignored novelty;
+  fixed in `scripts/run_h64.py`.
+- **Declared post hoc (`knowledge/39c_novelty_rule_declaration.md`):** cells that are positive in any informative
   registry raster are excluded. Universal-coverage probes (35 rasters whose 3 px halo covers at least 95% of the
   footprint) are excluded from the novelty test, as the lane's policy does. Without that, no cell remains.
-- **Independent re-check** (`work/h62/independent_uniqueness_check.py`, re-run outside the gate code): 0 of 548 identical;
+- **Independent re-check** (`work/h64/independent_uniqueness_check.py`, re-run outside the gate code): 0 of 548 identical;
   0 shared positive pixels with the 513 informative rasters (the gate counts 511; the difference is unresolved, see Limits).
   35 probe rasters share pixels with the file, as expected for rasters covering the footprint.
 - **The lane is the real blocker.** Nine informative rasters have more than 70% of this file's dots within 3 px of
@@ -43,7 +43,7 @@
 - **Literal lane:** DUPLICATE for every nonempty candidate on this registry, because the probes cover the footprint
   (the saturation finding in `knowledge/31`). The policy lane is also DUPLICATE, on the 70% rule above.
 
-## H62 results, each labelled
+## H64 results, each labelled
 
 **S1 (sufficiency, not a score):** View A out-of-quadrant AUC mean **0.5230**, minimum **0.4681**, threshold mean ≥ 0.60
 and fold ≥ 0.55. **FAIL.** H61's View A measured 0.516 on the same test; its learner was higher-capacity.
@@ -62,14 +62,14 @@ cluster bootstrap, 153 clusters, 1,000 draws). Fold-level arms; the final placem
 Paired, candidate minus single_B: **−0.143284**, 95% CI [−0.165564, −0.121457]. Holdout eligible: **False**.
 
 **Control.** single_B reproduces the committed H61 value to |Δ| 2.9 × 10⁻⁷, within the amended tolerance 0.001
-(`knowledge/34b`; the frozen prereg text is not edited). The H61 run-to-run spread was 5.4 × 10⁻⁵.
+(`knowledge/39b`; the frozen prereg text is not edited). The H61 run-to-run spread was 5.4 × 10⁻⁵.
 
 **ORGANIZER-CONFIRMED:** none. This round has no submission-page receipt. The 0.3774 and 0.3195 figures are from the
 official leaderboard page (fetched 2026-10-09) and the dated snapshots in `registry/`, not from an organiser receipt.
 
 ## Hypotheses and the frozen plan
 
-Five ranked hypotheses are pre-registered in `knowledge/34_hypotheses_H62_preregistered.md`. H62, the sufficiency-gated
+Five ranked hypotheses are pre-registered in `knowledge/39_hypotheses_H64_preregistered.md`. H64, the sufficiency-gated
 co-training, is now tested and negative. R5-H1, the trace-correction corridor, is ranked first by expected value but its
 gate has not been run. Repo context: `knowledge/01`, `03`, `10`, `25`, `27`, `31`, `33`, `34`, `34b`, `34c`.
 
@@ -81,13 +81,13 @@ gate has not been run. Repo context: `knowledge/01`, `03`, `10`, `25`, `27`, `31
   owner-reported (IR-H61-004). Official: https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/
 - Prevalence: the holdout withholds about 1% of the footprint, against an estimated 0.12–0.25% true prevalence, so the
   holdout density is optimistic by a factor of about 4–9.
-- The H61 and H62 fits are not bit-reproducible on this machine. Run-to-run spread is recorded above.
+- The H61 and H64 fits are not bit-reproducible on this machine. Run-to-run spread is recorded above.
 - Probe count: this check finds 35 probes (511 informative). H61's lane receipt reports 14 probes (531 informative).
   The classification rule is the same; the cause is unresolved and flagged.
 - The R5-H1 lane gate is not run. No slot is used.
 - The reasoning CSV is measured context plus a template hypothesis, not field-verified geology.
 
-<!--/H62-README-->
+<!--/H64-README-->
 
 <!--H61-README-->
 # GEMSDOE52 — a new research GeoTIFF and an explicit submit verdict

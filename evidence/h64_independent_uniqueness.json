@@ -1,8 +1,8 @@
 {
- "check": "independent re-check of docs/downloads/h62-candidate.tif against the registry, outside gates.py",
- "script": "work/h62/independent_uniqueness_check.py",
+ "check": "independent re-check of docs/downloads/h64-candidate.tif against the registry, outside gates.py",
+ "script": "work/h64/independent_uniqueness_check.py",
  "summary": {
-  "candidate": "h62-candidate.tif",
+  "candidate": "h64-candidate.tif",
   "candidate_positive_px": 37600,
   "priors_checked": 548,
   "priors_skipped": 0,

@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Render the H62 landing page, executive summary, results note and README block from the receipts.
+"""Render the H64 landing page, executive summary, results note and README block from the receipts.
 
-Every number written here is read from ``evidence/h62_*.json`` or the submission receipt.  Nothing is
+Every number written here is read from ``evidence/h64_*.json`` or the submission receipt.  Nothing is
 typed by hand, so the page cannot disagree with the evidence it cites.  Nothing here uploads anything
 or changes a verdict; it only reports the verdict the run card already holds.
 
-Run after ``scripts/run_h62.py build``:
-    .venv/bin/python scripts/publish_h62_site.py
+Run after ``scripts/run_h64.py build``:
+    .venv/bin/python scripts/publish_h64_site.py
 """
 from __future__ import annotations
 
@@ -36,12 +36,12 @@ def fmt_int(x) -> str:
 
 
 def main() -> int:
-    card = load("h62_run_card.json")
-    suf = load("h62_sufficiency.json")
-    hold = load("h62_holdout.json")["pooled"]
-    cv = load("h62_control_and_verdict.json")
-    lane_s = load("h62_lane_surface.json")
-    lane_d = load("h62_lane_dots.json")
+    card = load("h64_run_card.json")
+    suf = load("h64_sufficiency.json")
+    hold = load("h64_holdout.json")["pooled"]
+    cv = load("h64_control_and_verdict.json")
+    lane_s = load("h64_lane_surface.json")
+    lane_d = load("h64_lane_dots.json")
     stem = card["raster"]["file"][:-4]
     sub = json.loads((SUBM / f"{stem}.json").read_text())
     val = sub["validator"]
@@ -54,11 +54,11 @@ def main() -> int:
 
     # --------------------------------------------------------------- copies the page serves
     DOWN.mkdir(parents=True, exist_ok=True)
-    shutil.copy(SUBM / f"{stem}.tif", DOWN / "h62-candidate.tif")
-    shutil.copy(SUBM / f"{stem}.zip", DOWN / "h62-candidate.zip")
+    shutil.copy(SUBM / f"{stem}.tif", DOWN / "h64-candidate.tif")
+    shutil.copy(SUBM / f"{stem}.zip", DOWN / "h64-candidate.zip")
     (DOCS / "data").mkdir(exist_ok=True)
-    shutil.copy(EVID / "h62_run_card.json", DOCS / "data/h62_run_card.json")
-    (SUBM / "H62_LATEST.txt").write_text(f"{stem}.tif\n# pointer for the site; NOT an upload approval\n")
+    shutil.copy(EVID / "h64_run_card.json", DOCS / "data/h64_run_card.json")
+    (SUBM / "H64_LATEST.txt").write_text(f"{stem}.tif\n# pointer for the site; NOT an upload approval\n")
 
     gates_rows = [
         ("Format gate (single-band float32 GeoTIFF, EPSG:32611, shape and transform as pinned)",
@@ -101,14 +101,14 @@ def main() -> int:
             f'<link rel="stylesheet" href="assets/ctd5.css"></head><body>'
             f'<a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation">'
             f'<a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>'
-            f'<a href="index.html">Overview</a><a href="executive-summary.html">Submission guide</a>'
+            f'<a href="index.html">Overview</a><a href="h64-executive-summary.html">Submission guide</a>'
             f'<a href="archive-h61-landing.html">H61 (previous)</a><a href="downloads/index.html">Archive</a>'
             f'</nav></header><main id="main">')
     # Earlier rounds that the home and executive-summary pages keep pointing to (check_site enforces these).
     h58 = json.loads((DOCS / "data" / "h58_result.json").read_text())["artifact"]
     r5 = json.loads((DOCS / "data" / "submission_r5.json").read_text())
     earlier = f"""
-<section><h2>Earlier rounds still on this site</h2><p class="small">Each is a separate artefact with its own receipt. None of them is the H62 file, and none is approved for a slot.</p>
+<section><h2>Earlier rounds still on this site</h2><p class="small">Each is a separate artefact with its own receipt. None of them is the H64 file, and none is approved for a slot.</p>
 <ul>
 <li><b>R5, research candidate, not slot-approved.</b> OK TO DOWNLOAD for research. File
 <code>{esc(r5['file'])}</code>, SHA-256 prefix <code>{esc(r5['sha256'][:24])}</code>. Short path
@@ -123,18 +123,18 @@ def main() -> int:
     tail = "</main></body></html>\n"
 
     index = head + f"""
-<section class="hero"><div><div class="eyebrow">DOE GEMS / H62 · sufficiency-gated co-training</div>
+<section class="hero"><div><div class="eyebrow">DOE GEMS / H64 · sufficiency-gated co-training</div>
 <h1>Download the file.<br>Read the verdict first.</h1>
-<p class="lead">{esc(headline)} H62 tests one pre-registered change to View A's capacity and asks whether the
+<p class="lead">{esc(headline)} H64 tests one pre-registered change to View A's capacity and asks whether the
 co-training exchange becomes licensed. The sufficiency gate S1 fails on out-of-quadrant View A AUC, so the exchange is not run.</p>
 <div class="notice" role="note"><strong>{esc(notice)}</strong>
 <p>Verdict: <b>{esc(verdict)}</b></p></div>
-<div class="actions"><a class="button" href="downloads/h62-candidate.tif" download>Download the H62 GeoTIFF ↓</a>
-<a class="button secondary" href="downloads/h62-candidate.zip" download>Single-TIFF ZIP</a>
-<a class="button secondary" href="downloads/h62-a-only-reasoning.csv.gz" download>A-only reasoning CSV (gzip)</a></div>
+<div class="actions"><a class="button" href="downloads/h64-candidate.tif" download>Download the H64 GeoTIFF ↓</a>
+<a class="button secondary" href="downloads/h64-candidate.zip" download>Single-TIFF ZIP</a>
+<a class="button secondary" href="downloads/h64-a-only-reasoning.csv.gz" download>A-only reasoning CSV (gzip)</a></div>
 <p class="fileline">{fileline}</p>
-<p class="small"><a href="executive-summary.html">How to submit, and whether this file may be submitted →</a>
-· <a href="data/h62_run_card.json">Complete JSON run card ↗</a></p></section>
+<p class="small"><a href="h64-executive-summary.html">How to submit, and whether this file may be submitted →</a>
+· <a href="data/h64_run_card.json">Complete JSON run card ↗</a></p></section>
 <hr class="divider">
 <section><h2>Gates, measured</h2><div class="table-wrap"><table><thead><tr><th>Gate</th><th>Result</th></tr></thead>
 <tbody>{gates_html}</tbody></table></div>
@@ -154,7 +154,7 @@ Every arm placed 9,400 dots per fold at 3 px spacing. Best comparable control: <
 (amended tolerance {cv['control']['tolerance']}; see <code>knowledge/34b</code>). Holdout numbers are HOLDOUT-DTI, never
 organiser scores, and the hide-and-recover instrument does not rank board performance (<code>knowledge/10</code> §5).</p></section>
 <hr class="divider">
-<section><h2>View A sufficiency (the one thing H62 changed)</h2>
+<section><h2>View A sufficiency (the one thing H64 changed)</h2>
 <p class="small">Pre-registered gate S1: mean out-of-quadrant AUC ≥ 0.60 and every fold ≥ 0.55. Measured mean
 <b>{suf['mean_view_A_oof_auc']:.4f}</b>, minimum <b>{suf['min_fold_view_A_oof_auc']:.4f}</b>. Result: <b>{'PASS' if suf['S1_pass'] else 'FAIL'}</b>.
 H61 (higher-capacity View A) measured {suf['H61_reference_view_A_mean_oof_auc']:.4f}.</p>
@@ -170,8 +170,8 @@ sufficient. The post-arms equal the pre-arms by construction.</p></section>
 <li>It is not a leaderboard estimate. The best published board score is 0.3774 (rank 1), 0.3195 is rank 7 (DARD),
 and 0.2778 is rank 13 (extradr19): <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">official leaderboard</a>.</li>
 <li>Attribution caveat: the 0.2778 and 0.2600 figures are owner-reported, not organiser-confirmed (IR-H61-004).</li></ul>
-<p class="small"><a href="../knowledge/34_hypotheses_H62_preregistered.md">Five ranked hypotheses and the frozen protocol →</a> ·
-<a href="../knowledge/35_h62_results_and_limits.md">Results and limits →</a> · <a href="archive-h61-landing.html">H61 landing (previous round) →</a></p></section>
+<p class="small"><a href="../knowledge/39_hypotheses_H64_preregistered.md">Five ranked hypotheses and the frozen protocol →</a> ·
+<a href="../knowledge/40_h64_results_and_limits.md">Results and limits →</a> · <a href="archive-h61-landing.html">H61 landing (previous round) →</a></p></section>
 {earlier}""" + tail
 
     exec_html = head + f"""
@@ -184,8 +184,8 @@ promotion within the weekly cap shown on the submission page.</p>
 {card['novelty_rule']['worst_raster_near_dots']['share']:.3f} against one informative registry raster). The holdout
 does not beat single_B, and S1 failed. The file is not identical on decoded pixels to any registry raster, and it shares no positive pixel with any
 informative registry raster, so it is safe to download for research.</p></div>
-<div class="actions"><a class="button" href="downloads/h62-candidate.tif" download>Download the H62 GeoTIFF ↓</a>
-<a class="button secondary" href="downloads/h62-candidate.zip" download>Single-TIFF ZIP</a></div>
+<div class="actions"><a class="button" href="downloads/h64-candidate.tif" download>Download the H64 GeoTIFF ↓</a>
+<a class="button secondary" href="downloads/h64-candidate.zip" download>Single-TIFF ZIP</a></div>
 <p class="fileline">{fileline}</p>
 <section class="prose"><h2>The file contract (checked on disk)</h2><ul>
 <li>One band, float32, every value in [0, 1]; in practice exactly 0 or 1.</li>
@@ -202,17 +202,17 @@ rejection is caused by NaN/out-of-range bytes, and this file has neither).</li>
 <li>Submit only if the selector has approved this file. This file is not approved.</li></ol></section>
 {earlier}""" + tail
 
-    (DOCS / "index.html").write_text(index)
-    (DOCS / "executive-summary.html").write_text(exec_html)
+    (DOCS / "h64.html").write_text(index)
+    (DOCS / "h64-executive-summary.html").write_text(exec_html)
 
     # --------------------------------------------------------------- knowledge note and README block
-    kn = f"""# 35 · H62 results and limits (rendered from the receipts by `scripts/publish_h62_site.py`)
+    kn = f"""# 35 · H64 results and limits (rendered from the receipts by `scripts/publish_h64_site.py`)
 
 **Verdict: `{verdict}`**
 
 Artefact `{stem}.tif`, SHA-256 `{card['raster']['sha256']}`, {card['raster']['bytes']} bytes, {n_dots} emitted cells.
-Pre-registration: `knowledge/34_hypotheses_H62_preregistered.md` (SHA-256 in `registry/h62_preregistration.json`), amended
-for the control tolerance only: `knowledge/34b_amendment_control_tolerance.md`.
+Pre-registration: `knowledge/39_hypotheses_H64_preregistered.md` (SHA-256 in `registry/h64_preregistration.json`), amended
+for the control tolerance only: `knowledge/39b_amendment_control_tolerance.md`.
 
 ## 1 · Sufficiency gate S1 (the premise of co-training)
 Mean View-A out-of-quadrant AUC **{suf['mean_view_A_oof_auc']:.4f}** (fold minimum {suf['min_fold_view_A_oof_auc']:.4f}); thresholds mean ≥ 0.60, fold ≥ 0.55.
@@ -223,7 +223,7 @@ Mean View-A out-of-quadrant AUC **{suf['mean_view_A_oof_auc']:.4f}** (fold minim
 |---|---:|---:|---:|
 """ + "".join(f"| {a} | {sc[a]['dti']:.6f} | {ci(sc[a]['ci95'])} | {fmt_int(sc[a]['withheld_positive_pixels'])} |\n" for a in arms) + f"""
 Paired difference, candidate minus single_B: {pdiff['single_B']['delta']:+.6f}, 95% CI {ci(pdiff['single_B']['ci95'])}.
-Control: single_B {cv['control']['single_B_h62']:.10f} vs committed H61 {cv['control']['single_B_h61_committed']:.6f}, |Δ| {cv['control']['abs_difference']:.2e}.
+Control: single_B {cv['control']['single_B_h64']:.10f} vs committed H61 {cv['control']['single_B_h61_committed']:.6f}, |Δ| {cv['control']['abs_difference']:.2e}.
 
 ## 3 · Gates
 """ + "".join(f"* {a}: **{b}**\n" for a, b in gates_rows) + f"""
@@ -233,8 +233,8 @@ Control: single_B {cv['control']['single_B_h62']:.10f} vs committed H61 {cv['con
 * Prevalence: the holdout withholds about 1.04% of the footprint; the competition truth is about 0.12–0.25%.
 * The lane gate, uniqueness and projections are measured against the registry census available on disk at build time.
 """
-    (DOCS.parent / "knowledge/35_h62_results_and_limits.md").write_text(kn)
-    print("published:", DOCS / "index.html", DOCS / "executive-summary.html")
+    (DOCS.parent / "knowledge/40_h64_results_and_limits.md").write_text(kn)
+    print("published:", DOCS / "h64.html", DOCS / "h64-executive-summary.html")
     return 0
 
 

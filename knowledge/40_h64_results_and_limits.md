@@ -1,10 +1,10 @@
-# 35 · H62 results and limits (rendered from the receipts by `scripts/publish_h62_site.py`)
+# 35 · H64 results and limits (rendered from the receipts by `scripts/publish_h64_site.py`)
 
 **Verdict: `NEGATIVE, research-only. DOWNLOAD YES (format-valid and unique); SUBMIT NO (holdout does not beat single_B and/or literal lane not PASS). gates: format=True lane=False unique=True not_union=True S1=False holdout_beats_single_B=False`**
 
-Artefact `gems52-h62-sufgate-cotrain-37600px-20261009T022631Z.tif`, SHA-256 `739a8e7c4b54436508fc2b9da6b8ddc56e44a0d1ad273dc88c07a2003637f8bb`, 133668 bytes, 37600 emitted cells.
-Pre-registration: `knowledge/34_hypotheses_H62_preregistered.md` (SHA-256 in `registry/h62_preregistration.json`), amended
-for the control tolerance only: `knowledge/34b_amendment_control_tolerance.md`.
+Artefact `gems52-h64-sufgate-cotrain-37600px-20261009T022631Z.tif`, SHA-256 `739a8e7c4b54436508fc2b9da6b8ddc56e44a0d1ad273dc88c07a2003637f8bb`, 133668 bytes, 37600 emitted cells.
+Pre-registration: `knowledge/39_hypotheses_H64_preregistered.md` (SHA-256 in `registry/h64_preregistration.json`), amended
+for the control tolerance only: `knowledge/39b_amendment_control_tolerance.md`.
 
 ## 1 · Sufficiency gate S1 (the premise of co-training)
 Mean View-A out-of-quadrant AUC **0.5230** (fold minimum 0.4681); thresholds mean ≥ 0.60, fold ≥ 0.55.

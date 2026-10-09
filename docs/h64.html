@@ -1,0 +1,63 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="assets/ctd5.css"></head><body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a><a href="index.html">Overview</a><a href="h64-executive-summary.html">Submission guide</a><a href="archive-h61-landing.html">H61 (previous)</a><a href="downloads/index.html">Archive</a></nav></header><main id="main">
+<section class="hero"><div><div class="eyebrow">DOE GEMS / H64 · sufficiency-gated co-training</div>
+<h1>Download the file.<br>Read the verdict first.</h1>
+<p class="lead">A valid, unique file and a negative verdict. H64 tests one pre-registered change to View A's capacity and asks whether the
+co-training exchange becomes licensed. The sufficiency gate S1 fails on out-of-quadrant View A AUC, so the exchange is not run.</p>
+<div class="notice" role="note"><strong>OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT · DO NOT UPLOAD</strong>
+<p>Verdict: <b>NEGATIVE, research-only. DOWNLOAD YES (format-valid and unique); SUBMIT NO (holdout does not beat single_B and/or literal lane not PASS). gates: format=True lane=False unique=True not_union=True S1=False holdout_beats_single_B=False</b></p></div>
+<div class="actions"><a class="button" href="downloads/h64-candidate.tif" download>Download the H64 GeoTIFF ↓</a>
+<a class="button secondary" href="downloads/h64-candidate.zip" download>Single-TIFF ZIP</a>
+<a class="button secondary" href="downloads/h64-a-only-reasoning.csv.gz" download>A-only reasoning CSV (gzip)</a></div>
+<p class="fileline">gems52-h64-sufgate-cotrain-37600px-20261009T022631Z.tif<br>133,668 bytes · SHA-256 739a8e7c4b54436508fc2b9da6b8ddc56e44a0d1ad273dc88c07a2003637f8bb · 37,600 emitted cells · values exactly {0,1}, 0 NaN</p>
+<p class="small"><a href="h64-executive-summary.html">How to submit, and whether this file may be submitted →</a>
+· <a href="data/h64_run_card.json">Complete JSON run card ↗</a></p></section>
+<hr class="divider">
+<section><h2>Gates, measured</h2><div class="table-wrap"><table><thead><tr><th>Gate</th><th>Result</th></tr></thead>
+<tbody><tr><td>Format gate (single-band float32 GeoTIFF, EPSG:32611, shape and transform as pinned)</td><td>PASS</td></tr><tr><td>Values exactly {0, 1}; 0 NaN; 0 infinite</td><td>PASS</td></tr><tr><td>Decoded-pattern uniqueness (not identical to any of the 548 registry rasters)</td><td>PASS</td></tr><tr><td>Exact novelty: share of emitted cells that are not positive in any of the 511 informative registry rasters</td><td>1.0000</td></tr><tr><td>Not the union of the two views</td><td>PASS</td></tr><tr><td>Sufficiency gate S1 (View A out-of-quadrant AUC)</td><td>FAIL</td></tr><tr><td>Lane gate, literal, surface / dots</td><td>PASS / DUPLICATE/STOP</td></tr><tr><td>Lane gate, saturation policy, surface / dots</td><td>PASS / DUPLICATE/STOP</td></tr><tr><td>Holdout beats single_B (paired CI lower bound &gt; 0)</td><td>FAIL</td></tr></tbody></table></div>
+<p class="small">Local validator only. Not an organiser acceptance receipt. Lane gate statistics are the literal
+rule and the saturation policy from <code>gems52.gates.lane_report</code>.</p></section>
+<hr class="divider">
+<section><h2>HOLDOUT-DTI (gems52-pooled-hide-v1)</h2>
+<p class="small">53,186 withheld positive pixels · α 0.2 / β 0.8 ·
+300 m triangular kernel · 95% paired physical-cluster bootstrap, 153 clusters, 1000 draws.
+Every arm placed 9,400 dots per fold at 3 px spacing. Best comparable control: <code>single_B</code>.</p>
+<div class="table-wrap"><table><thead><tr><th>Arm</th><th>HOLDOUT-DTI</th><th>95% CI</th><th>Withheld positives</th></tr></thead>
+<tbody><tr><td>single_A</td><td class='numeric'>0.065101</td><td class='numeric'>[0.048643, 0.081659]</td><td class='numeric'>53,186</td></tr><tr><td>single_B</td><td class='numeric'>0.174517</td><td class='numeric'>[0.152316, 0.196299]</td><td class='numeric'>53,186</td></tr><tr><td>union_max</td><td class='numeric'>0.149659</td><td class='numeric'>[0.128675, 0.171048]</td><td class='numeric'>53,186</td></tr><tr><td>disagreement_pre</td><td class='numeric'>0.031233</td><td class='numeric'>[0.021219, 0.043309]</td><td class='numeric'>53,186</td></tr><tr><td>disagreement_post</td><td class='numeric'>0.031233</td><td class='numeric'>[0.021219, 0.043309]</td><td class='numeric'>53,186</td></tr><tr><td>random</td><td class='numeric'>0.080426</td><td class='numeric'>[0.070223, 0.090973]</td><td class='numeric'>53,186</td></tr></tbody></table></div>
+<p class="small">Paired differences (candidate = disagreement_post):</p>
+<div class="table-wrap"><table><thead><tr><th>Paired difference</th><th>Δ DTI</th><th>95% CI</th></tr></thead>
+<tbody><tr><td>disagreement_post − single_B</td><td class='numeric'>-0.143284</td><td class='numeric'>[-0.165564, -0.121457]</td></tr><tr><td>disagreement_post − union_max</td><td class='numeric'>-0.118426</td><td class='numeric'>[-0.137595, -0.100261]</td></tr><tr><td>disagreement_post − single_A</td><td class='numeric'>-0.033868</td><td class='numeric'>[-0.044621, -0.022982]</td></tr><tr><td>disagreement_post − random</td><td class='numeric'>-0.049192</td><td class='numeric'>[-0.059197, -0.038806]</td></tr></tbody></table></div>
+<p class="small">The single_B control reproduces the H61 committed value to |Δ| = 2.9e-07
+(amended tolerance 0.001; see <code>knowledge/34b</code>). Holdout numbers are HOLDOUT-DTI, never
+organiser scores, and the hide-and-recover instrument does not rank board performance (<code>knowledge/10</code> §5).</p></section>
+<hr class="divider">
+<section><h2>View A sufficiency (the one thing H64 changed)</h2>
+<p class="small">Pre-registered gate S1: mean out-of-quadrant AUC ≥ 0.60 and every fold ≥ 0.55. Measured mean
+<b>0.5230</b>, minimum <b>0.4681</b>. Result: <b>FAIL</b>.
+H61 (higher-capacity View A) measured 0.5163.</p>
+<div class="table-wrap"><table><thead><tr><th>Fold</th><th>View A OOF AUC</th><th>Positives / negatives</th></tr></thead>
+<tbody><tr><td>fold 0</td><td class='numeric'>0.5186</td><td class='numeric'>20,000 / 40,000</td></tr><tr><td>fold 1</td><td class='numeric'>0.6004</td><td class='numeric'>10,677 / 40,000</td></tr><tr><td>fold 2</td><td class='numeric'>0.4681</td><td class='numeric'>6,813 / 40,000</td></tr><tr><td>fold 3</td><td class='numeric'>0.5051</td><td class='numeric'>8,387 / 40,000</td></tr></tbody></table></div>
+<p class="small">Because S1 failed, no pseudo-label was created: the exchange is not licensed by Blum–Mitchell when a view is not
+sufficient. The post-arms equal the pre-arms by construction.</p></section>
+<hr class="divider">
+<section><h2>What this does and does not show</h2><ul>
+<li>It shows that making View A less complex does not make it generalise across quadrants on these layers.</li>
+<li>It does not show that potential-field data contain no fault information; it shows this learner on these layers does not transfer.</li>
+<li><b>NO CERTIFIED LEADERBOARD GAIN.</b> Nothing on this page is an organiser score or a promise of a board gain.</li>
+<li>It is not a leaderboard estimate. The best published board score is 0.3774 (rank 1), 0.3195 is rank 7 (DARD),
+and 0.2778 is rank 13 (extradr19): <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">official leaderboard</a>.</li>
+<li>Attribution caveat: the 0.2778 and 0.2600 figures are owner-reported, not organiser-confirmed (IR-H61-004).</li></ul>
+<p class="small"><a href="../knowledge/39_hypotheses_H64_preregistered.md">Five ranked hypotheses and the frozen protocol →</a> ·
+<a href="../knowledge/40_h64_results_and_limits.md">Results and limits →</a> · <a href="archive-h61-landing.html">H61 landing (previous round) →</a></p></section>
+
+<section><h2>Earlier rounds still on this site</h2><p class="small">Each is a separate artefact with its own receipt. None of them is the H64 file, and none is approved for a slot.</p>
+<ul>
+<li><b>R5, research candidate, not slot-approved.</b> OK TO DOWNLOAD for research. File
+<code>gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif</code>, SHA-256 prefix <code>d2bfb0f79328399354943bd1</code>. Short path
+<a href="downloads/r5-candidate.tif" download>downloads/r5-candidate.tif</a>. P(beating 0.2778) = 0.366 under the frozen prior; the instrument is disqualified (<code>knowledge/10</code> §5). Details: <a href="r5.html">R5 page</a>.</li>
+<li><b>H58, research-only, not approved to submit.</b> File <code>gems52-h58-coldgeo-consensus-22px-a55b0dee38-research.tif</code>, SHA-256 prefix <code>130c242e33aef398c44b22cd</code>. Short path
+<a href="downloads/h58-candidate.tif" download>downloads/h58-candidate.tif</a>. Details: <a href="h58.html">H58 page</a>.</li>
+<li><b>H57 alternate, research archive, not approved.</b> File <code>gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif</code>. Details: <a href="h57-creditcore.html">H57 credit-core archive</a>.</li>
+<li><b>H55-EDGE, failed-gate archive.</b> Main incumbent unchanged. Details: <a href="h55-edge.html">h55-edge.html</a>.</li>
+<li><b>H61, previous round, negative. Do not upload.</b> Details: <a href="archive-h61-landing.html">H61 landing</a>.</li>
+</ul></section>
+</main></body></html>

@@ -1,8 +1,8 @@
 {
- "round": "H62",
+ "round": "H64",
  "generated_utc": "2026-10-09T01:24:18+00:00",
  "hypothesis": "Sufficiency-gated co-training: a lower-capacity View A that generalises out of quadrant makes the exchange licensed; then disagreement ranks buried-cover candidates.",
- "mechanism": "Blum-Mitchell needs sufficient views. View A capacity is the single change (knowledge/34 \u00a74).",
+ "mechanism": "Blum-Mitchell needs sufficient views. View A capacity is the single change (knowledge/39 \u00a74).",
  "named_non_fault_mimic": "basin-margin or basement-high gravity/magnetic gradient, lithologic contact, volcanic or basin-fill density boundary, upward-continued flight-line artefact",
  "sufficiency_S1": {
   "mean_view_A_oof_auc": 0.5230469927534889,
@@ -187,7 +187,7 @@
   "not_union_pass": true
  },
  "raster": {
-  "file": "gems52-h62-sufgate-cotrain-37600px-20261009T011359Z.tif",
+  "file": "gems52-h64-sufgate-cotrain-37600px-20261009T011359Z.tif",
   "sha256": "4aff8657389b60c4f2de09f8d2bec076e08b8e7e865460b3273862b841e1e28c",
   "bytes": 130023,
   "zip_sha256": "48ec78af625d8d27b383f602a0dcdd46cf46fde48eb4c3b6a659cd1316d8d73b"
@@ -211,8 +211,8 @@
    4508550.0
   ]
  },
- "submission_name": "gems52-h62-sufgate-cotrain-37600px-20261009T011359Z",
- "note": "H62 S1 fail: co-train, A capacity cut, 3px dots, >200m off catalogue; research only, not slot-approved",
+ "submission_name": "gems52-h64-sufgate-cotrain-37600px-20261009T011359Z",
+ "note": "H64 S1 fail: co-train, A capacity cut, 3px dots, >200m off catalogue; research only, not slot-approved",
  "note_chars": 102,
  "counts": {
   "budget": 37600,

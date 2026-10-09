@@ -1,8 +1,8 @@
-# 34 · H62 — five ranked hypotheses, and one pre-registered validation before any H62 fit
+# 39 · H64 — five ranked hypotheses, and one pre-registered validation before any H64 fit
 
-**Status: PRE-REGISTERED before any H62 model is fitted.** The SHA-256 of this file is recorded in
-`registry/h62_preregistration.json`; `scripts/run_h62.py` refuses to run if the hash moves. Nothing
-below was written after seeing an H62 number. Frozen against: `knowledge/26_current_user_brief.md`
+**Status: PRE-REGISTERED before any H64 model is fitted.** The SHA-256 of this file is recorded in
+`registry/h64_preregistration.json`; `scripts/run_h64.py` refuses to run if the hash moves. Nothing
+below was written after seeing an H64 number. Frozen against: `knowledge/26_current_user_brief.md`
 (the brief this session carries verbatim in substance), `knowledge/27_r5_findings.md`,
 `knowledge/31_h61_results_and_limits.md`, `knowledge/33_hypotheses_R5.md`.
 
@@ -43,9 +43,9 @@ Source: <https://www.drivendata.org/competitions/306/competition-doe-gems/leader
 | 13 | extradr19 | **0.2778** | 12 |
 
 * **0.3195 is rank 7, not the top.** The brief's sentence "0.3195 is the highest score right now"
-  is wrong; the board top is 0.3774. Flagged as `IR-H62-001`.
+  is wrong; the board top is 0.3774. Flagged as `IR-H64-001`.
 * Between the repo's 2026-10-08 snapshot and this fetch, rank 8 changed from `mzoorob 0.2884` to
-  `mzoorob 0.2902`. The board moves; every bar is dated. Flagged as `IR-H62-002`.
+  `mzoorob 0.2902`. The board moves; every bar is dated. Flagged as `IR-H64-002`.
 
 ### 1.3 Obtainability of the candidate data, checked this session
 
@@ -77,7 +77,7 @@ a measured DTI.
 * Cost: medium (1–2 days). Gate: `knowledge/33` §A-gate, not yet run (`knowledge/27` §8 lists it
   as the change that "would change the answer"). **Not validated this session: no receipt exists.**
 
-**H-2 · Sufficiency-gated co-training (`H62`, validated in this session — §4).** *Rank 2 by expected value; lowest cost of the validatable ideas.*
+**H-2 · Sufficiency-gated co-training (`H64`, validated in this session — §4).** *Rank 2 by expected value; lowest cost of the validatable ideas.*
 * Layers: the same two views as H61. View A potential-field/subsurface; View B DEM curvature/slope,
   band 6 (radiometric total count, Spearman 1.0000 vs the external GeoDAWN TC grid), external K, Th, U.
 * Mechanism under test: H61 measured View A out-of-quadrant AUC **0.516** against an in-quadrant fit of
@@ -87,7 +87,7 @@ a measured DTI.
 * Why it could catch a fault missing from the catalogue: the exchange can only pseudo-label
   whole segments where A is confident and B abstains, i.e. buried-cover candidates.
 * Non-fault mimic: a basement-high or a basin-margin gravity gradient that A learns as "fault-like".
-* Differs from implemented work: H61 used the unregularised 36-channel learner; H62 changes only the
+* Differs from implemented work: H61 used the unregularised 36-channel learner; H64 changes only the
   View A capacity (see §4).
 
 **H-3 · Hot-spring alignment at fault intersections (new; not implemented anywhere in this repo).**
@@ -126,7 +126,7 @@ to beat `single_B`. A failed gate is a valid result.
 
 ---
 
-## 4 · H62 frozen protocol (one experiment; the budget counts it once)
+## 4 · H64 frozen protocol (one experiment; the budget counts it once)
 
 **Change relative to H61, and nothing else.**
 * View A learner only: `HistGradientBoostingClassifier(max_iter=120, learning_rate=0.05,
@@ -157,7 +157,7 @@ physical-cluster bootstrap, 1000 draws.
    leaderboard gain. Otherwise → **NEGATIVE, research-only**: DOWNLOAD YES if format-valid and unique,
    SUBMIT NO.
 
-**Budget.** One experiment (H62-A) — the reproduction of H61 is a verification, not an experiment. No
+**Budget.** One experiment (H64-A) — the reproduction of H61 is a verification, not an experiment. No
 weekly slot is touched. No threshold is changed after a result.
 
 **Pre-registered predictions** (to be checked, not tuned to): S1 fails with probability ≥ 0.5 by

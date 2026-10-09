@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""H62 -- sufficiency-gated two-view co-training: one pre-registered change to View A capacity.
+"""H64 -- sufficiency-gated two-view co-training: one pre-registered change to View A capacity.
 
-Preregistered in ``knowledge/34_hypotheses_H62_preregistered.md`` and pinned by
-``registry/h62_preregistration.json``; this runner refuses to start if either hash has moved.
+Preregistered in ``knowledge/39_hypotheses_H64_preregistered.md`` and pinned by
+``registry/h64_preregistration.json``; this runner refuses to start if either hash has moved.
 
 What is shared and what is not
 ------------------------------
@@ -11,19 +11,19 @@ What is shared and what is not
   ``gems52.evaluate_holdout`` (gems52-pooled-hide-v1).  The only change to the shared runner is the
   ``learner_for(view, seed)`` hook, whose default is the H61 learner (H61 receipts are unchanged).
 * Round-specific: ``learner_for`` for View A (the single pre-registered change), the sufficiency gate
-  S1, the output names (``h62_*``), and the build (placement, not-union, A-only reasoning, gates),
+  S1, the output names (``h64_*``), and the build (placement, not-union, A-only reasoning, gates),
   which mirrors ``scripts/build_h61_submission.py`` line for line and imports only its prior census.
 
 Stages
 ------
-    fit        base.stage_fit with the H62 View-A learner (both views, every fold)
+    fit        base.stage_fit with the H64 View-A learner (both views, every fold)
     sufficiency  gate S1 on View A out-of-quadrant AUC (pre-registered thresholds)
     exchange   base.stage_exchange only if S1 passes (S2 is evaluated inside it); otherwise the
                post-arms are declared equal to the pre-arms and no pseudo-label is created
     holdout    base.stage_holdout, six arms, pooled HOLDOUT-DTI + paired 95% CI
     build      placement, gates, GeoTIFF, reasoning CSV, run card (nothing is uploaded)
 
-Usage: ``python scripts/run_h62.py [fit|exchange|holdout|build|all]``
+Usage: ``python scripts/run_h64.py [fit|exchange|holdout|build|all]``
 """
 from __future__ import annotations
 
@@ -53,23 +53,23 @@ import build_h61_submission as b61                                   # noqa: E40
 from gems52 import gates, nodes, spatial, structural, submission_writer  # noqa: E402
 
 SEED = base.SEED
-WORK = ROOT / "work/h62"
+WORK = ROOT / "work/h64"
 EVID = ROOT / "evidence"
 DOCS = ROOT / "docs/data"
 DOWN = ROOT / "docs/downloads"
 SUBM = ROOT / "submission"
-REG_PATH = ROOT / "registry/h62_preregistration.json"
+REG_PATH = ROOT / "registry/h64_preregistration.json"
 STAGE_EV = WORK / "stage_evidence"          # the holdout stage reads one receipt by a fixed name
-BUDGET = int(os.environ.get("H62_BUDGET", "37600"))   # default = template budget; see knowledge/34c
-FEASIBILITY_ONLY = os.environ.get("H62_FEASIBILITY_ONLY") == "1"
+BUDGET = int(os.environ.get("H64_BUDGET", "37600"))   # default = template budget; see knowledge/34c
+FEASIBILITY_ONLY = os.environ.get("H64_FEASIBILITY_ONLY") == "1"
 # exact_and_lane (default): per-raster 70% cap enforced; exact_only: exact pixel novelty only, the
 # per-raster cap is measured and reported but not enforced (used for the downloadable, lane-DUPLICATE build)
-NOVELTY_MODE = os.environ.get("H62_NOVELTY_MODE", "exact_and_lane")
+NOVELTY_MODE = os.environ.get("H64_NOVELTY_MODE", "exact_and_lane")
 EXACT_ONLY = NOVELTY_MODE == "exact_only"
 NOVELTY_RADIUS_PX = 3
 MAX_NOVELTY_ITER = 12
 NOVELTY_MIN_PX = 3.0
-PREFIX = "gems52-h62-"
+PREFIX = "gems52-h64-"
 CHAMPION_REF = ("ref_h33_2_b2", 0.2778)
 
 
@@ -81,12 +81,12 @@ def now() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
-def write_h62(name: str, obj) -> Path:
+def write_h64(name: str, obj) -> Path:
     EVID.mkdir(parents=True, exist_ok=True)
-    p = EVID / f"h62_{name}.json"
+    p = EVID / f"h64_{name}.json"
     p.write_text(json.dumps(obj, indent=1, allow_nan=False, default=str) + "\n")
     DOCS.mkdir(parents=True, exist_ok=True)
-    (DOCS / f"h62_{name}.json").write_text(p.read_text())
+    (DOCS / f"h64_{name}.json").write_text(p.read_text())
     return p
 
 
@@ -99,24 +99,24 @@ def check_prereg() -> dict:
     reg = json.loads(REG_PATH.read_text())
     doc = ROOT / reg["hypothesis_document"]
     if sha(doc) != reg["hypothesis_sha256"]:
-        raise SystemExit("H62 preregistered document changed after registration; refusing to run")
+        raise SystemExit("H64 preregistered document changed after registration; refusing to run")
     for am in reg.get("amendments", []):
         if sha(ROOT / am["document"]) != am["sha256"]:
-            raise SystemExit(f"H62 amendment changed after registration: {am['document']}")
-    # every threshold not restated here is H61's, unchanged (knowledge/34 §4: "identical to H61")
+            raise SystemExit(f"H64 amendment changed after registration: {am['document']}")
+    # every threshold not restated here is H61's, unchanged (knowledge/39 §4: "identical to H61")
     h61 = json.loads((ROOT / "registry/h61_preregistration.json").read_text())["thresholds"]
     reg["thresholds"] = {**h61, **reg["thresholds"]}
     return reg
 
 
 def control_and_verdict(reg) -> dict:
-    """Amended single_B control (|delta| <= tolerance) and the frozen verdict rule (knowledge/34 §4)."""
-    rec = json.loads((EVID / "h62_holdout.json").read_text())
+    """Amended single_B control (|delta| <= tolerance) and the frozen verdict rule (knowledge/39 §4)."""
+    rec = json.loads((EVID / "h64_holdout.json").read_text())
     pooled = rec["pooled"]
     sB = float(pooled["scores"]["single_B"]["dti"])
     ref = float(reg["thresholds"]["single_B_h61_control_holdout_dti"])
     tol = float(reg["thresholds"]["single_B_control_abs_tolerance"])
-    control = dict(single_B_h62=sB, single_B_h61_committed=ref, abs_difference=abs(sB - ref),
+    control = dict(single_B_h64=sB, single_B_h61_committed=ref, abs_difference=abs(sB - ref),
                    tolerance=tol, pass_=bool(abs(sB - ref) <= tol))
     pd = pooled["paired_differences"]["single_B"]          # candidate minus single_B
     lo = float(pd["ci95"][0])
@@ -124,14 +124,14 @@ def control_and_verdict(reg) -> dict:
     beats = bool(cand > sB and lo > 0.0)
     out = dict(control=control, candidate_arm="disagreement_post", candidate_dti=cand,
                paired_delta_vs_single_B=pd, holdout_eligible=beats)
-    write_h62("control_and_verdict", out)
+    write_h64("control_and_verdict", out)
     if not control["pass_"]:
         raise SystemExit(f"single_B control outside tolerance: {control}; pipeline defect, stopping")
     return out
 
 
 def view_a_learner(seed=SEED):
-    """The one pre-registered change: View-A capacity (knowledge/34 §4)."""
+    """The one pre-registered change: View-A capacity (knowledge/39 §4)."""
     return HistGradientBoostingClassifier(max_iter=120, learning_rate=0.05, max_leaf_nodes=7,
                                           min_samples_leaf=400, l2_regularization=5.0,
                                           early_stopping=False, random_state=seed)
@@ -142,11 +142,11 @@ def learner_for(view: str, seed=SEED):
 
 
 def redirect() -> None:
-    """Point the shared H61 stages at H62 storage.  Nothing under evidence/h61_* is written."""
+    """Point the shared H61 stages at H64 storage.  Nothing under evidence/h61_* is written."""
     WORK.mkdir(parents=True, exist_ok=True)
     STAGE_EV.mkdir(parents=True, exist_ok=True)
     base.WORK = WORK
-    base.write = write_h62
+    base.write = write_h64
     base.learner_for = learner_for
     base.EVID = STAGE_EV           # stage_holdout reads "h61_pseudo_exchange.json" by its fixed name
 
@@ -182,7 +182,7 @@ def stage_sufficiency(reg) -> dict:
                           and rec["min_fold_view_A_oof_auc"] >= th["S1_sufficiency_min_fold_oof_auc"])
     rec["finished_utc"] = now()
     rec["H61_reference_view_A_mean_oof_auc"] = 0.5163
-    write_h62("sufficiency", rec)
+    write_h64("sufficiency", rec)
     log(f"S1 sufficiency: mean {rec['mean_view_A_oof_auc']:.4f} min {rec['min_fold_view_A_oof_auc']:.4f} "
         f"-> {'PASS' if rec['S1_pass'] else 'FAIL'}")
     return rec
@@ -198,7 +198,7 @@ def mirror_pre_to_post(folds) -> None:
 def run_exchange_or_skip(reg, s1: dict) -> dict:
     if s1["S1_pass"]:
         # S2 is evaluated inside the shared stage, which writes the full receipt itself
-        # (h62_pseudo_exchange.json).  Mirror that receipt, unmodified, for the holdout stage.
+        # (h64_pseudo_exchange.json).  Mirror that receipt, unmodified, for the holdout stage.
         ex = base.stage_exchange()
         (STAGE_EV / "h61_pseudo_exchange.json").write_text(json.dumps(ex, default=str) + "\n")
         return ex
@@ -210,7 +210,7 @@ def run_exchange_or_skip(reg, s1: dict) -> dict:
                        reason=("S1 sufficiency failed: View A is not sufficient out of quadrant, so "
                                "Blum-Mitchell does not license an exchange. Post-arms := pre-arms."))
     receipt["finished_utc"] = now()
-    write_h62("pseudo_exchange", receipt)
+    write_h64("pseudo_exchange", receipt)
     # the shared holdout stage reads this exact file name from base.EVID (= STAGE_EV)
     (STAGE_EV / "h61_pseudo_exchange.json").write_text(json.dumps(receipt, default=str) + "\n")
     return receipt
@@ -234,7 +234,7 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
         cat = ds.read(1) == 1
     del sub
     cat_dist = ndi.distance_transform_edt(~cat, sampling=100.0)
-    # buffer_px is not restated in the H62 prereg; the H62 folds were built with the H61 value (80 px),
+    # buffer_px is not restated in the H64 prereg; the H64 folds were built with the H61 value (80 px),
     # read from the frozen H61 prereg so the build and the fit use identical fold geometry.
     h61_th = json.loads((ROOT / "registry/h61_preregistration.json").read_text())["thresholds"]
     buffer_px = int(h61_th["buffer_px"])
@@ -257,7 +257,7 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
     n_allowed_pre_novelty = int(allowed.sum())
     log(f"emission domain: eligible {int(eligible.sum())} -> allowed {n_allowed_pre_novelty}")
 
-    # NOVELTY RULE (declared post hoc in knowledge/34c; see README). The first H62 build was not
+    # NOVELTY RULE (declared post hoc in knowledge/34c; see README). The first H64 build was not
     # unique: every emitted cell already occurred in some registry raster (novel_fraction 0.0).
     # Rule: no emitted cell within NOVELTY_RADIUS_PX of any positive pixel of an informative registry
     # raster; the radius is the lane's own near-dot radius (3 px). A first attempt that used all 548
@@ -297,7 +297,7 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
                    informative_rasters=len(informative), probe_rasters=len(probes), probes=probes,
                    rasters_skipped_shape=n_skip, exact_union_px=int(exact_union.sum()),
                    allowed_before=n_allowed_pre_novelty, allowed_after_exact=int(allowed.sum()),
-                   declared="post hoc, after build 1 failed uniqueness (novel_fraction 0.0); see knowledge/34c")
+                   declared="post hoc, after build 1 failed uniqueness (novel_fraction 0.0); see knowledge/39c")
     log(f"novelty (1) exact: informative {len(informative)}, probes {len(probes)}; allowed "
         f"{n_allowed_pre_novelty} -> {int(allowed.sum())}")
     if int(allowed.sum()) < BUDGET:
@@ -434,7 +434,7 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
                     max(1e-9, float(np.ptp(field[allowed]))), 0.0).astype(np.float32)
     lane_surface = gates.lane_report(surf, allowed, priors, sample=ROOT / "data/sample_submission.tif",
                                      phase="surface", log=log)
-    write_h62("lane_surface", lane_surface)
+    write_h64("lane_surface", lane_surface)
 
     emission = emission_final
     n_dots = int(emission.sum())
@@ -462,28 +462,28 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
 
     # the TIF and its single-band validator
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    stem = f"gems52-h62-sufgate-cotrain-{BUDGET}px-{stamp}"
+    stem = f"gems52-h64-sufgate-cotrain-{BUDGET}px-{stamp}"
     path = SUBM / f"{stem}.tif"
     SUBM.mkdir(exist_ok=True)
     s1_word = "S1 pass" if s1["S1_pass"] else "S1 fail"
     if EXACT_ONLY:
-        note = (f"H62 {s1_word}; exact-novel vs registry; lane DUPLICATE (70% rule); "
+        note = (f"H64 {s1_word}; exact-novel vs registry; lane DUPLICATE (70% rule); "
                 f"research only, do not submit")
     else:
-        note = (f"H62 {s1_word}: co-train, A capacity cut, 3px dots, >200m off catalogue; "
+        note = (f"H64 {s1_word}: co-train, A capacity cut, 3px dots, >200m off catalogue; "
                 f"research only, not slot-approved")
     assert len(note) <= 140, len(note)
     name = stem
     receipt = submission_writer.write_submission(
         path, pred, sample=ROOT / "data/sample_submission.tif", footprint=sub_finite,
         note=note[:140], name=name[:140],
-        metadata=dict(round="H62", preregistration=reg["hypothesis_sha256"], budget=BUDGET))
+        metadata=dict(round="H64", preregistration=reg["hypothesis_sha256"], budget=BUDGET))
     fmt = receipt["validator"]
     lane_dots = gates.lane_report(pred, eligible, priors, sample=ROOT / "data/sample_submission.tif",
                                   phase="dots", log=log)
     uniq = gates.uniqueness_report(pred, [p for p in priors if p != path], top=None)   # tier 1: exact, all priors
     uniq_inf = gates.uniqueness_report(pred, [p for p in informative_paths if p != path], top=None)  # tier 2: novelty
-    write_h62("lane_dots", lane_dots)
+    write_h64("lane_dots", lane_dots)
 
     # geological reasoning for every emitted cell, measured context + template hypothesis
     ys, xs = np.nonzero(emission)
@@ -491,7 +491,7 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
            "X_mag_TMI_up150_grad3", "raw_band_13", "raw_band_17")
     ctx_rows = store.gather(ys * shape[1] + xs, list(CTX))
     ctx = {n: ctx_rows[:, j] for j, n in enumerate(CTX)}
-    csv_path = DOWN / "h62-a-only-reasoning.csv"
+    csv_path = DOWN / "h64-a-only-reasoning.csv"
     DOWN.mkdir(parents=True, exist_ok=True)
     with csv_path.open("w", newline="") as fh:
         w = csv.writer(fh)
@@ -524,14 +524,14 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
                 "MEASURED CONTEXT + TEMPLATE HYPOTHESIS; no field observation, no geologist review"])
     log(f"reasoning rows: {n_dots} -> {csv_path}")
 
-    # the H61 run card records these; H62 keeps the same fields
-    hold = json.loads((EVID / "h62_holdout.json").read_text()) if (EVID / "h62_holdout.json").exists() else None
+    # the H61 run card records these; H64 keeps the same fields
+    hold = json.loads((EVID / "h64_holdout.json").read_text()) if (EVID / "h64_holdout.json").exists() else None
     card = dict(
-        round="H62",
+        round="H64",
         generated_utc=now(),
         hypothesis="Sufficiency-gated co-training: a lower-capacity View A that generalises out of "
                    "quadrant makes the exchange licensed; then disagreement ranks buried-cover candidates.",
-        mechanism="Blum-Mitchell needs sufficient views. View A capacity is the single change (knowledge/34 §4).",
+        mechanism="Blum-Mitchell needs sufficient views. View A capacity is the single change (knowledge/39 §4).",
         named_non_fault_mimic="basin-margin or basement-high gravity/magnetic gradient, lithologic contact, "
                               "volcanic or basin-fill density boundary, upward-continued flight-line artefact",
         sufficiency_S1=dict(mean_view_A_oof_auc=s1["mean_view_A_oof_auc"],
@@ -572,14 +572,14 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
                                           and (uniq_inf.get("novel_fraction") or 0.0) >= 1.0),
                              not_union_ok=not_union["not_union_pass"],
                              s1=s1["S1_pass"],
-                             holdout_ok=bool(json.loads((EVID / "h62_control_and_verdict.json").read_text())
+                             holdout_ok=bool(json.loads((EVID / "h64_control_and_verdict.json").read_text())
                                              ["holdout_eligible"])))
-    write_h62("run_card", card)
+    write_h64("run_card", card)
     return card
 
 
 def verdict_text(*, fmt_ok, lane_ok, uniq_ok, not_union_ok, s1, holdout_ok) -> str:
-    """Frozen rule (knowledge/34 §4): eligible for the selector only if every gate passes AND the
+    """Frozen rule (knowledge/39 §4): eligible for the selector only if every gate passes AND the
     holdout beats single_B.  Even then nothing is promoted and no slot is used."""
     if fmt_ok and lane_ok and uniq_ok and not_union_ok and s1 and holdout_ok:
         return "ELIGIBLE FOR SELECTOR, NOT PROMOTED (no slot used; holdout is not board evidence)"
@@ -597,9 +597,9 @@ def main(argv) -> int:
         raise SystemExit(f"unknown stage {stage!r}")
     reg = check_prereg()
     redirect()
-    load = lambda name: json.loads((EVID / f"h62_{name}.json").read_text())   # noqa: E731
+    load = lambda name: json.loads((EVID / f"h64_{name}.json").read_text())   # noqa: E731
     if stage in ("fit", "all"):
-        log("=== H62 stage fit (View A learner changed; View B identical to H61) ===")
+        log("=== H64 stage fit (View A learner changed; View B identical to H61) ===")
         base.stage_fit()
     if stage in ("sufficiency", "all"):
         s1 = stage_sufficiency(reg)
@@ -610,7 +610,7 @@ def main(argv) -> int:
     if stage == "holdout" or stage == "build":
         exch = load("pseudo_exchange")
     if stage in ("holdout", "all"):
-        log("=== H62 stage holdout ===")
+        log("=== H64 stage holdout ===")
         base.stage_holdout()
         cv = control_and_verdict(reg)
         log(f"single_B control: {cv['control']}; holdout-eligible: {cv['holdout_eligible']}")
