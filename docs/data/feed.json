@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-09T00:24:35Z",
+ "generated_utc": "2026-10-09T01:58:44Z",
  "branch": "arena/b64de1f3-gemsdoe52",
  "repo": "buffedlizard55-lab/GEMSDOE52",
  "evidence_copied": [
@@ -136,7 +136,17 @@
   "h61_lane_dots.json",
   "h61_lane_surface.json",
   "h61_submission.json",
-  "h61_run_card.json"
+  "h61_run_card.json",
+  "h63_canary.json",
+  "h63_fit_checkpoint.json",
+  "h63_independence.json",
+  "h63_pseudo_exchange.json",
+  "h63_holdout.json",
+  "h63_projection.json",
+  "h63_lane_dots.json",
+  "h63_lane_surface.json",
+  "h63_submission.json",
+  "h63_run_card.json"
  ],
  "files": [
   "a_only_reasoning_r2.json",
@@ -220,31 +230,31 @@
  "leaderboard_last_observed_utc": "2026-10-08",
  "prior_entries": 395,
  "eligible_prior_rasters": 389,
- "scientific_gate": "CLOSED \u2014 H61 verdict is negative; research download only",
+ "scientific_gate": "CLOSED \u2014 H63 verdict is negative; research download only",
  "slots_used": 0,
  "latest_research": {
-  "run_id": "h61-7c868531",
-  "round": "H61",
-  "file": "gems52-h61-deepsharp-cotrain-37600px.tif",
-  "download": "downloads/h61-candidate.tif",
-  "bytes": 131771,
-  "sha256": "7c86853164f9cfa7aea34de029c7d5ccf3a6b43dbbb2b14de570e558384d2755",
+  "run_id": "h63-aa41d0cd",
+  "round": "H63",
+  "file": "gems52-h63-stepview-cotrain-37600px.tif",
+  "download": "downloads/h63-candidate.tif",
+  "bytes": 140421,
+  "sha256": "aa41d0cd4658b2f0887180bf85132453dbf8f9408272d2c880d1fe4e822caa9f",
   "emitted_px": 37600,
   "verdict": "negative",
   "download_ok": true,
   "submit_ok": false,
   "hash_verified": true,
-  "holdout_dti": 0.030584408210788217,
+  "holdout_dti": 0.04025690885595976,
   "holdout_ci95": [
-   0.020940468893667626,
-   0.04223810880975772
+   0.03210579911766438,
+   0.04866412085586052
   ],
   "evaluator": "gems52-pooled-hide-v1",
   "withheld_positive_pixels": 53186,
   "lane_literal": "DUPLICATE/STOP",
   "lane_policy": "DUPLICATE/STOP",
   "slots_used": 0,
-  "evidence": "evidence/h61_run_card.json"
+  "evidence": "evidence/h63_run_card.json"
  },
  "freshness_note": "Local evidence feed only. It is not a live leaderboard and it never reports an organiser score; every number is HOLDOUT-DTI, MEASURED-FROM-PINNED-BYTES, OWNER-REPORTED or PROJECTION and is labelled as such.",
  "previous_research": {
