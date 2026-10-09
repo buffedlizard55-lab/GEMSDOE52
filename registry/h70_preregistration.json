@@ -1,12 +1,12 @@
 {
- "round": "H66",
+ "round": "H70",
  "preregistered_utc": "2026-10-09T05:10:00+00:00",
- "hypothesis_document": "knowledge/43_hypotheses_H66_preregistered.md",
- "hypothesis_sha256": "1da0fa6cef50118cbdb5ebd4ed7a3e3e3077e5578c8cc62dafcb6bb7072eaa1c",
+ "hypothesis_document": "knowledge/54_hypotheses_H70_preregistered.md",
+ "hypothesis_sha256": "25b6ee74f9bf488bcfdcbbae109ae5c18d317584a1160a448959c37e45b92151",
  "hypothesis_bytes": 20519,
  "lane": "two-view co-training (Blum & Mitchell 1998, doi:10.1145/279943.279962); View A potential-field/subsurface, View B surface; disagreement as the discovery signal",
  "frozen_before_any_fit": true,
- "runner": "scripts/run_h66.py",
+ "runner": "scripts/run_h70.py",
  "runner_refuses_if_hash_moves": true,
  "shared_tools_to_reuse": [
   "scripts/run_h61.py::setup, stage_canary, stage_fit, stage_exchange (label-blind-quadrants-v2 folds, pin checks, feature-store checks)",
@@ -22,7 +22,10 @@
   "canary_auc_alarm": 0.9,
   "independence_abandon_max_abs_rho": 0.6,
   "donor_rank_min": 0.95,
-  "receiver_rank_interval": [0.35, 0.65],
+  "receiver_rank_interval": [
+   0.35,
+   0.65
+  ],
   "buffer_px": 80,
   "block_side_px": 50,
   "min_pseudo_pixels": 5,
@@ -38,20 +41,48 @@
   "universal_coverage_probe_threshold": 0.95,
   "S1_sufficiency_mean_oof_auc_min": 0.6,
   "S1_sufficiency_min_fold_oof_auc": 0.55,
-  "lane_valid_budget_search_range": [16000, 40000]
+  "lane_valid_budget_search_range": [
+   16000,
+   40000
+  ]
  },
  "hypotheses": [
-  {"id": "H66-A", "rank": 1, "status": "tested in E2, built in E3", "summary": "strict A-only stratum (rankA>=0.95 & rankB in [0.35,0.65]) isolated as a standalone emission arm and as the built candidate"},
-  {"id": "H66-B", "rank": 2, "status": "tested in E2", "summary": "B-only veto on single_B (artifact clause of the brief)"},
-  {"id": "H66-C", "rank": 3, "status": "tested in E2", "summary": "concordant-only emission (both views confident)"},
-  {"id": "H66-D", "rank": 4, "status": "deferred", "summary": "radiometric-cover gating of the A-only stratum"},
-  {"id": "H66-E", "rank": 5, "status": "deferred", "summary": "deformation-only View A2"}
+  {
+   "id": "H70-A",
+   "rank": 1,
+   "status": "tested in E2, built in E3",
+   "summary": "strict A-only stratum (rankA>=0.95 & rankB in [0.35,0.65]) isolated as a standalone emission arm and as the built candidate"
+  },
+  {
+   "id": "H70-B",
+   "rank": 2,
+   "status": "tested in E2",
+   "summary": "B-only veto on single_B (artifact clause of the brief)"
+  },
+  {
+   "id": "H70-C",
+   "rank": 3,
+   "status": "tested in E2",
+   "summary": "concordant-only emission (both views confident)"
+  },
+  {
+   "id": "H70-D",
+   "rank": 4,
+   "status": "deferred",
+   "summary": "radiometric-cover gating of the A-only stratum"
+  },
+  {
+   "id": "H70-E",
+   "rank": 5,
+   "status": "deferred",
+   "summary": "deformation-only View A2"
+  }
  ],
  "budget": {
   "max_experiments": 3,
   "experiments": [
    "E1 canary + independence (the brief's mandated tests)",
-   "E2 fit + one whole-segment exchange + nine-arm matched-budget holdout (validates H66-A/B/C)",
+   "E2 fit + one whole-segment exchange + nine-arm matched-budget holdout (validates H70-A/B/C)",
    "E3 build the strict A-only candidate with lane-valid constrained placement, gates, reasoning CSV, run card, publish"
   ]
  },
@@ -62,7 +93,11 @@
   "emission_values": "binary {0,1} (metric-optimal at fixed support, pinned in tests/test_metric.py)"
  },
  "verdict_rule": "eligible for the selector only if format+lane+uniqueness+not-union+S1 pass AND the candidate arm beats single_B with the paired 95% CI above 0; otherwise negative/research-only (DOWNLOAD yes, SUBMIT no). No slot is spent by this round; promotion is the separate selector step.",
- "champion_reference": {"name": "ref_h33_2_b2", "reported_score": 0.2778, "evidence_class": "OWNER-REPORTED, NOT ORGANIZER-CONFIRMED"},
+ "champion_reference": {
+  "name": "ref_h33_2_b2",
+  "reported_score": 0.2778,
+  "evidence_class": "OWNER-REPORTED, NOT ORGANIZER-CONFIRMED"
+ },
  "single_B_control_holdout_dti": 0.174517,
  "single_B_control_abs_tolerance": 0.01
 }

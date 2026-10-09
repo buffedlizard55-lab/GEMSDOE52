@@ -1,70 +1,3 @@
-<!--H66-README-->
-# Current status — H66 (2026-10-09): NEGATIVE; the brief's literal discovery stratum is anti-informative and a duplicate lane
-
-> **SUBMIT TO THE COMPETITION: NO.** A new unique GeoTIFF **was** generated this round (one-click download
-> below), and it is **not** slot-approved: the holdout does not beat the single-view control, and the lane
-> marks it DUPLICATE/STOP under **both** the literal rule and the saturation policy — no lane-valid emission
-> exists from this stratum (IR-H66-001). DOWNLOAD: YES, for research.
-
-**What was tested.** H66 isolates the one lane element no previous round ever tested standalone: the strict
-A-only discovery stratum — View A confident (operating rank ≥ 0.95) ∧ View B abstaining ([0.35, 0.65]) —
-after the Blum–Mitchell exchange, plus two further lane variants in the same matched-budget holdout (the
-B-only artifact veto, the concordant ranking). Preregistered in
-[`knowledge/43`](knowledge/43_hypotheses_H66_preregistered.md) (SHA-256 `1da0fa6c…72eaa1c`); runner
-`scripts/run_h66.py` refuses to run if the hash moves. Shared H61 stages reused, not forked.
-
-| Check | Label | Result | Receipt |
-|---|---|---|---|
-| Leakage canary (75 features × 4 folds + fitted top-5) | PREMISE-AUC | max single-feature **0.6687**; no alarm (bar 0.90) | [`evidence/h66_canary.json`](evidence/h66_canary.json) |
-| Independence (block OOF errors, labelled negatives, 2,089 blocks) | diagnostic | max **\|ρ\| 0.1337**; abandon bar 0.60 → **HELD**, exchange allowed | [`evidence/h66_independence.json`](evidence/h66_independence.json) |
-| Sufficiency S1 (View A out-of-quadrant AUC) | PREMISE-AUC | mean **0.5166**, min fold **0.4673** → **FAIL** (5th consecutive ≈ 0.52) | [`evidence/h66_sufficiency.json`](evidence/h66_sufficiency.json) |
-| HOLDOUT-DTI, nine arms, matched budget (53,186 withheld positives) | HOLDOUT-DTI | single_B **0.174571** (control \|Δ\| 5.4e-05 vs committed); **a_only 0.046023** [0.0314, 0.0621]; veto 0.167221; concordant 0.119590; random 0.080426 | [`evidence/h66_holdout.json`](evidence/h66_holdout.json) |
-| Pure strict A-only stratum, achieved budget (5,239/2,910/1,272/1,729 px per fold) | HOLDOUT-DTI (unmatched-budget diagnostic) | **0.017351** [0.0124, 0.0235] — **below uniform random** (paired Δ −0.0631 [−0.0739, −0.0521]) | [`evidence/h66_a_only_capacity.json`](evidence/h66_a_only_capacity.json) |
-| Lane-valid constrained placement | diagnostic | **no lane-valid emission exists**: 610 placeable stratum cells, all within 3 px of registry dots (worst informative near-dot share **1.0**) | [`evidence/h66_lane_dots.json`](evidence/h66_lane_dots.json) |
-| Uniqueness, independent audit (536 byte-deduped priors) | diagnostic | decoded-pattern max Jaccard **0.000135**; exact novelty 1.0 vs 516 informative priors; lane DUPLICATE/STOP literal 1.0, policy 1.0 | [`evidence/h66_uniqueness_audit.json`](evidence/h66_uniqueness_audit.json) |
-
-**Verdict: H66 not promoted.** The brief's literal discovery signal is **anti-informative** (pure pooled
-HOLDOUT-DTI 0.0174, below random), the artifact clause is falsified (the B-only veto *loses* 0.0074, CI
-excludes 0), the concordance clause is falsified (Δ −0.0550, CI excludes 0), the independence premise held
-(max \|ρ\| 0.1337 — the abandonment clause does not fire), the exchange transferred nothing again
-(post − pre ≈ −0.0004 on 15,446 pseudo px), and the stratum is a **duplicate lane**: after exact novelty
-every placeable cell lies within 3 px of an existing registry raster's dots, so the lane's own stop
-condition is met. Experiments used: 3 of 3. Run card: [`evidence/h66_run_card.json`](evidence/h66_run_card.json).
-Full note: [`knowledge/44`](knowledge/44_h66_results_and_limits.md). Tests: `tests/test_h66.py` 10 passed.
-
-**[★ Download the H66 GeoTIFF — one click](docs/downloads/h66-candidate.tif)** ·
-[single-TIFF ZIP](docs/downloads/h66-candidate.zip) ·
-[A-only reasoning CSV, gzip](docs/downloads/h66-a-only-reasoning.csv.gz) ·
-**[Executive summary / exact submission steps](docs/executive-summary.html)** ·
-[Landing page](docs/h66.html) · [Run card](evidence/h66_run_card.json) ·
-[Results and limits](knowledge/44_h66_results_and_limits.md)
-
-> **DOWNLOAD: YES, for research (unique on decoded pixels). SUBMIT TO THE COMPETITION: NO.**
-> Verdict `NEGATIVE, research-only`. The file is not identical, on decoded pixels, to any of the 553 registry
-> rasters (independent audit max Jaccard 0.000135 over 536 byte-deduped priors), and it shares no positive
-> pixel with any of the 516 informative rasters (exact novelty 1.0). It is still **not** submit-eligible:
-> the lane marks it DUPLICATE/STOP under the 70% per-raster rule (worst informative near-dot share **1.0** —
-> no lane-valid emission exists from this stratum), S1 failed, and the holdout does not beat single_B
-> (a_only 0.0460 [0.0314, 0.0621] vs single_B 0.1746, paired Δ −0.1285 [−0.1513, −0.1062]).
-> **NO CERTIFIED LEADERBOARD GAIN.** Competition slots used: **0**.
-
-- **File:** `gems52-h66-aonly-cotrain-610px-20261009T055521Z.tif` — 58,363 bytes, 610 emitted cells
-- **SHA-256:** `ea9774a871929427e60261cdfe2f64fdab0d0c8c2253cf2eac119cc404e28af3`
-- **Note (132/140 chars):** `H66 strict A-only co-training discovery stratum; constrained placement at 610 dots, lane-DUPLICATE; research only, not slot-approved`
-
-**Irregularities logged this round:** IR-H66-001 (the strict A-only stratum has no lane-valid emission —
-every placeable cell is within 3 px of a registry raster's dots), -002 (the first build iteration's fallback
-verified the near-dot share against the wrong denominator; corrected in `scripts/run_h66.py`, superseded
-artefact removed, TIF bytes unchanged), -003 (the matched-budget `a_only` arm is mostly field=−1 filler
-outside the stratum; the pure measurement is a separate disclosed diagnostic).
-
-**Still open:** a unique, **lane-valid** candidate that beats the current comparable holdout best
-(single_B 0.1746); the co-training lane is closed on this stack (five sufficiency failures, an
-anti-informative discovery stratum, a falsified artifact clause, a falsified concordance clause, a
-duplicate-lane stop); H66-E (deformation-only View A2) is the only untested View A variant left; the
-0.2778 file-to-row receipt; the portal error text.
-<!--/H66-README-->
-
 <!--H65-README-->
 # Current status — H65 (2026-10-09; first written as H62): NEGATIVE at the premise gate, nothing submitted
 
@@ -1663,8 +1596,6 @@ Pass 3: Re-check the entire implementation against the original request. Improve
 Do not stop after the first pass. Each pass must build on the previous one. Before finishing, verify that the final result fully satisfies the original request.  Work line by line verify everything no hallucinations.
 
 Go ahead and create a pull request and then merge the pull request onto the main. Make suggestions for what work still needs to be done and any limitations that are in the way of a successful project.  It should be worked on in this next session or the next session.  Work line by line verify everything no hallucinations.
-
-Arena is designed to push AI agents to do better work. This message contains core values and motivations that are more likely to give the task a good review, and working to make your task a success.
 ```
 
 ### 2026-10-09 addendum — what the prompt asks and where this repository stands

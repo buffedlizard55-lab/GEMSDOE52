@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
-"""Publish the H66 round to the static GitHub Pages site.
+"""Publish the H70 round to the static GitHub Pages site.
 
-Reads the H66 receipts (every number is injected from ``evidence/h66_*.json`` or the submission
+Reads the H70 receipts (every number is injected from ``evidence/h70_*.json`` or the submission
 receipt; nothing is hand-typed), stages the download aliases, refreshes the local feed, and
 regenerates:
 
-* ``docs/index.html``            -- H66 hero, unmistakable download/submit verdict, holdout table
+* ``docs/index.html``            -- H70 hero, unmistakable download/submit verdict, holdout table
 * ``docs/executive-summary.html``-- the submission guide (exact steps, file contract, verdict)
-* ``docs/h66.html``              -- the H66 landing/audit page
-* ``docs/h66-executive-summary.html`` -- the same guide under the round's own name
-* ``docs/downloads/index.html``  -- the H66 rows and the latest-research notice
-* ``docs/data/feed.json``        -- ``latest_research`` for the H66 artefact
+* ``docs/h70.html``              -- the H70 landing/audit page
+* ``docs/h70-executive-summary.html`` -- the same guide under the round's own name
+* ``docs/downloads/index.html``  -- the H70 rows and the latest-research notice
+* ``docs/data/feed.json``        -- ``latest_research`` for the H70 artefact
 
 The global submission pointer (``submission/LATEST.txt`` / ``docs/data/submission.json``) is NOT
-moved: H66 is a negative round, and only a round that passes its gates may take the pointer.
+moved: H70 is a negative round, and only a round that passes its gates may take the pointer.
 
-Run after ``scripts/run_h66.py build``:  ``.venv/bin/python scripts/publish_h66_site.py``
+Run after ``scripts/run_h70.py build``:  ``.venv/bin/python scripts/publish_h70_site.py``
 """
 from __future__ import annotations
 
@@ -48,7 +48,7 @@ def ci(pair) -> str:
 
 
 def load(name: str) -> dict:
-    return json.loads((EVID / f"h66_{name}.json").read_text())
+    return json.loads((EVID / f"h70_{name}.json").read_text())
 
 
 def sha(path: Path) -> str:
@@ -56,22 +56,22 @@ def sha(path: Path) -> str:
 
 
 NAV = ('<a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>\n'
-       '<a href="index.html">Overview</a><a href="h66.html">H66 run &amp; evidence</a>'
+       '<a href="index.html">Overview</a><a href="h70.html">H70 run &amp; evidence</a>'
        '<a href="executive-summary.html">Submission guide</a>'
-       '<a href="h66-sources.html">Sources</a><a href="downloads/index.html">Archive</a>')
+       '<a href="h70-sources.html">Sources</a><a href="downloads/index.html">Archive</a>')
 
 HEAD = ('<!doctype html>\n<html lang="en"><head><meta charset="utf-8">'
         '<meta name="viewport" content="width=device-width,initial-scale=1">\n'
         '<meta name="description" content="{desc}">\n<title>{title} · GEMSDOE52</title>'
-        '<link rel="stylesheet" href="assets/ctd5.css"><script src="assets/h66.js" defer></script>'
+        '<link rel="stylesheet" href="assets/ctd5.css"><script src="assets/h70.js" defer></script>'
         '</head>\n<body><a class="skip" href="#main">Skip to content</a>'
         '<header><nav aria-label="Main navigation">{nav}</nav></header>\n<main id="main">')
 
 FOOT = ('</main><footer>Independent competition research, not an official DOE or DrivenData site. '
         'Predictions are not verified faults or geothermal discoveries.<br>\n'
         '<a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code &amp; reproducibility</a> · '
-        '<a href="h66.html#limits">Limitations</a> · '
-        '<a href="data/h66_run_card.json">JSON run card</a> · H66 / 2026-10-09</footer></body></html>')
+        '<a href="h70.html#limits">Limitations</a> · '
+        '<a href="data/h70_run_card.json">JSON run card</a> · H70 / 2026-10-09</footer></body></html>')
 
 
 def page(title: str, desc: str, body: str) -> str:
@@ -81,7 +81,7 @@ def page(title: str, desc: str, body: str) -> str:
 def main() -> int:
     card = load("run_card")
     hold = load("holdout")
-    cap = json.loads((EVID / "h66_a_only_capacity.json").read_text())
+    cap = json.loads((EVID / "h70_a_only_capacity.json").read_text())
     s1 = load("sufficiency")
     indep = load("independence")
     exch = load("pseudo_exchange")
@@ -97,9 +97,9 @@ def main() -> int:
     ndots = card["counts"]["placed"]
 
     # ---- stage the download aliases (the build already wrote them; verify byte-identity) ----
-    for src, dst in ((SUBM / tif_name, DL / "h66-candidate.tif"),
-                     (SUBM / f"{stem}.zip", DL / "h66-candidate.zip"),
-                     (SUBM / f"{stem}.json", DL / "h66-candidate-receipt.json")):
+    for src, dst in ((SUBM / tif_name, DL / "h70-candidate.tif"),
+                     (SUBM / f"{stem}.zip", DL / "h70-candidate.zip"),
+                     (SUBM / f"{stem}.json", DL / "h70-candidate-receipt.json")):
         if not dst.exists() or sha(dst) != sha(src):
             shutil.copyfile(src, dst)
         if sha(dst) != sha(src):
@@ -124,7 +124,7 @@ def main() -> int:
     d_rnd = pooled["paired_differences"]["random"]
     verdict = card["verdict"]
     download_ok = bool(val.get("ok")) and bool(card["uniqueness"]["tier1_exact_all_priors"]["canonical_pattern_unique"])
-    submit_ok = False  # H66 is negative; the selector step owns any future promotion
+    submit_ok = False  # H70 is negative; the selector step owns any future promotion
     lane_pol = lane_dots["policy"]["verdict"]
     lane_lit = lane_dots["literal"]["verdict"]
     lane_pol_near = lane_dots["policy"]["max_near_3px_fraction"]
@@ -148,10 +148,10 @@ def main() -> int:
         f'<td class="numeric">{f6(f["a_only_pure"]["dti"])}</td></tr>\n'
         for f in cap["folds"])
 
-    actions = (f'<div class="actions"><a class="button" href="downloads/h66-candidate.tif" download>'
-               f'Download the H66 GeoTIFF ↓</a>'
-               f'<a class="button secondary" href="downloads/h66-candidate.zip" download>Single-TIFF ZIP</a>'
-               f'<a class="button secondary" href="downloads/h66-a-only-reasoning.csv.gz" download>'
+    actions = (f'<div class="actions"><a class="button" href="downloads/h70-candidate.tif" download>'
+               f'Download the H70 GeoTIFF ↓</a>'
+               f'<a class="button secondary" href="downloads/h70-candidate.zip" download>Single-TIFF ZIP</a>'
+               f'<a class="button secondary" href="downloads/h70-a-only-reasoning.csv.gz" download>'
                f'A-only reasoning CSV (gzip)</a></div>')
     fileline = (f'<p class="fileline">{esc(tif_name)}<br>{nbytes:,} bytes · SHA-256 {sha256} · '
                 f'{ndots:,} emitted cells · values exactly {{0,1}}, 0 NaN</p>')
@@ -230,22 +230,22 @@ def main() -> int:
            f'<a href="downloads/{esc(h57cc_file)}" download><code>{esc(h57cc_file)}</code></a> · '
            f'research only, not approved to submit.</p>' if h57cc_file else ""))
 
-    # ================================================================ h66.html (audit)
-    body = f"""<div class="notice" role="note" style="margin:0 0 1rem"><strong>Latest research round: H66 (negative).</strong>
+    # ================================================================ h70.html (audit)
+    body = f"""<div class="notice" role="note" style="margin:0 0 1rem"><strong>Latest research round: H70 (negative).</strong>
 Download yes, for research only; submit no. The brief's literal discovery stratum (A confident ∧ B abstains) is
 measured for the first time, isolated and pure: it is <b>anti-informative</b> on this stack.
-<a href="h66-executive-summary.html">H66 submission guide</a> · <a href="h64.html">Previous round (H64)</a></div>
-<section class="hero"><div><div class="eyebrow">DOE GEMS / H66 · strict A-only isolation, two-view co-training</div>
+<a href="h70-executive-summary.html">H70 submission guide</a> · <a href="h64.html">Previous round (H64)</a></div>
+<section class="hero"><div><div class="eyebrow">DOE GEMS / H70 · strict A-only isolation, two-view co-training</div>
 <h1>Download the file.<br>Read the verdict first.</h1>
-<p class="lead">H66 isolates the one lane element no previous round tested standalone: the strict A-only
+<p class="lead">H70 isolates the one lane element no previous round tested standalone: the strict A-only
 discovery stratum — View A (potential field / subsurface) confident, View B (surface) abstaining — after the
 Blum–Mitchell exchange, and validates two further lane variants (the B-only artifact veto, the concordant
 ranking) in one matched-budget holdout.</p>
 {notice}
 {actions}
 {fileline}
-<p class="small"><a href="h66-executive-summary.html">Exactly what may be uploaded, and how →</a> ·
-<a href="data/h66_run_card.json">Complete JSON run card ↗</a></p></div>
+<p class="small"><a href="h70-executive-summary.html">Exactly what may be uploaded, and how →</a> ·
+<a href="data/h70_run_card.json">Complete JSON run card ↗</a></p></div>
 <aside class="panel" aria-label="Submission readiness"><div class="label">Readiness / measured, not promised</div>
 <div class="status-line"><span>Single-band float32 GeoTIFF</span><span class="good">PASS</span></div>
 <div class="status-line"><span>Finite, values in [0, 1]</span><span class="good">PASS</span></div>
@@ -258,7 +258,7 @@ ranking) in one matched-budget holdout.</p>
 <div class="status-line"><span>Verdict</span><span class="bad">NEGATIVE</span></div>
 <p class="fine">A valid file is not an approved competition entry. Promotion to a weekly slot is a
 separate selector step.</p>
-<a class="small" href="data/h66_run_card.json">Inspect the complete JSON run card ↗</a></aside></section>
+<a class="small" href="data/h70_run_card.json">Inspect the complete JSON run card ↗</a></aside></section>
 <hr class="divider">
 <section><h2>Gates, measured</h2><div class="table-wrap"><table>
 <thead><tr><th>Gate</th><th>Result</th></tr></thead><tbody>
@@ -266,7 +266,7 @@ separate selector step.</p>
 <p class="small">Local validator only; not an organiser acceptance receipt. The literal lane rule is
 saturated on this registry by a spacing-5 lattice probe whose 3 px halo covers ≥ 95 % of the eligible
 footprint, so it reads DUPLICATE/STOP for every nonempty candidate — a measured property of the registry
-(<code>evidence/ctd5_registry_saturation.json</code>), not of this file. The H66 build is lane-valid under
+(<code>evidence/ctd5_registry_saturation.json</code>), not of this file. The H70 build is lane-valid under
 the saturation-aware policy <b>by construction</b>: every informative prior is constrained from the first
 placement and the budget was discovered by feasibility probes.</p></section>
 <hr class="divider">
@@ -304,11 +304,11 @@ quadrant (OOF AUC ≈ 0.52), so the disagreement signal inverts.</p></section>
 <section><h2>The two further lane variants (both negative, paired CIs exclude 0)</h2>
 <div class="table-wrap"><table><thead><tr><th>arm</th><th>HOLDOUT-DTI</th><th>95% CI</th>
 <th>Δ vs single_B</th><th>95% CI</th></tr></thead><tbody>
-<tr><td>single_B_veto_Bonly (H66-B: B-only artifact veto)</td><td class="numeric">{f6(arms["single_B_veto_Bonly"]["dti"])}</td>
+<tr><td>single_B_veto_Bonly (H70-B: B-only artifact veto)</td><td class="numeric">{f6(arms["single_B_veto_Bonly"]["dti"])}</td>
 <td class="numeric">{ci(arms["single_B_veto_Bonly"]["ci95"])}</td>
 <td class="numeric">{hold["pooled"]["single_B_veto_Bonly"]["paired_differences"]["single_B"]["delta"]:+.6f}</td>
 <td class="numeric">{ci(hold["pooled"]["single_B_veto_Bonly"]["paired_differences"]["single_B"]["ci95"])}</td></tr>
-<tr><td>concordant (H66-C: both-views-agree ranking)</td><td class="numeric">{f6(arms["concordant"]["dti"])}</td>
+<tr><td>concordant (H70-C: both-views-agree ranking)</td><td class="numeric">{f6(arms["concordant"]["dti"])}</td>
 <td class="numeric">{ci(arms["concordant"]["ci95"])}</td>
 <td class="numeric">{hold["pooled"]["concordant"]["paired_differences"]["single_B"]["delta"]:+.6f}</td>
 <td class="numeric">{ci(hold["pooled"]["concordant"]["paired_differences"]["single_B"]["ci95"])}</td></tr>
@@ -333,7 +333,7 @@ transferable out-of-quadrant skill.</p></section>
 <td class="numeric">&gt; 0</td><td>no transfer ({exch["total_pseudo_pixels"]:,} pseudo px)</td></tr>
 </tbody></table></div>
 <p class="small">Fifth consecutive round with View A OOF AUC ≈ 0.52 (H61 0.5163 · H63 0.5362 · H64 0.5230 ·
-H65 0.5202 · H66 0.5166). The independence premise held, so the brief's abandonment clause does not fire;
+H65 0.5202 · H70 0.5166). The independence premise held, so the brief's abandonment clause does not fire;
 the method fails on sufficiency, and now also on the discovery signal itself.</p></section>
 <hr class="divider">
 <section id="limits"><h2>Limits</h2><ul>
@@ -350,14 +350,14 @@ is PUBLIC BOARD or OWNER-REPORTED, none ORGANIZER-CONFIRMED.</li>
 universal-coverage probes by measured coverage, and the literal statistics remain published in the receipts.</li>
 <li>All HOLDOUT-DTI numbers: evaluator <code>gems52-pooled-hide-v1</code>, 53,186 withheld positives,
 95 % paired 20 km-cluster bootstrap, 1,000 draws.</li></ul></section>"""
-    (DOCS / "h66.html").write_text(page(
-        "H66 research GeoTIFF and explicit submission status",
+    (DOCS / "h70.html").write_text(page(
+        "H70 research GeoTIFF and explicit submission status",
         "Strict A-only two-view co-training GeoTIFF with measured gates and an explicit download/submit verdict.",
         body))
 
     # ================================================================ executive summary (guide)
-    guide_body = f"""<div class="notice" role="note" style="margin:0 0 1rem"><strong>Latest research round: H66 (negative).</strong>
-Download yes, for research only; submit no. <a href="h66.html">H66 run &amp; evidence</a> ·
+    guide_body = f"""<div class="notice" role="note" style="margin:0 0 1rem"><strong>Latest research round: H70 (negative).</strong>
+Download yes, for research only; submit no. <a href="h70.html">H70 run &amp; evidence</a> ·
 <a href="h64.html">Previous round (H64)</a></div>
 <div class="eyebrow">Executive summary / submission guide</div>
 <h1>Download in one click.<br>Do not upload this run.</h1>
@@ -392,7 +392,7 @@ lattice-probe saturation); the file is lane-valid under the saturation-aware pol
 anything on its own.</li>
 <li>Inputs are pinned owner mirrors, not organiser-authenticated downloads, and the current weekly allowance
 is not observable from this sandbox.</li></ul>
-<a href="h66.html">Read the full run and its limits →</a></section></div>
+<a href="h70.html">Read the full run and its limits →</a></section></div>
 <section class="prose"><h2>About “Predicted values must be in range [0, 1]”</h2>
 <p>That portal rejection is a property of the uploaded bytes, and this exporter makes it unreachable:
 <code>gems52.grid.write_geotiff</code> refuses to write unless the array is float32, finite everywhere,
@@ -403,7 +403,7 @@ precaution — we do <b>not</b> claim that NaN caused your specific historical r
 bytes and the portal receipt were never available here.</p>
 <h2>Exact competition steps — only for an approved candidate</h2><ol>
 <li>Obtain the separate selector's approval after the scientific, provenance, uniqueness and current-best
-gates pass. <b>H66 is negative; stop here for this file.</b></li>
+gates pass. <b>H70 is negative; stop here for this file.</b></li>
 <li>Check the <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">official rules</a> and the remaining
 weekly allowance shown on your authenticated
 <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">submission page</a>.
@@ -424,9 +424,9 @@ the file.</p>
 <textarea id="submission-note" readonly rows="3">{esc(card["note"])}</textarea>
 <div class="copy-row"><button class="copy" data-copy-id="submission-note">Copy note</button></div>
 <p class="copy-status" id="copy-status" aria-live="polite"></p>
-<section class="prose"><h2>Reproduce it</h2><pre class="code">.venv/bin/python scripts/run_h66.py all          # canary -> fit -> sufficiency -> exchange -> holdout -> build
-.venv/bin/python scripts/h66_a_only_capacity.py   # pure-stratum capacity diagnostic
-.venv/bin/python scripts/publish_h66_site.py      # this page
+<section class="prose"><h2>Reproduce it</h2><pre class="code">.venv/bin/python scripts/run_h70.py all          # canary -> fit -> sufficiency -> exchange -> holdout -> build
+.venv/bin/python scripts/h70_a_only_capacity.py   # pure-stratum capacity diagnostic
+.venv/bin/python scripts/publish_h70_site.py      # this page
 .venv/bin/python scripts/check_site.py &amp;&amp; .venv/bin/python -m pytest -q</pre>
 <p class="small">GitHub Pages is static: it serves the generated file, it does not train a model in your
 browser. Reproduction regenerates the same research result; it never uploads, promotes or spends a slot.</p>
@@ -434,7 +434,7 @@ browser. Reproduction regenerates the same research result; it never uploads, pr
 <code>bash scripts/download_competition_data.sh</code> ·
 <code>PYTHONPATH=src .venv/bin/python -c "from gems52 import structural; structural.build(dest='work/r2/features', include_optional_profiles=False)"</code>
 · <code>PYTHONPATH=src .venv/bin/python -m gems52.external</code> ·
-<code>.venv/bin/python scripts/fetch_prior_inventory.py --out work/h66/priors --receipt work/h66/prior_fetch_receipt.json</code></p></section>
+<code>.venv/bin/python scripts/fetch_prior_inventory.py --out work/h70/priors --receipt work/h70/prior_fetch_receipt.json</code></p></section>
 <details><summary>Preserved research archives — none of these is an approval</summary>
 {archive_idents}
 <p class="small"><a href="h64.html">H64 landing</a> · <a href="h64-executive-summary.html">H64 submission guide</a> ·
@@ -450,30 +450,30 @@ browser. Reproduction regenerates the same research result; it never uploads, pr
 <a href="feed.html">Feed</a> · <a href="downloads/index.html">Download archive</a></p></details>"""
     guide = page(
         "Executive summary — how to submit, and whether this file may be submitted",
-        "One-click download, the exact file contract, and the explicit submit verdict for the H66 artefact.",
+        "One-click download, the exact file contract, and the explicit submit verdict for the H70 artefact.",
         guide_body)
     (DOCS / "executive-summary.html").write_text(guide)
-    (DOCS / "h66-executive-summary.html").write_text(guide)
+    (DOCS / "h70-executive-summary.html").write_text(guide)
 
     # ================================================================ index.html
     idx_notice = ('<div class="notice" role="note" style="margin:0 0 1rem"><strong>Latest research round: '
-                  'H66 (negative).</strong> Download yes, for research only; submit no. The brief\'s literal '
+                  'H70 (negative).</strong> Download yes, for research only; submit no. The brief\'s literal '
                   'discovery stratum (A confident ∧ B abstains) is measured purely for the first time and is '
-                  'anti-informative. <a href="h66.html">H66 landing</a> · '
-                  '<a href="h66-executive-summary.html">H66 submission guide</a> · '
+                  'anti-informative. <a href="h70.html">H70 landing</a> · '
+                  '<a href="h70-executive-summary.html">H70 submission guide</a> · '
                   '<a href="h64.html">Previous round (H64)</a></div>')
     idx_body = f"""{idx_notice}
-<section class="hero"><div><div class="eyebrow">DOE GEMS / H66 · strict A-only isolation, two-view co-training</div>
+<section class="hero"><div><div class="eyebrow">DOE GEMS / H70 · strict A-only isolation, two-view co-training</div>
 <h1>A new GeoTIFF.<br>An unambiguous verdict.</h1>
 <p class="lead">View A is the potential field and the subsurface; View B is the surface (DEM curvature and
-slope plus the radiometric channels). H66 isolates the brief's literal discovery stratum — A confident, B
+slope plus the radiometric channels). H70 isolates the brief's literal discovery stratum — A confident, B
 abstaining — after the co-training exchange, validates the artifact-veto and concordant variants in the same
 matched-budget holdout, and builds the candidate with a lane-valid constrained placement.</p>
 {notice}
 {actions}
 {fileline}
 <p class="small"><a href="executive-summary.html">Exactly what may be uploaded, and how →</a> ·
-<a href="h66.html">Method, evidence and limits →</a> · <a href="archive-main-index-20261008.html">Previous main landing page</a></p></div>
+<a href="h70.html">Method, evidence and limits →</a> · <a href="archive-main-index-20261008.html">Previous main landing page</a></p></div>
 <aside class="panel" aria-label="Submission readiness"><div class="label">Readiness / measured, not promised</div>
 <div class="status-line"><span>Single-band float32 GeoTIFF</span><span class="good">PASS</span></div>
 <div class="status-line"><span>Finite, values in [0, 1]</span><span class="good">PASS</span></div>
@@ -486,10 +486,10 @@ matched-budget holdout, and builds the candidate with a lane-valid constrained p
 <div class="status-line"><span>Verdict</span><span class="bad">NEGATIVE</span></div>
 <p class="fine">A valid file is not an approved competition entry. Promotion to a weekly slot is a
 separate selector step.</p>
-<a class="small" href="data/h66_run_card.json">Inspect the complete JSON run card ↗</a></aside></section>
+<a class="small" href="data/h70_run_card.json">Inspect the complete JSON run card ↗</a></aside></section>
 <hr class="divider">
 <div class="section-head"><h2>What the holdout says (HOLDOUT-DTI — not a leaderboard score)</h2>
-<a href="h66.html">Full audit →</a></div>
+<a href="h70.html">Full audit →</a></div>
 <p class="small"><b>HOLDOUT-DTI</b> · evaluator <code>gems52-pooled-hide-v1</code> · 53,186 withheld positive
 pixels · pooled TPw/FPw/FNw · α 0.2 / β 0.8 · 300 m triangular kernel · 95% paired physical-cluster
 bootstrap (1,000 draws). Every arm placed exactly 9,400 dots per fold at 3 px separation; all nine arms
@@ -528,7 +528,7 @@ pays the false-positive tax; deleting it is free precision. Binary mass is optim
 measurement says the A-only discovery signal is anti-informative and the honest expectation for this lane is
 no gain. <b>No leaderboard gain is claimed.</b> All board numbers are PUBLIC BOARD or OWNER-REPORTED, never
 ORGANIZER-CONFIRMED.</p>
-<a href="h66.html">The full measured algebra (knowledge/01) →</a></section>
+<a href="h70.html">The full measured algebra (knowledge/01) →</a></section>
 <figure style="margin:0"><div class="panel"><div class="label">Emission domain and gates</div>
 <div class="status-line"><span>Registry rasters checked</span><span>{card["counts"]["prior_rasters"]}</span></div>
 <div class="status-line"><span>Informative priors</span><span>{card["counts"]["informative_rasters"]}</span></div>
@@ -570,38 +570,38 @@ results are not a live feed.</div>
 <a href="downloads/ctd5-research.tif" download>CTD5 research TIFF</a> ·
 <a href="downloads/index.html">full archive index</a></p></details>"""
     (DOCS / "index.html").write_text(page(
-        "H66 research GeoTIFF and explicit submission status",
+        "H70 research GeoTIFF and explicit submission status",
         "Strict A-only two-view co-training GeoTIFF with measured gates and an explicit download/submit verdict.",
         idx_body))
 
     # ================================================================ downloads/index.html
     dl_path = DL / "index.html"
     dl_text = dl_path.read_text()
-    h66_rows = (
-        '<!--H66-DL-->'
-        f'<tr><td><a href="h66-candidate.tif" download>h66-candidate.tif</a></td>'
+    h70_rows = (
+        '<!--H70-DL-->'
+        f'<tr><td><a href="h70-candidate.tif" download>h70-candidate.tif</a></td>'
         f'<td class="number">{nbytes:,}</td><td class="mono">{sha256}</td>'
-        f'<td>H66 · strict A-only co-training discovery stratum · {ndots:,} px · newest round; '
-        f'<a href="../h66.html">evidence</a></td></tr>\n'
+        f'<td>H70 · strict A-only co-training discovery stratum · {ndots:,} px · newest round; '
+        f'<a href="../h70.html">evidence</a></td></tr>\n'
         f'<tr><td><a href="{esc(tif_name)}" download>{esc(tif_name)}</a></td>'
         f'<td class="number">{nbytes:,}</td><td class="mono">{sha256}</td>'
         f'<td>canonical filename, byte-identical</td></tr>\n'
-        f'<tr><td><a href="h66-candidate.zip" download>h66-candidate.zip</a></td>'
-        f'<td class="number">{(DL / "h66-candidate.zip").stat().st_size:,}</td>'
+        f'<tr><td><a href="h70-candidate.zip" download>h70-candidate.zip</a></td>'
+        f'<td class="number">{(DL / "h70-candidate.zip").stat().st_size:,}</td>'
         f'<td class="mono">single-TIFF ZIP, byte-identical payload</td><td>portal-accepted wrapper</td></tr>\n'
-        f'<tr><td><a href="h66-a-only-reasoning.csv.gz" download>h66-a-only-reasoning.csv.gz</a></td>'
-        f'<td class="number">{(DL / "h66-a-only-reasoning.csv.gz").stat().st_size:,}</td>'
+        f'<tr><td><a href="h70-a-only-reasoning.csv.gz" download>h70-a-only-reasoning.csv.gz</a></td>'
+        f'<td class="number">{(DL / "h70-a-only-reasoning.csv.gz").stat().st_size:,}</td>'
         f'<td class="mono">gzip CSV</td><td>{ndots:,} per-pixel geological reasoning rows (hypothesis + named '
         f'non-fault mimic + falsifier)</td></tr>\n'
-        '<!--/H66-DL-->\n')
-    if "<!--H66-DL-->" not in dl_text:
-        dl_text = dl_text.replace("<!--/H63-DL-->", "<!--/H63-DL-->\n" + h66_rows, 1)
+        '<!--/H70-DL-->\n')
+    if "<!--H70-DL-->" not in dl_text:
+        dl_text = dl_text.replace("<!--/H63-DL-->", "<!--/H63-DL-->\n" + h70_rows, 1)
     notice_new = ('<aside style="padding:20px;background:#fff1de;color:#12331f;font:16px/1.6 system-ui">'
-                  '<b>Latest research: H66 — DO NOT SUBMIT.</b> '
-                  f'<a href="h66-candidate.tif" download>Download the H66 GeoTIFF</a> '
+                  '<b>Latest research: H70 — DO NOT SUBMIT.</b> '
+                  f'<a href="h70-candidate.tif" download>Download the H70 GeoTIFF</a> '
                   f'({nbytes:,} bytes, SHA-256 <code>{sha256[:16]}…</code>, {ndots:,} cells) · '
                   '<a href="../executive-summary.html">Read the gate status first</a> · '
-                  '<a href="../h66.html">Run &amp; evidence</a>. Historical downloads below are not upload '
+                  '<a href="../h70.html">Run &amp; evidence</a>. Historical downloads below are not upload '
                   'approval.</aside>')
     import re
     dl_text = re.sub(r'<aside style="padding:20px;background:#fff1de[^"]*">.*?</aside>',
@@ -613,31 +613,31 @@ results are not a live feed.</div>
     feed = json.loads(feed_path.read_text()) if feed_path.exists() else {}
     feed["generated_utc"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     feed["latest_research"] = dict(
-        run_id=f"h66-{sha256[:8]}", round="H66", file=tif_name,
-        download="downloads/h66-candidate.tif", bytes=nbytes, sha256=sha256, emitted_px=ndots,
+        run_id=f"h70-{sha256[:8]}", round="H70", file=tif_name,
+        download="downloads/h70-candidate.tif", bytes=nbytes, sha256=sha256, emitted_px=ndots,
         verdict="NEGATIVE, research-only", download_ok=download_ok, submit_ok=submit_ok,
         hash_verified=True,
         holdout_dti=cand, holdout_ci95=cand_ci,
         evaluator="gems52-pooled-hide-v1",
         withheld_positive_pixels=arms["a_only"]["withheld_positive_pixels"],
         lane_literal=lane_lit, lane_policy=lane_pol,
-        slots_used=0, evidence="evidence/h66_run_card.json")
-    feed["scientific_gate"] = "CLOSED — H66 verdict is negative; research download only"
+        slots_used=0, evidence="evidence/h70_run_card.json")
+    feed["scientific_gate"] = "CLOSED — H70 verdict is negative; research download only"
     for n in ("canary", "fit_checkpoint", "sufficiency", "independence", "pseudo_exchange", "holdout",
               "a_only_capacity", "lane_surface", "lane_dots", "run_card"):
-        fn = f"h66_{n}.json"
+        fn = f"h70_{n}.json"
         feed.setdefault("evidence_copied", [])
         if fn not in feed["evidence_copied"]:
             feed["evidence_copied"].append(fn)
     feed_path.write_text(json.dumps(feed, indent=1, allow_nan=False) + "\n")
 
-    # ================================================================ assets/h66.js (copy of the h63 clipboard/feed js)
+    # ================================================================ assets/h70.js (copy of the h63 clipboard/feed js)
     js_src = DOCS / "assets/h63.js"
-    js_dst = DOCS / "assets/h66.js"
+    js_dst = DOCS / "assets/h70.js"
     if js_src.exists() and (not js_dst.exists() or js_dst.read_text() != js_src.read_text()):
         shutil.copyfile(js_src, js_dst)
 
-    # ================================================================ h66-sources.html (nav target)
+    # ================================================================ h70-sources.html (nav target)
     src_body = f"""<div class="eyebrow">Sources</div><h1>Official and verified sources</h1>
 <p class="lead">Every external claim on this site traces to one of these. Nothing here is an organiser
 receipt.</p>
@@ -665,11 +665,11 @@ pp. 92–100, doi:10.1145/279943.279962</td><td>the co-training lane's method</t
 <p class="small">Competition rasters are integrity-pinned owner mirrors of login-walled portal files
 (SHA-256 verified after restore; see <code>registry/data_manifest.json</code> and
 <code>scripts/restore_data.py</code>), not organiser-authenticated downloads.</p>"""
-    if not (DOCS / "h66-sources.html").exists():
-        (DOCS / "h66-sources.html").write_text(page(
-            "H66 sources", "Official and verified sources for the H66 round.", src_body))
+    if not (DOCS / "h70-sources.html").exists():
+        (DOCS / "h70-sources.html").write_text(page(
+            "H70 sources", "Official and verified sources for the H70 round.", src_body))
 
-    print(f"published H66: {tif_name} ({nbytes:,} bytes, {ndots:,} cells)")
+    print(f"published H70: {tif_name} ({nbytes:,} bytes, {ndots:,} cells)")
     print(f"verdict: {verdict}")
     print(f"lane literal={lane_lit} policy={lane_pol} (worst informative near-dot share {lane_pol_near:.4f})")
     return 0

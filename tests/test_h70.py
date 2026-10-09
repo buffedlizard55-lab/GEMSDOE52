@@ -1,4 +1,4 @@
-"""Tests for the H66 round: frozen protocol, nine-arm holdout, lane-valid build logic.
+"""Tests for the H70 round: frozen protocol, nine-arm holdout, lane-valid build logic.
 
 These tests need no competition raster. The feature-store and receipt checks skip cleanly when
 work/ or the receipts are absent.
@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 sys.path.insert(0, str(ROOT / "src"))
 
-REG = ROOT / "registry/h66_preregistration.json"
+REG = ROOT / "registry/h70_preregistration.json"
 
 
 def _sha(p: Path) -> str:
@@ -32,7 +32,7 @@ def test_protocol_hash_matches_registration():
 def test_runner_refuses_if_hash_moves_and_is_registered():
     reg = json.loads(REG.read_text())
     assert reg["runner_refuses_if_hash_moves"] is True
-    assert reg["runner"] == "scripts/run_h66.py"
+    assert reg["runner"] == "scripts/run_h70.py"
     assert (ROOT / reg["runner"]).exists()
     assert reg["frozen_before_any_fit"] is True
 
@@ -55,17 +55,17 @@ def test_five_hypotheses_ranked_and_top_validated():
     hyps = reg["hypotheses"]
     assert len(hyps) == 5
     assert [h["rank"] for h in hyps] == [1, 2, 3, 4, 5]
-    assert hyps[0]["id"] == "H66-A" and "tested" in hyps[0]["status"]
+    assert hyps[0]["id"] == "H70-A" and "tested" in hyps[0]["status"]
     assert all("deferred" in h["status"] for h in hyps[3:])
     assert len(reg["budget"]["experiments"]) == 3
 
 
-def test_nine_arms_include_the_three_new_h66_arms():
-    import run_h66
-    assert len(run_h66.ARMS) == 9
+def test_nine_arms_include_the_three_new_h70_arms():
+    import run_h70
+    assert len(run_h70.ARMS) == 9
     for arm in ("a_only", "single_B_veto_Bonly", "concordant"):
-        assert arm in run_h66.ARMS
-    assert set(run_h66.CANDIDATES) == {"a_only", "single_B_veto_Bonly", "concordant",
+        assert arm in run_h70.ARMS
+    assert set(run_h70.CANDIDATES) == {"a_only", "single_B_veto_Bonly", "concordant",
                                         "disagreement_post"}
 
 
@@ -77,11 +77,11 @@ def test_lane_valid_greedy_respects_per_raster_cap():
     the multi-prior bookkeeping is exercised without adding a second binding constraint.  n=300 is
     feasible: 210 dots inside the halo (at the cap) + 90 outside it.
     """
-    import run_h66
+    import run_h70
     shape = (200, 200)
     N = shape[0] * shape[1]
     width = shape[1]
-    disk = run_h66.gates._disk(3.0)
+    disk = run_h70.gates._disk(3.0)
     supports, priors = {}, []
     for name in ("p0", "p1"):
         sup = np.zeros(shape, bool)
@@ -97,18 +97,18 @@ def test_lane_valid_greedy_respects_per_raster_cap():
     for name in priors:
         sup2 = np.zeros(N, bool)
         sup2[supports[name]] = True
-        halo_rows.append(run_h66.ndi.binary_dilation(sup2.reshape(shape), structure=disk).ravel()[cand])
-    HITS = run_h66.sp.csr_matrix(np.stack(halo_rows).T)
+        halo_rows.append(run_h70.ndi.binary_dilation(sup2.reshape(shape), structure=disk).ravel()[cand])
+    HITS = run_h70.sp.csr_matrix(np.stack(halo_rows).T)
     indptr, indices = HITS.indptr, HITS.indices
 
     n = 300
-    keep, counts = run_h66.lane_valid_greedy(cand, indptr, indices, len(priors), width, n)
+    keep, counts = run_h70.lane_valid_greedy(cand, indptr, indices, len(priors), width, n)
     assert len(keep) >= n, f"greedy placed {len(keep)} of {n} requested"
     em = cand[np.asarray(keep[:n], dtype=np.int64)]
     for name in priors:
         sup2 = np.zeros(N, bool)
         sup2[supports[name]] = True
-        halo = run_h66.ndi.binary_dilation(sup2.reshape(shape), structure=disk)
+        halo = run_h70.ndi.binary_dilation(sup2.reshape(shape), structure=disk)
         share = float(halo.ravel()[em].sum()) / n
         assert share <= 0.70 + 1e-12, (name, share)
     # the caps must actually have bound: every prior sits at its cap
@@ -117,7 +117,7 @@ def test_lane_valid_greedy_respects_per_raster_cap():
 
 
 def test_canary_receipt_clean_if_present():
-    p = ROOT / "evidence/h66_canary.json"
+    p = ROOT / "evidence/h70_canary.json"
     if not p.exists():
         pytest.skip("canary receipt not produced yet")
     r = json.loads(p.read_text())
@@ -126,7 +126,7 @@ def test_canary_receipt_clean_if_present():
 
 
 def test_independence_receipt_if_present():
-    p = ROOT / "evidence/h66_independence.json"
+    p = ROOT / "evidence/h70_independence.json"
     if not p.exists():
         pytest.skip("independence receipt not produced yet")
     r = json.loads(p.read_text())
@@ -135,11 +135,11 @@ def test_independence_receipt_if_present():
 
 
 def test_holdout_receipt_structure_if_present():
-    p = ROOT / "evidence/h66_holdout.json"
+    p = ROOT / "evidence/h70_holdout.json"
     if not p.exists():
         pytest.skip("holdout receipt not produced yet")
     r = json.loads(p.read_text())
-    assert set(r["arms"]) == set(run_h66.ARMS) if False else True  # arms live under pooled scores
+    assert set(r["arms"]) == set(run_h70.ARMS) if False else True  # arms live under pooled scores
     scores = r["pooled"]["a_only"]["scores"]
     for arm in ("single_A", "single_B", "union_max", "disagreement_pre", "disagreement_post",
                 "a_only", "single_B_veto_Bonly", "concordant", "random"):
@@ -152,9 +152,9 @@ def test_holdout_receipt_structure_if_present():
 def test_submission_file_if_present():
     import rasterio
     p = ROOT / "submission"
-    files = sorted(p.glob("gems52-h66-*.tif"))
+    files = sorted(p.glob("gems52-h70-*.tif"))
     if not files:
-        pytest.skip("H66 submission not built yet")
+        pytest.skip("H70 submission not built yet")
     with rasterio.open(files[-1]) as src:
         a = src.read(1)
         assert src.count == 1 and src.dtypes[0] == "float32"
@@ -169,11 +169,11 @@ def test_submission_file_if_present():
 
 
 def test_run_card_labels_if_present():
-    p = ROOT / "evidence/h66_run_card.json"
+    p = ROOT / "evidence/h70_run_card.json"
     if not p.exists():
         pytest.skip("run card not produced yet")
     r = json.loads(p.read_text())
-    assert r["round"] == "H66"
+    assert r["round"] == "H70"
     assert r["holdout_dti"]["a_only"]["evaluator_version"] == "gems52-pooled-hide-v1"
     assert r["submission_slots_used"] == 0
     assert r["champion_reference"]["evidence_class"].startswith("OWNER-REPORTED")

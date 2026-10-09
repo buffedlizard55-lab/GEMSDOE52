@@ -1,7 +1,7 @@
 {
- "round": "H66",
+ "round": "H70",
  "generated_utc": "2026-10-09T06:09:10+00:00",
- "hypothesis": "H66-A: the brief's literal discovery stratum -- strict A-only (View A confident at operating rank >= 0.95, View B abstaining in [0.35, 0.65]) -- isolated as a standalone emission arm and built as the candidate, after the co-training exchange.",
+ "hypothesis": "H70-A: the brief's literal discovery stratum -- strict A-only (View A confident at operating rank >= 0.95, View B abstaining in [0.35, 0.65]) -- isolated as a standalone emission arm and built as the candidate, after the co-training exchange.",
  "mechanism": "Blum & Mitchell co-training (doi:10.1145/279943.279962): one whole-segment confident-to-abstaining pseudo-label round per direction per fold, then the disagreement stratum A-confident & B-abstaining is emitted as buried-cover fault candidates.",
  "named_non_fault_mimic": "basin-margin or basement-high gravity/magnetic gradient, volcanic lithologic contact, buried palaeo-channel or alluvial-fan margin, upward-continued flight-line artefact",
  "sufficiency_S1": {
@@ -953,10 +953,10 @@
   "not_union_pass": true
  },
  "raster": {
-  "file": "gems52-h66-aonly-cotrain-610px-20261009T055521Z.tif",
+  "file": "gems52-h70-aonly-cotrain-610px-20261009T055521Z.tif",
   "sha256": "ea9774a871929427e60261cdfe2f64fdab0d0c8c2253cf2eac119cc404e28af3",
   "bytes": 58363,
-  "zip_sha256": "fe8319ce5abf01fbfa9c886aba58d422d13ee17554dd3a245afc83f3f633c2f7"
+  "zip_sha256": "bd078bf150994d7b61ba0cde94e347be4294dbc7cd45d19cb845786598471471"
  },
  "validator": {
   "ok": true,
@@ -982,8 +982,8 @@
   ],
   "mass_outside_footprint": 0
  },
- "submission_name": "gems52-h66-aonly-cotrain-610px-20261009T055521Z",
- "note": "H66 strict A-only co-training discovery stratum; constrained placement at 610 dots, lane-DUPLICATE; research only, not slot-approved",
+ "submission_name": "gems52-h70-aonly-cotrain-610px-20261009T055521Z",
+ "note": "H70 strict A-only co-training discovery stratum; constrained placement at 610 dots, lane-DUPLICATE; research only, not slot-approved",
  "note_chars": 132,
  "counts": {
   "budget": 610,

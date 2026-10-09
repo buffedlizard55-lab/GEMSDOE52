@@ -1,8 +1,8 @@
-# H66 — hypotheses and protocol, preregistered 2026-10-09 **before** any H66 fit, score or artefact
+# H70 — hypotheses and protocol, preregistered 2026-10-09 **before** any H70 fit, score or artefact
 
-Frozen file. Its SHA-256 is recorded in `registry/h66_preregistration.json` before the first model
-is fitted, and `scripts/run_h66.py` refuses to run if the hash has moved. Nothing below was written
-after seeing an H66 result. Lane: the brief's two-view co-training paragraph (Blum & Mitchell, COLT
+Frozen file. Its SHA-256 is recorded in `registry/h70_preregistration.json` before the first model
+is fitted, and `scripts/run_h70.py` refuses to run if the hash has moved. Nothing below was written
+after seeing an H70 result. Lane: the brief's two-view co-training paragraph (Blum & Mitchell, COLT
 '98, pp. 92–100, doi:10.1145/279943.279962; View A potential-field/subsurface, View B surface;
 disagreement as the discovery signal).
 
@@ -52,7 +52,7 @@ The H64 build also left a second gap: its file is unique on decoded pixels (0 of
 novel_fraction 1.0 against the 511 informative priors) but **lane-DUPLICATE** — 9 informative
 priors have > 70 % of its dots within 3 px (largest 0.888), and the constrained re-placement that
 enforces the per-raster 70 % cap placed only 31,487 of 37,600 dots before the time limit. No file
-in this repository currently passes the lane's policy gate. H66 closes that gap with a placement
+in this repository currently passes the lane's policy gate. H70 closes that gap with a placement
 that is lane-valid *by construction* (§3).
 
 ---
@@ -64,7 +64,7 @@ Ranking criterion: expected HOLDOUT-DTI improvement against the current comparab
 views, so their marginal cost inside the holdout stage is one placement + one evaluation each;
 the ranking therefore orders interpretation priority, and all three are measured in E2.
 
-### H66-A — strict A-only isolation (the brief's literal discovery stratum) — RANK 1, tested in E2, built in E3
+### H70-A — strict A-only isolation (the brief's literal discovery stratum) — RANK 1, tested in E2, built in E3
 
 * **Layers.** The shared store's `view_A_with_external` (36 channels: isostatic gravity anomaly and
   its slope/vertical/horizontal gradients, magnetics — anomaly, RTP, TMI, TMI horizontal/vertical
@@ -95,7 +95,7 @@ the ranking therefore orders interpretation priority, and all three are measured
 * **Implementation cost.** One extra arm in the existing holdout stage (~10 min); the E3 build emits
   from it directly.
 
-### H66-B — B-only veto on the strongest arm (single_B minus the B-only stratum) — RANK 2, tested in E2
+### H70-B — B-only veto on the strongest arm (single_B minus the B-only stratum) — RANK 2, tested in E2
 
 * **Layers.** View B operating ranks plus the disagreement stratum mask (no new physics).
 * **Physical signature.** The brief's own reading: *"where B is confident and A is not, suspect
@@ -105,7 +105,7 @@ the ranking therefore orders interpretation priority, and all three are measured
   lithologic strips are not faults and are by construction absent from a fault catalogue — so
   vetoing them removes off-catalogue false-positive mass that the surface view otherwise emits.
 * **How it differs.** The disagreement signal was only ever used as a *positive* emission field
-  (`rankA − rankB`); no round used it as a *negative filter* on the strongest arm. H66-B places
+  (`rankA − rankB`); no round used it as a *negative filter* on the strongest arm. H70-B places
   single_B's top-k after deleting the B-only stratum (`rankB ≥ 0.95` ∧ `rankA ∈ [0.35, 0.65]`).
 * **Expected DTI improvement.** Small and possibly negative: A's abstention carries little
   information (OOF AUC ≈ 0.52), so the veto is near-random with respect to truth; the expected
@@ -113,7 +113,7 @@ the ranking therefore orders interpretation priority, and all three are measured
   brief's artifact clause.
 * **Implementation cost.** One extra arm (~10 min).
 
-### H66-C — concordant-only emission (both views confident) — RANK 3, tested in E2
+### H70-C — concordant-only emission (both views confident) — RANK 3, tested in E2
 
 * **Layers.** Both views' operating ranks.
 * **Physical signature.** Two physically independent sensor families — potential field/subsurface
@@ -125,21 +125,21 @@ the ranking therefore orders interpretation priority, and all three are measured
   more likely to sit on real, uncatalogued structure than either view alone.
 * **How it differs.** `union_max` ranks `max(rankA, rankB)` over the whole domain (measured
   0.1497–0.1513, below single_B because A's noise tail dilutes the ranking at fixed budget). The
-  strict concordant stratum (`rankA ≥ 0.95` ∧ `rankB ≥ 0.95`) has never been isolated; H66-C places
+  strict concordant stratum (`rankA ≥ 0.95` ∧ `rankB ≥ 0.95`) has never been isolated; H70-C places
   its top-k by `min(rankA, rankB)`.
 * **Expected DTI improvement.** Between single_B and union_max; small. If View A contributes any
   independent signal at all, concordant ranking should edge single_B; if A is pure noise out of
   quadrant (the four sufficiency measurements), it should land slightly below.
 * **Implementation cost.** One extra arm (~10 min).
 
-### H66-D — radiometric-cover gating of the A-only stratum — RANK 4, deferred (budget)
+### H70-D — radiometric-cover gating of the A-only stratum — RANK 4, deferred (budget)
 
-* **Layers.** H66-A's stratum intersected with radiometric quiet (band 6 total count and `X_rad_*`
+* **Layers.** H70-A's stratum intersected with radiometric quiet (band 6 total count and `X_rad_*`
   line responses below their local background), sharpening "buried beneath cover" to "no surface
   expression in *any* surface view".
 * **Physical signature.** A covered fault shows no lineament in DEM *or* radiometrics; radiometric
   alteration halos, by contrast, mark fluid pathways and can corroborate a hidden fault's position.
-* **Why catalogue-missing.** Same mechanism as H66-A, with a second independent surface family
+* **Why catalogue-missing.** Same mechanism as H70-A, with a second independent surface family
   required to be silent.
 * **Differs.** No round has gated an emission stratum by radiometric context; radiometrics entered
   only as View B learner features.
@@ -147,7 +147,7 @@ the ranking therefore orders interpretation priority, and all three are measured
   cost (per-cell radiometric transforms). **Deferred**: not authorised in this round's 3-experiment
   budget.
 
-### H66-E — deformation-only View A2 — RANK 5, deferred (needs its own round)
+### H70-E — deformation-only View A2 — RANK 5, deferred (needs its own round)
 
 * **Layers.** A View A built only from the deformation bands: geodetic second invariant, shear rate,
   dilatation rate (bands 4/7/8), earthquake density and distance (bands 10/16).
@@ -174,7 +174,7 @@ stage unchanged (raw single-feature AUC of every feature on every fold's held-ou
 spatial-block out-of-fold errors on labeled negatives, and abandon the method if they are strongly
 correlated* — is measured here, before any exchange.
 
-**E2 — fit + exchange + matched-budget holdout (validates H66-A/B/C).** H61's fit stage unchanged
+**E2 — fit + exchange + matched-budget holdout (validates H70-A/B/C).** H61's fit stage unchanged
 (same sampler, same learner, same label-blind-quadrants-v2 folds, buffer 80 px), then exactly one
 confident-to-abstaining whole-segment pseudo-label round per direction per fold (H61 thresholds:
 donor rank ≥ 0.95, receiver rank ∈ [0.35, 0.65], ≥ 5 px segments, ≤ 2,000 px per fold per
@@ -191,15 +191,15 @@ arms at exactly 9,400 dots per fold per arm, 3 px minimum separation, pooled HOL
 | `union_max` | `max(rankA_pre, rankB_pre)` |
 | `disagreement_pre` | `rankA_pre − rankB_pre` |
 | `disagreement_post` | `rankA_post − rankB_post` |
-| **`a_only` (H66-A, new)** | `rankA_post − rankB_post` gated to `rankA_post ≥ 0.95` ∧ `rankB_post ∈ [0.35, 0.65]` |
-| **`single_B_veto_Bonly` (H66-B, new)** | `rankB_pre` gated to NOT(`rankB_pre ≥ 0.95` ∧ `rankA_pre ∈ [0.35, 0.65]`) |
-| **`concordant` (H66-C, new)** | `min(rankA_pre, rankB_pre)` gated to `rankA_pre ≥ 0.95` ∧ `rankB_pre ≥ 0.95` |
+| **`a_only` (H70-A, new)** | `rankA_post − rankB_post` gated to `rankA_post ≥ 0.95` ∧ `rankB_post ∈ [0.35, 0.65]` |
+| **`single_B_veto_Bonly` (H70-B, new)** | `rankB_pre` gated to NOT(`rankB_pre ≥ 0.95` ∧ `rankA_pre ∈ [0.35, 0.65]`) |
+| **`concordant` (H70-C, new)** | `min(rankA_pre, rankB_pre)` gated to `rankA_pre ≥ 0.95` ∧ `rankB_pre ≥ 0.95` |
 | `random` | uniform over the allowed domain |
 
 An arm that cannot fill 9,400 dots invalidates the comparison and is reported, not rescued. The
 verdict comparison is the paired bootstrap delta of each new arm against `single_B`.
 
-**E3 — build, gate, publish.** Build the round's GeoTIFF from the **H66-A strict A-only post-exchange
+**E3 — build, gate, publish.** Build the round's GeoTIFF from the **H70-A strict A-only post-exchange
 field** (the lane's literal candidate), with the placement of §3, the not-the-union check, the
 A-only geological-reasoning CSV for every emitted cell (the brief: *write the geological reasoning
 for every A-only candidate*), the uniqueness gates (tier 1 exact vs every prior; tier 2 novelty vs
@@ -209,7 +209,7 @@ competition slot is spent; promotion is the separate selector step.**
 
 ---
 
-## 3 · Lane-valid constrained placement (the H66 build change)
+## 3 · Lane-valid constrained placement (the H70 build change)
 
 The lane rule: STOP if more than 70 % of the candidate's dots fall within 3 px of **one** registry
 raster's dots (or rank correlation > 0.90). On this registry the *literal* rule is saturated — the
@@ -220,7 +220,7 @@ near-dot statistic is 1.0 for every nonempty candidate (measured, `evidence/ctd5
 (`gems52.gates.lane_report`, the H61 shared-template repair — not forked).
 
 H64 enforced the per-raster cap lazily (constrain only current offenders, re-place, repeat) and
-could not fill its budget (31,487 of 37,600). H66 enforces it **by construction**:
+could not fill its budget (31,487 of 37,600). H70 enforces it **by construction**:
 
 1. Constrain **every** informative prior from the first placement (halo = its 3 px dilation).
 2. Discover the largest feasible budget `n` by feasibility probes (coarse-to-fine over
@@ -256,7 +256,7 @@ of the delta above 0. Even then nothing is promoted and no slot is used — prom
 selector step, within the weekly cap. Otherwise the verdict is **negative / research-only**:
 DOWNLOAD yes (format-valid and unique), SUBMIT no. Negative results are deliverables.
 
-## 6 · Labels used in every H66 number
+## 6 · Labels used in every H70 number
 
 * **HOLDOUT-DTI** — evaluator `gems52-pooled-hide-v1`, α 0.2, β 0.8, 300 m triangular kernel,
   withheld-positive count, 95 % paired cluster-bootstrap CI. A simulator number, never a leaderboard

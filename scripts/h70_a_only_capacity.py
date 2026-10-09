@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""H66 diagnostic: capacity and PURE measurement of the strict A-only stratum.
+"""H70 diagnostic: capacity and PURE measurement of the strict A-only stratum.
 
 Two facts the pooled holdout number alone would hide:
 
@@ -36,7 +36,7 @@ from gems52 import evaluate_holdout as evaluator                    # noqa: E402
 from gems52 import nodes                                            # noqa: E402
 
 SEED = base.SEED
-WORK = ROOT / "work/h66"
+WORK = ROOT / "work/h70"
 
 
 def main() -> int:
@@ -102,9 +102,9 @@ def main() -> int:
         "The holdout's top-K a_only arm is additionally reported with its inside/outside split: "
         "most of its dots sit at field=-1 outside the stratum, so its pooled number is a mix, "
         "not the pure stratum.")
-    (ROOT / "evidence/h66_a_only_capacity.json").write_text(
+    (ROOT / "evidence/h70_a_only_capacity.json").write_text(
         json.dumps(out, indent=1, allow_nan=False, default=str) + "\n")
-    (ROOT / "docs/data/h66_a_only_capacity.json").write_text(
+    (ROOT / "docs/data/h70_a_only_capacity.json").write_text(
         json.dumps(out, indent=1, allow_nan=False, default=str) + "\n")
     return 0
 

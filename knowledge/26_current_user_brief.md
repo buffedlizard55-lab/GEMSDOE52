@@ -1,6 +1,6 @@
-# Current user brief — 2026-10-09, H66 session (refreshed)
+# Current user brief — 2026-10-09, H63 session (refreshed)
 
-The task text below is preserved as instructions, not as verified factual claims. In particular, the score attributions, current-leaderboard statements, data-access statements and earlier-session claims must be independently checked. This brief supersedes incompatible older briefs. URLs and repeated instructions are retained. Refreshed 2026-10-09 with the current prompt verbatim (the closing core-values paragraph arrived with the H66 session's prompt); the 2026-10-08 text is preserved at [knowledge/archive/26_current_user_brief_2026-10-08.md](archive/26_current_user_brief_2026-10-08.md), the H63-session copy at [knowledge/36_current_user_brief_2026-10-09.md](36_current_user_brief_2026-10-09.md), and a dated copy of the H66-session text at [knowledge/45_current_user_brief_2026-10-09_H66.md](45_current_user_brief_2026-10-09_H66.md). The README carries this same prompt verbatim under "Complete current prompt".
+The task text below is preserved as instructions, not as verified factual claims. In particular, the score attributions, current-leaderboard statements, data-access statements and earlier-session claims must be independently checked. This brief supersedes incompatible older briefs. URLs and repeated instructions are retained. Refreshed 2026-10-09 with the current prompt verbatim; the 2026-10-08 text is preserved at [knowledge/archive/26_current_user_brief_2026-10-08.md](archive/26_current_user_brief_2026-10-08.md) and a dated copy of the current text is kept at [knowledge/36_current_user_brief_2026-10-09.md](35_current_user_brief_2026-10-09.md). The README carries this same prompt verbatim under "Complete current prompt".
 
 ```text
 Review the repo. 
@@ -570,6 +570,4 @@ Pass 3: Re-check the entire implementation against the original request. Improve
 Do not stop after the first pass. Each pass must build on the previous one. Before finishing, verify that the final result fully satisfies the original request.  Work line by line verify everything no hallucinations.
 
 Go ahead and create a pull request and then merge the pull request onto the main. Make suggestions for what work still needs to be done and any limitations that are in the way of a successful project.  It should be worked on in this next session or the next session.  Work line by line verify everything no hallucinations.
-
-Arena is designed to push AI agents to do better work. This message contains core values and motivations that are more likely to give the task a good review, and working to make your task a success.
 ```

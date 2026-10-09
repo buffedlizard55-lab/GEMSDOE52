@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""H66 -- strict A-only isolation in the two-view co-training lane, with a lane-valid build.
+"""H70 -- strict A-only isolation in the two-view co-training lane, with a lane-valid build.
 
-Preregistered in ``knowledge/43_hypotheses_H66_preregistered.md`` and pinned by
-``registry/h66_preregistration.json``; this runner refuses to start if the hash has moved.
+Preregistered in ``knowledge/54_hypotheses_H70_preregistered.md`` and pinned by
+``registry/h70_preregistration.json``; this runner refuses to start if the hash has moved.
 
 Lane: the brief's co-training paragraph.  View A is potential-field/subsurface, View B is surface
 (DEM curvature and slope plus the radiometric channels), and disagreement is the discovery signal.
@@ -13,7 +13,7 @@ What is shared and what is not
   fit and exchange stages (identical sampler, learner, thresholds and assertions), and the evaluator
   ``gems52.evaluate_holdout`` (gems52-pooled-hide-v1).  The prior census helper is
   ``build_h61_submission.prior_paths``.  Nothing under ``evidence/h61_*`` is written.
-* Round-specific: the nine-arm holdout (H61's six arms plus the three preregistered H66 arms
+* Round-specific: the nine-arm holdout (H61's six arms plus the three preregistered H70 arms
   ``a_only``, ``single_B_veto_Bonly``, ``concordant``), the sufficiency screen S1 (reported, not
   gating the exchange -- the brief's abandonment clause is the independence correlation only), the
   strict-A-only build field, and the lane-valid constrained placement of prereg §3.
@@ -29,7 +29,7 @@ Stages
 
 Nothing here uploads or spends a competition slot; promotion is the separate selector step.
 
-Usage: ``python scripts/run_h66.py [canary|fit|sufficiency|exchange|holdout|build|all]``
+Usage: ``python scripts/run_h70.py [canary|fit|sufficiency|exchange|holdout|build|all]``
 """
 from __future__ import annotations
 
@@ -62,18 +62,18 @@ from gems52 import evaluate_holdout as evaluator                    # noqa: E402
 from gems52 import gates, nodes, spatial, structural, submission_writer  # noqa: E402
 
 SEED = base.SEED
-WORK = ROOT / "work/h66"
+WORK = ROOT / "work/h70"
 EVID = ROOT / "evidence"
 DOCS = ROOT / "docs/data"
 DOWN = ROOT / "docs/downloads"
 SUBM = ROOT / "submission"
-REG_PATH = ROOT / "registry/h66_preregistration.json"
+REG_PATH = ROOT / "registry/h70_preregistration.json"
 STAGE_EV = WORK / "stage_evidence"          # the holdout stage reads one receipt by a fixed name
-CENSUS = ROOT / "work/h66/prior_fetch_receipt.json"
+CENSUS = ROOT / "work/h70/prior_fetch_receipt.json"
 ARMS = ("single_A", "single_B", "union_max", "disagreement_pre", "disagreement_post",
         "a_only", "single_B_veto_Bonly", "concordant", "random")
 CANDIDATES = ("a_only", "single_B_veto_Bonly", "concordant", "disagreement_post")
-PREFIX = "gems52-h66-"
+PREFIX = "gems52-h70-"
 CHAMPION_REF = ("ref_h33_2_b2", 0.2778)
 # budget discovery for the lane-valid constrained placement (prereg §3): descending probes
 BUDGET_PROBES = [40000, 36000, 32000, 29000, 26000, 23000, 20000, 18000, 16000,
@@ -88,12 +88,12 @@ def now() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
-def write_h66(name: str, obj) -> Path:
+def write_h70(name: str, obj) -> Path:
     EVID.mkdir(parents=True, exist_ok=True)
-    p = EVID / f"h66_{name}.json"
+    p = EVID / f"h70_{name}.json"
     p.write_text(json.dumps(obj, indent=1, allow_nan=False, default=str) + "\n")
     DOCS.mkdir(parents=True, exist_ok=True)
-    (DOCS / f"h66_{name}.json").write_text(p.read_text())
+    (DOCS / f"h70_{name}.json").write_text(p.read_text())
     return p
 
 
@@ -106,18 +106,18 @@ def check_prereg() -> dict:
     reg = json.loads(REG_PATH.read_text())
     doc = ROOT / reg["hypothesis_document"]
     if sha(doc) != reg["hypothesis_sha256"]:
-        raise SystemExit("H66 preregistered document changed after registration; refusing to run")
+        raise SystemExit("H70 preregistered document changed after registration; refusing to run")
     return reg
 
 
 def redirect() -> None:
-    """Point the shared H61 stages at H66 storage.  Nothing under evidence/h61_* is written."""
+    """Point the shared H61 stages at H70 storage.  Nothing under evidence/h61_* is written."""
     WORK.mkdir(parents=True, exist_ok=True)
     STAGE_EV.mkdir(parents=True, exist_ok=True)
     base.WORK = WORK
-    base.write = write_h66
+    base.write = write_h70
     base.EVID = STAGE_EV
-    # H66 changes no learner: the default hook (H61 learner for both views) stays.
+    # H70 changes no learner: the default hook (H61 learner for both views) stays.
 
 
 # ------------------------------------------------------------------ stage: sufficiency (S1, reported)
@@ -154,7 +154,7 @@ def stage_sufficiency() -> dict:
     rec["H63_reference_view_A_mean_oof_auc"] = 0.5362
     rec["H64_reference_view_A_mean_oof_auc"] = 0.5230
     rec["H65_reference_view_A_mean_oof_auc"] = 0.5202
-    write_h66("sufficiency", rec)
+    write_h70("sufficiency", rec)
     log(f"S1 sufficiency: mean {rec['mean_view_A_oof_auc']:.4f} min {rec['min_fold_view_A_oof_auc']:.4f} "
         f"-> {'PASS' if rec['S1_pass'] else 'FAIL'}")
     return rec
@@ -179,10 +179,10 @@ def stage_holdout(reg) -> dict:
                independence_max_abs_rho=(ex.get("independence_pre") or {}).get("max_abs_correlation"),
                new_arms={
                    "a_only": f"rankA_post - rankB_post gated to rankA_post >= {donor} & rankB_post in [{lo}, {hi}] "
-                             "(H66-A: the brief's literal discovery stratum, isolated)",
+                             "(H70-A: the brief's literal discovery stratum, isolated)",
                    "single_B_veto_Bonly": f"rankB_pre gated to NOT(rankB_pre >= {donor} & rankA_pre in [{lo}, {hi}]) "
-                                          "(H66-B: the brief's artifact clause as a veto)",
-                   "concordant": "min(rankA_pre, rankB_pre) over the allowed domain (H66-C: the concordant "
+                                          "(H70-B: the brief's artifact clause as a veto)",
+                   "concordant": "min(rankA_pre, rankB_pre) over the allowed domain (H70-C: the concordant "
                                  "ranking; the strict 0.95/0.95 stratum size is reported as a diagnostic)"},
                capacity_note=("every arm is placed by nodes.spacing_select on a field that is finite over the whole "
                               "allowed domain; an arm that cannot fill K is reported with its achieved budget "
@@ -208,13 +208,13 @@ def stage_holdout(reg) -> dict:
         rng = np.random.default_rng(SEED + 500 + f)
         rnd = np.zeros(eligible.shape, np.float32)
         rnd.ravel()[allowed_idx] = rng.random(len(allowed_idx), dtype=np.float32)
-        # H66-A: strict A-only stratum on the post-exchange (co-trained) operating ranks
+        # H70-A: strict A-only stratum on the post-exchange (co-trained) operating ranks
         gate_a = (r_post["A"] >= donor) & (r_post["B"] >= lo) & (r_post["B"] <= hi) & allowed
         f_a = np.where(gate_a, r_post["A"] - r_post["B"], -1.0)
-        # H66-B: single_B minus the B-only stratum (artifact veto)
+        # H70-B: single_B minus the B-only stratum (artifact veto)
         veto = (r_pre["B"] >= donor) & (r_pre["A"] >= lo) & (r_pre["A"] <= hi)
         f_bv = np.where(allowed & ~veto, r_pre["B"], -1.0)
-        # H66-C: concordant ranking (soft min), strict stratum size as a diagnostic
+        # H70-C: concordant ranking (soft min), strict stratum size as a diagnostic
         f_cc = np.where(allowed, np.minimum(r_pre["A"], r_pre["B"]), -1.0)
         strict_cc = int(((r_pre["A"] >= donor) & (r_pre["B"] >= donor) & allowed).sum())
         fields = {
@@ -269,7 +269,7 @@ def stage_holdout(reg) -> dict:
     sB = pooled["a_only"]["scores"]["single_B"]["dti"]
     committed = float(reg["single_B_control_holdout_dti"])
     tol = float(reg["single_B_control_abs_tolerance"])
-    out["control"] = dict(single_B_h66=sB, single_B_committed=committed, abs_difference=abs(sB - committed),
+    out["control"] = dict(single_B_h70=sB, single_B_committed=committed, abs_difference=abs(sB - committed),
                           tolerance=tol, pass_=bool(abs(sB - committed) <= tol),
                           note="H61/H63/H64 measured 0.1742-0.1745 on the identical splitter and sampler")
     out.update(finished_utc=now(),
@@ -280,7 +280,7 @@ def stage_holdout(reg) -> dict:
                caveat="HOLDOUT-DTI on the corrected label-blind-quadrants-v2 splitter. This simulator "
                       "measured Spearman -0.10 against the owner-reported board in round R4, so it "
                       "screens procedures; it does not by itself promote anything.")
-    write_h66("holdout", out)
+    write_h70("holdout", out)
     if not out["control"]["pass_"]:
         raise SystemExit(f"single_B control outside tolerance: {out['control']}; pipeline defect, stopping")
     return out
@@ -407,7 +407,7 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
                             "see knowledge/39c")
     log(f"novelty exact: allowed {n_allowed_pre_novelty} -> {int(allowed.sum())}")
 
-    # ---- the H66-A candidate field: strict A-only on the post-exchange operating ranks --------
+    # ---- the H70-A candidate field: strict A-only on the post-exchange operating ranks --------
     lo, hi = th["receiver_rank_interval"]
     donor = float(th["donor_rank_min"])
     idx = np.flatnonzero(allowed.ravel())
@@ -543,7 +543,7 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
                     max(1e-9, float(np.ptp(field[allowed]))), 0.0).astype(np.float32)
     lane_surface = gates.lane_report(surf, allowed, priors, sample=ROOT / "data/sample_submission.tif",
                                      phase="surface", log=log)
-    write_h66("lane_surface", lane_surface)
+    write_h70("lane_surface", lane_surface)
 
     pred = emission.astype(np.float32)
     if not np.isfinite(pred).all() or pred.min() < 0 or pred.max() > 1:
@@ -553,29 +553,29 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
 
     # ---- the TIF, the single-TIFF ZIP and the on-disk validator ------------------------------
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    stem = f"gems52-h66-aonly-cotrain-{n_dots}px-{stamp}"
+    stem = f"gems52-h70-aonly-cotrain-{n_dots}px-{stamp}"
     path = SUBM / f"{stem}.tif"
     SUBM.mkdir(exist_ok=True)
-    hold = json.loads((EVID / "h66_holdout.json").read_text())
+    hold = json.loads((EVID / "h70_holdout.json").read_text())
     cand_dti = hold["pooled"]["a_only"]["scores"]["a_only"]["dti"]
     cand_ci = hold["pooled"]["a_only"]["scores"]["a_only"]["ci95"]
     sB = hold["pooled"]["a_only"]["scores"]["single_B"]["dti"]
     beats = bool(cand_dti > sB and hold["pooled"]["a_only"]["paired_differences"]["single_B"]["ci95"][0] > 0.0)
-    note = (f"H66 strict A-only co-training discovery stratum; constrained placement at {n_dots} dots, "
+    note = (f"H70 strict A-only co-training discovery stratum; constrained placement at {n_dots} dots, "
             f"lane-DUPLICATE; research only, not slot-approved")
     assert len(note) <= 140, len(note)
     name = stem
     receipt = submission_writer.write_submission(
         path, pred, sample=ROOT / "data/sample_submission.tif", footprint=sub_finite,
         note=note[:140], name=name[:140],
-        metadata=dict(round="H66", preregistration=reg["hypothesis_sha256"], budget=n_dots,
+        metadata=dict(round="H70", preregistration=reg["hypothesis_sha256"], budget=n_dots,
                       candidate_arm="a_only"))
     fmt = receipt["validator"]
     lane_dots = gates.lane_report(pred, eligible, priors, sample=ROOT / "data/sample_submission.tif",
                                   phase="dots", log=log)
     uniq = gates.uniqueness_report(pred, [p for p in priors if p != path], top=None)   # tier 1: exact, all priors
     uniq_inf = gates.uniqueness_report(pred, [p for p in informative if p != path], top=None)  # tier 2: novelty
-    write_h66("lane_dots", lane_dots)
+    write_h70("lane_dots", lane_dots)
 
     # ---- geological reasoning for every emitted (A-only) cell --------------------------------
     ys, xs = np.nonzero(emission)
@@ -583,7 +583,7 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
            "X_mag_TMI_up150_grad3", "raw_band_13", "raw_band_17")
     ctx_rows = store.gather(ys * W_ + xs, list(CTX))
     ctx = {n: ctx_rows[:, j] for j, n in enumerate(CTX)}
-    csv_path = DOWN / "h66-a-only-reasoning.csv"
+    csv_path = DOWN / "h70-a-only-reasoning.csv"
     DOWN.mkdir(parents=True, exist_ok=True)
     with csv_path.open("w", newline="") as fh:
         w = csv.writer(fh)
@@ -605,7 +605,7 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
                 round(float(ctx["raw_band_13"][i]), 4), round(float(ctx["raw_band_17"][i]), 4),
                 round(float(ctx["X_rad_ThK_rank"][i]), 4), round(float(ctx["X_rad_K_rank"][i]), 4),
                 round(float(ctx["X_mag_TMI_up150_grad3"][i]), 6),
-                "Buried or cover-hidden fault (H66-A): a deep potential-field fabric step (upward-continued "
+                "Buried or cover-hidden fault (H70-A): a deep potential-field fabric step (upward-continued "
                 "TMI and isostatic gravity gradient, basement-depth contrast) with no DEM scarp, no slope "
                 "lineament and no radiometric lineament -- View A confident, View B abstaining. "
                 "HYPOTHESIS, not verified geology.",
@@ -622,19 +622,19 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
 
     # ---- publish the download set -------------------------------------------------------------
     import shutil
-    shutil.copyfile(path, DOWN / "h66-candidate.tif")
-    shutil.copyfile(path.with_suffix(".zip"), DOWN / "h66-candidate.zip")
-    shutil.copyfile(path.with_suffix(".json"), DOWN / "h66-candidate-receipt.json")
-    for src_p, dst in ((path, DOWN / "h66-candidate.tif"),
-                       (path.with_suffix(".zip"), DOWN / "h66-candidate.zip")):
+    shutil.copyfile(path, DOWN / "h70-candidate.tif")
+    shutil.copyfile(path.with_suffix(".zip"), DOWN / "h70-candidate.zip")
+    shutil.copyfile(path.with_suffix(".json"), DOWN / "h70-candidate-receipt.json")
+    for src_p, dst in ((path, DOWN / "h70-candidate.tif"),
+                       (path.with_suffix(".zip"), DOWN / "h70-candidate.zip")):
         if sha(src_p) != sha(dst):
             raise IOError(f"published copy mismatch: {dst}")
 
     # ---- run card -----------------------------------------------------------------------------
     card = dict(
-        round="H66",
+        round="H70",
         generated_utc=now(),
-        hypothesis="H66-A: the brief's literal discovery stratum -- strict A-only (View A confident at "
+        hypothesis="H70-A: the brief's literal discovery stratum -- strict A-only (View A confident at "
                    "operating rank >= 0.95, View B abstaining in [0.35, 0.65]) -- isolated as a standalone "
                    "emission arm and built as the candidate, after the co-training exchange.",
         mechanism="Blum & Mitchell co-training (doi:10.1145/279943.279962): one whole-segment "
@@ -693,12 +693,12 @@ def stage_build(reg, s1: dict, exch: dict) -> dict:
                              not_union_ok=not_union["not_union_pass"],
                              s1=s1["S1_pass"],
                              holdout_ok=beats))
-    write_h66("run_card", card)
+    write_h70("run_card", card)
     return card
 
 
 def verdict_text(*, fmt_ok, lane_ok, lane_policy_ok, uniq_ok, not_union_ok, s1, holdout_ok) -> str:
-    """Frozen rule (knowledge/43 §5): eligible for the selector only if every gate passes AND the
+    """Frozen rule (knowledge/54 §5): eligible for the selector only if every gate passes AND the
     candidate arm beats single_B with the paired 95% CI above 0.  Even then nothing is promoted and
     no slot is used.  The literal lane is authority; the policy lane is reported alongside."""
     if fmt_ok and lane_ok and uniq_ok and not_union_ok and s1 and holdout_ok:
@@ -717,25 +717,25 @@ def main(argv) -> int:
         raise SystemExit(f"unknown stage {stage!r}")
     reg = check_prereg()
     redirect()
-    load = lambda name: json.loads((EVID / f"h66_{name}.json").read_text())   # noqa: E731
+    load = lambda name: json.loads((EVID / f"h70_{name}.json").read_text())   # noqa: E731
     if stage in ("canary", "all"):
-        log("=== H66 stage canary (shared H61 stage) ===")
+        log("=== H70 stage canary (shared H61 stage) ===")
         base.stage_canary()
     if stage in ("fit", "all"):
-        log("=== H66 stage fit (shared H61 stage; learners unchanged) ===")
+        log("=== H70 stage fit (shared H61 stage; learners unchanged) ===")
         base.stage_fit()
     if stage in ("sufficiency", "all"):
         stage_sufficiency()
     if stage in ("exchange", "all"):
-        log("=== H66 stage exchange (shared H61 stage: independence screen + one round per direction) ===")
+        log("=== H70 stage exchange (shared H61 stage: independence screen + one round per direction) ===")
         ex = base.stage_exchange()
         # the shared holdout stage reads this exact file name from base.EVID (= STAGE_EV)
         (STAGE_EV / "h61_pseudo_exchange.json").write_text(json.dumps(ex, default=str) + "\n")
     if stage in ("holdout", "all"):
-        log("=== H66 stage holdout (nine arms) ===")
+        log("=== H70 stage holdout (nine arms) ===")
         stage_holdout(reg)
     if stage in ("build", "all"):
-        log("=== H66 stage build (strict A-only, lane-valid placement) ===")
+        log("=== H70 stage build (strict A-only, lane-valid placement) ===")
         s1 = load("sufficiency")
         exch = json.loads((STAGE_EV / "h61_pseudo_exchange.json").read_text())
         card = stage_build(reg, s1, exch)
