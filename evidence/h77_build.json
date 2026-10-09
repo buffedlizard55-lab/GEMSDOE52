@@ -36,7 +36,7 @@
  "board_algebra": {
   "evidence_class": "MEASURED FROM RESTORED ORGANISER-SCORED BYTES",
   "G_pinned": 14088.7,
-  "source": "work/h77/board_forensics.json",
+  "source": "evidence/h77_board_forensics.json",
   "reading": "the 6,436 px the champion deleted all lie 100-200 m from a mapped trace and earned exactly zero credit"
  },
  "uniqueness": {

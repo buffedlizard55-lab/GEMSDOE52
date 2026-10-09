@@ -7,7 +7,7 @@ Field  : the mean out-of-fold percentile rank of the shared H61 View-B surface m
 Placement, every element measured rather than copied:
   * 200 m catalogue exclusion ring -- measured on organiser-scored bytes: the 6,436 pixels the
     champion deleted from the 0.2600 file all sit 100-200 m from a mapped trace and earned exactly
-    zero credit (work/h77/board_forensics.json).
+    zero credit (evidence/h77_board_forensics.json).
   * binary {0, 1} -- the metric's own algebra: DTI = lam*k/(0.2*lam + 0.8) increases in lam.
   * 3 px minimum separation -- nodes.spacing_select, the shared metric-motivated placer.
   * budget 37,654 -- the pooled-holdout optimum of the sweep in evidence/h77_budget_sweep.json
@@ -218,7 +218,7 @@ def main() -> int:
                      budget_sweep="evidence/h77_budget_sweep.json"),
         board_algebra=dict(evidence_class="MEASURED FROM RESTORED ORGANISER-SCORED BYTES",
                            G_pinned=14088.7,
-                           source="work/h77/board_forensics.json",
+                           source="evidence/h77_board_forensics.json",
                            reading="the 6,436 px the champion deleted all lie 100-200 m from a mapped "
                                    "trace and earned exactly zero credit"),
         uniqueness=dict(n_priors_checked=uniq["n_priors_checked"],
