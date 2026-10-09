@@ -1,0 +1,358 @@
+{
+  "round": "H72",
+  "generated_utc": "2026-10-09T17:29:13+00:00",
+  "preregistration": {
+    "hypothesis_document": "knowledge/59_hypotheses_H72_preregistered.md",
+    "hypothesis_sha256": "66901a785f9550f2f712f8b971ec6a0280485be3361eb4bf3368c5722157f53c",
+    "amendment_document": "knowledge/59a_h72_budget_amendment.md",
+    "amendment_sha256": "867fc0cf4e00e9b60bfae86eb68680fe005577c3e8f84014c85d5051924d8414",
+    "view_A": [
+      "raw_band_04",
+      "raw_band_07",
+      "raw_band_08"
+    ],
+    "view_B": "shared H61/H71 manifest list, unchanged",
+    "thresholds": {
+      "canary_auc_alarm": 0.9,
+      "independence_abandon_max_abs_rho": 0.6,
+      "donor_rank_min": 0.95,
+      "receiver_rank_interval": [
+        0.35,
+        0.65
+      ],
+      "buffer_px": 80,
+      "negative_error_block_side_px": 50,
+      "pseudo_min_pixels": 5,
+      "pseudo_cap_per_fold": 2000,
+      "matched_budget_dots_per_fold_per_arm": 1264,
+      "minimum_dot_separation_px": 3.0,
+      "catalogue_exclusion_m": 200.0,
+      "triangular_kernel_radius_m": 300.0,
+      "alpha": 0.2,
+      "beta": 0.8,
+      "bootstrap_draws": 1000,
+      "bootstrap_block_px": 200,
+      "lane_spearman_stop": 0.9,
+      "lane_near_dot_fraction_stop": 0.7,
+      "lane_near_dot_radius_px": 3.0,
+      "min_novel_fraction_for_research_release": 0.2,
+      "final_output_dots_total": 5056
+    }
+  },
+  "hypothesis": "H72-A: a localized, coherent geodetic strain/shear anomaly in raw_band_04, raw_band_07 and raw_band_08 may indicate a concealed fault where the fixed DEM/surface/radiometric View B abstains.",
+  "mechanism": "Two-view co-training only. Spatial-block OOF predictions; one whole-segment exchange where one view is rank>=0.95 and the other is within [0.35,0.65]; emit only the strict A-confident/B-abstaining stratum, never the union.",
+  "named_non_fault_mimic": "broad interseismic loading, a geodetic survey seam, or a strain-grid interpolation edge; any of these can produce a coherent strain anomaly without a fault.",
+  "reported_score_context": {
+    "public_board_snapshot": {
+      "value": 0.2778,
+      "rank": 13,
+      "team": "extradr19",
+      "observed_date": "2026-10-07",
+      "evidence_class": "PUBLIC-LEADERBOARD OBSERVATION; team-level only, not a file/hash/upload-receipt mapping",
+      "source": "registry/leaderboard_snapshot_2026-10-07.json",
+      "live_board_checked_in_H72": "No \u2014 the page fetch rendered Loading; the snapshot is dated and not current-confirmed"
+    },
+    "owner_reported_file_score": {
+      "value": 0.2778,
+      "submission_label": "h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros",
+      "evidence_class": "OWNER/USER-REPORTED; NOT ORGANIZER-CONFIRMED",
+      "receipt": null,
+      "authenticated_file_sha256": null,
+      "source": "evidence/ctd5_owner_reported_results.json"
+    },
+    "local_owner_mirror": {
+      "file": "reference/h33-2-b2-zeros.tif",
+      "file_sha256": "c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9",
+      "decoded_dot_count": 37654,
+      "dots_on_known_catalogue": 0,
+      "attribution_class": "FILENAME-ONLY-OWNER-REPORTED; token_hash_linked is empty",
+      "source": "evidence/h61_forensics.json; a mirror hash proves byte consistency, not organizer authentication"
+    },
+    "mechanism_evidence": {
+      "relation": "the local H33-labelled bitmap is a strict support subset of the owner-reported 0.2600-labelled 44,090-dot bitmap; 6,436 cells are removed",
+      "removed_cell_distance_to_known_catalogue_m": "100\u2013200 for all 6,436 measured cells",
+      "interpretation": "consistent with precision-oriented pruning under the distance-weighted metric, but not causal proof; hidden-truth credit on those flank cells is unknown",
+      "source": "evidence/h61_forensics.json (subset_pairs and catalogue_rings)"
+    },
+    "organizer_confirmed_submission_receipt": {
+      "found": false,
+      "value": null,
+      "file_sha256": null,
+      "evidence_class": "ORGANIZER-CONFIRMED: none located in the repository; no receipt copied from a submission page"
+    }
+  },
+  "canary": {
+    "evidence_class": "LEAKAGE-CANARY AUC (diagnostic, not a DTI score)",
+    "alarm_auc": 0.9,
+    "any_alarm": false,
+    "max_alarm_auc": 0.6686779701695234,
+    "max_fitted_top5_heldout_auc": 0.6665553748712185,
+    "dropped_features": [],
+    "receipt": "evidence/h72_canary.json"
+  },
+  "independence": {
+    "max_abs_error_correlation": 0.05063634895939781,
+    "threshold": 0.6,
+    "block_count": 2089,
+    "exchange_allowed": true,
+    "pseudo_pixels": 15979,
+    "negative_class": "held-out catalogue-zero proxies, not verified absence",
+    "receipt": "evidence/h72_independence.json"
+  },
+  "holdout_dti": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "alpha": 0.2,
+    "beta": 0.8,
+    "triangular_radius_m": 300.0,
+    "withheld_positive_pixels": 53186,
+    "matched_budget_dots_per_fold_per_arm": 1264,
+    "minimum_separation_px": 3.0,
+    "all_arms_fill_every_fold": false,
+    "candidate_placed_by_fold": {
+      "0": 1264,
+      "1": 1264,
+      "2": 1092,
+      "3": 1264
+    },
+    "candidate_underfilled_folds": [
+      2
+    ],
+    "matched_comparison_valid": false,
+    "comparison_invalid_reason": "at least one arm failed to fill the fixed per-fold budget; no fallback or retuning",
+    "scores": {
+      "a_only": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "withheld_positive_pixels": 53186,
+        "dti": 0.005894792546180385,
+        "ci95": [
+          0.0029817630161963673,
+          0.009147699521638
+        ],
+        "interpretation": "candidate DTI uses its achieved per-fold placement count; no paired delta is valid"
+      },
+      "single_A": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "withheld_positive_pixels": 53186,
+        "dti": 0.005761350677910388,
+        "ci95": [
+          0.0018167627442129295,
+          0.010882965026350404
+        ],
+        "interpretation": null
+      },
+      "single_B": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "withheld_positive_pixels": 53186,
+        "dti": 0.06146087763889319,
+        "ci95": [
+          0.048927347764089704,
+          0.0747033539342685
+        ],
+        "interpretation": null
+      },
+      "union_max": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "withheld_positive_pixels": 53186,
+        "dti": 0.0453418098579183,
+        "ci95": [
+          0.03541344905034398,
+          0.05671026760746378
+        ],
+        "interpretation": null
+      },
+      "disagreement_pre": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "withheld_positive_pixels": 53186,
+        "dti": 0.003969399264332318,
+        "ci95": [
+          0.0013535828396354014,
+          0.007389357783071491
+        ],
+        "interpretation": null
+      },
+      "disagreement_post": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "withheld_positive_pixels": 53186,
+        "dti": 0.0026923822511044555,
+        "ci95": [
+          0.0010858256638713098,
+          0.0047339934185956145
+        ],
+        "interpretation": null
+      },
+      "random": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "withheld_positive_pixels": 53186,
+        "dti": 0.013352193842859367,
+        "ci95": [
+          0.011518385223486926,
+          0.015348808079340017
+        ],
+        "interpretation": null
+      }
+    }
+  },
+  "lane_surface": {
+    "pass_literal": true,
+    "literal_verdict": "PASS",
+    "policy_verdict": "PASS",
+    "max_spearman": 0.051102082025439664,
+    "rank_stop": 0.9,
+    "priors_checked": 619,
+    "expected_priors": 619,
+    "error_count": 0,
+    "evidence_class": "uniqueness/lane diagnostic, not a score",
+    "max_spearman_source": {
+      "path": "work/h61/priors/d4639f1bf50f1d4870b752fc0bf9df5ad30b9ce6.tif",
+      "blob": "d4639f1bf50f1d4870b752fc0bf9df5ad30b9ce6",
+      "owner_repo": "buffedlizard55-lab/GEMSDOE40",
+      "owner_commit": "0d2ab31e0b75e29c627ee93614940904b457f8c6",
+      "owner_path": "docs/downloads/gems40-euler-si0-depthcluster-crossfamily-continuous-20261005-f3e0ed7a.tif",
+      "file_sha256": "d58eea0074e29ac171b70ba652a4e5bde76e52ce1259a958fd49f558c4eaf459",
+      "decoded_sha256": "79eddcd806508af3e2b81b99aa7e41108207f265edfd21290eb73046457436cb",
+      "provenance": "owner-mirrored census entry; not organizer-authenticated"
+    }
+  },
+  "lane_final_dots": {
+    "pass_literal": false,
+    "literal_verdict": "DUPLICATE/STOP",
+    "policy_verdict": "DUPLICATE/STOP",
+    "max_spearman": 0.011112104135144643,
+    "max_near_3px_fraction": 1.0,
+    "max_near_source": "/home/user/GEMSDOE52/work/h61/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+    "near_stop": 0.7,
+    "radius_px": 3.0,
+    "priors_checked": 619,
+    "expected_priors": 619,
+    "error_count": 0,
+    "evidence_class": "uniqueness/lane diagnostic, not a score",
+    "max_spearman_source": {
+      "path": "work/h61/priors/d4639f1bf50f1d4870b752fc0bf9df5ad30b9ce6.tif",
+      "blob": "d4639f1bf50f1d4870b752fc0bf9df5ad30b9ce6",
+      "owner_repo": "buffedlizard55-lab/GEMSDOE40",
+      "owner_commit": "0d2ab31e0b75e29c627ee93614940904b457f8c6",
+      "owner_path": "docs/downloads/gems40-euler-si0-depthcluster-crossfamily-continuous-20261005-f3e0ed7a.tif",
+      "file_sha256": "d58eea0074e29ac171b70ba652a4e5bde76e52ce1259a958fd49f558c4eaf459",
+      "decoded_sha256": "79eddcd806508af3e2b81b99aa7e41108207f265edfd21290eb73046457436cb",
+      "provenance": "owner-mirrored census entry; not organizer-authenticated"
+    },
+    "max_near_source_details": {
+      "path": "work/h61/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+      "blob": "cd838daadd39de3ccdb9d30025b7feacc4d87c9f",
+      "owner_repo": "buffedlizard55-lab/GEMSDOE48",
+      "owner_commit": "36d9785e28a81e859c71f4058c639ffba4b7f327",
+      "owner_path": "docs/downloads/diagnostics/GEMSDOE48-H56-OWDS-B2xH33D-20261007-1f7b5a4f18db-plausibility.tif",
+      "file_sha256": "85c5eed333caba5bf2ff68d7e91ae6bb89c001df57ea7988d08839af9e9435ad",
+      "decoded_sha256": "b315839a62188b053a9efac1b2b7af5223ed7ba70859d692bd54f2a7ec35d54f",
+      "provenance": "owner-mirrored census entry; not organizer-authenticated",
+      "prior_proposals": 5167373,
+      "coverage_3px_of_eligible": 1.0,
+      "universal_coverage_probe": true,
+      "near_3px_fraction": 1.0
+    },
+    "policy_max_near_3px_fraction": 0.9143591772151899,
+    "policy_max_near_source_details": {
+      "path": "work/h61/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+      "blob": "4e50a598eae16b3c098ca2653542dc142f1da8a8",
+      "owner_repo": "buffedlizard55-lab/15GEMSDOE",
+      "owner_commit": "8c94b0f83f22999032ba8a29c523af7ae6cf5e76",
+      "owner_path": "docs/downloads/gems-cleanup-a-20260928T195952Z-curv_scarp.tif",
+      "file_sha256": "3e88e6ad5c63f2bc37edebd0eb2c7332d97ba1e48308f7ffea3b7c63fc2bddd1",
+      "decoded_sha256": "713026f176056d852468ab3d6deaad608f4f0b2f0166cdc16c017895006020c8",
+      "provenance": "owner-mirrored census entry; not organizer-authenticated",
+      "coverage_3px_of_eligible": 0.897567715201546,
+      "near_3px_fraction": 0.9143591772151899
+    }
+  },
+  "decoded_uniqueness": {
+    "n_priors_checked": 619,
+    "canonical_pattern_unique": true,
+    "equals_literal_prior_union": false,
+    "novel_fraction": 0.0,
+    "support_novelty_gate_ok": false,
+    "relation_to_union": "subset-of-union",
+    "ok": false,
+    "scope": "Only the supplied, aligned accessible inventory; not a proof against all private/unlinked submissions"
+  },
+  "output": {
+    "placement": {
+      "target_dots": 5056,
+      "placed_dots": 5056,
+      "filled": true,
+      "domain": "strict A-only OOF stratum, full-grid sample footprint, outside 200 m from the full visible catalogue",
+      "method": "gems52.nodes.spacing_select",
+      "minimum_separation_px": 3.0,
+      "no_fallback": true,
+      "budget_amendment": "knowledge/59a_h72_budget_amendment.md",
+      "evidence_class": "placement diagnostic, not a score"
+    },
+    "not_union": {
+      "method": "candidate emitted only from the strict preregistered A-only disagreement stratum; compared to matched-mass single-view and max(A,B) placements",
+      "candidate_dots": 5056,
+      "every_dot_in_strict_a_only_stratum": true,
+      "equals_single_A": false,
+      "equals_single_B": false,
+      "equals_union_max": false,
+      "jaccard_single_A": 0.05873730499424144,
+      "jaccard_single_B": 0.0,
+      "jaccard_union_max": 0.025141930251419302,
+      "cells_different_from_union": 9616,
+      "not_union_pass": true,
+      "evidence_class": "placement/method diagnostic, not a score"
+    },
+    "reasoning": {
+      "file": "evidence/h72_a_only_reasoning_candidate.csv",
+      "rows": 5056,
+      "rationale": "one row per proposed dot, including all three raw preregistered channels and the OOF A/B ranks",
+      "caveat": "unreleased candidate diagnostic, not a submission TIFF; geological interpretation is a testable hypothesis, not fault confirmation"
+    },
+    "final_lane": {
+      "pass_literal": false,
+      "literal_verdict": "DUPLICATE/STOP",
+      "policy_verdict": "DUPLICATE/STOP",
+      "max_spearman": 0.011112104135144643,
+      "max_near_3px_fraction": 1.0,
+      "max_near_source": "/home/user/GEMSDOE52/work/h61/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+      "near_stop": 0.7,
+      "radius_px": 3.0,
+      "priors_checked": 619,
+      "expected_priors": 619,
+      "error_count": 0,
+      "evidence_class": "uniqueness/lane diagnostic, not a score"
+    }
+  },
+  "raster": null,
+  "validator": {
+    "status": "NOT RUN \u2014 no GeoTIFF was written"
+  },
+  "submission_name": null,
+  "note": null,
+  "note_chars": null,
+  "eligibility": {
+    "downloadable": false,
+    "portal_format_valid": null,
+    "portal_format_status": "NOT ASSESSED \u2014 no H72 TIFF exists",
+    "organizer_confirmed": false,
+    "approved_for_competition_submission": false,
+    "reason": "No H72 GeoTIFF was written because the preregistered literal lane gate failed; portal-format validation is NOT ASSESSED, and no organizer approval can be claimed."
+  },
+  "experiments_used": 3,
+  "execution_notes": [
+    "Resume correction before final-dot gating: geological-reasoning extraction now passes grid-flat indices to FeatureStore.gather (whose shared API applies the inverse mapping); cached E1/E2 model, exchange and holdout receipts are reused, with no refit or threshold change."
+  ],
+  "registered_experiment_budget": 3,
+  "elapsed_seconds": 2256.6,
+  "submission_slots_used": 0,
+  "selector_decision_made": false,
+  "stop_reason": "Final-dot literal lane gate failed; candidate was not written or published. Literal STOP takes precedence over any saturation-aware policy PASS.",
+  "verdict": "negative; no selector/slot decision and no submission made",
+  "verdict_promote_to_selector": false
+}

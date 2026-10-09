@@ -1,0 +1,966 @@
+{
+  "stage": "canary",
+  "started_utc": "2026-10-09T16:43:01+00:00",
+  "alarm_auc": 0.9,
+  "evidence_class": "LEAKAGE-CANARY AUC (diagnostic, not a DTI score)",
+  "folds": [
+    {
+      "fold": 0,
+      "n_pos": 20000,
+      "n_neg": 40000,
+      "max_direction_insensitive_auc": 0.6124033293750001,
+      "top5": [
+        [
+          "B_slope_grad_3",
+          0.6124033293750001
+        ],
+        [
+          "B_slope_grad_1",
+          0.5858538218749999
+        ],
+        [
+          "raw_band_07",
+          0.581615726875
+        ],
+        [
+          "B_elevation_grad_3",
+          0.5789422606250001
+        ],
+        [
+          "B_curvature_plus_3",
+          0.577472915625
+        ]
+      ],
+      "fitted_top5_heldout": {
+        "B_slope_grad_3": 0.60859437,
+        "B_slope_grad_1": 0.5819891125,
+        "raw_band_07": 0.43363385625000006,
+        "B_elevation_grad_3": 0.5833922825,
+        "B_curvature_plus_3": 0.584454216875
+      },
+      "alarms": [],
+      "per_feature": {
+        "raw_band_04": {
+          "auc": 0.5752358843750001,
+          "direction_insensitive": 0.5752358843750001,
+          "view": "A"
+        },
+        "raw_band_07": {
+          "auc": 0.581615726875,
+          "direction_insensitive": 0.581615726875,
+          "view": "A"
+        },
+        "raw_band_08": {
+          "auc": 0.4869888875,
+          "direction_insensitive": 0.5130111125,
+          "view": "A"
+        },
+        "B_curvature_minus_1": {
+          "auc": 0.495399324375,
+          "direction_insensitive": 0.504600675625,
+          "view": "B"
+        },
+        "B_curvature_minus_3": {
+          "auc": 0.49208788187499997,
+          "direction_insensitive": 0.507912118125,
+          "view": "B"
+        },
+        "B_curvature_plus_1": {
+          "auc": 0.561639153125,
+          "direction_insensitive": 0.561639153125,
+          "view": "B"
+        },
+        "B_curvature_plus_3": {
+          "auc": 0.577472915625,
+          "direction_insensitive": 0.577472915625,
+          "view": "B"
+        },
+        "B_curvature_trace_1": {
+          "auc": 0.549091048125,
+          "direction_insensitive": 0.549091048125,
+          "view": "B"
+        },
+        "B_curvature_trace_3": {
+          "auc": 0.563489941875,
+          "direction_insensitive": 0.563489941875,
+          "view": "B"
+        },
+        "B_elevation_grad_1": {
+          "auc": 0.566179918125,
+          "direction_insensitive": 0.566179918125,
+          "view": "B"
+        },
+        "B_elevation_grad_3": {
+          "auc": 0.5789422606250001,
+          "direction_insensitive": 0.5789422606250001,
+          "view": "B"
+        },
+        "B_elevation_grad_8": {
+          "auc": 0.573820864375,
+          "direction_insensitive": 0.573820864375,
+          "view": "B"
+        },
+        "B_elevation_local_residual": {
+          "auc": 0.48258162812500005,
+          "direction_insensitive": 0.517418371875,
+          "view": "B"
+        },
+        "B_elevation_local_sd": {
+          "auc": 0.56492007375,
+          "direction_insensitive": 0.56492007375,
+          "view": "B"
+        },
+        "B_slope_grad_1": {
+          "auc": 0.5858538218749999,
+          "direction_insensitive": 0.5858538218749999,
+          "view": "B"
+        },
+        "B_slope_grad_3": {
+          "auc": 0.6124033293750001,
+          "direction_insensitive": 0.6124033293750001,
+          "view": "B"
+        },
+        "B_slope_local_residual": {
+          "auc": 0.510231071875,
+          "direction_insensitive": 0.510231071875,
+          "view": "B"
+        },
+        "B_slope_local_sd": {
+          "auc": 0.571608300625,
+          "direction_insensitive": 0.571608300625,
+          "view": "B"
+        },
+        "B_surface_coherence": {
+          "auc": 0.567421415625,
+          "direction_insensitive": 0.567421415625,
+          "view": "B"
+        },
+        "X_rad_K_grad1": {
+          "auc": 0.50530556,
+          "direction_insensitive": 0.50530556,
+          "view": "B"
+        },
+        "X_rad_K_grad3": {
+          "auc": 0.512318150625,
+          "direction_insensitive": 0.512318150625,
+          "view": "B"
+        },
+        "X_rad_K_rank": {
+          "auc": 0.45273708874999996,
+          "direction_insensitive": 0.54726291125,
+          "view": "B"
+        },
+        "X_rad_ThK_grad1": {
+          "auc": 0.5190394024999999,
+          "direction_insensitive": 0.5190394024999999,
+          "view": "B"
+        },
+        "X_rad_ThK_grad3": {
+          "auc": 0.52473933,
+          "direction_insensitive": 0.52473933,
+          "view": "B"
+        },
+        "X_rad_ThK_rank": {
+          "auc": 0.493153779375,
+          "direction_insensitive": 0.506846220625,
+          "view": "B"
+        },
+        "X_rad_Th_grad1": {
+          "auc": 0.513130135625,
+          "direction_insensitive": 0.513130135625,
+          "view": "B"
+        },
+        "X_rad_Th_grad3": {
+          "auc": 0.5219145125,
+          "direction_insensitive": 0.5219145125,
+          "view": "B"
+        },
+        "X_rad_Th_rank": {
+          "auc": 0.462893009375,
+          "direction_insensitive": 0.537106990625,
+          "view": "B"
+        },
+        "X_rad_UK_grad1": {
+          "auc": 0.501579390625,
+          "direction_insensitive": 0.501579390625,
+          "view": "B"
+        },
+        "X_rad_UK_grad3": {
+          "auc": 0.5035065649999999,
+          "direction_insensitive": 0.5035065649999999,
+          "view": "B"
+        },
+        "X_rad_UK_rank": {
+          "auc": 0.52806166875,
+          "direction_insensitive": 0.52806166875,
+          "view": "B"
+        },
+        "X_rad_UTh_grad1": {
+          "auc": 0.524188830625,
+          "direction_insensitive": 0.524188830625,
+          "view": "B"
+        },
+        "X_rad_UTh_grad3": {
+          "auc": 0.53291495,
+          "direction_insensitive": 0.53291495,
+          "view": "B"
+        },
+        "X_rad_UTh_rank": {
+          "auc": 0.532682271875,
+          "direction_insensitive": 0.532682271875,
+          "view": "B"
+        },
+        "X_rad_U_grad1": {
+          "auc": 0.50352368875,
+          "direction_insensitive": 0.50352368875,
+          "view": "B"
+        },
+        "X_rad_U_grad3": {
+          "auc": 0.506327738125,
+          "direction_insensitive": 0.506327738125,
+          "view": "B"
+        },
+        "X_rad_U_rank": {
+          "auc": 0.48813042,
+          "direction_insensitive": 0.5118695799999999,
+          "view": "B"
+        },
+        "raw_band_06": {
+          "auc": 0.458623320625,
+          "direction_insensitive": 0.541376679375,
+          "view": "B"
+        },
+        "raw_band_12": {
+          "auc": 0.49716804687499994,
+          "direction_insensitive": 0.5028319531250001,
+          "view": "B"
+        },
+        "raw_band_19": {
+          "auc": 0.54861024375,
+          "direction_insensitive": 0.54861024375,
+          "view": "B"
+        }
+      }
+    },
+    {
+      "fold": 1,
+      "n_pos": 10677,
+      "n_neg": 40000,
+      "max_direction_insensitive_auc": 0.6686779701695234,
+      "top5": [
+        [
+          "B_slope_grad_3",
+          0.6686779701695234
+        ],
+        [
+          "B_surface_coherence",
+          0.629183691580032
+        ],
+        [
+          "B_slope_grad_1",
+          0.6230791690081483
+        ],
+        [
+          "B_curvature_trace_3",
+          0.6214220942212232
+        ],
+        [
+          "B_curvature_plus_3",
+          0.6130009951297182
+        ]
+      ],
+      "fitted_top5_heldout": {
+        "B_slope_grad_3": 0.6665553748712185,
+        "B_surface_coherence": 0.6451898192376135,
+        "B_slope_grad_1": 0.6162861981361806,
+        "B_curvature_trace_3": 0.6302100086634823,
+        "B_curvature_plus_3": 0.607320397817739
+      },
+      "alarms": [],
+      "per_feature": {
+        "raw_band_04": {
+          "auc": 0.5196518649901658,
+          "direction_insensitive": 0.5196518649901658,
+          "view": "A"
+        },
+        "raw_band_07": {
+          "auc": 0.4901422005244919,
+          "direction_insensitive": 0.509857799475508,
+          "view": "A"
+        },
+        "raw_band_08": {
+          "auc": 0.5260510302519434,
+          "direction_insensitive": 0.5260510302519434,
+          "view": "A"
+        },
+        "B_curvature_minus_1": {
+          "auc": 0.5114301173082327,
+          "direction_insensitive": 0.5114301173082327,
+          "view": "B"
+        },
+        "B_curvature_minus_3": {
+          "auc": 0.5269646225531517,
+          "direction_insensitive": 0.5269646225531517,
+          "view": "B"
+        },
+        "B_curvature_plus_1": {
+          "auc": 0.587973076472792,
+          "direction_insensitive": 0.587973076472792,
+          "view": "B"
+        },
+        "B_curvature_plus_3": {
+          "auc": 0.6130009951297182,
+          "direction_insensitive": 0.6130009951297182,
+          "view": "B"
+        },
+        "B_curvature_trace_1": {
+          "auc": 0.5837942657113421,
+          "direction_insensitive": 0.5837942657113421,
+          "view": "B"
+        },
+        "B_curvature_trace_3": {
+          "auc": 0.6214220942212232,
+          "direction_insensitive": 0.6214220942212232,
+          "view": "B"
+        },
+        "B_elevation_grad_1": {
+          "auc": 0.5752843331460149,
+          "direction_insensitive": 0.5752843331460149,
+          "view": "B"
+        },
+        "B_elevation_grad_3": {
+          "auc": 0.5976446075676688,
+          "direction_insensitive": 0.5976446075676688,
+          "view": "B"
+        },
+        "B_elevation_grad_8": {
+          "auc": 0.6061997564859042,
+          "direction_insensitive": 0.6061997564859042,
+          "view": "B"
+        },
+        "B_elevation_local_residual": {
+          "auc": 0.42366232790109576,
+          "direction_insensitive": 0.5763376720989042,
+          "view": "B"
+        },
+        "B_elevation_local_sd": {
+          "auc": 0.5682098389060597,
+          "direction_insensitive": 0.5682098389060597,
+          "view": "B"
+        },
+        "B_slope_grad_1": {
+          "auc": 0.6230791690081483,
+          "direction_insensitive": 0.6230791690081483,
+          "view": "B"
+        },
+        "B_slope_grad_3": {
+          "auc": 0.6686779701695234,
+          "direction_insensitive": 0.6686779701695234,
+          "view": "B"
+        },
+        "B_slope_local_residual": {
+          "auc": 0.5528616968717804,
+          "direction_insensitive": 0.5528616968717804,
+          "view": "B"
+        },
+        "B_slope_local_sd": {
+          "auc": 0.6020064144890886,
+          "direction_insensitive": 0.6020064144890886,
+          "view": "B"
+        },
+        "B_surface_coherence": {
+          "auc": 0.629183691580032,
+          "direction_insensitive": 0.629183691580032,
+          "view": "B"
+        },
+        "X_rad_K_grad1": {
+          "auc": 0.47385588414348595,
+          "direction_insensitive": 0.5261441158565141,
+          "view": "B"
+        },
+        "X_rad_K_grad3": {
+          "auc": 0.48755464081670885,
+          "direction_insensitive": 0.5124453591832911,
+          "view": "B"
+        },
+        "X_rad_K_rank": {
+          "auc": 0.39752411843214397,
+          "direction_insensitive": 0.602475881567856,
+          "view": "B"
+        },
+        "X_rad_ThK_grad1": {
+          "auc": 0.521577677484312,
+          "direction_insensitive": 0.521577677484312,
+          "view": "B"
+        },
+        "X_rad_ThK_grad3": {
+          "auc": 0.5244647162124193,
+          "direction_insensitive": 0.5244647162124193,
+          "view": "B"
+        },
+        "X_rad_ThK_rank": {
+          "auc": 0.49210687224875904,
+          "direction_insensitive": 0.507893127751241,
+          "view": "B"
+        },
+        "X_rad_Th_grad1": {
+          "auc": 0.5159977720801724,
+          "direction_insensitive": 0.5159977720801724,
+          "view": "B"
+        },
+        "X_rad_Th_grad3": {
+          "auc": 0.5176399573850333,
+          "direction_insensitive": 0.5176399573850333,
+          "view": "B"
+        },
+        "X_rad_Th_rank": {
+          "auc": 0.42620336587992885,
+          "direction_insensitive": 0.5737966341200711,
+          "view": "B"
+        },
+        "X_rad_UK_grad1": {
+          "auc": 0.5238781809028753,
+          "direction_insensitive": 0.5238781809028753,
+          "view": "B"
+        },
+        "X_rad_UK_grad3": {
+          "auc": 0.5277409759295683,
+          "direction_insensitive": 0.5277409759295683,
+          "view": "B"
+        },
+        "X_rad_UK_rank": {
+          "auc": 0.5796914102744216,
+          "direction_insensitive": 0.5796914102744216,
+          "view": "B"
+        },
+        "X_rad_UTh_grad1": {
+          "auc": 0.5440680891167932,
+          "direction_insensitive": 0.5440680891167932,
+          "view": "B"
+        },
+        "X_rad_UTh_grad3": {
+          "auc": 0.5661032125128782,
+          "direction_insensitive": 0.5661032125128782,
+          "view": "B"
+        },
+        "X_rad_UTh_rank": {
+          "auc": 0.5656800248197058,
+          "direction_insensitive": 0.5656800248197058,
+          "view": "B"
+        },
+        "X_rad_U_grad1": {
+          "auc": 0.5147276903624614,
+          "direction_insensitive": 0.5147276903624614,
+          "view": "B"
+        },
+        "X_rad_U_grad3": {
+          "auc": 0.5293051243326777,
+          "direction_insensitive": 0.5293051243326777,
+          "view": "B"
+        },
+        "X_rad_U_rank": {
+          "auc": 0.4766812178046268,
+          "direction_insensitive": 0.5233187821953732,
+          "view": "B"
+        },
+        "raw_band_06": {
+          "auc": 0.4278189437576098,
+          "direction_insensitive": 0.5721810562423901,
+          "view": "B"
+        },
+        "raw_band_12": {
+          "auc": 0.45837853680809215,
+          "direction_insensitive": 0.5416214631919078,
+          "view": "B"
+        },
+        "raw_band_19": {
+          "auc": 0.5465837910930036,
+          "direction_insensitive": 0.5465837910930036,
+          "view": "B"
+        }
+      }
+    },
+    {
+      "fold": 2,
+      "n_pos": 6813,
+      "n_neg": 40000,
+      "max_direction_insensitive_auc": 0.6405496679142815,
+      "top5": [
+        [
+          "B_curvature_plus_3",
+          0.6405496679142815
+        ],
+        [
+          "B_slope_grad_1",
+          0.6402052840158521
+        ],
+        [
+          "B_slope_grad_3",
+          0.6356933032437986
+        ],
+        [
+          "B_curvature_plus_1",
+          0.6310685013943931
+        ],
+        [
+          "X_rad_K_rank",
+          0.630538439380596
+        ]
+      ],
+      "fitted_top5_heldout": {
+        "B_curvature_plus_3": 0.6264397291941877,
+        "B_slope_grad_1": 0.6246705342727139,
+        "B_slope_grad_3": 0.6242295941582269,
+        "B_curvature_plus_1": 0.6117895732423309,
+        "X_rad_K_rank": 0.5970985248789079
+      },
+      "alarms": [],
+      "per_feature": {
+        "raw_band_04": {
+          "auc": 0.5225797042418905,
+          "direction_insensitive": 0.5225797042418905,
+          "view": "A"
+        },
+        "raw_band_07": {
+          "auc": 0.5581782272860707,
+          "direction_insensitive": 0.5581782272860707,
+          "view": "A"
+        },
+        "raw_band_08": {
+          "auc": 0.4440120523264347,
+          "direction_insensitive": 0.5559879476735653,
+          "view": "A"
+        },
+        "B_curvature_minus_1": {
+          "auc": 0.48404612505504185,
+          "direction_insensitive": 0.5159538749449581,
+          "view": "B"
+        },
+        "B_curvature_minus_3": {
+          "auc": 0.4768445123293703,
+          "direction_insensitive": 0.5231554876706297,
+          "view": "B"
+        },
+        "B_curvature_plus_1": {
+          "auc": 0.6310685013943931,
+          "direction_insensitive": 0.6310685013943931,
+          "view": "B"
+        },
+        "B_curvature_plus_3": {
+          "auc": 0.6405496679142815,
+          "direction_insensitive": 0.6405496679142815,
+          "view": "B"
+        },
+        "B_curvature_trace_1": {
+          "auc": 0.5944517796858947,
+          "direction_insensitive": 0.5944517796858947,
+          "view": "B"
+        },
+        "B_curvature_trace_3": {
+          "auc": 0.5966366780419785,
+          "direction_insensitive": 0.5966366780419785,
+          "view": "B"
+        },
+        "B_elevation_grad_1": {
+          "auc": 0.603459327755761,
+          "direction_insensitive": 0.603459327755761,
+          "view": "B"
+        },
+        "B_elevation_grad_3": {
+          "auc": 0.6111498568912374,
+          "direction_insensitive": 0.6111498568912374,
+          "view": "B"
+        },
+        "B_elevation_grad_8": {
+          "auc": 0.6170850634815793,
+          "direction_insensitive": 0.6170850634815793,
+          "view": "B"
+        },
+        "B_elevation_local_residual": {
+          "auc": 0.4418451049464259,
+          "direction_insensitive": 0.5581548950535741,
+          "view": "B"
+        },
+        "B_elevation_local_sd": {
+          "auc": 0.6167270603992367,
+          "direction_insensitive": 0.6167270603992367,
+          "view": "B"
+        },
+        "B_slope_grad_1": {
+          "auc": 0.6402052840158521,
+          "direction_insensitive": 0.6402052840158521,
+          "view": "B"
+        },
+        "B_slope_grad_3": {
+          "auc": 0.6356933032437986,
+          "direction_insensitive": 0.6356933032437986,
+          "view": "B"
+        },
+        "B_slope_local_residual": {
+          "auc": 0.5010320123293703,
+          "direction_insensitive": 0.5010320123293703,
+          "view": "B"
+        },
+        "B_slope_local_sd": {
+          "auc": 0.6219445471891971,
+          "direction_insensitive": 0.6219445471891971,
+          "view": "B"
+        },
+        "B_surface_coherence": {
+          "auc": 0.47159726625568765,
+          "direction_insensitive": 0.5284027337443123,
+          "view": "B"
+        },
+        "X_rad_K_grad1": {
+          "auc": 0.46115436665198883,
+          "direction_insensitive": 0.5388456333480112,
+          "view": "B"
+        },
+        "X_rad_K_grad3": {
+          "auc": 0.45159259870835167,
+          "direction_insensitive": 0.5484074012916483,
+          "view": "B"
+        },
+        "X_rad_K_rank": {
+          "auc": 0.3694615606194041,
+          "direction_insensitive": 0.630538439380596,
+          "view": "B"
+        },
+        "X_rad_ThK_grad1": {
+          "auc": 0.5110480735358872,
+          "direction_insensitive": 0.5110480735358872,
+          "view": "B"
+        },
+        "X_rad_ThK_grad3": {
+          "auc": 0.5064359202994275,
+          "direction_insensitive": 0.5064359202994275,
+          "view": "B"
+        },
+        "X_rad_ThK_rank": {
+          "auc": 0.5351148411125789,
+          "direction_insensitive": 0.5351148411125789,
+          "view": "B"
+        },
+        "X_rad_Th_grad1": {
+          "auc": 0.49723456443563774,
+          "direction_insensitive": 0.5027654355643623,
+          "view": "B"
+        },
+        "X_rad_Th_grad3": {
+          "auc": 0.49864817261118455,
+          "direction_insensitive": 0.5013518273888155,
+          "view": "B"
+        },
+        "X_rad_Th_rank": {
+          "auc": 0.4553115863055922,
+          "direction_insensitive": 0.5446884136944078,
+          "view": "B"
+        },
+        "X_rad_UK_grad1": {
+          "auc": 0.4980499688096287,
+          "direction_insensitive": 0.5019500311903713,
+          "view": "B"
+        },
+        "X_rad_UK_grad3": {
+          "auc": 0.46646469249963307,
+          "direction_insensitive": 0.5335353075003669,
+          "view": "B"
+        },
+        "X_rad_UK_rank": {
+          "auc": 0.537807403126376,
+          "direction_insensitive": 0.537807403126376,
+          "view": "B"
+        },
+        "X_rad_UTh_grad1": {
+          "auc": 0.5009321114046675,
+          "direction_insensitive": 0.5009321114046675,
+          "view": "B"
+        },
+        "X_rad_UTh_grad3": {
+          "auc": 0.4958856872890063,
+          "direction_insensitive": 0.5041143127109937,
+          "view": "B"
+        },
+        "X_rad_UTh_rank": {
+          "auc": 0.4940845369147218,
+          "direction_insensitive": 0.5059154630852782,
+          "view": "B"
+        },
+        "X_rad_U_grad1": {
+          "auc": 0.4935552876853075,
+          "direction_insensitive": 0.5064447123146925,
+          "view": "B"
+        },
+        "X_rad_U_grad3": {
+          "auc": 0.4826193361955086,
+          "direction_insensitive": 0.5173806638044913,
+          "view": "B"
+        },
+        "X_rad_U_rank": {
+          "auc": 0.41678364523704686,
+          "direction_insensitive": 0.5832163547629532,
+          "view": "B"
+        },
+        "raw_band_06": {
+          "auc": 0.38512818692206074,
+          "direction_insensitive": 0.6148718130779393,
+          "view": "B"
+        },
+        "raw_band_12": {
+          "auc": 0.599045299427565,
+          "direction_insensitive": 0.599045299427565,
+          "view": "B"
+        },
+        "raw_band_19": {
+          "auc": 0.6044139164098048,
+          "direction_insensitive": 0.6044139164098048,
+          "view": "B"
+        }
+      }
+    },
+    {
+      "fold": 3,
+      "n_pos": 8387,
+      "n_neg": 40000,
+      "max_direction_insensitive_auc": 0.6468732636818886,
+      "top5": [
+        [
+          "X_rad_Th_rank",
+          0.6468732636818886
+        ],
+        [
+          "raw_band_06",
+          0.6444254486109455
+        ],
+        [
+          "X_rad_K_rank",
+          0.6278173065458448
+        ],
+        [
+          "B_slope_grad_3",
+          0.626142947418624
+        ],
+        [
+          "X_rad_UTh_rank",
+          0.6243825414331705
+        ]
+      ],
+      "fitted_top5_heldout": {
+        "X_rad_Th_rank": 0.6283045740431621,
+        "raw_band_06": 0.6329547290449505,
+        "X_rad_K_rank": 0.6196225318945988,
+        "B_slope_grad_3": 0.6151386863598426,
+        "X_rad_UTh_rank": 0.5938885790509122
+      },
+      "alarms": [],
+      "per_feature": {
+        "raw_band_04": {
+          "auc": 0.47264752891379513,
+          "direction_insensitive": 0.5273524710862049,
+          "view": "A"
+        },
+        "raw_band_07": {
+          "auc": 0.44887580481697875,
+          "direction_insensitive": 0.5511241951830212,
+          "view": "A"
+        },
+        "raw_band_08": {
+          "auc": 0.6050067038273518,
+          "direction_insensitive": 0.6050067038273518,
+          "view": "A"
+        },
+        "B_curvature_minus_1": {
+          "auc": 0.4916134508763562,
+          "direction_insensitive": 0.5083865491236438,
+          "view": "B"
+        },
+        "B_curvature_minus_3": {
+          "auc": 0.4985815622391797,
+          "direction_insensitive": 0.5014184377608203,
+          "view": "B"
+        },
+        "B_curvature_plus_1": {
+          "auc": 0.5926324028258019,
+          "direction_insensitive": 0.5926324028258019,
+          "view": "B"
+        },
+        "B_curvature_plus_3": {
+          "auc": 0.5998149502205795,
+          "direction_insensitive": 0.5998149502205795,
+          "view": "B"
+        },
+        "B_curvature_trace_1": {
+          "auc": 0.5710191427208775,
+          "direction_insensitive": 0.5710191427208775,
+          "view": "B"
+        },
+        "B_curvature_trace_3": {
+          "auc": 0.583660617622511,
+          "direction_insensitive": 0.583660617622511,
+          "view": "B"
+        },
+        "B_elevation_grad_1": {
+          "auc": 0.5919919026469536,
+          "direction_insensitive": 0.5919919026469536,
+          "view": "B"
+        },
+        "B_elevation_grad_3": {
+          "auc": 0.5976375327888398,
+          "direction_insensitive": 0.5976375327888398,
+          "view": "B"
+        },
+        "B_elevation_grad_8": {
+          "auc": 0.5952702158101824,
+          "direction_insensitive": 0.5952702158101824,
+          "view": "B"
+        },
+        "B_elevation_local_residual": {
+          "auc": 0.4498716391439132,
+          "direction_insensitive": 0.5501283608560867,
+          "view": "B"
+        },
+        "B_elevation_local_sd": {
+          "auc": 0.5756237212352451,
+          "direction_insensitive": 0.5756237212352451,
+          "view": "B"
+        },
+        "B_slope_grad_1": {
+          "auc": 0.6164806635268868,
+          "direction_insensitive": 0.6164806635268868,
+          "view": "B"
+        },
+        "B_slope_grad_3": {
+          "auc": 0.626142947418624,
+          "direction_insensitive": 0.626142947418624,
+          "view": "B"
+        },
+        "B_slope_local_residual": {
+          "auc": 0.541597315786336,
+          "direction_insensitive": 0.541597315786336,
+          "view": "B"
+        },
+        "B_slope_local_sd": {
+          "auc": 0.5642814862286873,
+          "direction_insensitive": 0.5642814862286873,
+          "view": "B"
+        },
+        "B_surface_coherence": {
+          "auc": 0.582358687552164,
+          "direction_insensitive": 0.582358687552164,
+          "view": "B"
+        },
+        "X_rad_K_grad1": {
+          "auc": 0.49027670949087876,
+          "direction_insensitive": 0.5097232905091212,
+          "view": "B"
+        },
+        "X_rad_K_grad3": {
+          "auc": 0.4901978687254083,
+          "direction_insensitive": 0.5098021312745917,
+          "view": "B"
+        },
+        "X_rad_K_rank": {
+          "auc": 0.3721826934541552,
+          "direction_insensitive": 0.6278173065458448,
+          "view": "B"
+        },
+        "X_rad_ThK_grad1": {
+          "auc": 0.5114878562060332,
+          "direction_insensitive": 0.5114878562060332,
+          "view": "B"
+        },
+        "X_rad_ThK_grad3": {
+          "auc": 0.5113627310122809,
+          "direction_insensitive": 0.5113627310122809,
+          "view": "B"
+        },
+        "X_rad_ThK_rank": {
+          "auc": 0.39374758256826037,
+          "direction_insensitive": 0.6062524174317396,
+          "view": "B"
+        },
+        "X_rad_Th_grad1": {
+          "auc": 0.49845213276499345,
+          "direction_insensitive": 0.5015478672350066,
+          "view": "B"
+        },
+        "X_rad_Th_grad3": {
+          "auc": 0.4999922663049958,
+          "direction_insensitive": 0.5000077336950042,
+          "view": "B"
+        },
+        "X_rad_Th_rank": {
+          "auc": 0.35312673631811137,
+          "direction_insensitive": 0.6468732636818886,
+          "view": "B"
+        },
+        "X_rad_UK_grad1": {
+          "auc": 0.521873490222964,
+          "direction_insensitive": 0.521873490222964,
+          "view": "B"
+        },
+        "X_rad_UK_grad3": {
+          "auc": 0.5142369738881603,
+          "direction_insensitive": 0.5142369738881603,
+          "view": "B"
+        },
+        "X_rad_UK_rank": {
+          "auc": 0.5623357756051032,
+          "direction_insensitive": 0.5623357756051032,
+          "view": "B"
+        },
+        "X_rad_UTh_grad1": {
+          "auc": 0.5544284323953738,
+          "direction_insensitive": 0.5544284323953738,
+          "view": "B"
+        },
+        "X_rad_UTh_grad3": {
+          "auc": 0.5578057246333612,
+          "direction_insensitive": 0.5578057246333612,
+          "view": "B"
+        },
+        "X_rad_UTh_rank": {
+          "auc": 0.6243825414331705,
+          "direction_insensitive": 0.6243825414331705,
+          "view": "B"
+        },
+        "X_rad_U_grad1": {
+          "auc": 0.4841087799570764,
+          "direction_insensitive": 0.5158912200429235,
+          "view": "B"
+        },
+        "X_rad_U_grad3": {
+          "auc": 0.47844711756289493,
+          "direction_insensitive": 0.5215528824371051,
+          "view": "B"
+        },
+        "X_rad_U_rank": {
+          "auc": 0.39318460116847503,
+          "direction_insensitive": 0.606815398831525,
+          "view": "B"
+        },
+        "raw_band_06": {
+          "auc": 0.35557455138905447,
+          "direction_insensitive": 0.6444254486109455,
+          "view": "B"
+        },
+        "raw_band_12": {
+          "auc": 0.49027163318230593,
+          "direction_insensitive": 0.5097283668176941,
+          "view": "B"
+        },
+        "raw_band_19": {
+          "auc": 0.5782189668534636,
+          "direction_insensitive": 0.5782189668534636,
+          "view": "B"
+        }
+      }
+    }
+  ],
+  "finished_utc": "2026-10-09T16:43:32+00:00",
+  "max_alarm_across_folds": 0.6686779701695234,
+  "max_fitted_top5_heldout_auc": 0.6665553748712185,
+  "any_alarm": false,
+  "dropped_features": [],
+  "interpretation": "AUC above the alarm means leakage until proven otherwise; catalogue-zero negatives are proxies, not verified fault absence."
+}

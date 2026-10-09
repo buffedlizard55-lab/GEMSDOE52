@@ -209,7 +209,7 @@ def stage_canary():
     th = reg["thresholds"]
     rng = np.random.default_rng(SEED)
     out = dict(stage="canary", started_utc=now(), alarm_auc=th["canary_auc_alarm"],
-               evidence_class="HOLDOUT-DTI diagnostic AUC (not a DTI score)", folds=[])
+               evidence_class="LEAKAGE-CANARY AUC (diagnostic, not a DTI score)", folds=[])
     worst = []
     for fold in folds:
         region = fold["region"]
