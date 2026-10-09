@@ -1,0 +1,10 @@
+{
+  "n_priors_checked": 619,
+  "canonical_pattern_unique": true,
+  "equals_literal_prior_union": false,
+  "novel_fraction": 0.0,
+  "support_novelty_gate_ok": false,
+  "relation_to_union": "subset-of-union",
+  "ok": false,
+  "scope": "Only the supplied, aligned accessible inventory; not a proof against all private/unlinked submissions"
+}

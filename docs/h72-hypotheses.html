@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Four ranked H72 geological hypotheses, with exact layers, physical signatures, novelty, expected DTI direction, mimic processes and cost.">
+  <title>H72 ranked geological hypotheses · GEMSDOE52</title>
+  <link rel="stylesheet" href="assets/ctd5.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><nav aria-label="Main navigation">
+  <a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>
+  <a href="index.html">Overview</a>
+  <a href="h72.html">H72 result</a>
+  <a href="h72-hypotheses.html" aria-current="page">Ranked hypotheses</a>
+  <a href="h72-executive-summary.html">Submission status</a>
+  <a href="downloads/index.html">Archive</a>
+</nav></header>
+<main id="main">
+  <div class="eyebrow">Preregistered geology hypotheses · H72 · 2026-10-09</div>
+  <h1>Four hypotheses.<br>One was tested.</h1>
+  <p class="lead">All candidates stay in the single two-view co-training lane: geophysical/subsurface View A against fixed DEM/surface plus available radiometric View B. Cross-view disagreement is the discovery signal. Expected improvement is a qualitative ranking—not a numeric DTI forecast. H72-A was the sole tested candidate and ended negative. H72-B through H72-D remain untested proposals.</p>
+  <div class="notice" role="note"><strong>H72-A IS CLOSED — DO NOT RE-RUN OR BYPASS ITS STOP.</strong><p>The A-only holdout underfilled one fold and the final-dot lane gate failed. The other ideas below were not fitted or validated in this experiment.</p></div>
+
+  <section class="panel" aria-labelledby="h72a">
+    <div class="eyebrow">Rank 1 · H72-A · tested</div>
+    <h2 id="h72a">Strain-only geophysical teacher</h2>
+    <div class="table-wrap"><table><tbody>
+      <tr><th scope="row">Layers</th><td>View A exactly `raw_band_04` (second invariant of the strain-rate tensor), `raw_band_07` (geodetic shear rate), and signed `raw_band_08` (dilatation rate). View B stays fixed on the shared DEM-derived surface and available radiometric channels.</td></tr>
+      <tr><th scope="row">Physical signature</th><td>Spatially coherent shear/strain anomaly with a dilatational contrast, ranked only where OOF View A is confident and fixed View B abstains.</td></tr>
+      <tr><th scope="row">Why an undiscovered fault?</th><td>A concealed or basin-covered structure could localize deformation while relief and surface radiometry remain ambiguous. Catalogue incompleteness makes that possible; it does not make the signal fault-specific.</td></tr>
+      <tr><th scope="row">What differs from repo methods?</th><td>Earlier View-A learners combined strain with gravity, magnetics, seismicity, or other subsurface channels. H72 isolates these three existing deformation channels as the entire View A; it adds no external layer, new transform, or replacement method.</td></tr>
+      <tr><th scope="row">Expected DTI improvement</th><td><b>Highest relative priority among the viable existing-data candidates, but likely modest and uncertain.</b> No numeric improvement was forecast. The actual candidate HOLDOUT-DTI was underfilled in fold 2; no matched candidate-minus-single-B result is valid.</td></tr>
+      <tr><th scope="row">Cost and named mimic</th><td><b>Moderate:</b> refit existing shared learners and run the registered tests. Mimic: broad interseismic loading, a geodetic survey seam, or an interpolation edge rather than a discrete fault.</td></tr>
+      <tr><th scope="row">Observed outcome</th><td><b>Negative:</b> pre-placement surface test passed, final-dot literal and policy tests stopped, support novelty was zero, and no H72 TIFF was written. See the <a href="h72.html">full result</a>.</td></tr>
+    </tbody></table></div>
+  </section>
+
+  <hr class="divider">
+  <section class="panel" aria-labelledby="h72b">
+    <div class="eyebrow">Rank 2 · H72-B · not tested</div>
+    <h2 id="h72b">Magnetic-edge-only geophysical teacher</h2>
+    <div class="table-wrap"><table><tbody>
+      <tr><th scope="row">Layers</th><td>RTP magnetic anomaly `raw_band_02`; TMI horizontal/vertical derivatives `raw_band_03` and `raw_band_09`; TMI `raw_band_14`; and existing 150 m upward-continued TMI channels (`X_mag_TMI_up150_*`). View B remains unchanged.</td></tr>
+      <tr><th scope="row">Physical signature</th><td>A coherent magnetic-source boundary that persists between shallow and upward-continued products, at locations where View B abstains.</td></tr>
+      <tr><th scope="row">Why an undiscovered fault?</th><td>A buried basement discontinuity can generate a magnetic edge under basin cover without a clear scarp or surface lineament; it could reveal a continuation absent from the visible fault catalogue.</td></tr>
+      <tr><th scope="row">What differs from repo methods?</th><td>Magnetic channels appeared in broad mixed View A models, but a magnetic-family-only teacher has not been isolated as one co-training view. The composition changes; the lane protocol does not.</td></tr>
+      <tr><th scope="row">Expected DTI improvement</th><td><b>Low.</b> Magnetic edges are structurally plausible but can be broad and non-fault-specific. No numeric projection.</td></tr>
+      <tr><th scope="row">Cost and named mimic</th><td><b>Moderate:</b> use existing cached/restored layers and the same learner/evaluator. Mimics: lithologic contacts, flight-line or tie-line artifacts, and magnetic sources unrelated to fault displacement.</td></tr>
+    </tbody></table></div>
+  </section>
+
+  <hr class="divider">
+  <section class="panel" aria-labelledby="h72c">
+    <div class="eyebrow">Rank 3 · H72-C · not tested</div>
+    <h2 id="h72c">Seismo-kinematic geophysical teacher</h2>
+    <div class="table-wrap"><table><tbody>
+      <tr><th scope="row">Layers</th><td>Earthquake distance and density `raw_band_10` and `raw_band_16`, combined with geodetic shear and dilatation `raw_band_07` and `raw_band_08`. Keep fixed DEM/radiometric View B unchanged.</td></tr>
+      <tr><th scope="row">Physical signature</th><td>A coherent event-density plus strain/shear corridor where surface View B abstains.</td></tr>
+      <tr><th scope="row">Why an undiscovered fault?</th><td>Active seismicity and deformation may mark an unmapped structural corridor or a covered continuation that has little surface relief.</td></tr>
+      <tr><th scope="row">What differs from repo methods?</th><td>Earthquake and strain features were included in previous mixed View-A feature sets; this would isolate a narrow active-kinematic teacher and test the co-training view composition, not invent a different method lane.</td></tr>
+      <tr><th scope="row">Expected DTI improvement</th><td><b>Very low / uncertain.</b> Seismic density may be sparse or catalog-dependent; no numeric projection.</td></tr>
+      <tr><th scope="row">Cost and named mimic</th><td><b>Low to moderate:</b> existing competition channels, shared pipeline. Mimics: earthquake swarm, volcanic or hydrothermal unrest, or an event-catalogue density artifact.</td></tr>
+    </tbody></table></div>
+  </section>
+
+  <hr class="divider">
+  <section class="panel" aria-labelledby="h72d">
+    <div class="eyebrow">Rank 4 · H72-D · data-blocked, not tested</div>
+    <h2 id="h72d">Heat-flow-gradient teacher</h2>
+    <div class="table-wrap"><table><tbody>
+      <tr><th scope="row">Layers</th><td>A gradient/edge transform of the official Great Basin heat-flow grid would be added to geophysical View A; View B would remain fixed. This layer is not in the H72 cache or competition feature stack.</td></tr>
+      <tr><th scope="row">Physical signature</th><td>A broad thermal-gradient transition aligned with an A-confident/B-abstaining region; heat flow is regional and not inherently fault-specific.</td></tr>
+      <tr><th scope="row">Why an undiscovered fault?</th><td>A buried permeable structure could influence heat transport without a surface expression; the physical pathway is possible, but non-unique.</td></tr>
+      <tr><th scope="row">What differs from repo methods?</th><td>It would introduce an external data layer that is absent from the registered H72 views. It cannot be smuggled into or substituted for the frozen H72-A test.</td></tr>
+      <tr><th scope="row">Expected DTI improvement</th><td><b>Potentially interesting but unknown; not currently viable.</b> No data payload was obtained or validated, so no expected score is asserted.</td></tr>
+      <tr><th scope="row">Cost and named mimic</th><td><b>High and data-blocked:</b> locate official bytes, confirm rights and resolution, hash them, align them, and preregister a separate test. Mimics: lithologic variation, groundwater advection, or sparse-well interpolation.</td></tr>
+    </tbody></table></div>
+  </section>
+
+  <hr class="divider">
+  <section class="prose">
+    <h2>Official, manually reviewable sources</h2>
+    <ul>
+      <li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">DrivenData problem statement</a> — target, available geoscience inputs, catalogue limitations and distance-weighted metric.</li>
+      <li><a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">USGS GeoDAWN release</a>, DOI <a href="https://doi.org/10.5066/P93LGLVQ">10.5066/P93LGLVQ</a> — survey family and public data-release context; H72 used mirrored competition bands.</li>
+      <li><a href="https://gdr.openei.org/submissions/1391">DOE GDR INGENIOUS compilation</a>, DOI <a href="https://doi.org/10.15121/1881483">10.15121/1881483</a> — lists geodetic shear/dilatation, seismicity, gravity/magnetic and other regional data.</li>
+      <li><a href="https://www.usgs.gov/publications/discovering-blind-geothermal-systems-great-basin-region-integrated-geologic-and">USGS blind geothermal systems report</a>, DOI <a href="https://doi.org/10.2172/1724080">10.2172/1724080</a> — supports the plausibility of integrating geological/geophysical evidence; it does not validate an H72 fault prediction.</li>
+      <li>Blum &amp; Mitchell, <a href="https://doi.org/10.1145/279943.279962">“Combining labeled and unlabeled data with co-training”</a>, COLT 1998 — method reference, not empirical proof of H72 sufficiency/independence.</li>
+      <li><a href="https://doi.org/10.5066/P9BZPVUC">USGS Great Basin heat-flow maps</a> — possible future source only; the data payload was not downloaded or verified here.</li>
+    </ul>
+    <p class="small">The frozen, detailed hypothesis text and protocol are available in the repository at <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/59_hypotheses_H72_preregistered.md">knowledge/59</a>; the results correction is in <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/60_h72_results_and_limits.md">knowledge/60</a>.</p>
+  </section>
+  <div class="actions"><a class="button" href="h72.html">Return to H72 result</a><a class="button secondary" href="h72-executive-summary.html">Submission status: no TIFF</a></div>
+</main>
+<footer>Independent research; not an official DOE or DrivenData site. Predictions are hypotheses, not verified faults or geothermal discoveries. <a href="h72.html">H72 result</a> · <a href="index.html">Overview</a></footer>
+</body></html>
