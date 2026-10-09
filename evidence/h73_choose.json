@@ -1,7 +1,7 @@
 {
   "stage": "choose",
   "finished_utc": "2026-10-09T17:19:13+00:00",
-  "placement": "place_lane (greedy + per-prior quota, amendment 59a)",
+  "placement": "place_lane (greedy + per-prior quota, amendment 61a)",
   "trials": [
     {
       "T": 200,

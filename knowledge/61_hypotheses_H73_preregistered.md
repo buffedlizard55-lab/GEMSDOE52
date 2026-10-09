@@ -1,7 +1,7 @@
-# 59 · H72 — preregistration (frozen before any H72 fit)
+# 59 · H73 — preregistration (frozen before any H73 fit)
 
-Status: **preregistered 2026-10-09 (session H72), before any H72 model fit or placement.**
-Pinned in `registry/h72_preregistration.json`; `scripts/run_h72.py` refuses to run if this file's
+Status: **preregistered 2026-10-09 (session H73), before any H73 model fit or placement.**
+Pinned in `registry/h73_preregistration.json`; `scripts/run_h73.py` refuses to run if this file's
 SHA-256 moves. Experiment budget: this is **1 of 3** (the protocol's cap of 3 experiments / 2 hours).
 
 ## Why this round exists (the gap it fills)
@@ -15,7 +15,7 @@ SHA-256 moves. Experiment budget: this is **1 of 3** (the protocol's cap of 3 ex
   H69 satisfied the lane rule only for a co-training field; H71 failed it. A lane-compliant surface
   emission is the cheapest unique file that can be shipped at a holdout level the family has measured.
 
-## Hypothesis H72-B
+## Hypothesis H73-B
 
 **Surface-only (View B) ranking, emitted under the lane rule, keeps at least 90 % of the unconstrained
 `single_B` holdout DTI on the same folds, budget and evaluator, and passes the policy lane.**
@@ -48,7 +48,7 @@ SHA-256 moves. Experiment budget: this is **1 of 3** (the protocol's cap of 3 ex
 
 * **HOLDOUT-DTI** via `gems52.evaluate_holdout` (`gems52-pooled-hide-v1`), 4 folds, 9,400 dots per fold per arm,
   pooled over folds, 1,000 paired draws on 20 km blocks. Arms: `single_B` (control),
-  `H72_B_lane` (candidate: `single_B` restricted to the pool), `random` (control).
+  `H73_B_lane` (candidate: `single_B` restricted to the pool), `random` (control).
   Paired Δ = candidate − `single_B` with its 95 % CI.
 * **Control reproduction:** `single_B` must reproduce the H71 receipt value 0.174571 within 0.001
   (same features, seed, splitter). A failed reproduction voids the round's comparison, not just the number.

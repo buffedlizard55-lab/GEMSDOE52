@@ -1,12 +1,12 @@
-# 59a · H72 preregistration amendment — per-prior quota placement (dated 2026-10-09, BEFORE any holdout or shipped-file placement)
+# 61a · H73 preregistration amendment — per-prior quota placement (dated 2026-10-09, BEFORE any holdout or shipped-file placement)
 
-Amends `knowledge/59_hypotheses_H72_preregistered.md` §"Lane construction" step 3–4. Everything else in 59 is unchanged:
+Amends `knowledge/61_hypotheses_H73_preregistered.md` §"Lane construction" step 3–4. Everything else in 59 is unchanged:
 the hypothesis, the layers, the consensus pool, the holdout arms' budget and evaluator, the reproduction target, the
 canary, the lane limits (0.70 near-dot, 0.90 Spearman), the uniqueness rule and the verdict rule.
 
 ## What was measured before this amendment (the reason for it)
 
-`scripts/run_h72.py choose` (plain greedy `nodes.spacing_select` over a consensus pool, 350 informative distinct
+`scripts/run_h73.py choose` (plain greedy `nodes.spacing_select` over a consensus pool, 350 informative distinct
 census priors, 37,600 dots) measured the worst informative prior's near-dot share for every threshold tried:
 
 | consensus T | pool px | max near-dot share |
@@ -23,13 +23,13 @@ census priors, 37,600 dots) measured the worst informative prior's near-dot shar
 | 30 | 1,630,718 | 0.8935 |
 
 No threshold reaches 0.70. The preregistered construction (pool restriction + greedy) is therefore **infeasible for
-this registry**, and the measurement is reported as a wall, not hidden. Receipt: `evidence/h72_choose.json`.
+this registry**, and the measurement is reported as a wall, not hidden. Receipt: `evidence/h73_choose.json`.
 
 ## The amendment
 
 The repository's own lane-feasible method is the per-prior quota of `scripts/run_h69.py::stage_place` (H69 measured
-the lane rule satisfied at max near-dot 0.6985 with it). H72 adopts the same rule, re-implemented in
-`scripts/run_h72.py::place_quota` (not forked from run_h69, whose stage depends on its own checkpoints):
+the lane rule satisfied at max near-dot 0.6985 with it). H73 adopts the same rule, re-implemented in
+`scripts/run_h73.py::place_quota` (not forked from run_h69, whose stage depends on its own checkpoints):
 
 1. Place greedily in field-rank order over the pool with the same hard-core spacing as `nodes.spacing_select`
    (rejects a candidate with squared distance < 9 px² to an accepted dot).
@@ -43,18 +43,18 @@ the lane rule satisfied at max near-dot 0.6985 with it). H72 adopts the same rul
    here, before the quota run, and the plain-greedy trials above already showed those values are not feasible
    without quotas).
 
-The same placement is used for the candidate holdout arm (`H72_B_lane`, per fold, K = 9,400, same T, same quota rule
+The same placement is used for the candidate holdout arm (`H73_B_lane`, per fold, K = 9,400, same T, same quota rule
 on that fold's allowed domain). The control arms are unchanged: `single_B` and `random` use plain `spacing_select`
 exactly as H61 did, so the reproduction check still applies.
 
 ## Why this is not a holdout-driven change
 
 It was adopted from a lane measurement on the **placement** surface, before any holdout arm and before any shipped
-file was built. No HOLDOUT-DTI number from H72 existed when this was written. The amendment cannot be tuned against the
+file was built. No HOLDOUT-DTI number from H73 existed when this was written. The amendment cannot be tuned against the
 holdout because the holdout reads the same placement rule for every candidate.
 
 ## What this amendment does NOT do
 
 * It does not make the lane rule easier: the limits are unchanged (0.70 literal near-dot share; 0.90 Spearman).
-* It does not make H72 promote-eligible. The verdict rule in 59 is unchanged and still requires the holdout test.
+* It does not make H73 promote-eligible. The verdict rule in 59 is unchanged and still requires the holdout test.
 * It does not spend a competition slot.

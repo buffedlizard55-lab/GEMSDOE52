@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""H72 -- surface-only (View B) emission under the lane rule.
+"""H73 -- surface-only (View B) emission under the lane rule.
 
-Preregistered in ``knowledge/59_hypotheses_H72_preregistered.md`` and pinned by
-``registry/h72_preregistration.json``; this runner refuses to start if the hash has moved.
+Preregistered in ``knowledge/61_hypotheses_H73_preregistered.md`` and pinned by
+``registry/h73_preregistration.json``; this runner refuses to start if the hash has moved.
 
 What is shared and what is not
 ------------------------------
@@ -20,10 +20,10 @@ Stages (checkpointed; each refuses to overwrite a receipt written from different
     fit        View-B learner per fold (H61 rows, learner, seed) + per-feature canary AUCs
     consensus  census priors -> informative set -> consensus count over the footprint
     choose     largest consensus threshold T whose greedy fill reaches the budget at max near-dot <= 0.70
-    holdout    single_B control, H72_B_lane candidate (pool at fixed T), random; pooled HOLDOUT-DTI
+    holdout    single_B control, H73_B_lane candidate (pool at fixed T), random; pooled HOLDOUT-DTI
     build      stitched shipped field -> placement -> authoritative gates -> TIF -> uniqueness -> card
 
-Usage: ``python scripts/run_h72.py [fit|consensus|choose|holdout|build|all]``
+Usage: ``python scripts/run_h73.py [fit|consensus|choose|holdout|build|all]``
 """
 from __future__ import annotations
 
@@ -53,18 +53,18 @@ from gems52 import evaluate_holdout as evaluator                     # noqa: E40
 from gems52 import gates, nodes, submission_writer                   # noqa: E402
 
 SEED = base.SEED
-PREREG = ROOT / "registry/h72_preregistration.json"
-WORK = ROOT / "work/h72"
+PREREG = ROOT / "registry/h73_preregistration.json"
+WORK = ROOT / "work/h73"
 EVID = ROOT / "evidence"
 DOWN = ROOT / "docs/downloads"
 SUBM = ROOT / "submission"
 CENSUS = ROOT / "work/h61/prior_fetch_receipt.json"
 SAMPLE = ROOT / "data/sample_submission.tif"
-PREFIX = "gems52-h72-"
+PREFIX = "gems52-h73-"
 K_FOLD = 9400
 K_TOTAL = 37600
 NEAR_RADIUS = 3.0
-T_GRID = (200, 150, 100, 80, 60, 40)   # loosest first; fixed by amendment 59a
+T_GRID = (200, 150, 100, 80, 60, 40)   # loosest first; fixed by amendment 61a
 
 
 def log(*a, **k):
@@ -85,7 +85,7 @@ def digest(path) -> str:
 
 def write(name: str, obj) -> Path:
     EVID.mkdir(parents=True, exist_ok=True)
-    p = EVID / f"h72_{name}.json"
+    p = EVID / f"h73_{name}.json"
     p.write_text(json.dumps(obj, indent=2, default=str, allow_nan=False) + "\n")
     return p
 
@@ -94,10 +94,10 @@ def check_prereg() -> dict:
     reg = json.loads(PREREG.read_text())
     doc = ROOT / reg["hypothesis_document"]
     if digest(doc) != reg["hypothesis_sha256"]:
-        raise SystemExit("H72 preregistered hypothesis document changed after registration")
+        raise SystemExit("H73 preregistered hypothesis document changed after registration")
     for am in reg.get("amendments", []):
         if digest(ROOT / am["document"]) != am["sha256"]:
-            raise SystemExit(f"H72 amendment changed after registration: {am['document']}")
+            raise SystemExit(f"H73 amendment changed after registration: {am['document']}")
     return reg
 
 
@@ -136,7 +136,7 @@ def place_quota(field, pool, K, quotas):
     """Greedy top-K with hard-core spacing (d^2 >= 9 px^2, as nodes.spacing_select) and per-prior quotas.
 
     quotas: list of (packed_halo_bits, cap). A quota prior's 3 px halo is forbidden for the rest of
-    the placement once its cap is reached, so the cap can never be exceeded (amendment 59a).
+    the placement once its cap is reached, so the cap can never be exceeded (amendment 61a).
     """
     h, w = field.shape
     ncell = h * w
@@ -235,7 +235,7 @@ def informative_supports(eligible, reg):
         sup, _ = support_of(a)
         if sup.sum() == 0:
             continue
-        if (halo(sup) & eligible).sum() / max(1, eligible.sum()) >= H72["thresholds"]["universal_coverage_probe_threshold"]:
+        if (halo(sup) & eligible).sum() / max(1, eligible.sum()) >= H73["thresholds"]["universal_coverage_probe_threshold"]:
             continue
         sups.append(np.argwhere(sup).astype(np.int32))
         del sup, a
@@ -280,7 +280,7 @@ def stage_fit():
                    canary_max_direction_insensitive=max(c["direction_insensitive"] for c in canary.values()))
         out["folds"].append(rec)
         log(f"fold {f}: B region AUC {oof_auc:.4f}; canary max {rec['canary_max_direction_insensitive']:.4f}")
-    out["canary_alarm"] = any(r["canary_max_direction_insensitive"] >= H72["thresholds"]["canary_auc_alarm"]
+    out["canary_alarm"] = any(r["canary_max_direction_insensitive"] >= H73["thresholds"]["canary_auc_alarm"]
                               for r in out["folds"])
     out["finished_utc"] = now()
     write("fit", out)
@@ -309,7 +309,7 @@ def stage_consensus():
             sup, binary = support_of(a)
             cov = float((halo(sup) & eligible).sum()) / footprint_px
             rec = dict(path=str(path), decoded_sha256=dsha, binary=binary, support_px=int(sup.sum()),
-                       coverage_3px_of_footprint=cov, universal_coverage_probe=cov >= H72["thresholds"]["universal_coverage_probe_threshold"],
+                       coverage_3px_of_footprint=cov, universal_coverage_probe=cov >= H73["thresholds"]["universal_coverage_probe_threshold"],
                        duplicate_of_earlier=dsha in seen)
             if not rec["duplicate_of_earlier"] and not rec["universal_coverage_probe"] and sup.sum() > 0:
                 consensus += halo(sup).astype(np.uint16)
@@ -361,22 +361,22 @@ def stage_choose():
     sups = informative_supports(eligible, reg)
     log(f"informative supports for the search: {len(sups)}")
     trials, chosen = [], None
-    for T in H72["thresholds"]["consensus_T_grid"]:
+    for T in H73["thresholds"]["consensus_T_grid"]:
         pool = finite & (cons <= T)
         n_pool = int(pool.sum())
         if n_pool < K_TOTAL:
             trials.append(dict(T=T, pool_px=n_pool, ok=False, reason="pool smaller than budget"))
             continue
         t0 = time.time()
-        dots, rec = place_lane(field, pool, K_TOTAL, sups, eligible.shape, limit=H72["thresholds"]["lane_near_dot_fraction"])
+        dots, rec = place_lane(field, pool, K_TOTAL, sups, eligible.shape, limit=H73["thresholds"]["lane_near_dot_fraction"])
         trials.append(dict(T=T, pool_px=n_pool, seconds=round(time.time() - t0, 1), **rec))
         log(f"T={T}: pool {n_pool} px, ok={rec['ok']}, worst {rec['worst']}")
         if rec["ok"]:
             chosen = dict(T=T, pool_px=n_pool, worst_near_share=rec["worst"], quota_priors=rec["quota_priors"])
             break
-    out = dict(stage="choose", finished_utc=now(), placement="place_lane (greedy + per-prior quota, amendment 59a)",
+    out = dict(stage="choose", finished_utc=now(), placement="place_lane (greedy + per-prior quota, amendment 61a)",
                trials=trials, chosen=chosen, n_informative_supports=len(sups),
-               limit=H72["thresholds"]["lane_near_dot_fraction"],
+               limit=H73["thresholds"]["lane_near_dot_fraction"],
                note="fast KD-tree screen during search; the authoritative lane_report runs once in build")
     write("choose", out)
     if chosen is None:
@@ -387,14 +387,14 @@ def stage_choose():
 # --------------------------------------------------------------------------------------------
 def stage_holdout():
     reg, store, cat, eligible, folds, va, vb, ring_px = base.setup()
-    th = H72["thresholds"]
-    ch = json.loads((EVID / "h72_choose.json").read_text())["chosen"]
+    th = H73["thresholds"]
+    ch = json.loads((EVID / "h73_choose.json").read_text())["chosen"]
     if ch is None:
-        raise SystemExit("holdout refused: no lane-feasible consensus threshold (see h72_choose)")
+        raise SystemExit("holdout refused: no lane-feasible consensus threshold (see h73_choose)")
     T = ch["T"]
     cons = np.load(WORK / "consensus.npy")
     flat = store.flat_idx
-    arms = ("single_B", "H72_B_lane", "random")
+    arms = ("single_B", "H73_B_lane", "random")
     terms = {a: None for a in arms}
     SUPS = informative_supports(eligible, reg)
     out = dict(stage="holdout", started_utc=now(), budget_per_fold=K_FOLD, min_separation_px=3.0,
@@ -418,18 +418,18 @@ def stage_holdout():
         rec = dict(fold=f, allowed_px=int(allowed.sum()), truth_px=int(fold["truth"].sum()),
                    region_px=int(fold["region"].sum()), pool_px_candidate=int((allowed & (cons <= T)).sum()),
                    arms={})
-        # the candidate arm uses the same lane placement as the shipped file (amendment 59a)
+        # the candidate arm uses the same lane placement as the shipped file (amendment 61a)
         t0 = time.time()
         em_c, rec_c = place_lane(np.nan_to_num(r, nan=-1.0), allowed & (cons <= T), K_FOLD, SUPS,
                                  eligible.shape, limit=th["lane_near_dot_fraction"])
         result_c, term_c = evaluator.evaluate(em_c.astype(np.float32), fold, eligible, block_side=200)
-        terms["H72_B_lane"] = term_c if terms["H72_B_lane"] is None else terms["H72_B_lane"] + term_c
+        terms["H73_B_lane"] = term_c if terms["H73_B_lane"] is None else terms["H73_B_lane"] + term_c
         row = dict(result_c)
         row.update(placed=int(em_c.sum()), requested=K_FOLD, filled=bool(em_c.sum() == K_FOLD),
                    lane_ok=rec_c["ok"], lane_worst=rec_c["worst"], quota_priors=rec_c["quota_priors"],
                    spacing_ok=rec_c["spacing_ok"], seconds=round(time.time() - t0, 1))
-        rec["arms"]["H72_B_lane"] = row
-        log(f"fold {f} arm H72_B_lane: placed {int(em_c.sum())}/{K_FOLD} DTI {result_c['dti']:.6f} lane_ok {rec_c['ok']}")
+        rec["arms"]["H73_B_lane"] = row
+        log(f"fold {f} arm H73_B_lane: placed {int(em_c.sum())}/{K_FOLD} DTI {result_c['dti']:.6f} lane_ok {rec_c['ok']}")
         for arm, (field, dom) in fields.items():
             t0 = time.time()
             em = nodes.spacing_select(field, dom, K_FOLD, min_px=3.0)
@@ -442,9 +442,9 @@ def stage_holdout():
             log(f"fold {f} arm {arm}: placed {int(em.sum())}/{K_FOLD} DTI {result['dti']:.6f}")
         out["folds"].append(rec)
     out["pooled"] = evaluator.pooled_summary(terms, draws=int(th["bootstrap_draws"]), seed=SEED,
-                                             candidate="H72_B_lane")
+                                             candidate="H73_B_lane")
     out["all_arms_filled"] = bool(all(a["arms"][k]["filled"] for a in out["folds"] for k in arms))
-    out["withheld_positive_pixels"] = out["pooled"]["scores"]["H72_B_lane"]["withheld_positive_pixels"]
+    out["withheld_positive_pixels"] = out["pooled"]["scores"]["H73_B_lane"]["withheld_positive_pixels"]
     out["finished_utc"] = now()
     out["caveat"] = ("HOLDOUT-DTI on the label-blind quadrant splitter; an instrument reading, not a forecast "
                      "and not an organiser score.")
@@ -455,11 +455,11 @@ def stage_holdout():
 # --------------------------------------------------------------------------------------------
 def stage_build():
     reg, store, cat, eligible, folds, va, vb, ring_px = base.setup()
-    th = H72["thresholds"]
-    ch = json.loads((EVID / "h72_choose.json").read_text())["chosen"]
+    th = H73["thresholds"]
+    ch = json.loads((EVID / "h73_choose.json").read_text())["chosen"]
     if ch is None:
         raise SystemExit("build refused: no lane-feasible consensus threshold")
-    th = H72["thresholds"]
+    th = H73["thresholds"]
     T = ch["T"]
     cons = np.load(WORK / "consensus.npy")
     ff = _fold_fields(folds, store, cat, ring_px, eligible)
@@ -489,12 +489,12 @@ def stage_build():
     write("uniqueness", uniq)
     # ----- write, validate, package
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    name = f"gems52-h72-surfaceB-lanefeasible-{K_TOTAL}px-{stamp}"
-    note = ("H72 surface-only B rank, consensus-pool lane-feasible, 3 px spacing; holdout measured; "
+    name = f"gems52-h73-surfaceB-lanefeasible-{K_TOTAL}px-{stamp}"
+    note = ("H73 surface-only B rank, consensus-pool lane-feasible, 3 px spacing; holdout measured; "
             "research, not slot-approved")
     path = SUBM / f"{name}.tif"
     rec = submission_writer.write_submission(path, pred, SAMPLE, eligible, note=note, name=name,
-                                             metadata=dict(round="H72", consensus_T=T,
+                                             metadata=dict(round="H73", consensus_T=T,
                                                            lane_policy=lane_dots["policy"]["verdict"],
                                                            lane_literal=lane_dots["literal"]["verdict"]))
     write("build", dict(stage="build", finished_utc=now(), file=str(path.relative_to(ROOT)),
@@ -503,7 +503,7 @@ def stage_build():
     return rec
 
 
-H72: dict = {}
+H73: dict = {}
 
 # --------------------------------------------------------------------------------------------
 def stage_control():
@@ -517,7 +517,7 @@ def stage_control():
     arms = ("single_B", "random")
     terms = {a: None for a in arms}
     out = dict(stage="control", started_utc=now(), budget_per_fold=K_FOLD, arms=list(arms), folds=[],
-               reproduction_target_H71=0.174571, reproduction_tolerance=H72["thresholds"]["control_reproduction_tolerance"])
+               reproduction_target_H71=0.174571, reproduction_tolerance=H73["thresholds"]["control_reproduction_tolerance"])
     for fold in folds:
         f = fold["fold"]
         vis_dist = ndi.distance_transform_edt(~fold["visible"])
@@ -540,7 +540,7 @@ def stage_control():
             rec["arms"][arm] = row
             log(f"control fold {f} {arm}: placed {int(em.sum())} DTI {result['dti']:.6f}")
         out["folds"].append(rec)
-    out["pooled"] = evaluator.pooled_summary(terms, draws=int(H72["thresholds"]["bootstrap_draws"]), seed=SEED,
+    out["pooled"] = evaluator.pooled_summary(terms, draws=int(H73["thresholds"]["bootstrap_draws"]), seed=SEED,
                                              candidate="single_B")
     d = out["pooled"]["scores"]["single_B"]["dti"]
     out["single_B_dti"] = d
@@ -552,10 +552,10 @@ def stage_control():
 
 
 def main(argv=None) -> int:
-    global H72
+    global H73
     argv = list(sys.argv[1:] if argv is None else argv)
     stage = argv[0] if argv else "all"
-    H72 = check_prereg()
+    H73 = check_prereg()
     if stage in ("fit", "all"):
         stage_fit()
     if stage in ("consensus", "all"):

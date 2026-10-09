@@ -1,12 +1,12 @@
 {
-  "round": "H72",
+  "round": "H73",
   "preregistered_utc": "2026-10-09T16:22:31Z",
-  "hypothesis_document": "knowledge/59_hypotheses_H72_preregistered.md",
-  "hypothesis_sha256": "ee5ea818daed5149ae31b50f919901c2590d2c409cb7fac9fe6dca36193bf87c",
+  "hypothesis_document": "knowledge/61_hypotheses_H73_preregistered.md",
+  "hypothesis_sha256": "7f9e37f01f0b1feaf868a9b762c210827e89aaa3ae72fbc161a75a4216ca6780",
   "hypothesis_bytes": 6095,
   "lane": "surface-only (View B) emission under the brief's lane rule; consensus-restricted pool; no co-training",
   "frozen_before_any_fit": true,
-  "runner": "scripts/run_h72.py",
+  "runner": "scripts/run_h73.py",
   "runner_refuses_if_hash_moves": true,
   "shared_tools_reused": [
     "scripts/run_h61.py::setup, sample_train, learner_for, predict_flat, pct_rank",
@@ -44,16 +44,21 @@
   },
   "amendments": [
     {
-      "document": "knowledge/59a_h72_preregistration_amendment_quota_placement.md",
-      "sha256": "4d9b18982d34bb495f1c203eef43330740391ec353914551920c1668f73483e0",
+      "document": "knowledge/61a_h73_preregistration_amendment_quota_placement.md",
+      "sha256": "19dd5413698a1d96361929fdac228ab90cff298702700f45703f30189bbd55e3",
       "bytes": 3699,
       "dated_before": "any holdout arm and any shipped-file placement",
       "summary": "per-prior quota placement (H69 rule) replaces the plain greedy pool when the plain greedy is measured infeasible; T grid 200..40"
     }
   ],
   "measured_before_amendment": {
-    "file": "evidence/h72_choose_plain_greedy_wall.json",
+    "file": "evidence/h73_choose_plain_greedy_wall.json",
     "best_plain_greedy_max_near_share": 0.8916,
     "at_T": 150
+  },
+  "renamed_from": {
+    "round": "H72",
+    "reason": "identifier collision: a parallel session merged a different H72 round (strain-only View A x surface B, README H72 block, knowledge/59 and /60, registry/h72_preregistration.json) to main first; per the repo's identifier-only rename practice (README H71 rename note) this round is H73. No measured number changed.",
+    "hypothesis_sha256_before_rename": "ee5ea818daed5149ae31b50f919901c2590d2c409cb7fac9fe6dca36193bf87c"
   }
 }

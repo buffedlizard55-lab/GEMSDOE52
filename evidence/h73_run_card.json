@@ -1,5 +1,5 @@
 {
-  "round": "H72",
+  "round": "H73",
   "date_utc": "2026-10-09",
   "verdict": "negative",
   "verdict_reason": "lane gate infeasible for a surface-only emission on this registry (plain greedy best 0.8916; quota placement best 0.7043 with short fill); no candidate emitted; control reproduces",
@@ -51,13 +51,13 @@
     "quota_best_dots_placed": 37372,
     "limit": 0.7,
     "receipts": [
-      "evidence/h72_choose_plain_greedy_wall.json",
-      "evidence/h72_choose.json"
+      "evidence/h73_choose_plain_greedy_wall.json",
+      "evidence/h73_choose.json"
     ]
   },
   "correlation_overlap_vs_registry": "not computed for a candidate (none emitted); see the reviewed existing download below",
   "raster_sha256": null,
-  "validator_output": "not run: no H72 raster was written",
+  "validator_output": "not run: no H73 raster was written",
   "submission_name": null,
   "submission_note": null,
   "reviewed_existing_download": {
@@ -78,7 +78,7 @@
       "n_nonzero": 37600,
       "note": "local template check, not organizer acceptance"
     },
-    "audit": "evidence/h72_audit_h69_file.json",
+    "audit": "evidence/h73_audit_h69_file.json",
     "surface_lane": {
       "max_spearman": 0.04211384545418964,
       "ok": true
@@ -114,11 +114,11 @@
         ]
       },
       "withheld_positive_pixels": 60894,
-      "note": "does not reproduce today's single_B (0.174571); flagged IR-H72-010"
+      "note": "does not reproduce today's single_B (0.174571); flagged IR-H73-010"
     },
     "submit": "NO",
     "download": "YES (format valid, unique by Jaccard, lane policy PASS on informative priors, literal lane rule FAIL on probes; user decision)"
   },
-  "irregularities": "see knowledge/60 section 5 (IR-H72-001..010)",
+  "irregularities": "see knowledge/60 section 5 (IR-H73-001..010)",
   "next": "validate the top unrun hypothesis (directional variogram anisotropy) on the holdout against single_B before any lane work; add a denominator-aware quota placement as a separate preregistered placement round"
 }

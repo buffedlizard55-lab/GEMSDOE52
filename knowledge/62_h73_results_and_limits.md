@@ -1,16 +1,25 @@
-# 60 · H72 — results, walls, irregularities, and the next hypotheses (2026-10-09)
+# 60 · H73 — results, walls, irregularities, and the next hypotheses (2026-10-09)
 
-**Verdict: NEGATIVE at the lane gate. No H72 file was emitted. Competition slots used: 0.**
-Preregistered in [`knowledge/59`](59_hypotheses_H72_preregistered.md), amended before any holdout arm or shipped
-placement in [`knowledge/59a`](59a_h72_preregistration_amendment_quota_placement.md). Runner:
-[`scripts/run_h72.py`](../scripts/run_h72.py). Experiments used: **1 of 3**. Wall clock: ~1 h 30 min.
+**Verdict: NEGATIVE at the lane gate. No H73 file was emitted. Competition slots used: 0.**
+Preregistered in [`knowledge/61`](61_hypotheses_H73_preregistered.md), amended before any holdout arm or shipped
+placement in [`knowledge/61a`](61a_h73_preregistration_amendment_quota_placement.md). Runner:
+[`scripts/run_h73.py`](../scripts/run_h73.py). Experiments used: **1 of 3**. Wall clock: ~1 h 30 min.
 
 Labels: **HOLDOUT-DTI** = instrument reading (evaluator `gems52-pooled-hide-v1`, withheld positives and 95 % CI given);
 **MEASURED** = a receipt value; **ORGANIZER-CONFIRMED** = nothing in this document (no organiser receipt exists here).
 
+## 0 · Identifier rename (read first)
+
+This round was first frozen as **H72**. A parallel session had already merged a different H72 round to `main`
+(strain-only View A × surface B, with the same file names). Per the repository's identifier-only rename practice
+(README, H71 note), this round is **H73**. The rename changed labels only: the preregistered hypothesis text, the
+amendment text and every measured number are the same. The preregistration was re-pinned after the rename, and the old
+and new hashes are recorded in `registry/h73_preregistration.json` (`renamed_from`). Anyone auditing the pin should
+compare the content, not the file name.
+
 ## 1 · What was tested
 
-Hypothesis H72-B: a surface-only (View B) ranking, emitted under the brief's lane rule, keeps ≥ 90 % of the
+Hypothesis H73-B: a surface-only (View B) ranking, emitted under the brief's lane rule, keeps ≥ 90 % of the
 unconstrained `single_B` holdout DTI. View A is not used; no co-training; no pseudo-labels.
 
 ## 2 · Measurements, each labelled
@@ -20,17 +29,17 @@ unconstrained `single_B` holdout DTI. View A is not used; no co-training; no pse
 | Restore of 23 competition inputs (SHA-256 + byte pins) | MEASURED | 23/23 match | `data/restore_receipt.json` |
 | Test suite before this round's code | MEASURED | 416 passed, 1 skipped | `pytest` (run in `/home/user/.venv-gems`) |
 | Feature store rebuilt + external layers | MEASURED | built in ~3 min; 19-band template matches | `work/r2/features` (ignored) |
-| Canary: each View-B feature alone, held-out region | MEASURED (leakage canary) | max direction-insensitive AUC 0.6689 (fold 1); alarm at 0.90 → **no alarm** | `evidence/h72_fit.json` |
-| View-B out-of-quadrant AUC per fold | MEASURED | 0.6625 / 0.7684 / 0.6112 / 0.6952 | `evidence/h72_fit.json` |
+| Canary: each View-B feature alone, held-out region | MEASURED (leakage canary) | max direction-insensitive AUC 0.6689 (fold 1); alarm at 0.90 → **no alarm** | `evidence/h73_fit.json` |
+| View-B out-of-quadrant AUC per fold | MEASURED | 0.6625 / 0.7684 / 0.6112 / 0.6952 | `evidence/h73_fit.json` |
 | Census re-materialised (526 blobs) | MEASURED | 524/524 eligible file-SHA match, shapes and CRS match, 0 errors | `work/h61/prior_fetch_receipt.json` |
-| Registry used by the lane gate | MEASURED | 560 rasters (524 census + 36 local); 2 ineligible census entries skipped; 181 decoded duplicates; 14 universal-coverage probes; **350 informative distinct** | `evidence/h72_consensus.json` |
-| **Plain greedy under the consensus pool (preregistered construction)** | MEASURED | best worst-prior near-dot share **0.8916 at T = 150**; unrestricted 0.9377; **no T reaches 0.70** | `evidence/h72_choose_plain_greedy_wall.json` |
-| **Amended quota placement (59a), 6 thresholds** | MEASURED | all six fail. T=200 0.7382; T=150 0.7340; T=100 0.7317; T=80 0.7268; T=60 0.7223; T=40 0.7043 (short fill: 37,372 of 37,600 dots) | `evidence/h72_choose.json` |
-| **Instrument control: `single_B` at 9,400 dots/fold** | HOLDOUT-DTI, n = 53,186 withheld positives, evaluator `gems52-pooled-hide-v1` | **0.174571**, 95 % CI [0.152313, 0.196302]; committed H71 receipt 0.174571 → \|Δ\| = 3.6e-07 → **reproduces** | `evidence/h72_control.json` |
-| Control: `random` at 9,400 dots/fold | HOLDOUT-DTI, same withheld set | 0.080426, 95 % CI [0.070223, 0.090973] (H64 random arm 0.080426, as cited in H69) | `evidence/h72_control.json` |
-| Control paired difference `single_B` − `random` | HOLDOUT-DTI | +0.094146, 95 % CI [0.073841, 0.114562] | `evidence/h72_control.json` |
-| Candidate `H72_B_lane` holdout | **not measured** | the preregistered holdout stage refuses to run without a lane-feasible T (by design) | — |
-| Shipped H72 file | **not emitted** | no lane-feasible threshold → nothing written; no SHA, no validator, no name/note | — |
+| Registry used by the lane gate | MEASURED | 560 rasters (524 census + 36 local); 2 ineligible census entries skipped; 181 decoded duplicates; 14 universal-coverage probes; **350 informative distinct** | `evidence/h73_consensus.json` |
+| **Plain greedy under the consensus pool (preregistered construction)** | MEASURED | best worst-prior near-dot share **0.8916 at T = 150**; unrestricted 0.9377; **no T reaches 0.70** | `evidence/h73_choose_plain_greedy_wall.json` |
+| **Amended quota placement (61a), 6 thresholds** | MEASURED | all six fail. T=200 0.7382; T=150 0.7340; T=100 0.7317; T=80 0.7268; T=60 0.7223; T=40 0.7043 (short fill: 37,372 of 37,600 dots) | `evidence/h73_choose.json` |
+| **Instrument control: `single_B` at 9,400 dots/fold** | HOLDOUT-DTI, n = 53,186 withheld positives, evaluator `gems52-pooled-hide-v1` | **0.174571**, 95 % CI [0.152313, 0.196302]; committed H71 receipt 0.174571 → \|Δ\| = 3.6e-07 → **reproduces** | `evidence/h73_control.json` |
+| Control: `random` at 9,400 dots/fold | HOLDOUT-DTI, same withheld set | 0.080426, 95 % CI [0.070223, 0.090973] (H64 random arm 0.080426, as cited in H69) | `evidence/h73_control.json` |
+| Control paired difference `single_B` − `random` | HOLDOUT-DTI | +0.094146, 95 % CI [0.073841, 0.114562] | `evidence/h73_control.json` |
+| Candidate `H73_B_lane` holdout | **not measured** | the preregistered holdout stage refuses to run without a lane-feasible T (by design) | — |
+| Shipped H73 file | **not emitted** | no lane-feasible threshold → nothing written; no SHA, no validator, no name/note | — |
 
 **Reading the walls.** The shipped surface view ranks dots that cluster on the same few dense priors. Greedy placement
 therefore puts ≈ 90 % of its dots within 3 px of one registry raster. Restricting the pool by consensus moves that only
@@ -83,40 +92,40 @@ implementation in `src/` or `scripts/`) and against the access test below. Ranki
 
 ## 5 · Irregularities flagged for review (each has a receipt or a link)
 
-* **IR-H72-001 — the portal's NaN rule vs. the repo's zeros.** The official page says the submitted GeoTIFF's values are
+* **IR-H73-001 — the portal's NaN rule vs. the repo's zeros.** The official page says the submitted GeoTIFF's values are
   between 0 and 1 and that "data outside the bounds is null or nan"
   (<https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/>). The repository writes **0** outside
   the footprint; the official template `data/sample_submission.tif` writes NaN outside (7,111,787 px). The 0.2778
   reference `data/reference/h33-2-b2-zeros.tif` (owner-reported as scored) also writes zeros, with no NaN. The metric is unaffected (zero
   pixels contribute nothing), so this is a format question for the organiser, not a score question. **Not confirmed
   by the portal.**
-* **IR-H72-002 — the leaderboard could not be verified.** The DrivenData leaderboard page renders client-side and
+* **IR-H73-002 — the leaderboard could not be verified.** The DrivenData leaderboard page renders client-side and
   returned "Loading..." to the fetch tool. The 0.3774 top score, the 0.3195 and 0.2778 values are therefore
   **PUBLIC-PAGE or OWNER-REPORTED** in this repository. Per-file attribution (which file produced which score) is
   filename-only and owner-reported (see `knowledge/49`).
-* **IR-H72-003 — one submission per team.** The official page says competitors "must choose a **single** submission"
+* **IR-H73-003 — one submission per team.** The official page says competitors "must choose a **single** submission"
   across both prize rounds, and each team submits "one GeoTIFF per user/team"
   (<https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/>). The repository's 60-plus
   submission-named files are research artefacts; only one may be chosen for scoring. **Decision for the user.**
-* **IR-H72-004 — registry count differs from earlier rounds.** This round's lane registry is 560 rasters (350
+* **IR-H73-004 — registry count differs from earlier rounds.** This round's lane registry is 560 rasters (350
   informative distinct); H69 cites 566 and 555. Different census receipts; not reconciled.
-* **IR-H72-005 — the withheld-positive count differs from H69 for the same evaluator.** H72 control: 53,186; H69 cites
+* **IR-H73-005 — the withheld-positive count differs from H69 for the same evaluator.** H73 control: 53,186; H69 cites
   60,894. Not explained by this round; flagged rather than adjusted.
-* **IR-H72-006 — the preregistered T grid was reduced** from 12 values to 6 by amendment 59a, before any holdout or
+* **IR-H73-006 — the preregistered T grid was reduced** from 12 values to 6 by amendment 61a, before any holdout or
   shipped placement. Documented; the reduced grid was fixed before the quota run.
-* **IR-H72-007 — a runner defect found and fixed in this round:** `choose` read thresholds from the H61 registry
-  (no `consensus_T_grid` key) and was re-pointed at the H72 preregistration. The fit stage ran before that fix; its
+* **IR-H73-007 — a runner defect found and fixed in this round:** `choose` read thresholds from the H61 registry
+  (no `consensus_T_grid` key) and was re-pointed at the H73 preregistration. The fit stage ran before that fix; its
   canary and lane thresholds are numerically identical (0.90, 0.95), so its receipt is unaffected.
-* **IR-H72-008 — an out-of-memory kill** in the first `choose` attempt (350 dense prior masks ≈ 4 GB). Fixed by sparse
+* **IR-H73-008 — an out-of-memory kill** in the first `choose` attempt (350 dense prior masks ≈ 4 GB). Fixed by sparse
   support coordinates; no result from the killed run was used.
-* **IR-H72-009 — census `sha256` column is file bytes**, not decoded bands (receipt field `sha_column_reading`). The
+* **IR-H73-009 — census `sha256` column is file bytes**, not decoded bands (receipt field `sha_column_reading`). The
   decoded-SHA column in the receipt is therefore 0 matches by design; the file-SHA column is the verified one (524/524).
-* **IR-H72-010 — the H69 holdout does not reproduce today.** H69's receipt gives `single_B` = 0.137947 and `random` =
+* **IR-H73-010 — the H69 holdout does not reproduce today.** H69's receipt gives `single_B` = 0.137947 and `random` =
   0.072032; this round's control gives `single_B` = 0.174571 (reproduces H71 to 3.6e-07) and `random` = 0.080426 (reproduces
   H64). H69 says its View-B channel set changed, which would explain the gap, but the change is not in this round's
   receipts. Cross-round holdout comparisons that use H69's `single_B` are declared differences, not reproductions.
-* **IR-H72-011 — the H69 file passes the informative-prior lane policy and fails the literal lane rule, and the
-  difference is entirely universal-coverage probes.** Audit (`evidence/h72_audit_h69_file.json`): literal max near-dot
+* **IR-H73-011 — the H69 file passes the informative-prior lane policy and fails the literal lane rule, and the
+  difference is entirely universal-coverage probes.** Audit (`evidence/h73_audit_h69_file.json`): literal max near-dot
   share 1.0 (14 probes, each covering ≥ 95 % of the footprint, so every dot is "within 3 px" of them); informative-prior
   policy max 0.6985 (PASS at 0.70). Also, 100 % of its dots lie inside *some* prior's support, which is the same probe
   saturation, not evidence of a duplicate. Max Jaccard with any of 542 distinct priors is 0.0092. The brief's literal
@@ -129,6 +138,6 @@ python3 scripts/restore_data.py --target-dir data        # 23/23 pins
 PYTHONPATH=src python -c "from gems52 import structural; structural.build(dest='work/r2/features', include_optional_profiles=False)"
 PYTHONPATH=src python -m gems52.external
 python scripts/fetch_prior_inventory.py                  # census, 526 blobs, ~20 min
-python scripts/run_h72.py fit && python scripts/run_h72.py consensus && python scripts/run_h72.py choose
-python scripts/run_h72.py control                        # the instrument check that reproduces 0.174571
+python scripts/run_h73.py fit && python scripts/run_h73.py consensus && python scripts/run_h73.py choose
+python scripts/run_h73.py control                        # the instrument check that reproduces 0.174571
 ```
