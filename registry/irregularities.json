@@ -1638,6 +1638,83 @@
   },
   {
    "id": "IR-H65-001",
+   "round": "H65",
+   "severity": "medium",
+   "status": "open - mis-specified operator; not used in H65",
+   "title": "H60-3 'strike-projected basement step' is a second difference ALONG strike and does not detect a step across the trace",
+   "what_it_is": "src/gems52/h60.py (build_stack, H60-3 block) computes |d1 + d2 - 2*arr| with d1, d2 shifted along the strike unit vector. A basement step across a strike-parallel trace is constant along the trace, so its along-strike second difference is zero by construction; a ramp is also cancelled. The layers b15_step_nne/nw and b13_step_nne exist in evidence/h60_views.json. registry/h60_preregistration.json (line 18) names them 'H60-3 strike-projected basement steps'.",
+   "how_we_know": "scripts/h65_operator_audit.py -> evidence/h65_operator_audit.json: synthetic 400x400 px grid, 200 m step across a NNE trace. H60-3 on-trace mean 2.96e-05 vs cross-strike symmetric difference (d=3 px) 1.970 in the same grid units (ratio 1.5e-05). Scratch check: the residual persists with no ramp (2.96e-05 order-1, 2.07e-05 nearest) and vanishes for a pure ramp, so it comes from the discrete step, not from the ramp.",
+   "handling": "H65 replaces the operator with a cross-strike symmetric difference, regionally detrended. H60 outputs are not edited or withdrawn here; any H60 result that uses b15_step_* as a feature is affected and needs re-running before it is cited.",
+   "disposition": "Open for review. Check whether any submitted H60 or H60C/H60D artefact used b15_step_* features (evidence/h60_views.json)."
+  },
+  {
+   "id": "IR-H65-002",
+   "round": "H65",
+   "severity": "high",
+   "status": "open - brief claim contradicted by the live public board",
+   "title": "Brief states '0.3195 is the highest score right now'; the live public board shows 0.3774 at #1",
+   "what_it_is": "The brief says 0.3195 is the highest score. The DrivenData leaderboard, fetched live on 2026-10-09 (https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/), shows #1 xiaofanhu 0.3774 and #7 DARD 0.3195. The 2026-10-08 snapshot (registry/leaderboard_snapshot_2026-10-08.json) gives #2 alexoktaba 0.3345 and the same #1 and #7 rows.",
+   "how_we_know": "Live fetch 2026-10-09 (chunk 0 of the public leaderboard, no login) for #1 and #7; registry/leaderboard_snapshot_2026-10-08.json for #2.",
+   "handling": "The bar used in this repository is stated as the measured holdout comparable, not as the board top. Both figures are recorded; 0.3195 is treated as the DARD row, not as the top.",
+   "disposition": "Reviewer to confirm the bar the brief intends (board top 0.3774 vs DARD 0.3195)."
+  },
+  {
+   "id": "IR-H65-003",
+   "round": "H65",
+   "severity": "medium",
+   "status": "open - board entry not linked to any file",
+   "title": "The public board lists 0.2778 under team 'extradr19' (#13); no file is linked to that row",
+   "what_it_is": "The live board shows #13 extradr19, 0.2778. The 2026-10-08 snapshot gives 12 submissions for that row. The repository's 0.2778 attribution to gemsdoe32-h33-h33-2-b2 (token e5eb6e7e) is owner-reported (IR-H61-004). The board row proves a 0.2778 exists for that team; it does not prove the file or the token.",
+   "how_we_know": "Live fetch 2026-10-09 of the public leaderboard; token mismatch recorded in IR-H61-004.",
+   "handling": "Recorded as: board row 0.2778 exists under team extradr19; file attribution remains OWNER-REPORTED, NOT ORGANIZER-CONFIRMED.",
+   "disposition": "Open. Needs a submission-page receipt to link the file to the row."
+  },
+  {
+   "id": "IR-H65-004",
+   "round": "H65",
+   "severity": "high",
+   "status": "open - measured DUPLICATE under literal and policy; download-for-research label still on the site",
+   "title": "H61 one-click file is 'DOWNLOAD FOR RESEARCH' on the site, but the lane rule classes it DUPLICATE/STOP",
+   "what_it_is": "The brief's lane rule: rank-correlation above 0.90 or more than 70% of dots within 3 px of one registry raster means 'log it as a duplicate and stop'. Measured 2026-10-09 with the census (evidence/h61_uniqueness_census_20261009.json, 530 priors after byte dedupe): literal DUPLICATE/STOP (max near-dot 1.0000, from 14 universal-coverage probes); repository policy DUPLICATE/STOP (max near-dot 0.87875 against work/h61/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif; 9 informative priors above 0.70, 14 probes excluded by 3 px coverage >= 0.95). Surface phase passes (max Spearman 0.0342). The repository's probe policy (IR-H61-005) is the reason the literal result is not read as the verdict; it does not turn 9 informative conflicts into a pass. The executive summary and index still show 'OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT' for H61.",
+   "how_we_know": "evidence/h61_uniqueness_census_20261009.json (lane_policy_dots, phases.dots); scripts/audit_uniqueness.py; README.md lines 53-55; docs/executive-summary.html.",
+   "handling": "Download-for-research and submit-no are both kept. The file is not offered as a lane-valid submission. H65 makes no emission.",
+   "disposition": "Reviewer decision: under the brief's literal rule the H61 file is a duplicate and should not be downloaded as a lane output. Confirm before any further use."
+  },
+  {
+   "id": "IR-H65-005",
+   "round": "H65",
+   "severity": "low",
+   "status": "closed - covered by byte-identical local copies",
+   "title": "7 of 524 eligible census priors returned HTTP 403 from the Git Data API",
+   "what_it_is": "scripts/fetch_prior_inventory.py materialised 519 of 526 census blobs; 7 failed with HTTP 403. The 7 are all repository-local rasters: docs/downloads/gems52-r2-signednormal-37654-1f751ac9b6ee-zeros.tif, docs/downloads/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.tif, docs/downloads/gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif, docs/downloads/gemsdoe52-cotrain-anchored-hybrid-20261006-zeros.tif, docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-nan.tif, docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-zeros.tif, submission/gems52-r4-B_only-37654px-b-only-research.tif.",
+   "how_we_know": "work/h61/prior_fetch_receipt.json (n_errors 7, n_fetched 519); local copies compared by SHA-256 against the census in this session.",
+   "handling": "The uniqueness audit includes the local copies through the PRIOR_GLOBS. Coverage is 524 of 524 eligible priors.",
+   "disposition": "Closed for the uniqueness audit. Still open as a fetch problem for the 403 blobs; the API access change is not explained."
+  },
+  {
+   "id": "IR-H65-006",
+   "round": "H65",
+   "severity": "low",
+   "status": "open - metadata difference, not a format failure",
+   "title": "H61 one-click TIFF has no nodata tag; sample_submission.tif declares nodata NaN",
+   "what_it_is": "docs/downloads/h61-candidate.tif: float32, values exactly 0 or 1, nodata tag None. data/sample_submission.tif: float32, nodata NaN. The organiser's nodata wording was not checked in this session.",
+   "how_we_know": "Independent rasterio read in this session: dtype float32, EPSG:32611, shape (3730, 3292), nodata None; NaN count 0, Inf count 0, unique values {0, 1}. The sample's nodata is NaN (same read).",
+   "handling": "Not changed. The file's bytes are the audited bytes (sha256 7c86853164f9cfa7aea34de029c7d5ccf3a6b43dbbb2b14de570e558384d2755).",
+   "disposition": "Reviewer to confirm against the organiser's validator text before any upload."
+  },
+  {
+   "id": "IR-H65-007",
+   "round": "H65",
+   "severity": "low",
+   "status": "open - user-reported rejection not reproduced",
+   "title": "User-reported portal error 'Predicted values must be in range [0, 1]' cannot be reproduced from the repository",
+   "what_it_is": "The user reported the error on an earlier submission. The repository's existing files are float32, finite and inside [0,1] (checked for the H61 file). The rejected bytes and portal receipt are not in this sandbox.",
+   "how_we_know": "Independent validator read of docs/downloads/h61-candidate.tif (this session); the rejected file was never provided.",
+   "handling": "The repository does not claim the NaN explanation. Recorded as not reproduced.",
+   "disposition": "Open. Needs the rejected file or the portal's exact error receipt."
+  },
+  {
+   "id": "IR-H65halo-001",
    "severity": "medium",
    "status": "resolved-in-shared-template",
    "title": "The shared H61 setup guard `endswith('+external-geodawn-v1')` rejected the feature store that the H63 step extension had extended, so H61/H64 could not run on that store",
@@ -1667,7 +1744,7 @@
    "detected_by_round": null
   },
   {
-   "id": "IR-H65-002",
+   "id": "IR-H65halo-002",
    "severity": "medium",
    "status": "corrected-in-knowledge-42",
    "title": "The marginal acceptance bar is written two ways: knowledge/01 and knowledge/05 use alpha*DTI/(1-alpha*DTI); metric.credit_bar, the exact-marginal test and knowledge/17 use alpha*DTI",
@@ -1697,7 +1774,7 @@
    "detected_by_round": null
   },
   {
-   "id": "IR-H65-003",
+   "id": "IR-H65halo-003",
    "severity": "medium",
    "status": "recorded-with-receipt",
    "title": "The public leaderboard moved between snapshots: extradr19 (0.2778) is rank 15 in the 2026-10-09 fetch, but knowledge/39 lists it at rank 13",
@@ -1726,7 +1803,7 @@
    "detected_by_round": null
   },
   {
-   "id": "IR-H65-004",
+   "id": "IR-H65halo-004",
    "severity": "medium",
    "status": "observed-open",
    "title": "The official reference solution writes a float64 raster; the page 967 specification requires float32",
@@ -1755,7 +1832,7 @@
    "detected_by_round": null
   },
   {
-   "id": "IR-H65-005",
+   "id": "IR-H65halo-005",
    "severity": "high",
    "status": "resolved-by-primary-source",
    "title": "The brief says 0.3195 is the top leaderboard score; the public board's top is 0.3774 (xiaofanhu). 0.3195 is DARD, rank 7",
@@ -1784,7 +1861,7 @@
    "detected_by_round": null
   },
   {
-   "id": "IR-H65-006",
+   "id": "IR-H65halo-006",
    "severity": "medium",
    "status": "open",
    "title": "The pre-registered hard control is not bit-reproducible across runs of the same receipts: fold-0 predictions differ from a standalone refit on about 0.02% of pixels (maximum |diff| 0.98)",
@@ -1814,7 +1891,7 @@
    "detected_by_round": null
   },
   {
-   "id": "IR-H65-007",
+   "id": "IR-H65halo-007",
    "severity": "medium",
    "status": "open-limitation",
    "title": "The 0.2778 analysis calls the 6,436 deleted pixels 'zero-credit'; that holds only under the catalogue proxy. Under the official metric their credit depends on new-fault labels within 300 m, which staff say can exist",
@@ -1844,7 +1921,7 @@
    "detected_by_round": null
   },
   {
-   "id": "IR-H65-008",
+   "id": "IR-H65halo-008",
    "severity": "low",
    "status": "observed-open",
    "title": "Label source wording differs between page 967 and the NLR rules (rules §3.3 cites INGENIOUS with a GDR DOI; page 967 cites USGS quaternary fault maps and INGENIOUS)",

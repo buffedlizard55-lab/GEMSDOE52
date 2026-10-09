@@ -1,14 +1,14 @@
 {
  "round": "H65",
- "generated_utc": "2026-10-09T04:27:37Z",
+ "generated_utc": "2026-10-09T04:34:57Z",
  "experiment_index": "1 of 3 (budget: 3 experiments or 2 hours)",
  "hypothesis": "Metric-kernel halo targets: training both co-training views on the official triangular 300 m coverage kernel (soft labels for 0 < d < 300 m from the visible catalogue) raises single-view holdout DTI over the H61 hard-label control, and the co-training disagreement then ranks candidates better than single_B.",
  "mechanism": "The official distance-weighted Tversky credit is partial within 300 m; the hard-label learners never see the 0-300 m halo as training signal, so the 200 m emission boundary is a blind zone. One change: halo rows are added with weights t and 1 - t, t = 1 - d/300 m.",
  "named_non_fault_mimic": "basin-margin gravity gradient or lithologic contact running parallel to a mapped trace within 300 m; flight-line or DEM artefact along a road or canal.",
  "preregistration": {
-  "document": "knowledge/41_hypotheses_H65_preregistered.md",
+  "document": "knowledge/41b_hypotheses_H65halo_preregistered.md",
   "sha256": "7ae7cd9119c8b86d8b525519819e1120c71355bd949b7a164bc7c8b12e391afc",
-  "registry": "registry/h65_preregistration.json"
+  "registry": "registry/h65halo_preregistration.json"
  },
  "sufficiency_S1": {
   "mean_view_A_oof_auc": 0.5299319264004125,
@@ -113,7 +113,7 @@
  },
  "raster": null,
  "validator": null,
- "submission_name": "gems52-h65-halo-cotrain-NOT-BUILT",
+ "submission_name": "gems52-h65halo-cotrain-NOT-BUILT",
  "note": "H65 halo soft targets: NEGATIVE, no raster built; holdout below single_B; do not submit",
  "note_chars": 87,
  "note_status": "NOT USED: no file exists for this run; the text is a placeholder that must not be pasted",
