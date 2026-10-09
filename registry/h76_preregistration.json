@@ -1,0 +1,63 @@
+{
+ "round": "H76",
+ "preregistered_utc": "2026-10-09T20:40:00+00:00",
+ "hypothesis_document": "knowledge/67_hypotheses_H76_preregistered.md",
+ "hypothesis_sha256": "fe7050eb40ecf23ff717514ac5067cbc7d45cfa1f844c6d12fa0ee85d6b3b571",
+ "hypothesis_bytes": 22031,
+ "lane": "two-view paragraph of the brief, executed on the branch measured informative (View B) plus the lane-gate redefinition ranked first in knowledge/66; primary arm B_DVA2_VSA = View B + 50 DVA-2 channels + 11 VSA channels; controls single_B (0.174517) and B_DVA (0.186352) must reproduce within 1e-3",
+ "frozen_before_any_fit": true,
+ "runner": "scripts/run_h76.py",
+ "runner_refuses_if_hash_moves": true,
+ "primary_arm": "B_DVA2_VSA",
+ "promotion_rule": "paired 95% CI lower bound of (B_DVA2_VSA - single_B) > 0 on gems52-pooled-hide-v1 at 9400 dots/fold",
+ "attribution_arms_not_promotable": [
+  "B_DVA2",
+  "B_VSA"
+ ],
+ "budget": {
+  "experiments": 3,
+  "hours": 2,
+  "submission_slots_allowed": 0
+ },
+ "new_channels": {
+  "dva2": 50,
+  "vsa": 10,
+  "total": 60,
+  "diagnostics_not_learner": [
+   "XVSA_visible_tensor_mag"
+  ]
+ },
+ "canary_alarm_auc": 0.9,
+ "emission": {
+  "K_total": 37654,
+  "K_fold": 9400,
+  "min_spacing_px": 3.0,
+  "catalogue_ring_excluded_m": 200.0,
+  "values": "binary {0,1}",
+  "ring_mechanism_source": "knowledge/49 section 1 (measured 0.2600 -> 0.2778)"
+ },
+ "lane_registries": {
+  "literal_full_census": "evidence/ctd5_prior_inventory.json (526 blobs, 524 eligible) + submission/ + data/scored + data/reference",
+  "restricted_scored_only": "data/scored/*.tif + data/reference/h33-2-b2-zeros.tif, membership rule frozen in knowledge/67 section 5.1",
+  "doctrine": "a policy or restricted-registry PASS never waives a literal full-census DUPLICATE/STOP (AGENTS.md; knowledge/62 IR-H73-011); both verdicts reported verbatim"
+ },
+ "shared_tools_to_reuse": [
+  "scripts/run_h61.py::setup, sample_for_fit, learner_for, predict_flat, to_grid, pct_rank",
+  "src/gems52/spatial.py::folds (label-blind-quadrants-v2)",
+  "src/gems52/evaluate_holdout.py (gems52-pooled-hide-v1)",
+  "src/gems52/metric.py",
+  "src/gems52/nodes.py::spacing_select",
+  "src/gems52/azimuth.py::axial_difference, axial_resultant, mean_axial_deg",
+  "src/gems52/submission_writer.py",
+  "src/gems52/gates.py (format_report, lane_report, uniqueness_report, find_priors)",
+  "src/gems52/structural.py::FeatureStore (cached stack)",
+  "scripts/run_h73.py::place_lane, informative_supports (quota placement)"
+ ],
+ "no_private_fork": true,
+ "expected_board_claim": "none; knowledge/67 section 7 states the honest bracket before the holdout is read",
+ "inputs_provenance": "integrity-pinned, not organizer-authenticated (registry/data_manifest.json, 23/23 pins, ALL_VERIFIED=True)",
+ "original_sha256_before_amendments": "999593083599fb2d5c1f47405aa8c3fe625084c77d3f2e8112c3ef497a910e3a",
+ "amendments": [
+  "67a (written before any H76 fit/canary/holdout reading): XVSA magnitude channel demoted to diagnostic -> 60 new channels; VSA degeneracy convention; GROUP2 offset lengths recorded; region-only prediction domain with the two controls as the check"
+ ]
+}

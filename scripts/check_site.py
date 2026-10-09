@@ -621,7 +621,11 @@ def check_r5(DATA, DOCS, ROOT, problems, notes):
     def _stamp(q: Path):
         cands = []
         sidecar = q.with_suffix(".json")
-        for src in (sidecar, q):
+        # docs/downloads' short aliases carry their receipt as "<alias>-receipt.json"
+        # (h61/h63/h70/h74-candidate-receipt.json); without this the alias looks undated, is treated
+        # as contemporaneous with R5, and silently invalidates R5's novelty receipt.
+        receipt = q.with_name(q.stem + "-receipt.json")
+        for src in (sidecar, receipt, q):
             try:
                 txt = src.read_text(errors="replace") if src.suffix == ".json" else src.name
             except Exception:                                    # noqa: BLE001
@@ -633,6 +637,16 @@ def check_r5(DATA, DOCS, ROOT, problems, notes):
             for fmt in ("%Y-%m-%dT%H:%M:%S", "%Y%m%dT%H%M%S"):
                 try:
                     t = _dt.strptime(c, fmt)
+                except ValueError:
+                    continue
+                best = t if best is None or t > best else best
+        if best is None:
+            # Date-only filenames (gems52-h75-...-20261009.tif) still carry the day. Read them as
+            # 00:00:00 of that day, which is the strict direction: a same-day round stays
+            # contemporaneous and remains in the prior set, and only a strictly later day is excluded.
+            for c in _re.findall(r"(\d{8})(?!\d)", txt):
+                try:
+                    t = _dt.strptime(c, "%Y%m%d")
                 except ValueError:
                     continue
                 best = t if best is None or t > best else best
