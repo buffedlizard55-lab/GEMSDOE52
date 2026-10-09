@@ -13,7 +13,7 @@
 
 > **DOWNLOAD: YES — the file is portal-safe by construction. SUBMIT TO THE COMPETITION: NO.**
 > Verdict `negative`. Format PASS, decoded-pattern uniqueness PASS over
-> 566 registry rasters, and for the first time in this repository the
+> 570 registry rasters, and for the first time in this repository the
 > **lane rule is satisfied by construction**: max informative near-dot
 > **0.6985** and max Spearman **0.0096** against
 > literal limits of 0.70 and 0.90 (H63 measured 0.8188, H64 0.888 and both shipped DUPLICATE). It is still
@@ -92,7 +92,7 @@ the reported champion ranks 13th of 13 here while ranking 1st on the board.
 1. **NEW — the lane is satisfiable, and here is the construction.** Place in field-rank order with hard-core
    3 px spacing; measure the directed 3 px near-dot count of *every* informative prior; put every prior above
    `floor(0.6985·S)` under an exact quota (packed halos, a lazy forbidden mask, counts that can never pass
-   the cap); re-place; re-measure all 551 informative priors. Converged
+   the cap); re-place; re-measure all 555 informative priors. Converged
    in 2 rounds to max near-dot 0.6985.
 2. **NEW — the committed whole-segment pseudo-label rule yields exactly zero labels** on these views in all
    four folds, so `disagreement_post` is bit-identical to `disagreement_pre` and the paired CI is exactly
@@ -145,6 +145,7 @@ bash scripts/download_competition_data.sh
 ```
 
 <!--/H69-README-->
+
 
 
 <!--H65B-README-->

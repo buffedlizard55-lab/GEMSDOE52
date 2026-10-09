@@ -21,6 +21,9 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import re as _re_stamp
+
+_re_stamp = _re_stamp.compile(r"^\d{8}T\d{6}Z$")
 import json
 import sys
 import time
@@ -37,6 +40,7 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from gems52 import cotrain, evaluate_holdout as EH, gates, grid as G, holdout, metric, nodes, spatial  # noqa: E402
+from gems52 import submission_writer  # noqa: E402
 
 W = ROOT / "work/h69"
 EV = ROOT / "evidence"
@@ -891,7 +895,9 @@ def stage_gates(args):
     core = np.load(W / "core.npy")
     ck = json.loads((W / "place_ckpt.json").read_text())
     sample = ROOT / "data/sample_submission.tif"
-    stamp = now()
+    stamp = (args.stamp or "").strip() or now()
+    if args.stamp and not _re_stamp.fullmatch(stamp):
+        raise SystemExit(f"--stamp must look like 20261009T062239Z, got {stamp!r}")
     S = int(pred.sum())
     name = f"gems52-h69-cotrain-basementview-consensus-lanefeasible-{S}px-{stamp}"
     tif = SUB / f"{name}.tif"
@@ -1037,11 +1043,15 @@ def stage_gates(args):
                         t_core_bounds=[float(lo), float(hi)])
     log("PROJECTION:", json.dumps(pw, indent=1))
 
+    # the receipts the verdict and the packaging metadata both need, read once, up front
+    hold = json.loads((EV / "h69_holdout.json").read_text())
+    sB = hold["pooled"]["scores"]["single_B"]["dti"]
+    cand = hold["pooled"]["scores"]["disagreement_post"]["dti"]
+    pd = hold["pooled"]["paired_differences"]["single_B"]
+    beats = bool(pd["ci95"][0] > 0)
+    s1 = json.loads((EV / "h69_s1.json").read_text())
+
     # ---------- artefacts ------------------------------------------------------------------------
-    zf = SUB / f"{name}.zip"
-    with zipfile.ZipFile(zf, "w", zipfile.ZIP_DEFLATED) as z:
-        z.write(tif, tif.name)
-    (SUB / f"{name}-submission-name.txt").write_text(name + "\n")
     # The portal's note field is bounded, and a note truncated mid-word is a note nobody can read:
     # build it short enough that the 140-character cut can never fire, then assert that it did not.
     note = (f"H69 co-training, novel-only {n_novel}px, consensus-restricted lane-feasible; "
@@ -1049,6 +1059,21 @@ def stage_gates(args):
             f"research, not a verified fault map")
     if len(note) > 140:
         raise SystemExit(f"submission note is {len(note)} chars, over the 140 budget")
+    # Repackage through the shared fail-closed writer rather than hand-rolling the ZIP and the receipt.
+    # It delegates to the same grid.write_geotiff, so the TIFF bytes -- and therefore the published
+    # SHA-256 -- are unchanged; what it adds is the name/note 140-character enforcement, the
+    # no-positive-mass-outside-footprint check, the single-TIFF ZIP roundtrip assertion and the receipt.
+    receipt = submission_writer.write_submission(
+        tif, arr, sample, valid, note=note, name=name,
+        metadata=dict(round="H69", preregistration=PREREG_SHA, amendment="knowledge/52b",
+                      budget=int(S), lane_policy_max_near_3px=lane_dots["policy"]["max_near_3px_fraction"],
+                      lane_policy_max_spearman=lane_dots["policy"]["max_spearman"],
+                      s1_view_A_mean_oof_auc=s1["summary"]["A"]["mean"]))
+    if receipt["sha256"] != info["sha256"]:
+        raise SystemExit(f"repackaging changed the TIFF: {info['sha256']} -> {receipt['sha256']}")
+    log(f"shared writer receipt: zip {receipt['zip_file']} sha {receipt['zip_sha256'][:16]}… "
+        f"TIFF unchanged {receipt['sha256'][:16]}…")
+    (SUB / f"{name}-submission-name.txt").write_text(name + "\n")
     (SUB / f"{name}-submission-note.txt").write_text(note + "\n")
 
     lane_ok = bool(lane_dots["policy"]["verdict"] == "PASS" and lane_surface["policy"]["verdict"] == "PASS")
@@ -1057,12 +1082,6 @@ def stage_gates(args):
     # FAILED diagnostic, never silently waived (gates.gate_correction). Uniqueness for the verdict is
     # the brief's own rule: distinct decoded pattern, Spearman <= 0.90, near-dot <= 0.70 per raster.
     uniq_ok = bool(uniq["canonical_pattern_unique"] and not uniq["equals_literal_prior_union"])
-    hold = json.loads((EV / "h69_holdout.json").read_text())
-    sB = hold["pooled"]["scores"]["single_B"]["dti"]
-    cand = hold["pooled"]["scores"]["disagreement_post"]["dti"]
-    pd = hold["pooled"]["paired_differences"]["single_B"]
-    beats = bool(pd["ci95"][0] > 0)
-    s1 = json.loads((EV / "h69_s1.json").read_text())
     verdict = "promote" if (fmt["ok"] and uniq_ok and lane_ok and s1["pass_"] and beats) else "negative"
     portal_will_accept = bool(fmt["ok"])          # the file itself cannot trip a format rejection
     submit = bool(verdict == "promote")           # the frozen promote rule, all five clauses
@@ -1143,6 +1162,13 @@ def stage_gates(args):
                                  credited_core_withdrawn_by="knowledge/52b_h69_prereg_amendment_placement.md",
                                  core_px=ck["n_core"], novel_px=n_novel),
         raster_sha256=info["sha256"], raster_bytes=info["bytes"],
+        packaging=dict(writer="gems52.submission_writer.write_submission (shared, fail-closed)",
+                       zip_file=receipt["zip_file"], zip_sha256=receipt["zip_sha256"],
+                       receipt_file=f"{name}.json",
+                       name_chars=len(name), note_chars=len(note),
+                       approved_for_weekly_slot=receipt["approved_for_weekly_slot"],
+                       submission_slots_used=receipt["submission_slots_used"],
+                       tiff_bytes_unchanged_by_repackaging=bool(receipt["sha256"] == info["sha256"])),
         validator=dict(no_nan_inside_footprint=int(fmt["nan_pixels"]) == 0,
                        values_in_0_1=bool(fmt["min"] >= 0.0 and fmt["max"] <= 1.0),
                        unique_values=int(len(np.unique(arr))),
@@ -1177,7 +1203,7 @@ def stage_gates(args):
     write_json(EV / "h69_lane_surface.json", {k: v for k, v in lane_surface.items() if k != "per_prior"})
     write_json(EV / "h69_lane_dots.json", {k: v for k, v in lane_dots.items() if k != "per_prior"})
     write_json(EV / "h69_placement.json", ck)
-    write_json(SUB / f"{name}.json", card)
+    write_json(SUB / f"{name}-run-card.json", card)
     (SUB / "H69_LATEST.txt").write_text(
         f"{tif.name}\n# pointer for the site; NOT an upload approval. Verdict: {verdict}. "
         f"Download OK: {fmt['ok']}. Spend a weekly slot: {submit}.\n")
@@ -1191,6 +1217,9 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--stage", default="all", choices=["features", "lane", "place", "gates", "all"])
     ap.add_argument("--force-features", action="store_true")
+    ap.add_argument("--stamp", default="",
+                    help="reuse an exact UTC stamp so an unchanged emission reproduces its published "
+                         "filename byte-for-byte instead of minting a second identical artefact")
     args = ap.parse_args()
     check_prereg()
     W.mkdir(parents=True, exist_ok=True)
