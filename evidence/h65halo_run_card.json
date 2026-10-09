@@ -1,6 +1,6 @@
 {
  "round": "H65",
- "generated_utc": "2026-10-09T04:34:57Z",
+ "generated_utc": "2026-10-09T04:38:11Z",
  "experiment_index": "1 of 3 (budget: 3 experiments or 2 hours)",
  "hypothesis": "Metric-kernel halo targets: training both co-training views on the official triangular 300 m coverage kernel (soft labels for 0 < d < 300 m from the visible catalogue) raises single-view holdout DTI over the H61 hard-label control, and the co-training disagreement then ranks candidates better than single_B.",
  "mechanism": "The official distance-weighted Tversky credit is partial within 300 m; the hard-label learners never see the 0-300 m halo as training signal, so the 200 m emission boundary is a blind zone. One change: halo rows are added with weights t and 1 - t, t = 1 - d/300 m.",
