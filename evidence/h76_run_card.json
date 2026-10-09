@@ -1,13 +1,13 @@
 {
- "round": "H74",
+ "round": "H76",
  "generated_utc": "2026-10-09T19:52:11+00:00",
- "runner": "scripts/run_h74.py",
+ "runner": "scripts/run_h76.py",
  "preregistration": {
-  "document": "knowledge/63_hypotheses_H74_preregistered.md",
+  "document": "knowledge/67_hypotheses_H76_preregistered.md",
   "sha256": "d117b265d44aed769ec19e9a38f10ad5aa53793feca52be0e6a8579dfc8e3b55",
   "frozen_before_any_fit": true
  },
- "hypothesis": "The co-training sufficiency gate that closed this lane five times is measured against a target the catalogue systematically under-samples: mapped faults are surface-expressed by selection, which is View B's domain. H74 tests sufficiency CONDITIONALLY (View A's AUC restricted to truth pixels inside View B's blind band) and emits the first nested arm: View B's ranking with the weakest phi of its budget swapped for View A's confident cells where View B abstains.",
+ "hypothesis": "The co-training sufficiency gate that closed this lane five times is measured against a target the catalogue systematically under-samples: mapped faults are surface-expressed by selection, which is View B's domain. H76 tests sufficiency CONDITIONALLY (View A's AUC restricted to truth pixels inside View B's blind band) and emits the first nested arm: View B's ranking with the weakest phi of its budget swapped for View A's confident cells where View B abstains.",
  "mechanism": "A density/susceptibility/strain discontinuity with no co-located topographic or radiometric step: a fault that offsets basement and basin fill but whose scarp is buried under Quaternary alluvium, so a 100 m DEM sees nothing.",
  "named_non_fault_process": "A buried lithologic contact (Tertiary volcanics against basin fill) makes the same potential-field edge with no surface step and is not a fault; aeromagnetic flight-line / tie-line levelling residues are linear, surface-invisible and strike with the survey plan.",
  "evidence_classes": {
@@ -155,7 +155,7 @@
   "priors_compared": 643,
   "incomparable_priors": [
    {
-    "path": "/home/user/GEMSDOE52/work/h74/priors/a97c7b2a513225c9f9f2b35736afe5abf4d2a491.tif",
+    "path": "/home/user/GEMSDOE52/work/h76/priors/a97c7b2a513225c9f9f2b35736afe5abf4d2a491.tif",
     "error": "ValueError: not aligned single-band prediction (1 bands, (32, 48))"
    }
   ],
@@ -373,8 +373,8 @@
   "rule": "every A-only candidate the lane identifies carries a written reason, a named non-fault mimic and a falsifier, whether or not the shipped arm emits it",
   "evidence_class": "HYPOTHESIS, not verified geology"
  },
- "submission_name": "gems74-line-support-B-cotrain-37654px-20261009T193810Z",
- "submission_note": "H74 RESEARCH ONLY-DO NOT SUBMIT: co-training trace-integrated View B 600m chord; 37654px binary; >200m off catalogue; lane-feasible c<=50",
+ "submission_name": "gems76-line-support-B-cotrain-37654px-20261009T193810Z",
+ "submission_note": "H76 RESEARCH ONLY-DO NOT SUBMIT: co-training trace-integrated View B 600m chord; 37654px binary; >200m off catalogue; lane-feasible c<=50",
  "note_chars": 137,
  "gates": {
   "c1_format": true,
@@ -394,5 +394,12 @@
  "submit_recommendation_reason": "the frozen promote rule requires format AND uniqueness AND the final-dot lane AND not-the-union AND conditional sufficiency AND a holdout paired CI lower bound above single_B; failing clauses: c5_S1_conditional, c6_beats_single_B -> do not spend a weekly slot",
  "slots_used": 0,
  "organizer_confirmed": false,
- "seconds": 847.9
+ "seconds": 847.9,
+ "identifier_rename": {
+  "previous_round_label": "H74",
+  "round": "H76",
+  "reason": "a parallel session merged its own H74 to main first; H75 was also taken",
+  "raster_bytes_unchanged": true,
+  "sha256": "49ad60980f8bf768b94a2753581cae9ba572c75564d862089cec8093bcf317ad"
+ }
 }

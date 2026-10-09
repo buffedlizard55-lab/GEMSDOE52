@@ -1,14 +1,14 @@
-<!--H74-README-->
-## H74 — conditional co-training sufficiency (S1′) and the B-core + A-rescue swap
+<!--H76-README-->
+## H76 — conditional co-training sufficiency (S1′) and the B-core + A-rescue swap
 
 **Verdict: NEGATIVE, research-only.** Download OK: **True**. Spend a weekly slot: **False**.
-The frozen promote rule requires format AND uniqueness AND the final-dot lane AND not-the-union AND conditional sufficiency AND a holdout paired CI lower bound above single_B; failing clauses: c5_S1_conditional, c6_beats_single_B -> do not spend a weekly slot
+the frozen promote rule requires format AND uniqueness AND the final-dot lane AND not-the-union AND conditional sufficiency AND a holdout paired CI lower bound above single_B; failing clauses: c5_S1_conditional, c6_beats_single_B -> do not spend a weekly slot
 
-* One-click download: [`docs/downloads/h74-candidate.tif`](docs/downloads/h74-candidate.tif)
+* One-click download: [`docs/downloads/h76-candidate.tif`](docs/downloads/h76-candidate.tif)
   (137,255 bytes, SHA-256 `49ad60980f8bf768b94a2753581cae9ba572c75564d862089cec8093bcf317ad`, 37,654 cells, values exactly {0,1},
   0 NaN, EPSG:32611, grid identical to `sample_submission.tif`).
-* Pages: [`docs/h74.html`](docs/h74.html) · [exact submission steps](docs/h74-executive-summary.html).
-* Submission name: `gems74-line-support-B-cotrain-37654px-20261009T193810Z` · note (137 chars): `H74 RESEARCH ONLY-DO NOT SUBMIT: co-training trace-integrated View B 600m chord; 37654px binary; >200m off catalogue; lane-feasible c<=50`
+* Pages: [`docs/h76.html`](docs/h76.html) · [exact submission steps](docs/h76-executive-summary.html).
+* Submission name: `gems76-line-support-B-cotrain-37654px-20261009T193810Z` · note (137 chars): `H76 RESEARCH ONLY-DO NOT SUBMIT: co-training trace-integrated View B 600m chord; 37654px binary; >200m off catalogue; lane-feasible c<=50`
 * New science: **S1′**, View A's out-of-quadrant AUC restricted to truth inside View B's blind band —
   0.4893 against the 0.60 bar
   (global S1 for comparison: 0.5163); conditional margin
@@ -16,23 +16,23 @@ The frozen promote rule requires format AND uniqueness AND the final-dot lane AN
 * Shipped arm `line_support_B`: HOLDOUT-DTI 0.172426 [0.150155, 0.195030] vs the `single_B` control
   0.174517 [0.152316, 0.196299]; paired Δ -0.002091
   [-0.005873, 0.001289]. HOLDOUT-DTI, not a leaderboard score.
-* Receipts: [`evidence/h74_run_card.json`](evidence/h74_run_card.json),
-  [`knowledge/63_hypotheses_H74_preregistered.md`](knowledge/63_hypotheses_H74_preregistered.md),
-  [`knowledge/64_h74_results_and_limits.md`](knowledge/64_h74_results_and_limits.md).
-<!--/H74-README-->
+* Receipts: [`evidence/h76_run_card.json`](evidence/h76_run_card.json),
+  [`knowledge/67_hypotheses_H76_preregistered.md`](knowledge/67_hypotheses_H76_preregistered.md),
+  [`knowledge/68_h76_results_and_limits.md`](knowledge/68_h76_results_and_limits.md).
+<!--/H76-README-->
 
 <!--H72-README-->
-# H72 (2026-10-09): NO FILE WAS PRODUCED — superseded by H74
+# H72 (2026-10-09): NO FILE WAS PRODUCED — superseded by H76
 
 > **DOWNLOAD: nothing to download. SUBMIT: no.** H72 stopped at the final-dot parallel-lane gate and
 > never wrote a GeoTIFF: literal near-dot share 1.00000, saturation-aware 0.914359, support novelty
 > 0.0, relation `subset-of-union`. An earlier revision of this block advertised three candidate
 > downloads (`h72-candidate-v3`, `-spsc`, `-mraec`) and recommended submitting one of them. **Those
 > files were never created**, the links 404'd, and the recommendation was never backed by a holdout
-> result that beat `single_B`. Corrected 2026-10-09 in the H74 session; the dead buttons on
+> result that beat `single_B`. Corrected 2026-10-09 in the H76 session; the dead buttons on
 > `docs/h72-executive-summary.html` were removed at the same time.
 
-The newest downloadable research file is **H74** — see the block above.
+The newest downloadable research file is **H76** — see the block above.
 
 <!--/H72-README-->
 <!--H71-README-->

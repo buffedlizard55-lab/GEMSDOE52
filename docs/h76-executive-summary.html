@@ -1,9 +1,9 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DOE GEMS · H74 conditional co-training</title><link rel="stylesheet" href="assets/ctd5.css"></head><body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a><a href="index.html">Overview</a><a href="h74-executive-summary.html">How to submit</a><a href="h71.html">H71 (earlier)</a><a href="downloads/index.html">Archive</a></nav></header><main id="main">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DOE GEMS · H76 conditional co-training</title><link rel="stylesheet" href="assets/ctd5.css"></head><body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a><a href="index.html">Overview</a><a href="h76-executive-summary.html">How to submit</a><a href="h71.html">H71 (earlier)</a><a href="downloads/index.html">Archive</a></nav></header><main id="main">
 <div class="eyebrow">Executive summary · submission guide</div>
 <h1>Is this file OK to download and submit?</h1>
 <div class="notice" role="note" style="background:#fff1de;border-left:6px solid #12331f;padding:18px 20px;margin:18px 0"><div style="font-size:1.35rem;font-weight:700;letter-spacing:.01em">SAFE TO DOWNLOAD — DO NOT SUBMIT IT</div><p style="margin:.5rem 0 0"><b>Can I download this file?</b> Yes — the on-disk validator passes: one float32 band, every value in [0,1], no NaN, grid identical to sample_submission.tif.</p><p style="margin:.35rem 0 0"><b>Can I submit this file to DrivenData?</b> NO. Download it, read it, cite it; do not spend a weekly slot on it.</p><p style="margin:.35rem 0 0"><b>Why:</b> the frozen promote rule requires format AND uniqueness AND the final-dot lane AND not-the-union AND conditional sufficiency AND a holdout paired CI lower bound above single_B; failing clauses: c5_S1_conditional, c6_beats_single_B -&gt; do not spend a weekly slot</p><p style="margin:.35rem 0 0"><b>Verdict recorded in the run card:</b> <b>NEGATIVE, research-only</b></p></div>
-<div class="actions"><a class="button" href="downloads/h74-candidate.tif" download>Download the H74 GeoTIFF ↓</a><a class="button secondary" href="downloads/h74-candidate.zip" download>Single-TIFF ZIP</a><a class="button secondary" href="downloads/h74-a-only-reasoning.csv" download>A-only reasoning CSV</a></div>
-<p class="fileline">gems74-line-support-B-cotrain-37654px-20261009T193810Z.tif<br>137,255 bytes · SHA-256 49ad60980f8bf768b94a2753581cae9ba572c75564d862089cec8093bcf317ad · 37,654 emitted cells · values exactly {0,1}, 1 band, 0 NaN</p>
+<div class="actions"><a class="button" href="downloads/h76-candidate.tif" download>Download the H76 GeoTIFF ↓</a><a class="button secondary" href="downloads/h76-candidate.zip" download>Single-TIFF ZIP</a><a class="button secondary" href="downloads/h76-a-only-reasoning.csv" download>A-only reasoning CSV</a></div>
+<p class="fileline">gems76-line-support-B-cotrain-37654px-20261009T193810Z.tif<br>137,255 bytes · SHA-256 49ad60980f8bf768b94a2753581cae9ba572c75564d862089cec8093bcf317ad · 37,654 emitted cells · values exactly {0,1}, 1 band, 0 NaN</p>
 <section class="prose">
 <h2>The file contract, checked on disk by the shared validator</h2><ul>
 <li>One band, float32, every value in [0, 1] — in practice exactly 0 or 1. The portal rule
@@ -22,13 +22,13 @@ separation so no two dots compete for the same kernel credit.</li>
 exactly what to paste.</p>
 <ol>
 <li><b>File to submit.</b> Upload a single-band GeoTIFF, or a ZIP containing exactly one GeoTIFF. Use
-<a href="downloads/h74-candidate.tif" download><code>h74-candidate.tif</code></a> or
-<a href="downloads/h74-candidate.zip" download><code>h74-candidate.zip</code></a> — the ZIP holds that one TIFF and
+<a href="downloads/h76-candidate.tif" download><code>h76-candidate.tif</code></a> or
+<a href="downloads/h76-candidate.zip" download><code>h76-candidate.zip</code></a> — the ZIP holds that one TIFF and
 nothing else, verified byte-for-byte.</li>
 <li><b>Submission name (must be unique).</b> Every submission needs a name you have not used before. Paste:<br>
-<code>gems74-line-support-B-cotrain-37654px-20261009T193810Z</code></li>
+<code>gems76-line-support-B-cotrain-37654px-20261009T193810Z</code></li>
 <li><b>Note (≤ 140 characters).</b> A short line distinguishing this entry from your others. Paste
-(137 characters):<br><code>H74 RESEARCH ONLY-DO NOT SUBMIT: co-training trace-integrated View B 600m chord; 37654px binary; &gt;200m off catalogue; lane-feasible c&lt;=50</code></li>
+(137 characters):<br><code>H76 RESEARCH ONLY-DO NOT SUBMIT: co-training trace-integrated View B 600m chord; 37654px binary; &gt;200m off catalogue; lane-feasible c&lt;=50</code></li>
 </ol>
 <ol start="4">
 <li>Open the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">competition
@@ -57,7 +57,7 @@ spent, never to manufacture training labels.</p>
 </section>
 
 <section><h2>Earlier rounds still on this site</h2><p class="small">Each is a separate artefact with its own
-receipt. None of them is the H74 file and none is approved for a weekly slot.</p><ul>
+receipt. None of them is the H76 file and none is approved for a weekly slot.</p><ul>
 <li><b>H71, negative. Do not upload.</b> <a href="h71.html">H71 landing</a> · <a href="h71-executive-summary.html">H71 guide</a></li>
 <li><b>H64, negative. Do not upload.</b> <a href="h64.html">H64 landing</a></li>
 <li><b>H61, negative; its file is a measured lane duplicate.</b> <a href="archive-h61-landing.html">H61 landing</a></li>

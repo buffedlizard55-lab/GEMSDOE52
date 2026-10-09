@@ -1,16 +1,16 @@
-# 64 · H74 results and limits (rendered from the receipts by `scripts/publish_h74_site.py`)
+# 64 · H76 results and limits (rendered from the receipts by `scripts/publish_h76_site.py`)
 
 **Verdict: `NEGATIVE, research-only`** · download OK: **True** · spend a weekly slot: **False**
 
-Artefact `gems74-line-support-B-cotrain-37654px-20261009T193810Z.tif`, SHA-256 `49ad60980f8bf768b94a2753581cae9ba572c75564d862089cec8093bcf317ad`, 137255 bytes, 37654 emitted cells.
-Preregistration `knowledge/63_hypotheses_H74_preregistered.md`
-(SHA-256 `d117b265d44aed769ec19e9a38f10ad5aa53793feca52be0e6a8579dfc8e3b55`, pinned in `registry/h74_preregistration.json`),
-amendment `knowledge/63a_h74_amendment_shipped_arm_rule.md`.
+Artefact `gems76-line-support-B-cotrain-37654px-20261009T193810Z.tif`, SHA-256 `49ad60980f8bf768b94a2753581cae9ba572c75564d862089cec8093bcf317ad`, 137255 bytes, 37654 emitted cells.
+Preregistration `knowledge/67_hypotheses_H76_preregistered.md`
+(SHA-256 `d117b265d44aed769ec19e9a38f10ad5aa53793feca52be0e6a8579dfc8e3b55`, pinned in `registry/h76_preregistration.json`),
+amendment `knowledge/67a_h76_amendment_shipped_arm_rule.md`.
 
-## 1 · What H74 changed
+## 1 · What H76 changed
 
 Five rounds closed this lane on one gate: View A's out-of-quadrant AUC on *all* held-out truth is ~0.52, below the
-0.60 sufficiency bar. H74's claim is that this gate is confounded: the catalogue's faults are surface-expressed by
+0.60 sufficiency bar. H76's claim is that this gate is confounded: the catalogue's faults are surface-expressed by
 selection, so "View A cannot predict mapped faults" and "View A is uninformative" are not the same statement. The
 new test **S1′** restricts View A's AUC to held-out truth inside View B's blind band and requires it to beat both an
 absolute bar and View A's own AUC on surface-expressed truth.
@@ -37,7 +37,7 @@ Conditional AUCs are label-selected diagnostics, not unbiased estimates.
 
 **In every fold, without exception, A∣B-dark < A∣B-blind < A∣B-bright.**
 View A is least informative exactly where View B is blind and most informative where View B is already confident —
-the reverse of the H74 hypothesis. This does not merely fail the bar, it forecloses the rescue argument that kept
+the reverse of the H76 hypothesis. This does not merely fail the bar, it forecloses the rescue argument that kept
 the lane open for six rounds: View A's apparent skill is a shadow of the same surface-expressed structures View B
 reads directly, not an independent subsurface channel that the catalogue under-samples. A buried-fault population
 visible only to gravity and magnetics would have produced the reverse ordering.
@@ -50,16 +50,16 @@ precondition holds on this data; its *sufficiency* precondition is refuted, now 
 
 | arm | HOLDOUT-DTI | 95% CI | paired Δ vs single_B |
 |---|---:|---:|---:|
-| `disagreement_pre` | 0.033293 | [0.023815, 0.044556] | — |
-| `line_support_B` **(shipped)** | 0.172426 | [0.150155, 0.195030] | -0.002091 [-0.005873, 0.001289] |
-| `swap_010` | 0.168343 | [0.146443, 0.190252] | -0.006175 [-0.009869, -0.002305] |
-| `single_B` | 0.174517 | [0.152316, 0.196299] | — |
-| `single_A` | 0.071954 | [0.056636, 0.088566] | — |
-| `disagreement_post` | 0.030584 | [0.020941, 0.042238] | -0.143933 [-0.167383, -0.121183] |
-| `random` | 0.080426 | [0.070223, 0.090973] | — |
-| `swap_050` | 0.152317 | [0.131466, 0.173735] | -0.022201 [-0.027505, -0.016355] |
-| `swap_025` | 0.160427 | [0.138964, 0.181651] | -0.014091 [-0.018133, -0.009855] |
 | `union_max` | 0.148981 | [0.128084, 0.169418] | — |
+| `disagreement_pre` | 0.033293 | [0.023815, 0.044556] | — |
+| `disagreement_post` | 0.030584 | [0.020941, 0.042238] | -0.143933 [-0.167383, -0.121183] |
+| `swap_025` | 0.160427 | [0.138964, 0.181651] | -0.014091 [-0.018133, -0.009855] |
+| `single_B` | 0.174517 | [0.152316, 0.196299] | — |
+| `swap_010` | 0.168343 | [0.146443, 0.190252] | -0.006175 [-0.009869, -0.002305] |
+| `single_A` | 0.071954 | [0.056636, 0.088566] | — |
+| `random` | 0.080426 | [0.070223, 0.090973] | — |
+| `line_support_B` **(shipped)** | 0.172426 | [0.150155, 0.195030] | -0.002091 [-0.005873, 0.001289] |
+| `swap_050` | 0.152317 | [0.131466, 0.173735] | -0.022201 [-0.027505, -0.016355] |
 
 Control reproduction: single_B 0.174517 vs committed
 0.174517, |Δ| 2.88e-07

@@ -4,11 +4,11 @@ The task text below is preserved as instructions, not as verified factual claims
 
 Refreshed in the H70 session: the closing core-values paragraph arrived with that session's prompt; a dated copy is at [knowledge/56_current_user_brief_2026-10-09_H70.md](56_current_user_brief_2026-10-09_H70.md).
 
-**Re-read in full at the start of the H74 session (2026-10-09).** The prompt arrived unchanged from the
-text preserved below, so no new dated copy was created. H74's lane assignment, budget (3 experiments /
+**Re-read in full at the start of the H76 session (2026-10-09; executed as H74, renamed at merge).** The prompt arrived unchanged from the
+text preserved below, so no new dated copy was created. H76's lane assignment, budget (3 experiments /
 2 hours), parallel-run protocol and the "it must be obvious whether it is OK to download and submit"
 requirement are all taken from this text; see
-[knowledge/63_hypotheses_H74_preregistered.md](63_hypotheses_H74_preregistered.md).
+[knowledge/67_hypotheses_H76_preregistered.md](67_hypotheses_H76_preregistered.md).
 
 ```text
 Review the repo. 
