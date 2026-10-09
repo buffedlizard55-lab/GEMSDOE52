@@ -1712,6 +1712,50 @@
    "how_we_know": "Independent validator read of docs/downloads/h61-candidate.tif (this session); the rejected file was never provided.",
    "handling": "The repository does not claim the NaN explanation. Recorded as not reproduced.",
    "disposition": "Open. Needs the rejected file or the portal's exact error receipt."
+  },
+  {
+   "id": "IR-H66-001",
+   "round": "H66",
+   "severity": "medium",
+   "status": "open - corrected in code and receipt",
+   "title": "H66 build receipt probe_rasters field clobbered by a shadowed variable",
+   "what_it_is": "scripts/run_h66.py reused the name `probes` for the lane-cap search log, overwriting the registry probe list before the receipt was written: evidence/h66_build.json reported probe_rasters=10 instead of the 35 the run log measured (516 informative + 35 probes + 2 empty = 553 rasters).",
+   "how_we_know": "work/h66_build.log line \"registry: 516 informative, 35 universal-coverage probes\"; a direct re-measurement of the same inputs reproduced 35/517/2 (517 because the new H66 tif joined the local glob afterwards).",
+   "handling": "Variable renamed to cap_probes in scripts/run_h66.py; the receipt fields were corrected post-build (probe_rasters=35, placement_rule.cap_probes) with a note recording the correction. The authoritative lane classification remains gems52.gates.lane_report (14 probes / 539 informative), which differs by definition (>0 support for every raster on the placement side vs binary >0 / continuous >=0.5 on the verdict side) - the same pre-existing probe-count discrepancy flagged in knowledge/31 and the H64 README.",
+   "disposition": "code fix + receipt correction; verdict unaffected (verdict uses the gates receipts)"
+  },
+  {
+   "id": "IR-H66-002",
+   "round": "H66",
+   "severity": "low",
+   "status": "resolved in code and receipt",
+   "title": "H66 run card matches_sample_submission computed from a nonexistent format key",
+   "what_it_is": "make_run_card read fmt[\"shape\"], which format_report does not write (it writes height/width), so the card reported matches_sample_submission=false while the validator itself passed every shape/CRS/transform check.",
+   "how_we_know": "evidence/h66_run_card.json (validator.ok=true, matches_sample_submission=false); format_report keys in src/gems52/gates.py.",
+   "handling": "Fixed in scripts/run_h66.py (height/width/crs/problems) and patched in the published receipts; re-verified true.",
+   "disposition": "resolved"
+  },
+  {
+   "id": "IR-H66-003",
+   "round": "H66",
+   "severity": "high",
+   "status": "open - measured property of the registry",
+   "title": "Lane-quiet domain (>=3 px from every informative prior) measured EMPTY",
+   "what_it_is": "The preregistered H66-B placement premise is falsified on this registry: the 3 px halos of the informative priors cover 100.00% of the allowed domain (4,325,298 px), so no nonempty emission can have a directed near-dot fraction of 0 against every informative prior.",
+   "how_we_know": "Build log \"quiet domain: allowed 4325298 -> quiet 0 (0.00%)\"; evidence/h66_halostats.json (20 informative priors cover >70% of the A-only stratum, max 0.90648; 8 cover >70% of the exact-novel subset, max 1.0).",
+   "handling": "Dated preregistration amendment knowledge/43a records the measurement and replaces the placement clause; the verdict rule is unchanged.",
+   "disposition": "measured; documented; a third placement attempt needs a new preregistration"
+  },
+  {
+   "id": "IR-H66-004",
+   "round": "H66",
+   "severity": "high",
+   "status": "open - measured infeasibility",
+   "title": "No per-prior near-dot cap admits a lane-policy-passing fill of the A-only stratum",
+   "what_it_is": "Every cap probe (c = 7452 down to ~2110) stopped with max_near exactly = c, i.e. fill ~1.24 x c: at least one informative prior halo covers ~80%+ of whatever the rank order takes, so c <= 0.70 x filled never held. The lane policy (>70% rule) could not be satisfied by placement on this stratum.",
+   "how_we_know": "evidence/h66_build.json placement_rule.cap_probes (10 probes, all feasible=false); the fallback emission then measured policy DUPLICATE/STOP with max near 0.8903 and 17 informative offenders (evidence/h66_lane_dots.json), matching the pre-existing H61 finding that 9 informative priors have 3px coverage 0.7583-0.8976.",
+   "handling": "Amendment knowledge/43b rule 4 executed: novel-first fallback at the 20% support-novelty budget; lane STOP reported verbatim; verdict NEGATIVE; no slot spent.",
+   "disposition": "measured; the file is published research-only with the STOP disclosed"
   }
  ],
  "merge_note": "Merged registry/irregularities.json: main's entries (including the parallel session's IR-H62-001..005) plus this round's IR-H63-001/002 (renamed from IR-H62-001/002 when the round was renamed H62 -> H63 after the parallel session's H62 merged first)."

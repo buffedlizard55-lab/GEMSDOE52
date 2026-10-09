@@ -8,6 +8,22 @@ Keep known-catalogue labels separate from verified fault absence, public partici
 
 This session's working branch is fixed by Arena. Do not change branches. Keep raw competition data and large intermediate arrays under ignored `data/` and `work/`. Publish small audit receipts, the unique compressed prediction raster and its review table.
 
+## Current H66 continuation (2026-10-09)
+
+Read `README.md`'s H66 block first, then `knowledge/43_hypotheses_H66_preregistered.md` (frozen, SHA-256
+`315c4e47…18b4286`, pinned in `registry/h66_preregistration.json`) plus its two dated amendments
+`knowledge/43a` (lane-quiet domain measured EMPTY: 0 px) and `knowledge/43b` (novel-first placement,
+cap searched against the filled count), and `knowledge/44_h66_results_and_limits.md`. H66 is
+**NEGATIVE**: the A-only stratum does not beat single_B on the holdout (matched budget 1,264 dots/fold,
+paired delta -0.050144, CI [-0.064233, -0.036779]) and the policy lane reads DUPLICATE/STOP on the
+final dots (max near 0.8903, 17 informative offenders) — both measured, both published verbatim. The
+downloadable file `submission/gems52-h66-aonly-stratum-fallback-uncapped-3080px-20261009T073227Z.tif`
+(SHA-256 `369b844e…111ea95c`) is format-valid, decoded-unique and support-novel 0.3104; it is
+research-only. Experiments used: 3 of 3. Slots used: 0. Do not re-run H66, do not promote it, and do
+not present the H66 file as lane-valid. The two measured placement walls (quiet domain 0 px; every cap
+probe stopped at max_near = cap) are the round's main deliverable — a third placement attempt needs a
+new preregistration.
+
 ## Current H65 continuation (2026-10-09; the protocol body keeps the H62 label, see knowledge/41a)
 
 Read `README.md`'s H65 block first, then `knowledge/41_hypotheses_H65_preregistered.md` (frozen;

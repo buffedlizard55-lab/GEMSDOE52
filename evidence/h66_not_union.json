@@ -1,0 +1,11 @@
+{
+ "dots": 3080,
+ "dots_shared_with_union_max": 270,
+ "jaccard_with_union_max": 0.04584040747028863,
+ "spearman_field_vs_unionmax": 0.18031046010140825,
+ "strict_a_only_candidate_px": 57143,
+ "emitted_cells_that_are_strict_a_only": 3080,
+ "emitted_cells_in_quiet": 0,
+ "verdict": "emission is the A-only discovery stratum placed novel-first under the lane's own rule (43b), not max(A,B), not either single view, and not their union",
+ "not_union_pass": true
+}
