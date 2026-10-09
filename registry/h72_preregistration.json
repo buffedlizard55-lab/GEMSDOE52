@@ -1,0 +1,60 @@
+{
+ "round": "H72",
+ "preregistered_utc": "2026-10-09T17:05:00+00:00",
+ "hypothesis_document": "knowledge/59_hypotheses_H72_preregistered.md",
+ "hypothesis_sha256": "733de92cd7fed46f8ae977ce3184867e8e3452c78835c076c9704f732ca839e2",
+ "hypothesis_bytes": 21566,
+ "lane": "two-view co-training (Blum & Mitchell 1998, doi:10.1145/279943.279962); View A2 deformation-only (geodetic strain bands 4/7/8 + seismicity bands 10/16), View B surface unchanged; disagreement as the discovery signal; the strict A2-only stratum built with the lane-valid constrained placement",
+ "frozen_before_any_fit": true,
+ "runner": "scripts/run_h72.py",
+ "runner_refuses_if_hash_moves": true,
+ "shared_tools_to_reuse": [
+  "scripts/run_h61.py stages (setup, sample_train, learner, stage_canary, stage_fit, stage_exchange) run UNCHANGED via a setup wrapper that substitutes the View A2 list; no forked stage",
+  "src/gems52/h72.py::extend_store (idempotent shared-store extension, +h72-deformation-v1)",
+  "src/gems52/spatial.py::folds (label-blind-quadrants-v2)",
+  "src/gems52/evaluate_holdout.py (gems52-pooled-hide-v1)",
+  "src/gems52/metric.py",
+  "src/gems52/nodes.py::spacing_select",
+  "src/gems52/submission_writer.py",
+  "src/gems52/gates.py (incl. authoritative universal-coverage-probe lane policy)",
+  "src/gems52/structural.py::FeatureStore (cached stack, structural-core-v2-band6-B+external-geodawn-v1)",
+  "scripts/audit_uniqueness.py with the census receipt",
+  "scripts/build_h61_submission.py::prior_paths (census helper only)"
+ ],
+ "thresholds": {
+  "canary_auc_alarm": 0.9,
+  "independence_abandon_max_abs_rho": 0.6,
+  "donor_rank_min": 0.95,
+  "receiver_rank_interval": [
+   0.35,
+   0.65
+  ],
+  "buffer_px": 80,
+  "block_side_px": 50,
+  "min_pseudo_pixels": 5,
+  "pseudo_cap_per_fold": 2000,
+  "budget_dots_per_fold_per_arm": 9400,
+  "min_dot_separation_px": 3.0,
+  "catalogue_exclusion_m": 200.0,
+  "bootstrap_draws": 1000,
+  "bootstrap_block_px": 200,
+  "lane_near_dot_fraction": 0.7,
+  "lane_near_dot_radius_px": 3.0,
+  "lane_rank_correlation": 0.9,
+  "universal_coverage_probe_threshold": 0.95,
+  "S1_sufficiency_mean_oof_auc_min": 0.6,
+  "S1_sufficiency_min_fold_oof_auc": 0.55,
+  "single_B_control_holdout_dti": 0.174517,
+  "single_B_control_abs_tolerance": 0.001
+ },
+ "budget": {
+  "max_experiments": 3,
+  "experiments": [
+   "E1 store extension + shared canary + shared fit + independence screen (mandated tests, before any exchange)",
+   "E2 shared exchange + refit + S1 sufficiency + nine-arm matched-budget holdout (candidate vs single-view baseline)",
+   "E3 build + lane/uniqueness gates + GeoTIFF + audit + site publication"
+  ]
+ },
+ "verdict_rule": "eligible for the selector only if format + policy lane + uniqueness (both tiers) + not-the-union + S1 sufficiency + holdout-beats-single_B all pass; otherwise negative/research-only (DOWNLOAD yes, SUBMIT no); this lane spends no weekly slot",
+ "executes": "H70-E (knowledge/54, deferred RANK 5): deformation-only View A2, the lane's only untested View A variant"
+}

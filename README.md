@@ -1,3 +1,59 @@
+<!--H72-README-->
+# Current status — H72 (2026-10-09): NEGATIVE verdict, one unique GeoTIFF to download, nothing submitted
+
+> **DOWNLOAD: YES — the file is format-valid and unique on decoded pixels. SUBMIT TO THE COMPETITION: NO.**
+> NEGATIVE, research-only. DOWNLOAD YES (format-valid and unique on decoded pixels); SUBMIT NO. Failed gates: lane_policy, S1, holdout_beats_single_B. No weekly slot spent by this lane.
+
+**★ [Download the H72 GeoTIFF — one click](docs/downloads/h72-candidate.tif)** ·
+[single-TIFF ZIP](docs/downloads/h72-candidate.zip) ·
+[geological reasoning CSV, one row per dot](docs/downloads/h72-a-only-reasoning.csv) ·
+**[Executive summary / exact submission steps](docs/h72-executive-summary.html)** ·
+[Landing page](docs/h72.html) · [Run card](evidence/h72_run_card.json) ·
+[Results and limits](knowledge/60_h72_results_and_limits.md)
+
+- **File:** `gems52-h72-a2deform-cotrain-721px-20261009T174546Z.tif` — 58,475 bytes, 721 emitted cells
+- **SHA-256:** `0dea78bc8e276a8276de94a169e59ffac43234cef6a6f978f13f0788c6232f26`
+- **Name (50 characters):** `gems52-h72-a2deform-cotrain-721px-20261009T174546Z`
+- **Note (137 characters):** `H72 deformation-only View A2; A2-only stratum, 721 dots, lane-DUPLICATE; holdout does NOT beat single_B; research only, not slot-approved`
+- **Local validator:** one float32 band; values exactly {0, 1}; 0 NaN; 0 infinite; EPSG:32611; shape
+  3,730 × 3,292 and transform identical to `data/sample_submission.tif`. Local validator only —
+  **not** an organiser acceptance receipt.
+
+**What H72 tested (the lane, one round).** The deferred **H70-E** variant: a **deformation-only View A2**
+(geodetic strain bands 4/7/8 + seismicity bands 10/16, 22 channels with gradient/coherence transforms),
+View B unchanged, disagreement as the discovery signal. Preregistered in
+[`knowledge/59`](knowledge/59_hypotheses_H72_preregistered.md) (SHA-256 pinned in
+`registry/h72_preregistration.json`; the runner refuses if it moves). The shared H61 canary/fit/exchange
+stages ran **unchanged** with the View A list substituted by a setup wrapper — no forked stage; the 17
+deformation columns were added to the shared store once, idempotently (`+h72-deformation-v1`).
+
+| Check | Label | Result | Receipt |
+|---|---|---|---|
+| Leakage canary (59 channels × 4 folds) | PREMISE-AUC | max direction-insensitive AUC **0.6687**, any alarm **False** (bar 0.90) | [`evidence/h72_canary.json`](evidence/h72_canary.json) |
+| S1 sufficiency (View A2 deformation-only, out-of-quadrant) | PREMISE-AUC | mean **0.5194**, min fold **0.5011** → **FAIL** (gate 0.60/0.55); prior mixed View A: 0.5163–0.5362 | [`evidence/h72_sufficiency.json`](evidence/h72_sufficiency.json) |
+| Independence (spatial-block OOF errors on labelled negatives, A2/B pair) | diagnostic | max abs ρ **0.0765** < 0.60 → exchange **allowed** | [`evidence/h72_independence.json`](evidence/h72_independence.json) |
+| Control reproduction (single_B at 9,400 dots/fold) | HOLDOUT-DTI | **0.174517** vs committed H61 0.174517, abs Δ 2.9e-07 ≤ 0.001 → **PASS** | [`evidence/h72_holdout.json`](evidence/h72_holdout.json) |
+| **HOLDOUT-DTI, matched budget 9,400 dots/fold/arm** | HOLDOUT-DTI | a_only **0.050048** [0.035285, 0.065611] vs single_B **0.174517** [0.152316, 0.196299]; paired Δ **-0.124469** [-0.149150, -0.099436] → **does not beat single_B** | [`evidence/h72_holdout.json`](evidence/h72_holdout.json) |
+| Format gate | diagnostic | PASS — 0 NaN, {0,1}, pinned CRS/shape/transform | [`evidence/h72_build.json`](evidence/h72_build.json) |
+| Decoded-pattern uniqueness (560 registry rasters) | diagnostic | PASS — canonical-pattern unique, not the prior union | [`evidence/h72_build.json`](evidence/h72_build.json) |
+| Support novelty vs informative priors | diagnostic | **1.0000** | [`evidence/h72_build.json`](evidence/h72_build.json) |
+| Lane gate, surface (before placement) | diagnostic | literal **PASS**, policy **PASS** | [`evidence/h72_lane_surface.json`](evidence/h72_lane_surface.json) |
+| Lane gate, final dots | diagnostic | literal **DUPLICATE/STOP**, policy **DUPLICATE/STOP** (max near **0.8835**, max Spearman -0.0000) → **gate fails, reported verbatim** | [`evidence/h72_lane_dots.json`](evidence/h72_lane_dots.json) |
+| Census audit (`audit_uniqueness.py`) | diagnostic | surface max Spearman 0.0058; dots max near 1.0000 | [`evidence/h72_audit_uniqueness.json`](evidence/h72_audit_uniqueness.json) |
+| Not the union of the two views | diagnostic | **PASS** — every dot in the strict A2-only stratum | [`evidence/h72_not_union.json`](evidence/h72_not_union.json) |
+
+**Verdict: H72 not promoted.** Experiments used: **3 of 3**
+(E1 features+canary+fit+sufficiency, E2 exchange+holdout, E3 build+audit). Run card:
+[`evidence/h72_run_card.json`](evidence/h72_run_card.json).
+
+**Leaderboard (PUBLIC BOARD, not ORGANIZER-CONFIRMED).** Top is **0.3774** (xiaofanhu); 0.3195 is rank 7
+(DARD); 0.2778 is rank 13 (extradr19), owner-reported and not linked to any file. Source:
+https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/ (2026-10-09).
+
+**Still open:** a candidate that beats `single_B` on the holdout (nothing in this lane has); H72-D
+(radiometric-cover gating of the A2-only stratum) and H72-E (H65 operator on the strain bands) remain
+deferred; the deformation-only View A2 is now measured — see `knowledge/60` for what it attributes.
+<!--/H72-README-->
 <!--H71-README-->
 > **Round identity:** first frozen as H66 in this session (2026-10-09 04:35Z); renamed **H71** at merge
 > time because a parallel session's own H66 round (knowledge/43, frozen 04:28Z) merged to `main` first
@@ -1570,7 +1626,7 @@ no official-host download is claimed anywhere in this round.
 
 ## Complete current prompt — 2026-10-09, verbatim — read before working
 
-The following is user-supplied task text, not independently verified factual claims. It supersedes earlier prompt archives where they conflict. A copy is also kept at [knowledge/36_current_user_brief_2026-10-09.md](knowledge/36_current_user_brief_2026-10-09.md).
+The following is user-supplied task text, not independently verified factual claims. It supersedes earlier prompt archives where they conflict. Dated copies are kept at [knowledge/36_current_user_brief_2026-10-09.md](knowledge/36_current_user_brief_2026-10-09.md) and [knowledge/60b_current_user_brief_2026-10-09_H72.md](knowledge/60b_current_user_brief_2026-10-09_H72.md).
 
 ```text
 Review the repo. 
@@ -1973,13 +2029,31 @@ h53-twostage-20261008T040951Z-9a0b32c871:
 
 ....
 
-53GEMSDOE
+[https://buffedlizard55-lab.github.io/GEMSDOE53/docs/index.html](https://buffedlizard55-lab.github.io/GEMSDOE53/docs/index.html)
+
+h8-tiprelay-ridgeconcord-pr2-n80000-20261009-49bec522-zeros:
+
+....
+
+[https://buffedlizard55-lab.github.io/GEMSDOE54/docs/index.html](https://buffedlizard55-lab.github.io/GEMSDOE54/docs/index.html)
+
+h54c-manifest-edge-20261009T025732Z-73454bc5:
+
+....
+
+55GEMSDOE
 
 :
 
 ....
 
-54GEMSDOE
+56GEMSDOE
+
+:
+
+....
+
+57GEMSDOE
 
 :
 

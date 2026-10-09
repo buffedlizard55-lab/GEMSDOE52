@@ -1,0 +1,71 @@
+{
+  "file": "gems52-h72-a2deform-cotrain-721px-20261009T174546Z.tif",
+  "sha256": "0dea78bc8e276a8276de94a169e59ffac43234cef6a6f978f13f0788c6232f26",
+  "bytes": 58475,
+  "submission_name": "gems52-h72-a2deform-cotrain-721px-20261009T174546Z",
+  "note": "H72 deformation-only View A2; A2-only stratum, 721 dots, lane-DUPLICATE; holdout does NOT beat single_B; research only, not slot-approved",
+  "note_chars": 137,
+  "validator": {
+    "path": "/home/user/GEMSDOE52/submission/gems52-h72-a2deform-cotrain-721px-20261009T174546Z.tif",
+    "bytes": 58475,
+    "sha256": "0dea78bc8e276a8276de94a169e59ffac43234cef6a6f978f13f0788c6232f26",
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "ref_bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "nodata": null,
+    "blocksize": [
+      256,
+      256
+    ],
+    "fixture_grid": false,
+    "has_validity_mask": false,
+    "nan_pixels": 0,
+    "infinity_pixels": 0,
+    "n_nan": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 5.871737084817141e-05,
+    "n_nonzero": 721,
+    "mass": 721.0,
+    "mass_outside_footprint": 0,
+    "problems": [],
+    "ok": true,
+    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "zip_file": "gems52-h72-a2deform-cotrain-721px-20261009T174546Z.zip",
+  "zip_sha256": "b497b05c0eed1f87b9c87b016363583dbf29c5a3f763e3f96ff012799903ce35",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "status": "research-only; local format validation is not organizer acceptance",
+  "metadata": {
+    "round": "H72",
+    "preregistration": "733de92cd7fed46f8ae977ce3184867e8e3452c78835c076c9704f732ca839e2",
+    "budget": 721,
+    "candidate_arm": "a_only",
+    "view_A": "deformation-only A2",
+    "placement": "fallback-duplicate"
+  }
+}

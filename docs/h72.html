@@ -1,0 +1,69 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="assets/ctd5.css"></head><body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a><a href="index.html">Overview</a><a href="h72-executive-summary.html">Submission guide</a><a href="h71.html">H71 (previous)</a><a href="downloads/index.html">Archive</a></nav></header><main id="main">
+<section class="hero"><div><div class="eyebrow">DOE GEMS / H72 · deformation-only View A2 co-training (the deferred H70-E variant)</div>
+<h1>Download the file.<br>Read the verdict first.</h1>
+<p class="lead">A unique, lane-checked research file and a negative verdict. H72 executes the one lane variant no previous round tested: a View A
+built <b>only</b> from the deformation bands (geodetic strain 4/7/8, seismicity 10/16), with View B
+(surface) unchanged. Five consecutive mixed potential-field+deformation View A rebuilds all failed the
+Blum&ndash;Mitchell sufficiency screen out of quadrant (AUC &asymp; 0.52); H72 attributes the failure to one
+half. The emission is the lane's discovery signal on the deformation pair — the strict A2-only stratum
+(A2 confident, B abstaining: a young blind fault straining beneath cover) — placed with the lane-valid
+constrained placement, and every emitted dot carries written geological reasoning.</p>
+<div class="notice" role="note"><strong>OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT · DO NOT UPLOAD</strong>
+<p>Verdict: <b>NEGATIVE, research-only. DOWNLOAD YES (format-valid and unique on decoded pixels); SUBMIT NO. Failed gates: lane_policy, S1, holdout_beats_single_B. No weekly slot spent by this lane.</b></p></div>
+<div class="actions"><a class="button" href="downloads/h72-candidate.tif" download>Download the H72 GeoTIFF ↓</a>
+<a class="button secondary" href="downloads/h72-candidate.zip" download>Single-TIFF ZIP</a>
+<a class="button secondary" href="downloads/h72-a-only-reasoning.csv" download>Geological reasoning CSV</a></div>
+<p class="fileline">gems52-h72-a2deform-cotrain-721px-20261009T174546Z.tif<br>58,475 bytes · SHA-256 0dea78bc8e276a8276de94a169e59ffac43234cef6a6f978f13f0788c6232f26 · 721 emitted cells · values exactly {0,1}, 0 NaN</p>
+<p class="small"><a href="h72-executive-summary.html">How to submit, and whether this file may be submitted →</a>
+· <a href="data/h72_run_card.json">Complete JSON run card ↗</a></p></section>
+<hr class="divider">
+<section><h2>Gates, measured</h2><div class="table-wrap"><table><thead><tr><th>Gate</th><th>Result</th></tr></thead>
+<tbody><tr><td>Format gate (single-band float32 GeoTIFF, EPSG:32611, shape and transform as pinned)</td><td>PASS</td></tr><tr><td>Values exactly {0, 1}; 0 NaN; 0 infinite</td><td>PASS</td></tr><tr><td>Decoded-pattern uniqueness (not identical to any of the 560 registry rasters)</td><td>PASS</td></tr><tr><td>Support novelty vs the 523 informative registry rasters</td><td>1.0000</td></tr><tr><td>Not the union of the two views</td><td>PASS</td></tr><tr><td>Lane gate, literal, surface / dots</td><td>PASS / DUPLICATE/STOP</td></tr><tr><td>Lane gate, saturation policy, surface / dots</td><td>PASS / DUPLICATE/STOP</td></tr><tr><td>Lane policy max near-dot share (bar 0.70)</td><td>0.8835</td></tr><tr><td>Audit (audit_uniqueness.py, census): surface max Spearman / dots max near-3px</td><td>0.0058 / 1.0000</td></tr><tr><td>S1 sufficiency (View A2 out-of-quadrant AUC mean ≥ 0.60, min fold ≥ 0.55)</td><td>FAIL (0.5194 / 0.5011)</td></tr><tr><td>Holdout beats single_B (paired CI lower bound &gt; 0)</td><td>FAIL</td></tr></tbody></table></div>
+<p class="small">Local validator only. Not an organiser acceptance receipt. Lane gate statistics are the literal
+rule and the saturation policy from <code>gems52.gates.lane_report</code>; the literal rule fails for every nonempty
+raster on this registry because it contains a measured universal-coverage lattice probe.</p></section>
+<hr class="divider">
+<section><h2>HOLDOUT-DTI (gems52-pooled-hide-v1), matched budget 9400 dots/fold/arm</h2>
+<p class="small">53,186 withheld positive pixels · α 0.2 / β 0.8 ·
+300 m triangular kernel · 95% paired physical-cluster bootstrap, 1000 draws. Best comparable control: <code>single_B</code>.</p>
+<div class="table-wrap"><table><thead><tr><th>Arm</th><th>HOLDOUT-DTI</th><th>95% CI</th><th>Withheld positives</th></tr></thead>
+<tbody><tr class='highlight'><td>a_only</td><td class='numeric'>0.050048</td><td class='numeric'>[0.035285, 0.065611]</td><td class='numeric'>53,186</td></tr><tr><td>single_B</td><td class='numeric'>0.174517</td><td class='numeric'>[0.152316, 0.196299]</td><td class='numeric'>53,186</td></tr><tr><td>single_A2</td><td class='numeric'>0.070000</td><td class='numeric'>[0.054826, 0.086633]</td><td class='numeric'>53,186</td></tr><tr><td>union_max</td><td class='numeric'>0.148599</td><td class='numeric'>[0.128721, 0.168434]</td><td class='numeric'>53,186</td></tr><tr><td>disagreement_pre</td><td class='numeric'>0.039789</td><td class='numeric'>[0.029721, 0.051799]</td><td class='numeric'>53,186</td></tr><tr><td>disagreement_post</td><td class='numeric'>0.035789</td><td class='numeric'>[0.026034, 0.046255]</td><td class='numeric'>53,186</td></tr><tr><td>single_B_veto_Bonly</td><td class='numeric'>0.167026</td><td class='numeric'>[0.146221, 0.187384]</td><td class='numeric'>53,186</td></tr><tr><td>concordant</td><td class='numeric'>0.118511</td><td class='numeric'>[0.097657, 0.139208]</td><td class='numeric'>53,186</td></tr><tr><td>random</td><td class='numeric'>0.080426</td><td class='numeric'>[0.070223, 0.090973]</td><td class='numeric'>53,186</td></tr></tbody></table></div>
+<p class="small">Paired difference, candidate (a_only) minus single_B: -0.124469, 95% CI [-0.149150, -0.099436].
+Control reproduction at the H61 budget (9,400 dots/fold): single_B 0.174517 vs committed H61
+0.174517, |Δ| 2.88e-07 (tolerance 0.001).
+Holdout numbers are HOLDOUT-DTI, never organiser scores, and the hide-and-recover instrument does not rank board
+performance (<code>knowledge/10</code> §5).</p></section>
+<hr class="divider">
+<section><h2>Independence and sufficiency (the lane's mandated tests)</h2>
+<p class="small">Independence screen on spatial-block out-of-fold errors of the two views on labelled negatives
+(held-out catalogue-zero proxies): max |ρ| <b>0.0765</b> against an abandon bar of 0.60 →
+exchange <b>allowed</b>. S1 sufficiency on the deformation-only View A2
+(out-of-quadrant AUC): mean <b>0.5194</b>, min fold <b>0.5011</b>
+→ <b>FAIL</b> (gate 0.60 / 0.55). Prior mixed View A rebuilds: H61 0.5163 · H63 0.5362 ·
+H64 0.5230 · H65 0.5202 · H70 0.5166. View B mean 0.6843 (H61: 0.6843). Leakage canary: max alarm AUC
+<b>0.6687</b>, any alarm <b>False</b> (bar 0.90).</p></section>
+<hr class="divider">
+<section><h2>What this does and does not show</h2><ul>
+<li>It shows the lane's only untested View A variant measured end to end: a deformation-only View A2, the
+independence premise on the A2/B pair, one whole-segment exchange, and the strict A2-only discovery stratum
+emitted as a unique, lane-checked file with written geological reasoning per dot.</li>
+<li>It does not show the A2-only stratum beats the single-view baseline on the hide-and-recover instrument; the
+holdout table above is the measured comparison.</li>
+<li><b>NO CERTIFIED LEADERBOARD GAIN.</b> Nothing on this page is an organiser score or a promise of a board gain.</li>
+<li>The best published board score is 0.3774 (rank 1, xiaofanhu), 0.3195 is rank 7 (DARD), 0.2778 is rank 13
+(extradr19): <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">official
+leaderboard</a> (public board, not organiser-confirmed).</li>
+<li>Attribution caveat: the 0.2778 and 0.2600 figures are owner-reported, not organiser-confirmed (IR-H61-004).</li></ul>
+<p class="small"><a href="../knowledge/59_hypotheses_H72_preregistered.md">Ranked hypotheses and the frozen protocol →</a> ·
+<a href="../knowledge/60_h72_results_and_limits.md">Results and limits →</a> ·
+<a href="h71.html">H71 landing (previous round) →</a></p></section>
+
+<section><h2>Earlier rounds still on this site</h2><p class="small">Each is a separate artefact with its own receipt. None of them is the H72 file, and none is approved for a slot.</p>
+<ul>
+<li><b>H71, previous round, negative. Do not upload.</b> <a href="h71.html">H71 landing</a> · <a href="h71-executive-summary.html">H71 submission guide</a></li>
+<li><b>H70, negative; its 610-px file is a measured lane duplicate. Do not upload.</b> <a href="h70.html">H70 landing</a></li>
+<li><b>H69, negative; the first lane-feasible file, still not slot-approved.</b> <a href="h69-overview.html">H69 overview</a></li>
+<li><b>H67, negative. Do not upload.</b> <a href="h67.html">H67 landing</a></li>
+<li><b>H65b, negative. Do not upload.</b> <a href="h65b.html">H65b round page</a></li>
+</ul></section>
+</main></body></html>

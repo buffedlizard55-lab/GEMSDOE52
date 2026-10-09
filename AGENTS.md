@@ -9,6 +9,38 @@ Keep known-catalogue labels separate from verified fault absence, public partici
 This session's working branch is fixed by Arena. Do not change branches. Keep raw competition data and large intermediate arrays under ignored `data/` and `work/`. Publish small audit receipts, the unique compressed prediction raster and its review table.
 
 <!--H67-AGENTS-->
+## Current H72 continuation (2026-10-09)
+
+Read `README.md`'s H72 block first, then `knowledge/59_hypotheses_H72_preregistered.md` (frozen,
+SHA-256 pinned in `registry/h72_preregistration.json`) and `knowledge/60_h72_results_and_limits.md`.
+H72 executed the deferred **H70-E** variant — a **deformation-only View A2** (geodetic strain bands
+4/7/8 + seismicity bands 10/16, 22 channels) with View B unchanged — the lane's only untested View A
+half. **Verdict: NEGATIVE, research-only. DOWNLOAD YES; SUBMIT NO. Slots used: 0. Experiments used:
+3 of 3.** The lane's attribution question is now closed: View A2 out-of-quadrant AUC mean **0.5194**,
+min fold **0.5011** → S1 sufficiency **FAIL** (sixth consecutive failure; the deformation half alone
+is as non-transferable as the mixed View A, so the failure is common to both halves of the
+subsurface stack on this grid, not attributable to the potential-field channels). Independence on the
+A2/B pair held with the lane's lowest measured correlation (max |ρ| **0.0765** < 0.60 → exchange
+allowed); the exchange moved 15,986 whole-segment pseudo pixels and **dropped** View A2's OOF AUC
+(0.5019→0.4759, 0.5011→0.4741, 0.5234→0.4796, 0.5513→~0.48) — the donor labels amplify the
+deformation view's bias, the brief's own warning. HOLDOUT-DTI (gems52-pooled-hide-v1, 9,400
+dots/fold/arm, 53,186 withheld positives): `a_only` **0.050048** [0.035285, 0.065611] vs `single_B`
+**0.174517** [0.152316, 0.196299] (control reproduced to 2.9e-07), paired Δ **−0.124469**
+[−0.149150, −0.099436] — the strict A2-only stratum is again anti-informative (below random
+0.080426); `single_B_veto_Bonly` 0.167026 and `concordant` 0.118511 both lose to `single_B` again.
+Leakage canary max alarm AUC **0.6687**, no alarm. The build emitted the strict A2-only stratum
+(1,965 candidate cells after exact novelty) at **721 dots** (candidate exhaustion; every budget probe
+placed 721) with the measured worst informative near-dot share **0.9945** → **no lane-valid emission
+exists**; dots lane literal **DUPLICATE/STOP** (lattice probe), policy **DUPLICATE/STOP** (max near
+**0.8835**); surface lane PASS/PASS (max ρ 0.0110). The file is format-valid, canonical-pattern
+unique, tier-2 novel_fraction **1.0**, not the prior union, and every one of its 721 cells is a
+strict A2-only candidate with a written geological reasoning row
+(`docs/downloads/h72-a-only-reasoning.csv`). Do **not** re-run the co-training lane with another View
+A rebuild — both halves are now measured (potential-field: H61/H63/H64/H65/H70; deformation-only:
+H72). H72-D (radiometric-cover gating) and H72-E (H65 operator on the strain bands) remain deferred.
+IR-H72-001 (build CSR orientation crash, fixed, regression-tested) is in
+`registry/irregularities.json`.
+
 ## Current H71 continuation (2026-10-09)
 
 Read `README.md`'s H71 block first, then `knowledge/57_hypotheses_H71_preregistered.md` (frozen, SHA-256
