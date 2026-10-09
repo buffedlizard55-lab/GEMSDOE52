@@ -1,0 +1,136 @@
+{
+  "round": "H62",
+  "date_utc": "2026-10-09",
+  "branch": "arena/dfeab8a9-gemsdoe52",
+  "experiments": {
+    "limit": 3,
+    "used": 2,
+    "run": [
+      "E1 operator audit (SYNTHETIC)",
+      "E2 premise fit (PREMISE-AUC)"
+    ],
+    "not_authorised": [
+      "E3 holdout arm (requires premise pass)"
+    ]
+  },
+  "budget": {
+    "limit_minutes": 120,
+    "session_start_utc_proxy": "2026-10-09T00:37Z (.venv creation)",
+    "note": "approximate; check at close"
+  },
+  "hypothesis": {
+    "id": "H62-A",
+    "rank": 1,
+    "title": "cross-strike, regionally detrended basement and gravity offsets as View A",
+    "protocol": "knowledge/34_hypotheses_H62_preregistered.md",
+    "protocol_sha256": "4d9d559fe6e4b42cffef206d366ccf785b1eda2146a686be98e376a1352bef71",
+    "protocol_sha256_check": "4d9d559fe6e4b42cffef206d366ccf785b1eda2146a686be98e376a1352bef71",
+    "layers": [
+      "raw_band_15",
+      "raw_band_13"
+    ],
+    "normals_deg": [
+      15,
+      315
+    ],
+    "offsets_px": [
+      3,
+      6
+    ],
+    "detrend_px": 15
+  },
+  "physical_signature": "basement step or offset across a strike-parallel trace: a cross-strike symmetric difference of the band response",
+  "premise": {
+    "label": "PREMISE-AUC (not HOLDOUT-DTI)",
+    "mean_oof_auc": 0.5202,
+    "min_fold_auc": 0.4706,
+    "gate": {
+      "mean_min": 0.6,
+      "min_fold_min": 0.55
+    },
+    "premise_passed": false,
+    "receipt": "evidence/h62_premise.json"
+  },
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "status": "NOT RUN",
+    "evaluator_version": null,
+    "withheld_positive_count": null,
+    "ci95": null,
+    "reason": "premise gate failed before the hide-and-recover arm"
+  },
+  "leakage_canary": {
+    "alarm_auc": 0.9,
+    "max_raw_single_feature_auc": 0.5904,
+    "max_fitted_top5_heldout_auc": 0.5439,
+    "any_alarm": false,
+    "receipt": "evidence/h62_canary.json"
+  },
+  "operator_audit": {
+    "label": "SYNTHETIC",
+    "receipt": "evidence/h62_operator_audit.json",
+    "h60_3_on_over_cross_d3": 1.5045449977825765e-05,
+    "finding": "H60-3 does not detect a cross-strike step (IR-H62-001)"
+  },
+  "independence_test": {
+    "status": "NOT RUN",
+    "reason": "no fit passed the premise gate"
+  },
+  "candidate_emitted": false,
+  "submission": {
+    "decision": "NONE",
+    "slots_used": 0,
+    "file": null,
+    "note": "no candidate passed the premise gate"
+  },
+  "existing_h61_file": {
+    "path": "docs/downloads/h61-candidate.tif",
+    "sha256": "7c86853164f9cfa7aea34de029c7d5ccf3a6b43dbbb2b14de570e558384d2755",
+    "download_for_research": true,
+    "submit": false,
+    "lane": {
+      "surface_phase": "PASS (max spearman 0.0342)",
+      "dots_literal": "DUPLICATE/STOP (max near-dot 1.0000)",
+      "dots_policy": "DUPLICATE/STOP (max near-dot 0.87875; 9 informative priors > 0.70)"
+    },
+    "uniqueness_receipt": "evidence/h61_uniqueness_census_20261009.json",
+    "irregularity": "IR-H62-004"
+  },
+  "leaderboard": {
+    "label": "PUBLIC BOARD (not ORGANIZER-CONFIRMED)",
+    "observed_utc": "2026-10-09",
+    "top": {
+      "team": "xiaofanhu",
+      "score": 0.3774
+    },
+    "dard_rank7": {
+      "team": "DARD",
+      "score": 0.3195
+    },
+    "extradr19_rank13": {
+      "score": 0.2778,
+      "file_link": "not linked (IR-H62-003)"
+    },
+    "source": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/"
+  },
+  "irregularities_logged": [
+    "IR-H62-001",
+    "IR-H62-002",
+    "IR-H62-003",
+    "IR-H62-004",
+    "IR-H62-005",
+    "IR-H62-006",
+    "IR-H62-007"
+  ],
+  "tests": {
+    "tests/test_h62.py": "8 passed",
+    "full_suite": "309 passed"
+  },
+  "verdict": "NEGATIVE at the premise gate. H62 not promoted. No submission. No slot used.",
+  "not_verified": [
+    "knowledge/34 section 4 items 4-6 (see 34a)",
+    "H60 outputs using b15_step_* (not re-run)",
+    "H62-B/C/D (not tested)",
+    "portal error text (not reproduced)"
+  ]
+}

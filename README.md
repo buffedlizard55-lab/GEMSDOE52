@@ -1,3 +1,41 @@
+<!--H62-README-->
+# Current status — H62 (2026-10-09): NEGATIVE at the premise gate, nothing submitted
+
+> **SUBMIT TO THE COMPETITION: NO.** No new GeoTIFF was produced. The one-click file below is the H61 file,
+> and it is a **measured lane duplicate** (see IR-H62-004), not a lane-valid unique submission.
+
+**What was tested.** H62-A, the only hypothesis run this round. A cross-strike, regionally detrended offset of
+`raw_band_15` and `raw_band_13` as View A, with label-blind quadrant folds (buffer 80 px).
+Preregistered in [`knowledge/34`](knowledge/34_hypotheses_H62_preregistered.md) (SHA-256 `4d9d559f…2bef71`).
+A dated amendment that corrects its source list, without editing the frozen file, is in
+[`knowledge/34a`](knowledge/34a_amendment_2026-10-09_H62_sources.md).
+
+| Check | Label | Result | Receipt |
+|---|---|---|---|
+| Operator audit (H60-3 vs cross-strike) | SYNTHETIC | H60-3 responds at 1.5e-05 of cross-strike on a step; it is not a step detector | [`evidence/h62_operator_audit.json`](evidence/h62_operator_audit.json) |
+| Premise (out-of-quadrant AUC) | PREMISE-AUC | mean **0.5202**, min fold **0.4706**; gate needs ≥ 0.60 and ≥ 0.55 → **FAIL** | [`evidence/h62_premise.json`](evidence/h62_premise.json) |
+| Leakage canary (alarm > 0.90) | PREMISE-AUC | max single-feature 0.5904; no alarm | [`evidence/h62_canary.json`](evidence/h62_canary.json) |
+| HOLDOUT-DTI (hide-and-recover) | HOLDOUT-DTI | **not run** (premise gate failed) | — |
+| Uniqueness of the H61 file, census of 530 priors | diagnostic | surface PASS (max ρ 0.034); dots **DUPLICATE/STOP** (literal 1.0000; policy 0.87875, 9 informative priors above 0.70) | [`evidence/h61_uniqueness_census_20261009.json`](evidence/h61_uniqueness_census_20261009.json) |
+
+**Verdict: H62 not promoted.** Experiments used: 2 of 3 (E3 not authorised). Run card:
+[`evidence/h62_run_card.json`](evidence/h62_run_card.json). Full note: [`knowledge/35`](knowledge/35_h62_results_and_limits.md).
+Tests: `tests/test_h62.py` 8 passed; full suite 309 passed.
+
+**Leaderboard correction (PUBLIC BOARD, not ORGANIZER-CONFIRMED).** The brief says 0.3195 is the highest score.
+It is not. On the live DrivenData board on 2026-10-09 the top is **0.3774** (xiaofanhu), and 0.3195 is rank 7 (DARD):
+[leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/). The 0.2778 row is
+rank 13 (extradr19) and is not linked to any file (IR-H62-003).
+
+**Irregularities logged this round:** IR-H62-001 (H60-3 operator mis-specified), -002 (the brief's "highest score"
+claim), -003 (0.2778 row not linked to a file), -004 (H61 lane status under the literal rule and the policy),
+-005 (7 census blobs HTTP 403, covered by byte-identical local copies), -006 (H61 file has no nodata tag;
+sample declares NaN), -007 (portal error not reproduced).
+
+**Still open:** a unique, lane-valid candidate; a HOLDOUT-DTI number for any H62 arm; the source items 4–6 in
+`knowledge/34` §4 (unopened); the 0.2778 file-to-row receipt; the portal error text.
+<!--/H62-README-->
+
 <!--H61-README-->
 # GEMSDOE52 — a new research GeoTIFF and an explicit submit verdict
 
