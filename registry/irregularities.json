@@ -1,6 +1,6 @@
 {
  "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified.",
- "generated": "2026-10-08T22:30:00Z",
+ "generated": "2026-10-09T01:08:47Z",
  "entries": [
   {
    "id": "IR-30-029",
@@ -1238,6 +1238,38 @@
     "git history: PR #38 (H60C) merged before this round's PR",
     "evidence/h60d_build.json (rebuilt prior inventory)"
    ]
+  },
+  {
+   "id": "IR-H62-001",
+   "title": "Stale evidence checkpoints survive a wiped work cache (shared template bug, fixed)",
+   "status": "fixed in scripts/run_h60d_cotrain.py done()",
+   "what_it_is": "run_h60d_cotrain.py's stage checkpoints tested only the tracked evidence receipt. work/ is gitignored, so in a fresh checkout the receipt exists while the work/h60 arrays do not; a re-run would print 'cotrain cached' and then crash in stage_validate for missing files, or silently skip recomputing state that later stages need.",
+   "how_we_know": "observed in this checkout on 2026-10-09: evidence/h60d_cotrain.json present, work/h60 absent after clone.",
+   "disposition": "fixed once in the shared template: done(path, work_artifact) now requires the work artifact to exist. H62's own runner checks both (scripts/run_h62.py stage_oof). Historical H60D receipts are unchanged (no H60D stage was re-run)."
+  },
+  {
+   "id": "IR-H62-002",
+   "title": "H62-1 corridor length estimator under-counted thin lines (caught by test before results)",
+   "status": "fixed in scripts/run_h62.py h62_corridor_mask",
+   "what_it_is": "The first implementation estimated skeleton length as area//3 after a cross erosion; for a 1-px-wide line the erosion is empty and area//3 under-counts, so a 25-px corridor failed the >=15 px persistence gate. tests/test_h62.py::test_corridor_mask_gates caught it on synthetic data before any validation number was written.",
+   "how_we_know": "pytest failure run in this checkout, 2026-10-09; the killed run's gate log (mask0 602162 -> kept 220883 px) was produced only after the fix.",
+   "disposition": "fixed with skimage.morphology.thin skeletonisation counted per labelled component. Tests cover line-survives / blob-dies / shallow-cover-dies."
+  },
+  {
+   "id": "IR-H62-003",
+   "title": "Weak-surface subgroup evaluator held one full-grid mask per segment and was OOM-killed",
+   "status": "fixed in scripts/run_h62.py stage_validate",
+   "what_it_is": "The preregistered weak-surface subgroup analysis collected every withheld segment as a full 3,730x3,292 boolean array (hundreds of segments -> >1.5 GB) and the validation process was killed by the OOM killer before writing evidence/h62_validation.json; the log ends without a traceback after the tip fold loop.",
+   "how_we_know": "process disappeared mid-run in this checkout, 2026-10-09 00:23 UTC; ps shows no python; evidence/h62_validation.json absent. No result was written by the killed run, so no number was lost or corrupted.",
+   "disposition": "fixed: segment means via bincount over the label array; subgroup truth masks built by label lookup with LUTs, no per-segment full-grid arrays. Validation re-run from the cached OOF stage."
+  },
+  {
+   "id": "IR-H62-004",
+   "title": "0.2778 attribution for h33-2-b2 conflicts with GEMSDOE32's own 'NO ORGANISER SCORE EXISTS'",
+   "status": "open - provenance conflict, both readings recorded",
+   "what_it_is": "The session brief lists 'h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros: 0.2778' as a scored submission. The source site (https://buffedlizard55-lab.github.io/GEMSDOE32/docs/index.html, read 2026-10-08) states verbatim: 'NO ORGANISER SCORE EXISTS for this or any artifact in this repository', labels the file UNSCORED, and quotes a MODEL projection of 0.2747. The same page records a verified 2026-10-04 public leaderboard read (#1 nchuzhoy 0.3262, #2 DARD 0.3195, #3 alexoktaba 0.3042).",
+   "how_we_know": "fetched live in this session; the byte identity of the champion raster (sha256 c55bafc470054e82..., 219,065 bytes) is independently pinned in registry/data_manifest.json and re-measured here; the nested-pair 6,436-px ring deletion is re-derived from bytes in knowledge/27.",
+   "disposition": "every use of 0.2778 in this repository is labelled OWNER-REPORTED; no ORGANIZER-CONFIRMED score-to-file mapping exists in this family. The 0.3195/0.3262 leaderboard numbers are owner-reported reads of the public page, not authenticated here (login-walled)."
   }
  ]
 }

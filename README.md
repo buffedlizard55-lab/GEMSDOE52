@@ -1,6 +1,105 @@
-# GEMSDOE52 — a new research GeoTIFF, not an approved submission
+# GEMSDOE52 — H62 buried structural corridors: unique research GeoTIFF, SUBMIT: NO
 
-> **Current H60D session status (co-training with disagreement as the discovery signal, run
+> **Current H62 session status (co-training lane, 2026-10-09 UTC).** This round ran the brief's
+> co-training method paragraph end to end on the manifest-pinned bytes (23/23 SHA-256 verified;
+> integrity-pinned owner mirrors, **not organizer-authenticated**): the Blum & Mitchell
+> independence premise was **measured** (block OOF negative-error max |r| = 0.1763 < 0.60,
+> exchange licensed), the leakage canary is clean (worst of 75 layers 0.7136 < 0.90), and the
+> new **H62-1 gate chain** — A-only disagreement `max(pA−pB,0)` gated by cover ≥ 200 m →
+> potential-field edge ≥ P75 → line persistence (skeleton ≥ 15 px, elongation ≥ 3) — was
+> validated against the repo's hide-and-recover holdout before any artifact was built.
+> **Verdict: NEGATIVE (preregistered promotion bar failed).** Hide pooled at 37,654 px
+> (36,411 withheld positives, 4 whole-segment folds, evaluator pinned):
+> view_B 0.0062 > clf_union 0.0062 > **ungated dis_contrast 0.0041 > H62-1 corridors 0.0034** >
+> view_A 0.0040 > random 0.0018 (15,000 px ordering identical); on the preregistered
+> weak-surface-expression subgroup the field loses to view_B **0/4 folds** (0.0047 vs 0.0062).
+> The physical gates **subtract** ranking quality on catalogue truth — plausibly because withheld
+> catalogue segments are surface-mapped faults, exactly the population the cover gate removes.
+> Hypotheses, protocol and decision rules were frozen in
+> [`knowledge/32_hypotheses_H62_preregistered.md`](knowledge/32_hypotheses_H62_preregistered.md)
+> + [`registry/h62_preregistration.json`](registry/h62_preregistration.json) (SHA-256
+> `e3a8cfd2…`) **before any fit**; results in [`knowledge/33_h62_results_and_limits.md`](knowledge/33_h62_results_and_limits.md);
+> run card [`evidence/h62_run_card.json`](evidence/h62_run_card.json) (verdict **negative**,
+> `submit_ok: false`, 0 slots used).
+
+**[★ Download the H62 GeoTIFF — one click](docs/downloads/h62-candidate.tif)** ·
+[single-TIFF ZIP with paste-ready name/note](docs/downloads/h62-candidate.zip) ·
+**[Executive summary / exactly how to submit](docs/executive-summary.html)** ·
+[H62 audit page](docs/h62.html) · [run card](evidence/h62_run_card.json) ·
+[per-pixel geological reasoning CSV (37,627 rows)](docs/downloads/gems52-h62-37627px-candidate-geology.csv) ·
+[A-only corridor segments CSV (1,120 rows, one falsifier each)](docs/downloads/gems52-h62-a-only-candidate-segments.csv)
+
+> **IS IT OK TO DOWNLOAD? YES. IS IT OK TO SUBMIT? NO.** The file is portal-safe by construction
+> (single-band float32, EPSG:32611, 3,730 × 3,292, exact sample transform, **every cell finite
+> and in {0, 1}**, zeros outside footprint — the portal error *"Predicted values must be in
+> range [0, 1]"* cannot occur on it; `gems52.grid.write_geotiff` refuses anything else), it is
+> **decoded-pattern-unique against 71 accessible priors with 100 % of its pixels outside every
+> prior's support** (no previous submission is copied), and its lane-drift gates are clean
+> (surface max |ρ| 0.048; dots 0.0094; ≤3 px proximity 0.3623 excl. calibration rasters per
+> correction H60-6, raw 0.8307 disclosed). But the **preregistered promotion bar failed**, so
+> this repository does not approve spending a weekly slot on it. Download it, review it,
+> reproduce it — that is what it is approved for.
+
+- **File:** `gems52-h62-buriedcorr-37627px.tif` · **SHA-256:** `1f25c4fbeaf1aaf945b789bdb480971178bd0247c02da53617d20ee3d24dd8d2` · 107,698 bytes
+- **Name (paste verbatim):** `gems52-h62-buriedcorr-37627px-1f25c4fb-zeros`
+- **Note (138/140 chars):** `H62 buried corridors: cover/edge/persistence gates on A-only disagreement; finite binary [0,1]; off-prior; hypotheses, not verified faults`
+- **HOLDOUT-DTI of the shipped raster** (required-novel pool, hide pooled, 36,411 withheld
+  positives, 95 % fold-bootstrap CI): 0.0025 — above matched novel-pool random, below the novel
+  pool's view_B/union; **descriptive only, not a leaderboard forecast**. Disclosed weakness:
+  only **1,707** of 37,627 emitted pixels carry positive corridor-field mass (the novel pool
+  overlaps the corridor population by ~99.2 % with prior submissions' support); the remaining
+  35,920 are zero-field matched-budget fill, and the receipt says so.
+
+## Why did `h33-h33-2-b2` score 0.2778, and can we beat it? — the measured answer
+
+**Why 0.2778 (OWNER-REPORTED — see the conflict below).** The champion raster (`c55bafc470054e82…`,
+restored and re-measured byte-exactly) is `gems24-…-d2-8` (reported 0.2600) **minus 6,436 pixels
+sitting 100–200 m from the mapped catalogue**. Inverting the published metric (α 0.2, β 0.8,
+300 m triangular kernel) on that nested pair credits the deleted ring with **exactly zero**:
+a masked pixel can never earn credit but always pays the 0.2 false-positive tax. Deleting 14.6 %
+of its mass raised the reported score 6.8 %. It won by understanding the metric's tax term, not
+by a stronger detector — same mass scattered scores 0.0778 (3.6× worse). *(Provenance conflict,
+[IR-H62-004](registry/irregularities.json): GEMSDOE32's own page — read live 2026-10-08 — states
+"NO ORGANISER SCORE EXISTS for this or any artifact in this repository" and quotes a 0.2747
+MODEL projection. Nothing in this family is ORGANIZER-CONFIRMED.)*
+
+**Can we beat it — and the 0.3195/0.3262 leaders?** Verified leaderboard read from GEMSDOE32's
+stored 2026-10-04 snapshot: #1 nchuzhoy **0.3262**, #2 DARD **0.3195**, #3 alexoktaba 0.3042
+(owner-reported reads of the public page; this sandbox cannot authenticate the live board).
+For sparse dot emissions the metric is exactly `DTI = T / (0.2·S + 0.8·|G|)`, with the hidden
+truth bracketed at **|G| ≈ 18,000–27,400 px** once the unmeasured `M = T` assumption is dropped
+([IR-H60-002](registry/irregularities.json); GEMSDOE32's truth model infers 12,691 px — the
+spread is evidence of non-identification). The marginal acceptance bar is
+`c > α·DTI/(1−α·DTI)` ≈ **0.055 at 0.2778, 0.068 at 0.32**; measured uniform-random credit
+density is 0.024–0.028; everything we hold sits below the bar except the champion's attributed
+25,517-px core (density 0.163–0.205, identified interval [0.2524, 0.3196] — consistent with the
+0.3195–0.3262 leaders being re-weightings of that same mass). **Beating 0.32 needs new mass at
+density above ~0.07 that no instrument available here can certify** — the hide-and-recover
+instrument ranks the 0.2778 champion *below random* (0.0048 vs 0.0223; board/instrument
+Spearman −0.099 across 13 scored priors, [IR-H60-003](registry/irregularities.json)). H62's
+negative answers its part of the question honestly: geologically gated disagreement does not
+transfer to catalogue-truth ranking, and its board value is unmeasurable from public data.
+
+## Hypotheses registered this round (top-1 validated; the rest are proposals)
+
+| rank | id | idea | status |
+|---|---|---|---|
+| 1 | H62-1 | cover-gated, edge-conditioned, persistence-filtered A-only disagreement ("buried structural corridors") | **tested — NEGATIVE** |
+| 2 | H62-2 | seismicity/strain-anchored step-over nodes inside those corridors | not tested (precondition failed) |
+| 3 | H62-3 | radiometric-alteration concordance along buried corridors | proposal only |
+| 4 | H62-5 | B-only artifact hard-negatives to de-bias View A | proposal only |
+| 5 | H62-4 | ratcheted multi-round co-training (3 rounds) | proposal only (5 nulls already measured) |
+
+Full statements — layers, physical signature, why the catalogue cannot contain the target, how
+each differs from every prior round, and the named non-fault mimic — are in
+[`knowledge/32_hypotheses_H62_preregistered.md`](knowledge/32_hypotheses_H62_preregistered.md).
+
+<!--/H62README-->
+
+<!--HISTORICALREADME-->
+# Historical status (H60D / CTD5, 2026-10-08) — preserved, not current authority
+
+> **H60D session status (co-training with disagreement as the discovery signal, run
 > 2026-10-08 UTC):** hypotheses H60-1…H60-4 were registered in
 > `knowledge/30_hypotheses_H60D_preregistered.md` + `registry/h60d_preregistration.json` (SHA-verified,
 > frozen) **before** the first fit, and all were adjudicated on the hide/tip holdout instruments using
@@ -242,11 +341,46 @@ sensitivity table, is on the audit page.
 
 ## Start here every session
 
-Read the **complete current prompt below**, [working agreement](AGENTS.md), [frozen ranked hypotheses](knowledge/25_ctd5_preregistered.md), [results and limitations](knowledge/27_ctd5_results_and_limits.md), and [three-pass review](knowledge/28_ctd5_three_pass_review.md). The older README is preserved unchanged in [the history archive](knowledge/archive/README_before_ctd5.md); its conflicting “current” pointers and scientific/score claims are **not current authority**.
+Read the **complete current prompt below**, [working agreement](AGENTS.md), the frozen H62
+hypotheses ([knowledge/32](knowledge/32_hypotheses_H62_preregistered.md) ·
+[registry/h62_preregistration.json](registry/h62_preregistration.json)), the H62 results and
+limits ([knowledge/33](knowledge/33_h62_results_and_limits.md)), and the newest run card
+([evidence/h62_run_card.json](evidence/h62_run_card.json)). Older round registers
+([knowledge/25_ctd5_preregistered.md](knowledge/25_ctd5_preregistered.md) …
+[knowledge/31_what_h60D_found.md](knowledge/31_what_h60D_found.md)) remain the record of what
+was tried and refuted — read them before proposing anything they already killed. The archived
+READMEs in [knowledge/archive/](knowledge/archive/) are **not current authority**.
 
 **Maximize P(Win):** do not consume a scarce slot to make a failed research run look successful. **Own the Outcome:** publish the real file, failure diagnostics, provenance boundaries and reproduction—not only a promising story.
 
-## What this session completed
+## What the H62 session completed (2026-10-09)
+
+1. **Reviewed the repo and the brief; froze five ranked hypotheses before any fit**
+   (H62-1…H62-5, `knowledge/32`), each naming layers, physical signature, why the target is
+   off-catalogue, how it differs from every prior round, and the named non-fault mimic.
+2. **Restored the 23 manifest-pinned owner-mirror files autonomously** (`scripts/restore_data.py`,
+   23/23 SHA-256 verified, `evidence/h62_preflight.json`) and placed `data/` symlinks so the
+   full test suite runs in a fresh checkout. Integrity-pinned does **not** mean
+   organizer-authenticated.
+3. **E1 — lane premises re-measured on fresh bytes:** independence max |r| 0.1763 (< 0.60),
+   canary clean (0.7136), strata reproduce the cover geology (A-only median depth 340 m vs
+   B-only 107 m), 36,411 withheld positives. Reproduces H60D to rounding.
+4. **E2 — H62-1 validated on the spatially-blocked hide/tip holdout before any artifact:**
+   NEGATIVE. The cover→edge→persistence gates rank *worse* than the ungated disagreement field
+   (0.0034 vs 0.0041 hide pooled at 37,654 px) and lose the weak-surface subgroup 0/4 folds.
+   The preregistered promotion bar failed on every win clause → verdict **negative**.
+5. **E3 — unique artifact built with every gate and disclosure:** 37,627 px, decoded-pattern
+   unique vs 71 priors, 100 % support novelty, lane drift clean (H60-6), not-merely-union,
+   ≥200 m from the catalogue, all-finite {0,1} (portal-safe), per-pixel + per-segment
+   geological reasoning with falsifiers, run card written. **Download: YES · Submit: NO.**
+   No competition slot used.
+6. **Shared-tool fixes (fixed once, reported):** stale evidence checkpoints with a wiped work
+   cache (IR-H62-001, `run_h60d_cotrain.py done()`); thin-line length estimator
+   (IR-H62-002, caught by test before results); subgroup evaluator OOM (IR-H62-003, label-index
+   rewrite + rows checkpoint). Provenance conflict on the 0.2778 attribution registered as
+   IR-H62-004.
+
+## What the CTD5 session completed (historical, 2026-10-08)
 
 1. Reviewed prior H55–H59/R4 failures and registered four new, lane-specific hypotheses before fitting. Tested only cover-matched transfer; other hypotheses remain untested proposals.
 2. Restored the pinned owner-mirror data autonomously, ran the download wrapper and data preparation, and trained on CPU. The misleading tracked tiny placeholder TIFFs were removed from Git; the real files remain in ignored `data/` and `work/ctd5/input/`. **Integrity-pinned does not mean organizer-authenticated.**
