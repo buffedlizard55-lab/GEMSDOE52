@@ -133,3 +133,26 @@ def test_every_new_h77_arm_is_reported_as_losing_to_the_control():
     for arm in new:
         assert scores[arm]["dti"] < control, f"{arm} must stay below the control"
     assert scores["h77_D_antithetic_margin"]["dti"] < scores["random"]["dti"]
+
+
+def test_shipped_h77_zip_inner_member_carries_the_current_name():
+    """The rename changed the outer ZIP name but not the member inside it.
+
+    Caught by re-reading the published bytes: the ZIP served on the site held
+    `gems52-h74-viewb-...tif` after the round was renamed to H77, so an entrant unzipping it would
+    upload a file whose name contradicted the submission name the page told them to paste. A round
+    that renames itself must rebuild the archive, not just move it.
+    """
+    import zipfile
+    card = json.loads(BUILD.read_text())
+    inner = card["file"]
+    assert inner.startswith("gems52-h77-"), inner
+    tif_bytes = (ROOT / "submission" / inner).read_bytes()
+    for rel in (Path("submission") / card["file"].replace(".tif", ".zip"),
+                Path("docs/downloads/h77-candidate.zip")):
+        path = ROOT / rel
+        assert path.exists(), f"missing archive {rel}"
+        with zipfile.ZipFile(path) as z:
+            assert z.namelist() == [inner], f"{rel} holds {z.namelist()}, expected [{inner}]"
+            assert z.read(inner) == tif_bytes, f"{rel} inner bytes differ from the TIFF"
+            assert z.testzip() is None, f"{rel} failed the archive CRC check"
