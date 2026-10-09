@@ -553,6 +553,12 @@ def main():
         import re as _re2
         txt = _re2.sub(r"<!--H69-DOWNLOAD-NOTICE-->.*?<!--/H69-DOWNLOAD-NOTICE-->", "", txt, flags=_re2.S)
         txt = _re2.sub(r"<!--H69-DL-->.*?<!--/H69-DL-->", "", txt, flags=_re2.S)
+        # This round was committed as H65 and renumbered to H69 after a parallel session merged a
+        # different round under H65 (PR #57). main carries no H65 block in this file, so any H65
+        # marker here is this round's own pre-rename injection, pointing at files that no longer
+        # exist. Strip it rather than leave dead links for scripts/check_site.py to find.
+        txt = _re2.sub(r"<!--H65-DOWNLOAD-NOTICE-->.*?<!--/H65-DOWNLOAD-NOTICE-->", "", txt, flags=_re2.S)
+        txt = _re2.sub(r"<!--H65-DL-->.*?<!--/H65-DL-->", "", txt, flags=_re2.S)
         notice = (f'<!--H69-DOWNLOAD-NOTICE--><aside style="padding:20px;background:#e8f0fe;color:#0b1f3a;'
                   f'font:16px/1.6 system-ui"><b>Latest round: H69 (2026-10-09) — DOWNLOAD YES, SPEND A SLOT NO.</b> '
                   f'<a href="h69-candidate.tif" download>Download the H69 GeoTIFF</a> ({n(fmt["bytes"])} bytes, '
