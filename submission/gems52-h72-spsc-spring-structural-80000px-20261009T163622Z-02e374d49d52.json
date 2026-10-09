@@ -1,0 +1,32 @@
+{
+  "hypothesis": "H72-SPSC: hot spring density + structural gradients identify fault-controlled geothermal systems including unmapped faults",
+  "mechanism": "Spring kernel density at 300m scale captures fault-controlled hydrothermal fluid pathways; corroborated by gravity edges and DEM slope",
+  "named_mimic": "Non-structural hot springs, artesian springs, lithological contacts",
+  "budget": 80000,
+  "n_emitted": 80000,
+  "field_weights": {
+    "hot_spring_density": 0.3,
+    "all_spring_density": 0.2,
+    "gravity_edge": 0.2,
+    "slope": 0.15,
+    "lidar_scarp": 0.15
+  },
+  "spring_data": {
+    "source": "GDR 1391, DOI 10.15121/1881483, CC BY 4.0",
+    "n_springs": 27092,
+    "n_hot_springs": 1994,
+    "provenance": "SHA-256 verified in data_manifest.json"
+  },
+  "catalogue_ring_m": 200,
+  "smoothing_sigma_px": 1.5,
+  "binary_mass": true,
+  "sha256": "64b338214a335714357e4f54c31835e18d4316b688e4a1dbe8bf45e48cec2ad8",
+  "bytes": 165511,
+  "format_ok": true,
+  "max_rank_corr": 0.04496682470444172,
+  "holdout_dti_pooled": 0.027192878967879607,
+  "submission_name": "h72-spsc-spring-structural-80000px-20261009T163622Z-02e374d49d52",
+  "note": "H72 SPSC: hot-spring density + gravity edge + slope + LiDAR scarp; wider emission for higher coverage of unmapped faults; 200m ring masked",
+  "verdict": "PENDING_HOLDOUT",
+  "status": "research-only; local validation only, not organizer acceptance"
+}

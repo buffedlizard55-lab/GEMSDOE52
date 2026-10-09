@@ -1,0 +1,1 @@
+H72 SPSC: hot-spring density + gravity edge + slope + LiDAR scarp; wider emission for higher coverage of unmapped faults; 200m ring masked
