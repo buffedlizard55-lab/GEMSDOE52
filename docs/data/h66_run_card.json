@@ -1,0 +1,226 @@
+{
+ "round": "H66",
+ "generated_utc": "2026-10-09T05:11:50+00:00",
+ "preregistration": {
+  "path": "knowledge/43_hypotheses_H66_preregistered.md",
+  "sha256": "e21187387a3b646ee6fafa30aacc6229c9575d455360f0f84a3331f5fb1aa0a9",
+  "inherited_thresholds_sha256": "3135e37afb3e1f88429b09337676b02b449d9d43a991e3985163f2db0e3ec4c1"
+ },
+ "lane": "two-view co-training (Blum & Mitchell 1998); View A = 14 local-scale potential-field channels (H66-A); View B = H61 surface",
+ "experiments": {
+  "E1": "canary + fit + premise (non-gating diagnostic included)",
+  "E2": "exchange + holdout + emission + gates",
+  "E3": "not used",
+  "used": 2,
+  "budget": 3
+ },
+ "inputs": {
+  "training_features_sha256_prefix": "4371c82e",
+  "labels_sha256_prefix": "7ba308cc",
+  "sample_submission_sha256_prefix": "2176d08e",
+  "feature_store": "structural-core-v2-band6-B+external-geodawn-v1"
+ },
+ "canary": {
+  "max_alarm_across_folds": 0.6686779701695234,
+  "any_alarm": false,
+  "dropped_features": [],
+  "max_direction_insensitive_auc": 0.6686779701695234
+ },
+ "premise": {
+  "verdict": "FAIL",
+  "gate": "mean >= 0.60 and min >= 0.55",
+  "view_A_local_oof_auc_per_fold": [
+   0.5622148808785735,
+   0.5606248571139292,
+   0.5246269649004276,
+   0.5340570950779346
+  ],
+  "view_A_mean": 0.5453809494927162,
+  "view_A_min": 0.5246269649004276,
+  "view_B_oof_auc_per_fold": [
+   0.6625012282147498,
+   0.7684414473654164,
+   0.6112200625930911,
+   0.6951780354196093
+  ],
+  "view_B_mean": 0.6843351933982167
+ },
+ "diagnostic_hgb_local": {
+  "gating": false,
+  "mean": 0.5392120582045994,
+  "min": 0.5108197722651455,
+  "per_fold": [
+   0.5388297259431581,
+   0.5673975149190124,
+   0.5108197722651455,
+   0.5398012196910815
+  ]
+ },
+ "exchange": {
+  "allowed": true,
+  "independence_max_abs_rho": 0.1937497852730525,
+  "pseudo_pixels": 15989
+ },
+ "holdout": {
+  "evaluator": "gems52-pooled-hide-v1",
+  "withheld_positive_pixels": 53186,
+  "bootstrap": "paired physical spatial-cluster percentile",
+  "arms": {
+   "single_A": {
+    "dti": 0.07564059904972076,
+    "ci95": [
+     0.06044647802332764,
+     0.09117438589658093
+    ],
+    "tpw": 3815.7119841184617
+   },
+   "single_B": {
+    "dti": 0.17457135886487102,
+    "ci95": [
+     0.1523129808950829,
+     0.19630189491073133
+    ],
+    "tpw": 8905.176058686935
+   },
+   "union_max": {
+    "dti": 0.15326912316248306,
+    "ci95": [
+     0.13357397642793575,
+     0.17279473757122032
+    ],
+    "tpw": 7800.909709377877
+   },
+   "disagreement_pre": {
+    "dti": 0.04324471121748903,
+    "ci95": [
+     0.03307938394362359,
+     0.05484544256168026
+    ],
+    "tpw": 2175.5246872080156
+   },
+   "disagreement_post": {
+    "dti": 0.039804954793874116,
+    "ci95": [
+     0.030130504619818862,
+     0.05034497987092532
+    ],
+    "tpw": 2001.5882131097464
+   },
+   "random": {
+    "dti": 0.08042564781050282,
+    "ci95": [
+     0.0702226099128376,
+     0.09097325665223467
+    ],
+    "tpw": 4067.2229486710503
+   }
+  },
+  "candidate": "disagreement_post",
+  "control": "single_B",
+  "candidate_minus_control": {
+   "delta": -0.1347664040709969,
+   "ci95": [
+    -0.1597311567205286,
+    -0.11087550058668302
+   ]
+  },
+  "candidate_beats_control": false,
+  "reproduction_single_B_vs_H61": {
+   "h61_receipt": 0.174517,
+   "h66": 0.17457135886487102,
+   "difference": 5.435886487101249e-05,
+   "status": "MISMATCH (IR-H66-010): fold 0 only; B AUCs match"
+  }
+ },
+ "emission": {
+  "file": "submission/gems52-h66-localA-cotrain-37600px.tif",
+  "sha256": "a87c55f8c4d5bbe100324941b7722a73e8e73613ab5c802194291459869ee2d5",
+  "bytes": 134986,
+  "dots": 37600,
+  "name": "gems52-h66-localA-cotrain-37600px-20261009T044501Z",
+  "note": "H66 local-A cotrain: 3px dots, >200m off catalogue, research-only",
+  "recomputed_emission_equals_written_tif": true,
+  "review_table_rows": 37600,
+  "values": "exactly {0,1}, no NaN, EPSG:32611, grid identical to sample"
+ },
+ "format": {
+  "path": "submission/gems52-h66-localA-cotrain-37600px.tif",
+  "bytes": 134986,
+  "sha256": "a87c55f8c4d5bbe100324941b7722a73e8e73613ab5c802194291459869ee2d5",
+  "band_count": 1,
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "shape": [
+   3730,
+   3292
+  ],
+  "transform": [
+   100.0,
+   0.0,
+   243350.0,
+   0.0,
+   -100.0,
+   4508550.0
+  ],
+  "nodata": null,
+  "driver": "GTiff",
+  "nan_count": 0,
+  "inf_count": 0,
+  "min": 0.0,
+  "max": 1.0,
+  "ones": 37600,
+  "zeros": 12241560,
+  "other_values": 0,
+  "grid_matches_sample": true,
+  "values_exactly_01_no_nan": true,
+  "format_pass": true,
+  "sample_ones_for_reference": 60988,
+  "evidence_class": "format validator (local), not an organiser acceptance receipt"
+ },
+ "lane_surface": {
+  "literal": "PASS",
+  "policy": "PASS"
+ },
+ "lane_dots": {
+  "literal": "DUPLICATE/STOP",
+  "policy": "DUPLICATE/STOP"
+ },
+ "uniqueness_audit": {
+  "receipt": "evidence/h66_uniqueness_audit.json",
+  "summary": {
+   "candidate_nonzero": 37600,
+   "priors_after_byte_dedupe": 536,
+   "max_jaccard": 0.035385,
+   "max_jaccard_prior": "submission/gems52-h63-stepview-cotrain-37600px.tif",
+   "share_of_candidate_px_inside_any_prior_support": 1.0
+  }
+ },
+ "tests": "tests/test_h66.py: 5 passed (see the full-suite line in the run card)",
+ "verdict": {
+  "verdict": "negative",
+  "format_pass": true,
+  "premise_pass": false,
+  "holdout_beats_single_B": false,
+  "lane_pass": false,
+  "uniqueness_pass": false,
+  "decoded_distinct_from_all_priors": true,
+  "lane_unique": false,
+  "download_for_research": "YES",
+  "submit": "NO",
+  "statement": "Research-only. DOWNLOAD YES (format-valid; see uniqueness). SUBMIT NO: the premise gate failed, the holdout candidate is below the single-view control, and the lane gate is not PASS. Nothing uploads and no weekly slot is used."
+ },
+ "irregularities": [
+  "IR-H66-001",
+  "IR-H66-002",
+  "IR-H66-003",
+  "IR-H66-004",
+  "IR-H66-005",
+  "IR-H66-006",
+  "IR-H66-007",
+  "IR-H66-008",
+  "IR-H66-009",
+  "IR-H66-010",
+  "IR-H65-007"
+ ],
+ "ai_disclosure": "An AI agent (Arena.ai Agent Mode) wrote the code, the protocol and the page text. No geologist verified any structure; no organiser score or acceptance is claimed."
+}
