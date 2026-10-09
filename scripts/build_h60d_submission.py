@@ -155,6 +155,7 @@ def main() -> int:
 
     # ---- lane drift gate on the SURFACE, before placement (lane protocol item 1) --------------
     lane_surface = h60d.lane_drift_report(field_arr, None, priors, valid,
+                                         sample=DATA / "sample_submission.tif",
                                          calibration=h60d.calibration_basenames(
                                              ROOT / "registry/data_manifest.json"))
     h60d.write_json(EV / "h60d_lane_surface.json", lane_surface)
@@ -238,14 +239,15 @@ def main() -> int:
         f"novel_frac={uniq['novel_fraction']:.4f}, n_priors={uniq['n_priors_checked']}")
 
     # ---- lane drift gate on the FINAL DOTS (lane protocol item 1) -------------------------------
-    # correction H60-6: calibration rasters are excluded from the 3-px proximity component only
+    # H60-6 withdrawn: calibration classification is metadata, never a gate exemption
     # (manifest-driven; raw readings still reported; both Spearman components apply to all).
     calib = h60d.calibration_basenames(ROOT / "registry/data_manifest.json")
-    lane_dots = h60d.lane_drift_report(field_arr, arm_b, priors, valid, calibration=calib)
+    lane_dots = h60d.lane_drift_report(field_arr, arm_b, priors, valid, calibration=calib,
+                                        sample=DATA / "sample_submission.tif")
     h60d.write_json(EV / "h60d_lane_gate.json", lane_dots)
     log(f"lane gate on dots: max|rho|={lane_dots['dots_max_abs_spearman']}, "
         f"raw max within-3px frac={lane_dots['dots_max_within_3px_frac']} "
-        f"(gate value excl. calibration: {lane_dots['dots_max_within_3px_frac_gate']}) -> "
+        f"(strict all-prior gate value: {lane_dots['dots_max_within_3px_frac_gate']}) -> "
         f"{'DRIFT' if lane_dots['lane_drift_detected'] else 'clean'}")
     if lane_dots["lane_drift_detected"]:
         h60d.write_json(EV / "h60d_run_card.json", h60d.run_card(

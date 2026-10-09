@@ -1,0 +1,624 @@
+{
+ "instrument": "scripts/h61_lane_analysis.py",
+ "evidence_class": "lane diagnostic derived from evidence/h61_lane_dots.json; not a score",
+ "rule_trigger": 0.7,
+ "chance_level_explanation": "An emission placed uniformly at random over the eligible footprint lies within 3 px of a prior with probability equal to that prior's own 3 px coverage. The directed proximity statistic therefore has a chance level, and the 0.70 trigger is only discriminating for priors whose coverage is below 0.70.",
+ "n_rasters": 545,
+ "n_probes": 14,
+ "n_near_offenders": 23,
+ "n_informative_near_offenders": 9,
+ "n_rasters_with_coverage_at_or_above_trigger": 31,
+ "offenders": [
+  {
+   "name": "51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+   "coverage_3px": 1.0,
+   "near_3px_fraction": 1.0,
+   "excess_over_chance": 0.0,
+   "probe": true,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "name": "5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+   "coverage_3px": 1.0,
+   "near_3px_fraction": 1.0,
+   "excess_over_chance": 0.0,
+   "probe": true,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "name": "81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+   "coverage_3px": 1.0,
+   "near_3px_fraction": 1.0,
+   "excess_over_chance": 0.0,
+   "probe": true,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "name": "5c1a159439735522659ee78969df3f34efddcdde.tif",
+   "coverage_3px": 1.0,
+   "near_3px_fraction": 1.0,
+   "excess_over_chance": 0.0,
+   "probe": true,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "name": "cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+   "coverage_3px": 1.0,
+   "near_3px_fraction": 1.0,
+   "excess_over_chance": 0.0,
+   "probe": true,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "name": "4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+   "coverage_3px": 0.9999997822854843,
+   "near_3px_fraction": 1.0,
+   "excess_over_chance": 2.1771451574892353e-07,
+   "probe": true,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "name": "c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+   "coverage_3px": 0.9974396772948362,
+   "near_3px_fraction": 1.0,
+   "excess_over_chance": 0.00256032270516382,
+   "probe": true,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "name": "3d3ee66300203bdc878f3a052caabde671daf042.tif",
+   "coverage_3px": 1.0,
+   "near_3px_fraction": 1.0,
+   "excess_over_chance": 0.0,
+   "probe": true,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "name": "35616cbb48ac3533dd4c957b8acca57f71ba365f.tif",
+   "coverage_3px": 0.9974396772948362,
+   "near_3px_fraction": 1.0,
+   "excess_over_chance": 0.00256032270516382,
+   "probe": true,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "name": "1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+   "coverage_3px": 0.9956951308801697,
+   "near_3px_fraction": 0.9991489361702127,
+   "excess_over_chance": 0.0034538052900430216,
+   "probe": true,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "name": "1102512580ae652c866e0cf5754afd1531fac952.tif",
+   "coverage_3px": 0.9919031971594352,
+   "near_3px_fraction": 0.9990691489361702,
+   "excess_over_chance": 0.007165951776734958,
+   "probe": true,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "name": "d89695181cadd18a7284241c571af6f82671bf6d.tif",
+   "coverage_3px": 0.9885919770894661,
+   "near_3px_fraction": 0.9990425531914894,
+   "excess_over_chance": 0.010450576102023268,
+   "probe": true,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "name": "f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+   "coverage_3px": 0.9883130847947964,
+   "near_3px_fraction": 0.9990425531914894,
+   "excess_over_chance": 0.010729468396692976,
+   "probe": true,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "name": "ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+   "coverage_3px": 0.9883130847947964,
+   "near_3px_fraction": 0.9990425531914894,
+   "excess_over_chance": 0.010729468396692976,
+   "probe": true,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "name": "4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+   "coverage_3px": 0.897567715201546,
+   "near_3px_fraction": 0.87875,
+   "excess_over_chance": -0.01881771520154596,
+   "probe": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "name": "437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+   "coverage_3px": 0.8615559925811601,
+   "near_3px_fraction": 0.8561702127659574,
+   "excess_over_chance": -0.005385779815202718,
+   "probe": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "name": "c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+   "coverage_3px": 0.8615559925811601,
+   "near_3px_fraction": 0.8561702127659574,
+   "excess_over_chance": -0.005385779815202718,
+   "probe": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "name": "5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+   "coverage_3px": 0.8354104386708007,
+   "near_3px_fraction": 0.8219148936170213,
+   "excess_over_chance": -0.013495545053779368,
+   "probe": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "name": "0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+   "coverage_3px": 0.8354104386708007,
+   "near_3px_fraction": 0.8219148936170213,
+   "excess_over_chance": -0.013495545053779368,
+   "probe": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "name": "bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+   "coverage_3px": 0.7629609261227157,
+   "near_3px_fraction": 0.7572606382978724,
+   "excess_over_chance": -0.005700287824843331,
+   "probe": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "name": "2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+   "coverage_3px": 0.7629609261227157,
+   "near_3px_fraction": 0.7572606382978724,
+   "excess_over_chance": -0.005700287824843331,
+   "probe": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "name": "ab7e0752036d020fbc394a528bbe63171c3cb08f.tif",
+   "coverage_3px": 0.7582652594471226,
+   "near_3px_fraction": 0.7291489361702128,
+   "excess_over_chance": -0.029116323276909828,
+   "probe": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "name": "443e8e1c799734facd50a92bc85c650f3857a2b6.tif",
+   "coverage_3px": 0.7582652594471226,
+   "near_3px_fraction": 0.7291489361702128,
+   "excess_over_chance": -0.029116323276909828,
+   "probe": false,
+   "coverage_at_or_above_trigger": true
+  }
+ ],
+ "informative_offenders": [
+  {
+   "name": "4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+   "coverage_3px": 0.897567715201546,
+   "near_3px_fraction": 0.87875,
+   "excess_over_chance": -0.01881771520154596
+  },
+  {
+   "name": "437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+   "coverage_3px": 0.8615559925811601,
+   "near_3px_fraction": 0.8561702127659574,
+   "excess_over_chance": -0.005385779815202718
+  },
+  {
+   "name": "c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+   "coverage_3px": 0.8615559925811601,
+   "near_3px_fraction": 0.8561702127659574,
+   "excess_over_chance": -0.005385779815202718
+  },
+  {
+   "name": "5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+   "coverage_3px": 0.8354104386708007,
+   "near_3px_fraction": 0.8219148936170213,
+   "excess_over_chance": -0.013495545053779368
+  },
+  {
+   "name": "0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+   "coverage_3px": 0.8354104386708007,
+   "near_3px_fraction": 0.8219148936170213,
+   "excess_over_chance": -0.013495545053779368
+  },
+  {
+   "name": "bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+   "coverage_3px": 0.7629609261227157,
+   "near_3px_fraction": 0.7572606382978724,
+   "excess_over_chance": -0.005700287824843331
+  },
+  {
+   "name": "2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+   "coverage_3px": 0.7629609261227157,
+   "near_3px_fraction": 0.7572606382978724,
+   "excess_over_chance": -0.005700287824843331
+  },
+  {
+   "name": "ab7e0752036d020fbc394a528bbe63171c3cb08f.tif",
+   "coverage_3px": 0.7582652594471226,
+   "near_3px_fraction": 0.7291489361702128,
+   "excess_over_chance": -0.029116323276909828
+  },
+  {
+   "name": "443e8e1c799734facd50a92bc85c650f3857a2b6.tif",
+   "coverage_3px": 0.7582652594471226,
+   "near_3px_fraction": 0.7291489361702128,
+   "excess_over_chance": -0.029116323276909828
+  }
+ ],
+ "excess_over_chance": {
+  "min": -0.24092599508631313,
+  "median": -0.07664774039639616,
+  "mean": -0.06357700160046344,
+  "max": 0.10655954412447188,
+  "n_above_zero": 108
+ },
+ "informative_coverage_quantiles": {
+  "0.00": 0.0,
+  "0.25": 0.11019097699606656,
+  "0.50": 0.16155418555067946,
+  "0.75": 0.20018675551160625,
+  "0.90": 0.3007018462844079,
+  "0.99": 0.7629609261227157,
+  "1.00": 0.897567715201546
+ },
+ "n_informative_above_trigger": 17,
+ "prospective_recommendation": "Apply the directed 3 px/0.70 rule only to priors whose measured 3 px coverage is BELOW the rule's own trigger, or equivalently test the chance-normalised excess (near - coverage) against a margin. Both forms are derived from the rule rather than tuned to a result. Adopt it in the shared selector BEFORE the next round; do not apply it retroactively to this one.",
+ "verdict_unchanged": "This round's preregistered probe threshold (0.95) and the literal rule both stand, so the recorded lane verdict remains DUPLICATE/STOP and the artefact remains research-only.",
+ "top_of_table": [
+  {
+   "path": "/home/user/GEMSDOE52/work/h61/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+   "name": "51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+   "decoded_sha256": "1a65d4a2390db4f77f44228ac230502417d9c4ad18fac771178c1fa0295b1612",
+   "coverage_3px": 1.0,
+   "near_3px_fraction": 1.0,
+   "excess_over_chance": 0.0,
+   "ratio_to_chance": 1.0,
+   "spearman": -0.021553326152649828,
+   "probe": true,
+   "near_offender": true,
+   "rank_offender": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "path": "/home/user/GEMSDOE52/work/h61/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+   "name": "5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+   "decoded_sha256": "4fba660d091d639050390ae486cfac97a2daf95022ea1cdabcd151b59e97d602",
+   "coverage_3px": 1.0,
+   "near_3px_fraction": 1.0,
+   "excess_over_chance": 0.0,
+   "ratio_to_chance": 1.0,
+   "spearman": 0.009833179527298518,
+   "probe": true,
+   "near_offender": true,
+   "rank_offender": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "path": "/home/user/GEMSDOE52/work/h61/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+   "name": "81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+   "decoded_sha256": "3140ac4bcfca3d20dc2684c1efb7d8b770d9f861ac3f1869e360b0451970cfec",
+   "coverage_3px": 1.0,
+   "near_3px_fraction": 1.0,
+   "excess_over_chance": 0.0,
+   "ratio_to_chance": 1.0,
+   "spearman": 0.0001808616883117173,
+   "probe": true,
+   "near_offender": true,
+   "rank_offender": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "path": "/home/user/GEMSDOE52/work/h61/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+   "name": "5c1a159439735522659ee78969df3f34efddcdde.tif",
+   "decoded_sha256": "3140ac4bcfca3d20dc2684c1efb7d8b770d9f861ac3f1869e360b0451970cfec",
+   "coverage_3px": 1.0,
+   "near_3px_fraction": 1.0,
+   "excess_over_chance": 0.0,
+   "ratio_to_chance": 1.0,
+   "spearman": 0.0001808616883117173,
+   "probe": true,
+   "near_offender": true,
+   "rank_offender": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "path": "/home/user/GEMSDOE52/work/h61/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+   "name": "cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+   "decoded_sha256": "b315839a62188b053a9efac1b2b7af5223ed7ba70859d692bd54f2a7ec35d54f",
+   "coverage_3px": 1.0,
+   "near_3px_fraction": 1.0,
+   "excess_over_chance": 0.0,
+   "ratio_to_chance": 1.0,
+   "spearman": -0.028189275491487843,
+   "probe": true,
+   "near_offender": true,
+   "rank_offender": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "path": "/home/user/GEMSDOE52/work/h61/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+   "name": "4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+   "decoded_sha256": "d20d517a041ce9f4d68cffe79ca7469f9b8a812b803de43b0c3f64e52a110496",
+   "coverage_3px": 0.9999997822854843,
+   "near_3px_fraction": 1.0,
+   "excess_over_chance": 2.1771451574892353e-07,
+   "ratio_to_chance": 1.000000217714563,
+   "spearman": 0.028188838727718133,
+   "probe": true,
+   "near_offender": true,
+   "rank_offender": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "path": "/home/user/GEMSDOE52/work/h61/priors/c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+   "name": "c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+   "decoded_sha256": "1c551dedae1bedccca547dfcadf592d23fc4e829c54a83b9df5e71225b9f70c3",
+   "coverage_3px": 0.9974396772948362,
+   "near_3px_fraction": 1.0,
+   "excess_over_chance": 0.00256032270516382,
+   "ratio_to_chance": 1.0025668947841615,
+   "spearman": -0.006146758002192607,
+   "probe": true,
+   "near_offender": true,
+   "rank_offender": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "path": "/home/user/GEMSDOE52/work/h61/priors/3d3ee66300203bdc878f3a052caabde671daf042.tif",
+   "name": "3d3ee66300203bdc878f3a052caabde671daf042.tif",
+   "decoded_sha256": "bead1c12cd2a9e5aefac3948b06b0a420539e2e07018d19b1f4c555a354091e2",
+   "coverage_3px": 1.0,
+   "near_3px_fraction": 1.0,
+   "excess_over_chance": 0.0,
+   "ratio_to_chance": 1.0,
+   "spearman": -0.020743928653865776,
+   "probe": true,
+   "near_offender": true,
+   "rank_offender": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "path": "/home/user/GEMSDOE52/work/h61/priors/35616cbb48ac3533dd4c957b8acca57f71ba365f.tif",
+   "name": "35616cbb48ac3533dd4c957b8acca57f71ba365f.tif",
+   "decoded_sha256": "374a9b31e8b7cc6c41f64f0674c4cd263ff00ae59464557cb96da362373ae23e",
+   "coverage_3px": 0.9974396772948362,
+   "near_3px_fraction": 1.0,
+   "excess_over_chance": 0.00256032270516382,
+   "ratio_to_chance": 1.0025668947841615,
+   "spearman": -0.006146758002192615,
+   "probe": true,
+   "near_offender": true,
+   "rank_offender": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "path": "/home/user/GEMSDOE52/work/h61/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+   "name": "1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+   "decoded_sha256": "78d178ccd4253d428167c1bf91c18d9a2bf9382558bf23ac4aa9d799fd8f06a5",
+   "coverage_3px": 0.9956951308801697,
+   "near_3px_fraction": 0.9991489361702127,
+   "excess_over_chance": 0.0034538052900430216,
+   "ratio_to_chance": 1.0034687377520768,
+   "spearman": 0.028775579615623745,
+   "probe": true,
+   "near_offender": true,
+   "rank_offender": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "path": "/home/user/GEMSDOE52/work/h61/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+   "name": "1102512580ae652c866e0cf5754afd1531fac952.tif",
+   "decoded_sha256": "ac6859073ad3423ce725671dc03b0906770b1c85fced22ab1b014b3887e7475a",
+   "coverage_3px": 0.9919031971594352,
+   "near_3px_fraction": 0.9990691489361702,
+   "excess_over_chance": 0.007165951776734958,
+   "ratio_to_chance": 1.007224446697275,
+   "spearman": 0.03548631346970051,
+   "probe": true,
+   "near_offender": true,
+   "rank_offender": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "path": "/home/user/GEMSDOE52/work/h61/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+   "name": "d89695181cadd18a7284241c571af6f82671bf6d.tif",
+   "decoded_sha256": "dbd624f8b1bbb5f1fe4d039f68db5b002395da86d6ba9a0fbf0f5c13958d1bb8",
+   "coverage_3px": 0.9885919770894661,
+   "near_3px_fraction": 0.9990425531914894,
+   "excess_over_chance": 0.010450576102023268,
+   "ratio_to_chance": 1.0105711722775568,
+   "spearman": 0.035943759442172034,
+   "probe": true,
+   "near_offender": true,
+   "rank_offender": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "path": "/home/user/GEMSDOE52/work/h61/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+   "name": "f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+   "decoded_sha256": "9b0a8685b837510c1f5a53bc5dfe833956f8e3f6dd332c1549f2d6b3a7a3d42d",
+   "coverage_3px": 0.9883130847947964,
+   "near_3px_fraction": 0.9990425531914894,
+   "excess_over_chance": 0.010729468396692976,
+   "ratio_to_chance": 1.0108563455870068,
+   "spearman": 0.03609154435473693,
+   "probe": true,
+   "near_offender": true,
+   "rank_offender": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "path": "/home/user/GEMSDOE52/work/h61/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+   "name": "ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+   "decoded_sha256": "94b6b87f4bdbd2aa5dfb3402bfdff11639c8ccc215a0346fdf5a5ca498471c8d",
+   "coverage_3px": 0.9883130847947964,
+   "near_3px_fraction": 0.9990425531914894,
+   "excess_over_chance": 0.010729468396692976,
+   "ratio_to_chance": 1.0108563455870068,
+   "spearman": 0.03609154437284096,
+   "probe": true,
+   "near_offender": true,
+   "rank_offender": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "path": "/home/user/GEMSDOE52/work/h61/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+   "name": "4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+   "decoded_sha256": "713026f176056d852468ab3d6deaad608f4f0b2f0166cdc16c017895006020c8",
+   "coverage_3px": 0.897567715201546,
+   "near_3px_fraction": 0.87875,
+   "excess_over_chance": -0.01881771520154596,
+   "ratio_to_chance": 0.9790347682042903,
+   "spearman": 0.020927162722598033,
+   "probe": false,
+   "near_offender": true,
+   "rank_offender": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "path": "/home/user/GEMSDOE52/work/h61/priors/437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+   "name": "437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+   "decoded_sha256": "d6e759141cf42b4814ec4cfaaa44c09a2203b3c59d25470170eb8ca5f2f10315",
+   "coverage_3px": 0.8615559925811601,
+   "near_3px_fraction": 0.8561702127659574,
+   "excess_over_chance": -0.005385779815202718,
+   "ratio_to_chance": 0.9937487756320198,
+   "spearman": -0.0020879872793396616,
+   "probe": false,
+   "near_offender": true,
+   "rank_offender": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "path": "/home/user/GEMSDOE52/work/h61/priors/c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+   "name": "c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+   "decoded_sha256": "d6e759141cf42b4814ec4cfaaa44c09a2203b3c59d25470170eb8ca5f2f10315",
+   "coverage_3px": 0.8615559925811601,
+   "near_3px_fraction": 0.8561702127659574,
+   "excess_over_chance": -0.005385779815202718,
+   "ratio_to_chance": 0.9937487756320198,
+   "spearman": -0.0020879872793396616,
+   "probe": false,
+   "near_offender": true,
+   "rank_offender": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "path": "/home/user/GEMSDOE52/work/h61/priors/5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+   "name": "5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+   "decoded_sha256": "b3cc58faa512355c2f89eb37f9ebae33bd8fb74b86da3da7a6c2665cb60110dd",
+   "coverage_3px": 0.8354104386708007,
+   "near_3px_fraction": 0.8219148936170213,
+   "excess_over_chance": -0.013495545053779368,
+   "ratio_to_chance": 0.9838456111761642,
+   "spearman": -0.0057731236931348314,
+   "probe": false,
+   "near_offender": true,
+   "rank_offender": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "path": "/home/user/GEMSDOE52/work/h61/priors/0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+   "name": "0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+   "decoded_sha256": "b3cc58faa512355c2f89eb37f9ebae33bd8fb74b86da3da7a6c2665cb60110dd",
+   "coverage_3px": 0.8354104386708007,
+   "near_3px_fraction": 0.8219148936170213,
+   "excess_over_chance": -0.013495545053779368,
+   "ratio_to_chance": 0.9838456111761642,
+   "spearman": -0.0057731236931348314,
+   "probe": false,
+   "near_offender": true,
+   "rank_offender": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "path": "/home/user/GEMSDOE52/work/h61/priors/bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+   "name": "bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+   "decoded_sha256": "0d84319a7bbda2adc0d65ca46ffa22633a9c40f82d2ae4045f6cded9ea7c0bb4",
+   "coverage_3px": 0.7629609261227157,
+   "near_3px_fraction": 0.7572606382978724,
+   "excess_over_chance": -0.005700287824843331,
+   "ratio_to_chance": 0.9925287290217972,
+   "spearman": -0.003411249556146031,
+   "probe": false,
+   "near_offender": true,
+   "rank_offender": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "path": "/home/user/GEMSDOE52/work/h61/priors/2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+   "name": "2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+   "decoded_sha256": "0d84319a7bbda2adc0d65ca46ffa22633a9c40f82d2ae4045f6cded9ea7c0bb4",
+   "coverage_3px": 0.7629609261227157,
+   "near_3px_fraction": 0.7572606382978724,
+   "excess_over_chance": -0.005700287824843331,
+   "ratio_to_chance": 0.9925287290217972,
+   "spearman": -0.003411249556146031,
+   "probe": false,
+   "near_offender": true,
+   "rank_offender": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "path": "/home/user/GEMSDOE52/work/h61/priors/ab7e0752036d020fbc394a528bbe63171c3cb08f.tif",
+   "name": "ab7e0752036d020fbc394a528bbe63171c3cb08f.tif",
+   "decoded_sha256": "46b0e880fd1c486a107ea2489e95b432430cd5aa92f66a4075e6d1ed4ff00658",
+   "coverage_3px": 0.7582652594471226,
+   "near_3px_fraction": 0.7291489361702128,
+   "excess_over_chance": -0.029116323276909828,
+   "ratio_to_chance": 0.9616014014697976,
+   "spearman": -0.003827270979666427,
+   "probe": false,
+   "near_offender": true,
+   "rank_offender": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "path": "/home/user/GEMSDOE52/work/h61/priors/443e8e1c799734facd50a92bc85c650f3857a2b6.tif",
+   "name": "443e8e1c799734facd50a92bc85c650f3857a2b6.tif",
+   "decoded_sha256": "46b0e880fd1c486a107ea2489e95b432430cd5aa92f66a4075e6d1ed4ff00658",
+   "coverage_3px": 0.7582652594471226,
+   "near_3px_fraction": 0.7291489361702128,
+   "excess_over_chance": -0.029116323276909828,
+   "ratio_to_chance": 0.9616014014697976,
+   "spearman": -0.003827270979666427,
+   "probe": false,
+   "near_offender": true,
+   "rank_offender": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "path": "/home/user/GEMSDOE52/work/h61/priors/32a4a6d2d4df8ef8e880120f36d2a4d94f134f8a.tif",
+   "name": "32a4a6d2d4df8ef8e880120f36d2a4d94f134f8a.tif",
+   "decoded_sha256": "73ac14d815b4c20683b18efbb24e3eaf080e0798bd1d2ca9e60d90353be45f49",
+   "coverage_3px": 0.7346334373355575,
+   "near_3px_fraction": 0.6981648936170213,
+   "excess_over_chance": -0.03646854371853625,
+   "ratio_to_chance": 0.9503581761118797,
+   "spearman": -0.002259774020264235,
+   "probe": false,
+   "near_offender": false,
+   "rank_offender": false,
+   "coverage_at_or_above_trigger": true
+  },
+  {
+   "path": "/home/user/GEMSDOE52/work/h61/priors/fdd931161c431a583cf7039362e51832e59d07ad.tif",
+   "name": "fdd931161c431a583cf7039362e51832e59d07ad.tif",
+   "decoded_sha256": "9e0084c3ed3da5b3b9afbde970a8f570bb8db015a0024258e021339685202ef1",
+   "coverage_3px": 0.7352378128312662,
+   "near_3px_fraction": 0.6863563829787234,
+   "excess_over_chance": -0.048881429852542846,
+   "ratio_to_chance": 0.9335161644307854,
+   "spearman": -0.0045266497251086465,
+   "probe": false,
+   "near_offender": false,
+   "rank_offender": false,
+   "coverage_at_or_above_trigger": true
+  }
+ ]
+}

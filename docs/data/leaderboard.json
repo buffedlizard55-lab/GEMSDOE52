@@ -1,30 +1,150 @@
 {
   "status": "dated snapshot; automated DrivenData access disabled by Terms-of-Use policy",
-  "observed_date_utc": "2026-10-07",
+  "observed_date_utc": "2026-10-08",
+  "observed_at_utc": "2026-10-08T21:40:41Z",
   "source": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
+  "retrieved_by": "fetch_page over the public leaderboard HTML (no authentication, no scraping of user data)",
   "column_header_on_board": "Best public DW-Tversky (in descending order)",
   "rows": [
     {
-      "rank": "1",
+      "rank": 1,
       "team": "xiaofanhu",
-      "score": 0.3774
+      "score": 0.3774,
+      "submissions": 13
     },
     {
-      "rank": "7",
+      "rank": 2,
+      "team": "alexoktaba",
+      "score": 0.3345,
+      "submissions": 25
+    },
+    {
+      "rank": 3,
+      "team": "nchuzhoy",
+      "score": 0.3262,
+      "submissions": 6
+    },
+    {
+      "rank": 4,
+      "team": "joeyfezster",
+      "score": 0.326,
+      "submissions": 24
+    },
+    {
+      "rank": 5,
+      "team": "kinghorton42",
+      "score": 0.3222,
+      "submissions": 9
+    },
+    {
+      "rank": 6,
+      "team": "Batik Shirt Brothers",
+      "score": 0.3221,
+      "submissions": 23
+    },
+    {
+      "rank": 7,
       "team": "DARD",
-      "score": 0.3195
+      "score": 0.3195,
+      "submissions": 16
     },
     {
-      "rank": "13",
+      "rank": 8,
+      "team": "ndavis7",
+      "score": 0.2888,
+      "submissions": 9
+    },
+    {
+      "rank": 9,
+      "team": "mzoorob",
+      "score": 0.2884,
+      "submissions": 27
+    },
+    {
+      "rank": 10,
+      "team": "GrigorSargsyan",
+      "score": 0.2876,
+      "submissions": 14
+    },
+    {
+      "rank": 11,
+      "team": "HardcoreTechGod",
+      "score": 0.2854,
+      "submissions": 6
+    },
+    {
+      "rank": 12,
+      "team": "op01",
+      "score": 0.2797,
+      "submissions": 8
+    },
+    {
+      "rank": 13,
       "team": "extradr19",
-      "score": 0.2778
+      "score": 0.2778,
+      "submissions": 12
+    },
+    {
+      "rank": 14,
+      "team": "arnofault",
+      "score": 0.2764,
+      "submissions": 1
+    },
+    {
+      "rank": 15,
+      "team": "No Fault of Our Own",
+      "score": 0.2761,
+      "submissions": 24
+    },
+    {
+      "rank": 16,
+      "team": "notmyfault",
+      "score": 0.2758,
+      "submissions": 16
+    },
+    {
+      "rank": 17,
+      "team": "wbg1",
+      "score": 0.275,
+      "submissions": 14
+    },
+    {
+      "rank": 18,
+      "team": "raboush2",
+      "score": 0.2747,
+      "submissions": 9
+    },
+    {
+      "rank": 19,
+      "team": "li002666",
+      "score": 0.2726,
+      "submissions": 4
+    },
+    {
+      "rank": 20,
+      "team": "smashi34",
+      "score": 0.271,
+      "submissions": 12
+    },
+    {
+      "rank": 21,
+      "team": "smrtdoog5",
+      "score": 0.2708,
+      "submissions": 12
+    },
+    {
+      "rank": 22,
+      "team": "bot_account",
+      "score": 0.2707,
+      "submissions": 1
     }
   ],
+  "top": 0.3774,
   "our_team": "extradr19 (owner-reported association; not authenticated)",
   "our_best_reported": 0.2778,
-  "top": 0.3774,
-  "gap_to_top": 0.0996,
-  "scope_note": "Selected official board rows preserved from the one-off 2026-10-07 fetch. The board reports team-level best scores, not filenames, hashes, upload receipts, hidden labels, or causal attribution. Automated DrivenData access remains disabled under the repository's reviewed Terms-of-Use policy.",
+  "our_rank": 13,
+  "supersedes": "registry/leaderboard_snapshot_2026-10-07.json (same top three rows, same values)",
+  "scope_note": "Board rows preserved from the 2026-10-08 fetch. The board reports team-level best public scores, not filenames, hashes, upload receipts, hidden labels or causal attribution. TWO CORRECTIONS to what this repo and the current brief have been carrying: (1) 0.3195 is rank 7 (team DARD), not the board top -- the top is 0.3774 (team xiaofanhu), exactly as the 2026-10-07 snapshot already recorded and as the H57 acceptance addendum in README.md warned; (2) the family's 0.2778 sits at rank 13 inside a dense cluster of eleven teams between 0.2707 and 0.2888, separated from the 0.3195-0.3774 group by a gap of 0.031. Rows 23+ were not captured.",
   "owner_best_reported": 0.2778,
   "artifact_score_authenticated": false,
   "note": "Dated participant-level observation; no filename/hash/receipt attribution. Participant identity is not authenticated as the user's team.",

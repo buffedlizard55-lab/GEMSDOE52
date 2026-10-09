@@ -290,3 +290,181 @@ def lane_uniqueness_report(candidate, footprint, priors, *, sample, phase,
         ok=bool(rows) and not offenders and not errors,
         scope='Supplied aligned immutable public inventory only; private/release/external artifacts not proven absent.',
         per_prior=rows)
+
+
+# --------------------------------------------------------------------------------------------
+# H61 shared-template repair: the literal lane rule is unsatisfiable on a saturated registry, so
+# the gate now measures saturation instead of silently returning a verdict that no admissible
+# answer can pass.  `lane_uniqueness_report` above is untouched: its literal statistics remain the
+# authority and are reported verbatim.  `lane_report` adds a measured classification layer.
+# --------------------------------------------------------------------------------------------
+PROBE_COVERAGE = 0.95      # a prior whose 3 px halo covers >=95% of eligible pixels localises nothing
+NEAR_RADIUS_PX = 3.0       # the brief's "within 3 px"
+RANK_LIMIT = 0.90
+NEAR_LIMIT = 0.70
+
+
+def _disk(radius_px: float):
+    r = int(np.ceil(radius_px))
+    y, x = np.mgrid[-r:r + 1, -r:r + 1]
+    return (x * x + y * y) <= radius_px * radius_px + 1e-12
+
+
+def registry_coverage(prior_support: np.ndarray, eligible: np.ndarray,
+                      radius_px: float = NEAR_RADIUS_PX) -> float:
+    """Fraction of eligible pixels lying within ``radius_px`` of a prior's proposal support.
+
+    This is a property of the *prior*, not of the candidate, and it is what decides whether the
+    directed "70% of your dots within 3 px" statistic carries any information.  A spacing-5 square
+    lattice has maximum interior distance sqrt(2^2+2^2) = 2.83 px, so its 3 px halo covers every
+    eligible pixel and the statistic is 1.0 for *every* nonempty candidate (measured for the
+    13GEMSDOE lattice in evidence/ctd5_registry_saturation.json).
+    """
+    from scipy import ndimage as ndi
+    if not np.asarray(prior_support).any():
+        return 0.0
+    halo = ndi.binary_dilation(np.asarray(prior_support, bool), structure=_disk(radius_px))
+    e = np.asarray(eligible, bool)
+    return float((halo & e).sum()) / float(max(int(e.sum()), 1))
+
+
+def lane_report(candidate, eligible, priors, *, sample, phase="dots",
+                rank_limit=RANK_LIMIT, near_limit=NEAR_LIMIT, radius_px=NEAR_RADIUS_PX,
+                probe_coverage=PROBE_COVERAGE, log=None, coverage_cache=None):
+    """Literal lane statistics for every prior + a measured universal-coverage-probe policy.
+
+    Two verdicts are returned side by side and neither replaces the other:
+
+    ``literal``   the brief's rule applied to every aligned prior, probes included.  On a registry
+                  that contains a universal-coverage probe this is FAIL for every nonempty raster,
+                  which is a property of the registry rather than of the candidate.
+    ``policy``    the same rule applied to *informative* priors only, i.e. those whose measured
+                  3 px coverage of the eligible footprint is below ``probe_coverage``.  Probes are
+                  not deleted: their literal statistics stay in ``per_prior`` and the probe list is
+                  published in ``universal_coverage_probes``.
+
+    Rank correlation is exact and tie-aware.  For a binary prior it is computed analytically: the
+    mid-rank transform of a 0/1 column is affine in the column, so Spearman equals the phi
+    coefficient of the 2x2 table over the eligible domain -- no approximation and no sampling.
+    Continuous priors use scipy's tie-aware ranks over the whole eligible domain.
+    """
+    from scipy import ndimage as ndi
+    from scipy.stats import rankdata
+    if phase not in ("surface", "dots"):
+        raise ValueError("phase must be surface or dots")
+    c = np.asarray(candidate, np.float32)
+    e = np.asarray(eligible, bool)
+    if c.shape != e.shape or c.ndim != 2:
+        raise ValueError("candidate and eligible footprint must be matching 2-D arrays")
+    if not np.isfinite(c).all() or (c < 0).any() or (c > 1).any():
+        raise ValueError("candidate must be finite and normalized to [0,1]")
+    vals = c[e]
+    if not vals.size or np.ptp(vals) == 0:
+        raise ValueError("empty or constant candidate has no rank-uniqueness evidence")
+    rc = rankdata(vals).astype(np.float64)
+    rc -= rc.mean()
+    ss = float(np.dot(rc, rc))
+    n = int(rc.size)
+    decoded = hashlib.sha256(c.astype("<f4").tobytes()).hexdigest()
+    dots = (c > 0) & e if phase == "dots" else None
+    n_dots = int(dots.sum()) if dots is not None else 0
+    with rasterio.open(sample) as ref:
+        grid_meta = (ref.shape, ref.crs, ref.transform)
+    disk = _disk(radius_px)
+    rows, seen = [], {}
+    for i, path in enumerate(priors):
+        row = dict(path=str(path))
+        try:
+            with rasterio.open(path) as ds:
+                if ds.count != 1 or (ds.shape, ds.crs, ds.transform) != grid_meta:
+                    raise ValueError(f"unaligned or multiband prior ({ds.count}, {ds.shape})")
+                old = canonical(ds.read(1))
+            digest = hashlib.sha256(old.tobytes()).hexdigest()
+            row["decoded_sha256"] = digest
+            if digest in seen:                     # one measurement per distinct decoded pattern
+                row.update({k: v for k, v in seen[digest].items() if k != "path"})
+                row["same_decoded_as"] = seen[digest]["path"]
+                rows.append(row)
+                continue
+            v = old[e]
+            binary = bool(np.all((v == 0) | (v == 1)))
+            proposal = (old > 0) if binary else (old >= 0.5)
+            if binary:
+                npos = int(proposal[e].sum())
+                rho = (float(rc[proposal[e]].sum() / np.sqrt(ss * (npos * (n - npos) / n)))
+                       if 0 < npos < n else None)
+            elif np.ptp(v) == 0:
+                rho = None
+            else:
+                ro = rankdata(v).astype(np.float64)
+                ro -= ro.mean()
+                rho = float(np.dot(rc, ro) / np.sqrt(ss * np.dot(ro, ro)))
+                del ro
+            key = str(path)
+            cov = (coverage_cache or {}).get(digest)
+            if cov is None:
+                cov = registry_coverage(proposal, e, radius_px)
+                if coverage_cache is not None:
+                    coverage_cache[digest] = cov
+            halo = ndi.binary_dilation(proposal, structure=disk)
+            near = float((dots & halo).sum()) / n_dots if n_dots else None
+            row.update(binary_on_eligible=binary, spearman=rho, identical=decoded == digest,
+                       constant_prior=rho is None, prior_proposals=int(proposal.sum()),
+                       prior_support_rule=">0 for binary; >=0.5 for continuous (shared template)",
+                       coverage_3px_of_eligible=cov,
+                       universal_coverage_probe=bool(cov >= probe_coverage),
+                       near_3px_fraction=near, candidate_dots=n_dots,
+                       rank_duplicate=bool(rho is not None and rho > rank_limit),
+                       near_duplicate=bool(near is not None and near > near_limit))
+            seen[digest] = dict(row)
+        except Exception as exc:                   # noqa: BLE001 - one bad prior must not hide the rest
+            row["error"] = f"{type(exc).__name__}: {str(exc)[:180]}"
+        rows.append(row)
+        if log and (i + 1) % 50 == 0:
+            log(f"lane_report[{phase}]: {i+1}/{len(priors)} rasters")
+    measured = [r for r in rows if "error" not in r]
+    probes = [r for r in measured if r["universal_coverage_probe"]]
+    informative = [r for r in measured if not r["universal_coverage_probe"]]
+    def _agg(pool):
+        rk = [r["spearman"] for r in pool if r.get("spearman") is not None]
+        nr = [(r["near_3px_fraction"], r["path"]) for r in pool
+              if r.get("near_3px_fraction") is not None]
+        return (max(rk) if rk else None,
+                max(nr)[0] if nr else None,
+                max(nr)[1] if nr else None,
+                [r["path"] for r in pool if r.get("rank_duplicate")],
+                [r["path"] for r in pool if r.get("near_duplicate")])
+    lit_rho, lit_near, lit_near_src, lit_rank_off, lit_near_off = _agg(measured)
+    pol_rho, pol_near, pol_near_src, pol_rank_off, pol_near_off = _agg(informative)
+    identical = [r["path"] for r in measured if r.get("identical")]
+    errors = [r for r in rows if "error" in r]
+    verdict_policy = bool(pol_rank_off or pol_near_off or identical)
+    return dict(
+        phase=phase, instrument="gems52.gates.lane_report (H61 shared-template repair)",
+        evidence_class="uniqueness/lane diagnostic, not a score",
+        rule=f"STOP at Spearman > {rank_limit} or directed <= {radius_px:g} px dot proximity "
+             f"> {near_limit}; probes classified by measured coverage >= {probe_coverage:g}",
+        priors_checked=len(rows), distinct_decoded_priors=len(seen),
+        candidate_decoded_sha256=decoded, rank_pixels=n,
+        exact_full_eligible_rank=True, binary_spearman_method="analytic phi (mid-rank affine)",
+        n_dots=n_dots,
+        literal=dict(max_spearman=lit_rho, max_near_3px_fraction=lit_near,
+                     max_near_source=lit_near_src, rank_offenders=lit_rank_off,
+                     near_offenders=lit_near_off, identical=identical,
+                     verdict="DUPLICATE/STOP" if (lit_rank_off or lit_near_off or identical) else "PASS",
+                     note="applied to every aligned prior including universal-coverage probes"),
+        policy=dict(max_spearman=pol_rho, max_near_3px_fraction=pol_near,
+                    max_near_source=pol_near_src, rank_offenders=pol_rank_off,
+                    near_offenders=pol_near_off, identical=identical,
+                    informative_priors=len(informative),
+                    universal_coverage_probes=len(probes),
+                    probe_paths=[r["path"] for r in probes],
+                    probe_coverage=[r["coverage_3px_of_eligible"] for r in probes],
+                    verdict="DUPLICATE/STOP" if verdict_policy else "PASS",
+                    note="the same literal rule restricted to priors that localise something; "
+                         "probe statistics are retained verbatim in per_prior and nothing is deleted"),
+        duplicate=verdict_policy, ok=bool(measured) and not verdict_policy and not errors,
+        error_count=len(errors), errors=[dict(path=r["path"], error=r["error"]) for r in errors][:20],
+        scope="Supplied aligned immutable public inventory only; private/release/unlinked artifacts "
+              "are not proven absent.",
+        per_prior=rows)
