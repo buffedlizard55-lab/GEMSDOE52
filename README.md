@@ -1,3 +1,26 @@
+<!--H65-README-->
+# GEMSDOE52 — H65: halo targets (negative), the executive answer, and corrected premises (2026-10-09)
+
+**[★ Executive summary / exact submission steps](docs/executive-summary.html)** · [H65 page](docs/h65.html) · [H65 run card](evidence/h65_run_card.json) · [Results, verification and the 0.2778 answer](knowledge/42_h65_results_and_limits.md) · [Leaderboard receipt](docs/data/leaderboard_snapshot_2026-10-09.json)
+
+> **DO NOT UPLOAD anything from this round.** No candidate passes the gates. H65 built no file (verdict `NEGATIVE, research-only`; slots used 0; experiments used 1 of 3).
+> The H64 file (`docs/downloads/h64-candidate.tif`) remains a **research** download only: format-valid and exact-unique on decoded pixels, but DUPLICATE under the 70% lane rule.
+
+**H65 result (HOLDOUT-DTI, 53,186 withheld positives, 95% paired cluster bootstrap):** the mechanism test, halo soft targets minus the H61 hard control on single_B, is +0.0021 with CI [−0.0011, +0.0051], so it is **not confirmed**. The co-training candidate is 0.0364 against single_B's 0.1767 (Δ −0.1403, CI [−0.1630, −0.1184]). S1 View-A sufficiency failed (mean 0.5299; fourth failure, same learner). The exchange was skipped and post := pre.
+
+**The 0.2778 answer, corrected (BYTES-VERIFIED where marked):**
+- The 0.2778 file (`h33-2-b2`, 37,654 px) is a strict subset of its parent (44,090 px): 6,436 px removed, 0 added; removed pixels lie 100–200 m from the catalogue; the nearest kept pixel is 223.6 m away.
+- Pruning is the right mechanism, but "zero credit" was too strong. Under the sparse approximation, the owner-reported pair needs the removed ring to have carried about 0.5–3.3% of the parent's credit across the identified |G| interval. Official staff say new-fault pixels can lie within 300 m of known traces, so the ring's credit cannot be settled from the catalogue proxy.
+- The marginal acceptance bar is **α·DTI** (0.0556 at 0.2778). Earlier notes used α·DTI/(1−α·DTI); corrected in `knowledge/01`, `05` and `42` (IR-H65-002).
+- Premises: the board's top is **0.3774** (xiaofanhu); 0.3195 is DARD, rank 7. 0.2778 is owner-reported for GEMSDOE32, not organiser-confirmed; the public board also shows 0.2778 for `extradr19` (rank 15 on the 2026-10-09 fetch).
+
+**Official facts verified this session:** page 967 metric and format (with the page's own worked example, 0.60); forum topic 11516 masking (staff, 16 and 21 Sep: known-fault pixels are masked, pixel-exact, no buffer for known faults; new-fault pixels may lie within 300 m of known traces). The reference notebook writes float64 where the page requires float32 (IR-H65-004).
+
+**Limits:** the holdout cannot test R5-H1 (trace corrections), because its truth is the catalogue. The H65 hard control is not bit-reproducible across runs (IR-H65-006; verdict unaffected). Nothing here is a submission candidate.
+
+**Next steps:** (1) an independent corrected-fault release to test R5-H1, obtainability not yet verified; (2) pin thread counts and check bitwise refit equality before any further round; (3) a fresh round only after a candidate clears the lane gate on the surface and the final dots.
+<!--/H65-README-->
+
 <!--H64-README-->
 # GEMSDOE52 — H64: a unique GeoTIFF, and the verdict on whether it may be submitted
 

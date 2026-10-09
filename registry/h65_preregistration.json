@@ -1,0 +1,36 @@
+{
+  "round": "H65",
+  "preregistered_utc": "2026-10-09T03:53:31Z",
+  "hypothesis_document": "knowledge/41_hypotheses_H65_preregistered.md",
+  "hypothesis_sha256": "7ae7cd9119c8b86d8b525519819e1120c71355bd949b7a164bc7c8b12e391afc",
+  "hypothesis_bytes": 8388,
+  "frozen_before_any_fit": true,
+  "runner": "scripts/run_h65.py",
+  "runner_refuses_if_hash_moves": true,
+  "lane": "two-view co-training (Blum & Mitchell 1998, doi:10.1145/279943.279962); View A potential-field/subsurface, View B surface; disagreement as the discovery signal",
+  "single_change_vs_H61": "training targets: metric-kernel halo (soft weights t = max(0, 1 - d_vis/300 m) for 0 < d_vis < 300 m, duplicated with weights t and 1 - t); learners, features, folds, budget and placement unchanged",
+  "thresholds": {
+    "S1_sufficiency_mean_oof_auc_min": 0.6,
+    "S1_sufficiency_min_fold_oof_auc": 0.55,
+    "halo_radius_m": 300.0,
+    "halo_max_rows_per_fold": 30000,
+    "halo_seed_offset": 900,
+    "single_B_h61_control_holdout_dti": 0.174517,
+    "single_B_control_abs_tolerance": 0.001
+  },
+  "verdict_rule": "mechanism confirmed only if single_B_soft minus single_B_hard has 95% CI lower bound > 0. Eligible for the selector only if S1 pass AND lane PASS (surface and final) AND not-union PASS AND format PASS AND exact-unique PASS AND disagreement_post > single_B_soft with CI lower bound > 0. Otherwise NEGATIVE research-only (DOWNLOAD YES if valid and exact-unique; SUBMIT NO). Nothing uploads; no weekly slot is touched.",
+  "budget": {
+    "max_experiments": 1,
+    "experiment": "H65 metric-kernel halo targets for both co-training views"
+  },
+  "h61_reference_receipts": [
+    "evidence/h61_holdout.json",
+    "evidence/h61_canary.json",
+    "evidence/h61_pseudo_exchange.json"
+  ],
+  "h64_reference_receipts": [
+    "evidence/h64_holdout.json",
+    "evidence/h64_sufficiency.json"
+  ],
+  "amendments": []
+}
