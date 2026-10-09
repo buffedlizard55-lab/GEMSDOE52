@@ -1,0 +1,19 @@
+{
+ "a_only_candidates": 842,
+ "b_only_dots": 450,
+ "emitted_dots": 37654,
+ "a_only_cells_in_shipped_raster": 431,
+ "b_only_pool_px": 65713,
+ "a_only_pool_px": 29669,
+ "cardinal_orientation_share": {
+  "a_only": 0.22327790973871733,
+  "b_only": 0.23777777777777778,
+  "all_emitted": 0.22621766611780952,
+  "matched_random_control": 0.21546183672385405,
+  "control_dots": 37654
+ },
+ "cardinal_definition": "best 600 m chord orientation within 10 deg of due N-S or due E-W",
+ "a_only_reading": "View A confident, View B abstaining -> fault possibly concealed beneath cover",
+ "b_only_reading": "View B confident, View A abstaining -> suspect roads, canals, powerlines or erosion lines; a cardinal share materially above the random control is evidence of cultural infrastructure rather than structure",
+ "evidence_class": "disagreement diagnostic on out-of-fold ranks; not field-verified geology"
+}
