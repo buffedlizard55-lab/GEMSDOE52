@@ -2379,30 +2379,30 @@
    "measured_effect": "No measured number changed: link targets and the verbatim prompt text only."
   },
   {
-   "id": "IR-H76-001",
-   "round": "H76",
+   "id": "IR-H81-001",
+   "round": "H81",
    "severity": "high",
    "status": "open - H75 file not promotable",
    "title": "H75 file fails the support-novelty gate: its support is a subset of the 566-prior union",
    "what_it_is": "The H75 README and executive summary report uniqueness PASS. That is the canonical decoded-pattern check only. The support-novelty gate (gems52.gates.uniqueness_report, called by scripts/h75_gates.py) returns novel_fraction 0.0 against a 0.20 bar, relation_to_union 'subset-of-union', ok False. The committed evidence/h75_gates.json (from the earlier H75 session, 565 priors) already recorded novel_fraction 0.0 and ok False; the README and executive summary did not report it. The re-run on 566 priors (census now restored, one more local artefact) gives the same verdict.",
    "how_we_know": "evidence/h75_gates.json (re-run 2026-10-09 on restored bytes and the census of 524 eligible priors); the 'uniqueness' block. Committed version of the same file at HEAD (git show HEAD:evidence/h75_gates.json) records the same fields.",
-   "handling": "The H75 file is labelled research-only with support novelty stated. Not a submission candidate. The README H76 block and docs/h75-executive-summary.html carry the correction.",
-   "disposition": "The H75 file is labelled research-only with support novelty stated. Not a submission candidate. The README H76 block and docs/h75-executive-summary.html carry the correction."
+   "handling": "The H75 file is labelled research-only with support novelty stated. Not a submission candidate. The README H81 block and docs/h75-executive-summary.html carry the correction.",
+   "disposition": "The H75 file is labelled research-only with support novelty stated. Not a submission candidate. The README H81 block and docs/h75-executive-summary.html carry the correction."
   },
   {
-   "id": "IR-H76-002",
-   "round": "H76",
+   "id": "IR-H81-002",
+   "round": "H81",
    "severity": "high",
    "status": "measured - confirms lane failure",
    "title": "H75 final dots fail the lane gate on both literal and policy readings",
    "what_it_is": "Literal rule: max 3 px near-dot share 1.000 vs one registry raster -> DUPLICATE/STOP. Policy rule: 0.9220 with 38 informative offenders -> DUPLICATE/STOP. Surface lane PASS.",
    "how_we_know": "evidence/h75_gates.json lane_dots.literal and lane_dots.policy; reproduced from restored bytes.",
-   "handling": "No submission. Owner decision on the lane rule needed (knowledge/67 H76-4).",
-   "disposition": "No submission. Owner decision on the lane rule needed (knowledge/67 H76-4)."
+   "handling": "No submission. Owner decision on the lane rule needed (knowledge/67 H81-4).",
+   "disposition": "No submission. Owner decision on the lane rule needed (knowledge/67 H81-4)."
   },
   {
-   "id": "IR-H76-003",
-   "round": "H76",
+   "id": "IR-H81-003",
+   "round": "H81",
    "severity": "medium",
    "status": "resolved - corrected receipt, original archived",
    "title": "single_B holdout in the H75 receipt depends on process state (0.174517 vs fresh 0.174571)",
@@ -2412,19 +2412,19 @@
    "disposition": "evidence/h75_holdout.json replaced by the fresh run; the original is archived. Corrected paired B_DVA - single_B = +0.011781 [0.006700, 0.017313] (committed +0.011835 [0.006791, 0.017362]). Promotion rule unchanged. Run each stage in its own process from now on."
   },
   {
-   "id": "IR-H76-004",
-   "round": "H76",
+   "id": "IR-H81-004",
+   "round": "H81",
    "severity": "medium",
    "status": "open - decision for owner",
    "title": "H75 writes 0 outside the labelled bounds; the official text says null or nan",
    "what_it_is": "The organiser's submission-format text says data outside the bounds is 'null or nan'. The sample_submission.tif uses NaN outside its 5,167,373 finite pixels, and the H75 file writes 0 outside its footprint. This is the same deviation as IR-H73-001. The metric formula treats zero and NaN identically outside bounds, because FPw sums over p(x) > 0 and the kernel maximum is unaffected by zeros. Scored board rows with '-nan' and '-zeros' suffixes both appear on the board.",
    "how_we_know": "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/ (fetched 2026-10-09, submission format section); data/sample_submission.tif nodata NaN; H75 file pixel count outside footprint = 0 non-zero values.",
-   "handling": "Not changed in H76, because changing bytes creates a new file. Owner to decide whether the next file follows the official NaN convention. The metric is the same either way, by the formula.",
-   "disposition": "Not changed in H76, because changing bytes creates a new file. Owner to decide whether the next file follows the official NaN convention. The metric is the same either way, by the formula."
+   "handling": "Not changed in H81, because changing bytes creates a new file. Owner to decide whether the next file follows the official NaN convention. The metric is the same either way, by the formula.",
+   "disposition": "Not changed in H81, because changing bytes creates a new file. Owner to decide whether the next file follows the official NaN convention. The metric is the same either way, by the formula."
   },
   {
-   "id": "IR-H76-005",
-   "round": "H76",
+   "id": "IR-H81-005",
+   "round": "H81",
    "severity": "medium",
    "status": "flagged for owner review",
    "title": "The brief says 0.3195 is the highest score; the board says 0.3774 is the highest",
@@ -2434,8 +2434,8 @@
    "disposition": "The repo uses 0.3774 as the top and 0.3195 as the rank-7 bar. The 0.2778 value is owner-reported and not linked to a file (knowledge/49)."
   },
   {
-   "id": "IR-H76-006",
-   "round": "H76",
+   "id": "IR-H81-006",
+   "round": "H81",
    "severity": "high",
    "status": "open - provenance review",
    "title": "Competition rasters were restored from owner sibling mirrors, not from the DrivenData portal",
@@ -2445,8 +2445,8 @@
    "disposition": "Flagged. Do not treat restored bytes as organiser-authenticated. Before any submission, confirm that the data use is permitted under the competition rules (https://www.herox.com/GEMSPrize/resource/2274, linked from the competition rules page)."
   },
   {
-   "id": "IR-H76-007",
-   "round": "H76",
+   "id": "IR-H81-007",
+   "round": "H81",
    "severity": "low",
    "status": "fixed in this round",
    "title": "run_h75.py refused to run until gems52.external had been applied",
@@ -2456,19 +2456,19 @@
    "disposition": "The step is added to the README reproduce block in this round."
   },
   {
-   "id": "IR-H76-008",
-   "round": "H76",
+   "id": "IR-H81-008",
+   "round": "H81",
    "severity": "low",
    "status": "fixed in this round",
    "title": "README reproduce steps omit the feature-store, external-layer and census steps",
    "what_it_is": "The H75 block says 'build store (see H73)' but not the exact commands, and omits the external-layer step and the census fetch (scripts/fetch_prior_inventory.py, about 35 minutes for 526 blobs).",
    "how_we_know": "Reproduction log, 2026-10-09; scripts/fetch_prior_inventory.py.",
-   "handling": "Exact commands in the README H76 block.",
-   "disposition": "Exact commands in the README H76 block."
+   "handling": "Exact commands in the README H81 block.",
+   "disposition": "Exact commands in the README H81 block."
   },
   {
-   "id": "IR-H76-009",
-   "round": "H76",
+   "id": "IR-H81-009",
+   "round": "H81",
    "severity": "low",
    "status": "environment note",
    "title": "The default python3 has no rasterio, sklearn or pytest",
@@ -2478,8 +2478,8 @@
    "disposition": "Reproduce with the pinned stack. The venv is outside the repo and is not committed."
   },
   {
-   "id": "IR-H76-010",
-   "round": "H76",
+   "id": "IR-H81-010",
+   "round": "H81",
    "severity": "low",
    "status": "open",
    "title": "Test count in the H75 README (435 passed) is stale",
@@ -2489,15 +2489,15 @@
    "disposition": "Recorded here. Not changed in older blocks."
   },
   {
-   "id": "IR-H76-011",
-   "round": "H76",
+   "id": "IR-H81-011",
+   "round": "H81",
    "severity": "medium",
    "status": "open - check depends on local data/ presence",
    "title": "scripts/check_site.py reports 'R5 novelty: recomputed 0.992087 != receipt 1.0' once data/ is restored",
    "what_it_is": "The R5 novelty check recomputes novelty against every raster under data/scored, data/reference, submission/ and docs/downloads. Those directories are populated only after the restore, so the check's result depends on local state. A receipt of 1.0 becomes 0.9921 with the restored set. The cause was inferred from the code path and not bisected.",
    "how_we_know": "scripts/check_site.py run 2026-10-09 after scripts/download_competition_data.sh; 1 problem reported (exit non-zero).",
-   "handling": "Not changed in H76 (R5 is a closed round and its receipt is a statement about its build-time prior set). Flagged for the next session: make the check compare only against priors that existed at the receipt's build time, or record the prior set in the receipt.",
-   "disposition": "Not changed in H76 (R5 is a closed round and its receipt is a statement about its build-time prior set). Flagged for the next session: make the check compare only against priors that existed at the receipt's build time, or record the prior set in the receipt."
+   "handling": "Not changed in H81 (R5 is a closed round and its receipt is a statement about its build-time prior set). Flagged for the next session: make the check compare only against priors that existed at the receipt's build time, or record the prior set in the receipt.",
+   "disposition": "Not changed in H81 (R5 is a closed round and its receipt is a statement about its build-time prior set). Flagged for the next session: make the check compare only against priors that existed at the receipt's build time, or record the prior set in the receipt."
   }
  ],
  "merge_note": "Merged registry/irregularities.json: main's entries (including the parallel H66 round's IR-H66-001..010) plus this round's IR-H67-001..011. This round was labelled H66 in its own receipts and was renamed H67 before merge because main merged a different H66 first (PR #56); the IDs were renumbered wholesale so no ID carries two meanings. See knowledge/45a_amendment_2026-10-09_H67_rename.md. IR-H67-002 (in-domain nodata sentinels collapse every rank channel) and IR-H67-008 (probe classification flips with the structuring element, and this round's lane verdict depends on it) are the two that change a result; IR-H67-005 and IR-H67-007 change how a shared instrument must be read."

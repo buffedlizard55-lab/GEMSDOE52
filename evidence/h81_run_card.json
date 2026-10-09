@@ -1,7 +1,7 @@
 {
- "round": "H76",
+ "round": "H81",
  "date_utc": "2026-10-09",
- "experiments_used": "1 of 3 (H76-1). H75 reproduction runs are not counted.",
+ "experiments_used": "1 of 3 (H81-1). H75 reproduction runs are not counted.",
  "slots_used": 0,
  "hypothesis": "Adding directional variogram anisotropy of band 18 (iso_grav_anom_hg), 4 channels, to H75's View B (which already has DVA of bands 12, 19, 13) improves hide-and-recover recovery over B_DVA.",
  "mechanism": "A fault damage zone makes the local texture of the gravity horizontal-gradient field direction-dependent (strike-parallel smooth, strike-normal rough) at 200-400 m lags.",
@@ -58,7 +58,7 @@
   "alarm": false
  },
  "promotion_rule": "paired CI lower bound > 0 and canary < 0.90",
- "verdict_H76_1": "NEGATIVE (CI lower bound -0.00146 < 0). No file emitted.",
+ "verdict_H81_1": "NEGATIVE (CI lower bound -0.00146 < 0). No file emitted.",
  "lane_and_overlap_of_shipped_H75_file": {
   "surface_literal": "PASS (max Spearman 0.4657)",
   "dots_literal": "DUPLICATE/STOP (max 3 px near-dot share 1.000)",
@@ -72,7 +72,7 @@
   "support_novelty_novel_fraction": 0.0,
   "support_novelty_gate_ok": false,
   "relation_to_union": "subset-of-union",
-  "verdict": "NOT CONFIRMED on support. Canonical pattern unique only (IR-H76-001)."
+  "verdict": "NOT CONFIRMED on support. Canonical pattern unique only (IR-H81-001)."
  },
  "raster_sha256_shipped_H75": "b97691584d514ab1925d9fff2b61c410be86bdc0bc8c844dfdaa6257a4ea7a16",
  "raster_file": "submission/gems52-h75-dva-variogram-anisotropy-B-37654px-20261009.tif",
@@ -93,18 +93,18 @@
    1.0
   ],
   "ones": 37654,
-  "outside_footprint_values": "0 (official text says null or nan; IR-H76-004)",
+  "outside_footprint_values": "0 (official text says null or nan; IR-H81-004)",
   "PASS": true
  },
  "submission_name_and_note_for_shipped_H75_file": {
   "name": "h75-dva-variogram-anisotropy-B-37654px-20261009",
   "note": "H75: View-B + directional variogram anisotropy (det_elev/slope/grav); 200m ring cut; binary 37654 dots; holdout +0.012 vs B"
  },
- "H76_submission": "none (no emission: holdout gate failed)",
+ "H81_submission": "none (no emission: holdout gate failed)",
  "owner_facing_verdict": {
   "H75_file_download": "YES, research copy only",
   "H75_file_submit": "NO (lane gate fails on literal and policy readings; support novelty 0.0)",
-  "H76_1": "NEGATIVE, nothing to download or submit"
+  "H81_1": "NEGATIVE, nothing to download or submit"
  },
  "board_context": "PUBLIC board 2026-10-08 snapshot: top 0.3774 (xiaofanhu), 0.3195 rank 7 (DARD), 0.2778 rank 13 (extradr19, owner-reported file match). Holdout does not forecast board (R4 Spearman -0.10).",
  "reproduction": [
@@ -116,6 +116,6 @@
   "python scripts/run_h75.py holdout",
   "python scripts/run_h75.py build",
   "python scripts/h75_gates.py",
-  "python scripts/run_h76.py all"
+  "python scripts/run_h81.py all"
  ]
 }

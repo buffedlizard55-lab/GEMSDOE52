@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""H76-1 -- DVA of band 18 (iso_grav_anom_hg) added to View B; one experiment; holdout only.
+"""H81-1 -- DVA of band 18 (iso_grav_anom_hg) added to View B; one experiment; holdout only.
 
-Preregistered in knowledge/68_h76_preregistered.md (pinned in registry/h76_preregistration.json).
+Preregistered in knowledge/70_h81_preregistered.md (pinned in registry/h81_preregistration.json).
 Shared, not forked: run_h75 (setup via run_h61, DVA kernel, gather/predict, allowed_of, evaluator calls).
 Reused arms: single_B, B_DVA and random predictions/terms from work/h75 (same rows, learner, seed, folds).
 Only B_DVA18 is fitted here. No placement or emission file is written by this runner.
 
-Usage: python scripts/run_h76.py [fit|holdout|all]
+Usage: python scripts/run_h81.py [fit|holdout|all]
 """
 from __future__ import annotations
 
@@ -28,8 +28,8 @@ import run_h75 as h75                                                # noqa: E40
 from gems52 import evaluate_holdout as evaluator                     # noqa: E402
 from gems52 import nodes                                             # noqa: E402
 
-PREREG = ROOT / "registry/h76_preregistration.json"
-WORK = ROOT / "work/h76"
+PREREG = ROOT / "registry/h81_preregistration.json"
+WORK = ROOT / "work/h81"
 H75 = ROOT / "work/h75"
 EVID = ROOT / "evidence"
 K_FOLD = 9400
@@ -47,12 +47,12 @@ def digest(p):
 def check_prereg():
     reg = json.loads(PREREG.read_text())
     if digest(ROOT / reg["hypothesis_document"]) != reg["hypothesis_sha256"]:
-        raise SystemExit("H76 preregistration changed after freezing")
+        raise SystemExit("H81 preregistration changed after freezing")
     return reg
 
 
 def write(name, obj):
-    p = EVID / f"h76_{name}.json"
+    p = EVID / f"h81_{name}.json"
     p.write_text(json.dumps(obj, indent=1, default=float))
     return p
 
@@ -141,7 +141,7 @@ def stage_holdout():
     # preregistered comparison: the evaluator's own paired block-bootstrap (candidate B_DVA18 vs B_DVA)
     d = summ["paired_differences"]["B_DVA"]
     out["paired_B_DVA18_minus_B_DVA"] = d
-    canary_alarm = json.loads((EVID / "h76_fit.json").read_text())["canary_alarm"]
+    canary_alarm = json.loads((EVID / "h81_fit.json").read_text())["canary_alarm"]
     out["canary_alarm"] = canary_alarm
     out["promote_rule_met"] = bool(d["ci95"][0] > 0 and not canary_alarm)
     write("holdout", out)

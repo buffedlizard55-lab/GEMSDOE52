@@ -1,10 +1,10 @@
-# 68 · H76 — preregistration (frozen before any H76 fit, 2026-10-09)
+# 68 · H81 — preregistration (frozen before any H81 fit, 2026-10-09)
 
 Labels: HOLDOUT-DTI = reading of `gems52-pooled-hide-v1` (pooled, alpha 0.2, beta 0.8, 300 m triangular
 kernel, whole-segment quadrant folds with buffer, visible catalogue masked). Nothing here is ORGANIZER-CONFIRMED.
-Ranked candidate list that motivates this test: `knowledge/67_h76_hypotheses_ranked.md`.
+Ranked candidate list that motivates this test: `knowledge/69_h81_hypotheses_ranked.md`.
 
-## Hypothesis (H76-1)
+## Hypothesis (H81-1)
 Adding the **directional variogram anisotropy (DVA)** of band 18 `iso_grav_anom_hg` (isostatic gravity
 horizontal gradient) to View B, on top of the H75 DVA channels (bands 12, 19, 13), improves hide-and-recover
 recovery over H75's `B_DVA`.

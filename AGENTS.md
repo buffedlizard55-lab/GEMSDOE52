@@ -8,13 +8,13 @@ Keep known-catalogue labels separate from verified fault absence, public partici
 
 This session's working branch is fixed by Arena. Do not change branches. Keep raw competition data and large intermediate arrays under ignored `data/` and `work/`. Publish small audit receipts, the unique compressed prediction raster and its review table.
 
-<!--H76-AGENTS-->
-## Current H76 continuation (2026-10-09)
-Read README's H76 block first, then `knowledge/67_h76_hypotheses_ranked.md` (ranked candidates), `knowledge/68_h76_preregistered.md` (frozen; SHA-256 pinned in `registry/h76_preregistration.json`) and `knowledge/69_h76_results_and_limits.md`.
-Verdicts: H76-1 (band-18 DVA) **NEGATIVE** (paired +0.0020, CI [−0.0015, +0.0052]); experiments used 1 of 3; slots 0. The H75 file is **research-only: do not submit**. It fails the lane gate (literal 1.000, policy 0.922) AND the support-novelty gate (novel fraction 0.0, subset of the 566-prior union). "Unique" in older blocks means canonical decoded pattern only.
-Corrections: the committed H75 single_B holdout is replaced by a fresh-process run (0.174571; IR-H76-003). Run each stage in its own process. Use `scripts/run_h76.py`, which reuses H75 predictions and fits only B_DVA18.
-Next: lane-rule decision by the owner (H76-4) before any further holdout work; then H76-2 (antithetic band-15 step, untested), and H76-3 (magnetic-gradient DVA) only after a flight-line artefact check.
-<!--/H76-AGENTS-->
+<!--H81-AGENTS-->
+## Current H81 continuation (2026-10-09)
+Read README's H81 block first, then `knowledge/69_h81_hypotheses_ranked.md` (ranked candidates), `knowledge/70_h81_preregistered.md` (frozen; SHA-256 pinned in `registry/h81_preregistration.json`) and `knowledge/71_h81_results_and_limits.md`.
+Verdicts: H81-1 (band-18 DVA) **NEGATIVE** (paired +0.0020, CI [−0.0015, +0.0052]); experiments used 1 of 3; slots 0. The H75 file is **research-only: do not submit**. It fails the lane gate (literal 1.000, policy 0.922) AND the support-novelty gate (novel fraction 0.0, subset of the 566-prior union). "Unique" in older blocks means canonical decoded pattern only.
+Corrections: the committed H75 single_B holdout is replaced by a fresh-process run (0.174571; IR-H81-003). Run each stage in its own process. Use `scripts/run_h81.py`, which reuses H75 predictions and fits only B_DVA18.
+Next: lane-rule decision by the owner (H81-4) before any further holdout work; then H81-2 (antithetic band-15 step, untested), and H81-3 (magnetic-gradient DVA) only after a flight-line artefact check.
+<!--/H81-AGENTS-->
 
 <!--H75-AGENTS-->
 ## Current H75 continuation (2026-10-09)
