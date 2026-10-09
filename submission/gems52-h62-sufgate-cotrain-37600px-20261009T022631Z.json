@@ -1,0 +1,68 @@
+{
+  "file": "gems52-h62-sufgate-cotrain-37600px-20261009T022631Z.tif",
+  "sha256": "739a8e7c4b54436508fc2b9da6b8ddc56e44a0d1ad273dc88c07a2003637f8bb",
+  "bytes": 133668,
+  "submission_name": "gems52-h62-sufgate-cotrain-37600px-20261009T022631Z",
+  "note": "H62 S1 fail; exact-novel vs registry; lane DUPLICATE (70% rule); research only, do not submit",
+  "note_chars": 93,
+  "validator": {
+    "path": "/home/user/GEMSDOE52/submission/gems52-h62-sufgate-cotrain-37600px-20261009T022631Z.tif",
+    "bytes": 133668,
+    "sha256": "739a8e7c4b54436508fc2b9da6b8ddc56e44a0d1ad273dc88c07a2003637f8bb",
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "ref_bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "nodata": null,
+    "blocksize": [
+      256,
+      256
+    ],
+    "fixture_grid": false,
+    "has_validity_mask": false,
+    "nan_pixels": 0,
+    "infinity_pixels": 0,
+    "n_nan": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.003062098752707243,
+    "n_nonzero": 37600,
+    "mass": 37600.0,
+    "mass_outside_footprint": 0,
+    "problems": [],
+    "ok": true,
+    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "zip_file": "gems52-h62-sufgate-cotrain-37600px-20261009T022631Z.zip",
+  "zip_sha256": "0e7dfc6876d60fba68ef715923cb1bacc82108ffdcdb83339cdb7bfa999c0078",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "status": "research-only; local format validation is not organizer acceptance",
+  "metadata": {
+    "round": "H62",
+    "preregistration": "c1f183e6dcdee4fcebe0584f88a0b31a36533276eff3c39261b4c20117b58c5e",
+    "budget": 37600
+  }
+}

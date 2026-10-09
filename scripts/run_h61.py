@@ -139,6 +139,16 @@ def learner(seed=SEED):
                                           early_stopping=False, random_state=seed)
 
 
+def learner_for(view: str, seed=SEED):
+    """Per-view learner hook shared with the later rounds (H62 changes View A capacity only).
+
+    The default returns the H61 learner for both views, so H61's receipts are unchanged; a round
+    that needs a different View-A learner overrides this function in its own runner rather than
+    forking the fit/exchange stages.
+    """
+    return learner(seed)
+
+
 def predict_flat(store, model, names, rows, chunk=250_000) -> np.ndarray:
     """Chunked prediction over flat grid indices; bounds peak memory on a 3 GB box."""
     out = np.empty(len(rows), np.float32)
@@ -241,7 +251,7 @@ def stage_fit():
         for view, names in (("A", va), ("B", vb)):
             t0 = time.time()
             X = store.gather(rows, names)
-            m = learner(SEED)
+            m = learner_for(view, SEED)
             m.fit(X, y)
             in_auc = float(roc_auc_score(y, m.predict_proba(X)[:, 1]))
             del X
@@ -359,7 +369,7 @@ def stage_exchange():
             r2 = np.concatenate([rows, extra_rows]) if len(extra_rows) else rows
             y2 = np.concatenate([y, np.ones(len(extra_rows), np.int8)]) if len(extra_rows) else y
             X = store.gather(r2, names)
-            m = learner(SEED + 7)
+            m = learner_for(view, SEED + 7)
             m.fit(X, y2)
             del X
             p = predict_flat(store, m, names, flat)

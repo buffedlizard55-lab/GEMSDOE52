@@ -1,0 +1,40 @@
+{
+ "stage": "sufficiency",
+ "started_utc": "2026-10-09T01:04:57+00:00",
+ "folds": [
+  {
+   "fold": 0,
+   "n_pos": 20000,
+   "n_neg": 40000,
+   "view_A_oof_auc": 0.5186208056249999
+  },
+  {
+   "fold": 1,
+   "n_pos": 10677,
+   "n_neg": 40000,
+   "view_A_oof_auc": 0.600378327245481
+  },
+  {
+   "fold": 2,
+   "n_pos": 6813,
+   "n_neg": 40000,
+   "view_A_oof_auc": 0.46810702700719214
+  },
+  {
+   "fold": 3,
+   "n_pos": 8387,
+   "n_neg": 40000,
+   "view_A_oof_auc": 0.5050818111362824
+  }
+ ],
+ "evidence_class": "HOLDOUT-DTI diagnostic AUC (View A out-of-quadrant), not a DTI score",
+ "mean_view_A_oof_auc": 0.5230469927534889,
+ "min_fold_view_A_oof_auc": 0.46810702700719214,
+ "S1_thresholds": {
+  "mean_min": 0.6,
+  "fold_min": 0.55
+ },
+ "S1_pass": false,
+ "finished_utc": "2026-10-09T01:04:57+00:00",
+ "H61_reference_view_A_mean_oof_auc": 0.5163
+}

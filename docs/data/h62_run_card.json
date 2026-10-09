@@ -1,0 +1,413 @@
+{
+ "round": "H62",
+ "generated_utc": "2026-10-09T02:43:26+00:00",
+ "hypothesis": "Sufficiency-gated co-training: a lower-capacity View A that generalises out of quadrant makes the exchange licensed; then disagreement ranks buried-cover candidates.",
+ "mechanism": "Blum-Mitchell needs sufficient views. View A capacity is the single change (knowledge/34 \u00a74).",
+ "named_non_fault_mimic": "basin-margin or basement-high gravity/magnetic gradient, lithologic contact, volcanic or basin-fill density boundary, upward-continued flight-line artefact",
+ "sufficiency_S1": {
+  "mean_view_A_oof_auc": 0.5230469927534889,
+  "min_fold": 0.46810702700719214,
+  "S1_pass": false
+ },
+ "exchange": {
+  "skipped": true,
+  "total_pseudo_pixels": 0
+ },
+ "holdout_dti": {
+  "evidence_class": "HOLDOUT-DTI",
+  "evaluator_version": "gems52-pooled-hide-v1",
+  "alpha": 0.2,
+  "beta": 0.8,
+  "triangular_radius_m": 300.0,
+  "pooled": true,
+  "scores": {
+   "single_A": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.06510092317545893,
+    "ci95": [
+     0.04864341103047507,
+     0.08165936851602962
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 3280.6223380153733,
+    "fpw": 35939.7260916907,
+    "fnw": 49905.37766198465
+   },
+   "single_B": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.1745172875994316,
+    "ci95": [
+     0.15231581471183422,
+     0.19629866582738847
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 8902.354204271809,
+    "fpw": 33410.159873156495,
+    "fnw": 44283.645795728204
+   },
+   "union_max": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.14965945709931078,
+    "ci95": [
+     0.1286753965705682,
+     0.17104811552506338
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 7613.565921995252,
+    "fpw": 34005.44158721456,
+    "fnw": 45572.43407800476
+   },
+   "disagreement_pre": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.03123315247442798,
+    "ci95": [
+     0.021219145932465305,
+     0.04330904506718273
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 1569.0290837038012,
+    "fpw": 36867.04071367532,
+    "fnw": 51616.97091629621
+   },
+   "disagreement_post": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.03123315247442798,
+    "ci95": [
+     0.021219145932465305,
+     0.04330904506718273
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 1569.0290837038012,
+    "fpw": 36867.04071367532,
+    "fnw": 51616.97091629621
+   },
+   "random": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.08042564781050282,
+    "ci95": [
+     0.0702226099128376,
+     0.09097325665223467
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 4067.2229486710503,
+    "fpw": 36044.86583622452,
+    "fnw": 49118.777051328965
+   }
+  },
+  "best_comparable_control": "single_B",
+  "paired_differences": {
+   "single_A": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "delta": -0.03386777070103095,
+    "ci95": [
+     -0.04462080751741186,
+     -0.022982442127492907
+    ],
+    "withheld_positive_pixels": 53186
+   },
+   "single_B": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "delta": -0.14328413512500363,
+    "ci95": [
+     -0.16556391819773872,
+     -0.12145711933733887
+    ],
+    "withheld_positive_pixels": 53186
+   },
+   "union_max": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "delta": -0.1184263046248828,
+    "ci95": [
+     -0.1375950682779028,
+     -0.10026142130438517
+    ],
+    "withheld_positive_pixels": 53186
+   },
+   "disagreement_pre": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "delta": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "withheld_positive_pixels": 53186
+   },
+   "random": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "delta": -0.04919249533607484,
+    "ci95": [
+     -0.059196850527664546,
+     -0.03880646028347366
+    ],
+    "withheld_positive_pixels": 53186
+   }
+  },
+  "bootstrap": {
+   "method": "paired physical spatial-cluster percentile",
+   "clusters": 153,
+   "draws": 1000,
+   "seed": 61052,
+   "confidence": 0.95,
+   "caveat": "Conditional on fitted folds, catalogue labels and fixed budgets; not a leaderboard interval."
+  },
+  "implementation_sha256": {
+   "evaluate_holdout.py": "ffb084fdf34bb30438485b89caeb1228a6680abfd9f9f0472f4355845da05cc6",
+   "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+   "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+   "spatial.py": "fad7b09db9efc512247b9a176a7e7ce8631e287592b4e07902d0b9c38bed00f8"
+  }
+ },
+ "correlation_overlap_vs_registry": {
+  "lane_dots_literal": "DUPLICATE/STOP",
+  "lane_dots_policy": "DUPLICATE/STOP",
+  "lane_surface_literal": "PASS",
+  "lane_surface_policy": "PASS",
+  "uniqueness_canonical_pattern_unique": true,
+  "novel_fraction": 0.0,
+  "equals_literal_prior_union": false
+ },
+ "not_the_union": {
+  "dots_shared_with_union_max": 8813,
+  "jaccard_with_union_max": 0.13275189419615285,
+  "spearman_field_vs_unionmax": 0.020567515373282833,
+  "strict_a_only_candidate_px": 2834,
+  "emitted_cells_that_are_strict_a_only": 486,
+  "verdict": "emission is not max(A,B), not either single view, and not their union",
+  "not_union_pass": true
+ },
+ "raster": {
+  "file": "gems52-h62-sufgate-cotrain-37600px-20261009T022631Z.tif",
+  "sha256": "739a8e7c4b54436508fc2b9da6b8ddc56e44a0d1ad273dc88c07a2003637f8bb",
+  "bytes": 133668,
+  "zip_sha256": "0e7dfc6876d60fba68ef715923cb1bacc82108ffdcdb83339cdb7bfa999c0078"
+ },
+ "validator": {
+  "ok": true,
+  "problems": [],
+  "nan_inside_footprint": null,
+  "value_range": [
+   0.0,
+   1.0
+  ],
+  "crs": "EPSG:32611",
+  "shape": null,
+  "transform": [
+   100.0,
+   0.0,
+   243350.0,
+   0.0,
+   -100.0,
+   4508550.0
+  ]
+ },
+ "submission_name": "gems52-h62-sufgate-cotrain-37600px-20261009T022631Z",
+ "note": "H62 S1 fail; exact-novel vs registry; lane DUPLICATE (70% rule); research only, do not submit",
+ "note_chars": 93,
+ "counts": {
+  "budget": 37600,
+  "placed": 37600,
+  "prior_rasters": 548
+ },
+ "novelty_rule": {
+  "rule": "(1) no emitted cell is a positive pixel of an informative registry raster; (2) no emitted cell lies within 3 px of a positive pixel of an informative registry raster whose near-dot share of the emission exceeds 0.70 (the lane's per-raster rule); universal-coverage probes (3 px coverage >= 0.95) are excluded as in gates.lane_report policy",
+  "radius_px": 3,
+  "near_limit": 0.7,
+  "informative_rasters": 511,
+  "probe_rasters": 35,
+  "probes": [
+   {
+    "name": "51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "374c88b1da2b803e2ed160de467fd71ae114010d.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "5c1a159439735522659ee78969df3f34efddcdde.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "7303cda1534398189a1e8dc603b15755b6dbeba9.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "f79f3e81b2ebcc0428ba545a3af6dde56387f057.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "989f2fa40fdefdec8d7838ef261e5940f73081c4.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "916cdeecd661878529afa9e2fa280f632cad956c.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "5ec102564a28243a70ee905f8f3ebfc65f6770f1.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "329606215cccd5e363b3f3c3a9a377baa3b02ed4.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "0a3571a217529e1426f04f7e0384ac417817fbbc.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "d89695181cadd18a7284241c571af6f82671bf6d.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "1102512580ae652c866e0cf5754afd1531fac952.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "0c42fc03b2c1830b4bbbd09e3a58a7f31c310118.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "70b12c34ea848e6a2b60c865d31ef9df52a4c662.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "70e09941ffab77b15fd1f776221d43e0a6def3b0.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "8bf0bf2d1814689811fe95b3a8c9f03990ff8c9b.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "f127cac4b68003af16138d50510a65335a7a0031.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "3d3ee66300203bdc878f3a052caabde671daf042.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "35616cbb48ac3533dd4c957b8acca57f71ba365f.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "1cb4f016b4876391236f4960822171a3820a7597.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "45469b332d0a742da90c159bac511936bb47134a.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "b25bae2852d368c75c69ba486350187597fed0b3.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "8c3d512092bfd9ea12ab22b259444e934031ab7d.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "d89160eb2675d6f8fdc9c8af261bc73c5c535f63.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "2ef0c06c25cdab62ba3381a1b43db230776fc631.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "ca8d98f3634799689ea7aa0ea175e11a3ea20699.tif",
+    "coverage_3px_of_eligible": 1.0
+   },
+   {
+    "name": "b782e3233089529759feed3860c1e8b8bf5085d7.tif",
+    "coverage_3px_of_eligible": 1.0
+   }
+  ],
+  "rasters_skipped_shape": 0,
+  "exact_union_px": 5111169,
+  "allowed_before": 4325298,
+  "allowed_after_exact": 206848,
+  "declared": "post hoc, after build 1 failed uniqueness (novel_fraction 0.0); see knowledge/34c",
+  "mode": "exact_only",
+  "per_raster_rule": "NOT ENFORCED (exact_only mode): unconstrained greedy placement; the cap is measured only",
+  "cap_dots": 26320,
+  "iterations": [
+   {
+    "round": 0,
+    "placed": 37600,
+    "offenders": 9,
+    "unconstrained": true
+   }
+  ],
+  "constrained_rasters": [],
+  "worst_raster_near_dots": {
+   "name": "4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+   "count": 33385,
+   "share": 0.887899
+  },
+  "allowed_final": 206848,
+  "min_px": 3.0
+ },
+ "uniqueness": {
+  "tier1_exact_all_priors": {
+   "canonical_pattern_unique": true,
+   "identical_to_any_prior": false
+  },
+  "tier2_novelty_informative_priors": {
+   "novel_fraction": 1.0,
+   "equals_literal_prior_union": false,
+   "informative_rasters": 511
+  }
+ },
+ "champion_reference": {
+  "name": "ref_h33_2_b2",
+  "reported_score": 0.2778,
+  "evidence_class": "OWNER-REPORTED, NOT ORGANIZER-CONFIRMED"
+ },
+ "submission_slots_used": 0,
+ "verdict": "NEGATIVE, research-only. DOWNLOAD YES (format-valid and unique); SUBMIT NO (holdout does not beat single_B and/or literal lane not PASS). gates: format=True lane=False unique=True not_union=True S1=False holdout_beats_single_B=False"
+}

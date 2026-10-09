@@ -1,0 +1,57 @@
+{
+ "check": "independent re-check of docs/downloads/h62-candidate.tif against the registry, outside gates.py",
+ "script": "work/h62/independent_uniqueness_check.py",
+ "summary": {
+  "candidate": "h62-candidate.tif",
+  "candidate_positive_px": 37600,
+  "priors_checked": 548,
+  "priors_skipped": 0,
+  "identical_to_any_prior": 0,
+  "max_overlap_fraction_of_candidate": 1.0,
+  "probes": 35,
+  "informative": 513,
+  "priors_sharing_any_exact_pixel": 35,
+  "informative_priors_sharing_exact_pixel": 0,
+  "sharing_pixels_with_low_density_priors": 0,
+  "sharing_pixels_with_low_density_priors_count": 0,
+  "max_near3px_share_informative": 0.8878989361702128,
+  "informative_over_70pct_near": [
+   [
+    "4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+    0.8879
+   ],
+   [
+    "437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+    0.8244
+   ],
+   [
+    "c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+    0.8244
+   ],
+   [
+    "5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+    0.7765
+   ],
+   [
+    "0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+    0.7765
+   ],
+   [
+    "bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+    0.7482
+   ],
+   [
+    "2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+    0.7482
+   ],
+   [
+    "32a4a6d2d4df8ef8e880120f36d2a4d94f134f8a.tif",
+    0.7058
+   ],
+   [
+    "fdd931161c431a583cf7039362e51832e59d07ad.tif",
+    0.7001
+   ]
+  ]
+ }
+}

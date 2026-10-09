@@ -1,0 +1,41 @@
+{
+  "round": "H62",
+  "preregistered_utc": "2026-10-09T00:45:26Z",
+  "hypothesis_document": "knowledge/34_hypotheses_H62_preregistered.md",
+  "hypothesis_sha256": "c1f183e6dcdee4fcebe0584f88a0b31a36533276eff3c39261b4c20117b58c5e",
+  "hypothesis_bytes": 11415,
+  "frozen_before_any_fit": true,
+  "runner": "scripts/run_h62.py",
+  "runner_refuses_if_hash_moves": true,
+  "lane": "two-view co-training (Blum & Mitchell 1998, doi:10.1145/279943.279962); View A potential-field/subsurface, View B surface; disagreement as the discovery signal",
+  "single_change_vs_H61": "View A learner capacity only (max_iter 120, learning_rate 0.05, max_leaf_nodes 7, min_samples_leaf 400, l2 5.0)",
+  "thresholds": {
+    "S1_sufficiency_mean_oof_auc_min": 0.6,
+    "S1_sufficiency_min_fold_oof_auc": 0.55,
+    "S2_independence_abandon_max_abs_rho": 0.6,
+    "canary_auc_alarm": 0.9,
+    "budget_dots_per_fold_per_arm": 9400,
+    "min_dot_separation_px": 3.0,
+    "catalogue_exclusion_m": 200.0,
+    "single_B_h61_control_holdout_dti": 0.174517,
+    "single_B_control_abs_tolerance": 0.001
+  },
+  "verdict_rule": "eligible-for-selector only if format+lane+not-union pass AND candidate HOLDOUT-DTI > single_B in the same run with paired-difference 95% CI lower bound > 0; otherwise NEGATIVE research-only (DOWNLOAD YES if valid+unique, SUBMIT NO). Nothing uploads; no weekly slot is touched.",
+  "budget": {
+    "max_experiments": 1,
+    "experiment": "H62-A sufficiency-gated co-training"
+  },
+  "h61_reference_receipts": [
+    "evidence/h61_holdout.json",
+    "evidence/h61_forensics.json",
+    "evidence/h61_canary.json"
+  ],
+  "amendments": [
+    {
+      "document": "knowledge/34b_amendment_control_tolerance.md",
+      "sha256": "a357dc436396ca50e1b42f21c2240bffcb5e70e8e4912d5d0c06eb4ef57fc1fd",
+      "changes": "single_B control tolerance: exact -> |delta| <= 0.001 (measured nondeterminism 5.41e-5)",
+      "left_unchanged": "S1 thresholds, S2, evaluator, arms, budget, verdict rule"
+    }
+  ]
+}

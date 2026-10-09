@@ -1,0 +1,22 @@
+{
+ "control": {
+  "single_B_h62": 0.1745172875994316,
+  "single_B_h61_committed": 0.174517,
+  "abs_difference": 2.8759943160316936e-07,
+  "tolerance": 0.001,
+  "pass_": true
+ },
+ "candidate_arm": "disagreement_post",
+ "candidate_dti": 0.03123315247442798,
+ "paired_delta_vs_single_B": {
+  "evidence_class": "HOLDOUT-DTI",
+  "evaluator_version": "gems52-pooled-hide-v1",
+  "delta": -0.14328413512500363,
+  "ci95": [
+   -0.16556391819773872,
+   -0.12145711933733887
+  ],
+  "withheld_positive_pixels": 53186
+ },
+ "holdout_eligible": false
+}

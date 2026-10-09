@@ -1,0 +1,65 @@
+{
+ "check": "H61 re-run from the same restored bytes, same seeds, same code (run_h61.py all, feature store rebuilt)",
+ "evidence_class": "REPRODUCTION CHECK; numbers are HOLDOUT-DTI diagnostics, not organiser scores",
+ "result": {
+  "canary": {
+   "n_differences": 0,
+   "first_differences": []
+  },
+  "holdout": {
+   "n_differences": 104,
+   "first_differences": [
+    "/exchange_pseudo_pixels: committed 15441 reproduced 15446 (delta +5.000e+00)",
+    "/folds[0]/arms/disagreement_post/seconds: committed 2.9 reproduced 2.7 (delta -2.000e-01)",
+    "/folds[0]/arms/disagreement_pre/seconds: committed 3.1 reproduced 2.6 (delta -5.000e-01)",
+    "/folds[0]/arms/random/seconds: committed 2.8 reproduced 2.7 (delta -1.000e-01)",
+    "/folds[0]/arms/single_A/seconds: committed 3.0 reproduced 3.1 (delta +1.000e-01)",
+    "/folds[0]/arms/single_B/dti: committed 0.11291041409914934 reproduced 0.1130262056682846 (delta +1.158e-04)",
+    "/folds[0]/arms/single_B/fnw: committed 24597.518399514905 reproduced 24594.696545099778 (delta -2.822e+00)",
+    "/folds[0]/arms/single_B/fpw: committed 8124.773121035848 reproduced 8123.773121035848 (delta -1.000e+00)"
+   ]
+  },
+  "pseudo_exchange": {
+   "n_differences": 788,
+   "first_differences": [
+    "/folds[1]/directions/A->B/mean_donor_rank: committed 0.9631347101181745 reproduced 0.9631824869662523 (delta +4.778e-05)",
+    "/folds[1]/directions/A->B/mean_receiver_rank: committed 0.515374150313437 reproduced 0.5151442922651768 (delta -2.299e-04)",
+    "/folds[1]/directions/A->B/n_pixels: committed 1996 reproduced 2000 (delta +4.000e+00)",
+    "/folds[1]/directions/A->B/segments[0]/mean_receiver: committed 0.47572416067123413 reproduced 0.4758898913860321 (delta +1.657e-04)",
+    "/folds[1]/directions/A->B/segments[1]/mean_receiver: committed 0.5898940563201904 reproduced 0.5900222063064575 (delta +1.281e-04)",
+    "/folds[1]/directions/A->B/segments[2]/mean_receiver: committed 0.5693262219429016 reproduced 0.5694615244865417 (delta +1.353e-04)",
+    "/folds[1]/directions/A->B/segments[3]/mean_receiver: committed 0.530719518661499 reproduced 0.5308669805526733 (delta +1.475e-04)",
+    "/folds[1]/directions/A->B/segments[4]/mean_receiver: committed 0.46243229508399963 reproduced 0.462602823972702 (delta +1.705e-04)"
+   ]
+  },
+  "independence": {
+   "n_differences": 120,
+   "first_differences": [
+    "/pre/blocks[0]/fpr_B: committed 0.7267080745341615 reproduced 0.6894409937888198 (delta -3.727e-02)",
+    "/pre/blocks[0]/mse_A: committed 0.036542896975756835 reproduced 0.03547666261723128 (delta -1.066e-03)",
+    "/pre/blocks[0]/mse_B: committed 0.6032793052863331 reproduced 0.5723055217746429 (delta -3.097e-02)",
+    "/pre/blocks[1]/fpr_B: committed 0.06825938566552901 reproduced 0.05802047781569966 (delta -1.024e-02)",
+    "/pre/blocks[1]/mse_A: committed 0.023610624091692775 reproduced 0.021566167939158255 (delta -2.044e-03)",
+    "/pre/blocks[1]/mse_B: committed 0.08012258503627052 reproduced 0.07072033524714018 (delta -9.402e-03)",
+    "/pre/blocks[2]/fpr_B: committed 0.047142857142857146 reproduced 0.037142857142857144 (delta -1.000e-02)",
+    "/pre/blocks[2]/mse_A: committed 0.019712348689350272 reproduced 0.018648251291836334 (delta -1.064e-03)"
+   ]
+  },
+  "fit_checkpoint": {
+   "n_differences": 16,
+   "first_differences": [
+    "/folds[0]/view_A/fit_seconds: committed 4.0 reproduced 3.9 (delta -1.000e-01)",
+    "/folds[0]/view_A/predict_seconds: committed 70.8 reproduced 57.1 (delta -1.370e+01)",
+    "/folds[0]/view_B/fit_seconds: committed 3.9 reproduced 6.0 (delta +2.100e+00)",
+    "/folds[0]/view_B/predict_seconds: committed 72.0 reproduced 75.8 (delta +3.800e+00)",
+    "/folds[1]/view_A/fit_seconds: committed 3.1 reproduced 4.1 (delta +1.000e+00)",
+    "/folds[1]/view_A/predict_seconds: committed 64.0 reproduced 66.3 (delta +2.300e+00)",
+    "/folds[1]/view_B/fit_seconds: committed 3.2 reproduced 4.3 (delta +1.100e+00)",
+    "/folds[1]/view_B/predict_seconds: committed 69.8 reproduced 66.9 (delta -2.900e+00)"
+   ]
+  }
+ },
+ "reading": "canary identical: the feature stack is identical. Fit/exchange/holdout differ by run-to-run numerical nondeterminism (HistGradientBoosting with OpenMP reductions); see knowledge/34b. A second run of the H62 control matched the committed single_B to 2.9e-7.",
+ "h61_build_reproduced": false,
+ "note": "The H61 raster was NOT rebuilt in this check; its SHA-256 is therefore not re-verified here."
+}

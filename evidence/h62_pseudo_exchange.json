@@ -1,0 +1,9 @@
+{
+ "stage": "exchange_gate",
+ "skipped": true,
+ "allowed_exchange": false,
+ "total_pseudo_pixels": 0,
+ "allowed_exchange_note": "",
+ "reason": "S1 sufficiency failed: View A is not sufficient out of quadrant, so Blum-Mitchell does not license an exchange. Post-arms := pre-arms.",
+ "finished_utc": "2026-10-09T01:05:04+00:00"
+}
