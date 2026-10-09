@@ -1,0 +1,124 @@
+{
+  "round": "H72",
+  "date_utc": "2026-10-09",
+  "verdict": "negative",
+  "verdict_reason": "lane gate infeasible for a surface-only emission on this registry (plain greedy best 0.8916; quota placement best 0.7043 with short fill); no candidate emitted; control reproduces",
+  "experiments_used": 1,
+  "experiments_cap": 3,
+  "competition_slots_used": 0,
+  "submit_to_competition": "NO",
+  "hypothesis": "Surface-only (View B) ranking, emitted under the lane rule, keeps >= 90% of unconstrained single_B holdout DTI and passes the lane policy.",
+  "mechanism": "B-view learner out-of-fold rank over the label-blind allowed domain; surface alteration/permeability contrast near buried-or-mapped fault traces; consensus-pool and per-prior quota placement for the lane rule.",
+  "named_non_fault_process": "radiometric contrast from lithology/soil cover (playa, alluvium, fan deposits) and linear erosion or road features (roads not testable here: no roads layer reachable)",
+  "candidate_holdout": {
+    "status": "NOT MEASURED",
+    "reason": "lane-feasible threshold not found; holdout stage refuses to run without one"
+  },
+  "control_holdout_HOLDOUT_DTI": {
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "withheld_positive_pixels": 53186,
+    "single_B": {
+      "dti": 0.174571,
+      "ci95": [
+        0.152313,
+        0.196302
+      ]
+    },
+    "random": {
+      "dti": 0.080426,
+      "ci95": [
+        0.070223,
+        0.090973
+      ]
+    },
+    "reproduction_target_H71": 0.174571,
+    "reproduction_abs_delta": 3.5886487101399744e-07,
+    "reproduction_pass": true
+  },
+  "canary": {
+    "alarm_threshold": 0.9,
+    "max_single_feature_direction_insensitive_auc": 0.6688741048584759,
+    "alarm": false
+  },
+  "lane": {
+    "registry_rasters": 560,
+    "informative_distinct": 350,
+    "probes": 14,
+    "duplicates": 181,
+    "plain_greedy_best_worst_near_share": 0.8916,
+    "quota_best_worst_near_share": 0.7043,
+    "quota_best_T": 40,
+    "quota_best_dots_placed": 37372,
+    "limit": 0.7,
+    "receipts": [
+      "evidence/h72_choose_plain_greedy_wall.json",
+      "evidence/h72_choose.json"
+    ]
+  },
+  "correlation_overlap_vs_registry": "not computed for a candidate (none emitted); see the reviewed existing download below",
+  "raster_sha256": null,
+  "validator_output": "not run: no H72 raster was written",
+  "submission_name": null,
+  "submission_note": null,
+  "reviewed_existing_download": {
+    "file": "docs/downloads/h69-candidate.tif",
+    "sha256": "9501c1c88fa1b80ac76b0d2652afb6234c470f8583a2d634dd62fc23c6ae8461",
+    "format_validator": {
+      "ok": true,
+      "dtype": "float32",
+      "crs": "EPSG:32611",
+      "shape": [
+        3730,
+        3292
+      ],
+      "transform_matches_sample": true,
+      "nan_pixels": 0,
+      "min": 0.0,
+      "max": 1.0,
+      "n_nonzero": 37600,
+      "note": "local template check, not organizer acceptance"
+    },
+    "audit": "evidence/h72_audit_h69_file.json",
+    "surface_lane": {
+      "max_spearman": 0.04211384545418964,
+      "ok": true
+    },
+    "dots_lane": {
+      "literal_max_near_share": 1.0,
+      "literal_verdict": "DUPLICATE/STOP (driven by universal-coverage probes, 14 of 542 distinct priors)",
+      "policy_max_near_share_informative": 0.6984840425531915,
+      "policy_verdict": "PASS"
+    },
+    "max_jaccard_vs_any_prior": 0.009206,
+    "share_of_dots_inside_some_prior_support": 1.0,
+    "holdout_H69_receipt_HOLDOUT_DTI": {
+      "candidate_disagreement_post": {
+        "dti": 0.036473,
+        "ci95": [
+          0.027471,
+          0.045996
+        ]
+      },
+      "single_B": {
+        "dti": 0.137947,
+        "ci95": [
+          0.117079,
+          0.158755
+        ]
+      },
+      "random": {
+        "dti": 0.072032,
+        "ci95": [
+          0.063558,
+          0.080098
+        ]
+      },
+      "withheld_positive_pixels": 60894,
+      "note": "does not reproduce today's single_B (0.174571); flagged IR-H72-010"
+    },
+    "submit": "NO",
+    "download": "YES (format valid, unique by Jaccard, lane policy PASS on informative priors, literal lane rule FAIL on probes; user decision)"
+  },
+  "irregularities": "see knowledge/60 section 5 (IR-H72-001..010)",
+  "next": "validate the top unrun hypothesis (directional variogram anisotropy) on the holdout against single_B before any lane work; add a denominator-aware quota placement as a separate preregistered placement round"
+}

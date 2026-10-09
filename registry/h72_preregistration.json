@@ -1,0 +1,59 @@
+{
+  "round": "H72",
+  "preregistered_utc": "2026-10-09T16:22:31Z",
+  "hypothesis_document": "knowledge/59_hypotheses_H72_preregistered.md",
+  "hypothesis_sha256": "ee5ea818daed5149ae31b50f919901c2590d2c409cb7fac9fe6dca36193bf87c",
+  "hypothesis_bytes": 6095,
+  "lane": "surface-only (View B) emission under the brief's lane rule; consensus-restricted pool; no co-training",
+  "frozen_before_any_fit": true,
+  "runner": "scripts/run_h72.py",
+  "runner_refuses_if_hash_moves": true,
+  "shared_tools_reused": [
+    "scripts/run_h61.py::setup, sample_train, learner_for, predict_flat, pct_rank",
+    "src/gems52/evaluate_holdout.py (gems52-pooled-hide-v1)",
+    "src/gems52/nodes.py::spacing_select",
+    "src/gems52/gates.py (lane_report, uniqueness_report, format_report)",
+    "src/gems52/submission_writer.py",
+    "scripts/fetch_prior_inventory.py (census re-materialisation)"
+  ],
+  "thresholds": {
+    "control_reproduction_target": 0.174571,
+    "control_reproduction_tolerance": 0.001,
+    "canary_auc_alarm": 0.9,
+    "budget_dots_per_fold": 9400,
+    "budget_dots_total_file": 37600,
+    "min_dot_separation_px": 3.0,
+    "lane_near_dot_fraction": 0.7,
+    "lane_rank_correlation": 0.9,
+    "universal_coverage_probe_threshold": 0.95,
+    "retain_fraction_of_single_B": 0.9,
+    "bootstrap_draws": 1000,
+    "consensus_T_grid": [
+      200,
+      150,
+      100,
+      80,
+      60,
+      40
+    ]
+  },
+  "budget": {
+    "max_experiments": 3,
+    "this_round_experiment": 1,
+    "slots_used": 0
+  },
+  "amendments": [
+    {
+      "document": "knowledge/59a_h72_preregistration_amendment_quota_placement.md",
+      "sha256": "4d9b18982d34bb495f1c203eef43330740391ec353914551920c1668f73483e0",
+      "bytes": 3699,
+      "dated_before": "any holdout arm and any shipped-file placement",
+      "summary": "per-prior quota placement (H69 rule) replaces the plain greedy pool when the plain greedy is measured infeasible; T grid 200..40"
+    }
+  ],
+  "measured_before_amendment": {
+    "file": "evidence/h72_choose_plain_greedy_wall.json",
+    "best_plain_greedy_max_near_share": 0.8916,
+    "at_T": 150
+  }
+}

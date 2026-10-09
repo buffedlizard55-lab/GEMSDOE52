@@ -1,3 +1,50 @@
+<!--H72-README-->
+# Current status — H72 (2026-10-09): NEGATIVE at the lane gate · SUBMIT NO · DOWNLOAD only with the caveats below
+
+> **SUBMIT TO THE COMPETITION: NO.** Competition slots used this session: **0**. No H72 file was emitted.
+>
+> **DOWNLOAD (research only):** [the H69 GeoTIFF](docs/downloads/h69-candidate.tif) is the one file in this repository that
+> passes the format check, is not identical to any of 542 distinct registry priors (max Jaccard 0.0092), and passes the
+> informative-prior lane policy (max near-dot share 0.6985 < 0.70). Its holdout is **negative**: HOLDOUT-DTI 0.036473
+> [0.027471, 0.045996] against single_B 0.137947 on H69's own receipt. The literal lane rule fails only on universal-coverage
+> probes; that reading is yours to make (IR-H72-011).
+
+**What H72 measured (one experiment, 1 of 3 used).** The hypothesis: a surface-only ranking, emitted under the lane rule,
+keeps ≥ 90 % of the best measured holdout arm. It cannot be emitted lane-feasible on this registry.
+
+| Check | Label | Result | Receipt |
+|---|---|---|---|
+| Competition inputs restored and SHA-256 pinned | MEASURED | 23/23 | `data/restore_receipt.json` (local, git-ignored) |
+| Test suite | MEASURED | 416 passed + 5 new H72 tests | `pytest` |
+| Instrument control: `single_B` at 9,400 dots/fold | HOLDOUT-DTI (n = 53,186 withheld positives) | **0.174571** [0.152313, 0.196302], reproduces H71 (\|Δ\| 3.6e-07); `random` 0.080426 [0.070223, 0.090973] | [`evidence/h72_control.json`](evidence/h72_control.json) |
+| Canary: each View-B feature alone | MEASURED | max AUC 0.6689 (alarm 0.90) → no alarm | [`evidence/h72_fit.json`](evidence/h72_fit.json) |
+| Registry census | MEASURED | 524/524 eligible file-SHA verified; 560 rasters; 350 informative distinct | [`evidence/h72_consensus.json`](evidence/h72_consensus.json) |
+| Preregistered placement (greedy, consensus pool) | MEASURED | best worst-prior near-dot share **0.8916** (T = 150); no T reaches 0.70 | [`evidence/h72_choose_plain_greedy_wall.json`](evidence/h72_choose_plain_greedy_wall.json) |
+| Amended placement (per-prior quota, 59a) | MEASURED | best **0.7043** (T = 40), short fill 37,372 of 37,600 → denominator effect | [`evidence/h72_choose.json`](evidence/h72_choose.json) |
+| Candidate holdout / shipped file | not measured / not emitted | the lane gate refused to proceed (by design) | — |
+
+**Why, in one paragraph.** The surface view puts its dots on the same few dense priors, so greedy placement puts ≈ 90 % of its
+dots within 3 px of one registry raster. Quotas pull that to ≈ 0.72, but they also exhaust the candidate pool, so the fill comes
+up short and the share divides by the smaller count. That denominator effect is the finding; it is recorded in full in
+[`knowledge/60`](knowledge/60_h72_results_and_limits.md).
+
+**Ranked next hypotheses** (none validated; see knowledge/60 §4): (1) directional variogram anisotropy on bands 12, 19 and the
+LiDAR scarp product, not implemented anywhere in `src/` or `scripts/`; (2) antithetic paired-margin asymmetry from band 15;
+(3) a denominator-aware placement fix, separately preregistered; (4) the 1 m DEM scarp product, which is free and public domain
+at <https://www.usgs.gov/3d-elevation-program> but not downloadable from this sandbox.
+
+**Leaderboard (not verified).** The DrivenData leaderboard renders client-side and returned "Loading..." to our fetch tool, so
+0.3774 (top), 0.3195 and 0.2778 are **PUBLIC-PAGE or OWNER-REPORTED** here, and per-file attribution is filename-only.
+Source: <https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/> (2026-10-09). Official rules to read first:
+<https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/> — **one GeoTIFF per team** is selected for scoring, and
+the official text says values must be in [0, 1] with "null or nan" outside the bounds (the repo writes 0 there; IR-H72-001).
+
+**Verify it yourself:** [`knowledge/60`](knowledge/60_h72_results_and_limits.md) (results, walls, 11 irregularities with receipts) ·
+[`knowledge/59`](knowledge/59_hypotheses_H72_preregistered.md) + [`59a`](knowledge/59a_h72_preregistration_amendment_quota_placement.md)
+(frozen before the holdout) · [`evidence/h72_run_card.json`](evidence/h72_run_card.json) (the run card) ·
+[`evidence/h72_audit_h69_file.json`](evidence/h72_audit_h69_file.json) (uniqueness and lane audit of the H69 file) ·
+[`scripts/run_h72.py`](scripts/run_h72.py).
+<!--/H72-README-->
 <!--H71-README-->
 > **Round identity:** first frozen as H66 in this session (2026-10-09 04:35Z); renamed **H71** at merge
 > time because a parallel session's own H66 round (knowledge/43, frozen 04:28Z) merged to `main` first

@@ -9,6 +9,17 @@ Keep known-catalogue labels separate from verified fault absence, public partici
 This session's working branch is fixed by Arena. Do not change branches. Keep raw competition data and large intermediate arrays under ignored `data/` and `work/`. Publish small audit receipts, the unique compressed prediction raster and its review table.
 
 <!--H67-AGENTS-->
+## Current H72 continuation (2026-10-09)
+
+Read `README.md`'s H72 block first, then `knowledge/59_hypotheses_H72_preregistered.md` (frozen), its dated amendment
+`knowledge/59a_h72_preregistration_amendment_quota_placement.md` (quota placement adopted BEFORE any holdout or shipped
+placement), and `knowledge/60_h72_results_and_limits.md`. H72 is **negative at the lane gate**: a surface-only emission
+cannot be made lane-feasible on this 350-distinct-prior registry with plain greedy (best 0.8916) or with per-prior quotas
+(best 0.7043, short fill). No H72 file was emitted. The instrument control reproduces (`single_B` 0.174571, |Δ| 3.6e-07).
+Experiments used: 1 of 3. Slots used: 0. Do not re-run the quota placement at the same budget expecting a different result;
+the denominator effect is the finding. The `scripts/run_h72.py` runner refuses to run if `knowledge/59` or `59a` moved.
+The DOWNLOAD/SUBMIT decision for the repo's existing lane-feasible file is in the README H72 block; it is still NO for submission.
+
 ## Current H71 continuation (2026-10-09)
 
 Read `README.md`'s H71 block first, then `knowledge/57_hypotheses_H71_preregistered.md` (frozen, SHA-256
