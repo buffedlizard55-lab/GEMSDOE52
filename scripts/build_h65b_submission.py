@@ -248,7 +248,7 @@ def main() -> int:
     shutil.copy2(stem.with_suffix(".tif"), DOWN / "h65b-candidate.tif")
     shutil.copy2(stem.with_suffix(".zip"), DOWN / "h65b-candidate.zip")
     rows = reasoning_rows(pred, field, b10, cat, valid)
-    with open(DOWN / "h65-reasoning.csv", "w", newline="") as fh:
+    with open(DOWN / "h65b-reasoning.csv", "w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=list(rows[0]))
         w.writeheader()
         w.writerows(rows)
