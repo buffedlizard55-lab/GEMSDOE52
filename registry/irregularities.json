@@ -1948,6 +1948,116 @@
    "open": null,
    "session": null,
    "detected_by_round": null
+  },
+  {
+   "id": "IR-H66-001",
+   "round": "H66",
+   "severity": "medium",
+   "status": "open - organiser check needed",
+   "title": "DrivenData sample description says 'predicts total fault absence'; the sample file has 60,988 ones, all on labelled faults",
+   "what_it_is": "The competition page describes the sample submission as predicting total fault absence. data/sample_submission.tif has 60,988 pixels equal to 1 and every one of them is a labelled fault pixel in data/labels.tif.",
+   "how_we_know": "Read of the restored bytes (SHA-256 pinned 2176d08e…) against labels.tif this session; description from fetch_page of the DrivenData problem page on 2026-10-09.",
+   "handling": "The repository does not treat the sample as an absence prediction. Recorded as a conflict between the published description and the published file.",
+   "disposition": "Open. Needs an organiser statement on what the sample represents."
+  },
+  {
+   "id": "IR-H66-002",
+   "round": "H66",
+   "severity": "low",
+   "status": "open - low; both forms stated in the H66 block",
+   "title": "Marginal bar: the metric's special case gives α·DTI (0.0556 at 0.2778); the repository's accept_bar gives α·DTI/(1−α·DTI) (0.0588)",
+   "what_it_is": "Metric identity (ii) in src/gems52/metric.py: an addition helps iff c·(1−α·DTI) > α·DTI·f, with c the credit increment and f the false-positive increment. For one uncovered truth pixel with kernel weight w (f = 1−w) this gives w > α·DTI = 0.0556 at DTI 0.2778. emit.accept_bar(dti) = α·DTI/(1−α·DTI) = 0.0588 is the f = 1 form, which is stricter. README's ≈0.055 is the special case, rounded. An earlier H66 draft called 0.0588 the marginal bar; that draft was wrong.",
+   "how_we_know": "Algebra from metric identities (i) and (ii), and direct evaluation of emit.accept_bar at DTI 0.2778 (this session).",
+   "handling": "The README H66 block states both forms with their conditions. No code changed.",
+   "disposition": "Open, low. Decide in a future round whether emit.accept_bar should use the special-case form; the current form is more conservative than the metric's marginal condition."
+  },
+  {
+   "id": "IR-H66-003",
+   "round": "H66",
+   "severity": "medium",
+   "status": "corrected in README 'Why 0.2778' section",
+   "title": "README 'Why 0.2778 won' writes the DTI denominator as 0.2·(T+S−M)+0.8·(|G|−T); the metric is 0.2·(T+S−M)+0.8·|G|",
+   "what_it_is": "The public-facing formula in README.md, section 'Why 0.2778 won, measured from the bytes', carries the −T inside the 0.8 term. The metric docstring in src/gems52/metric.py, identity (i), gives T / (0.2·(T+S−M) + 0.8·|G|). The two differ by 0.8·T in the denominator.",
+   "how_we_know": "Algebra: T + α(S−M) + β(|G|−T) = α(T+S−M) + β|G| with α=0.2, β=0.8. The README form is not equal to it.",
+   "handling": "The README formula is corrected to the metric's form with a note. The code and tests are unchanged.",
+   "disposition": "Closed in README. Future rounds must quote the metric.py form."
+  },
+  {
+   "id": "IR-H66-004",
+   "round": "H66",
+   "severity": "medium",
+   "status": "open - live board not re-verified",
+   "title": "The H65 block says the live board was read on 2026-10-09; this session's fetch of the leaderboard page returned 'Loading…'",
+   "what_it_is": "The only leaderboard record is registry/leaderboard_snapshot_2026-10-08.json (observed 2026-10-08T21:40:41Z). The live page is client-rendered and fetch_page returned no rows on 2026-10-09. The top-line numbers (0.3774, 0.3195 at #7, 0.2778 at #13) are therefore dated, not re-verified today.",
+   "how_we_know": "fetch_page of the leaderboard URL (2026-10-09) returned 'Loading…'; curl to the DrivenData API host failed TLS (this session).",
+   "handling": "H66 cites the dated snapshot, labels it public-board, and says the live re-read is pending.",
+   "disposition": "Open. A browser re-read of the live board is needed before any leaderboard claim."
+  },
+  {
+   "id": "IR-H66-005",
+   "round": "H66",
+   "severity": "low",
+   "status": "open - monitor",
+   "title": "The 7 census HTTP 403 failures (IR-H65-005) did not recur: the full 526-blob census fetched with 0 errors",
+   "what_it_is": "work/h61/prior_fetch_receipt.json: n_entries 526, n_fetched 526, n_errors 0 (this session). IR-H65-005 recorded 7 HTTP 403 failures in an earlier session.",
+   "how_we_know": "Read of the receipt after the fetch finished on 2026-10-09.",
+   "handling": "The H66 lane gate refuses to run on a partial census (guard in scripts/run_h66.py).",
+   "disposition": "Monitor. The earlier failures are not explained by this session."
+  },
+  {
+   "id": "IR-H66-006",
+   "round": "H66",
+   "severity": "high",
+   "status": "open - legal review required",
+   "title": "DrivenData Terms prohibit automatic access and reproduction or distribution; competition rasters are mirrored on public GitHub",
+   "what_it_is": "The DrivenData Terms of Use (fetched 2026-10-09; last modified 2014-08-07) prohibit robot or automatic access and reproduction or distribution beyond listed exceptions. Competition rasters are mirrored on public buffedlizard55-lab/GEMSDOE* repositories. H66 reads those mirrors through the GitHub API and publishes a derived TIF.",
+   "how_we_know": "Terms read via fetch_page (chunks 0–1 of 4); repository layout read via git and the restore receipts.",
+   "handling": "Raw data stays in ignored data/ and work/. The published H66 file is a derived prediction raster and a review table, not a copy of the competition data. Flagged for review; no legal conclusion is drawn.",
+   "disposition": "Open. The owner needs legal review before any further publication of competition-derived rasters."
+  },
+  {
+   "id": "IR-H66-007",
+   "round": "H66",
+   "severity": "medium",
+   "status": "open - user decision",
+   "title": "The brief asks for 'a single submission'; the official rules allow one entry, up to 3 scored submissions per week, and one final submission",
+   "what_it_is": "NLR rules §3.2 and §3.4–3.6.2 (fetched 2026-10-09): up to 3 scored submissions per week; exactly one final submission chosen before the deadline. The brief's wording is compatible only if the weekly limit is respected and the final choice is made deliberately.",
+   "how_we_know": "Read of the NLR rules PDF (chunks 0–5 of 7); chunk 6 not read.",
+   "handling": "H66 authorises zero slots. The verdict is research-only.",
+   "disposition": "Open. The user chooses any weekly slot and the final selection."
+  },
+  {
+   "id": "IR-H66-008",
+   "round": "H66",
+   "severity": "medium",
+   "status": "open - user action",
+   "title": "Generative-AI use must be disclosed in the submission narrative (NLR §3.2)",
+   "what_it_is": "The rules require disclosure of generative-AI use in the narrative. H66 includes its disclosure (knowledge/43 §7). The narrative for any competition submission must repeat it.",
+   "how_we_know": "NLR rules PDF §3.2, read this session.",
+   "handling": "Disclosure written into the H66 protocol and the H66 site page.",
+   "disposition": "Open. The user must carry the disclosure into any narrative."
+  },
+  {
+   "id": "IR-H66-009",
+   "round": "H66",
+   "severity": "medium",
+   "status": "open - organiser check needed",
+   "title": "The rules say values outside the bounds are null/NaN, but the scored champion carries 0 (not NaN) outside the footprint",
+   "what_it_is": "The DrivenData problem page says outside bounds should be null/NaN. The champion data/reference/h33-2-b2-zeros.tif has 0 NaN and no nodata tag, values {0,1}, and is reported as scored at 0.2778. The H66 file uses the same zero-filled, all-finite convention.",
+   "how_we_know": "Read of the champion bytes (work/h66/champion_check.json) and the DrivenData problem page (fetched 2026-10-09).",
+   "handling": "H66 reports the convention as measured, and does not claim it satisfies the rule. The format gate checks [0,1] and finiteness.",
+   "disposition": "Open. The portal's rejection text (IR-H65-007) and this convention need an organiser or portal check before any upload."
+  },
+  {
+   "id": "IR-H66-010",
+   "round": "H66",
+   "severity": "low",
+   "status": "open - cause not established",
+   "title": "H66 reproduction of the H61 single_B holdout arm differs by 5.4e-5 DTI (fold 0 only); the B-view AUCs match to full precision",
+   "what_it_is": "Holdout single_B: H66 0.174571 vs H61 receipt 0.174517 (95% CI [0.152313, 0.196302] vs [0.152316, 0.196299]). Per fold, folds 1-3 match to 7 decimals and fold 0 differs (0.1129104 vs 0.1130262). The View B fold AUCs match H61 to all printed digits, and the random arm matches exactly, so the holdout machinery is identical.",
+   "how_we_know": "Comparison of evidence/h61_holdout.json with work/h66/evid/h61_holdout.json and of the fit checkpoints (this session).",
+   "handling": "Reported as a reproduction mismatch under the H66 pre-registration (section 2.11). Comparisons in H66 use the H66 single_B arm from the same run, so no verdict depends on the small difference.",
+   "disposition": "Open. The H61 feature store is not in this sandbox, so the store cannot be compared directly; a difference in fold-0 predictions outside the AUC sample is the working explanation, not verified."
   }
  ],
  "merge_note": "Merged registry/irregularities.json: main's entries (including the parallel session's IR-H62-001..005) plus this round's IR-H63-001/002 (renamed from IR-H62-001/002 when the round was renamed H62 -> H63 after the parallel session's H62 merged first)."

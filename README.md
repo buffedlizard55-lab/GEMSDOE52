@@ -22,6 +22,53 @@
 <!--/H65HALO-README-->
 
 <!--H66-README-->
+# Current status — H66 (2026-10-09): NEGATIVE at the premise gate; research-only; NOT lane-unique
+
+> **SUBMIT TO THE COMPETITION: NO.** No slot used, nothing uploaded. The file below is format-valid and decoded-distinct from every
+> prior raster, but it is **DUPLICATE under the lane's dot-proximity gate**, so it is not the unique, lane-checked GeoTIFF the brief asked for.
+
+**What was tested.** H66-A: View A restricted to 14 local-scale potential-field channels (scale ≤ 3 px; raw bands, σ = 8 channels and
+the rank channel excluded), with a logistic readout. View B is the H61 learner, unchanged. Pre-registered in
+[`knowledge/43_hypotheses_H66_preregistered.md`](knowledge/43_hypotheses_H66_preregistered.md) (SHA-256 `e2118738…`) before any fit. Runner: `scripts/run_h66.py`, which reuses
+the H61 template through documented hooks and does not fork it.
+
+| Check | Label | Result | Receipt |
+|---|---|---|---|
+| Premise (View A_local out-of-quadrant AUC) | PREMISE-AUC | mean **0.5454**, min **0.5246**; gate needs ≥ 0.60 and ≥ 0.55 → **FAIL** | [`evidence/h66_fit_checkpoint.json`](evidence/h66_fit_checkpoint.json) |
+| Non-gating diagnostic (gradient boosting, same 14 channels) | PREMISE-AUC | mean 0.5392, min 0.5108 (does not rescue the premise) | [`evidence/h66_diagnostic_hgb_local.json`](evidence/h66_diagnostic_hgb_local.json) |
+| Leakage canary (alarm > 0.90) | PREMISE-AUC | max single-feature 0.6687; no alarm | [`evidence/h66_canary.json`](evidence/h66_canary.json) |
+| HOLDOUT-DTI (`gems52-pooled-hide-v1`, 53,186 withheld positives) | HOLDOUT-DTI | candidate `disagreement_post` **0.039805** [0.030131, 0.050345]; best control `single_B` **0.174571** [0.152313, 0.196302]; paired difference −0.134766 [−0.159731, −0.110876] → **does not beat** | [`evidence/h66_holdout.json`](evidence/h66_holdout.json) |
+| Uniqueness (`scripts/audit_uniqueness.py`, 526-blob census, 536 priors after byte dedupe) | diagnostic | decoded-distinct from every prior (max Jaccard 0.035385); surface **PASS** (max ρ 0.0615); dots **DUPLICATE/STOP** | [`evidence/h66_uniqueness_audit.json`](evidence/h66_uniqueness_audit.json) |
+| Lane gate, dots (literal / policy) | lane | **DUPLICATE/STOP / DUPLICATE/STOP**: literal near-dot share 1.0 against the 14 coverage probes; policy 0.8878 against a prior that H61 also matched | [`evidence/h66_lane_dots.json`](evidence/h66_lane_dots.json) |
+| Format gate | FORMAT | **PASS**: single-band float32, EPSG:32611, grid identical to the sample, values exactly {0, 1}, 0 NaN; 37,600 cells | [`evidence/h66_format_validator.json`](evidence/h66_format_validator.json) |
+| Emission re-derived from the frozen field | verification | **PASS**: recomputed set equals the written GeoTIFF; review table has 37,600 rows | [`docs/downloads/h66cotrain-review-table.csv.gz`](docs/downloads/h66cotrain-review-table.csv.gz) |
+
+**Label note.** A separate round on `main` also uses the label H66 (structural coherence; `submission/gems52-h66-structural-coherence-25000px.tif`, `docs/h66-audit.html`). This round's published files therefore carry the name `h66cotrain` and do not overwrite that round's files.
+
+**Files.** `submission/gems52-h66-localA-cotrain-37600px.tif` (SHA-256 `a87c55f8…`, 134,986 B); research download
+[`docs/downloads/h66cotrain-candidate.tif`](docs/downloads/h66cotrain-candidate.tif) (+ ZIP); pages [`docs/h66cotrain.html`](docs/h66cotrain.html) and
+[`docs/h66cotrain-executive-summary.html`](docs/h66cotrain-executive-summary.html) (submission guide, limitations, access needs).
+
+**Verdict: H66 not promoted.** Experiments used: 2 of 3 (E3 not authorised). Run card: [`evidence/h66_run_card.json`](evidence/h66_run_card.json).
+Tests: `tests/test_h66.py` 5 passed; full suite 350 passed, 1 skipped. Nothing here is an organiser acceptance.
+
+**Reproduction mismatch, reported under the pre-registration (IR-H66-010).** `single_B` reproduces H61's 0.174517 only to within 5.4 × 10⁻⁵
+(0.174571; fold 0 differs, folds 1–3 match). The View B AUCs match H61 exactly. The cause is not established.
+
+**Corrections in this block.** (a) The metric's denominator is `0.2·(T+S−M) + 0.8·|G|`, and an earlier README line misquoted it with `0.8·(|G|−T)` (IR-H66-003). (b) The marginal bar has two forms. The metric's special case (one uncovered truth pixel of kernel weight w, false-positive increment 1−w) gives **w > α·DTI = 0.0556** at DTI 0.2778, which is what the H65halo notes and the original README's ≈0.055 state. The repository's `emit.accept_bar` gives α·DTI/(1−α·DTI) = **0.0588**, a stricter variant (IR-H66-002; no verdict in this round depends on it). An earlier draft of this block called 0.0588 the marginal bar; that was wrong. The 0.3774 top is from the dated 2026-10-08 snapshot; the live board was not re-readable this session (IR-H66-004).
+
+**Irregularities logged this round:** IR-H66-001 (sample description conflicts with the file), -002 (bar value), -003 (denominator),
+-004 (live board not re-verified), -005 (census 403s did not recur), -006 (DrivenData Terms vs public GitHub mirrors; legal review),
+-007 (one final submission and up to three scored per week vs the brief), -008 (generative-AI disclosure), -009 (outside-bounds
+convention: zeros, not null/NaN), -010 (single_B reproduction mismatch).
+
+**Still open:** a lane-unique candidate (no co-training variant has reached a lane PASS on dots, and the 3-px hard-core emission matches
+existing priors); legal review; organiser answers (IR-H66-001, -009); the rejected portal file for IR-H65-007; the H66-B/C/D hypotheses
+(not run, pre-registered in `knowledge/43` §1). A separate, already-published file from another lane,
+`submission/gems52-r5-novel-n5_strike_ridge-16681px-…tif`, is outside this lane and is not endorsed here. Its own receipt reported novelty
+against 55 rasters; a later closure check in `scripts/check_site.py` reports a novel fraction of 0.958 against 89 rasters, so "strictly novel"
+is overstated for that file.
+<!--/H66-README-->
 
 <!--H65-README-->
 # Current status — H65 (2026-10-09; first written as H62): NEGATIVE at the premise gate, nothing submitted
@@ -353,7 +400,7 @@ The reported-0.2778 champion `h33-2-b2` is a **strict subset** of the reported-0
 100 m and
 200 m from a mapped trace; its own
 nearest dot is 223.6 m away. Since
-`DTI = T / (0.2·(T + S − M) + 0.8·(|G| − T))` carries a fixed `0.8·|G|` floor in the denominator, pruning
+`DTI = T / (0.2·(T + S − M) + 0.8·|G|)` (the metric's form, `src/gems52/metric.py` identity (i); an earlier version put `−T` inside the 0.8 term, corrected in H66, [IR-H66-003](registry/irregularities.json)) carries a fixed `0.8·|G|` floor in the denominator, pruning
 zero-credit mass raises the ratio without finding anything new. **It is precision, not detection.**
 Beating it therefore needs either a recombination of existing public mass — which is a duplicate by
 construction and outside this lane — or a detector above
@@ -818,7 +865,7 @@ For sparse dot emissions the metric is exactly `DTI = T / (0.2·S + 0.8·|G|)`, 
 truth bracketed at **|G| ≈ 18,000–27,400 px** once the unmeasured `M = T` assumption is dropped
 ([IR-H60-002](registry/irregularities.json); GEMSDOE32's truth model infers 12,691 px — the
 spread is evidence of non-identification). The marginal acceptance bar is
-`c > α·DTI/(1−α·DTI)` ≈ **0.055 at 0.2778, 0.068 at 0.32**; measured uniform-random credit
+`c > α·DTI/(1−α·DTI)` ≈ **0.055 at 0.2778, 0.068 at 0.32** (annotation, H66: this form gives 0.0588 at 0.2778; the metric's special case, one uncovered truth pixel, gives α·DTI = 0.0556; see [IR-H66-002](registry/irregularities.json)); measured uniform-random credit
 density is 0.024–0.028; everything we hold sits below the bar except the champion's attributed
 25,517-px core (density 0.163–0.205, identified interval [0.2524, 0.3196] — consistent with the
 0.3195–0.3262 leaders being re-weightings of that same mass). **Beating 0.32 needs new mass at
