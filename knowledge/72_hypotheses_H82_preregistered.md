@@ -1,9 +1,9 @@
-# 67 · H76 — preregistration (frozen before any H76 fit, 2026-10-09)
+# 67 · H82 — preregistration (frozen before any H82 fit, 2026-10-09)
 
-Round identifier: **H76**. Lane: the brief's two-view paragraph, executed on the one branch of it that
+Round identifier: **H82**. Lane: the brief's two-view paragraph, executed on the one branch of it that
 this repository has measured as informative (View B), plus the lane-gate redefinition that H75's own
-next-step list ranked first. Preregistered in this file; pinned by `registry/h76_preregistration.json`;
-`scripts/run_h76.py` refuses to start if this hash moves.
+next-step list ranked first. Preregistered in this file; pinned by `registry/h82_preregistration.json`;
+`scripts/run_h82.py` refuses to start if this hash moves.
 
 Labels used everywhere below: **HOLDOUT-DTI** = a reading of the shared evaluator
 `gems52-pooled-hide-v1` (hide-and-recover, whole fault segments withheld with an 80 px buffer, every
@@ -23,7 +23,7 @@ deformation-only View A2 0.5194 with a min fold of 0.5011 (H74). Both halves of 
 are measured, so the failure is not attributable to the potential-field channels. `AGENTS.md` records
 the standing instruction: **do not re-run the co-training lane with another View A rebuild.** Re-running
 it unchanged would be a seventh identical experiment and would spend the whole budget on a known
-negative. H76 therefore executes the two highest-ranked *untested* items this repo already carries:
+negative. H82 therefore executes the two highest-ranked *untested* items this repo already carries:
 
 * `knowledge/66` next step 2 — DVA at more lags and more bands (15 depth-to-basement, 18 gravity
   horizontal gradient) and DVA azimuth versus the regional strike.
@@ -209,13 +209,13 @@ S = 37,654 the required credit density is rho = 0.1387 to reach 0.2778, 0.1595 t
 0.1884 to reach 0.3774 (at |G| = 14,088.7). The champion's own measured rho is 0.1387; uniform random
 is 0.0279. A **wholly novel** emission — which the lane rule requires — therefore has an expectation
 bracket of roughly DTI in [0.04, 0.21] unless the new ranker sustains rho above the champion's. **No
-claim is made here that H76 will beat 0.2778, 0.3195 or 0.3774.** HOLDOUT-DTI is not a board forecast:
+claim is made here that H82 will beat 0.2778, 0.3195 or 0.3774.** HOLDOUT-DTI is not a board forecast:
 this repository measured Spearman −0.10 between holdout DTI and public-board score across the R4 arms.
 The public board is also not the scored set — the Initial Prize Round is scored on the *private* chunk
 and the Final Prize Round rescores against an expanded expert-verified label set, which is why E3 writes
 a reasoning row per emitted cell.
 
-## Amendment 67a (written BEFORE any H76 fit, canary or holdout reading; re-pin required)
+## Amendment 72a (written BEFORE any H82 fit, canary or holdout reading; re-pin required)
 
 Four definitional fixes, adopted before a single number in this round existed, so none of them is a
 post-hoc selection:

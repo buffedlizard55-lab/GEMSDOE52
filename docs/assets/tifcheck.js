@@ -15,7 +15,7 @@
  *   - same bounds as the training data; data outside the bounds is null or nan
  *   - a single-band GeoTIFF (.tif), or a .zip containing a single GeoTIFF (submission-form text)
  *
- * Reference geometry below is MEASURED from data/sample_submission.tif by scripts/publish_h76_site.py
+ * Reference geometry below is MEASURED from data/sample_submission.tif by scripts/publish_h82_site.py
  * and injected as window.GEMS_REF; the defaults here are that same measurement, kept so the file is
  * usable standalone. Nothing is asserted that was not read off the organiser's own template.
  *

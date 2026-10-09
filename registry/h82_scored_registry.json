@@ -1,7 +1,7 @@
 {
- "registry": "H76 restricted scored-only lane registry",
+ "registry": "H82 restricted scored-only lane registry",
  "frozen_utc": "2026-10-09T20:55:00+00:00",
- "membership_rule": "knowledge/67 section 5.1: single-band grid-aligned raster AND an owner-reported public-board score for that filename in this repository score list, or an organiser-side calibration file pinned under scored_*/calib_*/ref_* in registry/data_manifest.json",
+ "membership_rule": "knowledge/72 section 5.1: single-band grid-aligned raster AND an owner-reported public-board score for that filename in this repository score list, or an organiser-side calibration file pinned under scored_*/calib_*/ref_* in registry/data_manifest.json",
  "n_files": 13,
  "all_sha_match": true,
  "declared_effect": "LOOSENING of the literal lane rule; the full 526-blob census verdict is still computed and reported verbatim, and a restricted PASS never waives a literal DUPLICATE/STOP",

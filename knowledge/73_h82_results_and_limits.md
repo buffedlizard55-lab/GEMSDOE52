@@ -1,12 +1,12 @@
-# 68 — H76: results, attribution, and limits
+# 68 — H82: results, attribution, and limits
 
-Round **H76** — extended directional variogram anisotropy (DVA-2) plus variogram/strike alignment (VSA),
+Round **H82** — extended directional variogram anisotropy (DVA-2) plus variogram/strike alignment (VSA),
 run inside the assigned **co-training lane** (View A subsurface/geophysical vs View B surface, Blum &
 Mitchell 1998, doi:10.1145/279943.279962).
 
-Frozen before any fit: `knowledge/67_hypotheses_H76_preregistered.md`
+Frozen before any fit: `knowledge/72_hypotheses_H82_preregistered.md`
 (SHA-256 `fe7050eb40ecf23ff717514ac5067cbc7d45cfa1f844c6d12fa0ee85d6b3b571`, pinned in
-`registry/h76_preregistration.json`, amendment 67a included).
+`registry/h82_preregistration.json`, amendment 72a included).
 
 **Verdict: NEGATIVE. 0 submission slots spent. Download safe, submission not recommended.**
 
@@ -49,7 +49,7 @@ Paired differences, primary minus each arm (positive = primary better):
 
 **Frozen promotion rule:** promote only if the primary's paired CI lower bound against `single_B` is above
 zero. It is −0.039025. **Not promoted. No attribution arm may be promoted post hoc**
-(`registry/h76_preregistration.json → attribution_arms_not_promotable`), so `B_DVA2`'s 0.189200 is
+(`registry/h82_preregistration.json → attribution_arms_not_promotable`), so `B_DVA2`'s 0.189200 is
 recorded as a *finding*, not as a submission.
 
 These are HOLDOUT-DTI numbers. In this repository the hide-and-recover instrument does **not** rank
@@ -79,7 +79,7 @@ leaderboard performance (Spearman −0.10 over R4, `knowledge/10` §5), so none 
    less entropy than the 50 float channels it is pooled with.
 2. **The local variant is mostly a null indicator.** `VSA_*_cos2loc` is exactly 0 wherever the local
    structure tensor is degenerate, which is **69.9% / 53.6% / 46.7% / 47.8%** of eligible pixels by fold
-   (`degenerate_tensor_px_eligible` in `evidence/h76_channels.json`). On a 1-in-37 subsample of
+   (`degenerate_tensor_px_eligible` in `evidence/h82_channels.json`). On a 1-in-37 subsample of
    `VSA_det_elev_cos2loc_l2`, 69.85% of values are exactly 0.
 
 Both were frozen design consequences, discovered by measurement after the fit. Neither was visible from
@@ -112,7 +112,7 @@ Bar: a single-channel direction-insensitive AUC ≥ 0.90 on the held-out region 
 proven otherwise. Measured maximum over all **60 new learner channels** in all four folds: **0.6235**
 (fold 2, `DVAH75_det_elev_slope_logvar_l4`). Per fold: 0.5666, 0.6235, 0.6235, 0.6010. No alarm.
 
-Amendment 67a was applied **before any fit**: `XVSA_visible_tensor_mag` was demoted from a learner channel
+Amendment 72a was applied **before any fit**: `XVSA_visible_tensor_mag` was demoted from a learner channel
 to a diagnostic because it is monotone in distance-to-visible-catalogue and would have tripped the canary
 by construction rather than by discovery. It never entered a model.
 
@@ -121,7 +121,7 @@ by construction rather than by discovery. It never entered a model.
 Instrument `gems52.spatial.independence` on spatial-block out-of-fold errors of the two views over
 held-out catalogue-zero proxies. Thresholds inherited **verbatim** from
 `registry/h74_preregistration.json` (donor rank 0.95, block side 50 px, abandon bar |ρ| > 0.60, minimum 20
-blocks, negative ring 4 px) and **not re-tuned for H76**; the H76 pin was not edited after the fact, and the
+blocks, negative ring 4 px) and **not re-tuned for H82**; the H82 pin was not edited after the fact, and the
 inheritance is recorded with the source file's own SHA-256.
 
 | Statistic | n | Pearson | Spearman |
@@ -153,14 +153,14 @@ cut doing its job.
 ## 9. Not-the-union test (the brief's explicit requirement)
 
 The emission is compared against the union-max of the two single-view fields and against each single view
-at the same budget. Results are in `evidence/h76_build.json → not_the_union`, and the run card carries the
+at the same budget. Results are in `evidence/h82_build.json → not_the_union`, and the run card carries the
 Jaccard and shared-cell counts. Equal-budget comparison is the point: all four placements emit 37,654
 cells, so a shared-cell count is directly interpretable as an overlap fraction rather than a budget
 artefact.
 
 ## 10. What was built
 
-79 flat eligible-indexed columns (4,593,171 float32 each, 1.4 GB total in `work/h76/features`, git-ignored):
+79 flat eligible-indexed columns (4,593,171 float32 each, 1.4 GB total in `work/h82/features`, git-ignored):
 
 * **50 DVA-2 learner channels** — `aniso = (max γ − min γ)/(max γ + min γ + 1e−9)` and
   `logvar = log10(mean γ + 1e−9)` over 8 integer directions (GROUP1 `(0,h)(h,h)(h,0)(h,−h)` = H75's fan,
@@ -180,18 +180,18 @@ artefact.
    here, it was never pre-registered as a primary, and promoting it now would be exactly the post-hoc
    selection the protocol forbids. It must be pre-registered fresh, before any fit, in the next round.
 2. **The H75 control did not reproduce inside tolerance.** `B_DVA` measured 0.187587 against a committed
-   0.186352, |Δ| = 1.23e−3 against a 1e−3 tolerance → **FAIL** (IR-H76-004). `single_B` reproduced at
+   0.186352, |Δ| = 1.23e−3 against a 1e−3 tolerance → **FAIL** (IR-H82-004). `single_B` reproduced at
    3.93e−4 → PASS. Two candidate causes cannot be separated on this machine: installed library versions
    exceed the pins (cf. IR-H75-004, 5.4e−5), and `B_DVA` here is a *re-implementation* of H75's channels
-   inside `run_h76.py`, not a replay of H75's arrays — H75's `work/` directory no longer exists, so no
-   bit-for-bit comparison is possible. Any H76 claim that depends on reproducing H75 exactly is therefore
+   inside `run_h82.py`, not a replay of H75's arrays — H75's `work/` directory no longer exists, so no
+   bit-for-bit comparison is possible. Any H82 claim that depends on reproducing H75 exactly is therefore
    **not certified**; claims that depend only on arms fitted inside this round are unaffected.
 3. **No organiser number was produced.** This runner has no DrivenData credentials: it has never downloaded
    the competition data from the organiser and has never uploaded a file. Every score here is
    HOLDOUT-DTI, OWNER-REPORTED, or ORGANIZER-CONFIRMED-from-the-public-leaderboard, and is labelled as such.
 4. **The drainage-deflection hypothesis was never tested.** `1m_DEM_links.csv` is login-walled and usgs.gov
-   is outside this runner's egress allowlist (IR-H76-003). It remains the strongest untested idea in
-   `knowledge/67` because offset drainage targets exactly the covered faults the catalogue misses.
+   is outside this runner's egress allowlist (IR-H82-003). It remains the strongest untested idea in
+   `knowledge/72` because offset drainage targets exactly the covered faults the catalogue misses.
 5. **The A-only stratum reasoning table is not emitted.** The brief asks for geological reasoning for every
    A-only candidate; because the exchange was not run there is no A-only candidate set. Reasoning is instead
    written for **every emitted cell of the primary arm** (row, column, easting, northing, fold, rank
@@ -211,18 +211,18 @@ python3 scripts/restore_data.py --target-dir data
 PYTHONPATH=src python -c "from gems52 import structural; structural.build(dest='work/r2/features', include_optional_profiles=False)"
 PYTHONPATH=src python -m gems52.external
 python scripts/fetch_prior_inventory.py
-python scripts/run_h76.py channels        # 180 s, 79 columns, verified writes
-python scripts/run_h76.py fit             # ~7 min, 6 arms x 4 folds, checkpointed
-python scripts/run_h76.py holdout         # ~2.5 min
-python scripts/run_h76.py independence    # ~10 s
-python scripts/run_h76.py build           # ~20 s
-python scripts/run_h76.py lane            # ~20 min, 567-raster census x 2 phases
-python scripts/run_h76.py write           # ~4 min, raster + validator + reasoning CSV
-python scripts/run_h76.py card            # the single JSON run card
-python scripts/publish_h76_site.py
+python scripts/run_h82.py channels        # 180 s, 79 columns, verified writes
+python scripts/run_h82.py fit             # ~7 min, 6 arms x 4 folds, checkpointed
+python scripts/run_h82.py holdout         # ~2.5 min
+python scripts/run_h82.py independence    # ~10 s
+python scripts/run_h82.py build           # ~20 s
+python scripts/run_h82.py lane            # ~20 min, 567-raster census x 2 phases
+python scripts/run_h82.py write           # ~4 min, raster + validator + reasoning CSV
+python scripts/run_h82.py card            # the single JSON run card
+python scripts/publish_h82_site.py
 python scripts/check_site.py && python -m pytest -q
 ```
 
 Every `np.save` in the runner goes through `save_verified()`, which re-reads each file and rewrites until it
-is bit-exact (IR-H76-002). `Bank.col` refuses to serve a column whose bytes do not match its manifest
+is bit-exact (IR-H82-002). `Bank.col` refuses to serve a column whose bytes do not match its manifest
 digest, so a corrupted channel cannot reach a model silently.

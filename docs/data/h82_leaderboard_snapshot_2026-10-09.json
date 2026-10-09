@@ -1,5 +1,5 @@
 {
- "status": "one-off official leaderboard observation; no recurring fetch (GitHub Actions feed cannot reach drivendata.org from the runner's egress policy either - see .github/workflows/feed.yml and IR-H76-002)",
+ "status": "one-off official leaderboard observation; no recurring fetch (GitHub Actions feed cannot reach drivendata.org from the runner's egress policy either - see .github/workflows/feed.yml and IR-H82-002)",
  "observed_date_utc": "2026-10-09",
  "observed_at_utc": "2026-10-09T20:20:00Z",
  "source": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
@@ -310,6 +310,6 @@
   "UNCHANGED: the top score 0.3774 (xiaofanhu) and the 0.3195 row (DARD, rank 7)"
  ],
  "scope_note": "The board reports team-level best PUBLIC-chunk scores, not filenames, hashes, upload receipts, hidden labels or causal attribution. The Initial Prize Round is scored on the PRIVATE chunk at close and the Final Prize Round rescores the same chosen file against an expert-expanded label set (official problem page, fetched 2026-10-09: https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/). Therefore every number here is a public-chunk number and none of them is a forecast of a prize-round outcome.",
- "brief_correction": "The current user brief states both 'Current competition leaderboard GEMSDOE high score: 0.3774' and '0.3195 is the highest score right now'. Measured against the board on 2026-10-09, 0.3774 is the top and 0.3195 is rank 7 (team DARD). The two statements are mutually inconsistent; the second is wrong. Logged as IR-H76-001.",
+ "brief_correction": "The current user brief states both 'Current competition leaderboard GEMSDOE high score: 0.3774' and '0.3195 is the highest score right now'. Measured against the board on 2026-10-09, 0.3774 is the top and 0.3195 is rank 7 (team DARD). The two statements are mutually inconsistent; the second is wrong. Logged as IR-H82-001.",
  "coexisting_same_date_snapshot": "docs/data/leaderboard_snapshot_2026-10-09.json - an earlier same-date capture (ranks 1-22, keys participant/best_public_dw_tversky) committed by another session. It is left untouched. This file is the later, wider capture (48 rows, keys team/score/submissions); the board moves during the day, so both are valid observations at their own observed_at_utc."
 }

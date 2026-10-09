@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""H76 -- extended directional variogram anisotropy (DVA-2) + variogram/strike alignment (VSA) on View B.
+"""H82 -- extended directional variogram anisotropy (DVA-2) + variogram/strike alignment (VSA) on View B.
 
-Preregistered in ``knowledge/67_hypotheses_H76_preregistered.md`` (frozen, plus amendment 67a written
-before any fit) and pinned by ``registry/h76_preregistration.json``; this runner refuses to start if
+Preregistered in ``knowledge/72_hypotheses_H82_preregistered.md`` (frozen, plus amendment 72a written
+before any fit) and pinned by ``registry/h82_preregistration.json``; this runner refuses to start if
 either hash has moved.
 
 Shared tools are reused, never forked: ``run_h61.setup / sample_for_fit / learner_for / to_grid /
@@ -10,7 +10,7 @@ pct_rank``, ``gems52.spatial.folds`` (label-blind-quadrants-v2), ``gems52.evalua
 (gems52-pooled-hide-v1), ``gems52.nodes.spacing_select``, ``gems52.azimuth`` (Mardia & Jupp axial
 statistics), ``gems52.gates``, ``gems52.submission_writer``, ``run_h73.place_lane``.
 
-Stages (each checkpointed to work/h76 and evidence/h76_*.json):
+Stages (each checkpointed to work/h82 and evidence/h82_*.json):
     channels  build the 60 new learner channels + 4 diagnostic arrays from restored bytes
     fit       leakage canary per channel per fold, then 6 arms x 4 folds (region-only prediction)
     holdout   matched-budget hide-and-recover pooled DTI with paired 95% CIs
@@ -18,7 +18,7 @@ Stages (each checkpointed to work/h76 and evidence/h76_*.json):
     lane      lane gate on surface and on dots against BOTH registries + quota placement (E2)
     write     GeoTIFF, on-disk validator, uniqueness, not-the-union, reasoning, run card (E3)
 
-Usage: python scripts/run_h76.py [channels|fit|holdout|build|lane|write|all]
+Usage: python scripts/run_h82.py [channels|fit|holdout|build|lane|write|all]
 """
 from __future__ import annotations
 
@@ -49,17 +49,17 @@ from gems52 import evaluate_holdout as evaluator                      # noqa: E4
 from gems52 import gates, nodes, structural                           # noqa: E402
 
 SEED = base.SEED
-PREREG = ROOT / "registry/h76_preregistration.json"
-WORK = ROOT / "work/h76"
+PREREG = ROOT / "registry/h82_preregistration.json"
+WORK = ROOT / "work/h82"
 FEAT = WORK / "features"
 EVID = ROOT / "evidence"
 SAMPLE = ROOT / "data/sample_submission.tif"
-K_FOLD = int(os.environ.get("H76_K_FOLD", 9400))
-K_TOTAL = int(os.environ.get("H76_K_TOTAL", 37654))
+K_FOLD = int(os.environ.get("H82_K_FOLD", 9400))
+K_TOTAL = int(os.environ.get("H82_K_TOTAL", 37654))
 RING_M = 200.0
 SIGMA = 3.0
 VSA_LAG = 2
-PREFIX = "gems52-h76-"
+PREFIX = "gems52-h82-"
 
 # bands 12/19/13 are H75's; 15 depth-to-basement and 18 gravity horizontal gradient are new (67 sec.1)
 BANDS = {12: "det_elev", 19: "det_elev_slope", 13: "iso_grav_anom",
@@ -88,13 +88,13 @@ def digest(p):
 def save_verified(path, v, tries: int = 6, pause: float = 0.4):
     """np.save, read the file straight back, require a bit-exact match, rewrite if it differs.
 
-    Not paranoia. The first H76 channel build produced 8 files out of 79 whose first 3,968 data
+    Not paranoia. The first H82 channel build produced 8 files out of 79 whose first 3,968 data
     bytes - exactly one 4 KiB page after the 128-byte .npy header - were zero on disk, while the
     in-memory array was correct and the transform is bit-deterministic (two independent
     recomputations agreed to the last bit; only those 8 files' first eligible row, 992 pixels,
     disagreed). That is a torn write against a filesystem that snapshots concurrently. The Bank's
     byte-integrity guard refused to train on them, which is the guard doing its job; this removes the
-    failure mode at the source and reports how many rewrites each file needed (IR-H76-002).
+    failure mode at the source and reports how many rewrites each file needed (IR-H82-002).
 
     Returns (sha256_of_persisted_file, attempts_used).
     """
@@ -116,7 +116,7 @@ def save_verified(path, v, tries: int = 6, pause: float = 0.4):
 
 def write(name, obj):
     EVID.mkdir(exist_ok=True)
-    p = EVID / f"h76_{name}.json"
+    p = EVID / f"h82_{name}.json"
     p.write_text(json.dumps(obj, indent=1, default=float) + "\n")
     return p
 
@@ -124,7 +124,7 @@ def write(name, obj):
 def check_prereg():
     reg = json.loads(PREREG.read_text())
     if digest(ROOT / reg["hypothesis_document"]) != reg["hypothesis_sha256"]:
-        raise SystemExit("H76 preregistration changed after freezing; re-pin registry/h76_preregistration.json")
+        raise SystemExit("H82 preregistration changed after freezing; re-pin registry/h82_preregistration.json")
     return reg
 
 
@@ -259,7 +259,7 @@ def stage_channels():
                     cols[f"THMAX_{nm}_l{h}"] = _flat(thmax[f"THMAX_{nm}_l{h}"], eligible)
                     del arg, cur, phi
                 del mx, mn, mean
-            # H75 control channels: GROUP1 only, bands 12/19/13, lags 2/4 (amendment 67a)
+            # H75 control channels: GROUP1 only, bands 12/19/13, lags 2/4 (amendment 72a)
             if b in H75_BANDS:
                 for h in H75_LAGS:
                     mx, mn, mean = _gamma_stats(z, ok, w, h, FAN[:4], None)
@@ -267,7 +267,7 @@ def stage_channels():
                     cols[f"DVAH75_{nm}_logvar_l{h}"] = _flat(np.log10(mean + 1e-9), eligible)
                     del mx, mn, mean
             del z, ok, w
-    # ---- VSA strike references: per fold, from the fold's VISIBLE catalogue only (amendment 67a)
+    # ---- VSA strike references: per fold, from the fold's VISIBLE catalogue only (amendment 72a)
     psi_reg, strike_receipt = {}, []
     for fold in folds:
         f = fold["fold"]
@@ -309,7 +309,7 @@ def stage_channels():
         if attempts > 1:
             repaired[k] = attempts
         del v
-    man = dict(round="H76", created_utc=now(), version="h76-dva2-vsa-v1",
+    man = dict(round="H82", created_utc=now(), version="h82-dva2-vsa-v1",
                sigma_px=SIGMA, lags_px=list(LAGS), fan_offsets_dy_dx=[list(t) for t in FAN],
                fan_phi_deg_image_frame=list(PHI_DEG),
                fan_offset_lengths_px={str(k): float(np.hypot(*t)) for k, t in enumerate(FAN)},
@@ -340,7 +340,7 @@ def now():
 
 # --------------------------------------------------------------------------------------- stage: fit
 def gather_arm(store, bank, rows_grid, names_store, names_ch, fold):
-    """Feature matrix for grid-flat rows: shared store columns then H76 channels (H75's hstack order)."""
+    """Feature matrix for grid-flat rows: shared store columns then H82 channels (H75's hstack order)."""
     erows = store.inverse[rows_grid]
     X = store.gather(rows_grid, names_store) if names_store else np.empty((len(rows_grid), 0), np.float32)
     if names_ch:
@@ -436,7 +436,7 @@ def stage_fit():
     out["sufficiency_view_A"] = dict(mean=float(np.mean([r["auc"]["single_A"] for r in out["folds"]])),
                                      per_fold=[r["auc"]["single_A"] for r in out["folds"]],
                                      gate_mean=0.60, gate_min_fold=0.55,
-                                     verdict="standing negative; see knowledge/67 sec.0")
+                                     verdict="standing negative; see knowledge/72 sec.0")
     write("fit", out)
     log(json.dumps({"canary_alarm_any": out["canary_alarm_any"],
                     "canary_max": out["canary_max_learner_overall"],
@@ -512,13 +512,13 @@ def stage_holdout():
 
 # ---------------------------------------------------------------------------------- stage: independence
 def stage_independence():
-    """The lane's mandated view-independence test, on the H76 checkpoints, with H74's frozen thresholds.
+    """The lane's mandated view-independence test, on the H82 checkpoints, with H74's frozen thresholds.
 
     The brief: "Empirically test view independence: correlate each view's spatial-block out-of-fold
     errors on labeled negatives; abandon if strongly correlated."  This reuses the shared instrument
     (spatial.negative_block_errors + spatial.independence) rather than inventing a private one, and it
     inherits the thresholds VERBATIM from registry/h74_preregistration.json.  They are not re-tuned for
-    H76 and the H76 pin is not edited after the fact: the inheritance is recorded with the source file's
+    H82 and the H82 pin is not edited after the fact: the inheritance is recorded with the source file's
     own SHA-256 so a reader can check that nothing moved.
     """
     reg, store, cat, eligible, folds, va, vb, ring_px = base.setup()
@@ -549,7 +549,7 @@ def stage_independence():
                thresholds=dict(donor_rank_min=th["donor_rank_min"], block_side_px=th["block_side_px"],
                                abandon_max_abs_rho=th["independence_abandon_max_abs_rho"],
                                min_blocks=20, negative_ring_px=4),
-               thresholds_not_retuned_for_h76=True,
+               thresholds_not_retuned_for_h82=True,
                view_A="single_A (geophysical/subsurface store columns only)",
                view_B="single_B (surface store columns only)",
                per_fold=per_fold, result=res,
@@ -557,7 +557,7 @@ def stage_independence():
                                "two views share their errors and co-training could only amplify a common "
                                "bias" % th["independence_abandon_max_abs_rho"]),
                standing_deviation=("pseudo-label exchange is still not run: View-A sufficiency failed again "
-                                   "this round (see evidence/h76_fit.json), and H71 measured that exchange "
+                                   "this round (see evidence/h82_fit.json), and H71 measured that exchange "
                                    "LOWERED the A2 out-of-fold AUC (0.5019 -> 0.4759), which is the bias "
                                    "amplification the brief warns about"))
     write("independence", out)
@@ -620,9 +620,9 @@ def stage_build():
 
 # --------------------------------------------------------------------------------------- stage: lane (E2)
 def restricted_registry():
-    """The preregistered scored-only registry (knowledge/67 sec.5.1): owner-scored + calibration files."""
+    """The preregistered scored-only registry (knowledge/72 sec.5.1): owner-scored + calibration files."""
     paths = sorted((ROOT / "data/scored").glob("*.tif")) + sorted((ROOT / "data/reference").glob("*.tif"))
-    scores = json.loads((ROOT / "registry/h76_scored_registry.json").read_text())
+    scores = json.loads((ROOT / "registry/h82_scored_registry.json").read_text())
     return [p for p in paths if p.exists()], scores
 
 
@@ -655,7 +655,7 @@ def stage_lane():
     dots = np.load(WORK / "dots.npy").astype(np.float32)
     surf = np.load(WORK / "surface.npy")
     full, meta = prior_paths(ROOT / "work/h61/prior_fetch_receipt.json", ("submission",))
-    full = [p for p in full if p.exists() and PREFIX not in p.name and "h76" not in p.name]
+    full = [p for p in full if p.exists() and PREFIX not in p.name and "h82" not in p.name]
     restr, scored = restricted_registry()
     out = dict(stage="lane", started_utc=now(), registry_full=meta, n_full=len(full),
                n_restricted=len(restr), scored_registry=scored,
@@ -699,19 +699,19 @@ def stage_write():
     union_dots = np.load(WORK / "union_dots.npy")
     pred = dots.astype(np.float32)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    name = f"h76-dva2vsa-B-{int(dots.sum())}px-{stamp}"
-    note = ("H76: View-B + 50 DVA-2 + 10 variogram/strike-alignment channels; 8-dir integer fan, lags 100-600m; "
+    name = f"h82-dva2vsa-B-{int(dots.sum())}px-{stamp}"
+    note = ("H82: View-B + 50 DVA-2 + 10 variogram/strike-alignment channels; 8-dir integer fan, lags 100-600m; "
             "200m catalogue ring excluded; binary dots")
     if len(note) > 140:
-        note = ("H76: View-B + 50 DVA-2 + 10 variogram/strike-alignment channels; 200m ring excluded; "
+        note = ("H82: View-B + 50 DVA-2 + 10 variogram/strike-alignment channels; 200m ring excluded; "
                 f"binary {int(dots.sum())} dots")
     assert len(name) <= 140 and len(note) <= 140, (len(name), len(note))
     # File naming follows the H74/H75 convention: the file is "gems52-" + the submission name, so the
-    # round identifier appears once. PREFIX ("gems52-h76-") stays the lane-exclusion filter, and it still
+    # round identifier appears once. PREFIX ("gems52-h82-") stays the lane-exclusion filter, and it still
     # matches this filename, so the round continues to exclude its own raster from the prior census.
     out = ROOT / "submission" / f"gems52-{name}.tif"
     rec = submission_writer_write(out, pred, SAMPLE, eligible, note=note, name=name,
-                                  metadata=dict(round="H76", primary_arm=PRIMARY))
+                                  metadata=dict(round="H82", primary_arm=PRIMARY))
     # on-disk validation, independent of the writer
     with rasterio.open(out) as a, rasterio.open(SAMPLE) as s:
         v = a.read(1)
@@ -775,14 +775,14 @@ def stage_write():
     write("build", res)
     # stage the downloadable copy
     dl = ROOT / "docs/downloads"
-    shutil.copy(out, dl / "h76-candidate.tif")
-    with zipfile.ZipFile(dl / "h76-candidate.zip", "w", zipfile.ZIP_DEFLATED) as z:
+    shutil.copy(out, dl / "h82-candidate.tif")
+    with zipfile.ZipFile(dl / "h82-candidate.zip", "w", zipfile.ZIP_DEFLATED) as z:
         z.write(out, out.name)
-    with zipfile.ZipFile(dl / "h76-candidate.zip") as z:
+    with zipfile.ZipFile(dl / "h82-candidate.zip") as z:
         assert z.namelist() == [out.name] and z.read(out.name) == out.read_bytes()
-    res["download_staged"] = dict(tif="docs/downloads/h76-candidate.tif", zip="docs/downloads/h76-candidate.zip",
-                                  tif_sha256=digest(dl / "h76-candidate.tif"),
-                                  zip_sha256=digest(dl / "h76-candidate.zip"))
+    res["download_staged"] = dict(tif="docs/downloads/h82-candidate.tif", zip="docs/downloads/h82-candidate.zip",
+                                  tif_sha256=digest(dl / "h82-candidate.tif"),
+                                  zip_sha256=digest(dl / "h82-candidate.zip"))
     write("build", res)
     log(json.dumps({k: res[k] for k in ("file", "bytes", "sha256", "name", "note")}, indent=1))
     log("validator: " + json.dumps({k: val[k] for k in ("PASS", "range_ok", "dtype", "crs", "shape", "ones", "nan")}))
@@ -793,18 +793,18 @@ def stage_write():
 def stage_card():
     """The single JSON run card the brief demands, assembled only from receipts already on disk.
 
-    Nothing here is typed by hand: every number is read back out of evidence/h76_*.json so the card
+    Nothing here is typed by hand: every number is read back out of evidence/h82_*.json so the card
     cannot disagree with the run that produced it. Verdict logic is the frozen promotion rule from
-    knowledge/67 sec.3 (primary vs single_B, paired 95% CI lower bound > 0), never a post-hoc choice.
+    knowledge/72 sec.3 (primary vs single_B, paired 95% CI lower bound > 0), never a post-hoc choice.
     """
-    ch = json.loads((EVID / "h76_channels.json").read_text())
+    ch = json.loads((EVID / "h82_channels.json").read_text())
     chm = json.loads((FEAT / "manifest.json").read_text())   # the channel manifest holds the design constants
-    fit = json.loads((EVID / "h76_fit.json").read_text())
-    ho = json.loads((EVID / "h76_holdout.json").read_text())
-    bp = json.loads((EVID / "h76_build_placement.json").read_text())
-    ln = json.loads((EVID / "h76_lane.json").read_text())
-    bu = json.loads((EVID / "h76_build.json").read_text())
-    scored = json.loads((ROOT / "registry/h76_scored_registry.json").read_text())
+    fit = json.loads((EVID / "h82_fit.json").read_text())
+    ho = json.loads((EVID / "h82_holdout.json").read_text())
+    bp = json.loads((EVID / "h82_build_placement.json").read_text())
+    ln = json.loads((EVID / "h82_lane.json").read_text())
+    bu = json.loads((EVID / "h82_build.json").read_text())
+    scored = json.loads((ROOT / "registry/h82_scored_registry.json").read_text())
     sc = ho["pooled"]["scores"]
     pd_ = ho["pooled"]["paired_differences"]
     # keyed by comparison arm: entry "single_B" is primary minus single_B
@@ -820,12 +820,12 @@ def stage_card():
     promote = bool(holdout_wins and not lane_dup and bu["validator"]["PASS"]
                    and bu["not_the_union"]["not_union_pass"])
     card = dict(
-        round="H76", generated_utc=now(),
+        round="H82", generated_utc=now(),
         preregistration=dict(document=PREREG.name, sha256=json.loads(PREREG.read_text())["hypothesis_sha256"],
                              hypothesis_document=json.loads(PREREG.read_text())["hypothesis_document"],
                              hypothesis_document_sha256=digest(ROOT / json.loads(PREREG.read_text())["hypothesis_document"]),
                              frozen_before_any_fit=True,
-                             amendment="67a: XVSA_visible_tensor_mag demoted to a diagnostic before any fit "
+                             amendment="72a: XVSA_visible_tensor_mag demoted to a diagnostic before any fit "
                                        "because it is monotone in distance-to-visible-catalogue and would trip "
                                        "the 0.90 canary by construction"),
         hypothesis=("Fault damage zones impose a direction-dependent semivariance on isostatic gravity and "
@@ -869,7 +869,7 @@ def stage_card():
                                          "cos(2*delta) against a scalar regional strike takes only 4 "
                                          "distinct values; VSA_cos2reg is therefore a categorical recoding "
                                          "of the winning fan direction, not a continuous alignment. "
-                                         "Measured, not assumed - see knowledge/68."),
+                                         "Measured, not assumed - see knowledge/73."),
                       degenerate_tensor_fraction=("VSA_cos2loc is 0 wherever the local structure tensor is "
                                                   "degenerate: 69.9% / 53.6% / 46.7% / 47.8% of eligible "
                                                   "pixels by fold.")),
@@ -878,9 +878,9 @@ def stage_card():
                          "The lane's mandated independence test is reported as a standing measurement "
                          "instead, and the A-only arm is fitted and scored here so the failure is "
                          "re-measured rather than cited."),
-        independence=(json.loads((EVID / "h76_independence.json").read_text())
-                      if (EVID / "h76_independence.json").exists() else
-                      "not computed; run scripts/run_h76.py independence"),
+        independence=(json.loads((EVID / "h82_independence.json").read_text())
+                      if (EVID / "h82_independence.json").exists() else
+                      "not computed; run scripts/run_h82.py independence"),
         sufficiency_view_A=fit["sufficiency_view_A"],
         canary=dict(label="LEAKAGE CANARY (single-channel direction-insensitive AUC on the held-out region)",
                     bar=fit["canary_alarm_auc_bar"] if "canary_alarm_auc_bar" in fit
@@ -938,7 +938,7 @@ def stage_card():
         registry_correlation_overlap=dict(
             uniqueness_full_census=ln["uniqueness_full"],
             scored_only_registry=dict(
-                source="registry/h76_scored_registry.json", n=scored["n_files"],
+                source="registry/h82_scored_registry.json", n=scored["n_files"],
                 all_sha_match=scored["all_sha_match"],
                 membership_rule=scored["membership_rule"], declared_effect=scored["declared_effect"],
                 score_label="OWNER-REPORTED (never ORGANIZER-CONFIRMED)",

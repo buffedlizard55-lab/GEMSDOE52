@@ -1,6 +1,6 @@
 {
  "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified. | H61 merge: IR-H61-001..009 appended from the H61 branch; main's repaired schema and numbering retained.",
- "generated": "2026-10-09T21:49:28Z",
+ "generated": "2026-10-09T21:58:54Z",
  "entries": [
   {
    "id": "IR-30-029",
@@ -2379,32 +2379,32 @@
    "measured_effect": "No measured number changed: link targets and the verbatim prompt text only."
   },
   {
-   "id": "IR-H76-001",
-   "round": "H76",
+   "id": "IR-H82-001",
+   "round": "H82",
    "severity": "medium",
    "status": "logged - contradiction reported, not resolved by guessing",
    "title": "The round brief contradicts itself about the current best score: 0.3195 is called the highest score while 0.3774 is also cited",
    "what_it_is": "The user brief states 'Goal: beat 0.3195 (user states current top)' and elsewhere cites the leaderboard top as 0.3774. The live public leaderboard for competition #306, fetched 2026-10-09, shows xiaofanhu at 0.3774 in rank 1 and DARD at 0.3195 in rank 7. The owner team extradr19 is rank 17 at 0.2778 with 13 submissions (it was rank 13 with 12 submissions in the 2026-10-08 snapshot).",
    "how_we_know": "fetch_page on https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/ (chunks 0-1 of 3), captured verbatim into registry/leaderboard_snapshot_2026-10-09.json with 48 rows and a delta table against the 2026-10-08 snapshot.",
-   "handling": "Both figures are reported with their rank, and the target is stated as the measured rank-1 value. No attempt is made to guess which number the brief intended. H76's frozen preregistration (knowledge/67 sec.7) claims nothing about beating 0.2778, 0.3195 or 0.3774.",
+   "handling": "Both figures are reported with their rank, and the target is stated as the measured rank-1 value. No attempt is made to guess which number the brief intended. H82's frozen preregistration (knowledge/72 sec.7) claims nothing about beating 0.2778, 0.3195 or 0.3774.",
    "disposition": "Logged. registry/leaderboard_snapshot_2026-10-09.json is the authoritative capture; the site prints the fetch date beside every ORGANIZER-CONFIRMED number. Open - only the user can say which target they meant.",
    "measured_effect": "None on any measurement. It changes what 'success' would mean: reaching 0.3195 needs a hit rate rho of 0.1595 at S=37,654, while reaching 0.3774 needs substantially more (knowledge/49 sec.2)."
   },
   {
-   "id": "IR-H76-002",
-   "round": "H76",
+   "id": "IR-H82-002",
+   "round": "H82",
    "severity": "high",
    "status": "resolved - persistence now verifies by reload",
    "title": "Torn writes: 8 of 79 channel .npy files had one 4 KiB page of zeros after the 128-byte header",
-   "what_it_is": "The first H76 channel build wrote 79 flat eligible-indexed columns with np.save and recorded each file's SHA-256 immediately afterwards. Eight files - exactly the first eight in insertion order, all from the first band processed - did not match their recorded digest. On inspection each had its first 3,968 data bytes zeroed, i.e. the remainder of the first 4 KiB page after the 128-byte .npy header, which corresponds to the first eligible row of the grid (992 pixels of row 36).",
+   "what_it_is": "The first H82 channel build wrote 79 flat eligible-indexed columns with np.save and recorded each file's SHA-256 immediately afterwards. Eight files - exactly the first eight in insertion order, all from the first band processed - did not match their recorded digest. On inspection each had its first 3,968 data bytes zeroed, i.e. the remainder of the first 4 KiB page after the 128-byte .npy header, which corresponds to the first eligible row of the grid (992 pixels of row 36).",
    "how_we_know": "Bank.col refused to train and raised 'channel byte-integrity failure: DVA2_det_elev_aniso_l1'. Diagnosed by (a) re-hashing all 79 files against the manifest (8 mismatches), (b) two independent recomputations of the same channel that agreed with each other bit-for-bit and disagreed with the file in exactly 992 pixels, all in row 36, all exactly 0.0, and (c) file mtimes showing a single sequential write pass with no overwrite. The transform is deterministic; the files were not.",
-   "handling": "Added save_verified() in scripts/run_h76.py: np.save, read the file straight back with mmap_mode='r', require shape/dtype/bit-exact equality (equal_nan=True), and rewrite up to six times before raising. Every np.save in the runner now goes through it - channel columns, fold row indices, per-arm prediction checkpoints, dots, surface, stitched fields and the lane-restricted placement. The rebuild needed 0 rewrites and all 79 digests match.",
-   "disposition": "Resolved. Recorded in evidence/h76_channels.json as save_verified_by_reload=true, n_channels_needing_rewrite=0, and in the channel manifest as save_attempts_gt1={}. Regression-tested by tests/test_h76.py::test_save_verified_rewrites_a_torn_write, which monkeypatches np.save to reproduce the exact corruption and requires attempts == 2.",
+   "handling": "Added save_verified() in scripts/run_h82.py: np.save, read the file straight back with mmap_mode='r', require shape/dtype/bit-exact equality (equal_nan=True), and rewrite up to six times before raising. Every np.save in the runner now goes through it - channel columns, fold row indices, per-arm prediction checkpoints, dots, surface, stitched fields and the lane-restricted placement. The rebuild needed 0 rewrites and all 79 digests match.",
+   "disposition": "Resolved. Recorded in evidence/h82_channels.json as save_verified_by_reload=true, n_channels_needing_rewrite=0, and in the channel manifest as save_attempts_gt1={}. Regression-tested by tests/test_h82.py::test_save_verified_rewrites_a_torn_write, which monkeypatches np.save to reproduce the exact corruption and requires attempts == 2.",
    "measured_effect": "No measured number was affected: the guard fired before any model was fitted, so no arm was ever trained on the corrupted columns. Had it not fired, the primary arm would have been fitted on 992 wrong pixels in 8 of 60 channels and the result would have looked legitimate."
   },
   {
-   "id": "IR-H76-003",
-   "round": "H76",
+   "id": "IR-H82-003",
+   "round": "H82",
    "severity": "medium",
    "status": "logged - structural limitation of this runner",
    "title": "No ORGANIZER-CONFIRMED number can be refreshed from a scheduled job: runner egress excludes drivendata.org",
@@ -2415,52 +2415,64 @@
    "measured_effect": "None on measurements. It bounds how stale a board comparison can be."
   },
   {
-   "id": "IR-H76-004",
-   "round": "H76",
+   "id": "IR-H82-004",
+   "round": "H82",
    "severity": "medium",
    "status": "logged - control reported at its measured tolerance",
    "title": "Installed library versions exceed the repository's pins, so control reproduction is approximate (cf. IR-H75-004)",
    "what_it_is": "The system Python had no numpy at all; everything runs under /home/user/.venv-gems with versions installed at session start, which exceed the pins in requirements-r2.txt. H75 already recorded a 5.4e-05 drift on the same control (IR-H75-004).",
-   "how_we_know": "evidence/h76_holdout.json controls block: single_B measured 0.174910 against the committed 0.174517 (|delta| 3.93e-04, tolerance 1e-3, PASS); B_DVA measured 0.187587 against the committed 0.186352 (|delta| 1.23e-03, tolerance 1e-3, FAIL).",
+   "how_we_know": "evidence/h82_holdout.json controls block: single_B measured 0.174910 against the committed 0.174517 (|delta| 3.93e-04, tolerance 1e-3, PASS); B_DVA measured 0.187587 against the committed 0.186352 (|delta| 1.23e-03, tolerance 1e-3, FAIL).",
    "handling": "Both deltas are published with their tolerance and their PASS/FAIL. The B_DVA miss is reported as a control failure rather than rounded away. The single_B control - the one the frozen promotion rule actually compares against - reproduced inside tolerance.",
-   "disposition": "Logged. The B_DVA arm is a re-implementation of H75's channels inside run_h76.py (recovered by restricting the 8-direction fan to GROUP1 at H75's lags), not a replay of H75's own arrays, and H75's work/ directory no longer exists on this machine, so the two cannot be compared bit-for-bit here. The drift therefore has two candidate causes and this runner cannot separate them: library-version noise and re-implementation detail.",
-   "measured_effect": "B_DVA 0.187587 vs committed 0.186352, |delta| 1.23e-03 = 0.66% relative. Any H76 claim that rests on reproducing H75 exactly is therefore not certified; claims that rest on arms fitted inside this round are unaffected."
+   "disposition": "Logged. The B_DVA arm is a re-implementation of H75's channels inside run_h82.py (recovered by restricting the 8-direction fan to GROUP1 at H75's lags), not a replay of H75's own arrays, and H75's work/ directory no longer exists on this machine, so the two cannot be compared bit-for-bit here. The drift therefore has two candidate causes and this runner cannot separate them: library-version noise and re-implementation detail.",
+   "measured_effect": "B_DVA 0.187587 vs committed 0.186352, |delta| 1.23e-03 = 0.66% relative. Any H82 claim that rests on reproducing H75 exactly is therefore not certified; claims that rest on arms fitted inside this round are unaffected."
   },
   {
-   "id": "IR-H76-005",
-   "round": "H76",
+   "id": "IR-H82-005",
+   "round": "H82",
    "severity": "high",
    "status": "logged - the frozen primary arm lost, and the reason is attributed",
    "title": "The pre-registered primary arm is significantly worse than its own control; the strike-alignment channels are the cause",
    "what_it_is": "The frozen primary arm B_DVA2_VSA pooled to HOLDOUT-DTI 0.150591 [0.131262, 0.169201] against single_B 0.174910 [0.152922, 0.196038]; the paired difference is -0.024319 [-0.039025, -0.006869], whose upper bound is below zero. The attribution arms separate the cause: B_DVA2 alone reaches 0.189200 [0.167891, 0.209115] (the best number this repository has measured) while B_VSA alone reaches only 0.142148 [0.124400, 0.159982], below single_B.",
-   "how_we_know": "evidence/h76_holdout.json, evaluator gems52-pooled-hide-v1, 53,186 withheld positive pixels, 9,400 dots per fold per arm, 1000 paired physical-cluster bootstrap draws; evidence/h76_fit.json out-of-quadrant AUCs show the same ordering in all four folds (B_DVA2 mean 0.7124, single_B 0.6849, B_DVA2_VSA 0.6720, B_VSA 0.6511).",
-   "handling": "Reported as a negative result. The primary arm was NOT swapped for the better attribution arm, because the frozen preregistration forbids post-hoc promotion of attribution arms (registry/h76_preregistration.json attribution_arms_not_promotable). The raster emitted by E3 is the primary arm's, as pre-registered.",
+   "how_we_know": "evidence/h82_holdout.json, evaluator gems52-pooled-hide-v1, 53,186 withheld positive pixels, 9,400 dots per fold per arm, 1000 paired physical-cluster bootstrap draws; evidence/h82_fit.json out-of-quadrant AUCs show the same ordering in all four folds (B_DVA2 mean 0.7124, single_B 0.6849, B_DVA2_VSA 0.6720, B_VSA 0.6511).",
+   "handling": "Reported as a negative result. The primary arm was NOT swapped for the better attribution arm, because the frozen preregistration forbids post-hoc promotion of attribution arms (registry/h82_preregistration.json attribution_arms_not_promotable). The raster emitted by E3 is the primary arm's, as pre-registered.",
    "disposition": "Logged. Two mechanistic findings are recorded for the next round: (1) theta_max is an argmax over 8 discrete fan directions, so cos(2*delta) against a scalar regional strike takes only 4 distinct values - VSA_cos2reg is a categorical recoding of the winning direction, not a continuous alignment, and its low entropy appears to cost the learner more than it gives; (2) VSA_cos2loc is exactly 0 on 69.9%/53.6%/46.7%/47.8% of eligible pixels by fold, where the local structure tensor is degenerate, so the channel is dominated by a 'no local structure' indicator. A finer fan (16 or 32 directions) and a continuous sub-pixel theta_max are the obvious H77 candidates and must be pre-registered before any fit.",
    "measured_effect": "Primary arm loses 0.024319 HOLDOUT-DTI against its control with a 95% CI entirely below zero. Verdict NEGATIVE; 0 slots spent."
   },
   {
-   "id": "IR-H76-006",
-   "round": "H76",
+   "id": "IR-H82-006",
+   "round": "H82",
    "severity": "low",
    "status": "resolved - three runner bugs found and fixed before any result was quoted",
    "title": "Runner defects that would have produced wrong or meaningless numbers: axial_resultant's third return, VSA name parsing, and an empty single_B control arm",
-   "what_it_is": "Three separate defects in scripts/run_h76.py, all found before a result was published. (1) gems52.azimuth.axial_resultant returns (mean, R, n) where n is the weighted pixel count; the strike receipt called np.degrees(n) and labelled the result circular_sd_deg. (2) Bank.vsa parsed channel names with name.split('_') into four parts, but every band name contains underscores (det_elev, iso_grav_anom, depth_to_base_surf, iso_grav_anom_hg, det_elev_slope), so it raised ValueError on all ten VSA channels. (3) arm_channels returned an empty feature list for single_B, so the control arm that must reproduce 0.174517 had no features at all.",
-   "how_we_know": "(1) read of src/gems52/azimuth.py line 67 signature and its return statement; (2) and (3) tracebacks and smoke tests during this session, reproduced in tests/test_h76.py.",
+   "what_it_is": "Three separate defects in scripts/run_h82.py, all found before a result was published. (1) gems52.azimuth.axial_resultant returns (mean, R, n) where n is the weighted pixel count; the strike receipt called np.degrees(n) and labelled the result circular_sd_deg. (2) Bank.vsa parsed channel names with name.split('_') into four parts, but every band name contains underscores (det_elev, iso_grav_anom, depth_to_base_surf, iso_grav_anom_hg, det_elev_slope), so it raised ValueError on all ten VSA channels. (3) arm_channels returned an empty feature list for single_B, so the control arm that must reproduce 0.174517 had no features at all.",
+   "how_we_know": "(1) read of src/gems52/azimuth.py line 67 signature and its return statement; (2) and (3) tracebacks and smoke tests during this session, reproduced in tests/test_h82.py.",
    "handling": "(1) the strike receipt now carries the Mardia-Jupp axial circular SD sqrt(-2 ln R) in degrees, reported as undefined when R tends to 0, plus n_weighted_px separately. (2) name parsing now strips the VSA_ prefix and rsplits twice from the right. (3) single_B now carries the View B store columns, and it reproduced the committed control at 3.93e-04.",
-   "disposition": "Resolved and regression-tested (tests/test_h76.py). Closed.",
+   "disposition": "Resolved and regression-tested (tests/test_h82.py). Closed.",
    "measured_effect": "No published number was affected - all three were caught before a receipt was written. Had (1) survived, the site would have printed weighted pixel counts (241,871 to 434,494) as circular standard deviations in degrees."
   },
   {
-   "id": "IR-H76-007",
-   "round": "H76",
+   "id": "IR-H82-007",
+   "round": "H82",
    "severity": "medium",
    "status": "resolved - repaired in the shared tool, not worked around",
    "title": "check_site.py's R5 novelty check was already failing at HEAD: short download aliases look undated, so a later round silently invalidates an earlier round's receipt",
    "what_it_is": "scripts/check_site.py re-derives R5's 'novel against every raster the repository has produced' claim instead of trusting it, and excludes rasters whose receipt or filename carries a timestamp LATER than R5's build. Its _stamp() helper looked only at <file>.json and the filename. The short download aliases this repository actually serves (h70/h71/h74/h75-candidate.tif) have neither a matching <alias>.json nor a timestamp in the name, so they were classified as contemporaneous with R5 and folded into R5's prior set. h75-candidate.tif alone moved R5's recomputed novel fraction from the receipted 1.0 to 0.992087 and the script exited with a PROBLEM.",
-   "how_we_know": "Measured, not inferred: check_site.py on this branch reported 'R5 novelty: recomputed 0.992087 != receipt 1.0'. Moving H76's own aliases out of docs/downloads and re-running reproduced the identical failure, which proves it pre-dates H76. The repo already carries <alias>-receipt.json sidecars for h61/h63/h70/h74 under a name _stamp never looked at, and gems52-h75-...-20261009.tif carries a date but no time, which _stamp's two regexes cannot parse.",
-   "handling": "_stamp() now also reads the '<stem>-receipt.json' sidecar convention, and falls back to a date-only %Y%m%d match interpreted as 00:00:00 of that day. The fallback is deliberately the strict direction: a same-day round stays contemporaneous and remains in the prior set, so nothing is excluded that could have been present. Backfilled the missing alias receipts (docs/downloads/h71-, h75-, h76-candidate-receipt.json) by copying each canonical submission/<stem>.json whose sha256 matches the alias byte-for-byte; no existing file was edited. publish_h76_site.py now writes the H76 alias receipt on every run so it cannot rot.",
+   "how_we_know": "Measured, not inferred: check_site.py on this branch reported 'R5 novelty: recomputed 0.992087 != receipt 1.0'. Moving H82's own aliases out of docs/downloads and re-running reproduced the identical failure, which proves it pre-dates H82. The repo already carries <alias>-receipt.json sidecars for h61/h63/h70/h74 under a name _stamp never looked at, and gems52-h75-...-20261009.tif carries a date but no time, which _stamp's two regexes cannot parse.",
+   "handling": "_stamp() now also reads the '<stem>-receipt.json' sidecar convention, and falls back to a date-only %Y%m%d match interpreted as 00:00:00 of that day. The fallback is deliberately the strict direction: a same-day round stays contemporaneous and remains in the prior set, so nothing is excluded that could have been present. Backfilled the missing alias receipts (docs/downloads/h71-, h75-, h82-candidate-receipt.json) by copying each canonical submission/<stem>.json whose sha256 matches the alias byte-for-byte; no existing file was edited. publish_h82_site.py now writes the H82 alias receipt on every run so it cannot rot.",
    "disposition": "Resolved in the shared tool. After the repair check_site.py reports 'R5 novelty recomputed against 71 rasters: novel fraction 1.0000, pattern unique True' and exits with 0 problems over 88 pages and 365 data files. Future rounds that add a short alias must ship its -receipt.json sidecar, or the alias will look undated again.",
-   "measured_effect": "R5's recomputed novel fraction returned from 0.992087 to the receipted 1.000000, and the prior set shrank from 73 to 71 rasters (the two aliases that were wrongly counted as contemporaneous). No H76 number changed."
+   "measured_effect": "R5's recomputed novel fraction returned from 0.992087 to the receipted 1.000000, and the prior set shrank from 73 to 71 rasters (the two aliases that were wrongly counted as contemporaneous). No H82 number changed."
+  },
+  {
+   "id": "IR-H82-008",
+   "round": "H82",
+   "severity": "high",
+   "status": "resolved - round renamed at merge, following the IR-H71-005 / IR-H74-002 precedent",
+   "title": "Namespace collision: this session's round was numbered H76, but origin/main already holds an H76 round plus H77, H77cond and H81",
+   "what_it_is": "This session preregistered and completed its extended-directional-variogram round as H76 (knowledge/72, runner scripts/run_h82.py, unique GeoTIFF built, NEGATIVE verdict, 0 slots). While it ran, three parallel sessions merged to main: an H76 band-18 DVA round (PRs #78/#79), an H77 board-forensics round, an H77cond round, and an H81 round that had itself already renamed away from H76 for the same reason. PR #80 therefore reported mergeable=CONFLICTING, mergeStateStatus=DIRTY, and four artefact paths collided outright (docs/downloads/h76-candidate.tif, docs/h76-executive-summary.html, evidence/h76_run_card.json, index.html).",
+   "how_we_know": "git fetch origin main; git log --oneline 4b122f3..origin/main shows 63578f6 'H76: band-18 DVA holdout (NEGATIVE)...', d02844c 'Identifier-only rename H76 -> H81 (main holds H76 from another session and H77cond)', 7118f13 'H77: rebuild the single-TIFF ZIP...'; gh pr view 80 --json mergeable returned CONFLICTING; git merge-tree --name-only listed the eight conflicting paths.",
+   "handling": "This session's round was renamed H76 -> H82, the next free identifier on main (H61-H77, H77cond and H81 are taken), with identifier-only edits: scripts/run_h76.py -> run_h82.py, publish_h76_site.py -> publish_h82_site.py, tests/test_h76.py -> test_h82.py, knowledge/67 -> 72 and 68 -> 73 (main already uses 67/67a/68 for H77cond and 69/70/71 for H81), registry/h76_* -> h82_*, evidence/h76_* -> h82_*, docs pages and download aliases, submission prefix and H82_LATEST.txt, IR-H76-001..007 -> IR-H82-001..007, and the README and AGENTS markers. The write and card stages were then re-run so the GeoTIFF, its ZIP, the submission receipt and the run card all carry the new name consistently. The preregistration was re-pinned with the pre-rename SHA-256 and byte count kept beside the new ones.",
+   "disposition": "Renamed to H82 and re-pinned (registry/h82_preregistration.json carries pre_rename_sha256 fe7050eb40ecf23f... and post-rename e979a1773eb629a3...). Both rounds' README and AGENTS blocks are kept. No hypothesis, threshold, arm order, budget or promotion rule changed, and main's H76/H77/H77cond/H81 artefacts are untouched. Closed.",
+   "measured_effect": "None on any measured number: the rename is identifier-only, and that is provable rather than asserted - the rebuilt GeoTIFF has the identical SHA-256 17c3f8325ac6f267b1b8cc58bc6fd9495c118c30de64d5f78293d19d7f20c907 and the identical 37,654 emitted cells. Only the ZIP's SHA-256 changed, because the ZIP stores its inner member's filename (the same effect IR-H74-002 recorded)."
   }
  ],
  "merge_note": "Merged registry/irregularities.json: main's entries (including the parallel H66 round's IR-H66-001..010) plus this round's IR-H67-001..011. This round was labelled H66 in its own receipts and was renamed H67 before merge because main merged a different H66 first (PR #56); the IDs were renumbered wholesale so no ID carries two meanings. See knowledge/45a_amendment_2026-10-09_H67_rename.md. IR-H67-002 (in-domain nodata sentinels collapse every rank channel) and IR-H67-008 (probe classification flips with the structuring element, and this round's lane verdict depends on it) are the two that change a result; IR-H67-005 and IR-H67-007 change how a shared instrument must be read."

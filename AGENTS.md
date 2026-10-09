@@ -8,10 +8,10 @@ Keep known-catalogue labels separate from verified fault absence, public partici
 
 This session's working branch is fixed by Arena. Do not change branches. Keep raw competition data and large intermediate arrays under ignored `data/` and `work/`. Publish small audit receipts, the unique compressed prediction raster and its review table.
 
-<!--H76-AGENTS-->
-## Current H76 continuation (2026-10-09)
-Read README's H76 block, `knowledge/67` (frozen preregistration, amendment 67a included, SHA-256
-`fe7050eb…`) and `knowledge/68` (results and limits). H76 executed H75's own "next" item — a scored-only
+<!--H82-AGENTS-->
+## Current H82 continuation (2026-10-09)
+Read README's H82 block, `knowledge/72` (frozen preregistration, amendment 72a included, SHA-256
+`fe7050eb…`) and `knowledge/73` (results and limits). H82 executed H75's own "next" item — a scored-only
 lane registry — and one frozen experiment with six arms. Verdict **NEGATIVE**, experiments 1/3, slots 0.
 
 What is now settled, and must not be re-litigated:
@@ -25,7 +25,7 @@ What is now settled, and must not be re-litigated:
   `cos2reg` against a scalar strike takes only **4 distinct values** (middle histogram bin exactly empty
   on a 100k sample); and `cos2loc` is exactly 0 on 46.7–69.9% of eligible pixels where the local tensor is
   degenerate. Both are low-entropy channels pooled with 50 informative floats.
-- **`B_DVA2` may not be promoted post hoc.** `registry/h76_preregistration.json →
+- **`B_DVA2` may not be promoted post hoc.** `registry/h82_preregistration.json →
   attribution_arms_not_promotable` forbids it. It must be pre-registered fresh as H77's primary *before
   any fit*, together with the fix for the quantisation above (a 16/32-direction fan, or a continuous
   sub-pixel θ_max by parabolic interpolation across the fan or a structure tensor on the γ field).
@@ -41,29 +41,29 @@ What is now settled, and must not be re-litigated:
   universal-coverage lattice probes (near-3px 1.0 for *every* nonempty raster), and a restricted PASS never
   waives it. H77 should pre-register the quota-placed emission as its E3 output rather than the
   unconstrained one.
-- **Every `np.save` in a runner must go through a verified writer.** H76's first build produced 8 files of
-  79 with one 4 KiB page of zeros after the .npy header (IR-H76-002); `save_verified()` in
-  `scripts/run_h76.py` re-reads each file and rewrites until bit-exact, and `Bank.col` refuses a column
+- **Every `np.save` in a runner must go through a verified writer.** H82's first build produced 8 files of
+  79 with one 4 KiB page of zeros after the .npy header (IR-H82-002); `save_verified()` in
+  `scripts/run_h82.py` re-reads each file and rewrites until bit-exact, and `Bank.col` refuses a column
   whose bytes do not match its manifest digest. Copy this pattern; do not write channels with a bare
   `np.save`.
 - **`gems52.azimuth.axial_resultant` returns `(mean, R, n)`** — the third value is a weighted pixel count,
   not a circular SD. The axial circular SD is `sqrt(−2 ln R)` (Mardia–Jupp), undefined as R → 0.
 - **The H75 control does not reproduce inside 1e−3 from a re-implementation** (B_DVA 0.187587 vs committed
-  0.186352, |Δ| 1.23e−3; IR-H76-004). If a round needs an exact replay of an earlier round's channels,
+  0.186352, |Δ| 1.23e−3; IR-H82-004). If a round needs an exact replay of an earlier round's channels,
   persist those channels as an artifact instead of re-deriving them; `single_B` still reproduces at 3.9e−4.
 - **Site:** `docs/index.html` is current-first with every previous round preserved verbatim inside one
   collapsed `<details>` (`<!--ARCHIVE-START-->`/`<!--ARCHIVE-END-->`). `scripts/check_site.py` asserts a
   dozen historical strings on that page, so never rewrite it from scratch — `legacy_index_body()` in
-  `scripts/publish_h76_site.py` carries them forward and is idempotent. `docs/validator.html` +
+  `scripts/publish_h82_site.py` carries them forward and is idempotent. `docs/validator.html` +
   `docs/assets/tifcheck.js` decode a candidate in the browser (TIFF none/LZW/DEFLATE, predictor 1/2,
   strips/tiles, ZIP) and are pinned by test against rasterio-measured pixel counts. `check_site._stamp`
   now reads `<alias>-receipt.json` sidecars and date-only filenames; that repaired a pre-existing
   "R5 novelty recomputed 0.992087 != receipt 1.0" failure, now 1.0000 over 71 rasters.
 
-File `docs/downloads/h76-candidate.tif` (`gems52-h76-dva2vsa-B-37654px-20261009T213414Z.tif`, 140,555 bytes,
+File `docs/downloads/h82-candidate.tif` (`gems52-h82-dva2vsa-B-37654px-20261009T213414Z.tif`, 140,555 bytes,
 SHA-256 `17c3f8325ac6f267b1b8cc58bc6fd9495c118c30de64d5f78293d19d7f20c907`) is **DOWNLOAD YES, SUBMIT NO**.
 
-<!--/H76-AGENTS-->
+<!--/H82-AGENTS-->
 <!--H75-AGENTS-->
 ## Current H75 continuation (2026-10-09)
 Read README's H75 block, `knowledge/65` (+65a/65b) and `knowledge/66`. H75: B_DVA (View B + directional variogram

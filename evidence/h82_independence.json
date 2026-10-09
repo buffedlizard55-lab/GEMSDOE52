@@ -11,7 +11,7 @@
   "min_blocks": 20,
   "negative_ring_px": 4
  },
- "thresholds_not_retuned_for_h76": true,
+ "thresholds_not_retuned_for_h82": true,
  "view_A": "single_A (geophysical/subsurface store columns only)",
  "view_B": "single_B (surface store columns only)",
  "per_fold": [
@@ -20968,5 +20968,5 @@
   ]
  },
  "interpretation": "the abandon bar is |rho| > 0.60; a strongly correlated pair would mean the two views share their errors and co-training could only amplify a common bias",
- "standing_deviation": "pseudo-label exchange is still not run: View-A sufficiency failed again this round (see evidence/h76_fit.json), and H71 measured that exchange LOWERED the A2 out-of-fold AUC (0.5019 -> 0.4759), which is the bias amplification the brief warns about"
+ "standing_deviation": "pseudo-label exchange is still not run: View-A sufficiency failed again this round (see evidence/h82_fit.json), and H71 measured that exchange LOWERED the A2 out-of-fold AUC (0.5019 -> 0.4759), which is the bias amplification the brief warns about"
 }

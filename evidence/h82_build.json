@@ -1,10 +1,10 @@
 {
  "stage": "write",
- "file": "submission/gems52-h76-dva2vsa-B-37654px-20261009T213414Z.tif",
+ "file": "submission/gems52-h82-dva2vsa-B-37654px-20261009T215811Z.tif",
  "bytes": 140555,
  "sha256": "17c3f8325ac6f267b1b8cc58bc6fd9495c118c30de64d5f78293d19d7f20c907",
- "name": "h76-dva2vsa-B-37654px-20261009T213414Z",
- "note": "H76: View-B + 50 DVA-2 + 10 variogram/strike-alignment channels; 8-dir integer fan, lags 100-600m; 200m catalogue ring excluded; binary dots",
+ "name": "h82-dva2vsa-B-37654px-20261009T215811Z",
+ "note": "H82: View-B + 50 DVA-2 + 10 variogram/strike-alignment channels; 8-dir integer fan, lags 100-600m; 200m catalogue ring excluded; binary dots",
  "note_chars": 140,
  "validator": {
   "count": 1,
@@ -33,14 +33,14 @@
   "range_rule_source": "official: values between 0 and 1, single layer float32, EPSG:32611, 100 m, same bounds as the training data (https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/)"
  },
  "writer_receipt": {
-  "file": "gems52-h76-dva2vsa-B-37654px-20261009T213414Z.tif",
+  "file": "gems52-h82-dva2vsa-B-37654px-20261009T215811Z.tif",
   "sha256": "17c3f8325ac6f267b1b8cc58bc6fd9495c118c30de64d5f78293d19d7f20c907",
   "bytes": 140555,
-  "submission_name": "h76-dva2vsa-B-37654px-20261009T213414Z",
-  "note": "H76: View-B + 50 DVA-2 + 10 variogram/strike-alignment channels; 8-dir integer fan, lags 100-600m; 200m catalogue ring excluded; binary dots",
+  "submission_name": "h82-dva2vsa-B-37654px-20261009T215811Z",
+  "note": "H82: View-B + 50 DVA-2 + 10 variogram/strike-alignment channels; 8-dir integer fan, lags 100-600m; 200m catalogue ring excluded; binary dots",
   "note_chars": 140,
   "validator": {
-   "path": "/home/user/GEMSDOE52/submission/gems52-h76-dva2vsa-B-37654px-20261009T213414Z.tif",
+   "path": "/home/user/GEMSDOE52/submission/gems52-h82-dva2vsa-B-37654px-20261009T215811Z.tif",
    "bytes": 140555,
    "sha256": "17c3f8325ac6f267b1b8cc58bc6fd9495c118c30de64d5f78293d19d7f20c907",
    "bands": 1,
@@ -88,14 +88,14 @@
    "ok": true,
    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
   },
-  "zip_file": "gems52-h76-dva2vsa-B-37654px-20261009T213414Z.zip",
-  "zip_sha256": "828f6391f7142eed8b3df66989d184baa3e638dfef54566f95a60d123b9b0811",
+  "zip_file": "gems52-h82-dva2vsa-B-37654px-20261009T215811Z.zip",
+  "zip_sha256": "6dc56ff121d1d441df81bc1b035da608cdec7b03dd62aa85e5388e5fb58402e1",
   "approved_for_weekly_slot": false,
   "promoted": false,
   "submission_slots_used": 0,
   "status": "research-only; local format validation is not organizer acceptance",
   "metadata": {
-   "round": "H76",
+   "round": "H82",
    "primary_arm": "B_DVA2_VSA"
   }
  },
@@ -134,12 +134,12 @@
   "median_dist_m": 1562.0499351813307,
   "within_300m_pct": 10.798321559462474
  },
- "reasoning_csv": "docs/downloads/gems52-h76-dva2vsa-B-37654px-20261009T213414Z-reasoning.csv",
- "started_utc": "2026-10-09T21:34:21+00:00",
+ "reasoning_csv": "docs/downloads/gems52-h82-dva2vsa-B-37654px-20261009T215811Z-reasoning.csv",
+ "started_utc": "2026-10-09T21:58:19+00:00",
  "download_staged": {
-  "tif": "docs/downloads/h76-candidate.tif",
-  "zip": "docs/downloads/h76-candidate.zip",
+  "tif": "docs/downloads/h82-candidate.tif",
+  "zip": "docs/downloads/h82-candidate.zip",
   "tif_sha256": "17c3f8325ac6f267b1b8cc58bc6fd9495c118c30de64d5f78293d19d7f20c907",
-  "zip_sha256": "9a20bbcd44ab970be47751ea547622a4b8703e1375857502ea8eb4e1077c6627"
+  "zip_sha256": "b89875580382af6486fde53ef01128c4a8b2a2829d516b685373d41b1a8d777d"
  }
 }

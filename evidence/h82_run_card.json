@@ -1,13 +1,13 @@
 {
- "round": "H76",
- "generated_utc": "2026-10-09T21:34:23+00:00",
+ "round": "H82",
+ "generated_utc": "2026-10-09T21:58:21+00:00",
  "preregistration": {
-  "document": "h76_preregistration.json",
-  "sha256": "fe7050eb40ecf23ff717514ac5067cbc7d45cfa1f844c6d12fa0ee85d6b3b571",
-  "hypothesis_document": "knowledge/67_hypotheses_H76_preregistered.md",
-  "hypothesis_document_sha256": "fe7050eb40ecf23ff717514ac5067cbc7d45cfa1f844c6d12fa0ee85d6b3b571",
+  "document": "h82_preregistration.json",
+  "sha256": "e979a1773eb629a3d274f0a030a9d65eac6c2d859d6693a9f657bae2840d4852",
+  "hypothesis_document": "knowledge/72_hypotheses_H82_preregistered.md",
+  "hypothesis_document_sha256": "e979a1773eb629a3d274f0a030a9d65eac6c2d859d6693a9f657bae2840d4852",
   "frozen_before_any_fit": true,
-  "amendment": "67a: XVSA_visible_tensor_mag demoted to a diagnostic before any fit because it is monotone in distance-to-visible-catalogue and would trip the 0.90 canary by construction"
+  "amendment": "72a: XVSA_visible_tensor_mag demoted to a diagnostic before any fit because it is monotone in distance-to-visible-catalogue and would trip the 0.90 canary by construction"
  },
  "hypothesis": "Fault damage zones impose a direction-dependent semivariance on isostatic gravity and deterministic-elevation fields that the 4-direction H75 fan cannot resolve; extending the fan to 8 integer directions at lags 100-600 m and testing each pixel's winning direction against the fold's visible-catalogue strike recovers oblique and transfer structures that are absent from the USGS/INGENIOUS catalogue.",
  "mechanism": "A 300-900 m damage zone of increased fracture porosity and brecciation perturbs the  Bouguer field and the regolith thickness along the fault's own strike. Semivariance measured parallel to that strike stays low while the perpendicular lag crosses the contrast, so gamma(h, phi) is anisotropic with the maximum perpendicular to the fault. An 8-direction fan resolves the perpendicular at 22.5 degrees instead of 45, and cos(2*(theta_max - psi - pi/2)) tests whether the winning direction is consistent with the regional and local strike field measured from the fold's own visible catalogue.",
@@ -112,7 +112,7 @@
   ],
   "save_verified_by_reload": true,
   "channels_needing_rewrite": 0,
-  "quantisation_note": "theta_max is the argmax over 8 discrete fan directions, so cos(2*delta) against a scalar regional strike takes only 4 distinct values; VSA_cos2reg is therefore a categorical recoding of the winning fan direction, not a continuous alignment. Measured, not assumed - see knowledge/68.",
+  "quantisation_note": "theta_max is the argmax over 8 discrete fan directions, so cos(2*delta) against a scalar regional strike takes only 4 distinct values; VSA_cos2reg is therefore a categorical recoding of the winning fan direction, not a continuous alignment. Measured, not assumed - see knowledge/73.",
   "degenerate_tensor_fraction": "VSA_cos2loc is 0 wherever the local structure tensor is degenerate: 69.9% / 53.6% / 46.7% / 47.8% of eligible pixels by fold."
  },
  "cotraining_lane": "not re-run as pseudo-label exchange: View-A sufficiency has failed six consecutive rounds (knowledge/55, knowledge/64, evidence/h74_sufficiency.json). The lane's mandated independence test is reported as a standing measurement instead, and the A-only arm is fitted and scored here so the failure is re-measured rather than cited.",
@@ -129,7 +129,7 @@
    "min_blocks": 20,
    "negative_ring_px": 4
   },
-  "thresholds_not_retuned_for_h76": true,
+  "thresholds_not_retuned_for_h82": true,
   "view_A": "single_A (geophysical/subsurface store columns only)",
   "view_B": "single_B (surface store columns only)",
   "per_fold": [
@@ -21086,7 +21086,7 @@
    ]
   },
   "interpretation": "the abandon bar is |rho| > 0.60; a strongly correlated pair would mean the two views share their errors and co-training could only amplify a common bias",
-  "standing_deviation": "pseudo-label exchange is still not run: View-A sufficiency failed again this round (see evidence/h76_fit.json), and H71 measured that exchange LOWERED the A2 out-of-fold AUC (0.5019 -> 0.4759), which is the bias amplification the brief warns about"
+  "standing_deviation": "pseudo-label exchange is still not run: View-A sufficiency failed again this round (see evidence/h82_fit.json), and H71 measured that exchange LOWERED the A2 out-of-fold AUC (0.5019 -> 0.4759), which is the bias amplification the brief warns about"
  },
  "sufficiency_view_A": {
   "mean": 0.5112748996009956,
@@ -21098,7 +21098,7 @@
   ],
   "gate_mean": 0.6,
   "gate_min_fold": 0.55,
-  "verdict": "standing negative; see knowledge/67 sec.0"
+  "verdict": "standing negative; see knowledge/72 sec.0"
  },
  "canary": {
   "label": "LEAKAGE CANARY (single-channel direction-insensitive AUC on the held-out region)",
@@ -29281,10 +29281,10 @@
    "scope": "Only the supplied, aligned accessible inventory; not a proof against all private/unlinked submissions"
   },
   "scored_only_registry": {
-   "source": "registry/h76_scored_registry.json",
+   "source": "registry/h82_scored_registry.json",
    "n": 13,
    "all_sha_match": true,
-   "membership_rule": "knowledge/67 section 5.1: single-band grid-aligned raster AND an owner-reported public-board score for that filename in this repository score list, or an organiser-side calibration file pinned under scored_*/calib_*/ref_* in registry/data_manifest.json",
+   "membership_rule": "knowledge/72 section 5.1: single-band grid-aligned raster AND an owner-reported public-board score for that filename in this repository score list, or an organiser-side calibration file pinned under scored_*/calib_*/ref_* in registry/data_manifest.json",
    "declared_effect": "LOOSENING of the literal lane rule; the full 526-blob census verdict is still computed and reported verbatim, and a restricted PASS never waives a literal DUPLICATE/STOP",
    "score_label": "OWNER-REPORTED (never ORGANIZER-CONFIRMED)",
    "scores": {
@@ -29426,18 +29426,18 @@
   "not_union_pass": true
  },
  "raster": {
-  "file": "submission/gems52-h76-dva2vsa-B-37654px-20261009T213414Z.tif",
+  "file": "submission/gems52-h82-dva2vsa-B-37654px-20261009T215811Z.tif",
   "bytes": 140555,
   "sha256": "17c3f8325ac6f267b1b8cc58bc6fd9495c118c30de64d5f78293d19d7f20c907",
-  "name": "h76-dva2vsa-B-37654px-20261009T213414Z",
-  "note": "H76: View-B + 50 DVA-2 + 10 variogram/strike-alignment channels; 8-dir integer fan, lags 100-600m; 200m catalogue ring excluded; binary dots",
+  "name": "h82-dva2vsa-B-37654px-20261009T215811Z",
+  "note": "H82: View-B + 50 DVA-2 + 10 variogram/strike-alignment channels; 8-dir integer fan, lags 100-600m; 200m catalogue ring excluded; binary dots",
   "note_chars": 140,
   "emitted_cells": 37654,
   "download_staged": {
-   "tif": "docs/downloads/h76-candidate.tif",
-   "zip": "docs/downloads/h76-candidate.zip",
+   "tif": "docs/downloads/h82-candidate.tif",
+   "zip": "docs/downloads/h82-candidate.zip",
    "tif_sha256": "17c3f8325ac6f267b1b8cc58bc6fd9495c118c30de64d5f78293d19d7f20c907",
-   "zip_sha256": "9a20bbcd44ab970be47751ea547622a4b8703e1375857502ea8eb4e1077c6627"
+   "zip_sha256": "b89875580382af6486fde53ef01128c4a8b2a2829d516b685373d41b1a8d777d"
   }
  },
  "validator": {
@@ -29466,7 +29466,7 @@
   "PASS": true,
   "range_rule_source": "official: values between 0 and 1, single layer float32, EPSG:32611, 100 m, same bounds as the training data (https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/)"
  },
- "reasoning_csv": "docs/downloads/gems52-h76-dva2vsa-B-37654px-20261009T213414Z-reasoning.csv",
+ "reasoning_csv": "docs/downloads/gems52-h82-dva2vsa-B-37654px-20261009T215811Z-reasoning.csv",
  "verdict": "NEGATIVE / RESEARCH-ONLY: download is safe, submission is not recommended",
  "verdict_promote": false,
  "verdict_reasons": {

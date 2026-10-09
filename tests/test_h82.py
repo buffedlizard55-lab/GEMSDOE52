@@ -1,9 +1,9 @@
-"""H76 regression tests.
+"""H82 regression tests.
 
 Most of these exist because something broke during the round and the fix has to stay fixed:
 
 * ``save_verified`` — the first channel build produced 8 files of 79 with one 4 KiB page of zeros after
-  the .npy header (IR-H76-002). Persistence must re-read what it wrote.
+  the .npy header (IR-H82-002). Persistence must re-read what it wrote.
 * ``Bank.vsa`` — band names contain underscores (``det_elev``, ``iso_grav_anom_hg``), so a plain
   ``split("_")`` raised ``ValueError`` on every VSA channel.
 * ``arm_channels("single_B")`` — the control arm must carry the View B store columns. Written once with
@@ -25,21 +25,21 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 EVID = ROOT / "evidence"
 REG = ROOT / "registry"
-FEAT = ROOT / "work/h76/features"
+FEAT = ROOT / "work/h82/features"
 sys.path.insert(0, str(ROOT / "scripts"))
 
-CARD = EVID / "h76_run_card.json"
+CARD = EVID / "h82_run_card.json"
 
 
 def _card():
     if not CARD.exists():
-        pytest.skip("H76 run card not built yet (run scripts/run_h76.py card)")
+        pytest.skip("H82 run card not built yet (run scripts/run_h82.py card)")
     return json.loads(CARD.read_text())
 
 
 # ---------------------------------------------------------------------------------- preregistration
 def test_preregistration_pin_matches_the_hypothesis_document():
-    reg = json.loads((REG / "h76_preregistration.json").read_text())
+    reg = json.loads((REG / "h82_preregistration.json").read_text())
     doc = ROOT / reg["hypothesis_document"]
     assert doc.exists(), reg["hypothesis_document"]
     got = hashlib.sha256(doc.read_bytes()).hexdigest()
@@ -49,13 +49,13 @@ def test_preregistration_pin_matches_the_hypothesis_document():
 
 
 def test_preregistration_declares_the_scored_registry_a_loosening():
-    reg = json.loads((REG / "h76_preregistration.json").read_text())
+    reg = json.loads((REG / "h82_preregistration.json").read_text())
     blob = json.dumps(reg).lower()
     assert "duplicate" in blob and "stop" in blob, "the literal DUPLICATE/STOP rule must stay in the pin"
 
 
 def test_scored_registry_is_sha_verified_and_never_organizer_confirmed():
-    d = json.loads((REG / "h76_scored_registry.json").read_text())
+    d = json.loads((REG / "h82_scored_registry.json").read_text())
     assert d["all_sha_match"] is True
     assert d["n_files"] == len(d["files"]) >= 10
     assert "LOOSENING" in d["declared_effect"] and "never waives a literal DUPLICATE/STOP" in d["declared_effect"]
@@ -70,13 +70,13 @@ def test_scored_registry_is_sha_verified_and_never_organizer_confirmed():
 
 # ---------------------------------------------------------------------------------- persistence
 def test_save_verified_rewrites_a_torn_write(tmp_path, monkeypatch):
-    import run_h76 as R
+    import run_h82 as R
 
     real_save = np.save
     state = {"calls": 0}
 
     def torn_save(path, arr, *a, **k):
-        """Write correctly, then zero one page after the 128-byte header — exactly IR-H76-002."""
+        """Write correctly, then zero one page after the 128-byte header — exactly IR-H82-002."""
         real_save(path, arr, *a, **k)
         state["calls"] += 1
         if state["calls"] == 1:
@@ -95,14 +95,14 @@ def test_save_verified_rewrites_a_torn_write(tmp_path, monkeypatch):
 def test_save_verified_does_not_call_itself():
     """The regex that routed every np.save through save_verified also rewrote the call inside
     save_verified, producing 993-deep recursion. Guard the source, not just the behaviour."""
-    src = (ROOT / "scripts/run_h76.py").read_text()
+    src = (ROOT / "scripts/run_h82.py").read_text()
     body = src.split("def save_verified(", 1)[1].split("\ndef ", 1)[0]
     assert "save_verified(path" not in body, "save_verified must call plain np.save"
     assert "np.save(path, want)" in body
 
 
 def test_save_verified_accepts_nan_and_bool_columns(tmp_path):
-    import run_h76 as R
+    import run_h82 as R
     a = np.array([0.0, np.nan, 1.0, np.nan], np.float32)
     sha, att = R.save_verified(tmp_path / "nan.npy", a)
     assert att == 1 and np.array_equal(np.load(tmp_path / "nan.npy"), a, equal_nan=True)
@@ -122,7 +122,7 @@ def test_every_channel_file_matches_its_manifest_digest():
 
 @pytest.mark.skipif(not (FEAT / "manifest.json").exists(), reason="channel bank not built on this machine")
 def test_bank_vsa_parses_band_names_that_contain_underscores():
-    import run_h76 as R
+    import run_h82 as R
     bank = R.Bank(FEAT)
     rows = np.arange(0, bank.manifest["n_eligible"], 9973)
     for nm in R.VSA:
@@ -137,18 +137,18 @@ def test_bank_vsa_parses_band_names_that_contain_underscores():
 
 @pytest.mark.skipif(not (FEAT / "manifest.json").exists(), reason="channel bank not built on this machine")
 def test_channel_inventory_matches_the_frozen_design():
-    import run_h76 as R
+    import run_h82 as R
     assert len(R.DVA2) == 50 and len(R.VSA) == 10 and len(R.H75C) == 12
     assert len(set(R.DVA2) & set(R.H75C)) == 0
     man = json.loads((FEAT / "manifest.json").read_text())
     assert set(R.DVA2 + R.VSA) == set(man["learner_channels"]["dva2"] + man["learner_channels"]["vsa"])
     assert "XVSA_visible_tensor_mag" not in json.dumps(man), (
-        "amendment 67a demoted it to a diagnostic before any fit; it must never reappear as a learner channel")
+        "amendment 72a demoted it to a diagnostic before any fit; it must never reappear as a learner channel")
 
 
 def test_arm_channels_single_B_carries_the_view_B_store_columns():
     """The control arm must be able to reproduce 0.174517; an empty feature matrix cannot."""
-    import run_h76 as R
+    import run_h82 as R
     R.base_vb_cache.update(vb=["X_dem_slope", "X_rad_tc"], va=["X_mag_TMI_up150"])
     assert R.arm_channels("single_B") == (["X_dem_slope", "X_rad_tc"], [])
     assert R.arm_channels("single_A") == (["X_mag_TMI_up150"], [])
@@ -227,20 +227,20 @@ def test_run_card_labels_every_score_class_it_quotes():
 
 def test_download_matches_the_submission_bytes_and_the_card():
     c = _card()
-    served = ROOT / "docs/downloads/h76-candidate.tif"
+    served = ROOT / "docs/downloads/h82-candidate.tif"
     if not served.exists():
-        pytest.skip("site not published yet (run scripts/publish_h76_site.py)")
+        pytest.skip("site not published yet (run scripts/publish_h82_site.py)")
     b = served.read_bytes()
     assert hashlib.sha256(b).hexdigest() == c["raster"]["sha256"]
     assert b == (ROOT / c["raster"]["file"]).read_bytes()
-    with zipfile.ZipFile(ROOT / "docs/downloads/h76-candidate.zip") as z:
+    with zipfile.ZipFile(ROOT / "docs/downloads/h82-candidate.zip") as z:
         assert len(z.namelist()) == 1 and z.namelist()[0].endswith(".tif")
         assert hashlib.sha256(z.read(z.namelist()[0])).hexdigest() == c["raster"]["sha256"]
 
 
 def test_served_raster_is_single_band_float32_in_the_unit_interval():
     c = _card()
-    served = ROOT / "docs/downloads/h76-candidate.tif"
+    served = ROOT / "docs/downloads/h82-candidate.tif"
     if not served.exists():
         pytest.skip("site not published yet")
     import rasterio
@@ -339,8 +339,8 @@ const fs=require('fs');const api=require(process.argv[2]);
 
 # ---------------------------------------------------------------------------------- site
 def test_site_pages_exist_and_link_only_to_real_files():
-    for rel in ("docs/index.html", "docs/h76.html", "docs/h76-executive-summary.html",
-                "docs/h76-hypotheses.html", "docs/h76-sources.html", "docs/validator.html",
+    for rel in ("docs/index.html", "docs/h82.html", "docs/h82-executive-summary.html",
+                "docs/h82-hypotheses.html", "docs/h82-sources.html", "docs/validator.html",
                 "index.html"):
         p = ROOT / rel
         if not p.exists():
@@ -371,9 +371,9 @@ def test_index_puts_the_verdict_before_the_download_button():
     if not p.exists():
         pytest.skip("site not published yet")
     t = p.read_text()
-    button = 'href="downloads/h76-candidate.tif"'
+    button = 'href="downloads/h82-candidate.tif"'
     if "OK to download?" not in t or button not in t:
-        pytest.skip("docs/index.html is still a previous round's page; run scripts/publish_h76_site.py")
+        pytest.skip("docs/index.html is still a previous round's page; run scripts/publish_h82_site.py")
     assert t.index("OK to download?") < t.index(button), (
         "the brief requires it to be obvious whether the file may be downloaded and submitted; "
         "the verdict must precede the button")

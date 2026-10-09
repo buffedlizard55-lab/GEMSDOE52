@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Render the H76 site: a clean current-first index, the round page, the submission guide, the
+"""Render the H82 site: a clean current-first index, the round page, the submission guide, the
 hypothesis ranking, the source register, and the root landing page.
 
 Two rules this script exists to enforce:
 
-1. **No number is typed by hand.** Every figure is read out of ``evidence/h76_*.json``,
-   ``registry/h76_scored_registry.json`` or ``registry/leaderboard_snapshot_2026-10-09.json``. A page
+1. **No number is typed by hand.** Every figure is read out of ``evidence/h82_*.json``,
+   ``registry/h82_scored_registry.json`` or ``registry/leaderboard_snapshot_2026-10-09.json``. A page
    that disagrees with its own receipt is worse than no page.
 2. **The verdict is at the top, before the download button, and it is unambiguous.** The brief asks
    that it be *obvious* whether a file is OK to download and submit. "OK to download" and "OK to
@@ -14,8 +14,8 @@ Two rules this script exists to enforce:
 It also retires the historical-banner stacking that made ``docs/index.html`` unreadable: previous
 rounds become one compact table row each, and the current round gets the page.
 
-Run after ``scripts/run_h76.py card``:
-    .venv/bin/python scripts/publish_h76_site.py
+Run after ``scripts/run_h82.py card``:
+    .venv/bin/python scripts/publish_h82_site.py
 """
 from __future__ import annotations
 
@@ -43,7 +43,7 @@ def load(p: Path):
 
 
 def ev(name: str):
-    return load(EVID / f"h76_{name}.json")
+    return load(EVID / f"h82_{name}.json")
 
 
 def esc(x) -> str:
@@ -73,11 +73,11 @@ def head(title: str, description: str) -> str:
             '<a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation">'
             '<a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>'
             '<a href="index.html">Current round</a>'
-            '<a href="h76.html">H76 result</a>'
-            '<a href="h76-executive-summary.html">How to submit</a>'
+            '<a href="h82.html">H82 result</a>'
+            '<a href="h82-executive-summary.html">How to submit</a>'
             '<a href="validator.html">Check a file</a>'
-            '<a href="h76-hypotheses.html">Hypotheses</a>'
-            '<a href="h76-sources.html">Sources</a>'
+            '<a href="h82-hypotheses.html">Hypotheses</a>'
+            '<a href="h82-sources.html">Sources</a>'
             '<a href="downloads/index.html">Archive</a>'
             '</nav></header><main id="main">')
 TAIL = "</main></body></html>\n"
@@ -106,7 +106,7 @@ def legacy_index_body(path: Path) -> str:
     if a >= 0 and b > a:
         # Everything outside the markers is this script's own previous output, so it is discarded and
         # only the preserved legacy fragment is carried forward. Keeping body[:a] as well duplicated a
-        # whole previous H76 page into the archive on every re-publish.
+        # whole previous H82 page into the archive on every re-publish.
         body = body[a + len(ARCHIVE_START):b]
     # duplicate ids would be invalid HTML once this fragment is nested inside the new page
     body = body.replace(' id="main"', "").replace("<main>", "").replace("</main>", "")
@@ -130,7 +130,7 @@ def notice_block(download_ok: bool, submit_ok: bool, verdict: str) -> str:
 
 def actions_block(tif: str, zip_: str, csv_: str | None) -> str:
     a = (f'<div class="actions"><a class="button" href="{esc(tif)}" download>'
-         f'Download the H76 GeoTIFF &#8595;</a>'
+         f'Download the H82 GeoTIFF &#8595;</a>'
          f'<a class="button secondary" href="{esc(zip_)}" download>Single-TIFF ZIP</a>')
     if csv_:
         a += f'<a class="button secondary" href="{esc(csv_)}" download>Per-cell geological reasoning CSV</a>'
@@ -156,9 +156,9 @@ def main() -> int:
     bp = ev("build_placement")
     ln = ev("lane")
     bu = ev("build")
-    scored = load(REG / "h76_scored_registry.json")
+    scored = load(REG / "h82_scored_registry.json")
     board = load(REG / "leaderboard_snapshot_2026-10-09.json")
-    prereg = load(REG / "h76_preregistration.json")
+    prereg = load(REG / "h82_preregistration.json")
 
     stem = Path(card["raster"]["file"]).stem
     sub_receipt = SUBM / f"{stem}.json"
@@ -180,13 +180,13 @@ def main() -> int:
     DOWN.mkdir(parents=True, exist_ok=True)
     DAD.mkdir(parents=True, exist_ok=True)
     src_tif = ROOT / card["raster"]["file"]
-    shutil.copy(src_tif, DOWN / "h76-candidate.tif")
+    shutil.copy(src_tif, DOWN / "h82-candidate.tif")
     shutil.copy(src_tif, DOWN / f"{stem}.tif")
-    with (DOWN / "h76-candidate.zip").open("wb") as fo:
+    with (DOWN / "h82-candidate.zip").open("wb") as fo:
         import zipfile
         with zipfile.ZipFile(fo, "w", zipfile.ZIP_DEFLATED) as z:
             z.write(src_tif, src_tif.name)
-    shutil.copy(DOWN / "h76-candidate.zip", DOWN / f"{stem}.zip")
+    shutil.copy(DOWN / "h82-candidate.zip", DOWN / f"{stem}.zip")
     csv_name = Path(card["reasoning_csv"]["path"]).name if isinstance(card["reasoning_csv"], dict) \
         else Path(card["reasoning_csv"]).name
     csv_src = DOWN / csv_name
@@ -201,13 +201,13 @@ def main() -> int:
             shutil.copyfileobj(fi, fo)
     if csv_src.with_suffix(".csv.gz").exists():
         csv_link = csv_name + ".gz"
-    shutil.copy(SUBM / f"{stem}.json", DOWN / "h76-candidate-receipt.json")
-    for f in sorted(EVID.glob("h76_*.json")):
+    shutil.copy(SUBM / f"{stem}.json", DOWN / "h82-candidate-receipt.json")
+    for f in sorted(EVID.glob("h82_*.json")):
         shutil.copy(f, DAD / f.name)
     # namespaced: docs/data/leaderboard_snapshot_2026-10-09.json already exists from another session
     shutil.copy(REG / "leaderboard_snapshot_2026-10-09.json",
-                DAD / "h76_leaderboard_snapshot_2026-10-09.json")
-    (SUBM / "H76_LATEST.txt").write_text(
+                DAD / "h82_leaderboard_snapshot_2026-10-09.json")
+    (SUBM / "H82_LATEST.txt").write_text(
         f"{stem}.tif\n# pointer for the site; NOT an upload approval\n"
         f"# submit_ok={sb_ok} download_ok={dl_ok}\n")
 
@@ -284,30 +284,30 @@ def main() -> int:
         archive = (
             '<hr class="divider"><section><details><summary><b>Archive</b> &mdash; every previous '
             'round&rsquo;s banner and evidence section, preserved verbatim (collapsed). None of it is the '
-            'H76 file and none of it is upload approval.</summary>'
+            'H82 file and none of it is upload approval.</summary>'
             f'<div class="small">{ARCHIVE_START}{legacy}{ARCHIVE_END}</div></details></section>')
     dl_word = "yes" if dl_ok else "no"
     sb_word = "yes" if sb_ok else "no"
-    index = head("GEMS / DOE - H76 research GeoTIFF and explicit submission status - GEMSDOE52",
-                 f"H76 verdict: {card['verdict']}. Download {dl_word}, submit {sb_word}. "
+    index = head("GEMS / DOE - H82 research GeoTIFF and explicit submission status - GEMSDOE52",
+                 f"H82 verdict: {card['verdict']}. Download {dl_word}, submit {sb_word}. "
                  f"{i(n_dots)} emitted cells, SHA-256 {card['raster']['sha256'][:16]}") + f"""
 <section class="hero"><div>
-<div class="eyebrow">DOE GEMS / H76 &middot; extended directional variogram anisotropy + variogram&ndash;strike
+<div class="eyebrow">DOE GEMS / H82 &middot; extended directional variogram anisotropy + variogram&ndash;strike
 alignment &middot; co-training lane, View A (subsurface) vs View B (surface)</div>
 <h1>Download the file.<br>Read the verdict first.</h1>
-<p class="lead">{esc(headline)} H76 tests one frozen hypothesis: that a fault damage zone makes
+<p class="lead">{esc(headline)} H82 tests one frozen hypothesis: that a fault damage zone makes
 semivariance direction-dependent in the isostatic gravity and deterministic-elevation fields, and that a
 4-direction fan (H75) is too coarse to resolve the perpendicular. The fan is extended to 8 integer
 directions at lags 100&ndash;600 m, and each pixel&rsquo;s winning direction is tested against the strike
 field measured from that fold&rsquo;s <em>own visible</em> catalogue &mdash; never from the labels being
 predicted.</p>
 {notice_block(dl_ok, sb_ok, card["verdict"])}
-{actions_block("downloads/h76-candidate.tif", "downloads/h76-candidate.zip", "downloads/" + csv_link)}
+{actions_block("downloads/h82-candidate.tif", "downloads/h82-candidate.zip", "downloads/" + csv_link)}
 <p class="fileline">{fileline}</p>
-<p class="small"><a href="h76-executive-summary.html">Exactly how to submit, and whether this file may be
+<p class="small"><a href="h82-executive-summary.html">Exactly how to submit, and whether this file may be
 submitted &rarr;</a> &middot; <a href="validator.html">Check any .tif in your browser before uploading
-&rarr;</a> &middot; <a href="data/h76_run_card.json">Complete JSON run card &nearr;</a> &middot;
-<a href="h76.html">Full H76 result &rarr;</a></p>
+&rarr;</a> &middot; <a href="data/h82_run_card.json">Complete JSON run card &nearr;</a> &middot;
+<a href="h82.html">Full H82 result &rarr;</a></p>
 <p class="small">Submission name: <code>{esc(card["raster"]["name"])}</code><br>
 Submission note ({card["raster"]["note_chars"]}/140 characters): <code>{esc(card["raster"]["note"])}</code></p>
 </div></section>
@@ -326,7 +326,7 @@ Submission note ({card["raster"]["note_chars"]}/140 characters): <code>{esc(card
 <p class="small"><b>These are HOLDOUT-DTI numbers, not organiser scores.</b> In this repository the
 hide-and-recover instrument does not rank leaderboard performance (Spearman &minus;0.10 over R4), so a
 holdout gain is never presented as a board forecast. The only ORGANIZER-CONFIRMED numbers on this site are
-the public leaderboard rows in <a href="h76-sources.html">the source register</a>.</p></section>
+the public leaderboard rows in <a href="h82-sources.html">the source register</a>.</p></section>
 <hr class="divider">
 
 <section><h2>Gates, measured</h2>
@@ -334,7 +334,7 @@ the public leaderboard rows in <a href="h76-sources.html">the source register</a
 <p class="small">Local validator only &mdash; this is <b>not</b> an organiser acceptance receipt. The lane
 gate is reported twice on purpose: once against the full {i(lane["full_census_rasters"])}-raster census and
 once against the {lane["restricted_scored_rasters"]}-raster scored-only registry
-(<code>registry/h76_scored_registry.json</code>). The scored-only view is a declared loosening; a PASS
+(<code>registry/h82_scored_registry.json</code>). The scored-only view is a declared loosening; a PASS
 there never waives a literal DUPLICATE/STOP against the full census
 (<code>AGENTS.md</code>, IR-H73-011).</p></section>
 <hr class="divider">
@@ -376,7 +376,7 @@ of the best OWNER-REPORTED file in this repository (0.2778): emit a pixel only i
 <hr class="divider">
 
 <section><h2>Previous rounds on this site</h2>
-<p class="small">Each is a separate artefact with its own receipt. None of them is the H76 file. Rounds
+<p class="small">Each is a separate artefact with its own receipt. None of them is the H82 file. Rounds
 whose lane gate failed are marked and must not be uploaded.</p>
 {table(["Round", "Idea", "HOLDOUT-DTI (primary arm)", "Outcome", "Lane / gate status", "Page"],
        [[r[0], r[1], r[2], r[3], r[4], f'<a href="{r[5]}">open</a>'] for r in prior_rows])}
@@ -390,9 +390,9 @@ whose lane gate failed are marked and must not be uploaded.</p>
         for r in board["rows"][:10]])}
 <p class="small">{i(board["rows_captured"])} rows captured; {esc(board["rows_not_captured"])}. Owner team
 <b>{esc(board["our_team"])}</b> is rank {board["our_rank"]} with a best reported {board["our_best_reported"]:.4f}.
-{esc(board["brief_correction"])} That contradiction is logged as <b>IR-H76-001</b>.
+{esc(board["brief_correction"])} That contradiction is logged as <b>IR-H82-001</b>.
 {esc(board["scope_note"])} Full snapshot:
-<a href="data/h76_leaderboard_snapshot_2026-10-09.json">registry/leaderboard_snapshot_2026-10-09.json</a>.</p>
+<a href="data/h82_leaderboard_snapshot_2026-10-09.json">registry/leaderboard_snapshot_2026-10-09.json</a>.</p>
 </section>
 <hr class="divider">
 
@@ -413,7 +413,7 @@ register</a>.</li>
 """ + TAIL
     (DOCS / "index.html").write_text(index)
 
-    # ------------------------------------------------------------------ h76.html (full result page)
+    # ------------------------------------------------------------------ h82.html (full result page)
     can_rows = []
     for fr in fit["folds"]:
         can_rows.append([fr["fold"], f"{fr['canary_max_learner']:.4f}", esc(fr["canary_worst"]),
@@ -425,14 +425,14 @@ register</a>.</li>
         auc_rows.append([fr["fold"]] + [f"{fr['auc'][a]:.4f}" for a in
                                         ("single_B", "B_DVA", "B_DVA2", "B_VSA", PRIMARY, "single_A")])
 
-    h76 = head("H76 full result - DOE GEMS #306 - GEMSDOE52",
+    h82 = head("H82 full result - DOE GEMS #306 - GEMSDOE52",
                "Extended directional variogram anisotropy and variogram/strike alignment: gates, "
                "HOLDOUT-DTI with 95% CIs, leakage canary, lane gate, and why the primary arm lost.") + f"""
 <section class="hero"><div>
-<div class="eyebrow">H76 &middot; full result</div>
+<div class="eyebrow">H82 &middot; full result</div>
 <h1>Extended directional variogram anisotropy, and variogram&ndash;strike alignment</h1>
 {notice_block(dl_ok, sb_ok, card["verdict"])}
-{actions_block("downloads/h76-candidate.tif", "downloads/h76-candidate.zip", "downloads/" + csv_link)}
+{actions_block("downloads/h82-candidate.tif", "downloads/h82-candidate.zip", "downloads/" + csv_link)}
 <p class="fileline">{fileline}</p>
 </div></section>
 <hr class="divider">
@@ -456,7 +456,7 @@ register</a>.</li>
 ])}
 <p class="small">{esc(card["channels"]["quantisation_note"])}</p>
 <p class="small">{esc(card["channels"]["degenerate_tensor_fraction"])}</p>
-<p class="small">Amendment 67a, applied <b>before any fit</b>: <code>XVSA_visible_tensor_mag</code> was
+<p class="small">Amendment 72a, applied <b>before any fit</b>: <code>XVSA_visible_tensor_mag</code> was
 demoted from a learner channel to a diagnostic because it is monotone in distance-to-visible-catalogue and
 would have tripped the 0.90 leakage canary by construction rather than by discovery.</p></section>
 <hr class="divider">
@@ -535,40 +535,40 @@ modelling lever.</li>
 <p>The champion&rsquo;s implied &rho; is about 0.1387, roughly 5.0&times; the random-placement rate of
 0.0279. To reach 0.3195 at S = 37,654 needs &rho; = 0.1595; at S = 100,000 it needs only &rho; = 0.0999.
 The binding constraint is therefore the <b>decay of ranker quality with budget</b>, &rho;(S), not the
-choice of S. H76 attacks exactly that: better ranking per emitted pixel.
+choice of S. H82 attacks exactly that: better ranking per emitted pixel.
 <b>Nothing on this page claims that it succeeded.</b></p></section>
 <hr class="divider">
 <section><h2>8. Receipts</h2>
 <p class="small">
-<a href="data/h76_run_card.json">run card</a> &middot;
-<a href="data/h76_channels.json">channels</a> &middot;
-<a href="data/h76_fit.json">fit + canary</a> &middot;
-<a href="data/h76_holdout.json">holdout</a> &middot;
-<a href="data/h76_build_placement.json">placement</a> &middot;
-<a href="data/h76_lane.json">lane gate</a> &middot;
-<a href="data/h76_build.json">write + validator</a> &middot;
+<a href="data/h82_run_card.json">run card</a> &middot;
+<a href="data/h82_channels.json">channels</a> &middot;
+<a href="data/h82_fit.json">fit + canary</a> &middot;
+<a href="data/h82_holdout.json">holdout</a> &middot;
+<a href="data/h82_build_placement.json">placement</a> &middot;
+<a href="data/h82_lane.json">lane gate</a> &middot;
+<a href="data/h82_build.json">write + validator</a> &middot;
 <a href="../{esc(prereg["hypothesis_document"])}">frozen preregistration</a> (SHA-256
 <code>{esc(prereg["hypothesis_sha256"][:16])}&hellip;</code>)
 </p></section>
 """ + TAIL
-    (DOCS / "h76.html").write_text(h76)
+    (DOCS / "h82.html").write_text(h82)
 
     # ------------------------------------------------------------------ executive summary
-    exsum = head("How to submit, and whether this file may be submitted - H76 - GEMSDOE52",
+    exsum = head("How to submit, and whether this file may be submitted - H82 - GEMSDOE52",
                  "Step-by-step submission instructions for DOE GEMS competition #306, the four causes "
-                 "of the [0,1] rejection, and the H76 verdict.") + f"""
+                 "of the [0,1] rejection, and the H82 verdict.") + f"""
 <section class="hero"><div>
-<div class="eyebrow">H76 &middot; executive summary &middot; exactly how to submit</div>
+<div class="eyebrow">H82 &middot; executive summary &middot; exactly how to submit</div>
 <h1>Two questions, answered separately</h1>
 {notice_block(dl_ok, sb_ok, card["verdict"])}
-{actions_block("downloads/h76-candidate.tif", "downloads/h76-candidate.zip", "downloads/" + csv_link)}
+{actions_block("downloads/h82-candidate.tif", "downloads/h82-candidate.zip", "downloads/" + csv_link)}
 <p class="fileline">{fileline}</p>
 </div></section>
 <hr class="divider">
 <section><h2>If you decide to submit it: the exact steps</h2>
 <ol>
-<li><b>Download</b> <a href="downloads/h76-candidate.tif" download>h76-candidate.tif</a>
-({i(card["raster"]["bytes"])} bytes) or the <a href="downloads/h76-candidate.zip" download>ZIP</a>.
+<li><b>Download</b> <a href="downloads/h82-candidate.tif" download>h82-candidate.tif</a>
+({i(card["raster"]["bytes"])} bytes) or the <a href="downloads/h82-candidate.zip" download>ZIP</a>.
 Both are the same bytes; the ZIP exists because the organiser&rsquo;s form accepts either a single-band
 GeoTIFF or a ZIP containing one.</li>
 <li><b>Check the file you actually downloaded</b> on <a href="validator.html">the browser checker</a>.
@@ -624,7 +624,7 @@ k(d) = max(1 &minus; d/R, 0) with R = 300 m, and the score is the distance-weigh
 TI(&alpha;, &beta;) = TP / (TP + &alpha;&middot;FP + &beta;&middot;FN) with &alpha; = 0.2 and &beta; = 0.8.</p>
 </section>
 """ + TAIL
-    (DOCS / "h76-executive-summary.html").write_text(exsum)
+    (DOCS / "h82-executive-summary.html").write_text(exsum)
 
     # ------------------------------------------------------------------ hypotheses
     hyp_rows = [
@@ -662,10 +662,10 @@ TI(&alpha;, &beta;) = TP / (TP + &alpha;&middot;FP + &beta;&middot;FN) with &alp
          "BLOCKED — 1m_DEM_links.csv is behind a DrivenData login and this runner has no credentials; "
          "only api.github.com, pypi and npm are reachable"],
     ]
-    hypotheses = head("H76 candidate hypotheses, ranked before any fit - GEMSDOE52",
+    hypotheses = head("H82 candidate hypotheses, ranked before any fit - GEMSDOE52",
                       "Five new geological hypotheses with their layers, physical signature, transform, "
                       "why each would catch a catalogued miss, and its status.") + f"""
-<section class="hero"><div><div class="eyebrow">H76 &middot; candidate hypotheses, ranked before any fit</div>
+<section class="hero"><div><div class="eyebrow">H82 &middot; candidate hypotheses, ranked before any fit</div>
 <h1>Five new candidates, ranked by expected gain over implementation cost</h1>
 <p class="lead">The brief requires new geological hypotheses naming the layers, the physical signature and
 its transform, why each would catch a fault that the USGS Quaternary fault and fold database and the
@@ -679,14 +679,14 @@ written and ranked <b>before</b> any model was fitted, and frozen in
 <hr class="divider">
 <section><h2>How each differs from what the repository already did</h2>
 <ul class="small">
-<li><b>vs H75.</b> H75 used a 4-direction integer fan on 3 bands at 2 lags. H76 doubles the angular
+<li><b>vs H75.</b> H75 used a 4-direction integer fan on 3 bands at 2 lags. H82 doubles the angular
 resolution, adds two bands, adds two more lags, and keeps H75&rsquo;s exact &gamma; normalisation so that
 the H75 channels are <em>recovered</em> as a subset. That is what makes <code>B_DVA</code> a genuine
 control rather than a re-implementation.</li>
 <li><b>vs H74/H71/H70.</b> Those rounds rebuilt View A and re-ran pseudo-label exchange. View A sufficiency
-has failed six times; H76 does not re-run the exchange. It fits the A-only arm and reports the failure as a
+has failed six times; H82 does not re-run the exchange. It fits the A-only arm and reports the failure as a
 fresh measurement, and reports the independence test as a standing instrument.</li>
-<li><b>vs H67/H49.</b> Those rounds derived the metric algebra. H76 uses that algebra to set the emission
+<li><b>vs H67/H49.</b> Those rounds derived the metric algebra. H82 uses that algebra to set the emission
 rule (2.24 px at a board DTI of 0.2778) but claims nothing about beating any score.</li>
 <li><b>vs the whole repository.</b> Nothing previously compared a per-pixel variogram direction to a
 <em>measured</em> strike field derived from the fold&rsquo;s own visible catalogue. That is the VSA arm, and
@@ -709,11 +709,11 @@ it is the part that can separate a fault from a road or an incised drainage.</li
     ["Organiser metric text and leaderboard",
      "drivendata.org competition 306, page 967 and the leaderboard page",
      "YES via the research fetcher — recorded in registry/leaderboard_snapshot_2026-10-09.json and "
-     "docs/h76-sources.html"],
+     "docs/h82-sources.html"],
 ])}
 </section>
 """ + TAIL
-    (DOCS / "h76-hypotheses.html").write_text(hypotheses)
+    (DOCS / "h82-hypotheses.html").write_text(hypotheses)
 
     # ------------------------------------------------------------------ sources
     src_rows = [
@@ -762,15 +762,15 @@ it is the part that can separate a fault from a road or an incised drainage.</li
          "training_features.tif, labels.tif, sample_submission.tif and the owner-supplied mirrors. "
          "Integrity-pinned, NOT organiser-authenticated: this runner has no DrivenData credentials",
          "VERIFIED locally"],
-        ["This repository — scored-only registry", "registry/h76_scored_registry.json",
+        ["This repository — scored-only registry", "registry/h82_scored_registry.json",
          f"{scored['n_files']} files, all_sha_match {str(scored['all_sha_match']).lower()}",
          "every raster whose score the owner team reports, with its SHA-256 and byte size; scores are "
          "OWNER-REPORTED and never ORGANIZER-CONFIRMED", "VERIFIED locally"],
     ]
-    sources = head("H76 source register - every external claim with its link - GEMSDOE52",
+    sources = head("H82 source register - every external claim with its link - GEMSDOE52",
                    "Official sources, fetch dates, what each established, and its verification status; "
                    "plus the flagged irregularities.") + f"""
-<section class="hero"><div><div class="eyebrow">H76 &middot; source register</div>
+<section class="hero"><div><div class="eyebrow">H82 &middot; source register</div>
 <h1>Every external claim, with its link and its verification status</h1>
 <p class="lead">The brief requires line-by-line verification from official trusted sources, links for manual
 review, and no hallucinations. This table is that record. Where something could not be reached from this
@@ -779,26 +779,26 @@ runner it says so, and says what was used instead.</p></div></section>
 <hr class="divider">
 <section><h2>Flagged irregularities</h2>
 {table(["ID", "What", "Why it matters", "Disposition"], [
-    ["IR-H76-001",
+    ["IR-H82-001",
      "The round brief states both that 0.3195 is the highest current score and that the leaderboard top is "
      "0.3774.",
      "A target chosen from the wrong number would misdirect the whole round.",
      "The live board was fetched: 0.3774 is rank 1 and 0.3195 is rank 7. Both figures are reported, the "
      "contradiction is logged, and no guess is made about which the brief intended."],
-    ["IR-H76-002",
+    ["IR-H82-002",
      "Eight of 79 channel files from the first build had one 4 KiB page of zeros after the 128-byte .npy "
      "header, although the in-memory arrays were correct and the transform is bit-deterministic.",
      "A silently torn write would have trained a model on corrupted features and produced a result that "
      "looked legitimate.",
      "The byte-integrity guard refused to train on them. Persistence now re-reads every file after writing "
      "and rewrites until it is bit-exact; the rebuild needed 0 rewrites and all 79 SHA-256 digests match."],
-    ["IR-H76-003",
+    ["IR-H82-003",
      "This runner cannot fetch the leaderboard or the problem page from a scheduled job; egress is limited "
      "to github.com, api.github.com, pypi.org and registry.npmjs.org.",
      "No ORGANIZER-CONFIRMED number can be refreshed automatically, so a snapshot goes stale.",
      "Every leaderboard figure is dated and stored in registry/leaderboard_snapshot_2026-10-09.json, and the "
      "pages print the fetch date beside the number."],
-    ["IR-H76-004",
+    ["IR-H82-004",
      "Installed library versions exceed the pins in the repository's requirements.",
      "Control reproduction is approximate rather than exact (cf. IR-H75-004, where single_B differed by "
      "5.4e-05).",
@@ -817,11 +817,11 @@ score is not the prize score.</li>
 own <code>sample_submission.tif</code> instead, which is the stronger evidence anyway.</li>
 </ul></section>
 """ + TAIL
-    (DOCS / "h76-sources.html").write_text(sources)
+    (DOCS / "h82-sources.html").write_text(sources)
 
     # ------------------------------------------------------------------ irregularities prose twin
     irr = load(REG / "irregularities.json")
-    rows = [e for e in irr["entries"] if e["id"].startswith("IR-H76-")]
+    rows = [e for e in irr["entries"] if e["id"].startswith("IR-H82-")]
     body = "".join(
         f'<tr><td><b>{esc(e["id"])}</b><br><span class="small">{esc(e["severity"])} · {esc(e["status"])}</span></td>'
         f'<td>{esc(e["title"])}<div class="note">{esc(e["what_it_is"])}</div>'
@@ -831,19 +831,19 @@ own <code>sample_submission.tif</code> instead, which is the stronger evidence a
         f'<div class="note"><b>Measured effect:</b> {esc(e["measured_effect"])}</div></td></tr>'
         for e in rows)
     section = (
-        "<!--H76-IRREGULARITIES--><section><h2>H76 irregularities (2026-10-09)</h2>"
+        "<!--H82-IRREGULARITIES--><section><h2>H82 irregularities (2026-10-09)</h2>"
         f'<p class="small">The machine-readable register is authoritative: '
         f'<a href="../registry/irregularities.json">registry/irregularities.json</a> '
-        f'({len(irr["entries"])} entries, generated {esc(irr["generated"])}). The {len(rows)} H76 entries '
+        f'({len(irr["entries"])} entries, generated {esc(irr["generated"])}). The {len(rows)} H82 entries '
         f'are reproduced here in full. This page is otherwise an R2-era document and has not been '
         f'backfilled for H5x-H75; the register has.</p>'
         f'<div class="table-wrap"><table><thead><tr><th>ID</th><th>What it is, how we know, and what was done'
-        f'</th></tr></thead><tbody>{body}</tbody></table></div></section><!--/H76-IRREGULARITIES-->')
+        f'</th></tr></thead><tbody>{body}</tbody></table></div></section><!--/H82-IRREGULARITIES-->')
     ip = DOCS / "irregularities.html"
     t = ip.read_text()
-    if "<!--H76-IRREGULARITIES-->" in t:
-        a = t.index("<!--H76-IRREGULARITIES-->")
-        b = t.index("<!--/H76-IRREGULARITIES-->") + len("<!--/H76-IRREGULARITIES-->")
+    if "<!--H82-IRREGULARITIES-->" in t:
+        a = t.index("<!--H82-IRREGULARITIES-->")
+        b = t.index("<!--/H82-IRREGULARITIES-->") + len("<!--/H82-IRREGULARITIES-->")
         t = t[:a] + section + t[b:]
     else:
         t = t.replace("</main>", section + "</main>", 1)
@@ -853,7 +853,7 @@ own <code>sample_submission.tif</code> instead, which is the stronger evidence a
     root_index = f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>GEMSDOE52 — DOE GEMS competition #306 — H76 candidate</title>
+<title>GEMSDOE52 — DOE GEMS competition #306 — H82 candidate</title>
 <style>
 body{{margin:0;font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
 color:#14181d;background:#fff}}
@@ -868,13 +868,13 @@ a.s{{background:#eef2f6;color:#1f4e79}}
 code{{background:#f2f4f7;padding:1px 5px;border-radius:4px;font-size:13.5px}}
 small{{color:#5b6672}}
 </style></head><body><main>
-<h1>H76 candidate raster &mdash; DOE GEMS competition #306</h1>
+<h1>H82 candidate raster &mdash; DOE GEMS competition #306</h1>
 <div class="v">{esc("OK TO DOWNLOAD: yes" if dl_ok else "OK TO DOWNLOAD: no")}
 &nbsp;&middot;&nbsp; {esc("OK TO SUBMIT: yes" if sb_ok else "OK TO SUBMIT: no — research artefact only")}</div>
-<a class="b" href="docs/downloads/h76-candidate.tif" download>Download h76-candidate.tif &#8595;</a>
-<a class="b s" href="docs/downloads/h76-candidate.zip" download>ZIP</a>
+<a class="b" href="docs/downloads/h82-candidate.tif" download>Download h82-candidate.tif &#8595;</a>
+<a class="b s" href="docs/downloads/h82-candidate.zip" download>ZIP</a>
 <a class="b s" href="docs/index.html">Full site</a>
-<a class="b s" href="docs/h76-executive-summary.html">How to submit</a>
+<a class="b s" href="docs/h82-executive-summary.html">How to submit</a>
 <a class="b s" href="docs/validator.html">Check a file in your browser</a>
 <p><small>{i(card["raster"]["bytes"])} bytes &middot; {i(n_dots)} emitted cells, values exactly {{0,1}}
 &middot; SHA-256 <code>{esc(card["raster"]["sha256"])}</code> &middot; EPSG:32611, 3730&times;3292 at 100 m
@@ -886,15 +886,15 @@ paired {pair["delta"]:+.6f} {ci(pair["ci95"])}. A holdout number is never a boar
 {esc(card["verdict"])}.</small></p>
 <p><small>This page is a research artefact. It is not an organiser acceptance receipt, and it does not
 claim a leaderboard gain. Sources and verification status:
-<a href="docs/h76-sources.html">docs/h76-sources.html</a>.</small></p>
+<a href="docs/h82-sources.html">docs/h82-sources.html</a>.</small></p>
 </main></body></html>
 """
     (ROOT / "index.html").write_text(root_index)
 
     print(json.dumps(dict(
-        pages=["docs/index.html", "docs/h76.html", "docs/h76-executive-summary.html",
-               "docs/h76-hypotheses.html", "docs/h76-sources.html", "index.html", "docs/validator.html"],
-        downloads=["docs/downloads/h76-candidate.tif", "docs/downloads/h76-candidate.zip",
+        pages=["docs/index.html", "docs/h82.html", "docs/h82-executive-summary.html",
+               "docs/h82-hypotheses.html", "docs/h82-sources.html", "index.html", "docs/validator.html"],
+        downloads=["docs/downloads/h82-candidate.tif", "docs/downloads/h82-candidate.zip",
                    f"docs/downloads/{csv_link}"],
         verdict=card["verdict"], download_ok=dl_ok, submit_ok=sb_ok,
         sha256=card["raster"]["sha256"], name=card["raster"]["name"],

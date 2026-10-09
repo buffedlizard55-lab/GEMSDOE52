@@ -1,12 +1,12 @@
 {
- "round": "H76",
+ "round": "H82",
  "preregistered_utc": "2026-10-09T20:40:00+00:00",
- "hypothesis_document": "knowledge/67_hypotheses_H76_preregistered.md",
- "hypothesis_sha256": "fe7050eb40ecf23ff717514ac5067cbc7d45cfa1f844c6d12fa0ee85d6b3b571",
+ "hypothesis_document": "knowledge/72_hypotheses_H82_preregistered.md",
+ "hypothesis_sha256": "e979a1773eb629a3d274f0a030a9d65eac6c2d859d6693a9f657bae2840d4852",
  "hypothesis_bytes": 22031,
  "lane": "two-view paragraph of the brief, executed on the branch measured informative (View B) plus the lane-gate redefinition ranked first in knowledge/66; primary arm B_DVA2_VSA = View B + 50 DVA-2 channels + 11 VSA channels; controls single_B (0.174517) and B_DVA (0.186352) must reproduce within 1e-3",
  "frozen_before_any_fit": true,
- "runner": "scripts/run_h76.py",
+ "runner": "scripts/run_h82.py",
  "runner_refuses_if_hash_moves": true,
  "primary_arm": "B_DVA2_VSA",
  "promotion_rule": "paired 95% CI lower bound of (B_DVA2_VSA - single_B) > 0 on gems52-pooled-hide-v1 at 9400 dots/fold",
@@ -38,7 +38,7 @@
  },
  "lane_registries": {
   "literal_full_census": "evidence/ctd5_prior_inventory.json (526 blobs, 524 eligible) + submission/ + data/scored + data/reference",
-  "restricted_scored_only": "data/scored/*.tif + data/reference/h33-2-b2-zeros.tif, membership rule frozen in knowledge/67 section 5.1",
+  "restricted_scored_only": "data/scored/*.tif + data/reference/h33-2-b2-zeros.tif, membership rule frozen in knowledge/72 section 5.1",
   "doctrine": "a policy or restricted-registry PASS never waives a literal full-census DUPLICATE/STOP (AGENTS.md; knowledge/62 IR-H73-011); both verdicts reported verbatim"
  },
  "shared_tools_to_reuse": [
@@ -54,10 +54,14 @@
   "scripts/run_h73.py::place_lane, informative_supports (quota placement)"
  ],
  "no_private_fork": true,
- "expected_board_claim": "none; knowledge/67 section 7 states the honest bracket before the holdout is read",
+ "expected_board_claim": "none; knowledge/72 section 7 states the honest bracket before the holdout is read",
  "inputs_provenance": "integrity-pinned, not organizer-authenticated (registry/data_manifest.json, 23/23 pins, ALL_VERIFIED=True)",
  "original_sha256_before_amendments": "999593083599fb2d5c1f47405aa8c3fe625084c77d3f2e8112c3ef497a910e3a",
  "amendments": [
-  "67a (written before any H76 fit/canary/holdout reading): XVSA magnitude channel demoted to diagnostic -> 60 new channels; VSA degeneracy convention; GROUP2 offset lengths recorded; region-only prediction domain with the two controls as the check"
- ]
+  "67a (written before any H82 fit/canary/holdout reading): XVSA magnitude channel demoted to diagnostic -> 60 new channels; VSA degeneracy convention; GROUP2 offset lengths recorded; region-only prediction domain with the two controls as the check"
+ ],
+ "pre_rename_sha256": "fe7050eb40ecf23ff717514ac5067cbc7d45cfa1f844c6d12fa0ee85d6b3b571",
+ "pre_rename_bytes": 22031,
+ "pre_rename_round": "H76",
+ "rename_note": "Identifier-only rename H76 -> H82 at merge: origin/main already holds an H76 round (band-18 DVA, PR #78/#79) plus H77, H77cond and H81, so this session's round took the next free identifier, following the IR-H71-005 / IR-H74-002 precedent. The hypothesis document's bytes changed only in its own round label and knowledge-file numbers; no hypothesis, threshold, arm order, budget or promotion rule changed. The pre-rename SHA-256 is kept above so the frozen text can still be tied to the run that was executed. knowledge/67 -> knowledge/72 and knowledge/68 -> knowledge/73 because origin/main already uses 67/67a/68 for H77cond and 69/70/71 for H81."
 }
