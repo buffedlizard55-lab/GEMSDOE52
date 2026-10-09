@@ -139,3 +139,15 @@ def test_workflows_are_still_valid_yaml_and_still_stdlib_only():
         pytest.skip("pyyaml not installed")
     d = yaml.safe_load(p.read_text())
     assert d.get("on") or d.get(True), "the feed workflow has no trigger"
+
+
+def test_restore_rejects_unknown_only_id(tmp_path):
+    """A zero-file restore must not report ALL_VERIFIED=True."""
+    import subprocess
+    import sys
+    result = subprocess.run([sys.executable, 'scripts/restore_data.py', '--only',
+                             'sample_submission.tif', '--target-dir', str(tmp_path)],
+                            text=True, capture_output=True)
+    assert result.returncode != 0
+    assert 'unknown --only id' in result.stderr
+    assert 'ALL_VERIFIED=True' not in result.stdout
