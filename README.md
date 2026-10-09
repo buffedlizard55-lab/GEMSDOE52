@@ -1,3 +1,188 @@
+<!--H74-README-->
+# Current status — H74 (2026-10-09): a unique, lane-feasible, portal-exact GeoTIFF — download YES, submit NO
+
+> **DOWNLOAD: YES. SUBMIT TO THE COMPETITION: NO.** The file passes every format rule the portal
+> states, is decoded-unique against 105 registry rasters, and is only the second lane-feasible file
+> this repository has produced. It is still **not** a slot candidate: all five new geological
+> detectors this round scored *below* the shared control on the hide-and-recover holdout, and the
+> file's support was deliberately restricted to pixels the entire prior submission family avoided.
+> **Competition slots used: 0.** No organiser receipt exists for any file in this repository.
+
+**★ [Download the H74 GeoTIFF — one click](docs/downloads/h74-candidate.tif)** ·
+[single-TIFF ZIP](docs/downloads/h74-candidate.zip) ·
+**[Executive summary / exactly how to submit](docs/h74-executive-summary.html)** ·
+[Landing page](index.html) · [Build receipt](evidence/h74_build.json) ·
+[Holdout receipt](evidence/h74_holdout.json) · [Budget sweep](evidence/h74_budget_sweep.json)
+
+- **File:** `gems52-h74-viewb-boardplaced-37654px-20261009T194504Z.tif` — 1,558,626 bytes, 37,654 emitted cells
+- **SHA-256:** `f7f234af958b5645b0ca65c8969906c6b526ef3da9afa693b0171d1902452f49`
+- **Submission name (53 chars):** `gems52-h74-viewb-boardplaced-37654px-20261009T194504Z`
+- **Note (135 chars):** `H74: View-B OOF surface rank; 200m catalogue ring out; binary {0,1}; 3px spacing; K=37654; consensus<=1 lane-feasible; portal-exact LZW`
+
+## The portal rejection is fixed at the writer, not discovered at the portal
+
+The brief reports a submission that came back **"Predicted values must be in range [0, 1]"**. Measured
+this session across all 105 rasters in `submission/` and `docs/downloads/`: exactly **one** of them
+(`gemsdoe52-cotrain-disagree-submodular-20261006-nan.tif`, 7,111,787 NaN pixels) fails that rule as
+written, and it is linked from `docs/h60.html`. Every other file has values exactly {0, 1}.
+
+The structural cause is a container mismatch this repository had been shipping for 20+ rounds. Measured
+byte-by-byte against the organiser's own template:
+
+| | `sample_submission.tif` and all 11 owner-scored rasters | what this repo wrote |
+|---|---|---|
+| compression | **LZW** | deflate |
+| layout | **stripped** (`blocksize 3292x1`) | tiled 256×256 |
+| nodata | **`nan`, declared** | `None`, all-finite, zeros outside |
+
+Both variants have scored historically, so neither is *provably* rejected — but a portal reader that
+does not honour a nodata declaration turns every outside-footprint NaN into a failed `[0, 1]` test.
+**`gems52.grid.write_geotiff_portal_exact`** (new, in the shared template, not a fork) now writes the
+template's own container and re-reads its output, refusing to write a file that fails any of:
+single band, float32, EPSG:32611, 3,730 × 3,292, pinned transform, no finite value outside [0, 1], no
+non-finite pixel inside the footprint, no positive mass outside it. The H74 artefact passes all 13
+independent checks (`docs/h74-executive-summary.html` §2 has the 30-second verification snippet).
+
+## E1 · board forensics on all 13 owner-scored rasters — `|G|` pinned independently
+
+`scripts/run_h74.py`'s companion measurement is `work/h74/board_forensics.py`, run on bytes restored
+and SHA-256-verified this session (23/23 pins, `ALL_VERIFIED=True`).
+
+The champion `h33-2-b2` (0.2778) is a **strict subset** of the 0.2600 file; the 6,436 pixels it deleted
+all lie **100–200 m** from a mapped trace. Setting their credit to zero in the metric algebra and
+solving for `|G|` gives **14,088.7 px** — reproducing the value `knowledge/10` derived by a different
+route, from a different pair. With `|G|` fixed:
+
+```
+DTI = T / (0.2·S + 0.8·|G|)      T = credited mass, S = emitted mass
+```
+
+| file | S px | owner-reported DTI | implied T | coverage T/\|G\| | median dot spacing |
+|---|---:|---:|---:|---:|---:|
+| `h33-2-b2` (champion) | 37,654 | 0.2778 | 5,223.1 | **37.07 %** | 3.000 px |
+| `d2_8` | 44,090 | 0.2600 | 5,223.1 | 37.07 % | 3.000 px |
+| `d1_5` | 60,069 | 0.2477 | 5,767.6 | 40.94 % | 2.236 px |
+| `h19_5` | 121,131 | 0.1922 | 6,822.6 | **48.43 %** | 1.000 px |
+| `hedge_v2` | 227,507 | 0.1563 | 8,873.5 | 62.98 % | 1.000 px |
+
+Two readings the family had not written down:
+
+1. **The score ladder is a thinning ladder.** `h19_5 → d1_5 → d2_8 → h33-2-b2` raises the score
+   monotonically while *cutting coverage* 48.43 % → 37.07 %. Modelling the trade-off (credit per dot on
+   a 1-px-wide linear trace is `s(1 − s/12)`, maximised at 6 px spacing) puts the ideal thinning
+   retention at ~0.798 against the family's achieved 0.766 — **the family's placement is already within
+   4 % of optimal, so there is no headroom left in placement.**
+2. **To beat 0.3195 at the champion's budget you need `T ≥ 6,007`** versus its measured 5,223 — a 15 %
+   better detector at identical mass. Placement cannot supply it. This is the same ceiling
+   `knowledge/49` reached by a different route, now confirmed on the full 13-file corpus.
+
+I also tried to invert the 13 scores for per-pixel credit by partitioning the footprint into
+membership patterns (2,000+ strata, 13 equations). NNLS fits all 13 exactly with a degenerate sparse
+solution, so **per-pixel credit is not identifiable** — an independent reproduction of IR-H60-004.
+
+## E2 · five new geological hypotheses, all negative on the shared holdout
+
+Ranked by expected gain ÷ implementation cost before running, then measured on the template's own
+pooled hide-and-recover evaluator (`gems52-pooled-hide-v1`, 4 label-blind folds, 53,186 withheld
+positives, 9,400 dots/arm/fold, 1,000 paired block-bootstrap draws). All five are unsupervised
+functions of the raster columns, so there is no label to leak.
+
+| # | Hypothesis | Layer(s) | Physical signature | HOLDOUT-DTI [95 % CI] |
+|---|---|---|---|---|
+| — | **`single_B` control** (shared View-B surface model) | DEM + radiometric + LiDAR | — | **0.174571** [0.153568, 0.194531] |
+| — | uniform random | — | — | 0.082399 [0.072700, 0.092084] |
+| E | LiDAR scarp × radiometric-K discordance | LiDAR + K | surface expression without geochemical alteration | 0.086684 [0.071135, 0.104422] |
+| A | Basement-surface curvature, gated to thin cover | band 15 | \|λ_min\| of the Hessian = a kink in the basement | 0.078442 [0.066089, 0.090756] |
+| F | Equal-weight rank fusion of A–D | 8/15/17 | consensus of four transforms | 0.069808 [0.057725, 0.081007] |
+| B | Geodetic dilatation strain-partition boundary | band 8 | \|∇ dilatation\|, not its magnitude | 0.068369 [0.056286, 0.080578] |
+| C | Conductivity-gradient × basement-step coincidence | bands 15 + 17 | a fluid pathway across a basement offset | 0.061497 [0.049564, 0.073368] |
+| D | Antithetic basin-margin pairing | bands 12 + 15 | basement step on the far side of the basin floor | 0.043613 [0.029332, 0.058720] |
+
+**Verdict: NEGATIVE.** No new arm beats the control; the paired difference against `single_B` excludes
+zero for every arm. Only E separates from random at all, and its interval overlaps random's.
+The instrument itself is verified: `run_h61.py fit` reproduced View A mean OOF AUC **0.5163** and
+View B **0.6843** — the committed H61 values — and `single_B` pooled to **0.174571**, the committed
+H61/H71 control, so the new numbers are directly comparable.
+
+**Experiments used: 3 of 3** (E1 board forensics, E2 detector battery, E3 budget sweep + build).
+
+## E3 · the shipped file, and the two gates that decide it
+
+Budget chosen by measurement, not tradition: the pooled holdout for the `single_B` ranking rises
+monotonically to **K = 37,654 → 0.253693** [0.236989, 0.269552] and flattens (25,517 → 0.239134;
+20,000 → 0.226134). `evidence/h74_budget_sweep.json`.
+
+| Gate | Measured | Limit | Verdict |
+|---|---|---|---|
+| Format, 13 checks against `sample_submission.tif` | see the executive summary | — | **PASS** |
+| Decoded-pattern uniqueness, 105 registry rasters | unique; **35,960 / 37,654 dots (95.50 %) exact-novel**; not the prior union | not a copy | **PASS** |
+| Lane, surface — max rank correlation | 0.1296 | 0.90 | **PASS** |
+| Lane, final dots — max rank correlation | **0.0026** | 0.90 | **PASS** |
+| Lane, final dots — max share within 3 px of one prior | **12.17 %** (nearest: the H69 raster) | 70 % | **PASS** |
+| Beats the control on the holdout | no new arm does | must beat | **FAIL** |
+
+The lane gate only passes because the pool is restricted to pixels of **cross-family consensus ≤ 1**
+(856,910 px of 4,930,382 legal px) — the count of *distinct* decoded prior patterns whose 3 px halo
+covers the pixel, H69's lever, reimplemented from its definition over 44 distinct patterns. At
+consensus ≤ 0 the pool is 271,560 px and cannot fill the budget (33,355 placed).
+
+**That restriction is exactly why the verdict is submit-NO.** Consensus ≤ 1 means the dot sits where
+*no* prior submission in this family emitted. Per §1 of `knowledge/49` the champion's credit is
+concentrated in the support the family converged on, so a deliberately non-overlapping field has a
+*lower* expected credit density. The file is unique and lane-clean **because** it avoids the credit.
+Note also that `0.253693` is the holdout DTI of the *unrestricted* field; it is **not** a projection for
+this consensus-restricted artefact and is not presented as one.
+
+## What H74 changed that the next round must keep
+
+1. **Data placement is no longer a blocker.** All 23 manifest entries restore from the owner's
+   hash-pinned sibling repositories through the GitHub Contents API and verify by SHA-256 —
+   `scripts/restore_data.py`, `ALL_VERIFIED=True`, including the 419 MB feature raster in five parts.
+   The standing claim that this needs "any unrestricted machine" is superseded: `api.github.com` is
+   inside the sandbox egress allowlist.
+2. **`grid.write_geotiff_portal_exact`** is the writer to use. Do not add another packaging variant.
+3. **Placement headroom is measured and closed** (within 4 % of the thinning optimum). The only lever
+   that reaches 0.32+ is a detector that holds ρ ≈ 0.10 out to 100,000 px — a *lower* precision demand
+   than the champion's own 0.1387.
+4. **SGMC and `labels.tif` are 95 % disjoint**: SGMC holds 83,593 px, only 3,978 of them in
+   `labels.tif`, so **79,615 px of expert-compiled trace are absent from the competition catalogue**
+   (median 1,612 m away). This is a real off-catalogue validation target, and the repository's
+   hide-and-recover instrument does not use it — it hides *catalogue* faults, which is a different
+   task. Flagged as an irregularity below; a previous round measured that emitting the SGMC
+   off-catalogue lines directly scores 0.0512, so it is not the hidden truth, but it remains untested
+   as a *training target* for an off-catalogue detector.
+
+## Irregularities flagged this round
+
+- **IR-H74-001** — the site served by GitHub Pages (`main:/`, i.e. the root `index.html`) and
+  `docs/index.html` contradicted each other: the root page advertised three H72 downloads while
+  `docs/index.html` said "NO H72 TIFF WAS WRITTEN OR PUBLISHED". Both were on `main`. Only one is
+  served; the root page is now the single H74 entry point.
+- **IR-H74-002** — `docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-nan.tif` is the one
+  downloadable raster that fails the portal's stated `[0, 1]` rule (7,111,787 NaN pixels). It is still
+  linked from `docs/h60.html`. Left in place as a historical artefact and labelled, not deleted.
+- **IR-H74-003** — `evidence/h72_run_card.json` describes a 5,056-dot final output while the README's
+  H72 block and the served root page advertised 37,654 dots for `h72-candidate-v3`. The receipt and the
+  site described different artefacts.
+- **IR-H74-004** — the repo's submission container (tiled/deflate/nodata=None) has never matched the
+  organiser template's (stripped/LZW/nodata=nan), across every shipped file. Fixed by
+  `write_geotiff_portal_exact`; historical files are unchanged.
+- **IR-H74-005** — SGMC and `labels.tif` are 95 % disjoint (79,615 off-catalogue px). The shared
+  hide-and-recover instrument hides *catalogue* faults while the competition scores faults the
+  catalogue lacks; that mismatch is the likeliest cause of the measured Spearman −0.10. Untested as a
+  training target.
+- **IR-H74-006** — main's committed `evidence/h61_canary.json` carries
+  `"HOLDOUT-DTI diagnostic AUC"` while the **unmodified** `scripts/run_h61.py` line 212 emits
+  `"LEAKAGE-CANARY AUC"`. A receipt can therefore drift from the code that generates it with no test
+  noticing. Every AUC in the re-run is bit-identical to the committed value, so only provenance is
+  affected; the regenerated receipts are kept and the drift disclosed.
+- **IR-H74-007** — `docs/h72-executive-summary.html` linked its six download files without the
+  `downloads/` prefix, so all six were dead links on the served site. Found by `check_site.py` and fixed.
+
+**Still open:** a candidate that beats `single_B` on the holdout (nothing in H55–H74 has); the
+0.2778 file-to-score organiser receipt; an off-catalogue validation instrument built on the
+SGMC-disjoint traces; any road/hydrography layer (still outside the sandbox egress allowlist).
+<!--/H74-README-->
 <!--H72-README-->
 # Current status — H72 (2026-10-09): Three unique GeoTIFF candidates generated, one recommended for download
 
@@ -1990,7 +2175,7 @@ h60-lidarscarp-s2p0-20261007-nanoutside:
 
 [https://buffedlizard55-lab.github.io/GEMSDOE48/docs/index.html](https://buffedlizard55-lab.github.io/GEMSDOE48/docs/index.html)
 
-:
+h59-cover-ds-belief-b2xh33d-20261008T184547Z-b79c4c61d8d8: 0.2296
 
 ....
 
@@ -2012,15 +2197,15 @@ h53-twostage-20261008T040951Z-9a0b32c871:
 
 ....
 
-53GEMSDOE
+[https://buffedlizard55-lab.github.io/GEMSDOE53/docs/index.html](https://buffedlizard55-lab.github.io/GEMSDOE53/docs/index.html)
 
-:
+h8-tiprelay-ridgeconcord-pr2-n80000-20261009-49bec522-zeros:
 
 ....
 
-54GEMSDOE
+[https://buffedlizard55-lab.github.io/GEMSDOE54/docs/](https://buffedlizard55-lab.github.io/GEMSDOE54/docs/)
 
-:
+h54c-manifest-edge-20261009T025732Z-73454bc5:
 
 ....
 

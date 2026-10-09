@@ -1,6 +1,6 @@
 {
  "stage": "fit",
- "started_utc": "2026-10-08T23:21:42+00:00",
+ "started_utc": "2026-10-09T19:12:29+00:00",
  "view_A_features": [
   "A_RTP_grad_1",
   "A_RTP_grad_3",
@@ -90,16 +90,16 @@
    "region_px": 2265162,
    "truth_px": 27309,
    "view_A": {
-    "fit_seconds": 4.0,
-    "predict_seconds": 70.8,
+    "fit_seconds": 6.3,
+    "predict_seconds": 69.4,
     "in_sample_auc": 0.9480777,
     "heldout_region_auc": 0.5062341311661124,
     "n_region_pos": 27309,
     "n_region_neg": 1941302
    },
    "view_B": {
-    "fit_seconds": 3.9,
-    "predict_seconds": 72.0,
+    "fit_seconds": 3.6,
+    "predict_seconds": 68.1,
     "in_sample_auc": 0.8761703825,
     "heldout_region_auc": 0.6625012282147498,
     "n_region_pos": 27309,
@@ -114,16 +114,16 @@
    "region_px": 1170352,
    "truth_px": 10677,
    "view_A": {
-    "fit_seconds": 3.1,
-    "predict_seconds": 64.0,
+    "fit_seconds": 2.5,
+    "predict_seconds": 68.4,
     "in_sample_auc": 0.9251220795833333,
     "heldout_region_auc": 0.6010657195529969,
     "n_region_pos": 10677,
     "n_region_neg": 1032665
    },
    "view_B": {
-    "fit_seconds": 3.2,
-    "predict_seconds": 69.8,
+    "fit_seconds": 2.5,
+    "predict_seconds": 67.1,
     "in_sample_auc": 0.8366837916666667,
     "heldout_region_auc": 0.7684414473654164,
     "n_region_pos": 10677,
@@ -138,16 +138,16 @@
    "region_px": 471100,
    "truth_px": 6813,
    "view_A": {
-    "fit_seconds": 3.1,
-    "predict_seconds": 69.2,
+    "fit_seconds": 2.9,
+    "predict_seconds": 60.9,
     "in_sample_auc": 0.9201163041666667,
     "heldout_region_auc": 0.4668188015259936,
     "n_region_pos": 6813,
     "n_region_neg": 393204
    },
    "view_B": {
-    "fit_seconds": 3.2,
-    "predict_seconds": 70.6,
+    "fit_seconds": 2.8,
+    "predict_seconds": 71.1,
     "in_sample_auc": 0.8500644891666667,
     "heldout_region_auc": 0.6112200625930911,
     "n_region_pos": 6813,
@@ -162,16 +162,16 @@
    "region_px": 686557,
    "truth_px": 8387,
    "view_A": {
-    "fit_seconds": 2.8,
-    "predict_seconds": 66.6,
+    "fit_seconds": 2.4,
+    "predict_seconds": 65.7,
     "in_sample_auc": 0.9135027566666667,
     "heldout_region_auc": 0.4910432748636082,
     "n_region_pos": 8387,
     "n_region_neg": 595321
    },
    "view_B": {
-    "fit_seconds": 3.0,
-    "predict_seconds": 81.4,
+    "fit_seconds": 2.7,
+    "predict_seconds": 72.2,
     "in_sample_auc": 0.8490617991666667,
     "heldout_region_auc": 0.6951780354196093,
     "n_region_pos": 8387,
@@ -179,7 +179,7 @@
    }
   }
  ],
- "finished_utc": "2026-10-08T23:31:37+00:00",
+ "finished_utc": "2026-10-09T19:22:02+00:00",
  "evaluator_hashes": {
   "evaluate_holdout.py": "ffb084fdf34bb30438485b89caeb1228a6680abfd9f9f0472f4355845da05cc6",
   "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",

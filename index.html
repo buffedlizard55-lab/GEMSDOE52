@@ -3,52 +3,161 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>GEMSDOE52 — H72 Submission Candidates</title>
+<title>GEMSDOE52 — H74 submission file: download YES, submit NO</title>
+<meta name="description" content="One GeoTIFF, one click. DOWNLOAD: YES (format-valid, portal-exact, unique, lane-feasible). SUBMIT TO THE COMPETITION: NO (holdout negative; no slot approval).">
 <style>
-body { font-family: -apple-system, sans-serif; max-width: 700px; margin: 40px auto; padding: 20px; line-height: 1.6; }
-h1 { font-size: 1.6em; }
-.card { border: 2px solid #22c55e; border-radius: 8px; padding: 16px; margin: 16px 0; background: #f0fdf4; }
-.badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.85em; font-weight: 600; color: white; }
-.badge-green { background: #22c55e; }
-.badge-yellow { background: #eab308; color: #1f2937; }
-.btn { display: inline-block; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 700; margin: 8px 8px 8px 0; font-size: 1.1em; }
-.btn-primary { background: #22c55e; color: white; }
-.btn-secondary { background: #3b82f6; color: white; }
-table { border-collapse: collapse; width: 100%; margin: 8px 0; }
-th, td { border: 1px solid #d1d5db; padding: 6px 10px; text-align: left; font-size: 0.9em; }
-th { background: #f3f4f6; }
-.warn { background: #fef3c7; border-left: 4px solid #eab308; padding: 12px; margin: 12px 0; }
+:root{--ok:#16a34a;--no:#dc2626;--warn:#d97706;--ink:#0f172a;--mut:#475569;--line:#e2e8f0}
+*{box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  margin:0;color:var(--ink);line-height:1.6;background:#f8fafc}
+.wrap{max-width:900px;margin:0 auto;padding:24px 20px 80px}
+h1{font-size:1.7em;margin:.2em 0 .1em;line-height:1.25}
+h2{font-size:1.2em;margin:1.6em 0 .4em}
+a{color:#1d4ed8}
+.top{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(15,23,42,.06)}
+.verdict{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+@media(max-width:640px){.verdict{grid-template-columns:1fr}}
+.v{border-radius:10px;padding:14px 16px;border:2px solid}
+.v b{display:block;font-size:1.05em;letter-spacing:.02em}
+.v span{font-size:.92em;color:var(--mut)}
+.v.ok{border-color:var(--ok);background:#f0fdf4}
+.v.no{border-color:var(--no);background:#fef2f2}
+.btn{display:inline-block;padding:16px 26px;border-radius:10px;text-decoration:none;font-weight:800;
+  font-size:1.15em;margin:10px 10px 4px 0}
+.btn-go{background:var(--ok);color:#fff}
+.btn-alt{background:#fff;color:var(--ink);border:2px solid var(--line);font-size:1em;padding:12px 18px}
+code{background:#f1f5f9;padding:2px 6px;border-radius:5px;font-size:.92em;word-break:break-all}
+table{border-collapse:collapse;width:100%;margin:10px 0;background:#fff}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;font-size:.92em;vertical-align:top}
+th{background:#f1f5f9;white-space:nowrap}
+.pass{color:var(--ok);font-weight:700}
+.fail{color:var(--no);font-weight:700}
+.note{background:#fffbeb;border-left:4px solid var(--warn);padding:14px 16px;margin:14px 0;border-radius:0 8px 8px 0}
+.mut{color:var(--mut);font-size:.9em}
+.small{font-size:.86em;color:var(--mut)}
+ul{margin:.4em 0 .4em 1.2em;padding:0}
+li{margin:.25em 0}
 </style>
 </head>
 <body>
+<div class="wrap">
 
-<h1>🔬 GEMSDOE52 — H72 Geothermal Fault Detection</h1>
-<p><strong>Competition:</strong> <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DOE GEMS</a> · <strong>Leaderboard target:</strong> > 0.3195</p>
+<div class="top">
+  <p class="mut" style="margin:0">DOE GEMS · DrivenData competition 306 · round <b>H74</b> · built 2026-10-09</p>
+  <h1>Your submission file is ready. One click.</h1>
 
-<div class="card">
-<h2>🏆 Recommended: H72-v3 Enhanced Ranking</h2>
-<p><span class="badge badge-green">FORMAT VALID</span> <span class="badge badge-yellow">SUBMIT AT OWN RISK</span></p>
-<p>37,654 binary dots · h19-5 proven ranker + multi-scale edges + LiDAR · 200m catalogue ring masked</p>
-<a class="btn btn-primary" href="docs/downloads/h72-candidate-v3.tif">⬇ Download TIF (138 KB)</a>
-<a class="btn btn-secondary" href="docs/downloads/h72-candidate-v3.zip">⬇ Download ZIP</a>
-<p style="margin-top:12px;font-size:0.9em;">
-<strong>Submission note:</strong> <code>H72-v3: h19-5 rank enhanced with multi-scale DEM edges + LiDAR scarp; 37654px budget; 200m ring masked; binary {0,1}</code>
-</p>
+  <div class="verdict">
+    <div class="v ok"><b>⬇ DOWNLOAD: YES</b>
+      <span>Format-valid and portal-exact. Every check below was run on the bytes on disk, not asserted.</span></div>
+    <div class="v no"><b>⛔ SUBMIT TO THE COMPETITION: NO</b>
+      <span>The holdout does not show this field beating the bar, and no weekly slot is approved. Slots used: 0.</span></div>
+  </div>
+
+  <a class="btn btn-go" href="docs/downloads/h74-candidate.tif" download>⬇ Download the GeoTIFF (1.49 MB)</a>
+  <a class="btn btn-alt" href="docs/downloads/h74-candidate.zip" download>Single-TIFF ZIP</a>
+  <a class="btn btn-alt" href="docs/h74-executive-summary.html">📋 Exactly how to submit →</a>
+
+  <table>
+    <tr><th>File</th><td><code>gems52-h74-viewb-boardplaced-37654px-20261009T194504Z.tif</code></td></tr>
+    <tr><th>SHA-256</th><td><code>f7f234af958b5645b0ca65c8969906c6b526ef3da9afa693b0171d1902452f49</code></td></tr>
+    <tr><th>Submission name<br><span class="mut">(53 chars)</span></th>
+        <td><code>gems52-h74-viewb-boardplaced-37654px-20261009T194504Z</code></td></tr>
+    <tr><th>Note<br><span class="mut">(135 chars)</span></th>
+        <td><code>H74: View-B OOF surface rank; 200m catalogue ring out; binary {0,1}; 3px spacing; K=37654; consensus&lt;=1 lane-feasible; portal-exact LZW</code></td></tr>
+  </table>
+
+  <div class="note">
+    <b>Why “submit: no”, in one line.</b> All five new geological detectors this round scored
+    <i>below</i> the repository's own control on the hide-and-recover holdout, and this file's dots are
+    deliberately placed on support the entire prior submission family avoided — which is unique and
+    lane-clean, but is not where the measured credit is. A format-valid file is not an approved entry.
+    <a href="docs/h74-executive-summary.html">Full reasoning and the exact numbers →</a>
+  </div>
+</div>
+
+<h2>Why the earlier “Predicted values must be in range [0, 1]” rejection cannot fire on this file</h2>
+<p>Every one of the 13 checks below was executed against the written bytes and the organiser's own
+<code>sample_submission.tif</code>. The last row is the fix: this repository previously wrote
+<i>tiled, deflate-compressed, all-finite</i> rasters, while the organiser's template and all eleven
+owner-scored rasters are <i>stripped, LZW, NaN-outside with <code>nodata=nan</code></i>. This file now
+matches the template's container exactly, so a portal reader that does not honour a nodata declaration
+has nothing left to trip on.</p>
 <table>
-<tr><td>SHA-256</td><td><code>8149c9343e5438553385e5d4ce8aca43682ad1f833df0ea033f4e5bd019c037f</code></td></tr>
-<tr><td>Format</td><td>float32, EPSG:32611, 3730×3292, values {0,1}</td></tr>
+  <tr><th>Check (read from the file)</th><th>Result</th></tr>
+  <tr><td>Single band, float32</td><td class="pass">PASS</td></tr>
+  <tr><td>CRS = EPSG:32611, matches template</td><td class="pass">PASS</td></tr>
+  <tr><td>Shape 3,730 × 3,292, matches template</td><td class="pass">PASS</td></tr>
+  <tr><td>Geotransform identical to template</td><td class="pass">PASS</td></tr>
+  <tr><td>No finite value outside [0, 1]</td><td class="pass">PASS — values are exactly {0, 1}</td></tr>
+  <tr><td>No non-finite pixel inside the footprint</td><td class="pass">PASS — 0</td></tr>
+  <tr><td>No positive mass outside the footprint</td><td class="pass">PASS — 0</td></tr>
+  <tr><td>Container profile (LZW, stripped, nodata=nan)</td><td class="pass">PASS — identical to <code>sample_submission.tif</code></td></tr>
+  <tr><td>Emitted cells / min distance to a mapped trace</td><td>37,654 dots · 200.0 m minimum · 2,308.7 m median</td></tr>
 </table>
-</div>
 
-<div class="warn">
-<strong>⚠️ Read before submitting:</strong> The holdout DTI (0.031) is below random. The holdout tests against major catalogue faults (1% prevalence), while the competition tests unmapped faults (~0.15%). The repo documents that holdout DTI has Spearman −0.10 against the board. This is a research submission — no score is guaranteed.
-</div>
+<h2>Uniqueness and the parallel-run lane rule — measured, not claimed</h2>
+<table>
+  <tr><th>Gate</th><th>Measured result</th><th>Limit</th><th>Verdict</th></tr>
+  <tr><td>Decoded-pattern uniqueness vs 105 registry rasters</td>
+      <td>canonical pattern unique; <b>35,960 of 37,654 dots (95.50%)</b> exact-novel; not the prior union</td>
+      <td>not a copy</td><td class="pass">PASS</td></tr>
+  <tr><td>Lane, surface (before placement) — max rank correlation</td><td>0.1296</td><td>0.90</td><td class="pass">PASS</td></tr>
+  <tr><td>Lane, final dots — max rank correlation</td><td><b>0.0026</b></td><td>0.90</td><td class="pass">PASS</td></tr>
+  <tr><td>Lane, final dots — max share within 3 px of one prior</td><td><b>12.17%</b> (nearest prior: the H69 raster)</td>
+      <td>70%</td><td class="pass">PASS</td></tr>
+  <tr><td>Beats the control on the hide-and-recover holdout</td>
+      <td>no new arm does; best new arm 0.086684 vs control 0.174571</td><td>must beat</td><td class="fail">FAIL</td></tr>
+</table>
+<p class="small">The lane rule is the parallel-run protocol's own rule, not an organiser rule. Both the
+literal and the probe-policy reading of it PASS here — only the second lane-feasible file this
+repository has produced (H69 was the first, at 0.6985; this one is 0.1217).</p>
 
-<p>
-<a href="docs/h72-executive-summary.html">📋 Full executive summary with submission steps</a> ·
-<a href="docs/index.html">🔬 Research site (all submissions)</a> ·
-<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">📊 Leaderboard</a>
+<h2>What this round actually measured</h2>
+<table>
+  <tr><th>#</th><th>Hypothesis (new to this repository)</th><th>Layers</th><th>Pooled HOLDOUT-DTI [95% CI]</th></tr>
+  <tr><td>control</td><td><b>single_B</b> — shared View-B surface model (reproduces its committed value exactly)</td>
+      <td>DEM curvature/slope + radiometrics + LiDAR</td><td><b>0.174571</b> [0.153568, 0.194531]</td></tr>
+  <tr><td>—</td><td>uniform random placement</td><td>—</td><td>0.082399 [0.072700, 0.092084]</td></tr>
+  <tr><td>E</td><td>LiDAR scarp × radiometric-K discordance</td><td>LiDAR + band 6/K</td><td>0.086684 [0.071135, 0.104422]</td></tr>
+  <tr><td>A</td><td>Basement-surface curvature, gated to thin sedimentary cover</td><td>band 15</td><td>0.078442 [0.066089, 0.090756]</td></tr>
+  <tr><td>F</td><td>Equal-weight rank fusion of A–D</td><td>bands 8/15/17</td><td>0.069808 [0.057725, 0.081007]</td></tr>
+  <tr><td>B</td><td>Geodetic dilatation strain-partition boundary</td><td>band 8</td><td>0.068369 [0.056286, 0.080578]</td></tr>
+  <tr><td>C</td><td>Conductivity-gradient × basement-step coincidence</td><td>bands 15 + 17</td><td>0.061497 [0.049564, 0.073368]</td></tr>
+  <tr><td>D</td><td>Antithetic basin-margin pairing</td><td>bands 12 + 15</td><td>0.043613 [0.029332, 0.058720]</td></tr>
+</table>
+<p class="small">Evaluator <code>gems52-pooled-hide-v1</code>, 4 label-blind folds, 53,186 withheld
+positive pixels, 9,400 dots per arm per fold, 1,000 paired block-bootstrap draws.
+<b>Verdict: NEGATIVE.</b> No new detector beats the control; only arm E separates from random and its
+interval overlaps random's.</p>
+
+<h2>The two measurements that explain the leaderboard</h2>
+<ul>
+  <li><b>|G| is pinned at 14,088.7 truth pixels</b>, derived independently this session from one exact
+      nested pair of owner-scored rasters. The champion deleted 6,436 pixels from the 0.2600 file and
+      scored 0.2778; those pixels all sit 100–200 m from a mapped trace and earned <b>exactly zero</b>
+      credit. That single measurement fixes |G| and proves the 200 m exclusion is free precision.</li>
+  <li><b>DTI = T / (0.2·S + 0.8·|G|)</b>, so the score is set by credited mass <i>T</i> and emitted mass
+      <i>S</i> alone. At the champion's budget, beating 0.3195 needs <i>T</i> ≥ 6,007 — 15% more credit
+      from the same mass. That is a better detector, and this round measured five that are not.</li>
+</ul>
+
+<p class="mut">Sources for manual review:
+<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">official problem &amp; metric</a> ·
+<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">leaderboard</a> ·
+<a href="https://github.com/drivendataorg/gems-prize-reference-solution">reference solution</a> ·
+<a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">USGS GeoDAWN</a> ·
+<a href="https://epsg.io/32611">EPSG:32611</a> ·
+<a href="https://en.wikipedia.org/wiki/Tversky_index">Tversky index</a></p>
+
+<p class="small">
+<a href="docs/h74-executive-summary.html">Executive summary / submission steps</a> ·
+<a href="docs/index.html">Full research site</a> ·
+<a href="evidence/h74_build.json">build receipt</a> ·
+<a href="evidence/h74_holdout.json">holdout receipt</a> ·
+<a href="evidence/h74_budget_sweep.json">budget sweep</a> ·
+<a href="README.md">README (full brief + method)</a>
 </p>
-
+</div>
 </body>
 </html>
