@@ -1,0 +1,75 @@
+{
+ "round": "H61-validate-extra-fields",
+ "seed": 20261010,
+ "runtime_s": 101.5,
+ "reason": "the hard corroboration intersection is structurally unusable at this budget (k^2/n = 185 at k=30,000, n=4,861,502); the joint-confidence ranking min(pA,pB) is registered on the same two instruments so the promotion decision compares like with like",
+ "instrument1_holdout": {
+  "arms": {
+   "conc_soft|15000": {
+    "pooled_dti": 0.006846,
+    "ci_lo": 0.0021476390935435837,
+    "ci_hi": 0.00989802589063565,
+    "n_folds": 4,
+    "withheld_positives": 36474,
+    "mean_emitted": 15000.0,
+    "lift_over_random": 0.00593
+   },
+   "conc_soft|25000": {
+    "pooled_dti": 0.008467,
+    "ci_lo": 0.003427681031065764,
+    "ci_hi": 0.01160125773156484,
+    "n_folds": 4,
+    "withheld_positives": 36474,
+    "mean_emitted": 25000.0,
+    "lift_over_random": 0.007191
+   }
+  }
+ },
+ "instrument2_revealed": {
+  "per_field": [
+   {
+    "field": "conc_soft",
+    "f_8000": {
+     "n_dots": 8000,
+     "colocated": 1846,
+     "fraction": 0.23075,
+     "random_baseline": 0.11286553003577907,
+     "lift": 2.044468314877455,
+     "radius_px": 3
+    },
+    "f_12000": {
+     "n_dots": 12000,
+     "colocated": 2467,
+     "fraction": 0.20558333333333334,
+     "random_baseline": 0.11286553003577907,
+     "lift": 1.8214891053819724,
+     "radius_px": 3
+    },
+    "f_17000": {
+     "n_dots": 17000,
+     "colocated": 3104,
+     "fraction": 0.18258823529411763,
+     "random_baseline": 0.11286553003577907,
+     "lift": 1.6177502133400343,
+     "radius_px": 3
+    },
+    "f_25000": {
+     "n_dots": 25000,
+     "colocated": 3741,
+     "fraction": 0.14964,
+     "random_baseline": 0.11286553003577907,
+     "lift": 1.3258255195591,
+     "radius_px": 3
+    },
+    "f_38000": {
+     "n_dots": 38000,
+     "colocated": 4714,
+     "fraction": 0.12405263157894737,
+     "random_baseline": 0.11286553003577907,
+     "lift": 1.0991188500122395,
+     "radius_px": 3
+    }
+   }
+  ]
+ }
+}

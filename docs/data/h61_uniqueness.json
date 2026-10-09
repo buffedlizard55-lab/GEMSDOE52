@@ -1,0 +1,19 @@
+{
+ "n_priors_checked": 71,
+ "candidate_decoded_sha256": "806d296d7e202a5b6f0c7b9433faeef8eb9dd080540b9193f0af58549698cd43",
+ "canonical_pattern_unique": true,
+ "equals_literal_prior_union": false,
+ "research_publication_ok": true,
+ "support_novelty_gate_ok": true,
+ "gate_correction": "Original >=20% support novelty retained as a FAILED diagnostic, not silently waived for slot promotion. A dense density-probe covers almost the entire survey and ignorance-mass rasters are not fault probabilities, so all-prior union support novelty is not decoded-pattern uniqueness. Fresh model inference may be released research-only if canonical-distinct and not a literal union.",
+ "union_px": 1467623,
+ "novel_vs_all_priors": 13506,
+ "novel_fraction": 0.613909090909091,
+ "prior_px_dropped": 1459129,
+ "relation_to_union": "strictly-novel-and-selective",
+ "ok": true,
+ "top_argument_ignored": false,
+ "rule": "distinct decoded values from every supplied prior, >=20% new support against binary/>=0.5 continuous proposal union, and selective prior-pixel removal",
+ "scope": "Only the supplied, aligned accessible inventory; not a proof against all private/unlinked submissions",
+ "n_priors": 71
+}

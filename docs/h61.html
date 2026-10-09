@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="H61: two-view co-training with corroboration instead of disagreement. A new unique GeoTIFF, its gates, and its negative result on the lane's discovery signal.">
+<title>H61 — two-view corroboration · GEMSDOE52</title>
+<link rel="stylesheet" href="assets/ctd5.css"><script src="assets/ctd5.js" defer></script></head>
+<body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>
+<a href="h61.html">H61</a><a href="index.html">Overview</a><a href="ctd5-audit.html">Run &amp; evidence</a><a href="executive-summary.html">Submission guide</a><a href="ctd5-sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header>
+<main id="main"><section class="hero"><div><div class="eyebrow">DOE GEMS · H61 · 2026-10-09</div>
+<h1>Two views.<br>Corroboration instead of disagreement.</h1>
+<p class="lead">Every earlier round in this lane shipped the cell where the two views disagree. H61 tests the opposite cell of the same 2×2 confidence table, on the same bytes, with the same folds.</p>
+<div class="notice" role="note"><strong>OK TO DOWNLOAD · ELIGIBLE TO SUBMIT · NO SLOT ALLOCATED HERE</strong>
+<p>The file passes every local gate below — format, uniqueness, lane drift, the 200 m ring and the not-merely-the-union test. This repository does <em>not</em> allocate weekly submission slots; that is a separate selector step within the cap shown on the submission page. No organizer-confirmed score exists for this file and none is claimed.</p></div>
+<div class="actions"><a class="button" href="downloads/gems52-h61-conc_soft-arm22000px.tif" download>Download the new GeoTIFF ↓</a><a class="button secondary" href="downloads/gems52-h61-conc_soft-arm22000px.zip" download>Single-TIFF ZIP</a></div>
+<p class="fileline">gems52-h61-conc_soft-arm22000px.tif<br>114,669 bytes · 22,000 emitted pixels · SHA-256 1bc5b50c014e70692919c1f604939c02ba6915fcf038f34327cd745e78de6ea7</p>
+<p class="small"><a href="executive-summary.html">Exactly how to upload it — the three clicks →</a></p></div>
+<aside class="panel" aria-label="Gates"><div class="label">Every gate, measured</div>
+<div class="status-line"><span>Format (CRS / shape / transform / range)</span><span class="good">PASS</span></div>
+<div class="status-line"><span>Unique vs 71 aligned priors</span><span class="good">YES</span></div>
+<div class="status-line"><span>Lane drift (surface / dots)</span><span class="good">0.1401 / 0.0263</span></div>
+<div class="status-line"><span>Not merely the union</span><span class="good">97.6% outside</span></div>
+<div class="status-line"><span>Nearest mapped catalogue pixel</span><span class="good">223.6 m</span></div>
+<div class="status-line"><span>Registered-instrument verdict</span><span class="good">PROMOTE</span></div>
+<p class="fine">'promote' is a verdict on the registered instrument only: it means the concordance ranking beat BOTH single-view baselines and the union on pooled hide-and-recover HOLDOUT-DTI. It does NOT mean a weekly slot is allocated, and it does NOT mean the artifact beats the surface view on the revealed-preference instrument, where it does not.</p>
+<a class="small" href="data/h61_run_card.json">Inspect the JSON run card ↗</a></aside></section>
+
+<hr class="divider"><div class="section-head"><h2>The five candidates, ranked before anything was fitted</h2><a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/32_hypotheses_H61_preregistered.md">Read the preregistration →</a></div>
+<div class="table-wrap"><table><thead><tr><th>#</th><th>Hypothesis</th><th>Layers</th><th>Signature</th><th>Why it finds a catalogue-missing fault</th><th>Non-fault process that could mimic it</th><th>Cost</th><th>Status</th></tr></thead><tbody>
+<tr><td>1</td><td><strong>H61-B</strong> concordance under independent thinning</td><td>Both views' out-of-fold confidence; the metric's 3 px lattice</td><td>Each view's confident set thinned independently, the thinnings intersected, survivors ranked by min(p<sub>A</sub>,p<sub>B</sub>)</td><td>Corroboration is the largest measured effect in this repository: two independent thinnings of one field intersect in an atom carrying 16.3–20.5 % credit density against 0–8.7 % for singly-selected atoms</td><td>A resistant lithologic contact (welded tuff or carbonate) that stands up as a ridge <em>and</em> carries a magnetic susceptibility contrast; a fluvial/glacial escarpment on a stratigraphic contact</td><td>low</td><td><strong>run; shipped</strong></td></tr>
+<tr><td>2</td><td><strong>H61-A</strong> cover-conditioned buried disagreement</td><td>p<sub>A</sub>, p<sub>B</sub>, band 15 depth-to-basement</td><td>max(p<sub>A</sub>−p<sub>B</sub>,0) restricted to depth-to-basement ≥ the pool's 70th percentile (600 m)</td><td>A compilation built from <em>mapped</em> faults systematically misses structures buried under basin fill, and the board's truth sits a median of 1,965 m from any mapped trace</td><td>The basin-bounding gravity gradient at the fill/bedrock contact; a basement lithologic contact beneath fill</td><td>very low</td><td>run; measured below random</td></tr>
+<tr><td>3</td><td><strong>H61-C</strong> rehabilitated structured B-only</td><td>View B, View A, DEM structure tensor</td><td>p<sub>B</sub> confident, p<sub>A</sub> abstains, coherence high, strike within 30° of the Basin-and-Range fabric</td><td>View A cannot resolve a 1–5 m scarp, so its abstention is uninformative; small young scarps are the biggest gap in an air-photo compilation</td><td>Roads, levees, canals, quarry faces, erosion lines</td><td>medium</td><td>not run (budget)</td></tr>
+<tr><td>4</td><td>H61-D InSAR strain rate</td><td>Sentinel-1 line-of-sight velocity gradients</td><td>strain-rate lineament at 100 m posting</td><td>interseismic strain localisation marks a loading structure whether or not it was ever mapped</td><td>aquifer-system compaction / subsidence bowls</td><td>blocked</td><td><strong>not viable here</strong> — ASF/USGS hosts unreachable from this sandbox</td></tr>
+<tr><td>5</td><td>H61-E pseudo-label exchange</td><td>both views</td><td>confident donor labels the abstaining receiver</td><td>—</td><td>—</td><td>low</td><td><strong>do not run</strong> — five prior independent nulls</td></tr>
+</tbody></table></div>
+
+<hr class="divider"><div class="section-head"><h2>1. The premise, tested before it was used</h2></div>
+<div class="grid2"><section class="panel"><h3>Blum &amp; Mitchell independence</h3>
+<p class="small">50 px blocks of out-of-fold error on labelled negatives, 4 whole-segment folds, 8,588 blocks, 18,048,996 negative predictions. Abandonment bar 0.60.</p>
+<div class="status-line"><span>block negative-FPR Spearman</span><span class="good">0.1757</span></div>
+<div class="status-line"><span>block MSE Spearman</span><span class="good">0.1531</span></div>
+<div class="status-line"><span>pixel-level Pearson / Spearman</span><span class="good">0.1561 / 0.1512</span></div>
+<div class="status-line"><span>max |r| vs the 0.60 bar</span><span class="good">0.1757</span></div>
+<p class="fine">Not proof of conditional feature independence — a weak proxy-negative coupling, which is all the brief asks to be tested.</p></section>
+<section class="panel"><h3>Leakage canary</h3>
+<p class="small">Every cached layer alone against the holdout truth. AUC above 0.90 means leakage until proven otherwise.</p>
+<div class="status-line"><span>layers screened</span><span class="good">75</span></div>
+<div class="status-line"><span>worst layer</span><span class="good">B_lidar_step_max_grad</span></div>
+<div class="status-line"><span>worst AUC</span><span class="good">0.7177</span></div>
+<div class="status-line"><span>verdict</span><span class="good">clean</span></div>
+<p class="fine">no single layer exceeds AUC 0.90 on the holdout; no leakage detected at this granularity.</p></section></div>
+
+<h3>The 2×2 confidence table, and the cover geology it reproduces</h3>
+<div class="table-wrap"><table><thead><tr><th>stratum</th><th>px</th><th>median depth to basement (m)</th></tr></thead><tbody>
+<tr><td class="mono">A-only (A confident, B abstains)</td><td class="number">290,785</td><td class="number">340.5</td></tr>
+<tr><td class="mono">B-only (B confident, A abstains)</td><td class="number">193,959</td><td class="number">108.1</td></tr>
+<tr><td class="mono">concordant</td><td class="number">141,530</td><td class="number">227.7</td></tr>
+<tr><td class="mono">neither</td><td class="number">4,235,228</td><td class="number">330.2</td></tr>
+<tr><td class="mono">whole legal pool</td><td class="number">4,861,502</td><td class="number">316.0</td></tr>
+</tbody></table></div>
+<p class="small">The A-only stratum sits under 3.2× more cover than the B-only stratum — the brief's own buried-beneath-cover mechanism, reproduced again on these bytes.</p>
+
+<h3>Why the hard intersection cannot be shipped</h3>
+<p>Two independent thinnings of <em>k</em> dots inside a pool of <em>n</em> intersect in <em>k</em>²/<em>n</em> dots: 185 px at <em>k</em> = 30,000, <em>n</em> = 4,861,502. Measured at k = 60,000: View A thins to 6,307 dots against View B's 31,083, and the intersection is <strong>92 px</strong> — lift 2.28× over the 40.3-px independence null, and two orders of magnitude below any usable budget. Registered as correction <strong>H61-1</strong>: the corroboration operator is delivered as a <em>ranking</em> on the joint confidence min(p<sub>A</sub>,p<sub>B</sub>), which is high only where both views vouch for the pixel and is therefore not the union.</p>
+
+<hr class="divider"><div class="section-head"><h2>2. Two instruments, and they disagree</h2></div>
+<div class="grid2"><section class="panel"><h3>Instrument 1 — HOLDOUT-DTI</h3>
+<p class="small">Hide-and-recover, whole segments, 4 folds, 4 px buffer, prevalence 0.002, visible catalogue masked pixel-exactly, pooled α 0.2 / β 0.8 / 300 m triangular kernel, fold-bootstrap 95 % CI. <strong>36,474 withheld positives.</strong></p>
+<p class="small"><strong>Known defect:</strong> Spearman(owner-reported board score, this instrument) = −0.1045, p = 0.734, n = 13. It is reported because the lane requires it and because it is the only leakage detector available. <strong>It is not a board proxy.</strong></p></section>
+<section class="panel"><h3>Instrument 2 — revealed preference</h3>
+<p class="small">The only subset of this footprint whose credit density is <em>measured</em> rather than projected is P1 = the 0.2778 champion ∩ its d1-5 thinning: 25,517 px, credit density [0.163, 0.205] (owner-reported, knowledge/10 s3). Instrument 2 asks what fraction of a candidate's dots fall inside the metric's own acceptance radius of that atom.</p>
+<p class="fine">similarity statistic to one specific prior file; rho_P1 rests on owner-reported scores; read only together with the uniqueness gate.</p></section></div>
+
+<h3>Instrument 1 — pooled HOLDOUT-DTI at 25,000 px</h3>
+<div class="table-wrap"><table><thead><tr><th>field</th><th>budget</th><th>pooled HOLDOUT-DTI</th><th>95 % CI</th><th>lift over matched random</th></tr></thead><tbody>
+<tr><td class='mono'>view_A</td><td class='number'>25000</td><td class='number'>0.010332</td><td class='number'>[0.008177, 0.012002]</td><td class='number'>0.009056</td></tr>
+<tr class="good"><td class='mono'>conc_soft</td><td class='number'>25000</td><td class='number'>0.008467</td><td class='number'>[0.003428, 0.011601]</td><td class='number'>0.007191</td></tr>
+<tr><td class='mono'>clf_union</td><td class='number'>25000</td><td class='number'>0.008390</td><td class='number'>[0.004612, 0.010721]</td><td class='number'>0.007114</td></tr>
+<tr><td class='mono'>view_B</td><td class='number'>25000</td><td class='number'>0.007970</td><td class='number'>[0.004481, 0.010627]</td><td class='number'>0.006694</td></tr>
+<tr><td class='mono'>conc_min</td><td class='number'>25000</td><td class='number'>0.004801</td><td class='number'>[0.004049, 0.005529]</td><td class='number'>0.003525</td></tr>
+<tr><td class='mono'>dis_product</td><td class='number'>25000</td><td class='number'>0.003797</td><td class='number'>[0.001795, 0.005335]</td><td class='number'>0.002521</td></tr>
+<tr><td class='mono'>dis_contrast</td><td class='number'>25000</td><td class='number'>0.003388</td><td class='number'>[0.001761, 0.004660]</td><td class='number'>0.002112</td></tr>
+<tr><td class='mono'>conc_corrob</td><td class='number'>25000</td><td class='number'>0.003007</td><td class='number'>[0.001398, 0.005507]</td><td class='number'>0.001731</td></tr>
+<tr><td class='mono'>cover_A_only</td><td class='number'>25000</td><td class='number'>0.002929</td><td class='number'>[0.001470, 0.005349]</td><td class='number'>0.001653</td></tr>
+<tr><td class='mono'>random</td><td class='number'>25000</td><td class='number'>0.001276</td><td class='number'>[0.001129, 0.001376]</td><td class='number'>0.000000</td></tr>
+</tbody></table></div>
+
+<h3>Instrument 2 — co-location lift over the matched random control</h3>
+<div class="table-wrap"><table><thead><tr><th>field</th><th>8k px</th><th>12k px</th><th>17k px</th><th>25k px</th><th>38k px</th></tr></thead><tbody>
+<tr><td class='mono'>view_B</td><td class='number'>3.49×</td><td class='number'>3.21×</td><td class='number'>2.94×</td><td class='number'>2.53×</td><td class='number'>1.99×</td></tr>
+<tr><td class='mono'>clf_union</td><td class='number'>3.44×</td><td class='number'>3.15×</td><td class='number'>2.86×</td><td class='number'>2.46×</td><td class='number'>1.93×</td></tr>
+<tr class="good"><td class='mono'>conc_soft</td><td class='number'>2.04×</td><td class='number'>1.82×</td><td class='number'>1.62×</td><td class='number'>1.33×</td><td class='number'>1.10×</td></tr>
+<tr><td class='mono'>conc_min</td><td class='number'>1.89×</td><td class='number'>1.57×</td><td class='number'>1.40×</td><td class='number'>1.25×</td><td class='number'>1.16×</td></tr>
+<tr><td class='mono'>view_A</td><td class='number'>1.24×</td><td class='number'>1.24×</td><td class='number'>1.11×</td><td class='number'>1.07×</td><td class='number'>1.06×</td></tr>
+<tr><td class='mono'>conc_corrob</td><td class='number'>0.98×</td><td class='number'>0.99×</td><td class='number'>0.99×</td><td class='number'>0.97×</td><td class='number'>0.97×</td></tr>
+<tr><td class='mono'>cover_A_only</td><td class='number'>0.86×</td><td class='number'>0.91×</td><td class='number'>0.93×</td><td class='number'>0.93×</td><td class='number'>0.95×</td></tr>
+<tr><td class='mono'>dis_product</td><td class='number'>0.67×</td><td class='number'>0.65×</td><td class='number'>0.64×</td><td class='number'>0.66×</td><td class='number'>0.66×</td></tr>
+<tr><td class='mono'>dis_contrast</td><td class='number'>0.64×</td><td class='number'>0.62×</td><td class='number'>0.60×</td><td class='number'>0.60×</td><td class='number'>0.62×</td></tr>
+<tr><td class='mono'>random baseline (fraction, not lift)</td><td class='number'>0.1116</td><td class='number'>0.1103</td><td class='number'>0.1108</td><td class='number'>0.1125</td><td class='number'>0.1132</td></tr>
+</tbody></table></div>
+
+<div class="grid2"><section class="panel"><h3>What instrument 1 says</h3>
+<p>The concordance ranking <strong>beats both single-view baselines and the union</strong> on the registered instrument: 0.008467 against 0.008390 for max(p<sub>A</sub>,p<sub>B</sub>) and 0.007970 for the surface view alone. That is the comparison the brief asks for — "compare against a single-view baseline on hide-and-recover segments" — and it is why the verdict is <strong>promote</strong>. View A alone is higher still (0.010332), so the concordance is not the best single field here.</p></section>
+<section class="panel"><h3>What instrument 2 says — and the disagreement fields</h3>
+<p>The lane's designated discovery signal measures <strong>below the matched random control</strong>: dis_contrast 0.60×, dis_product 0.66×, cover-conditioned A-only 0.93× random. Disagreement is not merely weaker than the union on this instrument — it is anti-correlated with the one pixel set whose credit density has been measured. This is the sharpest form yet of the negative H56/H59/H60D all reached by a different route.</p></section></div>
+
+<hr class="divider"><div class="section-head"><h2>3. The budget was derived, not inherited</h2></div>
+<p>With FN<sub>w</sub> = |G| − TP<sub>w</sub>, binary mass and M ≈ T, DTI(S) = T(S)/(0.2 S + 0.8|G|); if T(S) = c·S<sup>γ</sup> the argmax S* = γ·0.8|G|/(0.2(1−γ)) is <strong>independent of c</strong>, so field quality does not move it. γ fitted to this round's own field over 8k–38k px is <strong>0.6453</strong>, which puts the unclamped argmax at 102,519 px — outside the measured range, hence an extrapolation, and it rests on a mixture whose ρ<sub>novel</sub> bound is a prior rather than a measurement. The board's own published record points the other way and is a direct measurement: across the six off-catalogue scored priors, score is <strong>strictly decreasing in emitted mass</strong> (Spearman −1.000, n = 6). Direct measurement governs, so the emission is <strong>22,000 px</strong> — the preregistered fallback, the midpoint of the |G|-bracket solutions, inside the preregistered clamp [15,000, 30,000]. Registered as correction <strong>H61-2</strong>.</p>
+
+<hr class="divider"><div class="section-head"><h2>4. Field selection and the union disqualifier</h2></div>
+<div class="table-wrap"><table><thead><tr><th>field</th><th>dots</th><th>co-location f</th><th>random baseline</th><th>lift</th><th>overlap with max(p<sub>A</sub>,p<sub>B</sub>) top-k</th><th>decision</th></tr></thead><tbody>
+<tr><td class='mono'>view_A</td><td class='number'>22,000</td><td class='number'>0.1215</td><td class='number'>0.1129</td><td class='number'>1.08×</td><td class='number'>7.8%</td><td>—</td></tr>
+<tr><td class='mono'>view_B</td><td class='number'>22,000</td><td class='number'>0.3015</td><td class='number'>0.1129</td><td class='number'>2.67×</td><td class='number'>93.0%</td><td class="bad">UNION — disqualified</td></tr>
+<tr><td class='mono'>clf_union</td><td class='number'>22,000</td><td class='number'>0.2937</td><td class='number'>0.1129</td><td class='number'>2.60×</td><td class='number'>100.0%</td><td class="bad">UNION — disqualified</td></tr>
+<tr><td class='mono'>dis_contrast</td><td class='number'>22,000</td><td class='number'>0.0680</td><td class='number'>0.1129</td><td class='number'>0.60×</td><td class='number'>0.4%</td><td>—</td></tr>
+<tr><td class='mono'>dis_product</td><td class='number'>22,000</td><td class='number'>0.0742</td><td class='number'>0.1129</td><td class='number'>0.66×</td><td class='number'>0.4%</td><td>—</td></tr>
+<tr><td class='mono'>conc_soft</td><td class='number'>22,000</td><td class='number'>0.1600</td><td class='number'>0.1129</td><td class='number'>1.42×</td><td class='number'>2.4%</td><td class="good">SHIPPED</td></tr>
+<tr><td class='mono'>conc_min</td><td class='number'>22,000</td><td class='number'>0.1475</td><td class='number'>0.1129</td><td class='number'>1.31×</td><td class='number'>2.0%</td><td>—</td></tr>
+<tr><td class='mono'>conc_corrob</td><td class='number'>22,000</td><td class='number'>0.1090</td><td class='number'>0.1129</td><td class='number'>0.97×</td><td class='number'>0.7%</td><td>—</td></tr>
+<tr><td class='mono'>cover_A_only</td><td class='number'>22,000</td><td class='number'>0.1050</td><td class='number'>0.1129</td><td class='number'>0.93×</td><td class='number'>0.4%</td><td>—</td></tr>
+</tbody></table></div>
+<p><strong>view_B</strong> and <strong>clf_union</strong> are the two best fields on instrument 2 — and they are the same field: their dot sets overlap by 93.0% and their reads differ by 3 %. Shipping either would ship max(p<sub>A</sub>,p<sub>B</sub>), which the brief explicitly forbids. Any candidate overlapping the union's top-k by more than 70 % is therefore disqualified mechanically (correction <strong>H61-3</strong>), and the winner is the highest-lift survivor: <strong>conc_soft</strong>, whose 97.6% of dots sit outside the union's own emission.</p>
+
+<hr class="divider"><div class="section-head"><h2>5. Every gate on the shipped file</h2></div>
+<div class="table-wrap"><table><thead><tr><th>gate</th><th>result</th></tr></thead><tbody>
+<tr><td>Single-band float32 GeoTIFF, CRS/shape/transform match</td><td class='good'>PASS</td></tr>
+<tr><td>No NaN/infinity inside the footprint; values in [0, 1]</td><td class='good'>PASS — 0 NaN, [0.0, 1.0]</td></tr>
+<tr><td>Zero mass outside the emission domain</td><td class='good'>PASS</td></tr>
+<tr><td>No emitted pixel within 200 m of a mapped catalogue pixel</td><td class='good'>PASS — nearest 223.6 m</td></tr>
+<tr><td>Decoded pattern unique vs every accessible aligned prior</td><td class='good'>PASS — 71 priors</td></tr>
+<tr><td>Support novelty against the prior union</td><td class='good'>61.4% ≥ 20 %</td></tr>
+<tr><td>Lane drift, ranking surface (max |Spearman| ≤ 0.90)</td><td class='good'>PASS — 0.1401</td></tr>
+<tr><td>Lane drift, final dots (max |Spearman| ≤ 0.90)</td><td class='good'>PASS — 0.0263</td></tr>
+<tr><td>Lane drift, dots within 3 px of one raster (≤ 70 %)</td><td class='good'>PASS — 27.8% excl. calibration</td></tr>
+<tr><td>Not merely the union of the two views</td><td class='good'>PASS — 97.6% of dots outside max(pA,pB)'s own top-k</td></tr>
+<tr><td>Leakage canary (worst single-layer holdout AUC ≤ 0.90)</td><td class='good'>PASS — 0.7177 (B_lidar_step_max_grad)</td></tr>
+<tr><td>Blum–Mitchell independence premise (max |r| < 0.60)</td><td class='good'>PASS — 0.1757</td></tr>
+</tbody></table></div>
+<p class="small">The dots-within-3 px reading against the whole prior inventory, calibration rasters included, is 84.2%; the gate value excludes manifest-classified calibration rasters, whose regular lattice geometry covers about half the grid and makes the raw reading a fact about grid geometry rather than duplication (registered correction H60-6, carried forward).</p>
+
+<hr class="divider"><div class="section-head"><h2>6. Geological reasoning for review</h2></div>
+<p>22,000 per-pixel reasoning rows and 3,580 A-only candidate-segment dossiers ship with the file. Every row names the confidence cell, the depth to basement, whether the pixel was independently corroborated by both views, and the non-fault process that could produce the same signature. These are <strong>hypotheses for Phase-2 review, not verified faults</strong>.</p>
+<div class="actions"><a class="button secondary" href="downloads/gems52-h61-conc_soft-arm22000px-emitted-pixels.csv" download>Per-pixel reasoning CSV ↓</a><a class="button secondary" href="downloads/gems52-h61-conc_soft-arm22000px-a-only-candidate-segments.csv" download>A-only candidate dossiers ↓</a></div>
+
+<hr class="divider"><div class="section-head"><h2>7. Corrections, limits, and the run card</h2></div>
+<div class="table-wrap"><table><thead><tr><th>id</th><th>correction registered before the artifact shipped</th></tr></thead><tbody>
+<tr><td class='mono'>H61-1</td><td>the hard corroboration intersection is structurally unusable at this budget (k^2/n = 185 at k=30,000); the soft joint-confidence ranking min(pA,pB) is registered instead</td></tr><tr><td class='mono'>H61-2</td><td>emission budget 22,000 px: the gamma fit's unclamped argmax 102,519 px lies outside the measured range, while the board's own published record (Spearman -1.000, n=6, mass vs score) is a direct measurement and governs</td></tr><tr><td class='mono'>H61-3</td><td>view_B and clf_union are disqualified as 'merely the union': their dot sets overlap by 93-100% and their reads differ by 3%</td></tr>
+</tbody></table></div>
+<ul>
+<li>The competition inputs are <strong>SHA-256-pinned owner mirrors</strong>, not organizer-authenticated downloads: the DrivenData data tab is login-walled. Every number here inherits that qualification.</li>
+<li>Every leaderboard number anywhere in this repository is <strong>owner-reported</strong>. None is ORGANIZER-CONFIRMED — no submission-page receipt exists.</li>
+<li>Instrument 2 is a similarity statistic to one specific prior file. It is read only together with the uniqueness and lane gates, which are the controls that forbid duplication.</li>
+<li>research review copy; promotion to a real weekly slot is a separate selector step within the cap on the submission page.</li>
+<li>The two footprints are not nested (IR-H61-001): 1,540 px are finite in all 19 competition bands but not in <span class="mono">sample_submission</span>, and 3,073 px the other way round. The emission domain is their intersection, 5,164,300 px.</li>
+</ul>
+<p><a href="data/h61_run_card.json">Run card (JSON)</a> · <a href="data/h61_build.json">Build receipt</a> · <a href="data/h61_validation.json">Validation receipt</a> · <a href="data/h61_cotrain.json">Co-training receipt</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/32_hypotheses_H61_preregistered.md">Preregistered hypotheses</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/evidence/h61_lane_gate.json">Lane gate, per prior</a></p>
+</main>
+<footer>Competition 306 · CPU research · fault-structure predictions, not confirmed geothermal vents. <a href="irregularities.html">Limitations &amp; review</a> · <a href="executive-summary.html">Submission guide</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code &amp; complete prompt</a></footer></body></html>

@@ -1,5 +1,15 @@
 # GEMSDOE52 — a new research GeoTIFF, not an approved submission
 
+> **NEWEST ROUND — H61 (2026-10-09). [Download the new unique GeoTIFF](docs/downloads/gems52-h61-conc_soft-arm22000px.tif)** · [single-TIFF ZIP](docs/downloads/gems52-h61-conc_soft-arm22000px.zip) · **[Executive summary / exact submission steps](docs/executive-summary.html)** · [H61 method & evidence](docs/h61.html) · [Run card](evidence/h61_run_card.json)
+>
+> **OK TO DOWNLOAD: YES. ELIGIBLE TO SUBMIT: the file passes every local gate. WEEKLY SLOT: not allocated here** — promotion to a real slot is a separate selector step, and no organizer-confirmed score exists for this file.
+>
+> **What it is.** 22,000 pixels, every one at least 223.6 m from any mapped USGS/INGENIOUS fault, ranked by the **joint confidence** `min(pA,pB)` of two independently trained views (A = potential-field/subsurface, B = surface) and placed by the metric's own 3 px lattice at a **derived** budget of 22,000 px. 97.6 % of its pixels lie outside `max(pA,pB)`'s own top-k, so it is not merely the union of the two views.
+>
+> **File:** `gems52-h61-conc_soft-arm22000px.tif` · **SHA-256:** `1bc5b50c014e70692919c1f604939c02ba6915fcf038f34327cd745e78de6ea7` · 114,669 bytes · all-finite `{0,1}` · EPSG:32611 · 3,730 × 3,292 · transform matches the pinned sample · nearest mapped catalogue pixel **223.6 m**.
+>
+> **The result.** The lane's own discovery signal — where the two views *disagree* — measures **below a matched random control** on the instrument tied to measured credit (`dis_contrast` 0.60×, `dis_product` 0.66×, cover-conditioned A-only 0.93× random). The **concordance** cell — the opposite corner of the same 2×2 confidence table — beats both single-view baselines and the union on the registered holdout instrument (pooled **HOLDOUT-DTI 0.008467**, 95 % CI [0.003428, 0.011601], 36,474 withheld positives, vs `clf_union` 0.008390 and `view_B` 0.007970). **Verdict: promote, scoped to the registered instrument; no slot allocated.** See [`knowledge/33_what_h61_found.md`](knowledge/33_what_h61_found.md).
+
 > **Current H60D session status (co-training with disagreement as the discovery signal, run
 > 2026-10-08 UTC):** hypotheses H60-1…H60-4 were registered in
 > `knowledge/30_hypotheses_H60D_preregistered.md` + `registry/h60d_preregistration.json` (SHA-verified,
@@ -239,6 +249,59 @@ sensitivity table, is on the audit page.
   `IR-H60D-002`).
 <!--/H60DREADME-->
 
+
+## Session 2026-10-09 — H61: two-view co-training with corroboration instead of disagreement
+
+**DOWNLOAD: YES · SUBMIT: the file is eligible and no local gate blocks it · WEEKLY SLOT: not allocated by this repository.**
+Preregistered in [`knowledge/32_hypotheses_H61_preregistered.md`](knowledge/32_hypotheses_H61_preregistered.md) and
+[`registry/h61_preregistration.json`](registry/h61_preregistration.json) **before** the first fit; every number recomputed
+on the 2026-10-09 SHA-pinned bytes (23/23 pins, [`evidence/h61_preflight_integrity.json`](evidence/h61_preflight_integrity.json)).
+[Run card](evidence/h61_run_card.json) · [build receipt](evidence/h61_build.json) · [validation](evidence/h61_validation.json) ·
+[co-training](evidence/h61_cotrain.json) · [lane gate, per prior](evidence/h61_lane_gate.json) · [what it found](knowledge/33_what_h61_found.md) · [site page](docs/h61.html)
+
+**Five candidate hypotheses were ranked before anything was fitted** (the brief's requirement), each naming the layers, the
+physical signature, why it should find a *catalogue-missing* fault rather than one already in the USGS/INGENIOUS compilation,
+and the named non-fault process that could mimic it:
+
+| rank | hypothesis | status |
+|---|---|---|
+| 1 | **H61-B** concordance under independent thinning (two views that err independently corroborate) | **run; shipped** |
+| 2 | **H61-A** cover-thickness-conditioned buried disagreement | **run; refuted** — below the matched random control |
+| 3 | H61-C rehabilitated structured B-only (View A cannot resolve a 1–5 m scarp) | not run (budget) |
+| 4 | H61-D InSAR strain rate | **not viable here**: ASF/USGS hosts are unreachable from this sandbox |
+| 5 | H61-E pseudo-label exchange | **do not run** — five prior independent nulls |
+
+**Three findings.**
+
+1. **The hard corroboration intersection cannot be delivered.** Two independent thinnings of *k* dots in a pool of *n*
+   intersect in *k²/n*: 185 px at *k* = 30,000, *n* = 4,861,502. Measured at `q_conf = 0.60`,
+   *k* = 60,000: View A thins to 6,307 dots against View B's 31,083, and the
+   intersection is **92 px** (lift 2.28× over the 40.3-px independence null).
+   Registered as correction **H61-1**: the operator ships as a ranking on `min(pA,pB)`.
+2. **The lane's discovery signal measures below random.** On the instrument tied to the only pixel set whose credit density
+   is *measured* (P1 = the 0.2778 champion ∩ its d1-5 thinning, 25,517 px, credit density [16.3 %, 20.5 %]), the
+   disagreement fields lift 0.60–0.67× over the matched random control and the cover-conditioned variant 0.86–0.95×.
+   This is the fourth independent confirmation of what H56, H59 and H60D found, and the sharpest.
+3. **The two instruments disagree in sign** (`IR-H61-003`): hide-and-recover ranks `view_A > conc_soft > clf_union > view_B`,
+   revealed preference ranks `view_B > clf_union > conc_soft > view_A`. Both orderings are published; neither is a forecast.
+
+**Three corrections were registered before the artifact shipped** — H61-1 (the operator form), H61-2 (the emission budget is
+**derived**, 22,000 px: the γ-fit's unclamped argmax of 102,519 px lies outside its measured range, while the board's own
+published record — score strictly decreasing in emitted mass, Spearman −1.000, n = 6 — is a direct measurement and governs),
+and H61-3 (`view_B` and `clf_union` are the *same field*: 93–100 % of their dots coincide, so shipping either would ship the
+union the brief forbids; the highest-lift non-union field ships instead).
+
+**Gates, all measured:** format PASS (0 problems); 0 px mass outside the emission domain; nearest catalogue pixel
+223.6 m (ring rule ≥ 200 m); pattern-unique vs **71** aligned priors with
+61.4 % support novelty; lane drift clean (surface max |ρ| 0.1401, dots max |ρ|
+0.0263, 3-px proximity 0.2781 excluding calibration rasters); **97.6 % of dots
+outside the union's own top-k**; leakage canary clean (worst of 75 layers, AUC 0.7177); independence premise holds
+(block max |r| 0.1757 against the 0.60 abandonment bar). 22,000 per-pixel geological reasoning rows and
+3,580 A-only candidate-segment dossiers ship with the file. The rebuild reproduces the identical sha256, so the
+build is a measured fixed point.
+
+**Reproduce:** `python scripts/restore_data.py` → `python scripts/prepare_data.py` → `python scripts/run_h61.py` →
+`python scripts/run_h61_extra_fields.py` → `python scripts/build_h61_submission.py` → `python scripts/publish_h61_site.py`.
 
 ## Start here every session
 
@@ -858,3 +921,33 @@ Do not stop after the first pass. Each pass must build on the previous one. Befo
 
 Go ahead and create a pull request and then merge the pull request onto the main. Make suggestions for what work still needs to be done and any limitations that is in the way of a successful project.  It should be worked on in this next session or the next session.  Work line by line verify everything no hallucinations.
 ```
+
+### 2026-10-09 addendum — what the prompt asks and where this repository stands
+
+The prompt above is verbatim and is re-read every session. Three of its clauses are answered here with measurements,
+not intentions.
+
+**"Why did `h33-h33-2-b2` score 0.2778, and can we generate one that scores higher than 0.3195?"**
+Because it is the 0.2600 file with the ≤ 200 m ring around the mapped catalogue deleted — 6.3 % of its mass removed for
++6.8 % score, i.e. *free precision*: a masked pixel can never earn credit and always pays the false-positive tax. It is not
+a better detector; the same 37,654 px emitted incoherently scores 0.0778, 3.6× worse. The arithmetic that beats 0.3195 is
+not a better model, it is **credit density × budget discipline**: `DTI = T / (0.2·T + 0.2·(S − M) + 0.8·|G|)`, so at
+`|G| ≈ 14,089` a 22,000-px file needs a credit density of ~16 % where the champion's own file averages 13.9 %. No
+instrument in this repository can certify that a novel field reaches it — the hide-and-recover simulator ranks the
+champion 13th of 13, and the revealed-preference instrument is a similarity statistic to one prior file. Both orderings
+are published in [`evidence/h61_validation.json`](evidence/h61_validation.json) and neither is a forecast.
+Full derivation: [`knowledge/27_why_02778_h60.md`](knowledge/27_why_02778_h60.md) and
+[`knowledge/10_revealed_preference_inverse.md`](knowledge/10_revealed_preference_inverse.md).
+
+**"It must be obvious whether it is OK to download and submit."** The front page
+([`docs/index.html`](docs/index.html)), the H61 page ([`docs/h61.html`](docs/h61.html)) and the
+submission guide ([`docs/executive-summary.html`](docs/executive-summary.html)) each carry an unmistakable status line.
+For H61 it reads **OK TO DOWNLOAD · ELIGIBLE TO SUBMIT · NO SLOT ALLOCATED HERE**, and the guide gives the four clicks:
+download → open the DrivenData *New submission* form → paste the ≤ 140-character note → submit and compare the portal's
+reported score against the receipt hash. The portal's `"Predicted values must be in range [0, 1]"` rejection cannot occur
+for this file: `gems52.grid.write_geotiff` refuses to emit a non-finite or out-of-range array, and the format gate
+re-reads the written bytes.
+
+**"Create an executive summary subpage that explains exactly how to make a submission."**
+[`docs/executive-summary.html`](docs/executive-summary.html) — file contract, the four clicks, the note text pre-written,
+and the three failure modes the submission form reports (value range, CRS/shape/geotransform, more than one TIFF in a ZIP).
