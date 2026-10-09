@@ -1,5 +1,5 @@
 {
- "round": "H74",
+ "round": "H75",
  "hypothesis": "Directional variogram anisotropy of det_elev, det_elev_slope and isostatic gravity marks fault damage zones not in the catalogue; adding it to View B improves recovery of hidden segments",
  "mechanism": "A 300-900 m fault damage zone makes local semivariance direction-dependent (strike-parallel smooth, strike-normal rough); statistic of the continuous field, not of mapped traces",
  "mimic": "Linear erosion/drainage incision, roads and range-front alluvial-fan bajada edges also produce anisotropic topographic texture; bedding-parallel layering can mimic it in gravity",
@@ -92,7 +92,7 @@
   }
  },
  "raster_sha256": "b97691584d514ab1925d9fff2b61c410be86bdc0bc8c844dfdaa6257a4ea7a16",
- "file": "submission/gems52-h74-dva-variogram-anisotropy-B-37654px-20261009.tif",
+ "file": "submission/gems52-h75-dva-variogram-anisotropy-B-37654px-20261009.tif",
  "validator": {
   "count": 1,
   "dtype": "float32",
@@ -114,9 +114,10 @@
   "ones": 37654,
   "PASS": true
  },
- "submission_name": "h74-dva-variogram-anisotropy-B-37654px-20261009",
- "note": "H74: View-B + directional variogram anisotropy (det_elev/slope/grav); 200m ring cut; binary 37654 dots; holdout +0.012 vs B",
+ "submission_name": "h75-dva-variogram-anisotropy-B-37654px-20261009",
+ "note": "H75: View-B + directional variogram anisotropy (det_elev/slope/grav); 200m ring cut; binary 37654 dots; holdout +0.012 vs B",
  "experiments_used": "3 of 3",
  "slots_used": 0,
- "verdict": "HOLDOUT: PROMOTE (beats single_B, CI>0). LANE: DUPLICATE/STOP on dots (near-dot 0.922>0.70). Overall: research-only per protocol; owner may override lane rule"
+ "verdict": "HOLDOUT: PROMOTE (beats single_B, CI>0). LANE: DUPLICATE/STOP on dots (near-dot 0.922>0.70). Overall: research-only per protocol; owner may override lane rule",
+ "renamed_from": "H74 (identifier-only: a parallel session merged its own H74 to main first)"
 }

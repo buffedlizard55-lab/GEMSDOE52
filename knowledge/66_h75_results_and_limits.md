@@ -1,9 +1,11 @@
-# 64 · H74 — results, irregularities, next steps (2026-10-09)
+# 66 · H75 — results, irregularities, next steps (2026-10-09)
+> Identifier note: first run as H74 in this session; renamed H75 at merge because a parallel session merged its own H74 to `main` first. Pixels, SHA-256 and every number unchanged.
 
-Preregistration: `knowledge/63` (+ amendments 63a, 63b, each written before the experiment it governs; the registry
-pin `registry/h74_preregistration.json` hashes the ORIGINAL text — the amendments are appended below it, so re-hash
-before re-running: IR-H74-002). Runner: `scripts/run_h74.py` (fit/holdout/build), `scripts/h74_gates.py`,
-`scripts/h74_lane_place.py`, `scripts/h74_write.py`. Run card: `evidence/h74_run_card.json`.
+
+Preregistration: `knowledge/65` (+ amendments 65a, 65b, each written before the experiment it governs; the registry
+pin `registry/h75_preregistration.json` hashes the ORIGINAL text — the amendments are appended below it, so re-hash
+before re-running: IR-H75-002). Runner: `scripts/run_h75.py` (fit/holdout/build), `scripts/h75_gates.py`,
+`scripts/h75_lane_place.py`, `scripts/h75_write.py`. Run card: `evidence/h75_run_card.json`.
 
 ## Measured
 | Step | Label | Result |
@@ -32,13 +34,13 @@ plausible area (a property of the registry, measured twice more here). Per the p
 Holdout DTI is not a board forecast (repo measured Spearman −0.10 between holdout and board, R4).
 
 ## Irregularities
-- IR-H74-001: README/landing page promoted H72-v3 as "recommended" although its own holdout (0.031) is **below random
-  (0.080)**. Superseded; H72-v3 should not be preferred over H74.
-- IR-H74-002: amendments appended to the pinned document change its hash; `run_h74.py` will refuse to run until the pin
+- IR-H75-001: README/landing page promoted H72-v3 as "recommended" although its own holdout (0.031) is **below random
+  (0.080)**. Superseded; H72-v3 should not be preferred over H75.
+- IR-H75-002: amendments appended to the pinned document change its hash; `run_h75.py` will refuse to run until the pin
   is refreshed (pin refreshed at the end of the round, old hash kept in the registry JSON).
-- IR-H74-003: the brief's co-training steps (independence test, A-only reasoning, pseudo-labels) were not re-run: lane
+- IR-H75-003: the brief's co-training steps (independence test, A-only reasoning, pseudo-labels) were not re-run: lane
   closed after 5 measured View-A sufficiency failures. There are therefore no A-only candidates to write reasoning for.
-- IR-H74-004: single_B differs from the H71 receipt by 5.4e-5 (float/library-level); random reproduces exactly.
+- IR-H75-004: single_B differs from the H71 receipt by 5.4e-5 (float/library-level); random reproduces exactly.
 
 ## Next steps (ranked)
 1. Decide the lane rule: the near-dot gate against 350+ dense priors makes **every** surface emission a "duplicate".

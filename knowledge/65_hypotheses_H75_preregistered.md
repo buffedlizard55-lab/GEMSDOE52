@@ -1,4 +1,4 @@
-# 63 · H74 — preregistration (frozen before any H74 fit, 2026-10-09)
+# 65 · H75 — preregistration (frozen before any H75 fit, 2026-10-09)
 
 Labels: HOLDOUT-DTI = reading of `gems52-pooled-hide-v1` (pooled, alpha 0.2, beta 0.8, 300 m triangular kernel,
 whole-segment quadrant folds with buffer, visible catalogue masked). Nothing here is ORGANIZER-CONFIRMED.
@@ -6,7 +6,7 @@ whole-segment quadrant folds with buffer, visible catalogue masked). Nothing her
 ## Lane status carried in
 The brief's co-training lane (View A geophysics × View B surface) failed View-A sufficiency five consecutive
 rounds (H62–H70, AUC ≈ 0.52; `knowledge/55`). Re-running it unchanged would be a sixth identical experiment, so
-H74 does **not** re-fit co-training. It tests the top-ranked untested hypothesis from `knowledge/62` §4.
+H75 does **not** re-fit co-training. It tests the top-ranked untested hypothesis from `knowledge/62` §4.
 
 ## Candidate hypotheses (ranked; cost = implementation effort here)
 | # | Hypothesis | Layers | Signature | Why off-catalogue | New vs repo | Exp. gain / cost |
@@ -26,7 +26,7 @@ same rows/learner/seed), `DVA_only`, `random`.
 200 m of the catalogue excluded (the measured 0.2600→0.2778 mechanism, `knowledge/49`), binary {0,1}, 37,654 dots,
 3 px spacing. Gates: rank-corr ≤ 0.90 and near-dot share ≤ 0.70 against every registry raster available locally.
 
-## Amendment 63a (written after the experiment-1 holdout and the dots lane gate, BEFORE experiment 2)
+## Amendment 65a (written after the experiment-1 holdout and the dots lane gate, BEFORE experiment 2)
 Experiment 1 result: B_DVA beat single_B on the holdout; surface lane PASS; dots lane DUPLICATE/STOP (policy max
 near-dot 0.9220, 38 informative offenders). Experiment 2 = the H73 amendment-61a placement (`run_h73.place_lane`,
 greedy + per-prior quota at floor(0.70·K), up to 8 re-placement rounds) applied unchanged to the B_DVA field over
@@ -34,8 +34,8 @@ the same 200 m-ring-excluded pool, K = 37,654. If it fills K with worst share �
 fold at 9,400 dots and must still beat single_B (paired CI lower bound > 0) before any file is called submittable.
 If it does not fill, the file is published as research-only with the lane failure stated.
 
-## Amendment 63b (after experiment 2, BEFORE experiment 3 — the last of 3)
+## Amendment 65b (after experiment 2, BEFORE experiment 3 — the last of 3)
 Experiment 2: place_lane at K = 37,654 short-filled (35,858 dots; worst 0.7350; 23 quota priors) — the same
 denominator wall H73 measured. Capacity outside the 23 quota halos ≈ 35,858 − 0.70·37,654 ≈ 9,500 dots, so the
 30 % non-halo share is reachable only for K ≲ 31,600. Experiment 3 = the identical placement at one fixed budget
-**K = 30,000** (holdout 7,500 dots/fold), no further budget search. Same promotion rule as 63a.
+**K = 30,000** (holdout 7,500 dots/fold), no further budget search. Same promotion rule as 65a.

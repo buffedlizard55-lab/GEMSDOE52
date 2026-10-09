@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""H74 -- directional variogram anisotropy (DVA) added to View B; hide-and-recover holdout; emission.
+"""H75 -- directional variogram anisotropy (DVA) added to View B; hide-and-recover holdout; emission.
 
-Preregistered in knowledge/63_hypotheses_H74_preregistered.md (pinned in registry/h74_preregistration.json).
+Preregistered in knowledge/65_hypotheses_H75_preregistered.md (pinned in registry/h75_preregistration.json).
 Shared, not forked: run_h61.setup / sample_for_fit / learner_for / pct_rank / to_grid, gems52.evaluate_holdout,
 gems52.nodes.spacing_select, gems52.gates, gems52.submission_writer, build_h61_submission.prior_paths.
 
-Usage: python scripts/run_h74.py [fit|holdout|build|all]
+Usage: python scripts/run_h75.py [fit|holdout|build|all]
 """
 from __future__ import annotations
 
@@ -32,12 +32,12 @@ from gems52 import evaluate_holdout as evaluator                     # noqa: E40
 from gems52 import nodes                                             # noqa: E402
 
 SEED = base.SEED
-PREREG = ROOT / "registry/h74_preregistration.json"
-WORK = ROOT / "work/h74"
+PREREG = ROOT / "registry/h75_preregistration.json"
+WORK = ROOT / "work/h75"
 EVID = ROOT / "evidence"
 SAMPLE = ROOT / "data/sample_submission.tif"
-K_FOLD = int(os.environ.get("H74_K_FOLD", 9400))
-K_TOTAL = int(os.environ.get("H74_K_TOTAL", 37654))
+K_FOLD = int(os.environ.get("H75_K_FOLD", 9400))
+K_TOTAL = int(os.environ.get("H75_K_TOTAL", 37654))
 DVA_BANDS = {12: "det_elev", 19: "det_elev_slope", 13: "iso_grav_anom"}
 LAGS = (2, 4)
 SIGMA = 3.0
@@ -53,7 +53,7 @@ def digest(p):
 
 def write(name, obj):
     EVID.mkdir(exist_ok=True)
-    p = EVID / f"h74_{name}.json"
+    p = EVID / f"h75_{name}.json"
     p.write_text(json.dumps(obj, indent=1, default=float))
     return p
 
@@ -61,7 +61,7 @@ def write(name, obj):
 def check_prereg():
     reg = json.loads(PREREG.read_text())
     if digest(ROOT / reg["hypothesis_document"]) != reg["hypothesis_sha256"]:
-        raise SystemExit("H74 preregistration changed after freezing")
+        raise SystemExit("H75 preregistration changed after freezing")
     return reg
 
 
