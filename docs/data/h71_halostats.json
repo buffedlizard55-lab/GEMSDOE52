@@ -1,0 +1,195 @@
+{
+ "evidence_class": "uniqueness/lane diagnostic, not a score",
+ "stratum_px": 57143,
+ "exact_novel_px": 1754,
+ "n_informative": 516,
+ "n_probes": 35,
+ "max_halo_frac_stratum": 0.90648,
+ "max_halo_frac_exact_novel": 1.0,
+ "n_stratum_blanket_over_070": 20,
+ "n_novel_blanket_over_070": 8,
+ "top20_by_stratum": [
+  {
+   "path": "4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+   "coverage_3px_eligible": 0.897568,
+   "halo_frac_of_stratum": 0.90648,
+   "halo_frac_of_exact_novel": 0.883124
+  },
+  {
+   "path": "437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+   "coverage_3px_eligible": 0.861556,
+   "halo_frac_of_stratum": 0.85216,
+   "halo_frac_of_exact_novel": 0.842645
+  },
+  {
+   "path": "c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+   "coverage_3px_eligible": 0.861556,
+   "halo_frac_of_stratum": 0.85216,
+   "halo_frac_of_exact_novel": 0.842645
+  },
+  {
+   "path": "5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+   "coverage_3px_eligible": 0.83541,
+   "halo_frac_of_stratum": 0.827153,
+   "halo_frac_of_exact_novel": 0.798176
+  },
+  {
+   "path": "0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+   "coverage_3px_eligible": 0.83541,
+   "halo_frac_of_stratum": 0.827153,
+   "halo_frac_of_exact_novel": 0.798176
+  },
+  {
+   "path": "ab7e0752036d020fbc394a528bbe63171c3cb08f.tif",
+   "coverage_3px_eligible": 0.758265,
+   "halo_frac_of_stratum": 0.786816,
+   "halo_frac_of_exact_novel": 0.607754
+  },
+  {
+   "path": "443e8e1c799734facd50a92bc85c650f3857a2b6.tif",
+   "coverage_3px_eligible": 0.758265,
+   "halo_frac_of_stratum": 0.786816,
+   "halo_frac_of_exact_novel": 0.607754
+  },
+  {
+   "path": "57732c697e2aa7c50c8ce35fa3d8866aee103abf.tif",
+   "coverage_3px_eligible": 0.739547,
+   "halo_frac_of_stratum": 0.780201,
+   "halo_frac_of_exact_novel": 0.620867
+  },
+  {
+   "path": "0bb2fae409553cc7281a848541d65232921a8bdc.tif",
+   "coverage_3px_eligible": 0.739547,
+   "halo_frac_of_stratum": 0.780201,
+   "halo_frac_of_exact_novel": 0.620867
+  },
+  {
+   "path": "e2594695e37059e4c708857a8e7e58f007900bca.tif",
+   "coverage_3px_eligible": 0.739547,
+   "halo_frac_of_stratum": 0.780201,
+   "halo_frac_of_exact_novel": 0.620867
+  },
+  {
+   "path": "80ee726da7af66e6cd86b627a9982cec8e709ac3.tif",
+   "coverage_3px_eligible": 0.739547,
+   "halo_frac_of_stratum": 0.780201,
+   "halo_frac_of_exact_novel": 0.620867
+  },
+  {
+   "path": "0a195a38802892f46e0146415faa678aa1603b5b.tif",
+   "coverage_3px_eligible": 0.724658,
+   "halo_frac_of_stratum": 0.763296,
+   "halo_frac_of_exact_novel": 0.620867
+  },
+  {
+   "path": "ed019800934ba779cbc6707fd0ed05ab40ed7ad1.tif",
+   "coverage_3px_eligible": 0.724658,
+   "halo_frac_of_stratum": 0.763296,
+   "halo_frac_of_exact_novel": 0.620867
+  },
+  {
+   "path": "bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+   "coverage_3px_eligible": 0.762961,
+   "halo_frac_of_stratum": 0.759953,
+   "halo_frac_of_exact_novel": 0.741733
+  },
+  {
+   "path": "2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+   "coverage_3px_eligible": 0.762961,
+   "halo_frac_of_stratum": 0.759953,
+   "halo_frac_of_exact_novel": 0.741733
+  },
+  {
+   "path": "d4639f1bf50f1d4870b752fc0bf9df5ad30b9ce6.tif",
+   "coverage_3px_eligible": 0.728818,
+   "halo_frac_of_stratum": 0.753741,
+   "halo_frac_of_exact_novel": 0.117446
+  },
+  {
+   "path": "32a4a6d2d4df8ef8e880120f36d2a4d94f134f8a.tif",
+   "coverage_3px_eligible": 0.734633,
+   "halo_frac_of_stratum": 0.727106,
+   "halo_frac_of_exact_novel": 0.666477
+  },
+  {
+   "path": "fdd931161c431a583cf7039362e51832e59d07ad.tif",
+   "coverage_3px_eligible": 0.735238,
+   "halo_frac_of_stratum": 0.714313,
+   "halo_frac_of_exact_novel": 0.687001
+  },
+  {
+   "path": "6d69c94d9c59cf518fe9d6d34463444348aa88ad.tif",
+   "coverage_3px_eligible": 0.679779,
+   "halo_frac_of_stratum": 0.714033,
+   "halo_frac_of_exact_novel": 0.576967
+  },
+  {
+   "path": "6ef080a1067db86fa70924252fdb777ec4b94b7a.tif",
+   "coverage_3px_eligible": 0.679779,
+   "halo_frac_of_stratum": 0.714033,
+   "halo_frac_of_exact_novel": 0.576967
+  }
+ ],
+ "top10_by_exact_novel": [
+  {
+   "path": "gems52-h64-sufgate-cotrain-37600px-20261009T022631Z.tif",
+   "coverage_3px_eligible": 0.145657,
+   "halo_frac_of_stratum": 0.13636,
+   "halo_frac_of_exact_novel": 1.0
+  },
+  {
+   "path": "4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+   "coverage_3px_eligible": 0.897568,
+   "halo_frac_of_stratum": 0.90648,
+   "halo_frac_of_exact_novel": 0.883124
+  },
+  {
+   "path": "437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+   "coverage_3px_eligible": 0.861556,
+   "halo_frac_of_stratum": 0.85216,
+   "halo_frac_of_exact_novel": 0.842645
+  },
+  {
+   "path": "c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+   "coverage_3px_eligible": 0.861556,
+   "halo_frac_of_stratum": 0.85216,
+   "halo_frac_of_exact_novel": 0.842645
+  },
+  {
+   "path": "5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+   "coverage_3px_eligible": 0.83541,
+   "halo_frac_of_stratum": 0.827153,
+   "halo_frac_of_exact_novel": 0.798176
+  },
+  {
+   "path": "0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+   "coverage_3px_eligible": 0.83541,
+   "halo_frac_of_stratum": 0.827153,
+   "halo_frac_of_exact_novel": 0.798176
+  },
+  {
+   "path": "bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+   "coverage_3px_eligible": 0.762961,
+   "halo_frac_of_stratum": 0.759953,
+   "halo_frac_of_exact_novel": 0.741733
+  },
+  {
+   "path": "2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+   "coverage_3px_eligible": 0.762961,
+   "halo_frac_of_stratum": 0.759953,
+   "halo_frac_of_exact_novel": 0.741733
+  },
+  {
+   "path": "fdd931161c431a583cf7039362e51832e59d07ad.tif",
+   "coverage_3px_eligible": 0.735238,
+   "halo_frac_of_stratum": 0.714313,
+   "halo_frac_of_exact_novel": 0.687001
+  },
+  {
+   "path": "32a4a6d2d4df8ef8e880120f36d2a4d94f134f8a.tif",
+   "coverage_3px_eligible": 0.734633,
+   "halo_frac_of_stratum": 0.727106,
+   "halo_frac_of_exact_novel": 0.666477
+  }
+ ]
+}

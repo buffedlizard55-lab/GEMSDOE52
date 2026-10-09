@@ -1,0 +1,65 @@
+{
+ "round": "H71",
+ "preregistered_utc": "2026-10-09T04:35:00+00:00",
+ "hypothesis_document": "knowledge/57_hypotheses_H71_preregistered.md",
+ "hypothesis_sha256": "dddad3a27a6869b953071583f943440f29e8568935d7bc7890107c9c06806fa1",
+ "hypothesis_bytes": 14881,
+ "lane": "two-view co-training (Blum & Mitchell 1998, doi:10.1145/279943.279962); View A potential-field/subsurface, View B surface; disagreement as the discovery signal; the A-only stratum emitted directly; lane-quiet placement",
+ "frozen_before_any_fit": true,
+ "runner": "scripts/run_h71.py",
+ "runner_refuses_if_hash_moves": true,
+ "shared_tools_to_reuse": [
+  "scripts/run_h61.py stages (setup, sample_train, learner, stage_fit, stage_exchange) via redirect, not fork",
+  "src/gems52/spatial.py::folds (label-blind-quadrants-v2)",
+  "src/gems52/evaluate_holdout.py (gems52-pooled-hide-v1)",
+  "src/gems52/metric.py",
+  "src/gems52/nodes.py::spacing_select",
+  "src/gems52/submission_writer.py",
+  "src/gems52/gates.py (incl. authoritative universal-coverage-probe lane policy)",
+  "src/gems52/structural.py::FeatureStore (cached stack, extended +external-geodawn-v1)",
+  "scripts/audit_uniqueness.py with the census receipt",
+  "scripts/build_h61_submission.py::prior_paths (census helper only)"
+ ],
+ "thresholds": {
+  "canary_auc_alarm": 0.9,
+  "independence_abandon_max_abs_rho": 0.6,
+  "donor_rank_min": 0.95,
+  "receiver_rank_interval": [
+   0.35,
+   0.65
+  ],
+  "buffer_px": 80,
+  "block_side_px": 50,
+  "min_pseudo_pixels": 5,
+  "pseudo_cap_per_fold": 2000,
+  "budget_dots_per_fold_per_arm": 9400,
+  "min_dot_separation_px": 3.0,
+  "catalogue_exclusion_m": 200.0,
+  "bootstrap_draws": 1000,
+  "bootstrap_block_px": 200,
+  "lane_near_dot_fraction": 0.7,
+  "lane_near_dot_radius_px": 3.0,
+  "lane_rank_correlation": 0.9,
+  "universal_coverage_probe_threshold": 0.95,
+  "single_B_h61_control_holdout_dti": 0.174517,
+  "single_B_control_abs_tolerance": 0.001,
+  "quiet_zone_radius_px": 3.0,
+  "build_budget_cap": 23000
+ },
+ "budget": {
+  "max_experiments": 3,
+  "experiments": [
+   "E1 canary + premise + independence (diagnostics on the rebuilt stack)",
+   "E2 exchange + matched-budget hide-and-recover holdout (candidate vs single-view baseline)",
+   "E3 build + lane/uniqueness gates + GeoTIFF + site publication"
+  ]
+ },
+ "verdict_rule": "promote only if format + policy lane + uniqueness (both tiers) + not-the-union + holdout-beats-single_B all pass; otherwise negative/research-only; this lane spends no weekly slot",
+ "rename_note": "Round first developed and frozen in session arena/7169d369 as round H66 (knowledge/43, preregistered 2026-10-09T04:35:00Z, sha 315c4e4755346855b30eb6e25e6144e885f9d26fe9bf8b0d7cbc7558718b4286). At merge time a parallel session's own H66 round (knowledge/43, preregistered 04:28:58Z, sha e21187387a3b646ee6fafa30aacc6229c9575d455360f0f84a3331f5fb1aa0a9) had already merged to main (PR #63), so this round was renamed H71 and its documents moved to knowledge/57/57a/57b/58 with identifier-only edits (h66->h71, 43->57, 44->58, IR-H66->IR-H71); no measured number, threshold or conclusion changed. The hypothesis_sha256 above is the hash of the renamed document; the original 315c4e47 hash pins the pre-rename bytes, which remain identical modulo those identifiers (IR-H71-005).",
+ "original_preregistration": {
+  "round": "H66",
+  "document": "knowledge/43_hypotheses_H66_preregistered.md",
+  "sha256": "315c4e4755346855b30eb6e25e6144e885f9d26fe9bf8b0d7cbc7558718b4286",
+  "preregistered_utc": "2026-10-09T04:35:00+00:00"
+ }
+}

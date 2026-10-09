@@ -1,0 +1,16 @@
+{
+ "tier1_all_priors": {
+  "canonical_pattern_unique": true,
+  "equals_literal_prior_union": false,
+  "novel_fraction": 0.0,
+  "relation_to_union": "subset-of-union",
+  "n_priors_checked": 553
+ },
+ "tier2_informative_priors": {
+  "novel_fraction": 0.3103896103896104,
+  "equals_literal_prior_union": false,
+  "relation_to_union": "strictly-novel-and-selective",
+  "n_priors_checked": 516,
+  "informative_rasters": 516
+ }
+}
