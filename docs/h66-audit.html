@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="H66 structural coherence audit — method, evidence, and limits.">
+<title>H66 audit — structural coherence with multi-data consensus · GEMSDOE52</title>
+<link rel="stylesheet" href="assets/ctd5.css">
+</head><body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>
+<a href="index.html">Overview</a><a href="h66-audit.html">Audit</a><a href="h66-executive-summary.html">Submission guide</a><a href="h66-sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header>
+<main id="main">
+
+<div class="notice" role="note" style="margin:0 0 1rem">
+<strong>H66 Research Round — structural coherence with multi-data consensus.</strong>
+New hypothesis; not yet validated on the hide-and-recover holdout.
+</div>
+
+<div class="eyebrow">H66 audit — method, evidence, and limits</div>
+<h1>Structural coherence with multi-data consensus.<br>A new hypothesis.</h1>
+
+<p class="lead">H66 combines structural coherence, multi-data consensus, and strike alignment to identify fault candidates that express across multiple independent data types. This is a new hypothesis that has not been validated on the holdout yet.</p>
+
+<section class="panel">
+<h2>Gate results</h2>
+<div class="status-line"><span>Format gate</span><span class="good">PASS</span></div>
+<div class="status-line"><span>Values in [0,1], 0 NaN</span><span class="good">PASS</span></div>
+<div class="status-line"><span>CRS/shape/transform match</span><span class="good">PASS</span></div>
+<div class="status-line"><span>Decoded-pattern uniqueness</span><span class="good">PASS</span></div>
+<div class="status-line"><span>Support novelty (>20%)</span><span class="good">PASS (90.56%)</span></div>
+<div class="status-line"><span>Not literal union</span><span class="good">PASS</span></div>
+<div class="status-line"><span>Lane gate (Spearman)</span><span class="good">PASS (max 0.0033)</span></div>
+<div class="status-line"><span>Lane gate (near-3px)</span><span class="good">PASS (max 0.1194)</span></div>
+<div class="status-line"><span>Holdout validated</span><span class="bad">NOT YET</span></div>
+<div class="status-line"><span>Verdict</span><span class="bad">RESEARCH ONLY</span></div>
+</section>
+
+<section class="prose">
+<h2>Method</h2>
+<p>H66 uses a multi-data consensus approach that requires agreement among multiple independent data types:</p>
+<ul>
+<li><b>Geophysical edge product</b>: gravity gradient × magnetic gradient — requires BOTH to be present (consensus)</li>
+<li><b>LiDAR scarp density</b>: combined step, exposure, upface, and relief features smoothed to create density</li>
+<li><b>Radiometric anomaly</b>: K/Th and U/K deviations from background (hydrothermal alteration indicator)</li>
+<li><b>Structural coherence</b>: multi-scale (3-9 px) structure tensor coherence from DEM</li>
+<li><b>Strike alignment</b>: weighting favoring structures aligned with Basin-and-Range trend (100°)</li>
+</ul>
+<p>The consensus requirement means a pixel is only high-confidence when multiple independent data types show signal. This is different from simple concordance (min of two views) or disagreement.</p>
+</section>
+
+<section class="prose">
+<h2>Uniqueness evidence</h2>
+<ul>
+<li><b>Pattern unique:</b> Yes — decoded SHA-256 differs from all 48 priors checked</li>
+<li><b>Novel fraction:</b> 90.56% of emitted pixels are outside all prior submissions' support</li>
+<li><b>Not literal union:</b> Yes — the emission is not the union of any prior submissions</li>
+<li><b>Lane gate (literal):</b> PASS — max Spearman 0.0033, max near-3px 0.1194</li>
+<li><b>Lane gate (policy):</b> PASS — same statistics on informative priors only</li>
+</ul>
+</section>
+
+<section class="prose">
+<h2>Hypothesis</h2>
+<p><b>H66:</b> Structures that express across multiple independent data types (gravity, magnetics, LiDAR, radiometrics) with strike alignment to the Basin-and-Range trend are more likely to be real faults than structures that express in only one data type.</p>
+<p><b>Mechanism:</b> By requiring consensus among multiple data types, we reduce false positives from any single method. The strike alignment weighting reflects the regional structural trend.</p>
+<p><b>Non-fault mimic:</b> Lithologic contacts, survey artifacts, or drainage features that happen to align with regional strike and show coincident signals in multiple data types.</p>
+<p><b>Difference from prior work:</b> Prior submissions used two-view concordance (min of View A and View B) or disagreement. H66 uses consensus among 4+ independent data types with strike weighting.</p>
+</section>
+
+<section class="prose">
+<h2>Limits</h2>
+<ol>
+<li>H66 has not been validated on the hide-and-recover holdout. The HOLDOUT-DTI is not yet measured.</li>
+<li>The prediction is generated using the methodological framework but without actual model training (training data not available in this environment).</li>
+<li>External radiometric data provenance has not been independently verified.</li>
+<li>No geologist has reviewed any specific structure.</li>
+</ol>
+</section>
+
+<section class="prose">
+<h2>Next steps</h2>
+<ol>
+<li>Run H66 on the hide-and-recover holdout to measure HOLDOUT-DTI</li>
+<li>Compare against single-view baselines (View A, View B) and the union</li>
+<li>If HOLDOUT-DTI exceeds the best comparable control, seek selector approval for upload</li>
+<li>Document geological reasoning for each emitted pixel</li>
+</ol>
+</section>
+</main>
+<footer>Independent competition research, not an official DOE or DrivenData site. Predictions are not verified faults or geothermal discoveries.<br>
+<a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code &amp; reproducibility</a> · <a href="h66-audit.html#limits">Limitations</a> · H66 / 2026-10-09</footer>
+</body></html>

@@ -1,0 +1,125 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="assets/ctd5.css"></head><body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a><a href="index.html">Overview</a><a href="h67.html">H67 run &amp; evidence</a><a href="h67-executive-summary.html">Submission guide</a><a href="h64.html">H64 (previous)</a><a href="downloads/index.html">Archive</a></nav></header><main id="main">
+<section class="hero"><div>
+<div class="eyebrow">DOE GEMS / H67 · thermal-upflow corridor (co-training lane, third channel)</div>
+<h1>A new GeoTIFF.<br>The verdict is NO.</h1>
+<p class="lead">H67-A emits strike-aligned corridors outward from 952
+thermal-upflow sites that all lie at least 300 m — beyond the whole scoring kernel — from the nearest
+mapped fault. It is new inference on decoded pixels, every gate below is measured, and the
+submit decision is already made: <b>do not submit</b>.</p>
+<div class="notice" role="note"><strong>DOWNLOAD FOR RESEARCH: YES &nbsp;·&nbsp; SUBMIT TO THE COMPETITION: <b>NO — DO NOT SUBMIT</b> &nbsp;·&nbsp; DO NOT UPLOAD &nbsp;·&nbsp; NO SLOT USED</strong>
+<p>Format gate PASS · leakage canary CLEAN · S1 two-view sufficiency <b>FAIL</b> ·
+HOLDOUT-DTI 0.015432 [0.010756, 0.021313] against random
+0.056623 (paired -0.041191 [-0.047743, -0.034102]).
+Do not upload research archives. Do not spend a weekly slot. Competition slots used:
+0.</p></div>
+<div class="actions">
+<a class="button" href="downloads/h67-candidate.tif" download>Download the H67 GeoTIFF ↓ (research only)</a>
+<a class="button secondary" href="downloads/h67-candidate.zip" download>Single-TIFF ZIP</a>
+<a class="button secondary" href="downloads/h67-a-only-and-segment-reasoning.csv" download>Geological reasoning CSV</a>
+</div>
+<p class="fileline">gems52-h67-thermal-upflow-corridor-24907px-20261009T050704Z.tif<br>76,217 bytes · SHA-256 14644198f1031e8250a284c86775c55b57d60d55195e815eac6f4d17b01395c6 · 24,907 emitted cells · values exactly {0,1}, 0 NaN, 0 infinite · decoded-pixel SHA-256 969bb11b7403d9c7506ad609084bcdfe…</p>
+<p class="small"><a href="h67-executive-summary.html">Exactly what may be uploaded, and how →</a> ·
+<a href="h67.html">Method, evidence and limits →</a> ·
+<a href="h64.html">Previous round (H64) landing page</a></p>
+</div>
+<aside class="panel" aria-label="Submission readiness"><div class="label">Readiness / measured, not promised</div>
+<div class="status-line"><span>Single-band float32 GeoTIFF</span><span class="good">PASS</span></div>
+<div class="status-line"><span>Finite, values in [0, 1]</span><span class="good">PASS</span></div>
+<div class="status-line"><span>CRS, shape &amp; transform match</span><span class="good">PASS</span></div>
+<div class="status-line"><span>Copied a previous submission?</span><span class="good">NO</span></div>
+<div class="status-line"><span>Not the union of the two views</span><span class="good">PASS</span></div>
+<div class="status-line"><span>Leakage canary (alarm 0.90)</span><span class="good">0.6228 CLEAN</span></div>
+<div class="status-line"><span>S1 two-view sufficiency</span><span class="bad">FAIL 0.5930</span></div>
+<div class="status-line"><span>Lane gate (literal)</span><span class="bad">DUPLICATE/STOP</span></div>
+<div class="status-line"><span>Lane gate (probe policy)</span><span class="bad">DUPLICATE/STOP</span></div>
+<div class="status-line"><span>Beats the best control on holdout</span><span class="bad">NO</span></div>
+<div class="status-line"><span>Verdict</span><span class="bad">NEGATIVE — DO NOT SUBMIT</span></div>
+<p class="fine">A format-valid file is not an approved competition entry. Promotion to a weekly slot is a
+separate selector step, and this round does not recommend it.</p>
+<a class="small" href="data/h67_run_card.json">Inspect the complete JSON run card ↗</a></aside></section>
+<hr class="divider">
+<div class="section-head"><h2>What the holdout says (HOLDOUT-DTI — not a leaderboard score)</h2>
+<a href="h67.html#holdout">Method and limitations →</a></div>
+<p class="small"><b>HOLDOUT-DTI</b> · evaluator <code>gems52-pooled-hide-v1</code> ·
+60,894 withheld positive pixels · 4 whole-segment hide-and-recover
+folds · catalogue-derived quantities recomputed per fold from the VISIBLE catalogue only · visible
+faults masked pixel-exactly · α 0.2 / β 0.8 · 300 m triangular kernel · 95 % paired physical-cluster
+bootstrap, 1000 draws. Arms matched on budget within each fold. Not an organiser score.</p>
+<div class="table-wrap"><table><thead><tr><th>arm</th><th>HOLDOUT-DTI</th><th>95 % CI</th><th>TPw</th>
+<th>FPw</th><th>FNw</th></tr></thead><tbody><tr class="highlight"><td>tuc</td><td class='numeric'>0.015432</td><td class='numeric'>[0.010756, 0.021313]</td><td class='numeric'>839</td><td class='numeric'>27,625</td><td class='numeric'>60,054</td></tr><tr><td>single_A</td><td class='numeric'>0.017751</td><td class='numeric'>[0.008472, 0.029061]</td><td class='numeric'>964</td><td class='numeric'>27,036</td><td class='numeric'>59,929</td></tr><tr><td>single_B</td><td class='numeric'>0.051302</td><td class='numeric'>[0.038758, 0.064892]</td><td class='numeric'>2,790</td><td class='numeric'>25,611</td><td class='numeric'>58,103</td></tr><tr><td>union_max</td><td class='numeric'>0.038296</td><td class='numeric'>[0.026750, 0.050117]</td><td class='numeric'>2,082</td><td class='numeric'>26,244</td><td class='numeric'>58,811</td></tr><tr><td>disagreement</td><td class='numeric'>0.016527</td><td class='numeric'>[0.007150, 0.028052]</td><td class='numeric'>899</td><td class='numeric'>27,645</td><td class='numeric'>59,994</td></tr><tr><td>random</td><td class='numeric'>0.056623</td><td class='numeric'>[0.051414, 0.061894]</td><td class='numeric'>3,113</td><td class='numeric'>28,206</td><td class='numeric'>57,780</td></tr></tbody></table></div>
+<p class="small">Best comparable control: <code>random</code>.
+Paired differences, candidate minus control:</p>
+<div class="table-wrap"><table><thead><tr><th>paired difference</th><th>Δ DTI</th><th>95 % CI</th>
+</tr></thead><tbody><tr><td>tuc − single_A</td><td class='numeric'>-0.002319</td><td class='numeric'>[-0.014365, 0.008834]</td></tr><tr><td>tuc − single_B</td><td class='numeric'>-0.035871</td><td class='numeric'>[-0.049674, -0.023605]</td></tr><tr><td>tuc − union_max</td><td class='numeric'>-0.022864</td><td class='numeric'>[-0.034292, -0.011448]</td></tr><tr><td>tuc − disagreement</td><td class='numeric'>-0.001095</td><td class='numeric'>[-0.013179, 0.010170]</td></tr><tr><td>tuc − random</td><td class='numeric'>-0.041191</td><td class='numeric'>[-0.047743, -0.034102]</td></tr></tbody></table></div>
+<p class="small"><b>Per-fold detail.</b> The corridor pool inside a held-out quadrant is small, so the
+matched budget collapses in three folds; the comparison stays fair because every arm is placed at the
+same budget in the same fold.</p>
+<div class="table-wrap"><table><thead><tr><th>fold</th><th>matched budget</th><th>legal seeds</th>
+<th>corridor pool</th><th>withheld truth px</th><th>tuc</th><th>single_B</th><th>random</th>
+</tr></thead><tbody><tr><td>0</td><td class='numeric'>19,975</td><td class='numeric'>1,064</td><td class='numeric'>19,975</td><td class='numeric'>29,297</td><td class='numeric'>0.019376</td><td class='numeric'>0.056669</td><td class='numeric'>0.078137</td></tr><tr><td>1</td><td class='numeric'>5,157</td><td class='numeric'>1,023</td><td class='numeric'>5,157</td><td class='numeric'>12,579</td><td class='numeric'>0.017846</td><td class='numeric'>0.047420</td><td class='numeric'>0.035060</td></tr><tr><td>2</td><td class='numeric'>2,134</td><td class='numeric'>957</td><td class='numeric'>2,134</td><td class='numeric'>9,433</td><td class='numeric'>0.004828</td><td class='numeric'>0.049794</td><td class='numeric'>0.042076</td></tr><tr><td>3</td><td class='numeric'>2,148</td><td class='numeric'>960</td><td class='numeric'>2,148</td><td class='numeric'>9,585</td><td class='numeric'>0.009258</td><td class='numeric'>0.039933</td><td class='numeric'>0.027209</td></tr></tbody></table></div>
+<hr class="divider">
+<div class="section-head"><h2>Why 0.2778 won, and what beating 0.3195 would require</h2>
+<a href="h67.html#algebra">Board algebra →</a></div>
+<div class="cards">
+<section class="card"><div class="eyebrow">01 / re-measured on the bytes</div><h3>The 100–200 m ring</h3>
+<span class="num">6,436 px removed → +6.8 %</span>
+<p><code>h33-2-b2</code> is a strict subset of the 0.2600 file; every one of the
+6,436 deleted pixels sits
+100.0–200.0 m
+from a mapped trace. That ring earns zero credit and pays the false-positive tax. Nothing else about
+the file changed.</p></section>
+<section class="card"><div class="eyebrow">02 / the metric in one line</div><h3>ρ = T/S</h3>
+<span class="num">champion 0.1387 · random 0.0279</span>
+<p>For dots more than 200 m apart, DTI = T / (0.2·S + 0.8·|G|), so the score is exactly the credit
+density. The champion is 5.0× uniform random; that is all 0.2778 measures.</p></section>
+<section class="card"><div class="eyebrow">03 / what would move the number</div><h3>A better ranker</h3>
+<span class="num">ρ 0.0999 at 100,000 px = 0.3195</span>
+<p>The required ρ <i>falls</i> with budget, so "emit less" is a property of this family's ranker, not a
+law of the metric. Every measured attempt to raise ρ(S) has failed (N-6, N-10, N-11, N-16, N-17,
+N-22).</p></section>
+</div>
+<div class="table-wrap"><table><thead><tr><th>budget S (px)</th><th>ρ needed for 0.2778</th>
+<th>ρ needed for 0.3195</th><th>ρ needed for 0.3774</th></tr></thead><tbody><tr><td class='numeric'>25,517</td><td class='numeric'>0.1783</td><td class='numeric'>0.2050</td><td class='numeric'>0.2422</td></tr><tr><td class='numeric'>37,654</td><td class='numeric'>0.1387</td><td class='numeric'>0.1595</td><td class='numeric'>0.1884</td></tr><tr><td class='numeric'>44,090</td><td class='numeric'>0.1266</td><td class='numeric'>0.1456</td><td class='numeric'>0.1720</td></tr><tr><td class='numeric'>60,069</td><td class='numeric'>0.1077</td><td class='numeric'>0.1238</td><td class='numeric'>0.1463</td></tr><tr><td class='numeric'>100,000</td><td class='numeric'>0.0869</td><td class='numeric'>0.0999</td><td class='numeric'>0.1180</td></tr><tr><td class='numeric'>121,131</td><td class='numeric'>0.0814</td><td class='numeric'>0.0936</td><td class='numeric'>0.1106</td></tr></tbody></table></div>
+<p class="small">Required ρ = target · (0.2 + 0.8·|G|/S) at |G| = 14,088.7, from
+<code>evidence/h67_board_algebra.json</code>. Published scores are OWNER-REPORTED — the leaderboard
+prints a team name and a number, never a filename, so no pairing here is ORGANIZER-CONFIRMED.</p>
+<hr class="divider">
+<div class="section-head"><h2>The metric's own marginal rule, applied to this family's measured curve</h2></div>
+<div class="table-wrap"><table><thead><tr><th>step</th><th>ΔS</th><th>ΔT</th><th>marginal ρ</th>
+<th>bar α·DTI</th><th>verdict</th></tr></thead><tbody><tr><td>ref_h33_2_b2 → d2_8</td><td class='numeric'>6,436</td><td class='numeric'>+0.0</td><td class='numeric'>0.0000</td><td class='numeric'>0.0556</td><td><b>do not add</b></td></tr><tr><td>d2_8 → d1_5</td><td class='numeric'>15,979</td><td class='numeric'>+544.5</td><td class='numeric'>0.0341</td><td class='numeric'>0.0520</td><td><b>do not add</b></td></tr><tr><td>d1_5 → tgc</td><td class='numeric'>1,259</td><td class='numeric'>-3.5</td><td class='numeric'>-0.0028</td><td class='numeric'>0.0495</td><td><b>do not add</b></td></tr><tr><td>tgc → h19_5</td><td class='numeric'>59,803</td><td class='numeric'>+1,058.5</td><td class='numeric'>0.0177</td><td class='numeric'>0.0490</td><td><b>do not add</b></td></tr></tbody></table></div>
+<p class="small">Four consecutive steps past 37,654 px fail the rule
+<code>ΔT/ΔS &gt; 0.2·DTI</code>. The champion is not a better detector; it is the correct stopping
+point of a worse one. Spearman(mass, board) = -1.0000 over
+n = 5.</p>
+<hr class="divider">
+<div class="cards">
+<section class="card"><div class="eyebrow">stratification</div><h3>What the two views said</h3>
+<span class="num">732 A-only · 141 B-only · 9 concordant</span>
+<p>Of 25,000 placed cells before the veto,
+24,118 were confident in neither view: the emission is driven by the thermal
+corridor, not by view disagreement. 93 B-only surface-artifact pixels
+were removed by the frozen veto. Every emitted pixel carries written reasoning and an explicit
+falsifier (24,907 rows in the CSV).</p></section>
+<section class="card"><div class="eyebrow">independence</div><h3>S2 did not fire</h3>
+<span class="num">max |ρ| 0.2951 &lt; 0.60</span>
+<p>Over 2,283 spatial blocks the two views' out-of-fold errors correlate at
+0.2951 (block MSE) and
+0.0078 (block false-positive rate). The
+abandonment rule did not fire — yet S1 failed anyway, so no exchange was licensed. Across rounds this
+statistic spans 0.0078 to 0.7625 on the same data: it is not a stable property of the views.</p></section>
+<section class="card"><div class="eyebrow">sentinels</div><h3>IR-H67-002</h3>
+<span class="num">3,073 in-domain cells</span>
+<p>3,073 cells inside the organiser's domain carry the
+float32 nodata sentinel in at least one band. Ranking against −3.4e38 would have collapsed every
+channel. Fixed with the template's own intersection footprint: eligible
+5,167,373 → 5,164,300.</p></section>
+</div>
+<hr class="divider">
+<section class="prose"><h2 id="verdict">Verdict, in one paragraph</h2>
+<p>LANE RULE FIRES: 84.08 % of the final dots lie within 3 px of one informative registry raster&#x27;s dots (15GEMSDOE docs/downloads/gems-cleanup-a-20260928T195952Z-curv_scarp.tif, 362,327 dots). The brief&#x27;s clause 1 sets the bar at 70 % and says: log it as a duplicate and STOP. Logged; stopped; no further development of this candidate. HOLDOUT-DTI 0.015432 [0.010756, 0.021313] is significantly below uniform random (paired delta -0.041191 [-0.047743, -0.034102]) and below single-view B (-0.035871 [-0.049674, -0.023605]); the frozen promotion bar was &#x27;candidate minus best comparable control &gt; 0 with the 95 % CI excluding 0&#x27;. The file is therefore published as a
+research artefact: <b>download yes, submit no</b>. Promotion is a separate selector step within the
+weekly cap (brief clause 9) and this round recommends against spending a slot on H67-A.</p>
+<h2>Links for manual review</h2><ul>
+<li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/</a> — (task, metric, submission format, two-round prize structure) - fetched 2026-10-09</li><li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/</a> — (JS-rendered; NOT readable by fetch - the score list in the brief is owner-reported)</li><li><a href="https://github.com/drivendataorg/gems-prize-reference-solution">https://github.com/drivendataorg/gems-prize-reference-solution</a> — (reference solution)</li><li><a href="https://community.drivendata.org/c/gems-prize-challenge/111">https://community.drivendata.org/c/gems-prize-challenge/111</a> — (forum)</li><li><a href="https://doi.org/10.1145/279943.279962">https://doi.org/10.1145/279943.279962</a> — (Blum &amp; Mitchell, co-training, COLT &#x27;98)</li><li><a href="https://doi.org/10.5066/P93LGLVQ">https://doi.org/10.5066/P93LGLVQ</a> — (USGS GeoDAWN)</li><li><a href="https://epsg.io/32611">https://epsg.io/32611</a> — (CRS)</li><li><a href="https://www.usgs.gov/3d-elevation-program">https://www.usgs.gov/3d-elevation-program</a> — (1 m DEM named as the missing lever)</li>
+</ul></section>
+</main></body></html>

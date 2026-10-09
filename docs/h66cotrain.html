@@ -1,0 +1,54 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="assets/ctd5.css"><title>H66 · DOE GEMS</title></head><body><a class="skip" href="#main">Skip to content</a>
+<header><nav aria-label="Main navigation"><a class="brand" href="index.html">DOE GEMS</a><a href="h66cotrain-executive-summary.html">Executive summary (submitting)</a><a href="h64.html">H64</a><a href="index.html">Home</a></nav></header>
+<main id="main">
+<section class="hero"><div><div class="eyebrow">DOE GEMS / H66 · local-scale View A co-training</div>
+<h1>Download for research.<br>Do not submit.</h1>
+<p class="lead">H66 tested one pre-registered change: View A restricted to 14 local-scale potential-field channels (scale ≤ 3 px), with the H61 surface view unchanged. The premise gate fails: the out-of-quadrant AUC mean is 0.545381 and the minimum is 0.524627, against a gate of mean ≥ 0.60 and minimum ≥ 0.55. The holdout candidate also scores below the best single-view control. The verdict is <b>NEGATIVE, research-only</b>.</p>
+<div class="notice" role="note"><strong>OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT · DO NOT UPLOAD · NOT LANE-UNIQUE: dots lane DUPLICATE/STOP (literal) / DUPLICATE/STOP (policy)</strong>
+<p>Verdict: <b>Research-only. DOWNLOAD YES (format-valid; see uniqueness). SUBMIT NO: the premise gate failed, the holdout candidate is below the single-view control, and the lane gate is not PASS. Nothing uploads and no weekly slot is used.</b></p>
+<p>Format gate: <b>PASS</b> · Premise: <b>FAIL</b> · Holdout beats single_B: <b>no</b> · Lane gate (dots, literal / policy): <b>DUPLICATE/STOP / DUPLICATE/STOP</b> · Uniqueness audit: <b>NOT PASSED</b></p></div>
+<div class="actions"><a class="button" href="downloads/h66cotrain-candidate.tif" download>Download the H66 GeoTIFF ↓</a>
+<a class="button secondary" href="downloads/h66cotrain-candidate.zip" download>Single-TIFF ZIP</a>
+<a class="button secondary" href="downloads/h66cotrain-review-table.csv.gz" download>Review table (gzip CSV)</a></div>
+<p class="fileline">gems52-h66-localA-cotrain-37600px.tif<br>134,986 bytes · SHA-256 a87c55f8c4d5bbe100324941b7722a73e8e73613ab5c802194291459869ee2d5 · 37,600 emitted cells · values exactly {0, 1}, 0 NaN · EPSG:32611 · grid identical to the sample</p>
+<p class="small"><a href="h66cotrain-executive-summary.html">How to submit, and whether this file may be submitted →</a> · <a href="data/h66_run_card.json">Complete JSON run card ↗</a> · <a href="../registry/irregularities.json">Irregularities (registry JSON) ↗</a></p></section>
+<hr class="divider">
+<section><h2>Gates, measured</h2><div class="table-wrap"><table><thead><tr><th>Gate</th><th>Result</th><th>Receipt</th></tr></thead><tbody>
+<tr><td>Pre-registration hash (frozen before any fit)</td><td>e21187387a3b646e… verified</td><td><code>knowledge/43_hypotheses_H66_preregistered.md</code></td></tr>
+<tr><td>Leakage canary, single-feature AUC (alarm &gt; 0.90)</td><td>max 0.668678; alarm: False</td><td><code>evidence/h66_canary.json</code></td></tr>
+<tr><td>Premise, View A_local out-of-quadrant AUC (mean ≥ 0.60 and min ≥ 0.55)</td><td><b>FAIL</b>: mean 0.545381, min 0.524627</td><td><code>evidence/h66_fit_checkpoint.json</code></td></tr>
+<tr><td>Diagnostic, non-gating: gradient boosting on the same 14 channels</td><td>mean 0.539212, min 0.510820</td><td><code>evidence/h66_diagnostic_hgb_local.json</code></td></tr>
+<tr><td>Exchange independence screen (|ρ| threshold 0.6)</td><td>exchange allowed; max |ρ| 0.193750</td><td><code>evidence/h66_pseudo_exchange.json</code></td></tr>
+<tr><td>Format gate (single-band float32 GeoTIFF, EPSG:32611, grid as sample, values {0,1}, no NaN)</td><td><b>PASS</b></td><td><code>evidence/h66_format_validator.json</code></td></tr>
+<tr><td>Written GeoTIFF equals the recomputed emission (independent re-derivation)</td><td><b>PASS</b></td><td>review table 37,600 rows</td></tr>
+<tr><td>Lane gate on the surface, literal / policy</td><td>PASS / PASS</td><td><code>evidence/h66_lane_surface.json</code></td></tr>
+<tr><td>Lane gate on the dots, literal / policy</td><td>DUPLICATE/STOP / DUPLICATE/STOP</td><td><code>evidence/h66_lane_dots.json</code></td></tr>
+<tr><td>Uniqueness audit (<code>scripts/audit_uniqueness.py</code>, census receipt as third argument)</td><td>priors checked 536; max Jaccard 0.035385; share of candidate pixels inside any prior's support 1.0</td><td><code>evidence/h66_uniqueness_audit.json</code></td></tr>
+</tbody></table></div>
+<p class="small">The support share is 1.0 because the coverage probes cover the footprint, so it does not discriminate. The decisive tests are the Jaccard check (no prior is identical) and the dots lane rule (DUPLICATE/STOP).</p></section>
+<hr class="divider">
+<section><h2>Premise, per fold (label-blind quadrants, buffer 80 px)</h2>
+<div class="table-wrap"><table><thead><tr><th>Fold</th><th>View A_local out-of-quadrant AUC</th><th>View B out-of-quadrant AUC (H61 learner)</th></tr></thead><tbody><tr><td>0</td><td class='numeric'>0.562215</td><td class='numeric'>0.662501</td></tr><tr><td>1</td><td class='numeric'>0.560625</td><td class='numeric'>0.768441</td></tr><tr><td>2</td><td class='numeric'>0.524627</td><td class='numeric'>0.611220</td></tr><tr><td>3</td><td class='numeric'>0.534057</td><td class='numeric'>0.695178</td></tr></tbody></table></div>
+<p class="small">View B matches the H61 receipt on every fold (fold 0: 0.8762 in-sample, 0.6625 out-of-quadrant). View A_local does not reach the gate on any fold.</p></section>
+<hr class="divider">
+<section><h2>HOLDOUT-DTI (gems52-pooled-hide-v1)</h2>
+<p class="small">53,186 withheld positive pixels · α 0.2 / β 0.8 · 300 m triangular kernel · 95% paired cluster bootstrap, 1000 draws · every arm placed 9,400 dots per fold at 3 px spacing. Candidate: <code>disagreement_post</code>. Control: <code>single_B</code>.</p>
+<div class="table-wrap"><table><thead><tr><th>Arm</th><th>HOLDOUT-DTI</th><th>95% CI</th><th>TPw</th></tr></thead><tbody><tr><td>single_A</td><td class='numeric'>0.075641</td><td class='numeric'>[0.060446, 0.091174]</td><td class='numeric'>3815.7</td></tr><tr><td>single_B</td><td class='numeric'>0.174571</td><td class='numeric'>[0.152313, 0.196302]</td><td class='numeric'>8905.2</td></tr><tr><td>union_max</td><td class='numeric'>0.153269</td><td class='numeric'>[0.133574, 0.172795]</td><td class='numeric'>7800.9</td></tr><tr><td>disagreement_pre</td><td class='numeric'>0.043245</td><td class='numeric'>[0.033079, 0.054845]</td><td class='numeric'>2175.5</td></tr><tr><td>disagreement_post</td><td class='numeric'>0.039805</td><td class='numeric'>[0.030131, 0.050345]</td><td class='numeric'>2001.6</td></tr><tr><td>random</td><td class='numeric'>0.080426</td><td class='numeric'>[0.070223, 0.090973]</td><td class='numeric'>4067.2</td></tr></tbody></table></div>
+<p class="small">Candidate minus control: <b>-0.134766</b>, 95% CI [-0.159731, -0.110876]. The candidate does not beat single_B: the paired CI lies entirely below zero.</p>
+<p class="small"><b>Reproduction note (IR-H66-010).</b> single_B reproduces H61 to within +0.000054 (H61 receipt 0.174517; H66 0.174571). Fold 0 differs and folds 1–3 match to seven decimals. The B-view AUCs match H61 exactly. The cause is not established, and no verdict depends on it.</p></section>
+<hr class="divider">
+<section><h2>Why 0.2778 scored where it did (measured, not reported)</h2>
+<p>The 0.2778 champion <code>h33-2-b2</code> is a strict subset of the reported-0.2600 gems24 d2-8 raster: 37,654 of 44,090 positive pixels, zero on the catalogue. It removes 6,436 pixels, all between 100 m and 200 m from a mapped trace, and adds none. Its nearest dot is 223.6 m from the catalogue. Under the published metric, <code>DTI = T / (0.2·(T+S−M) + 0.8·|G|)</code>, an emitted pixel helps only if its credit density exceeds the bar. Removing pixels therefore raises the ratio when their expected credit is below the bar. That is consistent with the measured subset chain, but it is an inference: the hidden truth is not available to measure the removed pixels' credit. Pruning raises the ratio without finding new faults. The owner-reported score attribution is unlinked (IR-H65-003). The marginal bar for one uncovered truth pixel of kernel weight w is w &gt; α·DTI = 0.0556 at DTI 0.2778; the repository's accept_bar form is 0.0588 (IR-H66-002).</p>
+<p class="small">Source: <code>work/h66/champion_check.json</code> (verified on restored bytes); <code>knowledge/01_why_02778_and_the_bar.md</code>, <code>README</code> section "Why 0.2778 won".</p></section>
+<hr class="divider">
+<section><h2>Hypotheses carried out of this round</h2>
+<div class="table-wrap"><table><thead><tr><th>Rank</th><th>ID</th><th>Idea</th><th>Status</th></tr></thead><tbody>
+<tr><td>1</td><td>H66-A</td><td>Local-scale View A (14 channels, logistic)</td><td>Tested; premise FAIL</td></tr>
+<tr><td>2</td><td>H66-B</td><td>Survey-levelling stripe veto on magnetic edges (precision term)</td><td>Not run; untested in repo</td></tr>
+<tr><td>3</td><td>H66-C</td><td>Tilt-angle zero contours (carried from H65-B)</td><td>Not run</td></tr>
+<tr><td>4</td><td>H66-D</td><td>Mapping-coverage residual (observation process, not geology)</td><td>Not run</td></tr>
+</tbody></table></div>
+<p class="small">Full pre-registration with layers, named mimics and costs: <a href="../knowledge/43_hypotheses_H66_preregistered.md"><code>knowledge/43</code></a>. Not proposed because already in the repo: Euler deconvolution, QFaults priors (one pixel), cross-field <code>C_*</code> features, gap bridging.</p></section>
+</main>
+<footer class="small">Research receipts only. Public-board numbers are owner-reported and dated (snapshot 2026-10-08). The AI-use disclosure is in the executive summary. Nothing here was uploaded.</footer>
+</body></html>

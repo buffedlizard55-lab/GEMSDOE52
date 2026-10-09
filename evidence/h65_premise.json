@@ -1,0 +1,86 @@
+{
+ "stage": "premise",
+ "started_utc": "2026-10-09T00:51:12+00:00",
+ "view_A_features": [
+  "H62_b15_nne_d3",
+  "H62_b15_nne_d6",
+  "H62_b15_nw_d3",
+  "H62_b15_nw_d6",
+  "H62_b13_nne_d3",
+  "H62_b13_nne_d6",
+  "H62_b13_nw_d3",
+  "H62_b13_nw_d6"
+ ],
+ "n_A": 8,
+ "seed": 61052,
+ "learner": "run_h61.learner",
+ "folds": [
+  {
+   "fold": 0,
+   "n_train": 80000,
+   "n_pos_train": 20000,
+   "in_sample_auc": 0.7023977425,
+   "heldout_region_auc": 0.5324898954697707,
+   "n_region_pos": 27309,
+   "n_region_neg": 1941302,
+   "fit_seconds": 25.4
+  },
+  {
+   "fold": 1,
+   "n_train": 80000,
+   "n_pos_train": 20000,
+   "in_sample_auc": 0.6812290341666667,
+   "heldout_region_auc": 0.5689148569090046,
+   "n_region_pos": 10677,
+   "n_region_neg": 1032665,
+   "fit_seconds": 26.9
+  },
+  {
+   "fold": 2,
+   "n_train": 80000,
+   "n_pos_train": 20000,
+   "in_sample_auc": 0.6777590270833334,
+   "heldout_region_auc": 0.47060159253821654,
+   "n_region_pos": 6813,
+   "n_region_neg": 393204,
+   "fit_seconds": 27.0
+  },
+  {
+   "fold": 3,
+   "n_train": 80000,
+   "n_pos_train": 20000,
+   "in_sample_auc": 0.6793755745833333,
+   "heldout_region_auc": 0.5089072604626982,
+   "n_region_pos": 8387,
+   "n_region_neg": 595321,
+   "fit_seconds": 28.0
+  }
+ ],
+ "finished_utc": "2026-10-09T00:53:03+00:00",
+ "h62_A_mean_oof_auc": 0.5202284013449225,
+ "h62_A_min_fold_oof_auc": 0.47060159253821654,
+ "h61_control": {
+  "source": "evidence/h61_fit_checkpoint.json (stored H61 receipt, not refitted)",
+  "view_A_oof_by_fold": [
+   0.5062341311661124,
+   0.6010657195529969,
+   0.4668188015259936,
+   0.4910432748636082
+  ],
+  "view_B_oof_by_fold": [
+   0.6625012282147498,
+   0.7684414473654164,
+   0.6112200625930911,
+   0.6951780354196093
+  ],
+  "view_A_mean": 0.5162904817771777,
+  "view_B_mean": 0.6843351933982167
+ },
+ "gate": {
+  "mean_threshold": 0.6,
+  "min_fold_threshold": 0.55,
+  "premise_passed": false
+ },
+ "verdict": "NEGATIVE -> H62-A does not carry out-of-quadrant information; no holdout arm, no emission, no slot",
+ "caveat": "Premise AUC only. It does not measure detection of faults, fault truth, or any competition score. Catalogue-zero is not verified fault absence."
+}

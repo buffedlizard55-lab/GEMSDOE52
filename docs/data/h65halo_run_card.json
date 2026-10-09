@@ -1,0 +1,133 @@
+{
+ "round": "H65",
+ "generated_utc": "2026-10-09T04:38:11Z",
+ "experiment_index": "1 of 3 (budget: 3 experiments or 2 hours)",
+ "hypothesis": "Metric-kernel halo targets: training both co-training views on the official triangular 300 m coverage kernel (soft labels for 0 < d < 300 m from the visible catalogue) raises single-view holdout DTI over the H61 hard-label control, and the co-training disagreement then ranks candidates better than single_B.",
+ "mechanism": "The official distance-weighted Tversky credit is partial within 300 m; the hard-label learners never see the 0-300 m halo as training signal, so the 200 m emission boundary is a blind zone. One change: halo rows are added with weights t and 1 - t, t = 1 - d/300 m.",
+ "named_non_fault_mimic": "basin-margin gravity gradient or lithologic contact running parallel to a mapped trace within 300 m; flight-line or DEM artefact along a road or canal.",
+ "preregistration": {
+  "document": "knowledge/41b_hypotheses_H65halo_preregistered.md",
+  "sha256": "7ae7cd9119c8b86d8b525519819e1120c71355bd949b7a164bc7c8b12e391afc",
+  "registry": "registry/h65halo_preregistration.json"
+ },
+ "sufficiency_S1": {
+  "mean_view_A_oof_auc": 0.5299319264004125,
+  "min_fold_view_A_oof_auc": 0.4752937252311757,
+  "S1_pass": false,
+  "threshold_mean": 0.6,
+  "threshold_min_fold": 0.55
+ },
+ "canary": {
+  "max_alarm_across_folds": 0.6686779701695234,
+  "any_alarm": false,
+  "threshold": 0.9
+ },
+ "exchange": {
+  "skipped": true,
+  "allowed_exchange": false,
+  "total_pseudo_pixels": 0
+ },
+ "holdout_dti": {
+  "evidence_class": "HOLDOUT-DTI",
+  "evaluator_version": "gems52-pooled-hide-v1",
+  "alpha": 0.2,
+  "beta": 0.8,
+  "triangular_radius_m": 300.0,
+  "withheld_positive_pixels": 53186,
+  "bootstrap": {
+   "method": "paired physical spatial-cluster percentile",
+   "clusters": 153,
+   "draws": 1000,
+   "seed": 61052,
+   "confidence": 0.95,
+   "caveat": "Conditional on fitted folds, catalogue labels and fixed budgets; not a leaderboard interval."
+  },
+  "single_B_soft": {
+   "dti": 0.17665059858482432,
+   "ci95": [
+    0.1554760601578626,
+    0.19737316623392284
+   ]
+  },
+  "single_B_hard_control": {
+   "dti": 0.17457135886487102,
+   "ci95": [
+    0.1523129808950829,
+    0.19630189491073133
+   ],
+   "h61_committed": 0.174517,
+   "abs_difference": 5.435886487101249e-05,
+   "tolerance": 0.001,
+   "pass_": true
+  },
+  "union_max": {
+   "dti": 0.157096181657789,
+   "ci95": [
+    0.1365194211646677,
+    0.17875598063421524
+   ]
+  },
+  "random": {
+   "dti": 0.08042564781050282,
+   "ci95": [
+    0.0702226099128376,
+    0.09097325665223467
+   ]
+  },
+  "single_A": {
+   "dti": 0.07563598197500569,
+   "ci95": [
+    0.05831975810276612,
+    0.09356818318178008
+   ]
+  },
+  "candidate_disagreement_post": {
+   "dti": 0.036386195213459406,
+   "ci95": [
+    0.024982628722061893,
+    0.04979731052673609
+   ]
+  },
+  "paired": {
+   "soft_minus_hard": {
+    "delta": 0.002079239719953302,
+    "ci95": [
+     -0.0010880235725922304,
+     0.005075820943227787
+    ],
+    "confirmed": false
+   },
+   "candidate_minus_single_B_soft": {
+    "delta": -0.14026440337136492,
+    "ci95": [
+     -0.16299811440037482,
+     -0.11839889374711146
+    ],
+    "confirmed": false
+   }
+  }
+ },
+ "correlation_overlap_vs_registry": {
+  "status": "not run",
+  "reason": "No raster was built: the preregistered rule builds only after a positive holdout, and the holdout is not positive. The lane gate (surface and final dots) is therefore not evaluated for H65 and nothing is claimed about it."
+ },
+ "raster": null,
+ "validator": null,
+ "submission_name": "gems52-h65halo-cotrain-NOT-BUILT",
+ "note": "H65 halo soft targets: NEGATIVE, no raster built; holdout below single_B; do not submit",
+ "note_chars": 87,
+ "note_status": "NOT USED: no file exists for this run; the text is a placeholder that must not be pasted",
+ "h64_reference": {
+  "file": "gems52-h64-sufgate-cotrain-37600px-20261009T022631Z.tif",
+  "sha256": "739a8e7c4b54436508fc2b9da6b8ddc56e44a0d1ad273dc88c07a2003637f8bb",
+  "lane_literal": "DUPLICATE/STOP"
+ },
+ "verdict": "NEGATIVE, research-only. DOWNLOAD NO (no file). SUBMIT NO. Primary test not confirmed: single_B_soft minus single_B_hard has a 95% CI that includes 0. Co-training candidate is far below single_B_soft.",
+ "slots_used": 0,
+ "upload": "none",
+ "limitations": [
+  "HOLDOUT-DTI uses catalogue truth. It cannot score the trace-correction population, because the organisers' statement (forum topic 11516, post of 21 Sep) says new-fault pixels can lie within 300 m of known traces; those pixels are not in the holdout truth.",
+  "S1 failed (View A not sufficient out of quadrant), so the exchange was skipped and post := pre; the co-training arm therefore has no exchange effect in this round.",
+  "The hard control was not bit-reproducible across two runs of the same receipts: the fold-0 predictions differ from a standalone refit on about 0.02% of pixels. The two receipts give single_B_hard 0.174517 and 0.174571 (tolerance 0.001). The verdict is unchanged in both."
+ ]
+}

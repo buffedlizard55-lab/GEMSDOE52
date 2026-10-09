@@ -1,0 +1,294 @@
+{
+ "stage": "canary",
+ "started_utc": "2026-10-09T00:50:38+00:00",
+ "alarm_auc": 0.9,
+ "evidence_class": "HOLDOUT-DTI diagnostic AUC (not a DTI score)",
+ "folds": [
+  {
+   "fold": 0,
+   "n_pos": 20000,
+   "n_neg": 40000,
+   "max_direction_insensitive_auc": 0.543639439375,
+   "top5": [
+    [
+     "H62_b13_nw_d3",
+     0.543639439375
+    ],
+    [
+     "H62_b13_nw_d6",
+     0.5432104237500001
+    ],
+    [
+     "H62_b13_nne_d6",
+     0.522635043125
+    ],
+    [
+     "H62_b13_nne_d3",
+     0.5221122475
+    ],
+    [
+     "H62_b15_nw_d3",
+     0.521739530625
+    ]
+   ],
+   "fitted_top5_heldout": {
+    "H62_b13_nw_d3": 0.533712383125,
+    "H62_b13_nw_d6": 0.5302911381250001,
+    "H62_b13_nne_d6": 0.512829199375,
+    "H62_b13_nne_d3": 0.512661120625,
+    "H62_b15_nw_d3": 0.517379456875
+   },
+   "alarms": [],
+   "per_feature": {
+    "H62_b15_nne_d3": {
+     "auc": 0.51418009375,
+     "direction_insensitive": 0.51418009375
+    },
+    "H62_b15_nne_d6": {
+     "auc": 0.51317973125,
+     "direction_insensitive": 0.51317973125
+    },
+    "H62_b15_nw_d3": {
+     "auc": 0.521739530625,
+     "direction_insensitive": 0.521739530625
+    },
+    "H62_b15_nw_d6": {
+     "auc": 0.5206579474999999,
+     "direction_insensitive": 0.5206579474999999
+    },
+    "H62_b13_nne_d3": {
+     "auc": 0.5221122475,
+     "direction_insensitive": 0.5221122475
+    },
+    "H62_b13_nne_d6": {
+     "auc": 0.522635043125,
+     "direction_insensitive": 0.522635043125
+    },
+    "H62_b13_nw_d3": {
+     "auc": 0.543639439375,
+     "direction_insensitive": 0.543639439375
+    },
+    "H62_b13_nw_d6": {
+     "auc": 0.5432104237500001,
+     "direction_insensitive": 0.5432104237500001
+    }
+   }
+  },
+  {
+   "fold": 1,
+   "n_pos": 10677,
+   "n_neg": 40000,
+   "max_direction_insensitive_auc": 0.5600271143579657,
+   "top5": [
+    [
+     "H62_b13_nw_d3",
+     0.5600271143579657
+    ],
+    [
+     "H62_b13_nw_d6",
+     0.5595881076144985
+    ],
+    [
+     "H62_b13_nne_d3",
+     0.5432530111454528
+    ],
+    [
+     "H62_b13_nne_d6",
+     0.5407388006930786
+    ],
+    [
+     "H62_b15_nw_d3",
+     0.540159331975274
+    ]
+   ],
+   "fitted_top5_heldout": {
+    "H62_b13_nw_d3": 0.5439005783459774,
+    "H62_b13_nw_d6": 0.5417175552589679,
+    "H62_b13_nne_d3": 0.5141912089069964,
+    "H62_b13_nne_d6": 0.5243104371546313,
+    "H62_b15_nw_d3": 0.5188774878242953
+   },
+   "alarms": [],
+   "per_feature": {
+    "H62_b15_nne_d3": {
+     "auc": 0.5393736653554368,
+     "direction_insensitive": 0.5393736653554368
+    },
+    "H62_b15_nne_d6": {
+     "auc": 0.5397705956729418,
+     "direction_insensitive": 0.5397705956729418
+    },
+    "H62_b15_nw_d3": {
+     "auc": 0.540159331975274,
+     "direction_insensitive": 0.540159331975274
+    },
+    "H62_b15_nw_d6": {
+     "auc": 0.5381538821766413,
+     "direction_insensitive": 0.5381538821766413
+    },
+    "H62_b13_nne_d3": {
+     "auc": 0.5432530111454528,
+     "direction_insensitive": 0.5432530111454528
+    },
+    "H62_b13_nne_d6": {
+     "auc": 0.5407388006930786,
+     "direction_insensitive": 0.5407388006930786
+    },
+    "H62_b13_nw_d3": {
+     "auc": 0.5600271143579657,
+     "direction_insensitive": 0.5600271143579657
+    },
+    "H62_b13_nw_d6": {
+     "auc": 0.5595881076144985,
+     "direction_insensitive": 0.5595881076144985
+    }
+   }
+  },
+  {
+   "fold": 2,
+   "n_pos": 6813,
+   "n_neg": 40000,
+   "max_direction_insensitive_auc": 0.547632014164098,
+   "top5": [
+    [
+     "H62_b15_nne_d6",
+     0.547632014164098
+    ],
+    [
+     "H62_b15_nne_d3",
+     0.5460933179216205
+    ],
+    [
+     "H62_b15_nw_d6",
+     0.535187325700866
+    ],
+    [
+     "H62_b15_nw_d3",
+     0.5317660868927051
+    ],
+    [
+     "H62_b13_nw_d3",
+     0.5115651218259211
+    ]
+   ],
+   "fitted_top5_heldout": {
+    "H62_b15_nne_d6": 0.4651788254073096,
+    "H62_b15_nne_d3": 0.47306334397475425,
+    "H62_b15_nw_d6": 0.47981951416409807,
+    "H62_b15_nw_d3": 0.4831330140907089,
+    "H62_b13_nw_d3": 0.4926540822691913
+   },
+   "alarms": [],
+   "per_feature": {
+    "H62_b15_nne_d3": {
+     "auc": 0.45390668207837953,
+     "direction_insensitive": 0.5460933179216205
+    },
+    "H62_b15_nne_d6": {
+     "auc": 0.45236798583590193,
+     "direction_insensitive": 0.547632014164098
+    },
+    "H62_b15_nw_d3": {
+     "auc": 0.4682339131072949,
+     "direction_insensitive": 0.5317660868927051
+    },
+    "H62_b15_nw_d6": {
+     "auc": 0.464812674299134,
+     "direction_insensitive": 0.535187325700866
+    },
+    "H62_b13_nne_d3": {
+     "auc": 0.5098962039483341,
+     "direction_insensitive": 0.5098962039483341
+    },
+    "H62_b13_nne_d6": {
+     "auc": 0.5063076673271687,
+     "direction_insensitive": 0.5063076673271687
+    },
+    "H62_b13_nw_d3": {
+     "auc": 0.48843487817407893,
+     "direction_insensitive": 0.5115651218259211
+    },
+    "H62_b13_nw_d6": {
+     "auc": 0.49304035300161453,
+     "direction_insensitive": 0.5069596469983855
+    }
+   }
+  },
+  {
+   "fold": 3,
+   "n_pos": 8387,
+   "n_neg": 40000,
+   "max_direction_insensitive_auc": 0.5903748688446405,
+   "top5": [
+    [
+     "H62_b15_nne_d3",
+     0.5903748688446405
+    ],
+    [
+     "H62_b15_nne_d6",
+     0.5897256572671992
+    ],
+    [
+     "H62_b15_nw_d3",
+     0.5760545293311077
+    ],
+    [
+     "H62_b15_nw_d6",
+     0.5750100736258495
+    ],
+    [
+     "H62_b13_nne_d3",
+     0.5575819393108382
+    ]
+   ],
+   "fitted_top5_heldout": {
+    "H62_b15_nne_d3": 0.515867130678431,
+    "H62_b15_nne_d6": 0.5067828082150948,
+    "H62_b15_nw_d3": 0.5171935763681889,
+    "H62_b15_nw_d6": 0.5147024114701324,
+    "H62_b13_nne_d3": 0.5328352733396924
+   },
+   "alarms": [],
+   "per_feature": {
+    "H62_b15_nne_d3": {
+     "auc": 0.5903748688446405,
+     "direction_insensitive": 0.5903748688446405
+    },
+    "H62_b15_nne_d6": {
+     "auc": 0.5897256572671992,
+     "direction_insensitive": 0.5897256572671992
+    },
+    "H62_b15_nw_d3": {
+     "auc": 0.5760545293311077,
+     "direction_insensitive": 0.5760545293311077
+    },
+    "H62_b15_nw_d6": {
+     "auc": 0.5750100736258495,
+     "direction_insensitive": 0.5750100736258495
+    },
+    "H62_b13_nne_d3": {
+     "auc": 0.5575819393108382,
+     "direction_insensitive": 0.5575819393108382
+    },
+    "H62_b13_nne_d6": {
+     "auc": 0.5557836175032789,
+     "direction_insensitive": 0.5557836175032789
+    },
+    "H62_b13_nw_d3": {
+     "auc": 0.5178505439966614,
+     "direction_insensitive": 0.5178505439966614
+    },
+    "H62_b13_nw_d6": {
+     "auc": 0.5167118501848098,
+     "direction_insensitive": 0.5167118501848098
+    }
+   }
+  }
+ ],
+ "finished_utc": "2026-10-09T00:51:03+00:00",
+ "any_alarm": false,
+ "dropped_features": [],
+ "max_raw_auc_any_feature": 0.5903748688446405,
+ "max_fitted_top5_heldout_auc": 0.5439005783459774,
+ "interpretation": "AUC above the alarm means leakage until proven otherwise; catalogue-zero negatives are proxies, not verified fault absence."
+}
