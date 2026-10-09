@@ -8,6 +8,45 @@ Keep known-catalogue labels separate from verified fault absence, public partici
 
 This session's working branch is fixed by Arena. Do not change branches. Keep raw competition data and large intermediate arrays under ignored `data/` and `work/`. Publish small audit receipts, the unique compressed prediction raster and its review table.
 
+<!--H77-AGENTS-->
+## Current H77 continuation (2026-10-09)
+
+Read `README.md`'s H77 block first, then `evidence/h77_build.json` (build, gates, run card),
+`evidence/h77_holdout.json` (all eight arms with CIs) and `evidence/h77_budget_sweep.json`.
+
+H77 is **negative at the holdout gate and positive at the format/uniqueness/lane gates**. Verdict:
+**DOWNLOAD YES, SUBMIT NO**, slots used 0. The shipped artefact is
+`gems52-h77-viewb-boardplaced-37654px-20261009T194504Z.tif` (SHA-256 `f7f234af…02452f49`), published
+one-click at `docs/downloads/h77-candidate.tif` with the verdict on the root `index.html` and
+`docs/h77-executive-summary.html`. Experiments used: 3 of 3.
+
+Facts the next round must respect:
+
+- **Data placement is not a blocker any more.** `scripts/restore_data.py` restores all 23 manifest
+  entries from the owner's hash-pinned sibling repos through the GitHub Contents API and verifies
+  every SHA-256 (`ALL_VERIFIED=True`), including the 419 MB feature raster in five parts.
+  `api.github.com` is inside the sandbox egress allowlist. Do not repeat the claim that this needs
+  an unrestricted machine.
+- **Use `gems52.grid.write_geotiff_portal_exact`.** It writes the organiser template's own container
+  (LZW, stripped, `nodata=nan` outside the footprint) and re-reads its output, refusing anything the
+  portal's stated rule could reject. Do not add another packaging variant (IR-H77-004).
+- **All five new detectors are measured negative** (basement curvature × thin cover 0.078442,
+  geodetic dilatation gradient 0.068369, conductivity × basement-step 0.061497, antithetic basin
+  margin 0.043613, LiDAR × radiometric-K 0.086684, rank fusion 0.069808) against `single_B`
+  **0.174571** [0.153568, 0.194531] and random 0.082399. Do not re-tune them on this protocol.
+  `run_h61.py fit` reproduces View A 0.5163 / View B 0.6843 exactly, so the instrument is sound.
+- **Placement headroom is closed.** The family's thinning ladder (`h19_5` → `d1_5` → `d2_8` →
+  `h33-2-b2`) retains 0.766 of its credit where the geometric optimum is 0.798 — within 4 %.
+  `|G|` is pinned at 14,088.7 px from the exact nested pair, and beating 0.3195 at 37,654 px needs
+  `T ≥ 6,007` against the champion's measured 5,223. That is a detector problem, not a placement one.
+- **The lane gate only passes on a consensus ≤ 1 pool** (856,910 of 4,930,382 legal px), which is
+  also why the file's expected board score is low: consensus ≤ 1 means no prior submission in the
+  family emitted there. Do not present the unrestricted field's 0.253693 as a projection for it.
+- **The holdout instrument hides CATALOGUE faults; the competition scores faults the catalogue
+  lacks.** SGMC is 95 % disjoint from `labels.tif` (79,615 off-catalogue px). That mismatch is the
+  likeliest cause of the measured Spearman −0.10 between holdout DTI and board score (IR-H77-005).
+  An off-catalogue instrument is the highest-value unbuilt tool in this repository.
+<!--/H77-AGENTS-->
 <!--H81-AGENTS-->
 ## Current H81 continuation (2026-10-09)
 Read README's H81 block first, then `knowledge/69_h81_hypotheses_ranked.md` (ranked candidates), `knowledge/70_h81_preregistered.md` (frozen; SHA-256 pinned in `registry/h81_preregistration.json`) and `knowledge/71_h81_results_and_limits.md`.

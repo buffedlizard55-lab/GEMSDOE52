@@ -1,6 +1,6 @@
 {
  "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified. | H61 merge: IR-H61-001..009 appended from the H61 branch; main's repaired schema and numbering retained.",
- "generated": "2026-10-09T20:20:00Z",
+ "generated": "2026-10-09T21:40:00+00:00 (H77 merged into main's register)",
  "entries": [
   {
    "id": "IR-30-029",
@@ -2534,6 +2534,94 @@
    "how_we_know": "scripts/check_site.py run 2026-10-09 after scripts/download_competition_data.sh; 1 problem reported (exit non-zero).",
    "handling": "Not changed in H81 (R5 is a closed round and its receipt is a statement about its build-time prior set). Flagged for the next session: make the check compare only against priors that existed at the receipt's build time, or record the prior set in the receipt.",
    "disposition": "Not changed in H81 (R5 is a closed round and its receipt is a statement about its build-time prior set). Flagged for the next session: make the check compare only against priors that existed at the receipt's build time, or record the prior set in the receipt."
+  },
+  {
+   "id": "IR-H77-001",
+   "round": "H77",
+   "severity": "high",
+   "status": "closed - root index.html is now the single H77 entry point",
+   "title": "The page GitHub Pages actually serves contradicted docs/index.html about whether a TIFF exists",
+   "what_it_is": "GitHub Pages for this repository is configured as branch=main, path=/ (measured through api.github.com/repos/buffedlizard55-lab/GEMSDOE52/pages), so the served landing page is the ROOT index.html. That page advertised three downloadable H72 candidates, while docs/index.html carried the banner 'Current result: H72 - NEGATIVE STOP. NO H72 TIFF WAS WRITTEN OR PUBLISHED.' Both were on main at the same commit. A visitor could only ever see one of them.",
+   "how_we_know": "api.github.com pages endpoint (source.branch=main, source.path=/) plus reading both files at HEAD 66dfe7a. buffedlizard55-lab.github.io is not inside the sandbox egress allowlist, so the served bytes could not be fetched directly; the Pages configuration is the authority for which file is served.",
+   "impact": "The download/submit verdict the brief demands be 'obvious' was ambiguous, and one of the two pages pointed at files the other said did not exist.",
+   "disposition": "The root index.html is now the single H77 entry point and states one download and one verdict. docs/index.html keeps its own historical banners; the two pages no longer disagree about which round is current."
+  },
+  {
+   "id": "IR-H77-002",
+   "round": "H77",
+   "severity": "high",
+   "status": "open - historical artefact retained and labelled, not deleted",
+   "title": "One downloadable raster fails the portal's stated [0,1] rule and is still linked from docs/h60.html",
+   "what_it_is": "docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-nan.tif holds 7,111,787 non-finite pixels. It is the only one of the 105 rasters in submission/ and docs/downloads/ that does; every other file has values exactly {0,1}.",
+   "how_we_know": "Decoded all 105 files with rasterio in this session and counted non-finite pixels and finite values outside [0,1].",
+   "impact": "Downloading that file and uploading it reproduces the brief's reported 'Predicted values must be in range [0, 1]' rejection.",
+   "disposition": "Retained as a historical artefact and labelled DO-NOT-UPLOAD on the H60 page. The H77 download path serves only the portal-exact artefact, and grid.write_geotiff_portal_exact refuses to write a file that could reproduce this rejection."
+  },
+  {
+   "id": "IR-H77-003",
+   "round": "H77",
+   "severity": "medium",
+   "status": "open - disclosed, not repaired",
+   "title": "The H72 run card and the H72 site page describe different artefacts",
+   "what_it_is": "evidence/h72_run_card.json pins thresholds.final_output_dots_total = 5056 and describes a strict A-confident/B-abstaining emission, while the README H72 block and the served root index.html advertised gems52-h72-v3-enhanced-h19-5-37654px (37,654 cells, an h19-5 rank blend). The receipt and the published file are not the same object.",
+   "how_we_know": "Read evidence/h72_run_card.json and the H72 README block at HEAD; decoded the shipped h72-candidate-v3.tif and counted 37,654 emitted cells.",
+   "impact": "A reader cannot tell which H72 artefact the H72 receipts certify.",
+   "disposition": "Disclosed, not repaired: the H72 receipts are left byte-identical so the round that produced them stays auditable. The H72 files are not on the H77 download path."
+  },
+  {
+   "id": "IR-H77-004",
+   "round": "H77",
+   "severity": "high",
+   "status": "closed - gems52.grid.write_geotiff_portal_exact added to the shared template",
+   "title": "Every GeoTIFF this repository has shipped used a different container profile from the organiser's own template",
+   "what_it_is": "sample_submission.tif and all eleven owner-scored rasters restored into data/scored/ are LZW-compressed, stripped (blocksize 3292x1), float32, with nodata=nan declared and NaN outside the footprint. grid.write_geotiff instead produced deflate-compressed, tiled 256x256, all-finite files with nodata=None and zeros outside the footprint.",
+   "how_we_know": "rasterio profiles read from data/sample_submission.tif, all eleven data/scored/*.tif, and the shipped docs/downloads artefacts, in this session.",
+   "impact": "Both variants have scored historically, so neither is provably rejected - but a portal reader that does not honour a nodata declaration turns every outside-footprint NaN into a failed [0,1] range test. The new writer matches the template's container exactly and re-reads its output, so the unknown is removed rather than guessed at.",
+   "disposition": "gems52.grid.write_geotiff_portal_exact added to the shared template, with regression tests in tests/test_h77.py. Historical files are unchanged; new rounds must use the new writer."
+  },
+  {
+   "id": "IR-H77-005",
+   "round": "H77",
+   "severity": "medium",
+   "status": "open - untested as a training target",
+   "title": "SGMC and labels.tif are 95% disjoint, giving an off-catalogue validation target the shared instrument does not use",
+   "what_it_is": "data/external/derived_sgmc_faults_100m_u8.tif holds 83,593 px on the same grid and transform as labels.tif, but only 3,978 px are shared. 79,615 px of expert-compiled trace are absent from the competition catalogue (median distance to it 1,612.5 m, 2,052 components). The shared hide-and-recover instrument hides CATALOGUE faults, which is a different task from finding faults the catalogue lacks - and the competition scores the latter.",
+   "how_we_know": "Set arithmetic on the two restored, SHA-verified rasters (work/h77/offcatalogue_truth.py).",
+   "impact": "This is the most likely reason holdout DTI correlates negatively with board score (Spearman -0.10, measured in R4). A previous round measured that emitting the SGMC off-catalogue lines directly scores 0.0512, so they are not the hidden truth; using them as a supervised TARGET for an off-catalogue detector has not been tried.",
+   "disposition": "Open. Building an off-catalogue validation instrument on the SGMC-disjoint traces is the highest-value unbuilt tool in this repository and is carried forward to the next round."
+  },
+  {
+   "id": "IR-H77-006",
+   "round": "H77",
+   "severity": "medium",
+   "status": "open - disclosed; the re-run receipts are kept because they are what the committed script emits",
+   "title": "main's committed H61 canary receipt does not match what its own unchanged script produces",
+   "what_it_is": "scripts/run_h61.py line 212 writes evidence_class = 'LEAKAGE-CANARY AUC (diagnostic, not a DTI score)'. The receipt committed on main at HEAD (evidence/h61_canary.json and its docs/data copy) carries evidence_class = 'HOLDOUT-DTI diagnostic AUC (not a DTI score)'. The script is unmodified in this session, so the committed receipt was either hand-edited or generated before a source change that was committed without regenerating it. Separately, re-running scripts/prepare_data.py reproduces band_inventory.json statistics only to float32 quantisation (e.g. band p99 311.884765625 vs 311.8848876953125), so that receipt is not byte-reproducible either.",
+   "how_we_know": "git show HEAD:evidence/h61_canary.json compared against a fresh run of `PYTHONPATH=src ./.venv/bin/python scripts/run_h61.py canary` in this session, with git diff --name-only confirming scripts/run_h61.py is unmodified.",
+   "impact": "The scientific content is unaffected: every AUC in the re-run is bit-identical to the committed value (View A fold 0 heldout_region_auc 0.5062341311661124, in_sample_auc 0.9480777). Only the provenance label and float32 rounding differ. But it means a receipt in this repository can drift from the code that generates it without any test noticing.",
+   "disposition": "The regenerated receipts are kept, because they are what the committed script actually emits, and the discrepancy is disclosed here rather than hidden by reverting. Recommendation for the next round: add a test that re-runs each generator's emit step against its committed receipt, or pin receipts to the script SHA that produced them."
+  },
+  {
+   "id": "IR-H77-007",
+   "round": "H77",
+   "severity": "low",
+   "status": "closed - the six hrefs now carry the downloads/ prefix",
+   "title": "Six download links on the H72 executive-summary page were dead on the served site",
+   "what_it_is": "docs/h72-executive-summary.html linked h72-candidate-{v3,spsc,mraec}.{tif,zip} with bare relative hrefs, but those files live in docs/downloads/. All six were 404s on the served site.",
+   "how_we_know": "scripts/check_site.py reported exactly these six as dead links; after prefixing them with downloads/ the same check reports no problems.",
+   "impact": "A reader following the H72 page's instructions could not download any H72 candidate.",
+   "disposition": "Fixed in this round: the six hrefs now point at downloads/. check_site.py is clean."
+  },
+  {
+   "id": "IR-H77-008",
+   "round": "H77",
+   "severity": "medium",
+   "status": "closed - fixed on main by a parallel round's `_created()` dating rule, which supersedes this branch's narrower fix",
+   "title": "scripts/check_site.py has been reporting a false R5-novelty failure since a parallel round landed an undated raster",
+   "what_it_is": "check_site.py recomputes R5's decoded-pattern novelty against the rasters it can prove predate R5's build and compares to the receipted 1.0. It now reports 0.992087 != 1.0 and exits with one problem. The classifier `_stamp(q) or built` gives any raster with no parseable YYYYMMDDTHHMMSSZ stamp in its name or sidecar a stamp of exactly `built`, so `> built` is False and it is judged NOT later and kept in the strict prior set. submission/gems52-h75-dva-variogram-anisotropy-B-37654px-20261009.tif carries the date 20261009 but no T######Z, so it is undated by that rule even though it is a 2026-10-09 round; the docs/downloads/h7{4,5,6}-candidate.tif aliases are undated too, and their bytes differ from their canonical twins so the content-hash expansion does not rescue them.",
+   "how_we_know": "Measured. (1) Pre-existing: GitHub Actions runs 37985270257 (main 68fc601) and 37982265131 (main 4b122f3) both fail at 'Verify all local website links JSON and download bytes', and locally the check reported 0.992087 != 1.0 with every H77 raster removed. (2) Root cause: `_stamp(q) or built` gave undated rasters a stamp of exactly `built`, so they were judged 'not later'; 76 of 112 swept rasters are undated. (3) This branch's narrower fix reached 1.0000 but over only 9 rasters. (4) main's `_created()` fix reaches 1.0000 over 68 rasters and is the version now on this branch. (5) A separate CI-only failure was also found and fixed here: docs/h77-executive-summary.html linked ../work/h77/board_forensics.json, and work/ is gitignored, so the link resolved locally but was dead in CI's fresh checkout; the receipt is now published at evidence/h77_board_forensics.json.",
+   "impact": "The site checker exits non-zero on main, so 'check_site.py clean' is no longer a usable pre-merge signal for any round. R5's own artefact and receipt are unaffected: it is still pattern unique and not the prior union over every set tried.",
+   "disposition": "FIXED, by main rather than by this branch. This branch's first fix excluded undated rasters from the strict prior set; that works but weakens the check badly (strict set fell from 73 to 9 rasters). A parallel round on main fixed the same bug better: `_created(q)` takes the MINIMUM over the earliest receipt recording the content hash, the filename/sidecar stamp and the git add date, so an undated alias inherits its canonical twin's date instead of being dropped, and it added a date-filter-independent duplicate guard against the UNFILTERED prior set. This branch therefore took main's scripts/check_site.py verbatim and dropped its own version. Verified: check_site.py exits 0 and R5 novelty recomputes to exactly 1.0000 over 68 provably-dated rasters -- a far stronger set than this branch's 9."
   }
  ],
  "merge_note": "Merged registry/irregularities.json: main's entries (including the parallel H66 round's IR-H66-001..010) plus this round's IR-H67-001..011. This round was labelled H66 in its own receipts and was renamed H67 before merge because main merged a different H66 first (PR #56); the IDs were renumbered wholesale so no ID carries two meanings. See knowledge/45a_amendment_2026-10-09_H67_rename.md. IR-H67-002 (in-domain nodata sentinels collapse every rank channel) and IR-H67-008 (probe classification flips with the structuring element, and this round's lane verdict depends on it) are the two that change a result; IR-H67-005 and IR-H67-007 change how a shared instrument must be read. | H77cond merge: this round was executed as H74 and renamed to H77cond before merge because a parallel session merged a different H74 first (PR #72) and a third took H75; see IR-H77cond-001. The rename is identifier-only and the preregistration's pinned SHA-256 still validates. IR-H77cond-002 records a shared-tool repair to scripts/check_site.py surfaced by that merge. IR-H77cond-003 records that filename, receipt and git dating are all individually unsound in this repository, and that the duplicate guard was therefore made dating-independent."
