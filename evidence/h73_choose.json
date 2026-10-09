@@ -1,0 +1,167 @@
+{
+  "stage": "choose",
+  "finished_utc": "2026-10-09T17:19:13+00:00",
+  "placement": "place_lane (greedy + per-prior quota, amendment 61a)",
+  "trials": [
+    {
+      "T": 200,
+      "pool_px": 4517736,
+      "seconds": 62.3,
+      "ok": false,
+      "worst": 0.7382060918830987,
+      "rounds": [
+        {
+          "round": 0,
+          "dots": 37600,
+          "quotas": 0,
+          "worst": 0.9314893617021277,
+          "new_offenders": 22
+        },
+        {
+          "round": 1,
+          "dots": 35654,
+          "quotas": 22,
+          "worst": 0.7382060918830987,
+          "new_offenders": 0
+        }
+      ],
+      "quota_cap": 26320,
+      "quota_priors": 22,
+      "spacing_ok": true
+    },
+    {
+      "T": 150,
+      "pool_px": 4109473,
+      "seconds": 60.0,
+      "ok": false,
+      "worst": 0.7340473003123605,
+      "rounds": [
+        {
+          "round": 0,
+          "dots": 37600,
+          "quotas": 0,
+          "worst": 0.8915691489361702,
+          "new_offenders": 15
+        },
+        {
+          "round": 1,
+          "dots": 35856,
+          "quotas": 15,
+          "worst": 0.7340473003123605,
+          "new_offenders": 0
+        }
+      ],
+      "quota_cap": 26320,
+      "quota_priors": 15,
+      "spacing_ok": true
+    },
+    {
+      "T": 100,
+      "pool_px": 3664087,
+      "seconds": 59.2,
+      "ok": false,
+      "worst": 0.7316598560031135,
+      "rounds": [
+        {
+          "round": 0,
+          "dots": 37600,
+          "quotas": 0,
+          "worst": 0.9013297872340426,
+          "new_offenders": 14
+        },
+        {
+          "round": 1,
+          "dots": 35973,
+          "quotas": 14,
+          "worst": 0.7316598560031135,
+          "new_offenders": 0
+        }
+      ],
+      "quota_cap": 26320,
+      "quota_priors": 14,
+      "spacing_ok": true
+    },
+    {
+      "T": 80,
+      "pool_px": 3408077,
+      "seconds": 58.9,
+      "ok": false,
+      "worst": 0.7268108137961505,
+      "rounds": [
+        {
+          "round": 0,
+          "dots": 37600,
+          "quotas": 0,
+          "worst": 0.9038563829787234,
+          "new_offenders": 13
+        },
+        {
+          "round": 1,
+          "dots": 36213,
+          "quotas": 13,
+          "worst": 0.7268108137961505,
+          "new_offenders": 0
+        }
+      ],
+      "quota_cap": 26320,
+      "quota_priors": 13,
+      "spacing_ok": true
+    },
+    {
+      "T": 60,
+      "pool_px": 2930680,
+      "seconds": 57.6,
+      "ok": false,
+      "worst": 0.7222832052689352,
+      "rounds": [
+        {
+          "round": 0,
+          "dots": 37600,
+          "quotas": 0,
+          "worst": 0.9036968085106383,
+          "new_offenders": 10
+        },
+        {
+          "round": 1,
+          "dots": 36440,
+          "quotas": 10,
+          "worst": 0.7222832052689352,
+          "new_offenders": 0
+        }
+      ],
+      "quota_cap": 26320,
+      "quota_priors": 10,
+      "spacing_ok": true
+    },
+    {
+      "T": 40,
+      "pool_px": 2105247,
+      "seconds": 55.9,
+      "ok": false,
+      "worst": 0.7042705769024938,
+      "rounds": [
+        {
+          "round": 0,
+          "dots": 37600,
+          "quotas": 0,
+          "worst": 0.8998670212765958,
+          "new_offenders": 8
+        },
+        {
+          "round": 1,
+          "dots": 37372,
+          "quotas": 8,
+          "worst": 0.7042705769024938,
+          "new_offenders": 0
+        }
+      ],
+      "quota_cap": 26320,
+      "quota_priors": 8,
+      "spacing_ok": true
+    }
+  ],
+  "chosen": null,
+  "n_informative_supports": 350,
+  "limit": 0.7,
+  "note": "fast KD-tree screen during search; the authoritative lane_report runs once in build"
+}

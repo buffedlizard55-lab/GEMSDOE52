@@ -1,3 +1,46 @@
+<!--H73-README-->
+# Current status — H73 (2026-10-09): NEGATIVE at the lane gate · SUBMIT NO · DOWNLOAD NO (research copy only; not lane-cleared)
+
+> **SUBMIT TO THE COMPETITION: NO.** Competition slots used this session: **0**. No H73 file was emitted.
+>
+> **DOWNLOAD: NO — not as a unique submission file. Research copy only.** The H69 file in this repository ([`docs/downloads/h69-candidate.tif`](docs/downloads/h69-candidate.tif)) is format-valid (float32, {0,1}, no NaN) and not identical to any registry prior (max Jaccard 0.0092 against 542 byte-distinct priors, 378 decoded-distinct). It **fails the literal lane rule**: DUPLICATE/STOP on 14 universal-coverage probe priors (IR-H73-011). The frozen rules do not waive a literal STOP for a policy PASS, so it is not cleared. Its holdout is also negative: HOLDOUT-DTI 0.036473 [0.027471, 0.045996] against single_B 0.137947 on H69's own receipt, which uses a different withheld-positive count from this round's control (IR-H73-010).
+
+**What H73 measured (one experiment, 1 of 3 used).** The hypothesis: a surface-only ranking, emitted under the lane rule,
+keeps ≥ 90 % of the best measured holdout arm. It cannot be emitted lane-feasible on this registry.
+
+| Check | Label | Result | Receipt |
+|---|---|---|---|
+| Competition inputs restored and SHA-256 pinned | MEASURED | 23/23 | `data/restore_receipt.json` (local, git-ignored) |
+| Test suite | MEASURED | 416 passed + 5 new H73 tests | `pytest` |
+| Instrument control: `single_B` at 9,400 dots/fold | HOLDOUT-DTI (n = 53,186 withheld positives) | **0.174571** [0.152313, 0.196302], reproduces H71 (\|Δ\| 3.6e-07); `random` 0.080426 [0.070223, 0.090973] | [`evidence/h73_control.json`](evidence/h73_control.json) |
+| Canary: each View-B feature alone | MEASURED | max AUC 0.6689 (alarm 0.90) → no alarm | [`evidence/h73_fit.json`](evidence/h73_fit.json) |
+| Registry census | MEASURED | 524/524 eligible file-SHA verified; 560 rasters; 350 informative distinct | [`evidence/h73_consensus.json`](evidence/h73_consensus.json) |
+| Preregistered placement (greedy, consensus pool) | MEASURED | best worst-prior near-dot share **0.8916** (T = 150); no T reaches 0.70 | [`evidence/h73_choose_plain_greedy_wall.json`](evidence/h73_choose_plain_greedy_wall.json) |
+| Amended placement (per-prior quota, 61a) | MEASURED | best **0.7043** (T = 40), short fill 37,372 of 37,600 → denominator effect | [`evidence/h73_choose.json`](evidence/h73_choose.json) |
+| Candidate holdout / shipped file | not measured / not emitted | the lane gate refused to proceed (by design) | — |
+
+**Why, in one paragraph.** The surface view puts its dots on the same few dense priors, so greedy placement puts ≈ 90 % of its
+dots within 3 px of one registry raster. Quotas pull that to ≈ 0.72, but they also exhaust the candidate pool, so the fill comes
+up short and the share divides by the smaller count. That denominator effect is the finding; it is recorded in full in
+[`knowledge/60`](knowledge/62_h73_results_and_limits.md).
+
+**Ranked next hypotheses** (none validated; see knowledge/60 §4): (1) directional variogram anisotropy on bands 12, 19 and the
+LiDAR scarp product, not implemented anywhere in `src/` or `scripts/`; (2) antithetic paired-margin asymmetry from band 15;
+(3) a denominator-aware placement fix, separately preregistered; (4) the 1 m DEM scarp product, which is free and public domain
+at <https://www.usgs.gov/3d-elevation-program> but not downloadable from this sandbox.
+
+**Leaderboard (not verified).** The DrivenData leaderboard renders client-side and returned "Loading..." to our fetch tool, so
+0.3774 (top), 0.3195 and 0.2778 are **PUBLIC-PAGE or OWNER-REPORTED** here, and per-file attribution is filename-only.
+Source: <https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/> (2026-10-09). Official rules to read first:
+<https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/> — **one GeoTIFF per team** is selected for scoring, and
+the official text says values must be in [0, 1] with "null or nan" outside the bounds (the repo writes 0 there; IR-H73-001).
+
+**Verify it yourself:** [`knowledge/60`](knowledge/62_h73_results_and_limits.md) (results, walls, 11 irregularities with receipts) ·
+[`knowledge/61`](knowledge/61_hypotheses_H73_preregistered.md) + [`61a`](knowledge/61a_h73_preregistration_amendment_quota_placement.md)
+(frozen before the holdout) · [`evidence/h73_run_card.json`](evidence/h73_run_card.json) (the run card) ·
+[`evidence/h73_audit_h69_file.json`](evidence/h73_audit_h69_file.json) (uniqueness and lane audit of the H69 file) ·
+[`scripts/run_h73.py`](scripts/run_h73.py).
+<!--/H73-README-->
 <!--H72-README-->
 # Current status — H72 (2026-10-09): NEGATIVE STOP; NO H72 TIFF
 
@@ -1435,7 +1478,9 @@ build is a measured fixed point.
 > 0.9959 — zero-copy claims are point-in-time against a live registry (IR-H62-010), so the receipts
 > record their measurement context rather than chasing every concurrent publication with a rebuild.
 
-> **IS IT OK TO DOWNLOAD? YES. IS IT OK TO SUBMIT? NO.** The file is portal-safe by construction
+> **CORRECTION 2026-10-09 (H73 audit, `evidence/h73_audit_h69_file.json`): the download verdict for this file is NO.** The literal lane rule returns DUPLICATE/STOP on 14 universal-coverage probe priors, and the frozen rules do not waive a literal STOP. This file is a research copy only. The H69 holdout and single_B figures below are H69's own receipt and do not reproduce this round's control (IR-H73-010).
+>
+> **IS IT OK TO DOWNLOAD? YES. IS IT OK TO SUBMIT? NO.** (original H69 verdict, superseded by the correction above) The file is portal-safe by construction
 > (single-band float32, EPSG:32611, 3,730 × 3,292, exact sample transform, **every cell finite
 > and in {0, 1}**, zeros outside footprint — the portal error *"Predicted values must be in
 > range [0, 1]"* cannot occur on it; `gems52.grid.write_geotiff` refuses anything else), it is
