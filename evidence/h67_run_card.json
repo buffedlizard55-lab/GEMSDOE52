@@ -1,16 +1,16 @@
 {
- "round": "H66",
- "generated_utc": "2026-10-09T06:03:33Z",
- "generated_by": "scripts/h66_run_card.py (assembled from evidence/h66_*.json; no hand-typed numbers)",
+ "round": "H67",
+ "generated_utc": "2026-10-09T06:14:29Z",
+ "generated_by": "scripts/h67_run_card.py (assembled from evidence/h67_*.json; no hand-typed numbers)",
  "preregistration": {
-  "protocol": "knowledge/43_hypotheses_H66_preregistered.md",
+  "protocol": "knowledge/45_hypotheses_H67_preregistered.md",
   "protocol_sha256": "9fa87ab6ca46369304044357a0c00227b888a305fc7f585faef842e65c7712bd",
   "registered_utc": "2026-10-09T04:33:24Z",
   "frozen_before_any_fit": true,
-  "registry": "registry/h66_preregistration.json",
+  "registry": "registry/h67_preregistration.json",
   "hash_verified_at_runtime": true
  },
- "hypothesis": "H66-A (Thermal-Upflow Corridor, TUC). A geothermal system needs a permeable pathway. A surface thermal manifestation whose measured or geothermometer-inferred temperature places it above the local conductive gradient must be fed by a structure that the provided Quaternary-fault catalogue does not contain, because every seed used here lies >= 300 m (>= 3 px, beyond the whole scoring kernel) from the nearest mapped trace. The conducting structure is therefore an uncatalogued fault, and it is elongated along strike: emitting a strike-aligned corridor outward from such a site should place mass on an unmapped fault at a credit density above uniform random (0.0279).",
+ "hypothesis": "H67-A (Thermal-Upflow Corridor, TUC). A geothermal system needs a permeable pathway. A surface thermal manifestation whose measured or geothermometer-inferred temperature places it above the local conductive gradient must be fed by a structure that the provided Quaternary-fault catalogue does not contain, because every seed used here lies >= 300 m (>= 3 px, beyond the whole scoring kernel) from the nearest mapped trace. The conducting structure is therefore an uncatalogued fault, and it is elongated along strike: emitting a strike-aligned corridor outward from such a site should place mass on an unmapped fault at a credit density above uniform random (0.0279).",
  "mechanism": "1) 1,156 INGENIOUS/GDR thermal sites in the footprint, of which 952 satisfy the frozen seed rule (temp >= 60 C, or reservoir geothermometer >= 100 C, or class Hot) and >= 300 m from the catalogue; 2) local strike from the structure tensor (sigma = 4 px) of the mean absolute-gradient composite of bands 12, 3, 18, 15, cross-checked against the external LiDAR scarp strike band; 3) a corridor 13 px long (\u00b16 px) along strike, half width 1 px, amplitude tapered 1.00 -> 0.40 with distance from the seed; 4) a hard corroboration gate requiring rank >= 0.50 of the best independent geophysical edge (magnetic TMI horizontal gradient, isostatic-gravity horizontal gradient, detrended-elevation curvature/slope, surface conductivity gradient, LiDAR step, Hessian linearity); 5) metric-aware greedy emission (src/gems52/emit.py) at the frozen budget ladder, values exactly {0,1}; 6) two-view stratification with a veto that removes B-only pixels having no thermal seed within 3 px (the surface-artifact class the brief names).",
  "named_non_fault_process_that_could_mimic_it": "Lithologic contacts and stratigraphic edges. A conductive/sedimentary contact can carry both a horizontal gravity-gradient edge and a conductivity contrast, and thermal water rising along a permeable sand body will discharge at its outcrop edge without any fault being present. Second: alluvial-fan and debris-flow margins, which produce linear topographic steps at 100 m and are the classic false 'scarp'. Third: road cuts and pipeline corridors, which the LiDAR step band and the detrended-elevation gradient both see as sharp lines; these are precisely the B-only pixels the veto removes, and 93 were removed on that ground. Fourth: a deep geothermal gradient with no anomalous chemistry, i.e. a warm well in ordinary basement, which the frozen seed rule tries to exclude by requiring a temperature or a chemical geothermometer threshold, but cannot exclude completely because 396 of 1,156 sites have no usable geothermometer.",
  "holdout": {
@@ -170,7 +170,7 @@
    "mean_view_B": 0.62,
    "bar": "mean >= 0.60 AND min >= 0.55 (frozen)",
    "pass": false,
-   "consequence": "no pseudo-label exchange was performed; the co-training premise of the brief is not met, so disagreement was used only for stratification and for the B-only artifact veto (declared deviation IR-H66-001)"
+   "consequence": "no pseudo-label exchange was performed; the co-training premise of the brief is not met, so disagreement was used only for stratification and for the B-only artifact veto (declared deviation IR-H67-001)"
   },
   "S2_conditional_independence": {
    "n_blocks": 2283,
@@ -189,7 +189,7 @@
    },
    "abandon_threshold": 0.6,
    "allow_exchange": true,
-   "reading": "the abandonment rule did NOT fire on H66's own measurement (0.2951 < 0.60), which contradicts N-19 (0.7625 on the H61/H63 feature set) and agrees with H62 (0.1757). The statistic is learner- and block-size-dependent, spanning 0.0078-0.7625 across rounds; it is not a stable property of 'the two views'."
+   "reading": "the abandonment rule did NOT fire on H67's own measurement (0.2951 < 0.60), which contradicts N-19 (0.7625 on the H61/H63 feature set) and agrees with H62 (0.1757). The statistic is learner- and block-size-dependent, spanning 0.0078-0.7625 across rounds; it is not a stable property of 'the two views'."
   },
   "leakage_canary": {
    "max_single_channel_auc": 0.6228,
@@ -251,7 +251,7 @@
    "pass_": true
   },
   "recomputed_over_alignment_filtered_corpus": {
-   "why": "the shared gate sets canonical_pattern_unique=False if ANY prior fails to open; the first pass included the 2 census-ineligible fixtures, so it reported False while 0 priors were identical. Recomputed with them excluded and published (IR-H66-007, IR-H66-010).",
+   "why": "the shared gate sets canonical_pattern_unique=False if ANY prior fails to open; the first pass included the 2 census-ineligible fixtures, so it reported False while 0 priors were identical. Recomputed with them excluded and published (IR-H67-007, IR-H67-010).",
    "n_priors_checked": 566,
    "n_excluded": 2,
    "excluded": [
@@ -341,7 +341,7 @@
      }
     ]
    },
-   "policy_reading": "362,327 dots; disk 3 px halo coverage of the eligible footprint 0.8886 (informative under the gate's 0.95 threshold) but 0.9648 under a square 7x7 element, i.e. the classification that decides this round's lane verdict flips with the structuring element (IR-H66-008). Under the shared gate as written the rule fires.",
+   "policy_reading": "362,327 dots; disk 3 px halo coverage of the eligible footprint 0.8886 (informative under the gate's 0.95 threshold) but 0.9648 under a square 7x7 element, i.e. the classification that decides this round's lane verdict flips with the structuring element (IR-H67-008). Under the shared gate as written the rule fires.",
    "support_overlap_vs_proximity_overlap": "max Jaccard with any single prior is 0.0138 (853 of 24,907 pixels shared), yet 84.08 % of the dots lie within 3 px of one prior's dots: the corridors run alongside an existing curvature-scarp emission without reusing its pixels. The brief's rule is a proximity rule, so it fires."
   },
   "seed_composition": {
@@ -372,7 +372,7 @@
    "footprint": "gems52.grid.footprint_from(training_features.tif, bands=\"all\") AND labels>=0 (the same sentinel-aware eligible the pipeline uses)",
    "eligible_cells": 5164300,
    "cross_check": {
-    "pipeline_receipt": "evidence/h66_build.json",
+    "pipeline_receipt": "evidence/h67_build.json",
     "pipeline_legal_seeds": 952,
     "pipeline_blocks_1km": 592,
     "first_attempt_used_the_sample_footprint_and_over_counted_by_8": true
@@ -388,10 +388,10 @@
   }
  },
  "raster": {
-  "file": "submission/gems52-h66-thermal-upflow-corridor-24907px-20261009T050704Z.tif",
+  "file": "submission/gems52-h67-thermal-upflow-corridor-24907px-20261009T050704Z.tif",
   "sha256": "14644198f1031e8250a284c86775c55b57d60d55195e815eac6f4d17b01395c6",
   "bytes": 76217,
-  "zip_sha256": "de2215cd53c6f2c7492ba149e56294ae4ebef24641c3dec9564bc5c35c29a626",
+  "zip_sha256": "039943bb4431ec07c51646fb5d380e56981959d131ef47048afaf776ac711587",
   "decoded_pixels_sha256": "969bb11b7403d9c7506ad609084bcdfe6690993cd6dac459cf8de19a913d6d11",
   "emitted_pixels": 24907,
   "reproduced_bit_identically_by_a_second_independent_run": true
@@ -439,9 +439,9 @@
   "note_on_nodata": "sample_submission.tif declares a NaN nodata; this file declares none and carries 0.0 outside the eligible footprint, which is what grid.write_geotiff requires (N-5 forbids NaN outside the footprint)."
  },
  "submission_identifiers": {
-  "name": "gems52-h66-thermal-upflow-corridor-24907px-20261009T050704Z",
+  "name": "gems52-h67-thermal-upflow-corridor-24907px-20261009T050704Z",
   "name_chars": 59,
-  "note": "H66 thermal-upflow corridor 24,907px; holdout below random; lane duplicate 84% near curv_scarp; DO NOT SUBMIT",
+  "note": "H67 thermal-upflow corridor 24,907px; holdout below random; lane duplicate 84% near curv_scarp; DO NOT SUBMIT",
   "note_chars": 109,
   "note_within_140": true
  },
@@ -468,21 +468,21 @@
    "E2 hide-and-recover holdout, 4 folds, 6 matched arms, pooled bootstrap",
    "E3 build at the frozen budget + format gate + lane gates on the surface and on the final dots + uniqueness report"
   ],
-  "wall_clock": "exceeded: the sandbox started cold (no cached feature stack, 3.9 GB RAM, 2 CPUs), the full 19-band stack and a 526-blob prior census had to be restored and fetched, and five defects had to be fixed in the runner (IR-H66-002 sentinel contamination, JSON NaN in receipts, module shadowing, a false-positive degenerate-channel guard, and the partially-filled in-quadrant AUC grid). Disclosed rather than smoothed."
+  "wall_clock": "exceeded: the sandbox started cold (no cached feature stack, 3.9 GB RAM, 2 CPUs), the full 19-band stack and a 526-blob prior census had to be restored and fetched, and five defects had to be fixed in the runner (IR-H67-002 sentinel contamination, JSON NaN in receipts, module shadowing, a false-positive degenerate-channel guard, and the partially-filled in-quadrant AUC grid). Disclosed rather than smoothed."
  },
  "declared_deviations": [
-  "IR-H66-001 emission seeds come from the external GDR Wellspring table, a third channel outside the two lane views; disagreement is used for stratification and veto only, never as a pseudo-label source (rule adopted after N-1)"
+  "IR-H67-001 emission seeds come from the external GDR Wellspring table, a third channel outside the two lane views; disagreement is used for stratification and veto only, never as a pseudo-label source (rule adopted after N-1)"
  ],
  "irregularities_found_this_round": [
-  "IR-H66-002 (severe, caught before publication): 3,061 in-domain cells carry the float32 nodata sentinel -3.4028234663852886e+38 in 18 of 19 bands (3,073 in band 6). Transform.rank01 bins against lo = -3.4e38, which collapses every rank channel to a near-constant. Fixed by using the template's own intersection footprint (grid.footprint_from(training_features.tif, bands='all')); eligible fell from 5,167,373 to 5,164,300.",
-  "IR-H66-003: three defensible footprints coexist (labels>=0 gives 5,167,373; band-12 non-sentinel 5,165,852; all-19-band intersection 5,164,300). This round uses the intersection and says so.",
-  "IR-H66-004: two channels are legitimately zero-inflated (rank_b10, grad_b17: > 50 % of the footprint ties at the physical minimum). A blunt 'collapsed channel' guard reports them as failures; replaced with a degenerate test (< 10 distinct rank levels, or raw |value| > 1e30 inside the eligible set).",
-  "IR-H66-005: the independence statistic S2 is not a stable property of the two views - 0.0078 to 0.7625 across five rounds on the same data, driven by feature set, learner and block size. The ABANDON rule can therefore fire or not fire at will; it cannot be used as a go/no-go gate without fixing all three."
+  "IR-H67-002 (severe, caught before publication): 3,061 in-domain cells carry the float32 nodata sentinel -3.4028234663852886e+38 in 18 of 19 bands (3,073 in band 6). Transform.rank01 bins against lo = -3.4e38, which collapses every rank channel to a near-constant. Fixed by using the template's own intersection footprint (grid.footprint_from(training_features.tif, bands='all')); eligible fell from 5,167,373 to 5,164,300.",
+  "IR-H67-003: three defensible footprints coexist (labels>=0 gives 5,167,373; band-12 non-sentinel 5,165,852; all-19-band intersection 5,164,300). This round uses the intersection and says so.",
+  "IR-H67-004: two channels are legitimately zero-inflated (rank_b10, grad_b17: > 50 % of the footprint ties at the physical minimum). A blunt 'collapsed channel' guard reports them as failures; replaced with a degenerate test (< 10 distinct rank levels, or raw |value| > 1e30 inside the eligible set).",
+  "IR-H67-005: the independence statistic S2 is not a stable property of the two views - 0.0078 to 0.7625 across five rounds on the same data, driven by feature set, learner and block size. The ABANDON rule can therefore fire or not fire at will; it cannot be used as a go/no-go gate without fixing all three."
  ],
  "board_algebra": {
   "evidence_class": "MEASURED on restored bytes; published scores are OWNER-REPORTED",
-  "receipt": "evidence/h66_board_algebra.json",
-  "script": "scripts/h66_board_algebra.py",
+  "receipt": "evidence/h67_board_algebra.json",
+  "script": "scripts/h67_board_algebra.py",
   "champion_ref_h33_2_b2": {
    "px": 37654,
    "owner_reported_score": 0.2778,
@@ -577,7 +577,7 @@
   }
  },
  "reasoning_record": {
-  "file": "gems52-h66-a-only-and-segment-reasoning.csv",
+  "file": "gems52-h67-a-only-and-segment-reasoning.csv",
   "rows": 24907,
   "strata": {
    "A_only": 732,
@@ -595,7 +595,7 @@
  },
  "seed_population": {
   "evidence_class": "MEASURED",
-  "receipt": "evidence/h66_seed_composition.json",
+  "receipt": "evidence/h67_seed_composition.json",
   "unique_sites": 12570,
   "evidence_sites": 1156,
   "legal_seeds": 952,
@@ -628,5 +628,5 @@
   "https://epsg.io/32611 (CRS)",
   "https://www.usgs.gov/3d-elevation-program (1 m DEM named as the missing lever)"
  ],
- "negative_result_statement": "H66-A is a negative result and is published as one. Thermal-upflow sites restricted to >= 300 m from mapped faults, extended along a structure-tensor strike and gated by an independent geophysical edge, do not localise catalogue faults better than uniform random on the shared hide-and-recover instrument. Together with N-20 (thermal lineaments as a rank bonus: +0.00003) and H58 (cold-geothermometer consensus: 22 px survived), that is the third independent measurement against the thermal-spring family of hypotheses in this region."
+ "negative_result_statement": "H67-A is a negative result and is published as one. Thermal-upflow sites restricted to >= 300 m from mapped faults, extended along a structure-tensor strike and gated by an independent geophysical edge, do not localise catalogue faults better than uniform random on the shared hide-and-recover instrument. Together with N-20 (thermal lineaments as a rank bonus: +0.00003) and H58 (cold-geothermometer consensus: 22 px survived), that is the third independent measurement against the thermal-spring family of hypotheses in this region."
 }

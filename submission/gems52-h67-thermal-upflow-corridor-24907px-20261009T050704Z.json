@@ -1,12 +1,12 @@
 {
-  "file": "gems52-h66-thermal-upflow-corridor-24907px-20261009T050704Z.tif",
+  "file": "gems52-h67-thermal-upflow-corridor-24907px-20261009T050704Z.tif",
   "sha256": "14644198f1031e8250a284c86775c55b57d60d55195e815eac6f4d17b01395c6",
   "bytes": 76217,
-  "submission_name": "gems52-h66-thermal-upflow-corridor-24907px-20261009T050704Z",
-  "note": "H66 thermal-upflow corridor 24,907px; holdout below random; lane duplicate 84% near curv_scarp; DO NOT SUBMIT",
+  "submission_name": "gems52-h67-thermal-upflow-corridor-24907px-20261009T050704Z",
+  "note": "H67 thermal-upflow corridor 24,907px; holdout below random; lane duplicate 84% near curv_scarp; DO NOT SUBMIT",
   "note_chars": 109,
   "validator": {
-    "path": "/home/user/GEMSDOE52/submission/gems52-h66-thermal-upflow-corridor-24907px-20261009T050704Z.tif",
+    "path": "/home/user/GEMSDOE52/submission/gems52-h67-thermal-upflow-corridor-24907px-20261009T050704Z.tif",
     "bytes": 76217,
     "sha256": "14644198f1031e8250a284c86775c55b57d60d55195e815eac6f4d17b01395c6",
     "bands": 1,
@@ -54,15 +54,15 @@
     "ok": true,
     "validation_class": "local on-disk template/range check; not organizer upload acceptance"
   },
-  "zip_file": "gems52-h66-thermal-upflow-corridor-24907px-20261009T050704Z.zip",
-  "zip_sha256": "de2215cd53c6f2c7492ba149e56294ae4ebef24641c3dec9564bc5c35c29a626",
+  "zip_file": "gems52-h67-thermal-upflow-corridor-24907px-20261009T050704Z.zip",
+  "zip_sha256": "039943bb4431ec07c51646fb5d380e56981959d131ef47048afaf776ac711587",
   "approved_for_weekly_slot": false,
   "promoted": false,
   "submission_slots_used": 0,
   "status": "research-only; local format validation is not organizer acceptance",
   "metadata": {
-    "round": "H66",
-    "protocol": "43_hypotheses_H66_preregistered.md",
+    "round": "H67",
+    "protocol": "43_hypotheses_H67_preregistered.md",
     "protocol_sha256": "9fa87ab6ca46369304044357a0c00227b888a305fc7f585faef842e65c7712bd",
     "budget": 25000,
     "stratification": {

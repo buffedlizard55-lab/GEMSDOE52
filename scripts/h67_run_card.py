@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Assemble the H66 run card from the receipts the pipeline wrote. Nothing is typed in by hand.
+"""Assemble the H67 run card from the receipts the pipeline wrote. Nothing is typed in by hand.
 
 Every field the parallel-run protocol asks for is read from a JSON receipt in ``evidence/`` or from
 the submission sidecar, and each number carries its evidence class:
@@ -24,7 +24,7 @@ EV = ROOT / "evidence"
 
 
 def load(name, default=None):
-    p = EV / f"h66_{name}.json"
+    p = EV / f"h67_{name}.json"
     return json.loads(p.read_text()) if p.exists() else default
 
 
@@ -53,10 +53,10 @@ def main() -> int:
         return dict(blob=blob, census_eligible=e.get("eligible"),
                     aliases=[dict(repo=a["repo"], commit=a["commit"], path=a["path"], bytes=a["bytes"])
                              for a in e["aliases"]])
-    prereg = json.loads((ROOT / "registry" / "h66_preregistration.json").read_text())
-    subs = sorted((ROOT / "submission").glob("gems52-h66-*.tif"))
+    prereg = json.loads((ROOT / "registry" / "h67_preregistration.json").read_text())
+    subs = sorted((ROOT / "submission").glob("gems52-h67-*.tif"))
     if len(subs) != 1:
-        raise SystemExit(f"expected exactly one H66 raster, found {len(subs)}")
+        raise SystemExit(f"expected exactly one H67 raster, found {len(subs)}")
     tif = subs[0]
     sidecar = json.loads(tif.with_suffix(".json").read_text())
     val = sidecar["validator"]
@@ -69,21 +69,21 @@ def main() -> int:
         return rel["lane_dots"]["policy"]
 
     card = {
-        "round": "H66",
+        "round": "H67",
         "generated_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "generated_by": "scripts/h66_run_card.py (assembled from evidence/h66_*.json; no hand-typed numbers)",
+        "generated_by": "scripts/h67_run_card.py (assembled from evidence/h67_*.json; no hand-typed numbers)",
         "preregistration": {
             "protocol": prereg["hypothesis_document"],
             "protocol_sha256": prereg["hypothesis_sha256"],
             "registered_utc": prereg.get("registered_utc"),
             "frozen_before_any_fit": prereg.get("frozen_before_any_fit"),
-            "registry": "registry/h66_preregistration.json",
+            "registry": "registry/h67_preregistration.json",
             "hash_verified_at_runtime": hashlib.sha256(
                 (ROOT / prereg["hypothesis_document"]).read_bytes()
             ).hexdigest() == prereg["hypothesis_sha256"],
         },
         "hypothesis": (
-            "H66-A (Thermal-Upflow Corridor, TUC). A geothermal system needs a permeable pathway. "
+            "H67-A (Thermal-Upflow Corridor, TUC). A geothermal system needs a permeable pathway. "
             "A surface thermal manifestation whose measured or geothermometer-inferred temperature "
             "places it above the local conductive gradient must be fed by a structure that the "
             "provided Quaternary-fault catalogue does not contain, because every seed used here lies "
@@ -158,7 +158,7 @@ def main() -> int:
                 "pass": s1["S1_pass"],
                 "consequence": "no pseudo-label exchange was performed; the co-training premise of "
                                "the brief is not met, so disagreement was used only for stratification "
-                               "and for the B-only artifact veto (declared deviation IR-H66-001)",
+                               "and for the B-only artifact veto (declared deviation IR-H67-001)",
             },
             "S2_conditional_independence": {
                 "n_blocks": s2["n_blocks_all"],
@@ -166,7 +166,7 @@ def main() -> int:
                 "tests": s2["tests"],
                 "abandon_threshold": 0.60,
                 "allow_exchange": s2["allow_exchange"],
-                "reading": "the abandonment rule did NOT fire on H66's own measurement (0.2951 < 0.60), "
+                "reading": "the abandonment rule did NOT fire on H67's own measurement (0.2951 < 0.60), "
                            "which contradicts N-19 (0.7625 on the H61/H63 feature set) and agrees with "
                            "H62 (0.1757). The statistic is learner- and block-size-dependent, spanning "
                            "0.0078-0.7625 across rounds; it is not a stable property of 'the two views'.",
@@ -197,7 +197,7 @@ def main() -> int:
                 "why": "the shared gate sets canonical_pattern_unique=False if ANY prior fails to open; "
                        "the first pass included the 2 census-ineligible fixtures, so it reported False "
                        "while 0 priors were identical. Recomputed with them excluded and published "
-                       "(IR-H66-007, IR-H66-010).",
+                       "(IR-H67-007, IR-H67-010).",
                 "n_priors_checked": uni2["corpus"]["n_checked"],
                 "n_excluded": uni2["corpus"]["n_excluded"],
                 "excluded": uni2["corpus"]["excluded"],
@@ -221,7 +221,7 @@ def main() -> int:
                                   "0.8886 (informative under the gate's 0.95 threshold) but 0.9648 "
                                   "under a square 7x7 element, i.e. the classification that decides "
                                   "this round's lane verdict flips with the structuring element "
-                                  "(IR-H66-008). Under the shared gate as written the rule fires.",
+                                  "(IR-H67-008). Under the shared gate as written the rule fires.",
                 "support_overlap_vs_proximity_overlap": "max Jaccard with any single prior is 0.0138 "
                                                         "(853 of 24,907 pixels shared), yet 84.08 % of "
                                                         "the dots lie within 3 px of one prior's dots: "
@@ -313,34 +313,34 @@ def main() -> int:
             "wall_clock": "exceeded: the sandbox started cold (no cached feature stack, 3.9 GB RAM, "
                           "2 CPUs), the full 19-band stack and a 526-blob prior census had to be "
                           "restored and fetched, and five defects had to be fixed in the runner "
-                          "(IR-H66-002 sentinel contamination, JSON NaN in receipts, module "
+                          "(IR-H67-002 sentinel contamination, JSON NaN in receipts, module "
                           "shadowing, a false-positive degenerate-channel guard, and the "
                           "partially-filled in-quadrant AUC grid). Disclosed rather than smoothed.",
         },
         "declared_deviations": prereg.get("declared_deviations", []),
         "irregularities_found_this_round": [
-            "IR-H66-002 (severe, caught before publication): 3,061 in-domain cells carry the "
+            "IR-H67-002 (severe, caught before publication): 3,061 in-domain cells carry the "
             "float32 nodata sentinel -3.4028234663852886e+38 in 18 of 19 bands (3,073 in band 6). "
             "Transform.rank01 bins against lo = -3.4e38, which collapses every rank channel to a "
             "near-constant. Fixed by using the template's own intersection footprint "
             "(grid.footprint_from(training_features.tif, bands='all')); eligible fell from "
             "5,167,373 to 5,164,300.",
-            "IR-H66-003: three defensible footprints coexist (labels>=0 gives 5,167,373; band-12 "
+            "IR-H67-003: three defensible footprints coexist (labels>=0 gives 5,167,373; band-12 "
             "non-sentinel 5,165,852; all-19-band intersection 5,164,300). This round uses the "
             "intersection and says so.",
-            "IR-H66-004: two channels are legitimately zero-inflated (rank_b10, grad_b17: > 50 % of "
+            "IR-H67-004: two channels are legitimately zero-inflated (rank_b10, grad_b17: > 50 % of "
             "the footprint ties at the physical minimum). A blunt 'collapsed channel' guard reports "
             "them as failures; replaced with a degenerate test (< 10 distinct rank levels, or raw "
             "|value| > 1e30 inside the eligible set).",
-            "IR-H66-005: the independence statistic S2 is not a stable property of the two views - "
+            "IR-H67-005: the independence statistic S2 is not a stable property of the two views - "
             "0.0078 to 0.7625 across five rounds on the same data, driven by feature set, learner "
             "and block size. The ABANDON rule can therefore fire or not fire at will; it cannot be "
             "used as a go/no-go gate without fixing all three.",
         ],
         "board_algebra": {
             "evidence_class": "MEASURED on restored bytes; published scores are OWNER-REPORTED",
-            "receipt": "evidence/h66_board_algebra.json",
-            "script": "scripts/h66_board_algebra.py",
+            "receipt": "evidence/h67_board_algebra.json",
+            "script": "scripts/h67_board_algebra.py",
             "champion_ref_h33_2_b2": alg["files"]["ref_h33_2_b2"],
             "set_relations_re_measured": alg["set_relations"],
             "mass_vs_board_spearman": alg["mass_vs_board"],
@@ -349,7 +349,7 @@ def main() -> int:
         "reasoning_record": reas,
         "seed_population": {
             "evidence_class": "MEASURED",
-            "receipt": "evidence/h66_seed_composition.json",
+            "receipt": "evidence/h67_seed_composition.json",
             "unique_sites": seeds["unique_sites"], "evidence_sites": seeds["evidence_sites"],
             "legal_seeds": seeds["legal_seeds"], "blocks_1km": seeds["composition"]["blocks_1km"],
             "composition": seeds["composition"], "caveat": seeds["caveat"],
@@ -367,7 +367,7 @@ def main() -> int:
             "https://www.usgs.gov/3d-elevation-program (1 m DEM named as the missing lever)",
         ],
         "negative_result_statement": (
-            "H66-A is a negative result and is published as one. Thermal-upflow sites restricted to "
+            "H67-A is a negative result and is published as one. Thermal-upflow sites restricted to "
             ">= 300 m from mapped faults, extended along a structure-tensor strike and gated by an "
             "independent geophysical edge, do not localise catalogue faults better than uniform "
             "random on the shared hide-and-recover instrument. Together with N-20 (thermal "
@@ -375,13 +375,13 @@ def main() -> int:
             "survived), that is the third independent measurement against the thermal-spring family "
             "of hypotheses in this region."),
     }
-    out = EV / "h66_run_card.json"
+    out = EV / "h67_run_card.json"
     out.write_text(json.dumps(card, indent=1, allow_nan=False, default=str) + "\n")
     (ROOT / "docs" / "data").mkdir(parents=True, exist_ok=True)
-    (ROOT / "docs" / "data" / "h66_run_card.json").write_text(
+    (ROOT / "docs" / "data" / "h67_run_card.json").write_text(
         json.dumps(card, indent=1, allow_nan=False, default=str) + "\n")
     print(json.dumps({k: card[k] for k in ("verdict", "submission_identifiers")}, indent=1, default=str))
-    print(f"\nwrote {out.relative_to(ROOT)} and docs/data/h66_run_card.json")
+    print(f"\nwrote {out.relative_to(ROOT)} and docs/data/h67_run_card.json")
     return 0
 
 

@@ -1,12 +1,12 @@
-# 44 · H66 results and limits (rendered from the receipts by `scripts/publish_h66_site.py`)
+# 48 · H67 results and limits (rendered from the receipts by `scripts/publish_h67_site.py`)
 
 **Verdict: `NEGATIVE` — download for research, DO NOT SUBMIT, no weekly slot used.**
 
-Artefact `gems52-h66-thermal-upflow-corridor-24907px-20261009T050704Z.tif`, SHA-256 `14644198f1031e8250a284c86775c55b57d60d55195e815eac6f4d17b01395c6`, 76,217 bytes,
+Artefact `gems52-h67-thermal-upflow-corridor-24907px-20261009T050704Z.tif`, SHA-256 `14644198f1031e8250a284c86775c55b57d60d55195e815eac6f4d17b01395c6`, 76,217 bytes,
 24,907 emitted cells, values exactly {0, 1}, decoded-pixel SHA-256 `969bb11b7403d9c7506ad609084bcdfe6690993cd6dac459cf8de19a913d6d11`.
 Reproduced bit-identically by a second independent run.
-Pre-registration: `knowledge/43_hypotheses_H66_preregistered.md`, protocol SHA-256 `9fa87ab6ca463693…`,
-thresholds and declared deviations frozen in `registry/h66_preregistration.json`.
+Pre-registration: `knowledge/45_hypotheses_H67_preregistered.md`, protocol SHA-256 `9fa87ab6ca463693…`,
+thresholds and declared deviations frozen in `registry/h67_preregistration.json`.
 
 ## 1 · Preflight and footprint integrity
 
@@ -15,8 +15,8 @@ thresholds and declared deviations frozen in `registry/h66_preregistration.json`
 * cells: 12,279,160 total, 7,111,787 outside the organiser's domain,
   5,167,373 in domain, **5,164,300 eligible** after excluding
   3,073 in-domain cells that carry the float32 nodata sentinel in at
-  least one band (**IR-H66-002**, see §7).
-* Three defensible footprints still coexist (IR-H66-003): `labels >= 0` gives 5,167,373,
+  least one band (**IR-H67-002**, see §7).
+* Three defensible footprints still coexist (IR-H67-003): `labels >= 0` gives 5,167,373,
   band-12-non-sentinel 5,165,840, all-19-band intersection 5,164,300.
   This round uses the intersection.
 
@@ -39,7 +39,7 @@ block mean-squared-error Spearman 0.2951
 Spearman 0.0078. Maximum |correlation|
 **0.2951** against the abandonment threshold 0.60.
 
-That contradicts N-19 (0.7625 hide / 0.7107 tip, same data) and agrees with H62 (0.1757). **IR-H66-005:
+That contradicts N-19 (0.7625 hide / 0.7107 tip, same data) and agrees with H62 (0.1757). **IR-H67-005:
 the S2 statistic is not a stable property of "the two views"** — it spans 0.0078 to 0.7625 across five
 rounds depending on feature set, learner and block size. An ABANDON rule keyed to it can be made to
 fire or not fire at will, so it cannot serve as a go/no-go gate until all three are frozen together.
@@ -89,7 +89,7 @@ said together, because either one alone would mislead:
    control > 0 with the 95 % CI excluding 0"; it is -0.041191
    with CI [-0.047743, -0.034102]. Not promoted.
 2. The instrument cannot score this hypothesis class in either direction. Its truth class *is* the
-   mapped catalogue, while H66-A is constructed to lie ≥ 200 m away from every mapped trace; and the
+   mapped catalogue, while H67-A is constructed to lie ≥ 200 m away from every mapped trace; and the
    same instrument ranks the organiser-scored 0.2778 champion at 0.00479, below a random placeholder
    (IR-H60-003; Spearman(board, instrument) = −0.099, n = 13, p = 0.748). Random beating single_B in
    this very table is the same fact seen from inside the round.
@@ -132,11 +132,11 @@ artefacts are **not proven absent**.
 For a fully novel field at S = 24,907 with credit density ρ ~ U[0.0279, 0.1387] and |G| = 14,088.7:
 DTI = ρS/(0.2S + 0.8|G|) ∈ **[0.0428, 0.2126]**. At |G| = 18,000 → [0.0359, 0.1782]; at |G| = 27,400
 → [0.0258, 0.1284]. Even the optimistic end is below the 0.2778 champion. This was stated **before**
-the holdout ran, in `knowledge/43` §1, and the measured holdout is worse than the projection.
+the holdout ran, in `knowledge/45` §1, and the measured holdout is worse than the projection.
 
 ## 6 · Why the lane cannot reach 0.3195 — the arithmetic, not the mood
 
-`knowledge/45` derives it from bytes re-measured this session (`scripts/h66_board_algebra.py`):
+`knowledge/49` derives it from bytes re-measured this session (`scripts/h67_board_algebra.py`):
 
 * `h33-2-b2` (0.2778, 37,654 px) is a **strict subset** of the 0.2600 file (44,090 px); the 6,436
   deleted pixels all lie 100–200 m from a mapped trace, and deleting them raised the score 6.8 %.
@@ -156,21 +156,21 @@ measurements in this repository say it is not available at 100 m.
 
 ## 7 · Irregularities found this round
 
-* **IR-H66-002 (severe, caught before publication).** 3,073
+* **IR-H67-002 (severe, caught before publication).** 3,073
   in-domain cells carry the nodata sentinel −3.4028234663852886e+38 in at least one band (3,061 cells
   across 18 of 19 bands; 3,073 in band 6). `transform.rank01` bins against `lo = −3.4e38`, which
   collapses every rank channel to a near-constant and would have silently produced a
   garbage-but-format-valid submission. Fixed with the template's own
   `grid.footprint_from(bands='all')`.
-* **IR-H66-003.** Three defensible footprints coexist (5,167,373 / 5,165,840 /
+* **IR-H67-003.** Three defensible footprints coexist (5,167,373 / 5,165,840 /
   5,164,300). Every number in this round is stated against the intersection.
-* **IR-H66-004.** Two channels are legitimately zero-inflated (`rank_b10`, `grad_b17`: more than half
+* **IR-H67-004.** Two channels are legitimately zero-inflated (`rank_b10`, `grad_b17`: more than half
   the footprint ties at the physical minimum). A blunt "collapsed channel" guard reports them as
   failures; replaced with a degenerate test (< 10 distinct rank levels, or raw |value| > 1e30 inside
   the eligible set) plus an informational zero-inflation list.
-* **IR-H66-005.** The S2 independence statistic spans 0.0078–0.7625 across five rounds on the same
+* **IR-H67-005.** The S2 independence statistic spans 0.0078–0.7625 across five rounds on the same
   data (§2). It cannot gate anything until feature set, learner and block size are frozen together.
-* **IR-H66-006.** `sample_submission.tif` declares a **NaN** nodata value, so any receipt writer that
+* **IR-H67-006.** `sample_submission.tif` declares a **NaN** nodata value, so any receipt writer that
   serialises it verbatim produces invalid JSON. Handled by an explicit sanitizer and a
   `nodata_declared_is_nan` field; worth fixing once in the shared template.
 
@@ -180,8 +180,8 @@ measurements in this repository say it is not available at 100 m.
   Prevalence mismatch inflates every arm's denominator effect and is the reason absolute values are
   not comparable across rounds.
 * The lane reports are computed against the registry census available on disk at build time.
-* No organiser receipt exists for any H66 number. Nothing here is ORGANIZER-CONFIRMED.
+* No organiser receipt exists for any H67 number. Nothing here is ORGANIZER-CONFIRMED.
 * The declared learner is `LogisticRegression(max_iter=800, C=1.0, lbfgs)` on rank channels; the
-  splitter is `label-blind-quadrants-v2` with an 80 px buffer. H66's `single_B` is therefore **not**
+  splitter is `label-blind-quadrants-v2` with an 80 px buffer. H67's `single_B` is therefore **not**
   comparable to H64's stored 0.174517 — a declared difference, not a control failure (H64's cached
   fold predictions no longer exist in this checkout, so its runner cannot be re-executed).

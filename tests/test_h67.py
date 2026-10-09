@@ -1,6 +1,6 @@
-"""Regression tests for the H66 round.
+"""Regression tests for the H67 round.
 
-Each test names the defect it would have caught. H66 hit six of them in one session, and five were
+Each test names the defect it would have caught. H67 hit six of them in one session, and five were
 caught only because a receipt disagreed with a number that looked plausible; those are the assertions
 below. Everything here reads receipts and pinned bytes, so the suite stays fast and deterministic.
 """
@@ -27,12 +27,12 @@ DATA = ROOT / "data"
 
 
 def load(name):
-    return json.loads((EV / f"h66_{name}.json").read_text())
+    return json.loads((EV / f"h67_{name}.json").read_text())
 
 
 def raster():
-    tifs = sorted(SUB.glob("gems52-h66-*.tif"))
-    assert len(tifs) == 1, f"expected exactly one H66 raster, found {len(tifs)}"
+    tifs = sorted(SUB.glob("gems52-h67-*.tif"))
+    assert len(tifs) == 1, f"expected exactly one H67 raster, found {len(tifs)}"
     return tifs[0]
 
 
@@ -44,18 +44,18 @@ def card():
 def test_protocol_hash_is_frozen_and_still_matches():
     """Would have caught: editing the pre-registered protocol after registering its hash.
 
-    run_h66.py verifies this at startup and refuses to run; the test makes the refusal permanent.
+    run_h67.py verifies this at startup and refuses to run; the test makes the refusal permanent.
     """
-    reg = json.loads((ROOT / "registry" / "h66_preregistration.json").read_text())
+    reg = json.loads((ROOT / "registry" / "h67_preregistration.json").read_text())
     proto = ROOT / reg["hypothesis_document"]
     assert proto.exists()
     assert hashlib.sha256(proto.read_bytes()).hexdigest() == reg["hypothesis_sha256"]
     assert card()["preregistration"]["hash_verified_at_runtime"] is True
 
 
-# --------------------------------------------------------------------- IR-H66-002
+# --------------------------------------------------------------------- IR-H67-002
 def test_in_domain_nodata_sentinels_exist_and_are_excluded_from_eligible():
-    """Would have caught IR-H66-002: rank channels binned against -3.4e38.
+    """Would have caught IR-H67-002: rank channels binned against -3.4e38.
 
     The defect was invisible on disk - the file is format-valid and the channels look finite - and it
     would have published a garbage-but-valid submission. Two independent halves are pinned: the
@@ -75,7 +75,7 @@ def test_in_domain_nodata_sentinels_exist_and_are_excluded_from_eligible():
 
 
 def test_no_channel_is_degenerate_and_the_zero_inflated_ones_are_named():
-    """Would have caught IR-H66-004: a blunt 'collapsed channel' guard failing legitimate layers.
+    """Would have caught IR-H67-004: a blunt 'collapsed channel' guard failing legitimate layers.
 
     `rank_b10` and `grad_b17` have more than half the footprint tied at the physical minimum. That is
     a property of the data, not a bug, and the guard must say so instead of failing.
@@ -105,12 +105,12 @@ def test_s1_sufficiency_failed_and_no_pseudo_labels_were_used():
     assert s1["S1_pass"] is False
     assert s1["mean_view_A_oof_auc"] < 0.60 or s1["min_view_A_oof_auc"] < 0.55
     assert len(s1["view_A_oof_auc"]) == len(s1["view_B_oof_auc"]) == 4
-    reg = json.loads((ROOT / "registry" / "h66_preregistration.json").read_text())
-    assert any(str(d).startswith("IR-H66-001") for d in reg["declared_deviations"])
+    reg = json.loads((ROOT / "registry" / "h67_preregistration.json").read_text())
+    assert any(str(d).startswith("IR-H67-001") for d in reg["declared_deviations"])
 
 
 def test_s2_is_recorded_with_its_block_count_and_not_only_its_verdict():
-    """Would have caught IR-H66-005: reporting a single independence number without its sample.
+    """Would have caught IR-H67-005: reporting a single independence number without its sample.
 
     Across five rounds this statistic spans 0.0078-0.7625 on the same data, so the block count and both
     tests have to travel with it or it means nothing.
@@ -262,7 +262,7 @@ def test_every_emitted_pixel_carries_a_written_interpretation_and_a_falsifier():
     assert reas["rows"] == card()["raster"]["emitted_pixels"]
     assert reas["a_only_rows"] >= 0
     import csv
-    path = SUB / "gems52-h66-a-only-and-segment-reasoning.csv"
+    path = SUB / "gems52-h67-a-only-and-segment-reasoning.csv"
     assert path.exists()
     with path.open() as fh:
         rows = list(csv.DictReader(fh))

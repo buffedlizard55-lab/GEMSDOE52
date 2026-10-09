@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""H66 geological reasoning record — reuses the runner's own channel/strike/corroboration code.
+"""H67 geological reasoning record — reuses the runner's own channel/strike/corroboration code.
 
 The brief requires written geological reasoning for **every A-only candidate**, because Phase-2
-reviewers verify faults.  This script imports ``scripts/run_h66.py`` (it does not re-implement any
+reviewers verify faults.  This script imports ``scripts/run_h67.py`` (it does not re-implement any
 operator) and writes one row per emitted pixel plus one row per corridor segment, with the measured
 context a reviewer needs and an explicit falsifier for each interpretation.
 
@@ -24,12 +24,12 @@ from scipy import ndimage as ndi
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-spec = importlib.util.spec_from_file_location("run_h66", ROOT / "scripts" / "run_h66.py")
+spec = importlib.util.spec_from_file_location("run_h67", ROOT / "scripts" / "run_h67.py")
 R = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(R)
 
 DATA = ROOT / "data"
-OUT_CSV = ROOT / "submission" / "gems52-h66-a-only-and-segment-reasoning.csv"
+OUT_CSV = ROOT / "submission" / "gems52-h67-a-only-and-segment-reasoning.csv"
 
 
 def main(tif: str, out: str | None = None) -> int:
@@ -38,9 +38,9 @@ def main(tif: str, out: str | None = None) -> int:
     with rasterio.open(tif_p) as ds:
         emitted = ds.read(1).astype(np.float32) > 0
         tr = ds.transform
-    # R.preflight() rewrites evidence/h66_preflight.json; keep the pipeline's original bytes so a
+    # R.preflight() rewrites evidence/h67_preflight.json; keep the pipeline's original bytes so a
     # derivative script cannot silently re-stamp the round's integrity receipt.
-    pre_p = ROOT / "evidence" / "h66_preflight.json"
+    pre_p = ROOT / "evidence" / "h67_preflight.json"
     pre_before = pre_p.read_bytes() if pre_p.exists() else None
     pf = R.preflight()
     if pre_before is not None:
@@ -192,7 +192,7 @@ def main(tif: str, out: str | None = None) -> int:
                         "A_only rows are the brief's required A-only geological reasoning",
                    channel_sanity=chsan["zero_inflated_channels"],
                    generated_utc=datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"))
-    (ROOT / "evidence" / "h66_reasoning.json").write_text(json.dumps(summary, indent=1) + "\n")
+    (ROOT / "evidence" / "h67_reasoning.json").write_text(json.dumps(summary, indent=1) + "\n")
     print(json.dumps(summary, indent=1))
     return 0
 

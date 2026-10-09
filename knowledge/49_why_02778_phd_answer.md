@@ -1,12 +1,12 @@
-# 45 · Why `h33-2-b2` scored 0.2778, and what it would actually take to beat 0.3195 / 0.3774
+# 49 · Why `h33-2-b2` scored 0.2778, and what it would actually take to beat 0.3195 / 0.3774
 
-Written 2026-10-09 (round H66) in answer to the brief's question: *"Why and how did this get the
+Written 2026-10-09 (round H67) in answer to the brief's question: *"Why and how did this get the
 highest score and are we able to generate a submission that scores higher than 0.2778?"*
 
 Every number in §§1–4 was **re-measured in this session** from bytes restored through
 `scripts/restore_data.py` and verified against `registry/data_manifest.json` (23/23 SHA-256 pins,
-0 mismatches — `evidence/h66_preflight.json`). The reproducing script is
-**`scripts/h66_board_algebra.py`**; its receipt is **`evidence/h66_board_algebra.json`**. Nothing
+0 mismatches — `evidence/h67_preflight.json`). The reproducing script is
+**`scripts/h67_board_algebra.py`**; its receipt is **`evidence/h67_board_algebra.json`**. Nothing
 here is quoted from a sibling website. Published scores are **OWNER-REPORTED** (the board prints a
 team name and a number, never a filename), so every file↔score pairing carries that caveat.
 Nothing in this document is ORGANIZER-CONFIRMED.
@@ -122,7 +122,7 @@ Required credit density `ρ = DTI_target·(0.2 + 0.8|G|/S)` at |G| = 14,088.7:
 | 100,000 | 0.0869 | **0.0999** | 0.1180 |
 | 121,131 | 0.0814 | **0.0936** | 0.1106 |
 
-(all four columns are read straight out of `evidence/h66_board_algebra.json` →
+(all four columns are read straight out of `evidence/h67_board_algebra.json` →
 `required_rho.target_*_G_14088.7`; the 0.464 column is omitted because `knowledge/01`'s 0.464
 "ceiling" rests on a |G| bracket that `knowledge/27` §3 superseded.)
 
@@ -179,9 +179,9 @@ marginally better public-chunk DTI and no reviewable rationale. That is why this
 A-only reasoning record per candidate even in rounds it does not promote, and it is where a
 small team can compete with a large one.
 
-## 6. What this means for the H66 candidate
+## 6. What this means for the H67 candidate
 
-`|G|` and the algebra above are the reason the H66 verdict is what it is. H66-A is a wholly novel
+`|G|` and the algebra above are the reason the H67 verdict is what it is. H67-A is a wholly novel
 emission (the parallel-run lane rule forbids re-emitting `P1`: any subset of `P1` has 100 % of its
 dots within 3 px of an existing registry raster, so it is a lane duplicate by construction). For a
 novel field, §4 gives the expectation directly: at S = 24,907 and ρ ~ U[0.0279, 0.1387],
@@ -195,8 +195,8 @@ DTI = ρS / (0.2S + 0.8|G|),  S = 24,907:
 
 **A fully novel file is expected to score below the 0.2778 champion, and the shortfall is the price
 of the uniqueness rule, not a defect of the geology.** That is stated before the holdout, in the
-frozen protocol (`knowledge/43` §1 rank 1, "Expected gain, and the honest bracket"), and the measured
-holdout (`evidence/h66_holdout.json`) is worse than that again: H66-A is significantly below uniform
+frozen protocol (`knowledge/45` §1 rank 1, "Expected gain, and the honest bracket"), and the measured
+holdout (`evidence/h67_holdout.json`) is worse than that again: H67-A is significantly below uniform
 random on the shared instrument. Both facts point the same way — **do not spend a weekly slot on it.**
 
 ## 7. Ranked list of what would move the number, by measured evidence

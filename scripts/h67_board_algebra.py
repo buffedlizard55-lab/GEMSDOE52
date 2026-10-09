@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""H66 board algebra: re-derived from restored bytes, not quoted from any prior document.
+"""H67 board algebra: re-derived from restored bytes, not quoted from any prior document.
 
 Answers, on measurements made in this session:
 
@@ -9,7 +9,7 @@ Answers, on measurements made in this session:
 4. The rho required to reach any target score at any budget - in particular 0.3195 and 0.3774.
 
 Everything is computed from ``data/`` files whose SHA-256 matches registry/data_manifest.json
-(checked by scripts/run_h66.py preflight).  Published scores are OWNER-REPORTED (the board prints no
+(checked by scripts/run_h67.py preflight).  Published scores are OWNER-REPORTED (the board prints no
 filename); they are never labelled ORGANIZER-CONFIRMED here.
 """
 from __future__ import annotations
@@ -108,7 +108,7 @@ def main() -> int:
                                 p=round(float(sr.pvalue), 6),
                                 reading="board score is strictly decreasing in emitted mass across the "
                                         "five owner-reported off-catalogue files of this family")
-    p = ROOT / "evidence" / "h66_board_algebra.json"
+    p = ROOT / "evidence" / "h67_board_algebra.json"
     p.write_text(json.dumps(out, indent=1, allow_nan=False) + "\n")
     print(json.dumps({k: out[k] for k in ("files", "set_relations", "mass_vs_board")}, indent=1))
     print("\nrequired rho to reach a target score (G = 14,088.7):",

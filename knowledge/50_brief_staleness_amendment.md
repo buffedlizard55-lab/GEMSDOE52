@@ -1,4 +1,4 @@
-# 46 · Amendment: the repository's verbatim copy of the user brief is stale (2026-10-09, H66)
+# 50 · Amendment: the repository's verbatim copy of the user brief is stale (2026-10-09, H67)
 
 **Status: flagged, not repaired.** This document records a discrepancy between the prompt this round was
 run against and the "verbatim" copy the repository keeps, and says exactly what was and was not done
@@ -16,11 +16,11 @@ rounds.
 
 ## 2 · What this round's prompt additionally contains
 
-The H66 prompt's per-repository score list is longer than the embedded copy. Six identifiers that
-appear in the H66 prompt were searched for across every `*.md`, `*.json` and `*.py` file in this
+The H67 prompt's per-repository score list is longer than the embedded copy. Six identifiers that
+appear in the H67 prompt were searched for across every `*.md`, `*.json` and `*.py` file in this
 checkout (excluding `.git`) and returned **zero hits anywhere in the repository**:
 
-| identifier in the H66 prompt | hits in README's embedded brief | hits anywhere in the repo |
+| identifier in the H67 prompt | hits in README's embedded brief | hits anywhere in the repo |
 |---|---|---|
 | `h8-tiprelay-ridgeconcord-pr2-n80000-20261009-49bec522-zeros` | 0 | 0 |
 | `h54c-manifest-edge-20261009T025732Z-73454bc5` | 0 | 0 |
@@ -34,12 +34,12 @@ For contrast, the identifiers that *are* in the embedded copy were re-checked an
 `gate_ortho_w0.25-40k` (1), `h60-lidarscarp-s2p0` (1), `h53-twostage` (1).
 
 The embedded copy's `GEMSDOE48` entry is an empty score line (`:`), and its list ends at
-`54GEMSDOE`; the H66 prompt carries a filename for `GEMSDOE48` and continues to `57GEMSDOE`.
+`54GEMSDOE`; the H67 prompt carries a filename for `GEMSDOE48` and continues to `57GEMSDOE`.
 
 **Reading.** These are the artefacts of *parallel* sessions running from the same prompt (the brief's
 own PARALLEL-RUN PROTOCOL says this session is one of several). The user's score list is updated as
 those sessions submit, so the embedded copy is simply a snapshot taken earlier on the same day. This
-is staleness, not corruption, and it does not change any H66 measurement.
+is staleness, not corruption, and it does not change any H67 measurement.
 
 ## 3 · What was deliberately NOT done
 
@@ -51,7 +51,7 @@ mechanical: paste the current prompt into the fenced block in `README.md` and in
 `knowledge/36`, then re-run the byte-identity check in §1.
 
 Two claims in the brief *were* independently re-verified this session, and both are corrected in the
-H66 README block with links:
+H67 README block with links:
 
 1. **The leaderboard cannot be fetched.** `https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/`
    is JavaScript-rendered and returns only "Loading…" to a page fetch, so no score in the brief's list
@@ -70,12 +70,12 @@ H66 README block with links:
 
 Consequence, and it is the one place where the amendment changes behaviour: a file whose every emitted
 cluster carries written, falsifiable geological reasoning has prize value in round two that its
-HOLDOUT-DTI does not express. That is why H66 ships a reasoning row per emitted pixel
-(`submission/gems52-h66-a-only-and-segment-reasoning.csv`, 24,907 rows) even though the round is
+HOLDOUT-DTI does not express. That is why H67 ships a reasoning row per emitted pixel
+(`submission/gems52-h67-a-only-and-segment-reasoning.csv`, 24,907 rows) even though the round is
 negative and the file must not be submitted.
 
 ## 4 · Logged as
 
-`registry/irregularities.json` → **IR-H66-011** (low severity, open). Disposition: the next session
+`registry/irregularities.json` → **IR-H67-011** (low severity, open). Disposition: the next session
 re-embeds the current prompt verbatim and re-runs the §1 byte-identity check; until then the embedded
 copy is treated as a snapshot of 2026-10-09 that is missing at least six later entries.

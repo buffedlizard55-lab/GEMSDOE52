@@ -26,7 +26,7 @@
  "footprint": "gems52.grid.footprint_from(training_features.tif, bands=\"all\") AND labels>=0 (the same sentinel-aware eligible the pipeline uses)",
  "eligible_cells": 5164300,
  "cross_check": {
-  "pipeline_receipt": "evidence/h66_build.json",
+  "pipeline_receipt": "evidence/h67_build.json",
   "pipeline_legal_seeds": 952,
   "pipeline_blocks_1km": 592,
   "first_attempt_used_the_sample_footprint_and_over_counted_by_8": true

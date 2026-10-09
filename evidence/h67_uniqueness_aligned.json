@@ -1,9 +1,9 @@
 {
  "generated_utc": "2026-10-09T05:48:05Z",
  "evidence_class": "MEASURED; uniqueness/lane diagnostic, not a score",
- "why_this_exists": "gates.uniqueness_report reports canonical_pattern_unique=False if any prior fails to open. The round's first pass included the 2 census-ineligible fixtures, so the flag was False while 0 priors were identical (IR-H66-007, IR-H66-010). This receipt separates the two.",
+ "why_this_exists": "gates.uniqueness_report reports canonical_pattern_unique=False if any prior fails to open. The round's first pass included the 2 census-ineligible fixtures, so the flag was False while 0 priors were identical (IR-H67-007, IR-H67-010). This receipt separates the two.",
  "candidate": {
-  "file": "gems52-h66-thermal-upflow-corridor-24907px-20261009T050704Z.tif",
+  "file": "gems52-h67-thermal-upflow-corridor-24907px-20261009T050704Z.tif",
   "sha256": "14644198f1031e8250a284c86775c55b57d60d55195e815eac6f4d17b01395c6",
   "decoded_sha256": "969bb11b7403d9c7506ad609084bcdfe6690993cd6dac459cf8de19a913d6d11",
   "emitted": 24907

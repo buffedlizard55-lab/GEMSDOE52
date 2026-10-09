@@ -33,7 +33,7 @@
  "cells_feature_finite": 5165840,
  "eligible": 5164300,
  "in_domain_nodata_sentinel_cells": 3073,
- "sentinel_policy": "gems52.grid.footprint_from(bands='all'): in-domain cells carrying the -3.4028234663852886e+38 nodata sentinel in any band are excluded from eligible, so transform.rank01 can never bin against the sentinel (IR-H66-002)",
+ "sentinel_policy": "gems52.grid.footprint_from(bands='all'): in-domain cells carrying the -3.4028234663852886e+38 nodata sentinel in any band are excluded from eligible, so transform.rank01 can never bin against the sentinel (IR-H67-002)",
  "catalogue_px": 60988,
  "sample_submission_ones": 60988,
  "sample_equals_catalogue": true,

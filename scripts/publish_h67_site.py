@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Render the H66 pages, downloads and index banners from the receipts. Nothing is typed by hand.
+"""Render the H67 pages, downloads and index banners from the receipts. Nothing is typed by hand.
 
-Every number written into HTML here is read from ``evidence/h66_*.json`` or from the submission
+Every number written into HTML here is read from ``evidence/h67_*.json`` or from the submission
 sidecar, so a page cannot disagree with the evidence it cites. This script changes no verdict: it
 reports the one the run card already holds (download for research / do not submit).
 
-Run after ``scripts/run_h66.py`` and ``scripts/h66_run_card.py``:
-    .venv/bin/python scripts/publish_h66_site.py
+Run after ``scripts/run_h67.py`` and ``scripts/h67_run_card.py``:
+    .venv/bin/python scripts/publish_h67_site.py
 """
 from __future__ import annotations
 
@@ -44,25 +44,25 @@ HEAD = ('<!doctype html><html lang="en"><head><meta charset="utf-8">'
         '<link rel="stylesheet" href="assets/ctd5.css"></head><body>'
         '<a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation">'
         '<a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>'
-        '<a href="index.html">Overview</a><a href="h66.html">H66 run &amp; evidence</a>'
-        '<a href="h66-executive-summary.html">Submission guide</a>'
+        '<a href="index.html">Overview</a><a href="h67.html">H67 run &amp; evidence</a>'
+        '<a href="h67-executive-summary.html">Submission guide</a>'
         '<a href="h64.html">H64 (previous)</a><a href="downloads/index.html">Archive</a>'
         '</nav></header><main id="main">')
 TAIL = "</main></body></html>\n"
 
 
 def main() -> int:
-    card = load("h66_run_card.json")
-    pre = load("h66_preflight.json")
-    chan = load("h66_channels.json")
-    s1 = load("h66_s1_sufficiency.json")
-    s2 = load("h66_s2_independence.json")
-    can = load("h66_canary.json")
-    build = load("h66_build.json")
-    ho = load("h66_holdout.json")
-    rel = load("h66_release_gates.json")
-    alg = load("h66_board_algebra.json")
-    reas = load("h66_reasoning.json")
+    card = load("h67_run_card.json")
+    pre = load("h67_preflight.json")
+    chan = load("h67_channels.json")
+    s1 = load("h67_s1_sufficiency.json")
+    s2 = load("h67_s2_independence.json")
+    can = load("h67_canary.json")
+    build = load("h67_build.json")
+    ho = load("h67_holdout.json")
+    rel = load("h67_release_gates.json")
+    alg = load("h67_board_algebra.json")
+    reas = load("h67_reasoning.json")
 
     raster = card["raster"]
     stem = Path(raster["file"]).stem
@@ -79,14 +79,14 @@ def main() -> int:
 
     # ------------------------------------------------------------------ files the site serves
     DOWN.mkdir(parents=True, exist_ok=True)
-    shutil.copy(SUBM / f"{stem}.tif", DOWN / "h66-candidate.tif")
-    shutil.copy(SUBM / f"{stem}.zip", DOWN / "h66-candidate.zip")
-    csv_src = SUBM / "gems52-h66-a-only-and-segment-reasoning.csv"
+    shutil.copy(SUBM / f"{stem}.tif", DOWN / "h67-candidate.tif")
+    shutil.copy(SUBM / f"{stem}.zip", DOWN / "h67-candidate.zip")
+    csv_src = SUBM / "gems52-h67-a-only-and-segment-reasoning.csv"
     if csv_src.exists():
-        shutil.copy(csv_src, DOWN / "h66-a-only-and-segment-reasoning.csv")
+        shutil.copy(csv_src, DOWN / "h67-a-only-and-segment-reasoning.csv")
     (DOCS / "data").mkdir(exist_ok=True)
-    shutil.copy(EVID / "h66_run_card.json", DOCS / "data/h66_run_card.json")
-    (SUBM / "H66_LATEST.txt").write_text(f"{stem}.tif\n# pointer for the site; NOT an upload approval\n")
+    shutil.copy(EVID / "h67_run_card.json", DOCS / "data/h67_run_card.json")
+    (SUBM / "H67_LATEST.txt").write_text(f"{stem}.tif\n# pointer for the site; NOT an upload approval\n")
 
     # ------------------------------------------------------------------ gate table
     gates = [
@@ -164,9 +164,9 @@ def main() -> int:
 
     hero = f"""
 <section class="hero"><div>
-<div class="eyebrow">DOE GEMS / H66 · thermal-upflow corridor (co-training lane, third channel)</div>
+<div class="eyebrow">DOE GEMS / H67 · thermal-upflow corridor (co-training lane, third channel)</div>
 <h1>A new GeoTIFF.<br>The verdict is NO.</h1>
-<p class="lead">H66-A emits strike-aligned corridors outward from {fmt_int(build['seeds']['legal_seeds'])}
+<p class="lead">H67-A emits strike-aligned corridors outward from {fmt_int(build['seeds']['legal_seeds'])}
 thermal-upflow sites that all lie at least 300 m — beyond the whole scoring kernel — from the nearest
 mapped fault. It is new inference on decoded pixels, every gate below is measured, and the
 submit decision is already made: <b>do not submit</b>.</p>
@@ -177,13 +177,13 @@ HOLDOUT-DTI {sc['tuc']['dti']:.6f} {ci(sc['tuc']['ci95'])} against random
 Do not upload research archives. Do not spend a weekly slot. Competition slots used:
 {verdict['submission_slots_used']}.</p></div>
 <div class="actions">
-<a class="button" href="downloads/h66-candidate.tif" download>Download the H66 GeoTIFF ↓ (research only)</a>
-<a class="button secondary" href="downloads/h66-candidate.zip" download>Single-TIFF ZIP</a>
-<a class="button secondary" href="downloads/h66-a-only-and-segment-reasoning.csv" download>Geological reasoning CSV</a>
+<a class="button" href="downloads/h67-candidate.tif" download>Download the H67 GeoTIFF ↓ (research only)</a>
+<a class="button secondary" href="downloads/h67-candidate.zip" download>Single-TIFF ZIP</a>
+<a class="button secondary" href="downloads/h67-a-only-and-segment-reasoning.csv" download>Geological reasoning CSV</a>
 </div>
 <p class="fileline">{fileline}</p>
-<p class="small"><a href="h66-executive-summary.html">Exactly what may be uploaded, and how →</a> ·
-<a href="h66.html">Method, evidence and limits →</a> ·
+<p class="small"><a href="h67-executive-summary.html">Exactly what may be uploaded, and how →</a> ·
+<a href="h67.html">Method, evidence and limits →</a> ·
 <a href="h64.html">Previous round (H64) landing page</a></p>
 </div>
 <aside class="panel" aria-label="Submission readiness"><div class="label">Readiness / measured, not promised</div>
@@ -200,12 +200,12 @@ Do not upload research archives. Do not spend a weekly slot. Competition slots u
 <div class="status-line"><span>Verdict</span><span class="bad">NEGATIVE — DO NOT SUBMIT</span></div>
 <p class="fine">A format-valid file is not an approved competition entry. Promotion to a weekly slot is a
 separate selector step, and this round does not recommend it.</p>
-<a class="small" href="data/h66_run_card.json">Inspect the complete JSON run card ↗</a></aside></section>
+<a class="small" href="data/h67_run_card.json">Inspect the complete JSON run card ↗</a></aside></section>
 <hr class="divider">"""
 
     body = f"""
 <div class="section-head"><h2>What the holdout says (HOLDOUT-DTI — not a leaderboard score)</h2>
-<a href="h66.html#holdout">Method and limitations →</a></div>
+<a href="h67.html#holdout">Method and limitations →</a></div>
 <p class="small"><b>HOLDOUT-DTI</b> · evaluator <code>{ho['evaluator_version']}</code> ·
 {fmt_int(ho['withheld_positives_total'])} withheld positive pixels · 4 whole-segment hide-and-recover
 folds · catalogue-derived quantities recomputed per fold from the VISIBLE catalogue only · visible
@@ -225,7 +225,7 @@ same budget in the same fold.</p>
 </tr></thead><tbody>{fold_rows}</tbody></table></div>
 <hr class="divider">
 <div class="section-head"><h2>Why 0.2778 won, and what beating 0.3195 would require</h2>
-<a href="h66.html#algebra">Board algebra →</a></div>
+<a href="h67.html#algebra">Board algebra →</a></div>
 <div class="cards">
 <section class="card"><div class="eyebrow">01 / re-measured on the bytes</div><h3>The 100–200 m ring</h3>
 <span class="num">{fmt_int(alg['set_relations']['d2_8__minus__ref_h33_2_b2']['px'])} px removed → +6.8 %</span>
@@ -247,7 +247,7 @@ N-22).</p></section>
 <div class="table-wrap"><table><thead><tr><th>budget S (px)</th><th>ρ needed for 0.2778</th>
 <th>ρ needed for 0.3195</th><th>ρ needed for 0.3774</th></tr></thead><tbody>{rho_rows}</tbody></table></div>
 <p class="small">Required ρ = target · (0.2 + 0.8·|G|/S) at |G| = 14,088.7, from
-<code>evidence/h66_board_algebra.json</code>. Published scores are OWNER-REPORTED — the leaderboard
+<code>evidence/h67_board_algebra.json</code>. Published scores are OWNER-REPORTED — the leaderboard
 prints a team name and a number, never a filename, so no pairing here is ORGANIZER-CONFIRMED.</p>
 <hr class="divider">
 <div class="section-head"><h2>The metric's own marginal rule, applied to this family's measured curve</h2></div>
@@ -273,7 +273,7 @@ falsifier ({fmt_int(reas['rows'])} rows in the CSV).</p></section>
 {s2['tests']['negative_false_positive_rate']['spearman']:.4f} (block false-positive rate). The
 abandonment rule did not fire — yet S1 failed anyway, so no exchange was licensed. Across rounds this
 statistic spans 0.0078 to 0.7625 on the same data: it is not a stable property of the views.</p></section>
-<section class="card"><div class="eyebrow">sentinels</div><h3>IR-H66-002</h3>
+<section class="card"><div class="eyebrow">sentinels</div><h3>IR-H67-002</h3>
 <span class="num">{fmt_int(pre['in_domain_nodata_sentinel_cells'])} in-domain cells</span>
 <p>{fmt_int(pre['in_domain_nodata_sentinel_cells'])} cells inside the organiser's domain carry the
 float32 nodata sentinel in at least one band. Ranking against −3.4e38 would have collapsed every
@@ -284,27 +284,27 @@ channel. Fixed with the template's own intersection footprint: eligible
 <section class="prose"><h2 id="verdict">Verdict, in one paragraph</h2>
 <p>{esc(verdict['reasons'][0])} {esc(verdict['reasons'][1])} The file is therefore published as a
 research artefact: <b>download yes, submit no</b>. Promotion is a separate selector step within the
-weekly cap (brief clause 9) and this round recommends against spending a slot on H66-A.</p>
+weekly cap (brief clause 9) and this round recommends against spending a slot on H67-A.</p>
 <h2>Links for manual review</h2><ul>
 {''.join(f'<li><a href="{esc(u.split(" ")[0])}">{esc(u.split(" ")[0])}</a> — {esc(u.split(" ", 1)[1])}</li>' for u in card['links_for_manual_review'])}
 </ul></section>
 """
 
-    (DOCS / "h66.html").write_text(HEAD + hero + body + TAIL)
+    (DOCS / "h67.html").write_text(HEAD + hero + body + TAIL)
 
     exec_html = HEAD + f"""
-<div class="notice" role="note"><strong>DO NOT UPLOAD THIS FILE.</strong> H66-A is a negative result.
+<div class="notice" role="note"><strong>DO NOT UPLOAD THIS FILE.</strong> H67-A is a negative result.
 The exact steps below are written so that a later selector can act on them; they are not an approval.
 Do not upload research archives to the competition portal.</div>
 <section class="hero"><div>
-<div class="eyebrow">H66 · executive summary and exact submission steps</div>
+<div class="eyebrow">H67 · executive summary and exact submission steps</div>
 <h1>One file, one verdict,<br>four steps you should not take today.</h1>
 <p class="lead">The file is format-valid and unique on decoded pixels. It is also significantly worse
 than uniform random on the shared hide-and-recover instrument. Both facts are measured; neither is a
 leaderboard score.</p>
-<div class="actions"><a class="button" href="downloads/h66-candidate.tif" download>Download the H66 GeoTIFF ↓</a>
-<a class="button secondary" href="downloads/h66-candidate.zip" download>Single-TIFF ZIP</a>
-<a class="button secondary" href="data/h66_run_card.json" download>JSON run card</a></div>
+<div class="actions"><a class="button" href="downloads/h67-candidate.tif" download>Download the H67 GeoTIFF ↓</a>
+<a class="button secondary" href="downloads/h67-candidate.zip" download>Single-TIFF ZIP</a>
+<a class="button secondary" href="data/h67_run_card.json" download>JSON run card</a></div>
 <p class="fileline">{fileline}</p></div>
 <aside class="panel"><div class="label">Identifiers, paste-ready</div>
 <p class="small"><b>Name ({len(sub['submission_name'])} characters):</b><br>
@@ -333,7 +333,7 @@ footprint of {fmt_int(pre['eligible'])} cells.</li>
 <h2>Gate table</h2>
 <div class="table-wrap"><table><thead><tr><th>gate</th><th>result</th></tr></thead><tbody>{gates_html}</tbody></table></div>
 <h2>What would have to be true to submit instead</h2>
-<p class="small">Per <code>knowledge/45</code>: at 37,654 px a candidate needs credit density
+<p class="small">Per <code>knowledge/49</code>: at 37,654 px a candidate needs credit density
 ρ ≥ {rho['37654']:.4f} to reach 0.3195 and ρ ≥ {rho74['37654']:.4f} to reach 0.3774. The only
 sub-field in this repository with a measured ρ in that range is the 25,517 px credited core P1, whose
 exact interval is [0.2546, 0.3190] — below 0.3195 — and which the parallel-run lane rule forbids
@@ -341,7 +341,7 @@ re-emitting, because every one of its pixels lies within 3 px of an existing reg
 conflict is the single most important thing for the next session to resolve, and it is a selector
 decision, not a modelling one.</p>
 <h2>Earlier rounds still on this site</h2>
-<p class="small">Each is a separate artefact with its own receipt. None of them is the H66 file and
+<p class="small">Each is a separate artefact with its own receipt. None of them is the H67 file and
 none is approved for a slot.</p><ul>
 <li><b>H64, negative, lane DUPLICATE under the 70 % rule.</b> <a href="h64.html">H64 landing</a>.</li>
 <li><b>H63, research-only, do not upload.</b> <a href="index.html">Home page hero</a>.</li>
@@ -352,18 +352,18 @@ none is approved for a slot.</p><ul>
 <li><b>H55-EDGE, failed-gate archive.</b> <a href="h55-edge.html">h55-edge.html</a>.</li>
 </ul></section>
 """ + TAIL
-    (DOCS / "h66-executive-summary.html").write_text(exec_html)
+    (DOCS / "h67-executive-summary.html").write_text(exec_html)
 
     # ------------------------------------------------------------------ knowledge note
-    kn = f"""# 44 · H66 results and limits (rendered from the receipts by `scripts/publish_h66_site.py`)
+    kn = f"""# 48 · H67 results and limits (rendered from the receipts by `scripts/publish_h67_site.py`)
 
 **Verdict: `{esc(verdict['promotion']).upper()}` — download for research, DO NOT SUBMIT, no weekly slot used.**
 
 Artefact `{stem}.tif`, SHA-256 `{raster['sha256']}`, {raster['bytes']:,} bytes,
 {n_em:,} emitted cells, values exactly {{0, 1}}, decoded-pixel SHA-256 `{raster['decoded_pixels_sha256']}`.
 Reproduced bit-identically by a second independent run.
-Pre-registration: `knowledge/43_hypotheses_H66_preregistered.md`, protocol SHA-256 `{card['preregistration']['protocol_sha256'][:16]}…`,
-thresholds and declared deviations frozen in `registry/h66_preregistration.json`.
+Pre-registration: `knowledge/45_hypotheses_H67_preregistered.md`, protocol SHA-256 `{card['preregistration']['protocol_sha256'][:16]}…`,
+thresholds and declared deviations frozen in `registry/h67_preregistration.json`.
 
 ## 1 · Preflight and footprint integrity
 
@@ -372,8 +372,8 @@ thresholds and declared deviations frozen in `registry/h66_preregistration.json`
 * cells: {pre['cells_total']:,} total, {pre['cells_outside_domain']:,} outside the organiser's domain,
   {pre['cells_domain']:,} in domain, **{pre['eligible']:,} eligible** after excluding
   {pre['in_domain_nodata_sentinel_cells']:,} in-domain cells that carry the float32 nodata sentinel in at
-  least one band (**IR-H66-002**, see §7).
-* Three defensible footprints still coexist (IR-H66-003): `labels >= 0` gives {pre['cells_domain']:,},
+  least one band (**IR-H67-002**, see §7).
+* Three defensible footprints still coexist (IR-H67-003): `labels >= 0` gives {pre['cells_domain']:,},
   band-12-non-sentinel {pre['cells_feature_finite']:,}, all-19-band intersection {pre['eligible']:,}.
   This round uses the intersection.
 
@@ -396,7 +396,7 @@ block mean-squared-error Spearman {s2['tests']['negative_mean_squared_error']['s
 Spearman {s2['tests']['negative_false_positive_rate']['spearman']:.4f}. Maximum |correlation|
 **{s2['max_abs_correlation']:.4f}** against the abandonment threshold 0.60.
 
-That contradicts N-19 (0.7625 hide / 0.7107 tip, same data) and agrees with H62 (0.1757). **IR-H66-005:
+That contradicts N-19 (0.7625 hide / 0.7107 tip, same data) and agrees with H62 (0.1757). **IR-H67-005:
 the S2 statistic is not a stable property of "the two views"** — it spans 0.0078 to 0.7625 across five
 rounds depending on feature set, learner and block size. An ABANDON rule keyed to it can be made to
 fire or not fire at will, so it cannot serve as a go/no-go gate until all three are frozen together.
@@ -438,7 +438,7 @@ said together, because either one alone would mislead:
    control > 0 with the 95 % CI excluding 0"; it is {pdiff[pooled['best_comparable_control']]['delta']:+.6f}
    with CI {ci(pdiff[pooled['best_comparable_control']]['ci95'])}. Not promoted.
 2. The instrument cannot score this hypothesis class in either direction. Its truth class *is* the
-   mapped catalogue, while H66-A is constructed to lie ≥ 200 m away from every mapped trace; and the
+   mapped catalogue, while H67-A is constructed to lie ≥ 200 m away from every mapped trace; and the
    same instrument ranks the organiser-scored 0.2778 champion at 0.00479, below a random placeholder
    (IR-H60-003; Spearman(board, instrument) = −0.099, n = 13, p = 0.748). Random beating single_B in
    this very table is the same fact seen from inside the round.
@@ -466,11 +466,11 @@ artefacts are **not proven absent**.
 For a fully novel field at S = {n_em:,} with credit density ρ ~ U[0.0279, 0.1387] and |G| = 14,088.7:
 DTI = ρS/(0.2S + 0.8|G|) ∈ **[0.0428, 0.2126]**. At |G| = 18,000 → [0.0359, 0.1782]; at |G| = 27,400
 → [0.0258, 0.1284]. Even the optimistic end is below the 0.2778 champion. This was stated **before**
-the holdout ran, in `knowledge/43` §1, and the measured holdout is worse than the projection.
+the holdout ran, in `knowledge/45` §1, and the measured holdout is worse than the projection.
 
 ## 6 · Why the lane cannot reach 0.3195 — the arithmetic, not the mood
 
-`knowledge/45` derives it from bytes re-measured this session (`scripts/h66_board_algebra.py`):
+`knowledge/49` derives it from bytes re-measured this session (`scripts/h67_board_algebra.py`):
 
 * `h33-2-b2` (0.2778, 37,654 px) is a **strict subset** of the 0.2600 file (44,090 px); the 6,436
   deleted pixels all lie 100–200 m from a mapped trace, and deleting them raised the score 6.8 %.
@@ -490,21 +490,21 @@ measurements in this repository say it is not available at 100 m.
 
 ## 7 · Irregularities found this round
 
-* **IR-H66-002 (severe, caught before publication).** {pre['in_domain_nodata_sentinel_cells']:,}
+* **IR-H67-002 (severe, caught before publication).** {pre['in_domain_nodata_sentinel_cells']:,}
   in-domain cells carry the nodata sentinel −3.4028234663852886e+38 in at least one band (3,061 cells
   across 18 of 19 bands; 3,073 in band 6). `transform.rank01` bins against `lo = −3.4e38`, which
   collapses every rank channel to a near-constant and would have silently produced a
   garbage-but-format-valid submission. Fixed with the template's own
   `grid.footprint_from(bands='all')`.
-* **IR-H66-003.** Three defensible footprints coexist ({pre['cells_domain']:,} / {pre['cells_feature_finite']:,} /
+* **IR-H67-003.** Three defensible footprints coexist ({pre['cells_domain']:,} / {pre['cells_feature_finite']:,} /
   {pre['eligible']:,}). Every number in this round is stated against the intersection.
-* **IR-H66-004.** Two channels are legitimately zero-inflated (`rank_b10`, `grad_b17`: more than half
+* **IR-H67-004.** Two channels are legitimately zero-inflated (`rank_b10`, `grad_b17`: more than half
   the footprint ties at the physical minimum). A blunt "collapsed channel" guard reports them as
   failures; replaced with a degenerate test (< 10 distinct rank levels, or raw |value| > 1e30 inside
   the eligible set) plus an informational zero-inflation list.
-* **IR-H66-005.** The S2 independence statistic spans 0.0078–0.7625 across five rounds on the same
+* **IR-H67-005.** The S2 independence statistic spans 0.0078–0.7625 across five rounds on the same
   data (§2). It cannot gate anything until feature set, learner and block size are frozen together.
-* **IR-H66-006.** `sample_submission.tif` declares a **NaN** nodata value, so any receipt writer that
+* **IR-H67-006.** `sample_submission.tif` declares a **NaN** nodata value, so any receipt writer that
   serialises it verbatim produces invalid JSON. Handled by an explicit sanitizer and a
   `nodata_declared_is_nan` field; worth fixing once in the shared template.
 
@@ -514,33 +514,33 @@ measurements in this repository say it is not available at 100 m.
   Prevalence mismatch inflates every arm's denominator effect and is the reason absolute values are
   not comparable across rounds.
 * The lane reports are computed against the registry census available on disk at build time.
-* No organiser receipt exists for any H66 number. Nothing here is ORGANIZER-CONFIRMED.
+* No organiser receipt exists for any H67 number. Nothing here is ORGANIZER-CONFIRMED.
 * The declared learner is `LogisticRegression(max_iter=800, C=1.0, lbfgs)` on rank channels; the
-  splitter is `label-blind-quadrants-v2` with an 80 px buffer. H66's `single_B` is therefore **not**
+  splitter is `label-blind-quadrants-v2` with an 80 px buffer. H67's `single_B` is therefore **not**
   comparable to H64's stored 0.174517 — a declared difference, not a control failure (H64's cached
   fold predictions no longer exist in this checkout, so its runner cannot be re-executed).
 """
-    (ROOT / "knowledge" / "44_h66_results_and_limits.md").write_text(kn)
+    (ROOT / "knowledge" / "48_h67_results_and_limits.md").write_text(kn)
 
     # ------------------------------------------------------------------ banners
-    banner = f"""<!--H66-BANNER-->
-<div class="notice" role="note" style="margin:0 0 1rem"><strong>Latest research round: H66 (negative).</strong>
+    banner = f"""<!--H67-BANNER-->
+<div class="notice" role="note" style="margin:0 0 1rem"><strong>Latest research round: H67 (negative).</strong>
 Download yes, for research only; <strong>submit no — do not upload</strong>. New inference on decoded
 pixels; S1 two-view sufficiency FAIL; HOLDOUT-DTI {sc['tuc']['dti']:.6f} {ci(sc['tuc']['ci95'])} versus
-random {sc['random']['dti']:.6f}. <a href="h66.html">H66 landing</a> ·
-<a href="h66-executive-summary.html">H66 submission guide</a> ·
-<a href="downloads/h66-candidate.tif" download>download the research GeoTIFF</a></div>
+random {sc['random']['dti']:.6f}. <a href="h67.html">H67 landing</a> ·
+<a href="h67-executive-summary.html">H67 submission guide</a> ·
+<a href="downloads/h67-candidate.tif" download>download the research GeoTIFF</a></div>
 {hero}
-<!--/H66-BANNER-->"""
+<!--/H67-BANNER-->"""
     for page in (DOCS / "index.html",):
         text = page.read_text(encoding="utf-8")
         # demote the previous round's "Latest" notice so the home page has exactly one latest round
         text = text.replace("Latest research round: H64", "Previous research round: H64")
         text = text.replace("Latest research round: H63", "Previous research round: H63")
-        marker = "<!--H66-BANNER-->"
+        marker = "<!--H67-BANNER-->"
         if marker in text:
             start = text.index(marker)
-            end = text.index("<!--/H66-BANNER-->") + len("<!--/H66-BANNER-->")
+            end = text.index("<!--/H67-BANNER-->") + len("<!--/H67-BANNER-->")
             text = text[:start] + banner + text[end:]
         else:
             anchor = '<main id="main">'
@@ -549,19 +549,19 @@ random {sc['random']['dti']:.6f}. <a href="h66.html">H66 landing</a> ·
 
     root_index = ROOT / "index.html"
     rt = root_index.read_text(encoding="utf-8")
-    line = ("<p>H66 (thermal-upflow corridor) is research-only: download yes, <b>submit no</b>, "
-            "no weekly slot used. <a href=\"docs/h66.html\">H66 verdict and evidence</a>.</p>")
-    if "<p>H66" in rt:
+    line = ("<p>H67 (thermal-upflow corridor) is research-only: download yes, <b>submit no</b>, "
+            "no weekly slot used. <a href=\"docs/h67.html\">H67 verdict and evidence</a>.</p>")
+    if "<p>H67" in rt:
         import re
-        rt = re.sub(r"<p>H66.*?</p>", line, rt, flags=re.S)
+        rt = re.sub(r"<p>H67.*?</p>", line, rt, flags=re.S)
     else:
         rt = rt.replace("</body>", line + "</body>")
     root_index.write_text(rt, encoding="utf-8")
 
-    print(json.dumps(dict(pages=["docs/h66.html", "docs/h66-executive-summary.html"],
-                          downloads=["docs/downloads/h66-candidate.tif", "docs/downloads/h66-candidate.zip",
-                                     "docs/downloads/h66-a-only-and-segment-reasoning.csv"],
-                          data=["docs/data/h66_run_card.json"],
+    print(json.dumps(dict(pages=["docs/h67.html", "docs/h67-executive-summary.html"],
+                          downloads=["docs/downloads/h67-candidate.tif", "docs/downloads/h67-candidate.zip",
+                                     "docs/downloads/h67-a-only-and-segment-reasoning.csv"],
+                          data=["docs/data/h67_run_card.json"],
                           banners=["docs/index.html", "index.html"],
                           verdict=verdict["submit_to_competition"]), indent=1))
     return 0

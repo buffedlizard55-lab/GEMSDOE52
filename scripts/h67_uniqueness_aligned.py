@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Re-run the shared uniqueness gate over an ALIGNMENT-FILTERED prior corpus (IR-H66-007/-010).
+"""Re-run the shared uniqueness gate over an ALIGNMENT-FILTERED prior corpus (IR-H67-007/-010).
 
 `gates.uniqueness_report` sets ``canonical_pattern_unique`` to False if *any* prior either matches the
 candidate exactly **or fails to open**.  The frozen 526-blob prior census contains 2 entries its own
-``eligible`` flag rejects ("not an aligned single-band prediction"), and ``run_h66.py`` passed all 526.
+``eligible`` flag rejects ("not an aligned single-band prediction"), and ``run_h67.py`` passed all 526.
 The resulting receipt therefore reports ``canonical_pattern_unique: False`` while
 ``identical: 0`` for every prior - a false alarm about *identity* caused by an audit error about
 *alignment*.  Two things are fixed here, once, in the open:
@@ -33,7 +33,7 @@ from gems52 import gates                                    # noqa: E402
 
 DATA = ROOT / "data"
 SUB = ROOT / "submission"
-WORK = ROOT / "work" / "h66"
+WORK = ROOT / "work" / "h66
 
 
 def aligned(path, ref):
@@ -46,8 +46,8 @@ def aligned(path, ref):
 
 
 def main() -> int:
-    tifs = sorted(SUB.glob("gems52-h66-*.tif"))
-    assert len(tifs) == 1, f"expected one H66 raster, found {len(tifs)}"
+    tifs = sorted(SUB.glob("gems52-h67-*.tif"))
+    assert len(tifs) == 1, f"expected one H67 raster, found {len(tifs)}"
     with rasterio.open(tifs[0]) as ds:
         cand = ds.read(1).astype(np.float32)
         ref = (ds.shape, ds.crs, ds.transform)
@@ -71,20 +71,20 @@ def main() -> int:
         (corpus if aligned(extra, ref) else excluded).append(
             str(extra) if aligned(extra, ref) else dict(path=str(extra), reason="not aligned"))
     for p in sorted(SUB.glob("*.tif")):
-        if p.name.startswith("gems52-h66-"):
+        if p.name.startswith("gems52-h67-"):
             continue                                        # this round's own builds are not priors
         (corpus if aligned(p, ref) else excluded).append(
             str(p) if aligned(p, ref) else dict(path=str(p), reason="not aligned"))
 
     uni = gates.uniqueness_report(cand, corpus)
-    rel = json.loads((ROOT / "evidence" / "h66_release_gates.json").read_text())
+    rel = json.loads((ROOT / "evidence" / "h67_release_gates.json").read_text())
     out = dict(
         generated_utc=datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         evidence_class="MEASURED; uniqueness/lane diagnostic, not a score",
         why_this_exists=(
             "gates.uniqueness_report reports canonical_pattern_unique=False if any prior fails to open. "
             "The round's first pass included the 2 census-ineligible fixtures, so the flag was False "
-            "while 0 priors were identical (IR-H66-007, IR-H66-010). This receipt separates the two."),
+            "while 0 priors were identical (IR-H67-007, IR-H67-010). This receipt separates the two."),
         candidate=dict(file=tifs[0].name, sha256=hashlib.sha256(tifs[0].read_bytes()).hexdigest(),
                        decoded_sha256=uni["candidate_decoded_sha256"], emitted=int((cand > 0).sum())),
         corpus=dict(n_checked=uni["n_priors_checked"], n_excluded=len(excluded), excluded=excluded[:20]),
@@ -119,7 +119,7 @@ def main() -> int:
             dots_literal_max_near_3px=rel["lane_dots"]["literal"]["max_near_3px_fraction"],
             dots_literal_source=Path(str(rel["lane_dots"]["literal"]["max_near_source"])).name),
     )
-    p = ROOT / "evidence" / "h66_uniqueness_aligned.json"
+    p = ROOT / "evidence" / "h67_uniqueness_aligned.json"
     p.write_text(json.dumps(out, indent=1, allow_nan=False, default=str) + "\n")
     print(json.dumps({k: out[k] for k in ("corpus", "result", "identical_priors", "read_errors",
                                           "closest_priors", "lane_gate_unchanged")}, indent=1, default=str))

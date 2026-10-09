@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Identifier-only re-wrap of the H66 GeoTIFF so the portal note states the verdict itself.
+"""Identifier-only re-wrap of the H67 GeoTIFF so the portal note states the verdict itself.
 
 The build wrote the note "…research-only".  A note is the only text an uploader sees next to the file,
 so for a round whose verdict is DO NOT SUBMIT the note must say that, name the failing gate, and stay
@@ -23,13 +23,13 @@ sys.path.insert(0, str(ROOT / "src"))
 from gems52 import submission_writer                        # noqa: E402
 
 SUB = ROOT / "submission"
-NOTE = ("H66 thermal-upflow corridor 24,907px; holdout below random; lane duplicate 84% near "
+NOTE = ("H67 thermal-upflow corridor 24,907px; holdout below random; lane duplicate 84% near "
         "curv_scarp; DO NOT SUBMIT")
 
 
 def main() -> int:
-    tifs = sorted(SUB.glob("gems52-h66-*.tif"))
-    assert len(tifs) == 1, f"expected one H66 raster, found {len(tifs)}"
+    tifs = sorted(SUB.glob("gems52-h67-*.tif"))
+    assert len(tifs) == 1, f"expected one H67 raster, found {len(tifs)}"
     tif = tifs[0]
     stem = tif.stem
     assert len(NOTE) <= 140 and len(stem) <= 140
@@ -64,7 +64,7 @@ def main() -> int:
         gates_not_recomputed=("lane, uniqueness, holdout, canary and format results were measured on these "
                               "same decoded pixels and are unchanged; only the container metadata differs"),
     )
-    (ROOT / "evidence" / "h66_rewrap.json").write_text(json.dumps(out, indent=1) + "\n")
+    (ROOT / "evidence" / "h67_rewrap.json").write_text(json.dumps(out, indent=1) + "\n")
     print(json.dumps(out, indent=1))
     return 0
 

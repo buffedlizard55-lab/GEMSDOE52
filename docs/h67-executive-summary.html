@@ -1,21 +1,21 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="assets/ctd5.css"></head><body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a><a href="index.html">Overview</a><a href="h66.html">H66 run &amp; evidence</a><a href="h66-executive-summary.html">Submission guide</a><a href="h64.html">H64 (previous)</a><a href="downloads/index.html">Archive</a></nav></header><main id="main">
-<div class="notice" role="note"><strong>DO NOT UPLOAD THIS FILE.</strong> H66-A is a negative result.
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="assets/ctd5.css"></head><body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a><a href="index.html">Overview</a><a href="h67.html">H67 run &amp; evidence</a><a href="h67-executive-summary.html">Submission guide</a><a href="h64.html">H64 (previous)</a><a href="downloads/index.html">Archive</a></nav></header><main id="main">
+<div class="notice" role="note"><strong>DO NOT UPLOAD THIS FILE.</strong> H67-A is a negative result.
 The exact steps below are written so that a later selector can act on them; they are not an approval.
 Do not upload research archives to the competition portal.</div>
 <section class="hero"><div>
-<div class="eyebrow">H66 · executive summary and exact submission steps</div>
+<div class="eyebrow">H67 · executive summary and exact submission steps</div>
 <h1>One file, one verdict,<br>four steps you should not take today.</h1>
 <p class="lead">The file is format-valid and unique on decoded pixels. It is also significantly worse
 than uniform random on the shared hide-and-recover instrument. Both facts are measured; neither is a
 leaderboard score.</p>
-<div class="actions"><a class="button" href="downloads/h66-candidate.tif" download>Download the H66 GeoTIFF ↓</a>
-<a class="button secondary" href="downloads/h66-candidate.zip" download>Single-TIFF ZIP</a>
-<a class="button secondary" href="data/h66_run_card.json" download>JSON run card</a></div>
-<p class="fileline">gems52-h66-thermal-upflow-corridor-24907px-20261009T050704Z.tif<br>76,217 bytes · SHA-256 14644198f1031e8250a284c86775c55b57d60d55195e815eac6f4d17b01395c6 · 24,907 emitted cells · values exactly {0,1}, 0 NaN, 0 infinite · decoded-pixel SHA-256 969bb11b7403d9c7506ad609084bcdfe…</p></div>
+<div class="actions"><a class="button" href="downloads/h67-candidate.tif" download>Download the H67 GeoTIFF ↓</a>
+<a class="button secondary" href="downloads/h67-candidate.zip" download>Single-TIFF ZIP</a>
+<a class="button secondary" href="data/h67_run_card.json" download>JSON run card</a></div>
+<p class="fileline">gems52-h67-thermal-upflow-corridor-24907px-20261009T050704Z.tif<br>76,217 bytes · SHA-256 14644198f1031e8250a284c86775c55b57d60d55195e815eac6f4d17b01395c6 · 24,907 emitted cells · values exactly {0,1}, 0 NaN, 0 infinite · decoded-pixel SHA-256 969bb11b7403d9c7506ad609084bcdfe…</p></div>
 <aside class="panel"><div class="label">Identifiers, paste-ready</div>
 <p class="small"><b>Name (59 characters):</b><br>
-<code>gems52-h66-thermal-upflow-corridor-24907px-20261009T050704Z</code></p>
-<p class="small"><b>Note (109 characters, limit 140):</b><br><code>H66 thermal-upflow corridor 24,907px; holdout below random; lane duplicate 84% near curv_scarp; DO NOT SUBMIT</code></p>
+<code>gems52-h67-thermal-upflow-corridor-24907px-20261009T050704Z</code></p>
+<p class="small"><b>Note (109 characters, limit 140):</b><br><code>H67 thermal-upflow corridor 24,907px; holdout below random; lane duplicate 84% near curv_scarp; DO NOT SUBMIT</code></p>
 <p class="fine">The note states research-only. If a future selector ever approves this file, the note
 must be replaced with the reasoning a Phase-2 reviewer needs — not with a score claim.</p></aside></section>
 <hr class="divider">
@@ -39,7 +39,7 @@ footprint of 5,164,300 cells.</li>
 <h2>Gate table</h2>
 <div class="table-wrap"><table><thead><tr><th>gate</th><th>result</th></tr></thead><tbody><tr><td>Manifest integrity (23 pinned mirrors, SHA-256)</td><td>PASS · 23 checked, 0 mismatched</td></tr><tr><td>Pre-registered protocol hash matches at run time</td><td>PASS</td></tr><tr><td>Format gate: 1 band, float32, EPSG:32611, shape and transform identical to the pinned sample</td><td>PASS</td></tr><tr><td>Finite values in [0, 1] — measured range 0.0…1.0, 0 NaN, 0 infinite</td><td>PASS</td></tr><tr><td>Emitted mass outside the eligible footprint</td><td>0 px</td></tr><tr><td>Leakage canary: worst single channel AUC on holdout, alarm at 0.90</td><td>0.6228 (downface_max) — CLEAN</td></tr><tr><td>S1 two-view sufficiency (mean ≥ 0.60 and min fold ≥ 0.55)</td><td>FAIL · View A mean 0.5930, min 0.5462</td></tr><tr><td>S2 conditional independence (abandon above 0.60)</td><td>exchange allowed · max |Spearman| 0.2951 over 2,283 blocks</td></tr><tr><td>Lane gate, literal rule, surface / final dots</td><td>PASS / DUPLICATE/STOP</td></tr><tr><td>Lane gate, universal-coverage-probe policy, surface / final dots</td><td>PASS / DUPLICATE/STOP</td></tr><tr><td>Decoded-pattern uniqueness against the prior census</td><td>FAIL (identical to a prior)</td></tr><tr><td>Exact novelty: share of emitted cells positive in none of the informative registry rasters</td><td>0.0000</td></tr><tr><td>Not merely the union of the two views (0.0061 of the emission inside the union of matched view top-K fields, bar 0.90)</td><td>PASS</td></tr><tr><td>HOLDOUT-DTI beats the best comparable control (random)</td><td>FAIL · 0.015432 vs 0.056623</td></tr><tr><td>Bit-identical reproduction by a second independent run</td><td>PASS</td></tr></tbody></table></div>
 <h2>What would have to be true to submit instead</h2>
-<p class="small">Per <code>knowledge/45</code>: at 37,654 px a candidate needs credit density
+<p class="small">Per <code>knowledge/49</code>: at 37,654 px a candidate needs credit density
 ρ ≥ 0.1595 to reach 0.3195 and ρ ≥ 0.1884 to reach 0.3774. The only
 sub-field in this repository with a measured ρ in that range is the 25,517 px credited core P1, whose
 exact interval is [0.2546, 0.3190] — below 0.3195 — and which the parallel-run lane rule forbids
@@ -47,7 +47,7 @@ re-emitting, because every one of its pixels lies within 3 px of an existing reg
 conflict is the single most important thing for the next session to resolve, and it is a selector
 decision, not a modelling one.</p>
 <h2>Earlier rounds still on this site</h2>
-<p class="small">Each is a separate artefact with its own receipt. None of them is the H66 file and
+<p class="small">Each is a separate artefact with its own receipt. None of them is the H67 file and
 none is approved for a slot.</p><ul>
 <li><b>H64, negative, lane DUPLICATE under the 70 % rule.</b> <a href="h64.html">H64 landing</a>.</li>
 <li><b>H63, research-only, do not upload.</b> <a href="index.html">Home page hero</a>.</li>

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""H66 — Thermal-Upflow Corridor (TUC): lane gates, holdout, build, release gates.
+"""H67 — Thermal-Upflow Corridor (TUC): lane gates, holdout, build, release gates.
 
 One script, one lane, no private fork of any shared instrument.  Everything scored here delegates
 to the template's own modules: ``gems52.metric`` (official DTI), ``gems52.holdout`` (folds, visible
@@ -8,8 +8,8 @@ masking), ``gems52.evaluate_holdout`` (pooled hide-and-recover evaluator
 negative-error independence diagnostic), ``gems52.emit`` (coverage greedy), ``gems52.gates``
 (format + lane uniqueness) and ``gems52.submission_writer`` (fail-closed packaging).
 
-Frozen protocol: ``knowledge/43_hypotheses_H66_preregistered.md``; this script refuses to run if its
-SHA-256 has moved since ``registry/h66_preregistration.json`` was written.
+Frozen protocol: ``knowledge/45_hypotheses_H67_preregistered.md``; this script refuses to run if its
+SHA-256 has moved since ``registry/h67_preregistration.json`` was written.
 
 Evidence classes are never mixed:
   HOLDOUT-DTI        shared evaluator, hide-and-recover, with a 95 % paired cluster CI.
@@ -39,10 +39,10 @@ from sklearn.linear_model import LogisticRegression  # noqa: E402
 from sklearn.metrics import roc_auc_score  # noqa: E402
 
 DATA = ROOT / "data"
-WORK = ROOT / "work" / "h66"
+WORK = ROOT / "work" / "h66
 EVID = ROOT / "evidence"
 SUB = ROOT / "submission"
-PROTO = ROOT / "knowledge" / "43_hypotheses_H66_preregistered.md"
+PROTO = ROOT / "knowledge" / "45_hypotheses_H67_preregistered.md"
 SEED = 660660
 ZERO_TAX_M = 200.0          # R-zero-tax (knowledge/10 §2)
 SEED_EXCLUSION_M = 300.0    # a seed must be beyond the whole DTI kernel from any mapped fault
@@ -99,18 +99,18 @@ def _clean(o):
 
 def write_receipt(name, obj):
     EVID.mkdir(parents=True, exist_ok=True)
-    p = EVID / f"h66_{name}.json"
+    p = EVID / f"h67_{name}.json"
     p.write_text(json.dumps(_clean(obj), indent=1, allow_nan=False) + "\n")
     log(f"receipt -> {p.relative_to(ROOT)}")
     return p
 
 
 def check_prereg():
-    reg_path = ROOT / "registry" / "h66_preregistration.json"
+    reg_path = ROOT / "registry" / "h67_preregistration.json"
     reg = json.loads(reg_path.read_text())
     got = sha(PROTO)
     if got != reg["hypothesis_sha256"]:
-        raise SystemExit(f"H66 protocol changed after registration ({got[:12]} != "
+        raise SystemExit(f"H67 protocol changed after registration ({got[:12]} != "
                          f"{reg['hypothesis_sha256'][:12]}); refusing to run")
     return reg
 
@@ -148,7 +148,7 @@ def preflight():
     inside = lab_raw >= 0                       # -1 is the organiser's outside-domain code
     with rasterio.open(DATA / "training_features.tif") as ds:
         tf_tr = list(ds.transform)
-    # IR-H66-002: the domain carries 3,061 in-domain nodata-sentinel cells (-3.4028234663852886e+38)
+    # IR-H67-002: the domain carries 3,061 in-domain nodata-sentinel cells (-3.4028234663852886e+38)
     # in 18 of the 19 bands and 3,073 in band 6.  Including them in `eligible` makes
     # transform.rank01 bin against lo = -3.4e38, collapsing every rank channel to a near-constant and
     # silently destroying the fit.  The template's own sentinel-aware intersection footprint is used
@@ -168,7 +168,7 @@ def preflight():
                in_domain_nodata_sentinel_cells=n_sentinel_in_domain,
                sentinel_policy="gems52.grid.footprint_from(bands='all'): in-domain cells carrying the "
                                "-3.4028234663852886e+38 nodata sentinel in any band are excluded from "
-                               "eligible, so transform.rank01 can never bin against the sentinel (IR-H66-002)",
+                               "eligible, so transform.rank01 can never bin against the sentinel (IR-H67-002)",
                catalogue_px=int(cat.sum()),
                sample_submission_ones=int((sample > 0).sum()),
                sample_equals_catalogue=bool(int((sample > 0).sum()) == int(cat.sum())),
@@ -248,7 +248,7 @@ def channels(bands, eligible):
             put(nm, bands[k])
     # ---- integrity of the ranking, checked rather than assumed ----------------------------------
     # A channel is *degenerate* if the nodata sentinel survived into it (which would put lo at
-    # -3.4e38 and collapse every real value into one bin, IR-H66-002) or if it carries fewer than
+    # -3.4e38 and collapse every real value into one bin, IR-H67-002) or if it carries fewer than
     # 10 distinct rank levels.  A channel whose minimum rank is ~0.5 is NOT degenerate: it is
     # zero-inflated (more than half the footprint ties at the physical minimum, e.g. band 10
     # distance-to-earthquake and the conductivity gradient), which is a property of the layer and is
@@ -632,28 +632,28 @@ def main(argv=None):
 
     # ---- release gates ---------------------------------------------------------------------------
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    name = args.name or f"gems52-h66-thermal-upflow-corridor-{build['emitted']}px-{stamp}"
-    note = args.note or ("H66 thermal-upflow corridor; strike-aligned; geophysically corroborated; "
+    name = args.name or f"gems52-h67-thermal-upflow-corridor-{build['emitted']}px-{stamp}"
+    note = args.note or ("H67 thermal-upflow corridor; strike-aligned; geophysically corroborated; "
                          "off-catalogue >=200 m; research-only")
     note = note[:140]
     outp = SUB / f"{name}.tif"
     # write_submission takes the sample *path* (it delegates to gates.format_report, which opens it)
     receipt = submission_writer.write_submission(outp, emitted, DATA / "sample_submission.tif", eligible,
                                                  note=note, name=name,
-                                                 metadata=dict(round="H66", protocol=PROTO.name,
+                                                 metadata=dict(round="H67", protocol=PROTO.name,
                                                                protocol_sha256=reg["hypothesis_sha256"],
                                                                budget=budget, stratification=st["counts"]))
     log("wrote", outp.name, receipt["sha256"][:16], f"{receipt['bytes']} bytes")
 
     priors = sorted(str(p) for p in (WORK / "priors").glob("*.tif")) if (WORK / "priors").exists() else []
-    prior_fetch = ROOT / "work" / "h66" / "prior_fetch_receipt.json"
+    prior_fetch = ROOT / "work" / "h66 / "prior_fetch_receipt.json"
     priors = [p for p in priors]
     priors += sorted(str(p) for p in (DATA / "scored").glob("*.tif"))
     priors += sorted(str(p) for p in (DATA / "reference").glob("*.tif"))
     # exclude this round's own earlier builds: an identical decoded pattern in the prior list would
     # be reported as "identical to a prior" and would hide the real comparison
     priors += sorted(str(p) for p in SUB.glob("*.tif")
-                     if p != outp and not p.name.startswith("gems52-h66-"))
+                     if p != outp and not p.name.startswith("gems52-h67-"))
     lane_s = gates.lane_report(emitted, eligible, priors, sample=str(DATA / "sample_submission.tif"),
                                phase="surface")
     lane_d = gates.lane_report(emitted, eligible, priors, sample=str(DATA / "sample_submission.tif"),
