@@ -1,0 +1,30 @@
+{
+ "n_priors_checked": 644,
+ "candidate_decoded_sha256": "7c00df71d6c4eb94741a2e7b387422723d9f44828e9853de07a6a140f096516c",
+ "canonical_pattern_unique": false,
+ "identical_to_a_prior": false,
+ "identical_prior_paths": [],
+ "distinct_from_every_comparable_prior": true,
+ "audit_complete": false,
+ "n_priors_compared": 643,
+ "incomparable_priors": [
+  {
+   "path": "/home/user/GEMSDOE52/work/h77cond/priors/a97c7b2a513225c9f9f2b35736afe5abf4d2a491.tif",
+   "error": "ValueError: not aligned single-band prediction (1 bands, (32, 48))"
+  }
+ ],
+ "key_semantics": "canonical_pattern_unique is False if ANY prior is byte-identical OR unreadable; distinct_from_every_comparable_prior isolates the first condition and audit_complete isolates the second",
+ "equals_literal_prior_union": false,
+ "research_publication_ok": false,
+ "support_novelty_gate_ok": false,
+ "gate_correction": "Original >=20% support novelty retained as a FAILED diagnostic, not silently waived for slot promotion. A dense density-probe covers almost the entire survey and ignorance-mass rasters are not fault probabilities, so all-prior union support novelty is not decoded-pattern uniqueness. Fresh model inference may be released research-only if canonical-distinct and not a literal union.",
+ "union_px": 5373804,
+ "novel_vs_all_priors": 0,
+ "novel_fraction": 0.0,
+ "prior_px_dropped": 5336150,
+ "relation_to_union": "subset-of-union",
+ "ok": false,
+ "top_argument_ignored": false,
+ "rule": "distinct decoded values from every supplied prior, >=20% new support against binary/>=0.5 continuous proposal union, and selective prior-pixel removal",
+ "scope": "Only the supplied, aligned accessible inventory; not a proof against all private/unlinked submissions"
+}

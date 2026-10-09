@@ -628,9 +628,18 @@ def check_r5(DATA, DOCS, ROOT, problems, notes):
                 txt = src.name
             cands += _re.findall(r"(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})Z?", txt)
             cands += _re.findall(r"(\d{8}T\d{6})Z", txt)
+            # IR-H77cond-002: a date-only stamp must still count.  H75 shipped
+            # "gems52-h75-dva-variogram-anisotropy-B-37654px-20261009.tif" -- a date with no
+            # THHMMSS part -- so the two patterns above found nothing, _stamp returned None, and
+            # the file was treated as PRE-dating every earlier round.  That silently back-dated a
+            # later raster into R5's build-time prior set and broke R5's novelty equality (1.0 ->
+            # 0.992087).  Accept a delimited YYYYMMDD run as midnight of that day; strptime below
+            # rejects impossible dates, and resolving to 00:00 errs toward counting the file as a
+            # prior, which only ever makes the earlier receipt harder to satisfy.
+            cands += _re.findall(r"(?<!\d)(20\d{6})(?!\d)", txt)
         best = None
         for c in cands:
-            for fmt in ("%Y-%m-%dT%H:%M:%S", "%Y%m%dT%H%M%S"):
+            for fmt in ("%Y-%m-%dT%H:%M:%S", "%Y%m%dT%H%M%S", "%Y%m%d"):
                 try:
                     t = _dt.strptime(c, fmt)
                 except ValueError:
@@ -638,8 +647,126 @@ def check_r5(DATA, DOCS, ROOT, problems, notes):
                 best = t if best is None or t > best else best
         return best
 
+    # IR-H77cond-003: filenames are not a reliable oracle for "when did this raster appear".
+    # H75 shipped a date-only name (IR-H77cond-002); the parallel H76 then shipped
+    # "gems52-h76-gravity-surface-abstention-research-only.tif", which carries no date in the
+    # filename AND none in its sidecar, so _stamp returned None and it back-dated itself into R5's
+    # prior set (1.0 -> 0.999520).
+    #
+    # Git was tried as the oracle and REJECTED: this repository's history is bulk/squash-imported,
+    # so `git log --diff-filter=A` dates h54, h59 and even R5's own raster to the PR #70 merge of
+    # 2026-10-09 11:41, long after they were produced.  That late-dates genuine priors and DROPS
+    # them from the comparison -- the unsafe direction, which can mask a real duplicate.  Measured:
+    # 37 priors that overlap R5 would have been silently excluded.  `--no-merges` does not help.
+    #
+    # The authoritative source is the repository's own provenance: every round writes a timestamped
+    # receipt that names its raster's SHA-256.  Index hash -> earliest recorded timestamp and look
+    # the prior up by CONTENT, which is immune to naming conventions, aliases and merge history.
+    def _receipt_dates() -> dict:
+        idx: dict[str, object] = {}
+        for rp in [*(ROOT / "evidence").glob("*.json"), *DATA.glob("*.json"),
+                   *(ROOT / "submission").glob("*.json")]:
+            try:
+                txt = rp.read_text(errors="replace")
+            except OSError:
+                continue
+            # Use the receipt's OWN generation field, not the minimum of every date in the text:
+            # a run card quotes earlier rounds' timestamps too, and taking the minimum stamped
+            # this round's raster with an older round's date (measured: R5 1.0 -> 0.973263).
+            try:
+                doc = json.loads(txt)
+            except (ValueError, TypeError):
+                continue
+
+            def _gen(o):
+                if isinstance(o, dict):
+                    for k, v in o.items():
+                        if isinstance(v, str) and k.lower() in (
+                                "generated_utc", "created_utc", "generated", "utc",
+                                "timestamp", "run_utc", "built_utc"):
+                            yield v
+                        else:
+                            yield from _gen(v)
+                elif isinstance(o, list):
+                    for x in o:
+                        yield from _gen(x)
+
+            stamps = []
+            for raw in _gen(doc):
+                for pat, fmt in ((r"(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})", "%Y-%m-%dT%H:%M:%S"),
+                                 (r"(\d{8}T\d{6})Z", "%Y%m%dT%H%M%S")):
+                    m_ = _re.search(pat, raw)
+                    if m_:
+                        try:
+                            stamps.append(_dt.strptime(m_.group(1), fmt))
+                            break
+                        except ValueError:
+                            pass
+            if not stamps:
+                continue
+            when = min(stamps)
+            for h in set(_re.findall(r"(?<![0-9a-f])([0-9a-f]{64})(?![0-9a-f])", txt)):
+                if h not in idx or when < idx[h]:
+                    idx[h] = when
+        return idx
+
+    _by_hash = _receipt_dates()
+
+    def _git_added() -> dict:
+        """path -> earliest commit date that added it, across ALL refs.
+
+        Used only as a THIRD signal inside the min() below.  Git's error mode in this repository
+        is one-directional: the history is bulk/squash-imported, so old files can appear LATE
+        (h54, h59 and R5's own raster all date to the PR #70 merge), but a genuinely new file can
+        never appear OLD.  Inside a min() that can only ever pull an estimate earlier, a
+        spuriously-late git date is harmless; it is the stamp and receipt signals that establish
+        lateness.  --all matters because during a merge the incoming branch's files are in the
+        working tree before their history is reachable from HEAD.
+        """
+        try:
+            out = subprocess.run(
+                ["git", "-C", str(ROOT), "log", "--all", "--diff-filter=A", "--name-only",
+                 "--date=iso-strict", "--format=@%ad"],
+                capture_output=True, text=True, timeout=120, check=True).stdout
+        except Exception:                                        # noqa: BLE001
+            return {}
+        seen, cur = {}, None
+        for line in out.splitlines():
+            if line.startswith("@"):
+                try:
+                    cur = _dt.fromisoformat(line[1:]).replace(tzinfo=None)
+                except ValueError:
+                    cur = None
+            elif line.strip() and cur is not None:
+                p = line.strip()
+                if p not in seen or cur < seen[p]:
+                    seen[p] = cur
+        return seen
+
+    _added = _git_added()
+
+    def _created(q: Path):
+        """EARLIEST evidence of when this file's BYTES came into existence.
+
+        Minimum over the filename/sidecar stamp, the earliest receipt recording this content
+        hash, and the git add date.  Minimum, not maximum, is the safe direction: under-estimating
+        a file's age keeps it IN an earlier round's prior set, which can only make that round's
+        novelty claim harder to satisfy.
+
+        Even so, no date heuristic is allowed to decide the question that actually matters -- "is
+        this file a duplicate of something?" -- which is asserted below against the UNFILTERED
+        prior set, with no dating involved at all.
+        """
+        h = hashlib.sha256(q.read_bytes()).hexdigest()
+        try:
+            key = q.resolve().relative_to(ROOT.resolve()).as_posix()
+        except ValueError:
+            key = q.as_posix()
+        cands = [t for t in (_by_hash.get(h), _stamp(q), _added.get(key)) if t is not None]
+        return min(cands) if cands else None
+
     built = _stamp(DATA / "submission_r5.json")
-    later = [q for q in priors if built is not None and (_stamp(q) or built) > built]
+    later = [q for q in priors if built is not None and (_created(q) or built) > built]
     # A later round's raster reaches the prior list under several names (canonical file, short alias,
     # docs/downloads copy), and only the canonical one carries a dated sidecar.  Exclude by content
     # hash so an alias of a later round cannot stay behind and invalidate the earlier receipt.
@@ -650,8 +777,22 @@ def check_r5(DATA, DOCS, ROOT, problems, notes):
     claimed = rec["novelty"]["novel_vs_all_repo_rasters"]
     if abs(uni["novel_fraction"] - claimed) > 1e-9:
         problems.append(f"R5 novelty: recomputed {uni['novel_fraction']:.6f} != receipt {claimed}")
+    # The date filter above decides only the HISTORICAL novel_fraction equality.  The question
+    # that could actually hide a problem -- "are these bytes a duplicate of some other raster in
+    # the repository?" -- is settled here against EVERY prior, undated and unfiltered, so that no
+    # dating heuristic however wrong can ever mask a duplicate.
+    uni_unfiltered = G.uniqueness_report((a > 0).astype(np.float32), priors)
+    if not uni_unfiltered["canonical_pattern_unique"]:
+        problems.append("R5 novelty: the decoded pattern matches a prior raster "
+                        "(checked against the UNFILTERED prior set, no date filter)")
+    if uni_unfiltered["equals_literal_prior_union"]:
+        problems.append("R5 novelty: the file is the literal union of the priors "
+                        "(checked against the UNFILTERED prior set, no date filter)")
+    notes.append(f"R5 duplicate guard, date-filter-independent: {uni_unfiltered['n_priors_checked']} "
+                 f"rasters compared, pattern unique {uni_unfiltered['canonical_pattern_unique']}, "
+                 f"identical={uni_unfiltered['identical_prior_paths']}")
     if later:
-        uni_all = G.uniqueness_report((a > 0).astype(np.float32), priors)
+        uni_all = uni_unfiltered
         notes.append(
             f"R5 supplemental closure against {len(later)} later-round raster(s) "
             f"({', '.join(sorted({q.name.split('-2026')[0] for q in later})[:3])}…): novel fraction "
