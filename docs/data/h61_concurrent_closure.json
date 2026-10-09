@@ -1,0 +1,44 @@
+{
+ "generated_utc": "2026-10-09T00:30:28+00:00",
+ "instrument": "scripts/h61_concurrent_closure.py",
+ "evidence_class": "lane diagnostic on unchanged bytes against a larger registry; not a score",
+ "artifact": "/home/user/GEMSDOE52/submission/gems52-h61-deepsharp-cotrain-37600px.tif",
+ "artifact_sha256": "7c86853164f9cfa7aea34de029c7d5ccf3a6b43dbbb2b14de570e558384d2755",
+ "base_commit": "57c7673",
+ "original_receipt": "evidence/h61_lane_dots.json",
+ "original_priors_checked": 545,
+ "new_decoded_patterns_checked": 2,
+ "rows": [
+  {
+   "source_path": "/home/user/GEMSDOE52/submission/gems52-h60d-dis_contrast-arm37654px.tif",
+   "decoded_sha256": "c6dd3257d3116ae833e0e96f9ebb5074d2a4d3e8b840a15782e649312c79fee4",
+   "prior_proposals": 37654,
+   "coverage_3px_of_eligible": 0.17127426782064067,
+   "universal_coverage_probe": false,
+   "near_3px_fraction": 0.18941489361702127,
+   "excess_over_chance": 0.018140625796380594,
+   "spearman": 0.002098945391252934,
+   "identical": false,
+   "rank_duplicate": false,
+   "near_duplicate": false
+  },
+  {
+   "source_path": "/home/user/GEMSDOE52/submission/gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif",
+   "decoded_sha256": "836b94ede72793f3d0542d0a35eb81e4b7f975429791ed2af4d030adc19b1ab3",
+   "prior_proposals": 16681,
+   "coverage_3px_of_eligible": 0.05394530271135126,
+   "universal_coverage_probe": false,
+   "near_3px_fraction": 0.08561170212765958,
+   "excess_over_chance": 0.03166639941630831,
+   "spearman": 0.003735758143382099,
+   "identical": false,
+   "rank_duplicate": false,
+   "near_duplicate": false
+  }
+ ],
+ "max_near_3px_fraction": 0.18941489361702127,
+ "max_spearman": 0.003735758143382099,
+ "verdict_on_new_rasters": "PASS",
+ "unchanged_artifact": true,
+ "note": "The H61 emission was not rebuilt, re-placed or re-tuned for this check. A DUPLICATE/STOP here would add to, not replace, the recorded verdict; a PASS does not overturn the original lane STOP recorded in evidence/h61_lane_dots.json."
+}

@@ -14,7 +14,7 @@ apply the repo's metric-aware placement, run the uniqueness gate, and confirm th
 isn't merely the union of the two views.
 
 **Written and frozen before any H62 fit ran** (machine-readable twin
-`registry/h62_preregistration.json`, SHA-256 recorded there). Data: the 23 manifest-pinned
+`registry/h62_buriedcorr_preregistration.json`, SHA-256 recorded there). Data: the 23 manifest-pinned
 owner-mirror files under `work/pinned` (integrity-pinned, NOT organizer-authenticated).
 Views, folds, thresholds and budgets are the H60D protocol values so every H62 number is
 comparable with `evidence/h60d_*.json` (seed 20261009, hide folds, 4 whole-segment folds,

@@ -1,0 +1,150 @@
+{
+ "exists": true,
+ "round": "H61",
+ "file": "gems52-h61-deepsharp-cotrain-37600px.tif",
+ "download": "downloads/h61-candidate.tif",
+ "bytes": 131771,
+ "sha256": "7c86853164f9cfa7aea34de029c7d5ccf3a6b43dbbb2b14de570e558384d2755",
+ "emitted_px": 37600,
+ "submission_name": "gems52-h61-deepsharp-cotrain-37600px-20261009T001003Z",
+ "note": "H61 deep-sharp cotrain: up-continued magnetics/gravity vs DEM+radiometric disagreement; 3px dots; >200m off catalogue; research-only",
+ "note_chars": 132,
+ "verdict": "negative",
+ "download_ok": true,
+ "submit_ok": false,
+ "approved_for_weekly_slot": false,
+ "promoted": false,
+ "weekly_submission_slots_used": 0,
+ "slots_used": 0,
+ "artifact_status": "RESEARCH ONLY \u2014 H61 negative verdict; not an approved competition entry",
+ "format": {
+  "path": "/home/user/GEMSDOE52/submission/gems52-h61-deepsharp-cotrain-37600px.tif",
+  "bytes": 131771,
+  "sha256": "7c86853164f9cfa7aea34de029c7d5ccf3a6b43dbbb2b14de570e558384d2755",
+  "bands": 1,
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "width": 3292,
+  "height": 3730,
+  "bounds": [
+   243350.0,
+   4135550.0,
+   572550.0,
+   4508550.0
+  ],
+  "ref_bounds": [
+   243350.0,
+   4135550.0,
+   572550.0,
+   4508550.0
+  ],
+  "transform": [
+   100.0,
+   0.0,
+   243350.0,
+   0.0,
+   -100.0,
+   4508550.0
+  ],
+  "nodata": null,
+  "blocksize": [
+   256,
+   256
+  ],
+  "fixture_grid": false,
+  "has_validity_mask": false,
+  "nan_pixels": 0,
+  "infinity_pixels": 0,
+  "n_nan": 0,
+  "min": 0.0,
+  "max": 1.0,
+  "mean": 0.003062098752707243,
+  "n_nonzero": 37600,
+  "mass": 37600.0,
+  "mass_outside_footprint": 0,
+  "problems": [],
+  "ok": true,
+  "validation_class": "local on-disk template/range check; not organizer upload acceptance",
+  "grid_matches_sample": true
+ },
+ "uniqueness": {
+  "n_priors_checked": 545,
+  "canonical_pattern_unique": true,
+  "equals_literal_prior_union": false,
+  "novel_fraction": 0.0,
+  "union_px": 5364537,
+  "relation_to_union": "subset-of-union",
+  "ok": false
+ },
+ "lane": {
+  "literal": "DUPLICATE/STOP",
+  "policy": "DUPLICATE/STOP",
+  "max_near_3px_fraction_literal": 1.0,
+  "max_near_3px_fraction_policy": 0.87875,
+  "universal_coverage_probes": 14,
+  "priors_checked": 545
+ },
+ "holdout": {
+  "evidence_class": "HOLDOUT-DTI",
+  "evaluator": "gems52-pooled-hide-v1",
+  "dti": 0.030584408210788217,
+  "ci95": [
+   0.020940468893667626,
+   0.04223810880975772
+  ],
+  "withheld_positive_pixels": 53186,
+  "best_comparable_control": "single_B",
+  "all_arms_filled_budget": true
+ },
+ "projection": {
+  "G_lower": {
+   "G_px": 5949.282184328427,
+   "emitted_px": 37600.0,
+   "breakeven_credit_density_to_match_champion": 0.0907240551235412,
+   "random_dot_density": 0.0109350576159826,
+   "breakeven_multiple_of_random": 8.296623420706956,
+   "dti_if_density_equals_holdout_arm": 0.12512296711782486
+  },
+  "G_upper": {
+   "G_px": 12512.133928571544,
+   "emitted_px": 37600.0,
+   "breakeven_credit_density_to_match_champion": 0.1295146979863229,
+   "random_dot_density": 0.02299788464703079,
+   "breakeven_multiple_of_random": 5.631591773508799,
+   "dti_if_density_equals_holdout_arm": 0.0876476812478638
+  },
+  "evidence_class": "PROJECTION FROM OWNER-REPORTED SCORES AND A LOCAL SIMULATOR; NOT A SCORE, NOT ORGANIZER-CONFIRMED, NOT A LEADERBOARD FORECAST",
+  "formula": "DTI = T/(0.2*(T+S-M)+0.8*(|G|-T)) with M~T for sparse dots => DTI = d*S/(0.2S+0.8|G|)",
+  "holdout_arm_density": 0.04086271766025406,
+  "holdout_arm_density_caveat": "HOLDOUT-DTI measures recovery of withheld *catalogue* components in a simulator that measured Spearman -0.10 against the owner-reported board in round R4; it is not a density estimate for hidden off-catalogue expert-drawn truth.",
+  "champion": {
+   "id": "ref_h33_2_b2",
+   "reported": 0.2778,
+   "attribution": "FILENAME-ONLY-OWNER-REPORTED",
+   "S_masked": 37654
+  },
+  "identified_interval_for_novel_mass": [
+   0.0,
+   12512.133928571544
+  ],
+  "identified_interval_note": "Pixels outside all 13 scored files belong to no LP atom, so organiser-tied evidence gives NO information about their credit: the interval is [0, |G|]. The claim 'novel mass is worthless' is as unproven as 'novel mass is valuable'.",
+  "verdict_rule": "promote only if format+lane+not-union pass AND the projected organiser-DTI interval exceeds the champion at both ends of the |G| interval; otherwise negative/research-only"
+ },
+ "not_the_union": {
+  "cells_differing_from_view_A": 69594,
+  "cells_differing_from_view_B": 75200,
+  "cells_differing_from_union_max": 72966,
+  "dots_shared_with_view_A": 2803,
+  "dots_shared_with_view_B": 0,
+  "dots_shared_with_union_max": 1117,
+  "jaccard_with_union_max": 0.015077683139181728,
+  "spearman_field_vs_unionmax": 0.00513558450620457,
+  "strict_a_only_candidate_px": 55193,
+  "emitted_cells_that_are_strict_a_only": 594,
+  "verdict": "the emission is not max(A,B), not either single view, and not their union"
+ },
+ "view_comparison": {
+  "not_copied_or_literal_union": true
+ },
+ "generated_utc": "2026-10-09T00:24:35Z"
+}

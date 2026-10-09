@@ -1,0 +1,529 @@
+{
+ "round": "H62-cotrain-v1",
+ "seed": 20261010,
+ "runtime_s": 154.2,
+ "lane": "co-training between a geophysical view and a surface view, with disagreement as the discovery signal (Blum & Mitchell COLT '98, doi:10.1145/279943.279962)",
+ "data_root": "data",
+ "qualification": "pinned owner-mirror bytes, SHA-verified; not organizer-authenticated",
+ "footprint_px": 5165840,
+ "catalogue_px": 60988,
+ "folds": [
+  {
+   "fold": 0,
+   "n_fit": 4954640,
+   "n_region": 5165840,
+   "n_truth": 10342,
+   "n_held_components_px": 12343,
+   "cat_in_fit": 47195,
+   "n_negatives": 4519160,
+   "n_blocks": 2147
+  },
+  {
+   "fold": 1,
+   "n_fit": 4841172,
+   "n_region": 5165840,
+   "n_truth": 10352,
+   "n_held_components_px": 26572,
+   "cat_in_fit": 33503,
+   "n_negatives": 4519160,
+   "n_blocks": 2147
+  },
+  {
+   "fold": 2,
+   "n_fit": 4920687,
+   "n_region": 5165840,
+   "n_truth": 10439,
+   "n_held_components_px": 16638,
+   "cat_in_fit": 43128,
+   "n_negatives": 4519160,
+   "n_blocks": 2147
+  },
+  {
+   "fold": 3,
+   "n_fit": 5013925,
+   "n_region": 5165840,
+   "n_truth": 5341,
+   "n_held_components_px": 5341,
+   "cat_in_fit": 54040,
+   "n_negatives": 4519160,
+   "n_blocks": 2147
+  }
+ ],
+ "withheld_positives_total": 36474,
+ "independence": {
+  "n_blocks": 8588,
+  "n_negative_predictions": 18048996,
+  "negative_class": "held-out catalogue-zero proxies, not verified absence",
+  "threshold": 0.6,
+  "minimum_blocks": 20,
+  "tests": {
+   "negative_mean_squared_error": {
+    "n": 8588,
+    "pearson": 0.15615432258056539,
+    "spearman": 0.15309098887990497
+   },
+   "negative_false_positive_rate": {
+    "n": 8588,
+    "pearson": 0.11471882073152385,
+    "spearman": 0.1757144177181826
+   }
+  },
+  "max_abs_correlation": 0.1757144177181826,
+  "measured": true,
+  "allow_exchange": true,
+  "reason": "weak proxy negative-error correlation; not proof of conditional feature independence",
+  "blocks": null,
+  "pixel_level": {
+   "n": 4519160,
+   "pearson": 0.15607103777362896,
+   "spearman": 0.15116628172554378
+  },
+  "q_conf": 0.6,
+  "block_px": 50,
+  "min_negatives_per_block": 300
+ },
+ "leakage_canary": {
+  "threshold": 0.9,
+  "n_layers": 75,
+  "rows": [
+   {
+    "layer": "A_mag_anom_val",
+    "max_auc_over_folds": 0.6,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_mag_anom_grad",
+    "max_auc_over_folds": 0.6541,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_mag_anom_range",
+    "max_auc_over_folds": 0.6559,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_rtp_val",
+    "max_auc_over_folds": 0.6183,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_rtp_grad",
+    "max_auc_over_folds": 0.6865,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_rtp_range",
+    "max_auc_over_folds": 0.6977,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_tmi_hg_val",
+    "max_auc_over_folds": 0.6848,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_tmi_hg_grad",
+    "max_auc_over_folds": 0.6719,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_tmi_hg_range",
+    "max_auc_over_folds": 0.6925,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_geod_2ndinv_val",
+    "max_auc_over_folds": 0.7004,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_geod_2ndinv_grad",
+    "max_auc_over_folds": 0.5455,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_geod_2ndinv_range",
+    "max_auc_over_folds": 0.5584,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_grav_slope_val",
+    "max_auc_over_folds": 0.6195,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_grav_slope_grad",
+    "max_auc_over_folds": 0.6371,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_grav_slope_range",
+    "max_auc_over_folds": 0.6416,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_tmi_vg_val",
+    "max_auc_over_folds": 0.5095,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_tmi_vg_grad",
+    "max_auc_over_folds": 0.6609,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_tmi_vg_range",
+    "max_auc_over_folds": 0.6745,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_grav_vg_val",
+    "max_auc_over_folds": 0.5465,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_grav_vg_grad",
+    "max_auc_over_folds": 0.6138,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_grav_vg_range",
+    "max_auc_over_folds": 0.618,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_grav_anom_val",
+    "max_auc_over_folds": 0.573,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_grav_anom_grad",
+    "max_auc_over_folds": 0.6173,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_grav_anom_range",
+    "max_auc_over_folds": 0.6206,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_tmi_val",
+    "max_auc_over_folds": 0.6056,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_tmi_grad",
+    "max_auc_over_folds": 0.6874,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_tmi_range",
+    "max_auc_over_folds": 0.6989,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_depth_to_base_val",
+    "max_auc_over_folds": 0.5304,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_depth_to_base_grad",
+    "max_auc_over_folds": 0.569,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_depth_to_base_range",
+    "max_auc_over_folds": 0.5763,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_eq_density_val",
+    "max_auc_over_folds": 0.6439,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_eq_density_grad",
+    "max_auc_over_folds": 0.5416,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_eq_density_range",
+    "max_auc_over_folds": 0.5524,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_cond_surf_val",
+    "max_auc_over_folds": 0.7066,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_cond_surf_grad",
+    "max_auc_over_folds": 0.5173,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_cond_surf_range",
+    "max_auc_over_folds": 0.5137,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_grav_hg_val",
+    "max_auc_over_folds": 0.6375,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_grav_hg_grad",
+    "max_auc_over_folds": 0.6142,
+    "n_folds": 4
+   },
+   {
+    "layer": "A_grav_hg_range",
+    "max_auc_over_folds": 0.6176,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_rad_tc_val",
+    "max_auc_over_folds": 0.5075,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_rad_tc_grad",
+    "max_auc_over_folds": 0.5257,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_rad_tc_range",
+    "max_auc_over_folds": 0.5299,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_det_elev_val",
+    "max_auc_over_folds": 0.5361,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_det_elev_grad",
+    "max_auc_over_folds": 0.6143,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_det_elev_range",
+    "max_auc_over_folds": 0.6015,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_det_elev_slope_val",
+    "max_auc_over_folds": 0.5976,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_det_elev_slope_grad",
+    "max_auc_over_folds": 0.6447,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_det_elev_slope_range",
+    "max_auc_over_folds": 0.6099,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_rad_TC_val",
+    "max_auc_over_folds": 0.5077,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_rad_TC_grad",
+    "max_auc_over_folds": 0.5207,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_rad_TC_range",
+    "max_auc_over_folds": 0.521,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_rad_ThK_val",
+    "max_auc_over_folds": 0.6294,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_rad_ThK_grad",
+    "max_auc_over_folds": 0.5377,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_rad_ThK_range",
+    "max_auc_over_folds": 0.5711,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_rad_UK_val",
+    "max_auc_over_folds": 0.6689,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_rad_UK_grad",
+    "max_auc_over_folds": 0.5541,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_rad_UK_range",
+    "max_auc_over_folds": 0.5884,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_rad_UTh_val",
+    "max_auc_over_folds": 0.7175,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_rad_UTh_grad",
+    "max_auc_over_folds": 0.5721,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_rad_UTh_range",
+    "max_auc_over_folds": 0.6034,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_lidar_ex_max_val",
+    "max_auc_over_folds": 0.6761,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_lidar_ex_max_grad",
+    "max_auc_over_folds": 0.6797,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_lidar_ex_max_range",
+    "max_auc_over_folds": 0.6768,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_lidar_step_max_val",
+    "max_auc_over_folds": 0.6677,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_lidar_step_max_grad",
+    "max_auc_over_folds": 0.7177,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_lidar_step_max_range",
+    "max_auc_over_folds": 0.7126,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_lidar_upface_max_val",
+    "max_auc_over_folds": 0.689,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_lidar_upface_max_grad",
+    "max_auc_over_folds": 0.7041,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_lidar_upface_max_range",
+    "max_auc_over_folds": 0.6846,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_lidar_relief_val",
+    "max_auc_over_folds": 0.6673,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_lidar_relief_grad",
+    "max_auc_over_folds": 0.7047,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_lidar_relief_range",
+    "max_auc_over_folds": 0.6818,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_lidar_coh100_val",
+    "max_auc_over_folds": 0.5804,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_lidar_coh100_grad",
+    "max_auc_over_folds": 0.6118,
+    "n_folds": 4
+   },
+   {
+    "layer": "B_lidar_coh100_range",
+    "max_auc_over_folds": 0.6207,
+    "n_folds": 4
+   }
+  ],
+  "worst_layer": "B_lidar_step_max_grad",
+  "worst_auc": 0.7177,
+  "leakage_detected": false,
+  "verdict": "no single layer exceeds AUC 0.90 on the holdout; no leakage detected at this granularity"
+ },
+ "strata": {
+  "q_conf": 0.6,
+  "q_abstain": 0.4,
+  "counts": {
+   "allowed": 4861502,
+   "a_only": 290785,
+   "b_only": 193959,
+   "concordant": 141530,
+   "neither": 4235228
+  },
+  "median_depth_to_basement_m": {
+   "a_only": 340.5487060546875,
+   "b_only": 108.0527114868164,
+   "concordant": 227.65139770507812,
+   "neither": 330.2393798828125,
+   "permitted": 315.98773193359375
+  },
+  "evaluated_px": 5165840
+ },
+ "corroboration_probe": {
+  "n_thin_a": 6307,
+  "n_thin_b": 31083,
+  "n_corroborated": 92,
+  "expected_under_independence": 40.32508492231413,
+  "corroboration_lift": 2.281458307582912
+ },
+ "cotraining_exchange": {
+  "ran": false,
+  "reason": "H62-E: not re-run. Five independent prior reproductions (H56, H57, H59, H60D x2 directions) returned nulls; the premise test is still run above because the concordance hypothesis rests on the same conditional-independence premise."
+ },
+ "view_a_layers": [
+  "A_mag_anom",
+  "A_rtp",
+  "A_tmi_hg",
+  "A_geod_2ndinv",
+  "A_grav_slope",
+  "A_tmi_vg",
+  "A_grav_vg",
+  "A_grav_anom",
+  "A_tmi",
+  "A_depth_to_base",
+  "A_eq_density",
+  "A_cond_surf",
+  "A_grav_hg"
+ ],
+ "view_b_layers": [
+  "B_rad_tc",
+  "B_det_elev",
+  "B_det_elev_slope",
+  "B_rad_TC",
+  "B_rad_ThK",
+  "B_rad_UK",
+  "B_rad_UTh",
+  "B_lidar_ex_max",
+  "B_lidar_step_max",
+  "B_lidar_upface_max",
+  "B_lidar_relief",
+  "B_lidar_coh100"
+ ]
+}

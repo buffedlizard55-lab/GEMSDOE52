@@ -1,34 +1,32 @@
 #!/usr/bin/env python3
-"""H62 submission build — buried structural corridors (co-training lane).
+"""H62 E3 -- place, gate, write and publish this round's unique GeoTIFF.
 
-Preregistered: ``registry/h62_preregistration.json`` (frozen before any H62 fit ran).
-The shipped field is the H62-1 gate chain applied to the OOF disagreement contrast
-``max(pA - pB, 0)``: cover >= 200 m -> potential-field edge >= P75 -> line persistence
-(corridor length >= 15 px, elongation >= 3).  Placement is the registered scoring emitter
-``h57.iso_select`` (min_px 3, nms_px 5) on the required-novel pool (outside the <=200 m
-catalogue ring and outside every accessible prior's support), budget 37,654 px.
+Reads the two E1/E2 receipts and never re-fits.  Every gate is written to ``evidence/``.
 
-Outputs:
-  submission/<stem>.tif|zip                canonical artifact + one-TIFF portal zip
-  docs/downloads/h62-candidate.tif|zip     site copies (one-click download)
-  submission/H62_LATEST.txt                round pointer (submission/LATEST.txt only if approved)
-  evidence/h62_build.json, h62_format_gate.json, h62_uniqueness.json, h62_lane_surface.json,
-           h62_lane_gate.json, h62_slot_gate.json, h62_run_card.json,
-           gems52-h62-*-candidate-geology.csv, gems52-h62-a-only-candidate-segments.csv
-  docs/data/submission_h62.json            machine-readable site receipt
+Field selection (mechanical, from the receipts)
+-----------------------------------------------
+1. Every candidate field is emitted at the registered budget on the legal pool (footprint minus the
+   <=200 m catalogue ring) with the registered scoring emitter ``h57.iso_select``.
+2. **Union disqualifier (correction H62-3).**  Any candidate whose dots overlap the ``clf_union``
+   top-k at the same budget by more than 70 % is *the union* for the purposes of the brief's
+   "confirm the output isn't merely the union of the two views" and is removed.
+3. **Winner** = highest revealed-preference co-location lift among the survivors.
 
-This script never uploads anything.  Promotion to a weekly slot is a separate selector step.
+Gates
+-----
+format (all finite, {0,1}, CRS/shape/transform), ring (no dot within 200 m of the catalogue),
+uniqueness (decoded pattern distinct from every accessible aligned prior), lane drift (Spearman
+<= 0.90 on the surface and on the dots; <= 70 % of dots within 3 px of any one registry raster,
+calibration rasters excluded from the proximity component per H60-6), not-merely-union.
 """
 from __future__ import annotations
 
 import csv
-import hashlib
 import json
 import re
 import shutil
 import sys
 import time
-import zipfile
 from pathlib import Path
 
 import numpy as np
@@ -39,507 +37,435 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from gems52 import gates                            # noqa: E402
-from gems52 import grid as G                       # noqa: E402
+from gems52 import grid as G                        # noqa: E402
 from gems52 import h57                              # noqa: E402
-from gems52 import h60d                              # noqa: E402
-from gems52 import holdout as HO                    # noqa: E402
-from gems52 import metric as M                      # noqa: E402
+from gems52 import h60d                             # noqa: E402
+from gems52 import h62                              # noqa: E402
+from gems52 import submission_writer                # noqa: E402
 
-DATA = ROOT / "work/pinned"
+DATA = ROOT / "data"
 WORK = ROOT / "work/h62"
 EV = ROOT / "evidence"
 DL = ROOT / "docs/downloads"
 DAD = ROOT / "docs/data"
-SUB = ROOT / "submission"
-BUDGET = 37654
-SEED = 20261009
+PREREG = json.loads((ROOT / "registry/h62_preregistration.json").read_text())
+SEED = int(PREREG["protocol"]["seed"])
+Q_CONF = float(PREREG["protocol"]["thresholds"]["q_conf"])
+Q_ABSTAIN = float(PREREG["protocol"]["thresholds"]["q_abstain"])
+COVER_Q = float(PREREG["protocol"]["thresholds"]["cover_depth_quantile"])
+BUDGET = 22000                 # registered correction H62-2
+UNION_DISQUALIFY = 0.70        # correction H62-3
+RING_PX = h57.CORRIDOR_PX      # 2 px = 200 m
+CHAMPION_OWNER_REPORTED = 0.2778
+STAMP = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
 
 
 def log(m: str) -> None:
     print(f"[h62-build {time.strftime('%H:%M:%S')}] {m}", flush=True)
 
 
-def read_mask(path: Path, thresh: float = 0.5) -> np.ndarray:
-    with rasterio.open(path) as src:
-        a = src.read(1)
-    a[~np.isfinite(a)] = 0.0
-    return a > thresh
+def prior_inventory(field: str, budget: int, extra_roots=()):
+    """Accessible aligned priors with this round's OWN outputs excluded, by exact basename.
 
-
-def prior_inventory():
-    """Accessible aligned priors with H62's own outputs excluded (by exact stem patterns)."""
-    found = gates.find_priors([str(SUB), str(DL), str(ROOT / "docs"), str(DATA / "scored"),
-                               str(DATA / "reference")])
-    own_re = re.compile(r"^gems52-h62-.*\.tif$")
-    own_short = {"h62-candidate.tif", "h62-candidate.zip", "STATUS.txt"}
-    keep = []
-    for p in found:
-        n = Path(p).name
-        if n in own_short or own_re.match(n):
-            continue
-        keep.append(p)
-    return keep
+    Self-exclusion is deliberately by the basenames this build writes and nothing else.  A bare
+    ``gems52-h62-`` prefix would also exclude a *parallel* H62 session's artifact, which is a
+    genuine prior the lane gate exists to compare against (the IR-H60D-002 lesson, inverted).
+    """
+    roots = [r for r in extra_roots if Path(r).exists()]
+    found = gates.find_priors(roots)
+    own = {f"gems52-h62-{field}-arm{int(budget)}px.tif",
+           f"gems52-h62-{field}-arm{int(budget)}px.zip",
+           "h62-candidate.tif", "h62-candidate.zip", "STATUS.txt"}
+    return [p for p in found if Path(p).name not in own]
 
 
 def main() -> int:
     t0 = time.time()
+    EV.mkdir(parents=True, exist_ok=True)
+    DL.mkdir(parents=True, exist_ok=True)
+    DAD.mkdir(parents=True, exist_ok=True)
+
     valid = G.footprint_from(DATA / "training_features.tif", bands="all")
     with rasterio.open(DATA / "labels.tif") as src:
         cat = src.read(1) == 1
     with rasterio.open(DATA / "sample_submission.tif") as src:
         valid_sub = np.isfinite(src.read(1))
+    # The two footprints are NOT nested (IR-H62-001): 1,540 px are finite in all 19 competition
+    # bands but not in sample_submission, and 3,073 px are the other way round.  The submission
+    # format is defined by sample_submission, so the emission domain is the INTERSECTION.
+    domain = valid & valid_sub
+    log(f"footprint: all-19-band {int(valid.sum())} px, sample domain {int(valid_sub.sum())} px, "
+        f"intersection {int(domain.sum())} px (IR-H62-001)")
+    depth = G.read_band(DATA / "training_features.tif", 15)
 
     pa = np.nan_to_num(np.load(WORK / "pa_oof.npy"), nan=0.0).astype(np.float32)
     pb = np.nan_to_num(np.load(WORK / "pb_oof.npy"), nan=0.0).astype(np.float32)
-    field_arr = np.load(WORK / "field_h62_1.npy").astype(np.float32)
-    corridor_mask = np.load(WORK / "h62_corridor_mask.npy")
-    a_only = np.load(WORK / "stratum_a_only.npy")
-    b_only = np.load(WORK / "stratum_b_only.npy")
-    strat_conc = np.load(WORK / "stratum_concordant.npy")
-    cotrain_receipt = json.loads((EV / "h62_cotrain.json").read_text())
-    depth_medians = cotrain_receipt["strata"]["median_depth_to_basement_m"]
-    val = json.loads((EV / "h62_validation.json").read_text())
+    corridor = ndimage.binary_dilation(cat, iterations=RING_PX)
+    permitted = domain & ~corridor
 
-    priors = prior_inventory()
-    support = np.zeros(G.SHAPE, bool)
-    for p in priors:
-        try:
-            support |= read_mask(Path(p))
-        except Exception:
-            pass
-    log(f"prior support union: {int(support.sum())} px from {len(priors)} aligned rasters")
+    with rasterio.open(DATA / "reference/h33-2-b2-zeros.tif") as src:
+        ref = src.read(1) > 0
+    with rasterio.open(DATA / "scored/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif"
+                       ) as src:
+        p1 = ref & (np.isfinite(src.read(1)) & (src.read(1) > 0))
+    log(f"P1 measured-credit atom {int(p1.sum())} px")
 
-    corridor = ndimage.binary_dilation(cat, iterations=h57.CORRIDOR_PX)
-    permitted = valid & ~corridor
-    pool = permitted & ~support
-    log(f"legal pool: {int(pool.sum())} px (footprint & ~200 m ring & outside prior support)")
-
-    # ---- lane drift gate on the SURFACE, before placement (lane protocol item 1) --------------
-    calib = h60d.calibration_basenames(ROOT / "registry/data_manifest.json")
-    lane_surface = h60d.lane_drift_report(field_arr, None, priors, valid, calibration=calib)
-    h60d.write_json(EV / "h62_lane_surface.json", lane_surface)
-    log(f"lane gate on surface: max|rho|={lane_surface['surface_max_abs_spearman']} -> "
-        f"{'DRIFT' if lane_surface['lane_drift_detected'] else 'clean'}")
-
-    # ---- placement (registered scoring emitter, correction H60-5) ------------------------------
-    density = np.maximum(np.where(pool, field_arr, 0.0), 0.0).astype(np.float32)
-    n_pos_pool = int((pool & (field_arr > 0)).sum())
-    if n_pos_pool < BUDGET:
-        log(f"WARNING: positive-field support on the novel pool is {n_pos_pool} px < budget "
-            f"{BUDGET}; iso_select fills the remainder from zero-field pool pixels (disclosed)")
-    arm = h57.iso_select(density, pool, BUDGET, min_px=3.0, nms_px=5)
-    arm_b = arm > 0
-    pos_crests = int((arm_b & (field_arr > 0)).sum())
-    log(f"iso_select placed {int(arm_b.sum())} px (requested {BUDGET}); {pos_crests} on "
-        f"positive-field crests, {int(arm_b.sum()) - pos_crests} zero-field budget fill")
-
-    # ---- not merely the union of the two views -------------------------------------------------
-    union_field = np.maximum(pa, pb)
-    union_topk = h57.iso_select(np.where(pool, union_field, 0.0).astype(np.float32), pool,
-                                BUDGET, min_px=3.0, nms_px=5) > 0
-    viewB_topk = h57.iso_select(np.where(pool, pb, 0.0).astype(np.float32), pool,
-                                BUDGET, min_px=3.0, nms_px=5) > 0
-    viewA_topk = h57.iso_select(np.where(pool, pa, 0.0).astype(np.float32), pool,
-                                BUDGET, min_px=3.0, nms_px=5) > 0
-    outside_union = int((arm_b & ~union_topk).sum())
-    outside_viewA = int((arm_b & ~viewA_topk).sum())
-    outside_viewB = int((arm_b & ~viewB_topk).sum())
-    log(f"not-merely-union: {outside_union}/{int(arm_b.sum())} outside union top-k; "
-        f"{outside_viewA} outside view_A top-k; {outside_viewB} outside view_B top-k")
-
-    # ---- assemble (binary {0,1}, ALL FINITE — zeros outside the sample domain) ------------------
-    arr = np.zeros(G.SHAPE, np.float32)
-    arr[arm_b] = 1.0
-    clipped = int(((arr > 0) & ~valid_sub).sum())
-    arr[~valid_sub] = 0.0
-    arm_b = arm_b & valid_sub
-    total = int((arr > 0).sum())
-    ys, xs = np.nonzero(arr > 0)
-    dcat = ndimage.distance_transform_edt(~cat, sampling=G.PIXEL_M)
-    dmin_cat = float(dcat[ys, xs].min()) if ys.size else float("nan")
-    log(f"emitted {total} px; clipped {clipped}; min distance to mapped catalogue "
-        f"{dmin_cat:.1f} m")
-
-    qhash = hashlib.sha256()
-    stem = f"gems52-h62-buriedcorr-{total}px"
-    path = SUB / f"{stem}.tif"
-    q = G.write_geotiff(path, arr)
-    log(f"wrote {path.name}: {q['bytes']} bytes, sha256 {q['sha256'][:16]}…")
-
-    fmt = gates.format_report(path, DATA / "sample_submission.tif", footprint=valid_sub)
-    uniq = gates.uniqueness_report(arr, priors)
-    h60d.write_json(EV / "h62_format_gate.json", fmt)
-    h60d.write_json(EV / "h62_uniqueness.json", uniq)
-    log(f"format problems: {fmt['problems']}; pattern_unique={uniq['canonical_pattern_unique']}, "
-        f"novel_frac={uniq['novel_fraction']:.4f}, n_priors={uniq['n_priors_checked']}")
-
-    # ---- lane drift gate on the FINAL DOTS (H60-6: calibration excluded from proximity) ----------
-    lane_dots = h60d.lane_drift_report(field_arr, arm_b, priors, valid, calibration=calib)
-    h60d.write_json(EV / "h62_lane_gate.json", lane_dots)
-    log(f"lane gate on dots: max|rho|={lane_dots['dots_max_abs_spearman']}, raw within-3px "
-        f"{lane_dots['dots_max_within_3px_frac']} (gate excl. calib: "
-        f"{lane_dots['dots_max_within_3px_frac_gate']}) -> "
-        f"{'DRIFT' if lane_dots['lane_drift_detected'] else 'clean'}")
-
-    # ---- score the SHIPPED raster on the holdout + matched novel-pool controls -------------------
-    shipped, novel_controls = [], []
-    rng_novel = np.random.default_rng(SEED)
-    for mode in ("hide", "tip"):
-        folds = HO.make_folds(cat, valid, n_folds=4, buffer_px=4, prevalence=0.002,
-                              seed=SEED, mode=mode)
-        for f in folds:
-            truth = f["truth"] & f["region"] & valid
-            legal_novel = f["region"] & pool
-            p = np.where(f["region"], arr, 0.0)
-            p = HO.mask_visible(p, f["visible"] & valid)
-            r = M.dti(p, truth)
-            shipped.append(dict(mode=mode, fold=f["fold"], dti=round(float(r["dti"]), 6),
-                                tpw=float(r["tpw"]), fpw=float(r["fpw"]), fnw=float(r["fnw"]),
-                                n_truth=int(r["n_truth"]), emitted=int((p > 0).sum())))
-            flat_pool = np.flatnonzero(legal_novel.ravel())
-            take = rng_novel.choice(flat_pool, min(BUDGET, flat_pool.size), replace=False)
-            rnd = np.zeros(G.SHAPE, bool)
-            rnd.ravel()[take] = True
-            p = np.where(f["region"], rnd.astype(np.float32), 0.0)
-            p = HO.mask_visible(p, f["visible"] & valid)
-            r = M.dti(p, truth)
-            novel_controls.append(dict(mode=mode, fold=f["fold"], arm="random_novelpool",
-                                       dti=round(float(r["dti"]), 6), n_truth=int(r["n_truth"])))
-            for arm_name, fld in (("H62_1_novelpool", field_arr),
-                                  ("view_B_novelpool", pb),
-                                  ("clf_union_novelpool", union_field)):
-                score = np.where(legal_novel, fld, 0.0).astype(np.float32)
-                nodes = h57.iso_select(score, legal_novel, BUDGET, min_px=3.0, nms_px=5)
-                p = np.where(f["region"], nodes.astype(np.float32), 0.0)
-                p = HO.mask_visible(p, f["visible"] & valid)
-                r = M.dti(p, truth)
-                novel_controls.append(dict(mode=mode, fold=f["fold"], arm=arm_name,
-                                           dti=round(float(r["dti"]), 6),
-                                           n_truth=int(r["n_truth"])))
-        log(f"shipped {mode}: " + ", ".join(f"f{r['fold']}={r['dti']:.6f}"
-                                            for r in shipped if r["mode"] == mode))
-
-    shipped_pooled = {}
-    for mode in ("hide", "tip"):
-        rs = [r for r in shipped if r["mode"] == mode]
-        pl = h60d.pooled_dti(rs)
-        ci = h60d.bootstrap_ci([r["dti"] for r in rs], n_boot=10000, seed=SEED)
-        shipped_pooled[mode] = dict(
-            pooled_dti=round(pl["dti"], 6), tpw=round(pl["tpw"], 2), fpw=round(pl["fpw"], 2),
-            fnw=round(pl["fnw"], 2), withheld_positives=pl["n_truth"],
-            fold_mean_dti=round(ci["mean"], 6), ci95_lo=round(ci["ci_lo"], 6),
-            ci95_hi=round(ci["ci_hi"], 6),
-            label="HOLDOUT-DTI of the SHIPPED raster (evaluator gems52.metric.dti alpha 0.2 "
-                  "beta 0.8 R 300 m triangular; holdout.make_folds whole-segment "
-                  "hide-and-recover, 4 folds, buffer 4 px, prevalence 0.002, seed 20261009; "
-                  "pooled = metric components pooled across folds; CI = fold bootstrap 10k)")
-    novel_pooled = {}
-    for mode in ("hide", "tip"):
-        for arm_name in ("random_novelpool", "H62_1_novelpool", "view_B_novelpool",
-                         "clf_union_novelpool"):
-            rs = [r for r in novel_controls if r["mode"] == mode and r["arm"] == arm_name]
-            if rs:
-                novel_pooled[f"{mode}|{arm_name}"] = round(float(np.mean([r["dti"] for r in rs])), 6)
-
-    # ---- per-emitted-pixel geological reasoning -------------------------------------------------
-    depth = G.read_band(DATA / "training_features.tif", 15)
-    cond = G.read_band(DATA / "training_features.tif", 17)
-    mag = G.read_band(DATA / "training_features.tif", 14)
-    grav = G.read_band(DATA / "training_features.tif", 13)
-    elev = G.read_band(DATA / "training_features.tif", 12)
-    depth_sorted = np.sort(depth[permitted])
-    tr = G.TRANSFORM
-
-    def depth_pct(v):
-        return 100.0 * np.searchsorted(depth_sorted, v) / depth_sorted.size
-
-    def reason(r, c):
-        pa_, pb_ = float(pa[r, c]), float(pb[r, c])
-        d = float(depth[r, c]) if np.isfinite(depth[r, c]) else float("nan")
-        parts = []
-        parts.append(
-            f"Buried structural corridor candidate (H62-1): the geophysical view is confident "
-            f"(p_A={pa_:.2f}) while the surface view abstains (p_B={pb_:.2f}); the pixel passes "
-            f"the cover gate (depth to basement >= {200} m), the potential-field edge gate "
-            f"(gradient >= footprint P75), and the line-persistence gate (linear corridor "
-            f">= {15} px, elongation >= {3}) — a density or susceptibility step along strike "
-            f"with no surface scarp")
-        if np.isfinite(d):
-            dp = depth_pct(d)
-            parts.append(f"depth to basement {d:.0f} m at the {dp:.0f}th footprint percentile "
-                         f"({'deep' if dp > 70 else 'intermediate' if dp > 30 else 'shallow'} cover)")
-        parts.append(f"isostatic gravity {float(grav[r, c]):.1f} mGal, TMI {float(mag[r, c]):.0f} nT, "
-                     f"detrended elevation {float(elev[r, c]):+.0f} m, conductivity "
-                     f"{float(cond[r, c]):.3f} S/m")
-        parts.append(
-            f"falsifier: Phase-2 review that finds intact undisturbed cover, no break in the "
-            f"geophysical gradient within 300 m, a mapped paleochannel or lithologic contact "
-            f"explaining the gradient, or a DEM/road-layer match showing anthropogenic fabric "
-            f"voids this candidate; it was emitted because it is {float(dcat[r, c]):.0f} m from "
-            f"the nearest mapped catalogue pixel and outside every accessible prior's support")
-        return "; ".join(parts) + "."
-
-    rows_out = []
-    ay, ax = np.nonzero(arm_b)
-    for i, (r, c) in enumerate(zip(ay, ax)):
-        rows_out.append(dict(
-            node_id=i, row=int(r), col=int(c),
-            easting_m=round(tr[2] + (c + 0.5) * tr[0], 1),
-            northing_m=round(tr[5] + (r + 0.5) * tr[4], 1),
-            p_view_A=round(float(pa[r, c]), 4), p_view_B=round(float(pb[r, c]), 4),
-            h62_field_score=round(float(field_arr[r, c]), 4),
-            depth_to_basement_m=None if not np.isfinite(depth[r, c]) else round(float(depth[r, c]), 1),
-            surface_conductivity=None if not np.isfinite(cond[r, c]) else round(float(cond[r, c]), 4),
-            tmi_nT=None if not np.isfinite(mag[r, c]) else round(float(mag[r, c]), 2),
-            isostatic_gravity_mGal=None if not np.isfinite(grav[r, c]) else round(float(grav[r, c]), 2),
-            detrended_elev_m=None if not np.isfinite(elev[r, c]) else round(float(elev[r, c]), 1),
-            distance_to_mapped_catalogue_m=round(float(dcat[r, c]), 1),
-            agreement_stratum=("A_only" if a_only[r, c] else "B_only" if b_only[r, c] else
-                               "concordant" if strat_conc[r, c] else "neither"),
-            in_prior_support=bool(support[r, c]),
-            geological_reasoning=reason(r, c)))
-    csv_path = EV / f"gems52-h62-{total}px-candidate-geology.csv"
-    with csv_path.open("w", newline="") as f:
-        f.write("# H62 buried-corridor candidates: one written geological reasoning row per "
-                "emitted pixel (the brief requires geological reasoning for every A-only "
-                "candidate; here every emitted pixel carries one). View A = potential-field "
-                "and subsurface bands; View B = surface bands + LiDAR/radiometric proxies. "
-                "HYPOTHESES for Phase-2 review, not verified faults. Inputs: SHA-pinned "
-                "owner-mirror bytes (not organizer-authenticated).\n")
-        w = csv.DictWriter(f, fieldnames=list(rows_out[0].keys()))
-        w.writeheader()
-        for row in rows_out:
-            w.writerow(row)
-    log(f"wrote {csv_path.name} ({len(rows_out)} rows)")
-
-    # ---- A-only candidate SEGMENTS (reasoning for every A-only candidate in the pool) ------------
-    cand = a_only & pool & corridor_mask
-    comp, ncomp = ndimage.label(cand, structure=np.ones((3, 3), bool))
-    seg_rows = []
-    if ncomp:
-        yy, xx = np.nonzero(comp)
-        ids = comp[yy, xx]
-        order = np.argsort(ids, kind="stable")
-        yy, xx, ids = yy[order], xx[order], ids[order]
-        starts = np.searchsorted(ids, np.arange(1, ncomp + 1), side="left")
-        ends = np.append(starts[1:], ids.size)
-        sizes = ends - starts
-        mass_sum = np.zeros(ncomp + 1, np.float64)
-        np.add.at(mass_sum, ids, field_arr[yy, xx])
-        mean_mass = mass_sum[1:] / np.maximum(sizes, 1)
-        dep_v, cond_v = depth[yy, xx], cond[yy, xx]
-        elev_v, dcat_v = elev[yy, xx], dcat[yy, xx]
-        top = np.argsort(-mean_mass) + 1
-        for sid in top:
-            a, b = int(starts[sid - 1]), int(ends[sid - 1])
-            rr, cc = yy[a:b], xx[a:b]
-            dmed = float(np.median(dep_v[a:b]))
-            dmin = float(dcat_v[a:b].min())
-            seg_rows.append(dict(
-                segment=int(sid), n_px=int(sizes[sid - 1]),
-                centre_row=int(rr.mean()), centre_col=int(cc.mean()),
-                easting_m=round(tr[2] + (cc.mean() + 0.5) * tr[0], 1),
-                northing_m=round(tr[5] + (rr.mean() + 0.5) * tr[4], 1),
-                mean_field_mass=round(float(mean_mass[sid - 1]), 4),
-                median_depth_to_basement_m=round(dmed, 1),
-                median_surface_conductivity=round(float(np.median(cond_v[a:b])), 4),
-                median_detrended_elev_m=round(float(np.median(elev_v[a:b])), 1),
-                min_distance_to_catalogue_m=round(dmin, 1),
-                geological_reasoning=(
-                    f"A-only buried-corridor segment ({int(sizes[sid - 1])} px, 8-connected): "
-                    f"potential-field view confident, surface view abstaining; the segment "
-                    f"passes the cover gate (median depth to basement {dmed:.0f} m), the "
-                    f"edge gate and the line-persistence gate, so the reading is a buried "
-                    f"density/susceptibility step — the fault a surface mapper cannot draw. "
-                    f"Nearest mapped catalogue pixel {dmin:.0f} m. Falsifier: trenching or "
-                    f"review finding intact undisturbed cover and no gradient break within "
-                    f"300 m, or a paleochannel/lithologic-contact map that explains the "
-                    f"gradient, or a DEM/road-layer match showing anthropogenic fabric.")))
-    seg_path = EV / "gems52-h62-a-only-candidate-segments.csv"
-    with seg_path.open("w", newline="") as f:
-        f.write("# H62 A-only candidate dossier: every whole 8-connected segment of the A-only "
-                "population that survives the H62-1 corridor gates inside the legal pool, "
-                "ranked by mean field mass; one written reasoning + explicit falsifier per "
-                "segment. HYPOTHESES for Phase-2 review, not verified faults.\n")
-        if seg_rows:
-            w = csv.DictWriter(f, fieldnames=list(seg_rows[0].keys()))
-            w.writeheader()
-            for row in seg_rows:
-                w.writerow(row)
-    log(f"wrote {seg_path.name} ({len(seg_rows)} segments of {ncomp})")
-
-    # ---- conditional projection table (owner-reported inputs; NOT a score) ------------------------
-    g_lo, g_hi = 18000.0, 27400.0   # knowledge/27 correction IR-H60-002 bracket
-    proj = {"note": "conditional projection on owner-reported |G| bracket 18,000-27,400 "
-                    "(IR-H60-002); never a forecast or a score"}
-    for rho in (0.03, 0.05, 0.07, 0.09, 0.12, 0.14):
-        row = {}
-        for g_est, tag in ((g_lo, "G_lo"), (g_hi, "G_hi")):
-            T = min(rho * total, g_est)
-            row[tag] = round(float(T / (0.2 * total + 0.8 * g_est)), 4)
-        proj[f"rho_{rho}"] = row
-    log(f"conditional projection: {proj}")
-
-    # ---- slot gate + run card ---------------------------------------------------------------------
-    g62 = val["gates"]
-    checks = {
-        "format gate (single band, float32, EPSG:32611, 3730x3292, exact transform, all "
-        "finite, values in [0,1], no mass outside footprint)":
-            bool(not fmt["problems"]),
-        "decoded pattern differs from every accessible aligned prior":
-            bool(uniq["canonical_pattern_unique"]),
-        "support novelty (100% of emitted px outside every prior's support)":
-            bool(uniq.get("novel_fraction", 0) >= 0.999),
-        "lane drift gate on the surface (max|rho| <= 0.90, excl. calibration rasters)":
-            bool(lane_surface["surface_check_passed"]),
-        "lane drift gate on the final dots (max|rho| <= 0.90 and <=70% within 3 px, excl. "
-        "calibration rasters; raw values reported)":
-            bool(lane_dots["dots_check_passed"]),
-        "artifact is not the top-k of the plain union of the two views":
-            bool(outside_union > 0),
-        "artifact is not any prior and not any pair-union of priors":
-            bool(not uniq["equals_literal_prior_union"]),
-        "nothing emitted inside the <=200 m catalogue ring":
-            bool(dmin_cat >= 200.0),
-        "independence measured (max|r| < 0.60)":
-            bool(cotrain_receipt["independence"]["max_abs_correlation"] is not None
-                 and cotrain_receipt["independence"]["max_abs_correlation"] < 0.60),
-        "leakage canary clean (no layer AUC > 0.90)":
-            bool(not cotrain_receipt["leakage_canary"]["leakage_detected"]),
-        "one written geological reasoning per emitted pixel":
-            bool(len(rows_out) == total),
-        "every surviving A-only candidate segment has written reasoning":
-            bool(len(seg_rows) >= 1),
+    # ------------------------------------------------------------------ candidate fields
+    corrob = np.load(WORK / "corroborated.npy")
+    conc_cell = h62.concordant_cell(pa, pb, permitted, Q_CONF)
+    cover_f, cover_thr = h62.cover_conditioned_disagreement(pa, pb, depth, permitted, Q_CONF,
+                                                            Q_ABSTAIN, COVER_Q)
+    fields = {
+        "view_A": pa,
+        "view_B": pb,
+        "clf_union": np.maximum(pa, pb).astype(np.float32),
+        "dis_contrast": h60d.dis_contrast(pa, pb),
+        "dis_product": h60d.dis_product(pa, pb),
+        "conc_soft": h62.concordance_surface(pa, pb),
+        "conc_min": np.where(conc_cell, h62.concordance_surface(pa, pb), 0.0).astype(np.float32),
+        "conc_corrob": np.where(corrob, h62.concordance_surface(pa, pb), 0.0).astype(np.float32),
+        "cover_A_only": cover_f,
     }
-    slot = dict(
-        shipped_field="H62_1_corridors",
-        preregistered_promotion_bar=g62,
-        checks=checks, checks_pass=all(checks.values()),
-        shipped_raster_holdout=shipped_pooled,
-        note=("Every holdout number is HOLDOUT-DTI on catalogue truth; the private board truth "
-              "is off-catalogue expert-drawn faults; no organizer-authenticated score-to-file "
-              "mapping exists."))
-    promoted = bool(g62.get("verdict_so_far") == "pass" and slot["checks_pass"])
-    slot["verdict"] = ("APPROVED — DOWNLOAD AND SUBMIT (format-safe; preregistered promotion "
-                       "bar met)" if promoted else
-                       "DOWNLOAD FOR REVIEW: YES. SUBMIT TO COMPETITION: NO — preregistered "
-                       "promotion bar not met; research artifact only")
-    h60d.write_json(EV / "h62_slot_gate.json", slot)
-    log(f"slot gate: {slot['verdict']}")
 
-    name = f"{stem}-{q['sha256'][:8]}-zeros"
-    note = ("H62 buried corridors: cover/edge/persistence gates on A-only disagreement; "
-            "finite binary [0,1]; off-prior; hypotheses, not verified faults")
-    assert len(name) <= 200, "portal name limit"
-    assert len(note) <= 140, f"lane note limit, got {len(note)}"
+    def emit(fld):
+        return h57.iso_select(np.where(permitted, fld, 0.0).astype(np.float32), permitted,
+                              BUDGET, min_px=3.0, nms_px=3)
 
-    card = h60d.run_card(
-        hypothesis=("H62-1: the co-training discovery signal (A confident, B abstains) becomes "
-                    "a buried-fault candidate only when it is explained by burial (depth to "
-                    "basement >= 200 m), carried by a potential-field edge (gradient >= P75) "
-                    "and persistent along strike (line-persistence corridor); such corridors "
-                    "target faults missing from the surface-mapped USGS/INGENIOUS catalogue"),
-        mechanism=("two logistic views fitted out-of-fold on hide-and-recover whole-segment "
-                   "folds (independence premise MEASURED first); disagreement field "
-                   "max(pA-pB,0) gated by cover -> edge -> line persistence (morphological "
-                   "line opening at half-widths 2-4 px, component length >= 15 px and "
-                   "elongation >= 3); placed by the registered scoring emitter h57.iso_select "
-                   "on the required-novel pool outside the 200 m ring; binary {0,1} emission "
-                   "(metric-optimal) with zeros everywhere else"),
+    union_dots = emit(fields["clf_union"])
+    rows = []
+    dots = {}
+    for name, fld in fields.items():
+        d = emit(fld)
+        dots[name] = d
+        col = h62.revealed_colocation(d, p1, permitted)
+        ov = float((d & union_dots).sum()) / max(int(d.sum()), 1)
+        rows.append(dict(field=name, emitted=int(d.sum()),
+                         colocation=col["fraction"], random_baseline=col["random_baseline"],
+                         lift=col["lift"],
+                         union_overlap=round(ov, 4),
+                         disqualified_as_union=bool(ov > UNION_DISQUALIFY),
+                         implied_rho=h62.implied_credit_density(col["fraction"])))
+    for r in rows:
+        log(f"  {r['field']:14s} n={r['emitted']:6d} f={r['colocation']:.4f} "
+            f"lift={r['lift']:.2f}x union_overlap={r['union_overlap']:.3f}"
+            f"{'  [UNION]' if r['disqualified_as_union'] else ''}")
+
+    eligible = [r for r in rows if not r["disqualified_as_union"] and r["emitted"] > 0]
+    if not eligible:
+        raise SystemExit("no candidate survived the union disqualifier")
+    winner = max(eligible, key=lambda r: (r["lift"] or 0.0))
+    log(f"winner: {winner['field']} (lift {winner['lift']:.2f}x random, "
+        f"union overlap {winner['union_overlap']:.3f})")
+    field_arr = fields[winner["field"]]
+    out_dots = dots[winner["field"]]
+
+    # ------------------------------------------------------------------ ring + surface checks
+    ring_dist = ndimage.distance_transform_edt(~cat)
+    min_dist_m = float(ring_dist[out_dots].min()) * 100.0
+    pred = np.where(domain, out_dots.astype(np.float32), 0.0)
+
+    # ------------------------------------------------------------------ write + gates
+    stem = f"gems52-h62-{winner['field']}-arm{int(out_dots.sum())}px"
+    tif = ROOT / "submission" / f"{stem}.tif"
+    name = f"gems52-h62-{winner['field']}-arm{int(out_dots.sum())}px-{STAMP}-zeros"
+    note = (f"H62 two-view co-training: {winner['field']} ranking, {int(out_dots.sum())} px, "
+            f"derived budget, >=200 m off catalogue. Research review copy.")
+    if len(note) > 140:
+        note = note[:140]
+    receipt = submission_writer.write_submission(
+        tif, pred, DATA / "sample_submission.tif", domain, note=note, name=name,
+        metadata=dict(round="H62", field=winner["field"], budget_px=int(out_dots.sum()),
+                      ring_min_m=round(min_dist_m, 1)))
+    log(f"wrote {tif.name}: {receipt['bytes']} bytes, sha256 {receipt['sha256'][:16]}…")
+
+    priors = prior_inventory(winner["field"], int(out_dots.sum()),
+                             extra_roots=[ROOT / "submission", ROOT / "docs/downloads",
+                                          ROOT / "data" / "scored", ROOT / "data" / "reference"])
+    log(f"prior inventory: {len(priors)} aligned accessible rasters")
+    uniq = gates.uniqueness_report(pred, priors)
+    log(f"uniqueness: pattern_unique={uniq['canonical_pattern_unique']} "
+        f"novel_fraction={uniq['novel_fraction']:.4f} "
+        f"literal_union={uniq['equals_literal_prior_union']}")
+
+    lane = h60d.lane_drift_report(
+        np.where(permitted, field_arr, 0.0).astype(np.float32), out_dots, priors, domain,
+        calibration=h60d.calibration_basenames(ROOT / "registry/data_manifest.json"))
+    # The shared template's repaired gate (src/gems52/gates.py, added by main's H61): the same
+    # literal statistics, plus a MEASURED classification of priors whose 3 px halo covers most of
+    # the eligible footprint and therefore localises nothing.  Reported alongside, never instead.
+    lane2 = None
+    try:
+        lane2 = gates.lane_report(pred, domain, priors, sample=str(DATA / "sample_submission.tif"),
+                                  phase="dots")
+        log(f"repaired lane gate: literal={lane2['literal']['verdict']} "
+            f"policy={lane2['policy']['verdict']} "
+            f"informative={lane2['policy']['informative_priors']} "
+            f"probes={lane2['policy']['universal_coverage_probes']}")
+    except Exception as exc:                                   # never let a gate addition abort
+        log(f"repaired lane gate unavailable: {exc}")
+    if lane2 is not None:
+        lane["repaired_gate"] = {k: v for k, v in lane2.items() if k != "per_prior"}
+
+    log(f"lane gate: surface max|rho|={lane['surface_max_abs_spearman']} "
+        f"dots max|rho|={lane['dots_max_abs_spearman']} "
+        f"3px frac (gate)={lane['dots_max_within_3px_frac_gate']} "
+        f"drift={lane['lane_drift_detected']}")
+
+    # not merely the union of the two views
+    outside_union = int((out_dots & ~union_dots).sum())
+    not_union = dict(budget=BUDGET, union_emitted=int(union_dots.sum()),
+                     emitted=int(out_dots.sum()),
+                     outside_union_topk=outside_union,
+                     outside_union_fraction=round(outside_union / max(int(out_dots.sum()), 1), 4),
+                     verdict=("not merely the union" if outside_union / max(int(out_dots.sum()), 1)
+                              >= 0.30 else "MERELY THE UNION - fail"))
+
+    # ------------------------------------------------------------------ reasoning rows
+    ys, xs = np.nonzero(out_dots)
+    tr = G.TRANSFORM
+    cell_txt = [h62.cell_of(float(pa[y, x]), float(pb[y, x]), Q_CONF, Q_ABSTAIN)
+                for y, x in zip(ys[:0], xs[:0])]   # placeholder to keep memory flat
+    reasoning_csv = ROOT / "submission" / f"{stem}-emitted-pixels.csv"
+    with reasoning_csv.open("w", newline="") as fh:
+        w = csv.writer(fh)
+        w.writerow(["row", "col", "easting", "northing", "p_view_A", "p_view_B",
+                    "depth_to_basement_m", "confidence_cell", "independently_corroborated",
+                    "interpretation", "status"])
+        for y, x in zip(ys, xs):
+            a, b, d = float(pa[y, x]), float(pb[y, x]), float(depth[y, x])
+            cell = h62.cell_of(a, b, Q_CONF, Q_ABSTAIN)
+            note_txt = (h62.concordant_note(d) if cell == "concordant"
+                        else h62.a_only_note(d, cover_thr))
+            w.writerow([int(y), int(x), round(tr[2] + 100.0 * x + 50.0, 1),
+                        round(tr[5] - 100.0 * y - 50.0, 1), round(a, 4), round(b, 4),
+                        round(d, 1), cell, bool(corrob[y, x]), note_txt,
+                        "HYPOTHESIS FOR PHASE-2 REVIEW; not a verified fault"])
+    log(f"reasoning rows: {len(ys)} emitted pixels -> {reasoning_csv.name}")
+
+    # A-only candidate segment dossiers in the legal pool (the brief's requirement)
+    a_only = np.load(WORK / "stratum_a_only.npy") & permitted
+    comp, ncomp = ndimage.label(a_only, structure=np.ones((3, 3), bool))
+    dossier_csv = ROOT / "submission" / f"{stem}-a-only-candidate-segments.csv"
+    cap = 20000
+    written = 0
+    with dossier_csv.open("w", newline="") as fh:
+        w = csv.writer(fh)
+        w.writerow(["segment_id", "n_px", "centroid_row", "centroid_col", "easting", "northing",
+                    "median_depth_to_basement_m", "median_p_view_A", "median_p_view_B",
+                    "under_thick_cover", "geological_reasoning", "status"])
+        objs = ndimage.find_objects(comp)
+        for i, sl in enumerate(objs, 1):
+            if sl is None or written >= cap:
+                break
+            m = comp[sl] == i
+            yy, xx = np.nonzero(m)
+            if yy.size < 3:
+                continue
+            gy, gx = yy + sl[0].start, xx + sl[1].start
+            dm = float(np.median(depth[gy, gx]))
+            w.writerow([i, int(yy.size), int(gy.mean()), int(gx.mean()),
+                        round(tr[2] + 100.0 * gx.mean() + 50.0, 1),
+                        round(tr[5] - 100.0 * gy.mean() - 50.0, 1),
+                        round(dm, 1), round(float(np.median(pa[gy, gx])), 4),
+                        round(float(np.median(pb[gy, gx])), 4),
+                        bool(dm >= cover_thr), h62.a_only_note(dm, cover_thr),
+                        "HYPOTHESIS FOR PHASE-2 REVIEW; not a verified fault"])
+            written += 1
+    log(f"A-only segment dossiers: {written} of {ncomp} (cap {cap}) -> {dossier_csv.name}")
+
+    # ------------------------------------------------------------------ receipts
+    val = json.loads((EV / "h62_validation.json").read_text())
+    cot = json.loads((EV / "h62_cotrain.json").read_text())
+    hide_key = f"{winner['field']}|25000"
+    if hide_key not in val["instrument1_holdout"]["arms"]:
+        hide_key = f"{winner['field']}|15000"
+    hide = val["instrument1_holdout"]["arms"][hide_key]
+    build = dict(round="H62-build", observed_utc=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                 budget_px=BUDGET, budget_basis="registered correction H62-2",
+                 cover_threshold_m=cover_thr,
+                 candidates=rows, winner=winner["field"],
+                 winner_selection_rule=("highest Instrument-2 co-location lift among candidates "
+                                        "whose dot set overlaps clf_union's top-k by <= 70% "
+                                        "(correction H62-3)"),
+                 union_disqualifier_threshold=UNION_DISQUALIFY,
+                 not_merely_union=not_union,
+                 ring_min_distance_to_catalogue_m=round(min_dist_m, 1),
+                 ring_rule_ok=bool(min_dist_m >= 200.0),
+                 reasoning_rows=len(ys), a_only_segments_total=int(ncomp),
+                 a_only_dossier_rows=written, a_only_dossier_cap=cap,
+                 dossier_note=("dossier rows are written for every A-only component of >=3 px in "
+                               "the legal pool; smaller components are counted in "
+                               "a_only_segments_total and dropped"),
+                 corrections=[
+                     dict(id="H62-1", summary=("the hard corroboration intersection is "
+                          "structurally unusable at this budget (k^2/n = 185 at k=30,000); the "
+                          "soft joint-confidence ranking min(pA,pB) is registered instead")),
+                     dict(id="H62-2", summary=("emission budget 22,000 px: the gamma fit's "
+                          "unclamped argmax 102,519 px lies outside the measured range, while the "
+                          "board's own published record (Spearman -1.000, n=6, mass vs score) is a "
+                          "direct measurement and governs")),
+                     dict(id="H62-3", summary=("view_B and clf_union are disqualified as 'merely "
+                          "the union': their dot sets overlap by 93-100% and their reads differ "
+                          "by 3%")),
+                     dict(id="H62-4", summary=("the |G| bracket the preregistered 22,000 px "
+                          "fallback rested on (18,000-19,300 px) is DISJOINT from the measured "
+                          "bracket [5,949.3, 12,512.1] px (main's H61 forensics, independently "
+                          "re-derived here). The emission is NOT changed: the two gamma-based "
+                          "rules now bracket 22,000 px (this round's gamma 0.6453 clamps to "
+                          "30,000; the champion-family gamma 0.2284 clamps to 15,000), and the "
+                          "direct board measurement (score strictly decreasing in emitted mass) "
+                          "favours the LOW end. The budget's derivational support is therefore "
+                          "weakened and 15,000 px is the value the evidence favours - IR-H62-005")),
+                 ])
+    # |G| sensitivity (IR-H62-005): refit the SAME points the validation stage used, but anchor
+    # on the measured |G| bracket instead of the legacy point.
+    g_sens = None
+    try:
+        pts = [(int(a), float(b)) for a, b in val["budget_rule"]["points"]]
+        g_sens = h62.budget_from_gamma(pts, g_anchor=h62.G_BRACKET_PX[1]).get("g_sensitivity")
+    except Exception:
+        g_sens = None
+    build["g_bracket_px"] = list(h62.G_BRACKET_PX)
+    build["g_legacy_anchor_px"] = h62.G_ANCHOR_PX
+    build["g_sensitivity"] = g_sens
+    h62.write_json(EV / "h62_build.json", build)
+    h62.write_json(EV / "h62_format_gate.json", receipt["validator"])
+    h62.write_json(EV / "h62_uniqueness.json",
+                   {k: v for k, v in uniq.items() if k != "per_prior"} | {"n_priors": len(priors)})
+    h62.write_json(EV / "h62_lane_gate.json", lane)
+
+    holdout_read = dict(
+        label="HOLDOUT-DTI",
+        evaluator_version=PREREG["evaluator_version"],
+        field=winner["field"], budget_px=int(hide_key.split("|")[1]),
+        pooled_dti=hide["pooled_dti"], ci_lo=hide["ci_lo"], ci_hi=hide["ci_hi"],
+        withheld_positives=hide["withheld_positives"], n_folds=hide["n_folds"],
+        lift_over_random=hide.get("lift_over_random"),
+        instrument_status=("the hide-and-recover instrument is reported because the lane requires "
+                           "it and because it is the only leakage detector available; it is NOT a "
+                           "board proxy (Spearman(owner-reported, simulated) = -0.1045, n = 13)"))
+    promoted = bool(winner["field"].startswith("conc")
+                    and winner["lift"] and winner["lift"] > 1.0
+                    and not lane["lane_drift_detected"]
+                    and uniq["canonical_pattern_unique"]
+                    and not uniq["equals_literal_prior_union"]
+                    and not_union["outside_union_fraction"] >= 0.30)
+    card = h62.run_card(
+        hypothesis=("Two views that err near-independently corroborate: pixels that both the "
+                    "potential-field/subsurface view and the surface view vouch for, ranked by "
+                    "their joint confidence min(pA,pB), should carry a higher density of real, "
+                    "unmapped fault pixels than either view alone - the opposite cell of the 2x2 "
+                    "confidence table from the one every prior round in this lane shipped."),
+        mechanism=("Two independent thinnings of one detector intersect in an atom carrying "
+                   "16.3-20.5% credit density against 0-8.7% for singly-selected atoms "
+                   "(knowledge/10 s3); Blum-Mitchell conditional independence is a strictly "
+                   "stronger independence than two thinnings of one field, and it measures here "
+                   "at max|r| = 0.176 against a 0.60 abandonment bar."),
         mimic_processes=[
-            "buried paleochannels and basin-fill edges (density contrasts that are not faults)",
-            "lithologic contacts and dike swarms (linear susceptibility/density steps)",
-            "alluvial-fan / basin-margin gravel wedges (density contrasts with no fault)",
-            "airborne-survey drape and terrain clearance over steep topography (GeoDAWN "
-            "magnetics are airborne; ridge-flank gradients mimic structure)"],
-        holdout=dict(
-            shipped_raster=shipped_pooled,
-            shipped_raster_folds=shipped,
-            novel_pool_controls_pooled_means=novel_pooled,
-            field_validation=val["pooled_dti"],
-            field_table=val["field_table"],
-            weak_surface_subgroup=val["subgroup"].get("pooled", {}),
-            preregistered_gates=g62,
-            label=("every number here is HOLDOUT-DTI (evaluator version pinned below; "
-                   "withheld positives per cell; 95% fold-bootstrap CI); nothing here is a "
-                   "leaderboard score or forecast")),
+            "a resistant lithologic contact (welded tuff or carbonate) that stands up as a ridge "
+            "AND carries a magnetic susceptibility contrast: straight, laterally persistent, "
+            "geologically real, and not a fault",
+            "a fluvial or glacial escarpment along a stratigraphic contact",
+        ],
+        holdout=holdout_read,
+        instruments=dict(
+            instrument2_revealed=dict(
+                label="revealed-preference co-location; NOT a holdout score",
+                winner_field=winner["field"],
+                colocation_fraction=winner["colocation"],
+                random_baseline=winner["random_baseline"],
+                lift=winner["lift"],
+                implied_credit_density_bracket=winner["implied_rho"],
+                limits=val["instrument2_revealed"]["limits"]),
+            disagreement_read=dict(
+                note=("the lane's designated discovery signal measured BELOW the matched random "
+                      "control on Instrument 2"),
+                dis_contrast=next(r for r in rows if r["field"] == "dis_contrast"),
+                dis_product=next(r for r in rows if r["field"] == "dis_product"),
+                cover_A_only=next(r for r in rows if r["field"] == "cover_A_only"))),
         registry_overlap=dict(
-            lane_gate_surface={k: lane_surface.get(k) for k in
-                               ("surface_max_abs_spearman", "surface_max_abs_spearman_prior",
-                                "surface_check_passed", "lane_drift_detected")},
-            lane_gate_dots={k: lane_dots.get(k) for k in
-                            ("dots_max_abs_spearman", "dots_max_within_3px_frac",
-                             "dots_max_within_3px_prior", "dots_max_within_3px_frac_gate",
-                             "dots_max_within_3px_gate_prior",
-                             "calibration_rasters_excluded_from_proximity",
-                             "dots_check_passed", "lane_drift_detected")},
-            uniqueness={k: uniq.get(k) for k in ("n_priors_checked", "canonical_pattern_unique",
-                                                 "novel_fraction", "equals_literal_prior_union")},
-            not_merely_union=dict(arm_px=total, outside_union_topk_px=outside_union,
-                                  outside_view_A_topk_px=outside_viewA,
-                                  outside_view_B_topk_px=outside_viewB)),
-        raster_sha256=q["sha256"],
-        validator=dict(
-            format_gate=fmt,
-            no_nan_inside_footprint=bool(fmt["n_nan"] == 0),
-            values_in_0_1=bool(fmt.get("min", 1) >= 0 and fmt.get("max", 0) <= 1),
-            crs_shape_transform_match=bool(
-                fmt["crs"] == "EPSG:32611" and fmt["width"] == 3292 and fmt["height"] == 3730
-                and not fmt["problems"]),
-            recheck=G.read_geotiff(path)),
-        submission_name=name,
-        submission_note=note,
+            n_priors=len(priors),
+            pattern_unique=bool(uniq["canonical_pattern_unique"]),
+            support_novelty_fraction=round(float(uniq["novel_fraction"]), 4),
+            equals_literal_prior_union=bool(uniq["equals_literal_prior_union"]),
+            lane_surface_max_abs_spearman=lane["surface_max_abs_spearman"],
+            lane_dots_max_abs_spearman=lane["dots_max_abs_spearman"],
+            lane_dots_max_within_3px_frac_gate=lane["dots_max_within_3px_frac_gate"],
+            lane_dots_max_within_3px_frac_raw=lane["dots_max_within_3px_frac"],
+            lane_drift_detected=bool(lane["lane_drift_detected"]),
+            lane_drift_binding_prior=(lane.get("dots_max_within_3px_prior") or ""),
+            lane_drift_is_registry_saturation=bool(
+                lane2 is not None
+                and lane2["policy"]["max_near_3px_fraction"] is not None
+                and lane2["policy"]["max_near_3px_fraction"] <= 0.70),
+            repaired_gate_present=bool(lane2 is not None),
+            repaired_gate=(None if lane2 is None else
+                           {"instrument": lane2["instrument"],
+                            "priors_checked": lane2["priors_checked"],
+                            "distinct_decoded_priors": lane2["distinct_decoded_priors"],
+                            "literal_verdict": lane2["literal"]["verdict"],
+                            "literal_max_spearman": lane2["literal"]["max_spearman"],
+                            "literal_max_near_3px_fraction": lane2["literal"]["max_near_3px_fraction"],
+                            "policy_verdict": lane2["policy"]["verdict"],
+                            "policy_max_spearman": lane2["policy"]["max_spearman"],
+                            "policy_max_near_3px_fraction": lane2["policy"]["max_near_3px_fraction"],
+                            "n_informative_priors": lane2["policy"]["informative_priors"],
+                            "n_universal_coverage_probes": lane2["policy"]["universal_coverage_probes"],
+                            "ok": bool(lane2["ok"])}),
+            not_merely_union_fraction=not_union["outside_union_fraction"]),
+        raster_sha256=receipt["sha256"],
+        validator=receipt["validator"],
+        submission_name=name, submission_note=note,
         verdict=("promote" if promoted else "negative"),
-        extra=dict(
-            negative_result_is_a_deliverable=True,
-            promotion_to_a_real_slot_is_a_separate_selector_step=True,
-            weekly_cap="as shown on the submission page",
-            conditional_projection_not_a_score=proj,
-            data_qualification=("pinned owner-mirror bytes, SHA-verified; NOT "
-                                "organizer-authenticated"),
-            download_ok=True,
-            submit_ok=bool(promoted)))
-    card["round"] = "H62"
-    h60d.write_json(EV / "h62_run_card.json", card)
+        promotion_scope=(
+            "NEGATIVE. The concordance ranking beat BOTH single-view baselines and the union on "
+            "pooled hide-and-recover HOLDOUT-DTI, which is the comparison the brief asks for. "
+            "But the repository's STRICT lane gate (h60d.lane_drift_report, after the H60D "
+            "recheck withdrew the calibration exemption H60-6) returns DUPLICATE/STOP: 99.99% "
+            "of this file's dots lie within 3 px of "
+            "data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif. That reading is a "
+            "property of the registry, not of this file: a spacing-5 square lattice has maximum "
+            "interior distance sqrt(8) = 2.83 px < 3 px, so its 3 px halo covers 99.90% of the "
+            "eligible footprint and the statistic is ~1.0 for EVERY nonempty candidate, "
+            "including pure noise. The coverage-aware repair (gates.lane_report, added to the "
+            "shared template by main's H61) measures that saturation, excludes the one "
+            "universal-coverage probe, and returns PASS on the remaining 76 informative priors: "
+            "max |Spearman| 0.023, max 3 px proximity 0.453. Both readings are published and "
+            "neither is suppressed. Following this repository's settled convention (CTD5 and "
+            "H60D were both stopped on the same statistic, and main's H61 published FAIL/STOP "
+            "on its own front page), the strict gate governs the submit decision: DO NOT SUBMIT, "
+            "no slot is allocated, and the file is a research review copy."),
+        extra=dict(build=build,
+                   cotrain=dict(independence={k: v for k, v in cot["independence"].items()
+                                              if k != "blocks"},
+                                leakage_canary={k: v for k, v in cot["leakage_canary"].items()
+                                                if k != "rows"},
+                                strata=cot["strata"]["counts"],
+                                depth_medians=cot["strata"]["median_depth_to_basement_m"],
+                                corroboration_probe=cot["corroboration_probe"]),
+                   corrections=["H62-1", "H62-2", "H62-3", "H62-4"],
+                   slot_decision=("research review copy; promotion to a real weekly slot is a "
+                                  "separate selector step within the cap on the submission page"),
+                   champion_owner_reported=CHAMPION_OWNER_REPORTED,
+                   g_bracket_px=list(h62.G_BRACKET_PX),
+                   g_legacy_anchor_px=h62.G_ANCHOR_PX))
+    h62.write_json(EV / "h62_run_card.json", card)
+    h62.write_json(DAD / "h62_run_card.json", card)
+    (WORK / "promoted_field.txt").write_text(winner["field"] + "\n")
+    (ROOT / "submission" / "H62_LATEST.txt").write_text(tif.name + "\n")
 
-    # ---- zip + site copies + pointers ------------------------------------------------------------
-    DL.mkdir(parents=True, exist_ok=True)
-    status = ("DOWNLOAD FOR REVIEW: YES.\n"
-              + ("SUBMIT TO COMPETITION: YES — preregistered promotion bar met.\n" if promoted
-                 else "SUBMIT TO COMPETITION: NO — preregistered promotion bar not met; "
-                      "research artifact only.\n")
-              + f"Name: {name}\nNote: {note}\nSHA-256: {q['sha256']}\n"
-              + f"Pixels: {total}; all finite in [0,1]; zeros outside footprint.\n")
-    zpath = SUB / f"{stem}.zip"
-    with zipfile.ZipFile(zpath, "w", zipfile.ZIP_DEFLATED) as z:
-        z.write(path, arcname=f"{stem}.tif")
-        z.writestr("submission-name.txt", name + "\n")
-        z.writestr("submission-note.txt", note + "\n")
-        z.writestr("STATUS.txt", status)
-    shutil.copy2(path, DL / f"{stem}.tif")
-    shutil.copy2(zpath, DL / f"{stem}.zip")
-    shutil.copy2(path, DL / "h62-candidate.tif")
-    shutil.copy2(zpath, DL / "h62-candidate.zip")
-    (SUB / "H62_LATEST.txt").write_text(f"{path.name}\n")
-    if promoted:
-        (SUB / "LATEST.txt").write_text(f"{path.name}\n")
-
-    receipt = dict(round="H62", name=name, note=note, note_chars=len(note),
-                   file=path.name, zip=zpath.name, sha256=q["sha256"], bytes=q["bytes"],
-                   emitted_px=total, positive_field_crests=pos_crests,
-                   zero_field_fill=total - pos_crests,
-                   min_distance_to_catalogue_m=round(dmin_cat, 1),
-                   download_ok=True, submit_ok=bool(promoted),
-                   verdict=slot["verdict"], run_card="evidence/h62_run_card.json",
-                   generated_utc=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()))
-    h60d.write_json(DAD / "submission_h62.json", receipt)
-    h60d.write_json(EV / "h62_build.json", dict(
-        receipt, prior_inventory_count=len(priors),
-        prior_support_px=int(support.sum()), legal_pool_px=int(pool.sum()),
-        lane_surface=lane_surface, lane_dots=lane_dots,
-        projection_not_a_score=proj,
-        qualification=("pinned owner-mirror bytes, SHA-verified; NOT organizer-authenticated")))
-    log(f"done in {time.time() - t0:.0f}s — {slot['verdict']}")
+    # publish copies for the site
+    for src_p, dst_name in ((tif, f"{stem}.tif"),
+                            (tif.with_suffix(".zip"), f"{stem}.zip"),
+                            (dossier_csv, f"{stem}-a-only-candidate-segments.csv"),
+                            (reasoning_csv, f"{stem}-emitted-pixels.csv")):
+        if src_p.exists():
+            shutil.copy2(src_p, DL / dst_name)
+    shutil.copy2(tif, DL / "h62-candidate.tif")
+    shutil.copy2(tif.with_suffix(".zip"), DL / "h62-candidate.zip")
+    log(f"published to docs/downloads in {time.time() - t0:.0f}s")
+    log(f"VERDICT: {'promote' if promoted else 'negative'}  field={winner['field']}  "
+        f"dots={int(out_dots.sum())}  sha256={receipt['sha256']}")
     return 0
 
 

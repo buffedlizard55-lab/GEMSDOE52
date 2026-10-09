@@ -1,0 +1,8 @@
+gems52-h61-deepsharp-cotrain-37600px.tif
+sha256 7c86853164f9cfa7aea34de029c7d5ccf3a6b43dbbb2b14de570e558384d2755
+bytes 131771
+name gems52-h61-deepsharp-cotrain-37600px-20261009T001003Z
+note H61 deep-sharp cotrain: up-continued magnetics/gravity vs DEM+radiometric disagreement; 3px dots; >200m off catalogue; research-only
+verdict negative
+download_ok True
+submit_ok False

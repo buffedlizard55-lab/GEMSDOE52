@@ -1,13 +1,13 @@
 # 33 — What H62 found (session 2026-10-09): buried corridors adjudicate NEGATIVE
 
 Preregistered in [`32_hypotheses_H62_preregistered.md`](32_hypotheses_H62_preregistered.md),
-frozen in [`registry/h62_preregistration.json`](../registry/h62_preregistration.json)
+frozen in [`registry/h62_buriedcorr_preregistration.json`](../registry/h62_buriedcorr_preregistration.json)
 (SHA-256 `e3a8cfd25a1dec233f3a5738a17055390dfc0003f87515d8d50f431d97976552`) before any H62
 fit ran. Every number below was computed on the manifest-pinned bytes (23/23 SHA-256 verified,
-`evidence/h62_preflight.json`; integrity-pinned owner mirrors, **not organizer-authenticated**).
-Receipts: `evidence/h62_cotrain.json` (E1), `evidence/h62_validation.json` (E2),
-`evidence/h62_build.json` + `h62_format_gate.json` + `h62_uniqueness.json` + `h62_lane_surface.json`
-+ `h62_lane_gate.json` + `h62_slot_gate.json` + `h62_run_card.json` (E3). Site: `docs/h62.html`.
+`evidence/h62_buriedcorr_preflight.json`; integrity-pinned owner mirrors, **not organizer-authenticated**).
+Receipts: `evidence/h62_buriedcorr_cotrain.json` (E1), `evidence/h62_buriedcorr_validation.json` (E2),
+`evidence/h62_buriedcorr_build.json` + `h62_format_gate.json` + `h62_uniqueness.json` + `h62_lane_surface.json`
++ `h62_lane_gate.json` + `h62_slot_gate.json` + `h62_run_card.json` (E3). Site: `docs/h62-buriedcorr.html`.
 
 **Verdict: NEGATIVE (research-only artifact).** The cover→edge→persistence gate chain on the
 A-only disagreement field does **not** improve the catalogue-truth holdout ranking: hide pooled
@@ -33,7 +33,7 @@ Gate chain on `max(pA−pB, 0)`: disagreement∩cover(≥200 m)∩edge(≥P75) =
 (half-widths 2–4 px, 4 azimuths) 562,922 px → persistence filter (skeleton length ≥ 15 px,
 elongation ≥ 3) **220,863 px in 261 of 2,387 components**.
 
-HOLDOUT-DTI, hide pooled, 37,654 px (evaluator pinned in `evidence/h62_validation.json`,
+HOLDOUT-DTI, hide pooled, 37,654 px (evaluator pinned in `evidence/h62_buriedcorr_validation.json`,
 36,411 withheld positives, fold-bootstrap CIs in the receipt):
 
 | field | hide pooled | tip pooled |
@@ -82,7 +82,7 @@ mapped catalogue pixel 223.6 m) · one written geological reasoning per emitted 
 only **1,707** crest pixels; the remaining **35,920** of the matched 37,654 budget is zero-field
 fill (emitted for budget comparability with the validation cells, and because DTI = T/(0.2S+0.8|G|)
 grows with S at any positive density). Shipped-raster hide pooled HOLDOUT-DTI is 0.0025 (folds
-0.0011–0.0044); the matched novel-pool controls are in `evidence/h62_build.json`.
+0.0011–0.0044); the matched novel-pool controls are in `evidence/h62_buriedcorr_build.json`.
 
 ## 4. Why 0.2778, and can anything beat it — the cross-checked answer
 
@@ -94,7 +94,7 @@ raised the reported score 6.8 %. It won by understanding the metric's tax term �
 detector. GEMSDOE32's own page (read 2026-10-08) states **"NO ORGANISER SCORE EXISTS for this or
 any artifact in this repository"** and quotes a *projection* of 0.2747 — so the 0.2778
 attribution is **OWNER-REPORTED, not ORGANIZER-CONFIRMED**, and is flagged as a provenance
-conflict in `registry/irregularities.json` (IR-H62-004).
+conflict in `registry/irregularities.json` (IR-H62-009).
 
 **Can we beat it — and 0.3195/0.3262?** The leaderboard read verified from GEMSDOE32's stored
 snapshot (2026-10-04): #1 nchuzhoy **0.3262**, #2 DARD **0.3195**, #3 alexoktaba 0.3042
@@ -122,8 +122,8 @@ board rewards. That is the honest state of the art here, and H62 does not change
    corridor field 4/4 folds. Registered as the lane's fairest test; it failed.
 3. **A reproducibility fixed point:** the OOF fields, strata (±2 px), canary and independence
    statistics re-derive on fresh restored bytes to H60D's values; the shared-template stale
-   checkpoint defect (IR-H62-001) and the subgroup OOM (IR-H62-003) were fixed once in shared
-   code, with tests (`tests/test_h62.py`).
+   checkpoint defect (IR-H62-006) and the subgroup OOM (IR-H62-008) were fixed once in shared
+   code, with tests (`tests/test_h62_buriedcorr.py`).
 4. **Novel-ground scarcity, quantified:** the A-only corridor population overlaps existing prior
    submissions' support by ~99.2 % (only 1,707 crest px survive on required-novel ground). Any
    future "unique discovery" file faces the same wall: the family's priors already cover the
@@ -141,3 +141,27 @@ board rewards. That is the honest state of the art here, and H62 does not change
 - Registered but untested (precondition "H62-1 passes clause (a)" failed): H62-2 step-over nodes,
   H62-3 alteration concordance, H62-4 ratcheted multi-round co-training, H62-5 B-only
   hard-negative de-biasing. Do not promote them to testing without a new falsifiable angle.
+
+## Post-merge amendment (2026-10-09) — artifact identity, IR-H62-010
+
+The concurrent H61/H62-concordance session's files (PRs #43–46) joined the prior registry after this
+round's E3 freeze. Registry-relative claims re-measured on the merged tree (80 aligned priors):
+
+| artifact | emitted px | sha256 (prefix) | pattern-unique vs 80 | novel fraction vs 80 | status |
+|---|---:|---|---|---:|---|
+| `gems52-h62-buriedcorr-37627px.tif` (E3 freeze, 00:55Z) | 37,627 | `1f25c4fbeaf1…` | yes | **0.9924** | superseded; kept with dated sidecar for provenance |
+| `gems52-h62-buriedcorr-37626px.tif` (rebuild, 01:40Z) | 37,626 | `6b494e7d1abc…` | yes | **1.0000** | **current research candidate** (DOWNLOAD YES / SUBMIT NO) |
+
+Mechanism: the required-novel pool excludes every prior's support, so selection is a function of the
+registry; the rebuild placed 1,709 crest px + 35,917 zero-field fill, clipped 28 ring violations. The
+frozen name prediction (`…37627px-1f25c4fb-zeros`) therefore does not describe the shipped bytes
+(`…37626px-6b494e7d-zeros`); the preregistration itself is untouched.
+
+The preregistered 3 px lane-proximity gate reads 0.9994 (excl. calibration) on the rebuild — any
+lattice-placed emission now trips it because the registry contains several lattice-dense emissions
+(sibling IR-H61-005/009, IR-H62-004 on the diamond geometry). Reported as registry-saturated; the
+promotion bar had already failed on clauses (a) and (b), so the verdict is unchanged: **negative**.
+
+Shipped-raster HOLDOUT-DTI of the current candidate (recomputed): hide pooled **0.002247**
+[0.001112, 0.003675] (36,411 withheld positives); tip pooled 0.001663. E1/E2 numbers above are
+untouched by the merge (holdout machinery is registry-independent).

@@ -1,0 +1,134 @@
+{
+ "views": {
+  "A": {
+   "folds": [
+    {
+     "fold": 0,
+     "train_rows": 211978,
+     "predicted_px": 1441356,
+     "held_sample_rows": 84154,
+     "auc": 0.6141991555304002,
+     "seconds": 10.599030256271362
+    },
+    {
+     "fold": 1,
+     "train_rows": 221097,
+     "predicted_px": 1325580,
+     "held_sample_rows": 74792,
+     "auc": 0.6532178977485565,
+     "seconds": 9.911002159118652
+    },
+    {
+     "fold": 2,
+     "train_rows": 225804,
+     "predicted_px": 1181692,
+     "held_sample_rows": 69989,
+     "auc": 0.5729739128320699,
+     "seconds": 8.986444473266602
+    },
+    {
+     "fold": 3,
+     "train_rows": 224759,
+     "predicted_px": 1217212,
+     "held_sample_rows": 71065,
+     "auc": 0.5901591056523602,
+     "seconds": 9.971379280090332
+    }
+   ],
+   "seconds": 39.83226490020752,
+   "mean_auc": 0.6076375179408467,
+   "n_layers": 14,
+   "layers": [
+    "raw_features_mag_anom",
+    "raw_features_tmi_hg",
+    "raw_features_geod_2ndinv",
+    "raw_features_iso_grav_anom_slope",
+    "raw_features_iso_grav_anom",
+    "raw_features_depth_to_base_surf",
+    "raw_features_ieq_n100a15",
+    "raw_features_cond_surf",
+    "resp_mag",
+    "resp_grav",
+    "resp_strain",
+    "resp_sub",
+    "corrob_A",
+    "persist_A"
+   ]
+  },
+  "B": {
+   "folds": [
+    {
+     "fold": 0,
+     "train_rows": 211978,
+     "predicted_px": 1441356,
+     "held_sample_rows": 84154,
+     "auc": 0.694823803712767,
+     "seconds": 13.349596738815308
+    },
+    {
+     "fold": 1,
+     "train_rows": 221097,
+     "predicted_px": 1325580,
+     "held_sample_rows": 74792,
+     "auc": 0.7055014128514182,
+     "seconds": 11.060729503631592
+    },
+    {
+     "fold": 2,
+     "train_rows": 225804,
+     "predicted_px": 1181692,
+     "held_sample_rows": 69989,
+     "auc": 0.6644973269557437,
+     "seconds": 10.52971076965332
+    },
+    {
+     "fold": 3,
+     "train_rows": 224759,
+     "predicted_px": 1217212,
+     "held_sample_rows": 71065,
+     "auc": 0.6719502357080231,
+     "seconds": 10.408848762512207
+    }
+   ],
+   "seconds": 45.44609880447388,
+   "mean_auc": 0.684193194806988,
+   "n_layers": 15,
+   "layers": [
+    "raw_features_tc",
+    "raw_features_det_elev",
+    "raw_features_det_elev_slope",
+    "raw_lidar_ex_max",
+    "raw_lidar_step_max",
+    "raw_lidar_downface_max",
+    "raw_lidar_upface_max",
+    "raw_lidar_relief",
+    "raw_rad_rad_K",
+    "raw_rad_rad_Th",
+    "raw_rad_rad_U",
+    "resp_topo",
+    "resp_rad",
+    "corrob_B",
+    "persist_B"
+   ]
+  }
+ },
+ "folds": {
+  "n_blocks": 317,
+  "n_folds": 4,
+  "buffer_px": 4,
+  "sample_pos": 60000,
+  "sample_neg": 240000,
+  "seed": 20261009
+ },
+ "inputs": {
+  "footprint_px": 5165840,
+  "catalogue_px": 60988,
+  "legal_off_ring_px": 4861502,
+  "corrob_ge2_tau99": 365136,
+  "corrob_ge3_tau99": 76636,
+  "corrob_ge2_tau95": 2244206,
+  "labels_sha": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+  "features_sha": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+  "sample_sha": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc"
+ }
+}

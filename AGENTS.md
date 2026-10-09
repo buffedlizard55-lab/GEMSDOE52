@@ -8,7 +8,24 @@ Keep known-catalogue labels separate from verified fault absence, public partici
 
 This session's working branch is fixed by Arena. Do not change branches. Keep raw competition data and large intermediate arrays under ignored `data/` and `work/`. Publish small audit receipts, the unique compressed prediction raster and its review table.
 
-## Current CTD5 continuation
+## Current H61 continuation
+
+Read `README.md`'s H61 block, `knowledge/30_hypotheses_H61_preregistered.md` (frozen before any fit;
+`scripts/run_h61.py` refuses to run if its hash moves) and
+`knowledge/31_h61_results_and_limits.md`. H61 is **negative**: View A (potential field / subsurface)
+reaches out-of-quadrant AUC ~0.52 while fitting its own quadrant at ~0.93, so the Blum–Mitchell
+sufficiency premise fails and the disagreement arm is noise-dominated. Do not re-tune it into a
+positive result, do not promote it, and do not treat a valid file as an approved entry.
+
+Three shared-instrument repairs are now authoritative and must not be reverted or forked: masked
+support `S` (off-catalogue pixels only), `|G|` as the measured interval [5,949.3, 12,512.1] px rather
+than the superseded point 14,088.7, and `gems52.gates.lane_report`'s measured universal-coverage-probe
+classification (a prior whose 3 px halo covers >=95% of the eligible footprint cannot localise a lane;
+its literal statistic is still reported). Band 6 is radiometric total count (Spearman 1.0000 against
+the external GeoDAWN TC grid), so it belongs in View B. See `registry/irregularities.json`
+IR-H61-001 … IR-H61-008.
+
+## Previous CTD5 continuation
 
 Read the entire current prompt in `README.md` (also `knowledge/26_current_user_brief.md`),
 `knowledge/25_ctd5_preregistered.md`, `knowledge/27_ctd5_results_and_limits.md`, and the

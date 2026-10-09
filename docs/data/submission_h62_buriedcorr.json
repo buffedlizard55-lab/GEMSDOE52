@@ -1,0 +1,19 @@
+{
+ "round": "H62",
+ "name": "gems52-h62-buriedcorr-37626px-6b494e7d-zeros",
+ "note": "H62 buried corridors: cover/edge/persistence gates on A-only disagreement; finite binary [0,1]; off-prior; hypotheses, not verified faults",
+ "note_chars": 138,
+ "file": "gems52-h62-buriedcorr-37626px.tif",
+ "zip": "gems52-h62-buriedcorr-37626px.zip",
+ "sha256": "6b494e7d1abc476555778c699e8d51a6cbd10658f57dfb60f1ccafc3f91924eb",
+ "bytes": 107764,
+ "emitted_px": 37626,
+ "positive_field_crests": 1709,
+ "zero_field_fill": 35917,
+ "min_distance_to_catalogue_m": 223.6,
+ "download_ok": true,
+ "submit_ok": false,
+ "verdict": "DOWNLOAD FOR REVIEW: YES. SUBMIT TO COMPETITION: NO \u2014 preregistered promotion bar not met; research artifact only",
+ "run_card": "evidence/h62_buriedcorr_run_card.json",
+ "generated_utc": "2026-10-09T01:46:24Z"
+}
