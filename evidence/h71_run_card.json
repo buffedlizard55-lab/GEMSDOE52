@@ -1,0 +1,330 @@
+{
+ "round": "H71",
+ "generated_utc": "2026-10-09T07:59:46+00:00",
+ "hypothesis": "The lane's discovery signal emitted directly: where View A (potential-field/subsurface) is confident and View B (surface) abstains, the fault may be buried beneath cover; emit the strict A-only stratum, ranked by View A's out-of-fold conviction, placed in the lane-quiet domain.",
+ "mechanism": "Blum & Mitchell (COLT '98, doi:10.1145/279943.279962) co-training: the confident-to-abstaining disagreement stratum is the discovery signal; the emission is that stratum, placed by metric-aware spacing_select at 3 px in the lane-quiet domain (>= 3 px from every informative registry prior's positive pixel), so the directed near-dot fraction is 0 for every informative prior by construction.",
+ "named_non_fault_mimic": "basin-margin or flexural hinge line (basement deepens with no displacement); density or lithologic basement contact; buried palaeo-channel or alluvial-fan margin; interpolation seam in the modelled depth-to-basement grid",
+ "independence": {
+  "max_abs_rho": 0.13368507450035322,
+  "threshold": 0.6,
+  "allow_exchange": true,
+  "negative_class": "held-out catalogue-zero proxies, not verified absence"
+ },
+ "premise_control": {
+  "evidence_class": "HOLDOUT-DTI diagnostic AUC (out-of-quadrant), not a DTI score",
+  "view_A_oof_auc_per_fold": [
+   0.506234,
+   0.601066,
+   0.466819,
+   0.491043
+  ],
+  "view_B_oof_auc_per_fold": [
+   0.662501,
+   0.768441,
+   0.61122,
+   0.695178
+  ],
+  "view_A_mean": 0.51629,
+  "view_A_min": 0.466819,
+  "view_B_mean": 0.684335,
+  "view_B_min": 0.61122,
+  "h61_committed_view_A_mean": 0.5163,
+  "h61_committed_view_B_mean": 0.6843,
+  "h64_committed_view_A_mean": 0.523,
+  "h65_committed_view_A_mean": 0.5202,
+  "note": "H71 does not re-tune View A; the premise is reported as control H71-C. The lane's mandated empirical test is the independence screen (E2a)."
+ },
+ "canary": {
+  "max_alarm_across_folds": 0.6686779701695234,
+  "any_alarm": false,
+  "max_fitted_top5_heldout_auc": 0.6665553748712185,
+  "alarm_threshold": 0.9
+ },
+ "holdout_dti": {
+  "evidence_class": "HOLDOUT-DTI",
+  "evaluator_version": "gems52-pooled-hide-v1",
+  "alpha": 0.2,
+  "beta": 0.8,
+  "triangular_radius_m": 300,
+  "withheld_positive_pixels": 53186,
+  "matched_budget_per_fold": 1264,
+  "candidate_a_only": {
+   "dti": 0.009532471237762807,
+   "ci95": [
+    0.005836124066423484,
+    0.014280615941128488
+   ]
+  },
+  "single_B_baseline": {
+   "dti": 0.059676308934473135,
+   "ci95": [
+    0.04700152542116021,
+    0.07368682782114912
+   ]
+  },
+  "single_A": {
+   "dti": 0.013884195355761497,
+   "ci95": [
+    0.008789227204452053,
+    0.019545730292042207
+   ]
+  },
+  "union_max": {
+   "dti": 0.04501745586073543,
+   "ci95": [
+    0.035239852639796586,
+    0.05609454304987889
+   ]
+  },
+  "random": {
+   "dti": 0.012329025334090263,
+   "ci95": [
+    0.009852731786648639,
+    0.014928673691262004
+   ]
+  },
+  "paired_candidate_minus_single_B": {
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems52-pooled-hide-v1",
+   "delta": -0.050143837696710325,
+   "ci95": [
+    -0.0642329374208188,
+    -0.036778942402140746
+   ],
+   "withheld_positive_pixels": 53186
+  },
+  "control_reproduction": {
+   "single_B_h71": 0.17457135886487102,
+   "single_B_h61_committed": 0.174517,
+   "abs_difference": 5.435886487101249e-05,
+   "tolerance": 0.001,
+   "pass_": true
+  },
+  "control_budget_arms": {
+   "single_A": {
+    "dti": 0.07195422771451437,
+    "ci95": [
+     0.05663648302475561,
+     0.08856584503981733
+    ]
+   },
+   "single_B": {
+    "dti": 0.17457135886487102,
+    "ci95": [
+     0.1523129808950829,
+     0.19630189491073133
+    ]
+   },
+   "union_max": {
+    "dti": 0.14900909797542158,
+    "ci95": [
+     0.1281099791756699,
+     0.16944496197715309
+    ]
+   },
+   "disagreement_pre": {
+    "dti": 0.033293417665161515,
+    "ci95": [
+     0.023815312334713765,
+     0.044556311894923775
+    ]
+   },
+   "disagreement_post": {
+    "dti": 0.032884392305377284,
+    "ci95": [
+     0.02185153500178613,
+     0.04570813951849598
+    ]
+   },
+   "random": {
+    "dti": 0.08042564781050282,
+    "ci95": [
+     0.0702226099128376,
+     0.09097325665223467
+    ]
+   },
+   "a_only": {
+    "dti": 0.018058967638100765,
+    "ci95": [
+     0.013191282517831823,
+     0.02430179202824536
+    ]
+   }
+  }
+ },
+ "correlation_overlap_vs_registry": {
+  "lane_surface_literal": "PASS",
+  "lane_surface_policy": "PASS",
+  "lane_dots_literal": "DUPLICATE/STOP",
+  "lane_dots_policy": "DUPLICATE/STOP",
+  "lane_dots_policy_max_near_3px": 0.8902597402597403,
+  "lane_dots_literal_max_near_3px": 1.0,
+  "audit_surface": {
+   "max_spearman": 0.02320156457440568,
+   "ok": true
+  },
+  "audit_dots": {
+   "max_near_3px": 1.0,
+   "ok": false
+  },
+  "audit_lane_policy_dots_literal": "DUPLICATE/STOP",
+  "audit_lane_policy_dots_policy": "DUPLICATE/STOP",
+  "audit_max_jaccard": 0.009912,
+  "audit_share_of_candidate_inside_any_prior": 1.0,
+  "uniqueness_tier1": {
+   "canonical_pattern_unique": true,
+   "equals_literal_prior_union": false,
+   "novel_fraction": 0.0,
+   "relation_to_union": "subset-of-union",
+   "n_priors_checked": 553
+  },
+  "uniqueness_tier2": {
+   "novel_fraction": 0.3103896103896104,
+   "equals_literal_prior_union": false,
+   "relation_to_union": "strictly-novel-and-selective",
+   "n_priors_checked": 516,
+   "informative_rasters": 516
+  },
+  "registry_rasters": 553,
+  "informative_rasters": 516,
+  "probe_rasters": 35
+ },
+ "not_the_union": {
+  "dots": 3080,
+  "dots_shared_with_union_max": 270,
+  "jaccard_with_union_max": 0.04584040747028863,
+  "spearman_field_vs_unionmax": 0.18031046010140825,
+  "strict_a_only_candidate_px": 57143,
+  "emitted_cells_that_are_strict_a_only": 3080,
+  "emitted_cells_in_quiet": 0,
+  "verdict": "emission is the A-only discovery stratum placed novel-first under the lane's own rule (57b), not max(A,B), not either single view, and not their union",
+  "not_union_pass": true
+ },
+ "placement": {
+  "mode": {
+   "rule": "fallback (57b rule 4): novel-first uncapped; lane reported verbatim",
+   "cap": null,
+   "filled": 3080,
+   "novel_capacity": 616,
+   "budget": 3080,
+   "max_near": 2742,
+   "cap_probes": [
+    {
+     "cap": 7452,
+     "filled": 8532,
+     "max_near": 7452,
+     "feasible": false
+    },
+    {
+     "cap": 5972,
+     "filled": 7069,
+     "max_near": 5972,
+     "feasible": false
+    },
+    {
+     "cap": 4948,
+     "filled": 5947,
+     "max_near": 4948,
+     "feasible": false
+    },
+    {
+     "cap": 4162,
+     "filled": 5081,
+     "max_near": 4162,
+     "feasible": false
+    },
+    {
+     "cap": 3556,
+     "filled": 4424,
+     "max_near": 3556,
+     "feasible": false
+    },
+    {
+     "cap": 3096,
+     "filled": 3917,
+     "max_near": 3096,
+     "feasible": false
+    },
+    {
+     "cap": 2741,
+     "filled": 3546,
+     "max_near": 2741,
+     "feasible": false
+    },
+    {
+     "cap": 2482,
+     "filled": 3260,
+     "max_near": 2482,
+     "feasible": false
+    },
+    {
+     "cap": 2282,
+     "filled": 3015,
+     "max_near": 2282,
+     "feasible": false
+    },
+    {
+     "cap": 2110,
+     "filled": 2797,
+     "max_near": 2110,
+     "feasible": false
+    }
+   ],
+   "note": "cap_probes = lane-cap search log; registry probe classification is the authoritative gates.lane_report one in the lane receipts (14 probes / 539 informative); build-time registry loop measured 35 probes(>0 support) / 516 informative / 2 empty over 553 rasters (log line; receipt field was briefly clobbered by a shadowed variable and corrected after the build)"
+  },
+  "stratum_px": 57143,
+  "exact_novel_px": 1754,
+  "capacity_at_3px": 10647,
+  "emitted_exact_novel_dots": 616,
+  "emitted_novel_fraction": 0.2
+ },
+ "raster": {
+  "file": "gems52-h71-aonly-stratum-fallback-uncapped-3080px-20261009T073227Z.tif",
+  "sha256": "369b844e04c4b092d63215cf325eae6872042e4e56c7576dcf0ef41d111ea95c",
+  "bytes": 64933,
+  "zip_sha256": "3f8be4d158bc4e3e3bb6cea52a0cf463e6afa28c87befb187fb70101e6453274",
+  "emitted_cells": 3080
+ },
+ "validator": {
+  "ok": true,
+  "problems": [],
+  "nan_pixels": 0,
+  "infinity_pixels": 0,
+  "value_range": [
+   0.0,
+   1.0
+  ],
+  "crs": "EPSG:32611",
+  "shape": [
+   3730,
+   3292
+  ],
+  "transform": [
+   100.0,
+   0.0,
+   243350.0,
+   0.0,
+   -100.0,
+   4508550.0
+  ],
+  "matches_sample_submission": true,
+  "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+ },
+ "submission_name": "gems52-h71-aonly-stratum-fallback-uncapped-3080px-20261009T073227Z",
+ "note": "H71 A-only stratum (A confident, B abstains), fallback-uncapped placement; holdout does NOT beat single_B; research only, not slot-approved",
+ "note_chars": 139,
+ "champion_reference": {
+  "name": "ref_h33_2_b2",
+  "reported_score": 0.2778,
+  "evidence_class": "OWNER-REPORTED, NOT ORGANIZER-CONFIRMED"
+ },
+ "leaderboard_top_public_board": {
+  "score": 0.3774,
+  "team": "xiaofanhu",
+  "evidence_class": "PUBLIC BOARD 2026-10-09, NOT ORGANIZER-CONFIRMED"
+ },
+ "experiments_used": "3 of 3 (E1 diagnostics, E2 exchange+holdout, E3 build+audit)",
+ "submission_slots_used": 0,
+ "verdict": "NEGATIVE, research-only. DOWNLOAD YES (format-valid and unique on decoded pixels); SUBMIT NO. lane_policy=False; holdout_beats_single_B=False. No weekly slot spent by this lane.",
+ "verdict_promote": false
+}

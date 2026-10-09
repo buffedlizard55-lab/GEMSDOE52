@@ -1,0 +1,379 @@
+{
+ "round": "H69",
+ "generated_utc": "2026-10-09T07:11:57.066652+00:00",
+ "hypothesis": "H69-1 basement-surface differential geometry as View A, co-trained against a DEM-curvature/slope + radiometric-total-count View B, with disagreement as the discovery signal; H69-2 cross-family consensus as the credit-density proxy for the novel mass",
+ "mechanism": "Blum-Mitchell two-view co-training (View A = differential geometry of the basement surface and the potential field; View B = DEM curvature/slope plus radiometric total count) for the discovery signal and the holdout arms, then a NOVEL-ONLY emission ranked by the stitched two-view operating field times cross-family consensus and placed by a greedy whose pool is restricted to low-consensus pixels so the brief's 70% per-raster near-dot rule holds against every informative prior. The pre-registered credited-core variant was withdrawn before placement; see knowledge/52b.",
+ "named_non_fault_mimic": "a lithologic contact or a basin axis with a density and magnetisation contrast and no relief; on the surface view, roads and erosion lines",
+ "holdout_dti": {
+  "evidence_class": "HOLDOUT-DTI",
+  "evaluator_version": "gems52-pooled-hide-v1",
+  "withheld_positives": 60894,
+  "scores": {
+   "single_A": {
+    "dti": 0.07189300702151767,
+    "ci95": [
+     0.058418332216876104,
+     0.08583163360986663
+    ]
+   },
+   "single_B": {
+    "dti": 0.13794726229246104,
+    "ci95": [
+     0.11707926786601155,
+     0.1587551261649051
+    ]
+   },
+   "union_max": {
+    "dti": 0.12572611125736852,
+    "ci95": [
+     0.10593354181829837,
+     0.14423158232783562
+    ]
+   },
+   "disagreement_pre": {
+    "dti": 0.03647338169485218,
+    "ci95": [
+     0.027470870380490783,
+     0.04599608108558893
+    ]
+   },
+   "disagreement_post": {
+    "dti": 0.03647338169485218,
+    "ci95": [
+     0.027470870380490783,
+     0.04599608108558893
+    ]
+   },
+   "random": {
+    "dti": 0.07203240143902066,
+    "ci95": [
+     0.06355779258735653,
+     0.08009831321805053
+    ]
+   }
+  },
+  "candidate_minus_single_B": {
+   "delta": -0.10147388059760887,
+   "ci95": [
+    -0.12361036874094027,
+    -0.08005147528290532
+   ]
+  },
+  "beats_single_B": false,
+  "validity": "the instrument anti-ranks the board (rho=-0.1045, p=0.734, n=13); HOLDOUT-DTI is not a forecast"
+ },
+ "s1_sufficiency": {
+  "view_A_mean": 0.528121,
+  "view_A_min": 0.489598,
+  "pass_": false
+ },
+ "projection": {
+  "evidence_class": "PROJECTION, never a score",
+  "g_bracket": [
+   5949.282184328427,
+   12512.133928571544
+  ],
+  "rho_novel_prior": [
+   0.02795,
+   0.13871
+  ],
+  "per_g": {
+   "G_lo": {
+    "g": 5949.282184328427,
+    "p_beat_02778": 0.43478260869565216,
+    "p_beat_03195": 0.3105590062111801,
+    "p_beat_03774": 0.14285714285714285,
+    "mean_dti": 0.25515916333851396,
+    "worst_dti": 0.08558380673600705,
+    "best_dti": 0.42473451994102096,
+    "t_core_bounds": [
+     0.0,
+     0.0
+    ]
+   },
+   "G_mid": {
+    "g": 9230.708056449985,
+    "p_beat_02778": 0.2608695652173913,
+    "p_beat_03195": 0.11180124223602485,
+    "p_beat_03774": 0.0,
+    "mean_dti": 0.21021799000516767,
+    "worst_dti": 0.07050993424510305,
+    "best_dti": 0.34992604576523234,
+    "t_core_bounds": [
+     0.0,
+     0.0
+    ]
+   },
+   "G_hi": {
+    "g": 12512.133928571544,
+    "p_beat_02778": 0.08695652173913043,
+    "p_beat_03195": 0.0,
+    "p_beat_03774": 0.0,
+    "mean_dti": 0.17873704189500256,
+    "worst_dti": 0.05995080188365921,
+    "best_dti": 0.2975232819063459,
+    "t_core_bounds": [
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "per_g_table": [
+   {
+    "g": 5949.282184328427,
+    "t_core_lo": 0.0,
+    "t_core_hi": 0.0,
+    "t_core_central": 0.0,
+    "dti_lo_rho_lo": 0.085584,
+    "dti_lo_rho_mid": 0.255159,
+    "dti_lo_rho_hi": 0.424735,
+    "dti_central_rho_lo": 0.085584,
+    "dti_central_rho_mid": 0.255159,
+    "dti_central_rho_hi": 0.424735,
+    "dti_hi_rho_lo": 0.085584,
+    "dti_hi_rho_mid": 0.255159,
+    "dti_hi_rho_hi": 0.424735
+   },
+   {
+    "g": 7589.995120389207,
+    "t_core_lo": 0.0,
+    "t_core_hi": 0.0,
+    "t_core_central": 0.0,
+    "dti_lo_rho_lo": 0.077319,
+    "dti_lo_rho_mid": 0.230519,
+    "dti_lo_rho_hi": 0.383718,
+    "dti_central_rho_lo": 0.077319,
+    "dti_central_rho_mid": 0.230519,
+    "dti_central_rho_hi": 0.383718,
+    "dti_hi_rho_lo": 0.077319,
+    "dti_hi_rho_mid": 0.230519,
+    "dti_hi_rho_hi": 0.383718
+   },
+   {
+    "g": 9230.708056449985,
+    "t_core_lo": 0.0,
+    "t_core_hi": 0.0,
+    "t_core_central": 0.0,
+    "dti_lo_rho_lo": 0.07051,
+    "dti_lo_rho_mid": 0.210218,
+    "dti_lo_rho_hi": 0.349926,
+    "dti_central_rho_lo": 0.07051,
+    "dti_central_rho_mid": 0.210218,
+    "dti_central_rho_hi": 0.349926,
+    "dti_hi_rho_lo": 0.07051,
+    "dti_hi_rho_mid": 0.210218,
+    "dti_hi_rho_hi": 0.349926
+   },
+   {
+    "g": 10871.420992510764,
+    "t_core_lo": 0.0,
+    "t_core_hi": 0.0,
+    "t_core_central": 0.0,
+    "dti_lo_rho_lo": 0.064803,
+    "dti_lo_rho_mid": 0.193204,
+    "dti_lo_rho_hi": 0.321604,
+    "dti_central_rho_lo": 0.064803,
+    "dti_central_rho_mid": 0.193204,
+    "dti_central_rho_hi": 0.321604,
+    "dti_hi_rho_lo": 0.064803,
+    "dti_hi_rho_mid": 0.193204,
+    "dti_hi_rho_hi": 0.321604
+   },
+   {
+    "g": 12512.133928571544,
+    "t_core_lo": 0.0,
+    "t_core_hi": 0.0,
+    "t_core_central": 0.0,
+    "dti_lo_rho_lo": 0.059951,
+    "dti_lo_rho_mid": 0.178737,
+    "dti_lo_rho_hi": 0.297523,
+    "dti_central_rho_lo": 0.059951,
+    "dti_central_rho_mid": 0.178737,
+    "dti_central_rho_hi": 0.297523,
+    "dti_hi_rho_lo": 0.059951,
+    "dti_hi_rho_mid": 0.178737,
+    "dti_hi_rho_hi": 0.297523
+   }
+  ],
+  "counterfactual_recombination_NOT_SHIPPED": {
+   "why": "prereg amendment knowledge/52b withdrew the credited-core emission: this repository already corrected a core-recombination file as NOT unique (README H60C correction, IR-H61-007, IR-UNQ-001), and sizing a file to land just under the 0.70 threshold a previous round was corrected for exceeding is re-tuning a negative result into a positive",
+   "design": "P1 = A & C restricted to the legal set (25,502 px) + 11,200 novel px",
+   "per_g": {
+    "G_lo": {
+     "g": 5949.282184328427,
+     "S": 36702,
+     "n_core": 25502,
+     "n_novel": 11200,
+     "t_core_bounds": [
+      1996.7410002144154,
+      3412.2176831867623
+     ],
+     "p_beat_02778": 0.6841557038694495,
+     "p_beat_03774": 0.046718876586551446,
+     "mean_dti": 0.3006469198503464,
+     "worst_dti": 0.19089374082091734,
+     "best_dti": 0.41040009887977547
+    },
+    "G_mid": {
+     "g": 9230.708056449985,
+     "S": 36702,
+     "n_core": 25502,
+     "n_novel": 11200,
+     "t_core_bounds": [
+      2871.186055652854,
+      4141.053075928431
+     ],
+     "p_beat_02778": 0.7380502295436133,
+     "p_beat_03774": 0.006596967709579106,
+     "mean_dti": 0.30148901067614,
+     "worst_dti": 0.21624674443312505,
+     "best_dti": 0.3867312769191548
+    },
+    "G_hi": {
+     "g": 12512.133928571544,
+     "S": 36702,
+     "n_core": 25502,
+     "n_novel": 11200,
+     "t_core_bounds": [
+      3745.6311110912925,
+      4869.8884686701
+     ],
+     "p_beat_02778": 0.7908259712202461,
+     "p_beat_03774": 0.0,
+     "mean_dti": 0.3020762780729199,
+     "worst_dti": 0.23392772607529302,
+     "best_dti": 0.3702248300705468
+    }
+   }
+  },
+  "algebra": "DTI = min(t_core + rho_novel*n_novel, |G|) / (0.2*S + 0.8*|G|)"
+ },
+ "registry": {
+  "n_tif_files_found": 572,
+  "n_priors": 570,
+  "n_excluded_not_on_competition_grid": 2,
+  "excluded_examples": [
+   {
+    "path": "/home/user/GEMSDOE52/work/h69/priors/7c12ed8a4164ce549fc8c3114eb30eb7f898af09.tif",
+    "reason": "count=1 shape=(3730, 3292) crs=EPSG:32611 transform mismatch=True"
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h69/priors/a97c7b2a513225c9f9f2b35736afe5abf4d2a491.tif",
+    "reason": "count=1 shape=(32, 48) crs=EPSG:32611 transform mismatch=True"
+   }
+  ],
+  "lane_report_error_count": 0,
+  "lane_report_errors": [],
+  "distinct_decoded": 376,
+  "n_probes": 15,
+  "n_informative": 555
+ },
+ "correlation_vs_registry": {
+  "literal": {
+   "max_spearman": 0.036504352569590184,
+   "max_near_3px": 1.0,
+   "max_near_source": "/home/user/GEMSDOE52/work/h69/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+   "verdict": "DUPLICATE/STOP",
+   "duplicate": true
+  },
+  "policy": {
+   "max_spearman": 0.009618957830968278,
+   "max_near_3px": 0.6984840425531915,
+   "max_near_source": "/home/user/GEMSDOE52/work/h69/priors/fdd931161c431a583cf7039362e51832e59d07ad.tif",
+   "verdict": "PASS",
+   "duplicate": false
+  },
+  "surface_literal": {
+   "max_spearman": 0.5056969474166644,
+   "verdict": "PASS",
+   "duplicate": false
+  },
+  "surface_policy": {
+   "max_spearman": 0.5056969474166644,
+   "verdict": "PASS",
+   "duplicate": false
+  }
+ },
+ "overlap_vs_registry": {
+  "novel_fraction_vs_all_informative_union": 0.0,
+  "novel_fraction_vs_binding_priors": 1.0,
+  "support_novelty_20pct_diagnostic": false,
+  "support_novelty_diagnostic_status": "FAILED and reported, not waived: the union of all informative priors' 3px halos covers 100% of the legal set, so no candidate on this registry can pass it (work/h69/probe.py)",
+  "union_px": 5373804,
+  "canonical_pattern_unique": true,
+  "equals_literal_prior_union": false,
+  "credited_core_shipped": false,
+  "credited_core_withdrawn_by": "knowledge/52b_h69_prereg_amendment_placement.md",
+  "core_px": 0,
+  "novel_px": 37600
+ },
+ "raster_sha256": "9501c1c88fa1b80ac76b0d2652afb6234c470f8583a2d634dd62fc23c6ae8461",
+ "raster_bytes": 147247,
+ "packaging": {
+  "writer": "gems52.submission_writer.write_submission (shared, fail-closed)",
+  "zip_file": "gems52-h69-cotrain-basementview-consensus-lanefeasible-37600px-20261009T062239Z.zip",
+  "zip_sha256": "65ccdf8d5f593f588ac48f4614fc86aee70409c38dc84b4fc52b2bb0de44137e",
+  "receipt_file": "gems52-h69-cotrain-basementview-consensus-lanefeasible-37600px-20261009T062239Z.json",
+  "name_chars": 79,
+  "note_chars": 127,
+  "approved_for_weekly_slot": false,
+  "submission_slots_used": 0,
+  "tiff_bytes_unchanged_by_repackaging": true
+ },
+ "validator": {
+  "no_nan_inside_footprint": true,
+  "values_in_0_1": true,
+  "unique_values": 2,
+  "value_set": [
+   0.0,
+   1.0
+  ],
+  "mass_outside_valid_footprint": 0,
+  "dtype": "float32",
+  "bands": 1,
+  "crs": "EPSG:32611",
+  "shape": [
+   3730,
+   3292
+  ],
+  "transform": [
+   100.0,
+   0.0,
+   243350.0,
+   0.0,
+   -100.0,
+   4508550.0
+  ],
+  "matches_sample": true,
+  "problems": []
+ },
+ "not_union": {
+  "per_fold_differing_cells": [
+   46732,
+   46492,
+   46424,
+   46228
+  ],
+  "min_differing": 46228,
+  "pass_": true,
+  "instrument": "union_max arm of the committed splitter (spatial.folds), placed by nodes.spacing_select at the same 9,400-dot-per-fold budget and 3 px separation as every other arm",
+  "note": "the shipped emission is one global 37,600-dot placement, so it differs from every per-fold union arm by construction; measured rather than asserted"
+ },
+ "submission_name": "gems52-h69-cotrain-basementview-consensus-lanefeasible-37600px-20261009T062239Z",
+ "submission_note": "H69 co-training, novel-only 37600px, consensus-restricted lane-feasible; max near-dot 0.698; research, not a verified fault map",
+ "note_chars": 127,
+ "gates": {
+  "format": true,
+  "lane": true,
+  "unique": true,
+  "not_union": true,
+  "S1": false,
+  "holdout_beats_single_B": false
+ },
+ "verdict": "negative",
+ "download_ok": true,
+ "portal_will_accept_the_format": true,
+ "submit_recommended": false,
+ "submit_recommendation_reason": "the frozen promote rule (knowledge/52 section 3) requires format AND uniqueness AND lane AND not-union AND S1 AND a holdout paired CI lower bound above single_B; S1 sufficiency FAILS and holdout beats single_B FAILS, so no weekly slot should be spent on it",
+ "slots_used": 0
+}

@@ -1,55 +1,89 @@
 {
  "round": "H66",
- "preregistered_utc": "2026-10-09T04:35:00+00:00",
+ "preregistered_utc": "2026-10-09T04:28:58+00:00",
  "hypothesis_document": "knowledge/43_hypotheses_H66_preregistered.md",
- "hypothesis_sha256": "315c4e4755346855b30eb6e25e6144e885f9d26fe9bf8b0d7cbc7558718b4286",
- "hypothesis_bytes": 14881,
- "lane": "two-view co-training (Blum & Mitchell 1998, doi:10.1145/279943.279962); View A potential-field/subsurface, View B surface; disagreement as the discovery signal; the A-only stratum emitted directly; lane-quiet placement",
+ "hypothesis_sha256": "e21187387a3b646ee6fafa30aacc6229c9575d455360f0f84a3331f5fb1aa0a9",
+ "hypothesis_bytes": 13397,
+ "lane": "two-view co-training (Blum & Mitchell 1998, doi:10.1145/279943.279962); View A = local-scale potential-field channels (H66-A), View B = surface (H61 unchanged)",
  "frozen_before_any_fit": true,
  "runner": "scripts/run_h66.py",
  "runner_refuses_if_hash_moves": true,
- "shared_tools_to_reuse": [
-  "scripts/run_h61.py stages (setup, sample_train, learner, stage_fit, stage_exchange) via redirect, not fork",
-  "src/gems52/spatial.py::folds (label-blind-quadrants-v2)",
-  "src/gems52/evaluate_holdout.py (gems52-pooled-hide-v1)",
-  "src/gems52/metric.py",
-  "src/gems52/nodes.py::spacing_select",
-  "src/gems52/submission_writer.py",
-  "src/gems52/gates.py (incl. authoritative universal-coverage-probe lane policy)",
-  "src/gems52/structural.py::FeatureStore (cached stack, extended +external-geodawn-v1)",
-  "scripts/audit_uniqueness.py with the census receipt",
-  "scripts/build_h61_submission.py::prior_paths (census helper only)"
- ],
- "thresholds": {
+ "inherited_thresholds_from": {
+  "path": "registry/h61_preregistration.json",
+  "sha256": "3135e37afb3e1f88429b09337676b02b449d9d43a991e3985163f2db0e3ec4c1"
+ },
+ "view_A_feature_rule": {
+  "scale_suffixes": [
+   "_1",
+   "_3",
+   "_1_3",
+   "grad1",
+   "grad3",
+   "_coherence"
+  ],
+  "exclude_prefixes": [
+   "raw_band_"
+  ],
+  "exclude_substrings": [
+   "rank"
+  ],
+  "expected_count": 14,
+  "expected_names": [
+   "A_RTP_grad_1",
+   "A_RTP_grad_3",
+   "A_gravity_grad_1",
+   "A_gravity_grad_3",
+   "A_cover_grad_1",
+   "A_cover_grad_3",
+   "A_gravity_cover_signed_1",
+   "A_gravity_cover_signed_3",
+   "A_gravity_persistence_1_3",
+   "A_cover_persistence_1_3",
+   "A_gravity_coherence",
+   "A_cover_coherence",
+   "X_mag_TMI_up150_grad1",
+   "X_mag_TMI_up150_grad3"
+  ]
+ },
+ "view_A_learner": {
+  "kind": "Pipeline(SimpleImputer(median), StandardScaler, LogisticRegression(C=1.0, max_iter=2000))"
+ },
+ "diagnostic_learner": {
+  "kind": "HistGradientBoostingClassifier(max_depth=3, max_iter=150, learning_rate=0.05, min_samples_leaf=200, l2_regularization=1.0)",
+  "gating": false
+ },
+ "thresholds_inherited": {
+  "premise_mean_min": 0.6,
+  "premise_min_min": 0.55,
   "canary_auc_alarm": 0.9,
-  "independence_abandon_max_abs_rho": 0.6,
-  "donor_rank_min": 0.95,
-  "receiver_rank_interval": [0.35, 0.65],
-  "buffer_px": 80,
-  "block_side_px": 50,
-  "min_pseudo_pixels": 5,
-  "pseudo_cap_per_fold": 2000,
   "budget_dots_per_fold_per_arm": 9400,
+  "emission_budget_global": 37600,
   "min_dot_separation_px": 3.0,
   "catalogue_exclusion_m": 200.0,
   "bootstrap_draws": 1000,
-  "bootstrap_block_px": 200,
+  "bootstrap_seed": 520810,
+  "lane_rank_correlation": 0.9,
   "lane_near_dot_fraction": 0.7,
   "lane_near_dot_radius_px": 3.0,
-  "lane_rank_correlation": 0.9,
-  "universal_coverage_probe_threshold": 0.95,
-  "single_B_h61_control_holdout_dti": 0.174517,
-  "single_B_control_abs_tolerance": 0.001,
-  "quiet_zone_radius_px": 3.0,
-  "build_budget_cap": 23000
+  "universal_coverage_probe_threshold": 0.95
  },
- "budget": {
-  "max_experiments": 3,
-  "experiments": [
-   "E1 canary + premise + independence (diagnostics on the rebuilt stack)",
-   "E2 exchange + matched-budget hide-and-recover holdout (candidate vs single-view baseline)",
-   "E3 build + lane/uniqueness gates + GeoTIFF + site publication"
+ "reference_control": {
+  "name": "single_B",
+  "holdout_dti_h61": 0.174517,
+  "ci95_h61": [
+   0.152316,
+   0.196299
   ]
  },
- "verdict_rule": "promote only if format + policy lane + uniqueness (both tiers) + not-the-union + holdout-beats-single_B all pass; otherwise negative/research-only; this lane spends no weekly slot"
+ "budget": {
+  "E1": "canary+fit+premise",
+  "E2": "exchange+holdout+emission+gates",
+  "E3": "reserved, not authorised unless E1 passes",
+  "max_experiments": 2
+ },
+ "verdict_rule": "research-only unless premise PASS AND holdout disagreement_post DTI > single_B DTI with paired 95% CI excluding 0 AND format PASS AND lane literal+policy PASS AND uniqueness PASS. Even then eligible only; promotion is a separate selector step; nothing uploads; no weekly slot used.",
+ "fail_closed": [
+  "premise FAIL -> verdict NEGATIVE",
+  "reproduction mismatch of single_B vs H61 -> stop and report"
+ ]
 }

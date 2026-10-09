@@ -1,0 +1,72 @@
+{
+  "file": "gems52-h69-cotrain-basementview-consensus-lanefeasible-37600px-20261009T062239Z.tif",
+  "sha256": "9501c1c88fa1b80ac76b0d2652afb6234c470f8583a2d634dd62fc23c6ae8461",
+  "bytes": 147247,
+  "submission_name": "gems52-h69-cotrain-basementview-consensus-lanefeasible-37600px-20261009T062239Z",
+  "note": "H69 co-training, novel-only 37600px, consensus-restricted lane-feasible; max near-dot 0.698; research, not a verified fault map",
+  "note_chars": 127,
+  "validator": {
+    "path": "/home/user/GEMSDOE52/submission/gems52-h69-cotrain-basementview-consensus-lanefeasible-37600px-20261009T062239Z.tif",
+    "bytes": 147247,
+    "sha256": "9501c1c88fa1b80ac76b0d2652afb6234c470f8583a2d634dd62fc23c6ae8461",
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "ref_bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "nodata": null,
+    "blocksize": [
+      256,
+      256
+    ],
+    "fixture_grid": false,
+    "has_validity_mask": false,
+    "nan_pixels": 0,
+    "infinity_pixels": 0,
+    "n_nan": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.003062098752707243,
+    "n_nonzero": 37600,
+    "mass": 37600.0,
+    "mass_outside_footprint": 0,
+    "problems": [],
+    "ok": true,
+    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "zip_file": "gems52-h69-cotrain-basementview-consensus-lanefeasible-37600px-20261009T062239Z.zip",
+  "zip_sha256": "65ccdf8d5f593f588ac48f4614fc86aee70409c38dc84b4fc52b2bb0de44137e",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "status": "research-only; local format validation is not organizer acceptance",
+  "metadata": {
+    "round": "H69",
+    "preregistration": "2791f5ff807de294207047acec349f6fc0ab10adc9f7bed9f8531d9d8dc1df81",
+    "amendment": "knowledge/52b",
+    "budget": 37600,
+    "lane_policy_max_near_3px": 0.6984840425531915,
+    "lane_policy_max_spearman": 0.009618957830968278,
+    "s1_view_A_mean_oof_auc": 0.528121
+  }
+}

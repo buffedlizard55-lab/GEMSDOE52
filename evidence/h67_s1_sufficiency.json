@@ -1,0 +1,277 @@
+{
+ "stage": "S1_sufficiency",
+ "evidence_class": "PREMISE-AUC (out-of-quadrant), not a DTI score",
+ "learner": "LogisticRegression(max_iter=800, C=1.0, lbfgs) on rank channels",
+ "splitter": "label-blind-quadrants-v2 (gems52.spatial.folds, buffer_px=80)",
+ "folds": [
+  {
+   "fold": 0,
+   "n_train_pos": 29676,
+   "n_train_neg": 90000,
+   "receipt": {
+    "fold": 0,
+    "split_version": "label-blind-quadrants-v2",
+    "evaluation_region_label_blind": true,
+    "truth_px": 29297,
+    "evaluation_px": 2448048,
+    "training_domain_px": 2506320,
+    "held_components": 1829,
+    "shared_train_truth_components": 0,
+    "buffer_px": 80,
+    "nearest_training_to_region_px": 80.00624975587844,
+    "held_pixels_without_feature_support": 21,
+    "held_positive_pixels_outside_this_evaluation_region": 244
+   },
+   "aucs": {
+    "A": {
+     "oof_auc": 0.605042045625,
+     "in_quadrant_auc": 0.64814477,
+     "channels": [
+      "grad_b13",
+      "grad_b18",
+      "grad_b3",
+      "grad_b15",
+      "hess_line",
+      "rank_b5",
+      "rank_b11",
+      "rank_b2",
+      "rank_b9",
+      "rank_b14",
+      "rank_b4",
+      "rank_b7",
+      "rank_b8",
+      "rank_b16",
+      "rank_b10",
+      "rank_b17"
+     ]
+    },
+    "B": {
+     "oof_auc": 0.5873223493749999,
+     "in_quadrant_auc": 0.67973582,
+     "channels": [
+      "slope",
+      "elev",
+      "rad_tc",
+      "range5",
+      "step_max",
+      "upface_max",
+      "downface_max",
+      "relief",
+      "coh100",
+      "ex_max",
+      "grad_b12"
+     ]
+    }
+   }
+  },
+  {
+   "fold": 1,
+   "n_train_pos": 30000,
+   "n_train_neg": 90000,
+   "receipt": {
+    "fold": 1,
+    "split_version": "label-blind-quadrants-v2",
+    "evaluation_region_label_blind": true,
+    "truth_px": 12579,
+    "evaluation_px": 1365092,
+    "training_domain_px": 3635108,
+    "held_components": 684,
+    "shared_train_truth_components": 0,
+    "buffer_px": 80,
+    "nearest_training_to_region_px": 80.00624975587844,
+    "held_pixels_without_feature_support": 12,
+    "held_positive_pixels_outside_this_evaluation_region": 82
+   },
+   "aucs": {
+    "A": {
+     "oof_auc": 0.5857889697114238,
+     "in_quadrant_auc": 0.6403614825,
+     "channels": [
+      "grad_b13",
+      "grad_b18",
+      "grad_b3",
+      "grad_b15",
+      "hess_line",
+      "rank_b5",
+      "rank_b11",
+      "rank_b2",
+      "rank_b9",
+      "rank_b14",
+      "rank_b4",
+      "rank_b7",
+      "rank_b8",
+      "rank_b16",
+      "rank_b10",
+      "rank_b17"
+     ]
+    },
+    "B": {
+     "oof_auc": 0.6644022617060181,
+     "in_quadrant_auc": 0.6262615325,
+     "channels": [
+      "slope",
+      "elev",
+      "rad_tc",
+      "range5",
+      "step_max",
+      "upface_max",
+      "downface_max",
+      "relief",
+      "coh100",
+      "ex_max",
+      "grad_b12"
+     ]
+    }
+   }
+  },
+  {
+   "fold": 2,
+   "n_train_pos": 30000,
+   "n_train_neg": 90000,
+   "receipt": {
+    "fold": 2,
+    "split_version": "label-blind-quadrants-v2",
+    "evaluation_region_label_blind": true,
+    "truth_px": 9433,
+    "evaluation_px": 563614,
+    "training_domain_px": 4380876,
+    "held_components": 381,
+    "shared_train_truth_components": 0,
+    "buffer_px": 80,
+    "nearest_training_to_region_px": 80.00624975587844,
+    "held_pixels_without_feature_support": 38,
+    "held_positive_pixels_outside_this_evaluation_region": 483
+   },
+   "aucs": {
+    "A": {
+     "oof_auc": 0.5461722953991307,
+     "in_quadrant_auc": 0.6366515075000001,
+     "channels": [
+      "grad_b13",
+      "grad_b18",
+      "grad_b3",
+      "grad_b15",
+      "hess_line",
+      "rank_b5",
+      "rank_b11",
+      "rank_b2",
+      "rank_b9",
+      "rank_b14",
+      "rank_b4",
+      "rank_b7",
+      "rank_b8",
+      "rank_b16",
+      "rank_b10",
+      "rank_b17"
+     ]
+    },
+    "B": {
+     "oof_auc": 0.5792169352273933,
+     "in_quadrant_auc": 0.637672095,
+     "channels": [
+      "slope",
+      "elev",
+      "rad_tc",
+      "range5",
+      "step_max",
+      "upface_max",
+      "downface_max",
+      "relief",
+      "coh100",
+      "ex_max",
+      "grad_b12"
+     ]
+    }
+   }
+  },
+  {
+   "fold": 3,
+   "n_train_pos": 30000,
+   "n_train_neg": 90000,
+   "receipt": {
+    "fold": 3,
+    "split_version": "label-blind-quadrants-v2",
+    "evaluation_region_label_blind": true,
+    "truth_px": 9585,
+    "evaluation_px": 787546,
+    "training_domain_px": 4260674,
+    "held_components": 328,
+    "shared_train_truth_components": 0,
+    "buffer_px": 80,
+    "nearest_training_to_region_px": 80.00624975587844,
+    "held_pixels_without_feature_support": 12,
+    "held_positive_pixels_outside_this_evaluation_region": 368
+   },
+   "aucs": {
+    "A": {
+     "oof_auc": 0.6350044679186229,
+     "in_quadrant_auc": 0.63201255,
+     "channels": [
+      "grad_b13",
+      "grad_b18",
+      "grad_b3",
+      "grad_b15",
+      "hess_line",
+      "rank_b5",
+      "rank_b11",
+      "rank_b2",
+      "rank_b9",
+      "rank_b14",
+      "rank_b4",
+      "rank_b7",
+      "rank_b8",
+      "rank_b16",
+      "rank_b10",
+      "rank_b17"
+     ]
+    },
+    "B": {
+     "oof_auc": 0.6488785263432446,
+     "in_quadrant_auc": 0.6284939675,
+     "channels": [
+      "slope",
+      "elev",
+      "rad_tc",
+      "range5",
+      "step_max",
+      "upface_max",
+      "downface_max",
+      "relief",
+      "coh100",
+      "ex_max",
+      "grad_b12"
+     ]
+    }
+   }
+  }
+ ],
+ "view_A_oof_auc": [
+  0.605042045625,
+  0.5857889697114238,
+  0.5461722953991307,
+  0.6350044679186229
+ ],
+ "view_B_oof_auc": [
+  0.5873223493749999,
+  0.6644022617060181,
+  0.5792169352273933,
+  0.6488785263432446
+ ],
+ "mean_view_A_oof_auc": 0.5930019446635444,
+ "min_view_A_oof_auc": 0.5461722953991307,
+ "mean_view_B_oof_auc": 0.619955018162914,
+ "min_view_B_oof_auc": 0.5792169352273933,
+ "thresholds": {
+  "mean_min": 0.6,
+  "fold_min": 0.55
+ },
+ "reference_stored": {
+  "H61_view_A": 0.5163,
+  "H63_view_A": 0.5362,
+  "H64_view_A": 0.523,
+  "H61_view_B": 0.6843,
+  "H63_view_B": 0.6862
+ },
+ "finished_utc": "2026-10-09T05:05:21Z",
+ "S1_pass": false
+}

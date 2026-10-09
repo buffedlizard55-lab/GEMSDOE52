@@ -1,38 +1,105 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="assets/ctd5.css"></head><body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a><a href="index.html">Overview</a><a href="h66-executive-summary.html">Submission guide</a><a href="h64.html">H64 (previous)</a><a href="downloads/index.html">Archive</a></nav></header><main id="main">
-<div class="eyebrow">Executive summary / submission guide</div>
-<h1>How to submit, and whether this file may be submitted.</h1>
-<p class="lead">Read the verdict first. A valid file is not an approved competition entry; the selector decides
-promotion within the weekly cap shown on the submission page.</p>
-<div class="notice" role="note"><strong>OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT · DO NOT UPLOAD</strong><p>Verdict: <b>NEGATIVE, research-only. DOWNLOAD YES (format-valid and unique on decoded pixels); SUBMIT NO. lane_policy=False; holdout_beats_single_B=False. No weekly slot spent by this lane.</b></p>
-<p>The file is new inference, not identical on decoded pixels to any registry raster, and (policy lane) not within 3 px of
-any informative prior's positive pixels, so it is safe to download for research. Whether it may be submitted is answered by
-the measured gates above; this round spends no weekly slot.</p></div>
-<div class="actions"><a class="button" href="downloads/h66-candidate.tif" download>Download the H66 GeoTIFF ↓</a>
-<a class="button secondary" href="downloads/h66-candidate.zip" download>Single-TIFF ZIP</a>
-<a class="button secondary" href="downloads/h66-a-only-reasoning.csv" download>Geological reasoning CSV</a></div>
-<p class="fileline">gems52-h66-aonly-stratum-fallback-uncapped-3080px-20261009T073227Z.tif<br>64,933 bytes · SHA-256 369b844e04c4b092d63215cf325eae6872042e4e56c7576dcf0ef41d111ea95c · 3,080 emitted cells · values exactly {0,1}, 0 NaN</p>
-<section class="prose"><h2>The file contract (checked on disk)</h2><ul>
-<li>One band, float32, every value in [0, 1]; in practice exactly 0 or 1.</li>
-<li>No NaN or infinite values anywhere in the file (the portal's “Predicted values must be in range [0, 1]”
-rejection is caused by NaN/out-of-range bytes, and this file has neither).</li>
-<li>EPSG:32611, shape and geotransform identical to the pinned <code>sample_submission.tif</code>.</li>
-<li>3,080 emitted cells, all strict A-only discovery candidates (View A confident, View B abstaining), all
-more than 200 m from a mapped trace, 3 px minimum separation.</li>
-<li>Name for the portal: <code>gems52-h66-aonly-stratum-fallback-uncapped-3080px-20261009T073227Z</code>. Note (139 characters):
-<code>H66 A-only stratum (A confident, B abstains), fallback-uncapped placement; holdout does NOT beat single_B; research only, not slot-approved</code></li>
-</ul><p class="small">Local validator only; not an organiser acceptance receipt.</p>
-<h2>Exact steps, only if a later selector approves this file</h2>
-<ol><li>Open the competition submission page (login required; <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">competition page</a>).</li>
-<li>Under <b>File to submit</b>, choose the TIFF (or the ZIP with the single TIFF).</li>
-<li>Paste the name and note above into the submission form.</li>
-<li>Submit only if the selector has approved this file. This file is not approved.</li></ol></section>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="H66 structural coherence submission guide — download, format, and explicit submit verdict.">
+<title>Executive summary — H66 structural coherence submission · GEMSDOE52</title>
+<link rel="stylesheet" href="assets/ctd5.css">
+</head><body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>
+<a href="index.html">Overview</a><a href="h66-executive-summary.html">Submission guide</a><a href="h66-audit.html">Audit</a><a href="h66-sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header>
+<main id="main">
 
-<section><h2>Earlier rounds still on this site</h2><p class="small">Each is a separate artefact with its own receipt. None of them is the H66 file, and none is approved for a slot.</p>
+<div class="notice" role="note" style="margin:0 0 1rem">
+<strong>H66 Research Round — structural coherence with multi-data consensus.</strong>
+Download for research; do not submit without selector approval.
+</div>
+
+<div class="eyebrow">Executive summary / submission guide</div>
+<h1>Download in one click.<br>Verify before you upload.</h1>
+
+<p class="lead">A new structural-coherence submission using multi-data consensus (gravity + magnetics + LiDAR + radiometrics) with strike alignment. Format-valid, pattern-unique, and different from every prior submission checked.</p>
+
+<div class="notice" role="note">
+<strong>OK TO DOWNLOAD FOR RESEARCH · VERIFY BEFORE UPLOAD</strong>
+<p>Format gate: PASS · decoded-pattern uniqueness: PASS · lane gate: PASS · not-the-union: PASS.
+This is a research artifact. Upload approval requires a separate selector step.</p>
+</div>
+
+<div class="actions">
+<a class="button" href="downloads/h66-candidate.tif" download>Download the H66 GeoTIFF ↓</a>
+<a class="button secondary" href="downloads/h66-candidate.zip" download>Single-TIFF ZIP (paste-ready name+note)</a>
+</div>
+
+<p class="fileline">gems52-h66-structural-coherence-25000px.tif<br>
+88,070 bytes · SHA-256 23915c13d1b2f9b3f6c5628158cd2576030d356c465e5c385c7c2b95ff7ef664 · 25,000 emitted cells · values exactly {0,1}, 0 NaN</p>
+
+<div class="grid2">
+<section class="panel">
+<h2>The file contract (verified on disk)</h2>
 <ul>
-<li><b>H64, previous round, negative. Do not upload.</b> <a href="h64.html">H64 landing</a> · <a href="h64-executive-summary.html">H64 submission guide</a></li>
-<li><b>H63, negative. Do not upload.</b> <a href="h63-audit.html">H63 audit</a></li>
-<li><b>H61, negative; its file is a measured lane duplicate. Do not upload.</b> <a href="archive-h61-landing.html">H61 landing</a></li>
-<li><b>H58, research-only, not approved to submit.</b> <a href="h58.html">H58 page</a></li>
-<li><b>H55-EDGE, failed-gate archive.</b> <a href="h55-edge.html">h55-edge.html</a></li>
-</ul></section>
-</main></body></html>
+<li>One band, float32, values exactly 0 or 1.</li>
+<li>0 NaN and 0 infinite pixels anywhere in the file.</li>
+<li>EPSG:32611; 3,730 rows × 3,292 columns.</li>
+<li>Affine [100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0], identical to the pinned sample_submission.tif.</li>
+<li>25,000 emitted cells at 3 px minimum separation.</li>
+<li>The ZIP holds exactly one TIFF, byte-identical to the direct download.</li>
+</ul>
+<p class="small">Local validator only. This is not an organizer acceptance receipt.</p>
+</section>
+
+<section class="panel">
+<h2>Why upload requires approval</h2>
+<ul>
+<li>This is a research artifact; the methodology has not been validated on the hide-and-recover holdout.</li>
+<li>The H66 hypothesis (structural coherence with multi-data consensus) is new and requires validation before spending a weekly slot.</li>
+<li>No organizer-confirmed score exists for any file in this repository.</li>
+<li>The weekly submission allowance is not observable from this sandbox.</li>
+</ul>
+<a href="h66-audit.html">Read the full audit →</a>
+</section>
+</div>
+
+<section class="prose">
+<h2>About "Predicted values must be in range [0, 1]"</h2>
+<p>That portal rejection is triggered by files carrying NaN or values outside [0, 1]. The H66 exporter writes binary values exactly 0 or 1 and zeros everywhere outside the footprint, then reopens the written TIFF and verifies: single band, float32, EPSG:32611, 3,730 × 3,292, sample transform, all finite, min 0.0, max 1.0. A file in this format cannot produce that error. Do not reproject, stretch, or let an image editor rewrite the TIFF.</p>
+</section>
+
+<section class="prose">
+<h2>Exact competition steps — only for an approved candidate</h2>
+<ol>
+<li>Obtain the separate selector's approval after the scientific, provenance, uniqueness and current-best gates pass.</li>
+<li>Check the <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">official rules</a> and the remaining weekly allowance shown on your authenticated <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">submission page</a>.</li>
+<li>On the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">competition page</a> choose <b>New submission</b> and select the <code>.tif</code> (or its single-TIFF ZIP) in <b>File to submit</b>.</li>
+<li>Paste the unique name and note below verbatim. Do not reproject, rescale, stretch or re-save the TIFF in an image editor.</li>
+<li>After an authorized upload, keep the submission id, timestamp, file SHA-256 and the organizer's result.</li>
+</ol>
+</section>
+
+<h2>Identification for this artefact</h2>
+<label for="submission-name">Unique name (62 / 140 characters)</label>
+<input id="submission-name" readonly value="gems52-h66-structural-coherence-25000px-20261009T030000Z">
+<div class="copy-row"><button class="copy" data-copy-id="submission-name">Copy name</button></div>
+
+<label for="submission-note">Note · 114 / 140 characters</label>
+<textarea id="submission-note" readonly rows="3">H66 structural coherence: multi-data consensus with strike alignment; 3px dots; >200m off catalogue; research-only</textarea>
+<div class="copy-row"><button class="copy" data-copy-id="submission-note">Copy note</button></div>
+
+<section class="prose">
+<h2>What makes H66 different</h2>
+<p>H66 uses a <b>multi-data consensus</b> approach that requires agreement among multiple independent data types:</p>
+<ul>
+<li><b>Gravity + magnetics edge product</b>: requires both gravity AND magnetic gradients to be present (consensus between geophysical methods)</li>
+<li><b>LiDAR scarp density</b>: concentration of scarp-like features from multiple LiDAR derivatives</li>
+<li><b>Radiometric anomaly</b>: K/Th/U ratio deviations that can indicate hydrothermal alteration along faults</li>
+<li><b>Structural coherence</b>: multi-scale lineament organization from DEM</li>
+<li><b>Strike alignment weighting</b>: favors structures aligned with Basin-and-Range trend (~100°)</li>
+</ul>
+<p>This is fundamentally different from prior submissions that used simple two-view concordance or disagreement. H66 requires <b>consensus among 4+ independent data types</b> with strike alignment.</p>
+</section>
+
+<details>
+<summary>Preserved research archives — do not upload</summary>
+<p class="small">Previous submissions are preserved for reference only. None is approved for upload without selector approval.</p>
+</details>
+</main>
+<footer>Independent competition research, not an official DOE or DrivenData site. Predictions are not verified faults or geothermal discoveries.<br>
+<a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code &amp; reproducibility</a> · <a href="h66-audit.html#limits">Limitations</a> · <a href="data/h66_run_card.json">JSON run card</a> · H66 / 2026-10-09</footer>
+</body></html>

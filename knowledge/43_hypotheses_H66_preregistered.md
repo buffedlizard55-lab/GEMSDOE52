@@ -1,193 +1,181 @@
-# H66 — hypotheses and protocol, preregistered 2026-10-09 **before** any H66 fit, score or artefact
+# 43 · H66 — frozen pre-registration (co-training lane, one tested candidate, four carried proposals)
 
-Frozen file. Its SHA-256 is recorded in `registry/h66_preregistration.json` before the first model
-is fitted, and `scripts/run_h66.py` refuses to run if the hash has moved. Nothing below was written
-after seeing an H66 result. Lane: the brief's two-view co-training paragraph (View A
-potential-field/subsurface, View B surface, disagreement as the discovery signal).
+**Frozen before any H66 fit, canary, exchange or holdout.** The runner `scripts/run_h66.py` refuses to
+run if this file's SHA-256 differs from the value pinned in `registry/h66_preregistration.json`.
+Any later change must go in a new dated amendment file, not an edit here.
 
-Scope of this round: it answers the open item "a unique, lane-valid candidate" left by H61/H64/H65
-(`knowledge/42` §"What is still open") inside the lane. It is a submission round: one new GeoTIFF is
-built, gated and published for research, with an explicit download/submit verdict. No competition
-upload is made by this lane; promotion to a weekly slot is the separate selector step.
+**Status labels used below:** `MEASURED` (read from bytes or a receipt this session), `REPO` (already
+in this repository, cited by file), `UNVERIFIED` (a claim I could not check from a primary source).
+`HYPOTHESIS` means a proposal, not a finding.
 
 ---
 
-## 0 · Why this, and what it must not repeat
+## 0 · Starting facts (re-verified this session, not carried over)
 
-Measured lane history (all HOLDOUT-DTI unless noted; evaluator `gems52-pooled-hide-v1`, 53,186
-withheld positives, α 0.2, β 0.8, 300 m triangular kernel, paired 95% cluster bootstrap):
+1. **0.2778 anatomy (`MEASURED`, `work/h66/champion_check.json`).** The champion
+   `data/reference/h33-2-b2-zeros.tif` (SHA-256 prefix `c55bafc4…`, 37,654 positive pixels, values {0,1}, 0 NaN)
+   is a pixel-exact subset of the gems24 d2-8 raster (44,090 positives, NaN background; reported 0.2600).
+   The 6,436 removed pixels all lie 100–200 m from the mapped catalogue (min 100 m, median 100 m,
+   max 200 m; 5,092 below 200 m and 1,344 at exactly 200 m). The champion adds zero pixels to d2-8.
+   The champion's nearest dot to the catalogue is 223.6 m; its median distance is 1,964.7 m.
+   Champion spacing is near-lattice (nearest-neighbour min 2.83 px, median 3.00 px).
+   **Interpretation boundary:** the subset chain is a pixel fact; the score attribution (which file scored
+   0.2778) is owner-reported and unlinked on the board (IR-H65-003).
+2. **Public board (`REPO`, dated snapshot `registry/leaderboard_snapshot_2026-10-08.json`, observed
+   2026-10-08T21:40:41Z).** #1 xiaofanhu 0.3774; #2 alexoktaba 0.3345; #7 DARD 0.3195; #13 extradr19 0.2778
+   (12 submissions). The brief's "0.3195 is the highest" is contradicted by the snapshot (IR-H65-002).
+   The live leaderboard page is client-rendered; this session's `fetch_page` returned "Loading…", so the
+   snapshot is **not re-verified live** today. It is public-board data, not organiser-confirmed.
+3. **Sample description conflict (`MEASURED`).** The DrivenData page describes the sample as predicting
+   "total fault absence". `data/sample_submission.tif` has 60,988 ones, all on labelled faults
+   (`data/labels.tif`). Logged as IR-H66-001.
+4. **Premise status before this round (`REPO`, receipts in `evidence/`).** View A out-of-quadrant AUC:
+   H61 0.5163, H63 0.5362, H64 0.5230, H65-A 0.5202. View B: H61 0.6843, H63 0.6862. Pass rule: mean ≥ 0.60
+   and minimum ≥ 0.55 (§3). Every View A construction so far has failed it.
+5. **Holdout reference (`REPO`, `evidence/h61_holdout.json`).** Best comparable control `single_B` = 0.174517,
+   95% cluster-bootstrap CI [0.152316, 0.196299], 53,186 withheld positives, 153 clusters. The H61
+   disagreement arm = 0.030584. Random placement = 0.080426.
 
-* H61 (`knowledge/31`): independence **holds** (max |ρ| 0.1331 on 2,089 blocks of held-out
-  catalogue-zero proxies, abandon bar 0.60), but View A sufficiency **fails** — out-of-quadrant AUC
-  mean 0.5163 (min fold 0.4668) while View B reaches 0.6843. Holdout: single_B **0.174517**
-  [0.152316, 0.196299], disagreement_post 0.030584 [0.020940, 0.042238]. The shipped H61 file is a
-  measured lane duplicate (policy max near-dot 0.8788; 9 informative priors above 0.70).
-* H64 (`knowledge/40`): lower-capacity View A still fails sufficiency (mean 0.5230, min 0.4681);
-  the emission is again lane-DUPLICATE (largest near-dot share 0.888), and the per-raster capped
-  re-placement could not fill its budget (31,487 of 37,600 at the template budget; 18,388 of 20,000
-  at the smallest tried budget).
-* H65 (`knowledge/42`): a physically parameterised View A (cross-strike detrended basement/gravity
-  offsets) also fails the premise (mean 0.5202, min 0.4706). No emission.
+## 1 · Hypotheses (ranked by expected DTI gain × probability ÷ cost; no numeric gain is claimed)
 
-Two measured facts drive this round's design:
+Expected-gain language is qualitative on purpose. The repo has no measured gain for any of these.
 
-1. **The lane's discovery signal has never been emitted directly.** H61/H64 emitted the continuous
-   rank difference A−B, in which a strict A-only pixel (A ≥ 0.95, B mid-rank) scores only ≈ 0.45 —
-   below most concordant pixels. The brief says the discovery signal is the *condition* "A confident,
-   B not", i.e. the A-only stratum. H66 emits that stratum itself.
-2. **The lane gate failed on dense informative priors, not on our field.** H61's lane analysis
-   (knowledge/31 §4): of 545 registry rasters, 31 have 3 px coverage at or above the rule's own 0.70
-   trigger; the 9 informative offenders have coverage 0.7583–0.8976, so *any* footprint-wide
-   emission lands ≈ coverage-fraction of its dots inside one offender's halo. Capped re-placement
-   (H64) could not fill the budget. H66 instead places only in the **lane-quiet domain**: cells at
-   least 3 px from every informative prior's positive pixel, so the directed near-dot fraction is 0
-   for every informative prior *by construction*, and measures how large a budget that domain fills.
+### H66-A · Local-scale, low-capacity View A (THE ONE TESTED THIS ROUND) — RANK 1
+* **Layers.** The 14 View A channels whose scale is ≤ 3 px (≤ 300 m, the metric's kernel radius R):
+  `A_RTP_grad_1`, `A_RTP_grad_3`, `A_gravity_grad_1`, `A_gravity_grad_3`, `A_cover_grad_1`,
+  `A_cover_grad_3`, `A_gravity_cover_signed_1`, `A_gravity_cover_signed_3`, `A_gravity_persistence_1_3`,
+  `A_cover_persistence_1_3`, `A_gravity_coherence`, `A_cover_coherence`, `X_mag_TMI_up150_grad1`,
+  `X_mag_TMI_up150_grad3`. Excluded: all 16 raw bands (regional bands 10, 15, 16, 17 included), every
+  σ = 8 channel, every `_3_8` persistence channel, and `X_mag_TMI_up150_rank` (a rank of an absolute level).
+* **Physical signature.** A fault juxtaposes blocks with contrasting density or susceptibility, which
+  produces a narrow gradient ridge or sign change at the fault line. The ridge should be local and
+  persistent along strike.
+* **Named mimic.** Lithologic contacts, intrusion margins, and survey-levelling stripes produce the same
+  local edges. A linear readout over local edges cannot separate them, so a positive result would not
+  identify faults on its own.
+* **Why catalogue-missing.** Blind or under-cover faults with small throw do not reach the mapped
+  catalogue, but their local gradient signature should still be present in the potential field.
+* **Difference from the repo.** H61 and H64 (View A) used regional raw bands with gradient-boosted
+  learners. H63 removed all raw band values (`src/gems52/h63.py` asserts it) but kept gradient boosting, and
+  H65-A used cross-strike offsets of two regional bands. No round has tested a monotone (logistic) readout
+  restricted to local channels as the sole View A. H66-A tests whether the failure was capacity or location
+  memorisation.
+* **Cost.** Low, about 30–60 CPU minutes, reusing the H61 runner and the cached store.
 
-Already tried, and therefore not repeated: the A−B rank-difference field (H61, H64), capped
-re-placement under the 70% rule (H64), premise re-tests of three different View A parameterisations
-(H61 raw, H64 capacity-cut, H65 physical offsets). H66 changes the *emission field* and the
-*placement domain*, not the views, the folds, the learner or the evaluator.
+### H66-B · Survey-levelling stripe veto on magnetic edges (precision term) — RANK 2, NOT RUN
+* **Layers.** Magnetic bands 2 (RTP), 3 (`tmi_hg`), 9 (`tmi_vg`), and their derivatives.
+* **Signature.** Gridded aeromagnetic data carry levelling and micro-levelling stripes: long, straight,
+  near-parallel, periodic at the flight or tie-line spacing. Stripe-aligned edges are artefacts, not
+  faults, so vetoing them removes false positives the disagreement field would otherwise rank high.
+* **Repo status.** `REPO`: "survey levelling stripe" appears only as a named confounder in a deferred
+  list, unimplemented and unvalidated. No veto exists.
+* **Validation (pre-stated, not run here).** Estimate stripe orientation and period from the footprint's
+  2-D spectrum with no labels. Veto only edge pixels within ±10° of the stripe orientation. Test on the
+  spatially blocked holdout against the same arms. Promote nothing unless it beats the matched control.
+* **Cost.** 1–2 hours.
 
----
+### H66-C · Tilt-angle zero contours (carried from H65-B; not run) — RANK 3, NOT RUN
+* **Layers.** Bands 9 (`tmi_vg`) and 3 (`tmi_hg`); tilt θ = arctan(VD / THD).
+* **Signature.** Zero crossings of the tilt angle approximate source edges, a sign-aware transform that
+  the repo's tested gradient-magnitude and persistence channels do not contain. The method's
+  attribution to Miller & Singh (1994) is `UNVERIFIED` (`knowledge/41a`, item 2).
+* **Expected gain.** Low: it is still an edge detector and the local-edge family has measured about 0.52.
+* **Cost.** About 30 minutes. Not run.
 
-## 1 · Hypotheses (ranked by expected DTI improvement and implementation cost)
+### H66-D · Mapping-coverage residual (observation-process hypothesis, not geology) — RANK 4, NOT RUN
+* **Idea.** Mapped catalogues are incomplete unevenly, following mapping effort rather than geology. Where
+  the local edge density (H66-A channels) is high but the fold-visible catalogue density is low, unmapped
+  faults are more likely than in well-mapped areas.
+* **Mimic.** Density of survey or sheet boundaries. Label-blind construction is required: only the fold's
+  visible catalogue may enter, and the hidden components must never define the residual.
+* **Repo status.** `REPO`: completeness is discussed only for the seismicity catalogue (ComCat), not for
+  the mapped-fault catalogue. Not implemented.
+* **Cost.** About 1 hour. Not run.
 
-### H66-A — the A-only discovery stratum, emitted directly — RANK 1, **tested in this round**
+### Considered and rejected as already covered (not new, not repeated)
+* Euler deconvolution: already in the README's scored-file records (`h8-euler-lineament…`, `h32-1-…euler…`
+  reported 0.2649, `h38-1-…euler…` reported 0.2707; owner-reported, `REPO`).
+* Quaternary-fault (QFaults) traces as positive priors: `REPO`, one pixel of footprint coverage.
+* Cross-field structural coincidence: `REPO`, `C_*` cross features in the store manifest.
+* Gap bridging between collinear traces: `REPO`, H55-4.
+* R5-H1 to R5-H5 (trace-correction corridor first): proposed in `knowledge/33`, not run. R5-H1 is the
+  highest-ranked untested idea in the repo and is outside this lane.
 
-* **Layers.** The shared store's View A (36 channels: gravity, magnetics incl. upward-continued TMI,
-  strain, seismicity, basement depth, conductivity) and View B (37 channels: DEM curvature/slope,
-  band 6 radiometric total count, external K/Th/U ratios), exactly as H61 — no feature is added,
-  dropped or re-weighted.
-* **Mechanism.** Blum & Mitchell (COLT '98, doi:10.1145/279943.279962): two learners trained on
-  separate views teach each other on unlabeled data where one is confident and the other abstains.
-  The brief turns the disagreement into a discovery signal: *where A is confident and B is not, the
-  fault may be buried beneath cover*. H66 emits exactly those candidates: the strict A-only stratum
-  **rankA ≥ 0.95 (donor_rank_min) AND rankB ∈ [0.35, 0.65] (receiver_rank_interval)** — the same
-  registered thresholds H61 used for pseudo-labels — ranked by View A's own out-of-fold conviction.
-  The candidate field is finite only on that stratum, so every placed dot is an A-only discovery
-  candidate and gets a written geological reasoning row (Phase 2 reviewers verify faults).
-* **Physical signature targeted.** A fault buried beneath basin cover: a potential-field fabric step
-  (gravity/magnetic gradient, basement-depth offset, upward-continued TMI edge) with **no** DEM scarp
-  and **no** radiometric lineament — invisible to the surface view, hence B's abstention.
-* **Why it could catch a catalogue-missing fault.** A covered fault has no surface expression, so the
-  USGS/INGENIOUS catalogue does not contain it; its potential-field signature can survive where the
-  DEM cannot see it. That is precisely the A-confident/B-abstaining case.
-* **Named non-fault process that could mimic it (required).** A **basin-margin or flexural hinge
-  line**: basement deepens sharply across a stratigraphic hinge with no displacement; also
-  **density or lithologic contacts** in the basement (a gravity/magnetic step without throw),
-  **buried palaeo-channels or alluvial-fan margins**, and **interpolation seams** in the modelled
-  depth-to-basement grid (band 15 is a *modelled* surface per repo notes, not an independent
-  measurement — unresolved, see knowledge/34 §H62-A). These are the rows' named mimics.
-* **Difference from everything already in the repo.** H61/H64 emitted rankA − rankB over the whole
-  domain; H55–H60D emitted surface/edge/union fields; H62/H63 emitted corroboration fields. No prior
-  round emitted the stratified A-only discovery field, and none placed in the lane-quiet domain.
-* **Cost.** Zero new features: one mosaic, two rank transforms, one stratum mask, one placement.
-  No new data.
+## 2 · H66-A protocol (frozen)
 
-### H66-B — quiet-zone placement makes the lane gate satisfiable at a real budget — RANK 2, **tested in this round**
+1. **Feature rule.** `A_local` = the View A channel names that (a) end in `_1`, `_3`, `_1_3`, `grad1`,
+   `grad3`, or `_coherence`, (b) do not start with `raw_band_`, and (c) do not contain `rank`. Expected
+   result: exactly the 14 channels in §1. The runner asserts this list and refuses any other size.
+2. **View B.** Unchanged from H61 (37 channels, `learner()` gradient boosting, SEED 61052).
+3. **View A learner.** `Pipeline(SimpleImputer(median), StandardScaler, LogisticRegression(C=1.0,
+   max_iter=2000))`. Same training sample as H61 (`sample_train`, max 20,000 positives and 60,000
+   negatives per fold, fold-own domain only).
+4. **Secondary diagnostic (not gating, not used for any emission).** Shallow gradient boosting
+   (`max_depth=3`, `max_iter=150`, `learning_rate=0.05`, `min_samples_leaf=200`) on the same 14 channels,
+   region AUC only. Its purpose is to say whether nonlinearity rescues the premise.
+5. **Canary.** Unchanged H61 canary on all 73 features (36 + 37), alarm at single-feature AUC > 0.90.
+   Any alarm drops that feature and is reported as leakage until proven otherwise.
+6. **Premise gate (inherited from H65 §3).** Out-of-quadrant AUC for View A_local over the four label-blind
+   folds: PASS only if the mean ≥ 0.60 and the minimum ≥ 0.55.
+7. **Exchange, holdout and emission.** The H61 exchange stage and the H61 holdout stage run unchanged,
+   through the documented module-global hooks (`WORK`, `EVID`, `DOCS`, `setup`, `learner_for`). The
+   runner never edits `run_h61.py`. Thresholds are inherited from `registry/h61_preregistration.json`
+   (hash checked): budget 9,400 dots per fold per arm, minimum separation 3 px, 200 m catalogue exclusion,
+   1,000 bootstrap draws, seed 520810.
+8. **Shipped field.** Rank difference `rankA_post − rankB_post` on the out-of-fold mosaic, as in H61. The
+   global budget is 37,600 dots (the H61 convention). Placed by `nodes.spacing_select` on the allowed
+   domain.
+9. **Gates on the dots.** Format (`submission_writer`, fail-closed), lane gate (`gates.lane_report`,
+   surface and dots, literal and policy), uniqueness through `scripts/audit_uniqueness.py` with the census
+   receipt as the third argument, and not-the-union check. The census is `work/h61/prior_fetch_receipt.json`
+   from `scripts/fetch_prior_inventory.py`, over the 526-blob inventory.
+10. **Verdict and slot rule.** Research-only unless ALL of: premise PASS; holdout `disagreement_post`
+    DTI > `single_B` DTI with the paired 95% CI excluding 0; format PASS; lane literal and policy PASS;
+    uniqueness PASS. Even then the artefact is only *eligible*. Promotion is a separate selector step, and
+    nothing in this round uploads anything or consumes a weekly slot.
+11. **Reproduction check.** The holdout's `single_B` arm should reproduce H61's 0.174517 exactly if the
+    store and the seeds match. A mismatch is reported as a reproduction failure before any other result is
+    read.
 
-* **Rule.** An emitted cell is *lane-quiet* iff it is at least 3 px (the lane's own near-dot radius)
-  from every positive pixel of every **informative** registry raster (universal-coverage probes,
-  measured 3 px coverage ≥ 0.95, are classified as in `gems52.gates.lane_report` and excluded, as
-  the authoritative shared repair requires). The directed near-dot fraction of the emission against
-  every informative prior is then 0 by construction, and the policy lane verdict is PASS without
-  retuning the 0.70 threshold.
-* **What is measured.** The quiet domain's size, the largest budget it fills at 3 px separation, and
-  the candidate's HOLDOUT-DTI at that matched budget. H64 measured the *failure* of the alternative
-  (capped re-placement: 31,487/37,600); H66 measures the quiet domain directly.
-* **Risk, stated before running.** If the quiet domain is too small for a meaningful budget, the
-  emission is small; a small emission is a weaker discovery claim but a *lane-valid* one, and the
-  verdict rule below handles it.
+## 3 · Frozen decision rules
 
-### H66-C — the exchange still cannot rescue View A (control, expected negative) — RANK 3, **measured, not tuned**
+* Premise: PASS only if mean ≥ 0.60 and min ≥ 0.55 (H65 §3, unchanged).
+* Canary alarm: single-feature AUC > 0.90 (inherited).
+* Holdout comparison: `disagreement_post` DTI vs `single_B` DTI, paired cluster bootstrap, 1,000 draws, seed
+  520810. Beating the control means DTI difference > 0 with the 95% CI excluding 0.
+* Independence: max |ρ| ≥ 0.6 abandons the exchange (inherited). H66 reports the exchange's own status
+  either way.
 
-* Three premise measurements (0.5163, 0.5230, 0.5202) say View A is at chance out of quadrant, so
-  A→B pseudo-labels are noise and disagreement_post ≤ disagreement_pre. H66 re-measures the premise
-  and the independence screen on this machine's rebuilt stack and reports them as controls; it does
-  **not** re-tune View A a fourth time (that would repeat H64/H65).
+## 4 · Experiment budget
 
-### H66-D — B-only candidates are not emitted — RANK 4, **deferred, named reason**
+* **E1** = H66-A canary + fit + premise gate (+ the non-gating diagnostic).
+* **E2** = H66-A exchange + holdout + emission + gates.
+* **E3** = reserved and **not authorised** unless E1 passes. No further co-training variant is proposed
+  here.
+* Total: at most 2 experiments this session, within the 3-experiment and 2-hour budget.
 
-* Where B is confident and A abstains, the brief says suspect surface artifacts (roads, erosion
-  lines). Emitting them would spend the false-positive tax (α = 0.2) on the likeliest artifacts.
-  H66 reports the B-only stratum count only. A road/hydrography veto layer would be needed to use
-  this stratum; neither USGS TNM nor NHD hosts is reachable from this sandbox's egress allowlist, so
-  the idea is **not viable this round** (same block as H62-C).
+## 5 · Sources (`UNVERIFIED` unless stated)
 
----
+* Blum & Mitchell (1998), DOI 10.1145/279943.279962. Record `VERIFIED` in `knowledge/41a`; body `UNVERIFIED`.
+* Miller & Singh (1994), Blakely & Simpson (1986): citation-only, `UNVERIFIED` (`knowledge/41a` items 2–3).
+* USGS GeoDAWN DOI 10.5066/P93LGLVQ: cited, not re-opened this session.
+* DrivenData metric and format page (fetched 2026-10-09, `MEASURED`), HeroX rules and NLR rules PDF
+  (fetched 2026-10-09; `knowledge/36` for rule anchors).
+* Leaderboard: dated snapshot only (see §0.2).
 
-## 2 · Frozen decision rules (checked by code)
+## 6 · Access, legal and review flags
 
-1. **Shared tools, not forks.** `run_h61.setup` (pins, store, label-blind-quadrants-v2 folds, buffer
-   80 px), `run_h61.sample_train`, `run_h61.learner`, `run_h61.stage_fit`, `run_h61.stage_exchange`
-   (independence screen + exactly one whole-segment exchange with buffer, no leakage into any
-   evaluation region), `gems52.evaluate_holdout` (`gems52-pooled-hide-v1`), `gems52.nodes.
-   spacing_select` (metric-aware placement, 3 px), `gems52.submission_writer`, `gems52.gates`
-   (incl. the authoritative probe-classification lane), `scripts/audit_uniqueness.py` with the
-   census receipt. The only round-specific code is the candidate field definition, the arm list,
-   the quiet-domain placement and the build — all in `scripts/run_h66.py`.
-2. **Controls.** The H61 six arms are re-run at the H61 budget (9,400 dots/fold) and must reproduce
-   the committed H61 pooled values within |Δ| ≤ 0.001 (knowledge/39b tolerance); single_B
-   0.174517 is the best comparable control. A control outside tolerance stops the round as a
-   pipeline defect.
-3. **Leakage canary.** Every feature, every fold, held-out sample; alarm at direction-insensitive
-   AUC > 0.90. Any alarm drops the feature and is recorded.
-4. **Independence.** Spatial-block (50×50 px) out-of-fold errors of the two views on labelled
-   negatives (held-out catalogue-zero proxies, > 4 px from any catalogue pixel). Abandon the
-   exchange if max |ρ| ≥ 0.60; the screen is measured before any transfer, as H61 did.
-5. **Holdout (the decision).** Matched budget per fold per arm. Candidate arm `a_only` = the strict
-   A-only stratum field (finite only on the stratum), placed by `spacing_select` at 9,400 dots/fold
-   or its fill, whichever is smaller; the matched set (a_only, single_A, single_B, union_max,
-   random) is then re-placed at K_c = the candidate's minimum per-fold fill so the comparison is
-   eligible. Pooled HOLDOUT-DTI (α 0.2, β 0.8, 300 m triangular kernel) with paired 95% cluster
-   bootstrap. **Holdout-eligible** iff the candidate's paired difference vs single_B has a 95% CI
-   lower bound > 0 at the matched budget. The 9,400-dot six-arm set is reported alongside as the
-   H61 control reproduction.
-6. **Build.** OOF mosaic of the post-exchange predictions (out-of-fold only, as H64). Percentile
-   ranks over the allowed domain (eligible ∩ sample-finite ∩ off-catalogue ∩ > 200 m from the
-   visible catalogue — the 200 m ring is built from the full catalogue at build time, exactly as
-   H64, because the organiser's truth is off-catalogue). Stratum = rankA ≥ 0.95 ∩ rankB ∈ [0.35,
-   0.65]. Candidate field = rankA on the stratum, −inf elsewhere. Quiet domain = allowed ∩ at least
-   3 px from every informative prior's positive pixel. Budget = the largest K ≤ 23,000 that
-   `spacing_select` fills inside (stratum ∩ quiet). **Surface lane check before placement**
-   (rank correlation of the min-max-normalised surface vs every registry raster, both literal and
-   policy verdicts). **Dots lane check after placement** (directed ≤ 3 px near-dot fraction vs every
-   registry raster, literal and policy). Uniqueness: tier 1 decoded-pattern uniqueness vs all
-   priors; tier 2 support novelty vs informative priors; `scripts/audit_uniqueness.py` with the
-   census receipt as the authoritative audit. **Not-the-union**: cell differences and Jaccard vs
-   the `max(A,B)` emission at the same budget, plus Spearman of the candidate field vs the union
-   field.
-7. **Validator.** `submission_writer.write_submission` re-opens the written file and requires:
-   one float32 band, finite everywhere, values in [0,1], EPSG:32611, shape 3,730 × 3,292 and the
-   pinned transform, no mass outside the footprint. Local validation only — never an organiser
-   receipt.
-8. **Verdict.** `promote` only if format + policy lane + uniqueness (both tiers) + not-the-union
-   + holdout-eligible all pass. Otherwise `negative`, published research-only with the download
-   label. **This lane spends no weekly slot.** The literal lane statistic is always reported
-   verbatim beside the policy verdict (the registry contains a measured universal-coverage lattice
-   probe, so the literal rule fails for every nonempty raster — a property of the registry, measured
-   in `evidence/ctd5_registry_saturation.json` and `evidence/h61_lane_analysis.json`).
-9. **Budget.** Three experiments: **E1** canary + premise + independence (diagnostics on the rebuilt
-   stack); **E2** exchange + matched-budget holdout (the comparison); **E3** build + gates + GeoTIFF
-   + site publication. Stop after E3 or two hours, whichever first. Negative results are deliverables.
+* DrivenData Terms of Use prohibit automatic access and reproduction or distribution beyond listed
+  exceptions (`REPO` `registry/source_policy.json`; fetched terms, last modified 2014-08-07). Competition
+  rasters are mirrored on public GitHub repositories. **Flag for legal review.** H66 reads mirrored bytes
+  from GitHub only, and the leaderboard came from one public page fetch.
+* Input SHA pins authenticate the mirror bytes only, not organiser authentication (`knowledge/36`).
+* Eligibility: the NLR rules require the registrant to certify eligibility, and that person must be the user.
+  The agent cannot certify it.
 
-## 3 · Sources (for manual review; checked in earlier rounds of this repo, re-verified by pin this round)
+## 7 · AI-use disclosure
 
-* Blum & Mitchell (1998), *Combining labeled and unlabeled data with co-training*, COLT '98,
-  pp. 92–100, DOI 10.1145/279943.279962: https://dl.acm.org/doi/10.1145/279943.279962
-* Competition metric/format/rules: https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/
-  and /page/968/; leaderboard: https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/
-* Masking clarification (staff, thread 11516): https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516/4
-* USGS GeoDAWN airborne magnetic/radiometric release, DOI 10.5066/P93LGLVQ:
-  https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and
-* GDR OpenEI submission 1391: https://gdr.openei.org/submissions/1391
-* Reference solution: https://github.com/drivendataorg/gems-prize-reference-solution
-* Competition rules PDF: https://docs.nlr.gov/docs/fy26osti/96647.pdf
-* Prior inputs are SHA-256-pinned owner mirrors (`registry/data_manifest.json`,
-  `data/restore_receipt.json` — all pins verified this session); **not** organiser-authenticated.
-
-## 4 · AI-use disclosure
-
-An AI assistant wrote the code, this protocol and the review text. No geologist verified any
-structure, no field observation was collected, and no organiser score, acceptance or leaderboard
-gain is claimed for any H66 output.
+An AI agent (Arena.ai Agent Mode) wrote the code, this protocol, and the review text. The rules
+(NLR §3.2) require disclosure in the submission narrative; this file is that disclosure for H66. No
+geologist verified any structure, no field observation was collected, and no organiser score, acceptance,
+or leaderboard gain is claimed for any H66 output.

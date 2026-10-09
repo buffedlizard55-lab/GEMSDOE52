@@ -1,0 +1,375 @@
+{
+  "evidence_class": "uniqueness diagnostic, not a score",
+  "candidate": "submission/gems52-h70-aonly-cotrain-610px-20261009T055521Z.tif",
+  "candidate_file_sha256": "ea9774a871929427e60261cdfe2f64fdab0d0c8c2253cf2eac119cc404e28af3",
+  "candidate_nonzero": 610,
+  "sample": "data/sample_submission.tif",
+  "footprint_px": 5167373,
+  "priors_offered": 615,
+  "self_copies_excluded": [
+    "docs/downloads/h70-candidate.tif"
+  ],
+  "priors_after_byte_dedupe": 536,
+  "phases": {
+    "surface": {
+      "phase": "surface",
+      "rule": "STOP at rho >0.90 or directed <=3px dot proximity >0.70; no lane retuning",
+      "evidence_class": "uniqueness diagnostic, not a score",
+      "priors_checked": 536,
+      "distinct_decoded_priors": 372,
+      "candidate_decoded_sha256": "418f6e9c09595e5364960ee7d5d0e509af7c1926cb8f22152db94af371e1765f",
+      "rank_pixels": 5167373,
+      "exact_full_eligible_rank": true,
+      "max_spearman": 0.005361492114552815,
+      "max_near_3px_fraction": null,
+      "rank_threshold": 0.9,
+      "near_threshold": 0.7,
+      "duplicate": false,
+      "offender_count": 0,
+      "error_count": 0,
+      "ok": true,
+      "scope": "Supplied aligned immutable public inventory only; private/release/external artifacts not proven absent.",
+      "top_spearman": [
+        {
+          "path": "work/h70/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+          "spearman": 0.005361
+        },
+        {
+          "path": "work/h70/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+          "spearman": 0.005361
+        },
+        {
+          "path": "work/h70/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+          "spearman": 0.00532
+        },
+        {
+          "path": "work/h70/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+          "spearman": 0.005275
+        },
+        {
+          "path": "work/h70/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+          "spearman": 0.004662
+        }
+      ],
+      "top_near_3px": [],
+      "offenders": []
+    },
+    "dots": {
+      "phase": "dots",
+      "rule": "STOP at rho >0.90 or directed <=3px dot proximity >0.70; no lane retuning",
+      "evidence_class": "uniqueness diagnostic, not a score",
+      "priors_checked": 536,
+      "distinct_decoded_priors": 372,
+      "candidate_decoded_sha256": "418f6e9c09595e5364960ee7d5d0e509af7c1926cb8f22152db94af371e1765f",
+      "rank_pixels": 5167373,
+      "exact_full_eligible_rank": true,
+      "max_spearman": 0.005361492114552815,
+      "max_near_3px_fraction": 1.0,
+      "rank_threshold": 0.9,
+      "near_threshold": 0.7,
+      "duplicate": true,
+      "offender_count": 24,
+      "error_count": 0,
+      "ok": false,
+      "scope": "Supplied aligned immutable public inventory only; private/release/external artifacts not proven absent.",
+      "top_spearman": [
+        {
+          "path": "work/h70/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+          "spearman": 0.005361
+        },
+        {
+          "path": "work/h70/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+          "spearman": 0.005361
+        },
+        {
+          "path": "work/h70/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+          "spearman": 0.00532
+        },
+        {
+          "path": "work/h70/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+          "spearman": 0.005275
+        },
+        {
+          "path": "work/h70/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+          "spearman": 0.004662
+        }
+      ],
+      "top_near_3px": [
+        {
+          "path": "work/h70/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+          "near_3px_fraction": 1.0
+        },
+        {
+          "path": "work/h70/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+          "near_3px_fraction": 1.0
+        },
+        {
+          "path": "work/h70/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+          "near_3px_fraction": 1.0
+        },
+        {
+          "path": "work/h70/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+          "near_3px_fraction": 1.0
+        },
+        {
+          "path": "work/h70/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+          "near_3px_fraction": 1.0
+        }
+      ],
+      "offenders": [
+        "work/h70/priors/fdd931161c431a583cf7039362e51832e59d07ad.tif",
+        "work/h70/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+        "work/h70/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+        "work/h70/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+        "work/h70/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+        "work/h70/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+        "work/h70/priors/bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+        "work/h70/priors/2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+        "work/h70/priors/437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+        "work/h70/priors/c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+        "work/h70/priors/5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+        "work/h70/priors/0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+        "work/h70/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+        "work/h70/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+        "work/h70/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+        "work/h70/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+        "work/h70/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+        "work/h70/priors/c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+        "work/h70/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+        "work/h70/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+        "work/h70/priors/3d3ee66300203bdc878f3a052caabde671daf042.tif",
+        "work/h70/priors/35616cbb48ac3533dd4c957b8acca57f71ba365f.tif",
+        "submission/gems52-h61-deepsharp-cotrain-37600px.tif",
+        "submission/gems52-h64-sufgate-cotrain-37600px-20261009T022631Z.tif"
+      ]
+    }
+  },
+  "census": {
+    "census_receipt": "work/h70/prior_fetch_receipt.json",
+    "census_entries": 526,
+    "census_errors": 0,
+    "census_sha_column": "file bytes",
+    "census_present": 524,
+    "local_artifacts": 0,
+    "census_errors_note": "blobs that failed the API fetch are covered by byte-identical local copies in docs/downloads (matched by decoded file SHA-256)"
+  },
+  "lane_policy_dots": {
+    "phase": "dots",
+    "instrument": "gems52.gates.lane_report (H61 shared-template repair)",
+    "evidence_class": "uniqueness/lane diagnostic, not a score",
+    "rule": "STOP at Spearman > 0.9 or directed <= 3 px dot proximity > 0.7; probes classified by measured coverage >= 0.95",
+    "priors_checked": 536,
+    "distinct_decoded_priors": 372,
+    "candidate_decoded_sha256": "418f6e9c09595e5364960ee7d5d0e509af7c1926cb8f22152db94af371e1765f",
+    "rank_pixels": 5167373,
+    "exact_full_eligible_rank": true,
+    "binary_spearman_method": "analytic phi (mid-rank affine)",
+    "n_dots": 610,
+    "literal": {
+      "max_spearman": 0.005361492114552815,
+      "max_near_3px_fraction": 1.0,
+      "max_near_source": "/home/user/GEMSDOE52/work/h70/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+      "rank_offenders": [],
+      "near_offenders": [
+        "/home/user/GEMSDOE52/work/h70/priors/fdd931161c431a583cf7039362e51832e59d07ad.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/3d3ee66300203bdc878f3a052caabde671daf042.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/35616cbb48ac3533dd4c957b8acca57f71ba365f.tif",
+        "/home/user/GEMSDOE52/submission/gems52-h61-deepsharp-cotrain-37600px.tif",
+        "/home/user/GEMSDOE52/submission/gems52-h64-sufgate-cotrain-37600px-20261009T022631Z.tif"
+      ],
+      "identical": [],
+      "verdict": "DUPLICATE/STOP",
+      "note": "applied to every aligned prior including universal-coverage probes"
+    },
+    "policy": {
+      "max_spearman": -2.2419865669784482e-05,
+      "max_near_3px_fraction": 1.0,
+      "max_near_source": "/home/user/GEMSDOE52/submission/gems52-h64-sufgate-cotrain-37600px-20261009T022631Z.tif",
+      "rank_offenders": [],
+      "near_offenders": [
+        "/home/user/GEMSDOE52/work/h70/priors/fdd931161c431a583cf7039362e51832e59d07ad.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+        "/home/user/GEMSDOE52/submission/gems52-h61-deepsharp-cotrain-37600px.tif",
+        "/home/user/GEMSDOE52/submission/gems52-h64-sufgate-cotrain-37600px-20261009T022631Z.tif"
+      ],
+      "identical": [],
+      "informative_priors": 522,
+      "universal_coverage_probes": 14,
+      "probe_paths": [
+        "/home/user/GEMSDOE52/work/h70/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/3d3ee66300203bdc878f3a052caabde671daf042.tif",
+        "/home/user/GEMSDOE52/work/h70/priors/35616cbb48ac3533dd4c957b8acca57f71ba365f.tif"
+      ],
+      "probe_coverage": [
+        1.0,
+        1.0,
+        0.9987132726822701,
+        0.9987132726822701,
+        1.0,
+        0.9999994194342077,
+        0.988265410683533,
+        0.9917604167533484,
+        0.9879739666557843,
+        0.9972862419647275,
+        0.9879739666557843,
+        0.9955909898511294,
+        1.0,
+        0.9972862419647275
+      ],
+      "verdict": "DUPLICATE/STOP",
+      "note": "the same literal rule restricted to priors that localise something; probe statistics are retained verbatim in per_prior and nothing is deleted"
+    },
+    "duplicate": true,
+    "ok": false,
+    "error_count": 0,
+    "errors": [],
+    "scope": "Supplied aligned immutable public inventory only; private/release/unlinked artifacts are not proven absent.",
+    "probe_coverage": [
+      {
+        "path": "work/h70/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+        "coverage_3px_of_eligible": 1.0
+      },
+      {
+        "path": "work/h70/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+        "coverage_3px_of_eligible": 1.0
+      },
+      {
+        "path": "work/h70/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+        "coverage_3px_of_eligible": 0.9987132726822701
+      },
+      {
+        "path": "work/h70/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+        "coverage_3px_of_eligible": 0.9987132726822701
+      },
+      {
+        "path": "work/h70/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+        "coverage_3px_of_eligible": 1.0
+      },
+      {
+        "path": "work/h70/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+        "coverage_3px_of_eligible": 0.9999994194342077
+      },
+      {
+        "path": "work/h70/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+        "coverage_3px_of_eligible": 0.988265410683533
+      },
+      {
+        "path": "work/h70/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+        "coverage_3px_of_eligible": 0.9917604167533484
+      },
+      {
+        "path": "work/h70/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+        "coverage_3px_of_eligible": 0.9879739666557843
+      },
+      {
+        "path": "work/h70/priors/c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+        "coverage_3px_of_eligible": 0.9972862419647275
+      },
+      {
+        "path": "work/h70/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+        "coverage_3px_of_eligible": 0.9879739666557843
+      },
+      {
+        "path": "work/h70/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+        "coverage_3px_of_eligible": 0.9955909898511294
+      },
+      {
+        "path": "work/h70/priors/3d3ee66300203bdc878f3a052caabde671daf042.tif",
+        "coverage_3px_of_eligible": 1.0
+      },
+      {
+        "path": "work/h70/priors/35616cbb48ac3533dd4c957b8acca57f71ba365f.tif",
+        "coverage_3px_of_eligible": 0.9972862419647275
+      }
+    ],
+    "informative_near_offenders_over_70pct": [
+      "work/h70/priors/fdd931161c431a583cf7039362e51832e59d07ad.tif",
+      "work/h70/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+      "work/h70/priors/bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+      "work/h70/priors/2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+      "work/h70/priors/437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+      "work/h70/priors/c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+      "work/h70/priors/5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+      "work/h70/priors/0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+      "submission/gems52-h61-deepsharp-cotrain-37600px.tif",
+      "submission/gems52-h64-sufgate-cotrain-37600px-20261009T022631Z.tif"
+    ]
+  },
+  "max_jaccard": 0.000135,
+  "max_jaccard_prior": "work/h70/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+  "candidate_px_inside_any_prior_support": 610,
+  "share_of_candidate_px_inside_any_prior_support": 1.0,
+  "top_overlaps": [
+    {
+      "path": "work/h70/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+      "prior_support": 206895,
+      "intersection": 28,
+      "jaccard": 0.000135,
+      "share_of_candidate_in_prior": 0.045902
+    },
+    {
+      "path": "work/h70/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+      "prior_support": 206895,
+      "intersection": 28,
+      "jaccard": 0.000135,
+      "share_of_candidate_in_prior": 0.045902
+    },
+    {
+      "path": "work/h70/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+      "prior_support": 5106385,
+      "intersection": 610,
+      "jaccard": 0.000119,
+      "share_of_candidate_in_prior": 1.0
+    },
+    {
+      "path": "work/h70/priors/989f2fa40fdefdec8d7838ef261e5940f73081c4.tif",
+      "prior_support": 5144440,
+      "intersection": 610,
+      "jaccard": 0.000119,
+      "share_of_candidate_in_prior": 1.0
+    },
+    {
+      "path": "work/h70/priors/5ec102564a28243a70ee905f8f3ebfc65f6770f1.tif",
+      "prior_support": 5144440,
+      "intersection": 610,
+      "jaccard": 0.000119,
+      "share_of_candidate_in_prior": 1.0
+    }
+  ]
+}

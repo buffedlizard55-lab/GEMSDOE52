@@ -1,0 +1,51 @@
+{
+ "stage": "diagnostic",
+ "started_utc": "2026-10-09T04:33:40+00:00",
+ "gating": false,
+ "learner": "HistGradientBoostingClassifier(max_depth=3,max_iter=150,lr=0.05,min_samples_leaf=200,l2=1.0)",
+ "view_A_features": [
+  "A_RTP_grad_1",
+  "A_RTP_grad_3",
+  "A_cover_coherence",
+  "A_cover_grad_1",
+  "A_cover_grad_3",
+  "A_cover_persistence_1_3",
+  "A_gravity_coherence",
+  "A_gravity_cover_signed_1",
+  "A_gravity_cover_signed_3",
+  "A_gravity_grad_1",
+  "A_gravity_grad_3",
+  "A_gravity_persistence_1_3",
+  "X_mag_TMI_up150_grad1",
+  "X_mag_TMI_up150_grad3"
+ ],
+ "folds": [
+  {
+   "fold": 0,
+   "heldout_region_auc_hgb_local": 0.5388297259431581,
+   "n_region_pos": 27309,
+   "n_region_neg": 1941302
+  },
+  {
+   "fold": 1,
+   "heldout_region_auc_hgb_local": 0.5673975149190124,
+   "n_region_pos": 10677,
+   "n_region_neg": 1032665
+  },
+  {
+   "fold": 2,
+   "heldout_region_auc_hgb_local": 0.5108197722651455,
+   "n_region_pos": 6813,
+   "n_region_neg": 393204
+  },
+  {
+   "fold": 3,
+   "heldout_region_auc_hgb_local": 0.5398012196910815,
+   "n_region_pos": 8387,
+   "n_region_neg": 595321
+  }
+ ],
+ "finished_utc": "2026-10-09T04:33:58+00:00",
+ "mean": 0.5392120582045994,
+ "min": 0.5108197722651455
+}

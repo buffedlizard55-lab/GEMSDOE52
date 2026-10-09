@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="One-click download, the exact file contract, and the explicit submit verdict for the H70 artefact.">
+<title>Executive summary — how to submit, and whether this file may be submitted · GEMSDOE52</title><link rel="stylesheet" href="assets/ctd5.css"><script src="assets/h70.js" defer></script></head>
+<body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>
+<a href="index.html">Overview</a><a href="h70.html">H70 run &amp; evidence</a><a href="h70-executive-summary.html">Submission guide</a><a href="h70-sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header>
+<main id="main"><div class="notice" role="note" style="margin:0 0 1rem"><strong>Latest research round: H70 (negative).</strong>
+Download yes, for research only; submit no. <a href="h70.html">H70 run &amp; evidence</a> ·
+<a href="h64.html">Previous round (H64)</a></div>
+<div class="eyebrow">Executive summary / submission guide</div>
+<h1>Download in one click.<br>Do not upload this run.</h1>
+<p class="lead">The file, its exact identifier, and the frozen verdict. Promotion to a weekly slot is a
+separate selector decision, never a property of a valid file.</p>
+<div class="notice" role="note"><strong>OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT · DO NOT UPLOAD</strong>
+<p>Verdict: <b>NEGATIVE, research-only.</b> DOWNLOAD YES (format-valid and unique on decoded pixels); SUBMIT NO (the strict A-only candidate does not beat the single-view control: HOLDOUT-DTI 0.046023 [0.0314, 0.0621] against single_B 0.174571, paired Δ -0.128548 [-0.1513, -0.1062]; and the literal lane gate reads DUPLICATE/STOP). Competition slots used: 0. NO CERTIFIED LEADERBOARD GAIN. Promotion to a weekly slot is a separate selector step.</p></div>
+<div class="actions"><a class="button" href="downloads/h70-candidate.tif" download>Download the H70 GeoTIFF ↓</a><a class="button secondary" href="downloads/h70-candidate.zip" download>Single-TIFF ZIP</a><a class="button secondary" href="downloads/h70-a-only-reasoning.csv.gz" download>A-only reasoning CSV (gzip)</a></div>
+<p class="fileline">gems52-h70-aonly-cotrain-610px-20261009T055521Z.tif<br>58,363 bytes · SHA-256 ea9774a871929427e60261cdfe2f64fdab0d0c8c2253cf2eac119cc404e28af3 · 610 emitted cells · values exactly {0,1}, 0 NaN</p>
+<div class="grid2"><section class="panel"><h2>The file contract (verified on disk)</h2><ul>
+<li>One band, float32, values exactly 0 or 1.</li>
+<li>0 NaN and 0 infinite pixels anywhere in the file.</li>
+<li>EPSG:32611; 3,730 rows × 3,292 columns.</li>
+<li>Affine [100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0], identical to the pinned
+<code>sample_submission.tif</code>: yes.</li>
+<li>610 emitted cells, all inside the strict A-only stratum, all more than 200 m from any mapped trace,
+3 px minimum separation.</li>
+<li>The ZIP holds exactly one TIFF, byte-identical to the direct download.</li></ul>
+<p class="small">Local validator only. This is not an organiser acceptance receipt.</p></section>
+<section class="panel"><h2>Why upload is blocked</h2><ul>
+<li>The strict A-only candidate does not beat the single-view control: HOLDOUT-DTI 0.046023
+[0.0314, 0.0621] against single_B 0.174571; paired Δ -0.128548 [-0.1513, -0.1062]
+(53,186 withheld positives, evaluator <code>gems52-pooled-hide-v1</code>).</li>
+<li>Measured purely, the brief's discovery stratum is <b>anti-informative</b>: pooled pure-stratum
+HOLDOUT-DTI 0.017351 [0.0124, 0.0235] at its achieved budget, below uniform random
+(paired Δ -0.063074 [-0.0739, -0.0521]).</li>
+<li>The sufficiency premise failed for the fifth consecutive round (View A out-of-quadrant AUC
+0.5166 against a 0.60 bar).</li>
+<li>The literal lane gate reads DUPLICATE/STOP for every nonempty candidate on this registry (a measured
+lattice-probe saturation); the file is lane-valid under the saturation-aware policy
+(worst informative near-dot share 1.0000 ≤ 0.70, by construction).</li>
+<li>The holdout simulator measured Spearman −0.10 against the owner-reported board in R4; it cannot promote
+anything on its own.</li>
+<li>Inputs are pinned owner mirrors, not organiser-authenticated downloads, and the current weekly allowance
+is not observable from this sandbox.</li></ul>
+<a href="h70.html">Read the full run and its limits →</a></section></div>
+<section class="prose"><h2>About “Predicted values must be in range [0, 1]”</h2>
+<p>That portal rejection is a property of the uploaded bytes, and this exporter makes it unreachable:
+<code>gems52.grid.write_geotiff</code> refuses to write unless the array is float32, finite everywhere,
+inside [0, 1], exactly 3,730 × 3,292 and on the pinned EPSG:32611 affine; <code>gems52.submission_writer</code>
+then reopens the written file, re-validates it against <code>sample_submission.tif</code>, and fails closed.
+The public specification permits null/NaN outside the footprint, so all-finite export is our compatibility
+precaution — we do <b>not</b> claim that NaN caused your specific historical rejection, because the rejected
+bytes and the portal receipt were never available here.</p>
+<h2>Exact competition steps — only for an approved candidate</h2><ol>
+<li>Obtain the separate selector's approval after the scientific, provenance, uniqueness and current-best
+gates pass. <b>H70 is negative; stop here for this file.</b></li>
+<li>Check the <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">official rules</a> and the remaining
+weekly allowance shown on your authenticated
+<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">submission page</a>.
+This site cannot read that allowance.</li>
+<li>On the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">competition page</a>
+choose <b>New submission</b> and select the <code>.tif</code> (or its single-TIFF ZIP) in <b>File to
+submit</b>. Never upload HTML, a JSON receipt or a screenshot.</li>
+<li>Paste the unique name and note below verbatim. Do not reproject, rescale, stretch or re-save the TIFF in
+an image editor.</li>
+<li>After an authorised upload, keep the submission id, timestamp, file SHA-256 and the organiser's result.
+Only that receipt supports an <b>ORGANIZER-CONFIRMED</b> score.</li></ol></section>
+<h2>Identification for this artefact</h2><p class="small">Copying these fields is not permission to upload
+the file.</p>
+<label for="submission-name">Unique name (47 / 140 characters)</label>
+<input id="submission-name" readonly value="gems52-h70-aonly-cotrain-610px-20261009T055521Z">
+<div class="copy-row"><button class="copy" data-copy-id="submission-name">Copy name</button></div>
+<label for="submission-note">Note · 132 / 140 characters</label>
+<textarea id="submission-note" readonly rows="3">H70 strict A-only co-training discovery stratum; constrained placement at 610 dots, lane-DUPLICATE; research only, not slot-approved</textarea>
+<div class="copy-row"><button class="copy" data-copy-id="submission-note">Copy note</button></div>
+<p class="copy-status" id="copy-status" aria-live="polite"></p>
+<section class="prose"><h2>Reproduce it</h2><pre class="code">.venv/bin/python scripts/run_h70.py all          # canary -> fit -> sufficiency -> exchange -> holdout -> build
+.venv/bin/python scripts/h70_a_only_capacity.py   # pure-stratum capacity diagnostic
+.venv/bin/python scripts/publish_h70_site.py      # this page
+.venv/bin/python scripts/check_site.py &amp;&amp; .venv/bin/python -m pytest -q</pre>
+<p class="small">GitHub Pages is static: it serves the generated file, it does not train a model in your
+browser. Reproduction regenerates the same research result; it never uploads, promotes or spends a slot.</p>
+<p class="small">Full pipeline from pinned inputs:
+<code>bash scripts/download_competition_data.sh</code> ·
+<code>PYTHONPATH=src .venv/bin/python -c "from gems52 import structural; structural.build(dest='work/r2/features', include_optional_profiles=False)"</code>
+· <code>PYTHONPATH=src .venv/bin/python -m gems52.external</code> ·
+<code>.venv/bin/python scripts/fetch_prior_inventory.py --out work/h70/priors --receipt work/h70/prior_fetch_receipt.json</code></p></section>
+<details><summary>Preserved research archives — none of these is an approval</summary>
+<p class="small"><a href="downloads/h64-candidate.tif" download>h64-candidate.tif</a> · <code></code> · SHA-256 <code>…</code> · H64 (previous round, negative): download for research, not approved to submit</p><p class="small"><a href="downloads/h63-candidate.tif" download>h63-candidate.tif</a> · <code>gems52-h63-stepview-cotrain-37600px.tif</code> · SHA-256 <code>aa41d0cd4658b2f0887180bf…</code> · H63 (negative): download for research, not approved to submit</p><p class="small"><a href="downloads/h61-candidate.tif" download>h61-candidate.tif</a> · <code>gems52-h61-deepsharp-cotrain-37600px.tif</code> · SHA-256 <code>7c86853164f9cfa7aea34de0…</code> · H61 (negative, measured lane duplicate IR-H65-004): download for research, not approved to submit</p><p class="small"><a href="downloads/h58-candidate.tif" download>h58-candidate.tif</a> · <code>gems52-h58-coldgeo-consensus-22px-a55b0dee38-research.tif</code> · SHA-256 <code>130c242e33aef398c44b22cd…</code> · H58 (negative): download for research, not approved to submit</p><p class="small"><a href="downloads/r5-candidate.tif" download>r5-candidate.tif</a> · <code>gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif</code> · SHA-256 <code>d2bfb0f79328399354943bd1…</code> · R5 (negative): ok to download, not slot-approved; its own receipt publishes P(beating 0.2778) = 0.366</p><p class="small">H57 credited-core alternate (separate artefact, never the global pointer): <a href="downloads/gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif" download><code>gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif</code></a> · research only, not approved to submit.</p>
+<p class="small"><a href="h64.html">H64 landing</a> · <a href="h64-executive-summary.html">H64 submission guide</a> ·
+<a href="archive-ctd5-overview.html">CTD5 landing page (negative, lane-saturated)</a> ·
+<a href="ctd5-audit.html">CTD5 run &amp; evidence</a> · <a href="h63-audit.html">H63 run &amp; evidence</a> ·
+<a href="h62.html">H62 run &amp; evidence</a> · <a href="h61-audit.html">H61 run &amp; evidence</a> ·
+<a href="h60.html">H60</a> · <a href="h59.html">H59</a> · <a href="h58.html">H58</a> ·
+<a href="h57.html">H57</a> · <a href="h56.html">H56</a> · <a href="h55.html">H55</a> ·
+<a href="h54.html">H54</a> · <a href="h53.html">H53</a> · <a href="r3.html">R3</a> ·
+<a href="hypotheses.html">Hypotheses</a> · <a href="method.html">Method</a> ·
+<a href="validation.html">Validation</a> · <a href="sources.html">Sources</a> ·
+<a href="irregularities.html">Irregularities</a> · <a href="forensics.html">Forensics</a> ·
+<a href="feed.html">Feed</a> · <a href="downloads/index.html">Download archive</a></p></details></main><footer>Independent competition research, not an official DOE or DrivenData site. Predictions are not verified faults or geothermal discoveries.<br>
+<a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code &amp; reproducibility</a> · <a href="h70.html#limits">Limitations</a> · <a href="data/h70_run_card.json">JSON run card</a> · H70 / 2026-10-09</footer></body></html>
