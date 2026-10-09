@@ -143,15 +143,19 @@ interval overlaps random's.</p>
 </ul>
 
 
-<h2>Two parallel rounds from today, and why their verdicts differ</h2>
-<p>This repository ran three rounds on 2026-10-09. Two of them are live and they fail
-<i>different</i> gates, which is worth stating plainly because it is the whole difficulty:</p>
+<h2>Three parallel rounds from today, and why their verdicts differ</h2>
+<p>This repository ran four rounds on 2026-10-09. They fail <i>different</i> gates, which is worth
+stating plainly because it is the whole difficulty: no round passes both the holdout and the lane rule.</p>
 <table>
   <tr><th>Round</th><th>Holdout gate</th><th>Lane gate</th><th>Verdict</th></tr>
   <tr><td><b>H77</b> (this page's download)<br><span class="mut">View-B OOF rank, consensus-restricted placement</span></td>
       <td class="fail">FAIL — no new arm beats <code>single_B</code></td>
       <td class="pass">PASS — 12.17 % near-dot, 0.0026 rank corr</td>
       <td>download YES · submit NO</td></tr>
+  <tr><td><b>H76</b> (parallel session)<br><span class="mut">unsupervised gravity-high / slope-quiet screen, 3,000 dots</span></td>
+      <td class="fail">not measured — no buffered holdout run</td>
+      <td>not certified against the full census (43 local rasters only)</td>
+      <td><a href="docs/downloads/h76-candidate.tif">download</a> · <a href="docs/h76-executive-summary.html">details</a> · submit NO</td></tr>
   <tr><td><b>H75</b> (parallel session)<br><span class="mut">directional variogram anisotropy ranker</span></td>
       <td class="pass">PASS — 0.1864 vs 0.1745, paired +0.0118, CI [0.0068, 0.0174]</td>
       <td class="fail">FAIL — 92.2 % of dots within 3 px of one prior (limit 70 %)</td>
