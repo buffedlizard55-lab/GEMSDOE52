@@ -1,0 +1,24 @@
+{
+  "hypothesis": "H72-MRAEC: multi-band radiometric alteration edge coherence detects fault-controlled alteration halos invisible to single-feature ranking",
+  "mechanism": "Edge coherence across gravity, magnetic, K/Th/U radiometric, and conductivity gradients identifies structural discontinuities with associated hydrothermal alteration",
+  "named_mimic": "Lithological contacts, drainage/alluvial boundaries, vegetation-soil moisture patterns",
+  "budget": 60000,
+  "n_emitted": 60000,
+  "field_weights": {
+    "coherence": 0.35,
+    "edge_strength": 0.3,
+    "lidar": 0.2,
+    "depth": 0.15
+  },
+  "catalogue_ring_m": 200,
+  "smoothing_sigma_px": 1.5,
+  "binary_mass": true,
+  "sha256": "5835c8b3862a1aa6d1f4317f68daf02d8a3620701c923832b9a437b685336b7e",
+  "bytes": 163335,
+  "format_ok": true,
+  "submission_name": "h72-mraec-multiband-edge-coherence-60000px-20261009T162713Z-a9243a183190",
+  "note": "H72 MRAEC: multi-band radiometric alteration edge coherence across gravity, magnetics, K/Th/U ratios, conductivity; wider emission at 60k bu",
+  "verdict": "PENDING_HOLDOUT",
+  "status": "research-only; local format validation only, not organizer acceptance",
+  "experiments_used": "1_of_3"
+}
