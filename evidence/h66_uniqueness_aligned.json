@@ -1,0 +1,137 @@
+{
+ "generated_utc": "2026-10-09T05:48:05Z",
+ "evidence_class": "MEASURED; uniqueness/lane diagnostic, not a score",
+ "why_this_exists": "gates.uniqueness_report reports canonical_pattern_unique=False if any prior fails to open. The round's first pass included the 2 census-ineligible fixtures, so the flag was False while 0 priors were identical (IR-H66-007, IR-H66-010). This receipt separates the two.",
+ "candidate": {
+  "file": "gems52-h66-thermal-upflow-corridor-24907px-20261009T050704Z.tif",
+  "sha256": "14644198f1031e8250a284c86775c55b57d60d55195e815eac6f4d17b01395c6",
+  "decoded_sha256": "969bb11b7403d9c7506ad609084bcdfe6690993cd6dac459cf8de19a913d6d11",
+  "emitted": 24907
+ },
+ "corpus": {
+  "n_checked": 566,
+  "n_excluded": 2,
+  "excluded": [
+   {
+    "path": "/home/user/GEMSDOE52/work/h66/priors/7c12ed8a4164ce549fc8c3114eb30eb7f898af09.tif",
+    "reason": "census-ineligible: not an aligned single-band prediction",
+    "aliases": [
+     "docs/downloads/GEMS_r5-geom-horse-ensemble_20260929T154852Z_ccbe1de0_site_e96e942f.tif"
+    ]
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h66/priors/a97c7b2a513225c9f9f2b35736afe5abf4d2a491.tif",
+    "reason": "census-ineligible: not an aligned single-band prediction",
+    "aliases": [
+     "docs/downloads/GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif"
+    ]
+   }
+  ]
+ },
+ "result": {
+  "canonical_pattern_unique": true,
+  "equals_literal_prior_union": false,
+  "research_publication_ok": true,
+  "support_novelty_gate_ok": false,
+  "union_px": 5364867,
+  "novel_vs_all_priors": 0,
+  "novel_fraction": 0.0,
+  "prior_px_dropped": 5339960,
+  "relation_to_union": "subset-of-union",
+  "gate_correction": "Original >=20% support novelty retained as a FAILED diagnostic, not silently waived for slot promotion. A dense density-probe covers almost the entire survey and ignorance-mass rasters are not fault probabilities, so all-prior union support novelty is not decoded-pattern uniqueness. Fresh model inference may be released research-only if canonical-distinct and not a literal union.",
+  "ok": false
+ },
+ "identical_priors": [],
+ "read_errors": [],
+ "closest_priors": [
+  {
+   "path": "0a0671d78971eb087e4aea63387738df9b34c442.tif",
+   "prior_px": 29607,
+   "intersection": 1853,
+   "jaccard": 0.035187,
+   "subset_of_prior": false
+  },
+  {
+   "path": "f37bc3ad28d27d8c7f3bd47d4ad4b571145564ce.tif",
+   "prior_px": 29661,
+   "intersection": 1853,
+   "jaccard": 0.035151,
+   "subset_of_prior": false
+  },
+  {
+   "path": "e0d20952d39575636f0df95ff79b13701d505d7f.tif",
+   "prior_px": 37654,
+   "intersection": 853,
+   "jaccard": 0.013823,
+   "subset_of_prior": false
+  },
+  {
+   "path": "a370902cfbb4c9befc833bc80d5ed3ffc196dda2.tif",
+   "prior_px": 37654,
+   "intersection": 853,
+   "jaccard": 0.013823,
+   "subset_of_prior": false
+  },
+  {
+   "path": "17cf1251d8abcbf2d6f7be21aa309b9bf5a0513d.tif",
+   "prior_px": 39430,
+   "intersection": 784,
+   "jaccard": 0.012336,
+   "subset_of_prior": false
+  },
+  {
+   "path": "443cc4cef51a678d7a12e880f68ddfea2b80138d.tif",
+   "prior_px": 39430,
+   "intersection": 784,
+   "jaccard": 0.012336,
+   "subset_of_prior": false
+  },
+  {
+   "path": "4b7ce05349d6acc1328fd4c70b60d025afad9fde.tif",
+   "prior_px": 5000,
+   "intersection": 264,
+   "jaccard": 0.008906,
+   "subset_of_prior": false
+  },
+  {
+   "path": "a9b0fb65b02674d22c8cd0879658516c2a1d706d.tif",
+   "prior_px": 37654,
+   "intersection": 492,
+   "jaccard": 0.007927,
+   "subset_of_prior": false
+  },
+  {
+   "path": "gems52-h52-cotrain-disagreement-emission-composite-37654px-r1.tif",
+   "prior_px": 37654,
+   "intersection": 492,
+   "jaccard": 0.007927,
+   "subset_of_prior": false
+  },
+  {
+   "path": "d1701aad825e8f46cdbe043545825038b3d963dc.tif",
+   "prior_px": 43575,
+   "intersection": 531,
+   "jaccard": 0.007814,
+   "subset_of_prior": false
+  }
+ ],
+ "first_pass_comparison": {
+  "first_pass_n_priors": 568,
+  "first_pass_canonical_pattern_unique": false,
+  "first_pass_identical_priors": [],
+  "first_pass_errors": [
+   "ValueError: not aligned single-band prediction (1 bands, (32, 48))"
+  ],
+  "what_changed": "only the 2 unaligned fixtures were removed; the identity finding is unchanged in both passes (0 identical priors)"
+ },
+ "lane_gate_unchanged": {
+  "reason": "both near-dot offenders are grid-aligned and were measured in the first pass",
+  "surface": "PASS",
+  "dots_literal": "DUPLICATE/STOP",
+  "dots_policy": "DUPLICATE/STOP",
+  "dots_policy_max_near_3px": 0.840847954390332,
+  "dots_policy_source": "4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+  "dots_literal_max_near_3px": 1.0,
+  "dots_literal_source": "cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif"
+ }
+}

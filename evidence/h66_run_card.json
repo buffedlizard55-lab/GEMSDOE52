@@ -1,0 +1,632 @@
+{
+ "round": "H66",
+ "generated_utc": "2026-10-09T06:03:33Z",
+ "generated_by": "scripts/h66_run_card.py (assembled from evidence/h66_*.json; no hand-typed numbers)",
+ "preregistration": {
+  "protocol": "knowledge/43_hypotheses_H66_preregistered.md",
+  "protocol_sha256": "9fa87ab6ca46369304044357a0c00227b888a305fc7f585faef842e65c7712bd",
+  "registered_utc": "2026-10-09T04:33:24Z",
+  "frozen_before_any_fit": true,
+  "registry": "registry/h66_preregistration.json",
+  "hash_verified_at_runtime": true
+ },
+ "hypothesis": "H66-A (Thermal-Upflow Corridor, TUC). A geothermal system needs a permeable pathway. A surface thermal manifestation whose measured or geothermometer-inferred temperature places it above the local conductive gradient must be fed by a structure that the provided Quaternary-fault catalogue does not contain, because every seed used here lies >= 300 m (>= 3 px, beyond the whole scoring kernel) from the nearest mapped trace. The conducting structure is therefore an uncatalogued fault, and it is elongated along strike: emitting a strike-aligned corridor outward from such a site should place mass on an unmapped fault at a credit density above uniform random (0.0279).",
+ "mechanism": "1) 1,156 INGENIOUS/GDR thermal sites in the footprint, of which 952 satisfy the frozen seed rule (temp >= 60 C, or reservoir geothermometer >= 100 C, or class Hot) and >= 300 m from the catalogue; 2) local strike from the structure tensor (sigma = 4 px) of the mean absolute-gradient composite of bands 12, 3, 18, 15, cross-checked against the external LiDAR scarp strike band; 3) a corridor 13 px long (\u00b16 px) along strike, half width 1 px, amplitude tapered 1.00 -> 0.40 with distance from the seed; 4) a hard corroboration gate requiring rank >= 0.50 of the best independent geophysical edge (magnetic TMI horizontal gradient, isostatic-gravity horizontal gradient, detrended-elevation curvature/slope, surface conductivity gradient, LiDAR step, Hessian linearity); 5) metric-aware greedy emission (src/gems52/emit.py) at the frozen budget ladder, values exactly {0,1}; 6) two-view stratification with a veto that removes B-only pixels having no thermal seed within 3 px (the surface-artifact class the brief names).",
+ "named_non_fault_process_that_could_mimic_it": "Lithologic contacts and stratigraphic edges. A conductive/sedimentary contact can carry both a horizontal gravity-gradient edge and a conductivity contrast, and thermal water rising along a permeable sand body will discharge at its outcrop edge without any fault being present. Second: alluvial-fan and debris-flow margins, which produce linear topographic steps at 100 m and are the classic false 'scarp'. Third: road cuts and pipeline corridors, which the LiDAR step band and the detrended-elevation gradient both see as sharp lines; these are precisely the B-only pixels the veto removes, and 93 were removed on that ground. Fourth: a deep geothermal gradient with no anomalous chemistry, i.e. a warm well in ordinary basement, which the frozen seed rule tries to exclude by requiring a temperature or a chemical geothermometer threshold, but cannot exclude completely because 396 of 1,156 sites have no usable geothermometer.",
+ "holdout": {
+  "evidence_class": "HOLDOUT-DTI",
+  "evaluator_version": "gems52-pooled-hide-v1",
+  "design": "hide-and-recover: whole catalogue components withheld with a buffer; every catalogue-derived quantity recomputed per fold from the VISIBLE catalogue only; visible faults masked pixel-exactly; pooled DTI alpha=0.2 beta=0.8, 300 m triangular kernel",
+  "withheld_positive_pixels": 60894,
+  "folds": [
+   {
+    "fold": 0,
+    "budget_matched": 19975,
+    "seeds_legal": 1064,
+    "corridor_pool": 19975,
+    "truth_px": 29297
+   },
+   {
+    "fold": 1,
+    "budget_matched": 5157,
+    "seeds_legal": 1023,
+    "corridor_pool": 5157,
+    "truth_px": 12579
+   },
+   {
+    "fold": 2,
+    "budget_matched": 2134,
+    "seeds_legal": 957,
+    "corridor_pool": 2134,
+    "truth_px": 9433
+   },
+   {
+    "fold": 3,
+    "budget_matched": 2148,
+    "seeds_legal": 960,
+    "corridor_pool": 2148,
+    "truth_px": 9585
+   }
+  ],
+  "pooled_dti": {
+   "tuc": {
+    "dti": 0.015432,
+    "ci95": [
+     0.010756,
+     0.021313
+    ],
+    "tpw": 839.6,
+    "fpw": 27625.1,
+    "fnw": 60054.4
+   },
+   "single_A": {
+    "dti": 0.017751,
+    "ci95": [
+     0.008472,
+     0.029061
+    ],
+    "tpw": 964.1,
+    "fpw": 27036.4,
+    "fnw": 59929.9
+   },
+   "single_B": {
+    "dti": 0.051302,
+    "ci95": [
+     0.038758,
+     0.064892
+    ],
+    "tpw": 2790.6,
+    "fpw": 25611.9,
+    "fnw": 58103.4
+   },
+   "union_max": {
+    "dti": 0.038296,
+    "ci95": [
+     0.02675,
+     0.050117
+    ],
+    "tpw": 2082.5,
+    "fpw": 26244.1,
+    "fnw": 58811.5
+   },
+   "disagreement": {
+    "dti": 0.016527,
+    "ci95": [
+     0.00715,
+     0.028052
+    ],
+    "tpw": 899.5,
+    "fpw": 27645.1,
+    "fnw": 59994.5
+   },
+   "random": {
+    "dti": 0.056623,
+    "ci95": [
+     0.051414,
+     0.061894
+    ],
+    "tpw": 3113.1,
+    "fpw": 28206.8,
+    "fnw": 57780.9
+   }
+  },
+  "best_comparable_control": "random",
+  "paired_differences_vs_candidate": {
+   "single_A": {
+    "delta": -0.002319,
+    "ci95": [
+     -0.014365,
+     0.008834
+    ]
+   },
+   "single_B": {
+    "delta": -0.035871,
+    "ci95": [
+     -0.049674,
+     -0.023605
+    ]
+   },
+   "union_max": {
+    "delta": -0.022864,
+    "ci95": [
+     -0.034292,
+     -0.011448
+    ]
+   },
+   "disagreement": {
+    "delta": -0.001095,
+    "ci95": [
+     -0.013179,
+     0.01017
+    ]
+   },
+   "random": {
+    "delta": -0.041191,
+    "ci95": [
+     -0.047743,
+     -0.034102
+    ]
+   }
+  },
+  "reading": "NEGATIVE. The candidate is significantly worse than uniform random and significantly worse than the single-view surface baseline on this instrument. Note that random also beats single_B, and that the instrument ranks the organiser-scored 0.2778 champion at 0.00479, below a random placeholder (IR-H60-003; Spearman(board, instrument) = -0.099, n=13, p=0.748): the hide-and-recover truth class IS the mapped catalogue, while this candidate is constructed to be >= 200 m away from it, so the instrument cannot score this hypothesis class in either direction. The result is reported as measured and not reinterpreted as a score."
+ },
+ "lane_gates": {
+  "evidence_class": "MEASURED",
+  "S1_two_view_sufficiency": {
+   "view_A_oof_auc": [
+    0.605,
+    0.5858,
+    0.5462,
+    0.635
+   ],
+   "mean_view_A": 0.593,
+   "min_view_A": 0.5462,
+   "view_B_oof_auc": [
+    0.5873,
+    0.6644,
+    0.5792,
+    0.6489
+   ],
+   "mean_view_B": 0.62,
+   "bar": "mean >= 0.60 AND min >= 0.55 (frozen)",
+   "pass": false,
+   "consequence": "no pseudo-label exchange was performed; the co-training premise of the brief is not met, so disagreement was used only for stratification and for the B-only artifact veto (declared deviation IR-H66-001)"
+  },
+  "S2_conditional_independence": {
+   "n_blocks": 2283,
+   "max_abs_spearman": 0.2951,
+   "tests": {
+    "negative_mean_squared_error": {
+     "n": 2283,
+     "pearson": 0.20043557325210268,
+     "spearman": 0.2951126403177301
+    },
+    "negative_false_positive_rate": {
+     "n": 2283,
+     "pearson": -0.01848376436626234,
+     "spearman": 0.007783426274741493
+    }
+   },
+   "abandon_threshold": 0.6,
+   "allow_exchange": true,
+   "reading": "the abandonment rule did NOT fire on H66's own measurement (0.2951 < 0.60), which contradicts N-19 (0.7625 on the H61/H63 feature set) and agrees with H62 (0.1757). The statistic is learner- and block-size-dependent, spanning 0.0078-0.7625 across rounds; it is not a stable property of 'the two views'."
+  },
+  "leakage_canary": {
+   "max_single_channel_auc": 0.6228,
+   "worst": {
+    "fold": 2,
+    "channel": "downface_max",
+    "auc": 0.62276554296875,
+    "signed_auc": 0.62276554296875
+   },
+   "alarm_threshold": 0.9,
+   "alarm_fired": false
+  }
+ },
+ "registry_correlation_and_overlap": {
+  "evidence_class": "MEASURED",
+  "surface_phase": {
+   "max_spearman": 0.06331247457808307,
+   "max_near_3px_fraction": null,
+   "max_near_source": null,
+   "verdict": "PASS"
+  },
+  "dots_phase": {
+   "max_spearman": 0.06331247457808307,
+   "max_near_3px_fraction": 0.840847954390332,
+   "max_near_source": "/home/user/GEMSDOE52/work/h66/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+   "verdict": "DUPLICATE/STOP"
+  },
+  "rank_offenders_dots": [],
+  "near_offenders_dots": [
+   "/home/user/GEMSDOE52/work/h66/priors/0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+   "/home/user/GEMSDOE52/work/h66/priors/2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+   "/home/user/GEMSDOE52/work/h66/priors/437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+   "/home/user/GEMSDOE52/work/h66/priors/443e8e1c799734facd50a92bc85c650f3857a2b6.tif",
+   "/home/user/GEMSDOE52/work/h66/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+   "/home/user/GEMSDOE52/work/h66/priors/5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+   "/home/user/GEMSDOE52/work/h66/priors/ab7e0752036d020fbc394a528bbe63171c3cb08f.tif",
+   "/home/user/GEMSDOE52/work/h66/priors/bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+   "/home/user/GEMSDOE52/work/h66/priors/c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+   "/home/user/GEMSDOE52/work/h66/priors/fdd931161c431a583cf7039362e51832e59d07ad.tif"
+  ],
+  "identical_to_a_prior": [],
+  "uniqueness": {
+   "n_priors_checked": 568,
+   "canonical_pattern_unique": false,
+   "equals_literal_prior_union": false,
+   "research_publication_ok": false,
+   "support_novelty_gate_ok": false,
+   "union_px": 5364867,
+   "novel_vs_all_priors": 0,
+   "novel_fraction": 0.0,
+   "prior_px_dropped": 5339960,
+   "relation_to_union": "subset-of-union"
+  },
+  "not_merely_the_union_of_the_two_views": {
+   "union_px": 49681,
+   "emitted_px": 24907,
+   "intersection": 153,
+   "fraction_of_emission_inside_union": 0.006142851407234914,
+   "pass_": true
+  },
+  "recomputed_over_alignment_filtered_corpus": {
+   "why": "the shared gate sets canonical_pattern_unique=False if ANY prior fails to open; the first pass included the 2 census-ineligible fixtures, so it reported False while 0 priors were identical. Recomputed with them excluded and published (IR-H66-007, IR-H66-010).",
+   "n_priors_checked": 566,
+   "n_excluded": 2,
+   "excluded": [
+    {
+     "path": "/home/user/GEMSDOE52/work/h66/priors/7c12ed8a4164ce549fc8c3114eb30eb7f898af09.tif",
+     "reason": "census-ineligible: not an aligned single-band prediction",
+     "aliases": [
+      "docs/downloads/GEMS_r5-geom-horse-ensemble_20260929T154852Z_ccbe1de0_site_e96e942f.tif"
+     ]
+    },
+    {
+     "path": "/home/user/GEMSDOE52/work/h66/priors/a97c7b2a513225c9f9f2b35736afe5abf4d2a491.tif",
+     "reason": "census-ineligible: not an aligned single-band prediction",
+     "aliases": [
+      "docs/downloads/GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif"
+     ]
+    }
+   ],
+   "read_errors": [],
+   "identical_priors": [],
+   "canonical_pattern_unique": true,
+   "research_publication_ok": true,
+   "support_novelty_gate_ok": false,
+   "novel_fraction": 0.0,
+   "gate_correction": "Original >=20% support novelty retained as a FAILED diagnostic, not silently waived for slot promotion. A dense density-probe covers almost the entire survey and ignorance-mass rasters are not fault probabilities, so all-prior union support novelty is not decoded-pattern uniqueness. Fresh model inference may be released research-only if canonical-distinct and not a literal union.",
+   "closest_priors_by_jaccard": [
+    {
+     "path": "0a0671d78971eb087e4aea63387738df9b34c442.tif",
+     "prior_px": 29607,
+     "intersection": 1853,
+     "jaccard": 0.035187,
+     "subset_of_prior": false
+    },
+    {
+     "path": "f37bc3ad28d27d8c7f3bd47d4ad4b571145564ce.tif",
+     "prior_px": 29661,
+     "intersection": 1853,
+     "jaccard": 0.035151,
+     "subset_of_prior": false
+    },
+    {
+     "path": "e0d20952d39575636f0df95ff79b13701d505d7f.tif",
+     "prior_px": 37654,
+     "intersection": 853,
+     "jaccard": 0.013823,
+     "subset_of_prior": false
+    },
+    {
+     "path": "a370902cfbb4c9befc833bc80d5ed3ffc196dda2.tif",
+     "prior_px": 37654,
+     "intersection": 853,
+     "jaccard": 0.013823,
+     "subset_of_prior": false
+    },
+    {
+     "path": "17cf1251d8abcbf2d6f7be21aa309b9bf5a0513d.tif",
+     "prior_px": 39430,
+     "intersection": 784,
+     "jaccard": 0.012336,
+     "subset_of_prior": false
+    }
+   ]
+  },
+  "lane_offender_identification": {
+   "literal_source": {
+    "blob": "cd838daadd39de3ccdb9d30025b7feacc4d87c9f",
+    "census_eligible": true,
+    "aliases": [
+     {
+      "repo": "buffedlizard55-lab/GEMSDOE48",
+      "commit": "36d9785e28a81e859c71f4058c639ffba4b7f327",
+      "path": "docs/downloads/diagnostics/GEMSDOE48-H56-OWDS-B2xH33D-20261007-1f7b5a4f18db-plausibility.tif",
+      "bytes": 1682684
+     }
+    ]
+   },
+   "literal_reading": "5,167,373 dots = every eligible cell; 3 px halo coverage 1.0000 under both the gate's disk and a square element, i.e. a total-coverage diagnostic raster. Its 1.0000 near fraction carries no information about this candidate.",
+   "policy_source": {
+    "blob": "4e50a598eae16b3c098ca2653542dc142f1da8a8",
+    "census_eligible": true,
+    "aliases": [
+     {
+      "repo": "buffedlizard55-lab/15GEMSDOE",
+      "commit": "8c94b0f83f22999032ba8a29c523af7ae6cf5e76",
+      "path": "docs/downloads/gems-cleanup-a-20260928T195952Z-curv_scarp.tif",
+      "bytes": 628807
+     }
+    ]
+   },
+   "policy_reading": "362,327 dots; disk 3 px halo coverage of the eligible footprint 0.8886 (informative under the gate's 0.95 threshold) but 0.9648 under a square 7x7 element, i.e. the classification that decides this round's lane verdict flips with the structuring element (IR-H66-008). Under the shared gate as written the rule fires.",
+   "support_overlap_vs_proximity_overlap": "max Jaccard with any single prior is 0.0138 (853 of 24,907 pixels shared), yet 84.08 % of the dots lie within 3 px of one prior's dots: the corridors run alongside an existing curvature-scarp emission without reusing its pixels. The brief's rule is a proximity rule, so it fires."
+  },
+  "seed_composition": {
+   "generated_utc": "2026-10-09T05:52:50Z",
+   "evidence_class": "MEASURED on data/external/gdr_wellspring_in_footprint.csv + pinned labels/sample",
+   "source_csv_sha256": "122718e65bdf55aab0ee12ad20d80062f0deb1de957225a61ad880dd5dc196ea",
+   "unique_sites": 12570,
+   "sites_inside_eligible": 12570,
+   "evidence_sites": 1156,
+   "legal_seeds": 952,
+   "composition": {
+    "measured_temp_ge_60": 412,
+    "measured_temp_lt_60": 484,
+    "only_chemical_geothermometer": 235,
+    "no_measured_temp": 56,
+    "class_hot": 739,
+    "class_warm": 158,
+    "reservoir_T_ge_150": 88,
+    "reservoir_T_120_150": 87,
+    "reservoir_T_100_120": 131,
+    "no_usable_geothermometer": 646,
+    "d_cat_median_m": 2002.5,
+    "d_cat_min_m": 300.0,
+    "d_cat_max_m": 14303.1,
+    "blocks_1km": 592
+   },
+   "caveat": "\"only_chemical_geothermometer\" sites are the class H58 measured as nearly worthless (22 px survived its holdout); they are admitted by the frozen seed rule and are named here rather than hidden. The seed rule was frozen before this count was taken.",
+   "footprint": "gems52.grid.footprint_from(training_features.tif, bands=\"all\") AND labels>=0 (the same sentinel-aware eligible the pipeline uses)",
+   "eligible_cells": 5164300,
+   "cross_check": {
+    "pipeline_receipt": "evidence/h66_build.json",
+    "pipeline_legal_seeds": 952,
+    "pipeline_blocks_1km": 592,
+    "first_attempt_used_the_sample_footprint_and_over_counted_by_8": true
+   }
+  },
+  "prior_corpus": {
+   "n_priors": 568,
+   "distinct_decoded_patterns": 372,
+   "errors": 2,
+   "informative_priors": 551,
+   "universal_coverage_probes": 15,
+   "source": "526-blob frozen prior census (evidence/ctd5_prior_inventory.json, work/h66/prior_fetch_receipt.json: 526 fetched, 0 errors, 524 file-SHA matches; the 2 mismatches are exactly the 2 census-ineligible entries) plus 35 local submission/*.tif, 12 data/scored priors and the 0.2778 reference"
+  }
+ },
+ "raster": {
+  "file": "submission/gems52-h66-thermal-upflow-corridor-24907px-20261009T050704Z.tif",
+  "sha256": "14644198f1031e8250a284c86775c55b57d60d55195e815eac6f4d17b01395c6",
+  "bytes": 76217,
+  "zip_sha256": "de2215cd53c6f2c7492ba149e56294ae4ebef24641c3dec9564bc5c35c29a626",
+  "decoded_pixels_sha256": "969bb11b7403d9c7506ad609084bcdfe6690993cd6dac459cf8de19a913d6d11",
+  "emitted_pixels": 24907,
+  "reproduced_bit_identically_by_a_second_independent_run": true
+ },
+ "validator": {
+  "evidence_class": "MEASURED (local format check; NOT organizer upload acceptance)",
+  "ok": true,
+  "problems": [],
+  "nan_inside_footprint": 0,
+  "infinity_pixels": 0,
+  "value_range": [
+   0.0,
+   1.0
+  ],
+  "unique_values": [
+   0.0,
+   1.0
+  ],
+  "n_nonzero": 24907,
+  "mass": 24907.0,
+  "crs": "EPSG:32611",
+  "shape": [
+   3730,
+   3292
+  ],
+  "transform": [
+   100.0,
+   0.0,
+   243350.0,
+   0.0,
+   -100.0,
+   4508550.0
+  ],
+  "bounds": [
+   243350.0,
+   4135550.0,
+   572550.0,
+   4508550.0
+  ],
+  "bounds_match_sample_submission": true,
+  "dtype": "float32",
+  "bands": 1,
+  "mass_outside_footprint": 0,
+  "nodata": null,
+  "note_on_nodata": "sample_submission.tif declares a NaN nodata; this file declares none and carries 0.0 outside the eligible footprint, which is what grid.write_geotiff requires (N-5 forbids NaN outside the footprint)."
+ },
+ "submission_identifiers": {
+  "name": "gems52-h66-thermal-upflow-corridor-24907px-20261009T050704Z",
+  "name_chars": 59,
+  "note": "H66 thermal-upflow corridor 24,907px; holdout below random; lane duplicate 84% near curv_scarp; DO NOT SUBMIT",
+  "note_chars": 109,
+  "note_within_140": true
+ },
+ "verdict": {
+  "download_for_research": "YES",
+  "submit_to_competition": "NO",
+  "promotion": "negative",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "reasons": [
+   "LANE RULE FIRES: 84.08 % of the final dots lie within 3 px of one informative registry raster's dots (15GEMSDOE docs/downloads/gems-cleanup-a-20260928T195952Z-curv_scarp.tif, 362,327 dots). The brief's clause 1 sets the bar at 70 % and says: log it as a duplicate and STOP. Logged; stopped; no further development of this candidate.",
+   "HOLDOUT-DTI 0.015432 [0.010756, 0.021313] is significantly below uniform random (paired delta -0.041191 [-0.047743, -0.034102]) and below single-view B (-0.035871 [-0.049674, -0.023605]); the frozen promotion bar was 'candidate minus best comparable control > 0 with the 95 % CI excluding 0'.",
+   "S1 two-view sufficiency FAILED (View A mean OOF AUC 0.593 < 0.60, min fold 0.5462 < 0.55), so the brief's co-training premise is not met and no pseudo-labels were used.",
+   "The expected-score bracket for a fully novel field at this budget (rho ~ U[0.0279, 0.1387], S = 24,907, |G| = 14,088.7) is DTI in [0.0428, 0.2126] - below the 0.2778 champion even at its optimistic end. A projection, never a score.",
+   "Promotion is a separate selector step within the weekly cap (brief clause 9). This card records a negative result, which the brief also calls a deliverable."
+  ]
+ },
+ "budget": {
+  "declared": "3 experiments or 2 hours, whichever first",
+  "experiments_used": 3,
+  "experiments": [
+   "E1 lane gates: S1 sufficiency, S2 conditional independence, leakage canary, preflight integrity",
+   "E2 hide-and-recover holdout, 4 folds, 6 matched arms, pooled bootstrap",
+   "E3 build at the frozen budget + format gate + lane gates on the surface and on the final dots + uniqueness report"
+  ],
+  "wall_clock": "exceeded: the sandbox started cold (no cached feature stack, 3.9 GB RAM, 2 CPUs), the full 19-band stack and a 526-blob prior census had to be restored and fetched, and five defects had to be fixed in the runner (IR-H66-002 sentinel contamination, JSON NaN in receipts, module shadowing, a false-positive degenerate-channel guard, and the partially-filled in-quadrant AUC grid). Disclosed rather than smoothed."
+ },
+ "declared_deviations": [
+  "IR-H66-001 emission seeds come from the external GDR Wellspring table, a third channel outside the two lane views; disagreement is used for stratification and veto only, never as a pseudo-label source (rule adopted after N-1)"
+ ],
+ "irregularities_found_this_round": [
+  "IR-H66-002 (severe, caught before publication): 3,061 in-domain cells carry the float32 nodata sentinel -3.4028234663852886e+38 in 18 of 19 bands (3,073 in band 6). Transform.rank01 bins against lo = -3.4e38, which collapses every rank channel to a near-constant. Fixed by using the template's own intersection footprint (grid.footprint_from(training_features.tif, bands='all')); eligible fell from 5,167,373 to 5,164,300.",
+  "IR-H66-003: three defensible footprints coexist (labels>=0 gives 5,167,373; band-12 non-sentinel 5,165,852; all-19-band intersection 5,164,300). This round uses the intersection and says so.",
+  "IR-H66-004: two channels are legitimately zero-inflated (rank_b10, grad_b17: > 50 % of the footprint ties at the physical minimum). A blunt 'collapsed channel' guard reports them as failures; replaced with a degenerate test (< 10 distinct rank levels, or raw |value| > 1e30 inside the eligible set).",
+  "IR-H66-005: the independence statistic S2 is not a stable property of the two views - 0.0078 to 0.7625 across five rounds on the same data, driven by feature set, learner and block size. The ABANDON rule can therefore fire or not fire at will; it cannot be used as a go/no-go gate without fixing all three."
+ ],
+ "board_algebra": {
+  "evidence_class": "MEASURED on restored bytes; published scores are OWNER-REPORTED",
+  "receipt": "evidence/h66_board_algebra.json",
+  "script": "scripts/h66_board_algebra.py",
+  "champion_ref_h33_2_b2": {
+   "px": 37654,
+   "owner_reported_score": 0.2778,
+   "min_dist_to_catalogue_m": 223.6,
+   "median_dist_to_catalogue_m": 1964.7,
+   "frac_within_200m": 0.0,
+   "frac_within_300m": 0.0428
+  },
+  "set_relations_re_measured": {
+   "ref_h33_2_b2__minus__d2_8": {
+    "px": 0,
+    "dist_min_m": null,
+    "dist_max_m": null,
+    "subset": true
+   },
+   "d2_8__minus__ref_h33_2_b2": {
+    "px": 6436,
+    "dist_min_m": 100.0,
+    "dist_max_m": 200.0,
+    "subset": false
+   },
+   "ref_h33_2_b2__minus__h19_5": {
+    "px": 0,
+    "dist_min_m": null,
+    "dist_max_m": null,
+    "subset": true
+   },
+   "h19_5__minus__ref_h33_2_b2": {
+    "px": 83477,
+    "dist_min_m": 100.0,
+    "dist_max_m": 21901.8,
+    "subset": false
+   },
+   "d2_8__minus__h19_5": {
+    "px": 0,
+    "dist_min_m": null,
+    "dist_max_m": null,
+    "subset": true
+   },
+   "d1_5__minus__h19_5": {
+    "px": 0,
+    "dist_min_m": null,
+    "dist_max_m": null,
+    "subset": true
+   },
+   "h19_5__minus__d1_5": {
+    "px": 61062,
+    "dist_min_m": 100.0,
+    "dist_max_m": 21901.8,
+    "subset": false
+   },
+   "d1_5__minus__tgc": {
+    "px": 0,
+    "dist_min_m": null,
+    "dist_max_m": null,
+    "subset": true
+   },
+   "tgc__minus__d1_5": {
+    "px": 1259,
+    "dist_min_m": 100.0,
+    "dist_max_m": 1931.3,
+    "subset": false
+   },
+   "ref_h33_2_b2__minus__d1_5": {
+    "px": 12137,
+    "dist_min_m": 223.6,
+    "dist_max_m": 18748.9,
+    "subset": false
+   },
+   "d1_5__minus__ref_h33_2_b2": {
+    "px": 34552,
+    "dist_min_m": 100.0,
+    "dist_max_m": 21876.9,
+    "subset": false
+   },
+   "P1_champion_and_d15": 25517,
+   "P2_champion_not_d15": 12137
+  },
+  "mass_vs_board_spearman": {
+   "n": 5,
+   "spearman": -1.0,
+   "p": 0.0,
+   "reading": "board score is strictly decreasing in emitted mass across the five owner-reported off-catalogue files of this family"
+  },
+  "required_rho_target_0_3195_at_G_14088_7": {
+   "25517": 0.205,
+   "37654": 0.1595,
+   "44090": 0.1456,
+   "60069": 0.1238,
+   "100000": 0.0999,
+   "121131": 0.0936
+  }
+ },
+ "reasoning_record": {
+  "file": "gems52-h66-a-only-and-segment-reasoning.csv",
+  "rows": 24907,
+  "strata": {
+   "A_only": 732,
+   "neither": 24118,
+   "B_only": 48,
+   "concordant": 9
+  },
+  "a_only_rows": 732,
+  "note": "every emitted pixel carries a written interpretation and an explicit falsifier; A_only rows are the brief's required A-only geological reasoning",
+  "channel_sanity": [
+   "grad_b17",
+   "rank_b10"
+  ],
+  "generated_utc": "2026-10-09T05:39:04Z"
+ },
+ "seed_population": {
+  "evidence_class": "MEASURED",
+  "receipt": "evidence/h66_seed_composition.json",
+  "unique_sites": 12570,
+  "evidence_sites": 1156,
+  "legal_seeds": 952,
+  "blocks_1km": 592,
+  "composition": {
+   "measured_temp_ge_60": 412,
+   "measured_temp_lt_60": 484,
+   "only_chemical_geothermometer": 235,
+   "no_measured_temp": 56,
+   "class_hot": 739,
+   "class_warm": 158,
+   "reservoir_T_ge_150": 88,
+   "reservoir_T_120_150": 87,
+   "reservoir_T_100_120": 131,
+   "no_usable_geothermometer": 646,
+   "d_cat_median_m": 2002.5,
+   "d_cat_min_m": 300.0,
+   "d_cat_max_m": 14303.1,
+   "blocks_1km": 592
+  },
+  "caveat": "\"only_chemical_geothermometer\" sites are the class H58 measured as nearly worthless (22 px survived its holdout); they are admitted by the frozen seed rule and are named here rather than hidden. The seed rule was frozen before this count was taken."
+ },
+ "links_for_manual_review": [
+  "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/ (task, metric, submission format, two-round prize structure) - fetched 2026-10-09",
+  "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/ (JS-rendered; NOT readable by fetch - the score list in the brief is owner-reported)",
+  "https://github.com/drivendataorg/gems-prize-reference-solution (reference solution)",
+  "https://community.drivendata.org/c/gems-prize-challenge/111 (forum)",
+  "https://doi.org/10.1145/279943.279962 (Blum & Mitchell, co-training, COLT '98)",
+  "https://doi.org/10.5066/P93LGLVQ (USGS GeoDAWN)",
+  "https://epsg.io/32611 (CRS)",
+  "https://www.usgs.gov/3d-elevation-program (1 m DEM named as the missing lever)"
+ ],
+ "negative_result_statement": "H66-A is a negative result and is published as one. Thermal-upflow sites restricted to >= 300 m from mapped faults, extended along a structure-tensor strike and gated by an independent geophysical edge, do not localise catalogue faults better than uniform random on the shared hide-and-recover instrument. Together with N-20 (thermal lineaments as a rank bonus: +0.00003) and H58 (cold-geothermometer consensus: 22 px survived), that is the third independent measurement against the thermal-spring family of hypotheses in this region."
+}

@@ -1,0 +1,17 @@
+{
+ "generated_utc": "2026-10-09T05:55:51Z",
+ "reason": "the portal note is the only text an uploader sees next to the file; for a DO-NOT-SUBMIT round it must say so and name the failing gate",
+ "file": "gems52-h66-thermal-upflow-corridor-24907px-20261009T050704Z.tif",
+ "container_sha256_before": "14644198f1031e8250a284c86775c55b57d60d55195e815eac6f4d17b01395c6",
+ "container_sha256_after": "14644198f1031e8250a284c86775c55b57d60d55195e815eac6f4d17b01395c6",
+ "decoded_pixels_sha256": "969bb11b7403d9c7506ad609084bcdfe6690993cd6dac459cf8de19a913d6d11",
+ "pixels_identical": true,
+ "note_before": "H66 thermal-upflow corridor; strike-aligned; geophysically corroborated; off-catalogue >=200 m; research-only",
+ "note_after": "H66 thermal-upflow corridor 24,907px; holdout below random; lane duplicate 84% near curv_scarp; DO NOT SUBMIT",
+ "note_chars": 109,
+ "name": "gems52-h66-thermal-upflow-corridor-24907px-20261009T050704Z",
+ "name_chars": 59,
+ "zip_sha256": "de2215cd53c6f2c7492ba149e56294ae4ebef24641c3dec9564bc5c35c29a626",
+ "bytes": 76217,
+ "gates_not_recomputed": "lane, uniqueness, holdout, canary and format results were measured on these same decoded pixels and are unchanged; only the container metadata differs"
+}

@@ -1,0 +1,51 @@
+{
+ "stage": "preflight",
+ "started_utc": "2026-10-09T05:03:36Z",
+ "grid": {
+  "shape": [
+   3730,
+   3292
+  ],
+  "crs": "EPSG:32611",
+  "transform": [
+   100.0,
+   0.0,
+   243350.0,
+   0.0,
+   -100.0,
+   4508550.0,
+   0.0,
+   0.0,
+   1.0
+  ],
+  "dtype": "float32",
+  "nodata": null,
+  "nodata_declared_is_nan": true
+ },
+ "labels_transform_matches_sample": true,
+ "labels_crs_matches_sample": true,
+ "features_transform_matches_sample": true,
+ "restore_pins_checked": 23,
+ "restore_pins_mismatched": [],
+ "cells_total": 12279160,
+ "cells_outside_domain": 7111787,
+ "cells_domain": 5167373,
+ "cells_feature_finite": 5165840,
+ "eligible": 5164300,
+ "in_domain_nodata_sentinel_cells": 3073,
+ "sentinel_policy": "gems52.grid.footprint_from(bands='all'): in-domain cells carrying the -3.4028234663852886e+38 nodata sentinel in any band are excluded from eligible, so transform.rank01 can never bin against the sentinel (IR-H66-002)",
+ "catalogue_px": 60988,
+ "sample_submission_ones": 60988,
+ "sample_equals_catalogue": true,
+ "legal_zero_tax": 4927499,
+ "champion_reference": {
+  "file": "h33-2-b2-zeros.tif",
+  "sha256": "c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9",
+  "emitted": 37654,
+  "min_dist_to_catalogue_m": 223.60679626464844,
+  "median_dist_to_catalogue_m": 1964.688232421875,
+  "frac_within_zero_tax": 0.0,
+  "emitted_inside_eligible": 37638
+ },
+ "finished_utc": "2026-10-09T05:03:36Z"
+}

@@ -1,0 +1,17 @@
+{
+ "file": "gems52-h66-a-only-and-segment-reasoning.csv",
+ "rows": 24907,
+ "strata": {
+  "A_only": 732,
+  "neither": 24118,
+  "B_only": 48,
+  "concordant": 9
+ },
+ "a_only_rows": 732,
+ "note": "every emitted pixel carries a written interpretation and an explicit falsifier; A_only rows are the brief's required A-only geological reasoning",
+ "channel_sanity": [
+  "grad_b17",
+  "rank_b10"
+ ],
+ "generated_utc": "2026-10-09T05:39:04Z"
+}

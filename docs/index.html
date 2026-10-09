@@ -4,7 +4,54 @@
 <title>H63 research GeoTIFF and explicit submission status · GEMSDOE52</title><link rel="stylesheet" href="assets/ctd5.css"><script src="assets/h63.js" defer></script></head>
 <body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>
 <a href="index.html">Overview</a><a href="h63-audit.html">Run &amp; evidence</a><a href="executive-summary.html">Submission guide</a><a href="h63-sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header>
-<main id="main"><div class="notice" role="note" style="margin:0 0 1rem"><strong>Latest research round: H64 (negative).</strong> Download yes, for research only; submit no. Unique research GeoTIFF on decoded pixels, lane DUPLICATE under the 70% rule. <a href="h64.html">H64 landing</a> · <a href="h64-executive-summary.html">H64 submission guide</a></div><section class="hero"><div><div class="eyebrow">DOE GEMS / H63 · step-normalised two-view co-training</div>
+<main id="main"><!--H66-BANNER-->
+<div class="notice" role="note" style="margin:0 0 1rem"><strong>Latest research round: H66 (negative).</strong>
+Download yes, for research only; <strong>submit no — do not upload</strong>. New inference on decoded
+pixels; S1 two-view sufficiency FAIL; HOLDOUT-DTI 0.015432 [0.010756, 0.021313] versus
+random 0.056623. <a href="h66.html">H66 landing</a> ·
+<a href="h66-executive-summary.html">H66 submission guide</a> ·
+<a href="downloads/h66-candidate.tif" download>download the research GeoTIFF</a></div>
+
+<section class="hero"><div>
+<div class="eyebrow">DOE GEMS / H66 · thermal-upflow corridor (co-training lane, third channel)</div>
+<h1>A new GeoTIFF.<br>The verdict is NO.</h1>
+<p class="lead">H66-A emits strike-aligned corridors outward from 952
+thermal-upflow sites that all lie at least 300 m — beyond the whole scoring kernel — from the nearest
+mapped fault. It is new inference on decoded pixels, every gate below is measured, and the
+submit decision is already made: <b>do not submit</b>.</p>
+<div class="notice" role="note"><strong>DOWNLOAD FOR RESEARCH: YES &nbsp;·&nbsp; SUBMIT TO THE COMPETITION: <b>NO — DO NOT SUBMIT</b> &nbsp;·&nbsp; DO NOT UPLOAD &nbsp;·&nbsp; NO SLOT USED</strong>
+<p>Format gate PASS · leakage canary CLEAN · S1 two-view sufficiency <b>FAIL</b> ·
+HOLDOUT-DTI 0.015432 [0.010756, 0.021313] against random
+0.056623 (paired -0.041191 [-0.047743, -0.034102]).
+Do not upload research archives. Do not spend a weekly slot. Competition slots used:
+0.</p></div>
+<div class="actions">
+<a class="button" href="downloads/h66-candidate.tif" download>Download the H66 GeoTIFF ↓ (research only)</a>
+<a class="button secondary" href="downloads/h66-candidate.zip" download>Single-TIFF ZIP</a>
+<a class="button secondary" href="downloads/h66-a-only-and-segment-reasoning.csv" download>Geological reasoning CSV</a>
+</div>
+<p class="fileline">gems52-h66-thermal-upflow-corridor-24907px-20261009T050704Z.tif<br>76,217 bytes · SHA-256 14644198f1031e8250a284c86775c55b57d60d55195e815eac6f4d17b01395c6 · 24,907 emitted cells · values exactly {0,1}, 0 NaN, 0 infinite · decoded-pixel SHA-256 969bb11b7403d9c7506ad609084bcdfe…</p>
+<p class="small"><a href="h66-executive-summary.html">Exactly what may be uploaded, and how →</a> ·
+<a href="h66.html">Method, evidence and limits →</a> ·
+<a href="h64.html">Previous round (H64) landing page</a></p>
+</div>
+<aside class="panel" aria-label="Submission readiness"><div class="label">Readiness / measured, not promised</div>
+<div class="status-line"><span>Single-band float32 GeoTIFF</span><span class="good">PASS</span></div>
+<div class="status-line"><span>Finite, values in [0, 1]</span><span class="good">PASS</span></div>
+<div class="status-line"><span>CRS, shape &amp; transform match</span><span class="good">PASS</span></div>
+<div class="status-line"><span>Copied a previous submission?</span><span class="good">NO</span></div>
+<div class="status-line"><span>Not the union of the two views</span><span class="good">PASS</span></div>
+<div class="status-line"><span>Leakage canary (alarm 0.90)</span><span class="good">0.6228 CLEAN</span></div>
+<div class="status-line"><span>S1 two-view sufficiency</span><span class="bad">FAIL 0.5930</span></div>
+<div class="status-line"><span>Lane gate (literal)</span><span class="bad">DUPLICATE/STOP</span></div>
+<div class="status-line"><span>Lane gate (probe policy)</span><span class="bad">DUPLICATE/STOP</span></div>
+<div class="status-line"><span>Beats the best control on holdout</span><span class="bad">NO</span></div>
+<div class="status-line"><span>Verdict</span><span class="bad">NEGATIVE — DO NOT SUBMIT</span></div>
+<p class="fine">A format-valid file is not an approved competition entry. Promotion to a weekly slot is a
+separate selector step, and this round does not recommend it.</p>
+<a class="small" href="data/h66_run_card.json">Inspect the complete JSON run card ↗</a></aside></section>
+<hr class="divider">
+<!--/H66-BANNER--><div class="notice" role="note" style="margin:0 0 1rem"><strong>Previous research round: H64 (negative).</strong> Download yes, for research only; submit no. Unique research GeoTIFF on decoded pixels, lane DUPLICATE under the 70% rule. <a href="h64.html">H64 landing</a> · <a href="h64-executive-summary.html">H64 submission guide</a></div><section class="hero"><div><div class="eyebrow">DOE GEMS / H63 · step-normalised two-view co-training</div>
 <h1>A new GeoTIFF.<br>An unambiguous verdict.</h1>
 <p class="lead">View A is the potential field and the subsurface, rebuilt as a physically parameterised step view; View B is the surface. Disagreement is the discovery signal. The file is new inference, every gate is measured, and the submit decision below is the frozen one.</p>
 <div class="notice" role="note"><strong>OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT</strong>

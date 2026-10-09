@@ -1,3 +1,109 @@
+<!--H66-README-->
+# Current status — H66 (2026-10-09): a unique GeoTIFF was built, and the verdict is DO NOT SUBMIT
+
+> **DOWNLOAD: YES, for research. SUBMIT TO THE COMPETITION: NO — DO NOT UPLOAD.** Two independent gates
+> say no: the brief's own lane rule fires on the final dots, and the shared hide-and-recover instrument
+> puts the candidate **below uniform random** with a 95 % CI that excludes zero. Slots used: **0**.
+
+**One-click download.** [★ H66 research GeoTIFF](docs/downloads/h66-candidate.tif) ·
+[single-TIFF ZIP](docs/downloads/h66-candidate.zip) ·
+[geological reasoning CSV, one row per emitted pixel](docs/downloads/h66-a-only-and-segment-reasoning.csv) ·
+[run card JSON](docs/data/h66_run_card.json) · site: [`docs/h66.html`](docs/h66.html),
+[`docs/h66-executive-summary.html`](docs/h66-executive-summary.html).
+
+**What was tested.** H66-A, the *Thermal-Upflow Corridor* (TUC): strike-aligned corridors emitted outward
+from 952 thermal-upflow sites, every one of them ≥ 300 m — beyond the whole scoring
+kernel — from the nearest mapped fault, gated by an independent geophysical edge, then placed by the repo's
+metric-aware greedy emitter at a frozen budget. Frozen before any fit in
+[`knowledge/43`](knowledge/43_hypotheses_H66_preregistered.md), protocol SHA-256
+`9fa87ab6ca463693…`, thresholds and deviations in
+[`registry/h66_preregistration.json`](registry/h66_preregistration.json). Four further hypotheses, ranked by
+expected gain and implementation cost with named free sources, are in the same document.
+
+| Check | Label | Result | Receipt |
+|---|---|---|---|
+| Manifest integrity | MEASURED | 23 pins checked, 0 mismatched | [`h66_preflight.json`](evidence/h66_preflight.json) |
+| Footprint after the sentinel fix | MEASURED | 5,167,373 in-domain → **5,164,300 eligible** (3,073 sentinel cells excluded, IR-H66-002) | [`h66_preflight.json`](evidence/h66_preflight.json) |
+| Leakage canary (alarm > 0.90) | PREMISE-AUC | max single channel **0.6228** (`downface_max`) → CLEAN | [`h66_canary.json`](evidence/h66_canary.json) |
+| S1 two-view sufficiency | PREMISE-AUC | View A mean **0.5930**, min fold **0.5462** vs bar ≥ 0.60 / ≥ 0.55 → **FAIL**; View B mean 0.6200 | [`h66_s1_sufficiency.json`](evidence/h66_s1_sufficiency.json) |
+| S2 conditional independence | MEASURED | max \|Spearman\| **0.2951** over 2,283 blocks → abandonment rule did **not** fire (IR-H66-005) | [`h66_s2_independence.json`](evidence/h66_s2_independence.json) |
+| HOLDOUT-DTI, candidate | HOLDOUT-DTI | **0.015432** [0.010756, 0.021313], 60,894 withheld positives, `gems52-pooled-hide-v1` | [`h66_holdout.json`](evidence/h66_holdout.json) |
+| HOLDOUT-DTI, controls | HOLDOUT-DTI | single_B 0.051302 · single_A 0.017751 · union_max 0.038296 · disagreement 0.016527 · **random 0.056623** (best control) | [`h66_holdout.json`](evidence/h66_holdout.json) |
+| Paired, candidate − random | HOLDOUT-DTI | **-0.041191** [-0.047743, -0.034102] → significantly worse than random | [`h66_holdout.json`](evidence/h66_holdout.json) |
+| Lane gate, surface | MEASURED | literal **PASS**, policy **PASS** (max ρ 0.0633 < 0.90) | [`h66_release_gates.json`](evidence/h66_release_gates.json) |
+| Lane gate, final dots | MEASURED | literal **DUPLICATE/STOP** (1.0000, a total-coverage diagnostic raster); policy **DUPLICATE/STOP** — **0.8408** > 0.70 vs `buffedlizard55-lab/15GEMSDOE` `docs/downloads/gems-cleanup-a-20260928T195952Z-curv_scarp.tif` → **log as duplicate and STOP** | [`h66_release_gates.json`](evidence/h66_release_gates.json) |
+| Decoded-pattern uniqueness | MEASURED | **unique** over 566 aligned priors, 0 identical, 0 read errors (IR-H66-007 recomputation) | [`h66_uniqueness_aligned.json`](evidence/h66_uniqueness_aligned.json) |
+| Support novelty vs the prior union | FAILED diagnostic | novel fraction 0.0000 (the prior union covers 5,364,867 px ≈ 104 % of eligible; the shared gate's own `gate_correction` says why this is not identity) | [`h66_uniqueness_aligned.json`](evidence/h66_uniqueness_aligned.json) |
+| Not merely the union of the two views | MEASURED | **0.0061** of the emission inside the union of matched view top-K fields (bar 0.90) → PASS | [`h66_release_gates.json`](evidence/h66_release_gates.json) |
+| Format contract | MEASURED | 1 band float32, EPSG:32611, 3730×3292, transform and bounds identical to the pinned sample, values exactly {0,1}, 0 NaN, 0 px outside the footprint | [`h66_run_card.json`](evidence/h66_run_card.json) |
+| Reproducibility | MEASURED | a second independent run produced **bit-identical decoded pixels** (SHA-256 `969bb11b7403d9c7506ad609…`) | [`h66_rewrap.json`](evidence/h66_rewrap.json) |
+
+**Artefact.** `gems52-h66-thermal-upflow-corridor-24907px-20261009T050704Z.tif` · 76,217 bytes · SHA-256 `14644198f1031e8250a284c86775c55b57d60d55195e815eac6f4d17b01395c6` ·
+24,907 emitted cells · ZIP SHA-256 `de2215cd53c6f2c7492ba149…`.
+Portal name (59 chars): `gems52-h66-thermal-upflow-corridor-24907px-20261009T050704Z`. Portal note (109 chars, limit 140):
+`H66 thermal-upflow corridor 24,907px; holdout below random; lane duplicate 84% near curv_scarp; DO NOT SUBMIT`.
+
+**Why 0.2778 won, and what beating 0.3195 would take** — re-measured from restored bytes this session by
+[`scripts/h66_board_algebra.py`](scripts/h66_board_algebra.py) (receipt
+[`evidence/h66_board_algebra.json`](evidence/h66_board_algebra.json)), written up in
+[`knowledge/45`](knowledge/45_why_02778_phd_answer.md). In four lines:
+
+1. `h33-2-b2` (0.2778, 37,654 px) is a **strict subset** of the 0.2600 file (44,090 px). The
+   6,436 deleted pixels all lie
+   100.0–200.0 m
+   from a mapped trace: the 100–200 m catalogue ring earns **zero** credit and still pays the
+   false-positive tax. Removing it bought +6.8 % relative. Nothing else about the file changed.
+2. For dots > 200 m apart, `DTI = T / (0.2·S + 0.8·|G|)`, so the score *is* the credit density
+   `ρ = T/S`. The champion's is **0.1387** — 5.0× uniform random (0.0279). That is the whole content of 0.2778.
+3. Spearman(mass, board) = **-1.0000** over the five owner-reported
+   off-catalogue files, and every step past 37,654 px fails the metric's own marginal rule
+   `ΔT/ΔS > 0.2·DTI`. The champion is not a better detector; it is the correct stopping point of a worse one.
+4. Required ρ for 0.3195 is **0.1595** at 37,654 px and
+   **0.0999** at 100,000 px; for 0.3774,
+   0.1884 and
+   0.1180. The only sub-field with a measured ρ in that
+   range is the 25,517 px credited core P1 (ρ ∈ [0.163, 0.205] ⇒ DTI ∈ [0.2546, 0.3190], **upper bound below
+   0.3195**), and the lane rule forbids re-emitting it — any subset of P1 has 100 % of its dots within 3 px of an
+   existing registry raster. **So within this lane no candidate can be shown to beat 0.2778.** The binding
+   constraint is a ranker whose marginal credit density stays above ~0.06 out to 60,000–150,000 px: a better
+   detector, not a better placement.
+
+**Verdict: H66 not promoted; negative result published.** Experiments used: **3 of 3** (E1 lane gates,
+E2 holdout, E3 build + release gates). Wall clock exceeded the 2 h budget and that is disclosed in the run
+card rather than smoothed: the sandbox started cold (no cached feature stack, 3.9 GB RAM, 2 CPUs), the
+19-band stack and a 526-blob prior census had to be restored and fetched, and five defects had to be fixed
+in the runner before the pipeline could complete. Run card:
+[`evidence/h66_run_card.json`](evidence/h66_run_card.json). Full note:
+[`knowledge/44`](knowledge/44_h66_results_and_limits.md).
+
+**Irregularities logged this round** ([`registry/irregularities.json`](registry/irregularities.json),
+IR-H66-001…010): -001 thermal seeds are a third channel outside the two views (declared deviation);
+**-002 severe**: 3,073 in-domain cells carry the nodata sentinel, which collapses every rank channel;
+-003 three defensible footprints; -004 zero-inflated layers defeated a blunt guard; **-005 high**: the S2
+independence statistic spans 0.0078–0.7625 across five rounds on the same data, so it cannot gate anything;
+-006 the sample's NaN nodata breaks JSON receipt writers; **-007**: `uniqueness_report` conflates "identical
+to a prior" with "a prior failed to open"; **-008 high**: probe classification flips with the structuring
+element, and this round's lane verdict depends on it; -009 the holdout budget collapses inside a fold;
+-010 two census-ineligible blobs were passed as priors.
+
+**Still open.** A unique, lane-valid candidate that is not spatially redundant with an existing registry
+raster; a holdout instrument that can rank the board (IR-H60-003, N-9, IR-H66-009); the four hypotheses in
+`knowledge/43` §3–§6 that were **not** run (drainage-network asymmetry needs USGS 3DEP 1 m tiles, unreachable
+from this sandbox); the 0.2778 file-to-board-row receipt; the portal error text behind IR-H65-007; and the
+selector decision that the lane rule makes unavoidable — the measured high-credit field is lane-blocked, so
+beating 0.3195 needs either a better detector or an explicit waiver of the 70 % rule, and only the user can
+grant that.
+
+**The brief.** This round ran against the prompt embedded verbatim below
+("Complete current prompt — 2026-10-09, verbatim") and preserved at
+[`knowledge/36`](knowledge/36_current_user_brief_2026-10-09.md). Two of its clauses are stale and were
+re-verified live this session: the leaderboard is JS-rendered and cannot be fetched (the last live reading,
+2026-10-09, is #1 xiaofanhu 0.3774, #7 DARD 0.3195, #13 extradr19 0.2778 — PUBLIC BOARD, not
+ORGANIZER-CONFIRMED), and the official page states a **two-round** prize structure in which the Final Round
+re-scores the *same* single submission against an **expanded** label set that includes faults experts verify
+after reviewing every team's file ([problem page 967](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/)).
+<!--/H66-README-->
+
 <!--H65-README-->
 # Current status — H65 (2026-10-09; first written as H62): NEGATIVE at the premise gate, nothing submitted
 

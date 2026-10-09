@@ -1,0 +1,32 @@
+{
+ "round": "H66",
+ "hypothesis_document": "knowledge/43_hypotheses_H66_preregistered.md",
+ "hypothesis_sha256": "9fa87ab6ca46369304044357a0c00227b888a305fc7f585faef842e65c7712bd",
+ "registered_utc": "2026-10-09T04:33:24Z",
+ "runner": "scripts/run_h66.py",
+ "frozen_before_any_fit": true,
+ "thresholds": {
+  "S1_sufficiency_mean_oof_auc_min": 0.6,
+  "S1_sufficiency_min_fold_oof_auc": 0.55,
+  "ABANDON_R": 0.6,
+  "canary_alarm_auc": 0.9,
+  "zero_tax_m": 200.0,
+  "seed_exclusion_m": 300.0,
+  "buffer_px": 80,
+  "corr_gate": 0.5,
+  "budgets": [
+   8000,
+   15000,
+   25000,
+   37654
+  ],
+  "rank_limit": 0.9,
+  "near_limit": 0.7,
+  "near_radius_px": 3.0
+ },
+ "evaluator_version": "gems52-pooled-hide-v1",
+ "lane": "co-training View A (potential field/subsurface) x View B (surface), disagreement as discovery signal",
+ "declared_deviations": [
+  "IR-H66-001 emission seeds come from the external GDR Wellspring table, a third channel outside the two lane views; disagreement is used for stratification and veto only, never as a pseudo-label source (rule adopted after N-1)"
+ ]
+}

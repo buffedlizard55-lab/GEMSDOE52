@@ -8,6 +8,20 @@ Keep known-catalogue labels separate from verified fault absence, public partici
 
 This session's working branch is fixed by Arena. Do not change branches. Keep raw competition data and large intermediate arrays under ignored `data/` and `work/`. Publish small audit receipts, the unique compressed prediction raster and its review table.
 
+<!--H66-AGENTS-->
+## Current H66 continuation (2026-10-09)
+
+Read `README.md`'s H66 block first, then `knowledge/43_hypotheses_H66_preregistered.md` (frozen before any
+fit), `knowledge/44_h66_results_and_limits.md` (rendered from the receipts) and
+`knowledge/45_why_02778_phd_answer.md` (the board algebra, re-measured from restored bytes by
+`scripts/h66_board_algebra.py`). H66-A is **negative**: the lane rule fires on the final dots
+(84.08 % within 3 px of one informative registry raster) and the hide-and-recover instrument puts it below
+uniform random. A unique GeoTIFF exists and is published research-only; **do not submit it, do not spend a
+weekly slot**. IR-H66-001 … -010 are in `registry/irregularities.json`; -002, -005, -007 and -008 change how
+a shared instrument must be read. Use `scripts/h66_uniqueness_aligned.py` (alignment-filtered corpus) for any
+uniqueness check; do not fork a checker.
+<!--/H66-AGENTS-->
+
 ## Current H65 continuation (2026-10-09; the protocol body keeps the H62 label, see knowledge/41a)
 
 Read `README.md`'s H65 block first, then `knowledge/41_hypotheses_H65_preregistered.md` (frozen;
