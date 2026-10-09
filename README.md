@@ -1,3 +1,24 @@
+<!--H75-README-->
+# Current status — H75 (2026-10-09): variogram-anisotropy ranker beats single_B on the holdout; lane rule still fails
+
+> **DOWNLOAD: YES** (format-valid, decoded-unique). **SUBMIT: research-only** — the holdout gate PASSES (first time in this
+> repo), the protocol's near-dot lane gate FAILS (0.922 > 0.70). Submitting needs an explicit owner override of the lane rule.
+> If overridden, use H75, not H72-v3 (H72-v3 holdout 0.031 is below random 0.080 — IR-H75-001). Slots used: 0.
+
+**★ [Download H75 GeoTIFF](docs/downloads/h75-candidate.tif)** · [ZIP](docs/downloads/h75-candidate.zip) · **[Executive summary / how to submit](docs/h75-executive-summary.html)**
+
+- **File:** `submission/gems52-h75-dva-variogram-anisotropy-B-37654px-20261009.tif` — 142,941 bytes, SHA-256 `b97691584d514ab1925d9fff2b61c410be86bdc0bc8c844dfdaa6257a4ea7a16`
+- **Name:** `h75-dva-variogram-anisotropy-B-37654px-20261009`
+- **Note (≤140):** `H75: View-B + directional variogram anisotropy (det_elev/slope/grav); 200m ring cut; binary 37654 dots; holdout +0.012 vs B`
+- **Validator (from disk):** 1 band float32, EPSG:32611, 3730×3292, transform match, 0 NaN, values {0,1}, 37,654 ones. PASS.
+- **HOLDOUT-DTI** (gems52-pooled-hide-v1, 53,186 withheld px, 9,400 dots/fold): B_DVA **0.1864** [0.1647, 0.2079] vs single_B 0.1745 [0.1523, 0.1963]; paired **+0.0118 [0.0068, 0.0174]**; random 0.0804. Canary max AUC 0.623 (no leakage alarm).
+- **Lane:** surface max Spearman 0.466 PASS; dots Spearman 0.108 PASS; dots near-dot 0.922 FAIL; quota placement infeasible at K=37,654 and 30,000 (short fill).
+- **Method:** 12 directional-variogram channels (lags 200/400 m, 4 azimuths; anisotropy + log semivariance) on det_elev, det_elev_slope, iso_grav_anom added to View B; same H61 learner/rows/seed; 200 m catalogue ring excluded (the measured 0.2600→0.2778 mechanism, knowledge/49); binary dots, 3 px spacing.
+- Docs: [preregistration](knowledge/65_hypotheses_H75_preregistered.md) · [results](knowledge/66_h75_results_and_limits.md) · [run card](evidence/h75_run_card.json). Reproduce: `bash scripts/download_competition_data.sh`, build store (see H73), `python scripts/run_h75.py all`, `python scripts/h75_gates.py`, `python scripts/h75_write.py`.
+
+---
+
+<!--/H75-README-->
 <!--H74-README-->
 # Current status — H74 (2026-10-09): NEGATIVE verdict, one unique GeoTIFF to download, nothing submitted
 
