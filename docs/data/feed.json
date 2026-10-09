@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-10-09T13:15:03Z",
+  "generated_utc": "2026-10-09T22:37:19Z",
   "branch": "main",
   "repo": "buffedlizard55-lab/GEMSDOE52",
   "evidence_copied": [
@@ -204,9 +204,9 @@
     "verified_claims_r3.json"
   ],
   "submission": "gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif",
-  "downloads": 63,
+  "downloads": 84,
   "leaderboard_status": "dated snapshot; automated DrivenData access disabled by Terms-of-Use policy",
-  "leaderboard_last_observed_utc": "2026-10-08",
+  "leaderboard_last_observed_utc": "2026-10-09",
   "prior_entries": 395,
   "eligible_prior_rasters": 389,
   "scientific_gate": false,
