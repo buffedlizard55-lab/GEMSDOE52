@@ -1,4 +1,4 @@
-# 35 · H64 results and limits (rendered from the receipts by `scripts/publish_h64_site.py`)
+# 40 · H64 results and limits (rendered from the receipts by `scripts/publish_h64_site.py`)
 
 **Verdict: `NEGATIVE, research-only. DOWNLOAD YES (format-valid and unique); SUBMIT NO (holdout does not beat single_B and/or literal lane not PASS). gates: format=True lane=False unique=True not_union=True S1=False holdout_beats_single_B=False`**
 

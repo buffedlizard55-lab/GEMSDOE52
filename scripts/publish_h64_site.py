@@ -206,7 +206,7 @@ rejection is caused by NaN/out-of-range bytes, and this file has neither).</li>
     (DOCS / "h64-executive-summary.html").write_text(exec_html)
 
     # --------------------------------------------------------------- knowledge note and README block
-    kn = f"""# 35 · H64 results and limits (rendered from the receipts by `scripts/publish_h64_site.py`)
+    kn = f"""# 40 · H64 results and limits (rendered from the receipts by `scripts/publish_h64_site.py`)
 
 **Verdict: `{verdict}`**
 
