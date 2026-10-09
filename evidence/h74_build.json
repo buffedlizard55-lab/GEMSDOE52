@@ -136,7 +136,7 @@
    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
   },
   "zip_file": "gems52-h74-a2deform-cotrain-721px-20261009T174546Z.zip",
-  "zip_sha256": "b497b05c0eed1f87b9c87b016363583dbf29c5a3f763e3f96ff012799903ce35",
+  "zip_sha256": "287cc70d55ddafc124637b7e7fc74dc3c68fe290f743c274fdfcb15a9f0cd24d",
   "approved_for_weekly_slot": false,
   "promoted": false,
   "submission_slots_used": 0,
