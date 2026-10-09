@@ -8,17 +8,17 @@ Keep known-catalogue labels separate from verified fault absence, public partici
 
 This session's working branch is fixed by Arena. Do not change branches. Keep raw competition data and large intermediate arrays under ignored `data/` and `work/`. Publish small audit receipts, the unique compressed prediction raster and its review table.
 
-<!--H76-AGENTS-->
-## Current H76 continuation (2026-10-09)
+<!--H77-AGENTS-->
+## Current H77 continuation (2026-10-09)
 
-Read `README.md`'s H76 block first, then `evidence/h76_build.json` (build, gates, run card),
-`evidence/h76_holdout.json` (all eight arms with CIs) and `evidence/h76_budget_sweep.json`.
+Read `README.md`'s H77 block first, then `evidence/h77_build.json` (build, gates, run card),
+`evidence/h77_holdout.json` (all eight arms with CIs) and `evidence/h77_budget_sweep.json`.
 
-H76 is **negative at the holdout gate and positive at the format/uniqueness/lane gates**. Verdict:
+H77 is **negative at the holdout gate and positive at the format/uniqueness/lane gates**. Verdict:
 **DOWNLOAD YES, SUBMIT NO**, slots used 0. The shipped artefact is
-`gems52-h76-viewb-boardplaced-37654px-20261009T194504Z.tif` (SHA-256 `f7f234af…02452f49`), published
-one-click at `docs/downloads/h76-candidate.tif` with the verdict on the root `index.html` and
-`docs/h76-executive-summary.html`. Experiments used: 3 of 3.
+`gems52-h77-viewb-boardplaced-37654px-20261009T194504Z.tif` (SHA-256 `f7f234af…02452f49`), published
+one-click at `docs/downloads/h77-candidate.tif` with the verdict on the root `index.html` and
+`docs/h77-executive-summary.html`. Experiments used: 3 of 3.
 
 Facts the next round must respect:
 
@@ -29,7 +29,7 @@ Facts the next round must respect:
   an unrestricted machine.
 - **Use `gems52.grid.write_geotiff_portal_exact`.** It writes the organiser template's own container
   (LZW, stripped, `nodata=nan` outside the footprint) and re-reads its output, refusing anything the
-  portal's stated rule could reject. Do not add another packaging variant (IR-H76-004).
+  portal's stated rule could reject. Do not add another packaging variant (IR-H77-004).
 - **All five new detectors are measured negative** (basement curvature × thin cover 0.078442,
   geodetic dilatation gradient 0.068369, conductivity × basement-step 0.061497, antithetic basin
   margin 0.043613, LiDAR × radiometric-K 0.086684, rank fusion 0.069808) against `single_B`
@@ -44,9 +44,9 @@ Facts the next round must respect:
   family emitted there. Do not present the unrestricted field's 0.253693 as a projection for it.
 - **The holdout instrument hides CATALOGUE faults; the competition scores faults the catalogue
   lacks.** SGMC is 95 % disjoint from `labels.tif` (79,615 off-catalogue px). That mismatch is the
-  likeliest cause of the measured Spearman −0.10 between holdout DTI and board score (IR-H76-005).
+  likeliest cause of the measured Spearman −0.10 between holdout DTI and board score (IR-H77-005).
   An off-catalogue instrument is the highest-value unbuilt tool in this repository.
-<!--/H76-AGENTS-->
+<!--/H77-AGENTS-->
 <!--H75-AGENTS-->
 ## Current H75 continuation (2026-10-09)
 Read README's H75 block, `knowledge/65` (+65a/65b) and `knowledge/66`. H75: B_DVA (View B + directional variogram

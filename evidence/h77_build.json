@@ -1,14 +1,14 @@
 {
- "round": "H76",
+ "round": "H77",
  "generated_utc": "2026-10-09T19:50:16.139761+00:00",
- "hypothesis": "H76 tests whether any of five new off-catalogue structural detectors (basement curvature x thin cover; geodetic dilatation gradient; conductivity x basement-step coincidence; antithetic basin margin; LiDAR-scarp x radiometric-K discordance) beats the shared View-B surface model on the hide-and-recover holdout.",
+ "hypothesis": "H77 tests whether any of five new off-catalogue structural detectors (basement curvature x thin cover; geodetic dilatation gradient; conductivity x basement-step coincidence; antithetic basin margin; LiDAR-scarp x radiometric-K discordance) beats the shared View-B surface model on the hide-and-recover holdout.",
  "mechanism": "Two-view co-training lane, measured end to end. All five new detectors are unsupervised functions of the raster columns; placement is the shared nodes.spacing_select; scoring is the shared pooled hide-and-recover evaluator.",
  "named_non_fault_process": "Basin-and-Range block tilting and alluvial-fan apron edges produce basement-curvature and dilatation-gradient lineaments with no fault; roads and erosion lines produce LiDAR scarps with no fault.",
  "holdout": {
   "evidence_class": "HOLDOUT-DTI",
   "evaluator": "gems52-pooled-hide-v1",
   "withheld_positive_pixels": 53186,
-  "best_new_arm": "h76_E_lidar_rad_discordance",
+  "best_new_arm": "h77_E_lidar_rad_discordance",
   "best_new_arm_dti": 0.086684,
   "best_new_arm_ci95": [
    0.071135,
@@ -24,19 +24,19 @@
    0.0727,
    0.092084
   ],
-  "verdict": "NEGATIVE - no new arm beats single_B; only h76_E separates from random and its CI overlaps random's",
+  "verdict": "NEGATIVE - no new arm beats single_B; only h77_E separates from random and its CI overlaps random's",
   "shipped_field": "single_B mean out-of-fold rank, board-measured placement",
   "shipped_field_pooled_dti": 0.253693,
   "shipped_field_pooled_ci95": [
    0.236989,
    0.269552
   ],
-  "budget_sweep": "evidence/h76_budget_sweep.json"
+  "budget_sweep": "evidence/h77_budget_sweep.json"
  },
  "board_algebra": {
   "evidence_class": "MEASURED FROM RESTORED ORGANISER-SCORED BYTES",
   "G_pinned": 14088.7,
-  "source": "work/h76/board_forensics.json",
+  "source": "work/h77/board_forensics.json",
   "reading": "the 6,436 px the champion deleted all lie 100-200 m from a mapped trace and earned exactly zero credit"
  },
  "uniqueness": {
@@ -86,12 +86,12 @@
    }
   ]
  },
- "file": "gems52-h76-viewb-boardplaced-37654px-20261009T194504Z.tif",
+ "file": "gems52-h77-viewb-boardplaced-37654px-20261009T194504Z.tif",
  "sha256": "f7f234af958b5645b0ca65c8969906c6b526ef3da9afa693b0171d1902452f49",
  "bytes": 1558626,
  "emitted_px": 37654,
  "validator": {
-  "path": "/home/user/GEMSDOE52/submission/gems52-h76-viewb-boardplaced-37654px-20261009T194504Z.tif",
+  "path": "/home/user/GEMSDOE52/submission/gems52-h77-viewb-boardplaced-37654px-20261009T194504Z.tif",
   "bytes": 1558626,
   "sha256": "f7f234af958b5645b0ca65c8969906c6b526ef3da9afa693b0171d1902452f49",
   "bands": 1,
@@ -132,9 +132,9 @@
   "ring_m": 200.0,
   "min_dot_distance_to_catalogue_m": 200.0
  },
- "submission_name": "gems52-h76-viewb-boardplaced-37654px-20261009T194504Z",
+ "submission_name": "gems52-h77-viewb-boardplaced-37654px-20261009T194504Z",
  "submission_name_chars": 53,
- "note": "H76: View-B OOF surface rank; 200m catalogue ring out; binary {0,1}; 3px spacing; K=37654; consensus<=1 lane-feasible; portal-exact LZW",
+ "note": "H77: View-B OOF surface rank; 200m catalogue ring out; binary {0,1}; 3px spacing; K=37654; consensus<=1 lane-feasible; portal-exact LZW",
  "note_chars": 135,
  "download_ok": true,
  "submit_ok": false,

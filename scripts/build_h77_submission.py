@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""H76-E3: build, gate and write the H76 GeoTIFF -- portal-exact, measured placement.
+"""H77-E3: build, gate and write the H77 GeoTIFF -- portal-exact, measured placement.
 
 Field  : the mean out-of-fold percentile rank of the shared H61 View-B surface model over the four
          label-blind folds (evidence/h71_premise.json committed mean OOF AUC 0.6843; reproduced
@@ -7,10 +7,10 @@ Field  : the mean out-of-fold percentile rank of the shared H61 View-B surface m
 Placement, every element measured rather than copied:
   * 200 m catalogue exclusion ring -- measured on organiser-scored bytes: the 6,436 pixels the
     champion deleted from the 0.2600 file all sit 100-200 m from a mapped trace and earned exactly
-    zero credit (work/h76/board_forensics.json).
+    zero credit (work/h77/board_forensics.json).
   * binary {0, 1} -- the metric's own algebra: DTI = lam*k/(0.2*lam + 0.8) increases in lam.
   * 3 px minimum separation -- nodes.spacing_select, the shared metric-motivated placer.
-  * budget 37,654 -- the pooled-holdout optimum of the sweep in evidence/h76_budget_sweep.json
+  * budget 37,654 -- the pooled-holdout optimum of the sweep in evidence/h77_budget_sweep.json
     (0.253693, CI [0.236989, 0.269552]), not the family's tradition.
 Container: grid.write_geotiff_portal_exact -- the organiser template's own profile (stripped, LZW,
     nodata=NaN outside the footprint), because that is what every owner-scored raster uses.
@@ -74,7 +74,7 @@ def main() -> int:
     # ---- cross-family consensus (H69's measured lane-feasibility lever, reimplemented from its
     # definition: the count of DISTINCT decoded prior patterns whose 3 px halo covers the pixel).
     # The round's own artefacts are never counted as priors.
-    priors_all = [q for q in gates.find_priors([SUB, DL]) if "h76" not in q.name]
+    priors_all = [q for q in gates.find_priors([SUB, DL]) if "h77" not in q.name]
     log(f"computing cross-family consensus over {len(priors_all)} registry rasters ...")
     patterns, seen_hash = [], set()
     for q in priors_all:
@@ -115,7 +115,7 @@ def main() -> int:
         em = nodes.spacing_select(field_all, pool, K, min_px=MIN_PX)
         got = int(em.sum())
         rep = gates.lane_report(em.astype(np.float32), legal,
-                                [q for q in gates.find_priors([SUB, DL]) if "h76" not in q.name],
+                                [q for q in gates.find_priors([SUB, DL]) if "h77" not in q.name],
                                 sample=DATA / "sample_submission.tif", phase="dots")
         share = rep["policy"]["max_near_3px_fraction"]
         search.append(dict(consensus_le=c, pool_px=npc, placed=got,
@@ -139,7 +139,7 @@ def main() -> int:
     if n != K:
         raise SystemExit(f"placement did not fill the budget: {n} != {K}")
     pred = emitted.astype(np.float32)
-    name = f"gems52-h76-viewb-boardplaced-{n}px-{STAMP}"
+    name = f"gems52-h77-viewb-boardplaced-{n}px-{STAMP}"
 
     # ---- gates, all before any file is written
     fp_report = dict(catalogue_px=int(cat.sum()), footprint_px=int(footprint.sum()),
@@ -150,7 +150,7 @@ def main() -> int:
 
     priors = gates.find_priors([SUB, DL], exclude=SUB / f"{name}.tif")
     # the round must also not find its own staged download copy as a "prior" (IR-52-026)
-    priors = [q for q in priors if "h76" not in q.name]
+    priors = [q for q in priors if "h77" not in q.name]
     log(f"registry priors found: {len(priors)}")
     uniq = gates.uniqueness_report(emitted, priors, top=10)
     surface_field = np.where(legal, rank_mean, 0.0).astype(np.float32)   # finite, in [0,1]
@@ -184,17 +184,17 @@ def main() -> int:
         z.writestr(zi, tif.read_bytes())
     with zipfile.ZipFile(zp) as z:
         assert z.namelist() == [tif.name] and z.read(tif.name) == tif.read_bytes()
-    (DL / "h76-candidate.tif").write_bytes(tif.read_bytes())
-    (DL / "h76-candidate.zip").write_bytes(zp.read_bytes())
-    assert sha(DL / "h76-candidate.tif") == receipt["sha256"], "download copy differs from submission copy"
+    (DL / "h77-candidate.tif").write_bytes(tif.read_bytes())
+    (DL / "h77-candidate.zip").write_bytes(zp.read_bytes())
+    assert sha(DL / "h77-candidate.tif") == receipt["sha256"], "download copy differs from submission copy"
 
-    note = ("H76: View-B OOF surface rank; 200m catalogue ring out; binary {0,1}; 3px spacing; K=37654; "
+    note = ("H77: View-B OOF surface rank; 200m catalogue ring out; binary {0,1}; 3px spacing; K=37654; "
             "consensus<=1 lane-feasible; portal-exact LZW")
     if len(note) > 140:
         raise SystemExit("submission note must fit the portal's 140-character field")
     card = dict(
-        round="H76", generated_utc=datetime.now(timezone.utc).isoformat(),
-        hypothesis=("H76 tests whether any of five new off-catalogue structural detectors (basement "
+        round="H77", generated_utc=datetime.now(timezone.utc).isoformat(),
+        hypothesis=("H77 tests whether any of five new off-catalogue structural detectors (basement "
                     "curvature x thin cover; geodetic dilatation gradient; conductivity x basement-step "
                     "coincidence; antithetic basin margin; LiDAR-scarp x radiometric-K discordance) "
                     "beats the shared View-B surface model on the hide-and-recover holdout."),
@@ -206,19 +206,19 @@ def main() -> int:
                                  "roads and erosion lines produce LiDAR scarps with no fault."),
         holdout=dict(evidence_class="HOLDOUT-DTI", evaluator="gems52-pooled-hide-v1",
                      withheld_positive_pixels=53186,
-                     best_new_arm="h76_E_lidar_rad_discordance", best_new_arm_dti=0.086684,
+                     best_new_arm="h77_E_lidar_rad_discordance", best_new_arm_dti=0.086684,
                      best_new_arm_ci95=[0.071135, 0.104422],
                      control_single_B=0.174571, control_single_B_ci95=[0.153568, 0.194531],
                      random=0.082399, random_ci95=[0.072700, 0.092084],
-                     verdict="NEGATIVE - no new arm beats single_B; only h76_E separates from random "
+                     verdict="NEGATIVE - no new arm beats single_B; only h77_E separates from random "
                              "and its CI overlaps random's",
                      shipped_field="single_B mean out-of-fold rank, board-measured placement",
                      shipped_field_pooled_dti=0.253693,
                      shipped_field_pooled_ci95=[0.236989, 0.269552],
-                     budget_sweep="evidence/h76_budget_sweep.json"),
+                     budget_sweep="evidence/h77_budget_sweep.json"),
         board_algebra=dict(evidence_class="MEASURED FROM RESTORED ORGANISER-SCORED BYTES",
                            G_pinned=14088.7,
-                           source="work/h76/board_forensics.json",
+                           source="work/h77/board_forensics.json",
                            reading="the 6,436 px the champion deleted all lie 100-200 m from a mapped "
                                    "trace and earned exactly zero credit"),
         uniqueness=dict(n_priors_checked=uniq["n_priors_checked"],
@@ -249,14 +249,14 @@ def main() -> int:
                        "PASS is not organiser acceptance"),
         competition_slots_used=0, organizer_receipt=None,
         seconds=round(time.time() - t_start, 1))
-    (EVID / "h76_build.json").write_text(json.dumps(card, indent=1, default=str))
-    (SUB / "H76_LATEST.txt").write_text(tif.name + "\n")
+    (EVID / "h77_build.json").write_text(json.dumps(card, indent=1, default=str))
+    (SUB / "H77_LATEST.txt").write_text(tif.name + "\n")
     log(json.dumps(dict(download_ok=True, submit_ok=False,
                         lane_dots=lane_dots["policy"]["verdict"],
                         max_near_3px=lane_dots["policy"]["max_near_3px_fraction"],
                         novel_fraction=uniq["novel_fraction"],
                         name=name, note_chars=len(note)), indent=1))
-    log(f"\nwrote {EVID/'h76_build.json'}")
+    log(f"\nwrote {EVID/'h77_build.json'}")
     return 0
 
 
