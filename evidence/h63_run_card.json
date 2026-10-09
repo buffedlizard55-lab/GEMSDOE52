@@ -1,6 +1,6 @@
 {
  "round": "H63",
- "generated_utc": "2026-10-09T01:19:54+00:00",
+ "generated_utc": "2026-10-09T01:57:31+00:00",
  "lane": "two-view co-training (Blum & Mitchell 1998, doi:10.1145/279943.279962); View A potential-field/subsurface, View B surface; disagreement as the discovery signal",
  "hypothesis": "Faults buried beneath basin cover leave a persistent cross-strike step in modelled basement depth, isostatic gravity and magnetic fabric (the step-normalised potential-field View A) with no surface scarp and no radiometric lineament, so a View-A learner is confident where a View-B learner abstains, and that disagreement marks structure the surface-expression catalogue structurally cannot contain.",
  "mechanism": "Blum-Mitchell two-view co-training with a physically parameterised view split: View A = step/persistence transforms of bands 13/15/2 plus local-contrast and upward-continued-TMI channels (38 channels, no raw band values), View B = surface (37 channels, unchanged from H61). One confident-to-abstaining whole-segment pseudo-label round where the independence screen allows, then the disagreement rank difference is placed as 3 px spaced dots.",
@@ -144,7 +144,7 @@
     "rank_offenders": [],
     "near_offenders": [],
     "identical": [],
-    "informative_priors": 534,
+    "informative_priors": 535,
     "universal_coverage_probes": 14,
     "probe_paths": [
      "/home/user/GEMSDOE52/work/h63/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
@@ -233,7 +233,7 @@
      "/home/user/GEMSDOE52/work/h63/priors/443e8e1c799734facd50a92bc85c650f3857a2b6.tif"
     ],
     "identical": [],
-    "informative_priors": 534,
+    "informative_priors": 535,
     "universal_coverage_probes": 14,
     "probe_paths": [
      "/home/user/GEMSDOE52/work/h63/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
@@ -279,7 +279,7 @@
     "/home/user/GEMSDOE52/work/h63/priors/a97c7b2a513225c9f9f2b35736afe5abf4d2a491.tif"
    ],
    "census_present": 524,
-   "local_artifacts": 24,
+   "local_artifacts": 26,
    "excluded_own_round_prefix": "gems52-h63-"
   },
   "decoded_pattern_uniqueness": {
@@ -363,7 +363,7 @@
   "identified_interval_note": "Pixels outside all 13 scored files belong to no LP atom, so organiser-tied evidence gives NO information about their credit: the interval is [0, |G|]. The claim 'novel mass is worthless' is as unproven as 'novel mass is valuable'.",
   "verdict_rule": "promote only if format+lane(policy)+decoded-pattern uniqueness+not-union pass AND the projected organiser-DTI interval exceeds the champion's owner-reported 0.2778 at both ends of the |G| interval; otherwise negative/research-only (DOWNLOAD YES, SUBMIT NO); promotion to a weekly slot is a separate selector step and this round spends 0 slots"
  },
- "submission_name": "gems52-h63-stepview-cotrain-37600px-20261009T011052Z",
+ "submission_name": "gems52-h63-stepview-cotrain-37600px-20261009T014832Z",
  "note": "H63 cotrain: step-normalised potential-field A vs DEM+radiometric B disagreement; 3px dots; >200m off catalogue; research-only",
  "note_chars": 126,
  "verdict": "negative",

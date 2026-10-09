@@ -3,8 +3,8 @@
  "instrument": "gems52.gates.lane_report (H61 shared-template repair)",
  "evidence_class": "uniqueness/lane diagnostic, not a score",
  "rule": "STOP at Spearman > 0.9 or directed <= 3 px dot proximity > 0.7; probes classified by measured coverage >= 0.95",
- "priors_checked": 548,
- "distinct_decoded_priors": 367,
+ "priors_checked": 549,
+ "distinct_decoded_priors": 368,
  "candidate_decoded_sha256": "48152ec3ee693f72d975d49ea7faa626d1021db71e97eae02c697131d6989d5f",
  "rank_pixels": 4593171,
  "exact_full_eligible_rank": true,
@@ -61,7 +61,7 @@
    "/home/user/GEMSDOE52/work/h63/priors/443e8e1c799734facd50a92bc85c650f3857a2b6.tif"
   ],
   "identical": [],
-  "informative_priors": 534,
+  "informative_priors": 535,
   "universal_coverage_probes": 14,
   "probe_paths": [
    "/home/user/GEMSDOE52/work/h63/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
@@ -8965,6 +8965,22 @@
    "coverage_3px_of_eligible": 0.1389700056888803,
    "universal_coverage_probe": false,
    "near_3px_fraction": 0.3849734042553192,
+   "candidate_dots": 37600,
+   "rank_duplicate": false,
+   "near_duplicate": false
+  },
+  {
+   "path": "/home/user/GEMSDOE52/submission/gems52-h62-conc_soft-arm22000px.tif",
+   "decoded_sha256": "86a8dc659714357de5c0cc40dcef2ec2ee71bfa2aeb7d3a12cb4552d408b739a",
+   "binary_on_eligible": true,
+   "spearman": 0.0005474369235759479,
+   "identical": false,
+   "constant_prior": false,
+   "prior_proposals": 22000,
+   "prior_support_rule": ">0 for binary; >=0.5 for continuous (shared template)",
+   "coverage_3px_of_eligible": 0.11696603501154214,
+   "universal_coverage_probe": false,
+   "near_3px_fraction": 0.13667553191489362,
    "candidate_dots": 37600,
    "rank_duplicate": false,
    "near_duplicate": false

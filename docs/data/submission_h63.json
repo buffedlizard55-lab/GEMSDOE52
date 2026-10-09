@@ -6,7 +6,7 @@
  "bytes": 140421,
  "sha256": "aa41d0cd4658b2f0887180bf85132453dbf8f9408272d2c880d1fe4e822caa9f",
  "emitted_px": 37600,
- "submission_name": "gems52-h63-stepview-cotrain-37600px-20261009T011052Z",
+ "submission_name": "gems52-h63-stepview-cotrain-37600px-20261009T014832Z",
  "note": "H63 cotrain: step-normalised potential-field A vs DEM+radiometric B disagreement; 3px dots; >200m off catalogue; research-only",
  "note_chars": 126,
  "verdict": "negative",
@@ -68,7 +68,7 @@
   "grid_matches_sample": true
  },
  "uniqueness": {
-  "n_priors_checked": 548,
+  "n_priors_checked": 549,
   "canonical_pattern_unique": true,
   "equals_literal_prior_union": false,
   "novel_fraction": 0.0,
@@ -82,7 +82,7 @@
   "max_near_3px_fraction_literal": 1.0,
   "max_near_3px_fraction_policy": 0.8913297872340425,
   "universal_coverage_probes": 14,
-  "priors_checked": 548
+  "priors_checked": 549
  },
  "holdout": {
   "evidence_class": "HOLDOUT-DTI",
@@ -153,5 +153,5 @@
  "view_comparison": {
   "not_copied_or_literal_union": true
  },
- "generated_utc": "2026-10-09T01:22:45Z"
+ "generated_utc": "2026-10-09T01:58:44Z"
 }

@@ -2,7 +2,7 @@
   "file": "gems52-h63-stepview-cotrain-37600px.tif",
   "sha256": "aa41d0cd4658b2f0887180bf85132453dbf8f9408272d2c880d1fe4e822caa9f",
   "bytes": 140421,
-  "submission_name": "gems52-h63-stepview-cotrain-37600px-20261009T011052Z",
+  "submission_name": "gems52-h63-stepview-cotrain-37600px-20261009T014832Z",
   "note": "H63 cotrain: step-normalised potential-field A vs DEM+radiometric B disagreement; 3px dots; >200m off catalogue; research-only",
   "note_chars": 126,
   "validator": {
@@ -55,7 +55,7 @@
     "validation_class": "local on-disk template/range check; not organizer upload acceptance"
   },
   "zip_file": "gems52-h63-stepview-cotrain-37600px.zip",
-  "zip_sha256": "062634821b9d6efd6533dd6bb6e1abcb67870168a1c2f94a93c6c83f71ca6fdc",
+  "zip_sha256": "bbc08649a217955b01f1984a6f0af5893e2aaed86880b35843624cb0f97d73de",
   "approved_for_weekly_slot": false,
   "promoted": false,
   "submission_slots_used": 0,

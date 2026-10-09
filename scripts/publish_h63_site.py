@@ -120,25 +120,45 @@ def main() -> int:
                       f'{esc(h58["file"])}</a>, SHA-256 <code>{esc(h58["sha256"][:24])}</code>…; '
                       f'research only, do not upload, not approved to submit. '
                       f'<a href="h58.html">H58 negative-result audit</a>.')
-    # The previous round's artefact identification, rendered from its own receipt (never hand-typed).
-    h61_id = ""
+    # Previous rounds' artefact identification, each rendered from its own receipt (never
+    # hand-typed).  Two rounds precede this one: H61 (this branch's previous round) and the
+    # parallel session's H62, which merged to main first (PR #46) and forced this round's
+    # rename H62 -> H63.
+    prev_ids = []
     h61p = DATA / "submission_h61.json"
     if h61p.exists():
         h61 = json.loads(h61p.read_text())
         if h61.get("file") and h61.get("sha256"):
-            h61_id = (f'H61 (previous round, negative): <a href="downloads/h61-candidate.tif" download>'
-                      f'{esc(h61["file"])}</a> · <a href="downloads/h61-candidate.zip" download>ZIP</a> · '
-                      f'<a href="downloads/h61-a-only-reasoning.csv" download>reasoning CSV</a>, '
-                      f'SHA-256 <code>{esc(h61["sha256"][:24])}</code>…, '
-                      f'{int(h61.get("emitted_px") or 0):,} px — ok to download, <b>not '
-                      f'slot-approved</b>; its raw-value View A failed the sufficiency screen '
-                      f'(mean OOF AUC 0.5163), which is the premise H63 repairs. '
-                      f'<a href="archive-h61-overview.html">H61 landing archive</a> · '
-                      f'<a href="h61-audit.html">H61 audit</a> '
-                      f'(<a href="h61-audit.html#holdout">holdout</a> · '
-                      f'<a href="h61-audit.html#economics">economics</a> · '
-                      f'<a href="h61-audit.html#limits">limits</a>) · '
-                      f'<a href="data/h61_run_card.json">run card</a>.')
+            prev_ids.append(
+                f'H61 (previous round, negative): <a href="downloads/h61-candidate.tif" download>'
+                f'{esc(h61["file"])}</a> · <a href="downloads/h61-candidate.zip" download>ZIP</a> · '
+                f'<a href="downloads/h61-a-only-reasoning.csv" download>reasoning CSV</a>, '
+                f'SHA-256 <code>{esc(h61["sha256"][:24])}</code>…, '
+                f'{int(h61.get("emitted_px") or 0):,} px — ok to download, <b>not '
+                f'slot-approved</b>; its raw-value View A failed the sufficiency screen '
+                f'(mean OOF AUC 0.5163), which is the premise H63 repairs. '
+                f'<a href="archive-h61-overview.html">H61 landing archive</a> · '
+                f'<a href="h61-audit.html">H61 audit</a> '
+                f'(<a href="h61-audit.html#holdout">holdout</a> · '
+                f'<a href="h61-audit.html#economics">economics</a> · '
+                f'<a href="h61-audit.html#limits">limits</a>) · '
+                f'<a href="data/h61_run_card.json">run card</a>.')
+    h62p = DATA / "h62_submission.json"
+    if h62p.exists():
+        h62 = json.loads(h62p.read_text())
+        if h62.get("file") and h62.get("sha256"):
+            prev_ids.append(
+                f'H62 (parallel session, merged to main first as PR #46; negative — the strict lane '
+                f'gate reads ≈1.0 against the spacing-5 lattice for any nonempty candidate): '
+                f'<a href="downloads/{esc(h62["file"])}" download>{esc(h62["file"])}</a> · '
+                f'<a href="downloads/{esc(h62.get("zip_file") or h62["file"].rsplit(".", 1)[0] + ".zip")}" '
+                f'download>ZIP</a>, SHA-256 <code>{esc(h62["sha256"][:24])}</code>…, '
+                f'{int(h62.get("bytes") or 0):,} bytes — ok to download, <b>not slot-approved</b>. '
+                f'<a href="archive-h62-overview.html">H62 landing archive</a> · '
+                f'<a href="h62.html">H62 audit</a> · '
+                f'<a href="data/h62_run_card.json">run card</a> · '
+                f'<a href="../knowledge/35_what_h62_found.md">what it found</a>.')
+    prev_block = "".join(f"<p class=\"small\">{x}</p>" for x in prev_ids)
     # Concurrent-round disclosure: the merged site checker requires the R5 artefact identification on
     # the landing and guide pages.  Rendered from R5's own receipt, never hand-typed here.
     r5_id = ""
@@ -162,12 +182,32 @@ def main() -> int:
     banner = ("OK TO DOWNLOAD · OK TO SUBMIT" if submit_ok
               else "OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT")
 
-    # ---------------------------------------------------------------- preserve the H61 landing page
+    # ------------------------------------------------- preserve the landing page being replaced
+    # The page currently on disk is the previous round's (whatever it is); archive it verbatim
+    # under its own round name before overwriting, and archive its submission guide the same way.
+    # The round is read from the page itself, never assumed.
     idx = DOCS / "index.html"
-    archive = DOCS / "archive-h61-overview.html"
+    ex_p = DOCS / "executive-summary.html"
     old_text = idx.read_text() if idx.exists() else ""
-    if old_text and not archive.exists():
-        archive.write_text(old_text)
+    old_ex = ex_p.read_text() if ex_p.exists() else ""
+
+    def detect_round(text: str) -> str:
+        for pat in (r'[Nn]ewest round\D{0,4}(H\d+[A-Z]?)', r'DOE GEMS / (H\d+[A-Z]?)',
+                    r'<!--(H\d+[A-Z]?)-'):
+            m = re.search(pat, text)
+            if m:
+                return m.group(1)
+        return "unknown"
+
+    if old_text and "H63" not in old_text[:4000]:
+        prev_round = detect_round(old_text)
+        arch = DOCS / f"archive-{prev_round.lower()}-overview.html"
+        if not arch.exists():
+            arch.write_text(old_text)
+        if old_ex and "H63" not in old_ex[:4000]:
+            arch_ex = DOCS / f"archive-{prev_round.lower()}-executive-summary.html"
+            if not arch_ex.exists():
+                arch_ex.write_text(old_ex)
     old_hrefs = set(re.findall(r'href="([^"#][^"]*)"', old_text))
     old_srcs = set(re.findall(r'src="([^"#][^"]*)"', old_text))
 
@@ -213,7 +253,7 @@ def main() -> int:
 <p>{esc(no_upload)} Format gate: {"PASS" if val["ok"] else "FAIL"} · decoded-pattern uniqueness: {"PASS" if sub["uniqueness_summary"]["canonical_pattern_unique"] else "FAIL"} · lane gate (literal): {esc(lit["verdict"])} · lane gate (saturation policy): {esc(pol["verdict"])} · beats the champion at both ends of |G|: {"YES" if card["verdict_reason"]["beats_champion_at_both_G_ends"] else "NO"}. Competition slots used: {card["slots_used"]}. NO CERTIFIED LEADERBOARD GAIN.</p></div>
 <div class="actions"><a class="button" href="downloads/h63-candidate.tif" download>Download the H63 GeoTIFF ↓</a><a class="button secondary" href="downloads/h63-candidate.zip" download>Single-TIFF ZIP</a><a class="button secondary" href="downloads/h63-a-only-reasoning.csv" download>Geological reasoning CSV</a></div>
 <p class="fileline">{esc(tif)}<br>{nbytes:,} bytes · SHA-256 {esc(sha)} · {dots:,} emitted cells · values exactly {{0,1}}, 0 NaN</p>
-<p class="small"><a href="executive-summary.html">Exactly what may be uploaded, and how →</a> · <a href="h63-audit.html">Method, evidence and limits →</a> · <a href="archive-h61-overview.html">Previous (H61) landing page</a></p></div>
+<p class="small"><a href="executive-summary.html">Exactly what may be uploaded, and how →</a> · <a href="h63-audit.html">Method, evidence and limits →</a> · <a href="archive-h62-overview.html">Previous (H62) landing page</a> · <a href="archive-h61-overview.html">H61 landing page</a></p></div>
 <aside class="panel" aria-label="Submission readiness"><div class="label">Readiness / measured, not promised</div>
 <div class="status-line"><span>Single-band float32 GeoTIFF</span><span class="good">{"PASS" if val["ok"] else "FAIL"}</span></div>
 <div class="status-line"><span>Finite, values in [0, 1]</span><span class="good">{"PASS" if val["nan_pixels"] == 0 and val["min"] >= 0 and val["max"] <= 1 else "FAIL"}</span></div>
@@ -255,12 +295,12 @@ def main() -> int:
 </div><figcaption class="legend">Literal statistics are reported for every prior including probes; the policy only decides which of them can localise a lane.</figcaption></figure></div>
 <div class="feed" id="local-feed">Automatic local evidence checks. Submission gate: {"OPEN" if submit_ok else "CLOSED"}. Organizer results are not a live feed.</div>
 <details><summary>Preserved research archives — none of these is an approval</summary>
-<p class="small"><a href="archive-ctd5-overview.html">CTD5 landing page (negative, lane-saturated)</a> · <a href="ctd5-audit.html">CTD5 run &amp; evidence</a> · <a href="ctd5-sources.html">CTD5 sources</a> · <a href="h61-audit.html">H61 run &amp; evidence</a> · <a href="h61-sources.html">H61 sources</a> · <a href="h60c.html">H60C</a> · <a href="h60.html">H60</a> · <a href="h60-triple-convergence.html">H60 triple convergence</a> · <a href="h59.html">H59</a> · <a href="archive-h59-overview.html">H59 landing archive</a> · <a href="h58.html">H58</a> · <a href="h57.html">H57</a> · <a href="h57-creditcore.html">H57 credit core</a> · <a href="h56-cotrain.html">H56 co-training</a> · <a href="h56.html">H56</a> · <a href="h55.html">H55</a> · <a href="h55-edge.html">H55-EDGE negative archive</a> · <a href="h55-profile.html">H55 profile</a> · <a href="h55-paired-shoulders.html">H55 paired shoulders</a> · <a href="h54.html">H54</a> · <a href="h53.html">H53</a> · <a href="r3.html">R3</a> · <a href="r3-hypotheses.html">R3 hypotheses</a> · <a href="hypotheses.html">Hypotheses</a> · <a href="method.html">Method</a> · <a href="validation.html">Validation</a> · <a href="sources.html">Sources</a> · <a href="irregularities.html">Irregularities</a> · <a href="forensics.html">Forensics</a> · <a href="feed.html">Feed</a></p>
+<p class="small"><a href="archive-ctd5-overview.html">CTD5 landing page (negative, lane-saturated)</a> · <a href="ctd5-audit.html">CTD5 run &amp; evidence</a> · <a href="ctd5-sources.html">CTD5 sources</a> · <a href="h62.html">H62 run &amp; evidence (parallel session)</a> · <a href="archive-h62-overview.html">H62 landing archive</a> · <a href="h61-audit.html">H61 run &amp; evidence</a> · <a href="h61-sources.html">H61 sources</a> · <a href="archive-h61-overview.html">H61 landing archive</a> · <a href="h60c.html">H60C</a> · <a href="h60.html">H60</a> · <a href="h60-triple-convergence.html">H60 triple convergence</a> · <a href="h59.html">H59</a> · <a href="archive-h59-overview.html">H59 landing archive</a> · <a href="h58.html">H58</a> · <a href="h57.html">H57</a> · <a href="h57-creditcore.html">H57 credit core</a> · <a href="h56-cotrain.html">H56 co-training</a> · <a href="h56.html">H56</a> · <a href="h55.html">H55</a> · <a href="h55-edge.html">H55-EDGE negative archive</a> · <a href="h55-profile.html">H55 profile</a> · <a href="h55-paired-shoulders.html">H55 paired shoulders</a> · <a href="h54.html">H54</a> · <a href="h53.html">H53</a> · <a href="r3.html">R3</a> · <a href="r3-hypotheses.html">R3 hypotheses</a> · <a href="hypotheses.html">Hypotheses</a> · <a href="method.html">Method</a> · <a href="validation.html">Validation</a> · <a href="sources.html">Sources</a> · <a href="irregularities.html">Irregularities</a> · <a href="forensics.html">Forensics</a> · <a href="feed.html">Feed</a></p>
 <p class="small">{h58_id}</p>
-<p class="small">{h61_id}</p>
+<p class="small">{prev_block}</p>
 <p class="small">{r5_id}</p>
 <p class="small">Concurrent rounds preserved: <a href="archive-main-index-20261008.html">main landing page of 2026-10-08</a> · <a href="r5.html">R5 audit</a> · <a href="h60d.html">H60D audit</a> · <a href="downloads/h60d-candidate.tif" download>H60D research TIFF</a>.</p>
-<p class="small">Historical downloads: <a href="downloads/ctd5-research.tif" download>CTD5 research TIFF</a> · <a href="downloads/h60c-candidate.tif" download>H60C candidate</a> · <a href="downloads/h61-candidate.tif" download>H61 research TIFF</a> · <a href="downloads/h58-candidate.tif" download>H58 research</a> · <a href="downloads/gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif" download>H57 credit core</a> · <a href="downloads/index.html">full archive index</a></p></details>
+<p class="small">Historical downloads: <a href="downloads/ctd5-research.tif" download>CTD5 research TIFF</a> · <a href="downloads/h60c-candidate.tif" download>H60C candidate</a> · <a href="downloads/h61-candidate.tif" download>H61 research TIFF</a> · <a href="downloads/gems52-h62-conc_soft-arm22000px.tif" download>H62 research TIFF (parallel session)</a> · <a href="downloads/h58-candidate.tif" download>H58 research</a> · <a href="downloads/gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif" download>H57 credit core</a> · <a href="downloads/index.html">full archive index</a></p></details>
 '''
     page += "</main>" + FOOT
     (DOCS / "index.html").write_text(page)
@@ -378,9 +418,9 @@ PYTHONPATH=src .venv/bin/python -c "from gems52 import h63; h63.extend_store()" 
 .venv/bin/python scripts/publish_h63_site.py       # this page
 .venv/bin/python scripts/check_site.py &amp;&amp; .venv/bin/python -m pytest -q</pre>
 <p class="small">GitHub Pages is static: it serves the generated file, it does not train a model in your browser. Reproduction regenerates the same research result; it never uploads, promotes or spends a slot.</p></section>
-<details><summary>Preserved research archives — do not upload</summary><p class="small"><a href="archive-ctd5-overview.html">CTD5 landing page</a> · <a href="ctd5-audit.html">CTD5 audit</a> · <a href="h61-audit.html">H61 audit</a> · <a href="h60c.html">H60C</a> · <a href="h60.html">H60</a> · <a href="h60-triple-convergence.html">H60 triple convergence</a> · <a href="h59.html">H59</a> · <a href="archive-h59-overview.html">H59 archive</a> · <a href="h58.html">H58</a> · <a href="h57.html">H57</a> · <a href="h57-creditcore.html">H57 credit core</a> · <a href="h56-cotrain.html">H56</a> · <a href="h56.html">H56</a> · <a href="h55.html">H55</a> · <a href="h55-edge.html">H55-EDGE</a> · <a href="h55-profile.html">H55 profile</a> · <a href="h55-paired-shoulders.html">H55 paired shoulders</a> · <a href="h54.html">H54</a> · <a href="h53.html">H53</a> · <a href="r3.html">R3</a> · <a href="r3-hypotheses.html">R3 hypotheses</a> · <a href="hypotheses.html">Hypotheses</a> · <a href="method.html">Method</a> · <a href="validation.html">Validation</a> · <a href="sources.html">Sources</a> · <a href="irregularities.html">Irregularities</a> · <a href="forensics.html">Forensics</a> · <a href="feed.html">Feed</a> · <a href="downloads/index.html">download archive</a> · <a href="downloads/ctd5-research.tif" download>CTD5 TIFF</a> · <a href="downloads/h61-candidate.tif" download>H61 TIFF</a> · <a href="downloads/h58-candidate.tif" download>H58 TIFF</a> · <a href="downloads/gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif" download>H57 TIFF</a></p>
+<details><summary>Preserved research archives — do not upload</summary><p class="small"><a href="archive-ctd5-overview.html">CTD5 landing page</a> · <a href="ctd5-audit.html">CTD5 audit</a> · <a href="h62.html">H62 audit (parallel session)</a> · <a href="archive-h62-overview.html">H62 landing archive</a> · <a href="h61-audit.html">H61 audit</a> · <a href="h60c.html">H60C</a> · <a href="h60.html">H60</a> · <a href="h60-triple-convergence.html">H60 triple convergence</a> · <a href="h59.html">H59</a> · <a href="archive-h59-overview.html">H59 archive</a> · <a href="h58.html">H58</a> · <a href="h57.html">H57</a> · <a href="h57-creditcore.html">H57 credit core</a> · <a href="h56-cotrain.html">H56</a> · <a href="h56.html">H56</a> · <a href="h55.html">H55</a> · <a href="h55-edge.html">H55-EDGE</a> · <a href="h55-profile.html">H55 profile</a> · <a href="h55-paired-shoulders.html">H55 paired shoulders</a> · <a href="h54.html">H54</a> · <a href="h53.html">H53</a> · <a href="r3.html">R3</a> · <a href="r3-hypotheses.html">R3 hypotheses</a> · <a href="hypotheses.html">Hypotheses</a> · <a href="method.html">Method</a> · <a href="validation.html">Validation</a> · <a href="sources.html">Sources</a> · <a href="irregularities.html">Irregularities</a> · <a href="forensics.html">Forensics</a> · <a href="feed.html">Feed</a> · <a href="downloads/index.html">download archive</a> · <a href="downloads/ctd5-research.tif" download>CTD5 TIFF</a> · <a href="downloads/h61-candidate.tif" download>H61 TIFF</a> · <a href="downloads/gems52-h62-conc_soft-arm22000px.tif" download>H62 TIFF</a> · <a href="downloads/h58-candidate.tif" download>H58 TIFF</a> · <a href="downloads/gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif" download>H57 TIFF</a></p>
 <p class="small">{h58_id}</p>
-<p class="small">{h61_id}</p>
+<p class="small">{prev_block}</p>
 <p class="small">{r5_id}</p>
 <p class="small">Concurrent rounds preserved: <a href="archive-main-index-20261008.html">main landing page of 2026-10-08</a> · <a href="r5.html">R5 audit</a> · <a href="h60d.html">H60D audit</a>.</p></details>'''
     ex += "</main>" + FOOT
@@ -470,13 +510,40 @@ PYTHONPATH=src .venv/bin/python -c "from gems52 import h63; h63.extend_store()" 
                   f'<a href="../executive-summary.html">Read the gate status first</a> · '
                   f'<a href="../h63-audit.html">Run &amp; evidence</a>. '
                   f'Historical downloads below are not upload approval.</aside>')
-        txt = re.sub(r'<!--(?:CTD5|H61|H63)-DOWNLOAD-NOTICE--><aside.*?</aside>', banner, txt, count=1, flags=re.S)
+        txt = re.sub(r'<!--(?:CTD5|H61|H62|H63)-DOWNLOAD-NOTICE--><aside.*?</aside>', banner, txt, count=1, flags=re.S)
         if '<!--H63-DOWNLOAD-NOTICE-->' not in txt:
             txt = txt.replace('<body>', '<body>' + banner, 1)
-        # collapse the repeated H61 audit links the earlier publishers inserted and add H63 once
+        # collapse any duplicated audit links earlier publishers/merges inserted, then make sure
+        # this round's audit link is present exactly once
+        txt = re.sub(r'(<a href="\.\./h63-audit\.html">H63 audit</a>)+',
+                     '<a href="../h63-audit.html">H63 audit</a>', txt)
         txt = re.sub(r'(<a href="\.\./h61-audit\.html">H61 audit</a>)+',
-                     '<a href="../h63-audit.html">H63 audit</a><a href="../h61-audit.html">H61 audit</a>',
-                     txt)
+                     '<a href="../h61-audit.html">H61 audit</a>', txt)
+        if 'href="../h63-audit.html"' not in txt:
+            txt = txt.replace('<a href="../h61-audit.html">H61 audit</a>',
+                              '<a href="../h63-audit.html">H63 audit</a>'
+                              '<a href="../h61-audit.html">H61 audit</a>', 1)
+        # add this round's rows at the top of the downloads table (previous rounds' rows stay)
+        rows = (f'<!--H63-DL--><tr><td><a href="h63-candidate.tif" download>h63-candidate.tif</a></td>'
+                f'<td class="number">{nbytes:,}</td><td class="mono">{sha}</td>'
+                f'<td>H63 · step-normalised two-view co-training · {dots:,} px · newest round; '
+                f'<a href="../h63-audit.html">evidence</a></td></tr>\n'
+                f'<tr><td><a href="{esc(tif)}" download>{esc(tif)}</a></td>'
+                f'<td class="number">{nbytes:,}</td><td class="mono">{sha}</td>'
+                f'<td>canonical filename, byte-identical</td></tr>\n'
+                f'<tr><td><a href="h63-candidate.zip" download>h63-candidate.zip</a></td>'
+                f'<td class="number">{(DOWN / "h63-candidate.zip").stat().st_size:,}</td>'
+                f'<td class="mono">single-TIFF ZIP, byte-identical payload</td>'
+                f'<td>portal-accepted wrapper</td></tr>\n'
+                f'<tr><td><a href="h63-a-only-reasoning.csv" download>h63-a-only-reasoning.csv</a></td>'
+                f'<td class="number">{(DOWN / "h63-a-only-reasoning.csv").stat().st_size:,}</td>'
+                f'<td class="mono">CSV</td>'
+                f'<td>{dots:,} per-pixel geological reasoning rows (hypothesis + named non-fault '
+                f'mimic + falsifier)</td></tr><!--/H63-DL-->\n')
+        txt = txt.replace("H62 · two-view corroboration · 22,000 px · newest round;",
+                          "H62 · two-view corroboration · 22,000 px · previous round (parallel session);")
+        if '<!--H63-DL-->' not in txt:
+            txt = txt.replace('<tbody>', '<tbody>' + rows, 1)
         dl_index.write_text(txt)
 
     # ---------------------------------------------------------------- link preservation
@@ -494,10 +561,11 @@ PYTHONPATH=src .venv/bin/python -c "from gems52 import h63; h63.extend_store()" 
     lost = sorted({h for h in old_hrefs | old_srcs
                    if not h.startswith(("http", "mailto", "data:")) and h not in new_text
                    and (DOCS / h.split("#")[0]).resolve().exists()})
+    archives = sorted(p.name for p in DOCS.glob("archive-*-overview.html"))
     print(json.dumps(dict(pages=["index.html", "executive-summary.html", "h63-audit.html",
-                                "h63-sources.html", "archive-h61-overview.html"],
+                                "h63-sources.html"] + archives,
                           dead_links=dead, old_links_not_reused=lost,
-                          preserved_archive=bool(archive.exists()),
+                          archives_preserved=archives,
                           download=str(DOWN / "h63-candidate.tif"), bytes=nbytes, sha256=sha,
                           verdict=verdict, submit_ok=submit_ok), indent=1))
     return 0

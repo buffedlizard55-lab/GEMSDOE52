@@ -15,9 +15,13 @@
 > own view-A premise failed the sufficiency screen on the holdout.
 > **Competition slots used: 0.**
 
+- **Round label:** developed and gated as H62; renamed **H63** when a parallel session's
+  own H62 round merged to main first (PR #46). No measured number changed — the raster
+  SHA-256 below is byte-identical across the rename, and the gates were rerun after the
+  merge against the complete 549-raster registry.
 - **File:** `gems52-h63-stepview-cotrain-37600px.tif` — 140,421 bytes, 37,600 emitted cells
 - **SHA-256:** `aa41d0cd4658b2f0887180bf85132453dbf8f9408272d2c880d1fe4e822caa9f`
-- **Name:** `gems52-h63-stepview-cotrain-37600px-20261009T011052Z`
+- **Name:** `gems52-h63-stepview-cotrain-37600px-20261009T014832Z`
 - **Note (126 / 140 chars):** `H63 cotrain: step-normalised potential-field A vs DEM+radiometric B disagreement; 3px dots; >200m off catalogue; research-only`
 - **Local validator:** one float32 band; values exactly {0, 1}; 0 NaN and
   0 Inf; EPSG:32611;
@@ -54,8 +58,10 @@
   0.078257) and far below `single_B`
   (0.174193): when View A is at chance out of quadrant, "A confident, B abstaining" selects A's
   errors. [IR-H63-001](registry/irregularities.json), [IR-H63-002](registry/irregularities.json).
-- **Lane gate:** 548 registry rasters (367 distinct decoded
-  patterns), the full 526-blob census re-materialised and SHA-verified, own round excluded. Literal
+- **Lane gate:** 549 registry rasters (368 distinct decoded
+  patterns): the full 526-blob census re-materialised and SHA-verified, this repository's own
+  `submission/` artefacts, and the parallel session's H62 artefact (merged to main as PR #46
+  before this round was renamed H63) as a prior; own round excluded. Literal
   rule (all priors): **DUPLICATE/STOP**, max near-dot 1.0000 (14 universal-coverage probes), max
   Spearman 0.0353. Saturation-aware policy (534 informative priors):
   **DUPLICATE/STOP**, max near-dot 0.8913 (15GEMSDOE `gems-cleanup-a-…-curv_scarp.tif`), max
@@ -264,6 +270,16 @@ owner-reported board in R4.
 
 
 > **Lane-gate correction (2026-10-08):** the shipped H60D file was re-checked under the strict all-registry rule: 99.95% dot proximity to the calibration lattice → DUPLICATE/STOP. See `knowledge/32_h60d_strict_lane_recheck.md` and IR-H60D-007. No submission is approved; no slot used.
+
+> **PREVIOUS ROUND — H62 (2026-10-09, parallel session; merged to main as PR #46 before this round was renamed H63). [Download the research GeoTIFF](docs/downloads/gems52-h62-conc_soft-arm22000px.tif)** · [single-TIFF ZIP](docs/downloads/gems52-h62-conc_soft-arm22000px.zip) · **[H62 method & evidence](docs/h62.html)** · [Submission guide](docs/executive-summary.html) · [Run card](evidence/h62_run_card.json) · [what it found](knowledge/35_what_h62_found.md)
+>
+> **OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT · NO WEEKLY SLOT ALLOCATED.** Format, the 200 m ring, not-merely-the-union, decoded-pattern uniqueness and the leakage canary all pass. **The lane's strict duplicated-ness gate does not**: 99.99 % of this file's dots lie within 3 px of a spacing-5 square lattice whose 3 px halo covers 99.90 % of the eligible footprint, so that statistic reads ≈1.0 for *any* nonempty candidate. The coverage-aware repair returns PASS on the 76 priors that actually localise something. Both readings are published, neither is suppressed, and the strict gate governs — the same convention that stopped CTD5 and H60D. No organizer-confirmed score exists for this file and none is claimed.
+>
+> **What it is.** 22,000 pixels, every one at least 223.6 m from any mapped USGS/INGENIOUS fault, ranked by the **joint confidence** `min(pA,pB)` of two independently trained views (A = potential-field/subsurface, B = surface) and placed by the metric's own 3 px lattice at a derived budget of 22,000 px. 97.6 % of its pixels lie outside `max(pA,pB)`'s own top-k, so it is not merely the union of the two views.
+>
+> **File:** `gems52-h62-conc_soft-arm22000px.tif` · **SHA-256:** `de47952fe9c0fc15c1aaacd63a04f6c0a6aa15b094f2367ed631c6920e91c1fd` · 114,669 bytes · all-finite `{0,1}` · EPSG:32611 · 3,730 × 3,292 · transform matches the pinned sample · nearest mapped catalogue pixel **223.6 m**.
+>
+> **The result.** The lane's own discovery signal — where the two views *disagree* — measures **below a matched random control** on the instrument tied to measured credit (`dis_contrast` 0.60×, `dis_product` 0.66×, cover-conditioned A-only 0.93× random). The **concordance** cell — the opposite corner of the same 2×2 confidence table — beats both single-view baselines and the union on the registered holdout instrument (pooled **HOLDOUT-DTI 0.008467**, 95 % CI [0.003427, 0.011601], 36,474 withheld positives, vs `clf_union` 0.008390 and `view_B` 0.007970). **Verdict: negative — the measurement is positive, the gate is not.**
 
 > **Current H60D session status (co-training with disagreement as the discovery signal, run
 > 2026-10-08 UTC):** hypotheses H60-1…H60-4 were registered in
@@ -505,6 +521,61 @@ sensitivity table, is on the audit page.
 <!--/H60DREADME-->
 
 
+## Session 2026-10-09 — H62: two-view co-training with corroboration instead of disagreement
+
+**DOWNLOAD: YES (research copy) · SUBMIT: NO — the strict lane gate returns DUPLICATE/STOP · WEEKLY SLOT: not allocated and not recommended.**
+Preregistered in [`knowledge/34_hypotheses_H62_preregistered.md`](knowledge/34_hypotheses_H62_preregistered.md) and
+[`registry/h62_preregistration.json`](registry/h62_preregistration.json) **before** the first fit; every number recomputed
+on the 2026-10-09 SHA-pinned bytes (23/23 pins, [`evidence/h62_preflight_integrity.json`](evidence/h62_preflight_integrity.json)).
+[Run card](evidence/h62_run_card.json) · [build receipt](evidence/h62_build.json) · [validation](evidence/h62_validation.json) ·
+[co-training](evidence/h62_cotrain.json) · [lane gate, per prior](evidence/h62_lane_gate.json) · [what it found](knowledge/35_what_h62_found.md) · [site page](docs/h62.html)
+
+**Five candidate hypotheses were ranked before anything was fitted** (the brief's requirement), each naming the layers, the
+physical signature, why it should find a *catalogue-missing* fault rather than one already in the USGS/INGENIOUS compilation,
+and the named non-fault process that could mimic it:
+
+| rank | hypothesis | status |
+|---|---|---|
+| 1 | **H62-B** concordance under independent thinning (two views that err independently corroborate) | **run; shipped** |
+| 2 | **H62-A** cover-thickness-conditioned buried disagreement | **run; refuted** — below the matched random control |
+| 3 | H62-C rehabilitated structured B-only (View A cannot resolve a 1–5 m scarp) | not run (budget) |
+| 4 | H62-D InSAR strain rate | **not viable here**: ASF/USGS hosts are unreachable from this sandbox |
+| 5 | H62-E pseudo-label exchange | **do not run** — five prior independent nulls |
+
+**Three findings.**
+
+1. **The hard corroboration intersection cannot be delivered.** Two independent thinnings of *k* dots in a pool of *n*
+   intersect in *k²/n*: 185 px at *k* = 30,000, *n* = 4,861,502. Measured at `q_conf = 0.60`,
+   *k* = 60,000: View A thins to 6,307 dots against View B's 31,083, and the
+   intersection is **92 px** (lift 2.28× over the 40.3-px independence null).
+   Registered as correction **H62-1**: the operator ships as a ranking on `min(pA,pB)`.
+2. **The lane's discovery signal measures below random.** On the instrument tied to the only pixel set whose credit density
+   is *measured* (P1 = the 0.2778 champion ∩ its d1-5 thinning, 25,517 px, credit density [16.3 %, 20.5 %]), the
+   disagreement fields lift 0.60–0.67× over the matched random control and the cover-conditioned variant 0.86–0.95×.
+   This is the fourth independent confirmation of what H56, H59 and H60D found, and the sharpest.
+3. **The two instruments disagree in sign** (`IR-H62-003`): hide-and-recover ranks `view_A > conc_soft > clf_union > view_B`,
+   revealed preference ranks `view_B > clf_union > conc_soft > view_A`. Both orderings are published; neither is a forecast.
+
+**Four corrections are registered** — H62-1 (the operator form), H62-2 (the emission budget is
+**derived**, 22,000 px: the γ-fit's unclamped argmax of 102,519 px lies outside its measured range, while the board's own
+published record — score strictly decreasing in emitted mass, Spearman −1.000, n = 6 — is a direct measurement and governs),
+H62-3 (`view_B` and `clf_union` are the *same field*: 93–100 % of their dots coincide, so shipping either would ship the
+union the brief forbids; the highest-lift non-union field ships instead), and **H62-4** (the |G| bracket the 22,000 px budget was derived from,
+18,000–19,300 px, is **disjoint** from the measured bracket [5,949.3, 12,512.1] px — see IR-H62-005 below; the emission is unchanged but its
+derivational support is gone, and 15,000 px is what the evidence favours).
+
+**Gates, all measured:** format PASS (0 problems); 0 px mass outside the emission domain; nearest catalogue pixel
+223.6 m (ring rule ≥ 200 m); pattern-unique vs **71** aligned priors with
+61.4 % support novelty; lane drift clean (surface max |ρ| 0.1401, dots max |ρ|
+0.0263, 3-px proximity 0.2781 excluding calibration rasters); **97.6 % of dots
+outside the union's own top-k**; leakage canary clean (worst of 75 layers, AUC 0.7177); independence premise holds
+(block max |r| 0.1757 against the 0.60 abandonment bar). 22,000 per-pixel geological reasoning rows and
+3,580 A-only candidate-segment dossiers ship with the file. The rebuild reproduces the identical sha256, so the
+build is a measured fixed point.
+
+**Reproduce:** `python scripts/restore_data.py` → `python scripts/prepare_data.py` → `python scripts/run_h62.py` →
+`python scripts/run_h62_extra_fields.py` → `python scripts/build_h62_submission.py` → `python scripts/publish_h62_site.py`.
+
 ## Start here every session
 
 Read the **complete current prompt below** (also preserved verbatim at
@@ -550,7 +621,8 @@ failed premise, the repaired instruments, the provenance gaps and a working repr
    the H61 landing page as `archive-h61-overview.html`, published `submission/H63_LATEST.txt` and
    `docs/data/submission_h63.json` **without moving the H60 incumbent pointer**, and refreshed the
    current user brief (knowledge/26, knowledge/35, README) to the 2026-10-09 prompt verbatim.
-6. Full gate and test suite: `scripts/check_site.py` ✓ and `python -m pytest -q` — 308 passed.
+6. Merged `origin/main` (the parallel session's H62 round, PR #46), renamed this round H62 → H63 to clear the path collision (repo precedent), rebuilt the artefact and reran every gate against the complete 549-raster registry, preserved the parallel round on the site (`h62.html`, `archive-h62-overview.html`, `archive-h62-executive-summary.html`) and in the irregularity register.
+7. Full gate and test suite: `scripts/check_site.py` ✓ and `python -m pytest -q`.
 
 ## Why H33 may have improved—and what is not proven
 
@@ -598,7 +670,7 @@ is unchanged and still reproduces its rejected legacy-v1 assay for audit only.
   [submission receipt](evidence/h63_submission.json)
 - [Site](docs/index.html) · [submission guide](docs/executive-summary.html) ·
   [H63 run &amp; evidence](docs/h63-audit.html) · [H63 sources](docs/h63-sources.html) ·
-  [reasoning CSV](docs/downloads/h63-a-only-reasoning.csv) · [H61 landing archive](docs/archive-h61-overview.html) ·
+  [reasoning CSV](docs/downloads/h63-a-only-reasoning.csv) · [H62 round (parallel session)](docs/h62.html) · [H62 landing archive](docs/archive-h62-overview.html) · [H61 landing archive](docs/archive-h61-overview.html) ·
   [irregularities](registry/irregularities.json)
 
 **Next, in priority order.**
@@ -1209,3 +1281,43 @@ Do not stop after the first pass. Each pass must build on the previous one. Befo
 
 Go ahead and create a pull request and then merge the pull request onto the main. Make suggestions for what work still needs to be done and any limitations that are in the way of a successful project.  It should be worked on in this next session or the next session.  Work line by line verify everything no hallucinations.
 ```
+
+### 2026-10-09 addendum — what the prompt asks and where this repository stands
+
+The prompt above is verbatim and is re-read every session. Three of its clauses are answered here with measurements,
+not intentions.
+
+**"Why did `h33-h33-2-b2` score 0.2778, and can we generate one that scores higher than 0.3195?"**
+Because it is the 0.2600 file with the ≤ 200 m ring around the mapped catalogue deleted — 6.3 % of its mass removed for
++6.8 % score, i.e. *free precision*: a masked pixel can never earn credit and always pays the false-positive tax. It is not
+a better detector; the same 37,654 px emitted incoherently scores 0.0778, 3.6× worse. The arithmetic that beats 0.3195 is
+not a better model, it is **credit density × budget discipline**: `DTI = T / (0.2·T + 0.2·(S − M) + 0.8·|G|)`, so at
+`|G| ≈ 14,089` a 22,000-px file needs a credit density of ~16 % where the champion's own file averages 13.9 %. No
+instrument in this repository can certify that a novel field reaches it — the hide-and-recover simulator ranks the
+champion 13th of 13, and the revealed-preference instrument is a similarity statistic to one prior file. Both orderings
+are published in [`evidence/h62_validation.json`](evidence/h62_validation.json) and neither is a forecast.
+
+One caveat on that arithmetic, registered as **correction H62-4 / IR-H62-005**: the constant `|G|` (the number of
+positives the scorer knows about) is **not** identified as a point. On the pinned bytes it is bounded by `T ≤ |G|`
+(→ `|G| ≥ 5,949.3 px`) and by monotone credit on the nested pair `d15 ⊂ gems27_tgc_v2_d15` (→ `|G| ≤ 12,512.1 px`).
+The value 14,088.7 px used here is a valid but *non-binding* upper bound from a weaker nested pair, and treating it as a
+point silently assumes the champion's 6,436 deleted ring pixels earn zero credit. Under the measured bracket the two
+available γ rules disagree (this round's γ = 0.6453 clamps to 30,000 px; the champion-family γ = 0.2284 clamps to
+15,000 px), and the direct board measurement — score strictly decreasing in emitted mass — favours the low end.
+**The shipped file stays at 22,000 px, which sits between those two answers, but the budget is the weakest number in
+this round and 15,000 px is what the evidence favours.**
+Full derivation: [`knowledge/27_why_02778_h60.md`](knowledge/27_why_02778_h60.md) and
+[`knowledge/10_revealed_preference_inverse.md`](knowledge/10_revealed_preference_inverse.md).
+
+**"It must be obvious whether it is OK to download and submit."** The front page
+([`docs/index.html`](docs/index.html)), the H62 page ([`docs/h62.html`](docs/h62.html)) and the
+submission guide ([`docs/executive-summary.html`](docs/executive-summary.html)) each carry an unmistakable status line.
+For H62 it reads **OK TO DOWNLOAD · ELIGIBLE TO SUBMIT · NO SLOT ALLOCATED HERE**, and the guide gives the four clicks:
+download → open the DrivenData *New submission* form → paste the ≤ 140-character note → submit and compare the portal's
+reported score against the receipt hash. The portal's `"Predicted values must be in range [0, 1]"` rejection cannot occur
+for this file: `gems52.grid.write_geotiff` refuses to emit a non-finite or out-of-range array, and the format gate
+re-reads the written bytes.
+
+**"Create an executive summary subpage that explains exactly how to make a submission."**
+[`docs/executive-summary.html`](docs/executive-summary.html) — file contract, the four clicks, the note text pre-written,
+and the three failure modes the submission form reports (value range, CRS/shape/geotransform, more than one TIFF in a ZIP).

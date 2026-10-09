@@ -3,8 +3,8 @@
  "instrument": "gems52.gates.lane_report (H61 shared-template repair)",
  "evidence_class": "uniqueness/lane diagnostic, not a score",
  "rule": "STOP at Spearman > 0.9 or directed <= 3 px dot proximity > 0.7; probes classified by measured coverage >= 0.95",
- "priors_checked": 548,
- "distinct_decoded_priors": 367,
+ "priors_checked": 549,
+ "distinct_decoded_priors": 368,
  "candidate_decoded_sha256": "c52f8a4386b0cf3540b4a10bfdd9f85ffc315d2a794bf1fe7f008b92bd152077",
  "rank_pixels": 4325298,
  "exact_full_eligible_rank": true,
@@ -27,7 +27,7 @@
   "rank_offenders": [],
   "near_offenders": [],
   "identical": [],
-  "informative_priors": 534,
+  "informative_priors": 535,
   "universal_coverage_probes": 14,
   "probe_paths": [
    "/home/user/GEMSDOE52/work/h63/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
@@ -70,7 +70,7 @@
  "errors": [],
  "scope": "Supplied aligned immutable public inventory only; private/release/unlinked artifacts are not proven absent.",
  "per_prior_trim": {
-  "n": 548,
+  "n": 549,
   "probes": [
    {
     "path": "/home/user/GEMSDOE52/work/h63/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",

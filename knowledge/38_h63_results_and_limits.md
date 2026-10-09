@@ -206,3 +206,41 @@ FILENAME-ONLY-OWNER-REPORTED).
 An AI assistant wrote the code, this protocol, the results document and the candidate-review
 templates. No geologist verified any emitted structure, no field observation was collected, and no
 organiser score, acceptance or leaderboard gain is claimed for any H63 artefact.
+
+---
+
+## 7 · Addendum: the round was renamed H62 → H63 after a parallel session merged first
+
+This round was developed, fitted and gated under the label **H62**. While it ran, a parallel
+session (same prompt, same lane) shipped its own round also labelled H62 — "two-view co-training
+with corroboration instead of disagreement", 22,000 px, verdict negative on the strict lane gate —
+and merged it to `main` as PR #46. Every H62-named path therefore collided
+(`src/gems52/h62.py`, `scripts/{run,build,publish}_h62*`, `tests/test_h62.py`,
+`knowledge/34/35`, `registry/h62_preregistration.json`, `evidence/h62_*.json`,
+`docs/data/h62_*.json`, `submission/H62_LATEST.txt`, `downloads/h62-candidate.*`, and the
+irregularity ids `IR-H62-001/002`, which the parallel session also used).
+
+Following the repository's own precedent (their commit "Rename this round H61 -> H62: main already
+shipped a different H61"), this round was renamed **H62 → H63** before publication:
+module `src/gems52/h63.py` (store tag `+h63-step-v1`, manifest key `view_A_h63`), scripts
+`run_h63.py` / `build_h63_submission.py` / `publish_h63_site.py`, `tests/test_h63.py`,
+`knowledge/37` (preregistration, re-pinned), `knowledge/36` (dated brief copy), `knowledge/38`
+(this document), `registry/h63_preregistration.json`, receipts `evidence/h63_*.json` /
+`docs/data/h63_*.json` / `submission_h63.json`, artefact stem `gems52-h63-stepview-cotrain-37600px`,
+and irregularities `IR-H63-001/002`.
+
+**Nothing measured changed.** The pipeline receipts are round-agnostic; the raster carries no
+name/note tags, so its SHA-256 is byte-identical across the rename; and the artefact was rebuilt
+after the merge so the lane gate and uniqueness report run against the **complete** registry —
+549 rasters including the parallel session's H62 artefact (`gems52-h62-conc_soft-arm22000px.tif`)
+as a prior. The parallel session's H62 round is preserved on the site (`docs/h62.html`,
+`docs/data/h62_submission.json`, `downloads/gems52-h62-conc_soft-arm22000px.tif`,
+`archive-h62-overview.html`, `archive-h62-executive-summary.html`) and in the README; the two
+rounds are independent measurements of the same lane from the same pinned bytes.
+
+The two rounds' negative verdicts are consistent and complementary: theirs refutes the
+**concordance** cell (joint confidence `min(pA,pB)`, HOLDOUT-DTI 0.008467 vs `view_B` 0.007970 —
+no lift), mine refutes the **disagreement** cell (below uniform random) *and* the View-A
+sufficiency premise that both cells share. Together they close the co-training lane on this data:
+neither corner of the 2×2 confidence table carries transferable credit, and View A is at chance
+out of quadrant in both parameterisations tried (raw 0.5163, step-normalised 0.5362).
