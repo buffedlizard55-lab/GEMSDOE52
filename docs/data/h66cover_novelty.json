@@ -1,0 +1,179 @@
+{
+ "rule": "(1) no emitted cell is a positive pixel of an informative registry raster; (2) no emitted cell lies within 3 px of a positive pixel of an informative registry raster whose near-dot share of the emission exceeds 0.70 (the lane's per-raster rule); universal-coverage probes (3 px coverage >= 0.95) are excluded as in gates.lane_report policy",
+ "radius_px": 3,
+ "near_limit": 0.7,
+ "informative_rasters": 516,
+ "probe_rasters": 35,
+ "probes": [
+  {
+   "name": "51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "374c88b1da2b803e2ed160de467fd71ae114010d.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "5c1a159439735522659ee78969df3f34efddcdde.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "7303cda1534398189a1e8dc603b15755b6dbeba9.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "f79f3e81b2ebcc0428ba545a3af6dde56387f057.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "989f2fa40fdefdec8d7838ef261e5940f73081c4.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "916cdeecd661878529afa9e2fa280f632cad956c.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "5ec102564a28243a70ee905f8f3ebfc65f6770f1.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "329606215cccd5e363b3f3c3a9a377baa3b02ed4.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "0a3571a217529e1426f04f7e0384ac417817fbbc.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "d89695181cadd18a7284241c571af6f82671bf6d.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "1102512580ae652c866e0cf5754afd1531fac952.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "0c42fc03b2c1830b4bbbd09e3a58a7f31c310118.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "70b12c34ea848e6a2b60c865d31ef9df52a4c662.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "70e09941ffab77b15fd1f776221d43e0a6def3b0.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "8bf0bf2d1814689811fe95b3a8c9f03990ff8c9b.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "f127cac4b68003af16138d50510a65335a7a0031.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "3d3ee66300203bdc878f3a052caabde671daf042.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "35616cbb48ac3533dd4c957b8acca57f71ba365f.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "1cb4f016b4876391236f4960822171a3820a7597.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "45469b332d0a742da90c159bac511936bb47134a.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "b25bae2852d368c75c69ba486350187597fed0b3.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "8c3d512092bfd9ea12ab22b259444e934031ab7d.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "d89160eb2675d6f8fdc9c8af261bc73c5c535f63.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "2ef0c06c25cdab62ba3381a1b43db230776fc631.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "ca8d98f3634799689ea7aa0ea175e11a3ea20699.tif",
+   "coverage_3px_of_eligible": 1.0
+  },
+  {
+   "name": "b782e3233089529759feed3860c1e8b8bf5085d7.tif",
+   "coverage_3px_of_eligible": 1.0
+  }
+ ],
+ "rasters_skipped_shape": 0,
+ "exact_union_px": 5155398,
+ "allowed_before": 4325298,
+ "allowed_after_exact": 164794,
+ "carried_from": "knowledge/39c (H64 declared post hoc; applied identically here)",
+ "mode": "exact_and_lane",
+ "per_raster_rule": "greedy placement over the A-only gate support at 3 px; the lane rule is share-based: no informative raster may hold more than 0.7 of the candidate's own dots within 3 px",
+ "cap_dots": 1159,
+ "cap_is_share_of_target": true,
+ "iterations": [
+  {
+   "round": 0,
+   "placed": 633,
+   "gate_cells": 1657,
+   "target": 1657,
+   "offenders": 0,
+   "unconstrained": true
+  }
+ ],
+ "constrained_rasters": [],
+ "worst_raster_near_dots": {
+  "name": "gems52-h64-sufgate-cotrain-37600px-20261009T022631Z.tif",
+  "count": 633,
+  "share": 1.0,
+  "lane_share_limit": 0.7
+ },
+ "allowed_final": 164794,
+ "min_px": 3.0,
+ "lane_rule_violated": true,
+ "budget_note": "the frozen gate field is positive on 1657 exact-novel cells; the template budget 37600 is a cap, not a target; the shipped emission is 633 cells"
+}

@@ -82,6 +82,89 @@ a lane-policy PASS at a real budget on this saturated registry (both placement a
 infeasible); the 0.2778 file-to-row receipt; H65-C/H71-D remain data-blocked (no roads/hydro layer
 reachable from this sandbox's egress allowlist).
 <!--/H71-README-->
+
+<!--H66COVER-README-->
+# Current status — H66cover (2026-10-09): co-training lane, cover-gated A-only emission — NEGATIVE, research-only
+
+> **SUBMIT TO THE COMPETITION: NO.**
+> The one-click file below is the H66cover research GeoTIFF. Verdict: `NEGATIVE, research-only. DOWNLOAD YES (format-valid and unique on decoded pixels); SUBMIT NO (gates: format=True lane_policy=False unique=True not_union=True beats_single_B=False). No certified leaderboard gain.`
+
+*Namespacing (IR-H66-015): a parallel session merged a different round under the "H66" label first
+(PR #56, structural coherence — the site's `h66-*` pages are that round's), and another merged H65halo
+and a thermal-upflow round renamed H67 (PR #58). This round is the cover-gated co-training H66, so its
+block, files and links carry the `h66cover` prefix; main's blocks above and below stay verbatim.*
+
+**What was tested.** H66-A, the only hypothesis run this round: the brief's co-training protocol executed in
+full — empirical independence screen on spatial-block out-of-fold errors of the two views over labelled
+negatives, one confident-to-abstaining whole-segment pseudo-label round, then a new placement field
+`(rankA − rankB) × log1p(cover)` restricted to the A-only stratum (View A confident, View B abstaining),
+which is the brief's "buried beneath cover" reading of the disagreement signal. Preregistered in
+[`knowledge/43_h66cover`](knowledge/43_h66cover_hypotheses_preregistered.md) (SHA-256 pinned in
+`registry/h66cover_preregistration.json`, with the dated amendment
+`knowledge/43_h66cover_amendment_2026-10-09_budget.md`); the H61 views, learner, seed and stages are
+reused unchanged, so H61's fits are reproduced, not re-tuned. Four further hypotheses (H66-B two-round
+exchange, H66-C strain–seismicity View A, H66-D long-wavelength deep-edge View A, H66-E B-only artifact
+control) are registered and deferred — see the preregistration §2.
+
+| Check | Label | Result | Receipt |
+|---|---|---|---|
+| Leakage canary (alarm > 0.90) | PREMISE-AUC | max single-feature raw AUC **0.6687**; any alarm: False | [`evidence/h66cover_canary.json`](evidence/h66cover_canary.json) |
+| Independence screen (mandated) | PREMISE-AUC | max abs Spearman rho **0.1331** over 2089 blocks (abandon >= 0.60) → exchange allowed; 15443 pseudo-label px | [`evidence/h66cover_pseudo_exchange.json`](evidence/h66cover_pseudo_exchange.json) |
+| HOLDOUT-DTI, H66-A vs single_B | HOLDOUT-DTI | h66a **0.045745** [0.031303, 0.062135] vs single_B **0.174517**; paired delta **-0.128772** [-0.151680, -0.106031] → does not beat the single-view baseline | [`evidence/h66cover_holdout.json`](evidence/h66cover_holdout.json) |
+| Lane gate, surface / dots | diagnostic | surface PASS (literal PASS) · dots DUPLICATE/STOP (literal DUPLICATE/STOP) — 100% of dots within 3 px of the H64 raster (IR-H66-014) | [`evidence/h66cover_lane_dots.json`](evidence/h66cover_lane_dots.json) |
+| Decoded-pattern uniqueness | diagnostic | tier 1 (all 553 priors): unique; tier 2 novelty vs 516 informative priors: **1.0000** | [`evidence/h66cover_uniqueness.json`](evidence/h66cover_uniqueness.json) |
+| Not the union of the two views | diagnostic | PASS; every emitted cell inside the A-only gate (633/633) | [`evidence/h66cover_not_union.json`](evidence/h66cover_not_union.json) |
+| Format gate (local) | diagnostic | PASS: single-band float32, values exactly {0,1}, 0 NaN, EPSG:32611, shape/transform identical to `data/sample_submission.tif` | [`submission/gems52-h66-covergate-cotrain-633px.json`](submission/gems52-h66-covergate-cotrain-633px.json) |
+
+**HOLDOUT-DTI, all seven arms** (evaluator `gems52-pooled-hide-v1`, α 0.2, β 0.8, 300 m triangular kernel,
+53,186 withheld positives, 95% paired physical-cluster bootstrap,
+153 clusters, 1000 draws; 9,400 dots per arm per fold at 3 px):
+
+| arm | HOLDOUT-DTI | 95% CI |
+|---|---:|---:|
+| h66a_cover_gated_a_only | 0.045745 | [0.031303, 0.062135] |
+| single_A | 0.071954 | [0.056636, 0.088566] |
+| single_B | 0.174517 | [0.152316, 0.196299] |
+| union_max | 0.148981 | [0.128084, 0.169418] |
+| disagreement_pre | 0.033293 | [0.023815, 0.044556] |
+| disagreement_post | 0.031535 | [0.020459, 0.044217] |
+| random | 0.080426 | [0.070223, 0.090973] |
+
+**Verdict: H66cover not promoted.** Experiments used: 3 of 3 (E1 canary+fit+independence, E2 exchange+holdout, E3 build+gates+GeoTIFF). Run card:
+[`evidence/h66cover_run_card.json`](evidence/h66cover_run_card.json). Full note: [`knowledge/44_h66cover`](knowledge/44_h66cover_results_and_limits.md).
+Site: **[download the H66cover GeoTIFF](docs/downloads/h66cover-candidate.tif)** · [ZIP](docs/downloads/h66cover-candidate.zip) ·
+[reasoning CSV](docs/downloads/h66cover-a-only-reasoning.csv) ·
+[executive summary / exact submission steps](docs/h66cover-executive-summary.html) · [landing page](docs/h66cover.html).
+
+- **File:** `gems52-h66-covergate-cotrain-633px.tif` — 58,473 bytes, 633 emitted cells
+  (the frozen A-only gate has 1,657 exact-novel cells, so the template budget
+  37,600 is a cap — IR-H66-013)
+- **SHA-256:** `0ce05c52194a8d234aac98684bee6f96bad9c7c5c5c2f79cf580a5df72707629`
+- **Name (51 characters):** `gems52-h66-covergate-cotrain-633px-20261009T055503Z`
+- **Note (140 characters):** `H66 co-training disagreement, cover-gated A-only (buried-beneath-cover) arm; 3px dots; >200m off catalogue; research only, not slot-approved`
+- **Projection (never a score):** break-even credit density to match the owner-reported 0.2778 at this budget:
+  2.1443 at |G| = 5949.3 and
+  4.4484 at |G| = 12512.1
+  (measured interval [5,949.3, 12,512.1] px). DTI if this arm's holdout density held:
+  0.4707 / 0.2269.
+
+**Leaderboard (PUBLIC BOARD, not ORGANIZER-CONFIRMED).** Live DrivenData board 2026-10-09: top **0.3774**
+(xiaofanhu), 0.3195 is rank 7 (DARD), 0.2778 is rank 13 (extradr19):
+[leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/). The brief's
+"0.3195 is the highest score" is wrong (IR-H65-002, IR-H66-012). ORGANIZER-CONFIRMED: none — no submission-page
+receipt exists for any file in this repository. Competition slots used: **0**.
+
+**Why 0.2778 won, in one paragraph (measured, `knowledge/27`).** The reported-0.2778 file is the
+reported-0.2600 file with 6,436 pixels deleted — every one 100–200 m from a mapped trace — and zero pixels
+added. Because `DTI = T / (0.2·(T+S−M) + 0.8·(|G|−T))`, deleting zero-credit pixels raises the ratio +6.8 %
+without detecting anything new: it is a precision edit, not a better detector. Beating it needs credit
+density above the break-even bar on novel mass, and no instrument in this repository can certify that —
+the hide-and-recover simulator measured Spearman −0.10 against the owner-reported board (R4).
+
+**Still open:** a lane-valid candidate that beats single_B on the holdout (the A-only stratum sits inside the
+H64 raster's 3 px halo, IR-H66-014); the H66-B/C/D hypotheses; the 0.2778 file-to-row receipt; the portal
+error text (IR-H65-007).
+<!--/H66COVER-README-->
 <!--H69-README-->
 # GEMSDOE52 — H69: a unique, lane-feasible GeoTIFF, and the verdict on whether it may be submitted
 
