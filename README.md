@@ -1,3 +1,24 @@
+<!--H76-README-->
+# H76 exploratory result (2026-10-09): DOWNLOAD YES; SUBMIT NO
+
+[Download the **new** H76 research GeoTIFF](docs/downloads/h76-candidate.tif) · [Executive summary / submission steps](docs/h76-executive-summary.html) · [3,000 per-dot geological interpretations](docs/downloads/h76-a-only-reasoning.csv) · [local gate receipt](evidence/h76_exploratory.json).
+
+**Do not upload this file.** The new H76 unsupervised subsurface-high/surface-low *screen* is not co-training: two calibrated sufficient views and segment-buffered pseudo-label exchange were not re-run (prior H74 View-A sufficiency failed). A whole-segment buffered HOLDOUT-DTI comparison and full-census gate have not been measured. No ORGANIZER-CONFIRMED score exists, and no slot was spent. It is distinct from 43 locally accessible `submission/*.tif` rasters (surface max Spearman 0.0364; final max 0.0105; near-dot max 0.4783), **not** certified unique against the entire historical census. It is NOT a union of confident A and B predictions: all 3,000 emitted cells satisfy the proxy A-high/B-low screen; neither proxy is a trained probability. SHA-256 `bd64f0121502488ead1f91cb97530a7e9ae5fce89b9f0afc10a95466e35c98c2`. Local on-disk validator: one float32 band, EPSG:32611, 3730×3292, same transform as pinned sample; 0 NaN, {0,1}, no positive outside valid intersection. Name `h76-gravity-surface-abstention-research-only`; note `H76 exploratory gravity edge with quiet slope; unvalidated, research-only; do not spend competition slot` (not an organizer receipt). See `scripts/run_h76_exploratory.py`.
+
+**Pre-implementation candidates (expected hide-and-recover gain / implementation cost, not score forecasts):**
+
+| Rank | Layers / physical signature | Why unmapped; mimic | Distinct from existing implementation | Gain / cost |
+|---|---|---|---|---|
+| 1 | band 18 isostatic gravity horizontal gradient high, band 19 detrended slope quiet: covered density boundary | Exclude 200 m mapped-fault ring; lithologic/intrusive contact can mimic | Strict geophysical-high/topographic-low *unsupervised screen*, unlike H74 deformation-only trained A2 or H75 surface DVA | uncertain / low |
+| 2 | bands 2, 9 magnetic reduced-to-pole/vertical gradient discordant with band 19 slope | Buried intrusive/fault contact not scarp; magnetite-bearing lithology mimics | Paired magnetic-polarity discontinuity conditioned on B abstention, not H75 variograms | uncertain / medium |
+| 3 | band 15 basement depth curvature + band 13 gravity normal cross-scale phase lag vs bands 12/19 surface | Covered basin-margin step away from mapped traces; sediment compaction mimics | Phase lag rather than R2 signed gradient alignment | uncertain / medium |
+| 4 | band 17 conductivity edge intersecting band 18 gravity edge with B slope quiet | Covered permeable intersection; saline aquifer mimics | Crossing geometry *plus abstention*, not unconditioned conductivity rank | uncertain / high |
+
+All use the pinned mirror of the competition's 19-band feature raster; no new external data. These are hypotheses, not discoveries. Existing `knowledge/07`, `knowledge/65`, `knowledge/66` document other tested transforms and failures. **Top candidate was NOT validated on spatial holdout, so it cannot be promoted.** The prior H75 improvement is HOLDOUT-DTI (gems52-pooled-hide-v1, 53,186 withheld, 95% CI): B_DVA 0.186352 [0.164675, 0.207868] vs single_B 0.174517 [0.152316, 0.196299], but its full-census final-dot near share 0.922 fails the lane rule. Do not infer a leaderboard score from either round.
+
+**Shared-tool irregularity fixed:** `restore_data.py --only` previously printed `ALL_VERIFIED=True` for an unknown filename (zero files processed). It now fails for unknown manifest IDs. The integrity pins establish mirror consistency, not organizer authentication. Primary references: [DrivenData task/format](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/), [organizer reference solution](https://github.com/drivendataorg/gems-prize-reference-solution), [USGS GeoDAWN release](https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and), [Blum–Mitchell DOI](https://doi.org/10.1145/279943.279962). The previously owner-attributed 0.2778 file's measured relationship to the 0.2600 file is analyzed in [knowledge/49](knowledge/49_why_02778_phd_answer.md); no authenticated filename↔score receipt exists, and no evidence warrants predicting a higher public score.
+
+---
 <!--H75-README-->
 # Current status — H75 (2026-10-09): variogram-anisotropy ranker beats single_B on the holdout; lane rule still fails
 
