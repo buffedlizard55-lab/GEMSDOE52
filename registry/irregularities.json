@@ -3665,6 +3665,78 @@
       "how_we_know": "evidence/h93_lane_control.json (this session).",
       "handling": "Logged as duplicate per protocol rule 1; no quota re-placement attempted because (a) the preregistration contains no re-placement amendment and (b) the verdict is already negative on the paired CI [-0.00167, +0.00878] alone.",
       "disposition": "Next round: if a B-family emission is shipped again, preregister quota placement against the full-census informative supports BEFORE the fit (H75 amendment-65a precedent) or reduce budget into the non-halo capacity."
+    },
+    {
+      "id": "IR-H95-001",
+      "round": "H95",
+      "severity": "high",
+      "status": "measured and disclosed",
+      "title": "The H87 raster was published as the current submission with no holdout evaluation; measured now, its emission rule is below random",
+      "what_it_is": "README/site on main presented gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.tif with 'No holdout DTI score yet'. H95 experiment E1 re-implemented the H87 views from scripts/build_h87_cotrain_wavelength.py (sha recorded) and scored them on gems52-pooled-hide-v1.",
+      "how_we_know": "evidence/h95_e1_h87_holdout.json (HOLDOUT-DTI, 53,186 withheld positive px, 1,000 paired cluster-bootstrap draws).",
+      "measured_effect": "h87_disagreement 0.063316 [0.0482, 0.0799] vs random 0.079238; h87_single_A 0.075066, h87_single_B 0.059570, h87_union_max 0.067699.",
+      "handling": "H87 is labelled research-only / do not upload wherever H95 publishes; no promote verdict without a measured holdout (same rule as IR-H89-003).",
+      "disposition": "closed for H87: negative"
+    },
+    {
+      "id": "IR-H95-002",
+      "round": "H95",
+      "severity": "medium",
+      "status": "open - disclosed",
+      "title": "The brief names 0.3195 as the score to beat, but the official leaderboard #1 is 0.3774",
+      "what_it_is": "The session brief says 'the leaderboard high is 0.3774' and also asks to beat 0.3195. On the official leaderboard fetched 2026-10-10, 0.3195 is rank #8 (DARD); #1 is xiaofanhu 0.3774; our best owner-reported score is 0.2778 (#22).",
+      "how_we_know": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/ (fetched 2026-10-10).",
+      "measured_effect": "Both bars are reported; P(Win) is judged against 0.3774 (rank 1) and top-5 prize money against 0.3300 (#4) / 0.3262 (#5).",
+      "handling": "Report both, never conflate.",
+      "disposition": "disclosed"
+    },
+    {
+      "id": "IR-H95-003",
+      "round": "H95",
+      "severity": "medium",
+      "status": "open - instrument limitation",
+      "title": "The off-catalogue SGMC proxy that ranks the board in the right order is dominated by emitted mass",
+      "what_it_is": "Segment-thinned SGMC-off-catalogue truth (|G| 10k) gives Spearman +0.567 vs 13 owner-reported board scores (0.911 excluding a lattice probe), but emitted mass alone gives -0.889, and the lattice probe r13 is an outlier (0.0757).",
+      "how_we_know": "evidence/h95_board_instrument.json (DIAGNOSTIC).",
+      "measured_effect": "Spearman vs board, n=13: catalogue-anchored hide-and-recover -0.49 on this 13-file set; SGMC all -0.539; SGMC off-catalogue unthinned +0.162; segment-thinned |G| 10k +0.567; emitted mass alone -0.889.",
+      "handling": "Used only to choose between two pre-registered budgets (frozen rule); never reported as a score and never used for promotion.",
+      "disposition": "kept as diagnostic"
+    },
+    {
+      "id": "IR-H95-004",
+      "round": "H95",
+      "severity": "low",
+      "status": "deviation - more conservative",
+      "title": "Lane/uniqueness roots widened beyond the frozen preregistration list",
+      "what_it_is": "registry/h95_preregistration.json lists data/scored, data/reference, submission/, docs/downloads/. The gates stage also scans work/h95/priors, the 526-blob sibling-repository census restored by scripts/fetch_prior_inventory.py via api.github.com.",
+      "how_we_know": "scripts/run_h95.py stage_gates; work/h95/prior_fetch_receipt.json.",
+      "measured_effect": "More priors can only make the uniqueness and lane gates harder to pass.",
+      "handling": "Disclosed in the run card 'deviations'.",
+      "disposition": "accepted"
+    },
+    {
+      "id": "IR-H95-005",
+      "round": "H95",
+      "severity": "medium",
+      "status": "resolved by rename",
+      "title": "Round identifier collision: this round ran as H88, but main acquired H88-H94 from parallel sessions before merge",
+      "what_it_is": "The session froze its protocol as H88 (registry + knowledge doc). Between branch creation (bc26fe2) and merge, main merged PR #89 (H89, H78) and later PRs carrying H88, H89-H92, H93 and H94. A second fetch at publish time showed main already holds a different H88 round (cotrain-strict-AB).",
+      "how_we_know": "git fetch origin main; git ls-tree origin/main shows evidence/h88_run_card.json, knowledge/80_h88_preregistered.md, docs/downloads/h88-candidate.tif from another session.",
+      "measured_effect": "Identifier-only rename H88 -> H95 (next free). The frozen preregistration keeps its bytes (knowledge/93_hypotheses_H95_preregistered_frozen_as_H88.md; SHA-256 pin still matches registry/h95_preregistration.json 'frozen_under_label': 'H88'). Hypothesis ids inside it (H88-1..H88-5) map to H95-1..H95-5. No file of the other H88 round was touched.",
+      "handling": "Rename, fast-forward to main, then insert H95 blocks idempotently.",
+      "disposition": "resolved"
+    },
+    {
+      "id": "IR-H95-006",
+      "round": "H95",
+      "severity": "high",
+      "status": "measured - lane duplicate, verdict stays SUBMIT NO",
+      "title": "The H95 raster is a lane near-duplicate of the parallel H93 raster that reached main one minute after our build",
+      "what_it_is": "H95 built its file at 22:35:22Z; the other session's gems52-h93-abs-cotrain-37654px-20261010T223629Z-zeros.tif (View B + four basement-step channels, same shared H61 View B learner) was written at 22:36:29Z and merged to main while the H95 gates ran. Both fields sit close to the shared single-view-B stitched field (H95 cotrain_B is statistically equal to single_B: paired delta CI spans 0).",
+      "how_we_know": "scripts/h95_supplemental_closure.py -> evidence/h95_gates.json 'supplemental_closure_after_merge' (shared gems52.gates.lane_report, unmodified).",
+      "measured_effect": "0.8048 of H95 dots lie within 3 px of the H93 file's dots while that file's 3 px halo covers only 0.1435 of the footprint (about 5.6x chance); not identical (Jaccard 0.0999).",
+      "handling": "Per the brief's lane rule (>70% within 3 px of one registry raster) this is a duplicate: stop. Combined with the failed holdout gate the H95 file is research-only.",
+      "disposition": "SUBMIT NO; future rounds should not re-run the shared H61 View B learner with minor channel additions."
     }
   ],
   "merge_note": "Merged registry/irregularities.json: main's entries (including the parallel H66 round's IR-H66-001..010) plus this round's IR-H67-001..011. This round was labelled H66 in its own receipts and was renamed H67 before merge because main merged a different H66 first (PR #56); the IDs were renumbered wholesale so no ID carries two meanings. See knowledge/45a_amendment_2026-10-09_H67_rename.md. IR-H67-002 (in-domain nodata sentinels collapse every rank channel) and IR-H67-008 (probe classification flips with the structuring element, and this round's lane verdict depends on it) are the two that change a result; IR-H67-005 and IR-H67-007 change how a shared instrument must be read. | H77cond merge: this round was executed as H74 and renamed to H77cond before merge because a parallel session merged a different H74 first (PR #72) and a third took H75; see IR-H77cond-001. The rename is identifier-only and the preregistration's pinned SHA-256 still validates. IR-H77cond-002 records a shared-tool repair to scripts/check_site.py surfaced by that merge. IR-H77cond-003 records that filename, receipt and git dating are all individually unsound in this repository, and that the duplicate guard was therefore made dating-independent. | H82 merge (2026-10-09): union of both entry sets by id; 8 H82 entries added (IR-H82-001..IR-H82-008); no existing entry was edited or removed. | H89 merge: IR-H89-001..006 appended; main entries kept verbatim; no id reused. Merged origin/main again (PR #99 round, IR-H93-001..004 and any other entries not in this branch); IDs kept as written by each round."
