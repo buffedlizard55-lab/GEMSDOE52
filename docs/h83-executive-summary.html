@@ -1,0 +1,42 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Four clicks: download the GeoTIFF, open the DrivenData New submission form, paste the note, submit. The file contract and the three failure modes."><title>How to submit to the DOE GEMS competition - H83</title><link rel="stylesheet" href="assets/ctd5.css"></head><body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a><a href="index.html">Current round</a><a href="h83.html">H83 result</a><a href="h83-executive-summary.html">How to submit</a><a href="validator.html">Check a file</a><a href="h83-hypotheses.html">Hypotheses</a><a href="h83-sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header><main id="main">
+<section><h1>How to submit &mdash; four clicks</h1>
+<div class="notice" role="note" style="border:2px solid #f0c4bf;background:#fdecea"><strong style="color:#b3261e">Verdict: NEGATIVE</strong><p><b>OK to download?</b> YES — safe to download and inspect</p><p><b>OK to submit to DrivenData?</b> NO — research artefact only; do not spend a weekly slot</p><p class="small">paired CI lower bound against single_B on gems52-pooled-hide-v1 is -0.161887; the frozen rule requires &gt; 0</p></div>
+<ol>
+<li><b>Download the file.</b> <a class="button" href="downloads/h83-candidate.tif" download>h83-candidate.tif &#8595;</a>
+    &nbsp;or the <a href="downloads/h83-candidate.zip">single-TIFF ZIP</a>. Both contain exactly one
+    GeoTIFF, which is what the form accepts.</li>
+<li><b>Open the submission form.</b> <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/" rel="noopener">DrivenData &rarr; competition 306
+    &rarr; Submit</a> (login required). Choose <i>File to submit</i> and pick the downloaded file.</li>
+<li><b>Paste the note</b> into the optional <i>Note</i> box so you can tell this submission apart later:
+    <br><code style="display:inline-block;margin:.4rem 0;padding:.4rem .6rem;background:#f2f4f7">H83 cotrain: geophysical vs surface disagreement, off-catalogue instrument, E3, 37654 dots 3px, &gt;200m off catalogue; research-only</code>
+    <br><span class="small">130/140 characters. The submission name the exporter
+    registers is <code>h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z</code>.</span></li>
+<li><b>Submit</b>, then compare the portal's reported score against the SHA-256 on this page
+    (<code>de580306e2cb6460fced1b745d1d40ff9735fb5497d493a56cca7630ad2a0ef7</code>) so you know exactly which bytes were scored.</li>
+</ol>
+</section><hr class="divider">
+
+<section><h2>The file contract, measured from the bytes</h2>
+<div class="table-wrap"><table><thead><tr><th>Rule</th><th>This file</th><th>Status</th></tr></thead><tbody><tr><td>Single-band GeoTIFF (or a ZIP with exactly one)</td><td>1 band, ZIP holds 1 member</td><td>PASS</td></tr><tr><td>Values in [0, 1]</td><td>min 0.0, max 1.0</td><td>PASS</td></tr><tr><td>CRS</td><td>EPSG:32611</td><td>PASS</td></tr><tr><td>Shape</td><td>3730 &times; 3292</td><td>PASS</td></tr><tr><td>Geotransform matches the submission format</td><td>[100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0]</td><td>PASS</td></tr><tr><td>Resolution</td><td>100 m (pinned by the rules page)</td><td>PASS</td></tr><tr><td>Finite everywhere (no NaN, no &plusmn;inf)</td><td>0 NaN, 0 infinite &mdash; zeros outside the footprint</td><td>PASS</td></tr><tr><td>Mass outside the submission footprint</td><td>0</td><td>PASS</td></tr></tbody></table></div>
+<p class="small">Verified by re-reading the written file with <code>rasterio</code> in
+<code>gems52.gates.format_report</code>; the exporter fails closed if any check fails, so a
+non-conforming file cannot be produced. You can also decode it yourself in the browser with
+<a href="validator.html">the checker</a>.</p></section><hr class="divider">
+
+<section><h2>The three failure modes the form reports</h2>
+<div class="table-wrap"><table><thead><tr><th>Message you may see</th><th>What it means</th><th>This file</th></tr></thead><tbody><tr><td>"Predicted values must be in range [0, 1]"</td><td>A finite value outside [0,1], or a NaN/&plusmn;inf that the portal's reader did not treat as nodata.</td><td><b>Cannot happen.</b> Every finite value is 0 or 1 and there is no non-finite pixel: the exporter writes zeros outside the footprint rather than NaN, so a reader that ignores the nodata declaration still sees a legal number. A NaN-outside twin is provided below for anyone who prefers byte-structural parity with sample_submission.tif.</td></tr><tr><td>"must match the submission format&rsquo;s CRS, shape, and geotransform"</td><td>Grid metadata drifted.</td><td><b>Cannot happen.</b> The affine is asserted against the pinned six numbers before the write, and re-read from the file afterwards.</td></tr><tr><td>"You can submit a single-band GeoTIFF (.tif) file, or a .zip file containing a single GeoTIFF"</td><td>More than one TIFF in the ZIP.</td><td><b>Cannot happen.</b> The ZIP is rewritten and round-tripped: it must contain exactly one member whose bytes equal the TIFF's.</td></tr></tbody></table></div>
+<p class="small"><b>The NaN-outside twin</b>
+(<a href="downloads/h83-candidate-template-nan.tif" download>h83-candidate-template-nan.tif</a>,
+SHA-256 <code>dee4ee5ee364ae2dae4b684e9f35cbf0a07216b75f13369630bc24cc5d65efd2</code>) is byte-structurally identical to the organiser's
+own <code>sample_submission.tif</code> container (stripped, LZW, <code>nodata=nan</code>). Both
+variants have scored in this project family; the all-finite file is the recommended one only because
+it cannot fail a literal <code>[0,1]</code> range test under any reader. Upload <b>one</b> of them,
+never both.</p></section><hr class="divider">
+
+<section><h2>Should you submit this one?</h2>
+<p>paired CI lower bound against single_B on gems52-pooled-hide-v1 is -0.161887; the frozen rule requires &gt; 0. Promotion to a real weekly slot is a separate selector step, within the weekly cap shown
+on the submission page; this round spent <b>0</b> slots.</p>
+<p class="small">Sources and verification status: <a href="h83-sources.html">h83-sources.html</a>.
+Rules page: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/" rel="noopener">competition 306, page 967</a>. Data page:
+<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/" rel="noopener">competition 306, data</a>.</p></section>
+</main></body></html>

@@ -68,6 +68,10 @@ def main() -> int:
         f"{f(r['view_B']['heldout_region_auc'], 4)} | {f(r['view_A']['offcatalogue_auc'], 4)} | "
         f"{f(r['view_B']['offcatalogue_auc'], 4)} |\n" for r in fit["folds"])
 
+    comp_rows = "".join(
+        f"| {k} | {v:,} | {100.0 * card['emission']['share_of_emission'][k]:.2f}% |\n"
+        for k, v in sorted(card["emission"]["emitted_by_class"].items(), key=lambda kv: -kv[1]))
+
     readme = f"""{R_START}
 # Current status — H83 (2026-10-10): co-training on two instruments — the mandated hide-and-recover and a new off-catalogue one
 
@@ -84,13 +88,35 @@ def main() -> int:
 - **File:** `submission/{rec['file']}` — {int(rec['bytes']):,} bytes, SHA-256 `{rec['sha256']}`
 - **Submission name:** `{rec['submission_name']}`
 - **Note ({rec['note_chars']}/140):** `{rec['note']}`
-- **Validator (re-read from disk):** {val['bands']} band {val['dtype']}, {val['crs']}, {val['height']}×{val['width']},
-  transform matches the organiser template, min {val['min']} / max {val['max']}, {val['finite_pixels']:,} finite pixels,
-  {sub['placed']:,} emitted cells. **PASS.**
+- **Validator (re-read from disk):** {val['bands']} band {val['dtype']}, {val['crs']}, {val['height']}×{val['width']}, transform matches the organiser template, min {val['min']} / max {val['max']}, {val['nan_pixels']:,} NaN / {val['infinity_pixels']:,} infinite, {val['n_nonzero']:,} positive pixels, {sub['placed']:,} emitted cells. **PASS.**
 - **A NaN-outside twin** byte-structurally identical to `sample_submission.tif`
   (`submission/{sub['twin']['file']}`, SHA-256 `{sub['twin']['sha256']}`) is published as
   `docs/downloads/h83-candidate-template-nan.tif`. Upload **one**, never both. The all-finite file is
   recommended only because it cannot fail a literal `[0,1]` range test under any reader.
+
+## What the shipped raster is actually made of
+
+The pseudo-label branch produced **{int(card['exchange']['total_pseudo_pixels']):,}** whole-segment
+pixels before the density fill — **{int(card['exchange']['pixels_a_to_b']):,}** A→B (*A* confident,
+*B* abstains ⇒ candidate buried structure) and **{int(card['exchange']['pixels_b_to_a']):,}** B→A
+(*B* confident, *A* abstains ⇒ suspect surface artefact) — which is
+**{100.0 * card['exchange']['total_pseudo_pixels'] / max(int(sub['placed']), 1):.1f}%** of the
+{int(sub['placed']):,} emitted cells. Re-scoring every emitted cell against the **same** out-of-fold
+ranks at the **same** preregistered thresholds (donor rank ≥ {card['emission'].get('donor_rank_min', 0.98):.2f},
+receiver rank in [{card['emission']['receiver_rank_interval'][0]:.2f}, {card['emission']['receiver_rank_interval'][1]:.2f}])
+splits the shipped raster as:
+
+| Class (measured on both views' out-of-fold ranks) | Cells | Share |
+|---|---|---|
+{comp_rows}
+Read that table before reading the download button. **{int(card['emission']['a_only_cells'])}** emitted
+cell sits in the discovery branch this lane exists to test. **{int(card['emission']['b_only_cells']):,}**
+sit in the branch the lane says to *distrust* (surface artefact). The remaining
+**{int(card['emission']['emitted_by_class'].get('neither view confident at the preregistered thresholds', 0)):,}**
+(**{100.0 * card['emission']['share_of_emission'].get('neither view confident at the preregistered thresholds', 0.0):.1f}%**)
+are in the raster because the 3 px lattice has to be filled to the {int(sub['placed']):,}-pixel budget,
+not because either view selected them. That is a measured result of this round and it is why the
+verdict is **{card['verdict']}** and why no slot was spent.
 
 ## What is new this round
 
@@ -142,9 +168,15 @@ Leakage canary: max single-channel direction-insensitive AUC **{f(can['max_alarm
 
 - Lane, surface: literal **{lane['surface']['literal']}** / policy **{lane['surface']['policy']}**;
   max Spearman **{f(lane['surface']['max_spearman'], 4)}** (bar 0.90).
-- Lane, dots: literal **{lane['dots']['literal']}** / policy **{lane['dots']['policy']}**;
-  max share within 3 px of one prior's dots **{f(lane['dots']['max_near_share'], 4)}** (bar 0.70).
-- Registry: {lane['registry']['n_priors']} rasters ({lane['registry']['n_scored']} scored-only).
+- Lane, dots, full census: literal **{lane['dots']['literal']}** (max near-3px share
+  {f(lane['dots']['max_near_3px_fraction'], 4)}) / informative-prior policy **{lane['dots']['policy']}**
+  ({f(lane['dots']['policy_max_near_3px_fraction'], 4)}) — bar 0.70 in both readings.
+- Lane, scored-only registry of {lane['scored_only']['n_priors']} rasters that the organiser actually
+  scored: surface **{lane['scored_only']['surface']['literal']}** at &rho; {f(lane['scored_only']['surface']['max_spearman'], 4)};
+  dots policy **{lane['scored_only']['dots']['policy']}** at {f(lane['scored_only']['dots']['policy_max_near_share'], 4)}.
+  The literal full-census dots rule is unsatisfiable for any nonempty raster because the census
+  contains {lane['dots']['probes']} universal-coverage lattice probes; a restricted PASS never waives it.
+- Registry searched: {lane['registry']['n_priors']} rasters; identical to no prior's decoded pattern.
 - Not merely the union of the two views: **{sub['not_union']['verdict']}**; Jaccard with the union
   placement {f(sub['not_union']['jaccard_with_union_max'], 4)}.
 
@@ -197,7 +229,8 @@ What is now settled and must not be re-litigated:
   passes (max |ρ| {f(ind['pre']['max_abs_correlation'], 4)}), so the brief does not require
   abandonment — but independence without sufficiency still gives co-training nothing to donate, and
   the exchange moved A's OOF AUC by at most
-  {f(max(abs(r['directions']['refit_A']['heldout_region_auc'] - r['view_A']['heldout_region_auc']) for r in ex['folds']), 4)}.
+  {f(max(abs(e['directions']['refit_A']['heldout_region_auc'] - r['view_A']['heldout_region_auc'])
+         for e, r in zip(ex['folds'], fit['folds'])), 4)}.
 - **Both packaging variants are format-valid.** The all-finite zeros-outside file is what the site
   recommends because it cannot fail a literal `[0,1]` range test; the NaN-outside twin matches the
   organiser template byte-structurally. Do not add a third variant (IR-H77-004 stands for "no new

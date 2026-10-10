@@ -33,6 +33,7 @@ DAD = DOCS / "data"
 DOWN = DOCS / "downloads"
 SUBM = ROOT / "submission"
 REG = ROOT / "registry"
+SAMPLE = ROOT / "data/sample_submission.tif"
 
 PROBLEM_URL = "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/"
 SUBMIT_URL = "https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/"
@@ -153,7 +154,10 @@ def main() -> int:
     # ---------------------------------------------------------------- per-cell geological reasoning
     csv_name = f"{Path(rec['file']).stem}-a-only-reasoning.csv"
     csv_path = DOWN / csv_name
-    n_rows = write_reasoning(csv_path, rec["file"], card)
+    n_rows, comp = write_reasoning(csv_path, rec["file"], card)
+    (DOCS / "data").mkdir(parents=True, exist_ok=True)
+    (DOCS / "data/h83_emission_composition.json").write_text(json.dumps(comp, indent=1))
+    (ROOT / "evidence/h83_emission_composition.json").write_text(json.dumps(comp, indent=1))
 
     # ---------------------------------------------------------------- downloads
     DOWN.mkdir(parents=True, exist_ok=True)
@@ -165,6 +169,14 @@ def main() -> int:
     (DOWN / csv_name).write_bytes(csv_path.read_bytes()) if csv_path.exists() else None
 
     dl_bytes = (DOWN / "h83-candidate.tif").stat().st_size if (DOWN / "h83-candidate.tif").exists() else 0
+
+    comp_rows = "\n".join(
+        f"<tr><td>{esc(k)}</td><td class='num'>{i(v)}</td>"
+        f"<td class='num'>{float(100.0 * v / max(n_rows, 1)):.2f}%</td></tr>"
+        for k, v in sorted(comp["emitted_by_class"].items(), key=lambda kv: -kv[1]))
+    comp_table = ("<table><thead><tr><th>class (measured on both views' out-of-fold ranks)</th>"
+                  "<th>cells</th><th>share of emission</th></tr></thead><tbody>"
+                  + comp_rows + "</tbody></table>")
 
     # ---------------------------------------------------------------- index.html
     legacy = legacy_index_body(DOCS / "index.html")
@@ -186,7 +198,7 @@ does not have</b> &mdash; which is the population the leaderboard actually rewar
 <a class="button secondary" href="validator.html">Check any file in your browser</a></div>
 <p class="fileline">{esc(rec["file"])}<br>{i(dl_bytes)} bytes &middot; SHA-256 <code>{esc(sha)}</code> &middot;
 {i(n_dots)} emitted cells &middot; values exactly {{0,1}} &middot; EPSG:32611 &middot; 3730&times;3292 px at 100 m &middot;
-{esc(val["dtype"])} &middot; {esc(val["crs"])}</p>
+{esc(val["dtype"])} &middot; {esc(val["crs"])} &middot; {esc(val["nan_pixels"])} NaN</p>
 <p class="small">Submission name: <code>{esc(rec["submission_name"])}</code><br>
 Submission note ({rec["note_chars"]}/140 characters): <code>{esc(rec["note"])}</code></p>
 </div></section>
@@ -263,19 +275,49 @@ alarm bar {esc(reg["thresholds"]["canary_auc_alarm"])} &rarr; <b>no alarm</b>.</
 {table(["Gate", "Result"], [
   ["Format gate &mdash; single band, float32, EPSG:32611, pinned shape and transform, finite values in [0,1], no mass outside the footprint",
    "PASS" if val.get("ok") else "CHECK RECEIPT"],
-  ["Values exactly {0,1}", f'{esc(val.get("unique_values"))} distinct finite values'],
+  ["Values exactly {0,1}", f'min {esc(val["min"])}, max {esc(val["max"])}, '
+   f'{i(val["n_nonzero"])} positive pixels', "PASS"],
   ["Leakage canary (bar 0.90)", f'{f6(can["max_alarm_across_folds"])} &mdash; NO ALARM'],
   ["Independence (bar 0.60 max |&rho;|)", f'{esc(ind["pre"]["max_abs_correlation"])} &mdash; exchange allowed'],
   ["Lane, surface, literal full census", esc(lane["surface"]["literal"])],
   ["Lane, surface, informative-prior policy", esc(lane["surface"]["policy"])],
   ["Lane, dots, literal full census", esc(lane["dots"]["literal"])],
   ["Lane, dots, informative-prior policy", esc(lane["dots"]["policy"])],
-  ["Max Spearman against any registry raster (bar 0.90)", esc(lane["surface"]["max_spearman"])],
-  ["Max share of dots within 3 px of one registry raster's dots (bar 0.70)", esc(lane["dots"]["max_near_share"])],
+  ["Max Spearman against any registry raster (bar 0.90)", f6(lane["surface"]["max_spearman"])],
+  ["Max share of dots within 3 px of one registry raster's dots, literal (bar 0.70)",
+   f'{f6(lane["dots"]["max_near_3px_fraction"])} &mdash; {esc(lane["dots"]["literal"])}'],
+  ["Same, informative-prior policy (probes excluded)",
+   f'{f6(lane["dots"]["policy_max_near_3px_fraction"])} &mdash; {esc(lane["dots"]["policy"])}'],
+  ["Scored-only registry (13 rasters that the organiser actually scored)",
+   f'surface {esc(lane["scored_only"]["surface"]["literal"])} at &rho; '
+   f'{f6(lane["scored_only"]["surface"]["max_spearman"])}; dots policy '
+   f'{esc(lane["scored_only"]["dots"]["policy"])} at '
+   f'{f6(lane["scored_only"]["dots"]["policy_max_near_share"])}'],
+  ["Identical to any prior's decoded pattern", "no" if not lane["dots"]["identical_to_a_prior"] else "YES"],
   ["Not merely the union of the two views", esc(sub["not_union"]["verdict"])],
   ["Slots spent by this round", "0 &mdash; promotion is a separate selector step"],
 ])}
 <p class="small">Local validator only &mdash; this is <b>not</b> an organiser acceptance receipt.</p></section>
+<hr class="divider">
+
+<section><h2>What the emitted set is actually made of</h2>
+<p>The pseudo-label branch produced {i(ex['total_pseudo_pixels'])} whole-segment pixels in total
+({i(comp['exchange']['A->B'])} A&rarr;B, i.e. A confident and B abstaining &rarr; candidate buried
+structure; {i(comp['exchange']['B->A'])} B&rarr;A, i.e. B confident and A abstaining &rarr; suspect
+surface artefact). That is {float(100.0 * ex['total_pseudo_pixels'] / max(n_dots, 1)):.1f}% of the
+{i(n_dots)} emitted pixels. Re-scoring every emitted cell against the <i>same</i> out-of-fold ranks
+and the <i>same</i> preregistered thresholds (donor &ge; {float(comp['donor_rank_min']):.2f}, receiver in
+[{float(comp['receiver_rank_interval'][0]):.2f}, {float(comp['receiver_rank_interval'][1]):.2f}]) splits the
+final raster like this:</p>
+{comp_table}
+<p class="small">Read that table before reading the download button. Only
+{i(comp['emitted_by_class'].get('A-only: A confident, B abstains (candidate buried structure)', 0))}
+emitted cell(s) sit in the discovery branch this lane exists to test &mdash; the one that would be
+A-confident and B-abstaining. The bulk of the emission is the 3&nbsp;px lattice needing to be filled
+to the {i(n_dots)} pixel budget, and {i(comp['emitted_by_class'].get('B-only: B confident, A abstains (suspect surface artefact)', 0))}
+cells sit in the branch the lane says to <i>distrust</i>. That is a measured result of this round,
+not a defect in the CSV: it is why the verdict is <b>{esc(verdict)}</b> and why no slot was spent.</p>
+</section>
 <hr class="divider">
 
 <section><h2>Per-cell geological reasoning</h2>
@@ -360,7 +402,9 @@ positives; OFFCAT-DTI is <code>gems52-offcatalogue-v1</code> with
   ["Shape", f'{esc(val["height"])} &times; {esc(val["width"])}', "PASS"],
   ["Geotransform matches the submission format", esc(val["transform"]), "PASS"],
   ["Resolution", "100 m (pinned by the rules page)", "PASS"],
-  ["Finite everywhere inside the footprint", f'{esc(val["finite_pixels"])} finite pixels', "PASS"],
+  ["Finite everywhere (no NaN, no &plusmn;inf)", f'{esc(val["nan_pixels"])} NaN, '
+   f'{esc(val["infinity_pixels"])} infinite &mdash; zeros outside the footprint', "PASS"],
+  ["Mass outside the submission footprint", esc(val["mass_outside_footprint"]), "PASS"],
 ])}
 <p class="small">Verified by re-reading the written file with <code>rasterio</code> in
 <code>gems52.gates.format_report</code>; the exporter fails closed if any check fails, so a
@@ -540,7 +584,8 @@ claim a leaderboard gain. Sources and verification status:
         downloads=["docs/downloads/h83-candidate.tif", "docs/downloads/h83-candidate.zip",
                    f"docs/downloads/{csv_name}"],
         verdict=verdict, submit_ok=sb_ok, sha256=sha, name=rec["submission_name"],
-        note_chars=rec["note_chars"], reasoning_rows=n_rows), indent=1))
+        note_chars=rec["note_chars"], reasoning_rows=n_rows,
+        composition=comp["emitted_by_class"]), indent=1))
     return 0
 
 
@@ -558,13 +603,26 @@ REASON_BANDS = {
 }
 
 
-def write_reasoning(path: Path, tif_name: str, card: dict) -> int:
-    """One measured row per emitted cell; the A-confident/B-abstaining cells get the full sentence."""
+def write_reasoning(path: Path, tif_name: str, card: dict):
+    """One measured row per emitted cell, classified by the two views' own out-of-fold ranks.
+
+    The classification uses the *preregistered* confidence/abstention thresholds
+    (donor rank >= 0.98, receiver rank in [0.35, 0.65]), not a proxy distance, so a cell is called
+    "A-only" only when View A is confident and View B genuinely abstains.  Every row carries the
+    measured channel values and, for the disagreement classes, a plain-English sentence naming what
+    a buried fault would look like here and what else could produce the same numbers.
+    """
     import numpy as np
     import rasterio
     from scipy import ndimage as ndi
+    from scipy.stats import rankdata
 
     from gems52 import structural
+
+    reg = json.loads((REG / "h83_preregistration.json").read_text())
+    th = reg["thresholds"]
+    donor_min = float(th["donor_rank_min"])
+    lo, hi = (float(v) for v in th["receiver_rank_interval"])
 
     store = structural.FeatureStore(ROOT / "work/r2/features")
     with rasterio.open(SUBM / tif_name) as ds:
@@ -574,8 +632,35 @@ def write_reasoning(path: Path, tif_name: str, card: dict) -> int:
         cat = ds.read(1) == 1
     with rasterio.open(ROOT / "data/external/derived_sgmc_faults_100m_u8.tif") as ds:
         sgmc = ds.read(1) > 0
+    with rasterio.open(SAMPLE) as ref:
+        s0 = ref.read(1)
+    sub_finite = np.isfinite(s0) & (s0 > -1e38)
+    del s0
     catd = ndi.distance_transform_edt(~cat, sampling=100.0)
     sgcmd = ndi.distance_transform_edt(~sgmc, sampling=100.0)
+    allowed = store.valid & sub_finite & ~cat & (catd > float(th["catalogue_exclusion_m"]))
+
+    # ---- out-of-fold rank of each view, the same way the emission ranked them
+    shape = store.valid.shape
+    flat, inv = store.flat_idx, store.inverse
+    from gems52 import spatial as _sp
+    folds = list(_sp.folds(cat, store.valid, buffer_px=int(th["buffer_px"])))
+    WORK = ROOT / "work/h83"
+    rank = {}
+    for v in ("A", "B"):
+        mos = np.full(int(np.prod(shape)), np.nan, np.float32)
+        for fold in folds:
+            rows = inv[np.flatnonzero(fold["region"].ravel())]
+            rows = rows[rows >= 0]
+            p = np.load(WORK / f"pred_post_{v}_f{fold['fold']}.npy")
+            mos[np.flatnonzero(fold["region"].ravel())] = p[rows]
+        g = mos.reshape(shape)
+        r = np.zeros(shape, np.float32)
+        idx = np.flatnonzero(allowed.ravel())
+        r.ravel()[idx] = ((rankdata(g.ravel()[idx], method="average") - 0.5) / float(idx.size)
+                          ).astype(np.float32)
+        rank[v] = r
+        del mos, g
 
     ys, xs = np.nonzero(emit)
     grids = {}
@@ -585,58 +670,96 @@ def write_reasoning(path: Path, tif_name: str, card: dict) -> int:
         except Exception:
             grids[label] = None
     try:
-        lidar = store.feature_grid("X_lidar_scarp_max")
+        ratio = store.feature_grid("X_rad_ThK_rank")
     except Exception:
-        lidar = None
+        ratio = None
 
     rows = 0
+    tally: dict = {}
     path.parent.mkdir(parents=True, exist_ok=True)
     with open(path, "w", newline="") as fh:
         w = csv.writer(fh)
         w.writerow(["row", "col", "easting_m", "northing_m",
                     "dist_to_mapped_catalogue_m", "dist_to_nearest_sgmc_fault_m",
-                    "depth_to_basement_surface_m", "surface_conductivity",
-                    "isostatic_gravity_anomaly", "rtp_magnetics", "tmi",
-                    "geodetic_second_invariant", "distance_to_earthquake_m",
-                    "earthquake_density", "radiometric_total_count", "lidar_scarp_max",
-                    "classification", "geological_reasoning"])
+                    "view_A_oof_rank", "view_B_oof_rank", "classification"] +
+                   list(REASON_BANDS) + ["radiometric_Th_over_K_ratio", "geological_reasoning"])
         for y, x in zip(ys, xs):
+            ra, rb = float(rank["A"][y, x]), float(rank["B"][y, x])
+            if ra >= donor_min and lo <= rb <= hi:
+                klass = "A-only: A confident, B abstains (candidate buried structure)"
+            elif rb >= donor_min and lo <= ra <= hi:
+                klass = "B-only: B confident, A abstains (suspect surface artefact)"
+            elif ra >= donor_min and rb >= donor_min:
+                klass = "consensus: both views confident"
+            else:
+                klass = "neither view confident at the preregistered thresholds"
             vals = {}
             for label, g in grids.items():
                 v = g[y, x] if g is not None else float("nan")
                 vals[label] = float(v) if v is not None and np.isfinite(v) else ""
-            lv = float(lidar[y, x]) if lidar is not None else float("nan")
+            rv = float(ratio[y, x]) if ratio is not None else float("nan")
             ex, ny = tr * (float(x) + 0.5, float(y) + 0.5)
             dc, ds_ = float(catd[y, x]), float(sgcmd[y, x])
             depth = vals.get("depth_to_basement_surface_m", "")
             finite_depth = isinstance(depth, float)
             thin = finite_depth and depth < 300.0
-            klass = ("A-confident / B-abstaining (candidate buried structure)"
-                     if ds_ < 400.0 or thin else "emitted by the selected field")
-            if klass.startswith("A-confident"):
+            if klass.startswith("A-only"):
                 reason = (
-                    f"The subsurface view is confident here and the surface view is not, which is the "
-                    f"pattern a fault buried beneath cover produces. Measured at this cell: depth to "
+                    f"View A (potential-field/subsurface) ranks this cell in its top "
+                    f"{100*(1-ra):.1f}% while View B (surface DEM curvature, slope and radiometrics) "
+                    f"sits at percentile {100*rb:.0f}, i.e. the surface view abstains. That is the "
+                    f"pattern a fault buried beneath cover produces. Measured here: depth to "
                     f"basement surface {depth if finite_depth else 'n/a'} m"
-                    f"{' (thin cover, so a bedrock fault could plausibly reach within the 300 m kernel)' if thin else ' (deeper cover)'}"
+                    f"{' (thin cover, so a bedrock fault could plausibly lie within the 300 m kernel)' if thin else ' (deeper cover; a bedrock fault here would be further from the surface)'}"
                     f"; isostatic gravity anomaly {vals.get('isostatic_gravity_anomaly', 'n/a')}; "
                     f"RTP magnetics {vals.get('rtp_magnetics', 'n/a')}; geodetic second invariant "
                     f"{vals.get('geodetic_second_invariant', 'n/a')}; nearest mapped catalogue trace "
-                    f"{dc:.0f} m away; nearest SGMC trace {ds_:.0f} m away. "
-                    f"What else could produce the same numbers: a lithologic contact or a basin-fill "
-                    f"thickness change makes an identical gravity and conductivity step with no fault, "
-                    f"and the airborne grids carry flight-line seams that mimic lineaments. "
-                    f"Radiometric total count at this cell is {vals.get('radiometric_total_count', 'n/a')}, "
-                    f"which would be anomalous along an alteration halo but is also raised by "
-                    f"lithology alone.")
+                    f"{dc:.0f} m away; nearest SGMC trace {ds_:.0f} m away. What else could produce "
+                    f"the same numbers: a lithologic contact or a basin-fill thickness change makes "
+                    f"an identical gravity and conductivity step with no fault at all, and the "
+                    f"airborne grids carry flight-line seams that mimic lineaments. Radiometric "
+                    f"total count here is {vals.get('radiometric_total_count', 'n/a')}, which would "
+                    f"be anomalous along an alteration halo but is also raised by lithology alone.")
+            elif klass.startswith("B-only"):
+                reason = (
+                    f"View B (surface) ranks this cell in its top {100*(1-rb):.1f}% while View A "
+                    f"sits at percentile {100*ra:.0f}. Under the lane's rule this is the branch to "
+                    f"suspect a surface artefact rather than a buried fault: roads, canal banks, "
+                    f"fence lines, irrigation ditches and erosion lines all make a DEM curvature and "
+                    f"slope signature indistinguishable from a small scarp, and none of them has a "
+                    f"density or magnetic expression. Measured here: distance to the nearest mapped "
+                    f"catalogue trace {dc:.0f} m; radiometric total count "
+                    f"{vals.get('radiometric_total_count', 'n/a')}; Th/K ratio "
+                    f"{f'{rv:.4f}' if np.isfinite(rv) else 'n/a'}. It is emitted because the field "
+                    f"selected it, not because the two views agree.")
+            elif klass.startswith("consensus"):
+                reason = ("Both views are confident here (top 2% on each). This is the agreement "
+                          "branch, not the discovery branch: it is where a well-exposed fault with "
+                          "both a scarp and a density/magnetic expression would sit.")
             else:
-                reason = ("Emitted by the selected field; the two views do not show the "
-                          "confident/abstaining disagreement that would mark a buried candidate.")
-            w.writerow([int(y), int(x), f"{ex:.1f}", f"{ny:.1f}", f"{dc:.1f}", f"{ds_:.1f}"] +
+                reason = ("Neither view reaches the preregistered confidence threshold at this "
+                          "cell; it is emitted by the placement because the budget had to be filled "
+                          "at 3 px spacing, not because either view singled it out.")
+            w.writerow([int(y), int(x), f"{ex:.1f}", f"{ny:.1f}", f"{dc:.1f}", f"{ds_:.1f}",
+                        f"{ra:.6f}", f"{rb:.6f}", klass] +
                        [vals.get(k, "") for k in REASON_BANDS] +
-                       [(f"{lv:.4f}" if np.isfinite(lv) else ""), klass, reason])
+                       [(f"{rv:.4f}" if np.isfinite(rv) else ""), reason])
             rows += 1
-    return rows
+            tally[klass] = tally.get(klass, 0) + 1
+    ex = ROOT / "evidence/h83_pseudo_exchange.json"
+    exch = {"A->B": 0, "B->A": 0}
+    if ex.exists():
+        _d = json.loads(ex.read_text())
+        for _f in _d["folds"]:
+            for _k in exch:
+                exch[_k] += int(_f["directions"].get(_k, {}).get("n_pixels", 0))
+    comp = dict(round="H83", tif=tif_name, rows=rows, donor_rank_min=donor_min,
+                receiver_rank_interval=[lo, hi], emitted_by_class=tally,
+                exchange=exch,
+                note=("classification uses the two views' own out-of-fold ranks at the "
+                      "preregistered donor/abstention thresholds; exchange counts are "
+                      "whole-segment pixels produced before the 3 px density fill"))
+    return rows, comp
 
 
 def update_legacy_executive_summary(rec: dict, sb_ok: bool, sha: str) -> None:

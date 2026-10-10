@@ -1,3 +1,36 @@
+<!--H83-AGENTS-->
+## Current H83 continuation (2026-10-10)
+Read README's H83 block and `knowledge/74` (frozen preregistration, SHA-256 `245220eccb36c61e…`) before
+proposing anything. H83 verdict **negative**, experiments 1 of 3, slots 0.
+
+What is now settled and must not be re-litigated:
+
+- **The off-catalogue instrument exists and is cheap.** `gems52-offcatalogue-v1` reuses the *same*
+  out-of-fold fits as `gems52-pooled-hide-v1`, because `gems52.spatial.folds`'s `train` domain is
+  already "everything except this quadrant, minus an 80 px buffer". Do not refit for it. Truth =
+  SGMC pixels ≥ 3 px from `labels.tif`: **55,562** pooled px.
+- **On the off-catalogue instrument every arm collapses toward the same number**
+  (best 0.065682 vs worst 0.065682), and View A is *less*
+  bad there than on hide-and-recover in two of four folds. The buried-fault population is real; this
+  field does not resolve it.
+- **View A sufficiency has now failed an eighth time on the mandated instrument**
+  (mean 0.5162). Independence still
+  passes (max |ρ| 0.1526), so the brief does not require
+  abandonment — but independence without sufficiency still gives co-training nothing to donate, and
+  the exchange moved A's OOF AUC by at most
+  0.0660.
+- **Both packaging variants are format-valid.** The all-finite zeros-outside file is what the site
+  recommends because it cannot fail a literal `[0,1]` range test; the NaN-outside twin matches the
+  organiser template byte-structurally. Do not add a third variant (IR-H77-004 stands for "no new
+  variant"; this round's second file is the *template* variant, not a new one).
+- **Site:** `docs/index.html` is current-first with every previous round preserved verbatim inside one
+  collapsed `<details>` (`<!--ARCHIVE-START-->`/`<!--ARCHIVE-END-->`). `scripts/check_site.py` asserts
+  historical strings on that page, so never rewrite it from scratch — `legacy_index_body()` in
+  `scripts/publish_h83_site.py` carries them forward and is idempotent.
+<!--/H83-AGENTS-->
+
+---
+
 # Working agreement
 
 Before every work session, read `README.md`, its full current user brief, `knowledge/07_r2_hypotheses_preregistered.md`, and the newest review/irregularities record. Read previous failed experiments before proposing another.

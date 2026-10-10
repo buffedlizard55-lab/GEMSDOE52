@@ -99,7 +99,7 @@ def test_shipped_raster_matches_its_receipt_and_is_portal_legal():
     assert val["crs"] == "EPSG:32611"
     assert (val["height"], val["width"]) == (3730, 3292)
     assert 0.0 <= val["min"] and val["max"] <= 1.0
-    assert int(val["positive_pixels"]) == int(sub["placed"])
+    assert int(val["n_nonzero"]) == int(sub["placed"])
 
 
 def test_shipped_raster_has_no_non_finite_pixel_and_no_mass_outside_the_footprint():

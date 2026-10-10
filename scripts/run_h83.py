@@ -408,7 +408,7 @@ def place_arm(arm, fields, pool_mask, K, min_px, quota_fraction=0.25):
 
 def _score_instrument(name, folds, fields_for_fold, pool, K, min_px, eligible, block_side=200,
                       draws=1000, seed=SEED, truth_key="truth", visible_key="visible",
-                      quota_fraction=0.25):
+                      quota_fraction=0.25, evidence_class="HOLDOUT-DTI"):
     """fields_for_fold(fold) -> dict arm->field grid; pool maps fold id -> allowed mask."""
     terms = {a: None for a in ARMS}
     recs = []
@@ -431,7 +431,8 @@ def _score_instrument(name, folds, fields_for_fold, pool, K, min_px, eligible, b
             rec["arms"][arm] = row
             log(f"  [{name}] fold {f} {arm}: {n}/{K} DTI {result['dti']:.6f} tpw {result['tpw']:.1f}")
         recs.append(rec)
-    pooled = evaluator.pooled_summary(terms, draws=draws, seed=seed, candidate="disagreement_post")
+    pooled = evaluator.pooled_summary(terms, draws=draws, seed=seed, candidate="disagreement_post",
+                                      evidence_class=evidence_class)
     return dict(instrument=name, folds=recs, pooled=pooled,
                 all_arms_filled=bool(all(a["arms"][arm]["filled"] for a in recs for arm in ARMS)))
 
@@ -493,7 +494,8 @@ def stage_holdout():
 
         res = _score_instrument(instr, folds, fields_for_fold, pool, K, min_px, eligible,
                                 block_side=200, draws=int(th["bootstrap_draws"]), seed=SEED,
-                                truth_key=truth_key, visible_key=visible_key)
+                                truth_key=truth_key, visible_key=visible_key,
+                                evidence_class=("HOLDOUT-DTI" if key == "pooled" else "OFFCAT-DTI"))
         out[key] = res
         out[f"{key}_evidence_class"] = ("HOLDOUT-DTI" if key == "pooled" else "OFFCAT-DTI")
 
@@ -680,28 +682,38 @@ def stage_lane():
     write("lane_surface", lane_surface)
     write("lane_dots", lane_dots)
 
-    # scored-only restricted reading: the prior files that were actually scored by the organiser
-    scored = [p for p in priors if p.parent.name == "scored"]
+    # ---- three readings, published side by side, none of them waives another
+    def reading(rep):
+        return dict(literal=rep["literal"]["verdict"], policy=rep["policy"]["verdict"],
+                    max_spearman=rep["literal"]["max_spearman"],
+                    max_near_3px_fraction=rep["literal"]["max_near_3px_fraction"],
+                    policy_max_near_3px_fraction=rep["policy"]["max_near_3px_fraction"],
+                    probes=rep["policy"]["universal_coverage_probes"],
+                    identical_to_a_prior=bool(rep["literal"]["identical"]))
+
+    # Scored-only registry: the restored rasters that the organiser actually scored.  These live in
+    # data/scored and data/reference, not in the frozen census, so they are added explicitly.
+    scored = sorted((ROOT / "data/scored").glob("*.tif"))
+    ref = ROOT / "data/reference/h33-2-b2-zeros.tif"
+    if ref.exists():
+        scored = scored + [ref]
     scored_only = None
     if scored:
-        scored_only = dict(surface=gates.lane_report(surf, allowed, scored, sample=SAMPLE,
-                                                     phase="surface", log=log),
-                           dots=gates.lane_report(cand.astype(np.float32), allowed, scored,
-                                                  sample=SAMPLE, phase="dots", log=log))
+        scored_only = dict(registry="data/scored/*.tif + data/reference/h33-2-b2-zeros.tif",
+                           n_priors=len(scored),
+                           surface=reading(gates.lane_report(surf, allowed, scored, sample=SAMPLE,
+                                                             phase="surface", log=log)),
+                           dots=reading(gates.lane_report(cand.astype(np.float32), allowed, scored,
+                                                          sample=SAMPLE, phase="dots", log=log)))
         write("lane_scored_only", scored_only)
 
     out = dict(stage="lane", round="H83", finished_utc=now(),
                registry=dict(n_priors=len(priors), n_scored=len(scored), meta=pmeta),
-               surface=dict(literal=lane_surface["literal"]["verdict"],
-                            policy=lane_surface["policy"]["verdict"],
-                            max_spearman=lane_surface["literal"].get("max_rank_correlation")),
-               dots=dict(literal=lane_dots["literal"]["verdict"],
-                         policy=lane_dots["policy"]["verdict"],
-                         max_near_share=lane_dots["literal"].get("max_near_share")),
-               scored_only=(dict(surface=scored_only["surface"]["policy"]["verdict"],
-                                 dots_literal=scored_only["dots"]["literal"]["verdict"],
-                                 dots_policy=scored_only["dots"]["policy"]["verdict"])
-                            if scored_only else None))
+               surface=reading(lane_surface), dots=reading(lane_dots),
+               scored_only=scored_only,
+               note="The literal full-census dots rule is unsatisfiable for every nonempty raster "
+                    "because the census contains universal-coverage lattice probes; a policy or "
+                    "scored-only PASS is reported as a third reading and never waives it.")
     write("lane_summary", out)
     return out
 
@@ -709,6 +721,37 @@ def stage_lane():
 # --------------------------------------------------------------------------------------------
 # stage: card
 # --------------------------------------------------------------------------------------------
+
+def composition_card() -> dict:
+    """What the shipped 3 px lattice is actually made of.
+
+    The publisher re-scores every emitted cell against both views' out-of-fold ranks at the
+    preregistered donor/abstention thresholds and writes evidence/h83_emission_composition.json.
+    The card carries that split next to the verdict so the number is auditable: how much of the
+    raster is the discovery branch this lane exists to test, and how much is density filler.
+    """
+    path = EVID / "h83_emission_composition.json"
+    if not path.exists():
+        return dict(available=False,
+                    note=("not measured; run scripts/publish_h83_site.py to classify every emitted "
+                          "cell against both views' out-of-fold ranks"))
+    c = json.loads(path.read_text())
+    cls = c["emitted_by_class"]
+    n = max(int(c.get("rows", 0)), 1)
+    return dict(available=True, evidence_class="MEASURED", rows=int(c["rows"]),
+                donor_rank_min=c["donor_rank_min"],
+                receiver_rank_interval=c["receiver_rank_interval"],
+                emitted_by_class=cls,
+                share_of_emission={k: v / n for k, v in cls.items()},
+                a_only_cells=cls.get("A-only: A confident, B abstains "
+                                     "(candidate buried structure)", 0),
+                b_only_cells=cls.get("B-only: B confident, A abstains "
+                                     "(suspect surface artefact)", 0),
+                note=("classification measured on the shipped raster, not projected; "
+                      "'neither view confident' cells are there because the 3 px lattice has to be "
+                      "filled to the budget, not because either view selected them"))
+
+
 def stage_card():
     reg = json.loads(PREREG.read_text())
     hold = json.loads((EVID / "h83_holdout.json").read_text())
@@ -769,7 +812,11 @@ def stage_card():
         canary=dict(max_alarm_across_folds=can["max_alarm_across_folds"],
                     any_alarm=can["any_alarm"]),
         exchange=dict(total_pseudo_pixels=ex["total_pseudo_pixels"],
-                      allowed=ex["allowed_exchange"]),
+                      allowed=ex["allowed_exchange"],
+                      pixels_a_to_b=sum(int(f["directions"].get("A->B", {}).get("n_pixels", 0))
+                                        for f in ex["folds"]),
+                      pixels_b_to_a=sum(int(f["directions"].get("B->A", {}).get("n_pixels", 0))
+                                        for f in ex["folds"])),
         view_a_heldout_auc=[f["view_A"]["heldout_region_auc"] for f in fit["folds"]],
         view_b_heldout_auc=[f["view_B"]["heldout_region_auc"] for f in fit["folds"]],
         view_a_offcatalogue_auc=[f["view_A"]["offcatalogue_auc"] for f in fit["folds"]],
@@ -780,6 +827,7 @@ def stage_card():
                     bytes=sub["receipt"]["bytes"], dots=sub["placed"],
                     validator=sub["receipt"]["validator"]),
         template_exact_twin=sub["twin"],
+        emission=composition_card(),
         submission_name=sub["receipt"]["submission_name"],
         note=sub["receipt"]["note"],
         submission_slots_used=0,

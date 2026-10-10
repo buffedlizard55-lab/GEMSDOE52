@@ -2761,7 +2761,7 @@
    "severity": "low",
    "status": "resolved - documented, no new variant created",
    "title": "Two packaging variants are published, which superficially conflicts with IR-H77-004 ('do not add another packaging variant')",
-   "what_it_is": "H77/H82 required gems52.grid.write_geotiff_portal_exact (stripped, LZW, NaN outside). The owner reported a portal rejection 'Predicted values must be in range [0, 1]', and the only variant that cannot produce it under any reader is the all-finite zeros-outside one. Both variants have scored in this project family, including the champion itself (h33-h33-2-b2-...-zeros).",
+   "what_it_is": "H77/H82 required gems52.grid.write_geotiff_portal_exact (stripped, LZW, nodata=nan outside). The owner reported a portal rejection 'Predicted values must be in range [0, 1]', and the only variant that cannot produce it under any reader is the all-finite zeros-outside one. Both variants have scored in this project family, including the champion itself (h33-h33-2-b2-...-zeros).",
    "how_we_know": "Measured: all 73 rasters in docs/downloads are single-band with finite values in [0,1]; the 11 owner-scored rasters restored into data/scored are stripped/LZW/NaN-outside, and the champion is a zeros file. So both containers are accepted by the portal.",
    "handling": "The all-finite file is the recommended download and the page says to upload one, never both. The second file is the organiser template's own container, not a new variant, so IR-H77-004 is not waived.",
    "disposition": "Documented in docs/h83-executive-summary.html and README's H83 block.",
