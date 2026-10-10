@@ -1,6 +1,6 @@
 {
   "uniqueness": {
-    "n_priors_checked": 135,
+    "n_priors_checked": 137,
     "per_prior": [
       {
         "path": "/home/user/GEMSDOE52/submission/gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif",
@@ -603,6 +603,20 @@
         "subset_of_prior": false,
         "superset_of_prior": false,
         "novel_vs_this": 37433
+      },
+      {
+        "path": "/home/user/GEMSDOE52/submission/gems52-h84-hva-ellipse-B-37654px-20261010T204630Z.tif",
+        "prior_px": 37654,
+        "new_px": 37654,
+        "binary": true,
+        "support_definition": ">0 for binary",
+        "decoded_sha256": "9ac8c4e3e093dd2c792a65b90a4d605589aa153d5118338589954eba978d7e99",
+        "intersection": 435,
+        "jaccard": 0.005809837992333685,
+        "identical": false,
+        "subset_of_prior": false,
+        "superset_of_prior": false,
+        "novel_vs_this": 37219
       },
       {
         "path": "/home/user/GEMSDOE52/submission/gems52-r2-signednormal-37654-1f751ac9b6ee-zeros.tif",
@@ -1711,6 +1725,20 @@
         "novel_vs_this": 32297
       },
       {
+        "path": "/home/user/GEMSDOE52/docs/downloads/h84-candidate.tif",
+        "prior_px": 37654,
+        "new_px": 37654,
+        "binary": true,
+        "support_definition": ">0 for binary",
+        "decoded_sha256": "9ac8c4e3e093dd2c792a65b90a4d605589aa153d5118338589954eba978d7e99",
+        "intersection": 435,
+        "jaccard": 0.005809837992333685,
+        "identical": false,
+        "subset_of_prior": false,
+        "superset_of_prior": false,
+        "novel_vs_this": 37219
+      },
+      {
         "path": "/home/user/GEMSDOE52/docs/downloads/r5-candidate.tif",
         "prior_px": 16681,
         "new_px": 37654,
@@ -1899,17 +1927,17 @@
     "identical_prior_paths": [],
     "distinct_from_every_comparable_prior": true,
     "audit_complete": true,
-    "n_priors_compared": 135,
+    "n_priors_compared": 137,
     "incomparable_priors": [],
     "key_semantics": "canonical_pattern_unique is False if ANY prior is byte-identical OR unreadable; distinct_from_every_comparable_prior isolates the first condition and audit_complete isolates the second",
     "equals_literal_prior_union": false,
     "research_publication_ok": true,
     "support_novelty_gate_ok": true,
     "gate_correction": "Original >=20% support novelty retained as a FAILED diagnostic, not silently waived for slot promotion. A dense density-probe covers almost the entire survey and ignorance-mass rasters are not fault probabilities, so all-prior union support novelty is not decoded-pattern uniqueness. Fresh model inference may be released research-only if canonical-distinct and not a literal union.",
-    "union_px": 2001842,
-    "novel_vs_all_priors": 20965,
-    "novel_fraction": 0.5567801561587082,
-    "prior_px_dropped": 1985153,
+    "union_px": 2012592,
+    "novel_vs_all_priors": 20879,
+    "novel_fraction": 0.5544962022627078,
+    "prior_px_dropped": 1995817,
     "relation_to_union": "strictly-novel-and-selective",
     "ok": true,
     "top_argument_ignored": false,
@@ -1920,8 +1948,8 @@
     "phase": "surface",
     "rule": "STOP at rho >0.90 or directed <=3px dot proximity >0.70; no lane retuning",
     "evidence_class": "uniqueness diagnostic, not a score",
-    "priors_checked": 135,
-    "distinct_decoded_priors": 64,
+    "priors_checked": 137,
+    "distinct_decoded_priors": 65,
     "candidate_decoded_sha256": "d265637a7f7761eae30414e980749ba76bf8f9042558b74431de465511bcdb82",
     "rank_pixels": 5167373,
     "exact_full_eligible_rank": true,
@@ -2318,6 +2346,15 @@
         "decoded_sha256": "8258b650c7225a80b97f4cd9ce6f74489af0bc2b4ac0d7c8d83f8a9e6fb645d4",
         "binary_on_footprint": true,
         "spearman": -0.01322647267763079,
+        "identical": false,
+        "constant_prior": false,
+        "rank_duplicate": false
+      },
+      {
+        "path": "/home/user/GEMSDOE52/submission/gems52-h84-hva-ellipse-B-37654px-20261010T204630Z.tif",
+        "decoded_sha256": "9ac8c4e3e093dd2c792a65b90a4d605589aa153d5118338589954eba978d7e99",
+        "binary_on_footprint": true,
+        "spearman": 0.017644446045793377,
         "identical": false,
         "constant_prior": false,
         "rank_duplicate": false
@@ -3104,6 +3141,16 @@
         "same_decoded_as": "/home/user/GEMSDOE52/submission/gems52-h83-structcon-geotherm-37654px-20261010T200310Z.tif"
       },
       {
+        "path": "/home/user/GEMSDOE52/docs/downloads/h84-candidate.tif",
+        "decoded_sha256": "9ac8c4e3e093dd2c792a65b90a4d605589aa153d5118338589954eba978d7e99",
+        "binary_on_footprint": true,
+        "spearman": 0.017644446045793377,
+        "identical": false,
+        "constant_prior": false,
+        "rank_duplicate": false,
+        "same_decoded_as": "/home/user/GEMSDOE52/submission/gems52-h84-hva-ellipse-B-37654px-20261010T204630Z.tif"
+      },
+      {
         "path": "/home/user/GEMSDOE52/docs/downloads/r5-candidate.tif",
         "decoded_sha256": "836b94ede72793f3d0542d0a35eb81e4b7f975429791ed2af4d030adc19b1ab3",
         "binary_on_footprint": true,
@@ -3227,8 +3274,8 @@
     "phase": "dots",
     "rule": "STOP at rho >0.90 or directed <=3px dot proximity >0.70; no lane retuning",
     "evidence_class": "uniqueness diagnostic, not a score",
-    "priors_checked": 135,
-    "distinct_decoded_priors": 64,
+    "priors_checked": 137,
+    "distinct_decoded_priors": 65,
     "candidate_decoded_sha256": "cf624b39280b073b42c48ceb37762b6c6887f1bcae53f4eff14537b91a694ea3",
     "rank_pixels": 5167373,
     "exact_full_eligible_rank": true,
@@ -3884,6 +3931,21 @@
         "prior_proposals": 37654,
         "near_3px_fraction": 0.09754607744197163,
         "positive_support_near_3px_fraction": 0.09754607744197163,
+        "support_rule": ">0 binary; >=0.5 continuous (shared template)",
+        "near_duplicate": false
+      },
+      {
+        "path": "/home/user/GEMSDOE52/submission/gems52-h84-hva-ellipse-B-37654px-20261010T204630Z.tif",
+        "decoded_sha256": "9ac8c4e3e093dd2c792a65b90a4d605589aa153d5118338589954eba978d7e99",
+        "binary_on_footprint": true,
+        "spearman": 0.004296994375722765,
+        "identical": false,
+        "constant_prior": false,
+        "rank_duplicate": false,
+        "candidate_dots": 37654,
+        "prior_proposals": 37654,
+        "near_3px_fraction": 0.15626493865193605,
+        "positive_support_near_3px_fraction": 0.15626493865193605,
         "support_rule": ">0 binary; >=0.5 continuous (shared template)",
         "near_duplicate": false
       },
@@ -5143,6 +5205,22 @@
         "same_decoded_as": "/home/user/GEMSDOE52/submission/gems52-h83-structcon-geotherm-37654px-20261010T200310Z.tif"
       },
       {
+        "path": "/home/user/GEMSDOE52/docs/downloads/h84-candidate.tif",
+        "decoded_sha256": "9ac8c4e3e093dd2c792a65b90a4d605589aa153d5118338589954eba978d7e99",
+        "binary_on_footprint": true,
+        "spearman": 0.004296994375722765,
+        "identical": false,
+        "constant_prior": false,
+        "rank_duplicate": false,
+        "candidate_dots": 37654,
+        "prior_proposals": 37654,
+        "near_3px_fraction": 0.15626493865193605,
+        "positive_support_near_3px_fraction": 0.15626493865193605,
+        "support_rule": ">0 binary; >=0.5 continuous (shared template)",
+        "near_duplicate": false,
+        "same_decoded_as": "/home/user/GEMSDOE52/submission/gems52-h84-hva-ellipse-B-37654px-20261010T204630Z.tif"
+      },
+      {
         "path": "/home/user/GEMSDOE52/docs/downloads/r5-candidate.tif",
         "decoded_sha256": "836b94ede72793f3d0542d0a35eb81e4b7f975429791ed2af4d030adc19b1ab3",
         "binary_on_footprint": true,
@@ -5341,7 +5419,7 @@
     ]
   },
   "format": {
-    "path": "/home/user/GEMSDOE52/submission/gems52-h85-geoconc-spaced-37654px-20261010T210350Z.tif",
+    "path": "/home/user/GEMSDOE52/submission/gems52-h85-geoconc-spaced-37654px-20261010.tif",
     "bytes": 793702,
     "sha256": "a4a6662009ad2118da8c1b638befb18dff62082757b6c6d89bb207336c17b32a",
     "bands": 1,

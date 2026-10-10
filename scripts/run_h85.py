@@ -240,7 +240,7 @@ def stage_write():
 
     ts = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
     name = f"h85-geoconc-spaced-cat200-{K_TOTAL}px-20261010"
-    fname = f"gems52-h85-geoconc-spaced-{K_TOTAL}px-{ts}.tif"    # outside="zero": all finite
+    fname = f"gems52-h85-geoconc-spaced-{K_TOTAL}px-20261010.tif"   # date-only: deterministic name; outside="zero"
     out = ROOT / "submission" / fname
     rec = GR.write_geotiff_portal_exact(out, em, footprint, sample, outside="zero")
     fmt = gates.format_report(out, sample)
@@ -248,6 +248,11 @@ def stage_write():
     log(f"wrote {out.name} sha256 {sha[:16]} format ok={fmt['ok']} problems={fmt.get('problems')}")
 
     priors = gates.find_priors([ROOT / "submission", ROOT / "docs/downloads", ROOT / "data/scored"], exclude=out)
+    # Exclude this candidate's own download copies. find_priors only drops the exact output path and
+    # its basename; the docs/downloads copy has a different basename, so without this line the
+    # candidate is compared against itself (the self-match bug first seen in the H83 audit, IR-H85-001).
+    own = {"h85-candidate.tif", "h85-candidate.zip", out.name}
+    priors = [q for q in priors if q.name not in own]
     uni = gates.uniqueness_report(em, priors)
     surface = np.where(allowed, score, 0.0).astype(np.float32)          # finite, in [0,1]
     lane_surface = gates.lane_uniqueness_report(surface, footprint, priors, sample=sample, phase="surface")
