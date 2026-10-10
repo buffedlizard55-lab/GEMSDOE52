@@ -145,32 +145,60 @@ def independence(rows, threshold=0.6, min_blocks=20):
 
 def whole_pseudo_segments(donor, receiver, train, forbidden, donor_threshold, receiver_lo, receiver_hi,
                           side=50, min_pixels=5, cap=2000):
-    """Select whole confident-disagreement components, never crossing train/block boundaries.
+    """Select whole confident-disagreement components within the observed field.
 
-    Components cut by a training boundary, a labelled sample, a known-fault
-    buffer, or a 50x50 block edge are rejected rather than clipped into fragments.
-    Receiver must abstain in a middle quantile interval, not be confidently negative.
+    The caller supplies predictions only for the training domain, so connected
+    components are defined over finite candidate pixels in that domain. A
+    continuation beyond the training boundary is unobserved and cannot be
+    detected here; "whole" means whole within this observed train-only field.
+    Within that field, components with candidate pixels in forbidden/collar
+    cells or candidate pixels spanning more than one 50x50 block are rejected.
+    The receiver must abstain in a middle quantile interval, not be confidently
+    negative. If the cap binds, complete observed components are selected by
+    descending mean donor confidence (then first row-major pixel); a component
+    is never pixel-trimmed.
     """
-    candidate = np.isfinite(donor) & np.isfinite(receiver) & (donor >= donor_threshold) & (receiver >= receiver_lo) & (receiver <= receiver_hi)
+    donor = np.asarray(donor, dtype=np.float32)
+    receiver = np.asarray(receiver, dtype=np.float32)
+    train = np.asarray(train, dtype=bool)
+    forbidden = np.asarray(forbidden, dtype=bool)
+    if (donor.ndim != 2 or donor.shape != receiver.shape or donor.shape != train.shape
+            or donor.shape != forbidden.shape):
+        raise ValueError("donor, receiver, train and forbidden must be same-shaped 2D arrays")
+    if not isinstance(side, int) or side <= 0 or not isinstance(min_pixels, int) or min_pixels <= 0:
+        raise ValueError("side and min_pixels must be positive integers")
+    if not isinstance(cap, int) or cap < 0:
+        raise ValueError("cap must be a nonnegative integer")
+    if not np.isfinite([donor_threshold, receiver_lo, receiver_hi]).all() or receiver_lo > receiver_hi:
+        raise ValueError("pseudo-label thresholds must be finite and ordered")
+    candidate = (np.isfinite(donor) & np.isfinite(receiver) & (donor >= donor_threshold)
+                 & (receiver >= receiver_lo) & (receiver <= receiver_hi))
     comp, n = ndi.label(candidate, np.ones((3, 3), bool))
     objects = ndi.find_objects(comp)
-    kept, receipts, total = [], [], 0
+    eligible = []
+    width = donor.shape[1]
     for i, sl in enumerate(objects, 1):
         if sl is None:
             continue
         local = comp[sl] == i
         yy, xx = np.nonzero(local)
         yy, xx = yy + sl[0].start, xx + sl[1].start
-        if len(yy) < min_pixels or len(yy) + total > cap:
-            continue
-        if not train[yy, xx].all() or forbidden[yy, xx].any():
+        if len(yy) < min_pixels or not train[yy, xx].all() or forbidden[yy, xx].any():
             continue
         by, bx = yy // side, xx // side
         if np.unique(by).size != 1 or np.unique(bx).size != 1:
             continue
-        idx = yy * donor.shape[1] + xx
+        idx = yy * width + xx
+        eligible.append((float(donor[yy, xx].mean()), int(idx.min()), int(i), idx,
+                         int(by[0]), int(bx[0]), float(receiver[yy, xx].mean())))
+    eligible.sort(key=lambda row: (-row[0], row[1]))
+    kept, receipts, total = [], [], 0
+    for mean_donor, first_pixel, component_id, idx, block_row, block_col, mean_receiver in eligible:
+        if len(idx) + total > cap:
+            continue
         kept.append(idx)
         total += len(idx)
-        receipts.append(dict(component=int(i), pixels=int(len(idx)), block_row=int(by[0]), block_col=int(bx[0]),
-                             mean_donor=float(donor[yy, xx].mean()), mean_receiver=float(receiver[yy, xx].mean())))
+        receipts.append(dict(component=component_id, pixels=int(len(idx)), block_row=block_row,
+                             block_col=block_col, mean_donor=mean_donor,
+                             mean_receiver=mean_receiver, first_row_major_pixel=first_pixel))
     return np.concatenate(kept) if kept else np.empty(0, np.int64), receipts

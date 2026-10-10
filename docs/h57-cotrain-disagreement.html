@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Historical H57 co-training no-go audit: preregistered spatial folds, research-only TIFF gates, provenance limitations, and geological hypotheses.">
+  <title>H57 co-training archive · GEMSDOE52</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to audit</a>
+<header><nav aria-label="Main navigation">
+  <a class="brand" href="index.html">GEMS / DOE 52</a>
+  <a href="executive-summary.html">Review disposition</a>
+  <a href="index.html">Overview</a>
+  <a href="forensics.html">H33 autopsy</a>
+  <a href="r3-hypotheses.html">Hypotheses</a>
+  <a href="sources.html">Sources</a>
+  <a href="irregularities.html">Limitations</a>
+</nav></header>
+<main id="main">
+  <div class="status" role="alert" style="border:2px solid #9c3f32;background:#fff0ec;color:#70251d">
+    <strong>Historical H57 co-training result: DO NOT SUBMIT.</strong>
+    This archived research TIFF lost to View B on all four recorded spatial folds and failed the separate ≥20% support-novelty diagnostic. It is not the repository's current pointer; the later H59 artifact remains unapproved here because no comparable spatial holdout or explicit slot authorization is recorded. This agent made no portal upload.
+  </div>
+  <div class="eyebrow">Experiment H57 · preregistered · 7 October 2026</div>
+  <h1>Testing disagreement, then respecting the result.</h1>
+  <p class="lede">H57 tests corrected geophysical/surface co-training on the actual competition raster geometry. The labelled task is <strong>fault prediction/mapping</strong>. Geothermal systems are motivation for studying structural controls, not the target class being predicted.</p>
+  <p class="status"><strong>This is an archived H57 variant, not the current pointer.</strong> The reconciliation against upstream main commit <code>2209161</code> found H60 in <code>submission/LATEST.txt</code> and <code>docs/data/submission.json</code> and H82 on the main result page. Later upstream main commit <code>ebb1d34</code> presents H83 as the latest research page; H83 has HOLDOUT-DTI NOT_EVALUATED and is not approved to submit. The canonical pointer remains H60 with its gate closed. H57 failed its registered holdout and has no weekly-slot approval.</p>
+
+  <section class="download-bar" aria-label="Research-only H57 downloads">
+    <div>
+      <strong>Research TIFF — not approved for submission</strong>
+      <small><code>gems52-h57-cotrain-disagreement-37654px-20261007T220849Z-1632bb37bb.tif</code></small>
+      <small>SHA-256 <code>a153cda1aae9f77249154b31a06d85f286cd669d56961dded0f0d79547018d7d</code> · decoded-pattern SHA-256 <code>1632bb37bbcc0ae138e624ec7acb86308d03600e48a068772380973d81425b57</code></small>
+    </div>
+    <a class="button" href="downloads/gems52-h57-cotrain-disagreement-37654px-20261007T220849Z-1632bb37bb.tif" download>↓ Download TIFF</a>
+    <a class="button secondary" href="downloads/gems52-h57-cotrain-disagreement-37654px-20261007T220849Z-1632bb37bb.zip" download>↓ One-TIFF ZIP</a>
+    <a class="button secondary" href="downloads/gems52-h57-cotrain-disagreement-37654px-20261007T220849Z-1632bb37bb-a-only-reasoning.csv" download>A-only component review</a>
+    <a class="button secondary" href="downloads/gems52-h57-cotrain-disagreement-37654px-20261007T220849Z-1632bb37bb-b-only-diagnostic.csv" download>B-only diagnostic</a>
+  </section>
+
+  <section class="card">
+    <h2>Research decision and comparative result</h2>
+    <p>Four outer spatial folds with an 80-pixel buffer compared supervised View A, supervised View B, a same-budget max-union control, and the preregistered H57 disagreement/co-training field. The strongest matched baseline is View B. Each arm was assessed with the same spatial split and 37,654-cell metric-aware budget.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Fold</th><th>View A</th><th>View B</th><th>Matched max-union</th><th>H57 co-training</th><th>H57 − View B</th></tr></thead>
+      <tbody>
+        <tr><td>0</td><td class="number">0.066070440</td><td class="number">0.142012295</td><td class="number">0.110424280</td><td class="number">0.099392411</td><td class="number">−0.042619883</td></tr>
+        <tr><td>1</td><td class="number">0.099929454</td><td class="number">0.180943662</td><td class="number">0.177622438</td><td class="number">0.132205712</td><td class="number">−0.048737950</td></tr>
+        <tr><td>2</td><td class="number">0.087929092</td><td class="number">0.133520057</td><td class="number">0.129540348</td><td class="number">0.101598945</td><td class="number">−0.031921113</td></tr>
+        <tr><td>3</td><td class="number">0.089643824</td><td class="number">0.148745048</td><td class="number">0.134601020</td><td class="number">0.109461963</td><td class="number">−0.039283085</td></tr>
+        <tr class="primary"><td><strong>Mean</strong></td><td class="number"><strong>0.085893203</strong></td><td class="number"><strong>0.151305265</strong></td><td class="number"><strong>0.138047021</strong></td><td class="number"><strong>0.110664758</strong></td><td class="number"><strong>−0.040640508</strong></td></tr>
+      </tbody>
+    </table></div>
+    <p><strong>Gate:</strong> the preregistered mean improvement threshold was +0.005 and at least 3/4 paired folds had to improve; H57 achieved −0.040641 and 0/4. It also failed to beat the historical internal holdout reference mean (0.196971; reference receipt SHA-256 <code>c14adec603d1b740a84cb1df2861ae5b087932b1891836fe35e090b328773c34</code>). Those are local proxy-holdout comparisons, not official scores.</p>
+    <p>The model’s predictions are not confirmed faults. The holdout’s negative class is the supplied mapped-catalogue-zero proxy; those pixels are not verified geological absences. The OOF instrument is informative as a spatial diagnostic, not an independent fault inventory.</p>
+  </section>
+
+  <section class="card">
+    <h2>Was co-training independent enough to test?</h2>
+    <p>On 2,281 spatial blocks containing 4,719,699 labelled-negative proxy predictions, the largest absolute view-error association was Spearman <strong>0.1052</strong> (false-positive rate at 0.5); the negative-MSE Spearman coefficient was 0.0909. The registered stop threshold was 0.6, so the mechanism was allowed to run. This low proxy correlation does <em>not</em> demonstrate conditional independence of the underlying view errors or guarantee safe pseudo-labels. The direct outcome is more decisive for this experiment: after permitted exchange, co-training lost in every holdout fold.</p>
+    <p>Pseudo-components were built from finite confident/abstaining disagreement predictions generated on the training domain only. Within that observed field, a selected component stayed in one 50×50-pixel block, components containing candidate pixels in the known-label collar were rejected, and components were never split to satisfy the cap. However, no predictions were made beyond the training mask, so the selector cannot detect whether a component continues across an evaluation/buffer boundary. “Whole” is therefore established only within the observed train-only field; geological-object completeness at an unobserved boundary is not established. No pseudo pixels entered the evaluation region or its buffer; this is a boundary-semantics limitation, not evidence of evaluation-label leakage. Full thresholds, pseudo-component IDs/hashes, fold masks, fit receipts, and registered inputs are in the machine-readable <a href="data/h57_holdout.json">H57 holdout receipt</a> and <a href="data/h57_execution_provenance.json">execution provenance</a>.</p>
+  </section>
+
+  <section class="card" id="provenance-limits">
+    <h2>Execution provenance is not fully reconciled</h2>
+    <p><strong>Merge namespacing:</strong> current main already had a different H57 implementation and registration. To preserve both experiments without overwriting main, the PR’s model/helper are retained byte-for-byte as <code>src/gems52/h57_real.py</code> and <code>src/gems52/h57_real_spatial.py</code>; its frozen registration is retained at <code>registry/h57_cotrain_disagreement_preregistration.json</code>, and its byte-identical hypothesis slate at <code>knowledge/18_hypotheses_H57_cotrain_preregistered.md</code>. The original frozen JSON still records its pre-merge path. The path mapping does not alter the protocol or results; see the <a href="data/h57_postmerge_provenance_review.json">reconciliation receipt</a>.</p>
+    <p><strong>H57 stays DO NOT SUBMIT.</strong> The historical receipt records holdout-runner SHA-256 <code>f9e1c0f08ebb6d56aa86394abbf3a2680e33d547b33713fad56ac3f1e3823716</code> and artifact-build-runner SHA-256 <code>6f6aaca215578213de68d7da5310648d558b0d85c842245939c559020342221c</code>. The current import/path-refactored runner is <code>4430aa223af54334948fd4f1627cd775fcc81a6f1564431c1e9594e68fdea9a9</code>; the current build script is <code>2150b4413c2821eb549eda3dad967b1ac6964cbaf0dfc0b0e13070a6fc159a91</code>. Original runner snapshots were not found in Git history. The H57 core module now lives at <code>src/gems52/h57_real.py</code> and its bytes match the old recorded <code>src/gems52/h57.py</code> module hash; <code>emit.py</code> and <code>metric.py</code> also match their recorded hashes. The current H57-specific spatial helper matches the prior review's 5faed874… checksum, but the original 88161ed7… source bytes are not present for independent comparison. A prior review called that change documentation-only; this checkout cannot independently confirm it. No full historical run was repeated with the current source or exact pinned inputs. See the <a href="data/h57_postmerge_provenance_review.json">post-merge provenance reconciliation</a>.</p>
+    <p>The pinned full-size input directory used for the run is absent from the current sandbox; similarly named files under <code>data/</code> have different hashes and sizes. Therefore the historical score/TIFF chain cannot be cleanly reproduced here. Treat the reported scores as a documented failed/no-go result, not as a fully reproducible promotion result. A fresh, separately preregistered run from restored SHA-pinned inputs and hash-pinned source is required before drawing further model conclusions.</p>
+  </section>
+
+  <div class="two">
+    <section class="card">
+      <h2>Raster format and exact-pattern audit</h2>
+      <ul>
+        <li><strong>Local format gate: PASS.</strong> One float32 band; EPSG:32611; 3730×3292; 100 m; exact sample grid/transform/bounds; values are {0,1} on the footprint; 37,654 positive cells; NaN only outside the template-valid footprint.</li>
+        <li><strong>Exact decoded-pattern uniqueness: PASS within accessible scope.</strong> The canonical candidate raster differs from all 567 unique byte-content representatives among 772 aligned prior paths. There were 205 exact-byte path aliases. Public scan: 55 repositories, 774 prediction-like TIFF paths fetched, 0 fetch errors and 0 recursive-tree truncations.</li>
+        <li><strong>Strict support novelty: FAIL (0%).</strong> The candidate support is inside the union of prior proposal supports, which covers 5,364,328 cells. The frozen ≥20% diagnostic is not silently waived. The broad prior union saturates the candidate footprint; this is not an exact decoded-pattern match.</li>
+        <li><strong>Not merely a view union: PASS.</strong> The emitted raster equals neither View A, View B, the equal-budget max-union, nor their literal union. It contains 35,236 cells absent from the max-union.</li>
+        <li>Inaccessible/private/deleted/unlinked/uncommitted files are outside this comparison; “unique” is bounded to the enumerated local/public inventory, not a universal guarantee.</li>
+      </ul>
+      <p><a href="data/h57_submission.json">Artifact receipt</a> · <a href="data/h57_prior_inventory.json">772-path/567-content inventory</a> · <a href="data/h57_public_repo_priors.json">public source manifest</a> · <a href="data/h57_candidate_local_gates.json">local gate bundle</a></p>
+    </section>
+    <section class="card">
+      <h2>A-only geology is a hypothesis, not a declaration</h2>
+      <p>The A-only diagnostic includes 1,137 connected components representing 36,540 candidate cells; the emitted map selected 3,030 cells from those components. The linked CSV gives every component’s coordinates, size, A/B scores, distance to the supplied catalogue, elongation/axis, relevant band values and global z-scores, local gradient channels, an explicitly tentative covered-fault interpretation, alternative lithologic/intrusive/processing explanations, and review status.</p>
+      <p>The intended mechanism is physically plausible but non-unique: a buried fault may juxtapose or offset density/magnetic bodies and alter cover-scale electrical/thermal conditions while lacking a sharp topographic expression. The same geophysical edge can instead be an intrusion, lithologic contact, regional trend, inversion boundary, or survey artifact. The A-only map is not proof, and the audit does not claim that every component is a fault.</p>
+      <p>B-only pixels remain a separate diagnostic: 28,322 candidate cells across 2,132 components; none were selected in this emission. They are possible surface artifacts (for example, drainage/road/fan edges), not automatically discarded truth.</p>
+      <p><a href="downloads/gems52-h57-cotrain-disagreement-37654px-20261007T220849Z-1632bb37bb-a-only-reasoning.csv">Download all A-only explanations</a> · <a href="downloads/gems52-h57-cotrain-disagreement-37654px-20261007T220849Z-1632bb37bb-b-only-diagnostic.csv">Download B-only diagnostic</a>.</p>
+    </section>
+  </div>
+
+  <section class="card">
+    <h2>H33 and the reported 0.2778: answer with an evidence boundary</h2>
+    <p>The organizer’s public leaderboard is participant-level and exposes neither submission filenames nor raster hashes. A 7 October snapshot lists 0.2778 at rank 13, 0.3195 at rank 7, and 0.3774 at rank 1. The attribution of 0.2778 to the named H33 TIFF/team is therefore an owner-reported association, not independently authenticated upload evidence.</p>
+    <p>The downloaded H33 file itself is measurable: <code>gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif</code>, SHA-256 <code>c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9</code>; one-band binary {0,1}; 37,654 positive cells; none on the supplied mapped-catalogue pixels; nearest such pixel about 223.6 m away. A sibling H27-4 TIFF has 40,199 cells; H33 removes exactly 2,545 off-catalogue pixels within 200 m, adds none, and has no H33 pixels within that ring. The owner-reported paired score is 0.2708→0.2778. This is consistent with reducing weak incremental-cover/false-positive mass, but hidden truth and an authenticated upload receipt are unavailable, so it is not causal proof.</p>
+    <p>The published metric uses a 300 m triangular distance kernel, α=0.2 on weighted false positives and β=0.8 on weighted false negatives. Thus a plausible explanation for a strong sparse submission is ranking cells near hidden faults while avoiding unsupported mass; deleting low-credit/false-positive cells could help. But the hidden test truth and upload-level score receipt are unavailable here, so the causal reason for H33’s reported score cannot be established from its raster alone. See <a href="forensics.html">the H33 autopsy</a> and <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">official metric description</a>.</p>
+  </section>
+
+  <section class="card">
+    <h2>Ranked hypotheses and next experiments</h2>
+    <p>The five candidates were written in <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/18_hypotheses_H57_cotrain_preregistered.md">the frozen hypothesis record</a> before the H57 feature construction and holdout. They are qualitative expected DTI opportunity per cost, not forecasts:</p>
+    <ol>
+      <li><strong>Corrected-view asymmetric buried-structure disagreement (H57-H1).</strong> Tested; holdout failed. Do not spend a slot on this configuration.</li>
+      <li><strong>Conductivity termination at a potential-field intersection.</strong> Band 17 with magnetic/gravity bands and basement depth; seek persistent cross-field junction geometry, not conductivity highs alone. Medium cost; boundaries may reflect inversion or lithology.</li>
+      <li><strong>Radiometric flank contrast aligned with a structural step.</strong> Band 6 plus optional independently sourced K/Th/U/ratios and magnetic/gravity context. Medium cost; band-6 identity remains provisional, and lithology/soil can mimic the signal.</li>
+      <li><strong>LiDAR scarp asymmetry cross-checked against deep structure.</strong> High cost; only if free official sources, licenses, acquisition coverage and independent mapping checks are verified. Roads and stream banks are major alternatives.</li>
+      <li><strong>Thermal wells/springs as Phase-2 context only.</strong> Never treat resource occurrence as a fault-positive label or a substitute for fault validation; wells are spatially biased.</li>
+    </ol>
+    <p>No follow-up uses the failed holdout to tune thresholds. A new preregistration and fresh buffered spatial test are required; any external raster must first have source/license/coverage provenance checked.</p>
+  </section>
+
+  <section class="card">
+    <h2>Inputs, assumptions, and sources</h2>
+    <ul>
+      <li>Three competition raster inputs are SHA-256 pinned: <code>training_features.tif</code> <code>4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5</code>; <code>labels.tif</code> <code>7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093</code>; <code>sample_submission.tif</code> <code>2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc5</code>. They are owner-maintained mirrors, not organizer-authenticated bytes.</li>
+      <li>Band 6 is a provenance uncertainty: the source tag conflicts with a measured total-count-radiometric-like comparison. The official survey catalogue establishes that USGS GeoDAWN magnetic/radiometric products exist, but does not authenticate this competition band’s identity.</li>
+      <li>No external geology, LiDAR, wells, springs, or competitor raster entered H57 feature generation. The competitor raster corpus was used post-inference only for novelty/uniqueness auditing.</li>
+      <li>Other caveats: catalogue-zero pixels are not confirmed absences; source rasters may mirror organizer data but their bytes are not authenticated; the greedy max-coverage emission is a surrogate, not expected DTI; the local format check is not portal acceptance.</li>
+    </ul>
+    <ul>
+      <li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Official task, metric and submission format</a></li>
+      <li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/968/">Official competition background</a></li>
+      <li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">Official public leaderboard</a> · <a href="data/leaderboard_snapshot_2026-10-07.json">dated row snapshot</a></li>
+      <li><a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">USGS GeoDAWN survey release</a> · <a href="https://doi.org/10.5066/P93LGLVQ">USGS data DOI</a></li>
+      <li><a href="https://gdr.openei.org/submissions/1391">INGENIOUS Great Basin data compilation</a> (context source, not an H57 label)</li>
+      <li><a href="https://doi.org/10.1145/279943.279962">Blum &amp; Mitchell, co-training, COLT 1998</a></li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Three review passes and implementation correction</h2>
+    <ol>
+      <li><strong>Implement and verify:</strong> froze hypotheses/protocol, built the real-raster cache, ran spatial holdout, refit the preregistered full-data arm, wrote the TIFF/one-TIFF ZIP/A-only and B-only diagnostics, and performed format and prior checks.</li>
+      <li><strong>Review and fix:</strong> the initial uniqueness run accidentally included the just-written TIFF itself as a “prior,” producing a false exact-match result. The scanner was corrected to pass the candidate path (and staged aliases are excluded by basename), a regression test was added, and an inference-free audit reran on the unchanged TIFF. The corrected exact-pattern result is unique across 567 unique prior contents; the 0% support-novelty failure remains reported.</li>
+      <li><strong>Re-check the request and provenance:</strong> output is downloadable and [0,1]/grid-compliant; H33 and leaderboard attribution are caveated; geology is explicitly tentative; the co-training result loses; stale H56-current labels were corrected; runner-hash, input-availability, and train-boundary caveats are disclosed; no slot was used; no portal upload or score is claimed.</li>
+    </ol>
+    <p>The execution provenance receipt reports two earlier validate invocations killed by a memory error while serializing unneeded per-fold strata arrays, followed by a completed run whose fold scores match the logs. Review then found unresolved runner-hash and exact-input availability gaps; the reported run is not independently reproducible from this sandbox. The full details and their effect on the no-go are recorded in <a href="data/h57_execution_provenance.json">the execution provenance receipt</a> and above.</p>
+  </section>
+
+  <div class="actions">
+    <a class="button" href="index.html">Read current repository status →</a>
+    <a class="button secondary" href="index.html">Back to overview</a>
+    <a class="button secondary" href="data/h57_holdout.json">Open full holdout JSON</a>
+    <a class="button secondary" href="data/h57_preregistration.json">Open preregistration</a>
+  </div>
+</main>
+<footer>GEMS Competition 306 · Research-only candidate · No organizer score or upload acceptance is claimed. <a href="index.html">Overview</a> · <a href="irregularities.html">Limitations</a></footer>
+</body>
+</html>

@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-10-10",
+  "scope": "Reconcile H83 public-facing submit claims with the tracked raster bytes and available local evidence. No model rerun, portal access, upload, or weekly-slot use.",
+  "upstream_main_commit_reviewed": "ebb1d343f8f5a5a33a5835776add16b668f6fbea",
+  "current_submission_pointer": {
+    "marker": "submission/LATEST.txt",
+    "file": "gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif",
+    "receipt": "docs/data/submission.json",
+    "round": "H60",
+    "approved_for_weekly_slot": false
+  },
+  "linked_h83_download": {
+    "path": "docs/downloads/h83-candidate.tif",
+    "same_bytes_as": "submission/gems52-h83-structcon-geotherm-37654px-20261010T200310Z.tif",
+    "bytes": 81076,
+    "sha256": "d9cfccf0e1aa4e28094a6039fda9e65be5e8ff102e321b33745df149f477f378",
+    "raster": {
+      "shape": [3730, 3292],
+      "dtype": "float32",
+      "crs": "EPSG:32611",
+      "transform": [100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0],
+      "compression": "DEFLATE",
+      "nodata": null,
+      "ones": 37654,
+      "zeros": 12241506,
+      "nan": 0
+    },
+    "run_card": "evidence/h83_run_card.json",
+    "run_card_holdout_dti": "NOT_EVALUATED",
+    "run_card_approval": null,
+    "run_card_verdict": "promote",
+    "interpretation": "The run card says it documents format validation only. Its promote label is not a measured holdout result or weekly-slot approval."
+  },
+  "distinct_h83_variant": {
+    "path": "submission/gems52-h83-structural-concordance-37654px-20261010T200049Z.tif",
+    "bytes": 1558064,
+    "sha256": "274db602ec8b91cb6a2793e9f512321f32326298aa8ed031ebd478e21426f5cd",
+    "raster": {
+      "shape": [3730, 3292],
+      "dtype": "float32",
+      "crs": "EPSG:32611",
+      "nodata": "NaN",
+      "compression": "LZW",
+      "ones": 37654,
+      "zeros": 5128186,
+      "nan": 7113320
+    },
+    "associated_receipt": "docs/downloads/h83-candidate.json",
+    "associated_receipt_approved_for_weekly_slot": false,
+    "warning": "This is not byte- or pixel-equivalent to the linked 81076-byte download. The associated JSON hash identifies this distinct 1558064-byte variant."
+  },
+  "local_decoded_mask_audit": {
+    "candidate": "docs/downloads/h83-candidate.tif",
+    "comparison": "positive-cell mask (value == 1) against other tracked GeoTIFFs with the same shape, CRS, and transform",
+    "other_same_grid_tiffs": 124,
+    "exact_positive_mask_matches": 0,
+    "highest_jaccard": {
+      "file": "submission/gems52-h67-thermal-upflow-corridor-24907px-20261009T050704Z.tif",
+      "shared_positive_cells": 542,
+      "candidate_positive_cells": 37654,
+      "other_positive_cells": 24907,
+      "jaccard": 0.008739
+    },
+    "scope_limit": "Repository-local raster comparison only; it does not establish global novelty, geologic validity, or holdout performance."
+  },
+  "public_leaderboard_snapshot": {
+    "path": "registry/leaderboard_snapshot_2026-10-09.json",
+    "source": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
+    "observed_at_utc": "2026-10-09T20:20:00Z",
+    "score_class": "Organizer-published public leaderboard; team-level only, not linked to a filename, hash, or upload receipt.",
+    "top_team": {"rank": 1, "team": "xiaofanhu", "score": 0.3774},
+    "dard": {"rank": 7, "team": "DARD", "score": 0.3195},
+    "extradr19": {"rank": 17, "team": "extradr19", "score": 0.2778},
+    "h33_raster": {
+      "source": "https://github.com/buffedlizard55-lab/GEMSDOE32/blob/main/docs/downloads/gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif",
+      "sha256": "c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9",
+      "attribution_to_extradr19_score": "Not established; the leaderboard snapshot has no filename/hash or upload-receipt mapping."
+    }
+  },
+  "material_discrepancies": [
+    "The incoming H83 README said SUBMIT YES although the H83 run card records HOLDOUT-DTI NOT_EVALUATED and leaves approval unset.",
+    "The incoming H83 index and executive guides gave portal-submission steps despite the missing holdout and absent organizer receipt.",
+    "The linked h83-candidate.tif is the 81076-byte all-finite raster, while h83-candidate.json records the separate 1558064-byte NaN/nodata variant.",
+    "The run-card note says there are no prior submissions in the repository, but 124 other tracked TIFFs share the candidate grid; a local decoded-mask comparison was therefore run.",
+    "The current checkout lacks data/sample_submission.tif, so the exact competition-footprint mask and portal compatibility were not independently checked.",
+    "The dated public leaderboard snapshot does record DARD at 0.3195 (rank 7) and extradr19 at 0.2778 (rank 17), with the leader at 0.3774; it is team-level only and does not bind either score to a specific TIFF. In particular, the H33 raster hash is not linked to the extradr19 score by an organizer receipt."
+  ],
+  "disposition": {
+    "downloadable": true,
+    "approved_for_weekly_slot": false,
+    "status": "RESEARCH ONLY — DO NOT SUBMIT",
+    "reason": "No comparable spatial-block holdout, no organizer receipt, and exact template-mask compatibility is unverified in this checkout.",
+    "portal_upload_performed": false,
+    "weekly_slot_used": false
+  }
+}

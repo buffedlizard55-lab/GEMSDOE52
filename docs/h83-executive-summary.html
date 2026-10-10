@@ -2,125 +2,31 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>H83 Executive Summary — GEMSDOE52</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>H83 Research Status — GEMSDOE52</title>
 <style>
-:root{--bg:#0f172a;--card:#1e293b;--accent:#3b82f6;--green:#22c55e;--red:#ef4444;--yellow:#eab308;--text:#e2e8f0;--muted:#94a3b8;--border:#334155}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:1rem;max-width:900px;margin:0 auto}
-h1{font-size:1.5rem;margin:1rem 0;color:var(--accent)}
-h2{font-size:1.2rem;margin:1.5rem 0 .5rem;color:var(--text);border-bottom:1px solid var(--border);padding-bottom:.3rem}
-.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;margin:1rem 0}
-.status{display:inline-block;padding:4px 12px;border-radius:4px;font-weight:700;font-size:.85rem}
-.status.ok{background:var(--green);color:#000}
-.status.no{background:var(--red);color:#fff}
-.status.warn{background:var(--yellow);color:#000}
-a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
-dl{display:grid;grid-template-columns:180px 1fr;gap:.4rem 1rem}
-dt{color:var(--muted);font-size:.85rem}dd{font-family:monospace;font-size:.85rem}
-.btn{display:inline-block;padding:10px 20px;background:var(--accent);color:#fff;border-radius:6px;font-weight:700;text-decoration:none;margin:.5rem .5rem .5rem 0}
-.btn:hover{opacity:.9;text-decoration:none}
-ol{padding-left:1.5rem}ol li{margin:.5rem 0}
-code{background:#0f172a;padding:2px 6px;border-radius:3px;font-size:.85rem}
-table{width:100%;border-collapse:collapse;font-size:.85rem}
-th,td{padding:6px 10px;text-align:left;border-bottom:1px solid var(--border)}
-th{color:var(--muted);font-weight:600}
-tr:last-child td{border-bottom:none}
+:root{--bg:#0f172a;--card:#1e293b;--blue:#3b82f6;--red:#ef4444;--text:#e2e8f0;--muted:#94a3b8;--border:#334155}*{box-sizing:border-box}body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;padding:1rem;max-width:850px;margin:0 auto}h1,h2{color:#93c5fd}h1{font-size:1.55rem}.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.1rem;margin:1rem 0}.stop{border-left:6px solid var(--red)}.btn{display:inline-block;padding:10px 18px;background:var(--blue);color:#fff;border-radius:6px;font-weight:700;text-decoration:none;margin:.4rem .4rem .2rem 0}.btn.alt{background:#334155}a{color:#93c5fd}code{overflow-wrap:anywhere}.label{font-weight:800;color:#fca5a5}.muted{color:var(--muted);font-size:.92rem}
 </style>
 </head>
 <body>
-
-<h1>H83 — Multi-band Structural Concordance</h1>
-
-<div class="card">
-<p><strong>DOWNLOAD:</strong> <span class="status ok">YES — format-valid, values exactly {0, 1}, NaN outside footprint only (matching template)</span></p>
-<p style="margin-top:.5rem"><strong>SUBMIT TO COMPETITION:</strong> <span class="status warn">RESEARCH-ONLY — no holdout validation against the board has been run; no organizer receipt exists</span></p>
-<p style="margin-top:.5rem"><em>Competition slots used: <strong>0</strong></em></p>
+<h1>H83 — Downloadable research TIFF; not approved to submit</h1>
+<div class="card stop" role="alert">
+<p><span class="label">DOWNLOAD: YES.</span> The research artifact is available below.</p>
+<p><span class="label">SUBMIT: NO — DO NOT UPLOAD.</span> The H83 run card records HOLDOUT-DTI <code>NOT_EVALUATED</code> and leaves weekly-slot approval unset. No comparable spatial-block holdout or organizer receipt is available. A format check or <code>verdict: promote</code> does not satisfy the user's promotion gate.</p>
+<p>The canonical pointer remains H60, with its gate closed. H83 is a research page, not a current submission pointer. No portal upload or slot use is authorized.</p>
 </div>
-
-<h2>★ One-Click Download</h2>
 <div class="card">
-<a class="btn" href="downloads/h83-candidate.tif">⬇ Download H83 GeoTIFF (1.5 MB)</a>
-<p style="margin-top:.5rem;font-size:.85rem;color:var(--muted)">
-SHA-256: 274db602ec8b91cb6a2793e9f512321f32326298aa8ed031ebd478e21426f5cd<br>
-37,654 binary dots · float32 · EPSG:32611 · 3730×3292 · nodata=nan outside footprint
-</p>
+<h2>Identified downloadable artifact</h2>
+<a class="btn" href="downloads/h83-candidate.tif" download>Download H83 TIFF</a>
+<a class="btn alt" href="downloads/h83-candidate.zip" download>Download ZIP</a>
+<p>Linked TIFF: 81,076 bytes · SHA-256 <code>d9cfccf0e1aa4e28094a6039fda9e65be5e8ff102e321b33745df149f477f378</code> · 37,654 positive cells.</p>
+<p class="muted">The linked raster is all-finite and has no nodata value. The current checkout lacks the sample template, so exact footprint-mask compatibility was not independently checked.</p>
 </div>
-
-<h2>How to Submit to the Competition</h2>
 <div class="card">
-<ol>
-<li>Click the blue <strong>Download H83 GeoTIFF</strong> button above. Save the <code>.tif</code> file.</li>
-<li>Go to <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/" target="_blank">the DrivenData GEMS competition page</a> and log in.</li>
-<li>Click <strong>New submission</strong> (or go to the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/predictions/" target="_blank">predictions page</a>).</li>
-<li><strong>File to submit:</strong> click "No file chosen" and select the downloaded <code>.tif</code> file.</li>
-<li><strong>Note (optional):</strong> paste this text:<br>
-<code>H83 multi-band structural concordance; 10 bands x 3 scales; 37654 dots 3px spacing; >200m off catalogue; research only</code></li>
-<li>Click <strong>Submit</strong>. The portal will check the file format and return your score.</li>
-</ol>
-<p style="margin-top:.75rem;font-size:.85rem"><strong>The file will NOT produce "Predicted values must be in range [0, 1]"</strong> — the portal-exact writer (<code>gems52.grid.write_geotiff_portal_exact</code>) writes NaN only outside the footprint with <code>nodata=nan</code> declared, and all finite values are exactly 0 or 1. This matches the organiser template's own container profile (LZW compression, stripped layout).</p>
+<h2>Read before any future decision</h2>
+<p>There are two different H83 TIFF variants in the repository, and the older JSON receipt refers to the other one. A local positive-mask comparison found no exact match among 124 same-grid tracked TIFFs, but this does not establish global uniqueness or scientific performance. H83 has no HOLDOUT-DTI result; do not treat the reported H33 0.2778 or DARD 0.3195 figures as organizer-authenticated baselines from the evidence available here.</p>
+<p>See the <a href="executive-summary.html">full status and byte-level reconciliation</a>, the <a href="data/h83_status_reconciliation.json">machine-readable site receipt</a>, or its <a href="../evidence/h83_status_reconciliation.json">evidence copy</a>.</p>
 </div>
-
-<h2>Submission Metadata (paste-ready)</h2>
-<div class="card">
-<dl>
-<dt>Submission name</dt><dd>h83-structural-concordance-37654px-20261010T200049Z</dd>
-<dt>Note (140 chars max)</dt><dd>H83 multi-band structural concordance; 10 bands x 3 scales; 37654 dots 3px spacing; &gt;200m off catalogue; research only</dd>
-<dt>SHA-256</dt><dd>274db602ec8b91cb…</dd>
-<dt>File size</dt><dd>1,558,064 bytes</dd>
-<dt>Dots emitted</dt><dd>37,654</dd>
-</dl>
-</div>
-
-<h2>Format Validation (from disk)</h2>
-<div class="card">
-<table>
-<tr><th>Check</th><th>Result</th></tr>
-<tr><td>Single band</td><td>✅ 1 band</td></tr>
-<tr><td>Dtype</td><td>✅ float32</td></tr>
-<tr><td>CRS</td><td>✅ EPSG:32611</td></tr>
-<tr><td>Shape</td><td>✅ 3730 × 3292</td></tr>
-<tr><td>Transform</td><td>✅ matches sample_submission.tif</td></tr>
-<tr><td>Finite values in [0,1]</td><td>✅ (37,654 ones + 5,128,186 zeros = all finite)</td></tr>
-<tr><td>NaN inside footprint</td><td>✅ 0</td></tr>
-<tr><td>Nodata declaration</td><td>✅ nan (matching template)</td></tr>
-<tr><td>Compression</td><td>✅ LZW, stripped layout</td></tr>
-</table>
-</div>
-
-<h2>Method</h2>
-<div class="card">
-<p>H83 uses <strong>multi-band structural concordance</strong> — a single integrated detector that identifies structural lineaments where multiple geophysical bands show coherent gradient orientation.</p>
-
-<p style="margin-top:.5rem"><strong>How it works:</strong></p>
-<ol style="margin-top:.25rem">
-<li>For each of 10 structural bands (gravity, magnetics, conductivity, strain, DEM derivatives), compute the <strong>structure tensor</strong> at 3 scales (σ = 1, 2, 4 pixels)</li>
-<li>Extract gradient magnitude and <strong>coherence</strong> (how linear the feature is, from the tensor eigenvalues)</li>
-<li>Combine into a single concordance score: strong gradients with high coherence across bands → likely structural feature</li>
-<li>Add LiDAR scarp features as high-confidence surface fault indicators</li>
-<li>Place 37,654 binary dots at 3px spacing on the highest-scoring locations, excluding the 200m catalogue ring</li>
-</ol>
-
-<p style="margin-top:.75rem"><strong>Why this is unique:</strong> Unlike B_DVA2 (variogram-based), this uses local structure tensor analysis. Unlike co-training (two competing views), this uses a single integrated detector. Unlike simple ridge detection, this leverages cross-band orientation agreement.</p>
-
-<p style="margin-top:.5rem"><strong>Bands used:</strong> det_elev, iso_grav_anom, depth_to_base_surf, iso_grav_anom_hg, det_elev_slope, tmi_vg, cond_surf, geod_2ndinv, tmi_hg, iso_grav_anom_vg</p>
-
-<p style="margin-top:.5rem"><strong>Named non-fault mimic:</strong> Lithological contacts can produce similar concordance signals. In the Great Basin, basin-margin faults often coincide with lithological boundaries.</p>
-</div>
-
-<h2>Honest Assessment</h2>
-<div class="card">
-<ul>
-<li>This is a <strong>research artifact</strong> — no holdout validation has been run to estimate board performance.</li>
-<li>The hide-and-recover instrument in this repo has <strong>Spearman −0.10 against the board</strong> (knowledge/10 §5), so even a good holdout DTI would not be a board forecast.</li>
-<li>The submission is <strong>format-valid and downloadable</strong>. It will not produce the "Predicted values must be in range [0, 1]" error.</li>
-<li>No competition slot has been spent. Promotion to a real slot is a separate decision.</li>
-</ul>
-</div>
-
-<p style="margin-top:2rem;text-align:center">
-<a class="btn" href="index.html">← Back to Landing Page</a>
-</p>
-
+<p><a href="index.html">← Back to the research page</a> · <a href="downloads/index.html">Download archive</a></p>
 </body>
 </html>

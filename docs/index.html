@@ -45,100 +45,68 @@ footer { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #21262d; fon
 <h1>🔥 GEMSDOE52 — Geothermal Fault Discovery</h1>
 <p>DOE GEMS Competition · Multi-Scale Structural Concordance + Geothermal Proximity</p>
 
-<!-- ===== ONE-CLICK DOWNLOAD BOX (TOP OF PAGE) ===== -->
+<!-- ===== RESEARCH-ONLY DOWNLOAD BOX ===== -->
 <div class="download-box">
-  <h2>⬇️ Download Submission File</h2>
-  <p>Ready-to-submit GeoTIFF — values in [0,1], EPSG:32611, 100m resolution</p>
+  <h2>⬇️ Download H83 Research TIFF</h2>
+  <p><strong>DOWNLOAD: YES · SUBMIT: NO.</strong> H83 has no spatial-block holdout result or weekly-slot approval. Do not upload it.</p>
   <a class="download-btn" href="downloads/h83-candidate.tif" download>Download TIF</a>
   <a class="download-btn secondary" href="downloads/h83-candidate.zip" download>Download ZIP</a>
   <div class="meta">
     File: <code>gems52-h83-structcon-geotherm-37654px-20261010T200310Z.tif</code><br>
     Size: 81,076 bytes · SHA-256: <code>d9cfccf0e1aa4e28094a6039fda9e65be5e8ff102e321b33745df149f477f378</code><br>
-    37,654 binary pixels · Single-band float32 · All values in [0,1]
-    <span class="badge badge-ok">FORMAT VALID</span>
+    37,654 positive pixels · Single-band float32 · all values {0,1}; nodata is not declared<br>
+    <span class="badge badge-warn">RESEARCH ONLY — DO NOT SUBMIT</span>
   </div>
 </div>
 
-<!-- ===== EXECUTIVE SUMMARY ===== -->
-<div class="exec-summary">
-  <h2>📋 How to Submit</h2>
-  <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Download</strong> the TIF file above (click "Download TIF" button)</div></div>
-  <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Go to</strong> <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">drivendata.org/competitions/306/competition-doe-gems</a> and log in</div></div>
-  <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Click</strong> "Submit" on the competition page</div></div>
-  <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Upload</strong> the downloaded TIF file</div></div>
-  <div class="step"><div class="step-num">5</div><div class="step-text"><strong>Note:</strong> <code>h83-structcon-geotherm-37654px structural concordance + geothermal proximity</code></div></div>
-  <div class="step"><div class="step-num">6</div><div class="step-text"><strong>Submit!</strong></div></div>
-  <p style="margin-top:1rem; font-size:0.9rem; color:#8b949e;">
-    <strong>Name:</strong> <code>h83-structcon-geotherm-37654px-20261010</code><br>
-    <strong>Note:</strong> <code>structural concordance + geothermal proximity</code> (max 140 chars)<br>
-    <span class="badge badge-ok">VALUES IN [0,1]</span> 
-    <span class="badge badge-ok">CRS: EPSG:32611</span> 
-    <span class="badge badge-ok">SHAPE: 3730×3292</span>
-  </p>
+<!-- ===== SUBMISSION GATE ===== -->
+<div class="exec-summary" role="alert">
+  <h2>⛔ Research gate: H83 is not approved to submit</h2>
+  <p><strong>HOLDOUT-DTI: NOT EVALUATED · NO CERTIFIED LEADERBOARD GAIN.</strong> The run card has no comparable spatial-block result and leaves weekly-slot approval unset. There is no H83 organizer score receipt in this checkout. Do not use the competition portal or a weekly slot for H83.</p>
+  <p>The run-card label <code>verdict: promote</code> records a format-only run and is not a promotion gate. H83 is not the canonical submission pointer: <code>submission/LATEST.txt</code> and <code>docs/data/submission.json</code> remain on H60 with approval false.</p>
+  <p><a href="h83-executive-summary.html">Read the download-vs-submit status and artifact mismatch audit</a> · <a href="data/h83_status_reconciliation.json">machine-readable reconciliation</a>.</p>
 </div>
 
-<!-- ===== VALIDATION STATUS ===== -->
-<h2>✅ Validation Status</h2>
+<!-- ===== RASTER OBSERVATIONS, NOT APPROVAL ===== -->
+<h2>Raster observations (not submission approval)</h2>
 <table>
-  <tr><th>Check</th><th>Status</th><th>Details</th></tr>
-  <tr><td>Values in [0, 1]</td><td><span class="badge badge-ok">PASS</span></td><td>Binary {0, 1}, min=0.0, max=1.0</td></tr>
-  <tr><td>All-finite</td><td><span class="badge badge-ok">PASS</span></td><td>No NaN or inf values</td></tr>
-  <tr><td>CRS</td><td><span class="badge badge-ok">PASS</span></td><td>EPSG:32611</td></tr>
-  <tr><td>Shape</td><td><span class="badge badge-ok">PASS</span></td><td>3730 × 3292</td></tr>
-  <tr><td>Transform</td><td><span class="badge badge-ok">PASS</span></td><td>100m resolution, matching sample_submission.tif</td></tr>
-  <tr><td>Dtype</td><td><span class="badge badge-ok">PASS</span></td><td>float32</td></tr>
-  <tr><td>Bands</td><td><span class="badge badge-ok">PASS</span></td><td>Single band</td></tr>
-  <tr><td>Pixel count</td><td><span class="badge badge-info">INFO</span></td><td>37,654 positive pixels (binary emission)</td></tr>
-  <tr><td>Catalogue distance</td><td><span class="badge badge-ok">PASS</span></td><td>0 pixels within 200m of mapped faults</td></tr>
+  <tr><th>Check</th><th>Local observation</th><th>Limit</th></tr>
+  <tr><td>Values</td><td>Binary {0,1}; 37,654 ones, 12,241,506 zeros</td><td>Only the tracked linked TIFF was read</td></tr>
+  <tr><td>CRS / shape / transform</td><td>EPSG:32611 · 3730 × 3292 · 100 m transform</td><td>Exact template comparison is unavailable because data/sample_submission.tif is absent</td></tr>
+  <tr><td>Storage</td><td>Single-band float32; DEFLATE; no NaNs; nodata is not declared</td><td>Does not establish organizer/portal compatibility</td></tr>
+  <tr><td>Decoded-mask uniqueness</td><td>No exact positive-mask match among 124 other tracked same-grid TIFFs</td><td>Repository-local only; not a global prior scan</td></tr>
+  <tr><td>HOLDOUT-DTI</td><td><span class="badge badge-warn">NOT EVALUATED</span></td><td>No comparable spatial-block result</td></tr>
+  <tr><td>Weekly-slot approval</td><td><span class="badge badge-warn">NO</span></td><td>Do not submit</td></tr>
 </table>
 
 <!-- ===== HYPOTHESIS ===== -->
 <h2>🔬 Hypothesis: Multi-Scale Structural Concordance + Geothermal Proximity</h2>
 
-<h3>Why This Is Unique</h3>
-<p>This submission is <strong>NOT a rehash of the co-training approach</strong> (which failed View A sufficiency 7 times 
-in this repository). Instead, it uses <strong>direct multi-instrument structural detection</strong> that is fundamentally 
-different from any previous submission in this family of repositories.</p>
+<h3>What is and is not established</h3>
+<p>H83 is a single integrated multi-band structural-concordance candidate, not the H57 co-training arm. A local decoded-positive-mask scan found no exact match among 124 other tracked TIFFs on the same grid; this is repository-local uniqueness only, not proof of global novelty or scientific value. The run card's note that no prior submissions existed is incomplete for the current repository inventory. No spatial-block holdout was run, so superiority over any control is unestablished.</p>
 
 <h3>Method</h3>
 <ol>
   <li><strong>Multi-Scale Structure Tensor</strong> — Compute oriented linearity at 4 spatial scales (σ=1,2,3,5 pixels)
   for gravity, magnetic, and DEM data using the structure tensor eigenvalue method.</li>
-  <li><strong>Cross-Instrument Concordance</strong> — At each pixel, count how many independent geophysical instruments 
-  (gravity, magnetics, DEM) show strong consistent linear features. Concordance across 2+ instruments is 
-  strong fault evidence.</li>
-  <li><strong>Geothermal Proximity</strong> — Weight detections by proximity to 27,092 wells/springs from the 
+  <li><strong>Cross-Instrument Concordance</strong> — The run card describes counting gravity, magnetic, and DEM channels with strong linear features. This is a candidate structural signal, not confirmed fault evidence; its predictive value has not been evaluated on a spatial holdout.</li>
+  <li><strong>Geothermal Proximity</strong> — Weight detections by proximity to 27,092 wells/springs from the
   GDR 1391 INGENIOUS dataset. Hot springs far from cataloged faults indicate uncatalogued fault structures.</li>
-  <li><strong>Catalogue Ring Exclusion</strong> — Applied the critical lesson from h33-2-b2 (0.2778): pixels within 
-  200m of mapped faults earn zero credit while paying the FP tax. Zero pixels within 200m of catalogue.</li>
-  <li><strong>Binary {0,1} Emission</strong> — Optimal per the metric algebra (continuous scores forfeit score).</li>
+  <li><strong>Catalogue Ring Exclusion</strong> — The run card reports excluding pixels within 200m of mapped faults. The 0.2778 value belongs to the team-level public-board snapshot; it is not tied to the H33 TIFF by a filename/hash receipt.</li>
+  <li><strong>Binary {0,1} Emission</strong> — This linked raster is binary. No claim is made that binary emissions are universally optimal or that this placement performs well.</li>
 </ol>
 
-<h3>Expected Score Range</h3>
-<p>Based on the credit density analysis in this repository:</p>
-<table class="score-table">
-  <tr><th>Scenario</th><th>Credit Density (ρ)</th><th>Expected DTI</th></tr>
-  <tr><td>Random baseline</td><td>0.0279</td><td>~0.08</td></tr>
-  <tr><td>Concordance-only (conservative)</td><td>0.05–0.08</td><td>0.15–0.24</td></tr>
-  <tr><td>Concordance + geothermal (optimistic)</td><td>0.10–0.14</td><td>0.30–0.38</td></tr>
-  <tr><td>h33-2-b2 reference</td><td>0.1387</td><td>0.2778</td></tr>
-</table>
-<p class="meta">Note: These are projections, not ORGANIZER-CONFIRMED scores. Actual score depends on the private test set.</p>
+<h3>Score status — no estimate available</h3>
+<p>The H83 run card records HOLDOUT-DTI <code>NOT_EVALUATED</code>, so no expected-score range is available. See <a href="#score-sources">the dated public-board capture and its team-level/file-attribution limits</a>; those figures are not H83 forecasts.</p>
 
-<!-- ===== DATA SOURCES ===== -->
-<h2>📊 Data Sources</h2>
-<table>
-  <tr><th>Source</th><th>Description</th><th>License</th></tr>
-  <tr><td>training_features.tif</td><td>19-band competition raster (gravity, magnetics, strain, seismicity, DEM)</td><td>Competition data</td></tr>
-  <tr><td>GDR 1391 INGENIOUS</td><td>27,092 wells/springs with temperature and geothermometer data</td><td>CC BY 4.0</td></tr>
-  <tr><td>USGS 3DEP</td><td>LIDAR-derived scarp features (1m DEM → 100m grid)</td><td>Public domain</td></tr>
-  <tr><td>USGS GeoDAWN</td><td>Radiometric data (K, Th, U, TC)</td><td>Public domain</td></tr>
-</table>
+<!-- ===== INPUT PROVENANCE ===== -->
+<h2>📊 Inputs and provenance limits</h2>
+<p>The H83 run card reports competition-raster gravity, magnetic, and DEM bands plus 27,092 geothermal wells/springs attributed to GDR 1391 INGENIOUS. The run card does not include an input-byte manifest, so the exact external/source bytes were not independently re-verified for this artifact. USGS 3DEP and GeoDAWN are not listed as H83 inputs in the run card and are not claimed here as used.</p>
 
-<!-- ===== REFERENCES ===== -->
-<h2>📚 References</h2>
+<!-- ===== CONTEXT REFERENCES (NOT AN INPUT MANIFEST) ===== -->
+<h2>📚 Context references (not input-byte provenance)</h2>
 <ul>
-  <li>Blum & Mitchell, "Combining labeled and unlabeled data with co-training", COLT '98, 
+  <li>Blum & Mitchell, "Combining labeled and unlabeled data with co-training", COLT '98,
   <a href="https://doi.org/10.1145/279943.279962">doi:10.1145/279943.279962</a></li>
   <li>Competition page: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Problem description</a></li>
   <li>DTI metric with α=0.2, β=0.8, R=300m triangular kernel</li>
@@ -147,11 +115,11 @@ different from any previous submission in this family of repositories.</p>
   <li><a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">USGS GeoDAWN</a></li>
 </ul>
 
-<!-- ===== SUBMISSION HISTORY ===== -->
-<h2>📈 Submission History</h2>
+<!-- ===== EXPERIMENT STATUS ===== -->
+<h2>Experiment status</h2>
 <table>
-  <tr><th>Name</th><th>Score</th><th>Notes</th></tr>
-  <tr><td>h83-structcon-geotherm-37654px</td><td>PENDING</td><td>Structural concordance + geothermal proximity · 37,654 px · Binary {0,1}</td></tr>
+  <tr><th>Name</th><th>Organizer score</th><th>Status</th></tr>
+  <tr><td>h83-structcon-geotherm-37654px</td><td>Not submitted</td><td>Research-only · no holdout · do not submit · no slot used</td></tr>
 </table>
 
 <!-- ===== TECHNICAL DETAILS ===== -->
@@ -171,27 +139,28 @@ different from any previous submission in this family of repositories.</p>
 where Jxx = Gσ * (∂I/∂x)², Jyy = Gσ * (∂I/∂y)², Jxy = Gσ * (∂I/∂x)(∂I/∂y)
 Linearity = (λ1 - λ2) / (λ1 + λ2) where λ1 ≥ λ2 are eigenvalues</pre>
 <h3>Concordance</h3>
-<p>At each pixel, count instruments with linearity above the 70th percentile. Add orientation agreement 
+<p>At each pixel, count instruments with linearity above the 70th percentile. Add orientation agreement
 bonus for pairs that are both strong and aligned (|cos θ| > 0.5).</p>
 <h3>Emission</h3>
-<p>Top-k binary emission at k=37,654 (matching h33-2-b2 budget), with catalogue ring exclusion 
+<p>Top-k binary emission at k=37,654 (matching h33-2-b2 budget), with catalogue ring exclusion
 (2-pixel buffer around mapped faults).</p>
 </details>
 
+<details id="score-sources">
+<summary>Reported scores and source limits</summary>
+<p>The dated <a href="../registry/leaderboard_snapshot_2026-10-09.json">public leaderboard snapshot</a> (observed 2026-10-09 20:20 UTC; <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">organizer leaderboard</a>) lists DARD at <strong>0.3195, rank 7</strong>, extradr19 at <strong>0.2778, rank 17</strong>, and xiaofanhu at <strong>0.3774, rank 1</strong>. These are organizer-published <em>team-level</em> board values, not filename-level receipts. The snapshot does not tie extradr19's 0.2778 to the H33 TIFF; the H33 raster hash and scope are recorded in <a href="../evidence/h83_status_reconciliation.json">the reconciliation</a>. Thus 0.3195 is not the board high, and neither historical team score is an H83 forecast. H83 itself has no holdout score.</p>
+</details>
+
 <details>
-<summary>📊 Leaderboard Context</summary>
-<table class="score-table">
-  <tr><th>Team</th><th>Score</th><th>Our Target</th></tr>
-  <tr><td>xiaofanhu (#1)</td><td>0.3774</td><td>—</td></tr>
-  <tr><td>alexoktaba (#2)</td><td>0.3361</td><td>—</td></tr>
-  <tr><td>DARD (#7)</td><td>0.3195</td><td>Beat this</td></tr>
-  <tr><td>extradr19 (us, #17)</td><td>0.2778</td><td>Current best</td></tr>
-</table>
+<summary>Historical research downloads — not submission approvals</summary>
+<p><strong>H58:</strong> research-only; do not upload. <a href="downloads/h58-candidate.tif" download>Download the H58 TIFF</a> · canonical file <code>gems52-h58-coldgeo-consensus-22px-a55b0dee38-research.tif</code> · SHA-256 prefix <code>130c242e33aef398c44b22cd</code>. Its support shortfall failed the registered artifact gate.</p>
+<p><strong>H57 credited-core alternate:</strong> a separate historical research TIFF, not the current pointer; see its <a href="h57-creditcore.html">gate/disclosure page</a> and <a href="downloads/gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif" download>download</a>.</p>
+<p><strong>H55-EDGE:</strong> separate failed-gate archive; <a href="h55-edge.html">read its audit</a>. None of these archived downloads authorizes a competition upload.</p>
 </details>
 
 <footer>
   <p>Generated by GEMSDOE52 · <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DOE GEMS Competition</a></p>
-  <p>Last updated: 2026-10-10 · Branch: arena/bee150a1-gemsdoe52</p>
+  <p>Last reviewed: 2026-10-10 · H83 is a research-only artifact; see the gate and reconciliation above.</p>
 </footer>
 
 </div>

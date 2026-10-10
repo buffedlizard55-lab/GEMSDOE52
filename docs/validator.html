@@ -2,61 +2,96 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TIF Validator — GEMSDOE52</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Browser GeoTIFF Checks — GEMSDOE52</title>
 <style>
-:root{--bg:#0f172a;--card:#1e293b;--accent:#3b82f6;--green:#22c55e;--red:#ef4444;--text:#e2e8f0;--muted:#94a3b8;--border:#334155}
+:root{--bg:#0f172a;--card:#1e293b;--accent:#3b82f6;--green:#22c55e;--red:#ef4444;--yellow:#eab308;--text:#e2e8f0;--muted:#94a3b8;--border:#334155}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:1rem;max-width:800px;margin:0 auto}
-h1{font-size:1.4rem;margin:1rem 0;color:var(--accent)}
-.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;margin:1rem 0}
-.pass{color:var(--green);font-weight:700}.fail{color:var(--red);font-weight:700}
-label{display:block;margin:.5rem 0;font-weight:600}
-input[type=file]{margin:.5rem 0}
+body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:1rem;max-width:900px;margin:0 auto}
+h1{font-size:1.45rem;margin:1rem 0;color:#93c5fd}h2{font-size:1.1rem;margin:0 0 .5rem}
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.1rem;margin:1rem 0}
+.notice{border-left:6px solid var(--red)}.good{color:var(--green);font-weight:700}.bad{color:#fca5a5;font-weight:700}.muted{color:var(--muted);font-size:.92rem}
+label{display:block;margin:.6rem 0;font-weight:600}input[type=file]{margin:.5rem 0}
 button{padding:10px 20px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-weight:700;cursor:pointer;margin:.5rem 0}
-button:hover{opacity:.9}
-pre{background:#0f172a;padding:1rem;border-radius:6px;overflow-x:auto;font-size:.85rem;white-space:pre-wrap}
-a{color:var(--accent)}
+pre{background:#0f172a;padding:.8rem;border-radius:6px;overflow:auto;white-space:pre-wrap;word-break:break-word}
+ul{padding-left:1.25rem}li{margin:.4rem 0}a{color:#93c5fd}code{overflow-wrap:anywhere}
 </style>
 </head>
 <body>
-<h1>🔍 TIF Validator — Check Before Submitting</h1>
+<h1>🔍 In-browser GeoTIFF format checks</h1>
+<div class="card notice" role="alert">
+<p><strong>H83 status remains DOWNLOAD YES / SUBMIT NO.</strong> A local format result cannot open the H83 scientific gate; its HOLDOUT-DTI is NOT_EVALUATED and it is not approved to submit.</p>
+<p><strong>This check runs in your browser. Nothing is uploaded.</strong> The page reads the file locally using <code>assets/tifcheck.js</code>. It checks implemented GeoTIFF structure, grid, CRS, and value-range rules; it does not evaluate geology, holdout performance, leaderboard score, or organizer approval.</p>
+</div>
 <div class="card">
-<p>Drop a <code>.tif</code> file below to verify it matches the competition format before uploading to DrivenData.</p>
-<label>Select GeoTIFF file:
-<input type="file" id="tif" accept=".tif,.tiff">
+<h2>Select a GeoTIFF or one-TIFF ZIP</h2>
+<label>Choose a local file:
+<input type="file" id="tif" accept=".tif,.tiff,.zip">
 </label>
-<button onclick="validate()">Validate</button>
-<div id="output"></div>
+<button id="validate" type="button">Run local format checks</button>
+<div id="output" aria-live="polite"></div>
 </div>
-
 <div class="card">
-<h2 style="margin-top:0">Expected Format</h2>
-<ul>
-<li>Single band, float32</li>
-<li>CRS: EPSG:32611 (UTM Zone 11N)</li>
-<li>Shape: 3730 rows × 3292 columns</li>
-<li>Transform: 100m resolution</li>
-<li>Values: all finite values in [0, 1]</li>
-<li>No NaN inside the footprint</li>
-<li>NaN or null outside footprint</li>
-</ul>
+<h2>Rule source and limits</h2>
+<p>Implemented format checks are based on the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967">official competition problem page</a>, including the portal message <code>Predicted values must be in range [0, 1]</code>. The geometry constants in <code>assets/tifcheck.js</code> are recorded as measured from the organizer template. This checkout does not contain <code>data/sample_submission.tif</code>, so the template mask was not independently re-read here.</p>
+<p class="muted">Passing this local format check means only that the implemented format rules passed for the selected bytes. It is not a promise of portal acceptance, a score, or permission to use a weekly slot.</p>
 </div>
-
-<p><a href="index.html">← Back to landing page</a></p>
-
+<p><a href="index.html">← Back to H83 research status</a> · <a href="downloads/index.html">Research downloads</a></p>
+<script src="assets/tifcheck.js"></script>
 <script>
-async function validate(){
-const f=document.getElementById('tif').files[0];
-if(!f){document.getElementById('output').innerHTML='<p class="fail">No file selected</p>';return;}
-const out=[];
-out.push(`File: ${f.name}`);
-out.push(`Size: ${(f.size/1024).toFixed(1)} KB`);
-out.push('');
-out.push('Server-side validation recommended — this browser validator checks basic structure.');
-out.push('Use the portal-exact writer (gems52.grid.write_geotiff_portal_exact) for guaranteed format compliance.');
-document.getElementById('output').innerHTML='<pre>'+out.join('\n')+'</pre>';
-}
+(function () {
+  const input = document.getElementById('tif');
+  const output = document.getElementById('output');
+  document.getElementById('validate').addEventListener('click', async function () {
+    output.replaceChildren();
+    const file = input.files && input.files[0];
+    if (!file) {
+      const msg = document.createElement('p');
+      msg.className = 'bad';
+      msg.textContent = 'No file selected.';
+      output.appendChild(msg);
+      return;
+    }
+    const header = document.createElement('p');
+    header.textContent = `File: ${file.name} · ${file.size.toLocaleString()} bytes`;
+    output.appendChild(header);
+    try {
+      if (!window.GEMSTIF || typeof window.GEMSTIF.checkFile !== 'function') {
+        throw new Error('The local parser assets/tifcheck.js did not load.');
+      }
+      const result = await window.GEMSTIF.checkFile(file);
+      const summary = document.createElement('p');
+      summary.className = result.ok ? 'good' : 'bad';
+      summary.textContent = `${result.passed}/${result.total} hard format checks passed. This is not submission approval.`;
+      output.appendChild(summary);
+      const list = document.createElement('ul');
+      for (const check of result.checks) {
+        const item = document.createElement('li');
+        item.textContent = `${check.pass ? 'PASS' : 'FAIL'} — ${check.label}: got ${check.got}; expected ${check.want}${check.note ? `; ${check.note}` : ''}`;
+        list.appendChild(item);
+      }
+      output.appendChild(list);
+      const stats = document.createElement('pre');
+      stats.textContent = result.stats ? JSON.stringify({
+        sha_not_computed: 'This browser check does not compute or attest a file hash.',
+        min: result.stats.min, max: result.stats.max, finite: result.stats.finite,
+        zero: result.stats.zero, one: result.stats.one, nan: result.stats.nan,
+        infinity: result.stats.inf, compression: result.compression,
+        predictor: result.predictor, elapsed_ms: result.ms
+      }, null, 2) : 'Pixel statistics unavailable because the selected raster could not be decoded as single-band float32.';
+      output.appendChild(stats);
+      const privacy = document.createElement('p');
+      privacy.className = 'muted';
+      privacy.textContent = 'The selected bytes were processed locally in this browser. Nothing is uploaded.';
+      output.appendChild(privacy);
+    } catch (error) {
+      const msg = document.createElement('p');
+      msg.className = 'bad';
+      msg.textContent = `Local check could not complete: ${error && error.message ? error.message : error}. Nothing is uploaded.`;
+      output.appendChild(msg);
+    }
+  });
+})();
 </script>
 </body>
 </html>
