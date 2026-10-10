@@ -1,47 +1,28 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>GEMSDOE52 — H82 research status and H74S negative closeout</title>
+<title>GEMSDOE52 — H84 candidate raster and status, DOE GEMS competition #306</title>
 <style>
 body{margin:0;font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
 color:#14181d;background:#fff}
 main{max-width:760px;margin:0 auto;padding:36px 20px 70px}
 h1{font-size:26px;margin:0 0 10px}
-.v{border-radius:10px;padding:14px 16px;margin:16px 0;font-weight:700;
-background:#fdecea;color:#b3261e;
-border:1px solid #f0c4bf}
-a.b{display:inline-block;background:#1f4e79;color:#fff;text-decoration:none;font-weight:700;
-padding:13px 20px;border-radius:8px;margin:6px 8px 6px 0}
+.v{border-radius:10px;padding:14px 16px;margin:16px 0;font-weight:700;background:#fdecea;color:#b3261e;border:1px solid #f0c4bf}
+.ok{background:#e8f5e9;color:#1b5e20;border:1px solid #b7dfb9}
+a.b{display:inline-block;background:#1f4e79;color:#fff;text-decoration:none;font-weight:700;padding:13px 20px;border-radius:8px;margin:6px 8px 6px 0}
 a.s{background:#eef2f6;color:#1f4e79}
-code{background:#f2f4f7;padding:1px 5px;border-radius:4px;font-size:13.5px}
+code{background:#f2f4f7;padding:1px 5px;border-radius:4px;font-size:13.5px;word-break:break-all}
 small{color:#5b6672}
 </style></head><body><main>
-<h1>H82 candidate raster &mdash; DOE GEMS competition #306</h1>
-<div class="v">OK TO DOWNLOAD: yes
-&nbsp;&middot;&nbsp; OK TO SUBMIT: no — research artefact only</div>
-<a class="b" href="docs/downloads/h82-candidate.tif" download>Download h82-candidate.tif &#8595;</a>
-<a class="b s" href="docs/downloads/h82-candidate.zip" download>ZIP</a>
-<a class="b s" href="docs/index.html">Full site</a>
-<a class="b s" href="docs/h82-executive-summary.html">How to submit</a>
+<h1>H84 candidate raster — DOE GEMS competition #306</h1>
+<div class="v ok">OK TO DOWNLOAD: yes (format-valid, decoded-unique, research file)</div>
+<div class="v">OK TO SUBMIT: NO — the holdout does not beat random (HOLDOUT-DTI 0.0694 [0.0569, 0.0822] vs random 0.0754 [0.0675, 0.0834]). Slots used: 0.</div>
+<a class="b" href="docs/downloads/h84-candidate.tif" download>Download h84-candidate.tif &#8595;</a>
+<a class="b s" href="docs/downloads/h84-candidate.zip" download>ZIP</a>
+<a class="b s" href="docs/h84-executive-summary.html">How to submit &amp; full status</a>
 <a class="b s" href="docs/validator.html">Check a file in your browser</a>
-<p><small>140,555 bytes &middot; 37,654 emitted cells, values exactly {0,1}
-&middot; SHA-256 <code>17c3f8325ac6f267b1b8cc58bc6fd9495c118c30de64d5f78293d19d7f20c907</code> &middot; EPSG:32611, 3730&times;3292 at 100 m
-&middot; submission name <code>h82-dva2vsa-B-37654px-20261009T215811Z</code></small></p>
-<p><small>HOLDOUT-DTI (evaluator gems52-pooled-hide-v1,
-53,186 withheld positives): primary arm
-0.150591 [0.131262, 0.169201] vs control single_B 0.174910;
-paired -0.024319 [-0.039025, -0.006869]. A holdout number is never a board forecast. Verdict:
-NEGATIVE / RESEARCH-ONLY: download is safe, submission is not recommended.</small></p>
-<p><small>This page is a research artefact. It is not an organiser acceptance receipt, and it does not
-claim a leaderboard gain. Sources and verification status:
-<a href="docs/h82-sources.html">docs/h82-sources.html</a>.</small></p>
-
-<section id="h74s-closeout" style="margin-top:28px;padding:18px 20px;border:2px solid #9f1d2d;border-radius:12px;background:#fff0f1;color:#172433">
-<h2 style="margin:0 0 8px;color:#9f1d2d">H74S experiment closeout — no TIFF, no download, no slot</h2>
-<p><strong>This card is specific to the H74S run; H82 above is the later repository round.</strong> H74S completed 3 experiments in 1,652.1 seconds. Its final 5,056-dot lane returned <code>DUPLICATE/STOP</code>; the result was not waived or re-placed. <b>There is no H74S TIFF/ZIP, no selector eligibility, no organizer confirmation, and no competition slot use.</b></p>
-<p>Local <strong>HOLDOUT-DTI</strong> (<code>gems52-pooled-hide-v1</code>, 53,186 withheld positives): A-only disagreement 0.008975 [0.004699, 0.014496]. The arm underfilled one fold (1,126/1,264), so the matched comparison is invalid; no matched win is claimed. This is not a leaderboard score.</p>
-<p><strong>Registry caveat:</strong> post-run history review found parallel public-main H74/H75 rasters omitted from H74S's frozen 693-path scan. Its surface PASS is snapshot-scoped; the final-dot stop still has an in-census duplicate witness. No post-stop pixel audit or rerun was made.</p>
-<p><a class="b s" href="docs/h74s.html">Detailed H74S closeout</a> <a class="b s" href="README.md">README brief and evidence</a> <a class="b s" href="evidence/h74s_run_card.json">H74S JSON run card</a> <a class="b s" href="evidence/h74s_postfreeze_registry_notice.json">Registry coverage notice</a></p>
-</section>
-
+<a class="b s" href="docs/index.html">Research archive</a>
+<p><small>128,032 bytes · 37,654 emitted cells, values exactly {0,1}, zeros outside the footprint · EPSG:32611, 3730×3292 at 100 m · SHA-256 <code>fff75cb886ebd236af609346d1553b16623e37dc569eeda258951a3ef2cb4f44</code> · submission name <code>h84-h83conc-spaced-37654px-20261010T205209Z</code></small></p>
+<p><small>Note (108 chars): <code>H84 H83 concordance+geotherm, 3px spacing, 200m catalogue collar, binary 0/1; holdout ~random; research only</code></small></p>
+<p><small>All scores here are HOLDOUT-DTI from the local evaluator (gems52-pooled-hide-v1, 60,894 withheld positive pixels). None is ORGANIZER-CONFIRMED. The top public board score is 0.3774 (live fetch 2026-10-10); the H83 "submit yes" claim is withdrawn (IR-H84-001). Open items for review: <a href="registry/irregularities.json">registry/irregularities.json</a> IR-H84-001 to IR-H84-013.</small></p>
 </main></body></html>

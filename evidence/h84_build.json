@@ -1,0 +1,72 @@
+{
+  "round": "H84",
+  "name": "h84-h83conc-spaced-37654px-20261010T205209Z",
+  "note": "H84 H83 concordance+geotherm, 3px spacing, 200m catalogue collar, binary 0/1; holdout ~random; research only",
+  "note_chars": 108,
+  "file": "submission/gems52-h84-h83conc-spaced-37654px-20261010T205209Z.tif",
+  "file_bytes": 128032,
+  "sha256": "fff75cb886ebd236af609346d1553b16623e37dc569eeda258951a3ef2cb4f44",
+  "decoded_sha256": "b18c00457d0eb03eb5f2618c2eecc2457ef46072b5833f51fd85105895bb2c64",
+  "writer_receipt": {
+    "bytes": 128032,
+    "sha256": "fff75cb886ebd236af609346d1553b16623e37dc569eeda258951a3ef2cb4f44",
+    "dtype": "float32",
+    "crs": "EPSG:32611"
+  },
+  "spacing_stats": {
+    "n": 37654,
+    "median_px": 3.0,
+    "p10_px": 3.0,
+    "p90_px": 3.1622776601683795,
+    "share_within_1px": 0.0,
+    "share_within_2px": 0.0
+  },
+  "validator": {
+    "single_band": true,
+    "float32": true,
+    "shape_match": true,
+    "crs_match": true,
+    "transform_match": true,
+    "all_finite": true,
+    "in_0_1": true,
+    "binary": true,
+    "nodata_none": true,
+    "ones": 37654,
+    "budget_exact": true,
+    "outside_domain_zero": true,
+    "on_catalogue_zero": true,
+    "collar_respected": true,
+    "PASS": true
+  },
+  "uniqueness": {
+    "n_priors_checked": 136,
+    "n_priors_compared": 136,
+    "identical_to_a_prior": false,
+    "distinct_from_every_comparable_prior": true,
+    "audit_complete": true,
+    "equals_literal_prior_union": false,
+    "novel_fraction": 0.5548414511074521,
+    "union_px": 2001842,
+    "ok": true,
+    "relation_to_union": "strictly-novel-and-selective",
+    "candidate_decoded_sha256": "b18c00457d0eb03eb5f2618c2eecc2457ef46072b5833f51fd85105895bb2c64"
+  },
+  "overlap_with_reference": {
+    "cells_shared_with_h33_2_b2": 273,
+    "jaccard_with_h33_2_b2": 0.003638302125674685,
+    "cells_within_200m_of_catalogue": 0,
+    "min_catalogue_distance_m": 223.60679774997897,
+    "median_catalogue_distance_m": 2262.741699796952,
+    "share_within_300m_of_catalogue": 0.060737239071546184
+  },
+  "method": {
+    "family": "H83 structural concordance (grav/mag/DEM structure tensor, 3 scales) x geothermal density",
+    "arm": "h84_spaced",
+    "budget": 37654,
+    "min_spacing_px": 3.0,
+    "collar_px": 2,
+    "catalogue_for_collar": "full catalogue (submission-time only; holdout used visible-only)"
+  },
+  "holdout_reference": "evidence/h84_holdout.json (HOLDOUT-DTI, pooled, 60,894 withheld positives)",
+  "elapsed_seconds": 197.2
+}

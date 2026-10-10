@@ -1,8 +1,50 @@
-<!--H83-README-->
-# Current status — H83 (2026-10-10): UNIQUE SUBMISSION — Multi-Scale Structural Concordance + Geothermal Proximity
+<!--H84-README-->
+# Current status — H84 (2026-10-10): DOWNLOAD YES · SUBMIT NO — the holdout is negative, and so is the top-ranked new idea
 
-> **DOWNLOAD: YES** (format-valid, all-finite, binary {0,1}, 0 NaN, CRS/shape/transform verified).
-> **SUBMIT: YES — format-valid, unique approach, ready for competition upload.**
+> **DOWNLOAD: YES.** A format-valid, decoded-unique research GeoTIFF (binary {0,1}, EPSG:32611, 3,730 × 3,292, 37,654 dots at 3 px spacing, 200 m catalogue collar, all-finite zeros outside the footprint).
+> **SUBMIT: NO.** The local hide-and-recover holdout does not beat random: **HOLDOUT-DTI 0.0694 [0.0569, 0.0822]** vs random **0.0754 [0.0675, 0.0834]** (paired −0.0061 [−0.0169, +0.0056]). AGENTS.md forbids a slot without beating the comparable best, and the repo's best (H82 B_DVA2, 0.1892) is not reproducible in this checkout (IR-H84-007). **Slots used: 0.**
+> **The H83 "SUBMIT YES" claim below is withdrawn.** It was never holdout-tested, and the same method measured near random here.
+> **Top-ranked new idea, Euler deconvolution (SI 0), is also negative:** HOLDOUT-DTI **0.0777 [0.0700, 0.0857]**; paired vs random **+0.0022 [−0.0030, +0.0072]**, which spans zero.
+
+**★ [Download H84 GeoTIFF](docs/downloads/h84-candidate.tif)** · [ZIP](docs/downloads/h84-candidate.zip) · **[Executive summary / how to submit](docs/h84-executive-summary.html)** · [Check any file in your browser](docs/validator.html) · [Hypotheses and result](knowledge/74_h84_hypotheses_ranked.md) · [Run card](evidence/h84_run_card.json)
+
+- **File:** `submission/gems52-h84-h83conc-spaced-37654px-20261010T205209Z.tif`, 128,032 bytes, SHA-256 `fff75cb886ebd236af609346d1553b16623e37dc569eeda258951a3ef2cb4f44`.
+- **Submission name:** `h84-h83conc-spaced-37654px-20261010T205209Z` · **Note (108 chars):** `H84 H83 concordance+geotherm, 3px spacing, 200m catalogue collar, binary 0/1; holdout ~random; research only`
+- **Validator (decoded from disk):** single band, float32, EPSG:32611, shape and transform equal to `data/sample_submission.tif`, 0 NaN, 0 inf, values exactly {0,1}, 37,654 ones, zero outside the organiser domain, zero on the catalogue and inside the 200 m collar. **PASS.**
+- **Uniqueness:** decoded-distinct from all 136 comparable priors (`submission/`, `docs/downloads/`, `data/scored/`, `data/reference/`), not identical to any, novel fraction 0.555, not the literal union.
+- **Lane (registry gate):** surface before placement max Spearman 0.152; final dots max Spearman 0.135 (bar 0.90). Among informative priors, the largest near-3 px share is 0.269 (bar 0.70). The one raster above 0.70 is the registry's own universal-coverage probe, with 3 px coverage 0.999. `duplicate: False`.
+- **Overlap with the 0.2778 reference:** 273 shared cells, Jaccard 0.0036. Min catalogue distance 223.6 m, median 2,263 m.
+- **HOLDOUT-DTI** (`gems52-pooled-hide-v1`, α 0.2, β 0.8, R 300 m, 9,400 dots per fold, **60,894 withheld positive px**, paired cluster bootstrap, 1,000 draws, `evidence/h84_holdout.json`):
+
+| arm | HOLDOUT-DTI | 95% CI |
+|---|---:|---|
+| H84 candidate (`h84_spaced`, the file above) | 0.069372 | [0.056921, 0.082153] |
+| H83 as built (no spacing, top-k) | 0.016248 | [0.011510, 0.021711] |
+| single-view concordance only (no geothermal) | 0.073801 | [0.063043, 0.086337] |
+| random over the allowed set | 0.075429 | [0.067521, 0.083387] |
+| Euler SI 0 (`evidence/h84_euler_holdout.json`, same folds) | 0.077671 | [0.070047, 0.085658] |
+
+- **Leakage canary:** max single-feature AUC 0.558 (concordance rank 0.558, geothermal rank 0.537, concordance count 0.554) against the alarm of 0.90, so no alarm. Euler per-fold AUC 0.515–0.531, no alarm.
+- **Placement:** the 3 px spacing is verified with a KD-tree (minimum nearest-neighbour distance 3.0 px, 0 dots below it). The spacing alone is worth +0.053 DTI in this harness (paired vs the as-built top-k).
+- **Answer to "why did 0.2778 score highest" (verified this round, `knowledge/49`):** `h33-2-b2` is a strict subset of the 0.2600 file (`gems24-…d2-8…`). The 6,436 pixels it deleted are all 100–200 m from a mapped trace, so the file pays the false-positive cost on a credit-free ring and removes it. Its score rose 0.2600 → 0.2778 by deleting zero-credit mass, not by better detection. The owner-reported scores are not filename-linked; see knowledge/49 for the metric algebra.
+- **Live board (fetched 2026-10-10):** #1 `xiaofanhu` 0.3774 · #2 `JerryDataWorks` 0.3418 · #8 `DARD` 0.3195 · #22 `extradr19` 0.2778. The brief's "0.3195 is highest" is wrong (IR-H84-006).
+- **Hypotheses (ranked, `knowledge/74`):** H84-E Euler (tested, negative) · H84-T theta map (untested, overlaps implemented tilt) · H84-H hillshade lineaments (untested, overlaps implemented DEM modules) · H84-A ASTER/Landsat alteration (blocked: sandbox egress allows only GitHub, npm and PyPI, so the bulk scene cannot be downloaded here).
+- **Budget:** experiments 2 of 3; hours about 1 of 2; slots 0. Organiser-confirmed scores: none.
+- **Remaining work and limitations:** owner decision on NaN vs zeros outside the footprint (IR-H84-013); checker reconciliation (IR-H84-014); organiser-authenticated score not available (no login in sandbox); H84-B/C/D untested (H84-D blocked by egress); no ORGANIZER-CONFIRMED number exists.
+- **Irregularities for review:** `registry/irregularities.json` IR-H84-001 … IR-H84-012 (H83 claim withdrawn; H83 page links the wrong file; two H83 rasters; stale 2026-10-09 snapshot; H82 fold-set mismatch; first-build receipt bug fixed); IR-H84-013 (official format text says outside-bounds = null/NaN; this file uses zeros, as the 0.2778 champion does, open for review); IR-H84-014 (`scripts/check_site.py` reports 22 failures that already exist at HEAD ebb1d34; open).
+- **Reproduce:** `python3 scripts/restore_data.py --target-dir data` → `python scripts/run_h84_holdout.py` → `python scripts/run_h84_euler.py` → `python scripts/build_h84_submission.py` → `python scripts/check_h84_lane.py <tif>` → `python scripts/publish_h84.py`.
+
+**Standing brief, checked each session:** verify every line against official or trusted sources, provide links for manual review, make no manual inputs, flag irregularities, and avoid hallucination. Label every number HOLDOUT-DTI or ORGANIZER-CONFIRMED. Never present a projection as a score. Download and submit status must be explicit. The target is #1 on the live board (currently 0.3774), not 0.3195.
+
+---
+
+<!--/H84-README-->
+<!--H83-README-->
+# SUPERSEDED — H83 (2026-10-10): the "SUBMIT YES" claim below is WITHDRAWN
+
+> **Withdrawn (IR-H84-001).** The text below was written before any holdout run. H84 measured the same method under the shared hide-and-recover evaluator: as built 0.0162; with 3 px spacing 0.0694, against random 0.0754 (`evidence/h84_holdout.json`). **SUBMIT: NO.** The "Expected score 0.15–0.38" projection is withdrawn and was never a score. The H83 download link below serves the geotherm raster (81,076 bytes, SHA-256 `d9cfccf0…`), not the 1.5 MB concordance variant named on the H83 page (IR-H84-003).
+
+> ~~**SUBMIT: YES — format-valid, unique approach, ready for competition upload.**~~
 > This is a NEW approach using direct multi-instrument structural detection, NOT a rehash of co-training.
 > Slots used: **0** (not yet submitted).
 

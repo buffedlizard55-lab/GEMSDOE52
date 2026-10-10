@@ -1,0 +1,260 @@
+{
+  "round": "H84",
+  "hypothesis": "A top-ranked, previously untried geophysical method (windowed Euler deconvolution, SI 0, on RTP magnetics, depth-gated) and the H83 structural-concordance x geothermal candidate can rank catalogue-missing fault pixels above a random allowed-set baseline under hide-and-recover.",
+  "mechanism": "Euler solutions cluster along depth-resolved source edges (contacts/steps). Under the hide-and-recover protocol the catalogue is never an input to either detector.",
+  "named_non_fault_mimic": "Lithologic contacts and intrusive margins (Euler SI 0 is also satisfied by non-fault steps); for H83, lithology and gridding seams; for the geothermal term, springs and wells sit where thermal, not structural, processes dominate.",
+  "holdout": {
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "evidence_class": "HOLDOUT-DTI",
+    "withheld_positive_px": 60894,
+    "eligible_px": 5164300,
+    "folds": 4,
+    "budget_per_fold": 9400,
+    "bootstrap": "paired physical 20 km spatial-cluster percentile, 1000 draws",
+    "h84_spaced_primary": {
+      "dti": 0.06937168738565058,
+      "ci95": [
+        0.05692099562367985,
+        0.08215349854481827
+      ]
+    },
+    "h83_as_built_topk": {
+      "dti": 0.01624840984664789,
+      "ci95": [
+        0.011509964971172501,
+        0.021711440157803165
+      ]
+    },
+    "concordance_only": {
+      "dti": 0.0738011378994489,
+      "ci95": [
+        0.06304329978734834,
+        0.08633672639039432
+      ]
+    },
+    "random": {
+      "dti": 0.07542931475702548,
+      "ci95": [
+        0.06752074006914813,
+        0.08338708462776773
+      ]
+    },
+    "paired_h84_minus_random": {
+      "delta": -0.006057627371374899,
+      "ci95": [
+        -0.01693646353457679,
+        0.005595451222738565
+      ]
+    },
+    "paired_h84_minus_concordance_only": {
+      "delta": -0.004429450513798311,
+      "ci95": [
+        -0.013279724962093202,
+        0.004193121238848083
+      ]
+    },
+    "paired_h84_minus_h83_topk": {
+      "delta": 0.05312327753900269,
+      "ci95": [
+        0.042936416942930135,
+        0.06403973450578007
+      ]
+    },
+    "euler_SI0": {
+      "dti": 0.07767092582055929,
+      "ci95": [
+        0.07004706856399823,
+        0.08565771168185067
+      ],
+      "paired_minus_random": {
+        "delta": 0.0022416110635338077,
+        "ci95": [
+          -0.002959693223528892,
+          0.007249074897071975
+        ]
+      },
+      "evaluator_version": "gems52-pooled-hide-v1",
+      "withheld_positive_px": 60894
+    }
+  },
+  "leakage_canary": {
+    "threshold_auc": 0.9,
+    "h84_features_max_auc": {
+      "concordance_rank": 0.5582492700099655,
+      "geothermal_rank": 0.5365203345749059,
+      "concordance_count": 0.5541667247240266
+    },
+    "h84_alarm": false,
+    "euler_max_fold_auc": 0.5310408169824317,
+    "euler_alarm": false
+  },
+  "lane_and_overlap": {
+    "rank_correlation_bar": 0.9,
+    "near_dot_bar": 0.7,
+    "near_radius_px": 3.0,
+    "surface_before_placement_max_spearman": 0.15240721661252749,
+    "final_dots_max_spearman": 0.1348188868025884,
+    "final_dots_max_near3px_informative": 0.2684708131938174,
+    "final_dots_max_near3px_informative_prior": "gems52-h53-coincidence-gated-singles-37654px-r1.tif",
+    "universal_coverage_probes": [
+      "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif"
+    ],
+    "duplicate_flag": false,
+    "lane_ok": true,
+    "priors_checked": 136,
+    "priors_distinct_decoded": 65,
+    "uniqueness": {
+      "n_priors_checked": 136,
+      "n_priors_compared": 136,
+      "identical_to_a_prior": false,
+      "distinct_from_every_comparable_prior": true,
+      "audit_complete": true,
+      "equals_literal_prior_union": false,
+      "novel_fraction": 0.5548414511074521,
+      "union_px": 2001842,
+      "ok": true,
+      "relation_to_union": "strictly-novel-and-selective",
+      "candidate_decoded_sha256": "b18c00457d0eb03eb5f2618c2eecc2457ef46072b5833f51fd85105895bb2c64"
+    },
+    "overlap_with_h33_2_b2": {
+      "cells_shared_with_h33_2_b2": 273,
+      "jaccard_with_h33_2_b2": 0.003638302125674685,
+      "cells_within_200m_of_catalogue": 0,
+      "min_catalogue_distance_m": 223.60679774997897,
+      "median_catalogue_distance_m": 2262.741699796952,
+      "share_within_300m_of_catalogue": 0.060737239071546184
+    },
+    "note": "Spearman and near-3px are measured against every aligned prior in submission/, docs/downloads/, data/scored/ and data/reference/. The only raster above 0.70 near-3px is the registry's own universal-coverage probe, whose 3 px coverage is 0.999 (a property of the probe, see gates.registry_coverage)."
+  },
+  "raster": {
+    "path": "submission/gems52-h84-h83conc-spaced-37654px-20261010T205209Z.tif",
+    "sha256": "fff75cb886ebd236af609346d1553b16623e37dc569eeda258951a3ef2cb4f44",
+    "decoded_sha256": "b18c00457d0eb03eb5f2618c2eecc2457ef46072b5833f51fd85105895bb2c64",
+    "bytes": 128032,
+    "download_copy": "docs/downloads/h84-candidate.tif",
+    "download_zip": "docs/downloads/h84-candidate.zip"
+  },
+  "validator": {
+    "single_band": true,
+    "float32": true,
+    "shape_match": true,
+    "crs_match": true,
+    "transform_match": true,
+    "all_finite": true,
+    "in_0_1": true,
+    "binary": true,
+    "nodata_none": true,
+    "ones": 37654,
+    "budget_exact": true,
+    "outside_domain_zero": true,
+    "on_catalogue_zero": true,
+    "collar_respected": true,
+    "PASS": true
+  },
+  "submission_name": "h84-h83conc-spaced-37654px-20261010T205209Z",
+  "note": "H84 H83 concordance+geotherm, 3px spacing, 200m catalogue collar, binary 0/1; holdout ~random; research only",
+  "note_chars": 108,
+  "spacing": {
+    "n": 37654,
+    "median_px": 3.0,
+    "p10_px": 3.0,
+    "p90_px": 3.1622776601683795,
+    "share_within_1px": 0.0,
+    "share_within_2px": 0.0
+  },
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "submit_reason": "HOLDOUT-DTI 0.0694 [0.0569, 0.0822] is statistically indistinguishable from random (0.0754 [0.0675, 0.0834]; paired delta -0.0061 [-0.0169, +0.0056]) and far below the repository's comparable holdout best (B_DVA2 0.1892, a different fold set; see IR-H84-007). AGENTS.md forbids a slot unless the candidate beats that best.",
+  "slots_used": 0,
+  "verdict": "negative",
+  "experiments_used": 2,
+  "experiment_budget": 3,
+  "hours_budget": 2,
+  "organizer_confirmed_scores": [],
+  "evidence_class_note": "Every score here is HOLDOUT-DTI (local evaluator) or a projection; none is ORGANIZER-CONFIRMED. Public board numbers quoted elsewhere are OWNER-REPORTED or PUBLIC-BOARD and are not filename-linked.",
+  "receipts": [
+    "evidence/h84_holdout.json",
+    "evidence/h84_euler_holdout.json",
+    "evidence/h84_build.json",
+    "evidence/h84_lane.json",
+    "knowledge/74_h84_hypotheses_ranked.md"
+  ],
+  "second_experiment_h84_e_euler": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "structural_index": 0,
+    "source_basis": "Reid & Thurston 2014 Table 1: SI 0 for infinite contact/fault; Reid et al. 1990 Euler method (doi 10.1190/1.1442774)",
+    "result_file": "evidence/h84_euler_holdout.json",
+    "pooled": {
+      "evidence_class": "HOLDOUT-DTI",
+      "evaluator_version": "gems52-pooled-hide-v1",
+      "alpha": 0.2,
+      "beta": 0.8,
+      "triangular_radius_m": 300.0,
+      "pooled": true,
+      "scores": {
+        "euler_SI0": {
+          "evidence_class": "HOLDOUT-DTI",
+          "evaluator_version": "gems52-pooled-hide-v1",
+          "dti": 0.07767092582055929,
+          "ci95": [
+            0.07004706856399823,
+            0.08565771168185067
+          ],
+          "withheld_positive_pixels": 60894,
+          "tpw": 4406.745802596196,
+          "fpw": 35697.779184125655,
+          "fnw": 56487.25419740378
+        },
+        "random": {
+          "evidence_class": "HOLDOUT-DTI",
+          "evaluator_version": "gems52-pooled-hide-v1",
+          "dti": 0.07542931475702548,
+          "ci95": [
+            0.06752074006914813,
+            0.08338708462776773
+          ],
+          "withheld_positive_pixels": 60894,
+          "tpw": 4282.067170560757,
+          "fpw": 35988.285163027525,
+          "fnw": 56611.93282943924
+        }
+      },
+      "best_comparable_control": "random",
+      "paired_differences": {
+        "random": {
+          "evidence_class": "HOLDOUT-DTI",
+          "evaluator_version": "gems52-pooled-hide-v1",
+          "delta": 0.0022416110635338077,
+          "ci95": [
+            -0.002959693223528892,
+            0.007249074897071975
+          ],
+          "withheld_positive_pixels": 60894
+        }
+      },
+      "bootstrap": {
+        "method": "paired physical spatial-cluster percentile",
+        "clusters": 161,
+        "draws": 1000,
+        "seed": 84001,
+        "confidence": 0.95,
+        "caveat": "Conditional on fitted folds, catalogue labels and fixed budgets; not a leaderboard interval."
+      },
+      "implementation_sha256": {
+        "evaluate_holdout.py": "ffb084fdf34bb30438485b89caeb1228a6680abfd9f9f0472f4355845da05cc6",
+        "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+        "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+        "spatial.py": "fad7b09db9efc512247b9a176a7e7ce8631e287592b4e07902d0b9c38bed00f8"
+      }
+    },
+    "canary_max_auc": 0.5310408169824317,
+    "canary_alarm": false,
+    "verdict": "negative: does not beat random; paired delta spans zero; not promoted",
+    "fault_or_contact_mimic_note": "SI 0 windows fit contacts and steps; the mimic risk is not tested beyond the holdout"
+  },
+  "note_on_budget": "Budget 3 experiments / 2 h; used 2 experiments. No third experiment was run.",
+  "irregularities_added": [
+    "IR-H84-001..IR-H84-014"
+  ]
+}
