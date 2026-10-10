@@ -1,0 +1,20 @@
+{
+ "stage": "lane_scored_only",
+ "round": "H83",
+ "registry": "data/scored/*.tif + data/reference/h33-2-b2-zeros.tif",
+ "n_priors": 13,
+ "surface": {
+  "literal": "PASS",
+  "policy": "PASS",
+  "max_spearman": 0.05340512001126167
+ },
+ "dots": {
+  "literal": "DUPLICATE/STOP",
+  "policy": "PASS",
+  "max_near_share": 1.0,
+  "policy_max_near_share": 0.5438997184894035,
+  "max_near_source": "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+  "n_offenders": 1,
+  "universal_coverage_probes": 1
+ }
+}

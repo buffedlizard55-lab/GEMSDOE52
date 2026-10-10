@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEMSDOE52 · H94 · download yes (audit), submit NO</title>
+<style>
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f1117;color:#e8eaed;line-height:1.6}
+.c{max-width:900px;margin:0 auto;padding:24px 20px}
+h1{color:#4fc3f7;font-size:1.6rem} h2{color:#4fc3f7;font-size:1.15rem;margin:24px 0 8px;border-bottom:1px solid #2d3040;padding-bottom:4px}
+a{color:#4fc3f7} code{background:#1e2130;padding:2px 6px;border-radius:3px;word-break:break-all}
+table{width:100%;border-collapse:collapse;font-size:0.92rem;margin:8px 0} th,td{padding:6px 9px;border-bottom:1px solid #2d3040;text-align:left;vertical-align:top} th{color:#4fc3f7}
+.no{color:#ef5350;font-weight:700} .yes{color:#66bb6a;font-weight:700} .muted{color:#9aa0a6;font-size:0.88rem}
+</style></head><body><div class="c">
+<p><a href="index.html">← status</a> · <a href="executive-summary.html">submission guide</a></p>
+<h1>H94 · co-training, strict A-confident / B-abstain</h1>
+<p class="muted">Round H94 (frozen protocol label H88, see knowledge/90) · 2026-10-10 · branch arena/411239c1-gemsdoe52 · evaluator gems52-pooled-hide-v1</p>
+<p><strong>Download for audit: <span class="yes">YES</strong> · Submit: <span class="no">NO</span> · Verdict: <span class="no">NEGATIVE</span>.</strong></p>
+
+<h2>Why this file is not submitted</h2>
+<ol style="margin-left:20px">
+<li><strong>Holdout.</strong> The candidate scores 0.063055 [0.049134, 0.078135] (HOLDOUT-DTI, 60,894 withheld positives). Random scores 0.076551. The candidate is 0.013496 below random, and the CI on that difference is [-0.026299, 0.001016]. It is significantly below single view A.</li>
+<li><strong>Lane, final dots.</strong> DUPLICATE/STOP. 97.46% of the dots lie within 3 px of the dots of <code>gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.tif</code> (the H87 file). 8 informative registry rasters exceed the 70% limit. Per the protocol, the round stops here; the lane is not retuned.</li>
+</ol>
+<p>Passing: the surface lane check (max Spearman 0.2216 against the 0.90 limit, 0 offenders); the format validator (12 of 12 checks PASS); decoded-pixel uniqueness (max Jaccard 0.128193, identical copies 0).</p>
+
+<h2>Holdout (HOLDOUT-DTI)</h2>
+<table><tr><th>arm</th><th>DTI</th><th>95% CI</th></tr><tr><td>H94 strict co-training (candidate)</td><td>0.063055</td><td>[0.049134, 0.078135]</td></tr><tr><td>single view A (baseline)</td><td>0.074611</td><td>[0.059380, 0.091743]</td></tr><tr><td>single view B (baseline)</td><td>0.054771</td><td>[0.042546, 0.066783]</td></tr><tr><td>S_BA control</td><td>0.054520</td><td>[0.042458, 0.066336]</td></tr><tr><td>random (same allowed set)</td><td>0.076551</td><td>[0.068175, 0.084557]</td></tr><tr><td>H87 as-built rule</td><td>0.056889</td><td>[0.043563, 0.071325]</td></tr></table>
+<table><tr><th>paired difference</th><th>Δ DTI</th><th>95% CI</th></tr><tr><td>candidate minus random</td><td>-0.013496</td><td>[-0.026299, 0.001016]</td></tr><tr><td>candidate minus single A</td><td>-0.011556</td><td>[-0.019032, -0.004848]</td></tr><tr><td>candidate minus single B</td><td>+0.008284</td><td>[-0.009246, 0.029358]</td></tr><tr><td>candidate minus H87 as-built</td><td>+0.006166</td><td>[0.001185, 0.011410]</td></tr></table>
+<p class="muted">Bar from the H84 instrument: 0.192829 (a different fold set, 53,186 withheld; IR-H94-002). Candidate is far below it.</p>
+
+<h2>The file</h2>
+<table>
+<tr><th>file</th><td><code>docs/downloads/gems52-h88-cotrain-strict-AB-37654px-20261010T220328Z.tif</code> · 795,844 bytes</td></tr>
+<tr><th>SHA-256</th><td><code>794b3814b63cdcd880395f5a632cfe0f3b28642b3fdb337ca0315a4722c0ccdd</code></td></tr>
+<tr><th>ZIP</th><td><code>docs/downloads/gems52-h88-cotrain-strict-AB-37654px-20261010T220328Z.zip</code> · 154,700 bytes · SHA-256 <code>ce246de6f0cc05fefe27046efa69bc0d2d8a10081f2430572d3165613d69c974</code></td></tr>
+<tr><th>format</th><td>float32, one band, EPSG:32611, 3730 rows × 3292 columns, values in [0, 1], zeros outside the footprint; 37,654 ones</td></tr>
+<tr><th>validator</th><td>12 of 12 checks PASS (evidence/h94_validator.json)</td></tr>
+<tr><th>name (prepared, not submitted)</th><td><code>h88-cotrain-strict-AB-37654px</code></td></tr>
+<tr><th>note (prepared, not submitted, 77 characters)</th><td><code>H88 cotrain A-conf/B-abstain stratum, 3px spacing, 200m collar, zeros outside</code></td></tr>
+</table>
+<p><a class="muted" href="downloads/gems52-h88-cotrain-strict-AB-37654px-20261010T220328Z.tif" download>Download the .tif (audit only)</a> · <a class="muted" href="downloads/gems52-h88-cotrain-strict-AB-37654px-20261010T220328Z.zip" download>Download the .zip</a></p>
+
+<h2>Non-union check and A-only candidates</h2>
+<p>93.7% of the dots lie outside the union of the top-K View A and top-K View B sets; 100% lie in the strict stratum. The output is therefore not mainly the union of the two views.</p>
+<p>A-only cluster table: <a href="downloads/h94-a-only-reasoning.csv">h94-a-only-reasoning.csv</a>. The mechanisms in that table are <strong>UNREVIEWED</strong> templates, not geological conclusions.</p>
+
+<h2>Placement</h2>
+<p>Placement is <code>gems52.nodes.spacing_select</code> at 3 px, placed 37,654, 200 m collar; fallback dots 0. The H94 placement ablation was <strong>not run</strong> this round (the H85 instrument ablation is in knowledge/78 §2).</p>
+
+<h2>Run card and records</h2>
+<ul style="margin-left:20px">
+<li><a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/evidence/h94_run_card.json">evidence/h94_run_card.json</a> (one JSON card for the round)</li>
+<li><a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/91_h94_results_and_limits.md">knowledge/81 · results and limits</a></li>
+<li><a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/92_h94_hypotheses_ranked.md">knowledge/82 · next hypotheses</a></li>
+<li><a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/registry/irregularities.json">registry/irregularities.json (IR-H94-001 to 007)</a></li>
+</ul>
+<p class="muted">No organiser score exists for this file. Slots used: 0. Experiments used: 1 of 3.</p>
+</div></body></html>

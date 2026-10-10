@@ -99,13 +99,17 @@ def main() -> int:
         '<a href="docs/downloads/h87-candidate.tif">Download H87 GeoTIFF</a> &middot; '
         '<a href="docs/h87-executive-summary.html">H87 executive summary</a> &middot; '
         'Not ORGANIZER-CONFIRMED.</div>')
-    if "Round H87" not in text:
-        text = text.replace('<div style="background:#eef6ff;', banner + '<div style="background:#eef6ff;', 1)
+    if "Round H87 board inversion" not in text:
+        if '<div style="background:#eef6ff;' in text:
+            text = text.replace('<div style="background:#eef6ff;',
+                                banner + '<div style="background:#eef6ff;', 1)
+        else:
+            text = text.replace("<body>", "<body>\n" + banner, 1)
     text = re.sub(r"<title>[^<]*</title>",
                   "<title>GEMSDOE52 &mdash; DOE GEMS competition #306 &mdash; H87 board-score "
                   "inversion, marginal-rule placement, explicit submission status</title>", text, count=1)
     section = (
-        '<section id="h87" style="margin-bottom:26px;padding:18px 20px;border:2px solid #1f4e79;'
+        '<section id="h87bi" style="margin-bottom:26px;padding:18px 20px;border:2px solid #1f4e79;'
         'border-radius:12px;background:#f5f9ff">\n'
         '<h1 style="margin:0 0 8px">H87 candidate raster &mdash; DOE GEMS competition #306</h1>\n'
         f'<p style="margin:0 0 8px"><b>Download: {"yes" if dl == "YES" else "no"} &middot; Submit: no</b> '
@@ -125,18 +129,103 @@ def main() -> int:
         '(model, never a score) ' + fnum(real["H87_candidate"]["mean"], 4) + ' against 3 truth '
         'realisations drawn from the fitted density, champion reference ' +
         fnum(real["ref_h33_2_b2"]["mean"], 4) + ' on the same draws &middot; slots used 0 &middot; no '
-        'organiser receipt. <a href="knowledge/80_h87_board_inversion_2026-10-10.md">H87 method, '
+        'organiser receipt. <a href="knowledge/82_h87_board_inversion_2026-10-10.md">H87 method, '
         'result and limitations</a>.</small></p>\n</section>\n')
-    if 'id="h87"' not in text:
+    if 'id="h87bi"' not in text:
         text = text.replace('<main>\n', '<main>\n' + section, 1)
     idx_w = (idx, text)
 
     # ------------------------------------------------------------------ docs/index.html (H84 block)
     di = DOCS / "index.html"
     d = di.read_text()
+    if "<!--H87BI-CARD-->" not in d and ("<!--/H95-CARD-->" in d or "<!--ARCHIVE-START-->" in d):
+        card = """<!--H87BI-CARD-->
+<section class="hero" style="margin-top:22px"><div>
+<div class="eyebrow">DOE GEMS #306 / H87 board-score inversion &middot; a DIFFERENT round from the
+H87 co-train-wavelength card above &middot; 2026-10-10</div>
+<h2 style="margin:.3rem 0">H87 board inversion &mdash; download yes, submit no</h2>
+<p>Thirteen owner-reported public-board scores were inverted through the metric&rsquo;s exact linear
+form for the hidden truth density: <b>|G| = """ + f"{fit['G_fit']:,.1f}" + """</b> truth pixels (a third
+independent pin), leave-one-out score MAE """ + fnum(fit["loo"]["mae"], 5) + """, Spearman """ + fnum(fit["loo"]["spearman"], 4) + """.
+The mass lands on the owner&rsquo;s own family consensus (""" + f"{fit['weights'].get('FAM_family_consensus', 0):,.0f}" + """, 69.3%) and the
+catalogue (""" + f"{fit['weights'].get('CAT_catalogue', 0):,.0f}" + """, 30.7%); <b>every physical, external and disagreement basis
+received weight zero</b>. Dots were then placed by the metric&rsquo;s own marginal rule (add iff exact
+marginal credit c &gt; 0.2&middot;DTI) as a shared tested tool, so the budget is derived: <b>""" + f"{npx:,}" + """
+cells</b>. HOLDOUT-DTI """ + fnum(cand["dti"]) + """ [""" + fnum(cand["ci95"][0]) + """, """ + fnum(cand["ci95"][1]) + """] vs random
+""" + fnum(rnd["dti"]) + """, paired """ + f"{delta['delta']:+.6f}" + """ [""" + fnum(delta["ci95"][0]) + """, """ + fnum(delta["ci95"][1]) + """] &mdash; excludes zero,
+but fold 0 loses and the incumbent is not beaten. PREDICTED-BOARD on three truth realisations puts the
+candidate """ + fnum(real["H87_candidate"]["mean"] - real["ref_h33_2_b2"]["mean"], 4) + """ <em>below</em> the 0.2778 champion, and the model inverts the top of
+the ladder. <b>IR-H87-001:</b> the 13 owner-scored rasters&rsquo; 3 px halos cover 108.6% of the
+footprint, so the literal lane rule is unsatisfiable for ANY non-empty emission here (a random
+emission scores """ + fnum(gt["lane_dots"]["random_control"]["literal"]["max_near_3px_fraction"], 4) + """ against the candidate&rsquo;s """ + fnum(lane_near, 4) + """); reported, not waived.
+Decoded-pixel uniqueness PASSES against """ + str(gt["uniqueness"]["n_priors_checked"]) + """ local priors (novel fraction """ + fnum(gt["uniqueness"]["novel_fraction"], 4) + """).
+Slots used 0. Nothing ORGANIZER-CONFIRMED.</p>
+<p><a class="button" href="downloads/h87-candidate.tif" download>Download the H87 GeoTIFF &#8595;</a>
+<a class="button secondary" href="downloads/h87-candidate.zip" download>Single-TIFF ZIP</a>
+<a class="button secondary" href="h87-executive-summary.html">H87 executive summary / how to submit</a>
+<a class="button secondary" href="../knowledge/82_h87_board_inversion_2026-10-10.md">Method, receipts, limitations</a></p>
+<p class="fileline">""" + f"{wr['bytes']:,}" + """ bytes &middot; SHA-256 <code>""" + sha + """</code> &middot; name
+<code>""" + name + """</code> &middot; note (""" + str(wr["note_chars"]) + """/140): <code>""" + note + """</code></p>
+</div></section>
+<!--/H87BI-CARD-->
+"""
+        anchor = "<!--/H95-CARD-->" if "<!--/H95-CARD-->" in d else "<!--ARCHIVE-START-->"
+        d2 = d.replace(anchor, anchor + "\n" + card, 1)
+        print(f"{'WOULD WRITE' if check else 'wrote'}: docs/index.html (H87 card appended after "
+              f"{anchor}, no published round overwritten)")
+        if not check:
+            di.write_text(d2)
+    if "<!--H84-CURRENT-->" not in d:
+        # main has moved on: a later round (H95, run as H88) replaced the marked current-round block
+        # and its markers. Do not overwrite a published round and do not invent a new marker that
+        # scripts/check_site.py does not know about. H87 stays on the root landing page, in its own
+        # executive summary, in the downloads index and in knowledge/82.
+        print("skipped: docs/index.html no longer carries the H84 current-round markers on main")
+        write_summary(check)
+        import re as _re
+        dli = DOCS / "downloads" / "index.html"
+        dt = dli.read_text()
+        row = ('<tr><td><code>h87-candidate.tif</code></td><td>' + f"{wr['bytes']:,}" +
+               '</td><td><code>' + sha[:24] + '&hellip;</code></td><td>H87 board-inverted density, '
+               'marginal-rule placement, ' + f"{npx:,}" + ' cells. <b>NOT approved for upload</b> '
+               '&mdash; research artefact; lane rule fires on a provably saturated registry '
+               '(IR-H87-001).</td><td><a href="h87-candidate.tif" download>TIF</a> &middot; '
+               '<a href="h87-candidate.zip" download>ZIP</a> &middot; <a href="' +
+               Path(rs["file"]).name + '" download>reasoning CSV</a></td></tr>')
+        if "h87-candidate.tif" not in dt:
+            m = _re.search(r"(</tbody>)", dt)
+            dt = dt[:m.start(1)] + row + dt[m.start(1):]
+        dli_w = (dli, dt)
+        for path, new in (idx_w, dli_w):
+            old_text = path.read_text()
+            if old_text == new:
+                print(f"unchanged: {path.relative_to(ROOT)}")
+                continue
+            print(f"{'WOULD WRITE' if check else 'wrote'}: {path.relative_to(ROOT)}")
+            if not check:
+                path.write_text(new)
+        return 0
     s = d.index("<!--H84-CURRENT-->")
     e = d.index("<!--/H84-CURRENT-->")
     blk = d[s:e]
+    if "H87" not in blk and "H84" not in blk.split("<h1>")[0] + blk[:2000]:
+        # another round has taken the marked current-round block on main since this script was
+        # written (H95, run as H88). Do not overwrite a published round: H87 stays on the root
+        # landing page, in its own executive summary, in the downloads index and in knowledge/82.
+        print("skipped: docs/index.html current-round block now belongs to a later round on main")
+        blk_new = blk
+        d2 = d
+        di_w = (di, d2)
+        write_summary(check)
+        for path, new in [(idx_w[0], idx_w[1]), (dli_w[0], dli_w[1])]:
+            old_text = path.read_text()
+            if old_text == new:
+                print(f"unchanged: {path.relative_to(ROOT)}")
+                continue
+            print(f"{'WOULD WRITE' if check else 'wrote'}: {path.relative_to(ROOT)}")
+            if not check:
+                path.write_text(new)
+        return 0
     hero_new = '''<!--H84-CURRENT-->
 <section class="hero"><div>
 <div class="eyebrow">DOE GEMS #306 / H87 &middot; inversion of thirteen owner-reported public-board
@@ -158,7 +247,7 @@ ring-deletion 14,088.7 and the lattice-coverage 12,367 &mdash; with leave-one-ou
 <b>''' + weights + '''</b>; every physical layer and both disagreement bases get <b>weight zero</b> (''' + zeroed + ''').
 Placement then needs no hand-chosen budget: a dot is added iff its exact marginal credit clears
 <code>0.2&middot;DTI</code>, which self-terminates at ''' + f"{npx:,}" + ''' cells. Method, receipts and limitations:
-<a href="../knowledge/80_h87_board_inversion_2026-10-10.md">knowledge/80</a>. How to submit, and the [0,1]
+<a href="../knowledge/82_h87_board_inversion_2026-10-10.md">knowledge/82</a>. How to submit, and the [0,1]
 fix: <a href="h87-executive-summary.html">h87-executive-summary.html</a>.</p>
 </div></section>
 <hr class="divider">

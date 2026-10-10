@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEMSDOE52 — H93 run card</title>
+<style>
+:root{--bg:#0f1117;--fg:#e8eaed;--accent:#4fc3f7;--ok:#66bb6a;--warn:#ffa726;--err:#ef5350;--card:#1a1d27;--border:#2d3040}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--fg);line-height:1.6;padding:0}
+.container{max-width:940px;margin:0 auto;padding:24px 20px}
+h1{font-size:1.8rem;margin-bottom:8px;color:var(--accent)}
+h2{font-size:1.3rem;margin:28px 0 12px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px}
+h3{font-size:1.1rem;margin:20px 0 8px}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+code{background:#1e2130;padding:2px 6px;border-radius:3px;font-size:0.9em}
+.download-box{background:linear-gradient(135deg,#1a237e,#0d47a1);border:2px solid var(--accent);border-radius:12px;padding:28px;margin:20px 0;text-align:center}
+.download-box h2{color:#fff;border:none;margin:0 0 12px;font-size:1.5rem}
+.download-box p{color:#b3e5fc;margin:8px 0}
+.btn{display:inline-block;background:var(--accent);color:#000;font-weight:700;padding:14px 32px;border-radius:8px;font-size:1.1rem;margin:8px;transition:all .2s}
+.btn:hover{background:#81d4fa;text-decoration:none;transform:translateY(-1px)}
+.btn-zip{background:#78909c;color:#fff}
+.btn-zip:hover{background:#90a4ae}
+.banner{border-radius:10px;padding:16px 20px;margin:16px 0;font-size:1.05rem;font-weight:600}
+.banner-ok{background:#10331a;border:2px solid var(--ok);color:#a5d6a7}
+.banner-no{background:#3a1214;border:2px solid var(--err);color:#ef9a9a}
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:18px;margin:12px 0}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:0.9rem}
+th,td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--border)}
+th{color:var(--accent);font-weight:600}
+.pass{color:var(--ok);font-weight:700}
+.fail{color:var(--err);font-weight:700}
+.warn{color:var(--warn);font-weight:700}
+.pill{display:inline-block;padding:2px 10px;border-radius:12px;font-size:0.8rem;font-weight:600}
+.pill-ok{background:#1b5e20;color:#a5d6a7}
+.pill-err{background:#4a1012;color:#ef9a9a}
+.pill-warn{background:#4a2800;color:#ffcc80}
+.copy-box{background:#1e2130;border:1px solid var(--border);border-radius:6px;padding:12px 16px;font-family:monospace;font-size:0.9rem;margin:8px 0;word-break:break-all}
+.footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--border);font-size:0.85rem;color:#777}
+details{margin:18px 0}
+summary{cursor:pointer;color:var(--accent);font-weight:600}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>H93 run card (all receipts)</h1>
+<p><a href="index.html">← back to the download page</a></p>
+<pre style="background:var(--card);padding:16px;border-radius:8px;overflow:auto;font-size:0.8rem">{
+ "round": "H93",
+ "generated_utc": "2026-10-10T22:39:37+00:00",
+ "hypothesis": "Antithetic / sign-asymmetric basement steps (band 15) add a subsurface channel the surface view lacks; co-training lane with disagreement strata.",
+ "mechanism": "Signed one-sided step |dz+|-|dz-| at 100/300 m and opposite-sign paired steps ~600 m apart locate half-graben margin / buried range-front faults with basement throw but no surface expression; the four ABS channels join View B in one learner; emission from the stitched OOF field outside the 200 m catalogue ring at 3 px spacing.",
+ "non_fault_process": "Differential compaction over buried lithologic steps, palaeo-channel incision into basement, and interpolation/smoothing artefacts of the model-derived basement-depth grid (band 15).",
+ "holdout_dti": {
+  "single_B": {
+   "dti": 0.17457135886487102,
+   "ci95": [
+    0.1523129808950829,
+    0.19630189491073133
+   ],
+   "withheld_positive_pixels": 53186
+  },
+  "B_ABS": {
+   "dti": 0.1779297902033208,
+   "ci95": [
+    0.15774782690442016,
+    0.19935627463495198
+   ],
+   "withheld_positive_pixels": 53186
+  },
+  "ABS_only": {
+   "dti": 0.09162778719012123,
+   "ci95": [
+    0.07923196845976684,
+    0.10384585081997633
+   ],
+   "withheld_positive_pixels": 53186
+  },
+  "disagree_Aonly": {
+   "dti": 0.0353013913907809,
+   "ci95": [
+    0.027765083906724136,
+    0.04416659582192433
+   ],
+   "withheld_positive_pixels": 53186
+  },
+  "random": {
+   "dti": 0.08042564781050282,
+   "ci95": [
+    0.0702226099128376,
+    0.09097325665223467
+   ],
+   "withheld_positive_pixels": 53186
+  }
+ },
+ "paired_B_ABS_minus_single_B": {
+  "evidence_class": "HOLDOUT-DTI",
+  "evaluator_version": "gems52-pooled-hide-v1",
+  "delta": 0.003358431338449791,
+  "ci95": [
+   -0.00166758078023631,
+   0.008780455416599423
+  ],
+  "withheld_positive_pixels": 53186
+ },
+ "promote_rule_met": {
+  "ci_lower_bound_gt_0": false,
+  "canaries_pass": true,
+  "independence_pass": true,
+  "union_check_pass": true
+ },
+ "independence": {
+  "max_abs_rho": 0.13368507450035322,
+  "threshold": 0.6,
+  "allow_exchange": true,
+  "note": "run_h61 block-level negative-error correlation"
+ },
+ "exchange": {
+  "total_pseudo_pixels": 15441,
+  "rule": "measured only, never shipped (N-1 settled)"
+ },
+ "correlation_vs_registry": {
+  "surface": {
+   "literal_max_spearman": 0.18553486655835172,
+   "literal_max_near3": null,
+   "literal_near3_offender": null,
+   "literal_verdict": "PASS",
+   "policy_max_spearman": 0.18553486655835172,
+   "policy_max_near3": null,
+   "policy_near3_offender": null,
+   "policy_verdict": "PASS",
+   "n_probes": 1
+  },
+  "dots": {
+   "literal_max_spearman": 0.2480985407452929,
+   "literal_max_near3": 1.0,
+   "literal_near3_offender": "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+   "literal_verdict": "DUPLICATE/STOP",
+   "policy_max_spearman": 0.2480985407452929,
+   "policy_max_near3": 0.7275189886864609,
+   "policy_near3_offender": "/home/user/GEMSDOE52/submission/gems52-h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z.tif",
+   "policy_verdict": "DUPLICATE/STOP",
+   "n_probes": 1
+  },
+  "literal_rule": "STOP at rank>0.90 or near3>0.70 vs ONE raster",
+  "probe_caveat": "universal-coverage probes make literal near3 ~1 for ANY nonempty raster; policy numbers exclude them; both are reported"
+ },
+ "union_not": {
+  "jaccard_vs_union_max": 0.07467333095323099,
+  "jaccard_vs_single_A": 0.0059350354230717816,
+  "jaccard_vs_single_B": 0.11451082610112259
+ },
+ "raster": {
+  "path": "/home/user/GEMSDOE52/docs/downloads/gems52-h93-abs-cotrain-37654px-20261010T223629Z-zeros.tif",
+  "sha256": "b37c2dc8e5ad4bde121edb7ef21b4e05c2d9d2ceebfe8604180627866b726759",
+  "bytes": 795526,
+  "ones": 37654,
+  "values": "{0,1}"
+ },
+ "validator": {
+  "format": {
+   "path": "/home/user/GEMSDOE52/submission/gems52-h93-abs-cotrain-37654px-20261010T223629Z-zeros.tif",
+   "bytes": 795526,
+   "sha256": "b37c2dc8e5ad4bde121edb7ef21b4e05c2d9d2ceebfe8604180627866b726759",
+   "bands": 1,
+   "dtype": "float32",
+   "crs": "EPSG:32611",
+   "width": 3292,
+   "height": 3730,
+   "bounds": [
+    243350.0,
+    4135550.0,
+    572550.0,
+    4508550.0
+   ],
+   "ref_bounds": [
+    243350.0,
+    4135550.0,
+    572550.0,
+    4508550.0
+   ],
+   "transform": [
+    100.0,
+    0.0,
+    243350.0,
+    0.0,
+    -100.0,
+    4508550.0
+   ],
+   "nodata": null,
+   "blocksize": [
+    1,
+    3292
+   ],
+   "fixture_grid": false,
+   "has_validity_mask": false,
+   "nan_pixels": 0,
+   "infinity_pixels": 0,
+   "n_nan": 0,
+   "min": 0.0,
+   "max": 1.0,
+   "mean": 0.0030664964579045773,
+   "n_nonzero": 37654,
+   "mass": 37654.0,
+   "problems": [],
+   "ok": true,
+   "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "all_finite": true,
+  "values_in_0_1": true,
+  "nan_inside_footprint": 0,
+  "crs_shape_transform_match": true
+ },
+ "uniqueness": {
+  "n_priors_checked": 147,
+  "identical_to_a_prior": false,
+  "distinct_from_every_comparable_prior": true,
+  "novel_fraction": 0.22990917299622882
+ },
+ "submission_name": "h93-abs-cotrain-37654px",
+ "submission_note": "H93 antithetic basement step + view B co-training, A>B disagreement strata, 37654px, 3px spacing",
+ "verdict": "negative",
+ "ok_to_download_and_submit": {
+  "download": true,
+  "submit": false,
+  "reason": "failing gate: ci, lane"
+ }
+}</pre>
+<div class="footer">GEMSDOE52 · DOE GEMS Prize (DrivenData #306) · generated by
+<code>scripts/publish_h93_site.py</code> from evidence receipts · every score labelled
+HOLDOUT-DTI is local, not organizer-confirmed.</div>
+</div></body></html>

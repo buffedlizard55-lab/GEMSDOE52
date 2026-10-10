@@ -1,3 +1,190 @@
+<!--H95-AGENTS-->
+## Current H95 continuation (2026-10-10) — READ FIRST
+Read README's H95 block (it ends with the session brief verbatim), `knowledge/93` (frozen preregistration,
+SHA-256 `bf55dfb78ba7c1c8…`), `knowledge/94` (brief) and `knowledge/95` (results, generated).
+Verdict **negative** — Failed gate(s): holdout_promotion, lane_dots_policy. The co-trained field scored 0.1724 on HOLDOUT-DTI, below the promotable best 0.190147 (paired vs single_B CI spans 0). Its dots are also a lane near-duplicate of the parallel H93 file (IR-H95-006). Experiments 3 of 3, slots 0.
+
+Settled this round; do not re-litigate:
+
+- **Co-training (A→B whole-segment pseudo-labels, one exchange) does not beat single-view B on the holdout:**
+  cotrain_B 0.172401 vs single_B 0.174571, paired -0.002171
+  [-0.006177, +0.001703]. Independence passed again (max |ρ| 0.1337); View A
+  sufficiency failed again (OOF AUC per fold [0.5062341311661124, 0.6010657195529969, 0.4668188015259936, 0.4910432748636082]).
+- **H87 had no holdout; measured now its rule is below random** (h87_disagreement 0.063316 vs random
+  0.079238; IR-H95-001). Never publish a promote verdict without a measured holdout.
+- **Before publishing, re-fetch main and close uniqueness/lane against rasters merged while you ran** (`scripts/h95_supplemental_closure.py`). That check caught a genuine lane duplicate with the parallel H93 file (IR-H95-006); re-running the shared H61 View B learner with minor channel additions produces near-identical dots.
+- **The board-anchored SGMC proxy (`gems52-offcat-segthin-v1`) is diagnostic only** — mass alone explains it (IR-H95-003).
+- **Uniqueness/lane must include the 526-blob sibling census:** run
+  `python3 scripts/fetch_prior_inventory.py --out work/h95/priors --receipt work/h95/prior_fetch_receipt.json` (api.github.com only)
+  before `scripts/run_h95.py gates`.
+- **Publishing:** `scripts/publish_h95_site.py` inserts `<!--H95-CARD-->` / `<!--H95-README-->` / `<!--H95-AGENTS-->` blocks
+  idempotently; it never rewrites a shared page. Re-run it after any receipt changes, then `scripts/check_site.py`.
+- Current artefact: `submission/gems52-h95-cotrainB-segthin-37654px-20261010T223522Z-2c3942b4-zeros.tif` (SHA-256 `28ee81370c9ce1bf…`) — **DOWNLOAD YES, SUBMIT NO**.
+
+<!--/H95-AGENTS-->
+
+<!--H94-AGENTS-->
+## Current H94 continuation (2026-10-10)
+Read README's standing brief and status block first. H94 verdict **NEGATIVE**. Download yes (audit only), submit **NO**.
+Experiments 1 of 3, slots 0.
+
+- The final-dot lane check is **DUPLICATE/STOP** for the H94 file (97.46% of dots within 3 px of the H87 file, IR-H94 record in
+  `knowledge/81` §6b). Do not retune placement to clear this gate without a new preregistration.
+- Placement is `gems52.nodes.spacing_select` at 3 px. The H94 placement ablation was not run; the H85 one is in `knowledge/78` §2.
+- The 0.192829 bar comes from a different fold set (53,186 withheld, not 60,894; IR-H94-002). Do not compare across sets.
+- Band 6 is tagged `tc` but is radiometric by content (IR-H94-001).
+- `scripts/check_site.py` R5 and H58 phrase checks now run only on their own pages (IR-H94-008). H94 checks are in `check_h88`.
+- Do not re-run plain pseudo-label exchange or strict co-training with changed thresholds without a new preregistration.
+- Use `/home/user/gems-venv/bin/python` for every script.
+<!--/H94-AGENTS-->
+
+<!--H93-AGENTS-->
+## Current H93 continuation (2026-10-10)
+Read README's H93 quick-download block, `knowledge/80` (session brief), `knowledge/81` (frozen
+preregistration, SHA-256 `7f50e069e0a1…`) and `knowledge/82` (results and limits) before proposing
+anything new in this lane. H93 verdict **NEGATIVE**, experiments 3 of 3, slots 0.
+
+What is now settled and must not be re-litigated:
+
+- **Band-15 sign-asymmetric steps (ABS) are the first new channel to lift View B's OOF AUC in all
+  four folds and pooled HOLDOUT-DTI over `single_B`** (+0.0034), but the paired CI [−0.001668,
+  +0.008780] crosses zero, so the frozen promote rule fails. The direction is alive; the win is
+  not certified. Do not ship ABS emission without a fresh preregistration.
+- **The A-only disagreement stratum scores 0.0353, below random (0.0804), on the catalogue
+  instrument** — a ninth confirmation that View-A confidence alone does not resolve the hidden
+  population there. The stratum's board relevance remains unprovable on this instrument.
+- **The denominator wall is now internal:** H93's dots hit near-3px 0.7275 vs THIS repo's own
+  H83-E3 research file (random control 0.20, IR-H93-004), so the literal lane rule fires even
+  without external rasters. Any future full-budget View-B-family emission must preregister quota
+  placement or a sub-halo budget BEFORE the fit.
+- **Controls reproduce exactly in this sandbox:** single_B 0.174571 and random 0.080426 to six
+  decimals (per-fold jitter ≤ 1e−3 is environment float, IR-H93-003).
+- **Site discipline:** `docs/index.html` is H93 current-first with the H87 page archived verbatim
+  between `<!--ARCHIVE-START-->`/`<!--ARCHIVE-END-->`; the historical guardrail strings (DO NOT
+  SUBMIT, NO CERTIFIED LEADERBOARD GAIN, OK to download?, downloads/h83-candidate.tif) are pinned
+  by tests — `scripts/publish_h93_site.py` is idempotent and keeps them.
+<!--/H93-AGENTS-->
+
+
+<!--H91-AGENTS-->
+## Current H91 continuation (2026-10-10)
+Read README's H91 block first, then `knowledge/86_hypotheses_H91_preregistered.md` (frozen before any
+fit; SHA-256 `31ceef4aed18c989…`, pinned in `registry/h91_preregistration.json`)
+and `knowledge/87_h91_results_and_limits.md`. Verdict **NEGATIVE**,
+experiments 1/3, slots 0.
+
+What is now settled, and must not be re-litigated:
+
+- **The 16-direction fan and the continuous alignment are measured, not assumed.** The primary
+  `B_CSA` scored HOLDOUT-DTI 0.169247 [0.150782, 0.188387] against `single_B`
+  0.173444 [0.152576, 0.194991], paired Δ -0.004197
+  [-0.016143, 0.008684]. The 8-direction control `B_DVA3c` scored
+  0.169532, so the fan-resolution and alignment effects are separated in one pass.
+- **The leakage canary stayed clean** at 0.6220 against a 0.90 bar
+  over 84 channels, so no channel is a leak.
+- **View-A sufficiency failed again** (mean 0.5315, min fold 0.4556).
+  Independence holds (max |ρ| 0.1370681276676306, bar
+  0.6), but independence without sufficiency gives co-training
+  nothing to donate. Do not re-run pseudo-label exchange on this View A.
+- **IR-H91-001 is environment-level, not repository-level:** channel files written by
+  `run_h82.save_verified` were corrupted *after* verification by the concurrently-snapshotting
+  filesystem. `scripts/repair_h91_channels.py --all` recomputes the whole bank with a
+  digest-stability check. Any round that builds a channel bank must run it before fitting.
+- **The H83 artefact is not a validated candidate.** Its own run card records
+  `holdout_dti = NOT_EVALUATED`, and it claims "no prior submissions to compare against" when the
+  registry holds 500+. It is archived, not promoted; do not submit it.
+- **Board algebra, re-measured this session** (`scripts/h67_board_algebra.py`,
+  `evidence/h67_board_algebra.json`): at 37,654 emitted px the credit density needed for 0.3195 is
+  ρ = 0.1595 against the reported-0.2778
+  champion's 0.1387; Spearman(emitted mass,
+  owner-reported board) = -1.0 over
+  5 files. The binding constraint is the ranker's ρ(S) decay, not the budget.
+- **The lane rule still cannot be satisfied literally** for any emission ranked by this family's own
+  signal: full-census dots literal **DUPLICATE/STOP** (max near-3px share
+  1.0000). Report it verbatim; never waive it with a restricted PASS.
+<!--/H91-AGENTS-->
+
+<!--H90-AGENTS-->
+## Current H90 continuation (2026-10-10)
+Read README's H90 block first, then `knowledge/86_hypotheses_H90_preregistered.md` (frozen before any
+fit; SHA-256 `67910c46587e6e43…`, pinned in `registry/h90_preregistration.json`)
+and `knowledge/87_h90_results_and_limits.md`. Verdict **NEGATIVE**,
+experiments 1/3, slots 0.
+
+What is now settled, and must not be re-litigated:
+
+- **The 16-direction fan and the continuous alignment are measured, not assumed.** The primary
+  `B_CSA` scored HOLDOUT-DTI 0.169247 [0.150782, 0.188387] against `single_B`
+  0.173444 [0.152576, 0.194991], paired Δ -0.004197
+  [-0.016143, 0.008684]. The 8-direction control `B_DVA3c` scored
+  0.169532, so the fan-resolution and alignment effects are separated in one pass.
+- **The leakage canary stayed clean** at 0.6220 against a 0.90 bar
+  over 84 channels, so no channel is a leak.
+- **View-A sufficiency failed again** (mean 0.5315, min fold 0.4556).
+  Independence holds (max |ρ| 0.1370681276676306, bar
+  0.6), but independence without sufficiency gives co-training
+  nothing to donate. Do not re-run pseudo-label exchange on this View A.
+- **IR-H90-001 is environment-level, not repository-level:** channel files written by
+  `run_h82.save_verified` were corrupted *after* verification by the concurrently-snapshotting
+  filesystem. `scripts/repair_h90_channels.py --all` recomputes the whole bank with a
+  digest-stability check. Any round that builds a channel bank must run it before fitting.
+- **The H83 artefact is not a validated candidate.** Its own run card records
+  `holdout_dti = NOT_EVALUATED`, and it claims "no prior submissions to compare against" when the
+  registry holds 500+. It is archived, not promoted; do not submit it.
+- **Board algebra, re-measured this session** (`scripts/h67_board_algebra.py`,
+  `evidence/h67_board_algebra.json`): at 37,654 emitted px the credit density needed for 0.3195 is
+  ρ = 0.1595 against the reported-0.2778
+  champion's 0.1387; Spearman(emitted mass,
+  owner-reported board) = -1.0 over
+  5 files. The binding constraint is the ranker's ρ(S) decay, not the budget.
+- **The lane rule still cannot be satisfied literally** for any emission ranked by this family's own
+  signal: full-census dots literal **DUPLICATE/STOP** (max near-3px share
+  1.0000). Report it verbatim; never waive it with a restricted PASS.
+<!--/H90-AGENTS-->
+
+<!--H88-AGENTS-->
+## Current H88 continuation (2026-10-10)
+Read README's START HERE and `knowledge/81_h88_results_and_limits.md` (result) and `knowledge/80_h88_preregistered.md` (frozen rule).
+- H88 (basement-step coherence on band 15, cover thickness): **NEGATIVE** on the shared instrument: candidate 0.048050 vs random 0.080426;
+  paired −0.032376 [−0.046704, −0.016764]. DOWNLOAD YES (format-valid, decoded-unique) / SUBMIT NO. Slots 0. Experiments 1 of 3.
+- The H87 name was taken by an earlier co-training file on this branch; this round is H88 (IR-H88-001).
+- The H85 download now fails uniqueness against H86 (IR-H88-002). Treat it as a duplicate.
+- Reproduce the feature store with `structural.build(include_optional_profiles=False)` then `gems52.external` (IR-H88-007).
+- Site: `scripts/publish_h88_site.py` regenerates the top of docs/index.html and the banner of executive-summary.html from evidence/.
+<!--/H88-AGENTS-->
+<!--H83-AGENTS-->
+## Current H83 continuation (2026-10-10)
+Read README's H83 block and `knowledge/74` (frozen preregistration, SHA-256 `245220eccb36c61e…`) before
+proposing anything. H83 verdict **negative**, experiments 1 of 3, slots 0.
+
+What is now settled and must not be re-litigated:
+
+- **The off-catalogue instrument exists and is cheap.** `gems52-offcatalogue-v1` reuses the *same*
+  out-of-fold fits as `gems52-pooled-hide-v1`, because `gems52.spatial.folds`'s `train` domain is
+  already "everything except this quadrant, minus an 80 px buffer". Do not refit for it. Truth =
+  SGMC pixels ≥ 3 px from `labels.tif`: **55,562** pooled px.
+- **On the off-catalogue instrument every arm collapses toward the same number**
+  (best 0.065682 vs worst 0.065682), and View A is *less*
+  bad there than on hide-and-recover in two of four folds. The buried-fault population is real; this
+  field does not resolve it.
+- **View A sufficiency has now failed an eighth time on the mandated instrument**
+  (mean 0.5162). Independence still
+  passes (max |ρ| 0.1526), so the brief does not require
+  abandonment — but independence without sufficiency still gives co-training nothing to donate, and
+  the exchange moved A's OOF AUC by at most
+  0.0660.
+- **Both packaging variants are format-valid.** The all-finite zeros-outside file is what the site
+  recommends because it cannot fail a literal `[0,1]` range test; the NaN-outside twin matches the
+  organiser template byte-structurally. Do not add a third variant (IR-H77-004 stands for "no new
+  variant"; this round's second file is the *template* variant, not a new one).
+- **Site:** `docs/index.html` is current-first with every previous round preserved verbatim inside one
+  collapsed `<details>` (`<!--ARCHIVE-START-->`/`<!--ARCHIVE-END-->`). `scripts/check_site.py` asserts
+  historical strings on that page, so never rewrite it from scratch — `legacy_index_body()` in
+  `scripts/publish_h83_site.py` carries them forward and is idempotent.
+<!--/H83-AGENTS-->
+
+---
+
 # Working agreement
 
 Before every work session, read `README.md`, its full current user brief, `knowledge/07_r2_hypotheses_preregistered.md`, and the newest review/irregularities record. Read previous failed experiments before proposing another.
@@ -7,6 +194,18 @@ Maximize P(Win): prioritize geological signal and trustworthy spatial validation
 Keep known-catalogue labels separate from verified fault absence, public participant scores separate from filename attribution, hypotheses separate from discoveries, and format-valid artifacts separate from promotion-approved ones. Do not invent organizer validation or claim a guaranteed leaderboard gain. A GeoTIFF with a new name or compression is not a unique prediction; compare decoded pixels.
 
 This session's working branch is fixed by Arena. Do not change branches. Keep raw competition data and large intermediate arrays under ignored `data/` and `work/`. Publish small audit receipts, the unique compressed prediction raster and its review table.
+
+<!--H90-AGENTS-->
+## Current H90 continuation (2026-10-10) — READ THIS FIRST
+
+- Verdict: **negative**. DOWNLOAD YES (research), SUBMIT NO, slots used 0. Full note: `knowledge/80_h90_results_and_limits.md`; run card: `evidence/h90_run_card.json`; irregularities IR-H90-001…009.
+- Holdout instrument finding: the shared H60-family holdout builds its legal pool from the FULL catalogue, so held-out truth is never inside the pool (IR-H90-001). Re-scored on the visible-catalogue ring, every arm's DTI moves 5–21× and the disagreement field falls below random (IR-H90-002). Do not compare any H60-family number with H82/H85/H86 numbers until both arms are reproduced on one instrument (IR-H90-007).
+- Clean sampler: the shipped View A holdout is inflated by about 10% (paired −0.000389 [−0.000832, −0.000104]); View B and dis_contrast are not materially affected (IR-H90-003).
+- Lane gate: the literal dot-lane rule returns DUPLICATE/STOP for the H90 candidate against the calibration lattice (99.81%). H60-6 excludes that raster and would pass (0.6534 vs H60D). Conflicting precedents; owner decision (IR-H90-006). Pixel uniqueness is not lane independence: 65% of its dots sit within 3 px of H60D's dots (IR-H90-005).
+- Next round (proposals, none validated): P1 re-score registered arms on one instrument; P2 single-view B with the clean sampler; P3 cover-gated candidates on the visible ring. See knowledge/80 §8.
+- Reproduction note: `work/pinned` is a symlink to `data/`; the H60 scripts expect that path and no script creates it (IR-H90-009). Staging step reported once; not forked.
+- Never spend a slot without a new comparable holdout best; promotion is a separate selector step.
+<!--/H90-AGENTS-->
 
 <!--H85-AGENTS-->
 ## Current H85 continuation (2026-10-10)
@@ -57,6 +256,36 @@ Standing lessons added by H84:
   whole H82 front page verbatim in the archive; it is idempotent. Never rewrite `docs/index.html` from scratch.
 <!--/H84-AGENTS-->
 
+<!--H89-AGENTS-->
+## Current H89 continuation (2026-10-10)
+Read README's H89 block, `knowledge/83` (frozen preregistration, SHA-256 `4fc5e57b19a450c0…`),
+`knowledge/84` (this session's brief) and `knowledge/85` (results and limits).
+
+Settled this round; do not re-litigate:
+
+- **View A failed sufficiency for the eighth time** (mean out-of-quadrant AUC 0.5153 vs View B
+  0.6661). Independence passes again (max |ρ| 0.1372 over
+  2,089 blocks). Independence without sufficiency still gives co-training nothing to donate.
+- **The donation step needs predictions on the TRAINING domain.** H89's first exchange run donated 0 px
+  because the fit stage predicts region-only, so the checkpointed grids are NaN exactly where a pseudo-label
+  is allowed to come from (IR-H89-001). `scripts/run_h89.py::stage_exchange` now re-derives the donor/receiver
+  fields on the training domain from bit-identical refits. Copy that pattern.
+- **Artefact demotion costs a little on catalogue recovery:** `B_art` 0.170046 vs `single_B`
+  0.175326. The veto is a hypothesis about *off-catalogue* precision and the hide-and-recover
+  instrument cannot test it; do not read the small loss as a refutation, and do not re-tune the weight on this
+  instrument.
+- **The 12 % reserved discovery budget costs 0.0148 DTI** (-0.014782
+  [-0.0215, -0.0084]) and that cost was priced into the frozen
+  non-inferiority margin before the fit. `A_only_cover` alone is 0.016073 and short-fills
+  its budget, so it is not a matched comparison — same failure mode as H74S.
+- **`docs/index.html` and `docs/executive-summary.html` were rewritten by H83 and lost the historical
+  identities `scripts/check_site.py` asserts** (IR-H89-002). `scripts/publish_h89_site.py` rebuilds both
+  current-first with an archive table that names H83/H82/R5/H58/H57-alternate/H55-EDGE by their own receipts.
+  Keep that table when you publish the next round.
+- **H83 was mislabelled SUBMIT: YES with no holdout evaluation** (IR-H89-003); it is re-labelled research-only
+  in the README. Never publish a promote verdict without a measured holdout.
+- Current artefact: `submission/gems52-h89-coverco-disagree-37654px-20261010T214732Z.tif` (SHA-256 `9d3e2be69efd476c…`) — **DOWNLOAD YES, SUBMIT NO**.
+<!--/H89-AGENTS-->
 <!--H82-AGENTS-->
 ## Previous H82 continuation (2026-10-09)
 Read README's H82 block, `knowledge/72` (frozen preregistration, amendment 72a included, SHA-256

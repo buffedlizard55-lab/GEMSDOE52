@@ -1,0 +1,582 @@
+{
+ "round": "H95",
+ "format": {
+  "path": "/home/user/GEMSDOE52/submission/gems52-h95-cotrainB-segthin-37654px-20261010T223522Z-2c3942b4-zeros.tif",
+  "bytes": 795367,
+  "sha256": "28ee81370c9ce1bfb914cc93eb1bbcc952bef8a40c0314dd7b1c2d6785f721bf",
+  "bands": 1,
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "width": 3292,
+  "height": 3730,
+  "bounds": [
+   243350.0,
+   4135550.0,
+   572550.0,
+   4508550.0
+  ],
+  "ref_bounds": [
+   243350.0,
+   4135550.0,
+   572550.0,
+   4508550.0
+  ],
+  "transform": [
+   100.0,
+   0.0,
+   243350.0,
+   0.0,
+   -100.0,
+   4508550.0
+  ],
+  "nodata": null,
+  "blocksize": [
+   1,
+   3292
+  ],
+  "fixture_grid": false,
+  "has_validity_mask": false,
+  "nan_pixels": 0,
+  "infinity_pixels": 0,
+  "n_nan": 0,
+  "min": 0.0,
+  "max": 1.0,
+  "mean": 0.0030664964579045773,
+  "n_nonzero": 37654,
+  "mass": 37654.0,
+  "mass_outside_footprint": 0,
+  "problems": [],
+  "ok": true,
+  "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+ },
+ "uniqueness": {
+  "n_priors_checked": 675,
+  "candidate_decoded_sha256": "2c3942b4dc06d0863c43fc8f94171ec8470672167c94815f7f8ab70c883bcb62",
+  "canonical_pattern_unique": false,
+  "identical_to_a_prior": false,
+  "identical_prior_paths": [],
+  "distinct_from_every_comparable_prior": true,
+  "audit_complete": false,
+  "n_priors_compared": 674,
+  "incomparable_priors": [
+   {
+    "path": "/home/user/GEMSDOE52/work/h95/priors/a97c7b2a513225c9f9f2b35736afe5abf4d2a491.tif",
+    "error": "ValueError: not aligned single-band prediction (1 bands, (32, 48))"
+   }
+  ],
+  "key_semantics": "canonical_pattern_unique is False if ANY prior is byte-identical OR unreadable; distinct_from_every_comparable_prior isolates the first condition and audit_complete isolates the second",
+  "equals_literal_prior_union": false,
+  "research_publication_ok": false,
+  "support_novelty_gate_ok": false,
+  "gate_correction": "Original >=20% support novelty retained as a FAILED diagnostic, not silently waived for slot promotion. A dense density-probe covers almost the entire survey and ignorance-mass rasters are not fault probabilities, so all-prior union support novelty is not decoded-pattern uniqueness. Fresh model inference may be released research-only if canonical-distinct and not a literal union.",
+  "union_px": 5373930,
+  "novel_vs_all_priors": 0,
+  "novel_fraction": 0.0,
+  "prior_px_dropped": 5336276,
+  "relation_to_union": "subset-of-union",
+  "ok": false,
+  "top_argument_ignored": false,
+  "rule": "distinct decoded values from every supplied prior, >=20% new support against binary/>=0.5 continuous proposal union, and selective prior-pixel removal",
+  "scope": "Only the supplied, aligned accessible inventory; not a proof against all private/unlinked submissions",
+  "max_jaccard": 0.0962501455688832,
+  "max_jaccard_prior": "/home/user/GEMSDOE52/submission/gems52-h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z-template-nan.tif"
+ },
+ "lane_surface": {
+  "phase": "surface",
+  "instrument": "gems52.gates.lane_report (H61 shared-template repair)",
+  "evidence_class": "uniqueness/lane diagnostic, not a score",
+  "rule": "STOP at Spearman > 0.9 or directed <= 3 px dot proximity > 0.7; probes classified by measured coverage >= 0.95",
+  "priors_checked": 675,
+  "distinct_decoded_priors": 398,
+  "candidate_decoded_sha256": "234836bc0c084d5976e54d0084e40b07988e7f5385e45ba295fe8c8fcad2d7a7",
+  "rank_pixels": 4593171,
+  "exact_full_eligible_rank": true,
+  "binary_spearman_method": "analytic phi (mid-rank affine)",
+  "n_dots": 0,
+  "literal": {
+   "max_spearman": 0.47575858072943134,
+   "max_near_3px_fraction": null,
+   "max_near_source": null,
+   "rank_offenders": [],
+   "near_offenders": [],
+   "identical": [],
+   "verdict": "PASS",
+   "note": "applied to every aligned prior including universal-coverage probes"
+  },
+  "policy": {
+   "max_spearman": 0.47575858072943134,
+   "max_near_3px_fraction": null,
+   "max_near_source": null,
+   "rank_offenders": [],
+   "near_offenders": [],
+   "identical": [],
+   "informative_priors": 658,
+   "universal_coverage_probes": 15,
+   "probe_paths": [
+    "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/35616cbb48ac3533dd4c957b8acca57f71ba365f.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/3d3ee66300203bdc878f3a052caabde671daf042.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif"
+   ],
+   "probe_coverage": [
+    1.0,
+    0.9919031971594352,
+    0.9956951308801697,
+    0.9974396772948362,
+    1.0,
+    0.9999997822854843,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.9883130847947964,
+    0.9974396772948362,
+    1.0,
+    0.9885919770894661,
+    0.9883130847947964
+   ],
+   "verdict": "PASS",
+   "note": "the same literal rule restricted to priors that localise something; probe statistics are retained verbatim in per_prior and nothing is deleted"
+  },
+  "duplicate": false,
+  "ok": false,
+  "error_count": 2,
+  "errors": [
+   {
+    "path": "/home/user/GEMSDOE52/work/h95/priors/7c12ed8a4164ce549fc8c3114eb30eb7f898af09.tif",
+    "error": "ValueError: unaligned or multiband prior (1, (3730, 3292))"
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h95/priors/a97c7b2a513225c9f9f2b35736afe5abf4d2a491.tif",
+    "error": "ValueError: unaligned or multiband prior (1, (32, 48))"
+   }
+  ],
+  "scope": "Supplied aligned immutable public inventory only; private/release/unlinked artifacts are not proven absent.",
+  "top_rank": [
+   [
+    0.47575858072943134,
+    "/home/user/GEMSDOE52/work/h95/priors/374c88b1da2b803e2ed160de467fd71ae114010d.tif"
+   ],
+   [
+    0.40529743483564806,
+    "/home/user/GEMSDOE52/work/h95/priors/e7271f8c701751de8e221c4afb5f0dfc48b1ad59.tif"
+   ],
+   [
+    0.40529743483564806,
+    "/home/user/GEMSDOE52/work/h95/priors/f2c3c62e277a12d2fcc41728eb5e281ae119567e.tif"
+   ]
+  ],
+  "top_near": [
+   [
+    0.0,
+    "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    true
+   ],
+   [
+    0.0,
+    "/home/user/GEMSDOE52/data/scored/8GEMSDOE_Hedge-v2_submission.tif",
+    false
+   ],
+   [
+    0.0,
+    "/home/user/GEMSDOE52/data/scored/gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif",
+    false
+   ],
+   [
+    0.0,
+    "/home/user/GEMSDOE52/data/scored/gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif",
+    false
+   ],
+   [
+    0.0,
+    "/home/user/GEMSDOE52/data/scored/gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif",
+    false
+   ]
+  ]
+ },
+ "lane_dots": {
+  "phase": "dots",
+  "instrument": "gems52.gates.lane_report (H61 shared-template repair)",
+  "evidence_class": "uniqueness/lane diagnostic, not a score",
+  "rule": "STOP at Spearman > 0.9 or directed <= 3 px dot proximity > 0.7; probes classified by measured coverage >= 0.95",
+  "priors_checked": 675,
+  "distinct_decoded_priors": 398,
+  "candidate_decoded_sha256": "2c3942b4dc06d0863c43fc8f94171ec8470672167c94815f7f8ab70c883bcb62",
+  "rank_pixels": 4593171,
+  "exact_full_eligible_rank": true,
+  "binary_spearman_method": "analytic phi (mid-rank affine)",
+  "n_dots": 37654,
+  "literal": {
+   "max_spearman": 0.16878471872561837,
+   "max_near_3px_fraction": 1.0,
+   "max_near_source": "/home/user/GEMSDOE52/work/h95/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+   "rank_offenders": [],
+   "near_offenders": [
+    "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    "/home/user/GEMSDOE52/submission/gems52-h75-dva-variogram-anisotropy-B-37654px-20261009T200333Z.tif",
+    "/home/user/GEMSDOE52/submission/gems52-h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z-template-nan.tif",
+    "/home/user/GEMSDOE52/submission/gems52-h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z.tif",
+    "/home/user/GEMSDOE52/submission/gems52-h89-coverco-disagree-37654px-20261010T214732Z.tif",
+    "/home/user/GEMSDOE52/submission/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.tif",
+    "/home/user/GEMSDOE52/docs/downloads/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.tif",
+    "/home/user/GEMSDOE52/docs/downloads/h75-candidate.tif",
+    "/home/user/GEMSDOE52/docs/downloads/h83-candidate-template-nan.tif",
+    "/home/user/GEMSDOE52/docs/downloads/h83-candidate.tif",
+    "/home/user/GEMSDOE52/docs/downloads/h89-candidate.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/0a195a38802892f46e0146415faa678aa1603b5b.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/0bb2fae409553cc7281a848541d65232921a8bdc.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/0c1b5547e970fee995a953382e94d4f1342444b9.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/1f0df28026260001a4d36f5f744d9309516d1595.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/1fdecbd4fd209b9e57f3619dd609a8ded6076a10.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/204b1314d6d68f34a4e6ed454cf4b36e24621675.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/306ee1b1deebc9a0a9f437e501cd0965ee37f25e.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/32a4a6d2d4df8ef8e880120f36d2a4d94f134f8a.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/35616cbb48ac3533dd4c957b8acca57f71ba365f.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/3d3ee66300203bdc878f3a052caabde671daf042.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/443e8e1c799734facd50a92bc85c650f3857a2b6.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/4934bb73380487247f9abc273bbc3bba7f5d83c1.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/4dd494d3c85b41f082a4949ea0b7037df4098816.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/509be169fe6253f94bf8b7323398e1b80e972c96.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/57732c697e2aa7c50c8ce35fa3d8866aee103abf.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/5ae4b6b4324c19727f8304eb63fc5610ad23b9d9.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/6d69c94d9c59cf518fe9d6d34463444348aa88ad.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/6ef080a1067db86fa70924252fdb777ec4b94b7a.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/716fa7b4c61a45bccd09dde54aa72bbc34dd6cfc.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/80ee726da7af66e6cd86b627a9982cec8e709ac3.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/93baa81db8295cf7fee042dd2c753465d2d73a3c.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/9aa682f254700d9034bfbb136e7a6705cd68a488.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/9f9dccae710f3011ec8ab925d06a1357e65cec9b.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/ab7e0752036d020fbc394a528bbe63171c3cb08f.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/b715491d384aefa60d1924a46f2b6f31f08326a6.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/c61719ffe62dd7533c43f2f1f76054efaabeceee.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/cf12b308d762ad013dce425384f26664cd79d940.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/e2594695e37059e4c708857a8e7e58f007900bca.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/ed019800934ba779cbc6707fd0ed05ab40ed7ad1.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/f11a0f27760003208c8a1df16b49a969a8f427ec.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/fdd931161c431a583cf7039362e51832e59d07ad.tif"
+   ],
+   "identical": [],
+   "verdict": "DUPLICATE/STOP",
+   "note": "applied to every aligned prior including universal-coverage probes"
+  },
+  "policy": {
+   "max_spearman": 0.16878471872561837,
+   "max_near_3px_fraction": 0.9222924523291018,
+   "max_near_source": "/home/user/GEMSDOE52/work/h95/priors/5ae4b6b4324c19727f8304eb63fc5610ad23b9d9.tif",
+   "rank_offenders": [],
+   "near_offenders": [
+    "/home/user/GEMSDOE52/submission/gems52-h75-dva-variogram-anisotropy-B-37654px-20261009T200333Z.tif",
+    "/home/user/GEMSDOE52/submission/gems52-h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z-template-nan.tif",
+    "/home/user/GEMSDOE52/submission/gems52-h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z.tif",
+    "/home/user/GEMSDOE52/submission/gems52-h89-coverco-disagree-37654px-20261010T214732Z.tif",
+    "/home/user/GEMSDOE52/submission/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.tif",
+    "/home/user/GEMSDOE52/docs/downloads/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.tif",
+    "/home/user/GEMSDOE52/docs/downloads/h75-candidate.tif",
+    "/home/user/GEMSDOE52/docs/downloads/h83-candidate-template-nan.tif",
+    "/home/user/GEMSDOE52/docs/downloads/h83-candidate.tif",
+    "/home/user/GEMSDOE52/docs/downloads/h89-candidate.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/0a195a38802892f46e0146415faa678aa1603b5b.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/0bb2fae409553cc7281a848541d65232921a8bdc.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/0c1b5547e970fee995a953382e94d4f1342444b9.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/1f0df28026260001a4d36f5f744d9309516d1595.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/1fdecbd4fd209b9e57f3619dd609a8ded6076a10.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/204b1314d6d68f34a4e6ed454cf4b36e24621675.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/306ee1b1deebc9a0a9f437e501cd0965ee37f25e.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/32a4a6d2d4df8ef8e880120f36d2a4d94f134f8a.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/443e8e1c799734facd50a92bc85c650f3857a2b6.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/4934bb73380487247f9abc273bbc3bba7f5d83c1.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/4dd494d3c85b41f082a4949ea0b7037df4098816.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/509be169fe6253f94bf8b7323398e1b80e972c96.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/57732c697e2aa7c50c8ce35fa3d8866aee103abf.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/5ae4b6b4324c19727f8304eb63fc5610ad23b9d9.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/6d69c94d9c59cf518fe9d6d34463444348aa88ad.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/6ef080a1067db86fa70924252fdb777ec4b94b7a.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/716fa7b4c61a45bccd09dde54aa72bbc34dd6cfc.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/80ee726da7af66e6cd86b627a9982cec8e709ac3.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/93baa81db8295cf7fee042dd2c753465d2d73a3c.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/9aa682f254700d9034bfbb136e7a6705cd68a488.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/9f9dccae710f3011ec8ab925d06a1357e65cec9b.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/ab7e0752036d020fbc394a528bbe63171c3cb08f.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/b715491d384aefa60d1924a46f2b6f31f08326a6.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/c61719ffe62dd7533c43f2f1f76054efaabeceee.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/cf12b308d762ad013dce425384f26664cd79d940.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/e2594695e37059e4c708857a8e7e58f007900bca.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/ed019800934ba779cbc6707fd0ed05ab40ed7ad1.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/f11a0f27760003208c8a1df16b49a969a8f427ec.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/fdd931161c431a583cf7039362e51832e59d07ad.tif"
+   ],
+   "identical": [],
+   "informative_priors": 658,
+   "universal_coverage_probes": 15,
+   "probe_paths": [
+    "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/35616cbb48ac3533dd4c957b8acca57f71ba365f.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/3d3ee66300203bdc878f3a052caabde671daf042.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif"
+   ],
+   "probe_coverage": [
+    1.0,
+    0.9919031971594352,
+    0.9956951308801697,
+    0.9974396772948362,
+    1.0,
+    0.9999997822854843,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.9883130847947964,
+    0.9974396772948362,
+    1.0,
+    0.9885919770894661,
+    0.9883130847947964
+   ],
+   "verdict": "DUPLICATE/STOP",
+   "note": "the same literal rule restricted to priors that localise something; probe statistics are retained verbatim in per_prior and nothing is deleted"
+  },
+  "duplicate": true,
+  "ok": false,
+  "error_count": 2,
+  "errors": [
+   {
+    "path": "/home/user/GEMSDOE52/work/h95/priors/7c12ed8a4164ce549fc8c3114eb30eb7f898af09.tif",
+    "error": "ValueError: unaligned or multiband prior (1, (3730, 3292))"
+   },
+   {
+    "path": "/home/user/GEMSDOE52/work/h95/priors/a97c7b2a513225c9f9f2b35736afe5abf4d2a491.tif",
+    "error": "ValueError: unaligned or multiband prior (1, (32, 48))"
+   }
+  ],
+  "scope": "Supplied aligned immutable public inventory only; private/release/unlinked artifacts are not proven absent.",
+  "top_rank": [
+   [
+    0.16878471872561837,
+    "/home/user/GEMSDOE52/submission/gems52-h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z-template-nan.tif"
+   ],
+   [
+    0.16878471872561837,
+    "/home/user/GEMSDOE52/submission/gems52-h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z.tif"
+   ],
+   [
+    0.16878471872561837,
+    "/home/user/GEMSDOE52/docs/downloads/h83-candidate-template-nan.tif"
+   ]
+  ],
+  "top_near": [
+   [
+    1.0,
+    "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    true
+   ],
+   [
+    1.0,
+    "/home/user/GEMSDOE52/work/h95/priors/3d3ee66300203bdc878f3a052caabde671daf042.tif",
+    true
+   ],
+   [
+    1.0,
+    "/home/user/GEMSDOE52/work/h95/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+    true
+   ],
+   [
+    1.0,
+    "/home/user/GEMSDOE52/work/h95/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+    true
+   ],
+   [
+    1.0,
+    "/home/user/GEMSDOE52/work/h95/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+    true
+   ]
+  ]
+ },
+ "not_the_union": {
+  "jaccard_vs_union_dots": 0.0740027667251387,
+  "jaccard_vs_singleA_dots": 0.006926059633640861,
+  "jaccard_vs_singleB_dots": 0.11608743979251575,
+  "dots_not_in_union": 32465,
+  "spearman_field_vs_unionmax": 0.5718313541374185,
+  "is_union": false
+ },
+ "strata": {
+  "a_only": 33,
+  "b_only": 6095,
+  "both_confident": 1640,
+  "total": 37654
+ },
+ "a_only_reasoning_csv": "submission/gems52-h95-cotrainB-segthin-37654px-20261010T223522Z-2c3942b4-zeros-a-only-reasoning.csv",
+ "a_only_rows": 33,
+ "n_priors": 675,
+ "finished_utc": "2026-10-10T22:54:35+00:00",
+ "supplemental_closure_after_merge": {
+  "commit_range": "6745d1b..940971b",
+  "n_new_rasters": 14,
+  "identical_to_any": false,
+  "distinct_from_every_comparable": true,
+  "max_jaccard": 0.09991674821446829,
+  "per_prior": [
+   {
+    "path": "gems52-h88-cotrain-strict-AB-37654px-20261010T220328Z.tif",
+    "jaccard": 0.002369226673765473,
+    "identical": false,
+    "error": null
+   },
+   {
+    "path": "gems52-h91-csa16fan-B-37654px-20261010T215157Z.tif",
+    "jaccard": 0.022178787632000433,
+    "identical": false,
+    "error": null
+   },
+   {
+    "path": "gems52-h92-cotrain-disagree-supportcal-17707px-20261010T224107Z.tif",
+    "jaccard": 0.0,
+    "identical": false,
+    "error": null
+   },
+   {
+    "path": "gems52-h93-abs-cotrain-37654px-20261010T223629Z-zeros.tif",
+    "jaccard": 0.09991674821446829,
+    "identical": false,
+    "error": null
+   },
+   {
+    "path": "h88-candidate.tif",
+    "jaccard": 0.0014761227176616088,
+    "identical": false,
+    "error": null
+   },
+   {
+    "path": "h90-candidate.tif",
+    "jaccard": 0.002129131846489594,
+    "identical": false,
+    "error": null
+   },
+   {
+    "path": "h91-candidate.tif",
+    "jaccard": 0.022178787632000433,
+    "identical": false,
+    "error": null
+   },
+   {
+    "path": "h92-candidate.tif",
+    "jaccard": 0.0,
+    "identical": false,
+    "error": null
+   },
+   {
+    "path": "gems52-h88-basement-step-37654px-20261010.tif",
+    "jaccard": 0.0014761227176616088,
+    "identical": false,
+    "error": null
+   },
+   {
+    "path": "gems52-h88-cotrain-strict-AB-37654px-20261010T220328Z.tif",
+    "jaccard": 0.002369226673765473,
+    "identical": false,
+    "error": null
+   },
+   {
+    "path": "gems52-h90-cleanoof-disagree-37654px.tif",
+    "jaccard": 0.002129131846489594,
+    "identical": false,
+    "error": null
+   },
+   {
+    "path": "gems52-h91-csa16fan-B-37654px-20261010T215157Z.tif",
+    "jaccard": 0.022178787632000433,
+    "identical": false,
+    "error": null
+   },
+   {
+    "path": "gems52-h92-cotrain-disagree-supportcal-17707px-20261010T224107Z.tif",
+    "jaccard": 0.0,
+    "identical": false,
+    "error": null
+   },
+   {
+    "path": "gems52-h93-abs-cotrain-37654px-20261010T223629Z-zeros.tif",
+    "jaccard": 0.09991674821446829,
+    "identical": false,
+    "error": null
+   }
+  ],
+  "lane_dots_literal": "DUPLICATE/STOP",
+  "lane_dots_policy": "DUPLICATE/STOP",
+  "near_3px_top": [
+   [
+    0.8047750570988474,
+    "gems52-h93-abs-cotrain-37654px-20261010T223629Z-zeros.tif",
+    0.14354508567506158
+   ],
+   [
+    0.8047750570988474,
+    "gems52-h93-abs-cotrain-37654px-20261010T223629Z-zeros.tif",
+    0.14354508567506158
+   ],
+   [
+    0.4740797790407394,
+    "gems52-h91-csa16fan-B-37654px-20261010T215157Z.tif",
+    0.13163497196738072
+   ],
+   [
+    0.4740797790407394,
+    "h91-candidate.tif",
+    0.13163497196738072
+   ],
+   [
+    0.4740797790407394,
+    "gems52-h91-csa16fan-B-37654px-20261010T215157Z.tif",
+    0.13163497196738072
+   ]
+  ],
+  "instrument": "gems52.gates (shared, unmodified)"
+ }
+}

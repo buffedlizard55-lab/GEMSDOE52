@@ -1,0 +1,97 @@
+{
+  "hypothesis": "H88: a coherent, sustained step in depth-to-basement (band 15, cover thickness) marks a basin-bounding buried fault without a surface trace.",
+  "mechanism": "gradient magnitude of the Gaussian-smoothed cover-thickness field times the structure-tensor coherence of its gradient field (line-like steps), placed with 3 px spacing outside the 200 m catalogue collar.",
+  "non_fault_process": "basin-margin alluvial fans and bounding fronts; basement facies boundaries; paleo-channel incisions in cover; DEM-to-basement interpolation seams.",
+  "holdout": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.04805004061434196,
+    "ci95": [
+      0.03218885123376269,
+      0.06447666008174065
+    ],
+    "withheld_positive_pixels": 53186,
+    "random_control_dti": 0.08042564781050282,
+    "paired_vs_random": {
+      "evidence_class": "HOLDOUT-DTI",
+      "evaluator_version": "gems52-pooled-hide-v1",
+      "delta": -0.03237560719616086,
+      "ci95": [
+        -0.046704405982846586,
+        -0.016763636429373424
+      ],
+      "withheld_positive_pixels": 53186
+    },
+    "verdict": "NEGATIVE/NOT-PROMOTED: fails the pre-registered rule (knowledge/80 section 5)",
+    "note": "from evidence/h88_holdout.json; the file's placement is the H88_step arm"
+  },
+  "raster_sha256": "636b4b9f75cc19980387b410575d433a8f1a93bfb29ffdde7386d75a6209aa4c",
+  "file": "submission/gems52-h88-basement-step-37654px-20261010.tif",
+  "bytes": 793459,
+  "submission_name": "h88-basement-step-cat200-37654px-20261010",
+  "note": "H88 basement-step coherence (band 15 cover); 3px spaced; 200m ring out; binary; see holdout",
+  "validator": {
+    "format_ok": true,
+    "problems": [],
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "shape": [
+      3730,
+      3292
+    ],
+    "nan_inside_footprint": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "positives": 37654
+  },
+  "uniqueness": {
+    "n_priors_checked": 146,
+    "ok": true,
+    "novel_fraction": 0.6603016943750996,
+    "canonical_pattern_unique": true,
+    "identical_to_a_prior": false,
+    "max_jaccard_vs_priors": 0.011877888853058153
+  },
+  "lane": {
+    "surface": {
+      "max_spearman": 0.06972314818018144,
+      "threshold": 0.9,
+      "duplicate": false,
+      "verdict": "PASS"
+    },
+    "dots": {
+      "max_near_3px_any_prior": 0.9840919955383226,
+      "threshold": 0.7,
+      "duplicate": true,
+      "verdict": "DUPLICATE/STOP",
+      "offenders": [
+        {
+          "path": "data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+          "candidate_near_3px": 0.9840919955383226,
+          "random_dots_near_3px": 0.9990704838795347,
+          "classified_universal_probe": true
+        }
+      ]
+    },
+    "dots_max_near_3px_excluding_universal_probes": 0.33220906145429435,
+    "dots_excluding_universal_probes_verdict": "PASS (policy only; literal rule still DUPLICATE/STOP)",
+    "scope": "all 135 local rasters in submission/, docs/downloads/, data/scored/; not the 567-blob full census"
+  },
+  "band15": {
+    "band": 15,
+    "tag": "depth_to_base_surf",
+    "n_nonfinite_or_nodata_inside_footprint": 0,
+    "fill_value_m_units_as_stored": 316.44793701171875,
+    "band_min": -14.837310791015625,
+    "band_max": 7135.306640625,
+    "band_median": 316.44793701171875,
+    "coherence_mean_inside": 0.911736430623952,
+    "gradient_p50": 8.291510219792622,
+    "gradient_p99": 90.15563223383201
+  },
+  "dots": 37654,
+  "slots_used": 0,
+  "verdict": "DOWNLOAD YES (format-valid, decoded-unique) / SUBMIT NO: NEGATIVE/NOT-PROMOTED: fails the pre-registered rule (knowledge/80 section 5)",
+  "generated_utc": "20261010T220731Z"
+}

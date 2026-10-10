@@ -1,0 +1,13 @@
+{
+  "shipped": "gems52-h88-cotrain-strict-AB-37654px-20261010T220328Z.tif",
+  "dots": 37654,
+  "share_in_topA": 0.063127,
+  "share_in_topB": 0.0,
+  "share_in_union_topA_topB": 0.063127,
+  "share_in_S_AB": 1.0,
+  "jaccard_vs_union_topA_topB": 0.021516,
+  "share_of_dots_outside_union": 0.936873,
+  "verdict_not_union": true,
+  "note": "share_of_dots_outside_union > 0.5 means the output is not mainly the union of the two single-view top-K sets",
+  "evidence_class": "diagnostic, not a score"
+}
