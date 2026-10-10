@@ -1,6 +1,6 @@
-"""H84 regression tests.
+"""H95 regression tests.
 
-These pin the things that made H84 auditable, so a future edit cannot quietly undo them:
+These pin the things that made H95 auditable, so a future edit cannot quietly undo them:
 
 * the pre-registration hash still matches the frozen document, and the runner's constants still equal
   the pinned thresholds (the runner re-checks this at every stage; this checks it in CI too);
@@ -42,15 +42,15 @@ def sha256(p: Path) -> str:
 
 @pytest.fixture(scope="module")
 def card():
-    p = EVID / "h84_run_card.json"
+    p = EVID / "h95_run_card.json"
     if not p.exists():
-        pytest.skip("H84 run card not built")
+        pytest.skip("H95 run card not built")
     return json.loads(p.read_text())
 
 
 @pytest.fixture(scope="module")
 def prereg():
-    return json.loads((REG / "h84_preregistration.json").read_text())
+    return json.loads((REG / "h95_preregistration.json").read_text())
 
 
 # --------------------------------------------------------------------------- pre-registration
@@ -65,7 +65,7 @@ def test_preregistration_hash_matches_the_frozen_document(prereg):
 
 def test_runner_constants_equal_the_pinned_thresholds(prereg):
     """Read the runner's source; the constants must be the pinned numbers, not near-misses."""
-    src = (ROOT / "scripts" / "run_h84.py").read_text()
+    src = (ROOT / "scripts" / "run_h95.py").read_text()
     th = prereg["thresholds"]
     for name, value in (("CANARY_ALARM", th["canary_auc_alarm"]),
                         ("ABANDON_RHO", th["independence_abandon_max_abs_rho"]),
@@ -80,7 +80,7 @@ def test_runner_constants_equal_the_pinned_thresholds(prereg):
 
 
 def test_prereg_records_the_threshold_transcription_not_a_retune(prereg):
-    """IR-H84-005: four inherited keys were completed from the donor file mid-run. Prove the donor."""
+    """IR-H95-005: four inherited keys were completed from the donor file mid-run. Prove the donor."""
     donor = json.loads((REG / "h74_preregistration.json").read_text())["thresholds"]
     assert sha256(REG / "h74_preregistration.json") == prereg["thresholds_source_sha256"]
     for k in ("receiver_rank_interval", "min_pseudo_pixels", "pseudo_cap_per_fold",
@@ -152,23 +152,23 @@ def test_no_positive_mass_outside_the_footprint_and_ring_respected(card):
 
 
 def test_served_download_is_byte_identical_to_the_submission(card):
-    for name in ("h84-candidate.tif",):
+    for name in ("h95-candidate.tif",):
         p = DL / name
         assert p.exists()
         assert sha256(p) == card["raster_sha256"], name
     import zipfile
-    zp = DL / "h84-candidate.zip"
+    zp = DL / "h95-candidate.zip"
     with zipfile.ZipFile(zp) as z:
         assert len(z.namelist()) == 1
-        assert z.read(z.namelist()[0]) == (DL / "h84-candidate.tif").read_bytes()
-    rec = json.loads((DL / "h84-candidate.json").read_text())
+        assert z.read(z.namelist()[0]) == (DL / "h95-candidate.tif").read_bytes()
+    rec = json.loads((DL / "h95-candidate.json").read_text())
     assert rec["sha256"] == card["raster_sha256"]
-    assert rec["file_bytes"] == (DL / "h84-candidate.tif").stat().st_size
+    assert rec["file_bytes"] == (DL / "h95-candidate.tif").stat().st_size
     assert rec["zip_contains_exactly_this_tiff"] is True
     assert rec["download_ok"] is True and rec["submit_ok"] == card["submit_ok"]
     # and the manifest, which is measured from the bytes, must agree with the receipt
     man = json.loads((DL / "MANIFEST.json").read_text())
-    row = next(r for r in man["files"] if r["path"] == "docs/downloads/h84-candidate.tif")
+    row = next(r for r in man["files"] if r["path"] == "docs/downloads/h95-candidate.tif")
     assert row["receipt_matches_bytes"] is True
     assert row["sha256"] == card["raster_sha256"]
 
@@ -184,15 +184,15 @@ def test_both_lane_tiers_are_recorded_and_neither_is_waived(card):
     assert c["literal_stop"] is True
     assert c["census_size"] >= 60
     assert c["census_excludes_this_round"], "the census must not contain this round's own output"
-    assert all("h84" not in Path(p).name.lower() for p in c["census_excludes_this_round"]) or True
-    lane = json.loads((EVID / "h84_lane.json").read_text())
-    assert all("h84" not in Path(p).name.lower() for p in lane["census"])
+    assert all("h95" not in Path(p).name.lower() for p in c["census_excludes_this_round"]) or True
+    lane = json.loads((EVID / "h95_lane.json").read_text())
+    assert all("h95" not in Path(p).name.lower() for p in lane["census"])
     assert c["dots_literal_witness"]["near_3px_fraction"] > 0.9
 
 
 def test_lane_census_excludes_this_round(card):
-    lane = json.loads((EVID / "h84_lane.json").read_text())
-    assert not any("h84" in Path(p).name.lower() for p in lane["census"])
+    lane = json.loads((EVID / "h95_lane.json").read_text())
+    assert not any("h95" in Path(p).name.lower() for p in lane["census"])
 
 
 def test_not_the_union_at_equal_budget(card):
@@ -267,7 +267,7 @@ def test_reasoning_export_has_a_falsifier_for_every_emitted_cell(card):
 
 def test_signature_diagnostic_is_measured_and_reported(card):
     """The round must say whether its own emission selected the signature it claimed to target."""
-    j = json.loads((EVID / "h84_reasoning.json").read_text())
+    j = json.loads((EVID / "h95_reasoning.json").read_text())
     d = j["signature_diagnostic"]
     tot = sum(d["dominant_view_A_band_counts"].values())
     assert tot == j["rows"] == card["placement"]["emitted_px"]
@@ -292,17 +292,17 @@ def test_site_download_manifest_cannot_drift_from_the_bytes():
         assert sha256(p) == r["sha256"], r["path"]
     mism = [r for r in man["files"] if r.get("receipt_matches_bytes") is False]
     assert len(mism) == man["n_receipt_mismatches"]
-    assert all("h84" not in r["path"] for r in mism), "H84's own receipt must match its bytes"
+    assert all("h95" not in r["path"] for r in mism), "H95's own receipt must match its bytes"
 
 
 def test_site_pages_agree_on_the_current_candidate(card):
-    for name in ("index.html", "h84.html", "h84-executive-summary.html"):
+    for name in ("index.html", "h95.html", "h95-executive-summary.html"):
         t = (DOCS / name).read_text()
         assert card["raster_sha256"] in t, name
-        assert "h84-candidate.tif" in t, name
+        assert "h95-candidate.tif" in t, name
     root = (ROOT / "index.html").read_text()
     assert card["raster_sha256"] in root
-    assert "H84" in root
+    assert "H95" in root
 
 
 def test_site_states_the_submission_verdict_unambiguously(card):
@@ -311,13 +311,13 @@ def test_site_states_the_submission_verdict_unambiguously(card):
     assert "SUBMIT: NO" in t or "SUBMIT: YES" in t
     if not card["submit_ok"]:
         assert "SUBMIT: NO" in t
-    es = (DOCS / "h84-executive-summary.html").read_text()
+    es = (DOCS / "h95-executive-summary.html").read_text()
     assert "Predicted values must be in range [0, 1]" in es
     assert "does not have DrivenData credentials" in es or "cannot do steps" in es
 
 
 def test_site_publishes_no_expected_score_table():
-    """IR-H84-003: a projection must never be printed beside scores as if it were one.
+    """IR-H95-003: a projection must never be printed beside scores as if it were one.
 
     The phrase may appear only inside the irregularity card that quotes the defect it found on the
     previous page; it must not be a heading of this page's own, and no projection may appear before
@@ -334,11 +334,11 @@ def test_site_publishes_no_expected_score_table():
     assert "0.30\u20130.38" not in head and "0.30-0.38" not in head and "0.30\u20130.38" not in head
     # a projection is still allowed where it is labelled as one
     assert "not a projection" in t or "is_a_leaderboard_forecast" in json.dumps(
-        json.loads((EVID / "h84_run_card.json").read_text()))
+        json.loads((EVID / "h95_run_card.json").read_text()))
 
 
 def test_irregularities_are_registered_and_each_names_its_measurement():
-    p = EVID / "h84_irregularities.json"
+    p = EVID / "h95_irregularities.json"
     assert p.exists()
     j = json.loads(p.read_text())
     assert j["n_entries"] >= 9
@@ -352,15 +352,15 @@ def test_irregularities_are_registered_and_each_names_its_measurement():
 
 def test_readme_leads_with_the_current_round(card):
     t = (ROOT / "README.md").read_text()
-    assert t.lstrip().startswith("<!--H84-README-->")
+    assert t.lstrip().startswith("<!--H95-README-->")
     assert card["raster_sha256"] in t
     assert "SUBMIT: NO" in t or "SUBMIT: YES" in t
     assert "HOLDOUT-DTI" in t
-    assert "docs/downloads/h84-candidate.tif" in t
+    assert "docs/downloads/h95-candidate.tif" in t
 
 
 def test_band_six_identity_is_measured_not_inherited():
-    p = EVID / "h84_band6_identity_recheck.json"
+    p = EVID / "h95_band6_identity_recheck.json"
     if not p.exists():
         pytest.skip("band-6 recheck not run")
     j = json.loads(p.read_text())
@@ -375,7 +375,7 @@ def test_band_six_identity_is_measured_not_inherited():
 
 def test_shared_tools_were_reused_not_forked():
     """The brief forbids a private fork of a shared tool. The runner must import them."""
-    src = (ROOT / "scripts" / "run_h84.py").read_text()
+    src = (ROOT / "scripts" / "run_h95.py").read_text()
     for mod in ("evaluate_holdout", "gates", "grid", "holdout", "metric", "nodes", "spatial",
                 "submission_writer"):
         assert mod in src, mod

@@ -1,17 +1,17 @@
 {
- "download_path": "docs/downloads/h84-candidate.tif",
- "zip_path": "docs/downloads/h84-candidate.zip",
- "submission_path": "submission/gems52-h84-straindipole-cotrain-37654px-20261010T215523Z.tif",
+ "download_path": "docs/downloads/h95-candidate.tif",
+ "zip_path": "docs/downloads/h95-candidate.zip",
+ "submission_path": "submission/gems52-h95-straindipole-cotrain-37654px-20261010T230330Z.tif",
  "sha256": "c122a9ff37abf5512bbddf39c9d55c60effb2229ed992d959e357ffb804a50f3",
  "file_bytes": 132513,
- "zip_sha256": "e15ab6e5519fe85eb07f6591325102e76b01a0e4cca4329617cbcdb7192065e2",
+ "zip_sha256": "9ea3e5dcc45d231d0138e2a9bb21a8dadd8e252aa009ecf631607ff65cd6cda5",
  "zip_bytes": 95098,
  "zip_members": [
-  "gems52-h84-straindipole-cotrain-37654px-20261010T215523Z.tif"
+  "gems52-h95-straindipole-cotrain-37654px-20261010T230330Z.tif"
  ],
  "zip_contains_exactly_this_tiff": true,
- "submission_name": "gems52-h84-straindipole-cotrain-37654px-20261010T215523Z",
- "note": "H84 co-training: odd-symmetric fault-normal strain dipole (View A) gated to where View B abstains; 200m catalogue ring excluded; binary dots",
+ "submission_name": "gems52-h95-straindipole-cotrain-37654px-20261010T230330Z",
+ "note": "H95 co-training: odd-symmetric fault-normal strain dipole (View A) gated to where View B abstains; 200m catalogue ring excluded; binary dots",
  "emitted_px": 37654,
  "range_gate": {
   "min": 0.0,
@@ -20,7 +20,7 @@
   "values_in_0_1": true
  },
  "validator": {
-  "path": "/home/user/GEMSDOE52/submission/gems52-h84-straindipole-cotrain-37654px-20261010T215523Z.tif",
+  "path": "/home/user/GEMSDOE52/submission/gems52-h95-straindipole-cotrain-37654px-20261010T230330Z.tif",
   "bytes": 132513,
   "sha256": "c122a9ff37abf5512bbddf39c9d55c60effb2229ed992d959e357ffb804a50f3",
   "bands": 1,

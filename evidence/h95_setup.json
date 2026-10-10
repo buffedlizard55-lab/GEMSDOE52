@@ -1,0 +1,77 @@
+{
+ "label_values": {
+  "-1": 7111787,
+  "0": 5106385,
+  "1": 60988
+ },
+ "in_domain_px": 5167373,
+ "features_all_bands_finite_px": 5165840,
+ "sample_submission_finite_px": 5167373,
+ "footprint_delta_sample_minus_features": 1533,
+ "valid_used_px": 5164300,
+ "catalogue_px": 60988,
+ "eligible_after_200m_ring_px": 4859987,
+ "folds": [
+  {
+   "fold": 0,
+   "mode": "hide",
+   "truth_px": 10332,
+   "visible_px": 48551,
+   "fit_px": 4776211,
+   "region_px": 5164300,
+   "n_held": 12343
+  },
+  {
+   "fold": 1,
+   "mode": "hide",
+   "truth_px": 10341,
+   "visible_px": 34322,
+   "fit_px": 4578048,
+   "region_px": 5164300,
+   "n_held": 26572
+  },
+  {
+   "fold": 2,
+   "mode": "hide",
+   "truth_px": 10342,
+   "visible_px": 44256,
+   "fit_px": 4713195,
+   "region_px": 5164300,
+   "n_held": 16638
+  },
+  {
+   "fold": 3,
+   "mode": "hide",
+   "truth_px": 5341,
+   "visible_px": 55553,
+   "fit_px": 4873766,
+   "region_px": 5164300,
+   "n_held": 5341
+  }
+ ],
+ "grid": {
+  "crs": "EPSG:32611",
+  "transform": [
+   100.0,
+   0.0,
+   243350.0,
+   0.0,
+   -100.0,
+   4508550.0
+  ],
+  "shape": [
+   3730,
+   3292
+  ],
+  "dtype": "int8",
+  "nodata": -1.0
+ },
+ "labels_sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+ "features_sha256": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+ "sample_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+ "prevalence_target": 0.002,
+ "buffer_px": 8,
+ "seed": 84,
+ "n_folds": 4,
+ "withheld_positive_pixels_total": 36356
+}

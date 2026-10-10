@@ -1,0 +1,66 @@
+{
+ "emitted_px": 37654,
+ "requested_budget": 37654,
+ "min_separation_px": 3.0,
+ "pool_px": 4859987,
+ "short_fill": 0,
+ "catalogue_distance_m": {
+  "min": 223.6,
+  "median": 1923.5,
+  "p05": 300.0,
+  "pct_within_300m": 5.543,
+  "pct_within_200m": 0.0
+ },
+ "ring_exclusion_m": 200.0,
+ "normal_field": {
+  "good_px": 1867434,
+  "coherence_median": 0.9066612124443054,
+  "regional_normal_tensor_rad": 0.22098458517357802,
+  "regional_resultant_R": 0.30204457139289675,
+  "regional_normal_compass_deg": 77.33851593210471,
+  "regional_strike_compass_deg": 167.3385159321047,
+  "axial_circular_sd_deg": 88.65790833500684,
+  "substituted_px": 10411726,
+  "substituted_fraction": 0.84792,
+  "cross_check": "strike derived as normal + 90 deg; H82 measured 166.7-171.8 deg compass from an independent structure-tensor implementation (knowledge/73 section 5)"
+ },
+ "marginal_rule": {
+  "source": "knowledge/49 section 2",
+  "bar_at_board_dti_0p2778": 0.05556,
+  "bar_at_board_dti_0p3774": 0.07548,
+  "max_emit_distance_px": 2.8333199999999996,
+  "note": "OWNER-REPORTED board DTIs used only to state the bar; not a projection of this file's score"
+ },
+ "not_the_union": {
+  "equal_budget": 37654,
+  "relations": [
+   {
+    "arm": "union_max",
+    "arm_px": 37654,
+    "shared_px": 1421,
+    "jaccard": 0.01923,
+    "identical": false
+   },
+   {
+    "arm": "single_A",
+    "arm_px": 37654,
+    "shared_px": 11145,
+    "jaccard": 0.1737,
+    "identical": false
+   },
+   {
+    "arm": "single_B",
+    "arm_px": 37654,
+    "shared_px": 0,
+    "jaccard": 0.0,
+    "identical": false
+   }
+  ],
+  "ok": true,
+  "rule": "the authorized candidate must not be identical to the union-max of the two views nor to either single view at the same budget"
+ },
+ "surface_field": {
+  "kind": "normalized rank surface of the primary field",
+  "note": "kept for the pre-placement lane check"
+ }
+}

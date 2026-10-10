@@ -1,6 +1,6 @@
 {
  "generated_from": "bytes on disk at publish time",
- "n_files": 140,
+ "n_files": 166,
  "n_receipt_mismatches": 1,
  "mismatched": [
   "docs/downloads/h83-candidate.tif"
@@ -166,6 +166,31 @@
    "path": "docs/downloads/gems52-h82-dva2vsa-B-37654px-20261009T215811Z.tif",
    "bytes": 140555,
    "sha256": "17c3f8325ac6f267b1b8cc58bc6fd9495c118c30de64d5f78293d19d7f20c907"
+  },
+  {
+   "path": "docs/downloads/gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.tif",
+   "bytes": 128024,
+   "sha256": "a861069b8c780738b83245c1f736313d043989ca33554377f6dffb0465d8e9c3"
+  },
+  {
+   "path": "docs/downloads/gems52-h88-cotrain-strict-AB-37654px-20261010T220328Z.tif",
+   "bytes": 795844,
+   "sha256": "794b3814b63cdcd880395f5a632cfe0f3b28642b3fdb337ca0315a4722c0ccdd"
+  },
+  {
+   "path": "docs/downloads/gems52-h91-csa16fan-B-37654px-20261010T215157Z.tif",
+   "bytes": 138604,
+   "sha256": "e0b5ab82ee6df0191a0ec3ed671d45588bcba8fdb1b4ce4f4610cf6a0cb6cc38"
+  },
+  {
+   "path": "docs/downloads/gems52-h92-cotrain-disagree-supportcal-17707px-20261010T224107Z.tif",
+   "bytes": 93751,
+   "sha256": "ddf09d89003eacb8a9df8896a9783e078a6fca5500445b24f3375d3db4d79d4f"
+  },
+  {
+   "path": "docs/downloads/gems52-h93-abs-cotrain-37654px-20261010T223629Z-zeros.tif",
+   "bytes": 795526,
+   "sha256": "b37c2dc8e5ad4bde121edb7ef21b4e05c2d9d2ceebfe8604180627866b726759"
   },
   {
    "path": "docs/downloads/gems52-r2-signednormal-37654-1f751ac9b6ee-zeros.tif",
@@ -368,9 +393,14 @@
    "sha256": "17c3f8325ac6f267b1b8cc58bc6fd9495c118c30de64d5f78293d19d7f20c907"
   },
   {
+   "path": "docs/downloads/h83-candidate-template-nan.tif",
+   "bytes": 1582635,
+   "sha256": "dee4ee5ee364ae2dae4b684e9f35cbf0a07216b75f13369630bc24cc5d65efd2"
+  },
+  {
    "path": "docs/downloads/h83-candidate.tif",
-   "bytes": 81076,
-   "sha256": "d9cfccf0e1aa4e28094a6039fda9e65be5e8ff102e321b33745df149f477f378",
+   "bytes": 140798,
+   "sha256": "de580306e2cb6460fced1b745d1d40ff9735fb5497d493a56cca7630ad2a0ef7",
    "adjacent_receipt": "h83-candidate.json",
    "receipt_claims": {
     "sha256": "274db602ec8b91cb6a2793e9f512321f32326298aa8ed031ebd478e21426f5cd",
@@ -383,16 +413,56 @@
   },
   {
    "path": "docs/downloads/h84-candidate.tif",
+   "bytes": 141678,
+   "sha256": "6bb18056c521a1a6a7bcefa75f3be7cb37653b8066efd4252a8b5c096b90b73e"
+  },
+  {
+   "path": "docs/downloads/h85-candidate.tif",
+   "bytes": 793702,
+   "sha256": "a4a6662009ad2118da8c1b638befb18dff62082757b6c6d89bb207336c17b32a"
+  },
+  {
+   "path": "docs/downloads/h86-candidate.tif",
+   "bytes": 128032,
+   "sha256": "fff75cb886ebd236af609346d1553b16623e37dc569eeda258951a3ef2cb4f44"
+  },
+  {
+   "path": "docs/downloads/h88-candidate.tif",
+   "bytes": 793459,
+   "sha256": "636b4b9f75cc19980387b410575d433a8f1a93bfb29ffdde7386d75a6209aa4c"
+  },
+  {
+   "path": "docs/downloads/h89-candidate.tif",
+   "bytes": 142450,
+   "sha256": "9d3e2be69efd476c91c8772a28c09ffccadac4281cc2025e376e0c8c8ffba04a"
+  },
+  {
+   "path": "docs/downloads/h90-candidate.tif",
+   "bytes": 791086,
+   "sha256": "094f5ce32216af1c450058583e0bad172ee3c6eded0a674789ab00a7446001ec"
+  },
+  {
+   "path": "docs/downloads/h91-candidate.tif",
+   "bytes": 138604,
+   "sha256": "e0b5ab82ee6df0191a0ec3ed671d45588bcba8fdb1b4ce4f4610cf6a0cb6cc38"
+  },
+  {
+   "path": "docs/downloads/h92-candidate.tif",
+   "bytes": 93751,
+   "sha256": "ddf09d89003eacb8a9df8896a9783e078a6fca5500445b24f3375d3db4d79d4f"
+  },
+  {
+   "path": "docs/downloads/h95-candidate.tif",
    "bytes": 132513,
    "sha256": "c122a9ff37abf5512bbddf39c9d55c60effb2229ed992d959e357ffb804a50f3",
-   "adjacent_receipt": "h84-candidate.json",
+   "adjacent_receipt": "h95-candidate.json",
    "receipt_claims": {
     "sha256": "c122a9ff37abf5512bbddf39c9d55c60effb2229ed992d959e357ffb804a50f3",
     "file_bytes": 132513,
-    "submission_name": "gems52-h84-straindipole-cotrain-37654px-20261010T215523Z"
+    "submission_name": "gems52-h95-straindipole-cotrain-37654px-20261010T230330Z"
    },
    "receipt_matches_bytes": true,
-   "round": "H84",
+   "round": "H95",
    "download_ok": true,
    "submit_ok": false,
    "verdict": "negative"
@@ -879,6 +949,54 @@
    "zip_single_tiff": true
   },
   {
+   "path": "docs/downloads/gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.zip",
+   "bytes": 89926,
+   "sha256": "4cf3f9c0ee7cb5a98377f96a2c1c39e58f8bef90a59be9137afbec67d25daffe",
+   "zip_members": [
+    {
+     "name": "gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.tif",
+     "bytes": 128024
+    }
+   ],
+   "zip_single_tiff": true
+  },
+  {
+   "path": "docs/downloads/gems52-h88-cotrain-strict-AB-37654px-20261010T220328Z.zip",
+   "bytes": 154700,
+   "sha256": "ce246de6f0cc05fefe27046efa69bc0d2d8a10081f2430572d3165613d69c974",
+   "zip_members": [
+    {
+     "name": "gems52-h88-cotrain-strict-AB-37654px-20261010T220328Z.tif",
+     "bytes": 795844
+    }
+   ],
+   "zip_single_tiff": true
+  },
+  {
+   "path": "docs/downloads/gems52-h91-csa16fan-B-37654px-20261010T215157Z.zip",
+   "bytes": 103854,
+   "sha256": "557fd31f1fff237d09fdb389f7c119445674fd7dd05bdf9865abbf7c1db11add",
+   "zip_members": [
+    {
+     "name": "gems52-h91-csa16fan-B-37654px-20261010T215157Z.tif",
+     "bytes": 138604
+    }
+   ],
+   "zip_single_tiff": true
+  },
+  {
+   "path": "docs/downloads/gems52-h93-abs-cotrain-37654px-20261010T223629Z-zeros.zip",
+   "bytes": 180033,
+   "sha256": "1acf23a6be6785a39068fcd7f9b9e14978949efc00939d4d3a6cb60669ab8f6d",
+   "zip_members": [
+    {
+     "name": "gems52-h93-abs-cotrain-37654px-20261010T223629Z-zeros.tif",
+     "bytes": 795526
+    }
+   ],
+   "zip_single_tiff": true
+  },
+  {
    "path": "docs/downloads/gems52-r2-signednormal-37654-1f751ac9b6ee-zeros.zip",
    "bytes": 120462,
    "sha256": "90f870313d4c1d0832a4540fb02cfe41b2ed379dbf1d06e1a7f854f260cd16d6",
@@ -1340,11 +1458,11 @@
   },
   {
    "path": "docs/downloads/h75-candidate.zip",
-   "bytes": 108795,
-   "sha256": "a38a3bbf4bd718b2dc725e333c30611f3f2fee89cad9fddba75aa35f4e608be3",
+   "bytes": 108811,
+   "sha256": "7ff4e50dbff3bc3c61164dc0d6e59054f7a7e14b548040fb664b0c9154d2917f",
    "zip_members": [
     {
-     "name": "gems52-h75-dva-variogram-anisotropy-B-37654px-20261009.tif",
+     "name": "gems52-h75-dva-variogram-anisotropy-B-37654px-20261009T200333Z.tif",
      "bytes": 142941
     }
    ],
@@ -1388,23 +1506,131 @@
   },
   {
    "path": "docs/downloads/h83-candidate.zip",
-   "bytes": 33283,
-   "sha256": "a96e5989a6d01e4b7caa4c933182e73064fa79bb5133e0b574da02ec8fac7db4",
+   "bytes": 106035,
+   "sha256": "1619dcbcbb91bf978e320009fa62f21451af1f989f40c926fb69e5312db54ae0",
    "zip_members": [
     {
-     "name": "gems52-h83-structcon-geotherm-37654px-20261010T200310Z.tif",
-     "bytes": 81076
+     "name": "gems52-h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z.tif",
+     "bytes": 140798
     }
    ],
    "zip_single_tiff": true
   },
   {
    "path": "docs/downloads/h84-candidate.zip",
-   "bytes": 95098,
-   "sha256": "e15ab6e5519fe85eb07f6591325102e76b01a0e4cca4329617cbcdb7192065e2",
+   "bytes": 107420,
+   "sha256": "5e9b7ed584ed731b4b71939a1e9771701cd4bb94eddc27146b4082bd1b7b68d1",
    "zip_members": [
     {
-     "name": "gems52-h84-straindipole-cotrain-37654px-20261010T215523Z.tif",
+     "name": "gems52-h84-hva-ellipse-B-37654px-20261010T204630Z.tif",
+     "bytes": 141678
+    }
+   ],
+   "zip_single_tiff": true
+  },
+  {
+   "path": "docs/downloads/h85-candidate.zip",
+   "bytes": 160578,
+   "sha256": "97a9506e144195a5f99de64eb14e1a48674856338add27d52588baa742c3efbd",
+   "zip_members": [
+    {
+     "name": "h85-candidate.tif",
+     "bytes": 793702
+    }
+   ],
+   "zip_single_tiff": true
+  },
+  {
+   "path": "docs/downloads/h86-candidate.zip",
+   "bytes": 90732,
+   "sha256": "31ce64bac42c9ac01212dc46bab676a1b822e5807669ea7e37f009619ff237b6",
+   "zip_members": [
+    {
+     "name": "gems52-h86-h83conc-spaced-37654px-20261010T205209Z.tif",
+     "bytes": 128032
+    }
+   ],
+   "zip_single_tiff": true
+  },
+  {
+   "path": "docs/downloads/h88-candidate.zip",
+   "bytes": 113371,
+   "sha256": "455634c7e5f6da2b2052a5e492f6bff7fc94738dabe49ce7247fc0d5304da75b",
+   "zip_members": [
+    {
+     "name": "gems52-h88-basement-step-37654px-20261010.tif",
+     "bytes": 793459
+    }
+   ],
+   "zip_single_tiff": true
+  },
+  {
+   "path": "docs/downloads/h89-candidate.zip",
+   "bytes": 108103,
+   "sha256": "6ae6c73dd89d822164367fc82770738df88b237b40fe7db0754b82bd6e617499",
+   "zip_members": [
+    {
+     "name": "gems52-h89-coverco-disagree-37654px-20261010T214732Z.tif",
+     "bytes": 142450
+    }
+   ],
+   "zip_single_tiff": true
+  },
+  {
+   "path": "docs/downloads/h90-candidate.zip",
+   "bytes": 177688,
+   "sha256": "40ba9b83bf233c30831d9992628e1265b9c71d43479d2ec0e6e5c0f7ad0f0a0a",
+   "zip_members": [
+    {
+     "name": "gems52-h90-cleanoof-disagree-37654px.tif",
+     "bytes": 791086
+    },
+    {
+     "name": "submission-name.txt",
+     "bytes": 37
+    },
+    {
+     "name": "submission-note.txt",
+     "bytes": 133
+    },
+    {
+     "name": "STATUS.txt",
+     "bytes": 66
+    }
+   ],
+   "zip_single_tiff": false
+  },
+  {
+   "path": "docs/downloads/h91-candidate.zip",
+   "bytes": 103854,
+   "sha256": "557fd31f1fff237d09fdb389f7c119445674fd7dd05bdf9865abbf7c1db11add",
+   "zip_members": [
+    {
+     "name": "gems52-h91-csa16fan-B-37654px-20261010T215157Z.tif",
+     "bytes": 138604
+    }
+   ],
+   "zip_single_tiff": true
+  },
+  {
+   "path": "docs/downloads/h92-candidate.zip",
+   "bytes": 50631,
+   "sha256": "d97de08bfa56b827f93ef0610c2e8a0782f744af5b9fa02b00fc973af58f45e7",
+   "zip_members": [
+    {
+     "name": "gems52-h92-cotrain-disagree-supportcal-17707px-20261010T224107Z.tif",
+     "bytes": 93751
+    }
+   ],
+   "zip_single_tiff": true
+  },
+  {
+   "path": "docs/downloads/h95-candidate.zip",
+   "bytes": 95098,
+   "sha256": "9ea3e5dcc45d231d0138e2a9bb21a8dadd8e252aa009ecf631607ff65cd6cda5",
+   "zip_members": [
+    {
+     "name": "gems52-h95-straindipole-cotrain-37654px-20261010T230330Z.tif",
      "bytes": 132513
     }
    ],

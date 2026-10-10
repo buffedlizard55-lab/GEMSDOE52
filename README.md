@@ -1,8 +1,95 @@
+<!--H95-README-->
+# Current status — H95 (2026-10-10): NEGATIVE — a signed strain-dipole operator was built and gated; View A failed sufficiency an eighth time
+
+> **DOWNLOAD: YES** (format-valid, range-gated, 0 NaN anywhere, values exactly {0,1}, lane-checked
+> against 79 byte-distinct aligned rasters). **SUBMIT: NO — research artefact only.**
+> The pre-registered primary `A_ODD_gated` scored **HOLDOUT-DTI 0.002757**
+> [0.0014, 0.0046] against its mandated control `single_B`
+> 0.029349 [0.0193, 0.0415]; paired
+> **-0.026592** [-0.0389, -0.0163]. The frozen rule needs that lower bound
+> above zero. **Slots used: 0.**
+
+**★ [Download H95 GeoTIFF](docs/downloads/h95-candidate.tif)** · [ZIP](docs/downloads/h95-candidate.zip)
+· **[Executive summary / exactly how to submit](docs/h95-executive-summary.html)**
+· **[Check any file in your browser](docs/validator.html)** · [Full result](docs/h95.html)
+· [Hypotheses](docs/h95-hypotheses.html) · [Sources](docs/h95-sources.html)
+· [Measured download manifest](docs/downloads/MANIFEST.json)
+
+- **File:** `submission/gems52-h95-straindipole-cotrain-37654px-20261010T230330Z.tif` — 132,513 bytes, SHA-256 `c122a9ff37abf5512bbddf39c9d55c60effb2229ed992d959e357ffb804a50f3`
+- **Submission name:** `gems52-h95-straindipole-cotrain-37654px-20261010T230330Z`
+- **Note (140/140):** `H95 co-training: odd-symmetric fault-normal strain dipole (View A) gated to where View B abstains; 200m catalogue ring excluded; binary dots`
+- **Validator (from the bytes on disk):** 1 band float32,
+  EPSG:32611, 3730×3292, transform identical to
+  `sample_submission.tif`, **0 NaN/infinite anywhere in the grid**, values
+  exactly {0,1}, 37,654 ones. **PASS.**
+- **Container, chosen on evidence:** all-finite with zeros outside the footprint, tiled/deflate, no
+  nodata tag — byte-structurally the container of the OWNER-REPORTED 0.2778 reference
+  `h33-2-b2-zeros.tif`. Measured this session: 11 of 13 restored owner-scored rasters are strip/LZW
+  `nodata=nan` and 2 are all-finite, so **both containers have been portal-accepted**, and the
+  all-finite one cannot trip *"Predicted values must be in range [0, 1]"* under any reader.
+- **HOLDOUT-DTI** (`gems52-pooled-hide-v1`, 36,356 withheld positive
+  px, 9,400 dots/fold/arm, α 0.2 / β 0.8, R 300 m, 1,000 paired
+  cluster-bootstrap draws at 200 px): `A_ODD_gated` **0.002757** · `single_B` 0.029349 ·
+  `single_A` 0.003260 · `random` 0.016962. **A holdout number is never a board forecast**
+  (this repository has measured Spearman −0.10 between the instrument and the board, `knowledge/10` §5).
+- **View A sufficiency FAILED an eighth time:** mean out-of-fold AUC
+  0.4875, worst fold 0.4351, bar
+  0.6 / 0.55. View B
+  0.6053. With A below chance there is nothing for A to donate, which is
+  why the primary arm cannot beat the control — the co-training lane's own precondition, not a bug.
+- **Leakage canary:** max single-channel out-of-fold AUC = **0.66534**
+  (`B_b19_detrended_elev_slope_h2_oddom`) against a 0.90 bar → **no alarm**.
+- **View independence (the lane's mandated test):** max |ρ| **0.0851** over
+  8,788 spatial blocks / 20,412,932 proxy negatives (bar 0.60,
+  thresholds inherited verbatim from `registry/h74_preregistration.json`) → `allow_exchange=True`.
+  **independence passes but View A sufficiency FAILED, so there is nothing to donate: exchange not run.**
+- **Lane:** surface literal **PASS** (max ρ 0.022438339722020743); final dots
+  literal **DUPLICATE/STOP** (max ρ 0.020776736236831485, near-3px
+  0.9989642534657672) against 79 byte-distinct aligned rasters.
+- **Not the union:** Jaccard 0.01923 against the union-max
+  placement at the same budget, 0.1737 against View A alone,
+  0.0 against View B alone; identical to none →
+  **PASS**.
+- **Placement:** 37,654 binary cells at 3 px minimum separation from a
+  4,859,987 px pool; 200 m catalogue ring excluded; minimum catalogue distance
+  223.6 m, median 1923.5 m,
+  5.543% inside the metric's 300 m kernel.
+- **Method:** 32 learner channels. View A = a **signed, odd-symmetric fault-normal profile
+  decomposition** of geodetic dilatation rate (band 8), shear rate (7) and second invariant (4), plus
+  isostatic gravity (13) and its horizontal gradient (18) as a cross-family antisymmetry control:
+  `odd=(B(+h)−B(−h))/2`, `even=(B(+h)+B(−h))/2` at h ∈ {1,2} px along a normal measured from a
+  structure tensor over each fold's **visible** catalogue only, with odd-dominance
+  `odd²/(|odd|+|even|+ε)` and a sign-reversal couple as the discriminators. View B = detrended elevation
+  (12), its slope (19) and the aeroradiometric total count (6). Every View A operator built in this
+  repository before was sign-blind; a grep for `dipole`, `odd_sym`, `strain_dipole`, `odd-symmetric`
+  and `derivative of gaussian` returns no implementation, and the one registered antisymmetry idea
+  (H57-C) was never run and is a cross-family *orientation* coincidence, not a signed profile.
+- **Cross-validation of the direction field:** H95's per-fold regional fault normals are 74.5–80.3°
+  compass, so the derived trace strikes are 164.5–170.3° — agreeing with H82's independently measured
+  166.7–171.8° from a separate structure-tensor implementation.
+- **Irregularities flagged this session:** 1 download path(s) whose adjacent JSON receipt
+  describes different bytes than the file served (IR-H95-001), plus
+  IR-H95-002…005 in `registry/irregularities.json` and on the site. None was papered over: the repair is
+  a **measured manifest** (`docs/downloads/MANIFEST.json`) re-derived from every served file at publish
+  time, so a receipt cannot drift from its bytes again.
+- **Docs:** [pre-registration](knowledge/93_hypotheses_H95_preregistered.md) (frozen before any fit,
+  SHA-256 pinned in `registry/h95_preregistration.json`, and the runner re-hashes it on every stage) ·
+  [run card](evidence/h95_run_card.json) · [holdout](evidence/h95_holdout.json) ·
+  [independence](evidence/h95_independence.json) · [lane](evidence/h95_lane.json) ·
+  [build](evidence/h95_build.json) · [write](evidence/h95_write.json)
+- **Reproduce:** `python3 scripts/restore_data.py --target-dir data` →
+  `python scripts/run_h95.py all` → `python scripts/publish_h95_site.py` → `python scripts/check_site.py`
+  → `python -m pytest -q`.
+
+---
+
+<!--/H95-README-->
+
 # GEMSDOE52 — Co-Training Research for the DOE GEMS Prize
 
 **Competition:** [DOE GEMS Prize (DrivenData #306)](https://www.drivendata.org/competitions/306/competition-doe-gems/)
 **Branch:** `arena/411239c1-gemsdoe52` (fixed for this session; the older header said `arena/99f480b9-gemsdoe52`, see IR-H94-005)
-**Current status (2026-10-10, H94):** **download yes (audit only) · submit NO.** Holdout NEGATIVE; final-dot lane DUPLICATE/STOP.
+**Superseded status (2026-10-10, H94 — the H95 block above is the current round):** **download yes (audit only) · submit NO.** Holdout NEGATIVE; final-dot lane DUPLICATE/STOP.
 
 ➡️ **Start here:** [current status page](https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/docs/index.html) (GitHub Pages: `docs/index.html`) · [executive summary and submission guide](docs/executive-summary.html)
 

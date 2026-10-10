@@ -1,0 +1,424 @@
+{
+ "band_tags": {
+  "b8_dilatation": {
+   "band": 8,
+   "data_category": "geodetic_strain",
+   "description": "Geodetic dilatation rate - rate of volumetric strain (expansion/contraction)"
+  },
+  "b7_shear": {
+   "band": 7,
+   "data_category": "geodetic_strain",
+   "description": "Geodetic shear rate - rate of angular deformation from GPS/InSAR"
+  },
+  "b4_secondinvariant": {
+   "band": 4,
+   "data_category": "geodetic_strain",
+   "description": "Geodetic second invariant - measure of strain rate tensor magnitude"
+  },
+  "b13_isograv": {
+   "band": 13,
+   "data_category": "gravity_data",
+   "description": "Isostatic gravity anomaly - gravity after compensating for topographic mass"
+  },
+  "b18_isograv_hg": {
+   "band": 18,
+   "data_category": "gravity_data",
+   "description": "Isostatic gravity anomaly horizontal gradient - horizontal rate of change"
+  },
+  "b12_detrended_elev": {
+   "band": 12,
+   "data_category": "topographic",
+   "description": "Detrended elevation - topography with regional trends removed"
+  },
+  "b19_detrended_elev_slope": {
+   "band": 19,
+   "data_category": "topographic",
+   "description": "Detrended elevation slope - gradient of elevation after detrending"
+  },
+  "b6_radiometric_tc": {
+   "band": 6,
+   "data_category": "magnetic_data",
+   "description": "Tilt angle or total curvature - magnetic field derivative for edge detection"
+  }
+ },
+ "sigma_A": 3.0,
+ "sigma_B": 2.0,
+ "lags_A": {
+  "b8_dilatation": [
+   1,
+   2
+  ],
+  "b7_shear": [
+   2
+  ],
+  "b4_secondinvariant": [
+   2
+  ],
+  "b13_isograv": [
+   2
+  ],
+  "b18_isograv_hg": [
+   2
+  ]
+ },
+ "lags_B": {
+  "b12_detrended_elev": [
+   2
+  ],
+  "b19_detrended_elev_slope": [
+   2
+  ],
+  "b6_radiometric_tc": [
+   2
+  ]
+ },
+ "A_channels": [
+  "A_b8_dilatation_h1_absodd",
+  "A_b8_dilatation_h1_oddom",
+  "A_b8_dilatation_h1_couple",
+  "A_b8_dilatation_h2_absodd",
+  "A_b8_dilatation_h2_oddom",
+  "A_b8_dilatation_h2_couple",
+  "A_b7_shear_h2_absodd",
+  "A_b7_shear_h2_oddom",
+  "A_b7_shear_h2_couple",
+  "A_b4_secondinvariant_h2_absodd",
+  "A_b4_secondinvariant_h2_oddom",
+  "A_b4_secondinvariant_h2_couple",
+  "A_b13_isograv_h2_absodd",
+  "A_b13_isograv_h2_oddom",
+  "A_b13_isograv_h2_couple",
+  "A_b18_isograv_hg_h2_absodd",
+  "A_b18_isograv_hg_h2_oddom",
+  "A_b18_isograv_hg_h2_couple"
+ ],
+ "B_channels": [
+  "B_b12_detrended_elev_h2_absodd",
+  "B_b12_detrended_elev_h2_oddom",
+  "B_b12_detrended_elev_h2_couple",
+  "B_b19_detrended_elev_slope_h2_absodd",
+  "B_b19_detrended_elev_slope_h2_oddom",
+  "B_b19_detrended_elev_slope_h2_couple",
+  "B_b6_radiometric_tc_h2_absodd",
+  "B_b6_radiometric_tc_h2_oddom",
+  "B_b6_radiometric_tc_h2_couple",
+  "B_b12_relief5",
+  "B_b12_curv",
+  "B_b12_grad",
+  "B_b19_grad",
+  "B_b6_localstd"
+ ],
+ "n_A": 18,
+ "n_B": 14,
+ "normal_fields": [
+  {
+   "good_px": 1490754,
+   "coherence_median": 0.9108010530471802,
+   "regional_normal_tensor_rad": 0.22243150401878367,
+   "regional_resultant_R": 0.30441298608174705,
+   "regional_normal_compass_deg": 77.25561358897649,
+   "regional_strike_compass_deg": 167.25561358897647,
+   "axial_circular_sd_deg": 88.36822239277575,
+   "substituted_px": 10788406,
+   "substituted_fraction": 0.87859,
+   "cross_check": "strike derived as normal + 90 deg; H82 measured 166.7-171.8 deg compass from an independent structure-tensor implementation (knowledge/73 section 5)",
+   "fold": 0
+  },
+  {
+   "good_px": 1094158,
+   "coherence_median": 0.909825325012207,
+   "regional_normal_tensor_rad": 0.2712434814980616,
+   "regional_resultant_R": 0.3524989042065847,
+   "regional_normal_compass_deg": 74.45889328972623,
+   "regional_strike_compass_deg": 164.45889328972623,
+   "axial_circular_sd_deg": 82.74065111368289,
+   "substituted_px": 11185002,
+   "substituted_fraction": 0.91089,
+   "cross_check": "strike derived as normal + 90 deg; H82 measured 166.7-171.8 deg compass from an independent structure-tensor implementation (knowledge/73 section 5)",
+   "fold": 1
+  },
+  {
+   "good_px": 1364734,
+   "coherence_median": 0.8995552062988281,
+   "regional_normal_tensor_rad": 0.23381373575392572,
+   "regional_resultant_R": 0.263323258911908,
+   "regional_normal_compass_deg": 76.60345974911297,
+   "regional_strike_compass_deg": 166.60345974911297,
+   "axial_circular_sd_deg": 93.60008295361354,
+   "substituted_px": 10914426,
+   "substituted_fraction": 0.88886,
+   "cross_check": "strike derived as normal + 90 deg; H82 measured 166.7-171.8 deg compass from an independent structure-tensor implementation (knowledge/73 section 5)",
+   "fold": 2
+  },
+  {
+   "good_px": 1678270,
+   "coherence_median": 0.9047183394432068,
+   "regional_normal_tensor_rad": 0.1690402332646947,
+   "regional_resultant_R": 0.30195129994216807,
+   "regional_normal_compass_deg": 80.31470806602604,
+   "regional_strike_compass_deg": 170.31470806602604,
+   "axial_circular_sd_deg": 88.66934355535868,
+   "substituted_px": 10600890,
+   "substituted_fraction": 0.86332,
+   "cross_check": "strike derived as normal + 90 deg; H82 measured 166.7-171.8 deg compass from an independent structure-tensor implementation (knowledge/73 section 5)",
+   "fold": 3
+  }
+ ],
+ "writes": {
+  "sm_b8_dilatation": {
+   "path": "/home/user/GEMSDOE52/work/h95/sm_b8_dilatation.npy",
+   "shape": [
+    3730,
+    3292
+   ],
+   "dtype": "float32",
+   "sha256": "562d4124e246802b940557bae2582622cb1d1992d7025189f1fd6b6ce4852f4d",
+   "bytes": 49116768,
+   "verified": true,
+   "attempts": 1
+  },
+  "sm_b7_shear": {
+   "path": "/home/user/GEMSDOE52/work/h95/sm_b7_shear.npy",
+   "shape": [
+    3730,
+    3292
+   ],
+   "dtype": "float32",
+   "sha256": "490bd5c1e1248b20126a4faee65a0525e1adcff91474b48fc2989dcce38e695f",
+   "bytes": 49116768,
+   "verified": true,
+   "attempts": 1
+  },
+  "sm_b4_secondinvariant": {
+   "path": "/home/user/GEMSDOE52/work/h95/sm_b4_secondinvariant.npy",
+   "shape": [
+    3730,
+    3292
+   ],
+   "dtype": "float32",
+   "sha256": "0eb3353858b3cd8519a936ee9fa49f44ceb3d15d9ba44c784ace7fe503fcffda",
+   "bytes": 49116768,
+   "verified": true,
+   "attempts": 1
+  },
+  "sm_b13_isograv": {
+   "path": "/home/user/GEMSDOE52/work/h95/sm_b13_isograv.npy",
+   "shape": [
+    3730,
+    3292
+   ],
+   "dtype": "float32",
+   "sha256": "677bb96f9408b7c159f0fd156a85d5e563293d827082cf24c5ebf57982b6e03a",
+   "bytes": 49116768,
+   "verified": true,
+   "attempts": 1
+  },
+  "sm_b18_isograv_hg": {
+   "path": "/home/user/GEMSDOE52/work/h95/sm_b18_isograv_hg.npy",
+   "shape": [
+    3730,
+    3292
+   ],
+   "dtype": "float32",
+   "sha256": "3b7a13609499266b702164e0cde3d48a73e0fb93cc869e98126cbbeee460f1b4",
+   "bytes": 49116768,
+   "verified": true,
+   "attempts": 1
+  },
+  "sm_b12_detrended_elev": {
+   "path": "/home/user/GEMSDOE52/work/h95/sm_b12_detrended_elev.npy",
+   "shape": [
+    3730,
+    3292
+   ],
+   "dtype": "float32",
+   "sha256": "727cda971db12c47829b36c6cfc1df7004730f0e2d66a8123a460cd6cf7659c0",
+   "bytes": 49116768,
+   "verified": true,
+   "attempts": 1
+  },
+  "sm_b19_detrended_elev_slope": {
+   "path": "/home/user/GEMSDOE52/work/h95/sm_b19_detrended_elev_slope.npy",
+   "shape": [
+    3730,
+    3292
+   ],
+   "dtype": "float32",
+   "sha256": "83ad40fea3aea3a08f9c596a9031679b1907b4ba60c1bb192b413b4b0f3b422c",
+   "bytes": 49116768,
+   "verified": true,
+   "attempts": 1
+  },
+  "sm_b6_radiometric_tc": {
+   "path": "/home/user/GEMSDOE52/work/h95/sm_b6_radiometric_tc.npy",
+   "shape": [
+    3730,
+    3292
+   ],
+   "dtype": "float32",
+   "sha256": "7e3b46b7bcb9ce1dcf3156a0f25b5bed3cfcc5f8fbebf8a1d8d48d692b931d63",
+   "bytes": 49116768,
+   "verified": true,
+   "attempts": 1
+  },
+  "B_b12_relief5": {
+   "path": "/home/user/GEMSDOE52/work/h95/B_b12_relief5.npy",
+   "shape": [
+    3730,
+    3292
+   ],
+   "dtype": "float32",
+   "sha256": "49446488735ae4d857ed7941854eee05c05f42b0bb004f7f420278916f23472b",
+   "bytes": 49116768,
+   "verified": true,
+   "attempts": 1
+  },
+  "B_b12_curv": {
+   "path": "/home/user/GEMSDOE52/work/h95/B_b12_curv.npy",
+   "shape": [
+    3730,
+    3292
+   ],
+   "dtype": "float32",
+   "sha256": "9cffaa50449d60b13873eb6744a467bf516ccce12706c0525d89144e3232a1e2",
+   "bytes": 49116768,
+   "verified": true,
+   "attempts": 1
+  },
+  "B_b12_grad": {
+   "path": "/home/user/GEMSDOE52/work/h95/B_b12_grad.npy",
+   "shape": [
+    3730,
+    3292
+   ],
+   "dtype": "float32",
+   "sha256": "89e71d537f91ecea1229e12c8058b8f1e0a09ca0f6e6c8a008aef19bdd33ba7e",
+   "bytes": 49116768,
+   "verified": true,
+   "attempts": 1
+  },
+  "B_b19_grad": {
+   "path": "/home/user/GEMSDOE52/work/h95/B_b19_grad.npy",
+   "shape": [
+    3730,
+    3292
+   ],
+   "dtype": "float32",
+   "sha256": "10b6e8554c4d4d6009c57c72004490613daa7356d7d342566bea91938ee80c8e",
+   "bytes": 49116768,
+   "verified": true,
+   "attempts": 1
+  },
+  "B_b6_localstd": {
+   "path": "/home/user/GEMSDOE52/work/h95/B_b6_localstd.npy",
+   "shape": [
+    3730,
+    3292
+   ],
+   "dtype": "float32",
+   "sha256": "19041cfcd87f26e7607df0eb11b5c5658f071fede6eca76b495640a19286ca11",
+   "bytes": 49116768,
+   "verified": true,
+   "attempts": 1
+  },
+  "cosn_f0": {
+   "path": "/home/user/GEMSDOE52/work/h95/cosn_f0.npy",
+   "shape": [
+    3730,
+    3292
+   ],
+   "dtype": "float32",
+   "sha256": "5dee97beb5cfa790a422b6f7094771264b5f576a2ba9e43172cb39339eebc316",
+   "bytes": 49116768,
+   "verified": true,
+   "attempts": 1
+  },
+  "sinn_f0": {
+   "path": "/home/user/GEMSDOE52/work/h95/sinn_f0.npy",
+   "shape": [
+    3730,
+    3292
+   ],
+   "dtype": "float32",
+   "sha256": "d576c6afc3796a42ded0f26378e1d36a8ff00234f6a80a10c2f22dbfc3d64e1e",
+   "bytes": 49116768,
+   "verified": true,
+   "attempts": 1
+  },
+  "cosn_f1": {
+   "path": "/home/user/GEMSDOE52/work/h95/cosn_f1.npy",
+   "shape": [
+    3730,
+    3292
+   ],
+   "dtype": "float32",
+   "sha256": "ed897298b88ae27d0bae31fb8bc429940641ec0add93f5fc9f4914d4e4da35aa",
+   "bytes": 49116768,
+   "verified": true,
+   "attempts": 1
+  },
+  "sinn_f1": {
+   "path": "/home/user/GEMSDOE52/work/h95/sinn_f1.npy",
+   "shape": [
+    3730,
+    3292
+   ],
+   "dtype": "float32",
+   "sha256": "96ca8879a423e363f3da6c0daf0e3bea7fba983dcf05b7ef60f71c2c1b3be159",
+   "bytes": 49116768,
+   "verified": true,
+   "attempts": 1
+  },
+  "cosn_f2": {
+   "path": "/home/user/GEMSDOE52/work/h95/cosn_f2.npy",
+   "shape": [
+    3730,
+    3292
+   ],
+   "dtype": "float32",
+   "sha256": "9755bdf71ca62dbcdc471669afd68ae554fcfe3a7b621bcc6ef1d178b2b079bc",
+   "bytes": 49116768,
+   "verified": true,
+   "attempts": 1
+  },
+  "sinn_f2": {
+   "path": "/home/user/GEMSDOE52/work/h95/sinn_f2.npy",
+   "shape": [
+    3730,
+    3292
+   ],
+   "dtype": "float32",
+   "sha256": "98e1bca5dc10e005e28c7b2812c0e4ac1613d1f490f0aa7212cc51cebf28e198",
+   "bytes": 49116768,
+   "verified": true,
+   "attempts": 1
+  },
+  "cosn_f3": {
+   "path": "/home/user/GEMSDOE52/work/h95/cosn_f3.npy",
+   "shape": [
+    3730,
+    3292
+   ],
+   "dtype": "float32",
+   "sha256": "e3f2002833866228759645869845aa313e372567071ae34be7df5a70f2ffa575",
+   "bytes": 49116768,
+   "verified": true,
+   "attempts": 1
+  },
+  "sinn_f3": {
+   "path": "/home/user/GEMSDOE52/work/h95/sinn_f3.npy",
+   "shape": [
+    3730,
+    3292
+   ],
+   "dtype": "float32",
+   "sha256": "63d85a7b354af4c1a7b10cf5d49c0b0fdcfefd693dc92f4154c861918820f569",
+   "bytes": 49116768,
+   "verified": true,
+   "attempts": 1
+  }
+ },
+ "smoothing": "gaussian with support-weight normalisation; footprint edge not invented",
+ "direction_source": "structure tensor over a 7px-dilated corridor of THIS FOLD's visible catalogue only; degenerate pixels take the fold's regional normal and are flagged (substituted_px)",
+ "odd_even_definition": "odd=(B(+h)-B(-h))/2, even=(B(+h)+B(-h))/2 sampled at +/-h*n_hat by bilinear interpolation on the smoothed band"
+}

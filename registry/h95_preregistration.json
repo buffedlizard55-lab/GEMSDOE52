@@ -1,0 +1,92 @@
+{
+ "round": "H95",
+ "preregistered_utc": "2026-10-10T21:02:39+00:00",
+ "hypothesis_document": "knowledge/93_hypotheses_H95_preregistered.md",
+ "hypothesis_sha256": "cbefd703a9a0c0893b133c4a4768b2e8f2e8cb9dd03be980b09c4326bbe31a57",
+ "hypothesis_bytes": 14407,
+ "lane": "two-view co-training (Blum & Mitchell 1998, doi:10.1145/279943.279962); View A potential-field and subsurface (geodetic strain bands 4/7/8 + isostatic gravity bands 13/18 cross-family control), View B surface (detrended elevation band 12, its slope band 19, aeroradiometric total count band 6); disagreement as the discovery signal; primary arm is the A-confident/B-abstains buried-fault quadrant",
+ "frozen_before_any_fit": true,
+ "runner": "scripts/run_h95.py",
+ "runner_refuses_if_hash_moves": true,
+ "mechanism": "odd-symmetric (signed dipole) fault-normal profile decomposition: odd=(B(+h)-B(-h))/2, even=(B(+h)+B(-h))/2 at h in {1,2} px along a visible-catalogue-measured fault normal quantised to 8 compass directions; discriminator is odd-dominance odd^2/(|odd|+|even|+eps) and the sign-reversal couple min(|B+|,|B-|)*1[sign differs]",
+ "named_non_fault_mimic": "geodetic strain is a smooth interpolation of sparse GPS/InSAR observations: (i) station-density gradients and block-boundary smoothing seams create signed couples with no structure; (ii) magmatic inflation/deflation is dilatant by definition; (iii) post-seismic viscoelastic relaxation after the 1954 Fairview Peak and 1959 Hebgen Lake sequences; (iv) elastic strain on an already-mapped fault, removed by the 200 m catalogue ring",
+ "shared_tools_to_reuse": [
+  "src/gems52/holdout.py::make_folds(mode='hide') / score / mask_visible / emit_topk",
+  "src/gems52/evaluate_holdout.py (gems52-pooled-hide-v1)",
+  "src/gems52/metric.py (literal published DTI transcription, pinned by tests/test_metric.py)",
+  "src/gems52/spatial.py::negative_block_errors + independence",
+  "src/gems52/gates.py::format_report + lane_report",
+  "src/gems52/grid.py::write_geotiff + read_geotiff",
+  "src/gems52/submission_writer.py::write_submission"
+ ],
+ "thresholds_inherited_verbatim_from": "registry/h74_preregistration.json",
+ "thresholds_source_sha256": "44d8eeba549abccd21483bb3b7859a295b86fa746aa4b13796f7fd0b74349e48",
+ "thresholds": {
+  "canary_auc_alarm": 0.9,
+  "independence_abandon_max_abs_rho": 0.6,
+  "donor_rank_min": 0.95,
+  "block_side_px": 50,
+  "min_blocks": 20,
+  "budget_dots_per_fold_per_arm": 9400,
+  "min_dot_separation_px": 3.0,
+  "catalogue_exclusion_m": 200.0,
+  "bootstrap_draws": 1000,
+  "bootstrap_block_px": 200,
+  "lane_near_dot_fraction": 0.7,
+  "lane_near_dot_radius_px": 3.0,
+  "lane_rank_correlation": 0.9,
+  "S1_sufficiency_mean_oof_auc_min": 0.6,
+  "S1_sufficiency_min_fold_oof_auc": 0.55,
+  "single_B_control_holdout_dti": 0.174517,
+  "single_B_control_abs_tolerance": 0.001,
+  "receiver_rank_interval": [
+   0.35,
+   0.65
+  ],
+  "min_pseudo_pixels": 5,
+  "pseudo_cap_per_fold": 2000,
+  "universal_coverage_probe_threshold": 0.95
+ },
+ "folds": {
+  "instrument": "hide-and-recover (whole 8-connected catalogue components withheld)",
+  "n_folds": 4,
+  "buffer_px": 8,
+  "prevalence": 0.002,
+  "seed": 84,
+  "mode": "hide"
+ },
+ "arms": {
+  "primary": "A_ODD_gated",
+  "controls": [
+   "single_A",
+   "single_B",
+   "random"
+  ],
+  "attribution": [
+   "A_ODD_ungated",
+   "B_conf_A_abstain"
+  ],
+  "attribution_arms_not_promotable": true
+ },
+ "promotion_rule": "promote only if the primary's paired 95% CI lower bound against single_B is above zero on gems52-pooled-hide-v1; otherwise NEGATIVE, research-only artefact, DOWNLOAD yes / SUBMIT no, 0 weekly slots spent",
+ "budget": {
+  "max_experiments": 3,
+  "max_hours": 2,
+  "experiments": [
+   "E1 channels + leakage canary + per-fold fit + OOF AUC",
+   "E2 independence screen + nine-budget matched hide-and-recover holdout",
+   "E3 build + lane/uniqueness gates + GeoTIFF + run card + site publication"
+  ]
+ },
+ "container_decision": {
+  "chosen": "all-finite float32, zeros outside footprint, tiled/deflate, no nodata tag",
+  "evidence": "measured this session: 11 of 13 restored owner-scored rasters are strip/LZW nodata=nan with 7,111,787 NaN outside; 2 are all-finite with zeros outside, one of which is the 0.2778 reference h33-2-b2-zeros.tif. Both containers have been portal-accepted, and the all-finite container cannot trip 'Predicted values must be in range [0, 1]' under any reader."
+ },
+ "evidence_class_policy": "every local number is HOLDOUT-DTI (evaluator version + withheld-positive count + 95% CI); ORGANIZER-CONFIRMED is used only for numbers read off the public leaderboard page; a projection is never written as a score",
+ "thresholds_completion_note": "receiver_rank_interval, min_pseudo_pixels, pseudo_cap_per_fold and universal_coverage_probe_threshold were transcribed verbatim from registry/h74_preregistration.json during the run, BEFORE the independence stage measured anything, because the first transcription omitted them and the stage raised KeyError. Transcription completion, not a re-tune: the abandon bar (0.60), donor rank (0.95), block side (50 px) and every other threshold were already pinned and were not edited. Recorded as IR-H95-005.",
+ "pre_rename_round": "H84",
+ "pre_rename_hypothesis_document": "knowledge/74_hypotheses_H84_preregistered.md",
+ "pre_rename_sha256": "ae86107fb0c760ac1604a0011bf11884186e4d9496ac04fce7472bf327767c12",
+ "pre_rename_bytes": 14407,
+ "rename_note": "Round frozen and executed in this session as H84 (runner scripts/run_h84.py, evidence/h84_*.json, submission prefix gems52-h84-straindipole-). At merge time origin/main already held an H84 round from a parallel session (an elliptical spatial-covariance anisotropy detector, gems52-h84-hva-ellipse-B-37654px-20261010T204630Z) plus H85-H94, so this round was renamed to H95, the next free identifier, following the IR-H71-005 / IR-H74-002 / IR-H82-008 precedent. The rename is IDENTIFIER-ONLY and that is provable rather than asserted: knowledge/93 is a byte-for-byte copy of knowledge/74 with the token H84->H95 substituted, the frozen text's own SHA-256 is preserved here as pre_rename_sha256, and the measured numbers in evidence/h95_{setup,channels,fit,holdout,independence,build}.json are the moved outputs of the executed run, not recomputed ones. The stages that were re-run after the rename are write, lane, reasoning and card: write re-stamps the filename and note, and lane HAD to be re-run because origin/main added ten further rounds of rasters to the census. The GeoTIFF's pixel pattern is unchanged; its SHA-256 changes only because the filename is part of the name, and the ZIP's SHA-256 changes because a ZIP stores its inner member's filename."
+}

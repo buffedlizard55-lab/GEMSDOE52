@@ -1,0 +1,47 @@
+{
+ "pre_rename_round": "H84",
+ "post_rename_round": "H95",
+ "pre_rename_submission_file": "gems52-h84-straindipole-cotrain-37654px-20261010T215523Z.tif",
+ "pre_rename_sha256": "c122a9ff37abf5512bbddf39c9d55c60effb2229ed992d959e357ffb804a50f3",
+ "pre_rename_bytes": 132513,
+ "pre_rename_zip_sha256": null,
+ "pre_rename_preregistration_sha256": "ae86107fb0c760ac1604a0011bf11884186e4d9496ac04fce7472bf327767c12",
+ "pre_rename_preregistration_bytes": 14407,
+ "post_rename_preregistration_sha256": "cbefd703a9a0c0893b133c4a4768b2e8f2e8cb9dd03be980b09c4326bbe31a57",
+ "reason": "origin/main already holds an H84 round (hva-ellipse) plus H85-H94 from parallel sessions",
+ "precedent": "IR-H71-005, IR-H74-002, IR-H82-008",
+ "identifier_only": true,
+ "stages_rerun_after_rename": [
+  "write",
+  "lane",
+  "reasoning",
+  "card"
+ ],
+ "stages_moved_not_recomputed": [
+  "setup",
+  "channels",
+  "fit",
+  "holdout",
+  "independence",
+  "build"
+ ],
+ "proof": "git show f963831 --stat lists the executed H84 artefacts; the pixel pattern is re-emitted by the same work/h95 build outputs and the emitted-cell count and catalogue-distance statistics are asserted unchanged in evidence/h95_build.json",
+ "post_rename_submission_file": "gems52-h95-straindipole-cotrain-37654px-20261010T230330Z.tif",
+ "post_rename_sha256": "c122a9ff37abf5512bbddf39c9d55c60effb2229ed992d959e357ffb804a50f3",
+ "post_rename_bytes": 132513,
+ "post_rename_zip_sha256": "9ea3e5dcc45d231d0138e2a9bb21a8dadd8e252aa009ecf631607ff65cd6cda5",
+ "raster_bytes_identical_after_rename": true,
+ "zip_sha256_changed_after_rename": true,
+ "rename_proof": "The GeoTIFF is byte-identical before and after the rename (SHA-256 c122a9ff37abf5512bbddf39c9d55c60effb2229ed992d959e357ffb804a50f3 both times, 132,513 bytes): a TIFF does not store its own filename, so an identifier-only rename cannot change it. Only the ZIP's SHA-256 changed, because a ZIP stores its inner member's filename. The submission name and note live in the sidecar JSON and on the site, never in the raster bytes. The pixel pattern, the 37,654 emitted cells and the catalogue-distance statistics are therefore provably unchanged, not merely asserted to be.",
+ "lane_rerun_after_merge": {
+  "census_size": 79,
+  "reason": "origin/main added rounds H85-H94 while this round ran; a lane receipt taken before the merge would have been scoped to a stale census (the H74S lesson)",
+  "verdicts": {
+   "surface_literal": "PASS",
+   "surface_policy": "PASS",
+   "dots_literal": "DUPLICATE/STOP",
+   "dots_policy": "PASS"
+  },
+  "dots_literal_witness": "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif"
+ }
+}
