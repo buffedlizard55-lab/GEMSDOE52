@@ -3,212 +3,129 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GEMSDOE52 — Executive Summary</title>
+<title>Executive summary — GEMSDOE52 · H88 co-training texture disagreement</title>
 <style>
 :root{--bg:#0f1117;--fg:#e8eaed;--accent:#4fc3f7;--ok:#66bb6a;--warn:#ffa726;--err:#ef5350;--card:#1a1d27;--border:#2d3040}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--fg);line-height:1.7;padding:0}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--fg);line-height:1.65}
 .container{max-width:900px;margin:0 auto;padding:24px 20px}
-h1{font-size:1.8rem;margin-bottom:8px;color:var(--accent)}
-h2{font-size:1.3rem;margin:28px 0 12px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px}
-h3{font-size:1.1rem;margin:20px 0 8px}
-a{color:var(--accent);text-decoration:none}
-a:hover{text-decoration:underline}
-code{background:#1e2130;padding:2px 6px;border-radius:3px;font-size:0.9em}
-pre{background:#1e2130;padding:16px;border-radius:6px;overflow-x:auto;font-size:0.85rem;line-height:1.5;color:#b0bec5}
+h1{font-size:1.7rem;margin-bottom:6px;color:var(--accent)}
+h2{font-size:1.25rem;margin:30px 0 12px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px}
+h3{font-size:1.05rem;margin:18px 0 8px}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+code{background:#1e2130;padding:2px 6px;border-radius:3px;font-size:0.9em;word-break:break-all}
 .card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:18px;margin:12px 0}
+.download-box{background:linear-gradient(135deg,#1a237e,#0d47a1);border:2px solid var(--accent);border-radius:12px;padding:24px;margin:18px 0;text-align:center}
+.download-box h2{color:#fff;border:none;margin:0 0 10px}
+.btn{display:inline-block;background:var(--accent);color:#000;font-weight:700;padding:12px 26px;border-radius:8px;margin:6px}
+.btn:hover{background:#81d4fa;text-decoration:none}
+.btn-zip{background:#78909c;color:#fff}
+.stop{background:#3e0d0d;border:3px solid var(--err);border-radius:10px;padding:18px;margin:16px 0;text-align:center}
+.stop h2{color:#ff8a80;border:none;margin:0 0 8px}
 table{width:100%;border-collapse:collapse;margin:12px 0;font-size:0.9rem}
 th,td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--border)}
-th{color:var(--accent);font-weight:600}
-.pass{color:var(--ok);font-weight:700}
-.fail{color:var(--err);font-weight:700}
+th{color:var(--accent)}
+.pass{color:var(--ok);font-weight:700}.fail{color:var(--err);font-weight:700}
+.copy-box{background:#1e2130;border:1px solid var(--border);border-radius:6px;padding:10px 14px;font-family:monospace;font-size:0.88rem;margin:6px 0;word-break:break-all}
 .step{display:flex;align-items:flex-start;margin:12px 0}
-.step-num{background:var(--accent);color:#000;font-weight:700;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:12px;margin-top:2px}
-.footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--border);font-size:0.85rem;color:#777}
+.step-num{background:var(--accent);color:#000;font-weight:700;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:10px;margin-top:2px}
+.footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--border);font-size:0.85rem;color:#777}
 </style>
 </head>
 <body>
 <div class="container">
 
-<p><a href="index.html">← Back to Submission</a></p>
+<h1>Executive summary — round H88</h1>
+<p style="color:#999">DOE GEMS Prize (DrivenData #306) · built 2026-10-10 · method lane: co-training two views, disagreement as the discovery signal</p>
 
-<h1>Executive Summary — H87 Co-Training Wavelength Contrast</h1>
-<p style="color:#999">GEMSDOE52 · DOE GEMS Prize · 2026-10-10</p>
+<div class="stop">
+<h2>⛔ IS THIS OK TO DOWNLOAD AND SUBMIT? — DOWNLOAD: YES · SUBMIT: NO</h2>
+<p>The file is format-valid and unique, so it is safe to <strong>download</strong>. It is <strong>not approved</strong> for a weekly slot: its preregistered primary scored 0.034799 HOLDOUT-DTI against a 0.080426 random control with a paired 95 % CI of [−0.054106, −0.037194] that excludes zero — below the floor.</p>
+<p style="font-size:0.9rem">No file on this site is currently approved to submit. This page explains exactly how to submit <em>if and when</em> the owner promotes one.</p>
+</div>
 
-<h2>1. What This Is</h2>
-<p>GEMSDOE52 is a fault-discovery system for the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/" target="_blank">DOE GEMS Prize</a> (DrivenData #306). 
-The task: predict where <em>unmapped</em> geothermal-indicative faults exist in the GeoDAWN study area of 
-northwestern Nevada. The scoring metric is a distance-weighted Tversky index (DTI) with α=0.2, β=0.8, 
-R=300 m triangular kernel.</p>
+<div class="download-box">
+<h2>⬇ The one-click files</h2>
+<a class="btn" href="downloads/h88-candidate.tif" download>📥 h88-candidate.tif (795 KB)</a>
+<a class="btn btn-zip" href="downloads/h88-candidate.zip" download>📦 h88-candidate.zip (180 KB)</a>
+<p style="font-size:0.85rem;color:#b3e5fc;margin-top:8px">canonical name <code>gems52-h88-cotrain-atexture-disagreement-20261010T222354Z.tif</code> · SHA-256 <code>dbbdc0715d8fac843e45e997267aab141df233b6e482206db7f1279d560a9914</code><br>
+A-only geological reasoning (every A-only candidate dot): <a href="downloads/h88-candidate-a-only-reasoning.csv" download>h88-candidate-a-only-reasoning.csv</a></p>
+</div>
 
-<p style="margin-top:12px">This submission (H87) implements a <strong>co-training framework</strong> between 
-two independent views of the Earth, using disagreement as the discovery signal:</p>
-<ul style="margin:8px 0 0 20px">
-<li><strong>View A (geophysical):</strong> Gravity gradients, magnetic gradients, geodetic strain, basement depth, conductivity — sees <em>subsurface structure</em></li>
-<li><strong>View B (surface):</strong> Multi-scale DEM wavelength contrast, slope, radiometric Th/K ratio — sees <em>surface expression + alteration</em></li>
-</ul>
-
-<h2>2. Why Disagreement Matters</h2>
-<p>Following <a href="https://doi.org/10.1145/279943.279962" target="_blank">Blum &amp; Mitchell (COLT 1998)</a>, 
-when two views are each sufficient for the task and approximately conditionally independent given the class, 
-their disagreements reveal the most informative unlabeled examples:</p>
-
-<table>
-<tr><th>Case</th><th>Interpretation</th><th>Action</th></tr>
-<tr><td>A confident, B abstains</td><td>Buried fault beneath alluvial cover</td><td><strong>EMIT</strong> (discovery candidate)</td></tr>
-<tr><td>B confident, A abstains</td><td>Surface artifact (road, erosion, lithologic contact)</td><td><strong>SUPPRESS</strong> (confounder)</td></tr>
-<tr><td>Both confident</td><td>Known/mapped fault (already in catalogue)</td><td>Skip (already mapped)</td></tr>
-<tr><td>Both abstain</td><td>No fault signal</td><td>Skip</td></tr>
-</table>
-
-<p style="margin-top:12px"><strong>Independence verified:</strong> The Pearson correlation between View A and View B 
-scores on the valid footprint is <strong>r = −0.140</strong>, well below the 0.60 abandonment threshold. 
-The views are measuring genuinely different aspects of the landscape.</p>
-
-<h2>3. Novel Features</h2>
+<h2>1 · How to submit (the exact steps)</h2>
 <div class="card">
-<h3>Multi-Scale Wavelength Contrast (never used in any prior)</h3>
-<p>The ratio of fine-scale (σ=1, ~100m) to coarse-scale (σ=8, ~800m) Hessian eigenvalue magnitude 
-of the detrended elevation. This ratio is high where a sharp, localized feature (scarp, lineament) 
-sits on top of a smooth regional surface, and low where the topography is uniformly rough or smooth 
-at all scales. No prior submission in the 129-raster registry uses this transform.</p>
-
-<h3 style="margin-top:16px">Radiometric Th/K Ratio (used as raw band but never as ratio)</h3>
-<p>Hydrothermal fluids leach potassium from rocks along fault zones, elevating the Th/K ratio. 
-The GeoDAWN airborne radiometric survey (DOI <a href="https://doi.org/10.5066/P93LGLVQ" target="_blank">10.5066/P93LGLVQ</a>) 
-provides K, Th, U, and total-count grids at 100m resolution. While some priors used the raw 
-radiometric bands, none computed the Th/K ratio transform specifically targeting hydrothermal alteration.</p>
+<div class="step"><div class="step-num">1</div><div>
+<strong>Open</strong> <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/" target="_blank" rel="noopener">DrivenData → DOE GEMS → Submit predictions</a>. Three slots per week; using one is a decision, not a step.
+</div></div>
+<div class="step"><div class="step-num">2</div><div>
+<strong>Upload</strong> the <code>.tif</code> (or the <code>.zip</code>, which contains exactly that TIFF).
+</div></div>
+<div class="step"><div class="step-num">3</div><div>
+<strong>Paste the name and the note</strong> (both ≤140 characters — these are pre-validated lengths):
+<div class="copy-box">name: h88-cotrain-atexture-disagreement-37654px</div>
+<div class="copy-box">note (74 chars): H88 A-texture vs B-texture disagreement, 37654px, 3px spacing, 200m collar</div>
+</div></div>
+<div class="step"><div class="step-num">4</div><div>
+<strong>Click “Create submission”.</strong> If the portal ever answers <em>“Predicted values must be in range [0, 1]”</em>, you are holding a file written with NaN outside the footprint — not this one. This file has zero NaN, zero inf, no nodata tag, and all 12,279,160 pixels inside [0,1] (verified from the bytes on disk; the check is a local on-disk template/range check, not organizer acceptance).
+</div></div>
 </div>
 
-<h2>4. How to Submit to the Competition</h2>
+<h2>2 · What H88 tested, in one paragraph</h2>
 <div class="card">
-<div class="step">
-<div class="step-num">1</div>
-<div>
-<p><strong>Download the submission file:</strong></p>
-<p><a href="downloads/gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.tif">📥 gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.tif</a> (128 KB)</p>
-<p>Or: <a href="downloads/gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.zip">📦 .zip version</a> (90 KB)</p>
-</div>
+<p>Blum &amp; Mitchell's co-training needs two views that are each <em>sufficient</em> for the task and approximately conditionally independent, then uses their disagreement to find the most informative unlabelled examples. Per the brief, <strong>View A</strong> is potential-field/subsurface and <strong>View B</strong> is surface (DEM curvature/slope + the radiometric band in the stack). This repository's nine prior rounds showed View B works (mean held-out-region AUC 0.68–0.70) while View A sits at chance when fed raw amplitudes. H88 attacked that directly: it replaced View A's <em>representation</em> with <strong>directional variogram anisotropy</strong> — an 8-direction semivariance fan reduced to <code>(max−min)/(max+min)</code> and <code>log10(mean)</code> — on bands never used for it before: <strong>2 <code>rtp</code></strong> (reduced-to-pole magnetics), <strong>9 <code>tmi_vg</code></strong> (magnetic vertical gradient), <strong>13 <code>iso_grav_anom</code></strong> (isostatic gravity). View B: <strong>12 <code>det_elev</code></strong>, <strong>19 <code>det_elev_slope</code></strong>, <strong>6</strong> (radiometric total count by bytes — IR-H88-003). The discovery signal is the disagreement field <code>pct_rank(A) − pct_rank(B)</code>. The disagreement is used as the brief's selection/emission signal; the separate <em>pseudo-label exchange</em> form of the lane was measured in H71 and lowered View A, so no exchange was run this round.</p>
 </div>
 
-<div class="step">
-<div class="step-num">2</div>
-<div>
-<p><strong>Go to the DrivenData submission page:</strong></p>
-<p><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/" target="_blank">https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/</a></p>
-</div>
-</div>
-
-<div class="step">
-<div class="step-num">3</div>
-<div>
-<p><strong>Upload the file</strong> using "File to submit" field.</p>
-</div>
-</div>
-
-<div class="step">
-<div class="step-num">4</div>
-<div>
-<p><strong>Paste the submission name:</strong> <code>h87-cotrain-wavelength-37654px</code></p>
-</div>
-</div>
-
-<div class="step">
-<div class="step-num">5</div>
-<div>
-<p><strong>Paste the note:</strong> <code>H87 co-train wavelength+Th/K, A&gt;B disagree, 37654px, 3px spacing, 200m collar</code></p>
-</div>
-</div>
-
-<div class="step">
-<div class="step-num">6</div>
-<div>
-<p><strong>Click "Create submission".</strong> The portal should accept it immediately — the file is 
-pre-validated with all values in [0,1], all finite, correct CRS/shape/transform, no nodata tag.</p>
-</div>
-</div>
-</div>
-
-<h2>5. Technical Specifications</h2>
+<h3>Result</h3>
 <table>
-<tr><th>Property</th><th>Value</th></tr>
-<tr><td>Grid</td><td>3292 × 3730 px (12,279,160 cells)</td></tr>
-<tr><td>Resolution</td><td>100 m</td></tr>
-<tr><td>CRS</td><td>EPSG:32611 (UTM Zone 11N)</td></tr>
-<tr><td>Data type</td><td>float32, single band</td></tr>
-<tr><td>Values</td><td>Binary {0, 1}</td></tr>
-<tr><td>Predicted pixels</td><td>37,654</td></tr>
-<tr><td>NaN pixels</td><td>0 (zeros outside footprint)</td></tr>
-<tr><td>Nodata tag</td><td>None</td></tr>
-<tr><td>Compression</td><td>Deflate + horizontal predictor, 256×256 tiles</td></tr>
-<tr><td>SHA256</td><td><code>a861069b8c780738b83245c1f736313d043989ca33554377f6dffb0465d8e9c3</code></td></tr>
-<tr><td>File size</td><td>128,024 bytes</td></tr>
+<tr><th>Arm (HOLDOUT-DTI, `gems52-pooled-hide-v1`, 53,186 withheld px, 1,000-draw paired spatial-cluster bootstrap)</th><th>DTI</th><th>95 % CI</th></tr>
+<tr><td><strong>primary — A-confident ∧ B-abstains</strong></td><td class="fail"><strong>0.034799</strong></td><td class="fail">[0.026938, 0.044011]</td></tr>
+<tr><td>consensus min(A,B)</td><td>0.128009</td><td>[0.112310, 0.143335]</td></tr>
+<tr><td>View A alone</td><td>0.081910</td><td>[0.069143, 0.095862]</td></tr>
+<tr><td>View B alone</td><td>0.164883</td><td>[0.145264, 0.183945]</td></tr>
+<tr><td>random floor, same allowed set</td><td>0.080426</td><td>[0.070223, 0.090973]</td></tr>
 </table>
+<p>The paired primary − random difference is <strong>−0.045627 [−0.054106, −0.037194]</strong>: strictly below the floor. Independence passed (max |ρ| = 0.4510, bar 0.90/0.60); sufficiency failed (View A mean AUC 0.5317, fold 2 below chance). H89 repeated the test at 400–800 m lags with three more View-A bands: primary <strong>0.034697 [0.026536, 0.043153]</strong>, paired vs random <strong>−0.045728 [−0.052841, −0.038856]</strong>, View A mean 0.5284 — so the “wrong scale” explanation is closed too. Both experiments are strict negatives and are published as such.</p>
 
-<h2>6. Metric-Aware Placement</h2>
-<p>The DTI metric uses a 300m triangular kernel: k(d) = max(1 − d/R, 0) where R = 300m = 3 px. 
-Each emitted dot earns credit only if it lies within 300m of a truth pixel, weighted by the kernel. 
-The credit bar at the current best DTI (~0.28) is 0.2 × 0.28 = 0.056 — each dot must earn 
-at least 0.056 kernel weight to raise DTI.</p>
-
-<p style="margin-top:12px">This submission uses:</p>
-<ul style="margin:8px 0 0 20px">
-<li><strong>Budget:</strong> 37,654 dots (same as the 0.2778 reference)</li>
-<li><strong>Spacing:</strong> minimum 3 px between dots (reduces redundant local coverage)</li>
-<li><strong>Catalogue collar:</strong> 200 m exclusion from all known fault pixels</li>
-<li><strong>Binary emission:</strong> {0, 1} — proven optimal at fixed budget (pinned in tests/test_metric.py)</li>
-</ul>
-
-<h2>7. Evidence Trail</h2>
-<table>
-<tr><th>Artifact</th><th>Location</th></tr>
-<tr><td>Build receipt (JSON)</td><td><code>evidence/h87_build.json</code></td></tr>
-<tr><td>Build script</td><td><code>scripts/build_h87_cotrain_wavelength.py</code></td></tr>
-<tr><td>Submission .tif</td><td><code>submission/gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.tif</code></td></tr>
-<tr><td>Submission .zip</td><td><code>submission/gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.zip</code></td></tr>
-<tr><td>Data manifest</td><td><code>registry/data_manifest.json</code> (SHA-256 pinned)</td></tr>
-</table>
-
-<h2>8. Limitations &amp; Next Steps</h2>
+<h2>3 · Why 0.2778 scores what it scores (the competition arithmetic)</h2>
 <div class="card">
-<h3>Known limitations</h3>
-<ul style="margin:8px 0 0 20px">
-<li><strong>No holdout DTI score:</strong> This build receipt verifies format and uniqueness but does not 
-run the spatially-blocked holdout evaluator. A holdout score would require running 
-<code>scripts/run_h87.py</code> which is not yet written.</li>
-<li><strong>Catalogue proxy:</strong> The holdout's truth is the visible catalogue, so it cannot reward 
-genuinely new faults — only structural extensions of known ones.</li>
-<li><strong>View A confounders:</strong> Gravity/magnetic gradients can arise from lithologic contacts 
-without faulting. The co-training approach mitigates this by suppressing B-confident predictions.</li>
-<li><strong>No organizer score:</strong> The DTI value will only be known after portal submission.</li>
-</ul>
-
-<h3 style="margin-top:16px">Recommended next steps</h3>
-<ul style="margin:8px 0 0 20px">
-<li>Submit this file to the competition portal and record the actual score</li>
-<li>Run the spatially-blocked holdout to get a projected DTI with confidence interval</li>
-<li>If score &gt; 0.28, investigate which geological zones the A-only dots concentrate in</li>
-<li>Consider a variant with tighter catalogue collar (1px instead of 2px) to capture tip extensions</li>
-</ul>
+<p>DTI = <code>T / (0.2·(T+S−M) + 0.8·|G|)</code>, where T = kernel-weighted credit on true fault pixels, S = emitted mass, M = mass inside <em>known</em> fault kernels (which the organizer masks out), |G| = total ground-truth mass. Solving the two known dotted reference points (37,654 dots → 0.2778; 44,090 dots → 0.2600) gives <strong>|G| ≈ 14,088.7 px</strong> and <strong>T ≈ 5,223.1 px</strong>: the champion earns credit on ~13.9 % of its emitted mass, and <strong>99.26 % of that mass sits outside every mapped fault kernel</strong> — it wins on faults the public catalogue lacks. Beating 0.3195 requires either <strong>+15.0 % credit density</strong> (T ≥ 6,007 at S = 37,654) or <strong>−32.6 % mass</strong> (S ≤ 25,384 at today's credit). Placement is already within ~4 % of its geometric optimum and the metric's marginal rule caps useful distance at ≈282 m, so the −33 % route is closed; the +15 % route needs a detector that ranks off-catalogue faults, which no round has yet produced. Full treatment: <code>knowledge/82_why_02778_and_the_route_above_it.md</code>.</p>
 </div>
 
-<h2>9. Official Verified Sources</h2>
+<h2>4 · What is on this site, and what each label means</h2>
 <table>
-<tr><th>Source</th><th>URL</th><th>Used For</th></tr>
-<tr><td>DrivenData Competition</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/" target="_blank">drivendata.org/.../306</a></td><td>Rules, data, metric, submission format</td></tr>
-<tr><td>Competition Rules PDF</td><td><a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf" target="_blank">docs.nlr.gov/.../96647.pdf</a></td><td>Official rules document</td></tr>
-<tr><td>USGS GeoDAWN</td><td><a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and" target="_blank">usgs.gov/.../geodawn</a></td><td>Airborne magnetics &amp; radiometrics</td></tr>
-<tr><td>GeoDAWN Data Release</td><td><a href="https://doi.org/10.5066/P93LGLVQ" target="_blank">DOI 10.5066/P93LGLVQ</a></td><td>K/Th/U/TC grids</td></tr>
-<tr><td>GDR 1391 INGENIOUS</td><td><a href="https://gdr.openei.org/submissions/1391" target="_blank">gdr.openei.org/.../1391</a></td><td>Fault traces, wells, springs</td></tr>
-<tr><td>Reference Solution</td><td><a href="https://github.com/drivendataorg/gems-prize-reference-solution" target="_blank">github.com/.../gems-prize-reference-solution</a></td><td>Baseline implementation</td></tr>
-<tr><td>EPSG:32611</td><td><a href="https://epsg.io/32611" target="_blank">epsg.io/32611</a></td><td>Coordinate reference system</td></tr>
-<tr><td>Blum &amp; Mitchell 1998</td><td><a href="https://doi.org/10.1145/279943.279962" target="_blank">DOI 10.1145/279943.279962</a></td><td>Co-training framework</td></tr>
-<tr><td>Tversky Index</td><td><a href="https://en.wikipedia.org/wiki/Tversky_index" target="_blank">Wikipedia</a></td><td>Metric definition reference</td></tr>
+<tr><th>Item</th><th>Status</th><th>Evidence class</th></tr>
+<tr><td>H88 artifact (<a href="downloads/h88-candidate.tif">h88-candidate.tif</a>)</td><td class="fail">do not upload — below random floor</td><td>HOLDOUT-DTI + local format check</td></tr>
+<tr><td>H89 preregistered follow-up</td><td class="fail">strict negative (same floor)</td><td>HOLDOUT-DTI</td></tr>
+<tr><td>H87 co-training wavelength+Th/K</td><td class="fail">do not upload — no holdout ever run (IR-H88-004)</td><td>build receipt only</td></tr>
+<tr><td>R5 strike-ridge core — <code>gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif</code> (<a href="downloads/r5-candidate.tif">r5-candidate.tif</a>, SHA-256 <code>d2bfb0f79328399354943bd1</code>…)</td><td class="warn">ok to download; NOT slot-approved</td><td>local catalogue-proxy; P(beating 0.2778) = 0.366 under its stated assumptions</td></tr>
+<tr><td>H58 cold-geothermal consensus — <code>gems52-h58-coldgeo-consensus-22px-a55b0dee38-research.tif</code> (<a href="downloads/h58-candidate.tif">h58-candidate.tif</a>, SHA-256 <code>130c242e33aef398c44b22cd</code>…)</td><td class="fail">do not upload — not approved to submit</td><td>local catalogue-proxy</td></tr>
+<tr><td>H57 credited-core alternate</td><td class="fail">do not upload — co-training arm REFUTED, archive only</td><td>audited archive</td></tr>
+<tr><td>H55-EDGE (separate failed-gate archive)</td><td class="fail">do not upload</td><td>audited archive</td></tr>
+</table>
+<p style="font-size:0.9rem;color:#999">Legend: <strong>HOLDOUT-DTI</strong> = measured with the hide-and-recover instrument (α 0.2, β 0.8, 300 m triangular kernel, whole segments withheld with an 80 px buffer, spatial-block CIs). <strong>Owner-reported</strong> = a score the team saw on the portal; <strong>this site holds zero organizer-confirmed receipts</strong> — treat every leaderboard-adjacent number as owner-reported or local. A projection is never written as a score.</p>
+
+<h2>5 · Irregularities this round (flagged, not hidden)</h2>
+<div class="card">
+<p><strong>IR-H88-001</strong> — the sandbox filesystem zeroed the first 4 KiB page of 34/36 channel arrays <em>after</em> the write check passed. Caught by digest audit, healed by recomputation, and the fit + holdout reproduced every number bit-for-bit. The writer now byte-compares the file on disk.</p>
+<p><strong>IR-H88-002</strong> — the lane's literal “70 % of dots within 3 px of a prior” rule is uninformative against the <code>r13-lattice</code> probe: that raster covers 100.000 % of the allowed set, so even uniformly random dots score 1.0000 against it. Reported, not waived; excluding probes the maximum is 0.3828 (bar 0.70).</p>
+<p><strong>IR-H88-003</strong> — band 6 is tagged as a magnetic curvature band but its bytes are the GeoDAWN radiometric total-count grid (ρ = 1.0000). It is therefore used as View B, per the brief's “any radiometric bands present”.</p>
+<p><strong>IR-H88-004</strong> — the previous front page claimed “VERDICT: PROMOTE” for H87 although no holdout had ever been run for it; corrected here and in the archive block on the <a href="index.html">front page</a>.</p>
+<p><strong>IR-H88-006</strong> — the first H88 build card hard-coded the all-bands mask count 60,894 and placed the paired CI in the plain <code>ci95</code> slot. Both are fixed; the card now reads the holdout receipt directly, and the corrected numbers are 53,186 withheld positives and the CI [0.026938, 0.044011].</p>
+</div>
+
+<h2>6 · Verified sources</h2>
+<table>
+<tr><th>Source</th><th>Link</th></tr>
+<tr><td>Competition &amp; metric page</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/" target="_blank" rel="noopener">DrivenData page 967</a></td></tr>
+<tr><td>Leaderboard (dated snapshot only — automated access disabled by ToU)</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/" target="_blank" rel="noopener">public leaderboard</a></td></tr>
+<tr><td>Blum &amp; Mitchell, COLT '98</td><td><a href="https://doi.org/10.1145/279943.279962" target="_blank" rel="noopener">doi:10.1145/279943.279962</a></td></tr>
+<tr><td>GeoDAWN radiometric release (band 6 identity)</td><td><a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and" target="_blank" rel="noopener">USGS DOI 10.5066/P93LGLVQ</a></td></tr>
+<tr><td>INGENIOUS GDR 1391 (independent 2-m temperature layer, operator download)</td><td><a href="https://gdr.openei.org/submissions/1391" target="_blank" rel="noopener">GDR 1391 · DOI 10.15121/1881483 · CC BY 4.0</a></td></tr>
 </table>
 
 <div class="footer">
-<p>GEMSDOE52 · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52" target="_blank">GitHub Repository</a> · 
-<a href="index.html">← Back to Submission Page</a></p>
+<p><a href="index.html">← Front page (H88 tables, all gates)</a> · <a href="downloads/index.html">All downloads</a> · <a href="feed.html">Dated evidence feed</a> · <a href="irregularities.html">Limitations &amp; review</a></p>
+<p style="margin-top:8px">No organizer score is newly confirmed here. Local validation is an on-disk template/range check, not organizer acceptance.</p>
 </div>
 
 </div>

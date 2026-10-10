@@ -1,0 +1,78 @@
+{
+ "round": "H88",
+ "hypothesis_document": "knowledge/80_hypotheses_H88_preregistered.md",
+ "hypothesis_sha256": "abfe7f9bb3bdec82fca5f958e7372c93897b64ba23b89cec10b840930a3df795",
+ "frozen_utc": "2026-10-10T00:00:00Z",
+ "lane": "brief co-training paragraph: View A potential-field/subsurface, View B surface DEM+radiometric, disagreement is the discovery signal",
+ "primary_arm": "xtex_dis",
+ "evaluator": "gems52-pooled-hide-v1",
+ "thresholds": {
+  "buffer_px": 80,
+  "catalogue_exclusion_m": 200,
+  "min_dot_separation_px": 3.0,
+  "budget_dots_per_fold_per_arm": 9400,
+  "bootstrap_draws": 1000,
+  "independence_bar_brief": 0.9,
+  "independence_bar_repo": 0.6,
+  "canary_alarm_auc": 0.9
+ },
+ "band6_policy": "band 6 is radiometric total count by bytes (IR-H85-005); it is View B per the brief",
+ "fan_offsets_dy_dx": [
+  [
+   0,
+   1
+  ],
+  [
+   1,
+   1
+  ],
+  [
+   1,
+   0
+  ],
+  [
+   1,
+   -1
+  ],
+  [
+   1,
+   2
+  ],
+  [
+   2,
+   1
+  ],
+  [
+   2,
+   -1
+  ],
+  [
+   1,
+   -2
+  ]
+ ],
+ "lags_px": [
+  1,
+  2,
+  3
+ ],
+ "sigma_px": 3.0,
+ "view_a_bands": [
+  2,
+  9,
+  13
+ ],
+ "view_b_bands": [
+  12,
+  19,
+  6
+ ],
+ "note": "DVA has never been computed on bands 2, 9 or 6 in this repository (run_h82.BANDS = 12,19,13,15,18).",
+ "arms": [
+  "xtex_dis",
+  "xtex_agree",
+  "single_Atex",
+  "single_Btex",
+  "random"
+ ]
+}
