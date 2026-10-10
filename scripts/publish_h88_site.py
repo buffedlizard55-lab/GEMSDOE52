@@ -53,6 +53,8 @@ def main() -> int:
         raise SystemExit("validator receipt is for a different file")
 
     s = hold["pooled"]["scores"]
+    h85 = load("h85_holdout.json")["pooled"]["scores"]
+    h85_topk, h85_rnd = h85["H85_geo_concordance_topk_noSpacing"], h85["random"]
     pdiff = hold["pooled"]["paired_differences"]
     g = hold["gate"]
     cand, rnd = s["H88_step"], s["random"]
@@ -68,8 +70,9 @@ def main() -> int:
 
 <div class="card" style="border-color:#ffa726">
 <div class="card-title">Verdict for the file below</div>
-<p><span class="pill pill-ok">DOWNLOAD: YES</span> format-valid (independent check: <span class="pass">PASS</span>), decoded-pixel unique (uniqueness gate <span class="pass">PASS</span>).</p>
-<p><span class="pill pill-warn">SUBMIT: NO</span> its pre-registered holdout test is <span class="fail">NEGATIVE</span>: it scores below the random control.</p>
+<p><span class="pill pill-ok">OK to download? YES</span> format-valid (independent check: <span class="pass">PASS</span>), decoded-pixel unique (uniqueness gate <span class="pass">PASS</span>).</p>
+<p><span class="pill pill-warn">OK to submit? NO — DO NOT SUBMIT</span> its pre-registered holdout test is <span class="fail">NEGATIVE</span>: it scores below the random control.</p>
+<p style="font-size:0.9rem"><b>NO CERTIFIED LEADERBOARD GAIN.</b> Nothing on this page is an organiser score or a certified gain.</p>
 <p style="font-size:0.9rem;color:#bbb">Nothing here is an organiser score. Slots used this round: 0. Promotion is a separate decision by the owner.</p>
 </div>
 
@@ -124,6 +127,9 @@ def main() -> int:
 <p style="font-size:0.9rem">The older download below was labelled "PROMOTE" on this page before H88. No holdout DTI for it exists in this repository, so that label is withdrawn.</p>
 <a class="btn btn-zip" href="{OLD_TIF}" download>Download older .tif</a>
 <a class="btn btn-zip" href="{OLD_ZIP}" download>Download older .zip</a>
+<p style="font-size:0.9rem"><b>Earlier H83 file</b> (<code>downloads/h83-candidate.tif</code>): its "SUBMIT: YES" label is withdrawn (IR-H85-003). Its own clumped placement measured <b>{h85_topk["dti"]:.6f}</b> HOLDOUT-DTI, 95% CI {pct_ci(h85_topk["ci95"])}, in H85 (<code>evidence/h85_holdout.json</code>), against a random control of {h85_rnd["dti"]:.6f}.</p>
+<a class="btn btn-zip" href="downloads/h83-candidate.tif" download>Download H83 .tif</a>
+<a class="btn btn-zip" href="downloads/h83-candidate.zip" download>Download H83 .zip</a>
 </details>
 <!--H88-END-->
 
@@ -140,7 +146,22 @@ def main() -> int:
     text = text.replace("<title>GEMSDOE52 — Co-Training Wavelength Contrast Submission</title>",
                         "<title>GEMSDOE52 — Submission Status (H88)</title>")
     INDEX.write_text(text)
-    print("published H88 block to docs/index.html; sha", sha[:16])
+    ex = ROOT / "docs/executive-summary.html"
+    banner = ('<!--H88-EXEC-START--><div style="background:#4a2800;color:#ffe0b2;padding:12px 16px;border:2px solid #ffa726;margin:8px">'
+              '<b>Current status (H88, 2026-10-10): OK to download? YES. OK to submit? NO &mdash; DO NOT SUBMIT.</b> '
+              'The file, its holdout result and the gate records are on the <a href="index.html" style="color:#ffe0b2">start page</a>. '
+              'Holdout-DTI is below the random control; no organiser score exists. Nothing on this page is a certified leaderboard gain.'
+              '</div><!--H88-EXEC-END-->')
+    et = ex.read_text()
+    if "<!--H88-EXEC-START-->" in et:
+        et = re.sub(r"<!--H88-EXEC-START-->.*?<!--H88-EXEC-END-->", lambda _m: banner, et, flags=re.S)
+    else:
+        m_body = re.search(r"<body[^>]*>", et)
+        if not m_body:
+            raise SystemExit("executive-summary.html has no <body> tag")
+        et = et[:m_body.end()] + banner + et[m_body.end():]
+    ex.write_text(et)
+    print("published H88 block to docs/index.html and executive-summary.html; sha", sha[:16])
     return 0
 
 

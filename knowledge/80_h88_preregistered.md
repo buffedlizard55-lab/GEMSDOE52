@@ -68,3 +68,10 @@ These are the reasons a PASS would still need field or geophysical support befor
 * Holdout only hides *catalogue* faults. The competition scores *new* faults. A PASS on the holdout does not
   establish a competition score (AGENTS.md: holdout DTI and board are not correlated, Spearman −0.10).
 * No organiser receipt exists for any file this session. Board numbers are owner-reported, not organiser-confirmed.
+
+## Amendment log
+
+* 2026-10-10 (before any run): identifier-only rename H87 -> H88 (`scripts/run_h88.py`, this file). Precedent IR-H84-006. No
+  rule, arm, or constant changed. Feature-store build errors and a band-description assert were fixed before the first
+  holdout that produced results (the assert now checks the description prefix `depth_to_base_surf`).
+* Result: knowledge/81_h88_results_and_limits.md (NEGATIVE).
