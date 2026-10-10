@@ -1,6 +1,6 @@
 {
  "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified. | H61 merge: IR-H61-001..009 appended from the H61 branch; main's repaired schema and numbering retained.",
- "generated": "2026-10-10T21:45:00Z",
+ "generated": "2026-10-10T21:50:00Z",
  "entries": [
   {
    "id": "IR-30-029",
@@ -3210,6 +3210,18 @@
    "measured_effect": "See evidence/h89_lane_excess.json for this round's numbers.",
    "handling": "Reported, not applied: the H89 gate stays exactly as frozen in knowledge/74 so that no verdict is redefined after seeing a result. The next round should pre-register the chance-corrected rule.",
    "disposition": "open - proposed shared-tool fix for the next pre-registration"
+  },
+  {
+   "id": "IR-H89-006",
+   "round": "H89",
+   "severity": "high",
+   "status": "repaired in this merge",
+   "title": "A parallel session replaced the 252 KB README with a 5.2 KB rewrite on main, removing every earlier round's status block and the standing user brief",
+   "what_it_is": "origin/main's README.md after PR #90 is 5,237 bytes and documents only that session's H87 artefact. The file it replaced was 252,186 bytes and carried the project's standing brief, every round's status block and the archived task briefs that AGENTS.md instructs each session to read first.",
+   "how_we_know": "git show origin/main:README.md | wc -c = 5237 versus git show HEAD:README.md | wc -c = 252186, measured during this merge.",
+   "measured_effect": "Loss of the written record that the working agreement depends on; no scientific result is changed, but a future session reading only main's README would not know the standing brief, the prior negatives, or the measured facts they must not re-litigate.",
+   "handling": "This merge rebuilds README.md as a union: this round's block, then the parallel H87 session's text kept verbatim in a delimited section, then the full historical body restored.",
+   "disposition": "repaired; future rounds must append to README rather than replace it"
   }
  ],
  "merge_note": "Merged registry/irregularities.json: main's entries (including the parallel H66 round's IR-H66-001..010) plus this round's IR-H67-001..011. This round was labelled H66 in its own receipts and was renamed H67 before merge because main merged a different H66 first (PR #56); the IDs were renumbered wholesale so no ID carries two meanings. See knowledge/45a_amendment_2026-10-09_H67_rename.md. IR-H67-002 (in-domain nodata sentinels collapse every rank channel) and IR-H67-008 (probe classification flips with the structuring element, and this round's lane verdict depends on it) are the two that change a result; IR-H67-005 and IR-H67-007 change how a shared instrument must be read. | H77cond merge: this round was executed as H74 and renamed to H77cond before merge because a parallel session merged a different H74 first (PR #72) and a third took H75; see IR-H77cond-001. The rename is identifier-only and the preregistration's pinned SHA-256 still validates. IR-H77cond-002 records a shared-tool repair to scripts/check_site.py surfaced by that merge. IR-H77cond-003 records that filename, receipt and git dating are all individually unsound in this repository, and that the duplicate guard was therefore made dating-independent. | H82 merge (2026-10-09): union of both entry sets by id; 8 H82 entries added (IR-H82-001..IR-H82-008); no existing entry was edited or removed. | H89 merge: IR-H89-001..005 appended from the H89 branch (renamed from H84 because main already holds a different H84); main entries kept verbatim, no id reused."

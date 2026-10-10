@@ -311,6 +311,27 @@ def existing_round_pages() -> str:
 def archive_block() -> str:
     """Carry the previous rounds forward by identity, not by deletion (IR-H89-002)."""
     return f"""
+<h2>Parallel rounds merged from main</h2>
+<p class="muted">Other sessions of this project run the same brief in different lanes. Their
+artefacts are kept and linked here verbatim; <b>OK to download?</b> yes for all of them,
+<b>OK to submit</b>: each one states its own verdict on its own page, and none of them is
+slot-approved by this round.</p>
+<table>
+<tr><th>round</th><th>artefact</th><th>verdict as published by that round</th><th>page</th></tr>
+<tr><td>H83</td><td><a href="downloads/h83-candidate.tif">downloads/h83-candidate.tif</a></td>
+ <td>OK to download? yes · OK to submit: no — negative holdout (research artefact)</td>
+ <td><a href="h83.html">h83.html</a> · <a href="h83-executive-summary.html">how to submit</a></td></tr>
+<tr><td>H84</td><td><a href="downloads/h84-candidate.tif">downloads/h84-candidate.tif</a></td>
+ <td>OK to download? yes · OK to submit: no — negative (harmonic variogram-ellipse anisotropy)</td>
+ <td><a href="h84.html">h84.html</a></td></tr>
+<tr><td>H85</td><td><a href="downloads/h85-candidate.tif">downloads/h85-candidate.tif</a></td>
+ <td>OK to download? yes · OK to submit: no — negative, below random on the shared instrument</td>
+ <td><a href="h85-executive-summary.html">h85-executive-summary.html</a></td></tr>
+<tr><td>H86</td><td><a href="downloads/h86-candidate.tif">downloads/h86-candidate.tif</a></td>
+ <td>OK to download? yes · OK to submit: see that round's page</td>
+ <td><a href="h86-executive-summary.html">h86-executive-summary.html</a></td></tr>
+</table>
+
 <h2>Previous rounds — archive index</h2>
 <p class="muted">Every earlier candidate stays downloadable and named by its own receipt. None of
 them is the current round and none is slot-approved.</p>
