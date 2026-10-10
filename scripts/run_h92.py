@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""H88 -- support-size calibration of the two-view disagreement emission.
+"""H92 -- support-size calibration of the two-view disagreement emission.
 
 Motivation (measured, not assumed)
 ----------------------------------
@@ -64,7 +64,7 @@ from gems52 import cotrain as CT                                      # noqa: E4
 from gems52 import evaluate_holdout as evaluator                      # noqa: E402
 from gems52 import gates, metric, nodes                               # noqa: E402
 
-WORK = ROOT / "work/h88"
+WORK = ROOT / "work/h92"
 EVID = ROOT / "evidence"
 DOCS = ROOT / "docs/data"
 SUB = ROOT / "submission"
@@ -85,10 +85,10 @@ def now() -> str:
 
 def write(name: str, obj) -> Path:
     EVID.mkdir(parents=True, exist_ok=True)
-    p = EVID / f"h88_{name}.json"
+    p = EVID / f"h92_{name}.json"
     p.write_text(json.dumps(obj, indent=1, allow_nan=False, default=str) + "\n")
     if DOCS.exists():
-        (DOCS / f"h88_{name}.json").write_text(p.read_text())
+        (DOCS / f"h92_{name}.json").write_text(p.read_text())
     return p
 
 
@@ -100,7 +100,7 @@ def digest(path) -> str:
 def stage_audit():
     """Three independent checks: instrument prevalence, the metric reduction, the board algebra."""
     reg, store, cat, eligible, folds, va, vb, ring_px = base.setup()
-    out = dict(stage="h88-audit", generated_utc=now(), evaluator=evaluator.VERSION,
+    out = dict(stage="h92-audit", generated_utc=now(), evaluator=evaluator.VERSION,
                implementation_hashes=evaluator.implementation_hashes())
 
     # 1 --- what prevalence does the shared instrument actually score?
@@ -293,7 +293,7 @@ def stage_ladder():
     reg, store, cat, eligible, folds, va, vb, ring_px = base.setup()
     ensure_fit()
     ensure_exchange()
-    out = dict(stage="h88-ladder", generated_utc=now(), evaluator=evaluator.VERSION,
+    out = dict(stage="h92-ladder", generated_utc=now(), evaluator=evaluator.VERSION,
                budgets={lab: k for lab, k in BUDGET_LADDER}, arms=list(ARMS),
                min_separation_px=3.0,
                selection_rule=("maximise the pooled HOLDOUT-DTI at a common budget; an in-lane arm "
@@ -335,7 +335,7 @@ def stage_ladder():
         out["pooled"][lab] = evaluator.pooled_summary(tbm, draws=1000, seed=SEED,
                                                       candidate="disagreement_post")
     # instrument-optimal budget per arm, then the prevalence-corrected board budget
-    _pc = json.loads((EVID / "h88_audit.json").read_text())["prevalence_correction"]
+    _pc = json.loads((EVID / "h92_audit.json").read_text())["prevalence_correction"]
     ratio = float(_pc["ratio_instrument_over_score_algebra"] or _pc["ratio_instrument_over_docstring_mid"])
     optimum = {}
     labs = [lab for lab, _ in BUDGET_LADDER]
@@ -433,8 +433,8 @@ def stage_emit():
     reg, store, cat, eligible, folds, va, vb, ring_px = base.setup()
     ensure_fit()
     ensure_exchange()
-    audit = json.loads((EVID / "h88_audit.json").read_text())
-    ladder = json.loads((EVID / "h88_ladder.json").read_text())
+    audit = json.loads((EVID / "h92_audit.json").read_text())
+    ladder = json.loads((EVID / "h92_ladder.json").read_text())
     # pre-registered pick: the in-lane arm with the best pooled DTI at its instrumentation optimum;
     # ties and negatives fall back to the brief's mandated discovery field.
     # The brief mandates the disagreement field, and it forbids shipping merely the union of the two
@@ -467,13 +467,13 @@ def stage_emit():
     log(f"placed {n} of {k_total} dots; allowed {int(allowed.sum()):,} px")
 
     ts = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
-    name = f"h88-cotrain-disagreement-support-cal-{n}px-20261010"
-    fname = f"gems52-h88-cotrain-disagree-supportcal-{n}px-{ts}.tif"
+    name = f"h92-cotrain-disagreement-support-cal-{n}px-20261010"
+    fname = f"gems52-h92-cotrain-disagree-supportcal-{n}px-{ts}.tif"
     SUB.mkdir(parents=True, exist_ok=True)
     from gems52 import submission_writer
     rec = submission_writer.write_submission(
         SUB / fname, em, ROOT / "data/sample_submission.tif", footprint,
-        note=f"H88 co-train disagreement {best_arm}, prevalence-calibrated {n}px, 3px spacing, 200m collar",
+        note=f"H92 co-train disagreement {best_arm}, prevalence-calibrated {n}px, 3px spacing, 200m collar",
         name=name,
         metadata=dict(arm=best_arm, dots=n, min_separation_px=3.0, catalogue_collar_m=200,
                       board_corrected_budget=k_total,
@@ -482,8 +482,8 @@ def stage_emit():
 
     # ---- downloads copies (short alias, byte-identical)
     DOWN.mkdir(parents=True, exist_ok=True)
-    for src, alias in ((SUB / fname, DOWN / fname), (SUB / fname, DOWN / "h88-candidate.tif"),
-                       (SUB / fname, DOWN / "h88-candidate.zip")):
+    for src, alias in ((SUB / fname, DOWN / fname), (SUB / fname, DOWN / "h92-candidate.tif"),
+                       (SUB / fname, DOWN / "h92-candidate.zip")):
         if alias.suffix == ".zip":
             import shutil
             shutil.copy2(SUB / (Path(fname).with_suffix(".zip").name), alias)

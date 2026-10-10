@@ -1,5 +1,5 @@
 {
- "file": "docs/downloads/h88-a-only-reasoning.csv",
+ "file": "docs/downloads/h92-a-only-reasoning.csv",
  "rows": 17707,
  "stratum_counts": {
   "0": 17208,
@@ -13,6 +13,6 @@
  },
  "q_conf": 0.98,
  "abstain_hi": 0.6,
- "shipped_tif": "gems52-h88-cotrain-disagree-supportcal-17707px-20261010T222145Z.tif",
+ "shipped_tif": "gems52-h92-cotrain-disagree-supportcal-17707px-20261010T224107Z.tif",
  "note": "strata are out-of-fold per the shared splitter; A-only means the potential-field view is in its confident tail while the surface view abstains - a hypothesis, not a fault"
 }

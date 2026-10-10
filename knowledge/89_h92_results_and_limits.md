@@ -1,10 +1,10 @@
-# 81 · H88 — support-size calibration of the mandated disagreement emission: results and limits
+# 81 · H92 — support-size calibration of the mandated disagreement emission: results and limits
 
-Round H88, 2026-10-10. Lane: the two-view co-training paragraph of the brief.
-Artefacts: `scripts/run_h88.py` (stages `audit | fit | ladder | emit`), `scripts/h88_run_card.py`,
-`scripts/h88_reasoning.py`, `evidence/h88_audit.json`, `evidence/h88_ladder.json`,
-`evidence/h88_run_card.json`, `docs/downloads/h88-a-only-reasoning.csv`,
-`submission/gems52-h88-cotrain-disagree-supportcal-17707px-20261010T222145Z.tif`.
+Round H92, 2026-10-10. Lane: the two-view co-training paragraph of the brief.
+Artefacts: `scripts/run_h92.py` (stages `audit | fit | ladder | emit`), `scripts/h92_run_card.py`,
+`scripts/h92_reasoning.py`, `evidence/h92_audit.json`, `evidence/h92_ladder.json`,
+`evidence/h92_run_card.json`, `docs/downloads/h92-a-only-reasoning.csv`,
+`submission/gems52-h92-cotrain-disagree-supportcal-17707px-20261010T222145Z.tif`.
 
 ## Verdict up front
 
@@ -49,7 +49,7 @@ Dividing the instrument optimum by 4.247 gives a board-side budget of **17,707 d
 the shipped file uses. Because every curve is monotone rising on the instrument, this corrected
 budget is a lower bound, not a measurement.
 
-**Board algebra reproduced from restored bytes** (`run_h88.py audit`, no owner-reported file read
+**Board algebra reproduced from restored bytes** (`run_h92.py audit`, no owner-reported file read
 during the algebra): the 0.2778 reference is a strict subset of its 0.2600 parent; the 6,436
 parent-only pixels all sit within 2 px of the mapped catalogue; the reference's nearest catalogue
 distance is 2.236 px. Inverting the metric on that nested pair gives implied truth
@@ -107,7 +107,7 @@ while B abstains), out of 11,233 such pixels in the placement domain. The rest a
    on the *corrected* prevalence instead of dividing an instrument optimum. Needs no new data —
    `data/labels.tif` and the existing folds are enough.
 2. **Fix the operationalisation**: emit the strict A-only stratum (or a cover-gated variant) as the
-   candidate field and re-run the same ladder; the H88 ladder already shows this arm is the better
+   candidate field and re-run the same ladder; the H92 ladder already shows this arm is the better
    of the two, but it still must clear `random` *and* `single_B` before promotion.
 3. **Tilt-depth / theta map on the GeoDAWN magnetics currently on disk**
    (<https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and>,
@@ -123,10 +123,10 @@ while B abstains), out of 11,233 such pixels in the placement domain. The rest a
 
 ## Note on regenerated receipts
 
-Running the shared template (`run_h61.stage_fit` / `stage_exchange`, invoked by the H88 ladder and
+Running the shared template (`run_h61.stage_fit` / `stage_exchange`, invoked by the H92 ladder and
 emit stages because `work/h61` had no checkpoints) rewrites `evidence/h61_independence.json`,
 `evidence/h61_pseudo_exchange.json` and `evidence/h61_fit_checkpoint.json` with freshly refit
 values that differ in the third decimal (`pseudo_exchange` spearman 0.133065 → 0.133685). Those
-committed H61 receipts were restored to their historical state; the numbers H88 actually used are
-recorded in `evidence/h88_ladder.json`, `evidence/h88_audit.json` and the H88 run card.
+committed H61 receipts were restored to their historical state; the numbers H92 actually used are
+recorded in `evidence/h92_ladder.json`, `evidence/h92_audit.json` and the H92 run card.
 

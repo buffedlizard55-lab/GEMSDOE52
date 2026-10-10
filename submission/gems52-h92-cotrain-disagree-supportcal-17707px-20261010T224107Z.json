@@ -1,12 +1,12 @@
 {
-  "file": "gems52-h88-cotrain-disagree-supportcal-17707px-20261010T222145Z.tif",
+  "file": "gems52-h92-cotrain-disagree-supportcal-17707px-20261010T224107Z.tif",
   "sha256": "ddf09d89003eacb8a9df8896a9783e078a6fca5500445b24f3375d3db4d79d4f",
   "bytes": 93751,
-  "submission_name": "h88-cotrain-disagreement-support-cal-17707px-20261010",
-  "note": "H88 co-train disagreement disagreement_post, prevalence-calibrated 17707px, 3px spacing, 200m collar",
+  "submission_name": "h92-cotrain-disagreement-support-cal-17707px-20261010",
+  "note": "H92 co-train disagreement disagreement_post, prevalence-calibrated 17707px, 3px spacing, 200m collar",
   "note_chars": 100,
   "validator": {
-    "path": "/home/user/GEMSDOE52/submission/gems52-h88-cotrain-disagree-supportcal-17707px-20261010T222145Z.tif",
+    "path": "/home/user/GEMSDOE52/submission/gems52-h92-cotrain-disagree-supportcal-17707px-20261010T224107Z.tif",
     "bytes": 93751,
     "sha256": "ddf09d89003eacb8a9df8896a9783e078a6fca5500445b24f3375d3db4d79d4f",
     "bands": 1,
@@ -54,8 +54,8 @@
     "ok": true,
     "validation_class": "local on-disk template/range check; not organizer upload acceptance"
   },
-  "zip_file": "gems52-h88-cotrain-disagree-supportcal-17707px-20261010T222145Z.zip",
-  "zip_sha256": "08d23ec84dba98e0b1d9e88929d3cc5cbc3ef02f837e47e9fdd1bac3158908f7",
+  "zip_file": "gems52-h92-cotrain-disagree-supportcal-17707px-20261010T224107Z.zip",
+  "zip_sha256": "d97de08bfa56b827f93ef0610c2e8a0782f744af5b9fa02b00fc973af58f45e7",
   "approved_for_weekly_slot": false,
   "promoted": false,
   "submission_slots_used": 0,

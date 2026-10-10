@@ -1,6 +1,6 @@
 {
- "round": "H88",
- "generated_utc": "2026-10-10T22:35:33Z",
+ "round": "H92",
+ "generated_utc": "2026-10-10T22:43:49Z",
  "lane": "two-view co-training (Blum & Mitchell 1998, doi:10.1145/279943.279962); View A potential-field/subsurface, View B surface; disagreement as the discovery signal",
  "hypothesis": "the brief's disagreement field is only worth emitting at a support size set by the board's truth prevalence, not by the family's inherited 37,654-dot convention; the board budget follows from the instrument optimum divided by the measured prevalence ratio",
  "mechanism": "rank(A_post) - rank(B_post) over the whole footprint in a one-quadrant-per-fold out-of-fold mosaic, placed as 3 px dots outside the 200 m catalogue collar at the prevalence-corrected board budget",
@@ -114,11 +114,11 @@
  },
  "reproduces_from_current_code": true,
  "raster_sha256": "ddf09d89003eacb8a9df8896a9783e078a6fca5500445b24f3375d3db4d79d4f",
- "file": "submission/gems52-h88-cotrain-disagree-supportcal-17707px-20261010T222145Z.tif",
- "zip": "submission/gems52-h88-cotrain-disagree-supportcal-17707px-20261010T222145Z.zip",
+ "file": "submission/gems52-h92-cotrain-disagree-supportcal-17707px-20261010T224107Z.tif",
+ "zip": "submission/gems52-h92-cotrain-disagree-supportcal-17707px-20261010T224107Z.zip",
  "emitted_px": 17707,
- "submission_name": "h88-cotrain-disagreement-support-cal-17707px-20261010",
- "note": "H88 co-train disagreement disagreement_post, prevalence-calibrated 17707px, 3px spacing, 200m collar",
+ "submission_name": "h92-cotrain-disagreement-support-cal-17707px-20261010",
+ "note": "H92 co-train disagreement disagreement_post, prevalence-calibrated 17707px, 3px spacing, 200m collar",
  "note_chars": 100,
  "validator": {
   "ok": true,
@@ -207,13 +207,13 @@
  "lane_rule": "STOP at Spearman > 0.90 or directed <= 3 px dot proximity > 0.70; no lane retuning",
  "canary_note": "the per-feature leakage canary (AUC > 0.90 = leakage) is carried by the shared fit stage; the highest view AUC measured in this family is 0.9481 in-sample, which is not an alarm -- alarms are on held-out features",
  "code": {
-  "runner": "scripts/run_h88.py",
-  "reasoning": "scripts/h88_reasoning.py",
-  "run_card": "scripts/h88_run_card.py"
+  "runner": "scripts/run_h92.py",
+  "reasoning": "scripts/h92_reasoning.py",
+  "run_card": "scripts/h92_run_card.py"
  },
  "reasoning_rows": {
   "rows": 17707,
-  "csv": "docs/downloads/h88-a-only-reasoning.csv",
+  "csv": "docs/downloads/h92-a-only-reasoning.csv",
   "a_only_stratum_rows": 499
  },
  "download_ok": true,

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""H88 -- the geological reasoning row for every A-only candidate in the emitted file.
+"""H92 -- the geological reasoning row for every A-only candidate in the emitted file.
 
 The standing brief: "Because Phase 2 reviewers verify faults, write the geological reasoning for
 every A-only candidate."  An A-only candidate is a pixel where the potential-field view is in its
@@ -7,7 +7,7 @@ confident tail and the surface view abstains (``gems52.cotrain.strata`` code 2).
 that is A-only gets one row: what the structure would be if real, the named non-fault process that
 mimics it, and the falsifier that distinguishes them.
 
-Reads the shipped GeoTIFF and the fold predictions; writes ``docs/downloads/h88-a-only-reasoning.csv``
+Reads the shipped GeoTIFF and the fold predictions; writes ``docs/downloads/h92-a-only-reasoning.csv``
 plus a machine-readable twin in ``evidence/``.  Writes nothing else.
 """
 from __future__ import annotations
@@ -27,8 +27,8 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import run_h61 as base                                                     # noqa: E402
 from gems52 import cotrain as CT, grid as GR                               # noqa: E402
 
-OUT = ROOT / "docs/downloads/h88-a-only-reasoning.csv"
-EV = ROOT / "evidence/h88_a_only_reasoning.json"
+OUT = ROOT / "docs/downloads/h92-a-only-reasoning.csv"
+EV = ROOT / "evidence/h92_a_only_reasoning.json"
 
 HYPOTHESIS = ("concealed normal fault beneath alluvial cover: potential-field gradient step with no "
               "surface scarp; displacement dies upward into cover")
@@ -47,10 +47,10 @@ FALSIFIER_B = ("ground-truth imagery shows a man-made corridor; or the potential
 
 def main() -> int:
     reg, store, cat, eligible, folds, va, vb, ring_px = base.setup()
-    shipped = sorted((ROOT / "submission").glob("gems52-h88-*.tif"))
-    shipped = [p for p in shipped if "-h88-" in p.name]
+    shipped = sorted((ROOT / "submission").glob("gems52-h92-*.tif"))
+    shipped = [p for p in shipped if "-h92-" in p.name]
     if not shipped:
-        raise SystemExit("no shipped H88 GeoTIFF found in submission/")
+        raise SystemExit("no shipped H92 GeoTIFF found in submission/")
     tif = shipped[-1]
     with rio.open(tif) as s:
         em = s.read(1)

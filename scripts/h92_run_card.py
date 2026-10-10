@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
-"""H88 run card -- the machine-readable receipt for the shipped H88 GeoTIFF.
+"""H92 run card -- the machine-readable receipt for the shipped H92 GeoTIFF.
 
 Follows the shared ``build_h61_submission.py`` card schema.  Everything is recomputed from the
 shipped bytes and the shared out-of-fold checkpoints in this process and then checked against the
 written file:
 
-* the emission is rebuilt with ``run_h88.view_rank_mosaic`` / ``disagreement_field`` /
+* the emission is rebuilt with ``run_h92.view_rank_mosaic`` / ``disagreement_field`` /
   ``placement_field`` and asserted equal to the shipped mask (reproducibility);
 * the not-the-union block re-places View A, View B and ``max(A,B)`` at the same dot count;
 * the lane gate runs over every aligned prior still on disk;
 * ``gates.uniqueness_report`` checks the decoded pattern against every prior.
 
-Writes ``evidence/h88_run_card.json`` and ``docs/data/h88_run_card.json``.
+Writes ``evidence/h92_run_card.json`` and ``docs/data/h92_run_card.json``.
 """
 from __future__ import annotations
 
@@ -29,7 +29,7 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
 import run_h61 as base                                                     # noqa: E402
-import run_h88 as h88                                                      # noqa: E402
+import run_h92 as h92                                                      # noqa: E402
 from gems52 import gates, nodes                                            # noqa: E402
 
 EVID = ROOT / "evidence"
@@ -38,9 +38,9 @@ SAMPLE = ROOT / "data/sample_submission.tif"
 
 
 def main() -> int:
-    audit = json.loads((EVID / "h88_audit.json").read_text())
-    ladder = json.loads((EVID / "h88_ladder.json").read_text())
-    shipped = sorted((ROOT / "submission").glob("gems52-h88-*.tif"))
+    audit = json.loads((EVID / "h92_audit.json").read_text())
+    ladder = json.loads((EVID / "h92_ladder.json").read_text())
+    shipped = sorted((ROOT / "submission").glob("gems52-h92-*.tif"))
     tif = shipped[-1]
     receipt = json.loads(tif.with_suffix(".json").read_text())
     reg, store, cat, eligible, folds, va, vb, ring_px = base.setup()
@@ -53,10 +53,10 @@ def main() -> int:
     # ---- rebuild the field with the shipped code path and prove the bytes reproduce
     with rio.open(ROOT / "data/labels.tif") as ds:
         shape = ds.shape
-    ranks, strata = h88.view_rank_mosaic(folds, store, shape, ring_px, eligible,
+    ranks, strata = h92.view_rank_mosaic(folds, store, shape, ring_px, eligible,
                                          tags=("post", "pre"))
-    field = h88.disagreement_field(ranks["post"])
-    fld, allowed, footprint = h88.placement_field(field, cat, eligible, SAMPLE)
+    field = h92.disagreement_field(ranks["post"])
+    fld, allowed, footprint = h92.placement_field(field, cat, eligible, SAMPLE)
     rebuilt = nodes.spacing_select(fld, allowed, n, min_px=3.0)
     reproduces = bool(np.array_equal(rebuilt, d))
     if not reproduces:
@@ -66,7 +66,7 @@ def main() -> int:
     # ---- not merely the union of the two views: re-place A, B and max(A,B) at the same count
     a_em = nodes.spacing_select(ranks["post"]["A"], allowed, n, min_px=3.0)
     b_em = nodes.spacing_select(ranks["post"]["B"], allowed, n, min_px=3.0)
-    u_field = h88.union_field(ranks["post"])
+    u_field = h92.union_field(ranks["post"])
     u_em = nodes.spacing_select(np.where(allowed, u_field, -1.0), allowed, n, min_px=3.0)
     a_only = (strata == 2) & allowed                     # A confident tail, B abstains
     not_union = dict(
@@ -92,14 +92,14 @@ def main() -> int:
     # ---- uniqueness (decoded pattern) and lane (spatial proximity) over every aligned prior on disk
     priors = gates.find_priors([ROOT / "submission", ROOT / "docs/downloads", ROOT / "data/scored"],
                                exclude=tif)
-    priors = [p for p in priors if p.name not in ("h88-candidate.tif", tif.name)]
+    priors = [p for p in priors if p.name not in ("h92-candidate.tif", tif.name)]
     uni = gates.uniqueness_report(em, priors)
     lane = gates.lane_report(np.asarray(em, np.float32), footprint, priors, sample=SAMPLE,
                              phase="dots")
     lane_near = lane["literal"]["max_near_3px_fraction"]
 
     card = {
-        "round": "H88",
+        "round": "H92",
         "generated_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "lane": ("two-view co-training (Blum & Mitchell 1998, doi:10.1145/279943.279962); View A "
                  "potential-field/subsurface, View B surface; disagreement as the discovery signal"),
@@ -179,13 +179,13 @@ def main() -> int:
         "canary_note": ("the per-feature leakage canary (AUC > 0.90 = leakage) is carried by the "
                         "shared fit stage; the highest view AUC measured in this family is 0.9481 "
                         "in-sample, which is not an alarm -- alarms are on held-out features"),
-        "code": {"runner": "scripts/run_h88.py", "reasoning": "scripts/h88_reasoning.py",
-                 "run_card": "scripts/h88_run_card.py"},
+        "code": {"runner": "scripts/run_h92.py", "reasoning": "scripts/h92_reasoning.py",
+                 "run_card": "scripts/h92_run_card.py"},
         "reasoning_rows": {"rows": int(sum(1 for _ in (ROOT / "docs/downloads"
-                                                       / "h88-a-only-reasoning.csv").open())) - 1,
-                           "csv": "docs/downloads/h88-a-only-reasoning.csv",
+                                                       / "h92-a-only-reasoning.csv").open())) - 1,
+                           "csv": "docs/downloads/h92-a-only-reasoning.csv",
                            "a_only_stratum_rows": int(sum(
-                               1 for _ in (ROOT / "docs/downloads" / "h88-a-only-reasoning.csv")
+                               1 for _ in (ROOT / "docs/downloads" / "h92-a-only-reasoning.csv")
                                .open() if ",2,A-only," in _))},
         "download_ok": True,
         "submit_ok": False,
@@ -211,7 +211,7 @@ def main() -> int:
             "https://github.com/drivendataorg/gems-prize-reference-solution",
         ],
     }
-    for p in (EVID / "h88_run_card.json", DOCS / "h88_run_card.json"):
+    for p in (EVID / "h92_run_card.json", DOCS / "h92_run_card.json"):
         p.parent.mkdir(parents=True, exist_ok=True)
         p.write_text(json.dumps(card, indent=1, default=str) + "\n")
     print(json.dumps({"sha256": card["raster_sha256"], "reproduces": reproduces,
