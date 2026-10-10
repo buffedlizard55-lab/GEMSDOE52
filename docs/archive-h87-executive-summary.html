@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEMSDOE52 — Executive Summary</title>
+<style>
+:root{--bg:#0f1117;--fg:#e8eaed;--accent:#4fc3f7;--ok:#66bb6a;--warn:#ffa726;--err:#ef5350;--card:#1a1d27;--border:#2d3040}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--fg);line-height:1.7;padding:0}
+.container{max-width:900px;margin:0 auto;padding:24px 20px}
+h1{font-size:1.8rem;margin-bottom:8px;color:var(--accent)}
+h2{font-size:1.3rem;margin:28px 0 12px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px}
+h3{font-size:1.1rem;margin:20px 0 8px}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+code{background:#1e2130;padding:2px 6px;border-radius:3px;font-size:0.9em}
+pre{background:#1e2130;padding:16px;border-radius:6px;overflow-x:auto;font-size:0.85rem;line-height:1.5;color:#b0bec5}
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:18px;margin:12px 0}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:0.9rem}
+th,td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--border)}
+th{color:var(--accent);font-weight:600}
+.pass{color:var(--ok);font-weight:700}
+.fail{color:var(--err);font-weight:700}
+.step{display:flex;align-items:flex-start;margin:12px 0}
+.step-num{background:var(--accent);color:#000;font-weight:700;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:12px;margin-top:2px}
+.footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--border);font-size:0.85rem;color:#777}
+</style>
+</head>
+<body>
+<div style="background:#4a1010;color:#ffcdd2;padding:14px 20px;border-bottom:2px solid #ef5350;font-family:sans-serif"><strong>ARCHIVED PAGE (H87). DO NOT SUBMIT.</strong> The H87 file was holdout-scored after this page was written: HOLDOUT-DTI 0.056889 [0.043563, 0.071325], below random 0.076551 (H88 instrument, evidence/h88_holdout.json). The "PROMOTE" and "one-click submission" wording below is superseded. See <a href="index.html" style="color:#ffe082">the current status page</a>. The content below is preserved verbatim for audit.</div>
+
+<div class="container">
+
+<p><a href="index.html">← Back to Submission</a></p>
+
+<h1>Executive Summary — H87 Co-Training Wavelength Contrast</h1>
+<p style="color:#999">GEMSDOE52 · DOE GEMS Prize · 2026-10-10</p>
+
+<h2>1. What This Is</h2>
+<p>GEMSDOE52 is a fault-discovery system for the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/" target="_blank">DOE GEMS Prize</a> (DrivenData #306). 
+The task: predict where <em>unmapped</em> geothermal-indicative faults exist in the GeoDAWN study area of 
+northwestern Nevada. The scoring metric is a distance-weighted Tversky index (DTI) with α=0.2, β=0.8, 
+R=300 m triangular kernel.</p>
+
+<p style="margin-top:12px">This submission (H87) implements a <strong>co-training framework</strong> between 
+two independent views of the Earth, using disagreement as the discovery signal:</p>
+<ul style="margin:8px 0 0 20px">
+<li><strong>View A (geophysical):</strong> Gravity gradients, magnetic gradients, geodetic strain, basement depth, conductivity — sees <em>subsurface structure</em></li>
+<li><strong>View B (surface):</strong> Multi-scale DEM wavelength contrast, slope, radiometric Th/K ratio — sees <em>surface expression + alteration</em></li>
+</ul>
+
+<h2>2. Why Disagreement Matters</h2>
+<p>Following <a href="https://doi.org/10.1145/279943.279962" target="_blank">Blum &amp; Mitchell (COLT 1998)</a>, 
+when two views are each sufficient for the task and approximately conditionally independent given the class, 
+their disagreements reveal the most informative unlabeled examples:</p>
+
+<table>
+<tr><th>Case</th><th>Interpretation</th><th>Action</th></tr>
+<tr><td>A confident, B abstains</td><td>Buried fault beneath alluvial cover</td><td><strong>EMIT</strong> (discovery candidate)</td></tr>
+<tr><td>B confident, A abstains</td><td>Surface artifact (road, erosion, lithologic contact)</td><td><strong>SUPPRESS</strong> (confounder)</td></tr>
+<tr><td>Both confident</td><td>Known/mapped fault (already in catalogue)</td><td>Skip (already mapped)</td></tr>
+<tr><td>Both abstain</td><td>No fault signal</td><td>Skip</td></tr>
+</table>
+
+<p style="margin-top:12px"><strong>Independence verified:</strong> The Pearson correlation between View A and View B 
+scores on the valid footprint is <strong>r = −0.140</strong>, well below the 0.60 abandonment threshold. 
+The views are measuring genuinely different aspects of the landscape.</p>
+
+<h2>3. Novel Features</h2>
+<div class="card">
+<h3>Multi-Scale Wavelength Contrast (never used in any prior)</h3>
+<p>The ratio of fine-scale (σ=1, ~100m) to coarse-scale (σ=8, ~800m) Hessian eigenvalue magnitude 
+of the detrended elevation. This ratio is high where a sharp, localized feature (scarp, lineament) 
+sits on top of a smooth regional surface, and low where the topography is uniformly rough or smooth 
+at all scales. No prior submission in the 129-raster registry uses this transform.</p>
+
+<h3 style="margin-top:16px">Radiometric Th/K Ratio (used as raw band but never as ratio)</h3>
+<p>Hydrothermal fluids leach potassium from rocks along fault zones, elevating the Th/K ratio. 
+The GeoDAWN airborne radiometric survey (DOI <a href="https://doi.org/10.5066/P93LGLVQ" target="_blank">10.5066/P93LGLVQ</a>) 
+provides K, Th, U, and total-count grids at 100m resolution. While some priors used the raw 
+radiometric bands, none computed the Th/K ratio transform specifically targeting hydrothermal alteration.</p>
+</div>
+
+<h2>4. How to Submit to the Competition</h2>
+<div class="card">
+<div class="step">
+<div class="step-num">1</div>
+<div>
+<p><strong>Download the submission file:</strong></p>
+<p><a href="downloads/gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.tif">📥 gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.tif</a> (128 KB)</p>
+<p>Or: <a href="downloads/gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.zip">📦 .zip version</a> (90 KB)</p>
+</div>
+</div>
+
+<div class="step">
+<div class="step-num">2</div>
+<div>
+<p><strong>Go to the DrivenData submission page:</strong></p>
+<p><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/" target="_blank">https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/</a></p>
+</div>
+</div>
+
+<div class="step">
+<div class="step-num">3</div>
+<div>
+<p><strong>Upload the file</strong> using "File to submit" field.</p>
+</div>
+</div>
+
+<div class="step">
+<div class="step-num">4</div>
+<div>
+<p><strong>Paste the submission name:</strong> <code>h87-cotrain-wavelength-37654px</code></p>
+</div>
+</div>
+
+<div class="step">
+<div class="step-num">5</div>
+<div>
+<p><strong>Paste the note:</strong> <code>H87 co-train wavelength+Th/K, A&gt;B disagree, 37654px, 3px spacing, 200m collar</code></p>
+</div>
+</div>
+
+<div class="step">
+<div class="step-num">6</div>
+<div>
+<p><strong>Click "Create submission".</strong> The portal should accept it immediately — the file is 
+pre-validated with all values in [0,1], all finite, correct CRS/shape/transform, no nodata tag.</p>
+</div>
+</div>
+</div>
+
+<h2>5. Technical Specifications</h2>
+<table>
+<tr><th>Property</th><th>Value</th></tr>
+<tr><td>Grid</td><td>3292 × 3730 px (12,279,160 cells)</td></tr>
+<tr><td>Resolution</td><td>100 m</td></tr>
+<tr><td>CRS</td><td>EPSG:32611 (UTM Zone 11N)</td></tr>
+<tr><td>Data type</td><td>float32, single band</td></tr>
+<tr><td>Values</td><td>Binary {0, 1}</td></tr>
+<tr><td>Predicted pixels</td><td>37,654</td></tr>
+<tr><td>NaN pixels</td><td>0 (zeros outside footprint)</td></tr>
+<tr><td>Nodata tag</td><td>None</td></tr>
+<tr><td>Compression</td><td>Deflate + horizontal predictor, 256×256 tiles</td></tr>
+<tr><td>SHA256</td><td><code>a861069b8c780738b83245c1f736313d043989ca33554377f6dffb0465d8e9c3</code></td></tr>
+<tr><td>File size</td><td>128,024 bytes</td></tr>
+</table>
+
+<h2>6. Metric-Aware Placement</h2>
+<p>The DTI metric uses a 300m triangular kernel: k(d) = max(1 − d/R, 0) where R = 300m = 3 px. 
+Each emitted dot earns credit only if it lies within 300m of a truth pixel, weighted by the kernel. 
+The credit bar at the current best DTI (~0.28) is 0.2 × 0.28 = 0.056 — each dot must earn 
+at least 0.056 kernel weight to raise DTI.</p>
+
+<p style="margin-top:12px">This submission uses:</p>
+<ul style="margin:8px 0 0 20px">
+<li><strong>Budget:</strong> 37,654 dots (same as the 0.2778 reference)</li>
+<li><strong>Spacing:</strong> minimum 3 px between dots (reduces redundant local coverage)</li>
+<li><strong>Catalogue collar:</strong> 200 m exclusion from all known fault pixels</li>
+<li><strong>Binary emission:</strong> {0, 1} — proven optimal at fixed budget (pinned in tests/test_metric.py)</li>
+</ul>
+
+<h2>7. Evidence Trail</h2>
+<table>
+<tr><th>Artifact</th><th>Location</th></tr>
+<tr><td>Build receipt (JSON)</td><td><code>evidence/h87_build.json</code></td></tr>
+<tr><td>Build script</td><td><code>scripts/build_h87_cotrain_wavelength.py</code></td></tr>
+<tr><td>Submission .tif</td><td><code>submission/gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.tif</code></td></tr>
+<tr><td>Submission .zip</td><td><code>submission/gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.zip</code></td></tr>
+<tr><td>Data manifest</td><td><code>registry/data_manifest.json</code> (SHA-256 pinned)</td></tr>
+</table>
+
+<h2>8. Limitations &amp; Next Steps</h2>
+<div class="card">
+<h3>Known limitations</h3>
+<ul style="margin:8px 0 0 20px">
+<li><strong>No holdout DTI score:</strong> This build receipt verifies format and uniqueness but does not 
+run the spatially-blocked holdout evaluator. A holdout score would require running 
+<code>scripts/run_h87.py</code> which is not yet written.</li>
+<li><strong>Catalogue proxy:</strong> The holdout's truth is the visible catalogue, so it cannot reward 
+genuinely new faults — only structural extensions of known ones.</li>
+<li><strong>View A confounders:</strong> Gravity/magnetic gradients can arise from lithologic contacts 
+without faulting. The co-training approach mitigates this by suppressing B-confident predictions.</li>
+<li><strong>No organizer score:</strong> The DTI value will only be known after portal submission.</li>
+</ul>
+
+<h3 style="margin-top:16px">Recommended next steps</h3>
+<ul style="margin:8px 0 0 20px">
+<li>Submit this file to the competition portal and record the actual score</li>
+<li>Run the spatially-blocked holdout to get a projected DTI with confidence interval</li>
+<li>If score &gt; 0.28, investigate which geological zones the A-only dots concentrate in</li>
+<li>Consider a variant with tighter catalogue collar (1px instead of 2px) to capture tip extensions</li>
+</ul>
+</div>
+
+<h2>9. Official Verified Sources</h2>
+<table>
+<tr><th>Source</th><th>URL</th><th>Used For</th></tr>
+<tr><td>DrivenData Competition</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/" target="_blank">drivendata.org/.../306</a></td><td>Rules, data, metric, submission format</td></tr>
+<tr><td>Competition Rules PDF</td><td><a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf" target="_blank">docs.nlr.gov/.../96647.pdf</a></td><td>Official rules document</td></tr>
+<tr><td>USGS GeoDAWN</td><td><a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and" target="_blank">usgs.gov/.../geodawn</a></td><td>Airborne magnetics &amp; radiometrics</td></tr>
+<tr><td>GeoDAWN Data Release</td><td><a href="https://doi.org/10.5066/P93LGLVQ" target="_blank">DOI 10.5066/P93LGLVQ</a></td><td>K/Th/U/TC grids</td></tr>
+<tr><td>GDR 1391 INGENIOUS</td><td><a href="https://gdr.openei.org/submissions/1391" target="_blank">gdr.openei.org/.../1391</a></td><td>Fault traces, wells, springs</td></tr>
+<tr><td>Reference Solution</td><td><a href="https://github.com/drivendataorg/gems-prize-reference-solution" target="_blank">github.com/.../gems-prize-reference-solution</a></td><td>Baseline implementation</td></tr>
+<tr><td>EPSG:32611</td><td><a href="https://epsg.io/32611" target="_blank">epsg.io/32611</a></td><td>Coordinate reference system</td></tr>
+<tr><td>Blum &amp; Mitchell 1998</td><td><a href="https://doi.org/10.1145/279943.279962" target="_blank">DOI 10.1145/279943.279962</a></td><td>Co-training framework</td></tr>
+<tr><td>Tversky Index</td><td><a href="https://en.wikipedia.org/wiki/Tversky_index" target="_blank">Wikipedia</a></td><td>Metric definition reference</td></tr>
+</table>
+
+<div class="footer">
+<p>GEMSDOE52 · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52" target="_blank">GitHub Repository</a> · 
+<a href="index.html">← Back to Submission Page</a></p>
+</div>
+
+</div>
+</body>
+</html>
