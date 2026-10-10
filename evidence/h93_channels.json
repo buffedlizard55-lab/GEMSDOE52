@@ -1,0 +1,13 @@
+{
+ "stage": "channels",
+ "seconds": 21.8,
+ "finite_px": {
+  "ABS_step3": 4586852,
+  "ABS_step1": 4591014,
+  "ABS_pair6": 4583880,
+  "ABS_cover": 4586852
+ },
+ "eligible_px": 4593171,
+ "definition": "knowledge/81 section 2 (frozen)",
+ "note": "band 15 is a model-derived basement depth; channels inherit its artefacts"
+}
