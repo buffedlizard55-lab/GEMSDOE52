@@ -1,0 +1,68 @@
+{
+  "file": "gems52-h87-deepedge-Aonly-37600px-20261010.tif",
+  "sha256": "e5ecc89c7ace5cbf0e3d7dfd1f2c3f0ecc78eaddcdca3d8e34be8e13870d4edc",
+  "bytes": 131257,
+  "submission_name": "gems52-h87-deepedge-Aonly-37600px-20261010",
+  "note": "H87 deep magnetic edge A-only, surface abstention; research-only, negative holdout; no slot approved",
+  "note_chars": 100,
+  "validator": {
+    "path": "/home/user/GEMSDOE52/docs/downloads/gems52-h87-deepedge-Aonly-37600px-20261010.tif",
+    "bytes": 131257,
+    "sha256": "e5ecc89c7ace5cbf0e3d7dfd1f2c3f0ecc78eaddcdca3d8e34be8e13870d4edc",
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "ref_bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "nodata": null,
+    "blocksize": [
+      256,
+      256
+    ],
+    "fixture_grid": false,
+    "has_validity_mask": false,
+    "nan_pixels": 0,
+    "infinity_pixels": 0,
+    "n_nan": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.003062098752707243,
+    "n_nonzero": 37600,
+    "mass": 37600.0,
+    "mass_outside_footprint": 0,
+    "problems": [],
+    "ok": true,
+    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "zip_file": "gems52-h87-deepedge-Aonly-37600px-20261010.zip",
+  "zip_sha256": "52260d514056363cb99c06cc4652e129e02c2b6b97fe3af94c530b9e890513c9",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "status": "research-only; local format validation is not organizer acceptance",
+  "metadata": {
+    "hypothesis": "H87-P upward-continued magnetic persistence in A-only disagreement",
+    "preregistration_sha256": "066acdc45201c2edf457c7f5f2849fe1eaa29cc831c5b279937007fd8982f97f",
+    "no_competition_slot_used": true
+  }
+}

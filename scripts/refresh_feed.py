@@ -72,8 +72,8 @@ def copy_evidence():
     # H55 publishes its own evidence the same way the R2 round publishes *_r2.json: copied on every
     # run so the page cannot drift from the artefact, and named by round so it is never mistaken for
     # another round's numbers.  The Phase-2 reasoning record is staged next to the raster it explains.
-    for pat in ('ctd5_*.json', 'h55_*.json', 'h58_*.json', 'h59_*.json', 'submission_gems52-h55-*.json',
-                'submission_gems52-h58-*.json', 'submission_gems52-h59-*.json'):
+    for pat in ('ctd5_*.json', 'h55_*.json', 'h58_*.json', 'h59_*.json', 'h87_run_card.json',
+                'submission_gems52-h55-*.json', 'submission_gems52-h58-*.json', 'submission_gems52-h59-*.json'):
         for path in sorted(EV.glob(pat)):
             write(path.name, safe(json.loads(path.read_text())))
             copied.append(path.name)
@@ -409,11 +409,27 @@ def current_branch(explicit=None):
 
 
 def research_status():
-    """Read the research card, not LATEST, and verify its exact published bytes.
+    """Read the latest explicit research card, verify its bytes, and never promote.
 
-    Hash identity preserves the previous on-disk validator result without importing
-    scientific dependencies into the scheduled stdlib-only feed. Never promotes.
+    H87 is a stopped duplicate lane, not the global LATEST submission pointer. The
+    scheduled stdlib-only feed checks the already-published bytes and never changes
+    its result into an organizer score or a slot approval.
     """
+    h87 = EV / 'h87_run_card.json'
+    if h87.exists():
+        card = json.loads(h87.read_text())
+        name = card['submission_name'] + '.tif'
+        path = DL / name
+        matches = path.is_file() and file_hash(path) == card['raster_sha256']
+        if not matches:
+            raise ValueError('H87 research download differs from its audited bytes')
+        return dict(run_id='H87', file=name, download='downloads/' + name,
+                    sha256=card['raster_sha256'], hash_verified=True,
+                    verdict='negative; final-dot duplicate/STOP',
+                    approved_for_weekly_slot=False, submit_ok=False,
+                    measurement_date_utc='2026-10-10',
+                    evidence='data/h87_run_card.json',
+                    note='Research only. Local feed refresh does not update the organizer leaderboard or use a submission slot.')
     p = EV / 'ctd5_run_card.json'
     if not p.exists():
         return None
@@ -440,14 +456,21 @@ def main():
     # Stage the rasters and the one-click ZIP BEFORE the report is written: the report points into
     # docs/downloads/, so publishing after it left the site offering a file that was not there yet
     # (IR-52-028).
-    for f in sorted((ROOT / 'submission').glob('*.tif')):
-        tgt = DL / f.name
-        if not tgt.exists() or file_hash(tgt) != file_hash(f):
-            tgt.write_bytes(f.read_bytes())
+    # Only stage explicitly marked artefacts. Sweeping submission/*.tif copied every
+    # historical research attempt (including unreviewed negatives) into the site on
+    # each feed refresh; the H87 run exposed 16 unintended new downloads in one call.
+    # Existing archive files remain untouched; H58/H55 have explicit handling below.
     for mk in ('LATEST.txt', 'R2_LATEST.txt'):
         mp = ROOT / 'submission' / mk
         if mp.exists():
-            make_zip(mp.read_text().strip())
+            name = mp.read_text().strip()
+            src = ROOT / 'submission' / name
+            if not src.is_file() or src.suffix.lower() != '.tif' or src.name != name:
+                raise ValueError(f'invalid marked submission path: {name!r}')
+            tgt = DL / name
+            if not tgt.exists() or file_hash(tgt) != file_hash(src):
+                tgt.write_bytes(src.read_bytes())
+            make_zip(name)
     # H58 is an explicitly named research result, not the global incumbent unless a later
     # independent gate approves it. Publish its one-TIFF package and stable review aliases from
     # the H58 receipt without changing submission/LATEST.txt or docs/data/submission.json.

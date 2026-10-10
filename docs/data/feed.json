@@ -1,6 +1,6 @@
 {
-  "generated_utc": "2026-10-10T12:29:57Z",
-  "branch": "main",
+  "generated_utc": "2026-10-10T22:18:30Z",
+  "branch": "arena/76f7571f-gemsdoe52",
   "repo": "buffedlizard55-lab/GEMSDOE52",
   "evidence_copied": [
     "a_only_reasoning_r2.json",
@@ -119,6 +119,7 @@
     "h59_slot_gate.json",
     "h59_uniqueness.json",
     "h59_validation.json",
+    "h87_run_card.json",
     "submission_gems52-h55-btherm-greedy-37654px-20261007T0150Z-zeros.json",
     "submission_gems52-h55-grav-rtp-logedge-37654-c4b8c10205da-zeros.json",
     "submission_gems52-h55-profile-37654-7fd28c25b51a-research.json",
@@ -204,24 +205,25 @@
     "verified_claims_r3.json"
   ],
   "submission": "gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif",
-  "downloads": 84,
+  "downloads": 78,
   "leaderboard_status": "dated snapshot; automated DrivenData access disabled by Terms-of-Use policy",
-  "leaderboard_last_observed_utc": "2026-10-09",
+  "leaderboard_last_observed_utc": "2026-10-10",
   "prior_entries": 395,
   "eligible_prior_rasters": 389,
   "scientific_gate": false,
   "slots_used": 0,
   "latest_research": {
-    "run_id": "ctd5-a24c35d1",
-    "file": "gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif",
-    "download": "downloads/ctd5-research.tif",
-    "sha256": "a6e6e44aebaf057989e254bd5ce3729e5a94836c0e5687a95e91e3fc8a40c686",
+    "run_id": "H87",
+    "file": "gems52-h87-deepedge-Aonly-37600px-20261010.tif",
+    "download": "downloads/gems52-h87-deepedge-Aonly-37600px-20261010.tif",
+    "sha256": "e5ecc89c7ace5cbf0e3d7dfd1f2c3f0ecc78eaddcdca3d8e34be8e13870d4edc",
     "hash_verified": true,
-    "verdict": "negative",
+    "verdict": "negative; final-dot duplicate/STOP",
     "approved_for_weekly_slot": false,
     "submit_ok": false,
-    "measurement_utc": "2026-10-08T18:31:08.001658+00:00",
-    "note": "Research only; local evidence refresh is not a fresh organizer or leaderboard observation."
+    "measurement_date_utc": "2026-10-10",
+    "evidence": "data/h87_run_card.json",
+    "note": "Research only. Local feed refresh does not update the organizer leaderboard or use a submission slot."
   },
   "freshness_note": "Local evidence refresh is automatic; the board is a dated snapshot. No automatic portal submission."
 }

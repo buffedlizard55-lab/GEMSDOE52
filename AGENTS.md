@@ -2,6 +2,9 @@
 
 Before every work session, read `README.md`, its full current user brief, `knowledge/07_r2_hypotheses_preregistered.md`, and the newest review/irregularities record. Read previous failed experiments before proposing another.
 
+## Current H87 stop (2026-10-10)
+Read `knowledge/80_h87_hypotheses_preregistered.md`, `knowledge/81_h87_three_pass_review_2026-10-10.md`, and `evidence/h87_run_card.json`. The latest H87 research GeoTIFF is format-valid and decoded-pixel-distinct, but **DO NOT SUBMIT**: its final dots are within 3 px of H61 at 0.8079 share (>0.70 lane limit), and HOLDOUT-DTI (`gems52-pooled-hide-v1`, 53,186 withheld, 95% CI) is 0.034206 [0.023321,0.045739] vs B-only 0.174517 [0.152791,0.195704]. One experiment, zero slots. Do not retune the duplicate within this lane; a separately pre-registered selector/next lane is required for any promotion. Official portal acceptance and authenticated data remain unavailable here. `scripts/refresh_feed.py` now copies only marked submission rasters, and reports H87 as negative research without modifying the LATEST marker. The full standing brief, including the co-training and parallel-run protocol, is reproduced in README and must be read at every session.
+
 Maximize P(Win): prioritize geological signal and trustworthy spatial validation. Never spend a competition upload slot unless the new candidate has beaten the current comparable holdout best. Own the Outcome: verify written files, served downloads, reproducibility, provenance and failure cases end to end.
 
 Keep known-catalogue labels separate from verified fault absence, public participant scores separate from filename attribution, hypotheses separate from discoveries, and format-valid artifacts separate from promotion-approved ones. Do not invent organizer validation or claim a guaranteed leaderboard gain. A GeoTIFF with a new name or compression is not a unique prediction; compare decoded pixels.

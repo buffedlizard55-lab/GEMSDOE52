@@ -1,6 +1,6 @@
 {
   "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified. | H61 merge: IR-H61-001..009 appended from the H61 branch; main's repaired schema and numbering retained.",
-  "generated": "2026-10-10T21:30:00Z (H85 append)",
+  "generated": "2026-10-10 H87 append",
   "entries": [
     {
       "id": "IR-30-029",
@@ -3090,6 +3090,38 @@
       "handling": "Not caused by H84 edits; left unchanged. The H84 pages were not made to satisfy stale round checks. The checker's dispatch also reads the current round from docs/data/submission.json (H60), which is stale.",
       "disposition": "Resolved by the merge with main: scripts/check_site.py now reports 0 failures on the merged tree (run 2026-10-10). The earlier 22 failures were the stale checker vs the pre-merge pages.",
       "measured_effect": "Site content is unaffected; the checker fails."
+    },
+    {
+      "id": "IR-H87-001",
+      "title": "H87 final dots violate literal lane even against informative H61",
+      "status": "STOP; negative",
+      "what_it_is": "Surface PASS (max Spearman 0.208179) but final dots near-3px share 0.807872 with H61 (limit 0.70); dense probe 1.000000; 26 priors fail.",
+      "how_we_know": "evidence/h87_surface_gate.json and evidence/h87_dots_gate.json: 653 comparable priors; errors=0; no identical decoded raster.",
+      "disposition": "No tuning, no weekly slot; H87 research download only."
+    },
+    {
+      "id": "IR-H87-002",
+      "title": "Geophysical View A independent errors but insufficient prediction",
+      "status": "measured; method negative",
+      "what_it_is": "Negative-block OOF errors weakly correlated (max |rho| 0.133065) but A-only H87-P 0.034206 HOLDOUT-DTI vs single B 0.174517 (53,186 withheld, shared evaluator). Conditional independence alone does not make A sufficient.",
+      "how_we_know": "evidence/h61_pseudo_exchange.json historical independent replica and evidence/h87_holdout.json; shared evaluator and same budget.",
+      "disposition": "Do not treat disagreement as confirmed burial; stop this lane."
+    },
+    {
+      "id": "IR-H87-003",
+      "title": "Deep-edge reasoning originally overclaimed pixel-wise persistence",
+      "status": "fixed in published reasoning",
+      "what_it_is": "Up150-grad3 rank can be 0.000918 at an emitted dot: (0.5+0.5*rank) is a weight, not a high-rank gate.",
+      "how_we_know": "Audited 37,600 rows of docs/downloads/h87-a-only-reasoning.csv.gz against emission; corrected text in scripts/run_h87.py and regenerated only the reasoning CSV; raster unchanged.",
+      "disposition": "Interpretation states weighting and individual percentile, not proof of depth."
+    },
+    {
+      "id": "IR-H87-004",
+      "title": "Data mirrors are integrity-pinned not organizer authenticated; band 6 tag conflict",
+      "status": "unresolved",
+      "what_it_is": "The GeoTIFF band-6 description says tc magnetic tilt, while H61 byte-level comparison says Spearman 1.0 with external radiometric total count. Official competition and USGS hosts are blocked in this sandbox.",
+      "how_we_know": "training_features.tif description read from SHA-pinned mirror; evidence/h61_forensics.json, registry/data_manifest.json.",
+      "disposition": "Request an independently authenticated organiser input or official USGS original before claiming physical calibration."
     }
   ],
   "merge_note": "Merged registry/irregularities.json: main's entries (including the parallel H66 round's IR-H66-001..010) plus this round's IR-H67-001..011. This round was labelled H66 in its own receipts and was renamed H67 before merge because main merged a different H66 first (PR #56); the IDs were renumbered wholesale so no ID carries two meanings. See knowledge/45a_amendment_2026-10-09_H67_rename.md. IR-H67-002 (in-domain nodata sentinels collapse every rank channel) and IR-H67-008 (probe classification flips with the structuring element, and this round's lane verdict depends on it) are the two that change a result; IR-H67-005 and IR-H67-007 change how a shared instrument must be read. | H77cond merge: this round was executed as H74 and renamed to H77cond before merge because a parallel session merged a different H74 first (PR #72) and a third took H75; see IR-H77cond-001. The rename is identifier-only and the preregistration's pinned SHA-256 still validates. IR-H77cond-002 records a shared-tool repair to scripts/check_site.py surfaced by that merge. IR-H77cond-003 records that filename, receipt and git dating are all individually unsound in this repository, and that the duplicate guard was therefore made dating-independent. | H82 merge (2026-10-09): union of both entry sets by id; 8 H82 entries added (IR-H82-001..IR-H82-008); no existing entry was edited or removed."

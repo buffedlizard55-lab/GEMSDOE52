@@ -1,0 +1,299 @@
+{
+  "surface_gate": {
+    "phase": "surface",
+    "rule": "STOP at rho >0.90 or directed <=3px dot proximity >0.70; no lane retuning",
+    "evidence_class": "uniqueness diagnostic, not a score",
+    "priors_checked": 653,
+    "distinct_decoded_priors": 395,
+    "candidate_decoded_sha256": "79d874a6073883509cd7ac47a5c207d10961f6e2b51b80f5c8a0ac39591a01eb",
+    "rank_pixels": 4593171,
+    "exact_full_eligible_rank": true,
+    "max_spearman": 0.20817899331510303,
+    "max_near_3px_fraction": null,
+    "rank_threshold": 0.9,
+    "near_threshold": 0.7,
+    "duplicate": false,
+    "offender_count": 0,
+    "error_count": 0,
+    "ok": true,
+    "scope": "Supplied aligned immutable public inventory only; private/release/external artifacts not proven absent.",
+    "worst_rank": [
+      [
+        0.20817899331510303,
+        "work/h61/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif"
+      ],
+      [
+        0.20817898838814994,
+        "work/h61/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif"
+      ],
+      [
+        0.20750399899718602,
+        "work/h61/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif"
+      ]
+    ],
+    "worst_near": [],
+    "offenders": []
+  },
+  "final_dots_gate": {
+    "phase": "dots",
+    "rule": "STOP at rho >0.90 or directed <=3px dot proximity >0.70; no lane retuning",
+    "evidence_class": "uniqueness diagnostic, not a score",
+    "priors_checked": 653,
+    "distinct_decoded_priors": 395,
+    "candidate_decoded_sha256": "f8c9813db95601a3a2f1909dda3d192b56b1d7b133fbc0bd981425d2706cc547",
+    "rank_pixels": 4593171,
+    "exact_full_eligible_rank": true,
+    "max_spearman": 0.32640076596979756,
+    "max_near_3px_fraction": 1.0,
+    "rank_threshold": 0.9,
+    "near_threshold": 0.7,
+    "duplicate": true,
+    "offender_count": 26,
+    "error_count": 0,
+    "ok": false,
+    "scope": "Supplied aligned immutable public inventory only; private/release/external artifacts not proven absent.",
+    "worst_rank": [
+      [
+        0.32640076596979756,
+        "submission/gems52-h61-deepsharp-cotrain-37600px.tif"
+      ],
+      [
+        0.32640076596979756,
+        "docs/downloads/h61-candidate.tif"
+      ],
+      [
+        0.32640076596979756,
+        "docs/downloads/gems52-h61-deepsharp-cotrain-37600px.tif"
+      ]
+    ],
+    "worst_near": [
+      [
+        1.0,
+        "work/h61/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif"
+      ],
+      [
+        1.0,
+        "work/h61/priors/c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif"
+      ],
+      [
+        1.0,
+        "work/h61/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif"
+      ]
+    ],
+    "offenders": [
+      {
+        "path": "docs/downloads/gems52-h61-deepsharp-cotrain-37600px.tif",
+        "spearman": 0.32640076596979756,
+        "near_3px_fraction": 0.8078723404255319,
+        "rank_duplicate": false,
+        "near_duplicate": true,
+        "error": null
+      },
+      {
+        "path": "docs/downloads/h61-candidate.tif",
+        "spearman": 0.32640076596979756,
+        "near_3px_fraction": 0.8078723404255319,
+        "rank_duplicate": false,
+        "near_duplicate": true,
+        "error": null
+      },
+      {
+        "path": "submission/gems52-h61-deepsharp-cotrain-37600px.tif",
+        "spearman": 0.32640076596979756,
+        "near_3px_fraction": 0.8078723404255319,
+        "rank_duplicate": false,
+        "near_duplicate": true,
+        "error": null
+      },
+      {
+        "path": "work/h61/priors/0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+        "spearman": -0.005661909295916874,
+        "near_3px_fraction": 0.8269414893617021,
+        "rank_duplicate": false,
+        "near_duplicate": true,
+        "error": null
+      },
+      {
+        "path": "work/h61/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+        "spearman": 0.03436916300936566,
+        "near_3px_fraction": 0.9990691489361702,
+        "rank_duplicate": false,
+        "near_duplicate": true,
+        "error": null
+      },
+      {
+        "path": "work/h61/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+        "spearman": 0.027355989993230034,
+        "near_3px_fraction": 0.9991223404255319,
+        "rank_duplicate": false,
+        "near_duplicate": true,
+        "error": null
+      },
+      {
+        "path": "work/h61/priors/2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+        "spearman": -0.0026192250127061727,
+        "near_3px_fraction": 0.7546808510638298,
+        "rank_duplicate": false,
+        "near_duplicate": true,
+        "error": null
+      },
+      {
+        "path": "work/h61/priors/35616cbb48ac3533dd4c957b8acca57f71ba365f.tif",
+        "spearman": -0.005069894744061249,
+        "near_3px_fraction": 1.0,
+        "rank_duplicate": false,
+        "near_duplicate": true,
+        "error": null
+      },
+      {
+        "path": "work/h61/priors/3d3ee66300203bdc878f3a052caabde671daf042.tif",
+        "spearman": -0.019490479840896465,
+        "near_3px_fraction": 1.0,
+        "rank_duplicate": false,
+        "near_duplicate": true,
+        "error": null
+      },
+      {
+        "path": "work/h61/priors/437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+        "spearman": -0.0015087468777206917,
+        "near_3px_fraction": 0.8596808510638297,
+        "rank_duplicate": false,
+        "near_duplicate": true,
+        "error": null
+      },
+      {
+        "path": "work/h61/priors/443e8e1c799734facd50a92bc85c650f3857a2b6.tif",
+        "spearman": -0.002311884501099838,
+        "near_3px_fraction": 0.7370212765957447,
+        "rank_duplicate": false,
+        "near_duplicate": true,
+        "error": null
+      },
+      {
+        "path": "work/h61/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+        "spearman": 0.02063529570214859,
+        "near_3px_fraction": 0.877127659574468,
+        "rank_duplicate": false,
+        "near_duplicate": true,
+        "error": null
+      },
+      {
+        "path": "work/h61/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+        "spearman": 0.026746363078978798,
+        "near_3px_fraction": 1.0,
+        "rank_duplicate": false,
+        "near_duplicate": true,
+        "error": null
+      },
+      {
+        "path": "work/h61/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+        "spearman": -0.02100588809647507,
+        "near_3px_fraction": 1.0,
+        "rank_duplicate": false,
+        "near_duplicate": true,
+        "error": null
+      },
+      {
+        "path": "work/h61/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+        "spearman": 0.009833179527298518,
+        "near_3px_fraction": 1.0,
+        "rank_duplicate": false,
+        "near_duplicate": true,
+        "error": null
+      },
+      {
+        "path": "work/h61/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+        "spearman": -0.00031260623494560084,
+        "near_3px_fraction": 1.0,
+        "rank_duplicate": false,
+        "near_duplicate": true,
+        "error": null
+      },
+      {
+        "path": "work/h61/priors/5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+        "spearman": -0.005661909295916874,
+        "near_3px_fraction": 0.8269414893617021,
+        "rank_duplicate": false,
+        "near_duplicate": true,
+        "error": null
+      },
+      {
+        "path": "work/h61/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+        "spearman": -0.00031260623494560084,
+        "near_3px_fraction": 1.0,
+        "rank_duplicate": false,
+        "near_duplicate": true,
+        "error": null
+      },
+      {
+        "path": "work/h61/priors/ab7e0752036d020fbc394a528bbe63171c3cb08f.tif",
+        "spearman": -0.002311884501099838,
+        "near_3px_fraction": 0.7370212765957447,
+        "rank_duplicate": false,
+        "near_duplicate": true,
+        "error": null
+      },
+      {
+        "path": "work/h61/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+        "spearman": 0.03487670094355782,
+        "near_3px_fraction": 0.9989361702127659,
+        "rank_duplicate": false,
+        "near_duplicate": true,
+        "error": null
+      },
+      {
+        "path": "work/h61/priors/bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+        "spearman": -0.0026192250127061727,
+        "near_3px_fraction": 0.7546808510638298,
+        "rank_duplicate": false,
+        "near_duplicate": true,
+        "error": null
+      },
+      {
+        "path": "work/h61/priors/c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+        "spearman": -0.005069894744061243,
+        "near_3px_fraction": 1.0,
+        "rank_duplicate": false,
+        "near_duplicate": true,
+        "error": null
+      },
+      {
+        "path": "work/h61/priors/c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+        "spearman": -0.0015087468777206917,
+        "near_3px_fraction": 0.8596808510638297,
+        "rank_duplicate": false,
+        "near_duplicate": true,
+        "error": null
+      },
+      {
+        "path": "work/h61/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+        "spearman": -0.026746577333077833,
+        "near_3px_fraction": 1.0,
+        "rank_duplicate": false,
+        "near_duplicate": true,
+        "error": null
+      },
+      {
+        "path": "work/h61/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+        "spearman": 0.034841749110149645,
+        "near_3px_fraction": 0.9990159574468085,
+        "rank_duplicate": false,
+        "near_duplicate": true,
+        "error": null
+      },
+      {
+        "path": "work/h61/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+        "spearman": 0.034876700926063174,
+        "near_3px_fraction": 0.9989361702127659,
+        "rank_duplicate": false,
+        "near_duplicate": true,
+        "error": null
+      }
+    ]
+  },
+  "not_union": {
+    "surface_differs_from_union_pixels": 4325298,
+    "A_only_dots": 37600,
+    "consensus_dots": 0
+  }
+}
