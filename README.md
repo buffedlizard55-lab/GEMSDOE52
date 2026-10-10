@@ -1,4 +1,39 @@
 # GEMSDOE52 — Co-Training Wavelength Contrast for the DOE GEMS Prize
+<!--H78-README-->
+# Current status — H78 (2026-10-09): verification of H75, the 0.2778 mechanism, and five ranked hypotheses
+
+**Core values (focal point):** **Maximize P(Win)** — do not spend a scarce weekly slot on an arm that has not beaten the comparable holdout best. **Own the Outcome** — publish the real file, its evidence, and the open decisions.
+
+> **Read the complete prompt blocks further down before each session** (`H72 project prompt` and the verbatim `Complete current prompt`). They are not edited here.
+
+> **DOWNLOAD: YES** (format-valid; decoded-unique against every restored raster). **SUBMIT: NOT APPROVED.** The parallel-run lane check FAILS (near-dot 0.922 > 0.70, 38 informative offenders in the 565-raster census). Submitting requires an explicit owner override. Slots used: 0.
+
+**START HERE:** [docs/index.html](docs/index.html) (top of the page) · [H75 executive summary](docs/h75-executive-summary.html) · [H78 record](knowledge/67_h78_verification_hypotheses_and_status.md)
+
+**Numbers and labels.** Holdout values are **HOLDOUT-DTI** (evaluator `gems52-pooled-hide-v1`, 53,186 withheld positives; not re-run this round; receipt `evidence/h75_holdout.json`). H75 vs control: paired +0.011835, 95% CI [0.006791, 0.017362]. **ORGANIZER-CONFIRMED: none.** The 0.3774, 0.3195, and 0.2778 values are owner-reported public-board values from `registry/leaderboard_snapshot_2026-10-08.json` (not organizer-confirmed).
+
+**What this round established (verified on bytes):**
+- The H75 raster: 1 band float32, EPSG:32611, 3730×3292, template transform, values exactly {0, 1}, 0 NaN, 37,654 dots. Nearest dot to a catalogue positive: 223.6 m; median 1,552.4 m (`evidence/h75_build.json`). Its SHA-256 is `b97691584d514ab1925d9fff2b61c410be86bdc0bc8c844dfdaa6257a4ea7a16`. Name and file carry the UTC write time `20261009T200333Z` (IR-H78-008).
+- The metric in `src/gems52/metric.py` has the official structure: TP_w, FP_w = mass − Σp·q (p > 0 only), FN_w, and DTI = TP_w / (TP_w + αFP_w + βFN_w + ε).
+- The 0.2778 reference (`h33-2-b2`) and H75 share 1,742 pixels; their near-3 px share is 0.549 (3 px disk) and the receipt's 0.642 is a 7×7 box. Definitions differ, so the numbers are not interchangeable.
+- Measured out-of-domain counts: 7,111,787 px. The sample's NaN pattern equals that set. H75 writes 0 there (open owner decision, IR-H78-003).
+
+**0.2778 mechanism (inference from one owner-reported pair; knowledge/67 §2):** the 0.2778 reference (37,654 dots) is the 0.2600 file (44,090 dots) with its 6,436 pixels in the 100–200 m catalogue ring deleted. Deleting the ring raised the score, so that ring's implied credit density is at most 0.018 per px across the repo's |G| interval, below the 0.052 break-even. The reference has 0 dots within 200 m of the catalogue. The mechanism is measured; the score attribution is owner-reported.
+
+**Five ranked hypotheses (none validated; knowledge/67 §7):**
+1. **H78-1** strike-aligned directional variogram, DVA+ (top candidate; validation blocked until the owner decides on the 419 MB training raster).
+2. **H78-2** INGENIOUS 2 m temperature probes (owner must download GDR 1391 and pin SHA-256).
+3. **H78-3** Landsat TIRS night surface-temperature residual (needs an EarthExplorer route; the owner confirms account requirements).
+4. **H78-4** paleo sinter/tufa proximity. Spring-fed tufa columns mark faults; wave (shoreline) tufa is the elevation-controlled mimic and must be removed by a shoreline test.
+5. **H78-5** Great Basin heat-flow residual (km-scale; low expected gain).
+
+**Not run this round (stated plainly):** the co-training conditional-independence test on spatial-block OOF errors, the hide-and-recover comparison, and any new raster. Experiments used: 0 of 3. No slot used.
+
+**Irregularities:** IR-H78-001…008 in `registry/irregularities.json` and `knowledge/67` §10. Key items: the brief's 0.3195 "top" conflicts with the 0.3774 snapshot (IR-H78-001); the sample is "total fault absence" yet holds the 60,988 catalogue positives (IR-H78-002); zeros versus NaN outside the domain (IR-H78-003); an unverified "fix" claim was corrected (IR-H78-004); the lane verdict depends on the census (IR-H78-005); redistribution of mirrored inputs is unverified (IR-H78-006).
+
+**Open owner decisions:** (1) lane override for submission; (2) zeros vs NaN outside the domain; (3) lane-rule scope (full census versus scored submissions); (4) redistribution position on the mirror (IR-H78-006); (5) download and pin GDR 1391 (2 m probes and paleo zips), which are unreachable from the sandbox.
+
+<!--/H78-README-->
 
 **Competition:** [DOE GEMS Prize (DrivenData #306)](https://www.drivendata.org/competitions/306/competition-doe-gems/)
 **Branch:** `arena/99f480b9-gemsdoe52`
