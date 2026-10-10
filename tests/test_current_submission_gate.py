@@ -166,33 +166,33 @@ def test_h54_remains_a_separate_audit_only_archive() -> None:
         assert archive.read(tiffs[0]) == canonical.read_bytes()
 
 
-# --- H95 (arena/90369109 session): bidirectional co-training disagreement field -------------------
+# --- H96 (arena/90369109 session): bidirectional co-training disagreement field -------------------
 # Every gate claim is re-derived from the published bytes/receipts, and the run-card contract is
 # enforced: approved_for_weekly_slot=False and submit_ok=False on a negative verdict, zero slots,
 # unique submission name + <=200-char note, and the round's receipts present beside the artifact.
 
 
-H95_STEM = "gems52-h95-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros"
-H95_SHA = "ba2dae7db2b919bb53c147cae0d5f9663b368b059fc1b26c69d8dbfc35948ade"
+H96_STEM = "gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros"
+H96_SHA = "ba2dae7db2b919bb53c147cae0d5f9663b368b059fc1b26c69d8dbfc35948ade"
 
 
-def _h95_receipts():
+def _h96_receipts():
     import json as _json
-    artifacts = _json.loads((ROOT / f"evidence/submission_{H95_STEM}.json").read_text())
-    card = _json.loads((ROOT / "evidence/h95_run_card.json").read_text())
-    hold = _json.loads((ROOT / "evidence/h95_holdout.json").read_text())
+    artifacts = _json.loads((ROOT / f"evidence/submission_{H96_STEM}.json").read_text())
+    card = _json.loads((ROOT / "evidence/h96_run_card.json").read_text())
+    hold = _json.loads((ROOT / "evidence/h96_holdout.json").read_text())
     return artifacts, card, hold
 
 
-def test_h95_receipt_gate_blocks_promote_while_below_the_bar() -> None:
-    artifacts, card, hold = _h95_receipts()
-    assert artifacts["sha256"] == H95_SHA
-    assert artifacts["file"].startswith("gems52-h95-bidir")
-    assert artifacts["round"] == "H95"
+def test_h96_receipt_gate_blocks_promote_while_below_the_bar() -> None:
+    artifacts, card, hold = _h96_receipts()
+    assert artifacts["sha256"] == H96_SHA
+    assert artifacts["file"].startswith("gems52-h96-bidir")
+    assert artifacts["round"] == "H96"
     assert artifacts["nonzero_px"] == 25400
-    assert artifacts["short_tif"] == "h95-candidate.tif"
-    assert artifacts["short_zip"] == "h95-candidate.zip"
-    assert artifacts["validator"]["sha256"] == H95_SHA
+    assert artifacts["short_tif"] == "h96-candidate.tif"
+    assert artifacts["short_zip"] == "h96-candidate.zip"
+    assert artifacts["validator"]["sha256"] == H96_SHA
     # unique submission name + short note (the submission-naming convention)
     note = artifacts["note"]
     assert 1 <= len(note) <= 200
@@ -221,29 +221,29 @@ def test_h95_receipt_gate_blocks_promote_while_below_the_bar() -> None:
     assert reg["amendment_sha256"].startswith("91f74c5a")
     assert card["preregistration"] == reg
     # the round's own receipts must exist beside the artifact
-    for name in ("h95_run_card.json", "h95_holdout.json", "h95_lane_surface.json", "h95_lane_dots.json"):
+    for name in ("h96_run_card.json", "h96_holdout.json", "h96_lane_surface.json", "h96_lane_dots.json"):
         assert (ROOT / "evidence" / name).is_file(), name
     # submission naming convention: the unique name and short note reach the site
     page = (DOCS / "index.html").read_text(encoding="utf-8")
-    assert "h95-bidir-cotrain-coverstep-25400px" in page
+    assert "h96-bidir-cotrain-coverstep-25400px" in page
     assert note[:60] in page
         # LATEST pointers all name this stem
-    for p in ("submission/LATEST.txt", "docs/submission/LATEST.txt", "submission/H95_LATEST.txt"):
+    for p in ("submission/LATEST.txt", "docs/submission/LATEST.txt", "submission/H96_LATEST.txt"):
         txt = (ROOT / p).read_text(encoding="utf-8").strip()
-        assert txt in (H95_STEM, H95_STEM + ".tif"), (p, txt)
+        assert txt in (H96_STEM, H96_STEM + ".tif"), (p, txt)
     # the run card names its validator and reports ok
     assert card["validator"]["ok"] is True
-    assert card["validator"]["sha256"] == H95_SHA
+    assert card["validator"]["sha256"] == H96_SHA
 
 
-def test_h95_artifact_bytes_re_verify_every_gate_claim() -> None:
+def test_h96_artifact_bytes_re_verify_every_gate_claim() -> None:
     import numpy as np
     import rasterio
 
-    artifacts, card, hold = _h95_receipts()
-    canonical = DOCS / "downloads" / f"{H95_STEM}.tif"
+    artifacts, card, hold = _h96_receipts()
+    canonical = DOCS / "downloads" / f"{H96_STEM}.tif"
     assert canonical.is_file()
-    assert hashlib.sha256(canonical.read_bytes()).hexdigest() == H95_SHA
+    assert hashlib.sha256(canonical.read_bytes()).hexdigest() == H96_SHA
     with rasterio.open(canonical) as ds:
         data = ds.read(1)
         assert ds.count == 1
@@ -259,13 +259,13 @@ def test_h95_artifact_bytes_re_verify_every_gate_claim() -> None:
     assert card["uniqueness"]["canonical_pattern_unique"] is True
     assert card["uniqueness"]["novel_fraction"] > 0.5
     assert card["uniqueness"]["equals_literal_prior_union"] is False
-    # lane surface PASS; dots lane policy PASS while the literal probe hit stays disclosed (IR-H95-002)
-    lane_s = json.loads((ROOT / "evidence/h95_lane_surface.json").read_text())
+    # lane surface PASS; dots lane policy PASS while the literal probe hit stays disclosed (IR-H96-002)
+    lane_s = json.loads((ROOT / "evidence/h96_lane_surface.json").read_text())
     assert lane_s["ok"] is True and lane_s["duplicate"] is False
     assert lane_s["literal"]["max_spearman"] < 0.90
-    lane_d = json.loads((ROOT / "evidence/h95_lane_dots.json").read_text())
+    lane_d = json.loads((ROOT / "evidence/h96_lane_dots.json").read_text())
     assert lane_d["policy"]["verdict"] == "PASS"
-    assert lane_d["literal"]["verdict"] == "DUPLICATE/STOP"  # disclosed probe-lane hit (IR-H95-002), not real drift
+    assert lane_d["literal"]["verdict"] == "DUPLICATE/STOP"  # disclosed probe-lane hit (IR-H96-002), not real drift
     assert lane_d["literal"]["max_near_3px_fraction"] > 0.99
     # holdout summary recorded: primary DTI in [0,1] with a CI, below the bar
     scores = hold["pooled"]["scores"]
@@ -275,6 +275,6 @@ def test_h95_artifact_bytes_re_verify_every_gate_claim() -> None:
     assert primary["dti"] < hold["bar_to_beat"]
     assert card["holdout_dti"]["scores"]["cotrain_bi"]["dti"] == primary["dti"]
     # the site carries the round's audit page and the download alias
-    assert 'href="h95.html"' in (DOCS / "index.html").read_text(encoding="utf-8")
-    assert (DOCS / "downloads/h95-candidate.tif").is_file()
-    assert (DOCS / "downloads/h95-candidate.tif").read_bytes() == canonical.read_bytes()
+    assert 'href="h96.html"' in (DOCS / "index.html").read_text(encoding="utf-8")
+    assert (DOCS / "downloads/h96-candidate.tif").is_file()
+    assert (DOCS / "downloads/h96-candidate.tif").read_bytes() == canonical.read_bytes()

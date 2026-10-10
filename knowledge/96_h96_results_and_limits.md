@@ -1,12 +1,12 @@
-# 81 · H95 results and limits — bidirectional co-training disagreement (2026-10-10)
+# 81 · H96 results and limits — bidirectional co-training disagreement (2026-10-10)
 
 Session branch `arena/90369109-gemsdoe52`. Lane: the standing brief's co-training paragraph
 (Blum & Mitchell, COLT '98, doi:10.1145/279943.279962). Pre-registration frozen before any fit:
-`registry/h95_preregistration.json` (SHA-256 `0f664c43…`) + pre-fit amendment
-`registry/h95_amendment_veto.json` (`91f74c5a…`), specification prose in
-`knowledge/80_hypotheses_H95_preregistered.md` and `knowledge/80a_amendment_H95_veto_positive_support.md`.
+`registry/h96_preregistration.json` (SHA-256 `0f664c43…`) + pre-fit amendment
+`registry/h96_amendment_veto.json` (`91f74c5a…`), specification prose in
+`knowledge/80_hypotheses_H96_preregistered.md` and `knowledge/80a_amendment_H96_veto_positive_support.md`.
 
-## 1 · Run card (summary; machine-readable twin `evidence/h95_run_card.json`)
+## 1 · Run card (summary; machine-readable twin `evidence/h96_run_card.json`)
 
 * **Hypothesis.** Bidirectional co-training disagreement: a sustained cover-thickness step and
   strain/seismicity lineation coincident with potential-field edges where the surface view abstains
@@ -20,7 +20,7 @@ Session branch `arena/90369109-gemsdoe52`. Lane: the standing brief's co-trainin
   paleo-channels; aftershock/induced seismicity clusters; road cuts; erosion lines. Each of the
   20,050 A-only (buried-dominant) dots carries a reasoning row naming fired components and these
   alternatives: `docs/downloads/gems52-h88-…-a-only-reasoning.csv`.
-* **HOLDOUT-DTI** (gems52-pooled-hide-v1; 60,894 withheld positive px — see IR-H95-004 for the
+* **HOLDOUT-DTI** (gems52-pooled-hide-v1; 60,894 withheld positive px — see IR-H96-004 for the
   cross-round tally caveat; 9,400 dots/fold/arm; 95 % paired 20 km cluster bootstrap, 1,000 draws):
 
   | arm | HOLDOUT-DTI | 95 % CI |
@@ -44,12 +44,12 @@ Session branch `arena/90369109-gemsdoe52`. Lane: the standing brief's co-trainin
   N-1, knowledge/03); the whole-segment diagnostic found 114 segments / 1,997 px of
   A-confident/B-abstain candidates and used none of them for training.
 * **Leakage canaries.** Max single-channel AUC on held-out truth inside the allowed set:
-  0.5958 (topo_edge) — no alarm (bar 0.90). Full per-channel table in `evidence/h95_holdout.json`.
+  0.5958 (topo_edge) — no alarm (bar 0.90). Full per-channel table in `evidence/h96_holdout.json`.
 * **Correlation/overlap vs registry.** Surface: max Spearman 0.0914 (PASS). Dots: max Spearman
   0.0356; max near-3px fraction 0.9993 vs the universal-coverage probe `13gems…r13-lattice…`
-  (literal DUPLICATE/STOP, IR-H95-002 — random dots score 0.9991 against the same probe);
+  (literal DUPLICATE/STOP, IR-H96-002 — random dots score 0.9991 against the same probe);
   excluding probes: max near 0.5233 (vs the H87 sibling raster), inside the 0.70 bar → policy PASS.
-* **Raster.** `submission/gems52-h95-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif`,
+* **Raster.** `submission/gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif`,
   SHA-256 `ba2dae7db2b919bb53c147cae0d5f9663b368b059fc1b26c69d8dbfc35948ade`. Independent
   re-read: single-band float32, nodata None, EPSG:32611, 3730×3292, transform (100, 0, 243350,
   0, −100, 4508550), all finite, values in [0,1], exactly {0,1}, 25,400 ones, min dot spacing
@@ -58,9 +58,9 @@ Session branch `arena/90369109-gemsdoe52`. Lane: the standing brief's co-trainin
 * **Not the union.** 21,849 / 25,400 dots (86 %) lie outside the two views' spaced top-k union
   (Jaccard 0.049); 78.9 % are disagreement-driven (buried-dominant).
 * **Uniqueness.** 147 registry rasters checked; decoded pattern unique; not identical to any prior;
-  novel fraction 0.5703; not the literal prior union (`evidence/h95_uniqueness.json`).
+  novel fraction 0.5703; not the literal prior union (`evidence/h96_uniqueness.json`).
 * **Submission name + note.** `h88-bidir-cotrain-coverstep-25400px` /
-  `H95 bidir co-train A/B disagreement, cover-step ViewA, 25400px mass lever, 3px, 200m collar; HOLDOUT-DTI below bar, research candidate` (134 chars).
+  `H96 bidir co-train A/B disagreement, cover-step ViewA, 25400px mass lever, 3px, 200m collar; HOLDOUT-DTI below bar, research candidate` (134 chars).
 * **Verdict: negative** (download ok; `submit_ok: false`; no submission slot used).
 
 ## 2 · What this round adds to the knowledge base
@@ -96,29 +96,29 @@ catalogue. All knowledge/76 §1 numbers reproduced exactly. The answer to "why d
 stands: it is the 0.2600 surface field with the catalogue ring pruned (free precision), and the
 family's score is dominated by emitted mass (Spearman(mass, score) = −0.928 over 12 files).
 "Can we score higher?" — the arithmetic: +15 % credit density at S = 37,654, or the same credit at
-S ≈ 25,400. H95 spent the mass lever on a novel ranking and measured the cost honestly.
+S ≈ 25,400. H96 spent the mass lever on a novel ranking and measured the cost honestly.
 
 ## 4 · Site and shared-tool repairs (Own the Outcome)
 
 * README.md rebuilt with the byte-exact preserved brief (knowledge/26_current_user_brief.md
-  ```text block, assembled programmatically) + H95 status; six broken test invariants from the
-  H87-session rewrite repaired (IR-H95-001).
+  ```text block, assembled programmatically) + H96 status; six broken test invariants from the
+  H87-session rewrite repaired (IR-H96-001).
 * docs/index.html and docs/executive-summary.html rewritten: explicit **OK to download? / OK to
   submit?** verdict box at the top, one-click downloads, exact submission name and note, the
   "Predicted values must be in range [0, 1]" troubleshooting table, and a research-files status
   table that keeps DO NOT SUBMIT labels on the negative-verdict files (ctd5, h83, h85, h86).
 * The H87 "VERDICT: PROMOTE / Ready-to-Submit" claim without a holdout receipt is retracted
-  (IR-H95-005).
+  (IR-H96-005).
 
 ## 5 · Limits and next steps
 
-* **Cross-run caveat (IR-H95-004):** the 0.192829 bar comes from a different eligible mask
+* **Cross-run caveat (IR-H96-004):** the 0.192829 bar comes from a different eligible mask
   (53,186 vs 60,894 withheld). Within-round comparisons are the valid ones; the bar is still the
   standing promotion gate.
 * **The holdout is the wrong population for the board** (family Spearman ≈ −0.10). A negative
   holdout verdict blocks a slot under the standing rule, but it is not evidence the file would
   score zero on the board. The selector step owns that trade-off.
-* **Next round (pre-registered before fitting):** graft the H95 cover-step/strain/seismicity
+* **Next round (pre-registered before fitting):** graft the H96 cover-step/strain/seismicity
   disagreement arm onto the H82/H84 DVA2+HVA surface channels at the same 9,400/fold budget and
   test whether the disagreement arm adds anything to 0.19. Second: H89-P, the prevalence-matched
   off-catalogue instrument (thinned to |G| ≈ 5,949–12,512 px), which is the only tool that can
@@ -135,6 +135,6 @@ S ≈ 25,400. H95 spent the mass lever on a novel ranking and measured the cost 
 * GeoDAWN USGS release (DOI 10.5066/P93LGLVQ): https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and
 * INGENIOUS GDR 1391 (DOI 10.15121/1881483): https://gdr.openei.org/submissions/1391
 * EPSG:32611: https://epsg.io/32611
-* Repo receipts: `evidence/h95_views.json`, `evidence/h95_holdout.json`, `evidence/h95_build.json`,
-  `evidence/h95_uniqueness.json`, `evidence/h95_lane_dots.json`, `evidence/h95_lane_surface.json`,
-  `evidence/h95_run_card.json`, `registry/h95_preregistration.json`, `registry/h95_amendment_veto.json`.
+* Repo receipts: `evidence/h96_views.json`, `evidence/h96_holdout.json`, `evidence/h96_build.json`,
+  `evidence/h96_uniqueness.json`, `evidence/h96_lane_dots.json`, `evidence/h96_lane_surface.json`,
+  `evidence/h96_run_card.json`, `registry/h96_preregistration.json`, `registry/h96_amendment_veto.json`.

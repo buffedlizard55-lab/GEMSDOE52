@@ -3705,7 +3705,47 @@
       "what_it_is": "evidence/h87_build.json states 'HOLDOUT-DTI (not yet run; this is the build receipt, not a score)' while the H87 README block printed 'Status: Submission built and validated' and 'VERDICT: PROMOTE'. No h87 holdout receipt exists in evidence/.",
       "how_we_know": "ls evidence/ | grep h87 shows only h87_build.json; README.md at bc26fe2 carries the quoted strings.",
       "disposition": "H87 is labelled build-receipt-only everywhere in the new README/site; the promotion language is removed. If the H87 family is ever selected for a slot it must first run the same hide-and-recover instrument."
+    },
+    {
+      "id": "IR-H96-001",
+      "title": "H87-session rewrite of README.md and docs/index.html broke six standing test invariants",
+      "status": "closed - repaired in the H96 session (2026-10-10)",
+      "what_it_is": "Commit bc26fe2 (H87 co-training wavelength round) replaced README.md and docs/index.html wholesale and dropped: the complete preserved brief (knowledge/26_current_user_brief.md ```text block), the strings 'MUST GENERATE A UNIQUE TIF SUBMISSION', 'Own the Outcome', 'no h55-1 tiff was built', 'DO NOT SUBMIT', 'HOLDOUT-DTI', 'NO CERTIFIED LEADERBOARD GAIN', 'OK to download?', 'downloads/h83-candidate.tif'. Six tests failed on main: tests/test_ctd5.py (2), tests/test_gems52_h1_pipeline.py, tests/test_h55_paired_shoulders_decision_gate.py, tests/test_h60.py, tests/test_h83.py. The H87 README also advertised 'VERDICT: PROMOTE / Ready-to-Submit' with no holdout run (the H83 pattern of IR-H85-003).",
+      "how_we_know": "pytest run on the restored checkout 2026-10-10: 6 failed, 491 passed before repair; the missing strings are asserted verbatim by tests/test_ctd5.py::test_current_readme_contains_the_complete_preserved_brief, tests/test_h83.py::test_site_states_both_verdicts_and_links_the_download, tests/test_h60.py::test_the_instrument_verdict_is_recorded_before_any_promots_claim and others.",
+      "disposition": "README.md rebuilt with the byte-exact brief segment (assembled programmatically from knowledge/26_current_user_brief.md); docs/index.html and docs/executive-summary.html rewritten for H96 with every required string restored and an explicit OK-to-download / OK-to-submit verdict box. H87's file is retained as a build-receipt-only artifact and labelled as never holdout-validated."
+    },
+    {
+      "id": "IR-H96-002",
+      "title": "Lane dots literal DUPLICATE/STOP fires only against the universal-coverage probe r13-lattice",
+      "status": "reported, not waived (same class as IR-H85-009)",
+      "what_it_is": "The H96 final dots trigger the brief's literal lane rule (near-3px fraction 0.9993 vs data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif). That raster is a 206,895-positive universal-coverage probe: uniformly random dots of the same budget score 0.9991 against it (H85 measured), so the literal rule cannot distinguish any localised raster from drift. Excluding probes (the shared gates lane_report 'policy' verdict), H96's maximum near-3px fraction is 0.5233 (vs the H87 sibling raster) and maximum Spearman is 0.0356, both inside the 0.70 / 0.90 bars. Surface-phase lane: PASS both verdicts (max Spearman 0.0914).",
+      "how_we_know": "evidence/h96_lane_dots.json and evidence/h96_lane_surface.json (gems52.gates.lane_report, exact lattice <=3 px proximity, analytic phi for binary priors); probe classification by measured 3px coverage in the same receipts.",
+      "disposition": "Both verdicts published side by side; policy verdict is used for the drift judgement and the literal verdict is disclosed in the run card."
+    },
+    {
+      "id": "IR-H96-003",
+      "title": "Frozen H96 field formula had a veto-rank flaw; amended pre-fit",
+      "status": "closed - amendment written before any fit (registry/h96_amendment_veto.json)",
+      "what_it_is": "The frozen veto term veto=rank01(clip(b-a,0,1)) assigns mid-ranks to the ~50% zero support, so A-dominant (buried-target) pixels would receive a spurious veto penalty meant for B-only cells. Found by reading the formula against the shared rank01 implementation before any view was computed.",
+      "how_we_know": "registry/h96_preregistration.json hash 0f664c43... is unchanged; the amendment (hash 91f74c5a...) freezes veto=rank01 on the positive support only, 0 elsewhere. knowledge/80a_amendment_H96_veto_positive_support.md records the reasoning and voids itself if any fit predates 2026-10-10T22:12:00Z.",
+      "disposition": "Original registration preserved; both hashes pinned in scripts/run_h96_cotrain_bidir.py which refuses to run if either moves."
+    },
+    {
+      "id": "IR-H96-004",
+      "title": "Same evaluator version, two withheld-positive tallies across rounds (53,186 vs 60,894)",
+      "status": "open - cross-run comparison caveat",
+      "what_it_is": "Receipts under gems52-pooled-hide-v1 report withheld_positive_px = 53,186 (H82, H84, H85) and 60,894 (H86, H86-E, H96). In gems52.spatial.folds, truth = held_all & region, so the summed tally equals the catalogue pixels inside each round's eligible footprint. 60,894 is the all-19-bands-finite catalogue count (IR-45-001); 53,186 implies an eligible mask that excluded ~7,708 further catalogue pixels (most plausibly external-layer nodata holes in the H82 FeatureStore build). The metric is identical; the fold tally is not.",
+      "how_we_know": "src/gems52/spatial.py folds() (truth = held_all & region) read this session; evidence/h82_holdout.json, h84_run_card.json, h85_holdout.json, h86_holdout.json, h86_euler_holdout.json, h96_holdout.json read this session.",
+      "disposition": "Within-round arm comparisons are valid. Cross-round DTI comparisons (e.g. H96 0.0725 vs H82 bar 0.1928) are labelled with this caveat in the H96 run card and README; they remain the promotion gate because the bar is the standing rule, but they are not same-instrument measurements."
+    },
+    {
+      "id": "IR-H96-005",
+      "title": "H87 build receipt evidence_class said HOLDOUT-DTI '(not yet run)' and the merged README claimed 'validated'/'PROMOTE'",
+      "status": "closed - corrected in the H96 session",
+      "what_it_is": "evidence/h87_build.json states 'HOLDOUT-DTI (not yet run; this is the build receipt, not a score)' while the H87 README block printed 'Status: Submission built and validated' and 'VERDICT: PROMOTE'. No h87 holdout receipt exists in evidence/.",
+      "how_we_know": "ls evidence/ | grep h87 shows only h87_build.json; README.md at bc26fe2 carries the quoted strings.",
+      "disposition": "H87 is labelled build-receipt-only everywhere in the new README/site; the promotion language is removed. If the H87 family is ever selected for a slot it must first run the same hide-and-recover instrument."
     }
   ],
-  "merge_note": "Entries appended in chronological order of first recording, per-round prefixes only. Merged with arena/90369109 session entries IR-H95-001..005 (bidirectional co-training round; the H88 label was taken on main by the basement-step round)."
+  "merge_note": "Entries appended in chronological order of first recording, per-round prefixes only. Merged with arena/90369109 session entries IR-H96-001..005 (bidirectional co-training disagreement round; labels H88 and H95 were taken on main by parallel sessions, so that round is H96)."
 }
