@@ -249,3 +249,41 @@ region the board supports is the one the registry already saturates (§5).
    nothing about the board.
 5. **Attribution is not organiser-confirmed anywhere**: two different byte patterns share the score
    0.1563 in the owner-reported registry, and this repository has never uploaded a file.
+
+## 11. New candidate hypotheses, ranked by expected DTI improvement x cost
+
+Generated from this round's measurements, not from another detector sweep. None of them has been
+validated yet; per the standing rule **no weekly slot may be spent on any of them until it beats the
+holdout incumbent on the shared instrument**, and the instrument itself does not rank board scores
+here (IR-H77-005), so a holdout win is necessary and not sufficient.
+
+| # | hypothesis | mechanism | why it can catch a catalogue-missing fault | how it differs from the repository | cost | expected board DTI | rank (value/cost) |
+|---|---|---|---|---|---|---|---|
+| 1 | **Staggered (hexagonal) packing at the marginal-rule budget** | `T` is what pays, and `T` per dot depends on packing geometry, not only on dot count. Measured: the pinned organiser-side lattice reaches mean cover **0.3748** at NN median 5.00 px with 99.85% of the footprint covered; this round's greedy emission reaches mean cover **0.2278** at 5.373 px equivalent spacing. The uniform control's residual (+10.7% against an owner-reported 0.0904) is mostly that gap. | It is not a detector and does not claim to be: it raises `T` at identical `S` and identical FP cost wherever the density is non-zero, which is exactly the regime the board rewards (the 0.2778 file's credit density is ~8x uniform). | Every previous round emitted with `nodes.spacing_select` in gain order, which produces raster-ordered, square-ish packings. Packing geometry has never been treated as a lever, and `hexagonal_tiebreak` only breaks ties — it does not enforce a lattice. | **Low**: one experiment, ~30 min. Emit on an exact hexagonal lattice restricted to the top-density region; sweep NN spacing 4.5–6.0 px; compare exact `T` at matched `S`. | **+0.005 to +0.015** at fixed `S` (from the measured cover difference) | **1** |
+| 2 | **\|G\|-swept marginal budget** | The acceptance bar `0.2*DTI` moves with `\|G\|` through DTI's denominator, and the three independent pins span 12,300–14,334. Emitting at each pin gives a family of self-terminated budgets instead of one. The board's own nested ladder has Spearman(S, score) = **−1.000** over five files, so smaller `S` has been winning all along. | Not a detector. It converts a pinned-but-uncertain scalar into a budget interval and tests whether the marginal rule's stopping point is inside it. | Previous rounds fixed `S` by hand (37,654 / 9,400 / 141,678). This makes `S` a function of a measured quantity with a measured uncertainty. | **Low**: ~20 min, four emissions, no new data. | **+0.01 to +0.03** | **2** |
+| 3 | **Geology-only inversion (family basis excluded)** | Re-fit the 13 scores with `FAM_family_consensus` removed. NNLS must then explain the ladder from physical bases alone, and the residual structure measures how much geology the board can actually see. The weights become a geological hypothesis rather than submission history. | Directly: any physical basis that earns positive weight when the family mirror is unavailable is evidence about off-catalogue faults, which is what the board scores and what the catalogue lacks. | All 80+ previous rounds chose a layer a priori and scored it on a proxy. This lets the organiser's own scoring function choose the layer, and it is the ablation that separates "geology" from "history" in §10.1. | **Medium**: ~1 h, and it must be run in its own process with the bases freed between fits — the 13-basis version was OOM-killed at 2.87 GB resident in a 3.9 GB sandbox. | Unknown sign; **high information either way** | **3** |
+| 4 | **Nested-ladder differential inversion** | Fit the exact *differences* ΔT between nested pairs (champion ⊂ d2_8 ⊂ d1_5 ⊂ h19_5 ⊂ h19_4) instead of the score levels. Differences cancel the family-collinear part of the design, which is what makes the leave-one-out champion error −0.07114 so large. | Indirect: a better-conditioned density shape means the emission ranks off-catalogue cells by evidence rather than by where a previous file happened to be dense. | H67 used one nested difference to pin \|G\| from two scores. This uses the whole ladder as a differential system, which no round has done. | **Medium**: ~1 h; needs the five cover fields plus the ring-deletion geometry already measured. | +0.00 to +0.02 | **4** |
+| 5 | **Cover-efficiency-corrected density** | `T` is sublinear where dots cluster. Correct the fitted density by local cover efficiency (mean cover per dot in a neighbourhood) before emission, moving mass from redundant to efficient locations. | Not a detector; it is the density-space version of #1 and overlaps it. | No round has modelled emission redundancy explicitly; the greedy sees it only through the cover field. | **Medium-high**: ~1.5 h, and it is only worth running after #1 quantifies the packing headroom. | +0.00 to +0.01 | **5** |
+
+**Validation status: none.** The budget for this round (3 experiments / 2 hours) was exhausted by two
+placement-tool defects, one sandbox OOM and one merge with three parallel rounds, and the round
+overran to ≈3 h 05 m. #1 and #2 together are under an hour and are the first things to run next; #3 is
+the one that would change what this repository believes about its own eighty rounds of detectors.
+
+## 12. Answers to the two standing questions, as of H87
+
+**Why did `h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros` score 0.2778?** See §8: 37,654 binary
+cells, no NaN, EPSG:32611, a jittered/thinned ≈3 px lattice whose nearest catalogue trace is 223.6 m,
+a strict subset of the 44,090-cell 0.2600 file, with the 6,436 deleted 100–200 m ring cells earning
+zero marginal credit. H87 adds the mechanism-level reading: at |G| = 14,334 its implied credit density
+is ≈8× uniform at its own coverage, it sits exactly where its own field stops paying, and ~34% of its
+300 m disc union is redundant overlap.
+
+**Can we beat it, and can we beat 0.3195?** The brief's "0.3195 highest" is stale (IR-H85-008): the
+public leader on 2026-10-10 is 0.3774 and 0.3195 is #8. Arithmetically yes — holding the champion's
+implied `T` ≈ 4,840, `S` = 25,000 gives 0.325, `S` = 20,000 gives 0.349, `S` = 15,000 gives 0.3755 —
+but that arithmetic assumes `T` survives the thinning, and the fitted density says the only region the
+board supports is the one the registry already saturates (§5, IR-H87-001). A **distinct** strategy that
+could get there is #1 + #2 + #3 together: pack better at a smaller, |G|-derived budget, in a region
+chosen by geology rather than by submission history. Nothing in this round beats 0.2778, and this round
+does not claim to.
