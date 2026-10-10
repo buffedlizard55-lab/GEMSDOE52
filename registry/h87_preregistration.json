@@ -1,9 +1,9 @@
 {
- "round": "H84",
+ "round": "H87",
  "title": "Cover-conditioned co-training with surface-artefact demotion",
  "frozen_utc": "2026-10-10T21:10:00+00:00",
- "hypothesis_document": "knowledge/74_hypotheses_H84_preregistered.md",
- "hypothesis_sha256": "0b45234e7831dd8952791f0d4f0449250db17a7efc83f660086075ac72e42a2d",
+ "hypothesis_document": "knowledge/80_hypotheses_H87_preregistered.md",
+ "hypothesis_sha256": "fdb4065a3c8376549e83f8b786882b188ebd7f830dd03187737223d00cba5286",
  "lane": "co-training between a geophysical view (A) and a surface view (B); disagreement is the discovery signal",
  "primary_arm": "CCD",
  "arms": [
@@ -51,5 +51,6 @@
  "seed": 84052,
  "output_policy": "binary {0,1} float32, all-finite, zeros outside the emitted set (portal rejected NaN-outside with \"Predicted values must be in range [0, 1]\")",
  "slots_used": 0,
- "experiments_budget": 3
+ "experiments_budget": 3,
+ "renamed_from": "H84 - origin/main already holds a different H84 round from a parallel session (7d3c612 harmonic variogram-ellipse anisotropy), plus H85 and H86; identifier-only rename following the IR-H71-005 / IR-H74-002 / IR-H82-008 precedent. No threshold, formula, seed or measurement changed."
 }

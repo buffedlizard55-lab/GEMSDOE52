@@ -1,13 +1,13 @@
-# 76 · H84 results and limits
+# 76 · H87 results and limits
 
-Round **H84**, 2026-10-10T21:36:10+00:00. Preregistration `knowledge/74_hypotheses_H84_preregistered.md`
-(SHA-256 `0b45234e7831dd8952791f0d4f0449250db17a7efc83f660086075ac72e42a2d`), frozen before any fit and pinned by
-`registry/h84_preregistration.json`. Every number below is read from `evidence/h84_*.json`.
+Round **H87**, 2026-10-10T21:39:57+00:00. Preregistration `knowledge/80_hypotheses_H87_preregistered.md`
+(SHA-256 `fdb4065a3c8376549e83f8b786882b188ebd7f830dd03187737223d00cba5286`), frozen before any fit and pinned by
+`registry/h87_preregistration.json`. Every number below is read from `evidence/h87_*.json`.
 
 **Verdict: NEGATIVE · DOWNLOAD YES · SUBMIT NO - not auto-promoted: lane_dots_policy · slots used 0.**
 
-Artefact: `submission/gems52-h84-coverco-disagree-37654px-20261010T211929Z.tif` — 142,450 bytes, SHA-256 `9d3e2be69efd476c91c8772a28c09ffccadac4281cc2025e376e0c8c8ffba04a`.
-Submission name `h84-coverco-disagree-37654px-20261010T211929Z`; note (133/140) `H84 cover-conditioned co-training: artefact-demoted View B + 12% reserved A-only sub-cover dots; 200m catalogue ring excluded; binary`.
+Artefact: `submission/gems52-h87-coverco-disagree-37654px-20261010T213918Z.tif` — 142,450 bytes, SHA-256 `9d3e2be69efd476c91c8772a28c09ffccadac4281cc2025e376e0c8c8ffba04a`.
+Submission name `h87-coverco-disagree-37654px-20261010T213918Z`; note (133/140) `H87 cover-conditioned co-training: artefact-demoted View B + 12% reserved A-only sub-cover dots; 200m catalogue ring excluded; binary`.
 
 ---
 
@@ -101,7 +101,7 @@ fault absence, and a weak error correlation is not proof of conditional feature 
 Decision: **pre-exchange View A retained (frozen rule: improvement required in 4/4 folds)** (the frozen rule requires improvement in
 4/4 folds).
 
-**IR-H84-001.** The first execution of this stage donated **0 px in all four folds** because the fit
+**IR-H87-001.** The first execution of this stage donated **0 px in all four folds** because the fit
 stage predicts on each fold's *evaluation region* only, so the checkpointed grids are NaN across the
 buffered training domain — exactly where a pseudo-label is permitted to originate. The stage now
 re-derives donor/receiver fields on the training domain from bit-identical refits (same seed, same

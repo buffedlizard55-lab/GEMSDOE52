@@ -1,7 +1,7 @@
-# 74 · H84 preregistration — cover-conditioned co-training with surface-artefact demotion
+# 74 · H87 preregistration — cover-conditioned co-training with surface-artefact demotion
 
-**Frozen 2026-10-10, before any fit of this round.** Pinned by `registry/h84_preregistration.json`
-(SHA-256 of this file). `scripts/run_h84.py` refuses to start if either hash moves.
+**Frozen 2026-10-10, before any fit of this round.** Pinned by `registry/h87_preregistration.json`
+(SHA-256 of this file). `scripts/run_h87.py` refuses to start if either hash moves.
 
 Lane (verbatim from the session brief): *co-training between a geophysical view and a surface view,
 with disagreement as the discovery signal*. View A is potential-field and subsurface (gravity,
@@ -42,7 +42,7 @@ catalogue lacks rather than one it already has, how it differs from what this re
 the honest cost. Ranking is by expected DTI improvement ÷ implementation cost. **A rank is a
 judgement, not a forecast.**
 
-### Rank 1 — H84-A · Cover-conditioned A-only discovery (tested this round, inside the primary)
+### Rank 1 — H87-A · Cover-conditioned A-only discovery (tested this round, inside the primary)
 
 * **Layers.** View A: band 18 isostatic gravity horizontal gradient, band 13 isostatic gravity
   anomaly, band 11 vertical gradient, band 2 RTP magnetics, band 3 TMI horizontal gradient, band 9
@@ -66,7 +66,7 @@ judgement, not a forecast.**
   **Falsifier written per candidate** (§5).
 * **Cost.** Low — two new scalar channels on the cached stack, no new fit.
 
-### Rank 2 — H84-B · Surface-artefact demotion of B-confident / A-silent pixels (tested, inside the primary)
+### Rank 2 — H87-B · Surface-artefact demotion of B-confident / A-silent pixels (tested, inside the primary)
 
 * **Layers.** View B: `B_curvature_plus_3`, band 12 detrended elevation, plus the six external
   radiometric gradient channels `X_rad_{K,Th,U,ThK,UK,UTh}_grad3` (GeoDAWN, USGS DOI 10.5066/P93LGLVQ,
@@ -88,7 +88,7 @@ judgement, not a forecast.**
   −0.20 demotion and not a hard mask.
 * **Cost.** Low — three cached channels, no new fit.
 
-### Rank 3 — H84-C · One Blum–Mitchell donation round, B → A only (tested, reported, gated)
+### Rank 3 — H87-C · One Blum–Mitchell donation round, B → A only (tested, reported, gated)
 
 * **Mechanism.** The literal co-training step: pixels where B is confident (rank ≥ 0.90) and A
   abstains (rank < 0.60), **restricted to the fold's buffered training domain**, become pseudo-positives
@@ -102,7 +102,7 @@ judgement, not a forecast.**
   negative with an exact receipt is a deliverable.
 * **Cost.** Low — 4 extra fits (~3 s each) and 4 region predictions.
 
-### Rank 4 — H84-D · Basement-step azimuth concordance (NOT tested this round)
+### Rank 4 — H87-D · Basement-step azimuth concordance (NOT tested this round)
 
 * **Layers.** Band 15 depth-to-basement, band 13/18 gravity, band 12 DEM.
 * **Signature.** The *azimuth* of the basement-depth step should match the strike of the surface
@@ -112,7 +112,7 @@ judgement, not a forecast.**
   continuous sub-pixel θ (16/32-direction fan or parabolic interpolation), which is a channel-build
   round of its own. Named here so the next round can pre-register it with the fix already specified.
 
-### Rank 5 — H84-E · 1 m 3DEP LiDAR re-reduction (NOT tested; external data named and checked)
+### Rank 5 — H87-E · 1 m 3DEP LiDAR re-reduction (NOT tested; external data named and checked)
 
 * **Source needed.** USGS 3DEP 1 m DEM tiles listed in the competition's own `1m_DEM_links.csv`
   (public domain, <https://www.usgs.gov/3d-elevation-program>).
@@ -203,9 +203,9 @@ easting/northing, `rA`, `rB`, measured depth-to-basement (m), isostatic gravity 
 RTP magnetics, detrended elevation, slope, radiometric edge rank, distance to the nearest catalogue
 trace (m), and one sentence naming **the specific non-fault process that would explain the same
 observation** (buried lithological contact / palaeochannel / survey-line artefact). The export is
-`docs/downloads/h84-a-only-reasoning.csv`, RFC 4180.
+`docs/downloads/h87-a-only-reasoning.csv`, RFC 4180.
 
 ## 6. Irregularity policy
 
 Anything that does not match this document is logged in `registry/irregularities.json` with an
-`IR-H84-xxx` identifier and reported in the run card, whether or not it changes the verdict.
+`IR-H87-xxx` identifier and reported in the run card, whether or not it changes the verdict.

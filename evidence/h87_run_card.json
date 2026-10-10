@@ -1,8 +1,8 @@
 {
- "round": "H84",
- "generated_utc": "2026-10-10T21:36:10+00:00",
- "preregistration": "registry/h84_preregistration.json",
- "preregistration_sha256": "0b45234e7831dd8952791f0d4f0449250db17a7efc83f660086075ac72e42a2d",
+ "round": "H87",
+ "generated_utc": "2026-10-10T21:39:57+00:00",
+ "preregistration": "registry/h87_preregistration.json",
+ "preregistration_sha256": "fdb4065a3c8376549e83f8b786882b188ebd7f830dd03187737223d00cba5286",
  "hypothesis": "Faults missing from the USGS/INGENIOUS catalogue are preferentially buried: a continuous potential-field edge under above-median sedimentary cover where the surface view abstains is a fault candidate, and a surface-confident pixel without a radiometric edge is a non-tectonic lineament.",
  "mechanism": "Two-view co-training (Blum & Mitchell, COLT '98, doi:10.1145/279943.279962). View A = potential-field/subsurface channels, View B = DEM + radiometric channels. One B->A donation round on whole confident-disagreement segments inside the buffered training domain. Emission = 88% artefact-demoted View B + 12% reserved cover-gated A-only discovery dots, 3 px spacing, 200 m catalogue ring excluded, binary {0,1}.",
  "named_non_fault_process": "buried lithological contact or basin-margin palaeochannel for the A-only dots; drainage incision or graded road for the demoted B-only pixels",
@@ -103,7 +103,7 @@
  },
  "raster_sha256": "9d3e2be69efd476c91c8772a28c09ffccadac4281cc2025e376e0c8c8ffba04a",
  "raster_bytes": 142450,
- "raster_file": "submission/gems52-h84-coverco-disagree-37654px-20261010T211929Z.tif",
+ "raster_file": "submission/gems52-h87-coverco-disagree-37654px-20261010T213918Z.tif",
  "validator": {
   "bands": 1,
   "dtype": "float32",
@@ -194,8 +194,8 @@
    "X_rad_UTh_grad3"
   ]
  },
- "submission_name": "h84-coverco-disagree-37654px-20261010T211929Z",
- "submission_note": "H84 cover-conditioned co-training: artefact-demoted View B + 12% reserved A-only sub-cover dots; 200m catalogue ring excluded; binary",
+ "submission_name": "h87-coverco-disagree-37654px-20261010T213918Z",
+ "submission_note": "H87 cover-conditioned co-training: artefact-demoted View B + 12% reserved A-only sub-cover dots; 200m catalogue ring excluded; binary",
  "note_chars": 133,
  "gates": {
   "format": true,
@@ -216,13 +216,7 @@
   "n_literal_offenders": 44,
   "n_excess_offenders": 3,
   "applies_to_this_round": false,
-  "note": "the pre-registered H84 gate is unchanged; this statistic is published so the next round can pre-register it rather than invent it after seeing a verdict",
-  "max_excess_informative_coverage_lt_0.95": 0.678440910535189,
-  "max_near_informative_coverage_lt_0.95": 0.8925479364742126,
-  "n_informative_measured": 41,
-  "n_informative_near_offenders": 29,
-  "n_informative_excess_offenders": 0,
-  "stability_caveat": "the ratio is unstable as coverage -> 1 (its denominator vanishes), which is why the three >=0.997-coverage probes show excess ~1; the statistic is only meaningful for priors that leave a substantial part of the footprint uncovered"
+  "note": "the pre-registered H87 gate is unchanged; this statistic is published so the next round can pre-register it rather than invent it after seeing a verdict"
  },
  "download": "YES",
  "portal_format_valid": true,

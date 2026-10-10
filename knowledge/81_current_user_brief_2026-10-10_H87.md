@@ -1,4 +1,4 @@
-# 75 · Current user brief — session of 2026-10-10 (round H84)
+# 75 · Current user brief — session of 2026-10-10 (round H87)
 
 This is the operative brief for the current session, captured for audit and for the next session to
 read first (AGENTS.md requires it). It is organised, not paraphrased away: every instruction below

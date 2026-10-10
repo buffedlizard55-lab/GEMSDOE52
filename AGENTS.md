@@ -8,19 +8,19 @@ Keep known-catalogue labels separate from verified fault absence, public partici
 
 This session's working branch is fixed by Arena. Do not change branches. Keep raw competition data and large intermediate arrays under ignored `data/` and `work/`. Publish small audit receipts, the unique compressed prediction raster and its review table.
 
-<!--H84-AGENTS-->
-## Current H84 continuation (2026-10-10)
-Read README's H84 block, `knowledge/74` (frozen preregistration, SHA-256 `0b45234e7831dd89…`),
-`knowledge/75` (this session's brief) and `knowledge/76` (results and limits).
+<!--H87-AGENTS-->
+## Current H87 continuation (2026-10-10)
+Read README's H87 block, `knowledge/80` (frozen preregistration, SHA-256 `fdb4065a3c837654…`),
+`knowledge/81` (this session's brief) and `knowledge/82` (results and limits).
 
 Settled this round; do not re-litigate:
 
 - **View A failed sufficiency for the eighth time** (mean out-of-quadrant AUC 0.5153 vs View B
   0.6661). Independence passes again (max |ρ| 0.1372 over
   2,089 blocks). Independence without sufficiency still gives co-training nothing to donate.
-- **The donation step needs predictions on the TRAINING domain.** H84's first exchange run donated 0 px
+- **The donation step needs predictions on the TRAINING domain.** H87's first exchange run donated 0 px
   because the fit stage predicts region-only, so the checkpointed grids are NaN exactly where a pseudo-label
-  is allowed to come from (IR-H84-001). `scripts/run_h84.py::stage_exchange` now re-derives the donor/receiver
+  is allowed to come from (IR-H87-001). `scripts/run_h87.py::stage_exchange` now re-derives the donor/receiver
   fields on the training domain from bit-identical refits. Copy that pattern.
 - **Artefact demotion costs a little on catalogue recovery:** `B_art` 0.170046 vs `single_B`
   0.175326. The veto is a hypothesis about *off-catalogue* precision and the hide-and-recover
@@ -31,13 +31,13 @@ Settled this round; do not re-litigate:
   non-inferiority margin before the fit. `A_only_cover` alone is 0.016073 and short-fills
   its budget, so it is not a matched comparison — same failure mode as H74S.
 - **`docs/index.html` and `docs/executive-summary.html` were rewritten by H83 and lost the historical
-  identities `scripts/check_site.py` asserts** (IR-H84-002). `scripts/publish_h84_site.py` rebuilds both
+  identities `scripts/check_site.py` asserts** (IR-H87-002). `scripts/publish_h87_site.py` rebuilds both
   current-first with an archive table that names H83/H82/R5/H58/H57-alternate/H55-EDGE by their own receipts.
   Keep that table when you publish the next round.
-- **H83 was mislabelled SUBMIT: YES with no holdout evaluation** (IR-H84-003); it is re-labelled research-only
+- **H83 was mislabelled SUBMIT: YES with no holdout evaluation** (IR-H87-003); it is re-labelled research-only
   in the README. Never publish a promote verdict without a measured holdout.
-- Current artefact: `submission/gems52-h84-coverco-disagree-37654px-20261010T211929Z.tif` (SHA-256 `9d3e2be69efd476c…`) — **DOWNLOAD YES, SUBMIT NO**.
-<!--/H84-AGENTS-->
+- Current artefact: `submission/gems52-h87-coverco-disagree-37654px-20261010T213918Z.tif` (SHA-256 `9d3e2be69efd476c…`) — **DOWNLOAD YES, SUBMIT NO**.
+<!--/H87-AGENTS-->
 <!--H82-AGENTS-->
 ## Current H82 continuation (2026-10-09)
 Read README's H82 block, `knowledge/72` (frozen preregistration, amendment 72a included, SHA-256

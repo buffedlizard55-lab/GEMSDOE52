@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Write the H84 status block into README.md and AGENTS.md from the receipts (no typed numbers).
+"""Write the H87 status block into README.md and AGENTS.md from the receipts (no typed numbers).
 
-Idempotent: the block is delimited by ``<!--H84-README-->`` / ``<!--/H84-README-->`` (and
-``<!--H84-AGENTS-->``) and is replaced in place if it already exists.  A correction block for the
+Idempotent: the block is delimited by ``<!--H87-README-->`` / ``<!--/H87-README-->`` (and
+``<!--H87-AGENTS-->``) and is replaced in place if it already exists.  A correction block for the
 previous round is also written, because H83 published "SUBMIT: YES / verdict promote" while its own
-run card recorded ``holdout_dti = NOT_EVALUATED`` (IR-H84-003).
+run card recorded ``holdout_dti = NOT_EVALUATED`` (IR-H87-003).
 """
 from __future__ import annotations
 
@@ -15,14 +15,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 EV = ROOT / "evidence"
 
-card = json.loads((EV / "h84_run_card.json").read_text())
-wr = json.loads((EV / "h84_write.json").read_text())
-hold = json.loads((EV / "h84_holdout.json").read_text())
-build = json.loads((EV / "h84_build.json").read_text())
-lane = json.loads((EV / "h84_lane.json").read_text())
-ind = json.loads((EV / "h84_independence.json").read_text())
-fit = json.loads((EV / "h84_fit.json").read_text())
-exg = json.loads((EV / "h84_exchange.json").read_text())
+card = json.loads((EV / "h87_run_card.json").read_text())
+wr = json.loads((EV / "h87_write.json").read_text())
+hold = json.loads((EV / "h87_holdout.json").read_text())
+build = json.loads((EV / "h87_build.json").read_text())
+lane = json.loads((EV / "h87_lane.json").read_text())
+ind = json.loads((EV / "h87_independence.json").read_text())
+fit = json.loads((EV / "h87_fit.json").read_text())
+exg = json.loads((EV / "h87_exchange.json").read_text())
 xs = card.get("lane_excess_chance_corrected") or {}
 
 S = card["holdout"]["scores"]
@@ -33,8 +33,8 @@ submit_yes = card["submit"].startswith("YES")
 arms = " · ".join(f"`{a}` {S[a]['dti']:.6f} [{S[a]['ci95'][0]:.4f}, {S[a]['ci95'][1]:.4f}]"
                   for a in ("CCD", "single_B", "B_art", "union_max", "random", "single_A", "A_only_cover"))
 
-block = f"""<!--H84-README-->
-# Current status — H84 (2026-10-10): UNIQUE SUBMISSION — cover-conditioned co-training, disagreement as the discovery signal
+block = f"""<!--H87-README-->
+# Current status — H87 (2026-10-10): UNIQUE SUBMISSION — cover-conditioned co-training, disagreement as the discovery signal
 
 Two questions, two unambiguous answers:
 
@@ -44,7 +44,7 @@ Two questions, two unambiguous answers:
 >
 > Weekly slots used by this round: **{card['slots_used']}**. The agent does not pick submissions — uploading is an owner selector decision taken with these numbers in hand.
 
-**★ [Download the submission GeoTIFF](docs/downloads/h84-candidate.tif)** · [ZIP](docs/downloads/h84-candidate.zip) · **[Executive summary / how to submit](docs/h84-executive-summary.html)** · **[Check any file in your browser](docs/validator.html)** · [Full result](docs/h84.html) · [Run card](evidence/h84_run_card.json)
+**★ [Download the submission GeoTIFF](docs/downloads/h87-candidate.tif)** · [ZIP](docs/downloads/h87-candidate.zip) · **[Executive summary / how to submit](docs/h87-executive-summary.html)** · **[Check any file in your browser](docs/validator.html)** · [Full result](docs/h87.html) · [Run card](evidence/h87_run_card.json)
 
 - **File:** `submission/{tif}` — {wr['bytes']:,} bytes, SHA-256 `{wr['sha256']}`
 - **Submission name to paste:** `{wr['submission_name']}`
@@ -60,11 +60,11 @@ Two questions, two unambiguous answers:
 - **Not the union:** shared with the union-max placement {wr['not_the_union']['shared_with_union']:,} px (Jaccard {wr['not_the_union']['jaccard_union']:.4f}), with single-A {wr['not_the_union']['shared_with_A']:,}, with single-B {wr['not_the_union']['shared_with_B']:,}; equal to the union {wr['not_the_union']['equal_union']}, subset of it {wr['not_the_union']['subset_of_union']} → **PASS**.
 - **Placement:** {build['dots']:,} binary dots at 3 px spacing; 200 m catalogue ring excluded (minimum distance {build['min_cat_dist_m']:.1f} m, median {build['median_cat_dist_m']:,.0f} m, {build['within_300m_pct']:.2f} % inside the metric's 300 m kernel).
 - **Method:** View A (potential-field/subsurface, {fit['n_A']} channels) and View B (surface + radiometric, {fit['n_B']} channels) are fitted per label-blind quadrant fold. Disagreement is used **in both directions**: A-confident ∧ B-abstaining ∧ above-median modelled cover ∧ 5×5 lineament continuity becomes the reserved 12 % *buried-fault discovery* budget; B-confident ∧ A-silent is demoted by `0.20 · artifact`, where `artifact = ½(1 − radiometric-edge rank) + ½ valley rank` — a fault juxtaposes materials and shows a K/Th/U edge, a drainage incision or graded road does not.
-- **Reviewer record:** every A-only candidate is exported with its measured cover depth, gravity/magnetic values, distance to the catalogue, a geological reading, the named non-fault mimic and an explicit falsifier → [`docs/downloads/h84-a-only-reasoning.csv`]({card['raster_file'].rsplit('/', 1)[0] if False else 'docs/downloads/h84-a-only-reasoning.csv'}).
-- Docs: [preregistration](knowledge/74_hypotheses_H84_preregistered.md) (SHA-256 `{card['preregistration_sha256'][:24]}…`, frozen before any fit) · [results & limits](knowledge/76_h84_results_and_limits.md) · [session brief](knowledge/75_current_user_brief_2026-10-10_H84.md) · [irregularities](registry/irregularities.json)
-- Reproduce: `python3 scripts/restore_data.py --target-dir data` → build the feature store → `python -m gems52.external` → `python scripts/fetch_prior_inventory.py --out work/h84/priors --receipt work/h84/prior_fetch_receipt.json --skip-verify` → `python scripts/run_h84.py all` → `python scripts/publish_h84_site.py`.
+- **Reviewer record:** every A-only candidate is exported with its measured cover depth, gravity/magnetic values, distance to the catalogue, a geological reading, the named non-fault mimic and an explicit falsifier → [`docs/downloads/h87-a-only-reasoning.csv`]({card['raster_file'].rsplit('/', 1)[0] if False else 'docs/downloads/h87-a-only-reasoning.csv'}).
+- Docs: [preregistration](knowledge/80_hypotheses_H87_preregistered.md) (SHA-256 `{card['preregistration_sha256'][:24]}…`, frozen before any fit) · [results & limits](knowledge/82_h87_results_and_limits.md) · [session brief](knowledge/81_current_user_brief_2026-10-10_H87.md) · [irregularities](registry/irregularities.json)
+- Reproduce: `python3 scripts/restore_data.py --target-dir data` → build the feature store → `python -m gems52.external` → `python scripts/fetch_prior_inventory.py --out work/h87/priors --receipt work/h87/prior_fetch_receipt.json --skip-verify` → `python scripts/run_h87.py all` → `python scripts/publish_h87_site.py`.
 
-### Correction to the previous round (IR-H84-003)
+### Correction to the previous round (IR-H87-003)
 
 The H83 block below states **SUBMIT: YES** and `"verdict": "promote"`, but `evidence/h83_run_card.json`
 records `holdout_dti = "NOT_EVALUATED"`. Under this project's own frozen rule — and under the session
@@ -74,30 +74,30 @@ SUBMIT NO (research-only).** Its bytes are unchanged and still published.
 
 ---
 
-<!--/H84-README-->
+<!--/H87-README-->
 """
 
 readme = ROOT / "README.md"
 text = readme.read_text()
-pat = re.compile(r"<!--H84-README-->.*?<!--/H84-README-->\n?", re.S)
+pat = re.compile(r"<!--H87-README-->.*?<!--/H87-README-->\n?", re.S)
 text = pat.sub("", text)
 readme.write_text(block + text)
 
 agents = ROOT / "AGENTS.md"
 atext = agents.read_text()
-ablock = f"""<!--H84-AGENTS-->
-## Current H84 continuation (2026-10-10)
-Read README's H84 block, `knowledge/74` (frozen preregistration, SHA-256 `{card['preregistration_sha256'][:16]}…`),
-`knowledge/75` (this session's brief) and `knowledge/76` (results and limits).
+ablock = f"""<!--H87-AGENTS-->
+## Current H87 continuation (2026-10-10)
+Read README's H87 block, `knowledge/80` (frozen preregistration, SHA-256 `{card['preregistration_sha256'][:16]}…`),
+`knowledge/81` (this session's brief) and `knowledge/82` (results and limits).
 
 Settled this round; do not re-litigate:
 
 - **View A failed sufficiency for the eighth time** (mean out-of-quadrant AUC {fit['mean_auc_A']:.4f} vs View B
   {fit['mean_auc_B']:.4f}). Independence passes again (max |ρ| {ind['result']['max_abs_correlation']:.4f} over
   {ind['n_blocks']:,} blocks). Independence without sufficiency still gives co-training nothing to donate.
-- **The donation step needs predictions on the TRAINING domain.** H84's first exchange run donated 0 px
+- **The donation step needs predictions on the TRAINING domain.** H87's first exchange run donated 0 px
   because the fit stage predicts region-only, so the checkpointed grids are NaN exactly where a pseudo-label
-  is allowed to come from (IR-H84-001). `scripts/run_h84.py::stage_exchange` now re-derives the donor/receiver
+  is allowed to come from (IR-H87-001). `scripts/run_h87.py::stage_exchange` now re-derives the donor/receiver
   fields on the training domain from bit-identical refits. Copy that pattern.
 - **Artefact demotion costs a little on catalogue recovery:** `B_art` {S['B_art']['dti']:.6f} vs `single_B`
   {S['single_B']['dti']:.6f}. The veto is a hypothesis about *off-catalogue* precision and the hide-and-recover
@@ -108,15 +108,15 @@ Settled this round; do not re-litigate:
   non-inferiority margin before the fit. `A_only_cover` alone is {S['A_only_cover']['dti']:.6f} and short-fills
   its budget, so it is not a matched comparison — same failure mode as H74S.
 - **`docs/index.html` and `docs/executive-summary.html` were rewritten by H83 and lost the historical
-  identities `scripts/check_site.py` asserts** (IR-H84-002). `scripts/publish_h84_site.py` rebuilds both
+  identities `scripts/check_site.py` asserts** (IR-H87-002). `scripts/publish_h87_site.py` rebuilds both
   current-first with an archive table that names H83/H82/R5/H58/H57-alternate/H55-EDGE by their own receipts.
   Keep that table when you publish the next round.
-- **H83 was mislabelled SUBMIT: YES with no holdout evaluation** (IR-H84-003); it is re-labelled research-only
+- **H83 was mislabelled SUBMIT: YES with no holdout evaluation** (IR-H87-003); it is re-labelled research-only
   in the README. Never publish a promote verdict without a measured holdout.
 - Current artefact: `submission/{tif}` (SHA-256 `{wr['sha256'][:16]}…`) — **DOWNLOAD YES, SUBMIT {"YES" if submit_yes else "NO"}**.
-<!--/H84-AGENTS-->
+<!--/H87-AGENTS-->
 """
-apat = re.compile(r"<!--H84-AGENTS-->.*?<!--/H84-AGENTS-->\n?", re.S)
+apat = re.compile(r"<!--H87-AGENTS-->.*?<!--/H87-AGENTS-->\n?", re.S)
 atext = apat.sub("", atext)
 marker = "<!--H82-AGENTS-->"
 if marker in atext:

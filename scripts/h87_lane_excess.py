@@ -16,7 +16,7 @@ This script computes, for the priors that actually drive the verdict, the chance
 
 which is 0 at chance level and 1 only when every dot sits inside the prior's 3 px halo while the halo
 is small.  It does not change any verdict in this round: the pre-registered gate stays exactly as
-frozen in ``knowledge/74``.  It is published so the next round can pre-register the corrected rule
+frozen in ``knowledge/80``.  It is published so the next round can pre-register the corrected rule
 instead of inventing it after seeing a result.
 """
 from __future__ import annotations
@@ -33,7 +33,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from gems52 import gates, structural                                  # noqa: E402
 
-WORK = ROOT / "work/h84"
+WORK = ROOT / "work/h87"
 EVID = ROOT / "evidence"
 
 
@@ -43,7 +43,7 @@ def disk(r: float = 3.0):
 
 
 def main() -> int:
-    lane = json.loads((EVID / "h84_lane.json").read_text())
+    lane = json.loads((EVID / "h87_lane.json").read_text())
     dots = np.load(WORK / "dots.npy").astype(bool)
     store = structural.FeatureStore(ROOT / "work/r2/features")
     eligible = store.valid
@@ -94,10 +94,10 @@ def main() -> int:
         n_literal_offenders=sum(r["literal_offender"] for r in rows),
         n_excess_offenders=sum(r["excess_offender"] for r in rows),
         applies_to_this_round=False,
-        note=("the pre-registered H84 gate is unchanged; this statistic is published so the next round "
+        note=("the pre-registered H87 gate is unchanged; this statistic is published so the next round "
               "can pre-register it rather than invent it after seeing a verdict"),
         per_prior=rows)
-    (EVID / "h84_lane_excess.json").write_text(json.dumps(out, indent=1, default=float) + "\n")
+    (EVID / "h87_lane_excess.json").write_text(json.dumps(out, indent=1, default=float) + "\n")
     print(json.dumps({k: v for k, v in out.items() if k != "per_prior"}, indent=1, default=float))
     for r in rows[:8]:
         print(f"  {r['path']}: support {r['support_px']:>7,} coverage {r['coverage_3px_of_eligible']:.4f} "
