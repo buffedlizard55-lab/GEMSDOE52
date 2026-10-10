@@ -1,0 +1,108 @@
+{
+  "file": "gems52-h87-dva-aonly-13966px-20261010.tif",
+  "sha256": "3fc7708422774f3766d12ecf1fa7e5a3493117ee67c61e1b19dadbe0b6f2d704",
+  "bytes": 92018,
+  "submission_name": "h87-dva-aonly-13966px-20261010",
+  "note": "H87 geophysical DVA vs surface/radiometric abstention; 3px spaced; research only; no slot used",
+  "note_chars": 94,
+  "validator": {
+    "path": "/home/user/GEMSDOE52/submission/gems52-h87-dva-aonly-13966px-20261010.tif",
+    "bytes": 92018,
+    "sha256": "3fc7708422774f3766d12ecf1fa7e5a3493117ee67c61e1b19dadbe0b6f2d704",
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "ref_bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "nodata": null,
+    "blocksize": [
+      256,
+      256
+    ],
+    "fixture_grid": false,
+    "has_validity_mask": false,
+    "nan_pixels": 0,
+    "infinity_pixels": 0,
+    "n_nan": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.0011373742017894983,
+    "n_nonzero": 13966,
+    "mass": 13966.0,
+    "mass_outside_footprint": 0,
+    "problems": [],
+    "ok": true,
+    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "zip_file": "gems52-h87-dva-aonly-13966px-20261010.zip",
+  "zip_sha256": "c5fd42cc1d9a61c54e073720a006ce1a447bf6432df5851ef80785f95b52d218",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "status": "research-only; local format validation is not organizer acceptance",
+  "metadata": {
+    "round": "H87",
+    "hypothesis": "80_h87_hypotheses_preregistered.md",
+    "hypothesis_sha256": "5d9d064d5c7940faf6294d8b9c7df10b954eeac179da31f6e13ff080b5617fad",
+    "method": "strict two-view DVA disagreement; A-only, B abstains",
+    "view_A_bands": [
+      2,
+      13,
+      15,
+      17,
+      7,
+      16
+    ],
+    "view_B_bands": [
+      6,
+      12,
+      19
+    ],
+    "pseudo_exchange_performed": false,
+    "holdout_reference": "evidence/h87_holdout.json",
+    "no_organizer_upload": true,
+    "data_provenance": "integrity-pinned owner mirror, not organizer-authenticated"
+  },
+  "download_copy": "docs/downloads/h87-candidate.tif",
+  "download_copy_sha256": "3fc7708422774f3766d12ecf1fa7e5a3493117ee67c61e1b19dadbe0b6f2d704",
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "slots_used": 0,
+  "verdict": "negative",
+  "holdout_dti": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.020944581837266104,
+    "ci95": [
+      0.016885341902336433,
+      0.025601205569515045
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 950.5793299592539,
+    "fpw": 13232.684566977357,
+    "fnw": 52235.42067004072
+  },
+  "comparison_valid": false,
+  "comparison_invalid_reason": "At least one arm failed to fill the preregistered 9,400-per-fold budget after spacing; DTI and bootstrap outputs are descriptive for their actual emissions, not a valid matched-budget ranking.",
+  "holdout_dti_interpretation": "Descriptive HOLDOUT-DTI only; the primary underfilled the fixed 9,400-per-fold budget, so its CI/delta is not a matched-budget comparison."
+}

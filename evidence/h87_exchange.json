@@ -1,0 +1,9 @@
+{
+  "stage": "exchange",
+  "started_utc": "2026-10-10T22:12:47+00:00",
+  "ran": false,
+  "reason": "exchange disabled: one or both views fail the sufficiency screen",
+  "pseudo_pixels": 0,
+  "folds": [],
+  "interpretation": "fail-closed; no pseudo-labels were created"
+}

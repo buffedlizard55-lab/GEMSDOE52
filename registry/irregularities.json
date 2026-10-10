@@ -1,6 +1,6 @@
 {
-  "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified. | H61 merge: IR-H61-001..009 appended from the H61 branch; main's repaired schema and numbering retained.",
-  "generated": "2026-10-10T21:30:00Z (H85 append)",
+  "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified. | H61 merge: IR-H61-001..009 appended from the H61 branch; main's repaired schema and numbering retained. | H87 results appended: IR-H87-001..003; see knowledge/81_h87_results_and_limits.md.",
+  "generated": "2026-10-10T22:25:00Z (H87 append)",
   "entries": [
     {
       "id": "IR-30-029",
@@ -3090,6 +3090,33 @@
       "handling": "Not caused by H84 edits; left unchanged. The H84 pages were not made to satisfy stale round checks. The checker's dispatch also reads the current round from docs/data/submission.json (H60), which is stale.",
       "disposition": "Resolved by the merge with main: scripts/check_site.py now reports 0 failures on the merged tree (run 2026-10-10). The earlier 22 failures were the stale checker vs the pre-merge pages.",
       "measured_effect": "Site content is unaffected; the checker fails."
+    },
+    {
+      "id": "IR-H87-001",
+      "title": "H87 geophysical-only View A fails the preregistered sufficiency screen; pseudo-label exchange is closed",
+      "status": "observed — H87 negative; no exchange run",
+      "what_it_is": "The strict geophysical DVA teacher did not achieve the predeclared OOF sufficiency screen, despite a clean single-feature leakage canary and weak block-level proxy-negative error correlation.",
+      "how_we_know": "evidence/h87_canary.json records a maximum direction-insensitive single-feature AUC of 0.6543 (<0.90). evidence/h87_fit.json records View A mean region OOF diagnostic AUC 0.4920 (<0.60) and View B 0.6656. evidence/h87_independence.json measures 2,097 spatial blocks; maximum absolute Pearson/Spearman error correlation 0.0782. The combined gate correctly closes because both view sufficiency is required.",
+      "disposition": "No pseudo-label exchange occurred. Treat H87-A as a negative result; do not promote, retune on these folds, or describe weak block correlation as conditional independence. A new, separately preregistered sufficient A representation would be needed.",
+      "measured_effect": "The preregistered co-training transfer step was not run; no exchange benefit is claimed."
+    },
+    {
+      "id": "IR-H87-002",
+      "title": "A-only H87 holdout underfills the fixed emission budget; paired DTI contrasts are not promotion evidence",
+      "status": "observed — matched-budget comparison invalid",
+      "what_it_is": "The disagreement-constrained A-only arm could place fewer than 9,400 points in every holdout fold under the frozen 3-pixel spacing rule. Shared evaluator DTI and bootstrap values exist for the actual emissions, but candidate/control comparisons are not budget matched.",
+      "how_we_know": "evidence/h87_holdout.json records A-only counts 7,162 / 3,454 / 1,209 / 1,823 (13,648 total versus 37,600 target); all single_A, single_B, union_max and random controls placed 9,400 per fold. The candidate descriptive HOLDOUT-DTI is 0.020945 [0.016885, 0.025601], 53,186 withheld positives; the control point-estimate leader is single_B at 0.174577 [0.154860, 0.196354].",
+      "disposition": "Mark the paired DTI contrasts invalid for the frozen equal-budget gate. Do not change the pool, relax spacing, or top up from outside the disagreement stratum. H87 verdict remains negative and no slot is used.",
+      "measured_effect": "The final research TIFF also contains 13,966 cells rather than the 37,654 maximum. The file can be downloaded for review, not submitted."
+    },
+    {
+      "id": "IR-H87-003",
+      "title": "H87 uniqueness/lane passes cover the accessible local raster inventory only; no organizer score or portal validation exists",
+      "status": "logged — scope limitation; upload explicitly not approved",
+      "what_it_is": "The H87 TIFF is distinct from and audited against the local accessible prior set, but that inventory cannot prove uniqueness against private, unlinked, or unavailable competitor files. Local validation is not organizer acceptance.",
+      "how_we_know": "evidence/h87_run_card.json and evidence/h87_lane.json report 129 accessible local prior rasters, 55 distinct decoded patterns, no identical prior, complete comparisons, 71.68% novel emitted support, surface Spearman max 0.0277 and final dots max Spearman 0.0112 / max <=3px proximity 0.3273. No organizer receipt is present; submission slots used = 0.",
+      "disposition": "DOWNLOAD YES for inspection only; SUBMIT NO. No organizer score, leaderboard improvement, or universal uniqueness claim is made; the separate weekly selector was not run.",
+      "measured_effect": "The local uniqueness and lane gates pass; the decision to submit remains negative."
     }
   ],
   "merge_note": "Merged registry/irregularities.json: main's entries (including the parallel H66 round's IR-H66-001..010) plus this round's IR-H67-001..011. This round was labelled H66 in its own receipts and was renamed H67 before merge because main merged a different H66 first (PR #56); the IDs were renumbered wholesale so no ID carries two meanings. See knowledge/45a_amendment_2026-10-09_H67_rename.md. IR-H67-002 (in-domain nodata sentinels collapse every rank channel) and IR-H67-008 (probe classification flips with the structuring element, and this round's lane verdict depends on it) are the two that change a result; IR-H67-005 and IR-H67-007 change how a shared instrument must be read. | H77cond merge: this round was executed as H74 and renamed to H77cond before merge because a parallel session merged a different H74 first (PR #72) and a third took H75; see IR-H77cond-001. The rename is identifier-only and the preregistration's pinned SHA-256 still validates. IR-H77cond-002 records a shared-tool repair to scripts/check_site.py surfaced by that merge. IR-H77cond-003 records that filename, receipt and git dating are all individually unsound in this repository, and that the duplicate guard was therefore made dating-independent. | H82 merge (2026-10-09): union of both entry sets by id; 8 H82 entries added (IR-H82-001..IR-H82-008); no existing entry was edited or removed."

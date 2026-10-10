@@ -1,0 +1,221 @@
+{
+  "stage": "fit",
+  "evidence_class": "HOLDOUT-DTI diagnostic AUC (not a DTI score)",
+  "started_utc": "2026-10-10T22:03:18+00:00",
+  "evaluator_version": "gems52-pooled-hide-v1",
+  "fold_geometry": [
+    {
+      "fold": 0,
+      "split_version": "label-blind-quadrants-v2",
+      "evaluation_region_label_blind": true,
+      "truth_px": 27309,
+      "evaluation_px": 2265162,
+      "training_domain_px": 2151265,
+      "held_components": 1696,
+      "shared_train_truth_components": 0,
+      "buffer_px": 80,
+      "nearest_training_to_region_px": 80.00624975587844,
+      "held_pixels_without_feature_support": 567,
+      "held_positive_pixels_outside_this_evaluation_region": 231
+    },
+    {
+      "fold": 1,
+      "split_version": "label-blind-quadrants-v2",
+      "evaluation_region_label_blind": true,
+      "truth_px": 10677,
+      "evaluation_px": 1170352,
+      "training_domain_px": 3270785,
+      "held_components": 596,
+      "shared_train_truth_components": 0,
+      "buffer_px": 80,
+      "nearest_training_to_region_px": 80.00624975587844,
+      "held_pixels_without_feature_support": 549,
+      "held_positive_pixels_outside_this_evaluation_region": 77
+    },
+    {
+      "fold": 2,
+      "split_version": "label-blind-quadrants-v2",
+      "evaluation_region_label_blind": true,
+      "truth_px": 6813,
+      "evaluation_px": 471100,
+      "training_domain_px": 3937283,
+      "held_components": 289,
+      "shared_train_truth_components": 0,
+      "buffer_px": 80,
+      "nearest_training_to_region_px": 80.00624975587844,
+      "held_pixels_without_feature_support": 643,
+      "held_positive_pixels_outside_this_evaluation_region": 347
+    },
+    {
+      "fold": 3,
+      "split_version": "label-blind-quadrants-v2",
+      "evaluation_region_label_blind": true,
+      "truth_px": 8387,
+      "evaluation_px": 686557,
+      "training_domain_px": 3808782,
+      "held_components": 292,
+      "shared_train_truth_components": 0,
+      "buffer_px": 80,
+      "nearest_training_to_region_px": 80.00624975587844,
+      "held_pixels_without_feature_support": 346,
+      "held_positive_pixels_outside_this_evaluation_region": 188
+    }
+  ],
+  "canary_max_auc": 0.6543168785707596,
+  "training_sample": {
+    "max_positive": 20000,
+    "max_negative": 60000,
+    "negative_collar_px": 5
+  },
+  "folds": [
+    {
+      "fold": 0,
+      "training": {
+        "rows": 80000,
+        "positive": 20000,
+        "negative": 60000
+      },
+      "views": {
+        "A": {
+          "train_seconds": 107.6,
+          "in_sample_auc": 0.8653251233333332,
+          "region_oof_auc": 0.50759750125,
+          "prediction_file": "work/h87/pred_pre_A_f0.npy",
+          "prediction_sha256": "4d5af86439bcad5d8d307ee13b90bc194e3183309ec133c428e840300e5ff2e6",
+          "n_region_positive": 20000,
+          "n_region_negative": 40000,
+          "features": 60
+        },
+        "B": {
+          "train_seconds": 45.4,
+          "in_sample_auc": 0.8659373037499999,
+          "region_oof_auc": 0.6468695875000001,
+          "prediction_file": "work/h87/pred_pre_B_f0.npy",
+          "prediction_sha256": "ee464ad819f2dc993e75bf5a7da38e5507f39c9a9e576104dca6ba5ebc9d0c33",
+          "n_region_positive": 20000,
+          "n_region_negative": 40000,
+          "features": 19
+        }
+      }
+    },
+    {
+      "fold": 1,
+      "training": {
+        "rows": 80000,
+        "positive": 20000,
+        "negative": 60000
+      },
+      "views": {
+        "A": {
+          "train_seconds": 96.4,
+          "in_sample_auc": 0.8263988775,
+          "region_oof_auc": 0.5300240189191721,
+          "prediction_file": "work/h87/pred_pre_A_f1.npy",
+          "prediction_sha256": "1bf2c27bc69b57eb2f160897393e2ec5b724cbb76e4b2b2a4a356976765930f5",
+          "n_region_positive": 10677,
+          "n_region_negative": 40000,
+          "features": 60
+        },
+        "B": {
+          "train_seconds": 38.3,
+          "in_sample_auc": 0.8279405983333334,
+          "region_oof_auc": 0.7487233843776342,
+          "prediction_file": "work/h87/pred_pre_B_f1.npy",
+          "prediction_sha256": "bfc9f03a064ddc1eac08921e79e918eab986a0cda5b8c8787a14e78502f6f2a6",
+          "n_region_positive": 10677,
+          "n_region_negative": 40000,
+          "features": 19
+        }
+      }
+    },
+    {
+      "fold": 2,
+      "training": {
+        "rows": 80000,
+        "positive": 20000,
+        "negative": 60000
+      },
+      "views": {
+        "A": {
+          "train_seconds": 93.2,
+          "in_sample_auc": 0.8196500258333332,
+          "region_oof_auc": 0.456227313591663,
+          "prediction_file": "work/h87/pred_pre_A_f2.npy",
+          "prediction_sha256": "fec190bde973290a7fa11a64d765493931c16c4ff7653d1b1225bae42f0137a7",
+          "n_region_positive": 6813,
+          "n_region_negative": 40000,
+          "features": 60
+        },
+        "B": {
+          "train_seconds": 43.8,
+          "in_sample_auc": 0.8403928454166667,
+          "region_oof_auc": 0.6012647768971084,
+          "prediction_file": "work/h87/pred_pre_B_f2.npy",
+          "prediction_sha256": "b2819e135e098e444348fe6c820bcfd2154467cc8f92604ba3d6a46967bf19bd",
+          "n_region_positive": 6813,
+          "n_region_negative": 40000,
+          "features": 19
+        }
+      }
+    },
+    {
+      "fold": 3,
+      "training": {
+        "rows": 80000,
+        "positive": 20000,
+        "negative": 60000
+      },
+      "views": {
+        "A": {
+          "train_seconds": 93.0,
+          "in_sample_auc": 0.8261473033333333,
+          "region_oof_auc": 0.4742514993442232,
+          "prediction_file": "work/h87/pred_pre_A_f3.npy",
+          "prediction_sha256": "4b03876e7608cfd7830ede9ea45f632c1460cbb8a27cd9813dbe1db4193c5a27",
+          "n_region_positive": 8387,
+          "n_region_negative": 40000,
+          "features": 60
+        },
+        "B": {
+          "train_seconds": 43.7,
+          "in_sample_auc": 0.8407146041666667,
+          "region_oof_auc": 0.665512015619411,
+          "prediction_file": "work/h87/pred_pre_B_f3.npy",
+          "prediction_sha256": "463b48d961318a7afe03f7a279bd9dd642545ce0e18690f2a2330d8d412ddb6d",
+          "n_region_positive": 8387,
+          "n_region_negative": 40000,
+          "features": 19
+        }
+      }
+    }
+  ],
+  "sufficiency": {
+    "evidence_class": "HOLDOUT-DTI diagnostic AUC (not a DTI score)",
+    "threshold": 0.6,
+    "view_A_mean": 0.4920250832762646,
+    "view_A_per_fold": [
+      0.50759750125,
+      0.5300240189191721,
+      0.456227313591663,
+      0.4742514993442232
+    ],
+    "view_B_mean": 0.6655924410985384,
+    "view_B_per_fold": [
+      0.6468695875000001,
+      0.7487233843776342,
+      0.6012647768971084,
+      0.665512015619411
+    ],
+    "view_A_pass": false,
+    "view_B_pass": true,
+    "both_pass": false,
+    "interpretation": "diagnostic screening rule, not a DTI score and not proof of theoretical sufficiency"
+  },
+  "evaluator_hashes": {
+    "evaluate_holdout.py": "ffb084fdf34bb30438485b89caeb1228a6680abfd9f9f0472f4355845da05cc6",
+    "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+    "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+    "spatial.py": "fad7b09db9efc512247b9a176a7e7ce8631e287592b4e07902d0b9c38bed00f8"
+  },
+  "finished_utc": "2026-10-10T22:12:43+00:00"
+}

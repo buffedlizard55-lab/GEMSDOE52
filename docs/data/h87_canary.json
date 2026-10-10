@@ -1,0 +1,1657 @@
+{
+  "stage": "canary",
+  "evidence_class": "HOLDOUT-DTI diagnostic AUC (not a DTI score)",
+  "alarm_direction_insensitive_auc": 0.9,
+  "input_provenance": {
+    "training_features": {
+      "path": "data/training_features.tif",
+      "bytes": 418912844,
+      "sha256": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+      "expected_bytes": 418912844,
+      "expected_sha256": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+      "matches_integrity_pin": true,
+      "provenance": "owner-mirrored bytes; integrity-pinned, not organizer-authenticated"
+    },
+    "labels": {
+      "path": "data/labels.tif",
+      "bytes": 425830,
+      "sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+      "expected_bytes": 425830,
+      "expected_sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+      "matches_integrity_pin": true,
+      "provenance": "owner-mirrored bytes; integrity-pinned, not organizer-authenticated"
+    },
+    "sample_submission": {
+      "path": "data/sample_submission.tif",
+      "bytes": 1599597,
+      "sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+      "expected_bytes": 1599597,
+      "expected_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+      "matches_integrity_pin": true,
+      "provenance": "owner-mirrored bytes; integrity-pinned, not organizer-authenticated"
+    }
+  },
+  "folds": [
+    {
+      "fold": 0,
+      "sample_rows": 60000,
+      "positive_sample": 20000,
+      "negative_sample": 40000,
+      "per_feature": {
+        "H87_DVA_rtp_aniso_l1": {
+          "raw_auc": 0.5088477,
+          "direction_insensitive_auc": 0.5088477,
+          "view": "A"
+        },
+        "H87_DVA_rtp_logvar_l1": {
+          "raw_auc": 0.523850001875,
+          "direction_insensitive_auc": 0.523850001875,
+          "view": "A"
+        },
+        "H87_DVA_rtp_aniso_l2": {
+          "raw_auc": 0.507484545,
+          "direction_insensitive_auc": 0.507484545,
+          "view": "A"
+        },
+        "H87_DVA_rtp_logvar_l2": {
+          "raw_auc": 0.52464143125,
+          "direction_insensitive_auc": 0.52464143125,
+          "view": "A"
+        },
+        "H87_DVA_rtp_aniso_l3": {
+          "raw_auc": 0.5049264356250001,
+          "direction_insensitive_auc": 0.5049264356250001,
+          "view": "A"
+        },
+        "H87_DVA_rtp_logvar_l3": {
+          "raw_auc": 0.525388884375,
+          "direction_insensitive_auc": 0.525388884375,
+          "view": "A"
+        },
+        "H87_DVA_rtp_aniso_l4": {
+          "raw_auc": 0.50258243,
+          "direction_insensitive_auc": 0.50258243,
+          "view": "A"
+        },
+        "H87_DVA_rtp_logvar_l4": {
+          "raw_auc": 0.52583169,
+          "direction_insensitive_auc": 0.52583169,
+          "view": "A"
+        },
+        "H87_DVA_rtp_aniso_l6": {
+          "raw_auc": 0.500178861875,
+          "direction_insensitive_auc": 0.500178861875,
+          "view": "A"
+        },
+        "H87_DVA_rtp_logvar_l6": {
+          "raw_auc": 0.526082071875,
+          "direction_insensitive_auc": 0.526082071875,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_aniso_l1": {
+          "raw_auc": 0.49561361624999994,
+          "direction_insensitive_auc": 0.50438638375,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_logvar_l1": {
+          "raw_auc": 0.537946439375,
+          "direction_insensitive_auc": 0.537946439375,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_aniso_l2": {
+          "raw_auc": 0.495505740625,
+          "direction_insensitive_auc": 0.5044942593749999,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_logvar_l2": {
+          "raw_auc": 0.53760052,
+          "direction_insensitive_auc": 0.53760052,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_aniso_l3": {
+          "raw_auc": 0.49486569124999996,
+          "direction_insensitive_auc": 0.50513430875,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_logvar_l3": {
+          "raw_auc": 0.537141703125,
+          "direction_insensitive_auc": 0.537141703125,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_aniso_l4": {
+          "raw_auc": 0.49419031999999996,
+          "direction_insensitive_auc": 0.50580968,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_logvar_l4": {
+          "raw_auc": 0.536567650625,
+          "direction_insensitive_auc": 0.536567650625,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_aniso_l6": {
+          "raw_auc": 0.49367456812500005,
+          "direction_insensitive_auc": 0.5063254318749999,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_logvar_l6": {
+          "raw_auc": 0.53512104125,
+          "direction_insensitive_auc": 0.53512104125,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_aniso_l1": {
+          "raw_auc": 0.51195554375,
+          "direction_insensitive_auc": 0.51195554375,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_logvar_l1": {
+          "raw_auc": 0.531249849375,
+          "direction_insensitive_auc": 0.531249849375,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_aniso_l2": {
+          "raw_auc": 0.508717073125,
+          "direction_insensitive_auc": 0.508717073125,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_logvar_l2": {
+          "raw_auc": 0.5304890637499999,
+          "direction_insensitive_auc": 0.5304890637499999,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_aniso_l3": {
+          "raw_auc": 0.50582425125,
+          "direction_insensitive_auc": 0.50582425125,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_logvar_l3": {
+          "raw_auc": 0.529704698125,
+          "direction_insensitive_auc": 0.529704698125,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_aniso_l4": {
+          "raw_auc": 0.50369864125,
+          "direction_insensitive_auc": 0.50369864125,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_logvar_l4": {
+          "raw_auc": 0.528940336875,
+          "direction_insensitive_auc": 0.528940336875,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_aniso_l6": {
+          "raw_auc": 0.501355906875,
+          "direction_insensitive_auc": 0.501355906875,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_logvar_l6": {
+          "raw_auc": 0.527533053125,
+          "direction_insensitive_auc": 0.527533053125,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_aniso_l1": {
+          "raw_auc": 0.4988165625,
+          "direction_insensitive_auc": 0.5011834374999999,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_logvar_l1": {
+          "raw_auc": 0.498570675625,
+          "direction_insensitive_auc": 0.501429324375,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_aniso_l2": {
+          "raw_auc": 0.4994419575,
+          "direction_insensitive_auc": 0.5005580425,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_logvar_l2": {
+          "raw_auc": 0.498412366875,
+          "direction_insensitive_auc": 0.501587633125,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_aniso_l3": {
+          "raw_auc": 0.5000363525,
+          "direction_insensitive_auc": 0.5000363525,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_logvar_l3": {
+          "raw_auc": 0.497858045625,
+          "direction_insensitive_auc": 0.502141954375,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_aniso_l4": {
+          "raw_auc": 0.500518025625,
+          "direction_insensitive_auc": 0.500518025625,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_logvar_l4": {
+          "raw_auc": 0.49711849562499993,
+          "direction_insensitive_auc": 0.5028815043750001,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_aniso_l6": {
+          "raw_auc": 0.500664153125,
+          "direction_insensitive_auc": 0.500664153125,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_logvar_l6": {
+          "raw_auc": 0.4947832581249999,
+          "direction_insensitive_auc": 0.5052167418750001,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_aniso_l1": {
+          "raw_auc": 0.49542976687499996,
+          "direction_insensitive_auc": 0.504570233125,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_logvar_l1": {
+          "raw_auc": 0.535471895625,
+          "direction_insensitive_auc": 0.535471895625,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_aniso_l2": {
+          "raw_auc": 0.492881890625,
+          "direction_insensitive_auc": 0.507118109375,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_logvar_l2": {
+          "raw_auc": 0.535814469375,
+          "direction_insensitive_auc": 0.535814469375,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_aniso_l3": {
+          "raw_auc": 0.4925571125,
+          "direction_insensitive_auc": 0.5074428875,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_logvar_l3": {
+          "raw_auc": 0.5365384037500001,
+          "direction_insensitive_auc": 0.5365384037500001,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_aniso_l4": {
+          "raw_auc": 0.49402729312499993,
+          "direction_insensitive_auc": 0.5059727068750001,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_logvar_l4": {
+          "raw_auc": 0.537505233125,
+          "direction_insensitive_auc": 0.537505233125,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_aniso_l6": {
+          "raw_auc": 0.49746792,
+          "direction_insensitive_auc": 0.5025320799999999,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_logvar_l6": {
+          "raw_auc": 0.539840750625,
+          "direction_insensitive_auc": 0.539840750625,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_aniso_l1": {
+          "raw_auc": 0.502804198125,
+          "direction_insensitive_auc": 0.502804198125,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_logvar_l1": {
+          "raw_auc": 0.5328849075,
+          "direction_insensitive_auc": 0.5328849075,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_aniso_l2": {
+          "raw_auc": 0.502552429375,
+          "direction_insensitive_auc": 0.502552429375,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_logvar_l2": {
+          "raw_auc": 0.533690468125,
+          "direction_insensitive_auc": 0.533690468125,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_aniso_l3": {
+          "raw_auc": 0.50347555625,
+          "direction_insensitive_auc": 0.50347555625,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_logvar_l3": {
+          "raw_auc": 0.5348465925,
+          "direction_insensitive_auc": 0.5348465925,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_aniso_l4": {
+          "raw_auc": 0.5043032762499999,
+          "direction_insensitive_auc": 0.5043032762499999,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_logvar_l4": {
+          "raw_auc": 0.536008455,
+          "direction_insensitive_auc": 0.536008455,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_aniso_l6": {
+          "raw_auc": 0.50603094625,
+          "direction_insensitive_auc": 0.50603094625,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_logvar_l6": {
+          "raw_auc": 0.537823660625,
+          "direction_insensitive_auc": 0.537823660625,
+          "view": "A"
+        },
+        "raw_band_06": {
+          "raw_auc": 0.46233670625,
+          "direction_insensitive_auc": 0.53766329375,
+          "view": "B"
+        },
+        "raw_band_12": {
+          "raw_auc": 0.49798542062499995,
+          "direction_insensitive_auc": 0.502014579375,
+          "view": "B"
+        },
+        "raw_band_19": {
+          "raw_auc": 0.5449648443749999,
+          "direction_insensitive_auc": 0.5449648443749999,
+          "view": "B"
+        },
+        "B_elevation_grad_1": {
+          "raw_auc": 0.56173782375,
+          "direction_insensitive_auc": 0.56173782375,
+          "view": "B"
+        },
+        "B_curvature_plus_1": {
+          "raw_auc": 0.5604474162499999,
+          "direction_insensitive_auc": 0.5604474162499999,
+          "view": "B"
+        },
+        "B_curvature_minus_1": {
+          "raw_auc": 0.50013039375,
+          "direction_insensitive_auc": 0.50013039375,
+          "view": "B"
+        },
+        "B_curvature_trace_1": {
+          "raw_auc": 0.550040064375,
+          "direction_insensitive_auc": 0.550040064375,
+          "view": "B"
+        },
+        "B_elevation_grad_3": {
+          "raw_auc": 0.5719204543749999,
+          "direction_insensitive_auc": 0.5719204543749999,
+          "view": "B"
+        },
+        "B_curvature_plus_3": {
+          "raw_auc": 0.572179403125,
+          "direction_insensitive_auc": 0.572179403125,
+          "view": "B"
+        },
+        "B_curvature_minus_3": {
+          "raw_auc": 0.494779240625,
+          "direction_insensitive_auc": 0.505220759375,
+          "view": "B"
+        },
+        "B_curvature_trace_3": {
+          "raw_auc": 0.558481049375,
+          "direction_insensitive_auc": 0.558481049375,
+          "view": "B"
+        },
+        "B_surface_coherence": {
+          "raw_auc": 0.56077146875,
+          "direction_insensitive_auc": 0.56077146875,
+          "view": "B"
+        },
+        "B_elevation_grad_8": {
+          "raw_auc": 0.566872581875,
+          "direction_insensitive_auc": 0.566872581875,
+          "view": "B"
+        },
+        "B_slope_grad_1": {
+          "raw_auc": 0.5804486175,
+          "direction_insensitive_auc": 0.5804486175,
+          "view": "B"
+        },
+        "B_slope_grad_3": {
+          "raw_auc": 0.601375369375,
+          "direction_insensitive_auc": 0.601375369375,
+          "view": "B"
+        },
+        "B_elevation_local_residual": {
+          "raw_auc": 0.48316918999999997,
+          "direction_insensitive_auc": 0.5168308100000001,
+          "view": "B"
+        },
+        "B_elevation_local_sd": {
+          "raw_auc": 0.558795465,
+          "direction_insensitive_auc": 0.558795465,
+          "view": "B"
+        },
+        "B_slope_local_residual": {
+          "raw_auc": 0.5118900049999999,
+          "direction_insensitive_auc": 0.5118900049999999,
+          "view": "B"
+        },
+        "B_slope_local_sd": {
+          "raw_auc": 0.564122141875,
+          "direction_insensitive_auc": 0.564122141875,
+          "view": "B"
+        }
+      },
+      "max_direction_insensitive_auc": 0.601375369375
+    },
+    {
+      "fold": 1,
+      "sample_rows": 50677,
+      "positive_sample": 10677,
+      "negative_sample": 40000,
+      "per_feature": {
+        "H87_DVA_rtp_aniso_l1": {
+          "raw_auc": 0.531887673269645,
+          "direction_insensitive_auc": 0.531887673269645,
+          "view": "A"
+        },
+        "H87_DVA_rtp_logvar_l1": {
+          "raw_auc": 0.4662149761168868,
+          "direction_insensitive_auc": 0.5337850238831132,
+          "view": "A"
+        },
+        "H87_DVA_rtp_aniso_l2": {
+          "raw_auc": 0.5320591423152571,
+          "direction_insensitive_auc": 0.5320591423152571,
+          "view": "A"
+        },
+        "H87_DVA_rtp_logvar_l2": {
+          "raw_auc": 0.4664879015641098,
+          "direction_insensitive_auc": 0.5335120984358902,
+          "view": "A"
+        },
+        "H87_DVA_rtp_aniso_l3": {
+          "raw_auc": 0.5286947445443477,
+          "direction_insensitive_auc": 0.5286947445443477,
+          "view": "A"
+        },
+        "H87_DVA_rtp_logvar_l3": {
+          "raw_auc": 0.4666452151821673,
+          "direction_insensitive_auc": 0.5333547848178327,
+          "view": "A"
+        },
+        "H87_DVA_rtp_aniso_l4": {
+          "raw_auc": 0.5246765711342137,
+          "direction_insensitive_auc": 0.5246765711342137,
+          "view": "A"
+        },
+        "H87_DVA_rtp_logvar_l4": {
+          "raw_auc": 0.4665361583309918,
+          "direction_insensitive_auc": 0.5334638416690082,
+          "view": "A"
+        },
+        "H87_DVA_rtp_aniso_l6": {
+          "raw_auc": 0.5178238433080453,
+          "direction_insensitive_auc": 0.5178238433080453,
+          "view": "A"
+        },
+        "H87_DVA_rtp_logvar_l6": {
+          "raw_auc": 0.4656263838156785,
+          "direction_insensitive_auc": 0.5343736161843216,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_aniso_l1": {
+          "raw_auc": 0.4864789945677625,
+          "direction_insensitive_auc": 0.5135210054322374,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_logvar_l1": {
+          "raw_auc": 0.5676282406106584,
+          "direction_insensitive_auc": 0.5676282406106584,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_aniso_l2": {
+          "raw_auc": 0.4834718799756486,
+          "direction_insensitive_auc": 0.5165281200243514,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_logvar_l2": {
+          "raw_auc": 0.5647078545003278,
+          "direction_insensitive_auc": 0.5647078545003278,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_aniso_l3": {
+          "raw_auc": 0.48035303338952895,
+          "direction_insensitive_auc": 0.519646966610471,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_logvar_l3": {
+          "raw_auc": 0.5615423140863538,
+          "direction_insensitive_auc": 0.5615423140863538,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_aniso_l4": {
+          "raw_auc": 0.47674154959258214,
+          "direction_insensitive_auc": 0.5232584504074178,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_logvar_l4": {
+          "raw_auc": 0.5581817212231901,
+          "direction_insensitive_auc": 0.5581817212231901,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_aniso_l6": {
+          "raw_auc": 0.47092878266366955,
+          "direction_insensitive_auc": 0.5290712173363304,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_logvar_l6": {
+          "raw_auc": 0.5513609265243046,
+          "direction_insensitive_auc": 0.5513609265243046,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_aniso_l1": {
+          "raw_auc": 0.5313015594268053,
+          "direction_insensitive_auc": 0.5313015594268053,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_logvar_l1": {
+          "raw_auc": 0.5499072457150885,
+          "direction_insensitive_auc": 0.5499072457150885,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_aniso_l2": {
+          "raw_auc": 0.5224294663763229,
+          "direction_insensitive_auc": 0.5224294663763229,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_logvar_l2": {
+          "raw_auc": 0.5487247412662732,
+          "direction_insensitive_auc": 0.5487247412662732,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_aniso_l3": {
+          "raw_auc": 0.5147628348318816,
+          "direction_insensitive_auc": 0.5147628348318816,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_logvar_l3": {
+          "raw_auc": 0.5474962934344854,
+          "direction_insensitive_auc": 0.5474962934344854,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_aniso_l4": {
+          "raw_auc": 0.5065151107520839,
+          "direction_insensitive_auc": 0.5065151107520839,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_logvar_l4": {
+          "raw_auc": 0.5462334679685305,
+          "direction_insensitive_auc": 0.5462334679685305,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_aniso_l6": {
+          "raw_auc": 0.49132549522337743,
+          "direction_insensitive_auc": 0.5086745047766226,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_logvar_l6": {
+          "raw_auc": 0.5436839409478317,
+          "direction_insensitive_auc": 0.5436839409478317,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_aniso_l1": {
+          "raw_auc": 0.4999175037463707,
+          "direction_insensitive_auc": 0.5000824962536293,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_logvar_l1": {
+          "raw_auc": 0.48757906247073146,
+          "direction_insensitive_auc": 0.5124209375292685,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_aniso_l2": {
+          "raw_auc": 0.4990843366582373,
+          "direction_insensitive_auc": 0.5009156633417626,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_logvar_l2": {
+          "raw_auc": 0.4860394246979489,
+          "direction_insensitive_auc": 0.5139605753020511,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_aniso_l3": {
+          "raw_auc": 0.49819616114076987,
+          "direction_insensitive_auc": 0.5018038388592301,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_logvar_l3": {
+          "raw_auc": 0.4846462079704037,
+          "direction_insensitive_auc": 0.5153537920295963,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_aniso_l4": {
+          "raw_auc": 0.49906757633230303,
+          "direction_insensitive_auc": 0.500932423667697,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_logvar_l4": {
+          "raw_auc": 0.4836814261964971,
+          "direction_insensitive_auc": 0.5163185738035029,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_aniso_l6": {
+          "raw_auc": 0.50219013299616,
+          "direction_insensitive_auc": 0.50219013299616,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_logvar_l6": {
+          "raw_auc": 0.4816278121195093,
+          "direction_insensitive_auc": 0.5183721878804908,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_aniso_l1": {
+          "raw_auc": 0.508331683759483,
+          "direction_insensitive_auc": 0.508331683759483,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_logvar_l1": {
+          "raw_auc": 0.5084068991757985,
+          "direction_insensitive_auc": 0.5084068991757985,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_aniso_l2": {
+          "raw_auc": 0.5079550704785988,
+          "direction_insensitive_auc": 0.5079550704785988,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_logvar_l2": {
+          "raw_auc": 0.507818452046455,
+          "direction_insensitive_auc": 0.507818452046455,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_aniso_l3": {
+          "raw_auc": 0.5069325079610377,
+          "direction_insensitive_auc": 0.5069325079610377,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_logvar_l3": {
+          "raw_auc": 0.5069216762667417,
+          "direction_insensitive_auc": 0.5069216762667417,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_aniso_l4": {
+          "raw_auc": 0.5061943488339421,
+          "direction_insensitive_auc": 0.5061943488339421,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_logvar_l4": {
+          "raw_auc": 0.5062127364896507,
+          "direction_insensitive_auc": 0.5062127364896507,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_aniso_l6": {
+          "raw_auc": 0.5055038950547907,
+          "direction_insensitive_auc": 0.5055038950547907,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_logvar_l6": {
+          "raw_auc": 0.5068208626018544,
+          "direction_insensitive_auc": 0.5068208626018544,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_aniso_l1": {
+          "raw_auc": 0.5015126931722395,
+          "direction_insensitive_auc": 0.5015126931722395,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_logvar_l1": {
+          "raw_auc": 0.49366177999438043,
+          "direction_insensitive_auc": 0.5063382200056196,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_aniso_l2": {
+          "raw_auc": 0.5027272981642784,
+          "direction_insensitive_auc": 0.5027272981642784,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_logvar_l2": {
+          "raw_auc": 0.4943619216540227,
+          "direction_insensitive_auc": 0.5056380783459773,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_aniso_l3": {
+          "raw_auc": 0.5038468706097218,
+          "direction_insensitive_auc": 0.5038468706097218,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_logvar_l3": {
+          "raw_auc": 0.4950263978645687,
+          "direction_insensitive_auc": 0.5049736021354313,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_aniso_l4": {
+          "raw_auc": 0.5045887913271518,
+          "direction_insensitive_auc": 0.5045887913271518,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_logvar_l4": {
+          "raw_auc": 0.4955872342418282,
+          "direction_insensitive_auc": 0.5044127657581718,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_aniso_l6": {
+          "raw_auc": 0.506025716493397,
+          "direction_insensitive_auc": 0.506025716493397,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_logvar_l6": {
+          "raw_auc": 0.49641836658237326,
+          "direction_insensitive_auc": 0.5035816334176267,
+          "view": "A"
+        },
+        "raw_band_06": {
+          "raw_auc": 0.4342282605132528,
+          "direction_insensitive_auc": 0.5657717394867472,
+          "view": "B"
+        },
+        "raw_band_12": {
+          "raw_auc": 0.46083749765851834,
+          "direction_insensitive_auc": 0.5391625023414817,
+          "view": "B"
+        },
+        "raw_band_19": {
+          "raw_auc": 0.5454839690456121,
+          "direction_insensitive_auc": 0.5454839690456121,
+          "view": "B"
+        },
+        "B_elevation_grad_1": {
+          "raw_auc": 0.5716576402547532,
+          "direction_insensitive_auc": 0.5716576402547532,
+          "view": "B"
+        },
+        "B_curvature_plus_1": {
+          "raw_auc": 0.5857440620024352,
+          "direction_insensitive_auc": 0.5857440620024352,
+          "view": "B"
+        },
+        "B_curvature_minus_1": {
+          "raw_auc": 0.5152794897911399,
+          "direction_insensitive_auc": 0.5152794897911399,
+          "view": "B"
+        },
+        "B_curvature_trace_1": {
+          "raw_auc": 0.5837354617401892,
+          "direction_insensitive_auc": 0.5837354617401892,
+          "view": "B"
+        },
+        "B_elevation_grad_3": {
+          "raw_auc": 0.5904872916081296,
+          "direction_insensitive_auc": 0.5904872916081296,
+          "view": "B"
+        },
+        "B_curvature_plus_3": {
+          "raw_auc": 0.6056527407043177,
+          "direction_insensitive_auc": 0.6056527407043177,
+          "view": "B"
+        },
+        "B_curvature_minus_3": {
+          "raw_auc": 0.5300476327620118,
+          "direction_insensitive_auc": 0.5300476327620118,
+          "view": "B"
+        },
+        "B_curvature_trace_3": {
+          "raw_auc": 0.6143239545284256,
+          "direction_insensitive_auc": 0.6143239545284256,
+          "view": "B"
+        },
+        "B_surface_coherence": {
+          "raw_auc": 0.6192088320689333,
+          "direction_insensitive_auc": 0.6192088320689333,
+          "view": "B"
+        },
+        "B_elevation_grad_8": {
+          "raw_auc": 0.596716362274047,
+          "direction_insensitive_auc": 0.596716362274047,
+          "view": "B"
+        },
+        "B_slope_grad_1": {
+          "raw_auc": 0.6162670295963286,
+          "direction_insensitive_auc": 0.6162670295963286,
+          "view": "B"
+        },
+        "B_slope_grad_3": {
+          "raw_auc": 0.6543168785707596,
+          "direction_insensitive_auc": 0.6543168785707596,
+          "view": "B"
+        },
+        "B_elevation_local_residual": {
+          "raw_auc": 0.4277841364615529,
+          "direction_insensitive_auc": 0.5722158635384471,
+          "view": "B"
+        },
+        "B_elevation_local_sd": {
+          "raw_auc": 0.5615489404795354,
+          "direction_insensitive_auc": 0.5615489404795354,
+          "view": "B"
+        },
+        "B_slope_local_residual": {
+          "raw_auc": 0.5549541163248104,
+          "direction_insensitive_auc": 0.5549541163248104,
+          "view": "B"
+        },
+        "B_slope_local_sd": {
+          "raw_auc": 0.5920069401517281,
+          "direction_insensitive_auc": 0.5920069401517281,
+          "view": "B"
+        }
+      },
+      "max_direction_insensitive_auc": 0.6543168785707596
+    },
+    {
+      "fold": 2,
+      "sample_rows": 46813,
+      "positive_sample": 6813,
+      "negative_sample": 40000,
+      "per_feature": {
+        "H87_DVA_rtp_aniso_l1": {
+          "raw_auc": 0.5349091626302657,
+          "direction_insensitive_auc": 0.5349091626302657,
+          "view": "A"
+        },
+        "H87_DVA_rtp_logvar_l1": {
+          "raw_auc": 0.5942375752238369,
+          "direction_insensitive_auc": 0.5942375752238369,
+          "view": "A"
+        },
+        "H87_DVA_rtp_aniso_l2": {
+          "raw_auc": 0.5355736606487598,
+          "direction_insensitive_auc": 0.5355736606487598,
+          "view": "A"
+        },
+        "H87_DVA_rtp_logvar_l2": {
+          "raw_auc": 0.594535777190665,
+          "direction_insensitive_auc": 0.594535777190665,
+          "view": "A"
+        },
+        "H87_DVA_rtp_aniso_l3": {
+          "raw_auc": 0.5368379568472039,
+          "direction_insensitive_auc": 0.5368379568472039,
+          "view": "A"
+        },
+        "H87_DVA_rtp_logvar_l3": {
+          "raw_auc": 0.5945944903126377,
+          "direction_insensitive_auc": 0.5945944903126377,
+          "view": "A"
+        },
+        "H87_DVA_rtp_aniso_l4": {
+          "raw_auc": 0.5339124816527228,
+          "direction_insensitive_auc": 0.5339124816527228,
+          "view": "A"
+        },
+        "H87_DVA_rtp_logvar_l4": {
+          "raw_auc": 0.5942897310289154,
+          "direction_insensitive_auc": 0.5942897310289154,
+          "view": "A"
+        },
+        "H87_DVA_rtp_aniso_l6": {
+          "raw_auc": 0.525004533612212,
+          "direction_insensitive_auc": 0.525004533612212,
+          "view": "A"
+        },
+        "H87_DVA_rtp_logvar_l6": {
+          "raw_auc": 0.5928031667400557,
+          "direction_insensitive_auc": 0.5928031667400557,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_aniso_l1": {
+          "raw_auc": 0.49450541428152056,
+          "direction_insensitive_auc": 0.5054945857184794,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_logvar_l1": {
+          "raw_auc": 0.46557239101717307,
+          "direction_insensitive_auc": 0.5344276089828269,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_aniso_l2": {
+          "raw_auc": 0.4968361514751211,
+          "direction_insensitive_auc": 0.5031638485248788,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_logvar_l2": {
+          "raw_auc": 0.46359377293409654,
+          "direction_insensitive_auc": 0.5364062270659035,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_aniso_l3": {
+          "raw_auc": 0.5002699453251137,
+          "direction_insensitive_auc": 0.5002699453251137,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_logvar_l3": {
+          "raw_auc": 0.4615035942316161,
+          "direction_insensitive_auc": 0.5384964057683839,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_aniso_l4": {
+          "raw_auc": 0.504021284676354,
+          "direction_insensitive_auc": 0.504021284676354,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_logvar_l4": {
+          "raw_auc": 0.4594603240129165,
+          "direction_insensitive_auc": 0.5405396759870835,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_aniso_l6": {
+          "raw_auc": 0.511808047115808,
+          "direction_insensitive_auc": 0.511808047115808,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_logvar_l6": {
+          "raw_auc": 0.4555498238661382,
+          "direction_insensitive_auc": 0.5444501761338618,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_aniso_l1": {
+          "raw_auc": 0.5168532309555263,
+          "direction_insensitive_auc": 0.5168532309555263,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_logvar_l1": {
+          "raw_auc": 0.4634060142374872,
+          "direction_insensitive_auc": 0.5365939857625128,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_aniso_l2": {
+          "raw_auc": 0.5153144081168355,
+          "direction_insensitive_auc": 0.5153144081168355,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_logvar_l2": {
+          "raw_auc": 0.46109020071921325,
+          "direction_insensitive_auc": 0.5389097992807867,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_aniso_l3": {
+          "raw_auc": 0.5144050455012477,
+          "direction_insensitive_auc": 0.5144050455012477,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_logvar_l3": {
+          "raw_auc": 0.45844891200645826,
+          "direction_insensitive_auc": 0.5415510879935417,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_aniso_l4": {
+          "raw_auc": 0.5140428684133275,
+          "direction_insensitive_auc": 0.5140428684133275,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_logvar_l4": {
+          "raw_auc": 0.4557460626742991,
+          "direction_insensitive_auc": 0.5442539373257009,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_aniso_l6": {
+          "raw_auc": 0.5136930537208277,
+          "direction_insensitive_auc": 0.5136930537208277,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_logvar_l6": {
+          "raw_auc": 0.45045875165125493,
+          "direction_insensitive_auc": 0.5495412483487451,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_aniso_l1": {
+          "raw_auc": 0.49613061426684285,
+          "direction_insensitive_auc": 0.5038693857331571,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_logvar_l1": {
+          "raw_auc": 0.5071910098341406,
+          "direction_insensitive_auc": 0.5071910098341406,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_aniso_l2": {
+          "raw_auc": 0.4979054950095406,
+          "direction_insensitive_auc": 0.5020945049904594,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_logvar_l2": {
+          "raw_auc": 0.510432148099222,
+          "direction_insensitive_auc": 0.510432148099222,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_aniso_l3": {
+          "raw_auc": 0.49870220717745484,
+          "direction_insensitive_auc": 0.5012977928225452,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_logvar_l3": {
+          "raw_auc": 0.5125312582562748,
+          "direction_insensitive_auc": 0.5125312582562748,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_aniso_l4": {
+          "raw_auc": 0.4985293666519888,
+          "direction_insensitive_auc": 0.5014706333480112,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_logvar_l4": {
+          "raw_auc": 0.5149010164391604,
+          "direction_insensitive_auc": 0.5149010164391604,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_aniso_l6": {
+          "raw_auc": 0.5018300932041685,
+          "direction_insensitive_auc": 0.5018300932041685,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_logvar_l6": {
+          "raw_auc": 0.5203456296785557,
+          "direction_insensitive_auc": 0.5203456296785557,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_aniso_l1": {
+          "raw_auc": 0.483841718039043,
+          "direction_insensitive_auc": 0.5161582819609569,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_logvar_l1": {
+          "raw_auc": 0.5146149493615148,
+          "direction_insensitive_auc": 0.5146149493615148,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_aniso_l2": {
+          "raw_auc": 0.48257816490532807,
+          "direction_insensitive_auc": 0.517421835094672,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_logvar_l2": {
+          "raw_auc": 0.513903111698224,
+          "direction_insensitive_auc": 0.513903111698224,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_aniso_l3": {
+          "raw_auc": 0.4819362340378688,
+          "direction_insensitive_auc": 0.5180637659621312,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_logvar_l3": {
+          "raw_auc": 0.5124475634815793,
+          "direction_insensitive_auc": 0.5124475634815793,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_aniso_l4": {
+          "raw_auc": 0.48398734588287096,
+          "direction_insensitive_auc": 0.516012654117129,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_logvar_l4": {
+          "raw_auc": 0.5106257724203729,
+          "direction_insensitive_auc": 0.5106257724203729,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_aniso_l6": {
+          "raw_auc": 0.49223354432702193,
+          "direction_insensitive_auc": 0.5077664556729781,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_logvar_l6": {
+          "raw_auc": 0.5064204351974166,
+          "direction_insensitive_auc": 0.5064204351974166,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_aniso_l1": {
+          "raw_auc": 0.49763228019961836,
+          "direction_insensitive_auc": 0.5023677198003816,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_logvar_l1": {
+          "raw_auc": 0.5075868101423748,
+          "direction_insensitive_auc": 0.5075868101423748,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_aniso_l2": {
+          "raw_auc": 0.49777423858799347,
+          "direction_insensitive_auc": 0.5022257614120065,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_logvar_l2": {
+          "raw_auc": 0.5077539208131514,
+          "direction_insensitive_auc": 0.5077539208131514,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_aniso_l3": {
+          "raw_auc": 0.49824616174959635,
+          "direction_insensitive_auc": 0.5017538382504036,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_logvar_l3": {
+          "raw_auc": 0.508156357331572,
+          "direction_insensitive_auc": 0.508156357331572,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_aniso_l4": {
+          "raw_auc": 0.4986755797739615,
+          "direction_insensitive_auc": 0.5013244202260385,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_logvar_l4": {
+          "raw_auc": 0.5083610193747248,
+          "direction_insensitive_auc": 0.5083610193747248,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_aniso_l6": {
+          "raw_auc": 0.5018173326728314,
+          "direction_insensitive_auc": 0.5018173326728314,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_logvar_l6": {
+          "raw_auc": 0.5076340323645971,
+          "direction_insensitive_auc": 0.5076340323645971,
+          "view": "A"
+        },
+        "raw_band_06": {
+          "raw_auc": 0.4021315114487011,
+          "direction_insensitive_auc": 0.5978684885512989,
+          "view": "B"
+        },
+        "raw_band_12": {
+          "raw_auc": 0.581189518200499,
+          "direction_insensitive_auc": 0.581189518200499,
+          "view": "B"
+        },
+        "raw_band_19": {
+          "raw_auc": 0.5902386448701012,
+          "direction_insensitive_auc": 0.5902386448701012,
+          "view": "B"
+        },
+        "B_elevation_grad_1": {
+          "raw_auc": 0.5878565334654338,
+          "direction_insensitive_auc": 0.5878565334654338,
+          "view": "B"
+        },
+        "B_curvature_plus_1": {
+          "raw_auc": 0.623455458314986,
+          "direction_insensitive_auc": 0.623455458314986,
+          "view": "B"
+        },
+        "B_curvature_minus_1": {
+          "raw_auc": 0.4928235523998239,
+          "direction_insensitive_auc": 0.5071764476001761,
+          "view": "B"
+        },
+        "B_curvature_trace_1": {
+          "raw_auc": 0.5925085186408336,
+          "direction_insensitive_auc": 0.5925085186408336,
+          "view": "B"
+        },
+        "B_elevation_grad_3": {
+          "raw_auc": 0.5953187655951857,
+          "direction_insensitive_auc": 0.5953187655951857,
+          "view": "B"
+        },
+        "B_curvature_plus_3": {
+          "raw_auc": 0.6235458865404375,
+          "direction_insensitive_auc": 0.6235458865404375,
+          "view": "B"
+        },
+        "B_curvature_minus_3": {
+          "raw_auc": 0.4808769136210186,
+          "direction_insensitive_auc": 0.5191230863789814,
+          "view": "B"
+        },
+        "B_curvature_trace_3": {
+          "raw_auc": 0.5859708920446206,
+          "direction_insensitive_auc": 0.5859708920446206,
+          "view": "B"
+        },
+        "B_surface_coherence": {
+          "raw_auc": 0.476766859313078,
+          "direction_insensitive_auc": 0.523233140686922,
+          "view": "B"
+        },
+        "B_elevation_grad_8": {
+          "raw_auc": 0.6006699930280347,
+          "direction_insensitive_auc": 0.6006699930280347,
+          "view": "B"
+        },
+        "B_slope_grad_1": {
+          "raw_auc": 0.6243363110964333,
+          "direction_insensitive_auc": 0.6243363110964333,
+          "view": "B"
+        },
+        "B_slope_grad_3": {
+          "raw_auc": 0.616555344561867,
+          "direction_insensitive_auc": 0.616555344561867,
+          "view": "B"
+        },
+        "B_elevation_local_residual": {
+          "raw_auc": 0.44507975928372223,
+          "direction_insensitive_auc": 0.5549202407162778,
+          "view": "B"
+        },
+        "B_elevation_local_sd": {
+          "raw_auc": 0.59943290033759,
+          "direction_insensitive_auc": 0.59943290033759,
+          "view": "B"
+        },
+        "B_slope_local_residual": {
+          "raw_auc": 0.500434857992074,
+          "direction_insensitive_auc": 0.500434857992074,
+          "view": "B"
+        },
+        "B_slope_local_sd": {
+          "raw_auc": 0.6024452884191986,
+          "direction_insensitive_auc": 0.6024452884191986,
+          "view": "B"
+        }
+      },
+      "max_direction_insensitive_auc": 0.6243363110964333
+    },
+    {
+      "fold": 3,
+      "sample_rows": 48387,
+      "positive_sample": 8387,
+      "negative_sample": 40000,
+      "per_feature": {
+        "H87_DVA_rtp_aniso_l1": {
+          "raw_auc": 0.49679415911529756,
+          "direction_insensitive_auc": 0.5032058408847024,
+          "view": "A"
+        },
+        "H87_DVA_rtp_logvar_l1": {
+          "raw_auc": 0.5082346473709312,
+          "direction_insensitive_auc": 0.5082346473709312,
+          "view": "A"
+        },
+        "H87_DVA_rtp_aniso_l2": {
+          "raw_auc": 0.49233296321688325,
+          "direction_insensitive_auc": 0.5076670367831168,
+          "view": "A"
+        },
+        "H87_DVA_rtp_logvar_l2": {
+          "raw_auc": 0.5077663154286396,
+          "direction_insensitive_auc": 0.5077663154286396,
+          "view": "A"
+        },
+        "H87_DVA_rtp_aniso_l3": {
+          "raw_auc": 0.4904141856444497,
+          "direction_insensitive_auc": 0.5095858143555503,
+          "view": "A"
+        },
+        "H87_DVA_rtp_logvar_l3": {
+          "raw_auc": 0.5071766588172171,
+          "direction_insensitive_auc": 0.5071766588172171,
+          "view": "A"
+        },
+        "H87_DVA_rtp_aniso_l4": {
+          "raw_auc": 0.48911882824609515,
+          "direction_insensitive_auc": 0.5108811717539048,
+          "view": "A"
+        },
+        "H87_DVA_rtp_logvar_l4": {
+          "raw_auc": 0.5067115848932873,
+          "direction_insensitive_auc": 0.5067115848932873,
+          "view": "A"
+        },
+        "H87_DVA_rtp_aniso_l6": {
+          "raw_auc": 0.4919020448312864,
+          "direction_insensitive_auc": 0.5080979551687136,
+          "view": "A"
+        },
+        "H87_DVA_rtp_logvar_l6": {
+          "raw_auc": 0.5065579855729104,
+          "direction_insensitive_auc": 0.5065579855729104,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_aniso_l1": {
+          "raw_auc": 0.5235917282699416,
+          "direction_insensitive_auc": 0.5235917282699416,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_logvar_l1": {
+          "raw_auc": 0.5574967628472637,
+          "direction_insensitive_auc": 0.5574967628472637,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_aniso_l2": {
+          "raw_auc": 0.520387674377012,
+          "direction_insensitive_auc": 0.520387674377012,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_logvar_l2": {
+          "raw_auc": 0.5551211547633242,
+          "direction_insensitive_auc": 0.5551211547633242,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_aniso_l3": {
+          "raw_auc": 0.5176477256468344,
+          "direction_insensitive_auc": 0.5176477256468344,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_logvar_l3": {
+          "raw_auc": 0.5528201189340646,
+          "direction_insensitive_auc": 0.5528201189340646,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_aniso_l4": {
+          "raw_auc": 0.5182318349827113,
+          "direction_insensitive_auc": 0.5182318349827113,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_logvar_l4": {
+          "raw_auc": 0.5508809362704185,
+          "direction_insensitive_auc": 0.5508809362704185,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_aniso_l6": {
+          "raw_auc": 0.5273549689996423,
+          "direction_insensitive_auc": 0.5273549689996423,
+          "view": "A"
+        },
+        "H87_DVA_iso_grav_anom_logvar_l6": {
+          "raw_auc": 0.5483148056516036,
+          "direction_insensitive_auc": 0.5483148056516036,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_aniso_l1": {
+          "raw_auc": 0.5215727956957196,
+          "direction_insensitive_auc": 0.5215727956957196,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_logvar_l1": {
+          "raw_auc": 0.5684461517825206,
+          "direction_insensitive_auc": 0.5684461517825206,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_aniso_l2": {
+          "raw_auc": 0.522630368427328,
+          "direction_insensitive_auc": 0.522630368427328,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_logvar_l2": {
+          "raw_auc": 0.5680948610945511,
+          "direction_insensitive_auc": 0.5680948610945511,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_aniso_l3": {
+          "raw_auc": 0.5240146327649935,
+          "direction_insensitive_auc": 0.5240146327649935,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_logvar_l3": {
+          "raw_auc": 0.5678515977107428,
+          "direction_insensitive_auc": 0.5678515977107428,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_aniso_l4": {
+          "raw_auc": 0.5257609320972934,
+          "direction_insensitive_auc": 0.5257609320972934,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_logvar_l4": {
+          "raw_auc": 0.5677264963634197,
+          "direction_insensitive_auc": 0.5677264963634197,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_aniso_l6": {
+          "raw_auc": 0.5302263652080601,
+          "direction_insensitive_auc": 0.5302263652080601,
+          "view": "A"
+        },
+        "H87_DVA_depth_to_base_surf_logvar_l6": {
+          "raw_auc": 0.5676989149874807,
+          "direction_insensitive_auc": 0.5676989149874807,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_aniso_l1": {
+          "raw_auc": 0.49499743650888284,
+          "direction_insensitive_auc": 0.5050025634911172,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_logvar_l1": {
+          "raw_auc": 0.5005273891141052,
+          "direction_insensitive_auc": 0.5005273891141052,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_aniso_l2": {
+          "raw_auc": 0.4939155523429117,
+          "direction_insensitive_auc": 0.5060844476570883,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_logvar_l2": {
+          "raw_auc": 0.5010387891975676,
+          "direction_insensitive_auc": 0.5010387891975676,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_aniso_l3": {
+          "raw_auc": 0.49455337874090854,
+          "direction_insensitive_auc": 0.5054466212590915,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_logvar_l3": {
+          "raw_auc": 0.5021538169190414,
+          "direction_insensitive_auc": 0.5021538169190414,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_aniso_l4": {
+          "raw_auc": 0.49449381632288064,
+          "direction_insensitive_auc": 0.5055061836771193,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_logvar_l4": {
+          "raw_auc": 0.5024734082508645,
+          "direction_insensitive_auc": 0.5024734082508645,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_aniso_l6": {
+          "raw_auc": 0.49111202307142005,
+          "direction_insensitive_auc": 0.5088879769285799,
+          "view": "A"
+        },
+        "H87_DVA_conductivity_surface_logvar_l6": {
+          "raw_auc": 0.5023097800166925,
+          "direction_insensitive_auc": 0.5023097800166925,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_aniso_l1": {
+          "raw_auc": 0.503803304220818,
+          "direction_insensitive_auc": 0.503803304220818,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_logvar_l1": {
+          "raw_auc": 0.461419488494098,
+          "direction_insensitive_auc": 0.538580511505902,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_aniso_l2": {
+          "raw_auc": 0.5065795442351257,
+          "direction_insensitive_auc": 0.5065795442351257,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_logvar_l2": {
+          "raw_auc": 0.46087471533325386,
+          "direction_insensitive_auc": 0.5391252846667461,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_aniso_l3": {
+          "raw_auc": 0.5092807305949685,
+          "direction_insensitive_auc": 0.5092807305949685,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_logvar_l3": {
+          "raw_auc": 0.45980898861333014,
+          "direction_insensitive_auc": 0.5401910113866699,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_aniso_l4": {
+          "raw_auc": 0.5119558945391678,
+          "direction_insensitive_auc": 0.5119558945391678,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_logvar_l4": {
+          "raw_auc": 0.458824587158698,
+          "direction_insensitive_auc": 0.541175412841302,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_aniso_l6": {
+          "raw_auc": 0.516343066650769,
+          "direction_insensitive_auc": 0.516343066650769,
+          "view": "A"
+        },
+        "H87_DVA_geodetic_shear_logvar_l6": {
+          "raw_auc": 0.4568657133063073,
+          "direction_insensitive_auc": 0.5431342866936927,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_aniso_l1": {
+          "raw_auc": 0.4899995200906164,
+          "direction_insensitive_auc": 0.5100004799093836,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_logvar_l1": {
+          "raw_auc": 0.5503667059139143,
+          "direction_insensitive_auc": 0.5503667059139143,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_aniso_l2": {
+          "raw_auc": 0.4871130395254561,
+          "direction_insensitive_auc": 0.5128869604745439,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_logvar_l2": {
+          "raw_auc": 0.5513091242398951,
+          "direction_insensitive_auc": 0.5513091242398951,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_aniso_l3": {
+          "raw_auc": 0.48523246691307986,
+          "direction_insensitive_auc": 0.5147675330869201,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_logvar_l3": {
+          "raw_auc": 0.5521228895910337,
+          "direction_insensitive_auc": 0.5521228895910337,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_aniso_l4": {
+          "raw_auc": 0.48450806754501013,
+          "direction_insensitive_auc": 0.5154919324549898,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_logvar_l4": {
+          "raw_auc": 0.5524472919399069,
+          "direction_insensitive_auc": 0.5524472919399069,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_aniso_l6": {
+          "raw_auc": 0.4844178773697389,
+          "direction_insensitive_auc": 0.515582122630261,
+          "view": "A"
+        },
+        "H87_DVA_earthquake_intensity_logvar_l6": {
+          "raw_auc": 0.5520152274353165,
+          "direction_insensitive_auc": 0.5520152274353165,
+          "view": "A"
+        },
+        "raw_band_06": {
+          "raw_auc": 0.37292465124597596,
+          "direction_insensitive_auc": 0.627075348754024,
+          "view": "B"
+        },
+        "raw_band_12": {
+          "raw_auc": 0.49399451085012525,
+          "direction_insensitive_auc": 0.5060054891498748,
+          "view": "B"
+        },
+        "raw_band_19": {
+          "raw_auc": 0.5751607010850126,
+          "direction_insensitive_auc": 0.5751607010850126,
+          "view": "B"
+        },
+        "B_elevation_grad_1": {
+          "raw_auc": 0.5873548870275427,
+          "direction_insensitive_auc": 0.5873548870275427,
+          "view": "B"
+        },
+        "B_curvature_plus_1": {
+          "raw_auc": 0.5914628472636223,
+          "direction_insensitive_auc": 0.5914628472636223,
+          "view": "B"
+        },
+        "B_curvature_minus_1": {
+          "raw_auc": 0.49280638190056036,
+          "direction_insensitive_auc": 0.5071936180994396,
+          "view": "B"
+        },
+        "B_curvature_trace_1": {
+          "raw_auc": 0.570851071598903,
+          "direction_insensitive_auc": 0.570851071598903,
+          "view": "B"
+        },
+        "B_elevation_grad_3": {
+          "raw_auc": 0.588002731906522,
+          "direction_insensitive_auc": 0.588002731906522,
+          "view": "B"
+        },
+        "B_curvature_plus_3": {
+          "raw_auc": 0.5947274934422321,
+          "direction_insensitive_auc": 0.5947274934422321,
+          "view": "B"
+        },
+        "B_curvature_minus_3": {
+          "raw_auc": 0.49968541939906996,
+          "direction_insensitive_auc": 0.50031458060093,
+          "view": "B"
+        },
+        "B_curvature_trace_3": {
+          "raw_auc": 0.5802077500894242,
+          "direction_insensitive_auc": 0.5802077500894242,
+          "view": "B"
+        },
+        "B_surface_coherence": {
+          "raw_auc": 0.5726009657803743,
+          "direction_insensitive_auc": 0.5726009657803743,
+          "view": "B"
+        },
+        "B_elevation_grad_8": {
+          "raw_auc": 0.5848429071777752,
+          "direction_insensitive_auc": 0.5848429071777752,
+          "view": "B"
+        },
+        "B_slope_grad_1": {
+          "raw_auc": 0.6119520299272685,
+          "direction_insensitive_auc": 0.6119520299272685,
+          "view": "B"
+        },
+        "B_slope_grad_3": {
+          "raw_auc": 0.6165327217717896,
+          "direction_insensitive_auc": 0.6165327217717896,
+          "view": "B"
+        },
+        "B_elevation_local_residual": {
+          "raw_auc": 0.4503017735781567,
+          "direction_insensitive_auc": 0.5496982264218433,
+          "view": "B"
+        },
+        "B_elevation_local_sd": {
+          "raw_auc": 0.5684052998688447,
+          "direction_insensitive_auc": 0.5684052998688447,
+          "view": "B"
+        },
+        "B_slope_local_residual": {
+          "raw_auc": 0.5410837888994873,
+          "direction_insensitive_auc": 0.5410837888994873,
+          "view": "B"
+        },
+        "B_slope_local_sd": {
+          "raw_auc": 0.5592251102897341,
+          "direction_insensitive_auc": 0.5592251102897341,
+          "view": "B"
+        }
+      },
+      "max_direction_insensitive_auc": 0.627075348754024
+    }
+  ],
+  "alarms": [],
+  "alarm": false,
+  "verdict": "PASS: no single feature exceeded 0.90",
+  "maximum_auc": 0.6543168785707596,
+  "evaluator_version_for_fold_sampling": "gems52-pooled-hide-v1"
+}

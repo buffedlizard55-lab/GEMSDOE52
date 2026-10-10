@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="H87 geophysical DVA co-training experiment: DOWNLOAD YES for review; SUBMIT NO. Holdout gates and TIFF provenance.">
+<title>H87 Executive Summary — GEMSDOE52</title>
+<style>
+:root{--bg:#0b1220;--card:#141f31;--border:#2a3a50;--text:#e6edf5;--muted:#afbdcd;--green:#48d597;--red:#ff7f86;--blue:#78b7ff;--amber:#ffd47a}
+*{box-sizing:border-box}body{margin:0 auto;padding:24px;max-width:1050px;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,sans-serif}
+a{color:#9bd2ff}h1{font-size:2rem;line-height:1.2;margin:.3rem 0 .6rem}h2{font-size:1.35rem;margin:1.6rem 0 .5rem}h3{font-size:1.05rem;margin:1.1rem 0 .4rem}.muted,small{color:var(--muted)}.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin:16px 0}.decision{border:2px solid var(--amber);background:#2a2415}.status{display:inline-block;border-radius:999px;padding:4px 11px;margin:3px 5px 3px 0;font-weight:800;letter-spacing:.02em}.yes{background:#103b2c;color:#86f0c2}.no{background:#4b2029;color:#ffc0c4}.warn{background:#4a3918;color:#ffe0a0}.actions{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0}.button{display:inline-block;background:#18794e;color:white;text-decoration:none;padding:11px 16px;border-radius:9px;font-weight:800}.button.alt{background:#26496d}.code{word-break:break-all;background:#0c1523;padding:2px 6px;border-radius:5px}table{border-collapse:collapse;width:100%;margin:10px 0}th,td{border:1px solid var(--border);padding:9px;text-align:left;vertical-align:top}th{background:#1b2a40}ul,ol{padding-left:22px}.small{font-size:.92rem}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}.metric{background:#101a29;border:1px solid var(--border);border-radius:10px;padding:14px}.metric b{display:block;font-size:1.25rem;color:var(--blue)}footer{margin:32px 0;color:var(--muted);font-size:.9rem}
+</style>
+</head>
+<body>
+<p class="muted"><a href="index.html">← GEMSDOE52 current-round overview</a> · DOE GEMS #306 · H87 · 10 October 2026</p>
+<header class="card decision">
+  <p><span class="status yes">DOWNLOAD YES — INSPECTION ONLY</span><span class="status no">SUBMIT NO</span><span class="status warn">NEGATIVE RESEARCH RESULT</span></p>
+  <h1>H87: geophysical DVA versus surface-view abstention</h1>
+  <p>The TIFF is a new decoded pattern in the accessible local inventory and passes the local format, decoded-uniqueness, and literal lane checks. Do <strong>not</strong> submit it: the geophysical View A failed its preregistered sufficiency screen, pseudo-label exchange was correctly disabled, and the A-only holdout arm could not fill its fixed budget. No weekly slot was used and no organizer score is claimed.</p>
+  <div class="actions">
+    <a class="button" href="downloads/h87-candidate.tif" download>Download the H87 GeoTIFF</a>
+    <a class="button alt" href="downloads/h87-candidate.zip" download>Download single-TIFF ZIP</a>
+    <a class="button alt" href="downloads/h87-a-only-reasoning.csv.gz" download>A-only review table (all 13,966 rows)</a>
+    <a class="button alt" href="data/h87_run_card.json">Open JSON run card</a>
+  </div>
+  <p class="small">File: <code>gems52-h87-dva-aonly-13966px-20261010.tif</code> · 92,018 bytes · 13,966 binary cells, not 37,654 · one-band float32 · EPSG:32611 · 100 m.</p>
+  <p class="small">SHA-256: <code class="code">3fc7708422774f3766d12ecf1fa7e5a3493117ee67c61e1b19dadbe0b6f2d704</code></p>
+  <p class="small"><strong>Submission name:</strong> <code>h87-dva-aonly-13966px-20261010</code> (34 characters)<br>
+  <strong>Submission note:</strong> <code>H87 geophysical DVA vs surface/radiometric abstention; 3px spaced; research only; no slot used</code> (94/140 characters)</p>
+</header>
+
+<section class="card">
+<h2>Executive result</h2>
+<div class="grid">
+  <div class="metric"><b>0.4920</b>View A mean region OOF diagnostic AUC; registered sufficiency floor 0.60 — <strong>FAIL</strong>.</div>
+  <div class="metric"><b>0.6656</b>View B mean region OOF diagnostic AUC; registered sufficiency floor 0.60 — PASS.</div>
+  <div class="metric"><b>0.0782</b>Maximum absolute block error correlation across the registered Pearson/Spearman diagnostics; 2,097 usable spatial blocks.</div>
+  <div class="metric"><b>0 / 1</b>No pseudo-label exchange. Weak proxy-negative error correlation does not override the failed View-A sufficiency gate.</div>
+</div>
+<p class="small">The AUC figures are diagnostic screening values, not leaderboard scores. Whole 8-connected fault components were hidden in four label-blind quadrants with an 80-pixel buffer. Catalogue-zero cells are incomplete-label proxies, not confirmed fault absence.</p>
+</section>
+
+<section class="card">
+<h2>Holdout DTI — descriptive, not a matched-budget ranking</h2>
+<p><strong>HOLDOUT-DTI</strong> · evaluator <code>gems52-pooled-hide-v1</code> · 53,186 withheld positive pixels · α=0.2 · β=0.8 · 300 m triangular kernel · 95% paired 20 km physical-block bootstrap, 1,000 draws.</p>
+<table>
+<thead><tr><th>Arm</th><th>HOLDOUT-DTI</th><th>95% CI</th><th>Points placed per fold</th><th>Interpretation</th></tr></thead>
+<tbody>
+<tr><td>A-only disagreement</td><td>0.020945</td><td>[0.016885, 0.025601]</td><td>7,162 / 3,454 / 1,209 / 1,823</td><td><strong>Underfilled</strong> versus 9,400/fold; descriptive only.</td></tr>
+<tr><td>Single A</td><td>0.062855</td><td>[0.051786, 0.074869]</td><td>9,400 each</td><td>Filled control.</td></tr>
+<tr><td>Single B</td><td>0.174577</td><td>[0.154860, 0.196354]</td><td>9,400 each</td><td>Filled control; highest point estimate, not called a valid matched-budget comparison with A-only.</td></tr>
+<tr><td>max(A,B) union</td><td>0.144927</td><td>[0.127059, 0.164959]</td><td>9,400 each</td><td>Filled union control.</td></tr>
+<tr><td>Random</td><td>0.081343</td><td>[0.071337, 0.091382]</td><td>9,400 each</td><td>Filled floor control.</td></tr>
+</tbody></table>
+<p><strong>Budget check:</strong> A-only placed 13,648 total points across four folds against a 37,600 target (36.3%). Because it failed the fixed 9,400-per-fold budget, its paired differences against filled controls are explicitly invalid for promotion or comparative ranking. We did not relax spacing, change the pool, or add points to rescue it.</p>
+<p>Full fold-level terms and paired bootstrap receipts: <a href="data/h87_holdout.json">H87 holdout JSON</a>. The complete experiment, limitations, and three review passes are recorded in <a href="../knowledge/81_h87_results_and_limits.md">knowledge/81</a>.</p>
+</section>
+
+<section class="card">
+<h2>What was tested</h2>
+<p>View A contained 60 label-free directional-variogram features derived only from in-stack bands 2, 13, 15, 17, 7, and 16: reduced-to-pole magnetics, isostatic gravity, modelled basement depth, surface conductivity, geodetic shear, and earthquake intensity. View B contained 19 shared-cache raw and DEM-derived features from bands 6, 12, and 19; band 6's source/tag identity conflict remains open, so its use is confined to View B and treated as provisional. Their feature lists are disjoint. H87 re-tested the DVA transform as a strictly geophysical teacher; it does not claim the transform itself is new.</p>
+<p>A directional-insensitive single-feature leakage canary peaked at 0.6543, below the 0.90 alarm. The two OOF error metrics were weakly correlated on catalogue-zero proxies (MSE Pearson/Spearman 0.0636/0.0782; FPR −0.0135/0.0666), but a low correlation is not proof of conditional independence. The combined transfer gate required <em>both</em> this check and view sufficiency. View A failed, so no pseudo labels were exchanged.</p>
+<p>The candidate is an A-high / B-abstaining field. Its named non-fault mimics include lithologic or basin-fill boundaries, inversion/gridding seams, conductive clays or saline fill, and modelled basement edges. Candidate locations are review targets only, not verified faults, vents, or geothermal systems.</p>
+<p>The downloadable per-cell review table has all 13,966 candidates, all 19 cached View-B features, the 12 A-view two-lag anisotropy values, the six raw A input bands, and a candidate-specific leading A channel, physical interpretation, non-fault mimic, and falsifier. The leading channel is a relative ranking of the two normalized DVA lags, not calibrated significance. Table SHA-256: <code class="code">156beeec79d36d6ff1ecf554a16eea909962b69c6a92b49db3efcef07d195856</code>.</p>
+<p>Pre-fit slate and protocol: <a href="../knowledge/80_h87_hypotheses_preregistered.md">H87 preregistration</a>. Its hash is frozen in <a href="../registry/h87_preregistration.json">registry/h87_preregistration.json</a>.</p>
+</section>
+
+<section class="card">
+<h2>File checks and distinctness</h2>
+<ul>
+<li><strong>Format:</strong> local validator PASS; single-band float32, exact sample shape/CRS/transform, EPSG:32611, finite binary [0,1], no positive pixels outside the eroded eligible footprint.</li>
+<li><strong>Decoded uniqueness:</strong> PASS against 129 accessible local prior rasters (55 distinct decoded prior patterns); no identical prior, complete aligned audit, 71.68% of emitted support outside the local prior union. This cannot prove uniqueness against inaccessible/private submissions.</li>
+<li><strong>Surface lane before placement:</strong> maximum Spearman 0.0277, PASS.</li>
+<li><strong>Final-dot lane:</strong> maximum Spearman 0.0112; largest directed fraction within 3 pixels 0.3273 (below 0.70), PASS.</li>
+<li><strong>Not merely a union:</strong> Jaccard 0.0319 versus equal-budget single A, 0.0000 versus single B, 0.0139 versus equal-budget max(A,B), and 0.0211 versus the union of separately placed single-view supports.</li>
+</ul>
+<p>Lane/novelty receipt: <a href="data/h87_lane.json">H87 lane JSON</a>. Validator, SHA, submission note, and verdict: <a href="data/h87_run_card.json">JSON run card</a>.</p>
+</section>
+
+<section class="card decision">
+<h2>Should I submit this file?</h2>
+<p><span class="status yes">DOWNLOAD YES</span><span class="status no">SUBMIT NO</span></p>
+<p>Do not spend a competition slot on H87. The file is provided for inspection and reproducible research, not as a leaderboard candidate. It has not been uploaded; there is no organizer score, receipt, or acceptance claim.</p>
+<h3>Submission steps — only if a separate future selector approves it</h3>
+<ol>
+<li>Download the GeoTIFF above (or the ZIP, which contains exactly this one TIFF).</li>
+<li>Open the official <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DrivenData competition page</a> and sign in.</li>
+<li>Use the competition's submission page to upload the single TIFF, enter the short name and note listed above, and retain the portal receipt.</li>
+<li>Only treat a score as organizer-confirmed if it appears in an organizer receipt. None exists for H87.</li>
+</ol>
+<p><strong>For this run, stop here: do not upload.</strong> Promotion/slot selection is a separate weekly-selector step and was not performed.</p>
+</section>
+
+<section class="card small">
+<h2>Provenance and official review sources</h2>
+<ul>
+<li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Official GEMS problem, data, and metric page</a>.</li>
+<li><a href="https://doi.org/10.1145/279943.279962">Blum &amp; Mitchell, co-training assumptions (DOI)</a>.</li>
+<li><a href="https://www.osti.gov/biblio/1724082">DOE/OSTI blind-system and structural-setting inventory</a>.</li>
+<li><a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">USGS GeoDAWN survey context</a>.</li>
+<li>Input rasters are owner-mirrored and SHA-pinned; integrity is not organizer authentication. No external data were used and no public-board projection is reported.</li>
+</ul>
+<p>Related records: <a href="irregularities.html">irregularities register</a> · <a href="../evidence/h87_process_notes.json">execution notes</a> · <a href="../evidence/h87_run_card.json">full run card</a>.</p>
+</section>
+<footer>GEMS / DOE #306 · GEMSDOE52 · research artifact, not a verified fault map. <a href="index.html">Overview</a></footer>
+</body>
+</html>

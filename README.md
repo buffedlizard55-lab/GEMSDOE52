@@ -1,4 +1,6 @@
-<div style="background:#eef6ff;border:1px solid #9cc3f5;color:#0b2e59;padding:12px 16px;margin:12px 0;border-radius:8px;font:15px/1.5 sans-serif"><strong>Round H86 (separate from the H84 and H85 rounds on main): DOWNLOAD YES, SUBMIT NO.</strong> Structural concordance x geothermal proximity, 3 px spacing, 37,654 cells, binary 0/1, decoded-unique (136 priors, novel fraction 0.555). HOLDOUT-DTI (gems52-pooled-hide-v1, 60,894 withheld): <b>0.0694 [0.0569, 0.0822]</b> vs random <b>0.0754 [0.0675, 0.0834]</b>; paired vs random spans zero. Euler SI0 arm: 0.0777 [0.0700, 0.0857]; paired vs random spans zero. Both at random. Slots used: 0. <a href="docs/downloads/h86-candidate.tif">Download H86 GeoTIFF</a> · <a href="docs/h86-executive-summary.html">H86 executive summary</a> · H83 "submit yes" and 0.15–0.38 projection withdrawn (IR-H86-001). Not ORGANIZER-CONFIRMED.</div>
+<div style="background:#fff4d6;border:2px solid #e0ad4e;color:#432c00;padding:14px 18px;margin:12px 0;border-radius:10px;font:15px/1.55 sans-serif"><strong>Current H87: DOWNLOAD YES (inspection only) · SUBMIT NO · NEGATIVE.</strong> New decoded-unique research TIFF: <a href="docs/downloads/h87-candidate.tif">download GeoTIFF</a>; <a href="docs/h87-executive-summary.html">executive summary &amp; submission steps</a>; <a href="evidence/h87_run_card.json">JSON run card</a>. View A failed its sufficiency gate; pseudo-label exchange was not run; the A-only holdout arm underfilled the frozen budget. No organizer score, upload, or weekly slot. Do not submit.</div>
+
+<div style="background:#eef6ff;border:1px solid #9cc3f5;color:#0b2e59;padding:12px 16px;margin:12px 0;border-radius:8px;font:15px/1.5 sans-serif"><strong>Archived H86 (superseded by H87): DOWNLOAD YES for inspection, SUBMIT NO.</strong> Structural concordance x geothermal proximity, 3 px spacing, 37,654 cells, binary 0/1, decoded-unique (136 priors, novel fraction 0.555). HOLDOUT-DTI (gems52-pooled-hide-v1, 60,894 withheld): <b>0.0694 [0.0569, 0.0822]</b> vs random <b>0.0754 [0.0675, 0.0834]</b>; paired vs random spans zero. Euler SI0 arm: 0.0777 [0.0700, 0.0857]; paired vs random spans zero. Both at random. Slots used: 0. <a href="docs/downloads/h86-candidate.tif">Download H86 GeoTIFF</a> · <a href="docs/h86-executive-summary.html">H86 executive summary</a> · H83 "submit yes" and 0.15–0.38 projection withdrawn (IR-H86-001). Not ORGANIZER-CONFIRMED.</div>
 
 <!--H85-README-->
 # ★ START HERE — standing brief (read every session)
@@ -596,7 +598,7 @@ Go ahead and create a pull request and then merge the pull request onto the main
 
 ---
 
-# Current status — H85 (2026-10-10): DOWNLOAD YES (unique, format-valid) · SUBMIT NO (holdout below random)
+# Archived status — H85 (2026-10-10; superseded by H87): DOWNLOAD YES (unique, format-valid) · SUBMIT NO (holdout below random)
 
 > **Download:** format-valid, every pixel finite and in [0, 1], decoded-unique against all 137 local priors (max Jaccard 0.0766; `evidence/h85_run_card.json`). **Submit:** **no.** On the repo's own hide-and-recover holdout this field scores **below the random control**, and its final dots hit the literal lane rule (a universal-coverage probe; see IR-H85-009). **Slots used: 0 · Organiser receipts: 0.**
 
@@ -619,7 +621,7 @@ Go ahead and create a pull request and then merge the pull request onto the main
 <!--/H85-README-->
 
 <!--H84-README-->
-# Current status — H84 (2026-10-10): NEGATIVE — harmonic variogram-ellipse anisotropy did not beat the current holdout best
+# Archived status — H84 (2026-10-10; superseded by H87): NEGATIVE — harmonic variogram-ellipse anisotropy did not beat the current holdout best
 
 > **DOWNLOAD: YES** (format-valid, decoded-distinct from all 584 compared priors, 0 NaN, values exactly {0,1}). **SUBMIT: NO — research artefact only.**
 > The frozen primary `B_DVA2_HVA` is **not better** than its control `B_DVA2` on the hide-and-recover instrument

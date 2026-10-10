@@ -1,0 +1,41 @@
+{
+  "round": "H87",
+  "generated_utc": "2026-10-10T22:19:46+00:00",
+  "scope": "execution anomalies; no score or leaderboard claim",
+  "attempts": [
+    {
+      "attempt": 1,
+      "stage": "shared-cache build",
+      "outcome": "aborted before full cache build",
+      "cause": "the shared structural builder passed flush=True to the runner logging callback, whose first version did not accept keyword arguments",
+      "effect": "one preliminary raw-band column file was written without a manifest; the next cache run rebuilt and hash-verified the complete cache",
+      "scientific_result": null
+    },
+    {
+      "attempt": 2,
+      "stage": "canary + first fold fit",
+      "outcome": "aborted at first out-of-fold prediction checkpoint",
+      "cause": "work/h87 did not yet exist when the verified NumPy writer opened pred_pre_A_f0.partial",
+      "effect": "no fit receipt or prediction checkpoint was written; a parent-directory creation fix was applied before the successful full run",
+      "scientific_result": "canary was repeated identically in the successful run; no result from the interrupted fit is used"
+    }
+  ],
+  "successful_run_elapsed_seconds": 1006.8,
+  "initial_cache_build_elapsed_seconds": 360.4,
+  "budget_note": "All documented fit, holdout and TIFF-build work stayed within the registered 3-experiment / 2-hour cap; failed technical starts were not separate hypotheses or tuning attempts.",
+  "total_reported_elapsed_seconds_including_cache": 1367.2,
+  "cache_integrity_revalidation_in_successful_run_seconds": 2.5,
+  "initial_cache_receipt": "evidence/h87_cache_initial_build.json",
+  "postrun_documentation_rebuild": {
+    "utc": "2026-10-10T22:28:56+00:00",
+    "artifact": "docs/downloads/h87-a-only-reasoning.csv.gz",
+    "rows": 13966,
+    "sha256": "156beeec79d36d6ff1ecf554a16eea909962b69c6a92b49db3efcef07d195856",
+    "bytes": 5872421,
+    "update": "Rebuilt the review table from the already-written final coordinates and hash-verified shared feature cache; added per-candidate leading A band, band-specific physical explanation, specific non-fault mimic, falsifier, and all 19 cached View-B features.",
+    "scientific_model_refit": false,
+    "holdout_rerun": false,
+    "candidate_tiff_changed": false,
+    "selector_or_submission": false
+  }
+}
