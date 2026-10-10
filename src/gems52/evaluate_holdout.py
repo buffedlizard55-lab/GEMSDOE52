@@ -56,7 +56,8 @@ def from_terms(terms):
     return np.divide(tp, den, out=np.zeros_like(tp), where=den > 0)
 
 
-def pooled_summary(terms_by_arm, draws=1000, seed=520810, candidate='disagreement'):
+def pooled_summary(terms_by_arm, draws=1000, seed=520810, candidate='disagreement',
+                  evidence_class='HOLDOUT-DTI'):
     """Pool terms first; paired percentile CI resamples physical 20 km blocks.
 
     Each arm has identical block coordinates/order and evaluation masks. Contributions
@@ -86,7 +87,7 @@ def pooled_summary(terms_by_arm, draws=1000, seed=520810, candidate='disagreemen
     summaries = {}
     for n, a in arrays.items():
         t = a.sum(axis=0)
-        summaries[n] = dict(evidence_class='HOLDOUT-DTI', evaluator_version=VERSION,
+        summaries[n] = dict(evidence_class=evidence_class, evaluator_version=VERSION,
             dti=float(from_terms(t)), ci95=[float(x) for x in np.quantile(boot[n], [.025, .975])],
             withheld_positive_pixels=int(round(t[3])), tpw=float(t[0]), fpw=float(t[1]), fnw=float(t[2]))
     controls = [n for n in names if n != candidate]
@@ -94,11 +95,11 @@ def pooled_summary(terms_by_arm, draws=1000, seed=520810, candidate='disagreemen
     differences = {}
     for n in controls:
         delta = boot[candidate] - boot[n]
-        differences[n] = dict(evidence_class='HOLDOUT-DTI', evaluator_version=VERSION,
+        differences[n] = dict(evidence_class=evidence_class, evaluator_version=VERSION,
             delta=summaries[candidate]['dti'] - summaries[n]['dti'],
             ci95=[float(x) for x in np.quantile(delta, [.025, .975])],
             withheld_positive_pixels=summaries[candidate]['withheld_positive_pixels'])
-    return dict(evidence_class='HOLDOUT-DTI', evaluator_version=VERSION,
+    return dict(evidence_class=evidence_class, evaluator_version=VERSION,
         alpha=metric.ALPHA, beta=metric.BETA, triangular_radius_m=metric.R_M,
         pooled=True, scores=summaries, best_comparable_control=best,
         paired_differences=differences, bootstrap=dict(method='paired physical spatial-cluster percentile',

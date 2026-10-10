@@ -1,0 +1,29 @@
+{
+ "round": "H83",
+ "pre": {
+  "n_blocks": 2089,
+  "n_negative_predictions": 4041757,
+  "negative_class": "held-out catalogue-zero proxies, not verified absence",
+  "threshold": 0.6,
+  "minimum_blocks": 20,
+  "tests": {
+   "negative_mean_squared_error": {
+    "n": 2089,
+    "pearson": 0.05332536492273142,
+    "spearman": 0.05781039407163284
+   },
+   "negative_false_positive_rate": {
+    "n": 2089,
+    "pearson": 0.09829124677306843,
+    "spearman": 0.15264314978028384
+   }
+  },
+  "max_abs_correlation": 0.15264314978028384,
+  "measured": true,
+  "allow_exchange": true,
+  "reason": "weak proxy negative-error correlation; not proof of conditional feature independence"
+ },
+ "allow_exchange": true,
+ "block_statistics": "50x50 px blocks of held-out catalogue-zero proxies",
+ "negative_class": "held-out catalogue-zero proxies, not verified absence"
+}
