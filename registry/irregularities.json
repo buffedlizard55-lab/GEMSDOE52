@@ -1,6 +1,6 @@
 {
  "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified. | H61 merge: IR-H61-001..009 appended from the H61 branch; main's repaired schema and numbering retained.",
- "generated": "2026-10-09T21:59:21Z",
+ "generated": "2026-10-10T20:32:44+00:00",
  "entries": [
   {
    "id": "IR-30-029",
@@ -2718,6 +2718,66 @@
    "handling": "This session's round was renamed H76 -> H82, the next free identifier on main (H61-H77, H77cond and H81 are taken), with identifier-only edits: scripts/run_h76.py -> run_h82.py, publish_h76_site.py -> publish_h82_site.py, tests/test_h76.py -> test_h82.py, knowledge/67 -> 72 and 68 -> 73 (main already uses 67/67a/68 for H77cond and 69/70/71 for H81), registry/h76_* -> h82_*, evidence/h76_* -> h82_*, docs pages and download aliases, submission prefix and H82_LATEST.txt, IR-H76-001..007 -> IR-H82-001..007, and the README and AGENTS markers. The write and card stages were then re-run so the GeoTIFF, its ZIP, the submission receipt and the run card all carry the new name consistently. The preregistration was re-pinned with the pre-rename SHA-256 and byte count kept beside the new ones.",
    "disposition": "Renamed to H82 and re-pinned (registry/h82_preregistration.json carries pre_rename_sha256 fe7050eb40ecf23f... and post-rename e979a1773eb629a3...). Both rounds' README and AGENTS blocks are kept. No hypothesis, threshold, arm order, budget or promotion rule changed, and main's H76/H77/H77cond/H81 artefacts are untouched. Closed.",
    "measured_effect": "None on any measured number: the rename is identifier-only, and that is provable rather than asserted - the rebuilt GeoTIFF has the identical SHA-256 17c3f8325ac6f267b1b8cc58bc6fd9495c118c30de64d5f78293d19d7f20c907 and the identical 37,654 emitted cells. Only the ZIP's SHA-256 changed, because the ZIP stores its inner member's filename (the same effect IR-H74-002 recorded)."
+  },
+  {
+   "id": "IR-H83-001",
+   "round": "H83",
+   "severity": "high",
+   "status": "open - registered and reported",
+   "title": "The off-catalogue instrument's truth is a proxy for the competition's hidden set, not the hidden set",
+   "what_it_is": "gems52-offcatalogue-v1 scores recovery of SGMC fault pixels, a different compilation's faults, as a stand-in for G (the faults the USGS/INGENIOUS catalogue lacks). SGMC is compiled from state geologic maps at 1:100k-1:500k, is itself incomplete, and may include non-fault lineaments; the 300 m cut also removes trace extensions by construction even though the organiser has said the new-fault truth includes extensions of mapped traces.",
+   "how_we_know": "Measured in this round: 70,629 SGMC pixels are off-catalogue at a 0 px cut and 55,562 at a 300 m cut, against 60,988 labels.tif pixels; knowledge/66 already records the 95% disjointness. Amendment 74a added I2b (0 px cut) specifically to bracket the extension question, and the two differ (single_B OFFCAT-DTI 0.107456 vs 0.090632).",
+   "handling": "I2 and I2b are reported as OFFCAT-DTI, never as HOLDOUT-DTI and never as a board forecast. registry/h83_preregistration.json states that a second instrument can demote but never promote; the verdict is decided only by gems52-pooled-hide-v1.",
+   "disposition": "Recorded as a limit of the instrument, not a defect of the run. Both numbers are published.",
+   "measured_effect": "I2 single_B vs random: 0.090632 vs 0.083641 (lift +0.0070). I2b: 0.107456 vs 0.073864 (lift +0.0336). I1: 0.174571 vs 0.080426 (lift +0.0941). The surface detector's skill collapses on the off-catalogue population."
+  },
+  {
+   "id": "IR-H83-002",
+   "round": "H83",
+   "severity": "medium",
+   "status": "resolved - pre-registered amendment, honesty statement recorded",
+   "title": "Amendment 74a chose E3's base field after the E1/E2 arm results had been read",
+   "what_it_is": "The frozen shipment rule ranked only E1 (disagreement_post) and E2 (union + quota), neither of which is the single-view baseline the brief requires as the comparison. E3 (single_B + the same 25% reserved A-only quota) was added after the arm table showed single_B 0.174571 above union_max 0.149009, so the choice of base field is informed by results already in hand even though E3's own measurement is prospective.",
+   "how_we_know": "The amendment text in knowledge/74 section 9 and registry/h83_preregistration.json -> amendment_74a records this explicitly rather than presenting E3 as blind.",
+   "handling": "E3 is registered as an attribution arm: it may be shipped (it is the better artefact) but it can never by itself turn the verdict positive. The verdict is decided by the pre-registered candidate disagreement_post and the frozen CI rule.",
+   "disposition": "Disclosed on the site and in the run card. Shipped arm E3; verdict still negative.",
+   "measured_effect": "E3 measured 0.154456 [0.133156, 0.175327] on I1 vs single_B 0.174571, paired -0.117468 [-0.140097, -0.095915]."
+  },
+  {
+   "id": "IR-H83-003",
+   "round": "H83",
+   "severity": "medium",
+   "status": "open - reported, not repaired",
+   "title": "The full-census literal dots rule is unsatisfiable for every non-empty raster",
+   "what_it_is": "The lane rule 'more than 70% of your dots within 3 px of one registry raster's dots' returns DUPLICATE/STOP for any non-empty emission, because the 526-blob census contains universal-coverage lattice probes whose 3 px halo covers the whole eligible footprint. This reproduces H82's and H73's finding; it is a property of the registry, not of the candidate.",
+   "how_we_know": "Measured by gates.lane_report, which publishes both the literal verdict and an informative-prior policy verdict, plus the list universal_coverage_probes.",
+   "handling": "Both readings are published side by side, and the scored-only restricted registry is reported as a third reading. A restricted PASS never waives a literal full-census DUPLICATE/STOP (IR-H73-011 stands).",
+   "disposition": "Left as-is: waiving it would be a silent loosening of the brief's rule.",
+   "measured_effect": "See evidence/h83_lane_summary.json for the three readings."
+  },
+  {
+   "id": "IR-H83-004",
+   "round": "H83",
+   "severity": "low",
+   "status": "resolved - documented, no new variant created",
+   "title": "Two packaging variants are published, which superficially conflicts with IR-H77-004 ('do not add another packaging variant')",
+   "what_it_is": "H77/H82 required gems52.grid.write_geotiff_portal_exact (stripped, LZW, NaN outside). The owner reported a portal rejection 'Predicted values must be in range [0, 1]', and the only variant that cannot produce it under any reader is the all-finite zeros-outside one. Both variants have scored in this project family, including the champion itself (h33-h33-2-b2-...-zeros).",
+   "how_we_know": "Measured: all 73 rasters in docs/downloads are single-band with finite values in [0,1]; the 11 owner-scored rasters restored into data/scored are stripped/LZW/NaN-outside, and the champion is a zeros file. So both containers are accepted by the portal.",
+   "handling": "The all-finite file is the recommended download and the page says to upload one, never both. The second file is the organiser template's own container, not a new variant, so IR-H77-004 is not waived.",
+   "disposition": "Documented in docs/h83-executive-summary.html and README's H83 block.",
+   "measured_effect": "Both files pass gems52.gates.format_report; the exporter fails closed otherwise."
+  },
+  {
+   "id": "IR-H83-005",
+   "round": "H83",
+   "severity": "low",
+   "status": "resolved - no action needed",
+   "title": "build stage crashed once on a stale variable name after the TIF had already been written",
+   "what_it_is": "After amendment 74a was patched in, stage_build's receipt dict still referenced d_union, which no longer existed. The GeoTIFF and its template twin were written before the crash, so the artefact was never at risk; only the JSON receipt was missing.",
+   "how_we_know": "The traceback is preserved in the session log; the re-run reproduced byte-identical TIFs (SHA-256 de580306...), which proves the build is deterministic.",
+   "handling": "Renamed to d_e2 and added e3_i1_dti; re-ran the stage. No change to method or results.",
+   "disposition": "Closed. The determinism check (identical SHA across two runs) is itself recorded here as evidence.",
+   "measured_effect": "None: identical SHA-256 across both runs."
   }
  ],
  "merge_note": "Merged registry/irregularities.json: main's entries (including the parallel H66 round's IR-H66-001..010) plus this round's IR-H67-001..011. This round was labelled H66 in its own receipts and was renamed H67 before merge because main merged a different H66 first (PR #56); the IDs were renumbered wholesale so no ID carries two meanings. See knowledge/45a_amendment_2026-10-09_H67_rename.md. IR-H67-002 (in-domain nodata sentinels collapse every rank channel) and IR-H67-008 (probe classification flips with the structuring element, and this round's lane verdict depends on it) are the two that change a result; IR-H67-005 and IR-H67-007 change how a shared instrument must be read. | H77cond merge: this round was executed as H74 and renamed to H77cond before merge because a parallel session merged a different H74 first (PR #72) and a third took H75; see IR-H77cond-001. The rename is identifier-only and the preregistration's pinned SHA-256 still validates. IR-H77cond-002 records a shared-tool repair to scripts/check_site.py surfaced by that merge. IR-H77cond-003 records that filename, receipt and git dating are all individually unsound in this repository, and that the duplicate guard was therefore made dating-independent. | H82 merge (2026-10-09): union of both entry sets by id; 8 H82 entries added (IR-H82-001..IR-H82-008); no existing entry was edited or removed."

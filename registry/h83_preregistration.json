@@ -1,0 +1,50 @@
+{
+ "round": "H83",
+ "version": "gems52-h83-offcatalogue-cotrain-v1",
+ "status": "frozen_preregistration_before_any_fit",
+ "registered_utc": "2026-10-10T00:00:00Z",
+ "lane": "co-training between a geophysical view and a surface view, disagreement as the discovery signal (Blum & Mitchell COLT '98, doi:10.1145/279943.279962)",
+ "hypothesis_document": "knowledge/74_hypotheses_H83_preregistered.md",
+ "hypothesis_sha256": "245220eccb36c61ef209d587f148f501e08afdd418fd2440b98491a2992cd156",
+ "instruments": {
+  "primary": "gems52-pooled-hide-v1 (src/gems52/evaluate_holdout.py) \u2014 mandated, unchanged, comparable with all prior rounds",
+  "new_secondary": "gems52-offcatalogue-v1 \u2014 truth = SGMC fault pixels >= 300 m from labels.tif; trained on labels.tif from other quadrants; diagnostic only, cannot promote"
+ },
+ "thresholds": {
+  "independence_abandon_max_abs_rho": 0.6,
+  "min_independence_blocks": 20,
+  "block_side_px": 50,
+  "canary_auc_alarm": 0.9,
+  "buffer_px": 80,
+  "catalogue_exclusion_m": 200.0,
+  "budget_dots_per_fold_per_arm": 9400,
+  "budget_dots_total": 37654,
+  "min_dot_separation_px": 3.0,
+  "bootstrap_draws": 1000,
+  "donor_rank_min": 0.98,
+  "receiver_rank_interval": [
+   0.35,
+   0.65
+  ],
+  "pseudo_cap_per_fold": 2000,
+  "min_pseudo_pixels": 5,
+  "lane_surface_max_spearman": 0.9,
+  "lane_dots_max_near_share": 0.7,
+  "lane_near_radius_px": 3.0,
+  "offcatalogue_min_distance_to_catalogue_px": 3.0,
+  "discovery_quota_fraction": 0.25
+ },
+ "promotion_rule": "ship only if the selected candidate's paired 95% CI lower bound against single_B on gems52-pooled-hide-v1 is above zero; otherwise verdict=negative and slots used = 0",
+ "attribution_arms_not_promotable": true,
+ "submission_slots_used": 0,
+ "note": "A second instrument does not authorise a second promotion path. OFFCAT-DTI is reported separately and is never written as a score.",
+ "amendment_74a": {
+  "registered_utc": "2026-10-10",
+  "adds_candidate_emission": "E3 = single_B field + 25% reserved A-only quota, scored as holdout arm E3_single_B_quota",
+  "adds_instrument": "I2b = gems52-offcatalogue-v1 with the catalogue-distance cut at 0 px (extensions included)",
+  "shipment_rule_now": "ship whichever of E1/E2/E3 has the highest MEASURED pooled gems52-pooled-hide-v1 DTI",
+  "honesty": "the E1/E2 arm results were read before this amendment; single_B's choice as E3's base field is therefore informed by results in hand, so E3 is registered as an attribution arm that may be shipped but cannot turn the verdict positive",
+  "verdict_unchanged": "decided by the pre-registered candidate disagreement_post and the frozen CI rule"
+ },
+ "hypothesis_sha256_with_amendment_74a": "245220eccb36c61ef209d587f148f501e08afdd418fd2440b98491a2992cd156"
+}
