@@ -1,7 +1,7 @@
 {
   "reviewed_utc": "2026-10-10",
   "round": "H57 real-raster co-training archive",
-  "status": "HISTORICAL RESEARCH ONLY — DO NOT SUBMIT",
+  "status": "HISTORICAL RESEARCH ONLY \u2014 DO NOT SUBMIT",
   "global_pointer_current_at_review": "gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif",
   "historical_result_receipts": {
     "holdout": "evidence/h57_holdout.json",
@@ -37,7 +37,7 @@
     "metric_module_matches_historical_hash": true,
     "spatial_helper_matches_historical_hash": false,
     "spatial_helper_change_is_docstring_only": null,
-    "spatial_helper_behavior_difference": "The current runner imports the H57-specific src/gems52/h57_real_spatial.py, whose bytes match the prior post-execution review's 5faed874… current-helper hash. The historical execution receipt records 88161ed7… for src/gems52/spatial.py, and no immutable snapshot of those bytes is present in Git history. A prior review described its later difference as documentation-only, but that comparison cannot be independently repeated here; no behavioral equivalence or mismatch is asserted.",
+    "spatial_helper_behavior_difference": "The current runner imports the H57-specific src/gems52/h57_real_spatial.py, whose bytes match the prior post-execution review's 5faed874\u2026 current-helper hash. The historical execution receipt records 88161ed7\u2026 for src/gems52/spatial.py, and no immutable snapshot of those bytes is present in Git history. A prior review described its later difference as documentation-only, but that comparison cannot be independently repeated here; no behavioral equivalence or mismatch is asserted.",
     "spatial_helper_change_was_verified_docstring_only_in_this_review": null,
     "runner_and_build_hashes_match_historical_receipts": false,
     "full_historical_run_repeated_with_current_code_and_exact_pinned_inputs": false
