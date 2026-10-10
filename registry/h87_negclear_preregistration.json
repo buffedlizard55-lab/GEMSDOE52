@@ -1,0 +1,27 @@
+{
+  "round": "H87-L",
+  "status": "preregistered before any H87 fit",
+  "lane": "co-training with disagreement as the discovery signal (shared H60D instrument)",
+  "question": "Does the shared negative sampler leak held-out catalogue geometry into hide-and-recover holdout scores?",
+  "mechanism_under_test": {
+    "shipped_path": "scripts/run_h60d_cotrain.py::fit_and_predict -> gems52.h57.labelled_pixels(cat=FULL catalogue, valid=FULL footprint, fit)",
+    "defect": "negatives are drawn from the whole footprint (including held-out fold region) and cleared by 5 px (500 m) from the FULL catalogue (including held-out fold truth). Held-out fault neighbourhoods are therefore never sampled as negatives, and held-out region labels shape the training set.",
+    "named_non_fault_mimic": "a smooth geophysical gradient that is simply absent from the negative sample near any fault (sampling artefact), rather than a learned fault signature"
+  },
+  "arms": {
+    "shipped": "as in H60D: fit on fit-region positives + negatives from full footprint cleared by full catalogue",
+    "clean": "fit-region only: positives cat&fit, negatives from valid&fit cleared by cat&fit (no held-out labels touch training)"
+  },
+  "fields_scored": ["view_A", "view_B", "clf_union", "dis_contrast"],
+  "instrument": "gems52 HO.make_folds(hide, n_folds=4, buffer_px=4, prevalence=0.002, seed=H60D SEED); legal = region & permitted & ~corridor(visible); R=300 m; alpha 0.2 beta 0.8; budgets 37654 and 15000 px; iso_select 3 px",
+  "primary_contrast": "paired per-fold DTI difference clean minus shipped, for view_B and dis_contrast at 37654 px",
+  "decision_rule": {
+    "leak_confirmed": "primary paired difference (clean - shipped) has fold-bootstrap 95% CI entirely below 0 for view_B AND for view_A at 37654 px",
+    "no_leak_detected": "CI spans 0 for both",
+    "clean_helps": "CI entirely above 0 (would mean the shipped sampler suppressed signal; reported, not promoted)"
+  },
+  "leakage_canary": "AUC of each field alone against held-out truth in the legal set (bar 0.90); h60d.layer_auc_canary",
+  "budget": "1 experiment of the 3 allowed this session",
+  "slots": 0,
+  "promotion": "none: this round can at most produce a corrected instrument, never a submission"
+}
