@@ -8,6 +8,18 @@ Keep known-catalogue labels separate from verified fault absence, public partici
 
 This session's working branch is fixed by Arena. Do not change branches. Keep raw competition data and large intermediate arrays under ignored `data/` and `work/`. Publish small audit receipts, the unique compressed prediction raster and its review table.
 
+<!--H90-AGENTS-->
+## Current H90 continuation (2026-10-10) — READ THIS FIRST
+
+- Verdict: **negative**. DOWNLOAD YES (research), SUBMIT NO, slots used 0. Full note: `knowledge/80_h90_results_and_limits.md`; run card: `evidence/h90_run_card.json`; irregularities IR-H90-001…009.
+- Holdout instrument finding: the shared H60-family holdout builds its legal pool from the FULL catalogue, so held-out truth is never inside the pool (IR-H90-001). Re-scored on the visible-catalogue ring, every arm's DTI moves 5–21× and the disagreement field falls below random (IR-H90-002). Do not compare any H60-family number with H82/H85/H86 numbers until both arms are reproduced on one instrument (IR-H90-007).
+- Clean sampler: the shipped View A holdout is inflated by about 10% (paired −0.000389 [−0.000832, −0.000104]); View B and dis_contrast are not materially affected (IR-H90-003).
+- Lane gate: the literal dot-lane rule returns DUPLICATE/STOP for the H90 candidate against the calibration lattice (99.81%). H60-6 excludes that raster and would pass (0.6534 vs H60D). Conflicting precedents; owner decision (IR-H90-006). Pixel uniqueness is not lane independence: 65% of its dots sit within 3 px of H60D's dots (IR-H90-005).
+- Next round (proposals, none validated): P1 re-score registered arms on one instrument; P2 single-view B with the clean sampler; P3 cover-gated candidates on the visible ring. See knowledge/80 §8.
+- Reproduction note: `work/pinned` is a symlink to `data/`; the H60 scripts expect that path and no script creates it (IR-H90-009). Staging step reported once; not forked.
+- Never spend a slot without a new comparable holdout best; promotion is a separate selector step.
+<!--/H90-AGENTS-->
+
 <!--H85-AGENTS-->
 ## Current H85 continuation (2026-10-10)
 Read `README.md`'s H85 block first: it carries the standing brief verbatim, and `knowledge/77` is the same text. Then

@@ -1,0 +1,112 @@
+{
+ "round": "H90 (worked as H87; renamed on merge because main had used H87 for another round, renamed H89)",
+ "lane": "co-training with disagreement as the discovery signal (View A potential-field/subsurface; View B surface DEM + radiometric when present)",
+ "hypothesis": "Clean-sampler co-training disagreement, max(pA - pB, 0), placed at 3 px spacing outside the 200 m catalogue ring and outside all prior support, carries catalogue-free buried-fault signal.",
+ "mechanism": "A confident and B abstaining marks structure that the surface view cannot see, i.e. buried under cover (depth_to_base_surf band 15 gates the cover interpretation).",
+ "named_non_fault_process": "Alluvial-fan gravel wedges and basin-fill thickness gradients (depth-to-basement) that raise View A confidence without faulting.",
+ "holdout_dti": {
+  "label": "HOLDOUT-DTI (H60D instrument; evaluator gems52.metric.dti alpha 0.2 beta 0.8 R 300 m; 4 hide folds; per-fold 37,654 px; 36,411 withheld positives; fold-bootstrap 95% CI)",
+  "candidate_arm_clean_dis_contrast": {
+   "dti": 0.00385,
+   "ci95": [
+    0.003519,
+    0.00422
+   ],
+   "note": "the arm that the candidate file is built from; not the shipped raster's own holdout"
+  },
+  "shipped_h60d_dis_contrast": {
+   "dti": 0.004109,
+   "ci95": [
+    0.003598,
+    0.004948
+   ]
+  },
+  "best_comparable_arm_shipped_view_B": {
+   "dti": 0.006419,
+   "ci95": [
+    0.005873,
+    0.006892
+   ]
+  },
+  "random_control": {
+   "dti": 0.001992,
+   "ci95": [
+    0.001904,
+    0.00212
+   ]
+  },
+  "paired_candidate_minus_shipped_dis_contrast": {
+   "mean": -0.000218,
+   "ci95": [
+    -0.000728,
+    0.000234
+   ]
+  },
+  "visible_ring_pool_HOLDOUT_DTI_dis_contrast": {
+   "dti": 0.031379,
+   "random": 0.041594,
+   "view_B": 0.053706,
+   "note": "competitor-realistic pool (IR-H90-001/002); CI not computed for this pool"
+  }
+ },
+ "leakage_canary": {
+  "bar": 0.9,
+  "max_single_layer_auc_over_fields_and_samplers": 0.7454,
+  "verdict": "no alarm (fold-region canary, IR-H90-004)"
+ },
+ "correlation_overlap_vs_registry": {
+  "surface_max_abs_spearman": 0.0883,
+  "surface_bar": 0.9,
+  "surface_passed": true,
+  "dots_max_within_3px_frac": 0.9981,
+  "dots_max_within_3px_prior": "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif (universal calibration lattice; IR-H90-006)",
+  "dots_within_3px_vs_h60d_dis_contrast": 0.6534,
+  "dots_bar": 0.7,
+  "dots_gate_literal": "DUPLICATE/STOP (literal)",
+  "exact_pixel_overlap_with_any_prior": 0,
+  "union_of_views_overlap_fraction": 0.0147,
+  "dots_gate_under_H60-6_exclusion_of_calibration_raster": "PASS (next-highest 0.6534 < 0.70); owner decision (IR-H90-006)"
+ },
+ "raster_sha256": {
+  "submission": "094f5ce32216af1c450058583e0bad172ee3c6eded0a674789ab00a7446001ec",
+  "docs_downloads_h90_candidate_tif": "094f5ce32216af1c450058583e0bad172ee3c6eded0a674789ab00a7446001ec"
+ },
+ "validator_output": {
+  "format_gate_problems": [],
+  "crs": "EPSG:32611",
+  "shape": [
+   3730,
+   3292
+  ],
+  "transform_matches_sample": true,
+  "values": "exactly {0, 1}; finite everywhere; in [0,1]: True",
+  "nan_inside_footprint": 0,
+  "outside_footprint_positive": 0,
+  "positives": 37654,
+  "nodata_tag": null,
+  "uniqueness": {
+   "priors_checked": 142,
+   "canonical_pattern_unique": true,
+   "novel_fraction": 1.0
+  },
+  "ring_gate_min_distance_m": 223.61,
+  "ring_gate_pass": true
+ },
+ "submission_name": "gems52-h90-cleanoof-disagree-37654px",
+ "submission_note": "H90 RESEARCH ONLY - DO NOT SUBMIT: clean-sampler co-training disagreement; 3px spaced; 200m ring out; binary; holdout below best arm",
+ "submission_note_chars": 132,
+ "verdict": "negative",
+ "promote": false,
+ "download_ok": true,
+ "submit_ok": false,
+ "slots_used": 0,
+ "experiments_used": 3,
+ "hours_used_approx": 0.6,
+ "why_not_promoted": [
+  "holdout DTI below the best comparable arm on the same instrument (view_B 0.006419)",
+  "disagreement field below random on the visible-ring pool (IR-H90-002)",
+  "literal dot-lane gate DUPLICATE/STOP (IR-H90-006)"
+ ],
+ "provenance": "owner-mirror bytes, SHA-256 pinned in registry/data_manifest.json; integrity-pinned, NOT organiser-authenticated",
+ "round_label_disclosure": "Identifier-only rename. Pre-registrations registry/h87_negclear_preregistration.json and registry/h87_ring_preregistration.json unchanged (sha256 1eede36d\u2026, 502a7ba7\u2026). Candidate TIF bytes unchanged (sha256 094f5ce3\u2026); its embedded note reads 'H87 RESEARCH ONLY' from build time."
+}

@@ -1,6 +1,6 @@
 {
   "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified. | H61 merge: IR-H61-001..009 appended from the H61 branch; main's repaired schema and numbering retained.",
-  "generated": "2026-10-10T21:30:00Z (H85 append)",
+  "generated": "2026-10-10T22:20:00Z (H90 append)",
   "entries": [
     {
       "id": "IR-30-029",
@@ -3090,6 +3090,114 @@
       "handling": "Not caused by H84 edits; left unchanged. The H84 pages were not made to satisfy stale round checks. The checker's dispatch also reads the current round from docs/data/submission.json (H60), which is stale.",
       "disposition": "Resolved by the merge with main: scripts/check_site.py now reports 0 failures on the merged tree (run 2026-10-10). The earlier 22 failures were the stale checker vs the pre-merge pages.",
       "measured_effect": "Site content is unaffected; the checker fails."
+    },
+    {
+      "id": "IR-H90-001",
+      "round": "H90",
+      "severity": "high",
+      "status": "open - decision for owner",
+      "title": "Legal-pool ring on the shared H60D holdout is built from the FULL catalogue, held-out truth included",
+      "what_it_is": "run_h60d_cotrain.stage_validate sets permitted = valid & ~dilate(full catalogue, 2 px). Held-out truth pixels therefore never lie in the legal pool (0 of 36,411 in every fold), so the shipped instrument credits dots only from the 200-300 m annulus around truth.",
+      "how_we_know": "evidence/h90_ring_audit.json: truth_in_legal_shipped_is_zero=true. Same OOF fields, visible-catalogue ring: view_B 0.006419 -> 0.053706 (x8.37), random 0.001992 -> 0.041594 (x20.9).",
+      "handling": "Not fixed in the shared tool (every committed H60/H62/H77cond holdout receipt depends on it). Reported. Next round must decide the instrument before any new holdout number is compared.",
+      "consequence": "HOLDOUT-DTI numbers from the H60 family are an annulus test, not the competitor-realistic test. Not comparable to H82/H85/H86 numbers without a ring-rule check.",
+      "disposition": "Open: owner decides the instrument (visible-catalogue ring). Existing H60-family receipts flagged, not rewritten."
+    },
+    {
+      "id": "IR-H90-002",
+      "round": "H90",
+      "severity": "high",
+      "status": "measured; lane finding",
+      "title": "On the visible-ring (competitor-realistic) pool the disagreement field is below random",
+      "what_it_is": "dis_contrast = max(pA-pB,0) pooled DTI 0.031379 vs random 0.041594 and view_A 0.020507 under the visible-catalogue pool. view_B 0.053706 and clf_union 0.050728 stay above random.",
+      "how_we_know": "evidence/h90_ring_audit.json pooled + arm_order_visible_ring. Same folds, scorer, budget, seed family as the shipped instrument.",
+      "handling": "Reported as a negative for the co-training disagreement signal. The H90-C candidate is built on this field, so it is not a promotion candidate.",
+      "consequence": "Co-training disagreement adds no measured lift over random on the rule a competitor faces. Single-view B is the strongest in-lane arm on both pools.",
+      "disposition": "Recorded: negative lane finding on the competitor-realistic (visible-ring) pool."
+    },
+    {
+      "id": "IR-H90-003",
+      "round": "H90",
+      "severity": "high",
+      "status": "measured; reported with receipt",
+      "title": "Shared negative sampler uses held-out region labels; effect measured on View A only",
+      "what_it_is": "gems52.h57.labelled_pixels draws negatives from the WHOLE footprint and clears them by 5 px from the FULL catalogue, so the held-out region's own labels shape training. The fit uses fit-region positives only.",
+      "how_we_know": "evidence/h90_negclear_audit.json: clean minus shipped at 37,654 px: view_A -0.000389 [-0.000832, -0.000104] (inflation of the shipped holdout); view_B +0.000108 [-0.000040, +0.000348]; dis_contrast -0.000218 [-0.000728, +0.000234].",
+      "handling": "Measured, not fixed. The clean sampler is available in scripts/run_h90_negclear_audit.py; the shipped emission is not changed because the final file uses the OOF fields.",
+      "consequence": "View A's holdout numbers in the H60 family are modestly inflated (about 10%). View B and the disagreement field are not materially affected.",
+      "disposition": "Recorded: View A holdout inflation measured (paired CI excludes zero); shared sampler not changed this round."
+    },
+    {
+      "id": "IR-H90-004",
+      "round": "H90",
+      "severity": "medium",
+      "status": "deviation recorded",
+      "title": "Pre-registered leakage-canary wording was undefined on the legal set",
+      "what_it_is": "The H87-L preregistration said 'AUC against truth in the legal set'. The legal set holds no truth pixel by construction, so the AUC is undefined (NaN). The first audit run failed on that NaN when writing the receipt.",
+      "how_we_know": "First run log work/logs/h90_audit2.log (NaN in canary_max_auc). Canary now uses the fold region, as run_h60d_cotrain.canary_report does.",
+      "handling": "Deviation recorded in the receipt (deviations field) and in registry/h87_negclear_preregistration.json history. Canary max AUC 0.7454 < 0.90 on fields from both samplers.",
+      "consequence": "Canary result is valid on the fold region, not on the legal set.",
+      "disposition": "Recorded deviation: canary on the fold region; deviation logged in the audit receipt."
+    },
+    {
+      "id": "IR-H90-005",
+      "round": "H90",
+      "severity": "medium",
+      "status": "reported",
+      "title": "H90-C candidate is pixel-unique but a near-sibling of H60D",
+      "what_it_is": "Zero pixels shared with any of the 142 priors (the legal pool excludes all prior support), but 65.34% of its dots lie within 3 px of the H60D dis_contrast dots.",
+      "how_we_know": "evidence/h90_build.json lane_dots.per_prior; independent check in this session (zero exact overlap with 5 priors).",
+      "handling": "Labelled research only. The lane-drift gate on dots returns DUPLICATE/STOP against the universal calibration lattice (IR-H90-006).",
+      "consequence": "Pixel uniqueness is not lane independence. Do not describe this file as a new discovery.",
+      "disposition": "Recorded: candidate labelled research only, not promoted."
+    },
+    {
+      "id": "IR-H90-006",
+      "round": "H90",
+      "severity": "medium",
+      "status": "repo convention applied; not waived",
+      "title": "Literal dot-lane gate fires on the calibration lattice that H60-6 excludes (conflicting precedents)",
+      "what_it_is": "99.81% of H90-C dots are within 3 px of 13gems_20261001_r13-lattice-s5_v2_nan-outside.tif (calibration raster; manifest class owner-supplied metric calibration). H60-6 (knowledge/30) excluded this raster from the 3-px dot component because budget-sized placements read 70-84% against it by grid geometry. H85 (IR-H85-009) instead reported the literal rule without waiver because random dots read 0.999 against it.",
+      "how_we_know": "evidence/h90_build.json lane_dots.dots_max_within_3px_prior and per_prior.",
+      "handling": "Literal DUPLICATE/STOP recorded. Under the H60-6 exclusion the dots gate would PASS (next-highest 0.6534 vs H60D < 0.70). Owner must decide which rule governs. The verdict is negative regardless (holdout clause).",
+      "consequence": "The lane's dot gate cannot be read without naming the rule. Do not present the literal FAIL as a duplicate finding about the candidate's placement.",
+      "disposition": "Open: owner decides which dot-gate rule governs (H60-6 exclusion vs H85 literal). Literal result stands."
+    },
+    {
+      "id": "IR-H90-007",
+      "round": "H90",
+      "severity": "high",
+      "status": "open - cross-instrument comparisons",
+      "title": "Random-control scales differ 20x between instruments; cross-round comparisons are not like-for-like",
+      "what_it_is": "H60 family random control at 37,654 px is about 0.0018-0.0020 (this round 0.001992). H82/H85 instrument random is 0.080426 and H82 B_DVA2 is 0.1892. Statements such as 'H85 is far below H82' compare different instruments.",
+      "how_we_know": "evidence/h60d_validation.json, evidence/h90_negclear_audit.json, and knowledge/78 section 2 table. The ring audit (IR-H90-001) changes view_B by x8.4 on one instrument alone, which is a likely contributor but not verified as the whole cause.",
+      "handling": "Flagged. No cross-instrument ranking is made in this round.",
+      "consequence": "Before ranking rounds against each other, reproduce both arms on one instrument.",
+      "disposition": "Open: no cross-instrument ranking until both arms are reproduced on one instrument."
+    },
+    {
+      "id": "IR-H90-008",
+      "round": "H90",
+      "severity": "low",
+      "status": "reported",
+      "title": "Random-control draws move the random arm by about 0.0002 between runs",
+      "what_it_is": "Committed H60D random at 37,654 px is 0.001802 [0.001508, 0.001944]. This round's random draw (per-fold seeds) gives 0.001992 [0.001904, 0.002120]. The draw order differs between the two runs.",
+      "how_we_know": "evidence/h60d_validation.json vs evidence/h90_negclear_audit.json.",
+      "handling": "Paired comparisons in this round use the same draws within the round only.",
+      "consequence": "Random-control differences below about 0.0003 are noise on this instrument.",
+      "disposition": "Recorded: random-control noise floor about 0.0002 between draws."
+    },
+    {
+      "id": "IR-H90-009",
+      "round": "H90",
+      "severity": "info",
+      "status": "reproduction verified",
+      "title": "H60D co-training pipeline reproduces committed numbers on restored bytes",
+      "what_it_is": "Restored data (SHA-256 verified against registry/data_manifest.json; integrity-pinned owner mirrors, not organiser-authenticated). Reproduction: independence max|r| 0.17604 (committed 0.176), withheld positives 36,411 (committed 36,411), canary worst 0.7136 (committed 0.7136), co-training AUC deltas -0.0067 and -0.0104 (committed), shipped holdout view_B 0.006419 [0.005873, 0.006892] (committed 0.006419 [0.005873, 0.006892]).",
+      "how_we_know": "evidence/h90_h60d_reproduction.log; evidence/h90_negclear_audit.json pooled_dti.",
+      "handling": "Working copy of data/ is in the ignored directory; work/pinned is a symlink to data/ because the H60 scripts expect that path and no script creates it.",
+      "consequence": "The instrument is trustworthy on these bytes. The issues above are design issues, not reproduction failures.",
+      "disposition": "Recorded: reproduction on restored bytes verified; work/pinned staging symlink reported."
     }
   ],
   "merge_note": "Merged registry/irregularities.json: main's entries (including the parallel H66 round's IR-H66-001..010) plus this round's IR-H67-001..011. This round was labelled H66 in its own receipts and was renamed H67 before merge because main merged a different H66 first (PR #56); the IDs were renumbered wholesale so no ID carries two meanings. See knowledge/45a_amendment_2026-10-09_H67_rename.md. IR-H67-002 (in-domain nodata sentinels collapse every rank channel) and IR-H67-008 (probe classification flips with the structuring element, and this round's lane verdict depends on it) are the two that change a result; IR-H67-005 and IR-H67-007 change how a shared instrument must be read. | H77cond merge: this round was executed as H74 and renamed to H77cond before merge because a parallel session merged a different H74 first (PR #72) and a third took H75; see IR-H77cond-001. The rename is identifier-only and the preregistration's pinned SHA-256 still validates. IR-H77cond-002 records a shared-tool repair to scripts/check_site.py surfaced by that merge. IR-H77cond-003 records that filename, receipt and git dating are all individually unsound in this repository, and that the duplicate guard was therefore made dating-independent. | H82 merge (2026-10-09): union of both entry sets by id; 8 H82 entries added (IR-H82-001..IR-H82-008); no existing entry was edited or removed."
