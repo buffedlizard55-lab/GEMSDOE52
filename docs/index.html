@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GEMSDOE52 — Co-Training Wavelength Contrast Submission</title>
+<title>GEMSDOE52 — Submission Status (H88)</title>
 <style>
 :root{--bg:#0f1117;--fg:#e8eaed;--accent:#4fc3f7;--ok:#66bb6a;--warn:#ffa726;--err:#ef5350;--card:#1a1d27;--border:#2d3040}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -42,25 +42,70 @@ th{color:var(--accent);font-weight:600}
 <body>
 <div class="container">
 
-<h1>GEMSDOE52 — Co-Training Wavelength Contrast</h1>
-<p style="color:#999;margin-bottom:4px">DOE GEMS Prize (DrivenData #306) · Fault Discovery System</p>
-<p style="color:#999;font-size:0.9rem">Built 2026-10-10 · <span class="pill pill-ok">VERDICT: PROMOTE</span></p>
+<!--H88-START-->
+<h1>GEMSDOE52 — Submission Status (H88)</h1>
+<p style="color:#999;margin-bottom:4px">DOE GEMS Prize (DrivenData #306) · Fault discovery · Auto-generated from <code>evidence/</code> by <code>scripts/publish_h88_site.py</code></p>
+
+<div class="card" style="border-color:#ffa726">
+<div class="card-title">Verdict for the file below</div>
+<p><span class="pill pill-ok">DOWNLOAD: YES</span> format-valid (independent check: <span class="pass">PASS</span>), decoded-pixel unique (uniqueness gate <span class="pass">PASS</span>).</p>
+<p><span class="pill pill-warn">SUBMIT: NO</span> its pre-registered holdout test is <span class="fail">NEGATIVE</span>: it scores below the random control.</p>
+<p style="font-size:0.9rem;color:#bbb">Nothing here is an organiser score. Slots used this round: 0. Promotion is a separate decision by the owner.</p>
+</div>
 
 <!-- DOWNLOAD BOX -->
 <div class="download-box">
-<h2>⬇ ONE-CLICK SUBMISSION FILE</h2>
-<p>Download the ready-to-submit GeoTIFF file below. It passes all format checks.</p>
-<a class="btn" href="downloads/gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.tif" download>
-  📥 Download .tif (128 KB)
-</a>
-<a class="btn btn-zip" href="downloads/gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.zip" download>
-  📦 Download .zip (90 KB)
-</a>
+<h2>⬇ SUBMISSION FILE (H88) — download only</h2>
+<p>Single-band float32 GeoTIFF · EPSG:32611 · 3730 × 3292 · 100 m · 37,654 dots (value 1), zeros elsewhere · every pixel finite and in [0, 1].</p>
+<a class="btn" href="downloads/h88-candidate.tif" download>📥 Download .tif</a>
+<a class="btn btn-zip" href="downloads/h88-candidate.zip" download>📦 Download .zip</a>
 <p style="font-size:0.85rem;margin-top:12px">
-  <strong>Filename:</strong> <code>gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.tif</code><br>
-  <strong>SHA256:</strong> <code>a861069b8c780738...</code>
+<strong>Filename inside:</strong> <code>gems52-h88-basement-step-37654px-20261010.tif</code><br>
+<strong>Suggested submission name:</strong> <code>h88-basement-step-cat200-37654px-20261010</code><br>
+<strong>SHA-256:</strong> <code>636b4b9f75cc19980387b410575d433a8f1a93bfb29ffdde7386d75a6209aa4c</code>
 </p>
 </div>
+
+<div class="card">
+<div class="card-title">Holdout result (HOLDOUT-DTI, not an organiser score)</div>
+<table>
+<tr><th>arm</th><th>HOLDOUT-DTI</th><th>95% CI (paired cluster bootstrap)</th></tr>
+<tr><td><b>H88 basement-step coherence (this file)</b></td><td>0.048050</td><td>[0.032189, 0.064477]</td></tr>
+<tr><td>random, same allowed set and placement (control)</td><td>0.080426</td><td>[0.070223, 0.090973]</td></tr>
+<tr><td>gradient magnitude only (ablation)</td><td>0.047641</td><td>[0.031543, 0.064464]</td></tr>
+<tr><td>raw depth-to-basement, no step term (ablation)</td><td>0.037456</td><td>[0.025136, 0.050826]</td></tr>
+<tr><td>H88 top-k without spacing (placement ablation)</td><td>0.007335</td><td>[0.001450, 0.015109]</td></tr>
+</table>
+<p style="font-size:0.9rem">Paired, H88 minus random: <b>-0.032376</b>, 95% CI [-0.046704, -0.016764]. Evaluator <code>gems52-pooled-hide-v1</code>; withheld positive pixels <b>53,186</b> over 4 folds; leakage canary max single-channel AUC <b>0.5668</b> (bar 0.90, no alarm); random control reproduces the H82 receipt (0.080426) to 3.5e-07.</p>
+<p style="font-size:0.9rem">Pre-registered rule (<code>knowledge/80_h88_preregistered.md</code> §5): <b>NEGATIVE/NOT-PROMOTED: fails the pre-registered rule (knowledge/80 section 5)</b>.</p>
+</div>
+
+<div class="card">
+<div class="card-title">Uniqueness and lane gates (from disk)</div>
+<ul style="margin-left:20px;font-size:0.92rem">
+<li>Decoded-pixel uniqueness: <b>146</b> local priors checked; max Jaccard of positive support <b>0.0119</b>; novel fraction <b>0.6603</b>; identical to a prior: False. Gate: <span class="pass">PASS</span>.</li>
+<li>Lane, surface: max Spearman <b>0.0697</b> vs bar 0.90 → <span class="pass">PASS</span>.</li>
+<li>Lane, dots: literal rule <span class="fail">DUPLICATE/STOP</span> (max near-3 px share 0.9841 against a universal-coverage probe raster that random dots also match at 0.999). Excluding probes: max 0.3322 vs bar 0.70. The literal rule is <b>not waived</b>.</li>
+<li>Catalogue collar: 0 dots within 200 m of the mapped catalogue (independent check).</li>
+</ul>
+</div>
+
+<div class="card" style="border-color:#ef5350">
+<div class="card-title">Limits (read before any upload)</div>
+<ul style="margin-left:20px;font-size:0.92rem">
+<li>The holdout hides <i>catalogue</i> faults; the competition scores <i>new</i> faults. A negative holdout is evidence against this field, not a proof about the board.</li>
+<li>The organiser's page says data outside the bounds is "null or nan"; this file writes 0.0 outside the footprint so it cannot fail a literal [0, 1] test. Organiser behaviour for this container is unverified (IR-H85-004).</li>
+<li>The organiser's competition-page leaderboard (fetched 2026-10-10) shows #1 0.3774, #8 0.3195 and #22 0.2778. Filename-to-score mapping for those is not organiser-confirmed.</li>
+</ul>
+</div>
+
+<details class="card">
+<summary><b>Previous file (earlier round, H87 co-training wavelength)</b> — not holdout-validated on this branch; kept for reference</summary>
+<p style="font-size:0.9rem">The older download below was labelled "PROMOTE" on this page before H88. No holdout DTI for it exists in this repository, so that label is withdrawn.</p>
+<a class="btn btn-zip" href="downloads/gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.tif" download>Download older .tif</a>
+<a class="btn btn-zip" href="downloads/gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.zip" download>Download older .zip</a>
+</details>
+<!--H88-END-->
 
 <!-- HOW TO SUBMIT -->
 <h2>📋 How to Submit (3 Steps)</h2>
