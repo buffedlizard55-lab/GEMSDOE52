@@ -1,5 +1,7 @@
 # GEMSDOE52 — DOE GEMS Prize (DrivenData #306): submission status and method
 
+**H92 — this session's round (renamed from H88 because `main` already holds H88–H91):** the brief's mandated co-training disagreement field emitted at the prevalence-corrected support (17,707 dots) is **DOWNLOAD YES / SUBMIT NO** — pooled HOLDOUT-DTI 0.0632 at 75.2k dots vs random 0.1346 and `single_B` 0.2228 (paired −0.1596 [−0.1821, −0.1374], 53,186 withheld positives), and lane DUPLICATE/STOP (0.969 ≤3 px to our own H61-family candidate). One-click files: `docs/downloads/h92-candidate.tif` · `.zip` · `h92-a-only-reasoning.csv`. Full write-up: `knowledge/89_h92_results_and_limits.md`; card: `evidence/h92_run_card.json`.
+
 **Competition:** [DOE GEMS Prize, DrivenData #306](https://www.drivendata.org/competitions/306/competition-doe-gems/) ·
 [Problem description and metric](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/) ·
 [Leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/) ·
