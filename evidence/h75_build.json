@@ -1,8 +1,8 @@
 {
- "file": "submission/gems52-h75-dva-variogram-anisotropy-B-37654px-20261009.tif",
+ "file": "submission/gems52-h75-dva-variogram-anisotropy-B-37654px-20261009T200333Z.tif",
  "bytes": 142941,
  "sha256": "b97691584d514ab1925d9fff2b61c410be86bdc0bc8c844dfdaa6257a4ea7a16",
- "name": "h75-dva-variogram-anisotropy-B-37654px-20261009",
+ "name": "h75-dva-variogram-anisotropy-B-37654px-20261009T200333Z",
  "note": "H75: View-B + directional variogram anisotropy (det_elev/slope/grav); 200m ring cut; binary 37654 dots; holdout +0.012 vs B",
  "validator": {
   "count": 1,
@@ -35,14 +35,14 @@
   }
  },
  "writer_receipt": {
-  "file": "gems52-h75-dva-variogram-anisotropy-B-37654px-20261009.tif",
+  "file": "gems52-h75-dva-variogram-anisotropy-B-37654px-20261009T200333Z.tif",
   "sha256": "b97691584d514ab1925d9fff2b61c410be86bdc0bc8c844dfdaa6257a4ea7a16",
   "bytes": 142941,
-  "submission_name": "h75-dva-variogram-anisotropy-B-37654px-20261009",
+  "submission_name": "h75-dva-variogram-anisotropy-B-37654px-20261009T200333Z",
   "note": "H75: View-B + directional variogram anisotropy (det_elev/slope/grav); 200m ring cut; binary 37654 dots; holdout +0.012 vs B",
   "note_chars": 123,
   "validator": {
-   "path": "/home/user/GEMSDOE52/submission/gems52-h75-dva-variogram-anisotropy-B-37654px-20261009.tif",
+   "path": "/home/user/GEMSDOE52/submission/gems52-h75-dva-variogram-anisotropy-B-37654px-20261009T200333Z.tif",
    "bytes": 142941,
    "sha256": "b97691584d514ab1925d9fff2b61c410be86bdc0bc8c844dfdaa6257a4ea7a16",
    "bands": 1,
@@ -90,8 +90,8 @@
    "ok": true,
    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
   },
-  "zip_file": "gems52-h75-dva-variogram-anisotropy-B-37654px-20261009.zip",
-  "zip_sha256": "c9285571661857885aca9fd3c9a08ce9be3cd24001181b394e245e05728ac366",
+  "zip_file": "gems52-h75-dva-variogram-anisotropy-B-37654px-20261009T200333Z.zip",
+  "zip_sha256": "7ff4e50dbff3bc3c61164dc0d6e59054f7a7e14b548040fb664b0c9154d2917f",
   "approved_for_weekly_slot": false,
   "promoted": false,
   "submission_slots_used": 0,
