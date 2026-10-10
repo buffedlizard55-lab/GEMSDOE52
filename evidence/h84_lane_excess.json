@@ -1,0 +1,524 @@
+{
+ "instrument": "chance-corrected lane proximity (proposed shared-tool fix, reported not applied)",
+ "definition": "excess = (near_3px_fraction - coverage_3px_of_eligible) / (1 - coverage_3px_of_eligible)",
+ "candidate_dots": 37654,
+ "priors_measured": 56,
+ "max_excess": 1.0,
+ "max_literal_near": 1.0,
+ "n_literal_offenders": 44,
+ "n_excess_offenders": 3,
+ "applies_to_this_round": false,
+ "note": "the pre-registered H84 gate is unchanged; this statistic is published so the next round can pre-register it rather than invent it after seeing a verdict",
+ "per_prior": [
+  {
+   "path": "work/h84/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+   "support_px": 4830583,
+   "coverage_3px_of_eligible": 0.9999997822854843,
+   "near_3px_fraction": 1.0,
+   "excess_proximity": 1.0,
+   "literal_offender": true,
+   "excess_offender": true
+  },
+  {
+   "path": "work/h84/priors/c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+   "support_px": 4862052,
+   "coverage_3px_of_eligible": 0.9974396772948362,
+   "near_3px_fraction": 0.9999468847931162,
+   "excess_proximity": 0.9792544874219745,
+   "literal_offender": true,
+   "excess_offender": true
+  },
+  {
+   "path": "work/h84/priors/35616cbb48ac3533dd4c957b8acca57f71ba365f.tif",
+   "support_px": 4862052,
+   "coverage_3px_of_eligible": 0.9974396772948362,
+   "near_3px_fraction": 0.9999468847931162,
+   "excess_proximity": 0.9792544874219745,
+   "literal_offender": true,
+   "excess_offender": true
+  },
+  {
+   "path": "work/h84/priors/5ae4b6b4324c19727f8304eb63fc5610ad23b9d9.tif",
+   "support_px": 516738,
+   "coverage_3px_of_eligible": 0.5327876972139727,
+   "near_3px_fraction": 0.8497636373293674,
+   "excess_proximity": 0.678440910535189,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/509be169fe6253f94bf8b7323398e1b80e972c96.tif",
+   "support_px": 516738,
+   "coverage_3px_of_eligible": 0.5327876972139727,
+   "near_3px_fraction": 0.8497636373293674,
+   "excess_proximity": 0.678440910535189,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/c61719ffe62dd7533c43f2f1f76054efaabeceee.tif",
+   "support_px": 335879,
+   "coverage_3px_of_eligible": 0.4119783478559801,
+   "near_3px_fraction": 0.770515748658841,
+   "excess_proximity": 0.6097350318573761,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/4934bb73380487247f9abc273bbc3bba7f5d83c1.tif",
+   "support_px": 335879,
+   "coverage_3px_of_eligible": 0.4119783478559801,
+   "near_3px_fraction": 0.770515748658841,
+   "excess_proximity": 0.6097350318573761,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/306ee1b1deebc9a0a9f437e501cd0965ee37f25e.tif",
+   "support_px": 624025,
+   "coverage_3px_of_eligible": 0.6166319520871311,
+   "near_3px_fraction": 0.8345726881606204,
+   "excess_proximity": 0.5684895683404017,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/0c1b5547e970fee995a953382e94d4f1342444b9.tif",
+   "support_px": 352506,
+   "coverage_3px_of_eligible": 0.39540504805939075,
+   "near_3px_fraction": 0.7199500717055293,
+   "excess_proximity": 0.5367974419971989,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/57732c697e2aa7c50c8ce35fa3d8866aee103abf.tif",
+   "support_px": 272853,
+   "coverage_3px_of_eligible": 0.73954660081238,
+   "near_3px_fraction": 0.8594040473787645,
+   "excess_proximity": 0.4601876840165335,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/0bb2fae409553cc7281a848541d65232921a8bdc.tif",
+   "support_px": 272853,
+   "coverage_3px_of_eligible": 0.73954660081238,
+   "near_3px_fraction": 0.8594040473787645,
+   "excess_proximity": 0.4601876840165335,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/e2594695e37059e4c708857a8e7e58f007900bca.tif",
+   "support_px": 272853,
+   "coverage_3px_of_eligible": 0.73954660081238,
+   "near_3px_fraction": 0.8594040473787645,
+   "excess_proximity": 0.4601876840165335,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/80ee726da7af66e6cd86b627a9982cec8e709ac3.tif",
+   "support_px": 272853,
+   "coverage_3px_of_eligible": 0.73954660081238,
+   "near_3px_fraction": 0.8594040473787645,
+   "excess_proximity": 0.4601876840165335,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "data/scored/gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif",
+   "support_px": 123779,
+   "coverage_3px_of_eligible": 0.201827669816778,
+   "near_3px_fraction": 0.5650661284325702,
+   "excess_proximity": 0.4550877609756406,
+   "literal_offender": false,
+   "excess_offender": false
+  },
+  {
+   "path": "data/scored/gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif",
+   "support_px": 123939,
+   "coverage_3px_of_eligible": 0.20707698450591105,
+   "near_3px_fraction": 0.5660487597599193,
+   "excess_proximity": 0.45271958089187825,
+   "literal_offender": false,
+   "excess_offender": false
+  },
+  {
+   "path": "data/scored/8GEMSDOE_Hedge-v2_submission.tif",
+   "support_px": 227507,
+   "coverage_3px_of_eligible": 0.2793958683445489,
+   "near_3px_fraction": 0.599059860838158,
+   "excess_proximity": 0.44360555046949535,
+   "literal_offender": false,
+   "excess_offender": false
+  },
+  {
+   "path": "data/scored/gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif",
+   "support_px": 121131,
+   "coverage_3px_of_eligible": 0.1941388639787197,
+   "near_3px_fraction": 0.5507781377808466,
+   "excess_proximity": 0.4425567357211642,
+   "literal_offender": false,
+   "excess_offender": false
+  },
+  {
+   "path": "data/scored/gemsdoe-ens12-adopted-7f00890a.tif",
+   "support_px": 172974,
+   "coverage_3px_of_eligible": 0.23757334529892313,
+   "near_3px_fraction": 0.5690497689488501,
+   "excess_proximity": 0.43476499884423403,
+   "literal_offender": false,
+   "excess_offender": false
+  },
+  {
+   "path": "data/scored/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
+   "support_px": 61328,
+   "coverage_3px_of_eligible": 0.18356751795219467,
+   "near_3px_fraction": 0.527434004355447,
+   "excess_proximity": 0.42118178044650306,
+   "literal_offender": false,
+   "excess_offender": false
+  },
+  {
+   "path": "data/scored/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+   "support_px": 60069,
+   "coverage_3px_of_eligible": 0.17897134681029728,
+   "near_3px_fraction": 0.5243267647527488,
+   "excess_proximity": 0.42063747300504434,
+   "literal_offender": false,
+   "excess_offender": false
+  },
+  {
+   "path": "data/scored/gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+   "support_px": 44090,
+   "coverage_3px_of_eligible": 0.17013453233071443,
+   "near_3px_fraction": 0.5060020183778616,
+   "excess_proximity": 0.404725222499553,
+   "literal_offender": false,
+   "excess_offender": false
+  },
+  {
+   "path": "data/scored/gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif",
+   "support_px": 174232,
+   "coverage_3px_of_eligible": 0.2607401292048565,
+   "near_3px_fraction": 0.5393318106974027,
+   "excess_proximity": 0.37685216322224363,
+   "literal_offender": false,
+   "excess_offender": false
+  },
+  {
+   "path": "data/reference/h33-2-b2-zeros.tif",
+   "support_px": 37654,
+   "coverage_3px_of_eligible": 0.15040742005903981,
+   "near_3px_fraction": 0.46728103255962183,
+   "excess_proximity": 0.3729712570260467,
+   "literal_offender": false,
+   "excess_offender": false
+  },
+  {
+   "path": "data/scored/gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif",
+   "support_px": 69281,
+   "coverage_3px_of_eligible": 0.26964661232947784,
+   "near_3px_fraction": 0.5338343867849366,
+   "excess_proximity": 0.36172595200535906,
+   "literal_offender": false,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/0a195a38802892f46e0146415faa678aa1603b5b.tif",
+   "support_px": 338755,
+   "coverage_3px_of_eligible": 0.7246581936531429,
+   "near_3px_fraction": 0.8217188080947575,
+   "excess_proximity": 0.35250954342670426,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/ed019800934ba779cbc6707fd0ed05ab40ed7ad1.tif",
+   "support_px": 338755,
+   "coverage_3px_of_eligible": 0.7246581936531429,
+   "near_3px_fraction": 0.8217188080947575,
+   "excess_proximity": 0.35250954342670426,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/9f9dccae710f3011ec8ab925d06a1357e65cec9b.tif",
+   "support_px": 344041,
+   "coverage_3px_of_eligible": 0.6461009180803414,
+   "near_3px_fraction": 0.7561215275933499,
+   "excess_proximity": 0.31088130807297537,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/f11a0f27760003208c8a1df16b49a969a8f427ec.tif",
+   "support_px": 344041,
+   "coverage_3px_of_eligible": 0.6461009180803414,
+   "near_3px_fraction": 0.7561215275933499,
+   "excess_proximity": 0.31088130807297537,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/6d69c94d9c59cf518fe9d6d34463444348aa88ad.tif",
+   "support_px": 246469,
+   "coverage_3px_of_eligible": 0.6797787410919385,
+   "near_3px_fraction": 0.7746321771923301,
+   "excess_proximity": 0.29621217661762095,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/6ef080a1067db86fa70924252fdb777ec4b94b7a.tif",
+   "support_px": 246469,
+   "coverage_3px_of_eligible": 0.6797787410919385,
+   "near_3px_fraction": 0.7746321771923301,
+   "excess_proximity": 0.29621217661762095,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/fdd931161c431a583cf7039362e51832e59d07ad.tif",
+   "support_px": 155021,
+   "coverage_3px_of_eligible": 0.7352378128312662,
+   "near_3px_fraction": 0.8093429648908482,
+   "excess_proximity": 0.2798932613906629,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/4dd494d3c85b41f082a4949ea0b7037df4098816.tif",
+   "support_px": 180000,
+   "coverage_3px_of_eligible": 0.6356001115569179,
+   "near_3px_fraction": 0.7137090348966909,
+   "excess_proximity": 0.21434947105362068,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/93baa81db8295cf7fee042dd2c753465d2d73a3c.tif",
+   "support_px": 180000,
+   "coverage_3px_of_eligible": 0.6356001115569179,
+   "near_3px_fraction": 0.7137090348966909,
+   "excess_proximity": 0.21434947105362068,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/ab7e0752036d020fbc394a528bbe63171c3cb08f.tif",
+   "support_px": 452679,
+   "coverage_3px_of_eligible": 0.7582652594471226,
+   "near_3px_fraction": 0.7952143198597759,
+   "excess_proximity": 0.15284960832748382,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/443e8e1c799734facd50a92bc85c650f3857a2b6.tif",
+   "support_px": 452679,
+   "coverage_3px_of_eligible": 0.7582652594471226,
+   "near_3px_fraction": 0.7952143198597759,
+   "excess_proximity": 0.15284960832748382,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/32a4a6d2d4df8ef8e880120f36d2a4d94f134f8a.tif",
+   "support_px": 155021,
+   "coverage_3px_of_eligible": 0.7346334373355575,
+   "near_3px_fraction": 0.7623360067987465,
+   "excess_proximity": 0.1043935949768434,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+   "support_px": 380365,
+   "coverage_3px_of_eligible": 0.8354104386708007,
+   "near_3px_fraction": 0.8523662824666702,
+   "excess_proximity": 0.10301895004116204,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+   "support_px": 380365,
+   "coverage_3px_of_eligible": 0.8354104386708007,
+   "near_3px_fraction": 0.8523662824666702,
+   "excess_proximity": 0.10301895004116204,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+   "support_px": 507776,
+   "coverage_3px_of_eligible": 0.8615559925811601,
+   "near_3px_fraction": 0.8738513836511393,
+   "excess_proximity": 0.08881129128819222,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+   "support_px": 507776,
+   "coverage_3px_of_eligible": 0.8615559925811601,
+   "near_3px_fraction": 0.8738513836511393,
+   "excess_proximity": 0.08881129128819222,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+   "support_px": 192231,
+   "coverage_3px_of_eligible": 0.7629609261227157,
+   "near_3px_fraction": 0.770701651882934,
+   "excess_proximity": 0.03265590619133844,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+   "support_px": 192231,
+   "coverage_3px_of_eligible": 0.7629609261227157,
+   "near_3px_fraction": 0.770701651882934,
+   "excess_proximity": 0.03265590619133844,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "data/scored/gemsdoe9-PLACEHOLDER-2314b599.tif",
+   "support_px": 343816,
+   "coverage_3px_of_eligible": 0.06228246237729882,
+   "near_3px_fraction": 0.06774844638019865,
+   "excess_proximity": 0.005829030367457113,
+   "literal_offender": false,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+   "support_px": 362327,
+   "coverage_3px_of_eligible": 0.897567715201546,
+   "near_3px_fraction": 0.8925479364742126,
+   "excess_proximity": -0.04900582601677116,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+   "support_px": 5167373,
+   "coverage_3px_of_eligible": 1.0,
+   "near_3px_fraction": 1.0,
+   "excess_proximity": NaN,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+   "support_px": 5106385,
+   "coverage_3px_of_eligible": 1.0,
+   "near_3px_fraction": 1.0,
+   "excess_proximity": NaN,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+   "support_px": 206895,
+   "coverage_3px_of_eligible": 1.0,
+   "near_3px_fraction": 1.0,
+   "excess_proximity": NaN,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+   "support_px": 206895,
+   "coverage_3px_of_eligible": 1.0,
+   "near_3px_fraction": 1.0,
+   "excess_proximity": NaN,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+   "support_px": 5167373,
+   "coverage_3px_of_eligible": 1.0,
+   "near_3px_fraction": 1.0,
+   "excess_proximity": NaN,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/3d3ee66300203bdc878f3a052caabde671daf042.tif",
+   "support_px": 5137016,
+   "coverage_3px_of_eligible": 1.0,
+   "near_3px_fraction": 1.0,
+   "excess_proximity": NaN,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+   "support_px": 206895,
+   "coverage_3px_of_eligible": 1.0,
+   "near_3px_fraction": 1.0,
+   "excess_proximity": NaN,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+   "support_px": 4234841,
+   "coverage_3px_of_eligible": 0.9883130847947964,
+   "near_3px_fraction": 0.96882137355925,
+   "excess_proximity": -1.6678234498413835,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+   "support_px": 4234841,
+   "coverage_3px_of_eligible": 0.9883130847947964,
+   "near_3px_fraction": 0.96882137355925,
+   "excess_proximity": -1.6678234498413835,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+   "support_px": 4238870,
+   "coverage_3px_of_eligible": 0.9885919770894661,
+   "near_3px_fraction": 0.9692462952143198,
+   "excess_proximity": -1.695796197716518,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+   "support_px": 4256372,
+   "coverage_3px_of_eligible": 0.9919031971594352,
+   "near_3px_fraction": 0.9743453550751581,
+   "excess_proximity": -2.1684907524625325,
+   "literal_offender": true,
+   "excess_offender": false
+  },
+  {
+   "path": "work/h84/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+   "support_px": 4467661,
+   "coverage_3px_of_eligible": 0.9956951308801697,
+   "near_3px_fraction": 0.9807722951080895,
+   "excess_proximity": -3.466501618676031,
+   "literal_offender": true,
+   "excess_offender": false
+  }
+ ],
+ "max_excess_informative_coverage_lt_0.95": 0.678440910535189,
+ "max_near_informative_coverage_lt_0.95": 0.8925479364742126,
+ "n_informative_measured": 41,
+ "n_informative_near_offenders": 29,
+ "n_informative_excess_offenders": 0,
+ "stability_caveat": "the ratio is unstable as coverage -> 1 (its denominator vanishes), which is why the three >=0.997-coverage probes show excess ~1; the statistic is only meaningful for priors that leave a substantial part of the footprint uncovered"
+}

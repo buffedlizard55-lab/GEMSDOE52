@@ -1,62 +1,86 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TIF Validator — GEMSDOE52</title>
+<title>Check a submission GeoTIFF in your browser — GEMSDOE52</title>
 <style>
-:root{--bg:#0f172a;--card:#1e293b;--accent:#3b82f6;--green:#22c55e;--red:#ef4444;--text:#e2e8f0;--muted:#94a3b8;--border:#334155}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:1rem;max-width:800px;margin:0 auto}
-h1{font-size:1.4rem;margin:1rem 0;color:var(--accent)}
-.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;margin:1rem 0}
-.pass{color:var(--green);font-weight:700}.fail{color:var(--red);font-weight:700}
-label{display:block;margin:.5rem 0;font-weight:600}
-input[type=file]{margin:.5rem 0}
-button{padding:10px 20px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-weight:700;cursor:pointer;margin:.5rem 0}
-button:hover{opacity:.9}
-pre{background:#0f172a;padding:1rem;border-radius:6px;overflow-x:auto;font-size:.85rem;white-space:pre-wrap}
-a{color:var(--accent)}
-</style>
-</head>
-<body>
-<h1>🔍 TIF Validator — Check Before Submitting</h1>
-<div class="card">
-<p>Drop a <code>.tif</code> file below to verify it matches the competition format before uploading to DrivenData.</p>
-<label>Select GeoTIFF file:
-<input type="file" id="tif" accept=".tif,.tiff">
-</label>
-<button onclick="validate()">Validate</button>
-<div id="output"></div>
-</div>
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#14181d;background:#f6f8fa}
+main{max-width:860px;margin:0 auto;padding:28px 20px 70px;background:#fff;min-height:100vh}
+h1{font-size:25px;margin:0 0 8px}
+h2{font-size:18px;margin:26px 0 8px;border-bottom:2px solid #e6eaef;padding-bottom:5px}
+.note{border-radius:10px;padding:14px 16px;margin:14px 0;background:#e7f6ec;color:#11643a;border:1px solid #9ad7b4;font-weight:600}
+.warn{background:#fff6e0;color:#7a5600;border:1px solid #f0d9a0}
+code{background:#f2f4f7;padding:1px 5px;border-radius:4px;font-size:13px;word-break:break-all}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:14px}
+th,td{border:1px solid #e3e8ee;padding:6px 9px;text-align:left;vertical-align:top}
+th{background:#f3f6f9}
+.pass{color:#11643a;font-weight:700}.fail{color:#b3261e;font-weight:700}
+button{padding:11px 20px;background:#1f4e79;color:#fff;border:0;border-radius:8px;font-weight:700;cursor:pointer}
+input[type=file]{margin:10px 0}
+small,.muted{color:#5b6672}
+a{color:#1f4e79}
+</style></head><body><main>
 
-<div class="card">
-<h2 style="margin-top:0">Expected Format</h2>
+<h1>Check a submission GeoTIFF <em>in your browser</em></h1>
+
+<div class="note">Nothing is uploaded. The file is decoded locally by
+<code>assets/tifcheck.js</code> inside this page — no network request is made with your data, and the
+page works offline once loaded.</div>
+
+<p>This checks a candidate against the competition's published submission rules, read from the
+official problem description at
+<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">drivendata.org
+&middot; competitions/306/competition-doe-gems/page/967</a>, and against the organiser's own
+<code>sample_submission.tif</code> container (the reference values baked into the checker were
+<em>measured</em> from those bytes, not assumed).</p>
+
+<div class="warn">The specific rejection this exists to prevent:
+<b>"Predicted values must be in range [0, 1]"</b>. A raster that writes NaN outside the footprint can
+trigger it if the reader does not honour the nodata declaration, so this checker reports the exact
+count of non-finite pixels as well as the value range.</div>
+
+<p><input type="file" id="f" accept=".tif,.tiff,.zip"> <button id="go">Check this file</button></p>
+<div id="output"><p class="muted">No file checked yet.</p></div>
+
+<h2>What is checked</h2>
 <ul>
-<li>Single band, float32</li>
-<li>CRS: EPSG:32611 (UTM Zone 11N)</li>
-<li>Shape: 3730 rows × 3292 columns</li>
-<li>Transform: 100m resolution</li>
-<li>Values: all finite values in [0, 1]</li>
-<li>No NaN inside the footprint</li>
-<li>NaN or null outside footprint</li>
+<li>single band, <code>float32</code></li>
+<li>CRS <a href="https://epsg.io/32611">EPSG:32611</a>, shape 3730&times;3292, 100&nbsp;m cells, and a
+geotransform/bounds equal to the submission format</li>
+<li>every decoded pixel finite and inside [0,&nbsp;1] &mdash; counted, not sampled</li>
+<li>the <code>GDAL_NODATA</code> tag, if present, is absent, <code>nan</code>, or itself inside [0,&nbsp;1]</li>
+<li><code>.zip</code> inputs must contain exactly one GeoTIFF</li>
 </ul>
-</div>
+<p class="muted">TIFF decoding covers uncompressed, LZW and DEFLATE data, predictor 1 and 2, strips and
+tiles. The decoder is pinned by test against pixel counts measured with rasterio, so the browser and
+the Python validator cannot disagree silently.</p>
 
-<p><a href="index.html">← Back to landing page</a></p>
+<p><a href="index.html">← back to the current candidate</a> · <a href="h84.html">H84 full result</a> ·
+<a href="h84-executive-summary.html">how to submit</a></p>
 
+<script src="assets/tifcheck.js"></script>
 <script>
-async function validate(){
-const f=document.getElementById('tif').files[0];
-if(!f){document.getElementById('output').innerHTML='<p class="fail">No file selected</p>';return;}
-const out=[];
-out.push(`File: ${f.name}`);
-out.push(`Size: ${(f.size/1024).toFixed(1)} KB`);
-out.push('');
-out.push('Server-side validation recommended — this browser validator checks basic structure.');
-out.push('Use the portal-exact writer (gems52.grid.write_geotiff_portal_exact) for guaranteed format compliance.');
-document.getElementById('output').innerHTML='<pre>'+out.join('\n')+'</pre>';
-}
+document.getElementById('go').addEventListener('click', async function () {
+  var el = document.getElementById('output');
+  var inp = document.getElementById('f');
+  if (!inp.files || !inp.files[0]) { el.innerHTML = '<p class="fail">Choose a .tif or .zip first.</p>'; return; }
+  el.innerHTML = '<p class="muted">Decoding locally…</p>';
+  try {
+    var r = await window.GEMSTIF.checkFile(inp.files[0]);
+    var rows = r.checks.map(function (c) {
+      return '<tr><td>' + c.label + '</td><td class="' + (c.pass ? 'pass' : 'fail') + '">' +
+             (c.pass ? 'PASS' : 'FAIL') + '</td><td><code>' + String(c.got) + '</code></td><td><code>' +
+             String(c.want) + '</code></td><td><small>' + (c.note || '') + '</small></td></tr>';
+    }).join('');
+    el.innerHTML = '<h2>' + (r.ok ? '<span class="pass">PASS</span>' : '<span class="fail">FAIL</span>') +
+      ' — ' + r.passed + ' of ' + r.total + ' hard rules, ' + r.file + ' (' + r.diskBytes.toLocaleString() +
+      ' bytes, ' + r.ms + ' ms)</h2>' +
+      '<table><tr><th>rule</th><th>result</th><th>measured</th><th>required</th><th>why</th></tr>' +
+      rows + '</table>' +
+      '<p class="muted">Reference: ' + r.reference_class + '</p>';
+  } catch (e) {
+    el.innerHTML = '<p class="fail">Could not decode this file: ' + (e && e.message ? e.message : e) + '</p>';
+  }
+});
 </script>
-</body>
-</html>
+</main></body></html>

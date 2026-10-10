@@ -1,0 +1,68 @@
+{
+  "file": "gems52-h84-coverco-disagree-37654px-20261010T211929Z.tif",
+  "sha256": "9d3e2be69efd476c91c8772a28c09ffccadac4281cc2025e376e0c8c8ffba04a",
+  "bytes": 142450,
+  "submission_name": "h84-coverco-disagree-37654px-20261010T211929Z",
+  "note": "H84 cover-conditioned co-training: artefact-demoted View B + 12% reserved A-only sub-cover dots; 200m catalogue ring excluded; binary",
+  "note_chars": 133,
+  "validator": {
+    "path": "/home/user/GEMSDOE52/submission/gems52-h84-coverco-disagree-37654px-20261010T211929Z.tif",
+    "bytes": 142450,
+    "sha256": "9d3e2be69efd476c91c8772a28c09ffccadac4281cc2025e376e0c8c8ffba04a",
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "ref_bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "nodata": null,
+    "blocksize": [
+      256,
+      256
+    ],
+    "fixture_grid": false,
+    "has_validity_mask": false,
+    "nan_pixels": 0,
+    "infinity_pixels": 0,
+    "n_nan": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.0030664964579045773,
+    "n_nonzero": 37654,
+    "mass": 37654.0,
+    "mass_outside_footprint": 0,
+    "problems": [],
+    "ok": true,
+    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "zip_file": "gems52-h84-coverco-disagree-37654px-20261010T211929Z.zip",
+  "zip_sha256": "73d1b0a489f257c7d7225277e1e492d88e1e40df5b575e76221e65b613ecb703",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "status": "research-only; local format validation is not organizer acceptance",
+  "metadata": {
+    "round": "H84",
+    "primary_arm": "CCD",
+    "preregistration": "registry/h84_preregistration.json"
+  }
+}
