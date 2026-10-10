@@ -77,7 +77,7 @@ def download_bar(sub: dict) -> str:
         f'<a class="button" href="{esc(sub.get("download"))}" download>↓ Download H54 audit TIFF</a>'
         f'<a class="button" href="{esc(sub.get("download_zip"))}" download>↓ Download H54 audit ZIP</a>'
         f'<a class="button" href="h54.html">H54 audit details →</a>'
-        '<small style="width:100%">The checked-in submission/LATEST pointer is H60 and is research-only; the current main result page is H82 and is also research-only. H57 co-training is an archived failed research experiment; H56 co-training is a historical synthetic demo. '
+        '<small style="width:100%">The checked-in submission/LATEST pointer is H60 and is research-only; H83 is the latest research page but has HOLDOUT-DTI NOT_EVALUATED and is not approved to submit. H57 co-training is an archived failed research experiment; H56 co-training is a historical synthetic demo. '
         '<a href="index.html">read current main status</a> · <a href="h57-cotrain-disagreement.html">read the H57 archive</a>.</small></div><!--/H54BAR-->')
 
 
@@ -133,7 +133,7 @@ def h54_body() -> str:
              'were screened for the ability to re-rank inside the champion file and the best blocked AUC was '
              '0.5453 (point features) and 0.5122 (structure-tensor coherence). The budget is therefore chosen '
              'by integrating the metric over a <em>stated prior</em> for that unknown. This local audit does not '
-             'establish global uniqueness or organizer approval; the H60 tracked pointer is research-only and the current H82 main result is also research-only. H57 co-training is archived as a failed real-raster experiment; H56 co-training is a historical synthetic demo and is not approved for upload.</div>')
+             'establish global uniqueness or organizer approval; the H60 tracked pointer is research-only and H83 is the latest research page with HOLDOUT-DTI NOT_EVALUATED, not approved to submit. H57 co-training is archived as a failed real-raster experiment; H56 co-training is a historical synthetic demo and is not approved for upload.</div>')
 
     B.append("<h2>1 · The calibration, exactly</h2>")
     rows = [["|G| (hidden truth, px)", cal.get("g_estimate_px"),

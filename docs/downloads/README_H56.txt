@@ -2,7 +2,7 @@ Historical H56 core-continuation artifact — separate from the historical H56 c
 gems52-h56-consensus-core-continuation-40517px-04c86e1888a8-zeros.tif
 short link: h56-candidate.tif (byte-identical alias for this historical core-continuation artifact)
 Historical H56 co-training demo: gems52-h56-cotrain-disagreement-37654px-20261007T1630Z-zeros.tif (synthetic methodology demo; not approved for upload)
-Current main result: H82 is research-only after its frozen primary arm lost its matched holdout control. `submission/LATEST.txt` still points to H60, also research-only. Neither is approved for submission. H57 is a separate archived no-go; H56 is historical only. DO NOT SUBMIT.
+Current research page: H83 is downloadable but not approved to submit; its HOLDOUT-DTI is NOT_EVALUATED. The canonical `submission/LATEST.txt` pointer remains H60, also research-only with its gate closed. H57 is a separate archived no-go; H56 is historical only. DO NOT SUBMIT.
 sha256 1308083dcf09b4c6fb656589ce79b3c392f5a0dd315e2ed31c8d36a47fc1d52d
 bytes 153815
 

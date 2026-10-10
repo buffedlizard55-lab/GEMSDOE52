@@ -1,5 +1,25 @@
+<!--H83-README-->
+# Latest research artifact — H83 (2026-10-10): DOWNLOADABLE; DO NOT SUBMIT
+
+> **DOWNLOAD: YES** — the linked GeoTIFF is present and its bytes/hash are recorded below.
+> **SUBMIT: NO — research-only.** H83's run card says HOLDOUT-DTI `NOT_EVALUATED`; its weekly-slot approval is unset, and no organizer receipt or comparable spatial-block holdout exists. Format checks and the run-card label `promote` are not scientific or portal approval. No portal upload or slot use is authorized.
+> H83 is the latest research page, **not** the canonical pointer: `submission/LATEST.txt` and `docs/data/submission.json` still point to H60, whose gate is closed.
+
+**[Download H83 research GeoTIFF](docs/downloads/h83-candidate.tif)** · [ZIP](docs/downloads/h83-candidate.zip) · [Status and byte-level reconciliation](docs/h83-executive-summary.html) · [Browser format checker](docs/validator.html) · [Full research page](docs/index.html)
+
+- **Linked file:** `submission/gems52-h83-structcon-geotherm-37654px-20261010T200310Z.tif` — 81,076 bytes, SHA-256 `d9cfccf0e1aa4e28094a6039fda9e65be5e8ff102e321b33745df149f477f378`.
+- **Local raster facts:** one band, float32, EPSG:32611, 3730×3292, 100 m transform, 37,654 ones, 12,241,506 zeros, no NaNs, and no nodata value. The current checkout lacks `data/sample_submission.tif`, so the exact organizer footprint mask and portal-format compatibility were not independently checked here.
+- **Integrity caveat:** a second H83 TIFF exists with a different hash and NaN/nodata footprint; `docs/downloads/h83-candidate.json` describes that older file, not the linked 81,076-byte download. Do not treat the two variants or their receipts as interchangeable.
+- **Local decoded-mask audit:** no exact positive-mask match among 124 other tracked same-grid TIFFs. This is repository-local uniqueness only, not global novelty, a score, or a promotion gate.
+- **Method:** a single integrated multi-band structural-concordance candidate (not H57's co-training arm). No H83 HOLDOUT-DTI, spatial-fold comparison, or score projection is available. The dated public leaderboard snapshot (`registry/leaderboard_snapshot_2026-10-09.json`) lists DARD at 0.3195 (rank 7), extradr19 at 0.2778 (rank 17), and the leader at 0.3774 (rank 1); these are team-level board values, not filename receipts. The snapshot does not attribute 0.2778 to the H33 TIFF. Neither score predicts H83.
+
+See [`evidence/h83_status_reconciliation.json`](evidence/h83_status_reconciliation.json) for scope, hashes, and limitations. H57 from PR #26 remains a separate archived no-go; it is not the current pointer.
+
+---
+
+<!--/H83-README-->
 <!--H82-README-->
-# Current status — H82 (2026-10-09): NEGATIVE — the frozen primary arm lost to its own control; the 8-direction fan helped, the strike-alignment channels hurt
+# Historical result — H82 (2026-10-09): NEGATIVE — the frozen primary arm lost to its own control; the 8-direction fan helped, the strike-alignment channels hurt
 
 > **DOWNLOAD: YES** (format-valid, decoded-unique, 0 NaN, values exactly {0,1}). **SUBMIT: NO — research artefact only.**
 > The pre-registered primary `B_DVA2_VSA` is **worse** than `single_B` on the hide-and-recover instrument
@@ -36,15 +56,15 @@
 
 ## Starting point for future sessions
 
-Read the [archived full task prompt](#archived-original-task-prompts-preserved-verbatim) before making changes. Its scientific, validation, provenance, and three-pass requirements remain standing constraints; factual status and score claims inside an old prompt are historical and must be re-checked. As of this checkout, `docs/index.html` presents H82 as the latest research result (no-go), while `submission/LATEST.txt` and `docs/data/submission.json` point to H60 (also research-only); treat those as distinct labels and do not silently promote either. No competition-portal upload or weekly-slot use is authorized.
+Read the [archived full task prompt](#archived-original-task-prompts-preserved-verbatim) before making changes. Its scientific, validation, provenance, and three-pass requirements remain standing constraints; factual status and score claims inside an old prompt are historical and must be re-checked. As of this checkout, H83 is the latest research artifact but is DOWNLOAD YES / SUBMIT NO: its HOLDOUT-DTI is `NOT_EVALUATED`, its approval is unset, and its linked TIFF differs from a second H83 variant. The canonical pointer remains H60 in `submission/LATEST.txt` and `docs/data/submission.json`, with its gate closed. See [`evidence/h83_status_reconciliation.json`](evidence/h83_status_reconciliation.json). No competition-portal upload or weekly-slot use is authorized.
 
-The H57 real-raster co-training arm from PR #26 is retained at [its separate research archive](docs/h57-cotrain-disagreement.html): 0.110665 mean HOLDOUT-DTI versus 0.151305 for matched View B, −0.040641 paired lift, and 0/4 folds improved. It is a historical no-go, not the current pointer.
+The H57 real-raster co-training arm from PR #26 is retained at [its separate research archive](docs/h57-cotrain-disagreement.html): 0.110665 mean HOLDOUT-DTI versus 0.151305 for matched View B, −0.040641 paired lift, and 0/4 folds improved. It is a historical no-go, not the current pointer. The three-pass integration review is in [knowledge/19](knowledge/19_h57_pr26_three_pass_review.md).
 
 
 <!--H74S-README-->
 # H74S experiment closeout — 2026-10-09: NEGATIVE / no TIFF / no slot
 
-> **H74S RUN ONLY: DOWNLOAD NO · SUBMIT NO · SLOTS USED 0.** This is the closeout of the specific H74S experiment in PR #74, not the newest repository round; H82 is later and remains the repository current result above. No H74S TIFF exists. Do not upload a historical file as an H74S result.
+> **H74S RUN ONLY: DOWNLOAD NO · SUBMIT NO · SLOTS USED 0.** This is the closeout of the specific H74S experiment in PR #74, not the newest repository round; H83 is now the latest research artifact, while H82 is a later historical round than H74S. No H74S TIFF exists. Do not upload a historical file as an H74S result.
 
 **[Detailed H74S report and source-linked three-pass review](docs/h74s.html)** ·
 [Full review / limitations](knowledge/64_h74s_three_pass_review.md) ·
@@ -102,12 +122,12 @@ This is the captured work brief for H74S, organized for audit rather than presen
 
 ### Relationship to later rounds
 
-H74S is a terminal, historical run. H82 is a later repository round and is described at the top of this README; H77, H75, H74, H73, H72, and older round records are also separate work. None is an H74S artifact, a selector decision for H74S, or authorization to upload or re-label a prior submission. See the [research archive](docs/index.html).
+H74S is a terminal, historical run. H82 and H83 are later repository artifacts described above; H83 is the latest research candidate, not an approved submission. H77, H75, H74, H73, H72, and older round records are also separate work. None is an H74S artifact, a selector decision for H74S, or authorization to upload or re-label a prior submission. See the [research archive](docs/index.html).
 
 ---
 <!--/H74S-README-->
 <!--H77-README-->
-# Historical round H77 — lane-feasible research GeoTIFF; H82 is the later repository round
+# Historical round H77 — lane-feasible research GeoTIFF; H83 is the latest research artifact
 
 > **DOWNLOAD: YES. SUBMIT TO THE COMPETITION: NO.** The file passes every format rule the portal
 > states, is decoded-unique against 105 registry rasters, and is only the second lane-feasible file
@@ -293,7 +313,7 @@ this consensus-restricted artefact and is not presented as one.
 SGMC-disjoint traces; any road/hydrography layer (still outside the sandbox egress allowlist).
 <!--/H77-README-->
 <!--H81-README-->
-# Historical round H81 — one negative experiment; H82 is later
+# Historical round H81 — one negative experiment; H82 and H83 are later
 
 > **DOWNLOAD: the H75 file, research copy only.  SUBMIT TO THE COMPETITION: NO.**
 > The H75 GeoTIFF is format-valid and its canonical pattern is unique, but two gates fail that the earlier READMEs did not report:
@@ -522,7 +542,7 @@ H72 details: [`knowledge/60_h72_results_and_limits.md`](knowledge/60_h72_results
 
 ## Archived H72 project prompt — retained for provenance, superseded by the current sections above
 
-**Historical note:** This is the H72-era prompt retained as an archive. For current repository status, use the H82 block at the top and the scoped H74S closeout above. The H72 candidate is terminal; do not reconstruct, rerun, or waive its failed gate.
+**Historical note:** This is the H72-era prompt retained as an archive. For current repository status, use the H83 status block at the top and the scoped H74S closeout above. The H72 candidate is terminal; do not reconstruct, rerun, or waive its failed gate.
 
 > Review the GEMSDOE52 repository and continue toward a unique, valid competition GeoTIFF. Explain the reported 0.2778 result with evidence, separating official public-leaderboard values, owner-reported file/score matches, local file-byte findings, HOLDOUT-DTI measurements, and organizer-confirmed receipts. Generate 3–5 not-previously-tried geological hypotheses; for each name the layers, physical signature, rationale for finding undiscovered faults, distinction from repo methods, expected DTI improvement (qualitative unless defensibly measured), and cost; rank them. Validate a best candidate by spatial-block hide-and-recover before any selector/slot decision. Keep the competition UI explicit about “downloadable,” “portal-format-valid,” and “organizer-approved to submit.” Use official, manually reviewable sources and flag uncertainty. Keep this prompt in the README.
 >

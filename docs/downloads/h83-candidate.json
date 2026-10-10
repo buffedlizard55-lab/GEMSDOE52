@@ -1,0 +1,33 @@
+{
+  "hypothesis": "Multi-band structural concordance lineament detector",
+  "mechanism": "Detects structural lineaments where multiple geophysical bands show coherent gradient orientation",
+  "mimic": "Lithological contacts can produce similar concordance signals",
+  "bands_used": [
+    "det_elev",
+    "iso_grav_anom",
+    "depth_to_base_surf",
+    "iso_grav_anom_hg",
+    "det_elev_slope",
+    "tmi_vg",
+    "cond_surf",
+    "geod_2ndinv",
+    "tmi_hg",
+    "iso_grav_anom_vg"
+  ],
+  "scales": [
+    1.0,
+    2.0,
+    4.0
+  ],
+  "budget": 37654,
+  "n_dots": 37654,
+  "sha256": "274db602ec8b91cb6a2793e9f512321f32326298aa8ed031ebd478e21426f5cd",
+  "file_bytes": 1558064,
+  "elapsed_seconds": 146.29569125175476,
+  "submission_name": "h83-structural-concordance-37654px-20261010T200049Z",
+  "note": "H83 multi-band structural concordance; 10 bands x 3 scales; 37654 dots 3px spacing; >200m off catalogue; research only",
+  "status": "research-only; no holdout validation run",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0
+}

@@ -1,0 +1,56 @@
+{
+  "hypothesis": "Multi-Scale Structural Concordance + Geothermal Anomaly Proximity",
+  "mechanism": "Multi-scale structure tensor concordance across gravity (bands 5,11,13,18), magnetics (bands 2,3,9), and DEM (bands 12,19) at 4 spatial scales. Geothermal proximity from 27,092 wells/springs weighted by temperature. Pixels with concordance across 2+ independent instruments + proximity to geothermal manifestations are prioritized.",
+  "non_fault_process": "Road cuts (linear, near-surface, visible in DEM), erosion gullies (linear surface features), lithological contacts (may show magnetic/gravity contrast without fault), buried river channels (gravity low, may mimic fault-controlled basin).",
+  "holdout_dti": {
+    "value": "NOT_EVALUATED",
+    "ci95": null,
+    "withheld_positive_pixels": null,
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "note": "Holdout evaluation not yet performed. This run card documents the submission format validation only."
+  },
+  "correlation_vs_registry": {
+    "note": "No prior submissions in this repository to compare against. Novel approach."
+  },
+  "raster_sha256": "d9cfccf0e1aa4e28094a6039fda9e65be5e8ff102e321b33745df149f477f378",
+  "validator_output": {
+    "no_nan_inside_footprint": true,
+    "values_in_0_1": true,
+    "crs_match": "EPSG:32611",
+    "shape_match": "3730x3292",
+    "transform_match": true,
+    "single_band": true,
+    "float32": true,
+    "positive_pixels": 37654,
+    "binary_values": true,
+    "format_ok": true
+  },
+  "submission_name": "h83-structcon-geotherm-37654px-20261010",
+  "submission_note": "structural concordance + geothermal proximity",
+  "verdict": "promote",
+  "slots_used": 0,
+  "experiments_used": 1,
+  "files": {
+    "tif": "submission/gems52-h83-structcon-geotherm-37654px-20261010T200310Z.tif",
+    "zip": "docs/downloads/h83-candidate.zip",
+    "download": "docs/downloads/h83-candidate.tif"
+  },
+  "catalogue_distance_analysis": {
+    "pixels_within_200m": 0,
+    "pixels_within_300m": 1167,
+    "pixels_beyond_300m": 36487,
+    "minimum_distance_to_catalogue_px": 2.0
+  },
+  "method_summary": {
+    "layers_used": {
+      "gravity": ["band 5 (iso_grav_slope)", "band 11 (iso_grav_vg)", "band 13 (iso_grav_anom)", "band 18 (iso_grav_hg)"],
+      "magnetics": ["band 2 (RTP)", "band 3 (tmi_hg)", "band 9 (tmi_vg)"],
+      "dem": ["band 12 (det_elev)", "band 19 (det_elev_slope)"],
+      "geothermal": ["27,092 wells/springs with temperature from GDR 1391 INGENIOUS"]
+    },
+    "scales_pixels": [1, 2, 3, 5],
+    "concordance_threshold_percentile": 70,
+    "budget": 37654,
+    "catalogue_ring_excluded_px": 2
+  }
+}
