@@ -1,0 +1,91 @@
+{
+ "round": "H93",
+ "hypothesis_document": "knowledge/89_hypotheses_H93_preregistered.md",
+ "hypothesis_sha256": "87f9e47bd1943e982f3ff20ee475b3ddacfeb04fb477700cf12f70698c8567ec",
+ "frozen_utc": "2026-10-10T22:10:00Z",
+ "lane": "brief co-training paragraph, second experiment: the potential-field/subsurface view (View A) at long lags",
+ "primary_arm": "xtex_dis",
+ "arms": [
+  "xtex_dis",
+  "xtex_agree",
+  "single_Atex",
+  "single_Btex",
+  "random"
+ ],
+ "evaluator": "gems52-pooled-hide-v1",
+ "thresholds": {
+  "buffer_px": 80,
+  "catalogue_exclusion_m": 200,
+  "min_dot_separation_px": 3.0,
+  "budget_dots_per_fold_per_arm": 9400,
+  "bootstrap_draws": 1000,
+  "independence_bar_brief": 0.9,
+  "independence_bar_repo": 0.6,
+  "canary_alarm_auc": 0.9
+ },
+ "band6_policy": "band 6 is radiometric total count by bytes (IR-H85-005); it is View B per the brief",
+ "fan_offsets_dy_dx": [
+  [
+   0,
+   1
+  ],
+  [
+   1,
+   1
+  ],
+  [
+   1,
+   0
+  ],
+  [
+   1,
+   -1
+  ],
+  [
+   1,
+   2
+  ],
+  [
+   2,
+   1
+  ],
+  [
+   2,
+   -1
+  ],
+  [
+   1,
+   -2
+  ]
+ ],
+ "lags_px": [
+  4,
+  6,
+  8
+ ],
+ "sigma_px": 3.0,
+ "view_a_bands": [
+  2,
+  9,
+  11,
+  13,
+  15,
+  17
+ ],
+ "view_b_bands": [
+  12,
+  19,
+  6
+ ],
+ "changed_vs_h92": "lags 1-3 px -> 4-8 px; View A gains bands 11 (gravity vertical gradient), 15 (cover thickness), 17 (conductivity)",
+ "decision_rule": "supported only if xtex_dis minus random has a 95% CI lower bound above 0",
+ "identifier_rename": {
+  "done_utc": "2026-10-10T23:25:00Z",
+  "reason": "identifier collision: a parallel session merged its own H88/H89 round to main (PR #94). This round renamed H88->H92 / H89->H93 mechanically (tokens + knowledge numbers); no hypothesis content changed.",
+  "hypothesis_sha256_before_rename": "cfd76d0246bc3ba2eae8d19fd6dd068650c4bad219433664981885ad0f524832",
+  "hypothesis_sha256_after_rename": "87f9e47bd1943e982f3ff20ee475b3ddacfeb04fb477700cf12f70698c8567ec",
+  "evidence_diff": "evidence/h92_identifier_rename.diff",
+  "verification": "the full substitution (h88->h92, H88->H92, h89->h93, H89->H93, knowledge numbers 80..83->88..91 and the title numbers) reproduces the final bytes exactly from the HEAD bytes; see the diff",
+  "irregularity": "IR-H92-008"
+ }
+}

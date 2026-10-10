@@ -1,0 +1,145 @@
+{
+ "round": "H87-R",
+ "preregistration": "registry/h87_ring_preregistration.json",
+ "seed": 20261009,
+ "budget": 37654,
+ "runtime_s": 159.9,
+ "pooled": {
+  "shipped": {
+   "random": {
+    "pooled_dti": 0.0019924054542664943,
+    "n_truth": 36411,
+    "fold_dti": [
+     0.001895,
+     0.002189,
+     0.001952,
+     0.001914
+    ]
+   },
+   "view_A": {
+    "pooled_dti": 0.004031149258933271,
+    "n_truth": 36411,
+    "fold_dti": [
+     0.004585,
+     0.004306,
+     0.003754,
+     0.003148
+    ]
+   },
+   "view_B": {
+    "pooled_dti": 0.006418964497354693,
+    "n_truth": 36411,
+    "fold_dti": [
+     0.005556,
+     0.006959,
+     0.006824,
+     0.006304
+    ]
+   },
+   "clf_union": {
+    "pooled_dti": 0.006139661608978345,
+    "n_truth": 36411,
+    "fold_dti": [
+     0.005311,
+     0.006125,
+     0.006762,
+     0.006458
+    ]
+   },
+   "dis_contrast": {
+    "pooled_dti": 0.00410948556962889,
+    "n_truth": 36411,
+    "fold_dti": [
+     0.003664,
+     0.003694,
+     0.005376,
+     0.003565
+    ]
+   }
+  },
+  "visible_ring": {
+   "random": {
+    "pooled_dti": 0.04159435360480126,
+    "n_truth": 36411,
+    "fold_dti": [
+     0.043247,
+     0.044254,
+     0.043264,
+     0.03357
+    ]
+   },
+   "view_A": {
+    "pooled_dti": 0.02050712073737256,
+    "n_truth": 36411,
+    "fold_dti": [
+     0.021113,
+     0.024557,
+     0.0196,
+     0.01451
+    ]
+   },
+   "view_B": {
+    "pooled_dti": 0.05370631720615284,
+    "n_truth": 36411,
+    "fold_dti": [
+     0.0476,
+     0.054457,
+     0.06483,
+     0.045543
+    ]
+   },
+   "clf_union": {
+    "pooled_dti": 0.05072784504863661,
+    "n_truth": 36411,
+    "fold_dti": [
+     0.044023,
+     0.046886,
+     0.065162,
+     0.045098
+    ]
+   },
+   "dis_contrast": {
+    "pooled_dti": 0.03137877744656322,
+    "n_truth": 36411,
+    "fold_dti": [
+     0.030165,
+     0.029141,
+     0.038319,
+     0.026694
+    ]
+   }
+  }
+ },
+ "ratio_visible_over_shipped": {
+  "random": 20.876450380986462,
+  "view_A": 5.087164830706166,
+  "view_B": 8.366819481286374,
+  "clf_union": 8.262319371877865,
+  "dis_contrast": 7.635694763954824
+ },
+ "material_change_over_10pct": {
+  "random": true,
+  "view_A": true,
+  "view_B": true,
+  "clf_union": true,
+  "dis_contrast": true
+ },
+ "arm_order_shipped": [
+  "view_B",
+  "clf_union",
+  "dis_contrast",
+  "view_A",
+  "random"
+ ],
+ "arm_order_visible_ring": [
+  "view_B",
+  "clf_union",
+  "random",
+  "dis_contrast",
+  "view_A"
+ ],
+ "arm_order_unchanged": false,
+ "truth_in_legal_shipped_is_zero": true,
+ "holdout_label": "HOLDOUT-DTI (H60D instrument; evaluator gems52.metric.dti alpha 0.2 beta 0.8 R 300 m; 4 hide folds; per-fold 37,654 px; not a leaderboard estimate)",
+ "slots_used": 0
+}

@@ -72,7 +72,7 @@ def copy_evidence():
     # H55 publishes its own evidence the same way the R2 round publishes *_r2.json: copied on every
     # run so the page cannot drift from the artefact, and named by round so it is never mistaken for
     # another round's numbers.  The Phase-2 reasoning record is staged next to the raster it explains.
-    for pat in ('ctd5_*.json', 'h55_*.json', 'h58_*.json', 'h59_*.json', 'h88_*.json', 'h89_*.json',
+    for pat in ('ctd5_*.json', 'h55_*.json', 'h58_*.json', 'h59_*.json', 'h92_*.json', 'h93_*.json',
                 'submission_gems52-h55-*.json',
                 'submission_gems52-h58-*.json', 'submission_gems52-h59-*.json'):
         for path in sorted(EV.glob(pat)):
@@ -416,8 +416,8 @@ def research_status():
     scientific dependencies into the scheduled stdlib-only feed. Never promotes.
 
     Two audited cards are eligible (newest generated_utc wins; CTD5 remains the fallback):
-    the CTD5 card, and the H88 build card whose artifact is published as
-    ``downloads/h88-candidate.tif``.  A card whose published alias does not match its own
+    the CTD5 card, and the H92 build card whose artifact is published as
+    ``downloads/h92-candidate.tif``.  A card whose published alias does not match its own
     SHA-256 raises, so a silent byte drift can never reach the feed.
     """
     candidates = []
@@ -429,15 +429,15 @@ def research_status():
             file=card['raster_file'], sha256=card['raster_sha256'],
             download='downloads/ctd5-research.tif', verdict=card.get('verdict'),
             path=DL / card['raster_file']))
-    p = EV / 'h88_build.json'
+    p = EV / 'h92_build.json'
     if p.exists():
         card = json.loads(p.read_text())
         candidates.append(dict(
             generated_utc=card.get('generated_utc'),
-            run_id=str(card.get('round', 'H88')).lower() + '-build',
+            run_id=str(card.get('round', 'H92')).lower() + '-build',
             file=card['artifact'], sha256=card['sha256'],
-            download='downloads/h88-candidate.tif', verdict=card.get('verdict'),
-            path=DL / 'h88-candidate.tif'))
+            download='downloads/h92-candidate.tif', verdict=card.get('verdict'),
+            path=DL / 'h92-candidate.tif'))
     if not candidates:
         return None
     card = max(candidates, key=lambda c: str(c.get('generated_utc') or ''))
@@ -508,7 +508,7 @@ def main():
         branch=current_branch(args.branch), repo='buffedlizard55-lab/GEMSDOE52',
         evidence_copied=copied,
         files=sorted({p.name for pat in ('*_r[23]*.json', 'h55_*.json', 'h58_*.json',
-                                         'h88_*.json', 'h89_*.json',
+                                         'h92_*.json', 'h93_*.json',
                                          'submission_gems52-h55-*.json', 'submission_gems52-h58-*.json')
                       for p in DATA.glob(pat)}),
         submission=sub.get('file'), downloads=len(list(DL.glob('*.tif'))),

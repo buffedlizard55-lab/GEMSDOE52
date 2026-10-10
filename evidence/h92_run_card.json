@@ -1,0 +1,197 @@
+{
+ "round": "H92",
+ "experiment": "1 of 3 (budget 3 experiments / 2 h)",
+ "evidence_class": "HOLDOUT-DTI",
+ "hypothesis": "View A (potential-field/subsurface) can be made sufficient by replacing amplitude with boundary texture \u2014 directional variogram anisotropy on bands 2 rtp, 9 tmi_vg, 13 iso_grav_anom \u2014 so the brief's A-confident/B-abstains disagreement arm can rank buried faults under cover",
+ "mechanism": "semivariance anisotropy isolates boundary geometry rather than source amplitude, so a buried offset should survive cover",
+ "named_non_fault_mimic": "lithologic contacts, intrusive margins, paleo-channels and gridding seams all satisfy a directional-variogram anisotropy maximum",
+ "view_a": {
+  "bands": {
+   "2": "rtp",
+   "9": "tmi_vg",
+   "13": "iso_grav_anom"
+  },
+  "lags_px": [
+   1,
+   2,
+   3
+  ],
+  "n_channels": 36
+ },
+ "view_b": {
+  "bands": {
+   "12": "det_elev",
+   "19": "det_elev_slope",
+   "6": "tc (radiometric total count by bytes, IR-H92-003)"
+  }
+ },
+ "holdout": {
+  "instrument": "gems52-pooled-hide-v1",
+  "withheld_positive_px": 53186,
+  "clusters": 153,
+  "draws": 1000,
+  "primary": "xtex_dis",
+  "primary_dti": 0.0347985809945442,
+  "primary_ci95": [
+   0.02693774938976825,
+   0.04401099407515187
+  ],
+  "random_dti": 0.08042564781050282,
+  "random_ci95": [
+   0.0702226099128376,
+   0.09097325665223467
+  ],
+  "paired_primary_minus_random": {
+   "delta": -0.04562706681595862,
+   "ci95": [
+    -0.05410584997543102,
+    -0.03719376849471195
+   ]
+  },
+  "arms": {
+   "xtex_dis": {
+    "dti": 0.0347985809945442,
+    "ci95": [
+     0.02693774938976825,
+     0.04401099407515187
+    ],
+    "withheld_positive_px": 53186
+   },
+   "xtex_agree": {
+    "dti": 0.1280091075196956,
+    "ci95": [
+     0.1123103659805099,
+     0.1433354688083664
+    ],
+    "withheld_positive_px": 53186
+   },
+   "single_Atex": {
+    "dti": 0.0819097873104574,
+    "ci95": [
+     0.06914345853470746,
+     0.09586161442253226
+    ],
+    "withheld_positive_px": 53186
+   },
+   "single_Btex": {
+    "dti": 0.16488292073875113,
+    "ci95": [
+     0.14526442428143804,
+     0.18394540541921192
+    ],
+    "withheld_positive_px": 53186
+   },
+   "random": {
+    "dti": 0.08042564781050282,
+    "ci95": [
+     0.0702226099128376,
+     0.09097325665223467
+    ],
+    "withheld_positive_px": 53186
+   }
+  }
+ },
+ "sufficiency": {
+  "view_A_AUC": [
+   0.5274665650438668,
+   0.533875470811413,
+   0.49288728576453167,
+   0.5724050168195043
+  ],
+  "view_B_AUC": [
+   0.681159777305192,
+   0.7500363624908483,
+   0.6713281657339708,
+   0.6848455176041106
+  ],
+  "view_A_mean": 0.5317,
+  "verdict": "FAIL \u2014 View A at chance; independence passes (max |rho| 0.4510) but is not sufficient"
+ },
+ "leakage_canary": {
+  "max_channel_AUC": 0.5977,
+  "bar": 0.9
+ },
+ "registry": {
+  "priors_checked": 146,
+  "canonical_pattern_unique": true,
+  "novel_fraction": 0.6825835236628247,
+  "max_jaccard": 0.0131,
+  "lane_max_spearman": 0.017866671336593285,
+  "lane_near_3px_max_excluding_probes": 0.3828,
+  "note": "literal lane dot rule fires only against the universal-coverage r13-lattice probe (IR-H92-002)"
+ },
+ "raster": {
+  "file": "gems52-h92-cotrain-atexture-disagreement-20261010T222354Z.tif",
+  "sha256": "dbbdc0715d8fac843e45e997267aab141df233b6e482206db7f1279d560a9914",
+  "bytes": 795099,
+  "placed": 37654,
+  "budget": 37654
+ },
+ "validator": {
+  "path": "/home/user/GEMSDOE52/submission/gems52-h92-cotrain-atexture-disagreement-20261010T222354Z.tif",
+  "bytes": 795099,
+  "sha256": "dbbdc0715d8fac843e45e997267aab141df233b6e482206db7f1279d560a9914",
+  "bands": 1,
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "width": 3292,
+  "height": 3730,
+  "bounds": [
+   243350.0,
+   4135550.0,
+   572550.0,
+   4508550.0
+  ],
+  "ref_bounds": [
+   243350.0,
+   4135550.0,
+   572550.0,
+   4508550.0
+  ],
+  "transform": [
+   100.0,
+   0.0,
+   243350.0,
+   0.0,
+   -100.0,
+   4508550.0
+  ],
+  "nodata": null,
+  "blocksize": [
+   1,
+   3292
+  ],
+  "fixture_grid": false,
+  "has_validity_mask": false,
+  "nan_pixels": 0,
+  "infinity_pixels": 0,
+  "n_nan": 0,
+  "min": 0.0,
+  "max": 1.0,
+  "mean": 0.0030664964579045773,
+  "n_nonzero": 37654,
+  "mass": 37654.0,
+  "mass_outside_footprint": 0,
+  "problems": [],
+  "ok": true,
+  "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+ },
+ "not_the_union": {
+  "disagreement_dots": 37654,
+  "dots_also_in_consensus": 0,
+  "dots_also_in_union": 1758,
+  "jaccard_vs_consensus": 0.0,
+  "spearman_field_vs_unionmax": -0.003348276036681345,
+  "note": "a high-A/low-B pixel and a high-A/high-B pixel have the same max(A,B)=union score but different disagreement scores, so the shipped field is not a rescaling of the union"
+ },
+ "submission_name": "h92-cotrain-atexture-disagreement-37654px",
+ "submission_note": "H92 A-texture vs B-texture disagreement, 37654px, 3px spacing, 200m collar",
+ "verdict": "NEGATIVE \u2014 DOWNLOAD YES, SUBMIT NO",
+ "verdict_reason": "primary 0.034799 is strictly below the 0.080426 random control with a paired 95% CI entirely below zero; no slot may be spent",
+ "receipts": [
+  "evidence/h92_fit.json",
+  "evidence/h92_holdout.json",
+  "evidence/h92_build.json"
+ ],
+ "generated_utc": "2026-10-10"
+}

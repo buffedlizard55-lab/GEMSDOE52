@@ -1,0 +1,428 @@
+{
+  "round": "H92",
+  "stage": "holdout",
+  "started_utc": "2026-10-10T22:21:26Z",
+  "evidence_class": "HOLDOUT-DTI",
+  "evaluator_version": "gems52-pooled-hide-v1",
+  "arms": [
+    "xtex_dis",
+    "xtex_agree",
+    "single_Atex",
+    "single_Btex",
+    "random"
+  ],
+  "primary": "xtex_dis",
+  "budget_per_fold": 9400,
+  "min_separation_px": 3.0,
+  "folds": [
+    {
+      "fold": 0,
+      "allowed_px": 2265054,
+      "truth_px": 27309,
+      "arms": {
+        "xtex_dis": {
+          "dti": 0.017470931678984086,
+          "tpw": 415.3847342866257,
+          "fpw": 9227.431209540513,
+          "fnw": 26893.615265713375,
+          "placed": 9400,
+          "seconds": 3.0
+        },
+        "xtex_agree": {
+          "dti": 0.07455400297256011,
+          "tpw": 1783.9033571887962,
+          "fpw": 8618.431679319483,
+          "fnw": 25525.096642811204,
+          "placed": 9400,
+          "seconds": 2.8
+        },
+        "single_Atex": {
+          "dti": 0.04452643848075102,
+          "tpw": 1061.8492135952706,
+          "fpw": 8940.209098020294,
+          "fnw": 26247.15078640473,
+          "placed": 9400,
+          "seconds": 2.5
+        },
+        "single_Btex": {
+          "dti": 0.10756141106833256,
+          "tpw": 2582.9428855098286,
+          "fpw": 8249.34460975712,
+          "fnw": 24726.05711449017,
+          "placed": 9400,
+          "seconds": 2.5
+        },
+        "random": {
+          "dti": 0.04391154954444291,
+          "tpw": 1047.567157232948,
+          "fpw": 8997.93942826165,
+          "fnw": 26261.43284276705,
+          "placed": 9400,
+          "seconds": 2.4
+        }
+      },
+      "not_the_union": {
+        "disagreement_dots": 9400,
+        "also_high_in_A": 525,
+        "also_high_in_B": 0,
+        "consensus_dots": 9400,
+        "symmetric_difference_vs_consensus": 18800
+      }
+    },
+    {
+      "fold": 1,
+      "allowed_px": 1170301,
+      "truth_px": 10677,
+      "arms": {
+        "xtex_dis": {
+          "dti": 0.022531377222063595,
+          "tpw": 235.4113254051483,
+          "fpw": 9297.36452353506,
+          "fnw": 10441.588674594852,
+          "placed": 9400,
+          "seconds": 2.4
+        },
+        "xtex_agree": {
+          "dti": 0.14742777222282172,
+          "tpw": 1561.6743520964,
+          "fpw": 8694.374705637856,
+          "fnw": 9115.325647903599,
+          "placed": 9400,
+          "seconds": 2.2
+        },
+        "single_Atex": {
+          "dti": 0.08247636018508293,
+          "tpw": 867.4523030899204,
+          "fpw": 9012.483266768795,
+          "fnw": 9809.54769691008,
+          "placed": 9400,
+          "seconds": 2.2
+        },
+        "single_Btex": {
+          "dti": 0.20535066867166926,
+          "tpw": 2186.3987920532836,
+          "fpw": 8341.3370883365,
+          "fnw": 8490.601207946716,
+          "placed": 9400,
+          "seconds": 2.3
+        },
+        "random": {
+          "dti": 0.07343361743372628,
+          "tpw": 772.1440320935346,
+          "fpw": 9094.144085361213,
+          "fnw": 9904.855967906466,
+          "placed": 9400,
+          "seconds": 2.3
+        }
+      },
+      "not_the_union": {
+        "disagreement_dots": 9400,
+        "also_high_in_A": 928,
+        "also_high_in_B": 0,
+        "consensus_dots": 9400,
+        "symmetric_difference_vs_consensus": 18800
+      }
+    },
+    {
+      "fold": 2,
+      "allowed_px": 471065,
+      "truth_px": 6813,
+      "arms": {
+        "xtex_dis": {
+          "dti": 0.07612570545236085,
+          "tpw": 562.6451228756077,
+          "fpw": 9140.357102207789,
+          "fnw": 6250.354877124392,
+          "placed": 9400,
+          "seconds": 2.2
+        },
+        "xtex_agree": {
+          "dti": 0.20616946749128945,
+          "tpw": 1545.6152739142394,
+          "fpw": 8686.481976798721,
+          "fnw": 5267.38472608576,
+          "placed": 9400,
+          "seconds": 2.1
+        },
+        "single_Atex": {
+          "dti": 0.1365773773680559,
+          "tpw": 1015.9787178641802,
+          "fpw": 8926.274731821979,
+          "fnw": 5797.02128213582,
+          "placed": 9400,
+          "seconds": 2.1
+        },
+        "single_Btex": {
+          "dti": 0.24514411717059997,
+          "tpw": 1845.0120011369895,
+          "fpw": 8534.158235206352,
+          "fnw": 4967.987998863011,
+          "placed": 9400,
+          "seconds": 2.1
+        },
+        "random": {
+          "dti": 0.16184723600024814,
+          "tpw": 1210.5504513365954,
+          "fpw": 8935.383589833544,
+          "fnw": 5602.449548663404,
+          "placed": 9400,
+          "seconds": 1.9
+        }
+      },
+      "not_the_union": {
+        "disagreement_dots": 9400,
+        "also_high_in_A": 1600,
+        "also_high_in_B": 0,
+        "consensus_dots": 9400,
+        "symmetric_difference_vs_consensus": 18800
+      }
+    },
+    {
+      "fold": 3,
+      "allowed_px": 686529,
+      "truth_px": 8387,
+      "arms": {
+        "xtex_dis": {
+          "dti": 0.06192655916121165,
+          "tpw": 535.7604501040245,
+          "fpw": 9173.967523227619,
+          "fnw": 7851.239549895976,
+          "placed": 9400,
+          "seconds": 2.1
+        },
+        "xtex_agree": {
+          "dti": 0.18356035145547733,
+          "tpw": 1610.548604998882,
+          "fpw": 8711.181220331118,
+          "fnw": 6776.451395001118,
+          "placed": 9400,
+          "seconds": 2.1
+        },
+        "single_Atex": {
+          "dti": 0.1367950758906659,
+          "tpw": 1193.5530459196145,
+          "fpw": 8884.03209113486,
+          "fnw": 7193.446954080386,
+          "placed": 9400,
+          "seconds": 2.1
+        },
+        "single_Btex": {
+          "dti": 0.20377505554434935,
+          "tpw": 1789.6455665822525,
+          "fpw": 8574.637067853253,
+          "fnw": 6597.354433417748,
+          "placed": 9400,
+          "seconds": 2.0
+        },
+        "random": {
+          "dti": 0.11891114460756524,
+          "tpw": 1036.9613080079703,
+          "fpw": 9017.398732768132,
+          "fnw": 7350.038691992029,
+          "placed": 9400,
+          "seconds": 2.0
+        }
+      },
+      "not_the_union": {
+        "disagreement_dots": 9400,
+        "also_high_in_A": 1273,
+        "also_high_in_B": 0,
+        "consensus_dots": 9400,
+        "symmetric_difference_vs_consensus": 18800
+      }
+    }
+  ],
+  "pooled": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "alpha": 0.2,
+    "beta": 0.8,
+    "triangular_radius_m": 300.0,
+    "pooled": true,
+    "scores": {
+      "xtex_dis": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.0347985809945442,
+        "ci95": [
+          0.02693774938976825,
+          0.04401099407515187
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 1749.2016326714056,
+        "fpw": 36839.12035851098,
+        "fnw": 51436.79836732862
+      },
+      "xtex_agree": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.1280091075196956,
+        "ci95": [
+          0.1123103659805099,
+          0.1433354688083664
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 6501.741588198319,
+        "fpw": 34710.469582087164,
+        "fnw": 46684.25841180168
+      },
+      "single_Atex": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.0819097873104574,
+        "ci95": [
+          0.06914345853470746,
+          0.09586161442253226
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 4138.833280468986,
+        "fpw": 35762.999187745925,
+        "fnw": 49047.166719531
+      },
+      "single_Btex": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.16488292073875113,
+        "ci95": [
+          0.14526442428143804,
+          0.18394540541921192
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 8403.99924528236,
+        "fpw": 33699.477001153224,
+        "fnw": 44782.00075471764
+      },
+      "random": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.08042564781050282,
+        "ci95": [
+          0.0702226099128376,
+          0.09097325665223467
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 4067.2229486710503,
+        "fpw": 36044.86583622452,
+        "fnw": 49118.777051328965
+      }
+    },
+    "best_comparable_control": "single_Btex",
+    "paired_differences": {
+      "xtex_agree": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "delta": -0.09321052652515141,
+        "ci95": [
+          -0.1072021280211808,
+          -0.07869527798312517
+        ],
+        "withheld_positive_pixels": 53186
+      },
+      "single_Atex": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "delta": -0.047111206315913194,
+        "ci95": [
+          -0.05651363262206635,
+          -0.037718405613604136
+        ],
+        "withheld_positive_pixels": 53186
+      },
+      "single_Btex": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "delta": -0.13008433974420694,
+        "ci95": [
+          -0.149839850293159,
+          -0.1103006468585945
+        ],
+        "withheld_positive_pixels": 53186
+      },
+      "random": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "delta": -0.04562706681595862,
+        "ci95": [
+          -0.05410584997543102,
+          -0.03719376849471195
+        ],
+        "withheld_positive_pixels": 53186
+      }
+    },
+    "bootstrap": {
+      "method": "paired physical spatial-cluster percentile",
+      "clusters": 153,
+      "draws": 1000,
+      "seed": 61052,
+      "confidence": 0.95,
+      "caveat": "Conditional on fitted folds, catalogue labels and fixed budgets; not a leaderboard interval."
+    },
+    "implementation_sha256": {
+      "evaluate_holdout.py": "e4211fe530ccb8f1ffeab2ef2f8e94a563492c2a3644c908d1a81e379fcbd9d4",
+      "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+      "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+      "spatial.py": "fad7b09db9efc512247b9a176a7e7ce8631e287592b4e07902d0b9c38bed00f8"
+    }
+  },
+  "withheld_positive_px": 53186,
+  "sufficiency": {
+    "view_A_AUC": [
+      0.5274665650438668,
+      0.533875470811413,
+      0.49288728576453167,
+      0.5724050168195043
+    ],
+    "view_B_AUC": [
+      0.681159777305192,
+      0.7500363624908483,
+      0.6713281657339708,
+      0.6848455176041106
+    ],
+    "note": "positives = the fold's withheld catalogue truth inside its region; negatives = region and not-catalogue and >500 m from any catalogue pixel"
+  },
+  "independence": {
+    "bar_brief": 0.9,
+    "bar_repo": 0.6,
+    "folds": [
+      {
+        "fold": 0,
+        "n_blocks": 77,
+        "pearson_rho": 0.42848245128185664,
+        "mean_abs_error_A": 0.2465987280542807,
+        "mean_abs_error_B": 0.20532432645473803
+      },
+      {
+        "fold": 1,
+        "n_blocks": 43,
+        "pearson_rho": 0.3463864629361093,
+        "mean_abs_error_A": 0.2159745489817528,
+        "mean_abs_error_B": 0.20804476559208912
+      },
+      {
+        "fold": 2,
+        "n_blocks": 28,
+        "pearson_rho": -0.09500810120250908,
+        "mean_abs_error_A": 0.2535073175027712,
+        "mean_abs_error_B": 0.24049378010216
+      },
+      {
+        "fold": 3,
+        "n_blocks": 28,
+        "pearson_rho": 0.451021755726837,
+        "mean_abs_error_A": 0.24675518520193643,
+        "mean_abs_error_B": 0.2319287783554004
+      }
+    ],
+    "max_abs_correlation": 0.451021755726837,
+    "abandon_required": false,
+    "independence_ok_repo_bar": true
+  },
+  "finished_utc": "2026-10-10T22:22:18Z",
+  "caveat": "HOLDOUT-DTI hides catalogue components; the competition scores faults the catalogue lacks. This instrument screens procedures and is not a leaderboard forecast (cross-round Spearman -0.10, IR-H77-005).",
+  "evaluator_hashes": {
+    "evaluate_holdout.py": "e4211fe530ccb8f1ffeab2ef2f8e94a563492c2a3644c908d1a81e379fcbd9d4",
+    "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+    "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+    "spatial.py": "fad7b09db9efc512247b9a176a7e7ce8631e287592b4e07902d0b9c38bed00f8"
+  }
+}
