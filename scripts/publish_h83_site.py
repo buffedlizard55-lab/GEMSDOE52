@@ -75,6 +75,7 @@ NAV = ('<a href="index.html">Current round</a>'
        '<a href="h83-sources.html">Sources</a>'
        '<a href="h84.html">H84 (parallel)</a>'
        '<a href="h85-executive-summary.html">H85 (parallel)</a>'
+       '<a href="h86-executive-summary.html">H86 (parallel)</a>'
        '<a href="h83-parallel-executive-summary.html">H83 structcon (parallel)</a>'
        '<a href="downloads/index.html">Archive</a>')
 
@@ -334,7 +335,7 @@ what else could produce the same numbers.</p></section>
 <hr class="divider">
 
 <details class="archive"><summary><b><section><h2>Rounds that landed in parallel on this repository</h2>
-<p>This repository is worked by more than one session at a time, and three other rounds were merged
+<p>This repository is worked by more than one session at a time, and several other rounds were merged
 to <code>main</code> while H83 was being measured. None spent a submission slot. All are linked here
 so nothing is hidden by this page being the "current round":</p>
 <ul>
@@ -344,6 +345,9 @@ artefact only). Its own receipt is <code>evidence/h84_run_card.json</code> and i
 <li><a href="h85-executive-summary.html">H85 — holdout of the H83 geo-concordance field</a>,
 also NEGATIVE and, like this round, <i>below random</i> on the mandated instrument. Its write-up is
 <code>knowledge/78_...</code> and its irregularities are IR-H85-001..010.</li>
+<li><a href="h86-executive-summary.html">H86 — page correcting the 0.2778 claim</a>: removed
+cells lie inside the 300 m kernel and are not guaranteed zero credit; the repo's sparse-approximation
+note puts the error at 0.5–3.3 %.</li>
 <li><a href="h83-parallel-executive-summary.html">H83 — multi-band structural concordance +
 geothermal proximity</a>, a <i>different</i> round that also used the label H83. It has no holdout
 validation run; its receipt is under <code>submission/gems52-h83-structural-concordance-37654px-20261010T200049Z.json</code>

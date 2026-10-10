@@ -50,7 +50,7 @@ verdict is **negative** and why no slot was spent.
 
 ## Rounds that landed in parallel
 
-More than one session works this repository. Three other rounds merged to `main` while H83 was
+More than one session works this repository. Several other rounds merged to `main` while H83 was
 being measured; **none spent a submission slot**.
 
 - **H84 — harmonic variogram-ellipse anisotropy**: also NEGATIVE, research artefact only.
@@ -59,12 +59,15 @@ being measured; **none spent a submission slot**.
 - **H85 — holdout of the H83 geo-concordance field**: also NEGATIVE and, like this round, *below
   random* on the mandated instrument. [Summary](docs/h85-executive-summary.html) · write-up
   `knowledge/78_...` · irregularities IR-H85-001..010.
+- **H86 — page correcting the 0.2778 claim**: removed cells lie inside the 300 m kernel and are
+  not guaranteed zero credit; the repository's sparse-approximation note puts the error at
+  0.5–3.3 %. [Summary](docs/h86-executive-summary.html).
 - **H83 — multi-band structural concordance + geothermal proximity**: a *different* round that
   also used the label H83, with no holdout validation run
   (`submission/gems52-h83-structural-concordance-37654px-20261010T200049Z.json`,
   `submission_slots_used: 0`). [Summary](docs/h83-parallel-executive-summary.html).
 
-Where the four rounds share a site filename (the "current round" page, the `h83-candidate`
+Where the rounds share a site filename (the "current round" page, the `h83-candidate`
 download), this README and `evidence/h83_run_card.json` are **this** round's. The other rounds'
 rasters remain in `submission/` and in git history.
 
