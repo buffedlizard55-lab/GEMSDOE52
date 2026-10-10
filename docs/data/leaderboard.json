@@ -1,317 +1,312 @@
 {
   "status": "dated snapshot; automated DrivenData access disabled by Terms-of-Use policy",
-  "observed_date_utc": "2026-10-09",
-  "observed_at_utc": "2026-10-09T20:20:00Z",
+  "observed_date_utc": "2026-10-10",
   "source": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
-  "retrieved_by": "agent page-fetch tool over the public leaderboard HTML (no authentication, no scraping of user data). NOTE: bash egress in this sandbox returns HTTP 000 for www.drivendata.org; the page-fetch tool is the only working transport, so this snapshot is tool-retrieved, not curl-retrieved.",
+  "retrieved_by": "agent page-fetch tool over the public leaderboard HTML (bash egress to www.drivendata.org returns HTTP 000 from this sandbox)",
   "column_header_on_board": "Best public DW-Tversky (in descending order)",
-  "score_class": "PUBLIC-BOARD (organiser-published, team-level). NOT ORGANIZER-CONFIRMED for any filename: the board prints a team name and a number, never a filename, hash or upload receipt.",
+  "score_class": "PUBLIC-BOARD (organiser-published, team-level). NOT ORGANIZER-CONFIRMED for any filename.",
+  "changes_vs_2026-10-09": [
+    "#1 unchanged xiaofanhu 0.3774",
+    "new #2 JerryDataWorks 0.3418 (not in the 2026-10-09 top 9)",
+    "Batik Shirt Brothers 0.3221 -> 0.3300",
+    "kinghorton42 0.3222 -> 0.3261",
+    "DARD 0.3195 now #8 (was #7)",
+    "0.3195 is no longer the 'highest score': it is #8; the bar to enter the top 3 is 0.3361"
+  ],
+  "irregularity_flags": [
+    "The brief quotes both 0.3774 (board high) and 0.3195 ('highest score right now'); on 2026-10-10 the board shows 0.3774 at #1 and 0.3195 at #8 (IR-H84-002).",
+    "extradr19 at 0.2778, last activity '6d 3h ago' (~2026-10-04), matches the OWNER-REPORTED h33-2-b2 score and date; this is consistent with, NOT proof of, that team being the owner's account."
+  ],
   "rows": [
     {
       "rank": 1,
       "team": "xiaofanhu",
       "score": 0.3774,
-      "submissions": 14
+      "submissions": 15
     },
     {
       "rank": 2,
-      "team": "alexoktaba",
-      "score": 0.3361,
-      "submissions": 26
+      "team": "JerryDataWorks",
+      "score": 0.3418,
+      "submissions": 18
     },
     {
       "rank": 3,
+      "team": "alexoktaba",
+      "score": 0.3361,
+      "submissions": 27
+    },
+    {
+      "rank": 4,
+      "team": "Batik Shirt Brothers",
+      "score": 0.33,
+      "submissions": 25
+    },
+    {
+      "rank": 5,
       "team": "nchuzhoy",
       "score": 0.3262,
       "submissions": 6
     },
     {
-      "rank": 4,
-      "team": "joeyfezster",
-      "score": 0.326,
-      "submissions": 25
-    },
-    {
-      "rank": 5,
-      "team": "kinghorton42",
-      "score": 0.3222,
-      "submissions": 9
-    },
-    {
       "rank": 6,
-      "team": "Batik Shirt Brothers",
-      "score": 0.3221,
-      "submissions": 24
+      "team": "kinghorton42",
+      "score": 0.3261,
+      "submissions": 10
     },
     {
       "rank": 7,
+      "team": "joeyfezster",
+      "score": 0.326,
+      "submissions": 26
+    },
+    {
+      "rank": 8,
       "team": "DARD",
       "score": 0.3195,
       "submissions": 17
     },
     {
-      "rank": 8,
-      "team": "giles",
-      "score": 0.3025,
-      "submissions": 5
-    },
-    {
       "rank": 9,
-      "team": "ohyeah",
-      "score": 0.296,
+      "team": "cfld__",
+      "score": 0.3108,
       "submissions": 4
     },
     {
       "rank": 10,
-      "team": "JerryDataWorks",
-      "score": 0.2948,
-      "submissions": 17
+      "team": "ruping",
+      "score": 0.3104,
+      "submissions": 7
     },
     {
       "rank": 11,
-      "team": "mzoorob",
-      "score": 0.2902,
-      "submissions": 28
+      "team": "newway",
+      "score": 0.3056,
+      "submissions": 7
     },
     {
       "rank": 12,
-      "team": "notmyfault",
-      "score": 0.2901,
-      "submissions": 18
+      "team": "giles",
+      "score": 0.3025,
+      "submissions": 6
     },
     {
       "rank": 13,
-      "team": "ndavis7",
-      "score": 0.2888,
-      "submissions": 10
+      "team": "mzoorob",
+      "score": 0.302,
+      "submissions": 29
     },
     {
       "rank": 14,
-      "team": "GrigorSargsyan",
-      "score": 0.2876,
-      "submissions": 15
+      "team": "ohyeah",
+      "score": 0.2983,
+      "submissions": 5
     },
     {
       "rank": 15,
+      "team": "baobao",
+      "score": 0.2974,
+      "submissions": 5
+    },
+    {
+      "rank": 16,
+      "team": "notmyfault",
+      "score": 0.2943,
+      "submissions": 19
+    },
+    {
+      "rank": 17,
+      "team": "BrandenKMurray",
+      "score": 0.2905,
+      "submissions": 16
+    },
+    {
+      "rank": 18,
+      "team": "GrigorSargsyan",
+      "score": 0.2892,
+      "submissions": 16
+    },
+    {
+      "rank": 19,
+      "team": "ndavis7",
+      "score": 0.2888,
+      "submissions": 11
+    },
+    {
+      "rank": 20,
       "team": "HardcoreTechGod",
       "score": 0.2854,
       "submissions": 6
     },
     {
-      "rank": 16,
+      "rank": 21,
       "team": "op01",
       "score": 0.2797,
-      "submissions": 9
+      "submissions": 10
     },
     {
-      "rank": 17,
+      "rank": 22,
       "team": "extradr19",
       "score": 0.2778,
-      "submissions": 13
+      "submissions": 14
     },
     {
-      "rank": 18,
+      "rank": 23,
       "team": "arnofault",
       "score": 0.2764,
       "submissions": 2
     },
     {
-      "rank": 19,
+      "rank": 24,
       "team": "faultsofthy",
       "score": 0.2764,
       "submissions": 3
     },
     {
-      "rank": 20,
+      "rank": 25,
       "team": "wonderfulbig12",
       "score": 0.2761,
       "submissions": 4
     },
     {
-      "rank": 21,
+      "rank": 26,
       "team": "No Fault of Our Own",
       "score": 0.2761,
-      "submissions": 25
+      "submissions": 26
     },
     {
-      "rank": 22,
-      "team": "newway",
-      "score": 0.2752,
-      "submissions": 6
-    },
-    {
-      "rank": 23,
+      "rank": 27,
       "team": "wbg1",
       "score": 0.275,
-      "submissions": 15
+      "submissions": 16
     },
     {
-      "rank": 24,
+      "rank": 28,
       "team": "raboush2",
       "score": 0.2747,
       "submissions": 10
     },
     {
-      "rank": 25,
+      "rank": 29,
       "team": "li002666",
       "score": 0.2726,
       "submissions": 4
     },
     {
-      "rank": 26,
+      "rank": 30,
       "team": "smashi34",
       "score": 0.271,
-      "submissions": 13
+      "submissions": 14
     },
     {
-      "rank": 27,
+      "rank": 31,
       "team": "smrtdoog5",
       "score": 0.2708,
-      "submissions": 13
+      "submissions": 14
     },
     {
-      "rank": 28,
+      "rank": 32,
       "team": "bot_account",
       "score": 0.2707,
       "submissions": 2
     },
     {
-      "rank": 29,
-      "team": "NoahNault",
-      "score": 0.2702,
-      "submissions": 10
+      "rank": 33,
+      "team": "kpomazi",
+      "score": 0.2706,
+      "submissions": 16
     },
     {
-      "rank": 30,
+      "rank": 34,
+      "team": "NoahNault",
+      "score": 0.2702,
+      "submissions": 11
+    },
+    {
+      "rank": 35,
       "team": "doublebigmac",
       "score": 0.2688,
       "submissions": 5
     },
     {
-      "rank": 31,
+      "rank": 36,
       "team": "jgaines",
       "score": 0.2682,
-      "submissions": 25
+      "submissions": 26
     },
     {
-      "rank": 32,
-      "team": "kpomazi",
-      "score": 0.2672,
-      "submissions": 15
-    },
-    {
-      "rank": 33,
+      "rank": 37,
       "team": "Mekhi12",
       "score": 0.2671,
       "submissions": 5
     },
     {
-      "rank": 34,
+      "rank": 38,
+      "team": "shixing",
+      "score": 0.2664,
+      "submissions": 6
+    },
+    {
+      "rank": 39,
       "team": "yifanxu",
       "score": 0.265,
       "submissions": 4
     },
     {
-      "rank": 35,
+      "rank": 40,
       "team": "ad3002",
       "score": 0.2643,
       "submissions": 25
     },
     {
-      "rank": 36,
+      "rank": 41,
+      "team": "moongrega",
+      "score": 0.264,
+      "submissions": 23
+    },
+    {
+      "rank": 42,
       "team": "regan_towin",
       "score": 0.2632,
       "submissions": 1
     },
     {
-      "rank": 37,
+      "rank": 43,
       "team": "1stop",
       "score": 0.2617,
       "submissions": 3
     },
     {
-      "rank": 38,
+      "rank": 44,
       "team": "SDCF9",
       "score": 0.26,
-      "submissions": 14
+      "submissions": 15
     },
     {
-      "rank": 39,
-      "team": "moongrega",
-      "score": 0.2599,
-      "submissions": 22
-    },
-    {
-      "rank": 40,
+      "rank": 45,
       "team": "haiderz",
       "score": 0.2584,
       "submissions": 1
     },
     {
-      "rank": 41,
-      "team": "baobao",
-      "score": 0.2574,
+      "rank": 46,
+      "team": "roison",
+      "score": 0.2541,
       "submissions": 4
     },
     {
-      "rank": 42,
+      "rank": 47,
       "team": "tchu",
       "score": 0.2511,
       "submissions": 21
     },
     {
-      "rank": 43,
-      "team": "BrandenKMurray",
-      "score": 0.2502,
-      "submissions": 15
-    },
-    {
-      "rank": 44,
-      "team": "nsabaj",
-      "score": 0.2488,
-      "submissions": 12
-    },
-    {
-      "rank": 45,
-      "team": "Financialanalyst",
-      "score": 0.2442,
-      "submissions": 3
-    },
-    {
-      "rank": 46,
-      "team": "jfper21",
-      "score": 0.2402,
-      "submissions": 13
-    },
-    {
-      "rank": 47,
-      "team": "hiii12345",
-      "score": 0.2326,
-      "submissions": 10
-    },
-    {
       "rank": 48,
-      "team": "Alherma7",
-      "score": 0.2316,
-      "submissions": 15
+      "team": "jfper21",
+      "score": 0.2503,
+      "submissions": 14
     }
   ],
-  "rows_captured": 48,
-  "rows_not_captured": "ranks 49+ were beyond the fetched chunks; this snapshot is explicitly partial below rank 48",
-  "top": 0.3774,
-  "our_team": "extradr19 (owner-reported association; not authenticated)",
-  "our_best_reported": 0.2778,
-  "our_rank": 17,
-  "supersedes": "registry/leaderboard_snapshot_2026-10-08.json",
-  "delta_vs_2026_10_08": [
-    "NEW rows since the 2026-10-08 snapshot: giles 0.3025 (rank 8), ohyeah 0.2960 (rank 9), JerryDataWorks 0.2948 (rank 10), faultsofthy 0.2764, wonderfulbig12 0.2761, newway 0.2752, NoahNault 0.2702, doublebigmac 0.2688, jgaines 0.2682, kpomazi 0.2672, Mekhi12 0.2671, yifanxu 0.2650, ad3002 0.2643, 1stop 0.2617, moongrega 0.2599, haiderz 0.2584, baobao 0.2574, tchu 0.2511, BrandenKMurray 0.2502, nsabaj 0.2488, Financialanalyst 0.2442, jfper21 0.2402, hiii12345 0.2326, Alherma7 0.2316",
-    "MOVED: alexoktaba 0.3345 -> 0.3361 (rank 2); mzoorob 0.2884 -> 0.2902; notmyfault 0.2758 -> 0.2901 (a jump of +0.0143, the largest single-team movement observed)",
-    "OUR ROW: extradr19 unchanged at 0.2778 but its rank slid 13 -> 17 as four teams passed it; submission count 12 -> 13",
-    "UNCHANGED: the top score 0.3774 (xiaofanhu) and the 0.3195 row (DARD, rank 7)"
-  ],
-  "scope_note": "The board reports team-level best PUBLIC-chunk scores, not filenames, hashes, upload receipts, hidden labels or causal attribution. The Initial Prize Round is scored on the PRIVATE chunk at close and the Final Prize Round rescores the same chosen file against an expert-expanded label set (official problem page, fetched 2026-10-09: https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/). Therefore every number here is a public-chunk number and none of them is a forecast of a prize-round outcome.",
-  "brief_correction": "The current user brief states both 'Current competition leaderboard GEMSDOE high score: 0.3774' and '0.3195 is the highest score right now'. Measured against the board on 2026-10-09, 0.3774 is the top and 0.3195 is rank 7 (team DARD). The two statements are mutually inconsistent; the second is wrong. Logged as IR-H76-001.",
-  "coexisting_same_date_snapshot": "docs/data/leaderboard_snapshot_2026-10-09.json - an earlier same-date capture (ranks 1-22, keys participant/best_public_dw_tversky) committed by another session. It is left untouched. This file is the later, wider capture (48 rows, keys team/score/submissions); the board moves during the day, so both are valid observations at their own observed_at_utc.",
   "owner_best_reported": 0.2778,
   "artifact_score_authenticated": false,
   "note": "Dated participant-level observation; no filename/hash/receipt attribution. Participant identity is not authenticated as the user's team.",
