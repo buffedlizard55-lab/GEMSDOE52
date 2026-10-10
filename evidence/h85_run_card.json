@@ -1,0 +1,79 @@
+{
+  "hypothesis": "H85: catalogue-free geo-concordance field (structure-tensor linearity over 3 bands + GDR well/spring temperature) placed with the repo's 3 px spacing selector outside the 200 m catalogue collar.",
+  "mechanism": "Linear structural evidence that agrees across gravity, magnetic and DEM gradients, weighted by proximity to geothermal manifestations.",
+  "non_fault_process": "Lithological contacts; basin-margin gravity steps; road and erosion lineaments in DEM; interpolation seams.",
+  "holdout": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.07238402730773738,
+    "ci95": [
+      0.05930994603093251,
+      0.08698275923181213
+    ],
+    "withheld_positive_pixels": 53186,
+    "random_control_dti": 0.08042564781050282,
+    "note": "from evidence/h85_holdout.json; the file's own placement is the H85_geo_concordance arm"
+  },
+  "raster_sha256": "a4a6662009ad2118da8c1b638befb18dff62082757b6c6d89bb207336c17b32a",
+  "file": "submission/gems52-h85-geoconc-spaced-37654px-20261010.tif",
+  "bytes": 793702,
+  "submission_name": "h85-geoconc-spaced-cat200-37654px-20261010",
+  "note": "H85 geo-concordance, catalogue-free; 3px spaced; 200m ring out; binary; holdout below random",
+  "validator": {
+    "format_ok": true,
+    "problems": [],
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "shape": [
+      3730,
+      3292
+    ],
+    "nan_inside_footprint": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "positives": 37654
+  },
+  "uniqueness": {
+    "n_priors_checked": 137,
+    "ok": true,
+    "novel_fraction": 0.5544962022627078,
+    "canonical_pattern_unique": true,
+    "identical_to_a_prior": false,
+    "max_jaccard_vs_priors": 0.07658217895383912
+  },
+  "lane": {
+    "surface": {
+      "max_spearman": 0.15250269396792862,
+      "threshold": 0.9,
+      "duplicate": false,
+      "verdict": "PASS"
+    },
+    "dots": {
+      "max_near_3px_any_prior": 0.99843310139693,
+      "threshold": 0.7,
+      "duplicate": true,
+      "verdict": "DUPLICATE/STOP",
+      "offenders": [
+        {
+          "path": "data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+          "candidate_near_3px": 0.99843310139693,
+          "random_dots_near_3px": 0.9990704838795347,
+          "classified_universal_probe": true
+        }
+      ]
+    },
+    "dots_max_near_3px_excluding_universal_probes": 0.2698252509693525,
+    "dots_excluding_universal_probes_verdict": "PASS (policy only; literal rule still DUPLICATE/STOP)",
+    "scope": "all 135 local rasters in submission/, docs/downloads/, data/scored/; not the 567-blob full census"
+  },
+  "dots": 37654,
+  "build_meta": {
+    "n_wells": 8693,
+    "concord_mean": 0.9707608222961426
+  },
+  "not_union_test": "not applicable: single-view structural field, no co-training",
+  "slots_used": 0,
+  "verdict": "DOWNLOAD YES (format-valid, decoded-unique) / SUBMIT NO: holdout below random control; literal lane rule DUPLICATE/STOP on dots (universal-probe raster; see lane)",
+  "generated_utc": "20261010T211432Z"
+}
