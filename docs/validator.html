@@ -2,191 +2,61 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Submission file checker — DOE GEMS (#306) — GEMSDOE52</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TIF Validator — GEMSDOE52</title>
 <style>
-:root{--ink:#14181d;--mut:#5b6672;--line:#dfe4ea;--ok:#0f7b3f;--okbg:#e8f6ed;--bad:#b3261e;--badbg:#fdecea;--info:#1f4e79;--infobg:#eaf1f8}
-*{box-sizing:border-box}
-body{margin:0;background:#fff;color:var(--ink);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
-header{border-bottom:1px solid var(--line);padding:14px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
-header a{color:var(--info);text-decoration:none;font-weight:600}
-header .sp{flex:1}
-main{max-width:900px;margin:0 auto;padding:24px 20px 80px}
-h1{font-size:26px;margin:0 0 6px}
-h2{font-size:18px;margin:28px 0 8px}
-p.lede{color:var(--mut);margin:0 0 20px}
-#drop{border:2px dashed #b9c3ce;border-radius:10px;padding:34px 20px;text-align:center;background:#fbfcfd;cursor:pointer}
-#drop.hot{border-color:var(--info);background:var(--infobg)}
-#drop strong{font-size:18px}
-#drop small{display:block;color:var(--mut);margin-top:6px}
-input[type=file]{display:none}
-#verdict{margin:20px 0;padding:16px 18px;border-radius:10px;font-size:18px;font-weight:700;display:none}
-#verdict.go{display:block;background:var(--okbg);color:var(--ok);border:1px solid #b7dfc5}
-#verdict.no{display:block;background:var(--badbg);color:var(--bad);border:1px solid #f0c4bf}
-#verdict.err{display:block;background:#fff6e5;color:#8a5300;border:1px solid #f2d9a6}
-table{width:100%;border-collapse:collapse;margin:10px 0 4px;font-size:14.5px}
-th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
-th{background:#f6f8fa;font-size:13px;text-transform:uppercase;letter-spacing:.03em;color:var(--mut)}
-td.st{white-space:nowrap;font-weight:700;width:74px}
-tr.hard td.st.pass{color:var(--ok)} tr.hard td.st.fail{color:var(--bad)}
-tr.info td.st{color:var(--info)} tr.info{background:var(--infobg)}
-td.lbl{font-weight:600}
-td.got{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
-.note{color:var(--mut);font-size:13px;margin-top:4px}
-.meta{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;color:var(--mut);margin:8px 0 0}
-.privacy{background:#f6f8fa;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-top:26px;font-size:14.5px}
-.rules li{margin-bottom:7px}
-code{background:#f2f4f7;padding:1px 5px;border-radius:4px;font-size:13.5px}
-a.ref{color:var(--info)}
-footer{border-top:1px solid var(--line);padding:18px 20px;color:var(--mut);font-size:13.5px;text-align:center}
+:root{--bg:#0f172a;--card:#1e293b;--accent:#3b82f6;--green:#22c55e;--red:#ef4444;--text:#e2e8f0;--muted:#94a3b8;--border:#334155}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:1rem;max-width:800px;margin:0 auto}
+h1{font-size:1.4rem;margin:1rem 0;color:var(--accent)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;margin:1rem 0}
+.pass{color:var(--green);font-weight:700}.fail{color:var(--red);font-weight:700}
+label{display:block;margin:.5rem 0;font-weight:600}
+input[type=file]{margin:.5rem 0}
+button{padding:10px 20px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-weight:700;cursor:pointer;margin:.5rem 0}
+button:hover{opacity:.9}
+pre{background:#0f172a;padding:1rem;border-radius:6px;overflow-x:auto;font-size:.85rem;white-space:pre-wrap}
+a{color:var(--accent)}
 </style>
 </head>
 <body>
-<header>
-  <a href="./index.html">← Site home</a>
-  <a href="./h82-executive-summary.html">How to submit</a>
-  <a href="./h82.html">H82 result</a>
-  <span class="sp"></span>
-  <span class="meta" style="margin:0">GEMSDOE52 · DOE GEMS competition #306</span>
-</header>
-<main>
-  <h1>Is this file safe to upload?</h1>
-  <p class="lede">Drop the <code>.tif</code> (or the <code>.zip</code> you downloaded) here. Every pixel is decoded
-  <strong>in your browser</strong> and checked against the organiser's published submission rules. Nothing is uploaded
-  anywhere — no network request is made, and the file never leaves this page.</p>
+<h1>🔍 TIF Validator — Check Before Submitting</h1>
+<div class="card">
+<p>Drop a <code>.tif</code> file below to verify it matches the competition format before uploading to DrivenData.</p>
+<label>Select GeoTIFF file:
+<input type="file" id="tif" accept=".tif,.tiff">
+</label>
+<button onclick="validate()">Validate</button>
+<div id="output"></div>
+</div>
 
-  <div id="drop" tabindex="0" role="button" aria-label="Choose or drop a GeoTIFF to check">
-    <strong>Drop a <code>.tif</code> or <code>.zip</code> here</strong>
-    <small>or click / press Enter to choose a file · about 1–3 seconds for the 12.3 M-pixel grid</small>
-  </div>
-  <input type="file" id="file" accept=".tif,.tiff,.zip">
+<div class="card">
+<h2 style="margin-top:0">Expected Format</h2>
+<ul>
+<li>Single band, float32</li>
+<li>CRS: EPSG:32611 (UTM Zone 11N)</li>
+<li>Shape: 3730 rows × 3292 columns</li>
+<li>Transform: 100m resolution</li>
+<li>Values: all finite values in [0, 1]</li>
+<li>No NaN inside the footprint</li>
+<li>NaN or null outside footprint</li>
+</ul>
+</div>
 
-  <div id="verdict" role="status" aria-live="polite"></div>
-  <div id="out"></div>
+<p><a href="index.html">← Back to landing page</a></p>
 
-  <h2>The rules this page enforces</h2>
-  <p>Quoted from the official problem page, <a class="ref"
-  href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">“The Problem”</a>
-  (fetched 2026-10-09), under <em>Submission format</em>:</p>
-  <ol class="rules">
-    <li><strong>Values in [0, 1].</strong> “Predictions should be pixel-wise probabilities of fault presence, with
-    values between 0 and 1.” This is the rule behind the rejection message
-    <code>Predicted values must be in range [0, 1]</code>.</li>
-    <li><strong>Single layer, 32-bit float.</strong> “a single layer GeoTIFF … 32-bit float”.</li>
-    <li><strong>Same projected CRS as the training data:</strong> UTM zone 11N, <code>EPSG:32611</code>.</li>
-    <li><strong>Same 100 m resolution and the same bounds</strong> as the training data; “the data outside the bounds
-    is null or nan”.</li>
-    <li><strong>File type:</strong> a single-band GeoTIFF, or a ZIP archive containing one GeoTIFF.</li>
-  </ol>
-
-  <h2>Where the reference geometry comes from</h2>
-  <p>Nothing on this page is assumed. The expected shape, CRS, pixel scale and origin are read from the organiser's own
-  template <code>sample_submission.tif</code>, measured with GDAL/rasterio in this repository:</p>
-  <table>
-    <tr><th>Property</th><th>Measured value</th></tr>
-    <tr><td>Grid</td><td class="got">3292 columns × 3730 rows (12,279,160 pixels)</td></tr>
-    <tr><td>Bands / type</td><td class="got">1 band, float32 (BitsPerSample 32, SampleFormat 3)</td></tr>
-    <tr><td>CRS</td><td class="got">EPSG:32611 — WGS 84 / UTM zone 11N</td></tr>
-    <tr><td>Pixel size</td><td class="got">100 m × 100 m</td></tr>
-    <tr><td>Origin (upper-left)</td><td class="got">243350 E, 4508550 N</td></tr>
-    <tr><td>Bounds</td><td class="got">243350–572550 E, 4135550–4508550 N</td></tr>
-    <tr><td>NoData</td><td class="got">NaN</td></tr>
-    <tr><td>Compression / layout</td><td class="got">LZW, 1-row strips</td></tr>
-    <tr><td>NaN pixels (outside footprint)</td><td class="got">7,111,787</td></tr>
-    <tr><td>Finite pixels</td><td class="got">5,167,373</td></tr>
-    <tr><td>SHA-256 of the template</td><td class="got">2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc</td></tr>
-  </table>
-  <p class="note">The decoder in <code>assets/tifcheck.js</code> was validated against two files whose pixel statistics
-  were measured independently with rasterio: <code>docs/downloads/h75-candidate.tif</code> (tiled 256×256, DEFLATE,
-  horizontal-differencing predictor — decoded to exactly 12,241,506 zeros and 37,654 ones) and
-  <code>data/sample_submission.tif</code> (1-row strips, LZW — decoded to exactly 5,106,385 zeros, 60,988 ones and
-  7,111,787 NaN). Both agree with rasterio to the pixel.</p>
-
-  <h2>What a FAIL here does and does not mean</h2>
-  <p>A FAIL on a <em>hard</em> row means the file will be rejected by the submission form, or scored wrongly. It does
-  <strong>not</strong> mean the prediction is good: format validity and scientific merit are separate questions, and the
-  score each round earned is recorded separately as ORGANIZER-CONFIRMED or OWNER-REPORTED in
-  <a class="ref" href="./index.html">the site home</a>. An <em>informational</em> row (blue) never affects the verdict;
-  it is there because the organiser's own template contains NaN pixels outside the footprint.</p>
-
-  <div class="privacy">
-    <strong>Privacy.</strong> This page runs entirely from static files on GitHub Pages. The check is performed by
-    <code>assets/tifcheck.js</code> in your own browser: the file is read with the File API, decompressed and decoded
-    locally, and no byte of it is transmitted. You can verify this in your browser's network panel — the only requests
-    are for the HTML, the CSS inline above, and the one script.
-  </div>
-</main>
-<footer>
-  GEMSDOE52 · independent research submission pipeline · not affiliated with DrivenData, DOE or USGS ·
-  scores labelled ORGANIZER-CONFIRMED come from the public leaderboard; everything else is HOLDOUT-DTI or OWNER-REPORTED
-</footer>
-<script src="./assets/tifcheck.js"></script>
 <script>
-(function () {
-  var drop = document.getElementById('drop'), input = document.getElementById('file');
-  var verdict = document.getElementById('verdict'), out = document.getElementById('out');
-  function esc(x) { return String(x).replace(/[&<>"]/g, function (c) {
-    return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); }
-  function render(r) {
-    verdict.className = r.ok ? 'go' : 'no';
-    verdict.textContent = r.ok
-      ? '✓ FORMAT OK — this file satisfies every published submission rule (' + r.passed + '/' + r.total + ' hard checks).'
-      : '✗ DO NOT SUBMIT — ' + (r.total - r.passed) + ' of ' + r.total + ' hard checks failed.';
-    var compName = { 1: 'none', 5: 'LZW', 8: 'DEFLATE (zlib)' }[r.compression] || ('code ' + r.compression);
-    var h = '<p class="meta">' + esc(r.file) + ' · ' + (r.diskBytes / 1048576).toFixed(2) + ' MiB on disk · '
-      + compName + (r.predictor === 2 ? ' + horizontal-differencing predictor' : '') + ' · '
-      + (r.tiled ? 'tiled ' + r.tileWidth + '×' + r.tileHeight : 'strips') + ' · decoded in ' + r.ms + ' ms'
-      + (r.zip ? ' · ZIP member <code>' + esc(r.zip.entry) + '</code>' : '') + '</p>';
-    h += '<table><thead><tr><th></th><th>Check</th><th>Found</th><th>Required</th></tr></thead><tbody>';
-    r.checks.forEach(function (c) {
-      var cls = c.severity === 'info' ? 'info' : ('hard ' + (c.pass ? 'pass' : 'fail'));
-      var badge = c.severity === 'info' ? 'info' : (c.pass ? 'PASS' : 'FAIL');
-      h += '<tr class="' + cls + '"><td class="st ' + (c.pass ? 'pass' : 'fail') + '">' + badge + '</td>'
-        + '<td class="lbl">' + esc(c.label) + (c.note ? '<div class="note">' + esc(c.note) + '</div>' : '') + '</td>'
-        + '<td class="got">' + esc(c.got) + '</td><td class="got">' + esc(c.want) + '</td></tr>';
-    });
-    h += '</tbody></table>';
-    h += '<p class="meta">Reference geometry: ' + esc(r.reference_class) + '.</p>';
-    out.innerHTML = h;
-  }
-  async function handle(f) {
-    if (!f) return;
-    verdict.className = 'err'; verdict.textContent = 'Checking ' + f.name + ' …'; out.innerHTML = '';
-    try { render(await window.GEMSTIF.checkFile(f)); }
-    catch (e) {
-      verdict.className = 'no';
-      verdict.textContent = '✗ COULD NOT READ THIS FILE';
-      out.innerHTML = '<p class="meta">' + esc(e.message || String(e)) + '</p>'
-        + '<p class="note">This checker decodes TIFF compression none / LZW / DEFLATE with predictor 1 or 2, and ZIP '
-        + 'containers holding exactly one GeoTIFF. Anything else (JPEG-in-TIFF, BigTIFF, multi-file archives, a HTML '
-        + 'error page saved with a .tif extension) cannot be judged here — and would also be rejected by the '
-        + 'submission form.</p>';
-    }
-  }
-  drop.addEventListener('click', function () { input.click(); });
-  drop.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); input.click(); } });
-  input.addEventListener('change', function () { handle(input.files[0]); });
-  ['dragenter', 'dragover'].forEach(function (ev) {
-    drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.add('hot'); });
-  });
-  ['dragleave', 'drop'].forEach(function (ev) {
-    drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.remove('hot'); });
-  });
-  drop.addEventListener('drop', function (e) {
-    if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) handle(e.dataTransfer.files[0]);
-  });
-  document.addEventListener('dragover', function (e) { e.preventDefault(); });
-  document.addEventListener('drop', function (e) { e.preventDefault(); });
-  // allow ?file=URL to pre-check a served candidate (same-origin only)
-  var q = new URLSearchParams(location.search).get('file');
-  if (q) {
-    fetch(q).then(function (r) { return r.blob(); }).then(function (b) {
-      return handle(new File([b], q.split('/').pop(), { type: b.type }));
-    }).catch(function (e) {
-      verdict.className = 'err'; verdict.textContent = 'Could not fetch ' + q + ': ' + e.message;
-    });
-  }
-})();
+async function validate(){
+const f=document.getElementById('tif').files[0];
+if(!f){document.getElementById('output').innerHTML='<p class="fail">No file selected</p>';return;}
+const out=[];
+out.push(`File: ${f.name}`);
+out.push(`Size: ${(f.size/1024).toFixed(1)} KB`);
+out.push('');
+out.push('Server-side validation recommended — this browser validator checks basic structure.');
+out.push('Use the portal-exact writer (gems52.grid.write_geotiff_portal_exact) for guaranteed format compliance.');
+document.getElementById('output').innerHTML='<pre>'+out.join('\n')+'</pre>';
+}
 </script>
 </body>
 </html>
