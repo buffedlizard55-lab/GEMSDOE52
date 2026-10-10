@@ -1,0 +1,77 @@
+{
+ "stage": "independence",
+ "started_utc": "2026-10-10T20:57:31+00:00",
+ "instrument": "gems52.spatial.independence",
+ "thresholds_inherited_from": "registry/h74_preregistration.json",
+ "thresholds_inherited_sha256": "44d8eeba549abccd21483bb3b7859a295b86fa746aa4b13796f7fd0b74349e48",
+ "thresholds": {
+  "block_side_px": 50,
+  "donor_rank_min": 0.95,
+  "abandon_max_abs_rho": 0.6,
+  "min_blocks": 20,
+  "negative_ring_px": 4
+ },
+ "per_fold": [
+  {
+   "fold": 0,
+   "n_labelled_negatives": 2008690,
+   "thresholds": [
+    0.4543192982673645,
+    0.49933987855911255
+   ],
+   "n_blocks": 978
+  },
+  {
+   "fold": 1,
+   "n_labelled_negatives": 1063285,
+   "thresholds": [
+    0.3718530833721161,
+    0.466435045003891
+   ],
+   "n_blocks": 559
+  },
+  {
+   "fold": 2,
+   "n_labelled_negatives": 409823,
+   "thresholds": [
+    0.3960059881210327,
+    0.5033078193664551
+   ],
+   "n_blocks": 221
+  },
+  {
+   "fold": 3,
+   "n_labelled_negatives": 613578,
+   "thresholds": [
+    0.4613345265388489,
+    0.4697820842266083
+   ],
+   "n_blocks": 331
+  }
+ ],
+ "result": {
+  "n_blocks": 2089,
+  "n_negative_predictions": 4095103,
+  "negative_class": "held-out catalogue-zero proxies, not verified absence",
+  "threshold": 0.6,
+  "minimum_blocks": 20,
+  "tests": {
+   "negative_mean_squared_error": {
+    "n": 2089,
+    "pearson": 0.11214316779839374,
+    "spearman": 0.08510993769607944
+   },
+   "negative_false_positive_rate": {
+    "n": 2089,
+    "pearson": 0.13715056360447167,
+    "spearman": 0.12575864112667534
+   }
+  },
+  "max_abs_correlation": 0.13715056360447167,
+  "measured": true,
+  "allow_exchange": true,
+  "reason": "weak proxy negative-error correlation; not proof of conditional feature independence"
+ },
+ "n_blocks": 2089,
+ "caveat": "proxy negatives are catalogue-zero pixels, which is not verified fault absence; a weak error correlation is not proof of conditional feature independence"
+}

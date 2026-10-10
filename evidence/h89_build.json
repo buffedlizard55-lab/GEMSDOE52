@@ -1,0 +1,39 @@
+{
+ "stage": "build",
+ "started_utc": "2026-10-10T21:00:50+00:00",
+ "placement": {
+  "requested_b": 33136,
+  "placed_b": 33136,
+  "requested_discovery": 4518,
+  "placed_discovery": 4518,
+  "discovery_pool_px": 96306,
+  "shortfall_discovery": 0
+ },
+ "dots": 37654,
+ "discovery_dots": 4518,
+ "pool_px": 4325298,
+ "eligible_px": 4593171,
+ "post_exchange_A_used": false,
+ "discovery_pool_px": 101165,
+ "discovery_pool_by_fold": {
+  "0": 45099,
+  "1": 27727,
+  "2": 15078,
+  "3": 16485
+ },
+ "ring_excluded_m": 200.0,
+ "min_cat_dist_m": 223.60679774997897,
+ "median_cat_dist_m": 1802.7756377319947,
+ "within_300m_pct": 12.312104955648802,
+ "spacing": {
+  "n": 37654,
+  "median_px": 3.1622776601683795,
+  "p10_px": 3.0,
+  "p90_px": 5.0,
+  "share_within_1px": 0.0,
+  "share_within_2px": 0.0
+ },
+ "union_dots": 37654,
+ "a_dots": 37654,
+ "b_dots": 37654
+}

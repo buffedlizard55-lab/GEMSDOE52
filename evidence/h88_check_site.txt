@@ -1,0 +1,59 @@
+# H88 check_site (final run)
+pages checked: 104   data files: 414
+  note: JS parser available: True
+  note: download verified byte-for-byte against the receipt: gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif (130202 bytes, 737c77344457dc15…)
+  note: R3 research TIFF verified against its independent receipt: gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.tif (0a28426785c4125d…)
+  note: current round dispatched from docs/data/submission.json: H60 (gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif)
+  note: H58 supplemental uniqueness: zero support overlap with the newly merged H57 credited-core raster
+  note: H58 TIFF verified byte-for-byte: gems52-h58-coldgeo-consensus-22px-a55b0dee38-research.tif (56,171 bytes, 130c242e33aef398…)
+  note: H58 hide holdout recomputed: mean lift -0.056556, 0/4 wins, budget comparable=False, gate=FAIL
+  note: H58 block holdout recomputed: mean lift -0.058306, 0/4 wins, budget comparable=False, gate=FAIL
+  note: H58 provenance: 23 owner-mirror SHA pins verified; organizer authentication remains unresolved; no slot used
+  note: H57 ZIP payload verified: gems52-h57-union-novel-core25517px-arm14804px.zip holds one TIFF identical to the canonical download (3 members)
+  note: H57 ZIP payload verified: h57-candidate.zip holds one TIFF identical to the canonical download (1 members)
+  note: H57: the short ZIP alias is repackaged rather than byte-identical to the canonical ZIP; the contained TIFF is verified byte-identical in both
+  note: H57 download verified byte-for-byte: gems52-h57-union-novel-core25517px-arm14804px.tif (157,541 bytes, 5fadcaefd64db0cb...)
+  note: H57 on-disk read-back: 40,321 cells, values exactly {{0, 1}}, 0 NaN, CRS EPSG:32611, transform matches the fixture
+  note: H57 dossier: 14,804 rows, strata {'neither': 8996, 'B_only': 4334, 'A_only': 846, 'concordant': 628}
+  note: H57 slot gate: SUPPORTED BUT BELOW THE REGISTERED LIFT THRESHOLD — R1 lift met: False, folds met: True
+  note: R5 downloads/gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif serves byte-identically: 99,231 bytes, content-type image/tiff
+  note: R5 downloads/r5-candidate.tif serves byte-identically: 99,231 bytes, content-type image/tiff
+  note: the .tif serves through the site: 130,202 bytes, content-type image/tiff
+  note: short path serves byte-identically: downloads/h58-candidate.tif
+  note: short path serves byte-identically: downloads/h58-candidate.zip
+  note: H55-PROFILE TIFF verified: 137,085 bytes, 27 priors, research-only
+  note: H55-EDGE TIFF served byte-identically: 134,874 bytes
+  note: research-only R3 TIFF also serves byte-identically: 138,077 bytes
+  note: H55-EDGE verified as a separate failed-gate archive: 134,874 bytes, 2/4 positive folds; main incumbent unchanged
+  note: prose literals with 4+ decimals found in HTML: 1547 (informational; receipts stay authoritative)
+  note:   docs/archive-ctd5-overview.html: literal 0.2778 in HTML (should come from data/*.json)
+  note:   docs/archive-h59-overview.html: literal 0.2778 in HTML (should come from data/*.json)
+  note:   docs/archive-h59-overview.html: literal 0.2600 in HTML (should come from data/*.json)
+  note:   docs/archive-h59-overview.html: literal 0.2546 in HTML (should come from data/*.json)
+  note: R5 download verified byte-identical in 3 places: gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif (99,231 bytes, d2bfb0f793283993...)
+  note: R5 on-disk read-back: 16,681 px, values exactly [np.float32(0.0), np.float32(1.0)], 12,279,160 finite cells, CRS EPSG:32611, transform matches the fixture, note 185/200 chars
+  note: R5 duplicate guard, date-filter-independent: 146 rasters compared, pattern unique True, identical=[]
+  note: R5 supplemental closure against 78 later-round raster(s) (gems52-h60d-dis_contrast-arm37654px.tif, gems52-h61-deepsharp-cotrain-37600px.tif, gems52-h62-buriedcorr-37626px.tif…): novel fraction 0.796535 over 146 rasters, pattern unique True; R5's own receipt predates them, so the strict comparison above uses the 68 rasters that existed at its build
+  note: R5 novelty recomputed against 68 rasters: novel fraction 1.0000, pattern unique True, relation strictly-novel-and-selective
+
+20 PROBLEM(S):
+  ✗ H58: index.html lacks the prominent short download path
+  ✗ H58: index.html does not identify the unique TIFF and its SHA prefix
+  ✗ H58: index.html does not clearly state the research-only/no-upload status
+  ✗ H58: executive-summary.html lacks the prominent short download path
+  ✗ H58: executive-summary.html does not identify the unique TIFF and its SHA prefix
+  ✗ H58: executive-summary.html does not clearly state the research-only/no-upload status
+  ✗ H57 alternate: not linked from the home page
+  ✗ index.html: missing failed-gate warning 'do not upload'
+  ✗ executive-summary.html: missing failed-gate warning 'do not upload'
+  ✗ index.html: missing separate H55-EDGE archive link
+  ✗ R5 index.html: the unique TIFF is not named
+  ✗ R5 index.html: the SHA-256 prefix is missing
+  ✗ R5 index.html: the short download path is missing
+  ✗ R5 index.html: does not state plainly that no weekly slot is approved
+  ✗ R5 index.html: P(beating 0.2778) is not published on the page
+  ✗ R5 executive-summary.html: the unique TIFF is not named
+  ✗ R5 executive-summary.html: the SHA-256 prefix is missing
+  ✗ R5 executive-summary.html: the short download path is missing
+  ✗ R5 executive-summary.html: does not state plainly that no weekly slot is approved
+  ✗ R5 executive-summary.html: P(beating 0.2778) is not published on the page
