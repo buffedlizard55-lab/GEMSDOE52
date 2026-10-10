@@ -1,0 +1,410 @@
+{
+ "round": "H84",
+ "hypothesis": "A locked, creeping or basin-buried normal fault partitions GPS/InSAR-derived geodetic strain into an antisymmetric couple about its trace, so a SIGNED odd-symmetric fault-normal profile decomposition of the dilatation/shear/second-invariant fields localises faults that have no Quaternary surface rupture and are therefore absent from the USGS/INGENIOUS catalogue by construction.",
+ "mechanism": "odd=(B(+h)-B(-h))/2, even=(B(+h)+B(-h))/2 at h in {1,2} px along a fault normal measured from a structure tensor over each fold's VISIBLE catalogue only; the discriminator is odd-dominance odd^2/(|odd|+|even|+eps) plus the sign-reversal couple min(|B+|,|B-|)*1[sign differs]; View B is the surface view (detrended elevation, its slope, aeroradiometric total count) and abstention is B below its fold median over the eligible pool.",
+ "named_non_fault_process": "the geodetic strain layers are a smooth interpolation of sparse GPS/InSAR observations: (i) station-density gradients and block-boundary smoothing seams create signed couples with no structure; (ii) magmatic inflation/deflation is dilatant by definition; (iii) post-seismic viscoelastic relaxation after the 1954 Fairview Peak and 1959 Hebgen Lake sequences; (iv) elastic strain on an already-mapped fault, removed by the 200 m catalogue ring.",
+ "holdout_dti": {
+  "evidence_class": "HOLDOUT-DTI",
+  "evaluator_version": "gems52-pooled-hide-v1",
+  "withheld_positive_pixels": 36356,
+  "primary_arm": "A_ODD_gated",
+  "dti": 0.002757455975324439,
+  "ci95": [
+   0.0013542051973391767,
+   0.004558670707045328
+  ],
+  "control_single_B": {
+   "dti": 0.029349037662231334,
+   "ci95": [
+    0.01930836067074042,
+    0.04146761231520725
+   ]
+  },
+  "paired_delta_primary_minus_single_B": {
+   "delta": -0.026591581686906895,
+   "ci95": [
+    -0.03891415673083434,
+    -0.016327858570557265
+   ]
+  },
+  "all_arms": {
+   "A_ODD_gated": {
+    "dti": 0.002757455975324439,
+    "ci95": [
+     0.0013542051973391767,
+     0.004558670707045328
+    ]
+   },
+   "single_A": {
+    "dti": 0.0032603751278755927,
+    "ci95": [
+     0.0013662822599310462,
+     0.005454309200725197
+    ]
+   },
+   "single_B": {
+    "dti": 0.029349037662231334,
+    "ci95": [
+     0.01930836067074042,
+     0.04146761231520725
+    ]
+   },
+   "A_ODD_ungated": {
+    "dti": 0.009978580951028323,
+    "ci95": [
+     0.006233400972165005,
+     0.014321926925351934
+    ]
+   },
+   "B_conf_A_abstain": {
+    "dti": 0.0270221339710486,
+    "ci95": [
+     0.0188887017544544,
+     0.03714392182921596
+    ]
+   },
+   "union_max": {
+    "dti": 0.029290284903326358,
+    "ci95": [
+     0.019265331243127883,
+     0.04137881212569177
+    ]
+   },
+   "random": {
+    "dti": 0.01696220605344591,
+    "ci95": [
+     0.014982032514754075,
+     0.018973017514677306
+    ]
+   }
+  },
+  "is_a_leaderboard_forecast": false,
+  "caveat": "A holdout number is never a leaderboard forecast. This repository has measured Spearman -0.10 between this instrument and owner-reported board scores (knowledge/10 section 5), so no number here is a projection."
+ },
+ "oof_auc": {
+  "view_A_mean": 0.48753,
+  "view_A_min_fold": 0.43512,
+  "view_B_mean": 0.60533,
+  "view_B_min_fold": 0.57976,
+  "view_A_sufficiency_passed": false,
+  "per_fold": [
+   {
+    "fold": 0,
+    "n_train_pos": 45932,
+    "n_train_neg": 918640,
+    "n_eval_pos": 10332,
+    "n_eval_neg": 200000,
+    "oof_auc_A": 0.48386,
+    "oof_auc_B": 0.58111
+   },
+   {
+    "fold": 1,
+    "n_train_pos": 32764,
+    "n_train_neg": 655280,
+    "n_eval_pos": 10341,
+    "n_eval_neg": 200000,
+    "oof_auc_A": 0.4974,
+    "oof_auc_B": 0.57976
+   },
+   {
+    "fold": 2,
+    "n_train_pos": 41851,
+    "n_train_neg": 837020,
+    "n_eval_pos": 10342,
+    "n_eval_neg": 200000,
+    "oof_auc_A": 0.53376,
+    "oof_auc_B": 0.6536
+   },
+   {
+    "fold": 3,
+    "n_train_pos": 52543,
+    "n_train_neg": 1050860,
+    "n_eval_pos": 5341,
+    "n_eval_neg": 200000,
+    "oof_auc_A": 0.43512,
+    "oof_auc_B": 0.60683
+   }
+  ]
+ },
+ "leakage_canary": {
+  "bar": 0.9,
+  "max_single_channel_oof_auc": 0.66534,
+  "max_channel": "B_b19_detrended_elev_slope_h2_oddom",
+  "alarm_tripped": false
+ },
+ "independence": {
+  "max_abs_rho": 0.08506685357346443,
+  "n_blocks": 8788,
+  "n_negative_predictions": 20412932,
+  "abandon_bar": 0.6,
+  "allow_exchange": true,
+  "exchange_decision": "independence passes but View A sufficiency FAILED, so there is nothing to donate: exchange not run",
+  "thresholds_inherited_verbatim_from": "registry/h74_preregistration.json"
+ },
+ "correlation_vs_registry": {
+  "census_size": 66,
+  "census_scope": "local checkout only: data/scored, data/reference, submission/, docs/downloads/, deduplicated by (size, sha256[:16]), minus this round's own artefacts. It does NOT include sibling public owner-mirror paths, so it is narrower than H74S's 693-path or H82's 567-raster censuses. Disclosed, not presented as exhaustive.",
+  "census_excludes_this_round": [
+   "/home/user/GEMSDOE52/submission/gems52-h84-straindipole-cotrain-37654px-20261010T215523Z.tif"
+  ],
+  "verdicts": {
+   "surface_literal": "PASS",
+   "surface_policy": "PASS",
+   "dots_literal": "DUPLICATE/STOP",
+   "dots_policy": "PASS"
+  },
+  "dots_literal_witness": {
+   "source": "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+   "near_3px_fraction": 0.9989642534657672,
+   "explanation": "the single literal offender is a spacing-5 square lattice, i.e. a universal-coverage probe: its maximum interior distance is sqrt(8)=2.83 px, so its 3 px halo covers essentially every eligible pixel and the directed near-3px statistic is ~1.0 for EVERY nonempty candidate. That is a property of the registry, not of this candidate, which is why the shared template publishes a policy tier beside the literal one. Both are reported and neither is waived."
+  },
+  "literal_stop": true,
+  "policy_stop": false,
+  "surface_literal": {
+   "max_spearman": 0.02245686265015881,
+   "duplicate": null
+  },
+  "surface_policy": {
+   "max_spearman": 0.02245686265015881,
+   "duplicate": null
+  },
+  "dots_literal": {
+   "max_spearman": 0.008732821284561994,
+   "max_near_3px_fraction": 0.9989642534657672,
+   "duplicate": null
+  },
+  "dots_policy": {
+   "max_spearman": 0.008732821284561994,
+   "max_near_3px_fraction": 0.29412545811865937,
+   "duplicate": null
+  },
+  "thresholds": {
+   "rank_rho": 0.9,
+   "near_3px_fraction": 0.7
+  }
+ },
+ "not_the_union": {
+  "equal_budget": 37654,
+  "relations": [
+   {
+    "arm": "union_max",
+    "arm_px": 37654,
+    "shared_px": 1421,
+    "jaccard": 0.01923,
+    "identical": false
+   },
+   {
+    "arm": "single_A",
+    "arm_px": 37654,
+    "shared_px": 11145,
+    "jaccard": 0.1737,
+    "identical": false
+   },
+   {
+    "arm": "single_B",
+    "arm_px": 37654,
+    "shared_px": 0,
+    "jaccard": 0.0,
+    "identical": false
+   }
+  ],
+  "ok": true,
+  "rule": "the authorized candidate must not be identical to the union-max of the two views nor to either single view at the same budget"
+ },
+ "raster_sha256": "c122a9ff37abf5512bbddf39c9d55c60effb2229ed992d959e357ffb804a50f3",
+ "raster_file": "gems52-h84-straindipole-cotrain-37654px-20261010T215523Z.tif",
+ "raster_bytes": 132513,
+ "zip_sha256": "e15ab6e5519fe85eb07f6591325102e76b01a0e4cca4329617cbcdb7192065e2",
+ "validator_output": {
+  "path": "/home/user/GEMSDOE52/submission/gems52-h84-straindipole-cotrain-37654px-20261010T215523Z.tif",
+  "bytes": 132513,
+  "sha256": "c122a9ff37abf5512bbddf39c9d55c60effb2229ed992d959e357ffb804a50f3",
+  "bands": 1,
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "width": 3292,
+  "height": 3730,
+  "bounds": [
+   243350.0,
+   4135550.0,
+   572550.0,
+   4508550.0
+  ],
+  "ref_bounds": [
+   243350.0,
+   4135550.0,
+   572550.0,
+   4508550.0
+  ],
+  "transform": [
+   100.0,
+   0.0,
+   243350.0,
+   0.0,
+   -100.0,
+   4508550.0
+  ],
+  "nodata": null,
+  "blocksize": [
+   256,
+   256
+  ],
+  "fixture_grid": false,
+  "has_validity_mask": false,
+  "nan_pixels": 0,
+  "infinity_pixels": 0,
+  "n_nan": 0,
+  "min": 0.0,
+  "max": 1.0,
+  "mean": 0.0030664964579045773,
+  "n_nonzero": 37654,
+  "mass": 37654.0,
+  "mass_outside_footprint": 0,
+  "problems": [],
+  "ok": true,
+  "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+ },
+ "range_gate": {
+  "min": 0.0,
+  "max": 1.0,
+  "n_nan": 0,
+  "values_in_0_1": true
+ },
+ "container_vs_0p2778_reference": {
+  "reference": "/home/user/GEMSDOE52/data/reference/h33-2-b2-zeros.tif",
+  "reference_sha256": "c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9",
+  "fields": {
+   "driver": {
+    "ours": "GTiff",
+    "reference": "GTiff"
+   },
+   "height": {
+    "ours": 3730,
+    "reference": 3730
+   },
+   "width": {
+    "ours": 3292,
+    "reference": 3292
+   },
+   "count": {
+    "ours": 1,
+    "reference": 1
+   },
+   "dtype": {
+    "ours": "float32",
+    "reference": "float32"
+   },
+   "compress": {
+    "ours": "deflate",
+    "reference": "deflate"
+   },
+   "tiled": {
+    "ours": true,
+    "reference": true
+   },
+   "predictor": {
+    "ours": null,
+    "reference": null
+   },
+   "nodata": {
+    "ours": null,
+    "reference": null
+   }
+  },
+  "identical_container": true,
+  "note": "the 0.2778 file is all-finite with zeros outside and no nodata tag; matching that container removes the NaN-reader unknown behind 'Predicted values must be in range [0, 1]'"
+ },
+ "placement": {
+  "emitted_px": 37654,
+  "budget": 37654,
+  "short_fill": 0,
+  "min_separation_px": 3.0,
+  "catalogue_distance_m": {
+   "min": 223.6,
+   "median": 1923.5,
+   "p05": 300.0,
+   "pct_within_300m": 5.543,
+   "pct_within_200m": 0.0
+  },
+  "marginal_rule": {
+   "source": "knowledge/49 section 2",
+   "bar_at_board_dti_0p2778": 0.05556,
+   "bar_at_board_dti_0p3774": 0.07548,
+   "max_emit_distance_px": 2.8333199999999996,
+   "note": "OWNER-REPORTED board DTIs used only to state the bar; not a projection of this file's score"
+  }
+ },
+ "submission_name": "gems52-h84-straindipole-cotrain-37654px-20261010T215523Z",
+ "submission_note": "H84 co-training: odd-symmetric fault-normal strain dipole (View A) gated to where View B abstains; 200m catalogue ring excluded; binary dots",
+ "submission_note_chars": 140,
+ "slots_used": 0,
+ "promoted": false,
+ "verdict": "negative",
+ "download_ok": true,
+ "submit_ok": false,
+ "submit_ok_reason": "promoted=False, not_the_union_ok=True, lane_literal_stop=True, lane_policy_stop=False",
+ "preregistration": {
+  "document": "knowledge/74_hypotheses_H84_preregistered.md",
+  "sha256": "ae86107fb0c760ac1604a0011bf11884186e4d9496ac04fce7472bf327767c12",
+  "frozen_before_any_fit": true
+ },
+ "organizer_confirmed_numbers": {
+  "source": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
+  "fetched_utc": "2026-10-10",
+  "public_leaderboard_top": 0.3774,
+  "rank_8": 0.3195,
+  "rank_22": 0.2778,
+  "note": "public-chunk scores read off the organiser's own leaderboard page; the Initial Prize Round is scored on the PRIVATE chunk, so none of these is a target this repository can verify against its own file"
+ },
+ "reasoning_export": {
+  "csv": "/home/user/GEMSDOE52/docs/downloads/h84-a-only-reasoning.csv",
+  "rows": 37654,
+  "bytes": 36251477,
+  "gz": "/home/user/GEMSDOE52/docs/downloads/h84-a-only-reasoning.csv.gz",
+  "gz_bytes": 1169113,
+  "columns": [
+   "row",
+   "col",
+   "easting_m",
+   "northing_m",
+   "view_A_score",
+   "view_B_score",
+   "b_abstains",
+   "catalogue_distance_m",
+   "fault_normal_deg_compass",
+   "dominant_view_A_band",
+   "mean_odd_dominance",
+   "sign_reversal_couple",
+   "mechanism",
+   "named_non_fault_mimic",
+   "falsifier",
+   "evidence_class"
+  ],
+  "signature_diagnostic": {
+   "dominant_view_A_band_counts": {
+    "isostatic_gravity_b13_h2": 25583,
+    "isostatic_gravity_hg_b18_h2": 2899,
+    "dilatation_rate_b8_h2": 3810,
+    "second_invariant_b4_h2": 3501,
+    "shear_rate_b7_h2": 1861
+   },
+   "strain_dominant_px": 9172,
+   "strain_dominant_fraction": 0.24359,
+   "gravity_dominant_px": 28482,
+   "gravity_dominant_fraction": 0.75641,
+   "sign_reversal_couple_present_px": 2840,
+   "sign_reversal_couple_present_fraction": 0.07542,
+   "mean_odd_dominance_median": 0.01251,
+   "mean_odd_dominance_p95": 0.07293,
+   "min_catalogue_distance_m": 223.6,
+   "b_abstains_on_every_row": true,
+   "reading": "the emission did NOT predominantly select the signature the hypothesis named: 75.6% of emitted cells carry their largest |odd| response in an isostatic-gravity band rather than a strain band, only 7.5% show an actual sign-reversal couple, and the median odd-dominance is 0.0125, i.e. most emitted cells are EVEN-dominant monotone steps. A linear blend of |odd|, odd-dominance and couple lets the largest-magnitude channel decide, so this arm tested 'large fault-normal gradient' far more than it tested 'antisymmetric couple'. The negative verdict stands as frozen, but the hypothesis itself is NOT cleanly refuted by this arm - a clean test gates on the couple directly.",
+   "clean_test_for_the_next_round": "emit only cells with sign(B(+h)) != sign(B(-h)) at BOTH lags and odd-dominance above a quantile frozen before the fit, instead of letting a logistic model weight |odd| against it"
+  },
+  "scope": "every emitted cell of the primary arm; the pseudo-label exchange was not run, so there is no separate A-only stratum"
+ },
+ "budget": {
+  "max_experiments": 3,
+  "experiments_used": 3
+ }
+}

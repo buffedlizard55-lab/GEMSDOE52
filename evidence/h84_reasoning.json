@@ -1,0 +1,47 @@
+{
+ "csv": "/home/user/GEMSDOE52/docs/downloads/h84-a-only-reasoning.csv",
+ "rows": 37654,
+ "bytes": 36251477,
+ "gz": "/home/user/GEMSDOE52/docs/downloads/h84-a-only-reasoning.csv.gz",
+ "gz_bytes": 1169113,
+ "columns": [
+  "row",
+  "col",
+  "easting_m",
+  "northing_m",
+  "view_A_score",
+  "view_B_score",
+  "b_abstains",
+  "catalogue_distance_m",
+  "fault_normal_deg_compass",
+  "dominant_view_A_band",
+  "mean_odd_dominance",
+  "sign_reversal_couple",
+  "mechanism",
+  "named_non_fault_mimic",
+  "falsifier",
+  "evidence_class"
+ ],
+ "signature_diagnostic": {
+  "dominant_view_A_band_counts": {
+   "isostatic_gravity_b13_h2": 25583,
+   "isostatic_gravity_hg_b18_h2": 2899,
+   "dilatation_rate_b8_h2": 3810,
+   "second_invariant_b4_h2": 3501,
+   "shear_rate_b7_h2": 1861
+  },
+  "strain_dominant_px": 9172,
+  "strain_dominant_fraction": 0.24359,
+  "gravity_dominant_px": 28482,
+  "gravity_dominant_fraction": 0.75641,
+  "sign_reversal_couple_present_px": 2840,
+  "sign_reversal_couple_present_fraction": 0.07542,
+  "mean_odd_dominance_median": 0.01251,
+  "mean_odd_dominance_p95": 0.07293,
+  "min_catalogue_distance_m": 223.6,
+  "b_abstains_on_every_row": true,
+  "reading": "the emission did NOT predominantly select the signature the hypothesis named: 75.6% of emitted cells carry their largest |odd| response in an isostatic-gravity band rather than a strain band, only 7.5% show an actual sign-reversal couple, and the median odd-dominance is 0.0125, i.e. most emitted cells are EVEN-dominant monotone steps. A linear blend of |odd|, odd-dominance and couple lets the largest-magnitude channel decide, so this arm tested 'large fault-normal gradient' far more than it tested 'antisymmetric couple'. The negative verdict stands as frozen, but the hypothesis itself is NOT cleanly refuted by this arm - a clean test gates on the couple directly.",
+  "clean_test_for_the_next_round": "emit only cells with sign(B(+h)) != sign(B(-h)) at BOTH lags and odd-dominance above a quantile frozen before the fit, instead of letting a logistic model weight |odd| against it"
+ },
+ "scope": "every emitted cell of the primary arm; the pseudo-label exchange was not run, so there is no separate A-only stratum"
+}

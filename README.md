@@ -1,3 +1,90 @@
+<!--H84-README-->
+# Current status — H84 (2026-10-10): NEGATIVE — a signed strain-dipole operator was built and gated; View A failed sufficiency an eighth time
+
+> **DOWNLOAD: YES** (format-valid, range-gated, 0 NaN anywhere, values exactly {0,1}, lane-checked
+> against 66 byte-distinct aligned rasters). **SUBMIT: NO — research artefact only.**
+> The pre-registered primary `A_ODD_gated` scored **HOLDOUT-DTI 0.002757**
+> [0.0014, 0.0046] against its mandated control `single_B`
+> 0.029349 [0.0193, 0.0415]; paired
+> **-0.026592** [-0.0389, -0.0163]. The frozen rule needs that lower bound
+> above zero. **Slots used: 0.**
+
+**★ [Download H84 GeoTIFF](docs/downloads/h84-candidate.tif)** · [ZIP](docs/downloads/h84-candidate.zip)
+· **[Executive summary / exactly how to submit](docs/h84-executive-summary.html)**
+· **[Check any file in your browser](docs/validator.html)** · [Full result](docs/h84.html)
+· [Hypotheses](docs/h84-hypotheses.html) · [Sources](docs/h84-sources.html)
+· [Measured download manifest](docs/downloads/MANIFEST.json)
+
+- **File:** `submission/gems52-h84-straindipole-cotrain-37654px-20261010T215523Z.tif` — 132,513 bytes, SHA-256 `c122a9ff37abf5512bbddf39c9d55c60effb2229ed992d959e357ffb804a50f3`
+- **Submission name:** `gems52-h84-straindipole-cotrain-37654px-20261010T215523Z`
+- **Note (140/140):** `H84 co-training: odd-symmetric fault-normal strain dipole (View A) gated to where View B abstains; 200m catalogue ring excluded; binary dots`
+- **Validator (from the bytes on disk):** 1 band float32,
+  EPSG:32611, 3730×3292, transform identical to
+  `sample_submission.tif`, **0 NaN/infinite anywhere in the grid**, values
+  exactly {0,1}, 37,654 ones. **PASS.**
+- **Container, chosen on evidence:** all-finite with zeros outside the footprint, tiled/deflate, no
+  nodata tag — byte-structurally the container of the OWNER-REPORTED 0.2778 reference
+  `h33-2-b2-zeros.tif`. Measured this session: 11 of 13 restored owner-scored rasters are strip/LZW
+  `nodata=nan` and 2 are all-finite, so **both containers have been portal-accepted**, and the
+  all-finite one cannot trip *"Predicted values must be in range [0, 1]"* under any reader.
+- **HOLDOUT-DTI** (`gems52-pooled-hide-v1`, 36,356 withheld positive
+  px, 9,400 dots/fold/arm, α 0.2 / β 0.8, R 300 m, 1,000 paired
+  cluster-bootstrap draws at 200 px): `A_ODD_gated` **0.002757** · `single_B` 0.029349 ·
+  `single_A` 0.003260 · `random` 0.016962. **A holdout number is never a board forecast**
+  (this repository has measured Spearman −0.10 between the instrument and the board, `knowledge/10` §5).
+- **View A sufficiency FAILED an eighth time:** mean out-of-fold AUC
+  0.4875, worst fold 0.4351, bar
+  0.6 / 0.55. View B
+  0.6053. With A below chance there is nothing for A to donate, which is
+  why the primary arm cannot beat the control — the co-training lane's own precondition, not a bug.
+- **Leakage canary:** max single-channel out-of-fold AUC = **0.66534**
+  (`B_b19_detrended_elev_slope_h2_oddom`) against a 0.90 bar → **no alarm**.
+- **View independence (the lane's mandated test):** max |ρ| **0.0851** over
+  8,788 spatial blocks / 20,412,932 proxy negatives (bar 0.60,
+  thresholds inherited verbatim from `registry/h74_preregistration.json`) → `allow_exchange=True`.
+  **independence passes but View A sufficiency FAILED, so there is nothing to donate: exchange not run.**
+- **Lane:** surface literal **PASS** (max ρ 0.02245686265015881); final dots
+  literal **DUPLICATE/STOP** (max ρ 0.008732821284561994, near-3px
+  0.9989642534657672) against 66 byte-distinct aligned rasters.
+- **Not the union:** Jaccard 0.01923 against the union-max
+  placement at the same budget, 0.1737 against View A alone,
+  0.0 against View B alone; identical to none →
+  **PASS**.
+- **Placement:** 37,654 binary cells at 3 px minimum separation from a
+  4,859,987 px pool; 200 m catalogue ring excluded; minimum catalogue distance
+  223.6 m, median 1923.5 m,
+  5.543% inside the metric's 300 m kernel.
+- **Method:** 32 learner channels. View A = a **signed, odd-symmetric fault-normal profile
+  decomposition** of geodetic dilatation rate (band 8), shear rate (7) and second invariant (4), plus
+  isostatic gravity (13) and its horizontal gradient (18) as a cross-family antisymmetry control:
+  `odd=(B(+h)−B(−h))/2`, `even=(B(+h)+B(−h))/2` at h ∈ {1,2} px along a normal measured from a
+  structure tensor over each fold's **visible** catalogue only, with odd-dominance
+  `odd²/(|odd|+|even|+ε)` and a sign-reversal couple as the discriminators. View B = detrended elevation
+  (12), its slope (19) and the aeroradiometric total count (6). Every View A operator built in this
+  repository before was sign-blind; a grep for `dipole`, `odd_sym`, `strain_dipole`, `odd-symmetric`
+  and `derivative of gaussian` returns no implementation, and the one registered antisymmetry idea
+  (H57-C) was never run and is a cross-family *orientation* coincidence, not a signed profile.
+- **Cross-validation of the direction field:** H84's per-fold regional fault normals are 74.5–80.3°
+  compass, so the derived trace strikes are 164.5–170.3° — agreeing with H82's independently measured
+  166.7–171.8° from a separate structure-tensor implementation.
+- **Irregularities flagged this session:** 1 download path(s) whose adjacent JSON receipt
+  describes different bytes than the file served (IR-H84-001), plus
+  IR-H84-002…005 in `registry/irregularities.json` and on the site. None was papered over: the repair is
+  a **measured manifest** (`docs/downloads/MANIFEST.json`) re-derived from every served file at publish
+  time, so a receipt cannot drift from its bytes again.
+- **Docs:** [pre-registration](knowledge/74_hypotheses_H84_preregistered.md) (frozen before any fit,
+  SHA-256 pinned in `registry/h84_preregistration.json`, and the runner re-hashes it on every stage) ·
+  [run card](evidence/h84_run_card.json) · [holdout](evidence/h84_holdout.json) ·
+  [independence](evidence/h84_independence.json) · [lane](evidence/h84_lane.json) ·
+  [build](evidence/h84_build.json) · [write](evidence/h84_write.json)
+- **Reproduce:** `python3 scripts/restore_data.py --target-dir data` →
+  `python scripts/run_h84.py all` → `python scripts/publish_h84_site.py` → `python scripts/check_site.py`
+  → `python -m pytest -q`.
+
+---
+
+<!--/H84-README-->
+
 <!--H83-README-->
 # Current status — H83 (2026-10-10): UNIQUE SUBMISSION — Multi-Scale Structural Concordance + Geothermal Proximity
 

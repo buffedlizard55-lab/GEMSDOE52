@@ -1,0 +1,40 @@
+{
+ "claim_under_test": "band 6 of training_features.tif is the aeroradiometric total-count grid, not the 'magnetic_data / tilt angle or total curvature' its own tag states",
+ "tag_in_file": {
+  "band_name": "tc",
+  "data_category": "magnetic_data",
+  "data_type": "numeric",
+  "description": "Tilt angle or total curvature - magnetic field derivative for edge detection"
+ },
+ "measured_min": 2.9534237384796143,
+ "measured_max": 88.56654357910156,
+ "subsample_stride": 37,
+ "comparisons": [
+  {
+   "external_band": 1,
+   "n": 139563,
+   "spearman_vs_band6": 0.886257
+  },
+  {
+   "external_band": 2,
+   "n": 139563,
+   "spearman_vs_band6": 0.913421
+  },
+  {
+   "external_band": 3,
+   "n": 139563,
+   "spearman_vs_band6": 0.720122
+  },
+  {
+   "external_band": 4,
+   "n": 139563,
+   "spearman_vs_band6": 0.999953
+  },
+  {
+   "control": "band14_TMI",
+   "spearman_vs_band6": -0.027762
+  }
+ ],
+ "independent_of": "docs/data/h55_band6_identity.json (a prior session's measurement)",
+ "note": "geodawn_rad_u8.tif carries NO band descriptions, so which of its four uint8 layers is TC/K/Th/U is not stated by any source; the comparison is therefore evidence about band 6 only if one of them is the total-count grid, which is the standard first band of an aeroradiometric reduction and is asserted here as an assumption, not a fact."
+}

@@ -1,47 +1,99 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>GEMSDOE52 — H82 research status and H74S negative closeout</title>
-<style>
-body{margin:0;font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-color:#14181d;background:#fff}
-main{max-width:760px;margin:0 auto;padding:36px 20px 70px}
-h1{font-size:26px;margin:0 0 10px}
-.v{border-radius:10px;padding:14px 16px;margin:16px 0;font-weight:700;
-background:#fdecea;color:#b3261e;
-border:1px solid #f0c4bf}
-a.b{display:inline-block;background:#1f4e79;color:#fff;text-decoration:none;font-weight:700;
-padding:13px 20px;border-radius:8px;margin:6px 8px 6px 0}
-a.s{background:#eef2f6;color:#1f4e79}
-code{background:#f2f4f7;padding:1px 5px;border-radius:4px;font-size:13.5px}
-small{color:#5b6672}
-</style></head><body><main>
-<h1>H82 candidate raster &mdash; DOE GEMS competition #306</h1>
-<div class="v">OK TO DOWNLOAD: yes
-&nbsp;&middot;&nbsp; OK TO SUBMIT: no — research artefact only</div>
-<a class="b" href="docs/downloads/h82-candidate.tif" download>Download h82-candidate.tif &#8595;</a>
-<a class="b s" href="docs/downloads/h82-candidate.zip" download>ZIP</a>
-<a class="b s" href="docs/index.html">Full site</a>
-<a class="b s" href="docs/h82-executive-summary.html">How to submit</a>
-<a class="b s" href="docs/validator.html">Check a file in your browser</a>
-<p><small>140,555 bytes &middot; 37,654 emitted cells, values exactly {0,1}
-&middot; SHA-256 <code>17c3f8325ac6f267b1b8cc58bc6fd9495c118c30de64d5f78293d19d7f20c907</code> &middot; EPSG:32611, 3730&times;3292 at 100 m
-&middot; submission name <code>h82-dva2vsa-B-37654px-20261009T215811Z</code></small></p>
-<p><small>HOLDOUT-DTI (evaluator gems52-pooled-hide-v1,
-53,186 withheld positives): primary arm
-0.150591 [0.131262, 0.169201] vs control single_B 0.174910;
-paired -0.024319 [-0.039025, -0.006869]. A holdout number is never a board forecast. Verdict:
-NEGATIVE / RESEARCH-ONLY: download is safe, submission is not recommended.</small></p>
-<p><small>This page is a research artefact. It is not an organiser acceptance receipt, and it does not
-claim a leaderboard gain. Sources and verification status:
-<a href="docs/h82-sources.html">docs/h82-sources.html</a>.</small></p>
-
-<section id="h74s-closeout" style="margin-top:28px;padding:18px 20px;border:2px solid #9f1d2d;border-radius:12px;background:#fff0f1;color:#172433">
-<h2 style="margin:0 0 8px;color:#9f1d2d">H74S experiment closeout — no TIFF, no download, no slot</h2>
-<p><strong>This card is specific to the H74S run; H82 above is the later repository round.</strong> H74S completed 3 experiments in 1,652.1 seconds. Its final 5,056-dot lane returned <code>DUPLICATE/STOP</code>; the result was not waived or re-placed. <b>There is no H74S TIFF/ZIP, no selector eligibility, no organizer confirmation, and no competition slot use.</b></p>
-<p>Local <strong>HOLDOUT-DTI</strong> (<code>gems52-pooled-hide-v1</code>, 53,186 withheld positives): A-only disagreement 0.008975 [0.004699, 0.014496]. The arm underfilled one fold (1,126/1,264), so the matched comparison is invalid; no matched win is claimed. This is not a leaderboard score.</p>
-<p><strong>Registry caveat:</strong> post-run history review found parallel public-main H74/H75 rasters omitted from H74S's frozen 693-path scan. Its surface PASS is snapshot-scoped; the final-dot stop still has an in-census duplicate witness. No post-stop pixel audit or rerun was made.</p>
-<p><a class="b s" href="docs/h74s.html">Detailed H74S closeout</a> <a class="b s" href="README.md">README brief and evidence</a> <a class="b s" href="evidence/h74s_run_card.json">H74S JSON run card</a> <a class="b s" href="evidence/h74s_postfreeze_registry_notice.json">Registry coverage notice</a></p>
-</section>
-
-</main></body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GEMSDOE52 — H84 candidate raster</title><style>
+:root{--ink:#12161c;--mut:#5b6672;--line:#e3e7ec;--bg:#fff;--soft:#f6f8fa;
+--ok:#0f7b3f;--okbg:#e8f6ee;--no:#b3261e;--nobg:#fdecea;--warn:#8a5a00;--warnbg:#fff6e5;
+--acc:#1f4e79}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+color:var(--ink);background:var(--bg)}
+header{border-bottom:1px solid var(--line);background:var(--soft);position:sticky;top:0;z-index:9}
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+nav{display:flex;gap:4px;flex-wrap:wrap;padding:10px 0}
+nav a{color:var(--acc);text-decoration:none;font-weight:600;font-size:14px;padding:6px 11px;
+border-radius:7px}
+nav a:hover{background:#e6edf5}
+nav a.on{background:var(--acc);color:#fff}
+main{max-width:1000px;margin:0 auto;padding:26px 20px 80px}
+h1{font-size:29px;line-height:1.25;margin:6px 0 10px}
+h2{font-size:21px;margin:38px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--line)}
+h3{font-size:17px;margin:24px 0 8px}
+p{margin:10px 0}
+small,.sm{color:var(--mut);font-size:13.5px}
+code{background:var(--soft);padding:1px 5px;border-radius:4px;font-size:13.5px;word-break:break-all}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--soft);font-weight:700}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.verdict{border-radius:12px;padding:18px 20px;margin:18px 0;border:2px solid}
+.v-no{background:var(--nobg);border-color:#f0c4bf}
+.v-ok{background:var(--okbg);border-color:#bfe3cd}
+.v-warn{background:var(--warnbg);border-color:#f0dcae}
+.verdict h2,.verdict h3{border:0;margin:0 0 8px;padding:0}
+.badge{display:inline-block;font-weight:800;font-size:13px;padding:3px 10px;border-radius:999px;
+letter-spacing:.02em}
+.b-no{background:var(--no);color:#fff}
+.b-ok{background:var(--ok);color:#fff}
+.b-warn{background:var(--warn);color:#fff}
+.hero{border:2px solid var(--acc);border-radius:14px;padding:22px;margin:20px 0;background:#fbfdff}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+a.btn{display:inline-block;background:var(--acc);color:#fff;text-decoration:none;font-weight:800;
+padding:15px 24px;border-radius:10px;font-size:17px}
+a.btn.sec{background:#eef2f6;color:var(--acc);font-weight:700;font-size:15px;padding:12px 18px}
+a.btn:hover{filter:brightness(1.08)}
+.kv{display:grid;grid-template-columns:minmax(190px,max-content) 1fr;gap:5px 16px;font-size:14px;
+margin:12px 0}
+.kv dt{color:var(--mut);font-weight:600}
+.kv dd{margin:0;word-break:break-word}
+.card{border:1px solid var(--line);border-radius:11px;padding:15px 17px;margin:14px 0;background:#fff}
+.card.bad{border-color:#f0c4bf;background:#fffafa}
+.pill{font-size:12px;font-weight:800;padding:2px 8px;border-radius:999px;background:var(--soft);
+color:var(--mut);border:1px solid var(--line)}
+ul,ol{margin:10px 0;padding-left:24px}
+li{margin:5px 0}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.two{grid-template-columns:1fr}}
+footer{border-top:1px solid var(--line);padding:22px 0;color:var(--mut);font-size:13px}
+</style></head><body><header><div class="wrap"><nav><a class="on" href="index.html">Current round</a><a href="docs/index.html">Full site</a><a href="docs/executive-summary.html">How to submit</a><a href="docs/h84.html">H84 result</a><a href="docs/h84-hypotheses.html">Hypotheses</a><a href="docs/h84-sources.html">Sources</a><a href="docs/validator.html">Check a file</a><a href="docs/archive.html">Archive</a></nav></div></header><main>
+<h1>H84 candidate raster &mdash; DOE GEMS competition #306</h1>
+<div class="verdict v-no">
+  <div style="display:flex;gap:10px;flex-wrap:wrap"><span class="badge b-ok">DOWNLOAD: YES</span> <span class="badge b-no">SUBMIT: NO &mdash; DO NOT SUBMIT</span> <span class="badge b-warn">NO CERTIFIED LEADERBOARD GAIN</span></div>
+  <p><strong>Verdict: NEGATIVE.</strong>
+  Research artefact only: download is safe, submission is not recommended.</p>
+  <p class="sm">HOLDOUT-DTI (evaluator <code>gems52-pooled-hide-v1</code>,
+  36,356 withheld positives, 9,400 dots per
+  fold per arm): primary arm <code>A_ODD_gated</code> <strong>0.002757</strong>
+  [0.001354, 0.004559] vs its mandated control <code>single_B</code>
+  0.029349 [0.019308, 0.041468]; paired -0.026592
+  [-0.038914, -0.016328]. A holdout number is never a board forecast.</p>
+</div>
+<div class="btns">
+  <a class="btn" href="docs/downloads/h84-candidate.tif" download>&#11015; Download h84-candidate.tif</a>
+  <a class="btn sec" href="docs/downloads/h84-candidate.zip" download>ZIP</a>
+  <a class="btn sec" href="docs/index.html">Full site</a>
+  <a class="btn sec" href="docs/executive-summary.html">How to submit</a>
+  <a class="btn sec" href="docs/validator.html">Check a file in your browser</a>
+  <a class="btn sec" href="docs/archive.html">Archive</a>
+</div>
+<dl class="kv">
+<dt>File</dt><dd><code>docs/downloads/h84-candidate.tif</code> =
+  <code>submission/gems52-h84-straindipole-cotrain-37654px-20261010T215523Z.tif</code></dd>
+<dt>Bytes / SHA-256</dt><dd>132,513 &middot; <code>c122a9ff37abf5512bbddf39c9d55c60effb2229ed992d959e357ffb804a50f3</code></dd>
+<dt>Emitted cells</dt><dd>37,654 binary {0,1} pixels, 3 px minimum
+  separation, 0.0% within 200 m of a mapped
+  trace</dd>
+<dt>Range gate</dt><dd>min 0.000, max 1.000, 0 NaN or infinite
+  anywhere in the grid &rarr; <strong>PASS</strong>; this file
+  cannot trip &ldquo;Predicted values must be in range [0, 1]&rdquo;</dd>
+<dt>Grid</dt><dd>EPSG:32611 &middot;
+  3730&times;3292 &middot;
+  float32 &middot; 1 band &middot;
+  transform identical to <code>sample_submission.tif</code></dd>
+<dt>Submission name</dt><dd><code>gems52-h84-straindipole-cotrain-37654px-20261010T215523Z</code></dd>
+<dt>Note (140/140)</dt><dd class="mono">H84 co-training: odd-symmetric fault-normal strain dipole (View A) gated to where View B abstains; 200m catalogue ring excluded; binary dots</dd>
+<dt>Slots used</dt><dd>0</dd>
+</dl>
+<p class="sm">This page is a research artefact. It is not an organiser acceptance receipt and it claims
+no leaderboard gain. Sources and what was verified from each:
+<a href="docs/h84-sources.html">docs/h84-sources.html</a>. Irregularities found this session, including
+two that this page's own predecessors had: <a href="docs/index.html#irregularities">docs/index.html</a>
+and <code>registry/irregularities.json</code>.</p></main><footer><div class="wrap">GEMSDOE52 &middot; DOE GEMS prize challenge #306 &middot; every number on this site is labelled HOLDOUT-DTI, OWNER-REPORTED or ORGANIZER-CONFIRMED.</div></footer></body></html>

@@ -1,0 +1,42 @@
+{
+ "b8_dilatation": {
+  "band": 8,
+  "data_category": "geodetic_strain",
+  "description": "Geodetic dilatation rate - rate of volumetric strain (expansion/contraction)"
+ },
+ "b7_shear": {
+  "band": 7,
+  "data_category": "geodetic_strain",
+  "description": "Geodetic shear rate - rate of angular deformation from GPS/InSAR"
+ },
+ "b4_secondinvariant": {
+  "band": 4,
+  "data_category": "geodetic_strain",
+  "description": "Geodetic second invariant - measure of strain rate tensor magnitude"
+ },
+ "b13_isograv": {
+  "band": 13,
+  "data_category": "gravity_data",
+  "description": "Isostatic gravity anomaly - gravity after compensating for topographic mass"
+ },
+ "b18_isograv_hg": {
+  "band": 18,
+  "data_category": "gravity_data",
+  "description": "Isostatic gravity anomaly horizontal gradient - horizontal rate of change"
+ },
+ "b12_detrended_elev": {
+  "band": 12,
+  "data_category": "topographic",
+  "description": "Detrended elevation - topography with regional trends removed"
+ },
+ "b19_detrended_elev_slope": {
+  "band": 19,
+  "data_category": "topographic",
+  "description": "Detrended elevation slope - gradient of elevation after detrending"
+ },
+ "b6_radiometric_tc": {
+  "band": 6,
+  "data_category": "magnetic_data",
+  "description": "Tilt angle or total curvature - magnetic field derivative for edge detection"
+ }
+}

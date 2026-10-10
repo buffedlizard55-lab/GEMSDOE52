@@ -1,0 +1,165 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>How to submit, and whether this file may be submitted — H84</title><style>
+:root{--ink:#12161c;--mut:#5b6672;--line:#e3e7ec;--bg:#fff;--soft:#f6f8fa;
+--ok:#0f7b3f;--okbg:#e8f6ee;--no:#b3261e;--nobg:#fdecea;--warn:#8a5a00;--warnbg:#fff6e5;
+--acc:#1f4e79}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+color:var(--ink);background:var(--bg)}
+header{border-bottom:1px solid var(--line);background:var(--soft);position:sticky;top:0;z-index:9}
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+nav{display:flex;gap:4px;flex-wrap:wrap;padding:10px 0}
+nav a{color:var(--acc);text-decoration:none;font-weight:600;font-size:14px;padding:6px 11px;
+border-radius:7px}
+nav a:hover{background:#e6edf5}
+nav a.on{background:var(--acc);color:#fff}
+main{max-width:1000px;margin:0 auto;padding:26px 20px 80px}
+h1{font-size:29px;line-height:1.25;margin:6px 0 10px}
+h2{font-size:21px;margin:38px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--line)}
+h3{font-size:17px;margin:24px 0 8px}
+p{margin:10px 0}
+small,.sm{color:var(--mut);font-size:13.5px}
+code{background:var(--soft);padding:1px 5px;border-radius:4px;font-size:13.5px;word-break:break-all}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--soft);font-weight:700}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.verdict{border-radius:12px;padding:18px 20px;margin:18px 0;border:2px solid}
+.v-no{background:var(--nobg);border-color:#f0c4bf}
+.v-ok{background:var(--okbg);border-color:#bfe3cd}
+.v-warn{background:var(--warnbg);border-color:#f0dcae}
+.verdict h2,.verdict h3{border:0;margin:0 0 8px;padding:0}
+.badge{display:inline-block;font-weight:800;font-size:13px;padding:3px 10px;border-radius:999px;
+letter-spacing:.02em}
+.b-no{background:var(--no);color:#fff}
+.b-ok{background:var(--ok);color:#fff}
+.b-warn{background:var(--warn);color:#fff}
+.hero{border:2px solid var(--acc);border-radius:14px;padding:22px;margin:20px 0;background:#fbfdff}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+a.btn{display:inline-block;background:var(--acc);color:#fff;text-decoration:none;font-weight:800;
+padding:15px 24px;border-radius:10px;font-size:17px}
+a.btn.sec{background:#eef2f6;color:var(--acc);font-weight:700;font-size:15px;padding:12px 18px}
+a.btn:hover{filter:brightness(1.08)}
+.kv{display:grid;grid-template-columns:minmax(190px,max-content) 1fr;gap:5px 16px;font-size:14px;
+margin:12px 0}
+.kv dt{color:var(--mut);font-weight:600}
+.kv dd{margin:0;word-break:break-word}
+.card{border:1px solid var(--line);border-radius:11px;padding:15px 17px;margin:14px 0;background:#fff}
+.card.bad{border-color:#f0c4bf;background:#fffafa}
+.pill{font-size:12px;font-weight:800;padding:2px 8px;border-radius:999px;background:var(--soft);
+color:var(--mut);border:1px solid var(--line)}
+ul,ol{margin:10px 0;padding-left:24px}
+li{margin:5px 0}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.two{grid-template-columns:1fr}}
+footer{border-top:1px solid var(--line);padding:22px 0;color:var(--mut);font-size:13px}
+</style></head><body><header><div class="wrap"><nav><a class="" href="index.html">Current round</a><a class="on" href="h84-executive-summary.html">How to submit</a><a class="" href="h84.html">H84 result</a><a class="" href="h84-hypotheses.html">Hypotheses</a><a class="" href="h84-sources.html">Sources</a><a class="" href="validator.html">Check a file</a><a class="" href="irregularities.html">Irregularities</a><a class="" href="archive.html">Archive</a></nav></div></header><main>
+<h1>Exactly how to make a submission &mdash; and whether <em>this</em> file may be submitted</h1>
+<p class="sm">Every number below is labelled. <strong>HOLDOUT-DTI</strong> = computed by this
+repository's own hide-and-recover instrument, with its evaluator version, withheld-positive count and
+95% CI. <strong>OWNER-REPORTED</strong> = the owner team's pairing of a filename with a board number.
+<strong>ORGANIZER-CONFIRMED</strong> = read off the organiser's own page. A projection is never written
+as a score, and <strong>NO CERTIFIED LEADERBOARD GAIN</strong> is claimed anywhere on this site.</p>
+<div class="verdict v-no">
+<h2 style="margin:0">Two separate questions, two separate answers</h2>
+<dl class="kv" style="font-size:16px">
+<dt>OK to download?</dt><dd><span class="badge b-ok">YES</span> &mdash; safe to download, inspect,
+  validate in your browser and read.</dd>
+<dt>OK to submit to DrivenData?</dt>
+<dd><span class="badge b-no">NO &mdash; DO NOT SUBMIT</span> &mdash; research artefact only. It failed the frozen promotion rule against its own single-view control, and its final-dot lane check returned a literal DUPLICATE/STOP, so uploading it would spend a weekly slot on a candidate that has not earned one. Download it, read it, DO NOT SUBMIT it.</dd>
+</dl>
+</div>
+<div class="btns">
+<a class="btn" href="downloads/h84-candidate.tif" download>&#11015; Download the H84 GeoTIFF</a>
+<a class="btn sec" href="downloads/h84-candidate.zip" download>ZIP</a>
+<a class="btn sec" href="downloads/h84-a-only-reasoning.csv" download>Per-cell geological reasoning CSV</a>
+<a class="btn sec" href="validator.html">Check any file in your browser</a>
+</div>
+
+<h2>The file</h2>
+<dl class="kv">
+<dt>Name</dt><dd><code>gems52-h84-straindipole-cotrain-37654px-20261010T215523Z.tif</code></dd>
+<dt>Bytes</dt><dd>132,513</dd>
+<dt>SHA-256</dt><dd><code>c122a9ff37abf5512bbddf39c9d55c60effb2229ed992d959e357ffb804a50f3</code></dd>
+<dt>Submission name</dt><dd><code>gems52-h84-straindipole-cotrain-37654px-20261010T215523Z</code></dd>
+<dt>Note (140/140)</dt><dd class="mono">H84 co-training: odd-symmetric fault-normal strain dipole (View A) gated to where View B abstains; 200m catalogue ring excluded; binary dots</dd>
+</dl>
+<table><tr><th>Rule the portal states</th><th>Measured from the bytes</th><th>Result</th></tr><tr><td>Single band, float32</td><td class="mono">1 band, float32</td><td><strong>PASS</strong></td></tr><tr><td>Values in [0, 1]</td><td class="mono">min 0.0, max 1.0</td><td><strong>PASS</strong></td></tr><tr><td>No NaN / infinite pixel</td><td class="mono">0 non-finite</td><td><strong>PASS</strong></td></tr><tr><td>CRS</td><td class="mono">EPSG:32611</td><td><strong>PASS</strong></td></tr><tr><td>Shape</td><td class="mono">3730 x 3292</td><td><strong>PASS</strong></td></tr><tr><td>Transform</td><td class="mono">100 0 243350 0 -100 4.50855e+06</td><td><strong>PASS</strong></td></tr><tr><td>Resolution</td><td class="mono">100 m x 100 m</td><td><strong>PASS</strong></td></tr><tr><td>Emitted cells</td><td class="mono">37,654 pixels equal to 1</td><td><strong>PASS</strong></td></tr><tr><td>Container</td><td class="mono">all-finite, zeros outside the footprint, tiled/deflate, no nodata tag</td><td><strong>PASS</strong></td></tr></table>
+
+<h2>If you decide to submit it &mdash; the exact steps</h2>
+<ol>
+<li><strong>Download</strong> <a href="downloads/h84-candidate.tif" download>h84-candidate.tif</a>
+(132,513 bytes) or the <a href="downloads/h84-candidate.zip" download>ZIP</a>. The organiser's
+form accepts either a single-band GeoTIFF or a ZIP containing exactly one; the ZIP here contains
+exactly this TIFF and nothing else, re-verified at publish time.</li>
+<li><strong>Check the file you actually downloaded</strong> on the
+<a href="validator.html">browser checker</a>. It decodes every pixel locally and reports each published
+rule as PASS or FAIL. Confirm the SHA-256 is <code>c122a9ff37abf5512bbddf39c9d55c60effb2229ed992d959e357ffb804a50f3</code>. If it is not, you
+downloaded something else &mdash; a truncated transfer, or a GitHub Pages 404 page saved with a
+<code>.tif</code> extension, which is the single most common cause of a confusing rejection.</li>
+<li><strong>Sign in</strong> at the
+<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">competition page</a> and
+open <em>Submit</em>.</li>
+<li><strong>Upload</strong> the file. The form rejects anything whose predicted values fall outside
+[0,&nbsp;1] with <em>&ldquo;Predicted values must be in range [0, 1]&rdquo;</em>. This file's values are
+exactly {0,&nbsp;1}, with 0 non-finite pixels anywhere in the grid, so it cannot trip that
+rule.</li>
+<li><strong>Name it</strong> <code>gems52-h84-straindipole-cotrain-37654px-20261010T215523Z</code>.</li>
+<li><strong>Note</strong> (140 of 140 characters):
+<span class="mono">H84 co-training: odd-symmetric fault-normal strain dipole (View A) gated to where View B abstains; 200m catalogue ring excluded; binary dots</span></li>
+<li><strong>Wait for the score.</strong> The public chunk is scored on upload; the
+<strong>Initial Prize Round ($50,000)</strong> is scored on the <strong>private</strong> chunk at close,
+and you must choose <strong>one</strong> submission for both rounds before the deadline without knowing
+your private performance. The <strong>Final Prize Round ($250,000)</strong> rescores the same file
+against an <em>expanded</em> label set built by experts reviewing every team's submission.</li>
+</ol>
+<p class="sm"><strong>This repository cannot do steps 3&ndash;7.</strong> It has no DrivenData
+credentials: it has never downloaded the competition data from the organiser and has never uploaded a
+file. Every score quoted anywhere on this site is HOLDOUT-DTI (this repository's own instrument),
+OWNER-REPORTED (the owner team's pairing of a filename with a board number) or ORGANIZER-CONFIRMED
+(read off the public leaderboard page). Nothing here is an organiser acceptance receipt.</p>
+
+<h2>Why &ldquo;Predicted values must be in range [0, 1]&rdquo; happens, and how to settle it in seconds</h2>
+<table><tr><th>#</th><th>Cause</th><th>How to recognise it</th><th>Fix</th></tr>
+<tr><td>1</td><td>The file you downloaded is not the file you think it is</td>
+<td>SHA-256 differs; or the file is a few hundred bytes; or a text editor shows HTML</td>
+<td>Re-download. A GitHub Pages 404 saved as <code>.tif</code> is the classic case.</td></tr>
+<tr><td>2</td><td>Unnormalised model scores (log-odds, distances, z-scores)</td>
+<td>the checker reports min/max far outside [0,1]</td><td>normalise to [0,1], or emit binary {0,1}</td></tr>
+<tr><td>3</td><td>Wrong dtype &mdash; float64 or int16 instead of float32</td>
+<td>the checker reports BitsPerSample 64 or 16</td><td>write <code>dtype='float32'</code></td></tr>
+<tr><td>4</td><td>A NoData sentinel outside [0,1] (e.g. &minus;3.4e38) inside the grid</td>
+<td>a huge negative minimum plus a <code>GDAL_NODATA</code> tag</td>
+<td>write NaN or 0 outside the footprint, never the float32 sentinel</td></tr>
+<tr><td>5</td><td>NaN written outside the footprint while the reader ignores the nodata tag</td>
+<td>the file declares <code>nodata=nan</code> and has millions of NaN</td>
+<td>ship the all-finite container instead: zeros outside, no nodata tag</td></tr></table>
+<p><strong>What this session measured about cause 5.</strong> Of the 13 owner-scored rasters restored
+into <code>data/scored/</code> and <code>data/reference/</code>, <strong>11</strong> are stripped/LZW
+with <code>nodata=nan</code> and 7,111,787 NaN outside the footprint, and <strong>2</strong> are
+all-finite with zeros outside and no nodata tag. One of those two is
+<code>h33-2-b2-zeros.tif</code>, the OWNER-REPORTED 0.2778 file.
+<strong>Both containers have therefore been accepted by the portal</strong>, so the container alone
+cannot be the whole explanation for a range rejection &mdash; but the all-finite container cannot trip
+the rule under <em>any</em> reader, NaN-honouring or not. H84 ships that container, and the choice is
+recorded as evidence rather than taste.</p>
+
+<h2 id="prior-artefacts">Prior research artefacts this site still serves</h2>
+<p class="sm">Every one of these is <strong>research-only: OK to download, do not upload</strong>.
+None is approved for a weekly slot, none has an organiser score, and no weekly slot has been spent on
+any of them. Their disclosures stay on the current pages on purpose, so that a reader who lands here
+from an old link cannot mistake an earlier artefact for the current candidate. Rendered from
+<code>docs/data/*.json</code>, not typed.</p>
+<table><tr><th>Round</th><th>Unique TIFF</th><th>SHA-256 prefix</th><th>Short download path</th>
+<th>Disposition</th><th>Its own page / published estimate</th></tr><tr><td><strong>R5</strong></td><td><code>gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif</code></td><td><code>d2bfb0f79328399354943bd1</code></td><td><a href="downloads/r5-candidate.tif" download>r5-candidate.tif</a></td><td>OK to download: yes &middot; <strong>do not upload</strong>, not slot-approved</td><td class="sm">R5's own frozen estimate P(beating 0.2778) = 0.366 (an R5 receipt value, not an H84 number and not a forecast)</td></tr><tr><td><strong>H58</strong></td><td><code>gems52-h58-coldgeo-consensus-22px-a55b0dee38-research.tif</code></td><td><code>130c242e33aef398c44b22cd</code></td><td><a href="downloads/h58-candidate.tif" download>h58-candidate.tif</a></td><td>OK to download: yes &middot; <strong>do not upload</strong>, not approved to submit</td><td class="sm"><a href="h58.html">H58 audit page</a></td></tr><tr><td><strong>H57-alt</strong></td><td><code>gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif</code></td><td>&mdash;</td><td>&mdash;</td><td>research archive &middot; <strong>do not upload</strong> &middot; zero slots</td><td class="sm"><a href="h57-creditcore.html">H57 credited-core alternate</a></td></tr><tr><td><strong>H55-EDGE</strong></td><td><code>gems52-h55-grav-rtp-logedge-37654-c4b8c10205da-zeros.tif</code></td><td><code>f0732d40d57b92d3f082eb2b</code></td><td>&mdash;</td><td>separate failed-gate archive, <strong>not the current H55 candidate</strong> &middot; <strong>do not upload</strong></td><td class="sm"><a href="h55-edge.html">h55-edge.html</a></td></tr></table>
+<p class="sm">The full list of everything served, re-measured from the bytes at publish time, is
+<a href="downloads/MANIFEST.json">docs/downloads/MANIFEST.json</a>. Every round's page is in
+<a href="archive.html">the archive</a>.</p>
+
+<h2>Download manifest &mdash; measured from the bytes, not from any receipt</h2>
+<p class="sm">A download path and its adjacent JSON receipt are two artefacts and they can drift. This
+session found 1 that had. The manifest below is re-measured from every served file at publish
+time, so it cannot drift.</p>
+<ul><li><code>docs/downloads/h83-candidate.tif</code> &mdash; its adjacent receipt <code>h83-candidate.json</code> claims <code>274db602ec8b91cb6a2793e9f512321f32326298aa8ed031ebd478e21426f5cd</code> / 1558064 bytes, but the file on disk is <code>d9cfccf0e1aa4e28&hellip;</code> / 81,076 bytes.</li></ul>
+<p><a class="btn sec" href="downloads/MANIFEST.json">docs/downloads/MANIFEST.json</a></p>
+</main><footer><div class="wrap">GEMSDOE52 &middot; DOE GEMS prize challenge #306 &middot; every number on this site is labelled HOLDOUT-DTI, OWNER-REPORTED or ORGANIZER-CONFIRMED. A projection is never written as a score.</div></footer></body></html>

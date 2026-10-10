@@ -1,0 +1,36 @@
+{
+ "n_blocks": 8788,
+ "n_negative_predictions": 20412932,
+ "negative_class": "held-out catalogue-zero proxies, not verified absence",
+ "threshold": 0.6,
+ "minimum_blocks": 20,
+ "tests": {
+  "negative_mean_squared_error": {
+   "n": 8788,
+   "pearson": 0.08506685357346443,
+   "spearman": 0.02504946042558496
+  },
+  "negative_false_positive_rate": {
+   "n": 8788,
+   "pearson": 0.0358041857013537,
+   "spearman": 0.02683755715391353
+  }
+ },
+ "max_abs_correlation": 0.08506685357346443,
+ "measured": true,
+ "allow_exchange": true,
+ "reason": "weak proxy negative-error correlation; not proof of conditional feature independence",
+ "evidence_class": "view-independence diagnostic, not a score",
+ "thresholds_inherited_verbatim_from": "registry/h74_preregistration.json",
+ "thresholds_source_sha256": "44d8eeba549abccd21483bb3b7859a295b86fa746aa4b13796f7fd0b74349e48",
+ "donor_cut_quantile": 0.95,
+ "receiver_cut_quantile": 0.65,
+ "blocks_per_fold": {
+  "0": 2197,
+  "1": 2197,
+  "2": 2197,
+  "3": 2197
+ },
+ "sufficiency_gate_passed": false,
+ "exchange_decision": "independence passes but View A sufficiency FAILED, so there is nothing to donate: exchange not run"
+}

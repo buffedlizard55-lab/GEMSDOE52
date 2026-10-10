@@ -1,0 +1,118 @@
+{
+ "download_path": "docs/downloads/h84-candidate.tif",
+ "zip_path": "docs/downloads/h84-candidate.zip",
+ "submission_path": "submission/gems52-h84-straindipole-cotrain-37654px-20261010T215523Z.tif",
+ "sha256": "c122a9ff37abf5512bbddf39c9d55c60effb2229ed992d959e357ffb804a50f3",
+ "file_bytes": 132513,
+ "zip_sha256": "e15ab6e5519fe85eb07f6591325102e76b01a0e4cca4329617cbcdb7192065e2",
+ "zip_bytes": 95098,
+ "zip_members": [
+  "gems52-h84-straindipole-cotrain-37654px-20261010T215523Z.tif"
+ ],
+ "zip_contains_exactly_this_tiff": true,
+ "submission_name": "gems52-h84-straindipole-cotrain-37654px-20261010T215523Z",
+ "note": "H84 co-training: odd-symmetric fault-normal strain dipole (View A) gated to where View B abstains; 200m catalogue ring excluded; binary dots",
+ "emitted_px": 37654,
+ "range_gate": {
+  "min": 0.0,
+  "max": 1.0,
+  "n_nan": 0,
+  "values_in_0_1": true
+ },
+ "validator": {
+  "path": "/home/user/GEMSDOE52/submission/gems52-h84-straindipole-cotrain-37654px-20261010T215523Z.tif",
+  "bytes": 132513,
+  "sha256": "c122a9ff37abf5512bbddf39c9d55c60effb2229ed992d959e357ffb804a50f3",
+  "bands": 1,
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "width": 3292,
+  "height": 3730,
+  "bounds": [
+   243350.0,
+   4135550.0,
+   572550.0,
+   4508550.0
+  ],
+  "ref_bounds": [
+   243350.0,
+   4135550.0,
+   572550.0,
+   4508550.0
+  ],
+  "transform": [
+   100.0,
+   0.0,
+   243350.0,
+   0.0,
+   -100.0,
+   4508550.0
+  ],
+  "nodata": null,
+  "blocksize": [
+   256,
+   256
+  ],
+  "fixture_grid": false,
+  "has_validity_mask": false,
+  "nan_pixels": 0,
+  "infinity_pixels": 0,
+  "n_nan": 0,
+  "min": 0.0,
+  "max": 1.0,
+  "mean": 0.0030664964579045773,
+  "n_nonzero": 37654,
+  "mass": 37654.0,
+  "mass_outside_footprint": 0,
+  "problems": [],
+  "ok": true,
+  "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+ },
+ "holdout_dti": {
+  "evidence_class": "HOLDOUT-DTI",
+  "evaluator_version": "gems52-pooled-hide-v1",
+  "withheld_positive_pixels": 36356,
+  "primary": {
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems52-pooled-hide-v1",
+   "dti": 0.002757455975324439,
+   "ci95": [
+    0.0013542051973391767,
+    0.004558670707045328
+   ],
+   "withheld_positive_pixels": 36356,
+   "tpw": 100.88729822837277,
+   "fpw": 37410.57773037008,
+   "fnw": 36255.11270177163
+  },
+  "control_single_B": {
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems52-pooled-hide-v1",
+   "dti": 0.029349037662231334,
+   "ci95": [
+    0.01930836067074042,
+    0.04146761231520725
+   ],
+   "withheld_positive_pixels": 36356,
+   "tpw": 1069.3571602769125,
+   "fpw": 35685.897332459965,
+   "fnw": 35286.64283972309
+  },
+  "paired_delta": {
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems52-pooled-hide-v1",
+   "delta": -0.026591581686906895,
+   "ci95": [
+    -0.03891415673083434,
+    -0.016327858570557265
+   ],
+   "withheld_positive_pixels": 36356
+  }
+ },
+ "verdict": "negative",
+ "download_ok": true,
+ "submit_ok": false,
+ "approved_for_weekly_slot": false,
+ "slots_used": 0,
+ "receipt_derived_from": "the copied bytes, re-hashed at publish time"
+}

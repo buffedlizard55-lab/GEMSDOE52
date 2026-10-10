@@ -1,0 +1,366 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>H84 — full result</title><style>
+:root{--ink:#12161c;--mut:#5b6672;--line:#e3e7ec;--bg:#fff;--soft:#f6f8fa;
+--ok:#0f7b3f;--okbg:#e8f6ee;--no:#b3261e;--nobg:#fdecea;--warn:#8a5a00;--warnbg:#fff6e5;
+--acc:#1f4e79}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+color:var(--ink);background:var(--bg)}
+header{border-bottom:1px solid var(--line);background:var(--soft);position:sticky;top:0;z-index:9}
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+nav{display:flex;gap:4px;flex-wrap:wrap;padding:10px 0}
+nav a{color:var(--acc);text-decoration:none;font-weight:600;font-size:14px;padding:6px 11px;
+border-radius:7px}
+nav a:hover{background:#e6edf5}
+nav a.on{background:var(--acc);color:#fff}
+main{max-width:1000px;margin:0 auto;padding:26px 20px 80px}
+h1{font-size:29px;line-height:1.25;margin:6px 0 10px}
+h2{font-size:21px;margin:38px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--line)}
+h3{font-size:17px;margin:24px 0 8px}
+p{margin:10px 0}
+small,.sm{color:var(--mut);font-size:13.5px}
+code{background:var(--soft);padding:1px 5px;border-radius:4px;font-size:13.5px;word-break:break-all}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--soft);font-weight:700}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.verdict{border-radius:12px;padding:18px 20px;margin:18px 0;border:2px solid}
+.v-no{background:var(--nobg);border-color:#f0c4bf}
+.v-ok{background:var(--okbg);border-color:#bfe3cd}
+.v-warn{background:var(--warnbg);border-color:#f0dcae}
+.verdict h2,.verdict h3{border:0;margin:0 0 8px;padding:0}
+.badge{display:inline-block;font-weight:800;font-size:13px;padding:3px 10px;border-radius:999px;
+letter-spacing:.02em}
+.b-no{background:var(--no);color:#fff}
+.b-ok{background:var(--ok);color:#fff}
+.b-warn{background:var(--warn);color:#fff}
+.hero{border:2px solid var(--acc);border-radius:14px;padding:22px;margin:20px 0;background:#fbfdff}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+a.btn{display:inline-block;background:var(--acc);color:#fff;text-decoration:none;font-weight:800;
+padding:15px 24px;border-radius:10px;font-size:17px}
+a.btn.sec{background:#eef2f6;color:var(--acc);font-weight:700;font-size:15px;padding:12px 18px}
+a.btn:hover{filter:brightness(1.08)}
+.kv{display:grid;grid-template-columns:minmax(190px,max-content) 1fr;gap:5px 16px;font-size:14px;
+margin:12px 0}
+.kv dt{color:var(--mut);font-weight:600}
+.kv dd{margin:0;word-break:break-word}
+.card{border:1px solid var(--line);border-radius:11px;padding:15px 17px;margin:14px 0;background:#fff}
+.card.bad{border-color:#f0c4bf;background:#fffafa}
+.pill{font-size:12px;font-weight:800;padding:2px 8px;border-radius:999px;background:var(--soft);
+color:var(--mut);border:1px solid var(--line)}
+ul,ol{margin:10px 0;padding-left:24px}
+li{margin:5px 0}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.two{grid-template-columns:1fr}}
+footer{border-top:1px solid var(--line);padding:22px 0;color:var(--mut);font-size:13px}
+</style></head><body><header><div class="wrap"><nav><a class="" href="index.html">Current round</a><a class="" href="h84-executive-summary.html">How to submit</a><a class="on" href="h84.html">H84 result</a><a class="" href="h84-hypotheses.html">Hypotheses</a><a class="" href="h84-sources.html">Sources</a><a class="" href="validator.html">Check a file</a><a class="" href="irregularities.html">Irregularities</a><a class="" href="archive.html">Archive</a></nav></div></header><main>
+<div class="hero">
+  <div style="font-size:13px;font-weight:800;letter-spacing:.09em;color:var(--mut)">
+    ROUND H84 &middot; GENERATED THIS SESSION &middot; UNIQUE, NOT A COPY OF ANY PRIOR SUBMISSION</div>
+  <h1 style="margin:8px 0 6px">Download the H84 submission GeoTIFF</h1>
+  <div class="verdict v-no" style="margin:12px 0">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <span class="badge b-ok">DOWNLOAD: YES</span> <span class="badge b-no">SUBMIT: NO &mdash; research artefact</span>
+      <span class="badge b-warn">NO CERTIFIED LEADERBOARD GAIN</span>
+      <span class="badge b-no">DO NOT SUBMIT</span>
+    </div>
+    <p style="margin:10px 0 0"><strong>NEGATIVE.</strong>
+    The pre-registered primary arm <code>A_ODD_gated</code> scored
+    <strong>HOLDOUT-DTI 0.002757</strong>
+    <span class="sm">[0.001354, 0.004559]</span> against its mandated
+    single-view control <code>single_B</code> 0.029349
+    <span class="sm">[0.019308, 0.041468]</span>;
+    paired difference -0.026592 <span class="sm">[-0.038914, -0.016328]</span>.
+    The frozen promotion rule needs that interval's lower bound above zero.
+    <strong>It is not.</strong>
+    <span class="sm">Competition slots used: 0.</span></p>
+  </div>
+  <div class="btns">
+    <a class="btn" href="downloads/h84-candidate.tif" download>&#11015; Download h84-candidate.tif</a>
+    <a class="btn sec" href="downloads/h84-candidate.zip" download>ZIP (single TIFF)</a>
+    <a class="btn sec" href="h84-executive-summary.html">How to submit, step by step</a>
+    <a class="btn sec" href="validator.html">Check any file in your browser</a>
+  </div>
+  <dl class="kv">
+    <dt>File</dt><dd><code>gems52-h84-straindipole-cotrain-37654px-20261010T215523Z.tif</code></dd>
+    <dt>Bytes / SHA-256</dt><dd>132,513 &middot; <code>c122a9ff37abf5512bbddf39c9d55c60effb2229ed992d959e357ffb804a50f3</code></dd>
+    <dt>Emitted cells</dt><dd>37,654 binary {0,1} pixels,
+      3 px minimum separation, 200 m catalogue ring excluded</dd>
+    <dt>Range gate</dt><dd>min 0.000 &middot;
+      max 1.000 &middot; NaN/inf 0
+      &rarr; <strong>PASS</strong>
+      &ldquo;Predicted values must be in range [0, 1]&rdquo; cannot be tripped by this file</dd>
+    <dt>Grid</dt><dd>EPSG:32611 &middot;
+      3730&times;3292 &middot;
+      float32 &middot; 1 band &middot;
+      transform identical to <code>sample_submission.tif</code></dd>
+    <dt>Submission name</dt><dd><code>gems52-h84-straindipole-cotrain-37654px-20261010T215523Z</code></dd>
+    <dt>Note (140/140)</dt><dd class="mono">H84 co-training: odd-symmetric fault-normal strain dipole (View A) gated to where View B abstains; 200m catalogue ring excluded; binary dots</dd>
+  </dl>
+  <p class="sm">A HOLDOUT-DTI number is produced by this repository's own hide-and-recover instrument.
+  It is <strong>not</strong> a leaderboard score and not a projection of one: this repository has
+  measured Spearman &minus;0.10 between that instrument and owner-reported board scores.
+  Nothing on this page is an organiser acceptance receipt.</p>
+</div>
+<h2>The one-sentence result</h2>
+<p>A <strong>signed, odd-symmetric</strong> fault-normal decomposition of the geodetic strain field
+&mdash; an operator no previous round in this repository has implemented &mdash; was built, gated and
+measured. <strong>View A is not sufficient:</strong> mean out-of-fold AUC
+0.4875 (worst fold 0.4351)
+against a sufficiency bar of 0.6 / 0.55.
+That is the <strong>eighth</strong> consecutive failure of View A in this lane, and it is the reason the
+primary arm cannot beat the View-B control: there is nothing for View A to donate.</p>
+
+<div class="two">
+<div class="card"><h3 style="margin-top:0">Every gate, in order</h3><table>
+<tr><th>Gate</th><th>Measured</th><th>Bar</th><th>Result</th></tr>
+<tr><td>Leakage canary</td><td class="n">0.6653</td><td class="n">0.90</td>
+<td><strong>PASS</strong></td></tr>
+<tr><td>View independence</td><td class="n">0.0851</td><td class="n">0.60</td>
+<td><strong>PASS</strong></td></tr>
+<tr><td>View A sufficiency</td><td class="n">0.4875</td>
+<td class="n">0.60</td><td><strong>FAIL</strong></td></tr>
+<tr><td>Beats <code>single_B</code></td><td class="n">-0.0389</td><td class="n">&gt; 0</td>
+<td><strong>FAIL</strong></td></tr>
+<tr><td>Lane, surface</td><td class="n">0.0225</td><td class="n">0.90</td>
+<td><strong>PASS</strong></td></tr>
+<tr><td>Lane, final dots</td><td class="n">0.0087 /
+  0.9990</td><td class="n">0.90 / 0.70</td>
+<td><strong>DUPLICATE/STOP</strong></td></tr>
+<tr><td>Not the union</td><td class="n">0.01923</td>
+<td class="n">not identical</td>
+<td><strong>PASS</strong></td></tr>
+<tr><td>Format / range</td><td class="n">0 NaN</td><td class="n">0, [0,1]</td>
+<td><strong>PASS</strong></td></tr>
+</table></div>
+<div class="card"><h3 style="margin-top:0">What the mechanism is</h3>
+<p class="sm">For every pixel the local fault-normal <b>n&#770;</b> is measured from a structure tensor
+over <em>that fold's visible catalogue only</em>. The smoothed band <i>B</i> is sampled at
+&plusmn;h&middot;<b>n&#770;</b> and split into</p>
+<p class="mono" style="text-align:center">odd = (B(+h) &minus; B(&minus;h)) / 2<br>
+even = (B(+h) + B(&minus;h)) / 2</p>
+<p class="sm">The discriminator is <b>odd-dominance</b>
+<code>odd&sup2;/(|odd|+|even|+&epsilon;)</code> plus a sign-reversal couple. A locked or buried normal
+fault partitions geodetic strain into an <b>antisymmetric couple</b>, so its trace is a zero crossing
+with a large odd part. A lithologic ramp, a road cut or an erosion line is a monotone step and is
+<b>even-dominant</b>. Every View A operator built here before was sign-blind and could not separate
+them.</p>
+<p class="sm"><b>Named mimic:</b> the strain layers interpolate sparse GPS/InSAR, so station-density
+gradients and block smoothing seams also produce signed couples; magmatic inflation is dilatant by
+definition; post-seismic relaxation after the 1954 Fairview Peak and 1959 Hebgen Lake sequences.</p>
+</div></div>
+
+<h2>HOLDOUT-DTI &mdash; the only score this repository can compute for itself</h2>
+<p class="sm">Evaluator <code>gems52-pooled-hide-v1</code> &middot;
+36,356 withheld positive pixels &middot; 9,400
+dots per fold per arm &middot; &alpha;&nbsp;0.2 / &beta;&nbsp;0.8 &middot; R&nbsp;300&nbsp;m triangular
+kernel &middot; 1,000 paired physical-cluster bootstrap draws at 200 px block side &middot;
+hide-and-recover folds (whole 8-connected catalogue components withheld, 8 px buffer, prevalence
+0.002).</p>
+<table><tr><th>Arm</th><th class="n">HOLDOUT-DTI</th><th class="n">95% CI</th>
+<th class="n">Withheld positives</th></tr><tr><td><code>single_B</code> <span class="pill">control</span></td><td class="n">0.029349</td><td class="n sm">[0.0193, 0.0415]</td><td class="n">36,356</td></tr><tr><td><code>union_max</code></td><td class="n">0.029290</td><td class="n sm">[0.0193, 0.0414]</td><td class="n">36,356</td></tr><tr><td><code>B_conf_A_abstain</code></td><td class="n">0.027022</td><td class="n sm">[0.0189, 0.0371]</td><td class="n">36,356</td></tr><tr><td><code>random</code> <span class="pill">control</span></td><td class="n">0.016962</td><td class="n sm">[0.0150, 0.0190]</td><td class="n">36,356</td></tr><tr><td><code>A_ODD_ungated</code></td><td class="n">0.009979</td><td class="n sm">[0.0062, 0.0143]</td><td class="n">36,356</td></tr><tr><td><code>single_A</code> <span class="pill">control</span></td><td class="n">0.003260</td><td class="n sm">[0.0014, 0.0055]</td><td class="n">36,356</td></tr><tr><td><code>A_ODD_gated</code> <span class="pill">primary</span></td><td class="n">0.002757</td><td class="n sm">[0.0014, 0.0046]</td><td class="n">36,356</td></tr></table>
+<p><strong>Frozen promotion rule:</strong> promote only if the primary's paired 95% CI lower bound
+against <code>single_B</code> is above zero. Measured: <strong>-0.026592</strong>
+[-0.038914, -0.016328] &rarr;
+<strong>NOT PROMOTED</strong>. Attribution arms are not promotable
+post hoc. <span class="sm">single_B here is this round&#x27;s OWN View-B learner on this round&#x27;s surface channels; it is NOT a replay of the committed 0.174517 control, whose feature bank is not reproducible from this checkout (cf. IR-H82-004). No reproduction claim is made.</span></p>
+
+<h3>Per-fold out-of-fold AUC</h3>
+<table><tr><th class="n">Fold</th><th class="n">Withheld truth px</th><th class="n">Proxy negatives</th>
+<th class="n">View A</th><th class="n">View B</th></tr><tr><td class="n">0</td><td class="n">10,332</td><td class="n">200,000</td><td class="n">0.4839</td><td class="n">0.5811</td></tr><tr><td class="n">1</td><td class="n">10,341</td><td class="n">200,000</td><td class="n">0.4974</td><td class="n">0.5798</td></tr><tr><td class="n">2</td><td class="n">10,342</td><td class="n">200,000</td><td class="n">0.5338</td><td class="n">0.6536</td></tr><tr><td class="n">3</td><td class="n">5,341</td><td class="n">200,000</td><td class="n">0.4351</td><td class="n">0.6068</td></tr></table>
+
+<h3>The measured fault-normal field, cross-checked against an independent round</h3>
+<p class="sm">The tensor's dominant gradient direction <em>is</em> the fault normal; the trace strike is
+that plus 90&deg;. H82 measured the regional strike at 166.7&ndash;171.8&deg; compass with a completely
+separate implementation. H84's independently derived strikes agree fold by fold, which is a real
+cross-validation of both.</p>
+<table><tr><th class="n">Fold</th><th class="n">Normal (compass)</th><th class="n">Strike (compass)</th>
+<th class="n">Resultant R</th><th class="n">Coherent px</th><th class="n">Regional fallback</th></tr><tr><td class="n">0</td><td class="n">77.3&deg;</td><td class="n">167.3&deg;</td><td class="n">0.3044</td><td class="n">1,490,754</td><td class="n">87.9%</td></tr><tr><td class="n">1</td><td class="n">74.5&deg;</td><td class="n">164.5&deg;</td><td class="n">0.3525</td><td class="n">1,094,158</td><td class="n">91.1%</td></tr><tr><td class="n">2</td><td class="n">76.6&deg;</td><td class="n">166.6&deg;</td><td class="n">0.2633</td><td class="n">1,364,734</td><td class="n">88.9%</td></tr><tr><td class="n">3</td><td class="n">80.3&deg;</td><td class="n">170.3&deg;</td><td class="n">0.3020</td><td class="n">1,678,270</td><td class="n">86.3%</td></tr></table>
+
+<h2>Placement, and why the 200 m ring is not optional</h2>
+<p class="sm">The organiser's own problem page states the test set is
+&ldquo;newly identified faults in the GeoDAWN region that are <b>not</b> included in the existing USGS
+fault database&rdquo;. Emitted mass near a <em>mapped</em> trace therefore earns zero credit while still
+paying the false-positive tax &mdash; which is arithmetically what lifted one owner-scored file from
+0.2600 to 0.2778 when its 100&ndash;200 m ring was deleted.</p>
+<dl class="kv">
+<dt>Emitted cells</dt><dd>37,654 of a requested 37,654
+  (short-fill 0) at 3 px minimum separation from a
+  4,859,987 px pool</dd>
+<dt>Distance to the mapped catalogue</dt><dd>min 223.6 m &middot;
+  5th pct 300.0 m &middot;
+  median 1923.5 m &middot;
+  0.0% within 200 m &middot;
+  5.543% within the 300 m kernel</dd>
+<dt>Marginal rule</dt><dd>emit only where the expected credit density exceeds
+  &alpha;&middot;DTI = 0.05556 at an OWNER-REPORTED board
+  DTI of 0.2778, i.e. within
+  2.83 px. Quoted to state the bar only; not a
+  projection of this file's score.</dd>
+</dl>
+<h3>Not the union of the two views, at equal budget</h3>
+<table><tr><th>Compared against</th><th class="n">Its cells</th><th class="n">Shared</th>
+<th class="n">Jaccard</th><th>Relation</th></tr><tr><td><code>union_max</code></td><td class="n">37,654</td><td class="n">1,421</td><td class="n">0.0192</td><td>distinct</td></tr><tr><td><code>single_A</code></td><td class="n">37,654</td><td class="n">11,145</td><td class="n">0.1737</td><td>distinct</td></tr><tr><td><code>single_B</code></td><td class="n">37,654</td><td class="n">0</td><td class="n">0.0000</td><td>distinct</td></tr></table>
+
+<h2>Lane uniqueness &mdash; 66 byte-distinct aligned rasters</h2>
+<table><tr><th>Phase</th><th>Tier</th><th class="n">Max Spearman</th><th class="n">Max near-3px</th>
+<th>Verdict</th></tr>
+<tr><td>surface (before placement)</td><td>literal</td><td class="n">0.0225</td>
+<td class="n">&mdash;</td><td><strong>PASS</strong></td></tr>
+<tr><td>surface (before placement)</td><td>policy</td><td class="n">0.0225</td>
+<td class="n">&mdash;</td><td><strong>PASS</strong></td></tr>
+<tr><td>final dots (after placement)</td><td>literal</td><td class="n">0.0087</td>
+<td class="n">0.9990</td>
+<td><strong>DUPLICATE/STOP</strong></td></tr>
+<tr><td>final dots (after placement)</td><td>policy</td><td class="n">0.0087</td>
+<td class="n">0.2941</td>
+<td><strong>PASS</strong></td></tr></table>
+<p class="sm">Census = owner-scored rasters restored into <code>data/scored/</code>, the 0.2778
+reference, every local emission in <code>submission/</code> and every served download, deduplicated by
+(size, SHA-256). It is not an organiser-authenticated census; private or unlinked artefacts are outside
+its scope.</p>
+
+<h2 id="irregularities">Irregularities found and flagged this session</h2>
+<p class="sm">Each was verified against bytes on disk in this checkout or against an official page
+fetched live. None is inherited unverified.</p>
+<div class="card bad">
+<h3 style="margin-top:0">IR-H84-001 &middot; A served download path and its adjacent JSON receipt describe different bytes than the file at that path
+  <span class="pill">high</span></h3>
+<p><strong>What it is.</strong> docs/downloads/h83-candidate.json claims sha256 274db602ec8b91cb6a2793e9f512321f32326298aa8ed031ebd478e21426f5cd and file_bytes 1558064, submission_name &#x27;h83-structural-concordance-37654px-20261010T200049Z&#x27;. The file actually served at docs/downloads/h83-candidate.tif is sha256 d9cfccf0e1aa4e28094a6039fda9e65be5e8ff102e321b33745df149f477f378, 81076 bytes, which is the OTHER parallel H83 round&#x27;s artefact (submission/gems52-h83-structcon-geotherm-37654px-20261010T200310Z.tif). Two parallel sessions merged to main within 43 seconds of each other and both wrote docs/downloads/h83-candidate.tif; the later write silently replaced the earlier one while the earlier one&#x27;s receipt survived.</p>
+<p><strong>How we know.</strong> <span class="mono">sha256sum docs/downloads/h83-candidate.tif; python3 -c &quot;import json;print(json.load(open(&#x27;docs/downloads/h83-candidate.json&#x27;))[&#x27;sha256&#x27;])&quot;; sha256sum submission/gems52-h83-*.tif; git log --stat -2 d5e61ad 4d06537</span></p>
+<p><strong>Handling.</strong> Not papered over and not repaired by rewriting another round&#x27;s artefacts. scripts/publish_h84_site.py re-measures EVERY served download from its own bytes and writes docs/downloads/MANIFEST.json, flagging receipt_matches_bytes=false wherever a receipt has drifted. A manifest derived from the files cannot drift from them. The H84 download&#x27;s own receipt is regenerated from the copied bytes at publish time and the copy is re-hashed against submission/ before the page is written, so the same defect cannot occur for this round.</p>
+</div><div class="card bad">
+<h3 style="margin-top:0">IR-H84-002 &middot; evidence/h83_run_card.json records verdict &#x27;promote&#x27; with holdout_dti &#x27;NOT_EVALUATED&#x27;, and claims there are no prior submissions to compare against
+  <span class="pill">high</span></h3>
+<p><strong>What it is.</strong> The run card sets &quot;verdict&quot;: &quot;promote&quot; while its own holdout_dti.value is &quot;NOT_EVALUATED&quot; with a null CI and null withheld-positive count, and its correlation_vs_registry.note reads &quot;No prior submissions in this repository to compare against. Novel approach.&quot;. docs/index.html, published from the same round, prints &quot;SUBMIT: YES&quot; and &quot;Ready-to-submit GeoTIFF&quot;. Measured in this checkout: 50 TIFFs in submission/ and 75 in docs/downloads/, plus 13 owner-scored and reference rasters restored into data/scored/ and data/reference/. The lane uniqueness gate was not run at all.</p>
+<p><strong>How we know.</strong> <span class="mono">python3 -c &quot;import json;d=json.load(open(&#x27;evidence/h83_run_card.json&#x27;));print(d[&#x27;verdict&#x27;], d[&#x27;holdout_dti&#x27;][&#x27;value&#x27;], d[&#x27;correlation_vs_registry&#x27;])&quot;; ls submission/*.tif | wc -l; ls docs/downloads/*.tif | wc -l; grep -c &#x27;SUBMIT: YES&#x27; docs/index.html</span></p>
+<p><strong>Handling.</strong> Flagged, not silently corrected. The H84 site states both rounds&#x27; dispositions side by side and publishes the measured download manifest. H84&#x27;s own run card reports verdict, download_ok and submit_ok as three separate fields computed from the gate results, so a &#x27;promote&#x27; cannot appear without a holdout number behind it.</p>
+</div><div class="card bad">
+<h3 style="margin-top:0">IR-H84-003 &middot; docs/index.html publishes an &#x27;Expected Score Range&#x27; table putting 0.30-0.38 beside real scores
+  <span class="pill">medium</span></h3>
+<p><strong>What it is.</strong> The page carries a table headed &#x27;Expected Score Range&#x27; with rows &#x27;Concordance + geothermal (optimistic) | 0.10-0.14 | 0.30-0.38&#x27; and &#x27;h33-2-b2 reference | 0.1387 | 0.2778&#x27;, i.e. a projection printed in the same column as an owner-reported board score. A disclaimer follows the table, but the table itself is what a reader remembers.</p>
+<p><strong>How we know.</strong> <span class="mono">grep -o &#x27;Expected Score Range&#x27; docs/index.html; grep -o &#x27;0.30–0.38&#x27; docs/index.html</span></p>
+<p><strong>Handling.</strong> The H84 pages print no expected-score table. Where the algebra is used (knowledge/49, and the &#x27;what would actually move the number&#x27; section of docs/index.html) it is labelled as a bound derived from owner-reported scores, and the run card carries is_a_leaderboard_forecast=false explicitly.</p>
+</div><div class="card bad">
+<h3 style="margin-top:0">IR-H84-004 &middot; The repository root landing page and docs/index.html described different rounds as current
+  <span class="pill">medium</span></h3>
+<p><strong>What it is.</strong> After the two parallel H83 merges, index.html (the GitHub Pages entry point for the repository root) still described H82 as the current round and linked docs/downloads/h82-candidate.tif, while docs/index.html described an H83 round and linked docs/downloads/h83-candidate.tif. A visitor could land on either and be told a different file was the current candidate, with different verdicts.</p>
+<p><strong>How we know.</strong> <span class="mono">git show ebb1d34:index.html | grep -c H82  (-&gt; 3); git show ebb1d34:docs/index.html | grep -c h83-structcon  (-&gt; 4); ebb1d34 is the merge of PR #82, the state of main when this session started</span></p>
+<p><strong>Handling.</strong> scripts/publish_h84_site.py writes BOTH index.html and docs/index.html from the same evidence files in the same run, and re-hashes the copied download against submission/ before writing either page, so the two cannot disagree about the current round or its bytes.</p>
+</div><div class="card bad">
+<h3 style="margin-top:0">IR-H84-005 &middot; H84&#x27;s own inherited-threshold block was transcribed incompletely and the independence stage raised KeyError
+  <span class="pill">low</span></h3>
+<p><strong>What it is.</strong> registry/h84_preregistration.json transcribes its thresholds verbatim from registry/h74_preregistration.json but the first transcription omitted receiver_rank_interval, min_pseudo_pixels, pseudo_cap_per_fold and universal_coverage_probe_threshold. scripts/run_h84.py stage_independence reads receiver_rank_interval[1] to set the receiver cut and raised KeyError.</p>
+<p><strong>How we know.</strong> <span class="mono">PYTHONPATH=src python3 scripts/run_h84.py independence -&gt; KeyError: &#x27;receiver_rank_interval&#x27;; json.load of both registry files compared key by key</span></p>
+<p><strong>Handling.</strong> The four keys were copied verbatim from the donor file BEFORE the independence stage was re-run, and the edit is recorded inside the pin itself (thresholds_completion_note). The abandon bar 0.60, donor rank 0.95, block side 50 px, minimum 20 blocks and every other threshold were already pinned and were not edited. check_prereg() re-validates the runner&#x27;s constants against the pin on every stage.</p>
+</div><div class="card bad">
+<h3 style="margin-top:0">IR-H84-006 &middot; save_verified rejected correct NaN-bearing out-of-fold grids, because np.array_equal reports NaN != NaN
+  <span class="pill">medium</span></h3>
+<p><strong>What it is.</strong> scripts/run_h84.py initialises each out-of-fold prediction grid to NaN off the evaluation region, then writes it through save_verified(), which re-reads the file and compares bit-exactly before accepting it. np.array_equal returns False whenever NaNs are present, so every correct write of a NaN-bearing grid looked like corruption, exhausted three rewrite attempts and fail-closed with an OSError on fold 0.</p>
+<p><strong>How we know.</strong> <span class="mono">PYTHONPATH=src python3 scripts/run_h84.py fit -&gt; OSError: save_verified could not produce a bit-exact file for work/h84/oofA_f0.npy, preceded by three &#x27;mismatch on attempt N&#x27; lines 0.1 s apart, which is a comparison failing, not a disk write failing</span></p>
+<p><strong>Handling.</strong> Fixed once, in the runner: np.array_equal(back, want, equal_nan=True), plus the NaN count is now recorded in the write receipt so the number of deliberately-NaN pixels is visible rather than hidden inside a comparison. Not forked around, not suppressed. The stage was re-run from scratch; no result in this round was produced by the defective comparison.</p>
+</div><div class="card bad">
+<h3 style="margin-top:0">IR-H84-007 &middot; training_features.tif band 6 is tagged data_category=&#x27;magnetic_data&#x27; / &#x27;Tilt angle or total curvature&#x27; but is the aeroradiometric total-count grid
+  <span class="pill">medium</span></h3>
+<p><strong>What it is.</strong> The organiser&#x27;s own file tags band 6 with band_name=&#x27;tc&#x27;, data_category=&#x27;magnetic_data&#x27;, description=&#x27;Tilt angle or total curvature - magnetic field derivative for edge detection&#x27;. band_name says total count; the category and description say a magnetic derivative. Measured this session on a 1-in-37 subsample: band 6 ranges 2.95 to 88.57 (a tilt angle would span roughly -90 to +90 and a curvature would be signed), Spearman against geodawn_rad_u8 band 4 is 0.999953, and against TMI (band 14) it is -0.027762. Band 6 is radiometric total count; the category and description tags are wrong.</p>
+<p><strong>How we know.</strong> <span class="mono">python3 -c reading rasterio tags(6) from data/training_features.tif and Spearman-correlating band 6 against all four bands of data/external/geodawn_rad_u8.tif and against band 14; receipt evidence/h84_band6_identity_recheck.json. This re-derives docs/data/h55_band6_identity.json independently rather than citing it.</span></p>
+<p><strong>Handling.</strong> Band 6 is assigned to View B, as radiometric total count, and the assignment is recorded in evidence/h84_band_tags.json and evidence/h84_band6_identity_recheck.json with the measurement that justifies it. The residual assumption is stated rather than hidden: geodawn_rad_u8.tif carries NO band descriptions, so which of its four uint8 layers is TC is not stated by any source; band 6&#x27;s identity rests on its own band_name=&#x27;tc&#x27; tag plus its value range plus a 0.99995 rank match to one of those layers plus a near-zero match to TMI.</p>
+</div><div class="card bad">
+<h3 style="margin-top:0">IR-H84-008 &middot; The three external uint8 rasters carry no band descriptions at all, so their channels cannot be audited against any source
+  <span class="pill">medium</span></h3>
+<p><strong>What it is.</strong> data/external/lidar_scarp_features_u8.tif (12 bands), geodawn_rad_u8.tif (4 bands) and geodawn_extensions_u8.tif (4 bands) are all EPSG:32611, 3730x3292, uint8, on the competition transform - and rasterio tags(i) returns an empty dict for every band of every one. There is no name, no category, no unit and no source reduction recorded in the bytes. They are integrity-pinned mirrors of an owner-side CI reduction, not organiser-authenticated products.</p>
+<p><strong>How we know.</strong> <span class="mono">python3 -c &quot;import rasterio;s=rasterio.open(&#x27;data/external/lidar_scarp_features_u8.tif&#x27;);print([s.tags(i) for i in range(1,s.count+1)])&quot; -&gt; [{}, {}, ...]; same for the other two</span></p>
+<p><strong>Handling.</strong> H84 uses ONLY bands of training_features.tif whose identity the organiser&#x27;s own file states (recorded in evidence/h84_band_tags.json), and does not use the external rasters as learner inputs. The gap is named as the specific thing a future round must close before it can use them: a per-band provenance record for the owner&#x27;s reduction, or a re-reduction from source that this sandbox can actually reach.</p>
+</div><div class="card bad">
+<h3 style="margin-top:0">IR-H84-010 &middot; The seeded holdout stage produced a different pooled control on its first execution than on two bit-identical re-runs, with unchanged inputs
+  <span class="pill">medium</span></h3>
+<p><strong>What it is.</strong> stage_holdout is fully seeded (np.random.default_rng(SEED+1), fixed fold order, fixed arm order) and reads only files on disk. Its first execution returned a pooled single_B of 0.030262; two consecutive re-runs returned 0.029349 with a maximum absolute difference of 0.0 across all 28 arm-by-fold values and all pooled values. The inputs did not change between them: work/h84/oofA_f*.npy and oofB_f*.npy were written by the fit stage and never rewritten, and their SHA-256 is now recorded in evidence/h84_holdout.json -&gt; input_sha256.</p>
+<p><strong>How we know.</strong> <span class="mono">ls -la --time-style=+%H:%M:%S work/h84/oof[AB]_f*.npy (mtimes 21:48-21:49, three holdout executions at 21:50, 22:44 and 22:46); the run logs of all three; and the diff of evidence/h84_holdout.json between the second and third runs, which is empty to 1e-9 on every arm and fold</span></p>
+<p><strong>Handling.</strong> Recorded, not explained. (1) Two consecutive re-runs were diffed and are bit-identical, so the stage as it now stands is reproducible. (2) The stage writes input_sha256 for every file it consumes plus a reproducibility block, so the next occurrence is attributable. (3) Every published H84 number comes from the reproducible pair; the first run&#x27;s values are superseded and appear nowhere else. (4) Impact is bounded and stated: about 0.0009 on the control and 0.0012 on the paired delta, against a primary arm that sits below random placement by 0.0127, so no gate and no verdict depends on it.</p>
+</div><div class="card bad">
+<h3 style="margin-top:0">IR-H84-009 &middot; The organiser&#x27;s footprint is 1,533 px larger than the region where all 19 feature bands are finite, and a submission must be finite on both
+  <span class="pill">low</span></h3>
+<p><strong>What it is.</strong> labels.tif == -1 on 7,111,787 px, so the organiser&#x27;s in-domain footprint is 5,167,373 px and sample_submission.tif is finite on exactly 5,167,373 px. The intersection of all 19 feature bands being finite is 5,165,840 px, a difference of 1,533 px. On those pixels a submission must still be finite and inside [0,1], but no feature is defined, so no model can score them.</p>
+<p><strong>How we know.</strong> <span class="mono">python scripts/run_h84.py setup, which measures labels.tif value counts, grid.footprint_from(training_features.tif, bands=&#x27;all&#x27;) and the finite mask of sample_submission.tif; receipt evidence/h84_setup.json</span></p>
+<p><strong>Handling.</strong> H84 writes the all-finite container: 0.0 outside the feature intersection, including those 1,533 px, and 0 non-finite pixels anywhere in the grid. The range gate is re-derived from the bytes on disk after writing, not from the in-memory array.</p>
+</div>
+
+<h2>What would actually move the number</h2>
+<p>The score is <code>DTI = T / (0.2&middot;T + 0.2&middot;(S&minus;M) + 0.8&middot;|G|)</code> with
+<code>T = &Sigma;<sub>g&isin;G</sub> max<sub>x</sub> p(x)k(d)</code>. Because &alpha;+&beta;=1 and
+<code>T &le; |G|</code>, the term <code>0.8&middot;|G|</code> is a <strong>fixed cost</strong> no
+submission can reduce. Solving the two owner-reported scores of a strictly nested pair
+(<code>knowledge/49</code>) gives <code>|G| &asymp; 14,089</code> on the public chunk and champion
+credit <code>T &asymp; 5,223</code> &mdash; <strong>37% of the available credit</strong>. Reaching
+0.3774 at the same budget needs <code>T &asymp; 7,096</code>, i.e. 50%. So the only lever that reaches
+the top of the board is a <strong>better detector</strong>, and this round measured, an eighth time,
+that View A is not one.</p>
+<table><tr><th>Lever</th><th>Status</th><th>Why</th></tr>
+<tr><td>Never emit within 200 m of a mapped trace</td><td>applied</td>
+<td>organiser states the truth is non-catalogue faults; measured +6.8% relative on owner-scored bytes</td></tr>
+<tr><td>Emit binary {0,1}, not a probability</td><td>applied</td>
+<td>the metric is linear in mass and the optimum is a corner (pinned in <code>tests/test_metric.py</code>)</td></tr>
+<tr><td>Stop where marginal credit crosses &alpha;&middot;DTI</td><td>applied</td><td>metric algebra</td></tr>
+<tr><td>Raise the ranker's credit density &rho;(S)</td><td><strong>the only lever that reaches 0.32+</strong></td>
+<td>&rho; &asymp; 0.10 sustained at 100,000 px would score 0.3195 &mdash; a <em>lower</em> precision
+demand than the champion's own 0.1387</td></tr>
+<tr><td>Written, falsifiable reasoning per candidate</td><td>applied</td>
+<td>the $250k Final Prize Round rescores the same file against an <em>expanded</em> label set built by
+experts reviewing every team's submission</td></tr>
+</table>
+<p><strong>The blocked lever, named specifically.</strong> Raising &rho; needs a reduction of the
+competition's own <code>1m_DEM_links.csv</code> tiles (USGS 3DEP, public domain,
+<a href="https://www.usgs.gov/3d-elevation-program">usgs.gov/3d-elevation-program</a>) at native
+resolution: a 1&nbsp;m fault scarp is aliased into a single 100&nbsp;m scoring cell, and the reachable
+substitute is the owner's pre-reduced <code>lidar_scarp_features_u8.tif</code>. That file is present
+here but carries <strong>no band descriptions at all</strong> &mdash; twelve unlabelled uint8 layers
+&mdash; so its channels cannot be audited against a source. It is integrity-pinned, not
+organiser-authenticated, and this session flags that rather than building a detector on top of it.</p>
+
+<h2 id="prior-artefacts">Prior research artefacts this site still serves</h2>
+<p class="sm">Every one of these is <strong>research-only: OK to download, do not upload</strong>.
+None is approved for a weekly slot, none has an organiser score, and no weekly slot has been spent on
+any of them. Their disclosures stay on the current pages on purpose, so that a reader who lands here
+from an old link cannot mistake an earlier artefact for the current candidate. Rendered from
+<code>docs/data/*.json</code>, not typed.</p>
+<table><tr><th>Round</th><th>Unique TIFF</th><th>SHA-256 prefix</th><th>Short download path</th>
+<th>Disposition</th><th>Its own page / published estimate</th></tr><tr><td><strong>R5</strong></td><td><code>gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif</code></td><td><code>d2bfb0f79328399354943bd1</code></td><td><a href="downloads/r5-candidate.tif" download>r5-candidate.tif</a></td><td>OK to download: yes &middot; <strong>do not upload</strong>, not slot-approved</td><td class="sm">R5's own frozen estimate P(beating 0.2778) = 0.366 (an R5 receipt value, not an H84 number and not a forecast)</td></tr><tr><td><strong>H58</strong></td><td><code>gems52-h58-coldgeo-consensus-22px-a55b0dee38-research.tif</code></td><td><code>130c242e33aef398c44b22cd</code></td><td><a href="downloads/h58-candidate.tif" download>h58-candidate.tif</a></td><td>OK to download: yes &middot; <strong>do not upload</strong>, not approved to submit</td><td class="sm"><a href="h58.html">H58 audit page</a></td></tr><tr><td><strong>H57-alt</strong></td><td><code>gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif</code></td><td>&mdash;</td><td>&mdash;</td><td>research archive &middot; <strong>do not upload</strong> &middot; zero slots</td><td class="sm"><a href="h57-creditcore.html">H57 credited-core alternate</a></td></tr><tr><td><strong>H55-EDGE</strong></td><td><code>gems52-h55-grav-rtp-logedge-37654-c4b8c10205da-zeros.tif</code></td><td><code>f0732d40d57b92d3f082eb2b</code></td><td>&mdash;</td><td>separate failed-gate archive, <strong>not the current H55 candidate</strong> &middot; <strong>do not upload</strong></td><td class="sm"><a href="h55-edge.html">h55-edge.html</a></td></tr></table>
+<p class="sm">The full list of everything served, re-measured from the bytes at publish time, is
+<a href="downloads/MANIFEST.json">docs/downloads/MANIFEST.json</a>. Every round's page is in
+<a href="archive.html">the archive</a>.</p>
+
+<h2>Previous rounds</h2>
+<p class="sm">This site is current-first. Every earlier round is preserved verbatim in
+<a href="archive.html">the archive</a>, and each round's own page, receipts and pre-registration are
+listed there with their verdicts. The two rounds merged to <code>main</code> while this one ran are
+H83 (two parallel sessions, both self-labelled &ldquo;SUBMIT: YES&rdquo;); the download/receipt
+mismatch between them is IR-H84-001 above and is <strong>not</strong> repaired by overwriting their
+artefacts &mdash; it is published in
+<a href="downloads/MANIFEST.json">docs/downloads/MANIFEST.json</a>, measured from the bytes.</p>
+
+<h2 id="signature">Did the emission actually select the signature the hypothesis named?</h2>
+<div class="verdict v-warn"><h3 style="margin-top:0">No &mdash; and that qualifies the negative result</h3>
+<p>the emission did NOT predominantly select the signature the hypothesis named: 75.6% of emitted cells carry their largest |odd| response in an isostatic-gravity band rather than a strain band, only 7.5% show an actual sign-reversal couple, and the median odd-dominance is 0.0125, i.e. most emitted cells are EVEN-dominant monotone steps. A linear blend of |odd|, odd-dominance and couple lets the largest-magnitude channel decide, so this arm tested &#x27;large fault-normal gradient&#x27; far more than it tested &#x27;antisymmetric couple&#x27;. The negative verdict stands as frozen, but the hypothesis itself is NOT cleanly refuted by this arm - a clean test gates on the couple directly.</p></div>
+<table><tr><th>Band carrying the largest |odd| response</th><th class="n">Emitted cells</th>
+<th class="n">Share</th></tr><tr><td><code>isostatic_gravity_b13_h2</code></td><td class="n">25,583</td><td class="n">67.94%</td></tr><tr><td><code>dilatation_rate_b8_h2</code></td><td class="n">3,810</td><td class="n">10.12%</td></tr><tr><td><code>second_invariant_b4_h2</code></td><td class="n">3,501</td><td class="n">9.30%</td></tr><tr><td><code>isostatic_gravity_hg_b18_h2</code></td><td class="n">2,899</td><td class="n">7.70%</td></tr><tr><td><code>shear_rate_b7_h2</code></td><td class="n">1,861</td><td class="n">4.94%</td></tr></table>
+<dl class="kv">
+<dt>Strain-band dominant</dt><dd>9,172
+  (24.36 %)</dd>
+<dt>Gravity-band dominant</dt><dd>28,482
+  (75.64 %)</dd>
+<dt>Actual sign-reversal couple present</dt><dd>2,840
+  (7.54 %)</dd>
+<dt>Odd-dominance, median / 95th pct</dt><dd>0.01251 /
+  0.07293</dd>
+<dt>B abstains on every emitted cell</dt><dd>True &mdash; the gate itself
+  worked exactly as designed</dd>
+<dt>Clean test for the next round</dt><dd>emit only cells with sign(B(+h)) != sign(B(-h)) at BOTH lags and odd-dominance above a quantile frozen before the fit, instead of letting a logistic model weight |odd| against it</dd>
+</dl>
+<p class="sm">Per-cell export: <a href="downloads/h84-a-only-reasoning.csv" download>CSV</a>
+(36,251,477 bytes, 37,654 rows) or
+<a href="downloads/h84-a-only-reasoning.csv.gz" download>gzipped</a>
+(1,169,113 bytes). Every row carries row, column, easting, northing, both view
+scores, the B-abstention flag, catalogue distance, fault-normal bearing, the dominant View A band, mean
+odd-dominance, the sign-reversal couple, the interpreted mechanism, the named non-fault mimic, an
+explicit falsifier, and an evidence class reading <em>model evidence for a Phase-2 reviewer target,
+NOT an organiser-confirmed fault</em>.</p></main><footer><div class="wrap">GEMSDOE52 &middot; DOE GEMS prize challenge #306 &middot; every number on this site is labelled HOLDOUT-DTI, OWNER-REPORTED or ORGANIZER-CONFIRMED. A projection is never written as a score.</div></footer></body></html>

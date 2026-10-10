@@ -1,0 +1,118 @@
+{
+ "file": "gems52-h84-straindipole-cotrain-37654px-20261010T215523Z.tif",
+ "sha256": "c122a9ff37abf5512bbddf39c9d55c60effb2229ed992d959e357ffb804a50f3",
+ "bytes": 132513,
+ "submission_name": "gems52-h84-straindipole-cotrain-37654px-20261010T215523Z",
+ "note": "H84 co-training: odd-symmetric fault-normal strain dipole (View A) gated to where View B abstains; 200m catalogue ring excluded; binary dots",
+ "note_chars": 140,
+ "validator": {
+  "path": "/home/user/GEMSDOE52/submission/gems52-h84-straindipole-cotrain-37654px-20261010T215523Z.tif",
+  "bytes": 132513,
+  "sha256": "c122a9ff37abf5512bbddf39c9d55c60effb2229ed992d959e357ffb804a50f3",
+  "bands": 1,
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "width": 3292,
+  "height": 3730,
+  "bounds": [
+   243350.0,
+   4135550.0,
+   572550.0,
+   4508550.0
+  ],
+  "ref_bounds": [
+   243350.0,
+   4135550.0,
+   572550.0,
+   4508550.0
+  ],
+  "transform": [
+   100.0,
+   0.0,
+   243350.0,
+   0.0,
+   -100.0,
+   4508550.0
+  ],
+  "nodata": null,
+  "blocksize": [
+   256,
+   256
+  ],
+  "fixture_grid": false,
+  "has_validity_mask": false,
+  "nan_pixels": 0,
+  "infinity_pixels": 0,
+  "n_nan": 0,
+  "min": 0.0,
+  "max": 1.0,
+  "mean": 0.0030664964579045773,
+  "n_nonzero": 37654,
+  "mass": 37654.0,
+  "mass_outside_footprint": 0,
+  "problems": [],
+  "ok": true,
+  "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+ },
+ "zip_file": "gems52-h84-straindipole-cotrain-37654px-20261010T215523Z.zip",
+ "zip_sha256": "e15ab6e5519fe85eb07f6591325102e76b01a0e4cca4329617cbcdb7192065e2",
+ "approved_for_weekly_slot": false,
+ "promoted": false,
+ "submission_slots_used": 0,
+ "status": "research-only; local format validation is not organizer acceptance",
+ "metadata": {
+  "round": "H84",
+  "mechanism": "odd-symmetric fault-normal profile decomposition",
+  "emitted_px": 37654
+ },
+ "container_vs_0p2778_reference": {
+  "reference": "/home/user/GEMSDOE52/data/reference/h33-2-b2-zeros.tif",
+  "reference_sha256": "c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9",
+  "fields": {
+   "driver": {
+    "ours": "GTiff",
+    "reference": "GTiff"
+   },
+   "height": {
+    "ours": 3730,
+    "reference": 3730
+   },
+   "width": {
+    "ours": 3292,
+    "reference": 3292
+   },
+   "count": {
+    "ours": 1,
+    "reference": 1
+   },
+   "dtype": {
+    "ours": "float32",
+    "reference": "float32"
+   },
+   "compress": {
+    "ours": "deflate",
+    "reference": "deflate"
+   },
+   "tiled": {
+    "ours": true,
+    "reference": true
+   },
+   "predictor": {
+    "ours": null,
+    "reference": null
+   },
+   "nodata": {
+    "ours": null,
+    "reference": null
+   }
+  },
+  "identical_container": true,
+  "note": "the 0.2778 file is all-finite with zeros outside and no nodata tag; matching that container removes the NaN-reader unknown behind 'Predicted values must be in range [0, 1]'"
+ },
+ "range_gate": {
+  "min": 0.0,
+  "max": 1.0,
+  "n_nan": 0,
+  "values_in_0_1": true
+ }
+}
