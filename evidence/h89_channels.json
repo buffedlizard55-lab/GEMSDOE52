@@ -1,0 +1,34 @@
+{
+ "stage": "channels",
+ "started_utc": "2026-10-10T20:53:12+00:00",
+ "eligible_px": 4593171,
+ "store_version": "structural-core-v2-band6-B+external-geodawn-v1",
+ "checks": {
+  "convention": "B_curvature_plus_3 large positive is expected at concave-up valley bottoms",
+  "mean_detrended_elev_top1pct_curv_plus_m": 260.41845703125,
+  "mean_detrended_elev_top1pct_curv_minus_m": 611.7097778320312,
+  "mean_detrended_elev_all_m": -12.3842134475708,
+  "valley_convention_consistent": true,
+  "cover_m": {
+   "min": -14.837310791015625,
+   "median": 318.9657897949219,
+   "p90": 1301.271240234375,
+   "max": 7135.306640625
+  },
+  "cover_median_threshold_m": 318.9657897949219,
+  "artifact": {
+   "mean": 0.23811088502407074,
+   "p05": 0.04752090573310852,
+   "p95": 0.45898574590682983
+  },
+  "radiometric_channels": [
+   "X_rad_K_grad3",
+   "X_rad_Th_grad3",
+   "X_rad_U_grad3",
+   "X_rad_ThK_grad3",
+   "X_rad_UK_grad3",
+   "X_rad_UTh_grad3"
+  ]
+ },
+ "formula": "artifact = 0.5*(1-rad_edge) + 0.5*valley ; valley = pct(B_curvature_plus_3)*pct(-raw_band_12) ; rad_edge = max over six X_rad_*_grad3 percentile ranks"
+}
