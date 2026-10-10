@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """H88: hide-and-recover HOLDOUT-DTI for co-training with a disagreement-gated A-only stratum.
 
-Frozen protocol: knowledge/90_h93_protocol_frozen_bytes_from_h88.md (SHA-256 pinned in registry/h93_preregistration.json).
+Frozen protocol: knowledge/90_h94_protocol_frozen_bytes_from_h88.md (SHA-256 pinned in registry/h94_preregistration.json).
 This runner refuses to start if the protocol file no longer matches its pin.
 
 Reuse, not forks
@@ -46,7 +46,7 @@ LABELS = ROOT / "data" / "labels.tif"
 SAMPLE = ROOT / "data" / "sample_submission.tif"
 GEODAWN_RAD = ROOT / "data" / "external" / "geodawn_rad_u8.tif"
 GEODAWN_EXT = ROOT / "data" / "external" / "geodawn_extensions_u8.tif"
-OUT = ROOT / "evidence" / "h93_holdout.json"
+OUT = ROOT / "evidence" / "h94_holdout.json"
 
 K_FOLD = 9400
 BUFFER_PX = 80

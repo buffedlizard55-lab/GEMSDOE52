@@ -1,12 +1,12 @@
-> **Label note.** This round is **H93** in this repository. `main` already holds an H88 round from another session (basement-step coherence), so the round label was changed. The frozen protocol (`knowledge/90`, bytes unchanged, pin verified) and the receipts under `evidence/h93_*` still carry the internal label **H88**. Every reference to "H88" in this document means this round.
+> **Label note.** This round is **H94** in this repository. `main` already holds an H88 round from another session (basement-step coherence), so the round label was changed. The frozen protocol (`knowledge/90`, bytes unchanged, pin verified) and the receipts under `evidence/h93_*` still carry the internal label **H88**. Every reference to "H88" in this document means this round.
 
-# 81 · H93 results and limits — co-training with a disagreement-gated A-only stratum
+# 81 · H94 results and limits — co-training with a disagreement-gated A-only stratum
 
 **Verdict: NEGATIVE.** Download yes (format-valid, audit only). **Submit: NO.** Slots used: **0**. Experiments: **1 of 3**.
-Protocol: `knowledge/90_h93_protocol_frozen_bytes_from_h88.md` (SHA-256 `50db10583392…`, pinned in `registry/h93_preregistration.json`).
+Protocol: `knowledge/90_h94_protocol_frozen_bytes_from_h88.md` (SHA-256 `50db10583392…`, pinned in `registry/h94_preregistration.json`).
 Every number below is **HOLDOUT-DTI** unless stated, evaluator `gems52-pooled-hide-v1` (α 0.2, β 0.8, 300 m triangular kernel),
 **60,894 withheld positive pixels** over 4 label-blind quadrant folds, K = 9,400 dots per fold, 3 px spacing, 1,000-draw paired
-physical 20 km cluster bootstrap (`evidence/h93_holdout.json`, produced by `scripts/run_h88_holdout.py`, 225 s on 2 CPUs).
+physical 20 km cluster bootstrap (`evidence/h94_holdout.json`, produced by `scripts/run_h88_holdout.py`, 225 s on 2 CPUs).
 
 ## 1 · Results (the frozen arms)
 
@@ -54,19 +54,19 @@ Fold 3 (9,585): P 0.10553, single_A 0.10357, random 0.10674. P is below single_A
    9,400 dots per fold are the highest-A pixels whose View B rank is at or below the 25th percentile. Highest-A pixels whose
    View B rank is above that cut are excluded. The loss is measured, not assumed: P is 0.011556 below View A alone.
 2. **The H87 rule was not validated.** Its docstring claims "A confident, B abstains", but its emission is a continuous
-   `(A − B)·gate` ranking. On this instrument it scores 0.056889 (below random). H93 shows the protocol rule does
+   `(A − B)·gate` ranking. On this instrument it scores 0.056889 (below random). H94 shows the protocol rule does
    better than the H87 rule, but still below random.
 3. **Nothing in this lane beats random here.** The repository's best arm on the older 53,186-withheld instrument is
    H84 `B_DVA2` 0.192829 (see §4). The lane's own arms do not reach random on this instrument.
 
-## 4 · Instrument caveat (IR-H93-002) — read before comparing to older rounds
+## 4 · Instrument caveat (IR-H94-002) — read before comparing to older rounds
 
-H82 and H84 receipts withhold **53,186** positives; H86 and H93 withhold **60,894** (H86 and H93 share one runner
+H82 and H84 receipts withhold **53,186** positives; H86 and H94 withhold **60,894** (H86 and H94 share one runner
 logic, eligible = 19-band finite AND organiser domain, IR-52-002). **The cause of the H82/H84 difference was not traced in this
 session** (they went through the H61 setup path). Random agrees across the two families (0.080426 vs 0.075429 for H86,
-0.076551 for H93), so the random control is stable across the two families. That does **not** establish the cause of the bar gap. The **0.192829 bar is a
+0.076551 for H94), so the random control is stable across the two families. That does **not** establish the cause of the bar gap. The **0.192829 bar is a
 different-instrument number, and the H84 single_B (0.174571) is a different View-B method**, so the bar is a reference,
-not a like-for-like threshold. The verdict does not depend on it: P is below random on the same instrument as H93.
+not a like-for-like threshold. The verdict does not depend on it: P is below random on the same instrument as H94.
 
 ## 5 · What was checked from the bytes (no hallucinated facts)
 
@@ -78,8 +78,8 @@ not a like-for-like threshold. The verdict does not depend on it: P is below ran
   that are not the declared nodata sentinel (−3.4028e38; it covers 7,113,320 cells of band 6). Restricted to the 5,164,300
   GeoDAWN-footprint cells: Pearson **0.99714**, Spearman **0.99995**. Without the sentinel mask, Pearson is about 0.886 on the
   full grid and near 0 on the footprint, so the masking must be stated with any Pearson value. Re-read from disk this session.
-  H93 does **not** use band 6 in View B. That is a declared deviation from the lane brief, which asks for "any radiometric
-  bands present in training_features.tif". See IR-H93-001 and the next-round item in `knowledge/82`.
+  H94 does **not** use band 6 in View B. That is a declared deviation from the lane brief, which asks for "any radiometric
+  bands present in training_features.tif". See IR-H94-001 and the next-round item in `knowledge/82`.
 
 ## 6 · The shipped file (download for audit, not for submission)
 
@@ -88,13 +88,13 @@ not a like-for-like threshold. The verdict does not depend on it: P is below ran
 | file | `docs/downloads/gems52-h88-cotrain-strict-AB-37654px-20261010T220328Z.tif` (also in `submission/`) |
 | ZIP | `docs/downloads/gems52-h88-cotrain-strict-AB-37654px-20261010T220328Z.zip` |
 | SHA-256 (TIF) | `794b3814b63cdcd880395f5a632cfe0f3b28642b3fdb337ca0315a4722c0ccdd` |
-| SHA-256 (ZIP) | see `evidence/h93_build.json` `zip_sha256` |
+| SHA-256 (ZIP) | see `evidence/h94_build.json` `zip_sha256` |
 | name (≤140 chars) | `h88-cotrain-strict-AB-37654px` |
-| note (≤140 chars) | `H93 cotrain A-conf/B-abstain stratum, 3px spacing, 200m collar, zeros outside` |
+| note (≤140 chars) | `H94 cotrain A-conf/B-abstain stratum, 3px spacing, 200m collar, zeros outside` |
 | dots / values | 37,654 ones, all other pixels 0.0; no NaN; float32; EPSG:32611; 3730 × 3292 |
-| validator | `scripts/verify_h88_file.py` → `evidence/h93_validator.json`: **12 of 12 checks PASS** (single band, float32, CRS, shape, transform, all finite, footprint NaN-free, values in [0,1], binary, no mass outside footprint, count = budget, ZIP identical) |
+| validator | `scripts/verify_h88_file.py` → `evidence/h94_validator.json`: **12 of 12 checks PASS** (single band, float32, CRS, shape, transform, all finite, footprint NaN-free, values in [0,1], binary, no mass outside footprint, count = budget, ZIP identical) |
 | spacing | placed by `gems52.nodes.spacing_select` at 3 px; 0 fallback dots |
-| collar | 0 dots within 2 px (200 m) of the FULL catalogue; minimum distance to a mapped trace 223.6 m (`evidence/h93_union_check.json`, review table) |
+| collar | 0 dots within 2 px (200 m) of the FULL catalogue; minimum distance to a mapped trace 223.6 m (`evidence/h94_union_check.json`, review table) |
 
 ### 6a · Uniqueness and lane (protocol §1)
 
@@ -105,28 +105,28 @@ not a like-for-like threshold. The verdict does not depend on it: P is below ran
   top-37,654 dots of View A and of View B; 100 % lie in S_AB; Jaccard vs the union 0.0215. The output is not
   the union of the two views.
 
-### 6b · Final-dot lane result — DUPLICATE/STOP (`evidence/h93_uniqueness.json`)
+### 6b · Final-dot lane result — DUPLICATE/STOP (`evidence/h94_uniqueness.json`)
 
 * Decoded-pixel uniqueness is **clean**: 0 identical priors, maximum Jaccard **0.128193** (against the H87 file), 562 priors after
-  byte deduplication. The H93 file is not a copy of anything in the registry.
-* The **dot-proximity** rule fails. The H93 dots are within 3 px of the H87 raster's dots for **97.46 %** of their positions
+  byte deduplication. The H94 file is not a copy of anything in the registry.
+* The **dot-proximity** rule fails. The H94 dots are within 3 px of the H87 raster's dots for **97.46 %** of their positions
   (`lane_policy_dots.policy.max_near_3px_fraction` = 0.974637). Seven further informative census rasters exceed the 70 %
   limit (`informative_near_offenders_over_70pct`). The literal rule, which also counts 14 universal-coverage probes, returns
   DUPLICATE/STOP as well (`literal.verdict`).
-* Measured: H87 and H93 both place dots with `nodes.spacing_select` at 3 px and the same budget (37,654)
+* Measured: H87 and H94 both place dots with `nodes.spacing_select` at 3 px and the same budget (37,654)
   (`scripts/build_h87_cotrain_wavelength.py` l.357; `scripts/build_h88_cotrain_strict.py` l.108). They are the same placement
   family. **Inference, not measured this round:** both fields rank View A highly, which is the likely source of the coincidence.
-  The H93 placement ablation (spaced vs clumped on H93's own field) was **not run** this round. The H85 instrument ablation is
+  The H94 placement ablation (spaced vs clumped on H94's own field) was **not run** this round. The H85 instrument ablation is
   in `knowledge/78` §2 (0.072384 spaced vs 0.017201 clumped).
 * **Protocol §1 says: log the drift as a duplicate and stop.** The lane was not retuned to clear the gate. A quota or
   alternative placement would be a new experiment with its own pre-registration, and the holdout is negative regardless.
 
 ## 7 · A-only geological reasoning (required by the brief, with its limits)
 
-`docs/downloads/h93-a-only-reasoning.csv`: **1,352 clusters** (dots dilated 3 px, 8-connected). Each row has measured ranks
+`docs/downloads/h94-a-only-reasoning.csv`: **1,352 clusters** (dots dilated 3 px, 8-connected). Each row has measured ranks
 (View A, View B, and the gravity / magnetic / strain group ranks), distance to the nearest mapped trace, distance to the
 nearest GDR well or spring, median raw depth to basement, a dominant-channel mechanism, and a named non-fault mimic.
-Dominant channel counts (after the View A band fix, from `evidence/h93_review_tables.log`): gravity 370, magnetic 460, strain 522. Every row is marked **UNREVIEWED**. The mechanism text is
+Dominant channel counts (after the View A band fix, from `evidence/h94_review_tables.log`): gravity 370, magnetic 460, strain 522. Every row is marked **UNREVIEWED**. The mechanism text is
 a template chosen from the dominant channel. It is not a per-site geological finding and must not be reported as one.
 Per-dot prose was not produced (37,654 dots); cluster-level review is the honest unit.
 
@@ -134,23 +134,23 @@ Per-dot prose was not produced (37,654 dots); cluster-level review is the honest
 
 1. One holdout experiment; the verdict is measured, not projected. No organiser receipt exists for this file.
 2. The independence test is a proxy (unsupervised scores), not the fitted OOF test. View sufficiency was not refitted.
-3. The fold set differs from H82/H84 (60,894 vs 53,186). The bar is a different-instrument reference (IR-H93-002).
-4. Band 6 is radiometric by content but is excluded from View B (IR-H93-001). The lane brief asks for it.
+3. The fold set differs from H82/H84 (60,894 vs 53,186). The bar is a different-instrument reference (IR-H94-002).
+4. Band 6 is radiometric by content but is excluded from View B (IR-H94-001). The lane brief asks for it.
 5. The external GeoDAWN rasters are USGS/GeoDAWN products restored from owner mirrors under SHA-256 pins; they are not
    re-downloaded from usgs.gov (egress returns 000 from this sandbox).
 6. The A-only table is templated. It needs a geologist before any reviewer sees it as an interpretation.
 7. The 524-blob prior census was restored through the Git Data API and byte-verified (524/524 file SHA-256 match).
    The fetch log's `decoded_sha_ok=0` is a labelling artefact: the census column stores file bytes, not decoded
-   pixels, so decoded comparison is not expected to match (IR-H93-004).
+   pixels, so decoded comparison is not expected to match (IR-H94-004).
 
 ## 9 · Why 0.2778 scored highest, and what this round adds to that answer
 
 The full reading is in `knowledge/78` §1 and `knowledge/76`. **This round did not re-derive `knowledge/78` §1.4.** That arithmetic
 is repo-derived and labelled assumption-dependent there. The DTI formula it relies on is repeated from `knowledge/78` §1.2 and
 is **not verified** against an official source here: the reference-solution README (the only official page reachable this
-session) does not state it. The board attribution of 0.2778 to `h33-2-b2` is owner-reported (IR-H93-006).
+session) does not state it. The board attribution of 0.2778 to `h33-2-b2` is owner-reported (IR-H94-006).
 
-What H93 adds: a 3-px thinned lattice is necessary but not sufficient. The H93 field is below random on its own holdout, and
+What H94 adds: a 3-px thinned lattice is necessary but not sufficient. The H94 field is below random on its own holdout, and
 its placement is the same family as H87 (97.46 % of dots within 3 px of H87's dots). Placement alone does not rescue a field
 that the holdout already scores below random (`knowledge/78` §2 shows that, for one field on one instrument, spacing moves the
 holdout from 0.017201 (clumped top-k) to 0.072384 (spaced).)

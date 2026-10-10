@@ -1,14 +1,14 @@
 # GEMSDOE52 — Co-Training Research for the DOE GEMS Prize
 
 **Competition:** [DOE GEMS Prize (DrivenData #306)](https://www.drivendata.org/competitions/306/competition-doe-gems/)
-**Branch:** `arena/411239c1-gemsdoe52` (fixed for this session; the older header said `arena/99f480b9-gemsdoe52`, see IR-H93-005)
-**Current status (2026-10-10, H93):** **download yes (audit only) · submit NO.** Holdout NEGATIVE; final-dot lane DUPLICATE/STOP.
+**Branch:** `arena/411239c1-gemsdoe52` (fixed for this session; the older header said `arena/99f480b9-gemsdoe52`, see IR-H94-005)
+**Current status (2026-10-10, H94):** **download yes (audit only) · submit NO.** Holdout NEGATIVE; final-dot lane DUPLICATE/STOP.
 
 ➡️ **Start here:** [current status page](https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/docs/index.html) (GitHub Pages: `docs/index.html`) · [executive summary and submission guide](docs/executive-summary.html)
 
 ---
 
-## Status block: H93 (2026-10-10)
+## Status block: H94 (2026-10-10)
 
 | item | value | evidence class |
 |---|---|---|
@@ -24,11 +24,11 @@
 | Submit | **NO** | — |
 | Slots used / experiments | 0 / 1 of 3 | — |
 
-Full results: [`knowledge/81`](knowledge/91_h93_results_and_limits.md). Ranked next hypotheses: [`knowledge/82`](knowledge/92_h93_hypotheses_ranked.md). Run card: [`evidence/h93_run_card.json`](evidence/h93_run_card.json). Irregularities: [`registry/irregularities.json`](registry/irregularities.json) (IR-H93-001 to IR-H93-008).
+Full results: [`knowledge/81`](knowledge/91_h93_results_and_limits.md). Ranked next hypotheses: [`knowledge/82`](knowledge/92_h93_hypotheses_ranked.md). Run card: [`evidence/h93_run_card.json`](evidence/h93_run_card.json). Irregularities: [`registry/irregularities.json`](registry/irregularities.json) (IR-H94-001 to IR-H94-008).
 
 ### Archived
 
-* **H87** (`docs/downloads/gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.tif`, SHA-256 `a861069b8c780738b83245c1f736313d043989ca33554377f6dffb0465d8e9c3`): **DO NOT SUBMIT.** Holdout 0.056889 [0.043563, 0.071325], below random. The H87 page said PROMOTE before the holdout was run; it is archived as `docs/archive-h87-index.html` with a banner (IR-H93-003).
+* **H87** (`docs/downloads/gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.tif`, SHA-256 `a861069b8c780738b83245c1f736313d043989ca33554377f6dffb0465d8e9c3`): **DO NOT SUBMIT.** Holdout 0.056889 [0.043563, 0.071325], below random. The H87 page said PROMOTE before the holdout was run; it is archived as `docs/archive-h87-index.html` with a banner (IR-H94-003).
 * **H55-1 (paired DEM shoulders):** no H55-1 TIFF was built or promoted; `knowledge/11` states that no H55 submission TIFF is built by this track (`evidence/h55_paired_shoulders_holdout.json`).
 
 ---
@@ -36,7 +36,7 @@ Full results: [`knowledge/81`](knowledge/91_h93_results_and_limits.md). Ranked n
 ## Project structure (short)
 
 * `docs/`: GitHub Pages site (`index.html` status, `executive-summary.html` submission guide, `h93.html`, archives, `downloads/`).
-* `knowledge/`: numbered notes. `80` (H93 protocol, frozen), `81` (H93 results), `82` (ranked hypotheses). `26_current_user_brief.md` holds the verbatim standing brief below.
+* `knowledge/`: numbered notes. `80` (H94 protocol, frozen), `81` (H94 results), `82` (ranked hypotheses). `26_current_user_brief.md` holds the verbatim standing brief below.
 * `registry/`: preregistrations, leaderboard snapshot, `irregularities.json`.
 * `evidence/`: receipts (holdout, build, validator, uniqueness, run card).
 * `scripts/`: runners, builders, validators, `check_site.py`, `write_h88_page.py`.
@@ -52,17 +52,17 @@ Full results: [`knowledge/81`](knowledge/91_h93_results_and_limits.md). Ranked n
 
 ## Limitations
 
-* Every score here is a repository measurement (HOLDOUT-DTI). No organiser score exists for H93.
-* The H93 placement ablation was not run this round.
+* Every score here is a repository measurement (HOLDOUT-DTI). No organiser score exists for H94.
+* The H94 placement ablation was not run this round.
 * Official hosts are not reachable from this sandbox. Links are unverified until reviewers open them.
-* Band 6 is tagged magnetic (`tc`) but is radiometric by content, and it carries a nodata sentinel of −3.4028e38 on 7.1 M cells (IR-H93-001).
+* Band 6 is tagged magnetic (`tc`) but is radiometric by content, and it carries a nodata sentinel of −3.4028e38 on 7.1 M cells (IR-H94-001).
 
 ## Next steps
 
-1. Pre-register and run **H89-W** (multi-scale band-pass of the reduced-to-pole magnetic field; `knowledge/82`) on the H93 holdout, with single-view and random controls, before any slot is considered.
+1. Pre-register and run **H89-W** (multi-scale band-pass of the reduced-to-pole magnetic field; `knowledge/82`) on the H94 holdout, with single-view and random controls, before any slot is considered.
 2. Repair View B so it contains the radiometric band (H89-B). This needs a protocol amendment.
 3. Obtain GDR 1391 and any free MT survey, pinned by SHA-256, before H89-G or H89-R.
-4. Resolve IR-H93-002 (which fold set the 0.192829 bar uses).
+4. Resolve IR-H94-002 (which fold set the 0.192829 bar uses).
 5. Re-check the verbatim brief against today's wording (see the note below).
 
 ---

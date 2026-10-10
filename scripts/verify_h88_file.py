@@ -6,7 +6,7 @@ Checks (each is a printed boolean, and the run exits 1 if any fails):
   sample's; no NaN inside the organiser footprint; every value finite and in [0, 1]; no positive mass outside
   the footprint; positive count equals the 37,654 budget; the ZIP holds exactly that one TIFF with identical bytes.
 
-Writes evidence/h93_validator.json.  Usage:  python scripts/verify_h88_file.py <tif> <zip>
+Writes evidence/h94_validator.json.  Usage:  python scripts/verify_h88_file.py <tif> <zip>
 """
 from __future__ import annotations
 
@@ -56,7 +56,7 @@ def main(tif_arg: str, zip_arg: str) -> int:
         footprint_px=int(sample_footprint.sum()), checks=checks, all_pass=all(checks.values()),
         evidence_class="local format validation; not organiser acceptance",
     )
-    (ROOT / "evidence" / "h93_validator.json").write_text(json.dumps(result, indent=2) + "\n")
+    (ROOT / "evidence" / "h94_validator.json").write_text(json.dumps(result, indent=2) + "\n")
     for k, v in checks.items():
         print(f"{'PASS' if v else 'FAIL'}  {k}")
     print(f"positives={positives} min={result['min']} max={result['max']} sha256={result['file_sha256']}")

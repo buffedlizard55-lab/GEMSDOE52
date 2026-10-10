@@ -1,9 +1,9 @@
-# 82 · Candidate hypotheses after H93, ranked (written before any new fit)
+# 82 · Candidate hypotheses after H94, ranked (written before any new fit)
 
 Scope: the brief asks for 3–5 candidate geological hypotheses **not yet tried**, each naming the layers, the physical signature,
 why it should catch a fault missing from the USGS/INGENIOUS catalogue, how it differs from what the repository already does,
 ranked by expected DTI improvement and implementation cost. The top candidate must be validated on the holdout before any
-slot is considered. Only H93-P has been validated so far (`knowledge/81`, NEGATIVE).
+slot is considered. Only H94-P has been validated so far (`knowledge/81`, NEGATIVE).
 
 **Method of "not tried".** Repository grep on `src/` and `scripts/` (this session). Counts are files that contain the term,
 so they are an upper bound on use, not a measure of effect. "Expected DTI" is an ordinal prior, **not a projection**
@@ -45,7 +45,7 @@ so they are an upper bound on use, not a measure of effect. "Expected DTI" is an
   holdout-random level in this repository.
 * **Implementation cost:** medium (about 1 h): a fixed scale grid, a wavelet modulus, ridge extraction, one holdout run.
 * **Validation status:** **not run.** The next experiment, pre-registered with a hash before any fit, with single-view
-  and random controls on the H93 instrument.
+  and random controls on the H94 instrument.
 
 ### 2 · H89-Θ — theta map (normalised total horizontal derivative of tilt) of band 2
 
@@ -63,8 +63,8 @@ so they are an upper bound on use, not a measure of effect. "Expected DTI" is an
 
 * **Layer(s):** band 6 `tc` as tagged, but radiometric by content. Measured in `knowledge/81` §5: Pearson 0.99569 and Spearman
   0.99912 with GeoDAWN `TC`, on sentinel-free cells.
-* **Why this matters:** the brief lists "radiometric bands present in training_features.tif" as part of View B. H93 left band 6
-  out (IR-H93-001). H61 already isolated band 6 in View B, so this is a **repair, not a new signature**.
+* **Why this matters:** the brief lists "radiometric bands present in training_features.tif" as part of View B. H94 left band 6
+  out (IR-H94-001). H61 already isolated band 6 in View B, so this is a **repair, not a new signature**.
 * **Expected DTI improvement:** not a discovery claim. **Cost:** trivial. **Validation status:** not run; to be pre-registered
   as a protocol amendment if it is ever used.
 
@@ -89,7 +89,7 @@ so they are an upper bound on use, not a measure of effect. "Expected DTI" is an
 
 ## What this round did and did not establish
 
-* Validated: H93-P, the top in-lane candidate (co-training, pre-registered). **NEGATIVE**, `knowledge/81`.
+* Validated: H94-P, the top in-lane candidate (co-training, pre-registered). **NEGATIVE**, `knowledge/81`.
 * Not validated: H89-W (top untried transform), H89-Θ, H89-B, H89-G, H89-R. No file is produced for any of them.
 * Not checked from a source: the Wijns et al. (2005) theta-map normalisation, and the Blum & Mitchell DOI. Neither could be
   resolved from this sandbox (`doi.org` and `usgs.gov` are not on the allowlist). Both are marked as such.

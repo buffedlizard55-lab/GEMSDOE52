@@ -1,6 +1,6 @@
 {
   "round": "H88",
-  "document": "knowledge/90_h93_protocol_frozen_bytes_from_h88.md",
+  "document": "knowledge/90_h94_protocol_frozen_bytes_from_h88.md",
   "sha256": "50db10583392ebb21a024d53b19c29f1f7ae39fe5521abee7148e137b2d9f0f8",
   "frozen_before": "scripts/run_h88_holdout.py first execution",
   "primary_arm": "P_strict_cotrain",
