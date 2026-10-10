@@ -118,6 +118,23 @@ are in the raster because the 3 px lattice has to be filled to the {int(sub['pla
 not because either view selected them. That is a measured result of this round and it is why the
 verdict is **{card['verdict']}** and why no slot was spent.
 
+## Rounds that landed in parallel
+
+More than one session works this repository. Two other rounds merged to `main` while H83 was being
+measured; **neither spent a submission slot**.
+
+- **H84 — harmonic variogram-ellipse anisotropy**: also NEGATIVE, research artefact only.
+  [Result](docs/h84.html) · [How to submit](docs/h84-executive-summary.html) ·
+  receipt `evidence/h84_run_card.json` · write-up `knowledge/76_h84_results_and_limits.md`.
+- **H83 — multi-band structural concordance + geothermal proximity**: a *different* round that
+  also used the label H83, with no holdout validation run
+  (`submission/gems52-h83-structural-concordance-37654px-20261010T200049Z.json`,
+  `submission_slots_used: 0`). [Summary](docs/h83-parallel-executive-summary.html).
+
+Where the three rounds share a site filename (the "current round" page, the `h83-candidate`
+download), this README and `evidence/h83_run_card.json` are **this** round's. The other rounds'
+rasters remain in `submission/` and in git history.
+
 ## What is new this round
 
 Every instrument this repository had — `gems52-pooled-hide-v1` — withholds **catalogue** faults and

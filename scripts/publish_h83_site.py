@@ -73,6 +73,8 @@ NAV = ('<a href="index.html">Current round</a>'
        '<a href="validator.html">Check a file</a>'
        '<a href="h83-hypotheses.html">Hypotheses</a>'
        '<a href="h83-sources.html">Sources</a>'
+       '<a href="h84.html">H84 (parallel)</a>'
+       '<a href="h83-parallel-executive-summary.html">H83 structcon (parallel)</a>'
        '<a href="downloads/index.html">Archive</a>')
 
 
@@ -330,7 +332,25 @@ sentence for the A-confident/B-abstaining cells saying what a buried fault would
 what else could produce the same numbers.</p></section>
 <hr class="divider">
 
-<details class="archive"><summary><b>Previous rounds (verbatim archive)</b></summary>
+<details class="archive"><summary><b><section><h2>Rounds that landed in parallel on this repository</h2>
+<p>This repository is worked by more than one session at a time, and two other rounds were merged to
+<code>main</code> while H83 was being measured. Neither spent a submission slot. Both are linked here
+so nothing is hidden by this page being the "current round":</p>
+<ul>
+<li><a href="h84.html">H84 — harmonic variogram-ellipse anisotropy</a> (also NEGATIVE, research
+artefact only). Its own receipt is <code>evidence/h84_run_card.json</code> and its write-up is
+<code>knowledge/76_h84_results_and_limits.md</code>.</li>
+<li><a href="h83-parallel-executive-summary.html">H83 — multi-band structural concordance +
+geothermal proximity</a>, a <i>different</i> round that also used the label H83. It has no holdout
+validation run; its receipt is under <code>submission/gems52-h83-structural-concordance-37654px-20261010T200049Z.json</code>
+and it records <code>submission_slots_used: 0</code>.</li>
+</ul>
+<p class="small">The three rounds are independent. Where they share a filename on the site (the
+"current round" page, the <code>h83-candidate</code> download), this page and its receipts are this
+round's; the other rounds' rasters remain in <code>submission/</code> and in git history.</p></section>
+<hr class="divider">
+
+Previous rounds (verbatim archive)</b></summary>
 {legacy}
 </details>
 """

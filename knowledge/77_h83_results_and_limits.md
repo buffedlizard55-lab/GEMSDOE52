@@ -99,6 +99,24 @@ contains any lattice raster, because a 3 px lattice is 3 px from itself. This is
 `registry/irregularities.json` as **IR-H83-003** and must be raised with the organisers; the
 restricted (scored-only) PASS is reported and **never** waives the literal rule.
 
+## 4a. The board moved while this round was being measured
+
+`registry/leaderboard_snapshot_2026-10-10.json` (fetched by another session on 2026-10-10, from the
+public leaderboard page) changes the target this repository has been aiming at:
+
+- #1 `xiaofanhu` **0.3774** (unchanged).
+- New #2 `JerryDataWorks` **0.3418**.
+- #3 bar is **0.3361**.
+- `DARD` at **0.3195** is now **#8**, not the "highest score right now" the brief quotes.
+- `extradr19` at **0.2778**, last activity ~2026-10-04, is *consistent with* (not proof of) the
+  owner's account and the `h33-2-b2` submission.
+
+Consequence for `knowledge/76`: that note derives the credit density needed for 0.3195. The
+arithmetic is unaffected, but 0.3195 is no longer a top-3 score — it is #8. **To enter the top 3 the
+bar is 0.3361**, and 0.3195 is a beat-the-champion bar, not a podium bar. Any future round that
+quotes 0.3195 must say which of the two it means. All of these are PUBLIC-BOARD figures:
+organiser-published and team-level, **not** ORGANIZER-CONFIRMED for any file in this repository.
+
 ## 5. Irregularities logged this round
 
 `IR-H83-001` … `IR-H83-005` in `registry/irregularities.json` (223 entries total).
