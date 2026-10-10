@@ -238,3 +238,247 @@ def emit_nodes(score: np.ndarray, allowed: np.ndarray, k: int, min_px: float = 3
                log=None) -> np.ndarray:
     """Binary {0,1} node emission: greedy top-k under a minimum separation (see :func:`spacing_select`)."""
     return spacing_select(score, allowed, k, min_px=min_px, log=log).astype(np.float32)
+
+
+# ---------------------------------------------------------------------------------------------
+# H87: emission placed by the metric's OWN marginal acceptance rule, with no hand-chosen budget.
+# ---------------------------------------------------------------------------------------------
+def kernel7() -> np.ndarray:
+    """7x7 array ``W`` with ``W[3+dy, 3+dx] = k(|offset|)``: the metric's exact lattice weights."""
+    W = np.zeros((7, 7), np.float64)
+    for dy, dx, w in OFFSET_WEIGHTS:
+        W[3 + dy, 3 + dx] = w
+    return W
+
+
+def cover_of(dots: np.ndarray) -> np.ndarray:
+    """C(x) = max over chosen dots of k(d(x,p)), the cover field of an emitted set (exact, by EDT)."""
+    d = ndimage.distance_transform_edt(~dots.astype(bool))
+    return np.maximum(1.0 - d / R_PX, 0.0)
+
+
+def hexagonal_tiebreak(shape: tuple[int, int], spacing_px: float = 6.0) -> np.ndarray:
+    """Distance to the nearest node of a hexagonal (triangular) lattice, for gain tie-breaking.
+
+    Measured reason this exists: the organiser-side calibration raster
+    ``data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif`` (206,895 dots, nearest-
+    neighbour median 5.00 px, 99.85 % of the footprint inside 300 m of a dot, mean cover 0.3748,
+    owner-reported board score 0.0904) is a *staggered* packing.  A square packing at the same
+    nearest-neighbour distance covers strictly less per dot: its cell centre sits at 0.707*a* from
+    the four corners, so a 5 px square lattice leaves ~5 % of the area outside the 300 m kernel and
+    averages ~0.32 cover, where the staggered packing reaches 0.3748.  Greedy selection over a
+    uniform density breaks ties by raster index, which produces rows -- a square packing -- and
+    therefore loses ~8 % of the achievable DTI.  Adding ``-eps * d_hex`` to the gain field resolves
+    ties toward the staggered packing without reordering genuinely different gains.
+    """
+    h, w = shape
+    a = max(1.0, float(spacing_px))
+    row_step = max(1, int(round(a * np.sqrt(3.0) / 2.0)))
+    lat = np.zeros(shape, bool)
+    r = 0
+    y = 0
+    while y < h:
+        offset = (r % 2) * int(round(a / 2.0))
+        x = offset % max(1, int(round(a)))
+        while x < w:
+            lat[y, x] = True
+            x += int(round(a))
+        y += row_step
+        r += 1
+    if not lat.any():
+        return np.zeros(shape, np.float64)
+    return ndimage.distance_transform_edt(~lat).astype(np.float64)
+
+
+def marginal_gain_field(g: np.ndarray, cover: np.ndarray) -> np.ndarray:
+    """Marginal credit of adding one dot at every pixel, exactly, under the current cover.
+
+    ``gain(p) = sum_x g(x) * max(0, k(d(x,p)) - C(x))``.  Only the 29 lattice offsets inside the
+    300 m disc can contribute, so this is 29 shifted elementwise products -- no approximation and
+    no separable shortcut.  ``g`` must carry truth MASS (sum(g) = |G| in truth-pixel units), not a
+    normalised density, because the acceptance bar ``alpha*DTI`` is scale-dependent.
+    """
+    W = kernel7()
+    out = np.zeros(g.shape, np.float64)
+    for dy, dx, w in OFFSET_WEIGHTS:
+        if w <= 0.0:
+            continue
+        # room(p) = max(0, w - C(p+o)) weighted by g(p+o); shift g*room back by -o
+        room = np.maximum(0.0, w - cover)
+        term = g * room
+        out += np.roll(np.roll(term, dy, axis=0), dx, axis=1)
+    # zero the wrap-around border that np.roll introduces
+    out[:3, :] = out[-3:, :] = 0.0
+    out[:, :3] = out[:, -3:] = 0.0
+    del W
+    return out
+
+
+def marginal_greedy(g: np.ndarray, allowed: np.ndarray, *, max_dots: int = 400_000,
+                    min_sep_px: float = 3.0, alpha: float = 0.2, beta: float = 0.8,
+                    round_cap: int = 40_000, max_cycles: int = 60, hexagonal_packing: bool = True,
+                    tiebreak_eps: float = 1e-6, mass_outside_allowed: float = 0.0,
+                    log=None) -> dict:
+    """Greedy emission that stops where the metric stops paying: add a dot iff its marginal credit
+    ``c`` satisfies ``c > alpha * DTI`` (``gems52.metric`` docstring part (ii) with the identity
+    ``DTI = T / (alpha*S + beta*|G|)``).  The budget is *derived*, never chosen by hand.
+
+    ``T(X) = sum_x g(x) max_{p in X} k(d(x,p))`` is monotone submodular, so greedy is the standard
+    near-optimal rule.  Exactness of the marginal accounting is the whole difficulty: a gain field
+    computed once per round is stale for every dot added later *in that round*, and a round that
+    adds a maximal 3-px-separated set at a stale zero cover over-fills by ~2.6x (measured: the
+    first version of this function stopped at a 3.07 px lattice with DTI 0.0643 where the metric's
+    own optimum for the same uniform density is a ~5 px lattice at DTI 0.0904 -- the spacing of the
+    pinned organiser-side ``r13-lattice-s5`` calibration raster, which scored 0.0904 on the board).
+
+    The fix is a multi-scale separation schedule.  Two dots at least ``2*R_PX = 6`` px apart have
+    *disjoint* kernel discs, so their marginal gains are exactly additive and the within-round
+    prefix test ``gain_(k) > alpha*DTI_k`` is exact rather than stale.  The schedule therefore runs
+    wide rounds (6 px) first and then tight rounds (``min_sep_px``), cycling until a full cycle adds
+    nothing.  ``T``, ``DTI`` and the cover are recomputed exactly from the emitted set after every
+    round and re-derived from the final mask at the end, so no reported number is a batch
+    approximation -- only the insertion *order* inside a tight round is.
+
+    ``g`` must carry truth MASS (``sum(g) = |G|`` in truth-pixel units), not a normalised density:
+    the bar ``alpha*DTI`` is scale-dependent through DTI's denominator.
+    """
+    g = np.asarray(g, np.float64)
+    allowed = np.asarray(allowed, bool)
+    if g.shape != allowed.shape:
+        raise ValueError("g and allowed must share a shape")
+    gA = np.where(allowed, g, 0.0)
+    if mass_outside_allowed < 0:
+        raise ValueError("mass_outside_allowed cannot be negative")
+    # Truth mass that exists but cannot be emitted (e.g. density fitted onto catalogue pixels while
+    # the emission domain is the off-catalogue collar).  It contributes nothing to T but it does
+    # contribute to FNw, so it belongs in DTI's denominator and therefore in the acceptance bar.
+    # Leaving it out would silently lower the bar and over-emit.
+    Gtot = float(gA.sum()) + float(mass_outside_allowed)
+    if Gtot <= 0:
+        raise ValueError("no truth mass at all")
+    if float(gA.sum()) <= 0:
+        raise ValueError("no allowed pixel carries truth mass")
+    # 6 px = disjoint kernel discs (gains exactly additive); 5 px and min_sep are tighter infills
+    # whose within-round prefix test is mildly optimistic, which is why every round is rolled back
+    # if the EXACT recomputed DTI fell.  The objective is therefore monotone by construction.
+    schedule = sorted({max(float(2 * R_PX), float(min_sep_px)), 5.0, float(min_sep_px)}, reverse=True)
+    schedule = [s for s in schedule if s >= float(min_sep_px)]
+    # The keep-out ring is the HARD separation constraint (min_sep_px), identical for every round.
+    # A per-round keep-out sized to the round's own wider separation was the first version here and
+    # it silently blocked all infill: after a 6 px round an 11x11 keep-out left no candidate at all,
+    # so the schedule degenerated to one round.
+    r = int(np.ceil(min_sep_px))
+    yy, xx = np.mgrid[-r:r + 1, -r:r + 1]
+    keepout = (yy * yy + xx * xx) <= float(min_sep_px) ** 2 + 1e-9   # EUCLIDEAN disc, not a square
+    dots = np.zeros(g.shape, bool)
+    C = np.zeros(g.shape, np.float64)
+    T = 0.0
+    added = 0
+    history = []
+    stop = "max_cycles"
+    rnd = 0
+    for cycle in range(max_cycles):
+        added_this_cycle = 0
+        for si, sep in enumerate(schedule):
+            gain = marginal_gain_field(gA, C)
+            if hexagonal_packing and gain.max() > 0:
+                # ties only: eps * max_gain * d_hex is far below any real gain difference
+                if "hex_tb" not in locals():
+                    hex_tb = hexagonal_tiebreak(g.shape, spacing_px=schedule[0])
+                gain = gain - tiebreak_eps * float(gain.max()) * hex_tb
+            dti = T / (alpha * added + beta * Gtot) if added else 0.0
+            bar = alpha * dti
+            cand = (gain > bar) & allowed & ~dots
+            if dots.any():
+                cand &= ~ndimage.binary_dilation(dots, structure=keepout)
+            if not cand.any():
+                history.append(dict(round=rnd, sep_px=sep, new_dots=0, added_total=added,
+                                    T=round(T, 4), dti=round(dti, 6), bar=round(bar, 8),
+                                    best_gain=round(float(gain.max()), 8), note="no candidate"))
+                rnd += 1
+                continue
+            k_round = int(min(round_cap, max_dots - added))
+            if k_round <= 0:
+                stop = "max_dots"
+                break
+            peaks = spacing_select(gain, cand, k_round, min_px=sep)
+            idx = np.flatnonzero(peaks.ravel())
+            if idx.size == 0:
+                history.append(dict(round=rnd, sep_px=sep, new_dots=0, added_total=added,
+                                    T=round(T, 4), dti=round(dti, 6), bar=round(bar, 8),
+                                    best_gain=round(float(gain.max()), 8), note="no separated peak"))
+                rnd += 1
+                continue
+            order = idx[np.argsort(-gain.ravel()[idx])]
+            gains = gain.ravel()[order]
+            # exact prefix test: at 6 px separation the gains are additive, so DTI_k is exact
+            cumT = T + np.cumsum(gains)
+            kk = np.arange(1, order.size + 1, dtype=np.float64)
+            dti_k = cumT / (alpha * (added + kk) + beta * Gtot)
+            ok = gains > alpha * dti_k
+            if not ok[0]:
+                history.append(dict(round=rnd, sep_px=sep, new_dots=0, added_total=added,
+                                    T=round(T, 4), dti=round(dti, 6), bar=round(bar, 8),
+                                    best_gain=round(float(gains[0]), 8),
+                                    note="best marginal credit did not clear alpha*DTI"))
+                rnd += 1
+                continue
+            n_take = int(np.argmin(ok)) if (~ok).any() else int(ok.size)
+            sel = order[:n_take]
+            batch = np.zeros(g.shape, bool)
+            batch.ravel()[sel] = True
+            prev = (dots.copy(), C.copy(), T, added)
+            dots |= batch
+            C = np.maximum(C, _stamp_cover(batch))
+            added += n_take
+            T = float((gA * C).sum())                     # exact, from the emitted set
+            dti_new = T / (alpha * added + beta * Gtot)
+            dti_old = prev[2] / (alpha * prev[3] + beta * Gtot) if prev[3] else 0.0
+            if dti_new < dti_old:                          # tighter round over-filled: revert
+                dots, C, T, added = prev
+                history.append(dict(round=rnd, sep_px=sep, new_dots=0, added_total=added,
+                                    T=round(T, 4), dti=round(dti_old, 6),
+                                    note="rolled back: exact DTI fell from "
+                                         f"{dti_old:.6f} to {dti_new:.6f}"))
+                rnd += 1
+                continue
+            dti = dti_new
+            added_this_cycle += n_take
+            history.append(dict(round=rnd, sep_px=sep, new_dots=n_take, added_total=added,
+                                T=round(T, 4), dti=round(dti, 6), bar=round(alpha * dti, 8),
+                                best_gain=round(float(gains[0]), 8),
+                                worst_taken_gain=round(float(gains[n_take - 1]), 8)))
+            if log:
+                log(f"  marginal_greedy r{rnd} sep={sep}: +{n_take} -> {added} dots, "
+                    f"T={T:.1f}, DTI={dti:.5f}, bar={alpha * dti:.6f}")
+            rnd += 1
+            if added >= max_dots:
+                stop = "max_dots"
+                break
+        if stop == "max_dots":
+            break
+        if added_this_cycle == 0:
+            stop = "marginal_rule"
+            break
+    C = cover_of(dots)                                    # exact cover re-derived from the mask
+    T = float((gA * C).sum())
+    dti = T / (alpha * added + beta * Gtot) if added else 0.0
+    return dict(dots=dots, n_added=int(added), T=T, G=Gtot, predicted_dti=float(dti),
+                stop_reason=stop, rounds=history, min_sep_px=float(min_sep_px),
+                separation_schedule_px=schedule, kernel_radius_px=R_PX,
+                mass_outside_allowed=float(mass_outside_allowed),
+                rule="add a dot iff its marginal credit exceeds alpha*DTI; budget is derived",
+                evidence_class="PREDICTED-BOARD under the supplied density g (a model projection, "
+                               "never a score)")
+
+
+def _stamp_cover(peaks: np.ndarray) -> np.ndarray:
+    """Cover field contributed by a batch of new dots, built from the exact 29-offset kernel."""
+    out = np.zeros(peaks.shape, np.float64)
+    p = peaks.astype(np.float64)
+    for dy, dx, w in OFFSET_WEIGHTS:
+        if w <= 0.0:
+            continue
+        out = np.maximum(out, np.roll(np.roll(p, dy, axis=0), dx, axis=1) * w)
+    out[:3, :] = np.maximum(out[:3, :], 0.0)
+    return out

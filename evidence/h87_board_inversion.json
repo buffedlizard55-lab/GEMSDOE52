@@ -1,0 +1,489 @@
+{
+ "evidence_class": "MEASURED on SHA-256-verified restored bytes + BOARD-CALIBRATED on owner-reported public-board scores (NOT organiser-confirmed)",
+ "metric_identity": "s = <g,M>/(0.2*S + 0.8*|G|); M = k(EDT) exactly; |B_j| = 1 so |G| = sum_j w_j",
+ "marginal_rule": "metric.py part (ii) with FPw = S - T for separated binary dots: adding a dot of marginal credit c improves DTI iff c > 0.2*DTI; greedy therefore self-terminates at the budget the metric wants",
+ "kernel_sum_over_29_offsets": 9.3803,
+ "footprint_px": 5167373,
+ "valid_px": 5164300,
+ "catalogue_px": 60988,
+ "bases_px": {
+  "U_uniform_offcat": 4722579,
+  "CAT_catalogue": 60988,
+  "RING_100_300m": 345336,
+  "SGMC_offcat": 62122,
+  "LIDAR_step_coh": 17679,
+  "LIDAR_ex_lapneg": 34581,
+  "RAD_K_high": 99612,
+  "RAD_ThK_low": 1172341,
+  "DIS_A_confident_B_abstains": 223600,
+  "DIS_B_confident_A_abstains": 218689,
+  "VIEWA_top": 90953,
+  "VIEWB_top": 97091,
+  "COVER_step_basement": 48721,
+  "GRAV_step": 45743,
+  "QFAULT_gdr_traces": 1499,
+  "THERMAL_springs": 563087
+ },
+ "files": {
+  "calib_gemsdoe9-PLACEHOLDER-2314b599": {
+   "dest": "data/scored/gemsdoe9-PLACEHOLDER-2314b599.tif",
+   "score": 0.0107,
+   "S_inside": 147684,
+   "S_all": 343816,
+   "M_mean_fp": 0.04757,
+   "M_std_fp": 0.19502,
+   "cover_frac": 0.06196,
+   "T_catalogue": 3579.9
+  },
+  "calib_13gems_20261001_r13-lattice-s5_v2_nan-ou": {
+   "dest": "data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+   "score": 0.0904,
+   "S_inside": 206895,
+   "S_all": 206895,
+   "M_mean_fp": 0.37481,
+   "M_std_fp": 0.23292,
+   "cover_frac": 0.99845,
+   "T_catalogue": 22820.3
+  },
+  "calib_gems10-h25-ctx-ridge-20260927T2329477041": {
+   "dest": "data/scored/gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif",
+   "score": 0.128,
+   "S_inside": 174232,
+   "S_all": 174232,
+   "M_mean_fp": 0.13087,
+   "M_std_fp": 0.2641,
+   "cover_frac": 0.24616,
+   "T_catalogue": 33416.4
+  },
+  "calib_8GEMSDOE_Hedge-v2_submission": {
+   "dest": "data/scored/8GEMSDOE_Hedge-v2_submission.tif",
+   "score": 0.1563,
+   "S_inside": 227507,
+   "S_all": 227507,
+   "M_mean_fp": 0.14055,
+   "M_std_fp": 0.27739,
+   "cover_frac": 0.26051,
+   "T_catalogue": 60988.0
+  },
+  "calib_gemsdoe-ens12-adopted-7f00890a": {
+   "dest": "data/scored/gemsdoe-ens12-adopted-7f00890a.tif",
+   "score": 0.1563,
+   "S_inside": 172974,
+   "S_all": 172974,
+   "M_mean_fp": 0.11524,
+   "M_std_fp": 0.25349,
+   "cover_frac": 0.22086,
+   "T_catalogue": 19131.4
+  },
+  "calib_gems10-h28-dotted-ridge-20260928T0202562": {
+   "dest": "data/scored/gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif",
+   "score": 0.1839,
+   "S_inside": 69281,
+   "S_all": 69281,
+   "M_mean_fp": 0.10912,
+   "M_std_fp": 0.22157,
+   "cover_frac": 0.25014,
+   "T_catalogue": 24371.5
+  },
+  "scored_h16_1": {
+   "dest": "data/scored/gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif",
+   "score": 0.1855,
+   "S_inside": 123939,
+   "S_all": 123939,
+   "M_mean_fp": 0.09444,
+   "M_std_fp": 0.22815,
+   "cover_frac": 0.19057,
+   "T_catalogue": 12336.0
+  },
+  "scored_h19_4": {
+   "dest": "data/scored/gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif",
+   "score": 0.1894,
+   "S_inside": 123779,
+   "S_all": 123779,
+   "M_mean_fp": 0.09254,
+   "M_std_fp": 0.22683,
+   "cover_frac": 0.18589,
+   "T_catalogue": 12373.3
+  },
+  "scored_h19_5": {
+   "dest": "data/scored/gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif",
+   "score": 0.1922,
+   "S_inside": 121131,
+   "S_all": 121131,
+   "M_mean_fp": 0.08939,
+   "M_std_fp": 0.22397,
+   "cover_frac": 0.179,
+   "T_catalogue": 12199.6
+  },
+  "scored_gems27_tgc_v2_d15": {
+   "dest": "data/scored/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
+   "score": 0.2449,
+   "S_inside": 61328,
+   "S_all": 61328,
+   "M_mean_fp": 0.07814,
+   "M_std_fp": 0.19996,
+   "cover_frac": 0.1709,
+   "T_catalogue": 10727.7
+  },
+  "scored_d15_scored": {
+   "dest": "data/scored/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+   "score": 0.2477,
+   "S_inside": 60069,
+   "S_all": 60069,
+   "M_mean_fp": 0.0763,
+   "M_std_fp": 0.19802,
+   "cover_frac": 0.16686,
+   "T_catalogue": 10633.4
+  },
+  "scored_d28_unscored": {
+   "dest": "data/scored/gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+   "score": 0.26,
+   "S_inside": 44090,
+   "S_all": 44090,
+   "M_mean_fp": 0.06788,
+   "M_std_fp": 0.18319,
+   "cover_frac": 0.15676,
+   "T_catalogue": 9498.8
+  },
+  "ref_h33_2_b2": {
+   "dest": "data/reference/h33-2-b2-zeros.tif",
+   "score": 0.2778,
+   "S_inside": 37654,
+   "S_all": 37654,
+   "M_mean_fp": 0.05862,
+   "M_std_fp": 0.17127,
+   "cover_frac": 0.13693,
+   "T_catalogue": 378.0
+  }
+ },
+ "extended13_omitted": {
+  "reason": "13-basis design + 13 leave-one-out family bases exceeded the 3.9 GB sandbox; the process was OOM-killed before persisting, so the fit set was reduced to primary8",
+  "bases": "U_uniform_offcat, CAT_catalogue, RING_100_300m, SGMC_offcat, LIDAR_step_coh, LIDAR_ex_lapneg, RAD_K_high, RAD_ThK_low, DIS_A_confident_B_abstains, DIS_B_confident_A_abstains, VIEWA_top, COVER_step_basement, GRAV_step + FAM",
+  "earlier_execution_log_line": "[22:36:28] extended13: G_fit=14333.8 LOO MAE=0.02007 rho=0.9436 weights={'CAT_catalogue': 4396.0, 'FAM_family_consensus': 9937.8}",
+  "log_copy": "work/h87/inversion_with_extended13.log (gitignored working copy)",
+  "reading": "identical to primary8: the thirteen extra bases buy nothing once the family consensus and the catalogue are in the model"
+ },
+ "fits": {
+  "primary8": {
+   "bases": [
+    "U_uniform_offcat",
+    "CAT_catalogue",
+    "RING_100_300m",
+    "SGMC_offcat",
+    "LIDAR_step_coh",
+    "RAD_K_high",
+    "DIS_A_confident_B_abstains",
+    "GRAV_step",
+    "FAM_family_consensus"
+   ],
+   "weights": {
+    "CAT_catalogue": 4396.0,
+    "FAM_family_consensus": 9937.8
+   },
+   "zero_weight": [
+    "U_uniform_offcat",
+    "RING_100_300m",
+    "SGMC_offcat",
+    "LIDAR_step_coh",
+    "RAD_K_high",
+    "DIS_A_confident_B_abstains",
+    "GRAV_step"
+   ],
+   "G_fit": 14333.8,
+   "in_sample": {
+    "max_abs": 0.05402,
+    "rows": [
+     {
+      "key": "calib_gemsdoe9-PLACEHOLDER-2314b599",
+      "observed": 0.0107,
+      "in_sample": 0.0183
+     },
+     {
+      "key": "calib_13gems_20261001_r13-lattice-s5_v2_nan-ou",
+      "observed": 0.0904,
+      "in_sample": 0.10161
+     },
+     {
+      "key": "calib_gems10-h25-ctx-ridge-20260927T2329477041",
+      "observed": 0.128,
+      "in_sample": 0.12553
+     },
+     {
+      "key": "calib_8GEMSDOE_Hedge-v2_submission",
+      "observed": 0.1563,
+      "in_sample": 0.13918
+     },
+     {
+      "key": "calib_gemsdoe-ens12-adopted-7f00890a",
+      "observed": 0.1563,
+      "in_sample": 0.10228
+     },
+     {
+      "key": "calib_gems10-h28-dotted-ridge-20260928T0202562",
+      "observed": 0.1839,
+      "in_sample": 0.17507
+     },
+     {
+      "key": "scored_h16_1",
+      "observed": 0.1855,
+      "in_sample": 0.18836
+     },
+     {
+      "key": "scored_h19_4",
+      "observed": 0.1894,
+      "in_sample": 0.19539
+     },
+     {
+      "key": "scored_h19_5",
+      "observed": 0.1922,
+      "in_sample": 0.19871
+     },
+     {
+      "key": "scored_gems27_tgc_v2_d15",
+      "observed": 0.2449,
+      "in_sample": 0.26135
+     },
+     {
+      "key": "scored_d15_scored",
+      "observed": 0.2477,
+      "in_sample": 0.26289
+     },
+     {
+      "key": "scored_d28_unscored",
+      "observed": 0.26,
+      "in_sample": 0.2734
+     },
+     {
+      "key": "ref_h33_2_b2",
+      "observed": 0.2778,
+      "in_sample": 0.2281
+     }
+    ]
+   },
+   "loo": {
+    "mae": 0.02007,
+    "max_abs": 0.07114,
+    "rmse": 0.02843,
+    "spearman": 0.9436,
+    "rows": [
+     {
+      "key": "calib_gemsdoe9-PLACEHOLDER-2314b599",
+      "observed": 0.0107,
+      "predicted": 0.01832,
+      "error": 0.00762,
+      "G": 14353.6
+     },
+     {
+      "key": "calib_13gems_20261001_r13-lattice-s5_v2_nan-ou",
+      "observed": 0.0904,
+      "predicted": 0.10247,
+      "error": 0.01207,
+      "G": 14489.7
+     },
+     {
+      "key": "calib_gems10-h25-ctx-ridge-20260927T2329477041",
+      "observed": 0.128,
+      "predicted": 0.12504,
+      "error": -0.00296,
+      "G": 14278.4
+     },
+     {
+      "key": "calib_8GEMSDOE_Hedge-v2_submission",
+      "observed": 0.1563,
+      "predicted": 0.12776,
+      "error": -0.02854,
+      "G": 13578.1
+     },
+     {
+      "key": "calib_gemsdoe-ens12-adopted-7f00890a",
+      "observed": 0.1563,
+      "predicted": 0.09949,
+      "error": -0.05681,
+      "G": 13799.0
+     },
+     {
+      "key": "calib_gems10-h28-dotted-ridge-20260928T0202562",
+      "observed": 0.1839,
+      "predicted": 0.1731,
+      "error": -0.0108,
+      "G": 14128.7
+     },
+     {
+      "key": "scored_h16_1",
+      "observed": 0.1855,
+      "predicted": 0.18872,
+      "error": 0.00322,
+      "G": 14368.0
+     },
+     {
+      "key": "scored_h19_4",
+      "observed": 0.1894,
+      "predicted": 0.19624,
+      "error": 0.00684,
+      "G": 14408.6
+     },
+     {
+      "key": "scored_h19_5",
+      "observed": 0.1922,
+      "predicted": 0.19965,
+      "error": 0.00745,
+      "G": 14415.0
+     },
+     {
+      "key": "scored_gems27_tgc_v2_d15",
+      "observed": 0.2449,
+      "predicted": 0.26445,
+      "error": 0.01955,
+      "G": 14500.9
+     },
+     {
+      "key": "scored_d15_scored",
+      "observed": 0.2477,
+      "predicted": 0.26575,
+      "error": 0.01805,
+      "G": 14482.8
+     },
+     {
+      "key": "scored_d28_unscored",
+      "observed": 0.26,
+      "predicted": 0.27586,
+      "error": 0.01586,
+      "G": 14416.0
+     },
+     {
+      "key": "ref_h33_2_b2",
+      "observed": 0.2778,
+      "predicted": 0.20666,
+      "error": -0.07114,
+      "G": 15084.1
+     }
+    ]
+   },
+   "ghat_file": "work/h87/ghat_primary8.npy",
+   "ghat_mass": 14333.8,
+   "ghat_sha256": "6a71086ae4c9660580c812482ff268be469543cd701b0e6710f0ecd462716707"
+  }
+ },
+ "shared_tool": {
+  "module": "src/gems52/nodes.py",
+  "functions": [
+   "marginal_greedy",
+   "marginal_gain_field",
+   "cover_of",
+   "kernel7",
+   "hexagonal_tiebreak",
+   "spacing_select"
+  ],
+  "note": "the metric's own marginal acceptance rule, added to the shared placement module and used here unchanged; no private fork"
+ },
+ "seconds": 152.7,
+ "uniform_control": {
+  "basis": "uniform density of the fitted total mass over allowed_ring",
+  "window": {
+   "rows": [
+    949,
+    1949
+   ],
+   "cols": [
+    961,
+    1961
+   ],
+   "allowed_px": 709005,
+   "rho_per_px": 0.002908940215,
+   "mass": 2062.5,
+   "equivalent_spacing_px": 5.373,
+   "mean_cover": 0.2278,
+   "cover_fraction": 0.5978
+  },
+  "G": 2062.5,
+  "G_source": "primary8 fit",
+  "dots": 24557,
+  "T": 656.6,
+  "predicted_dti": 0.10007,
+  "stop_reason": "marginal_rule",
+  "rounds": [
+   {
+    "round": 0,
+    "sep_px": 6.0,
+    "new_dots": 12020,
+    "added_total": 12020,
+    "T": 323.8787,
+    "dti": 0.079892,
+    "bar": 0.01597837,
+    "best_gain": 0.02728673,
+    "worst_taken_gain": 0.01600488
+   },
+   {
+    "round": 1,
+    "sep_px": 5.0,
+    "new_dots": 12428,
+    "added_total": 24448,
+    "T": 654.2877,
+    "dti": 0.100051,
+    "bar": 0.02001014,
+    "best_gain": 0.02728673,
+    "worst_taken_gain": 0.02002979
+   },
+   {
+    "round": 2,
+    "sep_px": 3.0,
+    "new_dots": 109,
+    "added_total": 24557,
+    "T": 656.6017,
+    "dti": 0.100071,
+    "bar": 0.02001419,
+    "best_gain": 0.02365824,
+    "worst_taken_gain": 0.0200298
+   },
+   {
+    "round": 3,
+    "sep_px": 6.0,
+    "new_dots": 0,
+    "added_total": 24557,
+    "T": 656.6017,
+    "dti": 0.100071,
+    "bar": 0.02001419,
+    "best_gain": 0.02171893,
+    "note": "no candidate"
+   },
+   {
+    "round": 4,
+    "sep_px": 5.0,
+    "new_dots": 0,
+    "added_total": 24557,
+    "T": 656.6017,
+    "dti": 0.100071,
+    "bar": 0.02001419,
+    "best_gain": 0.02171893,
+    "note": "no candidate"
+   },
+   {
+    "round": 5,
+    "sep_px": 3.0,
+    "new_dots": 0,
+    "added_total": 24557,
+    "T": 656.6017,
+    "dti": 0.100071,
+    "bar": 0.02001419,
+    "best_gain": 0.02171893,
+    "note": "no candidate"
+   }
+  ],
+  "separation_schedule_px": [
+   6.0,
+   5.0,
+   3.0
+  ],
+  "evidence_class": "PREDICTED-BOARD (model projection, never a score)",
+  "pinned_reference": {
+   "raster": "data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+   "S": 206895,
+   "owner_reported_score": 0.0904,
+   "cover_frac": 0.99845,
+   "M_mean": 0.37481,
+   "nn_median_px": 5.0
+  },
+  "relative_error_vs_pinned": 0.107,
+  "reading": "if the predicted uniform-truth DTI lands near the pinned lattice's owner-reported 0.0904 the placement model is calibrated in the one regime an owner score pins"
+ }
+}

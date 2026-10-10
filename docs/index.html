@@ -34,6 +34,36 @@ th{color:var(--accent)}
 <!--H95-CARD-->
 <style>.h95card{border:2px solid #1f4e79;border-radius:12px;padding:16px 18px;margin:16px 0;background:#f3f7fc;color:#14181d;font:15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}.h95card h2{margin:0 0 8px;font-size:19px;color:#1f4e79}.h95card a{color:#1f4e79;font-weight:700}.h95card code{background:#e8eef4;padding:1px 4px;border-radius:3px;font-size:12.5px;word-break:break-all}</style><div class="h95card"><h2>Latest round H95 — co-trained View B (A→B whole-segment pseudo-labels)</h2><p><b>OK TO DOWNLOAD: YES</b> (format-valid, all-finite, values exactly {0,1}, 37,654 cells). <b>OK TO SUBMIT: NO — research-only, do not upload.</b> Failed gate(s): holdout_promotion, lane_dots_policy. The co-trained field scored 0.1724 on HOLDOUT-DTI, below the promotable best 0.190147 (paired vs single_B CI spans 0). Its dots are also a lane near-duplicate of the parallel H93 file (IR-H95-006). No weekly slot is approved; slots used: 0.</p><p><a href="downloads/h95-candidate.tif" download>Download h95-candidate.tif</a> · <a href="downloads/h95-candidate.zip" download>ZIP</a> · <a href="h95-executive-summary.html">how to submit</a> · <a href="h95.html">full result</a></p><p><small><code>gems52-h95-cotrainB-segthin-37654px-20261010T223522Z-2c3942b4-zeros.tif</code> · SHA-256 <code>28ee81370c9ce1bfb914cc93</code> · HOLDOUT-DTI (gems52-pooled-hide-v1, 53,186 withheld positives): cotrain_B 0.172401 vs single_B 0.174571; first holdout of H87's rule 0.063316 (random 0.079238). A holdout number is not a board score.</small></p></div>
 <!--/H95-CARD-->
+<!--H87BI-CARD-->
+<section class="hero" style="margin-top:22px"><div>
+<div class="eyebrow">DOE GEMS #306 / H87 board-score inversion &middot; a DIFFERENT round from the
+H87 co-train-wavelength card above &middot; 2026-10-10</div>
+<h2 style="margin:.3rem 0">H87 board inversion &mdash; download yes, submit no</h2>
+<p>Thirteen owner-reported public-board scores were inverted through the metric&rsquo;s exact linear
+form for the hidden truth density: <b>|G| = 14,333.8</b> truth pixels (a third
+independent pin), leave-one-out score MAE 0.02007, Spearman 0.9436.
+The mass lands on the owner&rsquo;s own family consensus (9,938, 69.3%) and the
+catalogue (4,396, 30.7%); <b>every physical, external and disagreement basis
+received weight zero</b>. Dots were then placed by the metric&rsquo;s own marginal rule (add iff exact
+marginal credit c &gt; 0.2&middot;DTI) as a shared tested tool, so the budget is derived: <b>61,427
+cells</b>. HOLDOUT-DTI 0.104228 [0.084119, 0.124875] vs random
+0.075375, paired +0.028853 [0.014804, 0.043810] &mdash; excludes zero,
+but fold 0 loses and the incumbent is not beaten. PREDICTED-BOARD on three truth realisations puts the
+candidate -0.0411 <em>below</em> the 0.2778 champion, and the model inverts the top of
+the ladder. <b>IR-H87-001:</b> the 13 owner-scored rasters&rsquo; 3 px halos cover 108.6% of the
+footprint, so the literal lane rule is unsatisfiable for ANY non-empty emission here (a random
+emission scores 0.9990 against the candidate&rsquo;s 0.9992); reported, not waived.
+Decoded-pixel uniqueness PASSES against 142 local priors (novel fraction 0.3558).
+Slots used 0. Nothing ORGANIZER-CONFIRMED.</p>
+<p><a class="button" href="downloads/h87-candidate.tif" download>Download the H87 GeoTIFF &#8595;</a>
+<a class="button secondary" href="downloads/h87-candidate.zip" download>Single-TIFF ZIP</a>
+<a class="button secondary" href="h87-executive-summary.html">H87 executive summary / how to submit</a>
+<a class="button secondary" href="../knowledge/82_h87_board_inversion_2026-10-10.md">Method, receipts, limitations</a></p>
+<p class="fileline">838,772 bytes &middot; SHA-256 <code>a8be8bee429b46817320a78d5c2503a5b5b785b86e742a301fc3f90bb996f086</code> &middot; name
+<code>h87-boardcal-marginal-20261010</code> &middot; note (114/140): <code>H87 board-calibrated truth density; dots placed by the metric's own marginal rule c>0.2*DTI; 200m ring out; binary</code></p>
+</div></section>
+<!--/H87BI-CARD-->
+
 
 <div class="container">
 

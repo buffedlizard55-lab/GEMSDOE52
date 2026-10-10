@@ -1,0 +1,53 @@
+{
+ "file": "gems52-h87-boardcal-marginal-20261010-61427px.tif",
+ "path": "submission/gems52-h87-boardcal-marginal-20261010-61427px.tif",
+ "bytes": 838772,
+ "sha256": "a8be8bee429b46817320a78d5c2503a5b5b785b86e742a301fc3f90bb996f086",
+ "zip_file": "gems52-h87-boardcal-marginal-20261010-61427px.zip",
+ "zip_sha256": "dfc37a6b9c54f9703a2621244f1cc16b78e272ce9bb9aed86c8e89593b765a89",
+ "download_copy": "docs/downloads/h87-candidate.tif",
+ "download_copy_sha256": "a8be8bee429b46817320a78d5c2503a5b5b785b86e742a301fc3f90bb996f086",
+ "submission_name": "h87-boardcal-marginal-20261010",
+ "note": "H87 board-calibrated truth density; dots placed by the metric's own marginal rule c>0.2*DTI; 200m ring out; binary",
+ "note_chars": 114,
+ "positive_pixels": 61427,
+ "writer_receipt": {
+  "path": "/home/user/GEMSDOE52/submission/gems52-h87-boardcal-marginal-20261010-61427px.tif",
+  "bytes": 838772,
+  "sha256": "a8be8bee429b46817320a78d5c2503a5b5b785b86e742a301fc3f90bb996f086",
+  "bands": 1,
+  "dtype": "float32",
+  "height": 3730,
+  "width": 3292,
+  "crs": "EPSG:32611",
+  "transform": [
+   100.0,
+   0.0,
+   243350.0,
+   0.0,
+   -100.0,
+   4508550.0
+  ],
+  "res": [
+   100.0,
+   100.0
+  ],
+  "nodata": null,
+  "nodata_repr": "None",
+  "finite_pixels": 12279160,
+  "min": 0.0,
+  "max": 1.0,
+  "positive_pixels": 61427,
+  "nonzero_in_footprint": 61427,
+  "unique_values": 2,
+  "portal_exact": true,
+  "template": "/home/user/GEMSDOE52/data/sample_submission.tif",
+  "footprint_px": 5167373,
+  "finite_values_in_range": true
+ },
+ "container": "organiser-template profile (LZW, stripped, pinned grid) with 0.0 outside the footprint and no nodata tag, so every pixel is finite and in [0,1] -- the fix for the portal's 'Predicted values must be in range [0, 1]' rejection (IR-H85-004)",
+ "approved_for_weekly_slot": false,
+ "promoted": false,
+ "submission_slots_used": 0,
+ "status": "research artefact; local validation is not organiser acceptance"
+}
