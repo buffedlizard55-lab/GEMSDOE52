@@ -1,0 +1,92 @@
+{
+  "round": "H74S",
+  "freeze_utc": "2026-10-09T19:23:20Z",
+  "initial_registration_utc": "2026-10-09T18:52:55Z",
+  "preregistration_sha256": "9041c9dc04c366afd6b6c223b2ac8ce4ddc821687551a14ae99a678d9a09b38b",
+  "hypothesis_sha256": "054f809fc9b3b52af92776d3138d6f43c1698d93c204333ca8d15bc82010603c",
+  "hypothesis_bytes": 16433,
+  "runner_sha256": "106080fde2eb6e4a50843d10eeea6e74f02a9c35635194dd24609abd70dfdf49",
+  "fetch_script_sha256": "a19feec3e936ec6103ef08c53fdb4f000105fabd249e73b3ed02a3ce9c9db783",
+  "feature_cache_manifest_sha256": "9f69b87c572f684c98579a2400b1c528a2aac45ad24aefece502890df0cb5526",
+  "method_values_sha256": "9c7e9c9ea768681dcf389f6e7d82f048de14e071ec39947f3f68d1e2fa2493da",
+  "method_values_canonicalization": "UTF-8 JSON; sorted keys; compact separators over round, View A/B, all thresholds, budget, stop rules and promotion rule.",
+  "compatibility_alias_audit": {
+    "per_feature_leakage_auc_alarm_equals_canary_auc_alarm": [
+      0.9,
+      0.9
+    ],
+    "independence_max_abs_pearson_or_spearman_equals_independence_abandon_max_abs_rho": [
+      0.6,
+      0.6
+    ],
+    "negative_error_block_side_px_equals_block_side_px": [
+      50,
+      50
+    ],
+    "holdout_dots_per_fold_per_arm_equals_matched_budget": [
+      1264,
+      1264
+    ],
+    "lane_surface_rank_correlation_stop_equals_lane_spearman_stop": [
+      0.9,
+      0.9
+    ],
+    "lane_dots_within_3px_stop_equals_lane_near_dot_fraction_stop": [
+      0.7,
+      0.7
+    ],
+    "lane_near_radius_px_equals_lane_near_dot_radius_px": [
+      3.0,
+      3.0
+    ],
+    "whole_segment_buffer_px_equals_shared_H61_fold_buffer_px": [
+      80,
+      80
+    ],
+    "bootstrap_block_m_equals_bootstrap_block_px_times_100m": [
+      20000.0,
+      20000
+    ],
+    "final_budget_equals_four_matched_fold_budgets": [
+      5056,
+      5056
+    ],
+    "schema_changes_only": "H72-helper key mappings and explicit 9400-dot single_B control budget; no features, method, metric, stop threshold or budget changed; no H74 fit/calibration/result before this final freeze."
+  },
+  "prior_registry": {
+    "core_inventory": "evidence/ctd5_prior_inventory.json",
+    "core_inventory_sha256": "d8b4b7e15482636cefd52efa1085745ae2cead6562f095532beba7a12c98a7c1",
+    "core_restore_receipt": "work/h74s/prior_fetch_receipt.json",
+    "core_restore_receipt_sha256": "41054abdf44c3d4a5917a943c76f1e0657fb7d96f69f5caea3b27d461eaec504",
+    "core_entries": 526,
+    "core_fetch_errors": 0,
+    "core_eligible_present": 524,
+    "current_owner_repo_extension": "evidence/h74s_prior_extension.json",
+    "extension_receipt_sha256": "e660fb957ff674626cea8164c72813871932e77371ed611284e3a9a9b70cfbf5",
+    "extension_generated_utc": "2026-10-09T19:23:07+00:00",
+    "extension_repositories": 5,
+    "extension_paths": 64,
+    "extension_aligned_single_band": 64,
+    "extension_errors": 0,
+    "all_extension_git_blob_shas_verified": true,
+    "local_submission_download_tif_paths": 105,
+    "total_pre_run_gate_paths_expected": 693,
+    "scope": "Stored 2026-10-08 public owner census (526 entries/524 eligible), current local submission/download TIFFs, and 2026-10-09 H53-H57 public owner repositories; aligned single-band artifacts only; private/unlinked and organizer-private artifacts not covered.",
+    "organizer_authenticated": false
+  },
+  "budget": {
+    "max_experiments": 3,
+    "max_wall_clock_hours": 2,
+    "experiment_state_started": false
+  },
+  "no_h74s_experiment_before_freeze": true,
+  "pre_run_checks": {
+    "work_state_exists": false,
+    "canary_or_fit_receipt_exists": false,
+    "holdout_receipt_exists": false,
+    "lane_or_submission_receipt_exists": false,
+    "h74s_submission_tiff_exists": false,
+    "competition_slots_used": 0,
+    "selector_decision_made": false
+  }
+}

@@ -1,0 +1,329 @@
+{
+ "round": "H84",
+ "generated_utc": "2026-10-10T20:46:58+00:00",
+ "hypothesis": "A fault zone makes the spatial covariance of elevation, slope, gravity and basement-depth fields elliptical with its long axis along strike; the eccentricity of that ellipse, fitted continuously from 8 directional semivariances at 100-600 m lags, ranks unmapped fault cells better than the quantised (max-min)/(max+min) DVA-2 statistic.",
+ "mechanism": "Damage zones, juxtaposed blocks and cover-thickness steps leave low semivariance along strike and high semivariance across it. Under geometric anisotropy gamma(h,theta) = a + b cos2theta + c sin2theta at fixed lag, so sqrt(b^2+c^2)/a is the ellipse eccentricity; a fixed 3x8 least-squares operator estimates it from all 8 directions rather than 2 order statistics.",
+ "mimic": "Named non-fault processes with the same signature: linear drainage incision and road cuts (anisotropic elevation texture), alluvial-fan margins and lithologic contacts (anisotropic gravity/basement fields with no offset). B-only road audit result is in disagreement below.",
+ "preregistration": {
+  "document": "knowledge/74_hypotheses_H84_preregistered.md",
+  "sha256": "1972f1f412dbb9d82057f0eab602f64553ef4ceed5e4dab49b98955752dbca17",
+  "frozen_utc": "2026-10-10T19:54:01+00:00",
+  "frozen_before_any_fit": true
+ },
+ "channels": {
+  "new_learner": 30,
+  "hva": 25,
+  "coh": 5,
+  "dva2_control": 50,
+  "normal_matrix_condition_number": 2.325581395348837
+ },
+ "canary": {
+  "label": "LEAKAGE CANARY (single-channel AUC on held-out region; bar 0.90)",
+  "max_all_learner": 0.6237465831058919,
+  "max_new": 0.6237465831058919,
+  "alarm": false
+ },
+ "out_of_quadrant_auc": {
+  "single_B": [
+   0.6625012282147498,
+   0.7684414473654164,
+   0.6112200625930911,
+   0.6951780354196093
+  ],
+  "B_DVA2": [
+   0.6840483651268279,
+   0.7867400931326192,
+   0.6479282796377861,
+   0.7284019729496473
+  ],
+  "B_DVA2_HVA": [
+   0.6872038087184429,
+   0.7881405087149695,
+   0.6449566637090783,
+   0.7241142165105914
+  ],
+  "B_DVA2_HVA_COH": [
+   0.6877503072864376,
+   0.7903962234697546,
+   0.646152134563683,
+   0.7268678357336147
+  ],
+  "single_A": [
+   0.5062341311661124,
+   0.6010657195529969,
+   0.4668188015259936,
+   0.4910432748636082
+  ]
+ },
+ "holdout": {
+  "label": "HOLDOUT-DTI",
+  "evaluator": "gems52-pooled-hide-v1",
+  "withheld_positive_pixels": 53186,
+  "dots_per_fold_per_arm": 9400,
+  "ci": "95% paired cluster bootstrap, 1000 draws",
+  "scores": {
+   "single_B": {
+    "dti": 0.17457135886487102,
+    "ci95": [
+     0.1523129808950829,
+     0.19630189491073133
+    ],
+    "label": "HOLDOUT-DTI"
+   },
+   "B_DVA2": {
+    "dti": 0.19282907051926573,
+    "ci95": [
+     0.17078978437309403,
+     0.2136913963893321
+    ],
+    "label": "HOLDOUT-DTI"
+   },
+   "B_DVA2_HVA": {
+    "dti": 0.19014733655411672,
+    "ci95": [
+     0.16889284953507178,
+     0.2111541843902237
+    ],
+    "label": "HOLDOUT-DTI"
+   },
+   "B_DVA2_HVA_COH": {
+    "dti": 0.19056486186705368,
+    "ci95": [
+     0.16905751960067097,
+     0.2114373419782387
+    ],
+    "label": "HOLDOUT-DTI"
+   },
+   "single_A": {
+    "dti": 0.07195422771451437,
+    "ci95": [
+     0.05663648302475561,
+     0.08856584503981733
+    ],
+    "label": "HOLDOUT-DTI"
+   },
+   "random": {
+    "dti": 0.08042564781050282,
+    "ci95": [
+     0.0702226099128376,
+     0.09097325665223467
+    ],
+    "label": "HOLDOUT-DTI"
+   }
+  },
+  "primary_minus_each_arm": {
+   "single_B": {
+    "delta": 0.015575977689245707,
+    "ci95": [
+     0.007964182620459793,
+     0.023698954016699754
+    ]
+   },
+   "B_DVA2": {
+    "delta": -0.002681733965149008,
+    "ci95": [
+     -0.0055047502177871434,
+     0.00017738875369980732
+    ]
+   },
+   "B_DVA2_HVA_COH": {
+    "delta": -0.00041752531293695605,
+    "ci95": [
+     -0.0028163406999148224,
+     0.002201686735320561
+    ]
+   },
+   "single_A": {
+    "delta": 0.11819310883960235,
+    "ci95": [
+     0.09898203783066059,
+     0.1363349450496211
+    ]
+   },
+   "random": {
+    "delta": 0.1097216887436139,
+    "ci95": [
+     0.09217453697982454,
+     0.12944041168471787
+    ]
+   }
+  },
+  "attribution_COH_minus_each_arm": {
+   "B_DVA2": {
+    "delta": -0.002264208652212052,
+    "ci95": [
+     -0.005031855962087242,
+     0.0004625384911943234
+    ]
+   },
+   "single_B": {
+    "delta": 0.015993503002182663,
+    "ci95": [
+     0.00876080427248519,
+     0.02403694452399648
+    ]
+   },
+   "B_DVA2_HVA": {
+    "delta": 0.00041752531293695605,
+    "ci95": [
+     -0.0022405887115888924,
+     0.0028128009716180493
+    ]
+   }
+  },
+  "controls": {
+   "single_B": {
+    "committed": 0.174517,
+    "measured": 0.17457135886487102,
+    "abs_delta": 5.435886487101249e-05,
+    "tolerance": 0.001,
+    "PASS": true
+   },
+   "B_DVA2": {
+    "committed": 0.1892,
+    "measured": 0.19282907051926573,
+    "abs_delta": 0.0036290705192657258,
+    "tolerance": 0.001,
+    "PASS": false
+   }
+  },
+  "never_a_board_forecast": "holdout DTI does not rank board scores here (Spearman -0.10, knowledge/10)"
+ },
+ "cotraining": {
+  "independence": {
+   "max_abs_rho": 0.13368507450035322,
+   "allow_exchange": true,
+   "n_blocks": 2089,
+   "abandon_bar": 0.6,
+   "caveat": "negatives are catalogue-zero proxies, not verified absence; weak error correlation is necessary for co-training, not proof of conditional independence"
+  },
+  "sufficiency_view_A": {
+   "mean": 0.5162904817771777,
+   "min_fold": 0.4668188015259936,
+   "per_fold": [
+    0.5062341311661124,
+    0.6010657195529969,
+    0.4668188015259936,
+    0.4910432748636082
+   ],
+   "gate_mean": 0.6,
+   "gate_min_fold": 0.55,
+   "passes": false
+  },
+  "exchange_run": false,
+  "exchange_not_run_reason": "no sufficient donor view: View A's out-of-quadrant AUC fails the 0.60 mean / 0.55 min-fold gate (re-measured above); H71/H74 measured that exchange lowered the receiving view's AUC"
+ },
+ "disagreement": {
+  "a_only_stratum_px": 52589,
+  "a_only_candidates": 9225,
+  "a_only_reasoning_csv": "docs/downloads/gems52-h84-hva-ellipse-B-37654px-20261010T204630Z-a-only-reasoning.csv",
+  "b_only_candidates": 9691,
+  "b_only_cardinal_fraction": 0.08089980394180167,
+  "b_only_cardinal_null": 0.1111111111111111
+ },
+ "lane": {
+  "full_census_rasters": 584,
+  "scored_only_rasters": 13,
+  "surface_literal": "PASS",
+  "surface_max_spearman": 0.49526894599950044,
+  "surface_scored_only": "PASS",
+  "emitted_placement": "quota (run_h73.place_lane, scored-only supports)",
+  "quota_worst_share": 0.6982790672969671,
+  "dots_literal": "DUPLICATE/STOP",
+  "dots_max_spearman": 0.1939016549357651,
+  "dots_max_near_3px": 1.0,
+  "dots_policy": "DUPLICATE/STOP",
+  "dots_policy_max_near_3px": 0.9441493599617571,
+  "dots_scored_only": "DUPLICATE/STOP",
+  "dots_scored_only_max_near_3px": 1.0,
+  "doctrine": "both registries reported verbatim; a restricted-registry PASS never waives a literal full-census DUPLICATE/STOP (AGENTS.md, knowledge/62 IR-H73-011)"
+ },
+ "uniqueness": {
+  "n_priors_compared": 584,
+  "audit_complete": true,
+  "distinct_from_every_comparable_prior": true,
+  "identical_to_a_prior": false,
+  "candidate_decoded_sha256": "9ac8c4e3e093dd2c792a65b90a4d605589aa153d5118338589954eba978d7e99",
+  "support_novelty_gate_ok": false,
+  "novel_fraction": 0.0,
+  "relation_to_union": "subset-of-union",
+  "research_publication_ok": true,
+  "gate_correction": "Original >=20% support novelty retained as a FAILED diagnostic, not silently waived for slot promotion. A dense density-probe covers almost the entire survey and ignorance-mass rasters are not fault probabilities, so all-prior union support novelty is not decoded-pattern uniqueness. Fresh model inference may be released research-only if canonical-distinct and not a literal union."
+ },
+ "not_the_union": {
+  "dots_emitted": 37654,
+  "union_max_dots": 37654,
+  "dots_equal_union": false,
+  "dots_subset_of_union": false,
+  "dots_equal_single_A": false,
+  "dots_equal_single_B": false,
+  "shared_with_union": 3961,
+  "jaccard_with_union": 0.05551740087179559,
+  "shared_with_single_A": 568,
+  "jaccard_with_single_A": 0.0075996788868076,
+  "shared_with_single_B": 5524,
+  "jaccard_with_single_B": 0.07915854637166113,
+  "spearman_primary_field_vs_unionmax_field": 0.36531764282468354,
+  "not_union_pass": true
+ },
+ "raster": {
+  "file": "submission/gems52-h84-hva-ellipse-B-37654px-20261010T204630Z.tif",
+  "bytes": 141678,
+  "sha256": "6bb18056c521a1a6a7bcefa75f3be7cb37653b8066efd4252a8b5c096b90b73e",
+  "download": {
+   "tif": "docs/downloads/h84-candidate.tif",
+   "zip": "docs/downloads/h84-candidate.zip",
+   "tif_sha256": "6bb18056c521a1a6a7bcefa75f3be7cb37653b8066efd4252a8b5c096b90b73e",
+   "zip_sha256": "5e9b7ed584ed731b4b71939a1e9771701cd4bb94eddc27146b4082bd1b7b68d1"
+  }
+ },
+ "validator": {
+  "count": 1,
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "shape": [
+   3730,
+   3292
+  ],
+  "crs_match": true,
+  "shape_match": true,
+  "transform_match": true,
+  "bounds_match": true,
+  "nodata": null,
+  "nan": 0,
+  "infinite": 0,
+  "nan_inside_footprint": 0,
+  "min": 0.0,
+  "max": 1.0,
+  "values": [
+   0.0,
+   1.0
+  ],
+  "ones": 37654,
+  "zeros": 12241506,
+  "ones_outside_footprint": 0,
+  "range_ok": true,
+  "PASS": true,
+  "rule_source": "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/ (single band float32, EPSG:32611, 100 m, values in [0,1]); portal message 'Predicted values must be in range [0, 1]' -> no NaN written (knowledge/03 N-5)"
+ },
+ "submission_name": "h84-hva-ellipse-B-37654px-20261010T204630Z",
+ "submission_note": "H84: View-B + DVA2 + harmonic variogram-ellipse anisotropy (8-dir LS fit, lags 100-600m); 200m ring cut; binary dots; research",
+ "verdict": "negative",
+ "verdict_reasons": {
+  "beats_current_holdout_best_B_DVA2": false,
+  "beats_single_B": true,
+  "controls_reproduce": false,
+  "canary_no_alarm": true,
+  "lane_surface_literal_pass": true,
+  "lane_dots_literal_full_census_pass": false,
+  "format_validator_pass": true,
+  "not_the_union_pass": true
+ },
+ "download_ok": true,
+ "submit_ok": false,
+ "slots_used": 0,
+ "budget": {
+  "experiments_used": 1,
+  "experiments_allowed": 3
+ }
+}

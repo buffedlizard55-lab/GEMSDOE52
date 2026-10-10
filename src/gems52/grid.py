@@ -181,6 +181,109 @@ def write_geotiff(path: str | Path, arr: np.ndarray, *, nodata: float | None = N
     return read_geotiff(path)
 
 
+def portal_exact_profile(sample: str | Path) -> dict:
+    """The container profile of the organiser's own ``sample_submission.tif``, read from the bytes.
+
+    H74 measured a structural difference this repository had been shipping: every writer here
+    produced a **tiled, deflate-compressed, all-finite** GeoTIFF, while the organiser's template and
+    all eleven owner-scored rasters restored into ``data/scored/`` are **stripped, LZW-compressed,
+    NaN-outside with ``nodata=nan`` declared**.  Both variants have scored historically, so neither
+    is provably rejected -- but a portal reader that does not honour the nodata declaration turns
+    every outside-footprint NaN into a failed ``[0, 1]`` range test, which is exactly the rejection
+    this repository received.  Matching the template byte-structurally removes the unknown instead
+    of guessing at the portal's parser.  Measured, not assumed: the values come from the file.
+    """
+    import rasterio
+    with rasterio.open(Path(sample)) as src:
+        p = src.profile
+        out = dict(driver="GTiff", height=p["height"], width=p["width"], count=1,
+                   dtype=p["dtype"], crs=str(src.crs) if src.crs is not None else None,
+                   transform=src.transform, nodata=src.nodata,
+                   compress=p.get("compress"), tiled=bool(p.get("tiled", False)))
+        if out["tiled"]:
+            out["blockxsize"] = p.get("blockxsize"); out["blockysize"] = p.get("blockysize")
+        if "predictor" in p:
+            out["predictor"] = p["predictor"]
+        return out
+
+
+def write_geotiff_portal_exact(path: str | Path, inside: np.ndarray, footprint: np.ndarray,
+                               sample: str | Path, *, outside: str = "nan") -> dict:
+    """Write ``inside`` on the organiser template's exact container profile, then re-read it.
+
+    * ``inside`` must be finite and in [0, 1]; it is the prediction over the whole grid.
+    * Pixels outside ``footprint`` are written as NaN with ``nodata=nan`` declared, which is what
+      ``sample_submission.tif`` itself does (``outside="nan"``, the default and the H77 behaviour).
+    * ``outside="zero"`` (added 2026-10-10, H84) writes 0.0 outside the footprint and declares no
+      nodata, so every pixel is finite and inside [0, 1] -- the only container that cannot fail a naive
+      "values in [0, 1]" range test, which is the error the portal returned to the user. The LZW /
+      stripped / pinned-grid container is unchanged. The footprint rule is still enforced.
+    * The re-read is asserted: single band, float32, pinned CRS/shape/transform, no finite value
+      outside [0, 1], no non-finite pixel inside the footprint, and no positive mass outside it.
+
+    This is fail-closed: anything the portal's stated rule could reject raises here first.
+    """
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    a = np.asarray(inside)
+    if a.dtype != np.float32:
+        raise TypeError(f"submission must be float32, got {a.dtype}")
+    if a.shape != SHAPE:
+        raise ValueError(f"submission must be {SHAPE}, got {a.shape}")
+    fp = np.asarray(footprint, bool)
+    if fp.shape != SHAPE:
+        raise ValueError(f"footprint must be {SHAPE}, got {fp.shape}")
+    if not np.isfinite(a).all():
+        raise ValueError("prediction contains NaN/inf inside the grid; no silent repair")
+    if a.min() < 0.0 or a.max() > 1.0:
+        raise ValueError(f"prediction out of range: min={a.min()} max={a.max()}")
+    if np.any((a > 0) & ~fp):
+        raise ValueError("positive mass outside the footprint")
+    prof = portal_exact_profile(sample)
+    if prof["height"] != SHAPE[0] or prof["width"] != SHAPE[1]:
+        raise AssertionError(f"template shape {(prof['height'], prof['width'])} != pinned {SHAPE}")
+    if tuple(float(v) for v in prof["transform"])[:6] != tuple(float(v) for v in TRANSFORM):
+        raise AssertionError("template transform != pinned competition transform")
+    if outside not in ("nan", "zero"):
+        raise ValueError(f"outside must be 'nan' or 'zero', got {outside!r}")
+    fill = np.float32("nan") if outside == "nan" else np.float32(0.0)
+    out = np.where(fp, a, fill).astype(np.float32)
+    clean = {k: v for k, v in prof.items() if v is not None}
+    if outside == "zero":
+        clean.pop("nodata", None)
+    with rasterio.open(path, "w", **clean) as dst:
+        dst.write(out, 1)
+    back = read_geotiff(path)
+    with rasterio.open(path) as src:
+        r = src.read(1)
+    problems = []
+    if src.count != 1:
+        problems.append(f"{src.count} bands")
+    if src.dtypes[0] != "float32":
+        problems.append(f"dtype {src.dtypes[0]}")
+    if str(src.crs) != CRS_EPSG:
+        problems.append(f"crs {src.crs}")
+    if (src.height, src.width) != SHAPE:
+        problems.append(f"shape {(src.height, src.width)}")
+    if tuple(float(v) for v in src.transform)[:6] != tuple(float(v) for v in TRANSFORM):
+        problems.append("transform mismatch")
+    fin = np.isfinite(r)
+    if outside == "zero" and not fin.all():
+        problems.append("zero-outside container wrote non-finite pixels")
+    if np.any((r < 0) & fin) or np.any((r > 1) & fin):
+        problems.append("a finite value lies outside [0, 1]")
+    if np.any(~fin & fp):
+        problems.append("a non-finite pixel lies inside the footprint")
+    if np.any((r > 0) & fin & ~fp):
+        problems.append("positive mass outside the footprint")
+    if problems:
+        raise IOError(f"portal-exact writer rejected its own output: {problems}")
+    back.update(portal_exact=True, template=str(Path(sample)),
+                footprint_px=int(fp.sum()),
+                finite_values_in_range=bool(not problems))
+    return back
+
+
 def read_geotiff(path: str | Path) -> dict:
     """Everything a validator can complain about, re-derived from the bytes on disk."""
     import hashlib

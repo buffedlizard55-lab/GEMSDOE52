@@ -1,0 +1,55 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Step-by-step submission instructions for DOE GEMS competition #306, the four causes of the [0,1] rejection, and the H82 verdict."><title>How to submit, and whether this file may be submitted - H82 - GEMSDOE52</title><link rel="stylesheet" href="assets/ctd5.css"></head><body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a><a href="index.html">Current round</a><a href="h82.html">H82 result</a><a href="h82-executive-summary.html">How to submit</a><a href="validator.html">Check a file</a><a href="h82-hypotheses.html">Hypotheses</a><a href="h82-sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header><main id="main">
+<section class="hero"><div>
+<div class="eyebrow">H82 &middot; executive summary &middot; exactly how to submit</div>
+<h1>Two questions, answered separately</h1>
+<div class="notice" role="note"><strong>Verdict: NEGATIVE / RESEARCH-ONLY: download is safe, submission is not recommended</strong><p><b>OK to download?</b> YES — safe to download and inspect</p><p><b>OK to submit to DrivenData?</b> NO — research artefact only. Uploading it would spend a weekly slot on a candidate that has not beaten the incumbent on the hide-and-recover instrument, or that failed a lane gate. Download it, read it, do not upload it.</p></div>
+<div class="actions"><a class="button" href="downloads/h82-candidate.tif" download>Download the H82 GeoTIFF &#8595;</a><a class="button secondary" href="downloads/h82-candidate.zip" download>Single-TIFF ZIP</a><a class="button secondary" href="downloads/gems52-h82-dva2vsa-B-37654px-20261009T215811Z-reasoning.csv.gz" download>Per-cell geological reasoning CSV</a><a class="button secondary" href="validator.html">Check any file in your browser</a></div>
+<p class="fileline">gems52-h82-dva2vsa-B-37654px-20261009T215811Z.tif<br>140,555 bytes &middot; SHA-256 17c3f8325ac6f267b1b8cc58bc6fd9495c118c30de64d5f78293d19d7f20c907 &middot; 37,654 emitted cells &middot; values exactly {0,1}, 0 NaN, 0 infinite &middot; EPSG:32611 &middot; 3730&times;3292 px at 100 m</p>
+</div></section>
+<hr class="divider">
+<section><h2>If you decide to submit it: the exact steps</h2>
+<ol>
+<li><b>Download</b> <a href="downloads/h82-candidate.tif" download>h82-candidate.tif</a>
+(140,555 bytes) or the <a href="downloads/h82-candidate.zip" download>ZIP</a>.
+Both are the same bytes; the ZIP exists because the organiser&rsquo;s form accepts either a single-band
+GeoTIFF or a ZIP containing one.</li>
+<li><b>Check the file you actually downloaded</b> on <a href="validator.html">the browser checker</a>.
+It decodes every pixel locally and reports each published rule as PASS or FAIL. Confirm the SHA-256 is
+<code>17c3f8325ac6f267b1b8cc58bc6fd9495c118c30de64d5f78293d19d7f20c907</code> — if it is not, you downloaded something else (a truncated
+file, or an HTML error page saved with a <code>.tif</code> extension, which is the most common cause of a
+confusing rejection).</li>
+<li><b>Sign in</b> at <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">the competition problem page</a> and open
+<em>Submit</em>.</li>
+<li><b>Upload</b> the file. The form rejects anything whose predicted values fall outside [0, 1] with
+<code>Predicted values must be in range [0, 1]</code>. This file&rsquo;s values are exactly
+{0, 1} with 0 NaN and 0 infinite, so it cannot trip that rule.</li>
+<li><b>Name it</b> <code>h82-dva2vsa-B-37654px-20261009T215811Z</code>.</li>
+<li><b>Note</b> (140 of 140 characters):
+<code>H82: View-B + 50 DVA-2 + 10 variogram/strike-alignment channels; 8-dir integer fan, lags 100-600m; 200m catalogue ring excluded; binary dots</code></li>
+<li><b>Wait for the score.</b> The public chunk is scored on upload; the Initial Prize Round is scored on
+the <em>private</em> chunk, and one submission must be selected for both rounds before the deadline.</li>
+</ol>
+<p class="small"><b>This repository cannot do steps 3&ndash;7.</b> It has no DrivenData credentials, so it
+has never downloaded the competition data from the organiser and has never uploaded a file. Every score
+quoted here is either ORGANIZER-CONFIRMED from the public leaderboard or OWNER-REPORTED by the owner team.
+Nothing on this page is an organiser acceptance receipt.</p></section>
+<hr class="divider">
+<section><h2>Why the [0, 1] rejection happens, and how to diagnose it in seconds</h2>
+<p>The organiser&rsquo;s message <code>Predicted values must be in range [0, 1]</code> has four realistic
+causes. In order of likelihood:</p>
+<div class="table-wrap"><table class=""><thead><tr><th>Cause</th><th>How to recognise it</th><th>Fix</th></tr></thead><tbody><tr><td>The file you downloaded is not the file you think it is</td><td>SHA-256 differs; or the file is a few hundred bytes; or a text editor shows HTML</td><td>Re-download. A GitHub Pages 404 page saved as <code>.tif</code> is the classic case.</td></tr><tr><td>Values are unnormalised model scores (log-odds, distances, z-scores)</td><td>The browser checker reports min/max far outside [0,1]</td><td>Normalise to [0,1] before writing, or emit binary {0,1}.</td></tr><tr><td>Wrong dtype — float64 or int16 instead of float32</td><td>The checker reports BitsPerSample 64 or 16, or SampleFormat not 3</td><td>Write <code>dtype='float32'</code>.</td></tr><tr><td>A NoData sentinel outside [0,1] (e.g. -3.4e38) inside the footprint</td><td>The checker reports a huge negative minimum and a GDAL_NODATA tag</td><td>Write NaN or 0 outside the footprint, never the float32 sentinel.</td></tr></tbody></table></div>
+<p class="small">An audit of every raster this repository serves (110 TIFs and 82 ZIPs) found
+<b>none</b> of these defects, so the rejection the owner hit did not come from a current artefact here.
+That is recorded rather than papered over: the most likely source is a file from a sibling site or a
+truncated download. The <a href="validator.html">browser checker</a> exists so this can be settled in
+seconds, on the exact bytes you are about to upload.</p></section>
+<hr class="divider">
+<section><h2>The rules, quoted</h2>
+<p class="small">From <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">the official problem page</a>, fetched 2026-10-09:
+predictions are pixel-wise probabilities in [0, 1]; the submission must use the same projected CRS as the
+training data (UTM zone 11N, EPSG:32611), the same 100 m resolution, the same bounds with null or NaN
+outside them, a single layer, and 32-bit float. Distances are weighted by a triangular kernel
+k(d) = max(1 &minus; d/R, 0) with R = 300 m, and the score is the distance-weighted Tversky index
+TI(&alpha;, &beta;) = TP / (TP + &alpha;&middot;FP + &beta;&middot;FN) with &alpha; = 0.2 and &beta; = 0.8.</p>
+</section>
+</main></body></html>

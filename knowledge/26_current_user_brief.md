@@ -8,6 +8,12 @@ Refreshed in the H74 session (2026-10-09): the recurring prompt's score list gai
 GEMSDOE54 entries and the empty 55/56/57GEMSDOE placeholders; no instruction changed. A dated copy of
 this text is kept at [knowledge/64b_current_user_brief_2026-10-09_H74.md](60b_current_user_brief_2026-10-09_H74.md).
 
+**Re-read in full at the start of the H77cond session (2026-10-09; executed as H74, renamed at merge).** The prompt arrived unchanged from the
+text preserved below, so no new dated copy was created. H77cond's lane assignment, budget (3 experiments /
+2 hours), parallel-run protocol and the "it must be obvious whether it is OK to download and submit"
+requirement are all taken from this text; see
+[knowledge/67_hypotheses_H77cond_preregistered.md](67_hypotheses_H77cond_preregistered.md).
+
 ```text
 Review the repo. 
 
@@ -387,7 +393,7 @@ h60-lidarscarp-s2p0-20261007-nanoutside:
 
 [https://buffedlizard55-lab.github.io/GEMSDOE48/docs/index.html](https://buffedlizard55-lab.github.io/GEMSDOE48/docs/index.html)
 
-:
+h59-cover-ds-belief-b2xh33d-20261008T184547Z-b79c4c61d8d8: 0.2296
 
 ....
 
@@ -423,7 +429,7 @@ h54c-manifest-edge-20261009T025732Z-73454bc5:
 
 55GEMSDOE
 
-:
+h8-tiprelay-ridgeconcord-pr2-n80000-20261009-49bec522-zeros:
 
 ....
 
@@ -435,7 +441,7 @@ h54c-manifest-edge-20261009T025732Z-73454bc5:
 
 57GEMSDOE
 
-:
+h54c-manifest-edge-20261009T025732Z-73454bc5:
 
 ....
 

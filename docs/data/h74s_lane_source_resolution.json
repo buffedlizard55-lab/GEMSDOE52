@@ -1,0 +1,71 @@
+{
+  "round": "H74S",
+  "generated_utc": "2026-10-09T19:52:57+00:00",
+  "evidence_class": "source resolution for already-completed literal lane diagnostics; not a score and not a new experiment",
+  "surface": {
+    "max_spearman": 0.033570929954429146,
+    "verdict": "PASS",
+    "source": {
+      "path": "submission/gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif",
+      "provenance": "local accessible prior; no pinned owner-census mapping",
+      "source_url": "submission/gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif"
+    },
+    "per_prior_record": {
+      "spearman": 0.033570929954429146,
+      "coverage_3px_of_eligible": 0.05005458583431708,
+      "universal_coverage_probe": false,
+      "near_3px_fraction": null
+    }
+  },
+  "final_dots_literal": {
+    "max_spearman": 0.015279036126946697,
+    "max_near_3px_fraction": 1.0,
+    "verdict": "DUPLICATE/STOP",
+    "near_offender_count": 38,
+    "source": {
+      "path": "work/h74s/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+      "blob": "cd838daadd39de3ccdb9d30025b7feacc4d87c9f",
+      "owner_repo": "buffedlizard55-lab/GEMSDOE48",
+      "owner_commit": "36d9785e28a81e859c71f4058c639ffba4b7f327",
+      "owner_path": "docs/downloads/diagnostics/GEMSDOE48-H56-OWDS-B2xH33D-20261007-1f7b5a4f18db-plausibility.tif",
+      "file_sha256": "85c5eed333caba5bf2ff68d7e91ae6bb89c001df57ea7988d08839af9e9435ad",
+      "decoded_sha256": "b315839a62188b053a9efac1b2b7af5223ed7ba70859d692bd54f2a7ec35d54f",
+      "provenance": "public owner-mirror census; not organizer-authenticated",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE48/blob/36d9785e28a81e859c71f4058c639ffba4b7f327/docs/downloads/diagnostics/GEMSDOE48-H56-OWDS-B2xH33D-20261007-1f7b5a4f18db-plausibility.tif"
+    },
+    "per_prior_record": {
+      "spearman": -0.004770834478403197,
+      "prior_proposals": 5167373,
+      "coverage_3px_of_eligible": 1.0,
+      "universal_coverage_probe": true,
+      "near_3px_fraction": 1.0
+    }
+  },
+  "final_dots_saturation_aware_policy": {
+    "max_near_3px_fraction": 0.9107990506329114,
+    "verdict": "DUPLICATE/STOP",
+    "near_offender_count": 23,
+    "source": {
+      "path": "work/h74s/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+      "blob": "4e50a598eae16b3c098ca2653542dc142f1da8a8",
+      "owner_repo": "buffedlizard55-lab/15GEMSDOE",
+      "owner_commit": "8c94b0f83f22999032ba8a29c523af7ae6cf5e76",
+      "owner_path": "docs/downloads/gems-cleanup-a-20260928T195952Z-curv_scarp.tif",
+      "file_sha256": "3e88e6ad5c63f2bc37edebd0eb2c7332d97ba1e48308f7ffea3b7c63fc2bddd1",
+      "decoded_sha256": "713026f176056d852468ab3d6deaad608f4f0b2f0166cdc16c017895006020c8",
+      "provenance": "public owner-mirror census; not organizer-authenticated",
+      "source_url": "https://github.com/buffedlizard55-lab/15GEMSDOE/blob/8c94b0f83f22999032ba8a29c523af7ae6cf5e76/docs/downloads/gems-cleanup-a-20260928T195952Z-curv_scarp.tif"
+    },
+    "per_prior_record": {
+      "spearman": 0.0004248592110240561,
+      "prior_proposals": 362327,
+      "coverage_3px_of_eligible": 0.897567715201546,
+      "universal_coverage_probe": false,
+      "near_3px_fraction": 0.9107990506329114
+    }
+  },
+  "registries_checked": 693,
+  "lane_errors": 0,
+  "organizer_authenticated": false,
+  "note": "The final literal maximum comes from a 2026-10-08 owner-census diagnostic raster in GEMSDOE48; the informative-only policy maximum comes from 15GEMSDOE. These are public owner-mirror records, not organizer-authenticated submissions."
+}

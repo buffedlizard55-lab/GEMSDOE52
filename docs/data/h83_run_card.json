@@ -1,0 +1,393 @@
+{
+ "round": "H83",
+ "hypothesis": "Two-view co-training disagreement, evaluated on two instruments: the mandated hide-and-recover and a new off-catalogue instrument whose truth is a fault compilation the competition catalogue does not contain (SGMC at >= 300 m from labels.tif).",
+ "mechanism": "View A (potential-field/subsurface, 36 ch) and View B (surface DEM curvature + slope + radiometric band 6, 37 ch) are fitted per label-blind quadrant; independence is screened on 50 px blocks of held-out proxy negatives; one whole-segment, block-confined pseudo-label round follows; the discovery field is the rank difference A-B (A confident, B abstains = candidate buried structure).",
+ "named_non_fault_mimic": "A lithologic contact or a basin-fill thickness change: both make gravity/conductivity steps and basement-depth gradients with no fault. Second mimic: flight-line/grid seams in the airborne magnetic and radiometric grids. Surface branch: roads, canals and erosion lines, which is what B-only disagreement flags.",
+ "holdout": {
+  "evidence_class": "HOLDOUT-DTI",
+  "evaluator": "gems52-pooled-hide-v1",
+  "withheld_positive_pixels": 53186,
+  "dti": 0.036987866329419784,
+  "ci95": [
+   0.0250504329693836,
+   0.05083086724367956
+  ],
+  "paired_vs_single_B": {
+   "delta": -0.13758349253545124,
+   "ci95": [
+    -0.16188675700982544,
+    -0.11377642379877533
+   ]
+  },
+  "shipped_arm_dti": {
+   "disagreement_post": 0.036987866329419784,
+   "union_max": 0.14900909797542158,
+   "E3_single_B_quota": 0.15445570375023357
+  },
+  "all_arms": {
+   "single_A": {
+    "dti": 0.07195422771451437,
+    "ci95": [
+     0.05663648302475561,
+     0.08856584503981733
+    ]
+   },
+   "single_B": {
+    "dti": 0.17457135886487102,
+    "ci95": [
+     0.1523129808950829,
+     0.19630189491073133
+    ]
+   },
+   "union_max": {
+    "dti": 0.14900909797542158,
+    "ci95": [
+     0.1281099791756699,
+     0.16944496197715309
+    ]
+   },
+   "A_only": {
+    "dti": 0.033293417665161515,
+    "ci95": [
+     0.023815312334713765,
+     0.044556311894923775
+    ]
+   },
+   "B_only": {
+    "dti": 0.10535632049455934,
+    "ci95": [
+     0.08761805267722633,
+     0.12231345064209857
+    ]
+   },
+   "disagreement_post": {
+    "dti": 0.036987866329419784,
+    "ci95": [
+     0.0250504329693836,
+     0.05083086724367956
+    ]
+   },
+   "random": {
+    "dti": 0.08042564781050282,
+    "ci95": [
+     0.0702226099128376,
+     0.09097325665223467
+    ]
+   },
+   "E3_single_B_quota": {
+    "dti": 0.15445570375023357,
+    "ci95": [
+     0.13315586609202143,
+     0.17532709332925617
+    ]
+   }
+  },
+  "all_arms_filled": true
+ },
+ "offcatalogue": {
+  "evidence_class": "OFFCAT-DTI",
+  "evaluator": "gems52-offcatalogue-v1",
+  "note": "diagnostic proxy only; cannot promote",
+  "all_arms": {
+   "single_A": {
+    "dti": 0.07114399007641914,
+    "ci95": [
+     0.05132147031233598,
+     0.09249561447608859
+    ]
+   },
+   "single_B": {
+    "dti": 0.09063233058198746,
+    "ci95": [
+     0.07894141125604572,
+     0.10232369991227235
+    ]
+   },
+   "union_max": {
+    "dti": 0.08974704496140959,
+    "ci95": [
+     0.07443066338391408,
+     0.10685838851103774
+    ]
+   },
+   "A_only": {
+    "dti": 0.06806728150962511,
+    "ci95": [
+     0.04663604863298911,
+     0.0923423141001494
+    ]
+   },
+   "B_only": {
+    "dti": 0.08637881794598883,
+    "ci95": [
+     0.06979555885889449,
+     0.10300029036115715
+    ]
+   },
+   "disagreement_post": {
+    "dti": 0.06568174762386142,
+    "ci95": [
+     0.043691444750957584,
+     0.09275195920367632
+    ]
+   },
+   "random": {
+    "dti": 0.08364112626178799,
+    "ci95": [
+     0.0739712831801301,
+     0.09289580559114678
+    ]
+   },
+   "E3_single_B_quota": {
+    "dti": 0.09079794715460401,
+    "ci95": [
+     0.07679178640648618,
+     0.10653642983196332
+    ]
+   }
+  },
+  "all_arms_filled": true
+ },
+ "offcatalogue_b": {
+  "evidence_class": "OFFCAT-DTI",
+  "evaluator": "gems52-offcatalogue-b-v1",
+  "note": "amendment 74a: catalogue-distance cut 0 px, so trace extensions are included. Diagnostic proxy only; cannot promote.",
+  "all_arms": {
+   "single_A": {
+    "dti": 0.07082123192384968,
+    "ci95": [
+     0.05192525762374927,
+     0.0898010199716841
+    ]
+   },
+   "single_B": {
+    "dti": 0.10745611103947131,
+    "ci95": [
+     0.09689372718175394,
+     0.11762726226606782
+    ]
+   },
+   "union_max": {
+    "dti": 0.10270255023426396,
+    "ci95": [
+     0.08889584013637536,
+     0.11694788445504423
+    ]
+   },
+   "A_only": {
+    "dti": 0.058766745100434316,
+    "ci95": [
+     0.04090532391608326,
+     0.08049894548265023
+    ]
+   },
+   "B_only": {
+    "dti": 0.08276327150178922,
+    "ci95": [
+     0.0678776290734622,
+     0.09712547673640123
+    ]
+   },
+   "disagreement_post": {
+    "dti": 0.05707672641836849,
+    "ci95": [
+     0.03835925907008237,
+     0.0812754064112082
+    ]
+   },
+   "random": {
+    "dti": 0.07386392495766311,
+    "ci95": [
+     0.06493844852012597,
+     0.08283510496502125
+    ]
+   },
+   "E3_single_B_quota": {
+    "dti": 0.10432641876177927,
+    "ci95": [
+     0.09240697096723617,
+     0.11740499254799645
+    ]
+   }
+  },
+  "all_arms_filled": true
+ },
+ "independence": {
+  "max_abs_rho": 0.15264314978028384,
+  "allow_exchange": true,
+  "blocks": 2089,
+  "negative_class": "held-out catalogue-zero proxies, not verified absence"
+ },
+ "canary": {
+  "max_alarm_across_folds": 0.6710397630420529,
+  "any_alarm": false
+ },
+ "exchange": {
+  "total_pseudo_pixels": 10812,
+  "allowed": true,
+  "pixels_a_to_b": 2912,
+  "pixels_b_to_a": 7900
+ },
+ "view_a_heldout_auc": [
+  0.5063455875058,
+  0.5992567026369523,
+  0.4672256107843842,
+  0.4920913284933795
+ ],
+ "view_b_heldout_auc": [
+  0.6626537086641664,
+  0.768707374146484,
+  0.6114442902669032,
+  0.6957117488005737
+ ],
+ "view_a_offcatalogue_auc": [
+  0.5163170235375167,
+  0.41250942775600247,
+  0.6158182937019622,
+  0.5500061806663313
+ ],
+ "view_b_offcatalogue_auc": [
+  0.52892665956881,
+  0.5238823717300183,
+  0.594278176771722,
+  0.5328515051486089
+ ],
+ "lane": {
+  "surface": {
+   "literal": "PASS",
+   "policy": "PASS",
+   "max_spearman": 0.1517218939748482,
+   "max_near_3px_fraction": null,
+   "policy_max_near_3px_fraction": null,
+   "probes": 14,
+   "identical_to_a_prior": false
+  },
+  "dots": {
+   "literal": "DUPLICATE/STOP",
+   "policy": "DUPLICATE/STOP",
+   "max_spearman": 0.1517218939748482,
+   "max_near_3px_fraction": 1.0,
+   "policy_max_near_3px_fraction": 0.8719126785998832,
+   "probes": 14,
+   "identical_to_a_prior": false
+  },
+  "scored_only": {
+   "registry": "data/scored/*.tif + data/reference/h33-2-b2-zeros.tif",
+   "n_priors": 13,
+   "surface": {
+    "literal": "PASS",
+    "policy": "PASS",
+    "max_spearman": 0.05340512001126167
+   },
+   "dots": {
+    "literal": "DUPLICATE/STOP",
+    "policy": "PASS",
+    "max_near_share": 1.0,
+    "policy_max_near_share": 0.5438997184894035,
+    "max_near_source": "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    "n_offenders": 1,
+    "universal_coverage_probes": 1
+   }
+  }
+ },
+ "not_union": {
+  "dots_shared_with_view_A": 2163,
+  "dots_shared_with_view_B": 6884,
+  "dots_shared_with_union_max": 6101,
+  "jaccard_with_union_max": 0.08815582238790874,
+  "spearman_field_vs_unionmax": 0.5689924437815828,
+  "verdict": "PASS"
+ },
+ "raster": {
+  "file": "gems52-h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z.tif",
+  "sha256": "de580306e2cb6460fced1b745d1d40ff9735fb5497d493a56cca7630ad2a0ef7",
+  "bytes": 140798,
+  "dots": 37654,
+  "validator": {
+   "path": "/home/user/GEMSDOE52/submission/gems52-h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z.tif",
+   "bytes": 140798,
+   "sha256": "de580306e2cb6460fced1b745d1d40ff9735fb5497d493a56cca7630ad2a0ef7",
+   "bands": 1,
+   "dtype": "float32",
+   "crs": "EPSG:32611",
+   "width": 3292,
+   "height": 3730,
+   "bounds": [
+    243350.0,
+    4135550.0,
+    572550.0,
+    4508550.0
+   ],
+   "ref_bounds": [
+    243350.0,
+    4135550.0,
+    572550.0,
+    4508550.0
+   ],
+   "transform": [
+    100.0,
+    0.0,
+    243350.0,
+    0.0,
+    -100.0,
+    4508550.0
+   ],
+   "nodata": null,
+   "blocksize": [
+    256,
+    256
+   ],
+   "fixture_grid": false,
+   "has_validity_mask": false,
+   "nan_pixels": 0,
+   "infinity_pixels": 0,
+   "n_nan": 0,
+   "min": 0.0,
+   "max": 1.0,
+   "mean": 0.0030664964579045773,
+   "n_nonzero": 37654,
+   "mass": 37654.0,
+   "mass_outside_footprint": 0,
+   "problems": [],
+   "ok": true,
+   "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  }
+ },
+ "template_exact_twin": {
+  "file": "gems52-h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z-template-nan.tif",
+  "sha256": "dee4ee5ee364ae2dae4b684e9f35cbf0a07216b75f13369630bc24cc5d65efd2",
+  "bytes": 1582635
+ },
+ "emission": {
+  "available": true,
+  "evidence_class": "MEASURED",
+  "rows": 37654,
+  "donor_rank_min": 0.98,
+  "receiver_rank_interval": [
+   0.35,
+   0.65
+  ],
+  "emitted_by_class": {
+   "neither view confident at the preregistered thresholds": 33970,
+   "consensus: both views confident": 492,
+   "B-only: B confident, A abstains (suspect surface artefact)": 3191,
+   "A-only: A confident, B abstains (candidate buried structure)": 1
+  },
+  "share_of_emission": {
+   "neither view confident at the preregistered thresholds": 0.9021617889201679,
+   "consensus: both views confident": 0.01306634089339778,
+   "B-only: B confident, A abstains (suspect surface artefact)": 0.0847453125829925,
+   "A-only: A confident, B abstains (candidate buried structure)": 2.6557603441865406e-05
+  },
+  "a_only_cells": 1,
+  "b_only_cells": 3191,
+  "note": "classification measured on the shipped raster, not projected; 'neither view confident' cells are there because the 3 px lattice has to be filled to the budget, not because either view selected them"
+ },
+ "submission_name": "h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z",
+ "note": "H83 cotrain: geophysical vs surface disagreement, off-catalogue instrument, E3, 37654 dots 3px, >200m off catalogue; research-only",
+ "submission_slots_used": 0,
+ "verdict": "negative",
+ "verdict_reason": "paired CI lower bound against single_B on gems52-pooled-hide-v1 is -0.161887; the frozen rule requires > 0",
+ "download": "YES",
+ "submit": "NO - research artefact only"
+}

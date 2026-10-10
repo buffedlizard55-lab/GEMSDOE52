@@ -1,0 +1,34 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Step-by-step submission instructions for DOE GEMS #306, the causes of the [0,1] rejection, and the H84 verdict."><title>How to submit, and whether the H84 file may be submitted - GEMSDOE52</title><link rel="stylesheet" href="assets/ctd5.css"></head><body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a><a href="index.html">Current round</a><a href="h84.html">H84 result</a><a href="h84-executive-summary.html">How to submit</a><a href="validator.html">Check a file</a><a href="h82.html">H82</a><a href="h82-sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header><main id="main">
+<section class="hero"><div>
+<div class="eyebrow">H84 &middot; executive summary &middot; how to submit</div>
+<h1>Two questions, answered separately</h1>
+<div class="notice" role="note"><strong>Verdict: negative</strong><p><b>OK to download?</b> YES — safe to download and inspect</p><p><b>OK to submit to DrivenData?</b> NO — research artefact only. Uploading it would spend a weekly slot on a candidate that has not beaten the incumbent on the hide-and-recover instrument, or that failed a lane gate. Download it, read it, do not upload it.</p></div>
+<div class="actions"><a class="button" href="downloads/h84-candidate.tif" download>Download the H84 GeoTIFF &#8595;</a><a class="button secondary" href="downloads/h84-candidate.zip" download>Single-TIFF ZIP</a><a class="button secondary" href="downloads/gems52-h84-hva-ellipse-B-37654px-20261010T204630Z-a-only-reasoning.csv" download>A-only geological reasoning CSV</a><a class="button secondary" href="validator.html">Check any file in your browser</a></div>
+<p class="fileline">141,678 bytes &middot; SHA-256 <code>6bb18056c521a1a6a7bcefa75f3be7cb37653b8066efd4252a8b5c096b90b73e</code> &middot; submission name <code>h84-hva-ellipse-B-37654px-20261010T204630Z</code> &middot; note (126/140): <code>H84: View-B + DVA2 + harmonic variogram-ellipse anisotropy (8-dir LS fit, lags 100-600m); 200m ring cut; binary dots; research</code></p>
+<p>Primary arm <code>B_DVA2_HVA</code>: HOLDOUT-DTI 0.190147 [0.168893, 0.211154] vs current
+holdout best <code>B_DVA2</code> 0.192829; paired -0.002682
+[-0.005505, 0.000177]. <span class="small">HOLDOUT-DTI: evaluator <code>gems52-pooled-hide-v1</code>, 53,186 withheld positive pixels, 9,400 dots per fold per arm, 95% paired cluster bootstrap, 1000 draws. holdout DTI does not rank board scores here (Spearman -0.10, knowledge/10).</span></p>
+</div></section>
+<hr class="divider">
+
+<section><h2>If you decide to submit it: the exact steps</h2>
+<ol>
+<li><b>Download</b> <a href="downloads/h84-candidate.tif" download>h84-candidate.tif</a> (141,678 bytes)
+or the <a href="downloads/h84-candidate.zip" download>ZIP</a> (same bytes inside).</li>
+<li><b>Check the file you actually downloaded</b> on <a href="validator.html">the browser checker</a>; its SHA-256
+must be <code>6bb18056c521a1a6a7bcefa75f3be7cb37653b8066efd4252a8b5c096b90b73e</code>. A different hash means a truncated file or an HTML error page saved
+as <code>.tif</code>.</li>
+<li><b>Sign in</b> at <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">the competition page</a> and open <em>Submit</em>.</li>
+<li><b>Upload.</b> Values are exactly {0, 1}, 0 NaN, 0 infinite, 0.0 outside
+the footprint &mdash; the portal&rsquo;s <code>Predicted values must be in range [0, 1]</code> rule cannot fire.</li>
+<li><b>Name</b> <code>h84-hva-ellipse-B-37654px-20261010T204630Z</code></li>
+<li><b>Note</b> (126 of 140 characters): <code>H84: View-B + DVA2 + harmonic variogram-ellipse anisotropy (8-dir LS fit, lags 100-600m); 200m ring cut; binary dots; research</code></li>
+</ol>
+<p class="small">This repository cannot perform steps 3&ndash;6 (no credentials) and spends no slot.</p></section>
+<hr class="divider">
+<section><h2>Fixing &ldquo;Predicted values must be in range [0, 1]&rdquo;</h2>
+<div class="table-wrap"><table class=""><thead><tr><th>Cause</th><th>How to recognise it</th><th>Fix</th></tr></thead><tbody><tr><td>NaN or a NoData sentinel inside the raster</td><td>The checker reports NaN &gt; 0, or a huge negative minimum with a GDAL_NODATA tag</td><td>Write 0.0 everywhere you do not predict a fault; write no NaN at all (repository fix, knowledge/03 N-5).</td></tr><tr><td>The downloaded file is not the file you think</td><td>SHA-256 differs; the file is a few hundred bytes; a text editor shows HTML</td><td>Re-download; compare the hash.</td></tr><tr><td>Unnormalised scores (log-odds, z-scores, distances)</td><td>min/max far outside [0,1]</td><td>Rescale to [0,1] or emit binary {0,1}.</td></tr><tr><td>Wrong dtype (float64, int16)</td><td>BitsPerSample 64/16 or SampleFormat not 3</td><td>Write float32.</td></tr></tbody></table></div>
+<p class="small">Official rules: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/</a> &mdash; single band, float32, EPSG:32611,
+100 m, same bounds as the training data, probabilities in [0, 1]; distance-weighted Tversky index with
+&alpha; = 0.2, &beta; = 0.8, triangular kernel R = 300 m.</p></section>
+</main></body></html>

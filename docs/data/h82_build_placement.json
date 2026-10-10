@@ -1,0 +1,15 @@
+{
+ "stage": "build",
+ "dots": 37654,
+ "pool_px": 4325298,
+ "eligible_px": 4593171,
+ "ring_excluded_m": 200.0,
+ "min_cat_dist_m": 223.60679774997897,
+ "median_cat_dist_m": 1562.0499351813307,
+ "dots_within_300m_of_catalogue_pct": 10.798321559462474,
+ "dots_outside_domain": 0,
+ "union_dots": 37654,
+ "a_dots": 37654,
+ "b_dots": 37654,
+ "started_utc": "2026-10-09T21:10:21+00:00"
+}
