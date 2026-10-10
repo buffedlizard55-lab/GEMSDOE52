@@ -3533,6 +3533,50 @@
    "how_we_know": "Organiser page fetched 2026-10-10 (page/967, chunk 1). No organiser receipt for either container exists in the repository.",
    "handling": "Flagged. The owner should decide the container before any upload. The NaN-outside twin is the template layout and is not in this round.",
    "disposition": "open: owner decision. Flagged. The owner should decide the container before any upload. The NaN-outside twin is the template layout and is not in this round."
+  },
+  {
+   "id": "IR-H93-001",
+   "round": "H93 (2026-10-10)",
+   "severity": "medium",
+   "status": "open - partial repair in H88",
+   "title": "H87 replaced docs/index.html with a stand-alone page; check_site.py baseline fails",
+   "what_it_is": "scripts/check_site.py asserts historical strings (H55/H57/H58/R5 etc.) on docs/index.html. The H87 session rewrote that file as a stand-alone 252-line page, dropping the current-first archive structure (no ARCHIVE-START/END markers). Running check_site.py at commit bc26fe2 already fails those assertions; this is pre-existing, not caused by H93.",
+   "how_we_know": "python3 scripts/check_site.py at bc26fe2 (this session) fails the historical assertions; grep -c ARCHIVE-START docs/index.html = 0.",
+   "handling": "H93 restores a current-first index.html with the H87 page preserved verbatim as the archive block. The older pre-H87 archive content lives in docs/archive-*.html files and is linked, not re-inlined. check_site.py itself is not forked; repairing its expectations is queued.",
+   "disposition": "Follow-up round: decide whether to rebuild legacy_index_body() from docs/archive-*.html."
+  },
+  {
+   "id": "IR-H93-002",
+   "round": "H93 (2026-10-10)",
+   "severity": "medium",
+   "status": "superseded by H88",
+   "title": "H87's PROMOTE verdict was a build receipt, not a holdout validation",
+   "what_it_is": "docs/index.html (H87) displays 'VERDICT: PROMOTE' but evidence/h87_build.json states evidence_class 'HOLDOUT-DTI (not yet run; this is the build receipt, not a score)'. AGENTS.md forbids spending a slot on a candidate that has not beaten the holdout best; a PROMOTE label without a holdout is exactly what IR-H85-003 withdrew for H83.",
+   "how_we_know": "evidence/h87_build.json read this session; README.md H87 block lists 'No holdout DTI score yet' as limitation 1.",
+   "handling": "H93's index block relabels H87 as research-only and carries its own holdout-validated verdict.",
+   "disposition": "No slot was spent on H87; nothing to unwind."
+  },
+  {
+   "id": "IR-H93-003",
+   "round": "H93 (2026-10-10)",
+   "severity": "low",
+   "status": "documented",
+   "title": "H61 re-run in this sandbox: pooled DTI exact, per-fold and block statistics jitter ~1e-3",
+   "what_it_is": "Re-running scripts/run_h61.py all in this fresh sandbox reproduces the pooled controls exactly (single_B 0.174571, random 0.080426) and the per-fold OOF AUCs to 4 decimals, but per-fold DTIs and the block-level independence correlations drift by up to ~1e-3 (e.g. independence max|rho| 0.133065 -> 0.133685; fold-0 single_B DTI 0.112910 -> 0.113026). Attributed to BLAS/library-level float nondeterminism across environments, not to any code change (runner and shared modules unmodified).",
+   "how_we_know": "git diff of evidence/h61_*.json after the re-run; control reproduction inside run_h93 (tolerance 1e-3) passes.",
+   "handling": "All H93 numbers use THIS session's re-run consistently; committed H61 receipts remain the historical record.",
+   "disposition": "No action needed; if bit-exact replays are ever required, pin the BLAS build."
+  },
+  {
+   "id": "IR-H93-004",
+   "round": "H93 (2026-10-10)",
+   "severity": "medium",
+   "status": "logged, not waived",
+   "title": "H93 dots lane: near-3px 0.7275 vs own H83-E3 prior; random control 0.20 confirms real overlap",
+   "what_it_is": "The H93 emission's dots-phase lane gate measured 72.75% of dots within 3 px of gems52-h83-offcatalogue-cotrain-37654px-e3 (policy verdict DUPLICATE/STOP). A matched control (5 unspaced random draws and one spacing_select-placed random field of 37,654 dots from the same pool) scores ~0.20 against the same prior, so this is NOT the universal-probe registry artefact: the overlap is real. Both files are 37,654-dot, 200m-ring-excluded, 3px-spaced emissions from View-B-family fields, and their top-ranked area is largely the same (the H73/H75 denominator wall).",
+   "how_we_know": "evidence/h93_lane_control.json (this session).",
+   "handling": "Logged as duplicate per protocol rule 1; no quota re-placement attempted because (a) the preregistration contains no re-placement amendment and (b) the verdict is already negative on the paired CI [-0.00167, +0.00878] alone.",
+   "disposition": "Next round: if a B-family emission is shipped again, preregister quota placement against the full-census informative supports BEFORE the fit (H75 amendment-65a precedent) or reduce budget into the non-halo capacity."
   }
  ],
  "merge_note": "Merged registry/irregularities.json: main's entries (including the parallel H66 round's IR-H66-001..010) plus this round's IR-H67-001..011. This round was labelled H66 in its own receipts and was renamed H67 before merge because main merged a different H66 first (PR #56); the IDs were renumbered wholesale so no ID carries two meanings. See knowledge/45a_amendment_2026-10-09_H67_rename.md. IR-H67-002 (in-domain nodata sentinels collapse every rank channel) and IR-H67-008 (probe classification flips with the structuring element, and this round's lane verdict depends on it) are the two that change a result; IR-H67-005 and IR-H67-007 change how a shared instrument must be read. | H77cond merge: this round was executed as H74 and renamed to H77cond before merge because a parallel session merged a different H74 first (PR #72) and a third took H75; see IR-H77cond-001. The rename is identifier-only and the preregistration's pinned SHA-256 still validates. IR-H77cond-002 records a shared-tool repair to scripts/check_site.py surfaced by that merge. IR-H77cond-003 records that filename, receipt and git dating are all individually unsound in this repository, and that the duplicate guard was therefore made dating-independent. | H82 merge (2026-10-09): union of both entry sets by id; 8 H82 entries added (IR-H82-001..IR-H82-008); no existing entry was edited or removed. | H89 merge: IR-H89-001..006 appended; main entries kept verbatim; no id reused."
