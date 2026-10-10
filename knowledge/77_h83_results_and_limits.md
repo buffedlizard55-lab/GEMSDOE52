@@ -117,6 +117,21 @@ bar is 0.3361**, and 0.3195 is a beat-the-champion bar, not a podium bar. Any fu
 quotes 0.3195 must say which of the two it means. All of these are PUBLIC-BOARD figures:
 organiser-published and team-level, **not** ORGANIZER-CONFIRMED for any file in this repository.
 
+## 4b. Rounds that landed in parallel
+
+Three other rounds merged to `main` while H83 was being measured; **none spent a submission slot**:
+
+- **H84 — harmonic variogram-ellipse anisotropy**: NEGATIVE, research artefact only
+  (`evidence/h84_run_card.json`, `knowledge/76_h84_results_and_limits.md`).
+- **H85 — holdout of the H83 geo-concordance field**: NEGATIVE and, like this round, **below
+  random** on the mandated instrument (`knowledge/78_...`, IR-H85-001..010).
+- **H83 — multi-band structural concordance + geothermal proximity**: a *different* round that also
+  used the label H83, with no holdout validation run at all.
+
+Two independent rounds (this one and H85) both landing below random is the strongest cross-check in
+the repository that the fault is not in the disagreement/concordance *definition* — it is in what a
+37,654-cell 3 px lattice costs. See §6 item 1.
+
 ## 5. Irregularities logged this round
 
 `IR-H83-001` … `IR-H83-005` in `registry/irregularities.json` (223 entries total).

@@ -41,6 +41,28 @@ Keep known-catalogue labels separate from verified fault absence, public partici
 
 This session's working branch is fixed by Arena. Do not change branches. Keep raw competition data and large intermediate arrays under ignored `data/` and `work/`. Publish small audit receipts, the unique compressed prediction raster and its review table.
 
+<!--H85-AGENTS-->
+## Current H85 continuation (2026-10-10)
+Read `README.md`'s H85 block first: it carries the standing brief verbatim, and `knowledge/77` is the same text. Then
+`knowledge/78_h85_session_review_2026-10-10.md` (why 0.2778, the metric identity, the H85 holdout, ranked hypotheses,
+irregularities) and `registry/irregularities.json` IR-H85-001…010.
+
+Facts the next round must respect:
+- **H85 is download-only.** Its catalogue-free geo-concordance field scores 0.072384 HOLDOUT-DTI against a 0.080426 random
+  control on the shared instrument. Do not spend a slot on it. The H83 "SUBMIT YES" claim is withdrawn (IR-H85-003).
+- **Self-match:** when a candidate has a copy in `docs/downloads/`, exclude that copy by name before any uniqueness or lane
+  check (IR-H85-001; `scripts/run_h85.py`). `gates.find_priors` only excludes the exact output path and its basename.
+- **Placement, not the field, dominated this round:** the same field placed clumped scores 0.017201, placed at 3 px spacing
+  0.072384. Always place with `nodes.spacing_select` and report the placement ablation.
+- **Zero-outside container:** `write_geotiff_portal_exact(..., outside="zero")` is the only container with every pixel finite
+  in [0,1] (IR-H85-004). The default NaN container still exists for other callers.
+- **Band 6 is radiometric total count by bytes** (ρ = 1.0000 with GeoDAWN TC) despite its magnetic tag (IR-H85-005).
+- **Access:** gdr.openei.org (INGENIOUS GDR 1391, incl. the 2-m temperature survey never used here) is not on the sandbox
+  egress allowlist. Next round needs a user download with SHA pins, or an owner-approved allowlist entry.
+- **Round name:** main already holds H84 (another session). This session's round is H85; use the next free identifier
+  when merging, and rename identifier-only (precedent IR-H84-006).
+<!--/H85-AGENTS-->
+
 <!--H84-AGENTS-->
 ## Current H84 continuation (2026-10-10)
 Preregistered and run as H83, renamed H84 at merge (IR-H84-006). The parallel-session H83 round on main is
