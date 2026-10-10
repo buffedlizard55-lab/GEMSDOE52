@@ -1,0 +1,36 @@
+{
+  "round": "H88",
+  "hypothesis_document": "knowledge/81_hypotheses_H88_preregistered.md",
+  "hypothesis_sha256": "7f50e069e0a1594fb66bdcd9be075a0eda52e6d531fad12b4e6ed95a03de71f3",
+  "registered_utc": "2026-10-10T21:55:57Z",
+  "runner": "scripts/run_h88.py",
+  "frozen_before_any_fit": true,
+  "thresholds": {
+    "S1_note": "View-A sufficiency gate not re-litigated (eight consecutive failures, AGENTS.md settled)",
+    "ABANDON_R": 0.6,
+    "canary_alarm_auc": 0.9,
+    "zero_tax_m": 200.0,
+    "buffer_px": 80,
+    "budget_dots_per_fold_per_arm": 9400,
+    "budget_total": 37654,
+    "min_spacing_px": 3.0,
+    "rank_limit": 0.9,
+    "near_limit": 0.7,
+    "near_radius_px": 3.0,
+    "union_jaccard_bar": 0.5,
+    "a_confident_quantile": 0.9,
+    "b_abstain_interval": [0.35, 0.65],
+    "promote_rule": "B_ABS minus single_B paired 95% CI lower bound > 0 AND canaries pass AND union check passes",
+    "control_reproduction": {"single_B": 0.174571, "random": 0.080426, "tolerance": 1e-3}
+  },
+  "evaluator_version": "gems52-pooled-hide-v1",
+  "lane": "co-training View A (potential field/subsurface) x View B (surface), disagreement as discovery signal",
+  "abs_channels": {
+    "source_band": 15,
+    "source_description": "Depth to basement surface - thickness of sedimentary cover",
+    "axes": [[0, 1], [1, 0], [1, 1], [1, -1]],
+    "offsets_px": [1, 3],
+    "pair_offset_px": 6,
+    "channels": ["ABS_step3", "ABS_step1", "ABS_pair6", "ABS_cover"]
+  }
+}

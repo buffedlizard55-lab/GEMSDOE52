@@ -29,6 +29,28 @@ th{color:var(--accent);font-weight:600}
 </head>
 <body>
 <div class="container">
+<!--H88-EXEC-START-->
+<div class="card" style="border:2px solid var(--accent)">
+<h2 style="margin-top:0">H88 — how to make a submission into the contest (current status)</h2>
+<p><strong>Current file:</strong> <a href="downloads/gems52-h88-abs-cotrain-37654px-20261010T223629Z-zeros.tif">gems52-h88-abs-cotrain-37654px-20261010T223629Z-zeros.tif</a>
+(SHA-256 <code>b37c2dc8e5ad4bde121edb7ef21b4e05c2d9d2ceebfe8604180627866b726759</code>, 37,654 positive pixels,
+values exactly {0,1}, zeros outside the footprint).</p>
+<p><strong>Verdict:</strong> NEGATIVE — DO NOT SUBMIT — failing gate: ci, lane.</p>
+<ol>
+<li>Download the <code>.tif</code> (or <code>.zip</code>) from the <a href="index.html">front page</a>.</li>
+<li>Open the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">DrivenData “New submission” form</a> (login required).</li>
+<li>Under <strong>File to submit</strong>, choose the downloaded <code>.tif</code> (or the zip). It must match the
+submission format's CRS, shape, and geotransform — ours matches <code>sample_submission.tif</code> byte-for-byte
+on the grid. If you ever see “Predicted values must be in range [0, 1]”, the file carried NaNs outside the
+footprint; the H88 zeros-outside container cannot produce that error.</li>
+<li>Paste the <strong>submission name</strong> <code>h88-abs-cotrain-37654px</code> and the <strong>note</strong>
+<code>H88 antithetic basement step + view B co-training, A>B disagreement strata, 37654px, 3px spacing</code> (a short comment to tell submissions apart later).</li>
+<li>Click Submit. The score appears on the portal; record the receipt as ORGANIZER-CONFIRMED.</li>
+</ol>
+<p>Every number on this site is HOLDOUT-DTI (local evaluator) or OWNER-REPORTED until such a receipt
+exists. NO CERTIFIED LEADERBOARD GAIN is advertised.</p>
+</div>
+<!--H88-EXEC-END-->
 
 <p><a href="index.html">← Back to Submission</a></p>
 
