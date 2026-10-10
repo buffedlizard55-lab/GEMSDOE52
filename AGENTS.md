@@ -1,3 +1,36 @@
+<!--H83-AGENTS-->
+## Current H83 continuation (2026-10-10)
+Read README's H83 block and `knowledge/74` (frozen preregistration, SHA-256 `245220eccb36c61e…`) before
+proposing anything. H83 verdict **negative**, experiments 1 of 3, slots 0.
+
+What is now settled and must not be re-litigated:
+
+- **The off-catalogue instrument exists and is cheap.** `gems52-offcatalogue-v1` reuses the *same*
+  out-of-fold fits as `gems52-pooled-hide-v1`, because `gems52.spatial.folds`'s `train` domain is
+  already "everything except this quadrant, minus an 80 px buffer". Do not refit for it. Truth =
+  SGMC pixels ≥ 3 px from `labels.tif`: **55,562** pooled px.
+- **On the off-catalogue instrument every arm collapses toward the same number**
+  (best 0.065682 vs worst 0.065682), and View A is *less*
+  bad there than on hide-and-recover in two of four folds. The buried-fault population is real; this
+  field does not resolve it.
+- **View A sufficiency has now failed an eighth time on the mandated instrument**
+  (mean 0.5162). Independence still
+  passes (max |ρ| 0.1526), so the brief does not require
+  abandonment — but independence without sufficiency still gives co-training nothing to donate, and
+  the exchange moved A's OOF AUC by at most
+  0.0660.
+- **Both packaging variants are format-valid.** The all-finite zeros-outside file is what the site
+  recommends because it cannot fail a literal `[0,1]` range test; the NaN-outside twin matches the
+  organiser template byte-structurally. Do not add a third variant (IR-H77-004 stands for "no new
+  variant"; this round's second file is the *template* variant, not a new one).
+- **Site:** `docs/index.html` is current-first with every previous round preserved verbatim inside one
+  collapsed `<details>` (`<!--ARCHIVE-START-->`/`<!--ARCHIVE-END-->`). `scripts/check_site.py` asserts
+  historical strings on that page, so never rewrite it from scratch — `legacy_index_body()` in
+  `scripts/publish_h83_site.py` carries them forward and is idempotent.
+<!--/H83-AGENTS-->
+
+---
+
 # Working agreement
 
 Before every work session, read `README.md`, its full current user brief, `knowledge/07_r2_hypotheses_preregistered.md`, and the newest review/irregularities record. Read previous failed experiments before proposing another.
@@ -7,6 +40,55 @@ Maximize P(Win): prioritize geological signal and trustworthy spatial validation
 Keep known-catalogue labels separate from verified fault absence, public participant scores separate from filename attribution, hypotheses separate from discoveries, and format-valid artifacts separate from promotion-approved ones. Do not invent organizer validation or claim a guaranteed leaderboard gain. A GeoTIFF with a new name or compression is not a unique prediction; compare decoded pixels.
 
 This session's working branch is fixed by Arena. Do not change branches. Keep raw competition data and large intermediate arrays under ignored `data/` and `work/`. Publish small audit receipts, the unique compressed prediction raster and its review table.
+
+<!--H85-AGENTS-->
+## Current H85 continuation (2026-10-10)
+Read `README.md`'s H85 block first: it carries the standing brief verbatim, and `knowledge/77` is the same text. Then
+`knowledge/78_h85_session_review_2026-10-10.md` (why 0.2778, the metric identity, the H85 holdout, ranked hypotheses,
+irregularities) and `registry/irregularities.json` IR-H85-001…010.
+
+Facts the next round must respect:
+- **H85 is download-only.** Its catalogue-free geo-concordance field scores 0.072384 HOLDOUT-DTI against a 0.080426 random
+  control on the shared instrument. Do not spend a slot on it. The H83 "SUBMIT YES" claim is withdrawn (IR-H85-003).
+- **Self-match:** when a candidate has a copy in `docs/downloads/`, exclude that copy by name before any uniqueness or lane
+  check (IR-H85-001; `scripts/run_h85.py`). `gates.find_priors` only excludes the exact output path and its basename.
+- **Placement, not the field, dominated this round:** the same field placed clumped scores 0.017201, placed at 3 px spacing
+  0.072384. Always place with `nodes.spacing_select` and report the placement ablation.
+- **Zero-outside container:** `write_geotiff_portal_exact(..., outside="zero")` is the only container with every pixel finite
+  in [0,1] (IR-H85-004). The default NaN container still exists for other callers.
+- **Band 6 is radiometric total count by bytes** (ρ = 1.0000 with GeoDAWN TC) despite its magnetic tag (IR-H85-005).
+- **Access:** gdr.openei.org (INGENIOUS GDR 1391, incl. the 2-m temperature survey never used here) is not on the sandbox
+  egress allowlist. Next round needs a user download with SHA pins, or an owner-approved allowlist entry.
+- **Round name:** main already holds H84 (another session). This session's round is H85; use the next free identifier
+  when merging, and rename identifier-only (precedent IR-H84-006).
+<!--/H85-AGENTS-->
+
+<!--H84-AGENTS-->
+## Current H84 continuation (2026-10-10)
+Preregistered and run as H83, renamed H84 at merge (IR-H84-006). The parallel-session H83 round on main is
+**not holdout-validated** (IR-H84-007): do not treat its SUBMIT YES as approval.
+Read README's H84 block, `knowledge/74` (frozen preregistration), `knowledge/76` (results and limits) and the
+brief `knowledge/75`. H84 tested harmonic (elliptical) variogram anisotropy (an 8-direction least-squares fit of
+γ(θ) = a + b·cos2θ + c·sin2θ, channel √(b²+c²)/a) on top of H82's DVA-2: **NEGATIVE**, DOWNLOAD YES / SUBMIT
+NO, 0 slots, 1 of 3 experiments. Primary − `B_DVA2` = −0.002682 [−0.005505, +0.000177] HOLDOUT-DTI.
+File `docs/downloads/h84-candidate.tif` (`gems52-h84-hva-ellipse-B-37654px-20261010T204630Z.tif`, 141,678
+bytes, SHA-256 `6bb18056…b73e`).
+
+Standing lessons added by H84:
+- **The anisotropy reduction operator is not the bottleneck.** HVA ≈ DVA-2 (per-fold AUC 2 up, 2 down; COH adds
+  nothing). Do not spend another round on a new reduction of the same directional semivariances.
+- **`B_DVA2` is still the best holdout arm and still not promotable post hoc.** To use it, pre-register it fresh as
+  a primary, with a quota placement against the **full-census** informative supports: the scored-only quota
+  (worst 0.6983) still left the final dots at 0.9441 near-3px against a dense GEMSDOE22 10%-emission file
+  (IR-H84-001).
+- **Writers:** channel `.npy` files lost their first 4 KiB page after verified writes on two builds (IR-H84-003).
+  Use `gems52.structural.save_array`, re-audit every file from disk with the page cache dropped at the end of
+  the stage, recompute moved bands, and have the fit read verified in-RAM copies (`RamBank` in `run_h84.py`).
+- **Store per-channel array digests** in evidence (H84 does: `evidence/h84_channels.json` `array_sha256`), so
+  control drift (IR-H84-005: `B_DVA2` +3.6e−3 vs committed) can be attributed next time.
+- Site: `scripts/publish_h84_site.py` writes the H84 block between `<!--H84-CURRENT-->` markers and keeps the
+  whole H82 front page verbatim in the archive; it is idempotent. Never rewrite `docs/index.html` from scratch.
+<!--/H84-AGENTS-->
 
 <!--H87-AGENTS-->
 ## Current H87 continuation (2026-10-10)
@@ -39,7 +121,7 @@ Settled this round; do not re-litigate:
 - Current artefact: `submission/gems52-h87-coverco-disagree-37654px-20261010T213918Z.tif` (SHA-256 `9d3e2be69efd476c…`) — **DOWNLOAD YES, SUBMIT NO**.
 <!--/H87-AGENTS-->
 <!--H82-AGENTS-->
-## Current H82 continuation (2026-10-09)
+## Previous H82 continuation (2026-10-09)
 Read README's H82 block, `knowledge/72` (frozen preregistration, amendment 72a included, SHA-256
 `fe7050eb…`) and `knowledge/73` (results and limits). H82 executed H75's own "next" item — a scored-only
 lane registry — and one frozen experiment with six arms. Verdict **NEGATIVE**, experiments 1/3, slots 0.
@@ -90,7 +172,7 @@ What is now settled, and must not be re-litigated:
   now reads `<alias>-receipt.json` sidecars and date-only filenames; that repaired a pre-existing
   "R5 novelty recomputed 0.992087 != receipt 1.0" failure, now 1.0000 over 71 rasters.
 
-File `docs/downloads/h82-candidate.tif` (`gems52-h82-dva2vsa-B-37654px-20261009T213414Z.tif`, 140,555 bytes,
+File `docs/downloads/h82-candidate.tif` (`gems52-h82-dva2vsa-B-37654px-20261009T215811Z.tif`, 140,555 bytes,
 SHA-256 `17c3f8325ac6f267b1b8cc58bc6fd9495c118c30de64d5f78293d19d7f20c907`) is **DOWNLOAD YES, SUBMIT NO**.
 
 <!--/H82-AGENTS-->

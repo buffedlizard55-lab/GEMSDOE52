@@ -1,6 +1,6 @@
 # 76 · H87 results and limits
 
-Round **H87**, 2026-10-10T21:39:57+00:00. Preregistration `knowledge/80_hypotheses_H87_preregistered.md`
+Round **H87**, 2026-10-10T21:43:11+00:00. Preregistration `knowledge/80_hypotheses_H87_preregistered.md`
 (SHA-256 `fdb4065a3c8376549e83f8b786882b188ebd7f830dd03187737223d00cba5286`), frozen before any fit and pinned by
 `registry/h87_preregistration.json`. Every number below is read from `evidence/h87_*.json`.
 

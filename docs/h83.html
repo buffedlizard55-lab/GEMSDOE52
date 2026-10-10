@@ -1,0 +1,286 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="H83: seven arms, two instruments, independence screen, exchange, gates, run card."><title>H83 full result - co-training on two instruments</title><link rel="stylesheet" href="assets/ctd5.css"></head><body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a><a href="index.html">Current round</a><a href="h83.html">H83 result</a><a href="h83-executive-summary.html">How to submit</a><a href="validator.html">Check a file</a><a href="h83-hypotheses.html">Hypotheses</a><a href="h83-sources.html">Sources</a><a href="h84.html">H84 (parallel)</a><a href="h85-executive-summary.html">H85 (parallel)</a><a href="h86-executive-summary.html">H86 (parallel)</a><a href="h83-parallel-executive-summary.html">H83 structcon (parallel)</a><a href="downloads/index.html">Archive</a></nav></header><main id="main">
+<section><h1>H83 &mdash; co-training on two instruments</h1>
+<div class="notice" role="note" style="border:2px solid #f0c4bf;background:#fdecea"><strong style="color:#b3261e">Verdict: NEGATIVE</strong><p><b>OK to download?</b> YES — safe to download and inspect</p><p><b>OK to submit to DrivenData?</b> NO — research artefact only; do not spend a weekly slot</p><p class="small">paired CI lower bound against single_B on gems52-pooled-hide-v1 is -0.161887; the frozen rule requires &gt; 0</p></div>
+<p>Hypothesis: two-view co-training disagreement (Blum &amp; Mitchell, COLT '98,
+doi:10.1145/279943.279962), evaluated on the mandated hide-and-recover instrument and on a new
+off-catalogue instrument whose truth is a fault compilation the competition catalogue does not
+contain.</p>
+<p class="small">Preregistration: <code>knowledge/74_hypotheses_H83_preregistered.md</code>,
+SHA-256 <code>245220eccb36c61ef209d587f148f501e08afdd418fd2440b98491a2992cd156</code>, frozen before any fit; pinned in
+<code>registry/h83_preregistration.json</code>. The runner refuses to start if either hash moves.</p>
+</section><hr class="divider">
+
+<section><h2>Mechanism</h2>
+<p>View A (potential-field/subsurface, 36 ch) and View B (surface DEM curvature + slope + radiometric band 6, 37 ch) are fitted per label-blind quadrant; independence is screened on 50 px blocks of held-out proxy negatives; one whole-segment, block-confined pseudo-label round follows; the discovery field is the rank difference A-B (A confident, B abstains = candidate buried structure).</p>
+<h3>The named non-fault process that could mimic it</h3>
+<p>A lithologic contact or a basin-fill thickness change: both make gravity/conductivity steps and basement-depth gradients with no fault. Second mimic: flight-line/grid seams in the airborne magnetic and radiometric grids. Surface branch: roads, canals and erosion lines, which is what B-only disagreement flags.</p></section><hr class="divider">
+
+<section><h2>HOLDOUT-DTI, all arms</h2>
+<div class="table-wrap"><table><thead><tr><th>Arm</th><th>DTI</th><th>95% CI</th><th>TPw</th><th>FPw</th><th>FNw</th></tr></thead><tbody><tr><td>single_B</td><td>0.174571</td><td>[0.152313, 0.196302]</td><td>8905.2</td><td>33409.2</td><td>44280.8</td></tr><tr><td>E3_single_B_quota</td><td>0.154456</td><td>[0.133156, 0.175327]</td><td>7863.6</td><td>33950.8</td><td>45322.4</td></tr><tr><td>union_max</td><td>0.149009</td><td>[0.128110, 0.169445]</td><td>7581.0</td><td>34056.3</td><td>45605.0</td></tr><tr><td>B_only</td><td>0.105356</td><td>[0.087618, 0.122313]</td><td>5335.6</td><td>35136.3</td><td>47850.4</td></tr><tr><td>random</td><td>0.080426</td><td>[0.070223, 0.090973]</td><td>4067.2</td><td>36044.9</td><td>49118.8</td></tr><tr><td>single_A</td><td>0.071954</td><td>[0.056636, 0.088566]</td><td>3629.5</td><td>35837.3</td><td>49556.5</td></tr><tr><td>disagreement_post</td><td>0.036988</td><td>[0.025050, 0.050831]</td><td>1859.4</td><td>36748.2</td><td>51326.6</td></tr><tr><td>A_only</td><td>0.033293</td><td>[0.023815, 0.044556]</td><td>1673.1</td><td>36850.2</td><td>51512.9</td></tr></tbody></table></div>
+<h3>OFFCAT-DTI, all arms</h3>
+<div class="table-wrap"><table><thead><tr><th>Arm</th><th>DTI</th><th>95% CI</th><th>TPw</th><th>FPw</th><th>FNw</th></tr></thead><tbody><tr><td>E3_single_B_quota</td><td>0.090798</td><td>[0.076792, 0.106536]</td><td>4766.4</td><td>35460.2</td><td>50795.6</td></tr><tr><td>single_B</td><td>0.090632</td><td>[0.078941, 0.102324]</td><td>4757.3</td><td>35446.5</td><td>50804.7</td></tr><tr><td>union_max</td><td>0.089747</td><td>[0.074431, 0.106858]</td><td>4709.9</td><td>35439.7</td><td>50852.1</td></tr><tr><td>B_only</td><td>0.086379</td><td>[0.069796, 0.103000]</td><td>4533.1</td><td>35614.8</td><td>51028.9</td></tr><tr><td>random</td><td>0.083641</td><td>[0.073971, 0.092896]</td><td>4393.9</td><td>36020.9</td><td>51168.1</td></tr><tr><td>single_A</td><td>0.071144</td><td>[0.051321, 0.092496]</td><td>3725.6</td><td>35858.5</td><td>51836.4</td></tr><tr><td>A_only</td><td>0.068067</td><td>[0.046636, 0.092342]</td><td>3565.1</td><td>36065.2</td><td>51996.9</td></tr><tr><td>disagreement_post</td><td>0.065682</td><td>[0.043691, 0.092752]</td><td>3439.1</td><td>36110.4</td><td>52122.9</td></tr></tbody></table></div>
+<p class="small">Neither table is a leaderboard score. HOLDOUT-DTI is
+<code>gems52-pooled-hide-v1</code> with 53,186 withheld
+positives; OFFCAT-DTI is <code>gems52-offcatalogue-v1</code> with
+55,562 withheld positives.</p></section><hr class="divider">
+
+<section><h2>Run card</h2>
+<p class="small"><a href="data/h83_run_card.json">data/h83_run_card.json</a> (machine-readable).</p>
+<pre style="white-space:pre-wrap;font-size:12.5px">{
+ &quot;round&quot;: &quot;H83&quot;,
+ &quot;hypothesis&quot;: &quot;Two-view co-training disagreement, evaluated on two instruments: the mandated hide-and-recover and a new off-catalogue instrument whose truth is a fault compilation the competition catalogue does not contain (SGMC at &gt;= 300 m from labels.tif).&quot;,
+ &quot;mechanism&quot;: &quot;View A (potential-field/subsurface, 36 ch) and View B (surface DEM curvature + slope + radiometric band 6, 37 ch) are fitted per label-blind quadrant; independence is screened on 50 px blocks of held-out proxy negatives; one whole-segment, block-confined pseudo-label round follows; the discovery field is the rank difference A-B (A confident, B abstains = candidate buried structure).&quot;,
+ &quot;named_non_fault_mimic&quot;: &quot;A lithologic contact or a basin-fill thickness change: both make gravity/conductivity steps and basement-depth gradients with no fault. Second mimic: flight-line/grid seams in the airborne magnetic and radiometric grids. Surface branch: roads, canals and erosion lines, which is what B-only disagreement flags.&quot;,
+ &quot;holdout&quot;: {
+  &quot;evidence_class&quot;: &quot;HOLDOUT-DTI&quot;,
+  &quot;evaluator&quot;: &quot;gems52-pooled-hide-v1&quot;,
+  &quot;withheld_positive_pixels&quot;: 53186,
+  &quot;dti&quot;: 0.036987866329419784,
+  &quot;ci95&quot;: [
+   0.0250504329693836,
+   0.05083086724367956
+  ],
+  &quot;paired_vs_single_B&quot;: {
+   &quot;delta&quot;: -0.13758349253545124,
+   &quot;ci95&quot;: [
+    -0.16188675700982544,
+    -0.11377642379877533
+   ]
+  },
+  &quot;shipped_arm_dti&quot;: {
+   &quot;disagreement_post&quot;: 0.036987866329419784,
+   &quot;union_max&quot;: 0.14900909797542158,
+   &quot;E3_single_B_quota&quot;: 0.15445570375023357
+  },
+  &quot;all_arms&quot;: {
+   &quot;single_A&quot;: {
+    &quot;dti&quot;: 0.07195422771451437,
+    &quot;ci95&quot;: [
+     0.05663648302475561,
+     0.08856584503981733
+    ]
+   },
+   &quot;single_B&quot;: {
+    &quot;dti&quot;: 0.17457135886487102,
+    &quot;ci95&quot;: [
+     0.1523129808950829,
+     0.19630189491073133
+    ]
+   },
+   &quot;union_max&quot;: {
+    &quot;dti&quot;: 0.14900909797542158,
+    &quot;ci95&quot;: [
+     0.1281099791756699,
+     0.16944496197715309
+    ]
+   },
+   &quot;A_only&quot;: {
+    &quot;dti&quot;: 0.033293417665161515,
+    &quot;ci95&quot;: [
+     0.023815312334713765,
+     0.044556311894923775
+    ]
+   },
+   &quot;B_only&quot;: {
+    &quot;dti&quot;: 0.10535632049455934,
+    &quot;ci95&quot;: [
+     0.08761805267722633,
+     0.12231345064209857
+    ]
+   },
+   &quot;disagreement_post&quot;: {
+    &quot;dti&quot;: 0.036987866329419784,
+    &quot;ci95&quot;: [
+     0.0250504329693836,
+     0.05083086724367956
+    ]
+   },
+   &quot;random&quot;: {
+    &quot;dti&quot;: 0.08042564781050282,
+    &quot;ci95&quot;: [
+     0.0702226099128376,
+     0.09097325665223467
+    ]
+   },
+   &quot;E3_single_B_quota&quot;: {
+    &quot;dti&quot;: 0.15445570375023357,
+    &quot;ci95&quot;: [
+     0.13315586609202143,
+     0.17532709332925617
+    ]
+   }
+  },
+  &quot;all_arms_filled&quot;: true
+ },
+ &quot;offcatalogue&quot;: {
+  &quot;evidence_class&quot;: &quot;OFFCAT-DTI&quot;,
+  &quot;evaluator&quot;: &quot;gems52-offcatalogue-v1&quot;,
+  &quot;note&quot;: &quot;diagnostic proxy only; cannot promote&quot;,
+  &quot;all_arms&quot;: {
+   &quot;single_A&quot;: {
+    &quot;dti&quot;: 0.07114399007641914,
+    &quot;ci95&quot;: [
+     0.05132147031233598,
+     0.09249561447608859
+    ]
+   },
+   &quot;single_B&quot;: {
+    &quot;dti&quot;: 0.09063233058198746,
+    &quot;ci95&quot;: [
+     0.07894141125604572,
+     0.10232369991227235
+    ]
+   },
+   &quot;union_max&quot;: {
+    &quot;dti&quot;: 0.08974704496140959,
+    &quot;ci95&quot;: [
+     0.07443066338391408,
+     0.10685838851103774
+    ]
+   },
+   &quot;A_only&quot;: {
+    &quot;dti&quot;: 0.06806728150962511,
+    &quot;ci95&quot;: [
+     0.04663604863298911,
+     0.0923423141001494
+    ]
+   },
+   &quot;B_only&quot;: {
+    &quot;dti&quot;: 0.08637881794598883,
+    &quot;ci95&quot;: [
+     0.06979555885889449,
+     0.10300029036115715
+    ]
+   },
+   &quot;disagreement_post&quot;: {
+    &quot;dti&quot;: 0.06568174762386142,
+    &quot;ci95&quot;: [
+     0.043691444750957584,
+     0.09275195920367632
+    ]
+   },
+   &quot;random&quot;: {
+    &quot;dti&quot;: 0.08364112626178799,
+    &quot;ci95&quot;: [
+     0.0739712831801301,
+     0.09289580559114678
+    ]
+   },
+   &quot;E3_single_B_quota&quot;: {
+    &quot;dti&quot;: 0.09079794715460401,
+    &quot;ci95&quot;: [
+     0.07679178640648618,
+     0.10653642983196332
+    ]
+   }
+  },
+  &quot;all_arms_filled&quot;: true
+ },
+ &quot;offcatalogue_b&quot;: {
+  &quot;evidence_class&quot;: &quot;OFFCAT-DTI&quot;,
+  &quot;evaluator&quot;: &quot;gems52-offcatalogue-b-v1&quot;,
+  &quot;note&quot;: &quot;amendment 74a: catalogue-distance cut 0 px, so trace extensions are included. Diagnostic proxy only; cannot promote.&quot;,
+  &quot;all_arms&quot;: {
+   &quot;single_A&quot;: {
+    &quot;dti&quot;: 0.07082123192384968,
+    &quot;ci95&quot;: [
+     0.05192525762374927,
+     0.0898010199716841
+    ]
+   },
+   &quot;single_B&quot;: {
+    &quot;dti&quot;: 0.10745611103947131,
+    &quot;ci95&quot;: [
+     0.09689372718175394,
+     0.11762726226606782
+    ]
+   },
+   &quot;union_max&quot;: {
+    &quot;dti&quot;: 0.10270255023426396,
+    &quot;ci95&quot;: [
+     0.08889584013637536,
+     0.11694788445504423
+    ]
+   },
+   &quot;A_only&quot;: {
+    &quot;dti&quot;: 0.058766745100434316,
+    &quot;ci95&quot;: [
+     0.04090532391608326,
+     0.08049894548265023
+    ]
+   },
+   &quot;B_only&quot;: {
+    &quot;dti&quot;: 0.08276327150178922,
+    &quot;ci95&quot;: [
+     0.0678776290734622,
+     0.09712547673640123
+    ]
+   },
+   &quot;disagreement_post&quot;: {
+    &quot;dti&quot;: 0.05707672641836849,
+    &quot;ci95&quot;: [
+     0.03835925907008237,
+     0.0812754064112082
+    ]
+   },
+   &quot;random&quot;: {
+    &quot;dti&quot;: 0.07386392495766311,
+    &quot;ci95&quot;: [
+     0.06493844852012597,
+     0.08283510496502125
+    ]
+   },
+   &quot;E3_single_B_quota&quot;: {
+    &quot;dti&quot;: 0.10432641876177927,
+    &quot;ci95&quot;: [
+     0.09240697096723617,
+     0.11740499254799645
+    ]
+   }
+  },
+  &quot;all_arms_filled&quot;: true
+ },
+ &quot;independence&quot;: {
+  &quot;max_abs_rho&quot;: 0.15264314978028384,
+  &quot;allow_exchange&quot;: true,
+  &quot;blocks&quot;: 2089,
+  &quot;negative_class&quot;: &quot;held-out catalogue-zero proxies, not verified absence&quot;
+ },
+ &quot;canary&quot;: {
+  &quot;max_alarm_across_folds&quot;: 0.6710397630420529,
+  &quot;any_alarm&quot;: false
+ },
+ &quot;exchange&quot;: {
+  &quot;total_pseudo_pixels&quot;: 10812,
+  &quot;allowed&quot;: true,
+  &quot;pixels_a_to_b&quot;: 2912,
+  &quot;pixels_b_to_a&quot;: 7900
+ },
+ &quot;view_a_heldout_auc&quot;: [
+  0.5063455875058,
+  0.5992567026369523,
+  0.4672256107843842,
+  0.4920913284933795
+ ],
+ &quot;view_b_heldout_auc&quot;: [
+  0.6626537086641664,
+  0.768707374146484,
+  0.6114442902669032,
+  0.6957117488005737
+ ],
+ &quot;view_a_offcatalogue_auc&quot;: [
+  0.5163170235375167,
+  0.41250942775600247,
+  0.6158182937019622,
+  0.5500061806663313
+ ],
+ &quot;view_b_offcatalogue_auc&quot;: [
+  0.52892665956881,
+  0.5238823717300183,
+  0.594278176771722,
+  0.5328515051486089
+ ],
+ &quot;lane&quot;: {
+  &quot;surface&quot;: {
+   &quot;</pre></section>
+</main></body></html>

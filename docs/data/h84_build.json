@@ -1,0 +1,149 @@
+{
+ "stage": "write",
+ "file": "submission/gems52-h84-hva-ellipse-B-37654px-20261010T204630Z.tif",
+ "bytes": 141678,
+ "sha256": "6bb18056c521a1a6a7bcefa75f3be7cb37653b8066efd4252a8b5c096b90b73e",
+ "name": "h84-hva-ellipse-B-37654px-20261010T204630Z",
+ "note": "H84: View-B + DVA2 + harmonic variogram-ellipse anisotropy (8-dir LS fit, lags 100-600m); 200m ring cut; binary dots; research",
+ "note_chars": 126,
+ "validator": {
+  "count": 1,
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "shape": [
+   3730,
+   3292
+  ],
+  "crs_match": true,
+  "shape_match": true,
+  "transform_match": true,
+  "bounds_match": true,
+  "nodata": null,
+  "nan": 0,
+  "infinite": 0,
+  "nan_inside_footprint": 0,
+  "min": 0.0,
+  "max": 1.0,
+  "values": [
+   0.0,
+   1.0
+  ],
+  "ones": 37654,
+  "zeros": 12241506,
+  "ones_outside_footprint": 0,
+  "range_ok": true,
+  "PASS": true,
+  "rule_source": "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/ (single band float32, EPSG:32611, 100 m, values in [0,1]); portal message 'Predicted values must be in range [0, 1]' -> no NaN written (knowledge/03 N-5)"
+ },
+ "writer_receipt": {
+  "file": "gems52-h84-hva-ellipse-B-37654px-20261010T204630Z.tif",
+  "sha256": "6bb18056c521a1a6a7bcefa75f3be7cb37653b8066efd4252a8b5c096b90b73e",
+  "bytes": 141678,
+  "submission_name": "h84-hva-ellipse-B-37654px-20261010T204630Z",
+  "note": "H84: View-B + DVA2 + harmonic variogram-ellipse anisotropy (8-dir LS fit, lags 100-600m); 200m ring cut; binary dots; research",
+  "note_chars": 126,
+  "validator": {
+   "path": "/home/user/GEMSDOE52/submission/gems52-h84-hva-ellipse-B-37654px-20261010T204630Z.tif",
+   "bytes": 141678,
+   "sha256": "6bb18056c521a1a6a7bcefa75f3be7cb37653b8066efd4252a8b5c096b90b73e",
+   "bands": 1,
+   "dtype": "float32",
+   "crs": "EPSG:32611",
+   "width": 3292,
+   "height": 3730,
+   "bounds": [
+    243350.0,
+    4135550.0,
+    572550.0,
+    4508550.0
+   ],
+   "ref_bounds": [
+    243350.0,
+    4135550.0,
+    572550.0,
+    4508550.0
+   ],
+   "transform": [
+    100.0,
+    0.0,
+    243350.0,
+    0.0,
+    -100.0,
+    4508550.0
+   ],
+   "nodata": null,
+   "blocksize": [
+    256,
+    256
+   ],
+   "fixture_grid": false,
+   "has_validity_mask": false,
+   "nan_pixels": 0,
+   "infinity_pixels": 0,
+   "n_nan": 0,
+   "min": 0.0,
+   "max": 1.0,
+   "mean": 0.0030664964579045773,
+   "n_nonzero": 37654,
+   "mass": 37654.0,
+   "mass_outside_footprint": 0,
+   "problems": [],
+   "ok": true,
+   "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "zip_file": "gems52-h84-hva-ellipse-B-37654px-20261010T204630Z.zip",
+  "zip_sha256": "86ac96df8b672ae8939ebe76ff780f5033ea4e1861fd3ee6ceeb3adf439bb66f",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "status": "research-only; local format validation is not organizer acceptance",
+  "metadata": {
+   "round": "H84",
+   "primary_arm": "B_DVA2_HVA"
+  }
+ },
+ "not_the_union": {
+  "dots_emitted": 37654,
+  "union_max_dots": 37654,
+  "dots_equal_union": false,
+  "dots_subset_of_union": false,
+  "dots_equal_single_A": false,
+  "dots_equal_single_B": false,
+  "shared_with_union": 3961,
+  "jaccard_with_union": 0.05551740087179559,
+  "shared_with_single_A": 568,
+  "jaccard_with_single_A": 0.0075996788868076,
+  "shared_with_single_B": 5524,
+  "jaccard_with_single_B": 0.07915854637166113,
+  "spearman_primary_field_vs_unionmax_field": 0.36531764282468354,
+  "not_union_pass": true
+ },
+ "vs_named_priors": {
+  "ref_h33_2_b2_owner_reported_0.2778": {
+   "shared_px": 1644,
+   "prior_px": 37654,
+   "near_3px_share_of_my_dots": 0.5809475752908058,
+   "jaccard": 0.022317549956559515
+  },
+  "h82_candidate": {
+   "shared_px": 2839,
+   "prior_px": 37654,
+   "near_3px_share_of_my_dots": 0.5070112073086525,
+   "jaccard": 0.03917537153817494
+  }
+ },
+ "catalogue": {
+  "min_dist_m": 223.60679774997897,
+  "median_dist_m": 1431.7821063276353,
+  "within_300m_pct": 15.281245020449354
+ },
+ "a_only_reasoning_csv": "docs/downloads/gems52-h84-hva-ellipse-B-37654px-20261010T204630Z-a-only-reasoning.csv",
+ "a_only_rows": 9225,
+ "started_utc": "2026-10-10T20:46:57+00:00",
+ "download_staged": {
+  "tif": "docs/downloads/h84-candidate.tif",
+  "zip": "docs/downloads/h84-candidate.zip",
+  "tif_sha256": "6bb18056c521a1a6a7bcefa75f3be7cb37653b8066efd4252a8b5c096b90b73e",
+  "zip_sha256": "5e9b7ed584ed731b4b71939a1e9771701cd4bb94eddc27146b4082bd1b7b68d1"
+ }
+}

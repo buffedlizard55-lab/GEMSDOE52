@@ -1,0 +1,67 @@
+{
+  "round": "H84",
+  "preregistered_utc": "2026-10-10T19:54:01+00:00",
+  "hypothesis_document": "knowledge/74_hypotheses_H84_preregistered.md",
+  "hypothesis_sha256": "1972f1f412dbb9d82057f0eab602f64553ef4ceed5e4dab49b98955752dbca17",
+  "hypothesis_bytes": 14590,
+  "lane": "two-view co-training paragraph; primary B_DVA2_HVA = View B + 50 DVA2 + 25 harmonic variogram anisotropy channels",
+  "frozen_before_any_fit": true,
+  "runner": "scripts/run_h84.py",
+  "runner_refuses_if_hash_moves": true,
+  "primary_arm": "B_DVA2_HVA",
+  "attribution_arms_not_promotable": [
+    "B_DVA2_HVA_COH"
+  ],
+  "arms": [
+    "single_B",
+    "B_DVA2",
+    "B_DVA2_HVA",
+    "B_DVA2_HVA_COH",
+    "single_A"
+  ],
+  "control_targets": {
+    "single_B": 0.174517,
+    "B_DVA2": 0.1892
+  },
+  "control_tolerance": 0.001,
+  "promotion_rule": "paired CI95 lower of (B_DVA2_HVA - B_DVA2) > 0 AND of (B_DVA2_HVA - single_B) > 0 AND controls reproduce AND no canary alarm AND literal surface+full-census dot lane PASS AND validator PASS AND not-the-union PASS",
+  "canary_alarm_auc": 0.9,
+  "emission": {
+    "K_total": 37654,
+    "K_fold": 9400,
+    "min_spacing_px": 3.0,
+    "catalogue_ring_excluded_m": 200.0,
+    "values": "binary {0,1}",
+    "outside_footprint": "0.0, no NaN",
+    "E3": "run_h73.place_lane vs scored-only informative supports, limit 0.70; fallback spacing_select if short-fill"
+  },
+  "lane_thresholds": {
+    "max_spearman": 0.9,
+    "max_near_3px_fraction": 0.7,
+    "near_px": 3
+  },
+  "independence_thresholds_from": "registry/h74_preregistration.json",
+  "a_only_stratum": {
+    "A_rank_min": 0.95,
+    "primary_rank_band": [
+      0.35,
+      0.65
+    ],
+    "spacing_px": 3.0
+  },
+  "budget": {
+    "experiments": 3,
+    "hours": 2,
+    "submission_slots_allowed": 0
+  },
+  "inputs_provenance": "integrity-pinned, not organizer-authenticated (registry/data_manifest.json; restore ALL_VERIFIED=True 2026-10-10)",
+  "pre_rename": {
+    "round": "H83",
+    "hypothesis_document": "knowledge/74_hypotheses_H83_preregistered.md",
+    "hypothesis_sha256": "521eca0556302d3ee7fa672ccbc481d4ebd872f6338ba53c9b7e0813471c508d",
+    "hypothesis_bytes": 14590,
+    "proof": "replacing H84->H83 and h84->h83 in the renamed document reproduces this SHA-256 byte-for-byte"
+  },
+  "renamed_utc": "2026-10-10T20:46:13Z",
+  "rename_note": "identifier-only rename H83->H84 at merge (IR-H84-006): parallel sessions merged two other H83 rounds (PRs #81, #82) while this one ran; no hypothesis, threshold, arm, budget or rule changed"
+}

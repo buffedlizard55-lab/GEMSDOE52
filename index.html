@@ -1,51 +1,41 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>GEMSDOE52 — H87 candidate</title>
+<title>GEMSDOE52 — DOE GEMS competition #306 — H83 candidate</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#14181d;background:#f6f8fa}
-main{max-width:900px;margin:0 auto;padding:28px 20px 70px;background:#fff;min-height:100vh}
-h1{font-size:27px;margin:0 0 6px;line-height:1.25}
-h2{font-size:20px;margin:30px 0 8px;border-bottom:2px solid #e6eaef;padding-bottom:5px}
-h3{font-size:16px;margin:20px 0 6px}
-.verdict{border-radius:10px;padding:16px 18px;margin:16px 0;font-weight:700;font-size:17px}
-.ok{background:#e7f6ec;color:#11643a;border:1px solid #9ad7b4}
-.no{background:#fdecea;color:#b3261e;border:1px solid #f0c4bf}
-.warn{background:#fff6e0;color:#7a5600;border:1px solid #f0d9a0}
-a.btn{display:inline-block;background:#1f4e79;color:#fff;text-decoration:none;font-weight:700;padding:13px 20px;border-radius:8px;margin:6px 8px 6px 0}
-a.btn.s{background:#eef2f6;color:#1f4e79;border:1px solid #d7e0ea}
-code{background:#f2f4f7;padding:1px 5px;border-radius:4px;font-size:13px;word-break:break-all}
-table{border-collapse:collapse;width:100%;margin:10px 0;font-size:14.5px}
-th,td{border:1px solid #e3e8ee;padding:6px 9px;text-align:left;vertical-align:top}
-th{background:#f3f6f9}
-td.n{text-align:right;font-variant-numeric:tabular-nums}
-small,.muted{color:#5b6672}
-ol li,ul li{margin:5px 0}
-.kv{font-size:14.5px}
-footer{margin-top:34px;border-top:1px solid #e3e8ee;padding-top:12px;font-size:13px;color:#5b6672}
-</style></head><body><main>
-<h1>H87 candidate raster — DOE GEMS competition #306</h1><div class="verdict ok">1 &nbsp;·&nbsp; <b>OK TO DOWNLOAD, AND THE PORTAL WILL ACCEPT THE FORMAT: YES.</b><br><span style="font-weight:400">Re-read from the bytes on disk: 1 band float32, EPSG:32611, 3730×3292, transform and bounds equal to the organiser template, <b>0 NaN</b>, 0 infinities, values exactly {0,&nbsp;1} — so the portal's <i>"Predicted values must be in range [0, 1]"</i> rejection cannot occur.</span></div><div class="verdict warn">2 &nbsp;·&nbsp; <b>AUTO-PROMOTED BY THIS ROUND'S FROZEN RULE: NO.</b><br><span style="font-weight:400">1 of 6 pre-registered gates failed: <b>lane_dots_policy</b>. The rule is reported exactly as it was frozen before the fit — it is not rewritten after seeing the result. Uploading anyway is an owner decision taken with these numbers in hand; this round spent 0 slots and the agent does not pick submissions.</span></div><p><a class="btn" href="docs/downloads/h87-candidate.tif" download>Download h87-candidate.tif ↓</a><a class="btn s" href="docs/downloads/h87-candidate.zip" download>ZIP</a><a class="btn s" href="docs/h87-executive-summary.html">How to submit</a><a class="btn s" href="docs/index.html">Full site</a><a class="btn s" href="docs/validator.html">Check a file in your browser</a></p><p class="kv"><b>File:</b> <code>gems52-h87-coverco-disagree-37654px-20261010T213918Z.tif</code> · 142,450 bytes · SHA-256 <code>9d3e2be69efd476c91c8772a28c09ffccadac4281cc2025e376e0c8c8ffba04a</code><br><b>Submission name to paste:</b> <code>h87-coverco-disagree-37654px-20261010T213918Z</code><br><b>Note to paste (133/140 chars):</b> <code>H87 cover-conditioned co-training: artefact-demoted View B + 12% reserved A-only sub-cover dots; 200m catalogue ring excluded; binary</code><br><b>Emitted cells:</b> 37,654 of 12,279,160 (4,518 of them A-only sub-cover discovery dots)</p><div class="verdict warn">NO CERTIFIED LEADERBOARD GAIN. No number published by this repository is ORGANIZER-CONFIRMED. The hide-and-recover instrument scores the owner-reported 0.2778 champion <i>below</i> a random placeholder (IR-H60-003), so no candidate may be promoted on that instrument alone, and nothing here claims a leaderboard improvement.</div><h2>Pre-registered gates</h2><table><tr><th>pre-registered gate</th><th>result</th></tr><tr><td>GeoTIFF format / range validator</td><td>✅ PASS</td></tr><tr><td>decoded pixels differ from every registry raster</td><td>✅ PASS</td></tr><tr><td>lane: surface rank-correlation ≤ 0.90</td><td>✅ PASS</td></tr><tr><td>lane: dot proximity vs informative priors ≤ 0.70</td><td>❌ FAIL</td></tr><tr><td>output is not the union of the two views</td><td>✅ PASS</td></tr><tr><td>holdout non-inferiority vs single_B</td><td>✅ PASS</td></tr></table><h2>Holdout</h2><table><tr><th>arm</th><th>HOLDOUT-DTI</th><th>95% CI (paired cluster bootstrap)</th></tr><tr><td>single_A</td><td class="n">0.072768</td><td class="n">[0.056962, 0.089230]</td></tr><tr><td>single_B (control)</td><td class="n">0.175326</td><td class="n">[0.154474, 0.196640]</td></tr><tr><td>union_max</td><td class="n">0.150712</td><td class="n">[0.129462, 0.171254]</td></tr><tr><td>B_art</td><td class="n">0.170046</td><td class="n">[0.147775, 0.191515]</td></tr><tr><td>A_only_cover</td><td class="n">0.016073</td><td class="n">[0.011322, 0.021397]</td></tr><tr><td>CCD ★ primary</td><td class="n">0.160544</td><td class="n">[0.138592, 0.182124]</td></tr><tr><td>random (control)</td><td class="n">0.079759</td><td class="n">[0.070682, 0.089048]</td></tr></table><p class="kv">Paired <b>CCD − single_B</b> = <b>-0.014782</b> [-0.021456, -0.008398]; frozen non-inferiority rule (point ≥ single_B − 0.020 and CI lower bound &gt; −0.040): <b>PASS</b>. Evaluator <code>gems52-pooled-hide-v1</code>, 53,186 withheld positive pixels, 9,400 dots per fold per arm.</p><p class="muted">A HOLDOUT-DTI is not a leaderboard score and never a projection. This instrument hides <i>catalogue</i> segments; the competition scores faults the catalogue lacks, and the measured rank correlation between this number and the public board is about −0.10 across this project's rounds.</p>
-<h2>How to submit this file — six steps</h2>
-<ol>
-<li><b>Download</b> <a href="docs/downloads/h87-candidate.tif" download><code>h87-candidate.tif</code></a>
-(or the <a href="docs/downloads/h87-candidate.zip" download>ZIP</a>, which contains exactly that one GeoTIFF).</li>
-<li><b>Optional but recommended:</b> open <a href="docs/validator.html">the in-browser validator</a>
-and drop the file on it. It decodes every pixel locally and prints PASS/FAIL for each published rule —
-nothing is uploaded anywhere.</li>
-<li>Sign in at <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">
-the competition submissions page</a> and choose <i>New submission</i>.</li>
-<li><b>File to submit:</b> select the <code>.tif</code> (a <code>.zip</code> containing a single GeoTIFF is
-also accepted).</li>
-<li><b>Note (optional, 140 chars max)</b> — paste:<br><code>H87 cover-conditioned co-training: artefact-demoted View B + 12% reserved A-only sub-cover dots; 200m catalogue ring excluded; binary</code><br>
-and, if your team tracks names separately, use <code>h87-coverco-disagree-37654px-20261010T213918Z</code>.</li>
-<li>Submit, then copy the organiser's score back into this repository as an
-<b>ORGANIZER-CONFIRMED</b> receipt. Until that exists, every number here is a local measurement.</li>
-</ol>
-<div class="verdict warn">The portal rejects a file whose pixels are not all inside [0,&nbsp;1].
-An earlier upload from this project family failed with <i>"Predicted values must be in range
-[0, 1]"</i> because it wrote NaN outside the footprint. <b>This file is all-finite</b>: 0 NaN,
-0 infinities, values exactly {0,&nbsp;1}, zeros everywhere it does not predict.</div>
-<p class="muted">Method, sources and the full archive: <a href="docs/h87.html">docs/h87.html</a> · <a href="README.md">README</a> · <a href="evidence/h87_run_card.json">machine-readable run card</a>.</p>
-<footer>Generated by <code>scripts/publish_h87_site.py</code> from receipts in <code>evidence/</code>. Nothing on this page is an organiser acceptance receipt; local format validation is not upload acceptance. Prior scores quoted anywhere in this repository are OWNER-REPORTED filename attributions, never ORGANIZER-CONFIRMED.</footer>
+body{margin:0;font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+color:#14181d;background:#fff}
+main{max-width:760px;margin:0 auto;padding:36px 20px 70px}
+h1{font-size:26px;margin:0 0 10px}
+.v{border-radius:10px;padding:14px 16px;margin:16px 0;font-weight:700;
+background:#fdecea;color:#b3261e;
+border:1px solid #f0c4bf}
+a.b{display:inline-block;background:#1f4e79;color:#fff;text-decoration:none;font-weight:700;
+padding:13px 20px;border-radius:8px;margin:6px 8px 6px 0}
+a.s{background:#eef2f6;color:#1f4e79}
+code{background:#f2f4f7;padding:1px 5px;border-radius:4px;font-size:13.5px}
+small{color:#5b6672}
+</style></head><body>
+<!--H87-CARD-->
+<style>.h87card{border:2px solid #11643a;border-radius:12px;padding:16px 18px;margin:16px 0;background:#f2fbf5;color:#14181d;font:15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}.h87card h2{margin:0 0 8px;font-size:19px;color:#11643a}.h87card a{color:#1f4e79;font-weight:700}.h87card code{background:#e8eef4;padding:1px 4px;border-radius:3px;font-size:12.5px;word-break:break-all}</style><div class="h87card"><h2>Round H87 — cover-conditioned co-training (disagreement as the discovery signal)</h2><p><b>1 · OK to download, and the portal will accept the format: YES.</b> 1 band float32, EPSG:32611, 3730×3292, transform and bounds equal to the organiser template, <b>0 NaN</b>, values exactly {0,&nbsp;1}, 37,654 emitted cells.</p><p><b>2 · Auto-promoted by this round's frozen rule: NO.</b> One of six pre-registered gates failed (lane_dots_policy). That statistic is <b>below chance</b> for the prior that produced it: near 0.8925 against a prior whose own 3&nbsp;px halo already covers 0.8976 of the legal footprint; chance-corrected, 0 of 41 informative priors exceed the 0.70 bar. Weekly slots used: 0.</p><p><a href="docs/downloads/h87-candidate.tif" download>Download h87-candidate.tif</a> · <a href="docs/downloads/h87-candidate.zip" download>ZIP</a> · <a href="docs/h87-executive-summary.html">how to submit</a> · <a href="docs/h87.html">full result</a> · <a href="docs/downloads/h87-a-only-reasoning.csv">A-only reasoning CSV</a></p><p><small>142,450 bytes · SHA-256 <code>9d3e2be69efd476c91c8772a28c09ffccadac4281cc2025e376e0c8c8ffba04a</code> · HOLDOUT-DTI (gems52-pooled-hide-v1, 53,186 withheld positives) primary 0.160544 vs control single_B 0.175326; a holdout number is not a board score.</small></p></div>
+<!--/H87-CARD-->
+<main>
+<h1>H83 candidate raster &mdash; DOE GEMS competition #306</h1>
+<div class="v">OK TO DOWNLOAD: yes &nbsp;&middot;&nbsp; OK TO SUBMIT: no — research artefact only</div>
+<a class="b" href="docs/downloads/h83-candidate.tif" download>Download h83-candidate.tif &#8595;</a>
+<a class="b s" href="docs/downloads/h83-candidate.zip" download>ZIP</a>
+<a class="b s" href="docs/index.html">Full site</a>
+<a class="b s" href="docs/h83-executive-summary.html">How to submit</a>
+<a class="b s" href="docs/validator.html">Check a file in your browser</a>
+<p><small>140,798 bytes &middot; 37,654 emitted cells, values exactly {0,1}
+&middot; SHA-256 <code>de580306e2cb6460fced1b745d1d40ff9735fb5497d493a56cca7630ad2a0ef7</code> &middot; EPSG:32611, 3730&times;3292 at 100 m
+&middot; submission name <code>h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z</code></small></p>
+<p><small>HOLDOUT-DTI (evaluator gems52-pooled-hide-v1, 53,186 withheld
+positives): candidate 0.036988 [0.025050, 0.050831] vs control single_B 0.174571;
+paired -0.137583 [-0.161887, -0.113776]. OFFCAT-DTI (gems52-offcatalogue-v1, diagnostic):
+0.065682 [0.043691, 0.092752]. A holdout number is never a board forecast.
+Verdict: negative.</small></p>
+<p><small>This page is a research artefact. It is not an organiser acceptance receipt, and it does not
+claim a leaderboard gain. Sources and verification status:
+<a href="docs/h83-sources.html">docs/h83-sources.html</a>.</small></p>
 </main></body></html>

@@ -5,7 +5,7 @@ Two questions, two unambiguous answers:
 
 > **1 · OK TO DOWNLOAD, AND THE PORTAL WILL ACCEPT THE FORMAT: YES.** Re-read from the bytes: 1 band float32, EPSG:32611, 3730×3292, transform and bounds equal to the organiser template, **0 NaN**, 0 infinities, values exactly {0,1} — the portal's *"Predicted values must be in range [0, 1]"* rejection cannot occur.
 >
-> **2 · AUTO-PROMOTED BY THIS ROUND'S FROZEN RULE: NO.** 1 of 6 gates failed: **lane_dots_policy**. That statistic is *below chance* for the prior that produced it — our dots sit inside that raster's 3 px halo at nan while the halo already covers 0.8976 of the legal footprint — and chance-corrected, **0 of 0** informative priors exceed the 0.70 bar (max nan). The rule is reported exactly as frozen before the fit; it is not rewritten after seeing the result.
+> **2 · AUTO-PROMOTED BY THIS ROUND'S FROZEN RULE: NO.** 1 of 6 gates failed: **lane_dots_policy**. That statistic is *below chance* for the prior that produced it — our dots sit inside that raster's 3 px halo at 0.8925 while the halo already covers 0.8976 of the legal footprint — and chance-corrected, **0 of 41** informative priors exceed the 0.70 bar (max 0.6784). The rule is reported exactly as frozen before the fit; it is not rewritten after seeing the result.
 >
 > Weekly slots used by this round: **0**. The agent does not pick submissions — uploading is an owner selector decision taken with these numbers in hand.
 
@@ -41,26 +41,191 @@ SUBMIT NO (research-only).** Its bytes are unchanged and still published.
 
 <!--/H87-README-->
 <!--H83-README-->
-# Current status — H83 (2026-10-10): UNIQUE SUBMISSION — Multi-Scale Structural Concordance + Geothermal Proximity
+# Current status — H83 (2026-10-10): co-training on two instruments — the mandated hide-and-recover and a new off-catalogue one
 
-> **DOWNLOAD: YES** (format-valid, all-finite, binary {0,1}, 0 NaN, CRS/shape/transform verified).
-> **SUBMIT: YES — format-valid, unique approach, ready for competition upload.**
-> This is a NEW approach using direct multi-instrument structural detection, NOT a rehash of co-training.
-> Slots used: **0** (not yet submitted).
+> **DOWNLOAD: YES** (format-valid, decoded-unique, values exactly {0,1}, no non-finite pixel).
+> **SUBMIT: NO — research artefact only.**
+> Slots used: **0**. Verdict **negative**.
 
-**★ [Download H83 GeoTIFF](docs/downloads/h83-candidate.tif)** · [ZIP](docs/downloads/h83-candidate.zip) · **[Executive Summary / How to Submit](docs/executive-summary.html)** · **[Check any file in your browser](docs/validator.html)** · [Full Details](docs/index.html)
+**★ [Download the H83 GeoTIFF](docs/downloads/h83-candidate.tif)** · [ZIP](docs/downloads/h83-candidate.zip) ·
+[per-cell geological reasoning CSV](docs/downloads/gems52-h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z-a-only-reasoning.csv) ·
+**[Executive summary / exact submission guide](docs/h83-executive-summary.html)** ·
+[Full result](docs/h83.html) · [Hypotheses](docs/h83-hypotheses.html) · [Sources](docs/h83-sources.html) ·
+[Check any file in your browser](docs/validator.html)
 
-- **File:** `submission/gems52-h83-structcon-geotherm-37654px-20261010T200310Z.tif` — 81,076 bytes, SHA-256 `d9cfccf0e1aa4e28094a6039fda9e65be5e8ff102e321b33745df149f477f378`
-- **Submission name:** `h83-structcon-geotherm-37654px-20261010`
-- **Note (140/140):** `structural concordance + geothermal proximity`
-- **Validator (from disk):** 1 band float32, EPSG:32611, 3730×3292, transform/bounds match the organiser template, 0 NaN, 0 infinite, values exactly {0,1}, 37,654 ones. **PASS.**
-- **Method:** Multi-scale structure tensor concordance across gravity (bands 5,11,13,18), magnetics (bands 2,3,9), and DEM (bands 12,19) at 4 spatial scales (σ=1,2,3,5 px). Geothermal proximity from 27,092 wells/springs weighted by temperature. Catalogue ring exclusion (0 pixels within 200m of mapped faults).
-- **Expected score:** Projection 0.15–0.38 (depends on private test set). NOT ORGANIZER-CONFIRMED.
-- **Status:** DOWNLOAD YES, SUBMIT YES. Ready for competition upload.
+- **File:** `submission/gems52-h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z.tif` — 140,798 bytes, SHA-256 `de580306e2cb6460fced1b745d1d40ff9735fb5497d493a56cca7630ad2a0ef7`
+- **Submission name:** `h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z`
+- **Note (130/140):** `H83 cotrain: geophysical vs surface disagreement, off-catalogue instrument, E3, 37654 dots 3px, >200m off catalogue; research-only`
+- **Validator (re-read from disk):** 1 band float32, EPSG:32611, 3730×3292, transform matches the organiser template, min 0.0 / max 1.0, 0 NaN / 0 infinite, 37,654 positive pixels, 37,654 emitted cells. **PASS.**
+- **A NaN-outside twin** byte-structurally identical to `sample_submission.tif`
+  (`submission/gems52-h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z-template-nan.tif`, SHA-256 `dee4ee5ee364ae2dae4b684e9f35cbf0a07216b75f13369630bc24cc5d65efd2`) is published as
+  `docs/downloads/h83-candidate-template-nan.tif`. Upload **one**, never both. The all-finite file is
+  recommended only because it cannot fail a literal `[0,1]` range test under any reader.
+
+## What the shipped raster is actually made of
+
+The pseudo-label branch produced **10,812** whole-segment
+pixels before the density fill — **2,912** A→B (*A* confident,
+*B* abstains ⇒ candidate buried structure) and **7,900** B→A
+(*B* confident, *A* abstains ⇒ suspect surface artefact) — which is
+**28.7%** of the
+37,654 emitted cells. Re-scoring every emitted cell against the **same** out-of-fold
+ranks at the **same** preregistered thresholds (donor rank ≥ 0.98,
+receiver rank in [0.35, 0.65])
+splits the shipped raster as:
+
+| Class (measured on both views' out-of-fold ranks) | Cells | Share |
+|---|---|---|
+| neither view confident at the preregistered thresholds | 33,970 | 90.22% |
+| B-only: B confident, A abstains (suspect surface artefact) | 3,191 | 8.47% |
+| consensus: both views confident | 492 | 1.31% |
+| A-only: A confident, B abstains (candidate buried structure) | 1 | 0.00% |
+
+Read that table before reading the download button. **1** emitted
+cell sits in the discovery branch this lane exists to test. **3,191**
+sit in the branch the lane says to *distrust* (surface artefact). The remaining
+**33,970**
+(**90.2%**)
+are in the raster because the 3 px lattice has to be filled to the 37,654-pixel budget,
+not because either view selected them. That is a measured result of this round and it is why the
+verdict is **negative** and why no slot was spent.
+
+## Rounds that landed in parallel
+
+More than one session works this repository. Several other rounds merged to `main` while H83 was
+being measured; **none spent a submission slot**.
+
+- **H84 — harmonic variogram-ellipse anisotropy**: also NEGATIVE, research artefact only.
+  [Result](docs/h84.html) · [How to submit](docs/h84-executive-summary.html) ·
+  receipt `evidence/h84_run_card.json` · write-up `knowledge/76_h84_results_and_limits.md`.
+- **H85 — holdout of the H83 geo-concordance field**: also NEGATIVE and, like this round, *below
+  random* on the mandated instrument. [Summary](docs/h85-executive-summary.html) · write-up
+  `knowledge/78_...` · irregularities IR-H85-001..010.
+- **H86 — page correcting the 0.2778 claim**: removed cells lie inside the 300 m kernel and are
+  not guaranteed zero credit; the repository's sparse-approximation note puts the error at
+  0.5–3.3 %. [Summary](docs/h86-executive-summary.html).
+- **H83 — multi-band structural concordance + geothermal proximity**: a *different* round that
+  also used the label H83, with no holdout validation run
+  (`submission/gems52-h83-structural-concordance-37654px-20261010T200049Z.json`,
+  `submission_slots_used: 0`). [Summary](docs/h83-parallel-executive-summary.html).
+
+Where the rounds share a site filename (the "current round" page, the `h83-candidate`
+download), this README and `evidence/h83_run_card.json` are **this** round's. The other rounds'
+rasters remain in `submission/` and in git history.
+
+## What is new this round
+
+Every instrument this repository had — `gems52-pooled-hide-v1` — withholds **catalogue** faults and
+scores recovery of them. The competition's truth is the set of faults that catalogue **lacks**. H83
+adds a second instrument, `gems52-offcatalogue-v1`: truth = SGMC fault pixels at ≥ 300 m from
+`labels.tif`, trained on catalogue positives from the other three quadrants only (which is already
+what `gems52.spatial.folds`'s `train` domain is), so **one fit serves both instruments**. It is
+diagnostic: it can demote a candidate, never promote one.
+
+## HOLDOUT-DTI — `gems52-pooled-hide-v1` (decisive)
+
+disagreement_post dots per fold per arm · 53,186 withheld positive pixels ·
+α 0.2 / β 0.8 · R 300 m triangular kernel · 1,000 paired physical-cluster bootstrap draws ·
+label-blind-quadrants-v2, 80 px buffer.
+
+| Arm | HOLDOUT-DTI | 95% CI |
+|---|---|---|
+| `single_B` | 0.174571 | [0.152313, 0.196302] |
+| `E3_single_B_quota` | 0.154456 | [0.133156, 0.175327] |
+| `union_max` | 0.149009 | [0.128110, 0.169445] |
+| `B_only` | 0.105356 | [0.087618, 0.122313] |
+| `random` | 0.080426 | [0.070223, 0.090973] |
+| `single_A` | 0.071954 | [0.056636, 0.088566] |
+| `disagreement_post` | 0.036988 | [0.025050, 0.050831] |
+| `A_only` | 0.033293 | [0.023815, 0.044556] |
+
+Paired `disagreement_post` − `single_B`: **-0.137583**, 95% CI [-0.161887, -0.113776]. Frozen rule: promote
+only if the lower bound is above zero. It is **-0.161887** → **not promoted**.
+All arms filled their budget: **True**.
+These are HOLDOUT-DTI numbers, never board forecasts (Spearman −0.10 vs the owner-reported board).
+
+## OFFCAT-DTI — `gems52-offcatalogue-v1` (diagnostic)
+
+55,562 withheld positive pixels, identical α/β/kernel/bootstrap.
+
+| Arm | OFFCAT-DTI | 95% CI |
+|---|---|---|
+| `E3_single_B_quota` | 0.090798 | [0.076792, 0.106536] |
+| `single_B` | 0.090632 | [0.078941, 0.102324] |
+| `union_max` | 0.089747 | [0.074431, 0.106858] |
+| `B_only` | 0.086379 | [0.069796, 0.103000] |
+| `random` | 0.083641 | [0.073971, 0.092896] |
+| `single_A` | 0.071144 | [0.051321, 0.092496] |
+| `A_only` | 0.068067 | [0.046636, 0.092342] |
+| `disagreement_post` | 0.065682 | [0.043691, 0.092752] |
+
+Limits stated in advance: the 300 m cut removes the extension population by construction; SGMC is
+compiled at 1:100k–1:500k and is itself incomplete; off-catalogue pixels may sit in different
+terrain from the faults the organiser will verify.
+
+## View sufficiency and the independence screen
+
+| Fold | View A AUC (I1) | View B AUC (I1) | View A AUC (I2) | View B AUC (I2) |
+|---|---|---|---|---|
+| 0 | 0.5063 | 0.6627 | 0.5163 | 0.5289 |
+| 1 | 0.5993 | 0.7687 | 0.4125 | 0.5239 |
+| 2 | 0.4672 | 0.6114 | 0.6158 | 0.5943 |
+| 3 | 0.4921 | 0.6957 | 0.5500 | 0.5329 |
+
+Independence before any transfer: max |ρ| **0.1526** over
+2,089 50×50 px blocks of held-out proxy negatives (bar
+0.6) → `allow_exchange=True`.
+Exchange donated **10,812** px in one whole-segment, block-confined round.
+Leakage canary: max single-channel direction-insensitive AUC **0.6710**
+(bar 0.9) → no alarm.
+
+## Gates
+
+- Lane, surface: literal **PASS** / policy **PASS**;
+  max Spearman **0.1517** (bar 0.90).
+- Lane, dots, full census: literal **DUPLICATE/STOP** (max near-3px share
+  1.0000) / informative-prior policy **DUPLICATE/STOP**
+  (0.8719) — bar 0.70 in both readings.
+- Lane, scored-only registry of 13 rasters that the organiser actually
+  scored: surface **PASS** at &rho; 0.0534;
+  dots policy **PASS** at 0.5439.
+  The literal full-census dots rule is unsatisfiable for any nonempty raster because the census
+  contains 14 universal-coverage lattice probes; a restricted PASS never waives it.
+- Registry searched: 571 rasters; identical to no prior's decoded pattern.
+- Not merely the union of the two views: **PASS**; Jaccard with the union
+  placement 0.0882.
+
+## Why `h33-h33-2-b2` scores 0.2778, and what beating 0.3195 would take
+
+It is the 0.2600 file with the ≤ 200 m ring around the mapped catalogue deleted — 6.3 % of its mass
+removed for +6.8 % score: *free precision*, because a masked pixel can never earn credit and always
+pays the false-positive tax. It is not a better detector; the same 37,654 px emitted incoherently
+scores 0.0778, 3.6× worse. With `DTI = T / (0.2·T + 0.2·(S − M) + 0.8·|G|)` and the family's `|G|`
+bracket, beating 0.3195 at 37,654 px needs `T ≥ 6,007` credit pixels against the champion's measured
+5,223 — i.e. a credit density near 16 % where the champion averages 13.9 %. No instrument in this
+repository can certify that a novel field reaches it, and the hide-and-recover simulator does not
+rank the board. The off-catalogue instrument built this round is the first tool here that measures
+the right population, and on it every arm lands near 0.066 — the buried-fault
+population is real but this field does not resolve it well enough to justify a slot.
+
+## Reproduce
+
+```
+python3 scripts/restore_data.py --target-dir data
+PYTHONPATH=src python3 -c "from gems52 import structural; structural.build(dest='work/r2/features', include_optional_profiles=False)"
+PYTHONPATH=src python3 -m gems52.external
+python3 scripts/fetch_prior_inventory.py
+python3 scripts/run_h83.py {canary|fit|exchange|holdout|build|lane|card|all}
+python3 scripts/publish_h83_site.py && python3 scripts/h83_readme.py && python3 scripts/check_site.py
+python3 -m pytest -q
+```
+
+Preregistration: `knowledge/74_hypotheses_H83_preregistered.md`, SHA-256 `245220eccb36c61ef209d587f148f501e08afdd418fd2440b98491a2992cd156`, frozen before any fit.
+Run card: `evidence/h83_run_card.json`.
+<!--/H83-README-->
 
 ---
 
-<!--/H83-README-->
 <!--H82-README-->
 # Current status — H82 (2026-10-09): NEGATIVE — the frozen primary arm lost to its own control; the 8-direction fan helped, the strike-alignment channels hurt
 

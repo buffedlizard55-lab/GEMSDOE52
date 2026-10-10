@@ -1,0 +1,99 @@
+{
+  "file": "gems52-h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z.tif",
+  "sha256": "de580306e2cb6460fced1b745d1d40ff9735fb5497d493a56cca7630ad2a0ef7",
+  "bytes": 140798,
+  "submission_name": "h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z",
+  "note": "H83 cotrain: geophysical vs surface disagreement, off-catalogue instrument, E3, 37654 dots 3px, >200m off catalogue; research-only",
+  "note_chars": 130,
+  "validator": {
+    "path": "/home/user/GEMSDOE52/submission/gems52-h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z.tif",
+    "bytes": 140798,
+    "sha256": "de580306e2cb6460fced1b745d1d40ff9735fb5497d493a56cca7630ad2a0ef7",
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "ref_bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "nodata": null,
+    "blocksize": [
+      256,
+      256
+    ],
+    "fixture_grid": false,
+    "has_validity_mask": false,
+    "nan_pixels": 0,
+    "infinity_pixels": 0,
+    "n_nan": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.0030664964579045773,
+    "n_nonzero": 37654,
+    "mass": 37654.0,
+    "mass_outside_footprint": 0,
+    "problems": [],
+    "ok": true,
+    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "zip_file": "gems52-h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z.zip",
+  "zip_sha256": "1619dcbcbb91bf978e320009fa62f21451af1f989f40c926fb69e5312db54ae0",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "status": "research-only; local format validation is not organizer acceptance",
+  "metadata": {
+    "round": "H83",
+    "seed": 61052,
+    "budget": 37654,
+    "placed": 37654,
+    "chosen_arm": "E3",
+    "e1": {
+      "dti_i1": 0.036987866329419784
+    },
+    "e2": {
+      "dti_i1": 0.14900909797542158,
+      "quota_dots": 9414,
+      "consensus_dots": 28240,
+      "reserved_fraction": 0.25
+    },
+    "e3": {
+      "dti_i1": 0.15445570375023357,
+      "quota_dots": 9414,
+      "consensus_dots": 28240,
+      "reserved_fraction": 0.25
+    },
+    "min_separation_px": 3.0,
+    "catalogue_exclusion_m": 200.0,
+    "not_union": {
+      "dots_shared_with_view_A": 2163,
+      "dots_shared_with_view_B": 6884,
+      "dots_shared_with_union_max": 6101,
+      "jaccard_with_union_max": 0.08815582238790874,
+      "spearman_field_vs_unionmax": 0.5689924437815828,
+      "verdict": "PASS"
+    },
+    "instruments": [
+      "gems52-pooled-hide-v1",
+      "gems52-offcatalogue-v1"
+    ]
+  }
+}

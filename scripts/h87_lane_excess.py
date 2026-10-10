@@ -85,6 +85,8 @@ def main() -> int:
                          excess_offender=bool(np.isfinite(excess) and excess > 0.70)))
         del a, support, halo
     rows.sort(key=lambda r: -(r["excess_proximity"] if np.isfinite(r["excess_proximity"]) else -1))
+    inf_rows = [r for r in rows if r["coverage_3px_of_eligible"] < 0.95]
+    worst_near = max(inf_rows, key=lambda r: r["near_3px_fraction"], default=None)
     out = dict(
         instrument="chance-corrected lane proximity (proposed shared-tool fix, reported not applied)",
         definition="excess = (near_3px_fraction - coverage_3px_of_eligible) / (1 - coverage_3px_of_eligible)",
@@ -94,6 +96,16 @@ def main() -> int:
         n_literal_offenders=sum(r["literal_offender"] for r in rows),
         n_excess_offenders=sum(r["excess_offender"] for r in rows),
         applies_to_this_round=False,
+        n_informative_measured=len(inf_rows),
+        max_near_informative_coverage_lt_0_95=(worst_near["near_3px_fraction"] if worst_near else None),
+        coverage_of_that_prior=(worst_near["coverage_3px_of_eligible"] if worst_near else None),
+        excess_of_that_prior=(worst_near["excess_proximity"] if worst_near else None),
+        max_excess_informative_coverage_lt_0_95=(max((r["excess_proximity"] for r in inf_rows), default=None)),
+        n_informative_near_offenders=int(sum(r["near_3px_fraction"] > 0.70 for r in inf_rows)),
+        n_informative_excess_offenders=int(sum(r["excess_proximity"] > 0.70 for r in inf_rows)),
+        stability_caveat=("the ratio is unstable as coverage -> 1 (its denominator vanishes), which is why "
+                          "near-total-coverage probes show excess ~1; it is meaningful only for priors that "
+                          "leave a substantial part of the footprint uncovered"),
         note=("the pre-registered H87 gate is unchanged; this statistic is published so the next round "
               "can pre-register it rather than invent it after seeing a verdict"),
         per_prior=rows)

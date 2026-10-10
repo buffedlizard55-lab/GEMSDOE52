@@ -444,29 +444,62 @@ def main() -> int:
           + archive_block())
     (DOCS / "h87-executive-summary.html").write_text(page("How to submit — GEMSDOE52 H87", ex))
 
-    # ----------------------------------------------------------------- docs/index.html
-    idx = (f"<h1>GEMSDOE52 — DOE GEMS competition #306</h1>"
-           f"<p class=\"muted\">Current round: <b>H87</b>, cover-conditioned co-training with "
-           f"surface-artefact demotion. Generated {esc(card['generated_utc'])}.</p>"
-           + verdict_block()
-           + f"<p><a class=\"btn\" href=\"downloads/h87-candidate.tif\" download>Download h87-candidate.tif ↓</a>"
-             f"<a class=\"btn s\" href=\"downloads/h87-candidate.zip\" download>ZIP</a>"
-             f"<a class=\"btn s\" href=\"h87-executive-summary.html\">Executive summary / how to submit</a>"
-             f"<a class=\"btn s\" href=\"h87.html\">Full H87 result</a>"
-             f"<a class=\"btn s\" href=\"validator.html\">Check any file in your browser</a>"
-             f"<a class=\"btn s\" href=\"downloads/index.html\">All downloads</a></p>"
-           + identity_block()
-           + '<div class="verdict warn">NO CERTIFIED LEADERBOARD GAIN. No number published by this repository is ORGANIZER-CONFIRMED. The hide-and-recover instrument scores the owner-reported 0.2778 champion <i>below</i> a random placeholder (IR-H60-003), so no candidate may be promoted on that instrument alone, and nothing here claims a leaderboard improvement.</div>'
-           + "<h2>Pre-registered gates</h2>" + gates_table()
-           + "<h2>Holdout</h2>" + holdout_table()
-           + method_block() + archive_block() + sources_block())
-    (DOCS / "index.html").write_text(page("GEMSDOE52 — H87 current candidate", idx))
+    # ----------------------------------------------------------------- shared pages
+    # docs/index.html, docs/executive-summary.html and the repo-root index.html are shared with the
+    # parallel rounds merged into main.  This round INSERTS a delimited card at the top of each
+    # instead of rewriting them, so no other round's verdict, links or asserted strings are lost.
+    def insert_card(path: Path, card_html: str, marker: str = "H87-CARD") -> None:
+        text = path.read_text() if path.exists() else "<!doctype html><html><body></body></html>"
+        blob = f"<!--{marker}-->\n{card_html}\n<!--/{marker}-->\n"
+        if f"<!--{marker}-->" in text:
+            import re as _re
+            text = _re.sub(f"<!--{marker}-->.*?<!--/{marker}-->\n?", blob, text, flags=_re.S)
+        else:
+            i = text.find(">", text.find("<body")) + 1 if "<body" in text else 0
+            text = text[:i] + "\n" + blob + text[i:]
+        path.write_text(text)
 
-    # -------------------------------------------------------- docs/executive-summary.html
-    (DOCS / "executive-summary.html").write_text(
-        page("Executive summary — GEMSDOE52", ex.replace("<h1>Executive summary — how to make a submission</h1>",
-                                                         "<h1>Executive summary — how to make a submission "
-                                                         "(current round H87)</h1>")))
+    shared_css = ("<style>.h87card{border:2px solid #11643a;border-radius:12px;padding:16px 18px;margin:16px 0;"
+                  "background:#f2fbf5;color:#14181d;font:15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',"
+                  "Roboto,Helvetica,Arial,sans-serif}.h87card h2{margin:0 0 8px;font-size:19px;color:#11643a}"
+                  ".h87card a{color:#1f4e79;font-weight:700}.h87card code{background:#e8eef4;padding:1px 4px;"
+                  "border-radius:3px;font-size:12.5px;word-break:break-all}</style>")
+
+    def shared_card(prefix: str) -> str:
+        x = card.get("lane_excess_chance_corrected") or {}
+        chance = ""
+        if x.get("max_near_informative_coverage_lt_0_95") is not None:
+            chance = (f" That statistic is <b>below chance</b> for the prior that produced it: near "
+                      f"{x['max_near_informative_coverage_lt_0_95']:.4f} against a prior whose own 3&nbsp;px halo "
+                      f"already covers {x['coverage_of_that_prior']:.4f} of the legal footprint; chance-corrected, "
+                      f"0 of {x['n_informative_measured']} informative priors exceed the 0.70 bar.")
+        return (f"{shared_css}<div class=\"h87card\">"
+                f"<h2>Round H87 — cover-conditioned co-training (disagreement as the discovery signal)</h2>"
+                f"<p><b>1 · OK to download, and the portal will accept the format: YES.</b> "
+                f"{v_bands} band {v_dtype}, {v_crs}, {v_shape}, transform and bounds equal to the organiser "
+                f"template, <b>0 NaN</b>, values exactly {{0,&nbsp;1}}, {v_ones:,} emitted cells.</p>"
+                f"<p><b>2 · Auto-promoted by this round's frozen rule: "
+                f"{'YES' if SUBMIT_OK else 'NO'}.</b> "
+                f"{'All six pre-registered gates passed.' if SUBMIT_OK else 'One of six pre-registered gates failed (lane_dots_policy).'}"
+                f"{chance} Weekly slots used: 0.</p>"
+                f"<p><a href=\"{prefix}downloads/h87-candidate.tif\" download>Download h87-candidate.tif</a> · "
+                f"<a href=\"{prefix}downloads/h87-candidate.zip\" download>ZIP</a> · "
+                f"<a href=\"{prefix}h87-executive-summary.html\">how to submit</a> · "
+                f"<a href=\"{prefix}h87.html\">full result</a> · "
+                f"<a href=\"{prefix}downloads/h87-a-only-reasoning.csv\">A-only reasoning CSV</a></p>"
+                f"<p><small>{wr['bytes']:,} bytes · SHA-256 <code>{esc(SHA)}</code> · HOLDOUT-DTI "
+                f"(gems52-pooled-hide-v1, {hold['withheld_positive_px']:,} withheld positives) primary "
+                f"{card['holdout']['scores']['CCD']['dti']:.6f} vs control single_B "
+                f"{card['holdout']['scores']['single_B']['dti']:.6f}; a holdout number is not a board "
+                f"score.</small></p></div>")
+
+    v = wr["validator"]
+    v_bands, v_dtype, v_crs = v["bands"], v["dtype"], v["crs"]
+    v_shape = f"{v['shape'][0]}×{v['shape'][1]}"
+    v_ones = v["ones"]
+    insert_card(DOCS / "index.html", shared_card(""))
+    insert_card(DOCS / "executive-summary.html", shared_card(""))
+    insert_card(ROOT / "index.html", shared_card("docs/"))
 
     # ------------------------------------------------------------ docs/downloads/index.html
     dl = DOCS / "downloads" / "index.html"
@@ -490,26 +523,6 @@ def main() -> int:
     else:
         old = card_html + old
     dl.write_text(old)
-
-    # ------------------------------------------------------------------------ root index
-    root_body = (f"<h1>H87 candidate raster — DOE GEMS competition #306</h1>"
-                 + verdict_block()
-                 + f"<p><a class=\"btn\" href=\"docs/downloads/h87-candidate.tif\" download>"
-                   f"Download h87-candidate.tif ↓</a>"
-                   f"<a class=\"btn s\" href=\"docs/downloads/h87-candidate.zip\" download>ZIP</a>"
-                   f"<a class=\"btn s\" href=\"docs/h87-executive-summary.html\">How to submit</a>"
-                   f"<a class=\"btn s\" href=\"docs/index.html\">Full site</a>"
-                   f"<a class=\"btn s\" href=\"docs/validator.html\">Check a file in your browser</a></p>"
-                 + identity_block()
-                 + '<div class="verdict warn">NO CERTIFIED LEADERBOARD GAIN. No number published by this repository is ORGANIZER-CONFIRMED. The hide-and-recover instrument scores the owner-reported 0.2778 champion <i>below</i> a random placeholder (IR-H60-003), so no candidate may be promoted on that instrument alone, and nothing here claims a leaderboard improvement.</div>'
-                 + "<h2>Pre-registered gates</h2>" + gates_table()
-                 + "<h2>Holdout</h2>" + holdout_table()
-                 + how_to_submit(base="docs/")
-                 + "<p class=\"muted\">Method, sources and the full archive: "
-                   "<a href=\"docs/h87.html\">docs/h87.html</a> · "
-                   "<a href=\"README.md\">README</a> · "
-                   "<a href=\"evidence/h87_run_card.json\">machine-readable run card</a>.</p>")
-    (ROOT / "index.html").write_text(page("GEMSDOE52 — H87 candidate", root_body))
 
     # --------------------------------------------------------------- feed copies + checks
     DATA.mkdir(parents=True, exist_ok=True)
