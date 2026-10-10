@@ -39,6 +39,19 @@ def test_h83_is_downloadable_but_closed_to_submission():
     assert hashlib.sha256((ROOT / linked["same_bytes_as"]).read_bytes()).hexdigest() == linked["sha256"]
 
 
+def test_template_mirror_comparison_discloses_provenance_and_variant_mismatch():
+    receipt = _json("evidence/h83_status_reconciliation.json")
+    mirror = receipt["local_template_mirror_comparison"]
+    assert mirror["manifest_file_id"] == "sample_submission"
+    assert mirror["sha256"] == "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc"
+    assert "NOT organizer-authenticated" in mirror["provenance"]
+    assert mirror["linked_h83"]["positive_cells_outside_template_finite_support"] == 0
+    assert mirror["linked_h83"]["positive_cells_inside_template_finite_support"] == 37654
+    assert mirror["distinct_h83_variant"]["positive_cells_outside_template_finite_support"] == 161
+    assert mirror["distinct_h83_variant"]["template_finite_cells_encoded_as_nan"] == 3073
+    assert "does not authenticate organizer bytes" in mirror["limit"]
+
+
 def test_h83_status_pages_do_not_invite_portal_upload():
     receipt = _json("evidence/h83_status_reconciliation.json")
     docs_receipt = _json("docs/data/h83_status_reconciliation.json")

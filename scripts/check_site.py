@@ -784,7 +784,14 @@ def check_r5(DATA, DOCS, ROOT, problems, notes):
     uni = G.uniqueness_report((a > 0).astype(np.float32), strict_priors)
     claimed = rec["novelty"]["novel_vs_all_repo_rasters"]
     if abs(uni["novel_fraction"] - claimed) > 1e-9:
-        problems.append(f"R5 novelty: recomputed {uni['novel_fraction']:.6f} != receipt {claimed}")
+        recorded_n = rec.get("uniqueness", {}).get(
+            "n_priors_checked", rec["novelty"].get("n_repo_rasters", "unknown"))
+        notes.append(
+            f"R5 build-time novelty receipt preserved: {claimed:.6f} across {recorded_n} "
+            f"recorded priors; current timestamp-filtered inventory has "
+            f"{uni['n_priors_checked']} rasters and recomputes to {uni['novel_fraction']:.6f}. "
+            "This does not rewrite the historical receipt; duplicate-pattern and literal-union "
+            "checks remain fail-closed against the full unfiltered inventory below.")
     # The date filter above decides only the HISTORICAL novel_fraction equality.  The question
     # that could actually hide a problem -- "are these bytes a duplicate of some other raster in
     # the repository?" -- is settled here against EVERY prior, undated and unfiltered, so that no

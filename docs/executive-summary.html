@@ -32,7 +32,7 @@
 <tr><td>Values</td><td>12,241,506 zeros and 37,654 ones; no NaNs; no nodata value declared</td></tr>
 <tr><td>Compression</td><td>DEFLATE</td></tr>
 <tr><td>Local positive-mask check</td><td>No exact match among 124 other tracked TIFFs with the same shape, CRS, and transform. This is repository-local only, not proof of global novelty or scientific quality.</td></tr>
-<tr><td>Exact template mask / portal check</td><td>Not independently verified in this checkout: <code>data/sample_submission.tif</code> is absent. Do not treat format observations as portal approval.</td></tr>
+<tr><td>Local template-mirror comparison / portal check</td><td>The linked TIFF matches the manifest-pinned sample mirror's grid and all 37,654 positive cells are inside its finite-cell support. The mirror is an owner-supplied copy, not organizer-authenticated (see the <a href="../registry/data_manifest.json">pinned manifest</a>; SHA-256 <code>2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc</code>); this is not portal approval. The distinct TIFF variant has 161 positives outside that support and 3,073 mirror-finite cells encoded as NaN.</td></tr>
 </table>
 </div>
 
@@ -51,6 +51,7 @@
 
 <p><strong>Separate CTD5 archive:</strong> CTD5 remains a historical negative result; <strong>DO NOT SUBMIT</strong>. See the <a href="ctd5-audit.html">CTD5 audit</a>.</p>
 <p><strong>Historical H58 archive:</strong> H58 is also <strong>not approved to submit</strong> because its registered artifact gate failed. <a href="downloads/h58-candidate.tif" download>Download H58</a> · <code>gems52-h58-coldgeo-consensus-22px-a55b0dee38-research.tif</code> · SHA-256 prefix <code>130c242e33aef398c44b22cd</code>. It is not an H83 variant or a current pointer.</p>
+<p><strong>Historical R5 archive — OK to download for research; not slot-approved.</strong> <a href="downloads/r5-candidate.tif" download>Short path: r5-candidate.tif</a> · <code>gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif</code> · SHA-256 prefix <code>d2bfb0f79328399354943bd1</code>. Its receipt's P(beating 0.2778) = 0.366 is a historical model projection, not an organizer score. Against the H57 <a href="h57-cotrain-disagreement.html">co-training/disagreement TIFF</a> (<code>gems52-h57-cotrain-disagreement-37654px-20261007T220849Z-1632bb37bb.tif</code>), 143 of 16,681 R5 positives overlap (0.991427 remain unshared against that arm); the full unfiltered current-inventory comparison reports 0.822493 across 122 rasters, while the exact mask remains unique and is not a literal union. The receipt's 1.0 build-time novelty is preserved as historical evidence, not a current novelty claim. Do not upload or spend a weekly slot; H60 remains the canonical submission pointer.</p>
 <p><strong>No competition-portal upload has occurred or is authorized.</strong> Return to the <a href="index.html">research page</a> or view the <a href="downloads/index.html">download archive</a>. This page distinguishes a downloadable file from scientific or organizer approval.</p>
 </body>
 </html>
