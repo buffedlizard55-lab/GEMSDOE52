@@ -1,0 +1,131 @@
+{
+  "round": "H89",
+  "experiment": "2 of 3",
+  "evidence_class": "HOLDOUT-DTI",
+  "hypothesis": "The H88 failure is a scale problem: the same disagreement arm at 400-800 m lags (lags_px [4,6,8]) with View A extended to bands 2/9/11/13/15/17 should recover a buried-fault signal",
+  "mechanism": "a deep, covered boundary should have its semivariance anisotropy maximum at long lags",
+  "named_non_fault_mimic": "basin-scale lithologic boundaries and regional gridding seams produce long-lag anisotropy",
+  "view_a": {
+    "bands": {
+      "2": "rtp",
+      "9": "tmi_vg",
+      "11": "iso_grav_anom_vg",
+      "13": "iso_grav_anom",
+      "15": "depth_to_base_surf",
+      "17": "cond_surf"
+    },
+    "lags_px": [
+      4,
+      6,
+      8
+    ],
+    "n_channels": 54
+  },
+  "view_b": {
+    "bands": {
+      "12": "det_elev",
+      "19": "det_elev_slope",
+      "6": "tc (radiometric total count by bytes)"
+    }
+  },
+  "decision_rule": "H89-L supported only if the primary's paired difference against random has a 95% CI with lower bound > 0",
+  "holdout": {
+    "instrument": "gems52-pooled-hide-v1",
+    "withheld_positive_px": 53186,
+    "clusters": 153,
+    "draws": 1000,
+    "primary": "xtex_dis",
+    "primary_dti": 0.03469731675945374,
+    "primary_ci95": [
+      0.026536202254691305,
+      0.04315316443588432
+    ],
+    "random_dti": 0.08042564781050282,
+    "random_ci95": [
+      0.0702226099128376,
+      0.09097325665223467
+    ],
+    "paired_primary_minus_random": {
+      "delta": -0.04572833105104908,
+      "ci95": [
+        -0.052841252785089554,
+        -0.03885645560571778
+      ]
+    },
+    "arms": {
+      "xtex_dis": {
+        "dti": 0.03469731675945374,
+        "ci95": [
+          0.026536202254691305,
+          0.04315316443588432
+        ],
+        "withheld_positive_px": 53186
+      },
+      "xtex_agree": {
+        "dti": 0.12158164621472371,
+        "ci95": [
+          0.1072035232541386,
+          0.1374626179401088
+        ],
+        "withheld_positive_px": 53186
+      },
+      "single_Atex": {
+        "dti": 0.07491278845855717,
+        "ci95": [
+          0.061878078190362,
+          0.08771204794503676
+        ],
+        "withheld_positive_px": 53186
+      },
+      "single_Btex": {
+        "dti": 0.15261550428776235,
+        "ci95": [
+          0.13381788182829094,
+          0.17041183717714092
+        ],
+        "withheld_positive_px": 53186
+      },
+      "random": {
+        "dti": 0.08042564781050282,
+        "ci95": [
+          0.0702226099128376,
+          0.09097325665223467
+        ],
+        "withheld_positive_px": 53186
+      }
+    }
+  },
+  "sufficiency": {
+    "view_A_AUC": [
+      0.5368248756029743,
+      0.5528728674186263,
+      0.4912592836483846,
+      0.5327241843003275
+    ],
+    "view_B_AUC": [
+      0.6718425488894328,
+      0.729560973320307,
+      0.6429614567993401,
+      0.6864144627490116
+    ],
+    "view_A_mean": 0.5284,
+    "verdict": "FAIL \u2014 indistinguishable from H88 at short lags; scale explanation closed"
+  },
+  "leakage_canary": {
+    "max_channel_AUC": 0.595,
+    "bar": 0.9
+  },
+  "registry": {
+    "note": "no artifact built for H89: the preregistered primary is a strict negative"
+  },
+  "raster": null,
+  "verdict": "NEGATIVE \u2014 H89-L NOT supported",
+  "verdict_reason": "paired primary-minus-random CI lower bound -0.052841 < 0; primary below the random floor",
+  "closes": "the 'wrong scale' explanation for the co-training lane's View-A failure",
+  "receipts": [
+    "evidence/h89_fit.json",
+    "evidence/h89_holdout.json",
+    "knowledge/83_h88_h89_results.md"
+  ],
+  "generated_utc": "2026-10-10"
+}

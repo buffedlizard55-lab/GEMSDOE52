@@ -4471,5 +4471,15 @@
   "verdict_reason": "the preregistered primary scores 0.034799 HOLDOUT-DTI, strictly below the 0.080426 random control with a 95% CI that excludes zero; the repository forbids spending a slot on a candidate that has not beaten the control",
   "submission_name": "h88-cotrain-atexture-disagreement-37654px",
   "submission_note": "H88 A-texture vs B-texture disagreement, 37654px, 3px spacing, 200m collar",
-  "generated_utc": "2026-10-10T22:26:20Z"
+  "generated_utc": "2026-10-10T22:26:20Z",
+  "submission_note_chars": 74,
+  "submission_name_chars": 41,
+  "a_only_reasoning": {
+    "file": "docs/downloads/h88-candidate-a-only-reasoning.csv",
+    "rows": 37654,
+    "a_only_dots": 34187,
+    "bytes": 15932119,
+    "sha256": "45d750c4cc42060b4a41b1093229714fdd1ec4dad0460ebb8da5618343015fbe",
+    "determinism_check": "scripts/h88_full_reasoning.py recomputed the production placement from the frozen procedure and found 0 differing pixels vs the shipped TIF (evidence/h88_reasoning.json)"
+  }
 }
