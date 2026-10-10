@@ -1,5 +1,5 @@
-<!--H87-README-->
-# Current status — H87 (2026-10-10): UNIQUE SUBMISSION — cover-conditioned co-training, disagreement as the discovery signal
+<!--H89-README-->
+# Current status — H89 (2026-10-10): UNIQUE SUBMISSION — cover-conditioned co-training, disagreement as the discovery signal
 
 Two questions, two unambiguous answers:
 
@@ -9,11 +9,11 @@ Two questions, two unambiguous answers:
 >
 > Weekly slots used by this round: **0**. The agent does not pick submissions — uploading is an owner selector decision taken with these numbers in hand.
 
-**★ [Download the submission GeoTIFF](docs/downloads/h87-candidate.tif)** · [ZIP](docs/downloads/h87-candidate.zip) · **[Executive summary / how to submit](docs/h87-executive-summary.html)** · **[Check any file in your browser](docs/validator.html)** · [Full result](docs/h87.html) · [Run card](evidence/h87_run_card.json)
+**★ [Download the submission GeoTIFF](docs/downloads/h89-candidate.tif)** · [ZIP](docs/downloads/h89-candidate.zip) · **[Executive summary / how to submit](docs/h89-executive-summary.html)** · **[Check any file in your browser](docs/validator.html)** · [Full result](docs/h89.html) · [Run card](evidence/h89_run_card.json)
 
-- **File:** `submission/gems52-h87-coverco-disagree-37654px-20261010T213918Z.tif` — 142,450 bytes, SHA-256 `9d3e2be69efd476c91c8772a28c09ffccadac4281cc2025e376e0c8c8ffba04a`
-- **Submission name to paste:** `h87-coverco-disagree-37654px-20261010T213918Z`
-- **Note to paste (133/140):** `H87 cover-conditioned co-training: artefact-demoted View B + 12% reserved A-only sub-cover dots; 200m catalogue ring excluded; binary`
+- **File:** `submission/gems52-h89-coverco-disagree-37654px-20261010T214732Z.tif` — 142,450 bytes, SHA-256 `9d3e2be69efd476c91c8772a28c09ffccadac4281cc2025e376e0c8c8ffba04a`
+- **Submission name to paste:** `h89-coverco-disagree-37654px-20261010T214732Z`
+- **Note to paste (133/140):** `H89 cover-conditioned co-training: artefact-demoted View B + 12% reserved A-only sub-cover dots; 200m catalogue ring excluded; binary`
 - **Validator (re-read from disk):** 1 band float32, EPSG:32611, 3730×3292, transform/bounds match the organiser template, **0 NaN**, 0 infinite, values exactly {0,1}, **37,654 emitted cells** (4,518 of them A-only sub-cover discovery dots). **PASS.** All-finite zeros outside the emission: that is the fix for the portal's *"Predicted values must be in range [0, 1]"* rejection.
 - **HOLDOUT-DTI** (`gems52-pooled-hide-v1`, 53,186 withheld positive px, 9,400 dots/fold/arm, α 0.2 / β 0.8, R 300 m, 1,000 paired cluster-bootstrap draws): `CCD` 0.160544 [0.1386, 0.1821] · `single_B` 0.175326 [0.1545, 0.1966] · `B_art` 0.170046 [0.1478, 0.1915] · `union_max` 0.150712 [0.1295, 0.1713] · `random` 0.079759 [0.0707, 0.0890] · `single_A` 0.072768 [0.0570, 0.0892] · `A_only_cover` 0.016073 [0.0113, 0.0214].
   Frozen promotion test — paired **CCD − single_B = -0.014782** [-0.021456, -0.008398]; non-inferiority (point ≥ single_B − 0.020, CI lower bound > −0.040): **PASS**; superiority: no.
@@ -25,11 +25,11 @@ Two questions, two unambiguous answers:
 - **Not the union:** shared with the union-max placement 15,007 px (Jaccard 0.2489), with single-A 4,226, with single-B 20,845; equal to the union False, subset of it False → **PASS**.
 - **Placement:** 37,654 binary dots at 3 px spacing; 200 m catalogue ring excluded (minimum distance 223.6 m, median 1,803 m, 12.31 % inside the metric's 300 m kernel).
 - **Method:** View A (potential-field/subsurface, 36 channels) and View B (surface + radiometric, 37 channels) are fitted per label-blind quadrant fold. Disagreement is used **in both directions**: A-confident ∧ B-abstaining ∧ above-median modelled cover ∧ 5×5 lineament continuity becomes the reserved 12 % *buried-fault discovery* budget; B-confident ∧ A-silent is demoted by `0.20 · artifact`, where `artifact = ½(1 − radiometric-edge rank) + ½ valley rank` — a fault juxtaposes materials and shows a K/Th/U edge, a drainage incision or graded road does not.
-- **Reviewer record:** every A-only candidate is exported with its measured cover depth, gravity/magnetic values, distance to the catalogue, a geological reading, the named non-fault mimic and an explicit falsifier → [`docs/downloads/h87-a-only-reasoning.csv`](docs/downloads/h87-a-only-reasoning.csv).
-- Docs: [preregistration](knowledge/80_hypotheses_H87_preregistered.md) (SHA-256 `fdb4065a3c8376549e83f8b7…`, frozen before any fit) · [results & limits](knowledge/82_h87_results_and_limits.md) · [session brief](knowledge/81_current_user_brief_2026-10-10_H87.md) · [irregularities](registry/irregularities.json)
-- Reproduce: `python3 scripts/restore_data.py --target-dir data` → build the feature store → `python -m gems52.external` → `python scripts/fetch_prior_inventory.py --out work/h87/priors --receipt work/h87/prior_fetch_receipt.json --skip-verify` → `python scripts/run_h87.py all` → `python scripts/publish_h87_site.py`.
+- **Reviewer record:** every A-only candidate is exported with its measured cover depth, gravity/magnetic values, distance to the catalogue, a geological reading, the named non-fault mimic and an explicit falsifier → [`docs/downloads/h89-a-only-reasoning.csv`](docs/downloads/h89-a-only-reasoning.csv).
+- Docs: [preregistration](knowledge/83_hypotheses_H89_preregistered.md) (SHA-256 `4fc5e57b19a450c061cbd55a…`, frozen before any fit) · [results & limits](knowledge/85_h89_results_and_limits.md) · [session brief](knowledge/84_current_user_brief_2026-10-10_H89.md) · [irregularities](registry/irregularities.json)
+- Reproduce: `python3 scripts/restore_data.py --target-dir data` → build the feature store → `python -m gems52.external` → `python scripts/fetch_prior_inventory.py --out work/h89/priors --receipt work/h89/prior_fetch_receipt.json --skip-verify` → `python scripts/run_h89.py all` → `python scripts/publish_h89_site.py`.
 
-### Correction to the previous round (IR-H87-003)
+### Correction to the previous round (IR-H89-003)
 
 The H83 block below states **SUBMIT: YES** and `"verdict": "promote"`, but `evidence/h83_run_card.json`
 records `holdout_dti = "NOT_EVALUATED"`. Under this project's own frozen rule — and under the session
@@ -39,7 +39,7 @@ SUBMIT NO (research-only).** Its bytes are unchanged and still published.
 
 ---
 
-<!--/H87-README-->
+<!--/H89-README-->
 <!--H83-README-->
 # Current status — H83 (2026-10-10): co-training on two instruments — the mandated hide-and-recover and a new off-catalogue one
 

@@ -1,12 +1,12 @@
 {
-  "file": "gems52-h87-coverco-disagree-37654px-20261010T213918Z.tif",
+  "file": "gems52-h89-coverco-disagree-37654px-20261010T214732Z.tif",
   "sha256": "9d3e2be69efd476c91c8772a28c09ffccadac4281cc2025e376e0c8c8ffba04a",
   "bytes": 142450,
-  "submission_name": "h87-coverco-disagree-37654px-20261010T213918Z",
-  "note": "H87 cover-conditioned co-training: artefact-demoted View B + 12% reserved A-only sub-cover dots; 200m catalogue ring excluded; binary",
+  "submission_name": "h89-coverco-disagree-37654px-20261010T214732Z",
+  "note": "H89 cover-conditioned co-training: artefact-demoted View B + 12% reserved A-only sub-cover dots; 200m catalogue ring excluded; binary",
   "note_chars": 133,
   "validator": {
-    "path": "/home/user/GEMSDOE52/submission/gems52-h87-coverco-disagree-37654px-20261010T213918Z.tif",
+    "path": "/home/user/GEMSDOE52/submission/gems52-h89-coverco-disagree-37654px-20261010T214732Z.tif",
     "bytes": 142450,
     "sha256": "9d3e2be69efd476c91c8772a28c09ffccadac4281cc2025e376e0c8c8ffba04a",
     "bands": 1,
@@ -54,15 +54,15 @@
     "ok": true,
     "validation_class": "local on-disk template/range check; not organizer upload acceptance"
   },
-  "zip_file": "gems52-h87-coverco-disagree-37654px-20261010T213918Z.zip",
-  "zip_sha256": "0ee3ebafd83b08b3cb5781c442db40330741d4edd7b098f6f3b3c0110c6c8a7f",
+  "zip_file": "gems52-h89-coverco-disagree-37654px-20261010T214732Z.zip",
+  "zip_sha256": "9b1176441fa2aa9e2fd9208e5423e9d1e433331e52b150476e42e8d26252cee4",
   "approved_for_weekly_slot": false,
   "promoted": false,
   "submission_slots_used": 0,
   "status": "research-only; local format validation is not organizer acceptance",
   "metadata": {
-    "round": "H87",
+    "round": "H89",
     "primary_arm": "CCD",
-    "preregistration": "registry/h87_preregistration.json"
+    "preregistration": "registry/h89_preregistration.json"
   }
 }

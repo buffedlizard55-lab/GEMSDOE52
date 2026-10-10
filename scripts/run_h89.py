@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""H87 -- cover-conditioned co-training with surface-artefact demotion.
+"""H89 -- cover-conditioned co-training with surface-artefact demotion.
 
 Lane (session brief, verbatim): co-training between a geophysical view (A: potential-field and
 subsurface) and a surface view (B: DEM curvature/slope + radiometrics), with **disagreement as the
 discovery signal**.  Where A is confident and B abstains the fault may be buried beneath cover;
 where B is confident and A is silent, suspect a surface artefact.
 
-Preregistered in ``knowledge/80_hypotheses_H87_preregistered.md`` and pinned by
-``registry/h87_preregistration.json``.  This runner refuses to start if either hash has moved.
+Preregistered in ``knowledge/83_hypotheses_H89_preregistered.md`` and pinned by
+``registry/h89_preregistration.json``.  This runner refuses to start if either hash has moved.
 
 Shared tools are reused, never forked:
   run_h61.setup / sample_for_fit / learner_for / predict_flat / to_grid / pct_rank
@@ -16,7 +16,7 @@ Shared tools are reused, never forked:
   gems52.evaluate_holdout (gems52-pooled-hide-v1)   gems52.nodes.spacing_select
   gems52.gates (format/uniqueness/lane)             gems52.submission_writer
 
-Stages (each checkpointed under work/h87 and evidence/h87_*.json):
+Stages (each checkpointed under work/h89 and evidence/h89_*.json):
     channels      cover / artefact / continuity conditioners + their empirical sign checks
     fit           leakage canary, then View A and View B per fold, predicted on the fold's region
     independence  the lane's mandated OOF negative-error correlation test
@@ -27,7 +27,7 @@ Stages (each checkpointed under work/h87 and evidence/h87_*.json):
     write         GeoTIFF (all-finite zeros), validator, not-the-union, A-only reasoning export
     card          one JSON run card assembled only from receipts on disk
 
-Usage: python scripts/run_h87.py [channels|fit|independence|exchange|holdout|build|lane|write|card|all]
+Usage: python scripts/run_h89.py [channels|fit|independence|exchange|holdout|build|lane|write|card|all]
 """
 from __future__ import annotations
 
@@ -57,12 +57,12 @@ import run_h61 as base                                                # noqa: E4
 from gems52 import evaluate_holdout as evaluator                      # noqa: E402
 from gems52 import gates, nodes, spatial, submission_writer           # noqa: E402
 
-PREREG = ROOT / "registry/h87_preregistration.json"
-WORK = ROOT / "work/h87"
+PREREG = ROOT / "registry/h89_preregistration.json"
+WORK = ROOT / "work/h89"
 EVID = ROOT / "evidence"
 DOCS = ROOT / "docs/downloads"
 SAMPLE = ROOT / "data/sample_submission.tif"
-PREFIX = "gems52-h87-"
+PREFIX = "gems52-h89-"
 REG = json.loads(PREREG.read_text())
 TH = REG["thresholds"]
 SEED = int(REG["seed"])
@@ -90,7 +90,7 @@ def digest(p) -> str:
 
 def write(name: str, obj) -> Path:
     EVID.mkdir(parents=True, exist_ok=True)
-    p = EVID / f"h87_{name}.json"
+    p = EVID / f"h89_{name}.json"
     p.write_text(json.dumps(obj, indent=1, default=float) + "\n")
     return p
 
@@ -120,7 +120,7 @@ def save_verified(path: Path, v, tries: int = 6, pause: float = 0.4) -> str:
 
 def check_prereg() -> dict:
     if digest(ROOT / REG["hypothesis_document"]) != REG["hypothesis_sha256"]:
-        raise SystemExit("H87 preregistration changed after freezing; re-pin registry/h87_preregistration.json")
+        raise SystemExit("H89 preregistration changed after freezing; re-pin registry/h89_preregistration.json")
     return REG
 
 
@@ -308,7 +308,7 @@ def stage_independence():
 def stage_exchange():
     """One Blum-Mitchell donation round, B -> A only, inside the fold's buffered training domain."""
     store, cat, eligible, folds, va, vb, ring_px = setup()
-    ind = json.loads((EVID / "h87_independence.json").read_text())
+    ind = json.loads((EVID / "h89_independence.json").read_text())
     allow = bool(ind["result"]["allow_exchange"])
     out = dict(stage="exchange", started_utc=now(), allow_exchange=allow, folds=[],
                rule=f"keep the refit View A only if out-of-quadrant AUC improves in "
@@ -317,11 +317,11 @@ def stage_exchange():
         out["skipped"] = "independence instrument disallowed exchange"
         write("exchange", out)
         return
-    fit = json.loads((EVID / "h87_fit.json").read_text())
+    fit = json.loads((EVID / "h89_fit.json").read_text())
     improved = 0
     for fold in folds:
         f = fold["fold"]
-        # IR-H87-001: the fit stage predicts on each fold's evaluation region only, so the
+        # IR-H89-001: the fit stage predicts on each fold's evaluation region only, so the
         # checkpointed grids are NaN across the buffered TRAINING domain -- which is precisely
         # where a pseudo-label is allowed to come from.  The donor/receiver fields for the
         # donation step are therefore re-derived on the training domain here, from models refit
@@ -428,7 +428,7 @@ def place_ccd(ff, k_total, seed=0):
 
 def stage_holdout():
     store, cat, eligible, folds, va, vb, ring_px = setup()
-    ex = json.loads((EVID / "h87_exchange.json").read_text()) if (EVID / "h87_exchange.json").exists() else {}
+    ex = json.loads((EVID / "h89_exchange.json").read_text()) if (EVID / "h89_exchange.json").exists() else {}
     post_A = bool(ex.get("keep_post_exchange", False))
     terms = {a: None for a in ARMS}
     out = dict(stage="holdout", started_utc=now(), evaluator=evaluator.VERSION, budget_per_fold=K_FOLD,
@@ -506,7 +506,7 @@ def stitch_fields(folds, eligible, ring_px, post_A):
 
 def stage_build():
     store, cat, eligible, folds, va, vb, ring_px = setup()
-    ex = json.loads((EVID / "h87_exchange.json").read_text()) if (EVID / "h87_exchange.json").exists() else {}
+    ex = json.loads((EVID / "h89_exchange.json").read_text()) if (EVID / "h89_exchange.json").exists() else {}
     post_A = bool(ex.get("keep_post_exchange", False))
     acc, disc, cover_px = stitch_fields(folds, eligible, ring_px, post_A)
     catd = ndi.distance_transform_edt(~cat)
@@ -600,7 +600,7 @@ def write_reasoning(store, dots, discovery, catd, eligible, name):
     rA, rB = np.load(WORK / "field_rA.npy"), np.load(WORK / "field_rB.npy")
     with rasterio.open(SAMPLE) as ref:
         T = ref.transform
-    path = DOCS / "h87-a-only-reasoning.csv"
+    path = DOCS / "h89-a-only-reasoning.csv"
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as fh:
         wtr = csv.writer(fh, lineterminator="\r\n")
@@ -638,16 +638,16 @@ def stage_write():
     discovery = np.load(WORK / "discovery_dots.npy")
     union_dots = np.load(WORK / "union_dots.npy")
     a_dots, b_dots = np.load(WORK / "a_dots.npy"), np.load(WORK / "b_dots.npy")
-    hold = json.loads((EVID / "h87_holdout.json").read_text())
+    hold = json.loads((EVID / "h89_holdout.json").read_text())
     pred = dots.astype(np.float32)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    name = f"h87-coverco-disagree-{int(dots.sum())}px-{stamp}"
-    note = ("H87 cover-conditioned co-training: artefact-demoted View B + 12% reserved A-only "
+    name = f"h89-coverco-disagree-{int(dots.sum())}px-{stamp}"
+    note = ("H89 cover-conditioned co-training: artefact-demoted View B + 12% reserved A-only "
             "sub-cover dots; 200m catalogue ring excluded; binary")
     assert len(name) <= 140 and len(note) <= 140, (len(name), len(note))
     out = ROOT / "submission" / f"gems52-{name}.tif"
     rec = submission_writer.write_submission(out, pred, SAMPLE, eligible, note=note, name=name,
-                                             metadata=dict(round="H87", primary_arm=PRIMARY,
+                                             metadata=dict(round="H89", primary_arm=PRIMARY,
                                                            preregistration=str(PREREG.relative_to(ROOT))))
     with rasterio.open(out) as a, rasterio.open(SAMPLE) as s:
         v = a.read(1)
@@ -704,14 +704,14 @@ def stage_write():
                reasoning_csv=reasoning,
                holdout_promotion_test=hold["promotion_test"])
     DOCS.mkdir(parents=True, exist_ok=True)
-    shutil.copy(out, DOCS / "h87-candidate.tif")
-    with zipfile.ZipFile(DOCS / "h87-candidate.zip", "w", zipfile.ZIP_DEFLATED) as z:
+    shutil.copy(out, DOCS / "h89-candidate.tif")
+    with zipfile.ZipFile(DOCS / "h89-candidate.zip", "w", zipfile.ZIP_DEFLATED) as z:
         z.write(out, out.name)
-    with zipfile.ZipFile(DOCS / "h87-candidate.zip") as z:
+    with zipfile.ZipFile(DOCS / "h89-candidate.zip") as z:
         assert z.namelist() == [out.name] and z.read(out.name) == out.read_bytes()
-    res["download_staged"] = dict(tif="docs/downloads/h87-candidate.tif", zip="docs/downloads/h87-candidate.zip",
-                                  tif_sha256=digest(DOCS / "h87-candidate.tif"),
-                                  zip_sha256=digest(DOCS / "h87-candidate.zip"))
+    res["download_staged"] = dict(tif="docs/downloads/h89-candidate.tif", zip="docs/downloads/h89-candidate.zip",
+                                  tif_sha256=digest(DOCS / "h89-candidate.tif"),
+                                  zip_sha256=digest(DOCS / "h89-candidate.zip"))
     write("write", res)
     log("validator PASS=%s ones=%d nan=%d; not-the-union PASS=%s" %
         (val["PASS"], val["ones"], val["nan"], not_union["PASS"]))
@@ -720,14 +720,14 @@ def stage_write():
 
 # ------------------------------------------------------------------------------------- stage: card
 def stage_card():
-    ch = json.loads((EVID / "h87_channels.json").read_text())
-    fit = json.loads((EVID / "h87_fit.json").read_text())
-    ind = json.loads((EVID / "h87_independence.json").read_text())
-    exg = json.loads((EVID / "h87_exchange.json").read_text())
-    hold = json.loads((EVID / "h87_holdout.json").read_text())
-    build = json.loads((EVID / "h87_build.json").read_text())
-    lane = json.loads((EVID / "h87_lane.json").read_text())
-    wr = json.loads((EVID / "h87_write.json").read_text())
+    ch = json.loads((EVID / "h89_channels.json").read_text())
+    fit = json.loads((EVID / "h89_fit.json").read_text())
+    ind = json.loads((EVID / "h89_independence.json").read_text())
+    exg = json.loads((EVID / "h89_exchange.json").read_text())
+    hold = json.loads((EVID / "h89_holdout.json").read_text())
+    build = json.loads((EVID / "h89_build.json").read_text())
+    lane = json.loads((EVID / "h89_lane.json").read_text())
+    wr = json.loads((EVID / "h89_write.json").read_text())
     pt = hold["promotion_test"]
     gates_pass = dict(
         format=bool(wr["validator"]["PASS"]),
@@ -739,12 +739,12 @@ def stage_card():
     submit_ok = all(gates_pass.values())
     verdict = "promote" if submit_ok else "negative"
     xs = {}
-    xp = EVID / "h87_lane_excess.json"
+    xp = EVID / "h89_lane_excess.json"
     if xp.exists():
         x = json.loads(xp.read_text())
         xs = {k: v for k, v in x.items() if k != "per_prior"}
     card = dict(
-        round="H87", generated_utc=now(), preregistration=str(PREREG.relative_to(ROOT)),
+        round="H89", generated_utc=now(), preregistration=str(PREREG.relative_to(ROOT)),
         preregistration_sha256=REG["hypothesis_sha256"],
         hypothesis=("Faults missing from the USGS/INGENIOUS catalogue are preferentially buried: a "
                     "continuous potential-field edge under above-median sedimentary cover where the surface "
@@ -801,7 +801,7 @@ def stage_card():
             "never ORGANIZER-CONFIRMED.",
             "Local format validation is not organiser upload acceptance.",
             "Competition rasters are integrity-pinned mirrors, not organizer-authenticated downloads."])
-    (EVID / "h87_run_card.json").write_text(json.dumps(card, indent=1, default=float) + "\n")
+    (EVID / "h89_run_card.json").write_text(json.dumps(card, indent=1, default=float) + "\n")
     print(json.dumps(card, indent=1, default=float))
     return card
 

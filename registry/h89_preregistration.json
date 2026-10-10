@@ -1,9 +1,9 @@
 {
- "round": "H87",
+ "round": "H89",
  "title": "Cover-conditioned co-training with surface-artefact demotion",
  "frozen_utc": "2026-10-10T21:10:00+00:00",
- "hypothesis_document": "knowledge/80_hypotheses_H87_preregistered.md",
- "hypothesis_sha256": "fdb4065a3c8376549e83f8b786882b188ebd7f830dd03187737223d00cba5286",
+ "hypothesis_document": "knowledge/83_hypotheses_H89_preregistered.md",
+ "hypothesis_sha256": "4fc5e57b19a450c061cbd55a398b1c6737f4699f5bf4c2eda561e6a10eca78f8",
  "lane": "co-training between a geophysical view (A) and a surface view (B); disagreement is the discovery signal",
  "primary_arm": "CCD",
  "arms": [
@@ -52,5 +52,5 @@
  "output_policy": "binary {0,1} float32, all-finite, zeros outside the emitted set (portal rejected NaN-outside with \"Predicted values must be in range [0, 1]\")",
  "slots_used": 0,
  "experiments_budget": 3,
- "renamed_from": "H84 - origin/main already holds a different H84 round from a parallel session (7d3c612 harmonic variogram-ellipse anisotropy), plus H85 and H86; identifier-only rename following the IR-H71-005 / IR-H74-002 / IR-H82-008 precedent. No threshold, formula, seed or measurement changed."
+ "renamed_from": "H84 -> H87 -> H89. origin/main acquired H84 (harmonic variogram), H85, H86 and then H87 (wavelength contrast x Th/K) from parallel sessions while this round ran; identifier-only renames following the IR-H71-005 / IR-H74-002 / IR-H82-008 precedent. H88 is skipped deliberately to reduce the chance of a third collision with an in-flight session. No threshold, formula, seed, measurement or raster byte changed."
 }

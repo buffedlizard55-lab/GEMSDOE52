@@ -3152,44 +3152,44 @@
    "disposition": "Closed. Any future publisher must not write shared guide pages without the release checks."
   },
   {
-   "id": "IR-H87-001",
-   "round": "H87",
+   "id": "IR-H89-001",
+   "round": "H89",
    "severity": "medium",
    "status": "resolved in the runner; both receipts published",
    "title": "The pseudo-label donation stage donated 0 pixels because the fit stage predicts on the evaluation region only",
-   "what_it_is": "scripts/run_h87.py stage_fit predicts each fold's model on that fold's EVALUATION region (cheaper, and all the holdout needs). stage_exchange then read those checkpoints to pick confident-disagreement segments, but a pseudo-label may only come from the buffered TRAINING domain, where those grids are NaN. Every fold therefore reported donated_px=0 and the Blum-Mitchell step was vacuous.",
-   "how_we_know": "evidence/h87_exchange.json first run: donated_px 0 in folds 0 and 1 with auc_post == auc_pre to the last digit; the training domain and the evaluation region are disjoint by construction (gems52.spatial.folds, 80 px buffer).",
+   "what_it_is": "scripts/run_h89.py stage_fit predicts each fold's model on that fold's EVALUATION region (cheaper, and all the holdout needs). stage_exchange then read those checkpoints to pick confident-disagreement segments, but a pseudo-label may only come from the buffered TRAINING domain, where those grids are NaN. Every fold therefore reported donated_px=0 and the Blum-Mitchell step was vacuous.",
+   "how_we_know": "evidence/h89_exchange.json first run: donated_px 0 in folds 0 and 1 with auc_post == auc_pre to the last digit; the training domain and the evaluation region are disjoint by construction (gems52.spatial.folds, 80 px buffer).",
    "measured_effect": "None on any published result: the frozen rule requires improvement in 4/4 folds before the refit View A may be used, 0 donations cannot improve anything, so the holdout and the build both ran on the pre-exchange View A, which is what they would have used anyway.",
    "handling": "stage_exchange now re-derives the donor/receiver fields on the fold's training domain from bit-identical refits (same seed, same sample, deterministic learner) before selecting whole segments. The first, region-only receipt is retained at /tmp and summarised in knowledge/76.",
    "disposition": "fixed in the runner; the affected measurement is the donation diagnostic only"
   },
   {
-   "id": "IR-H87-002",
-   "round": "H87",
+   "id": "IR-H89-002",
+   "round": "H89",
    "severity": "medium",
    "status": "repaired this round",
    "title": "docs/index.html and docs/executive-summary.html were rewritten by H83 and lost the historical artefact identities that scripts/check_site.py asserts",
    "what_it_is": "At the start of this session scripts/check_site.py reported 22 problems on a clean checkout. All of them were missing strings on docs/index.html and docs/executive-summary.html: the H58 artefact name and SHA prefix, the R5 artefact name/SHA/P(beat 0.2778)/no-slot statement, the H57 credited-core alternate name, the H55-EDGE archive link and the 'do not upload' marker.",
    "how_we_know": "python3 scripts/check_site.py on the merge commit ebb1d34 before any change this session.",
    "measured_effect": "No scientific result is affected; the site lost its archive navigation and its explicit do-not-upload markers for the older artefacts, which is exactly the kind of silent regression the checker exists to catch.",
-   "handling": "scripts/publish_h87_site.py rebuilds both pages current-first and regenerates an archive table that names H83/H82/R5/H58/H57-alternate/H55-EDGE from their own receipts, so the pages name the same bytes the receipts name.",
+   "handling": "scripts/publish_h89_site.py rebuilds both pages current-first and regenerates an archive table that names H83/H82/R5/H58/H57-alternate/H55-EDGE from their own receipts, so the pages name the same bytes the receipts name.",
    "disposition": "repaired; keep the archive table in every future publisher"
   },
   {
-   "id": "IR-H87-003",
-   "round": "H87",
+   "id": "IR-H89-003",
+   "round": "H89",
    "severity": "high",
    "status": "corrected in README this round",
    "title": "H83 published SUBMIT: YES and verdict 'promote' with holdout_dti = NOT_EVALUATED",
    "what_it_is": "evidence/h83_run_card.json records holdout.value = 'NOT_EVALUATED' and 'Holdout evaluation not yet performed', yet the same card carries verdict 'promote' and the README block stated 'SUBMIT: YES - format-valid, unique approach, ready for competition upload'. The project's own rule, and the session brief, forbid promoting a candidate that has not beaten the current holdout best.",
    "how_we_know": "evidence/h83_run_card.json fields holdout_dti.value and verdict, read this session.",
    "measured_effect": "No slot was spent, so no competition cost was incurred. The risk was a reader uploading a file on an unmeasured promise.",
-   "handling": "The README H87 block re-labels H83 DOWNLOAD YES / SUBMIT NO (research-only); its bytes are unchanged.",
+   "handling": "The README H89 block re-labels H83 DOWNLOAD YES / SUBMIT NO (research-only); its bytes are unchanged.",
    "disposition": "corrected; H83 remains downloadable and clearly marked research-only"
   },
   {
-   "id": "IR-H87-004",
-   "round": "H87",
+   "id": "IR-H89-004",
+   "round": "H89",
    "severity": "low",
    "status": "open - transport limitation, disclosed",
    "title": "Two submission-format sources named in the brief are unreachable from this sandbox",
@@ -3200,17 +3200,17 @@
    "disposition": "accepted limitation"
   },
   {
-   "id": "IR-H87-005",
-   "round": "H87",
+   "id": "IR-H89-005",
+   "round": "H89",
    "severity": "medium",
    "status": "measured and published; rule change deferred to a pre-registration",
    "title": "The literal lane proximity rule is close to vacuous against a 573-raster census that contains near-total-coverage priors",
    "what_it_is": "The brief's rule stops a run when more than 70 % of its dots fall within 3 px of ONE registry raster's dots. A prior whose 3 px halo already covers a large share of the eligible footprint captures that same share of ANY placement, including a uniform random one, so the literal rule measures the registry rather than the candidate.",
-   "how_we_know": "gems52.gates.lane_report already reports each prior's measured coverage_3px_of_eligible beside its near_3px_fraction; scripts/h87_lane_excess.py computes the chance-corrected statistic excess = (near - coverage)/(1 - coverage) for the priors that drive the verdict.",
-   "measured_effect": "See evidence/h87_lane_excess.json for this round's numbers.",
-   "handling": "Reported, not applied: the H87 gate stays exactly as frozen in knowledge/74 so that no verdict is redefined after seeing a result. The next round should pre-register the chance-corrected rule.",
+   "how_we_know": "gems52.gates.lane_report already reports each prior's measured coverage_3px_of_eligible beside its near_3px_fraction; scripts/h89_lane_excess.py computes the chance-corrected statistic excess = (near - coverage)/(1 - coverage) for the priors that drive the verdict.",
+   "measured_effect": "See evidence/h89_lane_excess.json for this round's numbers.",
+   "handling": "Reported, not applied: the H89 gate stays exactly as frozen in knowledge/74 so that no verdict is redefined after seeing a result. The next round should pre-register the chance-corrected rule.",
    "disposition": "open - proposed shared-tool fix for the next pre-registration"
   }
  ],
- "merge_note": "Merged registry/irregularities.json: main's entries (including the parallel H66 round's IR-H66-001..010) plus this round's IR-H67-001..011. This round was labelled H66 in its own receipts and was renamed H67 before merge because main merged a different H66 first (PR #56); the IDs were renumbered wholesale so no ID carries two meanings. See knowledge/45a_amendment_2026-10-09_H67_rename.md. IR-H67-002 (in-domain nodata sentinels collapse every rank channel) and IR-H67-008 (probe classification flips with the structuring element, and this round's lane verdict depends on it) are the two that change a result; IR-H67-005 and IR-H67-007 change how a shared instrument must be read. | H77cond merge: this round was executed as H74 and renamed to H77cond before merge because a parallel session merged a different H74 first (PR #72) and a third took H75; see IR-H77cond-001. The rename is identifier-only and the preregistration's pinned SHA-256 still validates. IR-H77cond-002 records a shared-tool repair to scripts/check_site.py surfaced by that merge. IR-H77cond-003 records that filename, receipt and git dating are all individually unsound in this repository, and that the duplicate guard was therefore made dating-independent. | H82 merge (2026-10-09): union of both entry sets by id; 8 H82 entries added (IR-H82-001..IR-H82-008); no existing entry was edited or removed. | H87 merge: IR-H87-001..005 appended from the H87 branch (renamed from H84 because main already holds a different H84); main entries kept verbatim, no id reused."
+ "merge_note": "Merged registry/irregularities.json: main's entries (including the parallel H66 round's IR-H66-001..010) plus this round's IR-H67-001..011. This round was labelled H66 in its own receipts and was renamed H67 before merge because main merged a different H66 first (PR #56); the IDs were renumbered wholesale so no ID carries two meanings. See knowledge/45a_amendment_2026-10-09_H67_rename.md. IR-H67-002 (in-domain nodata sentinels collapse every rank channel) and IR-H67-008 (probe classification flips with the structuring element, and this round's lane verdict depends on it) are the two that change a result; IR-H67-005 and IR-H67-007 change how a shared instrument must be read. | H77cond merge: this round was executed as H74 and renamed to H77cond before merge because a parallel session merged a different H74 first (PR #72) and a third took H75; see IR-H77cond-001. The rename is identifier-only and the preregistration's pinned SHA-256 still validates. IR-H77cond-002 records a shared-tool repair to scripts/check_site.py surfaced by that merge. IR-H77cond-003 records that filename, receipt and git dating are all individually unsound in this repository, and that the duplicate guard was therefore made dating-independent. | H82 merge (2026-10-09): union of both entry sets by id; 8 H82 entries added (IR-H82-001..IR-H82-008); no existing entry was edited or removed. | H89 merge: IR-H89-001..005 appended from the H89 branch (renamed from H84 because main already holds a different H84); main entries kept verbatim, no id reused."
 }

@@ -8,5 +8,5 @@ knowledge/archive/*.md whitespace=-blank-at-eol,-blank-at-eof
 # H61 reasoning export uses RFC 4180 CRLF record endings, like the H58 and CTD5 exports.
 docs/downloads/*h61*reasoning.csv whitespace=cr-at-eol
 evidence/*h61*.csv whitespace=cr-at-eol
-# H87 A-only reasoning export uses RFC 4180 CRLF record endings, like the H58/CTD5/H61 exports.
+# H89 A-only reasoning export uses RFC 4180 CRLF record endings, like the H58/CTD5/H61 exports.
 docs/downloads/*h84*reasoning.csv whitespace=cr-at-eol

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate knowledge/82_h87_results_and_limits.md from the H87 receipts (no typed numbers)."""
+"""Generate knowledge/85_h89_results_and_limits.md from the H89 receipts (no typed numbers)."""
 from __future__ import annotations
 
 import json
@@ -7,7 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 EV = ROOT / "evidence"
-L = lambda n: json.loads((EV / f"h87_{n}.json").read_text())  # noqa: E731
+L = lambda n: json.loads((EV / f"h89_{n}.json").read_text())  # noqa: E731
 
 card, wr, hold, build, lane = L("run_card"), L("write"), L("holdout"), L("build"), L("lane")
 ind, exg, fit, chan = L("independence"), L("exchange"), L("fit"), L("channels")
@@ -34,11 +34,11 @@ don_rows = "\n".join(f"| {f['fold']} | {f['donated_px']:,} | {f['donated_compone
                      f"{f['auc_pre']:.4f} | {f['auc_post']:.4f} | {f['improved']} |"
                      for f in exg.get("folds", []))
 
-doc = f"""# 76 · H87 results and limits
+doc = f"""# 76 · H89 results and limits
 
-Round **H87**, {card['generated_utc']}. Preregistration `knowledge/80_hypotheses_H87_preregistered.md`
+Round **H89**, {card['generated_utc']}. Preregistration `knowledge/83_hypotheses_H89_preregistered.md`
 (SHA-256 `{card['preregistration_sha256']}`), frozen before any fit and pinned by
-`registry/h87_preregistration.json`. Every number below is read from `evidence/h87_*.json`.
+`registry/h89_preregistration.json`. Every number below is read from `evidence/h89_*.json`.
 
 **Verdict: {card['verdict'].upper()} · DOWNLOAD {card['download']} · SUBMIT {card['submit']} · slots used {card['slots_used']}.**
 
@@ -117,9 +117,9 @@ fault absence, and a weak error correlation is not proof of conditional feature 
 {don_rows}
 
 Decision: **{exg.get('decision', '—')}** (the frozen rule requires improvement in
-{json.loads((ROOT / 'registry/h87_preregistration.json').read_text())['thresholds']['donation_fold_improvement_required']}/4 folds).
+{json.loads((ROOT / 'registry/h89_preregistration.json').read_text())['thresholds']['donation_fold_improvement_required']}/4 folds).
 
-**IR-H87-001.** The first execution of this stage donated **0 px in all four folds** because the fit
+**IR-H89-001.** The first execution of this stage donated **0 px in all four folds** because the fit
 stage predicts on each fold's *evaluation region* only, so the checkpointed grids are NaN across the
 buffered training domain — exactly where a pseudo-label is permitted to originate. The stage now
 re-derives donor/receiver fields on the training domain from bit-identical refits (same seed, same
@@ -203,6 +203,6 @@ discovery gate uses the median as its threshold.
    or drainage lines) and measure whether the veto suppresses them more than it suppresses withheld
    catalogue faults. That is a direct test of the mechanism rather than a side-effect measurement.
 """
-out = ROOT / "knowledge/82_h87_results_and_limits.md"
+out = ROOT / "knowledge/85_h89_results_and_limits.md"
 out.write_text(doc)
 print(f"wrote {out} ({len(doc):,} chars)")

@@ -16,10 +16,10 @@
  "n_informative_near_offenders": 29,
  "n_informative_excess_offenders": 0,
  "stability_caveat": "the ratio is unstable as coverage -> 1 (its denominator vanishes), which is why near-total-coverage probes show excess ~1; it is meaningful only for priors that leave a substantial part of the footprint uncovered",
- "note": "the pre-registered H87 gate is unchanged; this statistic is published so the next round can pre-register it rather than invent it after seeing a verdict",
+ "note": "the pre-registered H89 gate is unchanged; this statistic is published so the next round can pre-register it rather than invent it after seeing a verdict",
  "per_prior": [
   {
-   "path": "work/h87/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+   "path": "work/h89/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
    "support_px": 4830583,
    "coverage_3px_of_eligible": 0.9999997822854843,
    "near_3px_fraction": 1.0,
@@ -28,7 +28,7 @@
    "excess_offender": true
   },
   {
-   "path": "work/h87/priors/c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+   "path": "work/h89/priors/c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
    "support_px": 4862052,
    "coverage_3px_of_eligible": 0.9974396772948362,
    "near_3px_fraction": 0.9999468847931162,
@@ -37,7 +37,7 @@
    "excess_offender": true
   },
   {
-   "path": "work/h87/priors/35616cbb48ac3533dd4c957b8acca57f71ba365f.tif",
+   "path": "work/h89/priors/35616cbb48ac3533dd4c957b8acca57f71ba365f.tif",
    "support_px": 4862052,
    "coverage_3px_of_eligible": 0.9974396772948362,
    "near_3px_fraction": 0.9999468847931162,
@@ -46,7 +46,7 @@
    "excess_offender": true
   },
   {
-   "path": "work/h87/priors/5ae4b6b4324c19727f8304eb63fc5610ad23b9d9.tif",
+   "path": "work/h89/priors/5ae4b6b4324c19727f8304eb63fc5610ad23b9d9.tif",
    "support_px": 516738,
    "coverage_3px_of_eligible": 0.5327876972139727,
    "near_3px_fraction": 0.8497636373293674,
@@ -55,7 +55,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/509be169fe6253f94bf8b7323398e1b80e972c96.tif",
+   "path": "work/h89/priors/509be169fe6253f94bf8b7323398e1b80e972c96.tif",
    "support_px": 516738,
    "coverage_3px_of_eligible": 0.5327876972139727,
    "near_3px_fraction": 0.8497636373293674,
@@ -64,7 +64,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/c61719ffe62dd7533c43f2f1f76054efaabeceee.tif",
+   "path": "work/h89/priors/c61719ffe62dd7533c43f2f1f76054efaabeceee.tif",
    "support_px": 335879,
    "coverage_3px_of_eligible": 0.4119783478559801,
    "near_3px_fraction": 0.770515748658841,
@@ -73,7 +73,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/4934bb73380487247f9abc273bbc3bba7f5d83c1.tif",
+   "path": "work/h89/priors/4934bb73380487247f9abc273bbc3bba7f5d83c1.tif",
    "support_px": 335879,
    "coverage_3px_of_eligible": 0.4119783478559801,
    "near_3px_fraction": 0.770515748658841,
@@ -82,7 +82,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/306ee1b1deebc9a0a9f437e501cd0965ee37f25e.tif",
+   "path": "work/h89/priors/306ee1b1deebc9a0a9f437e501cd0965ee37f25e.tif",
    "support_px": 624025,
    "coverage_3px_of_eligible": 0.6166319520871311,
    "near_3px_fraction": 0.8345726881606204,
@@ -91,7 +91,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/0c1b5547e970fee995a953382e94d4f1342444b9.tif",
+   "path": "work/h89/priors/0c1b5547e970fee995a953382e94d4f1342444b9.tif",
    "support_px": 352506,
    "coverage_3px_of_eligible": 0.39540504805939075,
    "near_3px_fraction": 0.7199500717055293,
@@ -100,7 +100,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/57732c697e2aa7c50c8ce35fa3d8866aee103abf.tif",
+   "path": "work/h89/priors/57732c697e2aa7c50c8ce35fa3d8866aee103abf.tif",
    "support_px": 272853,
    "coverage_3px_of_eligible": 0.73954660081238,
    "near_3px_fraction": 0.8594040473787645,
@@ -109,7 +109,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/0bb2fae409553cc7281a848541d65232921a8bdc.tif",
+   "path": "work/h89/priors/0bb2fae409553cc7281a848541d65232921a8bdc.tif",
    "support_px": 272853,
    "coverage_3px_of_eligible": 0.73954660081238,
    "near_3px_fraction": 0.8594040473787645,
@@ -118,7 +118,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/e2594695e37059e4c708857a8e7e58f007900bca.tif",
+   "path": "work/h89/priors/e2594695e37059e4c708857a8e7e58f007900bca.tif",
    "support_px": 272853,
    "coverage_3px_of_eligible": 0.73954660081238,
    "near_3px_fraction": 0.8594040473787645,
@@ -127,7 +127,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/80ee726da7af66e6cd86b627a9982cec8e709ac3.tif",
+   "path": "work/h89/priors/80ee726da7af66e6cd86b627a9982cec8e709ac3.tif",
    "support_px": 272853,
    "coverage_3px_of_eligible": 0.73954660081238,
    "near_3px_fraction": 0.8594040473787645,
@@ -235,7 +235,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/0a195a38802892f46e0146415faa678aa1603b5b.tif",
+   "path": "work/h89/priors/0a195a38802892f46e0146415faa678aa1603b5b.tif",
    "support_px": 338755,
    "coverage_3px_of_eligible": 0.7246581936531429,
    "near_3px_fraction": 0.8217188080947575,
@@ -244,7 +244,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/ed019800934ba779cbc6707fd0ed05ab40ed7ad1.tif",
+   "path": "work/h89/priors/ed019800934ba779cbc6707fd0ed05ab40ed7ad1.tif",
    "support_px": 338755,
    "coverage_3px_of_eligible": 0.7246581936531429,
    "near_3px_fraction": 0.8217188080947575,
@@ -253,7 +253,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/9f9dccae710f3011ec8ab925d06a1357e65cec9b.tif",
+   "path": "work/h89/priors/9f9dccae710f3011ec8ab925d06a1357e65cec9b.tif",
    "support_px": 344041,
    "coverage_3px_of_eligible": 0.6461009180803414,
    "near_3px_fraction": 0.7561215275933499,
@@ -262,7 +262,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/f11a0f27760003208c8a1df16b49a969a8f427ec.tif",
+   "path": "work/h89/priors/f11a0f27760003208c8a1df16b49a969a8f427ec.tif",
    "support_px": 344041,
    "coverage_3px_of_eligible": 0.6461009180803414,
    "near_3px_fraction": 0.7561215275933499,
@@ -271,7 +271,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/6d69c94d9c59cf518fe9d6d34463444348aa88ad.tif",
+   "path": "work/h89/priors/6d69c94d9c59cf518fe9d6d34463444348aa88ad.tif",
    "support_px": 246469,
    "coverage_3px_of_eligible": 0.6797787410919385,
    "near_3px_fraction": 0.7746321771923301,
@@ -280,7 +280,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/6ef080a1067db86fa70924252fdb777ec4b94b7a.tif",
+   "path": "work/h89/priors/6ef080a1067db86fa70924252fdb777ec4b94b7a.tif",
    "support_px": 246469,
    "coverage_3px_of_eligible": 0.6797787410919385,
    "near_3px_fraction": 0.7746321771923301,
@@ -289,7 +289,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/fdd931161c431a583cf7039362e51832e59d07ad.tif",
+   "path": "work/h89/priors/fdd931161c431a583cf7039362e51832e59d07ad.tif",
    "support_px": 155021,
    "coverage_3px_of_eligible": 0.7352378128312662,
    "near_3px_fraction": 0.8093429648908482,
@@ -298,7 +298,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/4dd494d3c85b41f082a4949ea0b7037df4098816.tif",
+   "path": "work/h89/priors/4dd494d3c85b41f082a4949ea0b7037df4098816.tif",
    "support_px": 180000,
    "coverage_3px_of_eligible": 0.6356001115569179,
    "near_3px_fraction": 0.7137090348966909,
@@ -307,7 +307,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/93baa81db8295cf7fee042dd2c753465d2d73a3c.tif",
+   "path": "work/h89/priors/93baa81db8295cf7fee042dd2c753465d2d73a3c.tif",
    "support_px": 180000,
    "coverage_3px_of_eligible": 0.6356001115569179,
    "near_3px_fraction": 0.7137090348966909,
@@ -316,7 +316,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/ab7e0752036d020fbc394a528bbe63171c3cb08f.tif",
+   "path": "work/h89/priors/ab7e0752036d020fbc394a528bbe63171c3cb08f.tif",
    "support_px": 452679,
    "coverage_3px_of_eligible": 0.7582652594471226,
    "near_3px_fraction": 0.7952143198597759,
@@ -325,7 +325,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/443e8e1c799734facd50a92bc85c650f3857a2b6.tif",
+   "path": "work/h89/priors/443e8e1c799734facd50a92bc85c650f3857a2b6.tif",
    "support_px": 452679,
    "coverage_3px_of_eligible": 0.7582652594471226,
    "near_3px_fraction": 0.7952143198597759,
@@ -334,7 +334,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/32a4a6d2d4df8ef8e880120f36d2a4d94f134f8a.tif",
+   "path": "work/h89/priors/32a4a6d2d4df8ef8e880120f36d2a4d94f134f8a.tif",
    "support_px": 155021,
    "coverage_3px_of_eligible": 0.7346334373355575,
    "near_3px_fraction": 0.7623360067987465,
@@ -343,7 +343,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+   "path": "work/h89/priors/5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
    "support_px": 380365,
    "coverage_3px_of_eligible": 0.8354104386708007,
    "near_3px_fraction": 0.8523662824666702,
@@ -352,7 +352,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+   "path": "work/h89/priors/0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
    "support_px": 380365,
    "coverage_3px_of_eligible": 0.8354104386708007,
    "near_3px_fraction": 0.8523662824666702,
@@ -361,7 +361,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+   "path": "work/h89/priors/437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
    "support_px": 507776,
    "coverage_3px_of_eligible": 0.8615559925811601,
    "near_3px_fraction": 0.8738513836511393,
@@ -370,7 +370,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+   "path": "work/h89/priors/c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
    "support_px": 507776,
    "coverage_3px_of_eligible": 0.8615559925811601,
    "near_3px_fraction": 0.8738513836511393,
@@ -379,7 +379,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+   "path": "work/h89/priors/bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
    "support_px": 192231,
    "coverage_3px_of_eligible": 0.7629609261227157,
    "near_3px_fraction": 0.770701651882934,
@@ -388,7 +388,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+   "path": "work/h89/priors/2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
    "support_px": 192231,
    "coverage_3px_of_eligible": 0.7629609261227157,
    "near_3px_fraction": 0.770701651882934,
@@ -406,7 +406,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+   "path": "work/h89/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
    "support_px": 362327,
    "coverage_3px_of_eligible": 0.897567715201546,
    "near_3px_fraction": 0.8925479364742126,
@@ -415,7 +415,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+   "path": "work/h89/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
    "support_px": 5167373,
    "coverage_3px_of_eligible": 1.0,
    "near_3px_fraction": 1.0,
@@ -424,7 +424,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+   "path": "work/h89/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
    "support_px": 5106385,
    "coverage_3px_of_eligible": 1.0,
    "near_3px_fraction": 1.0,
@@ -433,7 +433,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+   "path": "work/h89/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
    "support_px": 206895,
    "coverage_3px_of_eligible": 1.0,
    "near_3px_fraction": 1.0,
@@ -442,7 +442,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+   "path": "work/h89/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
    "support_px": 206895,
    "coverage_3px_of_eligible": 1.0,
    "near_3px_fraction": 1.0,
@@ -451,7 +451,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+   "path": "work/h89/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
    "support_px": 5167373,
    "coverage_3px_of_eligible": 1.0,
    "near_3px_fraction": 1.0,
@@ -460,7 +460,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/3d3ee66300203bdc878f3a052caabde671daf042.tif",
+   "path": "work/h89/priors/3d3ee66300203bdc878f3a052caabde671daf042.tif",
    "support_px": 5137016,
    "coverage_3px_of_eligible": 1.0,
    "near_3px_fraction": 1.0,
@@ -478,7 +478,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+   "path": "work/h89/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
    "support_px": 4234841,
    "coverage_3px_of_eligible": 0.9883130847947964,
    "near_3px_fraction": 0.96882137355925,
@@ -487,7 +487,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+   "path": "work/h89/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
    "support_px": 4234841,
    "coverage_3px_of_eligible": 0.9883130847947964,
    "near_3px_fraction": 0.96882137355925,
@@ -496,7 +496,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+   "path": "work/h89/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
    "support_px": 4238870,
    "coverage_3px_of_eligible": 0.9885919770894661,
    "near_3px_fraction": 0.9692462952143198,
@@ -505,7 +505,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+   "path": "work/h89/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
    "support_px": 4256372,
    "coverage_3px_of_eligible": 0.9919031971594352,
    "near_3px_fraction": 0.9743453550751581,
@@ -514,7 +514,7 @@
    "excess_offender": false
   },
   {
-   "path": "work/h87/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+   "path": "work/h89/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
    "support_px": 4467661,
    "coverage_3px_of_eligible": 0.9956951308801697,
    "near_3px_fraction": 0.9807722951080895,
