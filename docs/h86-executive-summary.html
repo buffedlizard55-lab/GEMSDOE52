@@ -94,7 +94,7 @@ Note (108 characters): <code>H86 H83 concordance+geotherm, 3px spacing, 200m cat
 
 <h2>The 0.2778 question, answered</h2>
 <div class="card">
-<p>Verified this round from the restored files: the 0.2778 raster (<code>h33-2-b2</code>, 37,654 cells) is a strict subset of the owner-reported 0.2600 raster (<code>d2_8</code>, 44,090 cells). The 6,436 cells it deleted all lie 100–200 m from a mapped trace, so they earn no credit under the metric's kernel but still cost false-positive mass. Deleting them raises the ratio of credited to emitted mass. The score rose 0.2600 → 0.2778 by removing zero-credit cells, not by a better detector. The full metric algebra is in <a href="../knowledge/49_why_02778_phd_answer.md">knowledge/49</a>.</p>
+<p>Verified from the restored files: the 0.2778 raster (<code>h33-2-b2</code>, 37,654 cells) is a strict subset of the owner-reported 0.2600 raster (<code>d2_8</code>, 44,090 cells). The 6,436 cells it deleted lie 100–200 m from a mapped trace. That is inside the 300 m triangular kernel, so they are <em>not</em> guaranteed zero credit. An earlier draft of this page said they earn zero credit; that was wrong and is corrected here. The repository's own later analysis (README, sparse-approximation note) finds the removed ring carries roughly 0.5–3.3% of the parent's credit across the identified |G| interval. So the rise is a precision gain from deleting false-positive mass, not proof of better detection. Owner-reported, not ORGANIZER-CONFIRMED. Derivation: <a href="../knowledge/49_why_02778_phd_answer.md">knowledge/49</a>.</p>
 </div>
 
 <h2>Lane and uniqueness (registry gates)</h2>
