@@ -1,0 +1,54 @@
+{
+  "stage": "build",
+  "registration": {
+    "preregistration_sha256": "0f664c43f166264864c3815d31a9230f5b95b257a426d4670a8b5ed7c78f7094",
+    "amendment_sha256": "91f74c5a5e4c730e826b91ae0731bf58883779af6753238e839e1c6ae8a84785",
+    "frozen_before_any_fit": true
+  },
+  "composition": {
+    "emitted": 25400,
+    "target": 25400,
+    "buried_dominant_dots": 20050,
+    "consensus_dominant_dots": 5350,
+    "buried_dominant_fraction": 0.7893700787401575,
+    "jaccard_vs_viewA_viewB_spaced_topk_union": 0.0489914737452057,
+    "intersection_with_view_union": 3551,
+    "dots_outside_view_union": 21849,
+    "is_merely_the_view_union": false
+  },
+  "allowed_px": 4859987,
+  "catalogue_px": 60988,
+  "collar_px": 2,
+  "spacing_px": 3.0,
+  "surface_lane": {
+    "literal": {
+      "max_spearman": 0.09138659730156094,
+      "max_near_3px_fraction": null,
+      "max_near_source": null,
+      "rank_offenders": [],
+      "near_offenders": [],
+      "identical": [],
+      "verdict": "PASS",
+      "note": "applied to every aligned prior including universal-coverage probes"
+    },
+    "policy": {
+      "max_spearman": 0.09138659730156094,
+      "max_near_3px_fraction": null,
+      "max_near_source": null,
+      "rank_offenders": [],
+      "near_offenders": [],
+      "identical": [],
+      "informative_priors": 146,
+      "universal_coverage_probes": 1,
+      "probe_paths": [
+        "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif"
+      ],
+      "probe_coverage": [
+        0.9990273609201634
+      ],
+      "verdict": "PASS",
+      "note": "the same literal rule restricted to priors that localise something; probe statistics are retained verbatim in per_prior and nothing is deleted"
+    }
+  },
+  "generated_utc": "2026-10-10T22:20:04.892127+00:00"
+}

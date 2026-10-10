@@ -1,6 +1,6 @@
 {
-  "generated_utc": "2026-10-10T21:42:55Z",
-  "branch": "main",
+  "generated_utc": "2026-10-10T22:45:10Z",
+  "branch": "arena/90369109-gemsdoe52",
   "repo": "buffedlizard55-lab/GEMSDOE52",
   "evidence_copied": [
     "a_only_reasoning_r2.json",
@@ -203,8 +203,8 @@
     "verified_claims_r2.json",
     "verified_claims_r3.json"
   ],
-  "submission": "gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif",
-  "downloads": 97,
+  "submission": "gems52-h88-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif",
+  "downloads": 99,
   "leaderboard_status": "dated snapshot; automated DrivenData access disabled by Terms-of-Use policy",
   "leaderboard_last_observed_utc": "2026-10-10",
   "prior_entries": 395,
