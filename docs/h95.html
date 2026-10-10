@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>H95 Status &amp; Audit — GEMSDOE52</title>
+<style>
+:root{--bg:#0f1117;--fg:#e8eaed;--accent:#4fc3f7;--ok:#66bb6a;--warn:#ffa726;--err:#ef5350;--card:#1a1d27;--border:#2d3040}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--fg);line-height:1.65}
+.container{max-width:920px;margin:0 auto;padding:24px 20px}
+h1{font-size:1.6rem;color:var(--accent);margin-bottom:8px}
+h2{font-size:1.2rem;margin:26px 0 12px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+code{background:#1e2130;padding:2px 6px;border-radius:3px;font-size:0.9em}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:0.9rem}
+th,td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+th{color:var(--accent)}
+.pass{color:var(--ok);font-weight:700}
+.warn{color:var(--warn);font-weight:700}
+.fail{color:var(--err);font-weight:700}
+.notice{background:var(--card);border:2px solid var(--warn);border-radius:10px;padding:16px 20px;margin:16px 0}
+.small{font-size:0.85rem;color:#999}
+.footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--border);font-size:0.85rem;color:#777}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>H95 — bidirectional co-training disagreement: status &amp; audit</h1>
+<p class="small">GEMSDOE52 · round H95 · generated 2026-10-10 ·
+<a href="index.html">download page</a> · <a href="executive-summary.html">executive summary</a></p>
+
+<div class="notice">
+<p><strong>current H95 status and review</strong> — the current pointer is
+<code>gems52-h95-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif</code>;
+its receipt explicitly closes the weekly-slot gate (HOLDOUT-DTI 0.0725 vs the promotion bar 0.1928).
+No upload happened; slots used: 0. The owner decides; no agent may upload or spend a slot on this
+file's behalf.</p>
+<p><b>OK to download?</b> <span class="pass">YES</span> ·
+<b>OK to submit?</b> <span class="warn">NOT RECOMMENDED (verdict negative)</span> ·
+NO CERTIFIED LEADERBOARD GAIN.</p>
+</div>
+
+<h2>Receipts (all machine-readable, re-derivable from bytes)</h2>
+<table>
+<tr><th>item</th><th>value</th></tr>
+<tr><td>raster</td><td><a href="downloads/gems52-h95-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif">…-zeros.tif</a> (106 KB) · short alias <a href="downloads/h95-candidate.tif">h95-candidate.tif</a></td></tr>
+<tr><td>zip</td><td><a href="downloads/gems52-h95-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.zip">…-zeros.zip</a> · short alias <a href="downloads/h95-candidate.zip">h95-candidate.zip</a></td></tr>
+<tr><td>SHA-256</td><td><code>ba2dae7db2b919bb53c147cae0d5f9663b368b059fc1b26c69d8dbfc35948ade</code></td></tr>
+<tr><td>submission name</td><td><code>h88-bidir-cotrain-coverstep-25400px</code></td></tr>
+<tr><td>note (134 chars)</td><td><code>H95 bidir co-train A/B disagreement, cover-step ViewA, 25400px mass lever, 3px, 200m collar; HOLDOUT-DTI below bar, research candidate</code></td></tr>
+<tr><td>format gate</td><td><span class="pass">PASS</span> — single band, float32, nodata None, EPSG:32611, 3730×3292, transform (100, 0, 243350, 0, −100, 4508550), all finite, values in [0,1], exactly {0,1}, 25,400 dots</td></tr>
+<tr><td>placement</td><td>3.0 px min spacing (metric-aware), 200 m catalogue collar (0 dots on catalogue, 0 inside collar)</td></tr>
+<tr><td>uniqueness gate</td><td><span class="pass">PASS</span> — 147 registry rasters; decoded pattern unique; novel fraction 0.5703; not the literal prior union</td></tr>
+<tr><td>lane gate (surface)</td><td><span class="pass">PASS</span> — max Spearman 0.0914 (bar 0.90)</td></tr>
+<tr><td>lane gate (dots)</td><td>literal DUPLICATE/STOP vs the universal-coverage probe <code>13gems…r13-lattice…</code> (near 0.9993; random dots score 0.9991 on the same probe — IR-H95-002); policy <span class="pass">PASS</span> — informative max near 0.5233 (vs the H87 sibling), max Spearman 0.0356</td></tr>
+<tr><td>not-the-union</td><td><span class="pass">CONFIRMED</span> — 86 % of dots outside the views' spaced top-k union (Jaccard 0.049); 78.9 % buried-dominant</td></tr>
+<tr><td>independence (Blum–Mitchell)</td><td>max |r| 0.0965 of spatial-block OOF negative errors (abandon threshold 0.60) — not abandoned</td></tr>
+<tr><td>leakage canary</td><td>max single-channel AUC 0.5958 (alarm 0.90) — silent</td></tr>
+<tr><td>HOLDOUT-DTI (primary)</td><td>0.072502 [0.058139, 0.087161] vs bar 0.192829 — <span class="fail">verdict negative</span></td></tr>
+<tr><td>A-only reasoning</td><td><a href="downloads/gems52-h95-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros-a-only-reasoning.csv">20,050 rows</a>, each naming fired components and non-fault alternatives</td></tr>
+</table>
+
+<h2>What the round tested</h2>
+<p>Pre-registered in <code>registry/h95_preregistration.json</code> (SHA-256 <code>0f664c43…</code>)
+plus the pre-fit veto amendment (<code>91f74c5a…</code>): View A = gravity/magnetic gradients +
+cover-thickness step + seismicity lineation + strain step + conductivity; View B = DEM slope /
+ridge curvature / topographic edges + radiometric K/Th + total count; discovery signal =
+disagreement both ways (A&gt;B → buried-fault boost; B&gt;A → artifact veto). First holdout
+measurement of the H85-next-B/C/D channels: cover-step AUC 0.567, seismicity-lineation 0.511,
+strain-step 0.527 — near-chance on catalogue recovery.</p>
+
+<h2>Run-card verdict</h2>
+<p><strong>negative</strong> — the primary arm did not beat random on hide-and-recover
+(Δ = −0.0040 [−0.0163, +0.0095]) and is far below the promotion bar. Negative results are
+deliverables: the full receipts close the bidirectional-disagreement hypothesis on the
+catalogue instrument and redirect the next round to graft the disagreement arm onto the strong
+H82/H84 surface channels. Full card: <code>evidence/h95_run_card.json</code>.</p>
+
+<div class="footer">
+<p><a href="index.html">Download page</a> ·
+<a href="executive-summary.html">Executive summary &amp; submission guide</a> ·
+<a href="h83-executive-summary.html">H83 executive summary</a> ·
+<a href="ctd5-audit.html">CTD5 audit</a> ·
+<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Competition problem &amp; metric</a></p>
+<p class="small">HOLDOUT-DTI is a local evaluator (gems52-pooled-hide-v1), not a leaderboard score.
+A projection is never written as a score.</p>
+</div>
+
+</div>
+</body>
+</html>

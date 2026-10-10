@@ -1,0 +1,78 @@
+{
+  "file": "gems52-h95-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif",
+  "sha256": "ba2dae7db2b919bb53c147cae0d5f9663b368b059fc1b26c69d8dbfc35948ade",
+  "bytes": 108742,
+  "submission_name": "gems52-h95-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros",
+  "note": "H95 bidir co-train A/B disagreement, cover-step ViewA, 25400px mass lever, 3px, 200m collar; HOLDOUT-DTI below bar, research candidate",
+  "note_chars": 134,
+  "validator": {
+    "path": "/home/user/GEMSDOE52/submission/gems52-h95-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif",
+    "bytes": 108742,
+    "sha256": "ba2dae7db2b919bb53c147cae0d5f9663b368b059fc1b26c69d8dbfc35948ade",
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "ref_bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "nodata": null,
+    "blocksize": [
+      256,
+      256
+    ],
+    "fixture_grid": false,
+    "has_validity_mask": false,
+    "nan_pixels": 0,
+    "infinity_pixels": 0,
+    "n_nan": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.002068545436486602,
+    "n_nonzero": 25400,
+    "mass": 25400.0,
+    "mass_outside_footprint": 0,
+    "problems": [],
+    "ok": true,
+    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "zip_file": "gems52-h95-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.zip",
+  "zip_sha256": "9ac8728c5445980215d0d74f4106a3a577c28dc15380e712edb0a27f5f53d168",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "status": "research-only; local format validation is not organizer acceptance",
+  "metadata": {
+    "round": "H95",
+    "hypothesis": "bidirectional co-training disagreement; A-confident/B-abstain = buried fault, B-confident/A-abstain = artifact veto",
+    "evidence_class": "HOLDOUT-DTI",
+    "registration": {
+      "preregistration_sha256": "0f664c43f166264864c3815d31a9230f5b95b257a426d4670a8b5ed7c78f7094",
+      "amendment_sha256": "91f74c5a5e4c730e826b91ae0731bf58883779af6753238e839e1c6ae8a84785",
+      "frozen_before_any_fit": true
+    }
+  },
+  "round": "H95",
+  "stem": "gems52-h95-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros",
+  "nonzero_px": 25400,
+  "short_tif": "h95-candidate.tif",
+  "short_zip": "h95-candidate.zip"
+}

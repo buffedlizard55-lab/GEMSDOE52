@@ -1,0 +1,245 @@
+{
+ "round": "H89",
+ "generated_utc": "2026-10-10T21:48:10+00:00",
+ "preregistration": "registry/h89_preregistration.json",
+ "preregistration_sha256": "4fc5e57b19a450c061cbd55a398b1c6737f4699f5bf4c2eda561e6a10eca78f8",
+ "hypothesis": "Faults missing from the USGS/INGENIOUS catalogue are preferentially buried: a continuous potential-field edge under above-median sedimentary cover where the surface view abstains is a fault candidate, and a surface-confident pixel without a radiometric edge is a non-tectonic lineament.",
+ "mechanism": "Two-view co-training (Blum & Mitchell, COLT '98, doi:10.1145/279943.279962). View A = potential-field/subsurface channels, View B = DEM + radiometric channels. One B->A donation round on whole confident-disagreement segments inside the buffered training domain. Emission = 88% artefact-demoted View B + 12% reserved cover-gated A-only discovery dots, 3 px spacing, 200 m catalogue ring excluded, binary {0,1}.",
+ "named_non_fault_process": "buried lithological contact or basin-margin palaeochannel for the A-only dots; drainage incision or graded road for the demoted B-only pixels",
+ "holdout": {
+  "evaluator": "gems52-pooled-hide-v1",
+  "withheld_positive_pixels": 53186,
+  "budget_per_fold": 9400,
+  "scores": {
+   "single_A": {
+    "dti": 0.07276756742487808,
+    "ci95": [
+     0.05696192659883368,
+     0.08922961111104954
+    ]
+   },
+   "single_B": {
+    "dti": 0.17532639176540848,
+    "ci95": [
+     0.15447389281241639,
+     0.19664032683708293
+    ]
+   },
+   "union_max": {
+    "dti": 0.15071239469919717,
+    "ci95": [
+     0.12946195565304408,
+     0.17125434864117797
+    ]
+   },
+   "B_art": {
+    "dti": 0.17004581233066568,
+    "ci95": [
+     0.14777483822722515,
+     0.19151459016036687
+    ]
+   },
+   "A_only_cover": {
+    "dti": 0.016072839295652966,
+    "ci95": [
+     0.011322298092997231,
+     0.021397314604584525
+    ]
+   },
+   "CCD": {
+    "dti": 0.1605443805545941,
+    "ci95": [
+     0.13859173049716206,
+     0.18212389692878828
+    ]
+   },
+   "random": {
+    "dti": 0.07975901799870512,
+    "ci95": [
+     0.07068240876017055,
+     0.0890477508399322
+    ]
+   }
+  },
+  "primary_minus_single_B": {
+   "delta": -0.014782011210814378,
+   "ci95": [
+    -0.021455708218540686,
+    -0.008398208513477222
+   ]
+  },
+  "evidence_class": "HOLDOUT-DTI (not a leaderboard score and not a projection)"
+ },
+ "leakage_canary": {
+  "max_single_channel_auc": 0.6565806352439824,
+  "bar": 0.9,
+  "alarm": false
+ },
+ "view_independence": {
+  "max_abs_rho": 0.13715056360447167,
+  "bar": 0.6,
+  "blocks": 2089,
+  "allow_exchange": true
+ },
+ "donation": {
+  "folds_improved": 2,
+  "decision": "pre-exchange View A retained (frozen rule: improvement required in 4/4 folds)",
+  "donated_px": [
+   1997,
+   2000,
+   1996,
+   1999
+  ]
+ },
+ "correlation_overlap_vs_registry": {
+  "census_rasters": 573,
+  "scored_rasters": 13,
+  "surface_max_spearman_literal": 0.4641324587987372,
+  "dots_max_near_3px_literal": 1.0,
+  "dots_literal_verdict": "DUPLICATE/STOP",
+  "dots_policy_verdict": "DUPLICATE/STOP",
+  "dots_max_near_3px_policy": 0.8925479364742126,
+  "identical_to_any_prior": null
+ },
+ "raster_sha256": "9d3e2be69efd476c91c8772a28c09ffccadac4281cc2025e376e0c8c8ffba04a",
+ "raster_bytes": 142450,
+ "raster_file": "submission/gems52-h89-coverco-disagree-37654px-20261010T214732Z.tif",
+ "validator": {
+  "bands": 1,
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "shape": [
+   3730,
+   3292
+  ],
+  "crs_match": true,
+  "shape_match": true,
+  "transform_match": true,
+  "bounds_match": true,
+  "nan": 0,
+  "infinite": 0,
+  "min": 0.0,
+  "max": 1.0,
+  "unique_values": [
+   0.0,
+   1.0
+  ],
+  "ones": 37654,
+  "zeros": 12241506,
+  "nan_inside_footprint": 0,
+  "range_ok": true,
+  "PASS": true,
+  "rule_source": "official submission format: single-band float32 GeoTIFF, EPSG:32611, 100 m, same bounds/shape/geotransform as the submission format, values in [0,1] -- https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/"
+ },
+ "not_the_union": {
+  "dots": 37654,
+  "discovery_dots": 4518,
+  "equal_union": false,
+  "subset_of_union": false,
+  "equal_single_A": false,
+  "equal_single_B": false,
+  "shared_with_union": 15007,
+  "jaccard_union": 0.2488681779738313,
+  "shared_with_A": 4226,
+  "jaccard_A": 0.0594524633521848,
+  "shared_with_B": 20845,
+  "jaccard_B": 0.3827369039531425,
+  "PASS": true
+ },
+ "placement": {
+  "requested_b": 33136,
+  "placed_b": 33136,
+  "requested_discovery": 4518,
+  "placed_discovery": 4518,
+  "discovery_pool_px": 96306,
+  "shortfall_discovery": 0,
+  "dots": 37654,
+  "discovery_dots": 4518,
+  "min_cat_dist_m": 223.60679774997897,
+  "median_cat_dist_m": 1802.7756377319947,
+  "within_300m_pct": 12.312104955648802,
+  "spacing": {
+   "n": 37654,
+   "median_px": 3.1622776601683795,
+   "p10_px": 3.0,
+   "p90_px": 5.0,
+   "share_within_1px": 0.0,
+   "share_within_2px": 0.0
+  }
+ },
+ "channels_sign_check": {
+  "convention": "B_curvature_plus_3 large positive is expected at concave-up valley bottoms",
+  "mean_detrended_elev_top1pct_curv_plus_m": 260.41845703125,
+  "mean_detrended_elev_top1pct_curv_minus_m": 611.7097778320312,
+  "mean_detrended_elev_all_m": -12.3842134475708,
+  "valley_convention_consistent": true,
+  "cover_m": {
+   "min": -14.837310791015625,
+   "median": 318.9657897949219,
+   "p90": 1301.271240234375,
+   "max": 7135.306640625
+  },
+  "cover_median_threshold_m": 318.9657897949219,
+  "artifact": {
+   "mean": 0.23811088502407074,
+   "p05": 0.04752090573310852,
+   "p95": 0.45898574590682983
+  },
+  "radiometric_channels": [
+   "X_rad_K_grad3",
+   "X_rad_Th_grad3",
+   "X_rad_U_grad3",
+   "X_rad_ThK_grad3",
+   "X_rad_UK_grad3",
+   "X_rad_UTh_grad3"
+  ]
+ },
+ "submission_name": "h89-coverco-disagree-37654px-20261010T214732Z",
+ "submission_note": "H89 cover-conditioned co-training: artefact-demoted View B + 12% reserved A-only sub-cover dots; 200m catalogue ring excluded; binary",
+ "note_chars": 133,
+ "gates": {
+  "format": true,
+  "uniqueness_not_identical": true,
+  "lane_surface_rank": true,
+  "lane_dots_policy": false,
+  "not_the_union": true,
+  "holdout_noninferior": true
+ },
+ "verdict": "negative",
+ "lane_excess_chance_corrected": {
+  "instrument": "chance-corrected lane proximity (proposed shared-tool fix, reported not applied)",
+  "definition": "excess = (near_3px_fraction - coverage_3px_of_eligible) / (1 - coverage_3px_of_eligible)",
+  "candidate_dots": 37654,
+  "priors_measured": 56,
+  "max_excess": 1.0,
+  "max_literal_near": 1.0,
+  "n_literal_offenders": 44,
+  "n_excess_offenders": 3,
+  "applies_to_this_round": false,
+  "n_informative_measured": 41,
+  "max_near_informative_coverage_lt_0_95": 0.8925479364742126,
+  "coverage_of_that_prior": 0.897567715201546,
+  "excess_of_that_prior": -0.04900582601677116,
+  "max_excess_informative_coverage_lt_0_95": 0.678440910535189,
+  "n_informative_near_offenders": 29,
+  "n_informative_excess_offenders": 0,
+  "stability_caveat": "the ratio is unstable as coverage -> 1 (its denominator vanishes), which is why near-total-coverage probes show excess ~1; it is meaningful only for priors that leave a substantial part of the footprint uncovered",
+  "note": "the pre-registered H89 gate is unchanged; this statistic is published so the next round can pre-register it rather than invent it after seeing a verdict"
+ },
+ "download": "YES",
+ "portal_format_valid": true,
+ "auto_promoted_by_frozen_rule": false,
+ "failed_gates": [
+  "lane_dots_policy"
+ ],
+ "submit": "NO - not auto-promoted: lane_dots_policy",
+ "slots_used": 0,
+ "experiments_used": 3,
+ "experiments_budget": 3,
+ "caveats": [
+  "HOLDOUT-DTI is measured on withheld CATALOGUE segments; the competition scores faults the catalogue lacks. Spearman(holdout, public board) measured at -0.10 in this repository.",
+  "Prior scores quoted anywhere in this repository are OWNER-REPORTED filename attributions, never ORGANIZER-CONFIRMED.",
+  "Local format validation is not organiser upload acceptance.",
+  "Competition rasters are integrity-pinned mirrors, not organizer-authenticated downloads."
+ ]
+}

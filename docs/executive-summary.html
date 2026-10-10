@@ -3,203 +3,110 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Executive Summary &amp; Submission Guide — GEMSDOE52 H88</title>
+<title>GEMSDOE52 · executive summary and submission guide</title>
 <style>
-:root{--bg:#0f1117;--fg:#e8eaed;--accent:#4fc3f7;--ok:#66bb6a;--warn:#ffa726;--err:#ef5350;--card:#1a1d27;--border:#2d3040}
+:root{--bg:#0f1117;--fg:#e8eaed;--accent:#4fc3f7;--err:#ef5350;--ok:#66bb6a;--warn:#ffa726;--card:#1a1d27;--border:#2d3040}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--fg);line-height:1.65;padding:0}
-.container{max-width:920px;margin:0 auto;padding:24px 20px}
-h1{font-size:1.7rem;margin-bottom:8px;color:var(--accent)}
-h2{font-size:1.25rem;margin:28px 0 12px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px}
-a{color:var(--accent);text-decoration:none}
-a:hover{text-decoration:underline}
-code{background:#1e2130;padding:2px 6px;border-radius:3px;font-size:0.9em}
-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:0.9rem}
-th,td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
-th{color:var(--accent);font-weight:600}
-.notice{background:var(--card);border:2px solid var(--warn);border-radius:10px;padding:16px 20px;margin:16px 0}
-.pass{color:var(--ok);font-weight:700}
-.warn{color:var(--warn);font-weight:700}
-.fail{color:var(--err);font-weight:700}
-.step{display:flex;align-items:flex-start;margin:12px 0}
-.step-num{background:var(--accent);color:#000;font-weight:700;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:12px;margin-top:2px}
-.copy-box{background:#1e2130;border:1px solid var(--border);border-radius:6px;padding:12px 16px;font-family:monospace;font-size:0.9rem;margin:8px 0;word-break:break-all}
-.btn{display:inline-block;background:var(--accent);color:#000;font-weight:700;padding:10px 22px;border-radius:8px;font-size:1rem;margin:6px}
-.btn:hover{background:#81d4fa;text-decoration:none}
-.small{font-size:0.85rem;color:#999}
-.footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--border);font-size:0.85rem;color:#777}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--fg);line-height:1.6}
+.container{max-width:900px;margin:0 auto;padding:24px 20px}
+h1{font-size:1.6rem;margin-bottom:6px;color:var(--accent)}
+h2{font-size:1.18rem;margin:26px 0 10px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px}
+a{color:var(--accent)}
+code{background:#1e2130;padding:2px 6px;border-radius:3px;font-size:0.9em;word-break:break-all}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:0.92rem}
+th,td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+th{color:var(--accent)}
+.verdict{border:2px solid var(--warn);border-radius:10px;padding:16px 20px;margin:14px 0;background:#241a06}
+.no{color:var(--err);font-weight:700}
+.yes{color:var(--ok);font-weight:700}
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin:10px 0}
+.muted{color:#9aa0a6;font-size:0.88rem}
+.footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--border);font-size:0.85rem;color:#8d939b}
 </style>
 </head>
 <body>
 <div class="container">
 
-<h1>Executive Summary — H88 and how to make a submission</h1>
-<p class="small">GEMSDOE52 · DOE GEMS Prize (DrivenData #306) · 2026-10-10 ·
-<a href="index.html">← back to the download page</a></p>
+<h1>Executive summary and submission guide</h1>
+<p class="muted">Competition: DOE GEMS Prize, DrivenData #306 · as of 2026-10-10 · <a href="index.html">back to status</a></p>
 
-<div class="notice">
-<p><strong>Verdict for this round: NEGATIVE on HOLDOUT-DTI (0.0725 vs bar 0.1928).</strong></p>
-<p><b>OK to download?</b> <span class="pass">YES</span> — the H88 file below is format-valid and safe
-to inspect.</p>
-<p><b>OK to submit?</b> <span class="warn">Not recommended</span> — the pre-registered holdout gate was
-not beaten, so this round's own rule says do not spend a weekly slot. Older research files on this
-site carry <b>DO NOT SUBMIT</b> labels where their rounds were negative or invalid
-(e.g. <a href="ctd5-audit.html">ctd5-research.tif</a>). Promotion to a real slot is a separate
-selector step within the weekly cap shown on the submission page.</p>
-<p class="small">NO CERTIFIED LEADERBOARD GAIN is claimed anywhere on this site.</p>
+<div class="verdict">
+  <p><strong>Current file (H95, 2026-10-10):</strong> download for audit: <span class="yes">YES</span> · submit to DrivenData: <span class="no">NO</span> · not slot-approved.</p>
+  <p>What H95 tested: <strong>bidirectional co-training disagreement</strong> (Blum &amp; Mitchell 1998).
+  View A = gravity/magnetics/strain/seismicity/cover/conductivity; View B = DEM curvature + slope + radiometrics.
+  A-confident/B-abstain cells were boosted as buried-fault candidates (cover-step + strain/seismicity lineation
+  mechanism); B-confident/A-abstain cells were vetoed as surface artifacts. 25,400 dots, 3 px spacing, 200 m collar.</p>
+  <p>Why not submit: HOLDOUT-DTI <strong>0.0725</strong> [0.0581, 0.0872] vs random 0.0766 and the promotion
+  bar 0.1928 (H82). Verdict <strong>negative</strong> — the disagreement field added nothing beyond the View-A
+  prior. All in <a href="h95.html">the H95 page</a>.</p>
+  <p>Downloads (research-only): <a href="downloads/gems52-h95-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif">.tif</a> ·
+  <a href="downloads/gems52-h95-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.zip">.zip</a> ·
+  <a href="downloads/h95-candidate.tif">downloads/h95-candidate.tif</a> ·
+  <a href="downloads/gems52-h95-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.json">gate receipt</a></p>
+  <p>Submission name: <strong>h95-bidir-cotrain-coverstep-25400px</strong> · note:
+  <code>H95 bidir co-train A/B disagreement, cover-step ViewA, 25400px mass lever, 3px, 200m collar; HOLDOUT-DTI below bar, research candidate</code></p>
+  <p><strong>DO NOT SUBMIT the H95, H94 or H87 file. Do not upload any of them.</strong></p>
 </div>
 
-<h2>Part 1 — Exactly how to submit a file to the competition</h2>
+<div class="verdict">
+  <p><strong>H94 (previous round):</strong> download for audit: <span class="yes">YES</span> · submit to DrivenData: <span class="no">NO</span> · not slot-approved.</p>
+  <p>Why not: the holdout is below random (HOLDOUT-DTI 0.063055 vs random 0.076551), and the final dots fail the lane duplicate rule (97.46% of dots within 3 px of the H87 file). Both are in <a href="h94.html">the H94 page</a>.</p>
+  <p><strong>DO NOT SUBMIT the H94 or H87 file. Do not upload either one.</strong></p>
+</div>
 
-<div class="step"><div class="step-num">1</div><div><strong>Download the GeoTIFF.</strong>
-<a class="btn" href="downloads/gems52-h88-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif" download>Download .tif</a>
-<a class="btn" href="downloads/gems52-h88-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.zip" download>Download .zip</a>
-The .zip contains exactly the one GeoTIFF and is accepted interchangeably with the .tif.</div></div>
+<h2>1 · How to submit (for the day a file is approved)</h2>
+<p>A file is submitted only when its status says <strong>OK to submit: YES</strong> on the <a href="index.html">status page</a>, and a selector has recorded that decision. The steps below are the ones the team follows. They are not yet tested on the DrivenData form from this sandbox.</p>
+<div class="card">
+<ol style="margin-left:20px">
+<li><strong>Check the file.</strong> It must be a single-band GeoTIFF, float32, EPSG:32611, with every value in <strong>[0, 1]</strong>. A previous upload was rejected with "Predicted values must be in range [0, 1]". Run the validator in the repository (<code>scripts/verify_h88_file.py</code> is the template) and confirm its output is 12/12 PASS.</li>
+<li><strong>Check the SHA-256</strong> of the file against the status page. A mismatch means the file has changed.</li>
+<li><strong>Open the competition page:</strong> <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">drivendata.org/competitions/306/competition-doe-gems</a> (not fetched from this sandbox). Log in as the team account.</li>
+<li><strong>Upload the .tif</strong> on the submissions page: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">submissions</a> (not fetched from this sandbox).</li>
+<li><strong>Enter the name and the note.</strong> The name must be unique on the team's history. The note must be at most <strong>140 characters</strong>. The status page gives both fields for the approved file.</li>
+<li><strong>Submit once</strong> and record the slot in the repository. Up to three submissions per week count against the limit, so each one is logged.</li>
+<li><strong>Read the organiser score</strong> on the submissions page. That is the only ORGANIZER-CONFIRMED number. Record it with a receipt; every other number is HOLDOUT-DTI.</li>
+</ol>
+</div>
 
-<div class="step"><div class="step-num">2</div><div><strong>Open the submission page.</strong>
-<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">DrivenData → DOE GEMS → Submissions</a>
-(login required) and click <strong>New submission</strong>.</div></div>
-
-<div class="step"><div class="step-num">3</div><div><strong>File to submit</strong> — click
-"No file chosen" and select the downloaded <code>.tif</code> (or the <code>.zip</code>). The form
-accepts "a single-band GeoTIFF (.tif) file, or a .zip file containing a single GeoTIFF" and it
-"must match the submission format's CRS, shape, and geotransform". Our file is single-band float32,
-EPSG:32611, 3730×3292 cells of 100 m, transform (100, 0, 243350, 0, −100, 4508550) — identical to
-the organiser's <code>sample_submission.tif</code> grid.</div></div>
-
-<div class="step"><div class="step-num">4</div><div><strong>Note (optional)</strong> — "A short comment
-to help you or your team tell submissions apart later e.g. clustering with k=25". Paste:</div></div>
-<div class="copy-box">H88 bidir co-train A/B disagreement, cover-step ViewA, 25400px mass lever, 3px, 200m collar; HOLDOUT-DTI below bar, research candidate</div>
-
-<div class="step"><div class="step-num">5</div><div><strong>Create submission</strong> and wait for the
-receipt. Copy the score from the submission page back into the repository's receipts as
-<strong>ORGANIZER-CONFIRMED</strong> — that is the only label allowed on a real score.</div></div>
-
-<h3>Submission name to use</h3>
-<div class="copy-box">h88-bidir-cotrain-coverstep-25400px</div>
-
-<h3>If the portal shows an error</h3>
+<h2>2 · Approval rule (what must be true before step 3 is allowed)</h2>
 <table>
-<tr><th>Message you may see</th><th>What it means</th><th>This file</th></tr>
-<tr><td>"Predicted values must be in range [0, 1]"</td>
-    <td>A value outside [0,1], or a NaN/&plusmn;inf that the portal's reader did not treat as nodata.
-    This is the error the older NaN-outside templates produced for some readers.</td>
-    <td><strong>Cannot happen here.</strong> Every pixel is finite and equal to 0 or 1. Outside the
-    survey footprint the file stores <em>zeros</em>, not NaN — the same all-finite container the
-    0.2778 champion uses — so even a reader that ignores the nodata tag sees legal numbers.</td></tr>
-<tr><td>"must match the submission format's CRS, shape, and geotransform"</td>
-    <td>Grid metadata drifted.</td>
-    <td><strong>Cannot happen here.</strong> The grid is re-read from the written file and compared
-    against the pinned numbers in the build receipt.</td></tr>
-<tr><td>"You can submit a single-band GeoTIFF (.tif) file, or a .zip file containing a single GeoTIFF"</td>
-    <td>More than one file in the ZIP.</td>
-    <td><strong>Cannot happen here.</strong> The ZIP is round-tripped and must contain exactly one
-    member whose bytes equal the TIFF.</td></tr>
+<tr><th>Gate</th><th>Requirement</th><th>H94 status</th></tr>
+<tr><td>Holdout</td><td>Beats the current bar on the same fold set, with a CI that excludes zero against the random control.</td><td class="no">FAIL: 0.063055, below random</td></tr>
+<tr><td>Lane (surface)</td><td>Rank correlation with every registry raster at or below 0.90.</td><td class="yes">PASS (max 0.2216)</td></tr>
+<tr><td>Lane (final dots)</td><td>At most 70% of dots within 3 px of any one registry raster's dots.</td><td class="no">FAIL: 97.46% with H87; DUPLICATE/STOP</td></tr>
+<tr><td>Format</td><td>Values in [0, 1], one band, float32, CRS and transform checked.</td><td class="yes">PASS (12/12)</td></tr>
+<tr><td>Name and note</td><td>Unique name; note at most 140 characters.</td><td class="yes">prepared (not submitted)</td></tr>
+<tr><td>Selector</td><td>A separate promotion step records the choice. Nobody chooses by hand.</td><td class="no">not run (not eligible)</td></tr>
 </table>
 
-<h2>Part 2 — What H88 is and what was measured</h2>
+<h2>3 · Result so far</h2>
+<ul style="margin-left:20px">
+<li>Holdout experiments used this week: <strong>1 of 3</strong> (H94). Slots used: <strong>0</strong>.</li>
+<li>Best organiser score on the public board snapshot: <strong>0.3774</strong> (#1). <strong>0.3195</strong> is #8. The 0.2778 value appears on that snapshot only as team <code>extradr19</code>, rank 22 (team-level, no filename). Its link to the file <code>h33-2-b2</code> is owner-reported (IR-H94-006).</li>
+<li>The H94 candidate is not competitive. An H94 submission would not beat the bar on the holdout, so it is not spent on a slot.</li>
+</ul>
 
-<p><strong>Hypothesis (frozen before any fit, <code>registry/h88_preregistration.json</code>).</strong>
-In a two-view co-training setup (Blum &amp; Mitchell, COLT '98,
-<a href="https://doi.org/10.1145/279943.279962">doi:10.1145/279943.279962</a>), disagreement is the
-discovery signal: where the <em>geophysical view</em> (gravity/magnetic gradients, cover-thickness
-steps, strain steps, seismicity lineations, conductivity) is confident and the <em>surface view</em>
-(DEM slope/curvature/edges, radiometric K/Th and total count) abstains, a fault may be
-<strong>buried beneath alluvial cover</strong> and missing from the USGS/INGENIOUS surface-trace
-catalogue. Where the surface view is confident and the geophysical view abstains, the lineament is
-suspected to be a surface artifact (road, erosion line) and is vetoed.</p>
+<h2>4 · Ranked untried hypotheses</h2>
+<p>Full detail, with the grep evidence for "not tried" and the cost, is in <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/92_h94_hypotheses_ranked.md">knowledge/82</a>. The ranking is an ordinal prior, not a projection.</p>
+<ol style="margin-left:20px">
+<li><strong>H89-W</strong> · multi-scale band-pass (wavelet) edge of the reduced-to-pole magnetic field. Untried in this repository. Medium cost. <em>Next experiment, not yet pre-registered.</em></li>
+<li><strong>H89-Θ</strong> · theta map of the reduced-to-pole field. Low cost, low novelty (a re-normalisation of tilt).</li>
+<li><strong>H89-B</strong> · compliance fix: add the radiometric band 6 to View B. A repair, not a discovery claim.</li>
+<li><strong>H89-G</strong> · 2 m temperature survey (GDR submission 1391). Blocked here: the host is not reachable from this sandbox.</li>
+<li><strong>H89-R</strong> · resistivity or magnetotelluric survey. Blocked: no official source has been located from this sandbox.</li>
+</ol>
 
-<p><strong>Named non-fault mimics (pre-registered):</strong> lithologic contacts and intrusive
-margins (potential-field edges without offset); basin-margin facies steps (cover steps without
-faulting); paleo-channels; aftershock clusters; road cuts and erosion lines. Every buried-dominant
-dot carries a reasoning row naming which components fired and these alternatives:
-<a href="downloads/gems52-h88-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros-a-only-reasoning.csv">A-only reasoning CSV (20,050 rows)</a>.</p>
-
-<p><strong>Independence test (the Blum–Mitchell assumption, measured):</strong> spatial-block
-out-of-fold error correlation of the two views on labelled negatives is <strong>r = 0.0965</strong>
-(max |r|, 50 px blocks), far below the 0.60 abandon threshold — the method was not abandoned.
-This is weak proxy-negative correlation, not proof of conditional independence.</p>
-
-<p><strong>Hide-and-recover HOLDOUT-DTI</strong> (evaluator <code>gems52-pooled-hide-v1</code>;
-60,894 withheld positive pixels; whole fault segments withheld with an 80 px buffer; visible
-catalogue masked pixel-exactly; 200 m collar from visible faults only; 9,400 dots per fold per arm;
-95 % paired 20 km cluster bootstrap, 1,000 draws):</p>
-
-<table>
-<tr><th>arm</th><th>HOLDOUT-DTI</th><th>95 % CI</th></tr>
-<tr><td><strong>cotrain_bi (primary)</strong></td><td><strong>0.072502</strong></td><td>[0.058139, 0.087161]</td></tr>
-<tr><td>consensus_only</td><td>0.082374</td><td>[0.066971, 0.096078]</td></tr>
-<tr><td>buried_only</td><td>0.058146</td><td>[0.044010, 0.072841]</td></tr>
-<tr><td>single_A</td><td>0.074518</td><td>[0.061701, 0.088090]</td></tr>
-<tr><td>single_B</td><td>0.052679</td><td>[0.041881, 0.063415]</td></tr>
-<tr><td>random</td><td>0.076551</td><td>[0.068175, 0.084557]</td></tr>
-</table>
-
-<p><strong>Interpretation.</strong> On hide-and-recover of <em>catalogue</em> faults the H88
-disagreement field performs at the random floor (paired delta vs random −0.0040, CI
-[−0.0163, +0.0095]), far below the promotion bar 0.192829. That is the honest negative result, and
-it matches the repository's measured finding that this family's holdout and the public board are
-uncorrelated (Spearman ≈ −0.10): the board rewards faults the catalogue lacks, while this
-instrument hides faults the catalogue has. The value of the round is the completed test:
-bidirectional disagreement with cover-step / strain-step / seismicity-lineation channels does not
-beat random on catalogue recovery, so the next round should graft the disagreement arm onto the
-strong surface channels (H82/H84 DVA2/HVA, holdout 0.19) instead of replacing them.</p>
-
-<p><strong>Uniqueness and lane.</strong> The raster is distinct from 147 registry rasters
-(decoded-pattern uniqueness: <code>evidence/h88_uniqueness.json</code>); surface rank-correlation
-vs every registry raster ≤ 0.091 (bar 0.90); final dots: see
-<code>evidence/h88_lane_dots.json</code>. It is not the union of the two views (86 % of dots outside
-the views' spaced top-k union; Jaccard 0.049).</p>
-
-<p><strong>Mass lever.</strong> The shipped file uses S = 25,400 dots (−33 % vs the champion's
-37,654) with the champion's free-precision move: the ≤ 200 m ring around the mapped catalogue is
-deleted, because those pixels can never earn discovery credit while still paying the
-false-positive tax.</p>
-
-<h2>Part 3 — Files and receipts</h2>
-<table>
-<tr><th>artifact</th><th>link</th></tr>
-<tr><td>Submission GeoTIFF (this round)</td><td><a href="downloads/gems52-h88-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif">…-zeros.tif</a></td></tr>
-<tr><td>Single-TIFF ZIP</td><td><a href="downloads/gems52-h88-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.zip">…-zeros.zip</a></td></tr>
-<tr><td>A-only geological reasoning (Phase 2 review material)</td><td><a href="downloads/gems52-h88-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros-a-only-reasoning.csv">…-a-only-reasoning.csv</a></td></tr>
-<tr><td>Build receipt (format validator output)</td><td><a href="downloads/gems52-h88-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.json">…-zeros.json</a></td></tr>
-<tr><td>H83 research file (verdict negative — DO NOT SUBMIT)</td><td><a href="downloads/h83-candidate.tif">h83-candidate.tif</a></td></tr>
-<tr><td>CTD5 research file (invalid instrument — DO NOT SUBMIT)</td><td><a href="downloads/ctd5-research.tif">ctd5-research.tif</a></td></tr>
-</table>
-
-<h2>Part 4 — Historical round archives (research-only; do not upload any of them)</h2>
-<p class="small">Kept for study and audit only. Every one records
-<code>approved_for_weekly_slot: false</code> and zero slots used. None is approved to submit.</p>
-<table>
-<tr><th>round</th><th>unique TIFF</th><th>SHA-256 prefix</th><th>short download</th></tr>
-<tr><td>H58</td><td><code>gems52-h58-coldgeo-consensus-22px-a55b0dee38-research.tif</code></td>
-    <td><code>130c242e33aef398c44b22cd</code></td>
-    <td><a href="downloads/h58-candidate.tif">h58-candidate.tif</a></td></tr>
-<tr><td>H57 credited-core alternate</td>
-    <td><code>gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif</code></td>
-    <td>(receipt: <a href="h57-creditcore.html">h57-creditcore.html</a>)</td><td>—</td></tr>
-<tr><td>R5</td><td><code>gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif</code></td>
-    <td><code>d2bfb0f79328399354943bd1</code></td>
-    <td><a href="downloads/r5-candidate.tif">r5-candidate.tif</a></td></tr>
-<tr><td>H55-EDGE</td><td><code>gems52-h55-grav-rtp-logedge-37654-c4b8c10205da-zeros.tif</code></td>
-    <td>(receipt: <a href="h55-edge.html">h55-edge.html</a>)</td><td>—</td></tr>
-</table>
-<p class="small">R5's receipt published a modelled projection P(beating 0.2778) = <strong>0.366</strong>
-for that file. It is a projection, never a score — a projection is never written as a score, and the
-R5 slot decision on the record is "no — not on the evidence".</p>
-
-<p class="small">Every claim above is measured from bytes in this repository or quoted with its
-source; projections are never written as scores. HOLDOUT-DTI numbers are local evaluator output
-(evaluator version gems52-pooled-hide-v1) and are labelled as such; ORGANIZER-CONFIRMED numbers
-exist only on a DrivenData submission receipt and none is recorded here.</p>
+<h2>5 · Limits and free official data still needed</h2>
+<ul style="margin-left:20px">
+<li><strong>Organiser provenance is unresolved.</strong> Every number here is a repository measurement (HOLDOUT-DTI), not an organiser score, unless marked otherwise.</li>
+<li><strong>Official hosts are not reachable from this sandbox</strong> (HTTP 000): gdr.openei.org, usgs.gov, doi.org, drivendata.org. Links are from the brief or repository notes and have not been fetched. Reviewers should open them directly.</li>
+<li><strong>Free data to obtain for the next round:</strong> GDR submission 1391 (INGENIOUS 2 m temperature, CC BY 4.0 per the repository's source notes), <a href="https://gdr.openei.org/submissions/1391">gdr.openei.org/submissions/1391</a> (not fetched); and a free magnetotelluric or resistivity survey for the footprint, source not yet identified.</li>
+<li><strong>The H94 placement ablation was not run.</strong> The H85 ablation is in knowledge/78 §2.</li>
+</ul>
 
 <div class="footer">
-<p><a href="index.html">Download page</a> ·
-<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Competition problem &amp; metric</a> ·
-<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">Leaderboard</a> ·
-<a href="sources.html">Sources</a></p>
+Number formats: HOLDOUT-DTI = repository evaluator <code>gems52-pooled-hide-v1</code> with a 95% cluster bootstrap CI. ORGANIZER-CONFIRMED = read from a submission-page receipt (none for H94).
 </div>
-
 </div>
 </body>
 </html>
