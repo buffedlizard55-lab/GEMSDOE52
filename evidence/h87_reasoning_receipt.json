@@ -1,0 +1,15 @@
+{
+ "file": "docs/downloads/gems52-h87-boardcal-marginal-20261010-a-only-reasoning.csv",
+ "rows": 3424,
+ "full_csv": "work/h87/h87_reasoning_all_emitted_cells.csv",
+ "full_rows": 61427,
+ "published_bytes": 1814819,
+ "published_scope": "A-only candidates only, which is what the brief asks to be reasoned per candidate; the every-emitted-cell version stays in the gitignored working copy so the published artefact stays small",
+ "a_only_buried_candidates": 3424,
+ "a_only_share": 0.0557,
+ "mean_dist_to_catalogue_m": 2699.4,
+ "median_dist_to_sgmc_fault_m": 1456.0,
+ "dots_within_500m_of_a_thermal_feature": 1432,
+ "mean_cover_of_emission": 1.0,
+ "note": "Phase 2 reviewers verify faults; every A-only candidate carries its own quantitative reasoning and the named non-fault process that could mimic it"
+}
