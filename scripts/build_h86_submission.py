@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
-"""H85 build: the PRE-REGISTERED holdout candidate `h85_spaced`, written as a competition GeoTIFF.
+"""H86 build: the PRE-REGISTERED holdout candidate `h86_spaced`, written as a competition GeoTIFF.
 
-This is exactly the arm named PRIMARY in ``scripts/run_h85_holdout.py`` (H83 structural-concordance
+This is exactly the arm named PRIMARY in ``scripts/run_h86_holdout.py`` (H83 structural-concordance
 + geothermal combiner, metric-aware 3 px spacing, 200 m collar), emitted once on the FULL catalogue
 at the full budget of 37,654 dots (the same budget as the 0.2778 reference). No post-hoc arm swap.
 
 Outputs (all written, then re-read and verified by the script):
-  submission/gems52-h85-h83conc-spaced-37654px-<UTC>.tif   (the candidate, binary {0,1}, float32)
-  evidence/h85_build.json                                   (decode-level validator + uniqueness)
+  submission/gems52-h86-h83conc-spaced-37654px-<UTC>.tif   (the candidate, binary {0,1}, float32)
+  evidence/h86_build.json                                   (decode-level validator + uniqueness)
 
 Writer: ``gems52.grid.write_geotiff`` with ``nodata=None`` and all-finite zeros outside the footprint,
-the same container as ``data/reference/h33-2-b2-zeros.tif`` (deflate, no nodata). See README H85 block.
+the same container as ``data/reference/h33-2-b2-zeros.tif`` (deflate, no nodata). See README H86 block.
 """
 from __future__ import annotations
 
@@ -40,7 +40,7 @@ LABELS = ROOT / "data/labels.tif"
 SAMPLE = ROOT / "data/sample_submission.tif"
 WELLS = ROOT / "data/external/gdr_wellspring_in_footprint.csv"
 SUBMISSION_DIR = ROOT / "submission"
-EVIDENCE = ROOT / "evidence/h85_build.json"
+EVIDENCE = ROOT / "evidence/h86_build.json"
 
 
 def sha256_file(p):
@@ -75,9 +75,9 @@ def main():
         raise SystemExit(f"spacing violated: {stats}")
 
     ts = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
-    name = f"h85-h83conc-spaced-{BUDGET}px-{ts}"
+    name = f"h86-h83conc-spaced-{BUDGET}px-{ts}"
     path = SUBMISSION_DIR / f"gems52-{name}.tif"
-    note = ("H85 H83 concordance+geotherm, 3px spacing, 200m catalogue collar, binary 0/1; "
+    note = ("H86 H83 concordance+geotherm, 3px spacing, 200m catalogue collar, binary 0/1; "
             "holdout ~random; research only")
     if len(note) > 140:
         raise SystemExit(f"note too long: {len(note)}")
@@ -126,14 +126,14 @@ def main():
     )
 
     out = dict(
-        round="H85", name=name, note=note, note_chars=len(note), file=str(path.relative_to(ROOT)),
+        round="H86", name=name, note=note, note_chars=len(note), file=str(path.relative_to(ROOT)),
         file_bytes=path.stat().st_size, sha256=sha, decoded_sha256=uniq["candidate_decoded_sha256"],
         writer_receipt={k: receipt[k] for k in receipt if k in ("bytes", "sha256", "shape", "dtype", "crs")} if isinstance(receipt, dict) else str(receipt),
         spacing_stats=stats, validator=checks, uniqueness=uniq_keep, overlap_with_reference=ref_overlap,
         method=dict(family="H83 structural concordance (grav/mag/DEM structure tensor, 3 scales) x geothermal density",
-                    arm="h85_spaced", budget=BUDGET, min_spacing_px=MIN_PX, collar_px=RING_PX,
+                    arm="h86_spaced", budget=BUDGET, min_spacing_px=MIN_PX, collar_px=RING_PX,
                     catalogue_for_collar="full catalogue (submission-time only; holdout used visible-only)"),
-        holdout_reference="evidence/h85_holdout.json (HOLDOUT-DTI, pooled, 60,894 withheld positives)",
+        holdout_reference="evidence/h86_holdout.json (HOLDOUT-DTI, pooled, 60,894 withheld positives)",
         elapsed_seconds=round(time.time() - t0, 1),
     )
     EVIDENCE.parent.mkdir(parents=True, exist_ok=True)

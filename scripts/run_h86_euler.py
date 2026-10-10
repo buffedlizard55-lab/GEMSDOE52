@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""H85-E (top-ranked untested idea): windowed Euler deconvolution on reduced-to-pole magnetics.
+"""H86-E (top-ranked untested idea): windowed Euler deconvolution on reduced-to-pole magnetics.
 
 PRE-REGISTERED ARM (fixed before this run; not tuned on the holdout):
   * field T = band 2 (rtp, reduced-to-pole TMI); vertical derivative = band 9 (tmi_vg) as stored.
@@ -8,13 +8,13 @@ PRE-REGISTERED ARM (fixed before this run; not tuned on the holdout):
     Tx*x0 + Ty*y0 + Tz*z0 = Tx*x + Ty*y.   Solved by least squares in 7-pixel (700 m) windows.
   * Accept a solution if its source lies inside its own window (|dx|,|dy| <= 700 m) and its depth
     z0 is in [50 m, 1500 m] and the 3x3 normal matrix is well conditioned.
-  * Score = Gaussian (sigma 1.5 px) density of accepted solution locations. Emission = the H85
+  * Score = Gaussian (sigma 1.5 px) density of accepted solution locations. Emission = the H86
     protocol: spacing_select(score, allowed, K, min_px=3) with the same allowed rule and folds.
 
 Catalogue use: NONE. Euler is label-free, so the same field is valid for every fold; the holdout
 only decides what is allowed and what is scored. This is the cleanest possible leakage control.
 
-Output: evidence/h85_euler_holdout.json (HOLDOUT-DTI, same evaluator and folds as H85).
+Output: evidence/h86_euler_holdout.json (HOLDOUT-DTI, same evaluator and folds as H86).
 """
 from __future__ import annotations
 
@@ -40,7 +40,7 @@ from gems52 import nodes, spatial  # noqa: E402
 
 RTP_BAND, TVG_BAND = 2, 9          # from the file's own band descriptions (checked this session)
 WIN_R = 7                          # px; 700 m half-window
-SEED = 84001                       # same as run_h85_holdout (random arm reproduces exactly)
+SEED = 84001                       # same as run_h86_holdout (random arm reproduces exactly)
 K_FOLD = 9400
 RING_PX = 2
 BUFFER_PX = 80
@@ -49,7 +49,7 @@ SIGMA_PX = 1.5
 FEATURES = ROOT / "data/training_features.tif"
 LABELS = ROOT / "data/labels.tif"
 SAMPLE = ROOT / "data/sample_submission.tif"
-OUT = ROOT / "evidence/h85_euler_holdout.json"
+OUT = ROOT / "evidence/h86_euler_holdout.json"
 
 
 def log(m):
@@ -148,7 +148,7 @@ def main():
         per_fold.append(rec)
     summ = evaluator.pooled_summary(terms, draws=1000, seed=SEED, candidate="euler_SI0")
     withheld = int(sum((f["truth"] & f["region"]).sum() for f in folds))
-    out = dict(round="H85-E", stage="holdout", evidence_class="HOLDOUT-DTI", evaluator_version=evaluator.VERSION,
+    out = dict(round="H86-E", stage="holdout", evidence_class="HOLDOUT-DTI", evaluator_version=evaluator.VERSION,
                arm="euler_SI0 (pre-registered; structural index 0; 7px window; depth 50-1500 m; sigma 1.5px)",
                budget_per_fold=K_FOLD, withheld_positive_px=withheld, pooled=summ, per_fold=per_fold,
                canary_fold_auc=auc, canary_max_auc=max(auc) if auc else None,
