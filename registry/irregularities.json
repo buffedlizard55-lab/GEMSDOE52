@@ -3445,6 +3445,94 @@
     "evidence/h91_channels.json",
     "work/h91/features/manifest.json::repair"
    ]
+  },
+  {
+   "id": "IR-H88-001",
+   "round": "H88 (2026-10-10)",
+   "severity": "medium",
+   "status": "resolved in this session",
+   "title": "Round identifier collision: H87 already used on this branch",
+   "what_it_is": "An earlier round on this branch already named its file and builder H87 (docs/downloads/gems52-h87-cotrain-wavelength-*, evidence/h87_build.json, scripts/build_h87_cotrain_wavelength.py). The pre-registration and runner first written as H87 would have overwritten those receipts' meaning.",
+   "how_we_know": "grep over evidence/, docs/downloads/, scripts/ before the first run found the H87 names.",
+   "handling": "This round is H88 (identifier-only rename of knowledge/80_h88_preregistered.md and scripts/run_h88.py before any holdout run; precedent IR-H84-006).",
+   "disposition": "resolved in this session. This round is H88 (identifier-only rename of knowledge/80_h88_preregistered.md and scripts/run_h88.py before any holdout run; precedent IR-H84-006)."
+  },
+  {
+   "id": "IR-H88-002",
+   "round": "H88 (2026-10-10)",
+   "severity": "high",
+   "status": "open: owner decision",
+   "title": "H85 download now fails the uniqueness gate against the H86 file",
+   "what_it_is": "docs/downloads/h85-candidate.tif and the H86 candidate (submission/gems52-h86-h83conc-spaced-*) have identical decoded support of 28,467 shared dots, Jaccard 0.6077. The H85 card's ok:true (committed earlier) predates the H86 file.",
+   "how_we_know": "scripts/run_h85.py write, regenerated: n_priors_checked 144, ok false, max_jaccard 0.6077. The raster bytes are unchanged (sha a4a666...), so the difference is the prior set, not the file.",
+   "handling": "Regenerated evidence/h85_run_card.json and h85_gates_raw.json reflect the current priors. The H85 file should be treated as duplicated by H86. Owner to decide whether to remove the download copy.",
+   "disposition": "open: owner decision. Regenerated evidence/h85_run_card.json and h85_gates_raw.json reflect the current priors. The H85 file should be treated as duplicated by H86. Owner to decide whether to remove the download copy."
+  },
+  {
+   "id": "IR-H88-003",
+   "round": "H88 (2026-10-10)",
+   "severity": "high",
+   "status": "resolved in this session",
+   "title": "Site header said VERDICT: PROMOTE for a file with no holdout DTI",
+   "what_it_is": "docs/index.html (before H88) showed 'VERDICT: PROMOTE' and a one-click download for the H87 co-training wavelength file. No holdout DTI for that file exists on this branch.",
+   "how_we_know": "grep for holdout/HOLDOUT receipts for the H87 file returns nothing on this branch; the pre-H88 page is preserved at git commit bc26fe2 (docs/index.html).",
+   "handling": "The PROMOTE label is withdrawn. The H87 file is kept in a collapsed section labelled not holdout-validated. scripts/publish_h88_site.py generates the new top block from evidence/.",
+   "disposition": "resolved in this session. The PROMOTE label is withdrawn. The H87 file is kept in a collapsed section labelled not holdout-validated. scripts/publish_h88_site.py generates the new top block from evidence/."
+  },
+  {
+   "id": "IR-H88-004",
+   "round": "H88 (2026-10-10)",
+   "severity": "medium",
+   "status": "resolved in this session",
+   "title": "README on this branch lacked the referenced H85 block and claimed an unvalidated file as validated",
+   "what_it_is": "AGENTS.md points to 'README's H85 block', which was absent here; the README top section said 'Submission built and validated' for the H87 file.",
+   "how_we_know": "grep -n 'H85' README.md returned nothing before this round.",
+   "handling": "README rewritten: status, method, hypotheses, irregularities, access limits, and the standing brief verbatim under 'Complete current prompt' (generated from knowledge/26).",
+   "disposition": "resolved in this session. README rewritten: status, method, hypotheses, irregularities, access limits, and the standing brief verbatim under 'Complete current prompt' (generated from knowledge/26)."
+  },
+  {
+   "id": "IR-H88-005",
+   "round": "H88 (2026-10-10)",
+   "severity": "high",
+   "status": "open: inherited, not introduced here",
+   "title": "check_site.py still reports 20 legacy-string problems (22 on origin/main); not introduced by H88",
+   "what_it_is": "Checks assert legacy strings (H57/H58/R5 wording, 'OK to download?', 'NO CERTIFIED LEADERBOARD GAIN', 'DO NOT SUBMIT' on executive-summary, 'no h55-1 tiff was built') that the main-line pages did not contain.",
+   "how_we_know": "Clean worktree of origin/main: check_site 22 problems, pytest 6 failed in five test files. On this branch after H88: pytest 496 passed (full suite; the 6 earlier failures reduced to 0 in those files, one new registry-schema failure fixed in the same round) and check_site 20 problems. Full output: evidence/h88_test_status.txt and evidence/h88_check_site.txt.",
+   "handling": "Left open. H88 added the phrases it can truthfully state (download/submit verdicts, no certified gain, H55-1 no-TIFF, the brief). The remaining checks are other rounds' contracts and need owner review before any change.",
+   "disposition": "open: inherited, not introduced here. Left open. H88 added the phrases it can truthfully state (download/submit verdicts, no certified gain, H55-1 no-TIFF, the brief). The remaining checks are other rounds' contracts and need owner review before any change."
+  },
+  {
+   "id": "IR-H88-006",
+   "round": "H88 (2026-10-10)",
+   "severity": "low",
+   "status": "resolved in this session",
+   "title": "origin/main advanced beyond this branch's base",
+   "what_it_is": "origin/main contains PRs #76 and #77 and other merges after bc26fe2.",
+   "how_we_know": "git merge-base --is-ancestor HEAD origin/main succeeded; git merge --no-commit preview reported no conflicts.",
+   "handling": "origin/main merged into the branch before the PR (merge commit recorded).",
+   "disposition": "resolved in this session. origin/main merged into the branch before the PR (merge commit recorded)."
+  },
+  {
+   "id": "IR-H88-007",
+   "round": "H88 (2026-10-10)",
+   "severity": "medium",
+   "status": "open: reproducibility",
+   "title": "Feature store is rebuilt, not restored",
+   "what_it_is": "work/r2/features is git-ignored and was absent. It was rebuilt with structural.build(include_optional_profiles=False) and gems52.external.extend_store. The manifest's external version string is the only record of that step.",
+   "how_we_know": "Build printed BUILD_OK 57 and the external step completed (manifest version contains +external-geodawn-v1). The H88 holdout reproduces the H82 random control to 3.5e-7, which is the instrument check.",
+   "handling": "The instrument check passes. Record the store manifest hash in the next round's receipt.",
+   "disposition": "open: reproducibility. The instrument check passes. Record the store manifest hash in the next round's receipt."
+  },
+  {
+   "id": "IR-H88-008",
+   "round": "H88 (2026-10-10)",
+   "severity": "high",
+   "status": "open: owner decision",
+   "title": "Organiser container for outside-footprint pixels is not verified",
+   "what_it_is": "The organiser page says 'data outside the bounds is null or nan'. The H88 file writes 0.0 outside the footprint so every pixel is finite and in [0,1]. The owner reported an earlier upload error 'Predicted values must be in range [0, 1]'; which container caused it is not verified.",
+   "how_we_know": "Organiser page fetched 2026-10-10 (page/967, chunk 1). No organiser receipt for either container exists in the repository.",
+   "handling": "Flagged. The owner should decide the container before any upload. The NaN-outside twin is the template layout and is not in this round.",
+   "disposition": "open: owner decision. Flagged. The owner should decide the container before any upload. The NaN-outside twin is the template layout and is not in this round."
   }
  ],
  "merge_note": "Merged registry/irregularities.json: main's entries (including the parallel H66 round's IR-H66-001..010) plus this round's IR-H67-001..011. This round was labelled H66 in its own receipts and was renamed H67 before merge because main merged a different H66 first (PR #56); the IDs were renumbered wholesale so no ID carries two meanings. See knowledge/45a_amendment_2026-10-09_H67_rename.md. IR-H67-002 (in-domain nodata sentinels collapse every rank channel) and IR-H67-008 (probe classification flips with the structuring element, and this round's lane verdict depends on it) are the two that change a result; IR-H67-005 and IR-H67-007 change how a shared instrument must be read. | H77cond merge: this round was executed as H74 and renamed to H77cond before merge because a parallel session merged a different H74 first (PR #72) and a third took H75; see IR-H77cond-001. The rename is identifier-only and the preregistration's pinned SHA-256 still validates. IR-H77cond-002 records a shared-tool repair to scripts/check_site.py surfaced by that merge. IR-H77cond-003 records that filename, receipt and git dating are all individually unsound in this repository, and that the duplicate guard was therefore made dating-independent. | H82 merge (2026-10-09): union of both entry sets by id; 8 H82 entries added (IR-H82-001..IR-H82-008); no existing entry was edited or removed. | H89 merge: IR-H89-001..006 appended; main entries kept verbatim; no id reused."

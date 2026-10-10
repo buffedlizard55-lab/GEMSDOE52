@@ -74,6 +74,16 @@ What is now settled, and must not be re-litigated:
   1.0000). Report it verbatim; never waive it with a restricted PASS.
 <!--/H90-AGENTS-->
 
+<!--H88-AGENTS-->
+## Current H88 continuation (2026-10-10)
+Read README's START HERE and `knowledge/81_h88_results_and_limits.md` (result) and `knowledge/80_h88_preregistered.md` (frozen rule).
+- H88 (basement-step coherence on band 15, cover thickness): **NEGATIVE** on the shared instrument: candidate 0.048050 vs random 0.080426;
+  paired −0.032376 [−0.046704, −0.016764]. DOWNLOAD YES (format-valid, decoded-unique) / SUBMIT NO. Slots 0. Experiments 1 of 3.
+- The H87 name was taken by an earlier co-training file on this branch; this round is H88 (IR-H88-001).
+- The H85 download now fails uniqueness against H86 (IR-H88-002). Treat it as a duplicate.
+- Reproduce the feature store with `structural.build(include_optional_profiles=False)` then `gems52.external` (IR-H88-007).
+- Site: `scripts/publish_h88_site.py` regenerates the top of docs/index.html and the banner of executive-summary.html from evidence/.
+<!--/H88-AGENTS-->
 <!--H83-AGENTS-->
 ## Current H83 continuation (2026-10-10)
 Read README's H83 block and `knowledge/74` (frozen preregistration, SHA-256 `245220eccb36c61e…`) before

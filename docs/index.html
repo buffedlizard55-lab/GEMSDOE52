@@ -1,4 +1,73 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="H83: two-view co-training disagreement scored on the mandated hide-and-recover instrument and on a new off-catalogue instrument. Download verdict and submission verdict stated separately."><title>GEMS / DOE - H83 GeoTIFF: co-training on two instruments, with an explicit download/submit verdict</title><link rel="stylesheet" href="assets/ctd5.css"></head><body><div style="background:#fff7e6;border:1px solid #e0b25c;color:#4a3300;padding:12px 16px;margin:12px 0;border-radius:8px;font:15px/1.5 sans-serif"><strong>Round H90 (co-training lane, clean sampler; newest): DOWNLOAD YES, SUBMIT NO.</strong> Clean-sampler co-training disagreement, 3 px spacing, 37,654 cells, binary 0/1, every value finite in [0,1], pixel-unique against 142 priors. HOLDOUT-DTI (H60D instrument, 36,411 withheld positives): <b>0.003850 [0.003519, 0.004220]</b>; best comparable arm view_B <b>0.006419 [0.005873, 0.006892]</b>; random <b>0.001992</b>. On the competitor-realistic visible-catalogue pool the disagreement field (0.031379) is <b>below random (0.041594)</b>. Literal dot-lane gate: DUPLICATE/STOP against the calibration lattice; H60-6 would exclude that raster (owner decision). Slots used: 0. <a href="downloads/h90-candidate.tif">Download H90 GeoTIFF</a> · <a href="downloads/h90-candidate.zip">ZIP with name and note</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/80_h90_results_and_limits.md">H90 results and limits</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/evidence/h90_run_card.json">H90 run card (JSON)</a> · Not ORGANIZER-CONFIRMED.</div>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="H83: two-view co-training disagreement scored on the mandated hide-and-recover instrument and on a new off-catalogue instrument. Download verdict and submission verdict stated separately."><title>GEMS / DOE - H83 GeoTIFF: co-training on two instruments, with an explicit download/submit verdict</title><link rel="stylesheet" href="assets/ctd5.css"></head><body><!--H88-START-->
+<h1>GEMSDOE52 — Submission Status (H88)</h1>
+<p style="color:#999;margin-bottom:4px">DOE GEMS Prize (DrivenData #306) · Fault discovery · Auto-generated from <code>evidence/</code> by <code>scripts/publish_h88_site.py</code></p>
+
+<div class="card" style="border-color:#ffa726">
+<div class="card-title">Verdict for the file below</div>
+<p><span class="pill pill-ok">OK to download? YES</span> format-valid (independent check: <span class="pass">PASS</span>), decoded-pixel unique (uniqueness gate <span class="pass">PASS</span>).</p>
+<p><span class="pill pill-warn">OK to submit? NO — DO NOT SUBMIT</span> its pre-registered holdout test is <span class="fail">NEGATIVE</span>: it scores below the random control.</p>
+<p style="font-size:0.9rem"><b>NO CERTIFIED LEADERBOARD GAIN.</b> Nothing on this page is an organiser score or a certified gain.</p>
+<p style="font-size:0.9rem;color:#bbb">Nothing here is an organiser score. Slots used this round: 0. Promotion is a separate decision by the owner.</p>
+</div>
+
+<!-- DOWNLOAD BOX -->
+<div class="download-box">
+<h2>⬇ SUBMISSION FILE (H88) — download only</h2>
+<p>Single-band float32 GeoTIFF · EPSG:32611 · 3730 × 3292 · 100 m · 37,654 dots (value 1), zeros elsewhere · every pixel finite and in [0, 1].</p>
+<a class="btn" href="downloads/h88-candidate.tif" download>📥 Download .tif</a>
+<a class="btn btn-zip" href="downloads/h88-candidate.zip" download>📦 Download .zip</a>
+<p style="font-size:0.85rem;margin-top:12px">
+<strong>Filename inside:</strong> <code>gems52-h88-basement-step-37654px-20261010.tif</code><br>
+<strong>Suggested submission name:</strong> <code>h88-basement-step-cat200-37654px-20261010</code><br>
+<strong>SHA-256:</strong> <code>636b4b9f75cc19980387b410575d433a8f1a93bfb29ffdde7386d75a6209aa4c</code>
+</p>
+</div>
+
+<div class="card">
+<div class="card-title">Holdout result (HOLDOUT-DTI, not an organiser score)</div>
+<table>
+<tr><th>arm</th><th>HOLDOUT-DTI</th><th>95% CI (paired cluster bootstrap)</th></tr>
+<tr><td><b>H88 basement-step coherence (this file)</b></td><td>0.048050</td><td>[0.032189, 0.064477]</td></tr>
+<tr><td>random, same allowed set and placement (control)</td><td>0.080426</td><td>[0.070223, 0.090973]</td></tr>
+<tr><td>gradient magnitude only (ablation)</td><td>0.047641</td><td>[0.031543, 0.064464]</td></tr>
+<tr><td>raw depth-to-basement, no step term (ablation)</td><td>0.037456</td><td>[0.025136, 0.050826]</td></tr>
+<tr><td>H88 top-k without spacing (placement ablation)</td><td>0.007335</td><td>[0.001450, 0.015109]</td></tr>
+</table>
+<p style="font-size:0.9rem">Paired, H88 minus random: <b>-0.032376</b>, 95% CI [-0.046704, -0.016764]. Evaluator <code>gems52-pooled-hide-v1</code>; withheld positive pixels <b>53,186</b> over 4 folds; leakage canary max single-channel AUC <b>0.5668</b> (bar 0.90, no alarm); random control reproduces the H82 receipt (0.080426) to 3.5e-07.</p>
+<p style="font-size:0.9rem">Pre-registered rule (<code>knowledge/80_h88_preregistered.md</code> §5): <b>NEGATIVE/NOT-PROMOTED: fails the pre-registered rule (knowledge/80 section 5)</b>.</p>
+</div>
+
+<div class="card">
+<div class="card-title">Uniqueness and lane gates (from disk)</div>
+<ul style="margin-left:20px;font-size:0.92rem">
+<li>Decoded-pixel uniqueness: <b>146</b> local priors checked; max Jaccard of positive support <b>0.0119</b>; novel fraction <b>0.6603</b>; identical to a prior: False. Gate: <span class="pass">PASS</span>.</li>
+<li>Lane, surface: max Spearman <b>0.0697</b> vs bar 0.90 → <span class="pass">PASS</span>.</li>
+<li>Lane, dots: literal rule <span class="fail">DUPLICATE/STOP</span> (max near-3 px share 0.9841 against a universal-coverage probe raster that random dots also match at 0.999). Excluding probes: max 0.3322 vs bar 0.70. The literal rule is <b>not waived</b>.</li>
+<li>Catalogue collar: 0 dots within 200 m of the mapped catalogue (independent check).</li>
+</ul>
+</div>
+
+<div class="card" style="border-color:#ef5350">
+<div class="card-title">Limits (read before any upload)</div>
+<ul style="margin-left:20px;font-size:0.92rem">
+<li>The holdout hides <i>catalogue</i> faults; the competition scores <i>new</i> faults. A negative holdout is evidence against this field, not a proof about the board.</li>
+<li>The organiser's page says data outside the bounds is "null or nan"; this file writes 0.0 outside the footprint so it cannot fail a literal [0, 1] test. Organiser behaviour for this container is unverified (IR-H85-004).</li>
+<li>The organiser's competition-page leaderboard (fetched 2026-10-10) shows #1 0.3774, #8 0.3195 and #22 0.2778. Filename-to-score mapping for those is not organiser-confirmed.</li>
+</ul>
+</div>
+
+<details class="card">
+<summary><b>Previous file (earlier round, H87 co-training wavelength)</b> — not holdout-validated on this branch; kept for reference</summary>
+<p style="font-size:0.9rem">The older download below was labelled "PROMOTE" on this page before H88. No holdout DTI for it exists in this repository, so that label is withdrawn.</p>
+<a class="btn btn-zip" href="downloads/gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.tif" download>Download older .tif</a>
+<a class="btn btn-zip" href="downloads/gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.zip" download>Download older .zip</a>
+<p style="font-size:0.9rem"><b>Earlier H83 file</b> (<code>downloads/h83-candidate.tif</code>): its "SUBMIT: YES" label is withdrawn (IR-H85-003). Its own clumped placement measured <b>0.017201</b> HOLDOUT-DTI, 95% CI [0.011695, 0.023879], in H85 (<code>evidence/h85_holdout.json</code>), against a random control of 0.080426.</p>
+<a class="btn btn-zip" href="downloads/h83-candidate.tif" download>Download H83 .tif</a>
+<a class="btn btn-zip" href="downloads/h83-candidate.zip" download>Download H83 .zip</a>
+</details>
+<!--H88-END-->
+
+<div style="background:#fff7e6;border:1px solid #e0b25c;color:#4a3300;padding:12px 16px;margin:12px 0;border-radius:8px;font:15px/1.5 sans-serif"><strong>Round H90 (co-training lane, clean sampler; newest): DOWNLOAD YES, SUBMIT NO.</strong> Clean-sampler co-training disagreement, 3 px spacing, 37,654 cells, binary 0/1, every value finite in [0,1], pixel-unique against 142 priors. HOLDOUT-DTI (H60D instrument, 36,411 withheld positives): <b>0.003850 [0.003519, 0.004220]</b>; best comparable arm view_B <b>0.006419 [0.005873, 0.006892]</b>; random <b>0.001992</b>. On the competitor-realistic visible-catalogue pool the disagreement field (0.031379) is <b>below random (0.041594)</b>. Literal dot-lane gate: DUPLICATE/STOP against the calibration lattice; H60-6 would exclude that raster (owner decision). Slots used: 0. <a href="downloads/h90-candidate.tif">Download H90 GeoTIFF</a> · <a href="downloads/h90-candidate.zip">ZIP with name and note</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/80_h90_results_and_limits.md">H90 results and limits</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/evidence/h90_run_card.json">H90 run card (JSON)</a> · Not ORGANIZER-CONFIRMED.</div>
 <!--H89-CARD-->
 <style>.h89card{border:2px solid #11643a;border-radius:12px;padding:16px 18px;margin:16px 0;background:#f2fbf5;color:#14181d;font:15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}.h89card h2{margin:0 0 8px;font-size:19px;color:#11643a}.h89card a{color:#1f4e79;font-weight:700}.h89card code{background:#e8eef4;padding:1px 4px;border-radius:3px;font-size:12.5px;word-break:break-all}</style><div class="h89card"><h2>Round H89 — cover-conditioned co-training (disagreement as the discovery signal)</h2><p><b>1 · OK to download, and the portal will accept the format: YES.</b> 1 band float32, EPSG:32611, 3730×3292, transform and bounds equal to the organiser template, <b>0 NaN</b>, values exactly {0,&nbsp;1}, 37,654 emitted cells.</p><p><b>2 · Auto-promoted by this round's frozen rule: NO.</b> One of six pre-registered gates failed (lane_dots_policy). That statistic is <b>below chance</b> for the prior that produced it: near 0.8925 against a prior whose own 3&nbsp;px halo already covers 0.8976 of the legal footprint; chance-corrected, 0 of 41 informative priors exceed the 0.70 bar. Weekly slots used: 0.</p><p><a href="downloads/h89-candidate.tif" download>Download h89-candidate.tif</a> · <a href="downloads/h89-candidate.zip" download>ZIP</a> · <a href="h89-executive-summary.html">how to submit</a> · <a href="h89.html">full result</a> · <a href="downloads/h89-a-only-reasoning.csv">A-only reasoning CSV</a></p><p><small>142,450 bytes · SHA-256 <code>9d3e2be69efd476c91c8772a28c09ffccadac4281cc2025e376e0c8c8ffba04a</code> · HOLDOUT-DTI (gems52-pooled-hide-v1, 53,186 withheld positives) primary 0.160544 vs control single_B 0.175326; a holdout number is not a board score.</small></p></div>
 <!--/H89-CARD-->
