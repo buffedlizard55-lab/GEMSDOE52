@@ -8,8 +8,35 @@ Keep known-catalogue labels separate from verified fault absence, public partici
 
 This session's working branch is fixed by Arena. Do not change branches. Keep raw competition data and large intermediate arrays under ignored `data/` and `work/`. Publish small audit receipts, the unique compressed prediction raster and its review table.
 
+<!--H84-AGENTS-->
+## Current H84 continuation (2026-10-10)
+Preregistered and run as H83, renamed H84 at merge (IR-H84-006). The parallel-session H83 round on main is
+**not holdout-validated** (IR-H84-007): do not treat its SUBMIT YES as approval.
+Read README's H84 block, `knowledge/74` (frozen preregistration), `knowledge/76` (results and limits) and the
+brief `knowledge/75`. H84 tested harmonic (elliptical) variogram anisotropy (an 8-direction least-squares fit of
+γ(θ) = a + b·cos2θ + c·sin2θ, channel √(b²+c²)/a) on top of H82's DVA-2: **NEGATIVE**, DOWNLOAD YES / SUBMIT
+NO, 0 slots, 1 of 3 experiments. Primary − `B_DVA2` = −0.002682 [−0.005505, +0.000177] HOLDOUT-DTI.
+File `docs/downloads/h84-candidate.tif` (`gems52-h84-hva-ellipse-B-37654px-20261010T204630Z.tif`, 141,678
+bytes, SHA-256 `6bb18056…b73e`).
+
+Standing lessons added by H84:
+- **The anisotropy reduction operator is not the bottleneck.** HVA ≈ DVA-2 (per-fold AUC 2 up, 2 down; COH adds
+  nothing). Do not spend another round on a new reduction of the same directional semivariances.
+- **`B_DVA2` is still the best holdout arm and still not promotable post hoc.** To use it, pre-register it fresh as
+  a primary, with a quota placement against the **full-census** informative supports: the scored-only quota
+  (worst 0.6983) still left the final dots at 0.9441 near-3px against a dense GEMSDOE22 10%-emission file
+  (IR-H84-001).
+- **Writers:** channel `.npy` files lost their first 4 KiB page after verified writes on two builds (IR-H84-003).
+  Use `gems52.structural.save_array`, re-audit every file from disk with the page cache dropped at the end of
+  the stage, recompute moved bands, and have the fit read verified in-RAM copies (`RamBank` in `run_h84.py`).
+- **Store per-channel array digests** in evidence (H84 does: `evidence/h84_channels.json` `array_sha256`), so
+  control drift (IR-H84-005: `B_DVA2` +3.6e−3 vs committed) can be attributed next time.
+- Site: `scripts/publish_h84_site.py` writes the H84 block between `<!--H84-CURRENT-->` markers and keeps the
+  whole H82 front page verbatim in the archive; it is idempotent. Never rewrite `docs/index.html` from scratch.
+<!--/H84-AGENTS-->
+
 <!--H82-AGENTS-->
-## Current H82 continuation (2026-10-09)
+## Previous H82 continuation (2026-10-09)
 Read README's H82 block, `knowledge/72` (frozen preregistration, amendment 72a included, SHA-256
 `fe7050eb…`) and `knowledge/73` (results and limits). H82 executed H75's own "next" item — a scored-only
 lane registry — and one frozen experiment with six arms. Verdict **NEGATIVE**, experiments 1/3, slots 0.
@@ -60,7 +87,7 @@ What is now settled, and must not be re-litigated:
   now reads `<alias>-receipt.json` sidecars and date-only filenames; that repaired a pre-existing
   "R5 novelty recomputed 0.992087 != receipt 1.0" failure, now 1.0000 over 71 rasters.
 
-File `docs/downloads/h82-candidate.tif` (`gems52-h82-dva2vsa-B-37654px-20261009T213414Z.tif`, 140,555 bytes,
+File `docs/downloads/h82-candidate.tif` (`gems52-h82-dva2vsa-B-37654px-20261009T215811Z.tif`, 140,555 bytes,
 SHA-256 `17c3f8325ac6f267b1b8cc58bc6fd9495c118c30de64d5f78293d19d7f20c907`) is **DOWNLOAD YES, SUBMIT NO**.
 
 <!--/H82-AGENTS-->

@@ -100,7 +100,18 @@ def save_verified(path, v, tries: int = 6, pause: float = 0.4):
     """
     want = np.ascontiguousarray(np.asarray(v))
     for attempt in range(1, tries + 1):
+        # IR-H84-003: the original version re-read through mmap straight after np.save, which is served
+        # from the page cache, so a page that was later lost on disk still "verified" (H84's first channel
+        # build: 16 of 81 files passed this check and then failed Bank.col's digest guard with the same
+        # zeroed first 4 KiB page). Now: fsync, drop the file's cached pages, then re-read from disk.
         np.save(path, want)   # plain np.save: this function must never call itself
+        fd = os.open(path, os.O_RDONLY)
+        try:
+            os.fsync(fd)
+            if hasattr(os, "posix_fadvise"):
+                os.posix_fadvise(fd, 0, 0, os.POSIX_FADV_DONTNEED)
+        finally:
+            os.close(fd)
         try:
             back = np.asarray(np.load(path, mmap_mode="r"))
             same = (back.shape == want.shape and back.dtype == want.dtype

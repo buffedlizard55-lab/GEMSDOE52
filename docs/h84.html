@@ -1,0 +1,60 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="H84 full result: verdict negative, holdout table, co-training independence, lane gate, format validator and JSON run card."><title>H84 result - harmonic variogram anisotropy - GEMSDOE52</title><link rel="stylesheet" href="assets/ctd5.css"></head><body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a><a href="index.html">Current round</a><a href="h84.html">H84 result</a><a href="h84-executive-summary.html">How to submit</a><a href="validator.html">Check a file</a><a href="h82.html">H82</a><a href="h82-sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header><main id="main">
+<section class="hero"><div>
+<div class="eyebrow">H84 &middot; full result &middot; preregistered 2026-10-10 (frozen before any fit)</div>
+<h1>H84: harmonic variogram-ellipse anisotropy</h1>
+<div class="notice" role="note"><strong>Verdict: negative</strong><p><b>OK to download?</b> YES — safe to download and inspect</p><p><b>OK to submit to DrivenData?</b> NO — research artefact only. Uploading it would spend a weekly slot on a candidate that has not beaten the incumbent on the hide-and-recover instrument, or that failed a lane gate. Download it, read it, do not upload it.</p></div>
+<div class="actions"><a class="button" href="downloads/h84-candidate.tif" download>Download the H84 GeoTIFF &#8595;</a><a class="button secondary" href="downloads/h84-candidate.zip" download>Single-TIFF ZIP</a><a class="button secondary" href="downloads/gems52-h84-hva-ellipse-B-37654px-20261010T204630Z-a-only-reasoning.csv" download>A-only geological reasoning CSV</a><a class="button secondary" href="validator.html">Check any file in your browser</a></div>
+<p class="fileline">141,678 bytes &middot; SHA-256 <code>6bb18056c521a1a6a7bcefa75f3be7cb37653b8066efd4252a8b5c096b90b73e</code> &middot; submission name <code>h84-hva-ellipse-B-37654px-20261010T204630Z</code> &middot; note (126/140): <code>H84: View-B + DVA2 + harmonic variogram-ellipse anisotropy (8-dir LS fit, lags 100-600m); 200m ring cut; binary dots; research</code></p></div></section>
+<hr class="divider">
+<section><h2>Hypothesis, mechanism, mimic</h2>
+<p><b>Hypothesis.</b> A fault zone makes the spatial covariance of elevation, slope, gravity and basement-depth fields elliptical with its long axis along strike; the eccentricity of that ellipse, fitted continuously from 8 directional semivariances at 100-600 m lags, ranks unmapped fault cells better than the quantised (max-min)/(max+min) DVA-2 statistic.</p>
+<p><b>Mechanism.</b> Damage zones, juxtaposed blocks and cover-thickness steps leave low semivariance along strike and high semivariance across it. Under geometric anisotropy gamma(h,theta) = a + b cos2theta + c sin2theta at fixed lag, so sqrt(b^2+c^2)/a is the ellipse eccentricity; a fixed 3x8 least-squares operator estimates it from all 8 directions rather than 2 order statistics.</p>
+<p><b>Mimic process.</b> Named non-fault processes with the same signature: linear drainage incision and road cuts (anisotropic elevation texture), alluvial-fan margins and lithologic contacts (anisotropic gravity/basement fields with no offset). B-only road audit result is in disagreement below.</p>
+<p class="small">Preregistration: <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/74_hypotheses_H84_preregistered.md">knowledge/74_hypotheses_H84_preregistered.md</a>,
+SHA-256 <code>1972f1f412dbb9d82057f0eab602f64553ef4ceed5e4dab49b98955752dbca17</code>, frozen 2026-10-10T19:54:01+00:00.
+Channels: 25 HVA + 5 COH new, 50
+DVA-2 control; least-squares normal-matrix condition number 2.326.</p>
+</section>
+<hr class="divider">
+<section><h2>Hide-and-recover holdout</h2>
+<p class="small">HOLDOUT-DTI: evaluator <code>gems52-pooled-hide-v1</code>, 53,186 withheld positive pixels, 9,400 dots per fold per arm, 95% paired cluster bootstrap, 1000 draws. holdout DTI does not rank board scores here (Spearman -0.10, knowledge/10).</p>
+<div class="table-wrap"><table class=""><thead><tr><th>Arm</th><th>Role</th><th>HOLDOUT-DTI</th><th>95% CI</th><th>primary − arm (paired, 95% CI)</th></tr></thead><tbody><tr><td><code>B_DVA2_HVA</code></td><td>PRIMARY (H84 hypothesis)</td><td>0.190147</td><td>[0.168893, 0.211154]</td><td>&mdash;</td></tr><tr><td><code>B_DVA2</code></td><td>control, current holdout best (H82)</td><td>0.192829</td><td>[0.170790, 0.213691]</td><td>-0.002682 [-0.005505, 0.000177]</td></tr><tr><td><code>B_DVA2_HVA_COH</code></td><td>attribution, not promotable</td><td>0.190565</td><td>[0.169058, 0.211437]</td><td>-0.000418 [-0.002816, 0.002202]</td></tr><tr><td><code>single_B</code></td><td>single-view baseline (View B) / control</td><td>0.174571</td><td>[0.152313, 0.196302]</td><td>+0.015576 [0.007964, 0.023699]</td></tr><tr><td><code>single_A</code></td><td>single-view baseline (View A)</td><td>0.071954</td><td>[0.056636, 0.088566]</td><td>+0.118193 [0.098982, 0.136335]</td></tr><tr><td><code>random</code></td><td>floor</td><td>0.080426</td><td>[0.070223, 0.090973]</td><td>+0.109722 [0.092175, 0.129440]</td></tr></tbody></table></div>
+<h3>Out-of-quadrant AUC per fold</h3>
+<div class="table-wrap"><table class=""><thead><tr><th>Arm</th><th>fold 0</th><th>fold 1</th><th>fold 2</th><th>fold 3</th></tr></thead><tbody><tr><td><code>single_B</code></td><td>0.6625</td><td>0.7684</td><td>0.6112</td><td>0.6952</td></tr><tr><td><code>B_DVA2</code></td><td>0.6840</td><td>0.7867</td><td>0.6479</td><td>0.7284</td></tr><tr><td><code>B_DVA2_HVA</code></td><td>0.6872</td><td>0.7881</td><td>0.6450</td><td>0.7241</td></tr><tr><td><code>B_DVA2_HVA_COH</code></td><td>0.6878</td><td>0.7904</td><td>0.6462</td><td>0.7269</td></tr><tr><td><code>single_A</code></td><td>0.5062</td><td>0.6011</td><td>0.4668</td><td>0.4910</td></tr></tbody></table></div>
+<p class="small">Leakage canary (single-channel AUC on the held-out region, alarm at 0.90): max over all learner
+channels 0.6237, max over new channels 0.6237,
+alarm False.</p>
+<div class="table-wrap"><table class=""><thead><tr><th>Frozen promotion gate (knowledge/74 §3)</th><th>Result</th></tr></thead><tbody><tr><td>primary beats current holdout best B_DVA2 (paired CI lower bound &gt; 0)</td><td><b>FAIL</b></td></tr><tr><td>primary beats single-view baseline single_B (paired CI lower bound &gt; 0)</td><td><b>PASS</b></td></tr><tr><td>controls reproduce committed values within 1e-3</td><td><b>FAIL</b></td></tr><tr><td>leakage canary: no single channel AUC &gt;= 0.90</td><td><b>PASS</b></td></tr><tr><td>lane: surface vs literal full census (before placement)</td><td><b>PASS</b></td></tr><tr><td>lane: final dots vs literal full census</td><td><b>FAIL</b></td></tr><tr><td>format validator (float32, EPSG:32611, grid, [0,1], no NaN)</td><td><b>PASS</b></td></tr><tr><td>not the union of the two views / not a single view</td><td><b>PASS</b></td></tr></tbody></table></div>
+</section>
+<hr class="divider">
+<section><h2>Co-training (Blum &amp; Mitchell 1998)</h2>
+<p>Lane reference: <a href="https://doi.org/10.1145/279943.279962">Blum &amp; Mitchell, <i>Combining labeled and unlabeled data with
+co-training</i>, COLT 1998</a>. Co-training needs two views that are each sufficient and conditionally
+independent given the label.</p>
+<ul>
+<li><b>Independence</b> (spatial-block OOF errors on labelled negatives, 2,089 blocks):
+max |&rho;| = 0.1337; abandon bar |&rho;| &gt; 0.6.
+Exchange allowed by this test: True. <span class="small">negatives are catalogue-zero proxies, not verified absence; weak error correlation is necessary for co-training, not proof of conditional independence</span></li>
+<li><b>Sufficiency of View A</b> (out-of-quadrant AUC): mean 0.5163, worst fold
+0.4668, per fold 0.5062, 0.6011, 0.4668, 0.4910; gate mean &ge;
+0.6 and every fold &ge; 0.55 &rarr; <b>FAIL</b>.</li>
+<li><b>Pseudo-label exchange run:</b> False &mdash; no sufficient donor view: View A&#x27;s out-of-quadrant AUC fails the 0.60 mean / 0.55 min-fold gate (re-measured above); H71/H74 measured that exchange lowered the receiving view&#x27;s AUC.</li>
+<li><b>Disagreement as discovery:</b> A-only stratum (View A rank &ge; 0.95, primary rank in [0.35, 0.65]) =
+52,589 px, 9,225 spacing-thinned candidates, each with a geological
+reasoning row (<a href="downloads/gems52-h84-hva-ellipse-B-37654px-20261010T204630Z-a-only-reasoning.csv">CSV</a>). B-only candidates: 9,691;
+share within 5&deg; of a cardinal direction (road/section-line mimic) 0.0809
+vs null 0.1111.</li>
+</ul></section>
+<hr class="divider">
+<section><h2>Lane gate (drift = rank correlation &gt; 0.90 or &gt; 70% of dots within 3 px of one registry raster)</h2>
+<div class="table-wrap"><table class=""><thead><tr><th>Check</th><th>Verdict</th><th>Detail</th></tr></thead><tbody><tr><td>surface vs literal full census (584 rasters)</td><td>PASS</td><td>max Spearman 0.4953</td></tr><tr><td>surface vs scored-only registry (13 rasters)</td><td>PASS</td><td></td></tr><tr><td>final dots vs literal full census</td><td>DUPLICATE/STOP</td><td>max near-3px share 1.0000; max Spearman 0.1939</td></tr><tr><td>final dots vs full census, policy (informative supports only)</td><td>DUPLICATE/STOP</td><td>max near-3px share 0.9441</td></tr><tr><td>final dots vs scored-only registry</td><td>DUPLICATE/STOP</td><td>max near-3px share 1.0000</td></tr></tbody></table></div>
+<p class="small">Doctrine retained verbatim: both registries reported verbatim; a restricted-registry PASS never waives a literal full-census DUPLICATE/STOP (AGENTS.md, knowledge/62 IR-H73-011)</p>
+<h3>Not the union</h3>
+<div class="table-wrap"><table class=""><thead><tr><th>Measure</th><th>Value</th></tr></thead><tbody><tr><td>dots_emitted</td><td>37654</td></tr><tr><td>union_max_dots</td><td>37654</td></tr><tr><td>dots_equal_union</td><td>False</td></tr><tr><td>dots_subset_of_union</td><td>False</td></tr><tr><td>dots_equal_single_A</td><td>False</td></tr><tr><td>dots_equal_single_B</td><td>False</td></tr><tr><td>shared_with_union</td><td>3961</td></tr><tr><td>jaccard_with_union</td><td>0.0555</td></tr><tr><td>shared_with_single_A</td><td>568</td></tr><tr><td>jaccard_with_single_A</td><td>0.0076</td></tr><tr><td>shared_with_single_B</td><td>5524</td></tr><tr><td>jaccard_with_single_B</td><td>0.0792</td></tr><tr><td>spearman_primary_field_vs_unionmax_field</td><td>0.3653</td></tr><tr><td>not_union_pass</td><td>True</td></tr></tbody></table></div>
+<h3>Format validator</h3>
+<div class="table-wrap"><table class=""><thead><tr><th>Check</th><th>Value</th></tr></thead><tbody><tr><td>count</td><td>1</td></tr><tr><td>dtype</td><td>float32</td></tr><tr><td>crs</td><td>EPSG:32611</td></tr><tr><td>shape</td><td>[3730, 3292]</td></tr><tr><td>crs_match</td><td>True</td></tr><tr><td>shape_match</td><td>True</td></tr><tr><td>transform_match</td><td>True</td></tr><tr><td>bounds_match</td><td>True</td></tr><tr><td>nodata</td><td>None</td></tr><tr><td>nan</td><td>0</td></tr><tr><td>infinite</td><td>0</td></tr><tr><td>nan_inside_footprint</td><td>0</td></tr><tr><td>min</td><td>0.0</td></tr><tr><td>max</td><td>1.0</td></tr><tr><td>values</td><td>[0.0, 1.0]</td></tr><tr><td>ones</td><td>37654</td></tr><tr><td>zeros</td><td>12241506</td></tr><tr><td>ones_outside_footprint</td><td>0</td></tr><tr><td>range_ok</td><td>True</td></tr><tr><td>PASS</td><td>True</td></tr></tbody></table></div>
+<p class="small">Machine receipts: <a href="data/h84_run_card.json">run card</a>,
+<a href="data/h84_holdout.json">holdout</a>, <a href="data/h84_independence.json">independence</a>,
+<a href="data/h84_lane.json">lane</a>, <a href="data/h84_fit.json">fit</a>.</p>
+</section>
+</main></body></html>
