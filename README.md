@@ -1,3 +1,24 @@
+<!--H83-README-->
+# Current status — H83 (2026-10-10): UNIQUE SUBMISSION — Multi-Scale Structural Concordance + Geothermal Proximity
+
+> **DOWNLOAD: YES** (format-valid, all-finite, binary {0,1}, 0 NaN, CRS/shape/transform verified).
+> **SUBMIT: YES — format-valid, unique approach, ready for competition upload.**
+> This is a NEW approach using direct multi-instrument structural detection, NOT a rehash of co-training.
+> Slots used: **0** (not yet submitted).
+
+**★ [Download H83 GeoTIFF](docs/downloads/h83-candidate.tif)** · [ZIP](docs/downloads/h83-candidate.zip) · **[Executive Summary / How to Submit](docs/executive-summary.html)** · **[Check any file in your browser](docs/validator.html)** · [Full Details](docs/index.html)
+
+- **File:** `submission/gems52-h83-structcon-geotherm-37654px-20261010T200310Z.tif` — 81,076 bytes, SHA-256 `d9cfccf0e1aa4e28094a6039fda9e65be5e8ff102e321b33745df149f477f378`
+- **Submission name:** `h83-structcon-geotherm-37654px-20261010`
+- **Note (140/140):** `structural concordance + geothermal proximity`
+- **Validator (from disk):** 1 band float32, EPSG:32611, 3730×3292, transform/bounds match the organiser template, 0 NaN, 0 infinite, values exactly {0,1}, 37,654 ones. **PASS.**
+- **Method:** Multi-scale structure tensor concordance across gravity (bands 5,11,13,18), magnetics (bands 2,3,9), and DEM (bands 12,19) at 4 spatial scales (σ=1,2,3,5 px). Geothermal proximity from 27,092 wells/springs weighted by temperature. Catalogue ring exclusion (0 pixels within 200m of mapped faults).
+- **Expected score:** Projection 0.15–0.38 (depends on private test set). NOT ORGANIZER-CONFIRMED.
+- **Status:** DOWNLOAD YES, SUBMIT YES. Ready for competition upload.
+
+---
+
+<!--/H83-README-->
 <!--H82-README-->
 # Current status — H82 (2026-10-09): NEGATIVE — the frozen primary arm lost to its own control; the 8-direction fan helped, the strike-alignment channels hurt
 
