@@ -1,0 +1,57 @@
+{
+ "stage": "lane",
+ "round": "H83",
+ "finished_utc": "2026-10-10T20:42:20+00:00",
+ "registry": {
+  "n_priors": 571,
+  "n_scored": 13,
+  "meta": {
+   "census_entries": 526,
+   "census_errors": 0,
+   "census_sha_column": "file bytes",
+   "skipped_ineligible": [
+    "/home/user/GEMSDOE52/work/h61/priors/7c12ed8a4164ce549fc8c3114eb30eb7f898af09.tif",
+    "/home/user/GEMSDOE52/work/h61/priors/a97c7b2a513225c9f9f2b35736afe5abf4d2a491.tif"
+   ],
+   "census_present": 524,
+   "local_artifacts": 51
+  }
+ },
+ "surface": {
+  "literal": "PASS",
+  "policy": "PASS",
+  "max_spearman": 0.1517218939748482,
+  "max_near_3px_fraction": null,
+  "policy_max_near_3px_fraction": null,
+  "probes": 14,
+  "identical_to_a_prior": false
+ },
+ "dots": {
+  "literal": "DUPLICATE/STOP",
+  "policy": "DUPLICATE/STOP",
+  "max_spearman": 0.1517218939748482,
+  "max_near_3px_fraction": 1.0,
+  "policy_max_near_3px_fraction": 0.8719126785998832,
+  "probes": 14,
+  "identical_to_a_prior": false
+ },
+ "scored_only": {
+  "registry": "data/scored/*.tif + data/reference/h33-2-b2-zeros.tif",
+  "n_priors": 13,
+  "surface": {
+   "literal": "PASS",
+   "policy": "PASS",
+   "max_spearman": 0.05340512001126167
+  },
+  "dots": {
+   "literal": "DUPLICATE/STOP",
+   "policy": "PASS",
+   "max_near_share": 1.0,
+   "policy_max_near_share": 0.5438997184894035,
+   "max_near_source": "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+   "n_offenders": 1,
+   "universal_coverage_probes": 1
+  }
+ },
+ "note": "The literal full-census dots rule is unsatisfiable for every nonempty raster because the census contains universal-coverage lattice probes; the policy and scored-only readings are reported and never waive it."
+}

@@ -1,0 +1,21 @@
+{
+ "round": "H83",
+ "tif": "gems52-h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z.tif",
+ "rows": 37654,
+ "donor_rank_min": 0.98,
+ "receiver_rank_interval": [
+  0.35,
+  0.65
+ ],
+ "emitted_by_class": {
+  "neither view confident at the preregistered thresholds": 33970,
+  "consensus: both views confident": 492,
+  "B-only: B confident, A abstains (suspect surface artefact)": 3191,
+  "A-only: A confident, B abstains (candidate buried structure)": 1
+ },
+ "exchange": {
+  "A->B": 2912,
+  "B->A": 7900
+ },
+ "note": "classification uses the two views' own out-of-fold ranks at the preregistered donor/abstention thresholds; exchange counts are whole-segment pixels produced before the 3 px density fill"
+}
