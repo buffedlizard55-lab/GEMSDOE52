@@ -31,9 +31,9 @@ th{color:var(--accent)}
 <p class="muted">Competition: DOE GEMS Prize, DrivenData #306 · as of 2026-10-10 · <a href="index.html">back to status</a></p>
 
 <div class="verdict">
-  <p><strong>Current file (H88):</strong> download for audit: <span class="yes">YES</span> · submit to DrivenData: <span class="no">NO</span> · not slot-approved.</p>
-  <p>Why not: the holdout is below random (HOLDOUT-DTI 0.063055 vs random 0.076551), and the final dots fail the lane duplicate rule (97.46% of dots within 3 px of the H87 file). Both are in <a href="h88.html">the H88 page</a>.</p>
-  <p><strong>DO NOT SUBMIT the H88 or H87 file. Do not upload either one.</strong></p>
+  <p><strong>Current file (H93):</strong> download for audit: <span class="yes">YES</span> · submit to DrivenData: <span class="no">NO</span> · not slot-approved.</p>
+  <p>Why not: the holdout is below random (HOLDOUT-DTI 0.063055 vs random 0.076551), and the final dots fail the lane duplicate rule (97.46% of dots within 3 px of the H87 file). Both are in <a href="h93.html">the H93 page</a>.</p>
+  <p><strong>DO NOT SUBMIT the H93 or H87 file. Do not upload either one.</strong></p>
 </div>
 
 <h2>1 · How to submit (for the day a file is approved)</h2>
@@ -52,7 +52,7 @@ th{color:var(--accent)}
 
 <h2>2 · Approval rule (what must be true before step 3 is allowed)</h2>
 <table>
-<tr><th>Gate</th><th>Requirement</th><th>H88 status</th></tr>
+<tr><th>Gate</th><th>Requirement</th><th>H93 status</th></tr>
 <tr><td>Holdout</td><td>Beats the current bar on the same fold set, with a CI that excludes zero against the random control.</td><td class="no">FAIL: 0.063055, below random</td></tr>
 <tr><td>Lane (surface)</td><td>Rank correlation with every registry raster at or below 0.90.</td><td class="yes">PASS (max 0.2216)</td></tr>
 <tr><td>Lane (final dots)</td><td>At most 70% of dots within 3 px of any one registry raster's dots.</td><td class="no">FAIL: 97.46% with H87; DUPLICATE/STOP</td></tr>
@@ -63,13 +63,13 @@ th{color:var(--accent)}
 
 <h2>3 · Result so far</h2>
 <ul style="margin-left:20px">
-<li>Holdout experiments used this week: <strong>1 of 3</strong> (H88). Slots used: <strong>0</strong>.</li>
-<li>Best organiser score on the public board snapshot: <strong>0.3774</strong> (#1). <strong>0.3195</strong> is #8. The 0.2778 value appears on that snapshot only as team <code>extradr19</code>, rank 22 (team-level, no filename). Its link to the file <code>h33-2-b2</code> is owner-reported (IR-H88-006).</li>
-<li>The H88 candidate is not competitive. An H88 submission would not beat the bar on the holdout, so it is not spent on a slot.</li>
+<li>Holdout experiments used this week: <strong>1 of 3</strong> (H93). Slots used: <strong>0</strong>.</li>
+<li>Best organiser score on the public board snapshot: <strong>0.3774</strong> (#1). <strong>0.3195</strong> is #8. The 0.2778 value appears on that snapshot only as team <code>extradr19</code>, rank 22 (team-level, no filename). Its link to the file <code>h33-2-b2</code> is owner-reported (IR-H93-006).</li>
+<li>The H93 candidate is not competitive. An H93 submission would not beat the bar on the holdout, so it is not spent on a slot.</li>
 </ul>
 
 <h2>4 · Ranked untried hypotheses</h2>
-<p>Full detail, with the grep evidence for "not tried" and the cost, is in <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/82_h88_hypotheses_ranked.md">knowledge/82</a>. The ranking is an ordinal prior, not a projection.</p>
+<p>Full detail, with the grep evidence for "not tried" and the cost, is in <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/92_h93_hypotheses_ranked.md">knowledge/82</a>. The ranking is an ordinal prior, not a projection.</p>
 <ol style="margin-left:20px">
 <li><strong>H89-W</strong> · multi-scale band-pass (wavelet) edge of the reduced-to-pole magnetic field. Untried in this repository. Medium cost. <em>Next experiment, not yet pre-registered.</em></li>
 <li><strong>H89-Θ</strong> · theta map of the reduced-to-pole field. Low cost, low novelty (a re-normalisation of tilt).</li>
@@ -83,11 +83,11 @@ th{color:var(--accent)}
 <li><strong>Organiser provenance is unresolved.</strong> Every number here is a repository measurement (HOLDOUT-DTI), not an organiser score, unless marked otherwise.</li>
 <li><strong>Official hosts are not reachable from this sandbox</strong> (HTTP 000): gdr.openei.org, usgs.gov, doi.org, drivendata.org. Links are from the brief or repository notes and have not been fetched. Reviewers should open them directly.</li>
 <li><strong>Free data to obtain for the next round:</strong> GDR submission 1391 (INGENIOUS 2 m temperature, CC BY 4.0 per the repository's source notes), <a href="https://gdr.openei.org/submissions/1391">gdr.openei.org/submissions/1391</a> (not fetched); and a free magnetotelluric or resistivity survey for the footprint, source not yet identified.</li>
-<li><strong>The H88 placement ablation was not run.</strong> The H85 ablation is in knowledge/78 §2.</li>
+<li><strong>The H93 placement ablation was not run.</strong> The H85 ablation is in knowledge/78 §2.</li>
 </ul>
 
 <div class="footer">
-Number formats: HOLDOUT-DTI = repository evaluator <code>gems52-pooled-hide-v1</code> with a 95% cluster bootstrap CI. ORGANIZER-CONFIRMED = read from a submission-page receipt (none for H88).
+Number formats: HOLDOUT-DTI = repository evaluator <code>gems52-pooled-hide-v1</code> with a 95% cluster bootstrap CI. ORGANIZER-CONFIRMED = read from a submission-page receipt (none for H93).
 </div>
 </div>
 </body>

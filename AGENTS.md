@@ -1,17 +1,17 @@
-<!--H88-AGENTS-->
-## Current H88 continuation (2026-10-10)
-Read README's standing brief and status block first. H88 verdict **NEGATIVE**. Download yes (audit only), submit **NO**.
+<!--H93-AGENTS-->
+## Current H93 continuation (2026-10-10)
+Read README's standing brief and status block first. H93 verdict **NEGATIVE**. Download yes (audit only), submit **NO**.
 Experiments 1 of 3, slots 0.
 
-- The final-dot lane check is **DUPLICATE/STOP** for the H88 file (97.46% of dots within 3 px of the H87 file, IR-H88 record in
+- The final-dot lane check is **DUPLICATE/STOP** for the H93 file (97.46% of dots within 3 px of the H87 file, IR-H93 record in
   `knowledge/81` §6b). Do not retune placement to clear this gate without a new preregistration.
-- Placement is `gems52.nodes.spacing_select` at 3 px. The H88 placement ablation was not run; the H85 one is in `knowledge/78` §2.
-- The 0.192829 bar comes from a different fold set (53,186 withheld, not 60,894; IR-H88-002). Do not compare across sets.
-- Band 6 is tagged `tc` but is radiometric by content (IR-H88-001).
-- `scripts/check_site.py` R5 and H58 phrase checks now run only on their own pages (IR-H88-008). H88 checks are in `check_h88`.
+- Placement is `gems52.nodes.spacing_select` at 3 px. The H93 placement ablation was not run; the H85 one is in `knowledge/78` §2.
+- The 0.192829 bar comes from a different fold set (53,186 withheld, not 60,894; IR-H93-002). Do not compare across sets.
+- Band 6 is tagged `tc` but is radiometric by content (IR-H93-001).
+- `scripts/check_site.py` R5 and H58 phrase checks now run only on their own pages (IR-H93-008). H93 checks are in `check_h88`.
 - Do not re-run plain pseudo-label exchange or strict co-training with changed thresholds without a new preregistration.
 - Use `/home/user/gems-venv/bin/python` for every script.
-<!--/H88-AGENTS-->
+<!--/H93-AGENTS-->
 
 <!--H83-AGENTS-->
 ## Current H83 continuation (2026-10-10)

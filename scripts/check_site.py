@@ -511,7 +511,7 @@ def check_h58(DATA, DOCS, ROOT, notes, *, current_round=False):
         if DATA.joinpath("h58_preregistration.json").read_bytes() != reg_path.read_bytes():
             problems.append("H58: published preregistration bytes differ from the frozen registry")
 
-        # IR-H88-008: index.html and executive-summary.html now describe H88; H58 phrases apply to its own pages.
+        # IR-H93-008: index.html and executive-summary.html now describe H88; H58 phrases apply to its own pages.
         for page_name in ("h58.html", "downloads/index.html"):
             page = DOCS / page_name
             if not page.is_file():
@@ -817,7 +817,7 @@ def check_r5(DATA, DOCS, ROOT, problems, notes):
                  f"{uni['canonical_pattern_unique']}, relation {uni['relation_to_union']}")
 
     # 4. the pages must say what the receipts say, in words a reader cannot miss
-    # IR-H88-008: the R5 phrase checks were written when R5 was the current round. index.html and
+    # IR-H93-008: the R5 phrase checks were written when R5 was the current round. index.html and
     # executive-summary.html now describe H88, so R5 phrases are checked on r5.html only.
     for page_name in ("r5.html",):
         page = DOCS / page_name
@@ -840,9 +840,9 @@ def check_r5(DATA, DOCS, ROOT, problems, notes):
 
 def check_h88(DATA, DOCS, ROOT, problems, notes):
     """H88 receipts and pages: the verdict, the download and submit decisions, and the file pins must agree."""
-    card_path = ROOT / "evidence" / "h88_run_card.json"
+    card_path = ROOT / "evidence" / "h93_run_card.json"
     if not card_path.is_file():
-        problems.append("H88: evidence/h88_run_card.json is missing")
+        problems.append("H88: evidence/h93_run_card.json is missing")
         return
     card = json.loads(card_path.read_text())
     tif = ROOT / card["raster"]["file"]
@@ -855,14 +855,14 @@ def check_h88(DATA, DOCS, ROOT, problems, notes):
         problems.append("H88: run card verdict/submit decision must be NEGATIVE / NO")
     if card.get("slots_used", 0) != 0:
         problems.append("H88: run card records a slot used; this round uses none")
-    holdout = json.loads((ROOT / "evidence" / "h88_holdout.json").read_text())
+    holdout = json.loads((ROOT / "evidence" / "h93_holdout.json").read_text())
     if holdout.get("decision", {}).get("verdict", holdout.get("verdict")) not in ("NEGATIVE", None):
         problems.append("H88: holdout receipt verdict is not NEGATIVE")
     sha = card["raster"]["sha256"]
     for page_name, terms in (
         ("index.html", ("OK to download", "OK to submit", "not slot-approved", "Do not upload", sha[:24], tif.name)),
         ("executive-summary.html", ("OK to submit", "140 characters", "not slot-approved", "[0, 1]")),
-        ("h88.html", (sha[:24], tif.name, "NEGATIVE", "DUPLICATE/STOP")),
+        ("h93.html", (sha[:24], tif.name, "NEGATIVE", "DUPLICATE/STOP")),
         ("archive-h87-index.html", ("DO NOT SUBMIT",)),
         ("archive-h87-executive-summary.html", ("DO NOT SUBMIT",)),
     ):

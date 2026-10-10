@@ -3152,41 +3152,41 @@
       "disposition": "Closed. Any future publisher must not write shared guide pages without the release checks."
     },
     {
-      "id": "IR-H88-001",
-      "round": "H88 (2026-10-10)",
+      "id": "IR-H93-001",
+      "round": "H93 (2026-10-10)",
       "severity": "medium",
       "status": "open",
       "title": "View B omits band 6, which is radiometric by content despite its magnetic tag",
-      "what_it_is": "training_features.tif band 6 is tagged 'tc' (tilt angle / total curvature, magnetic). Its content is total-count radiometric. The lane brief asks View B to include the radiometric bands of training_features.tif. H88 used the external GeoDAWN layers instead and left band 6 out, a declared deviation in knowledge/80 §1. The sentinel is a second data-hygiene fact: any code that reads band 6 without masking −3.4028e38 gets wrong statistics.",
+      "what_it_is": "training_features.tif band 6 is tagged 'tc' (tilt angle / total curvature, magnetic). Its content is total-count radiometric. The lane brief asks View B to include the radiometric bands of training_features.tif. H93 used the external GeoDAWN layers instead and left band 6 out, a declared deviation in knowledge/80 §1. The sentinel is a second data-hygiene fact: any code that reads band 6 without masking −3.4028e38 gets wrong statistics.",
       "how_we_know": "Re-read from disk this session. Band 6 (training_features.tif) carries a declared nodata value of −3.4028e38 on 7,113,320 cells. On the 5,165,840 non-sentinel cells, Pearson with GeoDAWN TC (geodawn_rad_u8 band 4) is 0.99569 and Spearman is 0.99912. On the 5,164,300 GeoDAWN-footprint cells, Pearson is 0.99714 and Spearman 0.99995. Without the sentinel mask the Pearson value is meaningless (about 0.886 on the full grid). H61 already isolates band 6 in View B (scripts/run_h61.py setup).",
       "handling": "Recorded as a deviation. Not changed mid-round, because the protocol was frozen first. Next round: the repair is H89-B (knowledge/82), which needs its own pre-registration if used.",
       "disposition": "open: deviation recorded; repair is H89-B and needs a protocol amendment"
     },
     {
-      "id": "IR-H88-002",
-      "round": "H88 (2026-10-10)",
+      "id": "IR-H93-002",
+      "round": "H93 (2026-10-10)",
       "severity": "high",
       "status": "open",
-      "title": "Two holdout fold sets are in use; the 0.192829 bar is not on H88's fold set",
-      "what_it_is": "H82 and H84 receipts withhold 53,186 positive pixels. H86 and H88 withhold 60,894, with fold 0 at 29,297 vs 27,309 in H84. H86 and H88 use the same runner logic and reproduce each other's counts exactly. The cause of the H82/H84 difference was NOT traced in this session (H82/H84 went through the H61 setup path). The bar 0.192829 is H84's B_DVA2, a different method on the 53,186 set.",
-      "how_we_know": "evidence/h82_holdout.json, evidence/h84_holdout.json, evidence/h86_holdout.json and evidence/h88_holdout.json withheld_positive_px fields, and per-fold counts. Random agrees across the families (0.080426 vs 0.075429 for H86 and 0.076551 for H88), so the difference does not explain a gap of this size.",
-      "handling": "H88 reports its own instrument and states that the bar is a different-instrument reference (knowledge/81 §4). The verdict does not depend on the bar: P is below random on H88's own instrument. Before any future comparison to 0.192829, rerun the H84 arm on the H88 instrument, or the reverse.",
+      "title": "Two holdout fold sets are in use; the 0.192829 bar is not on H93's fold set",
+      "what_it_is": "H82 and H84 receipts withhold 53,186 positive pixels. H86 and H93 withhold 60,894, with fold 0 at 29,297 vs 27,309 in H84. H86 and H93 use the same runner logic and reproduce each other's counts exactly. The cause of the H82/H84 difference was NOT traced in this session (H82/H84 went through the H61 setup path). The bar 0.192829 is H84's B_DVA2, a different method on the 53,186 set.",
+      "how_we_know": "evidence/h82_holdout.json, evidence/h84_holdout.json, evidence/h86_holdout.json and evidence/h93_holdout.json withheld_positive_px fields, and per-fold counts. Random agrees across the families (0.080426 vs 0.075429 for H86 and 0.076551 for H93), so the difference does not explain a gap of this size.",
+      "handling": "H93 reports its own instrument and states that the bar is a different-instrument reference (knowledge/81 §4). The verdict does not depend on the bar: P is below random on H93's own instrument. Before any future comparison to 0.192829, rerun the H84 arm on the H93 instrument, or the reverse.",
       "disposition": "open: bar comparison is not like-for-like; resolve before any cross-set comparison"
     },
     {
-      "id": "IR-H88-003",
-      "round": "H88 (2026-10-10)",
+      "id": "IR-H93-003",
+      "round": "H93 (2026-10-10)",
       "severity": "high",
       "status": "resolved in this session (site and receipts corrected)",
       "title": "The H87 file was published as ready to submit before it was holdout-scored; its rule is not the one its docstring names",
       "what_it_is": "docs/index.html (H87 page) carried 'VERDICT: PROMOTE' and a one-click submission box for gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.tif. H87's own receipt says 'HOLDOUT-DTI (not yet run)'. Its docstring names an 'A confident, B abstains' pseudo-label rule, but the code emits the top of a continuous (A−B)·gate field.",
-      "how_we_know": "H88 measured the as-built H87 rule on the shared instrument: h87_asbuilt HOLDOUT-DTI 0.056889 [0.043563, 0.071325] vs random 0.076551 (evidence/h88_holdout.json). Code read: scripts/build_h87_cotrain_wavelength.py compute_disagreement_field.",
-      "handling": "The H87 page was archived verbatim to docs/archive-h87-index.html; the front page now says DO NOT SUBMIT for H87 and H88. The H87 TIF stays in the repository as an audit artefact. Its README 'ready-to-submit' wording was replaced.",
+      "how_we_know": "H93 measured the as-built H87 rule on the shared instrument: h87_asbuilt HOLDOUT-DTI 0.056889 [0.043563, 0.071325] vs random 0.076551 (evidence/h93_holdout.json). Code read: scripts/build_h87_cotrain_wavelength.py compute_disagreement_field.",
+      "handling": "The H87 page was archived verbatim to docs/archive-h87-index.html; the front page now says DO NOT SUBMIT for H87 and H93. The H87 TIF stays in the repository as an audit artefact. Its README 'ready-to-submit' wording was replaced.",
       "disposition": "resolved in this session: H87 page archived with DO NOT SUBMIT banner; front page corrected"
     },
     {
-      "id": "IR-H88-004",
-      "round": "H88 (2026-10-10)",
+      "id": "IR-H93-004",
+      "round": "H93 (2026-10-10)",
       "severity": "low",
       "status": "resolved (labelling artefact)",
       "title": "Prior-census fetch log prints decoded_sha_ok=0 for every blob",
@@ -3196,19 +3196,19 @@
       "disposition": "resolved: labelling artefact verified from the receipt (524/524 file SHA-256 matches)"
     },
     {
-      "id": "IR-H88-005",
-      "round": "H88 (2026-10-10)",
+      "id": "IR-H93-005",
+      "round": "H93 (2026-10-10)",
       "severity": "medium",
       "status": "open",
       "title": "README on main does not contain the H83, H84 and H85 blocks that AGENTS.md tells sessions to read",
       "what_it_is": "AGENTS.md points to 'README's H83 block', 'H84 block' and 'H85 block' and says the H85 README block carries the standing brief verbatim. The README in this checkout has only an H87 block, and its branch line names another session's branch (arena/99f480b9-gemsdoe52).",
       "how_we_know": "grep of README.md for 'H83', 'H84', 'H85' returns no block headers; git log -- README.md shows one commit (bc26fe2, feed refresh). The feed workflow (.github/workflows/feed.yml) commits only docs/data/, so it is not the cause.",
-      "handling": "H88 rewrites README: standing brief verbatim (per the owner's request), current status, and the H88 block. Earlier blocks are not reconstructed; their text lives in knowledge/ and AGENTS.md.",
+      "handling": "H93 rewrites README: standing brief verbatim (per the owner's request), current status, and the H93 block. Earlier blocks are not reconstructed; their text lives in knowledge/ and AGENTS.md.",
       "disposition": "open: README rewritten with the verbatim brief from knowledge/26; earlier H83–H85 blocks not reconstructed"
     },
     {
-      "id": "IR-H88-006",
-      "round": "H88 (2026-10-10)",
+      "id": "IR-H93-006",
+      "round": "H93 (2026-10-10)",
       "severity": "low",
       "status": "open (repeat of IR-H84-002)",
       "title": "Brief quotes three different 'highest' scores (0.3774, 0.3195, 0.2778)",
@@ -3218,8 +3218,8 @@
       "disposition": "open: repeat of IR-H84-002; use the board snapshot figures, labelled PUBLIC-BOARD"
     },
     {
-      "id": "IR-H88-007",
-      "round": "H88 (2026-10-10)",
+      "id": "IR-H93-007",
+      "round": "H93 (2026-10-10)",
       "severity": "medium",
       "status": "open (sandbox limit)",
       "title": "Official sources are not reachable from this sandbox, so several links are unverified",
@@ -3229,15 +3229,15 @@
       "disposition": "open: unreachable official hosts; manual review required for every such link"
     },
     {
-      "id": "IR-H88-008",
-      "round": "H88 (2026-10-10)",
+      "id": "IR-H93-008",
+      "round": "H93 (2026-10-10)",
       "severity": "medium",
       "status": "resolved (checks rescoped; see note)",
       "title": "check_site.py R5 and H58 page checks were still applied to index.html and executive-summary.html",
       "what_it_is": "scripts/check_site.py required R5 and H58 phrases (download path, P(beating 0.2778), 'ok to download', 'do not upload') on the front pages. The current round's submission pointer docs/data/submission.json still says round H60. The baseline run before this round's site rewrite failed 22 checks, all of them R5/H58 phrase checks on index.html and executive-summary.html.",
-      "how_we_know": "evidence/site_check_baseline.log (run on the tree before the H88 pages were written): 22 PROBLEM(S), all R5 or H58 phrase checks plus H57 alternate and H55-EDGE link checks on index.html.",
-      "handling": "R5 phrase checks now apply to r5.html only; H58 phrase checks apply to h58.html and downloads/index.html. A new check_h88() verifies the H88 run card, the TIF SHA-256, the NEGATIVE verdict, the NO submit decision, and the H88 and archive pages. The R5 'P(beating 0.2778)' check is not applicable to H88 and is not faked. docs/data/submission.json (round H60) is a feed-owned file and was not edited. Also recorded, not edited: submission/LATEST.txt names the H60 artefact (approved_for_weekly_slot false in its receipt), and root index.html was an H83 page, now a pointer to docs/index.html.",
-      "disposition": "resolved: R5 and H58 phrase checks rescoped to their own pages; H88 checks added; checker passes"
+      "how_we_know": "evidence/site_check_baseline.log (run on the tree before the H93 pages were written): 22 PROBLEM(S), all R5 or H58 phrase checks plus H57 alternate and H55-EDGE link checks on index.html.",
+      "handling": "R5 phrase checks now apply to r5.html only; H58 phrase checks apply to h58.html and downloads/index.html. A new check_h88() verifies the H93 run card, the TIF SHA-256, the NEGATIVE verdict, the NO submit decision, and the H93 and archive pages. The R5 'P(beating 0.2778)' check is not applicable to H93 and is not faked. docs/data/submission.json (round H60) is a feed-owned file and was not edited. Also recorded, not edited: submission/LATEST.txt names the H60 artefact (approved_for_weekly_slot false in its receipt), and root index.html was an H83 page, now a pointer to docs/index.html.",
+      "disposition": "resolved: R5 and H58 phrase checks rescoped to their own pages; H93 checks added; checker passes"
     }
   ],
   "merge_note": "Merged registry/irregularities.json: main's entries (including the parallel H66 round's IR-H66-001..010) plus this round's IR-H67-001..011. This round was labelled H66 in its own receipts and was renamed H67 before merge because main merged a different H66 first (PR #56); the IDs were renumbered wholesale so no ID carries two meanings. See knowledge/45a_amendment_2026-10-09_H67_rename.md. IR-H67-002 (in-domain nodata sentinels collapse every rank channel) and IR-H67-008 (probe classification flips with the structuring element, and this round's lane verdict depends on it) are the two that change a result; IR-H67-005 and IR-H67-007 change how a shared instrument must be read. | H77cond merge: this round was executed as H74 and renamed to H77cond before merge because a parallel session merged a different H74 first (PR #72) and a third took H75; see IR-H77cond-001. The rename is identifier-only and the preregistration's pinned SHA-256 still validates. IR-H77cond-002 records a shared-tool repair to scripts/check_site.py surfaced by that merge. IR-H77cond-003 records that filename, receipt and git dating are all individually unsound in this repository, and that the duplicate guard was therefore made dating-independent. | H82 merge (2026-10-09): union of both entry sets by id; 8 H82 entries added (IR-H82-001..IR-H82-008); no existing entry was edited or removed."

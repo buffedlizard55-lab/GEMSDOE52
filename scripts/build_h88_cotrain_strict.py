@@ -3,8 +3,8 @@
 
 Preconditions (checked, not assumed)
 ------------------------------------
-* ``knowledge/80_h88_preregistered.md`` still matches its pin in ``registry/h88_preregistration.json``.
-* ``evidence/h88_holdout.json`` exists and was produced from that protocol (its ``protocol_sha256`` must match).
+* ``knowledge/90_h93_protocol_frozen_bytes_from_h88.md`` still matches its pin in ``registry/h93_preregistration.json``.
+* ``evidence/h93_holdout.json`` exists and was produced from that protocol (its ``protocol_sha256`` must match).
 
 Output policy (protocol §6)
 ---------------------------
@@ -78,10 +78,10 @@ def prior_list() -> list[Path]:
 def main() -> None:
     t0 = time.time()
     pin = H88.check_pin()
-    holdout_path = EVIDENCE / "h88_holdout.json"
+    holdout_path = EVIDENCE / "h93_holdout.json"
     holdout = json.loads(holdout_path.read_text())
     if holdout.get("protocol_sha256") != pin["sha256"]:
-        raise SystemExit("evidence/h88_holdout.json was not produced from the pinned protocol")
+        raise SystemExit("evidence/h93_holdout.json was not produced from the pinned protocol")
 
     with rasterio.open(H88.LABELS) as ds, rasterio.open(SAMPLE) as ref:
         labels = ds.read(1)
@@ -156,7 +156,7 @@ def main() -> None:
         approved_for_weekly_slot=False, submission_slots_used=0,
         elapsed_seconds=round(time.time() - t0, 1),
     )
-    (EVIDENCE / "h88_build.json").write_text(json.dumps(receipt, indent=2, default=float) + "\n")
+    (EVIDENCE / "h93_build.json").write_text(json.dumps(receipt, indent=2, default=float) + "\n")
     print(json.dumps({k: receipt[k] for k in ("file", "file_sha256", "placed", "fallback_dots", "holdout_verdict")}),
           flush=True)
 

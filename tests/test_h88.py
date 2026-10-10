@@ -27,7 +27,7 @@ def _sha(path: Path) -> str:
 # ---------- protocol pin ----------
 
 def test_protocol_pin_matches_frozen_document():
-    pin = _json(ROOT / "registry" / "h88_preregistration.json")
+    pin = _json(ROOT / "registry" / "h93_preregistration.json")
     assert pin["round"] == "H88"
     assert _sha(ROOT / pin["document"]) == pin["sha256"], "knowledge/80 was edited after the pin"
     assert pin["primary_arm"] == "P_strict_cotrain"
@@ -36,8 +36,8 @@ def test_protocol_pin_matches_frozen_document():
 
 
 def test_holdout_receipt_carries_the_pinned_protocol_hash():
-    pin = _json(ROOT / "registry" / "h88_preregistration.json")
-    holdout = _json(EV / "h88_holdout.json")
+    pin = _json(ROOT / "registry" / "h93_preregistration.json")
+    holdout = _json(EV / "h93_holdout.json")
     assert holdout["protocol_sha256"] == pin["sha256"]
     assert holdout["evaluator_version"] == "gems52-pooled-hide-v1"
 
@@ -45,7 +45,7 @@ def test_holdout_receipt_carries_the_pinned_protocol_hash():
 # ---------- verdict logic, recomputed from the receipt (not trusted from the label) ----------
 
 def test_verdict_is_negative_from_receipt_numbers():
-    holdout = _json(EV / "h88_holdout.json")
+    holdout = _json(EV / "h93_holdout.json")
     s = holdout["scores"]
     bar = 0.192829
     beats_bar = s["P_strict_cotrain"]["dti"] >= bar
@@ -58,7 +58,7 @@ def test_verdict_is_negative_from_receipt_numbers():
 
 
 def test_run_card_decisions_are_consistent():
-    card = _json(EV / "h88_run_card.json")
+    card = _json(EV / "h93_run_card.json")
     assert card["verdict"] == "NEGATIVE"
     assert card["submit_decision"].startswith("NO")
     assert card["slots_used"] == 0
@@ -69,7 +69,7 @@ def test_run_card_decisions_are_consistent():
 
 
 def test_run_card_lane_gate_is_recorded_as_duplicate_stop():
-    card = _json(EV / "h88_run_card.json")
+    card = _json(EV / "h93_run_card.json")
     c = card["correlation_overlap_vs_registry"]
     assert c["surface_verdict"].startswith("PASS")
     assert c["dots_policy_verdict"] == "DUPLICATE/STOP"
@@ -79,7 +79,7 @@ def test_run_card_lane_gate_is_recorded_as_duplicate_stop():
 
 
 def test_note_within_portal_limit():
-    card = _json(EV / "h88_run_card.json")
+    card = _json(EV / "h93_run_card.json")
     note = card["submission"]["note"]
     assert len(note) <= 140
     assert card["submission"]["note_chars"] == len(note)
@@ -89,12 +89,12 @@ def test_note_within_portal_limit():
 
 @pytest.fixture(scope="module")
 def tif_path() -> Path:
-    card = _json(EV / "h88_run_card.json")
+    card = _json(EV / "h93_run_card.json")
     return ROOT / card["raster"]["file"]
 
 
 def test_file_sha_matches_card_and_zip(tif_path):
-    card = _json(EV / "h88_run_card.json")
+    card = _json(EV / "h93_run_card.json")
     assert _sha(tif_path) == card["raster"]["sha256"]
     assert _sha(ROOT / card["raster"]["zip"]) == card["raster"]["zip_sha256"]
 
@@ -107,7 +107,7 @@ def test_raster_is_valid_submission_format(tif_path):
         assert src.count == 1
         assert src.dtypes[0] == "float32"
         assert src.crs.to_epsg() == 32611
-        assert (src.height, src.width) == (3730, 3292)  # rows x cols, as in evidence/h88_validator.json
+        assert (src.height, src.width) == (3730, 3292)  # rows x cols, as in evidence/h93_validator.json
         arr = src.read(1)
     assert np.isfinite(arr).all()
     assert float(arr.min()) >= 0.0 and float(arr.max()) <= 1.0
@@ -116,7 +116,7 @@ def test_raster_is_valid_submission_format(tif_path):
 
 
 def test_validator_receipt_all_pass():
-    v = _json(EV / "h88_validator.json")
+    v = _json(EV / "h93_validator.json")
     assert v["all_pass"] is True
     assert len(v["checks"]) == 12
     assert v["positives"] == 37654
@@ -142,6 +142,6 @@ def test_irregularity_register_has_h88_entries_with_required_keys():
     by_id = {e["id"]: e for e in entries}
     required = {"id", "round", "severity", "status", "title", "what_it_is", "how_we_know", "handling"}
     for i in range(1, 9):
-        key = f"IR-H88-{i:03d}"
+        key = f"IR-H93-{i:03d}"
         assert key in by_id, key
         assert required <= set(by_id[key]), key

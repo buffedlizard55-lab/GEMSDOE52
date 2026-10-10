@@ -8,7 +8,7 @@
    produced; dots are grouped into clusters (dilated 3 px, 8-connected) and each cluster gets measured attributes, a
    templated mechanism for its dominant View-A channel, a named non-fault mimic, and an UNREVIEWED status.
 
-Writes: evidence/h88_union_check.json, docs/downloads/h88-a-only-reasoning.csv
+Writes: evidence/h93_union_check.json, docs/downloads/h93-a-only-reasoning.csv
 """
 from __future__ import annotations
 
@@ -32,8 +32,8 @@ from gems52 import nodes  # noqa: E402
 BUDGET = 37654
 SHIPPED = sorted((ROOT / "docs/downloads").glob("gems52-h88-cotrain-strict-AB-37654px-*.tif"))[-1]
 WELLS = ROOT / "data/external/gdr_wellspring_in_footprint.csv"
-OUT_JSON = ROOT / "evidence/h88_union_check.json"
-OUT_CSV = ROOT / "docs/downloads/h88-a-only-reasoning.csv"
+OUT_JSON = ROOT / "evidence/h93_union_check.json"
+OUT_CSV = ROOT / "docs/downloads/h93-a-only-reasoning.csv"
 
 GROUPS = {
     "gravity": [5, 11, 18],   # iso_grav_anom_slope, iso_grav_anom_vg, iso_grav_anom_hg
