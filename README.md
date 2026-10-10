@@ -1,3 +1,76 @@
+# GEMSDOE52 — Co-Training Research for the DOE GEMS Prize
+
+**Competition:** [DOE GEMS Prize (DrivenData #306)](https://www.drivendata.org/competitions/306/competition-doe-gems/)
+**Branch:** `arena/411239c1-gemsdoe52` (fixed for this session; the older header said `arena/99f480b9-gemsdoe52`, see IR-H94-005)
+**Current status (2026-10-10, H94):** **download yes (audit only) · submit NO.** Holdout NEGATIVE; final-dot lane DUPLICATE/STOP.
+
+➡️ **Start here:** [current status page](https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/docs/index.html) (GitHub Pages: `docs/index.html`) · [executive summary and submission guide](docs/executive-summary.html)
+
+---
+
+## Status block: H94 (2026-10-10)
+
+| item | value | evidence class |
+|---|---|---|
+| File | `docs/downloads/gems52-h88-cotrain-strict-AB-37654px-20261010T220328Z.tif` (795,844 bytes) | — |
+| SHA-256 | `794b3814b63cdcd880395f5a632cfe0f3b28642b3fdb337ca0315a4722c0ccdd` | — |
+| Validator | 12/12 PASS (`scripts/verify_h88_file.py`, `evidence/h93_validator.json`) | format check |
+| Holdout | 0.063055 [0.049134, 0.078135] vs random 0.076551 | HOLDOUT-DTI |
+| Lane, surface | PASS (max Spearman 0.2216 against the 0.90 limit) | repo gate |
+| Lane, final dots | **DUPLICATE/STOP** (97.46% within 3 px of the H87 file) | repo gate |
+| Uniqueness, decoded | identical copies 0; max Jaccard 0.128193 | repo gate |
+| Verdict | NEGATIVE | HOLDOUT-DTI |
+| Download | yes, for audit only | — |
+| Submit | **NO** | — |
+| Slots used / experiments | 0 / 1 of 3 | — |
+
+Full results: [`knowledge/81`](knowledge/91_h93_results_and_limits.md). Ranked next hypotheses: [`knowledge/82`](knowledge/92_h93_hypotheses_ranked.md). Run card: [`evidence/h93_run_card.json`](evidence/h93_run_card.json). Irregularities: [`registry/irregularities.json`](registry/irregularities.json) (IR-H94-001 to IR-H94-008).
+
+### Archived
+
+* **H87** (`docs/downloads/gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.tif`, SHA-256 `a861069b8c780738b83245c1f736313d043989ca33554377f6dffb0465d8e9c3`): **DO NOT SUBMIT.** Holdout 0.056889 [0.043563, 0.071325], below random. The H87 page said PROMOTE before the holdout was run; it is archived as `docs/archive-h87-index.html` with a banner (IR-H94-003).
+* **H55-1 (paired DEM shoulders):** no H55-1 TIFF was built or promoted; `knowledge/11` states that no H55 submission TIFF is built by this track (`evidence/h55_paired_shoulders_holdout.json`).
+
+---
+
+## Project structure (short)
+
+* `docs/`: GitHub Pages site (`index.html` status, `executive-summary.html` submission guide, `h93.html`, archives, `downloads/`).
+* `knowledge/`: numbered notes. `80` (H94 protocol, frozen), `81` (H94 results), `82` (ranked hypotheses). `26_current_user_brief.md` holds the verbatim standing brief below.
+* `registry/`: preregistrations, leaderboard snapshot, `irregularities.json`.
+* `evidence/`: receipts (holdout, build, validator, uniqueness, run card).
+* `scripts/`: runners, builders, validators, `check_site.py`, `write_h88_page.py`.
+* `src/gems52/`: shared feature stack, holdout evaluator (`evaluate_holdout.py`, `gems52-pooled-hide-v1`), placement (`nodes.py`).
+* `data/`, `work/`: raw data and large intermediates, git-ignored.
+* `submission/`: copies and latest pointers.
+
+## Official sources
+
+* [DrivenData, DOE GEMS Prize #306](https://www.drivendata.org/competitions/306/competition-doe-gems/) (not fetched from this sandbox; egress returns HTTP 000).
+* [GEMS prize reference solution (GitHub, fetched README only)](https://github.com/drivendataorg/gems-prize-reference-solution): a setup guide for a U-Net with Monte-Carlo cross-validation. It does not state the metric.
+* [GEM data, INGENIOUS 2 m temperature survey, GDR submission 1391](https://gdr.openei.org/submissions/1391) (not fetched from this sandbox).
+
+## Limitations
+
+* Every score here is a repository measurement (HOLDOUT-DTI). No organiser score exists for H94.
+* The H94 placement ablation was not run this round.
+* Official hosts are not reachable from this sandbox. Links are unverified until reviewers open them.
+* Band 6 is tagged magnetic (`tc`) but is radiometric by content, and it carries a nodata sentinel of −3.4028e38 on 7.1 M cells (IR-H94-001).
+
+## Next steps
+
+1. Pre-register and run **H89-W** (multi-scale band-pass of the reduced-to-pole magnetic field; `knowledge/82`) on the H94 holdout, with single-view and random controls, before any slot is considered.
+2. Repair View B so it contains the radiometric band (H89-B). This needs a protocol amendment.
+3. Obtain GDR 1391 and any free MT survey, pinned by SHA-256, before H89-G or H89-R.
+4. Resolve IR-H94-002 (which fold set the 0.192829 bar uses).
+5. Re-check the verbatim brief against today's wording (see the note below).
+
+---
+
+---
+
+# Earlier README (from `origin/main`, other sessions' rounds, kept verbatim)
+
 # GEMSDOE52 — DOE GEMS Prize (DrivenData #306): submission status and method
 
 **H93 — this session's round (identifier-only rename of the in-session H88; `main` already holds H88–H92):** antithetic / sign-asymmetric basement steps of band 15 (the queued H81-2 statistic, first run) added to View B under the co-training lane — **DOWNLOAD YES / SUBMIT NO**. Pooled HOLDOUT-DTI 0.177930 [0.157748, 0.199356] vs `single_B` 0.174571 [0.152313, 0.196302]: paired +0.003358 with CI [−0.001668, +0.008780] crossing zero, so the frozen promote rule fails; canaries PASS (max 0.561), independence PASS (max |ρ| 0.1337), not-merely-union PASS (Jaccard ≤ 0.115), decoded pattern unique over 147 priors. Dots-lane policy near-3px 0.7275 vs the repo's own H83-E3 file (random control 0.20) logged as duplicate per protocol rule 1. One-click files: `docs/downloads/gems52-h93-abs-cotrain-37654px-20261010T223629Z-zeros.tif` (SHA-256 `b37c2dc8e5ad4bde121edb7ef21b4e05c2d9d2ceebfe8604180627866b726759`, 37,654 px {0,1}) · `.zip` · `docs/downloads/h93-a-only-reasoning.csv`. Full write-up: `knowledge/82_h93_results_and_limits.md`; card: `evidence/h93_run_card.json`.

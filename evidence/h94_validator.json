@@ -1,0 +1,33 @@
+{
+  "file": "docs/downloads/gems52-h88-cotrain-strict-AB-37654px-20261010T220328Z.tif",
+  "file_sha256": "794b3814b63cdcd880395f5a632cfe0f3b28642b3fdb337ca0315a4722c0ccdd",
+  "zip": "docs/downloads/gems52-h88-cotrain-strict-AB-37654px-20261010T220328Z.zip",
+  "zip_sha256": "ce246de6f0cc05fefe27046efa69bc0d2d8a10081f2430572d3165613d69c974",
+  "shape": [
+    3730,
+    3292
+  ],
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "nodata_declared": null,
+  "positives": 37654,
+  "min": 0.0,
+  "max": 1.0,
+  "footprint_px": 5167373,
+  "checks": {
+    "single_band": true,
+    "float32": true,
+    "crs_matches_sample": true,
+    "shape_matches_sample": true,
+    "transform_matches_sample": true,
+    "all_finite": true,
+    "no_nan_inside_footprint": true,
+    "values_in_0_1": true,
+    "binary_0_1": true,
+    "no_mass_outside_footprint": true,
+    "positive_count_equals_budget": true,
+    "zip_single_tif_identical": true
+  },
+  "all_pass": true,
+  "evidence_class": "local format validation; not organiser acceptance"
+}

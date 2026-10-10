@@ -1,3 +1,18 @@
+<!--H94-AGENTS-->
+## Current H94 continuation (2026-10-10)
+Read README's standing brief and status block first. H94 verdict **NEGATIVE**. Download yes (audit only), submit **NO**.
+Experiments 1 of 3, slots 0.
+
+- The final-dot lane check is **DUPLICATE/STOP** for the H94 file (97.46% of dots within 3 px of the H87 file, IR-H94 record in
+  `knowledge/81` §6b). Do not retune placement to clear this gate without a new preregistration.
+- Placement is `gems52.nodes.spacing_select` at 3 px. The H94 placement ablation was not run; the H85 one is in `knowledge/78` §2.
+- The 0.192829 bar comes from a different fold set (53,186 withheld, not 60,894; IR-H94-002). Do not compare across sets.
+- Band 6 is tagged `tc` but is radiometric by content (IR-H94-001).
+- `scripts/check_site.py` R5 and H58 phrase checks now run only on their own pages (IR-H94-008). H94 checks are in `check_h88`.
+- Do not re-run plain pseudo-label exchange or strict co-training with changed thresholds without a new preregistration.
+- Use `/home/user/gems-venv/bin/python` for every script.
+<!--/H94-AGENTS-->
+
 <!--H93-AGENTS-->
 ## Current H93 continuation (2026-10-10)
 Read README's H93 quick-download block, `knowledge/80` (session brief), `knowledge/81` (frozen
@@ -24,6 +39,7 @@ What is now settled and must not be re-litigated:
   SUBMIT, NO CERTIFIED LEADERBOARD GAIN, OK to download?, downloads/h83-candidate.tif) are pinned
   by tests — `scripts/publish_h93_site.py` is idempotent and keeps them.
 <!--/H93-AGENTS-->
+
 
 <!--H91-AGENTS-->
 ## Current H91 continuation (2026-10-10)

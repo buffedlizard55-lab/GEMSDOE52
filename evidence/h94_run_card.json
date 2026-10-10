@@ -1,0 +1,134 @@
+{
+  "round": "H88",
+  "branch": "arena/411239c1-gemsdoe52",
+  "protocol": "knowledge/80_h88_preregistered.md",
+  "protocol_sha256": "50db10583392ebb21a024d53b19c29f1f7ae39fe5521abee7148e137b2d9f0f8",
+  "hypothesis": "Co-training: emit only where View A (potential field/strain) is confident and View B (surface: DEM wavelength contrast, GeoDAWN Th/K and U) abstains; A-only dots are buried-fault candidates.",
+  "mechanism": "A buried normal or strike-slip fault under alluvial cover produces a gravity/magnetic/strain gradient without a surface scarp, so View B abstains where View A is confident.",
+  "named_non_fault_mimic": "Lithologic density or susceptibility contrast, intrusive margins, paleo-channels and sediment-thickness changes without faulting (gravity); dike margins (magnetic); GNSS/InSAR artefacts (strain).",
+  "holdout_dti": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator": "gems52-pooled-hide-v1",
+    "withheld_positive_px": 60894,
+    "primary": {
+      "dti": 0.06305488094936487,
+      "ci95": [
+        0.04913364100793291,
+        0.07813479325057344
+      ]
+    },
+    "random": {
+      "dti": 0.07655090995242028,
+      "ci95": [
+        0.06817489633479346,
+        0.08455741454979215
+      ]
+    },
+    "single_A": {
+      "dti": 0.07461101531573536,
+      "ci95": [
+        0.05937951539180333,
+        0.09174306996151184
+      ]
+    },
+    "single_B": {
+      "dti": 0.05477059935371814,
+      "ci95": [
+        0.042546283725580177,
+        0.0667827001067102
+      ]
+    },
+    "h87_asbuilt": {
+      "dti": 0.05688915946573735,
+      "ci95": [
+        0.04356264115846538,
+        0.0713247079802853
+      ]
+    },
+    "paired_P_minus_single_A": {
+      "delta": -0.011556134366370485,
+      "ci95": [
+        -0.019031669346083864,
+        -0.004848008942869322
+      ]
+    },
+    "paired_P_minus_random": {
+      "delta": -0.01349602900305541,
+      "ci95": [
+        -0.0262987827562608,
+        0.001016319952373879
+      ]
+    }
+  },
+  "correlation_overlap_vs_registry": {
+    "surface_max_spearman": 0.22158117212580858,
+    "surface_offenders": 0,
+    "surface_verdict": "PASS (limit 0.90)",
+    "dots_max_spearman": 0.22158117212580858,
+    "dots_policy_max_near_3px_fraction": 0.9746374887130186,
+    "dots_policy_max_near_source": "/home/user/GEMSDOE52/submission/gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.tif",
+    "dots_informative_offenders_over_70pct": 8,
+    "dots_literal_verdict": "DUPLICATE/STOP",
+    "dots_policy_verdict": "DUPLICATE/STOP",
+    "max_decoded_jaccard": 0.128193,
+    "max_decoded_jaccard_prior": "submission/gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.tif",
+    "identical_to_any_prior": 0,
+    "self_copies_excluded": [
+      "submission/gems52-h88-cotrain-strict-AB-37654px-20261010T220328Z.tif"
+    ]
+  },
+  "dot_lane_note": "Surface PASS, final dots DUPLICATE/STOP. Per the parallel-lane rule this is logged as a duplicate and the round stops; the lane is not retuned.",
+  "union_check": {
+    "share_outside_union_topA_topB": 0.936873,
+    "share_in_S_AB": 1.0
+  },
+  "raster": {
+    "file": "docs/downloads/gems52-h88-cotrain-strict-AB-37654px-20261010T220328Z.tif",
+    "sha256": "794b3814b63cdcd880395f5a632cfe0f3b28642b3fdb337ca0315a4722c0ccdd",
+    "zip": "docs/downloads/gems52-h88-cotrain-strict-AB-37654px-20261010T220328Z.zip",
+    "zip_sha256": "ce246de6f0cc05fefe27046efa69bc0d2d8a10081f2430572d3165613d69c974"
+  },
+  "validator": {
+    "all_pass": true,
+    "checks": {
+      "single_band": true,
+      "float32": true,
+      "crs_matches_sample": true,
+      "shape_matches_sample": true,
+      "transform_matches_sample": true,
+      "all_finite": true,
+      "no_nan_inside_footprint": true,
+      "values_in_0_1": true,
+      "binary_0_1": true,
+      "no_mass_outside_footprint": true,
+      "positive_count_equals_budget": true,
+      "zip_single_tif_identical": true
+    },
+    "positives": 37654
+  },
+  "submission": {
+    "name": "h88-cotrain-strict-AB-37654px",
+    "note": "H88 cotrain A-conf/B-abstain stratum, 3px spacing, 200m collar, zeros outside",
+    "note_chars": 77
+  },
+  "verdict": "NEGATIVE",
+  "download_decision": "YES, for audit only (format-valid and decoded-unique, not a submission)",
+  "submit_decision": "NO. Holdout NEGATIVE (below random) and final-dot lane DUPLICATE/STOP.",
+  "experiments_used": 1,
+  "experiments_budget": 3,
+  "slots_used": 0,
+  "organiser_receipts": 0,
+  "evidence_classes": {
+    "holdout": "HOLDOUT-DTI (evaluator gems52-pooled-hide-v1)",
+    "organiser_scores": "none in this round"
+  },
+  "irregularities": [
+    "IR-H88-001",
+    "IR-H88-002",
+    "IR-H88-003",
+    "IR-H88-004",
+    "IR-H88-005",
+    "IR-H88-006",
+    "IR-H88-007"
+  ]
+}
