@@ -1,8 +1,18 @@
-# Current user brief — 2026-10-09, H70 session (refreshed)
+# Current user brief — 2026-10-09, H74 session (refreshed)
 
 The task text below is preserved as instructions, not as verified factual claims. In particular, the score attributions, current-leaderboard statements, data-access statements and earlier-session claims must be independently checked. This brief supersedes incompatible older briefs. URLs and repeated instructions are retained. Refreshed 2026-10-09 with the current prompt verbatim; the 2026-10-08 text is preserved at [knowledge/archive/26_current_user_brief_2026-10-08.md](archive/26_current_user_brief_2026-10-08.md) and a dated copy of the current text is kept at [knowledge/36_current_user_brief_2026-10-09.md](35_current_user_brief_2026-10-09.md). The README carries this same prompt verbatim under "Complete current prompt".
 
 Refreshed in the H70 session: the closing core-values paragraph arrived with that session's prompt; a dated copy is at [knowledge/56_current_user_brief_2026-10-09_H70.md](56_current_user_brief_2026-10-09_H70.md).
+
+Refreshed in the H74 session (2026-10-09): the recurring prompt's score list gained the GEMSDOE53 and
+GEMSDOE54 entries and the empty 55/56/57GEMSDOE placeholders; no instruction changed. A dated copy of
+this text is kept at [knowledge/64b_current_user_brief_2026-10-09_H74.md](60b_current_user_brief_2026-10-09_H74.md).
+
+**Re-read in full at the start of the H77cond session (2026-10-09; executed as H74, renamed at merge).** The prompt arrived unchanged from the
+text preserved below, so no new dated copy was created. H77cond's lane assignment, budget (3 experiments /
+2 hours), parallel-run protocol and the "it must be obvious whether it is OK to download and submit"
+requirement are all taken from this text; see
+[knowledge/67_hypotheses_H77cond_preregistered.md](67_hypotheses_H77cond_preregistered.md).
 
 ```text
 Review the repo. 
@@ -383,7 +393,7 @@ h60-lidarscarp-s2p0-20261007-nanoutside:
 
 [https://buffedlizard55-lab.github.io/GEMSDOE48/docs/index.html](https://buffedlizard55-lab.github.io/GEMSDOE48/docs/index.html)
 
-:
+h59-cover-ds-belief-b2xh33d-20261008T184547Z-b79c4c61d8d8: 0.2296
 
 ....
 
@@ -405,15 +415,33 @@ h53-twostage-20261008T040951Z-9a0b32c871:
 
 ....
 
-53GEMSDOE
+[https://buffedlizard55-lab.github.io/GEMSDOE53/docs/index.html](https://buffedlizard55-lab.github.io/GEMSDOE53/docs/index.html)
+
+h8-tiprelay-ridgeconcord-pr2-n80000-20261009-49bec522-zeros:
+
+....
+
+[https://buffedlizard55-lab.github.io/GEMSDOE54/docs/index.html](https://buffedlizard55-lab.github.io/GEMSDOE54/docs/index.html)
+
+h54c-manifest-edge-20261009T025732Z-73454bc5:
+
+....
+
+55GEMSDOE
+
+h8-tiprelay-ridgeconcord-pr2-n80000-20261009-49bec522-zeros:
+
+....
+
+56GEMSDOE
 
 :
 
 ....
 
-54GEMSDOE
+57GEMSDOE
 
-:
+h54c-manifest-edge-20261009T025732Z-73454bc5:
 
 ....
 

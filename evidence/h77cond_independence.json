@@ -1,0 +1,62 @@
+{
+ "n_blocks": 2089,
+ "n_negative_predictions": 4095103,
+ "negative_class": "held-out catalogue-zero proxies, not verified absence",
+ "threshold": 0.6,
+ "minimum_blocks": 20,
+ "tests": {
+  "negative_mean_squared_error": {
+   "n": 2089,
+   "pearson": 0.053376364530336826,
+   "spearman": 0.05734518328592032
+  },
+  "negative_false_positive_rate": {
+   "n": 2089,
+   "pearson": 0.10451009953735489,
+   "spearman": 0.13306525528756755
+  }
+ },
+ "max_abs_correlation": 0.13306525528756755,
+ "measured": true,
+ "allow_exchange": true,
+ "reason": "weak proxy negative-error correlation; not proof of conditional feature independence",
+ "per_fold": [
+  {
+   "fold": 0,
+   "n_negatives": 2008690,
+   "thresholds": [
+    0.45039576292037964,
+    0.49328356981277466
+   ],
+   "n_blocks": 978
+  },
+  {
+   "fold": 1,
+   "n_negatives": 1063285,
+   "thresholds": [
+    0.4430326223373413,
+    0.48037397861480713
+   ],
+   "n_blocks": 559
+  },
+  {
+   "fold": 2,
+   "n_negatives": 409823,
+   "thresholds": [
+    0.371118426322937,
+    0.5064784288406372
+   ],
+   "n_blocks": 221
+  },
+  {
+   "fold": 3,
+   "n_negatives": 613578,
+   "thresholds": [
+    0.46387916803359985,
+    0.46076470613479614
+   ],
+   "n_blocks": 331
+  }
+ ],
+ "evidence_class": "independence diagnostic on catalogue-zero proxy negatives"
+}

@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>H77 — exactly how to submit to DOE GEMS (competition 306)</title>
+<style>
+:root{--ok:#16a34a;--no:#dc2626;--warn:#d97706;--ink:#0f172a;--mut:#475569;--line:#e2e8f0}
+*{box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  margin:0;color:var(--ink);line-height:1.62;background:#f8fafc}
+.wrap{max-width:880px;margin:0 auto;padding:24px 20px 80px}
+h1{font-size:1.6em;margin:.2em 0 .3em}
+h2{font-size:1.2em;margin:1.7em 0 .4em;border-bottom:1px solid var(--line);padding-bottom:6px}
+a{color:#1d4ed8}
+code{background:#f1f5f9;padding:2px 6px;border-radius:5px;font-size:.92em;word-break:break-all}
+pre{background:#0f172a;color:#e2e8f0;padding:14px;border-radius:8px;overflow-x:auto;font-size:.86em}
+.btn{display:inline-block;padding:15px 24px;border-radius:10px;text-decoration:none;font-weight:800;
+  font-size:1.1em;margin:8px 10px 4px 0}
+.btn-go{background:var(--ok);color:#fff}
+.btn-alt{background:#fff;color:var(--ink);border:2px solid var(--line);font-size:.98em;padding:11px 16px}
+table{border-collapse:collapse;width:100%;margin:10px 0;background:#fff}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;font-size:.92em;vertical-align:top}
+th{background:#f1f5f9;white-space:nowrap}
+.pass{color:var(--ok);font-weight:700}.fail{color:var(--no);font-weight:700}
+.v{border-radius:10px;padding:14px 16px;border:2px solid;margin:10px 0}
+.v.ok{border-color:var(--ok);background:#f0fdf4}
+.v.no{border-color:var(--no);background:#fef2f2}
+.note{background:#fffbeb;border-left:4px solid var(--warn);padding:14px 16px;margin:14px 0;border-radius:0 8px 8px 0}
+.mut{color:var(--mut);font-size:.9em}
+ol li,ul li{margin:.4em 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="mut"><a href="../index.html">← back to the download page</a></p>
+<h1>Exactly how to submit to DOE GEMS</h1>
+<p class="mut">Competition 306 · <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">portal</a>
+· round H77 · written 2026-10-09. Every number on this page comes from a receipt in
+<code>evidence/</code>, produced by re-reading the file bytes.</p>
+
+<div class="v ok"><b>⬇ DOWNLOAD: YES</b> — the file is format-valid, portal-exact, decoded-unique and lane-feasible.</div>
+<div class="v no"><b>⛔ SUBMIT TO THE COMPETITION: NO</b> — no new arm beats the control on the holdout,
+and no weekly slot is approved for this file. Competition slots used: <b>0</b>.</div>
+
+<h2>1 · Get the file</h2>
+<a class="btn btn-go" href="downloads/h77-candidate.tif" download>⬇ Download the GeoTIFF</a>
+<a class="btn btn-alt" href="downloads/h77-candidate.zip" download>Single-TIFF ZIP</a>
+<p>The portal accepts <i>either</i> a single-band <code>.tif</code> <i>or</i> a <code>.zip</code>
+containing exactly one GeoTIFF. The ZIP here contains one member, verified by round-trip.</p>
+
+<h2>2 · Check it before you upload (30 seconds)</h2>
+<p>Run this on the file you actually downloaded. It re-derives everything from the bytes and prints
+the exact rule the portal states.</p>
+<pre>python -c "
+import rasterio, numpy as np
+p='h77-candidate.tif'                 # &lt;- the file you downloaded
+s='sample_submission.tif'
+a=rasterio.open(p).read(1).astype('float64')
+with rasterio.open(p) as d, rasterio.open(s) as r:
+    assert d.count==1 and d.dtypes[0]=='float32'
+    assert str(d.crs)==str(r.crs)
+    assert (d.height,d.width)==(r.height,r.width)
+    assert tuple(d.transform)==tuple(r.transform)
+f=np.isfinite(a)
+print('non-finite pixels      :', int((~f).sum()))
+print('finite outside [0,1]   :', int(((a&lt;0)|(a&gt;1))[f].sum()))
+print('distinct finite values :', np.unique(a[f]))
+print('emitted cells          :', int((a&gt;0).sum()))
+print('OK TO UPLOAD' if ((a&gt;=0)[f].all() and (a&lt;=1)[f].all()) else 'REJECTED')
+"</pre>
+<p>Expected output for this artefact: <code>non-finite pixels : 7111787</code> (all of them outside the
+footprint, declared as <code>nodata=nan</code>, exactly as the organiser's own template does),
+<code>finite outside [0,1] : 0</code>, <code>distinct finite values : [0. 1.]</code>,
+<code>emitted cells : 37654</code>, <code>OK TO UPLOAD</code>.</p>
+
+<div class="note"><b>If you ever see “Predicted values must be in range [0, 1]”</b>, the cause is a
+non-finite pixel the portal does not treat as nodata, or a value outside [0, 1]. This repository's
+earlier rasters were written <i>tiled + deflate + all-finite</i>; the organiser's template and all
+eleven owner-scored rasters are <i>stripped + LZW + NaN-outside with <code>nodata=nan</code></i>.
+The H77 writer (<code>gems52.grid.write_geotiff_portal_exact</code>) now matches the template's
+container exactly and refuses to write a file that fails any of the rules above, so the failure mode
+is closed at the writer rather than discovered at the portal.</p></div>
+
+<h2>3 · Fill in the submission form</h2>
+<table>
+  <tr><th>Field</th><th>What to enter</th></tr>
+  <tr><td>File to submit</td><td>the <code>.tif</code> (or the <code>.zip</code>) from step 1</td></tr>
+  <tr><td>Name / label<br><span class="mut">53 characters</span></td>
+      <td><code>gems52-h77-viewb-boardplaced-37654px-20261009T194504Z</code></td></tr>
+  <tr><td>Note (optional)<br><span class="mut">135 of 140 characters</span></td>
+      <td><code>H77: View-B OOF surface rank; 200m catalogue ring out; binary {0,1}; 3px spacing; K=37654; consensus&lt;=1 lane-feasible; portal-exact LZW</code></td></tr>
+</table>
+<p class="mut">Both strings are also saved as
+<a href="downloads/h77-submission-name.txt">h77-submission-name.txt</a> and
+<a href="downloads/h77-submission-note.txt">h77-submission-note.txt</a> so they can be pasted without
+retyping. The portal's note field is capped at 140 characters.</p>
+
+<h2>4 · Why the recommendation is “do not spend a slot”</h2>
+<p>Read this before uploading. It is the honest reading of this round's own measurements, and it is the
+reason the verdict above is NO even though the file is valid.</p>
+<table>
+  <tr><th>Question</th><th>Measured answer</th></tr>
+  <tr><td>Does any new detector beat the repository's control?</td>
+      <td class="fail">NO. Best new arm 0.086684 [0.071135, 0.104422] vs control 0.174571 [0.153568, 0.194531];
+      the paired difference excludes zero.</td></tr>
+  <tr><td>Is the file unique?</td>
+      <td class="pass">YES. Canonical pattern unique against 105 registry rasters; 35,960 of 37,654 dots
+      (95.50%) are exact-novel; it is not the union of the two views.</td></tr>
+  <tr><td>Does it satisfy the parallel-run lane rule?</td>
+      <td class="pass">YES, both readings. Max rank correlation 0.0026 (limit 0.90); max share within 3 px of
+      one prior 12.17% (limit 70%).</td></tr>
+  <tr><td>Does the holdout predict the leaderboard?</td>
+      <td class="fail">Not reliably. This repository measured Spearman −0.10 between holdout DTI and
+      owner-reported board score, so a holdout number is never presented as a score.</td></tr>
+  <tr><td>Is there an organiser receipt for any file here?</td>
+      <td class="fail">NO. Every score quoted anywhere in this repository is OWNER-REPORTED; the board
+      prints a team and a number, never a filename.</td></tr>
+</table>
+
+<p>The structural reason is arithmetic, not pessimism. With |G| pinned at <b>14,088.7</b> truth pixels
+this session, the metric reduces to <code>DTI = T / (0.2·S + 0.8·|G|)</code>. At the champion's
+37,654-pixel budget, reaching 0.3195 needs credited mass <i>T</i> ≥ 6,007 versus the champion's
+measured 5,223 — a 15% better detector at identical mass. This file deliberately restricts itself to
+support the whole prior family avoided (that is what makes it lane-clean), so its expected credit
+density is <i>lower</i>, not higher. Shipping it as a slot candidate would be spending a scarce weekly
+upload on a measured-negative result.</p>
+
+<h2>5 · What would change the verdict</h2>
+<ol>
+  <li>A detector whose pooled holdout DTI beats <b>0.174571</b> with a paired CI excluding zero. Nothing
+      in this repository has done it across H55–H77.</li>
+  <li>A ranker that holds credit density ρ ≈ 0.10 out to 100,000 pixels. The algebra says that alone
+      scores 0.3195 — a <i>lower</i> precision demand than the champion's own 0.1387, so the binding
+      constraint is the ranker's decay, not the budget.</li>
+  <li>An organiser receipt linking one file hash to one board score. Until then every file↔score pairing
+      in this project is attribution by filename only.</li>
+</ol>
+
+<h2>6 · Reproduce this round from a clean checkout</h2>
+<pre>python3 -m venv .venv &amp;&amp; ./.venv/bin/pip install -r requirements-r2.txt
+./.venv/bin/python scripts/restore_data.py --target-dir data     # 23 files, SHA-256 verified
+./.venv/bin/python scripts/prepare_data.py                       # grid + band receipts
+PYTHONPATH=src ./.venv/bin/python -c "from gems52 import structural; \
+structural.build(dest='work/r2/features', include_optional_profiles=False)"
+PYTHONPATH=src ./.venv/bin/python -m gems52.external             # add GeoDAWN columns
+PYTHONPATH=src ./.venv/bin/python scripts/run_h61.py canary      # leakage canary
+PYTHONPATH=src ./.venv/bin/python scripts/run_h61.py fit         # reproduces AUC 0.5163 / 0.6843
+PYTHONPATH=src ./.venv/bin/python scripts/run_h77.py             # E2: five new detectors
+PYTHONPATH=src ./.venv/bin/python scripts/run_h77_budget.py      # E3a: budget sweep
+PYTHONPATH=src ./.venv/bin/python scripts/build_h77_submission.py# E3: build + gates + GeoTIFF
+./.venv/bin/python -m pytest -q                                  # 435 passed, 1 skipped</pre>
+<p class="mut">Data provenance: the three official rasters and the seven external layers are restored
+from the owner's hash-pinned sibling repositories through the GitHub Contents API and verified by
+SHA-256 and byte count (<code>data/restore_receipt.json</code>, <code>ALL_VERIFIED=True</code>).
+They are <b>integrity-pinned mirror bytes, not organiser-authenticated</b> — the DrivenData data tab
+is login-walled. Every report in this repository carries that caveat.</p>
+
+<h2>Receipts</h2>
+<ul>
+  <li><a href="../evidence/h77_build.json">evidence/h77_build.json</a> — build, gates, run card</li>
+  <li><a href="../evidence/h77_holdout.json">evidence/h77_holdout.json</a> — pooled holdout, all eight arms, CIs</li>
+  <li><a href="../evidence/h77_budget_sweep.json">evidence/h77_budget_sweep.json</a> — the budget decision</li>
+  <li><a href="../evidence/h77_board_forensics.json">evidence/h77_board_forensics.json</a> — 13 owner-scored rasters, |G| inversion</li>
+</ul>
+
+</div>
+</body>
+</html>

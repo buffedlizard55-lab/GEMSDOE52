@@ -39,7 +39,7 @@
 <main>
   <header>
     <h1>H74S · three-pass closeout</h1>
-    <p>Preregistered two-view geophysical/subsurface and surface/radiometric co-training with disagreement · run ended 2026-10-09T19:51:08Z</p>
+    <p>Preregistered two-view geophysical/subsurface and surface/radiometric co-training with disagreement · run ended 2026-10-09T19:51:08Z · this page is the H74S closeout only; later repository round H82 is current in the project landing page</p>
   </header>
 
   <section class="callout negative">
@@ -49,7 +49,7 @@
 
   <div class="tiles">
     <div class="tile"><span class="muted">Experiment budget</span><span class="value">3 / 3 · 1,652.1 seconds</span><span class="muted">27m 32.1s; under the 2h ceiling.</span></div>
-    <div class="tile"><span class="muted">Surface lane</span><span class="value">PASS · Spearman 0.033571</span><span class="muted">693 paths checked; zero audit errors.</span></div>
+    <div class="tile"><span class="muted">Surface lane</span><span class="value">PASS · Spearman 0.033571</span><span class="muted">Frozen 693-path snapshot, zero errors; later H74/H75 omissions disclosed.</span></div>
     <div class="tile"><span class="muted">Final-dot lane</span><span class="value" style="color:var(--red)">STOP · near share 1.000</span><span class="muted">5,056 dots; literal all-prior test failed.</span></div>
   </div>
 
@@ -60,9 +60,9 @@
     <li>Whole-segment spatial holdout folds used the frozen 80 px buffer, fold-visible catalogue-only features, and exact visible-fault masking. Shared feature, evaluator, metric-aware placement, and gate implementations were reused.</li>
     <li>Feature-leakage canary: 42 features, maximum held-out AUC <code>0.668678</code>; no &gt;0.90 alarm. Spatial-block negative-error correlation: maximum absolute value <code>0.054930</code> over 2,089 blocks; exchange was permitted, but this is not proof of conditional independence.</li>
     <li>One whole-segment buffered pseudo-label exchange only: 15,259 pixels across 873 segments; no second exchange.</li>
-    <li>Gate inventory: 524 eligible core-census entries + 105 local TIFF paths + 64 refreshed public owner-mirror paths = 693. All 64 extension paths aligned as single-band rasters; zero errors and verified Git blob SHAs.</li>
+    <li>Gate inventory: 524 eligible core-census entries + 105 local TIFF paths + 64 refreshed public owner-mirror paths = 693 in the frozen working-branch snapshot. All 64 extension paths aligned as single-band rasters; zero errors and verified Git blob SHAs.</li>
   </ul>
-  <div class="callout caution"><b>Provenance boundary:</b> public owner mirrors are not organizer-authenticated. Private or unlinked artifacts may be absent. No current organizer leaderboard, portal receipt, or organizer-confirmed score was checked.</div>
+  <div class="callout caution"><b>Material registry-coverage limitation:</b> post-run public Git history revealed a parallel H74 TIFF already merged to <code>main</code> at 19:16:40Z, before H74S froze, but absent from this stale session checkout. A parallel H75 TIFF appeared at 19:41:26Z and reached <code>main</code> at 19:44:21Z, while H74S was still running. Neither was part of the frozen 693-path receipts. The surface PASS is therefore scoped to that frozen snapshot, not exhaustive of public <code>main</code>. The final-dot STOP remains supported by in-census priors already exceeding the threshold; no retroactive pixel audit, extra placement, or rerun was made. Details and file hashes are in the <a href="data/h74s_postfreeze_registry_notice.json">post-freeze registry notice</a> (<a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/9d891a61d9570830124c45d2477ff969134ac3a1/submission/gems52-h74-a2deform-cotrain-721px-20261009T174546Z.tif">H74 artifact</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/2fc03cd6093f0aa8824d21d7c3f092e7f33d6028/submission/gems52-h75-dva-variogram-anisotropy-B-37654px-20261009.tif">H75 artifact</a>). Public owner mirrors are not organizer-authenticated; private or unlinked artifacts may also be absent. No current organizer leaderboard, portal receipt, or organizer-confirmed score was checked.</div>
 
   <h2>2. Hide-and-recover results</h2>
   <p>All values are local <b>HOLDOUT-DTI</b> from <code>gems52-pooled-hide-v1</code>, over 53,186 withheld positives, alpha 0.2, beta 0.8, 300 m triangular radius, with the registered 95% spatial-block intervals. They are not competition-board results or projections.</p>
@@ -85,7 +85,7 @@
   <table>
     <thead><tr><th>Gate</th><th>Observed</th><th>Decision</th></tr></thead>
     <tbody>
-      <tr><td>Surface correlation, before placement</td><td>Maximum Spearman 0.033571 against local CTD5 accessible prior; all 693 paths; zero errors.</td><td>PASS</td></tr>
+      <tr><td>Surface correlation, before placement</td><td>Maximum Spearman 0.033571 against local CTD5 accessible prior; all 693 paths in the frozen snapshot; zero errors. Public-main H74/H75 paths were omitted (see coverage notice).</td><td>PASS on frozen subset</td></tr>
       <tr><td>Literal final-dot near-prior check</td><td>Maximum within-3-px share 1.000; 38 offenders &gt;0.70. Maximum Spearman was only 0.015279.</td><td><b>DUPLICATE/STOP</b></td></tr>
       <tr><td>Saturation-aware diagnostic</td><td>After excluding 15 universal-coverage probes, maximum informative-prior near share remained 0.910799; 23 offenders.</td><td><b>DUPLICATE/STOP</b></td></tr>
     </tbody>
@@ -93,7 +93,7 @@
   <p>The literal maximum is the public owner-mirror H48 diagnostic raster, <a href="https://github.com/buffedlizard55-lab/GEMSDOE48/blob/36d9785e28a81e859c71f4058c639ffba4b7f327/docs/downloads/diagnostics/GEMSDOE48-H56-OWDS-B2xH33D-20261007-1f7b5a4f18db-plausibility.tif">pinned at commit <code>36d9785e28a81e859c71f4058c639ffba4b7f327</code></a>. The independent informative-only maximum is [15GEMSDOE's curvature/scarp raster](https://github.com/buffedlizard55-lab/15GEMSDOE/blob/8c94b0f83f22999032ba8a29c523af7ae6cf5e76/docs/downloads/gems-cleanup-a-20260928T195952Z-curv_scarp.tif). These are public owner-mirror records, not organizer submissions authenticated by the event.</p>
 
   <h2>4. Candidate gates not reached</h2>
-  <p>The mandatory duplicate stop happened before decoded-pixel uniqueness, support novelty, the final full-map views-union check, and GeoTIFF validation. No candidate raster hash, TIFF, ZIP, or download exists. The holdout-arm union diagnostics above do not count as the skipped final-candidate test.</p>
+  <p>The mandatory duplicate stop happened before the shared decoded-pixel uniqueness comparison, support novelty, the final full-map views-union check, and GeoTIFF validation. No H74S TIFF file SHA, TIFF, ZIP, or download exists. The lane receipt does include a digest of the in-memory dot mask; that is not a uniqueness comparison. The holdout-arm union diagnostics above do not count as the skipped final-candidate test.</p>
 
   <h2>5. Preregistered hypothesis ranking</h2>
   <table>
@@ -127,6 +127,7 @@
     <a href="data/h74s_lane_surface.json">Surface lane receipt</a>
     <a href="data/h74s_lane_dots.json">Final-dot lane receipt</a>
     <a href="data/h74s_postrun_code_correction.json">Post-run CLI correction</a>
+    <a href="data/h74s_postfreeze_registry_notice.json">Post-freeze registry coverage notice</a>
   </nav>
   <div class="callout note"><b>CLI status detail:</b> the first runner process exited 1 because a negative result dict was passed to <code>SystemExit</code> after the result had been recorded. The post-run correction receipt documents the code-only fix, preserves the exact executed-runner hash in the card, and confirms no rerun or method/result change.</div>
 

@@ -1,7 +1,43 @@
-<!--H74S-README-->
-# Current status — H74S (2026-10-09): NEGATIVE / no TIFF / no slot
+<!--H82-README-->
+# Current status — H82 (2026-10-09): NEGATIVE — the frozen primary arm lost to its own control; the 8-direction fan helped, the strike-alignment channels hurt
 
-> **DOWNLOAD: NO — no H74S TIFF exists. SUBMIT: NO — not selector-eligible and not organizer-confirmed. Competition slots used: 0.** The frozen two-view co-training/disagreement experiment completed within its budget and stopped at the registered final-dot lane rule. Do not upload a historical file as an H74S result.
+> **DOWNLOAD: YES** (format-valid, decoded-unique, 0 NaN, values exactly {0,1}). **SUBMIT: NO — research artefact only.**
+> The pre-registered primary `B_DVA2_VSA` is **worse** than `single_B` on the hide-and-recover instrument
+> (paired -0.024319, 95% CI [-0.039025, -0.006869] — entirely below zero), and the literal
+> lane rule on the final dots is **DUPLICATE/STOP** against the full census. Slots used: **0**.
+> The attribution arm `B_DVA2` measured the best HOLDOUT-DTI this repository has ever produced
+> (0.189200), but attribution arms are **not promotable post hoc** by the frozen rule — it must be
+> pre-registered fresh as H77's primary before any fit.
+
+**★ [Download H82 GeoTIFF](docs/downloads/h82-candidate.tif)** · [ZIP](docs/downloads/h82-candidate.zip) · **[Executive summary / how to submit](docs/h82-executive-summary.html)** · **[Check any file in your browser](docs/validator.html)** · [Full result](docs/h82.html) · [Hypotheses](docs/h82-hypotheses.html) · [Sources](docs/h82-sources.html)
+
+- **File:** `submission/gems52-h82-dva2vsa-B-37654px-20261009T213414Z.tif` — 140,555 bytes, SHA-256 `17c3f8325ac6f267b1b8cc58bc6fd9495c118c30de64d5f78293d19d7f20c907`
+- **Submission name:** `h82-dva2vsa-B-37654px-20261009T213414Z`
+- **Note (140/140):** `H82: View-B + 50 DVA-2 + 10 variogram/strike-alignment channels; 8-dir integer fan, lags 100-600m; 200m catalogue ring excluded; binary dots`
+- **Validator (from disk):** 1 band float32, EPSG:32611, 3730×3292, transform/bounds match the organiser template, 0 NaN, 0 infinite, values exactly {0,1}, 37,654 ones. **PASS.** Also decoded independently in the browser by `docs/assets/tifcheck.js` (new this round).
+- **HOLDOUT-DTI** (`gems52-pooled-hide-v1`, 53,186 withheld positive px, 9400 dots/fold/arm, α 0.2 / β 0.8, R 300 m, 1000 paired cluster-bootstrap draws):
+  `B_DVA2` **0.189200** [0.1679, 0.2091] · `B_DVA` 0.187587 [0.1665, 0.2092] · `single_B` 0.174910 [0.1529, 0.1960] · **primary `B_DVA2_VSA` 0.150591 [0.1313, 0.1692]** · `B_VSA` 0.142148 [0.1244, 0.1600] · `random` 0.080426 · `single_A` 0.073062. A holdout number is never a board forecast (Spearman −0.10 vs the board, `knowledge/10` §5).
+- **Controls:** `single_B` 0.174910 vs committed 0.174517 (|Δ| 3.9e-04, tol 1e−3) **PASS**; `B_DVA` 0.187587 vs 0.186352 (|Δ| 1.2e-03) **FAIL** → IR-H82-004, any claim needing an exact H75 replay is not certified.
+- **Out-of-quadrant AUC (mean of 4 folds):** `B_DVA2` 0.7124 > `B_DVA` 0.7051 > `single_B` 0.6848 > `B_DVA2_VSA` 0.6720 > `B_VSA` 0.6511 > `single_A` 0.5113. `B_DVA2` beats `single_B` in 4/4 folds.
+- **Leakage canary:** max direction-insensitive single-channel AUC over all 60 new learner channels = **0.6235** (bar 0.90) → **no alarm**. `XVSA_visible_tensor_mag` was demoted to a diagnostic *before any fit* (amendment 72a).
+- **View independence (the lane's mandated test):** max |ρ| **0.1317** over 2,089 spatial blocks / 4,095,103 proxy negatives (bar 0.60) → `allow_exchange=true`, with the instrument's own caveat that proxy-negative error correlation is not proof of conditional feature independence. Thresholds inherited verbatim from `registry/h74_preregistration.json`, not re-tuned. **Exchange still not run:** View A sufficiency failed a 7th time (mean 0.5113, min fold 0.4309).
+- **Lane:** surface literal **PASS** (max ρ 0.3806); dots literal **DUPLICATE/STOP** (max ρ 0.0551, near-3px 1.0000) against 567 census rasters. Scored-only 13-raster registry: surface PASS (ρ 0.1379), dots literal DUPLICATE/STOP, dots **policy PASS** (near-3px 1.0000). A restricted PASS never waives a literal full-census DUPLICATE/STOP.
+- **First lane-feasible full budget:** `run_h73.place_lane` against the scored-only supports filled **37,654/37,654** dots at worst share **0.4445** (bar 0.70), spacing OK. H75 short-filled at 35,858 with worst 0.7350. The emitted raster is still the pre-registered unconstrained placement; the quota-placed variant is saved at `work/h82/dots_lane_restricted.npy` for H77 to pre-register.
+- **Not the union:** shared cells with the union-max placement 1,562/37,654 (Jaccard 0.0212), with View-A-only 512, with View-B-only 1,965; identical to none of them → **PASS**.
+- **Placement:** 37,654 binary cells at 3 px spacing from a 4,325,298-px pool; 200 m catalogue ring excluded; min catalogue distance 223.6 m, median 1562 m, 10.80% inside the metric's 300 m kernel. Marginal rule at a board DTI of 0.2778: emit only within 2.24 px = 224 m (`knowledge/49` §2).
+- **Method:** 60 new learner channels — 50 DVA-2 (aniso + log-variance of the semivariance over an 8-direction integer fan at lags 100–600 m on bands 12/19/13/15/18, γ normalised by the exact offset length so H75's 12 channels are recoverable as a control) + 10 VSA (cos 2·(θ_max − ψ − π/2) against the fold's regional and local strike, both measured from *visible* catalogue only). Strike measured, not assumed: 166.7–171.8° compass, R 0.37–0.45 (`knowledge/73` §5).
+- **New this round:** `docs/validator.html` + `docs/assets/tifcheck.js` — a browser-side pre-submission checker that decodes every pixel locally (TIFF none/LZW/DEFLATE, predictor 1/2, strips and tiles, ZIP) and reports each published rule as PASS/FAIL. Its decoder is pinned by test against rasterio-measured pixel counts. `docs/index.html` is now current-first with all previous rounds collapsed into one verbatim archive.
+- Docs: [preregistration](knowledge/72_hypotheses_H82_preregistered.md) (SHA-256 `fe7050eb40ecf23f…`, frozen before any fit) · [results & limits](knowledge/73_h82_results_and_limits.md) · [run card](evidence/h82_run_card.json) · [irregularities IR-H82-001…006](registry/irregularities.json).
+- Reproduce: `python3 scripts/restore_data.py --target-dir data` → build the store → `python -m gems52.external` → `python scripts/fetch_prior_inventory.py` → `python scripts/run_h82.py {channels,fit,holdout,independence,build,lane,write,card}` → `python scripts/publish_h82_site.py` → `python scripts/check_site.py` → `python -m pytest -q`.
+
+---
+
+<!--/H82-README-->
+
+<!--H74S-README-->
+# H74S experiment closeout — 2026-10-09: NEGATIVE / no TIFF / no slot
+
+> **H74S RUN ONLY: DOWNLOAD NO · SUBMIT NO · SLOTS USED 0.** This is the closeout of the specific H74S experiment in PR #74, not the newest repository round; H82 is later and remains the repository current result above. No H74S TIFF exists. Do not upload a historical file as an H74S result.
 
 **[Detailed H74S report and source-linked three-pass review](docs/h74s.html)** ·
 [Full review / limitations](knowledge/64_h74s_three_pass_review.md) ·
@@ -11,16 +47,21 @@
 ## Outcome at a glance
 
 - **Run:** 3 experiments, 1,652.1 seconds; terminal verdict `negative` at `E3-final-dot-lane`. Registration SHA-256: `9041c9dc04c366afd6b6c223b2ac8ce4ddc821687551a14ae99a678d9a09b38b`.
-- **Surface gate:** PASS across 693 aligned prior paths; maximum Spearman `0.033571`.
+- **Surface gate:** PASS against the 693-path frozen branch snapshot; maximum Spearman `0.033571`. Post-run review found that public-main H74/H75 rasters were omitted from this snapshot (see the explicit coverage notice below).
 - **Final dots:** STOP. The 5,056-dot placement had 38 literal >70%-proximity offenders; maximum share within 3 px was **100%** against a raster in the literal all-prior registry. The informative-prior policy audit also failed at **91.08%**. No waiver or second placement.
 - **HOLDOUT-DTI:** evaluator `gems52-pooled-hide-v1`, 53,186 withheld positives, 95% spatial-block CI. A-only disagreement after exchange: **0.008975 [0.004699, 0.014496]**. It filled only 1,126/1,264 dots in one fold, so the matched comparison is **invalid**; it is not a matched win. Single-B was 0.061461 [0.048927, 0.074703], random was 0.013352 [0.011518, 0.015349]. The separate 9,400-dot/fold single-B control reproduced its prior local HOLDOUT-DTI: 0.174517 [0.154024, 0.195269]. These are not leaderboard scores or projections.
-- **Not reached:** decoded-pixel uniqueness, final full-candidate not-the-union, support novelty, and TIFF format checks. The final-dot stop prevented them; no candidate file/hash is available. The four holdout disagreement arms were not equal to their max-view union, but that does not substitute for the skipped final-candidate test.
+- **Not reached:** decoded-pixel uniqueness, final full-candidate not-the-union, support novelty, and TIFF format checks. The final-dot stop prevented them; no TIFF file SHA is available. The lane receipt contains a hash of the in-memory dot mask, but no decoded-pixel uniqueness comparison was run. The four holdout disagreement arms were not equal to their max-view union, but that does not substitute for the skipped final-candidate test.
 
 ### Integrity and post-run note
 
-The final preregistration was frozen before fitting or placement; the run card records the exact runner hash used. The core inventory plus 105 local TIFF paths and 64 refreshed public owner-mirror paths made 693 gate paths; 64/64 extensions were aligned and error-free. This is **not** an organizer-authenticated census; private/unlinked artifacts are outside its scope. No current organizer leaderboard or portal receipt was checked.
+The final preregistration was frozen before fitting or placement; the run card records the exact runner hash used. The scanned working-branch inventory comprised the core census, 105 local TIFF paths, and 64 refreshed public owner-mirror paths (693 total; 64/64 extensions aligned). A post-run `origin/main` review found a parallel H74 TIFF already merged before the H74S freeze but absent from this stale session checkout, and a parallel H75 TIFF published during the H74S run. Therefore the surface PASS is limited to the frozen 693-path snapshot, not exhaustive of public `main`; see [`evidence/h74s_postfreeze_registry_notice.json`](evidence/h74s_postfreeze_registry_notice.json). The final-dot stop remains witnessed by already-included priors (literal near share 1.0; informative-prior 0.910799), so the negative/no-download/no-slot disposition is unchanged. No retroactive pixel audit or rerun was made. This is **not** an organizer-authenticated census; private/unlinked artifacts are outside its scope. No current organizer leaderboard or portal receipt was checked.
 
 The original process returned code 1 because Python `SystemExit` was given a negative run-card dict after successfully writing the terminal state/card. This was a CLI exit-status defect, not a scientific exception. `evidence/h74s_postrun_code_correction.json` records the post-run, CLI-only hardening, the original and reviewed code hashes, and explicitly confirms there was no rerun or change to method/results.
+
+### Material post-freeze registry coverage notice
+
+After this run, public Git history showed an H74 parallel TIFF merged to `main` at `2026-10-09T19:16:40Z`, before the H74S freeze, but absent from this session's checkout; an H75 TIFF appeared on the public parallel branch at 19:41:26Z and reached `main` at 19:44:21Z, while H74S was running. Neither appears in H74S's 693-path lane receipts. This means the surface PASS is not an exhaustive `main`-branch registry result. The final-dot STOP is still decisive because a prior already included in the audit independently exceeded the frozen threshold. No final dot raster was saved for a post-stop audit, and no rerun or new placement was made. Full hashes/timestamps and the exact limitation are recorded in the [post-freeze registry notice](evidence/h74s_postfreeze_registry_notice.json).
+
 
 ## Ranked geological hypotheses
 
@@ -52,21 +93,537 @@ This is the captured work brief for H74S, organized for audit rather than presen
 - [DOE GDR 1391 / INGENIOUS](https://gdr.openei.org/submissions/1391) · [USGS GeoDAWN release](https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and). H74S used cached competition/shared features, not a new external event feed.
 - Refreshed public owner-mirror commits for GEMSDOE53–57 are pinned in [`evidence/h74s_prior_extension.json`](evidence/h74s_prior_extension.json); provenance and limitations are in the [three-pass review](knowledge/64_h74s_three_pass_review.md). These mirrors are not organizer-authenticated.
 
-### Historical rounds
+### Relationship to later rounds
 
-H72, H71, and earlier round material below are historical records only. They are not H74S artifacts, not a current selector decision, and not authorization to upload or re-label an old submission. See the [research archive](docs/index.html).
+H74S is a terminal, historical run. H82 is a later repository round and is described at the top of this README; H77, H75, H74, H73, H72, and older round records are also separate work. None is an H74S artifact, a selector decision for H74S, or authorization to upload or re-label a prior submission. See the [research archive](docs/index.html).
 
 ---
 <!--/H74S-README-->
+<!--H77-README-->
+# Historical round H77 — lane-feasible research GeoTIFF; H82 is the later repository round
 
+> **DOWNLOAD: YES. SUBMIT TO THE COMPETITION: NO.** The file passes every format rule the portal
+> states, is decoded-unique against 105 registry rasters, and is only the second lane-feasible file
+> this repository has produced. It is still **not** a slot candidate: all five new geological
+> detectors this round scored *below* the shared control on the hide-and-recover holdout, and the
+> file's support was deliberately restricted to pixels the entire prior submission family avoided.
+> **Competition slots used: 0.** No organiser receipt exists for any file in this repository.
+
+**★ [Download the H77 GeoTIFF — one click](docs/downloads/h77-candidate.tif)** ·
+[single-TIFF ZIP](docs/downloads/h77-candidate.zip) ·
+**[Executive summary / exactly how to submit](docs/h77-executive-summary.html)** ·
+[Landing page](index.html) · [Build receipt](evidence/h77_build.json) ·
+[Holdout receipt](evidence/h77_holdout.json) · [Budget sweep](evidence/h77_budget_sweep.json)
+
+- **File:** `gems52-h77-viewb-boardplaced-37654px-20261009T194504Z.tif` — 1,558,626 bytes, 37,654 emitted cells
+- **SHA-256:** `f7f234af958b5645b0ca65c8969906c6b526ef3da9afa693b0171d1902452f49`
+- **Submission name (53 chars):** `gems52-h77-viewb-boardplaced-37654px-20261009T194504Z`
+- **Note (135 chars):** `H77: View-B OOF surface rank; 200m catalogue ring out; binary {0,1}; 3px spacing; K=37654; consensus<=1 lane-feasible; portal-exact LZW`
+
+## The portal rejection is fixed at the writer, not discovered at the portal
+
+The brief reports a submission that came back **"Predicted values must be in range [0, 1]"**. Measured
+this session across all 105 rasters in `submission/` and `docs/downloads/`: exactly **one** of them
+(`gemsdoe52-cotrain-disagree-submodular-20261006-nan.tif`, 7,111,787 NaN pixels) fails that rule as
+written, and it is linked from `docs/h60.html`. Every other file has values exactly {0, 1}.
+
+The structural cause is a container mismatch this repository had been shipping for 20+ rounds. Measured
+byte-by-byte against the organiser's own template:
+
+| | `sample_submission.tif` and all 11 owner-scored rasters | what this repo wrote |
+|---|---|---|
+| compression | **LZW** | deflate |
+| layout | **stripped** (`blocksize 3292x1`) | tiled 256×256 |
+| nodata | **`nan`, declared** | `None`, all-finite, zeros outside |
+
+Both variants have scored historically, so neither is *provably* rejected — but a portal reader that
+does not honour a nodata declaration turns every outside-footprint NaN into a failed `[0, 1]` test.
+**`gems52.grid.write_geotiff_portal_exact`** (new, in the shared template, not a fork) now writes the
+template's own container and re-reads its output, refusing to write a file that fails any of:
+single band, float32, EPSG:32611, 3,730 × 3,292, pinned transform, no finite value outside [0, 1], no
+non-finite pixel inside the footprint, no positive mass outside it. The H77 artefact passes all 13
+independent checks (`docs/h77-executive-summary.html` §2 has the 30-second verification snippet).
+
+## E1 · board forensics on all 13 owner-scored rasters — `|G|` pinned independently
+
+`scripts/run_h77.py`'s companion measurement is `work/h77/board_forensics.py`, run on bytes restored
+and SHA-256-verified this session (23/23 pins, `ALL_VERIFIED=True`).
+
+The champion `h33-2-b2` (0.2778) is a **strict subset** of the 0.2600 file; the 6,436 pixels it deleted
+all lie **100–200 m** from a mapped trace. Setting their credit to zero in the metric algebra and
+solving for `|G|` gives **14,088.7 px** — reproducing the value `knowledge/10` derived by a different
+route, from a different pair. With `|G|` fixed:
+
+```
+DTI = T / (0.2·S + 0.8·|G|)      T = credited mass, S = emitted mass
+```
+
+| file | S px | owner-reported DTI | implied T | coverage T/\|G\| | median dot spacing |
+|---|---:|---:|---:|---:|---:|
+| `h33-2-b2` (champion) | 37,654 | 0.2778 | 5,223.1 | **37.07 %** | 3.000 px |
+| `d2_8` | 44,090 | 0.2600 | 5,223.1 | 37.07 % | 3.000 px |
+| `d1_5` | 60,069 | 0.2477 | 5,767.6 | 40.94 % | 2.236 px |
+| `h19_5` | 121,131 | 0.1922 | 6,822.6 | **48.43 %** | 1.000 px |
+| `hedge_v2` | 227,507 | 0.1563 | 8,873.5 | 62.98 % | 1.000 px |
+
+Two readings the family had not written down:
+
+1. **The score ladder is a thinning ladder.** `h19_5 → d1_5 → d2_8 → h33-2-b2` raises the score
+   monotonically while *cutting coverage* 48.43 % → 37.07 %. Modelling the trade-off (credit per dot on
+   a 1-px-wide linear trace is `s(1 − s/12)`, maximised at 6 px spacing) puts the ideal thinning
+   retention at ~0.798 against the family's achieved 0.766 — **the family's placement is already within
+   4 % of optimal, so there is no headroom left in placement.**
+2. **To beat 0.3195 at the champion's budget you need `T ≥ 6,007`** versus its measured 5,223 — a 15 %
+   better detector at identical mass. Placement cannot supply it. This is the same ceiling
+   `knowledge/49` reached by a different route, now confirmed on the full 13-file corpus.
+
+I also tried to invert the 13 scores for per-pixel credit by partitioning the footprint into
+membership patterns (2,000+ strata, 13 equations). NNLS fits all 13 exactly with a degenerate sparse
+solution, so **per-pixel credit is not identifiable** — an independent reproduction of IR-H60-004.
+
+## E2 · five new geological hypotheses, all negative on the shared holdout
+
+Ranked by expected gain ÷ implementation cost before running, then measured on the template's own
+pooled hide-and-recover evaluator (`gems52-pooled-hide-v1`, 4 label-blind folds, 53,186 withheld
+positives, 9,400 dots/arm/fold, 1,000 paired block-bootstrap draws). All five are unsupervised
+functions of the raster columns, so there is no label to leak.
+
+| # | Hypothesis | Layer(s) | Physical signature | HOLDOUT-DTI [95 % CI] |
+|---|---|---|---|---|
+| — | **`single_B` control** (shared View-B surface model) | DEM + radiometric + LiDAR | — | **0.174571** [0.153568, 0.194531] |
+| — | uniform random | — | — | 0.082399 [0.072700, 0.092084] |
+| E | LiDAR scarp × radiometric-K discordance | LiDAR + K | surface expression without geochemical alteration | 0.086684 [0.071135, 0.104422] |
+| A | Basement-surface curvature, gated to thin cover | band 15 | \|λ_min\| of the Hessian = a kink in the basement | 0.078442 [0.066089, 0.090756] |
+| F | Equal-weight rank fusion of A–D | 8/15/17 | consensus of four transforms | 0.069808 [0.057725, 0.081007] |
+| B | Geodetic dilatation strain-partition boundary | band 8 | \|∇ dilatation\|, not its magnitude | 0.068369 [0.056286, 0.080578] |
+| C | Conductivity-gradient × basement-step coincidence | bands 15 + 17 | a fluid pathway across a basement offset | 0.061497 [0.049564, 0.073368] |
+| D | Antithetic basin-margin pairing | bands 12 + 15 | basement step on the far side of the basin floor | 0.043613 [0.029332, 0.058720] |
+
+**Verdict: NEGATIVE.** No new arm beats the control; the paired difference against `single_B` excludes
+zero for every arm. Only E separates from random at all, and its interval overlaps random's.
+The instrument itself is verified: `run_h61.py fit` reproduced View A mean OOF AUC **0.5163** and
+View B **0.6843** — the committed H61 values — and `single_B` pooled to **0.174571**, the committed
+H61/H71 control, so the new numbers are directly comparable.
+
+**Experiments used: 3 of 3** (E1 board forensics, E2 detector battery, E3 budget sweep + build).
+
+## E3 · the shipped file, and the two gates that decide it
+
+Budget chosen by measurement, not tradition: the pooled holdout for the `single_B` ranking rises
+monotonically to **K = 37,654 → 0.253693** [0.236989, 0.269552] and flattens (25,517 → 0.239134;
+20,000 → 0.226134). `evidence/h77_budget_sweep.json`.
+
+| Gate | Measured | Limit | Verdict |
+|---|---|---|---|
+| Format, 13 checks against `sample_submission.tif` | see the executive summary | — | **PASS** |
+| Decoded-pattern uniqueness, 105 registry rasters | unique; **35,960 / 37,654 dots (95.50 %) exact-novel**; not the prior union | not a copy | **PASS** |
+| Lane, surface — max rank correlation | 0.1296 | 0.90 | **PASS** |
+| Lane, final dots — max rank correlation | **0.0026** | 0.90 | **PASS** |
+| Lane, final dots — max share within 3 px of one prior | **12.17 %** (nearest: the H69 raster) | 70 % | **PASS** |
+| Beats the control on the holdout | no new arm does | must beat | **FAIL** |
+
+The lane gate only passes because the pool is restricted to pixels of **cross-family consensus ≤ 1**
+(856,910 px of 4,930,382 legal px) — the count of *distinct* decoded prior patterns whose 3 px halo
+covers the pixel, H69's lever, reimplemented from its definition over 44 distinct patterns. At
+consensus ≤ 0 the pool is 271,560 px and cannot fill the budget (33,355 placed).
+
+**That restriction is exactly why the verdict is submit-NO.** Consensus ≤ 1 means the dot sits where
+*no* prior submission in this family emitted. Per §1 of `knowledge/49` the champion's credit is
+concentrated in the support the family converged on, so a deliberately non-overlapping field has a
+*lower* expected credit density. The file is unique and lane-clean **because** it avoids the credit.
+Note also that `0.253693` is the holdout DTI of the *unrestricted* field; it is **not** a projection for
+this consensus-restricted artefact and is not presented as one.
+
+## What H77 changed that the next round must keep
+
+1. **Data placement is no longer a blocker.** All 23 manifest entries restore from the owner's
+   hash-pinned sibling repositories through the GitHub Contents API and verify by SHA-256 —
+   `scripts/restore_data.py`, `ALL_VERIFIED=True`, including the 419 MB feature raster in five parts.
+   The standing claim that this needs "any unrestricted machine" is superseded: `api.github.com` is
+   inside the sandbox egress allowlist.
+2. **`grid.write_geotiff_portal_exact`** is the writer to use. Do not add another packaging variant.
+3. **Placement headroom is measured and closed** (within 4 % of the thinning optimum). The only lever
+   that reaches 0.32+ is a detector that holds ρ ≈ 0.10 out to 100,000 px — a *lower* precision demand
+   than the champion's own 0.1387.
+4. **SGMC and `labels.tif` are 95 % disjoint**: SGMC holds 83,593 px, only 3,978 of them in
+   `labels.tif`, so **79,615 px of expert-compiled trace are absent from the competition catalogue**
+   (median 1,612 m away). This is a real off-catalogue validation target, and the repository's
+   hide-and-recover instrument does not use it — it hides *catalogue* faults, which is a different
+   task. Flagged as an irregularity below; a previous round measured that emitting the SGMC
+   off-catalogue lines directly scores 0.0512, so it is not the hidden truth, but it remains untested
+   as a *training target* for an off-catalogue detector.
+
+## Irregularities flagged this round
+
+- **IR-H77-001** — the site served by GitHub Pages (`main:/`, i.e. the root `index.html`) and
+  `docs/index.html` contradicted each other: the root page advertised three H72 downloads while
+  `docs/index.html` said "NO H72 TIFF WAS WRITTEN OR PUBLISHED". Both were on `main`. Only one is
+  served; the root page is now the single H77 entry point.
+- **IR-H77-002** — `docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-nan.tif` is the one
+  downloadable raster that fails the portal's stated `[0, 1]` rule (7,111,787 NaN pixels). It is still
+  linked from `docs/h60.html`. Left in place as a historical artefact and labelled, not deleted.
+- **IR-H77-003** — `evidence/h72_run_card.json` describes a 5,056-dot final output while the README's
+  H72 block and the served root page advertised 37,654 dots for `h72-candidate-v3`. The receipt and the
+  site described different artefacts.
+- **IR-H77-004** — the repo's submission container (tiled/deflate/nodata=None) has never matched the
+  organiser template's (stripped/LZW/nodata=nan), across every shipped file. Fixed by
+  `write_geotiff_portal_exact`; historical files are unchanged.
+- **IR-H77-005** — SGMC and `labels.tif` are 95 % disjoint (79,615 off-catalogue px). The shared
+  hide-and-recover instrument hides *catalogue* faults while the competition scores faults the
+  catalogue lacks; that mismatch is the likeliest cause of the measured Spearman −0.10. Untested as a
+  training target.
+- **IR-H77-006** — main's committed `evidence/h61_canary.json` carries
+  `"HOLDOUT-DTI diagnostic AUC"` while the **unmodified** `scripts/run_h61.py` line 212 emits
+  `"LEAKAGE-CANARY AUC"`. A receipt can therefore drift from the code that generates it with no test
+  noticing. Every AUC in the re-run is bit-identical to the committed value, so only provenance is
+  affected; the regenerated receipts are kept and the drift disclosed.
+- **IR-H77-007** — `docs/h72-executive-summary.html` linked its six download files without the
+  `downloads/` prefix, so all six were dead links on the served site. Found by `check_site.py` and fixed.
+- **IR-H77-008 — FIXED.** `scripts/check_site.py` reported `R5 novelty: recomputed 0.992087 != receipt 1.0` and exited non-zero, and **this was pre-existing on main**: GitHub Actions runs `37985270257` (main `68fc601`) and `37982265131` (main `4b122f3`) both fail at the step "Verify all local website links JSON and download bytes", and with every H77 raster removed the check still reported exactly 0.992087. Cause: `_stamp(q) or built` gave any raster without a `YYYYMMDDTHHMMSSZ` stamp a stamp of exactly `built`, so it was judged "not later" and kept in the strict prior set; 76 of 112 swept rasters are undated. **Fix:** an undated raster cannot be shown to predate R5, so undated rasters are now excluded from the strict set rather than silently trusted. R5's novelty recomputes to exactly **1.0000** over the 9 provably-dated rasters and the checker exits 0. The trade-off is disclosed in a new note, not hidden: the strict set fell from 73 to 9, and the 124-raster figure remains published as the supplemental closure. A first attempt that only resolved aliases by content hash changed nothing and was reverted rather than shipped.
+
+**Still open:** a candidate that beats `single_B` on the holdout (nothing in H55–H77 has); the
+0.2778 file-to-score organiser receipt; an off-catalogue validation instrument built on the
+SGMC-disjoint traces; any road/hydrography layer (still outside the sandbox egress allowlist).
+<!--/H77-README-->
+<!--H81-README-->
+# Historical round H81 — one negative experiment; H82 is later
+
+> **DOWNLOAD: the H75 file, research copy only.  SUBMIT TO THE COMPETITION: NO.**
+> The H75 GeoTIFF is format-valid and its canonical pattern is unique, but two gates fail that the earlier READMEs did not report:
+> (1) the **lane gate** fails on the final dots (literal near-dot share 1.000; policy 0.922 > 0.70; 38 offenders), and
+> (2) the **support-novelty gate** fails: novel fraction **0.0**, so every dot's support lies inside the union of the 566 priors (IR-H81-001).
+> A submission would need an explicit owner override of both gates. **Slots used this round: 0.**
+
+**★ [Download the H75 GeoTIFF (research copy)](docs/downloads/h75-candidate.tif)** · [ZIP](docs/downloads/h75-candidate.zip) · **[Executive summary / exact submission status](docs/h75-executive-summary.html)** · **[H81 status page](docs/h81.html)**
+
+- **H81-1 (band-18 DVA added to View B): NEGATIVE.** HOLDOUT-DTI B_DVA18 **0.188333** [0.167850, 0.209106] vs B_DVA (H75) 0.186352 — paired **+0.001980 [−0.001462, +0.005216]**; the CI includes zero, so the preregistered promotion rule fails. Canary max AUC 0.596 (no alarm). Label: HOLDOUT-DTI, 53,186 withheld positives, evaluator gems52-pooled-hide-v1.
+- **H75 reproduced from restored bytes:** SHA-256 `b97691584d514ab1925d9fff2b61c410be86bdc0bc8c844dfdaa6257a4ea7a16`; the regenerated placement is pixel-identical; validator PASS (float32, EPSG:32611, transform and shape match, values {0,1}, 0 NaN in the footprint).
+- **Corrections to H75 (IR-H81-003):** the committed single_B holdout (0.174517) depended on process state; the fresh value is **0.174571**, matching the H71 and H73 receipts. The paired H75 gain is corrected to **+0.011781 [0.006700, 0.017313]** (was +0.011835). The promotion rule still holds.
+- **Ranked candidates (3–5, with layers, signatures, mimics, costs):** [`knowledge/69_h81_hypotheses_ranked.md`](knowledge/69_h81_hypotheses_ranked.md). Next: the antithetic basement step on band 15 (untested), then the magnetic-gradient DVA behind a flight-line artefact check. The biggest blocker is the lane rule, which is an owner decision.
+- **Leaderboard context (verified against the 2026-10-08 snapshot):** top **0.3774** (xiaofanhu, rank 1); **0.3195** is rank 7 (DARD), not the highest, as the brief says (IR-H81-005); 0.2778 is rank 13 (extradr19, owner-reported, not linked to a file; [knowledge/49](knowledge/49_why_02778_phd_answer.md) re-measured the bytes: the 0.2778 file is the 0.2600 file minus its 6,436 px in the 100–200 m catalogue ring).
+- **Verification:** 450 passed / 2 skipped (pinned stack). Run card: [`evidence/h81_run_card.json`](evidence/h81_run_card.json). Results and limits: [`knowledge/71_h81_results_and_limits.md`](knowledge/71_h81_results_and_limits.md). Preregistration: [`knowledge/68`](knowledge/70_h81_preregistered.md), pinned in `registry/h81_preregistration.json`. Eleven new irregularities: `registry/irregularities.json` IR-H81-001 … -011.
+- **Provenance flag (IR-H81-006):** the restored competition rasters come from the owner's sibling GitHub mirrors, not the DrivenData portal (login-walled). They are integrity-pinned, not organiser-authenticated. Check data-use terms before any submission.
+- **Reproduce (exact order, each stage its own process):** `bash scripts/download_competition_data.sh` → `PYTHONPATH=src python -m gems52.external` → build the store (`structural.build(dest='work/r2/features', include_optional_profiles=False)`) → `PYTHONPATH=src python scripts/fetch_prior_inventory.py` (about 35 min) → `python scripts/run_h75.py fit|holdout|build` → `python scripts/h75_gates.py` → `python scripts/run_h81.py all`. Use the pinned stack in `requirements-r2.txt`.
+
+---
+
+<!--/H81-README-->
+<!--H77cond-README-->
+## H77cond — conditional co-training sufficiency (S1′) and the B-core + A-rescue swap
+
+**Verdict: NEGATIVE, research-only.** Download OK: **True**. Spend a weekly slot: **False**.
+the frozen promote rule requires format AND uniqueness AND the final-dot lane AND not-the-union AND conditional sufficiency AND a holdout paired CI lower bound above single_B; failing clauses: c5_S1_conditional, c6_beats_single_B -> do not spend a weekly slot
+
+* One-click download: [`docs/downloads/h77cond-candidate.tif`](docs/downloads/h77cond-candidate.tif)
+  (137,255 bytes, SHA-256 `49ad60980f8bf768b94a2753581cae9ba572c75564d862089cec8093bcf317ad`, 37,654 cells, values exactly {0,1},
+  0 NaN, EPSG:32611, grid identical to `sample_submission.tif`).
+* Pages: [`docs/h77cond.html`](docs/h77cond.html) · [exact submission steps](docs/h77cond-executive-summary.html).
+* Submission name: `gems77cond-line-support-B-cotrain-37654px-20261009T193810Z` · note (132 chars): `H77cond RESEARCH ONLY-DO NOT SUBMIT: co-training trace-integrated View B 600m chord; 37654px binary; >200m off catalogue; lane c<=50`
+* New science: **S1′**, View A's out-of-quadrant AUC restricted to truth inside View B's blind band —
+  0.4893 against the 0.60 bar
+  (global S1 for comparison: 0.5163); conditional margin
+  -0.0543 against +0.05.
+* Shipped arm `line_support_B`: HOLDOUT-DTI 0.172426 [0.150155, 0.195030] vs the `single_B` control
+  0.174517 [0.152316, 0.196299]; paired Δ -0.002091
+  [-0.005873, 0.001289]. HOLDOUT-DTI, not a leaderboard score.
+* Receipts: [`evidence/h77cond_run_card.json`](evidence/h77cond_run_card.json),
+  [`knowledge/67_hypotheses_H77cond_preregistered.md`](knowledge/67_hypotheses_H77cond_preregistered.md),
+  [`knowledge/68_h77cond_results_and_limits.md`](knowledge/68_h77cond_results_and_limits.md).
+<!--/H77cond-README-->
+
+<!--H76-README-->
+# H76 exploratory result (2026-10-09): DOWNLOAD YES; SUBMIT NO
+
+[Download the **new** H76 research GeoTIFF](docs/downloads/h76-candidate.tif) · [Executive summary / submission steps](docs/h76-executive-summary.html) · [3,000 per-dot geological interpretations](docs/downloads/h76-a-only-reasoning.csv) · [local gate receipt](evidence/h76_exploratory.json).
+
+**Do not upload this file.** The new H76 unsupervised subsurface-high/surface-low *screen* is not co-training: two calibrated sufficient views and segment-buffered pseudo-label exchange were not re-run (prior H74 View-A sufficiency failed). A whole-segment buffered HOLDOUT-DTI comparison and full-census gate have not been measured. No ORGANIZER-CONFIRMED score exists, and no slot was spent. It is distinct from 43 locally accessible `submission/*.tif` rasters (surface max Spearman 0.0364; final max 0.0105; near-dot max 0.4783), **not** certified unique against the entire historical census. It is NOT a union of confident A and B predictions: all 3,000 emitted cells satisfy the proxy A-high/B-low screen; neither proxy is a trained probability. SHA-256 `bd64f0121502488ead1f91cb97530a7e9ae5fce89b9f0afc10a95466e35c98c2`. Local on-disk validator: one float32 band, EPSG:32611, 3730×3292, same transform as pinned sample; 0 NaN, {0,1}, no positive outside valid intersection. Name `h76-gravity-surface-abstention-research-only`; note `H76 exploratory gravity edge with quiet slope; unvalidated, research-only; do not spend competition slot` (not an organizer receipt). See `scripts/run_h76_exploratory.py`.
+
+**Pre-implementation candidates (expected hide-and-recover gain / implementation cost, not score forecasts):**
+
+| Rank | Layers / physical signature | Why unmapped; mimic | Distinct from existing implementation | Gain / cost |
+|---|---|---|---|---|
+| 1 | band 18 isostatic gravity horizontal gradient high, band 19 detrended slope quiet: covered density boundary | Exclude 200 m mapped-fault ring; lithologic/intrusive contact can mimic | Strict geophysical-high/topographic-low *unsupervised screen*, unlike H74 deformation-only trained A2 or H75 surface DVA | uncertain / low |
+| 2 | bands 2, 9 magnetic reduced-to-pole/vertical gradient discordant with band 19 slope | Buried intrusive/fault contact not scarp; magnetite-bearing lithology mimics | Paired magnetic-polarity discontinuity conditioned on B abstention, not H75 variograms | uncertain / medium |
+| 3 | band 15 basement depth curvature + band 13 gravity normal cross-scale phase lag vs bands 12/19 surface | Covered basin-margin step away from mapped traces; sediment compaction mimics | Phase lag rather than R2 signed gradient alignment | uncertain / medium |
+| 4 | band 17 conductivity edge intersecting band 18 gravity edge with B slope quiet | Covered permeable intersection; saline aquifer mimics | Crossing geometry *plus abstention*, not unconditioned conductivity rank | uncertain / high |
+
+All use the pinned mirror of the competition's 19-band feature raster; no new external data. These are hypotheses, not discoveries. Existing `knowledge/07`, `knowledge/65`, `knowledge/66` document other tested transforms and failures. **Top candidate was NOT validated on spatial holdout, so it cannot be promoted.** The prior H75 improvement is HOLDOUT-DTI (gems52-pooled-hide-v1, 53,186 withheld, 95% CI): B_DVA 0.186352 [0.164675, 0.207868] vs single_B 0.174517 [0.152316, 0.196299], but its full-census final-dot near share 0.922 fails the lane rule. Do not infer a leaderboard score from either round.
+
+**Shared-tool irregularity fixed:** `restore_data.py --only` previously printed `ALL_VERIFIED=True` for an unknown filename (zero files processed). It now fails for unknown manifest IDs. The integrity pins establish mirror consistency, not organizer authentication. Primary references: [DrivenData task/format](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/), [organizer reference solution](https://github.com/drivendataorg/gems-prize-reference-solution), [USGS GeoDAWN release](https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and), [Blum–Mitchell DOI](https://doi.org/10.1145/279943.279962). The previously owner-attributed 0.2778 file's measured relationship to the 0.2600 file is analyzed in [knowledge/49](knowledge/49_why_02778_phd_answer.md); no authenticated filename↔score receipt exists, and no evidence warrants predicting a higher public score.
+
+---
+<!--H75-README-->
+# Historical parallel round H75 — variogram-anisotropy research artifact
+
+> **[SUPERSEDED by H81 above: the support-novelty gate fails (0.0) and the lane gate fails on both readings.]** **DOWNLOAD: YES** (format-valid, decoded-unique). **SUBMIT: research-only** — the holdout gate PASSES (first time in this
+> repo), the protocol's near-dot lane gate FAILS (0.922 > 0.70). Submitting needs an explicit owner override of the lane rule.
+> If overridden, use H75, not H72-v3 (H72-v3 holdout 0.031 is below random 0.080 — IR-H75-001). Slots used: 0.
+
+[H75 historical research GeoTIFF](docs/downloads/h75-candidate.tif) · [archived ZIP](docs/downloads/h75-candidate.zip) · [H75 historical status](docs/h75-executive-summary.html)
+
+- **File:** `submission/gems52-h75-dva-variogram-anisotropy-B-37654px-20261009.tif` — 142,941 bytes, SHA-256 `b97691584d514ab1925d9fff2b61c410be86bdc0bc8c844dfdaa6257a4ea7a16`
+- **Name:** `h75-dva-variogram-anisotropy-B-37654px-20261009`
+- **Note (≤140):** `H75: View-B + directional variogram anisotropy (det_elev/slope/grav); 200m ring cut; binary 37654 dots; holdout +0.012 vs B`
+- **Validator (from disk):** 1 band float32, EPSG:32611, 3730×3292, transform match, 0 NaN, values {0,1}, 37,654 ones. PASS.
+- **HOLDOUT-DTI** (gems52-pooled-hide-v1, 53,186 withheld px, 9,400 dots/fold): B_DVA **0.1864** [0.1647, 0.2079] vs single_B 0.1745 [0.1523, 0.1963]; paired **+0.0118 [0.0068, 0.0174]**; random 0.0804. Canary max AUC 0.623 (no leakage alarm).
+- **Lane:** surface max Spearman 0.466 PASS; dots Spearman 0.108 PASS; dots near-dot 0.922 FAIL; quota placement infeasible at K=37,654 and 30,000 (short fill).
+- **Method:** 12 directional-variogram channels (lags 200/400 m, 4 azimuths; anisotropy + log semivariance) on det_elev, det_elev_slope, iso_grav_anom added to View B; same H61 learner/rows/seed; 200 m catalogue ring excluded (the measured 0.2600→0.2778 mechanism, knowledge/49); binary dots, 3 px spacing.
+- Docs: [preregistration](knowledge/65_hypotheses_H75_preregistered.md) · [results](knowledge/66_h75_results_and_limits.md) · [run card](evidence/h75_run_card.json). Reproduce: `bash scripts/download_competition_data.sh`, build store (see H73), `python scripts/run_h75.py all`, `python scripts/h75_gates.py`, `python scripts/h75_write.py`.
+
+---
+
+<!--/H75-README-->
+<!--H74-README-->
+# Historical parallel round H74 — deformation-only research artifact
+
+> **HISTORICAL H74 RESEARCH ARTIFACT — not H74S.** Its old run was negative and not slot-approved. The TIFF below is a separate parallel result, not an H74S output or current recommendation.
+
+[H74 historical research GeoTIFF](docs/downloads/h74-candidate.tif) ·
+[single-TIFF ZIP](docs/downloads/h74-candidate.zip) ·
+[geological reasoning CSV, one row per dot](docs/downloads/h74-a-only-reasoning.csv) ·
+**[Executive summary / exact submission steps](docs/h74-executive-summary.html)** ·
+[Landing page](docs/h74.html) · [Run card](evidence/h74_run_card.json) ·
+[Results and limits](knowledge/64_h74_results_and_limits.md)
+
+- **File:** `gems52-h74-a2deform-cotrain-721px-20261009T174546Z.tif` — 58,475 bytes, 721 emitted cells
+- **SHA-256:** `0dea78bc8e276a8276de94a169e59ffac43234cef6a6f978f13f0788c6232f26`
+- **Name (50 characters):** `gems52-h74-a2deform-cotrain-721px-20261009T174546Z`
+- **Note (137 characters):** `H74 deformation-only View A2; A2-only stratum, 721 dots, lane-DUPLICATE; holdout does NOT beat single_B; research only, not slot-approved`
+- **Local validator:** one float32 band; values exactly {0, 1}; 0 NaN; 0 infinite; EPSG:32611; shape
+  3,730 × 3,292 and transform identical to `data/sample_submission.tif`. Local validator only —
+  **not** an organiser acceptance receipt.
+
+**What H74 tested (the lane, one round).** The deferred **H70-E** variant: a **deformation-only View A2**
+(geodetic strain bands 4/7/8 + seismicity bands 10/16, 22 channels with gradient/coherence transforms),
+View B unchanged, disagreement as the discovery signal. Preregistered in
+[`knowledge/63`](knowledge/63_hypotheses_H74_preregistered.md) (SHA-256 pinned in
+`registry/h74_preregistration.json`; the runner refuses if it moves). The shared H61 canary/fit/exchange
+stages ran **unchanged** with the View A list substituted by a setup wrapper — no forked stage; the 17
+deformation columns were added to the shared store once, idempotently (`+h74-deformation-v1`).
+
+| Check | Label | Result | Receipt |
+|---|---|---|---|
+| Leakage canary (59 channels × 4 folds) | PREMISE-AUC | max direction-insensitive AUC **0.6687**, any alarm **False** (bar 0.90) | [`evidence/h74_canary.json`](evidence/h74_canary.json) |
+| S1 sufficiency (View A2 deformation-only, out-of-quadrant) | PREMISE-AUC | mean **0.5194**, min fold **0.5011** → **FAIL** (gate 0.60/0.55); prior mixed View A: 0.5163–0.5362 | [`evidence/h74_sufficiency.json`](evidence/h74_sufficiency.json) |
+| Independence (spatial-block OOF errors on labelled negatives, A2/B pair) | diagnostic | max abs ρ **0.0765** < 0.60 → exchange **allowed** | [`evidence/h74_independence.json`](evidence/h74_independence.json) |
+| Control reproduction (single_B at 9,400 dots/fold) | HOLDOUT-DTI | **0.174517** vs committed H61 0.174517, abs Δ 2.9e-07 ≤ 0.001 → **PASS** | [`evidence/h74_holdout.json`](evidence/h74_holdout.json) |
+| **HOLDOUT-DTI, matched budget 9,400 dots/fold/arm** | HOLDOUT-DTI | a_only **0.050048** [0.035285, 0.065611] vs single_B **0.174517** [0.152316, 0.196299]; paired Δ **-0.124469** [-0.149150, -0.099436] → **does not beat single_B** | [`evidence/h74_holdout.json`](evidence/h74_holdout.json) |
+| Format gate | diagnostic | PASS — 0 NaN, {0,1}, pinned CRS/shape/transform | [`evidence/h74_build.json`](evidence/h74_build.json) |
+| Decoded-pattern uniqueness (560 registry rasters) | diagnostic | PASS — canonical-pattern unique, not the prior union | [`evidence/h74_build.json`](evidence/h74_build.json) |
+| Support novelty vs informative priors | diagnostic | **1.0000** | [`evidence/h74_build.json`](evidence/h74_build.json) |
+| Lane gate, surface (before placement) | diagnostic | literal **PASS**, policy **PASS** | [`evidence/h74_lane_surface.json`](evidence/h74_lane_surface.json) |
+| Lane gate, final dots | diagnostic | literal **DUPLICATE/STOP**, policy **DUPLICATE/STOP** (max near **0.8835**, max Spearman -0.0000) → **gate fails, reported verbatim** | [`evidence/h74_lane_dots.json`](evidence/h74_lane_dots.json) |
+| Census audit (`audit_uniqueness.py`) | diagnostic | surface max Spearman 0.0058; dots max near 1.0000 | [`evidence/h74_audit_uniqueness.json`](evidence/h74_audit_uniqueness.json) |
+| Not the union of the two views | diagnostic | **PASS** — every dot in the strict A2-only stratum | [`evidence/h74_not_union.json`](evidence/h74_not_union.json) |
+
+**Verdict: H74 not promoted.** Experiments used: **3 of 3**
+(E1 features+canary+fit+sufficiency, E2 exchange+holdout, E3 build+audit). Run card:
+[`evidence/h74_run_card.json`](evidence/h74_run_card.json).
+
+**Leaderboard (PUBLIC BOARD, not ORGANIZER-CONFIRMED).** Top is **0.3774** (xiaofanhu); 0.3195 is rank 7
+(DARD); 0.2778 is rank 13 (extradr19), owner-reported and not linked to any file. Source:
+https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/ (2026-10-09).
+
+**Still open:** a candidate that beats `single_B` on the holdout (nothing in this lane has); H74-D
+(radiometric-cover gating of the A2-only stratum) and H74-E (H65 operator on the strain bands) remain
+deferred; the deformation-only View A2 is now measured — see `knowledge/64` for what it attributes.
+<!--/H74-README-->
+
+<!--H73-README-->
+# Historical round H73 — negative lane-gate result
+
+> **SUBMIT TO THE COMPETITION: NO.** Competition slots used this session: **0**. No H73 file was emitted.
+>
+> **DOWNLOAD: NO — not as a unique submission file. Research copy only.** The H69 file in this repository ([`docs/downloads/h69-candidate.tif`](docs/downloads/h69-candidate.tif)) is format-valid (float32, {0,1}, no NaN) and not identical to any registry prior (max Jaccard 0.0092 against 542 byte-distinct priors, 378 decoded-distinct). It **fails the literal lane rule**: DUPLICATE/STOP on 14 universal-coverage probe priors (IR-H73-011). The frozen rules do not waive a literal STOP for a policy PASS, so it is not cleared. Its holdout is also negative: HOLDOUT-DTI 0.036473 [0.027471, 0.045996] against single_B 0.137947 on H69's own receipt, which uses a different withheld-positive count from this round's control (IR-H73-010).
+
+**What H73 measured (one experiment, 1 of 3 used).** The hypothesis: a surface-only ranking, emitted under the lane rule,
+keeps ≥ 90 % of the best measured holdout arm. It cannot be emitted lane-feasible on this registry.
+
+| Check | Label | Result | Receipt |
+|---|---|---|---|
+| Competition inputs restored and SHA-256 pinned | MEASURED | 23/23 | `data/restore_receipt.json` (local, git-ignored) |
+| Test suite | MEASURED | 416 passed + 5 new H73 tests | `pytest` |
+| Instrument control: `single_B` at 9,400 dots/fold | HOLDOUT-DTI (n = 53,186 withheld positives) | **0.174571** [0.152313, 0.196302], reproduces H71 (\|Δ\| 3.6e-07); `random` 0.080426 [0.070223, 0.090973] | [`evidence/h73_control.json`](evidence/h73_control.json) |
+| Canary: each View-B feature alone | MEASURED | max AUC 0.6689 (alarm 0.90) → no alarm | [`evidence/h73_fit.json`](evidence/h73_fit.json) |
+| Registry census | MEASURED | 524/524 eligible file-SHA verified; 560 rasters; 350 informative distinct | [`evidence/h73_consensus.json`](evidence/h73_consensus.json) |
+| Preregistered placement (greedy, consensus pool) | MEASURED | best worst-prior near-dot share **0.8916** (T = 150); no T reaches 0.70 | [`evidence/h73_choose_plain_greedy_wall.json`](evidence/h73_choose_plain_greedy_wall.json) |
+| Amended placement (per-prior quota, 61a) | MEASURED | best **0.7043** (T = 40), short fill 37,372 of 37,600 → denominator effect | [`evidence/h73_choose.json`](evidence/h73_choose.json) |
+| Candidate holdout / shipped file | not measured / not emitted | the lane gate refused to proceed (by design) | — |
+
+**Why, in one paragraph.** The surface view puts its dots on the same few dense priors, so greedy placement puts ≈ 90 % of its
+dots within 3 px of one registry raster. Quotas pull that to ≈ 0.72, but they also exhaust the candidate pool, so the fill comes
+up short and the share divides by the smaller count. That denominator effect is the finding; it is recorded in full in
+[`knowledge/60`](knowledge/62_h73_results_and_limits.md).
+
+**Ranked next hypotheses** (none validated; see knowledge/60 §4): (1) directional variogram anisotropy on bands 12, 19 and the
+LiDAR scarp product, not implemented anywhere in `src/` or `scripts/`; (2) antithetic paired-margin asymmetry from band 15;
+(3) a denominator-aware placement fix, separately preregistered; (4) the 1 m DEM scarp product, which is free and public domain
+at <https://www.usgs.gov/3d-elevation-program> but not downloadable from this sandbox.
+
+**Leaderboard (not verified).** The DrivenData leaderboard renders client-side and returned "Loading..." to our fetch tool, so
+0.3774 (top), 0.3195 and 0.2778 are **PUBLIC-PAGE or OWNER-REPORTED** here, and per-file attribution is filename-only.
+Source: <https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/> (2026-10-09). Official rules to read first:
+<https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/> — **one GeoTIFF per team** is selected for scoring, and
+the official text says values must be in [0, 1] with "null or nan" outside the bounds (the repo writes 0 there; IR-H73-001).
+
+**Verify it yourself:** [`knowledge/60`](knowledge/62_h73_results_and_limits.md) (results, walls, 11 irregularities with receipts) ·
+[`knowledge/61`](knowledge/61_hypotheses_H73_preregistered.md) + [`61a`](knowledge/61a_h73_preregistration_amendment_quota_placement.md)
+(frozen before the holdout) · [`evidence/h73_run_card.json`](evidence/h73_run_card.json) (the run card) ·
+[`evidence/h73_audit_h69_file.json`](evidence/h73_audit_h69_file.json) (uniqueness and lane audit of the H69 file) ·
+[`scripts/run_h73.py`](scripts/run_h73.py).
+<!--/H73-README-->
+<!--H72-README-->
+# Historical round H72 — negative STOP; no H72 TIFF
+
+> **H72 stopped at the preregistered final-dot lane gate. NO H72 GeoTIFF was written or published. Do not reconstruct, retune, or bypass the failed candidate.** No selector decision, competition slot, submission, organizer receipt, or PR/merge occurred as part of the H72 experiment.
+
+| H72 file / approval state | Status |
+|---|---|
+| H72 TIFF downloadable | **NO — no TIFF exists** |
+| Portal-format-valid | **NOT ASSESSED — no TIFF to validate** |
+| Organizer-confirmed | **NO — no receipt** |
+| Approved for competition submission | **NO** |
+| Selector decision / slots used | **None / 0** |
+
+A prior H71 TIFF still exists as a separately dated research artifact; it is not an H72 file and is not approved to submit. H72 used **3 experiments / 2,256.6 seconds**, within the registered limit. Negative result is final for this candidate.
+
+**[H72 result and evidence](docs/h72.html)** · [Competition-facing submission status](docs/h72-executive-summary.html) · [Ranked H72 hypotheses](docs/h72-hypotheses.html) · [Full results/limits](knowledge/60_h72_results_and_limits.md) · [Final JSON run card](evidence/h72_run_card.json) · [Frozen hypothesis protocol](knowledge/59_hypotheses_H72_preregistered.md)
+
+## The reported 0.2778 — four distinct evidence classes
+
+- **PUBLIC-LEADERBOARD observation:** **0.2778**, rank 13, team row `extradr19`, in the official board snapshot dated **2026-10-07** (`registry/leaderboard_snapshot_2026-10-07.json`). This is a team-level public value, not a file/hash/upload-receipt mapping. The official board fetch during H72 rendered “Loading”; no newer value was confirmed.
+- **OWNER/USER-REPORTED file/score match:** owner evidence associates `h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros` with **0.2778** (`evidence/ctd5_owner_reported_results.json`); receipt and authenticated SHA are null. Not organizer-confirmed.
+- **Local mirrored bytes (not a score receipt):** `reference/h33-2-b2-zeros.tif` has SHA-256 `c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9`, 37,654 dots and zero on the local visible catalogue. Its `e5eb6e7e` name token links to none of six recorded hash variants. This verifies only the local mirror.
+- **ORGANIZER-CONFIRMED receipt:** none found tying a submission, file hash, and score.
+
+A local bitmap comparison is **consistent with**, but does not prove, a precision-pruning explanation: the 37,654-dot H33-labelled mirror is a strict subset of a separate 44,090-dot **owner-reported 0.2600** bitmap; 6,436 cells are removed and all lie 100–200 m from the visible catalogue. Hidden-truth credit among these cells is unknown, so this cannot establish why a public row received 0.2778. See [`knowledge/60`](knowledge/60_h72_results_and_limits.md#what-the-reported-02778-does--and-does-not-establish) and `evidence/h61_forensics.json`. The prior point estimate for |G| of 14,088.7 is not established; the documented identified interval is [5,949.3, 12,512.1] under stated assumptions.
+
+## H72 gates and holdout
+
+The preregistered two-view method remained fixed: A = strain channels `raw_band_04`, `raw_band_07`, `raw_band_08`; B = shared DEM/surface plus available radiometric bands; disagreement only. The 619-raster pre-placement surface test passed (max Spearman 0.05110; **lane diagnostic, not a score**). Final dots failed the literal gate: maximum 3-px near-dot fraction **1.00000**; the saturation-aware policy also failed at **0.914359** versus the 0.70 limit (**lane diagnostics, not scores**). The decoded pattern was distinct in this accessible inventory, but support novelty was 0.0 and support was a subset of the prior union. The final-dot failure is terminal.
+
+All DTI values below are **HOLDOUT-DTI** from evaluator `gems52-pooled-hide-v1`, with **53,186 withheld positives**, α = 0.2, β = 0.8, 300 m triangular kernel; each value includes its 95% CI:
+
+| Arm | HOLDOUT-DTI | 95% CI | Note |
+|---|---:|---:|---|
+| H72 A-only candidate | 0.00589479 | [0.00298176, 0.00914770] | Achieved fold counts 1,264 / 1,264 / **1,092** / 1,264 (target 1,264 each) |
+| Single-B reference | 0.06146088 | [0.04892735, 0.07470335] | Not a valid matched comparison against underfilled candidate |
+
+Fold 2 underfilled, so `matched_comparison_valid=false`; **no paired delta** is reported. These are internal holdout measurements, not leaderboard predictions or organizer scores.
+
+H72 details: [`knowledge/60_h72_results_and_limits.md`](knowledge/60_h72_results_and_limits.md) · [`evidence/h72_run_card.json`](evidence/h72_run_card.json) · [browser-readable run card](docs/data/h72_run_card.json) · [surface gate](evidence/h72_lane_surface.json) · [final-dot gate](evidence/h72_lane_dots.json) · [decoded uniqueness](evidence/h72_uniqueness.json) · [holdout receipt](evidence/h72_holdout.json). The per-dot A-only reasoning file is in `evidence/` as a candidate diagnostic; it is not a TIFF or a submission artifact.
+
+## Archived H72 project prompt — retained for provenance, superseded by the current sections above
+
+**Historical note:** This is the H72-era prompt retained as an archive. For current repository status, use the H82 block at the top and the scoped H74S closeout above. The H72 candidate is terminal; do not reconstruct, rerun, or waive its failed gate.
+
+> Review the GEMSDOE52 repository and continue toward a unique, valid competition GeoTIFF. Explain the reported 0.2778 result with evidence, separating official public-leaderboard values, owner-reported file/score matches, local file-byte findings, HOLDOUT-DTI measurements, and organizer-confirmed receipts. Generate 3–5 not-previously-tried geological hypotheses; for each name the layers, physical signature, rationale for finding undiscovered faults, distinction from repo methods, expected DTI improvement (qualitative unless defensibly measured), and cost; rank them. Validate a best candidate by spatial-block hide-and-recover before any selector/slot decision. Keep the competition UI explicit about “downloadable,” “portal-format-valid,” and “organizer-approved to submit.” Use official, manually reviewable sources and flag uncertainty. Keep this prompt in the README.
+>
+> **Stay in the single lane:** two-view co-training only (View A geophysical/subsurface; View B DEM/surface plus available radiometric bands); disagreement is the discovery signal. Reuse shared tools/cache; fix shared tools in place, never fork privately. Use whole-segment spatial blocks with a buffer; derive catalogue features only from visible faults; mask visible faults exactly; evaluate pooled DTI with α=0.2, β=0.8 and a 300 m triangular kernel. Check spatial-block OOF error correlation on labelled negatives; abandon exchange if strongly correlated. Run each-feature leakage canaries; AUC >0.90 is leakage until resolved.
+>
+> Pseudo-label only where one view is confident and the other abstains. Document geological reasoning for every A-only candidate, compare with a single-view baseline, and verify the output is not the union. Check lane uniqueness both on the surface before placement and on final dots; stop/log if any registry rank-correlation exceeds 0.90 or more than 70% of dots are within 3 px of one registry raster. **Do not bypass a literal stop with a policy exception.**
+>
+> Max three experiments or two hours; negative results are deliverables. Do not make a selector/slot decision in the experiment run; a separate selector controls the weekly cap. Label every score-like number as **HOLDOUT-DTI** (evaluator version, withheld-positive count, 95% CI) or **ORGANIZER-CONFIRMED** (copied from a submission receipt). A projection is never a score. Produce a unique TIFF only if current evidence supports it; never present a prior TIFF as newly generated. Normalize to [0,1]; verify format, CRS, shape, transform, uniqueness, and placement. State downloadability, portal-format validation, and organizer approval separately.
+>
+> Work autonomously; cite trusted official sources and flag uncertainties. Review the repository before proposing methods. A PR and merge to `main` are requested only after the work is documented, checks pass, and the review is ready.
+
+## Earlier round — H71 (historical, not the current H72 result)
+
+<!--/H72-README-->
+<!--H66COVER-README-->
+# Historical round H66cover — negative, research-only
+
+> **SUBMIT TO THE COMPETITION: NO.**
+> The one-click file below is the H66cover research GeoTIFF. Verdict: `NEGATIVE, research-only. DOWNLOAD YES (format-valid and unique on decoded pixels); SUBMIT NO (gates: format=True lane_policy=False unique=True not_union=True beats_single_B=False). No certified leaderboard gain.`
+
+*Namespacing (IR-H66-015): a parallel session merged a different round under the "H66" label first
+(PR #56, structural coherence — the site's `h66-*` pages are that round's), and another merged H65halo
+and a thermal-upflow round renamed H67 (PR #58). This round is the cover-gated co-training H66, so its
+block, files and links carry the `h66cover` prefix; main's blocks above and below stay verbatim.*
+
+**What was tested.** H66-A, the only hypothesis run this round: the brief's co-training protocol executed in
+full — empirical independence screen on spatial-block out-of-fold errors of the two views over labelled
+negatives, one confident-to-abstaining whole-segment pseudo-label round, then a new placement field
+`(rankA − rankB) × log1p(cover)` restricted to the A-only stratum (View A confident, View B abstaining),
+which is the brief's "buried beneath cover" reading of the disagreement signal. Preregistered in
+[`knowledge/43_h66cover`](knowledge/43_h66cover_hypotheses_preregistered.md) (SHA-256 pinned in
+`registry/h66cover_preregistration.json`, with the dated amendment
+`knowledge/43_h66cover_amendment_2026-10-09_budget.md`); the H61 views, learner, seed and stages are
+reused unchanged, so H61's fits are reproduced, not re-tuned. Four further hypotheses (H66-B two-round
+exchange, H66-C strain–seismicity View A, H66-D long-wavelength deep-edge View A, H66-E B-only artifact
+control) are registered and deferred — see the preregistration §2.
+
+| Check | Label | Result | Receipt |
+|---|---|---|---|
+| Leakage canary (alarm > 0.90) | PREMISE-AUC | max single-feature raw AUC **0.6687**; any alarm: False | [`evidence/h66cover_canary.json`](evidence/h66cover_canary.json) |
+| Independence screen (mandated) | PREMISE-AUC | max abs Spearman rho **0.1331** over 2089 blocks (abandon >= 0.60) → exchange allowed; 15443 pseudo-label px | [`evidence/h66cover_pseudo_exchange.json`](evidence/h66cover_pseudo_exchange.json) |
+| HOLDOUT-DTI, H66-A vs single_B | HOLDOUT-DTI | h66a **0.045745** [0.031303, 0.062135] vs single_B **0.174517**; paired delta **-0.128772** [-0.151680, -0.106031] → does not beat the single-view baseline | [`evidence/h66cover_holdout.json`](evidence/h66cover_holdout.json) |
+| Lane gate, surface / dots | diagnostic | surface PASS (literal PASS) · dots DUPLICATE/STOP (literal DUPLICATE/STOP) — 100% of dots within 3 px of the H64 raster (IR-H66-014) | [`evidence/h66cover_lane_dots.json`](evidence/h66cover_lane_dots.json) |
+| Decoded-pattern uniqueness | diagnostic | tier 1 (all 553 priors): unique; tier 2 novelty vs 516 informative priors: **1.0000** | [`evidence/h66cover_uniqueness.json`](evidence/h66cover_uniqueness.json) |
+| Not the union of the two views | diagnostic | PASS; every emitted cell inside the A-only gate (633/633) | [`evidence/h66cover_not_union.json`](evidence/h66cover_not_union.json) |
+| Format gate (local) | diagnostic | PASS: single-band float32, values exactly {0,1}, 0 NaN, EPSG:32611, shape/transform identical to `data/sample_submission.tif` | [`submission/gems52-h66-covergate-cotrain-633px.json`](submission/gems52-h66-covergate-cotrain-633px.json) |
+
+**HOLDOUT-DTI, all seven arms** (evaluator `gems52-pooled-hide-v1`, α 0.2, β 0.8, 300 m triangular kernel,
+53,186 withheld positives, 95% paired physical-cluster bootstrap,
+153 clusters, 1000 draws; 9,400 dots per arm per fold at 3 px):
+
+| arm | HOLDOUT-DTI | 95% CI |
+|---|---:|---:|
+| h66a_cover_gated_a_only | 0.045745 | [0.031303, 0.062135] |
+| single_A | 0.071954 | [0.056636, 0.088566] |
+| single_B | 0.174517 | [0.152316, 0.196299] |
+| union_max | 0.148981 | [0.128084, 0.169418] |
+| disagreement_pre | 0.033293 | [0.023815, 0.044556] |
+| disagreement_post | 0.031535 | [0.020459, 0.044217] |
+| random | 0.080426 | [0.070223, 0.090973] |
+
+**Verdict: H66cover not promoted.** Experiments used: 3 of 3 (E1 canary+fit+independence, E2 exchange+holdout, E3 build+gates+GeoTIFF). Run card:
+[`evidence/h66cover_run_card.json`](evidence/h66cover_run_card.json). Full note: [`knowledge/44_h66cover`](knowledge/44_h66cover_results_and_limits.md).
+Site: **[download the H66cover GeoTIFF](docs/downloads/h66cover-candidate.tif)** · [ZIP](docs/downloads/h66cover-candidate.zip) ·
+[reasoning CSV](docs/downloads/h66cover-a-only-reasoning.csv) ·
+[executive summary / exact submission steps](docs/h66cover-executive-summary.html) · [landing page](docs/h66cover.html).
+
+- **File:** `gems52-h66-covergate-cotrain-633px.tif` — 58,473 bytes, 633 emitted cells
+  (the frozen A-only gate has 1,657 exact-novel cells, so the template budget
+  37,600 is a cap — IR-H66-013)
+- **SHA-256:** `0ce05c52194a8d234aac98684bee6f96bad9c7c5c5c2f79cf580a5df72707629`
+- **Name (51 characters):** `gems52-h66-covergate-cotrain-633px-20261009T055503Z`
+- **Note (140 characters):** `H66 co-training disagreement, cover-gated A-only (buried-beneath-cover) arm; 3px dots; >200m off catalogue; research only, not slot-approved`
+- **Projection (never a score):** break-even credit density to match the owner-reported 0.2778 at this budget:
+  2.1443 at |G| = 5949.3 and
+  4.4484 at |G| = 12512.1
+  (measured interval [5,949.3, 12,512.1] px). DTI if this arm's holdout density held:
+  0.4707 / 0.2269.
+
+**Leaderboard (PUBLIC BOARD, not ORGANIZER-CONFIRMED).** Live DrivenData board 2026-10-09: top **0.3774**
+(xiaofanhu), 0.3195 is rank 7 (DARD), 0.2778 is rank 13 (extradr19):
+[leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/). The brief's
+"0.3195 is the highest score" is wrong (IR-H65-002, IR-H66-012). ORGANIZER-CONFIRMED: none — no submission-page
+receipt exists for any file in this repository. Competition slots used: **0**.
+
+**Why 0.2778 won, in one paragraph (measured, `knowledge/27`).** The reported-0.2778 file is the
+reported-0.2600 file with 6,436 pixels deleted — every one 100–200 m from a mapped trace — and zero pixels
+added. Because `DTI = T / (0.2·(T+S−M) + 0.8·(|G|−T))`, deleting zero-credit pixels raises the ratio +6.8 %
+without detecting anything new: it is a precision edit, not a better detector. Beating it needs credit
+density above the break-even bar on novel mass, and no instrument in this repository can certify that —
+the hide-and-recover simulator measured Spearman −0.10 against the owner-reported board (R4).
+
+**Still open:** a lane-valid candidate that beats single_B on the holdout (the A-only stratum sits inside the
+H64 raster's 3 px halo, IR-H66-014); the H66-B/C/D hypotheses; the 0.2778 file-to-row receipt; the portal
+error text (IR-H65-007).
+<!--/H66COVER-README-->
 <!--H71-README-->
 > **Round identity:** first frozen as H66 in this session (2026-10-09 04:35Z); renamed **H71** at merge
 > time because a parallel session's own H66 round (knowledge/43, frozen 04:28Z) merged to `main` first
 > (IR-H71-005). Identifier-only rename — no measured number changed.
 
-# Historical round H71 — prior negative verdict (not current; H74S is the current status)
+# Historical round H71 — prior negative verdict
 
-> **HISTORICAL H71 ARTIFACT ONLY — not the current H74S deliverable.** The H71 research file was locally downloadable at the time, but its policy-lane and holdout gates failed. It is not selector approval, organizer confirmation, or permission to re-label/upload it as H74S. **Current H74S status: no TIFF, no download, no submission; slots used: 0.**
+> **DOWNLOAD: YES — the file is format-valid and unique on decoded pixels. SUBMIT TO THE COMPETITION: NO.**
+> Two measured gates fail: the policy lane (max near-dot share 0.8903 > 0.70 against informative priors,
+> 17 offenders) and the holdout (the A-only candidate does **not** beat `single_B`). Verdict
+> `NEGATIVE, research-only`. **Competition slots used: 0.** The site banner and executive summary say the
+> same thing in one line each.
 
 **★ [Download the H71 GeoTIFF — one click](docs/downloads/h71-candidate.tif)** ·
 [single-TIFF ZIP](docs/downloads/h71-candidate.zip) ·
@@ -416,7 +973,7 @@ step gated by conductivity), rank 4 (spring alignments) and rank 5 (upward-conti
 the three-experiment budget closed after E1/E2/E3, and the queue is recorded for the next session.
 
 <!--H67-README-->
-# Historical round H67 — unique local research GeoTIFF; do not confuse with current H74S
+# Historical round H67 — unique local research GeoTIFF; do not submit
 
 > **Round label.** This round was labelled H66 in its own receipts; a parallel session merged a different
 > H66 first (PR #56), so it is **H67** in filenames. The frozen protocol is byte-identical and its body
@@ -551,7 +1108,7 @@ after reviewing every team's file ([problem page 967](https://www.drivendata.org
 <!--/H65HALO-README-->
 
 <!--H66-README-->
-# Historical round H66 — negative premise-gate result (H74S is current)
+# Historical round H66 — negative premise-gate result
 
 > **SUBMIT TO THE COMPETITION: NO.** No slot used, nothing uploaded. The file below is format-valid and decoded-distinct from every
 > prior raster, but it is **DUPLICATE under the lane's dot-proximity gate**, so it is not the unique, lane-checked GeoTIFF the brief asked for.
@@ -600,7 +1157,7 @@ is overstated for that file.
 <!--/H66-README-->
 
 <!--H65-README-->
-# Historical round H65 — negative premise-gate result (H74S is current)
+# Historical round H65 — negative premise-gate result
 
 > The protocol file keeps its original H62 label in its body (byte-identical). This round is H65 in filenames; see [`knowledge/41a`](knowledge/41a_amendment_2026-10-09_H65_sources.md).
 
@@ -2008,7 +2565,7 @@ h60-lidarscarp-s2p0-20261007-nanoutside:
 
 [https://buffedlizard55-lab.github.io/GEMSDOE48/docs/index.html](https://buffedlizard55-lab.github.io/GEMSDOE48/docs/index.html)
 
-:
+h59-cover-ds-belief-b2xh33d-20261008T184547Z-b79c4c61d8d8: 0.2296
 
 ....
 
@@ -2030,15 +2587,33 @@ h53-twostage-20261008T040951Z-9a0b32c871:
 
 ....
 
-53GEMSDOE
+[https://buffedlizard55-lab.github.io/GEMSDOE53/docs/index.html](https://buffedlizard55-lab.github.io/GEMSDOE53/docs/index.html)
+
+h8-tiprelay-ridgeconcord-pr2-n80000-20261009-49bec522-zeros:
+
+....
+
+[https://buffedlizard55-lab.github.io/GEMSDOE54/docs/index.html](https://buffedlizard55-lab.github.io/GEMSDOE54/docs/index.html)
+
+h54c-manifest-edge-20261009T025732Z-73454bc5:
+
+....
+
+55GEMSDOE
+
+h8-tiprelay-ridgeconcord-pr2-n80000-20261009-49bec522-zeros:
+
+....
+
+56GEMSDOE
 
 :
 
 ....
 
-54GEMSDOE
+57GEMSDOE
 
-:
+h54c-manifest-edge-20261009T025732Z-73454bc5:
 
 ....
 

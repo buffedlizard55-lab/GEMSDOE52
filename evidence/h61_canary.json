@@ -1,8 +1,8 @@
 {
  "stage": "canary",
- "started_utc": "2026-10-08T23:20:57+00:00",
+ "started_utc": "2026-10-09T19:11:49+00:00",
  "alarm_auc": 0.9,
- "evidence_class": "HOLDOUT-DTI diagnostic AUC (not a DTI score)",
+ "evidence_class": "LEAKAGE-CANARY AUC (diagnostic, not a DTI score)",
  "folds": [
   {
    "fold": 0,
@@ -1617,7 +1617,7 @@
    }
   }
  ],
- "finished_utc": "2026-10-08T23:21:35+00:00",
+ "finished_utc": "2026-10-09T19:12:22+00:00",
  "max_alarm_across_folds": 0.6686779701695234,
  "max_fitted_top5_heldout_auc": 0.6665553748712185,
  "any_alarm": false,

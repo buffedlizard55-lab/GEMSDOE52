@@ -1,0 +1,58 @@
+{
+ "stage": "fit",
+ "arm": "B_DVA18",
+ "new_channels": [
+  "DVA_iso_grav_anom_hg_aniso_l2",
+  "DVA_iso_grav_anom_hg_aniso_l4",
+  "DVA_iso_grav_anom_hg_logvar_l2",
+  "DVA_iso_grav_anom_hg_logvar_l4"
+ ],
+ "folds": [
+  {
+   "fold": 0,
+   "auc_B_DVA18": 0.6845362736534392,
+   "canary": {
+    "DVA_iso_grav_anom_hg_aniso_l2": 0.512558859795615,
+    "DVA_iso_grav_anom_hg_aniso_l4": 0.5101447069029269,
+    "DVA_iso_grav_anom_hg_logvar_l2": 0.5423290885838713,
+    "DVA_iso_grav_anom_hg_logvar_l4": 0.5411624675527842
+   },
+   "canary_max": 0.5423290885838713
+  },
+  {
+   "fold": 1,
+   "auc_B_DVA18": 0.7823744320677679,
+   "canary": {
+    "DVA_iso_grav_anom_hg_aniso_l2": 0.5079043326502918,
+    "DVA_iso_grav_anom_hg_aniso_l4": 0.5084241146258034,
+    "DVA_iso_grav_anom_hg_logvar_l2": 0.5957837565600288,
+    "DVA_iso_grav_anom_hg_logvar_l4": 0.5964356487886637
+   },
+   "canary_max": 0.5964356487886637
+  },
+  {
+   "fold": 2,
+   "auc_B_DVA18": 0.6397332875112225,
+   "canary": {
+    "DVA_iso_grav_anom_hg_aniso_l2": 0.5001329798248015,
+    "DVA_iso_grav_anom_hg_aniso_l4": 0.5023107152759346,
+    "DVA_iso_grav_anom_hg_logvar_l2": 0.5017912994349963,
+    "DVA_iso_grav_anom_hg_logvar_l4": 0.5037356722119346
+   },
+   "canary_max": 0.5037356722119346
+  },
+  {
+   "fold": 3,
+   "auc_B_DVA18": 0.7173854494748308,
+   "canary": {
+    "DVA_iso_grav_anom_hg_aniso_l2": 0.5119634834196027,
+    "DVA_iso_grav_anom_hg_aniso_l4": 0.5078632053540723,
+    "DVA_iso_grav_anom_hg_logvar_l2": 0.5640406089943859,
+    "DVA_iso_grav_anom_hg_logvar_l4": 0.5643676982174156
+   },
+   "canary_max": 0.5643676982174156
+  }
+ ],
+ "canary_max": 0.5964356487886637,
+ "canary_alarm": false
+}

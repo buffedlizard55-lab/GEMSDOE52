@@ -4,11 +4,11 @@
 
 **Disposition:** **NEGATIVE / STOP. No H74S TIFF, no download, no selector eligibility, no organizer confirmation, zero competition slots used.**
 
-**Scope:** review of the one frozen H74S run and its receipts. This document does not authorize another experiment, placement, or uniqueness waiver.
+**Scope:** review of the one frozen H74S run and its receipts only. H82 is a later repository round and is the current project result; H82 outcomes are not H74S outcomes. This document does not authorize another experiment, placement, or uniqueness waiver.
 
 ## Executive result
 
-The preregistered two-view co-training/disagreement lane completed its full budget of **3 experiments in 1,652.1 seconds (27m 32.1s)**. The surface-raster uniqueness gate passed, then the final-dot audit returned **`DUPLICATE/STOP`** under the literal registered all-prior rule. The saturation-aware policy also returned `DUPLICATE/STOP`. The runner stopped before decoded-pixel uniqueness, final not-the-union, support-novelty, or TIFF-format validation. It correctly wrote no H74S TIFF. No result is eligible for download or submission.
+The preregistered two-view co-training/disagreement lane completed its full budget of **3 experiments in 1,652.1 seconds (27m 32.1s)**. The surface-raster gate passed against the **frozen 693-path branch snapshot** (later found incomplete for public `main`), then the final-dot audit returned **`DUPLICATE/STOP`** under the literal registered rule. The saturation-aware policy also returned `DUPLICATE/STOP`. The runner stopped before decoded-pixel uniqueness, final not-the-union, support-novelty, or TIFF-format validation. It correctly wrote no H74S TIFF. No result is eligible for download or submission.
 
 The runner process itself exited with code 1 after writing the terminal negative state and run card: a negative branch returned a Python dict and `SystemExit(dict)` treated that object as an error. This is a **CLI exit-status defect**, not a missing run result. A transparently recorded post-run correction normalizes that CLI outcome and prevents reruns; it did not alter the frozen method, measurements, state, or run card and did not rerun H74S.
 
@@ -25,7 +25,7 @@ The runner process itself exited with code 1 after writing the terminal negative
 
 ### Registry and provenance boundary
 
-The frozen gate covered **693 aligned raster paths**: 524 eligible entries from the stored core inventory, 105 local submission/download TIFF paths, and 64 refreshed public-owner-repository paths. The 64 extensions were downloaded/decoded/aligned with zero errors and their Git blob SHAs verified. The 2026-10-09 refresh pinned five public repositories:
+The frozen gate covered **693 aligned raster paths in the checked-out branch snapshot**: 524 eligible entries from the stored core inventory, 105 local submission/download TIFF paths, and 64 refreshed public-owner-repository paths. The 64 extensions were downloaded/decoded/aligned with zero errors and their Git blob SHAs verified. The 2026-10-09 refresh pinned five public repositories:
 
 | Public repository | Pinned commit | Raster paths |
 |---|---|---:|
@@ -36,6 +36,12 @@ The frozen gate covered **693 aligned raster paths**: 524 eligible entries from 
 | [57GEMSDOE](https://github.com/buffedlizard55-lab/57GEMSDOE/commit/f639e272f5cf7437d1ca725c2a53cacaace1caf8) | `f639e272f5cf7437d1ca725c2a53cacaace1caf8` | included in 64 |
 
 These are **public owner-mirror** bytes, not organizer-authenticated submissions. Private/unlinked submissions are outside the census. No organizer portal receipt, current official leaderboard, or organizer-confirmed score was checked. The refreshed paths, commits, Git blob IDs, file hashes, and decoded hashes are recorded in `evidence/h74s_prior_extension.json`; the full source resolution for the decisive gate entries is `evidence/h74s_lane_source_resolution.json`.
+
+### Post-run registry-coverage discovery
+
+After H74S had stopped, fetching the updated public `origin/main` to resolve this PR's merge conflict revealed that the frozen 693-path snapshot was not a complete snapshot of public GEMSDOE52 history. A parallel H74 research TIFF (commit `9d891a61d9570830124c45d2477ff969134ac3a1`, file SHA-256 `0dea78bc8e276a8276de94a169e59ffac43234cef6a6f978f13f0788c6232f26`) had been merged into `main` at `2026-10-09T19:16:40Z`, **before** the H74S freeze, but was absent from this session's stale checkout. A second parallel H75 TIFF (commit `2fc03cd6093f0aa8824d21d7c3f092e7f33d6028`, file SHA-256 `b97691584d514ab1925d9fff2b61c410be86bdc0bc8c844dfdaa6257a4ea7a16`) was committed at `19:41:26Z` and reached `main` at `19:44:21Z`, while H74S was still running. Neither raster was included in the 693-path lane receipts.
+
+This is a material census-coverage limitation: the surface `PASS` is scoped to the frozen branch snapshot, **not** every public aligned raster available on `main` at freeze/run time. No decoded/pixel lane metric was retroactively measured against the H74/H75 files: the frozen round was terminal, the mandatory final-dot stop had already been proven by included priors (literal 1.0 and informative-only 0.910799), and no final TIFF/dot raster was saved for a separate audit. The added priors cannot remove that already-observed duplicate witness, so the negative/no-download/no-slot disposition remains; this notice does not claim an exhaustive current registry or authorize a rerun. The metadata-only discovery and hashes are in `evidence/h74s_postfreeze_registry_notice.json`.
 
 ## Pass 2 — experiment, holdout, and stop-rule review
 
@@ -67,14 +73,14 @@ The four holdout A-only arms were not equal to the max-view-union placement (Jac
 
 ### Lane audit: surface passed, final dots stopped
 
-- **Surface gate:** literal and policy `PASS` across all 693 paths, zero errors. Maximum Spearman correlation was **0.0335709**, against the local accessible prior `submission/gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif`. That local path has no pinned owner-census mapping.
+- **Surface gate:** literal and policy `PASS` across all 693 paths in the frozen branch snapshot, zero errors. Maximum Spearman correlation was **0.0335709**, against the local accessible prior `submission/gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif`. That local path has no pinned owner-census mapping.
 - **Final dots:** the one fixed metric-aware placement contained **5,056 dots**. The literal all-prior check found no rank-correlation offender (maximum Spearman **0.0152790**), but found **38** >70% near-dot offenders; the maximum fraction within 3 px was **1.0000**. The literal maximum was a public owner-mirror H48 diagnostic raster at commit [`36d9785e28a81e859c71f4058c639ffba4b7f327`](https://github.com/buffedlizard55-lab/GEMSDOE48/blob/36d9785e28a81e859c71f4058c639ffba4b7f327/docs/downloads/diagnostics/GEMSDOE48-H56-OWDS-B2xH33D-20261007-1f7b5a4f18db-plausibility.tif). That raster is a registry path covered by the literal all-prior rule; it is not an organizer-authenticated submission.
 - **Policy cross-check:** even excluding 15 universal-coverage probes, the maximum informative-prior near-dot fraction was **0.910799** (23 offenders), against [15GEMSDOE `gems-cleanup-a-20260928T195952Z-curv_scarp.tif`](https://github.com/buffedlizard55-lab/15GEMSDOE/blob/8c94b0f83f22999032ba8a29c523af7ae6cf5e76/docs/downloads/gems-cleanup-a-20260928T195952Z-curv_scarp.tif). This independently remains over 0.70.
 - **Decision:** literal `DUPLICATE/STOP` is binding. No waiver, another placement, threshold change, rerun, or TIFF write. The policy check is additional diagnosis, not a substitute for or relaxation of the literal rule.
 
 ### What was not reached
 
-Because the final-dot stop was mandatory, no H74S candidate TIFF exists. Consequently there is no candidate file hash, decoded-pixel uniqueness result, final full-map not-union result, support-novelty result, GeoTIFF-format validation, or download. The existence of the holdout not-union diagnostic does not substitute for those candidate-level gates.
+Because the final-dot stop was mandatory, no H74S candidate TIFF exists. Consequently there is no TIFF file hash, decoded-pixel uniqueness comparison/result, final full-map not-union result, support-novelty result, GeoTIFF-format validation, or download. The lane receipt includes a digest of the in-memory 5,056-dot mask, but that digest is not a uniqueness comparison against priors. The existence of the holdout not-union diagnostic does not substitute for those candidate-level gates.
 
 ## Pass 3 — release state, implementation review, tests
 
@@ -128,4 +134,5 @@ These are hypothesis priorities, not score projections. The old H72/H73 results 
 | [`evidence/h74s_lane_dots.json`](../evidence/h74s_lane_dots.json) | Literal and policy final-dot lane receipts |
 | [`evidence/h74s_lane_source_resolution.json`](../evidence/h74s_lane_source_resolution.json) | Owner commit, path, and hashes for decisive registry rasters |
 | [`evidence/h74s_postrun_code_correction.json`](../evidence/h74s_postrun_code_correction.json) | Transparent CLI-only hardening record; confirms no rerun |
+| [`evidence/h74s_postfreeze_registry_notice.json`](../evidence/h74s_postfreeze_registry_notice.json) | Post-run disclosure that parallel H74/H75 public-main TIFFs were absent from the frozen 693-path inventory |
 | [`evidence/h74s_prior_extension.json`](../evidence/h74s_prior_extension.json) | Refreshed 64-path public owner-repository census |
