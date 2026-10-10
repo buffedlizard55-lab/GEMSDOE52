@@ -137,12 +137,16 @@ def main() -> int:
     text = INDEX.read_text()
     if "<!--H88-START-->" in text:                      # idempotent re-run: swap the block in place
         text = re.sub(r"<!--H88-START-->.*?<!--H88-END-->\n*", lambda _m: block, text, flags=re.S)
-    else:                                              # first run: replace the old H87-era header and box
+    elif re.search(r"<h1>GEMSDOE52 — Co-Training Wavelength Contrast</h1>", text) and "<!-- HOW TO SUBMIT -->" in text:
+        # first run on the pre-merge page: replace the old H87-era header and box
         m = re.search(r"<h1>GEMSDOE52 — Co-Training Wavelength Contrast</h1>", text)
-        if not m:
-            raise SystemExit("index.html title anchor not found")
         head_end = text.index("<!-- HOW TO SUBMIT -->")
         text = text[:m.start()] + block + text[head_end:]
+    else:                                              # page rebuilt on main (other sessions): put the block first in <body>
+        m_body = re.search(r"<body[^>]*>", text)
+        if not m_body:
+            raise SystemExit("index.html has no <body> tag and no legacy anchor")
+        text = text[:m_body.end()] + block + text[m_body.end():]
     text = text.replace("<title>GEMSDOE52 — Co-Training Wavelength Contrast Submission</title>",
                         "<title>GEMSDOE52 — Submission Status (H88)</title>")
     INDEX.write_text(text)
