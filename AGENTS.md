@@ -1,3 +1,36 @@
+<!--H83-AGENTS-->
+## Current H83 continuation (2026-10-10)
+Read README's H83 block and `knowledge/74` (frozen preregistration, SHA-256 `245220eccb36c61e…`) before
+proposing anything. H83 verdict **negative**, experiments 1 of 3, slots 0.
+
+What is now settled and must not be re-litigated:
+
+- **The off-catalogue instrument exists and is cheap.** `gems52-offcatalogue-v1` reuses the *same*
+  out-of-fold fits as `gems52-pooled-hide-v1`, because `gems52.spatial.folds`'s `train` domain is
+  already "everything except this quadrant, minus an 80 px buffer". Do not refit for it. Truth =
+  SGMC pixels ≥ 3 px from `labels.tif`: **55,562** pooled px.
+- **On the off-catalogue instrument every arm collapses toward the same number**
+  (best 0.065682 vs worst 0.065682), and View A is *less*
+  bad there than on hide-and-recover in two of four folds. The buried-fault population is real; this
+  field does not resolve it.
+- **View A sufficiency has now failed an eighth time on the mandated instrument**
+  (mean 0.5162). Independence still
+  passes (max |ρ| 0.1526), so the brief does not require
+  abandonment — but independence without sufficiency still gives co-training nothing to donate, and
+  the exchange moved A's OOF AUC by at most
+  0.0660.
+- **Both packaging variants are format-valid.** The all-finite zeros-outside file is what the site
+  recommends because it cannot fail a literal `[0,1]` range test; the NaN-outside twin matches the
+  organiser template byte-structurally. Do not add a third variant (IR-H77-004 stands for "no new
+  variant"; this round's second file is the *template* variant, not a new one).
+- **Site:** `docs/index.html` is current-first with every previous round preserved verbatim inside one
+  collapsed `<details>` (`<!--ARCHIVE-START-->`/`<!--ARCHIVE-END-->`). `scripts/check_site.py` asserts
+  historical strings on that page, so never rewrite it from scratch — `legacy_index_body()` in
+  `scripts/publish_h83_site.py` carries them forward and is idempotent.
+<!--/H83-AGENTS-->
+
+---
+
 # Working agreement
 
 Before every work session, read `README.md`, its full current user brief, `knowledge/07_r2_hypotheses_preregistered.md`, and the newest review/irregularities record. Read previous failed experiments before proposing another.
@@ -69,6 +102,36 @@ Standing lessons added by H84:
   whole H82 front page verbatim in the archive; it is idempotent. Never rewrite `docs/index.html` from scratch.
 <!--/H84-AGENTS-->
 
+<!--H89-AGENTS-->
+## Current H89 continuation (2026-10-10)
+Read README's H89 block, `knowledge/83` (frozen preregistration, SHA-256 `4fc5e57b19a450c0…`),
+`knowledge/84` (this session's brief) and `knowledge/85` (results and limits).
+
+Settled this round; do not re-litigate:
+
+- **View A failed sufficiency for the eighth time** (mean out-of-quadrant AUC 0.5153 vs View B
+  0.6661). Independence passes again (max |ρ| 0.1372 over
+  2,089 blocks). Independence without sufficiency still gives co-training nothing to donate.
+- **The donation step needs predictions on the TRAINING domain.** H89's first exchange run donated 0 px
+  because the fit stage predicts region-only, so the checkpointed grids are NaN exactly where a pseudo-label
+  is allowed to come from (IR-H89-001). `scripts/run_h89.py::stage_exchange` now re-derives the donor/receiver
+  fields on the training domain from bit-identical refits. Copy that pattern.
+- **Artefact demotion costs a little on catalogue recovery:** `B_art` 0.170046 vs `single_B`
+  0.175326. The veto is a hypothesis about *off-catalogue* precision and the hide-and-recover
+  instrument cannot test it; do not read the small loss as a refutation, and do not re-tune the weight on this
+  instrument.
+- **The 12 % reserved discovery budget costs 0.0148 DTI** (-0.014782
+  [-0.0215, -0.0084]) and that cost was priced into the frozen
+  non-inferiority margin before the fit. `A_only_cover` alone is 0.016073 and short-fills
+  its budget, so it is not a matched comparison — same failure mode as H74S.
+- **`docs/index.html` and `docs/executive-summary.html` were rewritten by H83 and lost the historical
+  identities `scripts/check_site.py` asserts** (IR-H89-002). `scripts/publish_h89_site.py` rebuilds both
+  current-first with an archive table that names H83/H82/R5/H58/H57-alternate/H55-EDGE by their own receipts.
+  Keep that table when you publish the next round.
+- **H83 was mislabelled SUBMIT: YES with no holdout evaluation** (IR-H89-003); it is re-labelled research-only
+  in the README. Never publish a promote verdict without a measured holdout.
+- Current artefact: `submission/gems52-h89-coverco-disagree-37654px-20261010T214732Z.tif` (SHA-256 `9d3e2be69efd476c…`) — **DOWNLOAD YES, SUBMIT NO**.
+<!--/H89-AGENTS-->
 <!--H82-AGENTS-->
 ## Previous H82 continuation (2026-10-09)
 Read README's H82 block, `knowledge/72` (frozen preregistration, amendment 72a included, SHA-256
