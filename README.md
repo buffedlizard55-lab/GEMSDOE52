@@ -1,5 +1,30 @@
+<!--H83-CURRENT-->
+# Current direction — H83 preflight (2026-10-10): STOP / no new TIFF / no slot
+
+> **H83 did not fit a model or generate a TIFF.** There is no H83 file to download or upload. The last existing H82 GeoTIFF remains downloadable for inspection only and is **DOWNLOAD YES, SUBMIT NO**. Slots used: **0**. The legacy local `submission/LATEST.txt` pointer remains on H60; H82 has a separate round marker, and neither marker is an organizer portal receipt. H83 changed neither pointer.
+
+**Current public board (PUBLIC-BOARD, team-level; not filename/receipt evidence):** 0.3774 is rank 1; 0.3195 is rank 8; 0.2778 appears for `extradr19` at rank 22. The public page does not identify a TIFF, hash, private result, or organizer receipt. The dated 2026-10-10 snapshot is [here](registry/leaderboard_snapshot_2026-10-10.json); the current site feed is [here](docs/data/leaderboard.json).
+
+**Task framing (binding):** the official competition predicts geological faults indicative of geothermal resources; expert labels include newly identified faults, and external data may be used only subject to the competition rules. A fault-prediction raster is not a geothermal-vent map. Heat or hydrothermal variables may be supporting evidence, never a redefinition of the target. See the [official problem description](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/).
+
+**H33 read, corrected:** the repository's prior byte audit records H33 as a strict subset of the owner-mirrored `d2_8` parent (6,436 deleted cells, all measured 100–200 m from the known-catalogue traces). The owner's reported score pair (parent **0.2600**, H33 **0.2778**) is **OWNER-REPORTED**, not organizer-confirmed. The deletion is consistent with selective thinning, but the claim that the removed cells earned exactly zero credit is **superseded**: private new-fault truth can lie within 300 m of known traces, so the deleted cells' credit cannot be inferred from the catalogue. See [the corrected source analysis](knowledge/75_h83_preflight_and_hypotheses.md#3-what-can-and-cannot-be-said-about-the-reported-h33-result), [IR-H65halo-007](knowledge/42b_h65halo_results_and_limits.md), and [`knowledge/49`](knowledge/49_why_02778_phd_answer.md).
+
+**Method stop:** H77cond conditionally tested and refuted the buried-fault rescue rationale; do not reopen ordinary co-training without a genuinely new, preregistered mechanism that passes sufficiency. Separately, the literal full-census near-3-pixel gate is recorded as DUPLICATE/STOP for every nonempty raster due universal-coverage probes. Do not narrow the census or bypass either stop. No H83 holdout DTI was run and no projection is claimed.
+
+**Untested research slate:** the leading proposal is native 1 m DEM channel displacement/deflection; it is not viable for this run because the raw tiles and footprint coverage are not verified here. USGS 3DEP free/public-domain access is verified, not the target tiles. Two lower-ranked candidates and source checks are in the [H83 report](knowledge/75_h83_preflight_and_hypotheses.md). Earlier 2 m probes, ComCat, geochemistry and variogram proposals are not rebranded as new.
+
+- [H83 current brief](knowledge/74_current_user_brief_2026-10-10.md) · [preflight and ranked hypotheses](knowledge/75_h83_preflight_and_hypotheses.md) · [three-pass review](knowledge/76_h83_three_pass_review.md) · [H83 NOT-RUN JSON card](evidence/h83_preflight_run_card.json)
+- [Current H83 web page](docs/h83-preflight.html) · [dated evidence feed](docs/feed.html) · [public-board JSON](docs/data/leaderboard.json) · [all 50 rows observed](registry/leaderboard_snapshot_2026-10-10.json)
+- [Last existing H82 research TIFF](docs/downloads/h82-candidate.tif) (**for inspection only; do not submit**) · [submission guide](docs/h82-executive-summary.html) · [browser validator](docs/validator.html)
+
+**Future-work control:** treat [the active brief](knowledge/74_current_user_brief_2026-10-10.md) as the full specification; reuse the shared cache/evaluator/writer, validate on the blocked holdout before any slot decision, and stop at 3 experiments or 2 hours. Respect the live weekly cap, never bypass the literal registry gates, and do not promote a projection. The older vent-focused wording later in this historical README is superseded: the target remains faults, not vents.
+
+**Next safe step:** do not restore data or create a slot artifact just to satisfy the previous high-urgency TIFF request. First obtain and verify the exact 3DEP tiles (and source provenance), then write a genuinely new protocol that does not reopen the closed co-training lane and that can satisfy the literal census gate. If no mechanism can satisfy those conditions, preserve the negative result. Keep Arena's values **Maximize P(Win)** and **Own the Outcome**.
+
+<!--/H83-CURRENT-->
+
 <!--H82-README-->
-# Current status — H82 (2026-10-09): NEGATIVE — the frozen primary arm lost to its own control; the 8-direction fan helped, the strike-alignment channels hurt
+# H82 completed run archive (2026-10-09): NEGATIVE — the frozen primary arm lost to its own control; the 8-direction fan helped, the strike-alignment channels hurt
 
 > **DOWNLOAD: YES** (format-valid, decoded-unique, 0 NaN, values exactly {0,1}). **SUBMIT: NO — research artefact only.**
 > The pre-registered primary `B_DVA2_VSA` is **worse** than `single_B` on the hide-and-recover instrument
@@ -2782,14 +2807,7 @@ The prompt above is verbatim and is re-read every session. Three of its clauses 
 not intentions.
 
 **"Why did `h33-h33-2-b2` score 0.2778, and can we generate one that scores higher than 0.3195?"**
-Because it is the 0.2600 file with the ≤ 200 m ring around the mapped catalogue deleted — 6.3 % of its mass removed for
-+6.8 % score, i.e. *free precision*: a masked pixel can never earn credit and always pays the false-positive tax. It is not
-a better detector; the same 37,654 px emitted incoherently scores 0.0778, 3.6× worse. The arithmetic that beats 0.3195 is
-not a better model, it is **credit density × budget discipline**: `DTI = T / (0.2·T + 0.2·(S − M) + 0.8·|G|)`, so at
-`|G| ≈ 14,089` a 22,000-px file needs a credit density of ~16 % where the champion's own file averages 13.9 %. No
-instrument in this repository can certify that a novel field reaches it — the hide-and-recover simulator ranks the
-champion 13th of 13, and the revealed-preference instrument is a similarity statistic to one prior file. Both orderings
-are published in [`evidence/h62_validation.json`](evidence/h62_validation.json) and neither is a forecast.
+The byte audit in the owner-mirrored rasters records H33 as a strict subset of the reported 0.2600 parent: 6,436 cells removed and none added, with the removed cells 100–200 m from mapped traces. The owner-reported score pair (0.2600 → 0.2778) is consistent with selective thinning, but **does not prove zero credit or a masked 200 m ring**. Staff have stated that new-fault truth can lie within 300 m of known traces; the private truth therefore determines whether the deleted cells helped or hurt. The exact `|G| ≈ 14,089` point used below is not identified; see the later H65/H69 correction and `IR-H65halo-007`. No causal per-pixel credit or forecast is claimed. The current source-grounded account is in [knowledge/75](knowledge/75_h83_preflight_and_hypotheses.md).
 
 One caveat on that arithmetic, registered as **correction H62-4 / IR-H62-005**: the constant `|G|` (the number of
 positives the scorer knows about) is **not** identified as a point. On the pinned bytes it is bounded by `T ≤ |G|`

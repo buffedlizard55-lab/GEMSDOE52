@@ -1,0 +1,105 @@
+{
+  "round": "H83-preflight",
+  "generated_utc": "2026-10-10T20:00:42Z",
+  "status": "NEGATIVE \u2014 pre-fit stop; no experiment or candidate raster",
+  "hypothesis": "No H83 hypothesis was frozen for model fitting because the co-training sufficiency gate is closed, the literal full-census lane gate is saturated for every nonempty raster, and the leading new-data candidate has no verified local tile coverage.",
+  "proposed_top_hypothesis_not_tested": "Native 1 m DEM hydrogeomorphic channel deflection/offset at structural corridors, using USGS 3DEP bare-earth elevation. This is a research proposal only, not a selected or fitted H83 model.",
+  "mechanism": "NOT RUN. No new feature was built, no candidate was fit, no holdout arm was emitted, and no TIFF was written.",
+  "named_non_fault_mimic": "For the top untested proposal: alluvial-fan avulsion or a lithologic/contact-controlled channel; roads/culverts and irrigation are additional named alternatives in knowledge/75.",
+  "candidate_holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "status": "NOT RUN \u2014 no H83 candidate was fitted or emitted",
+    "evaluator": null,
+    "withheld_positive_count": null,
+    "dti": null,
+    "ci95": null
+  },
+  "prior_comparator_only_not_h83": {
+    "label": "HOLDOUT-DTI",
+    "evaluator": "gems52-pooled-hide-v1",
+    "withheld_positive_count": 53186,
+    "ci95_type": "95% paired cluster-bootstrap interval from the H82 receipt",
+    "arms": {
+      "B_DVA2": {
+        "dti": 0.1892,
+        "ci95": [
+          0.167891,
+          0.209115
+        ],
+        "role": "H82 attribution arm; not promotable post hoc under its frozen rule"
+      },
+      "single_B": {
+        "dti": 0.17491,
+        "ci95": [
+          0.152922,
+          0.196038
+        ],
+        "role": "H82 control; not an H83 result"
+      }
+    },
+    "source": "evidence/h82_holdout.json and knowledge/73_h82_results_and_limits.md",
+    "not_a_public_score_or_projection": true
+  },
+  "registry_correlation_overlap": {
+    "candidate_raster": "NOT BUILT",
+    "surface_rank_correlation": null,
+    "final_dot_near_3px_share": null,
+    "candidate_vs_registry_overlap": "NOT RUN \u2014 there are no H83 dots to compare",
+    "full_census_literal_gate": "DUPLICATE/STOP for every nonempty raster on the recorded universal-coverage-probe census; no census restriction or waiver applied",
+    "source": "AGENTS.md, README.md H82/H77cond blocks, evidence/h82_lane.json, knowledge/68_h77cond_results_and_limits.md"
+  },
+  "raster": {
+    "file": null,
+    "sha256": null,
+    "status": "NO H83 TIFF EXISTS"
+  },
+  "validator": {
+    "status": "NOT RUN \u2014 no raster exists",
+    "inside_footprint_nan": null,
+    "range_min": null,
+    "range_max": null,
+    "crs": null,
+    "shape": null,
+    "transform": null
+  },
+  "submission_name": null,
+  "submission_note": null,
+  "submission_note_character_limit": 140,
+  "submission_note_character_count": null,
+  "verdict": "negative",
+  "download_status": "No H83 file to download. The archived H82 TIFF remains downloadable for inspection only; its recorded verdict is DOWNLOAD YES, SUBMIT NO.",
+  "submission_slots_used": 0,
+  "experiments_used": 0,
+  "source_observations": {
+    "leaderboard_snapshot": "registry/leaderboard_snapshot_2026-10-10.json",
+    "official_source_review": "knowledge/75_h83_preflight_and_hypotheses.md \u00a77",
+    "raw_external_data_downloaded": false,
+    "owner_mirror_restore_attempted": true,
+    "owner_mirror_restore_completed": true,
+    "validation_only_template_restore": {
+      "file": "data/sample_submission.tif",
+      "bytes": 1599597,
+      "sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+      "purpose": "scripts/check_site.py site/archive validation only; not an H83 feature, label, fit, or holdout input",
+      "provenance": "registry/data_manifest.json; integrity-pinned owner-supplied mirror, NOT organizer-authenticated"
+    },
+    "h83_model_inputs_restored": false,
+    "raw_external_proposal_data_downloaded": false,
+    "validation_only_label_restore": {
+      "file": "data/labels.tif",
+      "bytes": 425830,
+      "sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+      "purpose": "legacy regression tests checking existing historical raster outputs only; not used for an H83 fit or holdout",
+      "provenance": "registry/data_manifest.json; integrity-pinned owner-supplied mirror, NOT organizer-authenticated"
+    }
+  },
+  "limits": [
+    "No organizer submission-page receipt ties any file hash to any public-board score.",
+    "The H77cond conditional diagnostic refutes the tested buried-fault rescue rationale; it is not proof that every buried fault is absent.",
+    "The literal full-census lane gate remains unsatisfiable under the registered rule; restricted registries are not substitutes.",
+    "Official source metadata and access routes were checked, but no external raster/line payload or exact study-footprint coverage was obtained in H83.",
+    "No new holdout result, score projection, GeoTIFF, or slot authorization is claimed."
+  ],
+  "generated_utc_note": "Initial run-card timestamp reconciled to the recorded write time in this checkout; later review/verification updates are tracked separately.",
+  "updated_utc": "2026-10-10T20:25:05Z"
+}

@@ -11,6 +11,7 @@ import argparse
 import hashlib
 import json
 import re
+import subprocess
 import sys
 import time
 import urllib.request
@@ -56,11 +57,18 @@ def copy_evidence():
     for name in ('r2_preregistration', 'r3_preregistration', 'h55_preregistration',
                  'h55_edge_preregistration', 'h58_preregistration', 'h59_preregistration',
                  'source_policy', 'data_manifest', 'irregularities',
-                 'leaderboard_snapshot_2026-10-07'):
+                 'leaderboard_snapshot_2026-10-07', 'leaderboard_snapshot_2026-10-09',
+                 'leaderboard_snapshot_2026-10-10'):
         path = ROOT / 'registry' / (name + '.json')
         if path.exists():
-            if name in ('h55_preregistration', 'h55_edge_preregistration',
-                        'h58_preregistration', 'h59_preregistration'):
+            if name.startswith('leaderboard_snapshot_'):
+                # Preserve the captured public-board snapshot byte-for-byte: its observed date and
+                # row transcription are evidence, not publisher-generated JSON to normalize.
+                target = DATA / (name + '.json')
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(path.read_bytes())
+            elif name in ('h55_preregistration', 'h55_edge_preregistration',
+                          'h58_preregistration', 'h59_preregistration'):
                 # A frozen registration's bytes are part of its audit trail; preserve them in the
                 # static site rather than semantically reserializing its JSON.
                 target = DATA / (name + '.json')
@@ -69,6 +77,12 @@ def copy_evidence():
             else:
                 write(name + '.json', safe(json.loads(path.read_text())))
             copied.append(name + '.json')
+    preflight_card = EV / 'h83_preflight_run_card.json'
+    if preflight_card.is_file():
+        target = DATA / preflight_card.name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(preflight_card.read_bytes())
+        copied.append(preflight_card.name)
     # H55 publishes its own evidence the same way the R2 round publishes *_r2.json: copied on every
     # run so the page cannot drift from the artefact, and named by round so it is never mistaken for
     # another round's numbers.  The Phase-2 reasoning record is staged next to the raster it explains.
@@ -397,6 +411,21 @@ def fetch_board(do_fetch=False):
     return out
 
 
+def published_download_count():
+    """Count TIFFs tracked for publication, not temporary copies staged by this refresh."""
+    try:
+        result = subprocess.run(['git', 'ls-files', '-z', '--', 'docs/downloads'], cwd=ROOT,
+                               capture_output=True, check=False)
+        if result.returncode == 0:
+            paths = [p for p in result.stdout.split(b'\0') if p]
+            count = sum(p.lower().endswith((b'.tif', b'.tiff')) for p in paths)
+            return count, 'Git-tracked GeoTIFFs under docs/downloads; untracked feed-staging copies excluded'
+    except OSError:
+        pass
+    fallback = len([p for p in DL.glob('*') if p.is_file() and p.suffix.lower() in ('.tif', '.tiff')])
+    return fallback, 'local workspace GeoTIFFs under docs/downloads; Git tracking could not be queried'
+
+
 def current_branch(explicit=None):
     if explicit:
         return explicit
@@ -409,11 +438,26 @@ def current_branch(explicit=None):
 
 
 def research_status():
-    """Read the research card, not LATEST, and verify its exact published bytes.
+    """Read and hash-check the latest archived completed research file; never promotes.
 
-    Hash identity preserves the previous on-disk validator result without importing
-    scientific dependencies into the scheduled stdlib-only feed. Never promotes.
+    H82 is the most recent completed model run. H83 is deliberately represented separately
+    as a preflight stop, so this field cannot imply that an H83 raster exists.
     """
+    h82_path = EV / 'h82_run_card.json'
+    if h82_path.is_file():
+        card = json.loads(h82_path.read_text())
+        raster = card['raster']
+        archive_path = DL / 'h82-candidate.tif'
+        matches = archive_path.is_file() and file_hash(archive_path) == raster['sha256']
+        if not matches:
+            raise ValueError('H82 research download differs from its audited bytes')
+        return dict(round='H82', file=Path(raster['file']).name,
+                    download='downloads/h82-candidate.tif', sha256=raster['sha256'],
+                    hash_verified=matches, verdict=card['verdict'],
+                    approved_for_weekly_slot=False, submit_ok=False,
+                    measurement_utc=card['generated_utc'],
+                    note='Archived H82 research file; DOWNLOAD YES, SUBMIT NO. H83 is a separate preflight stop.')
+
     p = EV / 'ctd5_run_card.json'
     if not p.exists():
         return None
@@ -427,7 +471,23 @@ def research_status():
                 hash_verified=matches, verdict=card['verdict'],
                 approved_for_weekly_slot=False, submit_ok=False,
                 measurement_utc=card['generated_utc'],
-                note='Research only; local evidence refresh is not a fresh organizer or leaderboard observation.')
+                note='Archived CTD5 research; local evidence refresh is not a fresh organizer or leaderboard observation.')
+
+
+def latest_preflight():
+    """Publish H83's process verdict without inventing a raster or score."""
+    p = EV / 'h83_preflight_run_card.json'
+    if not p.is_file():
+        return None
+    card = json.loads(p.read_text())
+    raster = card.get('raster') or {}
+    return dict(
+        round=card.get('round'), status=card.get('status'), verdict=card.get('verdict'),
+        candidate_file=raster.get('file'), candidate_tiff_exists=bool(raster.get('file')),
+        download_status=card.get('download_status'),
+        experiments_used=card.get('experiments_used'),
+        submission_slots_used=card.get('submission_slots_used'),
+        run_card='data/h83_preflight_run_card.json', landing_page='h83-preflight.html')
 
 
 def main():
@@ -477,6 +537,7 @@ def main():
                 target_zip.write_bytes(edge_zip.read_bytes())
     sub = latest_submission()
     board = fetch_board(args.fetch)
+    downloads_count, downloads_scope = published_download_count()
     write('submission.json', sub)
     write('leaderboard.json', board)
     inv = EV / 'prior_inventory_r2.json'
@@ -485,15 +546,18 @@ def main():
         generated_utc=time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
         branch=current_branch(args.branch), repo='buffedlizard55-lab/GEMSDOE52',
         evidence_copied=copied,
-        files=sorted({p.name for pat in ('*_r[23]*.json', 'h55_*.json', 'h58_*.json',
+        files=sorted({p.name for pat in ('*_r[23]*.json', 'h55_*.json', 'h58_*.json', 'h83_*.json',
                                          'submission_gems52-h55-*.json', 'submission_gems52-h58-*.json')
                       for p in DATA.glob(pat)}),
-        submission=sub.get('file'), downloads=len(list(DL.glob('*.tif'))),
+        submission=sub.get('file'),
+        submission_pointer_scope='local repository marker only; it is not an organizer submission-page receipt',
+        submission_pointer_note='H83 did not modify the legacy global marker or upload a file; latest_preflight and latest_research are separate fields.',
+        downloads=downloads_count, downloads_scope=downloads_scope,
         leaderboard_status=board['status'],
         leaderboard_last_observed_utc=board.get('fetched_utc') or board.get('observed_date_utc'),
         prior_entries=len(entries), eligible_prior_rasters=sum(bool(r.get('eligible_prior')) for r in entries),
         scientific_gate=sub.get('approved_for_weekly_slot', False), slots_used=0,
-        latest_research=research_status(),
+        latest_research=research_status(), latest_preflight=latest_preflight(),
         freshness_note='Local evidence refresh is automatic; the board is a dated snapshot. No automatic portal submission.'))
     log('Feed updated. ' + board['status'])
     return 1 if board.get('fetch_error') else 0

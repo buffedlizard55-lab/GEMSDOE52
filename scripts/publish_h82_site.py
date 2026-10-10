@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Render the H82 site: a clean current-first index, the round page, the submission guide, the
-hypothesis ranking, the source register, and the root landing page.
+"""Render the H82 archive pages and preserve the current H83 preflight status on shared landing pages.
+This generator does not fit or publish an H83 candidate; H83's run card is read only to disclose its stop.
 
 Two rules this script exists to enforce:
 
@@ -24,6 +24,7 @@ import html
 import json
 import shutil
 import sys
+import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -72,8 +73,11 @@ def head(title: str, description: str) -> str:
             '<link rel="stylesheet" href="assets/ctd5.css"></head><body>'
             '<a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation">'
             '<a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>'
-            '<a href="index.html">Current round</a>'
-            '<a href="h82.html">H82 result</a>'
+            '<a href="index.html">Current status</a>'
+            '<a href="h83-preflight.html">H83 preflight</a>'
+            '<a href="feed.html">Evidence feed</a>'
+            '<a href="data/feed.json">Feed JSON</a>'
+            '<a href="h82.html">H82 archive</a>'
             '<a href="h82-executive-summary.html">How to submit</a>'
             '<a href="validator.html">Check a file</a>'
             '<a href="h82-hypotheses.html">Hypotheses</a>'
@@ -182,11 +186,20 @@ def main() -> int:
     src_tif = ROOT / card["raster"]["file"]
     shutil.copy(src_tif, DOWN / "h82-candidate.tif")
     shutil.copy(src_tif, DOWN / f"{stem}.tif")
-    with (DOWN / "h82-candidate.zip").open("wb") as fo:
-        import zipfile
-        with zipfile.ZipFile(fo, "w", zipfile.ZIP_DEFLATED) as z:
-            z.write(src_tif, src_tif.name)
-    shutil.copy(DOWN / "h82-candidate.zip", DOWN / f"{stem}.zip")
+    archive_path = DOWN / "h82-candidate.zip"
+    archive_valid = False
+    if archive_path.is_file():
+        try:
+            with zipfile.ZipFile(archive_path) as archive:
+                archive_valid = (archive.namelist() == [src_tif.name]
+                                 and archive.read(src_tif.name) == src_tif.read_bytes()
+                                 and archive.testzip() is None)
+        except (OSError, KeyError, zipfile.BadZipFile):
+            archive_valid = False
+    if not archive_valid:
+        with zipfile.ZipFile(archive_path, "w", zipfile.ZIP_DEFLATED) as archive:
+            archive.write(src_tif, src_tif.name)
+    shutil.copy(archive_path, DOWN / f"{stem}.zip")
     csv_name = Path(card["reasoning_csv"]["path"]).name if isinstance(card["reasoning_csv"], dict) \
         else Path(card["reasoning_csv"]).name
     csv_src = DOWN / csv_name
@@ -288,9 +301,21 @@ def main() -> int:
             f'<div class="small">{ARCHIVE_START}{legacy}{ARCHIVE_END}</div></details></section>')
     dl_word = "yes" if dl_ok else "no"
     sb_word = "yes" if sb_ok else "no"
-    index = head("GEMS / DOE - H82 research GeoTIFF and explicit submission status - GEMSDOE52",
-                 f"H82 verdict: {card['verdict']}. Download {dl_word}, submit {sb_word}. "
-                 f"{i(n_dots)} emitted cells, SHA-256 {card['raster']['sha256'][:16]}") + f"""
+    h83_notice = ""
+    h83_card_path = EVID / "h83_preflight_run_card.json"
+    if h83_card_path.is_file():
+        h83_notice = (
+            '<section class="notice" role="note" style="margin:0 0 1rem;border:2px solid #9f1d2d;'
+            'background:#fff0f1;color:#53121b"><strong>Latest project status — H83 preflight: '
+            'NEGATIVE; no H83 experiment, no H83 TIFF, no slot used.</strong>'
+            '<p>No new H83 file exists to download. The H82 file below is an archive for inspection only; '
+            'its recorded verdict remains DOWNLOAD YES, SUBMIT NO. Do not upload it as an H83 candidate.</p>'
+            '<p><a href="h83-preflight.html">Read the current H83 stop report</a> · '
+            '<a href="data/leaderboard.json">Open the dated public-board feed</a> · '
+            '<a href="data/h83_preflight_run_card.json">H83 NOT-RUN JSON card</a></p></section>')
+    index = head("GEMS / DOE - H83 preflight and H82 research archive - GEMSDOE52",
+                 "Current H83 status: no candidate TIFF or slot. H82 remains a research-only archive; "
+                 "download yes, submit no.") + h83_notice + f"""
 <section class="hero"><div>
 <div class="eyebrow">DOE GEMS / H82 &middot; extended directional variogram anisotropy + variogram&ndash;strike
 alignment &middot; co-training lane, View A (subsurface) vs View B (surface)</div>
@@ -847,13 +872,35 @@ own <code>sample_submission.tif</code> instead, which is the stronger evidence a
         t = t[:a] + section + t[b:]
     else:
         t = t.replace("</main>", section + "</main>", 1)
+
+    # The H82 page is now an archive, while H83 is a pre-fit stop. Keep the historical
+    # irregularities page linked to the actual current status instead of its old CTD5 banner.
+    t = t.replace("Current CTD5 file and failed gates", "Current H83 status and stop gates")
+    h83_count = sum(e["id"].startswith("IR-H83-") for e in irr["entries"])
+    h83_section = (
+        "<!--H83-IRREGULARITIES--><section id=\"h83-preflight-review\"><h2>H83 preflight review (2026-10-10)</h2>"
+        f'<p>Current disposition: <b>NEGATIVE — pre-fit stop</b>; {h83_count} H83 irregularity logged. '
+        'No H83 experiment, holdout, TIFF, portal upload, or slot was used. IR-H83-001 records the dated '
+        '<b>PUBLIC-BOARD</b> observation and unresolved file-to-score attribution: a team-level row is not '
+        'an ORGANIZER-CONFIRMED submission receipt. The owner-reported H33 filename/score association '
+        'remains unverified.</p><p><a href="h83-preflight.html">Read the H83 preflight and ranked hypotheses</a> · '
+        '<a href="data/h83_preflight_run_card.json">H83 NOT-RUN card</a> · '
+        '<a href="data/leaderboard_snapshot_2026-10-10.json">Dated public-board snapshot</a> · '
+        '<a href="data/irregularities.json">Complete irregularities register</a></p>'
+        '</section><!--/H83-IRREGULARITIES-->')
+    if "<!--H83-IRREGULARITIES-->" in t:
+        a = t.index("<!--H83-IRREGULARITIES-->")
+        b = t.index("<!--/H83-IRREGULARITIES-->") + len("<!--/H83-IRREGULARITIES-->")
+        t = t[:a] + h83_section + t[b:]
+    else:
+        t = t.replace("</main>", h83_section + "</main>", 1)
     ip.write_text(t)
 
     # ------------------------------------------------------------------ root landing page
     root_index = f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>GEMSDOE52 — DOE GEMS competition #306 — H82 candidate</title>
+<title>GEMSDOE52 — H83 preflight and H82 research archive</title>
 <style>
 body{{margin:0;font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
 color:#14181d;background:#fff}}
@@ -868,7 +915,13 @@ a.s{{background:#eef2f6;color:#1f4e79}}
 code{{background:#f2f4f7;padding:1px 5px;border-radius:4px;font-size:13.5px}}
 small{{color:#5b6672}}
 </style></head><body><main>
-<h1>H82 candidate raster &mdash; DOE GEMS competition #306</h1>
+<div class="v" style="background:#fff0f1;color:#53121b;border-color:#d88991">
+CURRENT PROJECT STATUS — H83 preflight: NEGATIVE; no new model fit, no H83 TIFF, no slot used.
+No H83 file exists to download. The H82 file below is an archived research artefact: DOWNLOAD YES, SUBMIT NO.
+</div>
+<a class="b s" href="docs/h83-preflight.html">Current H83 preflight</a>
+<a class="b s" href="docs/data/leaderboard.json">Dated public-board feed</a>
+<h1>Last archived candidate — H82 research raster</h1>
 <div class="v">{esc("OK TO DOWNLOAD: yes" if dl_ok else "OK TO DOWNLOAD: no")}
 &nbsp;&middot;&nbsp; {esc("OK TO SUBMIT: yes" if sb_ok else "OK TO SUBMIT: no — research artefact only")}</div>
 <a class="b" href="docs/downloads/h82-candidate.tif" download>Download h82-candidate.tif &#8595;</a>
@@ -892,7 +945,7 @@ claim a leaderboard gain. Sources and verification status:
     (ROOT / "index.html").write_text(root_index)
 
     print(json.dumps(dict(
-        pages=["docs/index.html", "docs/h82.html", "docs/h82-executive-summary.html",
+        pages=["docs/index.html", "docs/h83-preflight.html", "docs/h82.html", "docs/h82-executive-summary.html",
                "docs/h82-hypotheses.html", "docs/h82-sources.html", "index.html", "docs/validator.html"],
         downloads=["docs/downloads/h82-candidate.tif", "docs/downloads/h82-candidate.zip",
                    f"docs/downloads/{csv_link}"],

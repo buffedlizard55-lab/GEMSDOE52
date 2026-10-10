@@ -1,5 +1,7 @@
 # 49 · Why `h33-2-b2` scored 0.2778, and what it would actually take to beat 0.3195 / 0.3774
 
+> **Correction added 2026-10-10 — read before using the analysis below.** This H67 report overstates that the deleted 100–200 m ring carried exactly zero credit and treats `|G| = 14,088.7` as a point. Both claims are superseded by `knowledge/42b_h65halo_results_and_limits.md` / `IR-H65halo-007` and the measured interval in `knowledge/53_h69_results_and_limits.md`: the private new-fault truth can lie within 300 m of known traces, so removed-ring credit is not known; the point count is not identified. The byte-level subset/deletion facts remain useful **conditional on the hash-pinned owner mirror**. The 0.2778 filename-to-score association remains owner-reported, not organizer-confirmed. See `knowledge/75_h83_preflight_and_hypotheses.md` for the current source-grounded answer.
+
 Written 2026-10-09 (round H67) in answer to the brief's question: *"Why and how did this get the
 highest score and are we able to generate a submission that scores higher than 0.2778?"*
 

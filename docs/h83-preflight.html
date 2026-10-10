@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="H83 preflight: no candidate was fit or generated. Source-grounded H33 analysis, ranked new hypotheses, explicit stop gates, and dated public-board feed.">
+  <title>H83 preflight — no new TIFF, no slot | GEMSDOE52</title>
+  <link rel="stylesheet" href="assets/ctd5.css">
+  <style>
+    .stop { border: 2px solid #9f1d2d; background: #fff0f1; color: #53121b; }
+    .soft { color: #53616e; font-size: .94rem; }
+    .tag { display:inline-block; border-radius:999px; padding:.12rem .55rem; font-weight:700; font-size:.8rem; background:#edf1f5; }
+    .tag.stop-tag { background:#f8d7da; color:#721c24; }
+    .tag.ok-tag { background:#e2f0e8; color:#155724; }
+    .status-box { border:1px solid #d3dbe3; border-radius:.6rem; padding:1rem; margin:1rem 0; }
+    table td, table th { vertical-align:top; }
+  </style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><nav aria-label="Main navigation">
+  <a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>
+  <a href="index.html">Current status</a>
+  <a href="h83-preflight.html" aria-current="page">H83 preflight</a>
+  <a href="h82.html">H82 result</a>
+  <a href="h82-executive-summary.html">How to submit</a>
+  <a href="validator.html">Check a file</a>
+  <a href="feed.html">Evidence feed</a>
+  <a href="data/feed.json">Feed JSON</a>
+  <a href="downloads/index.html">Archive</a>
+</nav></header>
+<main id="main">
+<section class="hero"><div>
+  <div class="eyebrow">H83 · 2026-10-10 · pre-fit review</div>
+  <h1>No new TIFF.<br>No slot. No invented score.</h1>
+  <p class="lead">H83 stopped before model fitting. The co-training sufficiency finding and the literal full-census lane stop both remain binding; the top new-data hypothesis has no verified local coverage or input bytes. The prior H82 file remains an archive, not an H83 candidate.</p>
+  <div class="notice stop" role="note">
+    <strong>H83 status: NEGATIVE — pre-fit stop.</strong>
+    <p><b>New H83 TIFF to download?</b> No file was generated.</p>
+    <p><b>Approved to submit?</b> No. No candidate passed a new spatially blocked holdout, and no competition slot was authorized or used.</p>
+    <p>The archived H82 raster may be downloaded for inspection only; its own status remains <b>DOWNLOAD YES, SUBMIT NO</b>.</p>
+    <p class="soft">The legacy global local pointer remains on H60; H82 has a separate round marker. Neither is an organizer portal receipt, and H83 changed neither pointer.</p>
+  </div>
+  <div class="actions">
+    <a class="button" href="h82-executive-summary.html">Read the submission guide</a>
+    <a class="button secondary" href="validator.html">Check a file in your browser</a>
+    <a class="button secondary" href="data/leaderboard.json">Open dated board JSON</a>
+    <a class="button secondary" href="data/h83_preflight_run_card.json">H83 NOT-RUN card</a>
+  </div>
+  <p class="soft"><b>Competition target:</b> geological faults indicative of geothermal resources; the expert labels include newly identified faults. External data may be used only under the competition rules. This is not a geothermal-vent mapping task.</p>
+</div></section>
+
+<section class="status-box">
+  <h2>Current public board snapshot</h2>
+  <p class="soft">PUBLIC-BOARD is a team-level observation, not ORGANIZER-CONFIRMED evidence for any TIFF. The public board exposes no filename, hash, private-round result, or portal receipt. A dated local snapshot is used; automated DrivenData access remains disabled.</p>
+  <div class="table-wrap"><table id="board-table">
+    <thead><tr><th>Rank</th><th>Team</th><th>PUBLIC-BOARD best DW-Tversky</th><th>Submissions</th></tr></thead>
+    <tbody><tr><td colspan="4">Loading the dated snapshot…</td></tr></tbody>
+  </table></div>
+  <p id="board-meta" class="soft">If the data file cannot be loaded, open <a href="data/leaderboard.json">the JSON snapshot</a> directly.</p>
+  <p><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">Open the competition&rsquo;s public leaderboard</a> · <a href="data/leaderboard_snapshot_2026-10-10.json">Dated source snapshot</a>.</p>
+</section>
+
+<section>
+  <h2>What the reported H33 result does—and does not—show</h2>
+  <p>The owner-reported H33 filename/score association is not tied to an organizer submission-page receipt. The public board confirms a team-level row only. The repository&rsquo;s byte audit records H33 as a strict subset of its reported parent, with 6,436 cells removed and none added; the removed cells were 100–200 m from the known-catalogue traces in the owner-mirrored raster audit. This pattern is consistent with selective thinning of marginal predictions.</p>
+  <p><b>Correction:</b> do not say the deleted ring had exactly zero credit or that the organizer masks a 200 m buffer. Private new-fault truth may lie within 300 m of known traces, so the credit of those deleted cells cannot be inferred from the catalogue alone. The improvement is a plausible precision/selection effect, not proof of a better detector or a geological no-fault zone. The official metric uses a triangular 300 m kernel with α=0.2 and β=0.8; false positives are not free.</p>
+  <p>Full analysis and its evidence limitations: <a href="../knowledge/75_h83_preflight_and_hypotheses.md">H83 source-grounded report</a> · <a href="../knowledge/42b_h65halo_results_and_limits.md">H65 correction</a> · <a href="data/irregularities.json">irregularity register</a>.</p>
+</section>
+
+<section>
+  <h2>Why this round stopped</h2>
+  <ul>
+    <li><b>Co-training:</b> H77cond conditionally tested the buried-fault rescue claim and found View A least informative where View B was blind. Do not reopen the same exchange with a different label. A genuinely new mechanism must pass sufficiency before co-training.</li>
+    <li><b>Literal lane:</b> the full-census near-3-pixel gate is recorded as DUPLICATE/STOP for every nonempty raster because universal-coverage probes saturate the footprint. No prior was excluded and no restricted-census pass substitutes for this verdict.</li>
+    <li><b>Inputs:</b> no shared feature cache or raw 1 m DEM tiles were present at preflight. The official 3DEP source is free/public-domain, but exact coverage and tile bytes were not verified in this workspace.</li>
+    <li><b>Integrity:</b> there is no H83 holdout-DTI, raster SHA-256, validator report, candidate-versus-registry overlap result, portal upload, or organizer receipt. All are NOT RUN / absent, not zero or pass.</li>
+  </ul>
+  <p>Prior measured HOLDOUT-DTI values remain in their own run records and are not reused as H83 results or public-board forecasts.</p>
+</section>
+
+<section>
+  <h2>Ranked, untested research hypotheses</h2>
+  <p>These are qualitative proposals, not score forecasts. Three are listed because repository review found several previously queued or tested ideas that would not honestly count as new. None was fit or evaluated in H83.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Rank</th><th>Mechanism and layers</th><th>Non-fault mimic / novelty</th><th>Potential, cost, source status</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Native 1 m 3DEP DEM: channel-reach deflection, paired knickpoints or channel-gradient offsets at a localized structural corridor; aggregate to 100 m only after native-resolution QC.</td>
+        <td>Alluvial-fan avulsion, lithologic contacts, road/culvert diversion, irrigation or erosional capture. No channel-graph displacement statistic was found in repo code; 1 m DEM acquisition was considered earlier, so the source itself is not novel.</td>
+        <td>Qualitative potential: medium but very uncertain; high acquisition/processing cost. USGS confirms free/public-domain access. Exact tile coverage and raw bytes are unverified; NOT viable for H83.</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Raw USGS GeoDAWN magnetic flight-line repeatability/crossover residuals with the delivered grid as a comparator; use radiometric lines as a lithology control, not as fault truth.</td>
+        <td>Flight-line leveling, variable aircraft clearance, or lithologic boundaries. Repo uses gridded fields and derivatives, not raw-line crossover coherence.</td>
+        <td>Qualitative potential: low-to-medium; medium-high QC/processing cost. Official release includes line CSVs and is CC0; exact payload/coverage not obtained, so NOT viable for H83.</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>USGS Landsat Collection 2 Level-2 Surface Temperature: multi-date, season-normalized thermal residuals with elevation/aspect/vegetation controls, aggregated to the contest grid.</td>
+        <td>Soil moisture, vegetation, aspect, wildfire, agriculture, emissivity/lithology and seasonal sampling. Repo tested well/spring temperatures, not satellite LST time series; only the sensor/time-series mechanism is new.</td>
+        <td>Qualitative potential: low and highly uncertain; high scene/QA cost. USGS states no use restrictions and global product access; cloud-free footprint coverage was not checked, so NOT viable for H83.</td>
+      </tr>
+    </tbody>
+  </table></div>
+  <p>Official source details, licenses and obtainability limits are in the <a href="../knowledge/75_h83_preflight_and_hypotheses.md#7-official-source-register-and-retrieval-limits">source register</a>. Earlier 2 m probes, raw-water chemistry, paleo deposits, ComCat points and variograms are not relabelled as new.</p>
+</section>
+
+<section>
+  <h2>Submission instructions—future approved candidate only</h2>
+  <p>The competition page specifies a single-band float32 GeoTIFF on the template CRS/shape/bounds, EPSG:32611, 100 m, with values in [0,1] and null/NaN outside. The portal accepts one TIFF or a ZIP containing one TIFF. H83 did not generate a candidate, so <b>do not upload anything from this report</b>.</p>
+  <ol>
+    <li>Open <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/">the competition data/submission page</a> and choose <b>New submission</b>.</li>
+    <li>Select only a future file whose independent run card says promote and whose slot selector has checked the weekly allowance.</li>
+    <li>Paste that run card&rsquo;s frozen name and note (within the portal&rsquo;s stated note limit); upload the TIFF or single-TIFF ZIP.</li>
+    <li>Save the submission-page receipt and verify it binds the exact file/hash. A public-board team row is not that receipt.</li>
+  </ol>
+  <p>Official format source: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">DrivenData problem statement</a>. Existing step-by-step guide: <a href="h82-executive-summary.html">H82 executive summary (format instructions only; H82 is not approved)</a>.</p>
+</section>
+
+<footer class="soft">GEMSDOE52 · H83 preflight · no model fit · no H83 TIFF · no upload · zero slots · <a href="../knowledge/76_h83_three_pass_review.md">Three-pass review</a></footer>
+</main>
+<script>
+(async () => {
+  const body = document.querySelector('#board-table tbody');
+  const meta = document.getElementById('board-meta');
+  try {
+    const response = await fetch('data/leaderboard.json', {cache: 'no-store'});
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const snapshot = await response.json();
+    const rows = Array.isArray(snapshot.rows) ? snapshot.rows : [];
+    const selected = rows.filter(row => [1, 8, 22].includes(Number(row.rank)));
+    body.replaceChildren();
+    for (const row of selected) {
+      const tr = document.createElement('tr');
+      for (const value of [row.rank, row.team, Number(row.score).toFixed(4), row.submissions]) {
+        const td = document.createElement('td');
+        td.textContent = String(value);
+        tr.appendChild(td);
+      }
+      body.appendChild(tr);
+    }
+    const observed = snapshot.observed_at_utc || snapshot.observed_date_utc || 'date not recorded';
+    meta.textContent = `Score class: ${snapshot.score_class || 'PUBLIC-BOARD; team-level'}. Observation: ${observed}. Exact fetch timestamp may be unavailable.`;
+  } catch (error) {
+    body.replaceChildren();
+    const tr = document.createElement('tr');
+    const td = document.createElement('td');
+    td.colSpan = 4;
+    td.textContent = `Snapshot unavailable in this browser (${error.message}); use the JSON link below.`;
+    tr.appendChild(td);
+    body.appendChild(tr);
+    meta.textContent = 'No board values were inferred or hard-coded.';
+  }
+})();
+</script>
+</body>
+</html>

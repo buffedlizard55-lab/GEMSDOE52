@@ -4,21 +4,9 @@
   "source": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
   "column_header_on_board": "Best public DW-Tversky (in descending order)",
   "rows": [
-    {
-      "rank": "1",
-      "team": "xiaofanhu",
-      "score": 0.3774
-    },
-    {
-      "rank": "7",
-      "team": "DARD",
-      "score": 0.3195
-    },
-    {
-      "rank": "13",
-      "team": "extradr19",
-      "score": 0.2778
-    }
+    {"rank": "1", "team": "xiaofanhu", "score": 0.3774},
+    {"rank": "7", "team": "DARD", "score": 0.3195},
+    {"rank": "13", "team": "extradr19", "score": 0.2778}
   ],
   "our_team": "extradr19 (owner-reported association; not authenticated)",
   "our_best_reported": 0.2778,

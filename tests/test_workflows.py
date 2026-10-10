@@ -55,11 +55,15 @@ def test_feed_workflow_declares_the_steps_the_site_relies_on():
 
 
 def test_feed_workflow_is_dependency_free():
-    """The fetcher is stdlib-only so a package index outage cannot freeze the leaderboard feed."""
+    """The fetcher is stdlib-only so a package index outage cannot freeze the leaderboard feed.
+
+    subprocess is permitted for the local ``git ls-files`` query that excludes untracked feed-staging
+    TIFF copies from the published-download count; it performs no network or package operation.
+    """
     text = (WF / "feed.yml").read_text()
     assert "pip install" not in text, "installing packages makes the schedule fail on PyPI, not on the site"
     src = (ROOT / "scripts" / "refresh_feed.py").read_text()
     mods = set(re.findall(r"^(?:import|from) (\w+)", src, re.M))
     allowed = {"argparse", "json", "re", "sys", "time", "urllib", "pathlib", "hashlib", "__future__",
-               "csv", "html"}
+               "csv", "html", "subprocess"}
     assert mods <= allowed, f"refresh_feed.py imports non-stdlib/odd modules: {sorted(mods - allowed)}"

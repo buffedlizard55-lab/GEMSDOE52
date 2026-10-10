@@ -1,0 +1,329 @@
+{
+ "status": "one-off public leaderboard observation; automated DrivenData fetch remains disabled",
+ "observed_date_utc": "2026-10-10",
+ "observed_at_utc": null,
+ "recorded_at_utc": "2026-10-10T19:56:56Z",
+ "timestamp_note": "The page-fetch interface did not expose a server timestamp. Date is verified; recorded_at_utc is the time this snapshot was written after retrieval, not a claim of exact fetch time.",
+ "source": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
+ "retrieved_by": "Arena page-fetch tool from the public HTML; no authentication and no access to private participant data",
+ "column_header_on_board": "Best public DW-Tversky (in descending order)",
+ "score_class": "PUBLIC-BOARD (organizer-published, team-level); NOT ORGANIZER-CONFIRMED for any filename/hash/upload receipt",
+ "rows_captured": 50,
+ "scope_note": "The page-fetch response exposed ranks 1-50. The board is a changing public leaderboard, not final private-round scoring.",
+ "top": 0.3774,
+ "owner_reported_file_claim": {
+  "filename_claimed_by_owner": "h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros",
+  "score_claimed": 0.2778,
+  "public_board_team_row": {
+   "rank": 22,
+   "team": "extradr19",
+   "score": 0.2778,
+   "submissions": 14
+  },
+  "file_score_link_confirmed_by_board": false,
+  "note": "The public board confirms only the team-level row; it displays no filename, file hash, or submission receipt."
+ },
+ "automated_fetch_allowed": false,
+ "rows": [
+  {
+   "rank": 1,
+   "team": "xiaofanhu",
+   "score": 0.3774,
+   "submissions": 15
+  },
+  {
+   "rank": 2,
+   "team": "JerryDataWorks",
+   "score": 0.3418,
+   "submissions": 18
+  },
+  {
+   "rank": 3,
+   "team": "alexoktaba",
+   "score": 0.3361,
+   "submissions": 27
+  },
+  {
+   "rank": 4,
+   "team": "Batik Shirt Brothers",
+   "score": 0.33,
+   "submissions": 25
+  },
+  {
+   "rank": 5,
+   "team": "nchuzhoy",
+   "score": 0.3262,
+   "submissions": 6
+  },
+  {
+   "rank": 6,
+   "team": "kinghorton42",
+   "score": 0.3261,
+   "submissions": 10
+  },
+  {
+   "rank": 7,
+   "team": "joeyfezster",
+   "score": 0.326,
+   "submissions": 26
+  },
+  {
+   "rank": 8,
+   "team": "DARD",
+   "score": 0.3195,
+   "submissions": 17
+  },
+  {
+   "rank": 9,
+   "team": "cfld__",
+   "score": 0.3108,
+   "submissions": 4
+  },
+  {
+   "rank": 10,
+   "team": "ruping",
+   "score": 0.3104,
+   "submissions": 7
+  },
+  {
+   "rank": 11,
+   "team": "newway",
+   "score": 0.3056,
+   "submissions": 7
+  },
+  {
+   "rank": 12,
+   "team": "giles",
+   "score": 0.3025,
+   "submissions": 6
+  },
+  {
+   "rank": 13,
+   "team": "mzoorob",
+   "score": 0.302,
+   "submissions": 29
+  },
+  {
+   "rank": 14,
+   "team": "ohyeah",
+   "score": 0.2983,
+   "submissions": 5
+  },
+  {
+   "rank": 15,
+   "team": "baobao",
+   "score": 0.2974,
+   "submissions": 5
+  },
+  {
+   "rank": 16,
+   "team": "notmyfault",
+   "score": 0.2943,
+   "submissions": 19
+  },
+  {
+   "rank": 17,
+   "team": "BrandenKMurray",
+   "score": 0.2905,
+   "submissions": 16
+  },
+  {
+   "rank": 18,
+   "team": "GrigorSargsyan",
+   "score": 0.2892,
+   "submissions": 16
+  },
+  {
+   "rank": 19,
+   "team": "ndavis7",
+   "score": 0.2888,
+   "submissions": 11
+  },
+  {
+   "rank": 20,
+   "team": "HardcoreTechGod",
+   "score": 0.2854,
+   "submissions": 6
+  },
+  {
+   "rank": 21,
+   "team": "op01",
+   "score": 0.2797,
+   "submissions": 10
+  },
+  {
+   "rank": 22,
+   "team": "extradr19",
+   "score": 0.2778,
+   "submissions": 14
+  },
+  {
+   "rank": 23,
+   "team": "arnofault",
+   "score": 0.2764,
+   "submissions": 2
+  },
+  {
+   "rank": 24,
+   "team": "faultsofthy",
+   "score": 0.2764,
+   "submissions": 3
+  },
+  {
+   "rank": 25,
+   "team": "wonderfulbig12",
+   "score": 0.2761,
+   "submissions": 4
+  },
+  {
+   "rank": 26,
+   "team": "No Fault of Our Own",
+   "score": 0.2761,
+   "submissions": 26
+  },
+  {
+   "rank": 27,
+   "team": "wbg1",
+   "score": 0.275,
+   "submissions": 16
+  },
+  {
+   "rank": 28,
+   "team": "raboush2",
+   "score": 0.2747,
+   "submissions": 10
+  },
+  {
+   "rank": 29,
+   "team": "li002666",
+   "score": 0.2726,
+   "submissions": 4
+  },
+  {
+   "rank": 30,
+   "team": "smashi34",
+   "score": 0.271,
+   "submissions": 14
+  },
+  {
+   "rank": 31,
+   "team": "smrtdoog5",
+   "score": 0.2708,
+   "submissions": 14
+  },
+  {
+   "rank": 32,
+   "team": "bot_account",
+   "score": 0.2707,
+   "submissions": 2
+  },
+  {
+   "rank": 33,
+   "team": "kpomazi",
+   "score": 0.2706,
+   "submissions": 16
+  },
+  {
+   "rank": 34,
+   "team": "NoahNault",
+   "score": 0.2702,
+   "submissions": 11
+  },
+  {
+   "rank": 35,
+   "team": "doublebigmac",
+   "score": 0.2688,
+   "submissions": 5
+  },
+  {
+   "rank": 36,
+   "team": "jgaines",
+   "score": 0.2682,
+   "submissions": 26
+  },
+  {
+   "rank": 37,
+   "team": "Mekhi12",
+   "score": 0.2671,
+   "submissions": 5
+  },
+  {
+   "rank": 38,
+   "team": "shixing",
+   "score": 0.2664,
+   "submissions": 6
+  },
+  {
+   "rank": 39,
+   "team": "yifanxu",
+   "score": 0.265,
+   "submissions": 4
+  },
+  {
+   "rank": 40,
+   "team": "ad3002",
+   "score": 0.2643,
+   "submissions": 25
+  },
+  {
+   "rank": 41,
+   "team": "moongrega",
+   "score": 0.264,
+   "submissions": 23
+  },
+  {
+   "rank": 42,
+   "team": "regan_towin",
+   "score": 0.2632,
+   "submissions": 1
+  },
+  {
+   "rank": 43,
+   "team": "1stop",
+   "score": 0.2617,
+   "submissions": 3
+  },
+  {
+   "rank": 44,
+   "team": "SDCF9",
+   "score": 0.26,
+   "submissions": 15
+  },
+  {
+   "rank": 45,
+   "team": "haiderz",
+   "score": 0.2584,
+   "submissions": 1
+  },
+  {
+   "rank": 46,
+   "team": "roison",
+   "score": 0.2541,
+   "submissions": 4
+  },
+  {
+   "rank": 47,
+   "team": "tchu",
+   "score": 0.2511,
+   "submissions": 21
+  },
+  {
+   "rank": 48,
+   "team": "jfper21",
+   "score": 0.2503,
+   "submissions": 14
+  },
+  {
+   "rank": 49,
+   "team": "nsabaj",
+   "score": 0.2488,
+   "submissions": 13
+  },
+  {
+   "rank": 50,
+   "team": "MSU-Laskowski-GEMS",
+   "score": 0.2448,
+   "submissions": 12
+  }
+ ]
+}

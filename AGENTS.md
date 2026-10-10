@@ -8,8 +8,31 @@ Keep known-catalogue labels separate from verified fault absence, public partici
 
 This session's working branch is fixed by Arena. Do not change branches. Keep raw competition data and large intermediate arrays under ignored `data/` and `work/`. Publish small audit receipts, the unique compressed prediction raster and its review table.
 
+<!--H83-AGENTS-->
+## Current H83 continuation (2026-10-10) — READ FIRST
+
+Read the H83 block at the very top of `README.md`, `knowledge/74_current_user_brief_2026-10-10.md`,
+`knowledge/75_h83_preflight_and_hypotheses.md`, `knowledge/76_h83_three_pass_review.md`,
+`evidence/h83_preflight_run_card.json`, and `registry/leaderboard_snapshot_2026-10-10.json`.
+
+H83 is a **pre-fit stop**, not a model run: no experiment, no new holdout, no H83 TIFF, no portal upload,
+no slot. The candidate-ranked slate is research-only. The H77cond conditional sufficiency result closes the
+ordinary co-training lane; the literal full-census near-3-pixel rule is DUPLICATE/STOP for every nonempty raster
+because of universal-coverage probes. Do not work around either gate or present a restricted-census pass as a
+literal pass. The H33 pruning interpretation is corrected in `knowledge/42b_h65halo_results_and_limits.md`
+and `IR-H65halo-007`: exact zero credit for the deleted 100–200 m ring is **not established**.
+
+The official 3DEP, GeoDAWN and Landsat source pages were checked, but exact H83 coverage/files were not downloaded.
+The workspace had no `data/`, `work/r2/features`, or `work/h82` at preflight. Afterward only two small
+owner-mirror fixtures were restored for verification: `sample_submission.tif` for `scripts/check_site.py` and
+`labels.tif` for regression checks of historical outputs. Both are integrity-pinned, not organizer-authenticated,
+and neither was used for an H83 fit or holdout. Do not claim the top 1 m drainage hypothesis was tested. Do not use the archived H82 TIFF as an H83 submission; its verdict remains DOWNLOAD YES,
+SUBMIT NO. The public board snapshot is dated and team-level; no filename/score receipt exists.
+
+<!--/H83-AGENTS-->
+
 <!--H82-AGENTS-->
-## Current H82 continuation (2026-10-09)
+## H82 completed-run archive (2026-10-09)
 Read README's H82 block, `knowledge/72` (frozen preregistration, amendment 72a included, SHA-256
 `fe7050eb…`) and `knowledge/73` (results and limits). H82 executed H75's own "next" item — a scored-only
 lane registry — and one frozen experiment with six arms. Verdict **NEGATIVE**, experiments 1/3, slots 0.
