@@ -11,8 +11,8 @@ current receipt; a failed-gate warning on the two top pages). An earlier version
 clobbered the R2 site and failed those checks. It does not do that any more.
 
 The H54 archive page and bar read the dedicated `docs/data/h54_audit.json` receipt, never the current
-`docs/data/submission.json`. The H54 bar stays below the current H56 bar; the executive summary is not
-edited. The insertion is idempotent and cannot replace the current H56 guide or pointer.
+`docs/data/submission.json`. The H54 bar is historical context; the executive summary is not
+edited. The insertion is idempotent and cannot replace the current repository status or pointer.
 """
 from __future__ import annotations
 
@@ -25,7 +25,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 EV = ROOT / "evidence"
 NAV = ('<a href="index.html">Overview</a><a href="executive-summary.html">Submission&nbsp;guide</a>'
-       '<a href="h54.html">H54&nbsp;audit archive</a><a href="h56-cotrain.html">Current H56 status</a>'
+       '<a href="h54.html">H54&nbsp;audit archive</a><a href="index.html">Current main status</a><a href="h57-cotrain-disagreement.html">H57 research archive</a>'
        '<a href="validation.html">Validation</a>'
        '<a href="forensics.html">0.2778&nbsp;autopsy</a><a href="irregularities.html">Irregularities</a>'
        '<a href="sources.html">Sources</a>')
@@ -61,12 +61,12 @@ def download_bar(sub: dict) -> str:
     if not sub.get("exists"):
         return ('<!--H54BAR--><div class="download-bar" id="h54-bar"><div>'
             '<strong>H54 audit archive not built</strong>'
-            '<small>This historical artifact is not the current H56 candidate.</small>'
+            '<small>This historical artifact is not the current tracked pointer or main result.</small>'
             '</div></div><!--/H54BAR-->')
     note = sub.get("submission_note") or "H54 legacy archive; no upload approval."
     return (
         '<!--H54BAR--><div class="download-bar" id="h54-bar"><div>'
-        '<strong>H54 legacy audit GeoTIFF — historical only; not the current H56 artifact</strong>'
+        '<strong>H54 legacy audit GeoTIFF — historical only; not the current tracked pointer</strong>'
         f'<small>{esc(sub.get("file"))} · {esc(sub.get("bytes"))} bytes · '
         f'SHA-256 <code>{esc((sub.get("sha256") or "")[:16])}…</code></small>'
         f'<small>Local format check: {esc(sub.get("format_ok"))}; global decoded-pattern uniqueness: '
@@ -77,12 +77,12 @@ def download_bar(sub: dict) -> str:
         f'<a class="button" href="{esc(sub.get("download"))}" download>↓ Download H54 audit TIFF</a>'
         f'<a class="button" href="{esc(sub.get("download_zip"))}" download>↓ Download H54 audit ZIP</a>'
         f'<a class="button" href="h54.html">H54 audit details →</a>'
-        '<small style="width:100%">The current H56 co-training artifact is a synthetic methodology demo and is also not approved for a weekly slot; '
-        '<a href="h56-cotrain.html">read its status</a>.</small></div><!--/H54BAR-->')
+        '<small style="width:100%">The checked-in submission/LATEST pointer is H60 and is research-only; the current main result page is H82 and is also research-only. H57 co-training is an archived failed research experiment; H56 co-training is a historical synthetic demo. '
+        '<a href="index.html">read current main status</a> · <a href="h57-cotrain-disagreement.html">read the H57 archive</a>.</small></div><!--/H54BAR-->')
 
 
 def insert_bar(path: pathlib.Path, bar: str) -> bool:
-    """Update the existing H54 archive slot; if missing, add only after H56 or refuse safely."""
+    """Update the existing H54 archive slot; if missing, add only at a known historical-page anchor or refuse safely."""
     if not path.exists():
         return False
     s = path.read_text()
@@ -110,7 +110,7 @@ def table(head, rows) -> str:
 
 
 def h54_body() -> str:
-    # H54 is a historical audit artifact, not the current H56 submission. Read its dedicated
+    # H54 is a historical audit artifact, not the current tracked pointer. Read its dedicated
     # receipt, which already carries explicit audit-only status and direct download aliases.
     sub = json.loads((DOCS / "data/h54_audit.json").read_text())
     cal = load("revealed_calibration")
@@ -133,8 +133,7 @@ def h54_body() -> str:
              'were screened for the ability to re-rank inside the champion file and the best blocked AUC was '
              '0.5453 (point features) and 0.5122 (structure-tensor coherence). The budget is therefore chosen '
              'by integrating the metric over a <em>stated prior</em> for that unknown. This local audit does not '
-             'establish global uniqueness or organizer approval; the current H56 is a separate synthetic demo '
-             'and is also not approved for upload.</div>')
+             'establish global uniqueness or organizer approval; the H60 tracked pointer is research-only and the current H82 main result is also research-only. H57 co-training is archived as a failed real-raster experiment; H56 co-training is a historical synthetic demo and is not approved for upload.</div>')
 
     B.append("<h2>1 · The calibration, exactly</h2>")
     rows = [["|G| (hidden truth, px)", cal.get("g_estimate_px"),
@@ -246,7 +245,7 @@ def main() -> int:
     bar = download_bar(sub)
     ok = insert_bar(DOCS / "index.html", bar)
     print(("updated" if ok else "SKIPPED safely") + " the H54 audit bar in docs/index.html")
-    print("left docs/executive-summary.html (current H56 guide) untouched")
+    print("left docs/executive-summary.html (current main-status page) untouched")
     return 0
 
 

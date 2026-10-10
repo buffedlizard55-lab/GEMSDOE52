@@ -1,0 +1,127 @@
+{
+  "version": "gems52-h57-corrected-views-cotrain-v1",
+  "registered_utc": "2026-10-07T21:00:07Z",
+  "registration_kind": "pre-fit and pre-holdout; frozen before H57 feature build, model fit, or scoring",
+  "base_commit": "ad0f38caafdeb193251253bf39749a22d6d03c9d",
+  "hypothesis_document": "knowledge/17_hypotheses_H57_preregistered.md",
+  "primary_question": "Does a band-semantics-correct geophysical/subsurface View A versus surface/radiometric View B, with confidence-disagreement pseudo-exchange only when spatial out-of-fold proxy errors are not strongly coupled, recover whole held-out mapped fault components better than matched single-view and max-union controls?",
+  "input_files": {
+    "training_features.tif": {
+      "sha256": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+      "bytes": 418912844,
+      "provenance": "integrity-pinned owner-maintained mirror of a login-walled competition raster; not organizer-authenticated"
+    },
+    "labels.tif": {
+      "sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+      "bytes": 425830,
+      "provenance": "integrity-pinned owner-maintained mirror of a login-walled competition raster; not organizer-authenticated"
+    },
+    "sample_submission.tif": {
+      "sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+      "bytes": 1599597,
+      "provenance": "integrity-pinned owner-maintained mirror of a login-walled competition raster; not organizer-authenticated; grid and footprint template only"
+    }
+  },
+  "band_identity_and_view_split": {
+    "evidence_path": "evidence/h55_band6_identity.json",
+    "band_6": "assigned to View B as radiometric total-count-like data because it matches the owner-mirrored GeoDAWN TC grid at Spearman rho approximately 0.99995; the competition TIFF's own tags call it magnetic and conflict with this inference, and no official band-mapping document has been verified",
+    "view_A_1_based_bands": [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18],
+    "view_B_1_based_bands": [6, 12, 19],
+    "external_data_in_primary_test": false
+  },
+  "feature_construction": {
+    "raw_inputs": "All listed bands, read without using labels to transform or select features; nodata/sentinel excluded.",
+    "View_A_local_features": "Gradient-magnitude features on bands 2 (RTP), 13 (isostatic gravity anomaly), 14 (TMI), and 17 (conductivity surface), after normalized-convolution Gaussian smoothing at sigma 1, 3, and 8 pixels (100, 300, 800 m).",
+    "View_B_local_features": "Gradient-magnitude features on band 6 and band 12 at sigma 1, 3, and 8 pixels; absolute Laplacian-of-Gaussian features on band 12 at the same scales.",
+    "max_local_support_px": 36,
+    "fold_buffer_px": 80,
+    "input_normalization": "No label-based normalization. HistGradientBoosting fits its internal feature bins on each training fold only.",
+    "feature_store_dtype": "float32, disk-backed memmap"
+  },
+  "holdout_protocol": {
+    "outer_folds": 4,
+    "spatial_layout": "Four contiguous raster quadrants. Original 8-connected catalogue components are assigned whole to their majority eligible quadrant. Evaluation covers the quadrant plus any held-component tails and the metric-support neighborhood.",
+    "train_test_buffer_px": 80,
+    "feature_support_px": 36,
+    "target": "All eligible held-out catalogue fault pixels; component and spatial fold never split across train/evaluation.",
+    "negative_class": "Catalogue-zero pixels at least 3 pixels from every known label, used only as proxy negatives; not verified geological absence.",
+    "label_leakage": "No held component, evaluation pixel, or 80-pixel evaluation buffer enters model fitting or pseudo-label training.",
+    "seed": 520207
+  },
+  "learner": {
+    "class": "sklearn.ensemble.HistGradientBoostingClassifier",
+    "max_iter": 120,
+    "max_leaf_nodes": 15,
+    "learning_rate": 0.08,
+    "l2_regularization": 2.0,
+    "min_samples_leaf": 80,
+    "early_stopping": false,
+    "class_weight": "balanced",
+    "training_positive_cap_per_fold": 40000,
+    "training_negative_cap_per_fold": 160000,
+    "sampling": "seeded uniform row sampling from the same train/positive/proxy-negative masks for all views and arms",
+    "random_state_rule": "Both views use the same random_state per outer fold (holdout seed + fold); both full-data views use holdout seed + 100."
+  },
+  "co_training_gate": {
+    "measurement": "Spatially out-of-fold, per-view errors aggregated over 50x50-pixel blocks in the held-out catalogue-zero proxy pool.",
+    "metrics": ["negative_mean_squared_error", "negative_false_positive_rate_at_0.5"],
+    "correlations": ["Pearson", "tie-aware Spearman"],
+    "maximum_absolute_correlation": 0.6,
+    "minimum_usable_blocks": 20,
+    "minimum_proxy_negatives_per_block": 32,
+    "undefined_or_missing": "fail closed; disable pseudo-exchange",
+    "interpretation": "This is only a proxy diagnostic. Because the public training raster does not supply verified geological absences, low correlation cannot establish conditional independence."
+  },
+  "pseudo_label_protocol": {
+    "rounds": 1,
+    "exchange_only_if_independence_gate_passes": true,
+    "global_exchange_requires_minimum_counts_in_both_directions_in_all_four_outer_folds_and_full_data_refit": true,
+    "teacher_confidence_quantile": 0.99,
+    "receiver_abstention_quantiles": [0.4, 0.8],
+    "whole_8_connected_components": true,
+    "one_50x50_spatial_block_only": true,
+    "training_domain_only": true,
+    "forbidden_label_buffer_px": 3,
+    "minimum_component_pixels": 5,
+    "maximum_pseudo_pixels_per_direction_per_fold": 2000,
+    "minimum_pseudo_pixels_per_direction_to_run": 200,
+    "pseudo_positive_weight": 0.25,
+    "cap_component_priority": "descending mean teacher score, then first row-major pixel; add whole components while within the cap and skip a component that would exceed the remaining allowance",
+    "truncate_components_to_meet_cap": false
+  },
+  "arms": ["view_A_supervised", "view_B_supervised", "matched_max_union", "h57_disagreement_cotrain_if_gated", "view_B_fallback_if_exchange_abandoned"],
+  "primary_arm_rule": "Use the disagreement-aware co-trained field only if the proxy-error gate passes and both whole-segment exchange directions meet the frozen minimum in all four outer folds and the final full-data refit; otherwise use the predeclared View-B-only field. Do not switch arms based on holdout scores.",
+  "field_and_placement": {
+    "score_scaling": "Map each view's model score to a tie-aware empirical CDF rank using only training-domain predictions; no evaluation labels or scores set the reference distribution.",
+    "strata": "Confident means rank >= 0.99; abstention means rank in [0.40, 0.80]. A-only is A-confident/B-abstaining; B-only is B-confident/A-abstaining; concordant is both confident.",
+    "disagreement_density": "clip(0.55*rA + 0.20*rB + 0.25*min(rA,rB) + 0.30*I(A-only)*rA - 0.75*I(B-only)*rB, 0, infinity)",
+    "metric": "Official distance-weighted Tversky: alpha=0.2, beta=0.8, triangular kernel k(d)=max(1-d/300m,0).",
+    "placement": "Same literal triangular-kernel marginal expected-coverage greedy for every arm; no truth is passed to placement; fixed 37,654 global-cell budget scaled by each fold's eligible evaluation-region area.",
+    "placement_caveat": "Expected max-coverage is a placement surrogate, not expected DTI and not a public-score forecast.",
+    "emitted_values": "Binary 1.0 on selected pixels, 0.0 elsewhere inside the template footprint."
+  },
+  "promotion_gate": {
+    "minimum_mean_dti_lift_over_strongest_matched_baseline": 0.005,
+    "minimum_positive_paired_folds": 3,
+    "must_exceed_historical_internal_holdout_floor": 0.1969713750604964,
+    "historical_floor_source": "evidence/h55_profile_holdout.json structural_contrast_h55 mean; same broad four-quadrant/80-pixel family, but the legacy feature split placed band 6 in A, so it is a conservative reference hurdle, not a matched refit",
+    "must_not_equal_matched_max_union": true,
+    "format_and_decoded_pixel_uniqueness_required": true,
+    "independent_confirmation_required_before_portal_slot": true,
+    "organizer_score_required_to_claim_live_improvement": true,
+    "automatic_or_manual_portal_upload_authorized": false,
+    "failed_gate_artifact_label": "RESEARCH ONLY — DO NOT SUBMIT; preserve the weekly slot"
+  },
+  "submission_format": {
+    "driver": "single-band GeoTIFF",
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "resolution_m": 100,
+    "bounds_and_grid": "exactly match sample_submission.tif",
+    "in_footprint_values": "finite and in [0,1]",
+    "outside_footprint": "NaN/nodata only outside the template validity mask, following the official problem-page wording",
+    "portal_upload_test": false
+  },
+  "public_score_forecast": null,
+  "submission_slots_used": 0
+}

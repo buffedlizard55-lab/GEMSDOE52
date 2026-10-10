@@ -1,0 +1,77 @@
+{
+  "reviewed_utc": "2026-10-10",
+  "round": "H57 real-raster co-training archive",
+  "status": "HISTORICAL RESEARCH ONLY — DO NOT SUBMIT",
+  "global_pointer_current_at_review": "gems52-h59-edge-coh-cotrain-37654px-20261008T022050Z-0f0984928454.tif",
+  "historical_result_receipts": {
+    "holdout": "evidence/h57_holdout.json",
+    "holdout_sha256": "8aa040bf7e95707b24095489eaee9f985d249c428dce60a913c4c33d89959b6c",
+    "submission": "evidence/h57_submission.json",
+    "submission_sha256": "e768194801116a229b4c25fc0c90b1f53574e585b52471e442247c8749915796",
+    "historical_tiff": "submission/gems52-h57-cotrain-disagreement-37654px-20261007T220849Z-1632bb37bb.tif",
+    "historical_tiff_sha256": "a153cda1aae9f77249154b31a06d85f286cd669d56961dded0f0d79547018d7d"
+  },
+  "historical_code_receipt": {
+    "source": "evidence/h57_execution_provenance.json",
+    "source_sha256": "116e96e38f0a385170e1413dc2404ee833b248298fa40aca829b7ab6140d86c4",
+    "recorded_holdout_runner_sha256": "f9e1c0f08ebb6d56aa86394abbf3a2680e33d547b33713fad56ac3f1e3823716",
+    "recorded_artifact_build_runner_sha256": "6f6aaca215578213de68d7da5310648d558b0d85c842245939c559020342221c",
+    "historical_runner_snapshots_available": false
+  },
+  "current_checkout_code_sha256": {
+    "scripts/run_h57_real.py": "4430aa223af54334948fd4f1627cd775fcc81a6f1564431c1e9594e68fdea9a9",
+    "scripts/build_h57_submission.py": "2150b4413c2821eb549eda3dad967b1ac6964cbaf0dfc0b0e13070a6fc159a91",
+    "scripts/validate_h57.py": "f9e61252a023e16bba3b521be872ffcb48d1c4d7bb5e62a4d9ef2e2a42f883ad",
+    "src/gems52/h57_real.py": "581051bafcc510e79946104233ad60a6e0bd9b92715216140215baaa2b584bf9",
+    "src/gems52/h57_real_spatial.py": "5faed874eede30c3bbb9977a70a64894daf5720d545923fb1ac3fd87d52ec814",
+    "src/gems52/h57.py": "f667fc689c254f49b00617236e22d394150b71b4c18b21d95ffe15a2b8fa8df2",
+    "src/gems52/spatial.py": "3776a6be457268a548b7d9931263bc6b5c1e5a431cb1ee727a22caacffc17c34",
+    "src/gems52/emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9",
+    "src/gems52/metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a"
+  },
+  "reconciliation": {
+    "recorded_h57_model_module_matches_current_h57_real_module_bytes": true,
+    "recorded_model_module_path": "src/gems52/h57.py",
+    "current_runner_imports": "src/gems52/h57_real.py and src/gems52/h57_real_spatial.py",
+    "emit_module_matches_historical_hash": true,
+    "metric_module_matches_historical_hash": true,
+    "spatial_helper_matches_historical_hash": false,
+    "spatial_helper_change_is_docstring_only": null,
+    "spatial_helper_behavior_difference": "The current runner imports the H57-specific src/gems52/h57_real_spatial.py, whose bytes match the prior post-execution review's 5faed874… current-helper hash. The historical execution receipt records 88161ed7… for src/gems52/spatial.py, and no immutable snapshot of those bytes is present in Git history. A prior review described its later difference as documentation-only, but that comparison cannot be independently repeated here; no behavioral equivalence or mismatch is asserted.",
+    "spatial_helper_change_was_verified_docstring_only_in_this_review": null,
+    "runner_and_build_hashes_match_historical_receipts": false,
+    "full_historical_run_repeated_with_current_code_and_exact_pinned_inputs": false
+  },
+  "input_provenance": {
+    "historical_exact_pinned_input_directory_present": false,
+    "historical_expected_directory": "/tmp/gems52-restored-core",
+    "current_data_files_match_historical_sha_pins": false,
+    "details": "The execution receipt records different hashes/sizes from the small current data/ files. No model run was repeated in this review."
+  },
+  "verification_performed": {
+    "unit_tests_cover_current_real_runner_helpers": true,
+    "full_spatial_holdout_recomputed": false,
+    "historical_score_or_tiff_revalidated_with_current_runner": false,
+    "current_code_hashes_captured_after_import_path_repair": true
+  },
+  "decision": "Keep H57 as an archived negative result and do not submit it. Its recorded holdout already failed the registered comparison (mean paired lift -0.040641, 0/4 folds improved); this review does not reproduce or extend that score. Because original runner/build snapshots and exact pinned inputs are absent, do not describe the H57 metric result as reproduced from the current checkout or use it as H59 promotion evidence.",
+  "pointer_scope_note": "The H59 value above was the pointer in the pre-merge local workspace reviewed on 2026-10-10; it was not the upstream main tip. After synchronizing the latest upstream main for PR #26, submission/LATEST.txt and docs/data/submission.json point to H60. docs/index.html presents the newer H82 research result. Both are no-go; this archive does not change either pointer or result.",
+  "code_hash_scope_note": "current_checkout_code_sha256 records the pre-merge workspace snapshot reviewed for this receipt. During PR #26 reconciliation, upstream main already contained a different src/gems52/h57.py; the PR implementation was preserved separately as src/gems52/h57_real.py. Do not interpret the old h57.py hash as the current main file hash.",
+  "merge_reconciliation": {
+    "reviewed_utc": "2026-10-10",
+    "upstream_main_before_merge_sha": "22091610117447c174b65d074d0df73d2a8b2e27",
+    "pr_head_before_merge_sha": "ea8d4d31783e4afb71005fee56a15416b54df5a1",
+    "upstream_submission_pointer": "gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif",
+    "upstream_main_status_page": "docs/index.html (H82; research-only/no-go)",
+    "path_collisions_resolved_without_overwrite": {
+      "pr_model": "src/gems52/h57.py -> src/gems52/h57_real.py (same frozen bytes; sha256 581051bafcc510e79946104233ad60a6e0bd9b92715216140215baaa2b584bf9)",
+      "pr_spatial_helper": "src/gems52/spatial.py -> src/gems52/h57_real_spatial.py (same frozen bytes; sha256 5faed874eede30c3bbb9977a70a64894daf5720d545923fb1ac3fd87d52ec814)",
+      "pr_registration": "registry/h57_preregistration.json -> registry/h57_cotrain_disagreement_preregistration.json (byte-identical; sha256 1fe3a3615651366d9cb296cd65adb40459462e357bf3a7aadf83292cfdf0061c)",
+      "pr_hypotheses": "knowledge/17_hypotheses_H57_preregistered.md -> knowledge/18_hypotheses_H57_cotrain_preregistered.md (byte-identical; sha256 eddac0d72d1019c65ccf9e61694cea14b3da19ea1918ad5b1e7a3a5bc6f5c553)",
+      "pr_page": "docs/h57.html -> docs/h57-cotrain-disagreement.html (retains the H57 co-training archive and provenance review)"
+    },
+    "scientific_results_changed": false,
+    "portal_upload_performed": false,
+    "note": "The frozen registration bytes are preserved. Its embedded original hypothesis_document path is historical and collides with a distinct main-line H57 slate; the byte-identical preregistered H57 co-training slate is kept at the namespaced path above. The path relocation changes no protocol or result."
+  }
+}

@@ -25,13 +25,7 @@ def component_folds(catalogue, eligible):
     return comp, assigned, quadrant
 
 
-def legacy_component_tail_folds(catalogue, eligible, buffer_px=80):
-    """REPRODUCTION ONLY: rejected CTD5-v1 geometry-informed evaluation domains.
-
-    The tail halo depends on withheld labels and can leak location to a regional
-    placement rule. Retained only to reproduce the negative historical receipt;
-    NEVER use this split as strict promotion evidence. Use folds() below.
-    """
+def folds(catalogue, eligible, buffer_px=80):
     comp, assigned, quadrant = component_folds(catalogue, eligible)
     for f in range(4):
         held_all = catalogue & (assigned == f)
@@ -56,42 +50,6 @@ def legacy_component_tail_folds(catalogue, eligible, buffer_px=80):
                                 buffer_px=buffer_px, nearest_training_to_region_px=minimum,
                                 held_pixels_without_feature_support=int((held_all & ~eligible).sum())))
 
-
-
-def folds(catalogue, eligible, buffer_px=80):
-    """Fixed, label-blind evaluation quadrants; entire intersecting segments hidden.
-
-    A component crossing several quadrants is excluded from training in EACH of
-    those folds, while its pixels are scored only in their fixed spatial quadrant.
-    Evaluation/placement geometry depends on grid and eligible footprint only,
-    never on the hidden trace. The buffer covers both the quadrant and all held
-    component tails. Boundary clipping is conservative, not a truth-shaped halo.
-    """
-    comp, _, quadrant = component_folds(catalogue, eligible)
-    for f in range(4):
-        region = eligible & (quadrant == f)
-        ids = np.unique(comp[catalogue & region])
-        ids = ids[ids > 0]
-        held_all = (np.isin(comp, ids) & catalogue) if len(ids) else np.zeros_like(catalogue, bool)
-        truth = held_all & region
-        exclusion = region | held_all
-        train = eligible & (ndi.distance_transform_edt(~exclusion) > buffer_px)
-        visible = catalogue & ~held_all
-        training_components = np.unique(comp[train & catalogue])
-        if np.intersect1d(training_components[training_components > 0], ids).size:
-            raise AssertionError('a whole held component reached training')
-        if (train & region).any() or (train & held_all).any():
-            raise AssertionError('train/evaluation overlap')
-        minimum = float(ndi.distance_transform_edt(~region)[train].min()) if train.any() else None
-        yield dict(fold=f, region=region, quadrant=quadrant == f, train=train,
-            truth=truth, visible=visible, held_all=held_all, components=comp,
-            receipt=dict(fold=f, split_version='label-blind-quadrants-v2',
-                evaluation_region_label_blind=True, truth_px=int(truth.sum()),
-                evaluation_px=int(region.sum()), training_domain_px=int(train.sum()),
-                held_components=len(ids), shared_train_truth_components=0, buffer_px=buffer_px,
-                nearest_training_to_region_px=minimum,
-                held_pixels_without_feature_support=int((held_all & ~eligible).sum()),
-                held_positive_pixels_outside_this_evaluation_region=int((held_all & eligible & ~region).sum())))
 
 def correlations(a, b):
     a, b = np.asarray(a, float), np.asarray(b, float)
