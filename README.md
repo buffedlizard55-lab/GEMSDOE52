@@ -674,10 +674,41 @@ Go ahead and create a pull request and then merge the pull request onto the main
 # GEMSDOE52 — Co-Training Research for the DOE GEMS Prize
 
 **Competition:** [DOE GEMS Prize (DrivenData #306)](https://www.drivendata.org/competitions/306/competition-doe-gems/)
-**Branch:** `arena/411239c1-gemsdoe52` (fixed for this session; the older header said `arena/99f480b9-gemsdoe52`, see IR-H94-005)
-**Current status (2026-10-10, H94):** **download yes (audit only) · submit NO.** Holdout NEGATIVE; final-dot lane DUPLICATE/STOP.
+**Branch:** `arena/90369109-gemsdoe52` (this session, H96) · `arena/411239c1-gemsdoe52` (H94 session; the older header said `arena/99f480b9-gemsdoe52`, see IR-H94-005)
+**Current status (2026-10-10, H96):** **download yes (audit only) · submit NO.** Holdout NEGATIVE (below random and below the bar).
 
 ➡️ **Start here:** [current status page](https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/docs/index.html) (GitHub Pages: `docs/index.html`) · [executive summary and submission guide](docs/executive-summary.html)
+
+---
+
+## Status block: H96 (2026-10-10)
+
+| item | value | evidence class |
+|---|---|---|
+| File | `docs/downloads/gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif` (108,742 bytes) | — |
+| SHA-256 | `ba2dae7db2b919bb53c147cae0d5f9663b368b059fc1b26c69d8dbfc35948ade` | — |
+| Validator | ok, 12/12 (single band float32, EPSG:32611, 3730×3292, values exactly {0,1}, all finite) | format check |
+| Holdout | 0.0725 [0.0581, 0.0872] vs random 0.0766 and bar 0.1928 | HOLDOUT-DTI |
+| Lane, surface | PASS (max Spearman 0.0914 against the 0.90 limit) | repo gate |
+| Lane, final dots | literal DUPLICATE vs the universal-coverage probe (0.9993; IR-H96-002) — policy PASS (informative max 0.5233) | repo gate |
+| Uniqueness, decoded | 147 priors; pattern unique; novel fraction 0.57 | repo gate |
+| Verdict | NEGATIVE | HOLDOUT-DTI |
+| Download | yes, for audit only | — |
+| Submit | **NO** | — |
+| Slots used / experiments | 0 / 1 of 3 | — |
+| Submission name / note | `h96-bidir-cotrain-coverstep-25400px` · `H96 bidir co-train A/B disagreement, cover-step ViewA, 25400px mass lever, 3px, 200m collar; HOLDOUT-DTI below bar, research candidate` | — |
+
+What H96 tested: **bidirectional co-training disagreement** (Blum &amp; Mitchell, COLT 1998) — View A
+(gravity/magnetics/strain/seismicity/cover/conductivity) vs View B (DEM curvature + slope + radiometrics);
+A-confident/B-abstain cells boosted as buried-fault candidates (cover-thickness step + strain/seismicity
+lineation), B-confident/A-abstain cells vetoed as surface artifacts. The first holdout measurement of the
+H85-next channels: cover-step AUC 0.567, seismicity-lineation 0.511, strain-step 0.527 — near-chance on
+catalogue recovery. The disagreement field itself scored **0.0725 vs random 0.0766** (n.s.); the best arm
+was consensus-only 0.0824. Negative results are deliverables: this closes the bidirectional-disagreement
+field on the catalogue instrument and redirects the next round to graft the disagreement arm onto the strong
+H82/H84 surface channels.
+
+Full results: [`knowledge/96`](knowledge/96_h96_results_and_limits.md). Run card: [`evidence/h96_run_card.json`](evidence/h96_run_card.json). Irregularities: [`registry/irregularities.json`](registry/irregularities.json) (IR-H96-001 to IR-H96-005).
 
 ---
 

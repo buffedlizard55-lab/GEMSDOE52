@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GEMSDOE52 — current status (H94): download yes, submit NO</title>
+<title>GEMSDOE52 — current status (H96): download yes, submit NO</title>
 <style>
 :root{--bg:#0f1117;--fg:#e8eaed;--accent:#4fc3f7;--ok:#66bb6a;--warn:#ffa726;--err:#ef5350;--card:#1a1d27;--border:#2d3040}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -38,7 +38,29 @@ th{color:var(--accent)}
 <div class="container">
 
 <h1>GEMSDOE52 · current status</h1>
-<p class="muted">DOE GEMS Prize (DrivenData #306) · last updated 2026-10-10 · branch <code>arena/411239c1-gemsdoe52</code></p>
+<p class="muted">DOE GEMS Prize (DrivenData #306) · last updated 2026-10-10 · branches
+<code>arena/90369109-gemsdoe52</code> (H96) and <code>arena/411239c1-gemsdoe52</code> (H94)</p>
+
+<div class="verdict">
+  <div class="big">H96 (2026-10-10) — OK to download? YES, for audit only. &nbsp; OK to submit: <span class="tag-no">NO</span>.</div>
+  <p><strong>NO CERTIFIED LEADERBOARD GAIN.</strong> No organiser score exists for H96, and its
+  HOLDOUT-DTI is below random and far below the promotion bar.</p>
+  <p>The current candidate file is <strong>not slot-approved</strong>. <strong>DO NOT SUBMIT. Do not upload it.</strong>
+  Slots used: 0.</p>
+  <p><strong>What H96 tested.</strong> Bidirectional co-training disagreement (Blum &amp; Mitchell 1998):
+  View A = gravity/magnetics/strain/seismicity/cover/conductivity; View B = DEM curvature+slope+radiometrics;
+  A-only disagreement boosted as buried-fault candidates, B-only cells vetoed as surface artifacts.
+  HOLDOUT-DTI 0.0725 [0.0581, 0.0872] vs random 0.0766 and bar 0.1928 (H82). Verdict <strong>negative</strong>.</p>
+  <p>Downloads (research-only): <a href="downloads/gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif">.tif</a> ·
+  <a href="downloads/gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.zip">.zip</a> ·
+  <a href="downloads/h96-candidate.tif">downloads/h96-candidate.tif</a> ·
+  <a href="downloads/gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros-a-only-reasoning.csv">A-only reasoning CSV</a> ·
+  <a href="downloads/gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.json">gate receipt</a></p>
+  <p>Submission name: <strong>h96-bidir-cotrain-coverstep-25400px</strong> · note:
+  <code>H96 bidir co-train A/B disagreement, cover-step ViewA, 25400px mass lever, 3px, 200m collar; HOLDOUT-DTI below bar, research candidate</code></p>
+  <p class="muted" style="margin-top:8px">Details: <a href="h96.html">H96 page</a> ·
+  <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/96_h96_results_and_limits.md">knowledge/96 · H96 results and limits</a></p>
+</div>
 
 <div class="verdict">
   <div class="big">OK to download? YES, for audit only. &nbsp; OK to submit: <span class="tag-no">NO</span>.</div>
@@ -76,6 +98,7 @@ th{color:var(--accent)}
 <tr><td><a href="archive-h87-executive-summary.html">H87 executive summary (archived)</a></td><td>Its submission guide, kept for audit.</td><td><span class="tag-no">DO NOT SUBMIT</span></td></tr>
 <tr><td><a href="h57.html">H57 alternate</a> · <code>gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif</code></td><td>Abandoned research alternate (refuted co-training arm disclosed). Do not upload.</td><td><span class="tag-no">do not upload</span>, not approved (IR-57-107)</td></tr>
 <tr><td><a href="h55-edge.html">H55-EDGE archive</a></td><td>Failed-gate archive, separate from the H55 candidate. Do not upload.</td><td>do not upload</td></tr>
+<tr><td><a href="h96.html">H96 page</a></td><td>Bidirectional co-training disagreement (buried-boost/artifact-veto), cover-step View A.</td><td>NEGATIVE; download yes (audit), submit NO</td></tr>
 <tr><td><a href="h94.html">H94 page</a></td><td>Protocol, holdout, lane check, run card, irregularities.</td><td>NEGATIVE; download yes (audit), submit NO</td></tr>
 <tr><td><a href="feed.html">Feed</a></td><td>Scheduled leaderboard observation (local feed).</td><td>see page</td></tr>
 </table>

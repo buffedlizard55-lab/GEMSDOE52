@@ -1,3 +1,18 @@
+<!--H96-AGENTS-->
+## Current H96 continuation (2026-10-10) — READ FIRST
+Read README's standing brief and status block first. H96 verdict **NEGATIVE**. Download yes (audit only), submit **NO**.
+This session's branch is `arena/90369109-gemsdoe52`. The H96 round tested **bidirectional co-training disagreement**
+(A = gravity/magnetics/strain/seismicity/cover/conductivity, B = DEM + radiometrics; Blum & Mitchell 1998):
+discovery field HOLDOUT-DTI 0.0725 vs random 0.0766 (60,894 withheld px) — negative. The labels H88 and H95 were
+taken on main by parallel sessions (basement-step round; View-B lane round), so this round is **H96** everywhere:
+`evidence/h96_*`, `docs/h96.html`, `knowledge/96_h96_results_and_limits.md`, IR-H96-001..005. Protocol bytes keep
+their frozen hashes (`0f664c43…` prereg = `registry/h96_preregistration.json`, `91f74c5a…` amendment).
+- H85-next channels measured on holdout: cover-step AUC 0.567, seismicity-lineation 0.511, strain-step 0.527.
+- Next: graft the disagreement arm onto the strong H82/H84 surface channels (H96 failure mode: the signal was the
+  View-A prior, not the disagreement); build a prevalence-matched off-catalogue instrument.
+- Band 6 is tagged `tc` but is radiometric by content (IR-H94-001).
+- `scripts/check_site.py` R5 and H58 phrase checks run only on their own pages (IR-H94-008).
+<!--/H96-AGENTS-->
 <!--H95-AGENTS-->
 ## Current H95 continuation (2026-10-10) — READ FIRST
 Read README's H95 block (it ends with the session brief verbatim), `knowledge/93` (frozen preregistration,
