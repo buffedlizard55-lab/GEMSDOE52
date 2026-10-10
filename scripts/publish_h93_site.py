@@ -262,12 +262,10 @@ None of this is a board forecast; it is arithmetic on published numbers.</p>
 <code>evidence/h93_build.json</code>, <code>evidence/h93_reasoning.json</code>,
 <code>evidence/h61_*.json</code>. Round detail page: <a href="h93.html">h93.html</a>.</p>
 """
-    # archive: previous index verbatim (idempotent: recover the already-archived page on re-run)
-    prev = (DOCS / "index.html").read_text()
-    start = prev.find("<!--ARCHIVE-START-->")
-    end = prev.find("<!--ARCHIVE-END-->")
-    if start != -1 and end != -1:
-        prev = prev[start + len("<!--ARCHIVE-START-->"):end]
+    # archive: save the previous index verbatim as its own page, once (idempotent)
+    arch = DOCS / "archive-main-index-h92-era.html"
+    if not arch.exists():
+        arch.write_text((DOCS / "index.html").read_text())
     page += f"""
 <h2>Verdict summary (this round)</h2>
 <table>
@@ -287,13 +285,11 @@ field scored below the random control, knowledge/78). H84/H85/H86 candidates
 <a href="downloads/h86-candidate.tif">h86</a>) are likewise research-only, DO NOT SUBMIT.
 No H55-1 paired-shoulders candidate was ever built or promoted: no h55-1 TIFF was built.</p>
 </div>
-<details><summary>H87 — co-training wavelength contrast (previous index page, verbatim; build
-receipt only — it was never holdout-validated, so treat its PROMOTE label as research-only,
-DO NOT SUBMIT without validation)</summary>
-<!--ARCHIVE-START-->
-{prev}
-<!--ARCHIVE-END-->
-</details>
+<!--H93-ARCHIVE-START-->
+<p><strong>Previous index page</strong> (as found at merge time; H92-era, preserved verbatim —
+every round in it carries its own DOWNLOAD / DO NOT SUBMIT verdict; none is upload approval):
+<a href="archive-main-index-h92-era.html">archive-main-index-h92-era.html</a></p>
+<!--H93-ARCHIVE-END-->
 <p>Older archived round pages:
 <a href="archive-h60-cotrain-overview.html">H60 co-training</a> ·
 <a href="archive-h61-overview.html">H61</a> ·
@@ -340,7 +336,10 @@ exists. NO CERTIFIED LEADERBOARD GAIN is advertised.</p>
         es_text = es_text[:i0] + exec_block + es_text[i1:]
     else:
         anchor = '<div class="container">'
-        es_text = es_text.replace(anchor, anchor + "\n" + exec_block, 1)
+        if anchor in es_text:
+            es_text = es_text.replace(anchor, anchor + "\n" + exec_block, 1)
+        else:
+            es_text = es_text.replace('<body>', '<body>' + exec_block, 1)
     es.write_text(es_text)
 
     # round detail page: the full run card rendered

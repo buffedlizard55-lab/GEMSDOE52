@@ -1,6 +1,6 @@
 {
  "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified. | H61 merge: IR-H61-001..009 appended from the H61 branch; main's repaired schema and numbering retained.",
- "generated": "2026-10-10T22:41:01+00:00",
+ "generated": "2026-10-10T21:58:00Z ; H90 append (IR-H90-001..009)",
  "entries": [
   {
    "id": "IR-30-029",
@@ -3152,6 +3152,389 @@
    "disposition": "Closed. Any future publisher must not write shared guide pages without the release checks."
   },
   {
+   "id": "IR-H78-001",
+   "round": "H78",
+   "severity": "medium",
+   "status": "open - flagged for review",
+   "title": "The brief says 0.3195 is the highest score; the dated snapshot shows 0.3774 at rank 1 and 0.3195 at rank 7",
+   "what_it_is": "The user brief states that 0.3195 is 'the highest score right now'. The 2026-10-08 snapshot (registry/leaderboard_snapshot_2026-10-08.json) lists 0.3774 (xiaofanhu) at rank 1, 0.3195 at rank 7 (DARD), and 0.2778 at rank 13 (extradr19).",
+   "how_we_know": "Dated snapshot in the repo; the public leaderboard chunk was read via fetch_page on 2026-10-09 (values not organizer-confirmed). The portal was not re-fetched.",
+   "handling": "Recorded as the top score being 0.3774. The bar used for H78 decisions is 0.3774 (top) and 0.3195 (rank 7), each labelled as owner-reported.",
+   "disposition": "Open. Owner to confirm the current top and the bar. No submission decision depends on the brief's wording."
+  },
+  {
+   "id": "IR-H78-002",
+   "round": "H78",
+   "severity": "medium",
+   "status": "open - flagged for review",
+   "title": "Official sample is described as 'total fault absence', but the repo template holds 60,988 catalogue positives",
+   "what_it_is": "The DrivenData problem text describes the sample as 'total fault absence'. data/sample_submission.tif has 60,988 ones, exactly equal to the labelled catalogue positives, and NaN outside the domain.",
+   "how_we_know": "Pixel comparison of sample_submission.tif with labels.tif (restored, SHA-verified). Official text from the DrivenData problem page (read-only, 2026-10-09).",
+   "handling": "Not changed. Template used as-is for footprint and transform; the catalogue overlap is recorded as a fact, not as a fault-absence claim.",
+   "disposition": "Open. Owner to confirm the template convention before any future template-derived submission."
+  },
+  {
+   "id": "IR-H78-003",
+   "round": "H78",
+   "severity": "high",
+   "status": "open - owner decision required",
+   "title": "H75 writes 0 outside the domain (7,111,787 px); the official text allows null or NaN",
+   "what_it_is": "The official rule allows null or NaN outside the bounds. The repo's writer and the 0.2778 owner-reported file use 0; the official sample uses NaN.",
+   "how_we_know": "Counts measured from disk: labels == -1 gives 7,111,787 px; the sample's NaN pattern equals that set; H75 writes 0 there.",
+   "handling": "Not changed. The knowledge record explains that both conventions are numerically safe, because the metric counts only p>0.",
+   "disposition": "Owner decision pending (knowledge/67 \u00a73.3; IR-H73-001). Submit one file only."
+  },
+  {
+   "id": "IR-H78-004",
+   "round": "H78",
+   "severity": "high",
+   "status": "resolved - text corrected",
+   "title": "The H75 executive summary said zeros 'fix' the 'must be in range' error; that was not verified",
+   "what_it_is": "docs/h75-executive-summary.html stated that zeros fix the 'Predicted values must be in range [0, 1]' error. The cause of that error on the earlier file is unknown; the claim was not verified.",
+   "how_we_know": "Re-read of the page and of the H75 file: the file meets the [0,1] rule (values {0,1}, no NaN). Nothing in the repo shows the cause of the earlier error.",
+   "handling": "Sentence replaced with a verified statement and an explicit note that the cause is unknown.",
+   "disposition": "Resolved in the H78 site edit."
+  },
+  {
+   "id": "IR-H78-005",
+   "round": "H78",
+   "severity": "high",
+   "status": "open - lane gate fails",
+   "title": "The lane verdict depends on the 565-raster census; the 13 restored rasters cannot show a pass",
+   "what_it_is": "The lane check of H75 uses the 565-raster census: near-dot 0.922 across 38 informative offenders (limit 0.70). Only 13 census rasters are restored here, and none of the 38 offenders is among them.",
+   "how_we_know": "Decoded SHA-256 of each restored raster matches its census record; near-dot values match this session's independent measurement to three decimals. Verifier output: evidence/h78_verify_h75.json.",
+   "handling": "The census receipt is the authority. The H75 run card records the lane FAIL. No slot is used.",
+   "disposition": "Open. Owner override required to submit (lane-rule scope, knowledge/67 \u00a75)."
+  },
+  {
+   "id": "IR-H78-006",
+   "round": "H78",
+   "severity": "high",
+   "status": "open - owner decision required",
+   "title": "Competition inputs are restored from the owner's public GitHub mirrors; redistribution is unverified",
+   "what_it_is": "labels, sample_submission, the reference raster, and the 12 scored priors were restored from the owner's GitHub mirrors under data/ (git-ignored). The DrivenData terms and the redistribution status were not verified.",
+   "how_we_know": "scripts/restore_data.py SHA-256 pins matched (ALL_VERIFIED=True). data/restore_receipt.json records the restore. source_policy.json has DrivenData automated access false.",
+   "handling": "Not committed. Only derived small receipts and the compressed prediction raster are published.",
+   "disposition": "Open. Owner to confirm the compliance position before any further mirror use (knowledge/67 \u00a78.2)."
+  },
+  {
+   "id": "IR-H78-007",
+   "round": "H78",
+   "severity": "medium",
+   "status": "open - owner-reported link",
+   "title": "The 0.2778 file to score link is owner-reported and the board is team-level",
+   "what_it_is": "The score 0.2778 for file h33-2-b2-20261004T220000Z-e5eb6e7e-zeros is owner-reported. The public board is team-level, so the file cannot be matched to the score from the board alone.",
+   "how_we_know": "The file's bytes were measured (knowledge/67 \u00a72); the score attribution was not measured.",
+   "handling": "The \u00a72 mechanism is stated as an inference from one owner-reported pair.",
+   "disposition": "Open. Owner to confirm the attribution from a submission-page receipt."
+  },
+  {
+   "id": "IR-H78-008",
+   "round": "H78",
+   "severity": "medium",
+   "status": "resolved - renamed with UTC write time",
+   "title": "check_site R5 novelty failed (0.992 vs receipt 1.0) because the H75 raster could not be dated",
+   "what_it_is": "H75's raster name carried only a day (20261009) and its sidecar had no timestamp. scripts/check_site.py dates priors from timestamps, so it counted H75 as present at R5's build (2026-10-08T23:51:56Z), and R5's novelty fell to 0.992087. The check exits 1 with H75 present and passes with it absent (novelty 1.0000 over 58 rasters).",
+   "how_we_know": "check_site.py output before and after moving the H75 files out; the R5 receipt value is 1.0 (evidence/r5_novel_emission.json).",
+   "handling": "Renamed the H75 raster, sidecar and zip to the UTC write time ...20261009T200333Z (the file mtime, 2026-10-09 20:03:33 UTC). TIF SHA-256 unchanged (b97691584d...). Zip rebuilt; new SHA-256 7ff4e50d.... Old zip SHA c9285571... is retired. Restored owner rasters in data/scored and data/reference were removed from the git-ignored data/ to match CI (which restores only the template and labels).",
+   "disposition": "Resolved. check_site exit 0; tests/test_h75.py, tests/test_ctd5.py, tests/test_gems52_h1_pipeline.py pass (32). The old file name was never submitted to the competition."
+  },
+  {
+   "id": "IR-H78-009",
+   "round": "H78",
+   "severity": "high",
+   "status": "open - owner decision required",
+   "title": "origin/main fails scripts/check_site.py (R5 novelty 0.991607 != receipt 1.0) since PR #76 merged an undated H76 raster",
+   "what_it_is": "PR #76 (H76 gravity-surface abstention, research-only) added submission/gems52-h76-gravity-surface-abstention-research-only.tif and docs/downloads/h76-candidate.tif. Neither name nor sidecar carries a build time, so check_site counts them as present when R5 was built (2026-10-08T23:51:56Z). The H76 raster shares 8 exact dots with R5, so R5's novelty is 0.999520 on this branch and 0.991607 on origin/main, against a receipt of 1.0.",
+   "how_we_know": "check_site.py run on a temporary worktree of origin/main (exit 1, 0.991607) and on this branch (exit 1, 0.999520). Exact overlap computed from decoded rasters: 8 shared dots with R5 (16,681 R5 dots). The raster's sidecar has no timestamp.",
+   "handling": "Not changed here. Dating another round's artifact would need its real build time, which is not recorded anywhere in the repo; inventing one would be a fabrication. Our H78 PR does not alter this raster.",
+   "disposition": "Open. Owner or the H76 round's author to record the true build time in the sidecar (or otherwise date it) so check_site can exclude it from R5's build-time set, or to accept R5's receipt as scoped to the build-time set. Until then check_site exits 1 on main."
+  },
+  {
+   "id": "IR-H89-001",
+   "round": "H89",
+   "severity": "medium",
+   "status": "resolved in the runner; both receipts published",
+   "title": "The pseudo-label donation stage donated 0 pixels because the fit stage predicts on the evaluation region only",
+   "what_it_is": "scripts/run_h89.py stage_fit predicts each fold's model on that fold's EVALUATION region (cheaper, and all the holdout needs). stage_exchange then read those checkpoints to pick confident-disagreement segments, but a pseudo-label may only come from the buffered TRAINING domain, where those grids are NaN. Every fold therefore reported donated_px=0 and the Blum-Mitchell step was vacuous.",
+   "how_we_know": "evidence/h89_exchange.json first run: donated_px 0 in folds 0 and 1 with auc_post == auc_pre to the last digit; the training domain and the evaluation region are disjoint by construction (gems52.spatial.folds, 80 px buffer).",
+   "measured_effect": "None on any published result: the frozen rule requires improvement in 4/4 folds before the refit View A may be used, 0 donations cannot improve anything, so the holdout and the build both ran on the pre-exchange View A, which is what they would have used anyway.",
+   "handling": "stage_exchange now re-derives the donor/receiver fields on the fold's training domain from bit-identical refits (same seed, same sample, deterministic learner) before selecting whole segments. The first, region-only receipt is retained at /tmp and summarised in knowledge/76.",
+   "disposition": "fixed in the runner; the affected measurement is the donation diagnostic only"
+  },
+  {
+   "id": "IR-H89-002",
+   "round": "H89",
+   "severity": "medium",
+   "status": "repaired this round",
+   "title": "docs/index.html and docs/executive-summary.html were rewritten by H83 and lost the historical artefact identities that scripts/check_site.py asserts",
+   "what_it_is": "At the start of this session scripts/check_site.py reported 22 problems on a clean checkout. All of them were missing strings on docs/index.html and docs/executive-summary.html: the H58 artefact name and SHA prefix, the R5 artefact name/SHA/P(beat 0.2778)/no-slot statement, the H57 credited-core alternate name, the H55-EDGE archive link and the 'do not upload' marker.",
+   "how_we_know": "python3 scripts/check_site.py on the merge commit ebb1d34 before any change this session.",
+   "measured_effect": "No scientific result is affected; the site lost its archive navigation and its explicit do-not-upload markers for the older artefacts, which is exactly the kind of silent regression the checker exists to catch.",
+   "handling": "scripts/publish_h89_site.py rebuilds both pages current-first and regenerates an archive table that names H83/H82/R5/H58/H57-alternate/H55-EDGE from their own receipts, so the pages name the same bytes the receipts name.",
+   "disposition": "repaired; keep the archive table in every future publisher"
+  },
+  {
+   "id": "IR-H89-003",
+   "round": "H89",
+   "severity": "high",
+   "status": "corrected in README this round",
+   "title": "H83 published SUBMIT: YES and verdict 'promote' with holdout_dti = NOT_EVALUATED",
+   "what_it_is": "evidence/h83_run_card.json records holdout.value = 'NOT_EVALUATED' and 'Holdout evaluation not yet performed', yet the same card carries verdict 'promote' and the README block stated 'SUBMIT: YES - format-valid, unique approach, ready for competition upload'. The project's own rule, and the session brief, forbid promoting a candidate that has not beaten the current holdout best.",
+   "how_we_know": "evidence/h83_run_card.json fields holdout_dti.value and verdict, read this session.",
+   "measured_effect": "No slot was spent, so no competition cost was incurred. The risk was a reader uploading a file on an unmeasured promise.",
+   "handling": "The README H89 block re-labels H83 DOWNLOAD YES / SUBMIT NO (research-only); its bytes are unchanged.",
+   "disposition": "corrected; H83 remains downloadable and clearly marked research-only"
+  },
+  {
+   "id": "IR-H89-004",
+   "round": "H89",
+   "severity": "low",
+   "status": "open - transport limitation, disclosed",
+   "title": "Two submission-format sources named in the brief are unreachable from this sandbox",
+   "what_it_is": "The brief cites https://docs.nlr.gov/docs/fy26osti/96647.pdf and several Dropbox mirrors (GEMS_96647.pdf, example_submission.tif, existing_faults.tif, the feature raster and the DEM links PDF). Neither host is inside the sandbox egress allowlist (github.com, codeload, api.github.com, registry.npmjs.org, pypi.org, files.pythonhosted.org), so none of them was fetched this session.",
+   "how_we_know": "Egress allowlist is fixed by the platform; bash cannot resolve those hosts.",
+   "measured_effect": "The format rules applied here come from the official competition problem page (read previously and transcribed into src/gems52/metric.py with a pinned unit test) and from the organiser's own sample_submission.tif bytes, which are the stronger source for a container check anyway.",
+   "handling": "Disclosed in knowledge/75 and on the site's sources table; no claim is sourced to the unread PDFs.",
+   "disposition": "accepted limitation"
+  },
+  {
+   "id": "IR-H89-005",
+   "round": "H89",
+   "severity": "medium",
+   "status": "measured and published; rule change deferred to a pre-registration",
+   "title": "The literal lane proximity rule is close to vacuous against a 573-raster census that contains near-total-coverage priors",
+   "what_it_is": "The brief's rule stops a run when more than 70 % of its dots fall within 3 px of ONE registry raster's dots. A prior whose 3 px halo already covers a large share of the eligible footprint captures that same share of ANY placement, including a uniform random one, so the literal rule measures the registry rather than the candidate.",
+   "how_we_know": "gems52.gates.lane_report already reports each prior's measured coverage_3px_of_eligible beside its near_3px_fraction; scripts/h89_lane_excess.py computes the chance-corrected statistic excess = (near - coverage)/(1 - coverage) for the priors that drive the verdict.",
+   "measured_effect": "See evidence/h89_lane_excess.json for this round's numbers.",
+   "handling": "Reported, not applied: the H89 gate stays exactly as frozen in knowledge/74 so that no verdict is redefined after seeing a result. The next round should pre-register the chance-corrected rule.",
+   "disposition": "open - proposed shared-tool fix for the next pre-registration"
+  },
+  {
+   "id": "IR-H89-006",
+   "round": "H89",
+   "severity": "high",
+   "status": "repaired in this merge",
+   "title": "A parallel session replaced the 252 KB README with a 5.2 KB rewrite on main, removing every earlier round's status block and the standing user brief",
+   "what_it_is": "origin/main's README.md after PR #90 is 5,237 bytes and documents only that session's H87 artefact. The file it replaced was 252,186 bytes and carried the project's standing brief, every round's status block and the archived task briefs that AGENTS.md instructs each session to read first.",
+   "how_we_know": "git show origin/main:README.md | wc -c = 5237 versus git show HEAD:README.md | wc -c = 252186, measured during this merge.",
+   "measured_effect": "Loss of the written record that the working agreement depends on; no scientific result is changed, but a future session reading only main's README would not know the standing brief, the prior negatives, or the measured facts they must not re-litigate.",
+   "handling": "This merge rebuilds README.md as a union: this round's block, then the parallel H87 session's text kept verbatim in a delimited section, then the full historical body restored.",
+   "disposition": "repaired; future rounds must append to README rather than replace it"
+  },
+  {
+   "id": "IR-H90-001",
+   "round": "H90",
+   "severity": "high",
+   "status": "open - decision for owner",
+   "title": "Legal-pool ring on the shared H60D holdout is built from the FULL catalogue, held-out truth included",
+   "what_it_is": "run_h60d_cotrain.stage_validate sets permitted = valid & ~dilate(full catalogue, 2 px). Held-out truth pixels therefore never lie in the legal pool (0 of 36,411 in every fold), so the shipped instrument credits dots only from the 200-300 m annulus around truth.",
+   "how_we_know": "evidence/h90_ring_audit.json: truth_in_legal_shipped_is_zero=true. Same OOF fields, visible-catalogue ring: view_B 0.006419 -> 0.053706 (x8.37), random 0.001992 -> 0.041594 (x20.9).",
+   "handling": "Not fixed in the shared tool (every committed H60/H62/H77cond holdout receipt depends on it). Reported. Next round must decide the instrument before any new holdout number is compared.",
+   "consequence": "HOLDOUT-DTI numbers from the H60 family are an annulus test, not the competitor-realistic test. Not comparable to H82/H85/H86 numbers without a ring-rule check.",
+   "disposition": "Open: owner decides the instrument (visible-catalogue ring). Existing H60-family receipts flagged, not rewritten."
+  },
+  {
+   "id": "IR-H90-002",
+   "round": "H90",
+   "severity": "high",
+   "status": "measured; lane finding",
+   "title": "On the visible-ring (competitor-realistic) pool the disagreement field is below random",
+   "what_it_is": "dis_contrast = max(pA-pB,0) pooled DTI 0.031379 vs random 0.041594 and view_A 0.020507 under the visible-catalogue pool. view_B 0.053706 and clf_union 0.050728 stay above random.",
+   "how_we_know": "evidence/h90_ring_audit.json pooled + arm_order_visible_ring. Same folds, scorer, budget, seed family as the shipped instrument.",
+   "handling": "Reported as a negative for the co-training disagreement signal. The H90-C candidate is built on this field, so it is not a promotion candidate.",
+   "consequence": "Co-training disagreement adds no measured lift over random on the rule a competitor faces. Single-view B is the strongest in-lane arm on both pools.",
+   "disposition": "Recorded: negative lane finding on the competitor-realistic (visible-ring) pool."
+  },
+  {
+   "id": "IR-H90-003",
+   "round": "H90",
+   "severity": "high",
+   "status": "measured; reported with receipt",
+   "title": "Shared negative sampler uses held-out region labels; effect measured on View A only",
+   "what_it_is": "gems52.h57.labelled_pixels draws negatives from the WHOLE footprint and clears them by 5 px from the FULL catalogue, so the held-out region's own labels shape training. The fit uses fit-region positives only.",
+   "how_we_know": "evidence/h90_negclear_audit.json: clean minus shipped at 37,654 px: view_A -0.000389 [-0.000832, -0.000104] (inflation of the shipped holdout); view_B +0.000108 [-0.000040, +0.000348]; dis_contrast -0.000218 [-0.000728, +0.000234].",
+   "handling": "Measured, not fixed. The clean sampler is available in scripts/run_h90_negclear_audit.py; the shipped emission is not changed because the final file uses the OOF fields.",
+   "consequence": "View A's holdout numbers in the H60 family are modestly inflated (about 10%). View B and the disagreement field are not materially affected.",
+   "disposition": "Recorded: View A holdout inflation measured (paired CI excludes zero); shared sampler not changed this round."
+  },
+  {
+   "id": "IR-H90-004",
+   "round": "H90",
+   "severity": "medium",
+   "status": "deviation recorded",
+   "title": "Pre-registered leakage-canary wording was undefined on the legal set",
+   "what_it_is": "The H87-L preregistration said 'AUC against truth in the legal set'. The legal set holds no truth pixel by construction, so the AUC is undefined (NaN). The first audit run failed on that NaN when writing the receipt.",
+   "how_we_know": "First run log work/logs/h90_audit2.log (NaN in canary_max_auc). Canary now uses the fold region, as run_h60d_cotrain.canary_report does.",
+   "handling": "Deviation recorded in the receipt (deviations field) and in registry/h87_negclear_preregistration.json history. Canary max AUC 0.7454 < 0.90 on fields from both samplers.",
+   "consequence": "Canary result is valid on the fold region, not on the legal set.",
+   "disposition": "Recorded deviation: canary on the fold region; deviation logged in the audit receipt."
+  },
+  {
+   "id": "IR-H90-005",
+   "round": "H90",
+   "severity": "medium",
+   "status": "reported",
+   "title": "H90-C candidate is pixel-unique but a near-sibling of H60D",
+   "what_it_is": "Zero pixels shared with any of the 142 priors (the legal pool excludes all prior support), but 65.34% of its dots lie within 3 px of the H60D dis_contrast dots.",
+   "how_we_know": "evidence/h90_build.json lane_dots.per_prior; independent check in this session (zero exact overlap with 5 priors).",
+   "handling": "Labelled research only. The lane-drift gate on dots returns DUPLICATE/STOP against the universal calibration lattice (IR-H90-006).",
+   "consequence": "Pixel uniqueness is not lane independence. Do not describe this file as a new discovery.",
+   "disposition": "Recorded: candidate labelled research only, not promoted."
+  },
+  {
+   "id": "IR-H90-006",
+   "round": "H90",
+   "severity": "medium",
+   "status": "repo convention applied; not waived",
+   "title": "Literal dot-lane gate fires on the calibration lattice that H60-6 excludes (conflicting precedents)",
+   "what_it_is": "99.81% of H90-C dots are within 3 px of 13gems_20261001_r13-lattice-s5_v2_nan-outside.tif (calibration raster; manifest class owner-supplied metric calibration). H60-6 (knowledge/30) excluded this raster from the 3-px dot component because budget-sized placements read 70-84% against it by grid geometry. H85 (IR-H85-009) instead reported the literal rule without waiver because random dots read 0.999 against it.",
+   "how_we_know": "evidence/h90_build.json lane_dots.dots_max_within_3px_prior and per_prior.",
+   "handling": "Literal DUPLICATE/STOP recorded. Under the H60-6 exclusion the dots gate would PASS (next-highest 0.6534 vs H60D < 0.70). Owner must decide which rule governs. The verdict is negative regardless (holdout clause).",
+   "consequence": "The lane's dot gate cannot be read without naming the rule. Do not present the literal FAIL as a duplicate finding about the candidate's placement.",
+   "disposition": "Open: owner decides which dot-gate rule governs (H60-6 exclusion vs H85 literal). Literal result stands."
+  },
+  {
+   "id": "IR-H90-007",
+   "round": "H90",
+   "severity": "high",
+   "status": "open - cross-instrument comparisons",
+   "title": "Random-control scales differ 20x between instruments; cross-round comparisons are not like-for-like",
+   "what_it_is": "H60 family random control at 37,654 px is about 0.0018-0.0020 (this round 0.001992). H82/H85 instrument random is 0.080426 and H82 B_DVA2 is 0.1892. Statements such as 'H85 is far below H82' compare different instruments.",
+   "how_we_know": "evidence/h60d_validation.json, evidence/h90_negclear_audit.json, and knowledge/78 section 2 table. The ring audit (IR-H90-001) changes view_B by x8.4 on one instrument alone, which is a likely contributor but not verified as the whole cause.",
+   "handling": "Flagged. No cross-instrument ranking is made in this round.",
+   "consequence": "Before ranking rounds against each other, reproduce both arms on one instrument.",
+   "disposition": "Open: no cross-instrument ranking until both arms are reproduced on one instrument."
+  },
+  {
+   "id": "IR-H90-008",
+   "round": "H90",
+   "severity": "low",
+   "status": "reported",
+   "title": "Random-control draws move the random arm by about 0.0002 between runs",
+   "what_it_is": "Committed H60D random at 37,654 px is 0.001802 [0.001508, 0.001944]. This round's random draw (per-fold seeds) gives 0.001992 [0.001904, 0.002120]. The draw order differs between the two runs.",
+   "how_we_know": "evidence/h60d_validation.json vs evidence/h90_negclear_audit.json.",
+   "handling": "Paired comparisons in this round use the same draws within the round only.",
+   "consequence": "Random-control differences below about 0.0003 are noise on this instrument.",
+   "disposition": "Recorded: random-control noise floor about 0.0002 between draws."
+  },
+  {
+   "id": "IR-H90-009",
+   "round": "H90",
+   "severity": "info",
+   "status": "reproduction verified",
+   "title": "H60D co-training pipeline reproduces committed numbers on restored bytes",
+   "what_it_is": "Restored data (SHA-256 verified against registry/data_manifest.json; integrity-pinned owner mirrors, not organiser-authenticated). Reproduction: independence max|r| 0.17604 (committed 0.176), withheld positives 36,411 (committed 36,411), canary worst 0.7136 (committed 0.7136), co-training AUC deltas -0.0067 and -0.0104 (committed), shipped holdout view_B 0.006419 [0.005873, 0.006892] (committed 0.006419 [0.005873, 0.006892]).",
+   "how_we_know": "evidence/h90_h60d_reproduction.log; evidence/h90_negclear_audit.json pooled_dti.",
+   "handling": "Working copy of data/ is in the ignored directory; work/pinned is a symlink to data/ because the H60 scripts expect that path and no script creates it.",
+   "consequence": "The instrument is trustworthy on these bytes. The issues above are design issues, not reproduction failures.",
+   "disposition": "Recorded: reproduction on restored bytes verified; work/pinned staging symlink reported."
+  },
+  {
+   "id": "IR-H91-001",
+   "round": "H91",
+   "observed_utc": "2026-10-10T20:56:00Z",
+   "what_it_is": "30 of 102 H91 channel files failed run_h82.Bank's byte-integrity guard (ValueError: channel byte-integrity failure) after run_h82.save_verified had already written them, read them back and recorded a matching digest. The files that failed were not the same set on each attempt: the first pass named CSA_det_elev_dirR_l2, the second CSA_iso_grav_anom_hg_dirR_l2, so the whole original channels pass is suspect, not three files.",
+   "how_we_know": "the manifest digests recorded at write time were re-hashed against the bytes on disk; 30 of 102 disagreed on the first three bands processed. run_h82.Bank re-hashes every column it is asked to gather and refuses to train on a mismatch, which is the guard working as designed. evidence/h91_preflight_integrity.json records the original mismatch set.",
+   "title": "30 of 102 H91 channel files failed the byte-integrity guard after passing it",
+   "detail": "run_h82.save_verified wrote each channel, read it back, required a bit-exact match and recorded the digest; a later re-hash found 30 files (the first three bands processed) whose bytes no longer matched. run_h82.Bank refused to train on them (ValueError: channel byte-integrity failure), which is the guard working. The mechanism is IR-H82-002: a torn write against a filesystem that snapshots concurrently, landing after the verification pass rather than during it.",
+   "resolution": "scripts/repair_h91_channels.py recomputed the affected (band, lag) channels from the pinned rasters with the same arithmetic, wrote them with an added digest-stability check (two digests separated by a pause), re-hashed every file on disk into the manifest, and re-verified the whole bank. No value was patched by hand and no channel was dropped.",
+   "disposition": "bank recomputed in full by scripts/repair_h91_channels.py --all and re-verified; the corruption mechanism itself is environment-level (IR-H82-002) and is NOT fixed at the repository level, so every future channel build must run the repair before fitting. No value was patched by hand and no channel was dropped.",
+   "status": "resolved; mechanism still open (environment-level, not repository-level)",
+   "evidence": [
+    "evidence/h91_channels.json",
+    "work/h91/features/manifest.json::repair"
+   ]
+  },
+  {
+   "id": "IR-H88-001",
+   "round": "H88 (2026-10-10)",
+   "severity": "medium",
+   "status": "resolved in this session",
+   "title": "Round identifier collision: H87 already used on this branch",
+   "what_it_is": "An earlier round on this branch already named its file and builder H87 (docs/downloads/gems52-h87-cotrain-wavelength-*, evidence/h87_build.json, scripts/build_h87_cotrain_wavelength.py). The pre-registration and runner first written as H87 would have overwritten those receipts' meaning.",
+   "how_we_know": "grep over evidence/, docs/downloads/, scripts/ before the first run found the H87 names.",
+   "handling": "This round is H88 (identifier-only rename of knowledge/80_h88_preregistered.md and scripts/run_h88.py before any holdout run; precedent IR-H84-006).",
+   "disposition": "resolved in this session. This round is H88 (identifier-only rename of knowledge/80_h88_preregistered.md and scripts/run_h88.py before any holdout run; precedent IR-H84-006)."
+  },
+  {
+   "id": "IR-H88-002",
+   "round": "H88 (2026-10-10)",
+   "severity": "high",
+   "status": "open: owner decision",
+   "title": "H85 download now fails the uniqueness gate against the H86 file",
+   "what_it_is": "docs/downloads/h85-candidate.tif and the H86 candidate (submission/gems52-h86-h83conc-spaced-*) have identical decoded support of 28,467 shared dots, Jaccard 0.6077. The H85 card's ok:true (committed earlier) predates the H86 file.",
+   "how_we_know": "scripts/run_h85.py write, regenerated: n_priors_checked 144, ok false, max_jaccard 0.6077. The raster bytes are unchanged (sha a4a666...), so the difference is the prior set, not the file.",
+   "handling": "Regenerated evidence/h85_run_card.json and h85_gates_raw.json reflect the current priors. The H85 file should be treated as duplicated by H86. Owner to decide whether to remove the download copy.",
+   "disposition": "open: owner decision. Regenerated evidence/h85_run_card.json and h85_gates_raw.json reflect the current priors. The H85 file should be treated as duplicated by H86. Owner to decide whether to remove the download copy."
+  },
+  {
+   "id": "IR-H88-003",
+   "round": "H88 (2026-10-10)",
+   "severity": "high",
+   "status": "resolved in this session",
+   "title": "Site header said VERDICT: PROMOTE for a file with no holdout DTI",
+   "what_it_is": "docs/index.html (before H88) showed 'VERDICT: PROMOTE' and a one-click download for the H87 co-training wavelength file. No holdout DTI for that file exists on this branch.",
+   "how_we_know": "grep for holdout/HOLDOUT receipts for the H87 file returns nothing on this branch; the pre-H88 page is preserved at git commit bc26fe2 (docs/index.html).",
+   "handling": "The PROMOTE label is withdrawn. The H87 file is kept in a collapsed section labelled not holdout-validated. scripts/publish_h88_site.py generates the new top block from evidence/.",
+   "disposition": "resolved in this session. The PROMOTE label is withdrawn. The H87 file is kept in a collapsed section labelled not holdout-validated. scripts/publish_h88_site.py generates the new top block from evidence/."
+  },
+  {
+   "id": "IR-H88-004",
+   "round": "H88 (2026-10-10)",
+   "severity": "medium",
+   "status": "resolved in this session",
+   "title": "README on this branch lacked the referenced H85 block and claimed an unvalidated file as validated",
+   "what_it_is": "AGENTS.md points to 'README's H85 block', which was absent here; the README top section said 'Submission built and validated' for the H87 file.",
+   "how_we_know": "grep -n 'H85' README.md returned nothing before this round.",
+   "handling": "README rewritten: status, method, hypotheses, irregularities, access limits, and the standing brief verbatim under 'Complete current prompt' (generated from knowledge/26).",
+   "disposition": "resolved in this session. README rewritten: status, method, hypotheses, irregularities, access limits, and the standing brief verbatim under 'Complete current prompt' (generated from knowledge/26)."
+  },
+  {
+   "id": "IR-H88-005",
+   "round": "H88 (2026-10-10)",
+   "severity": "high",
+   "status": "open: inherited, not introduced here",
+   "title": "check_site.py still reports 20 legacy-string problems (22 on origin/main); not introduced by H88",
+   "what_it_is": "Checks assert legacy strings (H57/H58/R5 wording, 'OK to download?', 'NO CERTIFIED LEADERBOARD GAIN', 'DO NOT SUBMIT' on executive-summary, 'no h55-1 tiff was built') that the main-line pages did not contain.",
+   "how_we_know": "Clean worktree of origin/main: check_site 22 problems, pytest 6 failed in five test files. On this branch after H88: pytest 496 passed (full suite; the 6 earlier failures reduced to 0 in those files, one new registry-schema failure fixed in the same round) and check_site 20 problems. Full output: evidence/h88_test_status.txt and evidence/h88_check_site.txt.",
+   "handling": "Left open. H88 added the phrases it can truthfully state (download/submit verdicts, no certified gain, H55-1 no-TIFF, the brief). The remaining checks are other rounds' contracts and need owner review before any change.",
+   "disposition": "open: inherited, not introduced here. Left open. H88 added the phrases it can truthfully state (download/submit verdicts, no certified gain, H55-1 no-TIFF, the brief). The remaining checks are other rounds' contracts and need owner review before any change."
+  },
+  {
+   "id": "IR-H88-006",
+   "round": "H88 (2026-10-10)",
+   "severity": "low",
+   "status": "resolved in this session",
+   "title": "origin/main advanced beyond this branch's base",
+   "what_it_is": "origin/main contains PRs #76 and #77 and other merges after bc26fe2.",
+   "how_we_know": "git merge-base --is-ancestor HEAD origin/main succeeded; git merge --no-commit preview reported no conflicts.",
+   "handling": "origin/main merged into the branch before the PR (merge commit recorded).",
+   "disposition": "resolved in this session. origin/main merged into the branch before the PR (merge commit recorded)."
+  },
+  {
+   "id": "IR-H88-007",
+   "round": "H88 (2026-10-10)",
+   "severity": "medium",
+   "status": "open: reproducibility",
+   "title": "Feature store is rebuilt, not restored",
+   "what_it_is": "work/r2/features is git-ignored and was absent. It was rebuilt with structural.build(include_optional_profiles=False) and gems52.external.extend_store. The manifest's external version string is the only record of that step.",
+   "how_we_know": "Build printed BUILD_OK 57 and the external step completed (manifest version contains +external-geodawn-v1). The H88 holdout reproduces the H82 random control to 3.5e-7, which is the instrument check.",
+   "handling": "The instrument check passes. Record the store manifest hash in the next round's receipt.",
+   "disposition": "open: reproducibility. The instrument check passes. Record the store manifest hash in the next round's receipt."
+  },
+  {
+   "id": "IR-H88-008",
+   "round": "H88 (2026-10-10)",
+   "severity": "high",
+   "status": "open: owner decision",
+   "title": "Organiser container for outside-footprint pixels is not verified",
+   "what_it_is": "The organiser page says 'data outside the bounds is null or nan'. The H88 file writes 0.0 outside the footprint so every pixel is finite and in [0,1]. The owner reported an earlier upload error 'Predicted values must be in range [0, 1]'; which container caused it is not verified.",
+   "how_we_know": "Organiser page fetched 2026-10-10 (page/967, chunk 1). No organiser receipt for either container exists in the repository.",
+   "handling": "Flagged. The owner should decide the container before any upload. The NaN-outside twin is the template layout and is not in this round.",
+   "disposition": "open: owner decision. Flagged. The owner should decide the container before any upload. The NaN-outside twin is the template layout and is not in this round."
+  },
+  {
    "id": "IR-H93-001",
    "round": "H93 (2026-10-10)",
    "severity": "medium",
@@ -3196,5 +3579,5 @@
    "disposition": "Next round: if a B-family emission is shipped again, preregister quota placement against the full-census informative supports BEFORE the fit (H75 amendment-65a precedent) or reduce budget into the non-halo capacity."
   }
  ],
- "merge_note": "Merged registry/irregularities.json: main's entries (including the parallel H66 round's IR-H66-001..010) plus this round's IR-H67-001..011. This round was labelled H66 in its own receipts and was renamed H67 before merge because main merged a different H66 first (PR #56); the IDs were renumbered wholesale so no ID carries two meanings. See knowledge/45a_amendment_2026-10-09_H67_rename.md. IR-H67-002 (in-domain nodata sentinels collapse every rank channel) and IR-H67-008 (probe classification flips with the structuring element, and this round's lane verdict depends on it) are the two that change a result; IR-H67-005 and IR-H67-007 change how a shared instrument must be read. | H77cond merge: this round was executed as H74 and renamed to H77cond before merge because a parallel session merged a different H74 first (PR #72) and a third took H75; see IR-H77cond-001. The rename is identifier-only and the preregistration's pinned SHA-256 still validates. IR-H77cond-002 records a shared-tool repair to scripts/check_site.py surfaced by that merge. IR-H77cond-003 records that filename, receipt and git dating are all individually unsound in this repository, and that the duplicate guard was therefore made dating-independent. | H82 merge (2026-10-09): union of both entry sets by id; 8 H82 entries added (IR-H82-001..IR-H82-008); no existing entry was edited or removed."
+ "merge_note": "Merged registry/irregularities.json: main's entries (including the parallel H66 round's IR-H66-001..010) plus this round's IR-H67-001..011. This round was labelled H66 in its own receipts and was renamed H67 before merge because main merged a different H66 first (PR #56); the IDs were renumbered wholesale so no ID carries two meanings. See knowledge/45a_amendment_2026-10-09_H67_rename.md. IR-H67-002 (in-domain nodata sentinels collapse every rank channel) and IR-H67-008 (probe classification flips with the structuring element, and this round's lane verdict depends on it) are the two that change a result; IR-H67-005 and IR-H67-007 change how a shared instrument must be read. | H77cond merge: this round was executed as H74 and renamed to H77cond before merge because a parallel session merged a different H74 first (PR #72) and a third took H75; see IR-H77cond-001. The rename is identifier-only and the preregistration's pinned SHA-256 still validates. IR-H77cond-002 records a shared-tool repair to scripts/check_site.py surfaced by that merge. IR-H77cond-003 records that filename, receipt and git dating are all individually unsound in this repository, and that the duplicate guard was therefore made dating-independent. | H82 merge (2026-10-09): union of both entry sets by id; 8 H82 entries added (IR-H82-001..IR-H82-008); no existing entry was edited or removed. | H89 merge: IR-H89-001..006 appended; main entries kept verbatim; no id reused."
 }
