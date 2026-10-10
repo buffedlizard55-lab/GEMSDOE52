@@ -1,199 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GEMSDOE52 — Geothermal Fault Discovery</title>
-<style>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Current-round download, explicit submit verdict, and the preserved research archive."><title>GEMSDOE52 — geothermal fault discovery</title><style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0d1117; color: #c9d1d9; line-height: 1.6; }
-.container { max-width: 960px; margin: 0 auto; padding: 1rem; }
-h1 { color: #58a6ff; font-size: 1.8rem; margin-bottom: 0.5rem; }
-h2 { color: #79c0ff; font-size: 1.3rem; margin: 1.5rem 0 0.5rem; border-bottom: 1px solid #21262d; padding-bottom: 0.3rem; }
-h3 { color: #d2a8ff; font-size: 1.1rem; margin: 1rem 0 0.3rem; }
-a { color: #58a6ff; text-decoration: none; }
-a:hover { text-decoration: underline; }
-.download-box { background: #161b22; border: 2px solid #238636; border-radius: 8px; padding: 1.5rem; margin: 1rem 0; text-align: center; }
+.container { max-width: 980px; margin: 0 auto; padding: 1rem; }
+h1 { color: #58a6ff; font-size: 1.8rem; margin-bottom: .4rem; }
+h2 { color: #79c0ff; font-size: 1.25rem; margin: 1.4rem 0 .5rem; border-bottom: 1px solid #21262d; padding-bottom: .3rem; }
+h3 { color: #d2a8ff; font-size: 1.05rem; margin: 1rem 0 .3rem; }
+a { color: #58a6ff; text-decoration: none; } a:hover { text-decoration: underline; }
+.download-box { background: #161b22; border: 2px solid #238636; border-radius: 8px; padding: 1.4rem; margin: 1rem 0; text-align: center; }
 .download-box h2 { color: #3fb950; border: none; margin-top: 0; }
-.download-btn { display: inline-block; background: #238636; color: #fff; padding: 0.8rem 2rem; border-radius: 6px; font-size: 1.1rem; font-weight: 600; margin: 0.5rem; cursor: pointer; text-decoration: none; }
+.download-btn { display: inline-block; background: #238636; color: #fff; padding: .8rem 1.8rem; border-radius: 6px; font-size: 1.05rem; font-weight: 600; margin: .4rem; text-decoration: none; }
 .download-btn:hover { background: #2ea043; text-decoration: none; }
 .download-btn.secondary { background: #21262d; border: 1px solid #30363d; }
-.download-btn.secondary:hover { background: #30363d; }
-.meta { font-size: 0.85rem; color: #8b949e; margin-top: 0.5rem; }
-table { width: 100%; border-collapse: collapse; margin: 0.5rem 0; }
-th, td { padding: 0.4rem 0.6rem; text-align: left; border-bottom: 1px solid #21262d; }
+.meta { font-size: .85rem; color: #8b949e; margin-top: .5rem; }
+table { width: 100%; border-collapse: collapse; margin: .5rem 0; }
+th, td { padding: .4rem .6rem; text-align: left; border-bottom: 1px solid #21262d; vertical-align: top; }
 th { color: #79c0ff; font-weight: 600; }
-code { background: #161b22; padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
-.badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 3px; font-size: 0.8rem; font-weight: 600; }
-.badge-ok { background: #238636; color: #fff; }
-.badge-warn { background: #9e6a03; color: #fff; }
-.badge-info { background: #1f6feb; color: #fff; }
-details { margin: 0.5rem 0; }
-summary { cursor: pointer; color: #79c0ff; font-weight: 600; }
-pre { background: #161b22; padding: 1rem; border-radius: 6px; overflow-x: auto; font-size: 0.85rem; }
-.exec-summary { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 1.5rem; margin: 1rem 0; }
-.step { display: flex; align-items: flex-start; margin: 0.8rem 0; }
-.step-num { background: #58a6ff; color: #0d1117; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; margin-right: 0.8rem; flex-shrink: 0; }
+td.numeric { font-variant-numeric: tabular-nums; }
+code { background: #161b22; padding: .1rem .4rem; border-radius: 3px; font-size: .88em; }
+.badge { display: inline-block; padding: .15rem .5rem; border-radius: 3px; font-size: .78rem; font-weight: 600; }
+.badge-ok { background: #238636; color: #fff; } .badge-warn { background: #9e6a03; color: #fff; }
+.badge-bad { background: #da3633; color: #fff; } .badge-info { background: #1f6feb; color: #fff; }
+.notice { border-radius: 8px; padding: 1rem 1.2rem; margin: 1rem 0; }
+.notice.ok { background: #12261a; border: 1px solid #238636; }
+.notice.warn { background: #2b1f06; border: 1px solid #9e6a03; }
+.notice.bad { background: #2b1110; border: 1px solid #da3633; }
+details { margin: .6rem 0; } summary { cursor: pointer; color: #79c0ff; font-weight: 600; }
+.step { display: flex; align-items: flex-start; margin: .8rem 0; }
+.step-num { background: #58a6ff; color: #0d1117; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; margin-right: .8rem; flex-shrink: 0; }
 .step-text { flex: 1; }
-.score-table td:first-child { font-weight: 600; }
-footer { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #21262d; font-size: 0.8rem; color: #8b949e; }
-</style>
-</head>
-<body>
-<div class="container">
+footer { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #21262d; font-size: .8rem; color: #8b949e; }
+.small { font-size: .85rem; color: #8b949e; }
+ul, ol { margin: .3rem 0 .3rem 1.3rem; }
+</style></head><body><div class="container"><h1>🔥 GEMSDOE52 — geothermal fault discovery, DOE GEMS</h1><p>Two-view co-training lane: potential-field/subsurface View A against surface View B, with disagreement as the discovery signal. Blum &amp; Mitchell, COLT 1998, <a href="https://doi.org/10.1145/279943.279962">doi:10.1145/279943.279962</a>.</p><div class="download-box"><h2>⬇️ Download the H84 submission GeoTIFF</h2><p>One click. Single-band float32 · EPSG:32611 · 100 m · 3730×3292 · values exactly {0,1} · 0 NaN inside the footprint.</p><a class="download-btn" href="downloads/h84-candidate.tif" download>Download TIF (138,604 bytes)</a><a class="download-btn secondary" href="downloads/h84-candidate.zip" download>Download single-TIFF ZIP</a><a class="download-btn secondary" href="downloads/h84-a-only-reasoning.csv" download>Per-cell geological reasoning CSV</a><a class="download-btn secondary" href="validator.html">Check any file in your browser</a><div class="meta">File <code>gems52-h84-csa16fan-B-37654px-20261010T215157Z.tif</code><br>SHA-256 <code>e0b5ab82ee6df0191a0ec3ed671d45588bcba8fdb1b4ce4f4610cf6a0cb6cc38</code><br>37,654 emitted cells · h84-csa16fan-B-37654px-20261010T215157Z · note: <code>H84: View-B + 84 continuous directional-alignment channels on a 16-direction semivariance fan; 200m ring excluded; binary dots</code></div></div><div class="notice warn" role="note"><strong>VERDICT: NEGATIVE</strong><p><b>OK to download?</b> YES — the file is format-valid on disk (single-band float32, EPSG:32611, 3730×3292, transform matches the organiser template, values exactly {0,1}, 0 NaN). Safe to download and inspect.</p><p><b>OK to submit to DrivenData?</b> NO — research artefact only. It did not beat the single-view control on the hide-and-recover instrument with a CI above zero, and/or a lane gate fired. <b>Do not upload it.</b> Download it, read it, and read the run card before deciding anything.</p><p class="small">No organizer receipt exists for any file in this repository. Every score below is either HOLDOUT-DTI (this repository's own instrument) or OWNER-REPORTED from the brief. Neither is an organizer-confirmed score.</p></div><h2>H84 in one paragraph</h2><p>A fault damage zone imposes a direction-dependent semivariance on the surface and potential-field grids; H82's 8-direction argmax quantised the preferred direction to four values and its local-tensor variant was null on 47-70 % of pixels. A 16-direction fan with a gamma-weighted circular mean direction and its resultant length recovers oblique, catalogue-missing structure that the discrete fan cannot resolve. On the hide-and-recover instrument the primary arm <code>B_CSA</code> scored HOLDOUT-DTI 0.169247 [0.150782, 0.188387] against the single-view control <code>single_B</code> 0.173444 [0.152576, 0.194991] (paired Δ -0.004197 [-0.016143, 0.008684]), with 53,186 withheld positive pixels, 84 new channels and a leakage canary at 0.622041 against a 0.90 bar. <b>Verdict negative</b>: the file is format-valid and downloadable, but it has not beaten the control with a CI above zero, so <b>do not upload it</b> and do not spend a weekly slot on it. Full record: <a href="h84.html">H84 result</a>, <a href="h84-executive-summary.html">submission guide</a>, <a href="h84-hypotheses.html">hypotheses</a>, <a href="h84-sources.html">sources</a>, <a href="data/h84_run_card.json">JSON run card</a>.</p><h2>Why the 0.2778 file won, and what beating 0.3195 needs</h2><p>The measured answer is arithmetic, not geology: the reported-0.2778 file (<code>h33-h33-2-b2</code>, owner-reported) is its 0.2600 parent with the 100–200 m catalogue ring deleted — 6,436 pixels, all inside the ring, +6.8 % relative score, which is only possible if the deleted mass earned zero credit while still paying the false-positive tax. Its credit density is ρ ≈ 0.1387 at 37,654 emitted px; reaching 0.3195 at the same budget needs ρ ≈ 0.1595, and reaching 0.3774 needs ρ ≈ 0.1884. The binding constraint on this family is the ranker's ρ(S) decay, not the emission budget. <a href="h84.html#why">Full board algebra</a> · <a href="../knowledge/49_why_02778_phd_answer.md">knowledge/49</a>.</p><details><summary>Preserved research archive — every earlier round, verbatim</summary><section class="hero"><div><div class="eyebrow">DOE GEMS / CTD5 research record</div><h1>A new GeoTIFF.<br>A clear stop decision.</h1><p class="lead">Geophysics meets surface evidence. We generated a new disagreement prediction, tested it, and kept the failed gates visible.</p><div class="notice" role="note"><strong>OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT</strong><p>The local format check passes. The legacy holdout is not strict-valid, and the scientific comparison and parallel-lane gate do not pass. No competition slot was used. NO CERTIFIED LEADERBOARD GAIN.</p></div><div class="actions"><a class="button" href="downloads/ctd5-research.tif" download>Download research GeoTIFF ↓</a><a class="button secondary" href="downloads/ctd5-research.zip" download>Single-TIFF ZIP</a></div><p class="fileline">gems52-ctd5-cover-disagreement-20261008-a24c35d1-b58bae0f0e.tif<br>83,917 bytes · SHA-256 a6e6e44aebaf057989e254bd5ce3729e5a94836c0e5687a95e91e3fc8a40c686</p><p class="small"><a href="executive-summary.html">What exactly can I upload—and when? →</a></p></div>
+<aside class="panel" aria-label="Submission readiness"><div class="label">Readiness / measured, not promised</div><div class="status-line"><span>Single-band GeoTIFF</span><span class="good">PASS</span></div><div class="status-line"><span>Finite values in [0, 1]</span><span class="good">PASS</span></div><div class="status-line"><span>CRS, shape &amp; transform</span><span class="good">PASS</span></div><div class="status-line"><span>Copied prior prediction?</span><span class="good">NO</span></div><div class="status-line"><span>Strict near-dot uniqueness</span><span class="bad">FAIL / STOP</span></div><div class="status-line"><span>Scientific promotion</span><span class="bad">NOT APPROVED</span></div><p class="fine">A valid file is not an approved competition entry. The independent selector has not assigned a slot.</p><a class="small" href="data/ctd5_run_card.json">Inspect the complete JSON run card ↗</a></aside></section>
+<!--R5:START-->
 
-<h1>🔥 GEMSDOE52 — Geothermal Fault Discovery</h1>
-<p>DOE GEMS Competition · Multi-Scale Structural Concordance + Geothermal Proximity</p>
+<section class="download-bar" aria-label="R5 strictly-novel artifact">
+<div><div class="eyebrow">R5 · strictly-novel emission · this session's round
+<span class="pill ok">OK TO DOWNLOAD</span>
+<span class="pill warn">PORTAL-ACCEPTABLE · NOT SLOT-APPROVED</span></div>
+<strong>gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif</strong>
+<small>99,231 bytes · single-band float32 · EPSG:32611 · all 12,279,160 cells
+finite · values exactly {0,1} · 16,681 emitted px · <b>novel fraction
+1.0000</b> against 71
+rasters · nearest mapped trace 223.6 m ·
+SHA-256 <code>d2bfb0f79328399354943bd1…</code></small></div>
+<a class="button" href="downloads/gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif" download>↓ Download the R5 TIFF (one click)</a>
+<a class="button" href="downloads/r5-candidate.tif" download>↓ Same file, short name</a>
+<a class="button secondary" href="r5.html">R5 audit →</a></section>
+<div class="status"><strong>R5 in one paragraph.</strong> Co-training was run exactly as the brief
+specifies and reported honestly: the independence premise <b>holds</b> (max |ρ| 0.2276
+against the 0.60 abandonment threshold), the pseudo-label exchange <b>harmed</b> the weaker view
+(-0.0247 AUC against +0.0029 the other
+way), the connected-component reading of “whole segment” returns the <b>empty set</b> as a measurement,
+and the co-training propensity ranking then <b>lost</b> to the six-family detector on the frozen rule —
+so the shipped file is not a co-training product and the site does not imply otherwise. Emission:
+16,681 px at the derived optimum S* = 4|G|β/(1−β) = 16,681, chosen on strike coherence
+(0.5326 against the credited cloud's 0.5309
+and a random control's 0.3886) with its dominant strike
+95° inside the credited band. Overlap with any reading of “the
+union of the two views” is at most
+0.0200 of the emitted pixels.
+<b>P(DTI &gt; 0.2778) = 0.366, P(&gt; 0.3195) = 0.226, P(&gt; 0.3774) = 0.031</b> —
+the board top is 0.3774, not the 0.3195 the brief states (rank 7, fetched
+2026-10-08). No weekly slot is authorised: the promotion instrument is disqualified
+and this round reproduced that on new data. Full record: <a href="r5.html">R5 audit</a>,
+<a href="executive-summary.html#r5">submission steps</a>,
+<code>knowledge/27_r5_findings.md</code>,
+<a href="downloads/a_only_reasoning_r5.csv">reasoning for all 4,164 A-only
+candidates</a>.</div>
 
-<!-- ===== ONE-CLICK DOWNLOAD BOX (TOP OF PAGE) ===== -->
-<div class="download-box">
-  <h2>⬇️ Download Submission File</h2>
-  <p>Ready-to-submit GeoTIFF — values in [0,1], EPSG:32611, 100m resolution</p>
-  <a class="download-btn" href="downloads/h83-candidate.tif" download>Download TIF</a>
-  <a class="download-btn secondary" href="downloads/h83-candidate.zip" download>Download ZIP</a>
-  <div class="meta">
-    File: <code>gems52-h83-structcon-geotherm-37654px-20261010T200310Z.tif</code><br>
-    Size: 81,076 bytes · SHA-256: <code>d9cfccf0e1aa4e28094a6039fda9e65be5e8ff102e321b33745df149f477f378</code><br>
-    37,654 binary pixels · Single-band float32 · All values in [0,1]
-    <span class="badge badge-ok">FORMAT VALID</span>
-  </div>
-</div>
-
-<!-- ===== EXECUTIVE SUMMARY ===== -->
-<div class="exec-summary">
-  <h2>📋 How to Submit</h2>
-  <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Download</strong> the TIF file above (click "Download TIF" button)</div></div>
-  <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Go to</strong> <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">drivendata.org/competitions/306/competition-doe-gems</a> and log in</div></div>
-  <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Click</strong> "Submit" on the competition page</div></div>
-  <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Upload</strong> the downloaded TIF file</div></div>
-  <div class="step"><div class="step-num">5</div><div class="step-text"><strong>Note:</strong> <code>h83-structcon-geotherm-37654px structural concordance + geothermal proximity</code></div></div>
-  <div class="step"><div class="step-num">6</div><div class="step-text"><strong>Submit!</strong></div></div>
-  <p style="margin-top:1rem; font-size:0.9rem; color:#8b949e;">
-    <strong>Name:</strong> <code>h83-structcon-geotherm-37654px-20261010</code><br>
-    <strong>Note:</strong> <code>structural concordance + geothermal proximity</code> (max 140 chars)<br>
-    <span class="badge badge-ok">VALUES IN [0,1]</span> 
-    <span class="badge badge-ok">CRS: EPSG:32611</span> 
-    <span class="badge badge-ok">SHAPE: 3730×3292</span>
-  </p>
-</div>
-
-<!-- ===== VALIDATION STATUS ===== -->
-<h2>✅ Validation Status</h2>
-<table>
-  <tr><th>Check</th><th>Status</th><th>Details</th></tr>
-  <tr><td>Values in [0, 1]</td><td><span class="badge badge-ok">PASS</span></td><td>Binary {0, 1}, min=0.0, max=1.0</td></tr>
-  <tr><td>All-finite</td><td><span class="badge badge-ok">PASS</span></td><td>No NaN or inf values</td></tr>
-  <tr><td>CRS</td><td><span class="badge badge-ok">PASS</span></td><td>EPSG:32611</td></tr>
-  <tr><td>Shape</td><td><span class="badge badge-ok">PASS</span></td><td>3730 × 3292</td></tr>
-  <tr><td>Transform</td><td><span class="badge badge-ok">PASS</span></td><td>100m resolution, matching sample_submission.tif</td></tr>
-  <tr><td>Dtype</td><td><span class="badge badge-ok">PASS</span></td><td>float32</td></tr>
-  <tr><td>Bands</td><td><span class="badge badge-ok">PASS</span></td><td>Single band</td></tr>
-  <tr><td>Pixel count</td><td><span class="badge badge-info">INFO</span></td><td>37,654 positive pixels (binary emission)</td></tr>
-  <tr><td>Catalogue distance</td><td><span class="badge badge-ok">PASS</span></td><td>0 pixels within 200m of mapped faults</td></tr>
-</table>
-
-<!-- ===== HYPOTHESIS ===== -->
-<h2>🔬 Hypothesis: Multi-Scale Structural Concordance + Geothermal Proximity</h2>
-
-<h3>Why This Is Unique</h3>
-<p>This submission is <strong>NOT a rehash of the co-training approach</strong> (which failed View A sufficiency 7 times 
-in this repository). Instead, it uses <strong>direct multi-instrument structural detection</strong> that is fundamentally 
-different from any previous submission in this family of repositories.</p>
-
-<h3>Method</h3>
-<ol>
-  <li><strong>Multi-Scale Structure Tensor</strong> — Compute oriented linearity at 4 spatial scales (σ=1,2,3,5 pixels)
-  for gravity, magnetic, and DEM data using the structure tensor eigenvalue method.</li>
-  <li><strong>Cross-Instrument Concordance</strong> — At each pixel, count how many independent geophysical instruments 
-  (gravity, magnetics, DEM) show strong consistent linear features. Concordance across 2+ instruments is 
-  strong fault evidence.</li>
-  <li><strong>Geothermal Proximity</strong> — Weight detections by proximity to 27,092 wells/springs from the 
-  GDR 1391 INGENIOUS dataset. Hot springs far from cataloged faults indicate uncatalogued fault structures.</li>
-  <li><strong>Catalogue Ring Exclusion</strong> — Applied the critical lesson from h33-2-b2 (0.2778): pixels within 
-  200m of mapped faults earn zero credit while paying the FP tax. Zero pixels within 200m of catalogue.</li>
-  <li><strong>Binary {0,1} Emission</strong> — Optimal per the metric algebra (continuous scores forfeit score).</li>
-</ol>
-
-<h3>Expected Score Range</h3>
-<p>Based on the credit density analysis in this repository:</p>
-<table class="score-table">
-  <tr><th>Scenario</th><th>Credit Density (ρ)</th><th>Expected DTI</th></tr>
-  <tr><td>Random baseline</td><td>0.0279</td><td>~0.08</td></tr>
-  <tr><td>Concordance-only (conservative)</td><td>0.05–0.08</td><td>0.15–0.24</td></tr>
-  <tr><td>Concordance + geothermal (optimistic)</td><td>0.10–0.14</td><td>0.30–0.38</td></tr>
-  <tr><td>h33-2-b2 reference</td><td>0.1387</td><td>0.2778</td></tr>
-</table>
-<p class="meta">Note: These are projections, not ORGANIZER-CONFIRMED scores. Actual score depends on the private test set.</p>
-
-<!-- ===== DATA SOURCES ===== -->
-<h2>📊 Data Sources</h2>
-<table>
-  <tr><th>Source</th><th>Description</th><th>License</th></tr>
-  <tr><td>training_features.tif</td><td>19-band competition raster (gravity, magnetics, strain, seismicity, DEM)</td><td>Competition data</td></tr>
-  <tr><td>GDR 1391 INGENIOUS</td><td>27,092 wells/springs with temperature and geothermometer data</td><td>CC BY 4.0</td></tr>
-  <tr><td>USGS 3DEP</td><td>LIDAR-derived scarp features (1m DEM → 100m grid)</td><td>Public domain</td></tr>
-  <tr><td>USGS GeoDAWN</td><td>Radiometric data (K, Th, U, TC)</td><td>Public domain</td></tr>
-</table>
-
-<!-- ===== REFERENCES ===== -->
-<h2>📚 References</h2>
-<ul>
-  <li>Blum & Mitchell, "Combining labeled and unlabeled data with co-training", COLT '98, 
-  <a href="https://doi.org/10.1145/279943.279962">doi:10.1145/279943.279962</a></li>
-  <li>Competition page: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Problem description</a></li>
-  <li>DTI metric with α=0.2, β=0.8, R=300m triangular kernel</li>
-  <li><a href="https://gdr.openei.org/submissions/1391">GDR 1391 INGENIOUS data</a></li>
-  <li><a href="https://www.usgs.gov/3d-elevation-program">USGS 3DEP</a></li>
-  <li><a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">USGS GeoDAWN</a></li>
-</ul>
-
-<!-- ===== SUBMISSION HISTORY ===== -->
-<h2>📈 Submission History</h2>
-<table>
-  <tr><th>Name</th><th>Score</th><th>Notes</th></tr>
-  <tr><td>h83-structcon-geotherm-37654px</td><td>PENDING</td><td>Structural concordance + geothermal proximity · 37,654 px · Binary {0,1}</td></tr>
-</table>
-
-<!-- ===== TECHNICAL DETAILS ===== -->
-<details>
-<summary>🔧 Technical Details</summary>
-<h3>Feature Engineering</h3>
-<ul>
-  <li><strong>Gravity</strong>: Isostatic anomaly (band 13), vertical gradient (band 11), horizontal gradient (band 18), slope (band 5)</li>
-  <li><strong>Magnetics</strong>: RTP (band 2), TMI vertical gradient (band 9), total magnetic intensity (band 14)</li>
-  <li><strong>DEM</strong>: Detrended elevation (band 12), slope (band 19)</li>
-  <li><strong>Geothermal</strong>: 27,092 well/spring locations with temperature weighting</li>
-</ul>
-<h3>Structure Tensor</h3>
-<p>At each scale σ, compute the structure tensor J from the gradient field:</p>
-<pre>J = [Jxx  Jxy]
-    [Jxy  Jyy]
-where Jxx = Gσ * (∂I/∂x)², Jyy = Gσ * (∂I/∂y)², Jxy = Gσ * (∂I/∂x)(∂I/∂y)
-Linearity = (λ1 - λ2) / (λ1 + λ2) where λ1 ≥ λ2 are eigenvalues</pre>
-<h3>Concordance</h3>
-<p>At each pixel, count instruments with linearity above the 70th percentile. Add orientation agreement 
-bonus for pairs that are both strong and aligned (|cos θ| > 0.5).</p>
-<h3>Emission</h3>
-<p>Top-k binary emission at k=37,654 (matching h33-2-b2 budget), with catalogue ring exclusion 
-(2-pixel buffer around mapped faults).</p>
-</details>
-
-<details>
-<summary>📊 Leaderboard Context</summary>
-<table class="score-table">
-  <tr><th>Team</th><th>Score</th><th>Our Target</th></tr>
-  <tr><td>xiaofanhu (#1)</td><td>0.3774</td><td>—</td></tr>
-  <tr><td>alexoktaba (#2)</td><td>0.3361</td><td>—</td></tr>
-  <tr><td>DARD (#7)</td><td>0.3195</td><td>Beat this</td></tr>
-  <tr><td>extradr19 (us, #17)</td><td>0.2778</td><td>Current best</td></tr>
-</table>
-</details>
-
-<footer>
-  <p>Generated by GEMSDOE52 · <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DOE GEMS Competition</a></p>
-  <p>Last updated: 2026-10-10 · Branch: arena/bee150a1-gemsdoe52</p>
-</footer>
-
-</div>
-</body>
-</html>
+<!--R5:END-->
+<hr class="divider"><div class="section-head"><h2>What the holdout actually says</h2><a href="ctd5-audit.html">Read the method &amp; limitations →</a></div><p class="small"><b>HOLDOUT-DTI — exploratory legacy-v1, NOT strict holdout-valid</b> · gems52-pooled-hide-v1 · 53,186 withheld positives · pooled terms · 300 m triangular kernel · α 0.2 / β 0.8. 95% CI: paired 20 km cluster bootstrap. Not an organizer score.</p><p class="small"><b>Validation failure:</b> Legacy evaluation halos depended on withheld fault tails, revealing location to the placement domain. Shared splitter v2 is corrected; no post-stop refit or revised score exists. <a href="data/ctd5_validation_scope_correction.json">Scope correction</a>. <b>Budget-comparison failure:</b> fold 1 emitted only 2,041 of 3,058 requested candidate dots; controls filled their budgets. These are descriptive results, not a valid matched-budget promotion test. The final TIFF contains 12,000 dots.</p>
+<div class="table-wrap"><table><thead><tr><th>Procedure</th><th>HOLDOUT-DTI</th><th>95% CI</th></tr></thead><tbody><tr class=""><td>Surface-only control</td><td class="numeric">0.106749</td><td class="numeric">[0.089076, 0.124951]</td></tr><tr class=""><td>Disagreement before transfer</td><td class="numeric">0.021217</td><td class="numeric">[0.014514, 0.028823]</td></tr><tr class="highlight"><td>Disagreement after one exchange</td><td class="numeric">0.018848</td><td class="numeric">[0.012421, 0.026020]</td></tr></tbody></table></div>
+<hr class="divider"><div class="cards"><section class="card"><div class="eyebrow">01 / newly inferred</div><h3>No inherited prediction core</h3><span class="num">0 copied priors</span><p>Prior rasters enter only the audit. The new file is not a renamed prior, not a retained “credited core,” and not the union of the two views.</p></section><section class="card"><div class="eyebrow">02 / scope disclosed</div><h3>The lane rule stopped the run</h3><span class="num">541 rasters checked</span><p>A survey-wide lattice is within three pixels of every eligible cell. The literal overlap gate fails even though no decoded prediction is identical.</p></section><section class="card"><div class="eyebrow">03 / review, not discovery</div><h3>Geology for every A-only segment</h3><span class="num">1,521 review records</span><p>Measured context, a named non-fault mimic and a falsifier—not invented field observations. All 12,000 emitted cells have a record too.</p></section></div>
+<hr class="divider"><div class="grid2"><section><div class="eyebrow">The H33 question</div><h2>Better placement is plausible.<br>A higher score is not proven.</h2><p>Re-reading the files shows H33 removed 2,545 off-catalogue flank dots from its immediate parent and added none. This can reduce false-positive mass, but hidden credit is unknown.</p><p class="small">The supplied <b>0.2778</b> association is <b>OWNER-REPORTED, NOT ORGANIZER-CONFIRMED</b>. GEMSDOE32’s source instead says “NO ORGANISER SCORE EXISTS.” We did not turn that conflict into a score claim.</p><a href="ctd5-audit.html#h33">The exact evidence and metric argument →</a></section><figure style="margin:0"><img class="map" src="assets/ctd5-prediction.png" width="530" height="600" alt="Unverified CTD5 predictions over the eligible raster footprint; no geographic feature is asserted to be a verified fault."><figcaption class="legend"><span><i class="swatch"></i>Emitted predictions</span><span><i class="swatch amber"></i>Strict A-only subset</span></figcaption><p class="fine">Actual raster preview, north up. Enlarged display pixels; not a verified fault or geothermal-resource map.</p></figure></div>
+<div class="feed" id="local-feed">Automatic local evidence checks. Submission gate: CLOSED. Organizer results are not a live feed.</div><p class="small">Concurrent closure: the later H60 artifact was checked separately against unchanged CTD5 predictions. Initial closure: 542 files / 361 patterns; a second concurrent H60 then brought the total to 543 files / 362 patterns. The original duplicate STOP remains. <a href="data/ctd5_parallel_reconciliation.json">First supplemental audit</a> · <a href="data/ctd5_second_parallel_check.json">Second supplemental audit</a>. The inherited H60 pointer is unapproved, not selected by this session. <a href="h60.html">Preserved H60 archive</a>. A third, independent H60 round is at <a href="h60c.html">H60C</a> — preregistered two-view co-training on forensically attributed credit, artifact <code>gems52-h60c-core25517px-arm9668px.tif</code>, <a href="downloads/h60c-candidate.tif" download>download</a>.</p><p class="small">A fourth, independent H60-family round is at <a href="h60d.html">H60D</a> — co-training with disagreement as the discovery signal, artifact <code>gems52-h60d-dis_contrast-arm37654px.tif</code>, <a href="downloads/h60d-candidate.tif" download>download</a>. NEGATIVE RESULT — download for review only; do not spend a weekly slot.</p>
+<details><summary>Preserved research archives — do not upload</summary><p class="small">None of these historical files is current approval. H58: <a href="downloads/h58-candidate.tif" download>gems52-h58-coldgeo-consensus-22px-a55b0dee38-research.tif</a>, SHA-256 <code>130c242e33aef398c44b22cd</code>…; research only, not approved to submit. <a href="h58.html">H58 negative-result audit</a>.</p><p class="small"><a href="downloads/gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif" download>gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif</a> is the unapproved H57 alternate; <a href="h57-creditcore.html">historical audit</a>. <a href="h55-edge.html">H55-EDGE negative-result archive</a> · <a href="archive-h59-overview.html">Former H59 landing page, historical claims superseded</a>.</p></details><p class="small">Concurrent H60 co-training result: <a href="h60.html">audit</a> · <a href="downloads/h60-cotrain-candidate.tif" download>research-only TIFF</a>. The separate <a href="h60-triple-convergence.html">H60 triple-convergence archive</a> is also preserved. Neither is approval.</p></details><footer><p>Independent competition research, not an official DOE or DrivenData site. Predictions are not verified faults or geothermal discoveries. · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code &amp; reproducibility</a> · H84 / 2026-10-10</p></footer></div></body></html>

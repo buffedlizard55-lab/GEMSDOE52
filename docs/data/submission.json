@@ -1,75 +1,85 @@
 {
-  "round": "H60",
-  "file": "gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif",
-  "stem": "gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros",
-  "bytes": 130202,
-  "sha256": "737c77344457dc1561fe091bc3ab085b3ab65af10b290f5301512f0505abec07",
-  "nonzero_px": 31000,
-  "short_tif": "h60-candidate.tif",
-  "short_zip": "h60-candidate.zip",
-  "note": "H60 concurrent triple-convergence research artifact. No registered comparable holdout lift; not approved for submission.",
+  "round": "H84",
+  "file": "gems52-h84-csa16fan-B-37654px-20261010T215157Z.tif",
+  "stem": "gems52-h84-csa16fan-B-37654px-20261010T215157Z",
+  "bytes": 138604,
+  "sha256": "e0b5ab82ee6df0191a0ec3ed671d45588bcba8fdb1b4ce4f4610cf6a0cb6cc38",
+  "nonzero_px": 37654,
+  "short_tif": "h84-candidate.tif",
+  "short_zip": "h84-candidate.zip",
+  "note": "H84: View-B + 84 continuous directional-alignment channels on a 16-direction semivariance fan; 200m ring excluded; binary dots",
   "approved_for_weekly_slot": false,
   "promoted": false,
   "submission_slots_used": 0,
   "format": {
-    "path": "submission/gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif",
-    "bytes": 130202,
-    "sha256": "737c77344457dc1561fe091bc3ab085b3ab65af10b290f5301512f0505abec07",
+    "path": "submission/gems52-h84-csa16fan-B-37654px-20261010T215157Z.tif",
+    "bytes": 138604,
+    "sha256": "e0b5ab82ee6df0191a0ec3ed671d45588bcba8fdb1b4ce4f4610cf6a0cb6cc38",
     "bands": 1,
     "dtype": "float32",
     "crs": "EPSG:32611",
     "width": 3292,
     "height": 3730,
-    "bounds": [
-      243350.0,
-      4135550.0,
-      572550.0,
-      4508550.0
-    ],
-    "ref_bounds": [
-      243350.0,
-      4135550.0,
-      572550.0,
-      4508550.0
-    ],
-    "transform": [
-      100.0,
-      0.0,
-      243350.0,
-      0.0,
-      -100.0,
-      4508550.0
-    ],
-    "nodata": null,
-    "blocksize": [
-      256,
-      256
-    ],
-    "fixture_grid": false,
-    "has_validity_mask": false,
     "nan_pixels": 0,
     "infinity_pixels": 0,
-    "n_nan": 0,
     "min": 0.0,
     "max": 1.0,
-    "mean": 0.0025246026925742626,
-    "n_nonzero": 31000,
-    "mass": 31000.0,
+    "n_nonzero": 37654,
+    "mass": 37654.0,
     "problems": [],
     "ok": true,
     "validation_class": "local on-disk template/range check; not organizer upload acceptance"
   },
-  "source_build": "evidence/h60_tc_build.json",
-  "source_build_is_archival": true,
-  "official_score_status": "No organizer submission receipt available.",
+  "source_build": "evidence/h84_build.json",
+  "source_build_is_archival": false,
+  "official_score_status": "No organizer submission receipt available; no leaderboard page was accessed.",
   "verdict": "research only; not approved for weekly slot",
-  "pointer_origin": "Inherited unchanged from upstream PR #34 (647ac2f); not selected or promoted by CTD5.",
-  "reason": "No registered comparable pooled holdout-DTI + CI; an insufficient-block independence statistic is not positive evidence.",
+  "reason": "three independent promotion conditions fail: (1) the primary paired difference B_CSA - single_B = -0.004197 has a 95 % CI [-0.016143, 0.008684] that straddles zero, so the continuous 16-fan alignment does not beat the single-view control; (2) the single_B instrument control measured 0.173444 against its committed 0.174517, |delta| 1.07e-03 > tolerance 0.001; (3) the lane dots literal gate is DUPLICATE/STOP on the full census and on the restricted scored-only registry (max near-3-px share 1.0000). The one significant positive result is internal: B_CSA - B_DVA3 = 0.009090 [0.002176, 0.015869], i.e. the continuous alignment is measurably better than H82's four-valued argmax recoding, but that only removes the H82 damage and does not beat plain 8-direction anisotropy (B_CSA - B_DVA3c = -0.000286, CI [-0.007287, 0.007428]).",
   "marker": "submission/LATEST.txt",
   "exists": true,
-  "download": "downloads/gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif",
-  "download_zip": "downloads/gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.zip",
-  "submission_note": "H60 concurrent triple-convergence research artifact. No registered comparable holdout lift; not approved for submission.",
-  "submission_note_chars": 120,
-  "published_byte_hash_matches_receipt": true
+  "download": "downloads/gems52-h84-csa16fan-B-37654px-20261010T215157Z.tif",
+  "download_zip": "downloads/gems52-h84-csa16fan-B-37654px-20261010T215157Z.zip",
+  "submission_name": "h84-csa16fan-B-37654px-20261010T215157Z",
+  "submission_note": "H84: View-B + 84 continuous directional-alignment channels on a 16-direction semivariance fan; 200m ring excluded; binary dots",
+  "submission_note_chars": 126,
+  "published_byte_hash_matches_receipt": true,
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator": "gems52-pooled-hide-v1",
+    "withheld_positive_px": 53186,
+    "primary": {
+      "evidence_class": "HOLDOUT-DTI",
+      "evaluator_version": "gems52-pooled-hide-v1",
+      "dti": 0.16924664155658412,
+      "ci95": [
+        0.15078247809845113,
+        0.18838705690466323
+      ],
+      "withheld_positive_pixels": 53186,
+      "tpw": 8627.315368760186,
+      "fpw": 33502.733812174985,
+      "fnw": 44558.68463123982
+    },
+    "control_single_B": {
+      "evidence_class": "HOLDOUT-DTI",
+      "evaluator_version": "gems52-pooled-hide-v1",
+      "dti": 0.1734438278177673,
+      "ci95": [
+        0.15257597815605767,
+        0.19499146398664705
+      ],
+      "withheld_positive_pixels": 53186,
+      "tpw": 8847.141952946635,
+      "fpw": 33452.293845820495,
+      "fnw": 44338.858047053385
+    },
+    "paired_delta": -0.004197186261183178,
+    "paired_ci95": [
+      -0.016143084519749884,
+      0.008683615357550262
+    ],
+    "note": "a holdout number is not a board forecast"
+  },
+  "download_ok": true,
+  "submit_ok": false
 }

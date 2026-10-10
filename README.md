@@ -1,3 +1,92 @@
+<!--H84-README-->
+# Current status — H84 (2026-10-10): continuous directional alignment on a 16-direction semivariance fan — NEGATIVE / research-only
+
+> **DOWNLOAD: YES** (format-valid on disk: single-band float32,
+> EPSG:32611, 3730×3292, transform/bounds match the organiser template, values exactly {0,1},
+> 0 NaN, 0 inf).
+> **SUBMIT TO THE COMPETITION: NO — research artefact only. DO NOT UPLOAD.**
+> Slots used: **0**. Experiments used: 1 of 3.
+
+**★ [Download the H84 GeoTIFF — one click](docs/downloads/h84-candidate.tif)** ·
+[single-TIFF ZIP](docs/downloads/h84-candidate.zip) ·
+[per-cell geological reasoning CSV](docs/downloads/h84-a-only-reasoning.csv) ·
+**[Executive summary / exactly how to submit](docs/h84-executive-summary.html)** ·
+[check any file in your browser](docs/validator.html) ·
+[full result](docs/h84.html) · [hypotheses](docs/h84-hypotheses.html) · [sources](docs/h84-sources.html)
+
+- **File:** `submission/gems52-h84-csa16fan-B-37654px-20261010T215157Z.tif` — 138,604 bytes, SHA-256 `e0b5ab82ee6df0191a0ec3ed671d45588bcba8fdb1b4ce4f4610cf6a0cb6cc38`
+- **Submission name:** `h84-csa16fan-B-37654px-20261010T215157Z` · **Note (126/140):** `H84: View-B + 84 continuous directional-alignment channels on a 16-direction semivariance fan; 200m ring excluded; binary dots`
+- **HOLDOUT-DTI** (`gems52-pooled-hide-v1`, 53,186 withheld positive px,
+  9,400 dots/fold/arm, α 0.2 / β 0.8, 300 m triangular kernel, 1,000 paired
+  physical-block bootstrap draws):
+
+| arm | pooled HOLDOUT-DTI | 95 % CI | role |
+|---|---|---|---|
+| `single_A` | 0.078181 | [0.063473, 0.094017] |  |
+| `single_B` | 0.173444 | [0.152576, 0.194991] | control |
+| `B_DVA3c` | 0.169532 | [0.152274, 0.188307] |  |
+| `B_DVA3` | 0.160157 | [0.142561, 0.179115] |  |
+| `B_CSA` | 0.169247 | [0.150782, 0.188387] | **primary** |
+| `random` | 0.079908 | [0.070672, 0.089335] |  |
+
+- **Primary paired difference** `B_CSA − single_B` = **-0.004197**
+  [-0.016143, 0.008684] → does not clear zero;
+  `B_CSA − B_DVA3` = 0.009090
+  [0.002176, 0.015869];
+  `B_CSA − random` = 0.089338
+  [0.073486, 0.106633].
+- **Instrument-integrity control:** `single_B` 0.173444 vs committed
+  0.174517 (|Δ| 1.07e-03 ≤ 0.001) → FAIL.
+- **Leakage canary:** max direction-insensitive single-channel AUC over all
+  84 new learner channels = **0.622041**
+  (bar 0.9) → no alarm.
+- **View independence (the lane's mandated Blum–Mitchell test):** max |rho|
+  0.1371 over 2,089 blocks / 4,095,103
+  proxy negatives (held-out catalogue-zero proxies, not verified absence), with the abandon bar
+  0.6 inherited verbatim from
+  `registry/h74_preregistration.json` → `allow_exchange =
+  True`. Exchange is still **not** run: View-A sufficiency failed
+  again (mean 0.5315, min fold 0.4556, gate 0.60/0.55) and H71
+  measured that exchange lowers the A2 out-of-fold AUC (0.5019 → 0.4759).
+- **Lane / uniqueness:** full census (573 rasters) dots literal
+  **DUPLICATE/STOP** (max ρ 0.0795 bar 0.90, max near-3px share
+  1.0000 bar 0.70). Restricted scored-only registry
+  (13 rasters) dots literal **DUPLICATE/STOP**
+  (max ρ 0.0385, max near 1.0000), policy
+  **PASS**; quota placement filled
+  37,654 dots at worst share
+  0.5829. A restricted or policy PASS never
+  waives a literal full-census DUPLICATE/STOP.
+- **Not the union:** shared with `max(pA,pB)` 1,496 px
+  (Jaccard 0.0203), with `single_A` 665 px, with
+  `single_B` 1,765 px, with the B-only-suppressed variant
+  27,429 px; identical to none → **PASS**.
+- **Placement:** 37,654 binary dots from a 4,325,298-px pool; 200 m catalogue ring
+  excluded; min distance to a mapped trace 223.6 m, median
+  1389.2 m, 14.19% inside the metric's
+  300 m kernel. B-only disagreement used as a **suppression** set (643,861
+  px vetoed).
+- **Method:** 84 new learner channels over 7 fields ×
+  3 lags × 4 statistics — 16-fan anisotropy, 16-fan log-variance, the
+  γ-weighted axial circular **mean direction** (continuous, replacing H82's 4-valued argmax) and its
+  **resultant length** (directional confidence, no degenerate-null mode) — plus
+  18 8-direction control channels whose fan is exactly H82's, computed in the
+  same pass. Measured strike per fold from the fold's own visible catalogue:
+  f0 169.7° (R 0.37), f1 171.8° (R 0.37), f2 166.7° (R 0.45), f3 167.2° (R 0.38).
+- **New this round:** `scripts/repair_h84_channels.py` (IR-H84-001) — 30 of 102 channel files failed
+  the byte-integrity guard *after* passing it; they were recomputed from the pinned rasters with a
+  digest-stability check, not patched.
+- Reproduce: `python3 scripts/restore_data.py --target-dir data` → build the store →
+  `PYTHONPATH=src python3 -m gems52.external` → `python3 scripts/fetch_prior_inventory.py` →
+  `python3 scripts/repair_h84_channels.py --all` →
+  `python3 scripts/run_h84.py fit independence holdout build write lane card` →
+  `python3 scripts/publish_h84_site.py` → `python3 scripts/finalize_h84.py` →
+  `python3 scripts/h84_readme_block.py` → `python3 scripts/check_site.py` → `python3 -m pytest -q`.
+
+---
+
+<!--/H84-README-->
+
 <!--H83-README-->
 # Current status — H83 (2026-10-10): UNIQUE SUBMISSION — Multi-Scale Structural Concordance + Geothermal Proximity
 

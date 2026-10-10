@@ -1,0 +1,67 @@
+{
+  "file": "gems52-h84-csa16fan-B-37654px-20261010T215157Z.tif",
+  "sha256": "e0b5ab82ee6df0191a0ec3ed671d45588bcba8fdb1b4ce4f4610cf6a0cb6cc38",
+  "bytes": 138604,
+  "submission_name": "h84-csa16fan-B-37654px-20261010T215157Z",
+  "note": "H84: View-B + 84 continuous directional-alignment channels on a 16-direction semivariance fan; 200m ring excluded; binary dots",
+  "note_chars": 126,
+  "validator": {
+    "path": "/home/user/GEMSDOE52/submission/gems52-h84-csa16fan-B-37654px-20261010T215157Z.tif",
+    "bytes": 138604,
+    "sha256": "e0b5ab82ee6df0191a0ec3ed671d45588bcba8fdb1b4ce4f4610cf6a0cb6cc38",
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "ref_bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "nodata": null,
+    "blocksize": [
+      256,
+      256
+    ],
+    "fixture_grid": false,
+    "has_validity_mask": false,
+    "nan_pixels": 0,
+    "infinity_pixels": 0,
+    "n_nan": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.0030664964579045773,
+    "n_nonzero": 37654,
+    "mass": 37654.0,
+    "mass_outside_footprint": 0,
+    "problems": [],
+    "ok": true,
+    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "zip_file": "gems52-h84-csa16fan-B-37654px-20261010T215157Z.zip",
+  "zip_sha256": "81951016231c6667c6f8fe1e29a3138ee9fab81ebfe8b8e9f5a86b2289445442",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "status": "research-only; local format validation is not organizer acceptance",
+  "metadata": {
+    "round": "H84",
+    "primary_arm": "B_CSA"
+  }
+}

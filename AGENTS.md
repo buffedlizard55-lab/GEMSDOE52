@@ -1,3 +1,41 @@
+<!--H84-AGENTS-->
+## Current H84 continuation (2026-10-10)
+Read README's H84 block first, then `knowledge/74_hypotheses_H84_preregistered.md` (frozen before any
+fit; SHA-256 `b7da44db742c5455…`, pinned in `registry/h84_preregistration.json`)
+and `knowledge/75_h84_results_and_limits.md`. Verdict **NEGATIVE**,
+experiments 1/3, slots 0.
+
+What is now settled, and must not be re-litigated:
+
+- **The 16-direction fan and the continuous alignment are measured, not assumed.** The primary
+  `B_CSA` scored HOLDOUT-DTI 0.169247 [0.150782, 0.188387] against `single_B`
+  0.173444 [0.152576, 0.194991], paired Δ -0.004197
+  [-0.016143, 0.008684]. The 8-direction control `B_DVA3c` scored
+  0.169532, so the fan-resolution and alignment effects are separated in one pass.
+- **The leakage canary stayed clean** at 0.6220 against a 0.90 bar
+  over 84 channels, so no channel is a leak.
+- **View-A sufficiency failed again** (mean 0.5315, min fold 0.4556).
+  Independence holds (max |ρ| 0.1370681276676306, bar
+  0.6), but independence without sufficiency gives co-training
+  nothing to donate. Do not re-run pseudo-label exchange on this View A.
+- **IR-H84-001 is environment-level, not repository-level:** channel files written by
+  `run_h82.save_verified` were corrupted *after* verification by the concurrently-snapshotting
+  filesystem. `scripts/repair_h84_channels.py --all` recomputes the whole bank with a
+  digest-stability check. Any round that builds a channel bank must run it before fitting.
+- **The H83 artefact is not a validated candidate.** Its own run card records
+  `holdout_dti = NOT_EVALUATED`, and it claims "no prior submissions to compare against" when the
+  registry holds 500+. It is archived, not promoted; do not submit it.
+- **Board algebra, re-measured this session** (`scripts/h67_board_algebra.py`,
+  `evidence/h67_board_algebra.json`): at 37,654 emitted px the credit density needed for 0.3195 is
+  ρ = 0.1595 against the reported-0.2778
+  champion's 0.1387; Spearman(emitted mass,
+  owner-reported board) = -1.0 over
+  5 files. The binding constraint is the ranker's ρ(S) decay, not the budget.
+- **The lane rule still cannot be satisfied literally** for any emission ranked by this family's own
+  signal: full-census dots literal **DUPLICATE/STOP** (max near-3px share
+  1.0000). Report it verbatim; never waive it with a restricted PASS.
+<!--/H84-AGENTS-->
+
 # Working agreement
 
 Before every work session, read `README.md`, its full current user brief, `knowledge/07_r2_hypotheses_preregistered.md`, and the newest review/irregularities record. Read previous failed experiments before proposing another.

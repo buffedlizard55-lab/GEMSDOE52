@@ -1,0 +1,177 @@
+{
+ "round": "H84",
+ "preregistered_utc": "2026-10-10T21:05:00+00:00",
+ "hypothesis_document": "knowledge/74_hypotheses_H84_preregistered.md",
+ "hypothesis_sha256": "b7da44db742c545511738a091b31d747dcf9c3de42dc4994005ba3f51bf34b17",
+ "hypothesis_bytes": 11294,
+ "lane": "two-view paragraph of the brief (Blum & Mitchell COLT 1998, doi:10.1145/279943.279962): View A potential-field/subsurface vs View B surface, disagreement as the discovery signal. H84 repairs the measured 4-value quantisation and degenerate-null defect of the H82 alignment channels (knowledge/73 section 4) with a 16-direction semivariance fan and a continuous, g-weighted mean direction plus directional resultant length, and adds radiometric-ratio (Th/K, U/K) directional anisotropy to View B.",
+ "frozen_before_any_fit": true,
+ "runner": "scripts/run_h84.py",
+ "runner_refuses_if_hash_moves": true,
+ "seed": 84024,
+ "primary_arm": "B_CSA",
+ "arms": [
+  "single_A",
+  "single_B",
+  "B_DVA3c",
+  "B_DVA3",
+  "B_CSA",
+  "random"
+ ],
+ "attribution_arms_not_promotable": [
+  "B_DVA3",
+  "B_DVA3c"
+ ],
+ "promotion_rule": "paired 95% CI lower bound of (B_CSA - single_B) > 0 on gems52-pooled-hide-v1 at 9400 dots/fold, AND single_B reproduces its committed control 0.174517 within 1e-3, AND leakage canary clean, AND not-the-union pass, AND lane gate pass",
+ "controls": {
+  "single_B": {
+   "committed": 0.174517,
+   "tolerance": 0.001,
+   "source": "registry/h74_preregistration.json thresholds.single_B_control_holdout_dti"
+  }
+ },
+ "new_channels": {
+  "fan_directions": 16,
+  "fan_offsets_dy_dx": [
+   [
+    0,
+    1
+   ],
+   [
+    1,
+    4
+   ],
+   [
+    1,
+    2
+   ],
+   [
+    3,
+    4
+   ],
+   [
+    1,
+    1
+   ],
+   [
+    4,
+    3
+   ],
+   [
+    2,
+    1
+   ],
+   [
+    4,
+    1
+   ],
+   [
+    1,
+    0
+   ],
+   [
+    -4,
+    1
+   ],
+   [
+    2,
+    -1
+   ],
+   [
+    -4,
+    3
+   ],
+   [
+    1,
+    -1
+   ],
+   [
+    -3,
+    4
+   ],
+   [
+    1,
+    -2
+   ],
+   [
+    -1,
+    4
+   ]
+  ],
+  "fan_note": "cyclic mod 16 (gamma is 180-degree periodic); even indices are exactly H82's 8-direction FAN as a set, so the 8-fan control is an internal sub-fan of the same computation",
+  "lags_px": [
+   2,
+   3,
+   4
+  ],
+  "bands": {
+   "12": "det_elev",
+   "19": "det_elev_slope",
+   "13": "iso_grav_anom",
+   "18": "iso_grav_anom_hg",
+   "15": "depth_to_base_surf",
+   "X_rad_ThK": "external geodawn_extensions_u8 band 1 (Th/K alteration index)",
+   "X_rad_UK": "external geodawn_extensions_u8 band 2 (U/K alteration index)"
+  },
+  "sigma_px": 3.0,
+  "channel_families": {
+   "DVA3_<band>_aniso_l<h>": "(max-min)/(max+min) of the smoothed semivariance over the 16-direction fan",
+   "DVA3_<band>_logvar_l<h>": "log10 of the fan-mean smoothed semivariance",
+   "CSA_<band>_cos2reg_l<h>": "cos(2*(phi_soft - psi_reg(fold))) with phi_soft the gamma-weighted circular mean direction; continuous, no degenerate-null mode",
+   "CSA_<band>_dirR_l<h>": "weighted resultant length of the fan direction distribution in [0,1]; directional confidence, continuous"
+  },
+  "n_learner_channels": 84,
+  "n_control_channels_8fan": 18,
+  "control_not_promotable": true,
+  "fields": [
+   "12",
+   "13",
+   "15",
+   "18",
+   "19",
+   "X_rad_ThK",
+   "X_rad_UK"
+  ]
+ },
+ "canary_alarm_auc": 0.9,
+ "emission": {
+  "K_total": 37654,
+  "K_fold": 9400,
+  "min_spacing_px": 3.0,
+  "catalogue_ring_excluded_m": 200.0,
+  "values": "binary {0,1}",
+  "ring_mechanism_source": "knowledge/49 section 1 (measured 0.2600 -> 0.2778)"
+ },
+ "lane_registries": {
+  "literal_full_census": "submission/*.tif plus the prior inventory receipt, excluding gems52-h84-*",
+  "restricted_scored_only": "data/scored/*.tif + data/reference/h33-2-b2-zeros.tif (13 files, registry/h82_scored_registry.json)",
+  "doctrine": "a policy or restricted-registry PASS never waives a literal full-census DUPLICATE/STOP (AGENTS.md; knowledge/62 IR-H73-011); both verdicts reported verbatim"
+ },
+ "shared_tools_to_reuse": [
+  "scripts/run_h61.py::setup, sample_for_fit, learner_for, predict_flat, to_grid, pct_rank",
+  "src/gems52/spatial.py::folds (label-blind-quadrants-v2), negative_block_errors, independence",
+  "src/gems52/evaluate_holdout.py (gems52-pooled-hide-v1)",
+  "src/gems52/metric.py",
+  "src/gems52/nodes.py::spacing_select",
+  "src/gems52/azimuth.py::axial_difference, axial_resultant, wrap_axial",
+  "src/gems52/submission_writer.py",
+  "src/gems52/grid.py::write_geotiff_portal_exact",
+  "src/gems52/gates.py (lane_report, uniqueness_report)",
+  "src/gems52/structural.py::FeatureStore (cached stack)",
+  "scripts/run_h82.py::save_verified (verified writer), Bank (byte-integrity-checked channel store)",
+  "scripts/run_h73.py::place_lane, support_of, halo (quota placement)"
+ ],
+ "no_private_fork": true,
+ "expected_board_claim": "none; knowledge/74 section 4 states the honest bracket before the holdout is read",
+ "inputs_provenance": "integrity-pinned, not organizer-authenticated (registry/data_manifest.json, 23/23 pins, ALL_VERIFIED=True)",
+ "budget": {
+  "experiments": 3,
+  "hours": 2,
+  "submission_slots_allowed": 0
+ },
+ "thresholds_inherited_from": "registry/h74_preregistration.json",
+ "thresholds_inherited_sha256": "44d8eeba549abccd21483bb3b7859a295b86fa746aa4b13796f7fd0b74349e48",
+ "amendments": [
+  "74a (2026-10-10T21:10Z, before any fit/canary/holdout read): learner-channel count corrected 60 -> 84 (7 fields x 3 lags x 4 statistics); design table already implied it. No hypothesis, threshold, arm, seed, budget, promotion rule or lane rule changed."
+ ]
+}
