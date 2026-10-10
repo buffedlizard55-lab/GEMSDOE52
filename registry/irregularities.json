@@ -1,6 +1,6 @@
 {
   "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified. | H61 merge: IR-H61-001..009 appended from the H61 branch; main's repaired schema and numbering retained.",
-  "generated": "2026-10-09T21:59:21Z",
+  "generated": "2026-10-10T20:48:38Z",
   "entries": [
     {
       "id": "IR-30-029",
@@ -2723,6 +2723,90 @@
       "id": "IR-H84-001",
       "round": "H84",
       "severity": "high",
+      "status": "recorded - lane DUPLICATE/STOP on final dots; verdict negative; file published research-only",
+      "title": "Final H84 dots cross the brief's '>70% of dots within 3 px of one registry raster' rule - literally (lattice probes) AND under the informative-prior policy",
+      "what_it_is": "Literal full census (584 rasters): max near-3px share 1.0 against universal-coverage lattice probes (e.g. work/h61/priors/cd838daa…tif); 71 near offenders, 0 rank offenders (max Spearman 0.1939). This part was predicted in the preregistration (knowledge/74 §5): any non-empty dot set scores 1.0 against a probe whose 3 px halo covers >=95% of the footprint. NEW in H84: the policy verdict that excludes the 15 probes is ALSO DUPLICATE/STOP - max share 0.9441 against GEMSDOE22 docs/downloads/gems22-h23-b-dti-optimal-emission-10pct-20261002-86176698-allfinite.tif (blob 5ae4b6b4…, halo covers 53% of the footprint), with 56 informative near-offenders (H82: 0.9077, 24 offenders). Every offender is a dense emission (halo coverage 30-90%) with Spearman <= 0.054 against the H84 surface, i.e. the dots fall inside dense halos rather than reproducing anyone's ranking. Scored-only 13-raster registry: literal DUPLICATE (one lattice probe), policy PASS at 0.6983 (the quota placement's bound).",
+      "how_we_know": "evidence/h84_lane.json full_dots / restricted_dots (literal, policy, per_prior); work/h61/prior_fetch_receipt.json maps blob 5ae4b6b4… to its source repo/path.",
+      "handling": "Per the brief and the frozen doctrine the duplicate is logged and the round stops: verdict NEGATIVE, SUBMIT NO, no re-placement, no waiver, no second placement tuned to dodge the rule. Per knowledge/74 §5 only a surface DUPLICATE stops before placement; the surface passed (literal max Spearman 0.4953, scored-only 0.1895), so the raster exists and is published as a research artefact.",
+      "disposition": "Owner decision needed (carried from H73/H75/H82): the 3 px proximity rule cannot be passed by any 37,654-dot emission against probes, and is now also failed against dense (30-90% coverage) informative priors. A future round that wants a lane-PASS file must pre-register a quota placement against the FULL census informative supports, not only the 13 scored-only files.",
+      "measured_effect": "gate 5 FAIL; raster decoded-distinct from all 584 compared priors (no identical prior)"
+    },
+    {
+      "id": "IR-H84-002",
+      "round": "H84",
+      "severity": "medium",
+      "status": "recorded",
+      "title": "The brief quotes 0.3195 as the leaderboard top; the public board's #1 is 0.3774",
+      "what_it_is": "The 2026-10-10 brief says 'the current leaderboard top is 0.3195' and elsewhere mentions 0.3774. On the live public board fetched 2026-10-10, 0.3195 is rank 8 (team DARD); rank 1 is 0.3774 (xiaofanhu), rank 2 0.3418, rank 3 0.3361.",
+      "how_we_know": "fetch of https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/ on 2026-10-10; rows 1-48 stored in registry/leaderboard_snapshot_2026-10-10.json.",
+      "handling": "Both bars are reported with their PUBLIC-BOARD label and rank; neither is used as a holdout target. The board shows team names only, so no score is attributed to a filename.",
+      "disposition": "no action needed beyond labelling",
+      "measured_effect": "none on the H84 measurement; affects only which bar the site quotes"
+    },
+    {
+      "id": "IR-H84-003",
+      "round": "H84",
+      "severity": "high",
+      "status": "resolved - writer changed, audit loop added, fit reads verified in-RAM copies",
+      "title": "Channel .npy files lost their first 4 KiB page AFTER a verified write, under the channel stage's load",
+      "what_it_is": "In the first H84 channel build, 16/81 files (all det_elev band) later had bytes 128-4095 zeroed (the rest of the header's first 4 KiB page = first 992 float32 values); the fit stage's digest guard refused them ('channel byte-integrity failure: COH_det_elev'). A second build, with save_verified hardened (fsync + POSIX_FADV_DONTNEED + re-read compare), passed every per-file verification yet an end-of-stage audit found 65/81 files changed. H82 saw the same signature (8/79). A quiet reproduction (4x np.save + 4x structural.save_array, 4.59M float32, 100 s) left 8/8 files intact. The shared feature store work/r2/features was audited: 78/78 feature_sha256 match, no zero-first-page column.",
+      "how_we_know": "byte comparison of the torn files against their in-memory arrays; manifest SHA-256 vs disk digest after cache drop; logs /tmp/h84_channels.log and /tmp/h84_fit.log of the failed runs.",
+      "handling": "scripts/run_h84.py stage_channels now writes through gems52.structural.save_array (atomic .partial + fsync + re-read + rename), then sleeps, drops the page cache per file, re-digests all 81 files against both the file digest and an array digest, and recomputes only bands with moved files (max 4 passes, else SystemExit). The fit stage loads every channel it needs fully into RAM (RamBank) after checking its array digest, so later on-disk changes cannot reach a model. run_h82.save_verified keeps the fsync + fadvise hardening.",
+      "disposition": "third build: audit pass 1 found 0/81 moved; fit read verified copies. Root cause (filesystem/VM page handling under memory pressure) not identified - recorded, not claimed.",
+      "measured_effect": "two wasted channel builds (~6 min); no effect on any reported number, because every number comes from the verified third build"
+    },
+    {
+      "id": "IR-H84-004",
+      "round": "H84",
+      "severity": "low",
+      "status": "resolved",
+      "title": "README and AGENTS H82 blocks named a submission file that does not exist (…20261009T213414Z)",
+      "what_it_is": "README.md lines 14-15 and AGENTS.md line 63 gave the H82 file/name as gems52-h82-dva2vsa-B-37654px-20261009T213414Z; the file on disk, evidence/h82_build.json and the root landing page all say …20261009T215811Z, with the same SHA-256 17c3f832…c907 (the H82 write stage was re-run and only the timestamp changed).",
+      "how_we_know": "ls submission/ | grep h82; evidence/h82_build.json name/file/sha256.",
+      "handling": "sed-replaced the stale timestamp in README.md and AGENTS.md; the bytes and SHA-256 were already correct.",
+      "disposition": "fixed",
+      "measured_effect": "a reader copying the README name would have used a name that does not match the file; no effect on bytes"
+    },
+    {
+      "id": "IR-H84-005",
+      "round": "H84",
+      "severity": "medium",
+      "status": "recorded - frozen gate 3 fails; verdict cannot be promote",
+      "title": "Control B_DVA2 did not reproduce H82's committed HOLDOUT-DTI within the frozen 1e-3 tolerance",
+      "what_it_is": "H84 measured B_DVA2 = 0.192829 against the committed 0.189200 (|delta| 3.63e-3 > tol 1e-3). The other control, single_B, reproduced (0.174571 vs 0.174517, |delta| 5.4e-5). H84 rebuilt the 50 DVA-2 channels with H82's arithmetic in a new per-band function and a different writer; H82's channel files are not in this sandbox and H82 stored no per-channel digests, so byte equality cannot be tested.",
+      "how_we_know": "evidence/h84_holdout.json controls; evidence/h82_fit.json vs evidence/h84_fit.json: identical n_train_rows and n_pos per fold, B_DVA2 out-of-quadrant AUC differs by <= 1.4e-3 per fold (0.6849/0.6840, 0.7855/0.7867, 0.6493/0.6479, 0.7297/0.7284) and single_B - which uses no DVA-2 channel - also differs by up to 3.1e-3 (0.6143/0.6112), i.e. part of the drift is run-to-run, not channel arithmetic.",
+      "handling": "Not tuned away. Gate 3 is reported FAIL and the verdict is negative on that ground alone. The H84 decision comparison (primary vs B_DVA2) is paired and made inside the same run on the same instrument, so the drift does not bias it.",
+      "disposition": "future rounds should store per-channel array digests in evidence (H84 now does: work/h84/features/manifest.json array_sha256, copied into evidence/h84_channels.json) and pin learner thread count, so control drift can be attributed",
+      "measured_effect": "committed-vs-measured B_DVA2 differs by +0.003629 HOLDOUT-DTI; within-run paired primary-B_DVA2 = -0.002682 [-0.005505, +0.000177]"
+    },
+    {
+      "id": "IR-H84-006",
+      "round": "H84",
+      "severity": "high",
+      "status": "resolved - round renamed at merge, following the IR-H71-005 / IR-H74-002 / IR-H82-008 precedent",
+      "title": "Namespace collision: this session's round was numbered H83, but two parallel sessions merged their own H83 rounds to main while it ran",
+      "what_it_is": "This session preregistered (19:54:01Z) and completed its harmonic-variogram round as H83. Meanwhile PR #81 (H83 multi-band structural-concordance lineament detector) and PR #82 (H83 multi-scale structural concordance + geothermal proximity) were merged to main, occupying docs/downloads/h83-candidate.*, docs/h83-executive-summary.html, evidence/h83_run_card.json and the README/AGENTS H83 markers.",
+      "how_we_know": "git fetch origin; git log HEAD..origin/main showed 4d06537 / 7ee32e9 (#81) and d5e61ad / ebb1d34 (#82); git ls-tree origin/main listed the colliding paths; H84 had 0 files and 0 text references on main.",
+      "handling": "Identifier-only rename H83 -> H84: scripts/run_h83.py -> run_h84.py, publish_h83_site.py -> publish_h84_site.py, tests/test_h83_harmonic.py -> test_h84_harmonic.py, knowledge/74/75/76 file names, registry/h83_preregistration.json -> h84_*, evidence/h83_* -> h84_*, work/h83 -> work/h84, IR-H83-001..005 -> IR-H84-001..005, README/AGENTS markers. The preregistration was re-pinned; replacing H84->H83 in the renamed document reproduces the frozen SHA-256 521eca05… byte-for-byte (kept as pre_rename in registry/h84_preregistration.json). The write and card stages were re-run: the GeoTIFF bytes are unchanged (SHA-256 6bb18056…b73e), only the submission name/prefix changed. The final dots were additionally lane-checked against the three parallel H83 rasters now on main: max Spearman 0.0095, max near-3px 0.2418, none identical -> PASS (evidence/h84_lane_vs_parallel_h83.json).",
+      "disposition": "Renamed to H84. Main's H83 artefacts are untouched; both rounds' README/AGENTS blocks are kept. No hypothesis, threshold, arm, budget or promotion rule changed.",
+      "measured_effect": "none on any number; names and paths only"
+    },
+    {
+      "id": "IR-H84-007",
+      "round": "H84",
+      "severity": "high",
+      "status": "open - flagged for the owner; the parallel session's content is preserved verbatim, only audit notices were added",
+      "title": "Parallel-session H83 (PR #82) is labelled SUBMIT YES / verdict promote with no holdout measurement, and its merge rewrote docs/index.html from scratch",
+      "what_it_is": "Main's H83 README block and evidence/h83_run_card.json (PR #82, 'Multi-Scale Structural Concordance + Geothermal Proximity', file submission/gems52-h83-structcon-geotherm-37654px-20261010T200310Z.tif, SHA-256 d9cfccf0…f378) say SUBMIT YES and verdict 'promote' while holdout_dti.value = 'NOT_EVALUATED'. The brief forbids promoting un-validated ideas and requires every number to be HOLDOUT-DTI or ORGANIZER-CONFIRMED; the README prints 'Expected score: Projection 0.15-0.38'. The run card says 'No prior submissions in this repository to compare against', but the census holds 584 aligned priors; no lane check is recorded. The README says 'Note (140/140)' for a 45-character note. The method uses a geothermal-well proximity layer outside the brief's co-training lane. The same merge replaced the 60,818-byte docs/index.html (H82 page + verbatim archive) with a 12,255-byte page, against AGENTS.md ('never rewrite docs/index.html from scratch'). The merge also replaced docs/executive-summary.html (23,015 -> 6,482 bytes) and rewrote docs/validator.html, which made scripts/check_site.py report 10 problems (H58/R5 executive-summary invariants) and failed tests/test_ctd5.py::test_full_published_ctd5_release_from_actual_bytes and tests/test_h82.py::test_validator_page_states_the_privacy_position_and_the_rule_source on main.",
+      "how_we_know": "git show origin/main:evidence/h83_run_card.json (holdout_dti, correlation_vs_registry, verdict); README.md lines 1-21 on ebb1d34; len('structural concordance + geothermal proximity') = 45; git show 2209161:docs/index.html | wc -c = 60818 vs 12255 on ebb1d34.",
+      "handling": "Not overwritten and not deleted (another session's round). The H84 session (a) lane-checked its own dots against the parallel files (PASS, evidence/h84_lane_vs_parallel_h83.json); (b) archived main's docs/index.html verbatim and restored the dropped H82 page + archive from 2209161 inside the archive; (c) added clearly marked 'H84 audit notice' banners to the parallel H83 README block and to docs/executive-summary.html and docs/h83-executive-summary.html, stating that no holdout exists and that the frozen-rule verdict for that file is therefore 'not validated'. (d) restored docs/executive-summary.html and docs/validator.html from 2209161 and kept the parallel session's versions byte-for-byte as docs/h83-parallel-executive-summary.html and docs/h83-parallel-validator.html; the parallel H83 README block's executive-summary link now points at its own docs/h83-executive-summary.html.",
+      "disposition": "Owner decision. Before any slot is spent on the H83 structcon file, it needs a fold-honest holdout on gems52-pooled-hide-v1 (with its catalogue-ring step computed from training-fold labels only) and a full-census lane check.",
+      "measured_effect": "none on H84 numbers; prevents an un-validated file being read as upload-approved"
+    },
+    {
+      "id": "IR-H85-001",
+      "round": "H85",
+      "severity": "high",
       "status": "open - corrected in this round",
       "title": "H83 was labelled SUBMIT YES and given a \"0.15-0.38\" projection with no holdout run",
       "what_it_is": "README H83 block and docs/h83-executive-summary.html stated SUBMIT YES and \"Expected score: projection 0.15-0.38\". The repo rule (AGENTS.md) forbids a slot before a holdout beats the comparable best. No holdout had been run for H83.",
@@ -2732,8 +2816,8 @@
       "measured_effect": "Holdout DTI 0.0162 (as built) and 0.0694 (spaced) against a 0.1892 comparable best reported by H82 (cross-run caveat, IR-H84-007)."
     },
     {
-      "id": "IR-H84-002",
-      "round": "H84",
+      "id": "IR-H85-002",
+      "round": "H85",
       "severity": "high",
       "status": "open",
       "title": "H83 as-built placement skips the repo metric-aware 3 px spacing",
@@ -2744,8 +2828,8 @@
       "measured_effect": "Spacing alone accounts for about 0.053 DTI in this harness."
     },
     {
-      "id": "IR-H84-003",
-      "round": "H84",
+      "id": "IR-H85-003",
+      "round": "H85",
       "severity": "high",
       "status": "open - needs owner review",
       "title": "H83 executive summary links a different file from the one it describes",
@@ -2756,8 +2840,8 @@
       "measured_effect": "None on score; a user following the page would download the wrong file."
     },
     {
-      "id": "IR-H84-004",
-      "round": "H84",
+      "id": "IR-H85-004",
+      "round": "H85",
       "severity": "medium",
       "status": "open",
       "title": "Two different rasters are both called \"H83\"",
@@ -2768,8 +2852,8 @@
       "measured_effect": "None."
     },
     {
-      "id": "IR-H84-005",
-      "round": "H84",
+      "id": "IR-H85-005",
+      "round": "H85",
       "severity": "medium",
       "status": "recorded",
       "title": "H83 geotherm builder reports an in-sample \"DTI sanity check\" against the full catalogue",
@@ -2780,8 +2864,8 @@
       "measured_effect": "None on any H84 number."
     },
     {
-      "id": "IR-H84-006",
-      "round": "H84",
+      "id": "IR-H85-006",
+      "round": "H85",
       "severity": "high",
       "status": "open - user brief needs correction",
       "title": "Brief says 0.3195 is the highest score; the live board top is 0.3774",
@@ -2792,8 +2876,8 @@
       "measured_effect": "A design target of \"beat 0.3195\" is a target below the current #1; the true bar is 0.3774."
     },
     {
-      "id": "IR-H84-007",
-      "round": "H84",
+      "id": "IR-H85-007",
+      "round": "H85",
       "severity": "high",
       "status": "open",
       "title": "H84 holdout is not on the same fold set as the H82 receipt, so cross-run numbers are indicative only",
@@ -2804,8 +2888,8 @@
       "measured_effect": "Cross-run gap of 0.0050 in the random arm alone."
     },
     {
-      "id": "IR-H84-008",
-      "round": "H84",
+      "id": "IR-H85-008",
+      "round": "H85",
       "severity": "medium",
       "status": "recorded (IR-52-002 family)",
       "title": "Three footprints disagree at the pixel level",
@@ -2816,8 +2900,8 @@
       "measured_effect": "At most 4,613 pixels; no measured score effect."
     },
     {
-      "id": "IR-H84-009",
-      "round": "H84",
+      "id": "IR-H85-009",
+      "round": "H85",
       "severity": "medium",
       "status": "resolved in this round",
       "title": "First H84 build reported a false 1.0 px spacing",
@@ -2828,8 +2912,8 @@
       "measured_effect": "None on the raster; the receipt was wrong."
     },
     {
-      "id": "IR-H84-010",
-      "round": "H84",
+      "id": "IR-H85-010",
+      "round": "H85",
       "severity": "low",
       "status": "resolved",
       "title": "Lane check failed once on a relative path",
@@ -2840,8 +2924,8 @@
       "measured_effect": "None."
     },
     {
-      "id": "IR-H84-011",
-      "round": "H84",
+      "id": "IR-H85-011",
+      "round": "H85",
       "severity": "medium",
       "status": "recorded - known limit",
       "title": "Competition rasters are integrity-pinned mirrors, not organiser-authenticated",
@@ -2852,8 +2936,8 @@
       "measured_effect": "None measured; it bounds what \"verified\" means here."
     },
     {
-      "id": "IR-H84-012",
-      "round": "H84",
+      "id": "IR-H85-012",
+      "round": "H85",
       "severity": "low",
       "status": "recorded",
       "title": "Euler deconvolution is on the board but was not in this repo",
@@ -2864,8 +2948,8 @@
       "measured_effect": "H84-E holdout DTI 0.0777 vs random 0.0754 (paired +0.0022 [-0.0030, +0.0072])."
     },
     {
-      "id": "IR-H84-013",
-      "round": "H84",
+      "id": "IR-H85-013",
+      "round": "H85",
       "severity": "high",
       "status": "open - needs owner / portal review",
       "title": "Outside-domain encoding: the official page says null/NaN; the H84 file and the 0.2778 champion use zeros",
@@ -2876,8 +2960,8 @@
       "measured_effect": "None on DTI in principle (zero-valued cells contribute 0 to all three terms); a portal-acceptance risk either way."
     },
     {
-      "id": "IR-H84-014",
-      "round": "H84",
+      "id": "IR-H85-014",
+      "round": "H85",
       "severity": "medium",
       "status": "open",
       "title": "scripts/check_site.py reports 22 failures that already exist at HEAD ebb1d34",

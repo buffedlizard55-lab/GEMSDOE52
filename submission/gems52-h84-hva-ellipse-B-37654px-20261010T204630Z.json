@@ -1,0 +1,67 @@
+{
+  "file": "gems52-h84-hva-ellipse-B-37654px-20261010T204630Z.tif",
+  "sha256": "6bb18056c521a1a6a7bcefa75f3be7cb37653b8066efd4252a8b5c096b90b73e",
+  "bytes": 141678,
+  "submission_name": "h84-hva-ellipse-B-37654px-20261010T204630Z",
+  "note": "H84: View-B + DVA2 + harmonic variogram-ellipse anisotropy (8-dir LS fit, lags 100-600m); 200m ring cut; binary dots; research",
+  "note_chars": 126,
+  "validator": {
+    "path": "/home/user/GEMSDOE52/submission/gems52-h84-hva-ellipse-B-37654px-20261010T204630Z.tif",
+    "bytes": 141678,
+    "sha256": "6bb18056c521a1a6a7bcefa75f3be7cb37653b8066efd4252a8b5c096b90b73e",
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "ref_bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "nodata": null,
+    "blocksize": [
+      256,
+      256
+    ],
+    "fixture_grid": false,
+    "has_validity_mask": false,
+    "nan_pixels": 0,
+    "infinity_pixels": 0,
+    "n_nan": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.0030664964579045773,
+    "n_nonzero": 37654,
+    "mass": 37654.0,
+    "mass_outside_footprint": 0,
+    "problems": [],
+    "ok": true,
+    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "zip_file": "gems52-h84-hva-ellipse-B-37654px-20261010T204630Z.zip",
+  "zip_sha256": "86ac96df8b672ae8939ebe76ff780f5033ea4e1861fd3ee6ceeb3adf439bb66f",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "status": "research-only; local format validation is not organizer acceptance",
+  "metadata": {
+    "round": "H84",
+    "primary_arm": "B_DVA2_HVA"
+  }
+}
