@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Detailed H74S experiment report, local holdout results, strict duplicate-stop evidence, and source/provenance limitations.">
+  <title>H74S closeout — GEMSDOE52</title>
+  <style>
+    :root { color-scheme: light; --ink:#172433; --muted:#596a79; --paper:#f4f6f8; --white:#fff; --line:#d5dee7; --red:#982332; --red-bg:#fff0f1; --blue:#164e7b; --blue-bg:#eaf3fb; --amber:#694400; --amber-bg:#fff7df; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font:16px/1.62 system-ui,-apple-system,"Segoe UI",sans-serif; }
+    main { max-width:1000px; margin:30px auto 70px; padding:0 18px; }
+    header { border-radius:15px; background:#142739; padding:28px; color:white; }
+    header p { color:#dce6ef; margin:8px 0 0; }
+    h1 { margin:0; font-size:clamp(1.8rem,4vw,2.65rem); line-height:1.15; }
+    h2 { margin:26px 0 10px; font-size:1.42rem; }
+    h3 { margin:18px 0 6px; font-size:1.06rem; }
+    a { color:var(--blue); text-underline-offset:3px; }
+    .callout { padding:18px 20px; margin:16px 0; border-radius:10px; }
+    .negative { border:2px solid var(--red); background:var(--red-bg); }
+    .negative strong { color:var(--red); }
+    .note { border-left:5px solid #3477a5; background:var(--blue-bg); }
+    .caution { border-left:5px solid #bc7b00; background:var(--amber-bg); color:#392d18; }
+    .tiles { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:15px 0; }
+    .tile { padding:15px; background:var(--white); border:1px solid var(--line); border-radius:10px; }
+    .value { display:block; font-size:1.3rem; font-weight:760; margin:3px 0; }
+    .muted { color:var(--muted); }
+    table { width:100%; border-collapse:collapse; margin:12px 0 20px; background:white; }
+    th,td { padding:10px 12px; border:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { background:#eaf0f5; }
+    code { overflow-wrap:anywhere; }
+    .links { display:flex; flex-wrap:wrap; gap:9px; margin:14px 0; }
+    .links a { display:inline-block; background:white; border:1px solid var(--line); border-radius:7px; padding:8px 11px; font-weight:650; }
+    footer { margin-top:32px; padding-top:16px; border-top:1px solid var(--line); color:var(--muted); font-size:.94rem; }
+    @media(max-width:720px) { .tiles { grid-template-columns:1fr; } th,td { padding:8px; } header { padding:22px; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>H74S · three-pass closeout</h1>
+    <p>Preregistered two-view geophysical/subsurface and surface/radiometric co-training with disagreement · run ended 2026-10-09T19:51:08Z · this page is the H74S closeout only; later repository round H82 is current in the project landing page</p>
+  </header>
+
+  <section class="callout negative">
+    <strong>FINAL VERDICT: NEGATIVE — DUPLICATE/STOP.</strong>
+    <p><b>There is no H74S TIFF to download and no H74S result to submit.</b> The final-dot lane failed the frozen all-prior rule. No uniqueness waiver, retuning, second placement, organizer confirmation, or competition-slot use occurred. A negative gated result is the deliverable.</p>
+  </section>
+
+  <div class="tiles">
+    <div class="tile"><span class="muted">Experiment budget</span><span class="value">3 / 3 · 1,652.1 seconds</span><span class="muted">27m 32.1s; under the 2h ceiling.</span></div>
+    <div class="tile"><span class="muted">Surface lane</span><span class="value">PASS · Spearman 0.033571</span><span class="muted">Frozen 693-path snapshot, zero errors; later H74/H75 omissions disclosed.</span></div>
+    <div class="tile"><span class="muted">Final-dot lane</span><span class="value" style="color:var(--red)">STOP · near share 1.000</span><span class="muted">5,056 dots; literal all-prior test failed.</span></div>
+  </div>
+
+  <h2>1. Registration, implementation, and provenance</h2>
+  <ul>
+    <li>Final registration frozen at <code>2026-10-09T19:23:20Z</code>; SHA-256 <code>9041c9dc04c366afd6b6c223b2ac8ce4ddc821687551a14ae99a678d9a09b38b</code>.</li>
+    <li>One pre-ranked hypothesis tested: View A combined geodetic strain bands 4/7/8 and seismicity bands 10/16; View B was the unchanged surface/radiometric view. Three other hypotheses remain untested.</li>
+    <li>Whole-segment spatial holdout folds used the frozen 80 px buffer, fold-visible catalogue-only features, and exact visible-fault masking. Shared feature, evaluator, metric-aware placement, and gate implementations were reused.</li>
+    <li>Feature-leakage canary: 42 features, maximum held-out AUC <code>0.668678</code>; no &gt;0.90 alarm. Spatial-block negative-error correlation: maximum absolute value <code>0.054930</code> over 2,089 blocks; exchange was permitted, but this is not proof of conditional independence.</li>
+    <li>One whole-segment buffered pseudo-label exchange only: 15,259 pixels across 873 segments; no second exchange.</li>
+    <li>Gate inventory: 524 eligible core-census entries + 105 local TIFF paths + 64 refreshed public owner-mirror paths = 693 in the frozen working-branch snapshot. All 64 extension paths aligned as single-band rasters; zero errors and verified Git blob SHAs.</li>
+  </ul>
+  <div class="callout caution"><b>Material registry-coverage limitation:</b> post-run public Git history revealed a parallel H74 TIFF already merged to <code>main</code> at 19:16:40Z, before H74S froze, but absent from this stale session checkout. A parallel H75 TIFF appeared at 19:41:26Z and reached <code>main</code> at 19:44:21Z, while H74S was still running. Neither was part of the frozen 693-path receipts. The surface PASS is therefore scoped to that frozen snapshot, not exhaustive of public <code>main</code>. The final-dot STOP remains supported by in-census priors already exceeding the threshold; no retroactive pixel audit, extra placement, or rerun was made. Details and file hashes are in the <a href="data/h74s_postfreeze_registry_notice.json">post-freeze registry notice</a> (<a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/9d891a61d9570830124c45d2477ff969134ac3a1/submission/gems52-h74-a2deform-cotrain-721px-20261009T174546Z.tif">H74 artifact</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/2fc03cd6093f0aa8824d21d7c3f092e7f33d6028/submission/gems52-h75-dva-variogram-anisotropy-B-37654px-20261009.tif">H75 artifact</a>). Public owner mirrors are not organizer-authenticated; private or unlinked artifacts may also be absent. No current organizer leaderboard, portal receipt, or organizer-confirmed score was checked.</div>
+
+  <h2>2. Hide-and-recover results</h2>
+  <p>All values are local <b>HOLDOUT-DTI</b> from <code>gems52-pooled-hide-v1</code>, over 53,186 withheld positives, alpha 0.2, beta 0.8, 300 m triangular radius, with the registered 95% spatial-block intervals. They are not competition-board results or projections.</p>
+  <table>
+    <thead><tr><th>Arm</th><th>HOLDOUT-DTI</th><th>95% CI</th></tr></thead>
+    <tbody>
+      <tr><td>A-only disagreement, after one exchange</td><td>0.008975</td><td>[0.004699, 0.014496]</td></tr>
+      <tr><td>A-only single-view baseline</td><td>0.011083</td><td>[0.004801, 0.019603]</td></tr>
+      <tr><td>B single-view baseline</td><td>0.061461</td><td>[0.048927, 0.074703]</td></tr>
+      <tr><td>Max-view-union diagnostic</td><td>0.046885</td><td>[0.035853, 0.059859]</td></tr>
+      <tr><td>Disagreement before exchange</td><td>0.002579</td><td>[0.000803, 0.005195]</td></tr>
+      <tr><td>Random control</td><td>0.013352</td><td>[0.011518, 0.015349]</td></tr>
+    </tbody>
+  </table>
+  <div class="callout caution"><b>Matched comparison invalid.</b> The A-only arm placed 1,264/1,264 in folds 0, 1, and 3, but 1,126/1,264 in fold 2. The run card records <code>matched_comparison_valid=false</code>; no paired candidate-minus-single-B win is claimed. The underfilled A-only pooled value is below the random and single-B holdout controls.</div>
+  <p>The separate fixed 9,400-dot/fold single-B control reproduced its prior local HOLDOUT-DTI reference: <b>0.174517 [0.154024, 0.195269]</b>, within 0.001 of 0.174571; all four folds filled. This control does not predict the leaderboard.</p>
+  <p>The four holdout disagreement arms were not equal to their views' max-union placements (Jaccard 0.00637, 0.01649, 0.00336, 0.00317 by fold). The final full-map not-union check was sequenced after the mandatory final-dot gate and was not reached; no final candidate union result is claimed.</p>
+
+  <h2>3. Lane audit and stop</h2>
+  <table>
+    <thead><tr><th>Gate</th><th>Observed</th><th>Decision</th></tr></thead>
+    <tbody>
+      <tr><td>Surface correlation, before placement</td><td>Maximum Spearman 0.033571 against local CTD5 accessible prior; all 693 paths in the frozen snapshot; zero errors. Public-main H74/H75 paths were omitted (see coverage notice).</td><td>PASS on frozen subset</td></tr>
+      <tr><td>Literal final-dot near-prior check</td><td>Maximum within-3-px share 1.000; 38 offenders &gt;0.70. Maximum Spearman was only 0.015279.</td><td><b>DUPLICATE/STOP</b></td></tr>
+      <tr><td>Saturation-aware diagnostic</td><td>After excluding 15 universal-coverage probes, maximum informative-prior near share remained 0.910799; 23 offenders.</td><td><b>DUPLICATE/STOP</b></td></tr>
+    </tbody>
+  </table>
+  <p>The literal maximum is the public owner-mirror H48 diagnostic raster, <a href="https://github.com/buffedlizard55-lab/GEMSDOE48/blob/36d9785e28a81e859c71f4058c639ffba4b7f327/docs/downloads/diagnostics/GEMSDOE48-H56-OWDS-B2xH33D-20261007-1f7b5a4f18db-plausibility.tif">pinned at commit <code>36d9785e28a81e859c71f4058c639ffba4b7f327</code></a>. The independent informative-only maximum is [15GEMSDOE's curvature/scarp raster](https://github.com/buffedlizard55-lab/15GEMSDOE/blob/8c94b0f83f22999032ba8a29c523af7ae6cf5e76/docs/downloads/gems-cleanup-a-20260928T195952Z-curv_scarp.tif). These are public owner-mirror records, not organizer submissions authenticated by the event.</p>
+
+  <h2>4. Candidate gates not reached</h2>
+  <p>The mandatory duplicate stop happened before the shared decoded-pixel uniqueness comparison, support novelty, the final full-map views-union check, and GeoTIFF validation. No H74S TIFF file SHA, TIFF, ZIP, or download exists. The lane receipt does include a digest of the in-memory dot mask; that is not a uniqueness comparison. The holdout-arm union diagnostics above do not count as the skipped final-candidate test.</p>
+
+  <h2>5. Preregistered hypothesis ranking</h2>
+  <table>
+    <thead><tr><th>Rank</th><th>Hypothesis</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Coupled strain and seismicity beneath a quiet surface (bands 4/7/8 + 10/16)</td><td>Tested; negative</td></tr>
+      <tr><td>2</td><td>Seismicity-only directional gradient against surface abstention (10/16)</td><td>Untested</td></tr>
+      <tr><td>3</td><td>Conductivity/basement contrast supported by gravity gradients (17/15/18/11)</td><td>Untested</td></tr>
+      <tr><td>4</td><td>Multiscale strain-tensor discontinuity coherence (4/7/8)</td><td>Untested</td></tr>
+    </tbody>
+  </table>
+  <p>The full geological signatures, catalogue-miss rationales, non-fault mimics, cost ranking, prior-method distinctions, and frozen decision rules are in the <a href="../knowledge/63_hypotheses_H74S_preregistered.md">H74S preregistration</a>.</p>
+
+  <h2>6. Source-linked context</h2>
+  <ul>
+    <li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">DrivenData GEMS task</a> · <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/">official data tab</a> (login-walled during recorded source review).</li>
+    <li>Blum &amp; Mitchell, <a href="https://doi.org/10.1145/279943.279962">Co-Training, COLT 1998</a> (the view assumptions remain assumptions; error correlation is only a diagnostic).</li>
+    <li><a href="https://gdr.openei.org/submissions/1391">DOE GDR submission 1391 / INGENIOUS</a> · <a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">USGS GeoDAWN data release</a>.</li>
+    <li>Current public owner-mirror commits H53–H57 and hashes: <a href="data/h74s_prior_extension.json">refreshed extension receipt</a>. Full decisive source path and decoded hashes: <a href="data/h74s_lane_source_resolution.json">lane source resolution</a>.</li>
+  </ul>
+
+  <h2>Receipts and review</h2>
+  <nav class="links" aria-label="H74S evidence links">
+    <a href="../README.md">Current project status and full task brief</a>
+    <a href="../knowledge/64_h74s_three_pass_review.md">Three-pass review and limitations</a>
+    <a href="../registry/h74s_preregistration.json">Frozen registration</a>
+    <a href="data/h74s_preregistration_freeze.json">Freeze provenance</a>
+    <a href="data/h74s_run_card.json">Completed JSON run card</a>
+    <a href="data/h74s_holdout.json">HOLDOUT-DTI receipt</a>
+    <a href="data/h74s_control_reproduction.json">Single-B control receipt</a>
+    <a href="data/h74s_lane_surface.json">Surface lane receipt</a>
+    <a href="data/h74s_lane_dots.json">Final-dot lane receipt</a>
+    <a href="data/h74s_postrun_code_correction.json">Post-run CLI correction</a>
+    <a href="data/h74s_postfreeze_registry_notice.json">Post-freeze registry coverage notice</a>
+  </nav>
+  <div class="callout note"><b>CLI status detail:</b> the first runner process exited 1 because a negative result dict was passed to <code>SystemExit</code> after the result had been recorded. The post-run correction receipt documents the code-only fix, preserves the exact executed-runner hash in the card, and confirms no rerun or method/result change.</div>
+
+  <footer>
+    <p>H74S status: <b>negative</b> · download: <b>no</b> · submit-eligible: <b>no</b> · organizer-confirmed: <b>no</b> · competition slots used: <b>0</b>.</p>
+    <p><a href="../index.html">Project landing page</a> · <a href="index.html">Historical research archive</a></p>
+  </footer>
+</main>
+</body>
+</html>
