@@ -1,0 +1,225 @@
+{
+ "stage": "budget_curve",
+ "round": "H83",
+ "note": "DTI of the stitched out-of-fold View-B field against the two off-catalogue truth sets, as a function of the emitted budget at 3 px spacing. Diagnostic: G is unknown, so this is not a board forecast.",
+ "rows": {
+  "B": [
+   {
+    "instrument": "I2_cut300m",
+    "k": 5000,
+    "placed": 5000,
+    "dti": 0.019337,
+    "tpw": 880.6,
+    "fpw": 4581.6,
+    "sm": 4581.6
+   },
+   {
+    "instrument": "I2_cut300m",
+    "k": 8000,
+    "placed": 8000,
+    "dti": 0.029543,
+    "tpw": 1364.8,
+    "fpw": 7368.1,
+    "sm": 7368.1
+   },
+   {
+    "instrument": "I2_cut300m",
+    "k": 12000,
+    "placed": 12000,
+    "dti": 0.040539,
+    "tpw": 1907.6,
+    "fpw": 11124.5,
+    "sm": 11124.5
+   },
+   {
+    "instrument": "I2_cut300m",
+    "k": 16000,
+    "placed": 16000,
+    "dti": 0.049283,
+    "tpw": 2360.9,
+    "fpw": 14911.2,
+    "sm": 14911.2
+   },
+   {
+    "instrument": "I2_cut300m",
+    "k": 22000,
+    "placed": 22000,
+    "dti": 0.063032,
+    "tpw": 3100.3,
+    "fpw": 20579.6,
+    "sm": 20579.6
+   },
+   {
+    "instrument": "I2_cut300m",
+    "k": 28000,
+    "placed": 28000,
+    "dti": 0.074032,
+    "tpw": 3735.3,
+    "fpw": 26291.2,
+    "sm": 26291.2
+   },
+   {
+    "instrument": "I2_cut300m",
+    "k": 34000,
+    "placed": 34000,
+    "dti": 0.084243,
+    "tpw": 4357.3,
+    "fpw": 32007.3,
+    "sm": 32007.3
+   },
+   {
+    "instrument": "I2_cut300m",
+    "k": 37654,
+    "placed": 37654,
+    "dti": 0.091168,
+    "tpw": 4786.5,
+    "fpw": 35473.3,
+    "sm": 35473.3
+   },
+   {
+    "instrument": "I2_cut300m",
+    "k": 45000,
+    "placed": 45000,
+    "dti": 0.103472,
+    "tpw": 5593.6,
+    "fpw": 42452.2,
+    "sm": 42452.2
+   },
+   {
+    "instrument": "I2_cut300m",
+    "k": 60000,
+    "placed": 60000,
+    "dti": 0.124531,
+    "tpw": 7126.2,
+    "fpw": 56749.6,
+    "sm": 56749.6
+   },
+   {
+    "instrument": "I2_cut300m",
+    "k": 90000,
+    "placed": 90000,
+    "dti": 0.163532,
+    "tpw": 10397.8,
+    "fpw": 85266.9,
+    "sm": 85266.9
+   },
+   {
+    "instrument": "I2_cut300m",
+    "k": 150000,
+    "placed": 150000,
+    "dti": 0.212275,
+    "tpw": 16170.3,
+    "fpw": 142463.3,
+    "sm": 142463.3
+   },
+   {
+    "instrument": "I2b_cut0m",
+    "k": 5000,
+    "placed": 5000,
+    "dti": 0.030656,
+    "tpw": 1769.2,
+    "fpw": 4270.1,
+    "sm": 4270.1
+   },
+   {
+    "instrument": "I2b_cut0m",
+    "k": 8000,
+    "placed": 8000,
+    "dti": 0.042784,
+    "tpw": 2498.4,
+    "fpw": 6961.2,
+    "sm": 6961.2
+   },
+   {
+    "instrument": "I2b_cut0m",
+    "k": 12000,
+    "placed": 12000,
+    "dti": 0.05525,
+    "tpw": 3275.6,
+    "fpw": 10638.1,
+    "sm": 10638.1
+   },
+   {
+    "instrument": "I2b_cut0m",
+    "k": 16000,
+    "placed": 16000,
+    "dti": 0.066206,
+    "tpw": 3983.5,
+    "fpw": 14339.4,
+    "sm": 14339.4
+   },
+   {
+    "instrument": "I2b_cut0m",
+    "k": 22000,
+    "placed": 22000,
+    "dti": 0.080377,
+    "tpw": 4941.4,
+    "fpw": 19932.1,
+    "sm": 19932.1
+   },
+   {
+    "instrument": "I2b_cut0m",
+    "k": 28000,
+    "placed": 28000,
+    "dti": 0.092084,
+    "tpw": 5780.3,
+    "fpw": 25565.1,
+    "sm": 25565.1
+   },
+   {
+    "instrument": "I2b_cut0m",
+    "k": 34000,
+    "placed": 34000,
+    "dti": 0.10273,
+    "tpw": 6581.2,
+    "fpw": 31218.6,
+    "sm": 31218.6
+   },
+   {
+    "instrument": "I2b_cut0m",
+    "k": 37654,
+    "placed": 37654,
+    "dti": 0.109827,
+    "tpw": 7122.9,
+    "fpw": 34639.8,
+    "sm": 34639.8
+   },
+   {
+    "instrument": "I2b_cut0m",
+    "k": 45000,
+    "placed": 45000,
+    "dti": 0.122427,
+    "tpw": 8134.0,
+    "fpw": 41547.8,
+    "sm": 41547.8
+   },
+   {
+    "instrument": "I2b_cut0m",
+    "k": 60000,
+    "placed": 60000,
+    "dti": 0.143961,
+    "tpw": 10027.1,
+    "fpw": 55714.5,
+    "sm": 55714.5
+   },
+   {
+    "instrument": "I2b_cut0m",
+    "k": 90000,
+    "placed": 90000,
+    "dti": 0.181909,
+    "tpw": 13839.2,
+    "fpw": 84034.6,
+    "sm": 84034.6
+   },
+   {
+    "instrument": "I2b_cut0m",
+    "k": 150000,
+    "placed": 150000,
+    "dti": 0.230373,
+    "tpw": 20452.0,
+    "fpw": 140920.8,
+    "sm": 140920.8
+   }
+  ]
+ }
+}

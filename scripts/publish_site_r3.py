@@ -478,8 +478,8 @@ def insert_h55_review(h55_archive: dict, verification: dict, sweep: dict,
     # written for.  A hard-coded "H56" link survived the H57 round and pointed readers at the wrong
     # audit page; the round is now read from the receipt.
     rnd = str(current_submission.get("round") or "H56").upper()
-    round_pages = {"H84": "h84.html", "H60": "h60.html", "H59": "h59.html",
-                   "H58": "h58.html", "H57": "h57.html"}
+    round_pages = {"H90": "h90.html", "H84": "h84.html", "H60": "h60.html",
+                   "H59": "h59.html", "H58": "h58.html", "H57": "h57.html"}
     page_href = round_pages.get(rnd) or (
         "h56-cotrain.html" if current_submission.get("synthetic")
         or current_submission.get("synthetic_demo") else "h56.html")

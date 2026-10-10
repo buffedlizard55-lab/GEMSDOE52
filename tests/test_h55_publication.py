@@ -89,8 +89,8 @@ def test_h55_archive_review_is_idempotent_and_carries_h56_status(monkeypatch, tm
     # silently went stale when a later round became current.
     assert f"current {str(current.get('round') or 'H56').upper()} status" in result, (
         "the H55 archive review must name the current round, read from the receipt")
-    round_pages = {"H84": "h84.html", "H60": "h60.html", "H59": "h59.html",
-                   "H58": "h58.html", "H57": "h57.html"}
+    round_pages = {"H90": "h90.html", "H84": "h84.html", "H60": "h60.html",
+                   "H59": "h59.html", "H58": "h58.html", "H57": "h57.html"}
     expected_href = round_pages.get(str(current.get("round") or "").upper(), "h56-cotrain.html")
     assert f'href="{expected_href}"' in result
     # case-insensitive: which sentence casing the status block uses depends on which branch the

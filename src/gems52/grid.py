@@ -208,12 +208,16 @@ def portal_exact_profile(sample: str | Path) -> dict:
 
 
 def write_geotiff_portal_exact(path: str | Path, inside: np.ndarray, footprint: np.ndarray,
-                               sample: str | Path) -> dict:
+                               sample: str | Path, *, outside: str = "nan") -> dict:
     """Write ``inside`` on the organiser template's exact container profile, then re-read it.
 
     * ``inside`` must be finite and in [0, 1]; it is the prediction over the whole grid.
     * Pixels outside ``footprint`` are written as NaN with ``nodata=nan`` declared, which is what
-      ``sample_submission.tif`` itself does.
+      ``sample_submission.tif`` itself does (``outside="nan"``, the default and the H77 behaviour).
+    * ``outside="zero"`` (added 2026-10-10, H84) writes 0.0 outside the footprint and declares no
+      nodata, so every pixel is finite and inside [0, 1] -- the only container that cannot fail a naive
+      "values in [0, 1]" range test, which is the error the portal returned to the user. The LZW /
+      stripped / pinned-grid container is unchanged. The footprint rule is still enforced.
     * The re-read is asserted: single band, float32, pinned CRS/shape/transform, no finite value
       outside [0, 1], no non-finite pixel inside the footprint, and no positive mass outside it.
 
@@ -240,8 +244,13 @@ def write_geotiff_portal_exact(path: str | Path, inside: np.ndarray, footprint: 
         raise AssertionError(f"template shape {(prof['height'], prof['width'])} != pinned {SHAPE}")
     if tuple(float(v) for v in prof["transform"])[:6] != tuple(float(v) for v in TRANSFORM):
         raise AssertionError("template transform != pinned competition transform")
-    out = np.where(fp, a, np.float32("nan")).astype(np.float32)
+    if outside not in ("nan", "zero"):
+        raise ValueError(f"outside must be 'nan' or 'zero', got {outside!r}")
+    fill = np.float32("nan") if outside == "nan" else np.float32(0.0)
+    out = np.where(fp, a, fill).astype(np.float32)
     clean = {k: v for k, v in prof.items() if v is not None}
+    if outside == "zero":
+        clean.pop("nodata", None)
     with rasterio.open(path, "w", **clean) as dst:
         dst.write(out, 1)
     back = read_geotiff(path)
@@ -259,6 +268,8 @@ def write_geotiff_portal_exact(path: str | Path, inside: np.ndarray, footprint: 
     if tuple(float(v) for v in src.transform)[:6] != tuple(float(v) for v in TRANSFORM):
         problems.append("transform mismatch")
     fin = np.isfinite(r)
+    if outside == "zero" and not fin.all():
+        problems.append("zero-outside container wrote non-finite pixels")
     if np.any((r < 0) & fin) or np.any((r > 1) & fin):
         problems.append("a finite value lies outside [0, 1]")
     if np.any(~fin & fp):

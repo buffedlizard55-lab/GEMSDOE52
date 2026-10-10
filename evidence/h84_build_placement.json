@@ -1,23 +1,22 @@
 {
  "stage": "build",
- "dots": 37654,
  "pool_px": 4325298,
  "eligible_px": 4593171,
  "ring_excluded_m": 200.0,
- "min_cat_dist_m": 223.60679774997897,
- "median_cat_dist_m": 1389.2443989449805,
- "dots_within_300m_of_catalogue_pct": 14.192383279332873,
- "union_dots": 37654,
- "a_dots": 37654,
- "b_dots": 37654,
- "b_only_suppression": {
-  "thresholds": {
-   "q_conf": 0.6,
-   "q_abstain": 0.4
-  },
-  "b_only_px": 643861,
-  "supp_pool_px": 3681437,
-  "supp_dots": 37654
+ "a_only_stratum_px": 52589,
+ "a_only_candidates": 9225,
+ "b_only_stratum_px": 51711,
+ "b_only_candidates": 9691,
+ "b_only_cardinal_strike_within_5deg_fraction": 0.08089980394180167,
+ "b_only_cardinal_null_fraction": 0.1111111111111111,
+ "b_only_audit_note": "Nevada section-line roads and fences run N-S/E-W; a B-only population strongly enriched above the isotropic null 20/180 = 0.111 would support the brief's road/erosion-line reading. Image frame: x east, y south; the cardinal set is frame-invariant.",
+ "stratum_rule": {
+  "A_rank_min": 0.95,
+  "primary_rank_band": [
+   0.35,
+   0.65
+  ],
+  "spacing_px": 3.0
  },
- "started_utc": "2026-10-10T21:31:58+00:00"
+ "started_utc": "2026-10-10T20:20:13+00:00"
 }

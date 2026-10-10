@@ -1,0 +1,63 @@
+{
+ "stage": "exchange",
+ "started_utc": "2026-10-10T21:23:32+00:00",
+ "allow_exchange": true,
+ "folds": [
+  {
+   "fold": 0,
+   "donated_px": 1997,
+   "donated_components": 89,
+   "donor_threshold": 0.4258232116699219,
+   "receiver_band": [
+    0.0005403839168138802,
+    0.18280357122421265
+   ],
+   "auc_pre": 0.5037799410974754,
+   "auc_post": 0.4968492174705935,
+   "improved": false
+  },
+  {
+   "fold": 1,
+   "donated_px": 2000,
+   "donated_components": 99,
+   "donor_threshold": 0.4106263518333435,
+   "receiver_band": [
+    0.0015064999461174011,
+    0.22140845656394958
+   ],
+   "auc_pre": 0.5943783365861692,
+   "auc_post": 0.5821492304101351,
+   "improved": false
+  },
+  {
+   "fold": 2,
+   "donated_px": 1996,
+   "donated_components": 98,
+   "donor_threshold": 0.41910645365715027,
+   "receiver_band": [
+    0.003659456502646208,
+    0.21719792485237122
+   ],
+   "auc_pre": 0.459296718775332,
+   "auc_post": 0.4737939539060452,
+   "improved": true
+  },
+  {
+   "fold": 3,
+   "donated_px": 1999,
+   "donated_components": 50,
+   "donor_threshold": 0.41785985231399536,
+   "receiver_band": [
+    0.0016200527315959334,
+    0.22151625156402588
+   ],
+   "auc_pre": 0.5036896546114442,
+   "auc_post": 0.504462292958537,
+   "improved": true
+  }
+ ],
+ "rule": "keep the refit View A only if out-of-quadrant AUC improves in 4/4 folds",
+ "folds_improved": 2,
+ "keep_post_exchange": false,
+ "decision": "pre-exchange View A retained (frozen rule: improvement required in 4/4 folds)"
+}

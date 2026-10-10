@@ -1,126 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>H83 Executive Summary — GEMSDOE52</title>
-<style>
-:root{--bg:#0f172a;--card:#1e293b;--accent:#3b82f6;--green:#22c55e;--red:#ef4444;--yellow:#eab308;--text:#e2e8f0;--muted:#94a3b8;--border:#334155}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:1rem;max-width:900px;margin:0 auto}
-h1{font-size:1.5rem;margin:1rem 0;color:var(--accent)}
-h2{font-size:1.2rem;margin:1.5rem 0 .5rem;color:var(--text);border-bottom:1px solid var(--border);padding-bottom:.3rem}
-.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;margin:1rem 0}
-.status{display:inline-block;padding:4px 12px;border-radius:4px;font-weight:700;font-size:.85rem}
-.status.ok{background:var(--green);color:#000}
-.status.no{background:var(--red);color:#fff}
-.status.warn{background:var(--yellow);color:#000}
-a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
-dl{display:grid;grid-template-columns:180px 1fr;gap:.4rem 1rem}
-dt{color:var(--muted);font-size:.85rem}dd{font-family:monospace;font-size:.85rem}
-.btn{display:inline-block;padding:10px 20px;background:var(--accent);color:#fff;border-radius:6px;font-weight:700;text-decoration:none;margin:.5rem .5rem .5rem 0}
-.btn:hover{opacity:.9;text-decoration:none}
-ol{padding-left:1.5rem}ol li{margin:.5rem 0}
-code{background:#0f172a;padding:2px 6px;border-radius:3px;font-size:.85rem}
-table{width:100%;border-collapse:collapse;font-size:.85rem}
-th,td{padding:6px 10px;text-align:left;border-bottom:1px solid var(--border)}
-th{color:var(--muted);font-weight:600}
-tr:last-child td{border-bottom:none}
-</style>
-</head>
-<body>
-
-<h1>H83 — Multi-band Structural Concordance</h1>
-
-<div class="card">
-<p><strong>DOWNLOAD:</strong> <span class="status ok">YES — format-valid, values exactly {0, 1}, NaN outside footprint only (matching template)</span></p>
-<p style="margin-top:.5rem"><strong>SUBMIT TO COMPETITION:</strong> <span class="status warn">RESEARCH-ONLY — no holdout validation against the board has been run; no organizer receipt exists</span></p>
-<p style="margin-top:.5rem"><em>Competition slots used: <strong>0</strong></em></p>
-</div>
-
-<h2>★ One-Click Download</h2>
-<div class="card">
-<a class="btn" href="downloads/h83-candidate.tif">⬇ Download H83 GeoTIFF (1.5 MB)</a>
-<p style="margin-top:.5rem;font-size:.85rem;color:var(--muted)">
-SHA-256: 274db602ec8b91cb6a2793e9f512321f32326298aa8ed031ebd478e21426f5cd<br>
-37,654 binary dots · float32 · EPSG:32611 · 3730×3292 · nodata=nan outside footprint
-</p>
-</div>
-
-<h2>How to Submit to the Competition</h2>
-<div class="card">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Four clicks: download the GeoTIFF, open the DrivenData New submission form, paste the note, submit. The file contract and the three failure modes."><title>How to submit to the DOE GEMS competition - H83</title><link rel="stylesheet" href="assets/ctd5.css"></head><body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a><a href="index.html">Current round</a><a href="h83.html">H83 result</a><a href="h83-executive-summary.html">How to submit</a><a href="validator.html">Check a file</a><a href="h83-hypotheses.html">Hypotheses</a><a href="h83-sources.html">Sources</a><a href="h84.html">H84 (parallel)</a><a href="h85-executive-summary.html">H85 (parallel)</a><a href="h86-executive-summary.html">H86 (parallel)</a><a href="h83-parallel-executive-summary.html">H83 structcon (parallel)</a><a href="downloads/index.html">Archive</a></nav></header><main id="main">
+<section><h1>How to submit &mdash; four clicks</h1>
+<div class="notice" role="note" style="border:2px solid #f0c4bf;background:#fdecea"><strong style="color:#b3261e">Verdict: NEGATIVE</strong><p><b>OK to download?</b> YES — safe to download and inspect</p><p><b>OK to submit to DrivenData?</b> NO — research artefact only; do not spend a weekly slot</p><p class="small">paired CI lower bound against single_B on gems52-pooled-hide-v1 is -0.161887; the frozen rule requires &gt; 0</p></div>
 <ol>
-<li>Click the blue <strong>Download H83 GeoTIFF</strong> button above. Save the <code>.tif</code> file.</li>
-<li>Go to <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/" target="_blank">the DrivenData GEMS competition page</a> and log in.</li>
-<li>Click <strong>New submission</strong> (or go to the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/predictions/" target="_blank">predictions page</a>).</li>
-<li><strong>File to submit:</strong> click "No file chosen" and select the downloaded <code>.tif</code> file.</li>
-<li><strong>Note (optional):</strong> paste this text:<br>
-<code>H83 multi-band structural concordance; 10 bands x 3 scales; 37654 dots 3px spacing; >200m off catalogue; research only</code></li>
-<li>Click <strong>Submit</strong>. The portal will check the file format and return your score.</li>
+<li><b>Download the file.</b> <a class="button" href="downloads/h83-candidate.tif" download>h83-candidate.tif &#8595;</a>
+    &nbsp;or the <a href="downloads/h83-candidate.zip">single-TIFF ZIP</a>. Both contain exactly one
+    GeoTIFF, which is what the form accepts.</li>
+<li><b>Open the submission form.</b> <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/" rel="noopener">DrivenData &rarr; competition 306
+    &rarr; Submit</a> (login required). Choose <i>File to submit</i> and pick the downloaded file.</li>
+<li><b>Paste the note</b> into the optional <i>Note</i> box so you can tell this submission apart later:
+    <br><code style="display:inline-block;margin:.4rem 0;padding:.4rem .6rem;background:#f2f4f7">H83 cotrain: geophysical vs surface disagreement, off-catalogue instrument, E3, 37654 dots 3px, &gt;200m off catalogue; research-only</code>
+    <br><span class="small">130/140 characters. The submission name the exporter
+    registers is <code>h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z</code>.</span></li>
+<li><b>Submit</b>, then compare the portal's reported score against the SHA-256 on this page
+    (<code>de580306e2cb6460fced1b745d1d40ff9735fb5497d493a56cca7630ad2a0ef7</code>) so you know exactly which bytes were scored.</li>
 </ol>
-<p style="margin-top:.75rem;font-size:.85rem"><strong>The file will NOT produce "Predicted values must be in range [0, 1]"</strong> — the portal-exact writer (<code>gems52.grid.write_geotiff_portal_exact</code>) writes NaN only outside the footprint with <code>nodata=nan</code> declared, and all finite values are exactly 0 or 1. This matches the organiser template's own container profile (LZW compression, stripped layout).</p>
-</div>
+</section><hr class="divider">
 
-<h2>Submission Metadata (paste-ready)</h2>
-<div class="card">
-<dl>
-<dt>Submission name</dt><dd>h83-structural-concordance-37654px-20261010T200049Z</dd>
-<dt>Note (140 chars max)</dt><dd>H83 multi-band structural concordance; 10 bands x 3 scales; 37654 dots 3px spacing; &gt;200m off catalogue; research only</dd>
-<dt>SHA-256</dt><dd>274db602ec8b91cb…</dd>
-<dt>File size</dt><dd>1,558,064 bytes</dd>
-<dt>Dots emitted</dt><dd>37,654</dd>
-</dl>
-</div>
+<section><h2>The file contract, measured from the bytes</h2>
+<div class="table-wrap"><table><thead><tr><th>Rule</th><th>This file</th><th>Status</th></tr></thead><tbody><tr><td>Single-band GeoTIFF (or a ZIP with exactly one)</td><td>1 band, ZIP holds 1 member</td><td>PASS</td></tr><tr><td>Values in [0, 1]</td><td>min 0.0, max 1.0</td><td>PASS</td></tr><tr><td>CRS</td><td>EPSG:32611</td><td>PASS</td></tr><tr><td>Shape</td><td>3730 &times; 3292</td><td>PASS</td></tr><tr><td>Geotransform matches the submission format</td><td>[100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0]</td><td>PASS</td></tr><tr><td>Resolution</td><td>100 m (pinned by the rules page)</td><td>PASS</td></tr><tr><td>Finite everywhere (no NaN, no &plusmn;inf)</td><td>0 NaN, 0 infinite &mdash; zeros outside the footprint</td><td>PASS</td></tr><tr><td>Mass outside the submission footprint</td><td>0</td><td>PASS</td></tr></tbody></table></div>
+<p class="small">Verified by re-reading the written file with <code>rasterio</code> in
+<code>gems52.gates.format_report</code>; the exporter fails closed if any check fails, so a
+non-conforming file cannot be produced. You can also decode it yourself in the browser with
+<a href="validator.html">the checker</a>.</p></section><hr class="divider">
 
-<h2>Format Validation (from disk)</h2>
-<div class="card">
-<table>
-<tr><th>Check</th><th>Result</th></tr>
-<tr><td>Single band</td><td>✅ 1 band</td></tr>
-<tr><td>Dtype</td><td>✅ float32</td></tr>
-<tr><td>CRS</td><td>✅ EPSG:32611</td></tr>
-<tr><td>Shape</td><td>✅ 3730 × 3292</td></tr>
-<tr><td>Transform</td><td>✅ matches sample_submission.tif</td></tr>
-<tr><td>Finite values in [0,1]</td><td>✅ (37,654 ones + 5,128,186 zeros = all finite)</td></tr>
-<tr><td>NaN inside footprint</td><td>✅ 0</td></tr>
-<tr><td>Nodata declaration</td><td>✅ nan (matching template)</td></tr>
-<tr><td>Compression</td><td>✅ LZW, stripped layout</td></tr>
-</table>
-</div>
+<section><h2>The three failure modes the form reports</h2>
+<div class="table-wrap"><table><thead><tr><th>Message you may see</th><th>What it means</th><th>This file</th></tr></thead><tbody><tr><td>"Predicted values must be in range [0, 1]"</td><td>A finite value outside [0,1], or a NaN/&plusmn;inf that the portal's reader did not treat as nodata.</td><td><b>Cannot happen.</b> Every finite value is 0 or 1 and there is no non-finite pixel: the exporter writes zeros outside the footprint rather than NaN, so a reader that ignores the nodata declaration still sees a legal number. A NaN-outside twin is provided below for anyone who prefers byte-structural parity with sample_submission.tif.</td></tr><tr><td>"must match the submission format&rsquo;s CRS, shape, and geotransform"</td><td>Grid metadata drifted.</td><td><b>Cannot happen.</b> The affine is asserted against the pinned six numbers before the write, and re-read from the file afterwards.</td></tr><tr><td>"You can submit a single-band GeoTIFF (.tif) file, or a .zip file containing a single GeoTIFF"</td><td>More than one TIFF in the ZIP.</td><td><b>Cannot happen.</b> The ZIP is rewritten and round-tripped: it must contain exactly one member whose bytes equal the TIFF's.</td></tr></tbody></table></div>
+<p class="small"><b>The NaN-outside twin</b>
+(<a href="downloads/h83-candidate-template-nan.tif" download>h83-candidate-template-nan.tif</a>,
+SHA-256 <code>dee4ee5ee364ae2dae4b684e9f35cbf0a07216b75f13369630bc24cc5d65efd2</code>) is byte-structurally identical to the organiser's
+own <code>sample_submission.tif</code> container (stripped, LZW, <code>nodata=nan</code>). Both
+variants have scored in this project family; the all-finite file is the recommended one only because
+it cannot fail a literal <code>[0,1]</code> range test under any reader. Upload <b>one</b> of them,
+never both.</p></section><hr class="divider">
 
-<h2>Method</h2>
-<div class="card">
-<p>H83 uses <strong>multi-band structural concordance</strong> — a single integrated detector that identifies structural lineaments where multiple geophysical bands show coherent gradient orientation.</p>
-
-<p style="margin-top:.5rem"><strong>How it works:</strong></p>
-<ol style="margin-top:.25rem">
-<li>For each of 10 structural bands (gravity, magnetics, conductivity, strain, DEM derivatives), compute the <strong>structure tensor</strong> at 3 scales (σ = 1, 2, 4 pixels)</li>
-<li>Extract gradient magnitude and <strong>coherence</strong> (how linear the feature is, from the tensor eigenvalues)</li>
-<li>Combine into a single concordance score: strong gradients with high coherence across bands → likely structural feature</li>
-<li>Add LiDAR scarp features as high-confidence surface fault indicators</li>
-<li>Place 37,654 binary dots at 3px spacing on the highest-scoring locations, excluding the 200m catalogue ring</li>
-</ol>
-
-<p style="margin-top:.75rem"><strong>Why this is unique:</strong> Unlike B_DVA2 (variogram-based), this uses local structure tensor analysis. Unlike co-training (two competing views), this uses a single integrated detector. Unlike simple ridge detection, this leverages cross-band orientation agreement.</p>
-
-<p style="margin-top:.5rem"><strong>Bands used:</strong> det_elev, iso_grav_anom, depth_to_base_surf, iso_grav_anom_hg, det_elev_slope, tmi_vg, cond_surf, geod_2ndinv, tmi_hg, iso_grav_anom_vg</p>
-
-<p style="margin-top:.5rem"><strong>Named non-fault mimic:</strong> Lithological contacts can produce similar concordance signals. In the Great Basin, basin-margin faults often coincide with lithological boundaries.</p>
-</div>
-
-<h2>Honest Assessment</h2>
-<div class="card">
-<ul>
-<li>This is a <strong>research artifact</strong> — no holdout validation has been run to estimate board performance.</li>
-<li>The hide-and-recover instrument in this repo has <strong>Spearman −0.10 against the board</strong> (knowledge/10 §5), so even a good holdout DTI would not be a board forecast.</li>
-<li>The submission is <strong>format-valid and downloadable</strong>. It will not produce the "Predicted values must be in range [0, 1]" error.</li>
-<li>No competition slot has been spent. Promotion to a real slot is a separate decision.</li>
-</ul>
-</div>
-
-<p style="margin-top:2rem;text-align:center">
-<a class="btn" href="index.html">← Back to Landing Page</a>
-</p>
-
-</body>
-</html>
+<section><h2>Should you submit this one?</h2>
+<p>paired CI lower bound against single_B on gems52-pooled-hide-v1 is -0.161887; the frozen rule requires &gt; 0. Promotion to a real weekly slot is a separate selector step, within the weekly cap shown
+on the submission page; this round spent <b>0</b> slots.</p>
+<p class="small">Sources and verification status: <a href="h83-sources.html">h83-sources.html</a>.
+Rules page: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/" rel="noopener">competition 306, page 967</a>. Data page:
+<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/" rel="noopener">competition 306, data</a>.</p></section>
+</main></body></html>
