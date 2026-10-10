@@ -1,3 +1,28 @@
+<!--H95-AGENTS-->
+## Current H95 continuation (2026-10-10) — READ FIRST
+Read README's H95 block (it ends with the session brief verbatim), `knowledge/93` (frozen preregistration,
+SHA-256 `bf55dfb78ba7c1c8…`), `knowledge/94` (brief) and `knowledge/95` (results, generated).
+Verdict **negative** — Failed gate(s): holdout_promotion, lane_dots_policy. The co-trained field scored 0.1724 on HOLDOUT-DTI, below the promotable best 0.190147 (paired vs single_B CI spans 0). Its dots are also a lane near-duplicate of the parallel H93 file (IR-H95-006). Experiments 3 of 3, slots 0.
+
+Settled this round; do not re-litigate:
+
+- **Co-training (A→B whole-segment pseudo-labels, one exchange) does not beat single-view B on the holdout:**
+  cotrain_B 0.172401 vs single_B 0.174571, paired -0.002171
+  [-0.006177, +0.001703]. Independence passed again (max |ρ| 0.1337); View A
+  sufficiency failed again (OOF AUC per fold [0.5062341311661124, 0.6010657195529969, 0.4668188015259936, 0.4910432748636082]).
+- **H87 had no holdout; measured now its rule is below random** (h87_disagreement 0.063316 vs random
+  0.079238; IR-H95-001). Never publish a promote verdict without a measured holdout.
+- **Before publishing, re-fetch main and close uniqueness/lane against rasters merged while you ran** (`scripts/h95_supplemental_closure.py`). That check caught a genuine lane duplicate with the parallel H93 file (IR-H95-006); re-running the shared H61 View B learner with minor channel additions produces near-identical dots.
+- **The board-anchored SGMC proxy (`gems52-offcat-segthin-v1`) is diagnostic only** — mass alone explains it (IR-H95-003).
+- **Uniqueness/lane must include the 526-blob sibling census:** run
+  `python3 scripts/fetch_prior_inventory.py --out work/h95/priors --receipt work/h95/prior_fetch_receipt.json` (api.github.com only)
+  before `scripts/run_h95.py gates`.
+- **Publishing:** `scripts/publish_h95_site.py` inserts `<!--H95-CARD-->` / `<!--H95-README-->` / `<!--H95-AGENTS-->` blocks
+  idempotently; it never rewrites a shared page. Re-run it after any receipt changes, then `scripts/check_site.py`.
+- Current artefact: `submission/gems52-h95-cotrainB-segthin-37654px-20261010T223522Z-2c3942b4-zeros.tif` (SHA-256 `28ee81370c9ce1bf…`) — **DOWNLOAD YES, SUBMIT NO**.
+
+<!--/H95-AGENTS-->
+
 <!--H94-AGENTS-->
 ## Current H94 continuation (2026-10-10)
 Read README's standing brief and status block first. H94 verdict **NEGATIVE**. Download yes (audit only), submit **NO**.

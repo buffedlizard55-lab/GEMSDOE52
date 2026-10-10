@@ -1,0 +1,13 @@
+{
+ "path": "submission/gems52-h95-cotrainB-segthin-37654px-20261010T223522Z-2c3942b4-zeros.tif",
+ "stem": "gems52-h95-cotrainB-segthin-37654px-20261010T223522Z-2c3942b4-zeros",
+ "budget": 37654,
+ "decoded_sha256": "2c3942b4dc06d0863c43fc8f94171ec8470672167c94815f7f8ab70c883bcb62",
+ "file_sha256": "28ee81370c9ce1bfb914cc93eb1bbcc952bef8a40c0314dd7b1c2d6785f721bf",
+ "bytes": 795367,
+ "writer": true,
+ "min_dist_to_catalogue_m": 223.60679774997897,
+ "within_300m": 5064,
+ "e2_promote": false,
+ "built_utc": "2026-10-10T22:35:23+00:00"
+}
