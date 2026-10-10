@@ -1,0 +1,72 @@
+{
+  "file": "gems52-h88-cotrain-disagree-supportcal-17707px-20261010T222145Z.tif",
+  "sha256": "ddf09d89003eacb8a9df8896a9783e078a6fca5500445b24f3375d3db4d79d4f",
+  "bytes": 93751,
+  "submission_name": "h88-cotrain-disagreement-support-cal-17707px-20261010",
+  "note": "H88 co-train disagreement disagreement_post, prevalence-calibrated 17707px, 3px spacing, 200m collar",
+  "note_chars": 100,
+  "validator": {
+    "path": "/home/user/GEMSDOE52/submission/gems52-h88-cotrain-disagree-supportcal-17707px-20261010T222145Z.tif",
+    "bytes": 93751,
+    "sha256": "ddf09d89003eacb8a9df8896a9783e078a6fca5500445b24f3375d3db4d79d4f",
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "ref_bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "nodata": null,
+    "blocksize": [
+      256,
+      256
+    ],
+    "fixture_grid": false,
+    "has_validity_mask": false,
+    "nan_pixels": 0,
+    "infinity_pixels": 0,
+    "n_nan": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.0014420367078855634,
+    "n_nonzero": 17707,
+    "mass": 17707.0,
+    "mass_outside_footprint": 0,
+    "problems": [],
+    "ok": true,
+    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "zip_file": "gems52-h88-cotrain-disagree-supportcal-17707px-20261010T222145Z.zip",
+  "zip_sha256": "08d23ec84dba98e0b1d9e88929d3cc5cbc3ef02f837e47e9fdd1bac3158908f7",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "status": "research-only; local format validation is not organizer acceptance",
+  "metadata": {
+    "arm": "disagreement_post",
+    "dots": 17707,
+    "min_separation_px": 3.0,
+    "catalogue_collar_m": 200,
+    "board_corrected_budget": 17707,
+    "instrument_max_pooled_dti": 0.06321529843824282,
+    "single_B_instrument_max": 0.22282287107634083
+  }
+}

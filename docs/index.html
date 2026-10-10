@@ -44,12 +44,35 @@ th{color:var(--accent);font-weight:600}
 
 <h1>GEMSDOE52 — Co-Training Wavelength Contrast</h1>
 <p style="color:#999;margin-bottom:4px">DOE GEMS Prize (DrivenData #306) · Fault Discovery System</p>
-<p style="color:#999;font-size:0.9rem">Built 2026-10-10 · <span class="pill pill-ok">VERDICT: PROMOTE</span></p>
+<p style="color:#999;font-size:0.9rem">Updated 2026-10-10 after round H88 · <span class="pill pill-warn">VERDICT: NO FILE PASSES THE PROMOTION BAR YET</span></p>
+
+<!-- H88 STATUS BOARD -->
+<div class="card" style="border-color:#ef5350">
+<div class="card-title">Submission status board (read this before downloading anything)</div>
+<table><thead><tr><th>round</th><th>file</th><th>HOLDOUT-DTI</th><th>lane gate</th><th>OK to submit?</th></tr></thead><tbody>
+<tr><td>H88</td><td><a href="downloads/h88-candidate.tif" download>h88-candidate.tif</a> (17,707 px, 93,751 B)</td><td>0.0632 at 75.2k dots — <span class="fail">below the 0.1346 random arm and 0.1596 below single_B</span> (53,186 withheld positives, paired CI [−0.1821, −0.1374])</td><td><span class="fail">DUPLICATE/STOP</span> (0.969 ≤3 px to our own H61 candidate)</td><td><span class="fail">NO — research only</span></td></tr>
+<tr><td>H87</td><td>gems52-h87-cotrain-wavelength-thk-37654px…tif</td><td><span class="warn">not run</span> — the build receipt says <code>HOLDOUT-DTI (not yet run)</code></td><td><span class="pass">PASS</span> (0.413)</td><td><span class="fail">NO — validation incomplete</span></td></tr>
+<tr><td>H75</td><td><a href="downloads/h75-candidate.tif" download>h75-candidate.tif</a></td><td><span class="pass">0.1864</span> vs single_B 0.1745, paired +0.0118 [0.0068, 0.0174] → promotes</td><td><span class="fail">DUPLICATE/STOP</span> (0.922)</td><td><span class="fail">NO — protocol says research only (owner may override)</span></td></tr>
+</tbody></table>
+<p style="font-size:0.85rem;color:#999">Rows are read off each round's run card in <code>evidence/</code>. The board score itself is not measurable from here. Full write-up: <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/81_h88_results_and_limits.md">knowledge/81</a>.</p>
+</div>
+<!-- /H88 STATUS BOARD -->
 
 <!-- DOWNLOAD BOX -->
 <div class="download-box">
-<h2>⬇ ONE-CLICK SUBMISSION FILE</h2>
-<p>Download the ready-to-submit GeoTIFF file below. It passes all format checks.</p>
+<h2>⬇ ONE-CLICK DOWNLOADS (RESEARCH FILES — NOT APPROVED TO SUBMIT)</h2>
+<p><strong>Newest (H88, research only):</strong> the format is portal-safe (values exactly {0,1}, all finite) but the holdout and lane gates both stop — see the board above.</p>
+<a class="btn" href="downloads/h88-candidate.tif" download>
+  📥 Download H88 .tif (94 KB, 17,707 px)
+</a>
+<a class="btn btn-zip" href="downloads/h88-candidate.zip" download>
+  📦 Download H88 .zip (51 KB)
+</a>
+<a class="btn" href="downloads/h88-a-only-reasoning.csv" download>
+  📝 H88 per-dot reasoning (17,707 rows)
+</a>
+<p style="font-size:0.85rem;margin-top:12px"><strong>H88 SHA-256:</strong> <code>ddf09d89003eacb8…</code> · submission name <code>h88-cotrain-disagreement-support-cal-17707px-20261010</code></p>
+<p style="margin-top:18px"><strong>H87 (previous round, holdout still not run — do not submit):</strong></p>
 <a class="btn" href="downloads/gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.tif" download>
   📥 Download .tif (128 KB)
 </a>
@@ -248,5 +271,6 @@ Metric: <a href="https://en.wikipedia.org/wiki/Tversky_index" target="_blank">Di
 </div>
 
 </div>
+<div class="card" style="border-color:#ef5350"><div class="card-title">Do not upload</div>No file on this site is approved for a weekly slot right now. The H88 round stopped on both the holdout and the lane gate, H87 has no holdout score yet, and H75 is a research-only artefact under the lane rule. See the status board above and the failed-gate archive <a href="h55-edge.html">H55-EDGE</a> (a separate historical artefact, never the current candidate).</div>
 </body>
 </html>
