@@ -1,6 +1,6 @@
 {
  "segments": 15,
- "csv": "/home/user/GEMSDOE52/docs/downloads/h88-a-only-reasoning.csv",
+ "csv": "/home/user/GEMSDOE52/docs/downloads/h93-a-only-reasoning.csv",
  "total_a_only_segments": 10182,
  "segments_with_shipped_dots": 15,
  "rule": "one row per connected A-only stratum component intersecting the shipped dots, max 200"

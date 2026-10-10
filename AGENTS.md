@@ -1,8 +1,8 @@
-<!--H88-AGENTS-->
-## Current H88 continuation (2026-10-10)
-Read README's H88 quick-download block, `knowledge/80` (session brief), `knowledge/81` (frozen
+<!--H93-AGENTS-->
+## Current H93 continuation (2026-10-10)
+Read README's H93 quick-download block, `knowledge/80` (session brief), `knowledge/81` (frozen
 preregistration, SHA-256 `7f50e069e0a1…`) and `knowledge/82` (results and limits) before proposing
-anything new in this lane. H88 verdict **NEGATIVE**, experiments 3 of 3, slots 0.
+anything new in this lane. H93 verdict **NEGATIVE**, experiments 3 of 3, slots 0.
 
 What is now settled and must not be re-litigated:
 
@@ -13,17 +13,17 @@ What is now settled and must not be re-litigated:
 - **The A-only disagreement stratum scores 0.0353, below random (0.0804), on the catalogue
   instrument** — a ninth confirmation that View-A confidence alone does not resolve the hidden
   population there. The stratum's board relevance remains unprovable on this instrument.
-- **The denominator wall is now internal:** H88's dots hit near-3px 0.7275 vs THIS repo's own
-  H83-E3 research file (random control 0.20, IR-H88-004), so the literal lane rule fires even
+- **The denominator wall is now internal:** H93's dots hit near-3px 0.7275 vs THIS repo's own
+  H83-E3 research file (random control 0.20, IR-H93-004), so the literal lane rule fires even
   without external rasters. Any future full-budget View-B-family emission must preregister quota
   placement or a sub-halo budget BEFORE the fit.
 - **Controls reproduce exactly in this sandbox:** single_B 0.174571 and random 0.080426 to six
-  decimals (per-fold jitter ≤ 1e−3 is environment float, IR-H88-003).
-- **Site discipline:** `docs/index.html` is H88 current-first with the H87 page archived verbatim
+  decimals (per-fold jitter ≤ 1e−3 is environment float, IR-H93-003).
+- **Site discipline:** `docs/index.html` is H93 current-first with the H87 page archived verbatim
   between `<!--ARCHIVE-START-->`/`<!--ARCHIVE-END-->`; the historical guardrail strings (DO NOT
   SUBMIT, NO CERTIFIED LEADERBOARD GAIN, OK to download?, downloads/h83-candidate.tif) are pinned
-  by tests — `scripts/publish_h88_site.py` is idempotent and keeps them.
-<!--/H88-AGENTS-->
+  by tests — `scripts/publish_h93_site.py` is idempotent and keeps them.
+<!--/H93-AGENTS-->
 
 <!--H83-AGENTS-->
 ## Current H83 continuation (2026-10-10)

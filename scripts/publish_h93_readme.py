@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate README.md for the H88 round from receipts (no hand-copied numbers).
+"""Generate README.md for the H93 round from receipts (no hand-copied numbers).
 
 Test contract honoured (tests/test_ctd5.py, tests/test_gems52_h1_pipeline.py):
 * the complete preserved brief (knowledge/26_current_user_brief.md from the ```text block on)
@@ -23,8 +23,8 @@ def load(name):
 
 
 def main():
-    card = load("h88_run_card.json")
-    ho = load("h88_holdout.json")
+    card = load("h93_run_card.json")
+    ho = load("h93_holdout.json")
     sc = ho["pooled"]["scores"]
     diff = ho["pooled"]["paired_differences"]["single_B"]
     submit_ok = bool(card["ok_to_download_and_submit"]["submit"])
@@ -45,12 +45,12 @@ def main():
                " Download is OK for research; spending a weekly slot is forbidden by the project's "
                "own rules (negative results are deliverables).")
 
-    readme = f"""# GEMSDOE52 — H88 Antithetic Basement-Step Co-Training (DOE GEMS Prize)
+    readme = f"""# GEMSDOE52 — H93 Antithetic Basement-Step Co-Training (DOE GEMS Prize)
 
 **Competition:** [DOE GEMS Prize (DrivenData #306)](https://www.drivendata.org/competitions/306/competition-doe-gems/)
 **Lane:** two-view co-training (Blum & Mitchell, COLT '98, [doi:10.1145/279943.279962](https://doi.org/10.1145/279943.279962))
 — View A potential-field/subsurface × View B surface, disagreement as the discovery signal.
-**Branch:** Arena session branch (see `knowledge/80_current_user_brief_2026-10-10_H88.md`)
+**Branch:** Arena session branch (see `knowledge/80_current_user_brief_2026-10-10_H93.md`)
 **Published:** {now} · **Slots used: 0** · **Verdict: {card['verdict'].upper()}**
 
 ## ⬇ Quick Download — Ready-to-Inspect File
@@ -68,14 +68,14 @@ def main():
 Format: single-band float32 GeoTIFF, EPSG:32611, CRS/shape/geotransform identical to
 `sample_submission.tif`, every pixel finite in [0,1] (zeros-outside container), {card['raster']['ones']:,}
 emitted pixels at value 1.0, ≥ 200 m from every mapped fault, 3 px minimum spacing. Verified from
-disk by `scripts/run_h88.py gates` (see `evidence/h88_run_card.json`).
+disk by `scripts/run_h93.py gates` (see `evidence/h93_run_card.json`).
 
 ### How to submit (if the verdict above allows it)
 1. Download the `.tif` above.
 2. Go to the [DrivenData submission page](https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/) (login required).
 3. Upload the file, paste the name and note, click Submit.
 
-## What H88 does
+## What H93 does
 
 **Hypothesis (preregistered, SHA-pinned):** antithetic / sign-asymmetric basement steps in band 15
 (`depth_to_base_surf`) add a subsurface channel the surface view lacks. Signed one-sided step
@@ -111,13 +111,13 @@ fault — the 0.2600 surface field with its ≤ 200 m catalogue ring deleted. Un
 arithmetic (DTI ≈ T / (0.2·S + 0.8·|G|), |G| ≈ 14,089 solved from the two owner-reported scores),
 beating 0.3195 needs +15% credit density at equal mass, or −33% mass at equal credit; across twelve
 owner-scored family rasters Spearman(mass, score) = −0.93, so the cheapest unspent lever is shipping
-less (queued as H88-MASS, knowledge/81). None of this is a board forecast.
+less (queued as H93-MASS, knowledge/81). None of this is a board forecast.
 
 ## Complete current prompt (standing brief — read every session)
 
 The user asked that the standing prompt live in this README verbatim. The preserved brief
 (`knowledge/26_current_user_brief.md`) is embedded below; the 2026-10-10 session brief is
-`knowledge/80_current_user_brief_2026-10-10_H88.md` and the verbatim standing text is
+`knowledge/80_current_user_brief_2026-10-10_H93.md` and the verbatim standing text is
 `knowledge/77_standing_brief_2026-10-10.md`.
 
 {brief_block}
@@ -128,7 +128,7 @@ The user asked that the standing prompt live in this README verbatim. The preser
   became the incumbent (`submission/LATEST.txt` carries the H60 triple-convergence research file).
 * CTD5 (`docs/downloads/ctd5-research.tif`) is research-only: DO NOT SUBMIT.
 * H83–H87 files in `docs/downloads/` are research artefacts with their own verdicts; H87's
-  build-receipt "PROMOTE" label was NOT a holdout validation (IR-H88-002).
+  build-receipt "PROMOTE" label was NOT a holdout validation (IR-H93-002).
 * Pseudo-label exchange is measured, never shipped (N-1). View-A sufficiency: eight consecutive
   failures on the catalogue target (AGENTS.md).
 * Every score labelled HOLDOUT-DTI is local; ORGANIZER-CONFIRMED is reserved for portal receipts.
@@ -138,15 +138,15 @@ The user asked that the standing prompt live in this README verbatim. The preser
 ```
 GEMSDOE52/
 ├── docs/                       # GitHub Pages site (index = current-first + archive)
-│   ├── index.html              # H88 download + verdict, previous rounds archived
-│   ├── h88.html                # H88 run card rendered
+│   ├── index.html              # H93 download + verdict, previous rounds archived
+│   ├── h93.html                # H93 run card rendered
 │   └── downloads/              # Submission files + A-only reasoning CSVs
 ├── src/gems52/                 # Shared library (grid, gates, metric, holdout, emit, nodes, spatial…)
 ├── scripts/
 │   ├── run_h61.py              # Shared co-training instrument (canary/fit/exchange/holdout)
-│   ├── run_h88.py              # THIS round: ABS channels, holdout, build, reasoning, gates
-│   ├── publish_h88_site.py     # Site publisher (receipts -> HTML, idempotent)
-│   ├── publish_h88_readme.py   # This README generator
+│   ├── run_h93.py              # THIS round: ABS channels, holdout, build, reasoning, gates
+│   ├── publish_h93_site.py     # Site publisher (receipts -> HTML, idempotent)
+│   ├── publish_h93_readme.py   # This README generator
 │   └── restore_data.py         # SHA-256-pinned mirror restore of competition data
 ├── data/                       # Competition data (ignored; restored via scripts)
 ├── work/                       # Caches (ignored): feature store, per-round predictions
@@ -175,12 +175,12 @@ GEMSDOE52/
 
 ## Next steps
 
-* If the selector promotes H88, submit and record the receipt as ORGANIZER-CONFIRMED.
-* H88-MASS: preregister the budget-discipline ablation (K = 26,982 vs 37,654) on a
+* If the selector promotes H93, submit and record the receipt as ORGANIZER-CONFIRMED.
+* H93-MASS: preregister the budget-discipline ablation (K = 26,982 vs 37,654) on a
   prevalence-matched off-catalogue instrument (knowledge/76 §4/§6).
-* H88-COND (conductivity local residual) and H88-SEIS (seismic–strain gate) are ranked and
-  queued in knowledge/81; H88-ASTER needs an operator-side EarthExplorer download.
-* Repair `scripts/check_site.py` expectations vs the H87-era index loss (IR-H88-001).
+* H93-COND (conductivity local residual) and H93-SEIS (seismic–strain gate) are ranked and
+  queued in knowledge/81; H93-ASTER needs an operator-side EarthExplorer download.
+* Repair `scripts/check_site.py` expectations vs the H87-era index loss (IR-H93-001).
 """
     (ROOT / "README.md").write_text(readme)
     print(f"README.md written ({len(readme)} bytes), submit_ok={submit_ok}")

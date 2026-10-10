@@ -1,11 +1,11 @@
-# 81 · H88 — hypotheses ranked and experiment plan (FROZEN before any fit)
+# 81 · H93 — hypotheses ranked and experiment plan (FROZEN before any fit)
 
-Round label: **H88**. Lane: the brief's co-training paragraph (Blum & Mitchell, COLT '98 pp. 92–100,
+Round label: **H93**. Lane: the brief's co-training paragraph (Blum & Mitchell, COLT '98 pp. 92–100,
 [doi:10.1145/279943.279962](https://doi.org/10.1145/279943.279962)) — View A potential-field /
 subsurface, View B surface, disagreement as the discovery signal.
 
-This document is pinned by SHA-256 in `registry/h88_preregistration.json` BEFORE any fit.
-`scripts/run_h88.py` recomputes the hash at start-up and refuses to run if it has moved.
+This document is pinned by SHA-256 in `registry/h93_preregistration.json` BEFORE any fit.
+`scripts/run_h93.py` recomputes the hash at start-up and refuses to run if it has moved.
 Nothing in this document may be edited after the first fit; amendments go in a separate file
 appended later (precedent: knowledge/65a, 67a).
 
@@ -24,14 +24,14 @@ or OWNER-REPORTED, never ORGANIZER-CONFIRMED. A projection is never written as a
   ≈ 0.52). Independence passes (max |ρ| 0.1526 < 0.60). H77cond showed the conditional margin is
   negative in every fold. No plain View-A repair is proposed.
 * Placement dominates field choice at weak-field strength (H85: 0.072 spaced vs 0.017 clumped).
-  All H88 placements use `gems52.nodes.spacing_select`, min 3 px.
+  All H93 placements use `gems52.nodes.spacing_select`, min 3 px.
 * The all-finite zeros-outside container is the only container that cannot fail a literal `[0,1]`
-  range test (IR-H85-004). H88 ships that container.
+  range test (IR-H85-004). H93 ships that container.
 * Holdout DTI does not forecast the board (Spearman −0.10, R4). A holdout win is necessary, not
   sufficient; a holdout loss is final for slot purposes.
 * Mass is the strongest measured board predictor in the family (Spearman −0.93 over 12 scored
   priors; knowledge/76 §4). The champion is likely over-emitting by 28–33 %. This is recorded as
-  the next round's lever (candidate H88-MASS below); H88 itself keeps the standing 37,654 budget
+  the next round's lever (candidate H93-MASS below); H93 itself keeps the standing 37,654 budget
   for lane/uniqueness comparability.
 
 ## 1 · Candidate hypotheses (3–5 required; novelty greps run this session)
@@ -41,13 +41,13 @@ tags are the file's own descriptions (`evidence/band_inventory.json`), 1-based G
 
 | rank | id | layers | physical signature targeted | why it could catch a catalogue-missing fault | difference from the repo | cost |
 |---|---|---|---|---|---|---|
-| **1** | **H88-ABS** antithetic / sign-asymmetric basement step | band 15 `depth_to_base_surf` (view A, subsurface) | signed one-sided step `|Δ+| − |Δ−|` at 300 m and 100 m along 4 axes, plus paired opposite-sign steps ≤ 600 m apart (antithetic half-graben margins) | half-graben antithetic margins and fan-buried range-fronts carry a basement-depth throw with no surface expression; the catalogue is built from surface mapping, so these are systematically under-mapped | the queued H81-2 / H66-B statistic, **never run** (knowledge/69 row 2 "NOT RUN"; knowledge/45 rank 2 "Not run this round"). H77-D tested only an UNSIGNED grad-magnitude × basin-floor product (DTI ≈ 0.04, dead); the store's band-15 channels are gradient magnitude, persistence and coherence only — no signed step | low–medium |
-| 2 | H88-COND conductivity local residual decoupled from cover | band 17 `cond_surf`, band 15 | high-frequency conductivity residual after removing the cover-thickness trend: fault-fluid / clay-alteration conductors that are not explained by sediment thickness | hydrothermal fluid pathways along unmapped faults alter conductivity at scales the catalogue never saw | H77-C tested `grad(cond) × grad(band 15)` (dead); a local-residual form exists for DEM elevation and slope (`B_*_local_residual` in the store) but NOT for band 17 (grep `residual` in store manifest: elevation + slope only) | medium |
-| 3 | H88-SEIS seismic–strain gate on the surface field | bands 4 `geod_2ndinv`, 10 `deq_n100a15`, 16 `ieq_n100a15` as a gate on view-B emission | actively-deforming cells (high strain invariant AND nearby seismicity) that have no mapped trace | geodetic strain and seismicity see creeping/hidden structures independent of any map; the catalogue cannot contain what was never mapped | bands 10/16 were used as view-A raw channels (H60C point-process, H74 deformation-only view A sufficiency 0.5194 — dead AS A VIEW); never as a multiplicative gate on the view-B surface field (grep `gate` + band 10/16: 0 files) | low |
-| 4 | H88-MASS budget discipline (metric lever, not geology) | placement only | none | — | knowledge/76 §4: the champion's own credit at S ≤ 25,384 reaches 0.3195; untested because no instrument could certify top-heavy ranking. Queued for a round with a prevalence-matched off-catalogue instrument (knowledge/76 §6) | low, separate round |
-| 5 | H88-ASTER alteration band ratios (external) | ASTER L1T VNIR/SWIR band ratios (clay, iron-oxide indices) | hydrothermal alteration halos around fault-fed systems | alteration is a surface expression invisible to the 100 m geophysics | **NOT VIABLE IN THIS SANDBOX.** Free official source named and checked: USGS EarthExplorer ASTER L1T (free, registration required), https://earthexplorer.usgs.gov/ ; sandbox egress allowlist excludes it. Needs an operator-side download with SHA pins before it can be proposed further | high |
+| **1** | **H93-ABS** antithetic / sign-asymmetric basement step | band 15 `depth_to_base_surf` (view A, subsurface) | signed one-sided step `|Δ+| − |Δ−|` at 300 m and 100 m along 4 axes, plus paired opposite-sign steps ≤ 600 m apart (antithetic half-graben margins) | half-graben antithetic margins and fan-buried range-fronts carry a basement-depth throw with no surface expression; the catalogue is built from surface mapping, so these are systematically under-mapped | the queued H81-2 / H66-B statistic, **never run** (knowledge/69 row 2 "NOT RUN"; knowledge/45 rank 2 "Not run this round"). H77-D tested only an UNSIGNED grad-magnitude × basin-floor product (DTI ≈ 0.04, dead); the store's band-15 channels are gradient magnitude, persistence and coherence only — no signed step | low–medium |
+| 2 | H93-COND conductivity local residual decoupled from cover | band 17 `cond_surf`, band 15 | high-frequency conductivity residual after removing the cover-thickness trend: fault-fluid / clay-alteration conductors that are not explained by sediment thickness | hydrothermal fluid pathways along unmapped faults alter conductivity at scales the catalogue never saw | H77-C tested `grad(cond) × grad(band 15)` (dead); a local-residual form exists for DEM elevation and slope (`B_*_local_residual` in the store) but NOT for band 17 (grep `residual` in store manifest: elevation + slope only) | medium |
+| 3 | H93-SEIS seismic–strain gate on the surface field | bands 4 `geod_2ndinv`, 10 `deq_n100a15`, 16 `ieq_n100a15` as a gate on view-B emission | actively-deforming cells (high strain invariant AND nearby seismicity) that have no mapped trace | geodetic strain and seismicity see creeping/hidden structures independent of any map; the catalogue cannot contain what was never mapped | bands 10/16 were used as view-A raw channels (H60C point-process, H74 deformation-only view A sufficiency 0.5194 — dead AS A VIEW); never as a multiplicative gate on the view-B surface field (grep `gate` + band 10/16: 0 files) | low |
+| 4 | H93-MASS budget discipline (metric lever, not geology) | placement only | none | — | knowledge/76 §4: the champion's own credit at S ≤ 25,384 reaches 0.3195; untested because no instrument could certify top-heavy ranking. Queued for a round with a prevalence-matched off-catalogue instrument (knowledge/76 §6) | low, separate round |
+| 5 | H93-ASTER alteration band ratios (external) | ASTER L1T VNIR/SWIR band ratios (clay, iron-oxide indices) | hydrothermal alteration halos around fault-fed systems | alteration is a surface expression invisible to the 100 m geophysics | **NOT VIABLE IN THIS SANDBOX.** Free official source named and checked: USGS EarthExplorer ASTER L1T (free, registration required), https://earthexplorer.usgs.gov/ ; sandbox egress allowlist excludes it. Needs an operator-side download with SHA pins before it can be proposed further | high |
 
-## 2 · H88-ABS channel definitions (frozen, label-free, catalogue-free)
+## 2 · H93-ABS channel definitions (frozen, label-free, catalogue-free)
 
 Let `z` = band 15 inside the eligible footprint `P`, NaN outside. Axes
 `k ∈ {(0,1), (1,0), (1,1)/√2, (1,−1)/√2}` realised as integer shifts (diagonals nearest-neighbour).
@@ -75,7 +75,7 @@ incision into basement, and interpolation/smoothing artefacts of the basement-de
 
 ## 3 · Experiment plan (budget: 3 experiments, ≤ 2 h, 0 slots)
 
-Instrument: `scripts/run_h61.py` (canary, fit, exchange) then `scripts/run_h88.py`
+Instrument: `scripts/run_h61.py` (canary, fit, exchange) then `scripts/run_h93.py`
 (fit/holdout/build), unchanged shared tools: `run_h61.setup/sample_for_fit/learner_for/pct_rank/
 to_grid`, `gems52.spatial.folds`, `gems52.evaluate_holdout` (`gems52-pooled-hide-v1`),
 `gems52.nodes.spacing_select`, `gems52.gates`, `gems52.grid.write_geotiff_portal_exact`.
@@ -124,9 +124,9 @@ prediction, H73/H75 pattern). Pool = eligible ∩ finite \ catalogue \ 200 m rin
 * format gate: single-band float32 EPSG:32611, shape/transform/CRS = sample_submission, all
   finite in [0,1], zeros outside the domain, zero mass on catalogue and inside the 200 m collar.
 * container: `write_geotiff_portal_exact(..., outside="zero")` (IR-H85-004); ZIP twin.
-* artefact name `gems52-h88-abs-cotrain-37654px-<UTC>-zeros.tif`, submission name
-  `h88-abs-cotrain-37654px`, note ≤ 140 chars:
-  `H88 antithetic basement step + view B co-training, A>B disagreement strata, 37654px, 3px spacing`.
+* artefact name `gems52-h93-abs-cotrain-37654px-<UTC>-zeros.tif`, submission name
+  `h93-abs-cotrain-37654px`, note ≤ 140 chars:
+  `H93 antithetic basement step + view B co-training, A>B disagreement strata, 37654px, 3px spacing`.
 * run card JSON per brief rule 5.
 
 ## 4 · Verdict ladder (frozen)
@@ -146,4 +146,4 @@ prediction, H73/H75 pattern). Pool = eligible ∩ finite \ catalogue \ 200 m rin
 * The holdout hides CATALOGUE faults; the board scores OFF-CATALOGUE faults (knowledge/76 §5:
   surface skill retains ~7 % there). Even a holdout win would not be a board forecast.
 * The strongest known lever (mass, knowledge/76 §4) is deliberately NOT spent this round because
-  the lane protocol fixes comparability at 37,654; it is queued as H88-MASS for the next round.
+  the lane protocol fixes comparability at 37,654; it is queued as H93-MASS for the next round.

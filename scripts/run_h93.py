@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""H88 -- antithetic / sign-asymmetric basement-step (ABS) channels added to View B;
+"""H93 -- antithetic / sign-asymmetric basement-step (ABS) channels added to View B;
 hide-and-recover holdout; disagreement strata; gated emission.
 
-Preregistered in knowledge/81_hypotheses_H88_preregistered.md (pinned in
-registry/h88_preregistration.json). Shared, not forked: run_h61.setup / sample_for_fit /
+Preregistered in knowledge/81_hypotheses_H93_preregistered.md (pinned in
+registry/h93_preregistration.json). Shared, not forked: run_h61.setup / sample_for_fit /
 learner_for / pct_rank / to_grid, gems52.spatial.folds, gems52.evaluate_holdout
 (gems52-pooled-hide-v1), gems52.nodes.spacing_select, gems52.gates, gems52.grid.
 
@@ -11,7 +11,7 @@ Prerequisites (reuse, don't rebuild):
     feature store built + externally extended (work/r2/features)
     python scripts/run_h61.py fit exchange holdout     # shared co-training instrument
 
-Usage: python scripts/run_h88.py [channels|fit|holdout|build|reasoning|gates|all]
+Usage: python scripts/run_h93.py [channels|fit|holdout|build|reasoning|gates|all]
 """
 from __future__ import annotations
 
@@ -41,8 +41,8 @@ from gems52 import evaluate_holdout as evaluator                     # noqa: E40
 from gems52 import gates, grid, nodes                                # noqa: E402
 
 SEED = base.SEED
-PREREG = ROOT / "registry/h88_preregistration.json"
-WORK = ROOT / "work/h88"
+PREREG = ROOT / "registry/h93_preregistration.json"
+WORK = ROOT / "work/h93"
 EVID = ROOT / "evidence"
 DOCS_DL = ROOT / "docs/downloads"
 SUB = ROOT / "submission"
@@ -66,7 +66,7 @@ def digest(p):
 
 def write(name, obj):
     EVID.mkdir(exist_ok=True)
-    p = EVID / f"h88_{name}.json"
+    p = EVID / f"h93_{name}.json"
     p.write_text(json.dumps(obj, indent=1, default=float))
     return p
 
@@ -74,7 +74,7 @@ def write(name, obj):
 def check_prereg():
     reg = json.loads(PREREG.read_text())
     if digest(ROOT / reg["hypothesis_document"]) != reg["hypothesis_sha256"]:
-        raise SystemExit("H88 preregistration changed after freezing")
+        raise SystemExit("H93 preregistration changed after freezing")
     return reg
 
 
@@ -238,7 +238,7 @@ def stage_fit():
 def stage_holdout():
     reg, store, cat, eligible, folds, va, vb, ring_px = base.setup()
     require_h61()
-    reg = check_prereg()          # H88 thresholds, not H61's
+    reg = check_prereg()          # H93 thresholds, not H61's
     th = reg["thresholds"]
     K = int(th["budget_dots_per_fold_per_arm"])
     abs_stack = dict(np.load(WORK / "abs.npz"))
@@ -332,7 +332,7 @@ def stage_holdout():
 # -------------------------------------------------------------------------------------------- build
 def stage_build():
     reg, store, cat, eligible, folds, va, vb, ring_px = base.setup()
-    reg = check_prereg()          # H88 thresholds, not H61's
+    reg = check_prereg()          # H93 thresholds, not H61's
     flat = store.flat_idx
     field = np.full(eligible.shape, np.nan, np.float32)
     for fold in folds:
@@ -420,7 +420,7 @@ def stage_reasoning():
                        "model-derived basement-depth grid (band 15). Status: HYPOTHESIS pending "
                        "Phase-2 geological verification, not verified geology.")))
     import csv
-    p = DOCS_DL / "h88-a-only-reasoning.csv"
+    p = DOCS_DL / "h93-a-only-reasoning.csv"
     DOCS_DL.mkdir(parents=True, exist_ok=True)
     with p.open("w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=list(rows[0].keys()) if rows else [])
@@ -439,8 +439,8 @@ def stage_gates():
     _, store, cat, eligible, folds, va, vb, ring_px = base.setup()
     dots = np.load(WORK / "dots.npy")
     surface = np.load(WORK / "surface.npy")
-    holdout = json.loads((EVID / "h88_holdout.json").read_text())
-    fit = json.loads((EVID / "h88_fit.json").read_text())
+    holdout = json.loads((EVID / "h93_holdout.json").read_text())
+    fit = json.loads((EVID / "h93_fit.json").read_text())
     h61_indep = json.loads((EVID / "h61_independence.json").read_text())
     h61_ex = json.loads((EVID / "h61_pseudo_exchange.json").read_text())
     pooled = holdout["pooled"]
@@ -451,7 +451,7 @@ def stage_gates():
     indep_ok = bool(h61_indep["allow_exchange"])
 
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    name = f"gems52-h88-abs-cotrain-37654px-{stamp}-zeros"
+    name = f"gems52-h93-abs-cotrain-37654px-{stamp}-zeros"
     tif = SUB / f"{name}.tif"
     inside = dots.astype(np.float32)
     receipt = grid.write_geotiff_portal_exact(tif, inside, eligible, SAMPLE, outside="zero")
@@ -506,12 +506,12 @@ def stage_gates():
     with zipfile.ZipFile(zp, "w", zipfile.ZIP_DEFLATED) as z:
         z.write(dl, arcname=dl.name)
     sha = digest(dl)
-    note = ("H88 antithetic basement step + view B co-training, A>B disagreement strata, "
+    note = ("H93 antithetic basement step + view B co-training, A>B disagreement strata, "
             "37654px, 3px spacing")
     assert len(note) <= 140, "submission note must be <= 140 chars"
 
     card = dict(
-        round="H88",
+        round="H93",
         generated_utc=datetime.now(timezone.utc).isoformat(timespec="seconds"),
         hypothesis=("Antithetic / sign-asymmetric basement steps (band 15) add a subsurface "
                     "channel the surface view lacks; co-training lane with disagreement strata."),
@@ -549,7 +549,7 @@ def stage_gates():
                         identical_to_a_prior=uniq["identical_to_a_prior"],
                         distinct_from_every_comparable_prior=uniq["distinct_from_every_comparable_prior"],
                         novel_fraction=uniq.get("novel_fraction")),
-        submission_name="h88-abs-cotrain-37654px",
+        submission_name="h93-abs-cotrain-37654px",
         submission_note=note,
         verdict=verdict,
         ok_to_download_and_submit=dict(download=True, submit=ok_submit,
