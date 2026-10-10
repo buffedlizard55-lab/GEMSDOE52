@@ -11,7 +11,7 @@ from gems52 import submission_writer, structural
 elig = structural.FeatureStore(ROOT / "work/r2/features").valid
 dots = np.load(ROOT / "work/h75/dots.npy")
 pred = dots.astype(np.float32)
-name = "h75-dva-variogram-anisotropy-B-37654px-20261009"
+name = "h75-dva-variogram-anisotropy-B-37654px-20261009T200333Z"
 note = "H75: View-B + directional variogram anisotropy (det_elev/slope/grav); 200m ring cut; binary 37654 dots; holdout +0.012 vs B"
 assert len(note) <= 140, len(note)
 out = ROOT / "submission" / f"gems52-{name}.tif"

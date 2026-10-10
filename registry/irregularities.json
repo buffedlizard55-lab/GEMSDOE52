@@ -1,6 +1,6 @@
 {
  "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified. | H61 merge: IR-H61-001..009 appended from the H61 branch; main's repaired schema and numbering retained.",
- "generated": "2026-10-10T21:50:00Z",
+ "generated": "2026-10-10T21:58:00Z",
  "entries": [
   {
    "id": "IR-30-029",
@@ -3152,6 +3152,105 @@
    "disposition": "Closed. Any future publisher must not write shared guide pages without the release checks."
   },
   {
+   "id": "IR-H78-001",
+   "round": "H78",
+   "severity": "medium",
+   "status": "open - flagged for review",
+   "title": "The brief says 0.3195 is the highest score; the dated snapshot shows 0.3774 at rank 1 and 0.3195 at rank 7",
+   "what_it_is": "The user brief states that 0.3195 is 'the highest score right now'. The 2026-10-08 snapshot (registry/leaderboard_snapshot_2026-10-08.json) lists 0.3774 (xiaofanhu) at rank 1, 0.3195 at rank 7 (DARD), and 0.2778 at rank 13 (extradr19).",
+   "how_we_know": "Dated snapshot in the repo; the public leaderboard chunk was read via fetch_page on 2026-10-09 (values not organizer-confirmed). The portal was not re-fetched.",
+   "handling": "Recorded as the top score being 0.3774. The bar used for H78 decisions is 0.3774 (top) and 0.3195 (rank 7), each labelled as owner-reported.",
+   "disposition": "Open. Owner to confirm the current top and the bar. No submission decision depends on the brief's wording."
+  },
+  {
+   "id": "IR-H78-002",
+   "round": "H78",
+   "severity": "medium",
+   "status": "open - flagged for review",
+   "title": "Official sample is described as 'total fault absence', but the repo template holds 60,988 catalogue positives",
+   "what_it_is": "The DrivenData problem text describes the sample as 'total fault absence'. data/sample_submission.tif has 60,988 ones, exactly equal to the labelled catalogue positives, and NaN outside the domain.",
+   "how_we_know": "Pixel comparison of sample_submission.tif with labels.tif (restored, SHA-verified). Official text from the DrivenData problem page (read-only, 2026-10-09).",
+   "handling": "Not changed. Template used as-is for footprint and transform; the catalogue overlap is recorded as a fact, not as a fault-absence claim.",
+   "disposition": "Open. Owner to confirm the template convention before any future template-derived submission."
+  },
+  {
+   "id": "IR-H78-003",
+   "round": "H78",
+   "severity": "high",
+   "status": "open - owner decision required",
+   "title": "H75 writes 0 outside the domain (7,111,787 px); the official text allows null or NaN",
+   "what_it_is": "The official rule allows null or NaN outside the bounds. The repo's writer and the 0.2778 owner-reported file use 0; the official sample uses NaN.",
+   "how_we_know": "Counts measured from disk: labels == -1 gives 7,111,787 px; the sample's NaN pattern equals that set; H75 writes 0 there.",
+   "handling": "Not changed. The knowledge record explains that both conventions are numerically safe, because the metric counts only p>0.",
+   "disposition": "Owner decision pending (knowledge/67 \u00a73.3; IR-H73-001). Submit one file only."
+  },
+  {
+   "id": "IR-H78-004",
+   "round": "H78",
+   "severity": "high",
+   "status": "resolved - text corrected",
+   "title": "The H75 executive summary said zeros 'fix' the 'must be in range' error; that was not verified",
+   "what_it_is": "docs/h75-executive-summary.html stated that zeros fix the 'Predicted values must be in range [0, 1]' error. The cause of that error on the earlier file is unknown; the claim was not verified.",
+   "how_we_know": "Re-read of the page and of the H75 file: the file meets the [0,1] rule (values {0,1}, no NaN). Nothing in the repo shows the cause of the earlier error.",
+   "handling": "Sentence replaced with a verified statement and an explicit note that the cause is unknown.",
+   "disposition": "Resolved in the H78 site edit."
+  },
+  {
+   "id": "IR-H78-005",
+   "round": "H78",
+   "severity": "high",
+   "status": "open - lane gate fails",
+   "title": "The lane verdict depends on the 565-raster census; the 13 restored rasters cannot show a pass",
+   "what_it_is": "The lane check of H75 uses the 565-raster census: near-dot 0.922 across 38 informative offenders (limit 0.70). Only 13 census rasters are restored here, and none of the 38 offenders is among them.",
+   "how_we_know": "Decoded SHA-256 of each restored raster matches its census record; near-dot values match this session's independent measurement to three decimals. Verifier output: evidence/h78_verify_h75.json.",
+   "handling": "The census receipt is the authority. The H75 run card records the lane FAIL. No slot is used.",
+   "disposition": "Open. Owner override required to submit (lane-rule scope, knowledge/67 \u00a75)."
+  },
+  {
+   "id": "IR-H78-006",
+   "round": "H78",
+   "severity": "high",
+   "status": "open - owner decision required",
+   "title": "Competition inputs are restored from the owner's public GitHub mirrors; redistribution is unverified",
+   "what_it_is": "labels, sample_submission, the reference raster, and the 12 scored priors were restored from the owner's GitHub mirrors under data/ (git-ignored). The DrivenData terms and the redistribution status were not verified.",
+   "how_we_know": "scripts/restore_data.py SHA-256 pins matched (ALL_VERIFIED=True). data/restore_receipt.json records the restore. source_policy.json has DrivenData automated access false.",
+   "handling": "Not committed. Only derived small receipts and the compressed prediction raster are published.",
+   "disposition": "Open. Owner to confirm the compliance position before any further mirror use (knowledge/67 \u00a78.2)."
+  },
+  {
+   "id": "IR-H78-007",
+   "round": "H78",
+   "severity": "medium",
+   "status": "open - owner-reported link",
+   "title": "The 0.2778 file to score link is owner-reported and the board is team-level",
+   "what_it_is": "The score 0.2778 for file h33-2-b2-20261004T220000Z-e5eb6e7e-zeros is owner-reported. The public board is team-level, so the file cannot be matched to the score from the board alone.",
+   "how_we_know": "The file's bytes were measured (knowledge/67 \u00a72); the score attribution was not measured.",
+   "handling": "The \u00a72 mechanism is stated as an inference from one owner-reported pair.",
+   "disposition": "Open. Owner to confirm the attribution from a submission-page receipt."
+  },
+  {
+   "id": "IR-H78-008",
+   "round": "H78",
+   "severity": "medium",
+   "status": "resolved - renamed with UTC write time",
+   "title": "check_site R5 novelty failed (0.992 vs receipt 1.0) because the H75 raster could not be dated",
+   "what_it_is": "H75's raster name carried only a day (20261009) and its sidecar had no timestamp. scripts/check_site.py dates priors from timestamps, so it counted H75 as present at R5's build (2026-10-08T23:51:56Z), and R5's novelty fell to 0.992087. The check exits 1 with H75 present and passes with it absent (novelty 1.0000 over 58 rasters).",
+   "how_we_know": "check_site.py output before and after moving the H75 files out; the R5 receipt value is 1.0 (evidence/r5_novel_emission.json).",
+   "handling": "Renamed the H75 raster, sidecar and zip to the UTC write time ...20261009T200333Z (the file mtime, 2026-10-09 20:03:33 UTC). TIF SHA-256 unchanged (b97691584d...). Zip rebuilt; new SHA-256 7ff4e50d.... Old zip SHA c9285571... is retired. Restored owner rasters in data/scored and data/reference were removed from the git-ignored data/ to match CI (which restores only the template and labels).",
+   "disposition": "Resolved. check_site exit 0; tests/test_h75.py, tests/test_ctd5.py, tests/test_gems52_h1_pipeline.py pass (32). The old file name was never submitted to the competition."
+  },
+  {
+   "id": "IR-H78-009",
+   "round": "H78",
+   "severity": "high",
+   "status": "open - owner decision required",
+   "title": "origin/main fails scripts/check_site.py (R5 novelty 0.991607 != receipt 1.0) since PR #76 merged an undated H76 raster",
+   "what_it_is": "PR #76 (H76 gravity-surface abstention, research-only) added submission/gems52-h76-gravity-surface-abstention-research-only.tif and docs/downloads/h76-candidate.tif. Neither name nor sidecar carries a build time, so check_site counts them as present when R5 was built (2026-10-08T23:51:56Z). The H76 raster shares 8 exact dots with R5, so R5's novelty is 0.999520 on this branch and 0.991607 on origin/main, against a receipt of 1.0.",
+   "how_we_know": "check_site.py run on a temporary worktree of origin/main (exit 1, 0.991607) and on this branch (exit 1, 0.999520). Exact overlap computed from decoded rasters: 8 shared dots with R5 (16,681 R5 dots). The raster's sidecar has no timestamp.",
+   "handling": "Not changed here. Dating another round's artifact would need its real build time, which is not recorded anywhere in the repo; inventing one would be a fabrication. Our H78 PR does not alter this raster.",
+   "disposition": "Open. Owner or the H76 round's author to record the true build time in the sidecar (or otherwise date it) so check_site can exclude it from R5's build-time set, or to accept R5's receipt as scoped to the build-time set. Until then check_site exits 1 on main."
+  },
+  {
    "id": "IR-H89-001",
    "round": "H89",
    "severity": "medium",
@@ -3224,5 +3323,5 @@
    "disposition": "repaired; future rounds must append to README rather than replace it"
   }
  ],
- "merge_note": "Merged registry/irregularities.json: main's entries (including the parallel H66 round's IR-H66-001..010) plus this round's IR-H67-001..011. This round was labelled H66 in its own receipts and was renamed H67 before merge because main merged a different H66 first (PR #56); the IDs were renumbered wholesale so no ID carries two meanings. See knowledge/45a_amendment_2026-10-09_H67_rename.md. IR-H67-002 (in-domain nodata sentinels collapse every rank channel) and IR-H67-008 (probe classification flips with the structuring element, and this round's lane verdict depends on it) are the two that change a result; IR-H67-005 and IR-H67-007 change how a shared instrument must be read. | H77cond merge: this round was executed as H74 and renamed to H77cond before merge because a parallel session merged a different H74 first (PR #72) and a third took H75; see IR-H77cond-001. The rename is identifier-only and the preregistration's pinned SHA-256 still validates. IR-H77cond-002 records a shared-tool repair to scripts/check_site.py surfaced by that merge. IR-H77cond-003 records that filename, receipt and git dating are all individually unsound in this repository, and that the duplicate guard was therefore made dating-independent. | H82 merge (2026-10-09): union of both entry sets by id; 8 H82 entries added (IR-H82-001..IR-H82-008); no existing entry was edited or removed. | H89 merge: IR-H89-001..005 appended from the H89 branch (renamed from H84 because main already holds a different H84); main entries kept verbatim, no id reused."
+ "merge_note": "Merged registry/irregularities.json: main's entries (including the parallel H66 round's IR-H66-001..010) plus this round's IR-H67-001..011. This round was labelled H66 in its own receipts and was renamed H67 before merge because main merged a different H66 first (PR #56); the IDs were renumbered wholesale so no ID carries two meanings. See knowledge/45a_amendment_2026-10-09_H67_rename.md. IR-H67-002 (in-domain nodata sentinels collapse every rank channel) and IR-H67-008 (probe classification flips with the structuring element, and this round's lane verdict depends on it) are the two that change a result; IR-H67-005 and IR-H67-007 change how a shared instrument must be read. | H77cond merge: this round was executed as H74 and renamed to H77cond before merge because a parallel session merged a different H74 first (PR #72) and a third took H75; see IR-H77cond-001. The rename is identifier-only and the preregistration's pinned SHA-256 still validates. IR-H77cond-002 records a shared-tool repair to scripts/check_site.py surfaced by that merge. IR-H77cond-003 records that filename, receipt and git dating are all individually unsound in this repository, and that the duplicate guard was therefore made dating-independent. | H82 merge (2026-10-09): union of both entry sets by id; 8 H82 entries added (IR-H82-001..IR-H82-008); no existing entry was edited or removed. | H89 merge: IR-H89-001..006 appended; main entries kept verbatim; no id reused."
 }
