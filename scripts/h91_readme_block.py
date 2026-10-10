@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Render the H90 README block, the AGENTS.md pointer and knowledge/87 from the receipts.
+"""Render the H91 README block, the AGENTS.md pointer and knowledge/87 from the receipts.
 
-Idempotent: the README block lives between ``<!--H90-README-->`` and ``<!--/H90-README-->`` at the
-top of README.md, and the AGENTS.md section between ``<!--H90-AGENTS-->`` and
-``<!--/H90-AGENTS-->``.  Every number is read out of ``evidence/h90_*.json`` and
-``work/h90/features/manifest.json`` so the prose cannot drift from the evidence.
+Idempotent: the README block lives between ``<!--H91-README-->`` and ``<!--/H91-README-->`` at the
+top of README.md, and the AGENTS.md section between ``<!--H91-AGENTS-->`` and
+``<!--/H91-AGENTS-->``.  Every number is read out of ``evidence/h91_*.json`` and
+``work/h91/features/manifest.json`` so the prose cannot drift from the evidence.
 """
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 EV = ROOT / "evidence"
-FEAT = ROOT / "work/h90/features"
+FEAT = ROOT / "work/h91/features"
 
 
 def load(p):
@@ -21,15 +21,15 @@ def load(p):
 
 
 def main() -> int:
-    card = load(EV / "h90_run_card.json")
-    ch = load(EV / "h90_channels.json")
+    card = load(EV / "h91_run_card.json")
+    ch = load(EV / "h91_channels.json")
     chm = load(FEAT / "manifest.json")
-    fit = load(EV / "h90_fit.json")
-    ho = load(EV / "h90_holdout.json")
-    bp = load(EV / "h90_build_placement.json")
-    ln = load(EV / "h90_lane.json")
-    bu = load(EV / "h90_build.json")
-    ind = load(EV / "h90_independence.json")
+    fit = load(EV / "h91_fit.json")
+    ho = load(EV / "h91_holdout.json")
+    bp = load(EV / "h91_build_placement.json")
+    ln = load(EV / "h91_lane.json")
+    bu = load(EV / "h91_build.json")
+    ind = load(EV / "h91_independence.json")
     alg = load(EV / "h67_board_algebra.json")
     reg = load(ROOT / "registry/leaderboard_snapshot_2026-10-09.json")
 
@@ -55,8 +55,8 @@ def main() -> int:
         for a in sc)
     ir = ind["result"]
 
-    block = f"""<!--H90-README-->
-# Current status — H90 (2026-10-10): continuous directional alignment on a 16-direction semivariance fan — {'PROMOTE-ELIGIBLE' if card['submit_ok'] else 'NEGATIVE / research-only'}
+    block = f"""<!--H91-README-->
+# Current status — H91 (2026-10-10): continuous directional alignment on a 16-direction semivariance fan — {'PROMOTE-ELIGIBLE' if card['submit_ok'] else 'NEGATIVE / research-only'}
 
 > **DOWNLOAD: {'YES' if card['download_ok'] else 'NO'}** (format-valid on disk: single-band float32,
 > EPSG:32611, 3730×3292, transform/bounds match the organiser template, values exactly {{0,1}},
@@ -64,12 +64,12 @@ def main() -> int:
 > **SUBMIT TO THE COMPETITION: {'YES — every measured gate passed' if card['submit_ok'] else 'NO — research artefact only. DO NOT UPLOAD.'}**
 > Slots used: **{card['slots_used']}**. Experiments used: {card['experiments_used']} of 3.
 
-**★ [Download the H90 GeoTIFF — one click](docs/downloads/h90-candidate.tif)** ·
-[single-TIFF ZIP](docs/downloads/h90-candidate.zip) ·
-[per-cell geological reasoning CSV](docs/downloads/h90-a-only-reasoning.csv) ·
-**[Executive summary / exactly how to submit](docs/h90-executive-summary.html)** ·
+**★ [Download the H91 GeoTIFF — one click](docs/downloads/h91-candidate.tif)** ·
+[single-TIFF ZIP](docs/downloads/h91-candidate.zip) ·
+[per-cell geological reasoning CSV](docs/downloads/h91-a-only-reasoning.csv) ·
+**[Executive summary / exactly how to submit](docs/h91-executive-summary.html)** ·
 [check any file in your browser](docs/validator.html) ·
-[full result](docs/h90.html) · [hypotheses](docs/h90-hypotheses.html) · [sources](docs/h90-sources.html)
+[full result](docs/h91.html) · [hypotheses](docs/h91-hypotheses.html) · [sources](docs/h91-sources.html)
 
 - **File:** `{bu['file']}` — {bu['bytes']:,} bytes, SHA-256 `{bu['sha256']}`
 - **Submission name:** `{bu['name']}` · **Note ({bu['note_chars']}/140):** `{bu['note']}`
@@ -125,36 +125,36 @@ def main() -> int:
   {chm['n_control_channels']} 8-direction control channels whose fan is exactly H82's, computed in the
   same pass. Measured strike per fold from the fold's own visible catalogue:
   {', '.join(f"f{s['fold']} {s['strike_compass_deg']:.1f}° (R {s['resultant_length_R']:.2f})" for s in chm['strike'])}.
-- **New this round:** `scripts/repair_h90_channels.py` (IR-H90-001) — 30 of 102 channel files failed
+- **New this round:** `scripts/repair_h91_channels.py` (IR-H91-001) — 30 of 102 channel files failed
   the byte-integrity guard *after* passing it; they were recomputed from the pinned rasters with a
   digest-stability check, not patched.
 - Reproduce: `python3 scripts/restore_data.py --target-dir data` → build the store →
   `PYTHONPATH=src python3 -m gems52.external` → `python3 scripts/fetch_prior_inventory.py` →
-  `python3 scripts/repair_h90_channels.py --all` →
-  `python3 scripts/run_h90.py fit independence holdout build write lane card` →
-  `python3 scripts/publish_h90_site.py` → `python3 scripts/finalize_h90.py` →
-  `python3 scripts/h90_readme_block.py` → `python3 scripts/check_site.py` → `python3 -m pytest -q`.
+  `python3 scripts/repair_h91_channels.py --all` →
+  `python3 scripts/run_h91.py fit independence holdout build write lane card` →
+  `python3 scripts/publish_h91_site.py` → `python3 scripts/finalize_h91.py` →
+  `python3 scripts/h91_readme_block.py` → `python3 scripts/check_site.py` → `python3 -m pytest -q`.
 
 ---
 
-<!--/H90-README-->
+<!--/H91-README-->
 """
 
     readme = ROOT / "README.md"
     text = readme.read_text(encoding="utf-8")
-    if "<!--H90-README-->" in text:
-        a = text.index("<!--H90-README-->")
-        b = text.index("<!--/H90-README-->") + len("<!--/H90-README-->\n")
+    if "<!--H91-README-->" in text:
+        a = text.index("<!--H91-README-->")
+        b = text.index("<!--/H91-README-->") + len("<!--/H91-README-->\n")
         text = text[:a] + block + text[b:]
     else:
         text = block + "\n" + text
     readme.write_text(text, encoding="utf-8")
 
-    agents_block = f"""<!--H90-AGENTS-->
-## Current H90 continuation (2026-10-10)
-Read README's H90 block first, then `knowledge/86_hypotheses_H90_preregistered.md` (frozen before any
-fit; SHA-256 `{card['preregistration']['sha256'][:16]}…`, pinned in `registry/h90_preregistration.json`)
-and `knowledge/87_h90_results_and_limits.md`. Verdict **{'PROMOTE-ELIGIBLE' if card['submit_ok'] else 'NEGATIVE'}**,
+    agents_block = f"""<!--H91-AGENTS-->
+## Current H91 continuation (2026-10-10)
+Read README's H91 block first, then `knowledge/86_hypotheses_H91_preregistered.md` (frozen before any
+fit; SHA-256 `{card['preregistration']['sha256'][:16]}…`, pinned in `registry/h91_preregistration.json`)
+and `knowledge/87_h91_results_and_limits.md`. Verdict **{'PROMOTE-ELIGIBLE' if card['submit_ok'] else 'NEGATIVE'}**,
 experiments {card['experiments_used']}/3, slots 0.
 
 What is now settled, and must not be re-litigated:
@@ -170,9 +170,9 @@ What is now settled, and must not be re-litigated:
   Independence holds (max |ρ| {ind['result'].get('max_abs_correlation')}, bar
   {ind['thresholds']['abandon_max_abs_rho']}), but independence without sufficiency gives co-training
   nothing to donate. Do not re-run pseudo-label exchange on this View A.
-- **IR-H90-001 is environment-level, not repository-level:** channel files written by
+- **IR-H91-001 is environment-level, not repository-level:** channel files written by
   `run_h82.save_verified` were corrupted *after* verification by the concurrently-snapshotting
-  filesystem. `scripts/repair_h90_channels.py --all` recomputes the whole bank with a
+  filesystem. `scripts/repair_h91_channels.py --all` recomputes the whole bank with a
   digest-stability check. Any round that builds a channel bank must run it before fitting.
 - **The H83 artefact is not a validated candidate.** Its own run card records
   `holdout_dti = NOT_EVALUATED`, and it claims "no prior submissions to compare against" when the
@@ -186,27 +186,27 @@ What is now settled, and must not be re-litigated:
 - **The lane rule still cannot be satisfied literally** for any emission ranked by this family's own
   signal: full-census dots literal **{lit_full['verdict']}** (max near-3px share
   {lit_full['max_near_3px_fraction']:.4f}). Report it verbatim; never waive it with a restricted PASS.
-<!--/H90-AGENTS-->
+<!--/H91-AGENTS-->
 """
     ap = ROOT / "AGENTS.md"
     at = ap.read_text(encoding="utf-8")
-    if "<!--H90-AGENTS-->" in at:
-        a = at.index("<!--H90-AGENTS-->")
-        b = at.index("<!--/H90-AGENTS-->") + len("<!--/H90-AGENTS-->\n")
+    if "<!--H91-AGENTS-->" in at:
+        a = at.index("<!--H91-AGENTS-->")
+        b = at.index("<!--/H91-AGENTS-->") + len("<!--/H91-AGENTS-->\n")
         at = at[:a] + agents_block + at[b:]
     else:
         at = agents_block + "\n" + at
     ap.write_text(at, encoding="utf-8")
 
     # ------------------------------------------------------------------ knowledge/87 results
-    res = f"""# 75 · H90 results and limits (2026-10-10)
+    res = f"""# 75 · H91 results and limits (2026-10-10)
 
-Preregistered in [`86_hypotheses_H90_preregistered.md`](86_hypotheses_H90_preregistered.md)
+Preregistered in [`74_hypotheses_H91_preregistered.md`](74_hypotheses_H91_preregistered.md)
 (SHA-256 `{card['preregistration']['sha256']}`, frozen before any fit, canary, holdout or placement
 read; amendment 74a corrected only a channel count, before any fit). Receipts:
-`evidence/h90_channels.json`, `evidence/h90_fit.json`, `evidence/h90_holdout.json`,
-`evidence/h90_independence.json`, `evidence/h90_build_placement.json`,
-`evidence/h90_lane.json`, `evidence/h90_build.json`, `evidence/h90_run_card.json`.
+`evidence/h91_channels.json`, `evidence/h91_fit.json`, `evidence/h91_holdout.json`,
+`evidence/h91_independence.json`, `evidence/h91_build_placement.json`,
+`evidence/h91_lane.json`, `evidence/h91_build.json`, `evidence/h91_run_card.json`.
 
 **Verdict: {'PROMOTE-ELIGIBLE on every measured gate' if card['submit_ok'] else 'NEGATIVE — research artefact, do not upload'}.
 Slots used 0. Experiments used {card['experiments_used']} of 3.**
@@ -247,7 +247,7 @@ board scores over R4, `knowledge/10` §5).
 | View independence (max |ρ| over spatial blocks) | {ind['result'].get('max_abs_correlation')} | {ind['thresholds']['abandon_max_abs_rho']} | allow_exchange = {ind['result'].get('allow_exchange')} |
 
 Independence thresholds were inherited verbatim from `{ind['thresholds_inherited_from']}`
-(SHA-256 `{ind['thresholds_inherited_sha256'][:16]}…`); they were not re-tuned for H90.
+(SHA-256 `{ind['thresholds_inherited_sha256'][:16]}…`); they were not re-tuned for H91.
 
 ## 4. Measured strike, from each fold's own visible catalogue
 
@@ -294,10 +294,10 @@ metric's 300 m kernel. The B-only disagreement stratum was used as a **suppressi
 {bp['b_only_suppression']['supp_pool_px']:,} px, of which the emission took
 {bp['b_only_suppression']['supp_dots']:,}.
 
-## 8. Irregularity IR-H90-001
+## 8. Irregularity IR-H91-001
 
 30 of 102 channel files failed `run_h82.Bank`'s byte-integrity guard after passing
-`run_h82.save_verified`. `scripts/repair_h90_channels.py` recomputed them from the pinned rasters
+`run_h82.save_verified`. `scripts/repair_h91_channels.py` recomputed them from the pinned rasters
 with the same arithmetic and a digest-stability check, then re-hashed the whole bank and re-verified
 it. The mechanism is the environment-level torn write already recorded as IR-H82-002; it is
 **not** resolved at the repository level, and any future channel build must run the repair before
@@ -314,7 +314,7 @@ fitting.
   (egress limited to github/npm/pypi), so no new native-resolution scarp reduction is possible here.
 - Pseudo-label exchange is still not run: View-A sufficiency has now failed eight consecutive times.
 """
-    (ROOT / "knowledge/87_h90_results_and_limits.md").write_text(res, encoding="utf-8")
+    (ROOT / "knowledge/87_h91_results_and_limits.md").write_text(res, encoding="utf-8")
     print("README.md, AGENTS.md and knowledge/87 updated; block bytes:", len(block))
     return 0
 

@@ -1,10 +1,10 @@
 {
- "round": "H90",
- "generated_utc": "2026-10-10T22:13:01+00:00",
+ "round": "H91",
+ "generated_utc": "2026-10-10T22:20:57+00:00",
  "preregistration": {
-  "document": "knowledge/86_hypotheses_H90_preregistered.md",
-  "sha256": "67910c46587e6e43f30020a450e7c21617daf0b0ae44bc76e3af9158d29afc7d",
-  "hypothesis_document_sha256": "67910c46587e6e43f30020a450e7c21617daf0b0ae44bc76e3af9158d29afc7d",
+  "document": "knowledge/86_hypotheses_H91_preregistered.md",
+  "sha256": "31ceef4aed18c989ebc756bc17d23fb1c67ee79961b36793bcd36a080a5baa36",
+  "hypothesis_document_sha256": "31ceef4aed18c989ebc756bc17d23fb1c67ee79961b36793bcd36a080a5baa36",
   "frozen_before_any_fit": true,
   "seed": 84024
  },
@@ -8425,8 +8425,8 @@
   "PASS": true,
   "range_rule_source": "official: values between 0 and 1, single layer float32, EPSG:32611, 100 m, same bounds as the training data (https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/)"
  },
- "submission_name": "h90-csa16fan-B-37654px-20261010T215157Z",
- "submission_note": "H90: View-B + 84 continuous directional-alignment channels on a 16-direction semivariance fan; 200m ring excluded; binary dots",
+ "submission_name": "h91-csa16fan-B-37654px-20261010T215157Z",
+ "submission_note": "H91: View-B + 84 continuous directional-alignment channels on a 16-direction semivariance fan; 200m ring excluded; binary dots",
  "not_the_union": {
   "dots_emitted": 37654,
   "union_max_dots": 37654,
@@ -8449,7 +8449,7 @@
   "median_dist_m": 1389.2443989449805,
   "within_300m_pct": 14.192383279332873
  },
- "reasoning_csv": "docs/downloads/h90-a-only-reasoning.csv",
+ "reasoning_csv": "docs/downloads/h91-a-only-reasoning.csv",
  "n_reasoning_rows": 25169,
  "independence": {
   "stage": "independence",
@@ -29642,10 +29642,10 @@
  "slots_used": 0,
  "experiments_used": 1,
  "files": {
-  "tif": "submission/gems52-h90-csa16fan-B-37654px-20261010T215157Z.tif",
-  "zip": "docs/downloads/h90-candidate.zip",
-  "download": "docs/downloads/h90-candidate.tif",
-  "reasoning_csv": "docs/downloads/h90-a-only-reasoning.csv"
+  "tif": "submission/gems52-h91-csa16fan-B-37654px-20261010T215157Z.tif",
+  "zip": "docs/downloads/h91-candidate.zip",
+  "download": "docs/downloads/h91-candidate.tif",
+  "reasoning_csv": "docs/downloads/h91-a-only-reasoning.csv"
  },
  "download_ok": true,
  "submit_ok": false,

@@ -1,3 +1,41 @@
+<!--H91-AGENTS-->
+## Current H91 continuation (2026-10-10)
+Read README's H91 block first, then `knowledge/86_hypotheses_H91_preregistered.md` (frozen before any
+fit; SHA-256 `31ceef4aed18c989…`, pinned in `registry/h91_preregistration.json`)
+and `knowledge/87_h91_results_and_limits.md`. Verdict **NEGATIVE**,
+experiments 1/3, slots 0.
+
+What is now settled, and must not be re-litigated:
+
+- **The 16-direction fan and the continuous alignment are measured, not assumed.** The primary
+  `B_CSA` scored HOLDOUT-DTI 0.169247 [0.150782, 0.188387] against `single_B`
+  0.173444 [0.152576, 0.194991], paired Δ -0.004197
+  [-0.016143, 0.008684]. The 8-direction control `B_DVA3c` scored
+  0.169532, so the fan-resolution and alignment effects are separated in one pass.
+- **The leakage canary stayed clean** at 0.6220 against a 0.90 bar
+  over 84 channels, so no channel is a leak.
+- **View-A sufficiency failed again** (mean 0.5315, min fold 0.4556).
+  Independence holds (max |ρ| 0.1370681276676306, bar
+  0.6), but independence without sufficiency gives co-training
+  nothing to donate. Do not re-run pseudo-label exchange on this View A.
+- **IR-H91-001 is environment-level, not repository-level:** channel files written by
+  `run_h82.save_verified` were corrupted *after* verification by the concurrently-snapshotting
+  filesystem. `scripts/repair_h91_channels.py --all` recomputes the whole bank with a
+  digest-stability check. Any round that builds a channel bank must run it before fitting.
+- **The H83 artefact is not a validated candidate.** Its own run card records
+  `holdout_dti = NOT_EVALUATED`, and it claims "no prior submissions to compare against" when the
+  registry holds 500+. It is archived, not promoted; do not submit it.
+- **Board algebra, re-measured this session** (`scripts/h67_board_algebra.py`,
+  `evidence/h67_board_algebra.json`): at 37,654 emitted px the credit density needed for 0.3195 is
+  ρ = 0.1595 against the reported-0.2778
+  champion's 0.1387; Spearman(emitted mass,
+  owner-reported board) = -1.0 over
+  5 files. The binding constraint is the ranker's ρ(S) decay, not the budget.
+- **The lane rule still cannot be satisfied literally** for any emission ranked by this family's own
+  signal: full-census dots literal **DUPLICATE/STOP** (max near-3px share
+  1.0000). Report it verbatim; never waive it with a restricted PASS.
+<!--/H91-AGENTS-->
+
 <!--H90-AGENTS-->
 ## Current H90 continuation (2026-10-10)
 Read README's H90 block first, then `knowledge/86_hypotheses_H90_preregistered.md` (frozen before any
@@ -78,6 +116,18 @@ Maximize P(Win): prioritize geological signal and trustworthy spatial validation
 Keep known-catalogue labels separate from verified fault absence, public participant scores separate from filename attribution, hypotheses separate from discoveries, and format-valid artifacts separate from promotion-approved ones. Do not invent organizer validation or claim a guaranteed leaderboard gain. A GeoTIFF with a new name or compression is not a unique prediction; compare decoded pixels.
 
 This session's working branch is fixed by Arena. Do not change branches. Keep raw competition data and large intermediate arrays under ignored `data/` and `work/`. Publish small audit receipts, the unique compressed prediction raster and its review table.
+
+<!--H90-AGENTS-->
+## Current H90 continuation (2026-10-10) — READ THIS FIRST
+
+- Verdict: **negative**. DOWNLOAD YES (research), SUBMIT NO, slots used 0. Full note: `knowledge/80_h90_results_and_limits.md`; run card: `evidence/h90_run_card.json`; irregularities IR-H90-001…009.
+- Holdout instrument finding: the shared H60-family holdout builds its legal pool from the FULL catalogue, so held-out truth is never inside the pool (IR-H90-001). Re-scored on the visible-catalogue ring, every arm's DTI moves 5–21× and the disagreement field falls below random (IR-H90-002). Do not compare any H60-family number with H82/H85/H86 numbers until both arms are reproduced on one instrument (IR-H90-007).
+- Clean sampler: the shipped View A holdout is inflated by about 10% (paired −0.000389 [−0.000832, −0.000104]); View B and dis_contrast are not materially affected (IR-H90-003).
+- Lane gate: the literal dot-lane rule returns DUPLICATE/STOP for the H90 candidate against the calibration lattice (99.81%). H60-6 excludes that raster and would pass (0.6534 vs H60D). Conflicting precedents; owner decision (IR-H90-006). Pixel uniqueness is not lane independence: 65% of its dots sit within 3 px of H60D's dots (IR-H90-005).
+- Next round (proposals, none validated): P1 re-score registered arms on one instrument; P2 single-view B with the clean sampler; P3 cover-gated candidates on the visible ring. See knowledge/80 §8.
+- Reproduction note: `work/pinned` is a symlink to `data/`; the H60 scripts expect that path and no script creates it (IR-H90-009). Staging step reported once; not forked.
+- Never spend a slot without a new comparable holdout best; promotion is a separate selector step.
+<!--/H90-AGENTS-->
 
 <!--H85-AGENTS-->
 ## Current H85 continuation (2026-10-10)

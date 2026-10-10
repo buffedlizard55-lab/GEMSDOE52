@@ -1,11 +1,11 @@
-# 75 · H90 results and limits (2026-10-10)
+# 75 · H91 results and limits (2026-10-10)
 
-Preregistered in [`86_hypotheses_H90_preregistered.md`](86_hypotheses_H90_preregistered.md)
-(SHA-256 `67910c46587e6e43f30020a450e7c21617daf0b0ae44bc76e3af9158d29afc7d`, frozen before any fit, canary, holdout or placement
+Preregistered in [`74_hypotheses_H91_preregistered.md`](74_hypotheses_H91_preregistered.md)
+(SHA-256 `31ceef4aed18c989ebc756bc17d23fb1c67ee79961b36793bcd36a080a5baa36`, frozen before any fit, canary, holdout or placement
 read; amendment 74a corrected only a channel count, before any fit). Receipts:
-`evidence/h90_channels.json`, `evidence/h90_fit.json`, `evidence/h90_holdout.json`,
-`evidence/h90_independence.json`, `evidence/h90_build_placement.json`,
-`evidence/h90_lane.json`, `evidence/h90_build.json`, `evidence/h90_run_card.json`.
+`evidence/h91_channels.json`, `evidence/h91_fit.json`, `evidence/h91_holdout.json`,
+`evidence/h91_independence.json`, `evidence/h91_build_placement.json`,
+`evidence/h91_lane.json`, `evidence/h91_build.json`, `evidence/h91_run_card.json`.
 
 **Verdict: NEGATIVE — research artefact, do not upload.
 Slots used 0. Experiments used 1 of 3.**
@@ -55,7 +55,7 @@ board scores over R4, `knowledge/10` §5).
 | View independence (max |ρ| over spatial blocks) | 0.1370681276676306 | 0.6 | allow_exchange = True |
 
 Independence thresholds were inherited verbatim from `registry/h74_preregistration.json`
-(SHA-256 `44d8eeba549abccd…`); they were not re-tuned for H90.
+(SHA-256 `44d8eeba549abccd…`); they were not re-tuned for H91.
 
 ## 4. Measured strike, from each fold's own visible catalogue
 
@@ -105,10 +105,10 @@ metric's 300 m kernel. The B-only disagreement stratum was used as a **suppressi
 3,681,437 px, of which the emission took
 37,654.
 
-## 8. Irregularity IR-H90-001
+## 8. Irregularity IR-H91-001
 
 30 of 102 channel files failed `run_h82.Bank`'s byte-integrity guard after passing
-`run_h82.save_verified`. `scripts/repair_h90_channels.py` recomputed them from the pinned rasters
+`run_h82.save_verified`. `scripts/repair_h91_channels.py` recomputed them from the pinned rasters
 with the same arithmetic and a digest-stability check, then re-hashed the whole bank and re-verified
 it. The mechanism is the environment-level torn write already recorded as IR-H82-002; it is
 **not** resolved at the repository level, and any future channel build must run the repair before

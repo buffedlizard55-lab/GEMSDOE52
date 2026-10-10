@@ -1,7 +1,7 @@
-gems52-h90-csa16fan-B-37654px-20261010T215157Z.tif
+gems52-h91-csa16fan-B-37654px-20261010T215157Z.tif
 sha256 e0b5ab82ee6df0191a0ec3ed671d45588bcba8fdb1b4ce4f4610cf6a0cb6cc38
 bytes 138604
-download docs/downloads/h90-candidate.tif
+download docs/downloads/h91-candidate.tif
 download_ok True submit_ok False
 verdict negative
 slots_used 0

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""H90 -- continuous directional alignment (CSA) on a 16-direction semivariance fan, inside the
+"""H91 -- continuous directional alignment (CSA) on a 16-direction semivariance fan, inside the
 brief's two-view co-training lane.
 
 Lane (unchanged, per the brief): View A is potential-field/subsurface, View B is surface
@@ -11,7 +11,7 @@ What is new, and why it is not a re-run
 H82 (knowledge/73 section 4) measured two *implementation* defects in the alignment channels:
 theta_max is an argmax over 8 discrete fan directions, so cos(2*(theta_max - psi)) against a scalar
 strike takes only 4 distinct values; and the local-tensor variant is exactly 0 on 46.7-69.9 % of
-eligible pixels.  H90 repairs both:
+eligible pixels.  H91 repairs both:
 
 * a **16-direction fan** whose even indices are exactly H82's 8 directions as a set, so the
   8-direction statistic is recomputed inside the same pass as an internal control;
@@ -22,7 +22,7 @@ eligible pixels.  H90 repairs both:
 
 Stages (checkpointed, resumable):
     preflight    verify all 23 manifest entries by SHA-256/byte count; fail closed
-    channels     build the H90 channel bank with the verified writer (run_h82.save_verified)
+    channels     build the H91 channel bank with the verified writer (run_h82.save_verified)
     fit          per-fold OOF fits of every frozen arm + the leakage canary on each new channel
     independence the lane's mandated view-independence test (thresholds inherited from H74)
     holdout      pooled HOLDOUT-DTI, paired spatial-block bootstrap CI, all frozen arms
@@ -62,11 +62,11 @@ from gems52 import evaluate_holdout as evaluator                      # noqa: E4
 from gems52 import gates, nodes, submission_writer                    # noqa: E402
 
 DATA = ROOT / "data"
-WORK = ROOT / "work/h90"
+WORK = ROOT / "work/h91"
 FEAT = WORK / "features"
 EVID = ROOT / "evidence"
 SAMPLE = DATA / "sample_submission.tif"
-PREREG_PATH = ROOT / "registry/h90_preregistration.json"
+PREREG_PATH = ROOT / "registry/h91_preregistration.json"
 PREREG = json.loads(PREREG_PATH.read_text())
 
 SEED = int(PREREG["seed"])
@@ -77,7 +77,7 @@ MIN_SPACING = float(PREREG["emission"]["min_spacing_px"])
 CANARY_BAR = float(PREREG["canary_alarm_auc"])
 ARMS = tuple(PREREG["arms"])
 PRIMARY = PREREG["primary_arm"]
-PREFIX = "gems52-h90-"
+PREFIX = "gems52-h91-"
 
 # -------------------------------------------------------------------------------------------- design
 SIGMA = 3.0
@@ -117,7 +117,7 @@ def now() -> str:
 
 def write(name, obj):
     EVID.mkdir(exist_ok=True)
-    p = EVID / f"h90_{name}.json"
+    p = EVID / f"h91_{name}.json"
     p.write_text(json.dumps(obj, indent=1, default=float, allow_nan=False) + "\n")
     return p
 
@@ -132,13 +132,13 @@ def check_prereg() -> dict:
     doc = ROOT / reg["hypothesis_document"]
     h = digest(doc)
     if h != reg["hypothesis_sha256"] or doc.stat().st_size != reg["hypothesis_bytes"]:
-        raise SystemExit(f"H90 hypothesis document changed after preregistration: {h}")
+        raise SystemExit(f"H91 hypothesis document changed after preregistration: {h}")
     return reg
 
 
 # --------------------------------------------------------------------------------------- preflight
 def stage_preflight() -> None:
-    out = EVID / "h90_preflight_integrity.json"
+    out = EVID / "h91_preflight_integrity.json"
     if done(out):
         log("preflight cached")
         return
@@ -148,7 +148,7 @@ def stage_preflight() -> None:
     if not all_ok:
         raise SystemExit("preflight FAILED: a pinned input does not match its manifest entry")
     write("preflight_integrity", dict(
-        round="H90-preflight", observed_utc=now(), manifest="registry/data_manifest.json",
+        round="H91-preflight", observed_utc=now(), manifest="registry/data_manifest.json",
         data_root="data", pinned_files_verified=len(receipts), pinned_all_ok=True,
         qualification=("SHA/byte verification of owner-mirror pins proves mirror integrity, NOT "
                        "organizer authentication; the DrivenData data tab is login-walled"),
@@ -204,7 +204,7 @@ def _fan_only(z, ok, w, h, fan, sigma=SIGMA):
 
 def stage_channels() -> None:
     reg = check_prereg()
-    if done(EVID / "h90_channels.json") and done(FEAT / "manifest.json"):
+    if done(EVID / "h91_channels.json") and done(FEAT / "manifest.json"):
         log("channels cached")
         return
     reg, store, cat, eligible, folds, va, vb, ring_px = base.setup()
@@ -287,7 +287,7 @@ def stage_channels() -> None:
         del v
     learner = sorted([k for k in cols if k.startswith(("DVA3_", "CSA_"))])
     control = sorted([k for k in cols if k.startswith("DVA3c_")])
-    man = dict(round="H90", created_utc=now(), version="h90-csa-16fan-v1", sigma_px=SIGMA,
+    man = dict(round="H91", created_utc=now(), version="h91-csa-16fan-v1", sigma_px=SIGMA,
                lags_px=list(LAGS), fan_offsets_dy_dx=[list(t) for t in FAN16],
                fan_phi_deg_image_frame=list(PHI16),
                fan_offset_lengths_px={str(k): float(np.hypot(*t)) for k, t in enumerate(FAN16)},
@@ -316,7 +316,7 @@ def stage_channels() -> None:
 
 
 class Bank(h82tools.Bank):
-    """H90 channel bank; the only difference from H82's is the fold-folded CSA alignment column."""
+    """H91 channel bank; the only difference from H82's is the fold-folded CSA alignment column."""
 
     def gather(self, rows, names, fold=None):
         out = np.empty((len(rows), len(names)), np.float32)
@@ -386,7 +386,7 @@ def predict_region(store, bank, model, names_store, names_ch, names_fold, rows_g
 
 def stage_fit() -> None:
     check_prereg()
-    if done(EVID / "h90_fit.json"):
+    if done(EVID / "h91_fit.json"):
         log("fit cached")
         return
     reg, store, cat, eligible, folds, va, vb, ring_px = base.setup()
@@ -482,7 +482,7 @@ def stage_fit() -> None:
 # ---------------------------------------------------------------------------------- independence
 def stage_independence() -> None:
     check_prereg()
-    if done(EVID / "h90_independence.json"):
+    if done(EVID / "h91_independence.json"):
         log("independence cached")
         return
     from gems52 import spatial
@@ -510,7 +510,7 @@ def stage_independence() -> None:
     write("independence", dict(
         stage="independence", started_utc=now(), instrument="gems52.spatial.independence",
         thresholds_inherited_from="registry/h74_preregistration.json",
-        thresholds_inherited_sha256=digest(th_src), thresholds_not_retuned_for_h90=True,
+        thresholds_inherited_sha256=digest(th_src), thresholds_not_retuned_for_h91=True,
         thresholds=dict(donor_rank_min=th["donor_rank_min"], block_side_px=th["block_side_px"],
                         abandon_max_abs_rho=th["independence_abandon_max_abs_rho"], min_blocks=20,
                         negative_ring_px=4),
@@ -546,7 +546,7 @@ store_cache: dict = {}
 
 def stage_holdout() -> None:
     check_prereg()
-    if done(EVID / "h90_holdout.json"):
+    if done(EVID / "h91_holdout.json"):
         log("holdout cached")
         return
     reg, store, cat, eligible, folds, va, vb, ring_px = base.setup()
@@ -610,7 +610,7 @@ def stitch(arm, folds, eligible, flat):
 
 def stage_build() -> None:
     check_prereg()
-    if done(EVID / "h90_build_placement.json"):
+    if done(EVID / "h91_build_placement.json"):
         log("build cached")
         return
     reg, store, cat, eligible, folds, va, vb, ring_px = base.setup()
@@ -630,7 +630,7 @@ def stage_build() -> None:
     union_dots = sel(np.maximum(np.where(np.isfinite(fA), fA, -1.0),
                                 np.where(np.isfinite(fS), fS, -1.0)))
     a_dots, b_dots = sel(fA), sel(fS)
-    # H90-C: the B-only disagreement stratum as a SUPPRESSION set (new this round)
+    # H91-C: the B-only disagreement stratum as a SUPPRESSION set (new this round)
     pa = np.nan_to_num(fA, nan=0.0)
     pb = np.nan_to_num(fS, nan=0.0)
     q_conf, q_abst = 0.60, 0.40
@@ -691,7 +691,7 @@ def restricted_supports(paths, eligible, probe_threshold=0.95):
 
 def stage_lane() -> None:
     check_prereg()
-    if done(EVID / "h90_lane.json"):
+    if done(EVID / "h91_lane.json"):
         log("lane cached")
         return
     import run_h73 as h73
@@ -700,7 +700,7 @@ def stage_lane() -> None:
     dots = np.load(WORK / "dots.npy").astype(np.float32)
     surf = np.load(WORK / "surface.npy")
     full, meta = prior_paths(ROOT / "work/h61/prior_fetch_receipt.json", ("submission",))
-    full = [p for p in full if p.exists() and PREFIX not in p.name and "h90" not in p.name]
+    full = [p for p in full if p.exists() and PREFIX not in p.name and "h91" not in p.name]
     restr = restricted_registry()
     out = dict(stage="lane", started_utc=now(), registry_full=meta, n_full=len(full),
                n_restricted=len(restr),
@@ -775,7 +775,7 @@ def write_reasoning(dots, catd, eligible, folds) -> str:
                              p_view_A=round(a, 4), p_view_B=round(b, 4),
                              dist_to_catalogue_m=round(float(catd[y, x] * 100.0), 1),
                              geological_reading=reading, falsifier=falsifier))
-    p = ROOT / "docs/downloads/h90-a-only-reasoning.csv"
+    p = ROOT / "docs/downloads/h91-a-only-reasoning.csv"
     with p.open("w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=list(out_rows[0].keys()) if out_rows else
                            ["row", "col", "stratum", "p_view_A", "p_view_B", "dist_to_catalogue_m",
@@ -787,7 +787,7 @@ def write_reasoning(dots, catd, eligible, folds) -> str:
 
 def stage_write() -> None:
     check_prereg()
-    if done(EVID / "h90_build.json"):
+    if done(EVID / "h91_build.json"):
         log("write cached")
         return
     reg, store, cat, eligible, folds, va, vb, ring_px = base.setup()
@@ -795,15 +795,15 @@ def stage_write() -> None:
     union_dots = np.load(WORK / "union_dots.npy")
     pred = dots.astype(np.float32)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    name = f"h90-csa16fan-B-{int(dots.sum())}px-{stamp}"
+    name = f"h91-csa16fan-B-{int(dots.sum())}px-{stamp}"
     _man = json.loads((FEAT / "manifest.json").read_text())
-    note = (f"H90: View-B + {_man['n_learner_channels']} continuous directional-alignment "
+    note = (f"H91: View-B + {_man['n_learner_channels']} continuous directional-alignment "
             f"channels on a {len(_man['fan_offsets_dy_dx'])}-direction semivariance fan; "
             f"200m ring excluded; binary dots")
     assert len(name) <= 140 and len(note) <= 140, (len(name), len(note))
     out = ROOT / "submission" / f"gems52-{name}.tif"
     rec = submission_writer.write_submission(out, pred, SAMPLE, eligible, note=note, name=name,
-                                            metadata=dict(round="H90", primary_arm=PRIMARY))
+                                            metadata=dict(round="H91", primary_arm=PRIMARY))
     with rasterio.open(out) as a, rasterio.open(SAMPLE) as s:
         v = a.read(1)
         val = dict(count=a.count, dtype=a.dtypes[0], crs=str(a.crs), shape=list(a.shape),
@@ -871,15 +871,15 @@ def stage_write() -> None:
                reasoning_csv=reasoning_csv, n_reasoning_rows=n_reason, started_utc=now())
     write("build", res)
     dl = ROOT / "docs/downloads"
-    shutil.copy(out, dl / "h90-candidate.tif")
-    with zipfile.ZipFile(dl / "h90-candidate.zip", "w", zipfile.ZIP_DEFLATED) as z:
+    shutil.copy(out, dl / "h91-candidate.tif")
+    with zipfile.ZipFile(dl / "h91-candidate.zip", "w", zipfile.ZIP_DEFLATED) as z:
         z.write(out, out.name)
-    with zipfile.ZipFile(dl / "h90-candidate.zip") as z:
+    with zipfile.ZipFile(dl / "h91-candidate.zip") as z:
         assert z.namelist() == [out.name] and z.read(out.name) == out.read_bytes()
-    res["download_staged"] = dict(tif="docs/downloads/h90-candidate.tif",
-                                  zip="docs/downloads/h90-candidate.zip",
-                                  tif_sha256=digest(dl / "h90-candidate.tif"),
-                                  zip_sha256=digest(dl / "h90-candidate.zip"))
+    res["download_staged"] = dict(tif="docs/downloads/h91-candidate.tif",
+                                  zip="docs/downloads/h91-candidate.zip",
+                                  tif_sha256=digest(dl / "h91-candidate.tif"),
+                                  zip_sha256=digest(dl / "h91-candidate.zip"))
     write("build", res)
     log(json.dumps({k: res[k] for k in ("file", "bytes", "sha256", "name", "note")}, indent=1))
     log("validator: " + json.dumps({k: val[k] for k in ("PASS", "range_ok", "dtype", "crs",
@@ -890,14 +890,14 @@ def stage_write() -> None:
 
 # ------------------------------------------------------------------------------------------ card
 def stage_card() -> None:
-    ch = json.loads((EVID / "h90_channels.json").read_text())
+    ch = json.loads((EVID / "h91_channels.json").read_text())
     chm = json.loads((FEAT / "manifest.json").read_text())
-    fit = json.loads((EVID / "h90_fit.json").read_text())
-    ho = json.loads((EVID / "h90_holdout.json").read_text())
-    bp = json.loads((EVID / "h90_build_placement.json").read_text())
-    ln = json.loads((EVID / "h90_lane.json").read_text())
-    bu = json.loads((EVID / "h90_build.json").read_text())
-    ind = json.loads((EVID / "h90_independence.json").read_text())
+    fit = json.loads((EVID / "h91_fit.json").read_text())
+    ho = json.loads((EVID / "h91_holdout.json").read_text())
+    bp = json.loads((EVID / "h91_build_placement.json").read_text())
+    ln = json.loads((EVID / "h91_lane.json").read_text())
+    bu = json.loads((EVID / "h91_build.json").read_text())
+    ind = json.loads((EVID / "h91_independence.json").read_text())
     sc = ho["pooled"]["scores"]
     pd_ = ho["pooled"]["paired_differences"]
     pair = pd_["single_B"]
@@ -909,7 +909,7 @@ def stage_card() -> None:
     promote = bool(holdout_wins and not lane_dup and bu["validator"]["PASS"]
                    and bu["not_the_union"]["not_union_pass"])
     card = dict(
-        round="H90", generated_utc=now(),
+        round="H91", generated_utc=now(),
         preregistration=dict(document=PREREG["hypothesis_document"],
                              sha256=PREREG["hypothesis_sha256"],
                              hypothesis_document_sha256=digest(ROOT / PREREG["hypothesis_document"]),
@@ -1007,8 +1007,8 @@ def stage_card() -> None:
                 f"[{pd_['B_DVA3c']['ci95'][0]:.6f}, {pd_['B_DVA3c']['ci95'][1]:.6f}])."),
         verdict="promote" if promote else "negative",
         slots_used=0, experiments_used=1,
-        files=dict(tif=bu["file"], zip="docs/downloads/h90-candidate.zip",
-                   download="docs/downloads/h90-candidate.tif",
+        files=dict(tif=bu["file"], zip="docs/downloads/h91-candidate.zip",
+                   download="docs/downloads/h91-candidate.tif",
                    reasoning_csv=bu["reasoning_csv"]),
         download_ok=bool(bu["validator"]["PASS"]),
         submit_ok=bool(promote),

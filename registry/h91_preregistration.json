@@ -1,12 +1,12 @@
 {
- "round": "H90",
- "preregistered_utc": "2026-10-10T21:05:00+00:00 (relabelled H84 -> H90 at merge: a parallel session had already merged a different H84)",
- "hypothesis_document": "knowledge/86_hypotheses_H90_preregistered.md",
- "hypothesis_sha256": "67910c46587e6e43f30020a450e7c21617daf0b0ae44bc76e3af9158d29afc7d",
- "hypothesis_bytes": 12158,
- "lane": "two-view paragraph of the brief (Blum & Mitchell COLT 1998, doi:10.1145/279943.279962): View A potential-field/subsurface vs View B surface, disagreement as the discovery signal. H90 repairs the measured 4-value quantisation and degenerate-null defect of the H82 alignment channels (knowledge/73 section 4) with a 16-direction semivariance fan and a continuous, g-weighted mean direction plus directional resultant length, and adds radiometric-ratio (Th/K, U/K) directional anisotropy to View B.",
+ "round": "H91",
+ "preregistered_utc": "2026-10-10T21:05:00+00:00",
+ "hypothesis_document": "knowledge/86_hypotheses_H91_preregistered.md",
+ "hypothesis_sha256": "31ceef4aed18c989ebc756bc17d23fb1c67ee79961b36793bcd36a080a5baa36",
+ "hypothesis_bytes": 12025,
+ "lane": "two-view paragraph of the brief (Blum & Mitchell COLT 1998, doi:10.1145/279943.279962): View A potential-field/subsurface vs View B surface, disagreement as the discovery signal. H91 repairs the measured 4-value quantisation and degenerate-null defect of the H82 alignment channels (knowledge/73 section 4) with a 16-direction semivariance fan and a continuous, g-weighted mean direction plus directional resultant length, and adds radiometric-ratio (Th/K, U/K) directional anisotropy to View B.",
  "frozen_before_any_fit": true,
- "runner": "scripts/run_h90.py",
+ "runner": "scripts/run_h91.py",
  "runner_refuses_if_hash_moves": true,
  "seed": 84024,
  "primary_arm": "B_CSA",
@@ -143,7 +143,7 @@
   "ring_mechanism_source": "knowledge/49 section 1 (measured 0.2600 -> 0.2778)"
  },
  "lane_registries": {
-  "literal_full_census": "submission/*.tif plus the prior inventory receipt, excluding gems52-h90-*",
+  "literal_full_census": "submission/*.tif plus the prior inventory receipt, excluding gems52-h91-*",
   "restricted_scored_only": "data/scored/*.tif + data/reference/h33-2-b2-zeros.tif (13 files, registry/h82_scored_registry.json)",
   "doctrine": "a policy or restricted-registry PASS never waives a literal full-census DUPLICATE/STOP (AGENTS.md; knowledge/62 IR-H73-011); both verdicts reported verbatim"
  },
@@ -175,5 +175,5 @@
   "74a (2026-10-10T21:10Z, before any fit/canary/holdout read): learner-channel count corrected 60 -> 84 (7 fields x 3 lags x 4 statistics); design table already implied it. No hypothesis, threshold, arm, seed, budget, promotion rule or lane rule changed."
  ],
  "relabelled_from": "H84",
- "relabel_reason": "a parallel session merged a different H84 (primary B_DVA2_HVA) first; this round was relabelled H90 at merge, protocol body unchanged"
+ "relabel_reason": "two parallel sessions merged first and took H84 and then H90; this round was relabelled H91 at merge, protocol body unchanged"
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Publish the H90 site: current-first landing, full result page, hypotheses, sources and the
-submission guide.  Every number is read back out of ``evidence/h90_*.json`` and
-``work/h90/features/manifest.json``; nothing is typed by hand.
+"""Publish the H91 site: current-first landing, full result page, hypotheses, sources and the
+submission guide.  Every number is read back out of ``evidence/h91_*.json`` and
+``work/h91/features/manifest.json``; nothing is typed by hand.
 
 The landing page keeps the previous page's body verbatim inside a collapsed archive, because
 ``scripts/check_site.py`` asserts a dozen historical strings on it (H57's credited-core alternate,
@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 EV = ROOT / "evidence"
 DATA = ROOT / "docs/data"
 DOCS = ROOT / "docs"
-FEAT = ROOT / "work/h90/features"
+FEAT = ROOT / "work/h91/features"
 DOWN = DOCS / "downloads"
 
 CSS = """
@@ -125,14 +125,14 @@ def refresh_h55_review() -> None:
 
 
 # -------------------------------------------------------------------------------------------- data
-card = load(EV / "h90_run_card.json")
-ch = load(EV / "h90_channels.json")
-fit = load(EV / "h90_fit.json")
-ho = load(EV / "h90_holdout.json")
-bp = load(EV / "h90_build_placement.json")
-ln = load(EV / "h90_lane.json")
-bu = load(EV / "h90_build.json")
-ind = load(EV / "h90_independence.json")
+card = load(EV / "h91_run_card.json")
+ch = load(EV / "h91_channels.json")
+fit = load(EV / "h91_fit.json")
+ho = load(EV / "h91_holdout.json")
+bp = load(EV / "h91_build_placement.json")
+ln = load(EV / "h91_lane.json")
+bu = load(EV / "h91_build.json")
+ind = load(EV / "h91_independence.json")
 chm = load(FEAT / "manifest.json")
 R5 = load(DATA / "submission_r5.json")
 H58 = load(DATA / "h58_result.json")
@@ -141,11 +141,11 @@ H58_SHA24 = str(H58["artifact"]["sha256"])[:24]
 H58_FILE = str(H58["artifact"]["file"])
 
 TIF = ROOT / bu["file"]
-ZIP = DOWN / "h90-candidate.zip"
-SHORT = DOWN / "h90-candidate.tif"
+ZIP = DOWN / "h91-candidate.zip"
+SHORT = DOWN / "h91-candidate.tif"
 CANON = DOWN / TIF.name
 CANON_ZIP = DOWN / (TIF.stem + ".zip")
-CSV = DOWN / "h90-a-only-reasoning.csv"
+CSV = DOWN / "h91-a-only-reasoning.csv"
 
 # stage the canonical + short download copies (byte-identical)
 for src, dst in ((TIF, SHORT), (TIF, CANON)):
@@ -189,14 +189,14 @@ def verdict_notice() -> str:
 
 
 def actions() -> str:
-    return (f'<div class="download-box"><h2>⬇️ Download the H90 submission GeoTIFF</h2>'
+    return (f'<div class="download-box"><h2>⬇️ Download the H91 submission GeoTIFF</h2>'
             f'<p>One click. Single-band float32 · EPSG:32611 · 100 m · 3730×3292 · '
             f'values exactly {{0,1}} · 0 NaN inside the footprint.</p>'
             f'<a class="download-btn" href="downloads/{esc(SHORT.name)}" download>Download TIF '
             f'({TIF.stat().st_size:,} bytes)</a>'
             f'<a class="download-btn secondary" href="downloads/{esc(ZIP.name)}" download>'
             f'Download single-TIFF ZIP</a>'
-            f'<a class="download-btn secondary" href="downloads/h90-a-only-reasoning.csv" download>'
+            f'<a class="download-btn secondary" href="downloads/h91-a-only-reasoning.csv" download>'
             f'Per-cell geological reasoning CSV</a>'
             f'<a class="download-btn secondary" href="validator.html">Check any file in your browser</a>'
             f'<div class="meta">File <code>{esc(TIF.name)}</code><br>'
@@ -205,8 +205,8 @@ def actions() -> str:
             f'{esc(bu["name"])} · note: <code>{esc(bu["note"])}</code></div></div>')
 
 
-# --------------------------------------------------------------------------------------- h90.html
-def build_h90_page() -> str:
+# --------------------------------------------------------------------------------------- h91.html
+def build_h91_page() -> str:
     rows = []
     for arm, rec in SCORES.items():
         tag = ""
@@ -235,8 +235,8 @@ def build_h90_page() -> str:
                     f"{s['resultant_length_R']:.3f}", f"{s['corridor_px']:,}"]
                    for s in chm["strike"]]
     body = [
-        "<h1>H90 — continuous directional alignment on a 16-direction semivariance fan</h1>",
-        f'<p class="small">Round H90 · {esc(card["generated_utc"])} · lane: the brief\'s two-view '
+        "<h1>H91 — continuous directional alignment on a 16-direction semivariance fan</h1>",
+        f'<p class="small">Round H91 · {esc(card["generated_utc"])} · lane: the brief\'s two-view '
         f'co-training paragraph (Blum &amp; Mitchell, COLT 1998, '
         f'<a href="https://doi.org/10.1145/279943.279962">doi:10.1145/279943.279962</a>) · '
         f'experiments used {card["experiments_used"]} of 3 · submission slots used '
@@ -326,38 +326,38 @@ def build_h90_page() -> str:
         ]),
         f'<p class="small">{esc(val["range_rule_source"])}</p>',
         "<h2>9 · Per-candidate geological reasoning</h2>",
-        f'<p><a href="downloads/h90-a-only-reasoning.csv">h90-a-only-reasoning.csv</a> — '
+        f'<p><a href="downloads/h91-a-only-reasoning.csv">h91-a-only-reasoning.csv</a> — '
         f'{bu["n_reasoning_rows"]:,} rows, one per emitted cell in a disagreement stratum, each with '
         f'the two view probabilities, the distance to the nearest mapped trace, a geological reading '
         f'and an explicit falsifier. Phase-2 reviewers verify faults, so the A-only cells carry the '
         f'buried-continuation reading and the B-only cells carry the surface-artifact reading.</p>',
         "<h2>10 · Run card and provenance</h2>",
-        f'<p><a href="data/h90_run_card.json">docs/data/h90_run_card.json</a> · '
-        f'<a href="data/h90_channels.json">channels</a> · '
-        f'<a href="data/h90_fit.json">fit + canary</a> · '
-        f'<a href="data/h90_holdout.json">holdout</a> · '
-        f'<a href="data/h90_independence.json">independence</a> · '
-        f'<a href="data/h90_lane.json">lane</a> · '
-        f'<a href="data/h90_build.json">build</a>. '
+        f'<p><a href="data/h91_run_card.json">docs/data/h91_run_card.json</a> · '
+        f'<a href="data/h91_channels.json">channels</a> · '
+        f'<a href="data/h91_fit.json">fit + canary</a> · '
+        f'<a href="data/h91_holdout.json">holdout</a> · '
+        f'<a href="data/h91_independence.json">independence</a> · '
+        f'<a href="data/h91_lane.json">lane</a> · '
+        f'<a href="data/h91_build.json">build</a>. '
         f'Inputs: {esc(card["inputs_provenance"])}.</p>',
-        '<p class="small">Irregularity raised this round: <b>IR-H90-001</b> — 30 of 102 channel files '
+        '<p class="small">Irregularity raised this round: <b>IR-H91-001</b> — 30 of 102 channel files '
         'failed the byte-integrity guard after they had passed it (torn write against a concurrently '
         'snapshotting filesystem, the IR-H82-002 mechanism). '
-        '<a href="../scripts/repair_h90_channels.py">scripts/repair_h90_channels.py</a> recomputed them from the '
+        '<a href="../scripts/repair_h91_channels.py">scripts/repair_h91_channels.py</a> recomputed them from the '
         'pinned rasters and re-hashed the bank; see '
-        '<a href="data/h90_channels.json">the channels receipt</a>.</p>',
+        '<a href="data/h91_channels.json">the channels receipt</a>.</p>',
         '<footer><p><a href="index.html">← Overview</a> · '
-        '<a href="h90-executive-summary.html">Submission guide</a> · '
-        '<a href="h90-hypotheses.html">Hypotheses</a> · '
-        '<a href="h90-sources.html">Sources</a> · '
+        '<a href="h91-executive-summary.html">Submission guide</a> · '
+        '<a href="h91-hypotheses.html">Hypotheses</a> · '
+        '<a href="h91-sources.html">Sources</a> · '
         'Independent competition research; predictions are not verified faults.</p></footer>',
     ]
-    return page("H90 result — GEMSDOE52", "".join(body),
-                "H90 continuous directional alignment result, with the explicit download and "
+    return page("H91 result — GEMSDOE52", "".join(body),
+                "H91 continuous directional alignment result, with the explicit download and "
                 "submission verdict.")
 
 
-# --------------------------------------------------------------------------- h90-executive-summary
+# --------------------------------------------------------------------------- h91-executive-summary
 def build_summary() -> str:
     steps = [
         ("Download the GeoTIFF", f'Click the green button above (or '
@@ -435,7 +435,7 @@ def build_summary() -> str:
         'so it is archived, not promoted.</p></details>',
         '<p class="small">No weekly slot is approved by this page. Promotion is a separate selector '
         'step, within the weekly cap shown on the submission page.</p>',
-        '<footer><p><a href="index.html">← Overview</a> · <a href="h90.html">Full H90 result</a> · '
+        '<footer><p><a href="index.html">← Overview</a> · <a href="h91.html">Full H91 result</a> · '
         '<a href="validator.html">Browser validator</a></p></footer>',
     ]
     return page("How to submit — GEMSDOE52", "".join(body),
@@ -447,9 +447,9 @@ def val_count():
     return bu["validator"]["count"]
 
 
-# --------------------------------------------------------------------------------- h90-hypotheses
+# --------------------------------------------------------------------------------- h91-hypotheses
 def build_hypotheses() -> str:
-    doc = (ROOT / "knowledge/86_hypotheses_H90_preregistered.md").read_text()
+    doc = (ROOT / "knowledge/86_hypotheses_H91_preregistered.md").read_text()
     m = re.search(r"## 2\. Ranked hypotheses.*?(?=## 3\.)", doc, flags=re.S)
     tbl = m.group(0) if m else ""
     rows = []
@@ -463,8 +463,8 @@ def build_hypotheses() -> str:
             rows.append([f"<b>{esc(cells[0])}</b>", esc(cells[1]), esc(cells[2]), esc(cells[3]),
                          esc(cells[4]), esc(cells[5]), esc(cells[6])])
     body = [
-        "<h1>H90 — ranked geological hypotheses</h1>",
-        '<p class="small">Preregistered in <a href="../knowledge/86_hypotheses_H90_preregistered.md">'
+        "<h1>H91 — ranked geological hypotheses</h1>",
+        '<p class="small">Preregistered in <a href="../knowledge/86_hypotheses_H91_preregistered.md">'
         'knowledge/74</a> before any fit, canary, holdout or placement read. SHA-256 '
         f'<code>{esc(card["preregistration"]["sha256"])}</code>.</p>',
         "<h2>Ranked by expected holdout gain and implementation cost</h2>",
@@ -472,24 +472,24 @@ def build_hypotheses() -> str:
                "catalogue-missing fault", "how it differs from what this repo already has", "cost"],
               rows),
         "<h2>What was executed</h2>",
-        f'<p>Rank 1 (H90-A) with rank 2 (H90-B, the radiometric Th/K and U/K ratio fields) folded '
+        f'<p>Rank 1 (H91-A) with rank 2 (H91-B, the radiometric Th/K and U/K ratio fields) folded '
         f'into the same channel build: {chm["n_learner_channels"]} learner channels over '
         f'{len(chm["bands"])} fields × {len(chm["lags_px"])} lags × 4 statistics, plus '
         f'{chm["n_control_channels"]} 8-direction control channels. Ranks 3–5 are recorded as '
-        f'proposals; H90-C (the B-only suppression set) was also computed and is reported on the '
+        f'proposals; H91-C (the B-only suppression set) was also computed and is reported on the '
         f'result page.</p>',
         "<h2>What is deliberately not claimed</h2>",
         '<p>No organizer leaderboard page, portal receipt or private-set information was accessed. '
         'The DrivenData data tab is login-walled, so every raster is an owner-mirror copy verified '
         'only against its own SHA-256 pin. Nothing here is a guaranteed score, and a negative '
         'result is a deliverable.</p>',
-        '<footer><p><a href="h90.html">← H90 result</a></p></footer>',
+        '<footer><p><a href="h91.html">← H91 result</a></p></footer>',
     ]
-    return page("H90 hypotheses — GEMSDOE52", "".join(body),
-                "The ranked, preregistered geological hypotheses for H90.")
+    return page("H91 hypotheses — GEMSDOE52", "".join(body),
+                "The ranked, preregistered geological hypotheses for H91.")
 
 
-# ------------------------------------------------------------------------------------ h90-sources
+# ------------------------------------------------------------------------------------ h91-sources
 SOURCES = [
     ("Competition overview and performance metric",
      "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/",
@@ -535,7 +535,7 @@ def build_sources() -> str:
         '<p>The three competition rasters, the seven external layers and the twelve scored priors are '
         'restored from the owner\'s hash-pinned sibling repositories through the GitHub Contents API '
         'and verified by SHA-256 and byte count (23/23 pins, '
-        '<a href="data/h90_preflight_integrity.json">receipt</a>). That proves mirror integrity, '
+        '<a href="data/h91_preflight_integrity.json">receipt</a>). That proves mirror integrity, '
         '<b>not</b> organiser authentication: the DrivenData data tab requires a login this sandbox '
         'does not have.</p>',
         '<h2>Leaderboard observations</h2>',
@@ -545,7 +545,7 @@ def build_sources() -> str:
         'board prints a team name and a number, never a filename). The brief\'s numbers — 0.3774, '
         '0.3195, 0.2778 — are therefore <b>owner-reported/public</b>, never organizer-confirmed for '
         'a filename.</p>',
-        '<footer><p><a href="h90.html">← H90 result</a></p></footer>',
+        '<footer><p><a href="h91.html">← H91 result</a></p></footer>',
     ]
     return page("Sources — GEMSDOE52", "".join(body),
                 "Official, verified sources used by this repository.")
@@ -561,7 +561,7 @@ def build_index() -> str:
         '<a href="https://doi.org/10.1145/279943.279962">doi:10.1145/279943.279962</a>.</p>',
         actions(),
         verdict_notice(),
-        "<h2>H90 in one paragraph</h2>",
+        "<h2>H91 in one paragraph</h2>",
         f'<p>{esc(card["hypothesis"])} On the hide-and-recover instrument the primary arm '
         f'<code>{esc(ho["candidate"])}</code> scored HOLDOUT-DTI {f6(SCORES[ho["candidate"]]["dti"])} '
         f'{ci(SCORES[ho["candidate"]]["ci95"])} against the single-view control '
@@ -574,11 +574,11 @@ def build_index() -> str:
         + ("every gate passed." if SUB_OK else
            "the file is format-valid and downloadable, but it has not beaten the control with a CI "
            "above zero, so <b>do not upload it</b> and do not spend a weekly slot on it.")
-        + f' Full record: <a href="h90.html">H90 result</a>, '
-        f'<a href="h90-executive-summary.html">submission guide</a>, '
-        f'<a href="h90-hypotheses.html">hypotheses</a>, '
-        f'<a href="h90-sources.html">sources</a>, '
-        f'<a href="data/h90_run_card.json">JSON run card</a>.</p>',
+        + f' Full record: <a href="h91.html">H91 result</a>, '
+        f'<a href="h91-executive-summary.html">submission guide</a>, '
+        f'<a href="h91-hypotheses.html">hypotheses</a>, '
+        f'<a href="h91-sources.html">sources</a>, '
+        f'<a href="data/h91_run_card.json">JSON run card</a>.</p>',
         "<h2>Why the 0.2778 file won, and what beating 0.3195 needs</h2>",
         '<p>The measured answer is arithmetic, not geology: the reported-0.2778 file '
         '(<code>h33-h33-2-b2</code>, owner-reported) is its 0.2600 parent with the 100–200 m '
@@ -587,14 +587,14 @@ def build_index() -> str:
         'tax. Its credit density is ρ ≈ 0.1387 at 37,654 emitted px; reaching 0.3195 at the same '
         'budget needs ρ ≈ 0.1595, and reaching 0.3774 needs ρ ≈ 0.1884. The binding constraint on '
         'this family is the ranker\'s ρ(S) decay, not the emission budget. '
-        '<a href="h90.html#why">Full board algebra</a> · '
+        '<a href="h91.html#why">Full board algebra</a> · '
         '<a href="../knowledge/49_why_02778_phd_answer.md">knowledge/49</a>.</p>',
         f"<details><summary>Preserved research archive — every earlier round, verbatim</summary>"
         f"{legacy}</details>",
         '<footer><p>Independent competition research, not an official DOE or DrivenData site. '
         'Predictions are not verified faults or geothermal discoveries. · '
         '<a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code &amp; reproducibility</a> · '
-        'H90 / 2026-10-10</p></footer>',
+        'H91 / 2026-10-10</p></footer>',
     ]
     return page("GEMSDOE52 — geothermal fault discovery", "".join(body),
                 "Current-round download, explicit submit verdict, and the preserved research archive.")
@@ -604,20 +604,19 @@ def main() -> int:
     (DATA).mkdir(parents=True, exist_ok=True)
     for name in ("run_card", "channels", "fit", "holdout", "independence", "build",
                  "build_placement", "lane", "preflight_integrity"):
-        src = EV / f"h90_{name}.json"
+        src = EV / f"h91_{name}.json"
         if src.exists():
             shutil.copy(src, DATA / src.name)
-    (DOCS / "h90.html").write_text(build_h90_page())
-    (DOCS / "h90-executive-summary.html").write_text(build_summary())
-    (DOCS / "h90-hypotheses.html").write_text(build_hypotheses())
-    (DOCS / "h90-sources.html").write_text(build_sources())
-    # This round is NEGATIVE, so the global submission pointer (docs/data/submission.json and
-    # submission/LATEST.txt) is deliberately left on main's incumbent.  docs/index.html,
-    # docs/executive-summary.html and docs/irregularities.html are main's pages and are NOT
-    # overwritten here: this round adds only its own h90* pages (repo precedent -- keep main's site
-    # and add the round's own blocks, cf. commits 1c5faa9 and e916c87).
-    print("published:", ", ".join(["h90.html", "h90-executive-summary.html", "h90-hypotheses.html",
-                                   "h90-sources.html"]))
+    (DOCS / "h91.html").write_text(build_h91_page())
+    (DOCS / "h91-executive-summary.html").write_text(build_summary())
+    (DOCS / "h91-hypotheses.html").write_text(build_hypotheses())
+    (DOCS / "h91-sources.html").write_text(build_sources())
+    # This round is NEGATIVE, so the global submission pointer stays on main's incumbent, and
+    # docs/index.html, docs/executive-summary.html and docs/irregularities.html are main's pages and
+    # are NOT overwritten here: this round adds only its own h91* pages (repo precedent -- keep main's
+    # site and add the round's own blocks, cf. commits 1c5faa9 and e916c87).
+    print("published:", ", ".join(["h91.html", "h91-executive-summary.html", "h91-hypotheses.html",
+                                   "h91-sources.html"]))
     return 0
 
 

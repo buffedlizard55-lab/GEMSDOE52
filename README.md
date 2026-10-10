@@ -1,5 +1,5 @@
-<!--H90-README-->
-# Current status — H90 (2026-10-10): continuous directional alignment on a 16-direction semivariance fan — NEGATIVE / research-only
+<!--H91-README-->
+# Current status — H91 (2026-10-10): continuous directional alignment on a 16-direction semivariance fan — NEGATIVE / research-only
 
 > **DOWNLOAD: YES** (format-valid on disk: single-band float32,
 > EPSG:32611, 3730×3292, transform/bounds match the organiser template, values exactly {0,1},
@@ -7,15 +7,15 @@
 > **SUBMIT TO THE COMPETITION: NO — research artefact only. DO NOT UPLOAD.**
 > Slots used: **0**. Experiments used: 1 of 3.
 
-**★ [Download the H90 GeoTIFF — one click](docs/downloads/h90-candidate.tif)** ·
-[single-TIFF ZIP](docs/downloads/h90-candidate.zip) ·
-[per-cell geological reasoning CSV](docs/downloads/h90-a-only-reasoning.csv) ·
-**[Executive summary / exactly how to submit](docs/h90-executive-summary.html)** ·
+**★ [Download the H91 GeoTIFF — one click](docs/downloads/h91-candidate.tif)** ·
+[single-TIFF ZIP](docs/downloads/h91-candidate.zip) ·
+[per-cell geological reasoning CSV](docs/downloads/h91-a-only-reasoning.csv) ·
+**[Executive summary / exactly how to submit](docs/h91-executive-summary.html)** ·
 [check any file in your browser](docs/validator.html) ·
-[full result](docs/h90.html) · [hypotheses](docs/h90-hypotheses.html) · [sources](docs/h90-sources.html)
+[full result](docs/h91.html) · [hypotheses](docs/h91-hypotheses.html) · [sources](docs/h91-sources.html)
 
-- **File:** `submission/gems52-h90-csa16fan-B-37654px-20261010T215157Z.tif` — 138,604 bytes, SHA-256 `e0b5ab82ee6df0191a0ec3ed671d45588bcba8fdb1b4ce4f4610cf6a0cb6cc38`
-- **Submission name:** `h90-csa16fan-B-37654px-20261010T215157Z` · **Note (126/140):** `H90: View-B + 84 continuous directional-alignment channels on a 16-direction semivariance fan; 200m ring excluded; binary dots`
+- **File:** `submission/gems52-h91-csa16fan-B-37654px-20261010T215157Z.tif` — 138,604 bytes, SHA-256 `e0b5ab82ee6df0191a0ec3ed671d45588bcba8fdb1b4ce4f4610cf6a0cb6cc38`
+- **Submission name:** `h91-csa16fan-B-37654px-20261010T215157Z` · **Note (126/140):** `H91: View-B + 84 continuous directional-alignment channels on a 16-direction semivariance fan; 200m ring excluded; binary dots`
 - **HOLDOUT-DTI** (`gems52-pooled-hide-v1`, 53,186 withheld positive px,
   9,400 dots/fold/arm, α 0.2 / β 0.8, 300 m triangular kernel, 1,000 paired
   physical-block bootstrap draws):
@@ -73,20 +73,21 @@
   18 8-direction control channels whose fan is exactly H82's, computed in the
   same pass. Measured strike per fold from the fold's own visible catalogue:
   f0 169.7° (R 0.37), f1 171.8° (R 0.37), f2 166.7° (R 0.45), f3 167.2° (R 0.38).
-- **New this round:** `scripts/repair_h90_channels.py` (IR-H90-001) — 30 of 102 channel files failed
+- **New this round:** `scripts/repair_h91_channels.py` (IR-H91-001) — 30 of 102 channel files failed
   the byte-integrity guard *after* passing it; they were recomputed from the pinned rasters with a
   digest-stability check, not patched.
 - Reproduce: `python3 scripts/restore_data.py --target-dir data` → build the store →
   `PYTHONPATH=src python3 -m gems52.external` → `python3 scripts/fetch_prior_inventory.py` →
-  `python3 scripts/repair_h90_channels.py --all` →
-  `python3 scripts/run_h90.py fit independence holdout build write lane card` →
-  `python3 scripts/publish_h90_site.py` → `python3 scripts/finalize_h90.py` →
-  `python3 scripts/h90_readme_block.py` → `python3 scripts/check_site.py` → `python3 -m pytest -q`.
+  `python3 scripts/repair_h91_channels.py --all` →
+  `python3 scripts/run_h91.py fit independence holdout build write lane card` →
+  `python3 scripts/publish_h91_site.py` → `python3 scripts/finalize_h91.py` →
+  `python3 scripts/h91_readme_block.py` → `python3 scripts/check_site.py` → `python3 -m pytest -q`.
 
 ---
 
-<!--/H90-README-->
+<!--/H91-README-->
 
+<div style="background:#fff7e6;border:1px solid #e0b25c;color:#4a3300;padding:12px 16px;margin:12px 0;border-radius:8px;font:15px/1.5 sans-serif"><strong>Round H90 (co-training lane, clean sampler; newest): DOWNLOAD YES, SUBMIT NO.</strong> Clean-sampler co-training disagreement; 37,654 cells, binary 0/1, decoded-unique against 142 priors. HOLDOUT-DTI (H60D instrument): clean dis_contrast <b>0.003850 [0.003519, 0.004220]</b>; shipped dis_contrast 0.004109; best comparable arm view_B <b>0.006419 [0.005873, 0.006892]</b>; random 0.001992. Visible-catalogue ring (competitor-realistic): dis_contrast <b>0.031379</b> is <b>below random 0.041594</b>. Literal dot-lane gate DUPLICATE/STOP against the calibration lattice; H60-6 would exclude that raster (owner decision). Slots used: 0. <a href="docs/downloads/h90-candidate.tif">Download H90 GeoTIFF</a> · <a href="knowledge/80_h90_results_and_limits.md">H90 results and limits</a> · <a href="evidence/h90_run_card.json">run card</a> · Ring rule on the shared holdout is an instrument issue (IR-H90-001). Not ORGANIZER-CONFIRMED.</div>
 <!--H89-README-->
 # Current status — H89 (2026-10-10): UNIQUE SUBMISSION — cover-conditioned co-training, disagreement as the discovery signal
 

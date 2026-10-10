@@ -1,0 +1,12 @@
+{
+  "round": "H87-R",
+  "status": "preregistered before any H87-R number was computed",
+  "question": "How much of the H60D holdout score depends on building the 200 m legal-pool ring from the FULL catalogue (held-out truth included) instead of the VISIBLE catalogue only?",
+  "shipped_rule": "run_h60d_cotrain.stage_validate: legal = region & permitted & ~blocked, permitted = valid & ~dilate(FULL catalogue, 2 px), blocked = dilate(visible & valid, 2 px). Held-out truth therefore sets holes in the emission pool.",
+  "variant": "legal_visible = region & valid & ~dilate(visible & valid, 2 px). Held-out truth is not used to shape the pool. Truth may lie inside legal_visible, so the canary is defined.",
+  "fields": "shipped OOF fields from work/h60 (no refit): view_A, view_B, clf_union, dis_contrast, random",
+  "budget": 37654,
+  "scorer": "run_h60d_cotrain.score_cell (iso_select 3 px, NMS 5 px) and gems52.metric.dti, alpha 0.2, beta 0.8, R 300 m",
+  "decision_rule": "reported, not promoted. Question answered if the pooled DTI and the paired arm ordering change. A change of more than 10% of any arm's DTI is called a material instrument effect.",
+  "slots": 0
+}
