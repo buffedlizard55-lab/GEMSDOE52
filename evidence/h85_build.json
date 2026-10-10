@@ -1,9 +1,9 @@
 {
-  "round": "H84",
-  "name": "h84-h83conc-spaced-37654px-20261010T205209Z",
-  "note": "H84 H83 concordance+geotherm, 3px spacing, 200m catalogue collar, binary 0/1; holdout ~random; research only",
+  "round": "H85",
+  "name": "h85-h83conc-spaced-37654px-20261010T205209Z",
+  "note": "H85 H83 concordance+geotherm, 3px spacing, 200m catalogue collar, binary 0/1; holdout ~random; research only",
   "note_chars": 108,
-  "file": "submission/gems52-h84-h83conc-spaced-37654px-20261010T205209Z.tif",
+  "file": "submission/gems52-h85-h83conc-spaced-37654px-20261010T205209Z.tif",
   "file_bytes": 128032,
   "sha256": "fff75cb886ebd236af609346d1553b16623e37dc569eeda258951a3ef2cb4f44",
   "decoded_sha256": "b18c00457d0eb03eb5f2618c2eecc2457ef46072b5833f51fd85105895bb2c64",
@@ -61,12 +61,12 @@
   },
   "method": {
     "family": "H83 structural concordance (grav/mag/DEM structure tensor, 3 scales) x geothermal density",
-    "arm": "h84_spaced",
+    "arm": "h85_spaced",
     "budget": 37654,
     "min_spacing_px": 3.0,
     "collar_px": 2,
     "catalogue_for_collar": "full catalogue (submission-time only; holdout used visible-only)"
   },
-  "holdout_reference": "evidence/h84_holdout.json (HOLDOUT-DTI, pooled, 60,894 withheld positives)",
+  "holdout_reference": "evidence/h85_holdout.json (HOLDOUT-DTI, pooled, 60,894 withheld positives)",
   "elapsed_seconds": 197.2
 }

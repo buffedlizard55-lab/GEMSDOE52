@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""H84 lane / uniqueness gate: surface (before placement) and final dots (after placement).
+"""H85 lane / uniqueness gate: surface (before placement) and final dots (after placement).
 
 Uses the shared ``gems52.gates.lane_report`` (literal + policy verdicts) and
-``gates.uniqueness_report`` against every comparable prior raster. Writes evidence/h84_lane.json.
+``gates.uniqueness_report`` against every comparable prior raster. Writes evidence/h85_lane.json.
 Lane thresholds are the registry's (registry/h61_preregistration.json): rank correlation > 0.90 or
 > 70 % of dots within 3 px of one registry raster => DUPLICATE/STOP.
 """
@@ -31,7 +31,7 @@ FEATURES = ROOT / "data/training_features.tif"
 LABELS = ROOT / "data/labels.tif"
 SAMPLE = ROOT / "data/sample_submission.tif"
 WELLS = ROOT / "data/external/gdr_wellspring_in_footprint.csv"
-OUT = ROOT / "evidence/h84_lane.json"
+OUT = ROOT / "evidence/h85_lane.json"
 
 
 def sha(p):
@@ -92,7 +92,7 @@ def main():
     dots_rep = gates.lane_report(dots, eligible, priors, sample=str(SAMPLE), phase="dots")
 
     out = dict(
-        round="H84", candidate=str(CAND.relative_to(ROOT)), candidate_sha256=cs,
+        round="H85", candidate=str(CAND.relative_to(ROOT)), candidate_sha256=cs,
         priors_checked=len(priors), rank_limit=0.90, near_dot_limit=0.70, near_radius_px=3.0,
         surface_before_placement=slim(surf_rep), surface_max_over_priors=maxima(surf_rep),
         final_dots=slim(dots_rep), final_dots_max_over_priors=maxima(dots_rep),

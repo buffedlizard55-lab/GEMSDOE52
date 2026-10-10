@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>H84 Executive Summary — GEMSDOE52</title>
+<title>H85 Executive Summary — GEMSDOE52</title>
 <style>
 :root{--bg:#0f172a;--card:#1e293b;--accent:#3b82f6;--green:#22c55e;--red:#ef4444;--yellow:#eab308;--text:#e2e8f0;--muted:#94a3b8;--border:#334155}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -27,7 +27,7 @@ ol li,ul li{margin:.4rem 0}
 <body>
 
 <p><a href="../index.html">← Landing page</a> · <a href="index.html">Research archive</a></p>
-<h1>H84 — Executive summary</h1>
+<h1>H85 — Executive summary</h1>
 
 <div class="card">
 <p><strong>DOWNLOAD:</strong> <span class="status ok">YES — format-valid, decoded-unique research file</span></p>
@@ -37,13 +37,13 @@ ol li,ul li{margin:.4rem 0}
 
 <h2>★ One-click download</h2>
 <div class="card">
-<a class="btn" href="downloads/h84-candidate.tif" download>⬇ Download H84 GeoTIFF (125 KB)</a>
-<a class="btn s" href="downloads/h84-candidate.zip" download>ZIP</a>
+<a class="btn" href="downloads/h85-candidate.tif" download>⬇ Download H85 GeoTIFF (125 KB)</a>
+<a class="btn s" href="downloads/h85-candidate.zip" download>ZIP</a>
 <p style="margin-top:.6rem"><small>
-File: <code>gems52-h84-h83conc-spaced-37654px-20261010T205209Z.tif</code><br>
+File: <code>gems52-h85-h83conc-spaced-37654px-20261010T205209Z.tif</code><br>
 SHA-256: <code>fff75cb886ebd236af609346d1553b16623e37dc569eeda258951a3ef2cb4f44</code><br>
-Submission name: <code>h84-h83conc-spaced-37654px-20261010T205209Z</code><br>
-Note (108 characters): <code>H84 H83 concordance+geotherm, 3px spacing, 200m catalogue collar, binary 0/1; holdout ~random; research only</code>
+Submission name: <code>h85-h83conc-spaced-37654px-20261010T205209Z</code><br>
+Note (108 characters): <code>H85 H83 concordance+geotherm, 3px spacing, 200m catalogue collar, binary 0/1; holdout ~random; research only</code>
 </small></p>
 </div>
 
@@ -52,14 +52,14 @@ Note (108 characters): <code>H84 H83 concordance+geotherm, 3px spacing, 200m cat
 <p>The repository's own rule (<code>AGENTS.md</code>) forbids spending a slot unless a candidate beats the comparable holdout best. This file does not:</p>
 <table>
 <tr><th>Arm (same folds, budget 9,400 dots per fold, same evaluator)</th><th>HOLDOUT-DTI</th><th>95% CI</th></tr>
-<tr><td>H84 candidate (this file): concordance × geothermal, 3 px spacing</td><td>0.069372</td><td>[0.056921, 0.082153]</td></tr>
+<tr><td>H85 candidate (this file): concordance × geothermal, 3 px spacing</td><td>0.069372</td><td>[0.056921, 0.082153]</td></tr>
 <tr><td>H83 as built (unconstrained top-k, no spacing)</td><td>0.016248</td><td>[0.011510, 0.021711]</td></tr>
 <tr><td>Single-view concordance only (no geothermal term)</td><td>0.073801</td><td>[0.063043, 0.086337]</td></tr>
 <tr><td>Random over the allowed set (floor)</td><td>0.075429</td><td>[0.067521, 0.083387]</td></tr>
-<tr><td>H84-E Euler deconvolution, SI 0 (top-ranked new idea)</td><td>0.077671</td><td>[0.070047, 0.085658]</td></tr>
+<tr><td>H85-E Euler deconvolution, SI 0 (top-ranked new idea)</td><td>0.077671</td><td>[0.070047, 0.085658]</td></tr>
 </table>
-<p><small>Withheld positive pixels: 60,894 (4 whole-segment quadrant folds, 80 px buffer). Evaluator <code>gems52-pooled-hide-v1</code>; α 0.2, β 0.8, R 300 m triangular kernel. Paired H84 minus random: −0.0061, 95% CI [−0.0169, +0.0056]. Paired Euler minus random: +0.0022, CI [−0.0030, +0.0072]. Both paired intervals span zero.</small></p>
-<p style="margin-top:.6rem"><small>Cross-run caveat: the repository's best earlier holdout number (H82, 0.1892) used a different withheld-positive count (53,186 vs 60,894) and its feature cache is not in this checkout, so it cannot be replayed here (IR-H84-007). The within-run comparisons above are valid; the gap to 0.1892 is indicative only.</small></p>
+<p><small>Withheld positive pixels: 60,894 (4 whole-segment quadrant folds, 80 px buffer). Evaluator <code>gems52-pooled-hide-v1</code>; α 0.2, β 0.8, R 300 m triangular kernel. Paired H85 minus random: −0.0061, 95% CI [−0.0169, +0.0056]. Paired Euler minus random: +0.0022, CI [−0.0030, +0.0072]. Both paired intervals span zero.</small></p>
+<p style="margin-top:.6rem"><small>Cross-run caveat: the repository's best earlier holdout number (H82, 0.1892) used a different withheld-positive count (53,186 vs 60,894) and its feature cache is not in this checkout, so it cannot be replayed here (IR-H85-007). The within-run comparisons above are valid; the gap to 0.1892 is indicative only.</small></p>
 </div>
 
 <h2>How to check the file (30 seconds)</h2>
@@ -68,7 +68,7 @@ Note (108 characters): <code>H84 H83 concordance+geotherm, 3px spacing, 200m cat
 <li>Open <a href="validator.html">the browser checker</a> and drop the downloaded <code>.tif</code>. It decodes every pixel locally.</li>
 <li>Or in Python: <code>rasterio.open(path)</code> → one band, <code>float32</code>, CRS EPSG:32611, shape 3730 × 3292, transform equal to <code>data/sample_submission.tif</code>, values exactly {0, 1}, 37,654 ones, no NaN.</li>
 </ol>
-<p><small>Verified this round by decoding the file from disk: all of the above hold. See <code>evidence/h84_build.json</code>.</small></p>
+<p><small>Verified this round by decoding the file from disk: all of the above hold. See <code>evidence/h85_build.json</code>.</small></p>
 </div>
 
 <h2>How to submit, only if you override the gate (not recommended)</h2>
@@ -78,7 +78,7 @@ Note (108 characters): <code>H84 H83 concordance+geotherm, 3px spacing, 200m cat
 <li>Log in at the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/" target="_blank" rel="noopener">DrivenData competition page</a>. Login is required; this sandbox cannot do it.</li>
 <li>Open <em>New submission</em>, choose the downloaded <code>.tif</code>, paste the note above, and submit.</li>
 </ol>
-<p><small>The submission page accepts a single-band GeoTIFF or a ZIP containing one, matching the CRS, shape and geotransform. The official format text is quoted in the next section; read it before you upload, because it says outside-bounds values should be null or NaN and this file uses zeros (IR-H84-013).</small></p>
+<p><small>The submission page accepts a single-band GeoTIFF or a ZIP containing one, matching the CRS, shape and geotransform. The official format text is quoted in the next section; read it before you upload, because it says outside-bounds values should be null or NaN and this file uses zeros (IR-H85-013).</small></p>
 </div>
 
 <h2>What the official sources say (checked 2026-10-10)</h2>
@@ -88,7 +88,7 @@ Note (108 characters): <code>H84 H83 concordance+geotherm, 3px spacing, 200m cat
 <li><strong>Format.</strong> Single-layer float32, EPSG 32611, 100 m, same bounds as the training data, "data outside the bounds is null or nan". Source: same page, Submission format section.</li>
 <li><strong>Public board, live fetch 2026-10-10.</strong> #1 xiaofanhu 0.3774 · #2 JerryDataWorks 0.3418 · #8 DARD 0.3195 · #22 extradr19 0.2778. These are team-level public numbers, not filename-linked. Source: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/" target="_blank" rel="noopener">leaderboard</a>.</li>
 <li><strong>Euler deconvolution.</strong> Reid, A. B., Allsop, J. M., Granser, H., Millett, A. J., &amp; Somerton, I. W. (1990). Magnetic interpretation in three dimensions using Euler deconvolution. <em>Geophysics</em> 55(1), 80–91. <a href="https://doi.org/10.1190/1.1442774" target="_blank" rel="noopener">doi:10.1190/1.1442774</a>.</li>
-<li><strong>Structural index.</strong> Table 1 of Reid &amp; Thurston (2014) gives magnetic SI 0 for an infinite contact or fault, 1 for a thin sheet edge, 2 for a pipe, 3 for a sphere. Source: <a href="https://www.reid-geophys.co.uk/wp-content/uploads/2017/11/Reid-Thurston-2014.pdf" target="_blank" rel="noopener">Reid &amp; Thurston 2014 PDF</a>. The H84-E arm uses SI 0 for the contact geometry of a fault trace.</li>
+<li><strong>Structural index.</strong> Table 1 of Reid &amp; Thurston (2014) gives magnetic SI 0 for an infinite contact or fault, 1 for a thin sheet edge, 2 for a pipe, 3 for a sphere. Source: <a href="https://www.reid-geophys.co.uk/wp-content/uploads/2017/11/Reid-Thurston-2014.pdf" target="_blank" rel="noopener">Reid &amp; Thurston 2014 PDF</a>. The H85-E arm uses SI 0 for the contact geometry of a fault trace.</li>
 </ul>
 </div>
 
@@ -108,25 +108,25 @@ Note (108 characters): <code>H84 H83 concordance+geotherm, 3px spacing, 200m cat
 <tr><td>Dots within 3 px, the one prior above 0.70</td><td>the registry's universal-coverage probe (3 px coverage 0.999); a registry property, not a candidate property</td><td>n/a</td></tr>
 <tr><td>Overlap with the 0.2778 raster</td><td>273 shared cells; Jaccard 0.0036</td><td>n/a</td></tr>
 </table>
-<p><small>Receipt: <code>evidence/h84_lane.json</code>. The lane gate was run on the file's final dots and on the surface before placement.</small></p>
+<p><small>Receipt: <code>evidence/h85_lane.json</code>. The lane gate was run on the file's final dots and on the surface before placement.</small></p>
 </div>
 
 <h2>Irregularities for review</h2>
 <div class="card">
-<p>The full register is in <code>registry/irregularities.json</code>, entries IR-H84-001 to IR-H84-013. The ones a reviewer most needs to see:</p>
+<p>The full register is in <code>registry/irregularities.json</code>, entries IR-H85-001 to IR-H85-014. The ones a reviewer most needs to see:</p>
 <ul>
-<li><strong>IR-H84-001.</strong> H83 was labelled SUBMIT YES with a "0.15–0.38 projection" and no holdout. This is withdrawn.</li>
-<li><strong>IR-H84-003.</strong> The H83 page describes a 1.5 MB raster but links an 81 KB one.</li>
-<li><strong>IR-H84-006.</strong> The brief calls 0.3195 the highest score. The live board's top is 0.3774.</li>
-<li><strong>IR-H84-007.</strong> Cross-run holdout numbers are not on the same fold set as H82.</li>
-<li><strong>IR-H84-013.</strong> The official format text says outside-bounds values are null or NaN; this file uses zeros, as the 0.2778 champion does.</li>
+<li><strong>IR-H85-001.</strong> H83 was labelled SUBMIT YES with a "0.15–0.38 projection" and no holdout. This is withdrawn.</li>
+<li><strong>IR-H85-003.</strong> The H83 page describes a 1.5 MB raster but links an 81 KB one.</li>
+<li><strong>IR-H85-006.</strong> The brief calls 0.3195 the highest score. The live board's top is 0.3774.</li>
+<li><strong>IR-H85-007.</strong> Cross-run holdout numbers are not on the same fold set as H82.</li>
+<li><strong>IR-H85-013.</strong> The official format text says outside-bounds values are null or NaN; this file uses zeros, as the 0.2778 champion does.</li>
 </ul>
 </div>
 
 <h2>Reproduce</h2>
 <div class="card">
-<p><small><code>python3 scripts/restore_data.py --target-dir data</code> → <code>python scripts/run_h84_holdout.py</code> → <code>python scripts/run_h84_euler.py</code> → <code>python scripts/build_h84_submission.py</code> → <code>python scripts/check_h84_lane.py submission/gems52-h84-h83conc-spaced-37654px-20261010T205209Z.tif</code> → <code>python scripts/publish_h84.py</code></small></p>
-<p><small>Run card: <a href="../evidence/h84_run_card.json">evidence/h84_run_card.json</a> · Hypotheses and result: <a href="../knowledge/74_h84_hypotheses_ranked.md">knowledge/74</a></small></p>
+<p><small><code>python3 scripts/restore_data.py --target-dir data</code> → <code>python scripts/run_h85_holdout.py</code> → <code>python scripts/run_h85_euler.py</code> → <code>python scripts/build_h85_submission.py</code> → <code>python scripts/check_h85_lane.py submission/gems52-h85-h83conc-spaced-37654px-20261010T205209Z.tif</code> → <code>python scripts/publish_h85.py</code></small></p>
+<p><small>Run card: <a href="../evidence/h85_run_card.json">evidence/h85_run_card.json</a> · Hypotheses and result: <a href="../knowledge/74_h85_hypotheses_ranked.md">knowledge/74</a></small></p>
 </div>
 
 </body>

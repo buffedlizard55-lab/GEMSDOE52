@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""H84: hide-and-recover HOLDOUT-DTI for the H83 structural-concordance + geothermal method.
+"""H85: hide-and-recover HOLDOUT-DTI for the H83 structural-concordance + geothermal method.
 
 Why this exists
 ---------------
@@ -25,7 +25,7 @@ Protocol (identical to H82's holdout stage)
 Arms
 ----
 * ``h83_topk``            H83 as built: combiner + unconstrained top-k (no 3 px spacing).
-* ``h84_spaced``          H83 combiner + the repo's metric-aware 3 px spacing (``nodes.spacing_select``).
+* ``h85_spaced``          H83 combiner + the repo's metric-aware 3 px spacing (``nodes.spacing_select``).
 * ``concordance_only``    single-view baseline: structural concordance rank alone, no geothermal term,
                           same spacing. Tests whether the geothermal prior adds anything.
 * ``random``              uniform random over the allowed set (floor).
@@ -59,11 +59,11 @@ K_FOLD = 9400
 RING_PX = 2          # 200 m / 100 m pixels (registry catalogue_exclusion_m)
 BUFFER_PX = 80       # registry buffer_px, label-blind quadrant split
 CANARY_ALARM = 0.90
-PRIMARY = "h84_spaced"
+PRIMARY = "h85_spaced"
 FEATURES = ROOT / "data/training_features.tif"
 LABELS = ROOT / "data/labels.tif"
 WELLS = ROOT / "data/external/gdr_wellspring_in_footprint.csv"
-OUT = ROOT / "evidence/h84_holdout.json"
+OUT = ROOT / "evidence/h85_holdout.json"
 
 
 def log(msg):
@@ -118,7 +118,7 @@ def main():
     cc_rank = rank01(conc, valid)
     gt_rank = rank01(geo, valid)
 
-    terms = {a: None for a in ("h83_topk", "h84_spaced", "concordance_only", "random")}
+    terms = {a: None for a in ("h83_topk", "h85_spaced", "concordance_only", "random")}
     per_fold = []
     canary = {"concordance_rank": [], "geothermal_rank": [], "concordance_count": []}
     for fold in folds:
@@ -135,7 +135,7 @@ def main():
 
         emissions = {
             "h83_topk": H83.topk_emit(field, allowed, K_FOLD),
-            "h84_spaced": nodes.spacing_select(field, allowed, K_FOLD, min_px=3.0).astype(np.float32),
+            "h85_spaced": nodes.spacing_select(field, allowed, K_FOLD, min_px=3.0).astype(np.float32),
             "concordance_only": nodes.spacing_select(cc_only, allowed, K_FOLD, min_px=3.0).astype(np.float32),
             "random": nodes.spacing_select(rnd, allowed, K_FOLD, min_px=3.0).astype(np.float32),
         }
@@ -167,7 +167,7 @@ def main():
         "H82 single_B (single-view control)": dict(dti=0.174910, ci95=[0.1529, 0.1960], source="evidence/h82_holdout.json"),
     }
     out = dict(
-        round="H84", stage="holdout", evidence_class="HOLDOUT-DTI", evaluator_version=evaluator.VERSION,
+        round="H85", stage="holdout", evidence_class="HOLDOUT-DTI", evaluator_version=evaluator.VERSION,
         candidate=PRIMARY, budget_per_fold=K_FOLD, folds=len(folds), buffer_px=BUFFER_PX, ring_px=RING_PX,
         withheld_positive_px=withheld, eligible_px=int(valid.sum()),
         footprint_note="IR-52-002: eligible = 19-band finite AND organiser domain (sample finite)",
