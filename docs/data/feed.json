@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-10-11T00:29:12Z",
+  "generated_utc": "2026-10-11T00:29:35Z",
   "branch": "arena/f57253db-gemsdoe52",
   "repo": "buffedlizard55-lab/GEMSDOE52",
   "evidence_copied": [
@@ -204,7 +204,7 @@
     "verified_claims_r3.json"
   ],
   "submission": "gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif",
-  "downloads": 120,
+  "downloads": 121,
   "leaderboard_status": "dated snapshot; automated DrivenData access disabled by Terms-of-Use policy",
   "leaderboard_last_observed_utc": "2026-10-10",
   "prior_entries": 395,

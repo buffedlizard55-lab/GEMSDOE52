@@ -3824,6 +3824,17 @@
       "disposition": "Closed by other sessions' repair. Recorded here because an earlier count of 20 problems was logged as this round's observation and a reviewer comparing the two numbers would otherwise find them contradictory."
     },
     {
+      "id": "IR-H98-002",
+      "round": "arena/04b2bb40-gemsdoe52 merge (2026-10-10)",
+      "severity": "medium",
+      "status": "closed by this merge",
+      "title": "This branch's H88 round is a parallel duplicate of main's H88 lineage; its receipts were dropped rather than merged",
+      "what_it_is": "Branch arena/04b2bb40-gemsdoe52 (base bc26fe2) built its own H88 round -- prevalence-matched hide instruments, a 27,000-dot stratified emission, an H87 holdout, a lane recomputation and a publisher -- writing to the same paths as main's H88 round (evidence/h88_holdout.json, evidence/h88_run_card.json, docs/index.html, docs/executive-summary.html, scripts/run_h88.py, docs/downloads/h88-candidate.tif, registry/irregularities.json). main had meanwhile advanced to H98 with its own H88/H89/H91/H92/H95/H96/H97/H98 rounds using those same paths and its own IR-H88-001..008 ids.",
+      "how_we_know": "git fetch origin main (5b8c81c..72af98a); git merge origin/main reported 14 conflicts (add/add and content) across exactly those duplicate paths; the receipt shapes differ (main's evidence/h87_holdout.json has keys comparability/per_fold/pooled, this branch's had pooled_hide_9400/pm_hide/pm_offcatalogue/gate), and main's irregularity ids IR-H88-004..007 are already taken by unrelated entries, so the two records cannot be unioned without lying about which measurement produced which id.",
+      "handling": "Every conflict was resolved in main's favour; this branch's duplicate round pages, receipts and publisher/render scripts were deleted rather than merged, so no page can cite a receipt whose bytes did not produce it. Two self-contained additions from this branch are kept because main has no equivalent and they are additive-only: scripts/measure_champion_file_protocol.py with evidence/h88_champion_file_protocol.json (the owner-reported 0.2778 champion raster scores 0.006570 when scored verbatim on the shared hide-and-recover instrument, T=323.4 of |G|=53,186, statistically identical to a fresh 37,654-dot catalogue-flank emission -- so a file-level DTI near 0.006 cannot reject a catalogue-flank file, and file-protocol numbers must never be compared with arm-protocol bars), and scripts/recompute_h87_lane.py (a lane-only recomputation harness that excludes an artefact's own publisher copies and measures on the feature store's valid mask).",
+      "disposition": "Closed. Rules carried forward: round artifacts must be written to round-unique paths before a branch merge; receipts are deleted, never reconciled by hand; and every comparison must state whether its bar is an arm-protocol or a file-protocol number."
+    },
+    {
       "id": "IR-H99-001",
       "round": "H99/H100 (2026-10-10)",
       "severity": "high",
