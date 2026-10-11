@@ -45,8 +45,8 @@ def test_h95_verdict_follows_frozen_rule():
 
 
 def test_h95_readme_states_both_verdicts_and_brief():
-    # The top-of-README marker belongs to whichever round is newest (H97 today,
-    # asserted in tests/test_h97.py); this test checks the H95 block itself.
+    # The top-of-README marker belongs to whichever round is newest (H99 today,
+    # asserted in tests/test_h99.py); this test checks the H95 block itself.
     text = (ROOT / "README.md").read_text()
     assert "<!--H95-README-->" in text and "<!--/H95-README-->" in text
     block = text[text.index("<!--H95-README-->"): text.index("<!--/H95-README-->")]

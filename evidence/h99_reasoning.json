@@ -1,13 +1,13 @@
 {
- "round": "H97",
+ "round": "H99",
  "stage": "full_reasoning_dossier",
- "file": "h97-candidate-a-only-reasoning.csv",
+ "file": "h99-candidate-a-only-reasoning.csv",
  "bytes": 15932119,
  "sha256": "45d750c4cc42060b4a41b1093229714fdd1ec4dad0460ebb8da5618343015fbe",
  "rows": 37654,
  "a_only_dots": 34187,
  "determinism_check": {
-  "shipped_tif": "gems52-h97-cotrain-atexture-disagreement-20261010T222354Z.tif",
+  "shipped_tif": "gems52-h99-cotrain-atexture-disagreement-20261010T222354Z.tif",
   "identical": true,
   "differing_px": 0
  },

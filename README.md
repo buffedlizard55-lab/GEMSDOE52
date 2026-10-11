@@ -1,20 +1,20 @@
-<!--H97-README-->
-# Current status — H97/H98 (2026-10-10): two-view co-training, boundary texture — both strict NEGATIVES
+<!--H99-README-->
+# Current status — H99/H100 (2026-10-10): two-view co-training, boundary texture — both strict NEGATIVES
 
 > **OK TO DOWNLOAD: YES** — format-valid single-band float32 GeoTIFF, EPSG:32611, 3292×3730, transform/bounds equal to the organiser template, **0 NaN**, every value in [0,&nbsp;1], 37,654 emitted cells at ≥3&nbsp;px spacing with no mass inside the 200&nbsp;m catalogue collar.
 >
-> **OK TO SUBMIT: NO — research-only, do not upload.** The pre-registered primary scores **0.034799** HOLDOUT-DTI [0.026938, 0.044011] against its own random control **0.080426** [0.070223, 0.090973]; paired **-0.045627** [-0.054106, -0.037194]. The pre-registered long-lag follow-up (H98) repeated it. Nothing here beats the repository holdout bar (0.190147, H84).
+> **OK TO SUBMIT: NO — research-only, do not upload.** The pre-registered primary scores **0.034799** HOLDOUT-DTI [0.026938, 0.044011] against its own random control **0.080426** [0.070223, 0.090973]; paired **-0.045627** [-0.054106, -0.037194]. The pre-registered long-lag follow-up (H100) repeated it. Nothing here beats the repository holdout bar (0.190147, H84).
 >
 > Weekly slots used: **0**. The agent does not pick submissions; promotion is the owner's decision.
 
-**★ [Download h97-candidate.tif](docs/downloads/h97-candidate.tif)** · [ZIP](docs/downloads/h97-candidate.zip) · [Executive summary / how to submit](docs/executive-summary.html) · [Downloads index](docs/downloads/index.html) · [Run card](evidence/h97_run_card.json) · [A-only reasoning CSV](docs/downloads/h97-candidate-a-only-reasoning.csv) · **[Results (H97+H98)](knowledge/100_h97_h98_results.md)** · **[Why 0.2778 scored, and what beating 0.3195 takes](knowledge/99_why_02778_and_the_route_above_it.md)**
+**★ [Download h99-candidate.tif](docs/downloads/h99-candidate.tif)** · [ZIP](docs/downloads/h99-candidate.zip) · [Executive summary / how to submit](docs/executive-summary.html) · [Downloads index](docs/downloads/index.html) · [Run card](evidence/h99_run_card.json) · [A-only reasoning CSV](docs/downloads/h99-candidate-a-only-reasoning.csv) · **[Results (H99+H100)](knowledge/104_h99_h100_results.md)** · **[Why 0.2778 scored, and what beating 0.3195 takes](knowledge/103_why_02778_and_the_route_above_it.md)**
 
-- **File:** `submission/gems52-h97-cotrain-atexture-disagreement-20261010T222354Z.tif` — 795,099 bytes, SHA-256 `dbbdc0715d8fac843e45e997267aab141df233b6e482206db7f1279d560a9914`
-- **Submission name:** `h97-cotrain-atexture-disagreement-37654px` (41 chars) · **Note (74/140):** `H97 A-texture vs B-texture disagreement, 37654px, 3px spacing, 200m collar`
+- **File:** `submission/gems52-h99-cotrain-atexture-disagreement-20261010T222354Z.tif` — 795,099 bytes, SHA-256 `dbbdc0715d8fac843e45e997267aab141df233b6e482206db7f1279d560a9914`
+- **Submission name:** `h99-cotrain-atexture-disagreement-37654px` (41 chars) · **Note (74/140):** `H99 A-texture vs B-texture disagreement, 37654px, 3px spacing, 200m collar`
 - **Validator (re-read from disk):** single band float32, EPSG:32611, 3292×3730, transform/bounds = organiser template, 0 NaN, 0 inf, values in [0.0, 1.0], 37,654 emitted cells, nodata tag None; problems: none
 - **HOLDOUT-DTI** (`gems52-pooled-hide-v1`, 53,186 withheld positive px over 153 physical 20 km clusters, 1,000-draw paired bootstrap):
 
-| arm | H97 (lags 1–3 px) | H98 (lags 4–8 px) |
+| arm | H99 (lags 1–3 px) | H100 (lags 4–8 px) |
 |---|---:|---:|
 | `xtex_dis` — the brief's A-confident/B-abstains disagreement (primary) | **0.034799** [0.026938, 0.044011] | **0.034697** [0.026536, 0.043153] |
 | `random` (same placement, control) | 0.080426 [0.070223, 0.090973] | 0.080426 [0.070223, 0.090973] |
@@ -22,15 +22,15 @@
 | `single_Atex` (View A alone) | 0.081910 [0.069143, 0.095862] | 0.074913 |
 | `single_Btex` (View B alone) | 0.164883 [0.145264, 0.183945] | 0.152616 |
 
-  Paired primary − random: H97 **-0.045627** [-0.054106, -0.037194]; H98 **−0.045728** [−0.052841, −0.038856] → both CIs entirely below zero → **NEGATIVE**.
-- **What the brief asked to test:** view independence **PASSES** (max |ρ| 0.4510 H97 / 0.4455 H98, bars 0.90 and 0.60); view sufficiency **FAILS** (View A held-out AUC 0.5317 / 0.5284 — the 9th and 10th consecutive View-A failure, which is why the disagreement arm loses); leakage canary **PASSES** (0.5977, alarm 0.90); the shipped field is **not the union** of the two views (0 of 37,654 dots in the consensus, 1,758 in the union, Spearman(field, max(A,B)) −0.00335).
-- **Gates:** decoded-pattern uniqueness **PASSES** against 146 comparable priors (novel 25,702 px, novel fraction 0.6826, max Jaccard 0.0131, more than the 20 % bar, more selective than the prior union). The literal dot-lane rule **fires** against one prior only — the `r13-lattice` density probe, whose own 3 px halo covers virtually the whole footprint — and is **not waived**; excluding probe rasters the maximum is **0.3828 < 0.70** (IR-H97-002).
-- **Geological reasoning for every A-only candidate:** 34,187 of the 37,654 dots — `docs/downloads/h97-candidate-a-only-reasoning.csv` (15,932,119 bytes, SHA-256 `45d750c4cc42060b4a41b1093229714fdd1ec4dad0460ebb8da5618343015fbe`). Recomputing the production placement from the frozen procedure reproduced the shipped dot set with **0 differing pixels** (`evidence/h97_reasoning.json`).
-- **Receipts:** `evidence/h97_{channels,fit,holdout,build,reasoning,run_card}.json`, `evidence/h98_{channels,fit,holdout,run_card}.json`; frozen preregistrations `knowledge/97` + `registry/h97_preregistration.json` and `knowledge/98` + `registry/h98_preregistration.json` (both pins verify); results in full `knowledge/100_h97_h98_results.md`.
-- **Identifier history (IR-H97-008):** this round was frozen as H88/H89, renamed H92/H93 when a parallel session merged its own H88/H89 round, then renamed again to **H97/H98** when `main` used H92–H96. Both renames are mechanical and auditable (`evidence/h97_identifier_rename.diff` reproduces the frozen texts byte for byte); the GeoTIFF bytes never changed.
-- **Parallel rounds on this branch's history:** keep the newest of each card; `knowledge/99` carries the 0.2778 arithmetic (|G| ≈ 14,088.7 px, T ≈ 5,223.1 px, 0.3195 needs credit density ×1.1501 or S ≤ 25,384 px) and the three off-catalogue routes that remain untested.
+  Paired primary − random: H99 **-0.045627** [-0.054106, -0.037194]; H100 **−0.045728** [−0.052841, −0.038856] → both CIs entirely below zero → **NEGATIVE**.
+- **What the brief asked to test:** view independence **PASSES** (max |ρ| 0.4510 H99 / 0.4455 H100, bars 0.90 and 0.60); view sufficiency **FAILS** (View A held-out AUC 0.5317 / 0.5284 — the 9th and 10th consecutive View-A failure, which is why the disagreement arm loses); leakage canary **PASSES** (0.5977, alarm 0.90); the shipped field is **not the union** of the two views (0 of 37,654 dots in the consensus, 1,758 in the union, Spearman(field, max(A,B)) −0.00335).
+- **Gates:** decoded-pattern uniqueness **PASSES** against 146 comparable priors (novel 25,702 px, novel fraction 0.6826, max Jaccard 0.0131, more than the 20 % bar, more selective than the prior union). The literal dot-lane rule **fires** against one prior only — the `r13-lattice` density probe, whose own 3 px halo covers virtually the whole footprint — and is **not waived**; excluding probe rasters the maximum is **0.3828 < 0.70** (IR-H99-002).
+- **Geological reasoning for every A-only candidate:** 34,187 of the 37,654 dots — `docs/downloads/h99-candidate-a-only-reasoning.csv` (15,932,119 bytes, SHA-256 `45d750c4cc42060b4a41b1093229714fdd1ec4dad0460ebb8da5618343015fbe`). Recomputing the production placement from the frozen procedure reproduced the shipped dot set with **0 differing pixels** (`evidence/h99_reasoning.json`).
+- **Receipts:** `evidence/h99_{channels,fit,holdout,build,reasoning,run_card}.json`, `evidence/h100_{channels,fit,holdout,run_card}.json`; frozen preregistrations `knowledge/101` + `registry/h99_preregistration.json` and `knowledge/102` + `registry/h100_preregistration.json` (both pins verify); results in full `knowledge/104_h99_h100_results.md`.
+- **Identifier history (IR-H99-008):** this round was frozen as H88/H89, renamed H92/H93 when a parallel session merged its own H88/H89 round, then renamed again to **H99/H100** when `main` used H92–H96. Both renames are mechanical and auditable (`evidence/h99_identifier_rename.diff` reproduces the frozen texts byte for byte); the GeoTIFF bytes never changed.
+- **Parallel rounds on this branch's history:** keep the newest of each card; `knowledge/103` carries the 0.2778 arithmetic (|G| ≈ 14,088.7 px, T ≈ 5,223.1 px, 0.3195 needs credit density ×1.1501 or S ≤ 25,384 px) and the three off-catalogue routes that remain untested.
 
-<!--/H97-README-->
+<!--/H99-README-->
 ---
 <!--H95-README-->
 # Current status — H95 (2026-10-10): co-trained View B · first holdout of H87 · NEGATIVE

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Write the FULL A-only per-dot geological-reasoning dossier for the shipped H97 artifact.
+"""Write the FULL A-only per-dot geological-reasoning dossier for the shipped H99 artifact.
 
 The brief requires the geological reasoning for **every A-only candidate**.  The first build wrote
 only the top 4,000 disagreement rows.  This script recomputes the production field deterministically
-(same frozen procedure, same seed, same channels as ``scripts/build_h97_submission.py``), verifies
+(same frozen procedure, same seed, same channels as ``scripts/build_h99_submission.py``), verifies
 that the recomputed dot set is **exactly** the dot set of the shipped TIF, and then writes one row
 per emitted dot with its placement, view ranks and reasoning.
 
@@ -30,9 +30,9 @@ import numpy as np                                                    # noqa: E4
 import rasterio                                                       # noqa: E402
 from scipy import ndimage as ndi                                      # noqa: E402
 
-import build_h97_submission as B                                      # noqa: E402
+import build_h99_submission as B                                      # noqa: E402
 import run_h61 as base                                                # noqa: E402
-import run_h97 as H97                                                 # noqa: E402
+import run_h99 as H99                                                 # noqa: E402
 from gems52 import nodes                                              # noqa: E402
 
 
@@ -41,24 +41,24 @@ def log(*a):
 
 
 def main():
-    tif = ROOT / "submission/gems52-h97-cotrain-atexture-disagreement-20261010T222354Z.tif"
+    tif = ROOT / "submission/gems52-h99-cotrain-atexture-disagreement-20261010T222354Z.tif"
     if not tif.is_file():
         raise SystemExit(f"shipped artifact not found: {tif}")
     with rasterio.open(tif) as ds:
         shipped = ds.read(1) > 0
 
-    reg = H97.check_prereg()
+    reg = H99.check_prereg()
     log(f"prereg ok: {reg.get('sha256', '')[:16]}…")
     _r, store, cat, eligible, folds, _va, _vb, ring_px = base.setup()
-    H97.heal_channels()
-    bank = H97.Bank(inverse=store.inverse)
+    H99.heal_channels()
+    bank = H99.Bank(inverse=store.inverse)
     flat = store.flat_idx
     with rasterio.open(ROOT / "data/sample_submission.tif") as ds:
         domain = np.isfinite(ds.read(1))
     valid = store.valid & domain
 
     catd = ndi.distance_transform_edt(~cat)
-    rng = np.random.default_rng(H97.SEED)
+    rng = np.random.default_rng(H99.SEED)
     pos = np.flatnonzero((cat & store.valid).ravel())
     neg = np.flatnonzero((store.valid & ~cat & (catd > 5)).ravel())
     pos = rng.choice(pos, max(1, min(20000, len(pos))), replace=False)
@@ -69,9 +69,9 @@ def main():
     rows, y = rows[order], y[order]
 
     preds = {}
-    for view, names in (("Atex", H97.DVA_A), ("Btex", H97.DVA_B)):
+    for view, names in (("Atex", H99.DVA_A), ("Btex", H99.DVA_B)):
         t0 = time.time()
-        m = base.learner(H97.SEED)
+        m = base.learner(H99.SEED)
         X = bank.gather(rows, names)
         m.fit(X, y)
         del X
@@ -110,7 +110,7 @@ def main():
     a_only = a_q >= 0.75
     log(f"emitted {len(cy):,} dots; A-only (top-quartile View A) = {int(a_only.sum()):,}")
 
-    out = ROOT / "docs/downloads/h97-candidate-a-only-reasoning.csv"
+    out = ROOT / "docs/downloads/h99-candidate-a-only-reasoning.csv"
     with out.open("w", newline="") as fh:
         w = csv.writer(fh)
         w.writerow(["row", "col", "easting", "northing", "dist_mapped_fault_m",
@@ -135,12 +135,12 @@ def main():
                         f"{dist_cat_m[i]:.1f}", f"{a_q[i]:.4f}", f"{b_q[i]:.4f}",
                         f"{a_q[i] - b_q[i]:.4f}", cls, reason])
     digest = hashlib.sha256(out.read_bytes()).hexdigest()
-    receipt = dict(round="H97", stage="full_reasoning_dossier", file=out.name,
+    receipt = dict(round="H99", stage="full_reasoning_dossier", file=out.name,
                    bytes=out.stat().st_size, sha256=digest, rows=len(cy),
                    a_only_dots=int(a_only.sum()),
                    determinism_check=dict(shipped_tif=tif.name, identical=same, differing_px=n_diff),
                    generated_utc=datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"))
-    (ROOT / "evidence/h97_reasoning.json").write_text(json.dumps(receipt, indent=1) + "\n")
+    (ROOT / "evidence/h99_reasoning.json").write_text(json.dumps(receipt, indent=1) + "\n")
     log("wrote " + json.dumps(receipt))
 
 

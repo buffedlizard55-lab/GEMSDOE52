@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""H97 -- texture View A: does directional variogram anisotropy make the failing view sufficient?
+"""H99 -- texture View A: does directional variogram anisotropy make the failing view sufficient?
 
 Lane
 ----
@@ -13,7 +13,7 @@ The repository has measured its View A (H61's *raw* potential-field channels) be
 times (mean spatial-block OOF AUC 0.5163, min fold 0.4309) while its View B sits at 0.684.  Every
 DVA (directional variogram anisotropy) channel ever computed here used bands 12, 19, 13, 15, 18
 (``scripts/run_h82.py`` ``BANDS``).  Bands 2 (``rtp``), 9 (``tmi_vg``) and 6 (radiometric total
-count by bytes, IR-H85-005) have never carried a variogram anisotropy channel.  H97 replaces the
+count by bytes, IR-H85-005) have never carried a variogram anisotropy channel.  H99 replaces the
 *failing view's representation* -- amplitude -> boundary texture -- and leaves the working view's
 machinery alone.
 
@@ -23,14 +23,14 @@ Shared tools, never forked
 ``gems52.evaluate_holdout`` (``gems52-pooled-hide-v1``), ``gems52.nodes.spacing_select``,
 ``gems52.azimuth`` (axial statistics for the regional strike receipt).
 
-Stages (each checkpointed under ``work/h97`` and ``evidence/h97_*.json``)
+Stages (each checkpointed under ``work/h99`` and ``evidence/h99_*.json``)
 ------------------------------------------------------------------------
     channels  36 new DVA channels (6 bands x 3 lags x {aniso, logvar}) + regional-strike receipt
     fit       per-fold, per-view learner + leakage canary + sufficiency AUC; VSA-style independence
               screen on labelled negatives in 200 px blocks (the brief's own test)
     holdout   matched-budget hide-and-recover DTI for 5 arms with paired 95% CIs
 
-Usage: python3 scripts/run_h97.py [channels|fit|holdout|all]
+Usage: python3 scripts/run_h99.py [channels|fit|holdout|all]
 """
 from __future__ import annotations
 
@@ -60,9 +60,9 @@ from gems52 import nodes                                              # noqa: E4
 
 SEED = base.SEED
 # The runner is registry-driven, not round-specific: one implementation serves every texture
-# co-training round, so there is never a private fork of the science.  ``H97_PREREG`` selects the
+# co-training round, so there is never a private fork of the science.  ``H99_PREREG`` selects the
 # frozen registry; everything below (bands, lags, sigma, round name, evidence prefix) is read from it.
-PREREG = Path(os.environ.get("H97_PREREG", ROOT / "registry/h97_preregistration.json"))
+PREREG = Path(os.environ.get("H99_PREREG", ROOT / "registry/h99_preregistration.json"))
 FEATURES = ROOT / "data/training_features.tif"
 CANARY_ALARM = 0.90
 FAN = ((0, 1), (1, 1), (1, 0), (1, -1), (1, 2), (2, 1), (2, -1), (1, -2))
@@ -129,7 +129,7 @@ def write(name, obj):
 def save_verified(path, v, tries=8, pause=0.25):
     """Persist bit-exactly: write, fsync, then compare the RAW FILE BYTES with the in-memory image.
 
-    IR-H97-001 (this round): the array-compare version used in H97's first channels build passed
+    IR-H99-001 (this round): the array-compare version used in H99's first channels build passed
     while a whole 4 KiB page of the file was zero.  A byte-for-byte comparison against
     ``hdr + want.tobytes()`` catches exactly that failure (992 float32 = 3,968 bytes = one page).
     Detection at write time is necessary but not sufficient -- this sandbox also loses pages
@@ -157,7 +157,7 @@ def save_verified(path, v, tries=8, pause=0.25):
 
 
 def heal_channels(bank=None, log_fn=None):
-    """Recompute any channel whose on-disk bytes no longer match its pin (IR-H97-001).
+    """Recompute any channel whose on-disk bytes no longer match its pin (IR-H99-001).
 
     Reuses the SAME source bands and the SAME frozen parameters as the channels stage, so a healed
     channel is bit-identical to a freshly computed one.  Returns a receipt of what was rewritten.
