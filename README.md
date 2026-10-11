@@ -138,8 +138,8 @@
    channel, but `gdr.openei.org` is not reachable from this sandbox — the owner must download and pin it.
 <!--/H102-README-->
 
-<!--H103-README-->
-## Status block: H103 (2026-10-11) — co-training disagreement-state quota on the DVA2 base · NEGATIVE
+<!--H97-DSQ-README-->
+## Status block: H97-DSQ (2026-10-11) — co-training disagreement-state quota on the DVA2 base · NEGATIVE
 
 > **OK TO DOWNLOAD: YES** — format-valid single-band float32 GeoTIFF, EPSG:32611, 3730×3292, all-finite, values exactly {0,1}, 25,400 dots (the portal's *"Predicted values must be in range [0, 1]"* rejection cannot occur).
 >
@@ -147,10 +147,10 @@
 >
 > Weekly slots used: **0**. No weekly slot is approved by this round; the agent does not pick submissions.
 
-**★ [Download h103-candidate.tif](docs/downloads/h103-candidate.tif)** · [ZIP](docs/downloads/h103-candidate.zip) · **[Executive summary / how to submit](docs/h103-executive-summary.html)** · [Full result](docs/h103.html) · [Run card](evidence/h103_run_card.json) · [A-only reasoning CSV](docs/downloads/gems52-h103-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros-a-only-reasoning.csv)
+**★ [Download h97-dsq-candidate.tif](docs/downloads/h97-dsq-candidate.tif)** · [ZIP](docs/downloads/h97-dsq-candidate.zip) · **[Executive summary / how to submit](docs/h97-dsq-executive-summary.html)** · [Full result](docs/h97-dsq.html) · [Run card](evidence/h97_dsq_run_card.json) · [A-only reasoning CSV](docs/downloads/gems52-h97-dsq-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros-a-only-reasoning.csv)
 
-- **File:** `submission/gems52-h103-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif` — 753,675 bytes, SHA-256 `c49a07d15a5bb293c0f29f67d9d4931ed5f2f9ce48978da86af4e59a54f2523d`
-- **Submission name:** `h103-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c` · **Note (135/140):** `H103 co-train state machine: DVA2 consensus 18000 + buried A-only 7400, B-only veto, 25400px quota placement; vs 0.192829 bar; research`
+- **File:** `submission/gems52-h97-dsq-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif` — 753,675 bytes, SHA-256 `c49a07d15a5bb293c0f29f67d9d4931ed5f2f9ce48978da86af4e59a54f2523d`
+- **Submission name:** `h97-dsq-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c` · **Note (135/140):** `H97-DSQ co-train state machine: DVA2 consensus 18000 + buried A-only 7400, B-only veto, 25400px quota placement; vs 0.192829 bar; research`
 - **Validator (re-read from disk):** PASS · 1 band float32, EPSG:32611, 3730×3292, all-finite, values exactly [0.0, 1.0], 25,400 cells, no nodata; problems none
 - **HOLDOUT-DTI, E2 — disagreement-state quota** (`gems52-pooled-hide-v1`, 53,186 withheld positive px, 95 % CI):
 
@@ -176,11 +176,11 @@
 | `g_025` | 0.019639 [0.0168, 0.0225] |
 | `g_050` | 0.018175 [0.0155, 0.0211] |
 
-- **State machine (frozen):** τB = 0.98 (ladder 0.99→0.98); |C| = 31,490, |A-only| = 40,601, |B-only vetoed| = 32,837; realised emission 5,329 C / 4,967 A-only / tie fill — the 3 px spacing caps extractable C (IR-H103-001).
+- **State machine (frozen):** τB = 0.98 (ladder 0.99→0.98); |C| = 31,490, |A-only| = 40,601, |B-only vetoed| = 32,837; realised emission 5,329 C / 4,967 A-only / tie fill — the 3 px spacing caps extractable C (IR-H97-DSQ-001).
 - **Independence (spatial-block OOF errors):** max |ρ| 0.1337 over 2,089 blocks → PASS (bar 0.60).
 - **Sufficiency (View A, bookkeeping gate):** mean OOF AUC 0.5163 / min fold 0.4668 → **FAIL** (bar 0.60/0.55) — the mechanistic cause of the negative result.
-- **Lane / uniqueness:** surface literal PASS (max ρ 0.5417); dots literal DUPLICATE/STOP (probe rasters, IR-H87-001 class) with scored-only policy PASS (max near 0.3285); uniqueness literal novelty 0.0 (probe union, IR-H103-002) / informative-only **0.8121** (max Jaccard 0.0097); not-the-union PASS (76.2 % outside).
-- **Gates (frozen in `registry/h103_preregistration.json`, SHA `f58c5e32d405c530…`):**
+- **Lane / uniqueness:** surface literal PASS (max ρ 0.5417); dots literal DUPLICATE/STOP (probe rasters, IR-H87-001 class) with scored-only policy PASS (max near 0.3285); uniqueness literal novelty 0.0 (probe union, IR-H97-DSQ-002) / informative-only **0.8121** (max Jaccard 0.0097); not-the-union PASS (76.2 % outside).
+- **Gates (frozen in `registry/h97_dsq_preregistration.json`, SHA `f58c5e32d405c530…`):**
 
 | gate | result |
 |---|---|
@@ -196,24 +196,24 @@
 | format | PASS |
 | not_the_union | PASS |
 
-- **Irregularities:** IR-H103-001 (quota not realised by 3 px spacing; tie-fill mass), IR-H103-002 (probe-union novelty standing condition), IR-H103-003 (doubled CSV prefix, fixed pre-publication).
-- Docs: [preregistration](knowledge/97_hypotheses_H103_preregistered.md) · [results & limits](knowledge/98_h103_results_and_limits.md) · [session brief](knowledge/94_current_user_brief_2026-10-10_H95.md) · [irregularities](registry/irregularities.json)
-- Reproduce: `python3 scripts/restore_data.py --target-dir data` → feature store + `python -m gems52.external` → `python3 scripts/fetch_prior_inventory.py --out work/h103/priors --receipt work/h103/prior_fetch_receipt.json` → `python3 scripts/run_h103.py all` → `python3 scripts/publish_h103_site.py && python3 scripts/check_site.py`.
+- **Irregularities:** IR-H97-DSQ-001 (quota not realised by 3 px spacing; tie-fill mass), IR-H97-DSQ-002 (probe-union novelty standing condition), IR-H97-DSQ-003 (doubled CSV prefix, fixed pre-publication).
+- Docs: [preregistration](knowledge/97_hypotheses_H97-DSQ_preregistered.md) · [results & limits](knowledge/98_h97_dsq_results_and_limits.md) · [session brief](knowledge/94_current_user_brief_2026-10-10_H95.md) · [irregularities](registry/irregularities.json)
+- Reproduce: `python3 scripts/restore_data.py --target-dir data` → feature store + `python -m gems52.external` → `python3 scripts/fetch_prior_inventory.py --out work/h97-dsq/priors --receipt work/h97-dsq/prior_fetch_receipt.json` → `python3 scripts/run_h97_dsq.py all` → `python3 scripts/publish_h97_dsq_site.py && python3 scripts/check_site.py`.
 
 ### Why `h33-h33-2-b2` scored 0.2778, and can we beat 0.3195? (unchanged; full derivation: [knowledge/76](knowledge/76_why_02778_and_what_beating_03195_requires.md))
 
 - DTI = T / (0.2·S + 0.8·|G|); binary dots; a dot earns credit only if its kernel credit exceeds 0.2·DTI; Spearman(emitted mass, score) = −0.928 over our scored files.
 - The champion is the 0.2600 `d2-8` field with all dots within 200 m of the public catalogue deleted (37,654 dots). Beating 0.3195 needs ×1.1501 credit at every |G|, or the same credit from ≈25,400 dots.
-- **Honest answer after H103: still not demonstrated in the co-training lane.** H103 measured the lane's remaining in-lane levers (graft, consensus, quota state machine) and all three are at or below random — the lane's failure is the View A sufficiency condition, now measured (mean OOF AUC 0.516). The only lever with board-sign evidence remains the **mass lever on the champion's own field** (champion-field lane, out of this brief's lane).
+- **Honest answer after H97-DSQ: still not demonstrated in the co-training lane.** H97-DSQ measured the lane's remaining in-lane levers (graft, consensus, quota state machine) and all three are at or below random — the lane's failure is the View A sufficiency condition, now measured (mean OOF AUC 0.516). The only lever with board-sign evidence remains the **mass lever on the champion's own field** (champion-field lane, out of this brief's lane).
 
 ### Next work (ranked)
 
 1. **Mass lever on the champion's own field** (28k/32k-dot subset of h33-2-b2 ranked by its d2-8 value) — champion-field lane; the only board-sign lever.
-2. **Do not revisit co-training combination machinery** until a View A with pre-fit mean OOF AUC ≥ 0.60 exists (the sufficiency screen must be a hard gate, not bookkeeping). H103's measured 0.516 with independent errors is the demonstration.
+2. **Do not revisit co-training combination machinery** until a View A with pre-fit mean OOF AUC ≥ 0.60 exists (the sufficiency screen must be a hard gate, not bookkeeping). H97-DSQ's measured 0.516 with independent errors is the demonstration.
 3. **INGENIOUS 2 m temperature probes** (GDR 1391, DOI 10.15121/1881483) as the thermal View A upgrade — free and official, blocked on owner download (gdr.openei.org unreachable from the sandbox).
 4. Keep the H95 file's audit copy as the standing download example until a promotable round appears.
 
-<details><summary><b>The H103 session brief, verbatim (read it every session)</b></summary>
+<details><summary><b>The H97-DSQ session brief, verbatim (read it every session)</b></summary>
 
 # 94 · Standing user brief, as received for round H95 (originally labelled H88; renamed because main acquired H88–H94) (2026-10-10) — verbatim
 
@@ -812,7 +812,7 @@ Go ahead and create a pull request and then merge the pull request onto the main
 
 
 </details>
-<!--/H103-README-->
+<!--/H97-DSQ-README-->
 <!--H97-RDVA-ARCHIVE-START-->
 ## Parallel negative archive — H97-RDVA
 

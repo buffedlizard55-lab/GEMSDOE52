@@ -373,37 +373,37 @@ def test_h102_artifact_bytes_re_verify_every_gate_claim() -> None:
                 "union_max", "random"):
         assert arm in hold["pooled"]["scores"], arm
 
-# --- H103 (arena/1bc2f2ec session): co-training disagreement-state quota field ---------------------
-# Written as H97, renamed H97 -> H103 at merge: parallel sessions had merged their own H97/H97b and
-# H98-H101 rounds into main while this round ran (IR-H103-004; identifier-only rename per the
+# --- H97-DSQ (arena/1bc2f2ec session): co-training disagreement-state quota field ---------------------
+# Written as H97, renamed H97 -> H97-DSQ at merge: parallel sessions had merged their own H97/H97b and
+# H98-H101 rounds into main while this round ran (IR-H97-DSQ-004; identifier-only rename per the
 # IR-H84-006 precedent - GeoTIFF bytes and every holdout number unchanged). The round is NEGATIVE, so
 # the shared current pointer stays on the incumbent H96; this round keeps only its own round pin
-# (submission/H103_LATEST.txt). Same run-card contract as H96: negative verdict => slot gate closed,
+# (submission/H97-DSQ_LATEST.txt). Same run-card contract as H96: negative verdict => slot gate closed,
 # no upload, no promotion, zero slots.
 
-H103_STEM = "gems52-h103-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros"
-H103_SHA = "c49a07d15a5bb293c0f29f67d9d4931ed5f2f9ce48978da86af4e59a54f2523d"
+H97DSQ_STEM = "gems52-h97-dsq-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros"
+H97DSQ_SHA = "c49a07d15a5bb293c0f29f67d9d4931ed5f2f9ce48978da86af4e59a54f2523d"
 
 
-def _h103_receipts():
+def _h97_dsq_receipts():
     import json as _json
-    artifacts = _json.loads((ROOT / f"evidence/submission_{H103_STEM}.json").read_text())
-    card = _json.loads((ROOT / "evidence/h103_run_card.json").read_text())
-    w = _json.loads((ROOT / "evidence/h103_write.json").read_text())
+    artifacts = _json.loads((ROOT / f"evidence/submission_{H97DSQ_STEM}.json").read_text())
+    card = _json.loads((ROOT / "evidence/h97_dsq_run_card.json").read_text())
+    w = _json.loads((ROOT / "evidence/h97_dsq_write.json").read_text())
     return artifacts, card, w
 
 
-def test_h103_receipt_gate_blocks_promote_while_below_the_bar() -> None:
-    artifacts, card, w = _h103_receipts()
-    assert artifacts["sha256"] == H103_SHA
-    assert artifacts["file"].startswith("gems52-h103-")
-    assert artifacts["round"] == "H103"
+def test_h97_dsq_receipt_gate_blocks_promote_while_below_the_bar() -> None:
+    artifacts, card, w = _h97_dsq_receipts()
+    assert artifacts["sha256"] == H97DSQ_SHA
+    assert artifacts["file"].startswith("gems52-h97-dsq-")
+    assert artifacts["round"] == "H97-DSQ"
     assert artifacts["nonzero_px"] == 25400
-    assert artifacts["short_tif"] == "h103-candidate.tif"
-    assert artifacts["short_zip"] == "h103-candidate.zip"
-    assert artifacts["marker"] == "submission/H103_LATEST.txt"
+    assert artifacts["short_tif"] == "h97-dsq-candidate.tif"
+    assert artifacts["short_zip"] == "h97-dsq-candidate.zip"
+    assert artifacts["marker"] == "submission/H97-DSQ_LATEST.txt"
     assert "global pointer" in artifacts["pointer_policy"]
-    assert artifacts["validator"]["sha256"] == H103_SHA
+    assert artifacts["validator"]["sha256"] == H97DSQ_SHA
     # unique submission name + short note (the submission-naming convention)
     note = artifacts["note"]
     assert 1 <= len(note) <= 140
@@ -430,53 +430,55 @@ def test_h103_receipt_gate_blocks_promote_while_below_the_bar() -> None:
     assert card["gates"]["independence"] == "PASS"
     assert card["gates"]["format"] == "PASS"
     assert card["gates"]["not_the_union"] == "PASS"
-    # preregistration frozen before any fit; the rename is identifier-only (IR-H103-004 / IR-H84-006):
+    # preregistration frozen before any fit; the rename is identifier-only (IR-H97-DSQ-004 / IR-H84-006):
     # the re-pinned sha matches the renamed document's bytes and the pre-rename sha is preserved.
     reg = artifacts["metadata"]["registration"]
     assert reg["frozen_before_any_fit"] is True
-    regfile = json.loads((ROOT / "registry/h103_preregistration.json").read_text())
+    regfile = json.loads((ROOT / "registry/h97_dsq_preregistration.json").read_text())
     doc = ROOT / regfile["hypothesis_document"]
     assert regfile["hypothesis_sha256"] == reg["preregistration_sha256"]
     assert regfile["hypothesis_sha256"] == hashlib.sha256(doc.read_bytes()).hexdigest()
-    assert regfile["pre_rename"]["round"] == "H102"
-    assert regfile["pre_rename"]["hypothesis_sha256"].startswith("1a80ac50")
-    assert regfile["pre_rename_v1"]["round"] == "H97"
-    assert regfile["pre_rename_v1"]["hypothesis_sha256"].startswith("31f7c92c")
+    assert regfile["pre_rename"]["round"] == "H103"
+    assert regfile["pre_rename"]["hypothesis_sha256"].startswith("f58c5e32")
+    assert regfile["pre_rename_v1"]["round"] == "H102"
+    assert regfile["pre_rename_v1"]["hypothesis_sha256"].startswith("1a80ac50")
+    assert regfile["pre_rename_v2"]["round"] == "H97"
+    assert regfile["pre_rename_v2"]["hypothesis_sha256"].startswith("31f7c92c")
     # the round's own receipts must exist beside the artifact
-    for name in ("h103_run_card.json", "h103_e1_graft_holdout.json", "h103_e2_quota_holdout.json",
-                 "h103_lane.json", "h103_write.json", "h103_fit.json", "h103_independence.json"):
+    for name in ("h97_dsq_run_card.json", "h97_dsq_e1_graft_holdout.json", "h97_dsq_e2_quota_holdout.json",
+                 "h97_dsq_lane.json", "h97_dsq_write.json", "h97_dsq_fit.json", "h97_dsq_independence.json"):
         assert (ROOT / "evidence" / name).is_file(), name
     # the post-merge lane re-check against main's parallel rounds must PASS
-    relane = json.loads((ROOT / "evidence/h103_lane_vs_parallel_main.json").read_text())
+    relane = json.loads((ROOT / "evidence/h97_dsq_lane_vs_parallel_main.json").read_text())
     assert relane["ok"] is True and relane["duplicate"] is False
     # submission naming convention: the unique name and short note reach the site
     page = (DOCS / "index.html").read_text(encoding="utf-8")
-    assert "h103-disagreement-quota-dva2-25400px" in page
+    assert "h97-dsq-disagreement-quota-dva2-25400px" in page
     assert note[:60] in page
-    assert (DOCS / "h103.html").is_file() and (DOCS / "h103-executive-summary.html").is_file()
+    assert (DOCS / "h97-dsq.html").is_file() and (DOCS / "h97-dsq-executive-summary.html").is_file()
     # the NEGATIVE round does not move the incumbent: the global pointer still names the round the
     # repo considers current (read from the receipt, not hard-coded), and it is NOT this round; the
     # shared LATEST files agree with the global pointer.
     cur = json.loads((DOCS / "data" / "submission.json").read_text())
-    assert cur["file"] not in (H103_STEM, H103_STEM + ".tif"), "this round must not be the incumbent"
+    assert cur["file"] not in (H97DSQ_STEM, H97DSQ_STEM + ".tif"), "this round must not be the incumbent"
     for p in ("submission/LATEST.txt", "docs/submission/LATEST.txt"):
         txt = (ROOT / p).read_text(encoding="utf-8").strip()
         assert txt == cur["file"] or txt == cur["file"] + ".tif", (p, txt, cur["file"])
     # this round's own pin names this stem
-    pin = (ROOT / "submission/H103_LATEST.txt").read_text(encoding="utf-8").strip()
-    assert pin in (H103_STEM, H103_STEM + ".tif")
+    pin = (ROOT / "submission/H97-DSQ_LATEST.txt").read_text(encoding="utf-8").strip()
+    assert pin in (H97DSQ_STEM, H97DSQ_STEM + ".tif")
     # the run card names its validator and reports ok
     assert card["validator"]["ok"] is True
-    assert card["validator"]["sha256"] == H103_SHA
+    assert card["validator"]["sha256"] == H97DSQ_SHA
     # the artifact bytes re-verify: 25,400 binary dots, all finite, no nodata
     import numpy as np
     import rasterio
-    tif = ROOT / "submission" / (H103_STEM + ".tif")
-    assert hashlib.sha256(tif.read_bytes()).hexdigest() == H103_SHA
+    tif = ROOT / "submission" / (H97DSQ_STEM + ".tif")
+    assert hashlib.sha256(tif.read_bytes()).hexdigest() == H97DSQ_SHA
     with rasterio.open(tif) as ds:
         data = ds.read(1)
         assert ds.dtypes == ("float32",) and ds.crs.to_epsg() == 32611
         assert np.isfinite(data).all() and set(np.unique(data).tolist()) == {0.0, 1.0}
         assert int(np.count_nonzero(data)) == 25400
     # the short aliases are byte-identical
-    assert (DOWNLOADS / "h103-candidate.tif").read_bytes() == tif.read_bytes()
+    assert (DOWNLOADS / "h97-dsq-candidate.tif").read_bytes() == tif.read_bytes()

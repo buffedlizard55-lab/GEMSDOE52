@@ -1,5 +1,5 @@
 {
- "round": "H103",
+ "round": "H97-DSQ",
  "experiment": "E1 (soft-prior graft, full budget)",
  "evidence_class": "HOLDOUT-DTI",
  "evaluator_version": "gems52-pooled-hide-v1",
