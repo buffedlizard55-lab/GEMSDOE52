@@ -173,7 +173,9 @@ def test_published_downloads_are_byte_identical_to_the_repository_artefact():
 
 
 def test_site_states_both_verdicts_and_links_the_download():
-    idx = (DOCS / "index.html").read_text()
+    # Retargeted in the H88 round: the landing page advances every round, so the H83 verdict language
+    # and the h83-candidate.tif download link live permanently on the H83 executive summary.
+    idx = (DOCS / "h83-executive-summary.html").read_text()
     assert "OK to download?" in idx
     assert "OK to submit" in idx
     assert "downloads/h83-candidate.tif" in idx

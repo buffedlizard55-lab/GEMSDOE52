@@ -1,0 +1,1 @@
+H88 co-train lane: B-corroborated, A-only suppressed, 31177px, 3px spacing, 200m collar
