@@ -1,0 +1,4244 @@
+{
+  "stage": "canary",
+  "evidence_class": "LEAKAGE-CANARY AUC (diagnostic; not DTI)",
+  "alarm_rule": "direction-insensitive raw AUC > 0.90 is leakage until proven otherwise",
+  "alarm_threshold": 0.9,
+  "feature_inventory": {
+    "A": [
+      "store::A_RTP_grad_1",
+      "store::A_RTP_grad_3",
+      "store::A_cover_coherence",
+      "store::A_cover_grad_1",
+      "store::A_cover_grad_3",
+      "store::A_cover_grad_8",
+      "store::A_cover_persistence_1_3",
+      "store::A_cover_persistence_3_8",
+      "store::A_gravity_coherence",
+      "store::A_gravity_cover_signed_1",
+      "store::A_gravity_cover_signed_3",
+      "store::A_gravity_cover_signed_8",
+      "store::A_gravity_grad_1",
+      "store::A_gravity_grad_3",
+      "store::A_gravity_grad_8",
+      "store::A_gravity_persistence_1_3",
+      "store::A_gravity_persistence_3_8",
+      "store::X_mag_TMI_up150_grad1",
+      "store::X_mag_TMI_up150_grad3",
+      "store::X_mag_TMI_up150_rank",
+      "store::raw_band_01",
+      "store::raw_band_02",
+      "store::raw_band_03",
+      "store::raw_band_04",
+      "store::raw_band_05",
+      "store::raw_band_07",
+      "store::raw_band_08",
+      "store::raw_band_09",
+      "store::raw_band_10",
+      "store::raw_band_11",
+      "store::raw_band_13",
+      "store::raw_band_14",
+      "store::raw_band_15",
+      "store::raw_band_16",
+      "store::raw_band_17",
+      "store::raw_band_18",
+      "bank::DVA2_depth_to_base_surf_aniso_l1",
+      "bank::DVA2_depth_to_base_surf_aniso_l2",
+      "bank::DVA2_depth_to_base_surf_aniso_l3",
+      "bank::DVA2_depth_to_base_surf_aniso_l4",
+      "bank::DVA2_depth_to_base_surf_aniso_l6",
+      "bank::DVA2_depth_to_base_surf_logvar_l1",
+      "bank::DVA2_depth_to_base_surf_logvar_l2",
+      "bank::DVA2_depth_to_base_surf_logvar_l3",
+      "bank::DVA2_depth_to_base_surf_logvar_l4",
+      "bank::DVA2_depth_to_base_surf_logvar_l6",
+      "bank::DVA2_iso_grav_anom_aniso_l1",
+      "bank::DVA2_iso_grav_anom_aniso_l2",
+      "bank::DVA2_iso_grav_anom_aniso_l3",
+      "bank::DVA2_iso_grav_anom_aniso_l4",
+      "bank::DVA2_iso_grav_anom_aniso_l6",
+      "bank::DVA2_iso_grav_anom_hg_aniso_l1",
+      "bank::DVA2_iso_grav_anom_hg_aniso_l2",
+      "bank::DVA2_iso_grav_anom_hg_aniso_l3",
+      "bank::DVA2_iso_grav_anom_hg_aniso_l4",
+      "bank::DVA2_iso_grav_anom_hg_aniso_l6",
+      "bank::DVA2_iso_grav_anom_hg_logvar_l1",
+      "bank::DVA2_iso_grav_anom_hg_logvar_l2",
+      "bank::DVA2_iso_grav_anom_hg_logvar_l3",
+      "bank::DVA2_iso_grav_anom_hg_logvar_l4",
+      "bank::DVA2_iso_grav_anom_hg_logvar_l6",
+      "bank::DVA2_iso_grav_anom_logvar_l1",
+      "bank::DVA2_iso_grav_anom_logvar_l2",
+      "bank::DVA2_iso_grav_anom_logvar_l3",
+      "bank::DVA2_iso_grav_anom_logvar_l4",
+      "bank::DVA2_iso_grav_anom_logvar_l6"
+    ],
+    "B": [
+      "store::B_curvature_minus_1",
+      "store::B_curvature_minus_3",
+      "store::B_curvature_plus_1",
+      "store::B_curvature_plus_3",
+      "store::B_curvature_trace_1",
+      "store::B_curvature_trace_3",
+      "store::B_elevation_grad_1",
+      "store::B_elevation_grad_3",
+      "store::B_elevation_grad_8",
+      "store::B_elevation_local_residual",
+      "store::B_elevation_local_sd",
+      "store::B_slope_grad_1",
+      "store::B_slope_grad_3",
+      "store::B_slope_local_residual",
+      "store::B_slope_local_sd",
+      "store::B_surface_coherence",
+      "store::X_rad_K_grad1",
+      "store::X_rad_K_grad3",
+      "store::X_rad_K_rank",
+      "store::X_rad_ThK_grad1",
+      "store::X_rad_ThK_grad3",
+      "store::X_rad_ThK_rank",
+      "store::X_rad_Th_grad1",
+      "store::X_rad_Th_grad3",
+      "store::X_rad_Th_rank",
+      "store::X_rad_UK_grad1",
+      "store::X_rad_UK_grad3",
+      "store::X_rad_UK_rank",
+      "store::X_rad_UTh_grad1",
+      "store::X_rad_UTh_grad3",
+      "store::X_rad_UTh_rank",
+      "store::X_rad_U_grad1",
+      "store::X_rad_U_grad3",
+      "store::X_rad_U_rank",
+      "store::raw_band_06",
+      "store::raw_band_12",
+      "store::raw_band_19",
+      "bank::DVA2_det_elev_aniso_l1",
+      "bank::DVA2_det_elev_aniso_l2",
+      "bank::DVA2_det_elev_aniso_l3",
+      "bank::DVA2_det_elev_aniso_l4",
+      "bank::DVA2_det_elev_aniso_l6",
+      "bank::DVA2_det_elev_logvar_l1",
+      "bank::DVA2_det_elev_logvar_l2",
+      "bank::DVA2_det_elev_logvar_l3",
+      "bank::DVA2_det_elev_logvar_l4",
+      "bank::DVA2_det_elev_logvar_l6",
+      "bank::DVA2_det_elev_slope_aniso_l1",
+      "bank::DVA2_det_elev_slope_aniso_l2",
+      "bank::DVA2_det_elev_slope_aniso_l3",
+      "bank::DVA2_det_elev_slope_aniso_l4",
+      "bank::DVA2_det_elev_slope_aniso_l6",
+      "bank::DVA2_det_elev_slope_logvar_l1",
+      "bank::DVA2_det_elev_slope_logvar_l2",
+      "bank::DVA2_det_elev_slope_logvar_l3",
+      "bank::DVA2_det_elev_slope_logvar_l4",
+      "bank::DVA2_det_elev_slope_logvar_l6",
+      "bank::RDVA2_K_aniso_l1",
+      "bank::RDVA2_K_aniso_l2",
+      "bank::RDVA2_K_aniso_l3",
+      "bank::RDVA2_K_aniso_l4",
+      "bank::RDVA2_K_aniso_l6",
+      "bank::RDVA2_K_logvar_l1",
+      "bank::RDVA2_K_logvar_l2",
+      "bank::RDVA2_K_logvar_l3",
+      "bank::RDVA2_K_logvar_l4",
+      "bank::RDVA2_K_logvar_l6",
+      "bank::RDVA2_TC_aniso_l1",
+      "bank::RDVA2_TC_aniso_l2",
+      "bank::RDVA2_TC_aniso_l3",
+      "bank::RDVA2_TC_aniso_l4",
+      "bank::RDVA2_TC_aniso_l6",
+      "bank::RDVA2_TC_logvar_l1",
+      "bank::RDVA2_TC_logvar_l2",
+      "bank::RDVA2_TC_logvar_l3",
+      "bank::RDVA2_TC_logvar_l4",
+      "bank::RDVA2_TC_logvar_l6",
+      "bank::RDVA2_Th_aniso_l1",
+      "bank::RDVA2_Th_aniso_l2",
+      "bank::RDVA2_Th_aniso_l3",
+      "bank::RDVA2_Th_aniso_l4",
+      "bank::RDVA2_Th_aniso_l6",
+      "bank::RDVA2_Th_logvar_l1",
+      "bank::RDVA2_Th_logvar_l2",
+      "bank::RDVA2_Th_logvar_l3",
+      "bank::RDVA2_Th_logvar_l4",
+      "bank::RDVA2_Th_logvar_l6",
+      "bank::RDVA2_U_aniso_l1",
+      "bank::RDVA2_U_aniso_l2",
+      "bank::RDVA2_U_aniso_l3",
+      "bank::RDVA2_U_aniso_l4",
+      "bank::RDVA2_U_aniso_l6",
+      "bank::RDVA2_U_logvar_l1",
+      "bank::RDVA2_U_logvar_l2",
+      "bank::RDVA2_U_logvar_l3",
+      "bank::RDVA2_U_logvar_l4",
+      "bank::RDVA2_U_logvar_l6"
+    ]
+  },
+  "folds": [
+    {
+      "fold": 0,
+      "n_pos": 20000,
+      "n_neg": 40000,
+      "per_feature": {
+        "store::A_RTP_grad_1": {
+          "view": "A",
+          "auc": 0.52773654875,
+          "direction_insensitive": 0.52773654875,
+          "source": "shared structural store"
+        },
+        "store::A_RTP_grad_3": {
+          "view": "A",
+          "auc": 0.53037222875,
+          "direction_insensitive": 0.53037222875,
+          "source": "shared structural store"
+        },
+        "store::A_cover_coherence": {
+          "view": "A",
+          "auc": 0.5141456525,
+          "direction_insensitive": 0.5141456525,
+          "source": "shared structural store"
+        },
+        "store::A_cover_grad_1": {
+          "view": "A",
+          "auc": 0.5353508812500001,
+          "direction_insensitive": 0.5353508812500001,
+          "source": "shared structural store"
+        },
+        "store::A_cover_grad_3": {
+          "view": "A",
+          "auc": 0.53515979875,
+          "direction_insensitive": 0.53515979875,
+          "source": "shared structural store"
+        },
+        "store::A_cover_grad_8": {
+          "view": "A",
+          "auc": 0.5354550650000001,
+          "direction_insensitive": 0.5354550650000001,
+          "source": "shared structural store"
+        },
+        "store::A_cover_persistence_1_3": {
+          "view": "A",
+          "auc": 0.508738870625,
+          "direction_insensitive": 0.508738870625,
+          "source": "shared structural store"
+        },
+        "store::A_cover_persistence_3_8": {
+          "view": "A",
+          "auc": 0.500563913125,
+          "direction_insensitive": 0.500563913125,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_coherence": {
+          "view": "A",
+          "auc": 0.490591073125,
+          "direction_insensitive": 0.509408926875,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_cover_signed_1": {
+          "view": "A",
+          "auc": 0.537242561875,
+          "direction_insensitive": 0.537242561875,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_cover_signed_3": {
+          "view": "A",
+          "auc": 0.5373050312500001,
+          "direction_insensitive": 0.5373050312500001,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_cover_signed_8": {
+          "view": "A",
+          "auc": 0.538985779375,
+          "direction_insensitive": 0.538985779375,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_grad_1": {
+          "view": "A",
+          "auc": 0.540065495,
+          "direction_insensitive": 0.540065495,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_grad_3": {
+          "view": "A",
+          "auc": 0.5394822481249999,
+          "direction_insensitive": 0.5394822481249999,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_grad_8": {
+          "view": "A",
+          "auc": 0.535235841875,
+          "direction_insensitive": 0.535235841875,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_persistence_1_3": {
+          "view": "A",
+          "auc": 0.492266525,
+          "direction_insensitive": 0.507733475,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_persistence_3_8": {
+          "view": "A",
+          "auc": 0.48322278750000003,
+          "direction_insensitive": 0.5167772125,
+          "source": "shared structural store"
+        },
+        "store::X_mag_TMI_up150_grad1": {
+          "view": "A",
+          "auc": 0.527483510625,
+          "direction_insensitive": 0.527483510625,
+          "source": "shared structural store"
+        },
+        "store::X_mag_TMI_up150_grad3": {
+          "view": "A",
+          "auc": 0.529201723125,
+          "direction_insensitive": 0.529201723125,
+          "source": "shared structural store"
+        },
+        "store::X_mag_TMI_up150_rank": {
+          "view": "A",
+          "auc": 0.50256363625,
+          "direction_insensitive": 0.50256363625,
+          "source": "shared structural store"
+        },
+        "store::raw_band_01": {
+          "view": "A",
+          "auc": 0.503584475625,
+          "direction_insensitive": 0.503584475625,
+          "source": "shared structural store"
+        },
+        "store::raw_band_02": {
+          "view": "A",
+          "auc": 0.5136983799999999,
+          "direction_insensitive": 0.5136983799999999,
+          "source": "shared structural store"
+        },
+        "store::raw_band_03": {
+          "view": "A",
+          "auc": 0.5273671606249999,
+          "direction_insensitive": 0.5273671606249999,
+          "source": "shared structural store"
+        },
+        "store::raw_band_04": {
+          "view": "A",
+          "auc": 0.573751975,
+          "direction_insensitive": 0.573751975,
+          "source": "shared structural store"
+        },
+        "store::raw_band_05": {
+          "view": "A",
+          "auc": 0.5392926581249999,
+          "direction_insensitive": 0.5392926581249999,
+          "source": "shared structural store"
+        },
+        "store::raw_band_07": {
+          "view": "A",
+          "auc": 0.580323509375,
+          "direction_insensitive": 0.580323509375,
+          "source": "shared structural store"
+        },
+        "store::raw_band_08": {
+          "view": "A",
+          "auc": 0.48917868062500003,
+          "direction_insensitive": 0.510821319375,
+          "source": "shared structural store"
+        },
+        "store::raw_band_09": {
+          "view": "A",
+          "auc": 0.4970049825,
+          "direction_insensitive": 0.5029950175,
+          "source": "shared structural store"
+        },
+        "store::raw_band_10": {
+          "view": "A",
+          "auc": 0.534319620625,
+          "direction_insensitive": 0.534319620625,
+          "source": "shared structural store"
+        },
+        "store::raw_band_11": {
+          "view": "A",
+          "auc": 0.5185304025,
+          "direction_insensitive": 0.5185304025,
+          "source": "shared structural store"
+        },
+        "store::raw_band_13": {
+          "view": "A",
+          "auc": 0.45471681875,
+          "direction_insensitive": 0.5452831812500001,
+          "source": "shared structural store"
+        },
+        "store::raw_band_14": {
+          "view": "A",
+          "auc": 0.502489931875,
+          "direction_insensitive": 0.502489931875,
+          "source": "shared structural store"
+        },
+        "store::raw_band_15": {
+          "view": "A",
+          "auc": 0.5245104275,
+          "direction_insensitive": 0.5245104275,
+          "source": "shared structural store"
+        },
+        "store::raw_band_16": {
+          "view": "A",
+          "auc": 0.55186831,
+          "direction_insensitive": 0.55186831,
+          "source": "shared structural store"
+        },
+        "store::raw_band_17": {
+          "view": "A",
+          "auc": 0.50309424375,
+          "direction_insensitive": 0.50309424375,
+          "source": "shared structural store"
+        },
+        "store::raw_band_18": {
+          "view": "A",
+          "auc": 0.46457430625,
+          "direction_insensitive": 0.5354256937499999,
+          "source": "shared structural store"
+        },
+        "bank::DVA2_depth_to_base_surf_aniso_l1": {
+          "view": "A",
+          "auc": 0.51237103375,
+          "direction_insensitive": 0.51237103375,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_aniso_l2": {
+          "view": "A",
+          "auc": 0.50908160375,
+          "direction_insensitive": 0.50908160375,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_aniso_l3": {
+          "view": "A",
+          "auc": 0.50619019625,
+          "direction_insensitive": 0.50619019625,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_aniso_l4": {
+          "view": "A",
+          "auc": 0.503467886875,
+          "direction_insensitive": 0.503467886875,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_aniso_l6": {
+          "view": "A",
+          "auc": 0.49964589499999995,
+          "direction_insensitive": 0.500354105,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_logvar_l1": {
+          "view": "A",
+          "auc": 0.534947354375,
+          "direction_insensitive": 0.534947354375,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_logvar_l2": {
+          "view": "A",
+          "auc": 0.5342139968749999,
+          "direction_insensitive": 0.5342139968749999,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_logvar_l3": {
+          "view": "A",
+          "auc": 0.533493983125,
+          "direction_insensitive": 0.533493983125,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_logvar_l4": {
+          "view": "A",
+          "auc": 0.532795158125,
+          "direction_insensitive": 0.532795158125,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_logvar_l6": {
+          "view": "A",
+          "auc": 0.5314818649999999,
+          "direction_insensitive": 0.5314818649999999,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_aniso_l1": {
+          "view": "A",
+          "auc": 0.491893585625,
+          "direction_insensitive": 0.508106414375,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_aniso_l2": {
+          "view": "A",
+          "auc": 0.4919178062499999,
+          "direction_insensitive": 0.5080821937500001,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_aniso_l3": {
+          "view": "A",
+          "auc": 0.49160507625,
+          "direction_insensitive": 0.5083949237500001,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_aniso_l4": {
+          "view": "A",
+          "auc": 0.4914602175,
+          "direction_insensitive": 0.5085397825,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_aniso_l6": {
+          "view": "A",
+          "auc": 0.492184185625,
+          "direction_insensitive": 0.507815814375,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_aniso_l1": {
+          "view": "A",
+          "auc": 0.48131385812499994,
+          "direction_insensitive": 0.5186861418750001,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_aniso_l2": {
+          "view": "A",
+          "auc": 0.48195946624999997,
+          "direction_insensitive": 0.51804053375,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_aniso_l3": {
+          "view": "A",
+          "auc": 0.482425659375,
+          "direction_insensitive": 0.517574340625,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_aniso_l4": {
+          "view": "A",
+          "auc": 0.48343254625,
+          "direction_insensitive": 0.51656745375,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_aniso_l6": {
+          "view": "A",
+          "auc": 0.48614199937499997,
+          "direction_insensitive": 0.513858000625,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_logvar_l1": {
+          "view": "A",
+          "auc": 0.540479663125,
+          "direction_insensitive": 0.540479663125,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_logvar_l2": {
+          "view": "A",
+          "auc": 0.539721326875,
+          "direction_insensitive": 0.539721326875,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_logvar_l3": {
+          "view": "A",
+          "auc": 0.53907363625,
+          "direction_insensitive": 0.53907363625,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_logvar_l4": {
+          "view": "A",
+          "auc": 0.538593125,
+          "direction_insensitive": 0.538593125,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_logvar_l6": {
+          "view": "A",
+          "auc": 0.538010305,
+          "direction_insensitive": 0.538010305,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_logvar_l1": {
+          "view": "A",
+          "auc": 0.5422131375000001,
+          "direction_insensitive": 0.5422131375000001,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_logvar_l2": {
+          "view": "A",
+          "auc": 0.541787190625,
+          "direction_insensitive": 0.541787190625,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_logvar_l3": {
+          "view": "A",
+          "auc": 0.541321849375,
+          "direction_insensitive": 0.541321849375,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_logvar_l4": {
+          "view": "A",
+          "auc": 0.540794055,
+          "direction_insensitive": 0.540794055,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_logvar_l6": {
+          "view": "A",
+          "auc": 0.539539970625,
+          "direction_insensitive": 0.539539970625,
+          "source": "H97 directional bank"
+        },
+        "store::B_curvature_minus_1": {
+          "view": "B",
+          "auc": 0.498158300625,
+          "direction_insensitive": 0.501841699375,
+          "source": "shared structural store"
+        },
+        "store::B_curvature_minus_3": {
+          "view": "B",
+          "auc": 0.49465234625,
+          "direction_insensitive": 0.50534765375,
+          "source": "shared structural store"
+        },
+        "store::B_curvature_plus_1": {
+          "view": "B",
+          "auc": 0.5658419475,
+          "direction_insensitive": 0.5658419475,
+          "source": "shared structural store"
+        },
+        "store::B_curvature_plus_3": {
+          "view": "B",
+          "auc": 0.5793441343750001,
+          "direction_insensitive": 0.5793441343750001,
+          "source": "shared structural store"
+        },
+        "store::B_curvature_trace_1": {
+          "view": "B",
+          "auc": 0.552441208125,
+          "direction_insensitive": 0.552441208125,
+          "source": "shared structural store"
+        },
+        "store::B_curvature_trace_3": {
+          "view": "B",
+          "auc": 0.566632088125,
+          "direction_insensitive": 0.566632088125,
+          "source": "shared structural store"
+        },
+        "store::B_elevation_grad_1": {
+          "view": "B",
+          "auc": 0.5670018318749999,
+          "direction_insensitive": 0.5670018318749999,
+          "source": "shared structural store"
+        },
+        "store::B_elevation_grad_3": {
+          "view": "B",
+          "auc": 0.579019380625,
+          "direction_insensitive": 0.579019380625,
+          "source": "shared structural store"
+        },
+        "store::B_elevation_grad_8": {
+          "view": "B",
+          "auc": 0.57433065625,
+          "direction_insensitive": 0.57433065625,
+          "source": "shared structural store"
+        },
+        "store::B_elevation_local_residual": {
+          "view": "B",
+          "auc": 0.47918573,
+          "direction_insensitive": 0.52081427,
+          "source": "shared structural store"
+        },
+        "store::B_elevation_local_sd": {
+          "view": "B",
+          "auc": 0.5653959375,
+          "direction_insensitive": 0.5653959375,
+          "source": "shared structural store"
+        },
+        "store::B_slope_grad_1": {
+          "view": "B",
+          "auc": 0.5846001000000001,
+          "direction_insensitive": 0.5846001000000001,
+          "source": "shared structural store"
+        },
+        "store::B_slope_grad_3": {
+          "view": "B",
+          "auc": 0.613164986875,
+          "direction_insensitive": 0.613164986875,
+          "source": "shared structural store"
+        },
+        "store::B_slope_local_residual": {
+          "view": "B",
+          "auc": 0.511833686875,
+          "direction_insensitive": 0.511833686875,
+          "source": "shared structural store"
+        },
+        "store::B_slope_local_sd": {
+          "view": "B",
+          "auc": 0.5716134106249999,
+          "direction_insensitive": 0.5716134106249999,
+          "source": "shared structural store"
+        },
+        "store::B_surface_coherence": {
+          "view": "B",
+          "auc": 0.567167481875,
+          "direction_insensitive": 0.567167481875,
+          "source": "shared structural store"
+        },
+        "store::X_rad_K_grad1": {
+          "view": "B",
+          "auc": 0.500691698125,
+          "direction_insensitive": 0.500691698125,
+          "source": "shared structural store"
+        },
+        "store::X_rad_K_grad3": {
+          "view": "B",
+          "auc": 0.510554319375,
+          "direction_insensitive": 0.510554319375,
+          "source": "shared structural store"
+        },
+        "store::X_rad_K_rank": {
+          "view": "B",
+          "auc": 0.45466417375000007,
+          "direction_insensitive": 0.5453358262499999,
+          "source": "shared structural store"
+        },
+        "store::X_rad_ThK_grad1": {
+          "view": "B",
+          "auc": 0.51940428625,
+          "direction_insensitive": 0.51940428625,
+          "source": "shared structural store"
+        },
+        "store::X_rad_ThK_grad3": {
+          "view": "B",
+          "auc": 0.523180998125,
+          "direction_insensitive": 0.523180998125,
+          "source": "shared structural store"
+        },
+        "store::X_rad_ThK_rank": {
+          "view": "B",
+          "auc": 0.491990149375,
+          "direction_insensitive": 0.5080098506249999,
+          "source": "shared structural store"
+        },
+        "store::X_rad_Th_grad1": {
+          "view": "B",
+          "auc": 0.514670845625,
+          "direction_insensitive": 0.514670845625,
+          "source": "shared structural store"
+        },
+        "store::X_rad_Th_grad3": {
+          "view": "B",
+          "auc": 0.5222753793749999,
+          "direction_insensitive": 0.5222753793749999,
+          "source": "shared structural store"
+        },
+        "store::X_rad_Th_rank": {
+          "view": "B",
+          "auc": 0.46248491625,
+          "direction_insensitive": 0.53751508375,
+          "source": "shared structural store"
+        },
+        "store::X_rad_UK_grad1": {
+          "view": "B",
+          "auc": 0.49617909187500003,
+          "direction_insensitive": 0.503820908125,
+          "source": "shared structural store"
+        },
+        "store::X_rad_UK_grad3": {
+          "view": "B",
+          "auc": 0.50133128625,
+          "direction_insensitive": 0.50133128625,
+          "source": "shared structural store"
+        },
+        "store::X_rad_UK_rank": {
+          "view": "B",
+          "auc": 0.5216879750000001,
+          "direction_insensitive": 0.5216879750000001,
+          "source": "shared structural store"
+        },
+        "store::X_rad_UTh_grad1": {
+          "view": "B",
+          "auc": 0.5235774368749999,
+          "direction_insensitive": 0.5235774368749999,
+          "source": "shared structural store"
+        },
+        "store::X_rad_UTh_grad3": {
+          "view": "B",
+          "auc": 0.5352159306250001,
+          "direction_insensitive": 0.5352159306250001,
+          "source": "shared structural store"
+        },
+        "store::X_rad_UTh_rank": {
+          "view": "B",
+          "auc": 0.530080685625,
+          "direction_insensitive": 0.530080685625,
+          "source": "shared structural store"
+        },
+        "store::X_rad_U_grad1": {
+          "view": "B",
+          "auc": 0.500808506875,
+          "direction_insensitive": 0.500808506875,
+          "source": "shared structural store"
+        },
+        "store::X_rad_U_grad3": {
+          "view": "B",
+          "auc": 0.505464895,
+          "direction_insensitive": 0.505464895,
+          "source": "shared structural store"
+        },
+        "store::X_rad_U_rank": {
+          "view": "B",
+          "auc": 0.48295194375000006,
+          "direction_insensitive": 0.5170480562499999,
+          "source": "shared structural store"
+        },
+        "store::raw_band_06": {
+          "view": "B",
+          "auc": 0.45789785750000006,
+          "direction_insensitive": 0.5421021424999999,
+          "source": "shared structural store"
+        },
+        "store::raw_band_12": {
+          "view": "B",
+          "auc": 0.49873044625000007,
+          "direction_insensitive": 0.5012695537499999,
+          "source": "shared structural store"
+        },
+        "store::raw_band_19": {
+          "view": "B",
+          "auc": 0.5495407499999999,
+          "direction_insensitive": 0.5495407499999999,
+          "source": "shared structural store"
+        },
+        "bank::DVA2_det_elev_aniso_l1": {
+          "view": "B",
+          "auc": 0.544358688125,
+          "direction_insensitive": 0.544358688125,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_aniso_l2": {
+          "view": "B",
+          "auc": 0.5583147725,
+          "direction_insensitive": 0.5583147725,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_aniso_l3": {
+          "view": "B",
+          "auc": 0.5553009624999999,
+          "direction_insensitive": 0.5553009624999999,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_aniso_l4": {
+          "view": "B",
+          "auc": 0.5487217675,
+          "direction_insensitive": 0.5487217675,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_aniso_l6": {
+          "view": "B",
+          "auc": 0.5357937068749999,
+          "direction_insensitive": 0.5357937068749999,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_logvar_l1": {
+          "view": "B",
+          "auc": 0.5495350525,
+          "direction_insensitive": 0.5495350525,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_logvar_l2": {
+          "view": "B",
+          "auc": 0.555362148125,
+          "direction_insensitive": 0.555362148125,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_logvar_l3": {
+          "view": "B",
+          "auc": 0.5595204,
+          "direction_insensitive": 0.5595204,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_logvar_l4": {
+          "view": "B",
+          "auc": 0.5620869406250001,
+          "direction_insensitive": 0.5620869406250001,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_logvar_l6": {
+          "view": "B",
+          "auc": 0.563603638125,
+          "direction_insensitive": 0.563603638125,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_aniso_l1": {
+          "view": "B",
+          "auc": 0.5120803475,
+          "direction_insensitive": 0.5120803475,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_aniso_l2": {
+          "view": "B",
+          "auc": 0.522655100625,
+          "direction_insensitive": 0.522655100625,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_aniso_l3": {
+          "view": "B",
+          "auc": 0.528132853125,
+          "direction_insensitive": 0.528132853125,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_aniso_l4": {
+          "view": "B",
+          "auc": 0.5241987075,
+          "direction_insensitive": 0.5241987075,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_aniso_l6": {
+          "view": "B",
+          "auc": 0.5132172206250001,
+          "direction_insensitive": 0.5132172206250001,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_logvar_l1": {
+          "view": "B",
+          "auc": 0.5442026075,
+          "direction_insensitive": 0.5442026075,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_logvar_l2": {
+          "view": "B",
+          "auc": 0.5535349131249999,
+          "direction_insensitive": 0.5535349131249999,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_logvar_l3": {
+          "view": "B",
+          "auc": 0.56030586125,
+          "direction_insensitive": 0.56030586125,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_logvar_l4": {
+          "view": "B",
+          "auc": 0.564167115,
+          "direction_insensitive": 0.564167115,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_logvar_l6": {
+          "view": "B",
+          "auc": 0.566468361875,
+          "direction_insensitive": 0.566468361875,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_aniso_l1": {
+          "view": "B",
+          "auc": 0.5033266175,
+          "direction_insensitive": 0.5033266175,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_aniso_l2": {
+          "view": "B",
+          "auc": 0.499813435,
+          "direction_insensitive": 0.500186565,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_aniso_l3": {
+          "view": "B",
+          "auc": 0.506111418125,
+          "direction_insensitive": 0.506111418125,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_aniso_l4": {
+          "view": "B",
+          "auc": 0.5079098693749999,
+          "direction_insensitive": 0.5079098693749999,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_aniso_l6": {
+          "view": "B",
+          "auc": 0.5059874631250001,
+          "direction_insensitive": 0.5059874631250001,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_logvar_l1": {
+          "view": "B",
+          "auc": 0.490621351875,
+          "direction_insensitive": 0.509378648125,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_logvar_l2": {
+          "view": "B",
+          "auc": 0.49496478125000004,
+          "direction_insensitive": 0.50503521875,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_logvar_l3": {
+          "view": "B",
+          "auc": 0.49900588,
+          "direction_insensitive": 0.50099412,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_logvar_l4": {
+          "view": "B",
+          "auc": 0.50244273875,
+          "direction_insensitive": 0.50244273875,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_logvar_l6": {
+          "view": "B",
+          "auc": 0.506213470625,
+          "direction_insensitive": 0.506213470625,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_aniso_l1": {
+          "view": "B",
+          "auc": 0.49829378125,
+          "direction_insensitive": 0.50170621875,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_aniso_l2": {
+          "view": "B",
+          "auc": 0.49844752375,
+          "direction_insensitive": 0.50155247625,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_aniso_l3": {
+          "view": "B",
+          "auc": 0.50128674125,
+          "direction_insensitive": 0.50128674125,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_aniso_l4": {
+          "view": "B",
+          "auc": 0.49889996062499997,
+          "direction_insensitive": 0.501100039375,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_aniso_l6": {
+          "view": "B",
+          "auc": 0.49663670374999996,
+          "direction_insensitive": 0.5033632962500001,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_logvar_l1": {
+          "view": "B",
+          "auc": 0.497093508125,
+          "direction_insensitive": 0.5029064918749999,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_logvar_l2": {
+          "view": "B",
+          "auc": 0.49722150375000007,
+          "direction_insensitive": 0.5027784962499999,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_logvar_l3": {
+          "view": "B",
+          "auc": 0.4974584074999999,
+          "direction_insensitive": 0.5025415925000001,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_logvar_l4": {
+          "view": "B",
+          "auc": 0.49769587375,
+          "direction_insensitive": 0.50230412625,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_logvar_l6": {
+          "view": "B",
+          "auc": 0.49694820375,
+          "direction_insensitive": 0.5030517962500001,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_aniso_l1": {
+          "view": "B",
+          "auc": 0.500040754375,
+          "direction_insensitive": 0.500040754375,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_aniso_l2": {
+          "view": "B",
+          "auc": 0.5011117500000001,
+          "direction_insensitive": 0.5011117500000001,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_aniso_l3": {
+          "view": "B",
+          "auc": 0.49255573124999996,
+          "direction_insensitive": 0.50744426875,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_aniso_l4": {
+          "view": "B",
+          "auc": 0.4845484493750001,
+          "direction_insensitive": 0.5154515506249999,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_aniso_l6": {
+          "view": "B",
+          "auc": 0.48757998812500003,
+          "direction_insensitive": 0.512420011875,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_logvar_l1": {
+          "view": "B",
+          "auc": 0.50554075375,
+          "direction_insensitive": 0.50554075375,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_logvar_l2": {
+          "view": "B",
+          "auc": 0.5048755056249999,
+          "direction_insensitive": 0.5048755056249999,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_logvar_l3": {
+          "view": "B",
+          "auc": 0.50482021625,
+          "direction_insensitive": 0.50482021625,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_logvar_l4": {
+          "view": "B",
+          "auc": 0.50552541,
+          "direction_insensitive": 0.50552541,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_logvar_l6": {
+          "view": "B",
+          "auc": 0.5056403862500001,
+          "direction_insensitive": 0.5056403862500001,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_aniso_l1": {
+          "view": "B",
+          "auc": 0.497514609375,
+          "direction_insensitive": 0.502485390625,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_aniso_l2": {
+          "view": "B",
+          "auc": 0.50008359375,
+          "direction_insensitive": 0.50008359375,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_aniso_l3": {
+          "view": "B",
+          "auc": 0.499160929375,
+          "direction_insensitive": 0.500839070625,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_aniso_l4": {
+          "view": "B",
+          "auc": 0.5005065399999999,
+          "direction_insensitive": 0.5005065399999999,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_aniso_l6": {
+          "view": "B",
+          "auc": 0.49859140437500005,
+          "direction_insensitive": 0.501408595625,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_logvar_l1": {
+          "view": "B",
+          "auc": 0.501792498125,
+          "direction_insensitive": 0.501792498125,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_logvar_l2": {
+          "view": "B",
+          "auc": 0.500552026875,
+          "direction_insensitive": 0.500552026875,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_logvar_l3": {
+          "view": "B",
+          "auc": 0.4987698668749999,
+          "direction_insensitive": 0.5012301331250001,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_logvar_l4": {
+          "view": "B",
+          "auc": 0.49715318750000004,
+          "direction_insensitive": 0.5028468125,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_logvar_l6": {
+          "view": "B",
+          "auc": 0.49452295812499997,
+          "direction_insensitive": 0.5054770418750001,
+          "source": "H97 directional bank"
+        }
+      },
+      "top5": [
+        [
+          "store::B_slope_grad_3",
+          0.613164986875
+        ],
+        [
+          "store::B_slope_grad_1",
+          0.5846001000000001
+        ],
+        [
+          "store::raw_band_07",
+          0.580323509375
+        ],
+        [
+          "store::B_curvature_plus_3",
+          0.5793441343750001
+        ],
+        [
+          "store::B_elevation_grad_3",
+          0.579019380625
+        ]
+      ],
+      "max_direction_insensitive_auc": 0.613164986875,
+      "fitted_top5_heldout_auc": {
+        "store::B_slope_grad_3": 0.608915985,
+        "store::B_slope_grad_1": 0.5786322625,
+        "store::raw_band_07": 0.4341068687500001,
+        "store::B_curvature_plus_3": 0.586568296875,
+        "store::B_elevation_grad_3": 0.580816516875
+      },
+      "alarms": []
+    },
+    {
+      "fold": 1,
+      "n_pos": 10677,
+      "n_neg": 40000,
+      "per_feature": {
+        "store::A_RTP_grad_1": {
+          "view": "A",
+          "auc": 0.47383246581436733,
+          "direction_insensitive": 0.5261675341856327,
+          "source": "shared structural store"
+        },
+        "store::A_RTP_grad_3": {
+          "view": "A",
+          "auc": 0.4804999719022197,
+          "direction_insensitive": 0.5195000280977803,
+          "source": "shared structural store"
+        },
+        "store::A_cover_coherence": {
+          "view": "A",
+          "auc": 0.5515325910836377,
+          "direction_insensitive": 0.5515325910836377,
+          "source": "shared structural store"
+        },
+        "store::A_cover_grad_1": {
+          "view": "A",
+          "auc": 0.5558613023321157,
+          "direction_insensitive": 0.5558613023321157,
+          "source": "shared structural store"
+        },
+        "store::A_cover_grad_3": {
+          "view": "A",
+          "auc": 0.5567569378102464,
+          "direction_insensitive": 0.5567569378102464,
+          "source": "shared structural store"
+        },
+        "store::A_cover_grad_8": {
+          "view": "A",
+          "auc": 0.5573717734382317,
+          "direction_insensitive": 0.5573717734382317,
+          "source": "shared structural store"
+        },
+        "store::A_cover_persistence_1_3": {
+          "view": "A",
+          "auc": 0.5219454025007024,
+          "direction_insensitive": 0.5219454025007024,
+          "source": "shared structural store"
+        },
+        "store::A_cover_persistence_3_8": {
+          "view": "A",
+          "auc": 0.5237660848084669,
+          "direction_insensitive": 0.5237660848084669,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_coherence": {
+          "view": "A",
+          "auc": 0.4962716704130374,
+          "direction_insensitive": 0.5037283295869626,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_cover_signed_1": {
+          "view": "A",
+          "auc": 0.5254268766975742,
+          "direction_insensitive": 0.5254268766975742,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_cover_signed_3": {
+          "view": "A",
+          "auc": 0.5250404713402641,
+          "direction_insensitive": 0.5250404713402641,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_cover_signed_8": {
+          "view": "A",
+          "auc": 0.527268806780931,
+          "direction_insensitive": 0.527268806780931,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_grad_1": {
+          "view": "A",
+          "auc": 0.5738555446286411,
+          "direction_insensitive": 0.5738555446286411,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_grad_3": {
+          "view": "A",
+          "auc": 0.5737344057319471,
+          "direction_insensitive": 0.5737344057319471,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_grad_8": {
+          "view": "A",
+          "auc": 0.5687987765758171,
+          "direction_insensitive": 0.5687987765758171,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_persistence_1_3": {
+          "view": "A",
+          "auc": 0.4858554896038213,
+          "direction_insensitive": 0.5141445103961787,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_persistence_3_8": {
+          "view": "A",
+          "auc": 0.4840306862882833,
+          "direction_insensitive": 0.5159693137117167,
+          "source": "shared structural store"
+        },
+        "store::X_mag_TMI_up150_grad1": {
+          "view": "A",
+          "auc": 0.4727785918329119,
+          "direction_insensitive": 0.5272214081670881,
+          "source": "shared structural store"
+        },
+        "store::X_mag_TMI_up150_grad3": {
+          "view": "A",
+          "auc": 0.47466713964596796,
+          "direction_insensitive": 0.525332860354032,
+          "source": "shared structural store"
+        },
+        "store::X_mag_TMI_up150_rank": {
+          "view": "A",
+          "auc": 0.5037307085323592,
+          "direction_insensitive": 0.5037307085323592,
+          "source": "shared structural store"
+        },
+        "store::raw_band_01": {
+          "view": "A",
+          "auc": 0.5146621967781212,
+          "direction_insensitive": 0.5146621967781212,
+          "source": "shared structural store"
+        },
+        "store::raw_band_02": {
+          "view": "A",
+          "auc": 0.4965319846398801,
+          "direction_insensitive": 0.5034680153601199,
+          "source": "shared structural store"
+        },
+        "store::raw_band_03": {
+          "view": "A",
+          "auc": 0.46603073780088033,
+          "direction_insensitive": 0.5339692621991197,
+          "source": "shared structural store"
+        },
+        "store::raw_band_04": {
+          "view": "A",
+          "auc": 0.5202093027067528,
+          "direction_insensitive": 0.5202093027067528,
+          "source": "shared structural store"
+        },
+        "store::raw_band_05": {
+          "view": "A",
+          "auc": 0.5694792907651963,
+          "direction_insensitive": 0.5694792907651963,
+          "source": "shared structural store"
+        },
+        "store::raw_band_07": {
+          "view": "A",
+          "auc": 0.4913793715463145,
+          "direction_insensitive": 0.5086206284536855,
+          "source": "shared structural store"
+        },
+        "store::raw_band_08": {
+          "view": "A",
+          "auc": 0.5259116453591833,
+          "direction_insensitive": 0.5259116453591833,
+          "source": "shared structural store"
+        },
+        "store::raw_band_09": {
+          "view": "A",
+          "auc": 0.4846574342043645,
+          "direction_insensitive": 0.5153425657956354,
+          "source": "shared structural store"
+        },
+        "store::raw_band_10": {
+          "view": "A",
+          "auc": 0.5459339105085699,
+          "direction_insensitive": 0.5459339105085699,
+          "source": "shared structural store"
+        },
+        "store::raw_band_11": {
+          "view": "A",
+          "auc": 0.5560025768005995,
+          "direction_insensitive": 0.5560025768005995,
+          "source": "shared structural store"
+        },
+        "store::raw_band_13": {
+          "view": "A",
+          "auc": 0.47511044769129906,
+          "direction_insensitive": 0.5248895523087009,
+          "source": "shared structural store"
+        },
+        "store::raw_band_14": {
+          "view": "A",
+          "auc": 0.5037460639692798,
+          "direction_insensitive": 0.5037460639692798,
+          "source": "shared structural store"
+        },
+        "store::raw_band_15": {
+          "view": "A",
+          "auc": 0.5223733972557835,
+          "direction_insensitive": 0.5223733972557835,
+          "source": "shared structural store"
+        },
+        "store::raw_band_16": {
+          "view": "A",
+          "auc": 0.5297580909899784,
+          "direction_insensitive": 0.5297580909899784,
+          "source": "shared structural store"
+        },
+        "store::raw_band_17": {
+          "view": "A",
+          "auc": 0.4762649983609628,
+          "direction_insensitive": 0.5237350016390372,
+          "source": "shared structural store"
+        },
+        "store::raw_band_18": {
+          "view": "A",
+          "auc": 0.5991068523461647,
+          "direction_insensitive": 0.5991068523461647,
+          "source": "shared structural store"
+        },
+        "bank::DVA2_depth_to_base_surf_aniso_l1": {
+          "view": "A",
+          "auc": 0.5354804790671537,
+          "direction_insensitive": 0.5354804790671537,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_aniso_l2": {
+          "view": "A",
+          "auc": 0.5266723646623583,
+          "direction_insensitive": 0.5266723646623583,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_aniso_l3": {
+          "view": "A",
+          "auc": 0.519218519949424,
+          "direction_insensitive": 0.519218519949424,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_aniso_l4": {
+          "view": "A",
+          "auc": 0.5110899304579939,
+          "direction_insensitive": 0.5110899304579939,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_aniso_l6": {
+          "view": "A",
+          "auc": 0.4955736079891355,
+          "direction_insensitive": 0.5044263920108645,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_logvar_l1": {
+          "view": "A",
+          "auc": 0.556182437716587,
+          "direction_insensitive": 0.556182437716587,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_logvar_l2": {
+          "view": "A",
+          "auc": 0.5548477568605413,
+          "direction_insensitive": 0.5548477568605413,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_logvar_l3": {
+          "view": "A",
+          "auc": 0.5534385372763884,
+          "direction_insensitive": 0.5534385372763884,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_logvar_l4": {
+          "view": "A",
+          "auc": 0.551964710358715,
+          "direction_insensitive": 0.551964710358715,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_logvar_l6": {
+          "view": "A",
+          "auc": 0.5489699260091786,
+          "direction_insensitive": 0.5489699260091786,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_aniso_l1": {
+          "view": "A",
+          "auc": 0.4863971176360401,
+          "direction_insensitive": 0.5136028823639599,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_aniso_l2": {
+          "view": "A",
+          "auc": 0.48319960546033525,
+          "direction_insensitive": 0.5168003945396648,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_aniso_l3": {
+          "view": "A",
+          "auc": 0.48015007843963664,
+          "direction_insensitive": 0.5198499215603634,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_aniso_l4": {
+          "view": "A",
+          "auc": 0.4768453135243983,
+          "direction_insensitive": 0.5231546864756017,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_aniso_l6": {
+          "view": "A",
+          "auc": 0.47180154771939686,
+          "direction_insensitive": 0.5281984522806031,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_aniso_l1": {
+          "view": "A",
+          "auc": 0.503855205113796,
+          "direction_insensitive": 0.503855205113796,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_aniso_l2": {
+          "view": "A",
+          "auc": 0.502645564062939,
+          "direction_insensitive": 0.502645564062939,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_aniso_l3": {
+          "view": "A",
+          "auc": 0.5006003863444788,
+          "direction_insensitive": 0.5006003863444788,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_aniso_l4": {
+          "view": "A",
+          "auc": 0.4975842289500796,
+          "direction_insensitive": 0.5024157710499204,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_aniso_l6": {
+          "view": "A",
+          "auc": 0.4942128641004027,
+          "direction_insensitive": 0.5057871358995973,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_logvar_l1": {
+          "view": "A",
+          "auc": 0.5941630233211577,
+          "direction_insensitive": 0.5941630233211577,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_logvar_l2": {
+          "view": "A",
+          "auc": 0.5946652524117262,
+          "direction_insensitive": 0.5946652524117262,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_logvar_l3": {
+          "view": "A",
+          "auc": 0.5951008921045238,
+          "direction_insensitive": 0.5951008921045238,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_logvar_l4": {
+          "view": "A",
+          "auc": 0.5954902289969092,
+          "direction_insensitive": 0.5954902289969092,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_logvar_l6": {
+          "view": "A",
+          "auc": 0.5961148110424277,
+          "direction_insensitive": 0.5961148110424277,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_logvar_l1": {
+          "view": "A",
+          "auc": 0.5744982216446568,
+          "direction_insensitive": 0.5744982216446568,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_logvar_l2": {
+          "view": "A",
+          "auc": 0.5712753032218789,
+          "direction_insensitive": 0.5712753032218789,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_logvar_l3": {
+          "view": "A",
+          "auc": 0.5677682670694015,
+          "direction_insensitive": 0.5677682670694015,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_logvar_l4": {
+          "view": "A",
+          "auc": 0.5640509038119321,
+          "direction_insensitive": 0.5640509038119321,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_logvar_l6": {
+          "view": "A",
+          "auc": 0.556461805750679,
+          "direction_insensitive": 0.556461805750679,
+          "source": "H97 directional bank"
+        },
+        "store::B_curvature_minus_1": {
+          "view": "B",
+          "auc": 0.5148871745340451,
+          "direction_insensitive": 0.5148871745340451,
+          "source": "shared structural store"
+        },
+        "store::B_curvature_minus_3": {
+          "view": "B",
+          "auc": 0.5309331307951672,
+          "direction_insensitive": 0.5309331307951672,
+          "source": "shared structural store"
+        },
+        "store::B_curvature_plus_1": {
+          "view": "B",
+          "auc": 0.5880342839748993,
+          "direction_insensitive": 0.5880342839748993,
+          "source": "shared structural store"
+        },
+        "store::B_curvature_plus_3": {
+          "view": "B",
+          "auc": 0.6136543200337172,
+          "direction_insensitive": 0.6136543200337172,
+          "source": "shared structural store"
+        },
+        "store::B_curvature_trace_1": {
+          "view": "B",
+          "auc": 0.5860693476632013,
+          "direction_insensitive": 0.5860693476632013,
+          "source": "shared structural store"
+        },
+        "store::B_curvature_trace_3": {
+          "view": "B",
+          "auc": 0.6236957923574037,
+          "direction_insensitive": 0.6236957923574037,
+          "source": "shared structural store"
+        },
+        "store::B_elevation_grad_1": {
+          "view": "B",
+          "auc": 0.5766029116324811,
+          "direction_insensitive": 0.5766029116324811,
+          "source": "shared structural store"
+        },
+        "store::B_elevation_grad_3": {
+          "view": "B",
+          "auc": 0.5999044406200243,
+          "direction_insensitive": 0.5999044406200243,
+          "source": "shared structural store"
+        },
+        "store::B_elevation_grad_8": {
+          "view": "B",
+          "auc": 0.608255974290531,
+          "direction_insensitive": 0.608255974290531,
+          "source": "shared structural store"
+        },
+        "store::B_elevation_local_residual": {
+          "view": "B",
+          "auc": 0.42324264774749465,
+          "direction_insensitive": 0.5767573522525054,
+          "source": "shared structural store"
+        },
+        "store::B_elevation_local_sd": {
+          "view": "B",
+          "auc": 0.569614009084949,
+          "direction_insensitive": 0.569614009084949,
+          "source": "shared structural store"
+        },
+        "store::B_slope_grad_1": {
+          "view": "B",
+          "auc": 0.622585622131685,
+          "direction_insensitive": 0.622585622131685,
+          "source": "shared structural store"
+        },
+        "store::B_slope_grad_3": {
+          "view": "B",
+          "auc": 0.6690685773157253,
+          "direction_insensitive": 0.6690685773157253,
+          "source": "shared structural store"
+        },
+        "store::B_slope_local_residual": {
+          "view": "B",
+          "auc": 0.5556642678186756,
+          "direction_insensitive": 0.5556642678186756,
+          "source": "shared structural store"
+        },
+        "store::B_slope_local_sd": {
+          "view": "B",
+          "auc": 0.6029735260372764,
+          "direction_insensitive": 0.6029735260372764,
+          "source": "shared structural store"
+        },
+        "store::B_surface_coherence": {
+          "view": "B",
+          "auc": 0.6314448241547251,
+          "direction_insensitive": 0.6314448241547251,
+          "source": "shared structural store"
+        },
+        "store::X_rad_K_grad1": {
+          "view": "B",
+          "auc": 0.4749639809871687,
+          "direction_insensitive": 0.5250360190128314,
+          "source": "shared structural store"
+        },
+        "store::X_rad_K_grad3": {
+          "view": "B",
+          "auc": 0.48793659618806784,
+          "direction_insensitive": 0.5120634038119322,
+          "source": "shared structural store"
+        },
+        "store::X_rad_K_rank": {
+          "view": "B",
+          "auc": 0.39534196403484123,
+          "direction_insensitive": 0.6046580359651588,
+          "source": "shared structural store"
+        },
+        "store::X_rad_ThK_grad1": {
+          "view": "B",
+          "auc": 0.5200738210639693,
+          "direction_insensitive": 0.5200738210639693,
+          "source": "shared structural store"
+        },
+        "store::X_rad_ThK_grad3": {
+          "view": "B",
+          "auc": 0.5195325079610378,
+          "direction_insensitive": 0.5195325079610378,
+          "source": "shared structural store"
+        },
+        "store::X_rad_ThK_rank": {
+          "view": "B",
+          "auc": 0.4892434579001592,
+          "direction_insensitive": 0.5107565420998408,
+          "source": "shared structural store"
+        },
+        "store::X_rad_Th_grad1": {
+          "view": "B",
+          "auc": 0.5129198815210265,
+          "direction_insensitive": 0.5129198815210265,
+          "source": "shared structural store"
+        },
+        "store::X_rad_Th_grad3": {
+          "view": "B",
+          "auc": 0.5155912627610753,
+          "direction_insensitive": 0.5155912627610753,
+          "source": "shared structural store"
+        },
+        "store::X_rad_Th_rank": {
+          "view": "B",
+          "auc": 0.4235774585557741,
+          "direction_insensitive": 0.5764225414442259,
+          "source": "shared structural store"
+        },
+        "store::X_rad_UK_grad1": {
+          "view": "B",
+          "auc": 0.5222365587243608,
+          "direction_insensitive": 0.5222365587243608,
+          "source": "shared structural store"
+        },
+        "store::X_rad_UK_grad3": {
+          "view": "B",
+          "auc": 0.5292700009365927,
+          "direction_insensitive": 0.5292700009365927,
+          "source": "shared structural store"
+        },
+        "store::X_rad_UK_rank": {
+          "view": "B",
+          "auc": 0.5803815502950267,
+          "direction_insensitive": 0.5803815502950267,
+          "source": "shared structural store"
+        },
+        "store::X_rad_UTh_grad1": {
+          "view": "B",
+          "auc": 0.5409430153601199,
+          "direction_insensitive": 0.5409430153601199,
+          "source": "shared structural store"
+        },
+        "store::X_rad_UTh_grad3": {
+          "view": "B",
+          "auc": 0.566690766366957,
+          "direction_insensitive": 0.566690766366957,
+          "source": "shared structural store"
+        },
+        "store::X_rad_UTh_rank": {
+          "view": "B",
+          "auc": 0.5674181418001312,
+          "direction_insensitive": 0.5674181418001312,
+          "source": "shared structural store"
+        },
+        "store::X_rad_U_grad1": {
+          "view": "B",
+          "auc": 0.5121735787206144,
+          "direction_insensitive": 0.5121735787206144,
+          "source": "shared structural store"
+        },
+        "store::X_rad_U_grad3": {
+          "view": "B",
+          "auc": 0.5276827491336518,
+          "direction_insensitive": 0.5276827491336518,
+          "source": "shared structural store"
+        },
+        "store::X_rad_U_rank": {
+          "view": "B",
+          "auc": 0.474902157675377,
+          "direction_insensitive": 0.525097842324623,
+          "source": "shared structural store"
+        },
+        "store::raw_band_06": {
+          "view": "B",
+          "auc": 0.424821462021167,
+          "direction_insensitive": 0.575178537978833,
+          "source": "shared structural store"
+        },
+        "store::raw_band_12": {
+          "view": "B",
+          "auc": 0.4587380841996816,
+          "direction_insensitive": 0.5412619158003185,
+          "source": "shared structural store"
+        },
+        "store::raw_band_19": {
+          "view": "B",
+          "auc": 0.5482768087946053,
+          "direction_insensitive": 0.5482768087946053,
+          "source": "shared structural store"
+        },
+        "bank::DVA2_det_elev_aniso_l1": {
+          "view": "B",
+          "auc": 0.5322487437950735,
+          "direction_insensitive": 0.5322487437950735,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_aniso_l2": {
+          "view": "B",
+          "auc": 0.5775606736442821,
+          "direction_insensitive": 0.5775606736442821,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_aniso_l3": {
+          "view": "B",
+          "auc": 0.5879872845836845,
+          "direction_insensitive": 0.5879872845836845,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_aniso_l4": {
+          "view": "B",
+          "auc": 0.586770835674815,
+          "direction_insensitive": 0.586770835674815,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_aniso_l6": {
+          "view": "B",
+          "auc": 0.5758666034466611,
+          "direction_insensitive": 0.5758666034466611,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_logvar_l1": {
+          "view": "B",
+          "auc": 0.5391334960663108,
+          "direction_insensitive": 0.5391334960663108,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_logvar_l2": {
+          "view": "B",
+          "auc": 0.5476894305516531,
+          "direction_insensitive": 0.5476894305516531,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_logvar_l3": {
+          "view": "B",
+          "auc": 0.554184958321626,
+          "direction_insensitive": 0.554184958321626,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_logvar_l4": {
+          "view": "B",
+          "auc": 0.5580713039711529,
+          "direction_insensitive": 0.5580713039711529,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_logvar_l6": {
+          "view": "B",
+          "auc": 0.5610143778683152,
+          "direction_insensitive": 0.5610143778683152,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_aniso_l1": {
+          "view": "B",
+          "auc": 0.5223019270394306,
+          "direction_insensitive": 0.5223019270394306,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_aniso_l2": {
+          "view": "B",
+          "auc": 0.5706134763978645,
+          "direction_insensitive": 0.5706134763978645,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_aniso_l3": {
+          "view": "B",
+          "auc": 0.5910147653835347,
+          "direction_insensitive": 0.5910147653835347,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_aniso_l4": {
+          "view": "B",
+          "auc": 0.5805645335768473,
+          "direction_insensitive": 0.5805645335768473,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_aniso_l6": {
+          "view": "B",
+          "auc": 0.5603585288470543,
+          "direction_insensitive": 0.5603585288470543,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_logvar_l1": {
+          "view": "B",
+          "auc": 0.5377831062096095,
+          "direction_insensitive": 0.5377831062096095,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_logvar_l2": {
+          "view": "B",
+          "auc": 0.558719893228435,
+          "direction_insensitive": 0.558719893228435,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_logvar_l3": {
+          "view": "B",
+          "auc": 0.5715709351877868,
+          "direction_insensitive": 0.5715709351877868,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_logvar_l4": {
+          "view": "B",
+          "auc": 0.5783934473634915,
+          "direction_insensitive": 0.5783934473634915,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_logvar_l6": {
+          "view": "B",
+          "auc": 0.5832052940901002,
+          "direction_insensitive": 0.5832052940901002,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_aniso_l1": {
+          "view": "B",
+          "auc": 0.49941282429521394,
+          "direction_insensitive": 0.5005871757047861,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_aniso_l2": {
+          "view": "B",
+          "auc": 0.4975462992881896,
+          "direction_insensitive": 0.5024537007118104,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_aniso_l3": {
+          "view": "B",
+          "auc": 0.5079229593987076,
+          "direction_insensitive": 0.5079229593987076,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_aniso_l4": {
+          "view": "B",
+          "auc": 0.5134247670225719,
+          "direction_insensitive": 0.5134247670225719,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_aniso_l6": {
+          "view": "B",
+          "auc": 0.5252884213730449,
+          "direction_insensitive": 0.5252884213730449,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_logvar_l1": {
+          "view": "B",
+          "auc": 0.46360621897536763,
+          "direction_insensitive": 0.5363937810246324,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_logvar_l2": {
+          "view": "B",
+          "auc": 0.45658526739720895,
+          "direction_insensitive": 0.543414732602791,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_logvar_l3": {
+          "view": "B",
+          "auc": 0.4579171548655989,
+          "direction_insensitive": 0.5420828451344011,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_logvar_l4": {
+          "view": "B",
+          "auc": 0.4643323218132434,
+          "direction_insensitive": 0.5356676781867566,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_logvar_l6": {
+          "view": "B",
+          "auc": 0.47596180926290155,
+          "direction_insensitive": 0.5240381907370985,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_aniso_l1": {
+          "view": "B",
+          "auc": 0.4951801301863819,
+          "direction_insensitive": 0.5048198698136181,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_aniso_l2": {
+          "view": "B",
+          "auc": 0.5069519715275826,
+          "direction_insensitive": 0.5069519715275826,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_aniso_l3": {
+          "view": "B",
+          "auc": 0.5120345848552964,
+          "direction_insensitive": 0.5120345848552964,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_aniso_l4": {
+          "view": "B",
+          "auc": 0.510474600777372,
+          "direction_insensitive": 0.510474600777372,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_aniso_l6": {
+          "view": "B",
+          "auc": 0.5217273496768755,
+          "direction_insensitive": 0.5217273496768755,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_logvar_l1": {
+          "view": "B",
+          "auc": 0.477515796806219,
+          "direction_insensitive": 0.5224842031937811,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_logvar_l2": {
+          "view": "B",
+          "auc": 0.4785821942024914,
+          "direction_insensitive": 0.5214178057975086,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_logvar_l3": {
+          "view": "B",
+          "auc": 0.4820279935843402,
+          "direction_insensitive": 0.5179720064156599,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_logvar_l4": {
+          "view": "B",
+          "auc": 0.48500186030720244,
+          "direction_insensitive": 0.5149981396927976,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_logvar_l6": {
+          "view": "B",
+          "auc": 0.48779933150697763,
+          "direction_insensitive": 0.5122006684930224,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_aniso_l1": {
+          "view": "B",
+          "auc": 0.49370615926758454,
+          "direction_insensitive": 0.5062938407324155,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_aniso_l2": {
+          "view": "B",
+          "auc": 0.4911038131029315,
+          "direction_insensitive": 0.5088961868970685,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_aniso_l3": {
+          "view": "B",
+          "auc": 0.494026969186101,
+          "direction_insensitive": 0.505973030813899,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_aniso_l4": {
+          "view": "B",
+          "auc": 0.5029825606443757,
+          "direction_insensitive": 0.5029825606443757,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_aniso_l6": {
+          "view": "B",
+          "auc": 0.5149502481970591,
+          "direction_insensitive": 0.5149502481970591,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_logvar_l1": {
+          "view": "B",
+          "auc": 0.516630801020886,
+          "direction_insensitive": 0.516630801020886,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_logvar_l2": {
+          "view": "B",
+          "auc": 0.5141559262901565,
+          "direction_insensitive": 0.5141559262901565,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_logvar_l3": {
+          "view": "B",
+          "auc": 0.5136132644937716,
+          "direction_insensitive": 0.5136132644937716,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_logvar_l4": {
+          "view": "B",
+          "auc": 0.5145484745246792,
+          "direction_insensitive": 0.5145484745246792,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_logvar_l6": {
+          "view": "B",
+          "auc": 0.5142447972276857,
+          "direction_insensitive": 0.5142447972276857,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_aniso_l1": {
+          "view": "B",
+          "auc": 0.5152116008710312,
+          "direction_insensitive": 0.5152116008710312,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_aniso_l2": {
+          "view": "B",
+          "auc": 0.508532001030252,
+          "direction_insensitive": 0.508532001030252,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_aniso_l3": {
+          "view": "B",
+          "auc": 0.5138191954668914,
+          "direction_insensitive": 0.5138191954668914,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_aniso_l4": {
+          "view": "B",
+          "auc": 0.514091467640723,
+          "direction_insensitive": 0.514091467640723,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_aniso_l6": {
+          "view": "B",
+          "auc": 0.51040832865037,
+          "direction_insensitive": 0.51040832865037,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_logvar_l1": {
+          "view": "B",
+          "auc": 0.522639423527208,
+          "direction_insensitive": 0.522639423527208,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_logvar_l2": {
+          "view": "B",
+          "auc": 0.5231627505385408,
+          "direction_insensitive": 0.5231627505385408,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_logvar_l3": {
+          "view": "B",
+          "auc": 0.5218409665636415,
+          "direction_insensitive": 0.5218409665636415,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_logvar_l4": {
+          "view": "B",
+          "auc": 0.5223788599325653,
+          "direction_insensitive": 0.5223788599325653,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_logvar_l6": {
+          "view": "B",
+          "auc": 0.5202418610096469,
+          "direction_insensitive": 0.5202418610096469,
+          "source": "H97 directional bank"
+        }
+      },
+      "top5": [
+        [
+          "store::B_slope_grad_3",
+          0.6690685773157253
+        ],
+        [
+          "store::B_surface_coherence",
+          0.6314448241547251
+        ],
+        [
+          "store::B_curvature_trace_3",
+          0.6236957923574037
+        ],
+        [
+          "store::B_slope_grad_1",
+          0.622585622131685
+        ],
+        [
+          "store::B_curvature_plus_3",
+          0.6136543200337172
+        ]
+      ],
+      "max_direction_insensitive_auc": 0.6690685773157253,
+      "fitted_top5_heldout_auc": {
+        "store::B_slope_grad_3": 0.6655809836564579,
+        "store::B_surface_coherence": 0.6425269118197995,
+        "store::B_curvature_trace_3": 0.6305756403952422,
+        "store::B_slope_grad_1": 0.6159459082607474,
+        "store::B_curvature_plus_3": 0.6106755923948675
+      },
+      "alarms": []
+    },
+    {
+      "fold": 2,
+      "n_pos": 6813,
+      "n_neg": 40000,
+      "per_feature": {
+        "store::A_RTP_grad_1": {
+          "view": "A",
+          "auc": 0.5942939527374138,
+          "direction_insensitive": 0.5942939527374138,
+          "source": "shared structural store"
+        },
+        "store::A_RTP_grad_3": {
+          "view": "A",
+          "auc": 0.5947503412593571,
+          "direction_insensitive": 0.5947503412593571,
+          "source": "shared structural store"
+        },
+        "store::A_cover_coherence": {
+          "view": "A",
+          "auc": 0.5206200939380596,
+          "direction_insensitive": 0.5206200939380596,
+          "source": "shared structural store"
+        },
+        "store::A_cover_grad_1": {
+          "view": "A",
+          "auc": 0.4629726515485102,
+          "direction_insensitive": 0.5370273484514898,
+          "source": "shared structural store"
+        },
+        "store::A_cover_grad_3": {
+          "view": "A",
+          "auc": 0.46368899346836934,
+          "direction_insensitive": 0.5363110065316307,
+          "source": "shared structural store"
+        },
+        "store::A_cover_grad_8": {
+          "view": "A",
+          "auc": 0.46388519741670337,
+          "direction_insensitive": 0.5361148025832967,
+          "source": "shared structural store"
+        },
+        "store::A_cover_persistence_1_3": {
+          "view": "A",
+          "auc": 0.49860425106414213,
+          "direction_insensitive": 0.5013957489358578,
+          "source": "shared structural store"
+        },
+        "store::A_cover_persistence_3_8": {
+          "view": "A",
+          "auc": 0.5018149933949803,
+          "direction_insensitive": 0.5018149933949803,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_coherence": {
+          "view": "A",
+          "auc": 0.47855575003669454,
+          "direction_insensitive": 0.5214442499633054,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_cover_signed_1": {
+          "view": "A",
+          "auc": 0.49079398943196834,
+          "direction_insensitive": 0.5092060105680316,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_cover_signed_3": {
+          "view": "A",
+          "auc": 0.48944405731689417,
+          "direction_insensitive": 0.5105559426831059,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_cover_signed_8": {
+          "view": "A",
+          "auc": 0.48402597240569506,
+          "direction_insensitive": 0.515974027594305,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_grad_1": {
+          "view": "A",
+          "auc": 0.4664678519007779,
+          "direction_insensitive": 0.5335321480992221,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_grad_3": {
+          "view": "A",
+          "auc": 0.4655631549977983,
+          "direction_insensitive": 0.5344368450022017,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_grad_8": {
+          "view": "A",
+          "auc": 0.46175489688830174,
+          "direction_insensitive": 0.5382451031116983,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_persistence_1_3": {
+          "view": "A",
+          "auc": 0.4828222313958609,
+          "direction_insensitive": 0.5171777686041391,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_persistence_3_8": {
+          "view": "A",
+          "auc": 0.48237713562307355,
+          "direction_insensitive": 0.5176228643769265,
+          "source": "shared structural store"
+        },
+        "store::X_mag_TMI_up150_grad1": {
+          "view": "A",
+          "auc": 0.5749966718039042,
+          "direction_insensitive": 0.5749966718039042,
+          "source": "shared structural store"
+        },
+        "store::X_mag_TMI_up150_grad3": {
+          "view": "A",
+          "auc": 0.5744480478496992,
+          "direction_insensitive": 0.5744480478496992,
+          "source": "shared structural store"
+        },
+        "store::X_mag_TMI_up150_rank": {
+          "view": "A",
+          "auc": 0.5022572655217965,
+          "direction_insensitive": 0.5022572655217965,
+          "source": "shared structural store"
+        },
+        "store::raw_band_01": {
+          "view": "A",
+          "auc": 0.48634771209452515,
+          "direction_insensitive": 0.5136522879054748,
+          "source": "shared structural store"
+        },
+        "store::raw_band_02": {
+          "view": "A",
+          "auc": 0.5766597479084105,
+          "direction_insensitive": 0.5766597479084105,
+          "source": "shared structural store"
+        },
+        "store::raw_band_03": {
+          "view": "A",
+          "auc": 0.5793536419345369,
+          "direction_insensitive": 0.5793536419345369,
+          "source": "shared structural store"
+        },
+        "store::raw_band_04": {
+          "view": "A",
+          "auc": 0.5219077113606341,
+          "direction_insensitive": 0.5219077113606341,
+          "source": "shared structural store"
+        },
+        "store::raw_band_05": {
+          "view": "A",
+          "auc": 0.4616385311169823,
+          "direction_insensitive": 0.5383614688830177,
+          "source": "shared structural store"
+        },
+        "store::raw_band_07": {
+          "view": "A",
+          "auc": 0.5589268053720828,
+          "direction_insensitive": 0.5589268053720828,
+          "source": "shared structural store"
+        },
+        "store::raw_band_08": {
+          "view": "A",
+          "auc": 0.4413811389989726,
+          "direction_insensitive": 0.5586188610010274,
+          "source": "shared structural store"
+        },
+        "store::raw_band_09": {
+          "view": "A",
+          "auc": 0.4779585791868487,
+          "direction_insensitive": 0.5220414208131513,
+          "source": "shared structural store"
+        },
+        "store::raw_band_10": {
+          "view": "A",
+          "auc": 0.501391013503596,
+          "direction_insensitive": 0.501391013503596,
+          "source": "shared structural store"
+        },
+        "store::raw_band_11": {
+          "view": "A",
+          "auc": 0.5394630265668574,
+          "direction_insensitive": 0.5394630265668574,
+          "source": "shared structural store"
+        },
+        "store::raw_band_13": {
+          "view": "A",
+          "auc": 0.5181997229561133,
+          "direction_insensitive": 0.5181997229561133,
+          "source": "shared structural store"
+        },
+        "store::raw_band_14": {
+          "view": "A",
+          "auc": 0.5026476900777924,
+          "direction_insensitive": 0.5026476900777924,
+          "source": "shared structural store"
+        },
+        "store::raw_band_15": {
+          "view": "A",
+          "auc": 0.4731992440921767,
+          "direction_insensitive": 0.5268007559078234,
+          "source": "shared structural store"
+        },
+        "store::raw_band_16": {
+          "view": "A",
+          "auc": 0.530472565316307,
+          "direction_insensitive": 0.530472565316307,
+          "source": "shared structural store"
+        },
+        "store::raw_band_17": {
+          "view": "A",
+          "auc": 0.4878960186408337,
+          "direction_insensitive": 0.5121039813591663,
+          "source": "shared structural store"
+        },
+        "store::raw_band_18": {
+          "view": "A",
+          "auc": 0.4882284456186702,
+          "direction_insensitive": 0.5117715543813298,
+          "source": "shared structural store"
+        },
+        "bank::DVA2_depth_to_base_surf_aniso_l1": {
+          "view": "A",
+          "auc": 0.5195879788639366,
+          "direction_insensitive": 0.5195879788639366,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_aniso_l2": {
+          "view": "A",
+          "auc": 0.5173091681344488,
+          "direction_insensitive": 0.5173091681344488,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_aniso_l3": {
+          "view": "A",
+          "auc": 0.5157214424629385,
+          "direction_insensitive": 0.5157214424629385,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_aniso_l4": {
+          "view": "A",
+          "auc": 0.5147714112725672,
+          "direction_insensitive": 0.5147714112725672,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_aniso_l6": {
+          "view": "A",
+          "auc": 0.5147284401144869,
+          "direction_insensitive": 0.5147284401144869,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_logvar_l1": {
+          "view": "A",
+          "auc": 0.4582767668428005,
+          "direction_insensitive": 0.5417232331571995,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_logvar_l2": {
+          "view": "A",
+          "auc": 0.45555300161456036,
+          "direction_insensitive": 0.5444469983854396,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_logvar_l3": {
+          "view": "A",
+          "auc": 0.45251167804197856,
+          "direction_insensitive": 0.5474883219580214,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_logvar_l4": {
+          "view": "A",
+          "auc": 0.44939059151621896,
+          "direction_insensitive": 0.550609408483781,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_logvar_l6": {
+          "view": "A",
+          "auc": 0.4432794492147365,
+          "direction_insensitive": 0.5567205507852635,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_aniso_l1": {
+          "view": "A",
+          "auc": 0.49467156355496844,
+          "direction_insensitive": 0.5053284364450316,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_aniso_l2": {
+          "view": "A",
+          "auc": 0.4965979726258623,
+          "direction_insensitive": 0.5034020273741378,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_aniso_l3": {
+          "view": "A",
+          "auc": 0.5002630816086893,
+          "direction_insensitive": 0.5002630816086893,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_aniso_l4": {
+          "view": "A",
+          "auc": 0.5048496569059151,
+          "direction_insensitive": 0.5048496569059151,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_aniso_l6": {
+          "view": "A",
+          "auc": 0.515223987230295,
+          "direction_insensitive": 0.515223987230295,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_aniso_l1": {
+          "view": "A",
+          "auc": 0.49894175106414207,
+          "direction_insensitive": 0.5010582489358579,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_aniso_l2": {
+          "view": "A",
+          "auc": 0.4998945985615735,
+          "direction_insensitive": 0.5001054014384265,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_aniso_l3": {
+          "view": "A",
+          "auc": 0.5012536089094378,
+          "direction_insensitive": 0.5012536089094378,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_aniso_l4": {
+          "view": "A",
+          "auc": 0.5041638356817848,
+          "direction_insensitive": 0.5041638356817848,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_aniso_l6": {
+          "view": "A",
+          "auc": 0.5144218295904888,
+          "direction_insensitive": 0.5144218295904888,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_logvar_l1": {
+          "view": "A",
+          "auc": 0.49751929766622627,
+          "direction_insensitive": 0.5024807023337737,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_logvar_l2": {
+          "view": "A",
+          "auc": 0.4958268347277264,
+          "direction_insensitive": 0.5041731652722736,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_logvar_l3": {
+          "view": "A",
+          "auc": 0.49413518090415376,
+          "direction_insensitive": 0.5058648190958462,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_logvar_l4": {
+          "view": "A",
+          "auc": 0.49252932078379563,
+          "direction_insensitive": 0.5074706792162044,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_logvar_l6": {
+          "view": "A",
+          "auc": 0.49007100946719506,
+          "direction_insensitive": 0.5099289905328049,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_logvar_l1": {
+          "view": "A",
+          "auc": 0.46209052730074857,
+          "direction_insensitive": 0.5379094726992515,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_logvar_l2": {
+          "view": "A",
+          "auc": 0.4596817811536768,
+          "direction_insensitive": 0.5403182188463231,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_logvar_l3": {
+          "view": "A",
+          "auc": 0.4571633494789374,
+          "direction_insensitive": 0.5428366505210627,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_logvar_l4": {
+          "view": "A",
+          "auc": 0.45472976111845,
+          "direction_insensitive": 0.54527023888155,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_logvar_l6": {
+          "view": "A",
+          "auc": 0.4501888668721562,
+          "direction_insensitive": 0.5498111331278438,
+          "source": "H97 directional bank"
+        },
+        "store::B_curvature_minus_1": {
+          "view": "B",
+          "auc": 0.48579977616321735,
+          "direction_insensitive": 0.5142002238367827,
+          "source": "shared structural store"
+        },
+        "store::B_curvature_minus_3": {
+          "view": "B",
+          "auc": 0.4773956773814766,
+          "direction_insensitive": 0.5226043226185234,
+          "source": "shared structural store"
+        },
+        "store::B_curvature_plus_1": {
+          "view": "B",
+          "auc": 0.6325350267870248,
+          "direction_insensitive": 0.6325350267870248,
+          "source": "shared structural store"
+        },
+        "store::B_curvature_plus_3": {
+          "view": "B",
+          "auc": 0.6408296620431527,
+          "direction_insensitive": 0.6408296620431527,
+          "source": "shared structural store"
+        },
+        "store::B_curvature_trace_1": {
+          "view": "B",
+          "auc": 0.5966970754440042,
+          "direction_insensitive": 0.5966970754440042,
+          "source": "shared structural store"
+        },
+        "store::B_curvature_trace_3": {
+          "view": "B",
+          "auc": 0.5978099735799207,
+          "direction_insensitive": 0.5978099735799207,
+          "source": "shared structural store"
+        },
+        "store::B_elevation_grad_1": {
+          "view": "B",
+          "auc": 0.6032496697490093,
+          "direction_insensitive": 0.6032496697490093,
+          "source": "shared structural store"
+        },
+        "store::B_elevation_grad_3": {
+          "view": "B",
+          "auc": 0.6110716112578893,
+          "direction_insensitive": 0.6110716112578893,
+          "source": "shared structural store"
+        },
+        "store::B_elevation_grad_8": {
+          "view": "B",
+          "auc": 0.6192760696462645,
+          "direction_insensitive": 0.6192760696462645,
+          "source": "shared structural store"
+        },
+        "store::B_elevation_local_residual": {
+          "view": "B",
+          "auc": 0.4404726001761338,
+          "direction_insensitive": 0.5595273998238661,
+          "source": "shared structural store"
+        },
+        "store::B_elevation_local_sd": {
+          "view": "B",
+          "auc": 0.6177901640246588,
+          "direction_insensitive": 0.6177901640246588,
+          "source": "shared structural store"
+        },
+        "store::B_slope_grad_1": {
+          "view": "B",
+          "auc": 0.63989353625422,
+          "direction_insensitive": 0.63989353625422,
+          "source": "shared structural store"
+        },
+        "store::B_slope_grad_3": {
+          "view": "B",
+          "auc": 0.6368365642888595,
+          "direction_insensitive": 0.6368365642888595,
+          "source": "shared structural store"
+        },
+        "store::B_slope_local_residual": {
+          "view": "B",
+          "auc": 0.5005922886393659,
+          "direction_insensitive": 0.5005922886393659,
+          "source": "shared structural store"
+        },
+        "store::B_slope_local_sd": {
+          "view": "B",
+          "auc": 0.6225304014384265,
+          "direction_insensitive": 0.6225304014384265,
+          "source": "shared structural store"
+        },
+        "store::B_surface_coherence": {
+          "view": "B",
+          "auc": 0.4711211764274182,
+          "direction_insensitive": 0.5288788235725819,
+          "source": "shared structural store"
+        },
+        "store::X_rad_K_grad1": {
+          "view": "B",
+          "auc": 0.4617953361221195,
+          "direction_insensitive": 0.5382046638778806,
+          "source": "shared structural store"
+        },
+        "store::X_rad_K_grad3": {
+          "view": "B",
+          "auc": 0.4524992936298253,
+          "direction_insensitive": 0.5475007063701747,
+          "source": "shared structural store"
+        },
+        "store::X_rad_K_rank": {
+          "view": "B",
+          "auc": 0.3666696022310289,
+          "direction_insensitive": 0.633330397768971,
+          "source": "shared structural store"
+        },
+        "store::X_rad_ThK_grad1": {
+          "view": "B",
+          "auc": 0.511528091516219,
+          "direction_insensitive": 0.511528091516219,
+          "source": "shared structural store"
+        },
+        "store::X_rad_ThK_grad3": {
+          "view": "B",
+          "auc": 0.5036859771759871,
+          "direction_insensitive": 0.5036859771759871,
+          "source": "shared structural store"
+        },
+        "store::X_rad_ThK_rank": {
+          "view": "B",
+          "auc": 0.5328670501247614,
+          "direction_insensitive": 0.5328670501247614,
+          "source": "shared structural store"
+        },
+        "store::X_rad_Th_grad1": {
+          "view": "B",
+          "auc": 0.49528687986202846,
+          "direction_insensitive": 0.5047131201379715,
+          "source": "shared structural store"
+        },
+        "store::X_rad_Th_grad3": {
+          "view": "B",
+          "auc": 0.49734191802436517,
+          "direction_insensitive": 0.5026580819756348,
+          "source": "shared structural store"
+        },
+        "store::X_rad_Th_rank": {
+          "view": "B",
+          "auc": 0.45235310802876855,
+          "direction_insensitive": 0.5476468919712314,
+          "source": "shared structural store"
+        },
+        "store::X_rad_UK_grad1": {
+          "view": "B",
+          "auc": 0.4980829939087039,
+          "direction_insensitive": 0.5019170060912961,
+          "source": "shared structural store"
+        },
+        "store::X_rad_UK_grad3": {
+          "view": "B",
+          "auc": 0.46454593240863057,
+          "direction_insensitive": 0.5354540675913695,
+          "source": "shared structural store"
+        },
+        "store::X_rad_UK_rank": {
+          "view": "B",
+          "auc": 0.5383750165125496,
+          "direction_insensitive": 0.5383750165125496,
+          "source": "shared structural store"
+        },
+        "store::X_rad_UTh_grad1": {
+          "view": "B",
+          "auc": 0.5003110010274475,
+          "direction_insensitive": 0.5003110010274475,
+          "source": "shared structural store"
+        },
+        "store::X_rad_UTh_grad3": {
+          "view": "B",
+          "auc": 0.4959948040510788,
+          "direction_insensitive": 0.5040051959489211,
+          "source": "shared structural store"
+        },
+        "store::X_rad_UTh_rank": {
+          "view": "B",
+          "auc": 0.49564908997504775,
+          "direction_insensitive": 0.5043509100249522,
+          "source": "shared structural store"
+        },
+        "store::X_rad_U_grad1": {
+          "view": "B",
+          "auc": 0.4921961195508587,
+          "direction_insensitive": 0.5078038804491414,
+          "source": "shared structural store"
+        },
+        "store::X_rad_U_grad3": {
+          "view": "B",
+          "auc": 0.4820972258916777,
+          "direction_insensitive": 0.5179027741083223,
+          "source": "shared structural store"
+        },
+        "store::X_rad_U_rank": {
+          "view": "B",
+          "auc": 0.4139348855129899,
+          "direction_insensitive": 0.5860651144870102,
+          "source": "shared structural store"
+        },
+        "store::raw_band_06": {
+          "view": "B",
+          "auc": 0.382160032291208,
+          "direction_insensitive": 0.617839967708792,
+          "source": "shared structural store"
+        },
+        "store::raw_band_12": {
+          "view": "B",
+          "auc": 0.5973847534125936,
+          "direction_insensitive": 0.5973847534125936,
+          "source": "shared structural store"
+        },
+        "store::raw_band_19": {
+          "view": "B",
+          "auc": 0.605190215397035,
+          "direction_insensitive": 0.605190215397035,
+          "source": "shared structural store"
+        },
+        "bank::DVA2_det_elev_aniso_l1": {
+          "view": "B",
+          "auc": 0.446084234184647,
+          "direction_insensitive": 0.5539157658153531,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_aniso_l2": {
+          "view": "B",
+          "auc": 0.4515138576985175,
+          "direction_insensitive": 0.5484861423014825,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_aniso_l3": {
+          "view": "B",
+          "auc": 0.4553364982386614,
+          "direction_insensitive": 0.5446635017613386,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_aniso_l4": {
+          "view": "B",
+          "auc": 0.461093938059592,
+          "direction_insensitive": 0.538906061940408,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_aniso_l6": {
+          "view": "B",
+          "auc": 0.46967565499779834,
+          "direction_insensitive": 0.5303243450022017,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_logvar_l1": {
+          "view": "B",
+          "auc": 0.6100212755027153,
+          "direction_insensitive": 0.6100212755027153,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_logvar_l2": {
+          "view": "B",
+          "auc": 0.6119604469396742,
+          "direction_insensitive": 0.6119604469396742,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_logvar_l3": {
+          "view": "B",
+          "auc": 0.6128403199765154,
+          "direction_insensitive": 0.6128403199765154,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_logvar_l4": {
+          "view": "B",
+          "auc": 0.6124584379128137,
+          "direction_insensitive": 0.6124584379128137,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_logvar_l6": {
+          "view": "B",
+          "auc": 0.610223022163511,
+          "direction_insensitive": 0.610223022163511,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_aniso_l1": {
+          "view": "B",
+          "auc": 0.5146783795684721,
+          "direction_insensitive": 0.5146783795684721,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_aniso_l2": {
+          "view": "B",
+          "auc": 0.4951435124027595,
+          "direction_insensitive": 0.5048564875972406,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_aniso_l3": {
+          "view": "B",
+          "auc": 0.49777375972405696,
+          "direction_insensitive": 0.502226240275943,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_aniso_l4": {
+          "view": "B",
+          "auc": 0.4909792822545135,
+          "direction_insensitive": 0.5090207177454865,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_aniso_l6": {
+          "view": "B",
+          "auc": 0.47134119330691326,
+          "direction_insensitive": 0.5286588066930867,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_logvar_l1": {
+          "view": "B",
+          "auc": 0.6200310582709526,
+          "direction_insensitive": 0.6200310582709526,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_logvar_l2": {
+          "view": "B",
+          "auc": 0.6213744440774989,
+          "direction_insensitive": 0.6213744440774989,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_logvar_l3": {
+          "view": "B",
+          "auc": 0.6221290602524586,
+          "direction_insensitive": 0.6221290602524586,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_logvar_l4": {
+          "view": "B",
+          "auc": 0.6211742642741818,
+          "direction_insensitive": 0.6211742642741818,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_logvar_l6": {
+          "view": "B",
+          "auc": 0.6167501486129459,
+          "direction_insensitive": 0.6167501486129459,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_aniso_l1": {
+          "view": "B",
+          "auc": 0.48300111001027446,
+          "direction_insensitive": 0.5169988899897255,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_aniso_l2": {
+          "view": "B",
+          "auc": 0.48390995890209887,
+          "direction_insensitive": 0.5160900410979011,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_aniso_l3": {
+          "view": "B",
+          "auc": 0.4904981194040804,
+          "direction_insensitive": 0.5095018805959196,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_aniso_l4": {
+          "view": "B",
+          "auc": 0.4886029300601791,
+          "direction_insensitive": 0.5113970699398209,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_aniso_l6": {
+          "view": "B",
+          "auc": 0.49940003485982687,
+          "direction_insensitive": 0.5005999651401731,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_logvar_l1": {
+          "view": "B",
+          "auc": 0.4262139879641861,
+          "direction_insensitive": 0.5737860120358139,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_logvar_l2": {
+          "view": "B",
+          "auc": 0.42879127036547776,
+          "direction_insensitive": 0.5712087296345223,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_logvar_l3": {
+          "view": "B",
+          "auc": 0.43306031300455006,
+          "direction_insensitive": 0.5669396869954499,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_logvar_l4": {
+          "view": "B",
+          "auc": 0.43579693967415234,
+          "direction_insensitive": 0.5642030603258477,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_logvar_l6": {
+          "view": "B",
+          "auc": 0.4366988166006165,
+          "direction_insensitive": 0.5633011833993835,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_aniso_l1": {
+          "view": "B",
+          "auc": 0.5077606946279172,
+          "direction_insensitive": 0.5077606946279172,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_aniso_l2": {
+          "view": "B",
+          "auc": 0.4966921987377073,
+          "direction_insensitive": 0.5033078012622927,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_aniso_l3": {
+          "view": "B",
+          "auc": 0.4990995486569793,
+          "direction_insensitive": 0.5009004513430206,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_aniso_l4": {
+          "view": "B",
+          "auc": 0.49326867202407165,
+          "direction_insensitive": 0.5067313279759283,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_aniso_l6": {
+          "view": "B",
+          "auc": 0.49684192352854833,
+          "direction_insensitive": 0.5031580764714516,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_logvar_l1": {
+          "view": "B",
+          "auc": 0.4714508880082196,
+          "direction_insensitive": 0.5285491119917805,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_logvar_l2": {
+          "view": "B",
+          "auc": 0.4719221708498459,
+          "direction_insensitive": 0.5280778291501541,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_logvar_l3": {
+          "view": "B",
+          "auc": 0.47061759687362403,
+          "direction_insensitive": 0.529382403126376,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_logvar_l4": {
+          "view": "B",
+          "auc": 0.46927698517540006,
+          "direction_insensitive": 0.5307230148245999,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_logvar_l6": {
+          "view": "B",
+          "auc": 0.4633061977102598,
+          "direction_insensitive": 0.5366938022897402,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_aniso_l1": {
+          "view": "B",
+          "auc": 0.5123185766182298,
+          "direction_insensitive": 0.5123185766182298,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_aniso_l2": {
+          "view": "B",
+          "auc": 0.5083406594011448,
+          "direction_insensitive": 0.5083406594011448,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_aniso_l3": {
+          "view": "B",
+          "auc": 0.5034298656979304,
+          "direction_insensitive": 0.5034298656979304,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_aniso_l4": {
+          "view": "B",
+          "auc": 0.5082984092910612,
+          "direction_insensitive": 0.5082984092910612,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_aniso_l6": {
+          "view": "B",
+          "auc": 0.5076528915308969,
+          "direction_insensitive": 0.5076528915308969,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_logvar_l1": {
+          "view": "B",
+          "auc": 0.4617217708792015,
+          "direction_insensitive": 0.5382782291207985,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_logvar_l2": {
+          "view": "B",
+          "auc": 0.4647426042125349,
+          "direction_insensitive": 0.5352573957874651,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_logvar_l3": {
+          "view": "B",
+          "auc": 0.46759624614707174,
+          "direction_insensitive": 0.5324037538529283,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_logvar_l4": {
+          "view": "B",
+          "auc": 0.46929575077058566,
+          "direction_insensitive": 0.5307042492294143,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_logvar_l6": {
+          "view": "B",
+          "auc": 0.4681453306179363,
+          "direction_insensitive": 0.5318546693820637,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_aniso_l1": {
+          "view": "B",
+          "auc": 0.5103977487890797,
+          "direction_insensitive": 0.5103977487890797,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_aniso_l2": {
+          "view": "B",
+          "auc": 0.5193866872156172,
+          "direction_insensitive": 0.5193866872156172,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_aniso_l3": {
+          "view": "B",
+          "auc": 0.5398503192426244,
+          "direction_insensitive": 0.5398503192426244,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_aniso_l4": {
+          "view": "B",
+          "auc": 0.543578407089388,
+          "direction_insensitive": 0.543578407089388,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_aniso_l6": {
+          "view": "B",
+          "auc": 0.523977078746514,
+          "direction_insensitive": 0.523977078746514,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_logvar_l1": {
+          "view": "B",
+          "auc": 0.44065564729194184,
+          "direction_insensitive": 0.5593443527080582,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_logvar_l2": {
+          "view": "B",
+          "auc": 0.4443219305005137,
+          "direction_insensitive": 0.5556780694994863,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_logvar_l3": {
+          "view": "B",
+          "auc": 0.44363349662410095,
+          "direction_insensitive": 0.5563665033758991,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_logvar_l4": {
+          "view": "B",
+          "auc": 0.4407355937178922,
+          "direction_insensitive": 0.5592644062821077,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_logvar_l6": {
+          "view": "B",
+          "auc": 0.4368826544840746,
+          "direction_insensitive": 0.5631173455159254,
+          "source": "H97 directional bank"
+        }
+      },
+      "top5": [
+        [
+          "store::B_curvature_plus_3",
+          0.6408296620431527
+        ],
+        [
+          "store::B_slope_grad_1",
+          0.63989353625422
+        ],
+        [
+          "store::B_slope_grad_3",
+          0.6368365642888595
+        ],
+        [
+          "store::X_rad_K_rank",
+          0.633330397768971
+        ],
+        [
+          "store::B_curvature_plus_1",
+          0.6325350267870248
+        ]
+      ],
+      "max_direction_insensitive_auc": 0.6408296620431527,
+      "fitted_top5_heldout_auc": {
+        "store::B_curvature_plus_3": 0.6303911437692646,
+        "store::B_slope_grad_1": 0.6268248972552474,
+        "store::B_slope_grad_3": 0.6198411767943638,
+        "store::X_rad_K_rank": 0.5954808858065463,
+        "store::B_curvature_plus_1": 0.6140070490239249
+      },
+      "alarms": []
+    },
+    {
+      "fold": 3,
+      "n_pos": 8387,
+      "n_neg": 40000,
+      "per_feature": {
+        "store::A_RTP_grad_1": {
+          "view": "A",
+          "auc": 0.521807171813521,
+          "direction_insensitive": 0.521807171813521,
+          "source": "shared structural store"
+        },
+        "store::A_RTP_grad_3": {
+          "view": "A",
+          "auc": 0.5188817992130679,
+          "direction_insensitive": 0.5188817992130679,
+          "source": "shared structural store"
+        },
+        "store::A_cover_coherence": {
+          "view": "A",
+          "auc": 0.5232121750924049,
+          "direction_insensitive": 0.5232121750924049,
+          "source": "shared structural store"
+        },
+        "store::A_cover_grad_1": {
+          "view": "A",
+          "auc": 0.5711777274353165,
+          "direction_insensitive": 0.5711777274353165,
+          "source": "shared structural store"
+        },
+        "store::A_cover_grad_3": {
+          "view": "A",
+          "auc": 0.5726762116966734,
+          "direction_insensitive": 0.5726762116966734,
+          "source": "shared structural store"
+        },
+        "store::A_cover_grad_8": {
+          "view": "A",
+          "auc": 0.5787532371527364,
+          "direction_insensitive": 0.5787532371527364,
+          "source": "shared structural store"
+        },
+        "store::A_cover_persistence_1_3": {
+          "view": "A",
+          "auc": 0.511933259806844,
+          "direction_insensitive": 0.511933259806844,
+          "source": "shared structural store"
+        },
+        "store::A_cover_persistence_3_8": {
+          "view": "A",
+          "auc": 0.5228257422201026,
+          "direction_insensitive": 0.5228257422201026,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_coherence": {
+          "view": "A",
+          "auc": 0.5110450220579468,
+          "direction_insensitive": 0.5110450220579468,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_cover_signed_1": {
+          "view": "A",
+          "auc": 0.5269012504471206,
+          "direction_insensitive": 0.5269012504471206,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_cover_signed_3": {
+          "view": "A",
+          "auc": 0.5256136878502444,
+          "direction_insensitive": 0.5256136878502444,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_cover_signed_8": {
+          "view": "A",
+          "auc": 0.5252150530583045,
+          "direction_insensitive": 0.5252150530583045,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_grad_1": {
+          "view": "A",
+          "auc": 0.5611140962203409,
+          "direction_insensitive": 0.5611140962203409,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_grad_3": {
+          "view": "A",
+          "auc": 0.561876548527483,
+          "direction_insensitive": 0.561876548527483,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_grad_8": {
+          "view": "A",
+          "auc": 0.5660369321569094,
+          "direction_insensitive": 0.5660369321569094,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_persistence_1_3": {
+          "view": "A",
+          "auc": 0.5231660039346608,
+          "direction_insensitive": 0.5231660039346608,
+          "source": "shared structural store"
+        },
+        "store::A_gravity_persistence_3_8": {
+          "view": "A",
+          "auc": 0.5212500029808036,
+          "direction_insensitive": 0.5212500029808036,
+          "source": "shared structural store"
+        },
+        "store::X_mag_TMI_up150_grad1": {
+          "view": "A",
+          "auc": 0.5056963008227018,
+          "direction_insensitive": 0.5056963008227018,
+          "source": "shared structural store"
+        },
+        "store::X_mag_TMI_up150_grad3": {
+          "view": "A",
+          "auc": 0.5075197657088351,
+          "direction_insensitive": 0.5075197657088351,
+          "source": "shared structural store"
+        },
+        "store::X_mag_TMI_up150_rank": {
+          "view": "A",
+          "auc": 0.5221419220221772,
+          "direction_insensitive": 0.5221419220221772,
+          "source": "shared structural store"
+        },
+        "store::raw_band_01": {
+          "view": "A",
+          "auc": 0.5205974469416954,
+          "direction_insensitive": 0.5205974469416954,
+          "source": "shared structural store"
+        },
+        "store::raw_band_02": {
+          "view": "A",
+          "auc": 0.518545425956838,
+          "direction_insensitive": 0.518545425956838,
+          "source": "shared structural store"
+        },
+        "store::raw_band_03": {
+          "view": "A",
+          "auc": 0.5103737137832359,
+          "direction_insensitive": 0.5103737137832359,
+          "source": "shared structural store"
+        },
+        "store::raw_band_04": {
+          "view": "A",
+          "auc": 0.4779954408608561,
+          "direction_insensitive": 0.5220045591391439,
+          "source": "shared structural store"
+        },
+        "store::raw_band_05": {
+          "view": "A",
+          "auc": 0.5646469655419101,
+          "direction_insensitive": 0.5646469655419101,
+          "source": "shared structural store"
+        },
+        "store::raw_band_07": {
+          "view": "A",
+          "auc": 0.4539462233218075,
+          "direction_insensitive": 0.5460537766781925,
+          "source": "shared structural store"
+        },
+        "store::raw_band_08": {
+          "view": "A",
+          "auc": 0.6044630916895195,
+          "direction_insensitive": 0.6044630916895195,
+          "source": "shared structural store"
+        },
+        "store::raw_band_09": {
+          "view": "A",
+          "auc": 0.48390791850482884,
+          "direction_insensitive": 0.5160920814951712,
+          "source": "shared structural store"
+        },
+        "store::raw_band_10": {
+          "view": "A",
+          "auc": 0.4443965437581972,
+          "direction_insensitive": 0.5556034562418029,
+          "source": "shared structural store"
+        },
+        "store::raw_band_11": {
+          "view": "A",
+          "auc": 0.5530587561106475,
+          "direction_insensitive": 0.5530587561106475,
+          "source": "shared structural store"
+        },
+        "store::raw_band_13": {
+          "view": "A",
+          "auc": 0.5091653809467032,
+          "direction_insensitive": 0.5091653809467032,
+          "source": "shared structural store"
+        },
+        "store::raw_band_14": {
+          "view": "A",
+          "auc": 0.5129927104447358,
+          "direction_insensitive": 0.5129927104447358,
+          "source": "shared structural store"
+        },
+        "store::raw_band_15": {
+          "view": "A",
+          "auc": 0.5300324296530344,
+          "direction_insensitive": 0.5300324296530344,
+          "source": "shared structural store"
+        },
+        "store::raw_band_16": {
+          "view": "A",
+          "auc": 0.5807231459401454,
+          "direction_insensitive": 0.5807231459401454,
+          "source": "shared structural store"
+        },
+        "store::raw_band_17": {
+          "view": "A",
+          "auc": 0.5434616713365923,
+          "direction_insensitive": 0.5434616713365923,
+          "source": "shared structural store"
+        },
+        "store::raw_band_18": {
+          "view": "A",
+          "auc": 0.5197086905329678,
+          "direction_insensitive": 0.5197086905329678,
+          "source": "shared structural store"
+        },
+        "bank::DVA2_depth_to_base_surf_aniso_l1": {
+          "view": "A",
+          "auc": 0.5204826576845117,
+          "direction_insensitive": 0.5204826576845117,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_aniso_l2": {
+          "view": "A",
+          "auc": 0.5213761476093955,
+          "direction_insensitive": 0.5213761476093955,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_aniso_l3": {
+          "view": "A",
+          "auc": 0.5227895895433409,
+          "direction_insensitive": 0.5227895895433409,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_aniso_l4": {
+          "view": "A",
+          "auc": 0.5245342732800764,
+          "direction_insensitive": 0.5245342732800764,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_aniso_l6": {
+          "view": "A",
+          "auc": 0.5292327292237987,
+          "direction_insensitive": 0.5292327292237987,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_logvar_l1": {
+          "view": "A",
+          "auc": 0.5726705556217957,
+          "direction_insensitive": 0.5726705556217957,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_logvar_l2": {
+          "view": "A",
+          "auc": 0.5722228761774174,
+          "direction_insensitive": 0.5722228761774174,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_logvar_l3": {
+          "view": "A",
+          "auc": 0.5718569154644092,
+          "direction_insensitive": 0.5718569154644092,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_logvar_l4": {
+          "view": "A",
+          "auc": 0.5715981056992965,
+          "direction_insensitive": 0.5715981056992965,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_depth_to_base_surf_logvar_l6": {
+          "view": "A",
+          "auc": 0.5713562641588172,
+          "direction_insensitive": 0.5713562641588172,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_aniso_l1": {
+          "view": "A",
+          "auc": 0.5223296306784309,
+          "direction_insensitive": 0.5223296306784309,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_aniso_l2": {
+          "view": "A",
+          "auc": 0.5186255037558125,
+          "direction_insensitive": 0.5186255037558125,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_aniso_l3": {
+          "view": "A",
+          "auc": 0.5156520031000358,
+          "direction_insensitive": 0.5156520031000358,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_aniso_l4": {
+          "view": "A",
+          "auc": 0.5164238434481936,
+          "direction_insensitive": 0.5164238434481936,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_aniso_l6": {
+          "view": "A",
+          "auc": 0.527017217121736,
+          "direction_insensitive": 0.527017217121736,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_aniso_l1": {
+          "view": "A",
+          "auc": 0.5245878442828186,
+          "direction_insensitive": 0.5245878442828186,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_aniso_l2": {
+          "view": "A",
+          "auc": 0.5227723679503994,
+          "direction_insensitive": 0.5227723679503994,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_aniso_l3": {
+          "view": "A",
+          "auc": 0.5206748136997734,
+          "direction_insensitive": 0.5206748136997734,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_aniso_l4": {
+          "view": "A",
+          "auc": 0.5189378904852748,
+          "direction_insensitive": 0.5189378904852748,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_aniso_l6": {
+          "view": "A",
+          "auc": 0.5146690607487778,
+          "direction_insensitive": 0.5146690607487778,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_logvar_l1": {
+          "view": "A",
+          "auc": 0.5640965899606534,
+          "direction_insensitive": 0.5640965899606534,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_logvar_l2": {
+          "view": "A",
+          "auc": 0.564187666925003,
+          "direction_insensitive": 0.564187666925003,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_logvar_l3": {
+          "view": "A",
+          "auc": 0.5646008152497914,
+          "direction_insensitive": 0.5646008152497914,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_logvar_l4": {
+          "view": "A",
+          "auc": 0.5653017884821748,
+          "direction_insensitive": 0.5653017884821748,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_hg_logvar_l6": {
+          "view": "A",
+          "auc": 0.5673517363181113,
+          "direction_insensitive": 0.5673517363181113,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_logvar_l1": {
+          "view": "A",
+          "auc": 0.5605362570048884,
+          "direction_insensitive": 0.5605362570048884,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_logvar_l2": {
+          "view": "A",
+          "auc": 0.5579598336711578,
+          "direction_insensitive": 0.5579598336711578,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_logvar_l3": {
+          "view": "A",
+          "auc": 0.5554665255752951,
+          "direction_insensitive": 0.5554665255752951,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_logvar_l4": {
+          "view": "A",
+          "auc": 0.5532967285680219,
+          "direction_insensitive": 0.5532967285680219,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_iso_grav_anom_logvar_l6": {
+          "view": "A",
+          "auc": 0.5503494574937403,
+          "direction_insensitive": 0.5503494574937403,
+          "source": "H97 directional bank"
+        },
+        "store::B_curvature_minus_1": {
+          "view": "B",
+          "auc": 0.49006825593179915,
+          "direction_insensitive": 0.5099317440682009,
+          "source": "shared structural store"
+        },
+        "store::B_curvature_minus_3": {
+          "view": "B",
+          "auc": 0.4984871244187433,
+          "direction_insensitive": 0.5015128755812567,
+          "source": "shared structural store"
+        },
+        "store::B_curvature_plus_1": {
+          "view": "B",
+          "auc": 0.5956159741266245,
+          "direction_insensitive": 0.5956159741266245,
+          "source": "shared structural store"
+        },
+        "store::B_curvature_plus_3": {
+          "view": "B",
+          "auc": 0.60388030434005,
+          "direction_insensitive": 0.60388030434005,
+          "source": "shared structural store"
+        },
+        "store::B_curvature_trace_1": {
+          "view": "B",
+          "auc": 0.5722417148563252,
+          "direction_insensitive": 0.5722417148563252,
+          "source": "shared structural store"
+        },
+        "store::B_curvature_trace_3": {
+          "view": "B",
+          "auc": 0.5864615044115893,
+          "direction_insensitive": 0.5864615044115893,
+          "source": "shared structural store"
+        },
+        "store::B_elevation_grad_1": {
+          "view": "B",
+          "auc": 0.5961505827471085,
+          "direction_insensitive": 0.5961505827471085,
+          "source": "shared structural store"
+        },
+        "store::B_elevation_grad_3": {
+          "view": "B",
+          "auc": 0.600021108560868,
+          "direction_insensitive": 0.600021108560868,
+          "source": "shared structural store"
+        },
+        "store::B_elevation_grad_8": {
+          "view": "B",
+          "auc": 0.5983519911768213,
+          "direction_insensitive": 0.5983519911768213,
+          "source": "shared structural store"
+        },
+        "store::B_elevation_local_residual": {
+          "view": "B",
+          "auc": 0.44678658042208175,
+          "direction_insensitive": 0.5532134195779183,
+          "source": "shared structural store"
+        },
+        "store::B_elevation_local_sd": {
+          "view": "B",
+          "auc": 0.5788295561583403,
+          "direction_insensitive": 0.5788295561583403,
+          "source": "shared structural store"
+        },
+        "store::B_slope_grad_1": {
+          "view": "B",
+          "auc": 0.6187609887325622,
+          "direction_insensitive": 0.6187609887325622,
+          "source": "shared structural store"
+        },
+        "store::B_slope_grad_3": {
+          "view": "B",
+          "auc": 0.6289139665553833,
+          "direction_insensitive": 0.6289139665553833,
+          "source": "shared structural store"
+        },
+        "store::B_slope_local_residual": {
+          "view": "B",
+          "auc": 0.5412529152259449,
+          "direction_insensitive": 0.5412529152259449,
+          "source": "shared structural store"
+        },
+        "store::B_slope_local_sd": {
+          "view": "B",
+          "auc": 0.5685942008465482,
+          "direction_insensitive": 0.5685942008465482,
+          "source": "shared structural store"
+        },
+        "store::B_surface_coherence": {
+          "view": "B",
+          "auc": 0.5806612242160486,
+          "direction_insensitive": 0.5806612242160486,
+          "source": "shared structural store"
+        },
+        "store::X_rad_K_grad1": {
+          "view": "B",
+          "auc": 0.4931473247287469,
+          "direction_insensitive": 0.5068526752712531,
+          "source": "shared structural store"
+        },
+        "store::X_rad_K_grad3": {
+          "view": "B",
+          "auc": 0.4893514665553833,
+          "direction_insensitive": 0.5106485334446167,
+          "source": "shared structural store"
+        },
+        "store::X_rad_K_rank": {
+          "view": "B",
+          "auc": 0.36914029301299633,
+          "direction_insensitive": 0.6308597069870037,
+          "source": "shared structural store"
+        },
+        "store::X_rad_ThK_grad1": {
+          "view": "B",
+          "auc": 0.5105672782282104,
+          "direction_insensitive": 0.5105672782282104,
+          "source": "shared structural store"
+        },
+        "store::X_rad_ThK_grad3": {
+          "view": "B",
+          "auc": 0.5126684392512222,
+          "direction_insensitive": 0.5126684392512222,
+          "source": "shared structural store"
+        },
+        "store::X_rad_ThK_rank": {
+          "view": "B",
+          "auc": 0.3952961219744843,
+          "direction_insensitive": 0.6047038780255156,
+          "source": "shared structural store"
+        },
+        "store::X_rad_Th_grad1": {
+          "view": "B",
+          "auc": 0.4973845177059736,
+          "direction_insensitive": 0.5026154822940264,
+          "source": "shared structural store"
+        },
+        "store::X_rad_Th_grad3": {
+          "view": "B",
+          "auc": 0.4988187149755574,
+          "direction_insensitive": 0.5011812850244426,
+          "source": "shared structural store"
+        },
+        "store::X_rad_Th_rank": {
+          "view": "B",
+          "auc": 0.35199362704185044,
+          "direction_insensitive": 0.6480063729581496,
+          "source": "shared structural store"
+        },
+        "store::X_rad_UK_grad1": {
+          "view": "B",
+          "auc": 0.521598785322523,
+          "direction_insensitive": 0.521598785322523,
+          "source": "shared structural store"
+        },
+        "store::X_rad_UK_grad3": {
+          "view": "B",
+          "auc": 0.5138564623822582,
+          "direction_insensitive": 0.5138564623822582,
+          "source": "shared structural store"
+        },
+        "store::X_rad_UK_rank": {
+          "view": "B",
+          "auc": 0.5635997674973172,
+          "direction_insensitive": 0.5635997674973172,
+          "source": "shared structural store"
+        },
+        "store::X_rad_UTh_grad1": {
+          "view": "B",
+          "auc": 0.5528038631214975,
+          "direction_insensitive": 0.5528038631214975,
+          "source": "shared structural store"
+        },
+        "store::X_rad_UTh_grad3": {
+          "view": "B",
+          "auc": 0.5575879515917492,
+          "direction_insensitive": 0.5575879515917492,
+          "source": "shared structural store"
+        },
+        "store::X_rad_UTh_rank": {
+          "view": "B",
+          "auc": 0.6245023250268272,
+          "direction_insensitive": 0.6245023250268272,
+          "source": "shared structural store"
+        },
+        "store::X_rad_U_grad1": {
+          "view": "B",
+          "auc": 0.4848042580779778,
+          "direction_insensitive": 0.5151957419220222,
+          "source": "shared structural store"
+        },
+        "store::X_rad_U_grad3": {
+          "view": "B",
+          "auc": 0.47631703678311677,
+          "direction_insensitive": 0.5236829632168832,
+          "source": "shared structural store"
+        },
+        "store::X_rad_U_rank": {
+          "view": "B",
+          "auc": 0.3917895135328484,
+          "direction_insensitive": 0.6082104864671516,
+          "source": "shared structural store"
+        },
+        "store::raw_band_06": {
+          "view": "B",
+          "auc": 0.3534330600930011,
+          "direction_insensitive": 0.6465669399069989,
+          "source": "shared structural store"
+        },
+        "store::raw_band_12": {
+          "view": "B",
+          "auc": 0.4925082702396566,
+          "direction_insensitive": 0.5074917297603434,
+          "source": "shared structural store"
+        },
+        "store::raw_band_19": {
+          "view": "B",
+          "auc": 0.5824594208298558,
+          "direction_insensitive": 0.5824594208298558,
+          "source": "shared structural store"
+        },
+        "bank::DVA2_det_elev_aniso_l1": {
+          "view": "B",
+          "auc": 0.5022845564564207,
+          "direction_insensitive": 0.5022845564564207,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_aniso_l2": {
+          "view": "B",
+          "auc": 0.5367377816859425,
+          "direction_insensitive": 0.5367377816859425,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_aniso_l3": {
+          "view": "B",
+          "auc": 0.547311793549541,
+          "direction_insensitive": 0.547311793549541,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_aniso_l4": {
+          "view": "B",
+          "auc": 0.5491632347680935,
+          "direction_insensitive": 0.5491632347680935,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_aniso_l6": {
+          "view": "B",
+          "auc": 0.5443875059616072,
+          "direction_insensitive": 0.5443875059616072,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_logvar_l1": {
+          "view": "B",
+          "auc": 0.5734925539525456,
+          "direction_insensitive": 0.5734925539525456,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_logvar_l2": {
+          "view": "B",
+          "auc": 0.5773919220221773,
+          "direction_insensitive": 0.5773919220221773,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_logvar_l3": {
+          "view": "B",
+          "auc": 0.5797957806724692,
+          "direction_insensitive": 0.5797957806724692,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_logvar_l4": {
+          "view": "B",
+          "auc": 0.580552724454513,
+          "direction_insensitive": 0.580552724454513,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_logvar_l6": {
+          "view": "B",
+          "auc": 0.5790290702873495,
+          "direction_insensitive": 0.5790290702873495,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_aniso_l1": {
+          "view": "B",
+          "auc": 0.47858569214260166,
+          "direction_insensitive": 0.5214143078573983,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_aniso_l2": {
+          "view": "B",
+          "auc": 0.5007166775962799,
+          "direction_insensitive": 0.5007166775962799,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_aniso_l3": {
+          "view": "B",
+          "auc": 0.5202723694408012,
+          "direction_insensitive": 0.5202723694408012,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_aniso_l4": {
+          "view": "B",
+          "auc": 0.5152068320019076,
+          "direction_insensitive": 0.5152068320019076,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_aniso_l6": {
+          "view": "B",
+          "auc": 0.4986611020031,
+          "direction_insensitive": 0.5013388979969,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_logvar_l1": {
+          "view": "B",
+          "auc": 0.5693796366400381,
+          "direction_insensitive": 0.5693796366400381,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_logvar_l2": {
+          "view": "B",
+          "auc": 0.5753046366400382,
+          "direction_insensitive": 0.5753046366400382,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_logvar_l3": {
+          "view": "B",
+          "auc": 0.577798134016931,
+          "direction_insensitive": 0.577798134016931,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_logvar_l4": {
+          "view": "B",
+          "auc": 0.577736507392393,
+          "direction_insensitive": 0.577736507392393,
+          "source": "H97 directional bank"
+        },
+        "bank::DVA2_det_elev_slope_logvar_l6": {
+          "view": "B",
+          "auc": 0.574690541910099,
+          "direction_insensitive": 0.574690541910099,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_aniso_l1": {
+          "view": "B",
+          "auc": 0.5010903690234887,
+          "direction_insensitive": 0.5010903690234887,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_aniso_l2": {
+          "view": "B",
+          "auc": 0.49849813103612733,
+          "direction_insensitive": 0.5015018689638726,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_aniso_l3": {
+          "view": "B",
+          "auc": 0.493820695719566,
+          "direction_insensitive": 0.506179304280434,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_aniso_l4": {
+          "view": "B",
+          "auc": 0.48934232144986284,
+          "direction_insensitive": 0.5106576785501371,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_aniso_l6": {
+          "view": "B",
+          "auc": 0.5026578231191129,
+          "direction_insensitive": 0.5026578231191129,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_logvar_l1": {
+          "view": "B",
+          "auc": 0.45616555532371533,
+          "direction_insensitive": 0.5438344446762846,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_logvar_l2": {
+          "view": "B",
+          "auc": 0.4567474543937045,
+          "direction_insensitive": 0.5432525456062955,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_logvar_l3": {
+          "view": "B",
+          "auc": 0.45846217658280675,
+          "direction_insensitive": 0.5415378234171933,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_logvar_l4": {
+          "view": "B",
+          "auc": 0.45890554280434004,
+          "direction_insensitive": 0.54109445719566,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_K_logvar_l6": {
+          "view": "B",
+          "auc": 0.4623499150470967,
+          "direction_insensitive": 0.5376500849529033,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_aniso_l1": {
+          "view": "B",
+          "auc": 0.5176817053177537,
+          "direction_insensitive": 0.5176817053177537,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_aniso_l2": {
+          "view": "B",
+          "auc": 0.5160290300465006,
+          "direction_insensitive": 0.5160290300465006,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_aniso_l3": {
+          "view": "B",
+          "auc": 0.5084902348873256,
+          "direction_insensitive": 0.5084902348873256,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_aniso_l4": {
+          "view": "B",
+          "auc": 0.5008043698581137,
+          "direction_insensitive": 0.5008043698581137,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_aniso_l6": {
+          "view": "B",
+          "auc": 0.5040181635268869,
+          "direction_insensitive": 0.5040181635268869,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_logvar_l1": {
+          "view": "B",
+          "auc": 0.4655796426016454,
+          "direction_insensitive": 0.5344203573983546,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_logvar_l2": {
+          "view": "B",
+          "auc": 0.47269900590199115,
+          "direction_insensitive": 0.5273009940980089,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_logvar_l3": {
+          "view": "B",
+          "auc": 0.47388741802790035,
+          "direction_insensitive": 0.5261125819720996,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_logvar_l4": {
+          "view": "B",
+          "auc": 0.47230044413974004,
+          "direction_insensitive": 0.52769955586026,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_TC_logvar_l6": {
+          "view": "B",
+          "auc": 0.46812249612495527,
+          "direction_insensitive": 0.5318775038750447,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_aniso_l1": {
+          "view": "B",
+          "auc": 0.502394099499225,
+          "direction_insensitive": 0.502394099499225,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_aniso_l2": {
+          "view": "B",
+          "auc": 0.47778802015023253,
+          "direction_insensitive": 0.5222119798497675,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_aniso_l3": {
+          "view": "B",
+          "auc": 0.48457592255872184,
+          "direction_insensitive": 0.5154240774412782,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_aniso_l4": {
+          "view": "B",
+          "auc": 0.4961428937641588,
+          "direction_insensitive": 0.5038571062358412,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_aniso_l6": {
+          "view": "B",
+          "auc": 0.48974421127936096,
+          "direction_insensitive": 0.510255788720639,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_logvar_l1": {
+          "view": "B",
+          "auc": 0.46623020448312863,
+          "direction_insensitive": 0.5337697955168714,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_logvar_l2": {
+          "view": "B",
+          "auc": 0.46587470042923573,
+          "direction_insensitive": 0.5341252995707643,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_logvar_l3": {
+          "view": "B",
+          "auc": 0.46600042625491833,
+          "direction_insensitive": 0.5339995737450817,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_logvar_l4": {
+          "view": "B",
+          "auc": 0.4638464513532848,
+          "direction_insensitive": 0.5361535486467153,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_Th_logvar_l6": {
+          "view": "B",
+          "auc": 0.4583574072970073,
+          "direction_insensitive": 0.5416425927029926,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_aniso_l1": {
+          "view": "B",
+          "auc": 0.5105365610468583,
+          "direction_insensitive": 0.5105365610468583,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_aniso_l2": {
+          "view": "B",
+          "auc": 0.5082613210921665,
+          "direction_insensitive": 0.5082613210921665,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_aniso_l3": {
+          "view": "B",
+          "auc": 0.50464280434005,
+          "direction_insensitive": 0.50464280434005,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_aniso_l4": {
+          "view": "B",
+          "auc": 0.5049112525336831,
+          "direction_insensitive": 0.5049112525336831,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_aniso_l6": {
+          "view": "B",
+          "auc": 0.4958371199475378,
+          "direction_insensitive": 0.5041628800524622,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_logvar_l1": {
+          "view": "B",
+          "auc": 0.4616626967330393,
+          "direction_insensitive": 0.5383373032669607,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_logvar_l2": {
+          "view": "B",
+          "auc": 0.4543141707404317,
+          "direction_insensitive": 0.5456858292595683,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_logvar_l3": {
+          "view": "B",
+          "auc": 0.45201291135090016,
+          "direction_insensitive": 0.5479870886490998,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_logvar_l4": {
+          "view": "B",
+          "auc": 0.45109812507452013,
+          "direction_insensitive": 0.5489018749254799,
+          "source": "H97 directional bank"
+        },
+        "bank::RDVA2_U_logvar_l6": {
+          "view": "B",
+          "auc": 0.4484698596041492,
+          "direction_insensitive": 0.5515301403958508,
+          "source": "H97 directional bank"
+        }
+      },
+      "top5": [
+        [
+          "store::X_rad_Th_rank",
+          0.6480063729581496
+        ],
+        [
+          "store::raw_band_06",
+          0.6465669399069989
+        ],
+        [
+          "store::X_rad_K_rank",
+          0.6308597069870037
+        ],
+        [
+          "store::B_slope_grad_3",
+          0.6289139665553833
+        ],
+        [
+          "store::X_rad_UTh_rank",
+          0.6245023250268272
+        ]
+      ],
+      "max_direction_insensitive_auc": 0.6480063729581496,
+      "fitted_top5_heldout_auc": {
+        "store::X_rad_Th_rank": 0.6264471101108858,
+        "store::raw_band_06": 0.6291798795755336,
+        "store::X_rad_K_rank": 0.619060434303088,
+        "store::B_slope_grad_3": 0.6171830422081793,
+        "store::X_rad_UTh_rank": 0.5981499597591512
+      },
+      "alarms": []
+    }
+  ],
+  "max_auc": 0.6690685773157253,
+  "any_alarm": false,
+  "finished_utc": "2026-10-10T00:21:26Z"
+}

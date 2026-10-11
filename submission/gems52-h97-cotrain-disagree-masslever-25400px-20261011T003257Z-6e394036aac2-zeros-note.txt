@@ -1,0 +1,2 @@
+name: gems52-h97-cotrain-disagree-masslever-25400px-20261011T003257Z-6e394036aac2-zeros
+note (139/140): H97 co-training A(geophys)xB(surface incl. LiDAR scarp + radiometric ratios); disagreement mass lever 25,400 dots; 3px spacing; 200m collar

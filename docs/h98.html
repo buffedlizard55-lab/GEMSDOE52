@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEMSDOE52 — H98 validation (B confident, A abstains)</title>
+<style>
+:root{--bg:#0f1117;--fg:#e8eaed;--accent:#4fc3f7;--ok:#66bb6a;--warn:#ffa726;--err:#ef5350;--card:#1a1d27;--border:#2d3040}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--fg);line-height:1.65;padding:0}
+.container{max-width:960px;margin:0 auto;padding:24px 20px}
+h1{font-size:1.8rem;margin-bottom:6px;color:var(--accent)}
+h2{font-size:1.25rem;margin:28px 0 10px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px}
+h3{font-size:1.05rem;margin:18px 0 6px}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+code{background:#1e2130;padding:2px 6px;border-radius:3px;font-size:0.88em;word-break:break-all}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:0.9rem}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--border)}
+th{color:var(--accent);font-weight:600}
+.pass{color:var(--ok);font-weight:700}.fail{color:var(--err);font-weight:700}.warn{color:var(--warn);font-weight:700}
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin:12px 0}
+.download-box{background:linear-gradient(135deg,#0d3b66,#1a237e);border:2px solid var(--accent);border-radius:12px;padding:24px;margin:18px 0;text-align:center}
+.download-box h2{color:#fff;border:none;margin:0 0 8px;font-size:1.4rem}
+.download-box p{color:#cfe8ff;margin:6px 0}
+.btn{display:inline-block;background:var(--accent);color:#04202e;font-weight:700;padding:13px 26px;border-radius:8px;font-size:1.05rem;margin:6px}
+.btn:hover{background:#81d4fa;text-decoration:none}
+.btn-zip{background:#78909c;color:#fff}
+.verdict{display:inline-block;padding:6px 14px;border-radius:14px;font-weight:700;font-size:0.95rem}
+.verdict-ok{background:#1b5e20;color:#c8e6c9}
+.verdict-warn{background:#4a2800;color:#ffe0b2}
+.verdict-no{background:#5d1a1a;color:#ffcdd2}
+.copy-box{background:#1e2130;border:1px solid var(--border);border-radius:6px;padding:10px 14px;font-family:ui-monospace,monospace;font-size:0.9rem;margin:6px 0;word-break:break-all}
+.step{display:flex;align-items:flex-start;margin:12px 0}
+.step-num{background:var(--accent);color:#04202e;font-weight:700;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:12px;margin-top:2px}
+.footer{margin-top:36px;padding-top:18px;border-top:1px solid var(--border);font-size:0.85rem;color:#888}
+details{margin:16px 0;border:1px solid var(--border);border-radius:8px;padding:10px 14px;background:#141721}
+summary{cursor:pointer;color:var(--accent);font-weight:600}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>H98 — the lane's second disagreement case</h1>
+<p style="color:#999">View B confident, View A abstains · validated on the shared hide-and-recover
+instrument · <a href="index.html">back to the landing page</a></p>
+<p style="margin:10px 0"><span class="verdict verdict-no">verdict: negative</span></p>
+
+<div class="card">
+<p><strong>Why this arm existed.</strong> H97's channel screening measured this case — B confident,
+A abstains — at <strong>0.109480</strong> against a matched random mean of <strong>0.051925</strong>
+(+0.057555) on the prevalence-matched off-catalogue instrument. That contradicts the brief's stated
+prior for the case ("where B is confident and A is not, suspect surface artifacts"); the conflict is
+recorded in <code>registry/irregularities.json</code> and neither statement was deleted. The arm was
+then frozen in <code>registry/h98_preregistration.json</code> <em>before any H98 fit</em>, and validated
+here on the <em>other</em> instrument, which was never used to choose it.</p>
+</div>
+
+<h2>The validation numbers (HOLDOUT-DTI)</h2>
+<table>
+<tr><th>arm</th><th>pooled DTI</th><th>95% CI</th></tr>
+<tr><td><code>h98_bonly</code></td><td>0.058435</td><td>[0.043370, 0.075525]</td></tr><tr><td><code>single_B</code></td><td>0.054606</td><td>[0.041360, 0.069515]</td></tr><tr><td><code>random</code></td><td>0.077320</td><td>[0.068767, 0.087786]</td></tr>
+</table>
+<p>Paired <code>h98_bonly</code> − <code>random</code>: <strong>-0.018885</strong>
+[-0.030936, -0.007620] — the interval lies wholly below zero, so the arm
+is worse than the matched control on this instrument and the frozen promotion rule fails.
+Evaluator <code>gems52-pooled-hide-v1</code>, 60,894 withheld positive
+pixels, 9,400 dots per fold, buffer 80 px.</p>
+
+<h2>Why the two screens disagree, and what that means</h2>
+<div class="card">
+<p>The screening instrument's truth is SGMC-mapped fault pixels ≥300 m from the competition catalogue;
+the validation instrument's truth is the competition catalogue itself, hidden a quadrant at a time.
+The same arm scores <strong>+0.0576</strong> against one and <strong>−0.0189</strong> against the other.
+Both numbers are real and both are kept. The honest reading is that this arm does not survive a change
+of truth population, which is the same instrument-dependence this repository has measured all round
+(<code>knowledge/76</code> §6) — and it is the reason no H98 file is emitted.</p>
+</div>
+
+<h2>Gates that ran before and beside the validation</h2>
+<table>
+<tr><th>check</th><th>result</th></tr>
+<tr><td>Lane pre-check on the final dots (<code>scripts/check_h98_lane.py</code>)</td>
+    <td>policy <span class="pass">PASS</span> · max Spearman 0.01083 ·
+    max near-3px 0.4053</td></tr>
+<tr><td>Uniqueness at the pre-check (policy layer)</td>
+    <td>canonical unique True ·
+    novel fraction 0.6596 ·
+    strictly-novel-and-selective · 149 priors</td></tr>
+<tr><td>Leakage canary (alarm at 0.9)</td>
+    <td>no alarm · max AUC per arm: h98_bonly 0.5808, random 0.5023, single_B 0.5888</td></tr>
+</table>
+
+<h2>Limits</h2>
+<ul style="margin-left:20px">
+<li>The validation instrument measures <em>catalogue</em> truth; the board scores something else, and
+this repository has measured board-vs-instrument rank correlation near zero.</li>
+<li>The screen that selected this arm is a single-budget, single-instrument measurement and is
+attribution-only — it can never promote a file by itself.</li>
+<li>No organizer receipt exists for any file here; nothing on this page is an organizer-confirmed score.</li>
+</ul>
+
+<div class="footer">
+<p>Generated by <code>scripts/publish_h97_site.py</code> from <code>evidence/h98_holdout.json</code> and
+<code>evidence/h98_lane_precheck.json</code>. <a href="index.html">Landing page</a> ·
+<a href="h97.html">H97 round page</a> · <a href="executive-summary.html">Executive summary</a>.</p>
+</div>
+</div>
+</body>
+</html>

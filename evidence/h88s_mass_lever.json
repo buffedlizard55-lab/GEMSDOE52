@@ -1,0 +1,210 @@
+{
+  "stage": "mass_lever_verification",
+  "generated_utc": "2026-10-10T22:07:07.019059Z",
+  "champion": {
+    "path": "data/reference/h33-2-b2-zeros.tif",
+    "sha256": "c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9",
+    "meta": {
+      "dtype": "float32",
+      "shape": [
+        3730,
+        3292
+      ],
+      "crs": 32611,
+      "res": [
+        100.0,
+        100.0
+      ],
+      "nodata": null,
+      "compression": "Compression.deflate",
+      "tiled": true,
+      "bands": 1
+    },
+    "distinct_values": 2,
+    "binary": true,
+    "mass_S": 37654.0,
+    "positives": 37654,
+    "min_distance_to_catalogue_m": 223.60679774997897,
+    "median_distance_to_catalogue_m": 1964.68827043885,
+    "share_within_300m_pct": 5.76565570722898,
+    "M_kernel_cover": 277.938,
+    "M_over_S": 0.007381
+  },
+  "nested_pair_test": {
+    "parent": "data/scored/gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+    "parent_meta": {
+      "dtype": "float32",
+      "shape": [
+        3730,
+        3292
+      ],
+      "crs": 32611,
+      "res": [
+        100.0,
+        100.0
+      ],
+      "nodata": NaN,
+      "compression": "Compression.lzw",
+      "tiled": false,
+      "bands": 1
+    },
+    "parent_positives": 44090,
+    "parent_px_within_200m": 6436,
+    "parent_share_within_200m_pct": 14.597,
+    "champion_px_within_200m": 0,
+    "champion_minus_parent_px": 0,
+    "parent_minus_champion_px": 6436,
+    "parent_minus_champion_all_in_ring": true,
+    "champion_equals_parent_minus_ring": true
+  },
+  "mass_vs_score_table": [
+    {
+      "path": "data/reference/h33-2-b2-zeros.tif",
+      "mass": 37654.0,
+      "positives": 37654,
+      "binary": true,
+      "owner_reported_score": 0.2778,
+      "evidence_class": "OWNER/USER-REPORTED; NOT ORGANIZER-CONFIRMED"
+    },
+    {
+      "path": "data/scored/gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+      "mass": 44090.0,
+      "positives": 44090,
+      "binary": true,
+      "owner_reported_score": 0.26,
+      "evidence_class": "OWNER/USER-REPORTED; NOT ORGANIZER-CONFIRMED"
+    },
+    {
+      "path": "data/scored/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+      "mass": 60069.0,
+      "positives": 60069,
+      "binary": true,
+      "owner_reported_score": 0.2477,
+      "evidence_class": "OWNER/USER-REPORTED; NOT ORGANIZER-CONFIRMED"
+    },
+    {
+      "path": "data/scored/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
+      "mass": 61328.0,
+      "positives": 61328,
+      "binary": true,
+      "owner_reported_score": 0.2449,
+      "evidence_class": "OWNER/USER-REPORTED; NOT ORGANIZER-CONFIRMED"
+    },
+    {
+      "path": "data/scored/gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif",
+      "mass": 121131.0,
+      "positives": 121131,
+      "binary": true,
+      "owner_reported_score": 0.1922,
+      "evidence_class": "OWNER/USER-REPORTED; NOT ORGANIZER-CONFIRMED"
+    },
+    {
+      "path": "data/scored/gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif",
+      "mass": 123779.0,
+      "positives": 123779,
+      "binary": true,
+      "owner_reported_score": 0.1894,
+      "evidence_class": "OWNER/USER-REPORTED; NOT ORGANIZER-CONFIRMED"
+    },
+    {
+      "path": "data/scored/gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif",
+      "mass": 123939.0,
+      "positives": 123939,
+      "binary": true,
+      "owner_reported_score": 0.1855,
+      "evidence_class": "OWNER/USER-REPORTED; NOT ORGANIZER-CONFIRMED"
+    },
+    {
+      "path": "data/scored/gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif",
+      "mass": 69281.0,
+      "positives": 69281,
+      "binary": true,
+      "owner_reported_score": 0.1839,
+      "evidence_class": "OWNER/USER-REPORTED; NOT ORGANIZER-CONFIRMED"
+    },
+    {
+      "path": "data/scored/gemsdoe-ens12-adopted-7f00890a.tif",
+      "mass": 172974.0,
+      "positives": 172974,
+      "binary": true,
+      "owner_reported_score": 0.1563,
+      "evidence_class": "OWNER/USER-REPORTED; NOT ORGANIZER-CONFIRMED"
+    },
+    {
+      "path": "data/scored/8GEMSDOE_Hedge-v2_submission.tif",
+      "mass": 227507.0,
+      "positives": 227507,
+      "binary": true,
+      "owner_reported_score": 0.1563,
+      "evidence_class": "OWNER/USER-REPORTED; NOT ORGANIZER-CONFIRMED"
+    },
+    {
+      "path": "data/scored/gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif",
+      "mass": 174232.0,
+      "positives": 174232,
+      "binary": true,
+      "owner_reported_score": 0.128,
+      "evidence_class": "OWNER/USER-REPORTED; NOT ORGANIZER-CONFIRMED"
+    },
+    {
+      "path": "data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "mass": 206895.0,
+      "positives": 206895,
+      "binary": true,
+      "owner_reported_score": 0.0904,
+      "evidence_class": "OWNER/USER-REPORTED; NOT ORGANIZER-CONFIRMED"
+    },
+    {
+      "path": "data/scored/gemsdoe9-PLACEHOLDER-2314b599.tif",
+      "mass": 343816.0,
+      "positives": 343816,
+      "binary": true,
+      "owner_reported_score": 0.0107,
+      "evidence_class": "OWNER/USER-REPORTED; NOT ORGANIZER-CONFIRMED"
+    }
+  ],
+  "metric_inversion": {
+    "identity": "DTI = T / (0.2*(T + S - M) + 0.8*|G|),  FNw = |G| - T identically",
+    "M_measured": 277.9379531975857,
+    "S": 37654.0,
+    "implied_T_by_truth_size": {
+      "lower_5949": 3598.66,
+      "upper_12512": 5143.03,
+      "incumbent_14089": 5514.12
+    },
+    "knowledge76_implied_T_MequalsT_assumption": {
+      "lower_5949": 3414.16,
+      "upper_12512": 4872.72,
+      "incumbent_14089": 5223.2
+    },
+    "required_T_for_0_3195_at_S37654": {
+      "lower_5949": 4175.72,
+      "upper_12512": 5967.74,
+      "incumbent_14089": 6398.33
+    },
+    "required_T_for_0_3774_at_S37654": {
+      "lower_5949": 4994.23,
+      "upper_12512": 7137.51,
+      "incumbent_14089": 7652.51
+    },
+    "note": "knowledge/76 \u00a73 evaluates the reduced form DTI = T/(0.2 S + 0.8|G|), which is exact only when M = T. The champion's measured M = 277.938 against an implied T of thousands, so the reduced form is not exact here; the table above uses the measured M.",
+    "mass_for_0_3195_at_champion_credit_14089": 24700.7,
+    "mass_check_S_prime_gives_target": 0.3195,
+    "mass_for_0_3195_with_MequalsT_shortcut": 25384.2,
+    "credit_density_champion_pct": 14.64,
+    "credit_density_required_at_S37654_pct": 16.99,
+    "champion_implied_T_at_14089": 5514.12
+  },
+  "notes": [
+    "2314b599 (0.0107) is a PLACEHOLDER raster; excluded from the correlation"
+  ],
+  "spearman_mass_vs_score": {
+    "n": 12,
+    "rho": -0.9282,
+    "p": 0.0,
+    "excluded": [
+      "data/scored/gemsdoe9-PLACEHOLDER-2314b599.tif"
+    ],
+    "note": "PLACEHOLDER file excluded: its id in registry/data_manifest.json says the bytes are a stand-in, so its mass is not the real submission's mass"
+  }
+}

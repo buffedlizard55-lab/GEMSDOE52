@@ -1,0 +1,158 @@
+{
+  "stage": "build",
+  "generated_utc": "2026-10-10T01:28:46Z",
+  "target_px": 25400,
+  "emitted_px": 25400,
+  "allowed_px": 4325298,
+  "min_catalogue_distance_m": 223.60679774997897,
+  "within_300m_of_catalogue_px": 4162,
+  "spacing_px": 3.0,
+  "field_decoded_sha256": "d221d6b4a6f199ce2d384656bd4314edc77cecb1101227caf042c970a875d667",
+  "prediction_decoded_sha256": "c6fbccd67b14db1b630a99bec1c2cf28a35bb620388378ac7f9551e822465d38",
+  "surface_lane": {
+    "phase": "surface",
+    "instrument": "gems52.gates.lane_report (H61 shared-template repair)",
+    "evidence_class": "uniqueness/lane diagnostic, not a score",
+    "rule": "STOP at Spearman > 0.9 or directed <= 3 px dot proximity > 0.7; probes classified by measured coverage >= 0.95",
+    "priors_checked": 719,
+    "distinct_decoded_priors": 407,
+    "candidate_decoded_sha256": "d221d6b4a6f199ce2d384656bd4314edc77cecb1101227caf042c970a875d667",
+    "rank_pixels": 4593171,
+    "exact_full_eligible_rank": true,
+    "binary_spearman_method": "analytic phi (mid-rank affine)",
+    "n_dots": 0,
+    "literal": {
+      "max_spearman": 0.4632121117570601,
+      "max_near_3px_fraction": null,
+      "max_near_source": null,
+      "rank_offenders": [],
+      "near_offenders": [],
+      "identical": [],
+      "verdict": "PASS",
+      "note": "applied to every aligned prior including universal-coverage probes"
+    },
+    "policy": {
+      "max_spearman": 0.4632121117570601,
+      "max_near_3px_fraction": null,
+      "max_near_source": null,
+      "rank_offenders": [],
+      "near_offenders": [],
+      "identical": [],
+      "informative_priors": 702,
+      "universal_coverage_probes": 15,
+      "probe_paths": [
+        "data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+        "work/h97/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+        "work/h97/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+        "work/h97/priors/35616cbb48ac3533dd4c957b8acca57f71ba365f.tif",
+        "work/h97/priors/3d3ee66300203bdc878f3a052caabde671daf042.tif",
+        "work/h97/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+        "work/h97/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+        "work/h97/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+        "work/h97/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+        "work/h97/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+        "work/h97/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+        "work/h97/priors/c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+        "work/h97/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+        "work/h97/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+        "work/h97/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif"
+      ],
+      "probe_coverage": [
+        1.0,
+        0.9919031971594352,
+        0.9956951308801697,
+        0.9974396772948362,
+        1.0,
+        0.9999997822854843,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.9883130847947964,
+        0.9974396772948362,
+        1.0,
+        0.9885919770894661,
+        0.9883130847947964
+      ],
+      "verdict": "PASS",
+      "note": "the same literal rule restricted to priors that localise something; probe statistics are retained verbatim in per_prior and nothing is deleted"
+    },
+    "duplicate": false,
+    "ok": false,
+    "error_count": 2,
+    "errors": [
+      {
+        "path": "work/h97/priors/7c12ed8a4164ce549fc8c3114eb30eb7f898af09.tif",
+        "error": "ValueError: unaligned or multiband prior (1, (3730, 3292))"
+      },
+      {
+        "path": "work/h97/priors/a97c7b2a513225c9f9f2b35736afe5abf4d2a491.tif",
+        "error": "ValueError: unaligned or multiband prior (1, (32, 48))"
+      }
+    ],
+    "scope": "Supplied aligned immutable public inventory only; private/release/unlinked artifacts are not proven absent.",
+    "top_rank": [
+      [
+        0.4632121117570601,
+        "work/h97/priors/374c88b1da2b803e2ed160de467fd71ae114010d.tif"
+      ],
+      [
+        0.4287177637636651,
+        "work/h97/priors/f2c3c62e277a12d2fcc41728eb5e281ae119567e.tif"
+      ],
+      [
+        0.4287177637636651,
+        "work/h97/priors/e7271f8c701751de8e221c4afb5f0dfc48b1ad59.tif"
+      ],
+      [
+        0.3965245583165216,
+        "work/h97/priors/1601f23e9650163a9b53d7187bcc8a9316bad31a.tif"
+      ],
+      [
+        0.3964271740812183,
+        "work/h97/priors/57f1a3500d984b4f0e278119a40582246dbedb21.tif"
+      ]
+    ],
+    "top_near": [
+      [
+        0.0,
+        "work/h97/priors/ff071608a5b837ca5f351302844319747104523c.tif",
+        false
+      ],
+      [
+        0.0,
+        "work/h97/priors/fec7d59fa6a5a10e9f45154abef19a6013158714.tif",
+        false
+      ],
+      [
+        0.0,
+        "work/h97/priors/fe3071fafc209240d188af4b4201f10e39c030eb.tif",
+        false
+      ],
+      [
+        0.0,
+        "work/h97/priors/fdd931161c431a583cf7039362e51832e59d07ad.tif",
+        false
+      ],
+      [
+        0.0,
+        "work/h97/priors/fd56d5c4806521438ee89cc9bd7dd1cf89e9fd44.tif",
+        false
+      ]
+    ]
+  },
+  "not_the_union": {
+    "equals_single_A": false,
+    "equals_single_B": false,
+    "equals_equal_budget_union_field": false,
+    "equals_literal_set_union": false,
+    "jaccard_single_A": 0.005582168731937131,
+    "jaccard_single_B": 0.12946617159881718,
+    "jaccard_union_field": 0.0782128833704765,
+    "jaccard_set_union": 0.08628264758497317,
+    "dots_outside_union_field": 21715,
+    "dots_outside_set_union": 19371,
+    "gate": true
+  },
+  "surface_literal_rank_gate_pass": true
+}

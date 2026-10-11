@@ -1,0 +1,51 @@
+{
+  "stage": "views",
+  "registration": {
+    "preregistration_sha256": "02668421f590ea8f4f13aa7052a4f3240beb410214db9ef80b7ac8a8e8f96703",
+    "hypothesis_bytes": 8801,
+    "frozen_before_any_fit": true
+  },
+  "eligible_px": 5164300,
+  "weights_A": {
+    "grav_hg": 0.22,
+    "mag_hg": 0.18,
+    "cover_step": 0.22,
+    "seis_line": 0.13,
+    "strain_step": 0.1,
+    "mag_vg": 0.1,
+    "cond": 0.05
+  },
+  "weights_B": {
+    "slope": 0.14,
+    "ridge_curv": 0.18,
+    "topo_edge": 0.12,
+    "K_over_Th": 0.08,
+    "tc": 0.06,
+    "scarp_ex_max": 0.1,
+    "scarp_step_max": 0.1,
+    "scarp_upface_max": 0.08,
+    "scarp_relief": 0.05,
+    "scarp_coh100": 0.04,
+    "rad_ThK": 0.02,
+    "rad_UK": 0.02,
+    "rad_UTh": 0.01
+  },
+  "lidar_ext_coverage": {
+    "scarp_ex_max": 0.31705621557174923,
+    "scarp_step_max": 0.31705621557174923,
+    "scarp_upface_max": 0.26119050488795653,
+    "scarp_relief": 0.31705621557174923,
+    "scarp_coh100": 0.3162188618765453,
+    "rad_ThK": 0.42071973978676064,
+    "rad_UK": 0.42071973978676064,
+    "rad_UTh": 0.42071973978676064
+  },
+  "view_correlation": -0.04423186891251048,
+  "features_sha256": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+  "labels_sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+  "rad_sha256": "c22420f75999030d7cc65c9e31e50d232ea6158423bca051613a18a8b20ba682",
+  "extensions_sha256": "a35a9c6d2a14786f4dab85481ee59769213072f5dab5b2535ea82ae4d9bb7d9b",
+  "lidar_sha256": "d580bb8bdcdb941e32fefb8b38044bc5bf04e199bf2e83498c3576e6fc465568",
+  "difference_from_H96": "View B adds lidar scarp bands 1,3,7,9,10 and geodawn_extensions bands 1,2,3",
+  "generated_utc": "2026-10-11T00:16:19+00:00"
+}

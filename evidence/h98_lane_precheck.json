@@ -1,0 +1,55 @@
+{
+  "schema": "h98-lane-precheck-v1",
+  "stage": "precheck",
+  "evidence_class": "lane/uniqueness diagnostic, not a score",
+  "budget_K": 37654,
+  "dots": 37654,
+  "lane": {
+    "literal": "DUPLICATE/STOP",
+    "policy": "PASS",
+    "max_spearman": 0.01082772666036328,
+    "max_near_3px_fraction": 0.4053487013331917,
+    "max_near_source": "/home/user/GEMSDOE52/docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-zeros.tif",
+    "informative_priors": 148,
+    "universal_coverage_probes": 1,
+    "probes": [
+      "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif"
+    ]
+  },
+  "uniqueness": {
+    "canonical_pattern_unique": true,
+    "novel_fraction": 0.6596377542890529,
+    "support_novelty_gate_ok": true,
+    "identical_to_a_prior": false,
+    "relation_to_union": "strictly-novel-and-selective",
+    "n_priors_checked": 149
+  },
+  "closest_five_by_dot_proximity": [
+    {
+      "path": "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "near_3px_fraction": 0.9976363732936739,
+      "spearman": -3.251057754524269e-05
+    },
+    {
+      "path": "/home/user/GEMSDOE52/docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-nan.tif",
+      "near_3px_fraction": 0.4053487013331917,
+      "spearman": 0.007434863239367205
+    },
+    {
+      "path": "/home/user/GEMSDOE52/docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-zeros.tif",
+      "near_3px_fraction": 0.4053487013331917,
+      "spearman": 0.007434863239367205
+    },
+    {
+      "path": "/home/user/GEMSDOE52/submission/gems52-h72-spsc-spring-structural-80000px-20261009T163622Z-02e374d49d52.tif",
+      "near_3px_fraction": 0.2850427577415414,
+      "spearman": 0.007808908581225966
+    },
+    {
+      "path": "/home/user/GEMSDOE52/docs/downloads/h72-candidate-spsc.tif",
+      "near_3px_fraction": 0.2850427577415414,
+      "spearman": 0.007808908581225966
+    }
+  ],
+  "decision": "proceed-to-validation"
+}

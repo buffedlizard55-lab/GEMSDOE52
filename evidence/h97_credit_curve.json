@@ -1,0 +1,220 @@
+{
+  "schema": "h97-credit-curve-v1",
+  "g_bracket_px": 14088.7,
+  "target": 0.3195,
+  "assumption": "M = T (no redundant credit between emitted pixels); knowledge/76 \u00a73 uses the same and shows the required-ratio result is |G|-invariant",
+  "evidence_class": "OWNER-REPORTED scores inverted through the organizer's published identity",
+  "rows": [
+    {
+      "file": "gemsdoe9-PLACEHOLDER-2314b599.tif",
+      "owner_reported_score": 0.0107,
+      "emitted_mass_S": 343816.0,
+      "positive_pixels": 343816,
+      "implied_credited_mass_T": 856.365512,
+      "credit_per_emitted_pixel": 0.0024907668985736557,
+      "max_value": 1.0,
+      "distinct_values": 2
+    },
+    {
+      "file": "8GEMSDOE_Hedge-v2_submission.tif",
+      "owner_reported_score": 0.1563,
+      "emitted_mass_S": 227507.0,
+      "positive_pixels": 227507,
+      "implied_credited_mass_T": 8873.519868,
+      "credit_per_emitted_pixel": 0.039003282835253415,
+      "max_value": 1.0,
+      "distinct_values": 2
+    },
+    {
+      "file": "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "owner_reported_score": 0.0904,
+      "emitted_mass_S": 206895.0,
+      "positive_pixels": 206895,
+      "implied_credited_mass_T": 4759.5563839999995,
+      "credit_per_emitted_pixel": 0.0230046950578796,
+      "max_value": 1.0,
+      "distinct_values": 2
+    },
+    {
+      "file": "gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif",
+      "owner_reported_score": 0.128,
+      "emitted_mass_S": 174232.0,
+      "positive_pixels": 174232,
+      "implied_credited_mass_T": 5903.022080000001,
+      "credit_per_emitted_pixel": 0.03388024059874191,
+      "max_value": 1.0,
+      "distinct_values": 2
+    },
+    {
+      "file": "gemsdoe-ens12-adopted-7f00890a.tif",
+      "owner_reported_score": 0.1563,
+      "emitted_mass_S": 172974.0,
+      "positive_pixels": 172974,
+      "implied_credited_mass_T": 7168.818288,
+      "credit_per_emitted_pixel": 0.04144448465087239,
+      "max_value": 1.0,
+      "distinct_values": 2
+    },
+    {
+      "file": "gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif",
+      "owner_reported_score": 0.1855,
+      "emitted_mass_S": 123939.0,
+      "positive_pixels": 123939,
+      "implied_credited_mass_T": 6688.89998,
+      "credit_per_emitted_pixel": 0.05396929118356611,
+      "max_value": 1.0,
+      "distinct_values": 2
+    },
+    {
+      "file": "gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif",
+      "owner_reported_score": 0.1894,
+      "emitted_mass_S": 123779.0,
+      "positive_pixels": 123779,
+      "implied_credited_mass_T": 6823.468344000001,
+      "credit_per_emitted_pixel": 0.05512621966569451,
+      "max_value": 1.0,
+      "distinct_values": 2
+    },
+    {
+      "file": "gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif",
+      "owner_reported_score": 0.1922,
+      "emitted_mass_S": 121131.0,
+      "positive_pixels": 121131,
+      "implied_credited_mass_T": 6822.554152000001,
+      "credit_per_emitted_pixel": 0.056323766434686416,
+      "max_value": 1.0,
+      "distinct_values": 2
+    },
+    {
+      "file": "gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif",
+      "owner_reported_score": 0.1839,
+      "emitted_mass_S": 69281.0,
+      "positive_pixels": 69281,
+      "implied_credited_mass_T": 4620.8847240000005,
+      "credit_per_emitted_pixel": 0.06669771977887155,
+      "max_value": 1.0,
+      "distinct_values": 2
+    },
+    {
+      "file": "gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
+      "owner_reported_score": 0.2449,
+      "emitted_mass_S": 61328.0,
+      "positive_pixels": 61328,
+      "implied_credited_mass_T": 5764.1035440000005,
+      "credit_per_emitted_pixel": 0.09398812196712758,
+      "max_value": 1.0,
+      "distinct_values": 2
+    },
+    {
+      "file": "gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+      "owner_reported_score": 0.2477,
+      "emitted_mass_S": 60069.0,
+      "positive_pixels": 60069,
+      "implied_credited_mass_T": 5767.6350520000005,
+      "credit_per_emitted_pixel": 0.09601683151042968,
+      "max_value": 1.0,
+      "distinct_values": 2
+    },
+    {
+      "file": "gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+      "owner_reported_score": 0.26,
+      "emitted_mass_S": 44090.0,
+      "positive_pixels": 44090,
+      "implied_credited_mass_T": 5223.1296,
+      "credit_per_emitted_pixel": 0.11846517577682014,
+      "max_value": 1.0,
+      "distinct_values": 2
+    },
+    {
+      "file": "h33-2-b2-zeros.tif",
+      "owner_reported_score": 0.2778,
+      "emitted_mass_S": 37654.0,
+      "positive_pixels": 37654,
+      "implied_credited_mass_T": 5223.128928,
+      "credit_per_emitted_pixel": 0.13871378679555957,
+      "max_value": 1.0,
+      "distinct_values": 2
+    }
+  ],
+  "spearman_mass_vs_score": -0.943604744115451,
+  "spearman_p": 1.293424644727524e-06,
+  "loglog_elasticity": {
+    "slope": -0.9172298013701896,
+    "intercept": 8.744915848007423
+  },
+  "marginal_transitions_descending_mass": [
+    {
+      "mass_removed": 116309.0,
+      "credit_lost": -8017.154355999999,
+      "credit_per_removed_pixel": 0.06892978493495773
+    },
+    {
+      "mass_removed": 20612.0,
+      "credit_lost": 4113.963484,
+      "credit_per_removed_pixel": -0.19959069881622354
+    },
+    {
+      "mass_removed": 32663.0,
+      "credit_lost": -1143.4656960000011,
+      "credit_per_removed_pixel": 0.03500798138566577
+    },
+    {
+      "mass_removed": 1258.0,
+      "credit_lost": -1265.7962079999998,
+      "credit_per_removed_pixel": 1.0061973036565977
+    },
+    {
+      "mass_removed": 49035.0,
+      "credit_lost": 479.91830800000025,
+      "credit_per_removed_pixel": -0.009787260283470996
+    },
+    {
+      "mass_removed": 160.0,
+      "credit_lost": -134.56836400000066,
+      "credit_per_removed_pixel": 0.8410522750000041
+    },
+    {
+      "mass_removed": 2648.0,
+      "credit_lost": 0.9141920000001846,
+      "credit_per_removed_pixel": -0.00034523867069493377
+    },
+    {
+      "mass_removed": 51850.0,
+      "credit_lost": 2201.669428,
+      "credit_per_removed_pixel": -0.04246228405014465
+    },
+    {
+      "mass_removed": 7953.0,
+      "credit_lost": -1143.21882,
+      "credit_per_removed_pixel": 0.1437468653338363
+    },
+    {
+      "mass_removed": 1259.0,
+      "credit_lost": -3.5315080000000307,
+      "credit_per_removed_pixel": 0.0028050103256553062
+    },
+    {
+      "mass_removed": 15979.0,
+      "credit_lost": 544.5054520000003,
+      "credit_per_removed_pixel": -0.034076315914637986
+    },
+    {
+      "mass_removed": 6436.0,
+      "credit_lost": 0.0006720000001223525,
+      "credit_per_removed_pixel": -1.0441267870142207e-07
+    }
+  ],
+  "marginal_pay_for_itself_threshold_credit": {
+    "at_DTI_0.1": 0.020000000000000004,
+    "at_DTI_0.2": 0.04000000000000001,
+    "at_DTI_0.2778": 0.05556,
+    "at_DTI_0.3195": 0.0639
+  },
+  "targets": {
+    "mass_for_0.2778_at_champion_T": 37654.0,
+    "T_for_0.2778_at_champion_mass": 5223.128928,
+    "mass_for_0.3195_at_champion_T": 25384.30685446009,
+    "T_for_0.3195_at_champion_mass": 6007.16232
+  },
+  "reading": "implied T varies by 8.0x across files (random-grade to lineage-grade) while S varies by 9.1x; within the champion's own lineage T moves only 1.31x while S moves 2.75x, so the recorded score gains in that lineage are mass-driven"
+}

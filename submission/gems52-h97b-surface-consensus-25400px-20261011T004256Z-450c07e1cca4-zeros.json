@@ -1,0 +1,64 @@
+{
+  "file": "gems52-h97b-surface-consensus-25400px-20261011T004256Z-450c07e1cca4-zeros.tif",
+  "sha256": "1b0b00aa711fde1a0e7dfbdb3680bc9f8652a09f7ff6ee3709e7ccafda9656a2",
+  "bytes": 111139,
+  "submission_name": "gems52-h97b-surface-consensus-25400px-20261011T004256Z-450c07e1cca4-zeros",
+  "note": "H97b lane-distinct: surface view (LiDAR scarp + radiometric ratios) ranked, View A as screen and B-only veto; 25,400 dots; 3px; 200m collar",
+  "note_chars": 139,
+  "validator": {
+    "path": "/home/user/GEMSDOE52/submission/gems52-h97b-surface-consensus-25400px-20261011T004256Z-450c07e1cca4-zeros.tif",
+    "bytes": 111139,
+    "sha256": "1b0b00aa711fde1a0e7dfbdb3680bc9f8652a09f7ff6ee3709e7ccafda9656a2",
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "ref_bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "nodata": null,
+    "blocksize": [
+      256,
+      256
+    ],
+    "fixture_grid": false,
+    "has_validity_mask": false,
+    "nan_pixels": 0,
+    "infinity_pixels": 0,
+    "n_nan": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.002068545436486602,
+    "n_nonzero": 25400,
+    "mass": 25400.0,
+    "mass_outside_footprint": 0,
+    "problems": [],
+    "ok": true,
+    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "zip_file": "gems52-h97b-surface-consensus-25400px-20261011T004256Z-450c07e1cca4-zeros.zip",
+  "zip_sha256": "6294559b541a65c571eb92f5736cd6218ad7facaed4f4a7798890020c8217c42",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "status": "research-only; local format validation is not organizer acceptance",
+  "metadata": {}
+}

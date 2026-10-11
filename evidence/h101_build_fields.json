@@ -1,0 +1,16 @@
+{
+ "stage": "build_fields",
+ "pool_px": 4325298,
+ "eligible_px": 4593171,
+ "b_only_px": 97755,
+ "vetoed_px": 17598,
+ "vetoed_erosion_px": 16152,
+ "vetoed_road_px": 1751,
+ "b_only_erosion_fraction": 0.16522940003068898,
+ "b_only_road_fraction": 0.017912127256917806,
+ "null_erosion": 0.3333333333333333,
+ "null_road": 0.05555555555555555,
+ "a_only_px": 52493,
+ "a_only_candidates": 9277,
+ "finished_utc": "2026-10-11T00:17:20+00:00"
+}

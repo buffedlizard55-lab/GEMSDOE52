@@ -1,0 +1,102 @@
+{
+  "schema": "h97-channel-screen-v1",
+  "stage": "screening",
+  "evidence_class": "PROXY-INSTRUMENT attribution, NOT promotable (post-hoc selection is forbidden)",
+  "instrument": {
+    "instrument": "gems52-offcatalogue-prevalence-matched-v1",
+    "raw_candidate_px": 62084,
+    "truth_px": 14089,
+    "target_px": 14089,
+    "cut_m": 300.0,
+    "seed": 88052,
+    "prevalence_note": "thinned to the incumbent |G| bracket (knowledge/76 \u00a73), which the unthinned H83 instrument lacked"
+  },
+  "budget_K": 37654,
+  "placement": "spacing_select min_px 3.0, 200 m ring removed",
+  "random_controls": [
+    {
+      "seed": 88078,
+      "dti": 0.05253847676419991,
+      "credit_per_dot": 0.02630669867110662
+    },
+    {
+      "seed": 88079,
+      "dti": 0.05101067695498425,
+      "credit_per_dot": 0.025536139666029595
+    },
+    {
+      "seed": 88080,
+      "dti": 0.052226321544738184,
+      "credit_per_dot": 0.026144057404822507
+    }
+  ],
+  "random_mean_dti": 0.05192515842130745,
+  "channels": {
+    "h97_disagree  (primary this round)": {
+      "dti": 0.0050230615241286525,
+      "tpw": 94.44605559447484,
+      "mass": 37654,
+      "credit_per_dot": 0.0025082608911264365,
+      "lift_vs_random_mean": -0.0469020968971788
+    },
+    "view_A_rank   (potential-field edge)": {
+      "dti": 0.04375223646866173,
+      "tpw": 822.6010147296906,
+      "mass": 37654,
+      "credit_per_dot": 0.021846311540067206,
+      "lift_vs_random_mean": -0.008172921952645726
+    },
+    "view_B_rank   (surface family)": {
+      "dti": 0.0950507084934635,
+      "tpw": 1789.3976090683962,
+      "mass": 37654,
+      "credit_per_dot": 0.04752211210146057,
+      "lift_vs_random_mean": 0.04312555007215605
+    },
+    "b_only        (B conf, A abstains)": {
+      "dti": 0.10947986513606446,
+      "tpw": 2060.321658890377,
+      "mass": 37654,
+      "credit_per_dot": 0.05471720557949692,
+      "lift_vs_random_mean": 0.05755470671475701
+    },
+    "cover_pct     (band 15 rank)": {
+      "dti": 0.013664945763153039,
+      "tpw": 256.8372214253439,
+      "mass": 37654,
+      "credit_per_dot": 0.006820981075724861,
+      "lift_vs_random_mean": -0.038260212658154415
+    },
+    "band12_curv   (DEM curvature sigma 2)": {
+      "dti": 0.11726263445629444,
+      "tpw": 2212.2105305577707,
+      "mass": 37654,
+      "credit_per_dot": 0.05875101000047195,
+      "lift_vs_random_mean": 0.06533747603498699
+    },
+    "band18_grav_hg(gradient sigma 2)": {
+      "dti": 0.029520336860209283,
+      "tpw": 554.7803888160943,
+      "mass": 37654,
+      "credit_per_dot": 0.014733637563501734,
+      "lift_vs_random_mean": -0.02240482156109817
+    },
+    "band2_rtp_grad(gradient sigma 2)": {
+      "dti": 0.04244617441530019,
+      "tpw": 798.0851506056517,
+      "mass": 37654,
+      "credit_per_dot": 0.021195228942626328,
+      "lift_vs_random_mean": -0.00947898400600726
+    },
+    "band6_rad_sm4 (radiometric TC)": {
+      "dti": 0.025057688461632283,
+      "tpw": 470.8997667901083,
+      "mass": 37654,
+      "credit_per_dot": 0.012505969267278597,
+      "lift_vs_random_mean": -0.02686746995967517
+    }
+  },
+  "reading": "the disagreement field is below the matched random control; view_A and view_B are both below it too, so this round's failure is not one bad combination but the whole catalogue-free ranking family on off-catalogue truth",
+  "next_round_rule": "if any channel is to ship, it must be pre-registered fresh as a primary before any fit in the next session, with this screening cited only as the prior belief",
+  "elapsed_seconds": 194.9
+}

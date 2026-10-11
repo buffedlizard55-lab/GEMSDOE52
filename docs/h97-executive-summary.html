@@ -1,0 +1,53 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GEMSDOE52 — H97 executive summary (download-only)</title>
+<link rel="stylesheet" href="assets/ctd5.css"></head><body>
+<h1>H97 executive summary</h1>
+<p style="color:#999">Generated from <code>evidence/h97_build.json</code> and
+<code>evidence/h97_holdout.json</code> by <code>scripts/publish_h97_site.py</code>.</p>
+
+<div class="card" style="border-color:#ffa726">
+<h2>One line</h2>
+<p><b>Download:</b> yes — a unique, format-valid GeoTIFF.
+<b>Submit:</b> no — it scores below a matched random control on the round's frozen hide-and-recover test.
+<b>Slots used:</b> 0. <b>Certified leaderboard gain:</b> none; this repository has no organiser receipt for
+any file.</p>
+</div>
+
+<h2>The file</h2>
+<p><code>gems52-h97-cotrain-disagree-sparse-37654px-20261010T224136Z.tif</code> — single-band float32, EPSG:32611, 3730 × 3292 at 100 m, exactly
+37,654 cells at 1.0 and zeros elsewhere, every pixel finite in [0, 1] (the
+portal's "Predicted values must be in range [0, 1]" rule cannot fail on it).
+SHA-256 <code>eed99c0b544b1731a4dd2e10c2f4db65a90316e149c3c4a6673256459d95f5f2</code>. ZIP contains exactly this one TIFF.</p>
+<p><b>Submission name:</b> <code>h97-cotrain-sparse-37654px</code><br>
+<b>Note (117/140):</b> <code>H97 co-train A-conf/B-abstain, 37654px, 3px spacing, 200m ring, budget from prevalence-matched off-cat, zeros-outside</code></p>
+
+<h2>What it is</h2>
+<p>The file is the brief's own lane: both views are co-trained, and a cell is emitted only where the
+potential-field view is confident while the surface view abstains, with a cover gate on the depth-to-basement
+band, at 3 px minimum spacing and with a 200 m ring around the known catalogue. A written geological reason
+and an explicit falsifier accompany every one of the 37,654 dots
+(<a href="downloads/h97-a-only-reasoning.csv.gz">CSV</a>).</p>
+
+<h2>Why it is download-only</h2>
+<table>
+<tr><th>Evidence</th><th>Value</th></tr>
+<tr><td>HOLDOUT-DTI (evaluator <code>gems52-pooled-hide-v1</code>, 60,894 withheld positives, 4 folds)</td>
+<td>0.045947 [0.033706, 0.059307]</td></tr>
+<tr><td>Matched random control, same instrument</td><td>0.076551 [0.068175, 0.084557]</td></tr>
+<tr><td>Paired difference (this file − random)</td><td>-0.030604 [-0.043238, -0.016560]</td></tr>
+<tr><td>Format, read back from disk</td><td>14/14 checks pass, no NaN, no nodata tag</td></tr>
+<tr><td>Uniqueness (decoded pixels, 147 priors)</td><td>unique — novel fraction 0.6725, relation <code>strictly-novel-and-selective</code></td></tr>
+<tr><td>Lane gate</td><td>policy PASS (literal rule stopped on one universal-coverage raster — IR-H97-001)</td></tr>
+</table>
+
+<h2>If you decide to spend a slot anyway</h2>
+<ol><li>Download the TIFF from <a href="index.html">the landing page</a>.</li>
+<li>Upload it at the DrivenData submission page.</li>
+<li>Paste the name and note above.</li>
+<li>Record the result in <code>evidence/</code> so the next round can learn from it — the organiser's
+score is the only measurement that would make any claim here certified.</li></ol>
+
+<p>Read more: <a href="h97.html">H97 round page</a> · <a href="h98.html">H98 validation page</a> ·
+<a href="https://github.com/buffedlizard55-lab/GEMSDOE52">repository</a>.</p>
+</body></html>

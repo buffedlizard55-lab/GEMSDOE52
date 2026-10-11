@@ -1,0 +1,14 @@
+{
+ "dots_emitted": 37600,
+ "union_max_dots": 37600,
+ "dots_equal_union": false,
+ "dots_equal_single_A": false,
+ "dots_equal_single_B": false,
+ "dots_subset_of_union": false,
+ "shared_with_union": 1179,
+ "jaccard_with_union": 0.0159279123491982,
+ "shared_with_single_A": 2938,
+ "jaccard_with_single_A": 0.04065760704104509,
+ "shared_with_single_B": 0,
+ "jaccard_with_single_B": 0.0
+}

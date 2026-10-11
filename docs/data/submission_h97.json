@@ -1,0 +1,193 @@
+{
+  "round": "H97",
+  "stage": "build",
+  "evidence_class": "local validation only; not organizer acceptance",
+  "hypothesis": "co-training disagreement (A confident, B abstains) with the emitted budget chosen on a prevalence-matched off-catalogue instrument",
+  "mechanism": "density/susceptibility edges with no surface expression = structure buried under cover, i.e. the population the surface-mapped catalogue is least likely to hold",
+  "non_fault_confounder": "lithologic contacts and intrusive margins; palaeo-channel thalwegs; playa/salina edges; anthropogenic linears (roads, canals)",
+  "k_star": 37654,
+  "k_star_rule": {
+    "k_star": 37654,
+    "best_K_measuring": null,
+    "best_dti": -1.0,
+    "dti_at_full_budget": 0.0050230615241286525,
+    "minimum_gain_required": 0.001,
+    "rule": "K* = argmax instrument-2 DTI iff it is < 37654 AND >= full-budget DTI + 0.001 AND > the matched random control; otherwise K* = 37654"
+  },
+  "holdout_dti": {
+    "arm": "h97_disagree",
+    "dti": 0.04594740031767762,
+    "ci95": [
+      0.03370645414559958,
+      0.059307032882270225
+    ],
+    "evaluator": "gems52-pooled-hide-v1",
+    "withheld_positive_px": 60894,
+    "random_dti": 0.07655090995242028,
+    "paired_vs_random": [
+      -0.030603509634742662,
+      [
+        -0.043238228802808684,
+        -0.016560486466771347
+      ]
+    ]
+  },
+  "instrument2": {
+    "8000": {
+      "placement": "spacing_select 3 px, 200 m catalogue ring removed, full footprint",
+      "expected_mass": 8000,
+      "random_expected_mass": 8000,
+      "dti": 0.001124864769837973,
+      "tpw": 14.478294600550273,
+      "fpw": 7985.233559704154,
+      "n_truth": 14089,
+      "credit_per_dot": 0.0018097867723554373,
+      "random_dti": 0.016399071814866707,
+      "random_credit_per_dot": 0.02641003020107746
+    },
+    "15000": {
+      "placement": "spacing_select 3 px, 200 m catalogue ring removed, full footprint",
+      "expected_mass": 15000,
+      "random_expected_mass": 15000,
+      "dti": 0.0023860077096313583,
+      "tpw": 34.05166365372759,
+      "fpw": 14966.934142122685,
+      "n_truth": 14089,
+      "credit_per_dot": 0.002270110882818699,
+      "random_dti": 0.02810817713852282,
+      "random_credit_per_dot": 0.02678615041077137
+    },
+    "25517": {
+      "placement": "spacing_select 3 px, 200 m catalogue ring removed, full footprint",
+      "expected_mass": 25517,
+      "random_expected_mass": 25517,
+      "dti": 0.003487516900133307,
+      "tpw": 57.10770911386817,
+      "fpw": 25461.34731028013,
+      "n_truth": 14089,
+      "credit_per_dot": 0.002238025888800621,
+      "random_dti": 0.042326317326004864,
+      "random_credit_per_dot": 0.02722528763115406
+    },
+    "30000": {
+      "placement": "spacing_select 3 px, 200 m catalogue ring removed, full footprint",
+      "expected_mass": 30000,
+      "random_expected_mass": 30000,
+      "dti": 0.004003959762229144,
+      "tpw": 69.15467359104302,
+      "fpw": 29932.698174238532,
+      "n_truth": 14089,
+      "credit_per_dot": 0.0023051556199789047,
+      "random_dti": 0.04663172910028882,
+      "random_credit_per_dot": 0.02691391110420227
+    },
+    "37654": {
+      "placement": "spacing_select 3 px, 200 m catalogue ring removed, full footprint",
+      "expected_mass": 37654,
+      "random_expected_mass": 37654,
+      "dti": 0.0050230615241286525,
+      "tpw": 94.44605559447484,
+      "fpw": 37561.99550101014,
+      "n_truth": 14089,
+      "credit_per_dot": 0.002508260775357485,
+      "random_dti": 0.05337184169019906,
+      "random_credit_per_dot": 0.026724940165877342
+    }
+  },
+  "independence": {
+    "negative_mean_squared_error": {
+      "n": 6390,
+      "pearson": 0.07187841052346154,
+      "spearman": 0.08917160488174011
+    },
+    "negative_false_positive_rate": {
+      "n": 6390,
+      "pearson": 0.10597627917738958,
+      "spearman": 0.09720645031857728
+    }
+  },
+  "format_checks": {
+    "single_band": true,
+    "float32": true,
+    "shape_match": true,
+    "crs_match": true,
+    "transform_match": true,
+    "all_finite": true,
+    "in_0_1": true,
+    "binary": true,
+    "nodata_none": true,
+    "ones": 37654,
+    "budget_match": true,
+    "outside_domain_zero": true,
+    "on_catalogue_zero": true,
+    "collar_respected": true,
+    "min_spacing_px": 3.0,
+    "spacing_ok": true
+  },
+  "format_ok": true,
+  "uniqueness": {
+    "canonical_pattern_unique": true,
+    "support_novelty_gate_ok": true,
+    "novel_fraction": 0.6725181919583577,
+    "relation_to_union": "strictly-novel-and-selective",
+    "n_priors_checked": 147,
+    "identical_to_a_prior": false
+  },
+  "lane": {
+    "literal": "DUPLICATE/STOP",
+    "policy": "PASS",
+    "literal_max_spearman": 0.025694775462692273,
+    "literal_max_near_3px_fraction": 0.9992298295001859,
+    "literal_max_near_source": "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    "literal_rank_offenders": [],
+    "literal_near_offenders": [
+      "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif"
+    ],
+    "max_spearman": 0.025694775462692273,
+    "max_near_3px_fraction": 0.41456418972751896,
+    "max_near_source": "/home/user/GEMSDOE52/submission/gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.tif",
+    "informative_priors": 146,
+    "universal_coverage_probes": 1,
+    "probe_paths": [
+      "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif"
+    ],
+    "probe_coverage": [
+      0.9990273609201634
+    ],
+    "full_receipt": "evidence/h97_lane_dots.json"
+  },
+  "not_merely_the_union": {
+    "candidate_px": 37654,
+    "single_A_px": 37654,
+    "single_B_px": 37654,
+    "union_px": 74984,
+    "candidate_inside_union": 2136,
+    "candidate_share_inside_union": 0.05672704095182451,
+    "candidate_equals_union": false,
+    "jaccard_candidate_vs_union": 0.01932996687842754,
+    "note": "the candidate is the disagreement field's own top-K, not the union of the single-view top-K sets; the share inside the union quantifies how much of it the two views alone would have produced"
+  },
+  "submission_name": "h97-cotrain-sparse-37654px",
+  "note": "H97 co-train A-conf/B-abstain, 37654px, 3px spacing, 200m ring, budget from prevalence-matched off-cat, zeros-outside",
+  "note_chars": 117,
+  "file": "/home/user/GEMSDOE52/submission/gems52-h97-cotrain-disagree-sparse-37654px-20261010T224136Z.tif",
+  "file_bytes": 125032,
+  "sha256": "eed99c0b544b1731a4dd2e10c2f4db65a90316e149c3c4a6673256459d95f5f2",
+  "zip_file": "/home/user/GEMSDOE52/submission/gems52-h97-cotrain-disagree-sparse-37654px-20261010T224136Z.zip",
+  "zip_sha256": "9e2e25da35616ede1d71bf5ac39db810292f6fe136125b020d4d2fa369345613",
+  "site_download": "/home/user/GEMSDOE52/docs/downloads/h97-candidate.tif",
+  "reasoning_rows": 37654,
+  "verdict": "negative",
+  "build_time_s": 267.8,
+  "band6_recheck": {
+    "band6_vs_geodawn_tc_spearman": 0.9988989469649551,
+    "n": 200000,
+    "rad_band_used": 4,
+    "rad_descriptions": [
+      "k",
+      "th",
+      "u",
+      "tc"
+    ]
+  }
+}

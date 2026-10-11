@@ -1,0 +1,93 @@
+{
+  "file": "gems52-h88-cotrain-disagreement-suffscreen-31156px-20261010T233522Z.tif",
+  "sha256": "124081c0c05fc882ed8c04a2b036c574d4208c10275bb2ede90dd4d2d52246a7",
+  "bytes": 129943,
+  "submission_name": "h88-cotrain-disagreement-31156px",
+  "note": "H88 co-train lane: B-corroborated, A-only suppressed, 31156px, 3px spacing, 200m collar",
+  "note_chars": 87,
+  "validator": {
+    "path": "/home/user/GEMSDOE52/submission/gems52-h88-cotrain-disagreement-suffscreen-31156px-20261010T233522Z.tif",
+    "bytes": 129943,
+    "sha256": "124081c0c05fc882ed8c04a2b036c574d4208c10275bb2ede90dd4d2d52246a7",
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "ref_bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "nodata": null,
+    "blocksize": [
+      256,
+      256
+    ],
+    "fixture_grid": false,
+    "has_validity_mask": false,
+    "nan_pixels": 0,
+    "infinity_pixels": 0,
+    "n_nan": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.002537307096645236,
+    "n_nonzero": 31156,
+    "mass": 31156.0,
+    "mass_outside_footprint": 0,
+    "problems": [],
+    "ok": true,
+    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "zip_file": "gems52-h88-cotrain-disagreement-suffscreen-31156px-20261010T233522Z.zip",
+  "zip_sha256": "cd78058e8abbd3ecb824a73c78d55b51bad525dd2d444ef9300967c4c3786e41",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "status": "research-only; local format validation is not organizer acceptance",
+  "metadata": {
+    "round": "H88",
+    "budget_rule": "knowledge/80a amendment 80b: the budget curve was measured for the primary only, so a non-primary ship field is emitted at the round's largest registered budget (9,400 dots/fold, 37,600 total, the champion's own scale)",
+    "per_fold": {
+      "0": {
+        "placed": 9400,
+        "a_only_px": 215315,
+        "b_only_px": 215312,
+        "concordant_px": 29485
+      },
+      "1": {
+        "placed": 9400,
+        "a_only_px": 113004,
+        "b_only_px": 113004,
+        "concordant_px": 23502
+      },
+      "2": {
+        "placed": 9400,
+        "a_only_px": 49381,
+        "b_only_px": 49381,
+        "concordant_px": 6978
+      },
+      "3": {
+        "placed": 9400,
+        "a_only_px": 69606,
+        "b_only_px": 69605,
+        "concordant_px": 9149
+      }
+    }
+  }
+}

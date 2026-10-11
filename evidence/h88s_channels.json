@@ -1,0 +1,356 @@
+{
+  "channels": [
+    {
+      "i": 0,
+      "name": "A_b01_val",
+      "view": "A"
+    },
+    {
+      "i": 1,
+      "name": "A_b01_grad",
+      "view": "A"
+    },
+    {
+      "i": 2,
+      "name": "A_b02_val",
+      "view": "A"
+    },
+    {
+      "i": 3,
+      "name": "A_b02_grad",
+      "view": "A"
+    },
+    {
+      "i": 4,
+      "name": "A_b03_val",
+      "view": "A"
+    },
+    {
+      "i": 5,
+      "name": "A_b03_grad",
+      "view": "A"
+    },
+    {
+      "i": 6,
+      "name": "A_b04_val",
+      "view": "A"
+    },
+    {
+      "i": 7,
+      "name": "A_b04_grad",
+      "view": "A"
+    },
+    {
+      "i": 8,
+      "name": "A_b05_val",
+      "view": "A"
+    },
+    {
+      "i": 9,
+      "name": "A_b05_grad",
+      "view": "A"
+    },
+    {
+      "i": 10,
+      "name": "A_b07_val",
+      "view": "A"
+    },
+    {
+      "i": 11,
+      "name": "A_b07_grad",
+      "view": "A"
+    },
+    {
+      "i": 12,
+      "name": "A_b08_val",
+      "view": "A"
+    },
+    {
+      "i": 13,
+      "name": "A_b08_grad",
+      "view": "A"
+    },
+    {
+      "i": 14,
+      "name": "A_b09_val",
+      "view": "A"
+    },
+    {
+      "i": 15,
+      "name": "A_b09_grad",
+      "view": "A"
+    },
+    {
+      "i": 16,
+      "name": "A_b10_val",
+      "view": "A"
+    },
+    {
+      "i": 17,
+      "name": "A_b10_grad",
+      "view": "A"
+    },
+    {
+      "i": 18,
+      "name": "A_b11_val",
+      "view": "A"
+    },
+    {
+      "i": 19,
+      "name": "A_b11_grad",
+      "view": "A"
+    },
+    {
+      "i": 20,
+      "name": "A_b13_val",
+      "view": "A"
+    },
+    {
+      "i": 21,
+      "name": "A_b13_grad",
+      "view": "A"
+    },
+    {
+      "i": 22,
+      "name": "A_b15_val",
+      "view": "A"
+    },
+    {
+      "i": 23,
+      "name": "A_b15_grad",
+      "view": "A"
+    },
+    {
+      "i": 24,
+      "name": "A_b17_val",
+      "view": "A"
+    },
+    {
+      "i": 25,
+      "name": "A_b17_grad",
+      "view": "A"
+    },
+    {
+      "i": 26,
+      "name": "A_b18_val",
+      "view": "A"
+    },
+    {
+      "i": 27,
+      "name": "A_b18_grad",
+      "view": "A"
+    },
+    {
+      "i": 28,
+      "name": "B_b12_val",
+      "view": "B"
+    },
+    {
+      "i": 29,
+      "name": "B_b12_grad",
+      "view": "B"
+    },
+    {
+      "i": 30,
+      "name": "B_b12_lap",
+      "view": "B"
+    },
+    {
+      "i": 31,
+      "name": "B_b12_curv_s1",
+      "view": "B"
+    },
+    {
+      "i": 32,
+      "name": "B_b12_curv_s8",
+      "view": "B"
+    },
+    {
+      "i": 33,
+      "name": "B_b12_wl_ratio",
+      "view": "B"
+    },
+    {
+      "i": 34,
+      "name": "B_b19_val",
+      "view": "B"
+    },
+    {
+      "i": 35,
+      "name": "B_b19_grad",
+      "view": "B"
+    },
+    {
+      "i": 36,
+      "name": "B_b06_val",
+      "view": "B"
+    },
+    {
+      "i": 37,
+      "name": "B_b06_grad",
+      "view": "B"
+    },
+    {
+      "i": 38,
+      "name": "B_rad01_val",
+      "view": "B"
+    },
+    {
+      "i": 39,
+      "name": "B_rad01_grad",
+      "view": "B"
+    },
+    {
+      "i": 40,
+      "name": "B_rad02_val",
+      "view": "B"
+    },
+    {
+      "i": 41,
+      "name": "B_rad02_grad",
+      "view": "B"
+    },
+    {
+      "i": 42,
+      "name": "B_rad03_val",
+      "view": "B"
+    },
+    {
+      "i": 43,
+      "name": "B_rad03_grad",
+      "view": "B"
+    },
+    {
+      "i": 44,
+      "name": "B_rad04_val",
+      "view": "B"
+    },
+    {
+      "i": 45,
+      "name": "B_rad04_grad",
+      "view": "B"
+    },
+    {
+      "i": 46,
+      "name": "B_rad05_val",
+      "view": "B"
+    },
+    {
+      "i": 47,
+      "name": "B_rad05_grad",
+      "view": "B"
+    },
+    {
+      "i": 48,
+      "name": "B_rad06_val",
+      "view": "B"
+    },
+    {
+      "i": 49,
+      "name": "B_rad06_grad",
+      "view": "B"
+    },
+    {
+      "i": 50,
+      "name": "B_rad07_val",
+      "view": "B"
+    },
+    {
+      "i": 51,
+      "name": "B_rad07_grad",
+      "view": "B"
+    },
+    {
+      "i": 52,
+      "name": "B_lid01_val",
+      "view": "B"
+    },
+    {
+      "i": 53,
+      "name": "B_lid01_grad",
+      "view": "B"
+    },
+    {
+      "i": 54,
+      "name": "B_lid03_val",
+      "view": "B"
+    },
+    {
+      "i": 55,
+      "name": "B_lid03_grad",
+      "view": "B"
+    },
+    {
+      "i": 56,
+      "name": "B_lid04_val",
+      "view": "B"
+    },
+    {
+      "i": 57,
+      "name": "B_lid04_grad",
+      "view": "B"
+    },
+    {
+      "i": 58,
+      "name": "B_lid05_val",
+      "view": "B"
+    },
+    {
+      "i": 59,
+      "name": "B_lid05_grad",
+      "view": "B"
+    },
+    {
+      "i": 60,
+      "name": "B_lid06_val",
+      "view": "B"
+    },
+    {
+      "i": 61,
+      "name": "B_lid06_grad",
+      "view": "B"
+    },
+    {
+      "i": 62,
+      "name": "B_lid07_val",
+      "view": "B"
+    },
+    {
+      "i": 63,
+      "name": "B_lid07_grad",
+      "view": "B"
+    },
+    {
+      "i": 64,
+      "name": "B_lid09_val",
+      "view": "B"
+    },
+    {
+      "i": 65,
+      "name": "B_lid09_grad",
+      "view": "B"
+    },
+    {
+      "i": 66,
+      "name": "B_lid10_val",
+      "view": "B"
+    },
+    {
+      "i": 67,
+      "name": "B_lid10_grad",
+      "view": "B"
+    }
+  ],
+  "encoder": "gems52.cotrain.rank_u8 (min-max percentile-free rank to uint8, valid>=0)",
+  "started_utc": "20261010T215700Z",
+  "finished_utc": "20261010T215844Z",
+  "n_channels": 68,
+  "seconds": 174.2,
+  "inputs": {
+    "training_features.tif": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+    "geodawn_rad_u8.tif": "c22420f75999030d7cc65c9e31e50d232ea6158423bca051613a18a8b20ba682",
+    "geodawn_extensions_u8.tif": "a35a9c6d2a14786f4dab85481ee59769213072f5dab5b2535ea82ae4d9bb7d9b",
+    "lidar_scarp_features_u8.tif": "d580bb8bdcdb941e32fefb8b38044bc5bf04e199bf2e83498c3576e6fc465568"
+  },
+  "caveat": "rank-uint8 per channel inside the eligible footprint; 255 levels is a rank encoding, the metric resolves 100 m, not 1/255 of a quantile"
+}

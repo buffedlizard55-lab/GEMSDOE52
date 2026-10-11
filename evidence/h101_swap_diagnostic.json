@@ -1,0 +1,38 @@
+{
+ "stage": "swap_diagnostic",
+ "evidence_class": "diagnostic per-dot kernel credit, not a score",
+ "folds": [
+  {
+   "fold": 0,
+   "removed": 852,
+   "added": 852,
+   "removed_mean_credit": 0.11844441064694725,
+   "added_mean_credit": 0.10154812246341106,
+   "removed_flagged": 658
+  },
+  {
+   "fold": 1,
+   "removed": 951,
+   "added": 951,
+   "removed_mean_credit": 0.11178788160207347,
+   "added_mean_credit": 0.0980777895323806,
+   "removed_flagged": 629
+  },
+  {
+   "fold": 2,
+   "removed": 698,
+   "added": 698,
+   "removed_mean_credit": 0.08606619975081958,
+   "added_mean_credit": 0.08432403774640351,
+   "removed_flagged": 266
+  },
+  {
+   "fold": 3,
+   "removed": 1052,
+   "added": 1052,
+   "removed_mean_credit": 0.09969928180299352,
+   "added_mean_credit": 0.09434426055868714,
+   "removed_flagged": 522
+  }
+ ]
+}

@@ -99,30 +99,58 @@ def save_verified(path, v, tries: int = 6, pause: float = 0.4):
     Returns (sha256_of_persisted_file, attempts_used).
     """
     want = np.ascontiguousarray(np.asarray(v))
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
     for attempt in range(1, tries + 1):
-        # IR-H84-003: the original version re-read through mmap straight after np.save, which is served
-        # from the page cache, so a page that was later lost on disk still "verified" (H84's first channel
-        # build: 16 of 81 files passed this check and then failed Bank.col's digest guard with the same
-        # zeroed first 4 KiB page). Now: fsync, drop the file's cached pages, then re-read from disk.
-        np.save(path, want)   # plain np.save: this function must never call itself
-        fd = os.open(path, os.O_RDONLY)
+        # IR-H97-001 extends IR-H82-002/IR-H84-003.  A direct np.save exposes a partially replaced
+        # destination to the workspace snapshotter; 33/90 H97 columns later lost one or more pages
+        # even though the immediate fsync/reload passed.  Write and fsync a sibling temporary file,
+        # verify it, then atomically rename it.  Thus observers see either the old complete file or
+        # the new complete file, never the in-progress inode.  Fsync the directory so the rename is
+        # durable as well as the payload.
+        tmp = path.with_name(f".{path.name}.tmp-{os.getpid()}-{attempt}.npy")
         try:
-            os.fsync(fd)
-            if hasattr(os, "posix_fadvise"):
-                os.posix_fadvise(fd, 0, 0, os.POSIX_FADV_DONTNEED)
-        finally:
-            os.close(fd)
-        try:
+            with tmp.open("wb") as fh:
+                np.save(fh, want)
+                fh.flush()
+                os.fsync(fh.fileno())
+            fd = os.open(tmp, os.O_RDONLY)
+            try:
+                if hasattr(os, "posix_fadvise"):
+                    os.posix_fadvise(fd, 0, 0, os.POSIX_FADV_DONTNEED)
+            finally:
+                os.close(fd)
+            probe = np.asarray(np.load(tmp, mmap_mode="r"))
+            verified_tmp = (probe.shape == want.shape and probe.dtype == want.dtype
+                            and np.array_equal(probe, want, equal_nan=True))
+            del probe
+            if not verified_tmp:
+                raise IOError("temporary .npy did not reload bit-exactly")
+            os.replace(tmp, path)
+            dfd = os.open(path.parent, os.O_RDONLY)
+            try:
+                os.fsync(dfd)
+            finally:
+                os.close(dfd)
+            fd = os.open(path, os.O_RDONLY)
+            try:
+                if hasattr(os, "posix_fadvise"):
+                    os.posix_fadvise(fd, 0, 0, os.POSIX_FADV_DONTNEED)
+            finally:
+                os.close(fd)
             back = np.asarray(np.load(path, mmap_mode="r"))
             same = (back.shape == want.shape and back.dtype == want.dtype
                     and np.array_equal(back, want, equal_nan=True))
+            del back
         except Exception:
             same = False
+        finally:
+            tmp.unlink(missing_ok=True)
         if same:
             return digest(path), attempt
-        log(f"torn write detected on {Path(path).name}: rewriting (attempt {attempt})")
+        log(f"torn write detected on {path.name}: rewriting (attempt {attempt})")
         time.sleep(pause)
-    raise RuntimeError(f"{Path(path).name} would not persist bit-exactly after {tries} attempts")
+    raise RuntimeError(f"{path.name} would not persist bit-exactly after {tries} attempts")
 
 
 def write(name, obj):

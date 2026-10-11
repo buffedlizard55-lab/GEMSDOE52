@@ -1,0 +1,56 @@
+{
+ "round": "H97",
+ "preregistered_utc": "2026-10-10T22:25:00+00:00",
+ "frozen_before_any_fit": true,
+ "superseded_draft_disclosure": "A first draft of this file (22:05Z) proposed a cover-thickness-gated A-only disagreement field as H97-1. It was withdrawn before any H97 fit, holdout read or canary run, because grepping the repository showed that experiment is already recorded and closed: H62 'buried structural corridors' ran cover-gated, edge-conditioned, persistence-filtered A-only disagreement and returned NEGATIVE (knowledge/33, registry/h62_buriedcorr_preregistration.json). Re-running it would be re-litigating a closed experiment (AGENTS.md). The draft was never executed and no number in this session derives from it.",
+ "lane": "the brief's single method paragraph: co-training between View A (potential-field: gravity, magnetics, strain, seismicity) and View B (surface: DEM curvature and slope, plus any radiometric band present in training_features.tif), disagreement as the discovery signal",
+ "hypothesis_document": "knowledge/97_h97_hypotheses_preregistered.md",
+ "runner": "scripts/run_h97_cotrain_holdout.py",
+ "builder": "scripts/build_h97_submission.py",
+ "primary_arm": "h97_disagree (View A confident, View B abstains: A_rank * (1 - B_rank))",
+ "view_definitions_frozen": {
+  "A": "bands 18, 11, 5 (isostatic gravity horizontal/vertical gradient, slope), 3, 9 (TMI horizontal/vertical gradient), 2 (RTP); each channel = percentile-rank of the Gaussian gradient magnitude at sigma 2 px, equal weights",
+  "B": "band 12 detrended elevation curvature magnitude at sigma 2 and 6 px, band 12 gradient magnitude at sigma 2, band 19 detrended-slope curvature at sigma 2, band 6 in-stack radiometric total count smoothed at sigma 4; equal weights",
+  "band6_justification": "IR-H85-005 resolved band 6 as the GeoDAWN total count by bytes despite its magnetic tag; re-measured this round in evidence/h97_holdout.json (band6_recheck) instead of quoted"
+ },
+ "experiment_1": {
+  "instrument": "hide-and-recover, gems52.spatial.folds label-blind quadrants v2, buffer 80 px, whole components hidden, 200 m collar from the VISIBLE catalogue only",
+  "budget_per_fold": 9400,
+  "arms": ["h97_disagree", "single_A", "single_B", "random"],
+  "scoring": "gems52.evaluate_holdout.evaluate + pooled_summary (gems52-pooled-hide-v1, alpha 0.2, beta 0.8, R 300 m, 1000 paired 20 km block-bootstrap draws)",
+  "placement": "nodes.spacing_select, min_px 3.0",
+  "independence": "spatial.negative_block_errors (50x50 px blocks) + spatial.independence, on catalogue-zero proxies inside each fold's TRAIN domain only; abandonment threshold 0.60",
+  "canary": "per-arm AUC against the held-out truth inside the allowed set; alarm 0.90"
+ },
+ "experiment_2": {
+  "instrument": "gems52-offcatalogue-prevalence-matched-v1: SGMC fault pixels >= 300 m from labels.tif, thinned with a fixed seed (88052) to 14089 px so the prevalence matches the incumbent |G| bracket instead of quadrupling it the way the H83 instrument did (knowledge/76 §6)",
+  "budgets_K": [8000, 15000, 25517, 30000, 37654],
+  "placement": "spacing_select 3 px on the full footprint, 200 m catalogue ring removed",
+  "control": "matched random over the same allowed set at every K",
+  "reference": "data/reference/h33-2-b2-zeros.tif scored as-is for context; it is a prior submission used for learning only, never re-emitted"
+ },
+ "budget_rule_frozen": {
+  "rule": "K* = the K with the highest instrument-2 DTI iff that K is < 37654 AND its DTI exceeds the DTI at K = 37654 by at least 0.001 AND exceeds the matched random control at that K; otherwise K* = 37654 and the mass lever is reported as unmeasured for this field",
+  "why": "the lever is only credible if the prevalence-matched instrument, not the over-rewarding one, says the credit stops arriving before the budget stops"
+ },
+ "emission_frozen": {
+  "min_spacing_px": 3.0,
+  "catalogue_ring_excluded_m": 200.0,
+  "values": "binary {0,1}, zeros outside the organiser domain, no nodata tag",
+  "container_reason": "the all-finite container is the one the current 0.2778 champion file itself uses (knowledge/76 §1) and the only one that cannot fail a literal [0,1] range test"
+ },
+ "promotion_rule": "paired 95% CI lower bound of (h97_disagree - random) > 0 on gems52-pooled-hide-v1 AND K* measured below the full budget; otherwise the round is negative and the file is download-only",
+ "budget": {"experiments": 3, "hours": 2, "submission_slots_allowed": 0},
+ "no_private_fork": true,
+ "shared_tools_to_reuse": [
+  "src/gems52/grid.py::footprint_from, write_geotiff",
+  "src/gems52/nodes.py::spacing_select",
+  "src/gems52/metric.py::dti",
+  "src/gems52/evaluate_holdout.py",
+  "src/gems52/spatial.py::folds, negative_block_errors, independence",
+  "src/gems52/gates.py::format_report, uniqueness_report, lane_report, find_priors",
+  "src/gems52/submission_writer.py"
+ ],
+ "expected_board_claim": "none; the arithmetic targets (S <= 25384 at champion T, or T >= 6007 at champion S) are arithmetic, not forecasts",
+ "inputs_provenance": "integrity-pinned, not organizer-authenticated; scripts/restore_data.py reported ALL_VERIFIED=True for 23/23 pins in this session"
+}

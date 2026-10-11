@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>H97 — co-training disagreement with a prevalence-matched budget</title>
+<style>
+:root{--bg:#0f1117;--fg:#e8eaed;--accent:#4fc3f7;--ok:#66bb6a;--warn:#ffa726;--err:#ef5350;--card:#1a1d27;--border:#2d3040}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--fg);line-height:1.65;padding:0}
+.container{max-width:960px;margin:0 auto;padding:24px 20px}
+h1{font-size:1.8rem;margin-bottom:6px;color:var(--accent)}
+h2{font-size:1.25rem;margin:28px 0 10px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px}
+h3{font-size:1.05rem;margin:18px 0 6px}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+code{background:#1e2130;padding:2px 6px;border-radius:3px;font-size:0.88em;word-break:break-all}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:0.9rem}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--border)}
+th{color:var(--accent);font-weight:600}
+.pass{color:var(--ok);font-weight:700}.fail{color:var(--err);font-weight:700}.warn{color:var(--warn);font-weight:700}
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin:12px 0}
+.download-box{background:linear-gradient(135deg,#0d3b66,#1a237e);border:2px solid var(--accent);border-radius:12px;padding:24px;margin:18px 0;text-align:center}
+.download-box h2{color:#fff;border:none;margin:0 0 8px;font-size:1.4rem}
+.download-box p{color:#cfe8ff;margin:6px 0}
+.btn{display:inline-block;background:var(--accent);color:#04202e;font-weight:700;padding:13px 26px;border-radius:8px;font-size:1.05rem;margin:6px}
+.btn:hover{background:#81d4fa;text-decoration:none}
+.btn-zip{background:#78909c;color:#fff}
+.verdict{display:inline-block;padding:6px 14px;border-radius:14px;font-weight:700;font-size:0.95rem}
+.verdict-ok{background:#1b5e20;color:#c8e6c9}
+.verdict-warn{background:#4a2800;color:#ffe0b2}
+.verdict-no{background:#5d1a1a;color:#ffcdd2}
+.copy-box{background:#1e2130;border:1px solid var(--border);border-radius:6px;padding:10px 14px;font-family:ui-monospace,monospace;font-size:0.9rem;margin:6px 0;word-break:break-all}
+.step{display:flex;align-items:flex-start;margin:12px 0}
+.step-num{background:var(--accent);color:#04202e;font-weight:700;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:12px;margin-top:2px}
+.footer{margin-top:36px;padding-top:18px;border-top:1px solid var(--border);font-size:0.85rem;color:#888}
+details{margin:16px 0;border:1px solid var(--border);border-radius:8px;padding:10px 14px;background:#141721}
+summary{cursor:pointer;color:var(--accent);font-weight:600}
+</style>
+</head>
+<body>
+<div class="container">
+<p><a href="index.html">← Back to the download</a></p>
+<h1>H97 — co-training disagreement, budget chosen on a prevalence-matched instrument</h1>
+<p style="color:#999">Round page · 2026-10-10 · 0 submission slots used</p>
+
+<h2>1 · The hypothesis</h2>
+<p>co-training disagreement (A confident, B abstains) with the emitted budget chosen on a prevalence-matched off-catalogue instrument</p>
+<p><strong>Mechanism:</strong> density/susceptibility edges with no surface expression = structure buried under cover, i.e. the population the surface-mapped catalogue is least likely to hold</p>
+<p><strong>Named non-fault mimics:</strong> lithologic contacts and intrusive margins; palaeo-channel thalwegs; playa/salina edges; anthropogenic linears (roads, canals)</p>
+
+<h2>2 · The lane, measured</h2>
+<table>
+<tr><th>Statistic</th><th>Value</th></tr>
+<tr><td>A-confident (≥0.75) ∧ B-abstains (≤0.40) pixels</td><td>91,316</td></tr>
+<tr><td>A-confident pixels / B-abstains pixels</td><td>419,994 / 1,753,840</td></tr>
+<tr><td>Eligible footprint</td><td>5,164,300</td></tr>
+</table>
+<h3>Independence of the two views (the Blum &amp; Mitchell premise)</h3>
+<table><tr><th>Test</th><th>Value</th></tr><tr><td>negative_mean_squared_error</td><td>{"n": 6390, "pearson": 0.07187841052346154, "spearman": 0.08917160488174011}</td></tr><tr><td>negative_false_positive_rate</td><td>{"n": 6390, "pearson": 0.10597627917738958, "spearman": 0.09720645031857728}</td></tr></table>
+<p style="font-size:0.92rem;color:#aaa">Block errors are measured on catalogue-zero proxies inside each
+fold's TRAIN domain only; the abandonment threshold is |ρ| &gt; 0.60.</p>
+
+<h2>3 · Both instruments</h2>
+<p><strong>Instrument 1</strong> (hide-and-recover, catalogue truth): 60,894 withheld positive pixels,
+9,400 dots per fold per arm, 4 label-blind quadrants with an 80 px buffer.</p>
+<table>
+<tr><th>Arm</th><th>DTI</th><th>95% CI</th></tr>
+<tr><td>h97_disagree</td><td>0.045947</td><td>[0.033706, 0.059307]</td></tr><tr><td>single_A</td><td>0.068460</td><td>[0.055921, 0.081430]</td></tr><tr><td>single_B</td><td>0.054606</td><td>[0.041452, 0.068289]</td></tr><tr><td>random</td><td>0.076551</td><td>[0.068175, 0.084557]</td></tr>
+</table>
+<p><strong>Instrument 2</strong> (prevalence-matched off-catalogue, the new tool this round): the H83
+instrument's truth re-thinned to 14,089 px from
+62,084 raw candidates, so DTI is measured at a prevalence
+comparable to the board's instead of roughly four times it. The budget rule it feeds:
+<code>K* = argmax instrument-2 DTI iff it is < 37654 AND >= full-budget DTI + 0.001 AND > the matched random control; otherwise K* = 37654</code></p>
+<p>K* this round: <strong>37,654 px</strong>. The mass lever is the repository's largest
+unspent, measurable effect: across the twelve restored owner-reported files,
+Spearman(emitted mass, score) = -0.944 and the implied credited mass stays
+inside 856–8,874
+while emitted mass moves 343,816 → 37,654.</p>
+
+<h2>4 · What is closed, and why this round did not re-open it</h2>
+<ul style="margin-left:20px">
+<li><strong>Cover-gated A-only disagreement</strong> — measured and negative (H62). This round's field
+carries no physical gate.</li>
+<li><strong>Pseudo-label exchange on View A</strong> — closed by the repository's own pre-registered
+sufficiency gate; disagreement is used as a field, not as a teacher.</li>
+<li><strong>Geo-concordance, Euler SI-0, harmonic anisotropy</strong> — all measured, all negative
+(H83/H85, H86, H84).</li>
+</ul>
+
+<h2>5 · Limits</h2>
+<ul style="margin-left:20px">
+<li>holdout truth is catalogue faults, not the organizer's scored new faults</li><li>instrument 2's truth is SGMC-mapped faults absent from the catalogue, a proxy</li><li>no organizer receipt exists for any file in this repository</li>
+</ul>
+
+<h2>6 · Sources</h2>
+<ul style="margin-left:20px">
+<li>Official problem description and metric algebra:
+<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/" target="_blank">DrivenData #306 page 967</a>
+(transcribed into <code>src/gems52/metric.py</code> and pinned by <code>tests/test_metric.py</code> against the
+organizer's own worked example).</li>
+<li>Blum &amp; Mitchell, COLT 1998: <a href="https://doi.org/10.1145/279943.279962" target="_blank">doi:10.1145/279943.279962</a>.</li>
+<li>GeoDAWN airborne magnetic and radiometric survey, USGS:
+<a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and" target="_blank">usgs.gov/data/geodawn…</a> (DOI 10.5066/P93LGLVQ).</li>
+<li>INGENIOUS / GDR 1391: <a href="https://gdr.openei.org/submissions/1391" target="_blank">gdr.openei.org/submissions/1391</a>
+(≈ inside this sandbox's egress allowlist — the 2 m temperature survey named as H97-5 cannot be fetched here).</li>
+<li>All other numbers: this repository's receipts, <code>evidence/h97_holdout.json</code>,
+<code>evidence/h97_credit_curve.json</code>, <code>evidence/h97_build.json</code>.</li>
+</ul>
+
+<details><summary>Previous landing page (H87, preserved verbatim)</summary>
+
+</details>
+<p><strong>DO NOT SUBMIT</strong> — the CTD5 negative-result release that this repository also serves (<code>docs/ctd5-audit.html</code>, <code>docs/data/ctd5_run_card.json</code>) is inspection-only and must never be uploaded to the competition.</p>
+<div class="footer">Generated by <code>scripts/publish_h97_site.py</code>.</div>
+</div>
+</body>
+</html>

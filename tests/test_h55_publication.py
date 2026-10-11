@@ -89,9 +89,13 @@ def test_h55_archive_review_is_idempotent_and_carries_h56_status(monkeypatch, tm
     # silently went stale when a later round became current.
     assert f"current {str(current.get('round') or 'H56').upper()} status" in result, (
         "the H55 archive review must name the current round, read from the receipt")
-    round_pages = {"H96": "h96.html", "H91": "h91.html", "H90": "h90.html", "H84": "h84.html", "H60": "h60.html",
-                   "H59": "h59.html", "H58": "h58.html", "H57": "h57.html"}
-    expected_href = round_pages.get(str(current.get("round") or "").upper(), "h56-cotrain.html")
+    round_pages = {"H102": "h102.html", "H96": "h96.html", "H91": "h91.html", "H90": "h90.html", "H84": "h84.html",
+                   "H60": "h60.html", "H59": "h59.html", "H58": "h58.html", "H57": "h57.html"}
+    rnd = str(current.get("round") or "").upper()
+    # future rounds publish h<round>.html beside the others; pick it up instead of going stale
+    if rnd and rnd not in round_pages and (ROOT / "docs" / f"h{rnd[1:].lower()}.html").is_file():
+        round_pages[rnd] = f"h{rnd[1:].lower()}.html"
+    expected_href = round_pages.get(rnd, "h56-cotrain.html")
     assert f'href="{expected_href}"' in result
     # case-insensitive: which sentence casing the status block uses depends on which branch the
     # current round's receipt selects, and the instruction itself is what must be present

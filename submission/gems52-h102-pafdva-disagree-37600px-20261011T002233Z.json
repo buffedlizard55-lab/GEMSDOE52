@@ -1,0 +1,79 @@
+{
+  "file": "gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif",
+  "sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
+  "bytes": 132324,
+  "submission_name": "h102-pafdva-disagree-37600px-20261011T002233Z",
+  "note": "H102 co-training: View-A potential-field anisotropy x View-B DEM anisotropy; disagreement field, 200m ring excluded, binary 37600 dots",
+  "note_chars": 134,
+  "validator": {
+    "path": "/home/user/GEMSDOE52/submission/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif",
+    "bytes": 132324,
+    "sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "ref_bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "nodata": null,
+    "blocksize": [
+      256,
+      256
+    ],
+    "fixture_grid": false,
+    "has_validity_mask": false,
+    "nan_pixels": 0,
+    "infinity_pixels": 0,
+    "n_nan": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.003062098752707243,
+    "n_nonzero": 37600,
+    "mass": 37600.0,
+    "mass_outside_footprint": 0,
+    "problems": [],
+    "ok": true,
+    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "zip_file": "gems52-h102-pafdva-disagree-37600px-20261011T002233Z.zip",
+  "zip_sha256": "3a1d063878a868e7aa9d23bc18deb8df438ae40b4eb10a81f1a582c824066a13",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "status": "research-only; local format validation is not organizer acceptance",
+  "metadata": {
+    "round": "H102",
+    "primary_arm": "cotrain_disagree",
+    "preregistration_sha256": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7"
+  },
+  "identifier_rename": {
+    "frm": "H97",
+    "to": "H102",
+    "artefact_bytes_unchanged": true,
+    "artefact_sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
+    "document_sha256_before": "3bc571adb709f8e3c18fbe158221019bbc69515162e88ed9220319b5851b674a",
+    "document_sha256_after": "3bc571adb709f8e3c18fbe158221019bbc69515162e88ed9220319b5851b674a",
+    "registry_sha256_before": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7",
+    "registry_sha256_after": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7",
+    "note": "identifier-only rename after the round closed; no measured value changed"
+  }
+}
