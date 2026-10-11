@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
-"""H97 E4 (diagnostic) -- is the score bought by the RANKING or by the EMISSION GEOMETRY?
+"""H102 E4 (diagnostic) -- is the score bought by the RANKING or by the EMISSION GEOMETRY?
 
-knowledge/98 shows, with the repository's own metric, that the organiser's DTI is a *coverage*
+knowledge/109 shows, with the repository's own metric, that the organiser's DTI is a *coverage*
 metric: a swath covering a fault trace scores 0.88 where a sparse sampling of the same trace scores
 far less, and the marginal rule admits any cell within ~283 m of an uncovered truth pixel. Every
-round in this family, including H97's own artifact, emits dots at 3 px minimum spacing -- a *sampled*
+round in this family, including H102's own artifact, emits dots at 3 px minimum spacing -- a *sampled*
 trace. E4 asks the question the family has never asked, on the shared hide-and-recover instrument:
 
     at the SAME emitted mass, does connecting neighbouring confident cells along the field
     ("bridging") recover more weighted truth than spending the same mass on more dots?
 
 Arms, per fold, all on the identical primary field and the identical allowed set:
-    dots@K          the H97 convention: spacing_select(field, K=9400, min_px=3)
+    dots@K          the H102 convention: spacing_select(field, K=9400, min_px=3)
     dots@S_bridge   mass-matched control: spacing_select(field, S_bridge, min_px=3)
     bridged         dots@K plus every cell on a segment between two dots closer than R_bridge px,
                     kept only where the cell is inside the allowed set and its field rank clears a
@@ -19,12 +19,12 @@ Arms, per fold, all on the identical primary field and the identical allowed set
     random@S        floor at the same mass
 
 If `bridged` beats `dots@S_bridge`, the family has been losing score to its emission geometry, which is
-the cheapest unspent lever in the project (knowledge/98 sec.6). If it does not, the lever is dead and
+the cheapest unspent lever in the project (knowledge/109 sec.6). If it does not, the lever is dead and
 that is a deliverable too.
 
-This is a DIAGNOSTIC. It does not re-tune H97's frozen arm, budget or promotion rule.
+This is a DIAGNOSTIC. It does not re-tune H102's frozen arm, budget or promotion rule.
 
-Usage: python scripts/run_h97_e4_coverage.py
+Usage: python scripts/run_h102_e4_coverage.py
 """
 from __future__ import annotations
 
@@ -46,16 +46,16 @@ from scipy import ndimage as ndi                                      # noqa: E4
 from scipy.spatial import cKDTree                                      # noqa: E402
 
 import run_h61 as base                                                # noqa: E402
-import run_h97 as h97                                                 # noqa: E402
+import run_h102 as h102                                                 # noqa: E402
 from gems52 import evaluate_holdout as evaluator                      # noqa: E402
 from gems52 import nodes                                              # noqa: E402
 
 SEED = base.SEED
-WORK = ROOT / "work/h97"
+WORK = ROOT / "work/h102"
 EVID = ROOT / "evidence"
-K_FOLD = int(os.environ.get("H97E4_K_FOLD", 9400))
-R_BRIDGE_PX = float(os.environ.get("H97E4_R_BRIDGE", 12.0))     # 1 200 m maximum gap to bridge
-Q_FLOOR = float(os.environ.get("H97E4_Q_FLOOR", 0.60))          # field-rank floor for a bridged cell
+K_FOLD = int(os.environ.get("H102E4_K_FOLD", 9400))
+R_BRIDGE_PX = float(os.environ.get("H102E4_R_BRIDGE", 12.0))     # 1 200 m maximum gap to bridge
+Q_FLOOR = float(os.environ.get("H102E4_Q_FLOOR", 0.60))          # field-rank floor for a bridged cell
 
 
 def log(*a):
@@ -111,19 +111,19 @@ def main() -> int:
                question=("at the same emitted mass, does bridging neighbouring confident cells along the field "
                          "recover more weighted truth than the same mass spent on more dots?"),
                falsifier="bridged DTI <= dots@S_bridge DTI, i.e. the geometry adds nothing at matched mass",
-               note=("run on two fields: the H97 primary disagreement field and the surface-anisotropy field "
+               note=("run on two fields: the H102 primary disagreement field and the surface-anisotropy field "
                      "single_B2, because the geometry question is best posed on the strongest available field"),
                folds=[])
     for fold in folds:
         f = fold["fold"]
-        allowed = h97.allowed_of(fold, ring_px)
+        allowed = h102.allowed_of(fold, ring_px)
         pa = base.to_grid(store.flat_idx, np.load(WORK / f"pred_single_A2_f{f}.npy"), eligible.shape)
         pb = base.to_grid(store.flat_idx, np.load(WORK / f"pred_single_B2_f{f}.npy"), eligible.shape)
-        ra, rb = h97.rank_in(pa, allowed), h97.rank_in(pb, allowed)
+        ra, rb = h102.rank_in(pa, allowed), h102.rank_in(pb, allowed)
         rec = dict(fold=f, allowed_px=int(allowed.sum()), arms={})
         for fld in FIELDS:
             if fld == "cotrain_disagree":
-                field = np.where(allowed, np.nan_to_num(h97.arm_field(h97.PRIMARY, ra, rb, eligible.shape), nan=-1.0),
+                field = np.where(allowed, np.nan_to_num(h102.arm_field(h102.PRIMARY, ra, rb, eligible.shape), nan=-1.0),
                                  -1.0).astype(np.float32)
             else:
                 field = np.where(allowed, np.nan_to_num(rb, nan=-1.0), -1.0).astype(np.float32)
@@ -165,7 +165,7 @@ def main() -> int:
                         else "no measured geometry gain at matched mass (negative)")
         out["geometry_vs_mass"][fld] = g
     out["seconds"] = round(time.time() - t0, 1)
-    (EVID / "h97_e4_coverage.json").write_text(json.dumps(out, indent=1, default=float) + "\n")
+    (EVID / "h102_e4_coverage.json").write_text(json.dumps(out, indent=1, default=float) + "\n")
     for fld in FIELDS:
         log(fld + ": " + json.dumps({a: round(out["pooled"][fld]["scores"][a]["dti"], 6) for a in arms}))
         log(fld + ": " + json.dumps(out["geometry_vs_mass"][fld], default=float))

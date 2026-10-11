@@ -38,3 +38,23 @@ def write_submission(path, prediction, sample, footprint, *, note, name, metadat
         status='research-only; local format validation is not organizer acceptance', metadata=metadata or {})
     path.with_suffix('.json').write_text(json.dumps(receipt, indent=2, allow_nan=False) + '\n')
     return receipt
+
+def repackage_zip(path):
+    """Rebuild the single-TIFF ZIP beside ``path`` after an *identifier-only* rename.
+
+    The TIFF bytes are re-read, never rewritten: the artefact hash is unchanged.  Only the member
+    name inside the archive moves with the file name, so the ZIP hash (and any receipt that
+    recorded it) must be regenerated.  Same parameters as ``write_submission`` so the archive
+    layout stays the one the shared writer produces.
+    """
+    path = Path(path)
+    zp = path.with_suffix('.zip')
+    with zipfile.ZipFile(zp, 'w', compression=zipfile.ZIP_DEFLATED) as z:
+        zi = zipfile.ZipInfo(path.name, date_time=(2026, 10, 8, 0, 0, 0))
+        zi.compress_type = zipfile.ZIP_DEFLATED
+        z.writestr(zi, path.read_bytes())
+    with zipfile.ZipFile(zp) as z:
+        if z.namelist() != [path.name] or z.read(path.name) != path.read_bytes():
+            raise IOError('single-TIFF ZIP roundtrip failed')
+    return dict(zip_file=zp.name, bytes=zp.stat().st_size,
+                zip_sha256=hashlib.sha256(zp.read_bytes()).hexdigest())

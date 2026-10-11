@@ -1,6 +1,6 @@
 # 100 · Next-round candidates, ranked by expected board gain per unit of cost
 
-Written after H97 (negative) and its two geometry diagnostics, with everything below constrained to data
+Written after H102 (negative) and its two geometry diagnostics, with everything below constrained to data
 that is **already on disk and SHA-pinned** unless the row says otherwise. Costs are in sandbox CPU time
 (2 cores available) and are estimates, not measurements; gains are stated as the *quantity that has to move*
 (the metric's own terms) rather than as predicted leaderboard numbers, because this repository has measured
@@ -8,7 +8,7 @@ that its hide-and-recover instrument does not rank the board (Spearman ≈ −0.
 
 The metric, verified from the organiser's page this session:
 `DTI = TPw / (TPw + 0.2·FPw + 0.8·FNw)` with `FNw = |G| − TPw`, hence
-`DTI = TPw / (0.2·TPw + 0.2·(S − M) + 0.8·|G|)` — see `knowledge/98`.
+`DTI = TPw / (0.2·TPw + 0.2·(S − M) + 0.8·|G|)` — see `knowledge/109`.
 
 ---
 
@@ -28,12 +28,12 @@ before emitted mass or emission shape can be tested at all.
 
 ### The E4/E4b geometry result in one table (4 folds, 53,186 withheld positive px, mass-matched)
 
-With the mandatory random control (`evidence/h97_e4_coverage.json`, `evidence/h97_e4b_hysteresis.json`;
-interpretation and its limits in `knowledge/99` §7–§8):
+With the mandatory random control (`evidence/h102_e4_coverage.json`, `evidence/h102_e4b_hysteresis.json`;
+interpretation and its limits in `knowledge/110` §7–§8):
 
 | field | dots @ 9,400 | trace @ matched mass | dots @ matched mass | random @ matched mass |
 |---|---:|---:|---:|---:|
-| `cotrain_disagree` (H97 primary) | 0.029460 | 0.024497 bridge / 0.021537 hysteresis | **0.201789 / 0.238451** | 0.178690 / 0.196837 |
+| `cotrain_disagree` (H102 primary) | 0.029460 | 0.024497 bridge / 0.021537 hysteresis | **0.201789 / 0.238451** | 0.178690 / 0.196837 |
 | `single_B2` (surface anisotropy) | 0.185968 | 0.153403 bridge / 0.144522 hysteresis | **0.254062 / 0.248644** | 0.176328 / 0.196093 |
 
 Two independent trace constructions both lose to the same mass spent as well-separated dots, on both fields,
@@ -84,11 +84,11 @@ this instrument (truth = the mapped catalogue, mass ~4× real prevalence), not a
   along-line median), and it must show the signal is not the survey geometry. Without that control the
   hypothesis is not testable, and it should not be run.
 * **Cost.** Medium (~1.5 h): one channels pass over 6 external bands at 5 lags (the operator costs ~30 s per
-  band at 5 lags, measured in H97) plus one fit/holdout pass.
+  band at 5 lags, measured in H102) plus one fit/holdout pass.
 
 ## 3 · Tip-and-stepover continuation gated by the surface fabric *(rank 3)*
 
-* **Layers.** `data/labels.tif` (visible catalogue, per fold), the H82/H97 surface anisotropy field, and the
+* **Layers.** `data/labels.tif` (visible catalogue, per fold), the H82/H102 surface anisotropy field, and the
   store's `B_*` DEM columns.
 * **Physical signature targeted.** The **along-strike fabric of the surface field beyond a mapped fault's
   tip**: if the local anisotropy ridge continues in a stable direction for N pixels past the tip, the mapped
@@ -127,10 +127,10 @@ this instrument (truth = the mapped catalogue, mass ~4× real prevalence), not a
 
 * Do not spend a weekly submission slot on any arm whose holdout number has not first beaten the standing
   bar on the shared instrument; the selector owns that decision and this repository has used 0 slots so far.
-* Do not re-`fit` a View-A-only arm again: eight consecutive sufficiency failures (`knowledge/99` §3) mean the
+* Do not re-`fit` a View-A-only arm again: eight consecutive sufficiency failures (`knowledge/110` §3) mean the
   potential-field view is a context/veto layer, not a learner.
 * Do not re-try emission **geometry** as a coverage fix on the catalogue instrument: bridging (E4) and
   hysteresis growth (E4b) both lost to mass-matched dots *and* to random at the same mass. Reopening that
   question requires the prevalence-matched off-catalogue instrument (rank 1).
 * Do not re-fetch the 526-blob prior census without budgeting for it; if it is needed, run
-  `scripts/fetch_prior_inventory.py` as its own step and record the receipt (IR-H97-003).
+  `scripts/fetch_prior_inventory.py` as its own step and record the receipt (IR-H102-003).

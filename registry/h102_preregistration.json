@@ -112,12 +112,199 @@
   "https://epsg.io/32611"
  ],
  "hypothesis_document": "knowledge/97_hypotheses_H97_preregistered.md",
- "hypothesis_sha256": "d603fe73580af36bc3673d3acaf2a41c4b64604134977782a5d077163e60db60",
+ "hypothesis_sha256": "3bc571adb709f8e3c18fbe158221019bbc69515162e88ed9220319b5851b674a",
  "amendment_h97a": {
   "written_before_any_fit": true,
   "created_utc": "2026-10-10T23:30:00+00:00",
   "change": "the artifact's emitted mass is FROZEN at 37,600 dots (= 4 x 9,400 per-fold budget, the family standard and the champion's 37,654 px mass). The pre-registered budget sweep {9400, 16000, 25400} is DEMOTED to a diagnostic: it is reported as a curve but it does NOT select the budget.",
   "reason": "knowledge/76 sec.6 and evidence/h83_budget_curve.json measure that the hide-and-recover instruments over-reward recall (off-catalogue truth is ~4x the estimated real prevalence), and knowledge/76 sec.6 states explicitly that these instruments are 'not valid for choosing the budget'. Selecting the artifact's mass from a sweep on such an instrument would repeat a defect this repository has already logged. Freezing the budget at the family standard keeps H97 comparable with H82/H89/H96 and leaves the mass lever to the selector step.",
   "unchanged": "arms, channels, holdout, canary, independence thresholds and the promotion rule are exactly as frozen in the un-amended preregistration"
+ },
+ "identifier_rename": {
+  "done_utc": "2026-10-11",
+  "reason": "identifier collision: this round was frozen, run and receipted as H97 (commit 1f542d4, base 7eb226d); main meanwhile merged other sessions' H97 (co-training disagreement) and H97b/H97-masslever rounds, so the label is taken. Renumbered H102. Identifier-only edit: no constant, threshold, arm, budget or measured number changed; every stage ran under the H97 name with the pre-rename hashes, and the TIFF bytes are identical before and after.",
+  "frm": "H97",
+  "to": "H102",
+  "document_sha256_before": "d603fe73580af36bc3673d3acaf2a41c4b64604134977782a5d077163e60db60",
+  "document_sha256_after": "3bc571adb709f8e3c18fbe158221019bbc69515162e88ed9220319b5851b674a",
+  "registry_sha256_before": "b2eb593fe5ebed4005574402769305b9805c2ffdd57d760ecd3d0c90bd359181",
+  "registry_sha256_after": "recorded in evidence/h102_run_card.json identifier_history (this file cannot contain its own hash)",
+  "token_map": {
+   "h97": "h102",
+   "H97": "H102",
+   "knowledge/97": "knowledge/108",
+   "knowledge/98": "knowledge/109",
+   "knowledge/99": "knowledge/110",
+   "knowledge/100": "knowledge/111"
+  },
+  "evidence_diff": "evidence/h102_identifier_rename.diff",
+  "artefact_bytes_unchanged": true,
+  "artefact_sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
+  "zip_rebuilt": {
+   "reason": "the single member of the ZIP is named after the TIFF",
+   "sha256_before": "f1c4472f11caadb1adbe9e257fbb4af3cdb26be8011e47dbdb3a17fe0f45c304"
+  },
+  "moves": [
+   {
+    "old": "knowledge/97_hypotheses_H97_preregistered.md",
+    "new": "knowledge/108_hypotheses_H102_preregistered.md"
+   },
+   {
+    "old": "knowledge/98_the_metric_is_a_coverage_metric.md",
+    "new": "knowledge/109_the_metric_is_a_coverage_metric.md"
+   },
+   {
+    "old": "knowledge/99_h97_results_and_limits.md",
+    "new": "knowledge/110_h102_results_and_limits.md"
+   },
+   {
+    "old": "knowledge/100_next_round_proposals.md",
+    "new": "knowledge/111_next_round_proposals.md"
+   },
+   {
+    "old": "registry/h97_preregistration.json",
+    "new": "registry/h102_preregistration.json"
+   },
+   {
+    "old": "docs/h97.html",
+    "new": "docs/h102.html"
+   },
+   {
+    "old": "scripts/run_h97.py",
+    "new": "scripts/run_h102.py"
+   },
+   {
+    "old": "scripts/run_h97_e4_coverage.py",
+    "new": "scripts/run_h102_e4_coverage.py"
+   },
+   {
+    "old": "scripts/run_h97_e4b_hysteresis.py",
+    "new": "scripts/run_h102_e4b_hysteresis.py"
+   },
+   {
+    "old": "scripts/build_h97b_covered.py",
+    "new": "scripts/build_h102b_covered.py"
+   },
+   {
+    "old": "scripts/publish_h97_site.py",
+    "new": "scripts/publish_h102_site.py"
+   },
+   {
+    "old": "scripts/publish_h97_readme.py",
+    "new": "scripts/publish_h102_readme.py"
+   },
+   {
+    "old": "scripts/finalize_h97_pointer.py",
+    "new": "scripts/finalize_h102_receipts.py"
+   },
+   {
+    "old": "submission/H97_LATEST.txt",
+    "new": "submission/H102_LATEST.txt"
+   },
+   {
+    "old": "docs/downloads/h97-candidate.json",
+    "new": "docs/downloads/h102-candidate.json"
+   },
+   {
+    "old": "tests/test_current_submission_gate.py",
+    "new": "tests/test_current_submission_gate.py"
+   },
+   {
+    "old": "tests/test_h95.py",
+    "new": "tests/test_h95.py"
+   },
+   {
+    "old": "evidence/h97_build_placement.json",
+    "new": "evidence/h102_build_placement.json"
+   },
+   {
+    "old": "evidence/h97_channels.json",
+    "new": "evidence/h102_channels.json"
+   },
+   {
+    "old": "evidence/h97_e4_coverage.json",
+    "new": "evidence/h102_e4_coverage.json"
+   },
+   {
+    "old": "evidence/h97_e4b_hysteresis.json",
+    "new": "evidence/h102_e4b_hysteresis.json"
+   },
+   {
+    "old": "evidence/h97_fit.json",
+    "new": "evidence/h102_fit.json"
+   },
+   {
+    "old": "evidence/h97_holdout.json",
+    "new": "evidence/h102_holdout.json"
+   },
+   {
+    "old": "evidence/h97_independence.json",
+    "new": "evidence/h102_independence.json"
+   },
+   {
+    "old": "evidence/h97_lane.json",
+    "new": "evidence/h102_lane.json"
+   },
+   {
+    "old": "evidence/h97_not_union.json",
+    "new": "evidence/h102_not_union.json"
+   },
+   {
+    "old": "evidence/h97_run_card.json",
+    "new": "evidence/h102_run_card.json"
+   },
+   {
+    "old": "evidence/submission_gems52-h97-pafdva-disagree-37600px-20261011T002233Z.json",
+    "new": "evidence/submission_gems52-h102-pafdva-disagree-37600px-20261011T002233Z.json"
+   },
+   {
+    "old": "docs/data/submission_gems52-h97-pafdva-disagree-37600px-20261011T002233Z.json",
+    "new": "docs/data/submission_gems52-h102-pafdva-disagree-37600px-20261011T002233Z.json"
+   },
+   {
+    "old": "submission/gems52-h97-pafdva-disagree-37600px-20261011T002233Z.json",
+    "new": "submission/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.json"
+   },
+   {
+    "old": "docs/downloads/gems52-h97-pafdva-disagree-37600px-20261011T002233Z.json",
+    "new": "docs/downloads/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.json"
+   },
+   {
+    "old": "submission/gems52-h97-pafdva-disagree-37600px-20261011T002233Z.tif",
+    "new": "submission/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif"
+   },
+   {
+    "old": "submission/gems52-h97-pafdva-disagree-37600px-20261011T002233Z.zip",
+    "new": "submission/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.zip"
+   },
+   {
+    "old": "submission/gems52-h97-pafdva-disagree-37600px-20261011T002233Z-a-only-reasoning.csv",
+    "new": "submission/gems52-h102-pafdva-disagree-37600px-20261011T002233Z-a-only-reasoning.csv"
+   },
+   {
+    "old": "docs/downloads/gems52-h97-pafdva-disagree-37600px-20261011T002233Z.tif",
+    "new": "docs/downloads/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif"
+   },
+   {
+    "old": "docs/downloads/gems52-h97-pafdva-disagree-37600px-20261011T002233Z.zip",
+    "new": "docs/downloads/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.zip"
+   },
+   {
+    "old": "docs/downloads/gems52-h97-pafdva-disagree-37600px-20261011T002233Z-a-only-reasoning.csv",
+    "new": "docs/downloads/gems52-h102-pafdva-disagree-37600px-20261011T002233Z-a-only-reasoning.csv"
+   },
+   {
+    "old": "docs/downloads/h97-candidate.tif",
+    "new": "docs/downloads/h102-candidate.tif"
+   },
+   {
+    "old": "docs/downloads/h97-candidate.zip",
+    "new": "docs/downloads/h102-candidate.zip"
+   },
+   {
+    "old": "docs/downloads/h97-a-only-reasoning.csv",
+    "new": "docs/downloads/h102-a-only-reasoning.csv"
+   }
+  ]
  }
 }

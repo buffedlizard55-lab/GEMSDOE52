@@ -18,7 +18,7 @@
  },
  "question": "at the same emitted mass, does bridging neighbouring confident cells along the field recover more weighted truth than the same mass spent on more dots?",
  "falsifier": "bridged DTI <= dots@S_bridge DTI, i.e. the geometry adds nothing at matched mass",
- "note": "run on two fields: the H97 primary disagreement field and the surface-anisotropy field single_B2, because the geometry question is best posed on the strongest available field",
+ "note": "run on two fields: the H102 primary disagreement field and the surface-anisotropy field single_B2, because the geometry question is best posed on the strongest available field",
  "folds": [
   {
    "fold": 0,

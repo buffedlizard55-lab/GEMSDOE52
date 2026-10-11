@@ -11,7 +11,7 @@
   "min_blocks": 20,
   "negative_ring_px": 4
  },
- "thresholds_not_retuned_for_h97": true,
+ "thresholds_not_retuned_for_h102": true,
  "view_A": "single_A2 (store view_A_with_external + 40 PAF-DVA channels)",
  "view_B": "single_B2 (store view_B_with_external + 20 surface-DVA channels)",
  "per_fold": [

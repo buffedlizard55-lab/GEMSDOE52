@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
-"""Publish the H97 round to the GitHub Pages site: one-click download + explicit submit verdict.
+"""Publish the H102 round to the GitHub Pages site: one-click download + explicit submit verdict.
 
-Reads only receipts written by ``scripts/run_h97.py`` (nothing is invented here):
-    evidence/h97_run_card.json  evidence/h97_holdout.json  evidence/h97_lane.json
-    evidence/h97_build_placement.json  evidence/h97_fit.json  evidence/h97_channels.json
+Reads only receipts written by ``scripts/run_h102.py`` (nothing is invented here):
+    evidence/h102_run_card.json  evidence/h102_holdout.json  evidence/h102_lane.json
+    evidence/h102_build_placement.json  evidence/h102_fit.json  evidence/h102_channels.json
 
 Writes:
-    docs/downloads/h97-candidate.tif / .zip / .json      stable download aliases
+    docs/downloads/h102-candidate.tif / .zip / .json      stable download aliases
     docs/downloads/<submission filename>.tif / .zip      the exact files to upload
-    docs/h97.html                                        the round page
+    docs/h102.html                                        the round page
     submission/LATEST.txt                                which file the site is pointing at
-and inserts an H97 card (between <!--H97-CARD--> markers) at the top of
+and inserts an H102 card (between <!--H102-CARD--> markers) at the top of
 docs/index.html and docs/executive-summary.html.
 """
 from __future__ import annotations
@@ -33,12 +33,12 @@ def load(name):
 
 
 def main() -> int:
-    card = load("h97_run_card.json")
-    hold = load("h97_holdout.json")
-    lane = load("h97_lane.json")
-    build = load("h97_build_placement.json")
-    fit = load("h97_fit.json")
-    ch = load("h97_channels.json")
+    card = load("h102_run_card.json")
+    hold = load("h102_holdout.json")
+    lane = load("h102_lane.json")
+    build = load("h102_build_placement.json")
+    fit = load("h102_fit.json")
+    ch = load("h102_channels.json")
     name = card["submission_name"]
     tif = SUB / f"gems52-{name}.tif"
     zipf = SUB / f"gems52-{name}.zip"
@@ -46,12 +46,12 @@ def main() -> int:
     if not tif.exists():
         raise SystemExit(f"missing {tif}")
     DL.mkdir(parents=True, exist_ok=True)
-    for src, alias in ((tif, "h97-candidate.tif"), (zipf, "h97-candidate.zip"), (jsf, "h97-candidate.json")):
+    for src, alias in ((tif, "h102-candidate.tif"), (zipf, "h102-candidate.zip"), (jsf, "h102-candidate.json")):
         if src.exists():
             shutil.copy2(src, DL / alias)
         shutil.copy2(src, DL / src.name)
     csvp = SUB / f"gems52-{name}-a-only-reasoning.csv"
-    csv_alias = DL / "h97-a-only-reasoning.csv"
+    csv_alias = DL / "h102-a-only-reasoning.csv"
     if csvp.exists():
         shutil.copy2(csvp, csv_alias)
         shutil.copy2(csvp, DL / csvp.name)
@@ -61,7 +61,7 @@ def main() -> int:
 
     # Optional diagnostics (only rendered when the receipts exist; never invented).
     geom_html = ""
-    e4p, e4bp = EV / "h97_e4_coverage.json", EV / "h97_e4b_hysteresis.json"
+    e4p, e4bp = EV / "h102_e4_coverage.json", EV / "h102_e4b_hysteresis.json"
     if e4p.exists() and e4bp.exists():
         e4 = json.loads(e4p.read_text())
         e4b = json.loads(e4bp.read_text())
@@ -99,25 +99,25 @@ close it on the leaderboard, whose truth set and scoring region differ (see the 
     auc_rows = "".join(
         f"<tr><td>{r['fold']}</td><td>{r['auc']['single_A2']:.4f}</td><td>{r['auc']['single_B2']:.4f}</td>"
         f"<td>{r['canary_max']:.4f}</td><td>{r['canary_worst']}</td></tr>" for r in fit["folds"])
-    card_html = f"""<!--H97-CARD-->
-<style>.h97card{{border:2px solid #66bb6a;border-radius:12px;padding:16px 18px;margin:16px 0;background:#0f1f14;color:#e8eaed;font:15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}}.h97card h2{{margin:0 0 8px;font-size:19px;color:#66bb6a}}.h97card a{{color:#4fc3f7;font-weight:700}}.h97card code{{background:#16241b;padding:1px 4px;border-radius:3px;font-size:12.5px;word-break:break-all}}</style>
-<div class="h97card"><h2>Latest round H97 — potential-field directional anisotropy (View A) &times; surface anisotropy (View B)</h2>
+    card_html = f"""<!--H102-CARD-->
+<style>.h102card{{border:2px solid #66bb6a;border-radius:12px;padding:16px 18px;margin:16px 0;background:#0f1f14;color:#e8eaed;font:15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}}.h102card h2{{margin:0 0 8px;font-size:19px;color:#66bb6a}}.h102card a{{color:#4fc3f7;font-weight:700}}.h102card code{{background:#16241b;padding:1px 4px;border-radius:3px;font-size:12.5px;word-break:break-all}}</style>
+<div class="h102card"><h2>Latest round H102 — potential-field directional anisotropy (View A) &times; surface anisotropy (View B)</h2>
 <p><b>OK TO DOWNLOAD: YES</b> (independent on-disk validator PASS: 1 band float32, EPSG:32611, 3730&times;3292,
 transform and bounds equal to the sample submission, <b>0 NaN, 0 inf, values exactly {{0.0, 1.0}}</b>,
 {card['validator']['ones']:,} cells = 1). <b>OK TO SUBMIT: {verdict_submit}</b> — {'holdout promotion gate PASSED; a selector still has to record the decision before a weekly slot is spent.' if promoted else 'research candidate, NOT slot-approved: its holdout DTI did not clear the promotion rule (see the table below). Do not spend your last slot on it without reading the limits.'}</p>
-<p><a href="downloads/h97-candidate.tif" download><b>Download the H97 GeoTIFF (.tif) &darr;</b></a> &middot;
-<a href="downloads/h97-candidate.zip" download>single-TIFF .zip &darr;</a> &middot;
-{'<a href="downloads/h97-a-only-reasoning.csv" download>A-only reasoning CSV &darr;</a> &middot;' if (DL / 'h97-a-only-reasoning.csv').exists() else ''}
-<a href="h97.html">full result page</a> &middot;
+<p><a href="downloads/h102-candidate.tif" download><b>Download the H102 GeoTIFF (.tif) &darr;</b></a> &middot;
+<a href="downloads/h102-candidate.zip" download>single-TIFF .zip &darr;</a> &middot;
+{'<a href="downloads/h102-a-only-reasoning.csv" download>A-only reasoning CSV &darr;</a> &middot;' if (DL / 'h102-a-only-reasoning.csv').exists() else ''}
+<a href="h102.html">full result page</a> &middot;
 <a href="executive-summary.html">how to submit (step by step)</a></p>
 <p><small>Submission name <code>{name}</code><br>Note ({card['note_chars']}/140): <code>{card['note']}</code><br>
 SHA-256 <code>{sha}</code> &middot; {card['raster_bytes']:,} bytes &middot;
 verdict <b>{card['verdict']}</b> &middot; submission slots used by this round: {card['submission_slots_used']}</small></p></div>
-<!--/H97-CARD-->"""
+<!--/H102-CARD-->"""
 
-    h97_page = f"""<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+    h102_page = f"""<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>H97 — potential-field anisotropy &times; surface anisotropy disagreement (GEMSDOE52)</title>
+<title>H102 — potential-field anisotropy &times; surface anisotropy disagreement (GEMSDOE52)</title>
 <style>:root{{--bg:#0f1117;--fg:#e8eaed;--accent:#4fc3f7;--ok:#66bb6a;--warn:#ffa726;--err:#ef5350;--card:#1a1d27;--border:#2d3040}}
 *{{margin:0;padding:0;box-sizing:border-box}}body{{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--fg);line-height:1.6}}
 .container{{max-width:900px;margin:0 auto;padding:24px 20px}}h1{{font-size:1.6rem;color:var(--accent)}}h2{{font-size:1.15rem;margin:24px 0 10px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px}}
@@ -125,13 +125,13 @@ a{{color:var(--accent)}}code{{background:#1e2130;padding:2px 6px;border-radius:3
 table{{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}}th,td{{padding:6px 9px;text-align:left;border-bottom:1px solid var(--border)}}th{{color:var(--accent)}}
 .box{{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin:12px 0}}.muted{{color:#9aa0a6;font-size:.88rem}}
 .btn{{display:inline-block;background:var(--accent);color:#000;font-weight:700;padding:10px 18px;border-radius:6px;margin:6px 6px 6px 0;text-decoration:none}}</style></head><body><div class="container">
-<h1>H97 — potential-field directional anisotropy (PAF-DVA) as View A</h1>
+<h1>H102 — potential-field directional anisotropy (PAF-DVA) as View A</h1>
 <p class="muted">DOE GEMS Prize (DrivenData #306) &middot; generated {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')} &middot;
-preregistration <code>registry/h97_preregistration.json</code> SHA-256 <code>{card['preregistration_sha256']}</code> &middot;
+preregistration <code>registry/h102_preregistration.json</code> SHA-256 <code>{card['preregistration_sha256']}</code> &middot;
 <a href="index.html">status</a> &middot; <a href="executive-summary.html">how to submit</a></p>
 <div class="box"><b>Download:</b>
-<a class="btn" href="downloads/h97-candidate.tif" download>h97-candidate.tif</a>
-<a class="btn" href="downloads/h97-candidate.zip" download>h97-candidate.zip</a>
+<a class="btn" href="downloads/h102-candidate.tif" download>h102-candidate.tif</a>
+<a class="btn" href="downloads/h102-candidate.zip" download>h102-candidate.zip</a>
 <p class="muted">Submit to DrivenData: <b>{verdict_submit}</b>. Verdict <b>{card['verdict']}</b>, submission slots used {card['submission_slots_used']}.</p></div>
 <h2>1 &middot; Hypothesis and mechanism</h2>
 <p>{card['hypothesis']}</p><p><b>Mechanism.</b> {card['mechanism']}</p>
@@ -153,14 +153,14 @@ CI lower bound above zero: <b>{gate['ci_lower_above_zero']}</b>; above the stand
 <h2>4 &middot; Diagnostics that were registered in advance</h2>
 <table><tr><th>fold</th><th>single_A2 out-of-quadrant AUC</th><th>single_B2</th><th>leakage canary max</th><th>worst channel</th></tr>{auc_rows}</table>
 <p>Leakage canary bar 0.90 (a single channel alone on the held-out region); alarm raised: <b>{fit['canary_alarm_any']}</b>.</p>
-<p><b>Budget diagnostic (does NOT select the budget — amendment h97a):</b> the artifact's mass is frozen at
+<p><b>Budget diagnostic (does NOT select the budget — amendment h102a):</b> the artifact's mass is frozen at
 {build['target_dots']:,} dots = 4 &times; {hold['budget_per_fold']:,}, the family standard.</p>
 <table><tr><th>fold</th><th>9,400/fold</th><th>16,000/fold</th><th>25,400/fold</th></tr>{budget_rows}</table>
 <h2>5 &middot; Independence of the two views (Blum&ndash;Mitchell assumption)</h2>
 <p>The brief's mandated test: correlate each view's spatial-block out-of-fold errors on labelled negatives,
 thresholds inherited verbatim from <code>registry/h74_preregistration.json</code>. Result recorded in
-<code>evidence/h97_independence.json</code>: max |rho| = {json.dumps(load('h97_independence.json')['result']['max_abs_correlation'])},
-abandon bar {json.dumps(load('h97_independence.json')['result']['threshold'])}.</p>
+<code>evidence/h102_independence.json</code>: max |rho| = {json.dumps(load('h102_independence.json')['result']['max_abs_correlation'])},
+abandon bar {json.dumps(load('h102_independence.json')['result']['threshold'])}.</p>
 <h2>6 &middot; The artifact: placement, format and uniqueness</h2>
 <p>Emitted {build['dots']:,} cells at 3 px minimum spacing inside the eligible footprint
 ({build['eligible_px']:,} px), pool {build['pool_px']:,} px, the &le;200 m collar around every mapped catalogue fault excluded.
@@ -183,10 +183,10 @@ NaN {card['validator']['nan']}, inf {card['validator']['infinite']}, range [{car
 <li>The hide-and-recover instrument withholds the <em>catalogue</em> faults, which were mapped from surface expression; the
 competition scores faults the catalogue lacks. This repository has measured that the instrument does not rank leaderboard
 performance (Spearman &asymp; &minus;0.10 over R4), so a holdout number is never a board forecast.</li>
-<li>View A (potential field / subsurface) has failed the sufficiency gate in every round that reported it; H97 tests whether
+<li>View A (potential field / subsurface) has failed the sufficiency gate in every round that reported it; H102 tests whether
 <em>directional anisotropy</em> changes that. The View-A out-of-quadrant AUCs are in the table above.</li>
 <li>The lane census covers the locally available registry ({lane['n_local_registry']} unique rasters). The full 526-blob
-cross-repository census lives in a git-ignored receipt and was not re-fetched inside this round's time box (IR-H97-003).</li>
+cross-repository census lives in a git-ignored receipt and was not re-fetched inside this round's time box (IR-H102-003).</li>
 <li>No new external data was used. The one external layer ranked highest-unexplored (GDR 1391 two-metre temperature probes,
 DOI 10.15121/1881483) is not reachable from this sandbox (<code>gdr.openei.org</code> is not on the egress allowlist).</li>
 </ul>
@@ -200,15 +200,15 @@ DOI 10.15121/1881483) is not reachable from this sandbox (<code>gdr.openei.org</
 <li>Reference solution: <a href="https://github.com/drivendataorg/gems-prize-reference-solution">github.com/drivendataorg/gems-prize-reference-solution</a></li>
 </ul>
 <p class="muted">Every number on this page was read from the JSON receipts named above, written by
-<code>scripts/run_h97.py</code>. Nothing is projected onto a leaderboard.</p>
+<code>scripts/run_h102.py</code>. Nothing is projected onto a leaderboard.</p>
 </div></body></html>"""
-    (ROOT / "docs/h97.html").write_text(h97_page)
+    (ROOT / "docs/h102.html").write_text(h102_page)
 
     for page in (ROOT / "docs/index.html", ROOT / "docs/executive-summary.html"):
         text = page.read_text()
-        if "<!--H97-CARD-->" in text:
-            head, rest = text.split("<!--H97-CARD-->", 1)
-            _old, tail = rest.split("<!--/H97-CARD-->", 1)
+        if "<!--H102-CARD-->" in text:
+            head, rest = text.split("<!--H102-CARD-->", 1)
+            _old, tail = rest.split("<!--/H102-CARD-->", 1)
             text = head + card_html + tail
         else:
             marker = "<body>"
@@ -217,11 +217,11 @@ DOI 10.15121/1881483) is not reachable from this sandbox (<code>gdr.openei.org</
         if page.name == "index.html":
             text = text.replace(
                 "<title>GEMSDOE52 — current status (H96): download yes, submit NO</title>",
-                f"<title>GEMSDOE52 — current status (H97): download yes, submit {verdict_submit}</title>")
+                f"<title>GEMSDOE52 — current status (H102): download yes, submit {verdict_submit}</title>")
         page.write_text(text)
 
     (SUB / "LATEST.txt").write_text(f"gems52-{name}.tif\n")
-    (SUB / "H97_LATEST.txt").write_text(f"gems52-{name}.tif\n")
+    (SUB / "H102_LATEST.txt").write_text(f"gems52-{name}.tif\n")
     print(json.dumps(dict(submission=f"gems52-{name}.tif", submit_ok=promoted, verdict=card["verdict"],
                           sha256=sha, note=card["note"], rasters_in_registry=lane["n_local_registry"],
                           lane_dots=lanes["verdict"], lane_surface=lane_s["verdict"]), indent=1))

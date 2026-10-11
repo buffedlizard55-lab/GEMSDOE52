@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""H97 E4b -- second geometry for the same question: hysteresis traces instead of naive bridging.
+"""H102 E4b -- second geometry for the same question: hysteresis traces instead of naive bridging.
 
-E4a (``run_h97_e4_coverage.py``) showed that *bridging every nearby pair* of dots along a weak field is
+E4a (``run_h102_e4_coverage.py``) showed that *bridging every nearby pair* of dots along a weak field is
 worse than spending the same mass on more dots, on both fields tested.  That is a negative for the
 bridging operator, not necessarily for the coverage thesis: bridging fills the segment between two cells
 regardless of what the field does in between, so on a field whose ranking is poor it concentrates mass
@@ -17,7 +17,7 @@ high-rank region.  Compared, at the same emitted mass, against
 
 Same shared instrument, same folds, same evaluator, same frozen field.  Diagnostic only.
 
-Usage: python scripts/run_h97_e4b_hysteresis.py
+Usage: python scripts/run_h102_e4b_hysteresis.py
 """
 from __future__ import annotations
 
@@ -38,16 +38,16 @@ import numpy as np                                                    # noqa: E4
 from scipy import ndimage as ndi                                      # noqa: E402
 
 import run_h61 as base                                                # noqa: E402
-import run_h97 as h97                                                 # noqa: E402
+import run_h102 as h102                                                 # noqa: E402
 from gems52 import evaluate_holdout as evaluator                      # noqa: E402
 from gems52 import nodes                                              # noqa: E402
 
 SEED = base.SEED
-WORK = ROOT / "work/h97"
+WORK = ROOT / "work/h102"
 EVID = ROOT / "evidence"
-Q_SEED = float(os.environ.get("H97E4B_Q_SEED", 0.98))
-Q_GROW = float(os.environ.get("H97E4B_Q_GROW", 0.85))
-MAX_STEPS = int(os.environ.get("H97E4B_MAX_STEPS", 12))
+Q_SEED = float(os.environ.get("H102E4B_Q_SEED", 0.98))
+Q_GROW = float(os.environ.get("H102E4B_Q_GROW", 0.85))
+MAX_STEPS = int(os.environ.get("H102E4B_MAX_STEPS", 12))
 FIELDS = ("single_B2", "cotrain_disagree")
 
 
@@ -87,19 +87,19 @@ def main() -> int:
                folds=[])
     for fold in folds:
         f = fold["fold"]
-        allowed = h97.allowed_of(fold, ring_px)
+        allowed = h102.allowed_of(fold, ring_px)
         pa = base.to_grid(store.flat_idx, np.load(WORK / f"pred_single_A2_f{f}.npy"), eligible.shape)
         pb = base.to_grid(store.flat_idx, np.load(WORK / f"pred_single_B2_f{f}.npy"), eligible.shape)
-        ra, rb = h97.rank_in(pa, allowed), h97.rank_in(pb, allowed)
+        ra, rb = h102.rank_in(pa, allowed), h102.rank_in(pb, allowed)
         rec = dict(fold=f, allowed_px=int(allowed.sum()), fields={})
         for fld in FIELDS:
             if fld == "cotrain_disagree":
-                field = np.where(allowed, np.nan_to_num(h97.arm_field(h97.PRIMARY, ra, rb, eligible.shape), nan=-1.0),
+                field = np.where(allowed, np.nan_to_num(h102.arm_field(h102.PRIMARY, ra, rb, eligible.shape), nan=-1.0),
                                  -1.0).astype(np.float32)
                 field[allowed] = ra[allowed] - rb[allowed] + 1.0        # keep it non-negative on the allowed set
             else:
                 field = np.where(allowed, np.nan_to_num(rb, nan=-1.0), -1.0).astype(np.float32)
-            dots = nodes.spacing_select(field, allowed, h97.K_FOLD, min_px=3.0)
+            dots = nodes.spacing_select(field, allowed, h102.K_FOLD, min_px=3.0)
             hyst, hrec = hysteresis(field, allowed, Q_SEED, Q_GROW, MAX_STEPS)
             s_hyst = int(hyst.sum())
             dots_s = nodes.spacing_select(field, allowed, s_hyst, min_px=3.0)
@@ -136,7 +136,7 @@ def main() -> int:
                         else "no measured hysteresis gain at matched mass (negative)")
         out["geometry_vs_mass"][fld] = g
     out["seconds"] = round(time.time() - t0, 1)
-    (EVID / "h97_e4b_hysteresis.json").write_text(json.dumps(out, indent=1, default=float) + "\n")
+    (EVID / "h102_e4b_hysteresis.json").write_text(json.dumps(out, indent=1, default=float) + "\n")
     for fld in FIELDS:
         log(fld + ": " + json.dumps({a: round(out["pooled"][fld]["scores"][a]["dti"], 6) for a in arms}))
         log(fld + ": " + json.dumps(out["geometry_vs_mass"][fld], default=float))

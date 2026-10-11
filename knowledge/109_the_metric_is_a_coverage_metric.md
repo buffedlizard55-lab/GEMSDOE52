@@ -30,7 +30,7 @@ The brief states two different "highest scores". The public board on 2026-10-10 
 highest score right now": it is rank 8. The family's own best is **0.2778 at rank 22**
 (`extradr19`, last active ~2026-10-04, which matches the owner-reported `h33-2-b2` value and date — that is
 consistent with, and not proof of, that team being the owner's account). The bar to enter the top 5 is
-currently **0.3262**, and to lead, **0.3774**. This is logged as IR-H97-001 and IR-H97-002. The number in
+currently **0.3262**, and to lead, **0.3774**. This is logged as IR-H102-001 and IR-H102-002. The number in
 the brief that a *target* has to beat is therefore 0.3262, not 0.3195.
 
 ## 2 · Why `h33-2-b2` scored 0.2778 (re-verified from its bytes this session)
@@ -128,7 +128,7 @@ is the one nobody has spent.
    has, on the metric, found one fault and reported two cells. Filling the gap adds `TPw` at ~1/3 the
    marginal cost of the same mass placed randomly. Cost: low (a line-following pass over the existing
    field). Evidence needed: does the filled field's `TPw` rise faster than its `0.2·S`? That is a
-   same-instrument, same-fold measurement, and it is exactly what the H97 budget curve and the H97 holdout
+   same-instrument, same-fold measurement, and it is exactly what the H102 budget curve and the H102 holdout
    give the first data point for.
 2. **The mass lever at the family's own density** (`knowledge/76` §4): re-emit the champion family's field
    at 32 % less mass. Blocked by the lane rule for the champion's own file (a subset of a registry raster's

@@ -290,30 +290,30 @@ def test_h96_artifact_bytes_re_verify_every_gate_claim() -> None:
     assert (DOCS / "downloads/h96-candidate.tif").read_bytes() == canonical.read_bytes()
 
 
-# --- H97 (arena/604a9c54 session): potential-field directional anisotropy x surface anisotropy -----
+# --- H102 (arena/604a9c54 session): potential-field directional anisotropy x surface anisotropy -----
 # Same contract as H96: the pointer may name this round, but the receipt must keep the slot gate
 # closed, the note inside the portal limit, and the round's own receipts beside the artifact.
 
-H97_STEM = "gems52-h97-pafdva-disagree-37600px-20261011T002233Z"
-H97_SHA = "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326"
+H102_STEM = "gems52-h102-pafdva-disagree-37600px-20261011T002233Z"
+H102_SHA = "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326"
 
 
-def _h97_receipts():
-    artifacts = json.loads((ROOT / f"evidence/submission_{H97_STEM}.json").read_text())
-    card = json.loads((ROOT / "evidence/h97_run_card.json").read_text())
-    hold = json.loads((ROOT / "evidence/h97_holdout.json").read_text())
+def _h102_receipts():
+    artifacts = json.loads((ROOT / f"evidence/submission_{H102_STEM}.json").read_text())
+    card = json.loads((ROOT / "evidence/h102_run_card.json").read_text())
+    hold = json.loads((ROOT / "evidence/h102_holdout.json").read_text())
     return artifacts, card, hold
 
 
-def test_h97_receipt_gate_blocks_promote_while_below_the_bar() -> None:
-    artifacts, card, hold = _h97_receipts()
-    assert artifacts["sha256"] == H97_SHA
-    assert artifacts["file"] == f"{H97_STEM}.tif"
-    assert artifacts["round"] == "H97"
+def test_h102_receipt_gate_blocks_promote_while_below_the_bar() -> None:
+    artifacts, card, hold = _h102_receipts()
+    assert artifacts["sha256"] == H102_SHA
+    assert artifacts["file"] == f"{H102_STEM}.tif"
+    assert artifacts["round"] == "H102"
     assert artifacts["nonzero_px"] == 37600
-    assert artifacts["short_tif"] == "h97-candidate.tif"
-    assert artifacts["short_zip"] == "h97-candidate.zip"
-    assert artifacts["validator"]["sha256"] == H97_SHA
+    assert artifacts["short_tif"] == "h102-candidate.tif"
+    assert artifacts["short_zip"] == "h102-candidate.zip"
+    assert artifacts["validator"]["sha256"] == H102_SHA
     note = artifacts["note"]
     assert 1 <= len(note) <= 140  # the owner's portal box is <=140 chars for this family's convention
     assert artifacts["note_chars"] == len(note)
@@ -335,16 +335,16 @@ def test_h97_receipt_gate_blocks_promote_while_below_the_bar() -> None:
     reg = artifacts["metadata"]["registration"]
     assert reg["frozen_before_any_fit"] is True
     assert reg["preregistration_sha256"].startswith("b2eb593f")
-    for name in ("h97_run_card.json", "h97_holdout.json", "h97_lane.json",
-                 "h97_e4_coverage.json", "h97_e4b_hysteresis.json"):
+    for name in ("h102_run_card.json", "h102_holdout.json", "h102_lane.json",
+                 "h102_e4_coverage.json", "h102_e4b_hysteresis.json"):
         assert (ROOT / "evidence" / name).is_file(), name
 
 
-def test_h97_artifact_bytes_re_verify_every_gate_claim() -> None:
-    artifacts, card, hold = _h97_receipts()
-    canonical = DOCS / "downloads" / f"{H97_STEM}.tif"
+def test_h102_artifact_bytes_re_verify_every_gate_claim() -> None:
+    artifacts, card, hold = _h102_receipts()
+    canonical = DOCS / "downloads" / f"{H102_STEM}.tif"
     assert canonical.is_file()
-    assert hashlib.sha256(canonical.read_bytes()).hexdigest() == H97_SHA
+    assert hashlib.sha256(canonical.read_bytes()).hexdigest() == H102_SHA
     with rasterio.open(canonical) as ds:
         data = ds.read(1)
         assert ds.count == 1

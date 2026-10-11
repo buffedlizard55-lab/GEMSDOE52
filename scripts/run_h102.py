@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""H97 -- potential-field directional anisotropy (PAF-DVA) as View A, disagreement as the discovery signal.
+"""H102 -- potential-field directional anisotropy (PAF-DVA) as View A, disagreement as the discovery signal.
 
-Preregistered (frozen before any fit) in ``knowledge/97_hypotheses_H97_preregistered.md`` and pinned by
-``registry/h97_preregistration.json`` (amendment h97a included); this runner refuses to start if either
+Preregistered (frozen before any fit) in ``knowledge/108_hypotheses_H102_preregistered.md`` and pinned by
+``registry/h102_preregistration.json`` (amendment h102a included); this runner refuses to start if either
 hash has moved.
 
 Lane: the standing brief's co-training paragraph (Blum & Mitchell, COLT '98, doi:10.1145/279943.279962).
@@ -18,7 +18,7 @@ Reuse, don't rebuild
 * DVA operator       ``run_h82._gamma_stats`` + the frozen fan/sigma/lags -- imported, never forked
 * learner, sampling, view columns, percentile rank: ``run_h61`` -- imported
 
-Stages (each checkpointed under work/h97 and evidence/h97_*.json):
+Stages (each checkpointed under work/h102 and evidence/h102_*.json):
     channels     40 PAF-DVA channels (View A) + 20 surface-DVA channels (View B) from the pinned raster
     fit          leakage canary per channel, then single_A2 and single_B2 per fold (region-only predict)
     holdout      matched-budget hide-and-recover pooled DTI for 7 arms + paired 95 % CIs
@@ -27,7 +27,7 @@ Stages (each checkpointed under work/h97 and evidence/h97_*.json):
     lane         lane gate (surface and dots) against every locally available registry raster
     write        GeoTIFF + on-disk validator + uniqueness + not-the-union + reasoning + run card
 
-Usage: python scripts/run_h97.py [channels|fit|holdout|independence|build|lane|write|all]
+Usage: python scripts/run_h102.py [channels|fit|holdout|independence|build|lane|write|all]
 """
 from __future__ import annotations
 
@@ -56,18 +56,18 @@ from gems52 import evaluate_holdout as evaluator                      # noqa: E4
 from gems52 import gates, nodes, spatial, submission_writer           # noqa: E402
 
 SEED = base.SEED
-PREREG = ROOT / "registry/h97_preregistration.json"
-WORK = ROOT / "work/h97"
+PREREG = ROOT / "registry/h102_preregistration.json"
+WORK = ROOT / "work/h102"
 FEAT = WORK / "features"
 EVID = ROOT / "evidence"
 SAMPLE = ROOT / "data/sample_submission.tif"
-K_FOLD = int(os.environ.get("H97_K_FOLD", 9400))
-K_TOTAL = int(os.environ.get("H97_K_TOTAL", 37600))          # amendment h97a: frozen = 4 x K_FOLD
+K_FOLD = int(os.environ.get("H102_K_FOLD", 9400))
+K_TOTAL = int(os.environ.get("H102_K_TOTAL", 37600))          # amendment h102a: frozen = 4 x K_FOLD
 RING_M = 200.0
 SIGMA = h82.SIGMA
 LAGS = h82.LAGS
 FAN = h82.FAN
-PREFIX = "gems52-h97-"
+PREFIX = "gems52-h102-"
 
 # View A: potential field and subsurface.  View B: surface only.  Disjoint by construction.
 A_BANDS = {13: "iso_grav_anom", 18: "iso_grav_anom_hg", 2: "rtp", 15: "depth_to_base_surf"}
@@ -91,7 +91,7 @@ def digest(p):
 
 def write(name, obj):
     EVID.mkdir(exist_ok=True)
-    p = EVID / f"h97_{name}.json"
+    p = EVID / f"h102_{name}.json"
     p.write_text(json.dumps(obj, indent=1, default=float) + "\n")
     return p
 
@@ -100,9 +100,9 @@ def check_prereg():
     reg = json.loads(PREREG.read_text())
     doc = ROOT / reg["hypothesis_document"]
     if digest(doc) != reg["hypothesis_sha256"]:
-        raise SystemExit("H97 preregistration document changed after freezing; re-pin registry/h97_preregistration.json")
+        raise SystemExit("H102 preregistration document changed after freezing; re-pin registry/h102_preregistration.json")
     if reg.get("frozen_before_any_fit") is not True:
-        raise SystemExit("H97 preregistration is not marked frozen before any fit")
+        raise SystemExit("H102 preregistration is not marked frozen before any fit")
     return reg
 
 
@@ -147,7 +147,7 @@ def stage_channels():
         if attempts > 1:
             repaired[k] = attempts
         del v
-    man = dict(round="H97", created_utc=now(), version="h97-pafdva-v1", sigma_px=SIGMA, lags_px=list(LAGS),
+    man = dict(round="H102", created_utc=now(), version="h102-pafdva-v1", sigma_px=SIGMA, lags_px=list(LAGS),
                fan_offsets_dy_dx=[list(t) for t in FAN], view_A_bands={str(k): v for k, v in A_BANDS.items()},
                view_B_bands={str(k): v for k, v in B_BANDS.items()},
                operator="run_h82._gamma_stats (imported, not forked)", channels_A=A_NAMES, channels_B=B_NAMES,
@@ -406,7 +406,7 @@ def stage_independence():
                thresholds=dict(donor_rank_min=th["donor_rank_min"], block_side_px=th["block_side_px"],
                                abandon_max_abs_rho=th["independence_abandon_max_abs_rho"],
                                min_blocks=20, negative_ring_px=4),
-               thresholds_not_retuned_for_h97=True,
+               thresholds_not_retuned_for_h102=True,
                view_A="single_A2 (store view_A_with_external + 40 PAF-DVA channels)",
                view_B="single_B2 (store view_B_with_external + 20 surface-DVA channels)",
                per_fold=per_fold, result=res,
@@ -465,7 +465,7 @@ def stage_build():
                min_cat_dist_m=float((catd[dots] * 100).min()), median_cat_dist_m=float(np.median(catd[dots] * 100)),
                dots_within_300m_of_catalogue_pct=float((catd[dots] * 100 <= 300).mean() * 100),
                union_dots=int(union_dots.sum()), a_dots=int(a_dots.sum()), b_dots=int(b_dots.sum()),
-               budget_rule="amendment h97a: frozen 37600 = 4 x 9400/fold", started_utc=now())
+               budget_rule="amendment h102a: frozen 37600 = 4 x 9400/fold", started_utc=now())
     write("build_placement", rec)
     log(f"dots {int(dots.sum())}, pool {int(pool.sum())}, min catalogue distance {rec['min_cat_dist_m']:.1f} m")
     del fA, fB, ra, rb, dis, field, dots, a_field, b_field, a_dots, b_dots, umax, union_dots, catd, pool
@@ -509,7 +509,7 @@ def stage_lane():
                registry_scope=("locally available de-duplicated rasters: restricted scored registry "
                                "(data/scored, data/reference), this repository's submission/ artefacts and "
                                "docs/downloads/*.tif. The 526-blob cross-repository census was NOT re-fetched "
-                               "inside this round's time box (IR-H97-003)."),
+                               "inside this round's time box (IR-H102-003)."),
                doctrine="a restricted-registry PASS never waives the full-census result; here both are the same set")
     out["surface"] = gates.lane_report(surf, eligible, reg, sample=SAMPLE, phase="surface", log=log)
     out["dots"] = gates.lane_report(dots, eligible, reg, sample=SAMPLE, phase="dots", log=log)
@@ -531,16 +531,16 @@ def stage_write():
     union_dots = np.load(WORK / "union_dots.npy")
     pred = dots.astype(np.float32)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    name = f"h97-pafdva-disagree-{int(dots.sum())}px-{stamp}"
-    note = ("H97 co-training: View-A potential-field directional anisotropy (gravity/RTP/cover) x View-B DEM "
+    name = f"h102-pafdva-disagree-{int(dots.sum())}px-{stamp}"
+    note = ("H102 co-training: View-A potential-field directional anisotropy (gravity/RTP/cover) x View-B DEM "
             "anisotropy; disagreement field, 200m catalogue ring excluded, binary")
     if len(note) > 140:
-        note = ("H97 co-training: View-A potential-field anisotropy x View-B DEM anisotropy; disagreement field, "
+        note = ("H102 co-training: View-A potential-field anisotropy x View-B DEM anisotropy; disagreement field, "
                 f"200m ring excluded, binary {int(dots.sum())} dots")
     assert len(name) <= 140 and len(note) <= 140, (len(name), len(note))
     out = ROOT / "submission" / f"gems52-{name}.tif"
     rec = submission_writer.write_submission(out, pred, SAMPLE, eligible, note=note, name=name,
-                                             metadata=dict(round="H97", primary_arm=PRIMARY,
+                                             metadata=dict(round="H102", primary_arm=PRIMARY,
                                                            preregistration_sha256=digest(PREREG)))
     with rasterio.open(out) as a, rasterio.open(SAMPLE) as s:
         v = a.read(1)
@@ -557,8 +557,8 @@ def stage_write():
     val["range_rule_source"] = ("official: single layer float32 with values between 0 and 1, EPSG:32611, 100 m, "
                                 "same bounds as the training data "
                                 "(https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/)")
-    hold = json.loads((EVID / "h97_holdout.json").read_text())
-    lane = json.loads((EVID / "h97_lane.json").read_text())
+    hold = json.loads((EVID / "h102_holdout.json").read_text())
+    lane = json.loads((EVID / "h102_lane.json").read_text())
     fA, fB = np.load(WORK / "field_A.npy"), np.load(WORK / "field_B.npy")
     catd = ndi.distance_transform_edt(~cat)
     pool = eligible & np.isfinite(fA) & np.isfinite(fB) & (catd * 100.0 > RING_M)
@@ -597,7 +597,7 @@ def stage_write():
                         "flight-line or terrain-correction striping; paleochannel scour at the basement surface",
                         "a Phase-2 reviewer finds the candidate coincides with a mapped lithologic contact or a "
                         "survey flight line and has no independent surface or seismicity expression"])
-    run_card = dict(round="H97", generated_utc=now(),
+    run_card = dict(round="H102", generated_utc=now(),
                     hypothesis=("directional semivariance anisotropy on the potential-field/subsurface bands is a "
                                 "subsurface texture that is not a copy of the surface texture; where View A is "
                                 "confident and View B abstains the fault may be buried beneath cover and absent "

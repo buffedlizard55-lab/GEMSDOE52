@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>H97 — potential-field anisotropy &times; surface anisotropy disagreement (GEMSDOE52)</title>
+<title>H102 — potential-field anisotropy &times; surface anisotropy disagreement (GEMSDOE52)</title>
 <style>:root{--bg:#0f1117;--fg:#e8eaed;--accent:#4fc3f7;--ok:#66bb6a;--warn:#ffa726;--err:#ef5350;--card:#1a1d27;--border:#2d3040}
 *{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--fg);line-height:1.6}
 .container{max-width:900px;margin:0 auto;padding:24px 20px}h1{font-size:1.6rem;color:var(--accent)}h2{font-size:1.15rem;margin:24px 0 10px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px}
@@ -8,13 +8,13 @@ a{color:var(--accent)}code{background:#1e2130;padding:2px 6px;border-radius:3px;
 table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}th,td{padding:6px 9px;text-align:left;border-bottom:1px solid var(--border)}th{color:var(--accent)}
 .box{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin:12px 0}.muted{color:#9aa0a6;font-size:.88rem}
 .btn{display:inline-block;background:var(--accent);color:#000;font-weight:700;padding:10px 18px;border-radius:6px;margin:6px 6px 6px 0;text-decoration:none}</style></head><body><div class="container">
-<h1>H97 — potential-field directional anisotropy (PAF-DVA) as View A</h1>
-<p class="muted">DOE GEMS Prize (DrivenData #306) &middot; generated 2026-10-11 00:31 UTC &middot;
-preregistration <code>registry/h97_preregistration.json</code> SHA-256 <code>b2eb593fe5ebed4005574402769305b9805c2ffdd57d760ecd3d0c90bd359181</code> &middot;
+<h1>H102 — potential-field directional anisotropy (PAF-DVA) as View A</h1>
+<p class="muted">DOE GEMS Prize (DrivenData #306) &middot; generated 2026-10-11 01:44 UTC &middot;
+preregistration <code>registry/h102_preregistration.json</code> SHA-256 <code>9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7</code> &middot;
 <a href="index.html">status</a> &middot; <a href="executive-summary.html">how to submit</a></p>
 <div class="box"><b>Download:</b>
-<a class="btn" href="downloads/h97-candidate.tif" download>h97-candidate.tif</a>
-<a class="btn" href="downloads/h97-candidate.zip" download>h97-candidate.zip</a>
+<a class="btn" href="downloads/h102-candidate.tif" download>h102-candidate.tif</a>
+<a class="btn" href="downloads/h102-candidate.zip" download>h102-candidate.zip</a>
 <p class="muted">Submit to DrivenData: <b>NO</b>. Verdict <b>negative</b>, submission slots used 0.</p></div>
 <h2>1 &middot; Hypothesis and mechanism</h2>
 <p>directional semivariance anisotropy on the potential-field/subsurface bands is a subsurface texture that is not a copy of the surface texture; where View A is confident and View B abstains the fault may be buried beneath cover and absent from the surface-expression catalogue</p><p><b>Mechanism.</b> fault damage zones lower density and destroy magnetite along strike, imprinting a preferred direction on the gravity and RTP-magnetic semivariance while alluvial cover removes the DEM expression</p>
@@ -36,13 +36,13 @@ CI lower bound above zero: <b>False</b>; above the standing bar: <b>False</b>
 <h2>4 &middot; Diagnostics that were registered in advance</h2>
 <table><tr><th>fold</th><th>single_A2 out-of-quadrant AUC</th><th>single_B2</th><th>leakage canary max</th><th>worst channel</th></tr><tr><td>0</td><td>0.5011</td><td>0.6735</td><td>0.5666</td><td>DVA2_det_elev_slope_logvar_l6</td></tr><tr><td>1</td><td>0.5995</td><td>0.7800</td><td>0.5976</td><td>DVA2_iso_grav_anom_hg_logvar_l6</td></tr><tr><td>2</td><td>0.4578</td><td>0.6422</td><td>0.6217</td><td>DVA2_det_elev_slope_logvar_l3</td></tr><tr><td>3</td><td>0.5238</td><td>0.7101</td><td>0.5801</td><td>DVA2_det_elev_logvar_l4</td></tr></table>
 <p>Leakage canary bar 0.90 (a single channel alone on the held-out region); alarm raised: <b>False</b>.</p>
-<p><b>Budget diagnostic (does NOT select the budget — amendment h97a):</b> the artifact's mass is frozen at
+<p><b>Budget diagnostic (does NOT select the budget — amendment h102a):</b> the artifact's mass is frozen at
 37,600 dots = 4 &times; 9,400, the family standard.</p>
 <table><tr><th>fold</th><th>9,400/fold</th><th>16,000/fold</th><th>25,400/fold</th></tr><tr><td>0</td><td>0.012407</td><td>0.024212</td><td>0.038672</td></tr><tr><td>1</td><td>0.020125</td><td>0.036810</td><td>0.057678</td></tr><tr><td>2</td><td>0.071960</td><td>0.123927</td><td>0.180295</td></tr><tr><td>3</td><td>0.051304</td><td>0.080811</td><td>0.118831</td></tr></table>
 <h2>5 &middot; Independence of the two views (Blum&ndash;Mitchell assumption)</h2>
 <p>The brief's mandated test: correlate each view's spatial-block out-of-fold errors on labelled negatives,
 thresholds inherited verbatim from <code>registry/h74_preregistration.json</code>. Result recorded in
-<code>evidence/h97_independence.json</code>: max |rho| = 0.17317082820447907,
+<code>evidence/h102_independence.json</code>: max |rho| = 0.17317082820447907,
 abandon bar 0.6.</p>
 <h2>6 &middot; The artifact: placement, format and uniqueness</h2>
 <p>Emitted 37,600 cells at 3 px minimum spacing inside the eligible footprint
@@ -55,7 +55,7 @@ Nearest emitted cell to the mapped catalogue 223.6 m; median 2816 m;
 NaN 0, inf 0, range [0.0, 1.0]</td></tr>
 <tr><td>lane vs registry (surface)</td><td>PASS &mdash; max |Spearman| 0.12071223517333894, bar 0.90</td></tr>
 <tr><td>lane vs registry (dots)</td><td>PASS &mdash; max fraction within 3 px of one prior 0.6595478723404256, bar 0.70</td></tr>
-<tr><td>registry scope</td><td>82 rasters &mdash; locally available de-duplicated rasters: restricted scored registry (data/scored, data/reference), this repository's submission/ artefacts and docs/downloads/*.tif. The 526-blob cross-repository census was NOT re-fetched inside this round's time box (IR-H97-003).</td></tr>
+<tr><td>registry scope</td><td>82 rasters &mdash; locally available de-duplicated rasters: restricted scored registry (data/scored, data/reference), this repository's submission/ artefacts and docs/downloads/*.tif. The 526-blob cross-repository census was NOT re-fetched inside this round's time box (IR-H102-003).</td></tr>
 <tr><td>uniqueness</td><td>identical to any prior: None; novel fraction 0.6097340425531915; max Jaccard None</td></tr>
 <tr><td>not merely the union of the two views</td><td>{"dots_emitted": 37600, "union_max_dots": 37600, "dots_equal_union": false, "dots_equal_single_A": false, "dots_equal_single_B": false, "dots_subset_of_union": false, "shared_with_union": 1179, "jaccard_with_union": 0.0159279123491982, "shared_with_single_A": 2938, "jaccard_with_single_A": 0.04065760704104509, "shared_with_single_B": 0, "jaccard_with_single_B": 0.0}</td></tr></table>
 <h2>6b &middot; Emission-geometry diagnostic (E4 / E4b) — negative</h2>
@@ -73,10 +73,10 @@ It did **not** clear the pre-registered promotion rule, so the file is a researc
 <li>The hide-and-recover instrument withholds the <em>catalogue</em> faults, which were mapped from surface expression; the
 competition scores faults the catalogue lacks. This repository has measured that the instrument does not rank leaderboard
 performance (Spearman &asymp; &minus;0.10 over R4), so a holdout number is never a board forecast.</li>
-<li>View A (potential field / subsurface) has failed the sufficiency gate in every round that reported it; H97 tests whether
+<li>View A (potential field / subsurface) has failed the sufficiency gate in every round that reported it; H102 tests whether
 <em>directional anisotropy</em> changes that. The View-A out-of-quadrant AUCs are in the table above.</li>
 <li>The lane census covers the locally available registry (82 unique rasters). The full 526-blob
-cross-repository census lives in a git-ignored receipt and was not re-fetched inside this round's time box (IR-H97-003).</li>
+cross-repository census lives in a git-ignored receipt and was not re-fetched inside this round's time box (IR-H102-003).</li>
 <li>No new external data was used. The one external layer ranked highest-unexplored (GDR 1391 two-metre temperature probes,
 DOI 10.15121/1881483) is not reachable from this sandbox (<code>gdr.openei.org</code> is not on the egress allowlist).</li>
 </ul>
@@ -90,5 +90,5 @@ DOI 10.15121/1881483) is not reachable from this sandbox (<code>gdr.openei.org</
 <li>Reference solution: <a href="https://github.com/drivendataorg/gems-prize-reference-solution">github.com/drivendataorg/gems-prize-reference-solution</a></li>
 </ul>
 <p class="muted">Every number on this page was read from the JSON receipts named above, written by
-<code>scripts/run_h97.py</code>. Nothing is projected onto a leaderboard.</p>
+<code>scripts/run_h102.py</code>. Nothing is projected onto a leaderboard.</p>
 </div></body></html>

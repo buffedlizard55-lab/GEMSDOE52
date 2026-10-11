@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Publish the H97 submission pointer, the way the site and the scheduled feed expect it.
+"""Publish the H102 submission pointer, the way the site and the scheduled feed expect it.
 
 The invariant the site's own verifier enforces (``scripts/check_site.py``) is:
 
@@ -13,11 +13,11 @@ This script writes, from receipts only (nothing is invented):
 
     evidence/submission_<stem>.json        per-artefact receipt (feed-compatible schema)
     docs/data/submission_<stem>.json       site copy of the same receipt
-    docs/data/submission.json              the global pointer (H97 is a NEGATIVE round: the file is
+    docs/data/submission.json              the global pointer (H102 is a NEGATIVE round: the file is
                                            research-only, ``approved_for_weekly_slot`` and
                                            ``promoted`` stay False and zero slots are used)
 
-Usage: python3 scripts/finalize_h97_pointer.py
+Usage: python3 scripts/finalize_h102_pointer.py
 """
 from __future__ import annotations
 
@@ -43,10 +43,10 @@ def sha(path: Path) -> str:
 
 
 def main() -> int:
-    card = load(EV / "h97_run_card.json")
-    hold = load(EV / "h97_holdout.json")
-    lane = load(EV / "h97_lane.json")
-    build = load(EV / "h97_build_placement.json")
+    card = load(EV / "h102_run_card.json")
+    hold = load(EV / "h102_holdout.json")
+    lane = load(EV / "h102_lane.json")
+    build = load(EV / "h102_build_placement.json")
     name = f"gems52-{card['submission_name']}"
     tif, zipf = SUB / f"{name}.tif", SUB / f"{name}.zip"
     for p in (tif, zipf):
@@ -76,17 +76,17 @@ def main() -> int:
         submission_slots_used=0,
         status="research-only; local format validation is not organizer acceptance",
         metadata=dict(
-            round="H97",
+            round="H102",
             hypothesis=card["hypothesis"],
             evidence_class="HOLDOUT-DTI",
             registration=dict(preregistration_sha256=card["preregistration_sha256"],
                               frozen_before_any_fit=True),
         ),
-        round="H97",
+        round="H102",
         stem=name,
         nonzero_px=int(v["ones"]),
-        short_tif="h97-candidate.tif",
-        short_zip="h97-candidate.zip",
+        short_tif="h102-candidate.tif",
+        short_zip="h102-candidate.zip",
         # keys the site verifier reads (all measured, never projected)
         format=dict(path=str(tif.relative_to(ROOT)), bytes=tif.stat().st_size,
                     sha256=card["raster_sha256"], bands=v["count"], dtype=v["dtype"],
@@ -98,7 +98,7 @@ def main() -> int:
         uniqueness=dict(n_priors_checked=lane["uniqueness"]["n_priors_checked"],
                         canonical_pattern_unique=lane["uniqueness"]["canonical_pattern_unique"],
                         identical_to_a_prior=lane["uniqueness"]["identical_to_a_prior"],
-                        help="lane census scoped to locally available rasters (IR-H97-003)"),
+                        help="lane census scoped to locally available rasters (IR-H102-003)"),
         holdout=dict(label="HOLDOUT-DTI", evaluator=hold["evaluator"],
                      withheld_positive_px=hold["withheld_positive_px"],
                      primary=hold["pooled"]["scores"][hold["candidate"]],
@@ -129,7 +129,7 @@ def main() -> int:
         site_marker.write_text(tif.name + "\n", encoding="utf-8")
 
     staged = DL / tif.name
-    assert staged.exists() and sha(staged) == card["raster_sha256"], "docs copy is stale; run publish_h97_site.py"
+    assert staged.exists() and sha(staged) == card["raster_sha256"], "docs copy is stale; run publish_h102_site.py"
     print(json.dumps(dict(pointer=pointer["file"], bytes=pointer["bytes"], sha256=pointer["sha256"],
                           zip_sha256=zip_sha, approved_for_weekly_slot=False, slots=0), indent=1))
     return 0

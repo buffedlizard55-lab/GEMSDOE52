@@ -45,14 +45,14 @@ def test_h95_verdict_follows_frozen_rule():
 
 
 def test_readme_carries_current_verdicts_brief_and_the_h95_archive():
-    """H95 stopped being the incumbent when H97 shipped; its block stays in the README as an archive
+    """H95 stopped being the incumbent when H102 shipped; its block stays in the README as an archive
     (the same convention as the H89/H87/H83/H82 blocks below it), the current block keeps the
     download/submit verdicts explicit, and the standing brief stays verbatim."""
     text = (ROOT / "README.md").read_text()
-    assert text.startswith("<!--H97-README-->"), "the newest block must sit at the top of the README"
-    current = text[: text.index("<!--/H97-README-->")]
+    assert text.startswith("<!--H102-README-->"), "the newest block must sit at the top of the README"
+    current = text[: text.index("<!--/H102-README-->")]
     assert "OK TO DOWNLOAD: YES" in current and "OK TO SUBMIT:" in current
-    assert "docs/downloads/h97-candidate.tif" in current
+    assert "docs/downloads/h102-candidate.tif" in current
     h95 = text[text.index("<!--H95-README-->"): text.index("<!--/H95-README-->")]
     assert "OK TO DOWNLOAD: YES" in h95 and "OK TO SUBMIT:" in h95
     assert "docs/downloads/h95-candidate.tif" in h95 and SHA in h95

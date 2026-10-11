@@ -1,9 +1,9 @@
-# 99 · H97 results and limits — potential-field directional anisotropy (PAF-DVA) as View A
+# 99 · H102 results and limits — potential-field directional anisotropy (PAF-DVA) as View A
 
-Round **H97**, executed 2026-10-11 UTC. Preregistration `registry/h97_preregistration.json`
-(SHA-256 `b2eb593fe5ebed40…`, amendment **h97a** included) + `knowledge/97_hypotheses_H97_preregistered.md`
-(SHA-256 `d603fe73580af36b…`), both frozen before any fit; the runner refuses to start if either hash moves.
-Every number below is read from `evidence/h97_*.json` or from the official page named beside it.
+Round **H102**, executed 2026-10-11 UTC. Preregistration `registry/h102_preregistration.json`
+(SHA-256 `9c2e19c0966d9294…`, amendment **h102a** included) + `knowledge/108_hypotheses_H102_preregistered.md`
+(SHA-256 `3bc571adb709f8e3…`), both frozen before any fit; the runner refuses to start if either hash moves.
+Every number below is read from `evidence/h102_*.json` or from the official page named beside it.
 
 **Verdict: NEGATIVE · download YES · submit NO (research candidate) · submission slots used 0.**
 
@@ -29,7 +29,7 @@ lags 1/2/3/4/6 px (100–600 m), `aniso = (max−min)/(max+min)`, `logvar = log1
 semivariance. Band 6 (radiometric total count) was excluded from the operator **in advance**
 (`excluded_by_design` in the preregistration) because an airborne gamma-ray count grid carries
 flight-line striping that is directional by construction. Built in 181 s; 60 columns; the byte-integrity
-`save_verified` guard reported **0 torn writes** (`evidence/h97_channels.json`).
+`save_verified` guard reported **0 torn writes** (`evidence/h102_channels.json`).
 
 ## 3 · HOLDOUT-DTI (`gems52-pooled-hide-v1`, 53,186 withheld positive px, 9,400 dots per fold per arm)
 
@@ -83,29 +83,29 @@ Frozen promotion test: paired CI lower bound above zero against the best compara
   not re-tuned): **max |ρ| = 0.1732 over 2,089 blocks** (4,095,103 labelled-negative predictions), abandon bar
   0.60 → **method not abandoned on this test**. The instrument's own caveat stands: the negatives are
   held-out *catalogue-zero proxies*, not verified absence, so this is not proof of conditional independence.
-* **Budget diagnostic (does not select the budget — amendment h97a)**: primary-arm DTI per fold rises
+* **Budget diagnostic (does not select the budget — amendment h102a)**: primary-arm DTI per fold rises
   monotonically with the per-fold budget — fold 0: 0.0124 → 0.0242 → 0.0387 for 9,400 → 16,000 → 25,400;
   fold 3: 0.0513 → 0.0808 → 0.1188. It also rises for the **random** control (0.0816 pooled at 9,400 vs the
   primary's 0.0295), which is the cleanest demonstration yet that this instrument rewards *coverage* rather
-  than skill and must not be used to choose emitted mass. Amendment h97a froze the artifact at 37,600 dots
+  than skill and must not be used to choose emitted mass. Amendment h102a froze the artifact at 37,600 dots
   (= 4 × 9,400), the family standard, for exactly this reason.
 
 ## 5 · The artifact
 
-`submission/gems52-h97-pafdva-disagree-37600px-20261011T002233Z.tif` — 132,324 bytes, SHA-256
+`submission/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif` — 132,324 bytes, SHA-256
 `cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326`. Submission name
-`h97-pafdva-disagree-37600px-20261011T002233Z`; note (118/140)
-`H97 co-training: View-A potential-field anisotropy x View-B DEM anisotropy; disagreement field, 200m ring excluded, binary 37600 dots`.
+`h102-pafdva-disagree-37600px-20261011T002233Z`; note (118/140)
+`H102 co-training: View-A potential-field anisotropy x View-B DEM anisotropy; disagreement field, 200m ring excluded, binary 37600 dots`.
 
 | gate | result |
 |---|---|
 | on-disk validator (`gems52.gates.format_report`, independent re-read) | **PASS** — 1 band float32, EPSG:32611, 3730×3292, transform/bounds = `sample_submission.tif`, **0 NaN, 0 inf**, values exactly {0.0, 1.0}, 37,600 cells = 1, no nodata tag |
 | lane, surface | **PASS** — max Spearman 0.1207 (bar 0.90), 81 informative priors, 1 universal-coverage probe |
-| lane, dots | **PASS, but close** — max near-3px fraction **0.6595** against `submission/gems52-h61-deepsharp-cotrain-37600px.tif` (bar 0.70); max Spearman 0.0677. Flagged as IR-H97-005 |
+| lane, dots | **PASS, but close** — max near-3px fraction **0.6595** against `submission/gems52-h61-deepsharp-cotrain-37600px.tif` (bar 0.70); max Spearman 0.0677. Flagged as IR-H102-005 |
 | uniqueness (`gems52.gates.uniqueness_report`) | **PASS** — 82 priors checked, canonical pattern unique, identical to none |
 | not merely the union of the two views | **PASS** — Jaccard vs the union-max placement 0.0159; 0 cells shared with `single_B2`; 2,938 shared with `single_A2`; not a subset of the union |
 | placement | 37,600 cells at 3 px minimum spacing inside 4,325,298 px of pool; nearest cell to the mapped catalogue **223.6 m**; median **2,816 m**; only **2.15 %** of the mass within 300 m of a mapped fault (the 0.2778 champion: 5.77 %) |
-| A-only geological reasoning | one row per emitted cell: `submission/gems52-h97-pafdva-disagree-37600px-20261011T002233Z-a-only-reasoning.csv` (37,600 rows, 20.3 MB), naming the fired components, the alternative non-fault processes and the falsifier for each |
+| A-only geological reasoning | one row per emitted cell: `submission/gems52-h102-pafdva-disagree-37600px-20261011T002233Z-a-only-reasoning.csv` (37,600 rows, 20.3 MB), naming the fired components, the alternative non-fault processes and the falsifier for each |
 | **submit_ok** | **false** — the frozen promotion rule failed |
 
 ## 6 · What this round adds to the knowledge base
@@ -119,13 +119,13 @@ Frozen promotion test: paired CI lower bound above zero against the best compara
    (0.185968 with 20 channels vs 0.189200 with 50). If a future round needs a cheap strong baseline, this is it.
 4. **The instrument rewards coverage, not skill** — the random control improves with budget exactly as the
    primary arm does.
-5. **`knowledge/98` is the strategic deliverable of this session**: the organiser's metric is a *coverage*
+5. **`knowledge/109` is the strategic deliverable of this session**: the organiser's metric is a *coverage*
    metric (a swath covering a trace scores 0.88 where sparse dots score far less; the marginal bar at
    DTI 0.2778 is 0.0556, so any cell within ~283 m of an uncovered truth pixel pays for itself), and the
    family has spent eight rounds optimising the ranking while its *emission geometry* — dots at 3 px spacing —
-   was inherited by convention and never measured. Round **H97-E4** measures it.
+   was inherited by convention and never measured. Round **H102-E4** measures it.
 
-## 7 · H97-E4 / E4b — the emission-geometry question, answered twice
+## 7 · H102-E4 / E4b — the emission-geometry question, answered twice
 
 Every round to date emits `nodes.spacing_select` dots at 3 px minimum separation. E4 and E4b are the first
 measurements in this repository of the *other* axis of a submission: not which cells the field likes, but what
@@ -134,7 +134,7 @@ shape the emitted mass has. Both run on the same shared instrument (`gems52-pool
 against **random placement at the same mass** — the second control is mandatory because §4 of the coverage
 note shows this instrument pays for mass almost regardless of where it lands.
 
-E4 (`scripts/run_h97_e4_coverage.py`, `evidence/h97_e4_coverage.json`) — *naive bridging*: connect
+E4 (`scripts/run_h102_e4_coverage.py`, `evidence/h102_e4_coverage.json`) — *naive bridging*: connect
 neighbouring confident cells with straight segments, then resample to the matched budget.
 
 | field | dots @ 9,400 | bridged @ matched mass | dots @ matched mass | random @ matched mass | Δ (bridged − dots@S) |
@@ -142,7 +142,7 @@ neighbouring confident cells with straight segments, then resample to the matche
 | `cotrain_disagree` (primary) | 0.029460 | 0.024497 | **0.201789** | 0.178690 | −0.1773 [−0.1932, −0.1611] |
 | `single_B2` | 0.185968 | 0.153403 | **0.254062** | 0.176328 | −0.1007 [−0.1149, −0.0853] |
 
-E4b (`scripts/run_h97_e4b_hysteresis.py`, `evidence/h97_e4b_hysteresis.json`) — *hysteresis growth*: seed at
+E4b (`scripts/run_h102_e4b_hysteresis.py`, `evidence/h102_e4b_hysteresis.json`) — *hysteresis growth*: seed at
 the top 2 % of the field, then grow the region geodesically (3×3) while the local field rank stays above the
 0.85 quantile, at most 12 dilate steps, so the trace only follows ground the field still likes.
 
@@ -162,9 +162,9 @@ follows a mapped fault's strike into unmapped ground is exactly the shape a real
 this instrument cannot see it: its truth *is* the catalogue, so a cell placed on a mapped fault is already
 near-truth, and its mass is 4× the competition's prevalence (`knowledge/76` §6). The geometry question is
 therefore **closed on the instrument and open on the board**, and the only way to reopen it here is a
-prevalence-matched off-catalogue instrument (`knowledge/100` §2).
+prevalence-matched off-catalogue instrument (`knowledge/111` §2).
 
-Consequences recorded in `knowledge/100_next_round_proposals.md`: the "coverage emission / hysteresis trace"
+Consequences recorded in `knowledge/111_next_round_proposals.md`: the "coverage emission / hysteresis trace"
 candidate is **falsified as ranked** and demoted; the prevalence-matched instrument moves up to rank 1
 because it is the prerequisite for testing emitted mass and emission geometry at all.
 
@@ -176,8 +176,8 @@ because it is the prerequisite for testing emitted mass and emission geometry at
 * The lane census covers the **locally available** registry (82 unique rasters, 70 before this round's file):
   `data/scored` (12 restored scored priors), `data/reference`, this repository's `submission/` artefacts and
   `docs/downloads/*.tif`. The full 526-blob cross-repository census lives in a git-ignored receipt and was
-  not re-fetched inside this round's time box (**IR-H97-003**).
-* **IR-H97-005**: 65.95 % of this file's cells lie within 3 px of the H61 deepsharp co-training file
+  not re-fetched inside this round's time box (**IR-H102-003**).
+* **IR-H102-005**: 65.95 % of this file's cells lie within 3 px of the H61 deepsharp co-training file
   (bar 0.70). Both are disagreement fields over the same feature store, so overlap is expected; it is
   reported because it is within 4 points of the lane rule. A quota placement (`run_h73.place_lane`) is the
   standard remedy and is listed for the next round.

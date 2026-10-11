@@ -86,7 +86,7 @@
   "docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-nan.tif",
   "docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-zeros.tif"
  ],
- "registry_scope": "locally available de-duplicated rasters: restricted scored registry (data/scored, data/reference), this repository's submission/ artefacts and docs/downloads/*.tif. The 526-blob cross-repository census was NOT re-fetched inside this round's time box (IR-H97-003).",
+ "registry_scope": "locally available de-duplicated rasters: restricted scored registry (data/scored, data/reference), this repository's submission/ artefacts and docs/downloads/*.tif. The 526-blob cross-repository census was NOT re-fetched inside this round's time box (IR-H102-003).",
  "doctrine": "a restricted-registry PASS never waives the full-census result; here both are the same set",
  "surface": {
   "phase": "surface",

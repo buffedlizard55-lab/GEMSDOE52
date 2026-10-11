@@ -1,8 +1,8 @@
-# 97 · H97 hypotheses — potential-field directional anisotropy (PAF-DVA) as View A, with anisotropy disagreement as the discovery signal
+# 97 · H102 hypotheses — potential-field directional anisotropy (PAF-DVA) as View A, with anisotropy disagreement as the discovery signal
 
-Frozen before any fit. Machine-readable twin: `registry/h97_preregistration.json`.
+Frozen before any fit. Machine-readable twin: `registry/h102_preregistration.json`.
 Lane: the standing brief's co-training paragraph (Blum & Mitchell, COLT '98,
-doi:10.1145/279943.279962). Round label H97 because `main` already holds H88–H96.
+doi:10.1145/279943.279962). Round label H102 because `main` already holds H88–H96.
 
 ---
 
@@ -15,7 +15,7 @@ H96: A-only discovery pool AUC near chance). Every one of those View-A channel s
 **per-pixel** operators — gradients, steps, ranks, roughness. The best-measured feature family in this
 repository is not per-pixel: it is the **directional semivariance anisotropy** of H82 (`B_DVA2`,
 HOLDOUT-DTI 0.189200 [0.167891, 0.209115]), and it has only ever been computed on **surface** bands
-plus two borrowed gravity bands. H97 computes that same operator **on the potential-field and
+plus two borrowed gravity bands. H102 computes that same operator **on the potential-field and
 subsurface bands** and asks the lane's question with a physically separated pair of views.
 
 ## 1 · Hypothesis
@@ -53,15 +53,15 @@ geological reasoning row:
 5. **Isostatic and Bouguer terrain-correction artefacts** at the margins of the survey blocks.
 
 Each emitted cell carries a reasoning row naming the fired components and these alternatives
-(`scripts/run_h97.py` stage `write`).
+(`scripts/run_h102.py` stage `write`).
 
 ## 4 · The independence assumption, tested as the brief requires
 
 Blum–Mitchell co-training needs the two views to be *approximately conditionally independent* given the
-class. H97 tests it the way the brief specifies: **correlate each view's spatial-block out-of-fold errors
+class. H102 tests it the way the brief specifies: **correlate each view's spatial-block out-of-fold errors
 on labelled negatives**. The instrument is `gems52.spatial.negative_block_errors` + `spatial.independence`
 and the thresholds are inherited **verbatim** from `registry/h74_preregistration.json`
-(`block_side_px`, `donor_rank_min`, abandon if |rho| > 0.60). They are not re-tuned for H97 and the
+(`block_side_px`, `donor_rank_min`, abandon if |rho| > 0.60). They are not re-tuned for H102 and the
 inheritance is recorded with the source file's SHA-256.
 
 A high correlation means the two views make the same mistakes, and co-training between them can only
