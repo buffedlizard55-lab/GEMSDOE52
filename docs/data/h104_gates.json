@@ -1,9 +1,9 @@
 {
  "runner_and_receipt_hashes": {
-  "scripts/h97_irregularities.py": "f813baf6f8565906cde40042d8e2e7105deda120c12aa9adc163062530e18bad",
-  "scripts/h97_supplemental_closure.py": "fb41f5684ea5bf54d6e35a148de8da84058c116f323fe41cc4e9dff4a6cb52d3",
-  "scripts/publish_h97_site.py": "e132dea79fe0e3b1917f60c2ff6b4f4bb8cfd0bfe546cd836c095bdf7bf1873a",
-  "scripts/run_h97_thermal_gap.py": "720fbed00b1cd644366aef095572dfcafb7056d23e64f7896d73de2c4e7fe434",
+  "scripts/h104_irregularities.py": "f813baf6f8565906cde40042d8e2e7105deda120c12aa9adc163062530e18bad",
+  "scripts/h104_supplemental_closure.py": "fb41f5684ea5bf54d6e35a148de8da84058c116f323fe41cc4e9dff4a6cb52d3",
+  "scripts/publish_h104_site.py": "e132dea79fe0e3b1917f60c2ff6b4f4bb8cfd0bfe546cd836c095bdf7bf1873a",
+  "scripts/run_h104_thermal_gap.py": "720fbed00b1cd644366aef095572dfcafb7056d23e64f7896d73de2c4e7fe434",
   "src/gems52/__init__.py": "bdce6142b45c33a87cb923942f02ae4bf184171a4761b86aaad94c3a298fcf0c",
   "src/gems52/azimuth.py": "1d446f22863506320e01f31c52d70eb826a279dd6128de2d8406872074ad7630",
   "src/gems52/cotrain.py": "99604a3af4389978d0b6d2aaa03259d35559b440cc5bf1e99479c554cf08b74b",
@@ -37,39 +37,39 @@
   "src/gems52/views54.py": "621065331129acb11ccd8591b203cd6b437e003142ed46a533f241da4132fa8a"
  },
  "receipts": {
-  "h97_build_pre.json": {
+  "h104_build_pre.json": {
    "sha256": "1ccf8477b181464946d60cb75a99a96984642363df723249b948d38d8b673879",
    "bytes": 10439
   },
-  "h97_gates.json": {
+  "h104_gates.json": {
    "sha256": "2855d0e3f3e8741fa9ca764201c85f5eda7ded03b7a09ad6830d6d99830e81df",
    "bytes": 6963
   },
-  "h97_holdout.json": {
+  "h104_holdout.json": {
    "sha256": "c2da639dc36f876b204293f9ce70d83fd8797aca591058706c6832310b3a5f13",
    "bytes": 600258
   },
-  "h97_lane_dots.json": {
+  "h104_lane_dots.json": {
    "sha256": "bcd2245952702638182db67380d1be77774c1a80080be2340cecdcdb7c461264",
    "bytes": 149139
   },
-  "h97_lane_surface.json": {
+  "h104_lane_surface.json": {
    "sha256": "0fb2e8bffb5cdd209c6cb744137c2c23e8f7c10e75212f3ebf865dc1eb488c8c",
    "bytes": 144348
   },
-  "h97_offcat.json": {
+  "h104_offcat.json": {
    "sha256": "2e02be210e9097d8f40bfd2363fa98286efa3d51d8713428d00aa2683876a36c",
    "bytes": 12603
   },
-  "h97_run_card.json": {
+  "h104_run_card.json": {
    "sha256": "bc89de5db82b204dfcceb27f76e4dfd84de88688b7cec28b7a5773688e8ce393",
    "bytes": 594882
   },
-  "h97_uniqueness.json": {
+  "h104_uniqueness.json": {
    "sha256": "d769411e6b1541b7151598a9830898a7efa132641f038077bd385577a2694dd9",
    "bytes": 99309
   },
-  "h97_views.json": {
+  "h104_views.json": {
    "sha256": "10b6d847307e0642bee4169abfbaad70ff1781c59f3efa62824d20e366f3d7b4",
    "bytes": 10049
   }
@@ -213,7 +213,7 @@
     false
    ]
   ],
-  "coverage_normalization": "the raw near-fraction is not interpretable without the prior's own coverage: a prior whose 3 px dilation covers a large part of the footprint makes any dot set 'near' it. `max_near_3px_lift` = near-fraction / coverage (>1 = closer than uniform scatter); `lift_offenders` are the priors with lift > 2. The verdicts above are unchanged and remain the frozen rule (H97 repair, IR-H97-006). An offender must trip the raw rule *and* show lift above the limit; priors with lift above the limit but a raw fraction below it are counted separately as `high_lift_low_overlap` because they are coincidence, not duplication."
+  "coverage_normalization": "the raw near-fraction is not interpretable without the prior's own coverage: a prior whose 3 px dilation covers a large part of the footprint makes any dot set 'near' it. `max_near_3px_lift` = near-fraction / coverage (>1 = closer than uniform scatter); `lift_offenders` are the priors with lift > 2. The verdicts above are unchanged and remain the frozen rule (H104 repair, IR-H104-006). An offender must trip the raw rule *and* show lift above the limit; priors with lift above the limit but a raw fraction below it are counted separately as `high_lift_low_overlap` because they are coincidence, not duplication."
  },
  "supplemental_disk_closure": {
   "n_priors": 193,

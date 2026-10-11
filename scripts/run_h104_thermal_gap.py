@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""H97: thermal-gap discovery inside the two-view co-training lane.
+"""H104: thermal-gap discovery inside the two-view co-training lane.
 
 Lane (standing brief): co-training between a geophysical view (View A) and a surface view
 (View B), with disagreement as the discovery signal (Blum & Mitchell, COLT '98, doi:10.1145/279943.279962).
 
-New mechanism registered this round (registry/h97_preregistration.json, frozen BEFORE any fit):
+New mechanism registered this round (registry/h104_preregistration.json, frozen BEFORE any fit):
 a hot spring / high-geothermometry well that the VISIBLE catalogue cannot explain is surface
 evidence of a fault the catalogue lacks; the co-training field gates where such evidence is
 accepted (A confident / B abstains = buried; B confident / A abstains = surface artefact, vetoed).
@@ -14,7 +14,7 @@ Shared tools are reused, never forked: ``gems52.spatial``, ``gems52.evaluate_hol
 ``gems52.gates``, ``gems52.submission_writer``, ``gems52.grid``.
 
 Stages: views | holdout | offcat | build | write | all
-Usage:  .venv/bin/python scripts/run_h97_thermal_gap.py all
+Usage:  .venv/bin/python scripts/run_h104_thermal_gap.py all
 """
 from __future__ import annotations
 
@@ -39,8 +39,8 @@ from gems52 import gates, nodes, spatial, submission_writer  # noqa: E402
 from gems52 import metric as M  # noqa: E402
 from gems52 import transform as T  # noqa: E402
 
-PREREG = ROOT / "registry/h97_preregistration.json"
-PREREG_SHA = "8cd93f2290d002c82b9770887f79a220352aeb42a94c238b713abaaf5f6bad1f"
+PREREG = ROOT / "registry/h104_preregistration.json"
+PREREG_SHA = "656170f2912d75b08a14e042f490d4c0a3fdd87c4be52d505fa38417dd2211cc"
 
 DATA = ROOT / "data"
 FEATURES = DATA / "training_features.tif"
@@ -49,7 +49,7 @@ SAMPLE = DATA / "sample_submission.tif"
 RAD = DATA / "external/geodawn_rad_u8.tif"
 SPRINGS = DATA / "external/gdr_wellspring_in_footprint.csv"
 SGMC = DATA / "external/derived_sgmc_faults_100m_u8.tif"
-WORK = ROOT / "work/h97"
+WORK = ROOT / "work/h104"
 EVID = ROOT / "evidence"
 SUBDIR = ROOT / "submission"
 DLDIR = ROOT / "docs/downloads"
@@ -306,7 +306,7 @@ def stage_views():
                features_sha256=sha256_file(FEATURES), labels_sha256=sha256_file(LABELS),
                springs_sha256=sha256_file(SPRINGS),
                generated_utc=datetime.now(timezone.utc).isoformat())
-    (EVID / "h97_views.json").write_text(json.dumps(out, indent=2, default=float) + "\n")
+    (EVID / "h104_views.json").write_text(json.dumps(out, indent=2, default=float) + "\n")
     log(f"eligible {int(valid.sum()):,} px; catalogue {int(cat.sum()):,} px; view corr {corr:.4f}")
     return out
 
@@ -346,7 +346,7 @@ def stage_holdout():
     indep = spatial.independence(rows, threshold=INDEP_ABANDON, min_blocks=20)
     log(f"independence: max |r| {indep['max_abs_correlation']} allow_exchange {indep['allow_exchange']}")
     if indep.get("max_abs_correlation") is not None and indep["max_abs_correlation"] >= INDEP_ABANDON:
-        raise SystemExit("independence gate failed: co-training abandoned (see evidence/h97_holdout.json)")
+        raise SystemExit("independence gate failed: co-training abandoned (see evidence/h104_holdout.json)")
 
     # ---- arms -------------------------------------------------------------------------------
     arms = ["thermal_gap_cotrain", "thermal_gap", "thermal_gap_line", "random_gap",
@@ -487,7 +487,7 @@ def stage_holdout():
                                "H82 single_B": 0.174571},
                implementation_hashes=evaluator.implementation_hashes(),
                generated_utc=datetime.now(timezone.utc).isoformat())
-    (EVID / "h97_holdout.json").write_text(json.dumps(out, indent=2, default=float) + "\n")
+    (EVID / "h104_holdout.json").write_text(json.dumps(out, indent=2, default=float) + "\n")
     log("pooled: " + json.dumps({k: round(summary["scores"][k]["dti"], 6) for k in arms}))
     log(f"verdict for slot (bar {BAR}): {verdict}")
     return out
@@ -572,7 +572,7 @@ def stage_offcat():
                          credit_density=float(r["T"] / max(r["nodes"], 1)))
         log(f"offcat {n}: DTI {r['dti']:.6f} T {r['T']:.1f} density {scores[n]['credit_density']:.4f}")
     log("offcat mass curve: " + json.dumps({k: round(v["credit_density"], 4) for k, v in curve.items()}))
-    out = dict(stage="offcat", registration=reg, instrument="gems52-offcat-prevalence-h97",
+    out = dict(stage="offcat", registration=reg, instrument="gems52-offcat-prevalence-h104",
                sgmc_sha256=sha256_file(SGMC), raw_offcatalogue_px=int(off.sum()),
                thinned_truth_px=int(truth.sum()), target_px=OFFCAT_TARGET_PX,
                budget_dots=K_FOLD, arms=scores, mass_curve_of_shipped_ranking=curve,
@@ -580,7 +580,7 @@ def stage_offcat():
                      "matched to the |G| bracket of knowledge/76 section 2 and it must never be used "
                      "to choose an emission budget") % (100.0 * truth.mean()),
                generated_utc=datetime.now(timezone.utc).isoformat())
-    (EVID / "h97_offcat.json").write_text(json.dumps(out, indent=2, default=float) + "\n")
+    (EVID / "h104_offcat.json").write_text(json.dumps(out, indent=2, default=float) + "\n")
     return out
 
 
@@ -606,7 +606,7 @@ def stage_build():
     out = dict(stage="build", registration=reg, n_gap_sites=n_gap, collar_px=COLLAR_PX,
                surface_lane=dict(literal=surface_lane["literal"], policy=surface_lane["policy"]),
                generated_utc=datetime.now(timezone.utc).isoformat())
-    (EVID / "h97_build_pre.json").write_text(json.dumps(out, indent=2, default=float) + "\n")
+    (EVID / "h104_build_pre.json").write_text(json.dumps(out, indent=2, default=float) + "\n")
     return out, field, cons, buried, art, veto, allowed, vd_full, sites
 
 
@@ -655,8 +655,8 @@ def stage_write(k_total=None):
         f"buried-dominant fraction {comp['buried_dominant_fraction']:.4f}")
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     digest8 = hashlib.sha256(raster.astype("<f4").tobytes()).hexdigest()[:8]
-    name = f"gems52-h97-thermal-gap-cotrain-{k_total}px-{stamp}-{digest8}-zeros"
-    note = (f"H97 thermal-gap springs x co-train A/B (A-conf, B-abstain), {k_total}px, "
+    name = f"gems52-h104-thermal-gap-cotrain-{k_total}px-{stamp}-{digest8}-zeros"
+    note = (f"H104 thermal-gap springs x co-train A/B (A-conf, B-abstain), {k_total}px, "
             f"3px spacing, {int(COLLAR_PX*100)}m collar; HOLDOUT-DTI below bar, research candidate")
     note = note[:140]
     tif = SUBDIR / f"{name}.tif"
@@ -664,7 +664,7 @@ def stage_write(k_total=None):
     DLDIR.mkdir(parents=True, exist_ok=True)
     receipt = submission_writer.write_submission(
         tif, raster, str(SAMPLE), valid, note=note, name=name,
-        metadata=dict(round="H97", hypothesis=reg["hypothesis"], registration=reg,
+        metadata=dict(round="H104", hypothesis=reg["hypothesis"], registration=reg,
                       thermal_gap_sites=int(pre["n_gap_sites"])))
     log(f"wrote {tif.name} sha256 {receipt['sha256']}")
     for dest in (DLDIR / f"{name}.tif", DLDIR / f"{name}.zip"):
@@ -728,21 +728,21 @@ def stage_write(k_total=None):
     # ---- uniqueness + lane (final dots) -----------------------------------------------------
     priors2 = gates.find_priors([SUBDIR, DLDIR, DATA / "scored", DATA / "reference"], exclude=tif)
     uniq = gates.uniqueness_report(raster, priors2)
-    (EVID / "h97_uniqueness.json").write_text(json.dumps(uniq, indent=2, allow_nan=False) + "\n")
+    (EVID / "h104_uniqueness.json").write_text(json.dumps(uniq, indent=2, allow_nan=False) + "\n")
     log(f"uniqueness: priors {uniq['n_priors_checked']} novel {uniq['novel_fraction']:.4f} "
         f"identical {uniq['identical_to_a_prior']}")
     cov_cache = {}
     dots_lane = gates.lane_report(raster, valid, priors2, sample=str(SAMPLE), phase="dots",
                                   log=log, coverage_cache=cov_cache)
-    (EVID / "h97_lane_dots.json").write_text(json.dumps(dots_lane, indent=2, allow_nan=False) + "\n")
+    (EVID / "h104_lane_dots.json").write_text(json.dumps(dots_lane, indent=2, allow_nan=False) + "\n")
     lane_surface = gates.lane_report(field, valid, priors2, sample=str(SAMPLE), phase="surface",
                                      log=log, coverage_cache=cov_cache)
-    (EVID / "h97_lane_surface.json").write_text(json.dumps(lane_surface, indent=2, allow_nan=False) + "\n")
+    (EVID / "h104_lane_surface.json").write_text(json.dumps(lane_surface, indent=2, allow_nan=False) + "\n")
     fmt = gates.format_report(tif, SAMPLE, footprint=valid)
-    hold = json.loads((EVID / "h97_holdout.json").read_text())
-    offcat = json.loads((EVID / "h97_offcat.json").read_text())
+    hold = json.loads((EVID / "h104_holdout.json").read_text())
+    offcat = json.loads((EVID / "h104_offcat.json").read_text())
     card = dict(
-        round="H97", generated_utc=datetime.now(timezone.utc).isoformat(),
+        round="H104", generated_utc=datetime.now(timezone.utc).isoformat(),
         lane=reg["lane"], hypothesis=reg["hypothesis"],
         mechanism=("Hot springs and high-geothermometry wells discharge along fault-controlled fluid "
                    "pathways. Where the VISIBLE catalogue has no fault within 300 m of such a site, the "
@@ -772,7 +772,7 @@ def stage_write(k_total=None):
         lane_dots=dict(literal=dots_lane.get("literal"), policy=dots_lane.get("policy")),
         lane_surface=dict(literal=lane_surface.get("literal"), policy=lane_surface.get("policy")),
         budget=reg["budget"])
-    (EVID / "h97_run_card.json").write_text(json.dumps(card, indent=2, default=float) + "\n")
+    (EVID / "h104_run_card.json").write_text(json.dumps(card, indent=2, default=float) + "\n")
     (WORK / "receipt.json").write_text(json.dumps(dict(name=name, sha256=receipt["sha256"],
                                                        k_total=k_total, comp=comp), indent=2))
     log(f"run card written; verdict {hold['verdict_for_slot']}")

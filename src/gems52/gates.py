@@ -325,7 +325,7 @@ LIFT_LIMIT = 2.0           # near-fraction / the prior's own 3 px coverage: >2 m
                            # A lift is only meaningful *jointly* with the raw rule: a prior with a
                            # tiny footprint can show a large lift from a handful of coincidences, so
                            # an offender must trip the raw rule AND survive normalisation
-                           # (H97 repair, IR-H97-006).
+                           # (H104 repair, IR-H104-006).
 
 
 def _disk(radius_px: float):
@@ -443,7 +443,7 @@ def lane_report(candidate, eligible, priors, *, sample, phase="dots",
                        constant_prior=rho is None, prior_proposals=int(proposal.sum()),
                        prior_support_rule=">0 for binary; >=0.5 for continuous (shared template)",
                        coverage_3px_of_eligible=cov,
-                       # Coverage normalisation (H97 repair, IR-H97-006): a prior whose own 3 px
+                       # Coverage normalisation (H104 repair, IR-H104-006): a prior whose own 3 px
                        # dilation already covers a large fraction of the footprint makes the raw
                        # near-fraction uninformative.  `lift` = observed / that coverage; a lift of
                        # <= 1 means the candidate is no closer than uniform scatter would be.
@@ -500,7 +500,7 @@ def lane_report(candidate, eligible, priors, *, sample, phase="dots",
             f"whose {radius_px:g} px dilation covers a large part of the footprint makes any dot set "
             "'near' it. `max_near_3px_lift` = near-fraction / coverage (>1 = closer than uniform "
             f"scatter); `lift_offenders` are the priors with lift > {lift_limit:g}. The verdicts above "
-            "are unchanged and remain the frozen rule (H97 repair, IR-H97-006). An offender must "
+            "are unchanged and remain the frozen rule (H104 repair, IR-H104-006). An offender must "
             "trip the raw rule *and* show lift above the limit; priors with lift above the limit but "
             "a raw fraction below it are counted separately as `high_lift_low_overlap` because they "
             "are coincidence, not duplication."),

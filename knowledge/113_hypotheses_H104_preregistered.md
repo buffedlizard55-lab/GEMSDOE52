@@ -1,6 +1,6 @@
-# 97 · H97 — preregistered hypotheses (frozen before any fit)
+# 97 · H104 — preregistered hypotheses (frozen before any fit)
 
-Machine-readable twin: `registry/h97_preregistration.json`
+Machine-readable twin: `registry/h104_preregistration.json`
 (frozen 2026-10-10T23:20:00Z, SHA-256 `8cd93f2290d002c82b9770887f79a220352aeb42a94c238b713abaaf5f6bad1f`,
 frozen **before** the first fit of this round; the runner refuses to run on a hash mismatch).
 
@@ -9,7 +9,7 @@ Session branch: `arena/86f85e87-gemsdoe52`.
 This file is the document the registration names in its `document` field. It is written after the
 fact of the *registration* but **before** the analysis it governs, and it contains no result: every
 number in it is an *input measurement* (taken with the shared tools on restored bytes), not an
-outcome. Results are in `98_h97_results_and_limits.md`.
+outcome. Results are in `98_h104_results_and_limits.md`.
 
 ---
 
@@ -104,7 +104,7 @@ silently become a full-budget replay of the H96 file.
 95 % CI excluding 0, **and** `thermal_gap_cotrain ≥ 0.192829` (bar from `evidence/h82_holdout.json`,
 H82 `B_DVA2`).
 
-**E2 — off-catalogue instrument (`gems52-offcat-prevalence-h97`).** SGMC fault pixels > 3 px from
+**E2 — off-catalogue instrument (`gems52-offcat-prevalence-h104`).** SGMC fault pixels > 3 px from
 `labels.tif`, thinned by whole 8-connected components (seed 9700) to ≤ 14,088 px, i.e. prevalence
 matched to the `|G|` bracket (5,764–15,179; nested-pair inversion 14,088.7, `knowledge/76`).
 **Ranking instrument only — never used to choose a budget** (IR-H95-003: the earlier board-anchored

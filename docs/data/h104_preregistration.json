@@ -1,9 +1,9 @@
 {
-  "id": "H97",
+  "id": "H104",
   "frozen_utc": "2026-10-10T23:20:00+00:00",
   "frozen_before_any_fit": true,
   "session_branch": "arena/86f85e87-gemsdoe52",
-  "document": "knowledge/97_hypotheses_H97_preregistered.md",
+  "document": "knowledge/113_hypotheses_H104_preregistered.md",
   "lane": "co-training between a geophysical view (View A) and a surface view (View B), with disagreement as the discovery signal (Blum & Mitchell, COLT '98, pp. 92-100, doi:10.1145/279943.279962)",
   "hypothesis": "Thermal-gap hypothesis: a hot spring / high-geothermometry well that the VISIBLE fault catalogue cannot explain (distance to the nearest visible catalogue fault > 3 px = 300 m) is surface evidence of a fault that is absent from that catalogue. Co-training gates the emission: the candidate is accepted where View A (potential-field / subsurface) is confident about structure and View B (surface) abstains, which is the standing brief's A-only 'buried fault' population; the reverse disagreement (B confident, A abstains) is vetoed as a surface artefact.",
   "why_new": "The GDR 1391 INGENIOUS well/spring catalogue (sha-pinned in registry/data_manifest.json) has been used in this repository only as smooth DISTANCE channels (B_spring_dist, B_paleo_geotherm_dist, H58 cold-geothermometer field, H55/H57/H86 thermal priors). It has never been used as a per-site EXISTENCE test against the visible catalogue, which is the mechanism registered here. The measured motivation is in knowledge/97: only 23.3 % of hot sites (temp_c >= 30 C) lie within 300 m of labels.tif, against roughly 14 % expected for uniformly scattered points over the same footprint, and the file's own dist_known_fault_px column equals the distance to labels.tif exactly (Pearson 1.0000, re-measured this session).",
@@ -59,7 +59,7 @@
       "ci": "paired 20 km spatial-cluster bootstrap, 1000 draws"
     },
     "E2_off_catalogue": {
-      "instrument": "gems52-offcat-prevalence-h97: SGMC fault pixels > 3 px from labels.tif, thinned by whole 8-connected components (seed 9700) to <= 14088 px; ranking instrument only, never used to choose a budget",
+      "instrument": "gems52-offcat-prevalence-h104: SGMC fault pixels > 3 px from labels.tif, thinned by whole 8-connected components (seed 9700) to <= 14088 px; ranking instrument only, never used to choose a budget",
       "arms": ["thermal_gap", "thermal_gap_cotrain", "random_matched", "single_B", "single_A", "cotrain_bi"],
       "budget_dots": 9400,
       "note": "the reference taxonomy in knowledge/76 section 6 governs: ranking at a matched budget only"

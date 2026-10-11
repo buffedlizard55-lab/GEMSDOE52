@@ -1,4 +1,4 @@
-"""H97 round guardrails: the verdicts, the receipts, and the two rules this round repaired.
+"""H104 round guardrails: the verdicts, the receipts, and the two rules this round repaired.
 
 Nothing here re-derives a model number.  Each assertion ties a *published claim* to the *receipt* it
 came from, so a hand-edited page or a stale receipt fails the suite instead of shipping.
@@ -17,20 +17,20 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 EVID = ROOT / "evidence"
-CARD = json.loads((EVID / "h97_run_card.json").read_text())
-H = json.loads((EVID / "h97_holdout.json").read_text())
-O = json.loads((EVID / "h97_offcat.json").read_text())
-REG = json.loads((ROOT / "registry/h97_preregistration.json").read_text())
+CARD = json.loads((EVID / "h104_run_card.json").read_text())
+H = json.loads((EVID / "h104_holdout.json").read_text())
+O = json.loads((EVID / "h104_offcat.json").read_text())
+REG = json.loads((ROOT / "registry/h104_preregistration.json").read_text())
 
 
 def test_preregistration_is_frozen_and_hashed():
     reg = CARD["preregistration"]
     assert reg["frozen_before_any_fit"] is True
-    assert reg["id"] == "H97"
+    assert reg["id"] == "H104"
     sha = reg.get("preregistration_sha256")
-    live = hashlib.sha256((ROOT / "registry/h97_preregistration.json").read_bytes()).hexdigest()
+    live = hashlib.sha256((ROOT / "registry/h104_preregistration.json").read_bytes()).hexdigest()
     assert sha == live, "the run card must quote the hash of the registration as it stands on disk"
-    assert REG["document"] == "knowledge/97_hypotheses_H97_preregistered.md"
+    assert REG["document"] == "knowledge/113_hypotheses_H104_preregistered.md"
 
 
 def test_holdout_receipt_has_the_nine_registered_arms():
@@ -41,7 +41,7 @@ def test_holdout_receipt_has_the_nine_registered_arms():
 
 
 def test_the_count_matched_claim_is_satisfied_and_the_mass_matched_one_is_not():
-    """IR-H97-002: this asymmetry is the round's headline and must not be flattened anywhere."""
+    """IR-H104-002: this asymmetry is the round's headline and must not be flattened anywhere."""
     pc = H["primary_claim"]
     assert pc["satisfied"] is True
     assert pc["paired"]["ci95"][0] > 0
@@ -55,7 +55,7 @@ def test_primary_is_below_the_promotion_bar_so_the_verdict_is_negative():
     assert CARD["verdict_for_slot"] == "negative"
     assert H["verdict_for_slot"] == "negative"
     # and the same file must not carry a submit-YES anywhere on the site
-    for page in ("h97.html", "h97-executive-summary.html"):
+    for page in ("h104.html", "h104-executive-summary.html"):
         html = (ROOT / "docs" / page).read_text()
         assert "OK TO SUBMIT: NO" in html
         assert "OK TO DOWNLOAD: YES" in html
@@ -77,7 +77,7 @@ def test_note_is_within_the_portal_limit_and_the_name_is_unique():
     assert len(CARD["note"]) <= 140
     assert CARD["note_chars"] == len(CARD["note"])
     from collections import Counter
-    names = [p.name for p in (ROOT / "submission").glob("gems52-h97-*.tif")]
+    names = [p.name for p in (ROOT / "submission").glob("gems52-h104-*.tif")]
     assert len(names) == 1 and CARD["submission_name"] + ".tif" == names[0]
 
 
@@ -100,7 +100,7 @@ def test_offcatalogue_instrument_is_flat_in_mass():
 
 
 def test_every_emitted_cell_has_an_a_only_reasoning_row():
-    csv = ROOT / "docs/downloads/h97-a-only-reasoning.csv"
+    csv = ROOT / "docs/downloads/h104-a-only-reasoning.csv"
     assert csv.exists()
     with csv.open() as fh:
         n = sum(1 for _ in fh) - 1
@@ -108,11 +108,11 @@ def test_every_emitted_cell_has_an_a_only_reasoning_row():
 
 
 def test_lane_rule_is_reported_both_raw_and_coverage_normalised():
-    """IR-H97-001/006: the raw rule fires on coverage probes; lift is the interpretable number, and a
+    """IR-H104-001/006: the raw rule fires on coverage probes; lift is the interpretable number, and a
     lift only counts when the raw rule also fired."""
     policy = CARD["lane_dots"]["policy"]
     assert policy["verdict"] == "DUPLICATE/STOP"
-    G = json.loads((EVID / "h97_gates.json").read_text())
+    G = json.loads((EVID / "h104_gates.json").read_text())
     cen = G["supplemental_census_closure"]
     disk = G["supplemental_disk_closure"]
 
@@ -120,7 +120,7 @@ def test_lane_rule_is_reported_both_raw_and_coverage_normalised():
     assert cen["n_priors"] >= 500
     assert G["census_identity"]["matches_census_file_or_decoded_sha"] is False
     assert cen["novel_fraction"] <= 0.05, "the 526-blob union includes dense lattice probes"
-    on_disk = json.loads((EVID / "h97_uniqueness.json").read_text())
+    on_disk = json.loads((EVID / "h104_uniqueness.json").read_text())
     assert cen["novel_fraction"] < on_disk["novel_fraction"], "novelty is a prior-set statement"
 
     # (b) the genuine concentration is against this repository's own H96 file
@@ -149,20 +149,20 @@ def test_irregularities_register_carries_this_round():
     reg = json.loads((ROOT / "registry/irregularities.json").read_text())
     ids = {e["id"] for e in reg["entries"]}
     for i in range(1, 7):
-        assert f"IR-H97-{i:03d}" in ids
+        assert f"IR-H104-{i:03d}" in ids
 
 
 def test_readme_agents_and_site_state_both_verdicts():
     readme = (ROOT / "README.md").read_text()
-    head = readme[: readme.index("<!--/H97-README-->")]
-    assert head.startswith("<!--H97-README-->")
+    head = readme[: readme.index("<!--/H104-README-->")]
+    assert head.startswith("<!--H104-README-->")
     assert "OK TO DOWNLOAD: YES" in head and "OK TO SUBMIT: NO" in head
-    assert "docs/downloads/h97-candidate.tif" in head and CARD["raster_sha256"] in head
-    brief = (ROOT / "knowledge/99_current_user_brief_2026-10-10_H97.md").read_text()
+    assert "docs/downloads/h104-candidate.tif" in head and CARD["raster_sha256"] in head
+    brief = (ROOT / "knowledge/115_current_user_brief_2026-10-10_H104.md").read_text()
     assert brief.strip()[:200] in head
-    assert (ROOT / "AGENTS.md").read_text().index("<!--H97-AGENTS-->") >= 0
-    assert (ROOT / "docs/downloads/h97-candidate.tif").exists()
-    assert (ROOT / "docs/h97.html").exists() and (ROOT / "docs/h97-executive-summary.html").exists()
+    assert (ROOT / "AGENTS.md").read_text().index("<!--H104-AGENTS-->") >= 0
+    assert (ROOT / "docs/downloads/h104-candidate.tif").exists()
+    assert (ROOT / "docs/h104.html").exists() and (ROOT / "docs/h104-executive-summary.html").exists()
 
 
 def test_artifact_is_not_byte_identical_to_any_other_submission():

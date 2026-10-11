@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""H97 supplemental closure — idempotent, shared tools only.  Three jobs:
+"""H104 supplemental closure — idempotent, shared tools only.  Three jobs:
 
 1. **Bind the receipts to the code.** Records the SHA-256 of the round runner, of the shared tools the
-   runner imports, and of every ``evidence/h97_*.json`` receipt, so a receipt can never be mistaken
-   for the output of a different version of the script (IR-H97-004).
+   runner imports, and of every ``evidence/h104_*.json`` receipt, so a receipt can never be mistaken
+   for the output of a different version of the script (IR-H104-004).
 
 2. **Close uniqueness against the full sibling census of 526 blobs** (`evidence/ctd5_prior_inventory.json`,
    the frozen 2026-10-08 census of every aligned single-band prediction blob published in the owner's
@@ -17,7 +17,7 @@
    ``gems52.gates.uniqueness_report`` and ``gems52.gates.lane_report`` against them and store the
    result under ``supplemental_census_closure``. Nothing is forked; nothing is deleted.
 
-Writes ``evidence/h97_gates.json``. Re-running replaces only this script's own keys.
+Writes ``evidence/h104_gates.json``. Re-running replaces only this script's own keys.
 """
 from __future__ import annotations
 
@@ -35,8 +35,8 @@ sys.path.insert(0, str(ROOT / "src"))
 from gems52 import gates  # noqa: E402
 
 EVID = ROOT / "evidence"
-OUT = EVID / "h97_gates.json"
-CARD = json.loads((EVID / "h97_run_card.json").read_text())
+OUT = EVID / "h104_gates.json"
+CARD = json.loads((EVID / "h104_run_card.json").read_text())
 SAMPLE = ROOT / "data/sample_submission.tif"
 TIF = ROOT / CARD["validator"]["path"]
 
@@ -65,11 +65,11 @@ def main(argv=None) -> int:
     out_path = Path(args.out)
 
     code = {str(p.relative_to(ROOT)): sha256_of(p) for p in sorted(
-        [ROOT / "scripts/run_h97_thermal_gap.py", ROOT / "scripts/publish_h97_site.py",
-         ROOT / "scripts/h97_supplemental_closure.py", ROOT / "scripts/h97_irregularities.py"]
+        [ROOT / "scripts/run_h104_thermal_gap.py", ROOT / "scripts/publish_h104_site.py",
+         ROOT / "scripts/h104_supplemental_closure.py", ROOT / "scripts/h104_irregularities.py"]
         + [p for p in (ROOT / "src/gems52").glob("*.py")])}
     receipts = {}
-    for p in sorted(EVID.glob("h97_*.json")):
+    for p in sorted(EVID.glob("h104_*.json")):
         receipts[p.name] = dict(sha256=sha256_of(p), bytes=p.stat().st_size)
 
     census = json.loads((EVID / "ctd5_prior_inventory.json").read_text())

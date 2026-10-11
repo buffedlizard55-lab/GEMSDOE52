@@ -1,9 +1,9 @@
-# 99 · Standing user brief for round H97 (2026-10-10) — verbatim
+# 99 · Standing user brief for round H104 (2026-10-10) — verbatim
 
 > Read this at the start of every session (AGENTS.md working agreement). It is reproduced verbatim in
-> `README.md` → the `<!--H97-README-->` block. Numbers inside it are the owner's; where this
+> `README.md` → the `<!--H104-README-->` block. Numbers inside it are the owner's; where this
 > repository measured something different, the difference is recorded in
-> `registry/irregularities.json` (IR-H97-*), never edited here.
+> `registry/irregularities.json` (IR-H104-*), never edited here.
 
 ---
 
