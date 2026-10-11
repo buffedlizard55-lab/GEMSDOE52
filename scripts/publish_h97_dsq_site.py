@@ -307,7 +307,7 @@ Both were pre-registered and measured: independence PASSES (max |ρ| {RHO:.4f}) 
 consensus AND-gate, state-machine quota) pays for that noise with the strong view's precision, so all three
 score at or below random placement. The single strong view B (DVA2) remains the best field at both budgets
 ({f6(S1['B_DVA2']['dti'])} @37,654 / {f6(S2['B_DVA2']['dti'])} @25,400). Full analysis and limits:
-<a href="h97-dsq.html">H97-DSQ full result</a> · <a href="../knowledge/98_h97_dsq_results_and_limits.md">knowledge/98</a>.</p>"""
+<a href="h97-dsq.html">H97-DSQ full result</a> · <a href="../knowledge/98_h97-dsq_results_and_limits.md">knowledge/98</a>.</p>"""
 
 
 def write_pages():
@@ -366,7 +366,7 @@ def readme_block():
 {g}
 
 - **Irregularities:** IR-H97-DSQ-001 (quota not realised by 3 px spacing; tie-fill mass), IR-H97-DSQ-002 (probe-union novelty standing condition), IR-H97-DSQ-003 (doubled CSV prefix, fixed pre-publication).
-- Docs: [preregistration](knowledge/97_hypotheses_H97-DSQ_preregistered.md) · [results & limits](knowledge/98_h97_dsq_results_and_limits.md) · [session brief](knowledge/94_current_user_brief_2026-10-10_H95.md) · [irregularities](registry/irregularities.json)
+- Docs: [preregistration](knowledge/97_hypotheses_H97-DSQ_preregistered.md) · [results & limits](knowledge/98_h97-dsq_results_and_limits.md) · [session brief](knowledge/94_current_user_brief_2026-10-10_H95.md) · [irregularities](registry/irregularities.json)
 - Reproduce: `python3 scripts/restore_data.py --target-dir data` → feature store + `python -m gems52.external` → `python3 scripts/fetch_prior_inventory.py --out work/h97-dsq/priors --receipt work/h97-dsq/prior_fetch_receipt.json` → `python3 scripts/run_h97_dsq.py all` → `python3 scripts/publish_h97_dsq_site.py && python3 scripts/check_site.py`.
 
 ### Why `h33-h33-2-b2` scored 0.2778, and can we beat 0.3195? (unchanged; full derivation: [knowledge/76](knowledge/76_why_02778_and_what_beating_03195_requires.md))
@@ -472,7 +472,7 @@ def main():
     insert_readme_block(ROOT / "README.md", "H97-DSQ-README", readme_block(), "H95-README")
     insert_marker_block(ROOT / "AGENTS.md", "H97-DSQ-AGENTS", agents_block(), "H96-AGENTS")
     print("published H97-DSQ:")
-    print(f"  pointer  round pin submission/H97-DSQ_LATEST.txt + evidence/submission_{{STEM}}.json (shared current pointer stays on incumbent H96)")
+    print(f"  pointer  round pin submission/H97-DSQ_LATEST.txt + evidence/submission_{{STEM}}.json (shared current pointer stays on incumbent {_current_round() or 'n/a'})")
     print(f"  aliases  docs/downloads/h97-dsq-candidate.tif + .zip")
     print(f"  cards    {', '.join(inserted)}")
     print(f"  pages    docs/h97-dsq.html, docs/h97-dsq-executive-summary.html")

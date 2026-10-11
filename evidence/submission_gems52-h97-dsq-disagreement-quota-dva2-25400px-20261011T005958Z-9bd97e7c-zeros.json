@@ -4,7 +4,7 @@
  "bytes": 753675,
  "submission_name": "h97-dsq-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c",
  "note": "H97-DSQ co-train state machine: DVA2 consensus 18000 + buried A-only 7400, B-only veto, 25400px quota placement; vs 0.192829 bar; research",
- "note_chars": 135,
+ "note_chars": 138,
  "validator": {
   "path": "/home/user/GEMSDOE52/submission/gems52-h97-dsq-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif",
   "bytes": 753675,
@@ -64,7 +64,7 @@
   "hypothesis": "disagreement-state quota emission on the DVA2 base: consensus 18000 + buried A-only 7400, B-only veto, 25400px quota placement; soft-prior graft ablation",
   "evidence_class": "HOLDOUT-DTI",
   "registration": {
-   "preregistration_sha256": "f58c5e32d405c5308f2f41d83c313be4759ee4fa864350e0c157c45d7ad88eeb",
+   "preregistration_sha256": "1867fd55666210a3628a0d123f867b9cf0880b943058fcc417fd174a0b48e125",
    "frozen_before_any_fit": true
   },
   "irregularities": [
@@ -87,6 +87,6 @@
  "download": "downloads/gems52-h97-dsq-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif",
  "download_zip": "downloads/gems52-h97-dsq-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.zip",
  "submission_note": "H97-DSQ co-train state machine: DVA2 consensus 18000 + buried A-only 7400, B-only veto, 25400px quota placement; vs 0.192829 bar; research",
- "submission_note_chars": 135,
+ "submission_note_chars": 138,
  "published_byte_hash_matches_receipt": true
 }

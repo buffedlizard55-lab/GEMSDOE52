@@ -150,7 +150,7 @@
 **★ [Download h97-dsq-candidate.tif](docs/downloads/h97-dsq-candidate.tif)** · [ZIP](docs/downloads/h97-dsq-candidate.zip) · **[Executive summary / how to submit](docs/h97-dsq-executive-summary.html)** · [Full result](docs/h97-dsq.html) · [Run card](evidence/h97_dsq_run_card.json) · [A-only reasoning CSV](docs/downloads/gems52-h97-dsq-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros-a-only-reasoning.csv)
 
 - **File:** `submission/gems52-h97-dsq-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif` — 753,675 bytes, SHA-256 `c49a07d15a5bb293c0f29f67d9d4931ed5f2f9ce48978da86af4e59a54f2523d`
-- **Submission name:** `h97-dsq-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c` · **Note (135/140):** `H97-DSQ co-train state machine: DVA2 consensus 18000 + buried A-only 7400, B-only veto, 25400px quota placement; vs 0.192829 bar; research`
+- **Submission name:** `h97-dsq-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c` · **Note (138/140):** `H97-DSQ co-train state machine: DVA2 consensus 18000 + buried A-only 7400, B-only veto, 25400px quota placement; vs 0.192829 bar; research`
 - **Validator (re-read from disk):** PASS · 1 band float32, EPSG:32611, 3730×3292, all-finite, values exactly [0.0, 1.0], 25,400 cells, no nodata; problems none
 - **HOLDOUT-DTI, E2 — disagreement-state quota** (`gems52-pooled-hide-v1`, 53,186 withheld positive px, 95 % CI):
 
@@ -180,7 +180,7 @@
 - **Independence (spatial-block OOF errors):** max |ρ| 0.1337 over 2,089 blocks → PASS (bar 0.60).
 - **Sufficiency (View A, bookkeeping gate):** mean OOF AUC 0.5163 / min fold 0.4668 → **FAIL** (bar 0.60/0.55) — the mechanistic cause of the negative result.
 - **Lane / uniqueness:** surface literal PASS (max ρ 0.5417); dots literal DUPLICATE/STOP (probe rasters, IR-H87-001 class) with scored-only policy PASS (max near 0.3285); uniqueness literal novelty 0.0 (probe union, IR-H97-DSQ-002) / informative-only **0.8121** (max Jaccard 0.0097); not-the-union PASS (76.2 % outside).
-- **Gates (frozen in `registry/h97_dsq_preregistration.json`, SHA `f58c5e32d405c530…`):**
+- **Gates (frozen in `registry/h97_dsq_preregistration.json`, SHA `1867fd55666210a3…`):**
 
 | gate | result |
 |---|---|
@@ -197,7 +197,7 @@
 | not_the_union | PASS |
 
 - **Irregularities:** IR-H97-DSQ-001 (quota not realised by 3 px spacing; tie-fill mass), IR-H97-DSQ-002 (probe-union novelty standing condition), IR-H97-DSQ-003 (doubled CSV prefix, fixed pre-publication).
-- Docs: [preregistration](knowledge/97_hypotheses_H97-DSQ_preregistered.md) · [results & limits](knowledge/98_h97_dsq_results_and_limits.md) · [session brief](knowledge/94_current_user_brief_2026-10-10_H95.md) · [irregularities](registry/irregularities.json)
+- Docs: [preregistration](knowledge/97_hypotheses_H97-DSQ_preregistered.md) · [results & limits](knowledge/98_h97-dsq_results_and_limits.md) · [session brief](knowledge/94_current_user_brief_2026-10-10_H95.md) · [irregularities](registry/irregularities.json)
 - Reproduce: `python3 scripts/restore_data.py --target-dir data` → feature store + `python -m gems52.external` → `python3 scripts/fetch_prior_inventory.py --out work/h97-dsq/priors --receipt work/h97-dsq/prior_fetch_receipt.json` → `python3 scripts/run_h97_dsq.py all` → `python3 scripts/publish_h97_dsq_site.py && python3 scripts/check_site.py`.
 
 ### Why `h33-h33-2-b2` scored 0.2778, and can we beat 0.3195? (unchanged; full derivation: [knowledge/76](knowledge/76_why_02778_and_what_beating_03195_requires.md))
@@ -813,6 +813,8 @@ Go ahead and create a pull request and then merge the pull request onto the main
 
 </details>
 <!--/H97-DSQ-README-->
+
+
 <!--H97-RDVA-ARCHIVE-START-->
 ## Parallel negative archive — H97-RDVA
 

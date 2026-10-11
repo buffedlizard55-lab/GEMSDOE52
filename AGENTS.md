@@ -11,7 +11,7 @@ Verdict **NEGATIVE** (download yes, submit NO). Experiments 2 of 3, slots 0.
 <!--H97-DSQ-AGENTS-->
 ## Current H97-DSQ continuation (2026-10-11) — READ FIRST
 Read README's H97-DSQ block (it ends with the session brief verbatim), `knowledge/97` (frozen preregistration,
-SHA-256 `f58c5e32d405c530…`), `knowledge/94` (brief) and `knowledge/98` (results, generated).
+SHA-256 `1867fd55666210a3…`), `knowledge/94` (brief) and `knowledge/98` (results, generated).
 Verdict **negative** — both co-training arms below random on the holdout (quota_primary 0.026348 vs random
 0.058228 @25,400; g_025 0.019639 vs random 0.080426 @37,654); bar 0.192829. Slots used 0.
 This session's branch is `arena/1bc2f2ec-gemsdoe52`.
@@ -29,7 +29,7 @@ Settled this round; do not re-litigate:
   literal and the informative-only reading; the scored-only policy reading was PASS (max near 0.3285).
 - **Control reproduction is exact** on the 53,186-px fold set (single_B 0.174517, random 0.080426, B_DVA2 0.192831):
   the H82/H84 bar 0.192829 is the correct comparison for this round's holdout.
-- Publishing: `scripts/publish_h97-dsq_site.py` inserts `<!--H97-DSQ-CARD-->` / `<!--H97-DSQ-README-->` / `<!--H97-DSQ-AGENTS-->`
+- Publishing: `scripts/publish_h97_dsq_site.py` inserts `<!--H97-DSQ-CARD-->` / `<!--H97-DSQ-README-->` / `<!--H97-DSQ-AGENTS-->`
   blocks (idempotent) and rewrites the H97-DSQ pages/pointer; verify with `scripts/check_site.py` + pytest.
 <!--/H97-DSQ-AGENTS-->
 <!--H97-MASSLEVER-AGENTS-->
