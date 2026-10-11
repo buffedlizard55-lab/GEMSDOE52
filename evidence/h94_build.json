@@ -1,0 +1,88 @@
+{
+  "round": "H88",
+  "file": "gems52-h88-cotrain-strict-AB-37654px-20261010T220328Z.tif",
+  "submission_name": "h88-cotrain-strict-AB-37654px",
+  "note": "H88 cotrain A-conf/B-abstain stratum, 3px spacing, 200m collar, zeros outside",
+  "note_chars": 77,
+  "file_sha256": "794b3814b63cdcd880395f5a632cfe0f3b28642b3fdb337ca0315a4722c0ccdd",
+  "bytes": 795844,
+  "zip_file": "gems52-h88-cotrain-strict-AB-37654px-20261010T220328Z.zip",
+  "zip_sha256": "ce246de6f0cc05fefe27046efa69bc0d2d8a10081f2430572d3165613d69c974",
+  "mirror_submission_copy": "submission/gems52-h88-cotrain-strict-AB-37654px-20261010T220328Z.tif",
+  "holdout_verdict": "NEGATIVE",
+  "holdout_reason": "bar 0.063055 vs 0.192829: fail; P-single_B lower CI -0.009246: fail; P-random lower CI -0.026299: fail",
+  "primary_rule": "P = rank_A + 1.0*[rank_A>=0.75 & rank_B<=0.25] (protocol \u00a73)",
+  "strata_px": {
+    "S_AB_px": 411799,
+    "S_BA_px": 407695,
+    "eligible_px": 5164300
+  },
+  "placed": 37654,
+  "placed_by_spacing": 37654,
+  "fallback_dots": 0,
+  "spacing_stats": {
+    "n": 37654,
+    "median_px": 3.0,
+    "p10_px": 3.0,
+    "p90_px": 3.605551275463989,
+    "share_within_1px": 0.0,
+    "share_within_2px": 0.0
+  },
+  "values": {
+    "unique": [
+      0.0,
+      1.0
+    ],
+    "finite_all": true,
+    "min": 0.0,
+    "max": 1.0,
+    "in_0_1": true
+  },
+  "container": {
+    "count": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "shape": [
+      3730,
+      3292
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "nodata": null,
+    "outside": "zero",
+    "portal_exact": true
+  },
+  "surface_pre_placement": {
+    "priors": 562,
+    "report": {
+      "phase": "surface",
+      "rule": "STOP at rho >0.90 or directed <=3px dot proximity >0.70; no lane retuning",
+      "evidence_class": "uniqueness diagnostic, not a score",
+      "priors_checked": 562,
+      "distinct_decoded_priors": 397,
+      "candidate_decoded_sha256": "981e98da472ac6efc9bcce91b7a7ef982b6c9bdfe71d397106dd691054191c61",
+      "rank_pixels": 5164300,
+      "exact_full_eligible_rank": true,
+      "max_spearman": 0.2998874326491185,
+      "max_near_3px_fraction": null,
+      "rank_threshold": 0.9,
+      "near_threshold": 0.7,
+      "duplicate": false,
+      "offender_count": 0,
+      "error_count": 0,
+      "ok": true,
+      "scope": "Supplied aligned immutable public inventory only; private/release/external artifacts not proven absent."
+    },
+    "offenders": []
+  },
+  "status": "research-only; local format validation is not organiser acceptance; HOLDOUT verdict decides SUBMIT (see knowledge/81)",
+  "approved_for_weekly_slot": false,
+  "submission_slots_used": 0,
+  "elapsed_seconds": 358.8
+}

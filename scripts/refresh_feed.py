@@ -72,8 +72,7 @@ def copy_evidence():
     # H55 publishes its own evidence the same way the R2 round publishes *_r2.json: copied on every
     # run so the page cannot drift from the artefact, and named by round so it is never mistaken for
     # another round's numbers.  The Phase-2 reasoning record is staged next to the raster it explains.
-    for pat in ('ctd5_*.json', 'h55_*.json', 'h58_*.json', 'h59_*.json', 'h92_*.json', 'h93_*.json',
-                'submission_gems52-h55-*.json',
+    for pat in ('ctd5_*.json', 'h55_*.json', 'h58_*.json', 'h59_*.json', 'submission_gems52-h55-*.json',
                 'submission_gems52-h58-*.json', 'submission_gems52-h59-*.json'):
         for path in sorted(EV.glob(pat)):
             write(path.name, safe(json.loads(path.read_text())))
@@ -410,42 +409,21 @@ def current_branch(explicit=None):
 
 
 def research_status():
-    """Read the newest research card, not LATEST, and verify its exact published bytes.
+    """Read the research card, not LATEST, and verify its exact published bytes.
 
     Hash identity preserves the previous on-disk validator result without importing
     scientific dependencies into the scheduled stdlib-only feed. Never promotes.
-
-    Two audited cards are eligible (newest generated_utc wins; CTD5 remains the fallback):
-    the CTD5 card, and the H92 build card whose artifact is published as
-    ``downloads/h92-candidate.tif``.  A card whose published alias does not match its own
-    SHA-256 raises, so a silent byte drift can never reach the feed.
     """
-    candidates = []
     p = EV / 'ctd5_run_card.json'
-    if p.exists():
-        card = json.loads(p.read_text())
-        candidates.append(dict(
-            generated_utc=card.get('generated_utc'), run_id=card.get('run_id'),
-            file=card['raster_file'], sha256=card['raster_sha256'],
-            download='downloads/ctd5-research.tif', verdict=card.get('verdict'),
-            path=DL / card['raster_file']))
-    p = EV / 'h92_build.json'
-    if p.exists():
-        card = json.loads(p.read_text())
-        candidates.append(dict(
-            generated_utc=card.get('generated_utc'),
-            run_id=str(card.get('round', 'H92')).lower() + '-build',
-            file=card['artifact'], sha256=card['sha256'],
-            download='downloads/h92-candidate.tif', verdict=card.get('verdict'),
-            path=DL / 'h92-candidate.tif'))
-    if not candidates:
+    if not p.exists():
         return None
-    card = max(candidates, key=lambda c: str(c.get('generated_utc') or ''))
-    matches = card['path'].is_file() and file_hash(card['path']) == card['sha256']
+    card = json.loads(p.read_text())
+    path = DL / card['raster_file']
+    matches = path.is_file() and file_hash(path) == card['raster_sha256']
     if not matches:
-        raise ValueError('research download differs from its audited bytes: ' + card['download'])
-    return dict(run_id=card['run_id'], file=card['file'],
-                download=card['download'], sha256=card['sha256'],
+        raise ValueError('CTD5 research download differs from its audited bytes')
+    return dict(run_id=card['run_id'], file=card['raster_file'],
+                download='downloads/ctd5-research.tif', sha256=card['raster_sha256'],
                 hash_verified=matches, verdict=card['verdict'],
                 approved_for_weekly_slot=False, submit_ok=False,
                 measurement_utc=card['generated_utc'],
@@ -508,7 +486,6 @@ def main():
         branch=current_branch(args.branch), repo='buffedlizard55-lab/GEMSDOE52',
         evidence_copied=copied,
         files=sorted({p.name for pat in ('*_r[23]*.json', 'h55_*.json', 'h58_*.json',
-                                         'h92_*.json', 'h93_*.json',
                                          'submission_gems52-h55-*.json', 'submission_gems52-h58-*.json')
                       for p in DATA.glob(pat)}),
         submission=sub.get('file'), downloads=len(list(DL.glob('*.tif'))),

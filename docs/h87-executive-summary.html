@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>H87 Executive Summary &mdash; GEMSDOE52</title>
+<style>
+:root{--bg:#0f172a;--card:#1e293b;--accent:#3b82f6;--green:#22c55e;--red:#ef4444;--yellow:#eab308;--text:#e2e8f0;--muted:#94a3b8;--border:#334155}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:1rem;max-width:960px;margin:0 auto}
+h1{font-size:1.55rem;margin:1rem 0;color:var(--accent)}
+h2{font-size:1.2rem;margin:1.5rem 0 .5rem;border-bottom:1px solid var(--border);padding-bottom:.3rem}
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;margin:1rem 0}
+.status{display:inline-block;padding:4px 12px;border-radius:4px;font-weight:700;font-size:.85rem}
+.ok{background:var(--green);color:#000}.no{background:var(--red);color:#fff}.warn{background:var(--yellow);color:#000}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+.btn{display:inline-block;padding:10px 20px;background:var(--accent);color:#fff;border-radius:6px;font-weight:700;text-decoration:none;margin:.5rem .5rem .5rem 0}
+.btn.s{background:#334155}
+code{background:#0f172a;padding:2px 6px;border-radius:3px;font-size:.85rem;word-break:break-all}
+table{width:100%;border-collapse:collapse;font-size:.88rem;margin:.5rem 0}
+th,td{padding:6px 10px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+th{color:var(--muted);font-weight:600}
+small,.muted{color:var(--muted)}
+ol li,ul li{margin:.4rem 0}
+</style>
+</head>
+<body>
+<p><a href="../index.html">&larr; Landing page</a> &middot; <a href="index.html">Research archive</a></p>
+<h1>H87 &mdash; Executive summary</h1>
+
+<div class="card">
+<h2 style="margin-top:0">Is it OK to download? Is it OK to submit?</h2>
+<p><span class="status ok">DOWNLOAD YES</span> &nbsp; <span class="status no">SUBMIT NO</span></p>
+<p><b>Download:</b> the file is a valid competition artefact &mdash; 1 band, float32, EPSG:32611, the
+organiser&rsquo;s 3730&times;3292 grid and transform, every one of the 12,279,160 pixels finite and inside
+[0, 1], no nodata tag, and no positive mass outside the data footprint. Downloading it cannot hurt
+anything.</p>
+<p><b>Submit:</b> no. On the repository&rsquo;s own hide-and-recover instrument the candidate scores
+<b>0.104228 [0.084119, 0.124875]</b> (HOLDOUT-DTI,
+evaluator <code>gems52-pooled-hide-v1</code>, 60,894 withheld
+positive pixels, 9,400 dots per fold) against a random control at
+<b>0.075375 [0.067081, 0.083962]</b>; the paired difference is
++0.028853 [0.014804, 0.043810], which spans zero. Spending a
+weekly slot on that is not justified. Verdict: <b>NEGATIVE</b>. Slots used: 0.
+Nothing in this round is ORGANIZER-CONFIRMED &mdash; this repository has never uploaded a file.</p>
+</div>
+
+<div class="card">
+<h2 style="margin-top:0">One-click download</h2>
+<p><a class="btn" href="downloads/h87-candidate.tif" download>Download h87-candidate.tif &darr;</a>
+<a class="btn s" href="downloads/h87-candidate.zip" download>Single-TIFF ZIP</a>
+<a class="btn s" href="downloads/gems52-h87-boardcal-marginal-20261010-a-only-reasoning.csv" download>A-only geological reasoning CSV</a>
+<a class="btn s" href="validator.html">Check any file in your browser</a></p>
+<p class="muted">838,772 bytes &middot; SHA-256 <code>a8be8bee429b46817320a78d5c2503a5b5b785b86e742a301fc3f90bb996f086</code> &middot;
+61,427 positive cells &middot; ZIP contains exactly one entry,
+<code>gems52-h87-boardcal-marginal-20261010-61427px.tif</code>, byte-identical to the TIF.</p>
+</div>
+
+<div class="card">
+<h2 style="margin-top:0">Exactly how to submit it (if a selector ever promotes it)</h2>
+<ol>
+<li>Download <code>h87-candidate.zip</code> above and unzip it, or use the TIF directly &mdash; the
+portal accepts a single GeoTIFF. Submission name to type in: <code>h87-boardcal-marginal-20261010</code>.</li>
+<li>Optional local check first: open <a href="validator.html">validator.html</a> in the browser and
+drop the file in. It must report 1 band, float32, EPSG:32611, 3730&times;3292, all pixels finite,
+min 0.0 and max 1.0.</li>
+<li>On <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">the
+competition&rsquo;s submissions page</a>, choose the file, paste the name above, and paste the note
+(114/140 characters): <code>H87 board-calibrated truth density; dots placed by the metric's own marginal rule c>0.2*DTI; 200m ring out; binary</code></li>
+<li>Upload. If the portal says <em>&ldquo;Predicted values must be in range [0, 1]&rdquo;</em>, the file
+was written with a nodata sentinel or non-finite pixels; this one is written by
+<code>grid.write_geotiff_portal_exact(..., outside="zero")</code>, which is the only writer in this
+repository that guarantees all pixels finite and in [0, 1] (IR-H85-004). Do not &ldquo;fix&rdquo; such a
+file by hand &mdash; re-run the writer.</li>
+<li>One upload = one weekly slot. Record the returned score as ORGANIZER-CONFIRMED in
+<code>registry/</code>; until then every number here is HOLDOUT-DTI, PREDICTED-BOARD, BOARD-CALIBRATED
+or OWNER-REPORTED.</li>
+</ol>
+</div>
+
+<div class="card">
+<h2 style="margin-top:0">What H87 actually found</h2>
+<p><b>The question.</b> Thirteen files in this repository have owner-reported public-board scores. The
+metric is exactly linear in the truth density once the cover field of each file is known:
+<code>s<sub>i</sub> = &lt;g, M<sub>i</sub>&gt; / (0.2&middot;S<sub>i</sub> + 0.8&middot;|G|)</code> with
+<code>M<sub>i</sub> = k(EDT to file i&rsquo;s dots)</code> and <code>k(d) = max(1 &minus; d/300 m, 0)</code>.
+Thirteen scores are therefore thirteen equations in <code>g</code>, and <code>|G|</code> is one of the
+unknowns.</p>
+<p><b>Result 1 &mdash; a third independent pin on the hidden truth mass.</b> Non-negative least squares on
+the exact linear form gives <b>|G| = 14,333.8</b> truth pixels, between H67&rsquo;s
+ring-deletion pin (14,088.7 [13,953&ndash;14,226]) and the lattice-coverage pin (12,367). Leave-one-out
+score MAE 0.02007, Spearman 0.9436 over the 13 files.</p>
+<p><b>Result 2 &mdash; a negative, and the important one.</b> The fitted mass is <code>FAM_family_consensus</code> 9,938, <code>CAT_catalogue</code> 4,396. Every physical,
+external and disagreement basis in the model received <b>weight zero</b>: <code>U_uniform_offcat</code>, <code>RING_100_300m</code>, <code>SGMC_offcat</code>, <code>LIDAR_step_coh</code>, <code>RAD_K_high</code>, <code>DIS_A_confident_B_abstains</code>, <code>GRAV_step</code>.
+A thirteen-basis version of the same fit, run earlier by the same deterministic script, returned an
+identical solution (log line quoted in <code>evidence/h87_board_inversion.json</code> under
+<code>extended13_omitted</code>). So the board evidence does not favour gravity steps, LiDAR scarps,
+radiometrics, seismicity, basement depth, conductivity or either co-training disagreement mask. What it
+favours is <em>where the owner&rsquo;s own earlier files were</em>, plus a modest catalogue component.</p>
+<p><b>Result 3 &mdash; the budget is derived, not chosen.</b> Adding a dot of exact marginal credit
+<code>c</code> raises DTI iff <code>c &gt; 0.2&middot;DTI</code>. Emission by that rule self-terminates at
+<b>61,427 cells</b> (marginal_rule), median
+nearest-neighbour spacing 3.1622776601683795 px. This is now a shared tool
+(<code>gems52.nodes.marginal_greedy</code>) with tests, not a private script.</p>
+<p><b>Calibration of that rule.</b> Under a uniform truth density of the fitted total mass the same tool
+stops at 24,557 dots, 5.373 px equivalent spacing, predicted DTI
+<b>0.1001</b>. The one board score whose geometry is fully known &mdash; the
+organiser-side lattice raster <code>13gems_20261001_r13-lattice-s5_v2</code>,
+206,895 dots, NN median 5.0 px, mean cover
+0.3748, cover fraction 0.9984
+&mdash; is OWNER-REPORTED at <b>0.0904</b>. The control is within
+10.7% of it, which bounds the placement model&rsquo;s
+error in the only regime where it can be checked. Two real defects were found and fixed by this control:
+a stale within-round gain field saturated the 3 px minimum separation (DTI 0.0643 instead of ~0.09), and a
+raster-order tie-break produced a square packing where the pinned raster is staggered (~8% of achievable
+DTI).</p>
+</div>
+
+<div class="card">
+<h2 style="margin-top:0">Numbers, and what each one is allowed to mean</h2>
+<table>
+<thead><tr><th>Quantity</th><th>Value</th><th>Label</th></tr></thead>
+<tbody>
+<tr><td>hidden truth mass |G|</td><td>14,333.8</td><td>BOARD-CALIBRATED (fitted from owner-reported scores)</td></tr>
+<tr><td>leave-one-out score MAE / Spearman</td><td>0.02007 / 0.9436</td><td>BOARD-CALIBRATED</td></tr>
+<tr><td>HOLDOUT-DTI, candidate</td><td>0.104228 [0.084119, 0.124875]</td><td>HOLDOUT-DTI (gems52-pooled-hide-v1, 60,894 withheld positives)</td></tr>
+<tr><td>HOLDOUT-DTI, random control</td><td>0.075375 [0.067081, 0.083962]</td><td>HOLDOUT-DTI</td></tr>
+<tr><td>paired difference vs random</td><td>+0.028853 [0.014804, 0.043810]</td><td>HOLDOUT-DTI, spans zero</td></tr>
+<tr><td>uniform-truth control</td><td>0.1001</td><td>PREDICTED-BOARD, checked against owner-reported 0.0904</td></tr>
+<tr><td>this candidate vs the 0.2778 champion on three shared truth realisations</td><td>0.1984 vs 0.2395 (paired -0.0411)</td><td>PREDICTED-BOARD &mdash; a consistency check, never a forecast</td></tr>
+<tr><td>champion&rsquo;s owner-reported public score</td><td>0.2778</td><td>OWNER-REPORTED (not organiser-confirmed for a named file)</td></tr>
+<tr><td>public leader (2026-10-10)</td><td>0.3774</td><td>PUBLIC-BOARD</td></tr>
+</tbody></table>
+<p class="muted">PREDICTED-BOARD values are computed against truth realisations drawn from a density that
+was itself fitted to those same board scores. They are consistency checks. They are never written as
+scores and never used to justify a slot.</p>
+</div>
+
+<div class="card">
+<h2 style="margin-top:0">Gates</h2>
+<table>
+<thead><tr><th>Gate</th><th>Result</th><th>Detail</th></tr></thead>
+<tbody>
+<tr><td>format validator</td><td>PASS</td><td>EPSG:32611, 3730&times;3292, NaN pixels 0, mass outside footprint 0</td></tr>
+
+<tr><td>lane, surface (registry-scoped)</td><td>PASS / policy PASS</td><td>max rank correlation 0.3608</td></tr>
+<tr><td>lane, final dots (registry-scoped)</td><td>DUPLICATE/STOP / policy DUPLICATE/STOP</td><td>max near-3px fraction 0.9992 over 13 owner-scored rasters. <b>A random emission at the same budget scores 0.9990</b>, because those rasters&rsquo; 3 px halos cover 108.6% of the footprint: IR-H87-001, the literal rule is unsatisfiable for any non-empty emission here. Per-prior candidate vs random controls: {"gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif": {"candidate": 0.8533, "random_control": 0.1868, "coverage_of_eligible": null}, "gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif": {"candidate": 0.8824, "random_control": 0.194, "coverage_of_eligible": null}, "gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif": {"candidate": 0.9044, "random_control": 0.1995, "coverage_of_eligible": null}, "gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif": {"candidate": 0.8127, "random_control": 0.1713, "coverage_of_</td></tr>
+<tr><td>decoded-pixel uniqueness</td><td>PASS</td><td>142 local priors, novel fraction 0.3558, max Jaccard 0.0719, strictly-novel-and-selective</td></tr>
+<tr><td>lane scope disclosure</td><td>IR-H87-002</td><td>rank/near-3px lane passes are scoped to the owner-scored registry; the four full-local-inventory lane passes did not complete inside the two-hour budget. Decoded-pixel uniqueness IS measured over the whole local inventory.</td></tr>
+<tr><td>holdout beats random</td><td>PASS</td><td>paired CI lower bound 0.014804</td></tr>
+</tbody></table>
+<p class="muted">Lane scope is the local on-disk prior inventory (142
+rasters). The 567-blob full census is not restorable in this sandbox, so a PASS here is snapshot-scoped,
+exactly as disclosed for H74S. Any literal near-3px hit against a universal-coverage probe is reported
+together with a random-emission control on the same probe, because random dots hit such a probe too
+(IR-H85-009): {"gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif": {"candidate": 0.8533, "random_control": 0.1868, "coverage_of_eligible": null}, "gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif": {"candidate": 0.8824, "random_control": 0.194, "coverage_of_eligible": null}, "gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif": {"ca.</p>
+</div>
+
+<div class="card">
+<h2 style="margin-top:0">Geological reasoning for the A-only candidates</h2>
+<p>3,424 emitted cells are described row by row in
+<a href="downloads/gems52-h87-boardcal-marginal-20261010-a-only-reasoning.csv">the reasoning CSV</a>. Of those,
+<b>3,424 (5.6%)</b> are A-only: View A
+(potential field and subsurface &mdash; gravity gradient/slope/horizontal-gradient, magnetics
+tmi_hg+tmi_vg+|rtp|, geodetic second invariant + shear + dilatation, seismicity density minus distance,
+basement-depth step, surface conductivity) ranks the cell in its top 15% while View B (surface &mdash; DEM
+slope and curvature, LiDAR step/excess/laplacian-negative/coherence, radiometric K and Th, band 6 total
+count) abstains between the 35th and 65th percentile. That is the co-training disagreement the brief asks
+to pseudo-label: a coherent subsurface edge with no surface expression, which is what a fault buried under
+alluvial cover looks like. Each such row carries the named non-fault process that could mimic it
+(basin-margin facies step, dyke or intrusive contact, geodetic interpolation seam, palaeo-channel under
+cover) and three measured distances: to the catalogue (2699.4 m mean), to the
+nearest derived SGMC fault (1456.0 m median) and to the nearest thermal
+well or spring (1,432 cells within 500 m).</p>
+<p class="muted">The co-training lane itself is closed by pre-registered gates in this repository:
+view independence passes (max |rho| 0.1333 over 2,089 blocks against a 0.60 bar) but View A sufficiency is
+refuted seven times (mean out-of-fold AUC 0.5113). H87 therefore ships the transparent rank composites and
+their disagreement masks as <em>reasoning and ranking</em> inputs, and does not re-open a pseudo-label
+exchange. See <code>registry/h77cond_preregistration.json</code> and <code>evidence/h71_*</code>.</p>
+</div>
+
+<div class="card">
+<h2 style="margin-top:0">Limitations, stated before anyone acts on this</h2>
+<ul>
+<li><b>The density is mostly a mirror.</b> 9,938 of
+14,334 mass units sit on the mean cover of the owner&rsquo;s own scored ladder, and that ladder
+is nested (the 0.2778 file is a strict subset of the 0.2600 file, which is a subset of the 0.2477 file).
+A leave-one-out basis rebuilt from the other six members of a nested family is strongly collinear with the
+target it has to predict, so the leave-one-out MAE 0.02007 overstates how much the
+model would know about a file it had never seen. The pin on |G| is robust (it is a scale, and two
+independent methods agree); the <em>shape</em> of the fitted density is not.</li>
+<li><b>The holdout instrument does not predict the board here</b> (Spearman &minus;0.10 across this
+repository&rsquo;s scored files, IR-H77-005): it hides catalogue faults while the board scores faults the
+catalogue lacks. A HOLDOUT-DTI below random is therefore not proof the candidate is bad on the board, and
+a value above random would not be proof it is good. It is the only unbiased instrument available, so it
+decides promotion and it says no.</li>
+<li><b>Truth realisations are not truth.</b> The PREDICTED-BOARD column samples |G| pixels with
+probability proportional to the fitted density and scores exactly against them. It answers &ldquo;is this
+pattern consistent with the density that explains the board?&rdquo;, not &ldquo;what will this score?&rdquo;.</li>
+<li><b>Two byte patterns share the score 0.1563</b> in the owner-reported registry, so attribution of a
+score to a file is not organiser-confirmed anywhere in this round.</li>
+<li><b>|G| enters the acceptance bar.</b> If the true mass is 12,367 rather than 14,334, the bar
+<code>0.2&middot;DTI</code> is higher and the self-terminated budget is smaller; the whole pinned interval
+[12,300, 14,100] should be swept before any promotion decision.</li>
+<li><b>Not tested:</b> a density fitted with the family basis excluded (the sandbox OOM-killed the
+13-basis run before that ablation could be added), any |G| sweep of the emission, and any organiser
+upload.</li>
+</ul>
+</div>
+
+<p class="muted">Run card: <a href="../evidence/h87_run_card.json">evidence/h87_run_card.json</a>.
+Receipts: <a href="../evidence/h87_board_inversion.json">board inversion</a>,
+<a href="../evidence/h87_emit.json">emission and lane probe</a>,
+<a href="../evidence/h87_realisation_scores.json">realisation scores</a>,
+<a href="../evidence/h87_holdout.json">holdout</a>,
+<a href="../evidence/h87_gates.json">gates</a>,
+<a href="../evidence/h87_write_receipt.json">writer receipt</a>.
+Irregularities: <a href="irregularities.html">register</a>.</p>
+</body>
+</html>
