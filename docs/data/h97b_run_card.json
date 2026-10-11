@@ -6,14 +6,14 @@
     "amendment_bytes": 4241,
     "registration": "02668421f590ea8f4f13aa7052a4f3240beb410214db9ef80b7ac8a8e8f96703"
   },
-  "amendment_to": "registry/h97_preregistration.json",
+  "amendment_to": "registry/h97_masslever_preregistration.json",
   "hypothesis": "Lane-distinct emission: rank by the extended surface view, use View A only as a support screen and to veto the B-only road/erosion population, and emit at the metric-implied 25,400-dot mass lever.",
   "mechanism": "A concealed fault beneath cover can still be read by surface channels that answer buried structure \u2014 LiDAR scarp morphology and radiometric ratios \u2014 where the potential field supports the location; where the potential field is silent, the surface response is attributed to a surface artefact instead.",
   "named_non_fault_mimic": "road cuts, erosion lines, drainage scarping and DEM/radiometric acquisition seams (the B-only population, vetoed); lithologic contacts (A-only population, screened out by the surface ranker)",
   "duplicate_finding": {
     "h97_primary_vs_h96_near_3px_policy": 0.9385433070866142,
     "literal": 0.9989370078740157,
-    "source": "evidence/h97_lane_dots.json",
+    "source": "evidence/h97_masslever_lane_dots.json",
     "meaning": "an A-dominant field reproduces the A-view's fixed point; H97b removes A from the ranking"
   },
   "holdout": {

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""H97b -- the lane-distinct emission rule frozen in knowledge/99_h97b_amendment.md.
+"""H97b -- the lane-distinct emission rule frozen in knowledge/107_h97b_amendment.md.
 
 Reuses (never forks) the H97 round's frozen views and the shared tools by importing
-``scripts/run_h97.py`` as a module: ``check_prereg``, ``load_folds``, ``allowed_for``,
+``scripts/run_h97_masslever.py`` as a module: ``check_prereg``, ``load_folds``, ``allowed_for``,
 ``prior_list``, ``write_ev``, the evaluator, ``gates``, ``nodes``, ``submission_writer``.
 
 Why this script exists: the H97 primary field is A-dominant and its dots came out 93.85 % within
@@ -221,7 +221,7 @@ def stage_card():
     ho = json.loads((EVID / "h97b_holdout.json").read_text())
     bd = json.loads((EVID / "h97b_build.json").read_text())
     wr = json.loads((EVID / "h97b_write.json").read_text())
-    h97 = json.loads((EVID / "h97_run_card.json").read_text())
+    h97 = json.loads((EVID / "h97_masslever_run_card.json").read_text())
     fm, uni, lane = wr["validator"], wr["uniqueness"], wr["lane_dots"]
     gates_tbl = {
         "format": dict(result="PASS" if fm["ok"] else "FAIL",
@@ -255,7 +255,7 @@ def stage_card():
     }
     failed = [k for k, v in gates_tbl.items() if v["result"] != "PASS"]
     card = dict(round="H97b", generated_utc=now(), registration=reg,
-                amendment_to="registry/h97_preregistration.json",
+                amendment_to="registry/h97_masslever_preregistration.json",
                 hypothesis="Lane-distinct emission: rank by the extended surface view, use View A only "
                            "as a support screen and to veto the B-only road/erosion population, and "
                            "emit at the metric-implied 25,400-dot mass lever.",
@@ -268,7 +268,7 @@ def stage_card():
                                       "contacts (A-only population, screened out by the surface ranker)",
                 duplicate_finding=dict(h97_primary_vs_h96_near_3px_policy=0.9385433070866142,
                                        literal=0.9989370078740157,
-                                       source="evidence/h97_lane_dots.json",
+                                       source="evidence/h97_masslever_lane_dots.json",
                                        meaning="an A-dominant field reproduces the A-view's fixed point; "
                                                "H97b removes A from the ranking"),
                 holdout=dict(withheld_positive_px=ho["withheld_positive_px"],

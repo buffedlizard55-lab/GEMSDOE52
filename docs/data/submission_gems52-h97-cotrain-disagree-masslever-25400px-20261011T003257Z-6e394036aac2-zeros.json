@@ -63,9 +63,9 @@
   "metadata": {},
   "round": "H97",
   "stem": "gems52-h97-cotrain-disagree-masslever-25400px-20261011T003257Z-6e394036aac2-zeros",
-  "short_tif": "h97-candidate.tif",
-  "marker": "submission/H97_LATEST.txt",
-  "download": "downloads/h97-candidate.tif",
+  "short_tif": "h97-masslever-candidate.tif",
+  "marker": "submission/H97_MASSLEVER_LATEST.txt",
+  "download": "downloads/h97-masslever-candidate.tif",
   "verdict": "negative",
   "failed_gates": [
     "holdout_promotion",

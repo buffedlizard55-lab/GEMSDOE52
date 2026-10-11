@@ -2,7 +2,7 @@
 """Insert / refresh the H97 block at the top of README.md and AGENTS.md, from the receipts.
 
 Idempotent: replaces the block between its markers, never touches another round's block.  Every
-number is read from ``evidence/h97_*.json``.
+number is read from ``evidence/h97_masslever_*.json``.
 """
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 EVID = ROOT / "evidence"
-OPEN, CLOSE = "<!--H97-README-->", "<!--/H97-README-->"
+OPEN, CLOSE = "<!--H97-MASSLEVER-README-->", "<!--/H97-MASSLEVER-README-->"
 AOPEN, ACLOSE = "<!--H97-AGENTS-->", "<!--/H97-AGENTS-->"
 
 
@@ -21,11 +21,11 @@ def rd(n):
 
 
 def main() -> int:
-    card = rd("h97_run_card.json")
-    wr = rd("h97_write.json")
-    inst = rd("h97_instrument.json")
-    hold = rd("h97_holdout.json")
-    build = rd("h97_build.json")
+    card = rd("h97_masslever_run_card.json")
+    wr = rd("h97_masslever_write.json")
+    inst = rd("h97_masslever_instrument.json")
+    hold = rd("h97_masslever_holdout.json")
+    build = rd("h97_masslever_build.json")
     fm = wr["validator"]
     uni = wr["uniqueness"]
     lane = wr["lane_dots"]
@@ -52,7 +52,7 @@ def main() -> int:
 > {', '.join(failed) if failed else 'none'}. And now the reason is measured, not guessed: **our holdout does not
 > rank the board's own scored files** (E1 below). Slots used: **0**; promotion is a separate selector step.
 
-**★ [Download h97-candidate.tif](docs/downloads/h97-candidate.tif)** · [ZIP](docs/downloads/h97-candidate.zip) · **[Executive summary / how to submit](docs/h97-executive-summary.html)** · [Full result](docs/h97.html) · [Run card](evidence/h97_run_card.json) · [A-only reasoning CSV](docs/downloads/{name}-a-only-reasoning.csv)
+**★ [Download h97-masslever-candidate.tif](docs/downloads/h97-masslever-candidate.tif)** · [ZIP](docs/downloads/h97-masslever-candidate.zip) · **[Executive summary / how to submit](docs/h97-masslever-executive-summary.html)** · [Full result](docs/h97-masslever.html) · [Run card](evidence/h97_masslever_run_card.json) · [A-only reasoning CSV](docs/downloads/{name}-a-only-reasoning.csv)
 
 - **File:** `submission/{name}.tif` — {wr['tif_bytes']:,} bytes, SHA-256 `{wr['sha256']}`
 - **Submission name:** `{name}` · **Note ({wr['note_chars']}/140):** `{wr['note']}`
@@ -102,9 +102,9 @@ certified-best *fitted* surface instrument uses) was run with the frozen arm set
 - Lanes: surface {build['surface_lane']['policy']['verdict']} (max Spearman {build['surface_lane']['policy']['max_spearman']:.4f});
   dots literal {lane['literal']['verdict']} / policy {lane['policy']['verdict']} (max Spearman {lane['literal']['max_spearman']:.4f},
   max near-3 px {lane['literal']['max_near_3px_fraction']}).
-- Docs: [preregistration](knowledge/97_hypotheses_H97_preregistered.md) · [results & limits](knowledge/98_h97_results_and_limits.md) ·
+- Docs: [preregistration](knowledge/105_h97_masslever_hypotheses_preregistered.md) · [results & limits](knowledge/106_h97_masslever_results_and_limits.md) ·
   [irregularities](registry/irregularities.json) · Reproduce: `python scripts/restore_data.py --target-dir data` then
-  `python scripts/run_h97.py all` then `python scripts/publish_h97_site.py && python scripts/publish_h97_readme.py`.
+  `python scripts/run_h97_masslever.py all` then `python scripts/publish_h97_masslever_site.py && python scripts/publish_h97_masslever_readme.py`.
 
 ### Next work, ranked after E1
 
@@ -116,7 +116,7 @@ certified-best *fitted* surface instrument uses) was run with the frozen arm set
 <details><summary><b>The H97 session brief, verbatim (read it every session)</b></summary>
 
 See `knowledge/94_current_user_brief_2026-10-10_H95.md` for the standing brief (the H97 session received
-the same co-training paragraph plus the parallel-run protocol), and `knowledge/97_hypotheses_H97_preregistered.md`
+the same co-training paragraph plus the parallel-run protocol), and `knowledge/105_h97_masslever_hypotheses_preregistered.md`
 for what this round froze before any fit.
 
 </details>
@@ -128,18 +128,25 @@ for what this round froze before any fit.
     path = ROOT / "README.md"
     t = path.read_text()
     t = re.sub(re.escape(OPEN) + r".*?" + re.escape(CLOSE) + r"\n*", "", t, count=1, flags=re.S)
-    anchor = "<!--/H95-README-->"
-    if anchor in t:
-        t = t.replace(anchor, anchor + "\n" + block.strip() + "\n", 1)
+    # Insertion point: the README's convention is newest-round-first, and tests/test_h99.py asserts
+    # that the file still STARTS with the H99 block from the parallel lane.  This lane's block is
+    # therefore written immediately AFTER the H99 block (falling back to after the H95 block, then
+    # to the top) so no other lane's block is moved or rewritten.
+    for anchor in ("<!--/H99-README-->", "<!--/H95-README-->"):
+        if anchor in t:
+            t = t.replace(anchor, anchor + "\n" + block.strip() + "\n", 1)
+            where = anchor
+            break
     else:
         t = block.strip() + "\n\n" + t
+        where = "top of file"
     path.write_text(t)
-    print(f"{path.name}: H97 block written after the H95 block ({len(block)} bytes)")
+    print(f"{path.name}: H97-masslever block written after {where} ({len(block)} bytes)")
 
     agents = ROOT / "AGENTS.md"
     ablock = f"""{AOPEN}
-## Current H97 continuation (2026-10-11) — READ FIRST
-Read README's H97 block first. Download **YES**; submit **your call** — no leaderboard gain is certified.
+## Current H97-masslever continuation (2026-10-11) — READ FIRST
+Read README's H97-masslever block first. Download **YES**; submit **your call** — no leaderboard gain is certified.
 This session's branch is `arena/c5bf6f30-gemsdoe52`. The round ran **three** experiments:
 **E1 instrument fidelity** (the repository's holdout does not rank the board: Spearman
 {inst['spearman_board_vs_holdout']['spearman']:.4f}, partial given log mass
@@ -156,7 +163,7 @@ This session's branch is `arena/c5bf6f30-gemsdoe52`. The round ran **three** exp
   `bands/dtype/crs/width/height/nan_pixels/infinity_pixels/n_min/max/n_nonzero/problems/ok`;
   `gates.uniqueness_report` has `n_priors_checked`/`identical_to_a_prior`/per-prior `jaccard`
   (no `identical_to_none`, no `max_jaccard`); `find_priors` excludes by resolve() **and basename**, so a
-  round that stages an alias copy of its own artifact (e.g. `h97-candidate.tif`) must drop its own names or the
+  round that stages an alias copy of its own artifact (e.g. `h97-masslever-candidate.tif`) must drop its own names or the
   candidate is compared to itself; `submission_writer.write_submission` rejects a note/name longer than 140 chars.
 - Use `/home/user/.venv/bin/python` (pinned numpy/scipy/rasterio/…env built this session).
 {AOPEN.replace('<!--H97-AGENTS-->','<!--/H97-AGENTS-->')}

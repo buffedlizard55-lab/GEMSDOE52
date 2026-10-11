@@ -2598,7 +2598,7 @@
         "novel_vs_this": 25343
       },
       {
-        "path": "/home/user/GEMSDOE52/docs/downloads/h97-candidate.tif",
+        "path": "/home/user/GEMSDOE52/docs/downloads/h97-masslever-candidate.tif",
         "prior_px": 25400,
         "new_px": 25400,
         "binary": true,
@@ -5889,7 +5889,7 @@
         "same_decoded_as": "/home/user/GEMSDOE52/submission/gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif"
       },
       {
-        "path": "/home/user/GEMSDOE52/docs/downloads/h97-candidate.tif",
+        "path": "/home/user/GEMSDOE52/docs/downloads/h97-masslever-candidate.tif",
         "decoded_sha256": "6e394036aac25c4798ad900ed3b00d84f50c65b1ff13fa573ed6ef19521b34ee",
         "binary_on_eligible": true,
         "spearman": -0.0033996697721547383,

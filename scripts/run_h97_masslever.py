@@ -9,15 +9,15 @@ pp. 92-100, doi:10.1145/279943.279962).
     holdout     E2: co-training at the metric-implied mass lever, with View B at full channel width
     build/write E3: the unique GeoTIFF, every gate re-read from the written bytes
 
-Frozen before any fit in ``registry/h97_preregistration.json`` (sha256 of
-``knowledge/97_hypotheses_H97_preregistered.md``); the runner refuses to start if the hash moves.
+Frozen before any fit in ``registry/h97_masslever_preregistration.json`` (sha256 of
+``knowledge/105_h97_masslever_hypotheses_preregistered.md``); the runner refuses to start if the hash moves.
 
 Shared tools are reused, never forked: ``gems52.spatial`` (whole-component label-blind-quadrant
 folds, negative_block_errors, independence, whole_pseudo_segments), ``gems52.evaluate_holdout``
 (``gems52-pooled-hide-v1``), ``gems52.nodes.spacing_select`` (metric-aware placement),
 ``gems52.gates`` (format/uniqueness/lane), ``gems52.submission_writer``.
 
-Usage: python scripts/run_h97.py [folds|instrument|views|holdout|build|write|card|all]
+Usage: python scripts/run_h97_masslever.py [folds|instrument|views|holdout|build|write|card|all]
 """
 from __future__ import annotations
 
@@ -45,7 +45,7 @@ from sklearn.metrics import roc_auc_score                             # noqa: E4
 from gems52 import evaluate_holdout as evaluator                      # noqa: E402
 from gems52 import gates, nodes, spatial, submission_writer           # noqa: E402
 
-PREREG = ROOT / "registry/h97_preregistration.json"
+PREREG = ROOT / "registry/h97_masslever_preregistration.json"
 WORK = ROOT / "work/h97"
 EVID = ROOT / "evidence"
 DOCS = ROOT / "docs/data"
@@ -262,7 +262,7 @@ def prior_list(roots, own_names: set[str]):
 
     ``find_priors`` already refuses to compare a candidate against itself (IR-52-026), including a
     staged copy with the *same* basename.  This round stages a second, shorter alias
-    (``h97-candidate.tif``) for the site, whose basename differs, so the tool cannot know it is the
+    (``h97-masslever-candidate.tif``) for the site, whose basename differs, so the tool cannot know it is the
     same bytes; without this filter the candidate is compared against its own copy and the gate
     reports "identical to a prior, novel = 0" -- the one verdict that would wrongly stop a
     legitimate submission.  Only this round's own names are removed; every other prior is kept.
@@ -615,7 +615,7 @@ def stage_build():
     a, b = z["a"], z["b"]
     field, cons, buried, art, veto = make_field(a, b, valid)
     priors, own_dropped = prior_list([SUBDIR, DLDIR, ROOT / "data/scored", ROOT / "data/reference"],
-                                     {"h97-candidate.tif"})
+                                     {"h97-masslever-candidate.tif"})
     log(f"registry priors found: {len(priors)} (own alias copies dropped: {own_dropped})")
     surface = gates.lane_report(field, valid, priors, sample=str(SAMPLE), phase="surface", log=log)
     log(f"surface lane: literal {surface['literal']['verdict']} "
@@ -689,14 +689,14 @@ def stage_write():
     log(f"wrote {out_tif} ({out_tif.stat().st_size:,} bytes)")
     # copies for the site
     DLDIR.mkdir(parents=True, exist_ok=True)
-    for dst in (DLDIR / f"{name}.tif", DLDIR / "h97-candidate.tif"):
+    for dst in (DLDIR / f"{name}.tif", DLDIR / "h97-masslever-candidate.tif"):
         dst.write_bytes(out_tif.read_bytes())
-    with zipfile.ZipFile(DLDIR / "h97-candidate.zip", "w", zipfile.ZIP_DEFLATED) as zf:
+    with zipfile.ZipFile(DLDIR / "h97-masslever-candidate.zip", "w", zipfile.ZIP_DEFLATED) as zf:
         zf.write(out_tif, arcname=f"{name}.tif")
 
     fm = gates.format_report(out_tif, str(SAMPLE), footprint=valid)
     log("format: " + json.dumps({k: fm[k] for k in list(fm)[:8]}, default=str)[:400])
-    own = {out_tif.name, "h97-candidate.tif"}
+    own = {out_tif.name, "h97-masslever-candidate.tif"}
     priors, own_dropped = prior_list([SUBDIR, DLDIR, ROOT / "data/scored", ROOT / "data/reference"], own)
     log(f"uniqueness/lane priors: {len(priors)} (own copies dropped by name: {own_dropped})")
     uni = gates.uniqueness_report(dots, priors)
@@ -709,7 +709,7 @@ def stage_write():
         f"(max Spearman {lane['literal']['max_spearman']}, max near-3px {lane['literal']['max_near_3px_fraction']})")
     gates.write_report(EVID / "h97_format_gate.json", fm)
     gates.write_report(EVID / "h97_uniqueness.json", uni)
-    gates.write_report(EVID / "h97_lane_dots.json", lane)
+    gates.write_report(EVID / "h97_masslever_lane_dots.json", lane)
 
     # A-only geological reasoning (the brief's Phase-2 duty): every dot whose buried score
     # dominates its consensus score, with the named non-fault mimic and a falsifier.
@@ -766,10 +766,10 @@ def stage_write():
 # ---------------------------------------------------------------------------------------------
 def stage_card():
     reg = check_prereg()
-    ho = json.loads((EVID / "h97_holdout.json").read_text())
-    inst = json.loads((EVID / "h97_instrument.json").read_text())
-    build = json.loads((EVID / "h97_build.json").read_text())
-    wr = json.loads((EVID / "h97_write.json").read_text())
+    ho = json.loads((EVID / "h97_masslever_holdout.json").read_text())
+    inst = json.loads((EVID / "h97_masslever_instrument.json").read_text())
+    build = json.loads((EVID / "h97_masslever_build.json").read_text())
+    wr = json.loads((EVID / "h97_masslever_write.json").read_text())
     uni = wr["uniqueness"]
     lane = wr["lane_dots"]
     fm = wr["validator"]

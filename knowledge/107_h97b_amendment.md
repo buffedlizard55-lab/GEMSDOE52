@@ -1,8 +1,8 @@
 # 99 · H97b amendment (written after E1/E2 were measured, disclosed) — a lane-distinct emission rule
 
 **Why this amendment exists.** The H97 primary emission (preregistered in
-`registry/h97_preregistration.json`) was built, written and gated. Its gates are in
-`evidence/h97_run_card.json`. The **dot lane check on the final dots failed**: 93.85 % of the
+`registry/h97_masslever_preregistration.json`) was built, written and gated. Its gates are in
+`evidence/h97_masslever_run_card.json`. The **dot lane check on the final dots failed**: 93.85 % of the
 25,400 dots fall within 3 px of the H96 artifact
 (`submission/gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif`),
 99.89 % when the universal-coverage lattice probe is included (129.9 % of the footprint covered by
@@ -27,7 +27,7 @@ inside B's confident set"*), and cannot reproduce the A-driven fixed point.
 **Chronology, disclosed.** This amendment was written **after** E1 and E2 produced numbers and after
 the H97 primary's lane gate failed. Its selection rationale is the brief's artifact rule plus the
 lane measurement — **not** the holdout. The promotion rule, the bar, the gates, the budgets and the
-placement rule are **unchanged** from `registry/h97_preregistration.json`. The H97b holdout is
+placement rule are **unchanged** from `registry/h97_masslever_preregistration.json`. The H97b holdout is
 reported for the amended field at both budgets so the reader can see the amended arm's own number,
 and the H97 primary is retained as an audit artifact with its own receipts.
 

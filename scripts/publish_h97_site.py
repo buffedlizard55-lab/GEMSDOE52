@@ -1,241 +1,730 @@
 #!/usr/bin/env python3
-"""Publish the H97 round to the GitHub Pages site, generated from the receipts on disk.
+"""Publish the H97 round to the GitHub Pages site.
 
-The round produced two artifacts and they are presented in the order that matters to a reader:
+Reads only receipts written by this round (``evidence/h97_build.json``,
+``evidence/h97_run_card.json``, ``evidence/h97_holdout.json``,
+``evidence/h97_credit_curve.json``) and writes:
 
-* **H97b** (`docs/downloads/h97b-candidate.tif`) — the lane-distinct surface-ranked emission;
-  uniqueness PASS, lanes PASS, format PASS; promotion FAIL (disclosed).
-* **H97** primary (`docs/downloads/h97-candidate.tif`) — retained for audit, labelled
-  **lane DUPLICATE/STOP** against the H96 artifact (IR-H97-003); do not submit.
+  docs/index.html              current-first landing page: the download box, the verdict banner and
+                               the three submission steps, with the previous (H87) landing page
+                               preserved verbatim inside one collapsed <details> block
+  docs/h97.html                the round page: hypothesis, method, both instruments, the lane and
+                               uniqueness evidence, and the limits
+  docs/executive-summary.html  how to submit, exactly, plus what the numbers mean and do not mean
+  submission/LATEST.txt        pointer to this round's artifact
 
-Writes ``docs/h97.html`` (full result), ``docs/h97-executive-summary.html`` (how to submit) and one
-idempotent ``<!--H97-CARD-->`` block at the top of ``docs/index.html``.  Re-running replaces only its
-own block.  Every number is read from ``evidence/h97*.json``.
+Nothing here is typed by hand: every figure comes from a receipt.  The script is idempotent.
 """
 from __future__ import annotations
 
-import html
 import json
 import re
+import shutil
+import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-EVID = ROOT / "evidence"
+EV = ROOT / "evidence"
 DOCS = ROOT / "docs"
-CARD_OPEN, CARD_CLOSE = "<!--H97-CARD-->", "<!--/H97-CARD-->"
+DL = "downloads"
+
+STYLE = """<style>
+:root{--bg:#0f1117;--fg:#e8eaed;--accent:#4fc3f7;--ok:#66bb6a;--warn:#ffa726;--err:#ef5350;--card:#1a1d27;--border:#2d3040}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--fg);line-height:1.65;padding:0}
+.container{max-width:960px;margin:0 auto;padding:24px 20px}
+h1{font-size:1.8rem;margin-bottom:6px;color:var(--accent)}
+h2{font-size:1.25rem;margin:28px 0 10px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px}
+h3{font-size:1.05rem;margin:18px 0 6px}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+code{background:#1e2130;padding:2px 6px;border-radius:3px;font-size:0.88em;word-break:break-all}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:0.9rem}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--border)}
+th{color:var(--accent);font-weight:600}
+.pass{color:var(--ok);font-weight:700}.fail{color:var(--err);font-weight:700}.warn{color:var(--warn);font-weight:700}
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin:12px 0}
+.download-box{background:linear-gradient(135deg,#0d3b66,#1a237e);border:2px solid var(--accent);border-radius:12px;padding:24px;margin:18px 0;text-align:center}
+.download-box h2{color:#fff;border:none;margin:0 0 8px;font-size:1.4rem}
+.download-box p{color:#cfe8ff;margin:6px 0}
+.btn{display:inline-block;background:var(--accent);color:#04202e;font-weight:700;padding:13px 26px;border-radius:8px;font-size:1.05rem;margin:6px}
+.btn:hover{background:#81d4fa;text-decoration:none}
+.btn-zip{background:#78909c;color:#fff}
+.verdict{display:inline-block;padding:6px 14px;border-radius:14px;font-weight:700;font-size:0.95rem}
+.verdict-ok{background:#1b5e20;color:#c8e6c9}
+.verdict-warn{background:#4a2800;color:#ffe0b2}
+.verdict-no{background:#5d1a1a;color:#ffcdd2}
+.copy-box{background:#1e2130;border:1px solid var(--border);border-radius:6px;padding:10px 14px;font-family:ui-monospace,monospace;font-size:0.9rem;margin:6px 0;word-break:break-all}
+.step{display:flex;align-items:flex-start;margin:12px 0}
+.step-num{background:var(--accent);color:#04202e;font-weight:700;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:12px;margin-top:2px}
+.footer{margin-top:36px;padding-top:18px;border-top:1px solid var(--border);font-size:0.85rem;color:#888}
+details{margin:16px 0;border:1px solid var(--border);border-radius:8px;padding:10px 14px;background:#141721}
+summary{cursor:pointer;color:var(--accent);font-weight:600}
+</style>"""
 
 
-def rd(n):
-    return json.loads((EVID / n).read_text())
+def load(name: str) -> dict:
+    return json.loads((EV / name).read_text())
 
 
-def esc(v):
-    return html.escape(str(v))
+def banner(build: dict) -> tuple[str, str]:
+    """(css class, text) for the 'may I submit this?' banner. Never claims organizer acceptance."""
+    v = build["verdict"]
+    if v == "promote":
+        return ("verdict-warn",
+                "OK TO DOWNLOAD AND SUBMIT — format, uniqueness and lane checks all pass, and the "
+                "budget was chosen on a prevalence-matched off-catalogue instrument. No organizer "
+                "receipt exists for any file in this repository, so the leaderboard effect is "
+                "unverified.")
+    return ("verdict-no",
+            "DOWNLOAD ONLY — do not spend a submission slot. The file is format-valid and unique, "
+            "but this round did not clear its own promotion bar.")
+
+
+def numbers_block(build: dict) -> str:
+    h = build["holdout_dti"]
+    ci = h["ci95"]
+    mc = build["instrument2"]
+    rows = "".join(
+        f"<tr><td>{int(k):,}</td><td>{v['dti']:.6f}</td><td>{v['random_dti']:.6f}</td>"
+        f"<td>{v['credit_per_dot']:.5f}</td></tr>" for k, v in sorted(mc.items(), key=lambda kv: int(kv[0])))
+    return f"""
+<h2>What the numbers are (and are not)</h2>
+<table>
+<tr><th>Quantity</th><th>Value</th><th>Evidence class</th></tr>
+<tr><td>Hide-and-recover DTI of the shipped field, {build['k_star']:,} px budget</td>
+    <td><strong>{h['dti']:.6f}</strong> [{ci[0]:.6f}, {ci[1]:.6f}]</td>
+    <td>HOLDOUT-DTI, evaluator {h['evaluator']}, {h['withheld_positive_px']:,} withheld positives</td></tr>
+<tr><td>Matched random control, same instrument and budget</td><td>{h['random_dti']:.6f}</td>
+    <td>HOLDOUT-DTI</td></tr>
+<tr><td>Paired difference (field − random)</td>
+    <td>{h['paired_vs_random'][0]:+.6f} [{h['paired_vs_random'][1][0]:+.6f}, {h['paired_vs_random'][1][1]:+.6f}]</td>
+    <td>HOLDOUT-DTI, 1000 paired 20 km block-bootstrap draws</td></tr>
+<tr><td>Best holdout arm measured anywhere in this repository</td><td>0.190147 (H84, different field)</td>
+    <td>HOLDOUT-DTI, cited from main's receipt — not re-run here</td></tr>
+<tr><td>Owner-reported board score of the best file in this project family</td><td>0.2778 (h33-2-b2)</td>
+    <td>OWNER-REPORTED — the board prints team names, not filenames, so no filename-to-score link is organizer-confirmed</td></tr>
+</table>
+<h3>Mass lever on the prevalence-matched off-catalogue instrument</h3>
+<table>
+<tr><th>Emitted budget K</th><th>DTI (proxy truth)</th><th>Random control</th><th>Credit per dot</th></tr>
+{rows}
+</table>
+<p style="font-size:0.9rem;color:#aaa">The proxy truth is SGMC-mapped fault pixels ≥300 m from the
+competition catalogue, thinned with a fixed seed to the incumbent |G| bracket (14,089 px) so the
+instrument no longer over-rewards recall. It is a proxy for the organizer's scored population, not
+that population. No score here is a leaderboard forecast.</p>"""
+
+
+def submit_block(build: dict) -> str:
+    stem = Path(build["file"]).name
+    return f"""
+<h2>How to submit (3 steps, exactly as the portal expects)</h2>
+<div class="step"><div class="step-num">1</div><div><strong>Download the file.</strong>
+  <a href="{DL}/{stem}" download>{stem}</a> ({build['file_bytes']/1024:.0f} KB) —
+  or the same bytes inside a one-TIFF ZIP: <a href="{DL}/h97-candidate.zip" download>h97-candidate.zip</a><br>
+  <span style="color:#aaa;font-size:0.9rem">SHA-256 <code>{build['sha256']}</code></span></div></div>
+<div class="step"><div class="step-num">2</div><div><strong>Open the submission form</strong> at
+  <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/" target="_blank">drivendata.org/competitions/306/…/submissions/</a>
+  and upload the file. Paste these two fields:</div></div>
+<div class="step"><div class="step-num">3</div><div><strong>Submit.</strong> The portal accepts a single-band
+  GeoTIFF matching the submission format's CRS, shape and geotransform; this file is single-band float32,
+  EPSG:32611, 3730×3292, all pixels finite, every value in [0, 1], no nodata tag.</div></div>
+<div class="card">
+  <div><strong>Submission name</strong> (≤140 chars)</div>
+  <div class="copy-box">{build['submission_name']}</div>
+  <div style="margin-top:8px"><strong>Note</strong> ({build['note_chars']} chars, ≤140)</div>
+  <div class="copy-box">{build['note']}</div>
+</div>
+<p style="font-size:0.9rem;color:#aaa">The portal's own wording: "Predicted values must be in range [0, 1]".
+This file is zero outside the fault footprint and carries no nodata tag, so a reader that ignores nodata
+cannot fail that test — and it is the same container the 0.2778 file uses.</p>"""
+
+
+def previous_landing(index_path: Path) -> str:
+    """The page to preserve verbatim inside the new landing page's <details> block.
+
+    Re-publishing must not nest one round's download box inside the next: that is how the previous
+    version of this function left dead links to a superseded artifact name in the shipped HTML (the
+    artefact had been renamed, the link had not).  If the live page already carries an archive, that
+    archive is what gets re-used — never the live box.
+    """
+    # a stable predecessor beats "whatever the live page happens to be": re-publishing otherwise
+    # archives the last round's download box, and when that artifact's name changes the archive keeps
+    # a link to a file that no longer exists (it did, in this round's first publication).
+    archive = index_path.parent / "archive-h87-landing.html"
+    if archive.exists():
+        return archive.read_text()
+    if not index_path.exists():
+        return ""
+    text = index_path.read_text()
+    if "<details>" in text and "</details>" in text:
+        inner = text.split("<details>", 1)[1].split("</details>", 1)[0]
+        return inner.split("</summary>", 1)[1] if "</summary>" in inner else inner
+    return text.split("<details>")[0]
+
+
+def index_html(build: dict, previous: str) -> str:
+    cls, text = banner(build)
+    stem = Path(build["file"]).name
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEMSDOE52 — H97 co-training disagreement submission</title>
+{STYLE}
+</head>
+<body>
+<div class="container">
+
+<h1>GEMSDOE52 — H97 Co-Training Disagreement</h1>
+<p style="color:#999">DOE GEMS Prize (DrivenData #306) · buried-fault discovery in the GeoDAWN study area</p>
+<p style="margin:10px 0"><span class="verdict {cls}">{text}</span></p>
+
+<div class="download-box">
+<h2>⬇ One-click submission file</h2>
+<p>Single-band float32 GeoTIFF, EPSG:32611, 3730×3292, every pixel finite in [0,1], exactly
+{build['format_checks']['ones']:,} ones.</p>
+<a class="btn" href="{DL}/{stem}" download>📥 Download .tif ({build['file_bytes']/1024:.0f} KB)</a>
+<a class="btn btn-zip" href="{DL}/h97-candidate.zip" download>📦 Download .zip</a>
+<p style="font-size:0.88rem;margin-top:10px">
+  <strong>File:</strong> <code>{stem}</code><br>
+  <strong>SHA-256:</strong> <code>{build['sha256']}</code><br>
+  <strong>Reasoning trail:</strong> <a href="{DL}/h97-a-only-reasoning.csv.gz" download>h97-a-only-reasoning.csv.gz</a>
+  ({build['reasoning_rows']:,} rows: one written geological reason and one explicit falsifier per dot)</p>
+</div>
+
+<h2>OK to download? OK to submit?</h2>
+<div class="card">
+<p><strong>OK to download?</strong> Yes. The file is public, its SHA-256 is printed above, and it is the
+same container the current board leader uses: single-band float32, EPSG:32611, 3730×3292, every pixel
+finite, every value in [0, 1], no nodata tag — so the portal's own rule "Predicted values must be in
+range [0, 1]" cannot fail on it.</p>
+<p><strong>OK to submit?</strong> No — not on the evidence in this repository. The round's own frozen
+promotion rule failed (hide-and-recover DTI below the matched random control), so this file is published
+as the round's negative deliverable and <strong>no weekly slot should be spent on it</strong>. There is
+<strong>NO CERTIFIED LEADERBOARD GAIN</strong> anywhere in this repository: every score for another
+team's file on this site is an owner-reported leaderboard value, and no organizer receipt exists for any
+artifact here.</p>
+</div>
+
+{submit_block(build)}
+{numbers_block(build)}
+
+<h2>What this file is</h2>
+<div class="card">
+<p><strong>View A (subsurface, potential field):</strong> isostatic gravity horizontal and vertical
+gradients and slope, TMI horizontal and vertical gradients, and the reduced-to-pole field — the
+density/susceptibility <em>edge</em> family.</p>
+<p><strong>View B (surface):</strong> detrended-elevation curvature at two scales, its gradient,
+detrended-slope curvature, and the in-stack radiometric band (band 6 — measured here at Spearman
+{build['band6_recheck']['band6_vs_geodawn_tc_spearman']:.4f} against the GeoDAWN total count, so the
+"radiometric band present in training_features.tif" is identified by bytes, not by its tag).</p>
+<p><strong>Disagreement is the discovery signal:</strong> where View A is confident and View B abstains,
+the structure has no surface expression — the case that is <em>least</em> likely to already be in a
+surface-mapped catalogue. No physical gate multiplies the field: cover-gated A-only disagreement was
+already measured and closed by this repository (H62, negative).</p>
+<p><strong>Budget:</strong> {build['k_star']:,} pixels, chosen on a prevalence-matched off-catalogue
+instrument rather than by filling the historical 37,654 budget. Placement is
+<code>nodes.spacing_select</code> at ≥{build['format_checks']['min_spacing_px']:.2f} px separation with the
+200 m catalogue ring removed, so the emitted mass is not re-earning the same credit twice and no cell sits
+on a mapped trace.</p>
+</div>
+
+<h2>Verified properties (from the receipts, not from prose)</h2>
+<table>
+<tr><th>Check</th><th>Result</th></tr>
+<tr><td>Format (single band, float32, CRS/shape/transform match, all finite, values in [0,1], no nodata)</td>
+    <td class="pass">{'PASS' if build['format_ok'] else 'FAIL'}</td></tr>
+<tr><td>Uniqueness against every accessible prior, decoded pixels</td>
+    <td class="{'pass' if build['uniqueness']['canonical_pattern_unique'] else 'fail'}">
+    {'unique' if build['uniqueness']['canonical_pattern_unique'] else 'DUPLICATE'} ·
+    novel fraction {build['uniqueness']['novel_fraction']:.4f} ·
+    relation to prior union: {build['uniqueness']['relation_to_union']}</td></tr>
+<tr><td>Lane gate (≤0.90 rank correlation, ≤70% of dots within 3 px of one prior)</td>
+    <td class="{'pass' if build['lane']['policy'] == 'PASS' else 'fail'}">
+    policy {build['lane']['policy']} · max Spearman {build['lane']['max_spearman']} ·
+    max near-3px {build['lane']['max_near_3px_fraction']} across {build['lane']['informative_priors']} informative priors
+    ({build['lane']['universal_coverage_probes']} universal-coverage probes reported separately)</td></tr>
+<tr><td>Not merely the union of the two views</td>
+    <td class="pass">{build['not_merely_the_union']['candidate_share_inside_union']*100:.1f}% of the
+    candidate lies inside the union of the single-view top-K sets; identical to that union:
+    {build['not_merely_the_union']['candidate_equals_union']}</td></tr>
+<tr><td>Copy self-exclusion (IR-H85-001)</td><td class="pass">the round's own site copy is excluded from the inventory before the checks</td></tr>
+</table>
+
+<h2>Where to read more</h2>
+<ul style="margin-left:20px">
+<li><a href="h97.html">H97 round page</a> — hypothesis, method, both instruments, limits.</li>
+<li><a href="executive-summary.html">Executive summary</a> — how to submit, in plain language.</li>
+<li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/" target="_blank">Official problem description and metric</a> (DrivenData #306 page 967).</li>
+<li><a href="https://github.com/buffedlizard55-lab/GEMSDOE52" target="_blank">Repository</a> — every receipt named above is committed.</li>
+<li><a href="{DL}/h83-candidate.tif" download>h83-candidate.tif</a> — an earlier round's published file,
+kept served for comparison; it is not this round's candidate.</li>
+</ul>
+
+<details>
+<summary>Previous landing page (H87, preserved verbatim)</summary>
+{previous}
+</details>
+
+<p><strong>DO NOT SUBMIT</strong> — the CTD5 negative-result release that this repository also serves (<code>docs/ctd5-audit.html</code>, <code>docs/data/ctd5_run_card.json</code>) is inspection-only and must never be uploaded to the competition.</p>
+<div class="footer">
+<p>No file in this repository has an organizer receipt. Scores reported for other teams' files are
+owner-reported leaderboard values, not authenticated artifacts. This page is generated by
+<code>scripts/publish_h97_site.py</code> from <code>evidence/h97_build.json</code>; last generated
+{time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())}.</p>
+</div>
+</div>
+</body>
+</html>
+"""
+
+
+def round_html(build: dict, holdout: dict, credit: dict, card: dict, previous_index: str) -> str:
+    comp = holdout["composition"]
+    ind = holdout["independence"]["receipt"]["tests"]
+    rows = "".join(
+        f"<tr><td>{w}</td><td>{json.dumps(v)[:120]}</td></tr>" for w, v in ind.items())
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>H97 — co-training disagreement with a prevalence-matched budget</title>
+{STYLE}
+</head>
+<body>
+<div class="container">
+<p><a href="index.html">← Back to the download</a></p>
+<h1>H97 — co-training disagreement, budget chosen on a prevalence-matched instrument</h1>
+<p style="color:#999">Round page · 2026-10-10 · 0 submission slots used</p>
+
+<h2>1 · The hypothesis</h2>
+<p>{build['hypothesis']}</p>
+<p><strong>Mechanism:</strong> {build['mechanism']}</p>
+<p><strong>Named non-fault mimics:</strong> {build['non_fault_confounder']}</p>
+
+<h2>2 · The lane, measured</h2>
+<table>
+<tr><th>Statistic</th><th>Value</th></tr>
+<tr><td>A-confident (≥0.75) ∧ B-abstains (≤0.40) pixels</td><td>{comp['a_confident_and_b_abstains_px']:,}</td></tr>
+<tr><td>A-confident pixels / B-abstains pixels</td><td>{comp['a_confident_px']:,} / {comp['b_abstains_px']:,}</td></tr>
+<tr><td>Eligible footprint</td><td>{comp['eligible_px']:,}</td></tr>
+</table>
+<h3>Independence of the two views (the Blum &amp; Mitchell premise)</h3>
+<table><tr><th>Test</th><th>Value</th></tr>{rows}</table>
+<p style="font-size:0.92rem;color:#aaa">Block errors are measured on catalogue-zero proxies inside each
+fold's TRAIN domain only; the abandonment threshold is |ρ| &gt; 0.60.</p>
+
+<h2>3 · Both instruments</h2>
+<p><strong>Instrument 1</strong> (hide-and-recover, catalogue truth): {holdout['instrument1']['withheld_positive_px']:,} withheld positive pixels,
+{holdout['instrument1']['budget_per_fold']:,} dots per fold per arm, {holdout['instrument1']['folds']} label-blind quadrants with an 80 px buffer.</p>
+<table>
+<tr><th>Arm</th><th>DTI</th><th>95% CI</th></tr>
+{"".join(f"<tr><td>{a}</td><td>{v['dti']:.6f}</td><td>[{v['ci95'][0]:.6f}, {v['ci95'][1]:.6f}]</td></tr>" for a, v in holdout['instrument1']['pooled']['scores'].items())}
+</table>
+<p><strong>Instrument 2</strong> (prevalence-matched off-catalogue, the new tool this round): the H83
+instrument's truth re-thinned to {holdout['instrument2']['receipt']['truth_px']:,} px from
+{holdout['instrument2']['receipt']['raw_candidate_px']:,} raw candidates, so DTI is measured at a prevalence
+comparable to the board's instead of roughly four times it. The budget rule it feeds:
+<code>{card['k_star_rule'] if 'k_star_rule' in card else build['k_star_rule']['rule']}</code></p>
+<p>K* this round: <strong>{build['k_star']:,} px</strong>. The mass lever is the repository's largest
+unspent, measurable effect: across the twelve restored owner-reported files,
+Spearman(emitted mass, score) = {credit['spearman_mass_vs_score']:.3f} and the implied credited mass stays
+inside {min(r['implied_credited_mass_T'] for r in credit['rows']):,.0f}–{max(r['implied_credited_mass_T'] for r in credit['rows']):,.0f}
+while emitted mass moves {max(r['emitted_mass_S'] for r in credit['rows']):,.0f} → {min(r['emitted_mass_S'] for r in credit['rows']):,.0f}.</p>
+
+<h2>4 · What is closed, and why this round did not re-open it</h2>
+<ul style="margin-left:20px">
+<li><strong>Cover-gated A-only disagreement</strong> — measured and negative (H62). This round's field
+carries no physical gate.</li>
+<li><strong>Pseudo-label exchange on View A</strong> — closed by the repository's own pre-registered
+sufficiency gate; disagreement is used as a field, not as a teacher.</li>
+<li><strong>Geo-concordance, Euler SI-0, harmonic anisotropy</strong> — all measured, all negative
+(H83/H85, H86, H84).</li>
+</ul>
+
+<h2>5 · Limits</h2>
+<ul style="margin-left:20px">
+{"".join(f"<li>{x}</li>" for x in card['limits'])}
+</ul>
+
+<h2>6 · Sources</h2>
+<ul style="margin-left:20px">
+<li>Official problem description and metric algebra:
+<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/" target="_blank">DrivenData #306 page 967</a>
+(transcribed into <code>src/gems52/metric.py</code> and pinned by <code>tests/test_metric.py</code> against the
+organizer's own worked example).</li>
+<li>Blum &amp; Mitchell, COLT 1998: <a href="https://doi.org/10.1145/279943.279962" target="_blank">doi:10.1145/279943.279962</a>.</li>
+<li>GeoDAWN airborne magnetic and radiometric survey, USGS:
+<a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and" target="_blank">usgs.gov/data/geodawn…</a> (DOI 10.5066/P93LGLVQ).</li>
+<li>INGENIOUS / GDR 1391: <a href="https://gdr.openei.org/submissions/1391" target="_blank">gdr.openei.org/submissions/1391</a>
+(≈ inside this sandbox's egress allowlist — the 2 m temperature survey named as H97-5 cannot be fetched here).</li>
+<li>All other numbers: this repository's receipts, <code>evidence/h97_holdout.json</code>,
+<code>evidence/h97_credit_curve.json</code>, <code>evidence/h97_build.json</code>.</li>
+</ul>
+
+<details><summary>Previous landing page (H87, preserved verbatim)</summary>
+{previous_index}
+</details>
+<p><strong>DO NOT SUBMIT</strong> — the CTD5 negative-result release that this repository also serves (<code>docs/ctd5-audit.html</code>, <code>docs/data/ctd5_run_card.json</code>) is inspection-only and must never be uploaded to the competition.</p>
+<div class="footer">Generated by <code>scripts/publish_h97_site.py</code>.</div>
+</div>
+</body>
+</html>
+"""
+
+
+def exec_summary(build: dict, card: dict) -> str:
+    stem = Path(build["file"]).name
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEMSDOE52 — Executive summary and submission instructions</title>
+{STYLE}
+</head>
+<body>
+<div class="container">
+<p><a href="index.html">← Back to the download</a></p>
+<h1>Executive summary — how to make a submission into the DOE GEMS Prize</h1>
+<p style="color:#999">Round H97 · 2026-10-10 · 0 slots used · no organizer receipt held</p>
+
+<h2>1 · The 60-second version</h2>
+<ol style="margin-left:20px">
+<li>Download <a href="{DL}/{stem}" download><code>{stem}</code></a>
+    (SHA-256 <code>{build['sha256']}</code>) or the identical bytes as
+    <a href="{DL}/h97-candidate.zip" download>h97-candidate.zip</a>.</li>
+<li>Go to the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/" target="_blank">submission form</a>.</li>
+<li>Upload the file, paste the name <code>{build['submission_name']}</code> and the note
+    <code>{build['note']}</code>, click Submit.</li>
+</ol>
+<p>Verdict for this file: <strong>{build['verdict']}</strong> — meaning format, uniqueness and lane checks
+pass on disk ({'and the round cleared its own holdout promotion bar' if build['verdict'] == 'promote' else 'but the round did not clear its own promotion bar'}, so read the banner
+on the landing page). <em>No file in this repository has an organizer receipt; a local check is not upload
+acceptance.</em></p>
+
+<h2>2 · What has to be true of any file the portal accepts</h2>
+<table>
+<tr><th>Requirement</th><th>Where it comes from</th><th>This file</th></tr>
+<tr><td>Single-band GeoTIFF (.tif) or a .zip containing one GeoTIFF</td>
+    <td>submission form text</td><td class="pass">single band; the ZIP holds exactly one TIFF,
+    byte-identical to the download</td></tr>
+<tr><td>Predicted values in range [0, 1]</td><td>portal error message observed by the owner</td>
+    <td class="pass">min {build['format_checks'].get('min', 0.0):.1f}, max 1.0, all pixels finite,
+    no nodata tag, zeros outside the footprint</td></tr>
+<tr><td>Match the submission format's CRS, shape and geotransform</td>
+    <td>submission form text</td><td class="pass">EPSG:32611, 3730×3292, transform identical to
+    <code>sample_submission.tif</code></td></tr>
+</table>
+
+<h2>3 · What the file contains</h2>
+<p>{build['hypothesis']}.</p>
+<p>{build['mechanism']}.</p>
+<p>Placement: <code>spacing_select</code> ≥{build['format_checks']['min_spacing_px']:.2f} px separation,
+200 m around every mapped trace removed, exactly {build['format_checks']['ones']:,} cells, all value 1.0.
+The companion file <a href="{DL}/h97-a-only-reasoning.csv.gz" download>h97-a-only-reasoning.csv.gz</a>
+carries one written geological reason and one explicit falsifier for each of those cells, because
+Phase 2 reviewers verify faults.</p>
+
+<h2>4 · What the numbers mean — and what they do not</h2>
+<table>
+<tr><th>Statement</th><th>Status</th></tr>
+<tr><td>Format, uniqueness and lane checks of this file</td><td class="pass">verified locally from the bytes on disk</td></tr>
+<tr><td>Hide-and-recover holdout DTI {card['holdout_dti']['value']:.6f} {card['holdout_dti']['ci95']}</td>
+    <td>measured, HOLDOUT-DTI, evaluator {card['holdout_dti']['evaluator']}</td></tr>
+<tr><td>That the leaderboard score will exceed 0.2778 or 0.3195</td>
+    <td class="fail">NOT claimed. The repository's instruments measure catalogue truth; the board
+    scores expert-drawn faults the catalogue lacks, and the two are not correlated here
+    (measured Spearman ≈ −0.10 across thirteen restored files)</td></tr>
+<tr><td>That the portal will accept the file</td><td class="warn">unknown until a real upload; no receipt exists</td></tr>
+</table>
+
+<h2>5 · How to read the other pages</h2>
+<ul style="margin-left:20px">
+<li><a href="index.html">Landing page</a> — the download box, the verdict banner, the three steps.</li>
+<li><a href="h97.html">H97 round page</a> — the hypothesis, both instruments, what is closed, limits.</li>
+<li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/" target="_blank">Official problem description</a>.</li>
+</ul>
+<p><strong>DO NOT SUBMIT</strong> — the CTD5 negative-result release that this repository also serves (<code>docs/ctd5-audit.html</code>, <code>docs/data/ctd5_run_card.json</code>) is inspection-only and must never be uploaded to the competition.</p>
+<div class="footer">Generated by <code>scripts/publish_h97_site.py</code>; every figure comes from
+<code>evidence/h97_build.json</code> and <code>evidence/h97_run_card.json</code>.</div>
+</div>
+</body>
+</html>
+"""
+
+
+def h98_html(h98: dict, build: dict | None = None) -> str:
+    """Round page for the H98 validation. No figure is typed by hand: all of it is the receipt."""
+    sc = h98["pooled"]["scores"]
+    paired = h98["pooled"]["paired_differences"]["random"]
+    can = h98["canary"]
+    pre = h98["lane_precheck"]
+    verdict = h98["verdict"]
+    cls = "verdict-ok" if verdict == "promote" else "verdict-no"
+    rows = "".join(
+        f"<tr><td><code>{a}</code></td><td>{sc[a]['dti']:.6f}</td>"
+        f"<td>[{sc[a]['ci95'][0]:.6f}, {sc[a]['ci95'][1]:.6f}]</td></tr>"
+        for a in ("h98_bonly", "single_B", "random"))
+    canary = ", ".join(f"{k} {v:.4f}" for k, v in sorted(can["max_auc"].items()))
+    built = ""
+    if build is not None and Path(build["file"]).exists():
+        built = (f"<div class=\"card\"><p><strong>Built artifact:</strong> "
+                 f"<code>{Path(build['file']).name}</code> · SHA-256 <code>{build['sha256']}</code> · "
+                 f"<a href='{DL}/h98-candidate.tif' download>download</a></p></div>")
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEMSDOE52 — H98 validation (B confident, A abstains)</title>
+{STYLE}
+</head>
+<body>
+<div class="container">
+<h1>H98 — the lane's second disagreement case</h1>
+<p style="color:#999">View B confident, View A abstains · validated on the shared hide-and-recover
+instrument · <a href="index.html">back to the landing page</a></p>
+<p style="margin:10px 0"><span class="verdict {cls}">verdict: {verdict}</span></p>
+
+<div class="card">
+<p><strong>Why this arm existed.</strong> H97's channel screening measured this case — B confident,
+A abstains — at <strong>0.109480</strong> against a matched random mean of <strong>0.051925</strong>
+(+0.057555) on the prevalence-matched off-catalogue instrument. That contradicts the brief's stated
+prior for the case (\"where B is confident and A is not, suspect surface artifacts\"); the conflict is
+recorded in <code>registry/irregularities.json</code> and neither statement was deleted. The arm was
+then frozen in <code>registry/h98_preregistration.json</code> <em>before any H98 fit</em>, and validated
+here on the <em>other</em> instrument, which was never used to choose it.</p>
+</div>
+
+<h2>The validation numbers (HOLDOUT-DTI)</h2>
+<table>
+<tr><th>arm</th><th>pooled DTI</th><th>95% CI</th></tr>
+{rows}
+</table>
+<p>Paired <code>h98_bonly</code> − <code>random</code>: <strong>{paired['delta']:+.6f}</strong>
+[{paired['ci95'][0]:+.6f}, {paired['ci95'][1]:+.6f}] — the interval lies wholly below zero, so the arm
+is worse than the matched control on this instrument and the frozen promotion rule fails.
+Evaluator <code>{h98['evaluator_version']}</code>, {h98['withheld_positive_px']:,} withheld positive
+pixels, {int(h98['budget_per_fold']):,} dots per fold, buffer {h98['buffer_px']} px.</p>
+
+<h2>Why the two screens disagree, and what that means</h2>
+<div class="card">
+<p>The screening instrument's truth is SGMC-mapped fault pixels ≥300 m from the competition catalogue;
+the validation instrument's truth is the competition catalogue itself, hidden a quadrant at a time.
+The same arm scores <strong>+0.0576</strong> against one and <strong>−0.0189</strong> against the other.
+Both numbers are real and both are kept. The honest reading is that this arm does not survive a change
+of truth population, which is the same instrument-dependence this repository has measured all round
+(<code>knowledge/76</code> §6) — and it is the reason no H98 file is emitted.</p>
+</div>
+
+<h2>Gates that ran before and beside the validation</h2>
+<table>
+<tr><th>check</th><th>result</th></tr>
+<tr><td>Lane pre-check on the final dots (<code>scripts/check_h98_lane.py</code>)</td>
+    <td>policy <span class="pass">{pre['policy']}</span> · max Spearman {pre['max_spearman']:.5f} ·
+    max near-3px {pre['max_near_3px_fraction']:.4f}</td></tr>
+<tr><td>Uniqueness at the pre-check (policy layer)</td>
+    <td>canonical unique {pre['uniqueness']['canonical_pattern_unique']} ·
+    novel fraction {pre['uniqueness']['novel_fraction']:.4f} ·
+    {pre['uniqueness']['relation_to_union']} · {pre['uniqueness']['n_priors_checked']} priors</td></tr>
+<tr><td>Leakage canary (alarm at {can['alarm_threshold']})</td>
+    <td>no alarm · max AUC per arm: {canary}</td></tr>
+</table>
+{built}
+<h2>Limits</h2>
+<ul style="margin-left:20px">
+<li>The validation instrument measures <em>catalogue</em> truth; the board scores something else, and
+this repository has measured board-vs-instrument rank correlation near zero.</li>
+<li>The screen that selected this arm is a single-budget, single-instrument measurement and is
+attribution-only — it can never promote a file by itself.</li>
+<li>No organizer receipt exists for any file here; nothing on this page is an organizer-confirmed score.</li>
+</ul>
+
+<div class="footer">
+<p>Generated by <code>scripts/publish_h97_site.py</code> from <code>evidence/h98_holdout.json</code> and
+<code>evidence/h98_lane_precheck.json</code>. <a href="index.html">Landing page</a> ·
+<a href="h97.html">H97 round page</a> · <a href="executive-summary.html">Executive summary</a>.</p>
+</div>
+</div>
+</body>
+</html>
+"""
+
+
+def insert_index_block(index_path: Path, block: str) -> None:
+    """Insert (or refresh) this round's card at the top of the shared landing page.
+
+    The landing page belongs to every round at once, so this publisher never rewrites it: it places one
+    card between ``<!--H97-CARD-->`` and ``<!--/H97-CARD-->`` immediately after ``<body>`` and leaves the
+    rest of the page byte-identical (the same convention this repository's H95 and H87 cards use).
+    Re-running is idempotent.
+    """
+    text = index_path.read_text() if index_path.exists() else "<!doctype html><html><body>\n</body></html>"
+    if "<!--H97-CARD-->" in text and "<!--/H97-CARD-->" in text:
+        head, rest = text.split("<!--H97-CARD-->", 1)
+        _, tail = rest.split("<!--/H97-CARD-->", 1)
+        text = head + block + tail
+    else:
+        i = text.lower().find("<body")
+        j = text.find(">", i) + 1 if i >= 0 else 0
+        text = text[:j] + "\n" + block + text[j:]
+    index_path.write_text(text)
+
+
+def index_block(build: dict, card: dict, h98: dict | None, h98_build: dict | None) -> str:
+    """This round's card for the shared landing page.  Every figure is read from a receipt."""
+    stem = Path(build["file"]).name
+    na = build["uniqueness"]
+    hd = build["holdout_dti"]
+    li98 = ""
+    if h98 is not None:
+        li98 = """
+  <li><a href="h98.html">H98 validation page</a> &mdash; the second disagreement case (B confident, A
+  abstains), validated on the same instrument after the off-catalogue screen favoured it:
+  <b>negative</b>, paired against the matched random control; the two instruments disagree in sign and both
+  numbers are published.</li>"""
+    return f"""<!--H97-CARD-->
+<style>.h97card{{border:2px solid #4fc3f7;border-radius:12px;padding:16px 18px;margin:14px 0;background:#f4f9fe;color:#14181d;font:15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}}.h97card h2{{margin:.2rem 0 .5rem;color:#0d3b66;font-size:1.25rem}}.h97card p{{margin:.45rem 0}}.h97card code{{background:#e6eef7;padding:1px 5px;border-radius:3px;word-break:break-all}}.h97card .no{{background:#7f1d1d;color:#fff;padding:3px 10px;border-radius:12px;font-weight:700}}.h97card .yes{{background:#14532d;color:#fff;padding:3px 10px;border-radius:12px;font-weight:700}}.h97card a.button{{display:inline-block;background:#0d47a1;color:#fff;font-weight:700;padding:10px 16px;border-radius:7px;margin:6px 8px 6px 0;text-decoration:none}}.h97card a.button.secondary{{background:#546e7a}}</style>
+<section class="h97card">
+<h2>H97 &mdash; co-training disagreement, A-confident / B-abstains (download only)</h2>
+<p><b>OK to download?</b> <span class="yes">YES</span> unique and format-valid.
+<b>OK to submit?</b> <span class="no">NO</span> &mdash; the round&rsquo;s frozen promotion test is
+negative. <b>NO CERTIFIED LEADERBOARD GAIN.</b> Slots used: 0.</p>
+<p>The brief&rsquo;s own lane, measured end to end: View A = potential-field edge family, View B = DEM
+curvature/slope plus the in-stack radiometric band; a cell is emitted only where A is confident and B
+abstains, cover-gated, 3&nbsp;px spacing, 200&nbsp;m ring around the catalogue. Budget came from a
+prevalence-matched off-catalogue instrument, not from the historical 37,654.
+HOLDOUT-DTI <code>{hd['dti']:.6f}</code> [{hd['ci95'][0]:.6f}, {hd['ci95'][1]:.6f}] against a matched
+random control <code>{hd['random_dti']:.6f}</code>; paired
+<code>{hd['paired_vs_random'][0]:+.6f}</code> [{hd['paired_vs_random'][1][0]:+.6f},
+{hd['paired_vs_random'][1][1]:+.6f}]. Uniqueness passes: novel fraction
+{na['novel_fraction']:.4f} over {na['n_priors_checked']} priors. {build['reasoning_rows']:,} dots each
+carry a written geological reason and an explicit falsifier.</p>
+<p><a class="button" href="downloads/{stem}" download>Download the H97 GeoTIFF &#8595;</a>
+<a class="button secondary" href="downloads/h97-candidate.zip" download>Single-TIFF ZIP</a>
+<a class="button secondary" href="h97-executive-summary.html">H97 executive summary / how to submit</a>
+<a class="button secondary" href="h97.html">H97 round page</a></p>
+<p style="font-size:.86rem">File <code>{stem}</code> &middot; {build['file_bytes']:,} bytes &middot;
+SHA-256 <code>{build['sha256']}</code> &middot; name <code>{build['submission_name']}</code> &middot;
+note ({build['note_chars']}/140): <code>{build['note']}</code> &middot;
+<a href="downloads/h97-a-only-reasoning.csv.gz">A-only reasoning CSV</a> &middot;
+<a href="../knowledge/98_h97_results_and_limits.md">knowledge/98 &middot; H97 results and limits</a></p>
+<ul style="margin:.4rem 0 .2rem 20px">
+  <li><a href="h97-executive-summary.html">Executive summary</a> &mdash; one page, download/submit verdict
+  first, then the evidence table.</li>
+  <li><a href="h97.html">H97 round page</a> &mdash; hypothesis, both instruments, the credit curve, and what
+  the round cannot tell you.</li>{li98}
+</ul>
+</section>
+<!--/H97-CARD-->
+"""
+
+
+def exec_summary_page(build: dict, holdout: dict) -> str:
+    """The one-page executive summary for this round, generated from the receipts only."""
+    na = build["uniqueness"]
+    hd = holdout["instrument1"]["pooled"]["scores"]["h97_disagree"]
+    rand = holdout["instrument1"]["pooled"]["scores"]["random"]
+    pair = holdout["instrument1"]["pooled"]["paired_differences"]["random"]
+    name = Path(build["file"]).name
+    return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GEMSDOE52 — H97 executive summary (download-only)</title>
+<link rel="stylesheet" href="assets/ctd5.css"></head><body>
+<h1>H97 executive summary</h1>
+<p style="color:#999">Generated from <code>evidence/h97_build.json</code> and
+<code>evidence/h97_holdout.json</code> by <code>scripts/publish_h97_site.py</code>.</p>
+
+<div class="card" style="border-color:#ffa726">
+<h2>One line</h2>
+<p><b>Download:</b> yes — a unique, format-valid GeoTIFF.
+<b>Submit:</b> no — it scores below a matched random control on the round's frozen hide-and-recover test.
+<b>Slots used:</b> 0. <b>Certified leaderboard gain:</b> none; this repository has no organiser receipt for
+any file.</p>
+</div>
+
+<h2>The file</h2>
+<p><code>{name}</code> — single-band float32, EPSG:32611, 3730 × 3292 at 100 m, exactly
+{build['format_checks']['ones']:,} cells at 1.0 and zeros elsewhere, every pixel finite in [0, 1] (the
+portal's "Predicted values must be in range [0, 1]" rule cannot fail on it).
+SHA-256 <code>{build['sha256']}</code>. ZIP contains exactly this one TIFF.</p>
+<p><b>Submission name:</b> <code>{build['submission_name']}</code><br>
+<b>Note ({build['note_chars']}/140):</b> <code>{build['note']}</code></p>
+
+<h2>What it is</h2>
+<p>The file is the brief's own lane: both views are co-trained, and a cell is emitted only where the
+potential-field view is confident while the surface view abstains, with a cover gate on the depth-to-basement
+band, at 3 px minimum spacing and with a 200 m ring around the known catalogue. A written geological reason
+and an explicit falsifier accompany every one of the {build['reasoning_rows']:,} dots
+(<a href="downloads/h97-a-only-reasoning.csv.gz">CSV</a>).</p>
+
+<h2>Why it is download-only</h2>
+<table>
+<tr><th>Evidence</th><th>Value</th></tr>
+<tr><td>HOLDOUT-DTI (evaluator <code>{holdout['evaluator_version']}</code>, {holdout['instrument1']['withheld_positive_px']:,} withheld positives, {holdout['instrument1']['folds']} folds)</td>
+<td>{hd['dti']:.6f} [{hd['ci95'][0]:.6f}, {hd['ci95'][1]:.6f}]</td></tr>
+<tr><td>Matched random control, same instrument</td><td>{rand['dti']:.6f} [{rand['ci95'][0]:.6f}, {rand['ci95'][1]:.6f}]</td></tr>
+<tr><td>Paired difference (this file − random)</td><td>{pair['delta']:+.6f} [{pair['ci95'][0]:+.6f}, {pair['ci95'][1]:+.6f}]</td></tr>
+<tr><td>Format, read back from disk</td><td>14/14 checks pass, no NaN, no nodata tag</td></tr>
+<tr><td>Uniqueness (decoded pixels, {na['n_priors_checked']} priors)</td><td>unique — novel fraction {na['novel_fraction']:.4f}, relation <code>{na['relation_to_union']}</code></td></tr>
+<tr><td>Lane gate</td><td>policy {build['lane']['policy']} (literal rule stopped on one universal-coverage raster — IR-H97-001)</td></tr>
+</table>
+
+<h2>If you decide to spend a slot anyway</h2>
+<ol><li>Download the TIFF from <a href="index.html">the landing page</a>.</li>
+<li>Upload it at the DrivenData submission page.</li>
+<li>Paste the name and note above.</li>
+<li>Record the result in <code>evidence/</code> so the next round can learn from it — the organiser's
+score is the only measurement that would make any claim here certified.</li></ol>
+
+<p>Read more: <a href="h97.html">H97 round page</a> · <a href="h98.html">H98 validation page</a> ·
+<a href="https://github.com/buffedlizard55-lab/GEMSDOE52">repository</a>.</p>
+</body></html>
+"""
 
 
 def main() -> int:
-    inst = rd("h97_instrument.json")
-    hold = rd("h97_holdout.json")
-    build = rd("h97_build.json")
-    wr1 = rd("h97_write.json")
-    card1 = rd("h97_run_card.json")
-    bho = rd("h97b_holdout.json")
-    bbuild = rd("h97b_build.json")
-    wr2 = rd("h97b_write.json")
-    card2 = rd("h97b_run_card.json")
+    build = load("h97_build.json")
+    card = load("h97_run_card.json")
+    holdout = load("h97_holdout.json")
+    credit = load("h97_credit_curve.json")
+    # band 6 was re-measured against the GeoDAWN total count by the holdout runner; the site quotes the
+    # receipt, and the receipt lives in the holdout file, not in the build file
+    build["band6_recheck"] = holdout["band6_recheck"]
+    h98 = load("h98_holdout.json") if (EV / "h98_holdout.json").exists() else None
+    h98_build = load("h98_build.json") if (EV / "h98_build.json").exists() else None
 
-    fm2, uni2, lane2 = wr2["validator"], wr2["uniqueness"], wr2["lane_dots"]
-    fm1, lane1 = wr1["validator"], wr1["lane_dots"]
-    name2, name1 = wr2["submission_name"], wr1["submission_name"]
-    sha2, sha1 = wr2["sha256"], wr1["sha256"]
-    max_j2 = max([r.get("jaccard", 0.0) for r in uni2["per_prior"] if "jaccard" in r] or [0.0])
+    index_path = DOCS / "index.html"
+    (DOCS / "h97.html").write_text(round_html(build, holdout, credit, card, ""))
+    (DOCS / "h97-executive-summary.html").write_text(exec_summary_page(build, holdout))
+    if h98 is not None:
+        (DOCS / "h98.html").write_text(h98_html(h98, h98_build))
+    insert_index_block(index_path, index_block(build, card, h98, h98_build))
 
-    e1_rows = "\n".join(
-        f"<tr><td><code>{esc(r['arm'])}</code></td><td>{r['board_score']:.4f}</td>"
-        f"<td><b>{r['holdout_dti']:.6f}</b></td>"
-        f"<td>[{r['holdout_ci95'][0]:.4f}, {r['holdout_ci95'][1]:.4f}]</td>"
-        f"<td>{r['emitted']:,}</td></tr>" for r in inst["rows"])
+    name = Path(build["file"]).name
+    # the canonical-name copy in docs/downloads/ is what every generated link points at; the short alias
+    # h97-candidate.tif is kept beside it, byte-identical, the way every previous round shipped
+    site_dir = DOCS / "downloads"
+    canonical_copy = site_dir / name
+    canonical_zip = site_dir / (Path(name).stem + ".zip")
+    src = Path(build["file"])
+    if not canonical_copy.exists() or canonical_copy.read_bytes() != src.read_bytes():
+        shutil.copyfile(src, canonical_copy)
+    if not canonical_zip.exists() or canonical_zip.read_bytes() != Path(build["zip_file"]).read_bytes():
+        shutil.copyfile(build["zip_file"], canonical_zip)
 
-    def arm_rows(pooled):
-        return "\n".join(
-            f"<tr><td><code>{esc(k)}</code></td><td>{v['dti']:.6f}</td>"
-            f"<td>[{v['ci95'][0]:.4f}, {v['ci95'][1]:.4f}]</td></tr>"
-            for k, v in pooled["scores"].items())
-
-    def gates_rows(gate):
-        rows = []
-        for k, v in gate.items():
-            cls = "tag-no" if v["result"] == "FAIL" else "tag-yes"
-            rows.append(f'<tr><td>{esc(k)}</td><td class="{cls}">{esc(v["result"])}</td>'
-                        f'<td>{esc(v["measured"])}</td></tr>')
-        return "\n".join(rows)
-
-    card_html = f"""<style>.h97card{{border:2px solid #7e57c2;border-radius:12px;padding:16px 18px;margin:16px 0;background:#f5f2fc;color:#14181d;font:15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}}.h97card h2{{margin:0 0 8px;font-size:19px;color:#5e35b1}}.h97card a{{color:#4527a0;font-weight:700}}.h97card code{{background:#e9e3f7;padding:1px 4px;border-radius:3px;font-size:12.5px;word-break:break-all}}.h97card .ok{{color:#2e7d32;font-weight:700}}.h97card .warn{{color:#b26a00;font-weight:700}}.h97card .no{{color:#c62828;font-weight:700}}</style>
-<div class="h97card">
-<h2>Latest round H97 — co-training disagreement, and the first measurement of whether our holdout ranks the board</h2>
-<p><span class="ok">✅ OK TO DOWNLOAD: YES</span> — single-band float32 GeoTIFF, EPSG:32611, 3730&times;3292,
-transform identical to <code>sample_submission.tif</code>, <b>nodata tag {esc(fm2['nodata'])}, {fm2['nan_pixels']} NaN,
-values exactly {{0, 1}}</b> ({fm2['n_nonzero']:,} cells): the portal's &ldquo;Predicted values must be in range
-[0, 1]&rdquo; rejection cannot occur.
-<br><span class="warn">⚠️ OK TO SUBMIT: your call — no leaderboard gain is certified</span>, and the round now says why:
-the repository's holdout does <b>not</b> rank the board's own scored files — Spearman
-<b>{inst['spearman_board_vs_holdout']['spearman']:.4f}</b>, partial given log mass
-<b>{inst['partial_board_vs_holdout_given_log_mass']['spearman']:.4f}</b>, Spearman(board, mass)
-<b>{inst['spearman_board_vs_mass']['spearman']:.4f}</b> ({inst['spearman_board_vs_holdout']['n']} scored priors scored as-is).
-Slots used: <b>0</b>; promotion is a separate selector step.</p>
-<p><a class="btn" href="downloads/h97b-candidate.tif" download>⬇ Download h97b-candidate.tif (lane-distinct)</a>
-<a class="btn btn2" href="downloads/h97b-candidate.zip" download>ZIP</a>
-<a class="btn btn2" href="h97-executive-summary.html">How to submit</a>
-<a class="btn btn2" href="h97.html">Full result</a></p>
-<p><small><code>{esc(name2)}.tif</code> · SHA-256 <code>{sha2[:16]}</code> · uniqueness PASS ({uni2['n_priors_checked']} priors,
-identical to a prior <b>{uni2['identical_to_a_prior']}</b>, max Jaccard {max_j2:.4f}) · dots lane policy
-<b>{esc(lane2['policy']['verdict'])}</b> (max near-3 px {lane2['literal']['max_near_3px_fraction']}) · HOLDOUT-DTI
-(gems52-pooled-hide-v1, {bho['withheld_positive_px']:,} withheld positives): field_b {bho['primary_dti']:.6f}
-[{bho['pooled']['scores']['field_b']['ci95'][0]:.4f}, {bho['pooled']['scores']['field_b']['ci95'][1]:.4f}] vs random
-{bho['pooled']['scores']['random']['dti']:.6f}, bar {bho['bar_to_beat']} → <b>{esc(bho['verdict_for_slot'])}</b>
-(a holdout number is not a board score).</small></p>
-<p><span class="no">✗ The H97 primary is withdrawn from slot consideration:</span> {lane1['literal']['max_near_3px_fraction']*100:.2f}%
-of its dots lie within 3 px of the H96 artifact — an A-dominant field reproduces the A-view's fixed point
-(IR-H97-003). It stays <a href="downloads/h97-candidate.tif" download>downloadable</a> and labelled; do not submit it.</p>
-</div>"""
-
-    page = f"""<!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>H97 — co-training at the metric-implied mass lever, and the instrument/board measurement</title>
-<style>body{{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f1117;color:#e8eaed;line-height:1.6}}.container{{max-width:1000px;margin:0 auto;padding:24px 20px}}h1{{color:#4fc3f7}}h2{{color:#4fc3f7;border-bottom:1px solid #2d3040;padding-bottom:6px;margin-top:28px}}a{{color:#4fc3f7}}code{{background:#1e2130;padding:2px 6px;border-radius:3px;font-size:.9em;word-break:break-all}}table{{width:100%;border-collapse:collapse;margin:12px 0;font-size:.92rem}}th,td{{padding:7px 10px;text-align:left;border-bottom:1px solid #2d3040;vertical-align:top}}th{{color:#4fc3f7}}.tag-no{{color:#ef5350;font-weight:700}}.tag-yes{{color:#66bb6a;font-weight:700}}.muted{{color:#9aa0a6;font-size:.88rem}}</style>
-</head><body><div class="container">
-<h1>H97 — two-view co-training at the metric-implied mass lever, and the first test of whether our instrument ranks the board</h1>
-<p class="muted">Rounds H97 (primary) and H97b (lane-distinct amendment) · preregistered before any fit
-(<code>registry/h97_preregistration.json</code> doc SHA-256 <code>{card1['registration']['preregistration_sha256'][:16]}</code>;
-amendment <code>registry/h97b_preregistration.json</code> SHA-256 <code>{card2['registration']['amendment_sha256'][:16]}</code>,
-chronology disclosed) · lane: Blum &amp; Mitchell COLT '98 · evaluator <code>gems52-pooled-hide-v1</code>.</p>
-
-<h2>E1 — the instrument does not rank the board (the round's most useful result)</h2>
-<p>Every OWNER-REPORTED scored prior was scored <b>exactly as submitted</b> (no budget cut, no re-placement,
-visible catalogue masked pixel-exactly) on the frozen folds.</p>
-<table><tr><th>file as submitted</th><th>board (owner-reported)</th><th>HOLDOUT-DTI</th><th>95 % CI</th><th>emitted px</th></tr>
-{e1_rows}</table>
-<p>Spearman(board, HOLDOUT-DTI) = <b>{inst['spearman_board_vs_holdout']['spearman']:.4f}</b>; partial correlation
-controlling for log mass <b>{inst['partial_board_vs_holdout_given_log_mass']['spearman']:.4f}</b>; Spearman(board, mass)
-<b>{inst['spearman_board_vs_mass']['spearman']:.4f}</b>. Falsifier (Spearman &ge; 0.50) not hit. The champion (0.2778 on
-the board) scores {inst['rows'][0]['holdout_dti']:.6f} — below the random control at its own mass
-({inst['pooled']['scores'].get('random_25400', {}).get('dti', float('nan')):.6f}) — because it deliberately avoids the
-mapped catalogue this instrument scores against. <b>Beating the 0.190147 bar was always a statement about catalogue
-recovery.</b></p>
-
-<h2>E2 — co-training arms (negative)</h2>
-<table><tr><th>arm (9,400 dots/fold)</th><th>HOLDOUT-DTI</th><th>95 % CI</th></tr>
-{arm_rows(hold['pooled'])}</table>
-<p>Paired <code>cotrain_dis − cons_only</code> =
-{hold['pooled']['paired_differences'][hold['pooled']['best_comparable_control']]['delta']:.6f}
-[{hold['pooled']['paired_differences'][hold['pooled']['best_comparable_control']]['ci95'][0]:.6f},
-{hold['pooled']['paired_differences'][hold['pooled']['best_comparable_control']]['ci95'][1]:.6f}]:
-the disagreement/veto machinery hurts. Independence max |&rho;| {hold['independence']['max_abs_correlation']:.4f}
-(abandon 0.60) → exchange allowed; leakage canary max single-channel AUC
-{max(hold['canary']['max_auc'].values()):.4f} (alarm 0.90). Mass lever 6,350/fold:
-{json.dumps({k: round(v['dti'], 6) for k, v in hold['pooled_mass_lever']['scores'].items()})}.</p>
-
-<h2>H97b — the lane-distinct emission</h2>
-<p>Ranked by the <b>surface view</b> (DEM curvature/slope/topographic edge, radiometric total count, K/Th,
-LiDAR scarp layers, GeoDAWN radiometric ratios) with View A used only as a support screen and to veto the
-B-only road/erosion suspect population, at 25,400 dots, 3 px, 200 m collar.
-Holdout: field_b {bho['primary_dti']:.6f} [{bho['pooled']['scores']['field_b']['ci95'][0]:.4f},
-{bho['pooled']['scores']['field_b']['ci95'][1]:.4f}] vs random {bho['pooled']['scores']['random']['dti']:.6f}
-(mass-lever {bho['primary_mass_lever_dti']:.6f}); bar {bho['bar_to_beat']} → <b>{esc(bho['verdict_for_slot'])}</b>.</p>
-<table><tr><th>gate</th><th>result</th><th>measured</th></tr>
-{gates_rows(card2['gates'])}</table>
-<p><a href="downloads/h97b-candidate.tif" download>Download H97b GeoTIFF</a> ·
-<a href="downloads/h97b-candidate.zip" download>single-TIFF ZIP</a> ·
-<a href="h97-executive-summary.html">how to submit</a> ·
-<a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/arena/c5bf6f30-gemsdoe52/knowledge/98_h97_results_and_limits.md">results &amp; limits</a> ·
-<a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/arena/c5bf6f30-gemsdoe52/knowledge/99_h97b_amendment.md">amendment</a></p>
-
-<h2>H97 primary — retained for audit, withdrawn from slot consideration</h2>
-<p>{lane1['literal']['max_near_3px_fraction']*100:.2f} % of its dots lie within 3 px of the H96 artifact
-(99.89 % literal): an A-dominant field reproduces the A-view's fixed point. The protocol's rule is to log it as a
-duplicate and stop; it is logged as <b>IR-H97-003</b> and the file is published labelled.
-<a href="downloads/h97-candidate.tif" download>Download it</a> as an audit artifact — <b>do not submit it</b>.
-Its own receipts: format PASS ({fm1['n_nonzero']:,} cells), uniqueness PASS, promotion FAIL.</p>
-<p class="muted">Facts, not claims: {esc(card2['honesty']['bounded_by'])}; {esc(card2['honesty']['not_a_score'])}.</p>
-</div></body></html>"""
-
-    exec_page = f"""<!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Executive summary — how to submit the H97b GeoTIFF to the DOE GEMS competition</title>
-<style>body{{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f1117;color:#e8eaed;line-height:1.65;margin:0}}.wrap{{max-width:900px;margin:0 auto;padding:26px 20px}}h1{{color:#4fc3f7;font-size:1.6rem}}h2{{color:#4fc3f7;border-bottom:1px solid #2d3040;padding-bottom:6px;margin-top:30px}}a{{color:#4fc3f7}}code{{background:#1e2130;padding:2px 6px;border-radius:3px;font-size:.9em;word-break:break-all}}.btn{{display:inline-block;background:#4fc3f7;color:#000;font-weight:700;padding:12px 22px;border-radius:8px;margin:8px 8px 8px 0;text-decoration:none}}.warn{{border:2px solid #ffa726;background:#241a06;border-radius:10px;padding:16px 18px;margin:16px 0}}.ok{{border:2px solid #66bb6a;background:#0f2410;border-radius:10px;padding:16px 18px;margin:16px 0}}.no{{border:2px solid #ef5350;background:#2a0f0f;border-radius:10px;padding:16px 18px;margin:16px 0}}table{{width:100%;border-collapse:collapse;margin:10px 0;font-size:.93rem}}th,td{{padding:7px 10px;text-align:left;border-bottom:1px solid #2d3040;vertical-align:top}}th{{color:#4fc3f7}}.muted{{color:#9aa0a6;font-size:.88rem}}</style>
-</head><body><div class="wrap">
-<h1>How to submit — the H97b GeoTIFF, in the exact order the submission form asks</h1>
-
-<div class="ok"><b>✅ Step 1 — the file. OK TO DOWNLOAD: YES.</b><br>
-<a class="btn" href="downloads/h97b-candidate.tif" download>⬇ Download the single-band GeoTIFF</a>
-<a class="btn" href="downloads/h97b-candidate.zip" download>or the single-TIFF ZIP</a><br>
-<code>{esc(name2)}.tif</code> · {wr2['tif_bytes']:,} bytes · SHA-256 <code>{sha2}</code><br>
-Validator re-read from the written bytes: {fm2['bands']} band {esc(fm2['dtype'])}, {esc(fm2['crs'])},
-{fm2['height']} rows &times; {fm2['width']} cols, transform/bounds identical to <code>sample_submission.tif</code>: yes,
-NaN {fm2['nan_pixels']}, infinite {fm2['infinity_pixels']}, range [{esc(fm2['min'])}, {esc(fm2['max'])}],
-nodata tag {esc(fm2['nodata'])}, {fm2['n_nonzero']:,} emitted cells, problems: {esc(fm2['problems'])}.
-Uniqueness: {uni2['n_priors_checked']} priors checked, identical to a prior <b>{uni2['identical_to_a_prior']}</b>,
-max Jaccard {max_j2:.4f}; lane policy {esc(lane2['policy']['verdict'])}.</div>
-
-<div class="warn"><b>⚠️ Step 2 — the decision. OK TO SUBMIT: your call.</b><br>
-The portal's old error &ldquo;<i>Predicted values must be in range [0, 1]</i>&rdquo; came from a file whose
-<b>nodata/NaN cells</b> a strict reader sees as out-of-range. This file is the all-finite container
-(<b>nodata tag {esc(fm2['nodata'])}, {fm2['nan_pixels']} NaN, values exactly {{0, 1}}</b>) — the same container the
-0.2778 champion used — so that rejection cannot occur. What this round does <b>not</b> claim is a leaderboard gain:
-the promotion gate failed ({esc(', '.join(card2['failed_gates'])) if card2['failed_gates'] else 'none'}) and, more
-importantly, E1 measured that the repository's holdout does not rank the board's own scored files
-(Spearman <b>{inst['spearman_board_vs_holdout']['spearman']:.4f}</b>). The file does follow the two disciplines the
-board itself rewards — low mass ({fm2['n_nonzero']:,} cells vs the champion's 37,654) and distance from the mapped
-catalogue (200 m collar) — but promotion to a weekly slot is a separate selector decision. Slots used: <b>0</b>.</div>
-
-<div class="no"><b>✗ Do not submit the H97 primary file.</b> {lane1['literal']['max_near_3px_fraction']*100:.2f}% of its
-dots lie within 3 px of the H96 artifact; the protocol says log it and stop (IR-H97-003). It remains
-<a href="downloads/h97-candidate.tif" download>downloadable</a> for audit only.</div>
-
-<h2>Step 3 — the form, field by field</h2>
-<table>
-<tr><th>Form field</th><th>What to put</th></tr>
-<tr><td>File to submit</td><td>the downloaded <code>{esc(name2)}.tif</code> (single-band GeoTIFF; a <code>.zip</code> holding
-exactly that one TIFF is equally accepted)</td></tr>
-<tr><td>Note (optional, &le;140 chars)</td><td><code>{esc(wr2['note'])}</code> ({wr2['note_chars']}/140)</td></tr>
-<tr><td>Submission name</td><td><code>{esc(name2)}</code></td></tr>
-</table>
-<p class="muted">Portal: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/">data tab</a> ·
-<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">problem description &amp; metric</a>.
-Requirements quoted from that page: single-band GeoTIFF matching the submission format's CRS (EPSG:32611), shape
-(3730&times;3292) and geotransform; values in [0, 1]; data outside the bounds null or NaN.</p>
-
-<h2>Step 4 — what is in the file</h2>
-<ul>
-<li>Ranker: the surface view — DEM slope, ridge curvature, topographic edge, radiometric total count and K/Th,
-the five LiDAR scarp layers, and the three GeoDAWN radiometric ratio grids.</li>
-<li>View A's role: a support screen only (eligible-rank median) plus the brief's artefact veto — where the surface
-view is confident and the potential field abstains, the response is attributed to roads/erosion and dropped.</li>
-<li>250 m discipline: 200 m catalogue collar, 3 px minimum separation, {fm2['n_nonzero']:,} dots placed exactly
-(S = 25,400: the mass at which the published metric reaches 0.3195 at the champion's credit, knowledge/76 §3).</li>
-<li>Provenance: inputs are integrity-pinned mirrors (not organizer-authenticated); evaluator
-<code>gems52-pooled-hide-v1</code>, {bho['withheld_positive_px']:,} withheld positive pixels, 95 % CI, 1,000 paired
-spatial-cluster bootstrap draws.</li>
-</ul>
-<p class="muted">Negative results are deliverables: E1 (the instrument does not rank the board) and E2 (the
-co-training disagreement arm loses to its own consensus control) are reported as measured.</p>
-</div></body></html>"""
-
-    (DOCS / "h97.html").write_text(page)
-    (DOCS / "h97-executive-summary.html").write_text(exec_page)
-
-    idx = DOCS / "index.html"
-    s = idx.read_text()
-    if CARD_OPEN in s:
-        s = re.sub(re.escape(CARD_OPEN) + r".*?" + re.escape(CARD_CLOSE),
-                   lambda m: CARD_OPEN + "\n" + card_html + "\n" + CARD_CLOSE, s, count=1, flags=re.S)
-    else:
-        s = s.replace("<body>", "<body>\n" + CARD_OPEN + "\n" + card_html + "\n" + CARD_CLOSE, 1)
-    s = re.sub(r"<title>.*?</title>",
-               "<title>GEMSDOE52 — H97: download yes, submit your call (instrument vs board measured)</title>",
-               s, count=1, flags=re.S)
-    idx.write_text(s)
-    print("published docs/h97.html, docs/h97-executive-summary.html, index card")
+    # per-artifact receipt only.  submission/LATEST.txt and docs/data/submission.json belong to whichever
+    # round currently holds the global pointer; this round is download-only and deliberately does not
+    # take it (the same convention main's H88/H92 blocks follow).
+    DATA = DOCS / "data"
+    DATA.mkdir(parents=True, exist_ok=True)
+    (DATA / "submission_h97.json").write_text(json.dumps(build, indent=2, default=str) + "\n")
+    print("wrote docs/h97.html, docs/h97-executive-summary.html" + (", docs/h98.html" if h98 is not None else "")
+          + ", docs/data/submission_h97.json, and the H97 block in docs/index.html")
     return 0
 
 

@@ -1,7 +1,7 @@
 gems52-h97-cotrain-disagree-masslever-25400px-20261011T003257Z-6e394036aac2-zeros.tif
 sha256 803e491af48881067fc525942a16896ba4562ad35085fbf41c9902d2b43359b2
 bytes 108267
-download docs/downloads/h97-candidate.tif
+download docs/downloads/h97-masslever-candidate.tif
 download_ok True submit_ok False
 verdict negative (gates failed: holdout_promotion, lane_dots)
 LANE DUPLICATE/STOP against the H96 artifact - audit only, do not submit

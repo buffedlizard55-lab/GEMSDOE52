@@ -1,33 +1,40 @@
 {
-  "round": "H97b",
-  "amendment_to": "registry/h97_preregistration.json",
-  "amendment_document": "knowledge/99_h97b_amendment.md",
-  "amendment_sha256": "67c6b685424a473fe730ea1324aab38db47b068dbaa135c57be2803cb6d963d6",
-  "amendment_bytes": 4241,
-  "written_after": [
-    "E1 instrument fidelity measured",
-    "E2 holdout measured",
-    "H97 primary lane gate failed (93.85% of dots within 3 px of the H96 artifact)"
-  ],
-  "disclosure": "chronology disclosed in the document; promotion rule, bar, gates, budgets and placement unchanged",
-  "emission_rule": {
-    "field": "b * screen(a >= median(a[valid])) * (1 - rank01(clip(b-a,0,1)))",
-    "ranker": "View B (surface, extended channel set)",
-    "view_A_role": "screen and artifact veto only (never a ranker)",
-    "S_total": 25400,
-    "spacing_px": 3.0,
-    "catalogue_collar_px": 2,
-    "container": "binary {0,1}, all-finite float32, nodata None"
-  },
-  "promotion_bar": {
-    "value": 0.190147,
-    "source": "evidence/h84_holdout.json primary B_DVA2_HVA"
-  },
-  "lane_thresholds": {
-    "max_spearman": 0.9,
-    "max_near_3px_fraction": 0.7,
-    "near_px": 3
-  },
-  "runner": "scripts/run_h97b.py",
-  "budget_note": "E1/E2/E3 already run; H97b is the artifact-production step demanded by the session's highest-priority instruction, disclosed as a budget deviation in the run card"
+ "round": "H97b",
+ "amendment_to": "registry/h97_masslever_preregistration.json",
+ "amendment_document": "knowledge/107_h97b_amendment.md",
+ "amendment_sha256": "e6e33a6d56a054a91bc271813cff14e16370d2d433710158d1482c363055b14e",
+ "amendment_bytes": 4271,
+ "written_after": [
+  "E1 instrument fidelity measured",
+  "E2 holdout measured",
+  "H97 primary lane gate failed (93.85% of dots within 3 px of the H96 artifact)"
+ ],
+ "disclosure": "chronology disclosed in the document; promotion rule, bar, gates, budgets and placement unchanged",
+ "emission_rule": {
+  "field": "b * screen(a >= median(a[valid])) * (1 - rank01(clip(b-a,0,1)))",
+  "ranker": "View B (surface, extended channel set)",
+  "view_A_role": "screen and artifact veto only (never a ranker)",
+  "S_total": 25400,
+  "spacing_px": 3.0,
+  "catalogue_collar_px": 2,
+  "container": "binary {0,1}, all-finite float32, nodata None"
+ },
+ "promotion_bar": {
+  "value": 0.190147,
+  "source": "evidence/h84_holdout.json primary B_DVA2_HVA"
+ },
+ "lane_thresholds": {
+  "max_spearman": 0.9,
+  "max_near_3px_fraction": 0.7,
+  "near_px": 3
+ },
+ "runner": "scripts/run_h97b.py",
+ "budget_note": "E1/E2/E3 already run; H97b is the artifact-production step demanded by the session's highest-priority instruction, disclosed as a budget deviation in the run card",
+ "post_freeze_edit": {
+  "what": "path/label-only edit after the freeze: 'knowledge/99_h97b_amendment.md' -> 'knowledge/107_h97b_amendment.md' and the referenced receipts/registration were renamed to their H97-masslever counterparts, because a parallel lane had already published a round called H97 on main (IR-H97M-008).",
+  "scope": "two path references in the document body; no rule, threshold, arm, budget, gate or artifact byte changed.",
+  "old_sha256": "67c6b685424a473fe730ea1324aab38db47b068dbaa135c57be2803cb6d963d6",
+  "new_sha256": "e6e33a6d56a054a91bc271813cff14e16370d2d433710158d1482c363055b14e",
+  "disclosed_in": "registry/irregularities.json IR-H97M-004 and IR-H97M-008"
+ }
 }

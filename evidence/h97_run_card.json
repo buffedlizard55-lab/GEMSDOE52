@@ -1,171 +1,121 @@
 {
   "round": "H97",
-  "generated_utc": "2026-10-11T00:48:07+00:00",
-  "registration": {
-    "preregistration_sha256": "02668421f590ea8f4f13aa7052a4f3240beb410214db9ef80b7ac8a8e8f96703",
-    "hypothesis_bytes": 8801,
-    "frozen_before_any_fit": true
-  },
-  "hypothesis": "Two-view co-training (A geophysical, B surface incl. LiDAR scarp and radiometric ratios) with disagreement as the discovery signal, emitted at the metric-implied 25,400-dot mass lever; plus the first direct test of whether the repository's holdout instrument ranks the board's own files.",
-  "mechanism": "Concealed faults offset basement beneath cover: potential-field edges, cover-thickness steps, strain steps and seismicity lineations register in View A while DEM curvature and slope see no scarp; the radiometric ratios and LiDAR scarp layers are the surface channels that answer a buried trace.",
-  "named_non_fault_mimic": "lithologic contacts and intrusive margins; basin-margin facies steps; paleochannels; aftershock clusters; road cuts and erosion lines (the vetoed B-only population); DEM/radiometric acquisition seams",
-  "experiment_1_instrument": {
-    "spearman_board_vs_holdout": {
-      "n": 13,
-      "spearman": -0.4896840946138492,
-      "pearson": -0.16924078589512814
-    },
-    "partial_given_log_mass": {
-      "n": 13,
-      "spearman": 0.12637362637362637,
-      "pearson": 0.40281632713614224
-    },
-    "spearman_board_vs_mass": {
-      "n": 13,
-      "spearman": -0.9436047441154511,
-      "pearson": -0.9455040409239945
-    },
-    "verdict": "instrument does NOT track the board (hypothesis not falsified)",
-    "falsified": false,
-    "withheld_positive_px": 60894
-  },
-  "experiment_2_holdout": {
+  "hypothesis": "co-training disagreement (A confident, B abstains) with the emitted budget chosen on a prevalence-matched off-catalogue instrument",
+  "mechanism": "density/susceptibility edges with no surface expression = structure buried under cover, i.e. the population the surface-mapped catalogue is least likely to hold",
+  "named_non_fault_process": "lithologic contacts and intrusive margins; palaeo-channel thalwegs; playa/salina edges; anthropogenic linears (roads, canals)",
+  "holdout_dti": {
+    "value": 0.04594740031767762,
+    "ci95": [
+      0.03370645414559958,
+      0.059307032882270225
+    ],
+    "evaluator": "gems52-pooled-hide-v1",
     "withheld_positive_px": 60894,
-    "matched_budget": {
-      "cotrain_dis": {
-        "dti": 0.06904082932839455,
-        "ci95": [
-          0.05693775912026808,
-          0.08218780199127873
-        ]
-      },
-      "cons_only": {
-        "dti": 0.09330967096590305,
-        "ci95": [
-          0.07669416343067316,
-          0.10807259457471499
-        ]
-      },
-      "buried_only": {
-        "dti": 0.050026003718792615,
-        "ci95": [
-          0.0375156131479089,
-          0.06295929535162767
-        ]
-      },
-      "single_B": {
-        "dti": 0.05866627906420085,
-        "ci95": [
-          0.04642178900034399,
-          0.07110661337011884
-        ]
-      },
-      "single_A": {
-        "dti": 0.07451798342836781,
-        "ci95": [
-          0.061746746566429526,
-          0.08770801669187743
-        ]
-      },
-      "random": {
-        "dti": 0.075716583838871,
-        "ci95": [
-          0.06646390324658658,
-          0.08599569862096909
-        ]
-      }
-    },
-    "mass_lever": {
-      "cotrain_dis": {
-        "dti": 0.04928593608942719,
-        "ci95": [
-          0.039101125132096244,
-          0.06048133885980508
-        ]
-      },
-      "single_B": {
-        "dti": 0.039621980089642225,
-        "ci95": [
-          0.030448727034841493,
-          0.04977136306032791
-        ]
-      },
-      "random": {
-        "dti": 0.053666425213901275,
-        "ci95": [
-          0.04667722895089404,
-          0.06095210341215241
-        ]
-      }
-    },
-    "paired_vs_best_control": {
-      "evidence_class": "HOLDOUT-DTI",
-      "evaluator_version": "gems52-pooled-hide-v1",
-      "delta": -0.024268841637508504,
-      "ci95": [
-        -0.03807080726448968,
-        -0.009207599055537032
-      ],
-      "withheld_positive_pixels": 60894
-    },
-    "bar": 0.190147,
-    "verdict": "negative"
+    "evidence_class": "HOLDOUT-DTI"
   },
-  "experiment_3_gates": {
-    "control_reproduction": {
-      "result": "n/a",
-      "measured": "no shared control re-run this round"
+  "instrument2_mass_lever": {
+    "8000": {
+      "dti": 0.001124864769837973,
+      "random_dti": 0.016399071814866707,
+      "credit_per_dot": 0.0018097867723554373
     },
-    "leakage_canary": {
-      "result": "PASS",
-      "measured": "max single-channel out-of-quadrant AUC 0.6190; alarm 0.90"
+    "15000": {
+      "dti": 0.0023860077096313583,
+      "random_dti": 0.02810817713852282,
+      "credit_per_dot": 0.002270110882818699
     },
-    "independence": {
-      "result": "PASS",
-      "measured": "max |rho| 0.0616 over 2283 blocks; abandon >= 0.60"
+    "25517": {
+      "dti": 0.003487516900133307,
+      "random_dti": 0.042326317326004864,
+      "credit_per_dot": 0.002238025888800621
     },
-    "holdout_promotion": {
-      "result": "FAIL",
-      "measured": "primary 0.069041 vs bar 0.190147; paired CI low -0.038071"
+    "30000": {
+      "dti": 0.004003959762229144,
+      "random_dti": 0.04663172910028882,
+      "credit_per_dot": 0.0023051556199789047
     },
-    "format": {
-      "result": "PASS",
-      "measured": "1 band float32, EPSG:32611, 3730x3292, nan 0, inf 0, range [0.0, 1.0], emitted 25400, nodata None; problems []"
-    },
-    "uniqueness": {
-      "result": "PASS",
-      "measured": "193 priors checked, 193 comparable, identical to a prior False, max Jaccard 0.256554862966261, incomparable 0"
-    },
-    "lane_surface": {
-      "result": "PASS",
-      "measured": "max Spearman 0.11545703611240694 (bar 0.90)"
-    },
-    "lane_dots": {
-      "result": "DUPLICATE/STOP",
-      "measured": "max Spearman 0.4054220954482891, max near-3px 0.9989370078740157"
-    },
-    "not_the_union": {
-      "result": "PASS",
-      "measured": "Jaccard vs spaced A/B union 0.0529"
+    "37654": {
+      "dti": 0.0050230615241286525,
+      "random_dti": 0.05337184169019906,
+      "credit_per_dot": 0.002508260775357485
     }
   },
-  "failed_gates": [
-    "holdout_promotion",
-    "lane_dots"
-  ],
-  "verdict": "negative",
-  "raster": {
-    "name": "gems52-h97-cotrain-disagree-masslever-25400px-20261011T003257Z-6e394036aac2-zeros",
-    "sha256": "803e491af48881067fc525942a16896ba4562ad35085fbf41c9902d2b43359b2",
-    "bytes": 108267,
-    "note": "H97 co-training A(geophys)xB(surface incl. LiDAR scarp + radiometric ratios); disagreement mass lever 25,400 dots; 3px spacing; 200m collar",
-    "note_chars": 139
+  "correlation_overlap_vs_registry": {
+    "lane": {
+      "literal": "DUPLICATE/STOP",
+      "policy": "PASS",
+      "literal_max_spearman": 0.025694775462692273,
+      "literal_max_near_3px_fraction": 0.9992298295001859,
+      "literal_max_near_source": "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "literal_rank_offenders": [],
+      "literal_near_offenders": [
+        "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif"
+      ],
+      "max_spearman": 0.025694775462692273,
+      "max_near_3px_fraction": 0.41456418972751896,
+      "max_near_source": "/home/user/GEMSDOE52/submission/gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.tif",
+      "informative_priors": 146,
+      "universal_coverage_probes": 1,
+      "probe_paths": [
+        "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif"
+      ],
+      "probe_coverage": [
+        0.9990273609201634
+      ],
+      "full_receipt": "evidence/h97_lane_dots.json"
+    },
+    "uniqueness": {
+      "canonical_pattern_unique": true,
+      "support_novelty_gate_ok": true,
+      "novel_fraction": 0.6725181919583577,
+      "relation_to_union": "strictly-novel-and-selective",
+      "n_priors_checked": 147,
+      "identical_to_a_prior": false
+    },
+    "not_merely_the_union": {
+      "candidate_px": 37654,
+      "single_A_px": 37654,
+      "single_B_px": 37654,
+      "union_px": 74984,
+      "candidate_inside_union": 2136,
+      "candidate_share_inside_union": 0.05672704095182451,
+      "candidate_equals_union": false,
+      "jaccard_candidate_vs_union": 0.01932996687842754,
+      "note": "the candidate is the disagreement field's own top-K, not the union of the single-view top-K sets; the share inside the union quantifies how much of it the two views alone would have produced"
+    }
   },
-  "download_ok": true,
-  "submit_ok": false,
+  "raster_sha256": "eed99c0b544b1731a4dd2e10c2f4db65a90316e149c3c4a6673256459d95f5f2",
+  "zip_sha256": "9e2e25da35616ede1d71bf5ac39db810292f6fe136125b020d4d2fa369345613",
+  "validator": {
+    "ok": true,
+    "problems": [],
+    "checks": {
+      "single_band": true,
+      "float32": true,
+      "shape_match": true,
+      "crs_match": true,
+      "transform_match": true,
+      "all_finite": true,
+      "in_0_1": true,
+      "binary": true,
+      "nodata_none": true,
+      "ones": 37654,
+      "budget_match": true,
+      "outside_domain_zero": true,
+      "on_catalogue_zero": true,
+      "collar_respected": true,
+      "min_spacing_px": 3.0,
+      "spacing_ok": true
+    }
+  },
+  "submission_name": "h97-cotrain-sparse-37654px",
+  "note": "H97 co-train A-conf/B-abstain, 37654px, 3px spacing, 200m ring, budget from prevalence-matched off-cat, zeros-outside",
   "slots_used": 0,
-  "honesty": {
-    "bounded_by": "the instrument and the restored bytes are integrity-pinned, not organizer-authenticated",
-    "not_a_score": "no leaderboard score is predicted anywhere in this card"
-  }
+  "approved_for_weekly_slot": false,
+  "verdict": "negative",
+  "limits": [
+    "holdout truth is catalogue faults, not the organizer's scored new faults",
+    "instrument 2's truth is SGMC-mapped faults absent from the catalogue, a proxy",
+    "no organizer receipt exists for any file in this repository"
+  ]
 }

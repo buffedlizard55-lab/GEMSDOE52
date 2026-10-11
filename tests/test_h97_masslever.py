@@ -23,7 +23,7 @@ def _sha(p: Path) -> str:
     return hashlib.sha256(p.read_bytes()).hexdigest()
 
 
-@pytest.mark.parametrize("reg_name", ["h97_preregistration.json", "h97b_preregistration.json"])
+@pytest.mark.parametrize("reg_name", ["h97_masslever_preregistration.json", "h97b_preregistration.json"])
 def test_preregistration_hash_is_frozen(reg_name: str) -> None:
     reg = json.loads((ROOT / "registry" / reg_name).read_text())
     doc = ROOT / (reg["hypothesis_document"] if "hypothesis_document" in reg
@@ -33,7 +33,7 @@ def test_preregistration_hash_is_frozen(reg_name: str) -> None:
 
 
 def test_primary_artifact_is_all_finite_binary_and_matches_the_validator() -> None:
-    wr = json.loads((EVID / "h97_write.json").read_text())
+    wr = json.loads((EVID / "h97_masslever_write.json").read_text())
     tif = ROOT / wr["tif"]
     assert _sha(tif) == wr["sha256"]
     fm = wr["validator"]
@@ -52,13 +52,13 @@ def test_primary_artifact_is_all_finite_binary_and_matches_the_validator() -> No
 
 
 def test_lane_gate_is_reported_for_the_primary_and_the_reason_is_recorded() -> None:
-    lane = json.loads((EVID / "h97_lane_dots.json").read_text())
-    card = json.loads((EVID / "h97_run_card.json").read_text())
+    lane = json.loads((EVID / "h97_masslever_lane_dots.json").read_text())
+    card = json.loads((EVID / "h97_masslever_run_card.json").read_text())
     if lane["policy"]["verdict"] != "PASS":
         # a duplicate must be labelled a duplicate; the card may not claim uniqueness
         assert "lane_dots" in card["failed_gates"]
         ir = json.loads((ROOT / "registry" / "irregularities.json").read_text())
-        assert any(e["id"] == "IR-H97-003" for e in ir["entries"])
+        assert any(e["id"] == "IR-H97M-003" for e in ir["entries"])
     assert card["submit_ok"] is False, "H97 primary failed a gate; submit approval must not be asserted"
 
 
@@ -80,7 +80,7 @@ def test_h97b_artifact_is_the_lane_distinct_one_and_is_written_cleanly() -> None
 
 
 def test_instrument_finding_is_recorded_with_its_confound_control() -> None:
-    inst = json.loads((EVID / "h97_instrument.json").read_text())
+    inst = json.loads((EVID / "h97_masslever_instrument.json").read_text())
     assert inst["spearman_board_vs_holdout"]["n"] == 13
     assert inst["spearman_board_vs_holdout"]["spearman"] < 0.5, "the falsifier was hit; rewrite the claim"
     assert abs(inst["partial_board_vs_holdout_given_log_mass"]["spearman"]) < 0.5
@@ -92,5 +92,5 @@ def test_instrument_finding_is_recorded_with_its_confound_control() -> None:
 def test_irregularity_ids_resolve() -> None:
     ir = json.loads((ROOT / "registry" / "irregularities.json").read_text())
     ids = {e["id"] for e in ir["entries"]}
-    for i in range(1, 8):
-        assert f"IR-H97-{i:03d}" in ids
+    for i in range(1, 9):
+        assert f"IR-H97M-{i:03d}" in ids
