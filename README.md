@@ -30,6 +30,7 @@
 - **Identifier history (IR-H97-008):** this round was frozen as H88/H89, renamed H92/H93 when a parallel session merged its own H88/H89 round, then renamed again to **H97/H98** when `main` used H92–H96. Both renames are mechanical and auditable (`evidence/h97_identifier_rename.diff` reproduces the frozen texts byte for byte); the GeoTIFF bytes never changed.
 - **Parallel rounds on this branch's history:** keep the newest of each card; `knowledge/99` carries the 0.2778 arithmetic (|G| ≈ 14,088.7 px, T ≈ 5,223.1 px, 0.3195 needs credit density ×1.1501 or S ≤ 25,384 px) and the three off-catalogue routes that remain untested.
 
+<!--/H97-README-->
 ---
 <!--H95-README-->
 # Current status — H95 (2026-10-10): co-trained View B · first holdout of H87 · NEGATIVE
