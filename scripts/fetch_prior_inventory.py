@@ -36,6 +36,60 @@ restore_data = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(restore_data)
 
 
+def codeload_blob(repo: str, commit: str, path: str, blob: str, dest: Path, want_bytes: int,
+                   cache: Path) -> None:
+    """Fallback when the Git Data API is rate-limited (HTTP 403 secondary limit, IR-H97-003).
+
+    Downloads the repository archive at the census's pinned commit from codeload.github.com (an allowed
+    host), extracts exactly the census path, and accepts it ONLY if the git blob SHA-1 of the extracted
+    bytes equals the census blob id and the byte count matches.  Nothing unverified is written.
+    """
+    import io
+    import subprocess
+    import tarfile
+    import urllib.request
+
+    cache.mkdir(parents=True, exist_ok=True)
+    arch = cache / f"{repo.replace('/', '__')}-{commit}.tar.gz"
+    if not arch.exists() or arch.stat().st_size == 0:
+        url = f"https://codeload.github.com/{repo}/tar.gz/{commit}"
+        tok = ""
+        try:
+            tok = subprocess.run(["gh", "auth", "token"], capture_output=True, text=True, timeout=20).stdout.strip()
+        except Exception:  # noqa: BLE001
+            tok = ""
+        req = urllib.request.Request(url, headers={"User-Agent": "gems52-prior-fetch/1.1",
+                                                   **({"Authorization": f"Bearer {tok}"} if tok else {})})
+        tmp = arch.with_suffix(".part")
+        with urllib.request.urlopen(req, timeout=300) as r, open(tmp, "wb") as w:
+            while True:
+                chunk = r.read(1 << 20)
+                if not chunk:
+                    break
+                w.write(chunk)
+        tmp.replace(arch)
+    data = None
+    with tarfile.open(arch, "r:gz") as tf:
+        for m in tf:
+            if not m.isfile():
+                continue
+            # codeload archives have one top-level directory: "<name>-<commit>/"
+            rel = m.name.split("/", 1)[1] if "/" in m.name else m.name
+            if rel == path:
+                data = tf.extractfile(m).read()
+                break
+    if data is None:
+        raise RuntimeError(f"path {path} not in archive {repo}@{commit[:10]}")
+    git_sha = hashlib.sha1(b"blob %d\0" % len(data) + data).hexdigest()
+    if git_sha != blob:
+        raise RuntimeError(f"codeload blob SHA-1 {git_sha} != census {blob}")
+    if len(data) != want_bytes:
+        raise RuntimeError(f"codeload byte count {len(data)} != census {want_bytes}")
+    tmp_dest = dest.with_suffix(dest.suffix + ".part")
+    tmp_dest.write_bytes(data)
+    tmp_dest.replace(dest)
+
+
 def decoded_sha(path: Path) -> tuple[str, tuple[int, int], str | None]:
     """SHA-256 of the decoded float32 band (non-finite -> 0) + shape + CRS."""
     import rasterio
@@ -104,19 +158,31 @@ def main() -> int:
             state["status"] = "present"
             n_present += 1
         else:
+            # Primary: codeload archive at the census's pinned commit, accepted only if the git blob SHA-1 equals
+            # the census blob id (IR-H97-003: the Git Data API returned 403 secondary-limit errors for this run).
+            # Fallback: the Git Data API stream, still checked by byte count and the decoded-SHA check below.
             try:
-                restore_data.stream_blob(e["aliases"][0]["repo"], blob, dest, want_bytes, tries=3)
+                codeload_blob(e["aliases"][0]["repo"], e["aliases"][0]["commit"], e["aliases"][0]["path"],
+                              blob, dest, want_bytes, cache=out.parent / "archives")
                 state["status"] = "fetched"
+                state["source"] = "codeload-archive (git blob SHA-1 verified)"
                 n_fetched += 1
-            except Exception as exc:  # noqa: BLE001 - a failed prior must not kill the census
-                state["status"] = f"error: {type(exc).__name__}: {exc}"
-                state["error"] = True
-                n_bad += 1
-                rec[blob] = state
-                _write(rp, args.inventory, len(entries), n_present, n_fetched, n_bad,
-                       n_file_sha_match, n_decoded_sha_match, rec)
-                print(f"[{i+1}/{len(entries)}] ERR {blob[:10]} {state['status'][:90]}", flush=True)
-                continue
+            except Exception as cl_exc:  # noqa: BLE001 - fall back to the API, never silently accept
+                try:
+                    restore_data.stream_blob(e["aliases"][0]["repo"], blob, dest, want_bytes, tries=2)
+                    state["status"] = "fetched"
+                    state["source"] = "git-data-api"
+                    state["codeload_error"] = f"{type(cl_exc).__name__}: {str(cl_exc)[:120]}"
+                    n_fetched += 1
+                except Exception as exc:  # noqa: BLE001 - a failed prior must not kill the census
+                    state["status"] = f"error: {type(exc).__name__}: {exc}"
+                    state["error"] = True
+                    n_bad += 1
+                    rec[blob] = state
+                    _write(rp, args.inventory, len(entries), n_present, n_fetched, n_bad,
+                           n_file_sha_match, n_decoded_sha_match, rec)
+                    print(f"[{i+1}/{len(entries)}] ERR {blob[:10]} {state['status'][:90]}", flush=True)
+                    continue
         if not args.skip_verify and e.get("eligible") and dest.exists():
             try:
                 fsha = file_sha(dest)

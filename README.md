@@ -1012,6 +1012,22 @@ Go ahead and create a pull request and then merge the pull request onto the main
 </details>
 
 <!--/H95-README-->
+<!--H103-README-->
+# Current status — H103 (2026-10-11): disagreement graft on the H84 surface learner · NEGATIVE
+
+> **OK TO DOWNLOAD: YES** — format check only. **OK TO SUBMIT: NO — research-only, do not upload.**
+>
+> HOLDOUT-DTI graft 0.047183 [0.034716, 0.060419] vs promotable bar 0.190147 (H84 `B_DVA2_HVA`). Paired graft − B_DVA2_HVA -0.142964 [-0.164118, -0.121119]. Weekly slots used: 0.
+
+- **File:** `submission/gems52-h103-graft-B_DVA2_HVA-37654px-20261011T021538Z.tif` · SHA-256 `588d0db7af4e818d90d84ecb983ab1bb842a327f49f9a047dfb04528625f9419`
+- **Name:** `h103-graft-B_DVA2_HVA-37654px-20261011T021538Z` · **Note (140/140):** `H103: H96 disagreement formula grafted on H84 B_DVA2_HVA (A=single_A); 3px spacing; 200m ring cut; binary dots; HOLDOUT-DTI gate in run card`
+- **Why negative:** the holdout fails the bar; the placed dots fall in A-confident / B-abstaining cells. The dot lane is a literal DUPLICATE/STOP: the literal 3 px share 1.000000 comes from universal-coverage probes; the policy share on an informative (non-probe) raster is 0.877330, and a random set of the same size scores 0.895921 there (IR-H103-006). On the holdout the A-only arm `single_A` scores 0.071954 against 0.080426 for random dots (`evidence/h103_holdout.json`); decomposition: [`evidence/h103_posthoc_diagnostic.json`](evidence/h103_posthoc_diagnostic.json). Full result: [`docs/h103.html`](docs/h103.html) · run card: [`evidence/h103_run_card.json`](evidence/h103_run_card.json) · preregistration: [`knowledge/97`](knowledge/108_hypotheses_H97_preregistered.md).
+
+---
+
+<!--/H103-README-->
+
+
 
 <!--H97-README-->
 # This session's round — H97 (artifact) and H98 (validation), 2026-10-11
