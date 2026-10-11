@@ -155,6 +155,7 @@ def insert_block(path: Path, blob: str):
             nl = text.find("\n", i)
             i = nl + 1 if nl != -1 else i
             text = text[:i] + block + text[i:]
+            path.write_text(text)
             return True
     if "<body" in text:
         text = re.sub(r"(<body[^>]*>)\n", lambda m: m.group(1) + "\n" + block, text, count=1)

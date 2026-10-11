@@ -1,6 +1,6 @@
 {
   "status": "dated snapshot; automated DrivenData access disabled by Terms-of-Use policy",
-  "observed_date_utc": "2026-10-10",
+  "observed_date_utc": "2026-10-11",
   "source": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
   "retrieved_by": "agent page-fetch tool over the public leaderboard HTML (bash egress to www.drivendata.org returns HTTP 000 from this sandbox)",
   "column_header_on_board": "Best public DW-Tversky (in descending order)",
@@ -306,6 +306,16 @@
       "score": 0.2503,
       "submissions": 14
     }
+  ],
+  "re_verified_by": "session arena/604a9c54-gemsdoe52 page-fetch of the public leaderboard, 2026-10-10/11 UTC",
+  "re_verification": [
+    "rank 1 xiaofanhu 0.3774 unchanged",
+    "rank 2 JerryDataWorks 0.3418",
+    "rank 3 alexoktaba 0.3361",
+    "rank 4 Batik Shirt Brothers 0.3300",
+    "rank 5 nchuzhoy 0.3262 (top-5 cut)",
+    "rank 8 DARD 0.3195",
+    "rank 22 extradr19 0.2778 (= owner-reported h33-h33-2-b2)"
   ],
   "owner_best_reported": 0.2778,
   "artifact_score_authenticated": false,

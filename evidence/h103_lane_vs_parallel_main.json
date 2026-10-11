@@ -6,14 +6,13 @@
  "this_file": "gems52-h103-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif",
  "this_sha256": "c49a07d15a5bb293c0f29f67d9d4931ed5f2f9ce48978da86af4e59a54f2523d",
  "n_my_dots": 25400,
- "started_utc": "2026-10-11T02:14:38+00:00",
+ "started_utc": "2026-10-11T02:32:28+00:00",
  "priors": [
   {
    "file": "gems52-h97-cotrain-disagree-masslever-25400px-20261011T003257Z-6e394036aac2-zeros.tif",
    "dots": 25400,
    "abs_spearman": 0.0017539804205491474,
    "my_frac_within_3px_of_their": 0.07448818897637795,
-   "their_frac_within_3px_of_mine": 0.08208661417322835,
    "identical": false,
    "duplicate": false
   },
@@ -22,7 +21,6 @@
    "dots": 37654,
    "abs_spearman": 0.0032454572494531246,
    "my_frac_within_3px_of_their": 0.11322834645669291,
-   "their_frac_within_3px_of_mine": 0.06926222977638498,
    "identical": false,
    "duplicate": false
   },
@@ -31,7 +29,6 @@
    "dots": 25400,
    "abs_spearman": 0.0022274006566852743,
    "my_frac_within_3px_of_their": 0.08035433070866142,
-   "their_frac_within_3px_of_mine": 0.08783464566929133,
    "identical": false,
    "duplicate": false
   },
@@ -40,7 +37,6 @@
    "dots": 37654,
    "abs_spearman": 0.054401993338534946,
    "my_frac_within_3px_of_their": 0.3775590551181102,
-   "their_frac_within_3px_of_mine": 0.30259733361661445,
    "identical": false,
    "duplicate": false
   },
@@ -49,7 +45,14 @@
    "dots": 37654,
    "abs_spearman": 0.003537224565550982,
    "my_frac_within_3px_of_their": 0.19578740157480315,
-   "their_frac_within_3px_of_mine": 0.07736229882615393,
+   "identical": false,
+   "duplicate": false
+  },
+  {
+   "file": "gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif",
+   "dots": 37600,
+   "abs_spearman": 0.007274185529270178,
+   "my_frac_within_3px_of_their": 0.18700787401574803,
    "identical": false,
    "duplicate": false
   }
@@ -58,6 +61,6 @@
  "worst_my_frac_within_3px": 0.3775590551181102,
  "duplicate": false,
  "ok": true,
- "disposition": "PASS - no parallel-main raster breaches the lane doctrine; the pre-merge 602-raster census receipts (evidence/h103_lane.json) stand, and these five post-merge parallel rasters add no new breach",
- "finished_utc": "2026-10-11T02:15:02+00:00"
+ "disposition": "PASS - none of main's six parallel rasters (h97-masslever, h97-sparse, h97b, h101, h99, h102-pafdva) breaches the lane doctrine; the pre-merge 602-raster census receipts (evidence/h103_lane.json) stand",
+ "finished_utc": "2026-10-11T02:32:53+00:00"
 }

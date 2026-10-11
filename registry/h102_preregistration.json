@@ -1,0 +1,310 @@
+{
+ "round": "H97",
+ "title": "Potential-field directional anisotropy (PAF-DVA) as an independent View A; anisotropy disagreement as the buried-fault discovery signal",
+ "created_utc": "2026-10-10T23:20:00+00:00",
+ "frozen_before_any_fit": true,
+ "lane": "the standing brief's co-training paragraph (Blum & Mitchell, COLT '98, doi:10.1145/279943.279962): View A potential-field/subsurface vs View B surface, disagreement as the discovery signal",
+ "hypothesis": "Directional semivariance anisotropy measured on the potential-field and subsurface bands (isostatic gravity anomaly and its horizontal gradient, reduced-to-pole magnetics, depth to basement) is a texture of the SUBSURFACE that is not a copy of the detrended-elevation texture. Fault damage zones and basement offsets imprint a preferred direction on the semivariance of those longer-wavelength fields, so where the View-A anisotropy is confident and the View-B (surface) anisotropy abstains, the fault may be buried beneath cover and therefore missing from the surface-expression USGS/INGENIOUS catalogue.",
+ "mechanism": "A fault offsets and fractures rock over a damage zone of hundreds of metres. Fracturing lowers density and, where hydrothermal fluids circulate, destroys magnetite, so the isostatic gravity and reduced-to-pole magnetic fields carry a directional roughness (semivariance) parallel to the fault that the DEM cannot see below cover. The H82 operator (8-direction integer fan, lags 100-600 m, sigma 3 px) resolves the perpendicular at 22.5 degrees and is the best-measured feature family in this repository (B_DVA2 HOLDOUT-DTI 0.189200 [0.167891, 0.209115]); H97 applies that same operator to View A instead of View B and uses the cross-view DISAGREEMENT as the emission field.",
+ "mimic": "Named non-fault processes that produce the same signature: (1) lithologic and intrusive contacts in the same fields, especially Tertiary volcanic flow margins that show in depth-to-basement; (2) basin-margin facies steps and the range-front bajada toe; (3) airborne-survey flight-line and levelling striping in the magnetic and radiometric grids, which is directional by construction; (4) karst/paleochannel scour at the basement surface; (5) regional isostatic and terrain-correction artefacts in the gravity grid. Every emitted cell carries its own reasoning row naming which of these it could be.",
+ "views": {
+  "view_A": "shared store columns view_A_with_external (gravity, magnetics, strain, seismicity, depth-to-basement, conductivity) PLUS 40 new PAF-DVA channels",
+  "view_B": "shared store columns view_B_with_external (detrended elevation, its slope, DEM curvature/coherence, radiometric K/Th/U and ratios) PLUS 20 new surface-DVA channels",
+  "overlap_policy": "the two column lists must be disjoint; run_h61.setup already enforces disjointness on its own lists and run_h97 re-checks the union it builds"
+ },
+ "channels": {
+  "operator": "run_h82._gamma_stats verbatim (shared, not forked): standardized band, running max/min/mean of the Gaussian-smoothed semivariance over the 8-direction integer fan, aniso = (max-min)/(max+min), logvar = log10(mean)",
+  "sigma_px": 3.0,
+  "lags_px": [
+   1,
+   2,
+   3,
+   4,
+   6
+  ],
+  "fan_offsets_dy_dx": [
+   [
+    0,
+    1
+   ],
+   [
+    1,
+    1
+   ],
+   [
+    1,
+    0
+   ],
+   [
+    1,
+    -1
+   ],
+   [
+    1,
+    2
+   ],
+   [
+    2,
+    1
+   ],
+   [
+    2,
+    -1
+   ],
+   [
+    1,
+    -2
+   ]
+  ],
+  "view_A_bands": {
+   "13": "iso_grav_anom",
+   "18": "iso_grav_anom_hg",
+   "2": "rtp",
+   "15": "depth_to_base_surf"
+  },
+  "view_B_bands": {
+   "12": "det_elev",
+   "19": "det_elev_slope"
+  },
+  "excluded_by_design": "band 6 (radiometric total count) is NOT given a DVA channel this round: an airborne gamma-ray count grid carries survey-footprint striping that is directional by construction, and including it would make the View-B surface-anisotropy field partly a survey-geometry artefact. Excluded in advance, not after seeing a result."
+ },
+ "arms": [
+  "single_A2",
+  "single_B2",
+  "cotrain_disagree",
+  "consensus",
+  "buried_only",
+  "union_max",
+  "random"
+ ],
+ "primary": "cotrain_disagree",
+ "arm_definitions": {
+  "single_A2": "store view_A_with_external + the 40 PAF-DVA channels",
+  "single_B2": "store view_B_with_external + the 20 surface-DVA channels",
+  "cotrain_disagree": "PRIMARY: within each fold's allowed set, ranking of (rank(A2) - rank(B2)); positive where View A is more confident than View B",
+  "consensus": "ranking of min(rank(A2), rank(B2))",
+  "buried_only": "ranking of rank(A2) restricted to cells where rank(B2) <= 0.5 (A confident, B abstains)",
+  "union_max": "ranking of max(rank(A2), rank(B2))",
+  "random": "uniform random over the same allowed set, same budget"
+ },
+ "holdout": {
+  "evaluator": "gems52.evaluate_holdout (gems52-pooled-hide-v1), unmodified; alpha 0.2, beta 0.8, 300 m triangular kernel",
+  "folds": "gems52.spatial.folds (label-blind-quadrants-v2) with the registered buffer, rebuilt from the pinned rasters",
+  "budget_per_fold": 9400,
+  "spacing_px": 3.0,
+  "catalogue_ring_excluded_m": 200.0,
+  "ci": "1000 paired physical spatial-cluster bootstrap draws (200 px blocks)"
+ },
+ "budget_selection_frozen_before_fit": {
+  "rule": "the artifact's emitted mass is chosen on the SAME hide-and-recover instrument from the sweep {9400, 16000, 25400} dots per fold for the primary arm only; take the smallest budget whose pooled DTI is within 0.002 of the best measured value (tie-break toward less mass, per knowledge/76 which measures Spearman(mass, board score) = -0.93 over this family's twelve scored files). If the sweep picks 9400, the artifact emits 9400 dots x 4 folds = 37600 only if the four fold fields are the artifact's domain; otherwise the artifact emits the selected per-fold budget scaled to its own domain as recorded in the build receipt.",
+  "reason_not_recomputed_post_hoc": "the sweep is registered here as the budget rule, not as a score; no arm's number is re-tuned after seeing it"
+ },
+ "promotion_rule_frozen_before_fit": "PROMOTE only if BOTH hold: (1) pooled cotrain_disagree minus the best comparable control (max over single_A2, single_B2, consensus, union_max, random) has paired 95% CI lower bound > 0; and (2) pooled cotrain_disagree >= 0.190147 (the standing promotable best, knowledge/73). Otherwise the verdict is NEGATIVE and the artifact ships as a research candidate with submit_ok false. Attribution arms are not promotable post hoc.",
+ "leakage_canary": "every new channel alone, direction-insensitive AUC on the held-out region; alarm bar 0.90",
+ "independence_test": "the brief's mandated test: spatial-block correlation of the two views' out-of-fold errors on labelled negatives, thresholds inherited verbatim from registry/h74_preregistration.json; abandon if |rho| > 0.60",
+ "budget_stop": "3 experiments or 2 hours; no submission slot is spent by this round",
+ "sources": [
+  "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/ (metric and submission format, fetched 2026-10-10)",
+  "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/ (public leaderboard, fetched 2026-10-10)",
+  "https://doi.org/10.1145/279943.279962 (Blum & Mitchell, COLT '98)",
+  "https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and (DOI 10.5066/P93LGLVQ)",
+  "https://gdr.openei.org/submissions/1391 (INGENIOUS, DOI 10.15121/1881483)",
+  "https://epsg.io/32611"
+ ],
+ "hypothesis_document": "knowledge/97_hypotheses_H97_preregistered.md",
+ "hypothesis_sha256": "3bc571adb709f8e3c18fbe158221019bbc69515162e88ed9220319b5851b674a",
+ "amendment_h97a": {
+  "written_before_any_fit": true,
+  "created_utc": "2026-10-10T23:30:00+00:00",
+  "change": "the artifact's emitted mass is FROZEN at 37,600 dots (= 4 x 9,400 per-fold budget, the family standard and the champion's 37,654 px mass). The pre-registered budget sweep {9400, 16000, 25400} is DEMOTED to a diagnostic: it is reported as a curve but it does NOT select the budget.",
+  "reason": "knowledge/76 sec.6 and evidence/h83_budget_curve.json measure that the hide-and-recover instruments over-reward recall (off-catalogue truth is ~4x the estimated real prevalence), and knowledge/76 sec.6 states explicitly that these instruments are 'not valid for choosing the budget'. Selecting the artifact's mass from a sweep on such an instrument would repeat a defect this repository has already logged. Freezing the budget at the family standard keeps H97 comparable with H82/H89/H96 and leaves the mass lever to the selector step.",
+  "unchanged": "arms, channels, holdout, canary, independence thresholds and the promotion rule are exactly as frozen in the un-amended preregistration"
+ },
+ "identifier_rename": {
+  "done_utc": "2026-10-11",
+  "reason": "identifier collision: this round was frozen, run and receipted as H97 (commit 1f542d4, base 7eb226d); main meanwhile merged other sessions' H97 (co-training disagreement) and H97b/H97-masslever rounds, so the label is taken. Renumbered H102. Identifier-only edit: no constant, threshold, arm, budget or measured number changed; every stage ran under the H97 name with the pre-rename hashes, and the TIFF bytes are identical before and after.",
+  "frm": "H97",
+  "to": "H102",
+  "document_sha256_before": "d603fe73580af36bc3673d3acaf2a41c4b64604134977782a5d077163e60db60",
+  "document_sha256_after": "3bc571adb709f8e3c18fbe158221019bbc69515162e88ed9220319b5851b674a",
+  "registry_sha256_before": "b2eb593fe5ebed4005574402769305b9805c2ffdd57d760ecd3d0c90bd359181",
+  "registry_sha256_after": "recorded in evidence/h102_run_card.json identifier_history (this file cannot contain its own hash)",
+  "token_map": {
+   "h97": "h102",
+   "H97": "H102",
+   "knowledge/97": "knowledge/108",
+   "knowledge/98": "knowledge/109",
+   "knowledge/99": "knowledge/110",
+   "knowledge/100": "knowledge/111"
+  },
+  "evidence_diff": "evidence/h102_identifier_rename.diff",
+  "artefact_bytes_unchanged": true,
+  "artefact_sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
+  "zip_rebuilt": {
+   "reason": "the single member of the ZIP is named after the TIFF",
+   "sha256_before": "f1c4472f11caadb1adbe9e257fbb4af3cdb26be8011e47dbdb3a17fe0f45c304"
+  },
+  "moves": [
+   {
+    "old": "knowledge/97_hypotheses_H97_preregistered.md",
+    "new": "knowledge/108_hypotheses_H102_preregistered.md"
+   },
+   {
+    "old": "knowledge/98_the_metric_is_a_coverage_metric.md",
+    "new": "knowledge/109_the_metric_is_a_coverage_metric.md"
+   },
+   {
+    "old": "knowledge/99_h97_results_and_limits.md",
+    "new": "knowledge/110_h102_results_and_limits.md"
+   },
+   {
+    "old": "knowledge/100_next_round_proposals.md",
+    "new": "knowledge/111_next_round_proposals.md"
+   },
+   {
+    "old": "registry/h97_preregistration.json",
+    "new": "registry/h102_preregistration.json"
+   },
+   {
+    "old": "docs/h97.html",
+    "new": "docs/h102.html"
+   },
+   {
+    "old": "scripts/run_h97.py",
+    "new": "scripts/run_h102.py"
+   },
+   {
+    "old": "scripts/run_h97_e4_coverage.py",
+    "new": "scripts/run_h102_e4_coverage.py"
+   },
+   {
+    "old": "scripts/run_h97_e4b_hysteresis.py",
+    "new": "scripts/run_h102_e4b_hysteresis.py"
+   },
+   {
+    "old": "scripts/build_h97b_covered.py",
+    "new": "scripts/build_h102b_covered.py"
+   },
+   {
+    "old": "scripts/publish_h97_site.py",
+    "new": "scripts/publish_h102_site.py"
+   },
+   {
+    "old": "scripts/publish_h97_readme.py",
+    "new": "scripts/publish_h102_readme.py"
+   },
+   {
+    "old": "scripts/finalize_h97_pointer.py",
+    "new": "scripts/finalize_h102_receipts.py"
+   },
+   {
+    "old": "submission/H97_LATEST.txt",
+    "new": "submission/H102_LATEST.txt"
+   },
+   {
+    "old": "docs/downloads/h97-candidate.json",
+    "new": "docs/downloads/h102-candidate.json"
+   },
+   {
+    "old": "tests/test_current_submission_gate.py",
+    "new": "tests/test_current_submission_gate.py"
+   },
+   {
+    "old": "tests/test_h95.py",
+    "new": "tests/test_h95.py"
+   },
+   {
+    "old": "evidence/h97_build_placement.json",
+    "new": "evidence/h102_build_placement.json"
+   },
+   {
+    "old": "evidence/h97_channels.json",
+    "new": "evidence/h102_channels.json"
+   },
+   {
+    "old": "evidence/h97_e4_coverage.json",
+    "new": "evidence/h102_e4_coverage.json"
+   },
+   {
+    "old": "evidence/h97_e4b_hysteresis.json",
+    "new": "evidence/h102_e4b_hysteresis.json"
+   },
+   {
+    "old": "evidence/h97_fit.json",
+    "new": "evidence/h102_fit.json"
+   },
+   {
+    "old": "evidence/h97_holdout.json",
+    "new": "evidence/h102_holdout.json"
+   },
+   {
+    "old": "evidence/h97_independence.json",
+    "new": "evidence/h102_independence.json"
+   },
+   {
+    "old": "evidence/h97_lane.json",
+    "new": "evidence/h102_lane.json"
+   },
+   {
+    "old": "evidence/h97_not_union.json",
+    "new": "evidence/h102_not_union.json"
+   },
+   {
+    "old": "evidence/h97_run_card.json",
+    "new": "evidence/h102_run_card.json"
+   },
+   {
+    "old": "evidence/submission_gems52-h97-pafdva-disagree-37600px-20261011T002233Z.json",
+    "new": "evidence/submission_gems52-h102-pafdva-disagree-37600px-20261011T002233Z.json"
+   },
+   {
+    "old": "docs/data/submission_gems52-h97-pafdva-disagree-37600px-20261011T002233Z.json",
+    "new": "docs/data/submission_gems52-h102-pafdva-disagree-37600px-20261011T002233Z.json"
+   },
+   {
+    "old": "submission/gems52-h97-pafdva-disagree-37600px-20261011T002233Z.json",
+    "new": "submission/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.json"
+   },
+   {
+    "old": "docs/downloads/gems52-h97-pafdva-disagree-37600px-20261011T002233Z.json",
+    "new": "docs/downloads/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.json"
+   },
+   {
+    "old": "submission/gems52-h97-pafdva-disagree-37600px-20261011T002233Z.tif",
+    "new": "submission/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif"
+   },
+   {
+    "old": "submission/gems52-h97-pafdva-disagree-37600px-20261011T002233Z.zip",
+    "new": "submission/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.zip"
+   },
+   {
+    "old": "submission/gems52-h97-pafdva-disagree-37600px-20261011T002233Z-a-only-reasoning.csv",
+    "new": "submission/gems52-h102-pafdva-disagree-37600px-20261011T002233Z-a-only-reasoning.csv"
+   },
+   {
+    "old": "docs/downloads/gems52-h97-pafdva-disagree-37600px-20261011T002233Z.tif",
+    "new": "docs/downloads/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif"
+   },
+   {
+    "old": "docs/downloads/gems52-h97-pafdva-disagree-37600px-20261011T002233Z.zip",
+    "new": "docs/downloads/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.zip"
+   },
+   {
+    "old": "docs/downloads/gems52-h97-pafdva-disagree-37600px-20261011T002233Z-a-only-reasoning.csv",
+    "new": "docs/downloads/gems52-h102-pafdva-disagree-37600px-20261011T002233Z-a-only-reasoning.csv"
+   },
+   {
+    "old": "docs/downloads/h97-candidate.tif",
+    "new": "docs/downloads/h102-candidate.tif"
+   },
+   {
+    "old": "docs/downloads/h97-candidate.zip",
+    "new": "docs/downloads/h102-candidate.zip"
+   },
+   {
+    "old": "docs/downloads/h97-a-only-reasoning.csv",
+    "new": "docs/downloads/h102-a-only-reasoning.csv"
+   }
+  ]
+ }
+}

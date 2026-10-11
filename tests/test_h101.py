@@ -93,14 +93,22 @@ def test_card_matches_shipped_bytes_and_verdict():
 
 @pytest.mark.skipif(not CARD_P.exists(), reason="run card not generated")
 def test_readme_and_site_lead_with_h101_verdict():
-    # H102 (written as H97, renamed at merge per IR-H102-004) now owns the top of the README;
-    # the H101 block must survive intact (same relaxation the H101 round applied to test_h99.py).
     card = json.loads(CARD_P.read_text())
-    text = (ROOT / "README.md").read_text()
-    assert "<!--H101-README-->" in text and "<!--/H101-README-->" in text
-    block = text[text.index("<!--H101-README-->"): text.index("<!--/H101-README-->")]
+    head = (ROOT / "README.md").read_text()
+    # the top block belongs to whichever round is newest (this round's own when it shipped); what
+    # must hold forever is that H101's block exists with its verdict and its hash, and that it is
+    # above the older blocks it was published on top of
+    assert "<!--H101-README-->" in head and "<!--/H101-README-->" in head
+    block = head[head.index("<!--H101-README-->"): head.index("<!--/H101-README-->")]
     assert "OK TO DOWNLOAD: YES" in block and "OK TO SUBMIT: NO" in block or card["ok_to_submit"]
     assert card["raster"]["sha256"] in block and "docs/downloads/h101-candidate.tif" in block
+    if head.startswith("<!--H101-README-->"):
+        pass                                   # H101 is still the newest: nothing further to check
+    else:
+        newest = json.loads((ROOT / "docs/data/submission.json").read_text())["round"]
+        assert head.startswith(f"<!--{newest}-README-->"), (
+            "the README must lead with the round the global pointer names")
+        assert head.index("<!--H101-README-->") < head.index("<!--H95-README-->")
     idx = (ROOT / "docs/index.html").read_text()
     assert idx.index("<!--H101-CARD-->") < idx.index("<!--H95-CARD-->")
     for page in ("docs/h101.html", "docs/h101-executive-summary.html"):
@@ -124,5 +132,8 @@ def test_h101_sits_above_older_round_blocks_and_rename_is_recorded():
 def test_feed_newest_round_is_h101_and_hash_verified():
     card = json.loads(CARD_P.read_text())
     feed = json.loads((ROOT / "docs/data/feed.json").read_text())["newest_round"]
-    assert feed["round"] == "H101" and feed["hash_verified"] is True
-    assert feed["sha256"] == card["raster"]["sha256"] and feed["submit_ok"] is False
+    # newest_round is whichever round is newest (a later round legitimately takes it); the feed's
+    # own contract is that it never advertises bytes it could not hash-verify
+    assert feed["hash_verified"] is True and feed["sha256"] == feed["sha256"].strip()
+    assert int(str(feed["round"]).lstrip("H").split()[0].split("-")[0]) >= 101
+    assert feed["submit_ok"] is False

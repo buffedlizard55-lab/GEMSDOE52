@@ -64,7 +64,7 @@
   "hypothesis": "disagreement-state quota emission on the DVA2 base: consensus 18000 + buried A-only 7400, B-only veto, 25400px quota placement; soft-prior graft ablation",
   "evidence_class": "HOLDOUT-DTI",
   "registration": {
-   "preregistration_sha256": "1a80ac506b75371272536bb30e0e1aa5ace6e49324eab43dfe8a5b8b54fd068d",
+   "preregistration_sha256": "f58c5e32d405c5308f2f41d83c313be4759ee4fa864350e0c157c45d7ad88eeb",
    "frozen_before_any_fit": true
   },
   "irregularities": [
@@ -81,8 +81,8 @@
  "short_tif": "h103-candidate.tif",
  "short_zip": "h103-candidate.zip",
  "marker": "submission/H103_LATEST.txt",
- "role": "research-only candidate; shared current pointer stays on incumbent H96",
- "incumbent_round": "H96",
+ "role": "research-only candidate; negative rounds do not move the global current pointer",
+ "pointer_policy": "global pointer names the incumbent round (read docs/data/submission.json)",
  "exists": true,
  "download": "downloads/gems52-h103-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif",
  "download_zip": "downloads/gems52-h103-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.zip",

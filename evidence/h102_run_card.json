@@ -1,0 +1,386 @@
+{
+ "round": "H102",
+ "generated_utc": "2026-10-11T00:22:39+00:00",
+ "hypothesis": "directional semivariance anisotropy on the potential-field/subsurface bands is a subsurface texture that is not a copy of the surface texture; where View A is confident and View B abstains the fault may be buried beneath cover and absent from the surface-expression catalogue",
+ "mechanism": "fault damage zones lower density and destroy magnetite along strike, imprinting a preferred direction on the gravity and RTP-magnetic semivariance while alluvial cover removes the DEM expression",
+ "named_non_fault_mimic": "lithologic/intrusive contacts; basin-margin facies steps; survey flight-line and terrain-correction striping; paleochannel scour; isostatic/terrain-correction artefacts at block margins",
+ "preregistration_sha256": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7",
+ "holdout_dti": {
+  "single_A2": {
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems52-pooled-hide-v1",
+   "dti": 0.07639617220689764,
+   "ci95": [
+    0.061925201702061346,
+    0.09188078159587354
+   ],
+   "withheld_positive_pixels": 53186,
+   "tpw": 3856.0701149200836,
+   "fpw": 35773.18390604043,
+   "fnw": 49329.92988507991
+  },
+  "single_B2": {
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems52-pooled-hide-v1",
+   "dti": 0.1859682483761976,
+   "ci95": [
+    0.16404980882739553,
+    0.20706624422215536
+   ],
+   "withheld_positive_pixels": 53186,
+   "tpw": 9499.539114815969,
+   "fpw": 33164.01560923631,
+   "fnw": 43686.46088518404
+  },
+  "cotrain_disagree": {
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems52-pooled-hide-v1",
+   "dti": 0.02946034877464432,
+   "ci95": [
+    0.02115773138691092,
+    0.03975570357329162
+   ],
+   "withheld_positive_pixels": 53186,
+   "tpw": 1479.8376061106685,
+   "fpw": 36933.67879510753,
+   "fnw": 51706.16239388936
+  },
+  "consensus": {
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems52-pooled-hide-v1",
+   "dti": 0.13033209756514075,
+   "ci95": [
+    0.11280720785091922,
+    0.1489482627393436
+   ],
+   "withheld_positive_pixels": 53186,
+   "tpw": 6616.769942186307,
+   "fpw": 34481.91600396785,
+   "fnw": 46569.23005781367
+  },
+  "buried_only": {
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems52-pooled-hide-v1",
+   "dti": 0.0358832672321347,
+   "ci95": [
+    0.027300054119480856,
+    0.04506044378386262
+   ],
+   "withheld_positive_pixels": 53186,
+   "tpw": 1803.712193566384,
+   "fpw": 36782.828849125835,
+   "fnw": 51382.287806433604
+  },
+  "union_max": {
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems52-pooled-hide-v1",
+   "dti": 0.15666735264519369,
+   "ci95": [
+    0.13672418932987757,
+    0.17714682369130594
+   ],
+   "withheld_positive_pixels": 53186,
+   "tpw": 7977.8884589750205,
+   "fpw": 33890.458155530956,
+   "fnw": 45208.11154102499
+  },
+  "random": {
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems52-pooled-hide-v1",
+   "dti": 0.0815923825446992,
+   "ci95": [
+    0.07137879179130074,
+    0.09251216812060094
+   ],
+   "withheld_positive_pixels": 53186,
+   "tpw": 4126.867482230022,
+   "fpw": 36024.52259717952,
+   "fnw": 49059.132517769984
+  }
+ },
+ "holdout_promotion_gate": {
+  "best_comparable_control": "single_B2",
+  "candidate_dti": 0.02946034877464432,
+  "control_dti": 0.1859682483761976,
+  "delta": -0.15650789960155329,
+  "ci95": [
+   -0.17908500547783923,
+   -0.13473655418256178
+  ],
+  "ci_lower_above_zero": false,
+  "above_standing_bar": false,
+  "PROMOTE": false
+ },
+ "lane_surface": {
+  "max_spearman": 0.12071223517333894,
+  "max_near_3px_fraction": null,
+  "max_near_source": null,
+  "rank_offenders": [],
+  "near_offenders": [],
+  "identical": [],
+  "informative_priors": 81,
+  "universal_coverage_probes": 1,
+  "probe_paths": [
+   "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif"
+  ],
+  "probe_coverage": [
+   1.0
+  ],
+  "verdict": "PASS",
+  "note": "the same literal rule restricted to priors that localise something; probe statistics are retained verbatim in per_prior and nothing is deleted"
+ },
+ "lane_dots": {
+  "max_spearman": 0.06771399006655615,
+  "max_near_3px_fraction": 0.6595478723404256,
+  "max_near_source": "/home/user/GEMSDOE52/submission/gems52-h61-deepsharp-cotrain-37600px.tif",
+  "rank_offenders": [],
+  "near_offenders": [],
+  "identical": [],
+  "informative_priors": 81,
+  "universal_coverage_probes": 1,
+  "probe_paths": [
+   "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif"
+  ],
+  "probe_coverage": [
+   1.0
+  ],
+  "verdict": "PASS",
+  "note": "the same literal rule restricted to priors that localise something; probe statistics are retained verbatim in per_prior and nothing is deleted"
+ },
+ "lane_registry_scope": "locally available de-duplicated rasters: restricted scored registry (data/scored, data/reference), this repository's submission/ artefacts and docs/downloads/*.tif. The 526-blob cross-repository census was NOT re-fetched inside this round's time box (IR-H102-003).",
+ "len_registry": 82,
+ "uniqueness": {
+  "n_priors_checked": 82,
+  "candidate_decoded_sha256": "dae66ebff81204ad65ac6bb068f0cb8dda782ef8784e932594f5982731396899",
+  "canonical_pattern_unique": true,
+  "identical_to_a_prior": false,
+  "identical_prior_paths": [],
+  "distinct_from_every_comparable_prior": true,
+  "audit_complete": true,
+  "n_priors_compared": 82,
+  "incomparable_priors": [],
+  "key_semantics": "canonical_pattern_unique is False if ANY prior is byte-identical OR unreadable; distinct_from_every_comparable_prior isolates the first condition and audit_complete isolates the second",
+  "equals_literal_prior_union": false,
+  "research_publication_ok": true,
+  "support_novelty_gate_ok": true,
+  "gate_correction": "Original >=20% support novelty retained as a FAILED diagnostic, not silently waived for slot promotion. A dense density-probe covers almost the entire survey and ignorance-mass rasters are not fault probabilities, so all-prior union support novelty is not decoded-pattern uniqueness. Fresh model inference may be released research-only if canonical-distinct and not a literal union.",
+  "union_px": 2232217,
+  "novel_vs_all_priors": 22926,
+  "novel_fraction": 0.6097340425531915,
+  "prior_px_dropped": 2217543,
+  "relation_to_union": "strictly-novel-and-selective",
+  "ok": true,
+  "top_argument_ignored": false,
+  "rule": "distinct decoded values from every supplied prior, >=20% new support against binary/>=0.5 continuous proposal union, and selective prior-pixel removal",
+  "scope": "Only the supplied, aligned accessible inventory; not a proof against all private/unlinked submissions"
+ },
+ "raster_sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
+ "raster_bytes": 132324,
+ "validator": {
+  "count": 1,
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "shape": [
+   3730,
+   3292
+  ],
+  "crs_match": true,
+  "shape_match": true,
+  "transform_match": true,
+  "bounds_match": true,
+  "nan": 0,
+  "infinite": 0,
+  "min": 0.0,
+  "max": 1.0,
+  "values": [
+   0.0,
+   1.0
+  ],
+  "ones": 37600,
+  "zeros": 12241560,
+  "mass": 37600.0,
+  "range_ok": true,
+  "PASS": true,
+  "range_rule_source": "official: single layer float32 with values between 0 and 1, EPSG:32611, 100 m, same bounds as the training data (https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/)"
+ },
+ "not_the_union": {
+  "dots_emitted": 37600,
+  "union_max_dots": 37600,
+  "dots_equal_union": false,
+  "dots_equal_single_A": false,
+  "dots_equal_single_B": false,
+  "dots_subset_of_union": false,
+  "shared_with_union": 1179,
+  "jaccard_with_union": 0.0159279123491982,
+  "shared_with_single_A": 2938,
+  "jaccard_with_single_A": 0.04065760704104509,
+  "shared_with_single_B": 0,
+  "jaccard_with_single_B": 0.0
+ },
+ "submission_name": "h102-pafdva-disagree-37600px-20261011T002233Z",
+ "note": "H102 co-training: View-A potential-field anisotropy x View-B DEM anisotropy; disagreement field, 200m ring excluded, binary 37600 dots",
+ "note_chars": 134,
+ "slotted": false,
+ "submission_slots_used": 0,
+ "verdict": "negative",
+ "submit_ok": false,
+ "hypothesis_document": "knowledge/108_hypotheses_H102_preregistered.md",
+ "hypothesis_sha256": "3bc571adb709f8e3c18fbe158221019bbc69515162e88ed9220319b5851b674a",
+ "holdout": {
+  "single_A2": {
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems52-pooled-hide-v1",
+   "dti": 0.07639617220689764,
+   "ci95": [
+    0.061925201702061346,
+    0.09188078159587354
+   ],
+   "withheld_positive_pixels": 53186,
+   "tpw": 3856.0701149200836,
+   "fpw": 35773.18390604043,
+   "fnw": 49329.92988507991
+  },
+  "single_B2": {
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems52-pooled-hide-v1",
+   "dti": 0.1859682483761976,
+   "ci95": [
+    0.16404980882739553,
+    0.20706624422215536
+   ],
+   "withheld_positive_pixels": 53186,
+   "tpw": 9499.539114815969,
+   "fpw": 33164.01560923631,
+   "fnw": 43686.46088518404
+  },
+  "cotrain_disagree": {
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems52-pooled-hide-v1",
+   "dti": 0.02946034877464432,
+   "ci95": [
+    0.02115773138691092,
+    0.03975570357329162
+   ],
+   "withheld_positive_pixels": 53186,
+   "tpw": 1479.8376061106685,
+   "fpw": 36933.67879510753,
+   "fnw": 51706.16239388936
+  },
+  "consensus": {
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems52-pooled-hide-v1",
+   "dti": 0.13033209756514075,
+   "ci95": [
+    0.11280720785091922,
+    0.1489482627393436
+   ],
+   "withheld_positive_pixels": 53186,
+   "tpw": 6616.769942186307,
+   "fpw": 34481.91600396785,
+   "fnw": 46569.23005781367
+  },
+  "buried_only": {
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems52-pooled-hide-v1",
+   "dti": 0.0358832672321347,
+   "ci95": [
+    0.027300054119480856,
+    0.04506044378386262
+   ],
+   "withheld_positive_pixels": 53186,
+   "tpw": 1803.712193566384,
+   "fpw": 36782.828849125835,
+   "fnw": 51382.287806433604
+  },
+  "union_max": {
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems52-pooled-hide-v1",
+   "dti": 0.15666735264519369,
+   "ci95": [
+    0.13672418932987757,
+    0.17714682369130594
+   ],
+   "withheld_positive_pixels": 53186,
+   "tpw": 7977.8884589750205,
+   "fpw": 33890.458155530956,
+   "fnw": 45208.11154102499
+  },
+  "random": {
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems52-pooled-hide-v1",
+   "dti": 0.0815923825446992,
+   "ci95": [
+    0.07137879179130074,
+    0.09251216812060094
+   ],
+   "withheld_positive_pixels": 53186,
+   "tpw": 4126.867482230022,
+   "fpw": 36024.52259717952,
+   "fnw": 49059.132517769984
+  },
+  "instrument": "gems52-pooled-hide-v1",
+  "withheld_positive_px": 53186,
+  "primary": "cotrain_disagree",
+  "primary_dti": 0.02946034877464432,
+  "primary_ci95": [
+   0.02115773138691092,
+   0.03975570357329162
+  ],
+  "random_dti": 0.0815923825446992,
+  "random_ci95": [
+   0.07137879179130074,
+   0.09251216812060094
+  ],
+  "paired_primary_minus_random": {
+   "delta": -0.052132033770054875,
+   "ci95": null,
+   "vs": "random",
+   "note": "the registered paired test is the one in holdout_promotion_gate (vs the best comparable control single_B2); the random arm is reported for scale"
+  }
+ },
+ "raster": {
+  "file": "gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif",
+  "bytes": 132324,
+  "sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
+  "download": {
+   "tif": "docs/downloads/h102-candidate.tif",
+   "zip": "docs/downloads/h102-candidate.zip",
+   "tif_sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
+   "zip_sha256": "3a1d063878a868e7aa9d23bc18deb8df438ae40b4eb10a81f1a582c824066a13"
+  }
+ },
+ "identifier_history": [
+  {
+   "name": "H97",
+   "commit": "1f542d4",
+   "base": "7eb226d",
+   "frozen_before_any_fit": true,
+   "document_sha256": "3bc571adb709f8e3c18fbe158221019bbc69515162e88ed9220319b5851b674a",
+   "registry_sha256": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7",
+   "note": "the round ran and produced every receipt under this name"
+  },
+  {
+   "name": "H102",
+   "commit": null,
+   "base": "7eb226d",
+   "reason": "identifier collision with main's H97/H97b rounds; identifier-only rename",
+   "document_sha256": "3bc571adb709f8e3c18fbe158221019bbc69515162e88ed9220319b5851b674a",
+   "registry_sha256": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7",
+   "artefact_sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
+   "zip_sha256": "3a1d063878a868e7aa9d23bc18deb8df438ae40b4eb10a81f1a582c824066a13",
+   "evidence_diff": "evidence/h102_identifier_rename.diff"
+  }
+ ],
+ "verdict_note": "identifier-only rename H97 -> H102 applied after the round closed; no measured value changed",
+ "identifier_rename": {
+  "frm": "H97",
+  "to": "H102",
+  "artefact_bytes_unchanged": true,
+  "artefact_sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
+  "document_sha256_before": "3bc571adb709f8e3c18fbe158221019bbc69515162e88ed9220319b5851b674a",
+  "document_sha256_after": "3bc571adb709f8e3c18fbe158221019bbc69515162e88ed9220319b5851b674a",
+  "registry_sha256_before": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7",
+  "registry_sha256_after": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7",
+  "note": "identifier-only rename after the round closed; no measured value changed"
+ }
+}

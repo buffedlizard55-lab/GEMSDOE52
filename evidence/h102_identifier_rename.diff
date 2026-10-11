@@ -1,0 +1,2454 @@
+--- 1f542d4:knowledge/97_hypotheses_H97_preregistered.md
++++ knowledge/108_hypotheses_H102_preregistered.md
+@@ -1,8 +1,8 @@
+-# 97 · H97 hypotheses — potential-field directional anisotropy (PAF-DVA) as View A, with anisotropy disagreement as the discovery signal
++# 97 · H102 hypotheses — potential-field directional anisotropy (PAF-DVA) as View A, with anisotropy disagreement as the discovery signal
+ 
+-Frozen before any fit. Machine-readable twin: `registry/h97_preregistration.json`.
++Frozen before any fit. Machine-readable twin: `registry/h102_preregistration.json`.
+ Lane: the standing brief's co-training paragraph (Blum & Mitchell, COLT '98,
+-doi:10.1145/279943.279962). Round label H97 because `main` already holds H88–H96.
++doi:10.1145/279943.279962). Round label H102 because `main` already holds H88–H96.
+ 
+ ---
+ 
+@@ -15,7 +15,7 @@
+ **per-pixel** operators — gradients, steps, ranks, roughness. The best-measured feature family in this
+ repository is not per-pixel: it is the **directional semivariance anisotropy** of H82 (`B_DVA2`,
+ HOLDOUT-DTI 0.189200 [0.167891, 0.209115]), and it has only ever been computed on **surface** bands
+-plus two borrowed gravity bands. H97 computes that same operator **on the potential-field and
++plus two borrowed gravity bands. H102 computes that same operator **on the potential-field and
+ subsurface bands** and asks the lane's question with a physically separated pair of views.
+ 
+ ## 1 · Hypothesis
+@@ -53,15 +53,15 @@
+ 5. **Isostatic and Bouguer terrain-correction artefacts** at the margins of the survey blocks.
+ 
+ Each emitted cell carries a reasoning row naming the fired components and these alternatives
+-(`scripts/run_h97.py` stage `write`).
++(`scripts/run_h102.py` stage `write`).
+ 
+ ## 4 · The independence assumption, tested as the brief requires
+ 
+ Blum–Mitchell co-training needs the two views to be *approximately conditionally independent* given the
+-class. H97 tests it the way the brief specifies: **correlate each view's spatial-block out-of-fold errors
++class. H102 tests it the way the brief specifies: **correlate each view's spatial-block out-of-fold errors
+ on labelled negatives**. The instrument is `gems52.spatial.negative_block_errors` + `spatial.independence`
+ and the thresholds are inherited **verbatim** from `registry/h74_preregistration.json`
+-(`block_side_px`, `donor_rank_min`, abandon if |rho| > 0.60). They are not re-tuned for H97 and the
++(`block_side_px`, `donor_rank_min`, abandon if |rho| > 0.60). They are not re-tuned for H102 and the
+ inheritance is recorded with the source file's SHA-256.
+ 
+ A high correlation means the two views make the same mistakes, and co-training between them can only
+
+--- 1f542d4:knowledge/98_the_metric_is_a_coverage_metric.md
++++ knowledge/109_the_metric_is_a_coverage_metric.md
+@@ -30,7 +30,7 @@
+ highest score right now": it is rank 8. The family's own best is **0.2778 at rank 22**
+ (`extradr19`, last active ~2026-10-04, which matches the owner-reported `h33-2-b2` value and date — that is
+ consistent with, and not proof of, that team being the owner's account). The bar to enter the top 5 is
+-currently **0.3262**, and to lead, **0.3774**. This is logged as IR-H97-001 and IR-H97-002. The number in
++currently **0.3262**, and to lead, **0.3774**. This is logged as IR-H102-001 and IR-H102-002. The number in
+ the brief that a *target* has to beat is therefore 0.3262, not 0.3195.
+ 
+ ## 2 · Why `h33-2-b2` scored 0.2778 (re-verified from its bytes this session)
+@@ -128,7 +128,7 @@
+    has, on the metric, found one fault and reported two cells. Filling the gap adds `TPw` at ~1/3 the
+    marginal cost of the same mass placed randomly. Cost: low (a line-following pass over the existing
+    field). Evidence needed: does the filled field's `TPw` rise faster than its `0.2·S`? That is a
+-   same-instrument, same-fold measurement, and it is exactly what the H97 budget curve and the H97 holdout
++   same-instrument, same-fold measurement, and it is exactly what the H102 budget curve and the H102 holdout
+    give the first data point for.
+ 2. **The mass lever at the family's own density** (`knowledge/76` §4): re-emit the champion family's field
+    at 32 % less mass. Blocked by the lane rule for the champion's own file (a subset of a registry raster's
+
+--- 1f542d4:knowledge/99_h97_results_and_limits.md
++++ knowledge/110_h102_results_and_limits.md
+@@ -1,9 +1,9 @@
+-# 99 · H97 results and limits — potential-field directional anisotropy (PAF-DVA) as View A
+-
+-Round **H97**, executed 2026-10-11 UTC. Preregistration `registry/h97_preregistration.json`
+-(SHA-256 `b2eb593fe5ebed40…`, amendment **h97a** included) + `knowledge/97_hypotheses_H97_preregistered.md`
+-(SHA-256 `d603fe73580af36b…`), both frozen before any fit; the runner refuses to start if either hash moves.
+-Every number below is read from `evidence/h97_*.json` or from the official page named beside it.
++# 99 · H102 results and limits — potential-field directional anisotropy (PAF-DVA) as View A
++
++Round **H102**, executed 2026-10-11 UTC. Preregistration `registry/h102_preregistration.json`
++(SHA-256 `9c2e19c0966d9294…`, amendment **h102a** included) + `knowledge/108_hypotheses_H102_preregistered.md`
++(SHA-256 `3bc571adb709f8e3…`), both frozen before any fit; the runner refuses to start if either hash moves.
++Every number below is read from `evidence/h102_*.json` or from the official page named beside it.
+ 
+ **Verdict: NEGATIVE · download YES · submit NO (research candidate) · submission slots used 0.**
+ 
+@@ -29,7 +29,7 @@
+ semivariance. Band 6 (radiometric total count) was excluded from the operator **in advance**
+ (`excluded_by_design` in the preregistration) because an airborne gamma-ray count grid carries
+ flight-line striping that is directional by construction. Built in 181 s; 60 columns; the byte-integrity
+-`save_verified` guard reported **0 torn writes** (`evidence/h97_channels.json`).
++`save_verified` guard reported **0 torn writes** (`evidence/h102_channels.json`).
+ 
+ ## 3 · HOLDOUT-DTI (`gems52-pooled-hide-v1`, 53,186 withheld positive px, 9,400 dots per fold per arm)
+ 
+@@ -83,29 +83,29 @@
+   not re-tuned): **max |ρ| = 0.1732 over 2,089 blocks** (4,095,103 labelled-negative predictions), abandon bar
+   0.60 → **method not abandoned on this test**. The instrument's own caveat stands: the negatives are
+   held-out *catalogue-zero proxies*, not verified absence, so this is not proof of conditional independence.
+-* **Budget diagnostic (does not select the budget — amendment h97a)**: primary-arm DTI per fold rises
++* **Budget diagnostic (does not select the budget — amendment h102a)**: primary-arm DTI per fold rises
+   monotonically with the per-fold budget — fold 0: 0.0124 → 0.0242 → 0.0387 for 9,400 → 16,000 → 25,400;
+   fold 3: 0.0513 → 0.0808 → 0.1188. It also rises for the **random** control (0.0816 pooled at 9,400 vs the
+   primary's 0.0295), which is the cleanest demonstration yet that this instrument rewards *coverage* rather
+-  than skill and must not be used to choose emitted mass. Amendment h97a froze the artifact at 37,600 dots
++  than skill and must not be used to choose emitted mass. Amendment h102a froze the artifact at 37,600 dots
+   (= 4 × 9,400), the family standard, for exactly this reason.
+ 
+ ## 5 · The artifact
+ 
+-`submission/gems52-h97-pafdva-disagree-37600px-20261011T002233Z.tif` — 132,324 bytes, SHA-256
++`submission/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif` — 132,324 bytes, SHA-256
+ `cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326`. Submission name
+-`h97-pafdva-disagree-37600px-20261011T002233Z`; note (118/140)
+-`H97 co-training: View-A potential-field anisotropy x View-B DEM anisotropy; disagreement field, 200m ring excluded, binary 37600 dots`.
++`h102-pafdva-disagree-37600px-20261011T002233Z`; note (118/140)
++`H102 co-training: View-A potential-field anisotropy x View-B DEM anisotropy; disagreement field, 200m ring excluded, binary 37600 dots`.
+ 
+ | gate | result |
+ |---|---|
+ | on-disk validator (`gems52.gates.format_report`, independent re-read) | **PASS** — 1 band float32, EPSG:32611, 3730×3292, transform/bounds = `sample_submission.tif`, **0 NaN, 0 inf**, values exactly {0.0, 1.0}, 37,600 cells = 1, no nodata tag |
+ | lane, surface | **PASS** — max Spearman 0.1207 (bar 0.90), 81 informative priors, 1 universal-coverage probe |
+-| lane, dots | **PASS, but close** — max near-3px fraction **0.6595** against `submission/gems52-h61-deepsharp-cotrain-37600px.tif` (bar 0.70); max Spearman 0.0677. Flagged as IR-H97-005 |
++| lane, dots | **PASS, but close** — max near-3px fraction **0.6595** against `submission/gems52-h61-deepsharp-cotrain-37600px.tif` (bar 0.70); max Spearman 0.0677. Flagged as IR-H102-005 |
+ | uniqueness (`gems52.gates.uniqueness_report`) | **PASS** — 82 priors checked, canonical pattern unique, identical to none |
+ | not merely the union of the two views | **PASS** — Jaccard vs the union-max placement 0.0159; 0 cells shared with `single_B2`; 2,938 shared with `single_A2`; not a subset of the union |
+ | placement | 37,600 cells at 3 px minimum spacing inside 4,325,298 px of pool; nearest cell to the mapped catalogue **223.6 m**; median **2,816 m**; only **2.15 %** of the mass within 300 m of a mapped fault (the 0.2778 champion: 5.77 %) |
+-| A-only geological reasoning | one row per emitted cell: `submission/gems52-h97-pafdva-disagree-37600px-20261011T002233Z-a-only-reasoning.csv` (37,600 rows, 20.3 MB), naming the fired components, the alternative non-fault processes and the falsifier for each |
++| A-only geological reasoning | one row per emitted cell: `submission/gems52-h102-pafdva-disagree-37600px-20261011T002233Z-a-only-reasoning.csv` (37,600 rows, 20.3 MB), naming the fired components, the alternative non-fault processes and the falsifier for each |
+ | **submit_ok** | **false** — the frozen promotion rule failed |
+ 
+ ## 6 · What this round adds to the knowledge base
+@@ -119,13 +119,13 @@
+    (0.185968 with 20 channels vs 0.189200 with 50). If a future round needs a cheap strong baseline, this is it.
+ 4. **The instrument rewards coverage, not skill** — the random control improves with budget exactly as the
+    primary arm does.
+-5. **`knowledge/98` is the strategic deliverable of this session**: the organiser's metric is a *coverage*
++5. **`knowledge/109` is the strategic deliverable of this session**: the organiser's metric is a *coverage*
+    metric (a swath covering a trace scores 0.88 where sparse dots score far less; the marginal bar at
+    DTI 0.2778 is 0.0556, so any cell within ~283 m of an uncovered truth pixel pays for itself), and the
+    family has spent eight rounds optimising the ranking while its *emission geometry* — dots at 3 px spacing —
+-   was inherited by convention and never measured. Round **H97-E4** measures it.
+-
+-## 7 · H97-E4 / E4b — the emission-geometry question, answered twice
++   was inherited by convention and never measured. Round **H102-E4** measures it.
++
++## 7 · H102-E4 / E4b — the emission-geometry question, answered twice
+ 
+ Every round to date emits `nodes.spacing_select` dots at 3 px minimum separation. E4 and E4b are the first
+ measurements in this repository of the *other* axis of a submission: not which cells the field likes, but what
+@@ -134,7 +134,7 @@
+ against **random placement at the same mass** — the second control is mandatory because §4 of the coverage
+ note shows this instrument pays for mass almost regardless of where it lands.
+ 
+-E4 (`scripts/run_h97_e4_coverage.py`, `evidence/h97_e4_coverage.json`) — *naive bridging*: connect
++E4 (`scripts/run_h102_e4_coverage.py`, `evidence/h102_e4_coverage.json`) — *naive bridging*: connect
+ neighbouring confident cells with straight segments, then resample to the matched budget.
+ 
+ | field | dots @ 9,400 | bridged @ matched mass | dots @ matched mass | random @ matched mass | Δ (bridged − dots@S) |
+@@ -142,7 +142,7 @@
+ | `cotrain_disagree` (primary) | 0.029460 | 0.024497 | **0.201789** | 0.178690 | −0.1773 [−0.1932, −0.1611] |
+ | `single_B2` | 0.185968 | 0.153403 | **0.254062** | 0.176328 | −0.1007 [−0.1149, −0.0853] |
+ 
+-E4b (`scripts/run_h97_e4b_hysteresis.py`, `evidence/h97_e4b_hysteresis.json`) — *hysteresis growth*: seed at
++E4b (`scripts/run_h102_e4b_hysteresis.py`, `evidence/h102_e4b_hysteresis.json`) — *hysteresis growth*: seed at
+ the top 2 % of the field, then grow the region geodesically (3×3) while the local field rank stays above the
+ 0.85 quantile, at most 12 dilate steps, so the trace only follows ground the field still likes.
+ 
+@@ -162,9 +162,9 @@
+ this instrument cannot see it: its truth *is* the catalogue, so a cell placed on a mapped fault is already
+ near-truth, and its mass is 4× the competition's prevalence (`knowledge/76` §6). The geometry question is
+ therefore **closed on the instrument and open on the board**, and the only way to reopen it here is a
+-prevalence-matched off-catalogue instrument (`knowledge/100` §2).
+-
+-Consequences recorded in `knowledge/100_next_round_proposals.md`: the "coverage emission / hysteresis trace"
++prevalence-matched off-catalogue instrument (`knowledge/111` §2).
++
++Consequences recorded in `knowledge/111_next_round_proposals.md`: the "coverage emission / hysteresis trace"
+ candidate is **falsified as ranked** and demoted; the prevalence-matched instrument moves up to rank 1
+ because it is the prerequisite for testing emitted mass and emission geometry at all.
+ 
+@@ -176,8 +176,8 @@
+ * The lane census covers the **locally available** registry (82 unique rasters, 70 before this round's file):
+   `data/scored` (12 restored scored priors), `data/reference`, this repository's `submission/` artefacts and
+   `docs/downloads/*.tif`. The full 526-blob cross-repository census lives in a git-ignored receipt and was
+-  not re-fetched inside this round's time box (**IR-H97-003**).
+-* **IR-H97-005**: 65.95 % of this file's cells lie within 3 px of the H61 deepsharp co-training file
++  not re-fetched inside this round's time box (**IR-H102-003**).
++* **IR-H102-005**: 65.95 % of this file's cells lie within 3 px of the H61 deepsharp co-training file
+   (bar 0.70). Both are disagreement fields over the same feature store, so overlap is expected; it is
+   reported because it is within 4 points of the lane rule. A quota placement (`run_h73.place_lane`) is the
+   standard remedy and is listed for the next round.
+
+--- 1f542d4:knowledge/100_next_round_proposals.md
++++ knowledge/111_next_round_proposals.md
+@@ -1,6 +1,6 @@
+ # 100 · Next-round candidates, ranked by expected board gain per unit of cost
+ 
+-Written after H97 (negative) and its two geometry diagnostics, with everything below constrained to data
++Written after H102 (negative) and its two geometry diagnostics, with everything below constrained to data
+ that is **already on disk and SHA-pinned** unless the row says otherwise. Costs are in sandbox CPU time
+ (2 cores available) and are estimates, not measurements; gains are stated as the *quantity that has to move*
+ (the metric's own terms) rather than as predicted leaderboard numbers, because this repository has measured
+@@ -8,7 +8,7 @@
+ 
+ The metric, verified from the organiser's page this session:
+ `DTI = TPw / (TPw + 0.2·FPw + 0.8·FNw)` with `FNw = |G| − TPw`, hence
+-`DTI = TPw / (0.2·TPw + 0.2·(S − M) + 0.8·|G|)` — see `knowledge/98`.
++`DTI = TPw / (0.2·TPw + 0.2·(S − M) + 0.8·|G|)` — see `knowledge/109`.
+ 
+ ---
+ 
+@@ -28,12 +28,12 @@
+ 
+ ### The E4/E4b geometry result in one table (4 folds, 53,186 withheld positive px, mass-matched)
+ 
+-With the mandatory random control (`evidence/h97_e4_coverage.json`, `evidence/h97_e4b_hysteresis.json`;
+-interpretation and its limits in `knowledge/99` §7–§8):
++With the mandatory random control (`evidence/h102_e4_coverage.json`, `evidence/h102_e4b_hysteresis.json`;
++interpretation and its limits in `knowledge/110` §7–§8):
+ 
+ | field | dots @ 9,400 | trace @ matched mass | dots @ matched mass | random @ matched mass |
+ |---|---:|---:|---:|---:|
+-| `cotrain_disagree` (H97 primary) | 0.029460 | 0.024497 bridge / 0.021537 hysteresis | **0.201789 / 0.238451** | 0.178690 / 0.196837 |
++| `cotrain_disagree` (H102 primary) | 0.029460 | 0.024497 bridge / 0.021537 hysteresis | **0.201789 / 0.238451** | 0.178690 / 0.196837 |
+ | `single_B2` (surface anisotropy) | 0.185968 | 0.153403 bridge / 0.144522 hysteresis | **0.254062 / 0.248644** | 0.176328 / 0.196093 |
+ 
+ Two independent trace constructions both lose to the same mass spent as well-separated dots, on both fields,
+@@ -84,11 +84,11 @@
+   along-line median), and it must show the signal is not the survey geometry. Without that control the
+   hypothesis is not testable, and it should not be run.
+ * **Cost.** Medium (~1.5 h): one channels pass over 6 external bands at 5 lags (the operator costs ~30 s per
+-  band at 5 lags, measured in H97) plus one fit/holdout pass.
++  band at 5 lags, measured in H102) plus one fit/holdout pass.
+ 
+ ## 3 · Tip-and-stepover continuation gated by the surface fabric *(rank 3)*
+ 
+-* **Layers.** `data/labels.tif` (visible catalogue, per fold), the H82/H97 surface anisotropy field, and the
++* **Layers.** `data/labels.tif` (visible catalogue, per fold), the H82/H102 surface anisotropy field, and the
+   store's `B_*` DEM columns.
+ * **Physical signature targeted.** The **along-strike fabric of the surface field beyond a mapped fault's
+   tip**: if the local anisotropy ridge continues in a stable direction for N pixels past the tip, the mapped
+@@ -127,10 +127,10 @@
+ 
+ * Do not spend a weekly submission slot on any arm whose holdout number has not first beaten the standing
+   bar on the shared instrument; the selector owns that decision and this repository has used 0 slots so far.
+-* Do not re-`fit` a View-A-only arm again: eight consecutive sufficiency failures (`knowledge/99` §3) mean the
++* Do not re-`fit` a View-A-only arm again: eight consecutive sufficiency failures (`knowledge/110` §3) mean the
+   potential-field view is a context/veto layer, not a learner.
+ * Do not re-try emission **geometry** as a coverage fix on the catalogue instrument: bridging (E4) and
+   hysteresis growth (E4b) both lost to mass-matched dots *and* to random at the same mass. Reopening that
+   question requires the prevalence-matched off-catalogue instrument (rank 1).
+ * Do not re-fetch the 526-blob prior census without budgeting for it; if it is needed, run
+-  `scripts/fetch_prior_inventory.py` as its own step and record the receipt (IR-H97-003).
++  `scripts/fetch_prior_inventory.py` as its own step and record the receipt (IR-H102-003).
+
+--- 1f542d4:registry/h97_preregistration.json
++++ registry/h102_preregistration.json
+@@ -112,12 +112,199 @@
+   "https://epsg.io/32611"
+  ],
+  "hypothesis_document": "knowledge/97_hypotheses_H97_preregistered.md",
+- "hypothesis_sha256": "d603fe73580af36bc3673d3acaf2a41c4b64604134977782a5d077163e60db60",
++ "hypothesis_sha256": "3bc571adb709f8e3c18fbe158221019bbc69515162e88ed9220319b5851b674a",
+  "amendment_h97a": {
+   "written_before_any_fit": true,
+   "created_utc": "2026-10-10T23:30:00+00:00",
+   "change": "the artifact's emitted mass is FROZEN at 37,600 dots (= 4 x 9,400 per-fold budget, the family standard and the champion's 37,654 px mass). The pre-registered budget sweep {9400, 16000, 25400} is DEMOTED to a diagnostic: it is reported as a curve but it does NOT select the budget.",
+   "reason": "knowledge/76 sec.6 and evidence/h83_budget_curve.json measure that the hide-and-recover instruments over-reward recall (off-catalogue truth is ~4x the estimated real prevalence), and knowledge/76 sec.6 states explicitly that these instruments are 'not valid for choosing the budget'. Selecting the artifact's mass from a sweep on such an instrument would repeat a defect this repository has already logged. Freezing the budget at the family standard keeps H97 comparable with H82/H89/H96 and leaves the mass lever to the selector step.",
+   "unchanged": "arms, channels, holdout, canary, independence thresholds and the promotion rule are exactly as frozen in the un-amended preregistration"
++ },
++ "identifier_rename": {
++  "done_utc": "2026-10-11",
++  "reason": "identifier collision: this round was frozen, run and receipted as H97 (commit 1f542d4, base 7eb226d); main meanwhile merged other sessions' H97 (co-training disagreement) and H97b/H97-masslever rounds, so the label is taken. Renumbered H102. Identifier-only edit: no constant, threshold, arm, budget or measured number changed; every stage ran under the H97 name with the pre-rename hashes, and the TIFF bytes are identical before and after.",
++  "frm": "H97",
++  "to": "H102",
++  "document_sha256_before": "d603fe73580af36bc3673d3acaf2a41c4b64604134977782a5d077163e60db60",
++  "document_sha256_after": "3bc571adb709f8e3c18fbe158221019bbc69515162e88ed9220319b5851b674a",
++  "registry_sha256_before": "b2eb593fe5ebed4005574402769305b9805c2ffdd57d760ecd3d0c90bd359181",
++  "registry_sha256_after": "recorded in evidence/h102_run_card.json identifier_history (this file cannot contain its own hash)",
++  "token_map": {
++   "h97": "h102",
++   "H97": "H102",
++   "knowledge/97": "knowledge/108",
++   "knowledge/98": "knowledge/109",
++   "knowledge/99": "knowledge/110",
++   "knowledge/100": "knowledge/111"
++  },
++  "evidence_diff": "evidence/h102_identifier_rename.diff",
++  "artefact_bytes_unchanged": true,
++  "artefact_sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
++  "zip_rebuilt": {
++   "reason": "the single member of the ZIP is named after the TIFF",
++   "sha256_before": "f1c4472f11caadb1adbe9e257fbb4af3cdb26be8011e47dbdb3a17fe0f45c304"
++  },
++  "moves": [
++   {
++    "old": "knowledge/97_hypotheses_H97_preregistered.md",
++    "new": "knowledge/108_hypotheses_H102_preregistered.md"
++   },
++   {
++    "old": "knowledge/98_the_metric_is_a_coverage_metric.md",
++    "new": "knowledge/109_the_metric_is_a_coverage_metric.md"
++   },
++   {
++    "old": "knowledge/99_h97_results_and_limits.md",
++    "new": "knowledge/110_h102_results_and_limits.md"
++   },
++   {
++    "old": "knowledge/100_next_round_proposals.md",
++    "new": "knowledge/111_next_round_proposals.md"
++   },
++   {
++    "old": "registry/h97_preregistration.json",
++    "new": "registry/h102_preregistration.json"
++   },
++   {
++    "old": "docs/h97.html",
++    "new": "docs/h102.html"
++   },
++   {
++    "old": "scripts/run_h97.py",
++    "new": "scripts/run_h102.py"
++   },
++   {
++    "old": "scripts/run_h97_e4_coverage.py",
++    "new": "scripts/run_h102_e4_coverage.py"
++   },
++   {
++    "old": "scripts/run_h97_e4b_hysteresis.py",
++    "new": "scripts/run_h102_e4b_hysteresis.py"
++   },
++   {
++    "old": "scripts/build_h97b_covered.py",
++    "new": "scripts/build_h102b_covered.py"
++   },
++   {
++    "old": "scripts/publish_h97_site.py",
++    "new": "scripts/publish_h102_site.py"
++   },
++   {
++    "old": "scripts/publish_h97_readme.py",
++    "new": "scripts/publish_h102_readme.py"
++   },
++   {
++    "old": "scripts/finalize_h97_pointer.py",
++    "new": "scripts/finalize_h102_receipts.py"
++   },
++   {
++    "old": "submission/H97_LATEST.txt",
++    "new": "submission/H102_LATEST.txt"
++   },
++   {
++    "old": "docs/downloads/h97-candidate.json",
++    "new": "docs/downloads/h102-candidate.json"
++   },
++   {
++    "old": "tests/test_current_submission_gate.py",
++    "new": "tests/test_current_submission_gate.py"
++   },
++   {
++    "old": "tests/test_h95.py",
++    "new": "tests/test_h95.py"
++   },
++   {
++    "old": "evidence/h97_build_placement.json",
++    "new": "evidence/h102_build_placement.json"
++   },
++   {
++    "old": "evidence/h97_channels.json",
++    "new": "evidence/h102_channels.json"
++   },
++   {
++    "old": "evidence/h97_e4_coverage.json",
++    "new": "evidence/h102_e4_coverage.json"
++   },
++   {
++    "old": "evidence/h97_e4b_hysteresis.json",
++    "new": "evidence/h102_e4b_hysteresis.json"
++   },
++   {
++    "old": "evidence/h97_fit.json",
++    "new": "evidence/h102_fit.json"
++   },
++   {
++    "old": "evidence/h97_holdout.json",
++    "new": "evidence/h102_holdout.json"
++   },
++   {
++    "old": "evidence/h97_independence.json",
++    "new": "evidence/h102_independence.json"
++   },
++   {
++    "old": "evidence/h97_lane.json",
++    "new": "evidence/h102_lane.json"
++   },
++   {
++    "old": "evidence/h97_not_union.json",
++    "new": "evidence/h102_not_union.json"
++   },
++   {
++    "old": "evidence/h97_run_card.json",
++    "new": "evidence/h102_run_card.json"
++   },
++   {
++    "old": "evidence/submission_gems52-h97-pafdva-disagree-37600px-20261011T002233Z.json",
++    "new": "evidence/submission_gems52-h102-pafdva-disagree-37600px-20261011T002233Z.json"
++   },
++   {
++    "old": "docs/data/submission_gems52-h97-pafdva-disagree-37600px-20261011T002233Z.json",
++    "new": "docs/data/submission_gems52-h102-pafdva-disagree-37600px-20261011T002233Z.json"
++   },
++   {
++    "old": "submission/gems52-h97-pafdva-disagree-37600px-20261011T002233Z.json",
++    "new": "submission/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.json"
++   },
++   {
++    "old": "docs/downloads/gems52-h97-pafdva-disagree-37600px-20261011T002233Z.json",
++    "new": "docs/downloads/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.json"
++   },
++   {
++    "old": "submission/gems52-h97-pafdva-disagree-37600px-20261011T002233Z.tif",
++    "new": "submission/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif"
++   },
++   {
++    "old": "submission/gems52-h97-pafdva-disagree-37600px-20261011T002233Z.zip",
++    "new": "submission/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.zip"
++   },
++   {
++    "old": "submission/gems52-h97-pafdva-disagree-37600px-20261011T002233Z-a-only-reasoning.csv",
++    "new": "submission/gems52-h102-pafdva-disagree-37600px-20261011T002233Z-a-only-reasoning.csv"
++   },
++   {
++    "old": "docs/downloads/gems52-h97-pafdva-disagree-37600px-20261011T002233Z.tif",
++    "new": "docs/downloads/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif"
++   },
++   {
++    "old": "docs/downloads/gems52-h97-pafdva-disagree-37600px-20261011T002233Z.zip",
++    "new": "docs/downloads/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.zip"
++   },
++   {
++    "old": "docs/downloads/gems52-h97-pafdva-disagree-37600px-20261011T002233Z-a-only-reasoning.csv",
++    "new": "docs/downloads/gems52-h102-pafdva-disagree-37600px-20261011T002233Z-a-only-reasoning.csv"
++   },
++   {
++    "old": "docs/downloads/h97-candidate.tif",
++    "new": "docs/downloads/h102-candidate.tif"
++   },
++   {
++    "old": "docs/downloads/h97-candidate.zip",
++    "new": "docs/downloads/h102-candidate.zip"
++   },
++   {
++    "old": "docs/downloads/h97-a-only-reasoning.csv",
++    "new": "docs/downloads/h102-a-only-reasoning.csv"
++   }
++  ]
+  }
+ }
+
+--- 1f542d4:docs/h97.html
++++ docs/h102.html
+@@ -1,6 +1,6 @@
+ <!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+-<title>H97 — potential-field anisotropy &times; surface anisotropy disagreement (GEMSDOE52)</title>
++<title>H102 — potential-field anisotropy &times; surface anisotropy disagreement (GEMSDOE52)</title>
+ <style>:root{--bg:#0f1117;--fg:#e8eaed;--accent:#4fc3f7;--ok:#66bb6a;--warn:#ffa726;--err:#ef5350;--card:#1a1d27;--border:#2d3040}
+ *{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--fg);line-height:1.6}
+ .container{max-width:900px;margin:0 auto;padding:24px 20px}h1{font-size:1.6rem;color:var(--accent)}h2{font-size:1.15rem;margin:24px 0 10px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px}
+@@ -8,13 +8,13 @@
+ table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}th,td{padding:6px 9px;text-align:left;border-bottom:1px solid var(--border)}th{color:var(--accent)}
+ .box{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin:12px 0}.muted{color:#9aa0a6;font-size:.88rem}
+ .btn{display:inline-block;background:var(--accent);color:#000;font-weight:700;padding:10px 18px;border-radius:6px;margin:6px 6px 6px 0;text-decoration:none}</style></head><body><div class="container">
+-<h1>H97 — potential-field directional anisotropy (PAF-DVA) as View A</h1>
++<h1>H102 — potential-field directional anisotropy (PAF-DVA) as View A</h1>
+ <p class="muted">DOE GEMS Prize (DrivenData #306) &middot; generated 2026-10-11 00:31 UTC &middot;
+-preregistration <code>registry/h97_preregistration.json</code> SHA-256 <code>b2eb593fe5ebed4005574402769305b9805c2ffdd57d760ecd3d0c90bd359181</code> &middot;
++preregistration <code>registry/h102_preregistration.json</code> SHA-256 <code>b2eb593fe5ebed4005574402769305b9805c2ffdd57d760ecd3d0c90bd359181</code> &middot;
+ <a href="index.html">status</a> &middot; <a href="executive-summary.html">how to submit</a></p>
+ <div class="box"><b>Download:</b>
+-<a class="btn" href="downloads/h97-candidate.tif" download>h97-candidate.tif</a>
+-<a class="btn" href="downloads/h97-candidate.zip" download>h97-candidate.zip</a>
++<a class="btn" href="downloads/h102-candidate.tif" download>h102-candidate.tif</a>
++<a class="btn" href="downloads/h102-candidate.zip" download>h102-candidate.zip</a>
+ <p class="muted">Submit to DrivenData: <b>NO</b>. Verdict <b>negative</b>, submission slots used 0.</p></div>
+ <h2>1 &middot; Hypothesis and mechanism</h2>
+ <p>directional semivariance anisotropy on the potential-field/subsurface bands is a subsurface texture that is not a copy of the surface texture; where View A is confident and View B abstains the fault may be buried beneath cover and absent from the surface-expression catalogue</p><p><b>Mechanism.</b> fault damage zones lower density and destroy magnetite along strike, imprinting a preferred direction on the gravity and RTP-magnetic semivariance while alluvial cover removes the DEM expression</p>
+@@ -36,13 +36,13 @@
+ <h2>4 &middot; Diagnostics that were registered in advance</h2>
+ <table><tr><th>fold</th><th>single_A2 out-of-quadrant AUC</th><th>single_B2</th><th>leakage canary max</th><th>worst channel</th></tr><tr><td>0</td><td>0.5011</td><td>0.6735</td><td>0.5666</td><td>DVA2_det_elev_slope_logvar_l6</td></tr><tr><td>1</td><td>0.5995</td><td>0.7800</td><td>0.5976</td><td>DVA2_iso_grav_anom_hg_logvar_l6</td></tr><tr><td>2</td><td>0.4578</td><td>0.6422</td><td>0.6217</td><td>DVA2_det_elev_slope_logvar_l3</td></tr><tr><td>3</td><td>0.5238</td><td>0.7101</td><td>0.5801</td><td>DVA2_det_elev_logvar_l4</td></tr></table>
+ <p>Leakage canary bar 0.90 (a single channel alone on the held-out region); alarm raised: <b>False</b>.</p>
+-<p><b>Budget diagnostic (does NOT select the budget — amendment h97a):</b> the artifact's mass is frozen at
++<p><b>Budget diagnostic (does NOT select the budget — amendment h102a):</b> the artifact's mass is frozen at
+ 37,600 dots = 4 &times; 9,400, the family standard.</p>
+ <table><tr><th>fold</th><th>9,400/fold</th><th>16,000/fold</th><th>25,400/fold</th></tr><tr><td>0</td><td>0.012407</td><td>0.024212</td><td>0.038672</td></tr><tr><td>1</td><td>0.020125</td><td>0.036810</td><td>0.057678</td></tr><tr><td>2</td><td>0.071960</td><td>0.123927</td><td>0.180295</td></tr><tr><td>3</td><td>0.051304</td><td>0.080811</td><td>0.118831</td></tr></table>
+ <h2>5 &middot; Independence of the two views (Blum&ndash;Mitchell assumption)</h2>
+ <p>The brief's mandated test: correlate each view's spatial-block out-of-fold errors on labelled negatives,
+ thresholds inherited verbatim from <code>registry/h74_preregistration.json</code>. Result recorded in
+-<code>evidence/h97_independence.json</code>: max |rho| = 0.17317082820447907,
++<code>evidence/h102_independence.json</code>: max |rho| = 0.17317082820447907,
+ abandon bar 0.6.</p>
+ <h2>6 &middot; The artifact: placement, format and uniqueness</h2>
+ <p>Emitted 37,600 cells at 3 px minimum spacing inside the eligible footprint
+@@ -55,7 +55,7 @@
+ NaN 0, inf 0, range [0.0, 1.0]</td></tr>
+ <tr><td>lane vs registry (surface)</td><td>PASS &mdash; max |Spearman| 0.12071223517333894, bar 0.90</td></tr>
+ <tr><td>lane vs registry (dots)</td><td>PASS &mdash; max fraction within 3 px of one prior 0.6595478723404256, bar 0.70</td></tr>
+-<tr><td>registry scope</td><td>82 rasters &mdash; locally available de-duplicated rasters: restricted scored registry (data/scored, data/reference), this repository's submission/ artefacts and docs/downloads/*.tif. The 526-blob cross-repository census was NOT re-fetched inside this round's time box (IR-H97-003).</td></tr>
++<tr><td>registry scope</td><td>82 rasters &mdash; locally available de-duplicated rasters: restricted scored registry (data/scored, data/reference), this repository's submission/ artefacts and docs/downloads/*.tif. The 526-blob cross-repository census was NOT re-fetched inside this round's time box (IR-H102-003).</td></tr>
+ <tr><td>uniqueness</td><td>identical to any prior: None; novel fraction 0.6097340425531915; max Jaccard None</td></tr>
+ <tr><td>not merely the union of the two views</td><td>{"dots_emitted": 37600, "union_max_dots": 37600, "dots_equal_union": false, "dots_equal_single_A": false, "dots_equal_single_B": false, "dots_subset_of_union": false, "shared_with_union": 1179, "jaccard_with_union": 0.0159279123491982, "shared_with_single_A": 2938, "jaccard_with_single_A": 0.04065760704104509, "shared_with_single_B": 0, "jaccard_with_single_B": 0.0}</td></tr></table>
+ <h2>6b &middot; Emission-geometry diagnostic (E4 / E4b) — negative</h2>
+@@ -73,10 +73,10 @@
+ <li>The hide-and-recover instrument withholds the <em>catalogue</em> faults, which were mapped from surface expression; the
+ competition scores faults the catalogue lacks. This repository has measured that the instrument does not rank leaderboard
+ performance (Spearman &asymp; &minus;0.10 over R4), so a holdout number is never a board forecast.</li>
+-<li>View A (potential field / subsurface) has failed the sufficiency gate in every round that reported it; H97 tests whether
++<li>View A (potential field / subsurface) has failed the sufficiency gate in every round that reported it; H102 tests whether
+ <em>directional anisotropy</em> changes that. The View-A out-of-quadrant AUCs are in the table above.</li>
+ <li>The lane census covers the locally available registry (82 unique rasters). The full 526-blob
+-cross-repository census lives in a git-ignored receipt and was not re-fetched inside this round's time box (IR-H97-003).</li>
++cross-repository census lives in a git-ignored receipt and was not re-fetched inside this round's time box (IR-H102-003).</li>
+ <li>No new external data was used. The one external layer ranked highest-unexplored (GDR 1391 two-metre temperature probes,
+ DOI 10.15121/1881483) is not reachable from this sandbox (<code>gdr.openei.org</code> is not on the egress allowlist).</li>
+ </ul>
+@@ -90,5 +90,5 @@
+ <li>Reference solution: <a href="https://github.com/drivendataorg/gems-prize-reference-solution">github.com/drivendataorg/gems-prize-reference-solution</a></li>
+ </ul>
+ <p class="muted">Every number on this page was read from the JSON receipts named above, written by
+-<code>scripts/run_h97.py</code>. Nothing is projected onto a leaderboard.</p>
++<code>scripts/run_h102.py</code>. Nothing is projected onto a leaderboard.</p>
+ </div></body></html>
+
+--- 1f542d4:scripts/run_h97.py
++++ scripts/run_h102.py
+@@ -1,8 +1,8 @@
+ #!/usr/bin/env python3
+-"""H97 -- potential-field directional anisotropy (PAF-DVA) as View A, disagreement as the discovery signal.
+-
+-Preregistered (frozen before any fit) in ``knowledge/97_hypotheses_H97_preregistered.md`` and pinned by
+-``registry/h97_preregistration.json`` (amendment h97a included); this runner refuses to start if either
++"""H102 -- potential-field directional anisotropy (PAF-DVA) as View A, disagreement as the discovery signal.
++
++Preregistered (frozen before any fit) in ``knowledge/108_hypotheses_H102_preregistered.md`` and pinned by
++``registry/h102_preregistration.json`` (amendment h102a included); this runner refuses to start if either
+ hash has moved.
+ 
+ Lane: the standing brief's co-training paragraph (Blum & Mitchell, COLT '98, doi:10.1145/279943.279962).
+@@ -18,7 +18,7 @@
+ * DVA operator       ``run_h82._gamma_stats`` + the frozen fan/sigma/lags -- imported, never forked
+ * learner, sampling, view columns, percentile rank: ``run_h61`` -- imported
+ 
+-Stages (each checkpointed under work/h97 and evidence/h97_*.json):
++Stages (each checkpointed under work/h102 and evidence/h102_*.json):
+     channels     40 PAF-DVA channels (View A) + 20 surface-DVA channels (View B) from the pinned raster
+     fit          leakage canary per channel, then single_A2 and single_B2 per fold (region-only predict)
+     holdout      matched-budget hide-and-recover pooled DTI for 7 arms + paired 95 % CIs
+@@ -27,7 +27,7 @@
+     lane         lane gate (surface and dots) against every locally available registry raster
+     write        GeoTIFF + on-disk validator + uniqueness + not-the-union + reasoning + run card
+ 
+-Usage: python scripts/run_h97.py [channels|fit|holdout|independence|build|lane|write|all]
++Usage: python scripts/run_h102.py [channels|fit|holdout|independence|build|lane|write|all]
+ """
+ from __future__ import annotations
+ 
+@@ -56,18 +56,18 @@
+ from gems52 import gates, nodes, spatial, submission_writer           # noqa: E402
+ 
+ SEED = base.SEED
+-PREREG = ROOT / "registry/h97_preregistration.json"
+-WORK = ROOT / "work/h97"
++PREREG = ROOT / "registry/h102_preregistration.json"
++WORK = ROOT / "work/h102"
+ FEAT = WORK / "features"
+ EVID = ROOT / "evidence"
+ SAMPLE = ROOT / "data/sample_submission.tif"
+-K_FOLD = int(os.environ.get("H97_K_FOLD", 9400))
+-K_TOTAL = int(os.environ.get("H97_K_TOTAL", 37600))          # amendment h97a: frozen = 4 x K_FOLD
++K_FOLD = int(os.environ.get("H102_K_FOLD", 9400))
++K_TOTAL = int(os.environ.get("H102_K_TOTAL", 37600))          # amendment h102a: frozen = 4 x K_FOLD
+ RING_M = 200.0
+ SIGMA = h82.SIGMA
+ LAGS = h82.LAGS
+ FAN = h82.FAN
+-PREFIX = "gems52-h97-"
++PREFIX = "gems52-h102-"
+ 
+ # View A: potential field and subsurface.  View B: surface only.  Disjoint by construction.
+ A_BANDS = {13: "iso_grav_anom", 18: "iso_grav_anom_hg", 2: "rtp", 15: "depth_to_base_surf"}
+@@ -91,7 +91,7 @@
+ 
+ def write(name, obj):
+     EVID.mkdir(exist_ok=True)
+-    p = EVID / f"h97_{name}.json"
++    p = EVID / f"h102_{name}.json"
+     p.write_text(json.dumps(obj, indent=1, default=float) + "\n")
+     return p
+ 
+@@ -100,9 +100,9 @@
+     reg = json.loads(PREREG.read_text())
+     doc = ROOT / reg["hypothesis_document"]
+     if digest(doc) != reg["hypothesis_sha256"]:
+-        raise SystemExit("H97 preregistration document changed after freezing; re-pin registry/h97_preregistration.json")
++        raise SystemExit("H102 preregistration document changed after freezing; re-pin registry/h102_preregistration.json")
+     if reg.get("frozen_before_any_fit") is not True:
+-        raise SystemExit("H97 preregistration is not marked frozen before any fit")
++        raise SystemExit("H102 preregistration is not marked frozen before any fit")
+     return reg
+ 
+ 
+@@ -147,7 +147,7 @@
+         if attempts > 1:
+             repaired[k] = attempts
+         del v
+-    man = dict(round="H97", created_utc=now(), version="h97-pafdva-v1", sigma_px=SIGMA, lags_px=list(LAGS),
++    man = dict(round="H102", created_utc=now(), version="h102-pafdva-v1", sigma_px=SIGMA, lags_px=list(LAGS),
+                fan_offsets_dy_dx=[list(t) for t in FAN], view_A_bands={str(k): v for k, v in A_BANDS.items()},
+                view_B_bands={str(k): v for k, v in B_BANDS.items()},
+                operator="run_h82._gamma_stats (imported, not forked)", channels_A=A_NAMES, channels_B=B_NAMES,
+@@ -406,7 +406,7 @@
+                thresholds=dict(donor_rank_min=th["donor_rank_min"], block_side_px=th["block_side_px"],
+                                abandon_max_abs_rho=th["independence_abandon_max_abs_rho"],
+                                min_blocks=20, negative_ring_px=4),
+-               thresholds_not_retuned_for_h97=True,
++               thresholds_not_retuned_for_h102=True,
+                view_A="single_A2 (store view_A_with_external + 40 PAF-DVA channels)",
+                view_B="single_B2 (store view_B_with_external + 20 surface-DVA channels)",
+                per_fold=per_fold, result=res,
+@@ -465,7 +465,7 @@
+                min_cat_dist_m=float((catd[dots] * 100).min()), median_cat_dist_m=float(np.median(catd[dots] * 100)),
+                dots_within_300m_of_catalogue_pct=float((catd[dots] * 100 <= 300).mean() * 100),
+                union_dots=int(union_dots.sum()), a_dots=int(a_dots.sum()), b_dots=int(b_dots.sum()),
+-               budget_rule="amendment h97a: frozen 37600 = 4 x 9400/fold", started_utc=now())
++               budget_rule="amendment h102a: frozen 37600 = 4 x 9400/fold", started_utc=now())
+     write("build_placement", rec)
+     log(f"dots {int(dots.sum())}, pool {int(pool.sum())}, min catalogue distance {rec['min_cat_dist_m']:.1f} m")
+     del fA, fB, ra, rb, dis, field, dots, a_field, b_field, a_dots, b_dots, umax, union_dots, catd, pool
+@@ -509,7 +509,7 @@
+                registry_scope=("locally available de-duplicated rasters: restricted scored registry "
+                                "(data/scored, data/reference), this repository's submission/ artefacts and "
+                                "docs/downloads/*.tif. The 526-blob cross-repository census was NOT re-fetched "
+-                               "inside this round's time box (IR-H97-003)."),
++                               "inside this round's time box (IR-H102-003)."),
+                doctrine="a restricted-registry PASS never waives the full-census result; here both are the same set")
+     out["surface"] = gates.lane_report(surf, eligible, reg, sample=SAMPLE, phase="surface", log=log)
+     out["dots"] = gates.lane_report(dots, eligible, reg, sample=SAMPLE, phase="dots", log=log)
+@@ -531,16 +531,16 @@
+     union_dots = np.load(WORK / "union_dots.npy")
+     pred = dots.astype(np.float32)
+     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+-    name = f"h97-pafdva-disagree-{int(dots.sum())}px-{stamp}"
+-    note = ("H97 co-training: View-A potential-field directional anisotropy (gravity/RTP/cover) x View-B DEM "
++    name = f"h102-pafdva-disagree-{int(dots.sum())}px-{stamp}"
++    note = ("H102 co-training: View-A potential-field directional anisotropy (gravity/RTP/cover) x View-B DEM "
+             "anisotropy; disagreement field, 200m catalogue ring excluded, binary")
+     if len(note) > 140:
+-        note = ("H97 co-training: View-A potential-field anisotropy x View-B DEM anisotropy; disagreement field, "
++        note = ("H102 co-training: View-A potential-field anisotropy x View-B DEM anisotropy; disagreement field, "
+                 f"200m ring excluded, binary {int(dots.sum())} dots")
+     assert len(name) <= 140 and len(note) <= 140, (len(name), len(note))
+     out = ROOT / "submission" / f"gems52-{name}.tif"
+     rec = submission_writer.write_submission(out, pred, SAMPLE, eligible, note=note, name=name,
+-                                             metadata=dict(round="H97", primary_arm=PRIMARY,
++                                             metadata=dict(round="H102", primary_arm=PRIMARY,
+                                                            preregistration_sha256=digest(PREREG)))
+     with rasterio.open(out) as a, rasterio.open(SAMPLE) as s:
+         v = a.read(1)
+@@ -557,8 +557,8 @@
+     val["range_rule_source"] = ("official: single layer float32 with values between 0 and 1, EPSG:32611, 100 m, "
+                                 "same bounds as the training data "
+                                 "(https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/)")
+-    hold = json.loads((EVID / "h97_holdout.json").read_text())
+-    lane = json.loads((EVID / "h97_lane.json").read_text())
++    hold = json.loads((EVID / "h102_holdout.json").read_text())
++    lane = json.loads((EVID / "h102_lane.json").read_text())
+     fA, fB = np.load(WORK / "field_A.npy"), np.load(WORK / "field_B.npy")
+     catd = ndi.distance_transform_edt(~cat)
+     pool = eligible & np.isfinite(fA) & np.isfinite(fB) & (catd * 100.0 > RING_M)
+@@ -597,7 +597,7 @@
+                         "flight-line or terrain-correction striping; paleochannel scour at the basement surface",
+                         "a Phase-2 reviewer finds the candidate coincides with a mapped lithologic contact or a "
+                         "survey flight line and has no independent surface or seismicity expression"])
+-    run_card = dict(round="H97", generated_utc=now(),
++    run_card = dict(round="H102", generated_utc=now(),
+                     hypothesis=("directional semivariance anisotropy on the potential-field/subsurface bands is a "
+                                 "subsurface texture that is not a copy of the surface texture; where View A is "
+                                 "confident and View B abstains the fault may be buried beneath cover and absent "
+
+--- 1f542d4:scripts/run_h97_e4_coverage.py
++++ scripts/run_h102_e4_coverage.py
+@@ -1,17 +1,17 @@
+ #!/usr/bin/env python3
+-"""H97 E4 (diagnostic) -- is the score bought by the RANKING or by the EMISSION GEOMETRY?
++"""H102 E4 (diagnostic) -- is the score bought by the RANKING or by the EMISSION GEOMETRY?
+ 
+-knowledge/98 shows, with the repository's own metric, that the organiser's DTI is a *coverage*
++knowledge/109 shows, with the repository's own metric, that the organiser's DTI is a *coverage*
+ metric: a swath covering a fault trace scores 0.88 where a sparse sampling of the same trace scores
+ far less, and the marginal rule admits any cell within ~283 m of an uncovered truth pixel. Every
+-round in this family, including H97's own artifact, emits dots at 3 px minimum spacing -- a *sampled*
++round in this family, including H102's own artifact, emits dots at 3 px minimum spacing -- a *sampled*
+ trace. E4 asks the question the family has never asked, on the shared hide-and-recover instrument:
+ 
+     at the SAME emitted mass, does connecting neighbouring confident cells along the field
+     ("bridging") recover more weighted truth than spending the same mass on more dots?
+ 
+ Arms, per fold, all on the identical primary field and the identical allowed set:
+-    dots@K          the H97 convention: spacing_select(field, K=9400, min_px=3)
++    dots@K          the H102 convention: spacing_select(field, K=9400, min_px=3)
+     dots@S_bridge   mass-matched control: spacing_select(field, S_bridge, min_px=3)
+     bridged         dots@K plus every cell on a segment between two dots closer than R_bridge px,
+                     kept only where the cell is inside the allowed set and its field rank clears a
+@@ -19,12 +19,12 @@
+     random@S        floor at the same mass
+ 
+ If `bridged` beats `dots@S_bridge`, the family has been losing score to its emission geometry, which is
+-the cheapest unspent lever in the project (knowledge/98 sec.6). If it does not, the lever is dead and
++the cheapest unspent lever in the project (knowledge/109 sec.6). If it does not, the lever is dead and
+ that is a deliverable too.
+ 
+-This is a DIAGNOSTIC. It does not re-tune H97's frozen arm, budget or promotion rule.
++This is a DIAGNOSTIC. It does not re-tune H102's frozen arm, budget or promotion rule.
+ 
+-Usage: python scripts/run_h97_e4_coverage.py
++Usage: python scripts/run_h102_e4_coverage.py
+ """
+ from __future__ import annotations
+ 
+@@ -46,16 +46,16 @@
+ from scipy.spatial import cKDTree                                      # noqa: E402
+ 
+ import run_h61 as base                                                # noqa: E402
+-import run_h97 as h97                                                 # noqa: E402
++import run_h102 as h102                                                 # noqa: E402
+ from gems52 import evaluate_holdout as evaluator                      # noqa: E402
+ from gems52 import nodes                                              # noqa: E402
+ 
+ SEED = base.SEED
+-WORK = ROOT / "work/h97"
++WORK = ROOT / "work/h102"
+ EVID = ROOT / "evidence"
+-K_FOLD = int(os.environ.get("H97E4_K_FOLD", 9400))
+-R_BRIDGE_PX = float(os.environ.get("H97E4_R_BRIDGE", 12.0))     # 1 200 m maximum gap to bridge
+-Q_FLOOR = float(os.environ.get("H97E4_Q_FLOOR", 0.60))          # field-rank floor for a bridged cell
++K_FOLD = int(os.environ.get("H102E4_K_FOLD", 9400))
++R_BRIDGE_PX = float(os.environ.get("H102E4_R_BRIDGE", 12.0))     # 1 200 m maximum gap to bridge
++Q_FLOOR = float(os.environ.get("H102E4_Q_FLOOR", 0.60))          # field-rank floor for a bridged cell
+ 
+ 
+ def log(*a):
+@@ -111,19 +111,19 @@
+                question=("at the same emitted mass, does bridging neighbouring confident cells along the field "
+                          "recover more weighted truth than the same mass spent on more dots?"),
+                falsifier="bridged DTI <= dots@S_bridge DTI, i.e. the geometry adds nothing at matched mass",
+-               note=("run on two fields: the H97 primary disagreement field and the surface-anisotropy field "
++               note=("run on two fields: the H102 primary disagreement field and the surface-anisotropy field "
+                      "single_B2, because the geometry question is best posed on the strongest available field"),
+                folds=[])
+     for fold in folds:
+         f = fold["fold"]
+-        allowed = h97.allowed_of(fold, ring_px)
++        allowed = h102.allowed_of(fold, ring_px)
+         pa = base.to_grid(store.flat_idx, np.load(WORK / f"pred_single_A2_f{f}.npy"), eligible.shape)
+         pb = base.to_grid(store.flat_idx, np.load(WORK / f"pred_single_B2_f{f}.npy"), eligible.shape)
+-        ra, rb = h97.rank_in(pa, allowed), h97.rank_in(pb, allowed)
++        ra, rb = h102.rank_in(pa, allowed), h102.rank_in(pb, allowed)
+         rec = dict(fold=f, allowed_px=int(allowed.sum()), arms={})
+         for fld in FIELDS:
+             if fld == "cotrain_disagree":
+-                field = np.where(allowed, np.nan_to_num(h97.arm_field(h97.PRIMARY, ra, rb, eligible.shape), nan=-1.0),
++                field = np.where(allowed, np.nan_to_num(h102.arm_field(h102.PRIMARY, ra, rb, eligible.shape), nan=-1.0),
+                                  -1.0).astype(np.float32)
+             else:
+                 field = np.where(allowed, np.nan_to_num(rb, nan=-1.0), -1.0).astype(np.float32)
+@@ -165,7 +165,7 @@
+                         else "no measured geometry gain at matched mass (negative)")
+         out["geometry_vs_mass"][fld] = g
+     out["seconds"] = round(time.time() - t0, 1)
+-    (EVID / "h97_e4_coverage.json").write_text(json.dumps(out, indent=1, default=float) + "\n")
++    (EVID / "h102_e4_coverage.json").write_text(json.dumps(out, indent=1, default=float) + "\n")
+     for fld in FIELDS:
+         log(fld + ": " + json.dumps({a: round(out["pooled"][fld]["scores"][a]["dti"], 6) for a in arms}))
+         log(fld + ": " + json.dumps(out["geometry_vs_mass"][fld], default=float))
+
+--- 1f542d4:scripts/run_h97_e4b_hysteresis.py
++++ scripts/run_h102_e4b_hysteresis.py
+@@ -1,7 +1,7 @@
+ #!/usr/bin/env python3
+-"""H97 E4b -- second geometry for the same question: hysteresis traces instead of naive bridging.
++"""H102 E4b -- second geometry for the same question: hysteresis traces instead of naive bridging.
+ 
+-E4a (``run_h97_e4_coverage.py``) showed that *bridging every nearby pair* of dots along a weak field is
++E4a (``run_h102_e4_coverage.py``) showed that *bridging every nearby pair* of dots along a weak field is
+ worse than spending the same mass on more dots, on both fields tested.  That is a negative for the
+ bridging operator, not necessarily for the coverage thesis: bridging fills the segment between two cells
+ regardless of what the field does in between, so on a field whose ranking is poor it concentrates mass
+@@ -17,7 +17,7 @@
+ 
+ Same shared instrument, same folds, same evaluator, same frozen field.  Diagnostic only.
+ 
+-Usage: python scripts/run_h97_e4b_hysteresis.py
++Usage: python scripts/run_h102_e4b_hysteresis.py
+ """
+ from __future__ import annotations
+ 
+@@ -38,16 +38,16 @@
+ from scipy import ndimage as ndi                                      # noqa: E402
+ 
+ import run_h61 as base                                                # noqa: E402
+-import run_h97 as h97                                                 # noqa: E402
++import run_h102 as h102                                                 # noqa: E402
+ from gems52 import evaluate_holdout as evaluator                      # noqa: E402
+ from gems52 import nodes                                              # noqa: E402
+ 
+ SEED = base.SEED
+-WORK = ROOT / "work/h97"
++WORK = ROOT / "work/h102"
+ EVID = ROOT / "evidence"
+-Q_SEED = float(os.environ.get("H97E4B_Q_SEED", 0.98))
+-Q_GROW = float(os.environ.get("H97E4B_Q_GROW", 0.85))
+-MAX_STEPS = int(os.environ.get("H97E4B_MAX_STEPS", 12))
++Q_SEED = float(os.environ.get("H102E4B_Q_SEED", 0.98))
++Q_GROW = float(os.environ.get("H102E4B_Q_GROW", 0.85))
++MAX_STEPS = int(os.environ.get("H102E4B_MAX_STEPS", 12))
+ FIELDS = ("single_B2", "cotrain_disagree")
+ 
+ 
+@@ -87,19 +87,19 @@
+                folds=[])
+     for fold in folds:
+         f = fold["fold"]
+-        allowed = h97.allowed_of(fold, ring_px)
++        allowed = h102.allowed_of(fold, ring_px)
+         pa = base.to_grid(store.flat_idx, np.load(WORK / f"pred_single_A2_f{f}.npy"), eligible.shape)
+         pb = base.to_grid(store.flat_idx, np.load(WORK / f"pred_single_B2_f{f}.npy"), eligible.shape)
+-        ra, rb = h97.rank_in(pa, allowed), h97.rank_in(pb, allowed)
++        ra, rb = h102.rank_in(pa, allowed), h102.rank_in(pb, allowed)
+         rec = dict(fold=f, allowed_px=int(allowed.sum()), fields={})
+         for fld in FIELDS:
+             if fld == "cotrain_disagree":
+-                field = np.where(allowed, np.nan_to_num(h97.arm_field(h97.PRIMARY, ra, rb, eligible.shape), nan=-1.0),
++                field = np.where(allowed, np.nan_to_num(h102.arm_field(h102.PRIMARY, ra, rb, eligible.shape), nan=-1.0),
+                                  -1.0).astype(np.float32)
+                 field[allowed] = ra[allowed] - rb[allowed] + 1.0        # keep it non-negative on the allowed set
+             else:
+                 field = np.where(allowed, np.nan_to_num(rb, nan=-1.0), -1.0).astype(np.float32)
+-            dots = nodes.spacing_select(field, allowed, h97.K_FOLD, min_px=3.0)
++            dots = nodes.spacing_select(field, allowed, h102.K_FOLD, min_px=3.0)
+             hyst, hrec = hysteresis(field, allowed, Q_SEED, Q_GROW, MAX_STEPS)
+             s_hyst = int(hyst.sum())
+             dots_s = nodes.spacing_select(field, allowed, s_hyst, min_px=3.0)
+@@ -136,7 +136,7 @@
+                         else "no measured hysteresis gain at matched mass (negative)")
+         out["geometry_vs_mass"][fld] = g
+     out["seconds"] = round(time.time() - t0, 1)
+-    (EVID / "h97_e4b_hysteresis.json").write_text(json.dumps(out, indent=1, default=float) + "\n")
++    (EVID / "h102_e4b_hysteresis.json").write_text(json.dumps(out, indent=1, default=float) + "\n")
+     for fld in FIELDS:
+         log(fld + ": " + json.dumps({a: round(out["pooled"][fld]["scores"][a]["dti"], 6) for a in arms}))
+         log(fld + ": " + json.dumps(out["geometry_vs_mass"][fld], default=float))
+
+--- 1f542d4:scripts/build_h97b_covered.py
++++ scripts/build_h102b_covered.py
+@@ -1,12 +1,12 @@
+ #!/usr/bin/env python3
+-"""H97b -- the same frozen H97 field emitted with the E4 coverage geometry, gated and packaged.
++"""H102b -- the same frozen H102 field emitted with the E4 coverage geometry, gated and packaged.
+ 
+-Only built if ``evidence/h97_e4_coverage.json`` says the geometry beats the same mass spent on more dots
+-(paired 95 % CI lower bound > 0).  Reuses, unmodified: ``run_h97.stitch`` / ``run_h97.arm_field`` /
+-``run_h97.rank_in`` / ``run_h97.local_registry``, ``run_h97_e4_coverage.bridge``,
++Only built if ``evidence/h102_e4_coverage.json`` says the geometry beats the same mass spent on more dots
++(paired 95 % CI lower bound > 0).  Reuses, unmodified: ``run_h102.stitch`` / ``run_h102.arm_field`` /
++``run_h102.rank_in`` / ``run_h102.local_registry``, ``run_h102_e4_coverage.bridge``,
+ ``gems52.nodes.spacing_select``, ``gems52.evaluate_holdout``, ``gems52.gates``, ``gems52.submission_writer``.
+ 
+-Usage: python scripts/build_h97b_covered.py
++Usage: python scripts/build_h102b_covered.py
+ """
+ from __future__ import annotations
+ 
+@@ -23,15 +23,15 @@
+ sys.path.insert(0, str(ROOT / "src"))
+ sys.path.insert(0, str(ROOT / "scripts"))
+ import run_h61 as base                                                 # noqa: E402
+-import run_h97 as h97                                                  # noqa: E402
+-import run_h97_e4_coverage as e4                                       # noqa: E402
++import run_h102 as h102                                                  # noqa: E402
++import run_h102_e4_coverage as e4                                       # noqa: E402
+ from gems52 import gates, nodes, submission_writer                     # noqa: E402
+ 
+ EVID = ROOT / "evidence"
+-WORK = ROOT / "work/h97"
++WORK = ROOT / "work/h102"
+ SAMPLE = ROOT / "data/sample_submission.tif"
+-K_TOTAL = h97.K_TOTAL
+-RING_M = h97.RING_M
++K_TOTAL = h102.K_TOTAL
++RING_M = h102.RING_M
+ 
+ 
+ def log(*a):
+@@ -39,18 +39,18 @@
+ 
+ 
+ def main() -> int:
+-    cov = json.loads((EVID / "h97_e4_coverage.json").read_text())
++    cov = json.loads((EVID / "h102_e4_coverage.json").read_text())
+     g = cov["geometry_vs_mass"]["single_B2"]
+     log("E4 geometry verdict: " + json.dumps({k: g[k] for k in ("verdict", "delta_matched_mass",
+                                                                 "ci95_matched_mass")}, default=float))
+     if not g["GEOMETRY_BEATS_MASS_AT_MATCHED_MASS"]:
+-        log("E4 says the geometry does not beat matched mass; not building h97b (recorded, not forced).")
+-        (EVID / "h97b_skipped.json").write_text(json.dumps(
++        log("E4 says the geometry does not beat matched mass; not building h102b (recorded, not forced).")
++        (EVID / "h102b_skipped.json").write_text(json.dumps(
+             dict(reason="E4 measured no geometry gain at matched mass", e4=g), indent=1, default=float) + "\n")
+         return 0
+     _reg, store, cat, eligible, folds, va, vb, ring_px = base.setup()
+     flat = store.flat_idx
+-    fA, fB = h97.stitch("single_A2", folds, eligible, flat), h97.stitch("single_B2", folds, eligible, flat)
++    fA, fB = h102.stitch("single_A2", folds, eligible, flat), h102.stitch("single_B2", folds, eligible, flat)
+     catd = ndi.distance_transform_edt(~cat)
+     pool = eligible & np.isfinite(fA) & np.isfinite(fB) & (catd * 100.0 > RING_M)
+     ai = np.flatnonzero(pool.ravel())
+@@ -64,15 +64,15 @@
+     covered, brec = e4.bridge(dots, field, pool, e4.Q_FLOOR, e4.R_BRIDGE_PX)
+     log(f"dots {int(dots.sum())} -> covered {int(covered.sum())} ({brec})")
+     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+-    name = f"h97b-pafdva-covered-{int(covered.sum())}px-{stamp}"
+-    note = ("H97b: same frozen H97 disagreement field, emitted as a covered trace (gap bridging <=1.2km) "
++    name = f"h102b-pafdva-covered-{int(covered.sum())}px-{stamp}"
++    note = ("H102b: same frozen H102 disagreement field, emitted as a covered trace (gap bridging <=1.2km) "
+             "instead of 3px dots; 200m catalogue ring excluded")
+     if len(note) > 140:
+-        note = f"H97b: H97 disagreement field emitted as a covered trace (gap bridging <=1.2km), 200m ring out, binary {int(covered.sum())}"
++        note = f"H102b: H102 disagreement field emitted as a covered trace (gap bridging <=1.2km), 200m ring out, binary {int(covered.sum())}"
+     assert len(name) <= 140 and len(note) <= 140, (len(name), len(note))
+     out = ROOT / "submission" / f"gems52-{name}.tif"
+     rec = submission_writer.write_submission(out, covered.astype(np.float32), SAMPLE, eligible, note=note,
+-                                             name=name, metadata=dict(round="H97b", primary_arm=h97.PRIMARY,
++                                             name=name, metadata=dict(round="H102b", primary_arm=h102.PRIMARY,
+                                                                       geometry="covered trace, E4 bridging",
+                                                                       bridge=brec,
+                                                                       e4_verdict=g["verdict"]))
+@@ -91,24 +91,24 @@
+     val["range_rule_source"] = ("official: single layer float32 with values between 0 and 1, EPSG:32611, 100 m, "
+                                 "same bounds as the training data "
+                                 "(https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/)")
+-    reg = h97.local_registry()
++    reg = h102.local_registry()
+     lane = dict(n=len(reg), surface=gates.lane_report(np.where(np.isfinite(field), np.nan_to_num(field, nan=0.0), 0.0),
+                                                       eligible, reg, sample=SAMPLE, phase="surface"),
+                 dots=gates.lane_report(covered.astype(np.float32), eligible, reg, sample=SAMPLE, phase="dots"),
+                 uniqueness=gates.uniqueness_report(covered, reg))
+-    hold = json.loads((EVID / "h97_holdout.json").read_text())
+-    card = dict(round="H97b", generated_utc=datetime.now(timezone.utc).isoformat(timespec="seconds"),
+-                hypothesis="same field as H97; emission geometry changed from 3 px dots to a covered trace",
+-                geometry_evidence="evidence/h97_e4_coverage.json", e4=g,
+-                holdout_dti_h97_arm=hold["pooled"]["scores"][h97.PRIMARY],
++    hold = json.loads((EVID / "h102_holdout.json").read_text())
++    card = dict(round="H102b", generated_utc=datetime.now(timezone.utc).isoformat(timespec="seconds"),
++                hypothesis="same field as H102; emission geometry changed from 3 px dots to a covered trace",
++                geometry_evidence="evidence/h102_e4_coverage.json", e4=g,
++                holdout_dti_h102_arm=hold["pooled"]["scores"][h102.PRIMARY],
+                 submission_name=name, note=note, note_chars=len(note), raster_sha256=rec["sha256"],
+-                raster_bytes=rec["bytes"], validator=val, lane_scope=h97.local_registry.__doc__,
++                raster_bytes=rec["bytes"], validator=val, lane_scope=h102.local_registry.__doc__,
+                 lane={k: (lane[k]["policy"] if k != "uniqueness" else {
+                     kk: vv for kk, vv in lane["uniqueness"].items() if kk != "per_prior"}) for k in lane},
+                 bridge=brec, dots_before_bridge=int(dots.sum()), slots_used=0)
+     card["verdict"] = "candidate with measured geometry gain" if val["PASS"] else "rejected by validator"
+     card["submit_ok"] = bool(val["PASS"])
+-    (EVID / "h97b_run_card.json").write_text(json.dumps(card, indent=1, default=float) + "\n")
++    (EVID / "h102b_run_card.json").write_text(json.dumps(card, indent=1, default=float) + "\n")
+     log(json.dumps(dict(sha=rec["sha256"], ones=val["ones"], validator=val["PASS"],
+                         lane_dots=lane["dots"]["policy"]["verdict"]), indent=1))
+     return 0
+
+--- 1f542d4:scripts/publish_h97_site.py
++++ scripts/publish_h102_site.py
+@@ -1,16 +1,16 @@
+ #!/usr/bin/env python3
+-"""Publish the H97 round to the GitHub Pages site: one-click download + explicit submit verdict.
+-
+-Reads only receipts written by ``scripts/run_h97.py`` (nothing is invented here):
+-    evidence/h97_run_card.json  evidence/h97_holdout.json  evidence/h97_lane.json
+-    evidence/h97_build_placement.json  evidence/h97_fit.json  evidence/h97_channels.json
++"""Publish the H102 round to the GitHub Pages site: one-click download + explicit submit verdict.
++
++Reads only receipts written by ``scripts/run_h102.py`` (nothing is invented here):
++    evidence/h102_run_card.json  evidence/h102_holdout.json  evidence/h102_lane.json
++    evidence/h102_build_placement.json  evidence/h102_fit.json  evidence/h102_channels.json
+ 
+ Writes:
+-    docs/downloads/h97-candidate.tif / .zip / .json      stable download aliases
++    docs/downloads/h102-candidate.tif / .zip / .json      stable download aliases
+     docs/downloads/<submission filename>.tif / .zip      the exact files to upload
+-    docs/h97.html                                        the round page
++    docs/h102.html                                        the round page
+     submission/LATEST.txt                                which file the site is pointing at
+-and inserts an H97 card (between <!--H97-CARD--> markers) at the top of
++and inserts an H102 card (between <!--H102-CARD--> markers) at the top of
+ docs/index.html and docs/executive-summary.html.
+ """
+ from __future__ import annotations
+@@ -33,12 +33,12 @@
+ 
+ 
+ def main() -> int:
+-    card = load("h97_run_card.json")
+-    hold = load("h97_holdout.json")
+-    lane = load("h97_lane.json")
+-    build = load("h97_build_placement.json")
+-    fit = load("h97_fit.json")
+-    ch = load("h97_channels.json")
++    card = load("h102_run_card.json")
++    hold = load("h102_holdout.json")
++    lane = load("h102_lane.json")
++    build = load("h102_build_placement.json")
++    fit = load("h102_fit.json")
++    ch = load("h102_channels.json")
+     name = card["submission_name"]
+     tif = SUB / f"gems52-{name}.tif"
+     zipf = SUB / f"gems52-{name}.zip"
+@@ -46,12 +46,12 @@
+     if not tif.exists():
+         raise SystemExit(f"missing {tif}")
+     DL.mkdir(parents=True, exist_ok=True)
+-    for src, alias in ((tif, "h97-candidate.tif"), (zipf, "h97-candidate.zip"), (jsf, "h97-candidate.json")):
++    for src, alias in ((tif, "h102-candidate.tif"), (zipf, "h102-candidate.zip"), (jsf, "h102-candidate.json")):
+         if src.exists():
+             shutil.copy2(src, DL / alias)
+         shutil.copy2(src, DL / src.name)
+     csvp = SUB / f"gems52-{name}-a-only-reasoning.csv"
+-    csv_alias = DL / "h97-a-only-reasoning.csv"
++    csv_alias = DL / "h102-a-only-reasoning.csv"
+     if csvp.exists():
+         shutil.copy2(csvp, csv_alias)
+         shutil.copy2(csvp, DL / csvp.name)
+@@ -61,7 +61,7 @@
+ 
+     # Optional diagnostics (only rendered when the receipts exist; never invented).
+     geom_html = ""
+-    e4p, e4bp = EV / "h97_e4_coverage.json", EV / "h97_e4b_hysteresis.json"
++    e4p, e4bp = EV / "h102_e4_coverage.json", EV / "h102_e4b_hysteresis.json"
+     if e4p.exists() and e4bp.exists():
+         e4 = json.loads(e4p.read_text())
+         e4b = json.loads(e4bp.read_text())
+@@ -99,25 +99,25 @@
+     auc_rows = "".join(
+         f"<tr><td>{r['fold']}</td><td>{r['auc']['single_A2']:.4f}</td><td>{r['auc']['single_B2']:.4f}</td>"
+         f"<td>{r['canary_max']:.4f}</td><td>{r['canary_worst']}</td></tr>" for r in fit["folds"])
+-    card_html = f"""<!--H97-CARD-->
+-<style>.h97card{{border:2px solid #66bb6a;border-radius:12px;padding:16px 18px;margin:16px 0;background:#0f1f14;color:#e8eaed;font:15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}}.h97card h2{{margin:0 0 8px;font-size:19px;color:#66bb6a}}.h97card a{{color:#4fc3f7;font-weight:700}}.h97card code{{background:#16241b;padding:1px 4px;border-radius:3px;font-size:12.5px;word-break:break-all}}</style>
+-<div class="h97card"><h2>Latest round H97 — potential-field directional anisotropy (View A) &times; surface anisotropy (View B)</h2>
++    card_html = f"""<!--H102-CARD-->
++<style>.h102card{{border:2px solid #66bb6a;border-radius:12px;padding:16px 18px;margin:16px 0;background:#0f1f14;color:#e8eaed;font:15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}}.h102card h2{{margin:0 0 8px;font-size:19px;color:#66bb6a}}.h102card a{{color:#4fc3f7;font-weight:700}}.h102card code{{background:#16241b;padding:1px 4px;border-radius:3px;font-size:12.5px;word-break:break-all}}</style>
++<div class="h102card"><h2>Latest round H102 — potential-field directional anisotropy (View A) &times; surface anisotropy (View B)</h2>
+ <p><b>OK TO DOWNLOAD: YES</b> (independent on-disk validator PASS: 1 band float32, EPSG:32611, 3730&times;3292,
+ transform and bounds equal to the sample submission, <b>0 NaN, 0 inf, values exactly {{0.0, 1.0}}</b>,
+ {card['validator']['ones']:,} cells = 1). <b>OK TO SUBMIT: {verdict_submit}</b> — {'holdout promotion gate PASSED; a selector still has to record the decision before a weekly slot is spent.' if promoted else 'research candidate, NOT slot-approved: its holdout DTI did not clear the promotion rule (see the table below). Do not spend your last slot on it without reading the limits.'}</p>
+-<p><a href="downloads/h97-candidate.tif" download><b>Download the H97 GeoTIFF (.tif) &darr;</b></a> &middot;
+-<a href="downloads/h97-candidate.zip" download>single-TIFF .zip &darr;</a> &middot;
+-{'<a href="downloads/h97-a-only-reasoning.csv" download>A-only reasoning CSV &darr;</a> &middot;' if (DL / 'h97-a-only-reasoning.csv').exists() else ''}
+-<a href="h97.html">full result page</a> &middot;
++<p><a href="downloads/h102-candidate.tif" download><b>Download the H102 GeoTIFF (.tif) &darr;</b></a> &middot;
++<a href="downloads/h102-candidate.zip" download>single-TIFF .zip &darr;</a> &middot;
++{'<a href="downloads/h102-a-only-reasoning.csv" download>A-only reasoning CSV &darr;</a> &middot;' if (DL / 'h102-a-only-reasoning.csv').exists() else ''}
++<a href="h102.html">full result page</a> &middot;
+ <a href="executive-summary.html">how to submit (step by step)</a></p>
+ <p><small>Submission name <code>{name}</code><br>Note ({card['note_chars']}/140): <code>{card['note']}</code><br>
+ SHA-256 <code>{sha}</code> &middot; {card['raster_bytes']:,} bytes &middot;
+ verdict <b>{card['verdict']}</b> &middot; submission slots used by this round: {card['submission_slots_used']}</small></p></div>
+-<!--/H97-CARD-->"""
+-
+-    h97_page = f"""<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
++<!--/H102-CARD-->"""
++
++    h102_page = f"""<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+-<title>H97 — potential-field anisotropy &times; surface anisotropy disagreement (GEMSDOE52)</title>
++<title>H102 — potential-field anisotropy &times; surface anisotropy disagreement (GEMSDOE52)</title>
+ <style>:root{{--bg:#0f1117;--fg:#e8eaed;--accent:#4fc3f7;--ok:#66bb6a;--warn:#ffa726;--err:#ef5350;--card:#1a1d27;--border:#2d3040}}
+ *{{margin:0;padding:0;box-sizing:border-box}}body{{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--fg);line-height:1.6}}
+ .container{{max-width:900px;margin:0 auto;padding:24px 20px}}h1{{font-size:1.6rem;color:var(--accent)}}h2{{font-size:1.15rem;margin:24px 0 10px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px}}
+@@ -125,13 +125,13 @@
+ table{{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}}th,td{{padding:6px 9px;text-align:left;border-bottom:1px solid var(--border)}}th{{color:var(--accent)}}
+ .box{{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin:12px 0}}.muted{{color:#9aa0a6;font-size:.88rem}}
+ .btn{{display:inline-block;background:var(--accent);color:#000;font-weight:700;padding:10px 18px;border-radius:6px;margin:6px 6px 6px 0;text-decoration:none}}</style></head><body><div class="container">
+-<h1>H97 — potential-field directional anisotropy (PAF-DVA) as View A</h1>
++<h1>H102 — potential-field directional anisotropy (PAF-DVA) as View A</h1>
+ <p class="muted">DOE GEMS Prize (DrivenData #306) &middot; generated {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')} &middot;
+-preregistration <code>registry/h97_preregistration.json</code> SHA-256 <code>{card['preregistration_sha256']}</code> &middot;
++preregistration <code>registry/h102_preregistration.json</code> SHA-256 <code>{card['preregistration_sha256']}</code> &middot;
+ <a href="index.html">status</a> &middot; <a href="executive-summary.html">how to submit</a></p>
+ <div class="box"><b>Download:</b>
+-<a class="btn" href="downloads/h97-candidate.tif" download>h97-candidate.tif</a>
+-<a class="btn" href="downloads/h97-candidate.zip" download>h97-candidate.zip</a>
++<a class="btn" href="downloads/h102-candidate.tif" download>h102-candidate.tif</a>
++<a class="btn" href="downloads/h102-candidate.zip" download>h102-candidate.zip</a>
+ <p class="muted">Submit to DrivenData: <b>{verdict_submit}</b>. Verdict <b>{card['verdict']}</b>, submission slots used {card['submission_slots_used']}.</p></div>
+ <h2>1 &middot; Hypothesis and mechanism</h2>
+ <p>{card['hypothesis']}</p><p><b>Mechanism.</b> {card['mechanism']}</p>
+@@ -153,14 +153,14 @@
+ <h2>4 &middot; Diagnostics that were registered in advance</h2>
+ <table><tr><th>fold</th><th>single_A2 out-of-quadrant AUC</th><th>single_B2</th><th>leakage canary max</th><th>worst channel</th></tr>{auc_rows}</table>
+ <p>Leakage canary bar 0.90 (a single channel alone on the held-out region); alarm raised: <b>{fit['canary_alarm_any']}</b>.</p>
+-<p><b>Budget diagnostic (does NOT select the budget — amendment h97a):</b> the artifact's mass is frozen at
++<p><b>Budget diagnostic (does NOT select the budget — amendment h102a):</b> the artifact's mass is frozen at
+ {build['target_dots']:,} dots = 4 &times; {hold['budget_per_fold']:,}, the family standard.</p>
+ <table><tr><th>fold</th><th>9,400/fold</th><th>16,000/fold</th><th>25,400/fold</th></tr>{budget_rows}</table>
+ <h2>5 &middot; Independence of the two views (Blum&ndash;Mitchell assumption)</h2>
+ <p>The brief's mandated test: correlate each view's spatial-block out-of-fold errors on labelled negatives,
+ thresholds inherited verbatim from <code>registry/h74_preregistration.json</code>. Result recorded in
+-<code>evidence/h97_independence.json</code>: max |rho| = {json.dumps(load('h97_independence.json')['result']['max_abs_correlation'])},
+-abandon bar {json.dumps(load('h97_independence.json')['result']['threshold'])}.</p>
++<code>evidence/h102_independence.json</code>: max |rho| = {json.dumps(load('h102_independence.json')['result']['max_abs_correlation'])},
++abandon bar {json.dumps(load('h102_independence.json')['result']['threshold'])}.</p>
+ <h2>6 &middot; The artifact: placement, format and uniqueness</h2>
+ <p>Emitted {build['dots']:,} cells at 3 px minimum spacing inside the eligible footprint
+ ({build['eligible_px']:,} px), pool {build['pool_px']:,} px, the &le;200 m collar around every mapped catalogue fault excluded.
+@@ -183,10 +183,10 @@
+ <li>The hide-and-recover instrument withholds the <em>catalogue</em> faults, which were mapped from surface expression; the
+ competition scores faults the catalogue lacks. This repository has measured that the instrument does not rank leaderboard
+ performance (Spearman &asymp; &minus;0.10 over R4), so a holdout number is never a board forecast.</li>
+-<li>View A (potential field / subsurface) has failed the sufficiency gate in every round that reported it; H97 tests whether
++<li>View A (potential field / subsurface) has failed the sufficiency gate in every round that reported it; H102 tests whether
+ <em>directional anisotropy</em> changes that. The View-A out-of-quadrant AUCs are in the table above.</li>
+ <li>The lane census covers the locally available registry ({lane['n_local_registry']} unique rasters). The full 526-blob
+-cross-repository census lives in a git-ignored receipt and was not re-fetched inside this round's time box (IR-H97-003).</li>
++cross-repository census lives in a git-ignored receipt and was not re-fetched inside this round's time box (IR-H102-003).</li>
+ <li>No new external data was used. The one external layer ranked highest-unexplored (GDR 1391 two-metre temperature probes,
+ DOI 10.15121/1881483) is not reachable from this sandbox (<code>gdr.openei.org</code> is not on the egress allowlist).</li>
+ </ul>
+@@ -200,15 +200,15 @@
+ <li>Reference solution: <a href="https://github.com/drivendataorg/gems-prize-reference-solution">github.com/drivendataorg/gems-prize-reference-solution</a></li>
+ </ul>
+ <p class="muted">Every number on this page was read from the JSON receipts named above, written by
+-<code>scripts/run_h97.py</code>. Nothing is projected onto a leaderboard.</p>
++<code>scripts/run_h102.py</code>. Nothing is projected onto a leaderboard.</p>
+ </div></body></html>"""
+-    (ROOT / "docs/h97.html").write_text(h97_page)
++    (ROOT / "docs/h102.html").write_text(h102_page)
+ 
+     for page in (ROOT / "docs/index.html", ROOT / "docs/executive-summary.html"):
+         text = page.read_text()
+-        if "<!--H97-CARD-->" in text:
+-            head, rest = text.split("<!--H97-CARD-->", 1)
+-            _old, tail = rest.split("<!--/H97-CARD-->", 1)
++        if "<!--H102-CARD-->" in text:
++            head, rest = text.split("<!--H102-CARD-->", 1)
++            _old, tail = rest.split("<!--/H102-CARD-->", 1)
+             text = head + card_html + tail
+         else:
+             marker = "<body>"
+@@ -217,11 +217,11 @@
+         if page.name == "index.html":
+             text = text.replace(
+                 "<title>GEMSDOE52 — current status (H96): download yes, submit NO</title>",
+-                f"<title>GEMSDOE52 — current status (H97): download yes, submit {verdict_submit}</title>")
++                f"<title>GEMSDOE52 — current status (H102): download yes, submit {verdict_submit}</title>")
+         page.write_text(text)
+ 
+     (SUB / "LATEST.txt").write_text(f"gems52-{name}.tif\n")
+-    (SUB / "H97_LATEST.txt").write_text(f"gems52-{name}.tif\n")
++    (SUB / "H102_LATEST.txt").write_text(f"gems52-{name}.tif\n")
+     print(json.dumps(dict(submission=f"gems52-{name}.tif", submit_ok=promoted, verdict=card["verdict"],
+                           sha256=sha, note=card["note"], rasters_in_registry=lane["n_local_registry"],
+                           lane_dots=lanes["verdict"], lane_surface=lane_s["verdict"]), indent=1))
+
+--- 1f542d4:scripts/publish_h97_readme.py
++++ scripts/publish_h102_readme.py
+@@ -1,18 +1,18 @@
+ #!/usr/bin/env python3
+-"""Refresh the README status block for round H97.
+-
+-Reads only receipts written by ``scripts/run_h97.py`` (plus the E4/E4b diagnostics and the
++"""Refresh the README status block for round H102.
++
++Reads only receipts written by ``scripts/run_h102.py`` (plus the E4/E4b diagnostics and the
+ irregularities register); nothing on the block is invented or projected onto the leaderboard.
+ 
+ Behaviour
+ ---------
+ * Replaces the region delimited by ``<!--H95-README-->`` … ``<!--/H95-README-->`` (or a previous
+-  ``<!--H97-README-->`` region) with a fresh H97 status block.
++  ``<!--H102-README-->`` region) with a fresh H102 status block.
+ * The standing user brief that currently sits inside the H95 region (heading
+   ``# 94 · Standing user brief …``) is carried across **byte-identically**; the script asserts that.
+ * Idempotent: running it twice leaves the second run's output equal to the first.
+ 
+-Usage: python3 scripts/publish_h97_readme.py
++Usage: python3 scripts/publish_h102_readme.py
+ """
+ from __future__ import annotations
+ 
+@@ -32,9 +32,9 @@
+ 
+ def main() -> int:
+     text = README.read_text(encoding="utf-8")
+-    if "<!--H97-README-->" in text:
+-        head, rest = text.split("<!--H97-README-->", 1)
+-        _old, tail = rest.split("<!--/H97-README-->", 1)
++    if "<!--H102-README-->" in text:
++        head, rest = text.split("<!--H102-README-->", 1)
++        _old, tail = rest.split("<!--/H102-README-->", 1)
+         brief = ""
+         archived_h95 = ""
+     elif "<!--H95-README-->" in text:
+@@ -48,10 +48,10 @@
+     else:
+         raise SystemExit("README has no known status marker")
+ 
+-    card, hold, fit, ind = (load("h97_run_card.json"), load("h97_holdout.json"),
+-                            load("h97_fit.json"), load("h97_independence.json"))
+-    lane, build = load("h97_lane.json"), load("h97_build_placement.json")
+-    e4, e4b = load("h97_e4_coverage.json"), load("h97_e4b_hysteresis.json")
++    card, hold, fit, ind = (load("h102_run_card.json"), load("h102_holdout.json"),
++                            load("h102_fit.json"), load("h102_independence.json"))
++    lane, build = load("h102_lane.json"), load("h102_build_placement.json")
++    e4, e4b = load("h102_e4_coverage.json"), load("h102_e4b_hysteresis.json")
+     reg = json.loads((ROOT / "registry/irregularities.json").read_text(encoding="utf-8"))
+ 
+     v = card["validator"]
+@@ -60,8 +60,8 @@
+     vd, vs = lane["dots"]["policy"], lane["surface"]["policy"]
+     uniq = lane["uniqueness"]
+     g4, g4b = e4["geometry_vs_mass"], e4b["geometry_vs_mass"]
+-    ir97 = [e["id"] for e in reg["entries"] if e["id"].startswith("IR-H97")]
+-    BAR = 0.190147  # standing bar, frozen in registry/h97_preregistration.json (knowledge/73)
++    ir97 = [e["id"] for e in reg["entries"] if e["id"].startswith("IR-H102")]
++    BAR = 0.190147  # standing bar, frozen in registry/h102_preregistration.json (knowledge/73)
+ 
+     arm_rows = "\n".join(
+         f"| `{a}` | {pool[a]['dti']:.6f} [{pool[a]['ci95'][0]:.6f}, {pool[a]['ci95'][1]:.6f}] |"
+@@ -78,8 +78,8 @@
+         f" {'loses' if not g4[f]['GEOMETRY_BEATS_MASS_AT_MATCHED_MASS'] else 'wins'} |"
+         for f in ("cotrain_disagree", "single_B2"))
+ 
+-    block = f"""<!--H97-README-->
+-# Current status — H97 (2026-10-11): potential-field directional anisotropy (PAF-DVA) as View A · NEGATIVE
++    block = f"""<!--H102-README-->
++# Current status — H102 (2026-10-11): potential-field directional anisotropy (PAF-DVA) as View A · NEGATIVE
+ 
+ > **OK TO DOWNLOAD: YES** — format-valid single-band float32 GeoTIFF, EPSG:32611, 3730×3292, all-finite,
+ > values exactly {{0,1}} (the portal's *"Predicted values must be in range [0, 1]"* rejection cannot occur).
+@@ -93,10 +93,10 @@
+ > Weekly slots used: **{card['submission_slots_used']}**. No weekly slot is approved by this round; the agent
+ > does not pick submissions.
+ 
+-**★ [Download h97-candidate.tif](docs/downloads/h97-candidate.tif)** ·
+-[ZIP](docs/downloads/h97-candidate.zip) · [A-only reasoning CSV](docs/downloads/h97-a-only-reasoning.csv) ·
+-[Full result](docs/h97.html) · [Executive summary / how to submit](docs/executive-summary.html) ·
+-[Run card](evidence/h97_run_card.json)
++**★ [Download h102-candidate.tif](docs/downloads/h102-candidate.tif)** ·
++[ZIP](docs/downloads/h102-candidate.zip) · [A-only reasoning CSV](docs/downloads/h102-a-only-reasoning.csv) ·
++[Full result](docs/h102.html) · [Executive summary / how to submit](docs/executive-summary.html) ·
++[Run card](evidence/h102_run_card.json)
+ 
+ - **File:** `submission/gems52-{card['submission_name']}.tif` — {card['raster_bytes']:,} bytes,
+   SHA-256 `{card['raster_sha256']}`
+@@ -135,15 +135,15 @@
+ {geom_rows}
+ 
+   This closes "coverage emission" as a fix *on the catalogue instrument*; it does not close it on the board,
+-  whose truth set and scoring region differ ([knowledge/99](knowledge/99_h97_results_and_limits.md) §7–§8).
+-- **Budget diagnostic (does NOT select the budget — amendment h97a):** frozen at
++  whose truth set and scoring region differ ([knowledge/110](knowledge/110_h102_results_and_limits.md) §7–§8).
++- **Budget diagnostic (does NOT select the budget — amendment h102a):** frozen at
+   {build['target_dots']:,} dots = 4 × {hold['budget_per_fold']:,}.
+ 
+ | fold | 9,400/fold | 16,000/fold | 25,400/fold |
+ |---|---|---|---|
+ {budget_rows}
+ 
+-- **Gates (frozen in `registry/h97_preregistration.json`):**
++- **Gates (frozen in `registry/h102_preregistration.json`):**
+ 
+ | gate | result | measured |
+ |---|---|---|
+@@ -153,7 +153,7 @@
+ | format | PASS | 1 band float32, EPSG:32611, 3730×3292, transform/bounds = sample_submission.tif: yes, 0 NaN, 0 inf, values exactly [0.0, 1.0], {v['ones']:,} emitted cells |
+ | uniqueness | PASS | {uniq['n_priors_checked']} locally available priors; identical to a prior: {uniq['identical_to_a_prior']}; canonical pattern unique: {uniq['canonical_pattern_unique']} |
+ | lane_surface | PASS | max Spearman {vs['max_spearman']:.4f} (bar 0.90) |
+-| lane_dots | PASS (close) | max near-3px {vd['max_near_3px_fraction']:.4f} (bar 0.70) → **IR-H97-005** |
++| lane_dots | PASS (close) | max near-3px {vd['max_near_3px_fraction']:.4f} (bar 0.70) → **IR-H102-005** |
+ | not_the_union | PASS | Jaccard vs union-max {card['not_the_union']['jaccard_with_union']:.4f}, vs single-A {card['not_the_union']['jaccard_with_single_A']:.4f}, shared with single-B {card['not_the_union']['shared_with_single_B']} |
+ 
+   This round preregistered **no control-reproduction gate** (unlike H95); the controls are the in-round arms
+@@ -164,34 +164,34 @@
+   nearest emitted cell to the mapped catalogue {build['min_cat_dist_m']:.1f} m, median
+   {build['median_cat_dist_m']:.0f} m, {build['dots_within_300m_of_catalogue_pct']:.2f} % of the mass within
+   300 m of a mapped fault.
+-- **Irregularities:** {' · '.join(ir97)} — board corrections (IR-H97-001..004), lane proximity (IR-H97-005);
++- **Irregularities:** {' · '.join(ir97)} — board corrections (IR-H102-001..004), lane proximity (IR-H102-005);
+   the register now carries {len(reg['entries'])} entries.
+-- Docs: [preregistration](registry/h97_preregistration.json) ·
+-  [hypotheses](knowledge/97_hypotheses_H97_preregistered.md) ·
+-  [results & limits](knowledge/99_h97_results_and_limits.md) ·
+-  [metric/coverage note](knowledge/98_the_metric_is_a_coverage_metric.md) ·
+-  [next-round proposals](knowledge/100_next_round_proposals.md)
++- Docs: [preregistration](registry/h102_preregistration.json) ·
++  [hypotheses](knowledge/108_hypotheses_H102_preregistered.md) ·
++  [results & limits](knowledge/110_h102_results_and_limits.md) ·
++  [metric/coverage note](knowledge/109_the_metric_is_a_coverage_metric.md) ·
++  [next-round proposals](knowledge/111_next_round_proposals.md)
+ - Reproduce: `python3 scripts/restore_data.py --target-dir data` → feature store + `python -m gems52.external`
+-  → `python3 scripts/run_h97.py all` → `python3 scripts/run_h97_e4_coverage.py` →
+-  `python3 scripts/run_h97_e4b_hysteresis.py` → `python3 scripts/publish_h97_site.py` →
+-  `python3 scripts/publish_h97_readme.py`.
++  → `python3 scripts/run_h102.py all` → `python3 scripts/run_h102_e4_coverage.py` →
++  `python3 scripts/run_h102_e4b_hysteresis.py` → `python3 scripts/publish_h102_site.py` →
++  `python3 scripts/publish_h102_readme.py`.
+ 
+ ### Why `h33-h33-2-b2` scored 0.2778, and can we beat it? (derivation: [knowledge/76](knowledge/76_why_02778_and_what_beating_03195_requires.md))
+ 
+ - DTI = T / (0.2·S + 0.8·|G|) with S = emitted mass and |G| the hidden positives. Our predictions are binary,
+   so S is the dot count, and a dot raises the score only if its kernel credit exceeds ≈0.2·DTI (about 0.056
+   at the 0.2778 level). The board shows this directly: Spearman(emitted mass, score) = −0.93 over our scored
+-  files. H97's E4/E4b add the mechanism: on the catalogue instrument, **mass dominates shape** — random
++  files. H102's E4/E4b add the mechanism: on the catalogue instrument, **mass dominates shape** — random
+   placement at ~400 k cells scores 0.177–0.197 while every trace construction loses.
+ - The champion is the 0.2600 `d2-8` field (44,090 px) with every dot within 200 m of the public catalogue
+   deleted, leaving 37,654 dots. The hidden faults are *new* faults, so dots on the known catalogue are pure
+   false-positive mass; deleting them raised the score by +0.0178 with no new signal.
+ - Beating the top-5 cut (0.3262) needs ×1.15 more credit at the same mass, or the same credit from about
+   25,400 dots; beating rank 1 (0.3774, verified live 2026-10-10) needs ×1.36. No ranking signal in this
+-  repository — H97's co-training included — has yet shown that precision on an instrument that tracks the
++  repository — H102's co-training included — has yet shown that precision on an instrument that tracks the
+   board. **Honest answer: not yet demonstrated; the levers are listed below.**
+ 
+-### Next work (ranked in [knowledge/100](knowledge/100_next_round_proposals.md); each must beat 0.190147 on the holdout or show a board-anchored gain before using a slot)
++### Next work (ranked in [knowledge/111](knowledge/111_next_round_proposals.md); each must beat 0.190147 on the holdout or show a board-anchored gain before using a slot)
+ 
+ 1. **Prevalence-matched off-catalogue instrument (H89-P).** E4/E4b prove the catalogue instrument pays for
+    mass regardless of shape, so it cannot certify the one lever with board evidence (emitted mass, ρ −0.93);
+@@ -203,7 +203,7 @@
+    failures); iterative pseudo-label exchange (closed negative).
+ 5. **INGENIOUS 2 m temperature probes** (GDR 1391, DOI 10.15121/1881483) remain the highest-value unused
+    channel, but `gdr.openei.org` is not reachable from this sandbox — the owner must download and pin it.
+-<!--/H97-README-->
++<!--/H102-README-->
+ """
+ 
+     rest_after = tail.lstrip("\n")
+
+--- 1f542d4:scripts/finalize_h97_pointer.py
++++ scripts/finalize_h102_receipts.py
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env python3
+-"""Publish the H97 submission pointer, the way the site and the scheduled feed expect it.
++"""Publish the H102 submission pointer, the way the site and the scheduled feed expect it.
+ 
+ The invariant the site's own verifier enforces (``scripts/check_site.py``) is:
+ 
+@@ -13,11 +13,11 @@
+ 
+     evidence/submission_<stem>.json        per-artefact receipt (feed-compatible schema)
+     docs/data/submission_<stem>.json       site copy of the same receipt
+-    docs/data/submission.json              the global pointer (H97 is a NEGATIVE round: the file is
++    docs/data/submission.json              the global pointer (H102 is a NEGATIVE round: the file is
+                                            research-only, ``approved_for_weekly_slot`` and
+                                            ``promoted`` stay False and zero slots are used)
+ 
+-Usage: python3 scripts/finalize_h97_pointer.py
++Usage: python3 scripts/finalize_h102_pointer.py
+ """
+ from __future__ import annotations
+ 
+@@ -43,10 +43,10 @@
+ 
+ 
+ def main() -> int:
+-    card = load(EV / "h97_run_card.json")
+-    hold = load(EV / "h97_holdout.json")
+-    lane = load(EV / "h97_lane.json")
+-    build = load(EV / "h97_build_placement.json")
++    card = load(EV / "h102_run_card.json")
++    hold = load(EV / "h102_holdout.json")
++    lane = load(EV / "h102_lane.json")
++    build = load(EV / "h102_build_placement.json")
+     name = f"gems52-{card['submission_name']}"
+     tif, zipf = SUB / f"{name}.tif", SUB / f"{name}.zip"
+     for p in (tif, zipf):
+@@ -76,17 +76,17 @@
+         submission_slots_used=0,
+         status="research-only; local format validation is not organizer acceptance",
+         metadata=dict(
+-            round="H97",
++            round="H102",
+             hypothesis=card["hypothesis"],
+             evidence_class="HOLDOUT-DTI",
+             registration=dict(preregistration_sha256=card["preregistration_sha256"],
+                               frozen_before_any_fit=True),
+         ),
+-        round="H97",
++        round="H102",
+         stem=name,
+         nonzero_px=int(v["ones"]),
+-        short_tif="h97-candidate.tif",
+-        short_zip="h97-candidate.zip",
++        short_tif="h102-candidate.tif",
++        short_zip="h102-candidate.zip",
+         # keys the site verifier reads (all measured, never projected)
+         format=dict(path=str(tif.relative_to(ROOT)), bytes=tif.stat().st_size,
+                     sha256=card["raster_sha256"], bands=v["count"], dtype=v["dtype"],
+@@ -98,7 +98,7 @@
+         uniqueness=dict(n_priors_checked=lane["uniqueness"]["n_priors_checked"],
+                         canonical_pattern_unique=lane["uniqueness"]["canonical_pattern_unique"],
+                         identical_to_a_prior=lane["uniqueness"]["identical_to_a_prior"],
+-                        help="lane census scoped to locally available rasters (IR-H97-003)"),
++                        help="lane census scoped to locally available rasters (IR-H102-003)"),
+         holdout=dict(label="HOLDOUT-DTI", evaluator=hold["evaluator"],
+                      withheld_positive_px=hold["withheld_positive_px"],
+                      primary=hold["pooled"]["scores"][hold["candidate"]],
+@@ -129,7 +129,7 @@
+         site_marker.write_text(tif.name + "\n", encoding="utf-8")
+ 
+     staged = DL / tif.name
+-    assert staged.exists() and sha(staged) == card["raster_sha256"], "docs copy is stale; run publish_h97_site.py"
++    assert staged.exists() and sha(staged) == card["raster_sha256"], "docs copy is stale; run publish_h102_site.py"
+     print(json.dumps(dict(pointer=pointer["file"], bytes=pointer["bytes"], sha256=pointer["sha256"],
+                           zip_sha256=zip_sha, approved_for_weekly_slot=False, slots=0), indent=1))
+     return 0
+
+--- 1f542d4:docs/downloads/h97-candidate.json
++++ docs/downloads/h102-candidate.json
+@@ -1,12 +1,12 @@
+ {
+-  "file": "gems52-h97-pafdva-disagree-37600px-20261011T002233Z.tif",
++  "file": "gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif",
+   "sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
+   "bytes": 132324,
+-  "submission_name": "h97-pafdva-disagree-37600px-20261011T002233Z",
+-  "note": "H97 co-training: View-A potential-field anisotropy x View-B DEM anisotropy; disagreement field, 200m ring excluded, binary 37600 dots",
+-  "note_chars": 133,
++  "submission_name": "h102-pafdva-disagree-37600px-20261011T002233Z",
++  "note": "H102 co-training: View-A potential-field anisotropy x View-B DEM anisotropy; disagreement field, 200m ring excluded, binary 37600 dots",
++  "note_chars": 134,
+   "validator": {
+-    "path": "/home/user/GEMSDOE52/submission/gems52-h97-pafdva-disagree-37600px-20261011T002233Z.tif",
++    "path": "/home/user/GEMSDOE52/submission/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif",
+     "bytes": 132324,
+     "sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
+     "bands": 1,
+@@ -54,15 +54,26 @@
+     "ok": true,
+     "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+   },
+-  "zip_file": "gems52-h97-pafdva-disagree-37600px-20261011T002233Z.zip",
+-  "zip_sha256": "f1c4472f11caadb1adbe9e257fbb4af3cdb26be8011e47dbdb3a17fe0f45c304",
++  "zip_file": "gems52-h102-pafdva-disagree-37600px-20261011T002233Z.zip",
++  "zip_sha256": "3a1d063878a868e7aa9d23bc18deb8df438ae40b4eb10a81f1a582c824066a13",
+   "approved_for_weekly_slot": false,
+   "promoted": false,
+   "submission_slots_used": 0,
+   "status": "research-only; local format validation is not organizer acceptance",
+   "metadata": {
+-    "round": "H97",
++    "round": "H102",
+     "primary_arm": "cotrain_disagree",
+-    "preregistration_sha256": "b2eb593fe5ebed4005574402769305b9805c2ffdd57d760ecd3d0c90bd359181"
++    "preregistration_sha256": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7"
++  },
++  "identifier_rename": {
++    "frm": "H97",
++    "to": "H102",
++    "artefact_bytes_unchanged": true,
++    "artefact_sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
++    "document_sha256_before": "3bc571adb709f8e3c18fbe158221019bbc69515162e88ed9220319b5851b674a",
++    "document_sha256_after": "3bc571adb709f8e3c18fbe158221019bbc69515162e88ed9220319b5851b674a",
++    "registry_sha256_before": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7",
++    "registry_sha256_after": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7",
++    "note": "identifier-only rename after the round closed; no measured value changed"
+   }
+ }
+
+--- 1f542d4:tests/test_current_submission_gate.py
++++ tests/test_current_submission_gate.py
+@@ -290,30 +290,30 @@
+     assert (DOCS / "downloads/h96-candidate.tif").read_bytes() == canonical.read_bytes()
+ 
+ 
+-# --- H97 (arena/604a9c54 session): potential-field directional anisotropy x surface anisotropy -----
++# --- H102 (arena/604a9c54 session): potential-field directional anisotropy x surface anisotropy -----
+ # Same contract as H96: the pointer may name this round, but the receipt must keep the slot gate
+ # closed, the note inside the portal limit, and the round's own receipts beside the artifact.
+ 
+-H97_STEM = "gems52-h97-pafdva-disagree-37600px-20261011T002233Z"
+-H97_SHA = "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326"
+-
+-
+-def _h97_receipts():
+-    artifacts = json.loads((ROOT / f"evidence/submission_{H97_STEM}.json").read_text())
+-    card = json.loads((ROOT / "evidence/h97_run_card.json").read_text())
+-    hold = json.loads((ROOT / "evidence/h97_holdout.json").read_text())
++H102_STEM = "gems52-h102-pafdva-disagree-37600px-20261011T002233Z"
++H102_SHA = "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326"
++
++
++def _h102_receipts():
++    artifacts = json.loads((ROOT / f"evidence/submission_{H102_STEM}.json").read_text())
++    card = json.loads((ROOT / "evidence/h102_run_card.json").read_text())
++    hold = json.loads((ROOT / "evidence/h102_holdout.json").read_text())
+     return artifacts, card, hold
+ 
+ 
+-def test_h97_receipt_gate_blocks_promote_while_below_the_bar() -> None:
+-    artifacts, card, hold = _h97_receipts()
+-    assert artifacts["sha256"] == H97_SHA
+-    assert artifacts["file"] == f"{H97_STEM}.tif"
+-    assert artifacts["round"] == "H97"
++def test_h102_receipt_gate_blocks_promote_while_below_the_bar() -> None:
++    artifacts, card, hold = _h102_receipts()
++    assert artifacts["sha256"] == H102_SHA
++    assert artifacts["file"] == f"{H102_STEM}.tif"
++    assert artifacts["round"] == "H102"
+     assert artifacts["nonzero_px"] == 37600
+-    assert artifacts["short_tif"] == "h97-candidate.tif"
+-    assert artifacts["short_zip"] == "h97-candidate.zip"
+-    assert artifacts["validator"]["sha256"] == H97_SHA
++    assert artifacts["short_tif"] == "h102-candidate.tif"
++    assert artifacts["short_zip"] == "h102-candidate.zip"
++    assert artifacts["validator"]["sha256"] == H102_SHA
+     note = artifacts["note"]
+     assert 1 <= len(note) <= 140  # the owner's portal box is <=140 chars for this family's convention
+     assert artifacts["note_chars"] == len(note)
+@@ -335,16 +335,16 @@
+     reg = artifacts["metadata"]["registration"]
+     assert reg["frozen_before_any_fit"] is True
+     assert reg["preregistration_sha256"].startswith("b2eb593f")
+-    for name in ("h97_run_card.json", "h97_holdout.json", "h97_lane.json",
+-                 "h97_e4_coverage.json", "h97_e4b_hysteresis.json"):
++    for name in ("h102_run_card.json", "h102_holdout.json", "h102_lane.json",
++                 "h102_e4_coverage.json", "h102_e4b_hysteresis.json"):
+         assert (ROOT / "evidence" / name).is_file(), name
+ 
+ 
+-def test_h97_artifact_bytes_re_verify_every_gate_claim() -> None:
+-    artifacts, card, hold = _h97_receipts()
+-    canonical = DOCS / "downloads" / f"{H97_STEM}.tif"
++def test_h102_artifact_bytes_re_verify_every_gate_claim() -> None:
++    artifacts, card, hold = _h102_receipts()
++    canonical = DOCS / "downloads" / f"{H102_STEM}.tif"
+     assert canonical.is_file()
+-    assert hashlib.sha256(canonical.read_bytes()).hexdigest() == H97_SHA
++    assert hashlib.sha256(canonical.read_bytes()).hexdigest() == H102_SHA
+     with rasterio.open(canonical) as ds:
+         data = ds.read(1)
+         assert ds.count == 1
+
+--- 1f542d4:tests/test_h95.py
++++ tests/test_h95.py
+@@ -45,14 +45,14 @@
+ 
+ 
+ def test_readme_carries_current_verdicts_brief_and_the_h95_archive():
+-    """H95 stopped being the incumbent when H97 shipped; its block stays in the README as an archive
++    """H95 stopped being the incumbent when H102 shipped; its block stays in the README as an archive
+     (the same convention as the H89/H87/H83/H82 blocks below it), the current block keeps the
+     download/submit verdicts explicit, and the standing brief stays verbatim."""
+     text = (ROOT / "README.md").read_text()
+-    assert text.startswith("<!--H97-README-->"), "the newest block must sit at the top of the README"
+-    current = text[: text.index("<!--/H97-README-->")]
++    assert text.startswith("<!--H102-README-->"), "the newest block must sit at the top of the README"
++    current = text[: text.index("<!--/H102-README-->")]
+     assert "OK TO DOWNLOAD: YES" in current and "OK TO SUBMIT:" in current
+-    assert "docs/downloads/h97-candidate.tif" in current
++    assert "docs/downloads/h102-candidate.tif" in current
+     h95 = text[text.index("<!--H95-README-->"): text.index("<!--/H95-README-->")]
+     assert "OK TO DOWNLOAD: YES" in h95 and "OK TO SUBMIT:" in h95
+     assert "docs/downloads/h95-candidate.tif" in h95 and SHA in h95
+
+--- 1f542d4:evidence/h97_build_placement.json
++++ evidence/h102_build_placement.json
+@@ -11,6 +11,6 @@
+  "union_dots": 37600,
+  "a_dots": 37600,
+  "b_dots": 37600,
+- "budget_rule": "amendment h97a: frozen 37600 = 4 x 9400/fold",
++ "budget_rule": "amendment h102a: frozen 37600 = 4 x 9400/fold",
+  "started_utc": "2026-10-11T00:19:50+00:00"
+ }
+
+--- 1f542d4:evidence/h97_e4_coverage.json
++++ evidence/h102_e4_coverage.json
+@@ -18,7 +18,7 @@
+  },
+  "question": "at the same emitted mass, does bridging neighbouring confident cells along the field recover more weighted truth than the same mass spent on more dots?",
+  "falsifier": "bridged DTI <= dots@S_bridge DTI, i.e. the geometry adds nothing at matched mass",
+- "note": "run on two fields: the H97 primary disagreement field and the surface-anisotropy field single_B2, because the geometry question is best posed on the strongest available field",
++ "note": "run on two fields: the H102 primary disagreement field and the surface-anisotropy field single_B2, because the geometry question is best posed on the strongest available field",
+  "folds": [
+   {
+    "fold": 0,
+
+--- 1f542d4:evidence/h97_independence.json
++++ evidence/h102_independence.json
+@@ -11,7 +11,7 @@
+   "min_blocks": 20,
+   "negative_ring_px": 4
+  },
+- "thresholds_not_retuned_for_h97": true,
++ "thresholds_not_retuned_for_h102": true,
+  "view_A": "single_A2 (store view_A_with_external + 40 PAF-DVA channels)",
+  "view_B": "single_B2 (store view_B_with_external + 20 surface-DVA channels)",
+  "per_fold": [
+
+--- 1f542d4:evidence/h97_lane.json
++++ evidence/h102_lane.json
+@@ -86,7 +86,7 @@
+   "docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-nan.tif",
+   "docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-zeros.tif"
+  ],
+- "registry_scope": "locally available de-duplicated rasters: restricted scored registry (data/scored, data/reference), this repository's submission/ artefacts and docs/downloads/*.tif. The 526-blob cross-repository census was NOT re-fetched inside this round's time box (IR-H97-003).",
++ "registry_scope": "locally available de-duplicated rasters: restricted scored registry (data/scored, data/reference), this repository's submission/ artefacts and docs/downloads/*.tif. The 526-blob cross-repository census was NOT re-fetched inside this round's time box (IR-H102-003).",
+  "doctrine": "a restricted-registry PASS never waives the full-census result; here both are the same set",
+  "surface": {
+   "phase": "surface",
+
+--- 1f542d4:evidence/h97_run_card.json
++++ evidence/h102_run_card.json
+@@ -1,10 +1,10 @@
+ {
+- "round": "H97",
++ "round": "H102",
+  "generated_utc": "2026-10-11T00:22:39+00:00",
+  "hypothesis": "directional semivariance anisotropy on the potential-field/subsurface bands is a subsurface texture that is not a copy of the surface texture; where View A is confident and View B abstains the fault may be buried beneath cover and absent from the surface-expression catalogue",
+  "mechanism": "fault damage zones lower density and destroy magnetite along strike, imprinting a preferred direction on the gravity and RTP-magnetic semivariance while alluvial cover removes the DEM expression",
+  "named_non_fault_mimic": "lithologic/intrusive contacts; basin-margin facies steps; survey flight-line and terrain-correction striping; paleochannel scour; isostatic/terrain-correction artefacts at block margins",
+- "preregistration_sha256": "b2eb593fe5ebed4005574402769305b9805c2ffdd57d760ecd3d0c90bd359181",
++ "preregistration_sha256": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7",
+  "holdout_dti": {
+   "single_A2": {
+    "evidence_class": "HOLDOUT-DTI",
+@@ -147,7 +147,7 @@
+   "verdict": "PASS",
+   "note": "the same literal rule restricted to priors that localise something; probe statistics are retained verbatim in per_prior and nothing is deleted"
+  },
+- "lane_registry_scope": "locally available de-duplicated rasters: restricted scored registry (data/scored, data/reference), this repository's submission/ artefacts and docs/downloads/*.tif. The 526-blob cross-repository census was NOT re-fetched inside this round's time box (IR-H97-003).",
++ "lane_registry_scope": "locally available de-duplicated rasters: restricted scored registry (data/scored, data/reference), this repository's submission/ artefacts and docs/downloads/*.tif. The 526-blob cross-repository census was NOT re-fetched inside this round's time box (IR-H102-003).",
+  "len_registry": 82,
+  "uniqueness": {
+   "n_priors_checked": 82,
+@@ -217,11 +217,170 @@
+   "shared_with_single_B": 0,
+   "jaccard_with_single_B": 0.0
+  },
+- "submission_name": "h97-pafdva-disagree-37600px-20261011T002233Z",
+- "note": "H97 co-training: View-A potential-field anisotropy x View-B DEM anisotropy; disagreement field, 200m ring excluded, binary 37600 dots",
+- "note_chars": 133,
++ "submission_name": "h102-pafdva-disagree-37600px-20261011T002233Z",
++ "note": "H102 co-training: View-A potential-field anisotropy x View-B DEM anisotropy; disagreement field, 200m ring excluded, binary 37600 dots",
++ "note_chars": 134,
+  "slotted": false,
+  "submission_slots_used": 0,
+  "verdict": "negative",
+- "submit_ok": false
++ "submit_ok": false,
++ "hypothesis_document": "knowledge/108_hypotheses_H102_preregistered.md",
++ "hypothesis_sha256": "3bc571adb709f8e3c18fbe158221019bbc69515162e88ed9220319b5851b674a",
++ "holdout": {
++  "single_A2": {
++   "evidence_class": "HOLDOUT-DTI",
++   "evaluator_version": "gems52-pooled-hide-v1",
++   "dti": 0.07639617220689764,
++   "ci95": [
++    0.061925201702061346,
++    0.09188078159587354
++   ],
++   "withheld_positive_pixels": 53186,
++   "tpw": 3856.0701149200836,
++   "fpw": 35773.18390604043,
++   "fnw": 49329.92988507991
++  },
++  "single_B2": {
++   "evidence_class": "HOLDOUT-DTI",
++   "evaluator_version": "gems52-pooled-hide-v1",
++   "dti": 0.1859682483761976,
++   "ci95": [
++    0.16404980882739553,
++    0.20706624422215536
++   ],
++   "withheld_positive_pixels": 53186,
++   "tpw": 9499.539114815969,
++   "fpw": 33164.01560923631,
++   "fnw": 43686.46088518404
++  },
++  "cotrain_disagree": {
++   "evidence_class": "HOLDOUT-DTI",
++   "evaluator_version": "gems52-pooled-hide-v1",
++   "dti": 0.02946034877464432,
++   "ci95": [
++    0.02115773138691092,
++    0.03975570357329162
++   ],
++   "withheld_positive_pixels": 53186,
++   "tpw": 1479.8376061106685,
++   "fpw": 36933.67879510753,
++   "fnw": 51706.16239388936
++  },
++  "consensus": {
++   "evidence_class": "HOLDOUT-DTI",
++   "evaluator_version": "gems52-pooled-hide-v1",
++   "dti": 0.13033209756514075,
++   "ci95": [
++    0.11280720785091922,
++    0.1489482627393436
++   ],
++   "withheld_positive_pixels": 53186,
++   "tpw": 6616.769942186307,
++   "fpw": 34481.91600396785,
++   "fnw": 46569.23005781367
++  },
++  "buried_only": {
++   "evidence_class": "HOLDOUT-DTI",
++   "evaluator_version": "gems52-pooled-hide-v1",
++   "dti": 0.0358832672321347,
++   "ci95": [
++    0.027300054119480856,
++    0.04506044378386262
++   ],
++   "withheld_positive_pixels": 53186,
++   "tpw": 1803.712193566384,
++   "fpw": 36782.828849125835,
++   "fnw": 51382.287806433604
++  },
++  "union_max": {
++   "evidence_class": "HOLDOUT-DTI",
++   "evaluator_version": "gems52-pooled-hide-v1",
++   "dti": 0.15666735264519369,
++   "ci95": [
++    0.13672418932987757,
++    0.17714682369130594
++   ],
++   "withheld_positive_pixels": 53186,
++   "tpw": 7977.8884589750205,
++   "fpw": 33890.458155530956,
++   "fnw": 45208.11154102499
++  },
++  "random": {
++   "evidence_class": "HOLDOUT-DTI",
++   "evaluator_version": "gems52-pooled-hide-v1",
++   "dti": 0.0815923825446992,
++   "ci95": [
++    0.07137879179130074,
++    0.09251216812060094
++   ],
++   "withheld_positive_pixels": 53186,
++   "tpw": 4126.867482230022,
++   "fpw": 36024.52259717952,
++   "fnw": 49059.132517769984
++  },
++  "instrument": "gems52-pooled-hide-v1",
++  "withheld_positive_px": 53186,
++  "primary": "cotrain_disagree",
++  "primary_dti": 0.02946034877464432,
++  "primary_ci95": [
++   0.02115773138691092,
++   0.03975570357329162
++  ],
++  "random_dti": 0.0815923825446992,
++  "random_ci95": [
++   0.07137879179130074,
++   0.09251216812060094
++  ],
++  "paired_primary_minus_random": {
++   "delta": -0.052132033770054875,
++   "ci95": null,
++   "vs": "random",
++   "note": "the registered paired test is the one in holdout_promotion_gate (vs the best comparable control single_B2); the random arm is reported for scale"
++  }
++ },
++ "raster": {
++  "file": "gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif",
++  "bytes": 132324,
++  "sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
++  "download": {
++   "tif": "docs/downloads/h102-candidate.tif",
++   "zip": "docs/downloads/h102-candidate.zip",
++   "tif_sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
++   "zip_sha256": "3a1d063878a868e7aa9d23bc18deb8df438ae40b4eb10a81f1a582c824066a13"
++  }
++ },
++ "identifier_history": [
++  {
++   "name": "H97",
++   "commit": "1f542d4",
++   "base": "7eb226d",
++   "frozen_before_any_fit": true,
++   "document_sha256": "3bc571adb709f8e3c18fbe158221019bbc69515162e88ed9220319b5851b674a",
++   "registry_sha256": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7",
++   "note": "the round ran and produced every receipt under this name"
++  },
++  {
++   "name": "H102",
++   "commit": null,
++   "base": "7eb226d",
++   "reason": "identifier collision with main's H97/H97b rounds; identifier-only rename",
++   "document_sha256": "3bc571adb709f8e3c18fbe158221019bbc69515162e88ed9220319b5851b674a",
++   "registry_sha256": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7",
++   "artefact_sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
++   "zip_sha256": "3a1d063878a868e7aa9d23bc18deb8df438ae40b4eb10a81f1a582c824066a13",
++   "evidence_diff": "evidence/h102_identifier_rename.diff"
++  }
++ ],
++ "verdict_note": "identifier-only rename H97 -> H102 applied after the round closed; no measured value changed",
++ "identifier_rename": {
++  "frm": "H97",
++  "to": "H102",
++  "artefact_bytes_unchanged": true,
++  "artefact_sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
++  "document_sha256_before": "3bc571adb709f8e3c18fbe158221019bbc69515162e88ed9220319b5851b674a",
++  "document_sha256_after": "3bc571adb709f8e3c18fbe158221019bbc69515162e88ed9220319b5851b674a",
++  "registry_sha256_before": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7",
++  "registry_sha256_after": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7",
++  "note": "identifier-only rename after the round closed; no measured value changed"
++ }
+ }
+
+--- 1f542d4:evidence/submission_gems52-h97-pafdva-disagree-37600px-20261011T002233Z.json
++++ evidence/submission_gems52-h102-pafdva-disagree-37600px-20261011T002233Z.json
+@@ -1,10 +1,10 @@
+ {
+- "file": "gems52-h97-pafdva-disagree-37600px-20261011T002233Z.tif",
++ "file": "gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif",
+  "sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
+  "bytes": 132324,
+- "submission_name": "gems52-h97-pafdva-disagree-37600px-20261011T002233Z",
+- "note": "H97 co-training: View-A potential-field anisotropy x View-B DEM anisotropy; disagreement field, 200m ring excluded, binary 37600 dots",
+- "note_chars": 133,
++ "submission_name": "gems52-h102-pafdva-disagree-37600px-20261011T002233Z",
++ "note": "H102 co-training: View-A potential-field anisotropy x View-B DEM anisotropy; disagreement field, 200m ring excluded, binary 37600 dots",
++ "note_chars": 134,
+  "validator": {
+   "count": 1,
+   "dtype": "float32",
+@@ -34,28 +34,28 @@
+   "sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
+   "ok": true
+  },
+- "zip_file": "gems52-h97-pafdva-disagree-37600px-20261011T002233Z.zip",
+- "zip_sha256": "f1c4472f11caadb1adbe9e257fbb4af3cdb26be8011e47dbdb3a17fe0f45c304",
++ "zip_file": "gems52-h102-pafdva-disagree-37600px-20261011T002233Z.zip",
++ "zip_sha256": "3a1d063878a868e7aa9d23bc18deb8df438ae40b4eb10a81f1a582c824066a13",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "status": "research-only; local format validation is not organizer acceptance",
+  "metadata": {
+-  "round": "H97",
++  "round": "H102",
+   "hypothesis": "directional semivariance anisotropy on the potential-field/subsurface bands is a subsurface texture that is not a copy of the surface texture; where View A is confident and View B abstains the fault may be buried beneath cover and absent from the surface-expression catalogue",
+   "evidence_class": "HOLDOUT-DTI",
+   "registration": {
+-   "preregistration_sha256": "b2eb593fe5ebed4005574402769305b9805c2ffdd57d760ecd3d0c90bd359181",
++   "preregistration_sha256": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7",
+    "frozen_before_any_fit": true
+   }
+  },
+- "round": "H97",
+- "stem": "gems52-h97-pafdva-disagree-37600px-20261011T002233Z",
++ "round": "H102",
++ "stem": "gems52-h102-pafdva-disagree-37600px-20261011T002233Z",
+  "nonzero_px": 37600,
+- "short_tif": "h97-candidate.tif",
+- "short_zip": "h97-candidate.zip",
++ "short_tif": "h102-candidate.tif",
++ "short_zip": "h102-candidate.zip",
+  "format": {
+-  "path": "submission/gems52-h97-pafdva-disagree-37600px-20261011T002233Z.tif",
++  "path": "submission/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif",
+   "bytes": 132324,
+   "sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
+   "bands": 1,
+@@ -79,7 +79,7 @@
+   "n_priors_checked": 82,
+   "canonical_pattern_unique": true,
+   "identical_to_a_prior": false,
+-  "help": "lane census scoped to locally available rasters (IR-H97-003)"
++  "help": "lane census scoped to locally available rasters (IR-H102-003)"
+  },
+  "holdout": {
+   "label": "HOLDOUT-DTI",
+@@ -216,5 +216,16 @@
+   "dots_within_300m_of_catalogue_pct": 2.1515957446808507
+  },
+  "submit_ok": false,
+- "download_ok": true
++ "download_ok": true,
++ "identifier_rename": {
++  "frm": "H97",
++  "to": "H102",
++  "artefact_bytes_unchanged": true,
++  "artefact_sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
++  "document_sha256_before": "3bc571adb709f8e3c18fbe158221019bbc69515162e88ed9220319b5851b674a",
++  "document_sha256_after": "3bc571adb709f8e3c18fbe158221019bbc69515162e88ed9220319b5851b674a",
++  "registry_sha256_before": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7",
++  "registry_sha256_after": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7",
++  "note": "identifier-only rename after the round closed; no measured value changed"
++ }
+ }
+
+--- 1f542d4:docs/data/submission_gems52-h97-pafdva-disagree-37600px-20261011T002233Z.json
++++ docs/data/submission_gems52-h102-pafdva-disagree-37600px-20261011T002233Z.json
+@@ -1,220 +1,231 @@
+ {
+-  "file": "gems52-h97-pafdva-disagree-37600px-20261011T002233Z.tif",
++ "file": "gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif",
++ "sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
++ "bytes": 132324,
++ "submission_name": "gems52-h102-pafdva-disagree-37600px-20261011T002233Z",
++ "note": "H102 co-training: View-A potential-field anisotropy x View-B DEM anisotropy; disagreement field, 200m ring excluded, binary 37600 dots",
++ "note_chars": 134,
++ "validator": {
++  "count": 1,
++  "dtype": "float32",
++  "crs": "EPSG:32611",
++  "shape": [
++   3730,
++   3292
++  ],
++  "crs_match": true,
++  "shape_match": true,
++  "transform_match": true,
++  "bounds_match": true,
++  "nan": 0,
++  "infinite": 0,
++  "min": 0.0,
++  "max": 1.0,
++  "values": [
++   0.0,
++   1.0
++  ],
++  "ones": 37600,
++  "zeros": 12241560,
++  "mass": 37600.0,
++  "range_ok": true,
++  "PASS": true,
++  "range_rule_source": "official: single layer float32 with values between 0 and 1, EPSG:32611, 100 m, same bounds as the training data (https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/)",
+   "sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
++  "ok": true
++ },
++ "zip_file": "gems52-h102-pafdva-disagree-37600px-20261011T002233Z.zip",
++ "zip_sha256": "3a1d063878a868e7aa9d23bc18deb8df438ae40b4eb10a81f1a582c824066a13",
++ "approved_for_weekly_slot": false,
++ "promoted": false,
++ "submission_slots_used": 0,
++ "status": "research-only; local format validation is not organizer acceptance",
++ "metadata": {
++  "round": "H102",
++  "hypothesis": "directional semivariance anisotropy on the potential-field/subsurface bands is a subsurface texture that is not a copy of the surface texture; where View A is confident and View B abstains the fault may be buried beneath cover and absent from the surface-expression catalogue",
++  "evidence_class": "HOLDOUT-DTI",
++  "registration": {
++   "preregistration_sha256": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7",
++   "frozen_before_any_fit": true
++  }
++ },
++ "round": "H102",
++ "stem": "gems52-h102-pafdva-disagree-37600px-20261011T002233Z",
++ "nonzero_px": 37600,
++ "short_tif": "h102-candidate.tif",
++ "short_zip": "h102-candidate.zip",
++ "format": {
++  "path": "submission/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif",
+   "bytes": 132324,
+-  "submission_name": "gems52-h97-pafdva-disagree-37600px-20261011T002233Z",
+-  "note": "H97 co-training: View-A potential-field anisotropy x View-B DEM anisotropy; disagreement field, 200m ring excluded, binary 37600 dots",
+-  "note_chars": 133,
+-  "validator": {
+-    "count": 1,
+-    "dtype": "float32",
+-    "crs": "EPSG:32611",
+-    "shape": [
+-      3730,
+-      3292
+-    ],
+-    "crs_match": true,
+-    "shape_match": true,
+-    "transform_match": true,
+-    "bounds_match": true,
+-    "nan": 0,
+-    "infinite": 0,
+-    "min": 0.0,
+-    "max": 1.0,
+-    "values": [
+-      0.0,
+-      1.0
+-    ],
+-    "ones": 37600,
+-    "zeros": 12241560,
+-    "mass": 37600.0,
+-    "range_ok": true,
+-    "PASS": true,
+-    "range_rule_source": "official: single layer float32 with values between 0 and 1, EPSG:32611, 100 m, same bounds as the training data (https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/)",
+-    "sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
+-    "ok": true
++  "sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
++  "bands": 1,
++  "dtype": "float32",
++  "crs": "EPSG:32611",
++  "width": 3292,
++  "height": 3730,
++  "transform_match": true,
++  "bounds_match": true,
++  "nan_pixels": 0,
++  "infinity_pixels": 0,
++  "min": 0.0,
++  "max": 1.0,
++  "n_nonzero": 37600,
++  "mass": 37600.0,
++  "problems": [],
++  "ok": true,
++  "validation_class": "local on-disk template/range check; not organizer upload acceptance"
++ },
++ "uniqueness": {
++  "n_priors_checked": 82,
++  "canonical_pattern_unique": true,
++  "identical_to_a_prior": false,
++  "help": "lane census scoped to locally available rasters (IR-H102-003)"
++ },
++ "holdout": {
++  "label": "HOLDOUT-DTI",
++  "evaluator": "gems52-pooled-hide-v1",
++  "withheld_positive_px": 53186,
++  "primary": {
++   "evidence_class": "HOLDOUT-DTI",
++   "evaluator_version": "gems52-pooled-hide-v1",
++   "dti": 0.02946034877464432,
++   "ci95": [
++    0.02115773138691092,
++    0.03975570357329162
++   ],
++   "withheld_positive_pixels": 53186,
++   "tpw": 1479.8376061106685,
++   "fpw": 36933.67879510753,
++   "fnw": 51706.16239388936
+   },
+-  "zip_file": "gems52-h97-pafdva-disagree-37600px-20261011T002233Z.zip",
+-  "zip_sha256": "f1c4472f11caadb1adbe9e257fbb4af3cdb26be8011e47dbdb3a17fe0f45c304",
+-  "approved_for_weekly_slot": false,
+-  "promoted": false,
+-  "submission_slots_used": 0,
+-  "status": "research-only; local format validation is not organizer acceptance",
+-  "metadata": {
+-    "round": "H97",
+-    "hypothesis": "directional semivariance anisotropy on the potential-field/subsurface bands is a subsurface texture that is not a copy of the surface texture; where View A is confident and View B abstains the fault may be buried beneath cover and absent from the surface-expression catalogue",
+-    "evidence_class": "HOLDOUT-DTI",
+-    "registration": {
+-      "preregistration_sha256": "b2eb593fe5ebed4005574402769305b9805c2ffdd57d760ecd3d0c90bd359181",
+-      "frozen_before_any_fit": true
+-    }
++  "controls": {
++   "single_A2": {
++    "evidence_class": "HOLDOUT-DTI",
++    "evaluator_version": "gems52-pooled-hide-v1",
++    "dti": 0.07639617220689764,
++    "ci95": [
++     0.061925201702061346,
++     0.09188078159587354
++    ],
++    "withheld_positive_pixels": 53186,
++    "tpw": 3856.0701149200836,
++    "fpw": 35773.18390604043,
++    "fnw": 49329.92988507991
++   },
++   "single_B2": {
++    "evidence_class": "HOLDOUT-DTI",
++    "evaluator_version": "gems52-pooled-hide-v1",
++    "dti": 0.1859682483761976,
++    "ci95": [
++     0.16404980882739553,
++     0.20706624422215536
++    ],
++    "withheld_positive_pixels": 53186,
++    "tpw": 9499.539114815969,
++    "fpw": 33164.01560923631,
++    "fnw": 43686.46088518404
++   },
++   "cotrain_disagree": {
++    "evidence_class": "HOLDOUT-DTI",
++    "evaluator_version": "gems52-pooled-hide-v1",
++    "dti": 0.02946034877464432,
++    "ci95": [
++     0.02115773138691092,
++     0.03975570357329162
++    ],
++    "withheld_positive_pixels": 53186,
++    "tpw": 1479.8376061106685,
++    "fpw": 36933.67879510753,
++    "fnw": 51706.16239388936
++   },
++   "consensus": {
++    "evidence_class": "HOLDOUT-DTI",
++    "evaluator_version": "gems52-pooled-hide-v1",
++    "dti": 0.13033209756514075,
++    "ci95": [
++     0.11280720785091922,
++     0.1489482627393436
++    ],
++    "withheld_positive_pixels": 53186,
++    "tpw": 6616.769942186307,
++    "fpw": 34481.91600396785,
++    "fnw": 46569.23005781367
++   },
++   "buried_only": {
++    "evidence_class": "HOLDOUT-DTI",
++    "evaluator_version": "gems52-pooled-hide-v1",
++    "dti": 0.0358832672321347,
++    "ci95": [
++     0.027300054119480856,
++     0.04506044378386262
++    ],
++    "withheld_positive_pixels": 53186,
++    "tpw": 1803.712193566384,
++    "fpw": 36782.828849125835,
++    "fnw": 51382.287806433604
++   },
++   "union_max": {
++    "evidence_class": "HOLDOUT-DTI",
++    "evaluator_version": "gems52-pooled-hide-v1",
++    "dti": 0.15666735264519369,
++    "ci95": [
++     0.13672418932987757,
++     0.17714682369130594
++    ],
++    "withheld_positive_pixels": 53186,
++    "tpw": 7977.8884589750205,
++    "fpw": 33890.458155530956,
++    "fnw": 45208.11154102499
++   },
++   "random": {
++    "evidence_class": "HOLDOUT-DTI",
++    "evaluator_version": "gems52-pooled-hide-v1",
++    "dti": 0.0815923825446992,
++    "ci95": [
++     0.07137879179130074,
++     0.09251216812060094
++    ],
++    "withheld_positive_pixels": 53186,
++    "tpw": 4126.867482230022,
++    "fpw": 36024.52259717952,
++    "fnw": 49059.132517769984
++   }
+   },
+-  "round": "H97",
+-  "stem": "gems52-h97-pafdva-disagree-37600px-20261011T002233Z",
+-  "nonzero_px": 37600,
+-  "short_tif": "h97-candidate.tif",
+-  "short_zip": "h97-candidate.zip",
+-  "format": {
+-    "path": "submission/gems52-h97-pafdva-disagree-37600px-20261011T002233Z.tif",
+-    "bytes": 132324,
+-    "sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
+-    "bands": 1,
+-    "dtype": "float32",
+-    "crs": "EPSG:32611",
+-    "width": 3292,
+-    "height": 3730,
+-    "transform_match": true,
+-    "bounds_match": true,
+-    "nan_pixels": 0,
+-    "infinity_pixels": 0,
+-    "min": 0.0,
+-    "max": 1.0,
+-    "n_nonzero": 37600,
+-    "mass": 37600.0,
+-    "problems": [],
+-    "ok": true,
+-    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
++  "paired_vs_best_control": {
++   "best_comparable_control": "single_B2",
++   "candidate_dti": 0.02946034877464432,
++   "control_dti": 0.1859682483761976,
++   "delta": -0.15650789960155329,
++   "ci95": [
++    -0.17908500547783923,
++    -0.13473655418256178
++   ],
++   "ci_lower_above_zero": false,
++   "above_standing_bar": false,
++   "PROMOTE": false
+   },
+-  "uniqueness": {
+-    "n_priors_checked": 82,
+-    "canonical_pattern_unique": true,
+-    "identical_to_a_prior": false,
+-    "help": "lane census scoped to locally available rasters (IR-H97-003)"
+-  },
+-  "holdout": {
+-    "label": "HOLDOUT-DTI",
+-    "evaluator": "gems52-pooled-hide-v1",
+-    "withheld_positive_px": 53186,
+-    "primary": {
+-      "evidence_class": "HOLDOUT-DTI",
+-      "evaluator_version": "gems52-pooled-hide-v1",
+-      "dti": 0.02946034877464432,
+-      "ci95": [
+-        0.02115773138691092,
+-        0.03975570357329162
+-      ],
+-      "withheld_positive_pixels": 53186,
+-      "tpw": 1479.8376061106685,
+-      "fpw": 36933.67879510753,
+-      "fnw": 51706.16239388936
+-    },
+-    "controls": {
+-      "single_A2": {
+-        "evidence_class": "HOLDOUT-DTI",
+-        "evaluator_version": "gems52-pooled-hide-v1",
+-        "dti": 0.07639617220689764,
+-        "ci95": [
+-          0.061925201702061346,
+-          0.09188078159587354
+-        ],
+-        "withheld_positive_pixels": 53186,
+-        "tpw": 3856.0701149200836,
+-        "fpw": 35773.18390604043,
+-        "fnw": 49329.92988507991
+-      },
+-      "single_B2": {
+-        "evidence_class": "HOLDOUT-DTI",
+-        "evaluator_version": "gems52-pooled-hide-v1",
+-        "dti": 0.1859682483761976,
+-        "ci95": [
+-          0.16404980882739553,
+-          0.20706624422215536
+-        ],
+-        "withheld_positive_pixels": 53186,
+-        "tpw": 9499.539114815969,
+-        "fpw": 33164.01560923631,
+-        "fnw": 43686.46088518404
+-      },
+-      "cotrain_disagree": {
+-        "evidence_class": "HOLDOUT-DTI",
+-        "evaluator_version": "gems52-pooled-hide-v1",
+-        "dti": 0.02946034877464432,
+-        "ci95": [
+-          0.02115773138691092,
+-          0.03975570357329162
+-        ],
+-        "withheld_positive_pixels": 53186,
+-        "tpw": 1479.8376061106685,
+-        "fpw": 36933.67879510753,
+-        "fnw": 51706.16239388936
+-      },
+-      "consensus": {
+-        "evidence_class": "HOLDOUT-DTI",
+-        "evaluator_version": "gems52-pooled-hide-v1",
+-        "dti": 0.13033209756514075,
+-        "ci95": [
+-          0.11280720785091922,
+-          0.1489482627393436
+-        ],
+-        "withheld_positive_pixels": 53186,
+-        "tpw": 6616.769942186307,
+-        "fpw": 34481.91600396785,
+-        "fnw": 46569.23005781367
+-      },
+-      "buried_only": {
+-        "evidence_class": "HOLDOUT-DTI",
+-        "evaluator_version": "gems52-pooled-hide-v1",
+-        "dti": 0.0358832672321347,
+-        "ci95": [
+-          0.027300054119480856,
+-          0.04506044378386262
+-        ],
+-        "withheld_positive_pixels": 53186,
+-        "tpw": 1803.712193566384,
+-        "fpw": 36782.828849125835,
+-        "fnw": 51382.287806433604
+-      },
+-      "union_max": {
+-        "evidence_class": "HOLDOUT-DTI",
+-        "evaluator_version": "gems52-pooled-hide-v1",
+-        "dti": 0.15666735264519369,
+-        "ci95": [
+-          0.13672418932987757,
+-          0.17714682369130594
+-        ],
+-        "withheld_positive_pixels": 53186,
+-        "tpw": 7977.8884589750205,
+-        "fpw": 33890.458155530956,
+-        "fnw": 45208.11154102499
+-      },
+-      "random": {
+-        "evidence_class": "HOLDOUT-DTI",
+-        "evaluator_version": "gems52-pooled-hide-v1",
+-        "dti": 0.0815923825446992,
+-        "ci95": [
+-          0.07137879179130074,
+-          0.09251216812060094
+-        ],
+-        "withheld_positive_pixels": 53186,
+-        "tpw": 4126.867482230022,
+-        "fpw": 36024.52259717952,
+-        "fnw": 49059.132517769984
+-      }
+-    },
+-    "paired_vs_best_control": {
+-      "best_comparable_control": "single_B2",
+-      "candidate_dti": 0.02946034877464432,
+-      "control_dti": 0.1859682483761976,
+-      "delta": -0.15650789960155329,
+-      "ci95": [
+-        -0.17908500547783923,
+-        -0.13473655418256178
+-      ],
+-      "ci_lower_above_zero": false,
+-      "above_standing_bar": false,
+-      "PROMOTE": false
+-    },
+-    "note": "a holdout number is not a board forecast"
+-  },
+-  "placement": {
+-    "dots": 37600,
+-    "pool_px": 4325298,
+-    "eligible_px": 4593171,
+-    "ring_excluded_m": 200.0,
+-    "min_cat_dist_m": 223.60679774997897,
+-    "median_cat_dist_m": 2816.0255680657447,
+-    "dots_within_300m_of_catalogue_pct": 2.1515957446808507
+-  },
+-  "submit_ok": false,
+-  "download_ok": true
++  "note": "a holdout number is not a board forecast"
++ },
++ "placement": {
++  "dots": 37600,
++  "pool_px": 4325298,
++  "eligible_px": 4593171,
++  "ring_excluded_m": 200.0,
++  "min_cat_dist_m": 223.60679774997897,
++  "median_cat_dist_m": 2816.0255680657447,
++  "dots_within_300m_of_catalogue_pct": 2.1515957446808507
++ },
++ "submit_ok": false,
++ "download_ok": true,
++ "identifier_rename": {
++  "frm": "H97",
++  "to": "H102",
++  "artefact_bytes_unchanged": true,
++  "artefact_sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
++  "document_sha256_before": "3bc571adb709f8e3c18fbe158221019bbc69515162e88ed9220319b5851b674a",
++  "document_sha256_after": "3bc571adb709f8e3c18fbe158221019bbc69515162e88ed9220319b5851b674a",
++  "registry_sha256_before": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7",
++  "registry_sha256_after": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7",
++  "note": "identifier-only rename after the round closed; no measured value changed"
++ }
+ }
+
+--- 1f542d4:submission/gems52-h97-pafdva-disagree-37600px-20261011T002233Z.json
++++ submission/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.json
+@@ -1,12 +1,12 @@
+ {
+-  "file": "gems52-h97-pafdva-disagree-37600px-20261011T002233Z.tif",
++  "file": "gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif",
+   "sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
+   "bytes": 132324,
+-  "submission_name": "h97-pafdva-disagree-37600px-20261011T002233Z",
+-  "note": "H97 co-training: View-A potential-field anisotropy x View-B DEM anisotropy; disagreement field, 200m ring excluded, binary 37600 dots",
+-  "note_chars": 133,
++  "submission_name": "h102-pafdva-disagree-37600px-20261011T002233Z",
++  "note": "H102 co-training: View-A potential-field anisotropy x View-B DEM anisotropy; disagreement field, 200m ring excluded, binary 37600 dots",
++  "note_chars": 134,
+   "validator": {
+-    "path": "/home/user/GEMSDOE52/submission/gems52-h97-pafdva-disagree-37600px-20261011T002233Z.tif",
++    "path": "/home/user/GEMSDOE52/submission/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif",
+     "bytes": 132324,
+     "sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
+     "bands": 1,
+@@ -54,15 +54,26 @@
+     "ok": true,
+     "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+   },
+-  "zip_file": "gems52-h97-pafdva-disagree-37600px-20261011T002233Z.zip",
+-  "zip_sha256": "f1c4472f11caadb1adbe9e257fbb4af3cdb26be8011e47dbdb3a17fe0f45c304",
++  "zip_file": "gems52-h102-pafdva-disagree-37600px-20261011T002233Z.zip",
++  "zip_sha256": "3a1d063878a868e7aa9d23bc18deb8df438ae40b4eb10a81f1a582c824066a13",
+   "approved_for_weekly_slot": false,
+   "promoted": false,
+   "submission_slots_used": 0,
+   "status": "research-only; local format validation is not organizer acceptance",
+   "metadata": {
+-    "round": "H97",
++    "round": "H102",
+     "primary_arm": "cotrain_disagree",
+-    "preregistration_sha256": "b2eb593fe5ebed4005574402769305b9805c2ffdd57d760ecd3d0c90bd359181"
++    "preregistration_sha256": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7"
++  },
++  "identifier_rename": {
++    "frm": "H97",
++    "to": "H102",
++    "artefact_bytes_unchanged": true,
++    "artefact_sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
++    "document_sha256_before": "3bc571adb709f8e3c18fbe158221019bbc69515162e88ed9220319b5851b674a",
++    "document_sha256_after": "3bc571adb709f8e3c18fbe158221019bbc69515162e88ed9220319b5851b674a",
++    "registry_sha256_before": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7",
++    "registry_sha256_after": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7",
++    "note": "identifier-only rename after the round closed; no measured value changed"
+   }
+ }
+
+--- 1f542d4:docs/downloads/gems52-h97-pafdva-disagree-37600px-20261011T002233Z.json
++++ docs/downloads/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.json
+@@ -1,12 +1,12 @@
+ {
+-  "file": "gems52-h97-pafdva-disagree-37600px-20261011T002233Z.tif",
++  "file": "gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif",
+   "sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
+   "bytes": 132324,
+-  "submission_name": "h97-pafdva-disagree-37600px-20261011T002233Z",
+-  "note": "H97 co-training: View-A potential-field anisotropy x View-B DEM anisotropy; disagreement field, 200m ring excluded, binary 37600 dots",
+-  "note_chars": 133,
++  "submission_name": "h102-pafdva-disagree-37600px-20261011T002233Z",
++  "note": "H102 co-training: View-A potential-field anisotropy x View-B DEM anisotropy; disagreement field, 200m ring excluded, binary 37600 dots",
++  "note_chars": 134,
+   "validator": {
+-    "path": "/home/user/GEMSDOE52/submission/gems52-h97-pafdva-disagree-37600px-20261011T002233Z.tif",
++    "path": "/home/user/GEMSDOE52/submission/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif",
+     "bytes": 132324,
+     "sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
+     "bands": 1,
+@@ -54,15 +54,26 @@
+     "ok": true,
+     "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+   },
+-  "zip_file": "gems52-h97-pafdva-disagree-37600px-20261011T002233Z.zip",
+-  "zip_sha256": "f1c4472f11caadb1adbe9e257fbb4af3cdb26be8011e47dbdb3a17fe0f45c304",
++  "zip_file": "gems52-h102-pafdva-disagree-37600px-20261011T002233Z.zip",
++  "zip_sha256": "3a1d063878a868e7aa9d23bc18deb8df438ae40b4eb10a81f1a582c824066a13",
+   "approved_for_weekly_slot": false,
+   "promoted": false,
+   "submission_slots_used": 0,
+   "status": "research-only; local format validation is not organizer acceptance",
+   "metadata": {
+-    "round": "H97",
++    "round": "H102",
+     "primary_arm": "cotrain_disagree",
+-    "preregistration_sha256": "b2eb593fe5ebed4005574402769305b9805c2ffdd57d760ecd3d0c90bd359181"
++    "preregistration_sha256": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7"
++  },
++  "identifier_rename": {
++    "frm": "H97",
++    "to": "H102",
++    "artefact_bytes_unchanged": true,
++    "artefact_sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
++    "document_sha256_before": "3bc571adb709f8e3c18fbe158221019bbc69515162e88ed9220319b5851b674a",
++    "document_sha256_after": "3bc571adb709f8e3c18fbe158221019bbc69515162e88ed9220319b5851b674a",
++    "registry_sha256_before": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7",
++    "registry_sha256_after": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7",
++    "note": "identifier-only rename after the round closed; no measured value changed"
+   }
+ }
+

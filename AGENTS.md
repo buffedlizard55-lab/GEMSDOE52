@@ -1,7 +1,7 @@
 <!--H103-AGENTS-->
 ## Current H103 continuation (2026-10-11) — READ FIRST
 Read README's H103 block (it ends with the session brief verbatim), `knowledge/97` (frozen preregistration,
-SHA-256 `1a80ac506b753712…`), `knowledge/94` (brief) and `knowledge/98` (results, generated).
+SHA-256 `f58c5e32d405c530…`), `knowledge/94` (brief) and `knowledge/98` (results, generated).
 Verdict **negative** — both co-training arms below random on the holdout (quota_primary 0.026348 vs random
 0.058228 @25,400; g_025 0.019639 vs random 0.080426 @37,654); bar 0.192829. Slots used 0.
 This session's branch is `arena/1bc2f2ec-gemsdoe52`.
