@@ -1,0 +1,83 @@
+{
+ "stage": "reverification",
+ "utc": "2026-10-11T00:45:16+00:00",
+ "champion": {
+  "file": "data/reference/h33-2-b2-zeros.tif",
+  "sha256": "c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9",
+  "dots": 37654,
+  "values": [
+   0.0,
+   1.0
+  ],
+  "min_dist_to_labels_m": 223.6,
+  "median_dist_m": 1964.7,
+  "pct_within_300m": 5.77,
+  "owner_reported_board_score": 0.2778,
+  "score_class": "owner-reported (README brief), not organizer-confirmed by this session"
+ },
+ "gdr_1391_reachability": {
+  "url": "https://gdr.openei.org/submissions/1391",
+  "curl_http_code": "000",
+  "stderr": "curl: (35) OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection to gdr.openei.org:443",
+  "reading": "000 = no connection from this sandbox (egress allowlist); INGENIOUS temperature probes need an owner download"
+ },
+ "leaderboard_live_observation": {
+  "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
+  "retrieved_by": "agent fetch_page tool (bash egress to drivendata.org is blocked)",
+  "observed_utc": "2026-10-11T00:48+00:00",
+  "score_class": "PUBLIC-BOARD (organiser-published, team-level); not organizer-confirmed for any of our files",
+  "top10": [
+   {
+    "rank": 1,
+    "team": "xiaofanhu",
+    "score": 0.3774
+   },
+   {
+    "rank": 2,
+    "team": "JerryDataWorks",
+    "score": 0.3418
+   },
+   {
+    "rank": 3,
+    "team": "alexoktaba",
+    "score": 0.3361
+   },
+   {
+    "rank": 4,
+    "team": "Batik Shirt Brothers",
+    "score": 0.33
+   },
+   {
+    "rank": 5,
+    "team": "nchuzhoy",
+    "score": 0.3262
+   },
+   {
+    "rank": 6,
+    "team": "kinghorton42",
+    "score": 0.3261
+   },
+   {
+    "rank": 7,
+    "team": "joeyfezster",
+    "score": 0.326
+   },
+   {
+    "rank": 8,
+    "team": "DARD",
+    "score": 0.3195
+   },
+   {
+    "rank": 9,
+    "team": "mzoorob",
+    "score": 0.3129
+   },
+   {
+    "rank": 10,
+    "team": "cfld__",
+    "score": 0.3108
+   }
+  ],
+  "change_vs_snapshot_2026_10_10": "mzoorob 0.3129 now #9 (cfld__ 0.3108 moved to #10); ranks 1-8 unchanged"
+ }
+}

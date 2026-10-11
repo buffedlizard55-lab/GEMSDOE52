@@ -13,7 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 EVID = ROOT / "evidence"
 OPEN, CLOSE = "<!--H97-MASSLEVER-README-->", "<!--/H97-MASSLEVER-README-->"
-AOPEN, ACLOSE = "<!--H97-AGENTS-->", "<!--/H97-AGENTS-->"
+AOPEN, ACLOSE = "<!--H97-MASSLEVER-AGENTS-->", "<!--/H97-MASSLEVER-AGENTS-->"
 
 
 def rd(n):
@@ -166,7 +166,7 @@ This session's branch is `arena/c5bf6f30-gemsdoe52`. The round ran **three** exp
   round that stages an alias copy of its own artifact (e.g. `h97-masslever-candidate.tif`) must drop its own names or the
   candidate is compared to itself; `submission_writer.write_submission` rejects a note/name longer than 140 chars.
 - Use `/home/user/.venv/bin/python` (pinned numpy/scipy/rasterio/…env built this session).
-{AOPEN.replace('<!--H97-AGENTS-->','<!--/H97-AGENTS-->')}
+{ACLOSE}
 """
     t = agents.read_text()
     if AOPEN in t:
