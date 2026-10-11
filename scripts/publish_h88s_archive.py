@@ -270,7 +270,7 @@ does not rank organiser scores (Spearman −0.1045, n 13, IR-52-017).</p>
 <p class="small"><b>Research-only files carry DO NOT SUBMIT.</b> The CTD5 release, the R3 paired-profile
 release and the H55 archives are published for audit and are never for upload; the only
 submission-eligible file is the one in the download box above (format, uniqueness, lane and
-not-the-union gates all pass — see <a href="h88.html">h88.html</a> §5).</p>
+not-the-union gates all pass — see <a href="h88s-round.html">h88s-round.html</a> §5).</p>
 </div>
 
 <div class="card">
@@ -293,8 +293,8 @@ leaderboard forecast.</p>
 <p class="small">Round <b>H88s</b> (this session's H88, renamed at the merge; the other H88 round in this repository is the basement-step round), two-view co-training (Blum &amp; Mitchell, COLT '98,
 doi:10.1145/279943.279962) with the brief's disagreement signal; preregistered in
 <code>knowledge/80s_h88s_preregistration.md</code> before any fit and audited against its sha256 by the runner. Full method,
-gates and irregularities: <a href="h88.html">h88.html</a>. Step-by-step submission guide:
-<a href="executive-summary.html">executive-summary.html</a>.</p>
+gates and irregularities: <a href="h88s-round.html">h88s-round.html</a>. Step-by-step submission guide:
+<a href="h88s-guide.html">h88s-guide.html</a>.</p>
 
 <h2>3 · The numbers this page is built from</h2>
 <table>
@@ -325,7 +325,7 @@ screened out rather than used: {ex_rows.count('FAIL')} of {len(fit['exchange_per
 the donor screen. The shipped field therefore uses View A only as a suppressor, never as a donor.</li>
 <li><b>The shipped file's own instrument number is ~0.</b> {diag_line}</li>
 <li>The champion (.2778 organiser score) is 37,654 dots of which only ~14.6 % carry kernel credit; the
-metric arithmetic behind "can we beat 0.3195" is in <a href="h88.html">h88.html</a> §4 and
+metric arithmetic behind "can we beat 0.3195" is in <a href="h88s-round.html">h88s-round.html</a> §4 and
 <code>knowledge/81s_h88s_champion_and_mass_lever.md</code>. Nothing in it is a forecast.</li>
 </ul>
 
@@ -456,7 +456,7 @@ buried-fault signal — remains unproven; the A-only candidates are exported wit
 <code>docs/data/h88s_build.json</code> for Phase 2 review instead of being shipped as the emission.</li>
 <li>Gravity/magnetic gradients can come from lithologic contacts, intrusive margins and palaeo-channels;
 surface channels can come from roads, canals, quarry faces and erosion lines. The stratum definitions
-and the suppression are in <a href="h88.html">h88.html</a> §3.</li>
+and the suppression are in <a href="h88s-round.html">h88s-round.html</a> §3.</li>
 </ul>
 <p class="small"><b>DO NOT SUBMIT</b> applies to the research-only archives (CTD5, the R3
 paired-profile release, the H55 archives): they are published for audit and are never uploaded. The only
