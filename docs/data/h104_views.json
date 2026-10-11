@@ -179,7 +179,7 @@
       "promote": "E1 primary beats random_gap with a paired 95 % CI excluding 0 AND E1 primary >= 0.192829 AND all gates PASS",
       "negative": "anything else; the run card and site must then say OK TO DOWNLOAD: YES / OK TO SUBMIT: NO (research-only)"
     },
-    "preregistration_sha256": "8cd93f2290d002c82b9770887f79a220352aeb42a94c238b713abaaf5f6bad1f"
+    "preregistration_sha256": "656170f2912d75b08a14e042f490d4c0a3fdd87c4be52d505fa38417dd2211cc"
   },
   "eligible_px": 5164300,
   "catalogue_px": 60988,

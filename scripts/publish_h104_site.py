@@ -482,6 +482,26 @@ def main():
             t = re.sub(r"<title>[^<]*</title>", f"<title>{title}</title>", t, count=1)
             pth.write_text(t)
 
+    # The scheduled feed (scripts/refresh_feed.py) writes a minimal pointer for whatever
+    # submission/LATEST.txt names; each round's publisher enriches it in the schema the earlier
+    # rounds used, so the site's current-pointer page and its tests can read the round's receipts.
+    ptr = DATA / "submission.json"
+    if ptr.exists():
+        cur = json.loads(ptr.read_text())
+        if cur.get("file") == TIF.name:
+            cur.update(round="H104", stem=STEM, short_tif="h104-candidate.tif",
+                       short_zip="h104-candidate.zip", nonzero_px=int(V["n_nonzero"]),
+                       submit_ok=False, download_ok=True, note=NOTE, note_chars=len(NOTE),
+                       submission_note=NOTE, submission_note_chars=len(NOTE),
+                       format=dict(V), unique=dict(U),
+                       metadata=dict(round="H104", hypothesis=CARD["hypothesis"],
+                                     evidence_class="HOLDOUT-DTI",
+                                     registration=dict(
+                                         preregistration_sha256=CARD["preregistration"].get(
+                                             "preregistration_sha256"),
+                                         frozen_before_any_fit=True)))
+            ptr.write_text(json.dumps(cur, indent=1, allow_nan=False) + "\n")
+            print(f"pointer enriched: round H104, {cur['nonzero_px']:,} px")
     DATA.mkdir(parents=True, exist_ok=True)
     for n in ("h104_run_card.json", "h104_holdout.json", "h104_offcat.json", "h104_uniqueness.json",
               "h104_lane_dots.json", "h104_lane_surface.json", "h104_views.json", "h104_build_pre.json",

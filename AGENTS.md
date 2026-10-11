@@ -1,3 +1,37 @@
+<!--H104-AGENTS-->
+## Current H104 continuation (2026-10-10) — READ FIRST
+Read README's H104 block (it ends with the session brief verbatim), `knowledge/97` (frozen preregistration,
+SHA-256 `656170f2912d75b08a14e042f490d4c0a3fdd87c4be52d505fa38417dd2211cc`), `knowledge/99` (brief)
+and `knowledge/98` (results). Verdict **NEGATIVE** — download YES (research artifact),
+submit **NO**. Experiments 3 of 3, slots 0.
+
+Settled this round; do not re-litigate:
+
+- **The thermal-gap mechanism does not beat random mass on the holdout.** Primary `thermal_gap_cotrain`
+  0.074709 [0.062414, 0.088008]
+  vs mass-matched `random_gap_full` 0.075335; paired
+  -0.000627 [-0.013423, +0.012889].
+  The frozen count-matched claim (+0.071471) is satisfied and is **not evidence** — see IR-H104-002.
+- **Gap dots alone are below random at every count-matched comparison** (`thermal_gap` 0.003977 vs
+  `random_gap` 0.003237; 1,324 dots total over 4 folds) and on the off-catalogue instrument
+  (0.0073 vs random 0.0157).
+- **A count-matched control is not a control in this metric.** DTI's denominator is 0.2·S, so compare at matched
+  mass or not at all. The 9-arm design (both controls reported side by side) is now the standard here.
+- **The registered composition cannot be lane-unique while it fills from an already-shipped field** (IR-H104-003):
+  `gems52.nodes.spacing_select` is deterministic, so the same field at the same or a smaller budget re-emits a
+  prefix of the earlier dots (0.8749 within 3 px of the H96 file).
+  Register quota placement or a sub-halo budget BEFORE the next fit.
+- **`data/scored/13gems_..._r13-lattice-s5_v2_nan-outside.tif` is a 5 px lattice probe** (746×659 at exactly 5 px,
+  206,895 px): its 3 px dilation tiles the plane, so the literal "70 % within 3 px" lane rule fires on any dense
+  emission. Quote the policy variant of `gates.lane_report`; the literal line is retained in the receipt (IR-H104-001).
+- **A receipt can outlive the code that wrote it** (IR-H104-004): the first `holdout` JSON came from a process
+  launched before the arm patch. Match receipts to the runner hash before publishing.
+- Publishing: `scripts/publish_h104_site.py` inserts `<!--H104-CARD-->` / `<!--H104-README-->` / `<!--H104-AGENTS-->`
+  idempotently and never rewrites a shared page; re-run it after any receipt changes, then `scripts/check_site.py`.
+- Current artefact: `/home/user/GEMSDOE52/submission/gems52-h104-thermal-gap-cotrain-25400px-20261011T003946Z-44f30af5-zeros.tif` (SHA-256 `939d69ac3357ba7d…`) — **DOWNLOAD YES, SUBMIT NO**.
+
+<!--/H104-AGENTS-->
+
 <!--H103-AGENTS-->
 ## Current H103 continuation (2026-10-11) — READ FIRST
 Verdict **NEGATIVE** (download yes, submit NO). Experiments 2 of 3, slots 0.

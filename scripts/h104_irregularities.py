@@ -151,9 +151,13 @@ def main() -> int:
         else:
             entries.append(new)
             added.append(new["id"])
-    data["generated"] = (data["generated"].split(" ; ")[0] +
-                         " ; H104 append (IR-H104-001..%03d)" % len(ENTRIES))
-    REG.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n")
+    # append to the history rather than truncating it (main carries one line per round), and keep
+    # the register's own 1-space indentation so a re-run produces no spurious whole-file diff
+    stamp = "H104 append (IR-H104-001..%03d)" % len(ENTRIES)
+    parts = [x for x in data["generated"].split(" ; ") if not x.startswith("H104 append")]
+    data["generated"] = " ; ".join(parts + [stamp])
+    data["generated"] = data["generated"].replace("H97 append", "H104 append")
+    REG.write_text(json.dumps(data, indent=1, ensure_ascii=False) + "\n")
     print(json.dumps(dict(added=added, replaced=replaced, total=len(entries)), indent=1))
     return 0
 
