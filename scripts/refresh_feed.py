@@ -430,50 +430,6 @@ def research_status():
                 note='Research only; local evidence refresh is not a fresh organizer or leaderboard observation.')
 
 
-
-def newest_round():
-    """The newest *round* in the repository, from its run card, hash-verified.
-
-    Additive to ``latest_research`` (the audited CTD5 research card) so a visitor sees the
-    newest round without manual checking. Stdlib only; any problem returns None rather than
-    breaking the scheduled refresh.
-    """
-    best = None
-    for card_path in sorted(EV.glob('h*_run_card.json')):
-        try:
-            card = json.loads(card_path.read_text())
-        except Exception:
-            continue
-        match = re.match(r'h(\d+)_run_card\.json$', card_path.name)
-        if not match or not isinstance(card, dict):
-            continue
-        raster = card.get('raster') or {}
-        name, sha = raster.get('file'), raster.get('sha256')
-        if not name or not sha:
-            continue
-        published = DL / name
-        if not published.is_file():
-            short = DL / (match.group(0).split('_')[0] + '-candidate.tif')
-            published = short if short.is_file() else None
-        if published is None or file_hash(published) != sha:
-            continue                     # never advertise bytes we cannot verify
-        num = int(match.group(1))
-        if best is None or num > best[0]:
-            holdout = card.get('holdout') or {}
-            paired = holdout.get('paired_primary_minus_random') or {}
-            best = (num, dict(
-                run_id=card.get('round', published.stem), round=card.get('round'),
-                file=name, download='downloads/' + published.name, sha256=sha,
-                hash_verified=True, verdict=card.get('verdict'), submit_ok=False,
-                approved_for_weekly_slot=False,
-                holdout_dti=holdout.get('primary_dti'), holdout_ci95=holdout.get('primary_ci95'),
-                random_dti=holdout.get('random_dti'),
-                paired_vs_random=paired.get('delta'), paired_ci95=paired.get('ci95'),
-                run_card='evidence/' + card_path.name,
-                note='Newest round in this repository; a holdout number is not an organiser score.'))
-    return best[1] if best else None
-
-
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--fetch', action='store_true', help='Only honored with recorded written permission; otherwise no DrivenData request.')
@@ -538,7 +494,6 @@ def main():
         prior_entries=len(entries), eligible_prior_rasters=sum(bool(r.get('eligible_prior')) for r in entries),
         scientific_gate=sub.get('approved_for_weekly_slot', False), slots_used=0,
         latest_research=research_status(),
-        newest_round=newest_round(),
         freshness_note='Local evidence refresh is automatic; the board is a dated snapshot. No automatic portal submission.'))
     log('Feed updated. ' + board['status'])
     return 1 if board.get('fetch_error') else 0

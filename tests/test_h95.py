@@ -45,10 +45,9 @@ def test_h95_verdict_follows_frozen_rule():
 
 
 def test_h95_readme_states_both_verdicts_and_brief():
-    # the top-of-README marker belongs to whichever round is newest (asserted in test_h99.py)
     text = (ROOT / "README.md").read_text()
-    assert "<!--H95-README-->" in text and "<!--/H95-README-->" in text
-    head = text[text.index("<!--H95-README-->"): text.index("<!--/H95-README-->")]
+    head = text[: text.index("<!--/H95-README-->")]
+    assert head.startswith("<!--H95-README-->")
     assert "OK TO DOWNLOAD: YES" in head and "OK TO SUBMIT:" in head
     assert "docs/downloads/h95-candidate.tif" in head and SHA in head
     brief = (ROOT / "knowledge/94_current_user_brief_2026-10-10_H95.md").read_text()
