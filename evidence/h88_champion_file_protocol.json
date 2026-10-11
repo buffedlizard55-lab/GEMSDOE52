@@ -1,0 +1,187 @@
+{
+ "stage": "file_protocol",
+ "round": "H88",
+ "finished_utc": "2026-10-10T23:05:37+00:00",
+ "evaluator": "gems52-pooled-hide-v1",
+ "instrument": "gems52.evaluate_holdout.evaluate(file_verbatim, fold, eligible) pooled over the four label-blind quadrant folds; predictions on visible-catalogue pixels are zeroed",
+ "implementation_hashes": {
+  "evaluate_holdout.py": "e4211fe530ccb8f1ffeab2ef2f8e94a563492c2a3644c908d1a81e379fcbd9d4",
+  "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+  "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+  "spatial.py": "fad7b09db9efc512247b9a176a7e7ce8631e287592b4e07902d0b9c38bed00f8"
+ },
+ "note": "File protocol, not the arm protocol: nothing is re-placed per fold. On this instrument the owner-reported 0.2778 champion raster scores ~0.0066 -- the same as a fresh 37,654-dot catalogue-flank emission -- so a file-level DTI near 0.006 carries no evidence against a candidate, and no page may present it as one. Field/arm numbers keep their own label.",
+ "files": [
+  {
+   "label": "champion h33-2-b2-zeros (owner-reported board 0.2778)",
+   "path": "data/reference/h33-2-b2-zeros.tif",
+   "sha256": "c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9",
+   "bytes": 219065,
+   "n_dots": 37654,
+   "min_nearest_neighbour_px": 2.8284271247461903,
+   "median_nearest_neighbour_px": 3.0,
+   "dots_within_3px_of_another": 11415,
+   "catalogue_distance_px": {
+    "min": 2.23606797749979,
+    "p10": 4.0,
+    "median": 19.6468827043885,
+    "p90": 68.00735254367721
+   },
+   "pooled_dti": 0.006569645614392114,
+   "per_fold": [
+    {
+     "fold": 0,
+     "dti": 0.006052700162289618,
+     "tpw": 152.4192461539647,
+     "fpw": 16521.70521663412,
+     "fnw": 27156.58075384604,
+     "n_truth": 27309.0
+    },
+    {
+     "fold": 1,
+     "dti": 0.00869553955934297,
+     "tpw": 88.85794633432614,
+     "fpw": 8297.122897472098,
+     "fnw": 10588.142053665671,
+     "n_truth": 10677.0
+    },
+    {
+     "fold": 2,
+     "dti": 0.007214184462537866,
+     "tpw": 44.9192540444987,
+     "fpw": 3835.673957119818,
+     "fnw": 6768.080745955502,
+     "n_truth": 6813.0
+    },
+    {
+     "fold": 3,
+     "dti": 0.004897137999416371,
+     "tpw": 37.24319242414569,
+     "fpw": 4440.224364937163,
+     "fnw": 8349.756807575854,
+     "n_truth": 8387.0
+    }
+   ],
+   "pooled_terms": {
+    "tpw": 323.43963895693526,
+    "fpw": 33094.7264361632,
+    "fnw": 52862.56036104307,
+    "n_truth": 53186.0
+   }
+  },
+  {
+   "label": "H87 shipped raster",
+   "path": "submission/gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.tif",
+   "sha256": "a861069b8c780738b83245c1f736313d043989ca33554377f6dffb0465d8e9c3",
+   "bytes": 128024,
+   "n_dots": 37654,
+   "min_nearest_neighbour_px": 3.0,
+   "median_nearest_neighbour_px": 3.0,
+   "dots_within_3px_of_another": 0,
+   "catalogue_distance_px": {
+    "min": 2.23606797749979,
+    "p10": 5.0,
+    "median": 21.18962010041709,
+    "p90": 68.60029154456998
+   },
+   "pooled_dti": 0.0064735408274593335,
+   "per_fold": [
+    {
+     "fold": 0,
+     "dti": 0.007453732301672766,
+     "tpw": 194.61666860827458,
+     "fpw": 21119.194306357047,
+     "fnw": 27114.38333139173,
+     "n_truth": 27309.0
+    },
+    {
+     "fold": 1,
+     "dti": 0.003050466706459999,
+     "tpw": 28.360690066254733,
+     "fpw": 3749.460653590874,
+     "fnw": 10648.639309933744,
+     "n_truth": 10677.0
+    },
+    {
+     "fold": 2,
+     "dti": 0.00634669958692823,
+     "tpw": 38.988959081295306,
+     "fpw": 3424.9434300911857,
+     "fnw": 6774.011040918704,
+     "n_truth": 6813.0
+    },
+    {
+     "fold": 3,
+     "dti": 0.0073867743352137895,
+     "tpw": 56.71179179096504,
+     "fpw": 4782.674377982725,
+     "fnw": 8330.28820820904,
+     "n_truth": 8387.0
+    }
+   ],
+   "pooled_terms": {
+    "tpw": 318.6781095467897,
+    "fpw": 33076.27276802183,
+    "fnw": 52867.321890453226,
+    "n_truth": 53186.0
+   }
+  },
+  {
+   "label": "H88 shipped raster",
+   "path": "submission/gems52-h88-cotrain-strat-pmcal-27000px-20261010T222229Z.tif",
+   "sha256": "a12cd504d7d7d4aa02223343d5b7482a12e3b58a6778c957365fb74f2778da41",
+   "bytes": 119127,
+   "n_dots": 27000,
+   "min_nearest_neighbour_px": 3.0,
+   "median_nearest_neighbour_px": 3.1622776601683795,
+   "dots_within_3px_of_another": 0,
+   "catalogue_distance_px": {
+    "min": 2.23606797749979,
+    "p10": 2.8284271247461903,
+    "median": 17.88854381999832,
+    "p90": 64.51356446515724
+   },
+   "pooled_dti": 0.015268065239122117,
+   "per_fold": [
+    {
+     "fold": 0,
+     "dti": 0.01341211077628973,
+     "tpw": 330.8751417329648,
+     "fpw": 13782.516781682267,
+     "fnw": 26978.124858267038,
+     "n_truth": 27309.0
+    },
+    {
+     "fold": 1,
+     "dti": 0.027027894094778994,
+     "tpw": 263.4641438962136,
+     "fpw": 5767.838846621847,
+     "fnw": 10413.535856103783,
+     "n_truth": 10677.0
+    },
+    {
+     "fold": 2,
+     "dti": 0.008867753271165043,
+     "tpw": 53.01067132608301,
+     "fpw": 2584.5620902751666,
+     "fnw": 6759.989328673918,
+     "n_truth": 6813.0
+    },
+    {
+     "fold": 3,
+     "dti": 0.011236344144116324,
+     "tpw": 85.24405473247359,
+     "fpw": 4299.046750506802,
+     "fnw": 8301.755945267529,
+     "n_truth": 8387.0
+    }
+   ],
+   "pooled_terms": {
+    "tpw": 732.5940116877352,
+    "fpw": 26433.96446908608,
+    "fnw": 52453.40598831226,
+    "n_truth": 53186.0
+   }
+  }
+ ]
+}

@@ -1,0 +1,119 @@
+{
+ "stage": "build",
+ "round": "H88",
+ "finished_utc": "2026-10-10T22:22:30+00:00",
+ "file": "gems52-h88-cotrain-strat-pmcal-27000px-20261010T222229Z.tif",
+ "sha256": "a12cd504d7d7d4aa02223343d5b7482a12e3b58a6778c957365fb74f2778da41",
+ "bytes": 119127,
+ "zip_file": "gems52-h88-cotrain-strat-pmcal-27000px-20261010T222229Z.zip",
+ "zip_sha256": "7032290ad68c4589bb0aced49916a7558e2bdb080d70f6e94f1900da2ade9c63",
+ "placed": 27000,
+ "budget": 27000,
+ "budget_rule": "maximise the average rank of the candidate's pooled DTI over the two prevalence-matched instruments; ties broken toward the smaller budget",
+ "chosen_budget_per_fold": 9413,
+ "strata": {
+  "concordant": 15362,
+  "a_only": 4050,
+  "b_only": 7588,
+  "neither": 0
+ },
+ "not_union": {
+  "dots_shared_with_view_A": 1114,
+  "dots_shared_with_view_B": 20916,
+  "dots_shared_with_union_max": 12415,
+  "jaccard_with_union_max": 0.29854514849104247,
+  "verdict": "PASS: not identical to union_max"
+ },
+ "receipt": {
+  "file": "gems52-h88-cotrain-strat-pmcal-27000px-20261010T222229Z.tif",
+  "sha256": "a12cd504d7d7d4aa02223343d5b7482a12e3b58a6778c957365fb74f2778da41",
+  "bytes": 119127,
+  "submission_name": "h88-cotrain-strat-pmcal-27k-20261010",
+  "note": "H88 co-train disagreement strata (15% A-only), pm-calibrated 27000 dots, 3px, >200m off catalogue; holdout-validated",
+  "note_chars": 116,
+  "validator": {
+   "path": "/home/user/GEMSDOE52/submission/gems52-h88-cotrain-strat-pmcal-27000px-20261010T222229Z.tif",
+   "bytes": 119127,
+   "sha256": "a12cd504d7d7d4aa02223343d5b7482a12e3b58a6778c957365fb74f2778da41",
+   "bands": 1,
+   "dtype": "float32",
+   "crs": "EPSG:32611",
+   "width": 3292,
+   "height": 3730,
+   "bounds": [
+    243350.0,
+    4135550.0,
+    572550.0,
+    4508550.0
+   ],
+   "ref_bounds": [
+    243350.0,
+    4135550.0,
+    572550.0,
+    4508550.0
+   ],
+   "transform": [
+    100.0,
+    0.0,
+    243350.0,
+    0.0,
+    -100.0,
+    4508550.0
+   ],
+   "nodata": null,
+   "blocksize": [
+    256,
+    256
+   ],
+   "fixture_grid": false,
+   "has_validity_mask": false,
+   "nan_pixels": 0,
+   "infinity_pixels": 0,
+   "n_nan": 0,
+   "min": 0.0,
+   "max": 1.0,
+   "mean": 0.0021988474763929844,
+   "n_nonzero": 27000,
+   "mass": 27000.0,
+   "mass_outside_footprint": 0,
+   "problems": [],
+   "ok": true,
+   "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "zip_file": "gems52-h88-cotrain-strat-pmcal-27000px-20261010T222229Z.zip",
+  "zip_sha256": "7032290ad68c4589bb0aced49916a7558e2bdb080d70f6e94f1900da2ade9c63",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "status": "research-only; local format validation is not organizer acceptance",
+  "metadata": {
+   "round": "H88",
+   "seed": 61052,
+   "budget": 27000,
+   "placed": 27000,
+   "min_separation_px": 3.0,
+   "catalogue_exclusion_m": 200.0,
+   "strata": {
+    "concordant": 15362,
+    "a_only": 4050,
+    "b_only": 7588,
+    "neither": 0
+   },
+   "a_only_quota_fraction": 0.15,
+   "not_union": {
+    "dots_shared_with_view_A": 1114,
+    "dots_shared_with_view_B": 20916,
+    "dots_shared_with_union_max": 12415,
+    "jaccard_with_union_max": 0.29854514849104247,
+    "verdict": "PASS: not identical to union_max"
+   },
+   "instruments": [
+    "gems52-pooled-hide-v1",
+    "gems52-pm-hide-v1",
+    "gems52-pm-offcatalogue-v1"
+   ]
+  }
+ },
+ "a_only_reasoning_csv": "gems52-h88-cotrain-strat-pmcal-27000px-a-only-reasoning.csv",
+ "allowed_px": 4325298
+}

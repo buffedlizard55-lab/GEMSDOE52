@@ -1,7 +1,7 @@
 {
  "stage": "canary",
  "round": "H83",
- "started_utc": "2026-10-10T20:07:03+00:00",
+ "started_utc": "2026-10-10T21:57:17+00:00",
  "alarm_auc": 0.9,
  "evidence_class": "LEAKAGE-CANARY AUC (diagnostic, not a DTI score)",
  "folds": [
@@ -1590,7 +1590,7 @@
    }
   }
  ],
- "finished_utc": "2026-10-10T20:07:11+00:00",
+ "finished_utc": "2026-10-10T21:57:25+00:00",
  "max_alarm_across_folds": 0.6710397630420529,
  "any_alarm": false,
  "dropped_features": [],

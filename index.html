@@ -1,37 +1,120 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>GEMSDOE52 — DOE GEMS competition #306 — H83 candidate</title>
-<style>
-body{margin:0;font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-color:#14181d;background:#fff}
-main{max-width:760px;margin:0 auto;padding:36px 20px 70px}
-h1{font-size:26px;margin:0 0 10px}
-.v{border-radius:10px;padding:14px 16px;margin:16px 0;font-weight:700;
-background:#fdecea;color:#b3261e;
-border:1px solid #f0c4bf}
-a.b{display:inline-block;background:#1f4e79;color:#fff;text-decoration:none;font-weight:700;
-padding:13px 20px;border-radius:8px;margin:6px 8px 6px 0}
-a.s{background:#eef2f6;color:#1f4e79}
-code{background:#f2f4f7;padding:1px 5px;border-radius:4px;font-size:13.5px}
-small{color:#5b6672}
-</style></head><body><main>
-<h1>H83 candidate raster &mdash; DOE GEMS competition #306</h1>
-<div class="v">OK TO DOWNLOAD: yes &nbsp;&middot;&nbsp; OK TO SUBMIT: no — research artefact only</div>
-<a class="b" href="docs/downloads/h83-candidate.tif" download>Download h83-candidate.tif &#8595;</a>
-<a class="b s" href="docs/downloads/h83-candidate.zip" download>ZIP</a>
-<a class="b s" href="docs/index.html">Full site</a>
-<a class="b s" href="docs/h83-executive-summary.html">How to submit</a>
-<a class="b s" href="docs/validator.html">Check a file in your browser</a>
-<p><small>140,798 bytes &middot; 37,654 emitted cells, values exactly {0,1}
-&middot; SHA-256 <code>de580306e2cb6460fced1b745d1d40ff9735fb5497d493a56cca7630ad2a0ef7</code> &middot; EPSG:32611, 3730&times;3292 at 100 m
-&middot; submission name <code>h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z</code></small></p>
-<p><small>HOLDOUT-DTI (evaluator gems52-pooled-hide-v1, 53,186 withheld
-positives): candidate 0.036988 [0.025050, 0.050831] vs control single_B 0.174571;
-paired -0.137583 [-0.161887, -0.113776]. OFFCAT-DTI (gems52-offcatalogue-v1, diagnostic):
-0.065682 [0.043691, 0.092752]. A holdout number is never a board forecast.
-Verdict: negative.</small></p>
-<p><small>This page is a research artefact. It is not an organiser acceptance receipt, and it does not
-claim a leaderboard gain. Sources and verification status:
-<a href="docs/h83-sources.html">docs/h83-sources.html</a>.</small></p>
-</main></body></html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEMSDOE52 — H88: OK to download? OK to submit?</title><style>
+:root{--bg:#0f1117;--fg:#e8eaed;--accent:#4fc3f7;--ok:#66bb6a;--warn:#ffa726;--err:#ef5350;--card:#1a1d27;--border:#2d3040}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--fg);line-height:1.6}
+.container{max-width:940px;margin:0 auto;padding:24px 20px}
+h1{font-size:1.7rem;margin-bottom:6px;color:var(--accent)}
+h2{font-size:1.22rem;margin:26px 0 10px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px}
+h3{font-size:1.04rem;margin:16px 0 6px}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+code{background:#1e2130;padding:2px 6px;border-radius:3px;font-size:.9em;word-break:break-all}
+.download-box{background:linear-gradient(135deg,#15307a,#0d47a1);border:2px solid var(--accent);border-radius:12px;padding:22px;margin:18px 0;text-align:center}
+.download-box h2{color:#fff;border:none;margin:0 0 8px;font-size:1.3rem}
+.download-box p{color:#cfe8ff;margin:6px 0}
+.btn{display:inline-block;background:var(--accent);color:#000;font-weight:700;padding:12px 22px;border-radius:8px;font-size:1rem;margin:6px}
+.btn:hover{background:#81d4fa;text-decoration:none}
+.btn-zip{background:#78909c;color:#fff}
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin:12px 0}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.88rem}
+th,td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+th{color:var(--accent)}
+.pass{color:var(--ok);font-weight:700}.fail{color:var(--err);font-weight:700}.warn{color:var(--warn);font-weight:700}
+.pill{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.8rem;font-weight:700}
+.pill-ok{background:#1b5e20;color:#a5d6a7}.pill-warn{background:#4a2800;color:#ffcc80}.pill-err{background:#5c1a17;color:#ffb4a9}
+.step{display:flex;margin:10px 0}.step-num{background:var(--accent);color:#000;font-weight:700;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:10px}
+.copy{background:#1e2130;border:1px solid var(--border);border-radius:6px;padding:10px 14px;font-family:monospace;font-size:.86rem;margin:6px 0;word-break:break-all}
+.footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--border);font-size:.85rem;color:#8b93a1}
+.small{font-size:.85rem;color:#9aa3b1}
+</style></head><body><div class="container">
+<h1>GEMSDOE52 &mdash; H88 round</h1>
+<p class="small">DOE GEMS Prize (DrivenData #306) &middot; fault discovery in the GeoDAWN footprint
+(NW Nevada, EPSG:32611, 100 m) &middot; built 2026-10-10</p>
+<div class="card">
+<span class="pill pill-ok">OK to download? YES for every file below (they are safe, format-valid GeoTIFFs)</span><br><br>
+<span class="pill pill-err">OK to submit? NO file this round beats the current comparable holdout best &mdash; the repository's standing rule is to spend a weekly slot only on an idea that has beaten the best measured holdout arm (0.192829)</span>
+</div>
+<div class="download-box">
+<h2>&#11015; This round's file (research artefact)</h2>
+<p><a class="btn" href="docs/downloads/gems52-h88-cotrain-strat-pmcal-27000px-20261010T222229Z.tif" download>Download gems52-h88-cotrain-strat-pmcal-27000px-20261010T222229Z.tif</a>
+<a class="btn btn-zip" href="docs/downloads/gems52-h88-cotrain-strat-pmcal-27000px-20261010T222229Z.zip" download>ZIP</a></p>
+<p class="small">27,000 cells &middot; 119,127 bytes &middot; SHA-256
+<code>a12cd504d7d7d4aa02223343d5b7482a12e3b58a6778c957365fb74f2778da41</code></p>
+<h2 style="margin-top:18px">&#11015; Previous round's file (now measured)</h2>
+<p><a class="btn" href="docs/downloads/gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.tif" download>Download gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.tif</a>
+<a class="btn btn-zip" href="docs/downloads/gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.zip" download>ZIP</a></p>
+<p class="small">37,654 cells &middot; 128,024 bytes &middot; SHA-256
+<code>a861069b8c780738b83245c1f736313d043989ca33554377f6dffb0465d8e9c3</code></p>
+</div>
+
+<h2>Historical artefacts and their verdicts (unchanged by this round)</h2>
+<table>
+<tr><th>round</th><th>artefact</th><th>download</th><th>OK to download?</th><th>OK to submit?</th></tr>
+<tr><td>H60 (the current docs/data pointer)</td><td><code>gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif</code></td>
+<td><a href="docs/downloads/gems52-h60-triple-conv-basement-cover-gated-31000px-20261008T181741Z-zeros.tif">canonical</a> &middot;
+<a href="docs/downloads/h60-candidate.tif">h60-candidate.tif</a></td>
+<td class="pass">YES</td>
+<td class="fail">NO &mdash; <b>do not upload</b>; its failed gates are unchanged and no weekly slot is
+approved for it</td></tr>
+<tr><td>H58 consensus 22 px</td><td><code>gems52-h58-coldgeo-consensus-22px-a55b0dee38-research.tif</code><br>
+SHA-256 <code>130c242e33aef398c44b22cdf247e8a9357d8b402f43f17f0a2da30f2ede1fc7</code></td>
+<td><a href="docs/downloads/h58-candidate.tif">h58-candidate.tif</a></td>
+<td class="pass">YES</td>
+<td class="fail">NO &mdash; research-only, <b>do not upload</b> (not approved to submit)</td></tr>
+<tr><td>H57 credited-core alternate</td><td><code>gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif</code><br>
+novel vs all priors: 8,000 px</td>
+<td><a href="docs/downloads/gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif">canonical</a></td>
+<td class="pass">YES</td>
+<td class="fail">NO &mdash; not slot-approved; the co-training arm is ABANDON/not proven
+(<a href="docs/h57-creditcore.html">h57-creditcore.html</a>)</td></tr>
+<tr><td>R5 novel strike-ridge</td><td><code>gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif</code><br>
+SHA-256 <code>d2bfb0f79328399354943bd166f2d2a206e9a49da46b4f1e8ccba0e4f0d8d002</code></td>
+<td><a href="docs/downloads/r5-candidate.tif">r5-candidate.tif</a></td>
+<td class="pass">OK TO DOWNLOAD</td>
+<td class="fail">NO &mdash; not slot-approved: no weekly slot was approved for it, and its own
+receipt publishes P(beating 0.2778) = 0.366; do not spend a slot on it</td></tr>
+<tr><td>H55-EDGE (failed gate)</td><td>separate research archive; the main incumbent marker is
+unchanged</td><td><a href="docs/h55-edge.html">h55-edge.html</a></td>
+<td class="pass">YES</td><td class="fail">NO &mdash; <b>do not upload</b>; it is not the incumbent</td></tr>
+</table>
+<p class="small">Older pages: <a href="docs/archive-h87-overview.html">H87 overview</a> &middot;
+<a href="docs/archive-ctd5-overview.html">CTD5 overview</a> &middot;
+<a href="docs/archive-h59-overview.html">H59 overview</a>. Every download above is byte-verified against its
+receipt by <code>scripts/check_site.py</code>; the receipts live in <code>docs/data/</code>.</p>
+
+<h2>What the numbers say (all HOLDOUT-DTI unless labelled)</h2>
+<table>
+<tr><th>artefact</th><th>candidate</th><th>single_B control</th><th>random control</th><th>OK TO SUBMIT</th></tr>
+<tr><td>H88 candidate, prevalence-matched hide instrument</td>
+<td>0.094615</td><td>0.104672</td>
+<td>0.049857</td><td class="fail">NO</td></tr>
+<tr><td>H88 candidate, champion density (9,400 dots/fold)</td>
+<td>0.156119</td><td>0.174571</td>
+<td>0.081592</td><td class="fail">NO</td></tr>
+<tr><td>H87 disagreement field, champion density</td><td>0.063641</td>
+<td>0.058233</td><td>0.081592</td><td class="fail">NO</td></tr>
+<tr><td>H87 shipped file, scored verbatim</td><td>0.006474</td>
+<td colspan="2" class="small">same folds/truth</td><td class="fail">NO</td></tr>
+<tr><td><b>the champion itself</b> (<code>h33-2-b2-zeros</code>, owner-reported board 0.2778), scored
+verbatim</td><td>0.006570</td>
+<td colspan="2" class="small">same folds/truth</td><td class="small">n/a &mdash; already on the board</td></tr>
+</table>
+<div class="card" role="note">
+<span class="pill pill-warn">Read file-level numbers with care (IR-H88-007)</span>
+<p class="small">Scored verbatim on this hide-and-recover instrument, the <b>owner-reported 0.2778
+champion raster gets 0.006570</b> &mdash; statistically
+indistinguishable from this round's fresh 37,654-dot catalogue-flank emission
+(0.006474). All three files sit in the same spatial family: median distance
+to the known catalogue 19.6 px
+(champion) vs 21.2 px (H87) vs
+17.9 px (H88), each with a 3.000 px minimum dot
+spacing. The instrument therefore <b>cannot reject a catalogue-flank emission</b>; its arm-level numbers
+are the comparable ones, and even those are not the public board
+(<a href="docs/data/h88_champion_file_protocol.json">receipt</a>).</p>
+</div>
+<p class="small">Full detail, receipts and reasons: <a href="docs/index.html">the site</a> &middot;
+<a href="docs/h88-executive-summary.html">how to submit (step by step)</a> &middot;
+<a href="docs/h88-hypotheses.html">the ranked hypotheses</a>.</p>
+<div class="footer">GEMSDOE52 &middot; DOE GEMS Prize (DrivenData #306) &middot; every number on this page is read from the receipts in <code>docs/data/</code> &middot; NO CERTIFIED LEADERBOARD GAIN: the public board prints team names, not filenames, so every score this repository attributes to a file is OWNER-REPORTED, and the submission decision stays with the owner.</div></div></body></html>

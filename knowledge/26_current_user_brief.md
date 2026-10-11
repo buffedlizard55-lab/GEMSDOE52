@@ -14,6 +14,11 @@ text preserved below, so no new dated copy was created. H77cond's lane assignmen
 requirement are all taken from this text; see
 [knowledge/67_hypotheses_H77cond_preregistered.md](67_hypotheses_H77cond_preregistered.md).
 
+**Re-read in full at the start of the H88 session (2026-10-10).** The prompt arrived with the same text
+preserved below (parallel-run protocol, 3 experiments / 2 hours, lane = the co-training paragraph, the
+"obvious whether it is OK to download and submit" requirement, the multi-pass review instruction and the
+Arena core-values paragraph). No instruction changed, so no new dated copy was created; this session's
+work products are the H88 receipts, `knowledge/80`, `knowledge/81` and the published pages.
 ```text
 Review the repo. 
 
