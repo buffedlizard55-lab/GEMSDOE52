@@ -1,0 +1,16 @@
+{
+ "stage": "build",
+ "dots": 37600,
+ "target_dots": 37600,
+ "pool_px": 4325298,
+ "eligible_px": 4593171,
+ "ring_excluded_m": 200.0,
+ "min_cat_dist_m": 223.60679774997897,
+ "median_cat_dist_m": 2816.0255680657447,
+ "dots_within_300m_of_catalogue_pct": 2.1515957446808507,
+ "union_dots": 37600,
+ "a_dots": 37600,
+ "b_dots": 37600,
+ "budget_rule": "amendment h102a: frozen 37600 = 4 x 9400/fold",
+ "started_utc": "2026-10-11T00:19:50+00:00"
+}

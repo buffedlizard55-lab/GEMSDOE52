@@ -1,6 +1,6 @@
 {
-  "generated_utc": "2026-10-11T01:07:18Z",
-  "branch": "arena/91d68c4f-gemsdoe52",
+  "generated_utc": "2026-10-11T01:57:39Z",
+  "branch": "arena/604a9c54-gemsdoe52",
   "repo": "buffedlizard55-lab/GEMSDOE52",
   "evidence_copied": [
     "a_only_reasoning_r2.json",
@@ -203,10 +203,10 @@
     "verified_claims_r2.json",
     "verified_claims_r3.json"
   ],
-  "submission": "gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif",
-  "downloads": 128,
+  "submission": "gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif",
+  "downloads": 134,
   "leaderboard_status": "dated snapshot; automated DrivenData access disabled by Terms-of-Use policy",
-  "leaderboard_last_observed_utc": "2026-10-10",
+  "leaderboard_last_observed_utc": "2026-10-11",
   "prior_entries": 395,
   "eligible_prior_rasters": 389,
   "scientific_gate": false,
@@ -224,24 +224,24 @@
     "note": "Research only; local evidence refresh is not a fresh organizer or leaderboard observation."
   },
   "newest_round": {
-    "run_id": "H101",
-    "round": "H101",
-    "file": "submission/gems52-h101-fallline-veto-dva2-37654px-20261011T003404Z-zeros.tif",
-    "download": "downloads/h101-candidate.tif",
-    "sha256": "5a9ce7cc3d10493f3fd86ba4c9887f5f198e2f5b007e301b8726e89b3644828b",
+    "run_id": "H102",
+    "round": "H102",
+    "file": "gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif",
+    "download": "downloads/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif",
+    "sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
     "hash_verified": true,
     "verdict": "negative",
     "submit_ok": false,
     "approved_for_weekly_slot": false,
-    "holdout_dti": 0.19212165660066666,
+    "holdout_dti": 0.02946034877464432,
     "holdout_ci95": [
-      0.17010642637345486,
-      0.21284148543594295
+      0.02115773138691092,
+      0.03975570357329162
     ],
-    "random_dti": 0.08042564781050282,
-    "paired_vs_random": 0.11169600879016384,
+    "random_dti": 0.0815923825446992,
+    "paired_vs_random": -0.052132033770054875,
     "paired_ci95": null,
-    "run_card": "evidence/h101_run_card.json",
+    "run_card": "evidence/h102_run_card.json",
     "note": "Newest round in this repository; a holdout number is not an organiser score."
   },
   "freshness_note": "Local evidence refresh is automatic; the board is a dated snapshot. No automatic portal submission."

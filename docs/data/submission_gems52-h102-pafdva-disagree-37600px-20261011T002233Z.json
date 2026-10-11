@@ -216,12 +216,5 @@
     "dots_within_300m_of_catalogue_pct": 2.1515957446808507
   },
   "submit_ok": false,
-  "download_ok": true,
-  "marker": "submission/LATEST.txt",
-  "exists": true,
-  "download": "downloads/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif",
-  "download_zip": "downloads/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.zip",
-  "submission_note": "H102 co-training: View-A potential-field anisotropy x View-B DEM anisotropy; disagreement field, 200m ring excluded, binary 37600 dots",
-  "submission_note_chars": 134,
-  "published_byte_hash_matches_receipt": true
+  "download_ok": true
 }
