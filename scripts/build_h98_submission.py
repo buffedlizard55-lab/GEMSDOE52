@@ -69,6 +69,15 @@ def main() -> int:
     a_rank = h97.view_a(str(FEATURES), valid)
     b_rank = h97.view_b(str(FEATURES), valid)
     field = (b_rank * (1.0 - a_rank)).astype(np.float32)
+
+    # Evaluate the continuous surface before placing any dots; a policy-only probe exclusion is
+    # never allowed to override the user's literal all-prior lane rule.
+    surface_priors = gates.find_priors([SUB, DL, ROOT / "data/scored", ROOT / "data/reference"])
+    surface_lane = gates.lane_report(field, valid, surface_priors, sample=str(SAMPLE), phase="surface")
+    (EV / "h98_lane_surface_build_precheck.json").write_text(
+        json.dumps(surface_lane, indent=2, default=float) + "\n")
+    gates.require_literal_lane(surface_lane, context="H98 surface before placement")
+
     ed = ndi.distance_transform_edt(~cat)
     allowed = valid & ~cat & (ed > h97.RING_PX)
     em = nodes.spacing_select(field, allowed, K, min_px=MIN_SPACING_PX)
@@ -87,6 +96,18 @@ def main() -> int:
             f"zeros-outside, lane-gated")
     note = note[:140]
     out_path = SUB / f"{stem}.tif"
+    site_copy = DL / "h98-candidate.tif"
+    priors = [p for p in gates.find_priors([SUB, DL, ROOT / "data/scored", ROOT / "data/reference"])
+              if p not in {out_path, site_copy}]
+    uq = gates.uniqueness_report(emitted, priors)
+    lane = gates.lane_report(emitted, valid, priors, sample=str(SAMPLE), phase="dots")
+    (EV / "h98_lane_dots_build_precheck.json").write_text(
+        json.dumps(lane, indent=2, default=float) + "\n")
+    log(f"pre-write dot lane literal={lane['literal']['verdict']} policy={lane['policy']['verdict']}")
+    gates.require_literal_lane(lane, context="H98 final dots before GeoTIFF write")
+    if not uq["canonical_pattern_unique"] or uq["identical_to_a_prior"]:
+        raise SystemExit("H98 decoded-pattern uniqueness precheck failed; no GeoTIFF written")
+
     grid.write_geotiff(out_path, emitted, nodata=None)
 
     with rasterio.open(out_path) as c:
@@ -113,11 +134,6 @@ def main() -> int:
         raise SystemExit(f"on-disk verification failed: {checks}")
     report = gates.format_report(out_path, SAMPLE, footprint=valid)
 
-    site_copy = DL / "h98-candidate.tif"
-    priors = [p for p in gates.find_priors([SUB, DL, ROOT / "data/scored", ROOT / "data/reference"])
-              if p not in {out_path, site_copy}]
-    uq = gates.uniqueness_report(emitted, priors)
-    lane = gates.lane_report(emitted, valid, priors, sample=str(SAMPLE), phase="dots")
     log(f"uniqueness canonical={uq['canonical_pattern_unique']} novel={uq['novel_fraction']:.4f}")
     log(f"lane literal={lane['literal']['verdict']} policy={lane['policy']['verdict']} "
         f"max_spearman={lane['policy']['max_spearman']} max_near3px={lane['policy']['max_near_3px_fraction']}")

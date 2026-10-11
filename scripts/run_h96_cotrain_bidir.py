@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
-"""H88: bidirectional co-training disagreement (View A geophysical, View B surface).
+"""ARCHIVED, FAIL-CLOSED: this H96-named path contains an H88 runner, not an H96 record.
+
+Its header, registration paths, internal round labels, work directory and outputs all identify H88.
+The recorded H96 provenance mismatch is unresolved; this script must not be used to regenerate or
+represent H96 evidence. The guard in ``check_prereg`` refuses execution until a separately reviewed,
+correctly preregistered runner exists.
+
+Historical H88 bidirectional co-training disagreement (View A geophysical, View B surface):
 
 Lane (the session's assigned method paragraph, standing brief): co-training between a
 geophysical view and a surface view, with disagreement as the discovery signal
@@ -85,12 +92,13 @@ def sha256_file(p):
 
 
 def check_prereg():
-    got_p = sha256_file(PREREG)
-    got_a = sha256_file(AMEND)
-    if got_p != PREREG_SHA or got_a != AMEND_SHA:
-        raise SystemExit(f"pre-registration hash moved: {got_p} / {got_a}; refusing to run")
-    return {"preregistration_sha256": got_p, "amendment_sha256": got_a,
-            "frozen_before_any_fit": True}
+    # Do not treat the H88 files pinned below as H96 provenance.  The historical artifact and
+    # receipts remain untouched; this execution path is archived until H96 has a matching
+    # registration, code hash and outputs reviewed together.
+    raise SystemExit(
+        "H96 replay blocked: scripts/run_h96_cotrain_bidir.py identifies itself internally as "
+        "H88 and pins registry/h88_*; the H96 provenance mismatch is unresolved. No fit, build, "
+        "or write is permitted from this runner.")
 
 
 def rank01(a: np.ndarray, mask: np.ndarray) -> np.ndarray:
@@ -434,10 +442,7 @@ def stage_build():
                                      log=log)
     log(f"surface lane: literal spearman max {surface_lane['literal']['max_spearman']}, "
         f"literal {surface_lane['literal']['verdict']}, policy {surface_lane['policy']['verdict']}")
-    if surface_lane["policy"]["verdict"] != "PASS":
-        raise SystemExit("lane drift on the surface (informative priors): DUPLICATE/STOP — "
-                         f"policy rank offenders {surface_lane['policy']['rank_offenders']}, "
-                         f"near offenders {surface_lane['policy']['near_offenders']}")
+    gates.require_literal_lane(surface_lane, context="surface before placement")
     # full-catalogue allowed set: not on catalogue, 200 m collar from the FULL catalogue
     vd = ndi.distance_transform_edt(~cat)
     allowed = valid & ~cat & (vd > RING_PX)
@@ -493,6 +498,21 @@ def stage_write():
             "200m collar; HOLDOUT-DTI below bar, research candidate")
     assert len(note) <= 140, len(note)
     tif = SUBDIR / f"{name}.tif"
+
+    # Fail closed before the shared writer can create a TIFF. Check both the continuous surface
+    # before placement and the exact final dot support against every supplied registry raster.
+    strict_priors = gates.find_priors([SUBDIR, DLDIR, ROOT / "data/scored", ROOT / "data/reference"])
+    strict_surface = gates.lane_report(field, valid, strict_priors, sample=str(SAMPLE), phase="surface")
+    gates.require_literal_lane(strict_surface, context="H88 surface before writer")
+    strict_dots = gates.lane_report(raster, valid, strict_priors, sample=str(SAMPLE), phase="dots")
+    gates.require_literal_lane(strict_dots, context="H88 final dots before writer")
+    strict_unique = gates.uniqueness_report(raster, strict_priors)
+    if not strict_unique["canonical_pattern_unique"] or strict_unique["identical_to_a_prior"]:
+        raise SystemExit("H88 decoded-pattern uniqueness precheck failed; no GeoTIFF written")
+    (EVID / "h88_lane_strict_prewrite.json").write_text(json.dumps(
+        dict(surface=strict_surface, dots=strict_dots, uniqueness=strict_unique),
+        indent=2, allow_nan=False, default=float) + "\n")
+
     SUBDIR.mkdir(exist_ok=True)
     DLDIR.mkdir(parents=True, exist_ok=True)
     receipt = submission_writer.write_submission(

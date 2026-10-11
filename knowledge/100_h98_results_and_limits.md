@@ -7,14 +7,25 @@ arm worth testing is in [`knowledge/82`](82_h97_results_and_limits.md) §3.
 **Slots used: 0. Uploads: 0. Artifacts built: 0.** Receipts: `evidence/h98_lane_precheck.json`,
 `evidence/h98_holdout.json`.
 
-## 1 · The lane gate ran first, as the protocol requires
+### Three-pass audit correction (2026-10-10; receipts preserved verbatim)
+
+The historical precheck did **not** satisfy the strict lane rule. Its receipt records a literal
+`DUPLICATE/STOP` against the universal-coverage lattice probe, but the precheck chose to proceed on the
+probe-excluding `policy=PASS` result. The literal result was the user's controlling rule; validation should
+have stopped before any H98 holdout. H98's negative HOLDOUT-DTI remains a historical exploratory result,
+not a protocol-compliant promotion test, and cannot be used to justify a slot or artifact. The deviation is
+not repaired by changing the old receipt. Future H98 execution now requires an explicit `strict_lane_ok`
+flag and a literal `PASS`; the probe-aware policy is diagnostic only.
+
+## 1 · Historical precheck (it should have stopped)
 
 `scripts/check_h98_lane.py` placed the 37,654-dot emanation and measured it against all 149 accessible
-priors *before* any validation. Decision: **proceed-to-validation**. Literal (every prior incl. probes)
-`DUPLICATE/STOP` — one universal-coverage probe, `data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif`,
-whose 3 px halo covers 99.90 % of the eligible area; policy (priors that localise something, 148 + 1
-probe) `PASS`, max Spearman **0.01083**, max near-3 px **0.40535**; canonical pattern unique, novel
-fraction 0.6596, relation `strictly-novel-and-selective`.
+priors before validation. The persisted historical decision is **proceed-to-validation (incorrect under
+the literal rule)**. Literal (every prior including probes) is `DUPLICATE/STOP`, with the universal-coverage
+probe `data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif`; its 3 px halo covers 99.90% of the
+eligible area. The probe-excluding sensitivity report was `policy=PASS`, max Spearman **0.01083**, max
+near-3 px **0.40535**; that result cannot waive the literal stop. Canonical pattern was unique, novel
+fraction 0.6596, relation `strictly-novel-and-selective`, none of which changes the lane verdict.
 
 ## 2 · The validation (HOLDOUT-DTI)
 

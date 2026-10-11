@@ -8,8 +8,9 @@
 
 <div class="card" style="border-color:#ffa726">
 <h2>One line</h2>
-<p><b>Download:</b> yes — a unique, format-valid GeoTIFF.
-<b>Submit:</b> no — it scores below a matched random control on the round's frozen hide-and-recover test.
+<p><b>Download:</b> yes for research — a decoded-pattern-unique, format-valid GeoTIFF.
+<b>Submit:</b> no — HOLDOUT-DTI is below the matched random control, and the literal all-prior lane is
+DUPLICATE/STOP. The probe-excluding policy PASS is diagnostic only.
 <b>Slots used:</b> 0. <b>Certified leaderboard gain:</b> none; this repository has no organiser receipt for
 any file.</p>
 </div>
@@ -38,15 +39,14 @@ and an explicit falsifier accompany every one of the 37,654 dots
 <tr><td>Paired difference (this file − random)</td><td>-0.030604 [-0.043238, -0.016560]</td></tr>
 <tr><td>Format, read back from disk</td><td>14/14 checks pass, no NaN, no nodata tag</td></tr>
 <tr><td>Uniqueness (decoded pixels, 147 priors)</td><td>unique — novel fraction 0.6725, relation <code>strictly-novel-and-selective</code></td></tr>
-<tr><td>Lane gate</td><td>policy PASS (literal rule stopped on one universal-coverage raster — IR-H97-001)</td></tr>
+<tr><td>Literal all-prior lane</td><td><b>DUPLICATE/STOP</b>; max Spearman 0.025695, max near-3px 0.999230 against <code>13gems_20261001_r13-lattice-s5_v2_nan-outside.tif</code> (universal-coverage probe; IR-H97-001)</td></tr>
+<tr><td>Policy sensitivity</td><td>PASS; max near-3px 0.414564 — diagnostic only, never a waiver</td></tr>
 </table>
 
-<h2>If you decide to spend a slot anyway</h2>
-<ol><li>Download the TIFF from <a href="index.html">the landing page</a>.</li>
-<li>Upload it at the DrivenData submission page.</li>
-<li>Paste the name and note above.</li>
-<li>Record the result in <code>evidence/</code> so the next round can learn from it — the organiser's
-score is the only measurement that would make any claim here certified.</li></ol>
+<h2>Submission status</h2>
+<p><strong>Do not submit H97 and do not spend a slot.</strong> It fails both the frozen holdout promotion test
+and the literal all-prior lane rule. The generic upload procedure below is for a future, separately
+validated and slot-approved file only; no such file exists in this review.</p>
 
 <p>Read more: <a href="h97.html">H97 round page</a> · <a href="h98.html">H98 validation page</a> ·
 <a href="https://github.com/buffedlizard55-lab/GEMSDOE52">repository</a>.</p>

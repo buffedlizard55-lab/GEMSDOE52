@@ -46,7 +46,9 @@ def test_h95_verdict_follows_frozen_rule():
 
 def test_h95_readme_states_both_verdicts_and_brief():
     text = (ROOT / "README.md").read_text()
-    head = text[: text.index("<!--/H95-README-->")]
+    start = text.index("<!--H95-README-->")
+    end = text.index("<!--/H95-README-->", start)
+    head = text[start:end]
     assert head.startswith("<!--H95-README-->")
     assert "OK TO DOWNLOAD: YES" in head and "OK TO SUBMIT:" in head
     assert "docs/downloads/h95-candidate.tif" in head and SHA in head

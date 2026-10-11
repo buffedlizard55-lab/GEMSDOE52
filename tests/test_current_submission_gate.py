@@ -223,10 +223,14 @@ def test_h96_receipt_gate_blocks_promote_while_below_the_bar() -> None:
     # the round's own receipts must exist beside the artifact
     for name in ("h96_run_card.json", "h96_holdout.json", "h96_lane_surface.json", "h96_lane_dots.json"):
         assert (ROOT / "evidence" / name).is_file(), name
-    # submission naming convention: the unique name and short note reach the site
+    # The stale H96-labelled record must not be presented as current: the H96-named runner points to H88.
     page = (DOCS / "index.html").read_text(encoding="utf-8")
-    assert "h96-bidir-cotrain-coverstep-25400px" in page
-    assert note[:60] in page
+    assert "Current: H97 research download YES" in page
+    assert "H96 provenance unresolved" in page
+    assert "Unverified as H96" in page
+    assert 'href="h96.html"' in page
+    assert "DUPLICATE/STOP" in page
+    assert "h96-bidir-cotrain-coverstep-25400px" not in page
         # LATEST pointers all name this stem
     for p in ("submission/LATEST.txt", "docs/submission/LATEST.txt", "submission/H96_LATEST.txt"):
         txt = (ROOT / p).read_text(encoding="utf-8").strip()

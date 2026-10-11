@@ -241,11 +241,14 @@ on a mapped trace.</p>
     {'unique' if build['uniqueness']['canonical_pattern_unique'] else 'DUPLICATE'} ·
     novel fraction {build['uniqueness']['novel_fraction']:.4f} ·
     relation to prior union: {build['uniqueness']['relation_to_union']}</td></tr>
-<tr><td>Lane gate (≤0.90 rank correlation, ≤70% of dots within 3 px of one prior)</td>
-    <td class="{'pass' if build['lane']['policy'] == 'PASS' else 'fail'}">
-    policy {build['lane']['policy']} · max Spearman {build['lane']['max_spearman']} ·
-    max near-3px {build['lane']['max_near_3px_fraction']} across {build['lane']['informative_priors']} informative priors
-    ({build['lane']['universal_coverage_probes']} universal-coverage probes reported separately)</td></tr>
+<tr><td>Literal lane gate (every aligned prior; thresholds are >0.90 rank correlation or >70% within 3 px)</td>
+    <td class="fail">{build['lane']['literal']} · max Spearman {build['lane']['literal_max_spearman']:.6f} ·
+    max near-3px {build['lane']['literal_max_near_3px_fraction']:.6f} vs
+    <code>{Path(build['lane']['literal_max_near_source']).name}</code></td></tr>
+<tr><td>Probe-excluding policy sensitivity (diagnostic only; cannot waive the literal rule)</td>
+    <td>policy {build['lane']['policy']} · max Spearman {build['lane']['max_spearman']:.6f} ·
+    max near-3px {build['lane']['max_near_3px_fraction']:.6f} across {build['lane']['informative_priors']} informative priors;
+    {build['lane']['universal_coverage_probes']} universal-coverage probe retained in literal report</td></tr>
 <tr><td>Not merely the union of the two views</td>
     <td class="pass">{build['not_merely_the_union']['candidate_share_inside_union']*100:.1f}% of the
     candidate lies inside the union of the single-view top-K sets; identical to that union:
@@ -457,12 +460,20 @@ Phase 2 reviewers verify faults.</p>
 """
 
 
-def h98_html(h98: dict, build: dict | None = None) -> str:
-    """Round page for the H98 validation. No figure is typed by hand: all of it is the receipt."""
+def h98_html(h98: dict, lane_receipt: dict | None = None, build: dict | None = None) -> str:
+    """Round page for H98, including the preserved literal-stop/policy-pass deviation."""
     sc = h98["pooled"]["scores"]
     paired = h98["pooled"]["paired_differences"]["random"]
     can = h98["canary"]
-    pre = h98["lane_precheck"]
+    pre = dict(h98.get("lane_precheck", {}))
+    if lane_receipt:
+        pre.update(lane_receipt.get("lane", {}))
+        pre["decision"] = lane_receipt.get("decision")
+        pre["uniqueness"] = lane_receipt.get("uniqueness", pre.get("uniqueness", {}))
+    literal_verdict = pre.get("literal", "UNRECORDED")
+    policy_verdict = pre.get("policy", "UNRECORDED")
+    historical_decision = pre.get("decision", "not recorded")
+    protocol_deviation = literal_verdict != "PASS" and historical_decision == "proceed-to-validation"
     verdict = h98["verdict"]
     cls = "verdict-ok" if verdict == "promote" else "verdict-no"
     rows = "".join(
@@ -489,6 +500,12 @@ def h98_html(h98: dict, build: dict | None = None) -> str:
 <p style="color:#999">View B confident, View A abstains · validated on the shared hide-and-recover
 instrument · <a href="index.html">back to the landing page</a></p>
 <p style="margin:10px 0"><span class="verdict {cls}">verdict: {verdict}</span></p>
+
+<div class="card" style="border:2px solid #ef5350">
+<p><strong>Literal lane: {literal_verdict} · policy sensitivity: {policy_verdict}.</strong> The persisted
+historical precheck decision was <code>{historical_decision}</code>. {"This was a protocol deviation: the literal STOP should have blocked validation; H98's holdout is preserved as exploratory evidence, not a compliant promotion test." if protocol_deviation else "No literal-stop/proceed deviation is recorded."}
+The old receipts are not rewritten. The corrected scripts now require an explicit literal all-prior PASS.</p>
+</div>
 
 <div class="card">
 <p><strong>Why this arm existed.</strong> H97's channel screening measured this case — B confident,
@@ -524,9 +541,11 @@ of truth population, which is the same instrument-dependence this repository has
 <h2>Gates that ran before and beside the validation</h2>
 <table>
 <tr><th>check</th><th>result</th></tr>
-<tr><td>Lane pre-check on the final dots (<code>scripts/check_h98_lane.py</code>)</td>
-    <td>policy <span class="pass">{pre['policy']}</span> · max Spearman {pre['max_spearman']:.5f} ·
-    max near-3px {pre['max_near_3px_fraction']:.4f}</td></tr>
+<tr><td>Literal final-dot lane (<code>scripts/check_h98_lane.py</code>)</td>
+    <td><span class="fail">{literal_verdict}</span>; the universal-coverage lattice probe triggered the all-prior rule.</td></tr>
+<tr><td>Probe-excluding policy sensitivity (diagnostic only)</td>
+    <td>policy {policy_verdict} · max Spearman {pre.get('max_spearman', 0.0):.5f} ·
+    max near-3px {pre.get('max_near_3px_fraction', 0.0):.4f}; cannot waive the literal STOP.</td></tr>
 <tr><td>Uniqueness at the pre-check (policy layer)</td>
     <td>canonical unique {pre['uniqueness']['canonical_pattern_unique']} ·
     novel fraction {pre['uniqueness']['novel_fraction']:.4f} ·
@@ -580,20 +599,22 @@ def index_block(build: dict, card: dict, h98: dict | None, h98_build: dict | Non
     stem = Path(build["file"]).name
     na = build["uniqueness"]
     hd = build["holdout_dti"]
+    lane = card.get("correlation_overlap_vs_registry", {}).get("lane", build["lane"])
+    lane_source = Path(lane.get("literal_max_near_source", "unavailable")).name
     li98 = ""
     if h98 is not None:
         li98 = """
-  <li><a href="h98.html">H98 validation page</a> &mdash; the second disagreement case (B confident, A
-  abstains), validated on the same instrument after the off-catalogue screen favoured it:
-  <b>negative</b>, paired against the matched random control; the two instruments disagree in sign and both
-  numbers are published.</li>"""
+  <li><a href="h98.html">H98 validation page</a> &mdash; negative, no artifact. Its historical precheck
+  recorded literal <b>DUPLICATE/STOP</b> but proceeded on a probe-excluding policy PASS; this protocol
+  deviation is disclosed and the historical receipt is unchanged.</li>"""
     return f"""<!--H97-CARD-->
 <style>.h97card{{border:2px solid #4fc3f7;border-radius:12px;padding:16px 18px;margin:14px 0;background:#f4f9fe;color:#14181d;font:15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}}.h97card h2{{margin:.2rem 0 .5rem;color:#0d3b66;font-size:1.25rem}}.h97card p{{margin:.45rem 0}}.h97card code{{background:#e6eef7;padding:1px 5px;border-radius:3px;word-break:break-all}}.h97card .no{{background:#7f1d1d;color:#fff;padding:3px 10px;border-radius:12px;font-weight:700}}.h97card .yes{{background:#14532d;color:#fff;padding:3px 10px;border-radius:12px;font-weight:700}}.h97card a.button{{display:inline-block;background:#0d47a1;color:#fff;font-weight:700;padding:10px 16px;border-radius:7px;margin:6px 8px 6px 0;text-decoration:none}}.h97card a.button.secondary{{background:#546e7a}}</style>
 <section class="h97card">
 <h2>H97 &mdash; co-training disagreement, A-confident / B-abstains (download only)</h2>
-<p><b>OK to download?</b> <span class="yes">YES</span> unique and format-valid.
-<b>OK to submit?</b> <span class="no">NO</span> &mdash; the round&rsquo;s frozen promotion test is
-negative. <b>NO CERTIFIED LEADERBOARD GAIN.</b> Slots used: 0.</p>
+<p><b>OK to download?</b> <span class="yes">YES, for research only</span> — decoded-pattern-unique and
+format-valid. <b>OK to submit?</b> <span class="no">NO</span> — HOLDOUT-DTI is negative and the
+literal all-prior lane is <b>DUPLICATE/STOP</b>. The probe-excluding policy PASS cannot waive that stop.
+<b>NO ORGANIZER-CONFIRMED SCORE.</b> Slots used: 0.</p>
 <p>The brief&rsquo;s own lane, measured end to end: View A = potential-field edge family, View B = DEM
 curvature/slope plus the in-stack radiometric band; a cell is emitted only where A is confident and B
 abstains, cover-gated, 3&nbsp;px spacing, 200&nbsp;m ring around the catalogue. Budget came from a
@@ -601,7 +622,10 @@ prevalence-matched off-catalogue instrument, not from the historical 37,654.
 HOLDOUT-DTI <code>{hd['dti']:.6f}</code> [{hd['ci95'][0]:.6f}, {hd['ci95'][1]:.6f}] against a matched
 random control <code>{hd['random_dti']:.6f}</code>; paired
 <code>{hd['paired_vs_random'][0]:+.6f}</code> [{hd['paired_vs_random'][1][0]:+.6f},
-{hd['paired_vs_random'][1][1]:+.6f}]. Uniqueness passes: novel fraction
+{hd['paired_vs_random'][1][1]:+.6f}]. Literal lane: <b>{lane['literal']}</b>, max Spearman
+{lane['literal_max_spearman']:.6f}, max near-3px {lane['literal_max_near_3px_fraction']:.6f}
+against <code>{lane_source}</code>; policy {lane['policy']} and max near-3px
+{lane['max_near_3px_fraction']:.6f} are sensitivity diagnostics only. Uniqueness passes: novel fraction
 {na['novel_fraction']:.4f} over {na['n_priors_checked']} priors. {build['reasoning_rows']:,} dots each
 carry a written geological reason and an explicit falsifier.</p>
 <p><a class="button" href="downloads/{stem}" download>Download the H97 GeoTIFF &#8595;</a>
@@ -641,8 +665,9 @@ def exec_summary_page(build: dict, holdout: dict) -> str:
 
 <div class="card" style="border-color:#ffa726">
 <h2>One line</h2>
-<p><b>Download:</b> yes — a unique, format-valid GeoTIFF.
-<b>Submit:</b> no — it scores below a matched random control on the round's frozen hide-and-recover test.
+<p><b>Download:</b> yes for research — a decoded-pattern-unique, format-valid GeoTIFF.
+<b>Submit:</b> no — HOLDOUT-DTI is below the matched random control, and the literal all-prior lane is
+DUPLICATE/STOP. The probe-excluding policy PASS is diagnostic only.
 <b>Slots used:</b> 0. <b>Certified leaderboard gain:</b> none; this repository has no organiser receipt for
 any file.</p>
 </div>
@@ -671,15 +696,14 @@ and an explicit falsifier accompany every one of the {build['reasoning_rows']:,}
 <tr><td>Paired difference (this file − random)</td><td>{pair['delta']:+.6f} [{pair['ci95'][0]:+.6f}, {pair['ci95'][1]:+.6f}]</td></tr>
 <tr><td>Format, read back from disk</td><td>14/14 checks pass, no NaN, no nodata tag</td></tr>
 <tr><td>Uniqueness (decoded pixels, {na['n_priors_checked']} priors)</td><td>unique — novel fraction {na['novel_fraction']:.4f}, relation <code>{na['relation_to_union']}</code></td></tr>
-<tr><td>Lane gate</td><td>policy {build['lane']['policy']} (literal rule stopped on one universal-coverage raster — IR-H97-001)</td></tr>
+<tr><td>Literal all-prior lane</td><td><b>{build['lane']['literal']}</b>; max Spearman {build['lane']['literal_max_spearman']:.6f}, max near-3px {build['lane']['literal_max_near_3px_fraction']:.6f} against <code>{Path(build['lane']['literal_max_near_source']).name}</code> (universal-coverage probe; IR-H97-001)</td></tr>
+<tr><td>Policy sensitivity</td><td>{build['lane']['policy']}; max near-3px {build['lane']['max_near_3px_fraction']:.6f} — diagnostic only, never a waiver</td></tr>
 </table>
 
-<h2>If you decide to spend a slot anyway</h2>
-<ol><li>Download the TIFF from <a href="index.html">the landing page</a>.</li>
-<li>Upload it at the DrivenData submission page.</li>
-<li>Paste the name and note above.</li>
-<li>Record the result in <code>evidence/</code> so the next round can learn from it — the organiser's
-score is the only measurement that would make any claim here certified.</li></ol>
+<h2>Submission status</h2>
+<p><strong>Do not submit H97 and do not spend a slot.</strong> It fails both the frozen holdout promotion test
+and the literal all-prior lane rule. The generic upload procedure below is for a future, separately
+validated and slot-approved file only; no such file exists in this review.</p>
 
 <p>Read more: <a href="h97.html">H97 round page</a> · <a href="h98.html">H98 validation page</a> ·
 <a href="https://github.com/buffedlizard55-lab/GEMSDOE52">repository</a>.</p>
@@ -696,13 +720,14 @@ def main() -> int:
     # receipt, and the receipt lives in the holdout file, not in the build file
     build["band6_recheck"] = holdout["band6_recheck"]
     h98 = load("h98_holdout.json") if (EV / "h98_holdout.json").exists() else None
+    h98_lane = load("h98_lane_precheck.json") if (EV / "h98_lane_precheck.json").exists() else None
     h98_build = load("h98_build.json") if (EV / "h98_build.json").exists() else None
 
     index_path = DOCS / "index.html"
     (DOCS / "h97.html").write_text(round_html(build, holdout, credit, card, ""))
     (DOCS / "h97-executive-summary.html").write_text(exec_summary_page(build, holdout))
     if h98 is not None:
-        (DOCS / "h98.html").write_text(h98_html(h98, h98_build))
+        (DOCS / "h98.html").write_text(h98_html(h98, h98_lane, h98_build))
     insert_index_block(index_path, index_block(build, card, h98, h98_build))
 
     name = Path(build["file"]).name

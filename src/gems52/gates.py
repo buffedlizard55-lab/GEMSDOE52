@@ -310,10 +310,10 @@ def lane_uniqueness_report(candidate, footprint, priors, *, sample, phase,
 
 
 # --------------------------------------------------------------------------------------------
-# H61 shared-template repair: the literal lane rule is unsatisfiable on a saturated registry, so
-# the gate now measures saturation instead of silently returning a verdict that no admissible
-# answer can pass.  `lane_uniqueness_report` above is untouched: its literal statistics remain the
-# authority and are reported verbatim.  `lane_report` adds a measured classification layer.
+# H61 shared-template repair: retain both the literal all-prior statistics and a measured
+# saturation-aware policy sensitivity. The literal result is authoritative for the standing prompt;
+# policy statistics are diagnostic only and never waive a literal stop. `lane_uniqueness_report`
+# remains available to callers that need the raw legacy report.
 # --------------------------------------------------------------------------------------------
 PROBE_COVERAGE = 0.95      # a prior whose 3 px halo covers >=95% of eligible pixels localises nothing
 NEAR_RADIUS_PX = 3.0       # the brief's "within 3 px"
@@ -350,15 +350,17 @@ def lane_report(candidate, eligible, priors, *, sample, phase="dots",
                 probe_coverage=PROBE_COVERAGE, log=None, coverage_cache=None):
     """Literal lane statistics for every prior + a measured universal-coverage-probe policy.
 
-    Two verdicts are returned side by side and neither replaces the other:
+    The literal verdict is authoritative for promotion; the policy verdict is diagnostic only.
 
     ``literal``   the brief's rule applied to every aligned prior, probes included.  On a registry
-                  that contains a universal-coverage probe this is FAIL for every nonempty raster,
-                  which is a property of the registry rather than of the candidate.
-    ``policy``    the same rule applied to *informative* priors only, i.e. those whose measured
+                  that contains a universal-coverage probe this is STOP for every nonempty raster,
+                  which is a property of the registry rather than of the candidate.  It is never
+                  waived by a policy pass.
+    ``policy``    a sensitivity analysis over *informative* priors only, i.e. those whose measured
                   3 px coverage of the eligible footprint is below ``probe_coverage``.  Probes are
                   not deleted: their literal statistics stay in ``per_prior`` and the probe list is
-                  published in ``universal_coverage_probes``.
+                  published in ``universal_coverage_probes``.  ``policy_ok`` is not submission
+                  approval and must not be used to override ``strict_ok`` / ``ok``.
 
     Rank correlation is exact and tie-aware.  For a binary prior it is computed analytically: the
     mid-rank transform of a 0/1 column is affine in the column, so Spearman equals the phi
@@ -462,6 +464,13 @@ def lane_report(candidate, eligible, priors, *, sample, phase="dots",
     identical = [r["path"] for r in measured if r.get("identical")]
     errors = [r for r in rows if "error" in r]
     verdict_policy = bool(pol_rank_off or pol_near_off or identical)
+    literal_fail = bool(lit_rank_off or lit_near_off or identical)
+    literal_ok = bool(measured) and not literal_fail and not errors
+    policy_ok = bool(measured) and not verdict_policy and not errors
+    literal_verdict = ("DUPLICATE/STOP" if literal_fail else
+                       "INCOMPLETE/STOP" if errors or not measured else "PASS")
+    policy_verdict = ("DUPLICATE/STOP" if verdict_policy else
+                      "INCOMPLETE/STOP" if errors or not measured else "PASS")
     return dict(
         phase=phase, instrument="gems52.gates.lane_report (H61 shared-template repair)",
         evidence_class="uniqueness/lane diagnostic, not a score",
@@ -474,8 +483,8 @@ def lane_report(candidate, eligible, priors, *, sample, phase="dots",
         literal=dict(max_spearman=lit_rho, max_near_3px_fraction=lit_near,
                      max_near_source=lit_near_src, rank_offenders=lit_rank_off,
                      near_offenders=lit_near_off, identical=identical,
-                     verdict="DUPLICATE/STOP" if (lit_rank_off or lit_near_off or identical) else "PASS",
-                     note="applied to every aligned prior including universal-coverage probes"),
+                     verdict=literal_verdict,
+                     note="authoritative: applied to every aligned prior including universal-coverage probes"),
         policy=dict(max_spearman=pol_rho, max_near_3px_fraction=pol_near,
                     max_near_source=pol_near_src, rank_offenders=pol_rank_off,
                     near_offenders=pol_near_off, identical=identical,
@@ -483,11 +492,33 @@ def lane_report(candidate, eligible, priors, *, sample, phase="dots",
                     universal_coverage_probes=len(probes),
                     probe_paths=[r["path"] for r in probes],
                     probe_coverage=[r["coverage_3px_of_eligible"] for r in probes],
-                    verdict="DUPLICATE/STOP" if verdict_policy else "PASS",
-                    note="the same literal rule restricted to priors that localise something; "
-                         "probe statistics are retained verbatim in per_prior and nothing is deleted"),
-        duplicate=verdict_policy, ok=bool(measured) and not verdict_policy and not errors,
+                    verdict=policy_verdict,
+                    note="diagnostic sensitivity analysis only; cannot waive a literal DUPLICATE/STOP"),
+        strict_ok=literal_ok, policy_ok=policy_ok,
+        literal_stop=not literal_ok, policy_duplicate=verdict_policy,
+        duplicate=not literal_ok, ok=literal_ok,
         error_count=len(errors), errors=[dict(path=r["path"], error=r["error"]) for r in errors][:20],
         scope="Supplied aligned immutable public inventory only; private/release/unlinked artifacts "
               "are not proven absent.",
         per_prior=rows)
+
+
+class LaneRuleStop(RuntimeError):
+    """Raised when the user's literal registry-lane rule says STOP."""
+
+
+def require_literal_lane(report, *, context="candidate"):
+    """Fail closed unless the literal all-prior lane rule passes.
+
+    A saturation-aware ``policy`` PASS is useful diagnostic context, but it does not override the
+    user's explicit rule covering *any* registry raster. Call this before placement for a surface
+    and after in-memory placement but before writing a GeoTIFF for final dots.
+    """
+    if report.get("strict_ok") is True and report.get("literal", {}).get("verdict") == "PASS":
+        return True
+    literal = report.get("literal", {})
+    raise LaneRuleStop(
+        f"{context}: literal lane {literal.get('verdict', 'INCOMPLETE/STOP')} — "
+        f"max Spearman={literal.get('max_spearman')}, "
+        f"max <=3px dot overlap={literal.get('max_near_3px_fraction')}; "
+        "policy-only results cannot waive the literal stop")

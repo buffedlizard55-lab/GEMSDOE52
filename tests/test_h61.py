@@ -5,8 +5,8 @@ history:
 
 1. ``registry_coverage`` really does classify a spacing-five lattice as a universal-coverage probe
    and a sparse detector as informative (IR-H61-005).
-2. ``lane_report`` reports the literal rule and the saturation-aware policy *side by side*, and a
-   probe can never be the reason the policy verdict fires.
+2. ``lane_report`` reports the literal rule and the saturation-aware policy *side by side*, but the
+   literal all-prior result is authoritative: a policy PASS cannot waive a probe-triggered STOP.
 3. The analytic binary Spearman equals scipy's tie-aware Spearman, so the fast path is exact and not
    an approximation.
 
@@ -65,11 +65,15 @@ def test_lane_report_keeps_literal_and_policy_verdicts_separate(tmp_path):
     row = rep["per_prior"][0]
     assert row["universal_coverage_probe"] is True
     assert row["near_3px_fraction"] == pytest.approx(1.0)
-    # the literal rule fires on a probe; the policy verdict must not
+    # The literal rule fires on the probe; the sensitivity-only policy pass cannot waive it.
     assert rep["literal"]["verdict"] == "DUPLICATE/STOP"
     assert rep["policy"]["verdict"] == "PASS"
     assert rep["policy"]["universal_coverage_probes"] == 1
-    assert rep["duplicate"] is False and rep["ok"] is True
+    assert rep["strict_ok"] is False and rep["ok"] is False
+    assert rep["duplicate"] is True and rep["literal_stop"] is True
+    assert rep["policy_ok"] is True and rep["policy_duplicate"] is False
+    with pytest.raises(gates.LaneRuleStop, match="policy-only results cannot waive"):
+        gates.require_literal_lane(rep, context="synthetic lattice test")
 
 
 def test_lane_report_stops_on_an_informative_copy_and_on_an_identical_decode(tmp_path):
@@ -91,6 +95,22 @@ def test_lane_report_stops_on_an_informative_copy_and_on_an_identical_decode(tmp
     rep = gates.lane_report(shifted, eligible, [prior_path], sample=sample, phase="dots")
     assert rep["per_prior"][0]["near_3px_fraction"] == pytest.approx(1.0)
     assert rep["policy"]["verdict"] == "DUPLICATE/STOP"
+
+
+def test_require_literal_lane_accepts_an_actual_all_prior_pass(tmp_path):
+    shape = (120, 120)
+    eligible = np.ones(shape, bool)
+    sample = write_tif(tmp_path, "sample.tif", np.zeros(shape, np.float32))
+    prior = np.zeros(shape, np.float32)
+    prior[::20, ::20] = 1.0
+    candidate = np.zeros(shape, np.float32)
+    candidate[10::20, 10::20] = 1.0
+    prior_path = write_tif(tmp_path, "prior.tif", prior)
+
+    rep = gates.lane_report(candidate, eligible, [prior_path], sample=sample, phase="dots")
+    assert rep["literal"]["verdict"] == "PASS"
+    assert rep["strict_ok"] is True and rep["policy_ok"] is True
+    assert gates.require_literal_lane(rep, context="synthetic clear case") is True
 
 
 def test_binary_spearman_is_exact_not_approximated(tmp_path):

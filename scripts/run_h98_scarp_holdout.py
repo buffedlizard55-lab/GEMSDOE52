@@ -55,9 +55,11 @@ def main() -> int:
     if not PRECHECK.exists():
         raise SystemExit("run scripts/check_h98_lane.py first (lane gate before validation)")
     pre = json.loads(PRECHECK.read_text())
-    if pre["decision"] != "proceed-to-validation":
-        raise SystemExit(f"lane pre-check says {pre['decision']}; the protocol says stop, not validate")
-    log(f"lane pre-check ok: policy {pre['lane']['policy']}, max_spearman {pre['lane']['max_spearman']}, "
+    if pre.get("decision") != "proceed-to-validation" or pre.get("strict_lane_ok") is not True:
+        raise SystemExit(
+            f"lane pre-check is not a literal all-prior PASS (decision={pre.get('decision')}, "
+            f"strict_lane_ok={pre.get('strict_lane_ok')}); the protocol says stop, not validate")
+    log(f"literal lane pre-check ok: max_spearman {pre['lane']['max_spearman']}, "
         f"max_near3px {pre['lane']['max_near_3px_fraction']}")
 
     with rasterio.open(LABELS) as ds:
@@ -99,7 +101,8 @@ def main() -> int:
     summary = evaluator.pooled_summary(terms, draws=1000, seed=SEED, candidate="h98_bonly")
     canary_max = {a: max(x["auc"] for x in v) for a, v in canary.items()}
     paired = summary["paired_differences"]["random"]
-    promote = bool(paired["ci95"][0] > 0 and pre["lane"]["policy"] == "PASS")
+    promote = bool(paired["ci95"][0] > 0 and pre.get("strict_lane_ok") is True
+                   and pre["lane"]["literal"] == "PASS")
     out = dict(
         round="H98", stage="holdout", evidence_class="HOLDOUT-DTI",
         evaluator_version=evaluator.VERSION, primary="h98_bonly",
@@ -110,10 +113,12 @@ def main() -> int:
         pooled=summary, per_fold=per_fold,
         canary=dict(alarm_threshold=CANARY_ALARM, max_auc=canary_max,
                     alarm={k: v > CANARY_ALARM for k, v in canary_max.items()}, per_fold=canary),
-        lane_precheck=dict(policy=pre["lane"]["policy"], max_spearman=pre["lane"]["max_spearman"],
+        lane_precheck=dict(literal=pre["lane"]["literal"], policy=pre["lane"]["policy"],
+                           strict_lane_ok=pre["strict_lane_ok"],
+                           max_spearman=pre["lane"]["max_spearman"],
                            max_near_3px_fraction=pre["lane"]["max_near_3px_fraction"],
                            uniqueness=pre["uniqueness"]),
-        promotion_rule="paired 95% CI lower bound of (h98_bonly - random) > 0 AND lane policy PASS",
+        promotion_rule="paired 95% CI lower bound of (h98_bonly - random) > 0 AND literal all-prior lane PASS",
         verdict="promote" if promote else "negative",
         inputs=dict(features_sha256=sha256(FEATURES), labels_sha256=sha256(LABELS)),
         implementation_hashes=evaluator.implementation_hashes(),

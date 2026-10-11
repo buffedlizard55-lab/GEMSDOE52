@@ -61,18 +61,34 @@ def main() -> int:
     a_rank = h97.view_a(str(FEATURES), valid)
     b_rank = h97.view_b(str(FEATURES), valid)
     field = (b_rank * (1.0 - a_rank)).astype(np.float32)
+    priors = [p for p in gates.find_priors([ROOT / "submission", ROOT / "docs/downloads",
+                                            ROOT / "data/scored", ROOT / "data/reference"])]
+    log(f"inventory {len(priors)} priors")
+
+    # The literal all-prior surface rule must pass before placement. A probe-aware policy pass is
+    # diagnostic only and cannot waive the user's STOP instruction.
+    surface_lane = gates.lane_report(field, valid, priors, sample=str(SAMPLE), phase="surface")
+    (ROOT / "evidence/h98_lane_surface_precheck.json").write_text(
+        json.dumps(surface_lane, indent=2, default=float) + "\n")
+    log(f"surface lane literal={surface_lane['literal']['verdict']} policy={surface_lane['policy']['verdict']}")
+    if not surface_lane["strict_ok"]:
+        out = dict(schema="h98-lane-precheck-v1", stage="precheck",
+                   evidence_class="lane diagnostic, not a score", decision="stop-literal-surface-lane",
+                   surface_lane=surface_lane)
+        OUT.write_text(json.dumps(out, indent=2, default=float) + "\n")
+        log("literal surface gate stopped the run before placement or validation")
+        return 0
+
     ed = ndi.distance_transform_edt(~cat)
     allowed = valid & ~cat & (ed > h97.RING_PX)
     em = nodes.spacing_select(field, allowed, K, min_px=3.0)
     log(f"emitted {int(em.sum()):,} dots of a requested {K:,}")
 
-    priors = [p for p in gates.find_priors([ROOT / "submission", ROOT / "docs/downloads",
-                                            ROOT / "data/scored", ROOT / "data/reference"])]
-    log(f"inventory {len(priors)} priors")
     lane = gates.lane_report(em.astype(np.float32), valid, priors, sample=str(SAMPLE), phase="dots")
     uq = gates.uniqueness_report(em.astype(np.float32), priors)
     log(f"lane literal={lane['literal']['verdict']} policy={lane['policy']['verdict']} "
-        f"max_spearman={lane['policy']['max_spearman']} max_near3px={lane['policy']['max_near_3px_fraction']}")
+        f"literal max_spearman={lane['literal']['max_spearman']} "
+        f"literal max_near3px={lane['literal']['max_near_3px_fraction']}")
     log(f"uniqueness canonical={uq['canonical_pattern_unique']} novel={uq['novel_fraction']:.4f} "
         f"gate_ok={uq['support_novelty_gate_ok']} identical={uq['identical_to_a_prior']}")
     most_similar = sorted([r for r in lane["per_prior"] if r.get("near_3px_fraction") is not None],
@@ -82,9 +98,11 @@ def main() -> int:
         evidence_class="lane/uniqueness diagnostic, not a score",
         budget_K=K, dots=int(em.sum()),
         lane=dict(literal=lane["literal"]["verdict"], policy=lane["policy"]["verdict"],
-                  max_spearman=lane["policy"]["max_spearman"],
-                  max_near_3px_fraction=lane["policy"]["max_near_3px_fraction"],
-                  max_near_source=lane["policy"]["max_near_source"],
+                  max_spearman=lane["literal"]["max_spearman"],
+                  max_near_3px_fraction=lane["literal"]["max_near_3px_fraction"],
+                  max_near_source=lane["literal"]["max_near_source"],
+                  policy_max_spearman=lane["policy"]["max_spearman"],
+                  policy_max_near_3px_fraction=lane["policy"]["max_near_3px_fraction"],
                   informative_priors=lane["policy"]["informative_priors"],
                   universal_coverage_probes=lane["policy"]["universal_coverage_probes"],
                   probes=lane["policy"]["probe_paths"]),
@@ -96,9 +114,12 @@ def main() -> int:
                         n_priors_checked=int(uq["n_priors_checked"])),
         closest_five_by_dot_proximity=[dict(path=r["path"], near_3px_fraction=r["near_3px_fraction"],
                                             spearman=r.get("spearman")) for r in most_similar],
-        decision=("proceed-to-validation" if (lane["policy"]["verdict"] == "PASS"
+        strict_lane_ok=bool(lane["strict_ok"]),
+        policy_lane_ok=bool(lane["policy_ok"]),
+        decision=("proceed-to-validation" if (lane["strict_ok"]
                                              and uq["canonical_pattern_unique"]
                                              and not uq["identical_to_a_prior"])
+                  else "stop-literal-lane" if not lane["strict_ok"]
                   else "stop-duplicate-or-not-unique"),
     )
     OUT.write_text(json.dumps(out, indent=2, default=float) + "\n")

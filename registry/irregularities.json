@@ -1,6 +1,6 @@
 {
   "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified. | H61 merge: IR-H61-001..009 appended from the H61 branch; main's repaired schema and numbering retained.",
-  "generated": "2026-10-11T00:05:00Z ; H97/H98 append (IR-H97-001..006, IR-H98-001)",
+  "generated": "2026-10-10T23:59:00Z ; strict-lane audit append IR-H96-006 and IR-H98-002",
   "entries": [
     {
       "id": "IR-30-029",
@@ -3822,7 +3822,29 @@
       "how_we_know": "check_site.py was run three times over the course of the round; the last run on the merged tree (main plus this round) returned exit 0 with 0 problems over 126 pages and 438 data files, after the parallel H93/H96 sessions rebuilt the landing page.",
       "handling": "Nothing was weakened to reach that state: this session did not edit scripts/check_site.py, removed no assertion, and moved no threshold. The page repairs this session did make were to pages it published itself.",
       "disposition": "Closed by other sessions' repair. Recorded here because an earlier count of 20 problems was logged as this round's observation and a reviewer comparing the two numbers would otherwise find them contradictory."
+    },
+    {
+      "id": "IR-H96-006",
+      "round": "H96-labelled record (2026-10-10)",
+      "severity": "high",
+      "status": "open - provenance unresolved; runner fail-closed",
+      "title": "H96-named runner pins and emits H88 provenance",
+      "what_it_is": "scripts/run_h96_cotrain_bidir.py identifies itself in its module header and stage outputs as H88, pins registry/h88_preregistration.json and registry/h88_amendment_veto.json, uses work/h88 and evidence/h88_* paths, and writes round='H88'. The available H96-labelled result files therefore do not establish an H96 preregistration-to-code-to-artifact chain.",
+      "how_we_know": "Read scripts/run_h96_cotrain_bidir.py, registry/h88_preregistration.json (id H88), registry/h88_amendment_veto.json, and the historical evidence/h96_* files; compare the paths and round labels. No H96 runner/source hash matching the H96 receipts was identified in this review.",
+      "handling": "The H96-named runner now raises an identity/provenance stop in check_prereg before any view, holdout, build, or write stage. H96-labelled TIFFs and receipts are retained unchanged and labelled unverified in README.md, docs/index.html, docs/executive-summary.html, and docs/h96.html.",
+      "disposition": "Open until an independently reviewed H96 registration, code hash, inputs, and output receipt agree; do not cite the historical values as verified H96 or use them for a slot decision."
+    },
+    {
+      "id": "IR-H98-002",
+      "round": "H98 (2026-10-10)",
+      "severity": "high",
+      "status": "open - protocol deviation disclosed; future runner corrected",
+      "title": "H98 validation proceeded on policy PASS despite the literal all-prior lane STOP",
+      "what_it_is": "The historical evidence/h98_lane_precheck.json records lane.literal='DUPLICATE/STOP' and lane.policy='PASS' but decision='proceed-to-validation'. The old precheck selected its decision using the probe-excluding policy result, contrary to the standing literal all-prior lane rule. H98's holdout was therefore run after a precheck that should have stopped.",
+      "how_we_know": "Inspect evidence/h98_lane_precheck.json and the historical scripts/check_h98_lane.py decision condition; evidence/h98_holdout.json records the subsequent negative HOLDOUT-DTI. No H98 TIFF exists and no submission slot was used.",
+      "handling": "Receipts remain unchanged. knowledge/100, docs/h98.html, README.md, and the current status page disclose that the result is exploratory rather than a protocol-compliant promotion test. The updated precheck stops on literal failure, and run_h98_scarp_holdout.py requires strict_lane_ok=True before scoring.",
+      "disposition": "Open as a historical protocol deviation; no result, policy pass, or later documentation can retroactively waive the literal STOP or authorize a slot."
     }
   ],
-  "merge_note": "Entries appended in chronological order of first recording, per-round prefixes only. Merged with arena/90369109 session entries IR-H96-001..005 (bidirectional co-training disagreement round; labels H88 and H95 were taken on main by parallel sessions, so that round is H96). Merged with arena/4cdd8084 session entries IR-H97-001..006 and IR-H98-001 (round labels H88/H89/H93/H94 were taken on main by parallel sessions in turn, so that pair is H97/H98; no number inside its receipts changed)."
+  "merge_note": "Entries appended in chronological order of first recording, per-round prefixes only. Merged with arena/90369109 session entries IR-H96-001..005 (bidirectional co-training disagreement round; labels H88 and H95 were taken on main by parallel sessions, so that round is H96). Merged with arena/4cdd8084 session entries IR-H97-001..006 and IR-H98-001 (round labels H88/H89/H93/H94 were taken on main by parallel sessions in turn, so that pair is H97/H98; no number inside its receipts changed). Strict-lane review append (2026-10-10): IR-H96-006 records the H96/H88 runner identity mismatch; IR-H98-002 records that the historical H98 precheck proceeded despite literal STOP. Original receipts are not rewritten."
 }

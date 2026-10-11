@@ -44,6 +44,12 @@ summary{cursor:pointer;color:var(--accent);font-weight:600}
 instrument · <a href="index.html">back to the landing page</a></p>
 <p style="margin:10px 0"><span class="verdict verdict-no">verdict: negative</span></p>
 
+<div class="card" style="border:2px solid #ef5350">
+<p><strong>Literal lane: DUPLICATE/STOP · policy sensitivity: PASS.</strong> The persisted
+historical precheck decision was <code>proceed-to-validation</code>. This was a protocol deviation: the literal STOP should have blocked validation; H98's holdout is preserved as exploratory evidence, not a compliant promotion test.
+The old receipts are not rewritten. The corrected scripts now require an explicit literal all-prior PASS.</p>
+</div>
+
 <div class="card">
 <p><strong>Why this arm existed.</strong> H97's channel screening measured this case — B confident,
 A abstains — at <strong>0.109480</strong> against a matched random mean of <strong>0.051925</strong>
@@ -78,9 +84,11 @@ of truth population, which is the same instrument-dependence this repository has
 <h2>Gates that ran before and beside the validation</h2>
 <table>
 <tr><th>check</th><th>result</th></tr>
-<tr><td>Lane pre-check on the final dots (<code>scripts/check_h98_lane.py</code>)</td>
-    <td>policy <span class="pass">PASS</span> · max Spearman 0.01083 ·
-    max near-3px 0.4053</td></tr>
+<tr><td>Literal final-dot lane (<code>scripts/check_h98_lane.py</code>)</td>
+    <td><span class="fail">DUPLICATE/STOP</span>; the universal-coverage lattice probe triggered the all-prior rule.</td></tr>
+<tr><td>Probe-excluding policy sensitivity (diagnostic only)</td>
+    <td>policy PASS · max Spearman 0.01083 ·
+    max near-3px 0.4053; cannot waive the literal STOP.</td></tr>
 <tr><td>Uniqueness at the pre-check (policy layer)</td>
     <td>canonical unique True ·
     novel fraction 0.6596 ·

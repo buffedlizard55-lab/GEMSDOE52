@@ -1,0 +1,111 @@
+{
+  "schema": "gems52-review-run-card-v1",
+  "round": "H101 review of the existing H97 research artifact",
+  "review_date": "2026-10-10",
+  "stage": "retroactive_review_not_a_new_experiment",
+  "evidence_class": "existing repository receipts; no refit or holdout rerun in this review",
+  "hypothesis": "H97: geophysical View A confident while surface View B abstains marks a buried fault under cover that is absent from the surface-mapped catalogue.",
+  "mechanism": "Density/susceptibility edges without a corresponding surface expression may indicate structure buried under cover; emitted dots were selected from the preregistered A-confident/B-abstaining disagreement field.",
+  "named_non_fault_mimic": "Lithologic contacts and intrusive margins; palaeo-channel thalwegs; playa/salina edges; anthropogenic linears such as roads and canals.",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "evaluator": "gems52-pooled-hide-v1",
+    "withheld_positive_pixels": 60894,
+    "primary_arm": "h97_disagree",
+    "dti": 0.04594740031767762,
+    "ci95": [0.03370645414559958, 0.059307032882270225],
+    "matched_random_dti": 0.07655090995242028,
+    "matched_random_ci95": [0.068175, 0.084557],
+    "paired_candidate_minus_random": -0.030603509634742662,
+    "paired_ci95": [-0.043238228802808684, -0.016560486466771347],
+    "interpretation": "negative on the repository holdout; not an organizer leaderboard score"
+  },
+  "registry_correlation_overlap": {
+    "evidence_class": "literal lane / uniqueness diagnostic, not a score",
+    "thresholds": {
+      "rank_correlation_stop_if_greater_than": 0.9,
+      "dot_overlap_stop_if_greater_than_within_px": 3,
+      "dot_overlap_fraction_stop_if_greater_than": 0.7
+    },
+    "literal_all_prior": {
+      "verdict": "DUPLICATE/STOP",
+      "max_spearman": 0.025694775462692273,
+      "max_dot_overlap_fraction_within_3px": 0.9992298295001859,
+      "overlap_source": "data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "source_is_universal_coverage_probe": true
+    },
+    "probe_excluding_policy_sensitivity_only": {
+      "verdict": "PASS",
+      "max_spearman": 0.025694775462692273,
+      "max_dot_overlap_fraction_within_3px": 0.41456418972751896,
+      "informative_priors": 146,
+      "universal_coverage_probes": 1,
+      "may_waive_literal_stop": false
+    }
+  },
+  "raster": {
+    "path": "submission/gems52-h97-cotrain-disagree-sparse-37654px-20261010T224136Z.tif",
+    "sha256": "eed99c0b544b1731a4dd2e10c2f4db65a90316e149c3c4a6673256459d95f5f2",
+    "status": "existing research artifact; not rebuilt"
+  },
+  "validator_output": {
+    "ok": true,
+    "problems": [],
+    "checks": {
+      "single_band": true,
+      "float32": true,
+      "shape_match": true,
+      "crs_match": true,
+      "transform_match": true,
+      "all_finite": true,
+      "in_0_1": true,
+      "binary": true,
+      "nodata_none": true,
+      "ones": 37654,
+      "budget_match": true,
+      "outside_domain_zero": true,
+      "on_catalogue_zero": true,
+      "collar_respected": true,
+      "min_spacing_px": 3,
+      "spacing_ok": true
+    }
+  },
+  "submission": {
+    "name": "h97-cotrain-sparse-37654px",
+    "note": "H97 co-train A-conf/B-abstain, 37654px, 3px spacing, 200m ring, budget from prevalence-matched off-cat, zeros-outside",
+    "note_characters": 117,
+    "note_limit": 140
+  },
+  "verdict": "negative",
+  "research_download_ok": true,
+  "submission_ok": false,
+  "weekly_slot_approved": false,
+  "weekly_slots_used": 0,
+  "organizer_confirmed_score": null,
+  "related_h98": {
+    "hypothesis": "B confident, A abstains (H98 B-only disagreement)",
+    "holdout_dti": {
+      "label": "HOLDOUT-DTI",
+      "evaluator": "gems52-pooled-hide-v1",
+      "withheld_positive_pixels": 60894,
+      "dti": 0.058435,
+      "ci95": [0.043370, 0.075525],
+      "matched_random_dti": 0.077320,
+      "matched_random_ci95": [0.068767, 0.087786],
+      "paired_candidate_minus_random": -0.018885,
+      "paired_ci95": [-0.030936, -0.007620]
+    },
+    "artifact": null,
+    "literal_lane_verdict": "DUPLICATE/STOP",
+    "policy_sensitivity_verdict": "PASS",
+    "policy_max_overlap_within_3px": 0.4053487013331917,
+    "historical_precheck_decision": "proceed-to-validation despite literal STOP; protocol deviation",
+    "receipt_rewritten": false
+  },
+  "related_h96": {
+    "status": "provenance unresolved",
+    "reason": "H96-named runner internally identifies as H88 and pins H88 registrations and outputs",
+    "runner_execution_allowed": false,
+    "historical_measurements_verified_as_h96": false
+  }
+}

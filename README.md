@@ -1,3 +1,14 @@
+<!--H101-CURRENT-STATUS-->
+# Current status — H97/H98 strict-lane review (2026-10-10)
+
+**H97:** research download **YES**; submit **NO**. Existing GeoTIFF is format-valid and pattern-unique, but its final dots have literal lane **DUPLICATE/STOP**: measured raster rank correlation 0.025695 and 0.999230 of dots within 3 px of the universal-coverage lattice probe. The probe-excluding sensitivity report (`policy=PASS`, max near-3-px 0.414564) is diagnostic only and cannot waive the literal rule. HOLDOUT-DTI (`gems52-pooled-hide-v1`, 60,894 withheld positive pixels): 0.045947 [0.033706, 0.059307] vs random 0.076551 [0.068175, 0.084557]; paired −0.030604 [−0.043238, −0.016560]. These are not organizer scores. **No slot used or approved.** [Download H97 TIFF for research](docs/downloads/h97-candidate.tif) · [ZIP](docs/downloads/h97-candidate.zip).
+
+**H98:** negative HOLDOUT-DTI (same evaluator and withheld-positive count): 0.058435 [0.043370, 0.075525] vs random 0.077320 [0.068767, 0.087786]; paired −0.018885 [−0.030936, −0.007620]. **No TIFF exists.** Audit found the historical precheck proceeded on policy PASS despite a literal `DUPLICATE/STOP`; that protocol deviation is disclosed in [`knowledge/100`](knowledge/100_h98_results_and_limits.md) and registered as `IR-H98-002`, while historical receipts remain unchanged. The current H97/H98 builders and H98 precheck/holdout path now fail closed on literal STOP; older historical runners that read the policy field directly still require review before reuse.
+
+**No new candidate was fitted or built.** The shared `work/r2/features` cache is absent, H97/H98 already exhaust the relevant validation cases, and no weekly slot may be spent. H96's H96-named runner is internally an H88 runner and is now fail-closed pending provenance repair (`IR-H96-006`); see [`knowledge/101`](knowledge/101_three-pass_audit_and_research_slate.md). The retroactive H97 audit card is [`evidence/h101_review_run_card.json`](evidence/h101_review_run_card.json). No ORGANIZER-CONFIRMED receipt was reviewed. Current working branch: `arena/c225b35f-gemsdoe52`.
+
+---
+
 <!--H95-README-->
 # Current status — H95 (2026-10-10): co-trained View B · first holdout of H87 · NEGATIVE
 
@@ -672,9 +683,9 @@ Go ahead and create a pull request and then merge the pull request onto the main
 <!--/H95-README-->
 
 <!--H97-README-->
-# This session's round — H97 (artifact) and H98 (validation), 2026-10-11
+# H97/H98 co-training rounds — historical results and strict-lane audit (2026-10-10)
 
-**Branch:** `arena/4cdd8084-gemsdoe52` · **Round-number lineage:** this pair was written as H88/H89,
+**Branch:** `arena/c225b35f-gemsdoe52` · **Round-number lineage:** this pair was written as H88/H89,
 renumbered H93/H94 when those labels went to parallel sessions, and renumbered **H97/H98** for the same
 reason. Every receipt, page, hash and byte count below belongs to this pair; no number *inside* any
 receipt changed during a rename.
@@ -685,9 +696,10 @@ receipt changed during a rename.
 > **OK to download?** Yes: `gems52-h97-cotrain-disagree-sparse-37654px-20261010T224136Z.tif` is
 > format-valid (single-band float32, EPSG:32611, 3730×3292 at 100 m, exactly
 > 37,654 cells at 1.0 and zeros elsewhere, every pixel finite in [0, 1], no nodata
-> tag — so the portal's rule "Predicted values must be in range [0, 1]" cannot fail on it) and unique
-> (novel fraction 0.6725 against 147 priors;
-> lane policy PASS).
+> tag — so the portal's rule "Predicted values must be in range [0, 1]" cannot fail on it) and pattern-unique
+> (novel fraction 0.6725 against 147 priors), but **not lane-clear**. Literal final-dot lane is
+> `DUPLICATE/STOP` (max Spearman 0.025695; 0.999230 within 3 px of the universal-coverage lattice
+> probe). The probe-excluding policy PASS is sensitivity-only and does not waive the rule.
 > **OK to submit?** No: the round's frozen promotion rule failed. Hide-and-recover DTI
 > **0.045947** [0.033706, 0.059307] against a matched random control
 > 0.076551; paired **-0.030604**
@@ -728,9 +740,17 @@ and neither is quoted alone.
   `registry/irregularities.json` — including the two defects found by manual review of the reasoning CSV
   (pixel indices used as projected coordinates; the lidar *coverage* band published under a scarp name),
   both fixed before publication with the raster bytes unchanged.
+* **H98 gate deviation:** `evidence/h98_lane_precheck.json` records literal `DUPLICATE/STOP` but
+  `decision=proceed-to-validation`, because the historical script gated on probe-excluding policy PASS.
+  That was not compliant with the standing literal lane rule. H98's negative validation is preserved as
+  exploratory evidence; it must not be described as a protocol-compliant promotion result. The old receipt
+  is unchanged; the corrected precheck and runner now stop unless the literal all-prior gate passes.
+* H96 provenance is unresolved: `scripts/run_h96_cotrain_bidir.py` identifies internally as H88 and pins
+  H88 registration/output paths. Its historical files remain, but no H96 claim is treated as verified.
 * Neither instrument measures the organiser's scored population. Nothing here is an organizer-confirmed
   score; every figure is either HOLDOUT-DTI (labelled with evaluator, withheld positives and CI) or copied
   from a receipt.
+* Three-pass review, candidate slate, test results and blocked next steps: [`knowledge/101`](knowledge/101_three-pass_audit_and_research_slate.md).
 
 ---
 <!--/H97-README-->
@@ -741,23 +761,29 @@ and neither is quoted alone.
 # GEMSDOE52 — Co-Training Research for the DOE GEMS Prize
 
 **Competition:** [DOE GEMS Prize (DrivenData #306)](https://www.drivendata.org/competitions/306/competition-doe-gems/)
-**Branch:** `arena/90369109-gemsdoe52` (this session, H96) · `arena/411239c1-gemsdoe52` (H94 session; the older header said `arena/99f480b9-gemsdoe52`, see IR-H94-005)
-**Current status (2026-10-10, H96):** **download yes (audit only) · submit NO.** Holdout NEGATIVE (below random and below the bar).
+**Branch:** `arena/c225b35f-gemsdoe52` (current review branch). Names of prior Arena branches below are historical context, not the active branch.
+**Current status (2026-10-10, H97/H98 audit):** H97 download yes for research only, submit NO; literal lane DUPLICATE/STOP. H98 negative, no TIFF, historical precheck deviation disclosed. H96 provenance unresolved. No organizer receipt; slots used 0.
 
 ➡️ **Start here:** [current status page](https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/docs/index.html) (GitHub Pages: `docs/index.html`) · [executive summary and submission guide](docs/executive-summary.html)
 
 ---
 
-## Status block: H96 (2026-10-10)
+## Archived H96-labelled record — provenance unresolved (2026-10-10)
+
+**Do not treat the following historical values as a verified H96 result.** The H96-named runner is internally
+an H88 runner: it reads `registry/h88_preregistration.json`, identifies its round as H88, and writes H88
+paths/outputs. Its identity mismatch is now fail-closed in code; historical TIFFs and receipts are not
+rewritten. The score values below are retained only as previously reported local evidence pending a
+separately verified provenance chain.
 
 | item | value | evidence class |
 |---|---|---|
 | File | `docs/downloads/gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif` (108,742 bytes) | — |
 | SHA-256 | `ba2dae7db2b919bb53c147cae0d5f9663b368b059fc1b26c69d8dbfc35948ade` | — |
 | Validator | ok, 12/12 (single band float32, EPSG:32611, 3730×3292, values exactly {0,1}, all finite) | format check |
-| Holdout | 0.0725 [0.0581, 0.0872] vs random 0.0766 and bar 0.1928 | HOLDOUT-DTI |
-| Lane, surface | PASS (max Spearman 0.0914 against the 0.90 limit) | repo gate |
-| Lane, final dots | literal DUPLICATE vs the universal-coverage probe (0.9993; IR-H96-002) — policy PASS (informative max 0.5233) | repo gate |
+| Historical holdout report | 0.0725 [0.0581, 0.0872] vs random 0.0766 and bar 0.1928; **not verified as H96** | claimed HOLDOUT-DTI; provenance unresolved |
+| Historical surface lane | PASS (max Spearman 0.0914 against the 0.90 limit); runner identity unresolved | local gate receipt |
+| Historical final dots | literal DUPLICATE/STOP vs the universal-coverage probe (0.9993; IR-H96-002) — policy PASS (informative max 0.5233); policy cannot waive literal STOP | local gate receipt |
 | Uniqueness, decoded | 147 priors; pattern unique; novel fraction 0.57 | repo gate |
 | Verdict | NEGATIVE | HOLDOUT-DTI |
 | Download | yes, for audit only | — |
@@ -765,17 +791,9 @@ and neither is quoted alone.
 | Slots used / experiments | 0 / 1 of 3 | — |
 | Submission name / note | `h96-bidir-cotrain-coverstep-25400px` · `H96 bidir co-train A/B disagreement, cover-step ViewA, 25400px mass lever, 3px, 200m collar; HOLDOUT-DTI below bar, research candidate` | — |
 
-What H96 tested: **bidirectional co-training disagreement** (Blum &amp; Mitchell, COLT 1998) — View A
-(gravity/magnetics/strain/seismicity/cover/conductivity) vs View B (DEM curvature + slope + radiometrics);
-A-confident/B-abstain cells boosted as buried-fault candidates (cover-thickness step + strain/seismicity
-lineation), B-confident/A-abstain cells vetoed as surface artifacts. The first holdout measurement of the
-H85-next channels: cover-step AUC 0.567, seismicity-lineation 0.511, strain-step 0.527 — near-chance on
-catalogue recovery. The disagreement field itself scored **0.0725 vs random 0.0766** (n.s.); the best arm
-was consensus-only 0.0824. Negative results are deliverables: this closes the bidirectional-disagreement
-field on the catalogue instrument and redirects the next round to graft the disagreement arm onto the strong
-H82/H84 surface channels.
+What the historical receipt purports to test: **bidirectional co-training disagreement** (Blum &amp; Mitchell, COLT 1998) — View A (gravity/magnetics/strain/seismicity/cover/conductivity) vs View B (DEM curvature + slope + radiometrics); A-confident/B-abstain cells boosted as buried-fault candidates and B-confident/A-abstain cells vetoed as surface artifacts. Its reported local holdout values (0.0725 vs random 0.0766; consensus-only 0.0824) remain in the historical receipts, but the H96 execution identity is not established and these are **not verified H96 measurements**. Do not use them for a slot decision. The final-dot literal lane was also DUPLICATE/STOP; the policy pass cannot waive it.
 
-Full results: [`knowledge/96`](knowledge/96_h96_results_and_limits.md). Run card: [`evidence/h96_run_card.json`](evidence/h96_run_card.json). Irregularities: [`registry/irregularities.json`](registry/irregularities.json) (IR-H96-001 to IR-H96-005).
+Historical records: [`knowledge/96`](knowledge/96_h96_results_and_limits.md) and [`evidence/h96_run_card.json`](evidence/h96_run_card.json). Identity/provenance audit and fail-closed runner: [`knowledge/101`](knowledge/101_three-pass_audit_and_research_slate.md), `scripts/run_h96_cotrain_bidir.py`. Irregularities remain in [`registry/irregularities.json`](registry/irregularities.json) (IR-H96-001 to IR-H96-006, including the unresolved H96/H88 identity mismatch).
 
 ---
 

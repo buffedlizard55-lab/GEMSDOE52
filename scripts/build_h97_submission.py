@@ -196,6 +196,15 @@ def main() -> int:
     a_rank = h97.view_a(str(FEATURES), eligible)
     b_rank = h97.view_b(str(FEATURES), eligible)
     field = h97.disagreement(a_rank, b_rank, eligible)
+
+    # Literal all-registry surface gate is checked before any placement. The probe-aware policy is
+    # retained below only as diagnostics and can never waive a literal STOP.
+    priors = gates.find_priors([SUB, DL, ROOT / "data/scored", ROOT / "data/reference"])
+    surface_lane = gates.lane_report(field, eligible, priors, sample=str(SAMPLE), phase="surface")
+    (EV / "h97_lane_surface_strict_precheck.json").write_text(json.dumps(surface_lane, indent=2, default=str) + "\n")
+    log(f"surface lane literal={surface_lane['literal']['verdict']} policy={surface_lane['policy']['verdict']}")
+    gates.require_literal_lane(surface_lane, context="H97 surface before placement")
+
     ed_cat = ndi.distance_transform_edt(~cat)
     allowed = eligible & ~cat & (ed_cat > h97.RING_PX)
     log(f"allowed (off-catalogue, >200 m) {int(allowed.sum()):,} px")
@@ -210,6 +219,17 @@ def main() -> int:
         placed = int(em.sum())
     emitted = em.astype(np.float32)
     log(f"emitted {placed:,} dots")
+
+    # Check the exact in-memory final support before a TIFF or ZIP is written. The brief's literal
+    # all-prior rule is authoritative, even when a universal-coverage lattice is the witness.
+    strict_priors = gates.find_priors([SUB, DL, ROOT / "data/scored", ROOT / "data/reference"])
+    strict_lane = gates.lane_report(emitted, eligible, strict_priors, sample=str(SAMPLE), phase="dots")
+    (EV / "h97_lane_dots_strict_precheck.json").write_text(json.dumps(strict_lane, indent=2, default=str) + "\n")
+    log(f"final-dot lane literal={strict_lane['literal']['verdict']} policy={strict_lane['policy']['verdict']}")
+    gates.require_literal_lane(strict_lane, context="H97 final dots before GeoTIFF write")
+    strict_uniqueness = gates.uniqueness_report(emitted, strict_priors)
+    if not strict_uniqueness["canonical_pattern_unique"] or strict_uniqueness["identical_to_a_prior"]:
+        raise SystemExit("H97 decoded-pattern uniqueness precheck failed; no GeoTIFF written")
 
     ts = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
     stem = f"gems52-h97-cotrain-disagree-sparse-{placed}px-{ts}"

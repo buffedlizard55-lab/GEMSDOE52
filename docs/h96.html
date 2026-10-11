@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>H96 Status &amp; Audit — GEMSDOE52</title>
+<title>H96-labelled archive — provenance unresolved — GEMSDOE52</title>
 <style>
 :root{--bg:#0f1117;--fg:#e8eaed;--accent:#4fc3f7;--ok:#66bb6a;--warn:#ffa726;--err:#ef5350;--card:#1a1d27;--border:#2d3040}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -28,22 +28,21 @@ th{color:var(--accent)}
 <body>
 <div class="container">
 
-<h1>H96 — bidirectional co-training disagreement: status &amp; audit</h1>
-<p class="small">GEMSDOE52 · round H96 · generated 2026-10-10 ·
-<a href="index.html">download page</a> · <a href="executive-summary.html">executive summary</a></p>
+<h1>Archived H96-labelled record — provenance unresolved</h1>
+<p class="small">GEMSDOE52 · historical local files dated 2026-10-10 · not a current candidate ·
+<a href="index.html">current status</a> · <a href="executive-summary.html">executive summary</a></p>
 
-<div class="notice">
-<p><strong>current H96 status and review</strong> — the current pointer is
-<code>gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif</code>;
-its receipt explicitly closes the weekly-slot gate (HOLDOUT-DTI 0.0725 vs the promotion bar 0.1928).
-No upload happened; slots used: 0. The owner decides; no agent may upload or spend a slot on this
-file's behalf.</p>
-<p><b>OK to download?</b> <span class="pass">YES</span> ·
-<b>OK to submit?</b> <span class="warn">NOT RECOMMENDED (verdict negative)</span> ·
-NO CERTIFIED LEADERBOARD GAIN.</p>
+<div class="notice" style="border-color:#ef5350">
+<p><strong>Do not treat these files or scores as verified H96 evidence.</strong> The H96-named runner
+<code>scripts/run_h96_cotrain_bidir.py</code> identifies internally as H88: it pins H88 preregistration
+files and writes H88 paths/round labels. The identity/provenance mismatch is unresolved, so the runner is
+now fail-closed. Historical receipts and artifacts are preserved, not rewritten.</p>
+<p><b>Historical download:</b> available for audit only. <b>Submission:</b> <span class="warn">NO</span> —
+not verified as H96, no slot approval, and the recorded final-dot literal lane is DUPLICATE/STOP.
+A probe-excluding policy PASS does not waive the literal rule. No organizer receipt is present.</p>
 </div>
 
-<h2>Receipts (all machine-readable, re-derivable from bytes)</h2>
+<h2>Existing historical receipts (machine-readable; provenance not established)</h2>
 <table>
 <tr><th>item</th><th>value</th></tr>
 <tr><td>raster</td><td><a href="downloads/gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif">…-zeros.tif</a> (106 KB) · short alias <a href="downloads/h96-candidate.tif">h96-candidate.tif</a></td></tr>
@@ -59,25 +58,24 @@ NO CERTIFIED LEADERBOARD GAIN.</p>
 <tr><td>not-the-union</td><td><span class="pass">CONFIRMED</span> — 86 % of dots outside the views' spaced top-k union (Jaccard 0.049); 78.9 % buried-dominant</td></tr>
 <tr><td>independence (Blum–Mitchell)</td><td>max |r| 0.0965 of spatial-block OOF negative errors (abandon threshold 0.60) — not abandoned</td></tr>
 <tr><td>leakage canary</td><td>max single-channel AUC 0.5958 (alarm 0.90) — silent</td></tr>
-<tr><td>HOLDOUT-DTI (primary)</td><td>0.072502 [0.058139, 0.087161] vs bar 0.192829 — <span class="fail">verdict negative</span></td></tr>
+<tr><td>Historical reported holdout (not verified as H96)</td><td>0.072502 [0.058139, 0.087161] vs bar 0.192829 — local receipt only, not an organizer score</td></tr>
 <tr><td>A-only reasoning</td><td><a href="downloads/gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros-a-only-reasoning.csv">20,050 rows</a>, each naming fired components and non-fault alternatives</td></tr>
 </table>
 
-<h2>What the round tested</h2>
-<p>Pre-registered in <code>registry/h96_preregistration.json</code> (SHA-256 <code>0f664c43…</code>)
-plus the pre-fit veto amendment (<code>91f74c5a…</code>): View A = gravity/magnetic gradients +
-cover-thickness step + seismicity lineation + strain step + conductivity; View B = DEM slope /
-ridge curvature / topographic edges + radiometric K/Th + total count; discovery signal =
-disagreement both ways (A&gt;B → buried-fault boost; B&gt;A → artifact veto). First holdout
-measurement of the H85-next-B/C/D channels: cover-step AUC 0.567, seismicity-lineation 0.511,
-strain-step 0.527 — near-chance on catalogue recovery.</p>
+<h2>Historical scientific description (unverified as H96)</h2>
+<p>The historical code and receipt describe View A as gravity/magnetic gradients, cover-thickness step,
+seismicity lineation, strain step and conductivity; View B as DEM slope/curvature plus radiometric K/Th
+and total count; and disagreement both ways (A&gt;B boost, B&gt;A veto). However, the H96-named runner
+actually pins the H88 registration/amendment and writes H88 round labels and output paths. There is no
+verified H96 preregistration-to-code-to-artifact chain. Preserve these details for audit only; do not
+attribute the reported AUC or DTI values to a verified H96 execution.</p>
 
-<h2>Run-card verdict</h2>
-<p><strong>negative</strong> — the primary arm did not beat random on hide-and-recover
-(Δ = −0.0040 [−0.0163, +0.0095]) and is far below the promotion bar. Negative results are
-deliverables: the full receipts close the bidirectional-disagreement hypothesis on the
-catalogue instrument and redirect the next round to graft the disagreement arm onto the strong
-H82/H84 surface channels. Full card: <code>evidence/h96_run_card.json</code>.</p>
+<h2>Historical run-card contents</h2>
+<p>The existing card reports a negative local result (Δ = −0.0040 [−0.0163, +0.0095]), but because the
+runner identity and registration provenance do not match H96, this must not be treated as a verified
+H96 verdict or used for slot selection. The original card is preserved at
+<code>evidence/h96_run_card.json</code>; the provenance blocker is detailed in
+<a href="../knowledge/101_three-pass_audit_and_research_slate.md">knowledge/101</a>.</p>
 
 <div class="footer">
 <p><a href="index.html">Download page</a> ·
