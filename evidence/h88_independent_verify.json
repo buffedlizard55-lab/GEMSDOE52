@@ -1,0 +1,49 @@
+{
+  "file": "submission/gems52-h88-basement-step-37654px-20261010.tif",
+  "sha256": "636b4b9f75cc19980387b410575d433a8f1a93bfb29ffdde7386d75a6209aa4c",
+  "bytes": 793459,
+  "run_card_sha256": "636b4b9f75cc19980387b410575d433a8f1a93bfb29ffdde7386d75a6209aa4c",
+  "sha256_matches_run_card": true,
+  "download_copy_identical": true,
+  "zip_members": [
+    "gems52-h88-basement-step-37654px-20261010.tif"
+  ],
+  "zip_tif_identical": true,
+  "count_bands": 1,
+  "dtype": "float32",
+  "shape": [
+    3730,
+    3292
+  ],
+  "crs": "EPSG:32611",
+  "transform": [
+    100.0,
+    0.0,
+    243350.0,
+    0.0,
+    -100.0,
+    4508550.0
+  ],
+  "nodata_tag": null,
+  "shape_matches_template": true,
+  "crs_matches_template": true,
+  "transform_matches_template": true,
+  "nan_count_all": 0,
+  "nan_count_inside_footprint": 0,
+  "min": 0.0,
+  "max": 1.0,
+  "all_in_0_1": true,
+  "values_unique": [
+    0.0,
+    1.0
+  ],
+  "positive_outside_footprint": 0,
+  "n_dots": 37654,
+  "binary": true,
+  "nn_min_px": 3.0,
+  "nn_median_px": 3.0,
+  "spacing_at_least_3px": true,
+  "dots_within_200m_of_catalogue": 0,
+  "catalogue_positive_px": 60988,
+  "validator_PASS": true
+}

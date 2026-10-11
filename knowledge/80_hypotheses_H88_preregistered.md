@@ -1,90 +1,123 @@
-# 80 · H88 — co-training lane: sufficiency-screened exchange, disagreement-stratified emission, metered budget (preregistered)
+# 80 · H88 hypotheses, ranked, and the frozen H88 specification — written before any fit
 
-Round identifier: **H88**. Lane: the brief's two-view co-training paragraph
-(Blum & Mitchell, *Combining labeled and unlabeled data with co-training*, COLT '98 pp. 92–100,
-DOI [10.1145/279943.279962](https://doi.org/10.1145/279943.279962)) — View A potential-field /
-subsurface, View B surface, **disagreement as the discovery signal**.
+Written 2026-10-10 in the H88 session (branch `arena/90369109-gemsdoe52`), **before any view was
+computed and before any holdout was run**. The frozen machine-readable twin is
+`registry/h88_preregistration.json` (hash-pinned by `scripts/run_h88_cotrain_bidir.py`, which
+refuses to start if the registration hash moves).
 
-Frozen **before any H88 fit**. Pinned by `registry/h88_preregistration.json`; the runner
-`scripts/run_h88_cotrain_lane.py` refuses to start if the hash of this file has moved. Nothing below is
-edited after the freeze; results go to `knowledge/82_h88_results_and_limits.md`.
+Lane (the session's assigned method paragraph, verbatim from the standing brief): **co-training
+between a geophysical view and a surface view, with disagreement as the discovery signal**
+(Blum & Mitchell, COLT '98, pp. 92–100, doi:10.1145/279943.279962). Everything below stays inside
+that lane. The brief also demands: test view-error independence on labelled negatives and abandon
+if strongly correlated; compare against a single-view baseline on hide-and-recover segments;
+write geological reasoning for every A-only candidate; confirm the output is not merely the union
+of the two views; normalize to [0, 1], metric-aware placement, uniqueness gate.
 
-## 0 · What is already settled in this repository, and what H88 therefore does *not* repeat
+## 1 · Ranked candidate hypotheses (3–5), each naming layers, signature, why off-catalogue, and novelty
 
-The repo has measured the co-training lane repeatedly (`knowledge/03` N-1; H61, H63, H65, H69, H70, H74,
-H82, H84). Settled facts carried in, each with its own receipt:
+Ranked by (prior plausibility for an **off-catalogue** fault) × (data present in this sandbox) ÷
+(cost). "Expected DTI" is ordinal only: no projection is written as a score (standing brief rule 3).
 
-| fact | receipt |
-|---|---|
-| View A sufficiency has failed **eight** times on the mandated instrument (H61 0.5163, H63 0.5362, H69 0.5281, H65 0.5202, H70 0.5166, H74 0.5194, H82 0.5113, H84 0.5163) | `AGENTS.md` §H83; `evidence/h82_fit.json`, `evidence/h84_holdout.json` |
-| Conditional independence **passes**: max \|ρ\| 0.1526 (H83) / 0.0765 (H61) — so the brief's *abandonment* condition never fired | `evidence/h83_holdout.json`, `knowledge/72` §6 |
-| Pseudo-labels used as a **label source** were the worst arm ever measured here (0.0084 tip / 0.0078 hide vs random 0.0253 / 0.0396) | `knowledge/03` N-1 |
-| Disagreement strata adopted as **stratify-and-suppress**, not as a label donor | `src/gems52/views54.py` docstring, `knowledge/03` N-1 |
-| Current promotable holdout bar: `B_DVA2` **0.192829** [0.170790, 0.213691]; `single_B` 0.174571; `single_A` 0.071954; random 0.080426 | `evidence/h84_holdout.json` |
-| Holdout DTI does **not** rank board scores (Spearman −0.1045, n = 13) | `knowledge/06` IR-52-017 |
-| Board-family mass lever: Spearman(mass, score) = −0.928 over the restored scored rasters | `knowledge/76` §4 |
-| The ≤ 200 m ring around the mapped catalogue earns **zero** credit; deleting it raised 0.2600 → 0.2778 | `knowledge/01` §5 item 2 (refuted half struck through); `knowledge/06` IR-52-018 |
+| rank | id | layer(s) (band index, tag read from `training_features.tif` band tags this session) | physical signature | why it could catch a fault the USGS/INGENIOUS catalogue lacks | how it differs from everything in this repo | status |
+|---|---|---|---|---|---|---|
+| **1** | **H88 · bidirectional co-training disagreement with cover-step View A** | A: 18 `iso_grav_anom_hg`, 3 `tmi_hg`, **15 `depth_to_base_surf` STEP** (gradient magnitude, σ=2 px), **10 `deq_n100a15` LINEATION** (gradient magnitude), **7 `geod_shearrate` STEP** (gradient magnitude), 9 `tmi_vg`, 17 `cond_surf`. B: 19 `det_elev_slope`, 12 `det_elev` ridge curvature + edges, **K/Th ratio** (`geodawn_rad_u8.tif` b1/b2), 6 `tc` (radiometric total count by bytes, IR-52-019) | A sustained step in cover thickness and in shear strain across a line, coincident with a gravity/magnetic edge, while the surface view abstains → **buried fault beneath alluvial cover**; the reverse disagreement (B confident, A abstains) is treated as a **surface-artifact suspect** (roads, erosion lines) and vetoed | a buried normal fault offsets the basement without a scarp: the catalogue (built from surface traces) misses it; the cover step is the only in-stack expression | no prior round used the band-15 **step** as a detector (H60-3 was a synthetic check only, `knowledge/25`); no prior used bands 10/7 gradients standalone (H74S-B/H74S-D were never run, `knowledge/78` §4); H87 used one-directional (A−B) emission on wavelength-contrast + Th/K — this round is **bidirectional** (A>B boost **and** B>A veto) on **different transforms** and ships the **mass-lever budget** | tested this session (views + independence + holdout + build) |
+| **2** | **H88-M · mass-lever emission budget** | not a detector: any field | the same credit delivered with less mass (knowledge/76 §3: 0.3195 needs S≈25,384 at the champion's credit) | not fault-specific — it is the metric's own marginal rule | no submission in the 44-repo family shipped S≈25,400; all top scorers shipped 37,654–44,090 | tested this session as the shipped budget (25,400) + holdout budget curve (9,400/6,350/4,700 per fold) |
+| 3 | H89-S · 2-m soil-temperature anomaly (GDR 1391) | external: INGENIOUS "2 m Temperature Probes", DOI 10.15121/1881483, CC BY 4.0 | positive shallow-thermal anomaly lineated along a trend | a fault carrying hot fluids leaks heat into the upper 2 m even where no trace is mapped | cited only as context in `knowledge/12`; its bytes are used nowhere | **blocked in this sandbox** (gdr.openei.org not on the egress allowlist); needs owner-side download into `data/external/` with SHA pin |
+| 4 | H89-T · theta map (Wijns et al. 2005) | A: band 2 `rtp` | normalised total-horizontal-derivative of tilt: equal-amplitude edge map | edge map of magnetic contacts that does not saturate on strong sources | tilt is already implemented (29 files); theta re-normalises the same information | untested; novelty low (ranked below the new mechanisms) |
+| 5 | H89-P · prevalence-matched off-catalogue instrument | instrument only | thins `gems52-offcatalogue-b-v1` truth to the estimated hidden prevalence (|G| ≈ 5,949–12,512 px) | lets the **mass lever** be tested without a submission slot | H83's instrument over-rewards recall (4× prevalence, knowledge/76 §6); no prevalence-matched variant exists | untested; an instrument fix, not a submission path |
 
-So H88 does **not** rebuild View A a ninth time and does not re-open the pseudo-label-as-label arm. What
-is genuinely untested in this repo, and is what H88 measures:
+**Named non-fault processes that could mimic H88 (pre-registered):** lithologic contacts and
+intrusive margins (gravity/magnetic edges with no fault offset); basin-margin facies steps
+(cover-thickness steps without faulting); paleo-channels (elongated cover thinness); aftershock
+clusters and induced seismicity (seismicity lineations off-fault); road cuts and canals (surface
+linear features that raise View B); erosion lines in badlands (surface texture without structure).
+Every A-only emitted dot gets a written reasoning row naming which components fired and these
+alternatives (`docs/downloads/…-a-only-reasoning.csv`).
 
-1. the mandated exchange run **under a sufficiency screen** — the exchange is executed and its effect
-   measured instead of assumed, and the screen's decision is recorded per fold;
-2. the disagreement strata used as a **suppressor on a strong surface view** (`corroborated_B`:
-   View B confident, minus the B-only stratum the brief calls a surface artefact) measured against
-   `single_B` and against the stratum arms;
-3. the **metered budget** (mass discipline) on the instrument — DTI as a function of the emitted dot
-   budget, never measured in this repository before;
-4. the **geological reasoning record for every A-only candidate**, exported as a review table.
+## 2 · Frozen H88 specification (no parameter is tuned after this point)
 
-## 1 · Candidate hypotheses (5), ranked; each names layers, signature, off-catalogue reason, novelty, cost
+Views are rank-01 normalised inside the 19-band-finite ∩ organiser-domain footprint, combined with
+the fixed weights below, then rank-01 again to get `a` and `b` in [0,1].
 
-Ranking is by (plausibility that the emitted dots land within 2 px of an *uncatalogued* fault pixel) ×
-(data in place) ÷ (cost). **No expected-DTI number is given anywhere**: no candidate here has a validated
-estimate, and a projection is never written as a score. Bands are 1-based positions in
-`training_features.tif` with the file's own tag (verified inventory: `docs/data/band_inventory.json`,
-19 float32 bands).
+**View A (potential-field and subsurface)** — weights: `|iso_grav_anom_hg|` 0.22, `|tmi_hg|` 0.18,
+cover-step `|∇(depth_to_base_surf)|` (σ=2 px Gaussian gradient magnitude) 0.22, seismicity-lineation
+`|∇(deq_n100a15)|` (σ=2 px) 0.13, strain-step `|∇(geod_shearrate)|` (σ=2 px) 0.10, `|tmi_vg|` 0.10,
+`cond_surf` 0.05. (Weights sum to 1.00. Pre-registered: cover-step is the largest single term with
+the gravity edge because the round's geological thesis is burial.)
 
-| rank | id | layer(s) | physical signature targeted | why it could catch a catalogue-missing fault | how it differs from what is already implemented | cost | status |
-|---|---|---|---|---|---|---|---|
-| **1** | **H88-P `corroborated_B`** | View B: band 12 `det_elev`, 19 `det_elev_slope`, 6 `tc` (radiometric total count, per IR-H85-005), external `geodawn_rad_u8` K/Th/U/TC + Th/K, U/K, U/Th, external `lidar_scarp_features_u8` (ex_max, step_max, lapneg_max, lappos_max, downface_max, upface_max, coh100, relief); View A: bands 1,2,3,4,5,7,8,9,10,11,13,15,17,18 | multi-scale curvature/relief wavelength contrast + scarp-face asymmetry + radiometric K/Th, **with the B-only stratum suppressed by A** | the surface expression of a fault that the catalogue missed (truncated trace, cover edge, unmapped splay) is still a linear relief/curvature feature; suppression removes the B-only stratum the brief calls road/erosion/levee | H61/H82/H84 used View B without the disagreement suppressor; H87 used a hand-weighted mixture with no holdout; no round has placed a View-B field through the strata and then metered the budget | medium (channels + 8 fits) | **tested in this round** |
-| 2 | H88-X `exchange_B` | same channels as #1, plus A-only pseudo-positives | co-training exchange itself (donor = A, receiver = B) | if A can donate anything, B's held-out recall rises | the exchange was run in H61/H63 but *never under a per-fold sufficiency screen*, and its donor was assumed sufficient | medium (+1 fit/fold) | **tested in this round** |
-| 3 | H88-A `a_only` | View A channels only | A-confident ∧ B-abstains = "buried fault beneath cover", the brief's discovery signal | a concealed normal fault under basin fill has a potential-field step and no scarp | this *is* the brief's signal, run here with spacing + collar + per-candidate geology, and compared to `single_A` and random | low (already computed) | **tested in this round** |
-| 4 | H88-K `budget_curve` | none new — the metered budget applied to arms #1–#3 | the metric's marginal-credit rule: at DTI ≈ 0.28 a pixel pays for itself only inside ≈ 282 m of a hidden fault, so mass beyond the ranking's reach is pure tax | the board family shows spearman(mass, score) = −0.93; the same credit in fewer dots dominates | no previous round swept K on the instrument; every round inherited K = 9,400/fold (37,600 total) from H82 | low (re-use of the same fields) | **tested in this round** |
-| 5 | H88-L `lidar_only_B` | external `lidar_scarp_features_u8` alone (12 bands) | 1 m-LiDAR scarp-face/relief channels resampled to 100 m | the catalogue's mapped traces were drawn from coarser mapping; LiDAR sees scarps the map does not carry | LiDAR is used in this repo only as a *component* (H55/H60/H85 mention it); no standalone holdout receipt exists | low (channels already read for #1) | **reported as a diagnostic arm only** |
+**View B (surface)** — weights: `det_elev_slope` 0.25, ridge curvature `|λ_min(Hessian(det_elev))|`
+(σ=1.5 px) 0.30, topographic edge `|∇(det_elev)|` (σ=1.5 px) 0.20, **K/Th** = rad_K/(rad_Th+ε) 0.15,
+`tc` (radiometric total count, band 6 by bytes) 0.10. (The K/Th direction is the inverse of H87's
+Th/K: potassic alteration raises K relative to Th along fault-fed hydrothermal pathways,
+`src/gems55/radlayers.py`.)
 
-**Named non-fault mimics for every hypothesis above** (the brief's "named non-fault process" field):
-roads, canals/levees, quarry faces, railroad grades, fence lines, playa shorelines and erosion lines for
-the surface channels; lithological contacts, intrusive margins, basement steps and paleo-channels for the
-potential-field channels; interpolation seams for the gridded interpolation of point datasets; solar
-aspect and soil moisture for the radiometric ratios.
+**Bidirectional disagreement field (the discovery signal):**
 
-## 2 · Pre-registered gates (frozen before any fit)
+```
+consensus = a * b
+buried    = a * clip(a - b, 0, 1)          # A confident & B abstains  -> buried-fault candidate
+artifact  = clip(b - a, 0, 1)               # B confident & A abstains  -> road/erosion suspect
+veto      = rank01(artifact)                # percentile-ranked inside the footprint
+field     = (0.45 * consensus + 0.55 * buried) * (1 - 0.70 * veto)
+```
 
-| # | gate | threshold |
-|---|---|---|
-| 1 | leakage canary — every single channel's OOF AUC on held-out truth | alarm if max AUC > 0.90 |
-| 2 | independence — \|ρ\| of the two views' **block-level out-of-fold errors on labelled negatives** | abandon the exchange if max \|ρ\| > 0.60 |
-| 3 | sufficiency screen — per-view OOF AUC of the *score* against held-out truth | exchange allowed only if the donor view's per-fold AUC ≥ 0.60; the decision is recorded per fold, and the exchange arm is still run and reported |
-| 4 | primary vs `single_B` (paired, 95 % spatial-cluster CI) | promotion candidate only if the paired CI lower bound > 0 |
-| 5 | random control reproduction | `random` must land inside 0.0702–0.0910 (H84's CI), else the run is void |
-| 6 | format validator on the shipped file | single band, float32, shape/CRS/transform equal to `sample_submission.tif`, all-finite, values in [0, 1], zeros outside the domain, zero on catalogue, zero inside the 200 m ring |
-| 7 | decoded uniqueness | no byte-identical or value-identical prior; ≥ 20 % novel support vs the binary-prior union, or ≥ 0.5 vs the continuous-proposal union |
-| 8 | lane (parallel-run protocol) | surface max \|Spearman\| ≤ 0.90 and final dots ≤ 70 % within 3 px of any one registry raster (universal-coverage probes reported, not waived) |
-| 9 | not-the-union | the shipped dots must not equal View A's dots, View B's dots, their set union, or the union-max field's dots |
+Fixed before any fit: buried weight 0.55 > consensus 0.45 (the lane says the discovery signal is
+disagreement); veto 0.70 (strong, not absolute — `src/gems52/cotrain.py` warns that B-only can be a
+real surface fault, not automatically a road).
 
-## 3 · Budget
+**Not-the-union test (pre-registered):** the field requires A-support (both terms contain `a`) and
+penalises B-only mass; the run card must show the emitted dots are not the union of the two views'
+top-k supports (Jaccard against `topk(a) ∪ topk(b)` at the same K, and the fraction of dots whose
+buried term dominates vs consensus-dominant).
 
-Three experiments (fit + independence; holdout arms with the budget curve; build + gates), two hours of
-wall clock. **No competition slot is used by this round.** Promotion is a separate selector step.
+**Independence gate (the Blum–Mitchell assumption, tested empirically):** per fold, block the
+footprint into 50 px blocks; the "error" of each view on labelled negatives is its score on pixels
+of `fold['region'] & ~fold['visible'] & ~fold['truth']` outside the 200 m visible-catalogue collar;
+thresholds are each view's 90th percentile on those negatives; correlate (Pearson and Spearman)
+block-level MSE and FPR between views with `gems52.spatial.negative_block_errors` +
+`gems52.spatial.independence` (threshold 0.60). **If `allow_exchange` is false the co-training
+method is abandoned and reported as such.** Iterative pseudo-label exchange is NOT run: it is a
+closed negative (N-1, `knowledge/03`). `spatial.whole_pseudo_segments` (whole components, blocked
+by train/block boundaries and catalogue buffers) is run only as a diagnostic count.
 
-## 4 · Sources used to write this preregistration
+**Leakage canary:** every single component above is scored alone on the held-out truth inside the
+allowed set per fold; AUC > 0.90 is treated as leakage until proven otherwise.
 
-* Blum & Mitchell, COLT '98: https://doi.org/10.1145/279943.279962
-* Competition problem description and metric: https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/
-* GeoDAWN airborne magnetics/radiometrics: https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and (DOI 10.5066/P93LGLVQ)
-* INGENIOUS / GDR 1391 catalogue and well-spring data: https://gdr.openei.org/submissions/1391
-* CRS: https://epsg.io/32611
-* Repo primary records: `registry/data_manifest.json` (23 SHA-256 pins), `src/gems52/metric.py`,
-  `src/gems52/evaluate_holdout.py`, `src/gems52/spatial.py`, `src/gems52/views54.py`,
-  `evidence/h84_holdout.json`, `knowledge/01`, `knowledge/03`, `knowledge/06`, `knowledge/76`.
+**Placement and emission:** `gems52.nodes.spacing_select`, min 3 px spacing (metric-aware), 200 m
+catalogue collar (2 px) measured from the **visible** catalogue only in folds and from the full
+catalogue in the shipped file; allowed set excludes visible catalogue pixels exactly (the organiser
+masks them pixel-exactly — DrivenData thread 11516 posts #2/#4, recorded in `src/gems52/holdout.py`).
+
+**Budgets:** holdout arms at 9,400 dots/fold (the matched budget of every comparable receipt) and
+the mass-lever arm at 6,350/fold (= 25,400 over 4 folds); shipped file S = **25,400** (knowledge/76
+§3: the same champion credit at S = 25,384 reaches 0.3195; the champion family over-emits 28–33 %).
+
+**Holdout instrument (unchanged, reused):** `gems52.spatial.folds(cat, valid, buffer_px=80)`
+(whole 8-connected components, label-blind quadrants), `gems52.evaluate_holdout.evaluate`
+(`gems52-pooled-hide-v1`, α 0.2, β 0.8, R 300 m triangular kernel), `pooled_summary` (paired
+20 km spatial-cluster bootstrap, 1,000 draws). **Bar to beat for promotion: HOLDOUT-DTI 0.192829**
+(H82 `B_DVA2`, `evidence/h82_holdout.json`); H84-main primary 0.190147 [0.1689, 0.2112]. A candidate
+that does not beat the bar is `verdict: negative` for slot purposes; a negative result is still a
+deliverable and the file is still generated and published for download.
+
+**Arms (6 × 4 folds):** `cotrain_bi` (PRIMARY, the field above), `consensus_only` (ablation),
+`buried_only` (ablation), `single_A` (view A alone), `single_B` (view B alone, the single-view
+baseline the brief demands), `random` (floor, seed 88001 + fold).
+
+## 3 · Lane-drift discipline (parallel-run protocol rule 1)
+
+Before placement (on the raw field) and again on the final dots: Spearman rank-correlation of the
+shipped raster against every registry raster must be ≤ 0.90, and ≤ 70 % of shipped dots may fall
+within 3 px of any single registry raster's dots (excluding the candidate's own download copies,
+IR-H85-001). Registry = `submission/`, `docs/downloads/`, `data/scored/`, `data/reference/`.
+The universal-coverage probe caveat (IR-H85-009) is reported, not silently waived.
+
+## 4 · What is deliberately NOT claimed
+
+* No ORGANIZER-CONFIRMED number exists for any file in this family; every score in this round is
+  HOLDOUT-DTI (evaluator `gems52-pooled-hide-v1`) or an owner-reported board value quoted from the
+  standing brief (unverified by receipt).
+* Holdout DTI and the public board are not correlated in this family (Spearman −0.10, `AGENTS.md`);
+  a holdout result is a gate, not a forecast.
+* The champion's identity and its 0.2778 attribution are owner-reported; the raster itself is
+  integrity-pinned, not organiser-authenticated (`registry/data_manifest.json`).

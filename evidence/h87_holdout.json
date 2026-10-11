@@ -1,0 +1,137 @@
+{
+ "stage": "holdout",
+ "evidence_class": "HOLDOUT-DTI",
+ "evaluator_version": "gems52-pooled-hide-v1",
+ "implementation_sha256": {
+  "evaluate_holdout.py": "ffb084fdf34bb30438485b89caeb1228a6680abfd9f9f0472f4355845da05cc6",
+  "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+  "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+  "spatial.py": "fad7b09db9efc512247b9a176a7e7ce8631e287592b4e07902d0b9c38bed00f8"
+ },
+ "per_fold": [
+  {
+   "fold": 0,
+   "allowed_px": 2447965,
+   "truth_px": 29297,
+   "candidate": {
+    "dti": 0.003118,
+    "emitted": 9400
+   },
+   "random": {
+    "dti": 0.041666,
+    "emitted": 9400
+   }
+  },
+  {
+   "fold": 1,
+   "allowed_px": 1365057,
+   "truth_px": 12579,
+   "candidate": {
+    "dti": 0.151246,
+    "emitted": 9400
+   },
+   "random": {
+    "dti": 0.064025,
+    "emitted": 9400
+   }
+  },
+  {
+   "fold": 2,
+   "allowed_px": 563585,
+   "truth_px": 9433,
+   "candidate": {
+    "dti": 0.218554,
+    "emitted": 9400
+   },
+   "random": {
+    "dti": 0.148026,
+    "emitted": 9400
+   }
+  },
+  {
+   "fold": 3,
+   "allowed_px": 787532,
+   "truth_px": 9585,
+   "candidate": {
+    "dti": 0.194599,
+    "emitted": 9400
+   },
+   "random": {
+    "dti": 0.106023,
+    "emitted": 9400
+   }
+  }
+ ],
+ "pooled": {
+  "evidence_class": "HOLDOUT-DTI",
+  "evaluator_version": "gems52-pooled-hide-v1",
+  "alpha": 0.2,
+  "beta": 0.8,
+  "triangular_radius_m": 300.0,
+  "pooled": true,
+  "scores": {
+   "candidate": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.10422785335583405,
+    "ci95": [
+     0.08411935655495487,
+     0.12487504462072424
+    ],
+    "withheld_positive_pixels": 60894,
+    "tpw": 5933.454880437318,
+    "fpw": 35129.18485919604,
+    "fnw": 54960.54511956269
+   },
+   "random": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.07537468490820108,
+    "ci95": [
+     0.0670808039462216,
+     0.08396212369084888
+    ],
+    "withheld_positive_pixels": 60894,
+    "tpw": 4279.195970776809,
+    "fpw": 36006.41990121293,
+    "fnw": 56614.80402922322
+   }
+  },
+  "best_comparable_control": "random",
+  "paired_differences": {
+   "random": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "delta": 0.02885316844763297,
+    "ci95": [
+     0.014803931963698365,
+     0.04380980343583374
+    ],
+    "withheld_positive_pixels": 60894
+   }
+  },
+  "bootstrap": {
+   "method": "paired physical spatial-cluster percentile",
+   "clusters": 160,
+   "draws": 1000,
+   "seed": 8701,
+   "confidence": 0.95,
+   "caveat": "Conditional on fitted folds, catalogue labels and fixed budgets; not a leaderboard interval."
+  },
+  "implementation_sha256": {
+   "evaluate_holdout.py": "ffb084fdf34bb30438485b89caeb1228a6680abfd9f9f0472f4355845da05cc6",
+   "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+   "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+   "spatial.py": "fad7b09db9efc512247b9a176a7e7ce8631e287592b4e07902d0b9c38bed00f8"
+  }
+ },
+ "leakage_caveat": "The density's mixture weights were fitted from owner-reported BOARD scores of patterns that were themselves built with full-catalogue knowledge, and the non-label bases were masked with the global catalogue. Inside a fold the two explicitly label-derived populations (CAT, RING) are removed and the emission is restricted to the fold's own region and visible-catalogue collar, so no held-out truth pixel is readable at placement time; the weights themselves are still global. This HOLDOUT-DTI is therefore descriptive, not a clean generalisation estimate, and it is not comparable to a leaderboard score.",
+ "comparability": {
+  "budget_per_fold": 9400,
+  "spacing_px": 3.0,
+  "h82_random_receipt": 0.080426,
+  "h82_B_DVA2_receipt": 0.1892,
+  "h84_primary_receipt": 0.190147,
+  "h85_candidate_receipt": 0.072384
+ }
+}

@@ -1,0 +1,31 @@
+{
+  "stage": "views",
+  "registration": {
+    "preregistration_sha256": "0f664c43f166264864c3815d31a9230f5b95b257a426d4670a8b5ed7c78f7094",
+    "amendment_sha256": "91f74c5a5e4c730e826b91ae0731bf58883779af6753238e839e1c6ae8a84785",
+    "frozen_before_any_fit": true
+  },
+  "eligible_px": 5164300,
+  "catalogue_px": 60988,
+  "view_correlation": -0.07187010276277436,
+  "weights_A": {
+    "grav_hg": 0.22,
+    "mag_hg": 0.18,
+    "cover_step": 0.22,
+    "seis_line": 0.13,
+    "strain_step": 0.1,
+    "mag_vg": 0.1,
+    "cond": 0.05
+  },
+  "weights_B": {
+    "slope": 0.25,
+    "ridge_curv": 0.3,
+    "topo_edge": 0.2,
+    "K_over_Th": 0.15,
+    "tc": 0.1
+  },
+  "features_sha256": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+  "labels_sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+  "rad_sha256": "c22420f75999030d7cc65c9e31e50d232ea6158423bca051613a18a8b20ba682",
+  "generated_utc": "2026-10-10T22:14:08.191848+00:00"
+}

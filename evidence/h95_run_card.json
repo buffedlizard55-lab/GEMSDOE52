@@ -1,0 +1,392 @@
+{
+ "round": "H95",
+ "generated_utc": "2026-10-10T23:04:25+00:00",
+ "preregistration": "knowledge/93_hypotheses_H95_preregistered_frozen_as_H88.md",
+ "preregistration_sha256": "bf55dfb78ba7c1c805a616c22735f1e1397112382dcb85760ef8fdbccc098711",
+ "experiments_used": 3,
+ "slots_used": 0,
+ "hypothesis": "A View-B (surface: DEM curvature/slope + GeoDAWN radiometrics) learner retrained once with whole-segment pseudo-labels donated where View A (potential field/subsurface) is confident (rank >= 0.95) and View B abstains (rank 0.35-0.65) recovers more withheld faults than the single-view View B baseline.",
+ "mechanism": "Buried normal faults juxtapose basement blocks of different density/susceptibility (View A sees an edge) while basin fill hides the scarp (View B silent); donating those segments teaches View B the surface texture of fault-adjacent cover (subtle curvature, radiometric contrast) so it can extend into cover.",
+ "named_non_fault_mimic": "A-only: buried lithological contact / intrusive margin (a density or susceptibility step with no displacement). B-only: section-line roads and graded tracks (cardinal linear curvature) and erosion rills / drainage incision on fans (fall-line slope breaks).",
+ "disagreement": "A-only dots in the shipped file: 33 of 37,654 (each with a reasoning row in the CSV); B-only: 6,095; both confident: 1,640. On the holdout the A-only stratum (disagreement_pre) scores 0.0333 vs random 0.0804.",
+ "holdout": {
+  "evidence_class": "HOLDOUT-DTI",
+  "evaluator_version": "gems52-pooled-hide-v1",
+  "withheld_positive_pixels": 53186,
+  "e2_scores": {
+   "single_A": {
+    "dti": 0.07195422771451437,
+    "ci95": [
+     0.05568684009963479,
+     0.08963586914594794
+    ]
+   },
+   "single_B": {
+    "dti": 0.17457135886487102,
+    "ci95": [
+     0.15276935818192874,
+     0.19612320116647786
+    ]
+   },
+   "union_max": {
+    "dti": 0.14900909797542158,
+    "ci95": [
+     0.1287696413880596,
+     0.1698665038312731
+    ]
+   },
+   "disagreement_pre": {
+    "dti": 0.033293417665161515,
+    "ci95": [
+     0.023513604866427115,
+     0.04509784022312671
+    ]
+   },
+   "cotrain_B": {
+    "dti": 0.17240062268562834,
+    "ci95": [
+     0.1512147384631429,
+     0.19402770516510023
+    ]
+   },
+   "random": {
+    "dti": 0.08042564781050282,
+    "ci95": [
+     0.07103758904048395,
+     0.09056228585643586
+    ]
+   }
+  },
+  "e2_paired_cotrainB_minus_singleB": {
+   "delta": -0.0021707361792426827,
+   "ci95": [
+    -0.006176806013939138,
+    0.0017034772006738414
+   ]
+  },
+  "e1_h87_scores": {
+   "h87_disagreement": {
+    "dti": 0.06331574572724168,
+    "ci95": [
+     0.04822792030642452,
+     0.0798766798582086
+    ]
+   },
+   "h87_single_A": {
+    "dti": 0.07506610282037705,
+    "ci95": [
+     0.059308163755472675,
+     0.09145374581991579
+    ]
+   },
+   "h87_single_B": {
+    "dti": 0.059569751781190394,
+    "ci95": [
+     0.04675417852373022,
+     0.07418776909286222
+    ]
+   },
+   "h87_union_max": {
+    "dti": 0.06769899079735305,
+    "ci95": [
+     0.055368932322477624,
+     0.08055655179891032
+    ]
+   },
+   "random": {
+    "dti": 0.07923796053211284,
+    "ci95": [
+     0.06950787901639811,
+     0.08886935821779376
+    ]
+   }
+  }
+ },
+ "proxy_sgmc": {
+  "evidence_class": "PROXY-SGMC (diagnostic, never a score)",
+  "shipped_budget": 37654,
+  "results": {
+   "cotrain_B@37654": 0.05818157067725073,
+   "cotrain_B@28000": 0.053193706457073164,
+   "single_B@37654": 0.05608851825323049,
+   "single_B@28000": 0.05226624684800799,
+   "single_A@37654": 0.04045328456104082,
+   "single_A@28000": 0.035630046016925654,
+   "union_max@37654": 0.05342027720799284,
+   "union_max@28000": 0.046292175433680416,
+   "disagreement_pre@37654": 0.03488810643842334,
+   "disagreement_pre@28000": 0.03091590357124368,
+   "h87_disagreement@37654": 0.0077903112993783635,
+   "h87_disagreement@28000": 0.006509876535444087,
+   "h87_single_B@37654": 0.08742939457113325,
+   "h87_single_B@28000": 0.07765908522658031,
+   "h87_single_A@37654": 0.025004528889146827,
+   "h87_single_A@28000": 0.018183289984308453,
+   "champion_h33_2_b2 (board 0.2778, OWNER-REPORTED)": 0.059337630701169854,
+   "d2-8 (board 0.2600, OWNER-REPORTED)": 0.05579100947153052,
+   "random@37654": 0.04548075968884482,
+   "random@28000": 0.03829699146871277
+  }
+ },
+ "lane": {
+  "surface": {
+   "max_spearman": 0.47575858072943134,
+   "max_near_3px_fraction": null,
+   "max_near_source": null,
+   "rank_offenders": [],
+   "near_offenders": [],
+   "identical": [],
+   "verdict": "PASS",
+   "note": "applied to every aligned prior including universal-coverage probes"
+  },
+  "dots_literal": {
+   "max_spearman": 0.16878471872561837,
+   "max_near_3px_fraction": 1.0,
+   "max_near_source": "/home/user/GEMSDOE52/work/h95/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+   "rank_offenders": [],
+   "near_offenders": [
+    "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    "/home/user/GEMSDOE52/submission/gems52-h75-dva-variogram-anisotropy-B-37654px-20261009T200333Z.tif",
+    "/home/user/GEMSDOE52/submission/gems52-h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z-template-nan.tif",
+    "/home/user/GEMSDOE52/submission/gems52-h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z.tif",
+    "/home/user/GEMSDOE52/submission/gems52-h89-coverco-disagree-37654px-20261010T214732Z.tif",
+    "/home/user/GEMSDOE52/submission/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.tif",
+    "/home/user/GEMSDOE52/docs/downloads/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.tif",
+    "/home/user/GEMSDOE52/docs/downloads/h75-candidate.tif",
+    "/home/user/GEMSDOE52/docs/downloads/h83-candidate-template-nan.tif",
+    "/home/user/GEMSDOE52/docs/downloads/h83-candidate.tif",
+    "/home/user/GEMSDOE52/docs/downloads/h89-candidate.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/0a195a38802892f46e0146415faa678aa1603b5b.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/0bb2fae409553cc7281a848541d65232921a8bdc.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/0c1b5547e970fee995a953382e94d4f1342444b9.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/1f0df28026260001a4d36f5f744d9309516d1595.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/1fdecbd4fd209b9e57f3619dd609a8ded6076a10.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/204b1314d6d68f34a4e6ed454cf4b36e24621675.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/306ee1b1deebc9a0a9f437e501cd0965ee37f25e.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/32a4a6d2d4df8ef8e880120f36d2a4d94f134f8a.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/35616cbb48ac3533dd4c957b8acca57f71ba365f.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/3d3ee66300203bdc878f3a052caabde671daf042.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/443e8e1c799734facd50a92bc85c650f3857a2b6.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/4934bb73380487247f9abc273bbc3bba7f5d83c1.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/4dd494d3c85b41f082a4949ea0b7037df4098816.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/509be169fe6253f94bf8b7323398e1b80e972c96.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/57732c697e2aa7c50c8ce35fa3d8866aee103abf.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/5ae4b6b4324c19727f8304eb63fc5610ad23b9d9.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/6d69c94d9c59cf518fe9d6d34463444348aa88ad.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/6ef080a1067db86fa70924252fdb777ec4b94b7a.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/716fa7b4c61a45bccd09dde54aa72bbc34dd6cfc.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/80ee726da7af66e6cd86b627a9982cec8e709ac3.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/93baa81db8295cf7fee042dd2c753465d2d73a3c.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/9aa682f254700d9034bfbb136e7a6705cd68a488.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/9f9dccae710f3011ec8ab925d06a1357e65cec9b.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/ab7e0752036d020fbc394a528bbe63171c3cb08f.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/b715491d384aefa60d1924a46f2b6f31f08326a6.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/c61719ffe62dd7533c43f2f1f76054efaabeceee.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/cf12b308d762ad013dce425384f26664cd79d940.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/e2594695e37059e4c708857a8e7e58f007900bca.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/ed019800934ba779cbc6707fd0ed05ab40ed7ad1.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/f11a0f27760003208c8a1df16b49a969a8f427ec.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/fdd931161c431a583cf7039362e51832e59d07ad.tif"
+   ],
+   "identical": [],
+   "verdict": "DUPLICATE/STOP",
+   "note": "applied to every aligned prior including universal-coverage probes"
+  },
+  "dots_policy": {
+   "max_spearman": 0.16878471872561837,
+   "max_near_3px_fraction": 0.9222924523291018,
+   "max_near_source": "/home/user/GEMSDOE52/work/h95/priors/5ae4b6b4324c19727f8304eb63fc5610ad23b9d9.tif",
+   "rank_offenders": [],
+   "near_offenders": [
+    "/home/user/GEMSDOE52/submission/gems52-h75-dva-variogram-anisotropy-B-37654px-20261009T200333Z.tif",
+    "/home/user/GEMSDOE52/submission/gems52-h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z-template-nan.tif",
+    "/home/user/GEMSDOE52/submission/gems52-h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z.tif",
+    "/home/user/GEMSDOE52/submission/gems52-h89-coverco-disagree-37654px-20261010T214732Z.tif",
+    "/home/user/GEMSDOE52/submission/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.tif",
+    "/home/user/GEMSDOE52/docs/downloads/gems52-r3-h1-paired-profile-37654-e42677141dbc-research-only.tif",
+    "/home/user/GEMSDOE52/docs/downloads/h75-candidate.tif",
+    "/home/user/GEMSDOE52/docs/downloads/h83-candidate-template-nan.tif",
+    "/home/user/GEMSDOE52/docs/downloads/h83-candidate.tif",
+    "/home/user/GEMSDOE52/docs/downloads/h89-candidate.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/0a195a38802892f46e0146415faa678aa1603b5b.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/0bb2fae409553cc7281a848541d65232921a8bdc.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/0c1b5547e970fee995a953382e94d4f1342444b9.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/1f0df28026260001a4d36f5f744d9309516d1595.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/1fdecbd4fd209b9e57f3619dd609a8ded6076a10.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/204b1314d6d68f34a4e6ed454cf4b36e24621675.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/306ee1b1deebc9a0a9f437e501cd0965ee37f25e.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/32a4a6d2d4df8ef8e880120f36d2a4d94f134f8a.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/443e8e1c799734facd50a92bc85c650f3857a2b6.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/4934bb73380487247f9abc273bbc3bba7f5d83c1.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/4dd494d3c85b41f082a4949ea0b7037df4098816.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/509be169fe6253f94bf8b7323398e1b80e972c96.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/57732c697e2aa7c50c8ce35fa3d8866aee103abf.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/5ae4b6b4324c19727f8304eb63fc5610ad23b9d9.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/6d69c94d9c59cf518fe9d6d34463444348aa88ad.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/6ef080a1067db86fa70924252fdb777ec4b94b7a.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/716fa7b4c61a45bccd09dde54aa72bbc34dd6cfc.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/80ee726da7af66e6cd86b627a9982cec8e709ac3.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/93baa81db8295cf7fee042dd2c753465d2d73a3c.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/9aa682f254700d9034bfbb136e7a6705cd68a488.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/9f9dccae710f3011ec8ab925d06a1357e65cec9b.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/ab7e0752036d020fbc394a528bbe63171c3cb08f.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/b715491d384aefa60d1924a46f2b6f31f08326a6.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/c61719ffe62dd7533c43f2f1f76054efaabeceee.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/cf12b308d762ad013dce425384f26664cd79d940.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/e2594695e37059e4c708857a8e7e58f007900bca.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/ed019800934ba779cbc6707fd0ed05ab40ed7ad1.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/f11a0f27760003208c8a1df16b49a969a8f427ec.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/fdd931161c431a583cf7039362e51832e59d07ad.tif"
+   ],
+   "identical": [],
+   "informative_priors": 658,
+   "universal_coverage_probes": 15,
+   "probe_paths": [
+    "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/35616cbb48ac3533dd4c957b8acca57f71ba365f.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/3d3ee66300203bdc878f3a052caabde671daf042.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+    "/home/user/GEMSDOE52/work/h95/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif"
+   ],
+   "probe_coverage": [
+    1.0,
+    0.9919031971594352,
+    0.9956951308801697,
+    0.9974396772948362,
+    1.0,
+    0.9999997822854843,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.9883130847947964,
+    0.9974396772948362,
+    1.0,
+    0.9885919770894661,
+    0.9883130847947964
+   ],
+   "verdict": "DUPLICATE/STOP",
+   "note": "the same literal rule restricted to priors that localise something; probe statistics are retained verbatim in per_prior and nothing is deleted"
+  },
+  "n_priors": 675
+ },
+ "uniqueness": {
+  "n_priors_checked": 675,
+  "identical_to_a_prior": false,
+  "novel_fraction": 0.0,
+  "max_jaccard": 0.0962501455688832,
+  "max_jaccard_prior": "/home/user/GEMSDOE52/submission/gems52-h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z-template-nan.tif",
+  "equals_literal_prior_union": false
+ },
+ "not_the_union": {
+  "jaccard_vs_union_dots": 0.0740027667251387,
+  "jaccard_vs_singleA_dots": 0.006926059633640861,
+  "jaccard_vs_singleB_dots": 0.11608743979251575,
+  "dots_not_in_union": 32465,
+  "spearman_field_vs_unionmax": 0.5718313541374185,
+  "is_union": false
+ },
+ "raster": {
+  "path": "submission/gems52-h95-cotrainB-segthin-37654px-20261010T223522Z-2c3942b4-zeros.tif",
+  "sha256": "28ee81370c9ce1bfb914cc93eb1bbcc952bef8a40c0314dd7b1c2d6785f721bf",
+  "bytes": 795367,
+  "decoded_sha256": "2c3942b4dc06d0863c43fc8f94171ec8470672167c94815f7f8ab70c883bcb62",
+  "min_dist_to_catalogue_m": 223.60679774997897,
+  "within_300m": 5064
+ },
+ "validator_output": "1 band float32, EPSG:32611, 3730 rows x 3292 cols, transform/bounds = sample_submission.tif: yes, 0 NaN, 0 inf, values exactly [0.0, 1.0], 37,654 emitted cells, nodata tag None; problems: none",
+ "gates": {
+  "control_reproduction": {
+   "pass": true,
+   "detail": "single_B 0.174571 vs H61 0.174517 (tol 1e-3)"
+  },
+  "leakage_canary": {
+   "pass": true,
+   "detail": "max single-feature AUC 0.6687 (E2), 0.6071 (E1); alarm 0.90"
+  },
+  "independence": {
+   "pass": true,
+   "detail": "max |rho| 0.1337 over 2089 blocks; abandon >= 0.60"
+  },
+  "holdout_promotion": {
+   "pass": false,
+   "detail": "cotrain_B 0.172401 vs bar 0.190147; paired vs single_B -0.002171 [-0.006177, +0.001703]"
+  },
+  "format": {
+   "pass": true,
+   "detail": "1 band float32, EPSG:32611, 3730 rows x 3292 cols, transform/bounds = sample_submission.tif: yes, 0 NaN, 0 inf, values exactly [0.0, 1.0], 37,654 emitted cells, nodata tag None; problems: none"
+  },
+  "uniqueness": {
+   "pass": true,
+   "detail": "675 priors checked, identical to none: True, novel fraction 0.0000, max Jaccard 0.0963 (gems52-h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z-template-nan.tif), incomparable 1; supplemental closure vs 14 rasters merged to main after the gates ran (6745d1b..940971b): identical to none, max Jaccard 0.0999"
+  },
+  "lane_surface": {
+   "pass": true,
+   "detail": "max Spearman 0.4758 (bar 0.90); literal PASS"
+  },
+  "lane_dots_policy": {
+   "pass": false,
+   "detail": "literal DUPLICATE/STOP (max near-3px 1.0000); policy DUPLICATE/STOP (universal-coverage probes excluded); supplemental closure: 0.8048 of our dots within 3 px of gems52-h93-abs-cotrain-37654px-20261010T223629Z-zeros.tif whose own halo covers only 0.1435 of the footprint -> genuine near-duplicate (IR-H95-006)"
+  },
+  "not_the_union": {
+   "pass": true,
+   "detail": "Jaccard vs union-max dots 0.0740, vs single-A 0.0069, vs single-B 0.1161; 32,465 dots not in the union placement"
+  }
+ },
+ "submission": {
+  "name": "h95-cotrainB-segthin-37654px-20261010T223522Z",
+  "note": "H95 co-trained surface view (A->B whole-segment pseudo-labels), 37654 binary dots, 3px spacing, 200m catalogue ring cut",
+  "note_chars": 119
+ },
+ "verdict": {
+  "label": "negative",
+  "submit_ok": false,
+  "download_ok": true,
+  "why": "Failed gate(s): holdout_promotion, lane_dots_policy. The co-trained field scored 0.1724 on HOLDOUT-DTI, below the promotable best 0.190147 (paired vs single_B CI spans 0). Its dots are also a lane near-duplicate of the parallel H93 file (IR-H95-006)."
+ },
+ "deviations": [
+  "Lane/uniqueness roots widened beyond the frozen list to include work/h95/priors (the 526-blob sibling-repository census restored via api.github.com) \u2014 strictly more conservative."
+ ],
+ "limitations": [
+  "HOLDOUT-DTI measures recovery of withheld USGS-catalogue faults; the hidden test set is new expert-identified faults NOT in that database, and this instrument's Spearman vs the public board is about -0.10 (IR-H60-003).",
+  "PROXY-SGMC (E3) tracks emitted mass as much as placement (|rho| 0.889 for mass alone); it chose the budget but is never a score.",
+  "View A (potential field) is insufficient again: out-of-quadrant AUC near 0.5, so it has little reliable signal to donate.",
+  "Independence was measured on catalogue-zero proxies, not verified absences."
+ ]
+}

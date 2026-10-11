@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEMSDOE52 — H88s archive: how to submit</title>
+<style>
+:root{--bg:#0f1117;--fg:#e8eaed;--accent:#4fc3f7;--ok:#66bb6a;--warn:#ffa726;--err:#ef5350;--card:#1a1d27;--border:#2d3040}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--fg);line-height:1.65}
+.container{max-width:900px;margin:0 auto;padding:24px 20px}
+h1{font-size:1.7rem;margin-bottom:8px;color:var(--accent)}
+h2{font-size:1.25rem;margin:26px 0 10px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px}
+h3{font-size:1.05rem;margin:18px 0 8px}
+a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+code{background:#1e2130;padding:2px 6px;border-radius:3px;font-size:.9em;word-break:break-all}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.88rem}
+th,td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--border)}
+th{color:var(--accent)}
+.download-box{background:linear-gradient(135deg,#1a237e,#0d47a1);border:2px solid var(--accent);border-radius:12px;padding:24px;margin:14px 0 20px;text-align:center}
+.download-box h2{color:#fff;border:none;margin:0 0 10px;font-size:1.4rem}
+.btn{display:inline-block;background:var(--accent);color:#000;font-weight:700;padding:14px 30px;border-radius:8px;font-size:1.05rem;margin:8px}
+.btn-zip{background:#90a4ae;color:#111}
+.ok{color:var(--ok);font-weight:700} .bad{color:var(--err);font-weight:700} .warn{color:var(--warn);font-weight:700}
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin:12px 0}
+.small{color:#9aa4b2;font-size:.86rem}
+ul,ol{margin-left:20px}
+</style></head><body><div class="container">
+
+<p><a href="h88s.html">← Download page</a></p>
+<h1>How to make a submission</h1>
+<p class="small">DOE GEMS Prize (DrivenData #306) · round H88 · generated from
+<code>evidence/h88s_build.json</code>, <code>evidence/h88s_holdout.json</code>,
+<code>evidence/h88s_fit.json</code>, <code>evidence/h88s_run_card.json</code></p>
+
+<h2>1 · Download</h2>
+<p><a class="btn" href="downloads/gems52-h88-cotrain-disagreement-suffscreen-31156px-20261010T233522Z.tif" download>⬇ gems52-h88-cotrain-disagreement-suffscreen-31156px-20261010T233522Z.tif</a>
+<a class="btn btn-zip" href="downloads/h88s-candidate.zip" download>ZIP</a></p>
+<p class="small">129,943 bytes · sha256 <code>124081c0c05fc882ed8c04a2b036c574d4208c10275bb2ede90dd4d2d52246a7</code> ·
+short alias <code>downloads/h88-candidate.tif</code> is byte-identical (check_site.py verifies it on
+every run).</p>
+
+<h2>2 · Submit, step by step</h2>
+<ol>
+<li>Click the download button above (or the ZIP).</li>
+<li>Open <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">the
+submission page</a> and sign in.</li>
+<li>Upload the downloaded <code>.tif</code> (not the ZIP, if the portal only accepts one file).</li>
+<li><b>Submission name:</b> <code>h88-cotrain-disagreement-31156px</code> — the portal requires a unique name;
+this round's name is unique to this round and rev is not reused.</li>
+<li><b>Comment/note (87/140 chars):</b> <code>H88 co-train lane: B-corroborated, A-only suppressed, 31156px, 3px spacing, 200m collar</code></li>
+<li>Submit. The portal's pre-flight checks are what matters; ours are below.</li>
+</ol>
+
+<h2>3 · Why you got "Predicted values must be in range [0, 1]" before, and why it cannot happen here</h2>
+<p>The portal reads the <b>raw band values</b> of the GeoTIFF, including pixels outside the study
+area, and rejects the file if any value is below 0 or above 1 — or if a NaN slips through a
+<code>nodata</code> path. The three ways that happens in practice, and this file's answer:</p>
+<table>
+<tr><th>trap</th><th>this file</th></tr>
+<tr><td>a <code>nodata</code> tag or NaN outside the footprint</td>
+<td>no nodata tag at all; the whole grid is finite (0 NaN and 0 infinite pixels on the whole grid),
+with zeros written outside the study area instead of nodata</td></tr>
+<tr><td>values left on an un-normalised scale (e.g. −1 … 1, or metres)</td>
+<td>values are exactly {0, 1} — min 0.0, max 1.0</td></tr>
+<tr><td>values outside [0,1] on the raw band, or the portal's own pre-flight text
+(&ldquo;Predicted values must be in range [0, 1]&rdquo;) triggered by any cell below 0 or above 1,
+including cells far outside the study area</td>
+<td>the whole grid is [0,1] by construction and re-read back from the shipped bytes (see row 2)</td></tr>
+<tr><td>a different grid, CRS or dtype than the sample submission</td>
+<td>single band, float32, EPSG:32611, shape/transform byte-checked against
+<code>sample_submission.tif</code>: read back from the shipped bytes: EPSG:32611, float32, nodata None</td></tr>
+</table>
+<p class="small">These are read back from the bytes of the shipped file by
+<code>gems52.gates.format_report</code> — not by the build script that wrote it.</p>
+
+<h2>4 · What the file is</h2>
+<table>
+<tr><th>property</th><th>value</th></tr>
+<tr><td>emitted dots</td><td>31,156, 6,423 dropped by the 200 m
+catalogue ring, minimum 3 px (300 m) spacing between dots</td></tr>
+<tr><td>catalogue discipline</td><td>0 px on the mapped catalogue, 0 px within 200 m of it</td></tr>
+<tr><td>sha256</td><td><code>124081c0c05fc882ed8c04a2b036c574d4208c10275bb2ede90dd4d2d52246a7</code></td></tr>
+<tr><td>validated by</td><td><code>gems52.gates.format_report</code>, <code>uniqueness_report</code>,
+<code>lane_report(phase="dots")</code> — all three receipts are in
+<code>docs/data/h88s_build.json</code></td></tr>
+</table>
+
+<h2>5 · Holdout evidence (every score here is HOLDOUT-DTI, never an organiser score)</h2>
+<p class="small">60,894 withheld positive pixels · 4 folds ·
+9,400 dots per fold per arm · α 0.2, β 0.8, 300 m triangular kernel · paired 95 %
+spatial-cluster bootstrap (seed 61052).</p>
+<table><tr><th>arm</th><th>DTI</th><th>95 % CI</th><th>TPw</th><th>FPw</th></tr>
+<tr><td><code>single_A</code></td><td>0.066325</td><td>[0.04933, 0.08392]</td><td>3756</td><td>35836</td></tr>
+<tr><td><code>single_B</code></td><td>0.179847</td><td>[0.15633, 0.20132]</td><td>10322</td><td>33078</td></tr>
+<tr><td><code>a_only</code></td><td>0.045017</td><td>[0.03365, 0.05692]</td><td>2488</td><td>30278</td></tr>
+<tr><td><code>b_only</code></td><td>0.163511</td><td>[0.14368, 0.18284]</td><td>9296</td><td>31403</td></tr>
+<tr><td><code>concordant</code></td><td>0.054984</td><td>[0.04133, 0.07039]</td><td>2817</td><td>9797</td></tr>
+<tr><td><code>corroborated_B</code> ← shipped field</td><td>0.127005</td><td>[0.11105, 0.14547]</td><td>7250</td><td>34581</td></tr>
+<tr><td><code>exchange_B</code></td><td>0.180551</td><td>[0.15734, 0.20221]</td><td>10363</td><td>33032</td></tr>
+<tr><td><code>union_max</code></td><td>0.152930</td><td>[0.13173, 0.17462]</td><td>8750</td><td>33741</td></tr>
+<tr><td><code>random</code></td><td>0.074569</td><td>[0.06564, 0.08307]</td><td>4233</td><td>36007</td></tr>
+<tr><td><code>h87_field</code> (incumbent's own field)</td><td>0.056889</td><td>[0.04364, 0.07229]</td><td>3219</td><td>36103</td></tr>
+</table>
+<p><b>Did it beat the single-view baseline?</b> NO — HOLDOUT-DTI 0.127005 [0.11105, 0.14547] vs single_B 0.179847 [0.15633, 0.20132]; paired delta -0.052841 [-0.067627, -0.038227].</p>
+
+<h2>6 · The co-training premises, measured</h2>
+<table><tr><th>fold</th><th>max |ρ| (block OOF errors, labelled negatives)</th><th>measured</th>
+<th>pixel r</th><th>negatives</th></tr><tr><td>0</td><td>0.1288</td><td>True</td><td>-0.0027</td><td>2,100,706</td></tr>
+<tr><td>1</td><td>0.1034</td><td>True</td><td>0.0697</td><td>1,204,181</td></tr>
+<tr><td>2</td><td>0.0271</td><td>True</td><td>0.0199</td><td>461,971</td></tr>
+<tr><td>3</td><td>0.1416</td><td>True</td><td>0.1336</td><td>683,909</td></tr></table>
+<table><tr><th>fold</th><th>donor A OOF AUC</th><th>screen ≥ 0.60</th><th>pseudo px</th>
+<th>segments</th><th>independence allowed</th></tr><tr><td>0</td><td>0.4988</td><td>FAIL</td><td>199</td><td>8</td><td>True</td></tr>
+<tr><td>1</td><td>0.5857</td><td>FAIL</td><td>198</td><td>13</td><td>True</td></tr>
+<tr><td>2</td><td>0.513</td><td>FAIL</td><td>196</td><td>14</td><td>True</td></tr>
+<tr><td>3</td><td>0.4641</td><td>FAIL</td><td>198</td><td>13</td><td>True</td></tr></table>
+<p class="small">Independence passes (max |ρ| 0.1416 &lt; 0.60), so the
+mandated abandonment test does <b>not</b> fire. Sufficiency fails for View A, so the pseudo-label
+exchange is screened out and reported as such instead of being used to claim a co-training win. That
+combination — independent but not sufficient — is the finding of this round.</p>
+<h3>Leakage canary (single channel alone on the holdout)</h3>
+<table><tr><th>channel</th><th>max AUC over folds</th></tr><tr><td><code>B_b19_grad</code></td><td>0.6474</td></tr>
+<tr><td><code>B_lid03_grad</code></td><td>0.6471</td></tr>
+<tr><td><code>B_lid06_grad</code></td><td>0.6436</td></tr>
+<tr><td><code>B_lid05_grad</code></td><td>0.6433</td></tr>
+<tr><td><code>B_lid07_grad</code></td><td>0.6405</td></tr></table>
+<p class="small">Alarm threshold 0.90; no channel reaches it, so the folds are not leaking a
+single-feature shortcut.</p>
+
+<h2>7 · Honest limits</h2>
+<ul class="small">
+<li>No organiser score exists for this file or for any number on this page. Everything is
+HOLDOUT-DTI, produced by this repository's own instrument.</li>
+<li>That instrument does not rank organiser scores (Spearman −0.1045, IR-52-017); passing it is
+necessary, not sufficient.</li>
+<li>View A is not sufficient here, so the discovery half of the brief — A-confident/B-abstains as a
+buried-fault signal — remains unproven; the A-only candidates are exported with written reasoning in
+<code>docs/data/h88s_build.json</code> for Phase 2 review instead of being shipped as the emission.</li>
+<li>Gravity/magnetic gradients can come from lithologic contacts, intrusive margins and palaeo-channels;
+surface channels can come from roads, canals, quarry faces and erosion lines. The stratum definitions
+and the suppression are in <a href="h88s-round.html">h88.html</a> §3.</li>
+</ul>
+<p class="small"><b>DO NOT SUBMIT</b> applies to the research-only archives (CTD5, the R3
+paired-profile release, the H55 archives): they are published for audit and are never uploaded. The only
+submission-eligible file is the one in the download box on <a href="h88s.html">index.html</a> — and even
+that one is the owner's separate selector step.</p>
+<p class="small"><b>NO CERTIFIED LEADERBOARD GAIN</b> — no number on this page is an organiser score;
+every figure is this repository's own HOLDOUT-DTI instrument (<code>gems52-pooled-hide-v1</code>),
+which is measured not to rank organiser scores (Spearman −0.1045, IR-52-017).</p>
+<p class="small"><b>This is an archived round record (H88s).</b> The repository's live pointer and the
+current round's download live on <a href="h88s.html">docs/index.html</a>; this page claims no pointer.</p>
+<p class="small"><a href="h88s.html">← Download page</a> · <a href="h88s-round.html">H88 round page</a></p>
+
+</div></body></html>

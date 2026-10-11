@@ -1,0 +1,70 @@
+{
+ "round": "H95",
+ "frozen_utc": "2026-10-10T22:01:44Z",
+ "hypothesis_document": "knowledge/93_hypotheses_H95_preregistered_frozen_as_H88.md",
+ "hypothesis_sha256": "bf55dfb78ba7c1c805a616c22735f1e1397112382dcb85760ef8fdbccc098711",
+ "thresholds": {
+  "canary_auc_alarm": 0.9,
+  "independence_abandon_max_abs_rho": 0.6,
+  "donor_rank_min": 0.95,
+  "receiver_rank_interval": [
+   0.35,
+   0.65
+  ],
+  "buffer_px": 80,
+  "block_side_px": 50,
+  "min_pseudo_pixels": 5,
+  "pseudo_cap_per_fold": 2000,
+  "budget_dots_per_fold_per_arm": 9400,
+  "min_dot_separation_px": 3.0,
+  "catalogue_exclusion_m": 200.0,
+  "bootstrap_draws": 1000,
+  "bootstrap_block_px": 200,
+  "lane_near_dot_fraction": 0.7,
+  "lane_near_dot_radius_px": 3.0,
+  "lane_rank_correlation": 0.9,
+  "universal_coverage_probe_threshold": 0.95
+ },
+ "primary_arm": "cotrain_B",
+ "arms": [
+  "single_A",
+  "single_B",
+  "union_max",
+  "disagreement_pre",
+  "cotrain_B",
+  "random"
+ ],
+ "control_target": {
+  "single_B": 0.174517,
+  "tolerance": 0.001,
+  "source": "evidence/h61_holdout.json"
+ },
+ "promotion": {
+  "holdout_bar": 0.190147,
+  "holdout_bar_source": "H84 primary, knowledge/78 section 6",
+  "paired_vs": "single_B",
+  "require_ci_excludes_zero": true
+ },
+ "e3": {
+  "instrument": "gems52-offcat-segthin-v1",
+  "truth": "SGMC (derived_sgmc_faults_100m_u8 >0) AND domain AND dist(labels)>=3px, whole 8-connected segments drawn in random order until >= G px",
+  "G": 10000,
+  "seeds": [
+   10000000,
+   10000001,
+   10000002,
+   10000003,
+   10000004
+  ],
+  "budgets": [
+   37654,
+   28000
+  ],
+  "ring_m": 200,
+  "label": "PROXY-SGMC (diagnostic, never a score)"
+ },
+ "shipped_budget_rule": "max PROXY-SGMC mean DTI over budgets [37654, 28000] for the primary field",
+ "slots_used": 0,
+ "frozen_under_label": "H88",
+ "renamed_note": "Identifier-only rename H88 -> H95 at merge time: main acquired rounds H88-H94 from other sessions. The frozen document's bytes are unchanged (SHA-256 pin still matches)."
+}

@@ -1,0 +1,173 @@
+{
+ "stage": "write",
+ "started_utc": "2026-10-10T21:47:37+00:00",
+ "file": "submission/gems52-h89-coverco-disagree-37654px-20261010T214732Z.tif",
+ "bytes": 142450,
+ "sha256": "9d3e2be69efd476c91c8772a28c09ffccadac4281cc2025e376e0c8c8ffba04a",
+ "submission_name": "h89-coverco-disagree-37654px-20261010T214732Z",
+ "note": "H89 cover-conditioned co-training: artefact-demoted View B + 12% reserved A-only sub-cover dots; 200m catalogue ring excluded; binary",
+ "note_chars": 133,
+ "validator": {
+  "bands": 1,
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "shape": [
+   3730,
+   3292
+  ],
+  "crs_match": true,
+  "shape_match": true,
+  "transform_match": true,
+  "bounds_match": true,
+  "nan": 0,
+  "infinite": 0,
+  "min": 0.0,
+  "max": 1.0,
+  "unique_values": [
+   0.0,
+   1.0
+  ],
+  "ones": 37654,
+  "zeros": 12241506,
+  "nan_inside_footprint": 0,
+  "range_ok": true,
+  "PASS": true,
+  "rule_source": "official submission format: single-band float32 GeoTIFF, EPSG:32611, 100 m, same bounds/shape/geotransform as the submission format, values in [0,1] -- https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/"
+ },
+ "writer_receipt": {
+  "file": "gems52-h89-coverco-disagree-37654px-20261010T214732Z.tif",
+  "sha256": "9d3e2be69efd476c91c8772a28c09ffccadac4281cc2025e376e0c8c8ffba04a",
+  "bytes": 142450,
+  "submission_name": "h89-coverco-disagree-37654px-20261010T214732Z",
+  "note": "H89 cover-conditioned co-training: artefact-demoted View B + 12% reserved A-only sub-cover dots; 200m catalogue ring excluded; binary",
+  "note_chars": 133,
+  "validator": {
+   "path": "/home/user/GEMSDOE52/submission/gems52-h89-coverco-disagree-37654px-20261010T214732Z.tif",
+   "bytes": 142450,
+   "sha256": "9d3e2be69efd476c91c8772a28c09ffccadac4281cc2025e376e0c8c8ffba04a",
+   "bands": 1,
+   "dtype": "float32",
+   "crs": "EPSG:32611",
+   "width": 3292,
+   "height": 3730,
+   "bounds": [
+    243350.0,
+    4135550.0,
+    572550.0,
+    4508550.0
+   ],
+   "ref_bounds": [
+    243350.0,
+    4135550.0,
+    572550.0,
+    4508550.0
+   ],
+   "transform": [
+    100.0,
+    0.0,
+    243350.0,
+    0.0,
+    -100.0,
+    4508550.0
+   ],
+   "nodata": null,
+   "blocksize": [
+    256,
+    256
+   ],
+   "fixture_grid": false,
+   "has_validity_mask": false,
+   "nan_pixels": 0,
+   "infinity_pixels": 0,
+   "n_nan": 0,
+   "min": 0.0,
+   "max": 1.0,
+   "mean": 0.0030664964579045773,
+   "n_nonzero": 37654,
+   "mass": 37654.0,
+   "mass_outside_footprint": 0,
+   "problems": [],
+   "ok": true,
+   "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "zip_file": "gems52-h89-coverco-disagree-37654px-20261010T214732Z.zip",
+  "zip_sha256": "9b1176441fa2aa9e2fd9208e5423e9d1e433331e52b150476e42e8d26252cee4",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "status": "research-only; local format validation is not organizer acceptance",
+  "metadata": {
+   "round": "H89",
+   "primary_arm": "CCD",
+   "preregistration": "registry/h89_preregistration.json"
+  }
+ },
+ "not_the_union": {
+  "dots": 37654,
+  "discovery_dots": 4518,
+  "equal_union": false,
+  "subset_of_union": false,
+  "equal_single_A": false,
+  "equal_single_B": false,
+  "shared_with_union": 15007,
+  "jaccard_union": 0.2488681779738313,
+  "shared_with_A": 4226,
+  "jaccard_A": 0.0594524633521848,
+  "shared_with_B": 20845,
+  "jaccard_B": 0.3827369039531425,
+  "PASS": true
+ },
+ "vs_named_priors": {
+  "ref_h33_2_b2_owner_reported_0.2778": {
+   "prior_px": 37654,
+   "shared_px": 1343,
+   "near_3px_share_of_my_dots": 0.5498751792638232,
+   "jaccard": 0.01815723653079159
+  },
+  "h83_same_repo_previous_round": {
+   "prior_px": 37654,
+   "shared_px": 5309,
+   "near_3px_share_of_my_dots": 0.7501460668189303,
+   "jaccard": 0.07584394062772325
+  },
+  "h82_same_repo_previous_round": {
+   "prior_px": 37654,
+   "shared_px": 1631,
+   "near_3px_share_of_my_dots": 0.4414404844106868,
+   "jaccard": 0.0221371662798431
+  }
+ },
+ "catalogue": {
+  "min_dist_m": 223.60679774997897,
+  "median_dist_m": 1802.7756377319947,
+  "within_200m_px": 0,
+  "within_300m_pct": 12.312104955648802
+ },
+ "reasoning_csv": {
+  "path": "docs/downloads/h89-a-only-reasoning.csv",
+  "rows": 4518,
+  "sha256": "484501cb17092cace43af4ae86e0b5a77ae0b81b9f7d4ddaf0c545744e562767",
+  "encoding": "utf-8",
+  "line_terminator": "CRLF (RFC 4180)"
+ },
+ "holdout_promotion_test": {
+  "rule": "non-inferiority to single_B: point estimate >= single_B - 0.020 AND paired 95% CI lower bound > -0.040 (frozen, knowledge/74 sec.4.4)",
+  "single_B": 0.17532639176540848,
+  "primary": 0.1605443805545941,
+  "delta": -0.014782011210814378,
+  "delta_ci95": [
+   -0.021455708218540686,
+   -0.008398208513477222
+  ],
+  "point_ok": true,
+  "ci_ok": true,
+  "superiority": false,
+  "noninferior": true
+ },
+ "download_staged": {
+  "tif": "docs/downloads/h89-candidate.tif",
+  "zip": "docs/downloads/h89-candidate.zip",
+  "tif_sha256": "9d3e2be69efd476c91c8772a28c09ffccadac4281cc2025e376e0c8c8ffba04a",
+  "zip_sha256": "6ae6c73dd89d822164367fc82770738df88b237b40fe7db0754b82bd6e617499"
+ }
+}

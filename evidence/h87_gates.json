@@ -1,0 +1,315 @@
+{
+ "stage": "gates",
+ "format": {
+  "path": "/home/user/GEMSDOE52/submission/gems52-h87-boardcal-marginal-20261010-61427px.tif",
+  "bytes": 838772,
+  "sha256": "a8be8bee429b46817320a78d5c2503a5b5b785b86e742a301fc3f90bb996f086",
+  "bands": 1,
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "width": 3292,
+  "height": 3730,
+  "bounds": [
+   243350.0,
+   4135550.0,
+   572550.0,
+   4508550.0
+  ],
+  "ref_bounds": [
+   243350.0,
+   4135550.0,
+   572550.0,
+   4508550.0
+  ],
+  "transform": [
+   100.0,
+   0.0,
+   243350.0,
+   0.0,
+   -100.0,
+   4508550.0
+  ],
+  "nodata": null,
+  "blocksize": [
+   1,
+   3292
+  ],
+  "fixture_grid": false,
+  "has_validity_mask": false,
+  "nan_pixels": 0,
+  "infinity_pixels": 0,
+  "n_nan": 0,
+  "min": 0.0,
+  "max": 1.0,
+  "mean": 0.005002541001886129,
+  "n_nonzero": 61427,
+  "mass": 61427.0,
+  "mass_outside_footprint": 0,
+  "problems": [],
+  "ok": true,
+  "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+ },
+ "uniqueness": {
+  "n_priors_checked": 142,
+  "canonical_pattern_unique": true,
+  "identical_to_a_prior": false,
+  "novel_fraction": 0.3557718918390936,
+  "equals_literal_prior_union": false,
+  "support_novelty_gate_ok": true,
+  "max_jaccard": 0.07194448460315166,
+  "relation_to_union": "strictly-novel-and-selective",
+  "scope": "Only the supplied, aligned accessible inventory; not a proof against all private/unlinked submissions"
+ },
+ "lane_scope": {
+  "lane_priors": 13,
+  "uniqueness_priors": 142,
+  "irregularity": "IR-H87-002",
+  "disclosure": "rank/near-3px lane passes are scoped to the owner-scored registry; the four full-local-inventory lane passes did not complete inside the two-hour budget. Decoded-pixel uniqueness IS measured over the whole local inventory."
+ },
+ "lane_surface": {
+  "literal": {
+   "max_spearman": 0.3608025991084538,
+   "max_near_3px_fraction": null,
+   "max_near_source": null,
+   "rank_offenders": [],
+   "near_offenders": [],
+   "identical": [],
+   "verdict": "PASS",
+   "note": "applied to every aligned prior including universal-coverage probes"
+  },
+  "policy": {
+   "max_spearman": 0.3608025991084538,
+   "max_near_3px_fraction": null,
+   "max_near_source": null,
+   "rank_offenders": [],
+   "near_offenders": [],
+   "identical": [],
+   "informative_priors": 12,
+   "universal_coverage_probes": 1,
+   "probe_paths": [
+    "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif"
+   ],
+   "probe_coverage": [
+    0.9990415015812282
+   ],
+   "verdict": "PASS",
+   "note": "the same literal rule restricted to priors that localise something; probe statistics are retained verbatim in per_prior and nothing is deleted"
+  },
+  "offenders": [],
+  "universal_coverage_probes": null
+ },
+ "lane_dots": {
+  "literal": {
+   "max_spearman": 0.13661691734599965,
+   "max_near_3px_fraction": 0.9992023051752487,
+   "max_near_source": "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+   "rank_offenders": [],
+   "near_offenders": [
+    "/home/user/GEMSDOE52/data/scored/gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif",
+    "/home/user/GEMSDOE52/data/scored/gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif",
+    "/home/user/GEMSDOE52/data/scored/gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif",
+    "/home/user/GEMSDOE52/data/scored/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+    "/home/user/GEMSDOE52/data/scored/gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+    "/home/user/GEMSDOE52/data/scored/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
+    "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    "/home/user/GEMSDOE52/data/reference/h33-2-b2-zeros.tif"
+   ],
+   "identical": [],
+   "verdict": "DUPLICATE/STOP",
+   "note": "applied to every aligned prior including universal-coverage probes"
+  },
+  "policy": {
+   "max_spearman": 0.13661691734599965,
+   "max_near_3px_fraction": 0.9043905774333763,
+   "max_near_source": "/home/user/GEMSDOE52/data/scored/gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif",
+   "rank_offenders": [],
+   "near_offenders": [
+    "/home/user/GEMSDOE52/data/scored/gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif",
+    "/home/user/GEMSDOE52/data/scored/gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif",
+    "/home/user/GEMSDOE52/data/scored/gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif",
+    "/home/user/GEMSDOE52/data/scored/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+    "/home/user/GEMSDOE52/data/scored/gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+    "/home/user/GEMSDOE52/data/scored/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
+    "/home/user/GEMSDOE52/data/reference/h33-2-b2-zeros.tif"
+   ],
+   "identical": [],
+   "informative_priors": 12,
+   "universal_coverage_probes": 1,
+   "probe_paths": [
+    "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif"
+   ],
+   "probe_coverage": [
+    0.9990415015812282
+   ],
+   "verdict": "DUPLICATE/STOP",
+   "note": "the same literal rule restricted to priors that localise something; probe statistics are retained verbatim in per_prior and nothing is deleted"
+  },
+  "n_dots": 61427,
+  "universal_coverage_probes": null,
+  "random_control": {
+   "literal": {
+    "max_spearman": 0.000661583703868681,
+    "max_near_3px_fraction": 0.9990069513406157,
+    "max_near_source": "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    "rank_offenders": [],
+    "near_offenders": [
+     "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif"
+    ],
+    "identical": [],
+    "verdict": "DUPLICATE/STOP",
+    "note": "applied to every aligned prior including universal-coverage probes"
+   },
+   "policy": {
+    "max_spearman": 0.000661583703868681,
+    "max_near_3px_fraction": 0.249971510899116,
+    "max_near_source": "/home/user/GEMSDOE52/data/scored/8GEMSDOE_Hedge-v2_submission.tif",
+    "rank_offenders": [],
+    "near_offenders": [],
+    "identical": [],
+    "informative_priors": 12,
+    "universal_coverage_probes": 1,
+    "probe_paths": [
+     "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif"
+    ],
+    "probe_coverage": [
+     0.9990415015812282
+    ],
+    "verdict": "PASS",
+    "note": "the same literal rule restricted to priors that localise something; probe statistics are retained verbatim in per_prior and nothing is deleted"
+   }
+  },
+  "literal_offenders": [
+   {
+    "path": "gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif",
+    "spearman": 0.12213223941685512,
+    "near_3px": 0.8533218291630716
+   },
+   {
+    "path": "gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif",
+    "spearman": 0.12940981611380856,
+    "near_3px": 0.8823807120647272
+   },
+   {
+    "path": "gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif",
+    "spearman": 0.13661691734599965,
+    "near_3px": 0.9043905774333763
+   },
+   {
+    "path": "gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+    "spearman": 0.1117012383829321,
+    "near_3px": 0.8127045110456314
+   },
+   {
+    "path": "gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+    "spearman": 0.10853720203016522,
+    "near_3px": 0.7793315642958308
+   },
+   {
+    "path": "gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
+    "spearman": 0.11603869006366581,
+    "near_3px": 0.8305305484558907
+   },
+   {
+    "path": "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    "spearman": -0.0006410149428656916,
+    "near_3px": 0.9992023051752487
+   },
+   {
+    "path": "h33-2-b2-zeros.tif",
+    "spearman": 0.11031167056538348,
+    "near_3px": 0.7302977518029531
+   }
+  ],
+  "probe_controls": {
+   "gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif": {
+    "candidate": 0.8533,
+    "random_control": 0.1868,
+    "coverage_of_eligible": null
+   },
+   "gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif": {
+    "candidate": 0.8824,
+    "random_control": 0.194,
+    "coverage_of_eligible": null
+   },
+   "gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif": {
+    "candidate": 0.9044,
+    "random_control": 0.1995,
+    "coverage_of_eligible": null
+   },
+   "gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif": {
+    "candidate": 0.8127,
+    "random_control": 0.1713,
+    "coverage_of_eligible": null
+   },
+   "gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif": {
+    "candidate": 0.7793,
+    "random_control": 0.1631,
+    "coverage_of_eligible": null
+   },
+   "gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif": {
+    "candidate": 0.8305,
+    "random_control": 0.1754,
+    "coverage_of_eligible": null
+   },
+   "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif": {
+    "candidate": 0.9992,
+    "random_control": 0.999,
+    "coverage_of_eligible": null
+   },
+   "h33-2-b2-zeros.tif": {
+    "candidate": 0.7303,
+    "random_control": 0.1545,
+    "coverage_of_eligible": null
+   }
+  },
+  "restricted_registry_verdict": "DUPLICATE/STOP",
+  "restricted_registry_literal": {
+   "max_spearman": 0.13661691734599965,
+   "max_near_3px_fraction": 0.9992023051752487,
+   "max_near_source": "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+   "rank_offenders": [],
+   "near_offenders": [
+    "/home/user/GEMSDOE52/data/scored/gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif",
+    "/home/user/GEMSDOE52/data/scored/gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif",
+    "/home/user/GEMSDOE52/data/scored/gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif",
+    "/home/user/GEMSDOE52/data/scored/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+    "/home/user/GEMSDOE52/data/scored/gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+    "/home/user/GEMSDOE52/data/scored/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
+    "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    "/home/user/GEMSDOE52/data/reference/h33-2-b2-zeros.tif"
+   ],
+   "identical": [],
+   "verdict": "DUPLICATE/STOP",
+   "note": "applied to every aligned prior including universal-coverage probes"
+  },
+  "restricted_registry_policy": {
+   "max_spearman": 0.13661691734599965,
+   "max_near_3px_fraction": 0.9043905774333763,
+   "max_near_source": "/home/user/GEMSDOE52/data/scored/gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif",
+   "rank_offenders": [],
+   "near_offenders": [
+    "/home/user/GEMSDOE52/data/scored/gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif",
+    "/home/user/GEMSDOE52/data/scored/gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif",
+    "/home/user/GEMSDOE52/data/scored/gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif",
+    "/home/user/GEMSDOE52/data/scored/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+    "/home/user/GEMSDOE52/data/scored/gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+    "/home/user/GEMSDOE52/data/scored/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
+    "/home/user/GEMSDOE52/data/reference/h33-2-b2-zeros.tif"
+   ],
+   "identical": [],
+   "informative_priors": 12,
+   "universal_coverage_probes": 1,
+   "probe_paths": [
+    "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif"
+   ],
+   "probe_coverage": [
+    0.9990415015812282
+   ],
+   "verdict": "DUPLICATE/STOP",
+   "note": "the same literal rule restricted to priors that localise something; probe statistics are retained verbatim in per_prior and nothing is deleted"
+  },
+  "restricted_registry_max_near_3px": 0.9992023051752487,
+  "restricted_registry_n": 13
+ },
+ "evidence_class": "local on-disk gates; not organiser upload acceptance"
+}

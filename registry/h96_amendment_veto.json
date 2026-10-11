@@ -1,0 +1,16 @@
+{
+  "id": "H88-amendment-veto-positive-support",
+  "amends": "registry/h88_preregistration.json",
+  "amends_sha256": "0f664c43f166264864c3815d31a9230f5b95b257a426d4670a8b5ed7c78f7094",
+  "frozen_utc": "2026-10-10T22:12:00+00:00",
+  "frozen_before_any_fit": true,
+  "document": "knowledge/80a_amendment_H88_veto_positive_support.md",
+  "reason": "rank01 of clip(b-a,0,1) assigns mid-ranks to the ~50% zero support, penalising A-dominant pixels that should not be vetoed; the veto must rank only the suspected (positive) support",
+  "field_veto": {
+    "formula": "art=clip(b-a,0,1); veto=0 where art==0; veto=rank01(art) on art>0 only; field=(0.45*consensus+0.55*buried)*(1-0.70*veto)",
+    "consensus_weight": 0.45,
+    "buried_weight": 0.55,
+    "veto_weight": 0.7
+  },
+  "all_other_terms_of_the_original_registration_stay_frozen": true
+}

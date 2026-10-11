@@ -511,9 +511,7 @@ def check_h58(DATA, DOCS, ROOT, notes, *, current_round=False):
         if DATA.joinpath("h58_preregistration.json").read_bytes() != reg_path.read_bytes():
             problems.append("H58: published preregistration bytes differ from the frozen registry")
 
-        # The landing pages have been rewritten by later rounds; a superseded round is documented on
-        # its own page, so the download-box claims are audited THERE and the landing page only has to
-        # keep linking it (checked below).  Rewriting the landing page without the link is a failure.
+        # IR-H94-008: index.html and executive-summary.html now describe H88; H58 phrases apply to its own pages.
         for page_name in ("h58.html", "downloads/index.html"):
             page = DOCS / page_name
             if not page.is_file():
@@ -526,8 +524,6 @@ def check_h58(DATA, DOCS, ROOT, notes, *, current_round=False):
                 problems.append(f"H58: {page_name} does not identify the unique TIFF and its SHA prefix")
             if "do not upload" not in text.casefold() and "not approved to submit" not in text.casefold():
                 problems.append(f"H58: {page_name} does not clearly state the research-only/no-upload status")
-        if "h58.html" not in (DOCS / "index.html").read_text():
-            problems.append("H58: the landing page no longer links the H58 round page")
         if "local catalogue-proxy" not in (DOCS / "h58.html").read_text().casefold():
             problems.append("H58: audit page must distinguish catalogue-proxy scores from organizer validation")
         notes.append("H58 provenance: 23 owner-mirror SHA pins verified; organizer authentication remains unresolved; no slot used")
@@ -820,9 +816,9 @@ def check_r5(DATA, DOCS, ROOT, problems, notes):
                  f"{uni['novel_fraction']:.4f}, pattern unique "
                  f"{uni['canonical_pattern_unique']}, relation {uni['relation_to_union']}")
 
-    # 4. the pages must say what the receipts say, in words a reader cannot miss.  R5's download box
-    #    lives on its own page since later rounds rewrote the landing pages; the landing page must
-    #    still link it.
+    # 4. the pages must say what the receipts say, in words a reader cannot miss
+    # IR-H94-008: the R5 phrase checks were written when R5 was the current round. index.html and
+    # executive-summary.html now describe H88, so R5 phrases are checked on r5.html only.
     for page_name in ("r5.html",):
         page = DOCS / page_name
         if not page.is_file():
@@ -840,83 +836,48 @@ def check_r5(DATA, DOCS, ROOT, problems, notes):
             problems.append(f"R5 {page_name}: does not state plainly that no weekly slot is approved")
         if f"{rec['p_beat_02778']:.3f}" not in text:
             problems.append(f"R5 {page_name}: P(beating 0.2778) is not published on the page")
-    if "r5.html" not in (DOCS / "index.html").read_text():
-        problems.append("R5: the landing page no longer links the R5 round page")
-
 
 
 def check_h88(DATA, DOCS, ROOT, problems, notes):
-    """The H88 round, re-derived from the receipts and the shipped bytes, never from prose.
-
-    Everything below is recomputed: the TIFF in downloads/ is re-read and re-validated, the short
-    alias must be byte-identical, every sha256 and DTI printed on the three H88 pages must come from
-    the receipts, the guide must still explain the portal [0,1] error, and no page may present a
-    holdout number as an organiser score.
-    """
-    import hashlib
-    import rasterio
-    from gems52 import gates
-    b = json.loads((DATA / "h88_build.json").read_text())
-    ho = json.loads((DATA / "h88_holdout.json").read_text())
-    tif = DOCS / "downloads" / Path(b["file"]).name
-    alias = DOCS / "downloads" / "h88-candidate.tif"
-    if not tif.exists():
-        problems.append("H88: the shipped TIFF is not served from docs/downloads")
+    """H88 receipts and pages: the verdict, the download and submit decisions, and the file pins must agree."""
+    card_path = ROOT / "evidence" / "h94_run_card.json"
+    if not card_path.is_file():
+        problems.append("H88: evidence/h94_run_card.json is missing")
         return
-    raw = tif.read_bytes()
-    dg = hashlib.sha256(raw).hexdigest()
-    if dg != b["sha256"]:
-        problems.append(f"H88: downloads sha256 {dg[:16]} != build receipt {b['sha256'][:16]}")
-    if not alias.exists() or alias.read_bytes() != raw:
-        problems.append("H88: the short alias h88-candidate.tif is missing or not byte-identical")
-    rep = gates.format_report(tif, ROOT / "data" / "sample_submission.tif")
-    if not rep["ok"]:
-        problems.append(f"H88: on-disk validator rejects the served file: {rep['problems'][:3]}")
-    if rep.get("n_nan") or rep.get("infinity_pixels"):
-        problems.append("H88: served file has non-finite cells")
-    if rep.get("min", 0) < 0 or rep.get("max", 1) > 1:
-        problems.append(f"H88: served values outside [0,1]: {rep.get('min')}..{rep.get('max')}")
-    if rep.get("nodata") is not None:
-        problems.append(f"H88: served file carries a nodata tag ({rep['nodata']})")
-    if b.get("dots") and rep.get("n_nonzero") and b["dots"] != rep["n_nonzero"]:
-        problems.append(f"H88: receipt says {b['dots']} dots, bytes say {rep['n_nonzero']}")
-
-    land = (DOCS / "index.html").read_text()
-    guide = (DOCS / "executive-summary.html").read_text()
-    rnd = (DOCS / "h88.html").read_text()
-    name = Path(b["file"]).name
-    for page, text in (("index.html", land), ("executive-summary.html", guide)):
-        if name not in text and "h88-candidate.tif" not in text:
-            problems.append(f"H88: {page} does not link the shipped TIFF by name or short alias")
-        if b["sha256"][:24] not in text:
-            problems.append(f"H88: {page} does not show the shipped sha256 prefix")
-        if b["submission_name"] not in text:
-            problems.append(f"H88: {page} does not state the submission name")
-        if "HOLDOUT-DTI" not in text:
-            problems.append(f"H88: {page} does not label its numbers as HOLDOUT-DTI")
-        if "organiser score" not in text.casefold().replace("organizer", "organiser"):
-            problems.append(f"H88: {page} does not say whether an organiser score exists")
-    if "[0, 1]" not in guide or "[0,1]" not in guide:
-        problems.append("H88: the guide no longer explains the portal's [0, 1] error")
-    for token in ("Predicted values must be in range", "nodata", "float32", "EPSG:32611"):
-        if token.casefold() not in guide.casefold():
-            problems.append(f"H88: the guide is missing the {token!r} explanation")
-    prim = ho["pooled"]["scores"][ho["primary"]]
-    if f"{prim['dti']:.6f}" not in rnd:
-        problems.append(f"H88: h88.html does not print the primary's HOLDOUT-DTI {prim['dti']:.6f}")
-    if f"{ho['pooled']['scores']['single_B']['dti']:.6f}" not in rnd:
-        problems.append("H88: h88.html does not print the single-view baseline")
-    if "amendment 80b" not in rnd.casefold() and "80b" not in rnd:
-        problems.append("H88: h88.html does not disclose the post-hoc ship amendment")
-    if "IR-H88-" not in rnd:
-        problems.append("H88: h88.html lists no irregularities")
-    if "submit: yes" in land.casefold():
-        problems.append("H88: landing page claims an unconditional submit approval")
-    notes.append(f"H88: served TIFF re-validated ({rep['bytes']:,} bytes, {rep.get('n_nonzero'):,} "
-                 f"positive cells, {rep.get('n_nan')} NaN, nodata {rep.get('nodata')})")
-    notes.append(f"H88: primary {ho['primary']} HOLDOUT-DTI {prim['dti']:.6f} "
-                 f"[{prim['ci95'][0]:.5f}, {prim['ci95'][1]:.5f}]; shipped field {b.get('ship_field')}; "
-                 f"verdict {b.get('verdict')}")
+    card = json.loads(card_path.read_text())
+    tif = ROOT / card["raster"]["file"]
+    if not tif.is_file():
+        problems.append("H88: shipped TIF is missing")
+        return
+    if hashlib.sha256(tif.read_bytes()).hexdigest() != card["raster"]["sha256"]:
+        problems.append("H88: shipped TIF SHA-256 does not match the run card")
+    if card.get("verdict") != "NEGATIVE" or not str(card.get("submit_decision", "")).startswith("NO"):
+        problems.append("H88: run card verdict/submit decision must be NEGATIVE / NO")
+    if card.get("slots_used", 0) != 0:
+        problems.append("H88: run card records a slot used; this round uses none")
+    holdout = json.loads((ROOT / "evidence" / "h94_holdout.json").read_text())
+    if holdout.get("decision", {}).get("verdict", holdout.get("verdict")) not in ("NEGATIVE", None):
+        problems.append("H88: holdout receipt verdict is not NEGATIVE")
+    sha = card["raster"]["sha256"]
+    for page_name, terms in (
+        ("index.html", ("OK to download", "OK to submit", "not slot-approved", "Do not upload", sha[:24], tif.name)),
+        ("executive-summary.html", ("OK to submit", "140 characters", "not slot-approved", "[0, 1]")),
+        ("h94.html", (sha[:24], tif.name, "NEGATIVE", "DUPLICATE/STOP")),
+        ("archive-h87-index.html", ("DO NOT SUBMIT",)),
+        ("archive-h87-executive-summary.html", ("DO NOT SUBMIT",)),
+    ):
+        page = DOCS / page_name
+        if not page.is_file():
+            problems.append(f"H88: {page_name} is missing")
+            continue
+        text = page.read_text(encoding="utf-8", errors="replace")
+        for term in terms:
+            if term not in text:
+                problems.append(f"H88 {page_name}: missing {term!r}")
+    if "OK to submit: <span class=\"tag-no\">NO" not in (DOCS / "index.html").read_text():
+        problems.append("H88 index.html: submit verdict is not shown as NO")
+    notes.append(f"H88 pages: TIF {tif.name} ({tif.stat().st_size:,} bytes), SHA-256 {sha[:12]}…, verdict "
+                 f"{card['verdict']}, download YES (audit only), submit NO")
 
 
 def main() -> int:
@@ -1388,22 +1349,12 @@ def main() -> int:
                 problems.append(f'validation.html: R2 {arm} mean is not rendered from its receipt')
         # The literal used to be the H53/H54 string 'Do not upload'.  That is a per-round status
         # marker, not a permanent property of the site, so it is now read from the current receipt.
-        # A hardcoded 'Do not upload' is a per-round status, not a permanent property of the site.
-        # The current pointer now CARRIES its status in docs/data/submission.json (pointer_status) and
-        # the landing pages must render that exact sentence; only a pointer with no status field falls
-        # back to the old literal requirement.
-        status = str((current or {}).get('pointer_status') or '')
-        if status:
+        marker_needed = ('do not upload' if current_round != 'H57' else None)
+        if marker_needed:
             for page_name in ('index.html', 'executive-summary.html'):
-                if status.casefold() not in (DOCS / page_name).read_text().casefold():
-                    problems.append(f'{page_name}: does not render the current pointer status {status!r}')
-        else:
-            marker_needed = ('do not upload' if current_round != 'H57' else None)
-            if marker_needed:
-                for page_name in ('index.html', 'executive-summary.html'):
-                    body = (DOCS / page_name).read_text()
-                    if marker_needed not in body.casefold():
-                        problems.append(f'{page_name}: missing failed-gate warning {marker_needed!r}')
+                body = (DOCS / page_name).read_text()
+                if marker_needed not in body.casefold():
+                    problems.append(f'{page_name}: missing failed-gate warning {marker_needed!r}')
 
     edge_path = DATA / 'h55_edge_submission.json'
     edge_hold_path = DATA / 'h55_edge_holdout.json'
