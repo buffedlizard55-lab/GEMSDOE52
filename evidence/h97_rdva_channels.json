@@ -1,0 +1,13 @@
+{
+  "stage": "channels",
+  "generated_utc": "2026-10-10T00:43:06Z",
+  "seconds": 267.6926004886627,
+  "n_channels": 90,
+  "n_A": 30,
+  "n_B": 60,
+  "manifest_sha256": "09c16152b386d19a701aecb69622429627c16b7e55407ab08163f91b79e754c6",
+  "all_columns_digest_verified": true,
+  "n_save_rewrites": 0,
+  "registration_sha256": "0631745794bfb6a582bfe2bc2f7d3f32ed9e066b1855469606d2ff89a8993db8",
+  "hypothesis_sha256": "f35c14e130af1ae00e6ed47a5a08a185125e81db8289ce30228ba7acfafc57e9"
+}

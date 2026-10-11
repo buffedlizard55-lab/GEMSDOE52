@@ -1036,7 +1036,8 @@ def main() -> int:
 
         sub_path = DATA / 'submission.json'
         sub = json.loads(sub_path.read_text()) if sub_path.exists() else {}
-        current_round = ('H60' if str(sub.get('file', '')).startswith('gems52-h60-')
+        current_round = ('H102' if str(sub.get('file', '')).startswith('gems52-h102-')
+                         else 'H60' if str(sub.get('file', '')).startswith('gems52-h60-')
                          else 'H58' if str(sub.get('file', '')).startswith('gems52-h58-')
                          else 'H57' if str(sub.get('file', '')).startswith('gems52-h57-')
                          else 'H56' if str(sub.get('file', '')).startswith('gems52-h56-')
@@ -1049,6 +1050,34 @@ def main() -> int:
             if sub.get('file') != marker:
                 problems.append(f'{current_round}: docs/data/submission.json does not match '
                                 'submission/LATEST.txt')
+        rdva_card_path = DATA / 'h97_rdva_run_card.json'
+        if rdva_card_path.is_file():
+            rdva = json.loads(rdva_card_path.read_text())
+            stem = rdva.get('unique_submission_name', '')
+            archive_receipt = DATA / f'submission_{stem}.json'
+            canonical = DOCS / 'downloads' / f'{stem}.tif'
+            alias = DOCS / 'downloads/h97-rdva-candidate.tif'
+            expected = (rdva.get('raster') or {}).get('sha256')
+            if (rdva.get('verdict') != 'negative' or rdva.get('download_ok') is not True
+                    or rdva.get('submit_ok') is not False
+                    or rdva.get('approved_for_weekly_slot') is not False
+                    or rdva.get('submission_slots_used') != 0):
+                problems.append('H97-RDVA: negative/download/submit/slot status changed')
+            if sub.get('file') == f'{stem}.tif':
+                problems.append('H97-RDVA: parallel archive must not replace the global current pointer')
+            if not archive_receipt.is_file():
+                problems.append('H97-RDVA: public archive receipt missing')
+            if not canonical.is_file() or not alias.is_file() or canonical.read_bytes() != alias.read_bytes():
+                problems.append('H97-RDVA: canonical/short TIFF bytes missing or unequal')
+            elif hashlib.sha256(canonical.read_bytes()).hexdigest() != expected:
+                problems.append('H97-RDVA: TIFF differs from run-card SHA-256')
+            for page_name in ('index.html', 'executive-summary.html', 'irregularities.html'):
+                text = (DOCS / page_name).read_text()
+                if text.count('<!--H97-RDVA-ARCHIVE-START-->') != 1:
+                    problems.append(f'H97-RDVA: {page_name} lacks one archive marker')
+            if not problems or not any(str(p).startswith('H97-RDVA:') for p in problems):
+                notes.append(f'H97-RDVA parallel archive verified: NEGATIVE, download YES, submit NO; '
+                             f'{canonical.name} ({canonical.stat().st_size:,} bytes, {expected[:16]}…)')
         if (DATA / "h58_result.json").is_file():
             problems.extend(check_h58(DATA, DOCS, ROOT, notes,
                                       current_round=(current_round == "H58")))

@@ -98,7 +98,8 @@ def test_save_verified_does_not_call_itself():
     src = (ROOT / "scripts/run_h82.py").read_text()
     body = src.split("def save_verified(", 1)[1].split("\ndef ", 1)[0]
     assert "save_verified(path" not in body, "save_verified must call plain np.save"
-    assert "np.save(path, want)" in body
+    assert "np.save(fh, want)" in body
+    assert "os.replace(tmp, path)" in body, "large channel replacement must stay atomic"
 
 
 def test_save_verified_accepts_nan_and_bool_columns(tmp_path):
