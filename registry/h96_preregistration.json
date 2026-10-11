@@ -1,0 +1,73 @@
+{
+  "id": "H88",
+  "frozen_utc": "2026-10-10T22:05:00+00:00",
+  "frozen_before_any_fit": true,
+  "document": "knowledge/80_hypotheses_H88_preregistered.md",
+  "lane": "co-training between a geophysical view and a surface view, with disagreement as the discovery signal (Blum & Mitchell COLT '98, doi:10.1145/279943.279962)",
+  "hypothesis": "Bidirectional co-training disagreement: a sustained cover-thickness step and strain/seismicity lineation coincident with gravity/magnetic edges where the surface view abstains marks buried faults the surface-trace catalogue lacks; the reverse disagreement marks surface artifacts and is vetoed.",
+  "view_A": {
+    "components": [
+      {"name": "grav_hg", "source": "training_features.tif band 18 iso_grav_anom_hg", "transform": "abs", "weight": 0.22},
+      {"name": "mag_hg", "source": "training_features.tif band 3 tmi_hg", "transform": "abs", "weight": 0.18},
+      {"name": "cover_step", "source": "training_features.tif band 15 depth_to_base_surf", "transform": "gaussian_gradient_magnitude sigma=2px", "weight": 0.22, "preregistered_from": "H85-next-B (knowledge/78 section 4, untested before this session)"},
+      {"name": "seis_line", "source": "training_features.tif band 10 deq_n100a15", "transform": "gaussian_gradient_magnitude sigma=2px", "weight": 0.13, "preregistered_from": "H85-next-C (knowledge/78 section 4, untested standalone)"},
+      {"name": "strain_step", "source": "training_features.tif band 7 geod_shearrate", "transform": "gaussian_gradient_magnitude sigma=2px", "weight": 0.10, "preregistered_from": "H85-next-D (knowledge/78 section 4, untested standalone)"},
+      {"name": "mag_vg", "source": "training_features.tif band 9 tmi_vg", "transform": "abs", "weight": 0.10},
+      {"name": "cond", "source": "training_features.tif band 17 cond_surf", "transform": "identity", "weight": 0.05}
+    ]
+  },
+  "view_B": {
+    "components": [
+      {"name": "slope", "source": "training_features.tif band 19 det_elev_slope", "transform": "identity", "weight": 0.25},
+      {"name": "ridge_curv", "source": "training_features.tif band 12 det_elev", "transform": "abs(min hessian eigenvalue) sigma=1.5px", "weight": 0.30},
+      {"name": "topo_edge", "source": "training_features.tif band 12 det_elev", "transform": "gaussian_gradient_magnitude sigma=1.5px", "weight": 0.20},
+      {"name": "K_over_Th", "source": "data/external/geodawn_rad_u8.tif band 1 K / band 2 Th (GeoDAWN DOI 10.5066/P93LGLVQ)", "transform": "K/(Th+eps) rank", "weight": 0.15, "note": "inverse direction of H87's Th/K; potassic alteration raises K relative to Th"},
+      {"name": "tc", "source": "training_features.tif band 6 tc (radiometric total count by bytes, IR-52-019)", "transform": "identity", "weight": 0.10, "note": "the one radiometric band present in training_features.tif, satisfying the brief's conditional clause"}
+    ]
+  },
+  "field": {
+    "formula": "consensus=a*b; buried=a*clip(a-b,0,1); veto=rank01(clip(b-a,0,1)); field=(0.45*consensus+0.55*buried)*(1-0.70*veto)",
+    "consensus_weight": 0.45,
+    "buried_weight": 0.55,
+    "veto_weight": 0.70
+  },
+  "independence_gate": {
+    "method": "gems52.spatial.negative_block_errors + gems52.spatial.independence",
+    "block_side_px": 50,
+    "thresholds": "each view's 90th percentile on fold negatives",
+    "abandon_if_max_abs_correlation_at_or_above": 0.6,
+    "min_blocks": 20,
+    "iterative_pseudo_label_exchange": "NOT run; closed negative N-1 (knowledge/03). whole_pseudo_segments run as diagnostic count only."
+  },
+  "holdout": {
+    "instrument": "gems52-pooled-hide-v1 (gems52.evaluate_holdout)",
+    "folds": "gems52.spatial.folds(cat, valid, buffer_px=80) whole-component label-blind quadrants",
+    "alpha": 0.2,
+    "beta": 0.8,
+    "kernel_m": 300,
+    "budget_dots_per_fold_per_arm": 9400,
+    "mass_lever_dots_per_fold": 6350,
+    "bar_to_beat_for_promotion": 0.192829,
+    "bar_source": "evidence/h82_holdout.json (H82 B_DVA2)",
+    "arms": ["cotrain_bi", "consensus_only", "buried_only", "single_A", "single_B", "random"],
+    "primary": "cotrain_bi",
+    "ci": "paired 20 km spatial-cluster bootstrap, 1000 draws"
+  },
+  "placement": {
+    "method": "gems52.nodes.spacing_select",
+    "min_spacing_px": 3.0,
+    "catalogue_collar_px": 2,
+    "catalogue_collar_m": 200,
+    "visible_catalogue_masked_pixel_exact": true
+  },
+  "shipped_budget": 25400,
+  "shipped_budget_reason": "mass lever (knowledge/76 section 3): the champion's implied credit at S=25384 reaches 0.3195; the champion family over-emits 28-33 percent",
+  "leakage_canary_alarm_auc": 0.9,
+  "lane_drift": {
+    "max_rank_correlation": 0.9,
+    "max_dot_overlap_fraction_within_3px": 0.7,
+    "checked_on": ["field before placement", "final dots"],
+    "registry_roots": ["submission/", "docs/downloads/", "data/scored/", "data/reference/"]
+  },
+  "budget": {"experiments": 3, "hours": 2, "submission_slot": "NOT spent; promotion is the selector step"}
+}

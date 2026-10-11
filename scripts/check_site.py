@@ -511,7 +511,8 @@ def check_h58(DATA, DOCS, ROOT, notes, *, current_round=False):
         if DATA.joinpath("h58_preregistration.json").read_bytes() != reg_path.read_bytes():
             problems.append("H58: published preregistration bytes differ from the frozen registry")
 
-        for page_name in ("h58.html", "index.html", "executive-summary.html", "downloads/index.html"):
+        # IR-H94-008: index.html and executive-summary.html now describe H88; H58 phrases apply to its own pages.
+        for page_name in ("h58.html", "downloads/index.html"):
             page = DOCS / page_name
             if not page.is_file():
                 problems.append(f"H58: {page_name} is missing")
@@ -816,7 +817,9 @@ def check_r5(DATA, DOCS, ROOT, problems, notes):
                  f"{uni['canonical_pattern_unique']}, relation {uni['relation_to_union']}")
 
     # 4. the pages must say what the receipts say, in words a reader cannot miss
-    for page_name in ("index.html", "executive-summary.html", "r5.html"):
+    # IR-H94-008: the R5 phrase checks were written when R5 was the current round. index.html and
+    # executive-summary.html now describe H88, so R5 phrases are checked on r5.html only.
+    for page_name in ("r5.html",):
         page = DOCS / page_name
         if not page.is_file():
             problems.append(f"R5: {page_name} is missing")
@@ -833,6 +836,48 @@ def check_r5(DATA, DOCS, ROOT, problems, notes):
             problems.append(f"R5 {page_name}: does not state plainly that no weekly slot is approved")
         if f"{rec['p_beat_02778']:.3f}" not in text:
             problems.append(f"R5 {page_name}: P(beating 0.2778) is not published on the page")
+
+
+def check_h88(DATA, DOCS, ROOT, problems, notes):
+    """H88 receipts and pages: the verdict, the download and submit decisions, and the file pins must agree."""
+    card_path = ROOT / "evidence" / "h94_run_card.json"
+    if not card_path.is_file():
+        problems.append("H88: evidence/h94_run_card.json is missing")
+        return
+    card = json.loads(card_path.read_text())
+    tif = ROOT / card["raster"]["file"]
+    if not tif.is_file():
+        problems.append("H88: shipped TIF is missing")
+        return
+    if hashlib.sha256(tif.read_bytes()).hexdigest() != card["raster"]["sha256"]:
+        problems.append("H88: shipped TIF SHA-256 does not match the run card")
+    if card.get("verdict") != "NEGATIVE" or not str(card.get("submit_decision", "")).startswith("NO"):
+        problems.append("H88: run card verdict/submit decision must be NEGATIVE / NO")
+    if card.get("slots_used", 0) != 0:
+        problems.append("H88: run card records a slot used; this round uses none")
+    holdout = json.loads((ROOT / "evidence" / "h94_holdout.json").read_text())
+    if holdout.get("decision", {}).get("verdict", holdout.get("verdict")) not in ("NEGATIVE", None):
+        problems.append("H88: holdout receipt verdict is not NEGATIVE")
+    sha = card["raster"]["sha256"]
+    for page_name, terms in (
+        ("index.html", ("OK to download", "OK to submit", "not slot-approved", "Do not upload", sha[:24], tif.name)),
+        ("executive-summary.html", ("OK to submit", "140 characters", "not slot-approved", "[0, 1]")),
+        ("h94.html", (sha[:24], tif.name, "NEGATIVE", "DUPLICATE/STOP")),
+        ("archive-h87-index.html", ("DO NOT SUBMIT",)),
+        ("archive-h87-executive-summary.html", ("DO NOT SUBMIT",)),
+    ):
+        page = DOCS / page_name
+        if not page.is_file():
+            problems.append(f"H88: {page_name} is missing")
+            continue
+        text = page.read_text(encoding="utf-8", errors="replace")
+        for term in terms:
+            if term not in text:
+                problems.append(f"H88 {page_name}: missing {term!r}")
+    if "OK to submit: <span class=\"tag-no\">NO" not in (DOCS / "index.html").read_text():
+        problems.append("H88 index.html: submit verdict is not shown as NO")
+    notes.append(f"H88 pages: TIF {tif.name} ({tif.stat().st_size:,} bytes), SHA-256 {sha[:12]}…, verdict "
+                 f"{card['verdict']}, download YES (audit only), submit NO")
 
 
 def main() -> int:
@@ -1395,6 +1440,7 @@ def main() -> int:
         notes.extend("  " + x for x in typed_numbers[:4])
 
     check_r5(DATA, DOCS, ROOT, problems, notes)
+    check_h88(DATA, DOCS, ROOT, problems, notes)
     print(f"pages checked: {len(pages)}   data files: {len(list(DATA.glob('*.json')))}")
     for nse in notes:
         print("  note:", nse)

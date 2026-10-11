@@ -1,7 +1,7 @@
 {
  "stage": "exchange",
  "round": "H83",
- "started_utc": "2026-10-10T22:02:22+00:00",
+ "started_utc": "2026-10-10T20:11:49+00:00",
  "independence_pre": {
   "n_blocks": 2089,
   "n_negative_predictions": 4041757,
@@ -2711,7 +2711,7 @@
  "cap_per_fold": 2000,
  "min_pixels": 5,
  "allowed_exchange": true,
- "finished_utc": "2026-10-10T22:06:56+00:00",
+ "finished_utc": "2026-10-10T20:16:14+00:00",
  "total_pseudo_pixels": 10812,
  "rule": "exactly one exchange; no second round; no post-result hyperparameter search"
 }

@@ -183,5 +183,7 @@
     "n_truth": 53186.0
    }
   }
- ]
+ ],
+ "merge_note": "Kept through the arena/04b2bb40-gemsdoe52 -> main merge: three shipped rasters (the owner-reported champion, this branch's H87 raster, this branch's H88 raster) scored verbatim on the shared hide-and-recover file protocol. The H88 raster is kept as a measurement witness only; its round's pages and receipts were dropped as duplicates of main's H88 lineage (IR-H98-002).",
+ "all_rows_sha_verified": true
 }

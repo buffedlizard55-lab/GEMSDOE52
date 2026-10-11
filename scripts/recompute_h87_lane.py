@@ -68,19 +68,33 @@ def main() -> int:
           f"surface literal {surface['literal']['verdict']} / policy {surface['policy']['verdict']}",
           flush=True)
 
-    hold = json.loads((EVID / "h87_holdout.json").read_text())
-    g = hold["gate"]
-    if g["lane_dots_policy"] != dots["policy"]["verdict"] or g["lane_surface_policy"] != surface["policy"]["verdict"]:
-        raise SystemExit("recomputed lane verdicts disagree with evidence/h87_holdout.json")
+    # Cross-check against the holdout receipt where that receipt carries lane fields.  main's
+    # H98-era evidence/h87_holdout.json has a different shape (comparability/per_fold/pooled), so the
+    # check is recorded rather than asserted when the fields are absent -- never silently assumed.
+    cross = dict(checked=False, reason="evidence/h87_holdout.json carries no lane verdict fields")
+    hold_path = EVID / "h87_holdout.json"
+    if hold_path.exists():
+        try:
+            hold = json.loads(hold_path.read_text())
+        except json.JSONDecodeError:
+            hold = {}
+        g = hold.get("gate") or {}
+        if "lane_dots_policy" in g and "lane_surface_policy" in g:
+            if (g["lane_dots_policy"] != dots["policy"]["verdict"]
+                    or g["lane_surface_policy"] != surface["policy"]["verdict"]):
+                raise SystemExit("recomputed lane verdicts disagree with evidence/h87_holdout.json")
+            cross = dict(checked=True, source="evidence/h87_holdout.json", agrees=True)
 
     out = dict(stage="lane_full_registry", round="H87", recomputed_utc=datetime.now(timezone.utc).isoformat(timespec="seconds"),
                instrument=dots["instrument"], registry_size=len(priors),
                eligible_px=int(eligible.sum()), eligible_mask_source="work/r2/features/valid.npy (store.valid)",
                candidate=str(H87_FILE.relative_to(ROOT)), candidate_sha256=sha256(H87_FILE),
                gates_sha256=sha256(ROOT / "src/gems52/gates.py"),
-               note=("lane-only recomputation (scripts/recompute_h87_lane.py) with the corrected eligible mask "
-                     "and the artefact's own publisher copies excluded; holdout numbers remain in "
-                     "evidence/h87_holdout.json and were asserted consistent with this reading"),
+               cross_check=cross,
+               note=("lane-only recomputation (scripts/recompute_h87_lane.py): eligible domain is the shared "
+                     "feature store's valid mask and the artefact's own publisher copies are excluded, so "
+                     "no artefact is ever compared with its own bytes (the pinned identical-decode STOP "
+                     "semantics in gates.lane_report are untouched)"),
                dots=dots, surface=surface)
     (EVID / "h87_lane_full_registry.json").write_text(json.dumps(out, indent=1, allow_nan=False, default=str) + "\n")
     print("wrote evidence/h87_lane_full_registry.json")

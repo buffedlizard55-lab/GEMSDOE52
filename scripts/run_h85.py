@@ -207,51 +207,18 @@ if __name__ == "__main__":
         stage_holdout()
 
 
-# ----------------------------------------------------------------------------------- stage: write
-def stage_write():
-    """Re-issue the H85 field as a competition GeoTIFF with the repo's metric-aware placement.
+def gate_candidate(out, em, footprint, allowed, score, sample, own):
+    """Shared uniqueness + lane gate for a binary dot file (H85, H87 ...). Returns the gate record.
 
-    Placement: ``nodes.spacing_select`` (greedy, 3 px minimum separation), K = 37,654, allowed =
-    footprint minus the 200 m catalogue collar (distance-transform, not a dilation).  The field is
-    the catalogue-free H85 field, divided by its analytic maximum (1.2) so the ranking is unchanged
-    and the score is on [0,1]; the emitted raster is binary {0,1}.
+    ``own`` is the set of basenames of this candidate's own download copies, excluded from the priors
+    (IR-H85-001). Moved here unchanged from ``stage_write`` in H85 so that every round uses one gate.
     """
     import rasterio
     from gems52 import gates
-    from gems52 import grid as GR
-
-    sample = ROOT / "data/sample_submission.tif"
-    with rasterio.open(sample) as s:
-        smp = s.read(1)
-    footprint = np.isfinite(smp) & (smp > -1e38)
-    with rasterio.open(ROOT / "data/labels.tif") as s:
-        cat = s.read(1) == 1
-    valid = h83.footprint_all_bands(str(FEAT))
-    fields, meta = build_fields(valid)
-    raw = fields["H85_geo_concordance"]
-    score = np.where(footprint & valid, raw / 1.2, 0.0).astype(np.float32)   # analytic max of combine_signals = 1.2
-    assert float(score.max()) <= 1.0 + 1e-6 and float(score.min()) >= 0.0
-    dcat_px = ndimage.distance_transform_edt(~cat)
-    allowed = footprint & valid & (dcat_px > 2.0) & ~cat           # 200 m = 2 px collar, Euclidean
-    score_m = np.where(allowed, score, -1.0).astype(np.float32)
-    em = nodes.spacing_select(score_m, allowed, K_TOTAL, min_px=3.0).astype(np.float32)
-    n = int(em.sum())
-    log(f"placed {n} of {K_TOTAL} dots; allowed {int(allowed.sum()):,} px")
-
-    ts = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
-    name = f"h85-geoconc-spaced-cat200-{K_TOTAL}px-20261010"
-    fname = f"gems52-h85-geoconc-spaced-{K_TOTAL}px-20261010.tif"   # date-only: deterministic name; outside="zero"
-    out = ROOT / "submission" / fname
-    rec = GR.write_geotiff_portal_exact(out, em, footprint, sample, outside="zero")
-    fmt = gates.format_report(out, sample)
-    sha = hashlib.sha256(out.read_bytes()).hexdigest()
-    log(f"wrote {out.name} sha256 {sha[:16]} format ok={fmt['ok']} problems={fmt.get('problems')}")
-
     priors = gates.find_priors([ROOT / "submission", ROOT / "docs/downloads", ROOT / "data/scored"], exclude=out)
     # Exclude this candidate's own download copies. find_priors only drops the exact output path and
     # its basename; the docs/downloads copy has a different basename, so without this line the
     # candidate is compared against itself (the self-match bug first seen in the H83 audit, IR-H85-001).
-    own = {"h85-candidate.tif", "h85-candidate.zip", out.name}
     priors = [q for q in priors if q.name not in own]
     uni = gates.uniqueness_report(em, priors)
     surface = np.where(allowed, score, 0.0).astype(np.float32)          # finite, in [0,1]
@@ -294,6 +261,54 @@ def stage_write():
                                                  if near_excl_probe is not None and near_excl_probe <= 0.70 else "DUPLICATE/STOP"),
         scope="all 135 local rasters in submission/, docs/downloads/, data/scored/; not the 567-blob full census",
     )
+    return dict(priors=priors, uni=uni, lane_surface=lane_surface, lane_dots=lane_dots,
+                probe_check=probe_check, lane_literal=lane_literal)
+
+
+# ----------------------------------------------------------------------------------- stage: write
+def stage_write():
+    """Re-issue the H85 field as a competition GeoTIFF with the repo's metric-aware placement.
+
+    Placement: ``nodes.spacing_select`` (greedy, 3 px minimum separation), K = 37,654, allowed =
+    footprint minus the 200 m catalogue collar (distance-transform, not a dilation).  The field is
+    the catalogue-free H85 field, divided by its analytic maximum (1.2) so the ranking is unchanged
+    and the score is on [0,1]; the emitted raster is binary {0,1}.
+    """
+    import rasterio
+    from gems52 import gates
+    from gems52 import grid as GR
+
+    sample = ROOT / "data/sample_submission.tif"
+    with rasterio.open(sample) as s:
+        smp = s.read(1)
+    footprint = np.isfinite(smp) & (smp > -1e38)
+    with rasterio.open(ROOT / "data/labels.tif") as s:
+        cat = s.read(1) == 1
+    valid = h83.footprint_all_bands(str(FEAT))
+    fields, meta = build_fields(valid)
+    raw = fields["H85_geo_concordance"]
+    score = np.where(footprint & valid, raw / 1.2, 0.0).astype(np.float32)   # analytic max of combine_signals = 1.2
+    assert float(score.max()) <= 1.0 + 1e-6 and float(score.min()) >= 0.0
+    dcat_px = ndimage.distance_transform_edt(~cat)
+    allowed = footprint & valid & (dcat_px > 2.0) & ~cat           # 200 m = 2 px collar, Euclidean
+    score_m = np.where(allowed, score, -1.0).astype(np.float32)
+    em = nodes.spacing_select(score_m, allowed, K_TOTAL, min_px=3.0).astype(np.float32)
+    n = int(em.sum())
+    log(f"placed {n} of {K_TOTAL} dots; allowed {int(allowed.sum()):,} px")
+
+    ts = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
+    name = f"h85-geoconc-spaced-cat200-{K_TOTAL}px-20261010"
+    fname = f"gems52-h85-geoconc-spaced-{K_TOTAL}px-20261010.tif"   # date-only: deterministic name; outside="zero"
+    out = ROOT / "submission" / fname
+    rec = GR.write_geotiff_portal_exact(out, em, footprint, sample, outside="zero")
+    fmt = gates.format_report(out, sample)
+    sha = hashlib.sha256(out.read_bytes()).hexdigest()
+    log(f"wrote {out.name} sha256 {sha[:16]} format ok={fmt['ok']} problems={fmt.get('problems')}")
+
+    own = {"h85-candidate.tif", "h85-candidate.zip", out.name}
+    g = gate_candidate(out, em, footprint, allowed, score, sample, own)
+    priors, uni, lane_surface, lane_dots = g["priors"], g["uni"], g["lane_surface"], g["lane_dots"]
+    probe_check, lane_literal = g["probe_check"], g["lane_literal"]
     cards_lane = lane_literal
     hold = json.loads((EVID / "h85_holdout.json").read_text())
     cards = dict(

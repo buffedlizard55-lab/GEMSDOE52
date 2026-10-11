@@ -1,0 +1,141 @@
+{
+ "stage": "write",
+ "file": "submission/gems52-h91-csa16fan-B-37654px-20261010T215157Z.tif",
+ "bytes": 138604,
+ "sha256": "e0b5ab82ee6df0191a0ec3ed671d45588bcba8fdb1b4ce4f4610cf6a0cb6cc38",
+ "name": "h91-csa16fan-B-37654px-20261010T215157Z",
+ "note": "H91: View-B + 84 continuous directional-alignment channels on a 16-direction semivariance fan; 200m ring excluded; binary dots",
+ "note_chars": 126,
+ "validator": {
+  "count": 1,
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "shape": [
+   3730,
+   3292
+  ],
+  "crs_match": true,
+  "shape_match": true,
+  "transform_match": true,
+  "bounds_match": true,
+  "nan": 0,
+  "infinite": 0,
+  "min": 0.0,
+  "max": 1.0,
+  "values": [
+   0.0,
+   1.0
+  ],
+  "ones": 37654,
+  "zeros": 12241506,
+  "range_ok": true,
+  "PASS": true,
+  "range_rule_source": "official: values between 0 and 1, single layer float32, EPSG:32611, 100 m, same bounds as the training data (https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/)"
+ },
+ "writer_receipt": {
+  "file": "gems52-h91-csa16fan-B-37654px-20261010T215157Z.tif",
+  "sha256": "e0b5ab82ee6df0191a0ec3ed671d45588bcba8fdb1b4ce4f4610cf6a0cb6cc38",
+  "bytes": 138604,
+  "submission_name": "h91-csa16fan-B-37654px-20261010T215157Z",
+  "note": "H91: View-B + 84 continuous directional-alignment channels on a 16-direction semivariance fan; 200m ring excluded; binary dots",
+  "note_chars": 126,
+  "validator": {
+   "path": "/home/user/GEMSDOE52/submission/gems52-h91-csa16fan-B-37654px-20261010T215157Z.tif",
+   "bytes": 138604,
+   "sha256": "e0b5ab82ee6df0191a0ec3ed671d45588bcba8fdb1b4ce4f4610cf6a0cb6cc38",
+   "bands": 1,
+   "dtype": "float32",
+   "crs": "EPSG:32611",
+   "width": 3292,
+   "height": 3730,
+   "bounds": [
+    243350.0,
+    4135550.0,
+    572550.0,
+    4508550.0
+   ],
+   "ref_bounds": [
+    243350.0,
+    4135550.0,
+    572550.0,
+    4508550.0
+   ],
+   "transform": [
+    100.0,
+    0.0,
+    243350.0,
+    0.0,
+    -100.0,
+    4508550.0
+   ],
+   "nodata": null,
+   "blocksize": [
+    256,
+    256
+   ],
+   "fixture_grid": false,
+   "has_validity_mask": false,
+   "nan_pixels": 0,
+   "infinity_pixels": 0,
+   "n_nan": 0,
+   "min": 0.0,
+   "max": 1.0,
+   "mean": 0.0030664964579045773,
+   "n_nonzero": 37654,
+   "mass": 37654.0,
+   "mass_outside_footprint": 0,
+   "problems": [],
+   "ok": true,
+   "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "zip_file": "gems52-h91-csa16fan-B-37654px-20261010T215157Z.zip",
+  "zip_sha256": "81951016231c6667c6f8fe1e29a3138ee9fab81ebfe8b8e9f5a86b2289445442",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "status": "research-only; local format validation is not organizer acceptance",
+  "metadata": {
+   "round": "H91",
+   "primary_arm": "B_CSA"
+  }
+ },
+ "not_the_union": {
+  "dots_emitted": 37654,
+  "union_max_dots": 37654,
+  "dots_equal_union": false,
+  "dots_equal_single_A": false,
+  "dots_equal_single_B": false,
+  "dots_subset_of_union": false,
+  "shared_with_union": 1496,
+  "jaccard_with_union": 0.02026770714788923,
+  "shared_with_single_A": 665,
+  "jaccard_with_single_A": 0.00890907385823185,
+  "shared_with_single_B": 1765,
+  "jaccard_with_single_B": 0.0239995648804101,
+  "shared_with_bonly_suppressed": 27429,
+  "jaccard_with_bonly_suppressed": 0.5728816391319785,
+  "not_union_pass": true
+ },
+ "vs_named_priors": {
+  "ref_h33_2_b2_owner_reported_0.2778": {
+   "shared_px": 1003,
+   "prior_px": 37654,
+   "near_3px_share_of_my_dots": 0.5665799118287566,
+   "jaccard": 0.01349841867976583
+  }
+ },
+ "catalogue": {
+  "min_dist_m": 223.60679774997897,
+  "median_dist_m": 1389.2443989449805,
+  "within_300m_pct": 14.192383279332873
+ },
+ "reasoning_csv": "docs/downloads/h91-a-only-reasoning.csv",
+ "n_reasoning_rows": 25169,
+ "started_utc": "2026-10-10T21:52:04+00:00",
+ "download_staged": {
+  "tif": "docs/downloads/h91-candidate.tif",
+  "zip": "docs/downloads/h91-candidate.zip",
+  "tif_sha256": "e0b5ab82ee6df0191a0ec3ed671d45588bcba8fdb1b4ce4f4610cf6a0cb6cc38",
+  "zip_sha256": "a3eb0a611bd52098bdaec3134f93a76fc126754ed5391173b9d02472236a9203"
+ }
+}

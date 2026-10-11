@@ -1,0 +1,227 @@
+{
+ "evidence_class": "PREDICTED-BOARD (model projection from a density fitted to owner-reported scores; NEVER a score, NEVER organiser-confirmed)",
+ "method": "exact gems52.metric.dti of each pattern against 3 binary truth realisations drawn from the fitted density (Gumbel top-k, |G| pixels, probability proportional to g)",
+ "paired": {
+  "candidate_minus_champion": -0.04107,
+  "note": "same realisations for both patterns, so the difference is paired"
+ },
+ "calibration_note": "the five reference patterns are the owner-reported scored rasters; their predicted values are in-sample for the fitted density (the honest test is the leave-one-out block in evidence/h87_board_inversion.json)",
+ "patterns": {
+  "H87_candidate": {
+   "mean": 0.19841,
+   "lo": 0.19795,
+   "hi": 0.1989,
+   "emitted": 61427,
+   "owner_reported_board_score": null,
+   "per_realisation": [
+    {
+     "realisation": 0,
+     "dti": 0.19838,
+     "tpw": 4697.3,
+     "fpw": 56357.5,
+     "fnw": 9636.7,
+     "emitted": 61427,
+     "truth_px": 14334
+    },
+    {
+     "realisation": 1,
+     "dti": 0.1989,
+     "tpw": 4709.1,
+     "fpw": 56336.8,
+     "fnw": 9624.9,
+     "emitted": 61427,
+     "truth_px": 14334
+    },
+    {
+     "realisation": 2,
+     "dti": 0.19795,
+     "tpw": 4687.3,
+     "fpw": 56374.0,
+     "fnw": 9646.7,
+     "emitted": 61427,
+     "truth_px": 14334
+    }
+   ]
+  },
+  "ref_h33_2_b2": {
+   "mean": 0.23948,
+   "lo": 0.2358,
+   "hi": 0.24308,
+   "emitted": 37654,
+   "owner_reported_board_score": 0.2778,
+   "per_realisation": [
+    {
+     "realisation": 0,
+     "dti": 0.23956,
+     "tpw": 4538.0,
+     "fpw": 32840.4,
+     "fnw": 9796.0,
+     "emitted": 37654,
+     "truth_px": 14334
+    },
+    {
+     "realisation": 1,
+     "dti": 0.24308,
+     "tpw": 4605.2,
+     "fpw": 32784.9,
+     "fnw": 9728.8,
+     "emitted": 37654,
+     "truth_px": 14334
+    },
+    {
+     "realisation": 2,
+     "dti": 0.2358,
+     "tpw": 4467.2,
+     "fpw": 32923.0,
+     "fnw": 9866.8,
+     "emitted": 37654,
+     "truth_px": 14334
+    }
+   ]
+  },
+  "scored_d28_unscored": {
+   "mean": 0.2808,
+   "lo": 0.27738,
+   "hi": 0.2835,
+   "emitted": 44090,
+   "owner_reported_board_score": 0.26,
+   "per_realisation": [
+    {
+     "realisation": 0,
+     "dti": 0.28152,
+     "tpw": 5692.2,
+     "fpw": 38069.2,
+     "fnw": 8641.8,
+     "emitted": 44090,
+     "truth_px": 14334
+    },
+    {
+     "realisation": 1,
+     "dti": 0.2835,
+     "tpw": 5732.8,
+     "fpw": 38039.1,
+     "fnw": 8601.2,
+     "emitted": 44090,
+     "truth_px": 14334
+    },
+    {
+     "realisation": 2,
+     "dti": 0.27738,
+     "tpw": 5608.6,
+     "fpw": 38155.0,
+     "fnw": 8725.4,
+     "emitted": 44090,
+     "truth_px": 14334
+    }
+   ]
+  },
+  "scored_h19_5": {
+   "mean": 0.21251,
+   "lo": 0.21024,
+   "hi": 0.21396,
+   "emitted": 121131,
+   "owner_reported_board_score": 0.1922,
+   "per_realisation": [
+    {
+     "realisation": 0,
+     "dti": 0.21334,
+     "tpw": 7205.4,
+     "fpw": 104334.0,
+     "fnw": 7128.6,
+     "emitted": 121131,
+     "truth_px": 14334
+    },
+    {
+     "realisation": 1,
+     "dti": 0.21396,
+     "tpw": 7224.9,
+     "fpw": 104275.6,
+     "fnw": 7109.1,
+     "emitted": 121131,
+     "truth_px": 14334
+    },
+    {
+     "realisation": 2,
+     "dti": 0.21024,
+     "tpw": 7114.1,
+     "fpw": 104742.0,
+     "fnw": 7219.9,
+     "emitted": 121131,
+     "truth_px": 14334
+    }
+   ]
+  },
+  "calib_13gems_20261001_r13-lattice-s5_v2_nan-ou": {
+   "mean": 0.10122,
+   "lo": 0.10111,
+   "hi": 0.1014,
+   "emitted": 206895,
+   "owner_reported_board_score": 0.0904,
+   "per_realisation": [
+    {
+     "realisation": 0,
+     "dti": 0.10111,
+     "tpw": 5352.9,
+     "fpw": 202021.0,
+     "fnw": 8981.1,
+     "emitted": 206895,
+     "truth_px": 14334
+    },
+    {
+     "realisation": 1,
+     "dti": 0.1014,
+     "tpw": 5367.9,
+     "fpw": 201994.6,
+     "fnw": 8966.1,
+     "emitted": 206895,
+     "truth_px": 14334
+    },
+    {
+     "realisation": 2,
+     "dti": 0.10114,
+     "tpw": 5354.8,
+     "fpw": 202016.5,
+     "fnw": 8979.2,
+     "emitted": 206895,
+     "truth_px": 14334
+    }
+   ]
+  },
+  "calib_gemsdoe9-PLACEHOLDER-2314b599": {
+   "mean": 0.00919,
+   "lo": 0.00902,
+   "hi": 0.00937,
+   "emitted": 343816,
+   "owner_reported_board_score": 0.0107,
+   "per_realisation": [
+    {
+     "realisation": 0,
+     "dti": 0.00937,
+     "tpw": 746.2,
+     "fpw": 340074.4,
+     "fnw": 13587.8,
+     "emitted": 343816,
+     "truth_px": 14334
+    },
+    {
+     "realisation": 1,
+     "dti": 0.00902,
+     "tpw": 718.8,
+     "fpw": 340185.3,
+     "fnw": 13615.2,
+     "emitted": 343816,
+     "truth_px": 14334
+    },
+    {
+     "realisation": 2,
+     "dti": 0.00917,
+     "tpw": 729.9,
+     "fpw": 340078.7,
+     "fnw": 13604.1,
+     "emitted": 343816,
+     "truth_px": 14334
+    }
+   ]
+  }
+ }
+}
