@@ -1,6 +1,6 @@
 {
  "stage": "lane",
- "started_utc": "2026-10-11T01:41:26+00:00",
+ "started_utc": "2026-10-11T02:10:37+00:00",
  "registry_full": {
   "census_entries": 526,
   "census_errors": 0,
@@ -10,10 +10,10 @@
    "/home/user/GEMSDOE52/work/h61/priors/a97c7b2a513225c9f9f2b35736afe5abf4d2a491.tif"
   ],
   "census_present": 524,
-  "local_artifacts": 75,
+  "local_artifacts": 76,
   "extra_scored_reference": 13
  },
- "n_full": 611,
+ "n_full": 612,
  "n_restricted": 13,
  "doctrine": "both registries reported verbatim; a restricted-registry PASS never waives a literal full-census DUPLICATE/STOP (AGENTS.md, knowledge/62 IR-H73-011)",
  "full_surface": {
@@ -21,8 +21,8 @@
   "instrument": "gems52.gates.lane_report (H61 shared-template repair)",
   "evidence_class": "uniqueness/lane diagnostic, not a score",
   "rule": "STOP at Spearman > 0.9 or directed <= 3 px dot proximity > 0.7; probes classified by measured coverage >= 0.95",
-  "priors_checked": 611,
-  "distinct_decoded_priors": 414,
+  "priors_checked": 612,
+  "distinct_decoded_priors": 415,
   "candidate_decoded_sha256": "65a94814236c52c1af79af817f4e196358cc8b04571f54dfe724626b4d8c1730",
   "rank_pixels": 4593171,
   "exact_full_eligible_rank": true,
@@ -39,13 +39,13 @@
    "note": "applied to every aligned prior including universal-coverage probes"
   },
   "policy": {
-   "max_spearman": 0.09311945545175608,
+   "max_spearman": 0.10805465758885138,
    "max_near_3px_fraction": null,
    "max_near_source": null,
    "rank_offenders": [],
    "near_offenders": [],
    "identical": [],
-   "informative_priors": 596,
+   "informative_priors": 597,
    "universal_coverage_probes": 15,
    "probe_paths": [
     "/home/user/GEMSDOE52/work/h61/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
@@ -8671,6 +8671,22 @@
     "near_duplicate": false
    },
    {
+    "path": "/home/user/GEMSDOE52/submission/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif",
+    "decoded_sha256": "dae66ebff81204ad65ac6bb068f0cb8dda782ef8784e932594f5982731396899",
+    "binary_on_eligible": true,
+    "spearman": 0.10805465758885138,
+    "identical": false,
+    "constant_prior": false,
+    "prior_proposals": 37600,
+    "prior_support_rule": ">0 for binary; >=0.5 for continuous (shared template)",
+    "coverage_3px_of_eligible": 0.13844857942367048,
+    "universal_coverage_probe": false,
+    "near_3px_fraction": null,
+    "candidate_dots": 0,
+    "rank_duplicate": false,
+    "near_duplicate": false
+   },
+   {
     "path": "/home/user/GEMSDOE52/submission/gems52-h52-cotrain-disagreement-emission-composite-37654px-r1.tif",
     "decoded_sha256": "39a43f8bea998e610be595a9829e8a8fbe76c5c6df1f0ff93a171fe94ee373f8",
     "binary_on_eligible": true,
@@ -10450,15 +10466,15 @@
   "instrument": "gems52.gates.lane_report (H61 shared-template repair)",
   "evidence_class": "uniqueness/lane diagnostic, not a score",
   "rule": "STOP at Spearman > 0.9 or directed <= 3 px dot proximity > 0.7; probes classified by measured coverage >= 0.95",
-  "priors_checked": 611,
-  "distinct_decoded_priors": 414,
+  "priors_checked": 612,
+  "distinct_decoded_priors": 415,
   "candidate_decoded_sha256": "9e11379d713c71bb317b38ad2f1d0504f6fc9f381aa3230968c0f504a9bf9384",
   "rank_pixels": 4593171,
   "exact_full_eligible_rank": true,
   "binary_spearman_method": "analytic phi (mid-rank affine)",
   "n_dots": 37654,
   "literal": {
-   "max_spearman": 0.03670438589629601,
+   "max_spearman": 0.05613161641661532,
    "max_near_3px_fraction": 1.0,
    "max_near_source": "/home/user/GEMSDOE52/work/h61/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
    "rank_offenders": [],
@@ -10495,7 +10511,7 @@
    "note": "applied to every aligned prior including universal-coverage probes"
   },
   "policy": {
-   "max_spearman": 0.03670438589629601,
+   "max_spearman": 0.05613161641661532,
    "max_near_3px_fraction": 0.8773304297020237,
    "max_near_source": "/home/user/GEMSDOE52/work/h61/priors/4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
    "rank_offenders": [],
@@ -10513,7 +10529,7 @@
     "/home/user/GEMSDOE52/work/h61/priors/443e8e1c799734facd50a92bc85c650f3857a2b6.tif"
    ],
    "identical": [],
-   "informative_priors": 596,
+   "informative_priors": 597,
    "universal_coverage_probes": 15,
    "probe_paths": [
     "/home/user/GEMSDOE52/work/h61/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
@@ -19139,6 +19155,22 @@
     "near_duplicate": false
    },
    {
+    "path": "/home/user/GEMSDOE52/submission/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif",
+    "decoded_sha256": "dae66ebff81204ad65ac6bb068f0cb8dda782ef8784e932594f5982731396899",
+    "binary_on_eligible": true,
+    "spearman": 0.05613161641661532,
+    "identical": false,
+    "constant_prior": false,
+    "prior_proposals": 37600,
+    "prior_support_rule": ">0 for binary; >=0.5 for continuous (shared template)",
+    "coverage_3px_of_eligible": 0.13844857942367048,
+    "universal_coverage_probe": false,
+    "near_3px_fraction": 0.5126945344452116,
+    "candidate_dots": 37654,
+    "rank_duplicate": false,
+    "near_duplicate": false
+   },
+   {
     "path": "/home/user/GEMSDOE52/submission/gems52-h52-cotrain-disagreement-emission-composite-37654px-r1.tif",
     "decoded_sha256": "39a43f8bea998e610be595a9829e8a8fbe76c5c6df1f0ff93a171fe94ee373f8",
     "binary_on_eligible": true,
@@ -20792,7 +20824,7 @@
   ]
  },
  "uniqueness_full": {
-  "n_priors_checked": 611,
+  "n_priors_checked": 612,
   "per_prior": [
    {
     "path": "/home/user/GEMSDOE52/work/h61/priors/3957f33ad98537c14db71425667dcbf199629af2.tif",
@@ -28159,6 +28191,20 @@
     "novel_vs_this": 37531
    },
    {
+    "path": "/home/user/GEMSDOE52/submission/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif",
+    "prior_px": 37600,
+    "new_px": 37654,
+    "binary": true,
+    "support_definition": ">0 for binary",
+    "decoded_sha256": "dae66ebff81204ad65ac6bb068f0cb8dda782ef8784e932594f5982731396899",
+    "intersection": 2403,
+    "jaccard": 0.03298513404071324,
+    "identical": false,
+    "subset_of_prior": false,
+    "superset_of_prior": false,
+    "novel_vs_this": 35251
+   },
+   {
     "path": "/home/user/GEMSDOE52/submission/gems52-h52-cotrain-disagreement-emission-composite-37654px-r1.tif",
     "prior_px": 37654,
     "new_px": 37654,
@@ -29355,7 +29401,7 @@
   "identical_prior_paths": [],
   "distinct_from_every_comparable_prior": true,
   "audit_complete": true,
-  "n_priors_compared": 611,
+  "n_priors_compared": 612,
   "incomparable_priors": [],
   "key_semantics": "canonical_pattern_unique is False if ANY prior is byte-identical OR unreadable; distinct_from_every_comparable_prior isolates the first condition and audit_complete isolates the second",
   "equals_literal_prior_union": false,
@@ -29372,5 +29418,5 @@
   "rule": "distinct decoded values from every supplied prior, >=20% new support against binary/>=0.5 continuous proposal union, and selective prior-pixel removal",
   "scope": "Only the supplied, aligned accessible inventory; not a proof against all private/unlinked submissions"
  },
- "finished_utc": "2026-10-11T01:58:38+00:00"
+ "finished_utc": "2026-10-11T02:31:09+00:00"
 }

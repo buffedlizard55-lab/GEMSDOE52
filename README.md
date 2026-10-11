@@ -1,3 +1,142 @@
+<!--H102-README-->
+# Current status — H102 (2026-10-11): potential-field directional anisotropy (PAF-DVA) as View A · NEGATIVE
+
+> **OK TO DOWNLOAD: YES** — format-valid single-band float32 GeoTIFF, EPSG:32611, 3730×3292, all-finite,
+> values exactly {0,1} (the portal's *"Predicted values must be in range [0, 1]"* rejection cannot occur).
+>
+> **OK TO SUBMIT: NO — research-only, do not upload.** Failed gate: **holdout_promotion**. The
+> disagreement field scored **0.029460** on HOLDOUT-DTI — *below* the random
+> control (0.081592) and far below the standing bar 0.190147; the best comparable control
+> `single_B2` scored 0.185968, paired difference
+> -0.156508 [-0.179085, -0.134737].
+>
+> Weekly slots used: **0**. No weekly slot is approved by this round; the agent
+> does not pick submissions.
+
+**★ [Download h102-candidate.tif](docs/downloads/h102-candidate.tif)** ·
+[ZIP](docs/downloads/h102-candidate.zip) · [A-only reasoning CSV](docs/downloads/h102-a-only-reasoning.csv) ·
+[Full result](docs/h102.html) · [Executive summary / how to submit](docs/executive-summary.html) ·
+[Run card](evidence/h102_run_card.json)
+
+- **File:** `submission/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif` — 132,324 bytes,
+  SHA-256 `cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326`
+- **Submission name:** `h102-pafdva-disagree-37600px-20261011T002233Z` · **Note (134/140):**
+  `H102 co-training: View-A potential-field anisotropy x View-B DEM anisotropy; disagreement field, 200m ring excluded, binary 37600 dots`
+- **Validator (re-read from disk):** 1 band float32, EPSG:32611, 3730 rows x
+  3292 cols, transform/bounds = sample_submission.tif: yes, NaN 0, inf 0,
+  values exactly [0.0, 1.0], 37,600 emitted cells, nodata tag None; problems: none
+- **HOLDOUT-DTI** (`gems52-pooled-hide-v1`, 53,186 withheld positive px,
+  9,400 dots per fold per arm, 95 % CI, 1,000 paired physical-cluster bootstrap draws):
+
+| arm | HOLDOUT-DTI [95 % CI] |
+|---|---|
+| `single_A2` | 0.076396 [0.061925, 0.091881] |
+| `single_B2` | 0.185968 [0.164050, 0.207066] |
+| `cotrain_disagree` | 0.029460 [0.021158, 0.039756] |
+| `consensus` | 0.130332 [0.112807, 0.148948] |
+| `buried_only` | 0.035883 [0.027300, 0.045060] |
+| `union_max` | 0.156667 [0.136724, 0.177147] |
+| `random` | 0.081592 [0.071379, 0.092512] |
+
+  Paired `cotrain_disagree − single_B2` = **-0.156508** [-0.179085,
+  -0.134737]; standing bar 0.190147; CI lower bound above zero:
+  False → **FAIL**.
+- **View-A sufficiency (out-of-quadrant AUC on the held-out region, per fold):**
+
+| fold | single_A2 AUC | single_B2 AUC | leakage canary max |
+|---|---|---|---|
+| 0 | 0.5011 | 0.6735 | 0.5666 |
+| 1 | 0.5995 | 0.7800 | 0.5976 |
+| 2 | 0.4578 | 0.6422 | 0.6217 |
+| 3 | 0.5238 | 0.7101 | 0.5801 |
+
+  Mean View-A AUC 0.5206 — the eighth
+  consecutive failure of the potential-field view to carry usable signal; canary alarm (bar 0.90):
+  **False**.
+- **Independence (spatial-block OOF error correlation on labelled negatives):** max |ρ|
+  0.1732; abandon ≥ 0.6 → exchange allowed.
+- **Emission-geometry diagnostic (E4/E4b, this round's second and third experiments):** at *matched emitted
+  mass*, does a connected trace along the field beat more well-separated dots? No — both constructions lose
+  to dots **and** to random at the same mass, on both test fields:
+
+| field | dots @ 9,400 | bridged @ S | hysteresis @ S | dots @ S | random @ S | verdict |
+|---|---|---|---|---|---|---|
+| `cotrain_disagree` | 0.029460 | 0.024497 | 0.021537 | **0.201789** | 0.178690 | loses |
+| `single_B2` | 0.185968 | 0.153403 | 0.144522 | **0.254062** | 0.176328 | loses |
+
+  This closes "coverage emission" as a fix *on the catalogue instrument*; it does not close it on the board,
+  whose truth set and scoring region differ ([knowledge/110](knowledge/110_h102_results_and_limits.md) §7–§8).
+- **Budget diagnostic (does NOT select the budget — amendment h102a):** frozen at
+  37,600 dots = 4 × 9,400.
+
+| fold | 9,400/fold | 16,000/fold | 25,400/fold |
+|---|---|---|---|
+| 0 | 0.012407 | 0.024212 | 0.038672 |
+| 1 | 0.020125 | 0.036810 | 0.057678 |
+| 2 | 0.071960 | 0.123927 | 0.180295 |
+| 3 | 0.051304 | 0.080811 | 0.118831 |
+
+- **Gates (frozen in `registry/h102_preregistration.json`):**
+
+| gate | result | measured |
+|---|---|---|
+| leakage_canary | PASS | max single-feature out-of-quadrant AUC 0.6217; alarm 0.90 |
+| independence | PASS | max \|rho\| 0.1732 over 2,089 blocks; abandon ≥ 0.60 |
+| holdout_promotion | FAIL | primary 0.029460 vs standing bar 0.190147; paired vs control -0.156508 [-0.179085, -0.134737] |
+| format | PASS | 1 band float32, EPSG:32611, 3730×3292, transform/bounds = sample_submission.tif: yes, 0 NaN, 0 inf, values exactly [0.0, 1.0], 37,600 emitted cells |
+| uniqueness | PASS | 82 locally available priors; identical to a prior: False; canonical pattern unique: True |
+| lane_surface | PASS | max Spearman 0.1207 (bar 0.90) |
+| lane_dots | PASS (close) | max near-3px 0.6595 (bar 0.70) → **IR-H102-005** |
+| not_the_union | PASS | Jaccard vs union-max 0.0159, vs single-A 0.0407, shared with single-B 0 |
+
+  This round preregistered **no control-reproduction gate** (unlike H95); the controls are the in-round arms
+  themselves, and `single_B2` (0.185968) reproduces the family's known single-view level
+  (H82's `B_DVA2` 0.189200 was a non-promotable finding arm).
+- **Placement:** 37,600 cells at ≥3 px spacing, pool 4,325,298 px of
+  4,593,171 eligible px, ≤200 m catalogue collar excluded;
+  nearest emitted cell to the mapped catalogue 223.6 m, median
+  2816 m, 2.15 % of the mass within
+  300 m of a mapped fault.
+- **Irregularities:**  — board corrections (IR-H102-001..004), lane proximity (IR-H102-005);
+  the register now carries 314 entries.
+- Docs: [preregistration](registry/h102_preregistration.json) ·
+  [hypotheses](knowledge/108_hypotheses_H102_preregistered.md) ·
+  [results & limits](knowledge/110_h102_results_and_limits.md) ·
+  [metric/coverage note](knowledge/109_the_metric_is_a_coverage_metric.md) ·
+  [next-round proposals](knowledge/111_next_round_proposals.md)
+- Reproduce: `python3 scripts/restore_data.py --target-dir data` → feature store + `python -m gems52.external`
+  → `python3 scripts/run_h102.py all` → `python3 scripts/run_h102_e4_coverage.py` →
+  `python3 scripts/run_h102_e4b_hysteresis.py` → `python3 scripts/publish_h102_site.py` →
+  `python3 scripts/publish_h102_readme.py`.
+
+### Why `h33-h33-2-b2` scored 0.2778, and can we beat it? (derivation: [knowledge/76](knowledge/76_why_02778_and_what_beating_03195_requires.md))
+
+- DTI = T / (0.2·S + 0.8·|G|) with S = emitted mass and |G| the hidden positives. Our predictions are binary,
+  so S is the dot count, and a dot raises the score only if its kernel credit exceeds ≈0.2·DTI (about 0.056
+  at the 0.2778 level). The board shows this directly: Spearman(emitted mass, score) = −0.93 over our scored
+  files. H102's E4/E4b add the mechanism: on the catalogue instrument, **mass dominates shape** — random
+  placement at ~400 k cells scores 0.177–0.197 while every trace construction loses.
+- The champion is the 0.2600 `d2-8` field (44,090 px) with every dot within 200 m of the public catalogue
+  deleted, leaving 37,654 dots. The hidden faults are *new* faults, so dots on the known catalogue are pure
+  false-positive mass; deleting them raised the score by +0.0178 with no new signal.
+- Beating the top-5 cut (0.3262) needs ×1.15 more credit at the same mass, or the same credit from about
+  25,400 dots; beating rank 1 (0.3774, verified live 2026-10-10) needs ×1.36. No ranking signal in this
+  repository — H102's co-training included — has yet shown that precision on an instrument that tracks the
+  board. **Honest answer: not yet demonstrated; the levers are listed below.**
+
+### Next work (ranked in [knowledge/111](knowledge/111_next_round_proposals.md); each must beat 0.190147 on the holdout or show a board-anchored gain before using a slot)
+
+1. **Prevalence-matched off-catalogue instrument (H89-P).** E4/E4b prove the catalogue instrument pays for
+   mass regardless of shape, so it cannot certify the one lever with board evidence (emitted mass, ρ −0.93);
+   the existing off-catalogue instrument carries ~4× real prevalence. Build the thinned one first.
+2. **Alteration-ratio anisotropy (Th/K, U/K, U/Th from the pinned GeoDAWN layers) as a third view** — with a
+   flight-line striping control, since that is the named non-fault mimic for any radiometric texture.
+3. **Tip-and-stepover continuation gated by the surface anisotropy ridge** — cheap, no new channels.
+4. **Do not retry:** naive bridging (E4) or hysteresis growth (E4b); View-A-only fits (eight sufficiency
+   failures); iterative pseudo-label exchange (closed negative).
+5. **INGENIOUS 2 m temperature probes** (GDR 1391, DOI 10.15121/1881483) remain the highest-value unused
+   channel, but `gdr.openei.org` is not reachable from this sandbox — the owner must download and pin it.
+<!--/H102-README-->
 <!--H101-README-->
 # Current status — H101 (2026-10-10): co-training disagreement as an artefact veto · NEGATIVE
 
@@ -860,20 +999,21 @@ Go ahead and create a pull request and then merge the pull request onto the main
 </details>
 
 <!--/H95-README-->
-<!--H102-README-->
-# Current status — H102 (2026-10-11): disagreement graft on the H84 surface learner · NEGATIVE
+<!--H103-README-->
+# Current status — H103 (2026-10-11): disagreement graft on the H84 surface learner · NEGATIVE
 
 > **OK TO DOWNLOAD: YES** — format check only. **OK TO SUBMIT: NO — research-only, do not upload.**
 >
 > HOLDOUT-DTI graft 0.047183 [0.034716, 0.060419] vs promotable bar 0.190147 (H84 `B_DVA2_HVA`). Paired graft − B_DVA2_HVA -0.142964 [-0.164118, -0.121119]. Weekly slots used: 0.
 
-- **File:** `submission/gems52-h102-graft-B_DVA2_HVA-37654px-20261011T015849Z.tif` · SHA-256 `588d0db7af4e818d90d84ecb983ab1bb842a327f49f9a047dfb04528625f9419`
-- **Name:** `h102-graft-B_DVA2_HVA-37654px-20261011T015849Z` · **Note (140/140):** `H102: H96 disagreement formula grafted on H84 B_DVA2_HVA (A=single_A); 3px spacing; 200m ring cut; binary dots; HOLDOUT-DTI gate in run card`
-- **Why negative:** the holdout fails the bar; the placed dots fall in A-confident / B-abstaining cells. The dot lane is a literal DUPLICATE/STOP: the literal 3 px share 1.000000 comes from universal-coverage probes; the policy share on an informative (non-probe) raster is 0.877330, and a random set of the same size scores 0.895921 there (IR-H102-006). On the holdout the A-only arm `single_A` scores 0.071954 against 0.080426 for random dots (`evidence/h102_holdout.json`); decomposition: [`evidence/h102_posthoc_diagnostic.json`](evidence/h102_posthoc_diagnostic.json). Full result: [`docs/h102.html`](docs/h102.html) · run card: [`evidence/h102_run_card.json`](evidence/h102_run_card.json) · preregistration: [`knowledge/97`](knowledge/108_hypotheses_H97_preregistered.md).
+- **File:** `submission/gems52-h103-graft-B_DVA2_HVA-37654px-20261011T021538Z.tif` · SHA-256 `588d0db7af4e818d90d84ecb983ab1bb842a327f49f9a047dfb04528625f9419`
+- **Name:** `h103-graft-B_DVA2_HVA-37654px-20261011T021538Z` · **Note (140/140):** `H103: H96 disagreement formula grafted on H84 B_DVA2_HVA (A=single_A); 3px spacing; 200m ring cut; binary dots; HOLDOUT-DTI gate in run card`
+- **Why negative:** the holdout fails the bar; the placed dots fall in A-confident / B-abstaining cells. The dot lane is a literal DUPLICATE/STOP: the literal 3 px share 1.000000 comes from universal-coverage probes; the policy share on an informative (non-probe) raster is 0.877330, and a random set of the same size scores 0.895921 there (IR-H103-006). On the holdout the A-only arm `single_A` scores 0.071954 against 0.080426 for random dots (`evidence/h103_holdout.json`); decomposition: [`evidence/h103_posthoc_diagnostic.json`](evidence/h103_posthoc_diagnostic.json). Full result: [`docs/h103.html`](docs/h103.html) · run card: [`evidence/h103_run_card.json`](evidence/h103_run_card.json) · preregistration: [`knowledge/97`](knowledge/108_hypotheses_H97_preregistered.md).
 
 ---
 
-<!--/H102-README-->
+<!--/H103-README-->
+
 
 
 <!--H97-README-->

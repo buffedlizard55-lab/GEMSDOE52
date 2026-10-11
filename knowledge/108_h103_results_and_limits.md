@@ -25,7 +25,7 @@ Control check: B_DVA2_HVA reproduces at 0.19014734 against the committed 0.19014
 ## 3. Lane (non-adjacent registry checks)
 
 - Surface field: literal PASS (max Spearman 0.2562 against the 0.90 limit); policy PASS (0.0931); scored-only PASS.
-- Dots, full census (611 rasters): literal DUPLICATE/STOP. The max 3 px share is 1.0, from universal-coverage probes, which the policy excludes by design.
+- Dots, full census (612 rasters): literal DUPLICATE/STOP. The max 3 px share is 1.0, from universal-coverage probes, which the policy excludes by design.
 - Dots, policy: DUPLICATE/STOP. The max 3 px share is 0.8773 against `15GEMSDOE/…/gems-cleanup-a-20260928T195952Z-curv_scarp.tif`, whose dots cover 89.8 % of the eligible footprint (below the preregistered probe threshold of 0.95, so it counts as informative). Other informative offenders: 0.8493, 0.8236, 0.7600.
 - Chance control (`scripts/h103_lane_chance_control.py`, `evidence/h103_lane_chance_control.json`): random dots of the same count score **0.8959** on the same raster, above H103's 0.8773. The dot-lane 3 px rule trips on high-coverage rasters for any placement. This is a gate-sensitivity finding (IR-H103-006). The verdict is not waived and the threshold is not retuned.
 
@@ -35,7 +35,7 @@ Control check: B_DVA2_HVA reproduces at 0.19014734 against the committed 0.19014
 - Validator PASS: single-band float32, EPSG:32611, 3730×3292, values exactly {0, 1}, 37,654 ones, no NaN, no nodata.
 - Not the union: Jaccard with the union 0.0649; with single_A 0.1430; with B_DVA2_HVA 0.0010.
 - A-only reasoning CSV: `docs/downloads/…-a-only-reasoning.csv`, 37,654 rows, every dot with A rank > B rank.
-- Uniqueness: canonical (decoded) pattern unique over 611 census priors; no identical prior. Support-novelty gate (≥ 20 %) FAILED with novel fraction 0.0. Recorded as a failed diagnostic, not waived. The `uniqueness_pass` check is the decoded-pattern criterion only.
+- Uniqueness: canonical (decoded) pattern unique over 612 census priors; no identical prior. Support-novelty gate (≥ 20 %) FAILED with novel fraction 0.0. Recorded as a failed diagnostic, not waived. The `uniqueness_pass` check is the decoded-pattern criterion only.
 - Name `h103-graft-B_DVA2_HVA-37654px-20261011T010835Z` (45 chars). Note 139/140 chars.
 
 ## 5. Limits
@@ -51,7 +51,7 @@ IR-H103-001 to IR-H103-007 in `registry/irregularities.json`.
 
 ## 7. Label history (disclosure)
 
-- This round was built and first recorded under the label H97. On `main`, the label H97 had already been taken by parallel rounds (H97 co-training sparse, H97b, H98 to H101, with their own IR-H97-* and IR-H98-* ids). This round is therefore registered as **H103**. Its IR ids are IR-H103-001..007.
+- This round was built and first recorded under the label H97. A later merge found H102 taken on `main` by another round, so the round was registered as H102 and then, after a second collision, as **H103**. On `main`, the label H97 had already been taken by parallel rounds (H97 co-training sparse, H97b, H98 to H101, with their own IR-H97-* and IR-H98-* ids). This round is therefore registered as **H103**. Its IR ids are IR-H103-001..007.
 - The preregistration **document is unchanged**: `knowledge/108_hypotheses_H97_preregistered.md`, SHA-256 `11b40c7f6340381d5e37ce45dc4ea9e89f0eb2d6d9678cf7d71c6d0dc4dafb29`, which matches the pinned value in `registry/h103_preregistration.json`. Only its path changed. Its text still says H97, because it was frozen under that name before the collision.
 - Labels in this round's receipts and scripts were changed from H97 to H103 (file names, round fields, and text). The numbers were not changed.
-- The census was widened on merge with `main`: the local submission folder now includes main's submissions, so the lane was re-run against the merged census (evidence/h103_lane.json registry_full: 524 present census priors, 75 local artefacts including main's new submissions, 13 extra scored references; n_full 611 after de-duplication). The earlier 601-raster census is superseded.
+- The census was widened on merge with `main`: the local submission folder now includes main's submissions, so the lane was re-run against the merged census (evidence/h103_lane.json registry_full: 524 present census priors, 75 local artefacts including main's new submissions, 13 extra scored references; n_full 612 after de-duplication (the census grows as main merges new submissions)). The earlier 601-raster census is superseded.
