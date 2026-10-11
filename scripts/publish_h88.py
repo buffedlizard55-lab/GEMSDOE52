@@ -126,7 +126,7 @@ def main() -> int:
     (DL / f"{tif.stem}-submission-note.txt").write_text(build["note"] + "\n")
 
     for name in ("h88_build.json", "h88_holdout.json", "h88_run_card.json",
-                 "h88_h87field_holdout.json"):
+                 "h88_h87field_holdout.json", "h88_shipped_holdout.json"):
         if (E / name).exists():
             shutil.copy2(E / name, DOCS / "data" / name)
 
