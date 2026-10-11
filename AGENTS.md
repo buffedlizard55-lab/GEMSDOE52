@@ -1,3 +1,27 @@
+<!--H97-MASSLEVER-AGENTS-->
+## Current H97-masslever continuation (2026-10-11) — READ FIRST
+Read README's H97-masslever block first. Download **YES**; submit **your call** — no leaderboard gain is certified.
+This session's branch is `arena/c5bf6f30-gemsdoe52`. The round ran **three** experiments:
+**E1 instrument fidelity** (the repository's holdout does not rank the board: Spearman
+-0.4897, partial given log mass
+0.1264, Spearman(board, mass)
+-0.9436 over 13 OWNER-REPORTED scored priors scored
+`as_is`); **E2 co-training at the metric-implied mass lever** (NEGATIVE: cotrain_dis
+0.069041 vs cons_only 0.093310, paired -0.024269
+[-0.038071, -0.009208]); **E3 artifact + gates**.
+- The data blocker is cleared in this session: `python scripts/restore_data.py --target-dir data` restores 23
+  hash-pinned files (531 MB, ALL_VERIFIED=True) through api.github.com; `data/raw_parts` was removed afterwards.
+- Settled; do not re-litigate: the unfitted-composite co-training lane is closed for a third time (H95, H96, H97); the
+  fitted learner is where the 0.19 lives. The A-only stratum is a Phase-2 deliverable, not a DTI bet.
+- Shared-tool facts learned the hard way this round: `gates.format_report` keys are
+  `bands/dtype/crs/width/height/nan_pixels/infinity_pixels/n_min/max/n_nonzero/problems/ok`;
+  `gates.uniqueness_report` has `n_priors_checked`/`identical_to_a_prior`/per-prior `jaccard`
+  (no `identical_to_none`, no `max_jaccard`); `find_priors` excludes by resolve() **and basename**, so a
+  round that stages an alias copy of its own artifact (e.g. `h97-masslever-candidate.tif`) must drop its own names or the
+  candidate is compared to itself; `submission_writer.write_submission` rejects a note/name longer than 140 chars.
+- Use `/home/user/.venv/bin/python` (pinned numpy/scipy/rasterio/…env built this session).
+<!--/H97-MASSLEVER-AGENTS-->
+
 <!--H101-AGENTS-->
 ## Current H101 continuation (2026-10-10) — READ FIRST
 Read README's H101 block, `knowledge/105` (frozen preregistration, SHA-256 `bf5c5e01cb4b6bdf…`) and
