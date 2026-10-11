@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEMSDOE52 — H97 executive summary — how to make a submission</title>
+<style>*{box-sizing:border-box}body{margin:0;font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#14181d;background:#f6f8fa}
+main{max-width:920px;margin:0 auto;padding:28px 20px 70px;background:#fff;min-height:100vh}h1{font-size:26px;margin:0 0 6px}
+h2{font-size:20px;margin:28px 0 8px;border-bottom:2px solid #e6eaef;padding-bottom:5px}.verdict{border-radius:10px;padding:14px 16px;margin:12px 0;font-weight:700}
+.ok{background:#e7f6ec;color:#11643a;border:1px solid #9ad7b4}.no{background:#fdecea;color:#b3261e;border:1px solid #f0c4bf}
+a.btn{display:inline-block;background:#1f4e79;color:#fff;text-decoration:none;font-weight:700;padding:12px 18px;border-radius:8px;margin:6px 8px 6px 0}
+a.btn.s{background:#eef2f6;color:#1f4e79;border:1px solid #d7e0ea}code{background:#f2f4f7;padding:1px 5px;border-radius:4px;font-size:13px;word-break:break-all}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:14.5px}th,td{border:1px solid #e3e8ee;padding:6px 9px;text-align:left;vertical-align:top}th{background:#f3f6f9}
+.copy{background:#f2f4f7;border:1px solid #d7e0ea;border-radius:6px;padding:10px 12px;font-family:monospace;font-size:14px;word-break:break-all}
+small,.muted{color:#5b6672}footer{margin-top:30px;border-top:1px solid #e3e8ee;padding-top:10px;font-size:13px;color:#5b6672}</style>
+</head>
+<body>
+<main>
+<h1>Executive summary — H97 — how to make a submission</h1>
+<div class="verdict ok">OK TO DOWNLOAD: YES — format-valid (1 band float32, EPSG:32611, all-finite,
+values exactly {0,1}, 25,400 emitted cells); the portal's "Predicted values must be in range [0, 1]"
+rejection cannot occur.</div>
+<div class="verdict no">OK TO SUBMIT: NO — research-only, do not upload. Failed gate(s): holdout_promotion
+(quota_primary 0.026348 &lt; 0.192829, paired CI deeply negative), uniqueness literal
+(probe-union standing condition, IR-H97-002), lane dots (full-census literal rule; scored-only policy reading PASS).
+The file is <b>not slot-approved</b>. The verdict is negative on the holdout alone.</div>
+<p><b>Weekly slots used by this round: 0.</b> No weekly slot is approved by this round; uploading is the owner's decision.</p>
+<p><a class="btn" href="downloads/h97-candidate.tif" download>Download h97-candidate.tif ↓</a>
+<a class="btn s" href="downloads/h97-candidate.zip" download>ZIP</a>
+<a class="btn s" href="downloads/gems52-h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros-a-only-reasoning.csv">A-only reasoning CSV</a>
+<a class="btn s" href="validator.html">Check a file in your browser</a></p>
+<h2>Identity</h2>
+<table>
+<tr><th>file</th><td><code>gems52-h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif</code></td></tr>
+<tr><th>bytes · SHA-256</th><td>753,675 · <code>c49a07d15a5bb293c0f29f67d9d4931ed5f2f9ce48978da86af4e59a54f2523d</code></td></tr>
+<tr><th>submission name</th><td><div class="copy">h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c</div></td></tr>
+<tr><th>note (134/140)</th><td><div class="copy">H97 co-train state machine: DVA2 consensus 18000 + buried A-only 7400, B-only veto, 25400px quota placement; vs 0.192829 bar; research</div></td></tr>
+<tr><th>emitted cells</th><td>25,400 binary dots (exactly {0,1}; 0.0 outside the footprint; no nodata)</td></tr>
+<tr><th>emission strata (realised)</th><td>5,329 consensus C · 4,967 A-only ·
+14,950 zero-score tie fill
+(154 B-only cells by chance inside the tie fill) — IR-H97-001</td></tr>
+<tr><th>validator (re-read from disk)</th><td>PASS · 1 band float32, EPSG:32611, 3730 rows x 3292 cols, transform/bounds = sample_submission.tif: yes, 0 NaN, 0 inf, values exactly [0.0, 1.0], 25,400 emitted cells, nodata tag None; problems: none</td></tr>
+</table>
+<h2>How to submit (exact steps)</h2>
+<ol>
+<li>Download <code>h97-candidate.tif</code> above (or the ZIP, which holds exactly one GeoTIFF).</li>
+<li>Optional: drop it on <a href="validator.html">the browser validator</a> — it must say 1 band, EPSG:32611,
+3730×3292, values in [0, 1], all finite, no nodata.</li>
+<li>Open <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">DrivenData → DOE GEMS → Submissions</a> (login required) and upload the .tif (or .zip).</li>
+<li>Paste the submission name and the note from the table above (the note is 134 of the 140 characters the form allows).</li>
+<li>Remember the official rule: you must choose ONE submission for both the Initial and the Final round
+(<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">problem description</a>).</li>
+</ol>
+<p class="verdict no">This round's frozen rule says do not upload: the primary arm did not beat the holdout bar —
+it is below random. The steps are listed so the owner can act on a later round that produces a promotable field.</p>
+<h2>HOLDOUT-DTI — E2, the co-training lane (primary <code>quota_primary</code>)</h2>
+<p class="muted">evaluator <code>gems52-pooled-hide-v1</code> · 53,186 withheld positive px ·
+4 label-blind quadrant folds · 6,350 dots/fold/arm (25,400 total) · α 0.2 β 0.8 R 300 m · 95 % paired cluster bootstrap · SEED 61052</p>
+<table><tr><th>arm</th><th>HOLDOUT-DTI [95 % CI]</th></tr><tr><td><code>B_DVA2</code></td><td>0.160893 [0.1395, 0.1811]</td></tr>
+<tr><td><code>single_B</code></td><td>0.146375 [0.1252, 0.1673]</td></tr>
+<tr><td><code>random</code></td><td>0.058228 [0.0506, 0.0664]</td></tr>
+<tr><td><code>consensus_only</code></td><td>0.029261 [0.0165, 0.0451]</td></tr>
+<tr><td><code>quota_primary</code></td><td>0.026348 [0.0141, 0.0414]</td></tr>
+<tr><td><code>a_only_stratum</code></td><td>0.025816 [0.0132, 0.0419]</td></tr></table>
+<p>Paired <code>quota_primary − B_DVA2</code> = <b>-0.134545</b> [-0.157623, -0.112616].
+Promotion bar 0.192829 (max committed B_DVA2 reading) and CI &gt; 0 required → <b>FAIL</b>.
+Control reproduction: single_B 0.174517 vs committed 0.174517 (Δ 2.9e-07),
+random 0.080426 vs 0.080426 (Δ 3.5e-07),
+B_DVA2 0.192831 vs [0.1892, 0.192829] — all within 1e-3 → <b>valid</b>.</p>
+<h2>HOLDOUT-DTI — E1, soft-prior graft (full budget)</h2>
+<table><tr><th>arm</th><th>HOLDOUT-DTI [95 % CI]</th></tr><tr><td><code>B_DVA2</code></td><td>0.192831 [0.1708, 0.2137]</td></tr>
+<tr><td><code>single_B</code></td><td>0.174517 [0.1523, 0.1963]</td></tr>
+<tr><td><code>random</code></td><td>0.080426 [0.0702, 0.0910]</td></tr>
+<tr><td><code>single_A</code></td><td>0.071954 [0.0566, 0.0886]</td></tr>
+<tr><td><code>g_025</code></td><td>0.019639 [0.0168, 0.0225]</td></tr>
+<tr><td><code>g_050</code></td><td>0.018175 [0.0155, 0.0211]</td></tr></table>
+<p>Paired <code>g_025 − B_DVA2</code> = -0.173192
+[-0.192087, -0.154063].
+The graft is below random: blending View A's coin-flip-scale rank into the B_DVA2 field destroys its precision.</p>
+<h2>Fit diagnostics (out-of-quadrant AUC, per fold)</h2>
+<table><tr><th>arm</th><th>fold 0</th><th>fold 1</th><th>fold 2</th><th>fold 3</th><th>mean</th></tr>
+<tr><td>single_A (View A)</td><td>0.5062</td><td>0.6011</td><td>0.4668</td><td>0.4910</td><td><b>0.5163 → sufficiency FAIL</b> (bar 0.60 / 0.55)</td></tr>
+<tr><td>single_B (View B)</td><td>0.6625</td><td>0.7684</td><td>0.6112</td><td>0.6952</td><td>0.6843</td></tr>
+<tr><td>B_DVA2</td><td>0.6840</td><td>0.7867</td><td>0.6479</td><td>0.7284</td><td>0.7118</td></tr></table>
+<p>Leakage canary: max single-channel AUC <b>0.6689</b> &lt; 0.90 → PASS.
+State machine: τB = 0.98 (ladder |C|@0.99 = 16,474 &lt; 18,000; |C|@0.98 = 31,490);
+|C| = 31,490 · |A-only| = 40,601 · |B-only vetoed| = 32,837 · |pool| = 4,325,298.</p>
+<h2>Independence test (spatial-block OOF error correlation)</h2>
+<p>max |ρ| = <b>0.1337</b> over 2,089 blocks (50 px) of 4,095,103
+catalogue-zero proxy negatives → <b>PASS</b> (bar 0.60). Weak error correlation is necessary for co-training, not proof
+of conditional feature independence (pre-registered caveat).</p>
+<h2>Lane / uniqueness / format (602-raster census; 13 scored-only)</h2>
+<table>
+<tr><th>check</th><th>result</th></tr>
+<tr><td>lane surface literal (602 priors)</td><td>PASS — max ρ 0.5417 &lt; 0.90, no identical, no near offenders</td></tr>
+<tr><td>lane dots literal (full census)</td><td>DUPLICATE/STOP — max near-3px 1.0000 (universal-coverage probe rasters; IR-H87-001 class, reported not waived)</td></tr>
+<tr><td>lane dots policy (informative census priors)</td><td>DUPLICATE/STOP — max near-3px 0.8819 (one dense census raster); scored-only policy reading PASS (max near 0.3285)</td></tr>
+<tr><td>uniqueness literal (full census)</td><td>novel fraction 0.0 (probe union covers the footprint — registry property, IR-H97-002); no identical prior; max Jaccard 0.0225; not the literal prior union</td></tr>
+<tr><td>uniqueness informative-only (13 scored)</td><td>novel fraction <b>0.8121</b> (20,627/25,400 dots), max Jaccard 0.0097, distinct from every comparable prior, not the literal union</td></tr>
+<tr><td>quota placement</td><td>run_h73.place_lane: 25,400/25,400 filled in round 0, worst-prior overlap 0.3285 &lt; 0.70 cap, 1.3 s</td></tr>
+<tr><td>not-the-union</td><td>PASS — 76.24 % of dots outside the equal-budget union-max placement (Jaccard 0.1348)</td></tr>
+<tr><td>format</td><td>PASS — all-finite [0,1], no nodata, writer's fail-closed re-read asserts passed</td></tr>
+</table>
+<h2>E3 — PROXY-SGMC diagnostic (never a score)</h2>
+<p class="muted">SGMC geologic-map faults thinned by whole segments to |G| ≈ 10,000, 5 seeds; Spearman 0.567 vs 13
+owner-reported board scores — a low-informative proxy. No H97 gate reads this experiment.</p>
+<table><tr><th>field</th><th>PROXY-SGMC (mean of 5 seeds)</th></tr>
+<tr><td>champion h33-h33-2-b2 (board 0.2778, OWNER-REPORTED)</td><td>0.06060</td></tr>
+<tr><td>d2-8 (board 0.2600, OWNER-REPORTED)</td><td>0.05713</td></tr><tr><td>B_DVA2@37654</td><td>0.04859</td></tr><tr><td>B_DVA2@28000</td><td>0.04406</td></tr><tr><td>B_DVA2@25400</td><td>0.04249</td></tr><tr><td>g_025@37654</td><td>0.04567</td></tr><tr><td>g_025@28000</td><td>0.03894</td></tr><tr><td>g_025@25400</td><td>0.03706</td></tr><tr><td>state_machine_s@37654</td><td>0.02928</td></tr><tr><td>state_machine_s@28000</td><td>0.02735</td></tr><tr><td>state_machine_s@25400</td><td>0.02622</td></tr><tr><td>single_B@37654</td><td>0.05065</td></tr><tr><td>single_B@28000</td><td>0.04694</td></tr><tr><td>single_B@25400</td><td>0.04507</td></tr><tr><td>single_A@37654</td><td>0.03913</td></tr><tr><td>single_A@28000</td><td>0.03519</td></tr><tr><td>single_A@25400</td><td>0.03369</td></tr><tr><td>random@37654</td><td>0.04611</td></tr><tr><td>random@28000</td><td>0.03968</td></tr><tr><td>random@25400</td><td>0.03654</td></tr></table>
+<h2>Gates (frozen in <code>registry/h97_preregistration.json</code>)</h2>
+<table><tr><th>gate</th><th>result</th></tr>
+<tr><td>control_reproduction</td><td>PASS</td></tr><tr><td>canary</td><td>PASS</td></tr><tr><td>independence</td><td>PASS</td></tr><tr><td>holdout_promotion</td><td>FAIL</td></tr><tr><td>lane_surface_literal</td><td>PASS</td></tr><tr><td>lane_dots_literal</td><td>DUPLICATE/STOP</td></tr><tr><td>lane_dots_policy</td><td>DUPLICATE/STOP</td></tr><tr><td>uniqueness</td><td>FAIL</td></tr><tr><td>uniqueness_informative_only</td><td>PASS</td></tr><tr><td>format</td><td>PASS</td></tr><tr><td>not_the_union</td><td>PASS</td></tr>
+</table>
+<p><b>verdict: negative</b> · submit_ok false · download_ok true · slots used 0 ·
+irregularities IR-H97-001 (quota/tie-fill), IR-H97-002 (probe-union novelty), IR-H97-003 (CSV prefix, fixed).</p>
+<h2>Why it failed (measured mechanism)</h2>
+<p>Blum &amp; Mitchell co-training needs (i) feature independence and (ii) each view sufficiently informative.
+Both were pre-registered and measured: independence PASSES (max |ρ| 0.1337) but View A's mean OOF AUC is
+0.5163 with two of four folds below 0.5 — a coin flip. Every combination tested (rank graft,
+consensus AND-gate, state-machine quota) pays for that noise with the strong view's precision, so all three
+score at or below random placement. The single strong view B (DVA2) remains the best field at both budgets
+(0.192831 @37,654 / 0.160893 @25,400). Full analysis and limits:
+<a href="h97.html">H97 full result</a> · <a href="../knowledge/98_h97_results_and_limits.md">knowledge/98</a>.</p>
+<footer>GEMSDOE52 · round H97 · generated from receipts in <code>evidence/h97_*.json</code> by <code>scripts/publish_h97_site.py</code> · <a href="index.html">site home</a></footer>
+</main>
+</body>
+</html>

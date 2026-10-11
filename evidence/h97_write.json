@@ -1,0 +1,76 @@
+{
+ "stage": "write",
+ "started_utc": "2026-10-11T01:00:27+00:00",
+ "submission_name": "h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c",
+ "note": "H97 co-train state machine: DVA2 consensus 18000 + buried A-only 7400, B-only veto, 25400px quota placement; vs 0.192829 bar; research",
+ "note_len": 134,
+ "file": "submission/gems52-h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif",
+ "bytes": 753675,
+ "sha256": "c49a07d15a5bb293c0f29f67d9d4931ed5f2f9ce48978da86af4e59a54f2523d",
+ "zip": "submission/gems52-h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.zip",
+ "dots": 25400,
+ "C_emitted": 5329,
+ "Aonly_emitted": 4967,
+ "Bonly_emitted": 154,
+ "validator": {
+  "path": "/home/user/GEMSDOE52/submission/gems52-h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif",
+  "bytes": 753675,
+  "sha256": "c49a07d15a5bb293c0f29f67d9d4931ed5f2f9ce48978da86af4e59a54f2523d",
+  "bands": 1,
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "width": 3292,
+  "height": 3730,
+  "bounds": [
+   243350.0,
+   4135550.0,
+   572550.0,
+   4508550.0
+  ],
+  "ref_bounds": [
+   243350.0,
+   4135550.0,
+   572550.0,
+   4508550.0
+  ],
+  "transform": [
+   100.0,
+   0.0,
+   243350.0,
+   0.0,
+   -100.0,
+   4508550.0
+  ],
+  "nodata": null,
+  "blocksize": [
+   1,
+   3292
+  ],
+  "fixture_grid": false,
+  "has_validity_mask": false,
+  "nan_pixels": 0,
+  "infinity_pixels": 0,
+  "n_nan": 0,
+  "min": 0.0,
+  "max": 1.0,
+  "mean": 0.002068545436486602,
+  "n_nonzero": 25400,
+  "mass": 25400.0,
+  "problems": [],
+  "ok": true,
+  "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+ },
+ "format_ok": true,
+ "not_the_union": {
+  "union_max_placement_px": 25400,
+  "jaccard_vs_union": 0.13481514576119735,
+  "share_of_dots_outside_union": 0.7624015748031496,
+  "jaccard_vs_single_A_only_topK": 0.18358267716535434,
+  "jaccard_vs_single_B_only_topK": 0.06610236220472442,
+  "gate_min_share_outside": 0.25,
+  "PASS": true
+ },
+ "a_only_reasoning_csv": "docs/downloads/gems52-h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros-a-only-reasoning.csv",
+ "a_only_reasoning_rows": 4967,
+ "finished_utc": "2026-10-11T01:00:27+00:00"
+}

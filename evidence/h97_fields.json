@@ -1,0 +1,23 @@
+{
+ "stage": "fields",
+ "started_utc": "2026-10-11T00:25:00+00:00",
+ "tauB": 0.98,
+ "tauB_ladder_sizes": {
+  "0.99": 16474,
+  "0.98": 31490
+ },
+ "A_rank_min": 0.75,
+ "Aonly_rank_min": 0.99,
+ "Bonly_rank_max": 0.5,
+ "C_px": 31490,
+ "Aonly_px": 40601,
+ "Bonly_vetoed_px": 32837,
+ "pool_px": 4325298,
+ "eligible_px": 4593171,
+ "graft_w": [
+  0.25,
+  0.5
+ ],
+ "note": "rB/rA are per-quadrant pct ranks of the stitched OOF fields over the pool (H82.stitch convention); s = 2 + 0.01 rB rA on C, 0.01 rA on A-only, 0 elsewhere; every C cell ranks above every A-only cell so the greedy walk realises the frozen 18000/7400 quota",
+ "finished_utc": "2026-10-11T00:25:00+00:00"
+}

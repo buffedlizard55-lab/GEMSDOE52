@@ -1,0 +1,145 @@
+{
+ "round": "H97",
+ "evidence_class": "HOLDOUT-DTI unless labelled otherwise",
+ "hypothesis": "Disagreement-state quota emission on the DVA2 base: the co-training state machine (consensus C / A-only buried / B-only artifact-veto) allocates a 25,400 px sub-halo budget 18,000 C + 7,400 A-only, B-only never emitted, placed by per-prior quota",
+ "mechanism": "DVA2 directional variogram anisotropy (damage zone / juxtaposed blocks, catalogue-free) gated by View A independence (max |rho| <= 0.14): C = both views fire (fault with geophysical expression), A-only = buried fault beneath cover the surface-trace catalogue lacks, B-only = road/erosion-line suspects vetoed",
+ "named_non_fault_process": "lithologic density contrasts at buried depositional contacts; basin-fill facies steps; intrusion margins; GNSS strain-grid smoothing gradients; aftershock/induced seismicity clusters; conductive clay-rich basin fill; road cuts and drainage/erosion lines (the vetoed B-only mimics)",
+ "holdout_dti": {
+  "evaluator": "gems52-pooled-hide-v1",
+  "withheld_positive_px": 53186,
+  "quota_primary@6350_per_fold": [
+   0.026348,
+   [
+    0.014089417279292103,
+    0.04135989868692979
+   ]
+  ],
+  "B_DVA2@6350_per_fold": [
+   0.160893,
+   [
+    0.13951859330256527,
+    0.18109778885367714
+   ]
+  ],
+  "B_DVA2@9400_per_fold_committed_bar": 0.192829,
+  "quota_primary_minus_B_DVA2_paired": {
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems52-pooled-hide-v1",
+   "delta": -0.13454481611895633,
+   "ci95": [
+    -0.15762323766412792,
+    -0.11261572421780632
+   ],
+   "withheld_positive_pixels": 53186
+  },
+  "graft_g_025@9400_per_fold": [
+   0.019639,
+   [
+    0.016828915613578407,
+    0.022512913023284523
+   ]
+  ]
+ },
+ "correlation_overlap_vs_registry": {
+  "surface_max_spearman": 0.5417456461843028,
+  "dots_max_near_3px_literal": 1.0,
+  "dots_max_near_3px_policy": 0.8818503937007874,
+  "uniqueness_novel_fraction": 0.0
+ },
+ "sufficiency_view_A_bookkeeping": {
+  "mean": 0.5162904817771777,
+  "min_fold": 0.4668188015259936,
+  "per_fold": [
+   0.5062341311661124,
+   0.6010657195529969,
+   0.4668188015259936,
+   0.4910432748636082
+  ],
+  "gate_mean": 0.6,
+  "gate_min_fold": 0.55,
+  "passes": false
+ },
+ "sufficiency_note": "gate 4 is bookkeeping only (preregistration sec.4); its expected FAIL does not block the verdict",
+ "emission_strata_realised": {
+  "C": 5329,
+  "A_only": 4967,
+  "B_only_by_chance_tie_fill": 154,
+  "zero_score_tie_fill": 14950
+ },
+ "quota_note": "the frozen 18000 C + 7400 A-only quota is NOT realised: the pre-registered 3 px minimum spacing (part of the placement instrument) caps extractable consensus cells, so 15,104 of 25,400 dots are zero-score tie fill (IR-H97-001); the E2 below-random score is driven by that tie fill plus the A-gate",
+ "irregularities": [
+  "IR-H97-001 (quota not realised by 3 px spacing; tie-fill mass; 154 B-only by chance)",
+  "IR-H97-002 (literal full-census novelty fraction 0.0 = probe-union standing condition; informative-only novelty 0.8121 reported side by side)",
+  "IR-H97-003 (first A-only CSV written with doubled gems52- prefix; fixed, first write pair discarded)"
+ ],
+ "raster_sha256": "c49a07d15a5bb293c0f29f67d9d4931ed5f2f9ce48978da86af4e59a54f2523d",
+ "validator": {
+  "path": "/home/user/GEMSDOE52/submission/gems52-h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif",
+  "bytes": 753675,
+  "sha256": "c49a07d15a5bb293c0f29f67d9d4931ed5f2f9ce48978da86af4e59a54f2523d",
+  "bands": 1,
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "width": 3292,
+  "height": 3730,
+  "bounds": [
+   243350.0,
+   4135550.0,
+   572550.0,
+   4508550.0
+  ],
+  "ref_bounds": [
+   243350.0,
+   4135550.0,
+   572550.0,
+   4508550.0
+  ],
+  "transform": [
+   100.0,
+   0.0,
+   243350.0,
+   0.0,
+   -100.0,
+   4508550.0
+  ],
+  "nodata": null,
+  "blocksize": [
+   1,
+   3292
+  ],
+  "fixture_grid": false,
+  "has_validity_mask": false,
+  "nan_pixels": 0,
+  "infinity_pixels": 0,
+  "n_nan": 0,
+  "min": 0.0,
+  "max": 1.0,
+  "mean": 0.002068545436486602,
+  "n_nonzero": 25400,
+  "mass": 25400.0,
+  "problems": [],
+  "ok": true,
+  "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+ },
+ "submission_name": "h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c",
+ "note": "H97 co-train state machine: DVA2 consensus 18000 + buried A-only 7400, B-only veto, 25400px quota placement; vs 0.192829 bar; research",
+ "gates": {
+  "control_reproduction": "PASS",
+  "canary": "PASS",
+  "independence": "PASS",
+  "holdout_promotion": "FAIL",
+  "lane_surface_literal": "PASS",
+  "lane_dots_literal": "DUPLICATE/STOP",
+  "lane_dots_policy": "DUPLICATE/STOP",
+  "uniqueness": "FAIL",
+  "uniqueness_informative_only": "PASS",
+  "format": "PASS",
+  "not_the_union": "PASS"
+ },
+ "verdict": "negative",
+ "submit_ok": false,
+ "download_ok": true,
+ "slots_used": 0,
+ "e3_proxy_sgmc": "diagnostic only, never a score (see evidence/h97_e3_proxy_sgmc.json)",
+ "finished_utc": "2026-10-11T01:00:28+00:00"
+}

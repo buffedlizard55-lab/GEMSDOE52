@@ -227,8 +227,9 @@ def test_h96_receipt_gate_blocks_promote_while_below_the_bar() -> None:
     page = (DOCS / "index.html").read_text(encoding="utf-8")
     assert "h96-bidir-cotrain-coverstep-25400px" in page
     assert note[:60] in page
-        # LATEST pointers all name this stem
-    for p in ("submission/LATEST.txt", "docs/submission/LATEST.txt", "submission/H96_LATEST.txt"):
+    # H96 keeps its own round pin; the shared LATEST pointers moved to H97 when that round shipped
+    # (2026-10-11, branch arena/1bc2f2ec-gemsdoe52) - see the H97 block below.
+    for p in ("submission/H96_LATEST.txt",):
         txt = (ROOT / p).read_text(encoding="utf-8").strip()
         assert txt in (H96_STEM, H96_STEM + ".tif"), (p, txt)
     # the run card names its validator and reports ok
@@ -278,3 +279,92 @@ def test_h96_artifact_bytes_re_verify_every_gate_claim() -> None:
     assert 'href="h96.html"' in (DOCS / "index.html").read_text(encoding="utf-8")
     assert (DOCS / "downloads/h96-candidate.tif").is_file()
     assert (DOCS / "downloads/h96-candidate.tif").read_bytes() == canonical.read_bytes()
+
+
+# --- H97 (arena/1bc2f2ec session): co-training disagreement-state quota field ---------------------
+# H97 became the incumbent 2026-10-11: the shared LATEST pointers now name the H97 stem, and H96 is
+# demoted to the archive (its own round pin and archive row are asserted above). Same run-card
+# contract as H96: negative verdict => slot gate closed, no upload, no promotion, zero slots.
+
+H97_STEM = "gems52-h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros"
+H97_SHA = "c49a07d15a5bb293c0f29f67d9d4931ed5f2f9ce48978da86af4e59a54f2523d"
+
+
+def _h97_receipts():
+    import json as _json
+    artifacts = _json.loads((ROOT / f"evidence/submission_{H97_STEM}.json").read_text())
+    card = _json.loads((ROOT / "evidence/h97_run_card.json").read_text())
+    w = _json.loads((ROOT / "evidence/h97_write.json").read_text())
+    return artifacts, card, w
+
+
+def test_h97_receipt_gate_blocks_promote_while_below_the_bar() -> None:
+    artifacts, card, w = _h97_receipts()
+    assert artifacts["sha256"] == H97_SHA
+    assert artifacts["file"].startswith("gems52-h97-")
+    assert artifacts["round"] == "H97"
+    assert artifacts["nonzero_px"] == 25400
+    assert artifacts["short_tif"] == "h97-candidate.tif"
+    assert artifacts["short_zip"] == "h97-candidate.zip"
+    assert artifacts["validator"]["sha256"] == H97_SHA
+    # unique submission name + short note (the submission-naming convention)
+    note = artifacts["note"]
+    assert 1 <= len(note) <= 140
+    assert artifacts["note_chars"] == len(note)
+    # run-card contract: negative verdict => slot gate closed, no upload, no promotion
+    assert card["verdict"] == "negative"
+    assert card["submit_ok"] is False
+    assert card["download_ok"] is True
+    assert card["slots_used"] == 0
+    assert artifacts["approved_for_weekly_slot"] is False
+    assert artifacts["promoted"] is False
+    assert artifacts["submission_slots_used"] == 0
+    # labels discipline: HOLDOUT-DTI on the repo evaluator; the bar is the committed B_DVA2 reading
+    hdti = card["holdout_dti"]
+    assert hdti["evaluator"] == "gems52-pooled-hide-v1"
+    assert hdti["withheld_positive_px"] == 53186
+    assert hdti["B_DVA2@9400_per_fold_committed_bar"] == 0.192829
+    prim_dti, prim_ci = hdti["quota_primary@6350_per_fold"]
+    assert prim_dti < 0.058228, "the primary arm must be below the random control of the same budget"
+    assert prim_ci[0] < 0 < prim_ci[1] or prim_ci[1] < 0.058228
+    assert card["gates"]["holdout_promotion"] == "FAIL"
+    assert card["gates"]["control_reproduction"] == "PASS"
+    assert card["gates"]["canary"] == "PASS"
+    assert card["gates"]["independence"] == "PASS"
+    assert card["gates"]["format"] == "PASS"
+    assert card["gates"]["not_the_union"] == "PASS"
+    # preregistration frozen before any fit
+    reg = artifacts["metadata"]["registration"]
+    assert reg["frozen_before_any_fit"] is True
+    assert reg["preregistration_sha256"].startswith("31f7c92c")
+    # the round's own receipts must exist beside the artifact
+    for name in ("h97_run_card.json", "h97_e1_graft_holdout.json", "h97_e2_quota_holdout.json",
+                 "h97_lane.json", "h97_write.json", "h97_fit.json", "h97_independence.json"):
+        assert (ROOT / "evidence" / name).is_file(), name
+    # submission naming convention: the unique name and short note reach the site
+    page = (DOCS / "index.html").read_text(encoding="utf-8")
+    assert "h97-disagreement-quota-dva2-25400px" in page
+    assert note[:60] in page
+    # LATEST pointers all name this stem (the shared pointers now belong to H97)
+    for p in ("submission/LATEST.txt", "docs/submission/LATEST.txt", "submission/H97_LATEST.txt"):
+        txt = (ROOT / p).read_text().strip()
+        assert txt in (H97_STEM, H97_STEM + ".tif"), (p, txt)
+    # H96 demotion: its round pin is intact and the archive row still carries its name and note
+    h96_pin = (ROOT / "submission/H96_LATEST.txt").read_text().strip()
+    assert h96_pin in (H96_STEM, H96_STEM + ".tif")
+    assert "h96-bidir-cotrain-coverstep-25400px" in page
+    # the run card names its validator and reports ok
+    assert card["validator"]["ok"] is True
+    assert card["validator"]["sha256"] == H97_SHA
+    # the artifact bytes re-verify: 25,400 binary dots, all finite, no nodata
+    import numpy as np
+    import rasterio
+    tif = ROOT / "submission" / (H97_STEM + ".tif")
+    assert hashlib.sha256(tif.read_bytes()).hexdigest() == H97_SHA
+    with rasterio.open(tif) as ds:
+        data = ds.read(1)
+        assert ds.dtypes == ("float32",) and ds.crs.to_epsg() == 32611
+        assert np.isfinite(data).all() and set(np.unique(data).tolist()) == {0.0, 1.0}
+        assert int(np.count_nonzero(data)) == 25400
+    # the short aliases are byte-identical
+    assert (DOWNLOADS / "h97-candidate.tif").read_bytes() == tif.read_bytes()

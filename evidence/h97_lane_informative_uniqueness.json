@@ -1,0 +1,42 @@
+{
+ "measurement": "informative-only decoded-pattern uniqueness (scored-only restricted registry, n=13)",
+ "purpose": "the full-census literal novelty fraction is 0.0 because the census contains universal-coverage probe rasters whose decoded supports union to the whole footprint (IR-H87-001 standing condition); this measurement isolates the candidate's novelty against the informative population only",
+ "priors_checked": 13,
+ "identical_to_a_prior": false,
+ "identical_prior_paths": [],
+ "distinct_from_every_comparable_prior": true,
+ "novel_fraction": 0.8120866141732284,
+ "novel_vs_all_priors": 20627,
+ "prior_px_dropped": 1003277,
+ "union_px": 1008050,
+ "equals_literal_prior_union": false,
+ "max_jaccard": 0.009729945768645044,
+ "top_jaccard": [
+  [
+   "gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif",
+   0.009729945768645044,
+   1412
+  ],
+  [
+   "gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif",
+   0.009671742808798647,
+   1429
+  ],
+  [
+   "gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif",
+   0.009633976499858025,
+   1425
+  ],
+  [
+   "gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+   0.007473330582896211,
+   634
+  ],
+  [
+   "gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
+   0.007434253322181953,
+   640
+  ]
+ ],
+ "candidate_decoded_sha256": "ef2d651bf82df3e6f3e526ffd3545839e14bb13bfdaac61d9b8859776e684206"
+}
