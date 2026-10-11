@@ -3984,6 +3984,78 @@
    "what_it_is": "The H101 lane check (602 rasters) ran on base 7eb226d. Rasters merged to main afterwards were compared after the merge; one of them crosses the >70 % within-3 px duplicate line.",
    "how_we_know": "evidence/h101_postmerge_uniqueness.json: docs/downloads/gems52-h87-boardcal-marginal-20261010-61427px.tif near-3px share 0.7488 (its coverage 0.0050, 61,427 dots), exact shared dots 1,779; no merged raster is byte- or array-identical, and every rank correlation is <= 0.1319.",
    "disposition": "A second lane near-duplicate (after H84, IR-H101-005); recorded per the parallel-run protocol. Research only."
+  },
+  {
+   "id": "IR-H97M-001",
+   "title": "The repository's holdout instrument does not rank the board's own scored files",
+   "status": "open - measured, strategic",
+   "what_it_is": "All twelve OWNER-REPORTED scored priors were scored as_is (no budget cut, no re-placement, visible catalogue masked pixel-exactly) on the frozen H97 fold set with gems52-pooled-hide-v1: Spearman(board, HOLDOUT-DTI) = -0.4897 over 13 files (12 scored + the restored champion), partial correlation controlling for log emitted mass +0.1264, Spearman(board, mass) -0.9436. The champion (board 0.2778) scores 0.006696, below the 0.050110 random control at its own mass.",
+   "how_we_know": "evidence/h97_instrument.json (per-file DTIs, CIs, 4 folds, 60,894 withheld positives, 1000 paired spatial-cluster bootstrap draws); knowledge/98 section 1.",
+   "disposition": "Recorded as the explanation of the 0.2778-vs-0.19 gap: 'beat the bar' is a catalogue-recovery statement, not a board statement. Next work item 1 is a board-validated instrument (off-catalogue SGMC proxy candidate) validated the way E1 validates this one."
+  },
+  {
+   "id": "IR-H97M-002",
+   "title": "The portal's 'Predicted values must be in range [0, 1]' rejection is a NaN/nodata-tag trap",
+   "status": "closed - container policy documented",
+   "what_it_is": "The owner's downloaded file was rejected with 'Predicted values must be in range [0, 1]'. In this repository the exposure is the template's NaN-outside-footprint container plus a nodata tag; a strict reader that ignores the nodata declaration sees out-of-range values. The champion's own file is the all-finite container (nodata tag None, values exactly {0,1}) and eleven of the twelve scored priors use the NaN variant.",
+   "how_we_know": "data/reference/h33-2-b2-zeros.tif measured in knowledge/76 section 1; gates.format_report on both containers; the H97/H97b artifacts are all-finite with nodata None (evidence/h97_write.json, evidence/h97b_write.json).",
+   "disposition": "All new artifacts use the all-finite container; the validator prints nan/inf/range/nodata on every build; the submission page explains the difference (docs/h97-executive-summary.html)."
+  },
+  {
+   "id": "IR-H97M-003",
+   "title": "An A-dominant emission reproduces the A-view's fixed point: H97 primary is a near-duplicate of the H96 artifact",
+   "status": "closed - logged, artifact withdrawn from slot consideration",
+   "what_it_is": "93.85% of the H97 primary's 25,400 dots fall within 3 px of the H96 artifact (99.89% literal, counting the universal-coverage lattice probe). The primary field (0.45*cons + 0.55*buried)*(1 - 0.70*veto) is carried by View A, which is byte-identical to H96's, so its top-ranked pixels are the same pixels.",
+   "how_we_know": "evidence/h97_lane_dots.json literal and policy blocks (both DUPLICATE/STOP); the same failure mode was hit by the parallel H95 session against H93 (IR-H95-006).",
+   "disposition": "H97 primary published with OK TO SUBMIT: NO (lane duplicate). H97b re-froze the emission to rank by the surface view with View A only as a screen and artifact veto (knowledge/99), which is lane-distinct; the duplicate stays downloadable and labelled for audit."
+  },
+  {
+   "id": "IR-H97M-004",
+   "title": "H97b amendment was frozen after E1/E2 were measured (chronology disclosed)",
+   "status": "open - disclosed, bounded",
+   "what_it_is": "knowledge/99_h97b_amendment.md was written after E1 (instrument fidelity) and E2 (co-training holdout) produced numbers and after the H97 primary failed the dot lane gate. It changes only the emission field; the promotion rule, bar, gates, budgets and placement rule are unchanged from registry/h97_preregistration.json.",
+   "how_we_know": "registry/h97b_preregistration.json records written_after and the sha256 of the amendment; every H97b receipt carries the amendment hash.",
+   "disposition": "Disclosed on the site and in the run card; the H97b holdout is labelled HOLDOUT-DTI for the amended field only. Not treated as a preregistered confirmatory test."
+  },
+  {
+   "id": "IR-H97M-005",
+   "title": "Local gates silently compare a candidate against its own staged copies",
+   "status": "closed - fixed in the round's runner, shared tool unchanged",
+   "what_it_is": "gates.find_priors excludes the candidate by resolve() and by basename (IR-52-026), but a round that stages a second alias copy under a different name (docs/downloads/h97-candidate.tif) is compared against itself and reports 'identical to a prior, novel = 0' - the one verdict that would stop a legitimate submission. A stale artifact from an earlier run of the SAME round has the same effect.",
+   "how_we_know": "First H97 write run: 198 priors, identical_to_a_prior True, max Jaccard 1.0000; after dropping own names and purging superseded h97 artifacts: 193 priors, identical False, max Jaccard 0.2566.",
+   "disposition": "scripts/run_h97.py gained prior_list() (drops only this round's own artifact names) and a purge of superseded h97 artifacts before writing; both are logged in the receipts. Reported here because the next round will hit it too."
+  },
+  {
+   "id": "IR-H97M-006",
+   "title": "Budget deviation: wall clock exceeded the standing 2-hour limit to finish the required deliverable",
+   "status": "open - disclosed",
+   "what_it_is": "The standing protocol allows 3 experiments or 2 hours. Three experiments were run (E1 instrument, E2 holdout, E3 artifact+gates); H97b is the artifact-production step demanded by the session's highest-priority instruction (a unique downloadable TIF), and wall clock exceeded 2 hours including two re-runs of the write stage after a 140-character note ValueError and a legacy uniqueness-key KeyError.",
+   "how_we_know": "run card budget_deviation field; this register; the E3 receipts' timestamps.",
+   "disposition": "Disclosed in evidence/h97b_run_card.json and knowledge/98 section 4. Slots used 0 in every round; promotion remains a separate selector step."
+  },
+  {
+   "id": "IR-H97M-007",
+   "title": "The data blocker was cleared by restore, but the pins prove mirrors, not organizer bytes",
+   "status": "open - provenance boundary",
+   "what_it_is": "This session restored all 23 manifest files (531 MB) through api.github.com (data/restore_receipt.json ALL_VERIFIED=True) including training_features.tif (418.9 MB) and the champion raster. SHA-256 pins prove the bytes match the owner's sibling mirrors; they do NOT prove the organizer published those bytes, because the DrivenData data tab is login-walled and this sandbox has no credentials.",
+   "how_we_know": "scripts/restore_data.py header and receipt; the manifest note field.",
+   "disposition": "Every receipt repeats 'integrity-pinned, not organizer-authenticated'. A single authenticated portal download of the three core rasters by the owner would close this permanently."
+  },
+  {
+   "id": "IR-H97M-008",
+   "title": "Two parallel lanes published a round called H97 in the same repository; this lane's paths were renamed",
+   "status": "disclosed, resolved by renaming only this lane's files",
+   "what_it_is": "The parallel-run protocol says this session is one of several running from the same prompt. While this lane was finishing, the other lane merged its own round H97 into main (PR #109: submission `gems52-h97-cotrain-disagree-sparse-37654px-20261010T224136Z.tif`, `docs/h97.html`, `evidence/h97_build.json`, `evidence/h97_holdout.json`, `evidence/h97_lane_dots.json`, `evidence/h97_run_card.json`, `knowledge/98_h97_results_and_limits.md`, `registry/h97_preregistration.json`, `scripts/publish_h97_site.py`, plus `docs/downloads/h97-candidate.tif`), and main had already consumed round ids through H100.",
+   "how_we_know": "`git merge origin/main` produced add/add conflicts on exactly those eleven paths; main's `registry/irregularities.json` already carried IR-H97-001..006 and IR-H98-001..002, so this lane's ids collided at the id level too.",
+   "disposition": "Main's files were kept byte-for-byte at their own paths and this lane's counterparts were renamed to free, self-describing ones: `docs/h97-masslever.html`, `docs/h97-masslever-executive-summary.html`, `docs/downloads/h97-masslever-candidate.tif(.zip)`, `evidence/h97_masslever_*.json`, `docs/data/h97_masslever_*.json`, `registry/h97_masslever_preregistration.json`, `knowledge/105_h97_masslever_hypotheses_preregistered.md`, `knowledge/106_h97_masslever_results_and_limits.md`, `scripts/run_h97_masslever.py`, `scripts/publish_h97_masslever_site.py`, `scripts/finalize_h97_masslever.py`, `tests/test_h97_masslever.py`, `submission/H97_MASSLEVER_LATEST.txt`, and this lane's irregularity ids became IR-H97M-*. No receipted number, artifact byte or SHA-256 changed -- only paths and labels. The H97b amendment files were already collision-free and keep their names."
+  },
+  {
+   "id": "IR-H97M-009",
+   "title": "A second parallel lane merged and renumbered its own round to H101 while this merge was in flight",
+   "status": "disclosed, resolution re-applied",
+   "what_it_is": "Immediately after this lane's first merge of origin/main, main advanced again: PR #112 from a third parallel session (arena/7947af94-gemsdoe52) merged with its own round renumbered H101, `docs/data/feed.json` newest_round=H101, and its own `registry/irregularities.json` entries IR-H101-001..007.",
+   "how_we_know": "Second `git merge origin/main` conflicted on AGENTS.md, docs/index.html and the two irregularity ledgers; tests/test_h101.py asserts README.md starts with `<!--H101-README-->`.",
+   "disposition": "That lane's files were kept byte-for-byte; their H101 README block stays first, this lane's block is inserted after the H99 block, its index card is placed at the top of <body> and every other card (H101, H99, H97, H95, H87BI, H96) is untouched, the irregularity ledgers are the union of both lanes' entries (340 entries, no duplicate ids), and this lane's AGENTS marker is named `<!--H97-MASSLEVER-AGENTS-->` so it cannot collide with any other lane's. pytest tests/ -q: 546 passed, 8 skipped."
   }
  ],
  "merge_note": "Entries appended in chronological order of first recording, per-round prefixes only. Merged with arena/90369109 session entries IR-H96-001..005 (bidirectional co-training disagreement round; labels H88 and H95 were taken on main by parallel sessions, so that round is H96). Merged with arena/4cdd8084 session entries IR-H97-001..006 and IR-H98-001 (round labels H88/H89/H93/H94 were taken on main by parallel sessions in turn, so that pair is H97/H98; no number inside its receipts changed). | H99/H100 merge: frozen as H88/H89, renamed to H92/H93 (main merged a parallel H88/H89), to H97/H98 (main used H92-H96) and to H99/H100 (main merged another H97/H98 round, PR #100). IR-H99-001..008 appended and this round's own ids renumbered wholesale; no existing entry was edited or removed."
