@@ -1,6 +1,6 @@
 {
-  "generated_utc": "2026-10-10T23:35:13Z",
-  "branch": "arena/90369109-gemsdoe52",
+  "generated_utc": "2026-10-11T00:29:12Z",
+  "branch": "arena/f57253db-gemsdoe52",
   "repo": "buffedlizard55-lab/GEMSDOE52",
   "evidence_copied": [
     "a_only_reasoning_r2.json",
@@ -204,7 +204,7 @@
     "verified_claims_r3.json"
   ],
   "submission": "gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif",
-  "downloads": 114,
+  "downloads": 120,
   "leaderboard_status": "dated snapshot; automated DrivenData access disabled by Terms-of-Use policy",
   "leaderboard_last_observed_utc": "2026-10-10",
   "prior_entries": 395,
@@ -222,6 +222,30 @@
     "submit_ok": false,
     "measurement_utc": "2026-10-08T18:31:08.001658+00:00",
     "note": "Research only; local evidence refresh is not a fresh organizer or leaderboard observation."
+  },
+  "newest_round": {
+    "run_id": "H99",
+    "round": "H99",
+    "file": "gems52-h99-cotrain-atexture-disagreement-20261010T222354Z.tif",
+    "download": "downloads/gems52-h99-cotrain-atexture-disagreement-20261010T222354Z.tif",
+    "sha256": "dbbdc0715d8fac843e45e997267aab141df233b6e482206db7f1279d560a9914",
+    "hash_verified": true,
+    "verdict": "NEGATIVE \u2014 DOWNLOAD YES, SUBMIT NO",
+    "submit_ok": false,
+    "approved_for_weekly_slot": false,
+    "holdout_dti": 0.0347985809945442,
+    "holdout_ci95": [
+      0.02693774938976825,
+      0.04401099407515187
+    ],
+    "random_dti": 0.08042564781050282,
+    "paired_vs_random": -0.04562706681595862,
+    "paired_ci95": [
+      -0.05410584997543102,
+      -0.03719376849471195
+    ],
+    "run_card": "evidence/h99_run_card.json",
+    "note": "Newest round in this repository; a holdout number is not an organiser score."
   },
   "freshness_note": "Local evidence refresh is automatic; the board is a dated snapshot. No automatic portal submission."
 }
