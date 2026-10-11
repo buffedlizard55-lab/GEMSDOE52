@@ -1,19 +1,19 @@
 {
  "stage": "write",
  "started_utc": "2026-10-11T01:00:27+00:00",
- "submission_name": "h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c",
- "note": "H97 co-train state machine: DVA2 consensus 18000 + buried A-only 7400, B-only veto, 25400px quota placement; vs 0.192829 bar; research",
- "note_len": 134,
- "file": "submission/gems52-h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif",
+ "submission_name": "h102-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c",
+ "note": "H102 co-train state machine: DVA2 consensus 18000 + buried A-only 7400, B-only veto, 25400px quota placement; vs 0.192829 bar; research",
+ "note_len": 135,
+ "file": "submission/gems52-h102-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif",
  "bytes": 753675,
  "sha256": "c49a07d15a5bb293c0f29f67d9d4931ed5f2f9ce48978da86af4e59a54f2523d",
- "zip": "submission/gems52-h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.zip",
+ "zip": "submission/gems52-h102-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.zip",
  "dots": 25400,
  "C_emitted": 5329,
  "Aonly_emitted": 4967,
  "Bonly_emitted": 154,
  "validator": {
-  "path": "/home/user/GEMSDOE52/submission/gems52-h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif",
+  "path": "/home/user/GEMSDOE52/submission/gems52-h102-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif",
   "bytes": 753675,
   "sha256": "c49a07d15a5bb293c0f29f67d9d4931ed5f2f9ce48978da86af4e59a54f2523d",
   "bands": 1,
@@ -70,7 +70,7 @@
   "gate_min_share_outside": 0.25,
   "PASS": true
  },
- "a_only_reasoning_csv": "docs/downloads/gems52-h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros-a-only-reasoning.csv",
+ "a_only_reasoning_csv": "docs/downloads/gems52-h102-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros-a-only-reasoning.csv",
  "a_only_reasoning_rows": 4967,
  "finished_utc": "2026-10-11T01:00:27+00:00"
 }

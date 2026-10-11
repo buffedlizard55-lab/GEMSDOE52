@@ -1,5 +1,5 @@
 {
- "round": "H97",
+ "round": "H102",
  "experiment": "E3",
  "evidence_class": "PROXY-SGMC (diagnostic, never a score)",
  "instrument": {
@@ -242,6 +242,6 @@
    ]
   }
  },
- "caveat": "SGMC geologic-map faults >= 3 px from labels.tif, thinned by whole segments to |G| ~ 10k; Spearman vs 13 owner-reported board scores 0.567 (0.911 excluding the lattice probe), about as informative as emitted mass alone (|rho| 0.889). Not the hidden expert faults. No H97 gate reads this experiment (preregistration sec.4/6).",
+ "caveat": "SGMC geologic-map faults >= 3 px from labels.tif, thinned by whole segments to |G| ~ 10k; Spearman vs 13 owner-reported board scores 0.567 (0.911 excluding the lattice probe), about as informative as emitted mass alone (|rho| 0.889). Not the hidden expert faults. No H102 gate reads this experiment (preregistration sec.4/6).",
  "finished_utc": "2026-10-11T00:29:44+00:00"
 }

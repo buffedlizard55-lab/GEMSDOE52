@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""H97 -- co-training lane: disagreement-state quota emission on the DVA2 base, plus the soft-prior graft.
+"""H102 -- co-training lane: disagreement-state quota emission on the DVA2 base, plus the soft-prior graft.
 
-Preregistered in ``knowledge/97_hypotheses_H97_preregistered.md`` (frozen before any fit) and pinned by
-``registry/h97_preregistration.json``; this runner refuses to start if the document's hash has moved.
+Preregistered in ``knowledge/97_hypotheses_H102_preregistered.md`` (frozen before any fit) and pinned by
+``registry/h102_preregistration.json``; this runner refuses to start if the document's hash has moved.
 
 Shared tools are reused, never forked:
   * ``run_h61.setup / sample_for_fit / learner_for / to_grid / pct_rank`` (cached feature stack, label-blind folds)
-  * ``run_h84.stage_channels`` (H82 DVA-2 design, redirected to work/h97) and
+  * ``run_h84.stage_channels`` (H82 DVA-2 design, redirected to work/h102) and
     ``run_h84.gather_arm / predict_region / RamBank / write_a_only_reasoning``
   * ``run_h82.stitch / restricted_registry / restricted_supports``
   * ``run_h73.place_lane`` (H73 amendment 61a per-prior quota placement)
@@ -15,8 +15,8 @@ Shared tools are reused, never forked:
     ``gems52.grid.write_geotiff_portal_exact(outside="zero")``
   * H95's E3 PROXY-SGMC recipe (segthin truths, budgets, caveat) -- diagnostic only, never a score.
 
-Stages (checkpointed to work/h97 and evidence/h97_*.json):
-    channels       50 DVA2 (+ HVA/COH by the shared H84 builder; H97 fits the DVA2 subset only)
+Stages (checkpointed to work/h102 and evidence/h102_*.json):
+    channels       50 DVA2 (+ HVA/COH by the shared H84 builder; H102 fits the DVA2 subset only)
     fit            canary per channel per fold, then 3 arms x 4 folds (region-only prediction)
     fields         stitched ranks; state machine (C / A-only / B-only veto) with the tauB ladder;
                    graft fields; emission pool; receipts
@@ -31,7 +31,7 @@ Stages (checkpointed to work/h97 and evidence/h97_*.json):
                    not-the-union
     card           the single JSON run card, assembled only from receipts on disk
 
-Usage: python scripts/run_h97.py [channels|fit|fields|e1|e2|e3|independence|lane|write|card|all]
+Usage: python scripts/run_h102.py [channels|fit|fields|e1|e2|e3|independence|lane|write|card|all]
 """
 from __future__ import annotations
 
@@ -62,14 +62,14 @@ import run_h73 as h73                                                 # noqa: E4
 from gems52 import evaluate_holdout as evaluator                      # noqa: E402
 from gems52 import gates, grid, metric, nodes, spatial                # noqa: E402
 
-PREREG = ROOT / "registry/h97_preregistration.json"
-WORK = ROOT / "work/h97"
+PREREG = ROOT / "registry/h102_preregistration.json"
+WORK = ROOT / "work/h102"
 FEAT = WORK / "features"
 EVID = ROOT / "evidence"
 DATA = ROOT / "data"
 SAMPLE = DATA / "sample_submission.tif"
 SEED = base.SEED
-PREFIX = "gems52-h97-"
+PREFIX = "gems52-h102-"
 RING_M = 200.0
 
 # redirect the shared H84/H82 channel+stitch machinery at this round's work directory
@@ -94,7 +94,7 @@ def digest(p):
 
 def write(name, obj):
     EVID.mkdir(exist_ok=True)
-    p = EVID / f"h97_{name}.json"
+    p = EVID / f"h102_{name}.json"
     p.write_text(json.dumps(obj, indent=1, default=float) + "\n")
     return p
 
@@ -107,7 +107,7 @@ h84.write = write
 def check_prereg():
     reg = json.loads(PREREG.read_text())
     if digest(ROOT / reg["hypothesis_document"]) != reg["hypothesis_sha256"]:
-        raise SystemExit("H97 preregistration changed after freezing; re-pin registry/h97_preregistration.json")
+        raise SystemExit("H102 preregistration changed after freezing; re-pin registry/h102_preregistration.json")
     return reg
 
 
@@ -156,7 +156,7 @@ def save_field(name, arr):
 # ============================================================================================= channels
 def stage_channels(max_passes: int = 4):
     check_prereg()
-    log("channels: shared H84 builder (DVA2 50 + HVA 25 + COH 5), redirected to work/h97")
+    log("channels: shared H84 builder (DVA2 50 + HVA 25 + COH 5), redirected to work/h102")
     h84.stage_channels(max_passes=max_passes)
     man = json.loads((FEAT / "manifest.json").read_text())
     log(f"channels: {len(DVA2)} DVA2 learner channels verified on disk "
@@ -339,7 +339,7 @@ def stage_e1():
     controls["B_DVA2"] = dict(committed_readings=ctr["B_DVA2_committed_readings"], measured=got_b,
                               abs_delta_vs_max=min(abs(got_b - t) for t in ctr["B_DVA2_committed_readings"]),
                               note="jitter across rounds <= 3.6e-3 (IR-H84-005); reported verbatim")
-    out = dict(round="H97", experiment="E1 (soft-prior graft, full budget)", evidence_class="HOLDOUT-DTI",
+    out = dict(round="H102", experiment="E1 (soft-prior graft, full budget)", evidence_class="HOLDOUT-DTI",
                evaluator_version=evaluator.VERSION, candidate="g_025", budget_per_fold=K,
                withheld_positive_px=int(sum(f["truth"].sum() for f in folds)),
                implementation_hashes=evaluator.implementation_hashes(),
@@ -383,7 +383,7 @@ def stage_e2():
     vs_dva2 = summary["paired_differences"].get("B_DVA2")
     vs_b = summary["paired_differences"].get("single_B")
     promote = bool(prim["dti"] > bar and vs_dva2 is not None and vs_dva2["ci95"][0] > 0)
-    out = dict(round="H97", experiment="E2 (disagreement-state quota emission, sub-halo)", evidence_class="HOLDOUT-DTI",
+    out = dict(round="H102", experiment="E2 (disagreement-state quota emission, sub-halo)", evidence_class="HOLDOUT-DTI",
                evaluator_version=evaluator.VERSION, candidate="quota_primary", budget_per_fold=K,
                subhalo_total=K * len(folds), withheld_positive_px=int(sum(f["truth"].sum() for f in folds)),
                implementation_hashes=evaluator.implementation_hashes(),
@@ -451,12 +451,12 @@ def stage_e3():
         rand = np.random.default_rng(SEED).random(eligible.shape).astype(np.float32)
         em = nodes.spacing_select(rand, allowed, K, min_px=3.0)
         res[f"random@{K}"] = dict(placed=int(em.sum()), **score(em.astype(np.float32)))
-    out = dict(round="H97", experiment="E3", evidence_class="PROXY-SGMC (diagnostic, never a score)",
+    out = dict(round="H102", experiment="E3", evidence_class="PROXY-SGMC (diagnostic, never a score)",
                instrument=reg["e3_proxy_sgmc"], results=res,
                caveat=("SGMC geologic-map faults >= 3 px from labels.tif, thinned by whole segments to |G| ~ 10k; "
                        "Spearman vs 13 owner-reported board scores 0.567 (0.911 excluding the lattice probe), "
                        "about as informative as emitted mass alone (|rho| 0.889). Not the hidden expert faults. "
-                       "No H97 gate reads this experiment (preregistration sec.4/6)."),
+                       "No H102 gate reads this experiment (preregistration sec.4/6)."),
                finished_utc=now())
     write("e3_proxy_sgmc", out)
     return out
@@ -501,7 +501,7 @@ def stage_independence():
 # ============================================================================================= lane
 def full_registry():
     from build_h61_submission import prior_paths
-    full, meta = prior_paths(ROOT / "work/h97/prior_fetch_receipt.json", ("submission",))
+    full, meta = prior_paths(ROOT / "work/h102/prior_fetch_receipt.json", ("submission",))
     extra = sorted((DATA / "scored").glob("*.tif")) + sorted((DATA / "reference").glob("*.tif"))
     seen, out = set(), []
     for p in full + extra:
@@ -623,11 +623,11 @@ def stage_write():
     fA_rank = np.load(WORK / "rA.npy")
     fB_rank = np.load(WORK / "rB.npy")
     catd = ndi.distance_transform_edt(~cat)
-    # the H84 helper adds its own "gems52-" prefix; pass the base name without it (IR-H97-003)
+    # the H84 helper adds its own "gems52-" prefix; pass the base name without it (IR-H102-003)
     csv_rel, n_reason_rows = h84.write_a_only_reasoning(store, cand, fA_rank, fB_rank, catd, eligible,
                                                         name[len("gems52-"):])
 
-    out = dict(stage="write", started_utc=now(), submission_name=f"h97-disagreement-quota-dva2-{K}px-{ts}-{dot_sha8}",
+    out = dict(stage="write", started_utc=now(), submission_name=f"h102-disagreement-quota-dva2-{K}px-{ts}-{dot_sha8}",
                note=reg["submission_note"], note_len=len(reg["submission_note"]),
                file=str(tif.relative_to(ROOT)), bytes=tif.stat().st_size, sha256=wrec.get("sha256"),
                zip=str(zip_path.relative_to(ROOT)), dots=int(dots.sum()),
@@ -647,7 +647,7 @@ def stage_card():
     reg = check_prereg()
 
     def rd(name):
-        p = EVID / f"h97_{name}.json"
+        p = EVID / f"h102_{name}.json"
         return json.loads(p.read_text()) if p.exists() else None
 
     fit, f1, f2, f3, ind, lane, wr = rd("fit"), rd("e1_graft_holdout"), rd("e2_quota_holdout"), \
@@ -670,10 +670,10 @@ def stage_card():
         gates_res["lane_dots_literal"] = lane["full_dots"]["literal"]["verdict"]
         gates_res["lane_dots_policy"] = lane["full_dots"]["policy"]["verdict"]
         uq = lane.get("uniqueness_full", {})
-        inf = json.loads((EVID / "h97_lane_informative_uniqueness.json").read_text()) \
-            if (EVID / "h97_lane_informative_uniqueness.json").exists() else None
+        inf = json.loads((EVID / "h102_lane_informative_uniqueness.json").read_text()) \
+            if (EVID / "h102_lane_informative_uniqueness.json").exists() else None
         # gate 7 as frozen: literal full-census reading.  It FAILs here for the standing registry reason
-        # (probe-census union covers the footprint; IR-H87-001 / IR-H97-002): reported, not waived.
+        # (probe-census union covers the footprint; IR-H87-001 / IR-H102-002): reported, not waived.
         gates_res["uniqueness"] = ("PASS" if (uq.get("distinct_from_every_comparable_prior")
                                               and not uq.get("identical_to_a_prior")
                                               and uq.get("novel_fraction", 0.0) >= 0.20
@@ -692,7 +692,7 @@ def stage_card():
                  and gates_res.get("lane_surface_literal") == "PASS"
                  and gates_res.get("lane_dots_policy") == "PASS")
     card = {
-        "round": "H97",
+        "round": "H102",
         "evidence_class": "HOLDOUT-DTI unless labelled otherwise",
         "hypothesis": ("Disagreement-state quota emission on the DVA2 base: the co-training state machine "
                        "(consensus C / A-only buried / B-only artifact-veto) allocates a 25,400 px sub-halo "
@@ -728,12 +728,12 @@ def stage_card():
                                           - wr["Bonly_emitted"]) if wr else None),
         "quota_note": ("the frozen 18000 C + 7400 A-only quota is NOT realised: the pre-registered 3 px minimum "
                        "spacing (part of the placement instrument) caps extractable consensus cells, so 15,104 of "
-                       "25,400 dots are zero-score tie fill (IR-H97-001); the E2 below-random score is driven by "
+                       "25,400 dots are zero-score tie fill (IR-H102-001); the E2 below-random score is driven by "
                        "that tie fill plus the A-gate"),
-        "irregularities": ["IR-H97-001 (quota not realised by 3 px spacing; tie-fill mass; 154 B-only by chance)",
-                           "IR-H97-002 (literal full-census novelty fraction 0.0 = probe-union standing condition; "
+        "irregularities": ["IR-H102-001 (quota not realised by 3 px spacing; tie-fill mass; 154 B-only by chance)",
+                           "IR-H102-002 (literal full-census novelty fraction 0.0 = probe-union standing condition; "
                            "informative-only novelty 0.8121 reported side by side)",
-                           "IR-H97-003 (first A-only CSV written with doubled gems52- prefix; fixed, first write pair discarded)"],
+                           "IR-H102-003 (first A-only CSV written with doubled gems52- prefix; fixed, first write pair discarded)"],
         "raster_sha256": wr["sha256"] if wr else None,
         "validator": wr["validator"] if wr else None,
         "submission_name": wr["submission_name"] if wr else None,
@@ -743,10 +743,10 @@ def stage_card():
         "submit_ok": bool(submit_ok),
         "download_ok": True,
         "slots_used": 0,
-        "e3_proxy_sgmc": "diagnostic only, never a score (see evidence/h97_e3_proxy_sgmc.json)",
+        "e3_proxy_sgmc": "diagnostic only, never a score (see evidence/h102_e3_proxy_sgmc.json)",
         "finished_utc": now(),
     }
-    p = EVID / "h97_run_card.json"
+    p = EVID / "h102_run_card.json"
     p.write_text(json.dumps(card, indent=1, default=float) + "\n")
     log(json.dumps(card["gates"], default=float))
     log(f"VERDICT: {card['verdict']} (submit_ok={card['submit_ok']})")

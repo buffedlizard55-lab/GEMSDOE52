@@ -1,5 +1,5 @@
 {
- "round": "H97",
+ "round": "H102",
  "evidence_class": "HOLDOUT-DTI unless labelled otherwise",
  "hypothesis": "Disagreement-state quota emission on the DVA2 base: the co-training state machine (consensus C / A-only buried / B-only artifact-veto) allocates a 25,400 px sub-halo budget 18,000 C + 7,400 A-only, B-only never emitted, placed by per-prior quota",
  "mechanism": "DVA2 directional variogram anisotropy (damage zone / juxtaposed blocks, catalogue-free) gated by View A independence (max |rho| <= 0.14): C = both views fire (fault with geophysical expression), A-only = buried fault beneath cover the surface-trace catalogue lacks, B-only = road/erosion-line suspects vetoed",
@@ -66,15 +66,15 @@
   "B_only_by_chance_tie_fill": 154,
   "zero_score_tie_fill": 14950
  },
- "quota_note": "the frozen 18000 C + 7400 A-only quota is NOT realised: the pre-registered 3 px minimum spacing (part of the placement instrument) caps extractable consensus cells, so 15,104 of 25,400 dots are zero-score tie fill (IR-H97-001); the E2 below-random score is driven by that tie fill plus the A-gate",
+ "quota_note": "the frozen 18000 C + 7400 A-only quota is NOT realised: the pre-registered 3 px minimum spacing (part of the placement instrument) caps extractable consensus cells, so 15,104 of 25,400 dots are zero-score tie fill (IR-H102-001); the E2 below-random score is driven by that tie fill plus the A-gate",
  "irregularities": [
-  "IR-H97-001 (quota not realised by 3 px spacing; tie-fill mass; 154 B-only by chance)",
-  "IR-H97-002 (literal full-census novelty fraction 0.0 = probe-union standing condition; informative-only novelty 0.8121 reported side by side)",
-  "IR-H97-003 (first A-only CSV written with doubled gems52- prefix; fixed, first write pair discarded)"
+  "IR-H102-001 (quota not realised by 3 px spacing; tie-fill mass; 154 B-only by chance)",
+  "IR-H102-002 (literal full-census novelty fraction 0.0 = probe-union standing condition; informative-only novelty 0.8121 reported side by side)",
+  "IR-H102-003 (first A-only CSV written with doubled gems52- prefix; fixed, first write pair discarded)"
  ],
  "raster_sha256": "c49a07d15a5bb293c0f29f67d9d4931ed5f2f9ce48978da86af4e59a54f2523d",
  "validator": {
-  "path": "/home/user/GEMSDOE52/submission/gems52-h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif",
+  "path": "/home/user/GEMSDOE52/submission/gems52-h102-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif",
   "bytes": 753675,
   "sha256": "c49a07d15a5bb293c0f29f67d9d4931ed5f2f9ce48978da86af4e59a54f2523d",
   "bands": 1,
@@ -121,8 +121,8 @@
   "ok": true,
   "validation_class": "local on-disk template/range check; not organizer upload acceptance"
  },
- "submission_name": "h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c",
- "note": "H97 co-train state machine: DVA2 consensus 18000 + buried A-only 7400, B-only veto, 25400px quota placement; vs 0.192829 bar; research",
+ "submission_name": "h102-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c",
+ "note": "H102 co-train state machine: DVA2 consensus 18000 + buried A-only 7400, B-only veto, 25400px quota placement; vs 0.192829 bar; research",
  "gates": {
   "control_reproduction": "PASS",
   "canary": "PASS",
@@ -140,6 +140,6 @@
  "submit_ok": false,
  "download_ok": true,
  "slots_used": 0,
- "e3_proxy_sgmc": "diagnostic only, never a score (see evidence/h97_e3_proxy_sgmc.json)",
+ "e3_proxy_sgmc": "diagnostic only, never a score (see evidence/h102_e3_proxy_sgmc.json)",
  "finished_utc": "2026-10-11T01:00:28+00:00"
 }

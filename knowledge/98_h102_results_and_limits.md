@@ -1,4 +1,4 @@
-# 98 · H97 results and limits (2026-10-10) — co-training disagreement-state quota on the DVA2 base
+# 98 · H102 results and limits (2026-10-10) — co-training disagreement-state quota on the DVA2 base
 
 **VERDICT: NEGATIVE (research candidate — OK TO DOWNLOAD: YES · OK TO SUBMIT: NO).**
 Neither co-training arm beat the promotion bar; both are *below random placement*. The failure is
@@ -7,21 +7,21 @@ below a coin flip) while the views **are independent** (max |ρ| 0.134). Co-trai
 to be sufficiently informative (Blum & Mitchell 1998, doi:10.1145/279943.279962); here only one is.
 Slots used: **0**. No ORGANIZER-CONFIRMED number exists for this round.
 
-Preregistration: `knowledge/97_hypotheses_H97_preregistered.md` (SHA-256
+Preregistration: `knowledge/97_hypotheses_H102_preregistered.md` (SHA-256
 `31f7c92c8fbe2be7880af3627eb7d09b483abb6b6a77e557f148b5dbce719b96`, frozen before any fit; pinned in
-`registry/h97_preregistration.json`; the runner refuses to start if the hash moves).
-Receipts: `evidence/h97_*.json` (channels, fit, fields, e1_graft_holdout, e2_quota_holdout,
+`registry/h102_preregistration.json`; the runner refuses to start if the hash moves).
+Receipts: `evidence/h102_*.json` (channels, fit, fields, e1_graft_holdout, e2_quota_holdout,
 e3_proxy_sgmc, independence, lane, lane_informative_uniqueness, write, run_card).
 
 **Artifact** (research candidate — download yes, submit no):
-`submission/gems52-h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif` ·
+`submission/gems52-h102-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif` ·
 753,675 bytes · SHA-256 `c49a07d15a5bb293c0f29f67d9d4931ed5f2f9ce48978da86af4e59a54f2523d` ·
 25,400 binary dots, 0.0 outside footprint, no nodata · ZIP beside it · short alias
-`docs/downloads/h97-candidate.tif` · A-only reasoning CSV
-`docs/downloads/gems52-h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros-a-only-reasoning.csv`
+`docs/downloads/h102-candidate.tif` · A-only reasoning CSV
+`docs/downloads/gems52-h102-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros-a-only-reasoning.csv`
 (4,967 rows, one geological reasoning + named non-fault mimic + falsifier per A-only dot).
-Irregularities this round: IR-H97-001 (quota/tie-fill), IR-H97-002 (probe-union novelty),
-IR-H97-003 (doubled CSV prefix, fixed pre-publication).
+Irregularities this round: IR-H102-001 (quota/tie-fill), IR-H102-002 (probe-union novelty),
+IR-H102-003 (doubled CSV prefix, fixed pre-publication).
 
 ## 1 · What was tested (preregistered)
 
@@ -118,7 +118,7 @@ weak error correlation is necessary for co-training, not proof of conditional fe
 The low-informative proxy (Spearman 0.567 vs board) reproduces the ordering: the co-training fields sit
 at/below the weak-view level, far below the single strong view and the champion. No gate reads E3.
 
-### 2.6 Realised emission strata and the tie-fill decomposition (IR-H97-001)
+### 2.6 Realised emission strata and the tie-fill decomposition (IR-H102-001)
 
 Realised composition of the 25,400 emitted dots: **5,329 C · 4,967 A-only · 15,104 zero-score tie fill**
 (154 of the tie-fill dots, 0.6 %, landed on B-only cells **by chance**, not by the state machine). The
@@ -129,7 +129,7 @@ instrument, `run_h73.place_lane` / `nodes.spacing_select min_px 3.0`) caps extra
 each fold's mass. Consequence for interpretation: the below-random E2 scores are driven by **both**
 mechanisms — the A-gate (consensus_only 0.029261 is itself below random 0.058228) and the tie-fill mass
 (zero-score cells ranked arbitrarily by the instrument). Both point the same way; neither is rescued by
-the other. Logged as IR-H97-001 (reported, not waived; the verdict is negative on independent grounds).
+the other. Logged as IR-H102-001 (reported, not waived; the verdict is negative on independent grounds).
 A future quota design must budget against the **spaced extractable** count of each stratum, not the raw
 stratum size.
 
@@ -154,7 +154,7 @@ consensus-only attribution) — all three fail. A future positive co-training re
 View A whose OOF AUC clears ~0.60 mean (e.g., the blocked INGENIOUS thermal view, or a materially
 better gravity/magnetics stack), not new combination machinery.
 
-## 4 · Gates, as measured (see `evidence/h97_run_card.json`)
+## 4 · Gates, as measured (see `evidence/h102_run_card.json`)
 
 | # | gate | result |
 |---|---|---|
@@ -164,7 +164,7 @@ better gravity/magnetics stack), not new combination machinery.
 | 4 | independence (max |ρ| < 0.60) | **PASS** (0.1337, 2,089 blocks) |
 | 5 | holdout promotion (> 0.192829 and paired CI > 0) | **FAIL** (0.026348; paired −0.134545 [−0.157623, −0.112616]) |
 | 6 | lane surface literal (602 priors) | **PASS** (max ρ 0.5417 < 0.90; no identical; no rank/near offenders) |
-| 7 | uniqueness literal (novel fraction ≥ 0.20, no identical, not literal union) | **FAIL — standing registry condition** (novel 0.0 vs probe census; informative-only 0.8121, see §5; IR-H97-002) |
+| 7 | uniqueness literal (novel fraction ≥ 0.20, no identical, not literal union) | **FAIL — standing registry condition** (novel 0.0 vs probe census; informative-only 0.8121, see §5; IR-H102-002) |
 | 8 | lane dots (brief's literal rule, full census) | **DUPLICATE/STOP** (max near-3px 1.0 vs probe rasters; 0.8819 vs a dense census raster — both reported; scored-only policy reading PASS, max near 0.3285) |
 | 9 | format (all-finite [0,1], no nodata) | **PASS** (re-read validator: problems none) |
 | 10 | not-the-union (≥ 25 % dots outside union-max) | **PASS** (76.24 % outside; Jaccard 0.1348) |
@@ -173,12 +173,12 @@ better gravity/magnetics stack), not new combination machinery.
 **negative**. download_ok = True (the file is a research candidate with the all-finite container; the
 portal's `[0,1]` rejection class cannot occur).
 
-## 5 · Lane, format, uniqueness (from `evidence/h97_lane.json`, `evidence/h97_write.json`,
-`evidence/h97_lane_informative_uniqueness.json`)
+## 5 · Lane, format, uniqueness (from `evidence/h102_lane.json`, `evidence/h102_write.json`,
+`evidence/h102_lane_informative_uniqueness.json`)
 
 Lane population: **602 rasters** = 524 fetched census blobs (of 526; 2 skipped ineligible — off-grid)
 + 65 local `submission/` artifacts + 13 scored/reference extras (fetch 2026-10-10T00:1xZ, receipt
-`work/h97/prior_fetch_receipt.json`). Scored-only restricted registry: 13 rasters.
+`work/h102/prior_fetch_receipt.json`). Scored-only restricted registry: 13 rasters.
 
 | phase / population | literal verdict | max ρ | max near-3px | policy verdict |
 |---|---|---|---|---|
@@ -196,7 +196,7 @@ Lane population: **602 rasters** = 524 fetched census blobs (of 526; 2 skipped i
   — the honest full-census policy reading. The scored-only policy reading is PASS (max near 0.3285, which
   is exactly the worst-prior overlap the quota placement reports: `worst 0.3285`, `quotas 0`, filled
   25,400/25,400 in round 0, 1.3 s).
-- **Uniqueness (decoded pattern)**: vs full census — novel fraction **0.0** (probe union; IR-H97-002),
+- **Uniqueness (decoded pattern)**: vs full census — novel fraction **0.0** (probe union; IR-H102-002),
   no identical prior, max Jaccard 0.0225, not the literal prior union. Vs scored-only informative 13 —
   distinct from every comparable prior, novel fraction **0.8121** (20,627/25,400 dots), max Jaccard
   0.0097 (`gems19-h19-5-powerlaw-budget-multiline-corroborated`), not the literal prior union.
@@ -204,13 +204,13 @@ Lane population: **602 rasters** = 524 fetched census blobs (of 526; 2 skipped i
   {0, 1}, no nodata tag, 25,400 nonzero, 0 mass outside footprint; writer's fail-closed re-read asserts
   passed (problems: none).
 - **Not-the-union**: equal-budget union-max placement (same quota machinery) shares only 13.5 % of cells
-  (Jaccard 0.1348); 76.24 % of H97 dots lie outside it → the H97 file is confirmed **not merely the
+  (Jaccard 0.1348); 76.24 % of H102 dots lie outside it → the H102 file is confirmed **not merely the
   union** of the views (gate 10 PASS).
 
 ## 6 · Limitations
 
 - HOLDOUT-DTI is conditional on the fitted folds, catalogue labels and fixed budgets; it is not a
-  leaderboard interval, and no ORGANIZER-CONFIRMED score exists for any H97 file.
+  leaderboard interval, and no ORGANIZER-CONFIRMED score exists for any H102 file.
 - The E2 budget (25,400) is a sub-halo bracketed by H92's instrument-prevalence bound (17,707) and the
   champion-mass elasticity estimate (≈ 26,982); the state machine's per-stratum quality was never given a
   chance because the *combination* itself is below random at any budget (E1 shows the same at 37,654).
@@ -219,11 +219,11 @@ Lane population: **602 rasters** = 524 fetched census blobs (of 526; 2 skipped i
 - E3's proxy is low-informative (Spearman 0.567); it is a diagnostic, never a score.
 - The independence test's negatives are catalogue-zero proxies, not verified absence.
 - The 526-blob census + 76 local rasters form the lane/uniqueness population; any prior published after
-  the fetch time is not covered (fetched 2026-10-10T00:1xZ, receipt `work/h97/prior_fetch_receipt.json`).
+  the fetch time is not covered (fetched 2026-10-10T00:1xZ, receipt `work/h102/prior_fetch_receipt.json`).
 
 ## 7 · Suggested remaining work (next session)
 
-1. **Do not spend a slot on any H97 file.** The mass lever (champion-field lane) remains the only
+1. **Do not spend a slot on any H102 file.** The mass lever (champion-field lane) remains the only
    demonstrated path toward 0.3195 (knowledge/76); it is out of this lane by the standing brief.
 2. If co-training is revisited, gate any future round on a **pre-fit View A sufficiency screen**
    (mean OOF AUC ≥ 0.60, min fold ≥ 0.55 as *hard* gates, not bookkeeping): a view at 0.516 cannot be

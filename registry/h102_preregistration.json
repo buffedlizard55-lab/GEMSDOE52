@@ -1,12 +1,12 @@
 {
  "schema_version": 1,
- "round": "H97",
+ "round": "H102",
  "branch": "arena/1bc2f2ec-gemsdoe52",
  "lane": "two-view co-training paragraph (Blum & Mitchell 1998, doi:10.1145/279943.279962)",
  "frozen_before_any_fit": true,
  "frozen_utc": "2026-10-10T00:00:00Z",
- "hypothesis_document": "knowledge/97_hypotheses_H97_preregistered.md",
- "hypothesis_sha256": "31f7c92c8fbe2be7880af3627eb7d09b483abb6b6a77e557f148b5dbce719b96",
+ "hypothesis_document": "knowledge/97_hypotheses_H102_preregistered.md",
+ "hypothesis_sha256": "1a80ac506b75371272536bb30e0e1aa5ace6e49324eab43dfe8a5b8b54fd068d",
  "primary_arm": "quota_primary",
  "promotion_bar_holdout_dti": 0.192829,
  "promotion_bar_source": "committed B_DVA2 HOLDOUT-DTI on gems52-pooled-hide-v1 (H82 0.189200 / H84 re-run 0.192829; bar = max committed reading)",
@@ -87,5 +87,11 @@
   ],
   "evidence_class": "diagnostic, never a score"
  },
- "submission_note": "H97 co-train state machine: DVA2 consensus 18000 + buried A-only 7400, B-only veto, 25400px quota placement; vs 0.192829 bar; research"
+ "submission_note": "H102 co-train state machine: DVA2 consensus 18000 + buried A-only 7400, B-only veto, 25400px quota placement; vs 0.192829 bar; research",
+ "pre_rename": {
+  "round": "H97",
+  "hypothesis_document": "knowledge/97_hypotheses_H97_preregistered.md",
+  "hypothesis_sha256": "31f7c92c8fbe2be7880af3627eb7d09b483abb6b6a77e557f148b5dbce719b96"
+ },
+ "rename_note": "Round renamed H97 -> H102 at merge: parallel sessions merged their own H97/H97b and H98-H101 rounds to main while this round ran (IR-H102-004; identifier-only rename per the IR-H84-006 precedent). GeoTIFF bytes and all holdout numbers are unchanged; only names and paths changed. Replacing H102->H97 in the renamed hypothesis document reproduces the pre-rename frozen SHA-256 byte-for-byte."
 }

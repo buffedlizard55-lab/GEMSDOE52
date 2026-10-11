@@ -670,8 +670,8 @@ Go ahead and create a pull request and then merge the pull request onto the main
 </details>
 
 <!--/H95-README-->
-<!--H97-README-->
-## Status block: H97 (2026-10-11) — co-training disagreement-state quota on the DVA2 base · NEGATIVE
+<!--H102-README-->
+## Status block: H102 (2026-10-11) — co-training disagreement-state quota on the DVA2 base · NEGATIVE
 
 > **OK TO DOWNLOAD: YES** — format-valid single-band float32 GeoTIFF, EPSG:32611, 3730×3292, all-finite, values exactly {0,1}, 25,400 dots (the portal's *"Predicted values must be in range [0, 1]"* rejection cannot occur).
 >
@@ -679,10 +679,10 @@ Go ahead and create a pull request and then merge the pull request onto the main
 >
 > Weekly slots used: **0**. No weekly slot is approved by this round; the agent does not pick submissions.
 
-**★ [Download h97-candidate.tif](docs/downloads/h97-candidate.tif)** · [ZIP](docs/downloads/h97-candidate.zip) · **[Executive summary / how to submit](docs/h97-executive-summary.html)** · [Full result](docs/h97.html) · [Run card](evidence/h97_run_card.json) · [A-only reasoning CSV](docs/downloads/gems52-h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros-a-only-reasoning.csv)
+**★ [Download h102-candidate.tif](docs/downloads/h102-candidate.tif)** · [ZIP](docs/downloads/h102-candidate.zip) · **[Executive summary / how to submit](docs/h102-executive-summary.html)** · [Full result](docs/h102.html) · [Run card](evidence/h102_run_card.json) · [A-only reasoning CSV](docs/downloads/gems52-h102-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros-a-only-reasoning.csv)
 
-- **File:** `submission/gems52-h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif` — 753,675 bytes, SHA-256 `c49a07d15a5bb293c0f29f67d9d4931ed5f2f9ce48978da86af4e59a54f2523d`
-- **Submission name:** `h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c` · **Note (134/140):** `H97 co-train state machine: DVA2 consensus 18000 + buried A-only 7400, B-only veto, 25400px quota placement; vs 0.192829 bar; research`
+- **File:** `submission/gems52-h102-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif` — 753,675 bytes, SHA-256 `c49a07d15a5bb293c0f29f67d9d4931ed5f2f9ce48978da86af4e59a54f2523d`
+- **Submission name:** `h102-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c` · **Note (135/140):** `H102 co-train state machine: DVA2 consensus 18000 + buried A-only 7400, B-only veto, 25400px quota placement; vs 0.192829 bar; research`
 - **Validator (re-read from disk):** PASS · 1 band float32, EPSG:32611, 3730×3292, all-finite, values exactly [0.0, 1.0], 25,400 cells, no nodata; problems none
 - **HOLDOUT-DTI, E2 — disagreement-state quota** (`gems52-pooled-hide-v1`, 53,186 withheld positive px, 95 % CI):
 
@@ -708,11 +708,11 @@ Go ahead and create a pull request and then merge the pull request onto the main
 | `g_025` | 0.019639 [0.0168, 0.0225] |
 | `g_050` | 0.018175 [0.0155, 0.0211] |
 
-- **State machine (frozen):** τB = 0.98 (ladder 0.99→0.98); |C| = 31,490, |A-only| = 40,601, |B-only vetoed| = 32,837; realised emission 5,329 C / 4,967 A-only / tie fill — the 3 px spacing caps extractable C (IR-H97-001).
+- **State machine (frozen):** τB = 0.98 (ladder 0.99→0.98); |C| = 31,490, |A-only| = 40,601, |B-only vetoed| = 32,837; realised emission 5,329 C / 4,967 A-only / tie fill — the 3 px spacing caps extractable C (IR-H102-001).
 - **Independence (spatial-block OOF errors):** max |ρ| 0.1337 over 2,089 blocks → PASS (bar 0.60).
 - **Sufficiency (View A, bookkeeping gate):** mean OOF AUC 0.5163 / min fold 0.4668 → **FAIL** (bar 0.60/0.55) — the mechanistic cause of the negative result.
-- **Lane / uniqueness:** surface literal PASS (max ρ 0.5417); dots literal DUPLICATE/STOP (probe rasters, IR-H87-001 class) with scored-only policy PASS (max near 0.3285); uniqueness literal novelty 0.0 (probe union, IR-H97-002) / informative-only **0.8121** (max Jaccard 0.0097); not-the-union PASS (76.2 % outside).
-- **Gates (frozen in `registry/h97_preregistration.json`, SHA `31f7c92c8fbe2be7…`):**
+- **Lane / uniqueness:** surface literal PASS (max ρ 0.5417); dots literal DUPLICATE/STOP (probe rasters, IR-H87-001 class) with scored-only policy PASS (max near 0.3285); uniqueness literal novelty 0.0 (probe union, IR-H102-002) / informative-only **0.8121** (max Jaccard 0.0097); not-the-union PASS (76.2 % outside).
+- **Gates (frozen in `registry/h102_preregistration.json`, SHA `1a80ac506b753712…`):**
 
 | gate | result |
 |---|---|
@@ -728,24 +728,24 @@ Go ahead and create a pull request and then merge the pull request onto the main
 | format | PASS |
 | not_the_union | PASS |
 
-- **Irregularities:** IR-H97-001 (quota not realised by 3 px spacing; tie-fill mass), IR-H97-002 (probe-union novelty standing condition), IR-H97-003 (doubled CSV prefix, fixed pre-publication).
-- Docs: [preregistration](knowledge/97_hypotheses_H97_preregistered.md) · [results & limits](knowledge/98_h97_results_and_limits.md) · [session brief](knowledge/94_current_user_brief_2026-10-10_H95.md) · [irregularities](registry/irregularities.json)
-- Reproduce: `python3 scripts/restore_data.py --target-dir data` → feature store + `python -m gems52.external` → `python3 scripts/fetch_prior_inventory.py --out work/h97/priors --receipt work/h97/prior_fetch_receipt.json` → `python3 scripts/run_h97.py all` → `python3 scripts/publish_h97_site.py && python3 scripts/check_site.py`.
+- **Irregularities:** IR-H102-001 (quota not realised by 3 px spacing; tie-fill mass), IR-H102-002 (probe-union novelty standing condition), IR-H102-003 (doubled CSV prefix, fixed pre-publication).
+- Docs: [preregistration](knowledge/97_hypotheses_H102_preregistered.md) · [results & limits](knowledge/98_h102_results_and_limits.md) · [session brief](knowledge/94_current_user_brief_2026-10-10_H95.md) · [irregularities](registry/irregularities.json)
+- Reproduce: `python3 scripts/restore_data.py --target-dir data` → feature store + `python -m gems52.external` → `python3 scripts/fetch_prior_inventory.py --out work/h102/priors --receipt work/h102/prior_fetch_receipt.json` → `python3 scripts/run_h102.py all` → `python3 scripts/publish_h102_site.py && python3 scripts/check_site.py`.
 
 ### Why `h33-h33-2-b2` scored 0.2778, and can we beat 0.3195? (unchanged; full derivation: [knowledge/76](knowledge/76_why_02778_and_what_beating_03195_requires.md))
 
 - DTI = T / (0.2·S + 0.8·|G|); binary dots; a dot earns credit only if its kernel credit exceeds 0.2·DTI; Spearman(emitted mass, score) = −0.928 over our scored files.
 - The champion is the 0.2600 `d2-8` field with all dots within 200 m of the public catalogue deleted (37,654 dots). Beating 0.3195 needs ×1.1501 credit at every |G|, or the same credit from ≈25,400 dots.
-- **Honest answer after H97: still not demonstrated in the co-training lane.** H97 measured the lane's remaining in-lane levers (graft, consensus, quota state machine) and all three are at or below random — the lane's failure is the View A sufficiency condition, now measured (mean OOF AUC 0.516). The only lever with board-sign evidence remains the **mass lever on the champion's own field** (champion-field lane, out of this brief's lane).
+- **Honest answer after H102: still not demonstrated in the co-training lane.** H102 measured the lane's remaining in-lane levers (graft, consensus, quota state machine) and all three are at or below random — the lane's failure is the View A sufficiency condition, now measured (mean OOF AUC 0.516). The only lever with board-sign evidence remains the **mass lever on the champion's own field** (champion-field lane, out of this brief's lane).
 
 ### Next work (ranked)
 
 1. **Mass lever on the champion's own field** (28k/32k-dot subset of h33-2-b2 ranked by its d2-8 value) — champion-field lane; the only board-sign lever.
-2. **Do not revisit co-training combination machinery** until a View A with pre-fit mean OOF AUC ≥ 0.60 exists (the sufficiency screen must be a hard gate, not bookkeeping). H97's measured 0.516 with independent errors is the demonstration.
+2. **Do not revisit co-training combination machinery** until a View A with pre-fit mean OOF AUC ≥ 0.60 exists (the sufficiency screen must be a hard gate, not bookkeeping). H102's measured 0.516 with independent errors is the demonstration.
 3. **INGENIOUS 2 m temperature probes** (GDR 1391, DOI 10.15121/1881483) as the thermal View A upgrade — free and official, blocked on owner download (gdr.openei.org unreachable from the sandbox).
 4. Keep the H95 file's audit copy as the standing download example until a promotable round appears.
 
-<details><summary><b>The H97 session brief, verbatim (read it every session)</b></summary>
+<details><summary><b>The H102 session brief, verbatim (read it every session)</b></summary>
 
 # 94 · Standing user brief, as received for round H95 (originally labelled H88; renamed because main acquired H88–H94) (2026-10-10) — verbatim
 
@@ -1344,7 +1344,9 @@ Go ahead and create a pull request and then merge the pull request onto the main
 
 
 </details>
-<!--/H97-README-->
+<!--/H102-README-->
+
+
 
 <div style="background:#f3f8f2;border:1px solid #9dc39a;color:#123d17;padding:12px 16px;margin:12px 0;border-radius:8px;font:15px/1.5 sans-serif"><strong>Round H87 board-score inversion (a DIFFERENT round from the H87 co-train-wavelength, H88 and H95 rounds already on main, and from H84, H85 and H86): DOWNLOAD YES, SUBMIT NO.</strong> Inverted 13 owner-reported public-board scores through the metric&rsquo;s exact linear form: hidden truth mass <b>|G| = 14,333.8</b> (third independent pin; H67 14,088.7, lattice 12,367), leave-one-out score MAE <b>0.02007</b>, Spearman <b>0.9436</b>. The mass lands on <b>family consensus 9,937.8 (69.3%)</b> and <b>catalogue 4,396.0 (30.7%)</b>; <b>every physical, external and disagreement basis got weight zero</b> (a 13-basis fit returned the identical solution). Dots placed by the metric&rsquo;s own marginal rule (add iff exact marginal credit c &gt; 0.2&middot;DTI), a shared tested tool <code>gems52.nodes.marginal_greedy</code> &mdash; budget derived, not chosen: <b>61,427 cells</b>, binary 0/1. Uniform-truth control self-terminates at 5.373 px and predicts <b>0.10007</b> where the pinned organiser-side lattice raster is OWNER-REPORTED at <b>0.0904</b> (+10.7%). HOLDOUT-DTI (gems52-pooled-hide-v1, 60,894 withheld): <b>0.104228 [0.084119, 0.124875]</b> vs random <b>0.075375 [0.067081, 0.083962]</b>; paired <b>+0.028853 [+0.014804, +0.043810]</b> excludes zero, but fold 0 loses (0.003118 vs 0.041666) and the holdout incumbent is not beaten. PREDICTED-BOARD on three truth realisations: candidate 0.19841 vs the 0.2778 champion 0.23948 (paired -0.04107) &mdash; worse than the file that already scored 0.2778. Decoded-pixel uniqueness PASSES vs 142 local priors (novel fraction 0.3558, max Jaccard 0.0719). <b>IR-H87-001:</b> the 13 owner-scored rasters&rsquo; 3 px halos cover <b>108.6%</b> of the footprint, so the literal lane rule is unsatisfiable for ANY non-empty emission here (random control near-3px 0.99901 vs candidate 0.99920); reported, not waived. <b>IR-H87-002:</b> lane scoped to the owner-scored registry; the four full-inventory lane passes did not fit the two-hour budget. Slots used: 0. <a href="docs/downloads/h87-candidate.tif">Download H87 GeoTIFF</a> &middot; <a href="docs/h87-executive-summary.html">H87 executive summary</a> &middot; <a href="knowledge/82_h87_board_inversion_2026-10-10.md">knowledge/82</a>. Not ORGANIZER-CONFIRMED.</div>
 

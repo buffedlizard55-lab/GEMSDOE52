@@ -1,12 +1,12 @@
 {
- "file": "gems52-h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif",
+ "file": "gems52-h102-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif",
  "sha256": "c49a07d15a5bb293c0f29f67d9d4931ed5f2f9ce48978da86af4e59a54f2523d",
  "bytes": 753675,
- "submission_name": "h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c",
- "note": "H97 co-train state machine: DVA2 consensus 18000 + buried A-only 7400, B-only veto, 25400px quota placement; vs 0.192829 bar; research",
- "note_chars": 134,
+ "submission_name": "h102-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c",
+ "note": "H102 co-train state machine: DVA2 consensus 18000 + buried A-only 7400, B-only veto, 25400px quota placement; vs 0.192829 bar; research",
+ "note_chars": 135,
  "validator": {
-  "path": "/home/user/GEMSDOE52/submission/gems52-h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif",
+  "path": "/home/user/GEMSDOE52/submission/gems52-h102-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif",
   "bytes": 753675,
   "sha256": "c49a07d15a5bb293c0f29f67d9d4931ed5f2f9ce48978da86af4e59a54f2523d",
   "bands": 1,
@@ -53,38 +53,40 @@
   "ok": true,
   "validation_class": "local on-disk template/range check; not organizer upload acceptance"
  },
- "zip_file": "gems52-h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.zip",
+ "zip_file": "gems52-h102-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.zip",
  "zip_sha256": "0fe26fc4f0a054d6f7bda047fe7099e347f26a0fed3888d0a7028998763b2eda",
  "approved_for_weekly_slot": false,
  "promoted": false,
  "submission_slots_used": 0,
  "status": "research-only; local format validation is not organizer acceptance",
  "metadata": {
-  "round": "H97",
+  "round": "H102",
   "hypothesis": "disagreement-state quota emission on the DVA2 base: consensus 18000 + buried A-only 7400, B-only veto, 25400px quota placement; soft-prior graft ablation",
   "evidence_class": "HOLDOUT-DTI",
   "registration": {
-   "preregistration_sha256": "31f7c92c8fbe2be7880af3627eb7d09b483abb6b6a77e557f148b5dbce719b96",
+   "preregistration_sha256": "1a80ac506b75371272536bb30e0e1aa5ace6e49324eab43dfe8a5b8b54fd068d",
    "frozen_before_any_fit": true
   },
   "irregularities": [
-   "IR-H97-001",
-   "IR-H97-002",
-   "IR-H97-003"
+   "IR-H102-001",
+   "IR-H102-002",
+   "IR-H102-003"
   ],
   "verdict": "negative",
   "submit_ok": false
  },
- "round": "H97",
- "stem": "gems52-h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros",
+ "round": "H102",
+ "stem": "gems52-h102-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros",
  "nonzero_px": 25400,
- "short_tif": "h97-candidate.tif",
- "short_zip": "h97-candidate.zip",
- "marker": "submission/LATEST.txt",
+ "short_tif": "h102-candidate.tif",
+ "short_zip": "h102-candidate.zip",
+ "marker": "submission/H102_LATEST.txt",
+ "role": "research-only candidate; shared current pointer stays on incumbent H96",
+ "incumbent_round": "H96",
  "exists": true,
- "download": "downloads/gems52-h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif",
- "download_zip": "downloads/gems52-h97-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.zip",
- "submission_note": "H97 co-train state machine: DVA2 consensus 18000 + buried A-only 7400, B-only veto, 25400px quota placement; vs 0.192829 bar; research",
- "submission_note_chars": 134,
+ "download": "downloads/gems52-h102-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif",
+ "download_zip": "downloads/gems52-h102-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.zip",
+ "submission_note": "H102 co-train state machine: DVA2 consensus 18000 + buried A-only 7400, B-only veto, 25400px quota placement; vs 0.192829 bar; research",
+ "submission_note_chars": 135,
  "published_byte_hash_matches_receipt": true
 }

@@ -1,7 +1,7 @@
-<!--H97-AGENTS-->
-## Current H97 continuation (2026-10-11) — READ FIRST
-Read README's H97 block (it ends with the session brief verbatim), `knowledge/97` (frozen preregistration,
-SHA-256 `31f7c92c8fbe2be7…`), `knowledge/94` (brief) and `knowledge/98` (results, generated).
+<!--H102-AGENTS-->
+## Current H102 continuation (2026-10-11) — READ FIRST
+Read README's H102 block (it ends with the session brief verbatim), `knowledge/97` (frozen preregistration,
+SHA-256 `1a80ac506b753712…`), `knowledge/94` (brief) and `knowledge/98` (results, generated).
 Verdict **negative** — both co-training arms below random on the holdout (quota_primary 0.026348 vs random
 0.058228 @25,400; g_025 0.019639 vs random 0.080426 @37,654); bar 0.192829. Slots used 0.
 This session's branch is `arena/1bc2f2ec-gemsdoe52`.
@@ -12,16 +12,16 @@ Settled this round; do not re-litigate:
   consensus 0.0293, quota 0.0263 — all at/below random (0.0582/0.0804). Views independent (max |ρ| 0.1337);
   View A insufficient (sufficiency gate FAIL by design). Any future co-training round needs a pre-fit hard
   sufficiency screen (mean OOF AUC ≥ 0.60, min fold ≥ 0.55) on the View A candidate.
-- **Quota budgets must be set against SPACED-EXTRACTABLE stratum counts, not raw stratum sizes** (IR-H97-001:
+- **Quota budgets must be set against SPACED-EXTRACTABLE stratum counts, not raw stratum sizes** (IR-H102-001:
   3 px spacing extracted 5,329 of 31,490 consensus cells; 15,104/25,400 dots are zero-score tie fill).
 - **The literal full-census lane/uniqueness rules are unsatisfiable for any non-empty emission** because of the
-  universal-coverage probe rasters (IR-H87-001 class; H97: dots near 1.0, census novelty 0.0). Report both the
+  universal-coverage probe rasters (IR-H87-001 class; H102: dots near 1.0, census novelty 0.0). Report both the
   literal and the informative-only reading; the scored-only policy reading was PASS (max near 0.3285).
 - **Control reproduction is exact** on the 53,186-px fold set (single_B 0.174517, random 0.080426, B_DVA2 0.192831):
   the H82/H84 bar 0.192829 is the correct comparison for this round's holdout.
-- Publishing: `scripts/publish_h97_site.py` inserts `<!--H97-CARD-->` / `<!--H97-README-->` / `<!--H97-AGENTS-->`
-  blocks (idempotent) and rewrites the H97 pages/pointer; verify with `scripts/check_site.py` + pytest.
-<!--/H97-AGENTS-->
+- Publishing: `scripts/publish_h102_site.py` inserts `<!--H102-CARD-->` / `<!--H102-README-->` / `<!--H102-AGENTS-->`
+  blocks (idempotent) and rewrites the H102 pages/pointer; verify with `scripts/check_site.py` + pytest.
+<!--/H102-AGENTS-->
 <!--H96-AGENTS-->
 ## Current H96 continuation (2026-10-10) — READ FIRST
 Read README's standing brief and status block first. H96 verdict **NEGATIVE**. Download yes (audit only), submit **NO**.

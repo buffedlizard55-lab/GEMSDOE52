@@ -1,9 +1,9 @@
-# 97 · H97 — preregistration, frozen BEFORE any fit (2026-10-10)
+# 97 · H102 — preregistration, frozen BEFORE any fit (2026-10-10)
 
-Round identifier: **H97** (checked free on `origin/main` at commit `5b8c81c4` by `git grep -l "H97"`
+Round identifier: **H102** (checked free on `origin/main` at commit `5b8c81c4` by `git grep -l "H102"`
 over all `.md/.json/.py/.html` files; no match). Session branch `arena/1bc2f2ec-gemsdoe52`.
 Lane: the standing brief's two-view co-training paragraph (Blum & Mitchell, COLT '98,
-doi:10.1145/279943.279962). Pinned by `registry/h97_preregistration.json`; `scripts/run_h97.py`
+doi:10.1145/279943.279962). Pinned by `registry/h102_preregistration.json`; `scripts/run_h102.py`
 refuses to start if this file's SHA-256 moves.
 
 **Labels.** HOLDOUT-DTI = a reading of the shared evaluator `gems52-pooled-hide-v1` (hide-and-recover,
@@ -11,7 +11,7 @@ whole fault segments withheld with the 80 px buffer of `label-blind-quadrants-v2
 catalogue-derived feature computed from the fold's *visible* faults only, visible faults masked
 pixel-exactly, pooled DTI at α 0.2 / β 0.8 / 300 m triangular kernel, 95 % paired CI by 1,000-draw
 spatial-cluster bootstrap, seed 61052, 53,186 withheld positive px). ORGANIZER-CONFIRMED = nothing
-this round (no submission-page receipts exist for any H97 number). OWNER-REPORTED and PUBLIC-BOARD =
+this round (no submission-page receipts exist for any H102 number). OWNER-REPORTED and PUBLIC-BOARD =
 cited only, never computed. A projection is never written as a score.
 
 ## 0 · Settled facts carried in (not re-litigated)
@@ -70,7 +70,7 @@ obtainability check).
 
 * **View B (primary ranking).** H82's DVA-2 bank (50 channels: per band × lag,
   `(max−min)/(max+min)` anisotropy and log-variance of the 8-directional semivariance), computed by
-  `run_h84.stage_channels` redirected to `work/h97/features` (imported, not forked). Learner:
+  `run_h84.stage_channels` redirected to `work/h102/features` (imported, not forked). Learner:
   `run_h61.learner_for("B", SEED)` (HistGradientBoostingClassifier, max_iter 250, lr 0.08,
   max_leaf_nodes 15, min_samples_leaf 40, l2 1.0, early stopping off, random_state 61052) on the
   store `view_B_with_external` channels + the 50 DVA2 channels (exactly H84's `B_DVA2` arm).
@@ -80,7 +80,7 @@ obtainability check).
 * **Folds.** `gems52.spatial.folds(cat, eligible, buffer_px=80)` = `label-blind-quadrants-v2`,
   4 folds; `SEED = 61052`. Training sample `run_h61.sample_for_fit` (20k pos / 60k neg cap,
   visible-catalogue collar 5 px). Region-only prediction, stitched per quadrant (`run_h82.stitch`
-  redirected to `work/h97`).
+  redirected to `work/h102`).
 * **Emission pool.** `eligible ∧ finite(fB) ∧ finite(fA) ∧ (dist_to_catalogue > 200 m)`.
 * **Ranks.** `rB`, `rA` = `run_h61.pct_rank` of the stitched OOF probability fields over the
   emission pool (averaged ties). All strata/graft definitions below operate on these global ranks;
@@ -152,20 +152,20 @@ verdict. No submission slot is picked by this session (protocol §6).
 
 ## 5 · Emission and artefacts (frozen)
 
-* File: `submission/gems52-h97-disagreement-quota-dva2-25400px-<UTC>-<sha8>-zeros.tif`
+* File: `submission/gems52-h102-disagreement-quota-dva2-25400px-<UTC>-<sha8>-zeros.tif`
   (single-band float32, values exactly {0,1}, 0.0 outside the organiser footprint, no NaN,
   `gems52.grid.write_geotiff_portal_exact(outside="zero")`) + ZIP wrapper.
-* **Submission name:** `h97-disagreement-quota-dva2-25400px-<UTC>-<sha8>`;
-  **note (134/140 chars):** `H97 co-train state machine: DVA2 consensus 18000 + buried A-only 7400, B-only veto, 25400px quota placement; vs 0.192829 bar; research`
+* **Submission name:** `h102-disagreement-quota-dva2-25400px-<UTC>-<sha8>`;
+  **note (134/140 chars):** `H102 co-train state machine: DVA2 consensus 18000 + buried A-only 7400, B-only veto, 25400px quota placement; vs 0.192829 bar; research`
 * A-only reasoning: one CSV row per emitted A-only dot (7,400): grid ref, easting/northing, rA, rB,
   distance to mapped catalogue, dominant View-A band z-scores (H84 `A_BANDS`/`A_MECH` reading
   function, imported), geological reasoning, named non-fault mimic, falsifier, confidence LOW
   (View A failed sufficiency — stated on every row).
-* Run card: `evidence/h97_run_card.json` (hypothesis, mechanism, named non-fault process,
+* Run card: `evidence/h102_run_card.json` (hypothesis, mechanism, named non-fault process,
   HOLDOUT-DTI + CI, correlation/overlap vs registry, raster sha256, validator output, submission
   name + note, verdict).
-* Knowledge: `knowledge/98_h97_results_and_limits.md`; site: `docs/h97.html` +
-  `docs/h97-executive-summary.html`; README/AGENTS blocks; `scripts/check_site.py` clean.
+* Knowledge: `knowledge/98_h102_results_and_limits.md`; site: `docs/h102.html` +
+  `docs/h102-executive-summary.html`; README/AGENTS blocks; `scripts/check_site.py` clean.
 
 ## 6 · What this round must not re-litigate
 
