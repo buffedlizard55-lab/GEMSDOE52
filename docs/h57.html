@@ -1,13 +1,13 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>H57 &middot; two-view co-training union arm &middot; GEMSDOE52</title>
-<link rel="stylesheet" href="style.css"><script src="site.js" defer></script></head><body><!--CTD5-ARCHIVE-NOTICE--><aside style="padding:14px 22px;background:#fff1de;color:#6e421d;border-bottom:1px solid #dcc8a8;font:14px/1.6 system-ui">Historical research archive, not current upload approval. <a href="index.html" style="color:#126954">Current CTD5 file and failed gates</a>. Older score, provenance and “safe to submit” statements may be superseded; no organizer score is newly confirmed here.</aside>
+<link rel="stylesheet" href="style.css"><script src="site.js" defer></script></head><body><!--CTD5-ARCHIVE-NOTICE--><aside role="alert" style="padding:14px 22px;background:#fef2f2;color:#7f1d1d;border:2px solid #991b1b;border-radius:8px;font:14px/1.6 system-ui"><strong>Current H75 status: DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION.</strong> No owner override or waiver; H75 is terminal and must not be rerun. <a href="h75-executive-summary.html" style="color:#7f1d1d">Read the H75 stop status</a>. The page below is a historical archive; no archived file is approved here.</aside>
 <a class="skip" href="#main">Skip to evidence</a>
 <header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html">Overview</a>
-<a href="executive-summary.html">Submission guide</a><a href="h57.html">H57 current</a><a href="h56.html">H56 audit</a><a href="validation.html">Validation</a>
+<a href="executive-summary.html">Research status</a><a href="h57.html">H57 current</a><a href="h56.html">H56 audit</a><a href="validation.html">Validation</a>
 <a href="forensics.html">0.2778 autopsy</a><a href="sources.html">Sources</a></nav></header>
 <main id="main">
-<div class="download-bar" id="h57-bar" aria-label="H57 submission download">
+<div class="download-bar" id="h57-bar" aria-label="H57 research download; not current approval">
 <div><strong>H57 &mdash; two-view co-training union arm &middot; VERDICT: SUPPORTED BUT BELOW THE REGISTERED LIFT THRESHOLD</strong>
 <small><code>gems52-h57-union-novel-core25517px-arm14804px.tif</code></small>
 <small>157,541 bytes &middot; single-band float32 &middot; EPSG:32611 &middot;
@@ -19,18 +19,18 @@
 unique against 38 accessible aligned priors:
 <b>True</b> &middot; arm cells outside their support union:
 <b>14,804 px (100.0% of the arm)</b></small>
-<small>closest emitted cell to a mapped catalogue trace <b>223.6 m</b>
-&mdash; the &le; 200 m ring that measured exactly zero credit is empty by construction.</small>
+<small>closest emitted cell to a mapped known-fault trace <b>223.6 m</b>. This is a placement fact, not a claim that nearby new-fault truth earns zero credit.</small>
 <small>conditional projection only (owner-reported scores, not organiser-authenticated):
 rho=0.03 &rarr; 0.2658, rho=0.05 &rarr; 0.2811, rho=0.07 &rarr; 0.2964, rho=0.09 &rarr; 0.3118, rho=0.12 &rarr; 0.3347, rho=0.14 &rarr; 0.35.
 rho is the arm's credit density &mdash; a <b>prior, not a measurement</b>. Not a forecast.</small>
-<small>submission name: <code>gems52-h57-two-view-union-arm-core25517px-arm14804px-5fadcaef-zeros</code><br>note (181 chars): <code>H57: exactly-accounted core of two scored priors plus 14.8k px of two-view co-training union mass, all outside the 200m ring and all outside prior support. Not a verified fault map.</code></small>
+<small>Archived research identifier (not a submission instruction): <code>gems52-h57-two-view-union-arm-core25517px-arm14804px-5fadcaef-zeros</code></small>
 </div>
-<a class="button" href="downloads/gems52-h57-union-novel-core25517px-arm14804px.tif" download>&darr; Download the submission .TIF</a>
+<a class="button" href="downloads/gems52-h57-union-novel-core25517px-arm14804px.tif" download>&darr; Download H57 research TIFF</a>
 <a class="button" href="downloads/gems52-h57-union-novel-core25517px-arm14804px.zip" download>&darr; Download single-TIFF .ZIP</a>
 <a class="button secondary" href="downloads/h57-candidate.tif" download>Short link &middot; h57-candidate.tif</a>
 <a class="button secondary" href="h57.html">Full audit &amp; holdout &rarr;</a>
 </div>
+<div class="status"><strong>Current evidence correction — public-board observation, not a receipt.</strong> The saved 2026-10-09 20:18 UTC observation places the team-level 0.2778 row at rank 17 (top 0.3774; 0.3195 at rank 7). The board contains no TIFF hash or organizer submission receipt; the file association remains owner-reported. The local subset and 100–200 m distances do not identify hidden-truth credit or explain a score change; new-fault truth may occur within 300 m of known traces. H57 calculations are conditional research outputs, not scores. See <a href="../knowledge/49_why_02778_phd_answer.md">knowledge/49</a>.</div>
 <div class="eyebrow">H57 &middot; session 2026-10-07 &middot; blind preregistration in
 <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/17_hypotheses_H57_preregistered.md">knowledge/17</a>
 &middot; results in
@@ -42,18 +42,10 @@ it on restored competition bytes and reports all five outcomes, including the fo
 artefact ships the union ranking field and the incumbent isotropic emitter, because those are the
 two choices the holdouts actually supported.</p>
 
-<div class="status"><strong>Verdict: SUPPORTED BUT BELOW THE REGISTERED LIFT THRESHOLD.</strong> The structure of this artifact is verified end to end -- format, uniqueness, novelty, the ring, the set relations and the per-candidate geological reasoning all pass their registered gates, and the ranking field is the best of eight on the only holdout that can measure anything. R1's absolute +0.005 lift threshold is not met (best +0.0048). Upload is therefore a judgement call, not a gate pass: P(this file scores below the owner's own 0.2778) = 0.83 under the registered prior, and P(above 0.3195) = 0.36.</div>
+<div class="status"><strong>Research-only; not approved for a slot.</strong> H57 did not meet its preregistered +0.005 HOLDOUT-DTI lift threshold (best +0.0048). The reported-score probabilities are conditional model scenarios, not scores. No weekly slot is recommended or recorded for this artifact.</div>
 
 <h2>1 &middot; What the metric actually pays for</h2>
-<p>From the published definition
-(<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/#performance-metric">page 967</a>)
-and the identity <code>FNw = |G| &minus; TPw</code>, a marginal pixel covering a previously
-uncovered truth pixel at distance <code>d</code> is worth accepting exactly when
-<code>k(d) &gt; &alpha;&middot;DTI</code>. At DTI 0.2778 that is a radius of <b>283 m</b>. Two
-consequences drive everything below: place, do not spray; and <b>add mass only if its credit
-density exceeds 0.2&middot;DTI &asymp; 0.0556</b>. The dead 6,436-cell ring
-inside 200 m of a mapped trace earned <b>exactly zero</b>, and deleting it turned a real 0.2600 into
-a real 0.2778.</p>
+<p>From the published metric definition and <code>FNw = |G| &minus; TPw</code>, the marginal condition <code>k(d) &gt; &alpha;&middot;DTI</code> is a conditional algebraic identity for a hypothetical added true-positive contribution. Using 0.2778 as an illustrative DTI gives 283 m for the stated kernel, but the value is owner-reported and this does not measure hidden-truth credit at any location. The local 6,436-cell subset difference lies 100–200 m from the known-fault mask; that does not show it earned zero credit or caused the public score observation. Official staff says new-fault truth may occur within 300 m of known traces. The file-to-score mapping is owner-reported, not organizer-confirmed.</p>
 
 <h2>2 &middot; The conditional-independence test the brief demands</h2>
 <p>Per-block out-of-fold error of each view on labelled negatives, whole-segment folds, 4 px buffer,
@@ -125,9 +117,9 @@ isotropic emitter. This is recorded as a <b>refutation</b>, not a tuning result.
 <table class="data"><tr><th>hypothesis</th><th>evidence</th><th>result</th></tr><tr><td>H57-A anisotropic along-strike placement</td><td><code>evidence/h57_validation.json -> placement</code></td><td>+0.000055 tip and +0.000031 hide, 2/4 folds; the +28.6 % credited-truth per node is exact for an isolated 1-px trace and does not survive against the wider mapped traces, so the isotropic 3-px emitter was shipped</td></tr><tr><td>H57-B A-only buried-structure population</td><td><code>evidence/h57_strata.json -> S_a_only</code></td><td>0.000785 against a matched random control of 0.001057: the worst of the eight arms tested, and below random. The stratum is kept as a labelled component of the arm and carries its own reasoning rows, but it is not the population</td></tr><tr><td>View A alone as the arm's ranking field</td><td><code>evidence/h57_strata.json -> view_A</code></td><td>0.003850 against the union's 0.004875 on identical rows</td></tr><tr><td>pseudo-labels as a training signal for View A</td><td><code>evidence/h57_cotrain.json -> pseudo_label</code></td><td>out-of-fold AUC 0.4842 -> 0.4869 (delta +0.0027), i.e. indistinguishable from noise, matching knowledge/03 N-1</td></tr></table>
 
 <h2>9 &middot; The artefact</h2>
-<p>25,517 core cells &mdash; the double-corroborated atom
-<code>P1 = h33-2-b2 &cap; gems24-d1-5</code>, whose credit density is bounded exactly by
-published-score algebra &mdash; plus 14,804 arm cells ranked by
+<p>25,517 core-overlap cells &mdash; the double-corroborated local atom
+<code>P1 = h33-2-b2 &cap; gems24-d1-5</code>, whose score-derived credit algebra is conditional on
+owner-reported scores and an assumed hidden-positive count &mdash; plus 14,804 arm cells ranked by
 <code>max(p_A, p_B)</code> over pixels outside the &le; 200 m ring, outside every accessible
 prior's support union, and at least 3 px from the core, placed with the isotropic 3-px emitter.</p>
 <p><a class="button" href="downloads/gems52-h57-union-novel-core25517px-arm14804px.tif" download>&darr; Download the .TIF</a>
@@ -136,10 +128,10 @@ prior's support union, and at least 3 px from the core, placed with the isotropi
 
 <h2>10 &middot; Slot gate</h2>
 <table class="data"><tr><th>registered check</th><th>result</th></tr><tr><td>R4 format gate (single band, float32, EPSG:32611, 3730x3292, transform, all finite, [0,1], no nodata)</td><td><b>PASS</b></td></tr><tr><td>R5 decoded pattern differs from every accessible aligned prior</td><td><b>PASS</b></td></tr><tr><td>R5 support novelty gate</td><td><b>PASS</b></td></tr><tr><td>R6 artefact is not the union of the two named priors</td><td><b>PASS</b></td></tr><tr><td>R3 nothing emitted inside the <= 200 m catalogue ring</td><td><b>PASS</b></td></tr><tr><td>R2 block-buffered OOF independence measured and non-degenerate</td><td><b>PASS</b></td></tr><tr><td>R7 one written geological reasoning per emitted arm pixel</td><td><b>PASS</b></td></tr><tr><td>R1 mean lift >= +0.005 on BOTH instruments</td><td><b>FAIL</b></td></tr><tr><td>R1 >= 3/4 folds positive on BOTH instruments</td><td><b>PASS</b></td></tr></table>
-<p>P(this file scores below the owner's own 0.2778) = <b>0.83</b> &middot;
-P(above 0.3195) = <b>0.36</b> &middot; P(above the observed board top 0.3774) =
-<b>0.00</b>, all under the registered joint prior over the exact core-credit interval
-and the arm's credit density. registry/leaderboard_snapshot_2026-10-07.json records rank 1 = 0.3774 (team xiaofanhu), rank 7 = 0.3195 (team DARD) and the owner-reported extradr19 best of 0.2778 at rank 13. The working target of 0.3195 is rank 7, not the top.</p>
+<p>Conditional model probability (not a score): this file scores below the owner's reported 0.2778 = <b>0.83</b> &middot;
+Conditional probability above 0.3195 = <b>0.36</b> &middot; Conditional probability above the observed board top 0.3774 =
+<b>0.00</b>, under the registered joint prior over score-derived core-credit assumptions
+and the arm's credit density; these are not leaderboard forecasts or scores. The archived <code>registry/leaderboard_snapshot_2026-10-07.json</code> recorded 0.2778 at rank 13 on that date. The later saved 2026-10-09 20:18 UTC public-board observation places it at rank 17 (top 0.3774; 0.3195 at rank 7). These are team-level rows, not TIFF-hash receipts; 0.2778 remains owner-reported as a file association, and 0.3195 is not the public-board top.</p>
 
 <h2>11 &middot; Limits, stated plainly</h2>
 <ol>

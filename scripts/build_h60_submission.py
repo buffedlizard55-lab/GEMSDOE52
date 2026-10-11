@@ -1,18 +1,13 @@
 #!/usr/bin/env python3
-"""H60 — build the artefact, run every gate, write every receipt.
+"""Historical H60 research builder, disabled under the terminal H75 stop.
 
-Inputs (all measured, none assumed):
-  work/h60_fields.npz          out-of-fold View A / View B fields from scripts/run_h60.py
-  evidence/h60_selection.json  the arm and budget the preregistered rule selected
-  data/training_features.tif   manifest-pinned, SHA-verified this session
+H75 is the current DUPLICATE/STOP. This legacy builder is fail-closed while H75 is
+published; it cannot rebuild an artifact, create a current run card, move any H60 pointer,
+authorize a slot, or provide portal instructions. Its old research ZIP format, if ever
+reviewed in a separately authorized context, is a single TIFF only.
 
-Outputs:
-  submission/<name>.tif + .zip + submission-name.txt + submission-note.txt
-  evidence/h60_build.json / h60_format_gate.json / h60_uniqueness.json / h60_reasoning.json
-  docs/downloads/ copies, evidence/h60-<n>px-candidate-geology.csv
-
-Nothing here reads a prior submission raster as a *model input*.  Priors are read only by
-the uniqueness gate, which is the one place the repository is allowed to look at them.
+The frozen H60 receipts remain historical evidence. This module must never change
+submission/LATEST.txt or submission/H60_LATEST.txt.
 """
 
 from __future__ import annotations
@@ -76,7 +71,18 @@ def _fb(o):
     return str(o)
 
 
+def h75_stop_is_current() -> bool:
+    home = ROOT / "docs" / "index.html"
+    status = ROOT / "docs" / "h75-executive-summary.html"
+    return (home.is_file() and status.is_file()
+            and "H75: DUPLICATE/STOP" in home.read_text(errors="replace")
+            and "DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION" in status.read_text(errors="replace"))
+
+
 def main() -> int:
+    if h75_stop_is_current():
+        print("H75 terminal DUPLICATE/STOP is current; H60 historical builder exited before any fit, artifact, ZIP, or pointer write")
+        return 0
     ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     st = Stack(WORK)
     lab = rasterio.open(ROOT / "data/labels.tif").read(1)
@@ -306,23 +312,10 @@ def main() -> int:
     log(f"[reasoning] {n_px} rows ({n_a_only} A-only) -> {csv_path}")
 
     # --------------------------------------------------------------- zip + short path
-    note = (f"H60 {arm} {n_px}px; two-view co-training on SHA-pinned bytes; "
-            f"independence measured; >200m ring excluded; all-finite binary [0,1]; "
-            f"not a verified fault map")
-    if len(note) > 200:
-        note = note[:200]
     SUB.mkdir(exist_ok=True); DL.mkdir(parents=True, exist_ok=True)
-    (SUB / f"{name}-submission-name.txt").write_text(name + "\n")
-    (SUB / f"{name}-submission-note.txt").write_text(note + "\n")
     zpath = SUB / f"{name}.zip"
     with zipfile.ZipFile(zpath, "w", zipfile.ZIP_DEFLATED) as z:
         z.write(SUB / f"{name}.tif", f"{name}.tif")
-        z.writestr("submission-name.txt", name + "\n")
-        z.writestr("submission-note.txt", note + "\n")
-        z.writestr("README.txt",
-                   "Single-band float32 GeoTIFF, EPSG:32611, 3730x3292 at 100 m.\n"
-                   f"Every pixel is finite and in {{0,1}}; {n_px} pixels are 1.\n"
-                   "Submit the .tif (or this .zip) on the competition submission page.\n")
     for dst in (DL / f"{name}.tif", DL / f"{name}.zip", DL / "h60-cotrain-candidate.tif",
                 DL / "h60-cotrain-candidate.zip"):
         shutil.copy2(zpath if dst.suffix == ".zip" else SUB / f"{name}.tif", dst)
@@ -335,7 +328,9 @@ def main() -> int:
                  n_nan=int(np.isnan(served).sum()), all_finite=bool(np.isfinite(served).all()),
                  values_set=sorted({float(v) for v in np.unique(served)})[:8],
                  in_range=bool(np.nanmin(served) >= 0.0 and np.nanmax(served) <= 1.0))
-    final = dict(name=name, note=note, tif_sha256=info["sha256"], bytes=info["bytes"],
+    final = dict(name=name, artifact_status="HISTORICAL RESEARCH ONLY · NOT FOR SUBMISSION",
+                 approved_for_submission=False, approved_for_weekly_slot=False,
+                 tif_sha256=info["sha256"], bytes=info["bytes"],
                  emitted_px=n_px, zip_bytes=zpath.stat().st_size,
                  range_proof_from_served_bytes=proof,
                  format_gate_ok=fmt["ok"], format_problems=fmt["problems"],
@@ -347,7 +342,7 @@ def main() -> int:
                  ok_to_download=True,
                  generated_utc=ts)
     save("h60_artifact.json", final)
-    (SUB / "H60_LATEST.txt").write_text(f"{name}.tif\n")
+    log("historical artifact only; no H60 or global submission pointer is changed")
     log(f"[build] artefact {name}  range {proof['min']}..{proof['max']} "
         f"nan={proof['n_nan']} in_range={proof['in_range']}")
     return 0

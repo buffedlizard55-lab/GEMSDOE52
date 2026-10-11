@@ -49,14 +49,14 @@ def table(headers: list[str], rows: list[list[str]]) -> str:
 def page(title: str, body: str) -> str:
     nav = "".join(link(p, label) for p, label in [
         ("index.html", "Overview"),
-        ("h55.html", "Main H55 candidate"),
+        ("h55.html", "H55 historical archive"),
         ("h55-profile.html", "H55-PROFILE follow-up"),
         ("h55-edge.html", "H55-EDGE negative result"),
         ("validation.html", "Validation"),
         ("downloads/index.html", "Downloads"),
         ("sources.html", "Sources"),
     ])
-    return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="H55-EDGE preregistered potential-field edge test: failed spatial promotion and strict support-novelty gates; research-only evidence archive."><title>{esc(title)} · GEMSDOE52</title><link rel="stylesheet" href="style.css"><script src="site.js" defer></script></head><body><a class="skip" href="#main">Skip to evidence</a><header><nav><a class="brand" href="index.html">GEMS / DOE 52</a>{nav}</nav></header><main id="main">{body}</main><footer>H55-EDGE is a historical research result, not the current H55 candidate. Fault-prediction research, not confirmed faults or geothermal vents. {link('sources.html','Sources')} · {link('irregularities.html','Limitations')} · {link('https://github.com/buffedlizard55-lab/GEMSDOE52','Code & complete prompt')}</footer></body></html>'''
+    return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="H55-EDGE preregistered potential-field edge test: failed spatial promotion and strict support-novelty gates; research-only evidence archive."><title>{esc(title)} · GEMSDOE52</title><link rel="stylesheet" href="style.css"><script src="site.js" defer></script></head><body><aside role="alert" style="padding:14px 22px;background:#fef2f2;color:#7f1d1d;border:2px solid #991b1b;font:14px/1.6 system-ui"><strong>H75: DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION.</strong> This H55 page is a historical research archive; it does not authorize upload, override, or slot use. <a href="h75-executive-summary.html">H75 stop status</a>.</aside><a class="skip" href="#main">Skip to evidence</a><header><nav><a class="brand" href="index.html">GEMS / DOE 52</a>{nav}</nav></header><main id="main">{body}</main><footer>H55-EDGE is a historical research result, not the current H55 candidate. Fault-prediction research, not confirmed faults or geothermal vents. {link('sources.html','Sources')} · {link('irregularities.html','Limitations')} · {link('https://github.com/buffedlizard55-lab/GEMSDOE52','Code & complete prompt')}</footer></body></html>'''
 
 
 def hash_file(path: Path) -> str:
@@ -186,7 +186,7 @@ def main() -> int:
               f"positive in {positive}/{hold['total_folds']} folds (required ≥{positive_needed}). "
               "The strict support-novelty slot diagnostic also failed. No portal upload, official score, or organizer acceptance is claimed.</div>")
     picture = (f'<figure><img src="assets/{preview.name}" alt="North-up overview of the H55-EDGE candidate pixels, known catalogue, and survey footprint."><figcaption>Decoded H55-EDGE raster: amber proposals, blue catalogue labels, muted survey footprint. Display downsample only; no pixel is field-confirmed.</figcaption></figure>' if preview else "")
-    downloads = f'''<section class="download-bar" aria-label="H55-EDGE research downloads"><div><strong>H55-EDGE research artifact — failed-gate archive</strong><small><code>{esc(file_name)}</code></small><small>{int(sub['bytes']):,} bytes · one float32 band · EPSG:32611 · {fmt_receipt['width']} × {fmt_receipt['height']} · values [{fmt_receipt['min']}, {fmt_receipt['max']}]</small><small>Byte SHA-256: <code>{esc(sub['sha256'])}</code></small><small>Portal note ({len(note)} / 200 characters): <code>{esc(note)}</code></small></div><a class="button" href="downloads/{esc(file_name)}" download>↓ Download .TIF</a><a class="button" href="downloads/{esc(Path(file_name).stem)}.zip" download>↓ Download one-TIFF .ZIP</a></section>'''
+    downloads = f'''<section class="download-bar" aria-label="H55-EDGE research downloads"><div><strong>H55-EDGE research artifact — failed-gate archive</strong><small><code>{esc(file_name)}</code></small><small>{int(sub['bytes']):,} bytes · one float32 band · EPSG:32611 · {fmt_receipt['width']} × {fmt_receipt['height']} · values [{fmt_receipt['min']}, {fmt_receipt['max']}]</small><small>Byte SHA-256: <code>{esc(sub['sha256'])}</code></small><small><strong>RESEARCH ONLY · NOT FOR SUBMISSION.</strong> No portal name or note is provided; local checks do not establish submission eligibility.</small></div><a class="button" href="downloads/{esc(file_name)}" download>↓ Download research TIFF</a><a class="button" href="downloads/{esc(Path(file_name).stem)}.zip" download>↓ Download one-TIFF .ZIP</a></section>'''
 
     registered = deviation.get("registered_h55_log_edge_inputs", {})
     implemented = deviation.get("implemented_new_h55_log_edge_inputs", {})
@@ -197,10 +197,18 @@ def main() -> int:
                     f"required {threshold:+.3f} and {positive_needed}/{hold['total_folds']}. Strict support-novelty gate also failed. No slot or score.")
     archive = f'''<section id="h55-edge-archive" class="card"><h2>H55-EDGE potential-field experiment — failed gates, research only</h2><p>{esc(archive_text)}</p><p><a href="downloads/{esc(file_name)}" download>Download research TIFF</a> · <a href="downloads/{esc(Path(file_name).stem)}.zip" download>one-TIFF ZIP</a> · <a href="downloads/{esc(reasoning['file'])}">A-only reasoning CSV</a> · <a href="h55-edge.html">Full H55-EDGE audit</a></p></section>'''
     archive_downloads = f'''<section id="h55-edge-archive" class="card"><h2>H55-EDGE potential-field experiment — failed gates, research only</h2><p>{esc(archive_text)}</p><p><a href="{esc(file_name)}" download>Download research TIFF</a> · <a href="{esc(Path(file_name).stem)}.zip" download>one-TIFF ZIP</a> · <a href="{esc(reasoning['file'])}">A-only reasoning CSV</a> · <a href="../h55-edge.html">Full H55-EDGE audit</a></p></section>'''
-    upsert_section(DOCS / "h55.html", "<!--H55EDGE-ARCHIVE-->", "<!--/H55EDGE-ARCHIVE-->", archive, after="<main id=\"main\">")
-    upsert_section(DOCS / "index.html", "<!--H55EDGE-ARCHIVE-->", "<!--/H55EDGE-ARCHIVE-->", archive, after="<!--/H55PROFILE-->")
-    upsert_section(DOCS / "downloads/index.html", "<!--H55EDGE-ARCHIVE-->", "<!--/H55EDGE-ARCHIVE-->", archive_downloads, after="</h1>")
-    print(f"Published H55-EDGE archive only; preserved current main pointer and H55 candidate ({file_name}).")
+    home = DOCS / "index.html"
+    h75_page = DOCS / "h75-executive-summary.html"
+    h75_is_current = (home.is_file() and h75_page.is_file()
+                      and "H75: DUPLICATE/STOP" in home.read_text(errors="replace")
+                      and "NOT FOR SUBMISSION" in h75_page.read_text(errors="replace"))
+    if h75_is_current:
+        print("H75 status pages are current; H55-EDGE publisher skipped shared homepage and downloads-index edits")
+    else:
+        upsert_section(DOCS / "h55.html", "<!--H55EDGE-ARCHIVE-->", "<!--/H55EDGE-ARCHIVE-->", archive, after="<main id=\"main\">")
+        upsert_section(home, "<!--H55EDGE-ARCHIVE-->", "<!--/H55EDGE-ARCHIVE-->", archive, after="<!--/H55PROFILE-->")
+        upsert_section(DOCS / "downloads/index.html", "<!--H55EDGE-ARCHIVE-->", "<!--/H55EDGE-ARCHIVE-->", archive_downloads, after="</h1>")
+    print(f"Published H55-EDGE research archive only; preserved current status and main pointer ({file_name}).")
     return 0
 
 

@@ -59,7 +59,7 @@ def bar_html(b, name, note, verdict):
     nd = b["not_the_union"]
     px, arm, core = b["file"]["px"], b["arm"]["px"], b["core"]["px"]
     proj = b["projection_by_rho"]
-    return f"""<div class="download-bar" id="h57-bar" aria-label="H57 submission download">
+    return f"""<div class="download-bar" id="h57-bar" aria-label="H57 research download; not current approval">
 <div><strong>H57 &mdash; two-view co-training union arm &middot; VERDICT: {verdict}</strong>
 <small><code>{f}</code></small>
 <small>{human(fmt['bytes'])} bytes &middot; single-band float32 &middot; EPSG:32611 &middot;
@@ -71,14 +71,14 @@ def bar_html(b, name, note, verdict):
 unique against {u['n_priors_checked']} accessible aligned priors:
 <b>{u['canonical_pattern_unique']}</b> &middot; arm cells outside their support union:
 <b>{human(nd['arm_outside_prior_support_px'])} px ({nd['arm_outside_prior_support_frac'] * 100:.1f}% of the arm)</b></small>
-<small>closest emitted cell to a mapped catalogue trace <b>{b['file']['min_distance_to_catalogue_m']:.1f} m</b>
-&mdash; the &le; 200 m ring that measured exactly zero credit is empty by construction.</small>
+<small>closest emitted cell to a mapped known-fault trace <b>{b['file']['min_distance_to_catalogue_m']:.1f} m</b>.
+This is a placement fact, not a claim that nearby new-fault truth earns zero credit.</small>
 <small>conditional projection only (owner-reported scores, not organiser-authenticated):
 {', '.join(f'{k.replace("rho_", "rho=")} &rarr; {v}' for k, v in proj.items())}.
 rho is the arm's credit density &mdash; a <b>prior, not a measurement</b>. Not a forecast.</small>
-<small>submission name: <code>{name}</code><br>note ({len(note)} chars): <code>{note}</code></small>
+<small>Research archive only · NOT APPROVED FOR SUBMISSION · no weekly slot authorized</small>
 </div>
-<a class="button" href="downloads/{f}" download>&darr; Download the submission .TIF</a>
+<a class="button" href="downloads/{f}" download>&darr; Download H57 research TIFF</a>
 <a class="button" href="downloads/{f[:-4]}.zip" download>&darr; Download single-TIFF .ZIP</a>
 <a class="button secondary" href="downloads/h57-candidate.tif" download>Short link &middot; h57-candidate.tif</a>
 <a class="button secondary" href="h57.html">Full audit &amp; holdout &rarr;</a>
@@ -131,6 +131,7 @@ def page_html(b, c, v, st, name, note, verdict, gate):
 <a href="forensics.html">0.2778 autopsy</a><a href="sources.html">Sources</a></nav></header>
 <main id="main">
 {bar_html(b, name, note, verdict)}
+<div class="status"><strong>Current evidence correction — public-board observation, not a receipt.</strong> The saved 2026-10-09 20:18 UTC observation places the team-level 0.2778 row at rank 17 (top 0.3774; 0.3195 at rank 7). The board contains no TIFF hash or organizer submission receipt; the file association remains owner-reported. The local 37,654/44,090 subset and 100–200 m distances do not identify hidden-truth credit or explain a score change; new-fault truth may occur within 300 m of known traces. H57's calculations are conditional research outputs, not scores. See <a href="../knowledge/49_why_02778_phd_answer.md">knowledge/49</a>.</div>
 <div class="eyebrow">H57 &middot; session 2026-10-07 &middot; blind preregistration in
 <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/17_hypotheses_H57_preregistered.md">knowledge/17</a>
 &middot; results in
@@ -142,7 +143,7 @@ it on restored competition bytes and reports all five outcomes, including the fo
 artefact ships the union ranking field and the incumbent isotropic emitter, because those are the
 two choices the holdouts actually supported.</p>
 
-<div class="status"><strong>Verdict: {verdict}.</strong> {gate['recommendation']}</div>
+<div class="status"><strong>Research-only; not approved for a slot.</strong> H57 did not meet its preregistered +0.005 HOLDOUT-DTI lift threshold (best +0.0048). The reported-score probabilities are conditional model scenarios, not scores. No weekly slot is recommended or recorded for this artifact.</div>
 
 <h2>1 &middot; What the metric actually pays for</h2>
 <p>From the published definition
@@ -151,9 +152,7 @@ and the identity <code>FNw = |G| &minus; TPw</code>, a marginal pixel covering a
 uncovered truth pixel at distance <code>d</code> is worth accepting exactly when
 <code>k(d) &gt; &alpha;&middot;DTI</code>. At DTI 0.2778 that is a radius of <b>283 m</b>. Two
 consequences drive everything below: place, do not spray; and <b>add mass only if its credit
-density exceeds 0.2&middot;DTI &asymp; {dm['marginal_breakeven_rho']}</b>. The dead 6,436-cell ring
-inside 200 m of a mapped trace earned <b>exactly zero</b>, and deleting it turned a real 0.2600 into
-a real 0.2778.</p>
+density exceeds 0.2&middot;DTI &asymp; {dm['marginal_breakeven_rho']}</b>. The local 6,436-cell set removed between the owner-associated 0.2600 and 0.2778 rasters lies 100–200 m from the known-fault mask, but this does not identify its hidden-truth credit or explain a score change. Official staff says new-fault truth may occur within 300 m of known traces; neither the local distance nor the byte subset makes those cells zero-credit.</p>
 
 <h2>2 &middot; The conditional-independence test the brief demands</h2>
 <p>Per-block out-of-fold error of each view on labelled negatives, whole-segment folds, 4 px buffer,
@@ -225,9 +224,9 @@ isotropic emitter. This is recorded as a <b>refutation</b>, not a tuning result.
 <table class="data"><tr><th>hypothesis</th><th>evidence</th><th>result</th></tr>{refuted}</table>
 
 <h2>9 &middot; The artefact</h2>
-<p>{human(b['core']['px'])} core cells &mdash; the double-corroborated atom
-<code>P1 = h33-2-b2 &cap; gems24-d1-5</code>, whose credit density is bounded exactly by
-published-score algebra &mdash; plus {human(b['arm']['px'])} arm cells ranked by
+<p>{human(b['core']['px'])} core-overlap cells &mdash; the double-corroborated local atom
+<code>P1 = h33-2-b2 &cap; gems24-d1-5</code>, whose score-derived credit algebra is conditional on
+owner-reported scores and an assumed hidden-positive count &mdash; plus {human(b['arm']['px'])} arm cells ranked by
 <code>max(p_A, p_B)</code> over pixels outside the &le; 200 m ring, outside every accessible
 prior's support union, and at least 3 px from the core, placed with the isotropic 3-px emitter.</p>
 <p><a class="button" href="downloads/{fname(b)}" download>&darr; Download the .TIF</a>
@@ -236,10 +235,13 @@ prior's support union, and at least 3 px from the core, placed with the isotropi
 
 <h2>10 &middot; Slot gate</h2>
 <table class="data"><tr><th>registered check</th><th>result</th></tr>{chk}</table>
-<p>P(this file scores below the owner's own 0.2778) = <b>{pb['0.2778']:.2f}</b> &middot;
+<p><strong>Conditional model probabilities only — not scores or leaderboard forecasts.</strong>
+P(this file scores below the owner's reported 0.2778) = <b>{pb['0.2778']:.2f}</b> &middot;
 P(above 0.3195) = <b>{pb['0.3195']:.2f}</b> &middot; P(above the observed board top 0.3774) =
-<b>{pb['0.3774']:.2f}</b>, all under the registered joint prior over the exact core-credit interval
-and the arm's credit density. {gate['board_note']}</p>
+<b>{pb['0.3774']:.2f}</b>, all conditional model probabilities under the registered joint prior over
+score-derived core-credit assumptions and the arm's credit density; they are not scores or
+leaderboard forecasts. {gate['board_note']} Later saved observation (2026-10-09 20:18 UTC):
+0.2778 at rank 17, top 0.3774; these team-level rows have no TIFF-hash receipt.</p>
 
 <h2>11 &middot; Limits, stated plainly</h2>
 <ol>
@@ -267,119 +269,37 @@ byte count &mdash; integrity-pinned, <b>not</b> organiser-authenticated download
 
 def exec_html(b, gate, name, note, verdict):
     fmt = b["format_gate"]
-    u = b["uniqueness"]
-    nd = b["not_the_union"]
-    px = b["file"]["px"]
-    ok = "no problems" if not fmt["problems"] else "; ".join(fmt["problems"])
-    fits = "fits" if len(note) <= 200 else "TOO LONG"
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Exactly how to submit the H57 GeoTIFF to DrivenData competition 306: the unique name, the note, and why 'Predicted values must be in range [0,1]' happens.">
-<title>Submit in 4 steps &middot; GEMSDOE52</title><link rel="stylesheet" href="style.css">
-<script src="site.js" defer></script></head><body><a class="skip" href="#main">Skip to content</a>
+<meta name="description" content="H57 historical research artifact; not approved for submission. No upload instructions or copyable identification fields.">
+<title>H57 research status — not for submission · GEMSDOE52</title><link rel="stylesheet" href="style.css">
+</head><body><a class="skip" href="#main">Skip to content</a>
 <header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html">Overview</a>
-<a href="executive-summary.html">Submission guide</a>{NAV_NEW}<a href="forensics.html">0.2778 autopsy</a>
+<a href="executive-summary.html">Research status</a>{NAV_NEW}<a href="forensics.html">0.2778 evidence</a>
 <a href="hypotheses.html">Hypotheses</a><a href="sources.html">Sources</a>
 <a href="irregularities.html">Limitations</a></nav></header><main id="main">
-{bar_html(b, name, note, verdict)}
-
-<h1>Submitting this file takes four steps.</h1>
-<p class="lede">Everything below is generated from the file on disk, not typed in. If any statement
-here ever disagrees with the bytes, <code>scripts/check_site.py</code> fails the build.</p>
-
-<div class="status"><strong>Verdict: {verdict}.</strong> {gate['recommendation']}</div>
-
-<section class="card"><h2>Step 2 &mdash; what the form asks for, and what this file contains</h2>
-<table><tr><th>Form field</th><th>What the portal requires</th><th>This file</th></tr>
-<tr><td>File to submit</td><td>A single-band <code>.tif</code>, or a <code>.zip</code> holding
-exactly one GeoTIFF. The CRS, shape and geotransform must match the submission format.</td>
-<td><code>{fname(b)}</code> &mdash; {human(fmt['bytes'])} bytes, CRS <code>{fmt['crs']}</code>,
-{human(fmt['width'])} &times; {human(fmt['height'])}, transform
-<code>({fmt['transform'][0]:g}, {fmt['transform'][1]:g}, {fmt['transform'][2]:g}, {fmt['transform'][3]:g}, {fmt['transform'][4]:g}, {fmt['transform'][5]:g})</code>,
-identical to <code>sample_submission.tif</code>. A .ZIP of the same TIFF is the second button.</td></tr>
-<tr><td>Predicted values</td><td>&ldquo;Predicted values must be in range [0,1]&rdquo;</td>
-<td>raw values are exactly <code>{{0, 1}}</code> &mdash; min {fmt['min']:.0f}, max
-{fmt['max']:.0f}, <b>0 NaN</b>, 0 infinities, no nodata tag. Format gate:
-<b>{'PASS' if fmt['ok'] else 'FAIL'}</b> ({ok}).</td></tr>
-<tr><td>Submission name</td><td>A unique name that tells your submissions apart</td>
-<td><code>{name}</code></td></tr>
-<tr><td>Note (optional)</td><td>A short comment, at most 200 characters</td>
-<td>the {len(note)}-character string below &mdash; <b>{fits}</b></td></tr></table>
-<label for="submission-note">Copy this into the Note box ({len(note)} / 200 characters)</label>
-<textarea id="submission-note" readonly>{note}</textarea><button data-copy="submission-note">Copy note</button>
-<p class="small">The bytes you downloaded are the bytes that were checked: sha256
-<span class="mono">{b['file']['sha256']}</span>. Re-exporting or re-compressing is unnecessary; the
-portal accepts the <code>.tif</code> directly.</p></section>
-
-<section class="card"><h2>Step 3 &mdash; if the portal says &ldquo;Predicted values must be in range [0,1]&rdquo;</h2>
-<p>That error has been hit in this project's history and it is almost never a scaling problem. Three
-causes account for it, in the order they occur:</p>
-<ol>
-<li><strong>No-data encoding.</strong> The problem page says data outside the survey bounds may be
-&quot;null or NaN&quot;, but the validator range-checks the array and NaN fails
-<code>0 &le; v &le; 1</code> in every comparison direction. The competition's own
-<code>sample_submission.tif</code> is the proof: its {human(fmt['mass'] + fmt['n_nan'])}-cell
-finite footprint is written with <b>0.0</b>, not NaN. This file writes 0.0 everywhere it does not
-predict, so it cannot trigger this.</li>
-<li><strong>A no-data tag outside [0,1].</strong> A <code>nodata</code> value such as
-<code>-1</code> or <code>-3.4e38</code> is read back by some validators as a pixel value. This file
-carries <b>no nodata tag at all</b>.</li>
-<li><strong>Rescaling that was never applied.</strong> If a model outputs logits or arbitrary real
-scores they must be written as probabilities. This file never needed rescaling: it is written
-directly in {{0, 1}}.</li>
-</ol>
-<p class="small">All three are checked locally by <code>gems52.gates.format_report</code> against
-the competition's own <code>sample_submission.tif</code>, and every check is re-run against the
-served download by <code>scripts/check_site.py</code>. Local checks are a compatibility precaution,
-not a promise about an undocumented portal validator.</p></section>
-
-<section class="card"><h2>Step 4 &mdash; is this file actually new?</h2>
-<table><tr><th>Check</th><th>Result</th></tr>
-<tr><td>Decoded pattern equals any of the {u['n_priors_checked']} accessible aligned prior rasters</td>
-<td><b>{'no &mdash; none' if u['canonical_pattern_unique'] else 'YES &mdash; FAIL'}</b></td></tr>
-<tr><td>Equals the literal union of those priors</td>
-<td><b>{u['equals_literal_prior_union']}</b></td></tr>
-<tr><td>Arm cells outside the accessible prior-support union</td>
-<td><b>{human(nd['arm_outside_prior_support_px'])} px
-({nd['arm_outside_prior_support_frac'] * 100:.1f}% of the arm)</b></td></tr>
-<tr><td>Equals the union of the two views it was derived from</td>
-<td><b>{nd['arm_equals_every_pixel_of_the_A_only_pool']}</b></td></tr>
-<tr><td>Equals any of the three named prior files it was derived from</td>
-<td><b>{nd['file_equals_prior_A'] or nd['file_equals_prior_B'] or nd['file_equals_prior_E']}</b></td></tr>
-<tr><td>Closest emitted cell to a mapped catalogue trace</td>
-<td><b>{b['file']['min_distance_to_catalogue_m']:.1f} m</b> (the ring that measured exactly zero
-credit is empty)</td></tr>
-<tr><td>Cells clipped to the submission domain</td>
-<td>{human(b['clipping_to_sample_domain_px'])} (mass outside
-<code>sample_submission.tif</code>'s finite mask cannot earn credit and can only be scored as a
-false positive)</td></tr></table>
-<p class="small">This is uniqueness against the <em>accessible</em> inventory only. It is not proof
-against every submission on the leaderboard, and it is not a statement that any emitted cell is a
-fault: predictions are model proposals, and a competition score is not the Phase-2 expert
-outcome.</p></section>
-
-<h2>Honest limits</h2><ul>
-<li>The core of this file reuses support from two earlier owner-reported submissions; its credit
-bound is derived from scores that are <strong>owner-reported, not organiser-authenticated</strong>.</li>
-<li>The new arm's credit density is a <strong>prior</strong>. The full curve is printed on the
-<a href="h57.html">audit page</a>; it is conditional arithmetic, not a forecast. The arm cannot be
-scored by the catalogue simulator at all.</li>
-<li>{gate['recommendation']}</li>
-<li>Inputs are SHA-pinned owner mirrors of the competition rasters, restored through the GitHub API
-and verified by SHA-256 and byte count; they are <strong>not</strong> organiser-authenticated
-downloads.</li>
-</ul>
-<p class="small">Official sources:
-<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">problem statement</a> &middot;
-<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">description, metric and submission format</a> &middot;
-<a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">competition rules (PDF)</a> &middot;
-<a href="https://github.com/drivendataorg/gems-prize-reference-solution">official reference solution</a>.</p>
-</main><footer>Competition 306 &middot; Local research only &middot; A competition score is not the
-expert-reviewed outcome. <a href="irregularities.html">Limitations</a> &middot;
-<a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code and prompt</a></footer></body></html>"""
+<div class="status" role="alert"><strong>H57 · RESEARCH DOWNLOAD ONLY · NOT APPROVED FOR SUBMISSION · NO SLOT AUTHORIZED.</strong>
+<p>This historical artifact did not meet its preregistered +0.005 HOLDOUT-DTI lift threshold. Local format validity and decoded-pattern uniqueness do not establish scientific eligibility or organizer acceptance. No owner override, upload procedure, or paste-ready name/note is provided.</p></div>
+<div class="download-bar"><div><strong>H57 historical research GeoTIFF</strong><small><code>{fname(b)}</code> · {human(fmt['bytes'])} bytes · SHA-256 <code>{b['file']['sha256']}</code></small><small>Local format gate: {'PASS' if fmt['ok'] else 'FAIL'}; this is not a portal-acceptance receipt.</small></div>
+<a class="button" href="downloads/{fname(b)}" download>Download H57 research TIFF</a>
+<a class="button secondary" href="downloads/{Path(fname(b)).stem}.zip" download>Research ZIP</a>
+<a class="button secondary" href="h57.html">H57 audit receipts</a></div>
+<p>HOLDOUT-DTI is an internal hide-and-recover measurement, not a public leaderboard score or organizer receipt. Any conditional score projection in the archived audit is scenario arithmetic, not a forecast.</p>
+<p>No organizer-confirmed score receipt or weekly slot is recorded. This page authorizes no rerun, new run-card, rebuild, override, or submission.</p>
+<p><a href="h57.html">Historical method and evidence →</a> · <a href="data/h57_slot_gate.json">Historical slot-gate receipt</a> · <a href="data/h57_build.json">Build receipt</a></p>
+</main><footer>Competition 306 · Local research only · Predictions are not verified faults. No submission approval is recorded.</footer></body></html>"""
 
 
 def main() -> int:
+
+    _h75_home = ROOT / "docs" / "index.html"
+    _h75_status = ROOT / "docs" / "h75-executive-summary.html"
+    if (_h75_home.is_file() and _h75_status.is_file()
+            and "H75: DUPLICATE/STOP" in _h75_home.read_text(errors="replace")
+            and "DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION" in
+            _h75_status.read_text(errors="replace")):
+        print("H75 terminal stop is current; historical publisher made no page or pointer changes")
+        return 0
     b = load(EV / "h57_build.json")
     c = load(EV / "h57_cotrain.json")
     v = load(EV / "h57_validation.json")
@@ -405,8 +325,7 @@ def main() -> int:
     (DL / "README_H57.txt").write_text(
         f"{src.name}\nshort link: h57-candidate.tif (byte-identical alias)\n"
         f"sha256 {b['file']['sha256']}\nbytes {b['file']['bytes']}\n\n"
-        f"VERDICT: {verdict}\n\n"
-        f"submission name: {name}\nidentifying note ({len(note)} chars): {note}\n\n"
+        f"VERDICT: RESEARCH DOWNLOAD ONLY; NOT APPROVED FOR SUBMISSION\n\n"
         + "\n".join(f"- {k}: {v2}" for k, v2 in gate["checks"].items())
         + f"\n\n- {gate['recommendation']}\n")
 
@@ -446,10 +365,9 @@ def main() -> int:
         submission_name=name, note=note, note_chars=len(note),
         verdict=verdict,
         approved_for_weekly_slot=False,
-        approval_reason="R1's absolute +0.005 mean-lift threshold was not met (best +0.0048). "
-                        "The artefact is published and fully gated; the upload decision is left "
-                        "explicitly to the owner with its probability stated in "
-                        "docs/data/h57_slot_gate.json.",
+        approval_reason="NO: R1's registered +0.005 mean-lift threshold was not met (best +0.0048). "
+                        "This is research-only and not approved for submission; no owner override or "
+                        "weekly slot is authorized.",
         promoted=False, submission_slots_used=0,
         format=dict(ok=b["format_gate"]["ok"], problems=b["format_gate"]["problems"],
                     crs=b["format_gate"]["crs"], width=b["format_gate"]["width"],

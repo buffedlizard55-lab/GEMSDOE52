@@ -46,20 +46,21 @@ def block() -> str:
     rows = "".join(f"| {k} | {f(v['dti'], 6)} | [{f(v['ci95'][0], 6)}, {f(v['ci95'][1], 6)}] |\n"
                    for k, v in sc.items())
     return f"""{START}
-# GEMSDOE52 — a new research GeoTIFF and an explicit submit verdict
+# H61 historical research artifact — negative result and explicit stop status
 
-**[★ Download the H61 GeoTIFF — one click](docs/downloads/h61-candidate.tif)** ·
-[single-TIFF ZIP](docs/downloads/h61-candidate.zip) ·
+**[Download the H61 GeoTIFF for research](docs/downloads/h61-candidate.tif)** ·
+[single-TIFF research ZIP](docs/downloads/h61-candidate.zip) ·
 [geological reasoning CSV](docs/downloads/h61-a-only-reasoning.csv) ·
-**[Executive summary / exact submission guide](docs/executive-summary.html)** ·
+**[H61 stop status / evidence](docs/h61-audit.html)** ·
 [Run &amp; evidence](docs/h61-audit.html) · [Sources](docs/h61-sources.html) ·
 [Run card](evidence/h61_run_card.json)
 
-> **DOWNLOAD: {"YES" if card["download_ok"] else "NO"} · SUBMIT TO THE COMPETITION: {"YES" if ok else "NO"}.**
-> Verdict `{card["verdict"]}`. The file is newly inferred, portal-safe by construction and different
-> from every checked prior's decoded predictions, but it does **not** beat the reported champion at
-> either end of the measured `|G|` interval, and its own view-A premise failed on the holdout.
+> **DOWNLOAD FOR RESEARCH: {"YES" if card["download_ok"] else "NO"} · LOCAL FORMAT CHECK: PASS · PORTAL ACCEPTANCE: UNVERIFIED · SUBMISSION APPROVAL: NO.**
+> Verdict `{card["verdict"]}`. H61 is negative; the literal and policy lane gates are DUPLICATE/STOP,
+> and its View-A premise failed on the shared holdout. Decoded-pattern difference is not a lane pass.
 > **Competition slots used: {card["slots_used"]}.**
+
+> **Current 0.2778 evidence correction:** rank 17 in the saved 2026-10-09 20:18 UTC PUBLIC-LEADERBOARD observation (top 0.3774), not a file/hash receipt. The file association is owner-reported. The local subset/distance comparison does not establish hidden-truth credit or cause; see [`knowledge/49`](knowledge/49_why_02778_phd_answer.md).
 
 - **File:** `{card["raster_file"]}` — {card["raster_bytes"]:,} bytes, {card["emitted_px"]:,} emitted cells
 - **SHA-256:** `{card["raster_sha256"]}`
@@ -113,11 +114,11 @@ def block() -> str:
 
 ## What H61 repaired in the shared instruments, before fitting anything
 
-1. **`|G|` is an interval, not a measurement: [{G["G_lower_bound"]:,.1f}, {G["G_upper_bound"]:,.1f}] px.**
-   Thirteen owner-reported scores are thirteen equations in fourteen unknowns. The previously published
-   point value {foren["G_point_under_zero_ring_credit"]["G_px"]:,.1f} px is **outside** that interval; it
-   requires the 6,436 px the champion deleted to earn exactly zero credit, and 25 credit of ring income
-   alone moves it to {f(foren["G_point_under_zero_ring_credit"]["sensitivity_to_ring_credit"][1]["G_px"], 0)} px.
+1. **`|G|` is a conditional interval, not a measurement: [{G["G_lower_bound"]:,.1f}, {G["G_upper_bound"]:,.1f}] px.**
+   Thirteen owner-reported score associations supply equations under stated assumptions; they are not organizer receipts.
+   The formerly published point value {foren["G_point_under_zero_ring_credit"]["G_px"]:,.1f} px is **outside** that interval
+   and depends on the unsupported scenario that the local 6,436-cell difference has zero hidden-truth credit.
+   A 25-credit sensitivity gives {f(foren["G_point_under_zero_ring_credit"]["sensitivity_to_ring_credit"][1]["G_px"], 0)} px; that is not a measurement.
    [IR-H61-001](registry/irregularities.json) · [receipt](evidence/h61_forensics.json)
 2. **Masked support `S`.** Known catalogue pixels are masked out of evaluation, so `S` counts
    off-catalogue pixels. Witness: `Hedge-v2` and `ens12-7f00890a` have identical off-catalogue support
@@ -145,26 +146,13 @@ def block() -> str:
 6. **H60C would fail the brief's own lane rule**: near-dot 0.7929 against the champion and 0.8087
    against `h19-5`, Spearman 0.7083 — DUPLICATE/STOP under the literal rule *and* under the policy,
    because those priors are informative. Its published gate used support-novelty and Jaccard instead.
-   Flagged for the selector, neither promoted nor deleted. [IR-H61-007]
+   Historical finding only; it provides no selector override or upload path. [IR-H61-007]
 7. **CTD5's own diagnosis is vindicated by the same instrument**: its informative-prior near-dot
    fractions are 0.1063–0.1368 with |ρ| ≤ 0.0046, i.e. its STOP was entirely the probe.
 
-## Why 0.2778 won, measured from the bytes
+## Current evidence about the reported 0.2778 — no cause established
 
-The reported-0.2778 champion `h33-2-b2` is a **strict subset** of the reported-0.2600 file
-(37,654 ⊂ 44,090 off-catalogue px), which is itself a strict subset of the reported-0.1922 parent field
-(⊂ 121,131 px). The champion added **zero** pixels and deleted
-{foren["catalogue_rings"]["base_only_px"]:,}, every one of them between
-{f(foren["catalogue_rings"]["base_only_distance_to_catalogue_m"]["min"], 0)} m and
-{f(foren["catalogue_rings"]["base_only_distance_to_catalogue_m"]["max"], 0)} m from a mapped trace; its own
-nearest dot is {f(foren["catalogue_rings"]["champion_distance_to_catalogue_m_min"], 1)} m away. Since
-`DTI = T / (0.2·(T + S − M) + 0.8·(|G| − T))` carries a fixed `0.8·|G|` floor in the denominator, pruning
-zero-credit mass raises the ratio without finding anything new. **It is precision, not detection.**
-Beating it therefore needs either a recombination of existing public mass — which is a duplicate by
-construction and outside this lane — or a detector above
-{f(proj["G_upper"]["breakeven_credit_density_to_match_champion"])} credit density on *novel* mass, which
-no instrument in this repository can certify: the local simulator measured Spearman −0.10 against the
-owner-reported board in R4.
+The saved 2026-10-09 20:18 UTC public-board observation places the team-level 0.2778 row at rank 17 (top 0.3774); the board has no TIFF hash or organizer receipt. The file association remains owner-reported. Local bytes show a strict 37,654/44,090 subset relation, 6,436 cells removed and none added, with removed cells 100–200 m from the local known-fault mask. These local facts do not identify hidden-truth credit or explain any organizer score change; official staff says new-fault truth may occur within 300 m of known traces. Older `|G|`, credit-density, and break-even calculations are conditional scenario arithmetic, not measurements, score forecasts, or explanations. See [`knowledge/49`](knowledge/49_why_02778_phd_answer.md) and `IR-R5-011`.
 <!--/H61-README-->"""
 
 
@@ -253,9 +241,9 @@ legacy-v1 assay for audit only.
    modelled cover thickness and radiometric alteration and bound credit per stratum, so the organizer's
    own scores say *where* hidden truth sits rather than *which prior* found it. Needs no new data; it
    was deferred only by this round's three-experiment budget.
-3. **Give the selector a priced option, not a lane violation.** The only mass measured above the
-   break-even density is inside the champion family, and emitting it is a duplicate by construction.
-   That trade belongs to the selector with the weekly cap in front of it.
+3. **No promotion path for the H61 artifact.** Its lane status is DUPLICATE/STOP and its holdout did not
+   clear the promotion threshold. The old score-derived density comparison is conditional, not measured
+   credit; do not present a selector override or weekly-slot exception.
 4. **Authenticate one receipt.** A single submission-page receipt tying a file SHA-256 to a score would
    turn IR-H61-004 from a caveat into a calibration and settle whether 0.2778 exists at all. No
    credentials may be requested or stored in chat.

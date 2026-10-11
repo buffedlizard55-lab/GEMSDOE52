@@ -1754,5 +1754,7 @@
   ],
   "unique_git_blobs": 526,
   "organizer_confirmed_scores": [],
-  "network_policy": "Only allowed GitHub API; no automated DrivenData access."
+  "network_policy": "Only allowed GitHub API; no automated DrivenData access.",
+  "interpretation_notice": "Historical owner-controlled/source-review excerpts, not current verified competition evidence. Any older text calling 0.2778 the highest public score or attributing a score change to the 0.2600-to-0.2778 pixel difference is superseded. The saved 2026-10-09 20:18 UTC public board places 0.2778 at rank 17 (top 0.3774); no organizer TIFF-hash receipt or causal explanation is established. See knowledge/49_why_02778_phd_answer.md.",
+  "current_correction": "../../knowledge/49_why_02778_phd_answer.md"
 }

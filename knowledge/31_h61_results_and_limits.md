@@ -3,6 +3,8 @@
 **Verdict: `NEGATIVE`. Download for research: YES.
 Submit to the competition: NO. Competition slots used: 0.**
 
+> **Current score-evidence correction (2026-10-10):** the saved 2026-10-09 20:18 UTC public observation places the team-level 0.2778 row at rank 17 (top 0.3774); it has no TIFF-hash receipt. The file association remains owner-reported. The local 37,654/44,090 subset and 100–200 m distances do not identify hidden-truth credit or explain a score change; new-fault truth may occur within 300 m of known traces. Score-derived `|G|` and credit values below are conditional scenarios, not measurements. See `knowledge/49` and IR-R5-011.
+
 Artefact `gems52-h61-deepsharp-cotrain-37600px.tif`, SHA-256 `7c86853164f9cfa7aea34de029c7d5ccf3a6b43dbbb2b14de570e558384d2755`, 131,771 bytes,
 37,600 emitted cells of exactly {0, 1} with 0 NaN.
 Preregistered before any fit in `knowledge/30_hypotheses_H61_preregistered.md`
@@ -106,19 +108,14 @@ candidate: single_A Δ -0.041370 [-0.054559, -0.027645], single_B Δ -0.143933 [
   `scored_d15_scored` ⊂ `scored_gems27_tgc_v2_d15`
   (0.2477 > 0.2449 with fewer pixels).
   The previously published point value
-  14,088.7 px is **outside** that interval; it needs the
-  6,436 px the champion deleted to earn exactly zero credit, and
-  12333 px is what
-  25 credit of ring income alone does to it.
-* **Nested lattice, measured:** A ⊂ B ⊂ E, A ⊂ E, C ⊂ D, C ⊂ E, and Hedge-v2 ≡ ens12
-  (`evidence/h61_forensics.json → subset_pairs`). The reported-0.2778 champion added **zero** pixels
-  to the reported-0.2600 file and deleted
-  6,436, every one of them between
-  100 m and
-  200 m of a mapped trace;
-  the champion's own nearest dot is
-  223.6 m away. **That pruning, not
-  a better detector, is the score.**
+  14,088.7 px is **outside** that conditional interval. It is obtained only under the extra scenario assumption that the 6,436-cell local difference has zero hidden-truth credit; neither the score-to-file association nor that credit assumption is organizer-confirmed. The 12333 px result is a sensitivity calculation with an assumed 25 credit, not a measurement.
+* **Nested lattice, measured locally:** the restored rasters have the listed subset relations
+  (`evidence/h61_forensics.json → subset_pairs`). The H33-labelled 37,654-cell raster is a strict subset
+  of a separate 44,090-cell raster associated with 0.2600 by its owner: 6,436 cells removed, none added,
+  all between 100 m and
+  200 m from the local known-fault mask.
+  Its nearest retained cell is 223.6 m away.
+  These byte and distance facts do not authenticate either score, identify hidden-truth credit, or establish a score-change mechanism.
 * **Band 6 is radiometric total count.** Spearman
   1.0000 against the independently derived
   external TC grid, 0.0175 against the tilt angle
@@ -172,9 +169,10 @@ Across the whole registry the median excess is
 108 of
 545 priors are positive: this emission is *less* clustered near
 prior dots than uniform chance, and its maximum Spearman is 0.0361 against a 0.90
-trigger. The preregistered threshold was **not** relaxed — the STOP stands and the artefact stays
-research-only — and the prospective fix (apply the rule only to priors whose coverage is below its own
-trigger, or test the chance-normalised excess) is handed to the shared selector. [IR-H61-009]
+trigger. The preregistered threshold was not relaxed — the STOP stands and the artefact stays
+research-only. This historical diagnostic creates no override or promotion path. Any future change to
+the shared rule would require a separately authorized, prospectively frozen protocol; it cannot be
+applied retroactively to this stopped file. [IR-H61-009]
 
 Re-measured with the same instrument, two inherited artefacts are placed correctly: **CTD5** has
 informative-prior near-dot fractions of 0.1063–0.1368 and |ρ| ≤ 0.0046 — its STOP was entirely the
@@ -253,16 +251,16 @@ board. **No leaderboard gain is claimed, and none is projected.**
    modelled cover thickness and radiometric alteration strata and bound credit per stratum, so the
    organiser's own scores say *where* hidden truth sits rather than *which prior* found it. No new
    data needed; deferred only by this round's three-experiment budget.
-3. **Hand the selector a priced option, not a lane violation.** The only mass measured above the
-   break-even density is inside the champion family, and emitting it is a duplicate by construction.
-   That decision belongs to the selector with the weekly cap in front of it; this lane must not
-   smuggle it in as "novel".
+3. **No promotion path for this artifact.** The shared policy lane verdict is DUPLICATE/STOP and the
+   H61 holdout did not clear its promotion gate. The historical score-derived density comparisons are
+   conditional scenarios, not measured credit. Do not present a selector override or weekly-slot
+   exception as a way around the stop.
 4. **Authenticate.** One submission-page receipt tying a file SHA-256 to a score would convert
    IR-H61-004 from a caveat into a calibration, and would settle whether 0.2778 exists at all.
 5. **Reconcile `registry/data_manifest.json` provenance text** with the owner's score list
    (IR-H61-008) without touching the pins.
 
-**Operational values.** Maximize P(Win): do not spend a scarce weekly slot on an arm whose only
-density estimate comes from a simulator that does not predict the board, and whose projected interval
-starts at zero. Own the Outcome: publish the file, the failed premise, the repaired instruments, the
-provenance gaps and a working reproduction — not a hopeful story.
+**Operational values.** This historical H61 file remains research-only: the lane gate is DUPLICATE/STOP,
+the holdout does not establish leaderboard performance, and no weekly slot was used. Preserve the
+negative result, repaired instruments, provenance gaps, and reproducible evidence without implying an
+override or a score forecast.

@@ -42,10 +42,11 @@ def ci(a) -> str:
 HEAD = ('<!doctype html><html lang="en"><head><meta charset="utf-8">'
         '<meta name="viewport" content="width=device-width,initial-scale=1">'
         '<link rel="stylesheet" href="assets/ctd5.css"></head><body>'
+        '<aside role="alert" style="padding:14px 22px;background:#fef2f2;color:#7f1d1d;border:2px solid #991b1b"><strong>H75: DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION.</strong> H67 is historical and not submission-authorized. <a href="h75-executive-summary.html">Current H75 stop status</a>.</aside>'
         '<a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation">'
         '<a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>'
         '<a href="index.html">Overview</a><a href="h67.html">H67 run &amp; evidence</a>'
-        '<a href="h67-executive-summary.html">Submission guide</a>'
+        '<a href="h67-executive-summary.html">H67 stop status</a>'
         '<a href="h64.html">H64 (previous)</a><a href="downloads/index.html">Archive</a>'
         '</nav></header><main id="main">')
 TAIL = "</main></body></html>\n"
@@ -171,7 +172,7 @@ thermal-upflow sites that all lie at least 300 m — beyond the whole scoring ke
 mapped fault. It is new inference on decoded pixels, every gate below is measured, and the
 submit decision is already made: <b>do not submit</b>.</p>
 <div class="notice" role="note"><strong>{notice}</strong>
-<p>Format gate PASS · leakage canary CLEAN · S1 two-view sufficiency <b>FAIL</b> ·
+<p>Format gate PASS · exact-pattern census unique (not the lane test) · lane policy <b>DUPLICATE/STOP</b> · S1 two-view sufficiency <b>FAIL</b> ·
 HOLDOUT-DTI {sc['tuc']['dti']:.6f} {ci(sc['tuc']['ci95'])} against random
 {sc['random']['dti']:.6f} (paired {pdiff['random']['delta']:+.6f} {ci(pdiff['random']['ci95'])}).
 Do not upload research archives. Do not spend a weekly slot. Competition slots used:
@@ -182,7 +183,7 @@ Do not upload research archives. Do not spend a weekly slot. Competition slots u
 <a class="button secondary" href="downloads/h67-a-only-and-segment-reasoning.csv" download>Geological reasoning CSV</a>
 </div>
 <p class="fileline">{fileline}</p>
-<p class="small"><a href="h67-executive-summary.html">Exactly what may be uploaded, and how →</a> ·
+<p class="small"><a href="h67-executive-summary.html">H67 stop status and evidence →</a> ·
 <a href="h67.html">Method, evidence and limits →</a> ·
 <a href="h64.html">Previous round (H64) landing page</a></p>
 </div>
@@ -190,7 +191,8 @@ Do not upload research archives. Do not spend a weekly slot. Competition slots u
 <div class="status-line"><span>Single-band float32 GeoTIFF</span><span class="good">PASS</span></div>
 <div class="status-line"><span>Finite, values in [0, 1]</span><span class="good">PASS</span></div>
 <div class="status-line"><span>CRS, shape &amp; transform match</span><span class="good">PASS</span></div>
-<div class="status-line"><span>Copied a previous submission?</span><span class="good">NO</span></div>
+<div class="status-line"><span>Exact decoded-pattern match?</span><span class="good">NO</span></div>
+<div class="status-line"><span>Spatial lane gate (&gt;70% near 3 px)</span><span class="bad">DUPLICATE/STOP</span></div>
 <div class="status-line"><span>Not the union of the two views</span><span class="good">PASS</span></div>
 <div class="status-line"><span>Leakage canary (alarm 0.90)</span><span class="good">{can['max_single_channel_auc']:.4f} CLEAN</span></div>
 <div class="status-line"><span>S1 two-view sufficiency</span><span class="bad">FAIL {s1['mean_view_A_oof_auc']:.4f}</span></div>
@@ -198,8 +200,7 @@ Do not upload research archives. Do not spend a weekly slot. Competition slots u
 <div class="status-line"><span>Lane gate (probe policy)</span><span class="{'good' if lane_d['policy']['verdict'] == 'PASS' else 'bad'}">{esc(lane_d['policy']['verdict'])}</span></div>
 <div class="status-line"><span>Beats the best control on holdout</span><span class="bad">NO</span></div>
 <div class="status-line"><span>Verdict</span><span class="bad">NEGATIVE — DO NOT SUBMIT</span></div>
-<p class="fine">A format-valid file is not an approved competition entry. Promotion to a weekly slot is a
-separate selector step, and this round does not recommend it.</p>
+<p class="fine">A local format pass is not portal acceptance or submission eligibility. The policy lane is DUPLICATE/STOP; H67 is research-only and not approved for a slot.</p>
 <a class="small" href="data/h67_run_card.json">Inspect the complete JSON run card ↗</a></aside></section>
 <hr class="divider">"""
 
@@ -224,39 +225,32 @@ same budget in the same fold.</p>
 <th>corridor pool</th><th>withheld truth px</th><th>tuc</th><th>single_B</th><th>random</th>
 </tr></thead><tbody>{fold_rows}</tbody></table></div>
 <hr class="divider">
-<div class="section-head"><h2>Why 0.2778 won, and what beating 0.3195 would require</h2>
-<a href="h67.html#algebra">Board algebra →</a></div>
+<div class="section-head"><h2>Current evidence about the reported 0.2778 (no causal explanation established)</h2>
+<a href="../knowledge/49_why_02778_phd_answer.md">Evidence classes and limits →</a></div>
 <div class="cards">
-<section class="card"><div class="eyebrow">01 / re-measured on the bytes</div><h3>The 100–200 m ring</h3>
-<span class="num">{fmt_int(alg['set_relations']['d2_8__minus__ref_h33_2_b2']['px'])} px removed → +6.8 %</span>
-<p><code>h33-2-b2</code> is a strict subset of the 0.2600 file; every one of the
-{fmt_int(alg['set_relations']['d2_8__minus__ref_h33_2_b2']['px'])} deleted pixels sits
-{alg['set_relations']['d2_8__minus__ref_h33_2_b2']['dist_min_m']}–{alg['set_relations']['d2_8__minus__ref_h33_2_b2']['dist_max_m']} m
-from a mapped trace. That ring earns zero credit and pays the false-positive tax. Nothing else about
-the file changed.</p></section>
-<section class="card"><div class="eyebrow">02 / the metric in one line</div><h3>ρ = T/S</h3>
-<span class="num">champion 0.1387 · random 0.0279</span>
-<p>For dots more than 200 m apart, DTI = T / (0.2·S + 0.8·|G|), so the score is exactly the credit
-density. The champion is 5.0× uniform random; that is all 0.2778 measures.</p></section>
-<section class="card"><div class="eyebrow">03 / what would move the number</div><h3>A better ranker</h3>
-<span class="num">ρ 0.0999 at 100,000 px = 0.3195</span>
-<p>The required ρ <i>falls</i> with budget, so "emit less" is a property of this family's ranker, not a
-law of the metric. Every measured attempt to raise ρ(S) has failed (N-6, N-10, N-11, N-16, N-17,
-N-22).</p></section>
+<section class="card"><div class="eyebrow">01 / local pixel facts</div><h3>Strict subset, not score causality</h3>
+<span class="num">6,436 cells removed · 0 added</span>
+<p>The local H33-labelled 37,654-cell bitmap is a strict subset of a separate 44,090-cell bitmap labelled 0.2600 by its owner. Removed cells are 100–200 m from the local known-fault mask. The byte and distance facts do not identify hidden-truth credit or explain an organizer score change; new-fault truth may occur within 300 m of known traces.</p></section>
+<section class="card"><div class="eyebrow">02 / public board vs file receipt</div><h3>Team-level observation</h3>
+<span class="num">0.2778 · rank 17 · top 0.3774</span>
+<p>The saved official public-board observation is 2026-10-09 20:18 UTC. It contains no filename, TIFF hash, or submission receipt. The local file association is owner-reported; no organizer-confirmed score-to-file mapping is available.</p></section>
+<section class="card"><div class="eyebrow">03 / conditional arithmetic only</div><h3>Unknown credit, unknown cause</h3>
+<span class="num">No hidden-truth credit recovered</span>
+<p>Any inversion of owner-reported values depends on assumptions about the test labels and overlap term. The previously quoted 14,088.7-pixel truth-size estimate and credit-density values are scenarios, not measurements or an explanation of the 0.2778 result.</p></section>
 </div>
+<div class="section-head"><h3>Conditional sensitivity calculation only — not a prediction or score</h3></div>
+<p class="small">The threshold table below assumes a hypothetical hidden-positive count of 14,088.7, which is not measured and is not organizer-confirmed. Its values are algebraic scenarios only; they do not explain the reported 0.2778.</p>
 <div class="table-wrap"><table><thead><tr><th>budget S (px)</th><th>ρ needed for 0.2778</th>
 <th>ρ needed for 0.3195</th><th>ρ needed for 0.3774</th></tr></thead><tbody>{rho_rows}</tbody></table></div>
-<p class="small">Required ρ = target · (0.2 + 0.8·|G|/S) at |G| = 14,088.7, from
+<p class="small">Scenario formula only: required ρ = target · (0.2 + 0.8·|G|/S) under assumed |G| = 14,088.7; this value is not measured. Calculation from
 <code>evidence/h67_board_algebra.json</code>. Published scores are OWNER-REPORTED — the leaderboard
 prints a team name and a number, never a filename, so no pairing here is ORGANIZER-CONFIRMED.</p>
 <hr class="divider">
-<div class="section-head"><h2>The metric's own marginal rule, applied to this family's measured curve</h2></div>
+<div class="section-head"><h2>Conditional marginal-rule scenario arithmetic — not a measured credit curve</h2></div>
+<p class="small">The ΔT values below are inferred from owner-reported score associations under the former assumed |G| = 14,088.7 and selected sparse-emission assumptions. They are not hidden-truth credit measurements, organizer-confirmed scores, or evidence for why the public-board value changed. Read the table only as conditional algebra.</p>
 <div class="table-wrap"><table><thead><tr><th>step</th><th>ΔS</th><th>ΔT</th><th>marginal ρ</th>
-<th>bar α·DTI</th><th>verdict</th></tr></thead><tbody>{marg_rows}</tbody></table></div>
-<p class="small">Four consecutive steps past 37,654 px fail the rule
-<code>ΔT/ΔS &gt; 0.2·DTI</code>. The champion is not a better detector; it is the correct stopping
-point of a worse one. Spearman(mass, board) = {alg['mass_vs_board']['spearman']:.4f} over
-n = {alg['mass_vs_board']['n']}.</p>
+<th>scenario bar α·DTI</th><th>conditional scenario result</th></tr></thead><tbody>{marg_rows}</tbody></table></div>
+<p class="small">Under those unverified assumptions, four historical increments past 37,654 px fall below the algebraic rule <code>ΔT/ΔS &gt; 0.2·DTI</code>. This does not show that the 37,654-cell bitmap is the correct stopping point, that the larger set earned no true-positive credit, or that pruning caused a score change. Spearman(mass, owner-reported score) = {alg['mass_vs_board']['spearman']:.4f} over n = {alg['mass_vs_board']['n']} is a tiny, unverified historical comparison and is not a predictive instrument.</p>
 <hr class="divider">
 <div class="cards">
 <section class="card"><div class="eyebrow">stratification</div><h3>What the two views said</h3>
@@ -283,8 +277,9 @@ channel. Fixed with the template's own intersection footprint: eligible
 <hr class="divider">
 <section class="prose"><h2 id="verdict">Verdict, in one paragraph</h2>
 <p>{esc(verdict['reasons'][0])} {esc(verdict['reasons'][1])} The file is therefore published as a
-research artefact: <b>download yes, submit no</b>. Promotion is a separate selector step within the
-weekly cap (brief clause 9) and this round recommends against spending a slot on H67-A.</p>
+research artefact: <b>download for research only; not eligible for submission</b>. The policy lane result is
+<b>DUPLICATE/STOP</b>, and the HOLDOUT-DTI result is significantly below random. No selector override or
+submission path is offered; no weekly slot was used.</p>
 <h2>Links for manual review</h2><ul>
 {''.join(f'<li><a href="{esc(u.split(" ")[0])}">{esc(u.split(" ")[0])}</a> — {esc(u.split(" ", 1)[1])}</li>' for u in card['links_for_manual_review'])}
 </ul></section>
@@ -293,25 +288,19 @@ weekly cap (brief clause 9) and this round recommends against spending a slot on
     (DOCS / "h67.html").write_text(HEAD + hero + body + TAIL)
 
     exec_html = HEAD + f"""
-<div class="notice" role="note"><strong>DO NOT UPLOAD THIS FILE.</strong> H67-A is a negative result.
-The exact steps below are written so that a later selector can act on them; they are not an approval.
-Do not upload research archives to the competition portal.</div>
+<div class="notice" role="alert"><strong>RESEARCH DOWNLOAD ONLY — NOT FOR SUBMISSION.</strong> H67 is terminal for promotion: the policy lane is DUPLICATE/STOP and the shared holdout is significantly below random. Do not upload it. No override or submission procedure is offered; no weekly slot was used.</div>
 <section class="hero"><div>
-<div class="eyebrow">H67 · executive summary and exact submission steps</div>
-<h1>One file, one verdict,<br>four steps you should not take today.</h1>
-<p class="lead">The file is format-valid and unique on decoded pixels. It is also significantly worse
-than uniform random on the shared hide-and-recover instrument. Both facts are measured; neither is a
-leaderboard score.</p>
+<div class="eyebrow">H67 · research-only negative result</div>
+<h1>Download for research.<br>Submission stop.</h1>
+<p class="lead">The local format contract passes and the exact-pattern census finds no byte-identical prior; neither establishes submission eligibility. The spatial lane policy is <b>DUPLICATE/STOP</b> (&gt;70% near 3 px), and the shared HOLDOUT-DTI is significantly worse than random. Neither local result is a leaderboard score.</p>
 <div class="actions"><a class="button" href="downloads/h67-candidate.tif" download>Download the H67 GeoTIFF ↓</a>
 <a class="button secondary" href="downloads/h67-candidate.zip" download>Single-TIFF ZIP</a>
 <a class="button secondary" href="data/h67_run_card.json" download>JSON run card</a></div>
 <p class="fileline">{fileline}</p></div>
-<aside class="panel"><div class="label">Identifiers, paste-ready</div>
-<p class="small"><b>Name ({len(sub['submission_name'])} characters):</b><br>
-<code>{esc(sub['submission_name'])}</code></p>
-<p class="small"><b>Note ({sub['note_chars']} characters, limit 140):</b><br><code>{esc(sub['note'])}</code></p>
-<p class="fine">The note states research-only. If a future selector ever approves this file, the note
-must be replaced with the reasoning a Phase-2 reviewer needs — not with a score claim.</p></aside></section>
+<aside class="panel" aria-label="Research file status"><div class="label">Research archive only</div>
+<p class="small"><b>Local format check:</b> pass. <b>Portal acceptance:</b> not recorded.
+<b>Submission approval:</b> no — lane status DUPLICATE/STOP.</p>
+<p class="fine">The research download does not imply eligibility, portal acceptance, organizer confirmation, or permission to spend a submission slot.</p></aside></section>
 <hr class="divider">
 <section class="prose"><h2>The file contract, checked on disk</h2><ul>
 <li>One band, float32, every value in [0, 1]; in practice exactly 0 or 1.</li>
@@ -324,22 +313,12 @@ must be replaced with the reasoning a Phase-2 reviewer needs — not with a scor
 footprint of {fmt_int(pre['eligible'])} cells.</li>
 <li>Values outside the footprint are 0.0, never NaN (N-5 forbids NaN outside the footprint).</li>
 </ul><p class="small">Local validator only. This is <b>not</b> an organiser acceptance receipt.</p>
-<h2>Exact steps — only if a later selector approves this file (it does not)</h2>
-<ol><li>Open the competition submission page (login required;
-<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">competition page</a>).</li>
-<li>Under <b>File to submit</b>, choose the TIFF (or the ZIP containing exactly one TIFF).</li>
-<li>Paste the name and note above into the submission form.</li>
-<li>Submit only if the selector has approved this file. <b>This file is not approved.</b></li></ol>
+<h2>Stop decision</h2>
+<p><strong>DUPLICATE/STOP.</strong> The policy uniqueness gate is not a selector preference: do not submit this artifact. The negative HOLDOUT-DTI result is an independent reason not to promote it.</p>
 <h2>Gate table</h2>
 <div class="table-wrap"><table><thead><tr><th>gate</th><th>result</th></tr></thead><tbody>{gates_html}</tbody></table></div>
-<h2>What would have to be true to submit instead</h2>
-<p class="small">Per <code>knowledge/49</code>: at 37,654 px a candidate needs credit density
-ρ ≥ {rho['37654']:.4f} to reach 0.3195 and ρ ≥ {rho74['37654']:.4f} to reach 0.3774. The only
-sub-field in this repository with a measured ρ in that range is the 25,517 px credited core P1, whose
-exact interval is [0.2546, 0.3190] — below 0.3195 — and which the parallel-run lane rule forbids
-re-emitting, because every one of its pixels lies within 3 px of an existing registry raster. That
-conflict is the single most important thing for the next session to resolve, and it is a selector
-decision, not a modelling one.</p>
+<h2>Research-only sensitivity context</h2>
+<p class="small">The values below are hypothetical algebraic requirements under an assumed |G| = 14,088.7, not measurements or score forecasts. They do not change the DUPLICATE/STOP result, authorize an override, or identify a promotable candidate. The top public-board observation is 0.3774; 0.3195 was rank 7 in the saved 2026-10-09 20:18 UTC observation. The 0.2778 file association remains owner-reported and is not organizer-confirmed.</p>
 <h2>Earlier rounds still on this site</h2>
 <p class="small">Each is a separate artefact with its own receipt. None of them is the H67 file and
 none is approved for a slot.</p><ul>
@@ -461,32 +440,13 @@ Prior corpus: {rel['lane_surface']['priors_checked']} aligned rasters
 Scope: the supplied aligned immutable public inventory only — private, release-only or unlinked
 artefacts are **not proven absent**.
 
-## 5 · Expected score, as a projection and never as a score
+## 5 · Current evidence about the reported 0.2778 (no cause established)
 
-For a fully novel field at S = {n_em:,} with credit density ρ ~ U[0.0279, 0.1387] and |G| = 14,088.7:
-DTI = ρS/(0.2S + 0.8|G|) ∈ **[0.0428, 0.2126]**. At |G| = 18,000 → [0.0359, 0.1782]; at |G| = 27,400
-→ [0.0258, 0.1284]. Even the optimistic end is below the 0.2778 champion. This was stated **before**
-the holdout ran, in `knowledge/45` §1, and the measured holdout is worse than the projection.
+The saved 2026-10-09 20:18 UTC public-board observation places the team-level 0.2778 row at rank 17; the top row is 0.3774. The board has no TIFF hash or organizer submission receipt. The 0.2778 file association remains owner-reported.
 
-## 6 · Why the lane cannot reach 0.3195 — the arithmetic, not the mood
+Local bytes show the H33-labelled 37,654-cell raster is a strict subset of a separate 44,090-cell bitmap associated with 0.2600 by its owner: 6,436 cells removed and none added, all removed cells 100–200 m from the local known-fault mask. The subset and distances do not identify hidden new-fault credit or explain an organizer score change. Official staff confirms the known-fault mask is pixel-exact, only new-fault truth is scored, and new-fault truth may occur within 300 m of known traces.
 
-`knowledge/49` derives it from bytes re-measured this session (`scripts/h67_board_algebra.py`):
-
-* `h33-2-b2` (0.2778, 37,654 px) is a **strict subset** of the 0.2600 file (44,090 px); the 6,436
-  deleted pixels all lie 100–200 m from a mapped trace, and deleting them raised the score 6.8 %.
-* Its credit density is ρ = 0.1387 — 5.0× uniform random. That is the whole content of 0.2778.
-* Spearman(mass, board) = −1.0000 over the five owner-reported off-catalogue files (n = 5, p < 1e-4),
-  and every step past 37,654 px fails the metric's own marginal rule ΔT/ΔS > 0.2·DTI.
-* Required ρ to reach 0.3195: {rho['37654']:.4f} at 37,654 px, {rho['100000']:.4f} at 100,000 px.
-  Required ρ to reach 0.3774: {rho74['37654']:.4f} at 37,654 px, {rho74['100000']:.4f} at 100,000 px.
-* The only sub-field with a measured ρ in that range is the 25,517 px credited core P1, exact interval
-  ρ ∈ [0.163, 0.205] ⇒ DTI ∈ [0.2546, 0.3190] — **its upper bound is below 0.3195** — and any subset
-  of P1 has 100 % of its dots within 3 px of an existing registry raster, so the lane rule forbids it.
-
-**Conclusion for the selector step, stated plainly: within this lane's uniqueness rule no candidate can
-be shown to beat 0.2778, let alone 0.3195.** The binding constraint is a ranker whose marginal credit
-density stays above ~0.06 out to 60,000–150,000 px; that is a better detector, and seven separate
-measurements in this repository say it is not available at 100 m.
+The previous `|G| = 14,088.7`, zero-credit-ring, credit-density, and +6.8% explanations are withdrawn as measurements or causal conclusions. Any corresponding equations are conditional scenario arithmetic from owner-reported values, not hidden-truth evidence or a score. See `knowledge/49` and `IR-R5-011`.
 
 ## 7 · Irregularities found this round
 
@@ -524,39 +484,47 @@ measurements in this repository say it is not available at 100 m.
 
     # ------------------------------------------------------------------ banners
     banner = f"""<!--H67-BANNER-->
-<div class="notice" role="note" style="margin:0 0 1rem"><strong>Latest research round: H67 (negative).</strong>
+<div class="notice" role="note" style="margin:0 0 1rem"><strong>Historical research round: H67 (negative; not current status).</strong>
 Download yes, for research only; <strong>submit no — do not upload</strong>. New inference on decoded
 pixels; S1 two-view sufficiency FAIL; HOLDOUT-DTI {sc['tuc']['dti']:.6f} {ci(sc['tuc']['ci95'])} versus
 random {sc['random']['dti']:.6f}. <a href="h67.html">H67 landing</a> ·
-<a href="h67-executive-summary.html">H67 submission guide</a> ·
+<a href="h67-executive-summary.html">H67 stop status</a> ·
 <a href="downloads/h67-candidate.tif" download>download the research GeoTIFF</a></div>
 {hero}
 <!--/H67-BANNER-->"""
-    for page in (DOCS / "index.html",):
-        text = page.read_text(encoding="utf-8")
-        # demote the previous round's "Latest" notice so the home page has exactly one latest round
-        text = text.replace("Latest research round: H64", "Previous research round: H64")
-        text = text.replace("Latest research round: H63", "Previous research round: H63")
-        marker = "<!--H67-BANNER-->"
-        if marker in text:
-            start = text.index(marker)
-            end = text.index("<!--/H67-BANNER-->") + len("<!--/H67-BANNER-->")
-            text = text[:start] + banner + text[end:]
-        else:
-            anchor = '<main id="main">'
-            text = text.replace(anchor, anchor + banner, 1)
-        page.write_text(text, encoding="utf-8")
-
-    root_index = ROOT / "index.html"
-    rt = root_index.read_text(encoding="utf-8")
-    line = ("<p>H67 (thermal-upflow corridor) is research-only: download yes, <b>submit no</b>, "
-            "no weekly slot used. <a href=\"docs/h67.html\">H67 verdict and evidence</a>.</p>")
-    if "<p>H67" in rt:
-        import re
-        rt = re.sub(r"<p>H67.*?</p>", line, rt, flags=re.S)
+    current_index = DOCS / "index.html"
+    h75_page = DOCS / "h75-executive-summary.html"
+    h75_is_current = (current_index.is_file() and h75_page.is_file()
+                      and "H75: DUPLICATE/STOP" in current_index.read_text(errors="replace")
+                      and "NOT FOR SUBMISSION" in h75_page.read_text(errors="replace"))
+    if h75_is_current:
+        print("H75 status pages are current; H67 publisher skipped shared homepage and root-index edits")
     else:
-        rt = rt.replace("</body>", line + "</body>")
-    root_index.write_text(rt, encoding="utf-8")
+        for page in (DOCS / "index.html",):
+            text = page.read_text(encoding="utf-8")
+            # demote the previous round's "Latest" notice so the home page has exactly one latest round
+            text = text.replace("Latest research round: H64", "Previous research round: H64")
+            text = text.replace("Latest research round: H63", "Previous research round: H63")
+            marker = "<!--H67-BANNER-->"
+            if marker in text:
+                start = text.index(marker)
+                end = text.index("<!--/H67-BANNER-->") + len("<!--/H67-BANNER-->")
+                text = text[:start] + banner + text[end:]
+            else:
+                anchor = '<main id="main">'
+                text = text.replace(anchor, anchor + banner, 1)
+            page.write_text(text, encoding="utf-8")
+
+        root_index = ROOT / "index.html"
+        rt = root_index.read_text(encoding="utf-8")
+        line = ("<p>H67 is a historical research archive: download for review only, <b>NOT FOR SUBMISSION</b>, "
+                "no weekly slot used. H75 is the current terminal stop. <a href=\"docs/h67.html\">H67 verdict and evidence</a>.</p>")
+        if "<p>H67" in rt:
+            import re
+            rt = re.sub(r"<p>H67.*?</p>", line, rt, flags=re.S)
+        else:
+            rt = rt.replace("</body>", line + "</body>")
+        root_index.write_text(rt, encoding="utf-8")
 
     print(json.dumps(dict(pages=["docs/h67.html", "docs/h67-executive-summary.html"],
                           downloads=["docs/downloads/h67-candidate.tif", "docs/downloads/h67-candidate.zip",

@@ -1,32 +1,25 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="assets/ctd5.css"><title>H66 executive summary · DOE GEMS</title></head><body><a class="skip" href="#main">Skip to content</a>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="assets/ctd5.css"><title>H66 executive summary · DOE GEMS</title></head><body><!--H75-ARCHIVE-STOP--><aside role="alert" style="padding:14px 22px;background:#fef2f2;color:#7f1d1d;border:2px solid #991b1b;border-radius:8px;font:14px/1.6 system-ui"><strong>Current H75 status: DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION.</strong> H75 is terminal: no owner override, waiver, or rerun is authorized. The page below is historical/research material; no archived file is approved here. <a href="h75-executive-summary.html" style="color:#7f1d1d">Read the H75 stop status</a>.</aside><a class="skip" href="#main">Skip to content</a>
 <header><nav aria-label="Main navigation"><a class="brand" href="index.html">DOE GEMS</a><a href="h66cotrain.html">H66 round</a><a href="index.html">Home</a></nav></header>
 <main id="main">
-<section class="hero"><div><div class="eyebrow">Executive summary / submission guide · H66</div>
-<h1>How to submit, and whether this file may be submitted.</h1>
-<p class="lead">Read the verdict first. A valid file is not an approved competition entry. Up to three scored submissions are allowed each week, and one final submission must be chosen before the deadline. Those choices belong to you, not to this repository.</p>
+<section class="hero"><div><div class="eyebrow">H66 · historical research status</div>
+<h1>H66 is not approved for submission.</h1>
+<p class="lead">This run is terminal research-only: the premise gate failed, the HOLDOUT-DTI candidate lost to its comparable single-view control, and the dots lane gate is DUPLICATE/STOP. Local format validity is not submission eligibility. No override, slot recommendation, or upload steps are provided.</p>
 <div class="notice" role="note"><strong>DOWNLOAD FOR RESEARCH: YES · SUBMIT: NO · UPLOAD: NO</strong>
 <p>Research-only. DOWNLOAD YES (format-valid; see uniqueness). SUBMIT NO: the premise gate failed, the holdout candidate is below the single-view control, and the lane gate is not PASS. Nothing uploads and no weekly slot is used.</p></div></section>
 <hr class="divider">
 <section><h2>The verdict in four lines</h2><ul>
 <li><b>Premise.</b> View A_local out-of-quadrant AUC mean 0.545381, minimum 0.524627. Gate: mean ≥ 0.60 and minimum ≥ 0.55. <b>FAIL.</b></li>
-<li><b>Holdout.</b> The candidate scores 0.039805 against 0.174571 for the best single-view control (paired difference -0.134766). It does not beat the control.</li>
+<li><b>HOLDOUT-DTI</b> (<code>gems52-pooled-hide-v1</code>; 53,186 withheld positives; 95% paired cluster-bootstrap CI). Candidate disagreement_post: 0.039805 [0.030131, 0.050345]; single_B control: 0.174571 [0.152313, 0.196302]; paired difference -0.134766 [-0.159731, -0.110876]. Internal measurement only, not a public-board score.</li>
 <li><b>Lane gate, dots.</b> Literal DUPLICATE/STOP; policy DUPLICATE/STOP.</li>
 <li><b>Format.</b> Single-band float32 GeoTIFF, EPSG:32611, values exactly {0, 1}, no NaN, 37,600 cells. The format is valid; validity is not approval.</li></ul></section>
 <hr class="divider">
-<section><h2>Why 0.2778 scored where it did</h2>
-<p>The 0.2778 file is a strict subset of a 0.2600 raster. It removed 6,436 pixels and added none. Under the published metric, that edit is consistent with a precision effect rather than a detection; the removed pixels' credit cannot be measured because the hidden truth is withheld. The metric's marginal bar for one uncovered truth pixel of kernel weight w is w &gt; α·DTI = 0.0556 at DTI 0.2778, which the README's ≈0.055 states. The repository's accept_bar form gives 0.0588 (IR-H66-002). The README's denominator was also misquoted and is now corrected (IR-H66-003).</p>
-<p class="small">Measured in <code>work/h66/champion_check.json</code>. The score itself is owner-reported and not linked to the file on the board (IR-H65-003).</p></section>
+<section><h2>Evidence about the reported 0.2778 — no causal explanation established</h2>
+<p><strong>PUBLIC-LEADERBOARD observation:</strong> the saved 2026-10-09 20:18 UTC board places extradr19 at 0.2778, rank 17; the top row is 0.3774. The row has no TIFF hash or submission receipt. <strong>OWNER-REPORTED file/score association:</strong> attribution to an H33-labelled file remains unauthenticated. No ORGANIZER-CONFIRMED receipt binds this value to a file.</p>
+<p><strong>LOCAL pixel facts only:</strong> the 37,654-cell H33-labelled bitmap is a strict subset of a separate owner-reported 0.2600-labelled 44,090-cell bitmap (6,436 removed, none added). The removed cells are 100–200 m from the local known-fault mask. These facts do not establish either score or why a public value changed. DrivenData staff clarifies that the known-fault mask is pixel-exact, only new-fault truth is scored, and new-fault truth may lie within 300 m of known traces. Near-trace distance alone therefore does not imply zero credit or an automatic penalty; hidden credit is unknown. Any marginal algebra is conditional scenario arithmetic, not a measured contribution or score explanation.</p>
+<p class="small">See <a href="../knowledge/49_why_02778_phd_answer.md">knowledge/49</a>, <code>IR-R5-011</code>, and <a href="data/leaderboard_observation_2026-10-09T201800Z.json">the dated board observation</a>.</p></section>
 <hr class="divider">
-<section><h2>Can a higher score be reached?</h2>
-<p>Not by this lane. Co-training has now failed its premise in every View A construction tried (raw bands, step-normalised, cross-strike, sufficiency-gated, and local-scale). Pruning or recombining the champion gives a duplicate by construction. The public top on the dated 2026-10-08 snapshot is 0.3774. Across the co-training rounds in this repository (H61, H63, H64, H65 and H66), no arm has beaten the single-view control on holdout. The next candidates are H66-B (levelling-stripe veto, precision), H66-C and H66-D, and R5-H1, which is the highest-ranked untested idea and sits outside this lane.</p></section>
-<hr class="divider">
-<section><h2>If you decide to submit a different file: the steps</h2><ol>
-<li><b>Eligibility certification.</b> The NLR rules require the registrant to certify eligibility. Only you can do this; the agent cannot (IR-H66-007 covers the slot rules).</li>
-<li><b>Weekly cap and final choice.</b> Up to three scored per week; one final submission to choose before the deadline (IR-H66-007).</li>
-<li><b>AI disclosure.</b> Generative-AI use must appear in the submission narrative (NLR §3.2). The disclosure text is in <code>knowledge/43_hypotheses_H66_preregistered.md</code> §7 (IR-H66-008).</li>
-<li><b>Organiser clarifications.</b> The sample description conflicts with the file (IR-H66-001). The rules say outside-bounds values are null or NaN, while the scored champion uses zeros (IR-H66-009). The portal's [0,1] rejection text is not reproduced (IR-H65-007).</li>
-<li><b>Legal review.</b> Competition rasters are mirrored on public GitHub repositories, and the Terms prohibit reproduction and automatic access (IR-H66-006). This needs review before any further publication.</li>
-<li><b>Live board.</b> The 0.3774 top is from a dated snapshot. A browser re-read is needed before any leaderboard claim (IR-H66-004).</li></ol></section>
+
+<section class="notice" role="alert"><h2>Submission disposition: stop</h2><p><strong>H66: DO NOT SUBMIT.</strong> The literal dots-lane DUPLICATE/STOP is a stop, not a recommendation. No owner override or procedural submission guidance is provided. This does not make any other artifact eligible.</p><p>The H66 HOLDOUT-DTI is an internal hide-and-recover measurement, not a leaderboard score. For all 0.2778 evidence classes, use <a href="../knowledge/49_why_02778_phd_answer.md">knowledge/49</a>; no causal explanation or file-to-score receipt is established.</p></section>
 <hr class="divider">
 <section><h2>Limitations</h2><ul>
 <li>The holdout is a simulator. The local analysis measured Spearman −0.10 against the owner-reported board (R4), so holdout gains do not predict leaderboard gains.</li>
@@ -35,12 +28,7 @@
 <li>The H66 lane gate is the shared gate. A PASS would still not be an organiser acceptance.</li>
 <li>No organiser validation, acceptance or score exists for this file. No geologist has checked any mapped or predicted structure.</li></ul></section>
 <hr class="divider">
-<section><h2>Access needs, from you</h2><ul>
-<li>A browser read of the live leaderboard, or a screenshot, dated.</li>
-<li>The rejected portal file or the exact portal error text, if the [0,1] rejection is to be reproduced (IR-H65-007).</li>
-<li>An organiser answer on the sample description and the outside-bounds convention (IR-H66-001, IR-H66-009).</li>
-<li>A legal decision on the public mirrors (IR-H66-006).</li>
-<li>Your eligibility certification, if a submission is made.</li></ul></section>
+<section><h2>Unresolved historical evidence</h2><p>The file/score mapping is not supported by an organizer receipt. The dated public-board observation is preserved separately from owner-reported file labels. Portal behavior and the provenance of mirrored inputs are not authenticated here. These gaps do not change the terminal H66 stop.</p></section>
 <hr class="divider">
 <section><h2>AI-use disclosure</h2><p class="small">An AI agent (Arena.ai Agent Mode) wrote the code, the pre-registration, the pages and this summary. No geologist verified any structure, no field observation was collected, and no organiser score, acceptance or leaderboard gain is claimed for any H66 output.</p></section>
 </main>

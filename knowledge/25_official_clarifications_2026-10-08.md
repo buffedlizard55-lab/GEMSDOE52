@@ -1,5 +1,7 @@
 # 25 · Official clarifications verified 2026-10-08, and every repo claim they change
 
+> **Dated-source caveat (2026-10-10):** this file records earlier source checks and board context; it is not the current 0.2778 narrative. The later saved 2026-10-09 20:18 UTC observation places 0.2778 at rank 17 and the public top at 0.3774. No board row authenticates a TIFF hash, and the local 0.2600/0.2778 subset comparison is not a causal explanation. The current account is [`knowledge/49`](49_why_02778_phd_answer.md).
+
 Fetched this session from the organiser's own pages and from DrivenData staff posts on the
 competition forum. Nothing here is inferred, remembered or reconstructed: each item is a quotation
 with a URL and a date, followed by what it does to a claim this repo has been carrying. Where an
@@ -143,9 +145,9 @@ What each one does to a standing repo claim:
 
 | Repo claim | Status after S3/S5 | Where it is corrected |
 | --- | --- | --- |
-| "emit nothing inside 200 m of a mapped trace … the single change with the largest measured effect in this repo's history" (`knowledge/10` §2) | **Too strong.** The mask is pixel-exact, so the 100–200 m corridor is *evaluated* mass, and the organiser says truth can sit there and that finding it is a goal. What is measured is narrower: *this family's* 6,436 corridor pixels earned 0–85 credit, a density ≤0.0132 against 0.0279 for uniform random. | `IR-R5-006`; `knowledge/33` R5-H1 proposes the correction detector the corridor actually needs |
-| `|G| = 14,088.7` is "exact" (`knowledge/10` §2) | **Exact only given "the corridor earned zero".** Solving `T_B − T_A = 200.62 − 0.01424·|G|` with the independent bracket `|G| ≥ 8,128` bounds the corridor's credit at 0–85 px, so `|G| ∈ [14,030, 14,089]` rather than being a single number. The bound is tight enough to keep every downstream figure. | `knowledge/27` §3 |
-| "deleting 2,545 masked pixels raised the score by 2.6 % … a pixel the organiser has masked can never earn credit but can always pay the false-positive tax" (`knowledge/01` §1) | **Wrong mechanism.** Masked pixels pay nothing (S3 answer 1). The gain came from the 6,436 *unmasked* corridor pixels. The set arithmetic reconciles: A emits 40,199 px of which 2,545 are masked → 37,654 evaluated; B emits 46,635 of which the same 2,545 are masked → 44,090 evaluated; difference 6,436. | `IR-R5-007`; `knowledge/27` §2 |
+| "emit nothing inside 200 m of a mapped trace … the single change with the largest measured effect in this repo's history" (`knowledge/10` §2) | **Too strong.** The mask is pixel-exact, so the 100–200 m corridor is *evaluated* mass, and the organiser says new-fault truth may occur within 300 m. The earlier 0–85 credit / ≤0.0132 density figures were derived from owner-reported score associations and unverified hidden-truth assumptions; they are conditional scenario arithmetic, not measured pixel credit. Local evidence establishes only the subset and distance relations. | `IR-R5-006`, `IR-R5-011`, `knowledge/49`; `knowledge/33` R5-H1 is a historical proposal |
+| `|G| = 14,088.7` is "exact" (`knowledge/10` §2) | **Not established.** The 14,088.7 point and the earlier `[14,030, 14,089]` bracket are scenario results that depend on owner-reported score/file associations, an assumed independent lower bound, and hidden-truth credit constraints that are not observed here. The 0–85 interval is not measured pixel credit, and these values do not support downstream score or causal claims. | `knowledge/49`; historical algebra retained only as conditional sensitivity |
+| "deleting 2,545 masked pixels raised the score by 2.6 % … a pixel the organiser has masked can never earn credit but can always pay the false-positive tax" (`knowledge/01` §1) | **The mask clarification is valid; the causal conclusion is not.** Staff says masked known-fault pixels are not evaluated. The local byte arithmetic reconciles two owner-associated rasters: A emits 40,199 px with 2,545 known-label cells → 37,654 off-mask cells; B emits 46,635 with the same 2,545 → 44,090 off-mask cells; difference 6,436. Those facts do not show that pruning changed any score. The 6,436 are off-mask/evaluated cells, and their hidden-truth credit is unknown; new-fault truth may occur within 300 m. | `IR-R5-007`, `IR-R5-011`; `knowledge/49` |
 | DTI is one pooled index over the evaluated footprint | **Confirmed** (S5). No per-chunk averaging, so there is no reason to spread mass thinly across chunks to avoid a zero-scoring chunk. | — |
 | The budget rule optimises against `|G| = 14,088.7` | **Round-dependent.** The DTI-optimal budget for a credit curve `T = c·S^β` is `S* = 4|G|β/(1−β)`, which scales *linearly* in `|G|`. The final round is scored on the entire GeoDAWN area with an expanded label set, so its `|G|` is larger by an unknown factor and its optimal budget is larger by the same factor. | `knowledge/27` §6, `knowledge/33` R5-H5 |
 
@@ -235,9 +237,8 @@ Preserved row by row in `registry/leaderboard_snapshot_2026-10-08.json`, top 22 
 
 **The brief's premise is wrong and it matters** (`IR-R5-005`): 0.3195 is rank **7**, not the top. The
 top is 0.3774, exactly as this repo's own 2026-10-07 snapshot recorded and exactly as the H57
-acceptance addendum in `README.md` warned ("never call 0.3195 'the highest score right now'"). Every
-projection in this round therefore carries three bars, not one: 0.2778 (this family's best, rank 13),
-0.3195 (the brief's stated target, rank 7) and 0.3774 (the board top, rank 1).
+acceptance addendum in `README.md` warned ("never call 0.3195 'the highest score right now'"). The dated 2026-10-07 snapshot therefore carried three comparison values: 0.2778 (rank 13 in that snapshot),
+0.3195 (rank 7) and 0.3774 (rank 1, the top). The later saved 2026-10-09 20:18 UTC observation places 0.2778 at rank 17; these are team-level public-board observations, not file/hash receipts.
 
 Two structural facts in the table are worth more than any single row:
 

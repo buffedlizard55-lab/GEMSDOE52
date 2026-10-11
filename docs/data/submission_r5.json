@@ -3,23 +3,26 @@
  "file": "gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif",
  "stem": "gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros",
  "submission_name": "gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros",
- "note": "R5 novel 16,681px: six-family trace rank, ridge-walked, gated by strike coherence x the credited 010-020deg azimuth. 100% novel vs 55 repo rasters, off the 200m ring. Research artifact.",
- "note_chars": 185,
+ "note": "R5 novel 16,681px: six-family trace rank, ridge-walked, gated by strike coherence x the credited 010-020deg azimuth. 100% novel vs 71 repo rasters at build, off the 200m ring. Research artifact.",
+ "note_chars": 194,
  "bytes": 99231,
  "sha256": "d2bfb0f79328399354943bd166f2d2a206e9a49da46b4f1e8ccba0e4f0d8d002",
  "nonzero_px": 16681,
- "verdict": "FORMAT-VALID AND UNIQUE \u2014 OK TO DOWNLOAD; PORTAL-ACCEPTABLE; NOT SLOT-APPROVED BECAUSE NO PROMOTION INSTRUMENT IN THIS REPO CAN RANK A NOVEL FIELD",
+ "verdict": "RESEARCH-ONLY \u2014 local format PASS; build-time novelty 1.0 against the receipt inventory; current inventory recheck is disclosed separately; NOT APPROVED FOR SUBMISSION",
  "approved_for_weekly_slot": false,
+ "approved_for_submission": false,
  "promoted": false,
  "ok_to_download": true,
- "ok_to_submit_portal_acceptable": true,
+ "portal_format_valid": true,
+ "ok_to_submit_portal_acceptable": false,
+ "submission_eligibility": "NO \u2014 no scientific promotion or weekly slot approval",
  "reason_slot_not_approved": "The standing rule is not to spend a slot on an idea that has not beaten the holdout best. The hide-and-recover holdout is disqualified as a leaderboard proxy (knowledge/10 \u00a75: Spearman -0.1045, p=0.734, n=13) and R5 reproduced the disqualification on new data (habitat 0.0003 < random 0.0275 < trace 0.0395, an order the board inverts), so no candidate can clear that bar and none is claimed to.",
  "p_beat_02778": 0.3659530477067271,
  "p_beat_03195": 0.22574513586140843,
  "p_beat_03774": 0.031067963299203694,
  "dti_at_kappa1": 0.2974154557412186,
  "budget_star": 16681,
- "budget_rule": "S* = 4|G|beta/(1-beta) with the measured beta=0.2284 and |G|=14088.7",
+ "budget_rule": "Historical scenario formula S*=4|G|beta/(1-beta), beta=0.2284; it used the legacy |G|=14,088.7 point estimate, which is not established from hidden truth.",
  "novelty": {
   "novel_vs_all_repo_rasters": 1.0,
   "own_builds_excluded_from_prior_scan": 0,
@@ -41,6 +44,14 @@
   "equals_literal_prior_union": false,
   "relation": "strictly-novel-and-selective"
  },
+ "current_inventory_recheck": {
+  "rasters_checked": 120,
+  "later_round_rasters_added_since_build": 49,
+  "support_novelty": 0.874408,
+  "canonical_pattern_unique": true,
+  "interpretation": "The 1.0 build-time novelty claim is scoped to the 71-raster inventory that existed at emission time. Against the current 120-raster inventory, the raster remains pattern-unique but 12.5592% of its positive support overlaps later-round priors; do not describe it as strictly novel against the current repository inventory."
+ },
+ "provenance_audit": "evidence/r5_provenance_audit_20261009.json",
  "values": {
   "min": 0.0,
   "max": 1.0,
@@ -181,10 +192,10 @@
   "in_credited_band": true
  },
  "frozen_rules": {
-  "R1_strict_novelty": "no pixel emitted by any of the 13 restored scored priors (union 1,467,623 px) and none within 200 m of the mapped catalogue",
-  "R2_budget": "S* = 4|G|beta/(1-beta) with the measured beta=0.2284 and |G|=14088.7",
+  "R1_strict_novelty": "Historical frozen rule required no support in the 13 organizer-scored rasters and excluded the local 200 m ring. The emission receipt separately records 71 accessible repository priors at build (novelty 1.0); current closure is 120 priors (novelty 0.874408). The 200 m cut is an internal rule, not an organizer scoring buffer.",
+  "R2_budget": "Historical scenario formula S*=4|G|beta/(1-beta), beta=0.2284; it used the legacy |G|=14,088.7 point estimate, which is not established from hidden truth.",
   "R3_choice": "largest coherence lift over the random control, subject to the dominant strike falling in the credited band 095-115 deg (array convention)",
-  "R4_prior": "kappa ~ U(0.3, 1.3) on T(S) = kappa*471.6*S^0.2284"
+  "R4_prior": "Legacy owner-score-derived model prior kappa~U(0.3,1.3) on T(S)=kappa*471.6*S^0.2284; not a hidden-truth measurement or leaderboard forecast."
  },
  "projection": {
   "0.2778": {
@@ -322,9 +333,12 @@
  "leaderboard_bars": {
   "top": 0.3774,
   "brief_stated": 0.3195,
-  "family_best": 0.2778,
+  "owner_reported_reference": 0.2778,
   "source": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
-  "observed": "2026-10-08"
+  "observed": "2026-10-08",
+  "current_public_observation": "evidence/leaderboard_observation_2026-10-09T201800Z.json",
+  "file_hash_mapping": null,
+  "organizer_receipt": null
  },
  "receipts": [
   "evidence/r5_novel_emission.json",
@@ -367,5 +381,5 @@
  "download": "downloads/gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif",
  "download_short": "downloads/r5-candidate.tif",
  "short_alias_byte_identical": true,
- "generated_utc": "2026-10-08T23:51:56Z"
+ "generated_utc": "2026-10-10T21:53:06Z"
 }

@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Publish R3 research pages and a receipt-backed review of the historical H55 result.
 
-H56 now owns the current submission pointer and executive guide. This publisher may add separate
-R3 research links and the H55 archive review, but it must not replace H56's current status or guide.
+H75 is the current terminal stop. This historical publisher is fail-closed under H75 and must not replace its status, homepage, downloads index, or pointer.
 It never uploads or submits anything.
 """
 from __future__ import annotations
@@ -45,8 +44,8 @@ def fnum(value, digits=6):
 def nav(prefix: str = "") -> str:
     links = (
         ("index.html", "Overview"),
-        ("executive-summary.html", "Submission guide"),
-        ("h55.html", "Current H55"),
+        ("executive-summary.html", "Research status"),
+        ("h55.html", "H55 historical archive"),
         ("r3.html", "R3 experiment"),
         ("r3-hypotheses.html", "R3 hypotheses"),
         ("validation.html", "R2 validation"),
@@ -65,7 +64,7 @@ def page(title: str, description: str, body: str, prefix: str = "") -> str:
         f'<meta name="description" content="{esc(description)}">'
         f'<title>{esc(title)} · GEMSDOE52</title>'
         f'<link rel="stylesheet" href="{prefix}style.css"><script src="{prefix}site.js" defer></script>'
-        '</head><body><a class="skip" href="#main">Skip to content</a>'
+        '</head><body><aside role="alert" style="padding:14px 22px;background:#fef2f2;color:#7f1d1d;border:2px solid #991b1b"><strong>H75: DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION.</strong> This is a historical R3 archive; it does not authorize an upload, override, or slot use. <a href="h75-executive-summary.html">H75 stop status</a>.</aside><a class="skip" href="#main">Skip to content</a>'
         f'<header><nav><a class="brand" href="{prefix}index.html">GEMS / DOE 52</a>{nav(prefix)}</nav></header>'
         f'<main id="main">{body}</main>'
         '<footer>Competition 306 · Local checks only; organizer acceptance and score are not recorded here. '
@@ -79,7 +78,6 @@ def page(title: str, description: str, body: str, prefix: str = "") -> str:
 def download_bar(sub: dict, prefix: str = "") -> str:
     uniqueness = sub.get("uniqueness") or {}
     format_gate = sub.get("format") or {}
-    note = sub.get("submission_note") or sub.get("note") or ""
     novel_fraction = uniqueness.get("novel_fraction")
     novel_text = "not measured" if novel_fraction is None else f"{100 * float(novel_fraction):.1f}%"
     return (
@@ -93,8 +91,7 @@ def download_bar(sub: dict, prefix: str = "") -> str:
         f'all-prior ≥20% support-novelty diagnostic: '
         f'{"PASS" if uniqueness.get("support_novelty_gate_ok") else "FAIL"} '
         f'({novel_text} support outside comparison union)</small>'
-        f'<small>submission note ({esc(sub.get("submission_note_chars", len(note)))} chars): '
-        f'<code>{esc(note)}</code></small></div>'
+        '<small><strong>RESEARCH ONLY · NOT FOR SUBMISSION.</strong> No portal name or note is provided.</small></div>'
         f'<a class="button" href="{esc(prefix + str(sub.get("download", "")))}" download>↓ Download .TIF</a>'
         f'<a class="button" href="{esc(prefix + str(sub.get("download_zip", "")))}" download>↓ Download .ZIP</a>'
         f'<a class="button secondary" href="{esc(prefix)}r3.html">Validation details →</a>'
@@ -113,7 +110,7 @@ def render_index(sub, holdout, board, feed) -> str:
     body = [download_bar(sub)]
     body.append(
         '<div class="eyebrow">R3 · paired DEM-normal scarp-profile test · 2026-10-07</div>'
-        '<h1>A new geological test.<br>An honest negative result.</h1>'
+        '<h1>Historical R3 test.<br>Honest negative result.</h1>'
         '<p class="lede">R3-H1 adds two signed, paired-flank profile features to the existing surface-view '
         'model. The preregistered spatial validation showed only a tiny, inconsistent lift. The artifact '
         'is published for audit and reproduction, not as a recommended competition submission.</p>'
@@ -145,19 +142,20 @@ def render_index(sub, holdout, board, feed) -> str:
         'margins, erosion, lithologic contacts, grading, or DEM artifacts.</p>'
         '<div class="actions"><a href="r3.html">Read the fold-by-fold result →</a>'
         '<a href="r3-hypotheses.html">Open the frozen four-hypothesis ranking →</a></div>'
-        '<h2>Why 0.2778 did well (what we can and cannot say)</h2>'
-        '<p>The 2026-10-07 public board showed 0.2778 at rank '
-        f'{esc(our_rank)}; 0.3195 at rank 7; and {esc(top)} at rank 1. The board reports team-level best '
-        'scores, not TIFF filenames or hashes. Local byte comparisons are consistent with a sparse, '
-        'distance-aware placement effect: in a tracked nested raster comparison, 2,545 off-catalogue '
-        'points within 200 m of mapped traces were removed between the owner-attributed 0.2708 and 0.2778 '
-        'files. That does <em>not</em> mean those pixels were on the known-fault mask, and the local '
-        'filename-to-score attribution is not organizer-authenticated. Avoiding weak off-catalogue mass '
-        'is a plausible explanation under the distance-weighted metric, not a proven causal account.</p>'
-        '<a href="forensics.html">Read the corrected 0.2778 byte-level autopsy →</a>'
-        '</section><aside><div class="card"><h3>Current board snapshot</h3>'
-        f'<p>Leader: <strong>{esc(top)}</strong> · our reported result: <strong>0.2778</strong> · '
-        f'rank {esc(our_rank)} (participant-level observation).</p>'
+        '<h2>Reported 0.2778: evidence classes, not a causal explanation</h2>'
+        '<p>The saved 2026-10-09 20:18 UTC PUBLIC-LEADERBOARD observation places extradr19 at rank 17 '
+        'with 0.2778; the top row is 0.3774. This is a team-level observation, not a TIFF-hash receipt. '
+        'The H33-labelled file association remains OWNER-REPORTED; no ORGANIZER-CONFIRMED receipt binds a '
+        'file hash to 0.2778. Locally, the 37,654-cell bitmap is a strict subset of a separate 44,090-cell '
+        'bitmap associated by its owner with 0.2600 (6,436 removed, none added; removed cells 100–200 m '
+        'from the known-fault mask). The byte comparison does not explain a score change or identify '
+        'hidden-truth credit. Staff clarifies that the known-fault mask is pixel-exact, only new-fault truth '
+        'is scored, and new-fault truth may occur within 300 m of known traces; near-trace distance alone '
+        'does not imply zero credit or an automatic penalty.</p>'
+        '<a href="forensics.html">Read the evidence review and limits →</a>'
+        '</section><aside><div class="card"><h3>Dated public-board observation</h3>'
+        f'<p>Observed top row: <strong>{esc(top)}</strong> · extradr19: <strong>0.2778</strong> · '
+        f'rank {esc(our_rank)}. This selected row set is partial and participant-level.</p>'
         '<p class="small">One-off official observation from '
         f'{esc(board.get("observed_date_utc", board.get("fetched_utc", "not recorded")))}. '
         'No automated DrivenData requests are made; see the Terms-of-Use note in the source ledger.</p>'
@@ -257,10 +255,9 @@ def render_r3(sub, holdout, independence, cotrain, board) -> str:
             f'<td>{direction["positive_folds"]}/{direction["total_folds"]}</td></tr>'
         )
     board_observed = board.get("observed_date_utc", board.get("fetched_utc", "not recorded"))
-    note = sub.get("submission_note") or sub.get("note") or ""
     body = [download_bar(sub)]
     body.append(
-        '<div class="eyebrow">R3-H1 · preregistered before implementation</div>'
+        '<div class="eyebrow">Historical R3-H1 · preregistered before implementation</div>'
         '<h1>Paired scarp-profile shoulders<br>on the 100 m DEM</h1>'
         '<p class="lede">A narrow geomorphic hypothesis: asymmetric paired slopes on opposite flanks '
         'of a subtle scarp may add information beyond the existing surface view. The feature was fixed '
@@ -334,12 +331,14 @@ def render_r3(sub, holdout, independence, cotrain, board) -> str:
         '<a href="data/cotraining_summary_r3.json">Machine-readable co-training summary →</a>'
     )
     body.append(
-        '<h2>Why 0.2778 is not a causal proof</h2>'
-        f'<p>The public snapshot from {esc(board_observed)} reports 0.2778 at rank '
-        f'{esc(next((row.get("rank") for row in board.get("rows", []) if float(row.get("score", -1)) == 0.2778), "not recorded"))}; '
-        'the board does not expose the scoring TIFF or its hash. The local forensic byte comparisons '
-        'support a plausible sparse-placement explanation, but the participant filename-to-score link is '
-        'owner-reported. No hidden new-fault labels are available to this project.</p>'
+        '<h2>Reported 0.2778: no causal explanation established</h2>'
+        '<p>The saved 2026-10-09 20:18 UTC PUBLIC-LEADERBOARD observation places extradr19 at rank 17 '
+        'with 0.2778; the top row is 0.3774. The board does not expose a TIFF hash or organizer receipt. '
+        'The file association is OWNER-REPORTED. The local 0.2600-to-0.2778 byte comparison is not proof '
+        'of why any score changed; hidden new-fault truth and credit for the removed cells are unknown. '
+        'Official staff says the known-fault mask is pixel-exact, only new-fault truth is scored, and '
+        'new-fault truth may occur within 300 m of known traces. Near-trace distance alone does not imply '
+        'zero credit or an automatic penalty.</p>'
         '<p>Sources: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">'
         'official task, metric and format</a>; <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">'
         'official participant leaderboard</a>; <a href="https://www.drivendata.org/termsofuse/">DrivenData Terms</a>; '
@@ -621,8 +620,7 @@ def insert_r3_download_section(sub: dict) -> None:
         f'<a href="{esc(stem)}.zip" download>Download ZIP and audit receipt</a> · '
         f'<a href="{esc(stem)}-audit.json">Audit JSON</a> · '
         '<a href="a_only_reasoning_r3.csv">A-only reasoning CSV</a></p>'
-        f'<p class="small">{esc(sub.get("submission_name"))} · '
-        f'{esc(sub.get("submission_note"))} · no weekly slot used.</p>'
+        '<p class="small"><strong>Historical research only; NOT FOR SUBMISSION.</strong> No portal name or note is provided. No weekly slot was used.</p>'
         '</section><!--/R3-H1-RESEARCH-DOWNLOADS-->'
     )
     start_tag, end_tag = "<!--R3-H1-RESEARCH-DOWNLOADS-->", "<!--/R3-H1-RESEARCH-DOWNLOADS-->"
@@ -643,6 +641,13 @@ def insert_r3_download_section(sub: dict) -> None:
 
 
 def main() -> int:
+    home = DOCS / "index.html"
+    h75 = DOCS / "h75-executive-summary.html"
+    if (home.is_file() and h75.is_file()
+            and "H75: DUPLICATE/STOP" in home.read_text(errors="replace")
+            and "DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION" in h75.read_text(errors="replace")):
+        print("H75 terminal stop is current; historical R3 publisher skipped all page and pointer changes")
+        return 0
     # H55's evidence is historical and must not be inferred from docs/data/submission.json, which now
     # belongs to the current H56 candidate. Load its immutable evidence receipts by their exact tag.
     r3 = load("submission_r3")
@@ -660,8 +665,6 @@ def main() -> int:
     r3["download"] = "downloads/" + r3["file"]
     r3["download_zip"] = "downloads/" + r3["file"].removesuffix(".tif") + ".zip"
     r3["exists"] = (DOCS / r3["download"]).exists()
-    r3["submission_note"] = r3.get("submission_note") or r3.get("note") or ""
-    r3["submission_note_chars"] = len(r3["submission_note"])
     if not r3["exists"]:
         raise FileNotFoundError(f"missing R3 research raster: {r3['download']}")
     if not (DOCS / r3["download_zip"]).exists():
@@ -688,7 +691,7 @@ def main() -> int:
     for name in ("index.html", "validation.html", "forensics.html", "hypotheses.html", "sources.html",
                  "irregularities.html", "feed.html", "h54.html", "executive-summary.html"):
         insert_nav_link(DOCS / name)
-    print("wrote R3 research pages and H55 archive review; H56 current guide/status and pointer remain intact")
+    print("wrote R3 historical research pages and H55 archive review; current H75 status and pointer remain intact")
     return 0
 
 if __name__ == "__main__":

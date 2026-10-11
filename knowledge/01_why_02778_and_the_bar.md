@@ -1,6 +1,8 @@
-> **Historical report — superseded where contradicted by R2.** See `09_r2_review.md` and `evidence/reference_forensics_r2.json`. In particular: known pixels do not pay penalties; H33 removed off-catalogue flanks; the old OOF independence report contained no negative predictions; hidden prevalence and a 0.464 ceiling are not established.
+> **Historical report — superseded by later review.** See `09_r2_review.md` and `evidence/reference_forensics_r2.json`; hidden prevalence, score-derived credit, and a 0.464 ceiling are not established.
+>
+> **2026-10-10 evidence correction:** This file is not a current causal explanation of 0.2778. The saved public-board observation at 2026-10-09 20:18 UTC places extradr19 at rank 17 and the board top at 0.3774; no public row maps a TIFF hash to a score. The file/score association remains owner-reported, and the local 0.2600/0.2778-labelled bitmap subset relation does not prove why an organizer score changed. DrivenData staff confirms that the known-fault mask is pixel-exact, only new-fault truth is scored, and new-fault truth may lie within 300 m of known traces; a 100–200 m distance alone does not establish zero credit. Current evidence: [`knowledge/49`](49_why_02778_phd_answer.md), `IR-R5-011`.
 
-# Why `h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros` scored 0.2778, and what it would take to beat it
+# Historical, superseded account: why `h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros` was reported as 0.2778
 
 Answered at the level the question deserves: first what the file *is*, then the algebra that turns
 that file into 0.2778, then the counterfactuals that bound what any file can do, then the concrete

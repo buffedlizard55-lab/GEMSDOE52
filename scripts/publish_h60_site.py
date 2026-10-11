@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Render the H60 site from the receipts.  No number appears in the HTML that is not in a JSON.
 
-Outputs: docs/index.html (landing + download), docs/h60.html (full audit),
-docs/executive-summary.html (how to submit), docs/h60-data.json (machine-readable copy).
+Outputs: docs/index.html (historical research download), docs/h60.html (full audit),
+docs/executive-summary.html (research-only status), docs/h60-data.json (machine-readable copy).
 """
 from __future__ import annotations
 
@@ -55,6 +55,13 @@ def insert_block(path, marker, body):
 
 
 def main() -> int:
+    home = DOCS / "index.html"
+    h75 = DOCS / "h75-executive-summary.html"
+    if (home.is_file() and h75.is_file()
+            and "H75: DUPLICATE/STOP" in home.read_text(errors="replace")
+            and "DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION" in h75.read_text(errors="replace")):
+        print("H75 terminal stop is current; historical H60 publisher skipped all page and pointer changes")
+        return 0
     art = rd("h60_artifact.json") or {}
     build = rd("h60_build.json") or {}
     fmt = rd("h60_format_gate.json") or {}
@@ -70,20 +77,15 @@ def main() -> int:
     grid = rd("grid.json") or {}
 
     proof0 = (art.get("range_proof_from_served_bytes") or {})
-    ok_submit = (bool(art.get("format_gate_ok"))
-                 and bool((uniq or {}).get("canonical_pattern_unique"))
-                 and not (uniq or {}).get("equals_literal_prior_union")
-                 and bool(proof0.get("in_range")))
+    # H60 is a historical research artifact. Local format/uniqueness checks do not grant
+    # submission eligibility or establish portal acceptance; no current selector approval exists.
+    ok_submit = False
     ivd = rd("h60_instrument_verdict.json") or {}
     # Two separate questions, answered separately, because conflating them is how a
     # format-valid file gets described as a good submission.
-    verdict_class = "ok" if ok_submit else "warn"
-    verdict = (("OK TO DOWNLOAD · PORTAL-VALID AND UNIQUE, THE UPLOAD WILL BE ACCEPTED · "
-                "NO CERTIFIED LEADERBOARD GAIN — the only local instrument ranks the 0.2778 "
-                f"champion at {ivd.get('champion_instrument_dti', float('nan')):.5f}, below a "
-                "random placeholder (IR-H60-003), so nothing here can show this file beats your "
-                "current best") if ok_submit else
-               "REVIEW ONLY — DO NOT SPEND A WEEKLY SLOT: a gate failed")
+    verdict_class = "no" if not ok_submit else "ok"
+    verdict = ("RESEARCH DOWNLOAD ONLY · LOCAL FORMAT CHECKS DO NOT ESTABLISH PORTAL ACCEPTANCE · "
+               "SUBMISSION NOT APPROVED; NO SLOT RECOMMENDED")
     name = art.get("name", "(no artefact built yet)")
     note = art.get("note", "")
     npx = art.get("emitted_px", 0)
@@ -140,14 +142,14 @@ def main() -> int:
 <style>{CSS}</style></head>
 <body><a class="skip" href="#main">Skip to content</a>
 <header><nav><a class="brand" href="index.html">GEMS / DOE 52</a>
-<a href="index.html">Overview</a><a href="executive-summary.html">How to submit</a>
+<a href="index.html">Overview</a><a href="executive-summary.html">H60 research status</a>
 <a href="h60.html">H60 audit</a><a href="h59.html">H59 (previous)</a>
 <a href="irregularities.html">Limitations</a><a href="sources.html">Sources</a></nav></header>
 <main id="main">{body}</main>
-<footer><p>Every number on these pages is read from a JSON receipt in <code>evidence/</code> at
-build time by <code>scripts/publish_h60_site.py</code>. Nothing here is organiser-authenticated:
-the DrivenData portal is login-walled, so leaderboard scores quoted anywhere in this repository
-are owner-reported filename attributions.</p></footer>
+<footer><p>Every number on these pages is read from a JSON record in <code>evidence/</code> at
+build time by <code>scripts/publish_h60_site.py</code>. The saved leaderboard row is a public,
+team-level observation; historical file/score associations are owner-reported unless an organizer
+receipt binds a submission ID, file hash, and score. No such H60 receipt is available.</p></footer>
 </body></html>"""
 
     # ========================================================================= index
@@ -164,8 +166,7 @@ are owner-reported filename attributions.</p></footer>
 <small><strong>Range proof re-read from the served file:</strong>
 min = {esc(proof.get('min'))}, max = {esc(proof.get('max'))}, NaN pixels = {esc(proof.get('n_nan'))},
 in [0,1] = <strong>{esc(proof.get('in_range'))}</strong>.
-This is the check that produced the portal's &ldquo;Predicted values must be in range [0, 1]&rdquo;
-rejection on an earlier file; it cannot trip on this one.</small>
+This is a local value-range check only; it does not establish portal acceptance or rule out other portal rejection causes.</small>
 <small>SHA-256 <code>{esc(art.get('tif_sha256'))}</code></small>
 <small>Format gate: <strong>{'PASS' if art.get('format_gate_ok') else 'FAIL'}</strong>
 problems = {esc(art.get('format_problems'))} ·
@@ -174,26 +175,16 @@ uniqueness: pattern unique vs {esc((art.get('uniqueness') or {}).get('priors_che
 novel support {fnum((art.get('uniqueness') or {}).get('novel_fraction'), 4)},
 literal union of priors = {esc((art.get('uniqueness') or {}).get('literal_union'))}</small>
 </div>
-<a class="button" href="downloads/h60-cotrain-candidate.tif" download>↓ Download the submission TIFF (one click)</a>
+<a class="button" href="downloads/h60-cotrain-candidate.tif" download>↓ Download the H60 research TIFF</a>
 <a class="button" href="downloads/h60-cotrain-candidate.zip" download>↓ Download the one-TIFF ZIP</a>
-<a class="button secondary" href="executive-summary.html">How to submit →</a>
+<a class="button secondary" href="executive-summary.html">H60 status →</a>
 </section>
 
-<section class="card">
-<h3>Paste these into the submission form</h3>
-<p><strong>Note (optional):</strong></p>
-<pre>{esc(note)}</pre>
-<p class="small">{len(note)} characters (the form allows 200). The ZIP also carries
-<code>submission-name.txt</code> and <code>submission-note.txt</code>.</p>
-</section>
+<section class="card"><h3>Research artifact status</h3>
+<p><strong>Not approved for submission.</strong> The file is retained for historical review only. Local format and uniqueness checks do not establish portal acceptance or scientific promotion. No paste-ready note, upload procedure, or slot recommendation is provided.</p></section>
 
-<h1>Why the 0.2778 file scored what it did, and what would actually beat it.</h1>
-<p class="lede">The metric is a distance-weighted Tversky index. With
-<code>FNw = |G| − TPw</code> it collapses to
-<code>DTI = T / (0.2·T + 0.2·(S − M) + 0.8·|G|)</code>, where <code>T</code> is credited mass,
-<code>S</code> is emitted mass and <code>M</code> is emitted mass that sits within 300 m of a truth
-pixel. Every emitted pixel that is <em>not</em> near a fault costs 0.2 in the denominator. That single
-identity, measured against the restored bytes of the 0.2778 file, is the whole story.</p>
+<h1>Historical score algebra — no causal explanation established for 0.2778</h1>
+<p class="lede">The distance-weighted Tversky identity describes the metric for a specified hidden-truth mask; it does not identify the credit of particular pixels from submission bytes alone. The saved 2026-10-09 20:18 UTC public-board observation places the team row at rank 17 with 0.2778, but no row binds a TIFF hash or organizer receipt to that score. The H33 file association is owner-reported. The 37,654/44,090 local subset and 100–200 m distances do not explain a score change; new-fault truth may lie within 300 m of known traces, so removed-cell credit is unknown. Any inversion or projection below is conditional scenario arithmetic, not measured credit or a score forecast. See knowledge/49 and IR-R5-011.</p>
 
 <div class="grid">
 <section class="card"><h3>Independence premise</h3>
@@ -214,12 +205,9 @@ pixel-level {fnum(indep.get('spearman_pixel_score'), 4)}.
 negative pseudo-labels taken from whole 50×50 segments outside 300 m of any label.
 {esc(pseudo.get('verdict'))}</p></section>
 
-<section class="card"><h3>Selected arm</h3>
+<section class="card"><h3>Historical arm selection</h3>
 <p class="metric">{esc(build.get('arm'))}</p>
-<p class="small">{npx:,} px at the budget the preregistered rule chose
-(mean hide-and-recover DTI {fnum((selj.get('selected') or {}).get('mean_dti'), 5)},
-{esc((selj.get('selected') or {}).get('fold_wins'))}/4 folds above the matched-budget random
-control). {esc(selj.get('note'))}</p></section>
+<p class="small">{npx:,} px. This is a retained research decision from a legacy hide-and-recover instrument, not a promotion or submission recommendation. The receipt lacks evaluator identity, withheld-positive count, and 95% CI required for a reportable HOLDOUT-DTI claim. H60 remains research-only.</p></section>
 
 <section class="card"><h3>Not merely the union of the two views</h3>
 <p class="metric">{fnum(nnu.get('fraction_outside_both_topk'), 3)}</p>
@@ -246,28 +234,14 @@ triangular max-coverage, so it spreads a hard-core pattern instead of taking a t
 <td>b10_rank, b16_rank</td><td>ablation</td></tr>
 </tbody></table>
 
-<h2>The control that decides whether any of this can be trusted</h2>
-<p>All thirteen scored priors, scored against the same four hide-and-recover folds
-(<code>evidence/h60_prior_control.json</code>):</p>
-<table><thead><tr><th>prior</th><th>owner-reported board</th><th>hide-and-recover DTI</th><th>mean px</th></tr></thead>
+<h2>Exploratory internal instrument — not a candidate ranker</h2>
+<p>The saved public-board observation is a team-level row, not a file receipt. The file labels in this legacy comparison are owner-reported. The second numeric column is an internal proximity-to-catalogue diagnostic, <strong>not a reportable HOLDOUT-DTI</strong>: its receipt does not include a named evaluator, withheld-positive count, or 95% CI. It cannot rank candidates for competition submission. See <code>evidence/h60_instrument_verdict.json</code>.</p>
+<table><thead><tr><th>prior label</th><th>OWNER-REPORTED file/score label (not a receipt)</th><th>legacy internal diagnostic (not a competition score)</th><th>mean px</th></tr></thead>
 <tbody>{prior_rows}</tbody></table>
-<p class="small"><strong>The 0.2778 champion scores {fnum(ivd.get('champion_instrument_dti'), 5)}
-on this instrument — below the random placeholder's
-{fnum(ivd.get('placeholder_instrument_dti'), 5)}.</strong> Spearman(board, instrument) across all
-13 priors = {fnum(ivd.get('spearman_board_vs_instrument'), 3)} (p = {fnum(ivd.get('p_value'), 3)},
-n = 13): no usable rank information, and not a demonstrable inversion either. An instrument on
-which the incumbent loses to noise cannot promote a challenger, so this repository does not
-certify a slot for this file. Across the six off-catalogue priors the board is instead
-<em>strictly decreasing in emitted mass</em> (Spearman −1.000), which is the evidence behind the
-budget amendment in <code>evidence/h60_budget_amendment.json</code>.</p>
+<p class="small">The owner-reported-label association with this diagnostic is exploratory only: Spearman ρ = {fnum(ivd.get('spearman_board_vs_instrument'), 3)}, p = {fnum(ivd.get('p_value'), 3)}, n = {esc(ivd.get('n'))}. This small, unauthenticated sample supplies no reliable calibration, ranking, inversion, or causal evidence. The row labelled 0.2778 has diagnostic value {fnum(ivd.get('champion_instrument_dti'), 5)} and the row labelled as a placeholder has {fnum(ivd.get('placeholder_instrument_dti'), 5)}; those are diagnostic outputs, not leaderboard values and not evidence that the public board rewards or penalizes any mechanism. A prior budget amendment is preserved as historical context only, not a current scoring rule or recommendation (<code>evidence/h60_budget_amendment.json</code>).</p>
 
-<h2>Hide-and-recover, matched budget</h2>
-<p class="small">Whole contiguous blocks held out ({esc(folds.get('n_blocks'))} blocks → 4 folds,
-{esc(folds.get('buffer_px'))} px boundary buffer), truth = the held-out catalogue, emission domain =
-footprint minus the {esc(build.get('emitted_outside_footprint') is not None and 200)} m catalogue ring.
-<strong>This measures recovery of held-out catalogue segments; the competition truth is
-expert-labelled faults that are NOT in the catalogue, so it is an instrument and not a score
-forecast.</strong></p>
+<h2>Legacy hide-and-recover diagnostics</h2>
+<p class="small"><strong>Not reportable as HOLDOUT-DTI:</strong> the historical receipt records four folds and a buffer but omits the evaluator version, total withheld-positive count, and 95% CI. The table is retained only as a descriptive archive of recovery on held-out catalogue segments, not a competition score or score forecast. The competition's new-fault truth is not the same as the published catalogue.</p>
 <table><thead><tr><th>arm</th>{hold_head}<th>capture</th><th>folds &gt; random</th></tr></thead>
 <tbody>{hold_rows}</tbody></table>
 
@@ -319,78 +293,18 @@ for Geothermal Energy</a>.</li>
 
     # =========================================================== executive summary
     exe = f"""
-<div class="eyebrow">Executive summary · how to make a submission</div>
-<h1>Three clicks, then two pastes.</h1>
-<section class="download-bar">
-<div><strong>{esc(name)}.tif</strong>
-<small>{art.get('bytes', 0):,} bytes · float32 · single band · EPSG:32611 ·
-{grid.get('labels', {}).get('height', 3730):,} × {grid.get('labels', {}).get('width', 3292):,} ·
-every pixel finite and in [0,1] · {npx:,} positive pixels</small>
-<small class="pill {verdict_class}">{esc(verdict)}</small></div>
-<a class="button" href="downloads/h60-cotrain-candidate.tif" download>↓ 1. Download the TIFF</a>
-<a class="button" href="downloads/h60-cotrain-candidate.zip" download>↓ or the ZIP</a>
-</section>
-
-<h2>The steps</h2>
-<ol>
-<li><strong>Download.</strong> Click the TIFF button above (or the ZIP — the portal accepts
-&ldquo;a single-band GeoTIFF (.tif) file, or a .zip file containing a single GeoTIFF&rdquo;).</li>
-<li><strong>Go to the submission page</strong>:
-<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">
-competitions/306 → New submission</a>. You need a DrivenData account that has accepted the
-competition rules.</li>
-<li><strong>Choose the file</strong> you just downloaded.</li>
-<li><strong>Paste the note</strong> (optional but it is how you tell submissions apart later):
-<pre>{esc(note)}</pre></li>
-<li><strong>Submit.</strong> The portal validates CRS, shape and geotransform against
-<code>sample_submission.tif</code> and checks that every value is in [0, 1].</li>
-</ol>
-
-<h2>Why the earlier &ldquo;Predicted values must be in range [0, 1]&rdquo; rejection happened</h2>
-<p>It was not a scaling error. The competition page says &ldquo;data outside the bounds is null or
-nan&rdquo;, so an earlier export wrote NaN outside the data footprint — and a NaN fails any
-range comparison. This repository now exports <strong>0.0</strong> outside the footprint instead, and
-<code>gems52.grid.write_geotiff</code> refuses to write a single non-finite pixel and then re-reads the
-file it wrote. The proof is re-read from the served bytes at publish time:</p>
-<table><tbody>
-<tr><td>min value in the served file</td><td><strong>{esc(proof.get('min'))}</strong></td></tr>
-<tr><td>max value in the served file</td><td><strong>{esc(proof.get('max'))}</strong></td></tr>
-<tr><td>NaN / infinite pixels</td><td><strong>{esc(proof.get('n_nan'))}</strong></td></tr>
-<tr><td>distinct values</td><td><strong>{esc(proof.get('values_set'))}</strong></td></tr>
-<tr><td>nodata tag</td><td>{esc(fmt.get('nodata'))}</td></tr>
-<tr><td>CRS</td><td>{esc(fmt.get('crs'))}</td></tr>
-<tr><td>transform</td><td>{esc(fmt.get('transform'))}</td></tr>
-<tr><td>block size / dtype</td><td>{esc(fmt.get('blocksize'))} · {esc(fmt.get('dtype'))}</td></tr>
-<tr><td>format-gate problems</td><td><strong>{esc(fmt.get('problems'))}</strong></td></tr>
-</tbody></table>
-
-<h2>Is it OK to submit?</h2>
-<p><strong>{esc(verdict)}.</strong> The file is portal-valid by construction: one band, float32,
-EPSG:32611, {grid.get('labels', {}).get('height', 3730):,} ×
-{grid.get('labels', {}).get('width', 3292):,}, transform identical to
-<code>sample_submission.tif</code>, every pixel finite, values in {{0,1}}, nearest emitted pixel
-{esc(build.get('nearest_emitted_to_catalogue_m'))} m from the published catalogue.</p>
-<p>What this repository will <em>not</em> claim: a leaderboard score. The portal is login-walled, so no
-score in this repository is organiser-authenticated, and the local hide-and-recover instrument
-recovers held-out catalogue segments — the competition truth is expert-labelled faults that are
-<em>not</em> in the catalogue. The preregistered slot rule is
-&ldquo;{esc(selj.get('promotion_rule'))}&rdquo; and it returned
-{esc(json.dumps(selj.get('selected')))}. Budget is the one lever whose size is known from the metric's
-own algebra; everything else is a ranking bet.</p>
-
-<h2>What is in the repository</h2>
-<ul>
-<li><code>scripts/run_h60.py</code> — folds, both views out-of-fold, independence test,
-pseudo-label exchange, strata, hide-and-recover, budget curve, selection.</li>
-<li><code>scripts/build_h60_submission.py</code> — final fit, metric-aware placement, every gate,
-the reasoning CSV, the artefact.</li>
-<li><code>scripts/publish_h60_site.py</code> — this site, rendered only from
-<code>evidence/*.json</code>.</li>
-<li><code>knowledge/25_hypotheses_H60_preregistered.md</code> — the five hypotheses, frozen before
-the first fit.</li>
-<li><code>knowledge/26_brief_2026-10-08_h60.md</code> — the user brief, verbatim.</li>
-<li><code>knowledge/27_why_02778_h60.md</code> — the metric forensics on the restored bytes.</li>
-</ul>
+<div class="eyebrow">H60 · historical research status</div>
+<h1>Research artifact — not approved for submission</h1>
+<div class="notice"><strong>RESEARCH DOWNLOAD ONLY · LOCAL FORMAT CHECKS ARE NOT PORTAL ACCEPTANCE · SUBMISSION: NO · NO SLOT RECOMMENDED</strong>
+<p>No organizer-confirmed receipt or current selector approval exists for this artifact. This legacy page intentionally provides no upload steps or paste-ready note.</p></div>
+<section class="download-bar"><div><strong>{esc(name)}.tif</strong>
+<small>{art.get('bytes', 0):,} bytes · one float32 band · EPSG:32611 · {grid.get('labels', {}).get('height', 3730):,} × {grid.get('labels', {}).get('width', 3292):,} · {npx:,} pixels</small>
+<small>SHA-256 <code>{esc(art.get('tif_sha256'))}</code></small>
+<small>Local format gate: <strong>{'PASS' if art.get('format_gate_ok') else 'FAIL'}</strong>. Portal acceptance: <strong>UNVERIFIED</strong>.</small></div>
+<a class="button" href="downloads/h60-cotrain-candidate.tif" download>Download for research review</a>
+<a class="button" href="downloads/h60-cotrain-candidate.zip" download>Research archive ZIP</a></section>
+<h2>Evidence limits</h2><p>The H60 hide-and-recover values are internal measurements and do not authenticate or predict a public score. The saved 2026-10-09 20:18 UTC board observation places 0.2778 at rank 17; no TIFF hash maps it to these bytes. The local subset and distance comparisons do not identify hidden-truth credit or explain a score change. New-fault truth may occur within 300 m of known traces. See <a href="../knowledge/49_why_02778_phd_answer.md">knowledge/49</a> and <code>IR-R5-011</code>.</p>
+<p>H60 scripts and receipts remain in the repository as historical provenance. This page does not authorize a rerun, new run-card, candidate rebuild, or submission.</p>
 """
     insert_block(DOCS / "executive-summary.html", "H60-ARTIFACT", exe)
 
@@ -398,10 +312,10 @@ the first fit.</li>
     aud = f"""
 <div class="eyebrow">H60 audit · every gate, every receipt</div>
 <h1>Audit</h1>
+<div class="status"><strong>H60: RESEARCH DOWNLOAD ONLY · NOT APPROVED FOR SUBMISSION.</strong> Local format/uniqueness checks do not establish portal acceptance, scientific promotion, or slot eligibility. No override or submission steps are provided.</div>
 <h2>Artefact</h2>
 <table><tbody>
 <tr><td>name</td><td><code>{esc(name)}</code></td></tr>
-<tr><td>note</td><td>{esc(note)}</td></tr>
 <tr><td>tif sha256</td><td><code>{esc(art.get('tif_sha256'))}</code></td></tr>
 <tr><td>bytes</td><td>{art.get('bytes', 0):,}</td></tr>
 <tr><td>emitted px</td><td>{npx:,}</td></tr>
@@ -434,7 +348,8 @@ relation: {esc(uniq.get('relation_to_union'))}</p>
 <h2>Pseudo-label exchange</h2>
 <pre>{esc(json.dumps(pseudo, indent=1))}</pre>
 
-<h2>Hide-and-recover, all folds</h2>
+<h2>Legacy hide-and-recover receipt (descriptive only)</h2>
+<p class="small"><strong>Not reportable as HOLDOUT-DTI:</strong> this historical JSON omits evaluator version, total withheld-positive count, and 95% CI. The values below describe held-out catalogue-segment recovery only; they are not competition scores or leaderboard forecasts.</p>
 <pre>{esc(json.dumps({k: hold.get(k) for k in ('ring_m', 'budgets', 'folds', 'mean_dti', 'fold_wins_vs_random', 'capture_at_37654')}, indent=1)[:9000])}</pre>
 
 <h2>Selection</h2>

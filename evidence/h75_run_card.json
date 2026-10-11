@@ -118,6 +118,10 @@
  "note": "H75: View-B + directional variogram anisotropy (det_elev/slope/grav); 200m ring cut; binary 37654 dots; holdout +0.012 vs B",
  "experiments_used": "3 of 3",
  "slots_used": 0,
- "verdict": "HOLDOUT: PROMOTE (beats single_B, CI>0). LANE: DUPLICATE/STOP on dots (near-dot 0.922>0.70). Overall: research-only per protocol; owner may override lane rule",
- "renamed_from": "H74 (identifier-only: a parallel session merged its own H74 to main first)"
+ "verdict": "HOLDOUT-DTI: B_DVA exceeded single_B on the internal hide-and-recover protocol; FINAL-DOT LANE: DUPLICATE/STOP (max near-dot 0.921974 > 0.70; support novelty 0.0). Overall: research-only; NOT FOR SUBMISSION. No override or waiver path; 0 slots used.",
+ "renamed_from": "H74 (identifier-only: a parallel session merged its own H74 to main first)",
+ "status_correction": {
+  "date": "2026-10-09",
+  "note": "The prior verdict string incorrectly suggested an owner override. That language is retracted; the preregistered DUPLICATE/STOP is terminal and the artifact is not for submission."
+ }
 }

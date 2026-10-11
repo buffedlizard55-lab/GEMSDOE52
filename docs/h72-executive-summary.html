@@ -1,160 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>H72 Executive Summary — GEMSDOE52 Submission Guide</title>
-<style>
-:root { --green: #22c55e; --red: #ef4444; --yellow: #eab308; --blue: #3b82f6; --gray: #6b7280; }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #1f2937; max-width: 960px; margin: 0 auto; padding: 20px; }
-h1 { font-size: 1.8em; margin-bottom: 8px; }
-h2 { font-size: 1.4em; margin: 24px 0 12px; border-bottom: 2px solid #e5e7eb; padding-bottom: 4px; }
-h3 { font-size: 1.1em; margin: 16px 0 8px; }
-.badge { display: inline-block; padding: 2px 10px; border-radius: 4px; font-size: 0.85em; font-weight: 600; color: white; }
-.badge-green { background: var(--green); }
-.badge-red { background: var(--red); }
-.badge-yellow { background: var(--yellow); color: #1f2937; }
-.badge-blue { background: var(--blue); }
-.card { border: 1px solid #d1d5db; border-radius: 8px; padding: 16px; margin: 12px 0; background: #f9fafb; }
-.card-title { font-weight: 700; font-size: 1.1em; margin-bottom: 8px; }
-.btn { display: inline-block; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; margin: 4px 8px 4px 0; }
-.btn-green { background: var(--green); color: white; }
-.btn-blue { background: var(--blue); color: white; }
-.btn-gray { background: var(--gray); color: white; }
-table { border-collapse: collapse; width: 100%; margin: 8px 0; }
-th, td { border: 1px solid #d1d5db; padding: 6px 10px; text-align: left; font-size: 0.9em; }
-th { background: #f3f4f6; }
-.warn { background: #fef3c7; border-left: 4px solid var(--yellow); padding: 12px; margin: 12px 0; }
-.ok { background: #dcfce7; border-left: 4px solid var(--green); padding: 12px; margin: 12px 0; }
-.danger { background: #fee2e2; border-left: 4px solid var(--red); padding: 12px; margin: 12px 0; }
-code { background: #f3f4f6; padding: 1px 4px; border-radius: 3px; font-size: 0.9em; }
-ol li { margin: 4px 0; }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="H72-A is a terminal DUPLICATE/STOP with no emitted TIFF. Legacy H72 files are archive downloads only and are not approved for submission.">
+  <title>H72-A stop and legacy archive status · GEMSDOE52</title>
+  <style>
+    :root { --red:#991b1b; --red-bg:#fef2f2; --line:#fecaca; --ink:#1f2937; --muted:#475569; }
+    * { box-sizing:border-box; }
+    body { font-family:system-ui,-apple-system,"Segoe UI",sans-serif; max-width:960px; margin:2rem auto; padding:0 1rem 3rem; line-height:1.65; color:var(--ink); }
+    h1 { line-height:1.15; }
+    h2 { margin-top:2rem; }
+    .stop { border:3px solid var(--red); background:var(--red-bg); color:var(--red); padding:1rem 1.2rem; border-radius:.65rem; }
+    .stop h2 { margin:.1rem 0 .5rem; }
+    .status { width:100%; border-collapse:collapse; margin:1rem 0; }
+    .status th,.status td { padding:.65rem; border-bottom:1px solid #d1d5db; text-align:left; vertical-align:top; }
+    .status th { width:42%; }
+    .bad { color:var(--red); font-weight:800; }
+    .archive { border:1px solid #cbd5e1; background:#f8fafc; padding:1rem; border-radius:.5rem; margin:1rem 0; }
+    .small { color:var(--muted); font-size:.94rem; }
+  </style>
 </head>
-<body>
+<body><!--H75-ARCHIVE-STOP--><aside role="alert" style="padding:14px 22px;background:#fef2f2;color:#7f1d1d;border:2px solid #991b1b;border-radius:8px;font:14px/1.6 system-ui"><strong>Current H75 status: DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION.</strong> H75 is terminal: no owner override, waiver, or rerun is authorized. The page below is historical/research material; no archived file is approved here. <a href="h75-executive-summary.html" style="color:#7f1d1d">Read the H75 stop status</a>.</aside>
+  <p><a href="index.html">← GEMSDOE52 overview</a> · <a href="h72.html">H72 result</a> · <a href="h72-hypotheses.html">Ranked hypotheses</a></p>
+  <h1>H72 status: H72-A is stopped; legacy files are separate</h1>
+  <section class="stop" role="alert" aria-labelledby="stop-title">
+    <h2 id="stop-title">H72-A: DUPLICATE/STOP · TERMINAL · NOT FOR SUBMISSION</h2>
+    <p>The final registered co-training run failed its final-dot lane gate. No H72-A TIFF was emitted. Do not reconstruct, retune, or bypass the stopped candidate. No selector decision, submission, organizer receipt, or competition slot resulted from this run.</p>
+  </section>
 
-<h1>🔬 GEMSDOE52 — H72 Executive Summary</h1>
-<p><strong>Generated:</strong> 2026-10-09 | <strong>Competition:</strong> <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DOE GEMS Geothermal Fault Detection</a></p>
+  <table class="status">
+    <tbody>
+      <tr><th>H72-A TIFF download</th><td><b>NO — no H72-A file was emitted.</b></td></tr>
+      <tr><th>H72-A portal-format status</th><td>NOT ASSESSED — no TIFF exists.</td></tr>
+      <tr><th>Organizer-confirmed receipt</th><td>None.</td></tr>
+      <tr><th>Approved for competition submission</th><td class="bad">NO — terminal stop.</td></tr>
+      <tr><th>Selector decision / slots used</th><td>None / 0.</td></tr>
+    </tbody>
+  </table>
 
-<h2>⚡ Quick Download — Submission Candidates</h2>
+  <section class="archive" aria-labelledby="archive-title">
+    <h2 id="archive-title">Separate legacy H72 downloads — research/archive only</h2>
+    <p>These older files were produced by different workflows; they are not H72-A outputs, do not reverse H72-A's stop, and are <strong class="bad">NOT FOR SUBMISSION</strong>. Downloadability and any historical local format check do not imply organizer approval.</p>
+    <ul>
+      <li><a href="downloads/h72-candidate-v3.tif" download>H72-v3 legacy TIFF</a> · <a href="downloads/h72-candidate-v3.zip" download>ZIP</a></li>
+      <li><a href="downloads/h72-candidate-spsc.tif" download>H72-SPSC legacy TIFF</a> · <a href="downloads/h72-candidate-spsc.zip" download>ZIP</a></li>
+      <li><a href="downloads/h72-candidate-mraec.tif" download>H72-MRAEC legacy TIFF</a> · <a href="downloads/h72-candidate-mraec.zip" download>ZIP</a></li>
+    </ul>
+  </section>
 
-<div class="card">
-<div class="card-title">🏆 H72-v3: Enhanced h19-5 Ranking (RECOMMENDED)</div>
-<p><span class="badge badge-yellow">DOWNLOAD YES</span> <span class="badge badge-yellow">SUBMIT: AT YOUR OWN RISK</span></p>
-<p>37,654 binary pixels · Enhanced h19-5 ranker (60%) + multi-scale DEM edges (25%) + LiDAR scarp (15%) · 200m catalogue ring masked</p>
-<a class="btn btn-green" href="downloads/h72-candidate-v3.tif">⬇ Download TIF</a>
-<a class="btn btn-blue" href="downloads/h72-candidate-v3.zip">⬇ Download ZIP</a>
-<table>
-<tr><th>Property</th><th>Value</th></tr>
-<tr><td>SHA-256</td><td><code>8149c9343e5438553385e5d4ce8aca43682ad1f833df0ea033f4e5bd019c037f</code></td></tr>
-<tr><td>Size</td><td>137,899 bytes</td></tr>
-<tr><td>Emitted pixels</td><td>37,654</td></tr>
-<tr><td>Values</td><td>Exactly {0.0, 1.0}</td></tr>
-<tr><td>Format gate</td><td><span class="badge badge-green">PASS</span></td></tr>
-<tr><td>Uniqueness</td><td><span class="badge badge-green">PASS</span> (decoded pattern unique)</td></tr>
-<tr><td>Rank corr vs h19-5</td><td>0.2010 (below 0.90 lane limit)</td></tr>
-<tr><td>Near-dot vs h19-5</td><td>57.85% (below 70% lane limit)</td></tr>
-<tr><td>Min dist to catalogue</td><td>223.6 m (> 200m)</td></tr>
-<tr><td>Holdout DTI</td><td>0.031 (below random; holdout does NOT predict competition score)</td></tr>
-<tr><td>Submission name</td><td><code>h72-v3-enhanced-h19-5-37654px-20261009T164122Z-534693a7481b</code></td></tr>
-<tr><td>Note</td><td><code>H72-v3: h19-5 rank enhanced with multi-scale DEM edges + LiDAR scarp; 37654px budget; 200m ring masked; binary {0,1}</code></td></tr>
-</table>
-</div>
+  <h2>H72-A evidence (internal holdout, not a score forecast)</h2>
+  <p>The H72-A A-only candidate's HOLDOUT-DTI was 0.00589479, with a 95% CI of [0.00298176, 0.00914770], using evaluator <code>gems52-pooled-hide-v1</code> and 53,186 withheld positives. A fold underfilled (1,092 emitted versus 1,264 requested); the comparison is not budget-matched, so no paired candidate-versus-single_B delta is reported. The final-dot lane gate was terminal; this internal value is not a public or organizer score.</p>
+  <p>See the <a href="h72.html">full result and provenance</a>, <a href="h72-hypotheses.html">pre-registered hypotheses</a>, <a href="data/h72_run_card.json">H72-A run card</a>, and <a href="../knowledge/60_h72_results_and_limits.md">results and limitations</a>.</p>
 
-<div class="card">
-<div class="card-title">🌿 H72-SPSC: Spring-Proximity Structural Coherence</div>
-<p><span class="badge badge-yellow">DOWNLOAD YES</span> <span class="badge badge-red">SUBMIT: NOT RECOMMENDED</span></p>
-<p>80,000 binary pixels · Hot spring density (30%) + all spring density (20%) + gravity edge (20%) + slope (15%) + LiDAR scarp (15%) · 200m ring masked</p>
-<a class="btn btn-green" href="downloads/h72-candidate-spsc.tif">⬇ Download TIF</a>
-<a class="btn btn-blue" href="downloads/h72-candidate-spsc.zip">⬇ Download ZIP</a>
-<table>
-<tr><th>Property</th><th>Value</th></tr>
-<tr><td>SHA-256</td><td><code>64b338214a335714357e4f54c31835e18d4316b688e4a1dbe8bf45e48cec2ad8</code></td></tr>
-<tr><td>Emitted pixels</td><td>80,000</td></tr>
-<tr><td>Springs used</td><td>27,092 total, 1,994 hot (GDR 1391, DOI 10.15121/1881483, CC BY 4.0)</td></tr>
-<tr><td>Format gate</td><td><span class="badge badge-green">PASS</span></td></tr>
-<tr><td>Max rank corr</td><td>0.0450</td></tr>
-<tr><td>Holdout DTI</td><td>0.027 (below random)</td></tr>
-</table>
-</div>
-
-<div class="card">
-<div class="card-title">📡 H72-MRAEC: Multi-Band Radiometric Alteration Edge Coherence</div>
-<p><span class="badge badge-yellow">DOWNLOAD YES</span> <span class="badge badge-red">SUBMIT: NOT RECOMMENDED</span></p>
-<p>60,000 binary pixels · Multi-band edge coherence (35%) + edge strength (30%) + LiDAR scarp (20%) + depth-to-basement (15%) · 200m ring masked</p>
-<a class="btn btn-green" href="downloads/h72-candidate-mraec.tif">⬇ Download TIF</a>
-<a class="btn btn-blue" href="downloads/h72-candidate-mraec.zip">⬇ Download ZIP</a>
-</div>
-
-<h2>📋 How to Submit to the Competition</h2>
-<div class="ok">
-<strong>Step-by-step submission instructions:</strong>
-<ol>
-<li><strong>Download</strong> one of the TIF files above (click the green "Download TIF" button)</li>
-<li>Go to <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">the competition page</a></li>
-<li>Click <strong>"Submit"</strong> in the left sidebar</li>
-<li>Click <strong>"New submission"</strong></li>
-<li><strong>Upload the .tif file</strong> (or the .zip file)</li>
-<li>In the <strong>Note</strong> field, paste the note from the table above (e.g. <code>H72-v3: h19-5 rank enhanced with multi-scale DEM edges + LiDAR scarp; 37654px budget; 200m ring masked; binary {0,1}</code>)</li>
-<li>Click <strong>"Submit"</strong></li>
-</ol>
-<p>The TIF file is <strong>single-band float32, EPSG:32611, 3730×3292, values exactly {0, 1}</strong>, matching the required submission format.</p>
-</div>
-
-<div class="warn">
-<strong>⚠️ Important caveats:</strong>
-<ul>
-<li>The holdout DTI (0.031) is below random (~0.080). However, the holdout tests recovery of MAJOR catalogue faults, while the competition tests against UNMAPPED faults. The repo's documented finding is that holdout DTI has Spearman −0.10 against the competition board.</li>
-<li>The competition scores are against a HIDDEN test set. We cannot predict the score.</li>
-<li>Each team has a limited number of weekly submission slots. Use wisely.</li>
-<li>The Final Prize Round ($250k) rescores submissions against an EXPANDED label set that includes faults verified from submissions.</li>
-</ul>
-</div>
-
-<h2>🧪 Methodology</h2>
-<h3>H72-v3 Approach</h3>
-<p>The v3 submission uses a <strong>three-component ranking field</strong>:</p>
-<ol>
-<li><strong>h19-5 base ranker (60%)</strong>: The proven powerlaw-budget-multiline-corroborated ranking that scored 0.1922 on the competition. This ranker uses DEM-derived curvature, slope, and multi-line corroboration.</li>
-<li><strong>Multi-scale DEM edge coherence (25%)</strong>: Sobel edge magnitude computed at5 scales (σ=0.5 to 3.0 px, i.e., 50m to 300m), averaged. This captures structural lineaments that persist across spatial scales — a hallmark of fault-controlled features.</li>
-<li><strong>LiDAR scarp features (15%)</strong>: High-resolution (1m source, aggregated to 100m) scarp detection from USGS 3DEP LiDAR data.</li>
-</ol>
-<p>All mass is placed <strong>more than 200m from any mapped catalogue fault</strong> (the "ring mask" that turned 0.2600 into 0.2778 for the champion family). Binary {0,1} mass is metric-optimal.</p>
-
-<h3>Why this could score higher than 0.2778</h3>
-<p>From the metric algebra (knowledge/49):</p>
-<ul>
-<li>The champion (0.2778) uses 37,654 pixels at credit density ρ ≈ 0.139</li>
-<li>To reach 0.3195 (current rank 7), we need ρ ≈ 0.16 at the same budget</li>
-<li>The v3 enhancement adds multi-scale edges that detect broader structural zones, potentially finding fault pixels the h19-5 ranker missed</li>
-<li>The risk: the additional features may add noise rather than signal</li>
-</ul>
-
-<h2>📊 Competition Context</h2>
-<table>
-<tr><th>Rank</th><th>Score</th><th>Submission</th></tr>
-<tr><td>1</td><td>0.3774</td><td>xiaofanhu (likely uses 1m LiDAR at native resolution)</td></tr>
-<tr><td>7</td><td>0.3195</td><td>DARD</td></tr>
-<tr><td>13</td><td>0.2778</td><td>h33-h33-2-b2-zeros (our family's best)</td></tr>
-<tr><td>—</td><td>—</td><td><strong>H72-v3 (our candidate)</strong></td></tr>
-</table>
-
-<h2>📁 Repo Resources</h2>
-<ul>
-<li><a href="https://buffedlizard55-lab.github.io/GEMSDOE52/">Main site</a> — full technical details</li>
-<li><a href="https://github.com/drivendataorg/gems-prize-reference-solution">Reference solution</a></li>
-<li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Competition overview</a></li>
-<li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/968/">About page</a></li>
-<li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/">Data download</a></li>
-<li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">Leaderboard</a></li>
-<li><a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">Submission format PDF</a></li>
-</ul>
-
-<p style="margin-top: 24px; color: var(--gray); font-size: 0.85em;">
-AI assistant generated. No geologist verified any structure. No organizer score is claimed.
-Data: SHA-256 integrity-pinned owner mirrors, NOT organizer-authenticated.
-</p>
-
+  <h2>Reported 0.2778: evidence classes kept separate</h2>
+  <ul>
+    <li><strong>PUBLIC-LEADERBOARD observation:</strong> 0.2778 at rank 17 for `extradr19` in the saved 2026-10-09 20:18 UTC observation. This is a team-level row; the board gives no TIFF filename or hash. It was not the top public score (the observed #1 row was 0.3774).</li>
+    <li><strong>OWNER-REPORTED association:</strong> an owner record associates an H33-labelled name with 0.2778; it has no organizer receipt or authenticated file hash.</li>
+    <li><strong>Local bytes:</strong> a 37,654-dot H33-labelled mirror is a strict subset of a separate 44,090-dot owner-reported 0.2600 mirror (6,436 removed, none added). This is not a cause of the public score.</li>
+    <li><strong>Official scoring clarification:</strong> <a href="https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516/4">DrivenData staff states</a> that the known-fault mask is pixel-exact, only new-fault ground truth is scored, and new-fault pixels may occur within 300 m of known traces. Therefore the removed 100–200 m cells are not automatically zero-credit.</li>
+    <li><strong>ORGANIZER-CONFIRMED:</strong> no receipt tying a submission, TIFF hash, and 0.2778 score was found.</li>
+  </ul>
+  <p class="small">Current review: <a href="../knowledge/49_why_02778_phd_answer.md">knowledge/49</a> · <a href="data/leaderboard_observation_2026-10-09T201800Z.json">saved public-board observation</a> · <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">official leaderboard</a>.</p>
+  <p class="bad"><strong>No H72 page here authorizes a submission. No H72 TIFF is approved.</strong></p>
 </body>
 </html>

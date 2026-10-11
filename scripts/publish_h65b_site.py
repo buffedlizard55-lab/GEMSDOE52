@@ -19,7 +19,7 @@ DOCS = ROOT / "docs"
 NAV = ('<a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation">'
        '<a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>'
        '<a href="index.html">Overview</a><a href="h65b.html">H65 round</a>'
-       '<a href="executive-summary.html">Submission guide</a>'
+       '<a href="executive-summary.html">H65 research status</a>'
        '<a href="downloads/index.html">Archive</a></nav></header>')
 
 
@@ -55,53 +55,17 @@ def main() -> int:
 
     exec_html = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="assets/ctd5.css">
-<title>H65 executive summary — how to submit, and whether this file may be submitted</title></head>
+<title>H65 research status — not for submission</title></head>
 <body>{NAV}<main id="main">
-<div class="eyebrow">Executive summary / submission guide · round H65</div>
-<h1>How to submit, and whether this file may be submitted.</h1>
-<p class="lead">Read the verdict first. A valid file is not an approved competition entry; the selector
-decides promotion within the weekly cap shown on the submission page.</p>
-<div class="notice" role="note"><strong>OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT TO THE COMPETITION · DO NOT UPLOAD THIS FILE</strong>
-<p>{verdict_line}</p>
-<p>Evidence, measured not promised: holdout DTI {fmt_ci(pooled['candidate'])} (candidate) vs
-{fmt_ci(pooled['singleB'])} (single_B control) and {fmt_ci(pooled['random'])} (random), evaluator
-gems52-pooled-hide-v1, {pooled['candidate']['withheld_positive_pixels']:,} withheld positives;
-paired candidate−single_B Δ {hold['pooled']['paired_differences']['singleB']['delta']:.5f}.
-Lane gate: surface {lane_s['policy']['verdict']}, dots {lane_d['policy']['verdict']}
-(max near-dot share {lane_d['policy']['max_near_3px_fraction']:.3f}); identical decoded priors: {n_ident}.
-Competition slots used: 0.</p></div>
-<div class="actions"><a class="button" href="downloads/h65b-candidate.tif" download>Download the H65 GeoTIFF ↓</a>
-<a class="button secondary" href="downloads/h65b-candidate.zip" download>Single-TIFF ZIP</a>
-<a class="button secondary" href="downloads/h65b-reasoning.csv" download>Per-dot reasoning CSV</a></div>
-<p class="fileline">{sub['file']}<br>{sub['bytes']:,} bytes · SHA-256 {sub['sha256']} ·
-{sub['metadata']['emission']['accepted']:,} emitted cells ·
-values exactly {{0,1}} · {fmt['nan_pixels']} NaN</p>
-<section class="prose"><h2>The file contract (checked on disk, evidence/h65b_format.json)</h2><ul>
-<li>One band, float32, every value in [0, 1] — measured min {fmt['min']}, max {fmt['max']}.</li>
-<li>No NaN or infinite values anywhere ({fmt['nan_pixels']} NaN, {fmt['infinity_pixels']} Inf). The portal's
-“Predicted values must be in range [0, 1]” rejection is caused by NaN/out-of-range bytes; this file has
-neither, and the writer refuses to produce one (<code>gems52.submission_writer</code> re-reads the file and
-fails closed).</li>
-<li>{fmt['crs']}, shape {fmt['height']}×{fmt['width']}, transform identical to the pinned
-<code>sample_submission.tif</code>, 100 m cells.</li>
-<li>Portal name: <code>{card['submission']['name']}</code> ({len(card['submission']['name'])} characters).<br>
-Portal note ({card['submission']['note_chars']} characters): <code>{card['submission']['note']}</code></li>
-</ul><p class="small">Local validator only; not an organiser acceptance receipt.</p>
-<h2>Exact submission steps (only if a later selector promotes this file)</h2>
-<ol>
-<li>Open <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">the competition page</a>
-and sign in; go to <em>Submit contributions</em> → the submission form.</li>
-<li>Under <b>File to submit</b>, upload <code>downloads/h65b-candidate.tif</code> (or the ZIP containing the
-single TIFF).</li>
-<li>Under <b>Note (optional)</b>, paste the note string above — it keeps the submission identifiable.</li>
-<li>Confirm the file name is <code>{card['submission']['name']}</code> so the receipt matches this page.</li>
-<li>Submit. As of this round the selector has NOT approved this file: its holdout result is negative and the
-parallel-run lane rule logs DUPLICATE. Downloading for research is fine; spending a weekly slot on it is not.</li>
-</ol></section>
-<p class="small"><a href="h65b.html">Round page with the full method and evidence →</a></p>
-<section><h2>Earlier rounds still on this site</h2>
-{HISTORIC_SECTIONS}
-</section>
+<div class="eyebrow">H65 · historical research status</div>
+<h1>H65 is not approved for submission.</h1>
+<div class="notice bad" role="alert"><strong>RESEARCH DOWNLOAD ONLY · DUPLICATE/STOP · NOT FOR SUBMISSION · NO SLOT AUTHORIZED</strong>
+<p>H65 does not beat the registered single_B control on the shared holdout, and the final-dot lane rule is DUPLICATE/STOP on the saturated registry. No override, upload instructions, or paste-ready identification is provided.</p>
+<p>HOLDOUT-DTI {fmt_ci(pooled['candidate'])} vs single_B {fmt_ci(pooled['singleB'])}, evaluator <code>gems52-pooled-hide-v1</code>, {pooled['candidate']['withheld_positive_pixels']:,} withheld positives; paired Δ {hold['pooled']['paired_differences']['singleB']['delta']:+.5f}. This is an internal holdout measurement, not a leaderboard score.</p></div>
+<div class="actions"><a class="button" href="downloads/h65b-candidate.tif" download>Download H65 research TIFF</a><a class="button secondary" href="downloads/h65b-candidate.zip" download>Research ZIP</a><a class="button secondary" href="h65b.html">H65 evidence</a></div>
+<p class="fileline">{sub['file']}<br>{sub['bytes']:,} bytes · SHA-256 {sub['sha256']} · {sub['metadata']['emission']['accepted']:,} emitted cells</p>
+<section class="prose"><h2>What the local receipts show</h2><ul><li>Local format checks pass; that does not establish portal acceptance.</li><li>Decoded-pattern uniqueness does not override the DUPLICATE/STOP lane rule.</li><li>H65 is negative; no organizer-confirmed receipt or weekly slot is recorded.</li></ul></section>
+<p class="small">This historical page does not authorize a rerun, new run-card, rebuild, override, or submission. See the <a href="h65b.html">H65 method and evidence</a>.</p>
 </main></body></html>"""
     (DOCS / "h65b-executive-summary.html").write_text(exec_html)
 
@@ -119,7 +83,7 @@ holdout before anything was published.</p>
 <p>{verdict_line}. Competition slots used: 0.</p></div>
 <div class="actions"><a class="button" href="downloads/h65b-candidate.tif" download>Download the H65 GeoTIFF ↓</a>
 <a class="button secondary" href="downloads/h65b-candidate.zip" download>Single-TIFF ZIP</a>
-<a class="button secondary" href="executive-summary.html">How to submit (executive summary)</a></div>
+<a class="button secondary" href="executive-summary.html">H65 research status — not for submission</a></div>
 <p class="fileline">{sub['file']}<br>{sub['bytes']:,} bytes · SHA-256 {sub['sha256']} ·
 {sub['metadata']['emission']['accepted']:,} emitted cells · values exactly {{0,1}} · 0 NaN</p>
 <section class="prose">
@@ -174,7 +138,7 @@ population itself.</li>
 
 
 HISTORIC_SECTIONS = (
-    '<p class="small">R5 (concurrent round): <a href="downloads/r5-candidate.tif" download>gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif</a>, SHA-256 <code>d2bfb0f79328399354943bd1</code>…, 16,681 px — ok to download, <b>not slot-approved</b>; its receipt publishes P(beating 0.2778) = 0.366 and P(beating 0.3195) = 0.226, with <a href="r5.html">its own audit page</a> and short path <code>r5-candidate.tif</code>. Its budget rule scales on |G| = 14,088.7 px, which H61 measures as outside the identified interval [5,949.3, 12,512.1] px — IR-H61-001 and IR-H61-010 in <a href="irregularities.html">the irregularity register</a>. Do not spend a weekly slot on either round.</p>'
+    '<p class="small">R5 (concurrent round): <a href="downloads/r5-candidate.tif" download>gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif</a>, SHA-256 <code>d2bfb0f79328399354943bd1</code>…, 16,681 px — ok to download, <b>not slot-approved</b>; its conditional scenario projection lists P(DTI > 0.2778) = 0.366 and P(DTI > 0.3195) = 0.226 under owner-reported score associations and assumed hidden-truth parameters; these are not scores or forecasts, with <a href="r5.html">its own audit page</a> and short path <code>r5-candidate.tif</code>. Its budget rule assumed |G| = 14,088.7 px, a conditional scenario not established by hidden truth; later owner-report-conditioned algebra gives [5,949.3, 12,512.1] px under stated assumptions — IR-H61-001 and IR-H61-010 in <a href="irregularities.html">the irregularity register</a>. Do not spend a weekly slot on either round.</p>'
     + "\n"
     '<p class="small"><a href="archive-ctd5-overview.html">CTD5 landing page</a> · <a href="ctd5-audit.html">CTD5 audit</a> · <a href="h62.html">H62 audit (parallel session)</a> · <a href="archive-h62-overview.html">H62 landing archive</a> · <a href="h61-audit.html">H61 audit</a> · <a href="h60c.html">H60C</a> · <a href="h60.html">H60</a> · <a href="h60-triple-convergence.html">H60 triple convergence</a> · <a href="h59.html">H59</a> · <a href="archive-h59-overview.html">H59 archive</a> · <a href="h58.html">H58</a> · <a href="h57.html">H57</a> · <a href="h57-creditcore.html">H57 credit core</a> · <a href="h56-cotrain.html">H56</a> · <a href="h56.html">H56</a> · <a href="h55.html">H55</a> · <a href="h55-edge.html">H55-EDGE</a> · <a href="h55-profile.html">H55 profile</a> · <a href="h55-paired-shoulders.html">H55 paired shoulders</a> · <a href="h54.html">H54</a> · <a href="h53.html">H53</a> · <a href="r3.html">R3</a> · <a href="r3-hypotheses.html">R3 hypotheses</a> · <a href="hypotheses.html">Hypotheses</a> · <a href="method.html">Method</a> · <a href="validation.html">Validation</a> · <a href="sources.html">Sources</a> · <a href="irregularities.html">Irregularities</a> · <a href="forensics.html">Forensics</a> · <a href="feed.html">Feed</a> · <a href="downloads/index.html">download archive</a> · <a href="downloads/ctd5-research.tif" download>CTD5 TIFF</a> · <a href="downloads/h61-candidate.tif" download>H61 TIFF</a> · <a href="downloads/gems52-h62-conc_soft-arm22000px.tif" download>H62 TIFF</a> · <a href="downloads/h58-candidate.tif" download>H58 TIFF</a> · <a href="downloads/gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif" download>H57 TIFF</a></p>'
     + "\n"

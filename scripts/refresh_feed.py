@@ -69,6 +69,12 @@ def copy_evidence():
             else:
                 write(name + '.json', safe(json.loads(path.read_text())))
             copied.append(name + '.json')
+    for name in ('leaderboard_observation_2026-10-09T201800Z.json',
+                 'revealed_submission_audit.json'):
+        path = EV / name
+        if path.is_file():
+            write(name, safe(json.loads(path.read_text())))
+            copied.append(name)
     # H55 publishes its own evidence the same way the R2 round publishes *_r2.json: copied on every
     # run so the page cannot drift from the artefact, and named by round so it is never mistaken for
     # another round's numbers.  The Phase-2 reasoning record is staged next to the raster it explains.
@@ -105,6 +111,23 @@ def copy_evidence():
         if not target.exists() or target.read_bytes() != reasoning.read_bytes():
             target.write_bytes(reasoning.read_bytes())
         copied.append(reasoning.name)
+    # These historical inventories preserve verbatim owner/source excerpts, including earlier
+    # unsupported public-high-score and score-causality claims. Keep the evidence originals intact,
+    # but annotate the public copies every time the scheduled feed refreshes them.
+    notice = (
+        'Historical owner-controlled/source-review excerpts, not current verified competition evidence. '
+        'Any older text calling 0.2778 the highest public score or attributing a score change to the '
+        '0.2600-to-0.2778 pixel difference is superseded. The saved 2026-10-09 20:18 UTC public board '
+        'places 0.2778 at rank 17 (top 0.3774); no organizer TIFF-hash receipt or causal explanation is '
+        'established. See knowledge/49_why_02778_phd_answer.md.'
+    )
+    for name in ('ctd5_sources.json', 'source_review_r2.json'):
+        target = DATA / name
+        if target.exists():
+            snapshot = json.loads(target.read_text())
+            snapshot['interpretation_notice'] = notice
+            snapshot['current_correction'] = '../../knowledge/49_why_02778_phd_answer.md'
+            write(name, safe(snapshot))
     return copied
 
 
@@ -116,166 +139,34 @@ def file_hash(path):
     return h.hexdigest()
 
 
-def submission_note(d):
-    """The <=200-character note that distinguishes this submission later.
-
-    A record may carry both a short ``submission_note`` (what actually goes in the portal's box, which
-    is length-limited) and a ``submission_note_long`` (the full reasoning, published on the site and in
-    the evidence file).  Truncating the long one is what produced a note that ended mid-sentence, so
-    the long form is never truncated into the short field: it is offered separately.
-    """
-    # The artifact's own note wins over a legacy synthesized submission_note.
-    if d.get('note'):
-        return str(d['note'])[:200]
-    if d.get('submission_note'):
-        return str(d['submission_note'])[:200]
-    portal_note = (d.get('portal') or {}).get('note')
-    if portal_note:
-        return str(portal_note)[:200]
-    return 'Research artifact; no submission note recorded. Not upload approval.'
-
-
-
 def make_zip(name):
-    """One-click ZIP beside the TIF: the raster, the note to paste, and the evidence behind it.
+    """Create or verify a research-only ZIP containing exactly one TIFF.
 
-    Round-agnostic on purpose.  Two rounds have shipped records with different shapes (H54 carries
-    ``retained_core_px`` / ``novel_along_strike_px`` / ``corridor_excluded_m``; H55 carries
-    ``geometry`` / ``selection`` / ``uniqueness``), and a zip that prints ``None px retained core``
-    for a round it was not written against is worse than a generic one.  So the body is assembled
-    from the keys the record actually has, and says which round it came from.
+    Portal identifiers, notes, status files and evidence sidecars are never placed in archive ZIPs.
+    Downloading an archive is not submission approval.
     """
     import zipfile
     src = ROOT / 'submission' / name
-    if not src.exists():
+    if not src.is_file():
         return None
-    stem = name[:-4] if name.endswith('.tif') else name
+    stem = name[:-4] if name.lower().endswith(('.tif', '.tiff')) else name
     zp = DL / f'{stem}.zip'
-    # Preserve immutable historical bundles when their TIFF payload is unchanged.
-    # H58 retains its stricter one-member check below; CTD5 uses submission_writer.
-    if zp.exists() and not stem.startswith('gems52-h58-'):
+    payload = src.read_bytes()
+    if zp.is_file():
         try:
             with zipfile.ZipFile(zp) as existing:
-                names=[n for n in existing.namelist() if n.lower().endswith(('.tif','.tiff'))]
-                if len(names)==1 and existing.read(names[0])==src.read_bytes() and existing.testzip() is None:
-                    return str(zp)
-        except (OSError,KeyError,zipfile.BadZipFile):
-            pass
-    if stem.startswith('gems52-h58-'):
-        # H58's portal ZIP is intentionally a single member: exactly one GeoTIFF. The short portal
-        # note and full evidence are published alongside it, not bundled as extra upload files.
-        if zp.exists():
-            try:
-                with zipfile.ZipFile(zp) as existing:
-                    valid = (existing.namelist() == [name]
-                             and existing.read(name) == src.read_bytes()
-                             and existing.testzip() is None)
-                if valid:
-                    return str(zp)
-            except (OSError, KeyError, zipfile.BadZipFile):
-                pass
-        with zipfile.ZipFile(zp, 'w', zipfile.ZIP_DEFLATED) as archive:
-            archive.write(src, arcname=name)
-        return str(zp)
-    ev = EV / f'submission_{stem}.json'
-    d = json.loads(ev.read_text()) if ev.exists() else {}
-    proj = d.get('projected_dti') or {}
-    lines = [
-        name,
-        f"sha256 {d.get('sha256')}",
-        f"{d.get('bytes')} bytes, 1 band, float32, EPSG:32611, values in [0,1], no NaN.",
-        '',
-        "SUBMISSION NOTE (<=200 chars, paste into the portal's notes box):",
-        submission_note(d),
-        '',
-    ]
-    if d.get('submission_name'):
-        lines += [f"SUBMISSION NAME: {d['submission_name']}", '']
-    if d.get('retained_core_px') is not None:
-        lines += [
-            f"What it is: {d.get('budget')} emitted pixels = {d.get('retained_core_px')} px retained "
-            f"core (the double-corroborated atom A&C, whose credit the organiser's own published "
-            f"scores bound exactly) + {d.get('novel_px')} px strictly novel "
-            f"({d.get('novel_along_strike_px')} along the recovered strike of that structure, "
-            f"{d.get('novel_far_px')} free candidates on the same fabric).",
-            f"Nothing is emitted within {d.get('corridor_excluded_m')} m of a mapped trace, because "
-            f"that ring's credit is exactly zero in the organiser's own scores (knowledge/10 s2).",
-            f"Projected DTI {proj.get('mean_dti')} (P(win over 0.2778) {proj.get('p_win')}); the "
-            f"projection is an integral over a stated prior, not a forecast - see "
-            f"evidence/revealed_budget.json.",
-            '',
-        ]
-    geo, sel, uni = d.get('geometry') or {}, d.get('selection') or {}, d.get('uniqueness') or {}
-    if geo:
-        lines += [
-            f"What it is: {geo.get('S')} emitted pixels, every one 8-isolated "
-            f"(largest component {geo.get('max_component')}), placed by a coverage-greedy on the "
-            f"metric's own numerator.",
-            f"Placement efficiency A/S = {geo.get('A_per_S')} = "
-            f"{(geo.get('spacing_efficiency') or 0):.2%} of the exact 9.380298 kernel-disc ceiling; "
-            f"the file that scored 0.2778 reached 8.044 (85.75%).",
-        ]
-    if sel:
-        lines += [
-            f"Selected by the pre-registered rule from {sel.get('source')}: "
-            f"{sel.get('arm')}|{sel.get('emitter')}. Blocked whole-segment holdout, 4 folds x 2 "
-            f"instruments, matched-budget random control: hide {sel.get('hide')} "
-            f"({sel.get('hide_wins')}/4 folds) vs random; tip {sel.get('tip')} "
-            f"({sel.get('tip_wins')}/4). Those are recovery numbers on hidden catalogue segments, "
-            f"NOT a forecast of the portal score.",
-            f"|G| = {sel.get('n_g')} calibrated by inverting DTI = T/(0.2*S + 0.8*|G|) on 13 "
-            f"SHA-256-verified scored rasters (evidence/h55_g_calibration.json).",
-        ]
-    if uni:
-        lines += [
-            f"Uniqueness gate: {uni.get('relation_to_union')}; "
-            f"{(uni.get('novel_fraction') or 0):.1%} of this file's pixels touch none of the "
-            f"{uni.get('n_priors_checked')} priors scanned, and {uni.get('prior_px_dropped')} prior "
-            f"pixels are deliberately not re-emitted.",
-        ]
-    if d.get('projection'):
-        lines += [
-            f"Placement gain in isolation (the 0.2778 file's own rho_A = 0.01287 applied to this "
-            f"file's measured coverage, nothing else changed): DTI ~ "
-            f"{d['projection'].get('geometry_only_dti')}. Arithmetic given its assumption, and the "
-            f"assumption is stated in the evidence file.",
-        ]
-    if d.get('submission_note_long'):
-        lines += ['', 'FULL REASONING (too long for the portal box; published on the site):',
-                  str(d['submission_note_long']), '']
-    body = "\n".join(lines)
-    zp = DL / f'{stem}.zip'
-    # Preserve immutable historical bundles when their TIFF payload is unchanged.
-    # H58 retains its stricter one-member check below; CTD5 uses submission_writer.
-    if zp.exists() and not stem.startswith('gems52-h58-'):
-        try:
-            with zipfile.ZipFile(zp) as existing:
-                names=[n for n in existing.namelist() if n.lower().endswith(('.tif','.tiff'))]
-                if len(names)==1 and existing.read(names[0])==src.read_bytes() and existing.testzip() is None:
-                    return str(zp)
-        except (OSError,KeyError,zipfile.BadZipFile):
-            pass
-    expected_members = [name, 'SUBMISSION_NOTE.txt'] + (['evidence.json'] if ev.exists() else [])
-    # Preserve a byte-identical, already-valid archive rather than changing ZIP timestamps on every
-    # scheduled refresh. Rebuild only when a member, note, or receipt actually changes.
-    if zp.exists():
-        try:
-            with zipfile.ZipFile(zp) as existing:
-                valid = (existing.namelist() == expected_members
-                         and existing.read(name) == src.read_bytes()
-                         and existing.read('SUBMISSION_NOTE.txt') == body.encode())
-                if ev.exists():
-                    valid = valid and existing.read('evidence.json') == ev.read_bytes()
-                valid = valid and existing.testzip() is None
+                valid = (existing.namelist() == [name]
+                         and existing.read(name) == payload
+                         and existing.testzip() is None)
             if valid:
                 return str(zp)
         except (OSError, KeyError, zipfile.BadZipFile):
             pass
-    with zipfile.ZipFile(zp, 'w', zipfile.ZIP_DEFLATED) as z:
-        z.write(src, arcname=name)
-        z.writestr('SUBMISSION_NOTE.txt', body)
-        if ev.exists():
-            z.write(ev, arcname='evidence.json')
+    with zipfile.ZipFile(zp, 'w', zipfile.ZIP_DEFLATED) as archive:
+        archive.writestr(name, payload)
+    with zipfile.ZipFile(zp) as check:
+        if check.namelist() != [name] or check.read(name) != payload or check.testzip() is not None:
+            raise ValueError(f'Research ZIP failed single-TIFF verification: {zp}')
     return str(zp)
 
 
@@ -337,8 +228,11 @@ def latest_submission():
         report.setdefault('short_zip', 'h58-candidate.zip')
         report.setdefault('promoted', False)
         report.setdefault('nonzero_px', report.get('emitted_pixels'))
-    report['submission_note'] = submission_note(report)
-    report['submission_note_chars'] = len(report['submission_note'])
+    for key in ('submission_name', 'submission_note', 'submission_note_long', 'portal'):
+        report.pop(key, None)
+    report['artifact_status'] = 'RESEARCH ONLY · NOT FOR SUBMISSION'
+    report['approved_for_submission'] = False
+    report['approved_for_weekly_slot'] = False
     if path.exists():
         actual_bytes = path.stat().st_size
         actual = file_hash(path)
@@ -368,15 +262,50 @@ def parse_board(text):
 def fetch_board(do_fetch=False):
     snapshots = sorted((ROOT / 'registry').glob('leaderboard_snapshot_*.json'))
     snap = snapshots[-1] if snapshots else None
-    out = json.loads(snap.read_text()) if snap and snap.exists() else dict(rows=[])
-    out.update(source=BOARD, owner_best_reported=OUR_BEST,
-               artifact_score_authenticated=False,
-               note='Dated participant-level observation; no filename/hash/receipt attribution. Participant identity is not authenticated as the user\'s team.')
+    prior_observation = json.loads(snap.read_text()) if snap and snap.exists() else dict(rows=[])
+    observation_path = EV / 'leaderboard_observation_2026-10-09T201800Z.json'
+    observation = json.loads(observation_path.read_text()) if observation_path.is_file() else None
+    if observation:
+        rows = [{'rank': row['rank'], 'team': row['participant'],
+                 'score': row['best_public_dw_tversky']}
+                for row in observation.get('rows', [])]
+        subject = next((row for row in rows if row['team'] == 'extradr19'), None)
+        top = max((row['score'] for row in rows if row['rank'] == 1), default=None)
+        out = dict(
+            status='partial dated public-board observation; automated DrivenData access disabled by Terms-of-Use policy',
+            observed_date_utc=observation.get('observed_utc', '')[:10],
+            observed_at_utc=observation.get('observed_utc'),
+            source=BOARD,
+            retrieved_by=observation.get('observation_method'),
+            evidence_class=observation.get('evidence_class', 'PUBLIC-LEADERBOARD OBSERVATION'),
+            rows=rows,
+            rows_complete=False,
+            top=top,
+            observed_subject=subject,
+            prior_snapshot_file=snap.name if snap else None,
+            prior_snapshot_status='historical; not the later observation',
+            owner_best_reported=OUR_BEST,
+            artifact_score_authenticated=False,
+            note='Selected team-level board rows are transcribed from the saved observation; participant identity is not authenticated as the repository owner, and no row binds a TIFF hash or organizer receipt.',
+            current_observation_correction={
+                'observed_utc': observation.get('observed_utc'),
+                'participant': subject,
+                'top_public_score': top,
+                'evidence': 'leaderboard_observation_2026-10-09T201800Z.json',
+                'rows_complete': False,
+                'scope_and_limits': observation.get('scope_and_limits', []),
+                'interpretation': 'Later dated public-board observation supersedes earlier rank snapshots. It is team-level and does not identify a TIFF or authenticate a score-to-file mapping.'})
+    else:
+        out = prior_observation
+        out.update(source=BOARD, owner_best_reported=OUR_BEST,
+                   artifact_score_authenticated=False,
+                   note='Dated participant-level observation; no filename/hash/receipt attribution. Participant identity is not authenticated as the user\'s team.')
     policy = json.loads((ROOT / 'registry/source_policy.json').read_text())['drivendata']
     allowed = bool(policy.get('automated_fetch_allowed') and policy.get('written_permission_reference'))
     out['automated_fetch_allowed'] = allowed
     if not allowed:
-        out['status'] = 'dated snapshot; automated DrivenData access disabled by Terms-of-Use policy'
+        out['status'] = ('saved partial dated public-board observation; automated DrivenData access '
+                        'disabled by Terms-of-Use policy')
         out['fetch_requested_but_disabled'] = bool(do_fetch)
         # Crucially, fetched_utc is retained unchanged.
         return out
@@ -430,6 +359,19 @@ def research_status():
                 note='Research only; local evidence refresh is not a fresh organizer or leaderboard observation.')
 
 
+def h75_stop_is_current():
+    """Fail closed when shared pages show the terminal H75 stop."""
+    index = DOCS / 'index.html'
+    status = DOCS / 'h75-executive-summary.html'
+    if not index.is_file() or not status.is_file():
+        return False
+    home = index.read_text(errors='replace')
+    page = status.read_text(errors='replace')
+    return ('H75: DUPLICATE/STOP' in home
+            and 'DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION' in page
+            and 'no owner override' in page.lower())
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--fetch', action='store_true', help='Only honored with recorded written permission; otherwise no DrivenData request.')
@@ -437,6 +379,30 @@ def main():
     args = parser.parse_args()
     copied = copy_evidence()
     DL.mkdir(parents=True, exist_ok=True)
+    if h75_stop_is_current():
+        board = fetch_board(args.fetch)
+        write('leaderboard.json', board)
+        inv = EV / 'prior_inventory_r2.json'
+        entries = json.loads(inv.read_text()).get('entries', []) if inv.exists() else []
+        latest_status = dict(
+            round='H75', verdict='DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION',
+            status_page='h75-executive-summary.html',
+            approved_for_submission=False, approved_for_weekly_slot=False,
+            owner_override=False, rerun_allowed=False,
+            note='H75 terminal stop is current; this feed run did not stage an artifact, create a ZIP, or change a submission pointer.')
+        write('feed.json', dict(
+            generated_utc=time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
+            branch=current_branch(args.branch), repo='buffedlizard55-lab/GEMSDOE52',
+            evidence_copied=copied, submission=None,
+            downloads=len(list(DL.glob('*.tif'))),
+            leaderboard_status=board['status'],
+            leaderboard_last_observed_utc=board.get('fetched_utc') or board.get('observed_date_utc'),
+            prior_entries=len(entries),
+            eligible_prior_rasters=sum(bool(r.get('eligible_prior')) for r in entries),
+            scientific_gate=False, slots_used=0, latest_research=latest_status,
+            freshness_note='Local evidence refresh is automatic; the board is a dated observation, not a live feed. No portal upload or submission-pointer change.'))
+        log('H75 terminal stop remains current; refreshed only local evidence/feed metadata. No TIFF, ZIP, pointer, or page was changed.')
+        return 1 if board.get('fetch_error') else 0
     # Stage the rasters and the one-click ZIP BEFORE the report is written: the report points into
     # docs/downloads/, so publishing after it left the site offering a file that was not there yet
     # (IR-52-028).

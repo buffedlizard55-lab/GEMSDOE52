@@ -1,5 +1,7 @@
-# 66 · H75 — results, irregularities, next steps (2026-10-09)
+# 66 · H75 — results and limits (2026-10-09; terminal amendment 2026-10-10)
 > Identifier note: first run as H74 in this session; renamed H75 at merge because a parallel session merged its own H74 to `main` first. Pixels, SHA-256 and every number unchanged.
+>
+> **Current terminal status (2026-10-10): DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION.** H75 exhausted its authorized experiment budget; the final-dot near-duplicate gate failed and support novelty is 0.0. No owner override, waiver, rerun, placement, build, new run card, or weekly slot is authorized. The historical experiment table below is an audit record, not current permission. The old “Next steps” are superseded. See [`knowledge/49_why_02778_phd_answer.md`](49_why_02778_phd_answer.md) for the corrected 0.2778 evidence classes and non-causal pixel comparison.
 
 
 Preregistration: `knowledge/65` (+ amendments 65a, 65b, each written before the experiment it governs; the registry
@@ -42,8 +44,8 @@ Holdout DTI is not a board forecast (repo measured Spearman −0.10 between hold
   closed after 5 measured View-A sufficiency failures. There are therefore no A-only candidates to write reasoning for.
 - IR-H75-004: single_B differs from the H71 receipt by 5.4e-5 (float/library-level); random reproduces exactly.
 
-## Next steps (ranked)
-1. Decide the lane rule: the near-dot gate against 350+ dense priors makes **every** surface emission a "duplicate".
-   Restrict the registry to *scored submissions* (owner-reported scores) rather than all 524 published blobs, preregistered.
-2. DVA at more lags/bands (bands 15 depth-to-basement, 18 grav HG) and DVA azimuth vs regional NNE Basin-and-Range strike.
-3. H67-B antithetic margin asymmetry (band 15).
+## Superseded follow-up ideas — not authorized
+
+The three items that followed the 2026-10-09 run were exploratory suggestions, not registered approvals. They are **not current next steps** and must not be used to reopen H75, alter the duplicate rule, or justify a submission. In particular, excluding registry priors based on owner-reported scores would be an unauthorized rule change. The terminal `DUPLICATE/STOP` stands.
+
+Any scientifically separate future work would require a newly authorized round, a frozen preregistration, restored shared cache support, and the shared holdout protocol before fitting. The 2026-10-10 pre-fit shortlist in [`knowledge/67_cotraining_candidate_shortlist_20261010.md`](67_cotraining_candidate_shortlist_20261010.md) is not authorization and does not make its three proposals distinct or viable. H72-A remains terminal, H72-D data-blocked; G1 cache support and H72-C/H74 distinctness remain unresolved.

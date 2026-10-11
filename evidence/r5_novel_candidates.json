@@ -13,7 +13,7 @@
   "beta_0p30": 24152
  },
  "min_sep_px": 3.0,
- "assay_not_used_as_gate": "the whole-component localisation assay is reported in evidence/r5_budget.json but does not choose this emission: knowledge/10 \u00a75 disqualified it (Spearman -0.1045, p=0.734, n=13) and this round reproduced the inversion -- on that instrument the champion family's habitat field scores 0.0003 against uniform random 0.0275, while on the organiser's board the same family is the best of the 13",
+ "assay_not_used_as_gate": "the whole-component localisation assay is reported in evidence/r5_budget.json but does not choose this emission: knowledge/10 §5 disqualified it (Spearman -0.1045, p=0.734, n=13) and this round reproduced the inversion -- on that instrument the champion family's habitat field scores 0.0003 against uniform random 0.0275, while on the organiser's board the same family is the best of the 13",
  "candidates": [
   {
    "name": "N1_trace_field",
@@ -252,7 +252,7 @@
   },
   {
    "name": "N6_habitat",
-   "what": "the two-view co-training propensity (contrast: knowledge/10 \u00a76 says habitat != credit)",
+   "what": "the two-view co-training propensity (contrast: knowledge/10 §6 says habitat != credit)",
    "placed": 16681,
    "requested": 16681,
    "candidates_seen": 189675,
@@ -653,5 +653,12 @@
   "support_novelty_gate_ok": true
  },
  "ok_to_download": true,
- "ok_to_submit": true
+ "ok_to_submit": false,
+ "portal_format_valid": true,
+ "approved_for_weekly_slot": false,
+ "submission_eligibility": "NO — not approved; a local format/uniqueness gate is not promotion evidence",
+ "status_correction": {
+  "date": "2026-10-09",
+  "note": "ok_to_submit was previously used for local format/uniqueness. It is corrected to false; portal_format_valid reports technical format only. No slot or submission approval is recorded."
+ }
 }

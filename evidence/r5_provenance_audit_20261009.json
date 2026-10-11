@@ -1,0 +1,48 @@
+{
+  "audit_id": "R5-provenance-review-2026-10-09",
+  "checked_utc": "2026-10-09T20:29:42Z",
+  "artifact": {
+    "file": "gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif",
+    "sha256": "d2bfb0f79328399354943bd166f2d2a206e9a49da46b4f1e8ccba0e4f0d8d002",
+    "bytes": 99231,
+    "emission_generated_utc": "2026-10-08T23:40:33Z",
+    "submission_wrapper_generated_utc": "2026-10-08T23:51:56Z"
+  },
+  "build_time_reconciliation": {
+    "authoritative_timestamp_source": "docs/data/r5_novel_emission.json (identical to evidence/r5_novel_emission.json)",
+    "timestamp_used_utc": "2026-10-08T23:40:33Z",
+    "later_submission_wrapper_is_not_build_time": true,
+    "prior_rasters_at_build": 71,
+    "recomputed_support_novelty_at_build": 1.0,
+    "recomputed_pattern_unique_at_build": true,
+    "receipt_matches_recomputation": true
+  },
+  "free_text_note_correction": {
+    "prior_note_claimed_raster_count": 55,
+    "build_receipt_raster_count": 71,
+    "correction": "The 55 count was stale free-text. The machine-readable build receipt and recomputation both report 71 accessible prior rasters at build time.",
+    "corrected_note_claims_raster_count": 71
+  },
+  "current_inventory_recheck_utc": "2026-10-09T20:29:42Z",
+  "current_inventory_recheck": {
+    "rasters_checked": 120,
+    "later_round_rasters_added_since_build": 49,
+    "support_novelty": 0.874408,
+    "canonical_pattern_unique": true,
+    "interpretation": "The 1.0 build-time novelty claim is scoped to the 71-raster inventory that existed at emission time. Against the current 120-raster inventory, the raster remains pattern-unique but 12.5592% of its positive support overlaps later-round priors; do not describe it as strictly novel against the current repository inventory."
+  },
+  "eligibility": {
+    "research_download": true,
+    "local_format_valid": true,
+    "approved_for_competition_submission": false,
+    "weekly_slots_used": 0,
+    "organizer_confirmed_receipt": false,
+    "reason": "No scientifically eligible promotion/slot approval is recorded. The local format check and historical build-time uniqueness claim do not constitute submission approval."
+  },
+  "verification": {
+    "command": ".venv/bin/python scripts/check_site.py",
+    "result": "exit 0; local links, formats, R5 build-time novelty and served bytes verified",
+    "tests": ".venv/bin/python -m pytest -q tests/test_site_provenance.py",
+    "tests_result": "4 passed"
+  }
+}

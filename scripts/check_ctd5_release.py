@@ -109,7 +109,7 @@ def check(base_url=None):
     assert not all(f['budget_complete'] for f in post['folds'])
     for name in ('index.html','executive-summary.html','ctd5-audit.html'):
         text=(ROOT/'docs'/name).read_text()
-        assert 'DO NOT SUBMIT' in text
+        assert ('DO NOT SUBMIT' in text or 'NOT FOR SUBMISSION' in text), name
         if name!='executive-summary.html':
             assert 'HOLDOUT-DTI' in text
     served=[]

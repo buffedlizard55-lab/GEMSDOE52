@@ -7,7 +7,7 @@
   <title>H72 ranked geological hypotheses · GEMSDOE52</title>
   <link rel="stylesheet" href="assets/ctd5.css">
 </head>
-<body>
+<body><!--H75-ARCHIVE-STOP--><aside role="alert" style="padding:14px 22px;background:#fef2f2;color:#7f1d1d;border:2px solid #991b1b;border-radius:8px;font:14px/1.6 system-ui"><strong>Current H75 status: DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION.</strong> H75 is terminal: no owner override, waiver, or rerun is authorized. The page below is historical/research material; no archived file is approved here. <a href="h75-executive-summary.html" style="color:#7f1d1d">Read the H75 stop status</a>.</aside>
 <a class="skip" href="#main">Skip to content</a>
 <header><nav aria-label="Main navigation">
   <a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>
@@ -20,8 +20,9 @@
 <main id="main">
   <div class="eyebrow">Preregistered geology hypotheses · H72 · 2026-10-09</div>
   <h1>Four hypotheses.<br>One was tested.</h1>
-  <p class="lead">All candidates stay in the single two-view co-training lane: geophysical/subsurface View A against fixed DEM/surface plus available radiometric View B. Cross-view disagreement is the discovery signal. Expected improvement is a qualitative ranking—not a numeric DTI forecast. H72-A was the sole tested candidate and ended negative. H72-B through H72-D remain untested proposals.</p>
-  <div class="notice" role="note"><strong>H72-A IS CLOSED — DO NOT RE-RUN OR BYPASS ITS STOP.</strong><p>The A-only holdout underfilled one fold and the final-dot lane gate failed. The other ideas below were not fitted or validated in this experiment.</p></div>
+  <p class="lead">This page preserves the original H72 preregistered set: H72-A was tested and ended negative; H72-B and H72-C were not fitted as H72; H72-D is data-blocked. A separate follow-on shortlist ranks three proposals, but does not establish three viable or fit-ready candidates. G1 is listed in the checked-in feature manifest, while its runtime cache is absent. H72-C’s four raw inputs overlap H74 A2; only the narrower composition remains unverified. Expected improvement is qualitative—not a numeric DTI forecast.</p>
+  <div class="notice" role="alert" style="border:2px solid #991b1b"><strong>H72-A IS CLOSED — DO NOT RE-RUN OR BYPASS ITS STOP.</strong><p>The A-only holdout underfilled one fold and the final-dot lane gate failed. H72-B/C were not fitted in H72; H72-D remains data-blocked.</p></div>
+  <div class="notice" role="note"><strong>Follow-on slate — 3 proposals; viability/distinctness not verified; no experiment authorized.</strong><p>Ranked for a separately authorized future round: gravity-boundary persistence, H72-B magnetic edges, and H72-C seismo-kinematics. G1’s names/hashes appear in the CTD5 manifest but its runtime cache is absent; H72-C’s four raw channels are all included in H74 A2, so its narrower-composition novelty still needs review. H72-A and H72-D are excluded. No model fit, holdout run, run-card, TIFF emission, or slot use occurred in preparing this shortlist. See the <a href="../knowledge/67_cotraining_candidate_shortlist_20261010.md">full layers, mechanisms, alternatives, expected value, costs, and test guardrails</a>. This does not modify the frozen H72 preregistration.</p></div>
 
   <section class="panel" aria-labelledby="h72a">
     <div class="eyebrow">Rank 1 · H72-A · tested</div>
@@ -53,13 +54,13 @@
 
   <hr class="divider">
   <section class="panel" aria-labelledby="h72c">
-    <div class="eyebrow">Rank 3 · H72-C · not tested</div>
+    <div class="eyebrow">Rank 3 · H72-C · narrow composition / novelty not verified</div>
     <h2 id="h72c">Seismo-kinematic geophysical teacher</h2>
     <div class="table-wrap"><table><tbody>
       <tr><th scope="row">Layers</th><td>Earthquake distance and density `raw_band_10` and `raw_band_16`, combined with geodetic shear and dilatation `raw_band_07` and `raw_band_08`. Keep fixed DEM/radiometric View B unchanged.</td></tr>
       <tr><th scope="row">Physical signature</th><td>A coherent event-density plus strain/shear corridor where surface View B abstains.</td></tr>
       <tr><th scope="row">Why an undiscovered fault?</th><td>Active seismicity and deformation may mark an unmapped structural corridor or a covered continuation that has little surface relief.</td></tr>
-      <tr><th scope="row">What differs from repo methods?</th><td>Earthquake and strain features were included in previous mixed View-A feature sets; this would isolate a narrow active-kinematic teacher and test the co-training view composition, not invent a different method lane.</td></tr>
+      <tr><th scope="row">What differs from repo methods?</th><td>H74 A2 already used all four proposed raw inputs (`raw_band_07`, `_08`, `_10`, `_16`) within its broader deformation/seismicity view and transforms. H72-C is a narrower four-channel teacher, but its novelty/distinctness versus H74 and prior mixed methods has not been established.</td></tr>
       <tr><th scope="row">Expected DTI improvement</th><td><b>Very low / uncertain.</b> Seismic density may be sparse or catalog-dependent; no numeric projection.</td></tr>
       <tr><th scope="row">Cost and named mimic</th><td><b>Low to moderate:</b> existing competition channels, shared pipeline. Mimics: earthquake swarm, volcanic or hydrothermal unrest, or an event-catalogue density artifact.</td></tr>
     </tbody></table></div>

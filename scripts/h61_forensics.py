@@ -29,10 +29,10 @@ Repair 2 -- ``|G|`` is an interval, not a measurement.
       (b) max-cover monotonicity on every *nested* pair ``X subset Y``: ``T_X <= T_Y``,
           which for ``score_X > score_Y`` gives an upper bound on ``|G|``.
 
-    The point value 14,088.7 is what (b) yields at its extreme, i.e. under the extra
-    assumption that the 6,436 px the champion deleted earn *exactly zero* credit.  That
-    assumption is plausible but unproven, so this script publishes the interval and the
-    sensitivity of ``|G|`` to the deleted-ring credit ``delta``.
+    The point value 14,088.7 is what (b) yields only under an extra scenario assumption
+    that the 6,436-cell local difference has zero hidden-truth credit. That assumption is
+    not established by distance to the known-fault mask, local bytes, or an organizer receipt;
+    the script publishes conditional bounds and sensitivity, not measured hidden-truth credit.
 
 Repair 3 (diagnostic, not a repair) -- attribution hash-links.
     The owner's score list embeds a 12-hex token in most filenames.  For some files that

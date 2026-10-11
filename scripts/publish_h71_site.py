@@ -38,6 +38,15 @@ def fmt_int(x) -> str:
 
 
 def main() -> int:
+
+    _h75_home = ROOT / "docs" / "index.html"
+    _h75_status = ROOT / "docs" / "h75-executive-summary.html"
+    if (_h75_home.is_file() and _h75_status.is_file()
+            and "H75: DUPLICATE/STOP" in _h75_home.read_text(errors="replace")
+            and "DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION" in
+            _h75_status.read_text(errors="replace")):
+        print("H75 terminal stop is current; historical publisher made no page or pointer changes")
+        return 0
     card = load("h71_run_card.json")
     hold = load("h71_holdout.json")
     build = load("h71_build.json")
@@ -47,7 +56,7 @@ def main() -> int:
     val = sub["validator"]
     n_dots = card["raster"]["emitted_cells"]
     verdict = card["verdict"]
-    promote = card["verdict_promote"]
+    promote = False  # no slot authorization; H71's current stop verdict is terminal
     mp = hold["matched_pooled"]
     sc = mp["scores"]
     ci = lambda a: f"[{a[0]:.6f}, {a[1]:.6f}]"   # noqa: E731
@@ -122,7 +131,7 @@ def main() -> int:
             '<link rel="stylesheet" href="assets/ctd5.css"></head><body>'
             '<a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation">'
             '<a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>'
-            '<a href="index.html">Overview</a><a href="h71-executive-summary.html">Submission guide</a>'
+            '<a href="index.html">Overview</a><a href="h71-executive-summary.html">H71 research status</a>'
             '<a href="h64.html">H64 (previous)</a><a href="downloads/index.html">Archive</a>'
             '</nav></header><main id="main">')
     tail = "</main></body></html>\n"
@@ -188,9 +197,7 @@ A-only candidate with written geological reasoning, placed where no informative 
 <li>It does not show the A-only stratum beats the single-view baseline on the hide-and-recover instrument; the holdout
 table above is the measured comparison.</li>
 <li><b>NO CERTIFIED LEADERBOARD GAIN.</b> Nothing on this page is an organiser score or a promise of a board gain.</li>
-<li>The best published board score is 0.3774 (rank 1, xiaofanhu), 0.3195 is rank 7 (DARD), 0.2778 is rank 13
-(extradr19): <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">official
-leaderboard</a> (public board, not organiser-confirmed).</li>
+<li>The saved 2026-10-09 20:18 UTC public-board observation shows 0.3774 at rank 1 (xiaofanhu), 0.3195 at rank 7 (DARD), and 0.2778 at rank 17 (extradr19); these are team-level rows, not file/hash receipts: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">official leaderboard</a>.</li>
 <li>Attribution caveat: the 0.2778 and 0.2600 figures are owner-reported, not organiser-confirmed (IR-H61-004).</li></ul>
 <p class="small"><a href="../knowledge/57_hypotheses_H71_preregistered.md">Ranked hypotheses and the frozen protocol →</a> ·
 <a href="../knowledge/58_h71_results_and_limits.md">Results and limits →</a> ·
@@ -198,34 +205,17 @@ leaderboard</a> (public board, not organiser-confirmed).</li>
 {earlier}""" + tail
 
     exec_html = head + f"""
-<div class="eyebrow">Executive summary / submission guide</div>
-<h1>How to submit, and whether this file may be submitted.</h1>
-<p class="lead">Read the verdict first. A valid file is not an approved competition entry; the selector decides
-promotion within the weekly cap shown on the submission page.</p>
-<div class="notice" role="note"><strong>{esc(notice)}</strong><p>Verdict: <b>{esc(verdict)}</b></p>
-<p>The file is new inference, not identical on decoded pixels to any registry raster, and (policy lane) not within 3 px of
-any informative prior's positive pixels, so it is safe to download for research. Whether it may be submitted is answered by
-the measured gates above; this round spends no weekly slot.</p></div>
-<div class="actions"><a class="button" href="downloads/h71-candidate.tif" download>Download the H71 GeoTIFF ↓</a>
-<a class="button secondary" href="downloads/h71-candidate.zip" download>Single-TIFF ZIP</a>
-<a class="button secondary" href="downloads/{esc(csv_link)}" download>Geological reasoning CSV</a></div>
+<div class="eyebrow">H71 · historical research status</div>
+<h1>H71 is not approved for submission.</h1>
+<div class="notice bad" role="alert"><strong>RESEARCH DOWNLOAD ONLY · DUPLICATE/STOP · NOT FOR SUBMISSION · NO SLOT AUTHORIZED</strong>
+<p>{esc(verdict)} The final-dot lane gate is a stop and the shared holdout does not beat single_B. A local format pass or distinct decoded pattern does not override these gates. No owner override, upload procedure, or paste-ready identification fields are provided.</p></div>
+<div class="actions"><a class="button" href="downloads/h71-candidate.tif" download>Download H71 research TIFF</a><a class="button secondary" href="downloads/h71-candidate.zip" download>Research ZIP</a><a class="button secondary" href="h71.html">H71 evidence</a></div>
 <p class="fileline">{fileline}</p>
-<section class="prose"><h2>The file contract (checked on disk)</h2><ul>
-<li>One band, float32, every value in [0, 1]; in practice exactly 0 or 1.</li>
-<li>No NaN or infinite values anywhere in the file (the portal's “Predicted values must be in range [0, 1]”
-rejection is caused by NaN/out-of-range bytes, and this file has neither).</li>
-<li>EPSG:32611, shape and geotransform identical to the pinned <code>sample_submission.tif</code>.</li>
-<li>{fmt_int(n_dots)} emitted cells, all strict A-only discovery candidates (View A confident, View B abstaining), all
-more than 200 m from a mapped trace, 3 px minimum separation.</li>
-<li>Name for the portal: <code>{esc(card['submission_name'])}</code>. Note ({card['note_chars']} characters):
-<code>{esc(card['note'])}</code></li>
-</ul><p class="small">Local validator only; not an organiser acceptance receipt.</p>
-<h2>Exact steps, only if a later selector approves this file</h2>
-<ol><li>Open the competition submission page (login required; <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">competition page</a>).</li>
-<li>Under <b>File to submit</b>, choose the TIFF (or the ZIP with the single TIFF).</li>
-<li>Paste the name and note above into the submission form.</li>
-<li>Submit only if the selector has approved this file. This file is not approved.</li></ol></section>
-{earlier}""" + tail
+<section class="prose"><h2>Local checks and scientific status</h2><ul>
+<li>Local raster-format checks do not establish portal acceptance.</li><li>The final-dot lane gate is DUPLICATE/STOP and the registered holdout comparison is negative.</li><li>No organizer-confirmed score receipt or weekly slot is recorded.</li></ul></section>
+<p class="small">The saved public-board observation is team-level and has no TIFF hash. Owner-reported values are not organizer-confirmed; no file-to-score causal attribution is established. See <a href="../knowledge/49_why_02778_phd_answer.md">knowledge/49</a>.</p>
+<p class="small">This historical archive authorizes no rerun, new run-card, rebuild, override, or submission.</p>
+""" + tail
 
     (DOCS / "h71.html").write_text(index)
     (DOCS / "h71-executive-summary.html").write_text(exec_html)

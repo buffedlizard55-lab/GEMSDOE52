@@ -1,28 +1,68 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>H75 executive summary — how to submit</title>
-<style>body{font-family:-apple-system,sans-serif;max-width:760px;margin:40px auto;padding:20px;line-height:1.6}
-.card{border:2px solid #22c55e;border-radius:8px;padding:16px;background:#f0fdf4}.warn{background:#fef3c7;border-left:4px solid #eab308;padding:12px;margin:12px 0}
-.btn{display:inline-block;padding:12px 22px;border-radius:6px;text-decoration:none;font-weight:700;background:#22c55e;color:#fff;margin:6px 6px 6px 0}
-table{border-collapse:collapse;width:100%}td,th{border:1px solid #d1d5db;padding:6px 8px;font-size:.9em}code{word-break:break-all}</style></head><body>
-<h1>H75 — Executive summary</h1>
-<div class="card"><h2>Download</h2>
-<a class="btn" href="downloads/h75-candidate.tif">⬇ h75-candidate.tif (143 KB)</a> <a class="btn" href="downloads/h75-candidate.zip">⬇ ZIP</a>
-<p><b>Is it OK to download?</b> YES — validated from disk: 1 band float32, EPSG:32611, 3730×3292, transform matches sample_submission, 0 NaN, values exactly {0,1} (fixes the "Predicted values must be in range [0, 1]" error).</p>
-<p><b>Is it OK to submit?</b> HOLDOUT says YES (first arm to beat single_B: +0.0118, 95% CI [0.0068, 0.0174]). The protocol's lane rule says NO (0.922 of dots within 3 px of one dense registry raster &gt; 0.70). <b>Status: research-only; submitting requires an explicit owner override of the lane rule.</b> If you override it, this is the best-holdout file in the repo; prefer it over H72-v3 (holdout 0.031, below random).</p></div>
-<h2>How to submit (exact steps)</h2><ol>
-<li>Open <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">the submissions page</a> (login required) → <i>Submit file</i>.</li>
-<li>File to submit: choose <code>h75-candidate.tif</code> (or the .zip).</li>
-<li>Note: paste <code>H75: View-B + directional variogram anisotropy (det_elev/slope/grav); 200m ring cut; binary 37654 dots; holdout +0.012 vs B</code></li>
-<li>Submit. The board shows the score; record it in <code>registry/</code> as ORGANIZER-CONFIRMED.</li></ol>
-<h2>Numbers (labelled)</h2><table>
-<tr><th>Arm</th><th>HOLDOUT-DTI (gems52-pooled-hide-v1, 53,186 withheld px)</th><th>95% CI</th></tr>
-<tr><td>B_DVA (this file's ranker)</td><td>0.186352</td><td>[0.164675, 0.207868]</td></tr>
-<tr><td>single_B (control)</td><td>0.174517</td><td>[0.152316, 0.196299]</td></tr>
-<tr><td>DVA only</td><td>0.165885</td><td>[0.147960, 0.184418]</td></tr>
-<tr><td>random</td><td>0.080426</td><td>[0.070223, 0.090973]</td></tr></table>
-<p>SHA-256 <code>b97691584d514ab1925d9fff2b61c410be86bdc0bc8c844dfdaa6257a4ea7a16</code>. Holdout DTI is not a leaderboard forecast. No score is ORGANIZER-CONFIRMED.</p>
-<h2>Why 0.2778 scored highest (measured)</h2><p>The 0.2778 file is the 0.2600 file with every dot 100–200 m from the catalogue deleted (6,436 px). The metric punishes
-non-credited mass, so mass already "explained" by the catalogue costs score. H75 keeps that 200 m exclusion but uses a new ranker. Details: <a href="../knowledge/49_why_02778_phd_answer.md">knowledge/49</a>, results <a href="../knowledge/66_h75_results_and_limits.md">knowledge/66</a>, run card <a href="../evidence/h75_run_card.json">evidence/h75_run_card.json</a>.</p>
-<h2>Sources</h2><ul><li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Problem description & metric</a></li>
-<li><a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">NLR GEMS report 96647</a></li><li><a href="https://doi.org/10.1145/279943.279962">Blum & Mitchell 1998</a></li></ul>
-</body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="H75 is DUPLICATE/STOP, research-only, and NOT FOR SUBMISSION. The downloadable TIFF is an archive artifact, not an approved competition file.">
+  <title>H75 stop — research only, not for submission · GEMSDOE52</title>
+  <style>
+    :root { color-scheme: light; --red:#991b1b; --red-bg:#fef2f2; --line:#fecaca; --ink:#1f2937; --muted:#475569; }
+    * { box-sizing:border-box; }
+    body { font-family:system-ui,-apple-system,"Segoe UI",sans-serif; max-width:900px; margin:2rem auto; padding:0 1rem 3rem; line-height:1.65; color:var(--ink); }
+    h1 { line-height:1.15; }
+    h2 { margin-top:2rem; }
+    .stop { border:3px solid var(--red); background:var(--red-bg); color:var(--red); padding:1rem 1.2rem; border-radius:.65rem; }
+    .stop h2 { margin:.1rem 0 .5rem; font-size:1.35rem; }
+    .stop strong { font-weight:800; }
+    .status { width:100%; border-collapse:collapse; margin:1rem 0; }
+    .status th,.status td { padding:.65rem; border-bottom:1px solid #d1d5db; text-align:left; vertical-align:top; }
+    .status th { width:42%; }
+    .bad { color:var(--red); font-weight:800; }
+    .download { display:inline-block; margin:.4rem .6rem .4rem 0; padding:.7rem 1rem; border:1px solid #64748b; border-radius:.45rem; color:#334155; text-decoration:none; font-weight:700; }
+    .small { color:var(--muted); font-size:.94rem; }
+    code { overflow-wrap:anywhere; }
+  </style>
+</head>
+<body>
+  <p><a href="index.html">← GEMSDOE52 overview</a> · <a href="h72.html">H72 result</a> · <a href="../knowledge/66_h75_results_and_limits.md">H75 results and limits</a></p>
+  <h1>H75 — terminal lane stop</h1>
+  <section class="stop" role="alert" aria-labelledby="stop-title">
+    <h2 id="stop-title">DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION</h2>
+    <p><strong>Do not submit the H75 TIFF.</strong> The preregistered final-dot gate measured a maximum 3-pixel near-dot fraction of 0.921974, above the 0.70 limit. Support novelty was 0.0. The result is terminal: there is no owner override or waiver path in the active rule. No weekly slot was used.</p>
+  </section>
+
+  <h2>Download and eligibility are separate</h2>
+  <table class="status">
+    <tbody>
+      <tr><th>Research download</th><td>YES — an existing archive copy is available for review only.</td></tr>
+      <tr><th>Local raster-format check</th><td>PASS — one float32 band, EPSG:32611, 3,730 × 3,292, sample transform, finite values in {0,1}. This is not organizer acceptance.</td></tr>
+      <tr><th>Decoded-pattern uniqueness</th><td>Distinct in the accessible registry comparison; this does not overcome zero support novelty or the final-dot stop.</td></tr>
+      <tr><th>Lane eligibility</th><td class="bad">FAIL — DUPLICATE/STOP (max near-dot fraction 0.921974 &gt; 0.70).</td></tr>
+      <tr><th>Approved for competition submission</th><td class="bad">NO — NOT FOR SUBMISSION.</td></tr>
+      <tr><th>Organizer-confirmed score / receipt</th><td class="bad">None.</td></tr>
+      <tr><th>Weekly slots used</th><td>0.</td></tr>
+    </tbody>
+  </table>
+
+  <p>
+    <a class="download" href="downloads/h75-candidate.tif" download>Download H75 research TIFF</a>
+    <a class="download" href="downloads/h75-candidate.zip" download>Download single-TIFF research ZIP</a>
+  </p>
+  <p class="small">Existing artifact: <code>gems52-h75-dva-variogram-anisotropy-B-37654px-20261009.tif</code> · SHA-256 <code>b97691584d514ab1925d9fff2b61c410be86bdc0bc8c844dfdaa6257a4ea7a16</code>. It was not generated or revalidated as a submission candidate by this status-page update.</p>
+
+  <h2>Holdout result (internal measurement, not a waiver)</h2>
+  <p>H75's single-view B_DVA arm has a <strong>HOLDOUT-DTI</strong> of 0.186352 [95% CI 0.164675–0.207868], compared with single_B 0.174517 [0.152316–0.196299], using evaluator <code>gems52-pooled-hide-v1</code> and 53,186 withheld positives. The paired delta was +0.011835 [0.006791–0.017362]. This internal hide-and-recover result is not a public leaderboard score, does not pass the lane gate, and does not authorize submission.
+  </p>
+  <p>H75 was a single-view B_DVA ranker, not the requested two-view disagreement co-training lane. It used 3/3 registered experiments; <strong>do not rerun H75</strong>.</p>
+
+  <h2>Evidence and sources</h2>
+  <ul>
+    <li><a href="../evidence/h75_run_card.json">H75 run card and gate measurements</a></li>
+    <li><a href="../evidence/h75_holdout.json">HOLDOUT-DTI receipt</a></li>
+    <li><a href="../evidence/h75_gates.json">Final lane-gate receipt</a></li>
+    <li><a href="../knowledge/66_h75_results_and_limits.md">H75 results and limits</a></li>
+    <li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Official DrivenData problem description and format</a></li>
+  </ul>
+  <p class="small">A locally format-valid raster is not automatically unique, lane-eligible, organizer-approved, or submission-ready. This page gives no submission instructions for H75.</p>
+</body>
+</html>

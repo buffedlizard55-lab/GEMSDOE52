@@ -1,153 +1,67 @@
 {
-  "status": "dated snapshot; automated DrivenData access disabled by Terms-of-Use policy",
-  "observed_date_utc": "2026-10-08",
-  "observed_at_utc": "2026-10-08T21:40:41Z",
+  "status": "saved partial dated public-board observation; automated DrivenData access disabled by Terms-of-Use policy",
+  "observed_date_utc": "2026-10-09",
+  "observed_at_utc": "2026-10-09T20:18:00Z",
   "source": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
-  "retrieved_by": "fetch_page over the public leaderboard HTML (no authentication, no scraping of user data)",
-  "column_header_on_board": "Best public DW-Tversky (in descending order)",
+  "retrieved_by": "Transcribed from the live official DrivenData leaderboard page fetched in this review; not an upload receipt or frozen competition export.",
+  "evidence_class": "PUBLIC-LEADERBOARD OBSERVATION",
   "rows": [
     {
       "rank": 1,
       "team": "xiaofanhu",
-      "score": 0.3774,
-      "submissions": 13
+      "score": 0.3774
     },
     {
       "rank": 2,
       "team": "alexoktaba",
-      "score": 0.3345,
-      "submissions": 25
+      "score": 0.3361
     },
     {
       "rank": 3,
       "team": "nchuzhoy",
-      "score": 0.3262,
-      "submissions": 6
-    },
-    {
-      "rank": 4,
-      "team": "joeyfezster",
-      "score": 0.326,
-      "submissions": 24
-    },
-    {
-      "rank": 5,
-      "team": "kinghorton42",
-      "score": 0.3222,
-      "submissions": 9
-    },
-    {
-      "rank": 6,
-      "team": "Batik Shirt Brothers",
-      "score": 0.3221,
-      "submissions": 23
+      "score": 0.3262
     },
     {
       "rank": 7,
       "team": "DARD",
-      "score": 0.3195,
-      "submissions": 16
-    },
-    {
-      "rank": 8,
-      "team": "ndavis7",
-      "score": 0.2888,
-      "submissions": 9
-    },
-    {
-      "rank": 9,
-      "team": "mzoorob",
-      "score": 0.2884,
-      "submissions": 27
-    },
-    {
-      "rank": 10,
-      "team": "GrigorSargsyan",
-      "score": 0.2876,
-      "submissions": 14
-    },
-    {
-      "rank": 11,
-      "team": "HardcoreTechGod",
-      "score": 0.2854,
-      "submissions": 6
-    },
-    {
-      "rank": 12,
-      "team": "op01",
-      "score": 0.2797,
-      "submissions": 8
-    },
-    {
-      "rank": 13,
-      "team": "extradr19",
-      "score": 0.2778,
-      "submissions": 12
-    },
-    {
-      "rank": 14,
-      "team": "arnofault",
-      "score": 0.2764,
-      "submissions": 1
-    },
-    {
-      "rank": 15,
-      "team": "No Fault of Our Own",
-      "score": 0.2761,
-      "submissions": 24
-    },
-    {
-      "rank": 16,
-      "team": "notmyfault",
-      "score": 0.2758,
-      "submissions": 16
+      "score": 0.3195
     },
     {
       "rank": 17,
-      "team": "wbg1",
-      "score": 0.275,
-      "submissions": 14
-    },
-    {
-      "rank": 18,
-      "team": "raboush2",
-      "score": 0.2747,
-      "submissions": 9
-    },
-    {
-      "rank": 19,
-      "team": "li002666",
-      "score": 0.2726,
-      "submissions": 4
-    },
-    {
-      "rank": 20,
-      "team": "smashi34",
-      "score": 0.271,
-      "submissions": 12
-    },
-    {
-      "rank": 21,
-      "team": "smrtdoog5",
-      "score": 0.2708,
-      "submissions": 12
-    },
-    {
-      "rank": 22,
-      "team": "bot_account",
-      "score": 0.2707,
-      "submissions": 1
+      "team": "extradr19",
+      "score": 0.2778
     }
   ],
+  "rows_complete": false,
   "top": 0.3774,
-  "our_team": "extradr19 (owner-reported association; not authenticated)",
-  "our_best_reported": 0.2778,
-  "our_rank": 13,
-  "supersedes": "registry/leaderboard_snapshot_2026-10-07.json (same top three rows, same values)",
-  "scope_note": "Board rows preserved from the 2026-10-08 fetch. The board reports team-level best public scores, not filenames, hashes, upload receipts, hidden labels or causal attribution. TWO CORRECTIONS to what this repo and the current brief have been carrying: (1) 0.3195 is rank 7 (team DARD), not the board top -- the top is 0.3774 (team xiaofanhu), exactly as the 2026-10-07 snapshot already recorded and as the H57 acceptance addendum in README.md warned; (2) the family's 0.2778 sits at rank 13 inside a dense cluster of eleven teams between 0.2707 and 0.2888, separated from the 0.3195-0.3774 group by a gap of 0.031. Rows 23+ were not captured.",
+  "observed_subject": {
+    "rank": 17,
+    "team": "extradr19",
+    "score": 0.2778
+  },
+  "prior_snapshot_file": "leaderboard_snapshot_2026-10-08.json",
+  "prior_snapshot_status": "historical; not the later observation",
   "owner_best_reported": 0.2778,
   "artifact_score_authenticated": false,
-  "note": "Dated participant-level observation; no filename/hash/receipt attribution. Participant identity is not authenticated as the user's team.",
+  "note": "Selected team-level board rows are transcribed from the saved observation; participant identity is not authenticated as the repository owner, and no row binds a TIFF hash or organizer receipt.",
+  "current_observation_correction": {
+    "observed_utc": "2026-10-09T20:18:00Z",
+    "participant": {
+      "rank": 17,
+      "team": "extradr19",
+      "score": 0.2778
+    },
+    "top_public_score": 0.3774,
+    "evidence": "leaderboard_observation_2026-10-09T201800Z.json",
+    "rows_complete": false,
+    "scope_and_limits": [
+      "0.2778 is rank 17 in this observation, not the highest public score.",
+      "The board is team-level and does not provide a filename, raster hash, organizer submission receipt, or causal explanation.",
+      "No row is attributed to any repository TIFF or owner-reported filename without an organizer receipt.",
+      "The snapshot is a reading of the public board only; organizer-confirmed score remains none located."
+    ],
+    "interpretation": "Later dated public-board observation supersedes earlier rank snapshots. It is team-level and does not identify a TIFF or authenticate a score-to-file mapping."
+  },
   "automated_fetch_allowed": false,
   "fetch_requested_but_disabled": false
 }

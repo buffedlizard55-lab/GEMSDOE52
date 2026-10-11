@@ -50,7 +50,7 @@ def mirror_receipts():
 
 def nav(active: str = "") -> str:
     links = [("index.html", "Overview", "overview"),
-             ("executive-summary.html", "Submission guide", "guide"),
+             ("executive-summary.html", "H59 research status", "guide"),
              ("h59.html", "H59 audit", "audit"),
              ("irregularities.html", "Limitations", "limits"),
              ("sources.html", "Sources", "sources"),
@@ -76,6 +76,15 @@ def shell(title: str, desc: str, content: str, active: str = "") -> str:
 
 
 def main() -> int:
+
+    _h75_home = ROOT / "docs" / "index.html"
+    _h75_status = ROOT / "docs" / "h75-executive-summary.html"
+    if (_h75_home.is_file() and _h75_status.is_file()
+            and "H75: DUPLICATE/STOP" in _h75_home.read_text(errors="replace")
+            and "DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION" in
+            _h75_status.read_text(errors="replace")):
+        print("H75 terminal stop is current; historical publisher made no page or pointer changes")
+        return 0
     mirror_receipts()
     build = load("h59_build.json", docs_dir=False)
     slot = load("h59_slot_gate.json", docs_dir=False)
@@ -85,7 +94,7 @@ def main() -> int:
     cot = load("h59_cotrain.json", docs_dir=False)
     pre = load("h59_preflight_integrity.json", docs_dir=False)
     sub59 = load("submission_h59.json", docs_dir=False)
-    approved = bool(build["approved_for_weekly_slot"])
+    approved = False  # no slot is authorized in this session; this publisher is research-only
 
     status = ("APPROVED — OK TO DOWNLOAD AND SUBMIT" if approved
               else "RESEARCH ONLY — OK TO DOWNLOAD FOR REVIEW · DO NOT SPEND A WEEKLY SLOT")
@@ -177,16 +186,10 @@ artefact) px; median depth to basement {strat["median_depth_to_basement_m"].get(
 under cover vs {strat["median_depth_to_basement_m"].get("b_only", 0):.0f} m. The brief's geology is
 confirmed; the population bet is decided by the holdout table, not by the story.</p></section>
 </div>
-<h2>Why the champion 0.2778 file won, and what beats it</h2>
-<p>Full derivation in <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/01_why_02778_and_the_bar.md">knowledge/01</a>
-and <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/10_revealed_preference_inverse.md">knowledge/10</a>.
-Short version: <code>h33-h33-2-b2</code> = the 0.2600 dotted-ridge file minus the ≤200 m catalogue
-ring — free precision, because masked pixels can never earn credit but always pay the false-positive
-tax. The metric's algebra then makes the champion file's double-corroborated core
-(<code>h33-2-b2 ∩ gems24-d1-5</code>, {build["core_px"]:,} px) credit <b>exactly bracketable</b> at
-[4,168, 5,223] truth-pixel-mass — 16.3–20.5 % density against 2.79 % for uniform random. That core
-alone projects 0.2546–0.3190 <i>before any new geology</i>; beating 0.2778 is therefore an
-arm-ranking problem, and the entire H59 slate attacks exactly that.</p>
+<section class="card" id="reported-02778-evidence"><h2>Evidence about the reported 0.2778 — no causal explanation established</h2>
+<p><strong>PUBLIC-LEADERBOARD observation:</strong> the saved 2026-10-09 20:18 UTC board places extradr19 at 0.2778, rank 17; the top row is 0.3774. The board has no TIFF hash or submission receipt. <strong>OWNER-REPORTED file/score association:</strong> the attribution of that value to an H33-labelled file remains unauthenticated. <strong>ORGANIZER-CONFIRMED receipt:</strong> none located for this score-to-file mapping.</p>
+<p><strong>LOCAL pixel comparison only:</strong> the 37,654-cell H33-labelled bitmap is a strict subset of a separately owner-reported 0.2600-labelled 44,090-cell raster (6,436 cells removed, none added). Those removed cells are 100–200 m from the local known-fault mask. These byte and distance facts do not establish either score or explain a score change. DrivenData staff says the known-fault mask is pixel-exact and only new-fault truth is scored; new-fault truth may occur within 300 m of known traces. Therefore near-trace distance alone does not imply zero credit or an automatic penalty. Hidden credit for the removed cells is unknown. No core-credit bracket, projected score, or causal score account is presented here.</p>
+<p class="small">See the current evidence review, official citations, and local receipts in <a href="../knowledge/49_why_02778_phd_answer.md">knowledge/49</a>, <code>IR-R5-011</code>, and <a href="data/leaderboard_observation_2026-10-09T201800Z.json">the dated leaderboard observation</a>.</p></section>
 <h2>The five preregistered hypotheses — verdicts</h2>
 <div class="table-wrap"><table><thead><tr><th>field (arm ranking)</th><th>tip lift vs random</th>
 <th>hide lift vs random</th><th>folds won</th><th>promotion</th><th>slot bar</th></tr></thead>
@@ -253,34 +256,21 @@ reads the live receipt).</p>
                     "least one registered gate decision did not clear the bar on the blocked "
                     "holdout. Downloading it for review, reproduction or audit is explicitly "
                     "allowed and encouraged.")
-    steps = f'''<h2>Exact portal steps</h2>
-<ol>
-<li>Use the registered eligible account on the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DOE GEMS competition page</a> → <b>Submit submission</b>.</li>
-<li>Download the audited file (single click): <a href="downloads/h59-candidate.tif" download>gems52-h59 · .tif</a> or the <a href="downloads/h59-candidate.zip" download>one-TIFF .zip</a>. Do not reproject, rescale, rename the payload, or open it in software that rewrites it.</li>
-<li><b>Why the range error cannot happen with this file:</b> the earlier portal error “Predicted values must be in range [0, 1]” is triggered by non-finite pixels (the historical <code>-nan</code> exports carried NaN outside the footprint). This artifact was written through <code>gems52.grid.write_geotiff</code>, which refuses to emit unless the re-read bytes are single-band float32, <b>all finite</b>, values exactly {{0,1}}, EPSG:32611, 3,730 × 3,292, transform <code>[100, 0, 243350, 0, −100, 4508550]</code> — the receipt below proves it.</li>
-<li>On the submission form, set <b>File to submit</b> to the downloaded .tif (or the .zip; it holds exactly one TIFF, verified byte-identical).</li>
-<li>Paste the unique submission name and the note (fields below; ≤ 200 characters each, counted).</li>
-<li>Submit, then record the returned submission ID, the timestamp, and the file hash next to this page's receipt. The first scored upload of this file closes its review window — one attempt per file, so re-verify the hash first.</li>
-</ol>
-<label for="submission-name">Submission name ({len(name)} chars)</label>
-<input id="submission-name" readonly value="{e(name)}" style="width:100%;font:13px/1.6 ui-monospace,monospace;border:1px solid var(--line);border-radius:8px;padding:12px;background:#fff">
-<button data-copy="submission-name">Copy name</button>
-<label for="submission-note">Portal note ({len(note)} chars)</label>
-<textarea id="submission-note" readonly>{e(note)}</textarea>
-<button data-copy="submission-note">Copy note</button>'''
+    steps = (f'''<div class="status"><strong>H59 research-only status.</strong> The registered promotion/slot gate did not clear. No upload procedure, owner override, or paste-ready note is provided.</div>'''
+             if not approved else "")
 
     guide = f'''<div class="eyebrow">Executive summary · H59 · explicit submission status</div>
-<h1>Download, verify, submit —<br>in that order.</h1>
+<h1>{"Download for research only —<br>not approved for submission." if not approved else "Download, verify, submit —<br>in that order."}</h1>
 <div class="status"><strong>{e(status)}</strong> {approve_text}</div>
 <section class="download-bar" aria-label="H59 download">
 <div><strong>{e(build["file"])}</strong>
 <small>{build["bytes"]:,} bytes · SHA-256 <code>{e(build["sha256"])}</code></small>
 <small>format gate: {len(fmt["problems"])} problems · decoded-pattern unique vs {uniq["n_priors_checked"]} priors · support-novel {100 * uniq["novel_fraction"]:.1f} % · arm-outside-union-top-k {build["not_the_union"]["arm_outside_union_topk_px"]:,} px</small></div>
 {dl_btn}</section>
-<h2>Is it OK to download and submit this file?</h2>
+<h2>H59 download and submission status</h2>
 <div class="table-wrap"><table><thead><tr><th>question</th><th>answer of record</th></tr></thead><tbody>
 <tr><td>OK to <b>download</b>?</td><td><span class="pill ok">YES</span> — always; the file and every receipt are published for audit.</td></tr>
-<tr><td>Format-safe for the portal?</td><td><span class="pill {"ok" if not fmt["problems"] else "no"}">{"YES" if not fmt["problems"] else "NO"}</span> — all finite, values {{0,1}}, exact grid/transform/CRS; the “must be in range [0,1]” rejection cannot occur (that error came from NaN-bearing exports).</td></tr>
+<tr><td>Format-safe for the portal?</td><td><span class="pill {"ok" if not fmt["problems"] else "no"}">{"YES" if not fmt["problems"] else "NO"}</span> — local finiteness, range, grid and transform checks only; they do not establish portal acceptance or explain any historical rejection.</td></tr>
 <tr><td>Unique submission?</td><td><span class="pill {"ok" if uniq["canonical_pattern_unique"] else "no"}">{"YES" if uniq["canonical_pattern_unique"] else "NO"}</span> — decoded pixel pattern differs from all {uniq["n_priors_checked"]} accessible aligned prior rasters (this repo's archives + the restored scored family); arm {100 * build["not_the_union"]["arm_outside_prior_support_frac"]:.0f} % outside their support union; not any prior, not any pair-union. The scan supersedes the brief's count: all 38 listed prior
 submissions are inside the {uniq["n_priors_checked"]} rasters compared (50 distinct artifacts; both
 concurrent-session TIFFs included), plus this repository's own
@@ -323,9 +313,8 @@ organizer-verified; the local holdout ranks arms relative to each other and cann
 arm's hidden-truth density — the projection {json.dumps(build["projection_by_rho"])} is conditional
 arithmetic, not a forecast.</div>'''
     (DOCS / "executive-summary.html").write_text(
-        shell("How to submit the H59 artifact · GEMSDOE52",
-              "Exact H59 artifact identification, gate status, and portal steps for the "
-              "single-band GeoTIFF; the file is all-finite [0,1] so the range error cannot occur.",
+        shell("H59 research status · GEMSDOE52",
+              "H59 research-only status and local gate receipts; no submission approval or upload procedures.",
               guide))
 
     # ---------------------------------------------------------------- audit page

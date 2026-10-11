@@ -59,12 +59,13 @@ LANE_PROXIMITY_PX = 3
 LEAKAGE_AUC_MAX = 0.90
 ABANDON_R = 0.60
 G_ANCHOR_PX = 14088.7          # legacy point value (knowledge/10 s2); CONTESTED -- see below
-# Measured bounds on |G| (main's H61 forensics, evidence/h61_forensics.json, independently
+# Conditional bounds on |G| from owner-reported score associations (H61 forensics; not measurements), independently
 # re-derived in this checkout): T <= |G| on calib_8GEMSDOE_Hedge-v2 gives |G| >= 5,949.3 px and
 # monotone credit on the nested pair d15 subset gems27_tgc_v2_d15 (0.2477 > 0.2449) gives
 # |G| <= 12,512.1 px.  The legacy point 14,088.7 lies OUTSIDE that interval: it additionally
-# assumes the 6,436 ring pixels the champion deleted earn exactly zero credit, and it falls to
-# 7,066 px if they earn 100 px.  Registered as IR-H62-005.
+# depends on an unsupported scenario assumption that the 6,436-cell local difference has zero
+# hidden-truth credit; 7,066 px is a sensitivity under an assumed 100-credit difference, not a
+# measurement. Registered as IR-H62-005.
 G_BRACKET_PX = (5949.282184328427, 12512.133928571544)
 G_SENSITIVITY_PX = (G_BRACKET_PX[0], G_BRACKET_PX[1], G_ANCHOR_PX)
 BUDGET_CLAMP = (15000, 30000)

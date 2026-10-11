@@ -2,17 +2,17 @@
 
 ## Decision in one line
 
-**H72 ended negative at the preregistered final-dot lane gate. No H72 GeoTIFF was written or published.** The candidate's decoded bitmap was unique in the accessible 619-raster inventory, but had zero support novelty, was a subset of the prior union, and failed both literal and saturation-aware final-dot near-duplicate limits. H72 did not enter a selector, use a slot, upload, or receive an organizer decision.
+**The final H72-A co-training run ended negative at the preregistered final-dot lane gate. No H72-A GeoTIFF was written or published.** The H72-A diagnostic bitmap was distinct in the accessible 619-raster inventory, but had zero support novelty, was a subset of the prior union, and failed both literal and saturation-aware final-dot near-duplicate limits. Separate legacy H72-v3/SPSC/MRAEC TIFFs from an earlier workflow are present in `docs/downloads/`; they are research archives, not H72-A outputs, and are not approved for submission. H72-A did not enter a selector, use a slot, upload, or receive an organizer decision.
 
-| State | H72 |
-|---|---|
-| H72 TIFF downloadable | **NO — no H72 TIFF exists** |
-| Portal-format validation | **NOT ASSESSED — no file to validate** |
-| Organizer-confirmed receipt | **NO receipt found** |
-| Approved for competition submission | **NO** |
-| Selector/slot decision | **None; 0 slots used** |
+| State | H72-A final run | Legacy H72 files |
+|---|---|---|
+| Downloadable | **NO — no H72-A TIFF emitted** | **YES — research/archive only** |
+| Portal-format validation | **NOT ASSESSED — no H72-A file** | Historical local checks only; not organizer acceptance |
+| Organizer-confirmed receipt | **NO receipt found** | **NO receipt found** |
+| Approved for competition submission | **NO — terminal STOP** | **NO — research-only; H72-v3 is not recommended** |
+| Selector/slot decision | **None; 0 slots used** | **None; 0 slots used** |
 
-These are distinct states. A locally downloadable file, a file that passes a local portal-format validator, and an organizer-approved submission are not interchangeable. H72 has no file, so only the first state can be answered (no); the format state is not assessed; and organizer approval is absent.
+These are distinct states. A legacy download, a local format check, and organizer approval are not interchangeable.
 
 ## What the reported 0.2778 does—and does not—establish
 
@@ -20,20 +20,22 @@ The evidence classes below are intentionally separate. Neither the public score 
 
 | Evidence class | Observed value / object | Evidence and limitation |
 |---|---|---|
-| **PUBLIC-LEADERBOARD observation** | `0.2778`, rank 13, team row `extradr19` | The repository's official DrivenData board snapshot is dated **2026-10-07** (`registry/leaderboard_snapshot_2026-10-07.json`). It is a team-level public row and contains no filename, file hash, upload receipt, or causal explanation. During H72, the official leaderboard page fetch rendered “Loading”; no newer value was live-confirmed. The public row and the internal file label are not proven to be the same scored submission. |
+| **PUBLIC-LEADERBOARD observation** | `0.2778`, rank 17, team row `extradr19` in the live 2026-10-09 20:18 UTC observation | The saved live-page transcription is `evidence/leaderboard_observation_2026-10-09T201800Z.json`; it also shows #1 at 0.3774 and #7 at 0.3195. The earlier 2026-10-07 frozen snapshot remains historical and listed `extradr19` at a different rank. The live board is team-level and contains no filename, file hash, upload receipt, or causal explanation. The public row and internal file label are not proven to be the same scored submission. |
 | **OWNER/USER-REPORTED file/score match** | Label `h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros`, reported `0.2778` | `evidence/ctd5_owner_reported_results.json` records the owner-reported association; its `receipt` and `authenticated_file_sha256` are null. This is not an organizer-confirmed pairing. |
 | **Local owner-mirrored bytes** | `reference/h33-2-b2-zeros.tif`; SHA-256 `c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9`; 37,654 binary dots, none on the local known-fault catalogue | `evidence/h61_forensics.json` measured the restored mirror. Its filename token `e5eb6e7e` matches none of the six recorded file/decoded/support hash variants (`token_hash_linked: []`). The file hash verifies the local bytes, not an upload or score attribution. |
 | **ORGANIZER-CONFIRMED receipt** | **None located** | There is no receipt tying a submission ID, the file hash, and a score. Do not upgrade either of the preceding rows to organizer-confirmed. |
 
-### Evidence-based, non-causal explanation
+### Exact local relation; no causal score explanation established
 
-The local H33-labelled bitmap has 37,654 dots and is a strict support subset of a separate 44,090-dot bitmap whose **0.2600 value is also owner-reported** and whose local filename token is hash-linked to its mirrored bytes (`evidence/h61_forensics.json`). The subset comparison finds 6,436 cells removed and zero added; all 6,436 removed cells were measured 100–200 m from the visible catalogue. The H33-labelled file's nearest retained dot is 223.6 m from that catalogue. The canonical competition metric is distance-weighted, so pruning low-value or false-positive mass is a plausible precision mechanism. But these flank cells could still overlap hidden faults; the catalogue is incomplete, and their hidden-truth credit is unknown. The local comparison therefore **supports a hypothesis about pruning, not proof that pruning caused a 0.2778 score**.
+The local H33-labelled bitmap has 37,654 dots and is a strict support subset of a separate 44,090-dot bitmap whose **0.2600 value is owner-reported**. Recomputed against the correct d2-8 parent and `data/labels.tif`, the subset comparison finds 6,436 cells removed and zero added; all removed cells are 100–200 m from known-mask positives (5,092 at 100 m; 1,344 at 200 m). H33's nearest retained cell is 223.6068 m from a known-mask positive. These are local byte/spatial facts, not evidence of which hidden pixels received score credit.
 
-Do not use the point `|G| = 14,088.7` as an established fact. The previous audit derived an identified interval `[5,949.3, 12,512.1]` under stated assumptions; its 14,088.7 point estimate requires the unverified assumption that the 6,436 removed flank cells earned exactly zero hidden-truth credit. A holdout DTI is an internal hide-and-recover measurement and cannot authenticate or reproduce a public leaderboard result.
+Official DrivenData staff confirms in the [scoring clarification](https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516/4) that the known-fault mask is pixel-exact, only new-fault ground truth is scored, and new-fault pixels may lie within 300 m of known traces. Therefore the removed 100–200 m cells are **not automatically score-free or zero-credit**; hidden new-fault truth could occur in that neighborhood and receive distance-kernel credit. The local comparison is consistent with a precision-pruning hypothesis, but it does not establish why any organizer score changed.
+
+Do not use the point `|G| = 14,088.7` as an established fact. The previous audit derived an identified interval `[5,949.3, 12,512.1]` under stated assumptions; its 14,088.7 point estimate requires the unverified assumption that the 6,436 removed cells earned exactly zero hidden-truth credit. A holdout DTI is an internal hide-and-recover measurement and cannot authenticate or reproduce a public leaderboard result.
 
 ### Snapshot-date correction
 
-The frozen preregistration document `knowledge/59_hypotheses_H72_preregistered.md` mistakenly calls the committed public-board snapshot “dated 2026-10-09.” The file in `registry/` is actually dated **2026-10-07**; the H72 run card and this result use the artifact's date. The preregistered hypothesis file was left byte-identical after fitting, so its pinned hash remains valid. This correction is documentation, not a new board fetch.
+The frozen preregistration document `knowledge/59_hypotheses_H72_preregistered.md` mistakenly calls the committed public-board snapshot “dated 2026-10-09.” That file in `registry/` is actually dated **2026-10-07**; the preregistered hypothesis file was left byte-identical after fitting, so its pinned hash remains valid. A later live board read on 2026-10-09 at 20:18 UTC is separately recorded in `evidence/leaderboard_observation_2026-10-09T201800Z.json`; it is not a replacement for the older snapshot and still does not map a public row to a TIFF.
 
 ## H72 experiment and gates
 
@@ -76,7 +78,7 @@ The per-dot A-only reasoning CSV is preserved as an internal evidence diagnostic
 ## Reviewable sources
 
 - Official [DrivenData problem description and metric](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/) — problem framing, input context, fault-catalogue limitations and distance-weighted evaluation.
-- Official [DrivenData leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/) — dated public rows only; the H72 fetch rendered “Loading,” so no fresh values claimed.
+- Official [DrivenData leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/) — live reading captured 2026-10-09 20:18 UTC; see `evidence/leaderboard_observation_2026-10-09T201800Z.json`. Public-board observation only, not an organizer receipt.
 - USGS [GeoDAWN airborne magnetic and radiometric release](https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and), DOI [10.5066/P93LGLVQ](https://doi.org/10.5066/P93LGLVQ) — context for the survey family; H72 used mirrored competition inputs, not a newly fetched USGS raster.
 - DOE Geothermal Data Repository [INGENIOUS regional compilation](https://gdr.openei.org/submissions/1391), DOI [10.15121/1881483](https://doi.org/10.15121/1881483) — record lists geodetic shear/dilatation, seismicity, gravity/magnetics and other datasets; landing-page record states CC BY 4.0. It does not authenticate the local competition mirrors.
 - USGS [blind geothermal systems report](https://www.usgs.gov/publications/discovering-blind-geothermal-systems-great-basin-region-integrated-geologic-and), DOI [10.2172/1724080] — integrated geologic/geophysical plausibility only, not validation of this detector or any candidate.

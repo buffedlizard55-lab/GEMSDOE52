@@ -50,7 +50,7 @@ def ci(pair) -> str:
 
 NAV = ('<a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>\n'
        '<a href="index.html">Overview</a><a href="h63-audit.html">Run &amp; evidence</a>'
-       '<a href="executive-summary.html">Submission guide</a><a href="h63-sources.html">Sources</a>'
+       '<a href="executive-summary.html">Research status</a><a href="h63-sources.html">Sources</a>'
        '<a href="downloads/index.html">Archive</a>')
 
 
@@ -73,6 +73,15 @@ FOOT = ('<footer>Independent competition research, not an official DOE or Driven
 
 
 def main() -> int:
+
+    _h75_home = ROOT / "docs" / "index.html"
+    _h75_status = ROOT / "docs" / "h75-executive-summary.html"
+    if (_h75_home.is_file() and _h75_status.is_file()
+            and "H75: DUPLICATE/STOP" in _h75_home.read_text(errors="replace")
+            and "DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION" in
+            _h75_status.read_text(errors="replace")):
+        print("H75 terminal stop is current; historical publisher made no page or pointer changes")
+        return 0
     card = load("run_card")
     sub = load("submission")
     foren = json.loads((EVID / "h61_forensics.json").read_text())   # inherited repair, H61 receipt
@@ -89,7 +98,8 @@ def main() -> int:
     nbytes = card["raster_bytes"]
     dots = card["emitted_px"]
     verdict = card["verdict"]
-    submit_ok = bool(card["submit_ok"])
+    # Local gate state never authorizes a weekly slot; this static status page provides no upload path.
+    submit_ok = False
     download_ok = bool(card["download_ok"])
     name = card["submission_name"]
     note = card["note"]
@@ -169,18 +179,16 @@ def main() -> int:
         r5_id = (f'R5 (concurrent round): <a href="{esc(short)}" download>'
                  f'{esc(r5["stem"])}.tif</a>, SHA-256 <code>{esc(r5["sha256"][:24])}</code>…, '
                  f'{int(r5.get("nonzero_px") or 0):,} px — ok to download, <b>not slot-approved</b>; '
-                 f'its receipt publishes P(beating 0.2778) = {r5["p_beat_02778"]:.3f} and '
-                 f'P(beating 0.3195) = {r5["p_beat_03195"]:.3f}, with <a href="r5.html">its own audit '
-                 f'page</a> and short path <code>r5-candidate.tif</code>. Its budget rule scales on '
-                 f'|G| = 14,088.7 px, which H61 measures as outside the identified interval '
-                 f'[5,949.3, 12,512.1] px — IR-H61-001 and IR-H61-010 in '
+                 f'its conditional scenario projection lists P(DTI > 0.2778) = {r5["p_beat_02778"]:.3f} and '
+                 f'P(DTI > 0.3195) = {r5["p_beat_03195"]:.3f} under owner-reported score associations and '
+                 f'assumed hidden-truth parameters; these are not scores or forecasts. Its budget rule assumed '
+                 f'|G| = 14,088.7 px, a conditional scenario not established by hidden truth; later owner-report-conditioned '
+                 f'algebra gives [5,949.3, 12,512.1] px under stated assumptions — IR-H61-001 and IR-H61-010 in '
                  f'<a href="irregularities.html">the irregularity register</a>. Do not spend a weekly '
                  f'slot on either round.')
-    no_upload = ("Do not upload this file to the competition portal." if not submit_ok
-                 else "Upload is permitted only through the authenticated submission page.")
-    banner_cls = "good" if submit_ok else "bad"
-    banner = ("OK TO DOWNLOAD · OK TO SUBMIT" if submit_ok
-              else "OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT")
+    no_upload = "Research archive only. No upload procedure, owner override, or paste-ready identification is provided."
+    banner_cls = "bad"
+    banner = "RESEARCH DOWNLOAD ONLY · NOT APPROVED FOR SUBMISSION · NO SLOT AUTHORIZED"
 
     # ------------------------------------------------- preserve the landing page being replaced
     # The page currently on disk is the previous round's (whatever it is); archive it verbatim
@@ -253,7 +261,7 @@ def main() -> int:
 <p>{esc(no_upload)} Format gate: {"PASS" if val["ok"] else "FAIL"} · decoded-pattern uniqueness: {"PASS" if sub["uniqueness_summary"]["canonical_pattern_unique"] else "FAIL"} · lane gate (literal): {esc(lit["verdict"])} · lane gate (saturation policy): {esc(pol["verdict"])} · beats the champion at both ends of |G|: {"YES" if card["verdict_reason"]["beats_champion_at_both_G_ends"] else "NO"}. Competition slots used: {card["slots_used"]}. NO CERTIFIED LEADERBOARD GAIN.</p></div>
 <div class="actions"><a class="button" href="downloads/h63-candidate.tif" download>Download the H63 GeoTIFF ↓</a><a class="button secondary" href="downloads/h63-candidate.zip" download>Single-TIFF ZIP</a><a class="button secondary" href="downloads/h63-a-only-reasoning.csv" download>Geological reasoning CSV</a></div>
 <p class="fileline">{esc(tif)}<br>{nbytes:,} bytes · SHA-256 {esc(sha)} · {dots:,} emitted cells · values exactly {{0,1}}, 0 NaN</p>
-<p class="small"><a href="executive-summary.html">Exactly what may be uploaded, and how →</a> · <a href="h63-audit.html">Method, evidence and limits →</a> · <a href="archive-h62-overview.html">Previous (H62) landing page</a> · <a href="archive-h61-overview.html">H61 landing page</a></p></div>
+<p class="small"><a href="executive-summary.html">Research status and evidence classes →</a> · <a href="h63-audit.html">Method, evidence and limits →</a> · <a href="archive-h62-overview.html">Previous (H62) landing page</a> · <a href="archive-h61-overview.html">H61 landing page</a></p></div>
 <aside class="panel" aria-label="Submission readiness"><div class="label">Readiness / measured, not promised</div>
 <div class="status-line"><span>Single-band float32 GeoTIFF</span><span class="good">{"PASS" if val["ok"] else "FAIL"}</span></div>
 <div class="status-line"><span>Finite, values in [0, 1]</span><span class="good">{"PASS" if val["nan_pixels"] == 0 and val["min"] >= 0 and val["max"] <= 1 else "FAIL"}</span></div>
@@ -274,15 +282,14 @@ def main() -> int:
 <hr class="divider">
 <div class="cards">
 <section class="card"><div class="eyebrow">01 / the premise this round repairs</div><h3>Does a step-normalised View A transfer?</h3><span class="num">AUC {f4(mean_a, 3)} vs {f4(mean_b, 3)}</span><p>Mean out-of-fold AUC inside a held-out quadrant: the H63 step-normalised View A (matched step/persistence columns of gravity, basement depth and RTP; no raw band values) {f4(mean_a, 3)} against View B {f4(mean_b, 3)}. H61's raw-value View A measured 0.5163 on the identical splitter. The sufficiency screen is measured before any pseudo-label exchange is trusted.</p></section>
-<section class="card"><div class="eyebrow">02 / inherited, repaired before fitting</div><h3>|G| is an interval</h3><span class="num">{G["G_lower_bound"]:,.0f}–{G["G_upper_bound"]:,.0f} px</span><p>Thirteen owner-reported scores give thirteen equations in fourteen unknowns. Rigorous bounds from <code>T<sub>i</sub> ≤ |G|</code> and max-cover monotonicity on the measured nested pairs give the interval above; the previously published point value 14,088.7 lies outside it and needed an unproven zero-credit assumption.</p></section>
-<section class="card"><div class="eyebrow">03 / resolved on the bytes</div><h3>Band 6 is radiometric</h3><span class="num">ρ = {f4(foren["band6_identity"]["best_external_match"]["spearman"], 4)}</span><p>The file describes band 6 as a magnetic tilt derivative. Measured against the pinned external GeoDAWN grids it is rank-identical to total count (ρ = {f4(foren["band6_identity"]["best_external_match"]["spearman"], 4)}) and uncorrelated with tilt (ρ = {f4(foren["band6_identity"]["spearman_vs_tilt_deg_of_TMI"], 4)}). It belongs in View B, and it is the reason View B is the view that transfers.</p></section>
+<section class="card"><div class="eyebrow">02 / inherited, repaired before fitting</div><h3>|G| is an assumed scenario range</h3><span class="num">{G["G_lower_bound"]:,.0f}–{G["G_upper_bound"]:,.0f} px</span><p>The displayed bracket is conditional on owner-reported score associations, a sparse-emission approximation, and the stated monotonicity assumptions. It is not a measured hidden-positive count; the former 14,088.7 point is not established and its zero-credit assumption is not a measurement.</p></section>
+<section class="card"><div class="eyebrow">03 / resolved on the bytes</div><h3>Band 6 is radiometric</h3><span class="num">ρ = {f4(foren["band6_identity"]["best_external_match"]["spearman"], 4)}</span><p>The file describes band 6 as a magnetic tilt derivative. Measured against the pinned external GeoDAWN grids it is rank-identical to total count (ρ = {f4(foren["band6_identity"]["best_external_match"]["spearman"], 4)}) and uncorrelated with tilt (ρ = {f4(foren["band6_identity"]["spearman_vs_tilt_deg_of_TMI"], 4)}). It belongs in View B for this analysis; the identity correction alone does not establish why a view transfers or explain a leaderboard score.</p></section>
 </div>
 <hr class="divider">
-<div class="grid2"><section><div class="eyebrow">The 0.2778 question</div><h2>Precision, not detection.</h2>
-<p>Measured from the restored bytes: the reported-0.2778 champion <code>h33-2-b2</code> is a <b>strict subset</b> of the reported-0.2600 file (37,654 ⊂ 44,090 off-catalogue px), which is itself a strict subset of the reported-0.1922 parent field (⊂ 121,131 px). The champion added no pixel and deleted 6,436 — every one of them between 100 m and 200 m from a mapped trace, measured. Its own nearest dot is {f4(foren["catalogue_rings"]["champion_distance_to_catalogue_m_min"], 1)} m away. DTI = T / (0.2·(T+S−M) + 0.8·(|G|−T)) rewards that pruning because 0.8·|G| is a fixed floor in the denominator.</p>
-<p class="small"><b>Can this file beat it?</b> Break-even credit density at {dots:,} dots is {f4(proj["G_lower"]["breakeven_credit_density_to_match_champion"], 4)}–{f4(proj["G_upper"]["breakeven_credit_density_to_match_champion"], 4)} per emitted pixel ({f4(proj["G_lower"]["breakeven_multiple_of_random"], 1)}–{f4(proj["G_upper"]["breakeven_multiple_of_random"], 1)}× uniform random). The arm's only empirical density estimate comes from a simulator that measured Spearman −0.10 against the owner-reported board, and organiser-tied evidence gives <b>no</b> information about pixels outside all thirteen scored files. So the honest projection is an interval whose lower end is 0. <b>No leaderboard gain is claimed.</b></p>
-<p class="small">Attribution strength is not uniform: {len(foren["masked_accounting_witness"]["files"])} of 13 owner-reported scores are hash-linked to the bytes held; the champion's token <code>e5eb6e7e</code> matches none of six hash conventions of the file we hold, and GEMSDOE32's own page says no organiser score exists. Every score here is <b>OWNER-REPORTED, NOT ORGANIZER-CONFIRMED</b>.</p>
-<a href="h63-audit.html#economics">The full measured algebra →</a></section>
+<div class="grid2"><section><div class="eyebrow">Current evidence: reported 0.2778</div><h2>No causal score explanation established.</h2>
+<p>The saved public-board observation from 2026-10-09 20:18 UTC places the team row at rank 17 with 0.2778; the top row is 0.3774. This is a team-level PUBLIC-LEADERBOARD observation, not a submission receipt or TIFF-hash mapping. The file/score association remains OWNER-REPORTED.</p>
+<p>Local bytes show a 37,654-cell bitmap is a strict subset of a separate 44,090-cell bitmap associated by its owner with 0.2600: 6,436 cells removed, none added, all 100–200 m from the local known-fault mask. That relation and distance do not identify hidden-truth credit or explain a score change. The known-fault mask is pixel-exact; only new-fault truth is scored, and official staff says new-fault truth may occur within 300 m of known traces. Removed-cell credit is unknown.</p>
+<p class="small">HOLDOUT-DTI is an internal hide-and-recover measurement, not a public-board score or predictor. Any score inversion, |G| estimate, break-even value, or projection is conditional scenario arithmetic, never organizer-confirmed measurement. See <a href="../knowledge/49_why_02778_phd_answer.md">knowledge/49</a> and <code>IR-R5-011</code>.</p></section>
 <figure style="margin:0"><div class="panel"><div class="label">Emission domain and gates</div>
 <div class="status-line"><span>Eligible footprint</span><span>{foren["grid"]["eligible_px"]:,} px</span></div>
 <div class="status-line"><span>Allowed (&gt;200 m off catalogue)</span><span>{esc(sub.get("allowed_px", "see receipt"))}</span></div>
@@ -308,7 +315,7 @@ def main() -> int:
     # ---------------------------------------------------------------- audit page
     audit = head("H63 run, evidence and limitations · GEMSDOE52",
                  "Preregistered protocol, measured gates, repaired accounting and the limits of every number.")
-    audit += f'''<div class="eyebrow">H63 / run &amp; evidence</div><h1>Everything measured, including what failed</h1>
+    audit += f'''<div class="status"><strong>Historical score-algebra correction.</strong> The local 37,654/44,090 subset and 100–200 m distances do not identify hidden-truth credit or explain a score change; new-fault truth may occur within 300 m of known traces. Owner-reported score associations and score-derived |G|/credit values below are conditional scenarios, not measurements or organizer-confirmed receipts. Latest saved public-board observation: 0.2778 at rank 17 (top 0.3774), team-level and unlinked to any TIFF hash. See <a href="../knowledge/49_why_02778_phd_answer.md">knowledge/49</a>.</div><div class="eyebrow">H63 / run &amp; evidence</div><h1>Everything measured, including what failed</h1>
 <p class="lead">Preregistered before any fit in <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/37_hypotheses_H63_preregistered.md">knowledge/37_hypotheses_H63_preregistered.md</a> (SHA-256 <code>{esc(json.loads((ROOT / "registry/h63_preregistration.json").read_text())["hypothesis_sha256"][:16])}…</code>); the runner refuses to start if that hash moves.</p>
 <section class="prose" id="holdout"><h2>1 · Holdout, canary, sufficiency and independence</h2>
 <p>Splitter: <code>gems52.spatial.folds</code> <b>label-blind-quadrants-v2</b> — fixed quadrants, whole 8-connected catalogue components hidden in full, 80 px buffer, evaluation geometry independent of the hidden trace. The rejected CTD5-v1 tail-halo splitter is not used anywhere in this round.</p>
@@ -319,7 +326,7 @@ def main() -> int:
 <p class="small"><b>Instrument validity.</b> This simulator measured Spearman −0.10 against the owner-reported board in round R4 and uniform random beat the champion on it. It screens procedures; it does not promote anything, and no HOLDOUT-DTI below is a score.</p></section>
 <section class="prose" id="economics"><h2>2 · Repaired organiser-score algebra (inherited from H61, receipts committed)</h2>
 <p><b>R1 masked support.</b> Known catalogue pixels are masked out of evaluation, so <code>S</code> must count off-catalogue pixels. Witness: <code>Hedge-v2</code> and <code>ens12-7f00890a</code> have identical off-catalogue support (166,519 px, Jaccard 1.000) and identical reported scores, yet raw-S accounting gave them different credit ({f4(foren["masked_accounting_witness"]["T_under_raw_accounting"][0], 1)} vs {f4(foren["masked_accounting_witness"]["T_under_raw_accounting"][1], 1)}); masked accounting gives both {f4(foren["masked_accounting_witness"]["T_under_masked_accounting"][0], 1)}.</p>
-<p><b>R2 |G| is set-identified.</b> Measured interval <b>[{G["G_lower_bound"]:,.1f}, {G["G_upper_bound"]:,.1f}] px</b>. Lower bound binds on <code>{esc(G["G_lower_binding_file"])}</code>; upper bound on the nested pair <code>{esc(G["G_upper_binding_pair"]["subset"])}</code> ⊂ <code>{esc(G["G_upper_binding_pair"]["superset"])}</code>. The published point value {foren["G_point_under_zero_ring_credit"]["G_px"]:,.1f} is outside it and needs the deleted ring to earn exactly zero credit.</p>
+<p><b>R2 |G| is conditionally set-identified from owner-reported score associations.</b> Scenario interval <b>[{G["G_lower_bound"]:,.1f}, {G["G_upper_bound"]:,.1f}] px</b> under stated assumptions. The former 14,088.7 point estimate lies outside it and requires the unsupported scenario that the local 6,436-cell difference has zero hidden-truth credit. This is conditional algebra, not a measurement or causal explanation.</p>
 <div class="table-wrap"><table><thead><tr><th>file</th><th>S raw</th><th>on catalogue</th><th>S masked</th><th>reported</th><th>attribution</th></tr></thead><tbody>{file_rows}</tbody></table></div>
 <div class="table-wrap"><table><thead><tr><th>file</th><th>credit T (masked)</th><th>density T/S</th></tr></thead><tbody>{credit_rows}</tbody></table></div>
 <p class="small">All 13 scores are <b>OWNER-REPORTED, NOT ORGANIZER-CONFIRMED</b>; only 3 are hash-linked to the bytes held. Credit uses the sparse-dot approximation M ≈ T, an <b>upper</b> bound on T for contiguous supports.</p></section>
@@ -368,61 +375,29 @@ def main() -> int:
     src += "</main>" + FOOT
     (DOCS / "h63-sources.html").write_text(src)
 
-    # ---------------------------------------------------------------- executive summary / guide
-    ex = head("Executive summary — how to submit, and whether this file may be submitted · GEMSDOE52",
-              "One-click download, the exact file contract, and the explicit submit verdict for the H63 artefact.")
-    ex += f'''<div class="eyebrow">Executive summary / submission guide</div>
-<h1>Download in one click.<br>{"Upload is permitted by this run." if submit_ok else "Do not upload this run."}</h1>
-<p class="lead">The file, its exact identifier, and the frozen verdict. Promotion to a weekly slot is a separate selector decision, never a property of a valid file.</p>
-<div class="notice" role="note"><strong>{esc(banner)}</strong><p>{esc(no_upload)} Verdict: <b>{esc(verdict)}</b>. Format gate {"PASS" if val["ok"] else "FAIL"}; decoded-pattern uniqueness {"PASS" if sub["uniqueness_summary"]["canonical_pattern_unique"] else "FAIL"}; lane gate (policy) {esc(pol["verdict"])}; projected DTI above the champion at both ends of |G|: {"YES" if card["verdict_reason"]["beats_champion_at_both_G_ends"] else "NO"}. Slots used: {card["slots_used"]}. NO CERTIFIED LEADERBOARD GAIN.</p></div>
-<div class="actions"><a class="button" href="downloads/h63-candidate.tif" download>Download the H63 GeoTIFF ↓</a><a class="button secondary" href="downloads/h63-candidate.zip" download>Single-TIFF ZIP</a><a class="button secondary" href="downloads/h63-a-only-reasoning.csv" download>Reasoning CSV</a></div>
-<p class="fileline">{esc(tif)}<br>{nbytes:,} bytes · SHA-256 {esc(sha)}</p>
-<div class="grid2"><section class="panel"><h2>The file contract (verified on disk)</h2><ul>
-<li>One band, float32, values exactly {f4(val["min"], 0)} or {f4(val["max"], 0)}.</li>
-<li>{val["nan_pixels"]} NaN and {val["infinity_pixels"]} infinite pixels anywhere in the file.</li>
-<li>{val["crs"]}; {val["height"]:,} rows × {val["width"]:,} columns.</li>
-<li>Affine {esc(val["transform"])}, identical to the pinned <code>sample_submission.tif</code>: {"yes" if val["grid_matches_sample"] else "NO"}.</li>
-<li>{dots:,} emitted cells, all more than 200 m from any mapped trace, 3 px minimum separation.</li>
-<li>The ZIP holds exactly one TIFF, byte-identical to the direct download.</li></ul>
-<p class="small">Local validator only. This is not an organiser acceptance receipt.</p></section>
-<section class="panel"><h2>Why upload is {"permitted" if submit_ok else "blocked"}</h2><ul>
-<li>{"The projected DTI interval exceeds the champion at both ends of the measured |G| interval." if submit_ok else "The projected DTI does not exceed the reported champion at both ends of the measured |G| interval — its lower end is 0, because novel mass belongs to no identified atom."}</li>
-<li>The sufficiency screen measures the premise before it is trusted: step-normalised View A mean out-of-fold AUC {f4(mean_a, 3)} against a bar of {f4(suff["bar"], 2)} (H61's raw-value View A: 0.5163; View B: {f4(mean_b, 3)}).</li>
-<li>The holdout simulator measured Spearman −0.10 against the owner-reported board in R4; it cannot promote anything on its own.</li>
-<li>Inputs are pinned owner mirrors, not organiser-authenticated downloads, and the current weekly allowance is not observable from this sandbox.</li>
-<li>Lane gate, literal rule over every prior: {esc(lit["verdict"])} (max near-dot {f4(lit["max_near_3px_fraction"], 4)}); saturation-aware policy: {esc(pol["verdict"])} (max near-dot {f4(pol["max_near_3px_fraction"], 4)}).</li></ul>
-<a href="h63-audit.html">Read the full run and its limits →</a></section></div>
-<section class="prose"><h2>About “Predicted values must be in range [0, 1]”</h2>
-<p>That portal rejection is a property of the uploaded bytes, and this exporter makes it unreachable: <code>gems52.grid.write_geotiff</code> refuses to write unless the array is float32, finite everywhere, inside [0, 1], exactly 3,730 × 3,292 and on the pinned EPSG:32611 affine; <code>gems52.submission_writer</code> then reopens the written file, re-validates it against <code>sample_submission.tif</code>, and fails closed. The public specification permits null/NaN outside the footprint, so all-finite export is our compatibility precaution — we do <b>not</b> claim that NaN caused your specific historical rejection, because the rejected bytes and the portal receipt were never available here.</p>
-<h2>Exact competition steps — only for an approved candidate</h2><ol>
-<li>Obtain the separate selector's approval after the scientific, provenance, uniqueness and current-best gates pass. <b>H63 is {esc(verdict)}; {"proceed" if submit_ok else "stop here for this file"}.</b></li>
-<li>Check the <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">official rules</a> and the remaining weekly allowance shown on your authenticated <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">submission page</a>. This site cannot read that allowance.</li>
-<li>On the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">competition page</a> choose <b>New submission</b> and select the <code>.tif</code> (or its single-TIFF ZIP) in <b>File to submit</b>. Never upload HTML, a JSON receipt or a screenshot.</li>
-<li>Paste the unique name and note below verbatim. Do not reproject, rescale, stretch or re-save the TIFF in an image editor.</li>
-<li>After an authorised upload, keep the submission id, timestamp, file SHA-256 and the organiser's result. Only that receipt supports an <b>ORGANIZER-CONFIRMED</b> score.</li></ol></section>
-<h2>Identification for this artefact</h2><p class="small">Copying these fields is not permission to upload the file.</p>
-<label for="submission-name">Unique name ({len(name)} / 140 characters)</label>
-<input id="submission-name" readonly value="{esc(name)}"><div class="copy-row"><button class="copy" data-copy-id="submission-name">Copy name</button></div>
-<label for="submission-note">Note · {card["note_chars"]} / 140 characters</label>
-<textarea id="submission-note" readonly rows="3">{esc(note)}</textarea><div class="copy-row"><button class="copy" data-copy-id="submission-note">Copy note</button></div>
-<p class="copy-status" id="copy-status" aria-live="polite"></p>
-<section class="prose"><h2>Reproduce it</h2><pre class="code">python -m venv .venv
-.venv/bin/pip install -r requirements-r2.txt
-bash scripts/download_competition_data.sh          # restore + SHA-256 verify the pinned inputs
-PYTHONPATH=src .venv/bin/python -c "from gems52 import structural; structural.build(dest='work/r2/features', include_optional_profiles=False, log=lambda *a, **k: None)"
-PYTHONPATH=src .venv/bin/python -m gems52.external # add the shared external GeoDAWN columns
-PYTHONPATH=src .venv/bin/python -c "from gems52 import h63; h63.extend_store()"   # add the H63 step columns
-.venv/bin/python scripts/fetch_prior_inventory.py --out work/h63/priors --receipt work/h63/prior_fetch_receipt.json
-.venv/bin/python scripts/run_h63.py all            # canary -> fit -> exchange -> holdout
-.venv/bin/python scripts/build_h63_submission.py   # place, gate, write, publish receipts
-.venv/bin/python scripts/publish_h63_site.py       # this page
-.venv/bin/python scripts/check_site.py &amp;&amp; .venv/bin/python -m pytest -q</pre>
-<p class="small">GitHub Pages is static: it serves the generated file, it does not train a model in your browser. Reproduction regenerates the same research result; it never uploads, promotes or spends a slot.</p></section>
-<details><summary>Preserved research archives — do not upload</summary><p class="small"><a href="archive-ctd5-overview.html">CTD5 landing page</a> · <a href="ctd5-audit.html">CTD5 audit</a> · <a href="h62.html">H62 audit (parallel session)</a> · <a href="archive-h62-overview.html">H62 landing archive</a> · <a href="h61-audit.html">H61 audit</a> · <a href="h60c.html">H60C</a> · <a href="h60.html">H60</a> · <a href="h60-triple-convergence.html">H60 triple convergence</a> · <a href="h59.html">H59</a> · <a href="archive-h59-overview.html">H59 archive</a> · <a href="h58.html">H58</a> · <a href="h57.html">H57</a> · <a href="h57-creditcore.html">H57 credit core</a> · <a href="h56-cotrain.html">H56</a> · <a href="h56.html">H56</a> · <a href="h55.html">H55</a> · <a href="h55-edge.html">H55-EDGE</a> · <a href="h55-profile.html">H55 profile</a> · <a href="h55-paired-shoulders.html">H55 paired shoulders</a> · <a href="h54.html">H54</a> · <a href="h53.html">H53</a> · <a href="r3.html">R3</a> · <a href="r3-hypotheses.html">R3 hypotheses</a> · <a href="hypotheses.html">Hypotheses</a> · <a href="method.html">Method</a> · <a href="validation.html">Validation</a> · <a href="sources.html">Sources</a> · <a href="irregularities.html">Irregularities</a> · <a href="forensics.html">Forensics</a> · <a href="feed.html">Feed</a> · <a href="downloads/index.html">download archive</a> · <a href="downloads/ctd5-research.tif" download>CTD5 TIFF</a> · <a href="downloads/h61-candidate.tif" download>H61 TIFF</a> · <a href="downloads/gems52-h62-conc_soft-arm22000px.tif" download>H62 TIFF</a> · <a href="downloads/h58-candidate.tif" download>H58 TIFF</a> · <a href="downloads/gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif" download>H57 TIFF</a></p>
-<p class="small">{h58_id}</p>
-<p class="small">{prev_block}</p>
-<p class="small">{r5_id}</p>
-<p class="small">Concurrent rounds preserved: <a href="archive-main-index-20261008.html">main landing page of 2026-10-08</a> · <a href="r5.html">R5 audit</a> · <a href="h60d.html">H60D audit</a>.</p></details>'''
+    # ---------------------------------------------------------------- project-wide research status hub
+    ex = head("Competition research status — no upload instructions · GEMSDOE52",
+              "Research-only download and submission-status index. No page on this route authorizes a competition upload.")
+    ex += """<div class="eyebrow">GEMSDOE52 · research status</div>
+<h1>Research downloads are not submission approvals.</h1>
+<div class="notice bad" role="alert"><strong>NO UPLOAD INSTRUCTIONS · NO OWNER OVERRIDE · NO WEEKLY SLOT AUTHORIZED</strong>
+<p>Local format validity, a public leaderboard row, a reported file association, and an organizer-confirmed submission receipt are different things. This index does not authorize a submission, rebuild, rerun, or new run-card.</p></div>
+<section class="prose"><h2>Explicit stop pages</h2><ul>
+<li><a href="h75-executive-summary.html"><b>H75 — DUPLICATE/STOP · research-only · not for submission</b></a>. Existing TIFF is an archive copy; H75 used its full experiment budget and must not be rerun.</li>
+<li><a href="h74-executive-summary.html">H74 — DUPLICATE/STOP · not for submission</a>.</li>
+<li><a href="h72-executive-summary.html">H72 — terminal / data-blocked proposal statuses</a>.</li>
+<li><a href="h70-executive-summary.html">H70 — DUPLICATE/STOP · not for submission</a>.</li>
+<li><a href="archive-h62-executive-summary.html">H62 — DUPLICATE/STOP · not for submission</a> · <a href="archive-h61-executive-summary.html">H61 — DUPLICATE/STOP · not for submission</a>.</li>
+<li><a href="archive-h60-cotrain-overview.html">CTD5/H33 evidence and stop status</a> · <a href="h59.html">H59 registered gate status</a>.</li>
+</ul></section>
+<section class="prose"><h2>What the reported 0.2778 does—and does not—show</h2>
+<ul><li><b>PUBLIC-LEADERBOARD observation:</b> the saved 2026-10-09 20:18 UTC team-level board shows extradr19 at 0.2778/rank 17 and the top row at 0.3774. There is no TIFF hash or receipt on that row.</li>
+<li><b>OWNER-REPORTED attribution:</b> the association with an H33-labelled file is reported by the owner, not authenticated by an organizer receipt.</li>
+<li><b>LOCAL pixel comparison:</b> H33 is a 37,654-cell subset of a separate 44,090-cell bitmap labelled 0.2600. This byte/pixel relation is not proof of why any score changed.</li>
+<li><b>ORGANIZER-CONFIRMED receipt:</b> none in this repository binds a submission ID, file hash, and 0.2778 result.</li></ul>
+<p>The official clarification says the known-fault mask is pixel-exact, only new-fault truth is scored, and new-fault truth may occur within 300 m of a known trace. Near-trace pixels are not automatically penalized or zero-credit. See <a href="../knowledge/49_why_02778_phd_answer.md">knowledge/49</a>, the <a href="https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516/4">official scoring clarification</a>, and the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">public leaderboard</a>.</p>
+<p>No causal explanation for a score change is established. HOLDOUT-DTI measurements are internal hide-and-recover results, not leaderboard scores or receipts.</p></section>
+<p><a href="h63-audit.html">H63 historical method and audit →</a> · <a href="h63-sources.html">Source inventory and provenance →</a> · <a href="downloads/index.html">Research download archive →</a></p>"""
     ex += "</main>" + FOOT
     (DOCS / "executive-summary.html").write_text(ex)
 

@@ -1,5 +1,7 @@
 # 33 — What H62 actually found (session 2026-10-09)
 
+> **Current correction (2026-10-10):** the historical score inversion below is conditional algebra, not a measurement or explanation of why an organizer score changed. The 0.2778 row is rank 17 in the later saved public-board observation; no file/hash receipt maps it to the reported raster. The local removed-cell credit is unknown because new-fault truth may occur within 300 m of known traces. See [`knowledge/49`](49_why_02778_phd_answer.md).
+
 Preregistered in [`34_hypotheses_H62_preregistered.md`](34_hypotheses_H62_preregistered.md)
 (sha256 `fd781e4f…`, frozen before any fit; verified at start-up by `scripts/run_h62.py`) and in
 [`registry/h62_preregistration.json`](../registry/h62_preregistration.json). Every number below was

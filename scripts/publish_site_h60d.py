@@ -41,7 +41,7 @@ def esc(s) -> str:
 
 NAV = ('<nav><a class="brand" href="{p}index.html">GEMS / DOE 52</a>'
        '<a href="{p}index.html">Overview</a>'
-       '<a href="{p}executive-summary.html">Submission guide</a>'
+       '<a href="{p}executive-summary.html">Research status</a>'
        '<a href="{p}h60d.html" aria-current="page">H60D audit</a>'
        '<a href="{p}h60c.html">H60C audit</a>'
        '<a href="{p}h59.html">H59 audit</a>'
@@ -61,7 +61,7 @@ def header(prefix: str, title: str, desc: str) -> str:
             f'<title>{esc(title)} · GEMSDOE52</title>'
             f'<link rel="stylesheet" href="{prefix}style.css">'
             f'<script src="{prefix}site.js" defer></script></head>\n'
-            f'<body><a class="skip" href="#main">Skip to evidence</a>'
+            f'<body><aside role="alert" style="padding:14px 22px;background:#fef2f2;color:#7f1d1d;border:2px solid #991b1b"><strong>H75: DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION.</strong> H60D is a historical research archive; it is not approved for submission. <a href="{prefix}h75-executive-summary.html">Current H75 stop status</a>.</aside><a class="skip" href="#main">Skip to evidence</a>'
             f'<header>{nav(prefix)}</header>\n<main id="main">')
 
 
@@ -78,6 +78,13 @@ def foot(prefix: str) -> str:
 
 
 def main() -> int:
+    home = DOCS / "index.html"
+    h75 = DOCS / "h75-executive-summary.html"
+    if (home.is_file() and h75.is_file()
+            and "H75: DUPLICATE/STOP" in home.read_text(errors="replace")
+            and "DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION" in h75.read_text(errors="replace")):
+        print("H75 terminal stop is current; H60D publisher skipped all H60D-page, shared-page, and pointer changes")
+        return 0
     sub = load("submission_h60d.json")
     cot = load("h60d_cotrain.json")
     val = load("h60d_validation.json")
@@ -88,15 +95,9 @@ def main() -> int:
     lane = load("h60d_lane_gate.json")
     lane_s = load("h60d_lane_surface.json")
 
-    name = sub["submission_name"]
-    note = sub["note"]
     fname = sub["file"]
     verdict = sub["verdict"]
-    approved = bool(sub["approved_for_weekly_slot"])
-    status_pill = (pill("ok", "PROMOTION MET — DOWNLOAD AND SUBMIT")
-                   if approved else
-                   pill("warn", "NEGATIVE RESULT — OK TO DOWNLOAD FOR REVIEW · "
-                                "DO NOT SPEND A WEEKLY SLOT"))
+    status_pill = pill("warn", "HISTORICAL RESEARCH ONLY · NOT FOR SUBMISSION")
     n_px = sub["nonzero_px"]
     sha = sub["sha256"]
     nbytes = sub["bytes"]
@@ -268,8 +269,7 @@ of {n_px:,} emitted px lie outside the union field's own greedy emission.</p>
 <tr><td>validator output</td><td>format problems: {len(fmt['problems'])};
 no NaN ({fmt['n_nan'] == 0}); values in [0,1] ({fmt.get('min')}–{fmt.get('max')});
 CRS/shape/transform match: {str(fmt['crs'] == 'EPSG:32611' and fmt['width'] == 3292 and fmt['height'] == 3730 and not fmt['problems']).lower()}</td></tr>
-<tr><td>submission name</td><td class="mono">{esc(name)}</td></tr>
-<tr><td>note (≤140 chars)</td><td>{esc(note)} ({card['submission_note_chars']} chars)</td></tr>
+<tr><td>submission eligibility</td><td>NO — historical research only; no portal identifier or note is provided</td></tr>
 <tr><td>verdict</td><td>{pill('ok', 'promote') if card['verdict'] == 'promote' else pill('warn', 'negative')}</td></tr>
 </tbody></table></div>
 <h2>Receipts</h2>

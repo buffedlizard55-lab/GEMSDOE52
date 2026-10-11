@@ -1,6 +1,9 @@
 // Table renderers shared by the validation / feed pages.  Same contract as render.js: fetch from
 // docs/data/, print, and never invent a value that is missing.
 (async function () {
+  // This legacy renderer may expose pointer-derived history; do not run under the H75 terminal stop.
+  const terminalH75 = document.body.textContent || '';
+  if (terminalH75.includes('H75: DUPLICATE/STOP') && terminalH75.includes('NOT FOR SUBMISSION')) return;
   const need = ['holdout_tip', 'holdout_hide', 'independence_tip', 'independence_hide',
                 'composite', 'feed', 'submission', 'layer_screen', 'folds_tip', 'folds_hide',
                 'strata_tip', 'strata_hide'];

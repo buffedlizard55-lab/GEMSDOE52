@@ -1,5 +1,7 @@
 # 48 · H67 results and limits (rendered from the receipts by `scripts/publish_h67_site.py`)
 
+> **Current evidence correction (2026-10-10):** H67's legacy score algebra below is a conditional model scenario, not an organizer score explanation or public-board predictor. The saved 2026-10-09 20:18 UTC public observation places 0.2778 at rank 17; the board has no TIFF hash mapping, and the file association remains owner-reported. The local subset relation and 100–200 m distances do not determine hidden-truth credit; new-fault truth may lie within 300 m of known traces. See [`knowledge/49`](49_why_02778_phd_answer.md), `IR-R5-011`.
+
 **Verdict: `NEGATIVE` — download for research, DO NOT SUBMIT, no weekly slot used.**
 
 Artefact `gems52-h67-thermal-upflow-corridor-24907px-20261009T050704Z.tif`, SHA-256 `14644198f1031e8250a284c86775c55b57d60d55195e815eac6f4d17b01395c6`, 76,217 bytes,
@@ -131,28 +133,14 @@ artefacts are **not proven absent**.
 
 For a fully novel field at S = 24,907 with credit density ρ ~ U[0.0279, 0.1387] and |G| = 14,088.7:
 DTI = ρS/(0.2S + 0.8|G|) ∈ **[0.0428, 0.2126]**. At |G| = 18,000 → [0.0359, 0.1782]; at |G| = 27,400
-→ [0.0258, 0.1284]. Even the optimistic end is below the 0.2778 champion. This was stated **before**
-the holdout ran, in `knowledge/45` §1, and the measured holdout is worse than the projection.
+→ [0.0258, 0.1284]. Even the optimistic end is below the 0.2778 owner-reported reference within this assumed scenario. This was stated **before**
+the holdout ran, in `knowledge/45` §1; the internal holdout does not validate it as a public-score projection.
 
-## 6 · Why the lane cannot reach 0.3195 — the arithmetic, not the mood
+## 6 · Historical score algebra — assumptions, not a board explanation
 
-`knowledge/49` derives it from bytes re-measured this session (`scripts/h67_board_algebra.py`):
+The public board is team-level; the 0.2778 row was observed at rank 17 in the saved 2026-10-09 20:18 UTC reading, with no TIFF filename/hash or organizer receipt. The H33-labelled 37,654-cell raster is a strict subset of a separate 44,090-cell owner-reported 0.2600 raster (6,436 removed, none added); those removed cells are 100–200 m from the local known-fault mask. This establishes a local bitmap relation only. It does not establish either public score's file mapping, the hidden-truth credit of the removed cells, or why an organizer score changed. Staff confirms new-fault truth may occur within 300 m of known traces.
 
-* `h33-2-b2` (0.2778, 37,654 px) is a **strict subset** of the 0.2600 file (44,090 px); the 6,436
-  deleted pixels all lie 100–200 m from a mapped trace, and deleting them raised the score 6.8 %.
-* Its credit density is ρ = 0.1387 — 5.0× uniform random. That is the whole content of 0.2778.
-* Spearman(mass, board) = −1.0000 over the five owner-reported off-catalogue files (n = 5, p < 1e-4),
-  and every step past 37,654 px fails the metric's own marginal rule ΔT/ΔS > 0.2·DTI.
-* Required ρ to reach 0.3195: 0.1595 at 37,654 px, 0.0999 at 100,000 px.
-  Required ρ to reach 0.3774: 0.1884 at 37,654 px, 0.1180 at 100,000 px.
-* The only sub-field with a measured ρ in that range is the 25,517 px credited core P1, exact interval
-  ρ ∈ [0.163, 0.205] ⇒ DTI ∈ [0.2546, 0.3190] — **its upper bound is below 0.3195** — and any subset
-  of P1 has 100 % of its dots within 3 px of an existing registry raster, so the lane rule forbids it.
-
-**Conclusion for the selector step, stated plainly: within this lane's uniqueness rule no candidate can
-be shown to beat 0.2778, let alone 0.3195.** The binding constraint is a ranker whose marginal credit
-density stays above ~0.06 out to 60,000–150,000 px; that is a better detector, and seven separate
-measurements in this repository say it is not available at 100 m.
+The historical `|G|`/credit-density equations were conditional on owner-reported values, sparse-emission assumptions, and assumed credit for the removed support. They are not measured hidden truth, a validated projection, or a causal explanation. H67's HOLDOUT-DTI values are internal measurements under its named evaluator and cannot be converted to public-board scores. No conclusion is offered here about whether a future candidate will exceed a public value.
 
 ## 7 · Irregularities found this round
 

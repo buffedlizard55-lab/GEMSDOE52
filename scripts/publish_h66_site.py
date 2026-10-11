@@ -293,7 +293,7 @@ def render_pages(card: dict) -> None:
     lane_note = ("" if v["lane_unique"] else
                  f" · NOT LANE-UNIQUE: dots lane {esc(lane_d.get('literal'))} (literal) / {esc(lane_d.get('policy'))} (policy)")
     page = f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="assets/ctd5.css"><title>H66 · DOE GEMS</title></head><body><a class="skip" href="#main">Skip to content</a>
-<header><nav aria-label="Main navigation"><a class="brand" href="index.html">DOE GEMS</a><a href="h66cotrain-executive-summary.html">Executive summary (submitting)</a><a href="h64.html">H64</a><a href="index.html">Home</a></nav></header>
+<header><nav aria-label="Main navigation"><a class="brand" href="index.html">DOE GEMS</a><a href="h66cotrain-executive-summary.html">H66 research status</a><a href="h64.html">H64</a><a href="index.html">Home</a></nav></header>
 <main id="main">
 <section class="hero"><div><div class="eyebrow">DOE GEMS / {esc(label)}</div>
 <h1>Download for research.<br>Do not submit.</h1>
@@ -305,7 +305,7 @@ def render_pages(card: dict) -> None:
 <a class="button secondary" href="downloads/h66cotrain-candidate.zip" download>Single-TIFF ZIP</a>
 <a class="button secondary" href="downloads/h66cotrain-review-table.csv.gz" download>Review table (gzip CSV)</a></div>
 <p class="fileline">{esc(em['file'].split('/')[-1])}<br>{fmt_['bytes']:,} bytes · SHA-256 {esc(fmt_['sha256'])} · {em['dots']:,} emitted cells · values exactly {{0, 1}}, 0 NaN · EPSG:32611 · grid identical to the sample</p>
-<p class="small"><a href="h66cotrain-executive-summary.html">How to submit, and whether this file may be submitted →</a> · <a href="data/h66_run_card.json">Complete JSON run card ↗</a> · <a href="../registry/irregularities.json">Irregularities (registry JSON) ↗</a></p></section>
+<p class="small"><a href="h66cotrain-executive-summary.html">H66 research status →</a> · <a href="data/h66_run_card.json">Complete JSON run card ↗</a> · <a href="../registry/irregularities.json">Irregularities (registry JSON) ↗</a></p></section>
 <hr class="divider">
 <section><h2>Gates, measured</h2><div class="table-wrap"><table><thead><tr><th>Gate</th><th>Result</th><th>Receipt</th></tr></thead><tbody>
 <tr><td>Pre-registration hash (frozen before any fit)</td><td>{esc(card['preregistration']['sha256'][:16])}… verified</td><td><code>knowledge/43_hypotheses_H66_preregistered.md</code></td></tr>
@@ -331,9 +331,10 @@ def render_pages(card: dict) -> None:
 <p class="small">Candidate minus control: <b>{f6(dl['delta'])}</b>, 95% CI [{f6(dl['ci95'][0])}, {f6(dl['ci95'][1])}]. The candidate does not beat single_B: the paired CI lies entirely below zero.</p>
 <p class="small"><b>Reproduction note (IR-H66-010).</b> single_B reproduces H61 to within {rep['difference']:+.6f} (H61 receipt 0.174517; H66 {f6(rep['h66'])}). Fold 0 differs and folds 1–3 match to seven decimals. The B-view AUCs match H61 exactly. The cause is not established, and no verdict depends on it.</p></section>
 <hr class="divider">
-<section><h2>Why 0.2778 scored where it did (measured, not reported)</h2>
-<p>The 0.2778 champion <code>h33-2-b2</code> is a strict subset of the reported-0.2600 gems24 d2-8 raster: 37,654 of 44,090 positive pixels, zero on the catalogue. It removes 6,436 pixels, all between 100 m and 200 m from a mapped trace, and adds none. Its nearest dot is 223.6 m from the catalogue. Under the published metric, <code>DTI = T / (0.2·(T+S−M) + 0.8·|G|)</code>, an emitted pixel helps only if its credit density exceeds the bar. Removing pixels therefore raises the ratio when their expected credit is below the bar. That is consistent with the measured subset chain, but it is an inference: the hidden truth is not available to measure the removed pixels' credit. Pruning raises the ratio without finding new faults. The owner-reported score attribution is unlinked (IR-H65-003). The marginal bar for one uncovered truth pixel of kernel weight w is w &gt; α·DTI = 0.0556 at DTI 0.2778; the repository's accept_bar form is 0.0588 (IR-H66-002).</p>
-<p class="small">Source: <code>work/h66/champion_check.json</code> (verified on restored bytes); <code>knowledge/01_why_02778_and_the_bar.md</code>, <code>README</code> section "Why 0.2778 won".</p></section>
+<section><h2>Evidence about the reported 0.2778 — no causal explanation established</h2>
+<p><strong>PUBLIC-LEADERBOARD observation:</strong> the saved 2026-10-09 20:18 UTC board places extradr19 at 0.2778, rank 17; the top row is 0.3774. The row has no TIFF hash or submission receipt. <strong>OWNER-REPORTED file/score association:</strong> attribution to an H33-labelled file remains unauthenticated. No ORGANIZER-CONFIRMED receipt binds this value to a file.</p>
+<p><strong>LOCAL pixel facts only:</strong> the 37,654-cell H33-labelled bitmap is a strict subset of a separate owner-reported 0.2600-labelled 44,090-cell bitmap (6,436 removed, none added). The removed cells are 100–200 m from the local known-fault mask. These facts do not establish either score or why a public value changed. DrivenData staff clarifies that the known-fault mask is pixel-exact, only new-fault truth is scored, and new-fault truth may lie within 300 m of known traces. Near-trace distance alone therefore does not imply zero credit or an automatic penalty; hidden credit is unknown. Any marginal algebra is conditional scenario arithmetic, not a measured contribution or score explanation.</p>
+<p class="small">See <a href="../knowledge/49_why_02778_phd_answer.md">knowledge/49</a>, <code>IR-R5-011</code>, and <a href="data/leaderboard_observation_2026-10-09T201800Z.json">the dated board observation</a>.</p></section>
 <hr class="divider">
 <section><h2>Hypotheses carried out of this round</h2>
 <div class="table-wrap"><table><thead><tr><th>Rank</th><th>ID</th><th>Idea</th><th>Status</th></tr></thead><tbody>
@@ -344,7 +345,7 @@ def render_pages(card: dict) -> None:
 </tbody></table></div>
 <p class="small">Full pre-registration with layers, named mimics and costs: <a href="../knowledge/43_hypotheses_H66_preregistered.md"><code>knowledge/43</code></a>. Not proposed because already in the repo: Euler deconvolution, QFaults priors (one pixel), cross-field <code>C_*</code> features, gap bridging.</p></section>
 </main>
-<footer class="small">Research receipts only. Public-board numbers are owner-reported and dated (snapshot 2026-10-08). The AI-use disclosure is in the executive summary. Nothing here was uploaded.</footer>
+<footer class="small">Research receipts only. Public-board observations are dated; file/score associations are owner-reported unless an organizer receipt is available. The AI-use disclosure is in the executive summary. Nothing here was uploaded.</footer>
 </body></html>
 """
     (DOCS / "h66cotrain.html").write_text(page)
@@ -359,32 +360,31 @@ def write_exec(card: dict) -> None:
     page = f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="assets/ctd5.css"><title>H66 executive summary · DOE GEMS</title></head><body><a class="skip" href="#main">Skip to content</a>
 <header><nav aria-label="Main navigation"><a class="brand" href="index.html">DOE GEMS</a><a href="h66cotrain.html">H66 round</a><a href="index.html">Home</a></nav></header>
 <main id="main">
-<section class="hero"><div><div class="eyebrow">Executive summary / submission guide · H66</div>
-<h1>How to submit, and whether this file may be submitted.</h1>
-<p class="lead">Read the verdict first. A valid file is not an approved competition entry. Up to three scored submissions are allowed each week, and one final submission must be chosen before the deadline. Those choices belong to you, not to this repository.</p>
+<section class="hero"><div><div class="eyebrow">H66 · historical research status</div>
+<h1>H66 is not approved for submission.</h1>
+<p class="lead">This run is terminal research-only: the premise gate failed, the HOLDOUT-DTI candidate lost to its comparable single-view control, and the dots lane gate is DUPLICATE/STOP. Local format validity is not submission eligibility. No override, slot recommendation, or upload steps are provided.</p>
 <div class="notice" role="note"><strong>DOWNLOAD FOR RESEARCH: {esc(v['download_for_research'])} · SUBMIT: NO · UPLOAD: NO</strong>
 <p>{esc(v['statement'])}</p></div></section>
 <hr class="divider">
 <section><h2>The verdict in four lines</h2><ul>
 <li><b>Premise.</b> View A_local out-of-quadrant AUC mean {f6(prem['view_A_mean'])}, minimum {f6(prem['view_A_min'])}. Gate: mean ≥ 0.60 and minimum ≥ 0.55. <b>FAIL.</b></li>
-<li><b>Holdout.</b> The candidate scores {f6(ho['arms']['disagreement_post']['dti'])} against {f6(ho['arms']['single_B']['dti'])} for the best single-view control (paired difference {f6(ho['candidate_minus_control']['delta'])}). It does not beat the control.</li>
+<li><b>HOLDOUT-DTI</b> ({esc(hold['pooled']['evaluator_version'])}; {hold['withheld_positive_pixels']:,} withheld positives; 95% paired cluster-bootstrap CI). Candidate disagreement_post: {f6(ho['disagreement_post']['dti'])} [{f6(ho['disagreement_post']['ci95'][0])}, {f6(ho['disagreement_post']['ci95'][1])}]; single_B control: {f6(ho['single_B']['dti'])} [{f6(ho['single_B']['ci95'][0])}, {f6(ho['single_B']['ci95'][1])}]; paired difference {f6(delta['delta'])} [{f6(delta['ci95'][0])}, {f6(delta['ci95'][1])}]. Internal measurement only, not a public-board score.</li>
 <li><b>Lane gate, dots.</b> Literal {esc(lane_d.get('literal'))}; policy {esc(lane_d.get('policy'))}.</li>
 <li><b>Format.</b> Single-band float32 GeoTIFF, EPSG:32611, values exactly {{0, 1}}, no NaN, 37,600 cells. The format is valid; validity is not approval.</li></ul></section>
 <hr class="divider">
-<section><h2>Why 0.2778 scored where it did</h2>
-<p>The 0.2778 file is a strict subset of a 0.2600 raster. It removed 6,436 pixels and added none. Under the published metric, that edit is consistent with a precision effect rather than a detection; the removed pixels' credit cannot be measured because the hidden truth is withheld. The metric's marginal bar for one uncovered truth pixel of kernel weight w is w &gt; α·DTI = 0.0556 at DTI 0.2778, which the README's ≈0.055 states. The repository's accept_bar form gives 0.0588 (IR-H66-002). The README's denominator was also misquoted and is now corrected (IR-H66-003).</p>
-<p class="small">Measured in <code>work/h66/champion_check.json</code>. The score itself is owner-reported and not linked to the file on the board (IR-H65-003).</p></section>
+<section><h2>Evidence about the reported 0.2778 — no causal explanation established</h2>
+<p><strong>PUBLIC-LEADERBOARD observation:</strong> the saved 2026-10-09 20:18 UTC board places extradr19 at 0.2778, rank 17; the top row is 0.3774. The row has no TIFF hash or submission receipt. <strong>OWNER-REPORTED file/score association:</strong> attribution to an H33-labelled file remains unauthenticated. No ORGANIZER-CONFIRMED receipt binds this value to a file.</p>
+<p><strong>LOCAL pixel facts only:</strong> the 37,654-cell H33-labelled bitmap is a strict subset of a separate owner-reported 0.2600-labelled 44,090-cell bitmap (6,436 removed, none added). The removed cells are 100–200 m from the local known-fault mask. These facts do not establish either score or why a public value changed. DrivenData staff clarifies that the known-fault mask is pixel-exact, only new-fault truth is scored, and new-fault truth may lie within 300 m of known traces. Near-trace distance alone therefore does not imply zero credit or an automatic penalty; hidden credit is unknown. Any marginal algebra is conditional scenario arithmetic, not a measured contribution or score explanation.</p>
+<p class="small">See <a href="../knowledge/49_why_02778_phd_answer.md">knowledge/49</a>, <code>IR-R5-011</code>, and <a href="data/leaderboard_observation_2026-10-09T201800Z.json">the dated board observation</a>.</p></section>
+
 <hr class="divider">
-<section><h2>Can a higher score be reached?</h2>
-<p>Not by this lane. Co-training has now failed its premise in every View A construction tried (raw bands, step-normalised, cross-strike, sufficiency-gated, and local-scale). Pruning or recombining the champion gives a duplicate by construction. The public top on the dated 2026-10-08 snapshot is 0.3774. Across the co-training rounds in this repository (H61, H63, H64, H65 and H66), no arm has beaten the single-view control on holdout. The next candidates are H66-B (levelling-stripe veto, precision), H66-C and H66-D, and R5-H1, which is the highest-ranked untested idea and sits outside this lane.</p></section>
+<section><h2>H66 disposition</h2><p>This round is closed as a negative research result. It does not rank future hypotheses or forecast a leaderboard result. Any new experiment needs its own preregistration and shared-gate checks; this page authorizes no rerun, new run-card, build, override, or submission.</p></section>
 <hr class="divider">
-<section><h2>If you decide to submit a different file: the steps</h2><ol>
-<li><b>Eligibility certification.</b> The NLR rules require the registrant to certify eligibility. Only you can do this; the agent cannot (IR-H66-007 covers the slot rules).</li>
-<li><b>Weekly cap and final choice.</b> Up to three scored per week; one final submission to choose before the deadline (IR-H66-007).</li>
-<li><b>AI disclosure.</b> Generative-AI use must appear in the submission narrative (NLR §3.2). The disclosure text is in <code>knowledge/43_hypotheses_H66_preregistered.md</code> §7 (IR-H66-008).</li>
-<li><b>Organiser clarifications.</b> The sample description conflicts with the file (IR-H66-001). The rules say outside-bounds values are null or NaN, while the scored champion uses zeros (IR-H66-009). The portal's [0,1] rejection text is not reproduced (IR-H65-007).</li>
-<li><b>Legal review.</b> Competition rasters are mirrored on public GitHub repositories, and the Terms prohibit reproduction and automatic access (IR-H66-006). This needs review before any further publication.</li>
-<li><b>Live board.</b> The 0.3774 top is from a dated snapshot. A browser re-read is needed before any leaderboard claim (IR-H66-004).</li></ol></section>
+<section><h2>Evidence about the reported 0.2778 — no causal explanation established</h2>
+<p><strong>PUBLIC-LEADERBOARD observation:</strong> the saved 2026-10-09 20:18 UTC board places extradr19 at 0.2778, rank 17; the top row is 0.3774. The row has no TIFF hash or submission receipt. <strong>OWNER-REPORTED file/score association:</strong> attribution to an H33-labelled file remains unauthenticated. No ORGANIZER-CONFIRMED receipt binds this value to a file.</p>
+<p><strong>LOCAL pixel facts only:</strong> the 37,654-cell H33-labelled bitmap is a strict subset of a separate owner-reported 0.2600-labelled 44,090-cell bitmap (6,436 removed, none added). The removed cells are 100–200 m from the local known-fault mask. These facts do not establish either score or why a public value changed. DrivenData staff clarifies that the known-fault mask is pixel-exact, only new-fault truth is scored, and new-fault truth may lie within 300 m of known traces. Near-trace distance alone therefore does not imply zero credit or an automatic penalty; hidden credit is unknown. Any marginal algebra is conditional scenario arithmetic, not a measured contribution or score explanation.</p>
+<p class="small">See <a href="../knowledge/49_why_02778_phd_answer.md">knowledge/49</a>, <code>IR-R5-011</code>, and <a href="data/leaderboard_observation_2026-10-09T201800Z.json">the dated board observation</a>.</p></section>
+
 <hr class="divider">
 <section><h2>Limitations</h2><ul>
 <li>The holdout is a simulator. The local analysis measured Spearman −0.10 against the owner-reported board (R4), so holdout gains do not predict leaderboard gains.</li>
@@ -393,12 +393,7 @@ def write_exec(card: dict) -> None:
 <li>The H66 lane gate is the shared gate. A PASS would still not be an organiser acceptance.</li>
 <li>No organiser validation, acceptance or score exists for this file. No geologist has checked any mapped or predicted structure.</li></ul></section>
 <hr class="divider">
-<section><h2>Access needs, from you</h2><ul>
-<li>A browser read of the live leaderboard, or a screenshot, dated.</li>
-<li>The rejected portal file or the exact portal error text, if the [0,1] rejection is to be reproduced (IR-H65-007).</li>
-<li>An organiser answer on the sample description and the outside-bounds convention (IR-H66-001, IR-H66-009).</li>
-<li>A legal decision on the public mirrors (IR-H66-006).</li>
-<li>Your eligibility certification, if a submission is made.</li></ul></section>
+<section><h2>Unresolved historical evidence</h2><p>The file/score mapping is not supported by an organizer receipt. The dated public-board observation is preserved separately from owner-reported file labels. Portal behavior and the provenance of mirrored inputs are not authenticated here. These gaps do not change the terminal H66 stop.</p></section>
 <hr class="divider">
 <section><h2>AI-use disclosure</h2><p class="small">An AI agent (Arena.ai Agent Mode) wrote the code, the pre-registration, the pages and this summary. No geologist verified any structure, no field observation was collected, and no organiser score, acceptance or leaderboard gain is claimed for any H66 output.</p></section>
 </main>

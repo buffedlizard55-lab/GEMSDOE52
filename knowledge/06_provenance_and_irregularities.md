@@ -1,6 +1,8 @@
 > **Historical report — superseded where contradicted by R2.** See `09_r2_review.md` and `evidence/reference_forensics_r2.json`. In particular: known pixels do not pay penalties; H33 removed off-catalogue flanks; the old OOF independence report contained no negative predictions; hidden prevalence and a 0.464 ceiling are not established.
 
-# 06 · Provenance and the irregularities register
+# 06 · Historical provenance notes — consult the current irregularities register
+
+> **Correction (2026-10-10):** this early audit contains obsolete claims and numbering. The current source of truth is [`registry/irregularities.json`](../registry/irregularities.json), especially `IR-R5-011` and the corrected board/score entries. Do not treat the old 100–200 m ring analysis as proof of zero credit or as a cause of the reported 0.2778 value. The public board is a team-level observation, the file association is owner-reported, and no organizer receipt maps a TIFF hash to 0.2778. See [`knowledge/49`](49_why_02778_phd_answer.md).
 
 The machine-readable twin of this file is `docs/irregularities.html`; this note is the version that keeps
 the *reasoning* about each item, because a register without reasoning gets re-litigated every session.
@@ -38,11 +40,7 @@ vacuously, not contradicted — but a builder that reads only the brief will loo
 user's number rather than adopting it, because acting on a remembered board is how a team optimises a
 target that no longer exists.
 
-**IR-52-003 — file↔score mappings in this family are owner reports, not organiser data.** The public board
-shows a team and a number, and nothing else. The 0.2778 attribution to `h33-2-b2` is used on this site only
-where the *mechanism* is what matters (deleting 6.3 % of one's own mass, all of it overlapping the mask,
-raised DTI 2.6 %), and the file itself is not in the checkout. Stated on the site in the same breath as the
-number.
+**Current evidence correction — file↔score mappings are not organizer-authenticated.** The public board is a team-level row and has no filename or TIFF hash. The 0.2778 association with `h33-2-b2` remains owner-reported. Local byte comparison shows 6,436 cells removed and none added between two labelled rasters, with the removed cells 100–200 m from the known-fault mask; it does not prove the cells' hidden-truth credit or explain any organizer score change. The saved 2026-10-09 20:18 UTC public observation places 0.2778 at rank 17, not first. See `IR-R5-011` and `knowledge/49`.
 
 **IR-52-020 — the session-2 brief's "0.3195 is the highest score right now" is the *brief's* number, and the
 board says 0.3774.** This is the same disagreement as **IR-52-002** (where it is recorded as a stale user
@@ -198,14 +196,7 @@ file the instrument ranks first scored 0.1563. Full measurement and the confound
 excluded: `knowledge/03` N-9. **Every selection made through that gate inherits the defect**, including
 the `promoted: false, forced: true` decision recorded in `docs/data/submission.json` for the H52 file.
 
-**IR-52-018 — the ≤200 m ring around the mapped catalogue earns exactly zero credit.**
-`h33-2-b2` (0.2778) ⊂ `gems24-d2-8` (0.2600); the 6,436 px difference lies entirely inside 200 m of a
-mapped trace and deleting it *raised* the score 6.8 %. `min` distance-to-catalogue inside `h33-2-b2` is
-223.6 m, so it holds 0 px in the ring. This **contradicts** `knowledge/01` §5 item 2 and `knowledge/02`
-H52-2, which made ranking that ring the primary emitter arm; §5 item 2 is now struck through with the
-measurement. The staff claim that the mask is pixel-exact survives as a statement; the bytes say scoring
-behaves as if there were a ~2 px ring, or as if the hidden truth never comes within 200 m. Both readings
-give the same rule and the bytes cannot separate them.
+**Historical draft — withdrawn: an earlier paragraph incorrectly described the 100–200 m neighborhood around known traces as exactly zero-credit and treated the 0.2600/0.2778-labelled bitmap relation as causal.** The local files establish only a strict subset relation and distances to the provided known-fault mask. DrivenData staff later clarified that the known-fault mask is pixel-exact, only new-fault truth is scored, and new-fault truth may occur within 300 m of known traces. The hidden truth near those cells is unavailable here; their credit is unknown, not automatically zero. This old draft's identifier must not be used: the current machine register uses `IR-52-018` for an unrelated independence-diagnostic correction. See current `IR-R5-011` and `knowledge/49`.
 
 **IR-52-019 — no feature available here re-ranks inside the champion file.** Best blocked AUC on the
 credited-vs-uncredited contrast: 0.5453 over 63 point/local-differential features (the maximum of 63

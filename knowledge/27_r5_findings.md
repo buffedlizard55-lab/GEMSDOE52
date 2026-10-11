@@ -1,183 +1,78 @@
-# 27 · R5: why 0.2778 is 0.2778, what would beat it, and what this round shipped
+# 27 · Historical R5 analysis — conditional arithmetic, not a causal score explanation
 
-The brief asks for a PhD-level answer to one question — why did
-`h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros` score 0.2778, and can this repo generate something
-better — and then asks for the answer to be turned into a unique submission. This file is the answer
-and the turning. Every number is either measured on restored bytes in this checkout, quoted from an
-official source in `knowledge/25`, or labelled as a prior with its bounds printed.
+> **Superseded 2026-10-10:** 0.2778 is a team-level public-board value at rank 17 in the saved 2026-10-09 20:18 UTC observation; it is not the public high score and no organizer receipt maps a TIFF hash to it. The locally measured 37,654/44,090 subset relation is not proof of why an organizer score changed. The known-fault mask is pixel-exact, only new-fault truth is scored, and new-fault truth may occur within 300 m of known traces, so removed 100–200 m cells are not known to be score-free. All score-derived algebra below is historical, owner-report-conditioned scenario arithmetic—not hidden-truth measurement or an organizer score explanation. Current account: [`knowledge/49`](49_why_02778_phd_answer.md) and `IR-R5-011`.
+
+The brief asks why the H33-labelled file was reported at 0.2778 and whether a future candidate could improve. The file/score association is owner-reported; no organizer receipt maps a TIFF hash to that value. This historical note does not answer the causal question. `knowledge/49` is the current evidence-classification reference; calculations retained below are conditional or local-only as explicitly labelled.
 
 ## 1. The three bars, with their owners
 
 | bar | value | whose | source |
 | --- | --- | --- | --- |
-| this family's best | **0.2778** | `extradr19`, rank 13, 12 submissions | board fetch 2026-10-08, `registry/leaderboard_snapshot_2026-10-08.json`; owner-reported file↔score pairing |
+| owner-reported reference | **0.2778** | `extradr19`, rank 13 in the 2026-10-08 snapshot; rank 17 in the later 2026-10-09 20:18 UTC observation | dated PUBLIC-LEADERBOARD observations; file↔score pairing remains OWNER-REPORTED, no organizer receipt |
 | the brief's stated target | **0.3195** | `DARD`, rank **7**, 16 submissions | same |
 | the board top | **0.3774** | `xiaofanhu`, rank 1, 13 submissions | same |
 
-The brief says "current leaderboard best is 0.3195". It is not; it is rank 7 (`IR-R5-005`). This repo
-already knew: the 2026-10-07 snapshot recorded 0.3774 at rank 1, and the H57 acceptance addendum in
-`README.md` says in terms "never call 0.3195 'the highest score right now'". All three bars are
-carried through every projection below, because a strategy aimed at seventh place is not a strategy
-aimed at first.
+The brief’s 0.3195-as-highest claim was incorrect: the saved 2026-10-09 20:18 UTC public observation records 0.3774 at rank 1, 0.3195 at rank 7, and 0.2778 at rank 17. Those are team-level rows, not file/hash receipts. Any historical cluster or rank narrative describes a dated board snapshot only; it cannot identify a shared geological ceiling, hidden-truth fraction, or what a particular bitmap scored. See `knowledge/49` and `evidence/leaderboard_observation_2026-10-09T201800Z.json`.
 
-The shape of the board matters more than any row. Ranks 8–22 span 0.2707–0.2888 — fifteen teams
-inside 0.018 — and then there is a **gap of 0.031** to rank 7. A cluster that tight with a step above
-it is what a shared ceiling looks like: eleven teams are finding the same easy fraction of the truth
-and stalling. This family is inside the cluster, at 0.2778, and has been for twelve submissions.
-`arnofault` is rank 14 at 0.2764 with **one** submission, which says the ceiling is about what you
-emit, not about how many times you get to measure it.
+## 2. Historical conditional arithmetic (not an established explanation)
 
-## 2. Why 0.2778, exactly
-
-The file is `h27-4-r1` with the catalogue mask removed. Set arithmetic on the restored bytes:
+The local bitmap set arithmetic is measured on restored bytes; the score associations shown beside it are owner-reported only:
 
 ```
-A = h33-2-b2      40,199 emitted px, of which 2,545 sit on label pixels → S_eval = 37,654   score 0.2778
-B = gems24-d2-8   46,635 emitted px, same 2,545 masked                → S_eval = 44,090   score 0.2600
+A = H33-labelled bitmap  40,199 emitted px, 2,545 exact known-label cells → 37,654 evaluated cells   owner-reported association: 0.2778
+B = d2-8-labelled bitmap 46,635 emitted px, same 2,545 known-label cells → 44,090 evaluated cells   owner-reported association: 0.2600
 A ⊂ B ;  B \ A = 6,436 px, every one of them 100–200 m from a mapped trace
 min distance-to-catalogue inside A = 223.6 m
 ```
 
-With the organiser's own formula (`knowledge/25` §3) and binary mass, `DTI = T/(0.2 S + 0.8 |G|)`
-where `T = TPw` and `M = T` because A's dots are more than 200 m apart:
+The official formula is `DTI = T / (0.2·(T + S − M) + 0.8·|G|)`. The hidden new-fault set, `T`, and the overlap term `M` are not present in this checkout, and the owner-reported score values are not linked to these local hashes. Therefore the score equations cannot be inverted as observations from these bytes.
 
-```
-T(A) = 0.2778 (0.2·37,654 + 0.8|G|)      T(B) = 0.2600 (0.2·44,090 + 0.8|G|)
-T(B) − T(A) = 200.62 − 0.01424·|G|
-```
+`B \ A` is a local 6,436-cell difference at 100–200 m from the known-fault mask. That distance does not determine hidden-truth credit: official staff says new-fault truth may occur within 300 m of a known trace. The former “zero-credit ring”, +6.8% gain, `|G| = 14,088.7`, and 5,223-credit values are withdrawn as measured findings. Any such arithmetic is conditional on unverified file/score mappings and assumptions about hidden truth and `M`; it is not an organizer score explanation.
 
-`B \ A` is the 100–200 m corridor. Setting its credit to zero — which is what "deleting it raised the
-score" means — gives **`|G| = 14,088.7 px`**, and then `T(A) = T(B) = 5,223.1`, so
+The exact local atom sizes are useful for byte forensics, but their hidden-truth credit is unknown:
 
-> **ρ(A) = T/S = 0.1387 credit per emitted pixel = 5.0× uniform random (0.0279).**
+| local atom | pixels | hidden-truth credit |
+| --- | ---: | --- |
+| `P1 = A ∩ C` | 25,502 | unknown |
+| `P2 = A \ C` | 12,136 | unknown |
+| `P3 ∪ P4 = B \ A` | 6,436 | unknown |
+| `P5 ∪ P6 = E \ B` | 66,142 | unknown |
 
-The +6.8 % came from deleting 6,436 px of pure false-positive mass. **Not** from deleting the 2,545
-on-label pixels: staff confirmed on 2026-09-16 that masked pixels "do not count towards penalty
-terms", so those were already score-neutral (`IR-R5-007` corrects `knowledge/01` §1, which had the
-mechanism backwards). The distinction is not pedantry — it is the difference between "the organiser
-hides a 2 px buffer around known faults" (false) and "this family's corridor pixels were worthless"
-(true, and a statement about this family's field, not about the corridor).
+No selection rule, credit density, random baseline, or causal score improvement follows from these counts alone.
 
-What the champion's 5,223 credits are made of, from the atom partition of `{A, B, C = d1-5, E = h19-5}`
-(`knowledge/10` §3, re-derived on the restored bytes this session):
+## 3. `|G|` is not recovered from the public board
 
-| atom | px | credit | density ρ | reading |
-| --- | --- | --- | --- | --- |
-| `P1 = A ∩ C` | 25,502 | **[4,168, 5,223]**, central 5,140 | **0.163–0.205** | selected by two independent thinnings of the same field |
-| `P2 = A \ C` | 12,136 | [0, 1,055] | 0–0.087 | selected by one |
-| `P3, P4 = B \ A` | 6,436 | **0** (bounded 0–85) | ≤0.0132 | the corridor: half of random |
-| `P5, P6 = E \ B` | 66,142 | 1,599 measured | **0.0242** | the family field's own tail: random |
+The earlier `|G| = 14,088.7` point and narrow interval depended on treating owner-reported score labels as exact mappings to local TIFFs and on assigning an unsupported credit to the 100–200 m difference set. Those assumptions are not measurements. The competition’s hidden new-fault labels and organizer receipts are unavailable here, so this local comparison does not recover `|G|`, a truth density, or the score-change mechanism.
 
-Three things follow, and they are the whole of the strategic picture:
+## 4. Conditional break-even algebra (sensitivity only; never a score or prediction)
 
-1. **The family's field is exhausted.** Its unemitted tail — 66,142 px beyond `d2-8` — earns ρ =
-   0.0242, indistinguishable from uniform random at 0.0279. There is nothing left to win by
-   re-ranking the same field; `T(E) − T(B) = 1,599` is the entire remaining yield of 121,131 px.
-2. **Corroboration is the only sub-ranking the published scores can see.** Two independent thinnings
-   agreeing (P1, ρ = 0.201) beats one (P2, ρ ≤ 0.087) by a factor of 2.3 or more, and beats the
-   field's average (0.1387) by 1.45. That is a property of the *selection procedure*, which is why it
-   is the one law in this repo that plausibly transfers to a new field — and why R5's emission is
-   built on a multi-family agreement test rather than on one rank.
-3. **Emitting P1 alone would score 0.2546–0.3190 (central 0.3139)** with no new geology at all. The
-   upper end of that interval is 0.0005 below the brief's target. It is also 63 % of the champion's
-   own pixels, which is why R5 did not ship it (§6).
+The former threshold table assumed `|G| = 14,088.7`, an unverified scenario value. The table’s algebra is not a forecast; it does not explain 0.2778 or estimate the chance that any future raster will score above it. No “best credit density” is measured from the local byte comparison because hidden-truth credit is unknown.
 
-## 3. What `|G|` is, with the bound corrected
+For a hypothetical known `|G|`, the required density follows `ρ = target·(0.2 + 0.8·|G|/S)`. Since `|G|` is not identified here, any numerical table is conditional and must be read as a sensitivity illustration only. The submission decision must use preregistered HOLDOUT-DTI with its evaluator, withheld-positive count, and confidence interval—not this arithmetic.
 
-`knowledge/10` §2 calls `|G| = 14,088.7` exact. It is exact **given** "the corridor earned nothing".
-Solving `T(B) − T(A) = 200.62 − 0.01424|G|` for the corridor credit `Δ` and intersecting with the
-independent bound `|G| ≥ 8,128` (from `T ≤ |G|` applied to `8GEMSDOE_Hedge-v2`, 166,519 px at
-0.1563) gives `Δ ∈ [0, 85]` and therefore
+## 5. Historical holdout diagnostics are not a public-score calibration
 
-> **`|G| ∈ [14,030, 14,089]` px = 0.272–0.273 % of the 5,165,840 px footprint.**
+The measurements below compare internal hide-and-recover diagnostics with owner-reported score associations. They do not authenticate the public scores or establish how the hidden new-fault labels behave. The diagnostics remain useful only for their preregistered local holdout purpose:
 
-The interval is 0.4 % wide, so every downstream figure is unaffected; the *word* "exact" was not
-earned and is corrected here. Independently: the organiser says the truth is "faults that are not
-contained within the current public USGS database" (`knowledge/25` §1), so `|G|` counts expert-mapped
-**new** faults only, and the mask is pixel-exact on the known ones — which is why `|G|` is a small
-number and why the catalogue's own 60,988 px are irrelevant to it except as geometry (§R5-H1).
+1. **The hide-and-recover localisation assay is not a public-score calibration.** `knowledge/10` §5 reports
+   Spearman(reported score association, simulated DTI) = −0.1045, p = 0.734, n = 13; these are owner-report
+   associations, not authenticated score/file pairs. R5 separately measured the champion-family proxy
+   field at **0.0003**, uniform random at **0.0275**, and the new six-family trace field at **0.0395**
+   (`evidence/r5_budget.json`, `work/r5/r5_assay.json`). These are internal holdout diagnostics on mapped
+   catalogue segments, not scores on the hidden new-fault set. The assay excludes a 200 m neighborhood
+   of visible catalogue as part of its design; this changes what the local holdout measures and does not
+   establish that the competition’s 100–200 m near-catalogue cells are zero-credit.
+2. **Feature diagnostics do not provide hidden-truth labels.** The historical 63 point/local-differential and 108 structure-tensor screens compared local set partitions, not known credited and uncredited pixels. Their AUC values cannot be interpreted as credit ranking or evidence about hidden truth.
+3. **R5 measured local mask enrichment, not credit.** The six-family corroborated-ridge pool
+   (`corr99 ≥ 2`, 653,593 px, 13.4 % of the legal footprint) overlaps the H33-labelled bitmap at
+   **1.54×** enrichment. Any P1/P2/P5/P6 “credit tier” comparisons are conditional on the withdrawn
+   score inversion; this spatial enrichment measures where the rasters emit, not which emissions
+   match hidden truth.
 
-## 4. What it would take to beat each bar
-
-For a binary emission `DTI = T/(0.2 S + 0.8|G|)` with `T ≤ min(ρS, |G|)`. Required credit density:
-
-| S (emitted px) | ρ needed for 0.2778 | ρ for 0.3195 | ρ for 0.3774 | best ρ ever measured here |
-| --- | --- | --- | --- | --- |
-| 16,681 | 0.2121 | 0.2442 | 0.2875 | 0.2010 (inherited, P1) |
-| 25,000 | 0.1812 | 0.2087 | 0.2456 | " |
-| 37,654 | 0.1424 | 0.1640 | 0.1930 | 0.1387 (the champion, at this S) |
-| 40,000 | 0.1339 | 0.1542 | 0.1815 | — |
-| 60,000 | 0.1077 | 0.1240 | 0.1459 | — |
-| 100,000 | 0.0869 | 0.0999 | 0.1176 | — |
-| 166,519 | 0.0714 | 0.0822 | 0.0967 | 0.0418 (Hedge-v2, at this S) |
-
-and the `|G|` cap binds at `S = |G|/ρ`, beyond which more mass only adds tax. Reading the table
-against the record:
-
-* **To beat 0.2778** a novel field needs ρ ≥ 0.134 at S = 40,000, i.e. **as good as the champion's
-  own field at the same budget**. Not impossible — an outside-family PINN file scored 0.2750 at
-  38,854 px, ρ = 0.135 (`knowledge/10` §4) — but nothing in this repo has measured a novel field
-  reaching it.
-* **To beat 0.3195** it needs ρ ≥ 0.154 at 40,000, or ρ ≥ 0.0999 at 100,000. The only mass here that
-  has ever measured above 0.154 is P1, which is inherited.
-* **To beat 0.3774** it needs ρ ≥ 0.182 at 40,000 or ρ ≥ 0.118 at 100,000 — above anything this repo
-  has measured anywhere, inherited or not. The board top is not a budget choice; it is a better field.
-
-Two structural levers, both derived rather than hoped for:
-
-**(a) The budget law.** For a credit curve `T = c·S^β`, `DTI(S)` is maximised at
-
-> **`S* = 4|G|β/(1−β)`**  (the amplitude `c` cancels), giving `DTI* = c·S*^β/(0.2 S* + 0.8|G|)`.
-
-With the measured `β = 0.2284` from `T(S) = 471.6·S^0.2284` — fitted on three family members and
-validated on five more across two families to within 4 % — `S* = 16,681 px` (9,945–24,152 over
-β ∈ [0.15, 0.30]). `knowledge/10` §8 reached the same 15–20k window from a completely different
-prior, which is the reason this round treated it as a law and froze it rather than tuning a budget.
-
-**(b) The marginal rule.** `d(DTI)/dS > 0` iff the *marginal* credit rate exceeds `0.2·DTI`. At
-DTI = 0.28 the bar is ρ_marginal > 0.056; at 0.32 it is 0.064. Uniform random mass (0.0279) is below
-both, so **padding an emission with random or habitat-ranked pixels always hurts**, and the only
-legitimate way to grow `S` is to have pixels above the bar.
-
-**(c) The round-dependence.** `S*` scales linearly in `|G|`, and the final round is scored "on the
-entire GeoDAWN area" with expanded labels (`knowledge/25` §5). If the whole-area `|G|` is 2× the
-effective public one, `S*` is 33,400; if 4×, 66,800. One file serves both rounds, so the shipped
-budget is a bet on the round whose `|G|` can be measured. It is placed on the measurable one, and the
-bet is written down (`knowledge/33` R5-H6).
-
-## 5. Why no instrument in this repo can rank a novel field — replicated this round on new data
-
-Three disqualifications, all measured, and R5 reproduced the first with a different detector and
-different folds:
-
-1. **The hide-and-recover localisation assay does not predict the board.** `knowledge/10` §5:
-   Spearman(reported score, simulated DTI) = −0.1045, p = 0.734, n = 13; the champion is the *worst*
-   of the 13 on that instrument and the best on the board. R5 rebuilt the instrument (whole-component
-   folds, lateral error instead of capture, four 20 km block folds, emission restricted to each fold's
-   legal set) and got the same inversion: on it, the champion family's habitat field scores
-   **0.0003**, uniform random **0.0275**, and the new six-family trace field **0.0395**
-   (`evidence/r5_budget.json`, `work/r5/r5_assay.json`). A ranking that puts habitat below random
-   cannot be used to promote anything, in either direction. The mechanism is visible: the assay's
-   truth is *mapped* catalogue inside a hidden fold, and its emission is forbidden within 200 m of
-   *visible* catalogue, so a field that ranks on proximity to mapped faults has its advantage removed
-   and its mass left in the least fault-like places.
-2. **No per-pixel feature re-ranks credit inside the champion.** 63 point and local-differential
-   features and 108 structure-tensor features, best AUC(P1 vs P2) = 0.5453 and 0.5122
-   (`knowledge/10` §6). Habitat AUC reaches 0.7023, and P2/P5/P6 have almost the same habitat AUCs as
-   P1 while carrying 20× less credit. **Habitat is not credit.**
-3. **R5 replicated #2 with a brand-new detector.** The six-family corroborated-ridge pool
-   (`corr99 ≥ 2`, 653,593 px, 13.4 % of the legal footprint) contains the champion's emission at
-   **1.54×** enrichment — and contains every credit tier at the same rate: P1 **1.47×**, P2 1.70×,
-   P5 1.64×, P6 1.66×, the family's tail 1.65×. The pool captures where this family *emits* and says
-   nothing about which emissions were *right*. A new detector, a new measurement, the same result.
-
-What is left, and it is not nothing: the **strike coherence of the credited cloud** (`knowledge/10`
-§7), which is a property of an emission's *arrangement* rather than of its pixels' habitat, and which
-is therefore not touched by disqualification #2. R5 rebuilt it and it replicates: the champion's
-37,638-dot cloud has mean coherence **0.5309** at σ = 4 px and **15.85 %** of dots above 0.8, against
-**0.3886** and **2.27 %** for a mass-matched random cloud — the published values were 0.531 / 16.8 %
-and 0.362 / 2.2 %, so the instrument reproduces to three decimal places on independently restored
-bytes.
+The local H33-labelled bitmap has measurable spatial coherence as a geometric property. The former
+“credited cloud” interpretation is not supported without hidden-truth labels and an authenticated score-to-file
+receipt. The coherence comparison against mass-matched random rasters is an internal spatial diagnostic,
+not evidence that these pixels are credited or geologically correct.
 
 ## 6. What R5 shipped, and the four rules that chose it
 
@@ -185,8 +80,8 @@ bytes.
 the script's docstring and in `evidence/r5_novel_emission.json → frozen_rules`; the numbers below are
 what came out.
 
-**R1 — strictly novel.** No pixel emitted by any of the **71**
-rasters this repo has ever produced (the 13 organiser-scored files *and* every research artifact in
+**R1 — strictly novel (at build time).** No pixel emitted by any of the **71**
+rasters in the checked inventory (13 rasters listed as scored/owner-labelled *and* every research artifact in
 `submission/` and `docs/downloads/`, including the CTD5, H60, H60C and H60D rounds merged from `main`
 in parallel with this one; their union is 1,467,623 px), and no pixel within 200 m of
 a mapped trace. Measured result: `novel_fraction = 1.0000` against
@@ -206,7 +101,7 @@ every run instead of reading the receipt.
 S = 16,681, all strictly novel, judged on the §7 instrument against a random control at the same
 budget:
 
-| candidate | what it is | mean coh σ4 | frac > 0.8 | dominant strike | in credited band | lift over random |
+| candidate | what it is | mean coh σ4 | frac > 0.8 | dominant strike | in conditional band scenario | lift over random |
 | --- | --- | --- | --- | --- | --- | --- |
 | N3_ridge_C3 | the same rank walked along the ≥3-family network | 0.6010 | 0.4145 | 75° | no | +0.7016 |
 | **N5_strike_ridge** | N4's score walked along the ≥2-family ridge network | **0.5326** | 0.2472 | 95° | yes | +0.4658 |
@@ -215,13 +110,12 @@ budget:
 | N1_trace_field | six-family rank + persistence, peaks | 0.4041 | 0.0636 | 95° | yes | +0.1538 |
 | N4_strike_gated | trace rank × network coherence × credited-azimuth match | 0.3926 | 0.0421 | 5° | no | +0.1207 |
 | N9_random_control | uniform random over the strictly-novel pool (the control) | 0.3000 | 0.0140 | 95° | yes | +0.0000 |
-| *reference: the champion's own cloud* | *37,638 dots, scored 0.2778* | *0.5309* | *0.1585* | *95°* | *yes* | — |
+| *reference: H33-labelled local bitmap* | *37,638 dots; owner-reported score association 0.2778* | *0.5309* | *0.1585* | *95°* | *conditional only* | — |
 
-N3 has the largest lift but fails the azimuth condition (75°, off the credited fabric)
+N3 has the largest lift but fails the historical azimuth condition (75°, off the hypothesized fabric)
 and could only place 9,165 of 16,681 dots from the ≥3-family network; N5 is the largest lift inside the band. Its
-coherence (0.5326) is within 0.0018 of the credited cloud's (0.5309) and its high-coherence fraction is
-1.6× the credited cloud's, at 2.3× fewer dots — so the comparison is stated with the density
-difference attached rather than as a match.
+coherence (0.5326) is within 0.0018 of the H33-labelled local bitmap's (0.5309) and its high-coherence fraction is
+1.6× that bitmap's, at 2.3× fewer dots. This is a geometric comparison, not credit corroboration.
 
 **R4 — the projection is a probability over a bounded unknown, never a point.** With
 `T(S) = κ·471.6·S^0.2284` and `κ ~ U[0.3, 1.3]` (κ = 1 is "as good as this family's field at the same
@@ -247,7 +141,7 @@ reproduces bit for bit.
 **Shipped:** `submission/gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif`
 — 16,681 px, 99,231 bytes, float32 single band, EPSG:32611, transform identical to
 `sample_submission.tif`, values exactly {0, 1}, all 12,279,160 cells finite, no nodata tag, format
-gate 0 problems, pattern-unique against 55 priors, minimum distance to a mapped trace 223.6 m,
+gate 0 problems, pattern-unique against 71 build-time priors (later current-inventory support novelty is 0.874408 over 120 rasters), minimum distance to a mapped trace 223.6 m,
 median 2,360 m. Portal note (≤200 chars) and the exact upload steps are in
 `docs/executive-summary.html`.
 

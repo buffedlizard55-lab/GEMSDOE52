@@ -1,29 +1,34 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="R5 audit trail: co-training receipt, independence test, pseudo-label readings, the disqualified promotion instrument, the frozen emission rules and every gate."><title>R5 audit · GEMSDOE52</title>
+<meta name="description" content="R5 research archive: co-training receipts, provenance correction, current-inventory novelty check, and explicit no-submission status."><title>R5 audit · GEMSDOE52</title>
 <link rel="stylesheet" href="style.css"><script src="site.js" defer></script></head>
-<body><a class="skip" href="#main">Skip to evidence</a><header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html">Overview</a><a href="ctd5-audit.html">Run &amp; evidence</a><a href="executive-summary.html">Submission guide</a><a href="r5.html">R5 audit</a><a href="irregularities.html">Limitations</a><a href="sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header>
+<body><!--H75-ARCHIVE-STOP--><aside role="alert" style="padding:14px 22px;background:#fef2f2;color:#7f1d1d;border:2px solid #991b1b;border-radius:8px;font:14px/1.6 system-ui"><strong>Current H75 status: DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION.</strong> H75 is terminal: no owner override, waiver, or rerun is authorized. The page below is historical/research material; no archived file is approved here. <a href="h75-executive-summary.html" style="color:#7f1d1d">Read the H75 stop status</a>.</aside><a class="skip" href="#main">Skip to evidence</a><header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html">Overview</a><a href="ctd5-audit.html">Run &amp; evidence</a><a href="executive-summary.html">Research status</a><a href="r5.html">R5 audit</a><a href="irregularities.html">Limitations</a><a href="sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header>
 <main id="main"><div class="eyebrow">R5 audit · every number below is read from a receipt</div>
 <h1>What was run, what it returned,<br>and what it does not license.</h1>
-<section class="download-bar" aria-label="R5 download">
+<section class="download-bar" aria-label="R5 research archive">
 <div><strong>gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif</strong><small>99,231 bytes · SHA-256
-<code>d2bfb0f79328399354943bd166f2d2a206e9a49da46b4f1e8ccba0e4f0d8d002</code> · 16,681 px · re-running the build reproduces these bytes exactly</small></div>
-<a class="button" href="downloads/gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif" download>↓ Download the submission TIFF (one click)</a>
+<code>d2bfb0f79328399354943bd166f2d2a206e9a49da46b4f1e8ccba0e4f0d8d002</code> · 16,681 positive px · build-time novelty 1.0000 against 71 rasters</small></div>
+<a class="button" href="downloads/gems52-r5-novel-n5_strike_ridge-16681px-20261008T234033Z-d2bfb0f7-zeros.tif" download>↓ Download the R5 research TIFF</a>
 <a class="button" href="downloads/r5-candidate.tif" download>↓ Same file, short name (r5-candidate.tif)</a>
-<a class="button secondary" href="executive-summary.html">How to submit →</a></section>
-<div class="status"><strong>Verdict of record.</strong> OK to download: <b>YES</b>. Portal-acceptable:
-<b>YES</b> — every published format clause is re-measured from the bytes on disk by
-<code>scripts/check_site.py</code>. Weekly submission slot approved: <b>NO — NOT SLOT-APPROVED</b>, do
-not spend a slot on this file on the strength of anything in this repository: the promotion instrument
-is disqualified and P(DTI &gt; 0.2778) = 0.366. Research artifact; every pixel is a hypothesis
-for expert review, not a verified fault.</div>
+<a class="button secondary" href="../evidence/r5_provenance_audit_20261009.json">Read provenance audit →</a></section>
+<div class="status"><strong>Research archive only.</strong> OK to download: <b>YES</b>. Local format validation: <b>PASS</b>.
+Portal-format validity: <b>PASS on the published format checks only</b>; actual portal acceptance is unverified.
+Current accessible-inventory recheck: support novelty 0.874408 against
+120 rasters; decoded pattern unique: true.
+<strong>Approved for competition submission: NO — NOT SLOT-APPROVED.</strong> Weekly slots used: 0. The 1.0 novelty figure
+was measured against the 71-raster inventory at the 2026-10-08 emission build; the original free-text
+note incorrectly said 55. That count is corrected and the later-round closure is recorded in the
+<a href="../evidence/r5_provenance_audit_20261009.json">provenance audit</a>. No organizer receipt maps a TIFF hash to a score.</div>
+<p class="small"><b>PUBLIC-LEADERBOARD observation, not ORGANIZER-CONFIRMED:</b> the saved 2026-10-09 20:18 UTC page read shows #1 xiaofanhu 0.3774, #7 DARD 0.3195 and #17 extradr19 0.2778. The board is team-level and contains no TIFF filename/hash or causal explanation. See <a href="data/leaderboard_observation_2026-10-09T201800Z.json">the saved observation</a>.</p>
 
-<h2>1 · The frozen rules, printed before the results</h2>
+<h2>1 · Historical frozen rules and current corrections</h2>
+<div class="status"><b>Correction:</b> the old |G| = 14,088.7 point estimate is not established; the associated R5 budget is scenario arithmetic, not a measured truth size. The organizer confirms that new-fault truth may lie within 300 m of known traces, so the local 100–200 m ring is not automatically zero-credit. The frozen emission did use 200 m as a repository rule, not an organizer scoring rule. See <a href="../knowledge/49_why_02778_phd_answer.md">current 0.2778 evidence</a>.</div>
 <div class="table-wrap"><table><thead><tr><th>rule</th><th>text</th></tr></thead><tbody>
-<tr><td><code>R1_strict_novelty</code></td><td>no pixel emitted by any of the 13 restored scored priors (union 1,467,623 px) and none within 200 m of the mapped catalogue</td></tr><tr><td><code>R2_budget</code></td><td>S* = 4|G|beta/(1-beta) with the measured beta=0.2284 and |G|=14088.7</td></tr><tr><td><code>R3_choice</code></td><td>largest coherence lift over the random control, subject to the dominant strike falling in the credited band 095-115 deg (array convention)</td></tr><tr><td><code>R4_prior</code></td><td>kappa ~ U(0.3, 1.3) on T(S) = kappa*471.6*S^0.2284</td></tr>
+<tr><td><code>R1_strict_novelty</code></td><td>Historical frozen rule required no support in the 13 organizer-scored rasters and excluded the local 200 m ring. The emission receipt separately records 71 accessible repository priors at build (novelty 1.0); current closure is 120 priors (novelty 0.874408). The 200 m cut is an internal rule, not an organizer scoring buffer.</td></tr><tr><td><code>R2_budget</code></td><td>Historical scenario formula S*=4|G|beta/(1-beta), beta=0.2284; it used the legacy |G|=14,088.7 point estimate, which is not established from hidden truth.</td></tr><tr><td><code>R3_choice</code></td><td>largest coherence lift over the random control, subject to the dominant strike falling in the credited band 095-115 deg (array convention)</td></tr><tr><td><code>R4_prior</code></td><td>Legacy owner-score-derived model prior kappa~U(0.3,1.3) on T(S)=kappa*471.6*S^0.2284; not a hidden-truth measurement or leaderboard forecast.</td></tr>
 </tbody></table></div>
 
-<h2>2 · Co-training, as the brief specifies it</h2>
+<h2>2 · Historical co-training diagnostics</h2>
+<p class="small">These are recorded diagnostics for the R5 experiment. They do not constitute an organizer score or a promotion decision.</p>
 <div class="table-wrap"><table><thead><tr><th>quantity</th><th>value</th><th>receipt</th></tr></thead><tbody>
 <tr><td>view A blocked OOF AUC (mean of 4 folds, 14 layers)</td>
 <td>0.6076</td>
@@ -98,17 +103,20 @@ against 71 rasters; novel fraction
 1.0000; equals the literal prior union
 false; prior union
 1,467,623 px</td></tr>
-<tr><td>novelty vs the 13 organiser-scored files alone</td>
+<tr><td>novelty vs the 13 organiser-scored files alone (build receipt)</td>
 <td>1.0000</td></tr>
+<tr><td>current accessible-inventory recheck (2026-10-09)</td><td>0.874408 support novelty vs 120 rasters; pattern unique true</td></tr>
 <tr><td>distance to the mapped catalogue</td><td>min 223.6 m,
 median 2,402.1 m (the organiser's mask is pixel-exact; the
 200 m ring is this repository's own rule, and <code>IR-R5-006</code> records that it is not the
 organiser's)</td></tr>
-<tr><td>OK to download / OK to submit (portal-acceptable)</td><td>TRUE /
-TRUE</td></tr>
+<tr><td>Research download / local format validation</td><td>TRUE / TRUE</td></tr>
+<tr><td>Approved for competition submission / slot used</td><td><b>NO</b> / 0</td></tr>
+<tr><td>Build-time prior-count note correction</td><td>71 measured in the emission receipts; earlier free-text note said 55. See <a href="../evidence/r5_provenance_audit_20261009.json">audit</a>.</td></tr>
 </tbody></table></div>
 
-<h2>5 · The projection, as a probability over a bounded unknown</h2>
+<h2>5 · Legacy model projections (not scores or promotion evidence)</h2>
+<p class="small">The calculations below use an unverified |G| point estimate and an owner-score-derived model. They are conditional projections only; the hide-and-recover instrument is not a qualified public-board predictor. Do not read them as scores, submission eligibility, or evidence that a public result changed for a particular reason.</p>
 <div class="table-wrap"><table><thead><tr><th>bar</th><th>credit needed</th><th>κ needed</th>
 <th>P(DTI &gt; bar)</th></tr></thead><tbody>
 <tr><td>0.2778</td><td>4,057.9</td><td>0.9340</td><td><b>0.366</b></td></tr><tr><td>0.3195</td><td>4,667.0</td><td>1.0743</td><td><b>0.226</b></td></tr><tr><td>0.3774</td><td>5,512.7</td><td>1.2689</td><td><b>0.031</b></td></tr>

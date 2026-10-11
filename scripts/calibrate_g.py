@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Estimate |G| -- the number of hidden public-test truth pixels -- from our own scored history.
+"""Conditional |G| inversion from owner-reported score associations (not a hidden-truth measurement).
+
+See knowledge/49 for current evidence limits; the hidden labels and organizer score-to-file receipts
+are not present in this repository.
 
 Input: the 13 rasters in ``data/scored`` + ``data/reference`` whose scores this laboratory reported,
 and whose byte counts and SHA-256s ``scripts/restore_data.py`` verified against

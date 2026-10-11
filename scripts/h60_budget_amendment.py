@@ -1,19 +1,12 @@
 #!/usr/bin/env python3
-"""Record the preregistered-rule amendment that sets the emitted budget, from the receipts.
+"""Preserve the historical H60 budget amendment without treating it as a score rule.
 
-The registered rule picked the budget with the highest mean hide-and-recover DTI.  Two
-measurements taken afterwards make that budget wrong for the board, and N-4 requires any
-change to the pre-registration to be written down with the fitted numbers rather than
-applied silently:
-
- 1. `evidence/h60_prior_control.json` — the 0.2778 champion scores 0.00479 on that
-    instrument, below the random placeholder's 0.02229, so the instrument cannot compare
-    a candidate with the incumbent and its budget curve is not transferable.
- 2. `evidence/h60_instrument_verdict.json` — across the six off-catalogue scored priors
-    the owner-reported board score is strictly decreasing in emitted mass.
-
-The amendment therefore sets the budget to the mass of the highest-scoring off-catalogue
-prior, which is read from the receipts, not typed in.
+This legacy record selected a budget using an internal hide-and-recover diagnostic and
+owner-reported score labels. The diagnostic lacks the metadata needed for a reportable
+HOLDOUT-DTI claim; the score labels have no organizer file/hash receipt. Small-sample rank
+associations are exploratory and are not evidence of causality, leaderboard calibration, or
+submission eligibility. This script is retained for provenance and should not be rerun as a
+current selection procedure.
 """
 import json, sys
 from pathlib import Path
@@ -55,13 +48,12 @@ out = dict(
     spearman_p_value=iv["p_value"],
     off_catalogue_family=[dict(board=b, mean_px=int(round(m))) for b, m in rows],
     spearman_board_vs_mass_off_catalogue=rho),
-  decision=f"emit at {int(round(best_mass))} px: the mass of the highest owner-reported "
-           f"off-catalogue score ({best_board}), because across the six off-catalogue scored "
-           f"priors the board is strictly decreasing in mass (Spearman {rho:.3f}) while the "
-           f"hide-and-recover instrument -- on which the champion itself scores "
-           f"{iv['champion_instrument_dti']:.5f}, below a random placeholder -- is not "
-           f"correlated with the board at all (Spearman {iv['spearman_board_vs_instrument']:.3f}, "
-           f"p={iv['p_value']:.3f})",
+  decision=(f"Historical H60 budget amendment to {int(round(best_mass))} px, preserved only as "
+           f"provenance. It was derived from owner-reported score labels and a legacy internal "
+           f"diagnostic; neither is a current competition ranking or causal score explanation. "
+           f"The six-label mass association (Spearman {rho:.3f}) and 13-label diagnostic association "
+           f"(Spearman {iv['spearman_board_vs_instrument']:.3f}, p={iv['p_value']:.3f}) are "
+           f"exploratory and not submission evidence."),
   not_claimed="this is a budget choice, not a score forecast; no organiser-authenticated "
               "score-to-file mapping exists")
 (EV / "h60_budget_amendment.json").write_text(json.dumps(out, indent=1) + "\n")

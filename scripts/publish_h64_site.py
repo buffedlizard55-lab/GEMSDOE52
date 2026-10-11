@@ -36,6 +36,15 @@ def fmt_int(x) -> str:
 
 
 def main() -> int:
+
+    _h75_home = ROOT / "docs" / "index.html"
+    _h75_status = ROOT / "docs" / "h75-executive-summary.html"
+    if (_h75_home.is_file() and _h75_status.is_file()
+            and "H75: DUPLICATE/STOP" in _h75_home.read_text(errors="replace")
+            and "DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION" in
+            _h75_status.read_text(errors="replace")):
+        print("H75 terminal stop is current; historical publisher made no page or pointer changes")
+        return 0
     card = load("h64_run_card.json")
     suf = load("h64_sufficiency.json")
     hold = load("h64_holdout.json")["pooled"]
@@ -101,7 +110,7 @@ def main() -> int:
             f'<link rel="stylesheet" href="assets/ctd5.css"></head><body>'
             f'<a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation">'
             f'<a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>'
-            f'<a href="index.html">Overview</a><a href="h64-executive-summary.html">Submission guide</a>'
+            f'<a href="index.html">Overview</a><a href="h64-executive-summary.html">H64 research status</a>'
             f'<a href="archive-h61-landing.html">H61 (previous)</a><a href="downloads/index.html">Archive</a>'
             f'</nav></header><main id="main">')
     # Earlier rounds that the home and executive-summary pages keep pointing to (check_site enforces these).
@@ -168,39 +177,26 @@ sufficient. The post-arms equal the pre-arms by construction.</p></section>
 <li>It does not show that potential-field data contain no fault information; it shows this learner on these layers does not transfer.</li>
 <li><b>NO CERTIFIED LEADERBOARD GAIN.</b> Nothing on this page is an organiser score or a promise of a board gain.</li>
 <li>It is not a leaderboard estimate. The best published board score is 0.3774 (rank 1), 0.3195 is rank 7 (DARD),
-and 0.2778 is rank 13 (extradr19): <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">official leaderboard</a>.</li>
+and 0.2778 is rank 17 (extradr19) in the saved 2026-10-09 20:18 UTC observation; the board row is team-level and not linked to a TIFF hash: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">official leaderboard</a>.</li>
 <li>Attribution caveat: the 0.2778 and 0.2600 figures are owner-reported, not organiser-confirmed (IR-H61-004).</li></ul>
 <p class="small"><a href="../knowledge/39_hypotheses_H64_preregistered.md">Five ranked hypotheses and the frozen protocol →</a> ·
 <a href="../knowledge/40_h64_results_and_limits.md">Results and limits →</a> · <a href="archive-h61-landing.html">H61 landing (previous round) →</a></p></section>
 {earlier}""" + tail
 
     exec_html = head + f"""
-<div class="eyebrow">Executive summary / submission guide</div>
-<h1>How to submit, and whether this file may be submitted.</h1>
-<p class="lead">Read the verdict first. A valid file is not an approved competition entry; the selector decides
-promotion within the weekly cap shown on the submission page.</p>
-<div class="notice" role="note"><strong>{esc(notice)}</strong><p>Verdict: <b>{esc(verdict)}</b></p>
-<p>Why not submit: the lane marks this file DUPLICATE under the 70% per-raster rule (the largest near-dot share is
-{card['novelty_rule']['worst_raster_near_dots']['share']:.3f} against one informative registry raster). The holdout
-does not beat single_B, and S1 failed. The file is not identical on decoded pixels to any registry raster, and it shares no positive pixel with any
-informative registry raster, so it is safe to download for research.</p></div>
-<div class="actions"><a class="button" href="downloads/h64-candidate.tif" download>Download the H64 GeoTIFF ↓</a>
-<a class="button secondary" href="downloads/h64-candidate.zip" download>Single-TIFF ZIP</a></div>
+<div class="eyebrow">H64 · historical research status</div>
+<h1>H64 is not approved for submission.</h1>
+<div class="notice bad" role="alert"><strong>RESEARCH DOWNLOAD ONLY · DUPLICATE/STOP · NOT FOR SUBMISSION · NO SLOT AUTHORIZED</strong>
+<p>{esc(verdict)} The final-dot lane gate is a stop; a local format pass or decoded-pattern difference does not override it. No upload procedure, owner override, or paste-ready identification fields are provided.</p></div>
+<div class="actions"><a class="button" href="downloads/h64-candidate.tif" download>Download H64 research TIFF</a><a class="button secondary" href="downloads/h64-candidate.zip" download>Research ZIP</a><a class="button secondary" href="h64.html">H64 evidence</a></div>
 <p class="fileline">{fileline}</p>
-<section class="prose"><h2>The file contract (checked on disk)</h2><ul>
-<li>One band, float32, every value in [0, 1]; in practice exactly 0 or 1.</li>
-<li>No NaN or infinite values anywhere in the file (the portal's “Predicted values must be in range [0, 1]”
-rejection is caused by NaN/out-of-range bytes, and this file has neither).</li>
-<li>EPSG:32611, shape and geotransform identical to the pinned <code>sample_submission.tif</code>.</li>
-<li>{fmt_int(n_dots)} emitted cells, all more than 200 m from a mapped trace, 3 px minimum separation.</li>
-<li>Name for the portal: <code>{esc(card['submission_name'])}</code>. Note ({card['note_chars']} characters): <code>{esc(card['note'])}</code></li>
-</ul><p class="small">Local validator only; not an organiser acceptance receipt.</p>
-<h2>Exact steps, only if a later selector approves this file</h2>
-<ol><li>Open the competition submission page (login required; <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">competition page</a>).</li>
-<li>Under <b>File to submit</b>, choose the TIFF (or the ZIP with the single TIFF).</li>
-<li>Paste the name and note above into the submission form.</li>
-<li>Submit only if the selector has approved this file. This file is not approved.</li></ol></section>
-{earlier}""" + tail
+<section class="prose"><h2>Local checks and scientific status</h2><ul>
+<li>Local raster-format checks are reported in the cited receipts only; they are not a portal-acceptance receipt.</li>
+<li>The holdout does not beat single_B, S1 failed, and the final-dot lane rule is DUPLICATE/STOP.</li>
+<li>No organizer-confirmed score receipt, selector approval, or weekly slot is recorded.</li></ul></section>
+<p class="small">The saved public-board observation is team-level and is not linked to a TIFF hash. The reported 0.2778 and 0.2600 values are owner-reported, not organizer-confirmed; no causal file-to-score attribution is established.</p>
+<p class="small">This archive does not authorize a rerun, new run-card, rebuild, override, or submission. See <a href="../knowledge/39_hypotheses_H64_preregistered.md">the preregistration</a> and <a href="../knowledge/40_h64_results_and_limits.md">the results and limits</a>.</p>
+""" + tail
 
     (DOCS / "h64.html").write_text(index)
     (DOCS / "h64-executive-summary.html").write_text(exec_html)

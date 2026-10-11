@@ -1,8 +1,16 @@
 #!/usr/bin/env python3
-"""H75 experiment 2 (amendment 65a): run_h73.place_lane on the B_DVA field; full domain then per-fold holdout."""
+"""Historical H75 lane-placement experiment; fail-closed after terminal DUPLICATE/STOP."""
 import json, sys
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
+_card_path = ROOT / "evidence/h75_run_card.json"
+if not _card_path.is_file():
+    raise SystemExit("H75 lane placement is fail-closed: no current authorization receipt exists")
+_card = json.loads(_card_path.read_text())
+if (_card.get("lane", {}).get("dots_verdict") == "DUPLICATE/STOP"
+        or "FINAL-DOT LANE: DUPLICATE/STOP" in str(_card.get("verdict", ""))):
+    raise SystemExit("H75 is terminal DUPLICATE/STOP; no lane-placement rerun or override is allowed")
+raise SystemExit("H75 has no newly authorized experiment; lane placement is disabled")
 sys.path[:0] = [str(ROOT / "src"), str(ROOT / "scripts")]
 import numpy as np
 from scipy import ndimage as ndi

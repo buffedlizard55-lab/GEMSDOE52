@@ -389,8 +389,8 @@ def main() -> int:
                 "signal and absence from it is weak evidence of absence. "
                 f"Strike {float(np.degrees(strike[ry, cx])):.0f} deg, "
                 f"{'continuing an already-credited lineament along strike' if along[ry, cx] else 'a free candidate on the same recovered fabric'}, "
-                f"{float(ed[ry, cx]):.0f} m from the nearest mapped trace -- emitted outside the "
-                "200 m ring whose credit is exactly zero in the organiser's own scores.")))
+                f"{float(ed[ry, cx]):.0f} m from the nearest mapped trace; this is a geometric "
+                "relation only and does not measure hidden-truth credit.")))
     gates.write_report(ev / "a_only_geological_reasoning54.json",
                        dict(n_candidates=len(reasons),
                             stratum_definition="View A confident (>= 90th percentile of the View A "
@@ -411,10 +411,15 @@ def main() -> int:
     # ---- 11. audit --------------------------------------------------------------------------
     sel = bud["selected"]
     audit = dict(name=name, path=str(op.relative_to(ROOT)), pixels=int(out.sum()),
+                 archive_status="HISTORICAL RESEARCH ONLY — NOT FOR SUBMISSION; no slot or override",
+                 score_association_status="OWNER-REPORTED only; no organizer-confirmed TIFF-hash receipt",
+                 g_estimate_status="conditional scenario arithmetic; not a measurement and superseded",
+                 projection_status="conditional scenario arithmetic; not HOLDOUT-DTI, public-board evidence, or a score",
+                 causal_conclusion="No score-change cause is established; the local byte/distance comparison is not causal evidence.",
                  g_estimate_px=g, retained_core_px=int(core.sum()),
-                 retained_core_source="A & C (h33-2-b2 and gems24-d1-5), used as a LABEL under the "
-                                      "brief's learning-and-education clause and as the credit core "
-                                      "whose value the published scores bound exactly",
+                 retained_core_source="A & C (local H33/d1-5 bitmap intersection), used as a historical "
+                                      "candidate support subset; owner-reported score associations do "
+                                      "not authenticate its hidden-truth credit",
                  retained_core_credit_central=cal.t_core_central,
                  retained_core_credit_bounds=list(cal.t_core_bounds),
                  retained_core_density_central=round(cal.t_core_central / max(n_core, 1), 5),
@@ -431,10 +436,11 @@ def main() -> int:
                                     "A-confident/B-abstaining disagreement up-weighted and the "
                                     "B-only artifact class suppressed",
                  corridor_excluded_m=R.CORRIDOR_M,
-                 corridor_justification="T(B)-T(A)=0 exactly: the <=200 m ring around the mapped "
-                                        "catalogue earns no credit in the organiser's own scores, "
-                                        "and deleting exactly that ring from the 0.2600 file is "
-                                        "what produced the 0.2778 file",
+                 corridor_justification="RETRACTED: an earlier analysis treated the local <=200 m corridor as "
+                                        "zero-credit and attributed the 0.2600-to-0.2778 difference to its deletion. "
+                                        "That inference is unsupported: score/file links are owner-reported, no organizer "
+                                        "receipt binds the hashes, and official staff says new-fault truth may lie within "
+                                        "300 m of known traces. Local distance does not determine hidden-truth credit.",
                  projected=bud["selected"], fabric=fabric,
                  view_a_oof_auc=round(results["A"]["auc"], 4),
                  view_b_oof_auc=round(results["B"]["auc"], 4),
@@ -444,9 +450,10 @@ def main() -> int:
                  n_a_only_candidates_reasoned=len(reasons),
                  uniqueness_ok=uniq["ok"], format_ok=fmt.get("ok"),
                  dti_against_mapped_catalogue=M.dti(out, cat.astype(np.int8))["dti"],
-                 note="dti_against_mapped_catalogue scores the artefact against the MAPPED "
-                      "catalogue, which is not the hidden truth; it is reported only to prove the "
-                      "file is scorable end to end.")
+                 catalogue_proxy_dti_evidence_class="CATALOGUE-PROXY-DTI; not HOLDOUT-DTI or a leaderboard score",
+                 note="dti_against_mapped_catalogue is a local catalogue-proxy calculation, not hidden "
+                      "truth, public-board evidence, or organizer-confirmed score; it does not establish "
+                      "submission eligibility.")
     gates.write_report(ev / "revealed_submission_audit.json", audit)
 
     # The site renders docs/data/submission.json, which scripts/refresh_feed.py builds from

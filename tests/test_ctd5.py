@@ -166,11 +166,23 @@ def test_operating_rank_ties_and_missing_values():
     assert np.isnan(r[-1])
 
 
-def test_feed_never_invents_h54_note_for_another_round():
+def test_feed_strips_portal_identity_and_notes_from_public_report(tmp_path,monkeypatch):
     spec=importlib.util.spec_from_file_location('ctd5_feed_test',ROOT/'scripts/refresh_feed.py')
     mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)
-    assert mod.submission_note({'note':'Correct current note','submission_note':'Stale legacy note'})=='Correct current note'
-    assert 'H54' not in mod.submission_note({})
+    root=tmp_path; ev=root/'evidence'; dl=root/'docs'/'downloads'; sub=root/'submission'
+    ev.mkdir();dl.mkdir(parents=True);sub.mkdir()
+    name='current-research.tif';payload=b'fixture research raster'
+    (sub/name).write_bytes(payload);(dl/name).write_bytes(payload)
+    (sub/'LATEST.txt').write_text(name)
+    (ev/f'submission_{name[:-4]}.json').write_text(json.dumps({
+        'file':name,'note':'Current note','submission_note':'Stale note',
+        'submission_name':'Old portal name','portal':{'note':'Portal note'},
+        'bytes':len(payload),'sha256':__import__('hashlib').sha256(payload).hexdigest()}))
+    monkeypatch.setattr(mod,'ROOT',root);monkeypatch.setattr(mod,'EV',ev);monkeypatch.setattr(mod,'DL',dl)
+    report=mod.latest_submission()
+    assert report['artifact_status']=='RESEARCH ONLY · NOT FOR SUBMISSION'
+    assert report['approved_for_submission'] is False
+    assert not {'submission_name','submission_note','submission_note_long','portal'} & report.keys()
 
 
 def test_download_wrapper_preserves_comma_separated_ids(tmp_path):
@@ -195,22 +207,27 @@ def test_full_published_ctd5_release_from_actual_bytes():
 
 def test_current_readme_contains_the_complete_preserved_brief():
     brief=(ROOT/'knowledge/26_current_user_brief.md').read_text()
-    assert brief[brief.index('```text'):] in (ROOT/'README.md').read_text()
+    normalized=lambda text:'\n'.join(line.rstrip(' \t') for line in text.splitlines())
+    assert normalized(brief[brief.index('```text'):]) in normalized((ROOT/'README.md').read_text())
     assert 'PARALLEL-RUN PROTOCOL' in brief and '0.3774' in brief and '0.3195' in brief
 
 
-def test_feed_does_not_repackage_unchanged_historical_payload(tmp_path,monkeypatch):
+def test_feed_rewrites_legacy_archive_as_one_tiff_and_then_is_stable(tmp_path,monkeypatch):
     spec=importlib.util.spec_from_file_location('ctd5_feed_preserve',ROOT/'scripts/refresh_feed.py')
     mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)
     (tmp_path/'submission').mkdir();dl=tmp_path/'downloads';dl.mkdir()
-    name='historical-candidate.tif';(tmp_path/'submission'/name).write_bytes(b'fixture raster')
+    name='historical-candidate.tif';payload=b'fixture raster'
+    (tmp_path/'submission'/name).write_bytes(payload)
     archive=dl/'historical-candidate.zip'
     with zipfile.ZipFile(archive,'w') as z:
-        z.writestr(name,b'fixture raster');z.writestr('old-note.txt','Preserve historical record.')
-    before=archive.read_bytes()
+        z.writestr(name,payload);z.writestr('old-note.txt','Do not republish portal metadata.')
     monkeypatch.setattr(mod,'ROOT',tmp_path);monkeypatch.setattr(mod,'DL',dl)
     assert mod.make_zip(name)==str(archive)
-    assert archive.read_bytes()==before
+    with zipfile.ZipFile(archive) as z:
+        assert z.namelist()==[name] and z.read(name)==payload and z.testzip() is None
+    scrubbed=archive.read_bytes()
+    assert mod.make_zip(name)==str(archive)
+    assert archive.read_bytes()==scrubbed
 
 
 def test_concurrent_h60_missing_correlations_not_zero_or_approval():

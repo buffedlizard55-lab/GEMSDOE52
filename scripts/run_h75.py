@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-"""H75 -- directional variogram anisotropy (DVA) added to View B; hide-and-recover holdout; emission.
+"""Historical H75 DVA experiment implementation, terminally disabled after DUPLICATE/STOP.
 
-Preregistered in knowledge/65_hypotheses_H75_preregistered.md (pinned in registry/h75_preregistration.json).
-Shared, not forked: run_h61.setup / sample_for_fit / learner_for / pct_rank / to_grid, gems52.evaluate_holdout,
-gems52.nodes.spacing_select, gems52.gates, gems52.submission_writer, build_h61_submission.prior_paths.
-
-Usage: python scripts/run_h75.py [fit|holdout|build|all]
+The frozen research code and receipts remain for audit. H75 exhausted its authorized budget and its
+final-dot lane gate is DUPLICATE/STOP. The CLI and each fit/holdout/build stage now fail closed; there
+is no owner override or rerun path. This module is not an authorization to create a new run card,
+artifact, or submission.
 """
 from __future__ import annotations
 
@@ -110,7 +109,20 @@ def predict(store, m, names, dva, rows, chunk=250_000):
 
 
 # ------------------------------------------------------------------------------------------- stages
+def assert_h75_run_authorized() -> None:
+    """H75's recorded final-dot DUPLICATE/STOP is terminal; do not spend its exhausted budget again."""
+    card_path = EVID / "h75_run_card.json"
+    if not card_path.is_file():
+        raise SystemExit("H75 is fail-closed: no current run-card authorization exists")
+    card = json.loads(card_path.read_text())
+    if (card.get("lane", {}).get("dots_verdict") == "DUPLICATE/STOP"
+            or "FINAL-DOT LANE: DUPLICATE/STOP" in str(card.get("verdict", ""))):
+        raise SystemExit("H75 is terminal DUPLICATE/STOP; rerun is forbidden and no override path exists")
+    raise SystemExit("H75 has no newly authorized experiment; do not fit, hold out, or rebuild")
+
+
 def stage_fit():
+    assert_h75_run_authorized()
     reg, store, cat, eligible, folds, va, vb, ring_px = base.setup()
     WORK.mkdir(parents=True, exist_ok=True)
     t0 = time.time()
@@ -154,6 +166,7 @@ def allowed_of(fold, ring_px):
 
 
 def stage_holdout():
+    assert_h75_run_authorized()
     reg, store, cat, eligible, folds, va, vb, ring_px = base.setup()
     flat = store.flat_idx
     arms = ("single_B", "B_DVA", "DVA_only", "random")
@@ -183,7 +196,8 @@ def stage_holdout():
 
 
 def stage_build():
-    """Full-domain B_DVA field: refit on all visible catalogue, rank, 200 m ring excluded, binary dots."""
+    """Historical build stage; disabled after terminal H75 DUPLICATE/STOP."""
+    assert_h75_run_authorized()
     reg, store, cat, eligible, folds, va, vb, ring_px = base.setup()
     dva = dict(np.load(WORK / "dva.npz"))
     flat = store.flat_idx
@@ -207,6 +221,7 @@ def stage_build():
 
 
 def main():
+    assert_h75_run_authorized()
     check_prereg()
     st = sys.argv[1] if len(sys.argv) > 1 else "all"
     for name, fn in (("fit", stage_fit), ("holdout", stage_holdout), ("build", stage_build)):

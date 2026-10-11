@@ -39,7 +39,7 @@ def fmt(value, nd=6):
 def nav(active: str = "") -> str:
     links = [
         ("index.html", "Overview", "overview"),
-        ("executive-summary.html", "Submission guide", "guide"),
+        ("executive-summary.html", "Research status", "guide"),
         ("h59.html", "H59 audit", "audit"),
         ("irregularities.html", "Limitations", "limits"),
         ("sources.html", "Sources", "sources"),
@@ -65,6 +65,15 @@ def shell(title: str, description: str, content: str, active: str = "") -> str:
 
 
 def main() -> None:
+
+    _h75_home = ROOT / "docs" / "index.html"
+    _h75_status = ROOT / "docs" / "h75-executive-summary.html"
+    if (_h75_home.is_file() and _h75_status.is_file()
+            and "H75: DUPLICATE/STOP" in _h75_home.read_text(errors="replace")
+            and "DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION" in
+            _h75_status.read_text(errors="replace")):
+        print("H75 terminal stop is current; historical publisher made no page or pointer changes")
+        return
     result = json.loads((EV / "h59_result.json").read_text())
     artifact = result["artifact"]
     stem = artifact["stem"]
@@ -76,7 +85,7 @@ def main() -> None:
     decision = result["holdout"]["decision"]
     summary = result["holdout"]["summary"]
     shipped = decision["shipped_field"]
-    recommended = bool(result["slot_recommended"])
+    recommended = False  # no authorized weekly slot or submission procedure in this research archive
     gates_ok = bool(result["gates_ok"])
     independence = result["independence"]
     strata = result["strata"]
@@ -122,10 +131,15 @@ def main() -> None:
             "measurement cannot be a slot candidate.</p><ul>"
             + "".join(sibling_items) + "</ul>")
 
-    # ---- the one-line verdict, generated from the receipt booleans -------------------------
+    # ---- historical research-only status; local gates do not authorize a slot ----------------
     diag = result.get("posthoc_incumbent_diagnostic") or {}
     incumbent_beaten = diag.get("incumbent_beaten_both_modes")
     ringfree_beaten = diag.get("best_ringfree_prior_beaten_both_modes")
+    verdict_head = "RESEARCH DOWNLOAD ONLY — NOT APPROVED FOR SUBMISSION."
+    verdict_class = "status"
+    verdict_detail = (
+        "This is a historical research artifact. Its local gate receipts and holdout diagnostics do not authorize a weekly slot. "
+        "No owner override, upload procedure, or paste-ready identification is provided.")
 
     # the incumbent diagnostic table, generated from the receipt numbers
     incumbent_table_rows = []
@@ -312,41 +326,26 @@ def main() -> None:
 <h2>Uniqueness and the "not a copy" question</h2>
 <p>Every emitted pixel was computed from the H59 fields on this staging — no prior raster was read into any emission mask. The decoded pattern matches none of the {int(artifact['uniqueness']['n_priors_checked'])} accessible aligned priors (canonical bytes compared, not hashes). {float(nov['emission_novel_fraction'])*100:.1f}% of the emitted support lies outside every prior's support; {int(nov.get('overlap_with_reference_px', 0)):,} px coincide with the 0.2778 reference's dots — two independent methods agreeing on where the structure is, which is evidence, not copying: the pattern as a whole is what uniqueness means, and it differs from every prior.</p>
 {sibling_html}
-<h2>Reproducibility</h2>
-<p><code>PYTHONPATH=src python scripts/run_h59.py --data-root work/h59_pinned --work-dir work/h59</code> after <code>python scripts/restore_data.py --target-dir work/h59_pinned</code>. Preregistration: <a href="data/h59_preregistration.json">frozen protocol</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/20_hypotheses_H59_preregistered.md">hypothesis slate</a>. Receipts: <a href="data/h59_result.json">run receipt</a> · <a href="downloads/{e(stem)}-reasoning.csv">per-pixel reasoning CSV</a>. Runtime {float(result["runtime_s"])/60:.1f} min, seed {int(result.get("seed", 20261008))}, zero portal contacts.</p>'''
+<h2>Historical receipts</h2>
+<p>Preregistration: <a href="data/h59_preregistration.json">frozen protocol</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/20_hypotheses_H59_preregistered.md">hypothesis slate</a>. Receipts: <a href="data/h59_result.json">run receipt</a> · <a href="downloads/{e(stem)}-reasoning.csv">per-pixel reasoning CSV</a>. This archived page does not authorize a rerun, new run-card, build, or submission.</p>'''
 
     (DOCS / "h59.html").write_text(shell(
         "H59 audit", "H59 two-view co-training audit: gates, folds, independence, strata, verdict",
         audit_content, active="audit"))
 
-    # ---- the submission guide (executive summary) -------------------------------------------
+    # ---- research-only executive summary; no upload steps or copyable identification -------------
     guide_content = f'''{bar}
-<div class="eyebrow">Executive summary · how to submit (or why not)</div>
-<h1>{e(verdict_head)}</h1>
-<div class="{verdict_class}"><strong>{e(verdict_head)}</strong> {e(verdict_detail)}</div>
-<p class="lede">The direct TIFF and one-TIFF ZIP below are one click away. The portal accepts a single-band GeoTIFF (or a ZIP containing exactly one) on EPSG:32611, 3,292 × 3,730, 100 m, values in [0, 1]. This file is float32, values exactly {{0, 1}}, 0 NaN — the historical <em>"Predicted values must be in range [0, 1]"</em> rejection cannot recur.</p>
-<section class="card"><h2>Artifact identification</h2>
-<p><b>File:</b> <code>{e(stem)}.tif</code> (short link <code>downloads/h59-candidate.tif</code>)</p>
-<p><b>Submission name:</b> <code>{e(submission["submission_name"])}</code></p>
-<p><b>SHA-256:</b> <span class="mono">{e(artifact["sha256"])}</span></p>
-<p><b>Format:</b> one band float32 · EPSG:32611 · 3,292 × 3,730 · 100 m · {primary:,} emitted px · values {{0,1}} · all finite</p>
-<label for="submission-note">Portal note (≤ 200 characters, copy-paste)</label>
-<textarea id="submission-note" readonly>{e(submission["note"])}</textarea>
-<button data-copy="submission-note">Copy note</button></section>
-<h2>Submission steps (only if you accept the verdict above)</h2>
-<ol>
-<li>Download the exact TIFF above (or its one-TIFF ZIP) and verify the SHA-256 matches. Do not reproject, rescale, recompress or edit it.</li>
-<li>Open the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DOE GEMS competition page</a> with the registered team account and choose <b>Submit file</b>.</li>
-<li>Select the GeoTIFF in <b>File to submit</b>; paste the note above into the optional note field.</li>
-<li>Record the returned submission ID, score and timestamp beside this receipt. The local holdout is not a forecast of that number.</li>
-</ol>
-<h2>Why this file exists (one paragraph)</h2>
-<p>The best score this family holds is 0.2778 (owner-reported, <code>h33-2-b2</code>): a 37,654-px dotted emission ranked by a surface field with every pixel inside 200 m of a mapped trace deleted. That file's entire credit comes from off-catalogue structure, and the metric's acceptance rule barely moves from 0.28 to the 0.46 ceiling — the only live lever is <em>ranking</em>. H59 rebuilds the ranking from two independent views and labels its own disagreement strata, so the buried-fault candidates carry written geology for Phase-2 review instead of silent mass.</p>
-<div class="status"><strong>Slots used by this round: 0.</strong> No portal upload, no organizer score, no leaderboard claim. Local gates are not organizer validation.</div>
-<p><a href="h59.html">Full H59 audit →</a> · <a href="data/h59_result.json">Machine-readable receipt</a> · <a href="irregularities.html">Limitations register</a></p>'''
+<div class="eyebrow">H59 · historical research status</div>
+<h1>H59 is not approved for submission.</h1>
+<div class="status"><strong>RESEARCH DOWNLOAD ONLY · NO SLOT AUTHORIZED</strong><p>{e(verdict_detail)}</p></div>
+<section class="download-bar" aria-label="H59 research download"><div><strong>{e(stem)}.tif</strong><small>{artifact["bytes"]:,} bytes · SHA-256 <code>{e(artifact["sha256"])}</code></small></div>{dl_btn}</section>
+<p>Download availability, local format checks, decoded-pattern uniqueness, and internal holdout measurements do not establish portal acceptance or submission eligibility.</p>
+<p><b>HOLDOUT-DTI</b> is an internal hide-and-recover measurement, not a public leaderboard score or an organizer receipt. The 0.2778 public-board row is team-level and is not linked to this file hash.</p>
+<p>No organizer-confirmed score receipt is recorded for H59. No owner override, upload procedure, paste-ready note, rerun, or new run-card authorization is provided.</p>
+<p><a href="h59.html">H59 method and historical evidence →</a> · <a href="data/h59_result.json">Historical run receipt</a> · <a href="data/h59_preregistration.json">Preregistered protocol</a></p>'''
     (DOCS / "executive-summary.html").write_text(shell(
-        "H59 submission guide",
-        "H59 artifact identification, one-click download, and the generated submit / do-not-submit verdict.",
+        "H59 research status — not for submission",
+        "Historical H59 research artifact; no submission approval or upload procedure.",
         guide_content, active="guide"))
 
     # ---- stage downloads and data ------------------------------------------------------------
@@ -360,9 +359,6 @@ def main() -> None:
     import zipfile
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
         zf.write(canonical, arcname=stem + ".tif")
-        zf.writestr("SUBMISSION_NOTE.txt",
-                    f"submission name: {submission['submission_name']}\n"
-                    f"note: {submission['note']}\nsha256: {artifact['sha256']}\n")
     canon_zip = DL / (stem + ".zip")
     shutil.copyfile(zip_path, canon_zip)
     DATA.mkdir(parents=True, exist_ok=True)
@@ -385,13 +381,13 @@ def main() -> None:
 <section class="card"><h2>Current decision</h2><p><b>Shipped field:</b> {e(shipped)}.</p><p><b>Gates:</b> {"PASS" if gates_ok else "one or more FAILED"} (format, uniqueness vs {int(artifact['uniqueness']['n_priors_checked'])} priors, not-the-union, 200 m ring, 3 px spacing).</p><p><b>Slot verdict:</b> {e(submission["verdict"])}.</p><p><b>Organizer provenance:</b> unresolved — integrity-pinned owner mirror (IR-52-003 / IR-H58-001).</p></section></div>
 <h2>Arm means on the two instruments (primary budget)</h2>{arm_table}
 {sibling_html}
-<h2>Evidence</h2><p><a href="h59.html">Full H59 audit</a> · <a href="executive-summary.html">Submission guide with the verdict</a> · <a href="data/h59_result.json">run receipt</a> · <a href="data/h59_preregistration.json">frozen protocol</a> · <a href="downloads/{e(stem)}-reasoning.csv">per-pixel reasoning CSV ({int(result['reasoning_dossier']['rows']):,} rows)</a>. Historical rounds: <a href="h58.html">H58</a> · <a href="h57.html">H57</a> · <a href="h56-cotrain.html">H56</a> · <a href="h55.html">H55</a>.</p><div class="live-feed" id="feed">Automatic local evidence feed. The official board is a dated observation, not a live feed.</div>'''
+<h2>Evidence</h2><p><a href="h59.html">Full H59 audit</a> · <a href="executive-summary.html">Research status with the verdict</a> · <a href="data/h59_result.json">run receipt</a> · <a href="data/h59_preregistration.json">frozen protocol</a> · <a href="downloads/{e(stem)}-reasoning.csv">per-pixel reasoning CSV ({int(result['reasoning_dossier']['rows']):,} rows)</a>. Historical rounds: <a href="h58.html">H58</a> · <a href="h57.html">H57</a> · <a href="h56-cotrain.html">H56</a> · <a href="h55.html">H55</a>.</p><div class="live-feed" id="feed">Automatic local evidence feed. The official board is a dated observation, not a live feed.</div>'''
     (DOCS / "index.html").write_text(shell(
         "H59 overview",
         "H59 two-view co-training overview: gates, verdict, and one-click artifact download.",
         index_content, active="overview"))
 
-    downloads_html = f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="One-click H59 downloads with the generated submit / do-not-submit verdict and audited filename/hash."><title>H59 downloads · GEMSDOE52</title><link rel="stylesheet" href="../style.css"><script src="../site.js" defer></script></head><body><a class="skip" href="#main">Skip to downloads</a><header>{nav("downloads")}</header><main id="main"><div class="eyebrow">One-click files</div><h1>H59 downloads.</h1><div class="{verdict_class}"><strong>{e(verdict_head)}</strong> {e(verdict_detail)}</div><p>Unique TIFF: <code>{e(stem)}.tif</code><br>SHA-256: <code>{e(artifact["sha256"])}</code><br>Portal note ({len(submission["note"])} chars): <code>{e(submission["note"])}</code></p><p><a href="{e(stem)}.tif" download>Download the audited TIFF</a> · <a href="h59-candidate.tif" download>Short TIFF link</a> · <a href="h59-candidate.zip" download>One-TIFF ZIP</a> · <a href="{e(stem)}-reasoning.csv">Per-pixel reasoning CSV</a> · <a href="../h59.html">Full audit</a></p><p class="small">Historical artifacts remain in this directory; the H59 file is the only one this round's verdict speaks about.</p></main></body></html>'''
+    downloads_html = f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="One-click H59 downloads with the generated submit / do-not-submit verdict and audited filename/hash."><title>H59 downloads · GEMSDOE52</title><link rel="stylesheet" href="../style.css"><script src="../site.js" defer></script></head><body><a class="skip" href="#main">Skip to downloads</a><header>{nav("downloads")}</header><main id="main"><div class="eyebrow">One-click files</div><h1>H59 downloads.</h1><div class="{verdict_class}"><strong>{e(verdict_head)}</strong> {e(verdict_detail)}</div><p>Unique TIFF: <code>{e(stem)}.tif</code><br>SHA-256: <code>{e(artifact["sha256"])}</code></p><p><a href="{e(stem)}.tif" download>Download the audited TIFF</a> · <a href="h59-candidate.tif" download>Short TIFF link</a> · <a href="h59-candidate.zip" download>One-TIFF ZIP</a> · <a href="{e(stem)}-reasoning.csv">Per-pixel reasoning CSV</a> · <a href="../h59.html">Full audit</a></p><p class="small">Historical artifacts remain in this directory; the H59 file is the only one this round's verdict speaks about.</p></main></body></html>'''
     (DL / "index.html").write_text(downloads_html)
 
     print(f"published docs/index.html, h59.html, executive-summary.html, downloads, data receipts; "

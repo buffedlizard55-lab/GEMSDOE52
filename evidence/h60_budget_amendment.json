@@ -44,6 +44,6 @@
   ],
   "spearman_board_vs_mass_off_catalogue": -1.0
  },
- "decision": "emit at 37654 px: the mass of the highest owner-reported off-catalogue score (0.2778), because across the six off-catalogue scored priors the board is strictly decreasing in mass (Spearman -1.000) while the hide-and-recover instrument -- on which the champion itself scores 0.00479, below a random placeholder -- is not correlated with the board at all (Spearman -0.099, p=0.748)",
+ "decision": "Historical H60 budget amendment to 37,654 px, preserved only as provenance. It was derived from owner-reported score labels and a legacy internal diagnostic; neither is a current competition ranking or causal score explanation. The six-label mass association (Spearman -1.000) and 13-label diagnostic association (Spearman -0.099, p=0.748) are exploratory and not submission evidence.",
  "not_claimed": "this is a budget choice, not a score forecast; no organiser-authenticated score-to-file mapping exists"
 }

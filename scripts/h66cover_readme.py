@@ -105,19 +105,16 @@ Site: **[download the H66cover GeoTIFF](docs/downloads/h66cover-candidate.tif)**
   (measured interval [5,949.3, 12,512.1] px). DTI if this arm's holdout density held:
   {proj['G_lower']['dti_if_density_equals_holdout_arm']:.4f} / {proj['G_upper']['dti_if_density_equals_holdout_arm']:.4f}.
 
-**Leaderboard (PUBLIC BOARD, not ORGANIZER-CONFIRMED).** Live DrivenData board 2026-10-09: top **0.3774**
-(xiaofanhu), 0.3195 is rank 7 (DARD), 0.2778 is rank 13 (extradr19):
-[leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/). The brief's
-"0.3195 is the highest score" is wrong (IR-H65-002, IR-H66-012). ORGANIZER-CONFIRMED: none — no submission-page
-receipt exists for any file in this repository. Competition slots used: **0**.
+**Leaderboard (PUBLIC BOARD, not ORGANIZER-CONFIRMED).** The saved 2026-10-09 20:18 UTC observation has top **0.3774**
+(xiaofanhu), 0.3195 at rank 7 (DARD), and 0.2778 at rank 17 (extradr19):
+[leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/). The rows are team-level;
+no submission-page receipt links a TIFF hash to a score. ORGANIZER-CONFIRMED mapping: none. Slots used: **0**.
 
-**Why 0.2778 won, in one paragraph (measured, `knowledge/27`).** The reported-0.2778 file is the
-reported-0.2600 file with 6,436 pixels deleted — every one 100–200 m from a mapped trace — and zero pixels
-added. Because `DTI = T / (0.2·(T+S−M) + 0.8·(|G|−T))`, deleting zero-credit pixels raises the ratio +6.8 %
-without detecting anything new: it is a precision edit, not a better detector. Beating it needs credit
-density above the break-even bar on novel mass, and no instrument in this repository can certify that —
-the hide-and-recover simulator measured Spearman −0.10 against the owner-reported board (R4).
-
+**Current evidence about 0.2778 (see `knowledge/49`).** Local bytes show a 37,654-cell H33-labelled bitmap is a strict subset
+of a separate 44,090-cell bitmap associated with 0.2600 by its owner (6,436 removed, none added; removed cells are
+100–200 m from the local known-fault mask). This does not show the removed cells had zero credit or explain a score
+change; official staff says new-fault truth may be within 300 m of known traces. The file-score association is
+owner-reported, not organizer-confirmed. No causal explanation is established.
 **Still open:** a lane-valid candidate that beats single_B on the holdout (the A-only stratum sits inside the
 H64 raster's 3 px halo, IR-H66-014); the H66-B/C/D hypotheses; the 0.2778 file-to-row receipt; the portal
 error text (IR-H65-007).

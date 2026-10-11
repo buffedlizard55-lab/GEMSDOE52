@@ -1,4 +1,6 @@
-# 42 · H65 results, official verification, and the 0.2778 answer (2026-10-09)
+# 42 · H65halo — historical halo-target analysis and official verification
+
+> **Current correction (2026-10-10):** the public 0.2778 row is a time-stamped team-level observation, not a file receipt; the latest saved 2026-10-09 20:18 UTC read places it at rank 17 (public top 0.3774). The owner-reported file pairing is unverified. The local 0.2600/0.2778-labelled subset relation does not explain a score change, and removed cells are not known to be zero-credit: DrivenData staff says new-fault truth may occur within 300 m of known traces. Use [`knowledge/49`](49_why_02778_phd_answer.md); equations below are historical conditional sensitivity only.
 
 Status: H65 NEGATIVE, research-only. No raster built. DO NOT UPLOAD. Slots used: 0. Experiments used: 1 of 3.
 Pre-registration: `knowledge/41b_hypotheses_H65halo_preregistered.md`, sha256 `7ae7cd9119c8b86d8b525519819e1120c71355bd949b7a164bc7c8b12e391afc`, pinned in `registry/h65halo_preregistration.json` before any fit.
@@ -38,7 +40,7 @@ One change, made in the shared template's sampler hook (`run_h61.sample_for_fit`
   - 16 Sep: "Pixels corresponding to known USGS/INGENIOUS faults are masked / excluded from evaluation, so they do not count towards penalty terms." Re-evaluation also masks them.
   - 21 Sep: "The mask is indeed pixel-exact - it is identical to the provided set of training fault labels." "…the buffer does not apply to known faults." "A new-fault ground truth pixel can indeed lie within 300m of a known fault trace. Such pixels would constitute corrections or modifications to existing fault traces. Identifying these corrections is one outcome we are aiming for as part of this competition."
   - The repo's earlier "staff masking" claim is therefore now verified from the primary text. The sentence about corrections is also verified, which is the basis for the R5-H1 rationale.
-- **Leaderboard** (live page, fetched 2026-10-09; receipt `docs/data/leaderboard_snapshot_2026-10-09.json`): #1 xiaofanhu **0.3774** (13 submissions); #7 DARD **0.3195**; #15 extradr19 **0.2778** (13 submissions). The repo snapshot in `knowledge/39` lists extradr19 at rank 13 (IR-H65halo-003).
+- **Leaderboard — PUBLIC-LEADERBOARD observations, not ORGANIZER-CONFIRMED.** An earlier 2026-10-09 page read put extradr19 at #15 and the 2026-10-08 snapshot listed #13. The later saved 2026-10-09 20:18 UTC observation places #1 xiaofanhu **0.3774**, #7 DARD **0.3195**, and #17 extradr19 **0.2778**. None provides a filename/hash receipt; see `evidence/leaderboard_observation_2026-10-09T201800Z.json` (IR-H65halo-003).
 - **NLR official rules** (`docs.nlr.gov/docs/fy26osti/96647.pdf`, fetched and checked 2026-10-09): §3.2 'multiple submissions, subject to the limits specified on the competition website (three submissions per week)'; §3.2 requires the narrative to indicate 'the extent to which, if any, you used generative AI technology'; §1.1 'Participants will submit a single entry'; §1.3 eligibility (individuals: U.S. citizen or permanent resident). §2 gives a third wording of the label source (see IR-H65halo-008).
 - **Reference solution** (`drivendataorg/gems-prize-reference-solution`, notebook read from `work/official/`): the output array is `np.zeros(...)` (float64) and is written with `dtype=y_final.dtype`; the page requires float32 (IR-H65halo-004).
 
@@ -46,7 +48,7 @@ One change, made in the shared template's sampler hook (`run_h61.sample_for_fit`
 
 **Question:** why did `h33-2-b2` (GEMSDOE32, owner-reported 0.2778) score highest, and can a submission beat 0.2778 or 0.3195?
 
-**Premise corrections.** (a) The top of the public board is 0.3774, not 0.3195; 0.3195 is DARD at rank 7. (b) 0.2778 is OWNER-REPORTED for `h33-2-b2`; the public board also shows 0.2778 for `extradr19` at rank 15, and the board does not identify files, so it confirms neither attribution. (c) GEMSDOE32's own page states that no organiser score exists for its artefacts (`knowledge/27`, IR-H62-009).
+**Evidence classes.** (a) The saved public-board observation at 2026-10-09 20:18 UTC shows top 0.3774 and DARD 0.3195 at rank 7; extradr19's 0.2778 row is rank 17 in that observation. (b) The association between 0.2778 and `h33-2-b2` is OWNER-REPORTED, not organizer-confirmed; the board has no file identifier or hash. (c) No organizer receipt authenticating a repository TIFF and score has been found.
 
 **What the bytes show (BYTES-VERIFIED, `data/reference/h33-2-b2-zeros.tif`, `data/scored/gems24-…-d2-8-…nan.tif`, `data/labels.tif`):**
 - `h33-2-b2` has 37,654 positive pixels and is a strict subset of its parent `gems24-…-d2-8` (44,090 positive pixels). 6,436 pixels were removed and none were added.
@@ -56,12 +58,9 @@ One change, made in the shared template's sampler hook (`run_h61.sample_for_fit`
 
 **Marginal rule (corrects IR-H65halo-002).** Adding one unit-probability pixel of kernel credit c to an uncovered truth pixel changes the denominator by α = 0.2 and the numerator by c, so DTI rises iff **c > α·DTI**. The repo's `metric.credit_bar` and `tests/test_metric.py` use this form. The prose form α·DTI/(1 − α·DTI) in `knowledge/01` and `05` is wrong. Checked on the repo metric: baseline DTI 0.277778, a dot with credit 0.0572 raises it to 0.278208 (bar 0.0556: passes); at baseline 0.294118 the same dot lowers it (bar 0.0588: fails). The prose form would predict the wrong sign at 0.2778.
 
-**What the owner pair implies (sparse approximation, owner-reported scores; computed):**
-- If the removed ring carried **zero** credit, the 0.2600 → 0.2778 change needs |G| = 14,089 px. That is above the top of the repo's identified |G| interval, [5,949, 12,512] px (IR-H61-001, IR-H62-005).
-- Within the identified interval, the owner pair needs the removed ring to have carried about **0.5% to 3.3%** of the parent's TP credit (3.3% at |G| = 5,949; 1.3% at 10,000; 0.5% at 12,512).
-- So the explanation "precision: pruning zero-credit mass" is approximately right: the ring carried almost no credit, but not provably zero. Our previous "zero credit" wording (`knowledge/27`) overstated it. Under the official metric the ring's credit depends on new-fault labels within 300 m, which staff say can exist (IR-H65halo-007).
+**Historical sensitivity algebra (not an explanation of an organizer score change):** under the sparse-mass approximation and assuming the owner-reported values correspond to these two rasters, one can calculate scenarios for different assumed credit on the removed pixels. The zero-credit case yields |G| = 14,089 px; other assumed credits yield different values. These are conditional computations, not measured hidden-truth credit, and they do not establish that precision pruning caused the public row to change. The official metric and staff clarification allow new-fault truth within 300 m, so the local removed-cell credit is unknown. The old statement that pruning zero-credit mass explains the 0.2600/0.2778 difference is withdrawn; see `knowledge/49` and `IR-R5-011`.
 
-**Can a submission beat 0.2778 or 0.3195?** On today's board, a score above 0.2778 would place a submission at rank 15 or better, and a score above 0.3195 at rank 7 or better. Our holdout numbers (0.17 to 0.18 for the best single view) are HOLDOUT-DTI on a catalogue proxy; they are **not** on the board's scale and no conversion is claimed. No candidate in this repo passes the gates, so no slot is spent. Whether any file can beat 0.2778 is unknown; there is no organiser evidence for this repo's files.
+**Can a future public score beat 0.2778 or 0.3195?** This cannot be inferred from the internal holdout. H65's 0.17–0.18 readings are HOLDOUT-DTI on a catalogue proxy, not on the public-board scale; no conversion is claimed. No candidate in this repo passes the gates, no slot is spent, and no file-to-row organizer receipt is available. Whether any file could beat a public value is unknown.
 
 ## 5. Candidate hypotheses (ranked), and what each needs
 

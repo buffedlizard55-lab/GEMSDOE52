@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="assets/ctd5.css"></head><body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a><a href="index.html">Overview</a><a href="h67.html">H67 run &amp; evidence</a><a href="h67-executive-summary.html">Submission guide</a><a href="h64.html">H64 (previous)</a><a href="downloads/index.html">Archive</a></nav></header><main id="main">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="assets/ctd5.css"></head><body><!--H75-ARCHIVE-STOP--><aside role="alert" style="padding:14px 22px;background:#fef2f2;color:#7f1d1d;border:2px solid #991b1b;border-radius:8px;font:14px/1.6 system-ui"><strong>Current H75 status: DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION.</strong> H75 is terminal: no owner override, waiver, or rerun is authorized. The page below is historical/research material; no archived file is approved here. <a href="h75-executive-summary.html" style="color:#7f1d1d">Read the H75 stop status</a>.</aside><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a><a href="index.html">Overview</a><a href="h67.html">H67 run &amp; evidence</a><a href="h67-executive-summary.html">H67 stop status</a><a href="h64.html">H64 (previous)</a><a href="downloads/index.html">Archive</a></nav></header><main id="main">
 <section class="hero"><div>
 <div class="eyebrow">DOE GEMS / H67 · thermal-upflow corridor (co-training lane, third channel)</div>
 <h1>A new GeoTIFF.<br>The verdict is NO.</h1>
@@ -7,7 +7,7 @@ thermal-upflow sites that all lie at least 300 m — beyond the whole scoring ke
 mapped fault. It is new inference on decoded pixels, every gate below is measured, and the
 submit decision is already made: <b>do not submit</b>.</p>
 <div class="notice" role="note"><strong>DOWNLOAD FOR RESEARCH: YES &nbsp;·&nbsp; SUBMIT TO THE COMPETITION: <b>NO — DO NOT SUBMIT</b> &nbsp;·&nbsp; DO NOT UPLOAD &nbsp;·&nbsp; NO SLOT USED</strong>
-<p>Format gate PASS · leakage canary CLEAN · S1 two-view sufficiency <b>FAIL</b> ·
+<p>Format gate PASS · exact-pattern census unique (not the lane test) · lane policy <b>DUPLICATE/STOP</b> · S1 two-view sufficiency <b>FAIL</b> ·
 HOLDOUT-DTI 0.015432 [0.010756, 0.021313] against random
 0.056623 (paired -0.041191 [-0.047743, -0.034102]).
 Do not upload research archives. Do not spend a weekly slot. Competition slots used:
@@ -18,7 +18,7 @@ Do not upload research archives. Do not spend a weekly slot. Competition slots u
 <a class="button secondary" href="downloads/h67-a-only-and-segment-reasoning.csv" download>Geological reasoning CSV</a>
 </div>
 <p class="fileline">gems52-h67-thermal-upflow-corridor-24907px-20261009T050704Z.tif<br>76,217 bytes · SHA-256 14644198f1031e8250a284c86775c55b57d60d55195e815eac6f4d17b01395c6 · 24,907 emitted cells · values exactly {0,1}, 0 NaN, 0 infinite · decoded-pixel SHA-256 969bb11b7403d9c7506ad609084bcdfe…</p>
-<p class="small"><a href="h67-executive-summary.html">Exactly what may be uploaded, and how →</a> ·
+<p class="small"><a href="h67-executive-summary.html">H67 stop status and evidence →</a> ·
 <a href="h67.html">Method, evidence and limits →</a> ·
 <a href="h64.html">Previous round (H64) landing page</a></p>
 </div>
@@ -26,7 +26,8 @@ Do not upload research archives. Do not spend a weekly slot. Competition slots u
 <div class="status-line"><span>Single-band float32 GeoTIFF</span><span class="good">PASS</span></div>
 <div class="status-line"><span>Finite, values in [0, 1]</span><span class="good">PASS</span></div>
 <div class="status-line"><span>CRS, shape &amp; transform match</span><span class="good">PASS</span></div>
-<div class="status-line"><span>Copied a previous submission?</span><span class="good">NO</span></div>
+<div class="status-line"><span>Exact decoded-pattern match?</span><span class="good">NO</span></div>
+<div class="status-line"><span>Spatial lane gate (&gt;70% near 3 px)</span><span class="bad">DUPLICATE/STOP</span></div>
 <div class="status-line"><span>Not the union of the two views</span><span class="good">PASS</span></div>
 <div class="status-line"><span>Leakage canary (alarm 0.90)</span><span class="good">0.6228 CLEAN</span></div>
 <div class="status-line"><span>S1 two-view sufficiency</span><span class="bad">FAIL 0.5930</span></div>
@@ -34,8 +35,7 @@ Do not upload research archives. Do not spend a weekly slot. Competition slots u
 <div class="status-line"><span>Lane gate (probe policy)</span><span class="bad">DUPLICATE/STOP</span></div>
 <div class="status-line"><span>Beats the best control on holdout</span><span class="bad">NO</span></div>
 <div class="status-line"><span>Verdict</span><span class="bad">NEGATIVE — DO NOT SUBMIT</span></div>
-<p class="fine">A format-valid file is not an approved competition entry. Promotion to a weekly slot is a
-separate selector step, and this round does not recommend it.</p>
+<p class="fine">A local format pass is not portal acceptance or submission eligibility. The policy lane is DUPLICATE/STOP; H67 is research-only and not approved for a slot.</p>
 <a class="small" href="data/h67_run_card.json">Inspect the complete JSON run card ↗</a></aside></section>
 <hr class="divider">
 <div class="section-head"><h2>What the holdout says (HOLDOUT-DTI — not a leaderboard score)</h2>
@@ -58,39 +58,32 @@ same budget in the same fold.</p>
 <th>corridor pool</th><th>withheld truth px</th><th>tuc</th><th>single_B</th><th>random</th>
 </tr></thead><tbody><tr><td>0</td><td class='numeric'>19,975</td><td class='numeric'>1,064</td><td class='numeric'>19,975</td><td class='numeric'>29,297</td><td class='numeric'>0.019376</td><td class='numeric'>0.056669</td><td class='numeric'>0.078137</td></tr><tr><td>1</td><td class='numeric'>5,157</td><td class='numeric'>1,023</td><td class='numeric'>5,157</td><td class='numeric'>12,579</td><td class='numeric'>0.017846</td><td class='numeric'>0.047420</td><td class='numeric'>0.035060</td></tr><tr><td>2</td><td class='numeric'>2,134</td><td class='numeric'>957</td><td class='numeric'>2,134</td><td class='numeric'>9,433</td><td class='numeric'>0.004828</td><td class='numeric'>0.049794</td><td class='numeric'>0.042076</td></tr><tr><td>3</td><td class='numeric'>2,148</td><td class='numeric'>960</td><td class='numeric'>2,148</td><td class='numeric'>9,585</td><td class='numeric'>0.009258</td><td class='numeric'>0.039933</td><td class='numeric'>0.027209</td></tr></tbody></table></div>
 <hr class="divider">
-<div class="section-head"><h2>Why 0.2778 won, and what beating 0.3195 would require</h2>
-<a href="h67.html#algebra">Board algebra →</a></div>
+<div class="section-head"><h2>Current evidence about the reported 0.2778 (no causal explanation established)</h2>
+<a href="../knowledge/49_why_02778_phd_answer.md">Evidence classes and limits →</a></div>
 <div class="cards">
-<section class="card"><div class="eyebrow">01 / re-measured on the bytes</div><h3>The 100–200 m ring</h3>
-<span class="num">6,436 px removed → +6.8 %</span>
-<p><code>h33-2-b2</code> is a strict subset of the 0.2600 file; every one of the
-6,436 deleted pixels sits
-100.0–200.0 m
-from a mapped trace. That ring earns zero credit and pays the false-positive tax. Nothing else about
-the file changed.</p></section>
-<section class="card"><div class="eyebrow">02 / the metric in one line</div><h3>ρ = T/S</h3>
-<span class="num">champion 0.1387 · random 0.0279</span>
-<p>For dots more than 200 m apart, DTI = T / (0.2·S + 0.8·|G|), so the score is exactly the credit
-density. The champion is 5.0× uniform random; that is all 0.2778 measures.</p></section>
-<section class="card"><div class="eyebrow">03 / what would move the number</div><h3>A better ranker</h3>
-<span class="num">ρ 0.0999 at 100,000 px = 0.3195</span>
-<p>The required ρ <i>falls</i> with budget, so "emit less" is a property of this family's ranker, not a
-law of the metric. Every measured attempt to raise ρ(S) has failed (N-6, N-10, N-11, N-16, N-17,
-N-22).</p></section>
+<section class="card"><div class="eyebrow">01 / local pixel facts</div><h3>Strict subset, not score causality</h3>
+<span class="num">6,436 cells removed · 0 added</span>
+<p>The local H33-labelled 37,654-cell bitmap is a strict subset of a separate 44,090-cell bitmap labelled 0.2600 by its owner. Removed cells are 100–200 m from the local known-fault mask. The byte and distance facts do not identify hidden-truth credit or explain an organizer score change; new-fault truth may occur within 300 m of known traces.</p></section>
+<section class="card"><div class="eyebrow">02 / public board vs file receipt</div><h3>Team-level observation</h3>
+<span class="num">0.2778 · rank 17 · top 0.3774</span>
+<p>The saved official public-board observation is 2026-10-09 20:18 UTC. It contains no filename, TIFF hash, or submission receipt. The local file association is owner-reported; no organizer-confirmed score-to-file mapping is available.</p></section>
+<section class="card"><div class="eyebrow">03 / conditional arithmetic only</div><h3>Unknown credit, unknown cause</h3>
+<span class="num">No hidden-truth credit recovered</span>
+<p>Any inversion of owner-reported values depends on assumptions about the test labels and overlap term. The previously quoted 14,088.7-pixel truth-size estimate and credit-density values are scenarios, not measurements or an explanation of the 0.2778 result.</p></section>
 </div>
+<div class="section-head"><h3>Conditional sensitivity calculation only — not a prediction or score</h3></div>
+<p class="small">The threshold table below assumes a hypothetical hidden-positive count of 14,088.7, which is not measured and is not organizer-confirmed. Its values are algebraic scenarios only; they do not explain the reported 0.2778.</p>
 <div class="table-wrap"><table><thead><tr><th>budget S (px)</th><th>ρ needed for 0.2778</th>
 <th>ρ needed for 0.3195</th><th>ρ needed for 0.3774</th></tr></thead><tbody><tr><td class='numeric'>25,517</td><td class='numeric'>0.1783</td><td class='numeric'>0.2050</td><td class='numeric'>0.2422</td></tr><tr><td class='numeric'>37,654</td><td class='numeric'>0.1387</td><td class='numeric'>0.1595</td><td class='numeric'>0.1884</td></tr><tr><td class='numeric'>44,090</td><td class='numeric'>0.1266</td><td class='numeric'>0.1456</td><td class='numeric'>0.1720</td></tr><tr><td class='numeric'>60,069</td><td class='numeric'>0.1077</td><td class='numeric'>0.1238</td><td class='numeric'>0.1463</td></tr><tr><td class='numeric'>100,000</td><td class='numeric'>0.0869</td><td class='numeric'>0.0999</td><td class='numeric'>0.1180</td></tr><tr><td class='numeric'>121,131</td><td class='numeric'>0.0814</td><td class='numeric'>0.0936</td><td class='numeric'>0.1106</td></tr></tbody></table></div>
-<p class="small">Required ρ = target · (0.2 + 0.8·|G|/S) at |G| = 14,088.7, from
+<p class="small">Scenario formula only: required ρ = target · (0.2 + 0.8·|G|/S) under assumed |G| = 14,088.7; this value is not measured. Calculation from
 <code>evidence/h67_board_algebra.json</code>. Published scores are OWNER-REPORTED — the leaderboard
 prints a team name and a number, never a filename, so no pairing here is ORGANIZER-CONFIRMED.</p>
 <hr class="divider">
-<div class="section-head"><h2>The metric's own marginal rule, applied to this family's measured curve</h2></div>
+<div class="section-head"><h2>Conditional marginal-rule scenario arithmetic — not a measured credit curve</h2></div>
+<p class="small">The ΔT values below are inferred from owner-reported score associations under the former assumed |G| = 14,088.7 and selected sparse-emission assumptions. They are not hidden-truth credit measurements, organizer-confirmed scores, or evidence for why the public-board value changed. Read the table only as conditional algebra.</p>
 <div class="table-wrap"><table><thead><tr><th>step</th><th>ΔS</th><th>ΔT</th><th>marginal ρ</th>
-<th>bar α·DTI</th><th>verdict</th></tr></thead><tbody><tr><td>ref_h33_2_b2 → d2_8</td><td class='numeric'>6,436</td><td class='numeric'>+0.0</td><td class='numeric'>0.0000</td><td class='numeric'>0.0556</td><td><b>do not add</b></td></tr><tr><td>d2_8 → d1_5</td><td class='numeric'>15,979</td><td class='numeric'>+544.5</td><td class='numeric'>0.0341</td><td class='numeric'>0.0520</td><td><b>do not add</b></td></tr><tr><td>d1_5 → tgc</td><td class='numeric'>1,259</td><td class='numeric'>-3.5</td><td class='numeric'>-0.0028</td><td class='numeric'>0.0495</td><td><b>do not add</b></td></tr><tr><td>tgc → h19_5</td><td class='numeric'>59,803</td><td class='numeric'>+1,058.5</td><td class='numeric'>0.0177</td><td class='numeric'>0.0490</td><td><b>do not add</b></td></tr></tbody></table></div>
-<p class="small">Four consecutive steps past 37,654 px fail the rule
-<code>ΔT/ΔS &gt; 0.2·DTI</code>. The champion is not a better detector; it is the correct stopping
-point of a worse one. Spearman(mass, board) = -1.0000 over
-n = 5.</p>
+<th>scenario bar α·DTI</th><th>conditional scenario result</th></tr></thead><tbody><tr><td>ref_h33_2_b2 → d2_8</td><td class='numeric'>6,436</td><td class='numeric'>+0.0</td><td class='numeric'>0.0000</td><td class='numeric'>0.0556</td><td><b>do not add</b></td></tr><tr><td>d2_8 → d1_5</td><td class='numeric'>15,979</td><td class='numeric'>+544.5</td><td class='numeric'>0.0341</td><td class='numeric'>0.0520</td><td><b>do not add</b></td></tr><tr><td>d1_5 → tgc</td><td class='numeric'>1,259</td><td class='numeric'>-3.5</td><td class='numeric'>-0.0028</td><td class='numeric'>0.0495</td><td><b>do not add</b></td></tr><tr><td>tgc → h19_5</td><td class='numeric'>59,803</td><td class='numeric'>+1,058.5</td><td class='numeric'>0.0177</td><td class='numeric'>0.0490</td><td><b>do not add</b></td></tr></tbody></table></div>
+<p class="small">Under those unverified assumptions, four historical increments past 37,654 px fall below the algebraic rule <code>ΔT/ΔS &gt; 0.2·DTI</code>. This does not show that the 37,654-cell bitmap is the correct stopping point, that the larger set earned no true-positive credit, or that pruning caused a score change. Spearman(mass, owner-reported score) = -1.0000 over n = 5 is a tiny, unverified historical comparison and is not a predictive instrument.</p>
 <hr class="divider">
 <div class="cards">
 <section class="card"><div class="eyebrow">stratification</div><h3>What the two views said</h3>
@@ -117,8 +110,7 @@ channel. Fixed with the template's own intersection footprint: eligible
 <hr class="divider">
 <section class="prose"><h2 id="verdict">Verdict, in one paragraph</h2>
 <p>LANE RULE FIRES: 84.08 % of the final dots lie within 3 px of one informative registry raster&#x27;s dots (15GEMSDOE docs/downloads/gems-cleanup-a-20260928T195952Z-curv_scarp.tif, 362,327 dots). The brief&#x27;s clause 1 sets the bar at 70 % and says: log it as a duplicate and STOP. Logged; stopped; no further development of this candidate. HOLDOUT-DTI 0.015432 [0.010756, 0.021313] is significantly below uniform random (paired delta -0.041191 [-0.047743, -0.034102]) and below single-view B (-0.035871 [-0.049674, -0.023605]); the frozen promotion bar was &#x27;candidate minus best comparable control &gt; 0 with the 95 % CI excluding 0&#x27;. The file is therefore published as a
-research artefact: <b>download yes, submit no</b>. Promotion is a separate selector step within the
-weekly cap (brief clause 9) and this round recommends against spending a slot on H67-A.</p>
+research artefact: <b>download for research only; not eligible for submission</b>. The policy lane is DUPLICATE/STOP, and the HOLDOUT-DTI result is significantly below random. No selector override or submission path is offered; no weekly slot was used.</p>
 <h2>Links for manual review</h2><ul>
 <li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/</a> — (task, metric, submission format, two-round prize structure) - fetched 2026-10-09</li><li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/</a> — (JS-rendered; NOT readable by fetch - the score list in the brief is owner-reported)</li><li><a href="https://github.com/drivendataorg/gems-prize-reference-solution">https://github.com/drivendataorg/gems-prize-reference-solution</a> — (reference solution)</li><li><a href="https://community.drivendata.org/c/gems-prize-challenge/111">https://community.drivendata.org/c/gems-prize-challenge/111</a> — (forum)</li><li><a href="https://doi.org/10.1145/279943.279962">https://doi.org/10.1145/279943.279962</a> — (Blum &amp; Mitchell, co-training, COLT &#x27;98)</li><li><a href="https://doi.org/10.5066/P93LGLVQ">https://doi.org/10.5066/P93LGLVQ</a> — (USGS GeoDAWN)</li><li><a href="https://epsg.io/32611">https://epsg.io/32611</a> — (CRS)</li><li><a href="https://www.usgs.gov/3d-elevation-program">https://www.usgs.gov/3d-elevation-program</a> — (1 m DEM named as the missing lever)</li>
 </ul></section>

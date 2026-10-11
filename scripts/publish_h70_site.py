@@ -6,7 +6,7 @@ receipt; nothing is hand-typed), stages the download aliases, refreshes the loca
 regenerates:
 
 * ``docs/index.html``            -- H70 hero, unmistakable download/submit verdict, holdout table
-* ``docs/executive-summary.html``-- the submission guide (exact steps, file contract, verdict)
+* ``docs/executive-summary.html``-- research-only stop status and local file facts
 * ``docs/h70.html``              -- the H70 landing/audit page
 * ``docs/h70-executive-summary.html`` -- the same guide under the round's own name
 * ``docs/downloads/index.html``  -- the H70 rows and the latest-research notice
@@ -57,7 +57,7 @@ def sha(path: Path) -> str:
 
 NAV = ('<a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>\n'
        '<a href="index.html">Overview</a><a href="h70.html">H70 run &amp; evidence</a>'
-       '<a href="h70-executive-summary.html">Submission guide</a>'
+       '<a href="h70-executive-summary.html">H70 research status</a>'
        '<a href="h70-sources.html">Sources</a><a href="downloads/index.html">Archive</a>')
 
 HEAD = ('<!doctype html>\n<html lang="en"><head><meta charset="utf-8">'
@@ -155,14 +155,12 @@ def main() -> int:
                f'A-only reasoning CSV (gzip)</a></div>')
     fileline = (f'<p class="fileline">{esc(tif_name)}<br>{nbytes:,} bytes · SHA-256 {sha256} · '
                 f'{ndots:,} emitted cells · values exactly {{0,1}}, 0 NaN</p>')
-    notice = ('<div class="notice" role="note"><strong>OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT · '
-              'DO NOT UPLOAD</strong>\n<p>Verdict: <b>NEGATIVE, research-only.</b> DOWNLOAD YES '
-              '(format-valid and unique on decoded pixels); SUBMIT NO (the strict A-only candidate '
-              'does not beat the single-view control: HOLDOUT-DTI '
-              f'{f6(cand)} {ci(cand_ci)} against single_B {f6(sB)}, paired Δ '
-              f'{d_sB["delta"]:+.6f} {ci(d_sB["ci95"])}; and the literal lane gate reads '
-              f'{esc(lane_lit)}). Competition slots used: 0. NO CERTIFIED LEADERBOARD GAIN. '
-              'Promotion to a weekly slot is a separate selector step.</p></div>')
+    notice = ('<div class="notice bad" role="alert"><strong>RESEARCH DOWNLOAD ONLY · DUPLICATE/STOP · '
+              'NOT FOR SUBMISSION · NO SLOT AUTHORIZED</strong>\n<p>H70 is negative on the shared holdout: '
+              'HOLDOUT-DTI ' + f'{f6(cand)} {ci(cand_ci)} against single_B {f6(sB)}, paired Δ '
+              + f'{d_sB["delta"]:+.6f} {ci(d_sB["ci95"])}' + f'; the literal final-dot lane gate reads '
+              '{esc(lane_lit)}. No override or upload procedure is provided. Competition slots used: 0. '
+              'No organizer-confirmed score receipt exists.</p></div>')
 
     vr = val.get("value_range") or [None, None]
     gates_rows = [
@@ -234,7 +232,7 @@ def main() -> int:
     body = f"""<div class="notice" role="note" style="margin:0 0 1rem"><strong>Latest research round: H70 (negative).</strong>
 Download yes, for research only; submit no. The brief's literal discovery stratum (A confident ∧ B abstains) is
 measured for the first time, isolated and pure: it is <b>anti-informative</b> on this stack.
-<a href="h70-executive-summary.html">H70 submission guide</a> · <a href="h64.html">Previous round (H64)</a></div>
+<a href="h70-executive-summary.html">H70 research status — not for submission</a> · <a href="h64.html">Previous round (H64)</a></div>
 <section class="hero"><div><div class="eyebrow">DOE GEMS / H70 · strict A-only isolation, two-view co-training</div>
 <h1>Download the file.<br>Read the verdict first.</h1>
 <p class="lead">H70 isolates the one lane element no previous round tested standalone: the strict A-only
@@ -356,101 +354,20 @@ universal-coverage probes by measured coverage, and the literal statistics remai
         body))
 
     # ================================================================ executive summary (guide)
-    guide_body = f"""<div class="notice" role="note" style="margin:0 0 1rem"><strong>Latest research round: H70 (negative).</strong>
-Download yes, for research only; submit no. <a href="h70.html">H70 run &amp; evidence</a> ·
-<a href="h64.html">Previous round (H64)</a></div>
-<div class="eyebrow">Executive summary / submission guide</div>
-<h1>Download in one click.<br>Do not upload this run.</h1>
-<p class="lead">The file, its exact identifier, and the frozen verdict. Promotion to a weekly slot is a
-separate selector decision, never a property of a valid file.</p>
+    guide_body = f"""<div class="eyebrow">H70 · historical research status</div>
+<h1>H70 is a research archive.<br>NOT FOR SUBMISSION.</h1>
 {notice}
 {actions}
 {fileline}
-<div class="grid2"><section class="panel"><h2>The file contract (verified on disk)</h2><ul>
-<li>One band, float32, values exactly 0 or 1.</li>
-<li>0 NaN and 0 infinite pixels anywhere in the file.</li>
-<li>EPSG:32611; 3,730 rows × 3,292 columns.</li>
-<li>Affine [100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0], identical to the pinned
-<code>sample_submission.tif</code>: yes.</li>
-<li>{ndots:,} emitted cells, all inside the strict A-only stratum, all more than 200 m from any mapped trace,
-3 px minimum separation.</li>
-<li>The ZIP holds exactly one TIFF, byte-identical to the direct download.</li></ul>
-<p class="small">Local validator only. This is not an organiser acceptance receipt.</p></section>
-<section class="panel"><h2>Why upload is blocked</h2><ul>
-<li>The strict A-only candidate does not beat the single-view control: HOLDOUT-DTI {f6(cand)}
-{ci(cand_ci)} against single_B {f6(sB)}; paired Δ {d_sB["delta"]:+.6f} {ci(d_sB["ci95"])}
-(53,186 withheld positives, evaluator <code>gems52-pooled-hide-v1</code>).</li>
-<li>Measured purely, the brief's discovery stratum is <b>anti-informative</b>: pooled pure-stratum
-HOLDOUT-DTI {f6(pure["dti"])} {ci(pure["ci95"])} at its achieved budget, below uniform random
-(paired Δ {pure_d["random"]["delta"]:+.6f} {ci(pure_d["random"]["ci95"])}).</li>
-<li>The sufficiency premise failed for the fifth consecutive round (View A out-of-quadrant AUC
-{s1["mean_view_A_oof_auc"]:.4f} against a 0.60 bar).</li>
-<li>The literal lane gate reads {esc(lane_lit)} for every nonempty candidate on this registry (a measured
-lattice-probe saturation); the file is lane-valid under the saturation-aware policy
-(worst informative near-dot share {lane_pol_near:.4f} ≤ 0.70, by construction).</li>
-<li>The holdout simulator measured Spearman −0.10 against the owner-reported board in R4; it cannot promote
-anything on its own.</li>
-<li>Inputs are pinned owner mirrors, not organiser-authenticated downloads, and the current weekly allowance
-is not observable from this sandbox.</li></ul>
-<a href="h70.html">Read the full run and its limits →</a></section></div>
-<section class="prose"><h2>About “Predicted values must be in range [0, 1]”</h2>
-<p>That portal rejection is a property of the uploaded bytes, and this exporter makes it unreachable:
-<code>gems52.grid.write_geotiff</code> refuses to write unless the array is float32, finite everywhere,
-inside [0, 1], exactly 3,730 × 3,292 and on the pinned EPSG:32611 affine; <code>gems52.submission_writer</code>
-then reopens the written file, re-validates it against <code>sample_submission.tif</code>, and fails closed.
-The public specification permits null/NaN outside the footprint, so all-finite export is our compatibility
-precaution — we do <b>not</b> claim that NaN caused your specific historical rejection, because the rejected
-bytes and the portal receipt were never available here.</p>
-<h2>Exact competition steps — only for an approved candidate</h2><ol>
-<li>Obtain the separate selector's approval after the scientific, provenance, uniqueness and current-best
-gates pass. <b>H70 is negative; stop here for this file.</b></li>
-<li>Check the <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">official rules</a> and the remaining
-weekly allowance shown on your authenticated
-<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">submission page</a>.
-This site cannot read that allowance.</li>
-<li>On the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">competition page</a>
-choose <b>New submission</b> and select the <code>.tif</code> (or its single-TIFF ZIP) in <b>File to
-submit</b>. Never upload HTML, a JSON receipt or a screenshot.</li>
-<li>Paste the unique name and note below verbatim. Do not reproject, rescale, stretch or re-save the TIFF in
-an image editor.</li>
-<li>After an authorised upload, keep the submission id, timestamp, file SHA-256 and the organiser's result.
-Only that receipt supports an <b>ORGANIZER-CONFIRMED</b> score.</li></ol></section>
-<h2>Identification for this artefact</h2><p class="small">Copying these fields is not permission to upload
-the file.</p>
-<label for="submission-name">Unique name ({len(card["submission_name"])} / 140 characters)</label>
-<input id="submission-name" readonly value="{esc(card["submission_name"])}">
-<div class="copy-row"><button class="copy" data-copy-id="submission-name">Copy name</button></div>
-<label for="submission-note">Note · {card["note_chars"]} / 140 characters</label>
-<textarea id="submission-note" readonly rows="3">{esc(card["note"])}</textarea>
-<div class="copy-row"><button class="copy" data-copy-id="submission-note">Copy note</button></div>
-<p class="copy-status" id="copy-status" aria-live="polite"></p>
-<section class="prose"><h2>Reproduce it</h2><pre class="code">.venv/bin/python scripts/run_h70.py all          # canary -> fit -> sufficiency -> exchange -> holdout -> build
-.venv/bin/python scripts/h70_a_only_capacity.py   # pure-stratum capacity diagnostic
-.venv/bin/python scripts/publish_h70_site.py      # this page
-.venv/bin/python scripts/check_site.py &amp;&amp; .venv/bin/python -m pytest -q</pre>
-<p class="small">GitHub Pages is static: it serves the generated file, it does not train a model in your
-browser. Reproduction regenerates the same research result; it never uploads, promotes or spends a slot.</p>
-<p class="small">Full pipeline from pinned inputs:
-<code>bash scripts/download_competition_data.sh</code> ·
-<code>PYTHONPATH=src .venv/bin/python -c "from gems52 import structural; structural.build(dest='work/r2/features', include_optional_profiles=False)"</code>
-· <code>PYTHONPATH=src .venv/bin/python -m gems52.external</code> ·
-<code>.venv/bin/python scripts/fetch_prior_inventory.py --out work/h70/priors --receipt work/h70/prior_fetch_receipt.json</code></p></section>
-<details><summary>Preserved research archives — none of these is an approval</summary>
-{archive_idents}
-<p class="small"><a href="h64.html">H64 landing</a> · <a href="h64-executive-summary.html">H64 submission guide</a> ·
-<a href="archive-ctd5-overview.html">CTD5 landing page (negative, lane-saturated)</a> ·
-<a href="ctd5-audit.html">CTD5 run &amp; evidence</a> · <a href="h63-audit.html">H63 run &amp; evidence</a> ·
-<a href="h62.html">H62 run &amp; evidence</a> · <a href="h61-audit.html">H61 run &amp; evidence</a> ·
-<a href="h60.html">H60</a> · <a href="h59.html">H59</a> · <a href="h58.html">H58</a> ·
-<a href="h57.html">H57</a> · <a href="h56.html">H56</a> · <a href="h55.html">H55</a> ·
-<a href="h54.html">H54</a> · <a href="h53.html">H53</a> · <a href="r3.html">R3</a> ·
-<a href="hypotheses.html">Hypotheses</a> · <a href="method.html">Method</a> ·
-<a href="validation.html">Validation</a> · <a href="sources.html">Sources</a> ·
-<a href="irregularities.html">Irregularities</a> · <a href="forensics.html">Forensics</a> ·
-<a href="feed.html">Feed</a> · <a href="downloads/index.html">Download archive</a></p></details>"""
+<div class="grid2"><section class="panel"><h2>Local file checks</h2><p>Local raster-format and writer checks are recorded in the H70 receipts. They do not establish portal acceptance or scientific eligibility.</p></section>
+<section class="panel"><h2>Why submission is stopped</h2><ul>
+<li>The A-only candidate does not beat single_B on the registered HOLDOUT-DTI protocol.</li>
+<li>The literal final-dot lane gate is DUPLICATE/STOP.</li><li>No weekly slot is authorized and no organizer-confirmed score receipt exists.</li></ul></section></div>
+<p><a href="h70.html">Read the H70 method and evidence →</a> · <a href="data/h70_run_card.json">Historical run-card receipt (JSON)</a></p>
+<p class="small">This archive gives no owner override, upload instructions, copyable identification fields, rerun procedure, or new run-card authorization. Existing artifacts are for research review only.</p>"""
     guide = page(
-        "Executive summary — how to submit, and whether this file may be submitted",
-        "One-click download, the exact file contract, and the explicit submit verdict for the H70 artefact.",
+        "H70 research status — not for submission",
+        "H70 is a research-only archive with a DUPLICATE/STOP lane verdict.",
         guide_body)
     (DOCS / "h70-executive-summary.html").write_text(guide)
 
@@ -459,7 +376,7 @@ browser. Reproduction regenerates the same research result; it never uploads, pr
                   'H70 (negative).</strong> Download yes, for research only; submit no. The brief\'s literal '
                   'discovery stratum (A confident ∧ B abstains) is measured purely for the first time and is '
                   'anti-informative. <a href="h70.html">H70 landing</a> · '
-                  '<a href="h70-executive-summary.html">H70 submission guide</a> · '
+                  '<a href="h70-executive-summary.html">H70 research status — not for submission</a> · '
                   '<a href="h64.html">Previous round (H64)</a></div>')
     idx_body = f"""{idx_notice}
 <section class="hero"><div><div class="eyebrow">DOE GEMS / H70 · strict A-only isolation, two-view co-training</div>
@@ -515,19 +432,10 @@ stratum, and more than 200 m from the mapped catalogue.</p></section>
 <p>Every informative prior is constrained from the first placement; the budget was discovered by feasibility
 probes. The literal gate remains saturated by a registry lattice probe — a property of the registry.</p></section>
 </div>
-<div class="grid2"><section><div class="eyebrow">The 0.2778 question</div><h2>Precision, not detection.</h2>
-<p>Measured from the restored bytes: the reported-0.2778 champion <code>h33-2-b2</code> is a <b>strict
-subset</b> of the reported-0.2600 file (37,654 ⊂ 44,090 off-catalogue px), which is itself a strict subset of
-the reported-0.1922 parent field. The champion added no pixel and deleted 6,436 — every one between 100 m and
-200 m of a mapped trace, measured. Under <code>DTI = TPw / (0.2·FPw + 0.8·FNw)</code> with
-<code>FNw = |G| − TPw</code> exactly, mass on a masked or near-masked pixel can never earn credit but always
-pays the false-positive tax; deleting it is free precision. Binary mass is optimal at fixed support.</p>
-<p class="small"><b>Can this file beat it?</b> The live public board's top is 0.3774 (xiaofanhu, fetched
-2026-10-09), so the leader is nearly maxed on placement and must be <i>finding</i> structure. Our own
-measurement says the A-only discovery signal is anti-informative and the honest expectation for this lane is
-no gain. <b>No leaderboard gain is claimed.</b> All board numbers are PUBLIC BOARD or OWNER-REPORTED, never
-ORGANIZER-CONFIRMED.</p>
-<a href="h70.html">The full measured algebra (knowledge/01) →</a></section>
+<div class="grid2"><section><div class="eyebrow">Current evidence: reported 0.2778</div><h2>No causal score explanation established.</h2>
+<p>The saved public-board observation from 2026-10-09 20:18 UTC places the team row at rank 17 with 0.2778; the top row is 0.3774. This is a team-level PUBLIC-LEADERBOARD observation, not a submission receipt or TIFF-hash mapping. The file/score association remains OWNER-REPORTED.</p>
+<p>Local bytes show a 37,654-cell bitmap is a strict subset of a separate 44,090-cell bitmap associated by its owner with 0.2600: 6,436 cells removed, none added, all 100–200 m from the local known-fault mask. That relation and distance do not identify hidden-truth credit or explain a score change. The known-fault mask is pixel-exact; only new-fault truth is scored, and official staff says new-fault truth may occur within 300 m of known traces. Removed-cell credit is unknown.</p>
+<p class="small">HOLDOUT-DTI is an internal hide-and-recover measurement, not a public-board score or predictor. Any score inversion, |G| estimate, break-even value, or projection is conditional scenario arithmetic, never organizer-confirmed measurement. See <a href="../knowledge/49_why_02778_phd_answer.md">knowledge/49</a> and <code>IR-R5-011</code>.</p></section>
 <figure style="margin:0"><div class="panel"><div class="label">Emission domain and gates</div>
 <div class="status-line"><span>Registry rasters checked</span><span>{card["counts"]["prior_rasters"]}</span></div>
 <div class="status-line"><span>Informative priors</span><span>{card["counts"]["informative_rasters"]}</span></div>
@@ -544,7 +452,7 @@ results are not a live feed.</div>
 {archive_idents}
 <p class="small"><a href="archive-ctd5-overview.html">CTD5 landing page (negative, lane-saturated)</a> ·
 <a href="ctd5-audit.html">CTD5 run &amp; evidence</a> · <a href="ctd5-sources.html">CTD5 sources</a> ·
-<a href="h64.html">H64 landing</a> · <a href="h64-executive-summary.html">H64 submission guide</a> ·
+<a href="h64.html">H64 landing</a> · <a href="h64-executive-summary.html">H64 research status</a> ·
 <a href="h63-audit.html">H63 run &amp; evidence</a> · <a href="h63-sources.html">H63 sources</a> ·
 <a href="h62.html">H62 run &amp; evidence (parallel session)</a> ·
 <a href="archive-h62-overview.html">H62 landing archive</a> · <a href="h61-audit.html">H61 run &amp; evidence</a> ·

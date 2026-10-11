@@ -1,10 +1,7 @@
 {
-  "status": "legacy-audit-only",
+  "status": "historical research archive only; NOT FOR SUBMISSION; no upload steps or owner override",
   "exists": true,
   "file": "gems52-h54-revealed-core-strike-continuation-50517px-r1.tif",
-  "submission_name": "GEMSDOE52-H54-Research-AuditOnly",
-  "submission_note": "H54 legacy research/audit only; no comparable spatial holdout; not approved for submission.",
-  "submission_note_chars": 91,
   "sha256": "15210d91fa0c939b254d058876b47268e650176e08bf0eed10437ced8d476e36",
   "bytes": 313431,
   "format_ok": true,
@@ -426,5 +423,7 @@
   "receipt": "data/submission_gems52-h54-revealed-core-strike-continuation-50517px-r1.json",
   "review": "data/h54_artifact_review_2026-10-07.json",
   "prior_inventory": "data/h54_prior_inventory_availability.json",
-  "a_only_reasoning_csv": "downloads/a_only_reasoning54.csv"
+  "a_only_reasoning_csv": "downloads/a_only_reasoning54.csv",
+  "score_association_status": "owner-reported; no organizer-confirmed file-hash receipt",
+  "zero_credit_claim_status": "retracted; local distance does not measure hidden-truth credit"
 }

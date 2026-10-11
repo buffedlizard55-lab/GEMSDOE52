@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="H59 unique two-view co-training GeoTIFF with gate-checked download and explicit submission status for the DOE GEMS competition."><title>GEMSDOE52 — H59 co-training submission workspace · GEMSDOE52</title>
 <link rel="stylesheet" href="style.css"><script src="site.js" defer></script></head>
-<body><!--CTD5-ARCHIVE-NOTICE--><aside style="padding:14px 22px;background:#fff1de;color:#6e421d;border-bottom:1px solid #dcc8a8;font:14px/1.6 system-ui">Historical research archive, not current upload approval. <a href="index.html" style="color:#126954">Current CTD5 file and failed gates</a>. Older score, provenance and “safe to submit” statements may be superseded; no organizer score is newly confirmed here.</aside><a class="skip" href="#main">Skip to evidence</a><header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html">Overview</a><a href="executive-summary.html">Submission guide</a><a href="h59.html">H59 audit</a><a href="irregularities.html">Limitations</a><a href="sources.html">Sources</a><a href="downloads/index.html">Downloads</a></nav></header>
+<body><!--CTD5-ARCHIVE-NOTICE--><aside role="alert" style="padding:14px 22px;background:#fef2f2;color:#7f1d1d;border:2px solid #991b1b;border-radius:8px;font:14px/1.6 system-ui"><strong>Current H75 status: DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION.</strong> No owner override or waiver; H75 is terminal and must not be rerun. <a href="h75-executive-summary.html" style="color:#7f1d1d">Read the H75 stop status</a>. The page below is a historical archive; no archived file is approved here.</aside><a class="skip" href="#main">Skip to evidence</a><header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html">Overview</a><a href="executive-summary.html">Research status</a><a href="h59.html">H59 audit</a><a href="irregularities.html">Limitations</a><a href="sources.html">Sources</a><a href="downloads/index.html">Downloads</a></nav></header>
 <main id="main"><div class="eyebrow">H59 · two-view co-training on SHA-pinned bytes ·
 <span class="pill warn">RESEARCH ONLY — OK TO DOWNLOAD FOR REVIEW · DO NOT SPEND A WEEKLY SLOT</span></div>
 <section class="download-bar" aria-label="H59 artifact download">
@@ -46,16 +46,10 @@ artefact) px; median depth to basement 419 m
 under cover vs 155 m. The brief's geology is
 confirmed; the population bet is decided by the holdout table, not by the story.</p></section>
 </div>
-<h2>Why the champion 0.2778 file won, and what beats it</h2>
-<p>Full derivation in <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/01_why_02778_and_the_bar.md">knowledge/01</a>
-and <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/10_revealed_preference_inverse.md">knowledge/10</a>.
-Short version: <code>h33-h33-2-b2</code> = the 0.2600 dotted-ridge file minus the ≤200 m catalogue
-ring — free precision, because masked pixels can never earn credit but always pay the false-positive
-tax. The metric's algebra then makes the champion file's double-corroborated core
-(<code>h33-2-b2 ∩ gems24-d1-5</code>, 25,517 px) credit <b>exactly bracketable</b> at
-[4,168, 5,223] truth-pixel-mass — 16.3–20.5 % density against 2.79 % for uniform random. That core
-alone projects 0.2546–0.3190 <i>before any new geology</i>; beating 0.2778 is therefore an
-arm-ranking problem, and the entire H59 slate attacks exactly that.</p>
+<section class="card" id="reported-02778-evidence"><h2>Evidence about the reported 0.2778 — no causal explanation established</h2>
+<p><strong>PUBLIC-LEADERBOARD observation:</strong> the saved 2026-10-09 20:18 UTC board places extradr19 at 0.2778, rank 17; the top row is 0.3774. The board has no TIFF hash or submission receipt. <strong>OWNER-REPORTED file/score association:</strong> the attribution of that value to an H33-labelled file remains unauthenticated. <strong>ORGANIZER-CONFIRMED receipt:</strong> none located for this score-to-file mapping.</p>
+<p><strong>LOCAL pixel comparison only:</strong> the 37,654-cell H33-labelled bitmap is a strict subset of a separately owner-reported 0.2600-labelled 44,090-cell raster (6,436 cells removed, none added). Those removed cells are 100–200 m from the local known-fault mask. These byte and distance facts do not establish either score or explain a score change. DrivenData staff says the known-fault mask is pixel-exact and only new-fault truth is scored; new-fault truth may occur within 300 m of known traces. Therefore near-trace distance alone does not imply zero credit or an automatic penalty. Hidden credit for the removed cells is unknown. No core-credit bracket, projected score, or causal score account is presented here.</p>
+<p class="small">See the current evidence review, official citations, and local receipts in <a href="../knowledge/49_why_02778_phd_answer.md">knowledge/49</a>, <code>IR-R5-011</code>, and <a href="data/leaderboard_observation_2026-10-09T201800Z.json">the dated leaderboard observation</a>.</p></section>
 <h2>The five preregistered hypotheses — verdicts</h2>
 <div class="table-wrap"><table><thead><tr><th>field (arm ranking)</th><th>tip lift vs random</th>
 <th>hide lift vs random</th><th>folds won</th><th>promotion</th><th>slot bar</th></tr></thead>

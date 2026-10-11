@@ -24,3 +24,16 @@ def test_h75_values_in_unit_interval():
         v = d.read(1)
         assert d.count == 1 and str(d.crs) == "EPSG:32611" and v.shape == (3730, 3292)
     assert np.isfinite(v).all() and set(np.unique(v).tolist()) == {0.0, 1.0}
+
+
+def test_h75_terminal_runner_refuses_fit_holdout_or_rebuild():
+    import importlib.util
+    import pytest
+    path=ROOT/'scripts/run_h75.py'
+    spec=importlib.util.spec_from_file_location('h75_terminal_runner_test',path)
+    mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)
+    with pytest.raises(SystemExit,match='terminal DUPLICATE/STOP'):
+        mod.main()
+    for stage in (mod.stage_fit,mod.stage_holdout,mod.stage_build):
+        with pytest.raises(SystemExit,match='terminal DUPLICATE/STOP'):
+            stage()

@@ -1,6 +1,8 @@
-# H72 — results and limits (2026-10-09)
+# H72 — historical results and limits (2026-10-09)
 
-Round: **H72 — novel ranker exploration for competition submission generation.**
+> **Status correction (2026-10-09):** this early summary is superseded for current eligibility by `knowledge/60_h72_results_and_limits.md`. Do not treat the legacy H72-v3 row as recommended or approved: its reported HOLDOUT-DTI 0.031 is below the ~0.080 random reference. Older H72 TIFFs remain archive files only; no H72 file is approved for competition submission.
+
+Round: **H72 — historical ranker exploration.**
 Three experiments used. Competition slots used: **0**.
 
 Every DTI number below is **HOLDOUT-DTI** (evaluator `gems52-pooled-hide-v1`, α 0.2, β 0.8, 300 m
@@ -43,7 +45,7 @@ is too diffuse to rank fault pixels effectively at the holdout's prevalence (~1%
 
 **Format:** PASS. **Uniqueness:** PASS. **Rank correlation:** max |rho| = 0.045.
 
-### H72-v3 — Enhanced h19-5 Ranking (RECOMMENDED)
+### H72-v3 — Enhanced h19-5 ranking (legacy archive; not recommended)
 
 **Layers.** h19-5 raster (proven ranker, owner-reported 0.1922 on the competition), multi-scale
 DEM edge coherence at 5 Gaussian scales (σ=0.5, 1.0, 1.5, 2.0, 3.0 px), LiDAR scarp features.
@@ -107,9 +109,9 @@ A-only candidate is the competitive advantage a small team can leverage.
 
 | Submission | Format | Unique | Lane | Holdout | Download | Submit |
 |---|---|---|---|---|---|---|
-| H72-v3 | PASS | PASS | 57.85% (< 70%) | 0.031 | **YES** | **AT OWN RISK** |
-| H72-SPSC | PASS | PASS | 0.045 corr | 0.027 | YES | NOT RECOMMENDED |
-| H72-MRAEC | PASS | PASS | 0.045 corr | 0.023 | YES | NOT RECOMMENDED |
+| H72-v3 (legacy file) | Historical local check PASS | Historical pattern-distinct claim only | 57.85% vs h19-5 (not the current full-registry gate) | 0.031 below random (legacy point estimate) | YES, archive only | **NO — NOT FOR SUBMISSION** |
+| H72-SPSC (legacy file) | Historical local check PASS | Historical pattern-distinct claim only | Historical check only | 0.027 below random (legacy point estimate) | YES, archive only | **NO — NOT FOR SUBMISSION** |
+| H72-MRAEC (legacy file) | Historical local check PASS | Historical pattern-distinct claim only | Historical check only | 0.023 below random (legacy point estimate) | YES, archive only | **NO — NOT FOR SUBMISSION** |
 
 All three are format-valid and unique. None beats random on the holdout. The holdout does not
 predict competition score. Competition slots used: **0** by any of these submissions.

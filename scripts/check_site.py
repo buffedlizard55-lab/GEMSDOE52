@@ -24,6 +24,7 @@ import tempfile
 import threading
 from html.parser import HTMLParser
 from pathlib import Path
+from datetime import datetime
 from urllib.request import urlopen
 
 import csv
@@ -68,6 +69,66 @@ class Scan(HTMLParser):
     def handle_data(self, data):
         if self.stack:
             self.scratch.append(data)
+
+
+def _artifact_stamp(path: Path) -> tuple[datetime | None, bool]:
+    """Return an artifact's latest parseable timestamp and whether it is time-of-day precise.
+
+    Full timestamps in a sidecar or filename take precedence.  Date-only tokens such as
+    ``20261009`` are retained at day precision; callers may order them across UTC calendar days,
+    but must conservatively retain same-day files because their within-day order is unknown.
+    """
+    texts = []
+    sidecar = path.with_suffix(".json")
+    for source in (sidecar, path):
+        try:
+            texts.append(source.read_text(errors="replace") if source.suffix == ".json" else source.name)
+        except OSError:
+            texts.append(source.name)
+
+    precise: list[datetime] = []
+    day_only: list[datetime] = []
+    for text in texts:
+        tokens = re.findall(r"(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})Z?", text)
+        tokens += re.findall(r"(\d{8}T\d{6})Z", text)
+        for token in tokens:
+            for fmt in ("%Y-%m-%dT%H:%M:%S", "%Y%m%dT%H%M%S"):
+                try:
+                    precise.append(datetime.strptime(token, fmt))
+                    break
+                except ValueError:
+                    continue
+        if not tokens:
+            dates = re.findall(r"(?<!\d)(\d{8})(?!\d)", text)
+            dates += re.findall(r"(?<!\d)(\d{4}-\d{2}-\d{2})(?!\d)", text)
+            for token in dates:
+                for fmt in ("%Y%m%d", "%Y-%m-%d"):
+                    try:
+                        day_only.append(datetime.strptime(token, fmt))
+                        break
+                    except ValueError:
+                        continue
+    if precise:
+        return max(precise), True
+    if day_only:
+        return max(day_only), False
+    return None, False
+
+
+def _is_later_than_build(path: Path, built: datetime) -> bool:
+    stamp, precise = _artifact_stamp(path)
+    if stamp is None:
+        return False
+    if precise:
+        return stamp > built
+    # A date-only artifact on the same calendar day is not provably later, so leave it in
+    # the conservative prior set.  A strictly later UTC date can safely be excluded.
+    return stamp.date() > built.date()
+
+
+def _r5_build_stamp(data_dir: Path) -> tuple[datetime | None, bool]:
+    """Use the emission receipt's timestamp, not the later site/submission wrapper timestamp."""
+    return _artifact_stamp(data_dir / "r5_novel_emission.json")
 
 
 def check_h57_creditcore(DATA, DOCS, ROOT, notes):
@@ -154,11 +215,8 @@ def check_h57(DATA, DOCS, ROOT, notes):
             problems.append(f"H57: {what} missing ({path.name})")
     if canonical.exists() and alias.exists() and canonical.read_bytes() != alias.read_bytes():
         problems.append("H57: short TIFF alias is not byte-identical to the canonical raster")
-    # The scheduled feed repackages ZIPs for whatever submission/LATEST.txt names, and its
-    # packaging adds SUBMISSION_NOTE.txt and evidence.json next to the TIFF.  The submission rule
-    # is "a single-band GeoTIFF, or a ZIP containing one GeoTIFF", so the invariant that matters is
-    # exactly one TIFF member whose bytes are the canonical TIFF; archive-level byte equality is
-    # reported as a note because a repackage does not change the payload the portal receives.
+    # Public research ZIPs contain exactly one TIFF and no portal-name/note or evidence sidecars.
+    # The general archive-policy check at the end of main() enforces that for every downloadable ZIP.
     for zp in (canonical_zip, alias_zip):
         if zp.exists():
             with zipfile.ZipFile(zp) as archive:
@@ -511,7 +569,17 @@ def check_h58(DATA, DOCS, ROOT, notes, *, current_round=False):
         if DATA.joinpath("h58_preregistration.json").read_bytes() != reg_path.read_bytes():
             problems.append("H58: published preregistration bytes differ from the frozen registry")
 
-        for page_name in ("h58.html", "index.html", "executive-summary.html", "downloads/index.html"):
+        home_text = (DOCS / "index.html").read_text(encoding="utf-8", errors="replace")
+        h75_status = DOCS / "h75-executive-summary.html"
+        h75_active = ("H75: DUPLICATE/STOP" in home_text and h75_status.is_file()
+                      and "DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION" in
+                      h75_status.read_text(encoding="utf-8", errors="replace"))
+        # H58 remains a historical download, not the current status/summary. When H75 owns the
+        # current stop, validate H58's own archive page instead of requiring its alias/note in the
+        # H75 executive summary and global downloads landing page.
+        page_names = ("h58.html",) if h75_active else (
+            "h58.html", "index.html", "executive-summary.html", "downloads/index.html")
+        for page_name in page_names:
             page = DOCS / page_name
             if not page.is_file():
                 problems.append(f"H58: {page_name} is missing")
@@ -550,6 +618,9 @@ def check_r5(DATA, DOCS, ROOT, problems, notes):
         return
     rec = json.loads(rec_path.read_text())
     stem, sha, nbytes = rec["stem"], rec["sha256"], rec["bytes"]
+    if not (ROOT / "data/sample_submission.tif").is_file():
+        notes.append("R5 deep grid/format/novelty recheck skipped: data/sample_submission.tif is not restored in this checkout")
+        return
 
     # 1. every copy on disk is the same bytes as the receipt
     copies = [ROOT / "submission" / f"{stem}.tif", DOCS / "downloads" / f"{stem}.tif",
@@ -608,38 +679,14 @@ def check_r5(DATA, DOCS, ROOT, problems, notes):
     priors = [q for q in priors
               if hashlib.sha256(q.read_bytes()).hexdigest() != sha and not q.name.startswith("gems52-r5-novel-")]
 
-    # A novelty receipt is a statement about the prior set that existed when the round was built.
-    # Concurrent sessions merge afterwards, so a raster whose own receipt or filename carries a
-    # timestamp LATER than this round's generated_utc cannot have been in its prior set.  Excluding
-    # those keeps the equality check strict for everything R5 could actually have seen, and the
-    # merged-set value is published as a supplemental closure note -- the same pattern CTD5 and H60
-    # used when a parallel round landed mid-run.  Without this, every later round silently invalidates
-    # every earlier round's receipt (measured: H61's 37,600-dot raster moved R5's 1.0 to 0.989989).
-    import re as _re
-    from datetime import datetime as _dt
-
-    def _stamp(q: Path):
-        cands = []
-        sidecar = q.with_suffix(".json")
-        for src in (sidecar, q):
-            try:
-                txt = src.read_text(errors="replace") if src.suffix == ".json" else src.name
-            except Exception:                                    # noqa: BLE001
-                txt = src.name
-            cands += _re.findall(r"(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})Z?", txt)
-            cands += _re.findall(r"(\d{8}T\d{6})Z", txt)
-        best = None
-        for c in cands:
-            for fmt in ("%Y-%m-%dT%H:%M:%S", "%Y%m%dT%H%M%S"):
-                try:
-                    t = _dt.strptime(c, fmt)
-                except ValueError:
-                    continue
-                best = t if best is None or t > best else best
-        return best
-
-    built = _stamp(DATA / "submission_r5.json")
-    later = [q for q in priors if built is not None and (_stamp(q) or built) > built]
+    # A novelty receipt is a statement about the prior set that existed when the R5 emission was built.
+    # Use the primary emission receipt (2026-10-08T23:40:33Z); submission_r5.json is a later site/UI
+    # wrapper (23:51:56Z), not the raster build time. Concurrent sessions merge afterwards, so only
+    # artifacts provably newer than the emission are excluded. Date-only tokens (e.g. H75's YYYYMMDD
+    # filename) are ordered only across UTC calendar days; same-day and undated files remain in the
+    # conservative prior set, preventing unrecorded within-day ordering from silently manufacturing novelty.
+    built, _built_precise = _r5_build_stamp(DATA)
+    later = [q for q in priors if built is not None and _is_later_than_build(q, built)]
     # A later round's raster reaches the prior list under several names (canonical file, short alias,
     # docs/downloads copy), and only the canonical one carries a dated sidecar.  Exclude by content
     # hash so an alias of a later round cannot stay behind and invalidate the earlier receipt.
@@ -1153,14 +1200,14 @@ def main() -> int:
         for arm, value in h['means'].items():
             if f'{value:.6f}' not in text:
                 problems.append(f'validation.html: R2 {arm} mean is not rendered from its receipt')
-        # The literal used to be the H53/H54 string 'Do not upload'.  That is a per-round status
-        # marker, not a permanent property of the site, so it is now read from the current receipt.
-        marker_needed = ('do not upload' if current_round != 'H57' else None)
-        if marker_needed:
+        # The status can be expressed as a per-round warning. Current H75 pages use the clearer
+        # explicit NOT FOR SUBMISSION / DUPLICATE/STOP terms rather than the old H53/H54 wording.
+        if current_round != 'H57':
             for page_name in ('index.html', 'executive-summary.html'):
-                body = (DOCS / page_name).read_text()
-                if marker_needed not in body.casefold():
-                    problems.append(f'{page_name}: missing failed-gate warning {marker_needed!r}')
+                body = (DOCS / page_name).read_text().casefold()
+                if not any(term in body for term in
+                           ('do not upload', 'not for submission', 'duplicate/stop', 'do not submit')):
+                    problems.append(f'{page_name}: missing explicit failed-gate / not-for-submission warning')
 
     edge_path = DATA / 'h55_edge_submission.json'
     edge_hold_path = DATA / 'h55_edge_holdout.json'
@@ -1245,6 +1292,24 @@ def main() -> int:
                      "(informational; receipts stay authoritative)")
         notes.extend("  " + x for x in typed_numbers[:4])
 
+    # Public research archives are intentionally single-TIFF only: no portal identifiers, notes,
+    # status sidecars, or evidence files are bundled with downloadable ZIPs.
+    for zip_path in sorted((DOCS / "downloads").glob("*.zip")):
+        try:
+            with zipfile.ZipFile(zip_path) as archive:
+                members = archive.namelist()
+                if len(members) != 1 or not members[0].lower().endswith((".tif", ".tiff")):
+                    problems.append(f"{zip_path.name}: research ZIP must contain exactly one TIFF and no sidecars")
+                    continue
+                if archive.testzip() is not None:
+                    problems.append(f"{zip_path.name}: ZIP CRC check failed")
+                    continue
+                tiff_path = DOCS / "downloads" / members[0]
+                if tiff_path.is_file() and archive.read(members[0]) != tiff_path.read_bytes():
+                    problems.append(f"{zip_path.name}: archived TIFF differs from the same-name TIFF download")
+        except (OSError, zipfile.BadZipFile, KeyError) as error:
+            problems.append(f"{zip_path.name}: invalid research ZIP ({error})")
+
     check_r5(DATA, DOCS, ROOT, problems, notes)
     print(f"pages checked: {len(pages)}   data files: {len(list(DATA.glob('*.json')))}")
     for nse in notes:
@@ -1268,8 +1333,8 @@ def main() -> int:
         slot = f"Scientific slot gate remains CLOSED for {sub.get('file')}."
     else:
         slot = 'Scientific slot gate: not recorded in docs/data/submission.json (not assumed either way).'
-    print('\n✓ local links/JSON/receipt values verified; format and canonical-pattern research release '
-          f'verified; byte-identical TIFF serves through the site. {slot}')
+    print('\n✓ applicable local links, JSON/receipt values, and byte-download checks verified; '
+          f'data-dependent checks that could not run are listed above. {slot}')
     return 0
 
 

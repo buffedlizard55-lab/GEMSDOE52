@@ -1,4 +1,6 @@
-# 21 — What H59 actually found (session 2026-10-08)
+# 21 — Historical H59 report (session 2026-10-08)
+
+> **Current correction (2026-10-10):** the owner-reported score narrative and local subset measurements do not establish why a public score changed. The saved 2026-10-09 20:18 UTC leaderboard observation places 0.2778 at rank 17, not at the public top; no file/hash receipt authenticates the association. The 100–200 m ring is not established as zero-credit because new-fault truth may lie within 300 m of known traces. See [`knowledge/49`](49_why_02778_phd_answer.md). Calculations below are a historical conditional analysis, not organizer-confirmed evidence.
 
 Preregistered in [`20_hypotheses_H59_preregistered.md`](20_hypotheses_H59_preregistered.md) and frozen
 in [`registry/h59_preregistration.json`](../registry/h59_preregistration.json) before any H59 fit ran.
@@ -10,15 +12,14 @@ as unused. Receipts: `evidence/h59_cotrain.json`, `evidence/h59_validation.json`
 `evidence/h59_build.json`, `evidence/h59_format_gate.json`, `evidence/h59_uniqueness.json`,
 `evidence/h59_slot_gate.json`.
 
-## 1. The answer to "why did `h33-h33-2-b2` score 0.2778, and can we beat it?"
+## 1. The historical question and the limits of the local comparison
 
-The champion file is `h27-4-r1` (owner-reported 0.2600 for the d2-8 superset) **minus the ≤200 m ring
-around the mapped catalogue**: 40,199 px → 37,654 px scored, +6.8 % score for deleting 6.3 % of its own
-mass. Re-measured from bytes again in this session (the exact set relations of the nested pair):
-`A\B = 0`, `B\A = 6,436` px all inside 100–200 m of a mapped trace, `min` distance-to-catalogue inside
-A = **223.6 m**, and inverting the metric on the pair gives `|G| = 14,088.7 px` and *exactly zero*
-credit for the deleted ring. It won because it understood the metric's tax term, not because its
-detector was stronger: same mass scattered scores 0.0778 (3.6× worse).
+An earlier owner-reported narrative associated `h33-2-b2` with 0.2778 and `gems24-d2-8` with 0.2600,
+then treated the 37,654-versus-44,090 subset relation as a score explanation. The local byte facts remain:
+`A\\B = 0`, `B\\A = 6,436` pixels, all removed cells 100–200 m from the local known-fault mask, and the
+nearest retained pixel is 223.6 m away. The file/score mapping is not authenticated, the hidden new-fault
+credit on the removed cells is unknown, and the byte relation does not establish why an organizer score
+changed. The old zero-credit / `|G| = 14,088.7` inversion is a conditional scenario, not a measurement.
 
 Beating it is then a two-part problem, and H59 executed both parts as far as the evidence allows:
 

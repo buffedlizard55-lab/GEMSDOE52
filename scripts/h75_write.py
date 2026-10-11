@@ -1,6 +1,17 @@
 #!/usr/bin/env python3
-"""Write the H75 B_DVA 37,654-dot GeoTIFF, validate it from disk, compare with the 0.2778 reference."""
-import hashlib, json, sys, shutil, zipfile
+"""Historical H75 writer; fail-closed after terminal DUPLICATE/STOP."""
+import json
+from pathlib import Path
+ROOT = Path(__file__).resolve().parents[1]
+_card_path = ROOT / "evidence/h75_run_card.json"
+if not _card_path.is_file():
+    raise SystemExit("H75 writer is fail-closed: no current authorization receipt exists")
+_card = json.loads(_card_path.read_text())
+if (_card.get("lane", {}).get("dots_verdict") == "DUPLICATE/STOP"
+        or "FINAL-DOT LANE: DUPLICATE/STOP" in str(_card.get("verdict", ""))):
+    raise SystemExit("H75 is terminal DUPLICATE/STOP; TIFF/ZIP rebuild and override are forbidden")
+raise SystemExit("H75 has no newly authorized experiment; writer is disabled")
+import hashlib, sys, shutil, zipfile
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / "src"), str(ROOT / "scripts")]

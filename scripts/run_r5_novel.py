@@ -14,28 +14,33 @@ else.
 
 What is used instead, frozen before any of the numbers below were computed
 --------------------------------------------------------------------------
-Every statement here comes from bytes restored and SHA-verified in this sandbox plus owner-reported
-public scores (never organiser-authenticated; see ``knowledge/06``).
+Every statement here must be read with the provenance limits in ``knowledge/49`` and
+``evidence/r5_provenance_audit_20261009.json``. Published score/file associations are owner-reported,
+not organizer-authenticated. This is a historical research build; its format and build-time uniqueness
+checks do not grant submission eligibility.
 
-Measured, exact
-  * ``|G| = 14,088.7 px`` and the ring within 200 m of the mapped catalogue earns **exactly 0**
-    (``knowledge/10`` §2, re-derived from the restored bytes this session).
-  * ``DTI = T / (0.2 S + 0.8 |G|)`` exactly for a binary emission, because ``M == T`` identically:
-    both are ``sum_g max_x k(d(x,g))``.  Clustering therefore never adds tax, it only wastes mass.
-  * The credit curve of this family's field is ``T(S) = 471.6 S^0.2284``, validated on 8 files
-    across 2 families to within 4 % (``knowledge/10`` §4).
-  * For any field of that form the DTI-optimal budget is ``S* = 4 |G| beta / (1 - beta)`` -- with the
-    measured ``beta = 0.2284`` that is **16,715 px** (9,945-24,152 over beta in [0.15, 0.30]), which
-    is the same 15-20k window ``knowledge/10`` §8 reached from a completely different prior.
-  * The one measured *positive* structural property of the credited cloud is its strike coherence
-    (``knowledge/10`` §7): mean coherence 0.531 vs 0.362 for a mass-matched random cloud at sigma=4,
-    16.8 % of credited dots above coherence 0.8 vs 2.2 %, dominant strike 100-110 deg in array
-    convention (+x east, +y south) = geographic azimuth 010-020 deg, the Basin-and-Range fabric.
+Conditional scenario model (not hidden-truth measurement)
+  * The legacy ``|G| = 14,088.7 px`` point estimate and the earlier claim that the 100-200 m ring
+    has exactly zero credit are not established. The organizer states that new-fault truth may lie
+    within 300 m of known traces. The R5 budget calculation used the legacy estimate; retain it only
+    as a conditional scenario, not a measured truth size or score explanation.
+  * The official distance-weighted Tversky metric is the source of truth. The sparse-emission
+    simplification ``DTI ≈ T / (0.2 S + 0.8 |G|)`` depends on assumptions about ``M`` and is not an
+    identity for arbitrary rasters or hidden faults.
+  * ``T(S) = 471.6 S^0.2284`` is a model fit to owner-reported score associations, not a measurement
+    against hidden labels. Its posterior projections are not leaderboard scores and the associated
+    hide-and-recover instrument is not a qualified leaderboard predictor.
+  * Strike-coherence summaries describe the local owner-score-derived reference cloud; they do not
+    establish credited hidden-truth pixels or confirm a geological fault.
 
 Frozen rules
-  R1  The emission is **strictly novel**: it contains no pixel emitted by any of the 13 restored
-      scored priors (their union is 947,062 px) and no pixel within 200 m of the mapped catalogue.
-      This is what makes the "unique TIF" requirement true by construction rather than by name.
+  R1  The historical build-time emission was compared with the accessible inventory at build time:
+      the receipt records 71 rasters and 1.0 support novelty. It also excluded cells within 200 m of
+      the local known-fault mask as an internal project rule, not an organizer scoring rule. A
+      2026-10-09 cumulative closure recheck finds 120 accessible rasters, 0.874408 support novelty,
+      and a distinct decoded pattern. Thus it is not strictly novel against the current inventory.
+      The free-text submission note's original 55 count was stale and is corrected in the audit receipt.
+      This does not make the TIFF submission-approved.
   R2  The budget is ``S* = 4 |G| beta / (1 - beta)`` with the measured ``beta``.  Not tuned.
   R3  Among candidates, choose the one with the largest **coherence lift over the random control**
       (mean coherence at sigma=4 plus fraction above 0.8, each minus the control's), subject to its
@@ -79,13 +84,13 @@ EVID = ROOT / "evidence"
 SUB = ROOT / "submission"
 DOCS = ROOT / "docs"
 
-G_PX = R.G_PX                 # 14,088.7, exact from the nested-pair identity
-BETA = 0.2284                 # measured credit-curve exponent (knowledge/10 §4)
-C_FIELD = 471.6               # measured credit-curve amplitude for this family's field
-CORRIDOR_M = 200.0
-CHAMPION = 0.2778          # extradr19, rank 13 -- this family's best, owner-reported
-BOARD = 0.3195               # DARD, rank 7 -- the bar the current brief states
-BOARD_TOP = 0.3774           # xiaofanhu, rank 1 -- the actual board top, fetched 2026-10-08
+G_PX = R.G_PX                 # legacy conditional point estimate; not established (see knowledge/49)
+BETA = 0.2284                 # owner-score-derived model exponent; not hidden-truth measurement
+C_FIELD = 471.6               # owner-score-derived model amplitude; not hidden-truth measurement
+CORRIDOR_M = 200.0            # internal historical emission rule, not an organizer scoring buffer
+CHAMPION = 0.2778             # owner-reported reference; extradr19 was observed at rank 17 on 2026-10-09 20:18 UTC; no file mapping
+BOARD = 0.3195                # DARD, observed at rank 7 on the saved 2026-10-09 20:18 UTC board reading
+BOARD_TOP = 0.3774            # xiaofanhu, observed at rank 1 on the saved 2026-10-09 20:18 UTC board reading
 CREDITED_STRIKE_DEG = (100.0, 110.0)     # array convention, knowledge/10 §7
 BAND_TOL_DEG = 5.0
 MIN_SEP = 3.0
@@ -172,11 +177,11 @@ def main() -> int:
     cat = L.catalogue()
     edt_cat = ndimage.distance_transform_edt(~cat, sampling=100.0)
     legal = valid & (edt_cat > CORRIDOR_M)
-    # Novelty is enforced against *every* raster this repository has ever produced, not only the 13
-    # the organiser scored: 55 files live in data/scored, data/reference, submission/ and
-    # docs/downloads, and 19.8 % of an earlier build's pixels turned out to have been emitted by one
-    # of this repo's own never-submitted research artifacts.  "Unique" has to mean unique against all
-    # of them or it does not mean anything.
+    # Novelty is checked against every accessible raster in these shared locations, not only the 13
+    # organizer-scored files. The inventory changes as parallel research artifacts arrive; therefore
+    # record the exact run-time prior count and date in the emission receipt instead of hard-coding a
+    # count here. An earlier build showed overlap with an unscored research artifact, motivating the
+    # broader comparison. Build-time uniqueness is not submission eligibility.
     prior_paths = G.find_priors([ROOT / "data/scored", ROOT / "data/reference", ROOT / "submission",
                                  ROOT / "docs/downloads"])
     # ... minus this round's own builds and their short alias.  The emission is deterministic, so a
@@ -352,10 +357,11 @@ def main() -> int:
     receipt = dict(
         generated_utc=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         frozen_rules=dict(
-            R1_strict_novelty="no pixel emitted by any of the 13 restored scored priors "
-                              f"(union {int(prior_union.sum()):,} px) and none within {CORRIDOR_M:g} m "
-                              "of the mapped catalogue",
-            R2_budget="S* = 4|G|beta/(1-beta) with the measured beta=0.2284 and |G|=14088.7",
+            R1_strict_novelty=f"no pixel emitted by any of {len(prior_paths)} accessible build-time priors "
+                              f"(union {int(prior_union.sum()):,} px); none within {CORRIDOR_M:g} m "
+                              "of the local known-fault mask (repository rule, not an organizer scoring buffer)",
+            R2_budget=(f"conditional scenario S*=4|G|beta/(1-beta), beta={BETA}; uses legacy "
+                       f"|G|={G_PX:g}, which is not established from hidden truth"),
             R3_choice="largest coherence lift over the random control, subject to the dominant "
                       "strike falling in the credited band 095-115 deg (array convention)",
             R4_prior=f"kappa ~ U{KAPPA} on T(S) = kappa*471.6*S^0.2284"),
@@ -429,9 +435,11 @@ def main() -> int:
                      support_novelty_gate_ok=uniq["support_novelty_gate_ok"]),
         ok_to_download=bool(fmt["ok"] and info["finite_pixels"] == info["height"] * info["width"]
                             and info["min"] >= 0.0 and info["max"] <= 1.0),
-        ok_to_submit=bool(fmt["ok"] and uniq["canonical_pattern_unique"]
-                          and info["finite_pixels"] == info["height"] * info["width"]
-                          and info["min"] >= 0.0 and info["max"] <= 1.0),
+        portal_format_valid=bool(fmt["ok"] and info["finite_pixels"] == info["height"] * info["width"]
+                                 and info["min"] >= 0.0 and info["max"] <= 1.0),
+        ok_to_submit=False,
+        approved_for_weekly_slot=False,
+        submission_eligibility="NO — not approved; a local format/uniqueness gate is not promotion evidence",
         seconds=time.time() - t0)
     for p in (EVID / "r5_novel_emission.json", DOCS / "data" / "r5_novel_emission.json",
               EVID / "r5_novel_candidates.json"):

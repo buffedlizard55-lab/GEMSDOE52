@@ -174,7 +174,7 @@ def build_page() -> str:
 <title>H62 — two-view corroboration · GEMSDOE52</title>
 <link rel="stylesheet" href="assets/ctd5.css"><script src="assets/ctd5.js" defer></script></head>
 <body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>
-<a href="h62.html">H62</a><a href="index.html">Overview</a><a href="ctd5-audit.html">Run &amp; evidence</a><a href="executive-summary.html">Submission guide</a><a href="ctd5-sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header>
+<a href="h62.html">H62</a><a href="index.html">Overview</a><a href="ctd5-audit.html">Run &amp; evidence</a><a href="executive-summary.html">H62 research status</a><a href="ctd5-sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header>
 <main id="main"><section class="hero"><div><div class="eyebrow">DOE GEMS · H62 · {PREREG['registered_utc_date']}</div>
 <h1>Two views.<br>Corroboration instead of disagreement.</h1>
 <p class="lead">Every earlier round in this lane shipped the cell where the two views disagree. H62 tests the opposite cell of the same 2×2 confidence table, on the same bytes, with the same folds.</p>
@@ -289,7 +289,7 @@ def build_page() -> str:
 </ul>
 <p><a href="data/h62_run_card.json">Run card (JSON)</a> · <a href="data/h62_build.json">Build receipt</a> · <a href="data/h62_validation.json">Validation receipt</a> · <a href="data/h62_cotrain.json">Co-training receipt</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/34_hypotheses_H62_preregistered.md">Preregistered hypotheses</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/evidence/h62_lane_gate.json">Lane gate, per prior</a></p>
 </main>
-<footer>Competition 306 · CPU research · fault-structure predictions, not confirmed geothermal vents. <a href="irregularities.html">Limitations &amp; review</a> · <a href="executive-summary.html">Submission guide</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code &amp; complete prompt</a></footer></body></html>
+<footer>Competition 306 · CPU research · fault-structure predictions, not confirmed geothermal vents. <a href="irregularities.html">Limitations &amp; review</a> · <a href="executive-summary.html">H62 research status</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52">Code &amp; complete prompt</a></footer></body></html>
 """
 
 
@@ -302,22 +302,15 @@ BANNER = f"""<!--H62-BANNER--><section class="hero" style="padding-top:8px"><div
 <div class="actions"><a class="button" href="downloads/{FILE}" download>Download the new GeoTIFF ↓</a><a class="button secondary" href="h62.html">Read the H62 evidence</a></div>
 <p class="fileline">{FILE}<br>{BYTES:,} bytes · {NPX:,} px · SHA-256 {SHA}</p></div></section><hr class="divider"><!--/H62-BANNER-->"""
 
-GUIDE = f"""<!--H62-GUIDE--><div class="eyebrow">Current file · H62</div>
-<h1>How to submit this file, in four clicks</h1>
-<div class="notice bad" role="note"><strong>OK TO DOWNLOAD FOR RESEARCH · DO NOT SUBMIT</strong>
-<p>{FILE} passes format, the 200 m ring, not-merely-the-union, decoded-pattern uniqueness and the leakage canary. It does <strong>not</strong> pass the strict lane gate ({pct(RO['lane_dots_max_within_3px_frac_gate'])} of dots within 3 px of the spacing-5 lattice). No weekly slot is allocated or recommended. No organizer-confirmed score exists for this file.</p></div>
-<div class="actions"><a class="button" href="downloads/{FILE}" download>1 · Download the GeoTIFF ↓</a><a class="button secondary" href="downloads/{FILE[:-4]}.zip" download>or the single-TIFF ZIP</a></div>
+GUIDE = f"""<!--H62-GUIDE--><div class="eyebrow">H62 · historical research status</div>
+<h1>H62 is a research archive.<br>NOT FOR SUBMISSION.</h1>
+<div class="notice bad" role="alert"><strong>RESEARCH DOWNLOAD ONLY · DUPLICATE/STOP · NOT FOR SUBMISSION · NO SLOT AUTHORIZED</strong>
+<p>The literal final-dot lane gate is a stop because the spacing-five lattice is within 3 px of the eligible footprint. Format validity, decoded-pattern uniqueness, and download availability do not override it. No upload steps, owner override, or paste-ready note are provided.</p></div>
+<div class="actions"><a class="button" href="downloads/{FILE}" download>Download H62 research TIFF</a><a class="button secondary" href="downloads/{FILE[:-4]}.zip" download>Research ZIP</a><a class="button secondary" href="h62.html">H62 audit receipts</a></div>
 <p class="fileline">{FILE}<br>{BYTES:,} bytes · {NPX:,} px · SHA-256 {SHA}</p>
-<div class="grid2"><section class="panel"><h2>2 · Open the submission form</h2>
-<p><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">drivendata.org/competitions/306/…/submissions</a> → <strong>New submission</strong> → <strong>File to submit</strong> → choose the <span class="mono">.tif</span> (or the ZIP; both contain the same single GeoTIFF).</p>
-<h2>3 · Paste the note</h2>
-<p class="mono">{NOTE}</p>
-<p class="small">{len(NOTE)} / 140 characters — the portal's limit.</p></section>
-<section class="panel"><h2>4 · Submit, then verify</h2>
-<ul><li>The form accepts one single-band GeoTIFF, or a ZIP holding exactly one.</li><li>Values must be in [0, 1]. This file is exactly {'{'}0, 1{'}'} with zero NaN, so the "Predicted values must be in range [0, 1]" rejection cannot occur.</li><li>CRS, shape and geotransform must match <span class="mono">sample_submission.tif</span>. Verified: EPSG:32611, 3,730 × 3,292, affine [100, 0, 243350, 0, −100, 4508550].</li><li>After upload, compare the portal's reported score with the receipt hash above so the file you uploaded is the file measured here.</li></ul></section></div>
-<h2>What this file is, in one paragraph</h2>
-<p>{NPX:,} pixels, every one of them at least {f(BUILD['ring_min_distance_to_catalogue_m'], 1)} m from any mapped USGS/INGENIOUS fault, ranked by the joint confidence min(p<sub>A</sub>,p<sub>B</sub>) of two independently trained learners — a potential-field/subsurface view and a surface view — and placed by the metric's own 3 px lattice at a budget derived from the decay of the ranking ({BUILD['budget_px']:,} px). {pct(BUILD['not_merely_union']['outside_union_fraction'])} of its pixels lie outside the union field's own emission, so it is not max(p<sub>A</sub>,p<sub>B</sub>). Geological reasoning ships for every pixel and for every A-only candidate segment.</p>
-<p><a href="h62.html">Full H62 method and evidence →</a> · <a href="data/h62_run_card.json">Run card (JSON)</a></p><hr class="divider"><!--/H62-GUIDE-->"""
+<div class="grid2"><section class="panel"><h2>Local file checks</h2><p>Format, ring, not-union, decoded-pattern uniqueness and leakage-canary checks are local measurements only. They do not establish portal acceptance or submission eligibility.</p></section><section class="panel"><h2>Terminal lane result</h2><p>The final-dot overlap with the spacing-five lattice is {pct(RO['lane_dots_max_within_3px_frac_gate'])}; the strict gate returns DUPLICATE/STOP. This result cannot be waived or retuned on this page. No weekly slot is allocated or recommended.</p></section></div>
+<p><a href="h62.html">Full H62 method and evidence →</a> · <a href="data/h62_run_card.json">Historical run-card receipt (JSON)</a> · <a href="../knowledge/35_what_h62_found.md">Results and limits</a></p>
+<p class="small">This archived page does not authorize a rerun, new run-card, rebuild, override, or submission. No organizer-confirmed score receipt exists for H62.</p><!--/H62-GUIDE-->"""
 
 DLROW = f"""<!--H62-DL--><tr><td><a href="gems52-h62-{BUILD['winner']}-arm{BUILD['budget_px']}px.tif" download>gems52-h62-{BUILD['winner']}-arm{BUILD['budget_px']}px.tif</a></td>
 <td class="number">{BYTES:,}</td><td class="mono">{SHA}</td>
@@ -347,6 +340,15 @@ def strip_previous(text: str, tag: str) -> str:
 
 
 def main() -> int:
+
+    _h75_home = ROOT / "docs" / "index.html"
+    _h75_status = ROOT / "docs" / "h75-executive-summary.html"
+    if (_h75_home.is_file() and _h75_status.is_file()
+            and "H75: DUPLICATE/STOP" in _h75_home.read_text(errors="replace")
+            and "DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION" in
+            _h75_status.read_text(errors="replace")):
+        print("H75 terminal stop is current; historical publisher made no page or pointer changes")
+        return 0
     (DOCS / "h62.html").write_text(build_page())
     for src, dst in (("h62_build.json", "h62_build.json"),
                      ("h62_validation.json", "h62_validation.json"),

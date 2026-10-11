@@ -42,7 +42,7 @@ HEAD = ('<!doctype html>\n<html lang="en"><head><meta charset="utf-8">'
         '<a class="brand" href="{root}index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>'
         '<a href="{root}index.html">Overview</a>'
         '<a href="{root}h69.html">H69 method &amp; results</a>'
-        '<a href="{root}h69-executive-summary.html">How to submit</a>'
+        '<a href="{root}h69-executive-summary.html">H69 stop status</a>'
         '<a href="{root}h69-sources.html">Sources</a>'
         '<a href="{root}downloads/index.html">Archive</a>'
         '</nav></header>\n<main id="main">')
@@ -56,26 +56,31 @@ FOOT = ('\n<footer><p class="small">GEMSDOE52 · H69 · every number on this pag
 def verdict_block(card, val, big=True):
     sub = card["submit_recommended"]
     dl = card["download_ok"]
-    cls = "notice" if not sub else "notice"
-    head = ("OK TO DOWNLOAD · OK TO SUBMIT — every frozen promote clause PASSES"
-            if sub else
-            "OK TO DOWNLOAD · THE PORTAL WILL ACCEPT THIS FILE · DO NOT SPEND A SUBMISSION SLOT ON IT")
+    literal_stop = card["correlation_vs_registry"]["literal"]["duplicate"]
+    cls = "notice"
+    if literal_stop:
+        head = ("RESEARCH DOWNLOAD ONLY · LOCAL FORMAT VALIDATION IS NOT PORTAL ACCEPTANCE · "
+                "NOT FOR SUBMISSION — DUPLICATE/STOP")
+    elif sub:
+        head = "LOCAL FORMAT CHECKS PASS · PORTAL ACCEPTANCE UNVERIFIED · PROMOTION GATES PASS"
+    else:
+        head = "RESEARCH DOWNLOAD ONLY · PORTAL ACCEPTANCE UNVERIFIED · SUBMISSION NOT RECOMMENDED"
     rows = [
-        ("Format gate (single band, float32, EPSG:32611, 3,730 × 3,292, pinned transform, values in [0, 1], no NaN)",
+        ("Local format validation (single band, float32, EPSG:32611, 3,730 × 3,292, pinned transform)",
          "PASS" if val["matches_sample"] else "FAIL"),
-        ("Values exactly {0, 1} ⊂ [0, 1] — the portal's \"Predicted values must be in range [0, 1]\" error cannot fire",
+        ("Local value-range check only — portal acceptance is unverified",
          "PASS" if val["values_in_0_1"] and val["unique_values"] <= 2 else "FAIL"),
         ("No NaN or infinite pixel anywhere in the file", "PASS" if val["no_nan_inside_footprint"] else "FAIL"),
         ("Decoded-pattern uniqueness — not identical to any registry raster",
          "PASS" if card["overlap_vs_registry"]["canonical_pattern_unique"] else "FAIL"),
         ("Lane, literal rule (every aligned prior): Spearman ≤ 0.90 and 3 px near-dot ≤ 0.70",
-         "PASS" if not card["correlation_vs_registry"]["literal"]["duplicate"] else "DUPLICATE"),
-        ("Lane, saturation policy (informative priors only)",
+         "DUPLICATE/STOP" if literal_stop else "PASS"),
+        ("Lane, saturation policy (informative priors only; does not override literal stop)",
          "PASS" if not card["correlation_vs_registry"]["policy"]["duplicate"] else "DUPLICATE"),
         ("Not the union of the two views", "PASS" if card["not_union"]["pass_"] else "FAIL"),
         ("S1 sufficiency (Blum–Mitchell premise, View A out-of-quadrant AUC)",
          "PASS" if card["s1_sufficiency"]["pass_"] else "FAIL"),
-        ("HOLDOUT-DTI beats single_B (paired 95 % CI lower bound &gt; 0)",
+        ("HOLDOUT-DTI beats single_B (paired 95 % CI lower bound > 0)",
          "PASS" if card["holdout_dti"]["beats_single_B"] else "FAIL"),
         ("≥ 20 % exact support novelty against the all-prior union",
          "PASS" if card["overlap_vs_registry"]["support_novelty_20pct_diagnostic"] else "FAILED DIAGNOSTIC"),
@@ -84,23 +89,29 @@ def verdict_block(card, val, big=True):
     out.append('<table class="t"><thead><tr><th>Gate</th><th>Measured result</th></tr></thead><tbody>')
     for k, v in rows:
         good = str(v).startswith("PASS")
-        out.append(f'<tr><td>{k}</td><td><strong style="color:{"#137333" if good else "#b3261e"}">{v}</strong></td></tr>')
+        out.append(f'<tr><td>{k}</td><td><strong style="color:{"#137333" if good else "#b3261e"}">{e(v)}</strong></td></tr>')
     out.append("</tbody></table>")
-    out.append(f'<p><strong>Three separate questions, three separate answers.</strong> '
-               f'Is it OK to download? <strong>{"YES" if card["download_ok"] else "NO"}</strong> — the file is '
-               'served below and re-verified from its own bytes. Will the portal accept it? '
-               f'<strong>{"YES" if card["portal_will_accept_the_format"] else "NO"}</strong> — single band, '
-               'float32, EPSG:32611, 3,730 × 3,292, transform identical to <code>sample_submission.tif</code>, '
-               'every value in {0, 1} ⊂ [0, 1], zero NaN, so the '
-               '<em>“Predicted values must be in range [0, 1]”</em> rejection cannot fire. Should you spend a '
-               f'weekly slot on it? <strong>{"YES" if sub else "NO"}</strong> — '
-               f'{e(card["submit_recommendation_reason"])}.</p>'
-               f'<p>Competition upload slots used by this session: <strong>{card["slots_used"]}</strong>. '
-               f'Run-card verdict: <strong>{e(card["verdict"])}</strong>.</p></div>')
+    out.append(f'<p><strong>Disposition.</strong> Research download: <strong>{"YES" if dl else "NO"}</strong>. '
+               'Local format validation: <strong>PASS</strong>; that does not establish portal acceptance. '
+               '<strong>Portal acceptance: UNVERIFIED</strong> — no organizer-confirmed receipt exists. '
+               f'Literal lane status: <strong>{"DUPLICATE/STOP" if literal_stop else "see measured gate above"}</strong>. '
+               f'Submission status: <strong>{"NO — stop controls; no override" if literal_stop else ("eligible under local gates only" if sub else "NO")}</strong>. '
+               'The informative-prior saturation-policy PASS cannot waive a literal DUPLICATE/STOP. '
+               f'Competition slots used: <strong>{card["slots_used"]}</strong>; no slot is recommended. '
+               f'Run-card verdict (historical): <strong>{e(card["verdict"])}</strong>.</p></div>')
     return "\n".join(out)
 
 
 def main():
+
+    _h75_home = ROOT / "docs" / "index.html"
+    _h75_status = ROOT / "docs" / "h75-executive-summary.html"
+    if (_h75_home.is_file() and _h75_status.is_file()
+            and "H75: DUPLICATE/STOP" in _h75_home.read_text(errors="replace")
+            and "DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION" in
+            _h75_status.read_text(errors="replace")):
+        print("H75 terminal stop is current; historical publisher made no page or pointer changes")
+        return
     card = load("h69_run_card.json")
     hold = load("h69_holdout.json")
     s1 = load("h69_s1.json")
@@ -126,8 +137,6 @@ def main():
     shutil.copy(SUBM / f"{stem}.tif", DOWN / "h69-candidate.tif")
     shutil.copy(SUBM / f"{stem}.tif", DOWN / f"{stem}.tif")     # canonical name, byte-identical
     shutil.copy(SUBM / f"{stem}.zip", DOWN / f"{stem}.zip")
-    shutil.copy(SUBM / f"{stem}-submission-name.txt", DOWN / "h69-submission-name.txt")
-    shutil.copy(SUBM / f"{stem}-submission-note.txt", DOWN / "h69-submission-note.txt")
     shutil.copy(SUBM / f"{stem}.zip", DOWN / "h69-candidate.zip")
     if (EVID / "h69_a_only_geological_reasoning.csv").exists():
         shutil.copy(EVID / "h69_a_only_geological_reasoning.csv.gz", DOWN / "h69-a-only-reasoning.csv.gz")
@@ -141,62 +150,42 @@ def main():
     ci = lambda a: f"[{a[0]:.6f}, {a[1]:.6f}]"  # noqa: E731
 
     # ------------------------------------------------------------------ index.html (landing)
-    idx = [HEAD.format(title="GEMSDOE52 · H69 downloadable GeoTIFF and explicit submission verdict", root="")]
+    idx = [HEAD.format(title="GEMSDOE52 · H69 historical research GeoTIFF and stop status", root="")]
     idx.append('<section class="hero"><div>')
     idx.append('<div class="eyebrow">DOE GEMS Prize Challenge · round H69 · 2026-10-09</div>')
-    idx.append('<h1>One file to download.<br>One unambiguous verdict.</h1>')
-    idx.append('<p class="lead">A single-band GeoTIFF on the competition grid, built by a two-view '
-               'co-training lane and placed by a lane-feasible constrained placer — the first placement '
-               'in this repository that satisfies the parallel-run lane rule <em>by construction</em> '
-               'instead of failing it after the fact.</p>')
+    idx.append('<h1>H69 research artifact.<br>Terminal submission stop.</h1>')
+    idx.append('<p class="lead">A historical single-band GeoTIFF retained for research and review. Local format checks pass, but portal acceptance is unverified. The literal all-prior lane check is DUPLICATE/STOP because a universal-coverage registry probe exceeds the near-dot limit; the informative-prior saturation policy does not waive that stop. This artifact is not for submission.</p>')
     idx.append('<div class="actions">'
                f'<a class="button" href="downloads/h69-candidate.tif" download>⬇ Download the H69 GeoTIFF ({n(fmt["bytes"])} bytes)</a>'
                '<a class="button secondary" href="downloads/h69-candidate.zip" download>Single-TIFF ZIP</a>'
                '<a class="button secondary" href="downloads/h69-a-only-reasoning.csv.gz" download>A-only geological reasoning CSV</a>'
-               '<a class="button secondary" href="h69-executive-summary.html">Exact submission steps →</a>'
+               '<a class="button secondary" href="h69-executive-summary.html">H69 stop status →</a>'
                '</div>')
     idx.append(f'<p class="fileline"><code>{e(stem)}.tif</code><br>'
                f'{n(fmt["bytes"])} bytes · SHA-256 <code>{e(card["raster_sha256"])}</code><br>'
                f'{n(S)} emitted pixels · values exactly {e(sorted(fmt.get("value_set", ["0", "1"])))} · '
                f'{val["unique_values"]} distinct value(s) · 0 NaN · EPSG:32611 · '
                f'{val["shape"][0]:,} × {val["shape"][1]:,} · transform {e(val["transform"])}</p>')
-    idx.append('<p class="small"><strong>Paste-into-the-portal fields.</strong> '
-               f'Note ({card["note_chars"]} / 140 characters): <code>{e(card["submission_note"])}</code></p>')
     idx.append('</div>')
     idx.append('<aside class="panel" aria-label="Readiness"><div class="label">Readiness, measured</div>')
-    idx.append(f'<p class="big">{"SUBMIT-ELIGIBLE" if sub else "DOWNLOAD YES · DO NOT SPEND A SLOT"}</p>')
-    idx.append('<p class="small">Portal-safe: '
-               f'{"YES" if card["portal_will_accept_the_format"] else "NO"}. '
-               'The file cannot trip a format or range rejection. The reason not to spend a slot is '
-               'scientific, not mechanical, and it is stated on this page in full.</p>')
-    idx.append(f'<p class="small">Format {e("PASS" if card["gates"]["format"] else "FAIL")} · '
-               f'Lane {e("PASS" if card["gates"]["lane"] else "FAIL")} · '
+    idx.append('<p class="big">RESEARCH DOWNLOAD · DUPLICATE/STOP</p>')
+    idx.append('<p class="small">Local format validation: PASS. Portal acceptance: UNVERIFIED; no organizer-confirmed receipt exists. Submission is stopped by the literal DUPLICATE/STOP result and other failed promotion gates.</p>')
+    idx.append(f'<p class="small">Local format {e("PASS" if card["gates"]["format"] else "FAIL")} · '
+               'literal lane DUPLICATE/STOP · informative-prior saturation policy PASS · '
                f'Unique {e("PASS" if card["gates"]["unique"] else "FAIL")} · '
                f'Not-union {e("PASS" if card["gates"]["not_union"] else "FAIL")} · '
                f'S1 {e("PASS" if card["gates"]["S1"] else "FAIL")} · '
                f'Beats single_B {e("PASS" if card["gates"]["holdout_beats_single_B"] else "FAIL")}</p>')
-    idx.append(f'<p class="small">PROJECTION across the measured |G| bracket '
-               f'[{n(card["projection"]["g_bracket"][0])}, {n(card["projection"]["g_bracket"][1])}] px: '
-               f'P(DTI &gt; 0.2778) = {pw["G_lo"]["p_beat_02778"]:.3f} / {pw["G_mid"]["p_beat_02778"]:.3f} / '
-               f'{pw["G_hi"]["p_beat_02778"]:.3f} at |G| low / mid / high. '
-               'A projection is never a score.</p>')
+    idx.append(f'<p class="small">CONDITIONAL SCENARIO ARITHMETIC only: the |G| range and score-derived density assumptions are not measured truth. These values are not a leaderboard score or prediction; see knowledge/49 and knowledge/53.</p>')
     idx.append('</aside></section>')
     idx.append(verdict_block(card, val))
     idx.append('<section><h2>What changed in this round</h2><ol>'
-               '<li><strong>The lane is now enforced during placement, not checked afterwards.</strong> '
-               f'A quota-constrained greedy put {place["n_quota_priors"]} informative priors under an explicit '
-               f'near-dot quota of {n(place["cap"])}, re-placed, and re-measured every one of the '
-               f'{lane_d["policy"]["informative_priors"]} informative priors. '
-               f'Measured max near-dot: <strong>{lane_d["policy"]["max_near_3px_fraction"]:.4f}</strong> against '
-               f'the brief\'s literal limit of 0.70. H63 measured 0.8188 and H64 0.888 and both shipped files '
-               'labelled DUPLICATE.</li>'
+               '<li><strong>The informative-prior saturation policy was enforced during placement; the literal all-prior gate still stops H69.</strong> '
+               f'The policy-only max near-dot is <strong>{lane_d["policy"]["max_near_3px_fraction"]:.4f}</strong>; '
+               'a universal-coverage probe has 1.0000, so the final literal status is DUPLICATE/STOP. '
+               'The policy pass is not lane clearance or submission eligibility.</li>'
                '<li><strong>The emission is novel-only.</strong> A pre-registered variant that retained the '
-               'measured credited core (25,502 px of <code>A ∩ C</code>, the only mass in this repository whose '
-               'credit is bounded exactly by the organiser\'s own reported scores) was '
-               '<em>withdrawn before placement ran</em>, because this repository has already corrected such a '
-               'file as NOT unique (README H60C correction, IR-H61-007, IR-UNQ-001) and sizing a file to land '
-               '0.005 under a threshold a previous round was corrected for exceeding is re-tuning a negative '
-               'result into a positive. Its projection is still published, labelled NOT SHIPPED.</li>'
+               '25,502-cell local support overlap in <code>A ∩ C</code> was withdrawn before placement. Any credit assigned by score inversion depends on owner-reported associations, assumed |G| and the sparse-emission model; it is conditional arithmetic, not measured hidden-truth credit. The historical H60C uniqueness correction (IR-H61-007, IR-UNQ-001) also remains applicable. Its scenario projection is NOT SHIPPED and is not a candidate.</li>'
                '<li><strong>View A was rebuilt as differential geometry of the basement surface</strong> '
                '(|∇| and ∇² of organiser band 15, a band-passed isostatic residual, and the gravity/RTP '
                'gradient-angle coherence), not as raw band levels or step/persistence columns. It did not work: '
@@ -212,8 +201,8 @@ def main():
     (DOCS / "h69-overview.html").write_text("\n".join(idx))
 
     # ------------------------------------------------------------------ executive summary
-    ex = [HEAD.format(title="H69 · exactly how to make a submission · GEMSDOE52", root="")]
-    ex.append('<section><h1>Executive summary — exactly how to submit</h1>')
+    ex = [HEAD.format(title="H69 · research-only stop status · GEMSDOE52", root="")]
+    ex.append('<section><h1>H69 status — research artifact, not for submission</h1>')
     ex.append(verdict_block(card, val))
     ex.append('<h2>1 · The file</h2>')
     ex.append('<div class="actions"><a class="button" href="downloads/h69-candidate.tif" download>'
@@ -230,34 +219,18 @@ def main():
                f'<tr><td>Value range</td><td>min {val["min"] if "min" in val else 0}, max {val["max"] if "max" in val else 1}; '
                f'{val["unique_values"]} distinct value(s); all inside [0, 1]</td></tr>'
                f'<tr><td>NaN / infinite pixels</td><td>0 (all-finite export policy)</td></tr>'
-               f'<tr><td>Emitted pixels</td><td>{n(S)} = {n(place["n_core"])} measured credited core + '
-               f'{n(place["n_novel_placed"])} novel</td></tr>'
+               f'<tr><td>Emitted pixels</td><td>{n(S)} = {n(place["n_core"])} local overlap-core cells (credit unknown) + '
+               f'{n(place["n_novel_placed"])} novel-view cells</td></tr>'
                '</tbody></table>')
-    ex.append('<h2>2 · The two fields the portal asks for</h2>')
-    ex.append('<table class="t"><thead><tr><th>Field</th><th>Exactly what to paste</th></tr></thead><tbody>'
-               f'<tr><td><strong>File to submit</strong></td><td>the downloaded <code>h69-candidate.tif</code> '
-               '(or the ZIP, which contains that one GeoTIFF and nothing else)</td></tr>'
-               f'<tr><td><strong>Note (optional, ≤ 140 characters)</strong></td>'
-               f'<td><code>{e(card["submission_note"])}</code> &nbsp;({card["note_chars"]} characters)</td></tr>'
-               '</tbody></table>')
-    ex.append('<h2>3 · Why the “Predicted values must be in range [0, 1]” error cannot fire on this file</h2>')
-    ex.append('<p>That rejection means the portal decoded at least one pixel outside [0, 1] — in practice a '
-               'continuous probability raster, a NaN that decoded to a sentinel, or a file written on the '
-               'wrong grid so that the portal read nodata. This file is written by '
-               '<code>gems52.grid.write_geotiff</code>, which refuses to write unless the array is float32, '
-               'is exactly 3,730 × 3,292, is finite everywhere, and has min ≥ 0 and max ≤ 1; it then '
-               '<em>re-reads the file from disk</em> and the receipt above is that re-read, not the array in '
-               'memory. <code>gates.format_report</code> compares bands, dtype, CRS, shape, transform and '
-               'bounds against <code>data/sample_submission.tif</code> independently. Measured: '
-               f'{val["unique_values"]} distinct value(s), min {fmt.get("min")}, max {fmt.get("max")}, '
-               f'NaN pixels {fmt["nan_pixels"]}, problems {e(fmt["problems"])}</p>')
+    ex.append('<h2>2 · Submission status</h2>')
+    ex.append('<p><strong>NOT FOR SUBMISSION — DUPLICATE/STOP.</strong> This historical raster is downloadable only as a research artifact. Do not use a competition slot. No owner override or submission steps are offered.</p>')
+    ex.append('<h2>3 · Local format validation (not portal acceptance)</h2>')
+    ex.append(f'<p>The saved bytes were locally re-read and checked against the sample grid: {val["bands"]} band, {e(val["dtype"])}, {e(val["crs"])}, {val["shape"][0]:,} × {val["shape"][1]:,}, values in [0, 1], no NaN or infinity. These local checks do not establish portal acceptance. Portal acceptance is UNVERIFIED because no organizer-confirmed submission receipt exists.</p>')
     ex.append('<h2>4 · The decision, in the repository’s own terms</h2>')
-    subword = ("SUBMIT-ELIGIBLE" if sub else
-               "DOWNLOAD YES &middot; THE PORTAL WILL ACCEPT THIS FILE YES &middot; SPEND A SLOT NO")
     s1word = "PASS" if s1["pass_"] else "FAIL"
-    ex.append(f'<p><strong>{subword}.</strong> '
-               '<p>The file itself is portal-safe and is served above. What fails is the frozen promote '
-               'rule, on two clauses that are not waivable:</p><ul>'
+    ex.append('<p><strong>RESEARCH DOWNLOAD ONLY · LOCAL FORMAT PASS · PORTAL ACCEPTANCE UNVERIFIED · NOT FOR SUBMISSION — DUPLICATE/STOP.</strong> '
+               'The informative-prior saturation-policy PASS does not waive the literal all-prior stop. '
+               'Two additional promotion criteria also fail:</p><ul>'
                f'<li><strong>S1 sufficiency {s1word}</strong> &mdash; View A '
                f'out-of-quadrant AUC mean {s1["summary"]["A"]["mean"]:.4f}, minimum '
                f'{s1["summary"]["A"]["minimum"]:.4f}, against thresholds mean ≥ 0.60 and fold ≥ 0.55. '
@@ -267,12 +240,7 @@ def main():
                f'{pdiff["single_B"]["delta"]:+.6f}, 95 % CI {ci(pdiff["single_B"]["ci95"])}. '
                'The brief says never spend a slot on an idea that has not beaten the current holdout best.</li>'
                '</ul>'
-               '<p>Read against that, one measured fact has to be stated every time: '
-               '<code>knowledge/10</code> §5 found Spearman ρ = −0.1045 (p = 0.734, n = 13) between this '
-               'hide-and-recover instrument and the organiser’s reported scores, and the reported champion '
-               'ranks 13th of 13 on the instrument while ranking 1st on the board. HOLDOUT-DTI is therefore '
-               'reported as HOLDOUT-DTI and never as a forecast; the forecast column is the PROJECTION from '
-               'the measured credit algebra, which is a different instrument with a different failure mode.</p>')
+               '<p>The historical n = 13 correlation between this holdout instrument and reported leaderboard values is exploratory only and is not a conversion or score forecast. H69 HOLDOUT-DTI remains an internal hide-and-recover measurement; all score-inversion outputs are conditional scenarios, not measured credit or organizer-confirmed results. See knowledge/49 and knowledge/53.</p>')
     ex.append('<h2>5 · The instrument control, published because it did not reproduce</h2>'
               f'<p>The pre-registration required <code>single_B</code> to reproduce the committed H61/H64 value '
               f'0.1745172876 to |Δ| ≤ 0.001. It measured '
@@ -288,16 +256,14 @@ def main():
               'H64\'s 53,186. <strong>Within-round paired comparisons are exact</strong> (identical folds, '
               'budget and masks for every arm); <strong>across-round level comparisons are approximate.</strong></p>')
     ex.append('<h2>6 · The projection, labelled as a projection</h2>')
-    ex.append('<p>Two tables. The first is the file that is actually served. The second is the '
-              'recombination that was withdrawn — published because the arithmetic is the answer to '
-              '"can 0.2778 be beaten", and hiding it would be worse than shipping it.</p>')
+    ex.append('<p>The tables below are historical conditional scenarios, not forecasts, scores, or submission candidates. They do not establish whether any raster can beat a public leaderboard value.</p>')
     ex.append('<h3>6a · The shipped novel-only file</h3>')
-    ex.append('<table class="t"><thead><tr><th>|G| (organiser’s hidden positive count)</th>'
-               '<th>t_core exact interval</th><th>P(DTI &gt; 0.2778)</th><th>P(DTI &gt; 0.3195)</th>'
-               '<th>P(DTI &gt; 0.3774)</th><th>mean</th><th>worst</th><th>best</th></tr></thead><tbody>')
-    for k, lbl in (("G_lo", "5,949.3 px (measured lower bound)"),
-                   ("G_mid", "9,230.7 px (bracket midpoint)"),
-                   ("G_hi", "12,512.1 px (measured upper bound)")):
+    ex.append('<table class="t"><thead><tr><th>|G| (scenario assumption; not observed)</th>'
+               '<th>conditional t_core interval</th><th>scenario P(DTI &gt; 0.2778)</th><th>P(DTI &gt; 0.3195)</th>'
+               '<th>scenario P(DTI &gt; 0.3774)</th><th>mean</th><th>worst</th><th>best</th></tr></thead><tbody>')
+    for k, lbl in (("G_lo", "5,949.3 px (scenario assumption)"),
+                   ("G_mid", "9,230.7 px (scenario midpoint)"),
+                   ("G_hi", "12,512.1 px (scenario assumption)")):
         r = pw[k]
         ex.append(f'<tr><td>{lbl}</td><td>[{r["t_core_bounds"][0]:,.0f}, {r["t_core_bounds"][1]:,.0f}]</td>'
                   f'<td>{r["p_beat_02778"]:.3f}</td><td>{r["p_beat_03195"]:.3f}</td>'
@@ -306,10 +272,10 @@ def main():
     ex.append('</tbody></table>')
     cf = card["projection"].get("counterfactual_recombination_NOT_SHIPPED", {})
     if cf:
-        ex.append('<h3>6b · NOT SHIPPED — the withdrawn credited-core recombination</h3>'
-                  f'<p class="small">{e(cf["why"])}</p>'
+        ex.append('<h3>6b · NOT SHIPPED — withdrawn local-overlap recombination (credit unknown)</h3>'
+                  f'<p class="small">Conditional scenario only; score-derived credit depends on owner-reported score associations and assumed |G|. {e(cf["why"])}</p>'
                   f'<p class="small">Design: <code>{e(cf["design"])}</code></p>'
-                  '<table class="t"><thead><tr><th>|G|</th><th>S</th><th>t_core exact interval</th>'
+                  '<table class="t"><thead><tr><th>|G| scenario</th><th>S</th><th>conditional t_core interval</th>'
                   '<th>P(DTI &gt; 0.2778)</th><th>P(DTI &gt; 0.3774)</th><th>mean</th><th>worst</th>'
                   '<th>best</th></tr></thead><tbody>')
         for k, lbl in (("G_lo", "5,949.3 px"), ("G_mid", "9,230.7 px"), ("G_hi", "12,512.1 px")):
@@ -322,18 +288,16 @@ def main():
                   '<p class="small"><strong>This is analysis, not a candidate.</strong> No such file was '
                   'written, served or offered for download in this round.</p>')
     ex.append(f'<p class="small">Algebra: <code>DTI = min(t_core + ρ_novel·n_novel, |G|) / (0.2·S + 0.8·|G|)</code> '
-               f'with S = {n(S)}, n_novel = {n(place["n_novel_placed"])}, t_core re-solved at every |G| from the '
-               'reported scores of the nested family A ⊂ B ⊂ E, C ⊂ E, and ρ_novel given a uniform prior over '
-               f'[{card["projection"]["rho_novel_prior"][0]}, {card["projection"]["rho_novel_prior"][1]}] — the two '
-               'credit densities that are actually measured (uniform random over the legal set, and the champion '
-               'file’s own average). <strong>ρ_novel is a prior, not a measurement.</strong> No organiser receipt '
-               'exists for this round; nothing here is ORGANIZER-CONFIRMED.</p>')
+               f'with S = {n(S)}, n_novel = {n(place["n_novel_placed"])}, t_core re-solved at each assumed |G| under '
+               'owner-reported score associations and a sparse-emission approximation. ρ_novel uses the stated '
+               f'scenario prior [{card["projection"]["rho_novel_prior"][0]}, {card["projection"]["rho_novel_prior"][1]}], not measured hidden-truth credit. '
+               'No organizer receipt exists for this round; nothing here is ORGANIZER-CONFIRMED.</p>')
     ex.append(FOOT)
     (DOCS / "h69-executive-summary.html").write_text("\n".join(ex))
 
     # ------------------------------------------------------------------ round page
     rd = [HEAD.format(title="H69 · method, measurements and limits · GEMSDOE52", root="")]
-    rd.append('<section><h1>H69 — basement-surface co-training and a lane-feasible placement</h1>')
+    rd.append('<section><h1>H69 — historical co-training result and literal DUPLICATE/STOP</h1>')
     rd.append(verdict_block(card, val))
     rd.append('<h2>1 · Hypotheses, ranked before any fit</h2>'
               '<p>Frozen in <code>knowledge/52_hypotheses_H69_preregistered.md</code> '
@@ -358,8 +322,7 @@ def main():
               '<tr><td>5</td><td><strong>H69-5</strong> Trace-correction corridor (R5-H1)</td>'
               '<td>labels.tif as geometry, external LiDAR scarp bands, 12/19, 2/3/9</td>'
               '<td>signed perpendicular offset estimator along the trace normal</td>'
-              '<td>CARRIED FORWARD — highest upside, frozen §A-gate never executed; excluded from this '
-              'emission because the ≤ 200 m ring’s credit measures at exactly 0.0</td></tr></tbody></table>')
+              '<td>CARRIED FORWARD — frozen §A-gate was not executed under this round’s budget. The 100–200 m distance is not evidence of zero hidden-truth credit; no score claim follows.</td></tr></tbody></table>')
     rd.append('<h2>2 · Leakage canary</h2>'
               f'<p>Every one of the {can["n_channels"]} channels fitted alone on the holdout. Worst '
               f'single-feature AUC <strong>{can["worst"]["auc_alone"]:.4f}</strong> '
@@ -398,7 +361,7 @@ def main():
               f'{n(ao["n_segments_written"])} segments of ≥ 3 px carry written geological reasoning in '
               '<a href="downloads/h69-a-only-reasoning.csv.gz">the CSV</a>. '
               f'{e(ao["caveat"])} S1 status: {e(ao["s1_status"])}.</p>')
-    rd.append('<h2>6 · Placement — how the lane is satisfied by construction</h2>'
+    rd.append('<h2>6 · Placement — informative-prior policy pass, literal lane stop</h2>'
               f'<p>Legal set: valid ∧ off-catalogue ∧ &gt; 200 m from any mapped trace '
               f'({n(place["base_pool_px"])} px with a finite operating field). Emission: novel-only, '
               f'{n(place["S_placed"])} dots. Ranking: {e(place["ranking"])}. Placement: {e(place["placement"])}. '
@@ -406,8 +369,8 @@ def main():
               f'{place["n_quota_priors"]} priors were held under quota. Worst informative near-dot after '
               f'convergence: {n(place["worst_informative_near"])} = '
               f'{place["worst_informative_near_share"]:.4f} '
-              f'(<code>{e(place["worst_informative_prior"])}</code>). Feasible: '
-              f'<strong>{place["feasible"]}</strong>.</p>'
+              f'(<code>{e(place["worst_informative_prior"])}</code>). Informative-prior policy feasibility: '
+              f'<strong>{place["feasible"]}</strong>; this does not override the literal DUPLICATE/STOP triggered by a universal-coverage probe.</p>'
               '<table class="t"><thead><tr><th>round</th><th>placed</th><th>worst near-dot</th>'
               '<th>share</th><th>offenders over cap</th><th>priors under quota</th></tr></thead><tbody>')
     for r in place["rounds"]:
@@ -443,17 +406,13 @@ def main():
               '4,859,987). No nonempty candidate on this registry can pass it, which is a property of the '
               'registry rather than of this file.</p>')
     rd.append('<h2>8 · Limits</h2><ul>'
-              '<li>No organiser receipt exists for this round. Nothing on this page is ORGANIZER-CONFIRMED. '
-              'The 0.2778, 0.3195 and 0.3774 figures are owner-reported or taken from the public leaderboard '
-              'page; the board publishes no filename, so file-to-score pairing is owner-reported.</li>'
+              '<li>No organizer-confirmed submission receipt exists for this round. The saved 2026-10-09 20:18 UTC public observation places the team at rank 17 with 0.2778; no row maps a TIFF hash to that score. The H33 file association is owner-reported, not organizer-confirmed.</li>'
               '<li>All input rasters are SHA-256-pinned owner mirrors of a login-walled portal file '
               '(<code>data/restore_receipt.json</code>, <code>ALL_VERIFIED=True</code>). The pins prove mirror '
               'consistency, not organiser authentication.</li>'
-              '<li>|G| is an interval [5,949.3, 12,512.1] px, not a point. The projection integrates over it.</li>'
-              '<li>ρ_novel, the credit density of novel mass, is a prior over two measured endpoints. '
-              'No instrument in this repository can certify a novel field’s credit density.</li>'
-              '<li>The hide-and-recover holdout anti-ranks the board (ρ = −0.1045, p = 0.734, n = 13) and '
-              'withholds ~1 % of the footprint against an estimated true prevalence of 0.12–0.25 %.</li>'
+              '<li>|G| is not measured. The [5,949.3, 12,512.1] bracket is conditional on owner-reported score associations and the stated inversion assumptions; projection values are scenario arithmetic.</li>'
+              '<li>ρ_novel is an assumed scenario prior, not a measured credit density. No instrument here certifies hidden-truth credit for novel mass.</li>'
+              '<li>A historical correlation of the hide-and-recover instrument with reported scores (ρ = −0.1045, p = 0.734, n = 13) is exploratory, small-sample evidence only. HOLDOUT-DTI is not a leaderboard predictor.</li>'
               '<li>The external GeoDAWN radiometric raster carries no band tags; the total-count band is '
               'identified by rank correlation against organiser band 6 and the other three are averaged into one '
               'contrast channel whose identity is UNVERIFIED.</li>'
@@ -472,7 +431,7 @@ def main():
               f'{s1["summary"]["A"]["mean"]:.4f}. It is recorded so nobody resurrects it.</li>'
               '<li>ComCat cannot be bulk-downloaded from this sandbox; the seismicity channels are the organiser’s '
               'own bands 10 and 16, not a fresh catalogue.</li>'
-              '<li>No submission slot was used and none can be used from here: the portal is login-walled.</li>'
+              '<li>No submission slot was used. Submission is stopped by the literal DUPLICATE/STOP; portal acceptance is unverified.</li>'
               '</ul>')
     rd.append(FOOT)
     (DOCS / "h69.html").write_text("\n".join(rd))
@@ -538,10 +497,8 @@ def main():
                'sit exactly on the labelled catalogue.</li>'
                '<li><strong>Exact support novelty is unsatisfiable on this registry.</strong> The union of all 359 '
                'informative priors’ 3 px halos covers 100 % of the 4,859,987 px legal set.</li>'
-               '<li><strong>The hide-and-recover instrument anti-ranks the board</strong> (ρ = −0.1045, p = 0.734, '
-               'n = 13), so HOLDOUT-DTI is reported but never used as a forecast.</li>'
-               '<li><strong>|G| is an interval, not a point.</strong> 14,088.7 px requires the champion’s deleted '
-               '6,436 px ring to earn exactly zero credit; 25 credit of ring income moves it to 12,333 px.</li>'
+               '<li><strong>HOLDOUT-DTI is not a leaderboard predictor.</strong> The historical n = 13 correlation (ρ = −0.1045, p = 0.734) is exploratory only.</li>'
+               '<li><strong>|G| and near-trace credit are not measured.</strong> Score inversions and the 6,436-cell local subset comparison depend on owner-reported score associations and conditional assumptions; new-fault truth may occur within 300 m of known traces.</li>'
                '</ul></section>')
     src.append(FOOT)
     (DOCS / "h69-sources.html").write_text("\n".join(src))
@@ -560,25 +517,22 @@ def main():
         txt = _re2.sub(r"<!--H65-DOWNLOAD-NOTICE-->.*?<!--/H65-DOWNLOAD-NOTICE-->", "", txt, flags=_re2.S)
         txt = _re2.sub(r"<!--H65-DL-->.*?<!--/H65-DL-->", "", txt, flags=_re2.S)
         notice = (f'<!--H69-DOWNLOAD-NOTICE--><aside style="padding:20px;background:#e8f0fe;color:#0b1f3a;'
-                  f'font:16px/1.6 system-ui"><b>Latest round: H69 (2026-10-09) — DOWNLOAD YES, SPEND A SLOT NO.</b> '
-                  f'<a href="h69-candidate.tif" download>Download the H69 GeoTIFF</a> ({n(fmt["bytes"])} bytes, '
-                  f'SHA-256 <code>{e(card["raster_sha256"][:16])}…</code>, {n(S)} cells, values exactly {{0,1}}, '
-                  f'0 NaN) · <a href="../h69-executive-summary.html">exact submission steps</a> · '
-                  f'<a href="../h69.html">method, results and limits</a>. This is the first file in this '
-                  f'repository whose directed 3 px near-dot share against every informative prior is inside the '
-                  f'brief\'s 0.70 limit ({lane_d["policy"]["max_near_3px_fraction"]:.4f}). Historical downloads '
-                  f'below are not upload approval.<!--/H69-DOWNLOAD-NOTICE-->')
+                  f'font:16px/1.6 system-ui"><b>Historical H69 research artifact — NOT FOR SUBMISSION (DUPLICATE/STOP).</b> '
+                  f'<a href="h69-candidate.tif" download>Download for research</a> ({n(fmt["bytes"])} bytes, '
+                  f'SHA-256 <code>{e(card["raster_sha256"][:16])}…</code>, {n(S)} cells). Local format checks pass; '
+                  f'portal acceptance is unverified. Informative-prior policy PASS does not waive literal stop. '
+                  f'<a href="../h69-executive-summary.html">H69 stop status</a> · '
+                  f'<a href="../h69.html">method, results and limits</a>.<!--/H69-DOWNLOAD-NOTICE-->')
         rows = (f'<!--H69-DL--><tr><td><a href="h69-candidate.tif" download>h69-candidate.tif</a></td>'
                 f'<td class="number">{n(fmt["bytes"])}</td><td class="mono">{e(card["raster_sha256"])}</td>'
-                f'<td>H69 · basement-surface two-view co-training, novel-only, consensus-restricted '
-                f'lane-feasible placement · {n(S)} px · newest round; <a href="../h69.html">evidence</a></td></tr>'
+                f'<td>H69 · historical two-view co-training, novel-only research artifact; informative-prior policy PASS, literal DUPLICATE/STOP · {n(S)} px; <a href="../h69.html">evidence</a></td></tr>'
                 f'<tr><td><a href="{e(stem)}.tif" download>{e(stem)}.tif</a></td>'
                 f'<td class="number">{n(fmt["bytes"])}</td><td class="mono">{e(card["raster_sha256"])}</td>'
                 f'<td>canonical filename, byte-identical</td></tr>'
                 f'<tr><td><a href="h69-candidate.zip" download>h69-candidate.zip</a></td>'
                 f'<td class="number">{n((DOWN / "h69-candidate.zip").stat().st_size)}</td>'
                 f'<td class="mono">single-TIFF ZIP, byte-identical payload</td>'
-                f'<td>portal-accepted wrapper</td></tr>'
+                f'<td>single-TIFF ZIP archive; local packaging only, portal acceptance unverified</td></tr>'
                 f'<tr><td><a href="h69-a-only-reasoning.csv.gz" download>h69-a-only-reasoning.csv.gz</a></td>'
                 f'<td class="number">{n((DOWN / "h69-a-only-reasoning.csv.gz").stat().st_size)}</td>'
                 f'<td class="mono">gzipped CSV</td><td>{n(ao["n_segments_written"])} A-only segments, one '
@@ -596,8 +550,8 @@ def main():
     txt = idxp.read_text()
     import re as _re3
     txt = _re3.sub(r"<!--H69-NOTICE-->.*?<!--/H69-NOTICE-->", "", txt, flags=_re3.S)
-    verdict_word = ("SUBMIT-ELIGIBLE" if sub else
-                    "DOWNLOAD YES &middot; THE PORTAL WILL ACCEPT THIS FILE YES &middot; SPEND A SLOT NO")
+    verdict_word = ("PROMOTION GATES PASS; PORTAL ACCEPTANCE UNVERIFIED" if sub else
+                    "RESEARCH DOWNLOAD ONLY &middot; LOCAL FORMAT PASS &middot; PORTAL UNVERIFIED &middot; NOT FOR SUBMISSION — DUPLICATE/STOP")
     notice = (
         '<!--H69-NOTICE--><div class="notice" role="note" style="margin:0 0 1rem;padding:1.1rem 1.2rem">'
         '<strong style="font-size:1.05rem">Round H69 (this branch, 2026-10-09) &mdash; '
@@ -609,18 +563,14 @@ def main():
         f'<span class="small"><code>{e(stem)}.tif</code> &middot; SHA-256 <code>{e(card["raster_sha256"])}</code>'
         f' &middot; {n(S)} cells &middot; values exactly {{0, 1}} &middot; 0 NaN &middot; EPSG:32611 &middot; '
         f'{val["shape"][0]:,} &times; {val["shape"][1]:,} &middot; transform identical to '
-        '<code>sample_submission.tif</code>, so the <em>&ldquo;Predicted values must be in range [0, 1]&rdquo;'
-        '</em> rejection cannot fire on it.<br>'
-        f'<strong>First lane-feasible file in this repository:</strong> max directed 3&nbsp;px near-dot '
-        f'<strong>{lane_pol["max_near_3px"]:.4f}</strong> against the brief&rsquo;s literal 0.70 limit, and '
-        f'max rank correlation <strong>{lane_pol["max_spearman"]:.4f}</strong> against 0.90, verified over '
-        f'{lane_d["priors_checked"]} registry rasters with 0 errors. '
-        f'<strong>Not submittable anyway:</strong> S1 sufficiency FAILED (View A out-of-quadrant AUC '
-        f'{card["s1_sufficiency"]["view_A_mean"]:.4f}) and the HOLDOUT-DTI paired difference against '
+        '<code>sample_submission.tif</code>; this is a local grid/value check only and does not establish portal acceptance.<br>'
+        f'<strong>Literal lane status: DUPLICATE/STOP.</strong> The informative-prior saturation-policy value '
+        f'{lane_pol["max_near_3px"]:.4f} is not an override. View A S1 mean is '
+        f'{card["s1_sufficiency"]["view_A_mean"]:.4f}; the HOLDOUT-DTI paired difference against '
         f'<code>single_B</code> is {card["holdout_dti"]["candidate_minus_single_B"]["delta"]:+.6f}. '
-        f'Slots used: {card["slots_used"]}.<br>'
-        '<a href="h69-overview.html">H69 overview and download</a> &middot; '
-        '<a href="h69-executive-summary.html">exactly how to submit</a> &middot; '
+        f'No slot used; none recommended.<br>'
+        '<a href="h69-overview.html">H69 overview and research download</a> &middot; '
+        '<a href="h69-executive-summary.html">H69 stop status</a> &middot; '
         '<a href="h69.html">method, results and limits</a> &middot; '
         '<a href="h69-sources.html">sources with links</a> &middot; '
         '<a href="downloads/h69-a-only-reasoning.csv.gz">A-only geological reasoning CSV</a></span>'
@@ -642,8 +592,8 @@ def main():
         '<h1>GEMSDOE52 · H69</h1>'
         f'<p><a href="docs/downloads/h69-candidate.tif" download>Download the H69 GeoTIFF ({n(fmt["bytes"])} bytes)</a></p>'
         '<p><a href="docs/index.html">Open the research download and the explicit submission verdict.</a></p>'
-        '<p><a href="docs/h69-executive-summary.html">Exactly how to submit, field by field.</a></p>'
-        f'<p>Verdict: {"SUBMIT-ELIGIBLE on every frozen promote clause" if sub else "DOWNLOAD YES, PORTAL ACCEPTS THE FORMAT YES, SPEND A SLOT NO"}.</p>'
+        '<p><a href="docs/h69-executive-summary.html">H69 stop status; no submission steps.</a></p>'
+        '<p>Research download only. Local format validation does not establish portal acceptance. Literal lane verdict: DUPLICATE/STOP; NOT FOR SUBMISSION.</p>'
         '</body></html>\n')
 
     # ------------------------------------------------------------------ README block (prepended)
@@ -655,151 +605,23 @@ def main():
     lane_pol = card["correlation_vs_registry"]["policy"]
     cf = card["projection"].get("counterfactual_recombination_NOT_SHIPPED", {})
     block = f"""<!--H69-README-->
-# GEMSDOE52 — H69: a unique, lane-feasible GeoTIFF, and the verdict on whether it may be submitted
+# H69 historical research artifact — NOT FOR SUBMISSION
 
-**[★ Download the H69 GeoTIFF — one click](docs/downloads/h69-candidate.tif)** ·
-[single-TIFF ZIP](docs/downloads/h69-candidate.zip) ·
-[A-only geological reasoning CSV](docs/downloads/h69-a-only-reasoning.csv.gz) ·
-**[Executive summary / exactly how to submit](docs/h69-executive-summary.html)** ·
-[Landing page](docs/index.html) · [Method, results and limits](docs/h69.html) ·
-[Sources with links](docs/h69-sources.html) · [Run card](evidence/h69_run_card.json) ·
-[Results and limits](knowledge/53_h69_results_and_limits.md) ·
-[Preregistration](knowledge/52_hypotheses_H69_preregistered.md) ·
-[Preregistration AMENDMENT](knowledge/52b_h69_prereg_amendment_placement.md)
+[Research GeoTIFF](docs/downloads/h69-candidate.tif) · [single-TIFF archive](docs/downloads/h69-candidate.zip) ·
+[H69 stop status](docs/h69-executive-summary.html) · [method and HOLDOUT-DTI evidence](docs/h69.html) ·
+[provenance and sources](docs/h69-sources.html) · [results/limits](knowledge/53_h69_results_and_limits.md)
 
-> **DOWNLOAD: YES — the file is portal-safe by construction. SUBMIT TO THE COMPETITION: NO.**
-> Verdict `{card["verdict"]}`. Format PASS, decoded-pattern uniqueness PASS over
-> {card["registry"]["n_priors"]} registry rasters, and for the first time in this repository the
-> **lane rule is satisfied by construction**: max informative near-dot
-> **{lane_pol["max_near_3px"]:.4f}** and max Spearman **{lane_pol["max_spearman"]:.4f}** against
-> literal limits of 0.70 and 0.90 (H63 measured 0.8188, H64 0.888 and both shipped DUPLICATE). It is still
-> **not** submit-eligible, for two reasons that are not waivable: S1 sufficiency FAILED (View A
-> out-of-quadrant AUC {card["s1_sufficiency"]["view_A_mean"]:.4f}, min fold
-> {card["s1_sufficiency"]["view_A_min"]:.4f}, bar 0.60 / 0.55) and the HOLDOUT-DTI paired difference against
-> `single_B` is {card["holdout_dti"]["candidate_minus_single_B"]["delta"]:+.6f}
-> [{card["holdout_dti"]["candidate_minus_single_B"]["ci95"][0]:+.6f},
-> {card["holdout_dti"]["candidate_minus_single_B"]["ci95"][1]:+.6f}]. **NO CERTIFIED LEADERBOARD GAIN.**
-> Competition slots used: **{card["slots_used"]}**.
+> **Research download: YES. Local format checks: PASS. Portal acceptance: UNVERIFIED. Submission: NO — literal DUPLICATE/STOP.**
+> The informative-prior saturation-policy result does not waive the literal all-prior stop; no override or slot is recommended. Slots used: **{card["slots_used"]}**.
 
-- **File:** `{stem}.tif` — {n(fmt["bytes"])} bytes, {n(S)} emitted cells, values exactly {{0, 1}}
-- **SHA-256:** `{card["raster_sha256"]}`
-- **Submission name:** `{card["submission_name"]}`
-- **Submission note ({card["note_chars"]}/140 chars):** `{card["submission_note"]}`
-- **Grid:** EPSG:32611, {val["shape"][0]:,} × {val["shape"][1]:,}, transform `{val["transform"]}`,
-  single band float32, **0 NaN and 0 infinite pixels anywhere**, min 0.0 max 1.0 — verified by re-reading the
-  written file, not from the array in memory. The portal's *"Predicted values must be in range [0, 1]"*
-  rejection cannot fire on this file: `gems52.grid.write_geotiff` refuses to write unless the array is
-  float32, exactly {val["shape"][0]:,} × {val["shape"][1]:,}, finite everywhere and inside [0, 1].
+- **Research raster:** `{stem}.tif`, {n(fmt["bytes"])} bytes, {n(S)} emitted cells, SHA-256 `{card["raster_sha256"]}`.
+- **Local format check:** EPSG:32611, {val["shape"][0]:,} × {val["shape"][1]:,}, one float32 band, values in [0, 1], no NaN/infinity. This is not portal acceptance; no organizer-confirmed receipt exists.
+- **Literal lane:** `DUPLICATE/STOP` because the all-prior check includes a universal-coverage probe with a 3 px near-dot fraction of 1.0000. Informative-prior-only saturation policy is a separate diagnostic, not an override.
+- **HOLDOUT-DTI:** evaluator `{hold["evaluator_version"]}`, {hold["withheld_positives"]:,} withheld positives; View-A co-training candidate minus `single_B` = {card["holdout_dti"]["candidate_minus_single_B"]["delta"]:+.6f}, 95% CI [{card["holdout_dti"]["candidate_minus_single_B"]["ci95"][0]:+.6f}, {card["holdout_dti"]["candidate_minus_single_B"]["ci95"][1]:+.6f}]. Internal hide-and-recover result, not a board score.
+- **Public-board evidence:** the saved 2026-10-09 20:18 UTC observation places the team at rank 17 with 0.2778. No public row maps a TIFF hash to a score; the file association is owner-reported, not organizer-confirmed.
+- **No causal explanation:** the local 37,654/44,090 subset and 100–200 m distances do not identify hidden-truth credit or explain a score change. Known-fault masking is pixel-exact; new-fault truth may lie within 300 m of known traces. Score inversions and projections are conditional scenario arithmetic only, never measured credit or a score forecast. See `knowledge/49` and `IR-R5-011`.
 
-## The measured answer to "why did `h33-h33-2-b2` score 0.2778, and can we beat it?"
-
-Re-derived from restored, SHA-256-verified bytes this session (`work/h69/probe.py`,
-`evidence/h61_forensics.json`), not copied from an earlier round's prose.
-
-1. **It is precision, not detection.** The reported-0.2778 file (37,654 px) is a *strict subset* of the
-   reported-0.2600 file (44,090 px), which is a strict subset of the reported-0.1922 parent field
-   (121,131 px). It added **zero** pixels and deleted 6,436, every one between 100 m and 200 m of a mapped
-   trace; its own nearest dot is 223.6 m away. For a binary dot emission with `M = T` the metric collapses
-   to `DTI = T / (0.2·S + 0.8·|G|)`, so deleting mass that earns no credit removes denominator and no
-   numerator.
-2. **Its credit is concentrated, and the concentration is measurable.** `P1 = A ∩ C` is 25,517 px carrying
-   credit density 0.163–0.205 against 0.0279 for uniform random over the legal set; the ≤ 200 m corridor
-   atoms carry **exactly zero**.
-3. **`|G|` is an interval, [5,949.3, 12,512.1] px**, not the 14,088.7 point value: that point requires the
-   champion's deleted 6,436 px to earn exactly zero credit, and 25 credit of ring income moves it to 12,333.
-4. **Two routes beat it, and only two.** (a) *Recombination of existing public mass* — this has an exact
-   credit bound and the projection clears 0.2778 across the whole bracket
-   (P = {cf["per_g"]["G_lo"]["p_beat_02778"]:.2f} / {cf["per_g"]["G_mid"]["p_beat_02778"]:.2f} /
-   {cf["per_g"]["G_hi"]["p_beat_02778"]:.2f} at |G| low/mid/high). It is **not shipped**: this repository
-   already corrected such a file as NOT unique (H60C correction, `IR-H61-007`, `IR-UNQ-001`), and sizing a
-   file to land 0.005 under the 0.70 threshold a previous round was corrected for exceeding is re-tuning a
-   negative result into a positive. (b) *A detector above 0.0907–0.1295 credit density on novel mass* — no
-   instrument here can certify it, and this round's novel field is ranked by a view at chance.
-5. **The top of the board (0.3774) needs `T ≈ 6,620` at `S = 37,654`, `|G| = 12,512`** (density 0.176) —
-   a detector better than anything this family has published. The highest-upside un-run idea remains
-   **R5-H1, the trace-correction corridor** (`knowledge/33`), whose target population the organiser has
-   confirmed exists and whose frozen §A-gate has never been executed.
-
-## H69 results, each labelled
-
-| arm | HOLDOUT-DTI | 95 % CI |
-|---|---:|---|
-| `single_A` | {sc["single_A"]["dti"]:.6f} | [{sc["single_A"]["ci95"][0]:.6f}, {sc["single_A"]["ci95"][1]:.6f}] |
-| `single_B` | {sc["single_B"]["dti"]:.6f} | [{sc["single_B"]["ci95"][0]:.6f}, {sc["single_B"]["ci95"][1]:.6f}] |
-| `union_max` | {sc["union_max"]["dti"]:.6f} | [{sc["union_max"]["ci95"][0]:.6f}, {sc["union_max"]["ci95"][1]:.6f}] |
-| `disagreement_pre` | {sc["disagreement_pre"]["dti"]:.6f} | [{sc["disagreement_pre"]["ci95"][0]:.6f}, {sc["disagreement_pre"]["ci95"][1]:.6f}] |
-| `disagreement_post` | {sc["disagreement_post"]["dti"]:.6f} | [{sc["disagreement_post"]["ci95"][0]:.6f}, {sc["disagreement_post"]["ci95"][1]:.6f}] |
-| `random` | {sc["random"]["dti"]:.6f} | [{sc["random"]["ci95"][0]:.6f}, {sc["random"]["ci95"][1]:.6f}] |
-
-Evaluator `{hold["evaluator_version"]}`, {hold["withheld_positives"]:,} withheld positives,
-{hold["pooled"]["bootstrap"]["clusters"]} physical 20 km clusters,
-{hold["pooled"]["bootstrap"]["draws"]} paired draws, every arm at a matched 9,400-dot-per-fold budget with
-3 px separation. **HOLDOUT-DTI is an instrument reading, never a forecast**: `knowledge/10` §5 measured
-Spearman ρ = −0.1045 (p = 0.734, n = 13) between this simulator and the organiser's reported scores, and
-the reported champion ranks 13th of 13 here while ranking 1st on the board.
-
-**PROJECTION (never a score)** for the shipped novel-only file, integrating `t_core = 0` and
-ρ_novel ~ U[{card["projection"]["rho_novel_prior"][0]}, {card["projection"]["rho_novel_prior"][1]}] over
-`|G|`: P(DTI > 0.2778) = {pw["G_lo"]["p_beat_02778"]:.3f} / {pw["G_mid"]["p_beat_02778"]:.3f} /
-{pw["G_hi"]["p_beat_02778"]:.3f} at |G| = 5,949.3 / 9,230.7 / 12,512.1; mean DTI {pw["G_mid"]["mean_dti"]:.4f}.
-
-## What is new, and what is now closed
-
-1. **NEW — the lane is satisfiable, and here is the construction.** Place in field-rank order with hard-core
-   3 px spacing; measure the directed 3 px near-dot count of *every* informative prior; put every prior above
-   `floor(0.6985·S)` under an exact quota (packed halos, a lazy forbidden mask, counts that can never pass
-   the cap); re-place; re-measure all {lane_d["policy"]["informative_priors"]} informative priors. Converged
-   in {len(place["rounds"])} rounds to max near-dot {lane_pol["max_near_3px"]:.4f}.
-2. **NEW — the committed whole-segment pseudo-label rule yields exactly zero labels** on these views in all
-   four folds, so `disagreement_post` is bit-identical to `disagreement_pre` and the paired CI is exactly
-   [0, 0]. The co-training mechanism **cannot be executed as specified** here — a stronger statement than
-   "it was executed and did not help". Same class as `IR-H58-002`.
-3. **CLOSED — rebuilding View A as basement-surface differential geometry does not rescue sufficiency.**
-   18 derivative/band-pass channels (|∇| and ∇² of band 15, DoG isostatic residual, gravity/RTP gradient
-   coherence, conductivity edge, strain, seismicity) give View A out-of-quadrant AUC
-   {card["s1_sufficiency"]["view_A_mean"]:.4f} against H61 0.5163, H63 0.5362, H64 0.5230. Fourth failure.
-4. **RETRACTED, on the record.** An early sufficiency reading of View A mean **0.6636** came from the wrong
-   splitter (`holdout.make_folds(mode="block")` with prevalence-thinned truth). It is not comparable to
-   anything in this repository and must not be quoted. The committed instrument gives
-   {card["s1_sufficiency"]["view_A_mean"]:.4f}.
-5. **The instrument control did not reproduce, and that is reported rather than hidden.** The preregistered
-   clause (`single_B` = 0.1745172876 ± 0.001) is unsatisfiable for a round that changes View B's channel set;
-   the model-free `random` arm measured {hold["instrument_control"]["random_arm"]:.6f} against H64's 0.080426
-   (|Δ| = {hold["instrument_control"]["abs_delta"]:.4f}). Cause: `structural.FeatureStore.valid` lives under
-   git-ignored `work/r2/features` and is absent in a fresh sandbox. Within-round paired comparisons are exact;
-   across-round levels are approximate.
-6. **Exact support novelty is impossible on this registry**: the union of every informative prior's 3 px halo
-   covers 100 % of the 4,859,987 px legal set (`work/h69/probe.py`, `novel_pool_exactly_novel = 0`). The
-   ≥ 20 % diagnostic fails for every nonempty candidate ever built here and is reported as a failed
-   diagnostic, never waived.
-7. **Band 6 metadata contradicts its bytes** (tag says magnetic tilt angle; ρ = 0.99995 against external
-   radiometric total count, ρ = 0.0175 against tilt). The external GeoDAWN radiometric raster carries **no
-   band tags at all**; this session identified its total-count band as band 4 (ρ = 0.99995 vs organiser band 6)
-   and averaged the other three into one contrast channel whose identity is UNVERIFIED.
-
-## Standing starting point
-
-The full user brief is preserved verbatim in [`knowledge/00_brief_as_received.md`](knowledge/00_brief_as_received.md)
-and is the standing starting point for every session; `AGENTS.md` records the working agreement and the
-authoritative shared-instrument repairs. Read those two, plus
-[`knowledge/03_negative_results_and_what_they_killed.md`](knowledge/03_negative_results_and_what_they_killed.md)
-and this block, before proposing anything.
-
-## Reproduce H69
-
-```bash
-python3 -m venv .venv && .venv/bin/pip install -r requirements-r2.txt
-bash scripts/download_competition_data.sh
-.venv/bin/python scripts/prepare_data.py
-.venv/bin/python scripts/fetch_prior_inventory.py --out work/h69/priors --receipt work/h69/prior_fetch_receipt.json
-.venv/bin/python work/h69/probe.py
-.venv/bin/python scripts/run_h69.py --stage features
-.venv/bin/python scripts/run_h69.py --stage lane
-.venv/bin/python scripts/run_h69.py --stage place
-.venv/bin/python scripts/run_h69.py --stage gates
-.venv/bin/python scripts/publish_h69_site.py
-```
-
+The H69 artifact and results are retained for review. They are not submission-approved and this block contains no upload instructions.
 <!--/H69-README-->
 """
     readme.write_text(block + "\n" + old)

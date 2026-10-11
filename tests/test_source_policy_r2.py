@@ -16,18 +16,19 @@ def load_script(name):
     return module
 
 
-def test_disabled_board_fetch_never_opens_url(monkeypatch):
+def test_disabled_board_fetch_never_opens_url_and_uses_saved_observation(monkeypatch):
     feed = load_script('refresh_feed')
-    snapshots = sorted((ROOT / 'registry').glob('leaderboard_snapshot_*.json'))
-    old = json.loads(snapshots[-1].read_text())
-    observation_key = 'fetched_utc' if 'fetched_utc' in old else 'observed_date_utc'
+    observation=json.loads((ROOT/'evidence/leaderboard_observation_2026-10-09T201800Z.json').read_text())
     def fail(*args, **kwargs):
         raise AssertionError('Network called despite disabled policy')
     monkeypatch.setattr(feed.urllib.request, 'urlopen', fail)
     result = feed.fetch_board(True)
     assert not result['automated_fetch_allowed']
     assert result['fetch_requested_but_disabled']
-    assert result[observation_key] == old[observation_key]
+    assert result['observed_at_utc']==observation['observed_utc']
+    assert result['rows_complete'] is False
+    assert result['observed_subject']['rank']==17
+    assert result['observed_subject']['score']==0.2778
 
 
 def test_source_crawler_applies_policy_before_any_network(monkeypatch):

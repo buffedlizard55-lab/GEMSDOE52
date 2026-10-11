@@ -43,6 +43,15 @@ def fmt_int(x) -> str:
 
 
 def main() -> int:
+
+    _h75_home = ROOT / "docs" / "index.html"
+    _h75_status = ROOT / "docs" / "h75-executive-summary.html"
+    if (_h75_home.is_file() and _h75_status.is_file()
+            and "H75: DUPLICATE/STOP" in _h75_home.read_text(errors="replace")
+            and "DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION" in
+            _h75_status.read_text(errors="replace")):
+        print("H75 terminal stop is current; historical publisher made no page or pointer changes")
+        return 0
     card = load("h66cover_run_card.json")
     hold = load("h66cover_holdout.json")
     pooled = hold["pooled"]
@@ -119,7 +128,7 @@ def main() -> int:
             f'<link rel="stylesheet" href="assets/ctd5.css"></head><body>'
             f'<a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation">'
             f'<a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>'
-            f'<a href="index.html">Overview</a><a href="h66cover-executive-summary.html">Submission guide</a>'
+            f'<a href="index.html">Overview</a><a href="h66cover-executive-summary.html">H66 research status</a>'
             f'<a href="h67.html">H67 (previous)</a><a href="downloads/index.html">Archive</a>'
             f'</nav></header><main id="main">')
     tail = "</main></body></html>\n"
@@ -176,7 +185,7 @@ The champion's score is OWNER-REPORTED, not ORGANIZER-CONFIRMED (IR-H61-004). No
 <li>It shows the cover-gated A-only field, placed at the matched budget, against the single-view baseline on hide-and-recover segments.</li>
 <li>It does not show that potential-field data contain no fault information; six rounds of View-A variants all fail to transfer out of quadrant (AUC ~0.52).</li>
 <li><b>NO CERTIFIED LEADERBOARD GAIN.</b> Nothing on this page is an organiser score or a promise of a board gain.</li>
-<li>The best published board score is 0.3774 (rank 1, xiaofanhu), 0.3195 is rank 7 (DARD), 0.2778 is rank 13 (extradr19):
+<li>The saved 2026-10-09 20:18 UTC public-board observation shows 0.3774 at rank 1 (xiaofanhu), 0.3195 at rank 7 (DARD), and 0.2778 at rank 17 (extradr19); these are team-level rows, not file/hash receipts:
 <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">official leaderboard</a> (PUBLIC BOARD, fetched 2026-10-09).</li>
 <li>Every emitted cell carries a written geological hypothesis, a named non-fault mimic and a falsifier in the reasoning CSV, as Phase-2 review requires.</li></ul>
 <p class="small"><a href="../knowledge/43_h66cover_hypotheses_preregistered.md">Five ranked hypotheses and the frozen protocol →</a> ·
@@ -184,40 +193,15 @@ The champion's score is OWNER-REPORTED, not ORGANIZER-CONFIRMED (IR-H61-004). No
 """ + tail
 
     exec_html = head + f"""
-<div class="eyebrow">Executive summary / submission guide</div>
-<h1>How to submit, and whether this file may be submitted.</h1>
-<p class="lead">Read the verdict first. A valid file is not an approved competition entry; the selector decides
-promotion within the weekly cap shown on the submission page.</p>
-<div class="notice" role="note"><strong>{esc(notice)}</strong><p>Verdict: <b>{esc(verdict)}</b></p>
-<p>Why: the H66-A arm {'beats' if beats else 'does not beat'} the single-view baseline on the pooled holdout
-(paired delta {paired['delta']:+.6f}, 95% CI {ci(paired['ci95'])}), the lane gate reads
-<b>{lane_d['policy']['verdict']}</b> under the saturation policy ({lane_d['literal']['verdict']} literal), and the
-decoded-pattern uniqueness is {'PASS' if uniq['tier1_all_priors']['canonical_pattern_unique'] else 'FAIL'}
-(novelty {uniq['tier2_informative_priors']['novel_fraction']:.4f} against informative registry rasters).</p></div>
-<div class="actions"><a class="button" href="downloads/h66cover-candidate.tif" download>Download the H66cover GeoTIFF ↓</a>
-<a class="button secondary" href="downloads/h66cover-candidate.zip" download>Single-TIFF ZIP</a></div>
+<div class="eyebrow">H66cover · historical research status</div>
+<h1>H66cover is not approved for submission.</h1>
+<div class="notice bad" role="alert"><strong>RESEARCH DOWNLOAD ONLY · DUPLICATE/STOP · NOT FOR SUBMISSION · NO SLOT AUTHORIZED</strong>
+<p>{esc(verdict)} The final-dot lane gate is a stop. Local format validity, uniqueness, holdout results, or download availability do not override it. No upload instructions, owner override, or paste-ready identification fields are provided.</p></div>
+<div class="actions"><a class="button" href="downloads/h66cover-candidate.tif" download>Download H66cover research TIFF</a><a class="button secondary" href="downloads/h66cover-candidate.zip" download>Research ZIP</a><a class="button secondary" href="h66cover.html">H66cover evidence</a></div>
 <p class="fileline">{fileline}</p>
-<section class="prose"><h2>The file contract (checked on disk)</h2><ul>
-<li>One band, float32, every value in [0, 1]; in practice exactly 0 or 1.</li>
-<li>No NaN or infinite values anywhere in the file (the portal's "Predicted values must be in range [0, 1]"
-rejection is caused by NaN/out-of-range bytes, and this file has neither; <code>gems52.grid.write_geotiff</code>
-refuses to write them).</li>
-<li>EPSG:32611, shape and geotransform identical to the pinned <code>sample_submission.tif</code>.</li>
-<li>{fmt_int(n_dots)} emitted cells, all more than 200 m from a mapped trace, 3 px minimum separation, every one
-inside the A-only (A-confident, B-abstaining) gate.</li>
-<li>Name for the portal: <code>{esc(card['submission_name'])}</code>. Note ({card['note_chars']} characters):
-<code>{esc(card['note'])}</code></li>
-</ul><p class="small">Local validator only; not an organiser acceptance receipt.</p>
-<h2>Exact steps, only if a later selector approves this file</h2>
-<ol><li>Open the competition submission page (login required; <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">competition page</a>).</li>
-<li>Under <b>File to submit</b>, choose the TIFF (or the ZIP with the single TIFF).</li>
-<li>Paste the name and note above into the submission form.</li>
-<li>Submit only if the selector has approved this file. This file is not approved.</li></ol>
-<h2>The three failure modes the submission form reports</h2>
-<ul><li><b>"Predicted values must be in range [0, 1]"</b> — NaN or out-of-range bytes. This file has neither; the
-writer refuses to emit them and the format gate re-reads the written bytes.</li>
-<li><b>CRS/shape/geotransform mismatch</b> — this file is byte-checked against <code>sample_submission.tif</code>.</li>
-<li><b>More than one TIFF in a ZIP</b> — the published ZIP holds exactly one GeoTIFF, verified by roundtrip.</li></ul></section>
+<section class="prose"><h2>Local checks and scientific status</h2><ul>
+<li>Local file checks are not portal acceptance.</li><li>The final-dot lane status is DUPLICATE/STOP.</li><li>No organizer-confirmed score receipt or weekly slot is recorded.</li></ul></section>
+<p class="small">The public-board observation is team-level and not linked to a TIFF hash; owner-reported values are not organizer-confirmed. This archive does not authorize a rerun, new run-card, rebuild, override, or submission.</p>
 """ + tail
 
     (DOCS / "h66cover.html").write_text(index)

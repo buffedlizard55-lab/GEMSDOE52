@@ -1,27 +1,13 @@
 #!/usr/bin/env python3
-"""Build the H60D submission: the pure disagreement-discovery arm, placed by the repo's
-metric-aware placement, on the pinned bytes, with every gate written to receipts.
+"""Historical H60D research builder, disabled under the terminal H75 stop.
 
-Registered in ``registry/h60d_preregistration.json`` (frozen before this script existed); the
-field shipped is the one the registered promotion gate in ``scripts/run_h60d_cotrain.py``
-selected — and if no disagreement field promoted, the best measured one ships with verdict
-**negative** (negative results are deliverables; promotion to a real slot is a separate
-selector step).
+H75 is the current DUPLICATE/STOP. This legacy builder is fail-closed while H75 is
+published; it cannot be used to fit, rebuild, create a current run card, move any submission
+pointer, authorize a slot, or provide portal instructions. Its archival ZIP format, if the
+historical code path is ever reviewed in a separate authorized context, is a single TIFF only.
 
-The artifact is the lane's honest deliverable: the disagreement field's emission ONLY, with
-no credited core, so the lane-drift and uniqueness measurements cannot be flattered by
-shared pixels with any prior artifact.
-
-Outputs (all measured from bytes, never quoted from prose):
-  submission/<stem>.tif                      the canonical single-band float32 GeoTIFF
-  submission/<stem>.zip                      one-TIFF zip for the portal (name/note/STATUS)
-  docs/downloads/<stem>.tif|zip + h60d-candidate.<ext>   site copies (short paths)
-  evidence/gems52-h60d-<n>px-candidate-geology.csv        one reasoning row per emitted pixel
-  evidence/gems52-h60d-a-only-candidate-segments.csv      every A-only whole-segment candidate
-  evidence/h60d_build.json / h60d_format_gate.json / h60d_uniqueness.json / h60d_lane_gate.json
-  evidence/h60d_slot_gate.json / h60d_run_card.json
-  docs/data/submission_h60d.json + docs/data/h60_*.json     the machine-readable receipts
-  submission/H60D_LATEST.txt                  the round pointer (LATEST.txt only if approved)
+The frozen H60D receipts remain historical evidence; this module is not a current experiment
+authorization. It must never change submission/LATEST.txt or any H60 pointer.
 """
 from __future__ import annotations
 
@@ -100,7 +86,18 @@ def prior_inventory(field: str, extra_roots=()):
     return keep
 
 
+def h75_stop_is_current() -> bool:
+    home = ROOT / "docs" / "index.html"
+    status = ROOT / "docs" / "h75-executive-summary.html"
+    return (home.is_file() and status.is_file()
+            and "H75: DUPLICATE/STOP" in home.read_text(errors="replace")
+            and "DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION" in status.read_text(errors="replace"))
+
+
 def main() -> int:
+    if h75_stop_is_current():
+        print("H75 terminal DUPLICATE/STOP is current; H60D historical builder exited before any fit, output, ZIP, or pointer write")
+        return 0
     t0 = time.time()
     valid = G.footprint_from(DATA / "training_features.tif", bands="all")
     with rasterio.open(DATA / "labels.tif") as src:
@@ -171,7 +168,6 @@ def main() -> int:
             holdout=val["pooled_dti"].get(f"hide@{BUDGET}|{promoted}", {}),
             registry_overlap=lane_surface,
             raster_sha256="", validator={},
-            submission_name="", submission_note="",
             verdict="negative — DUPLICATE LANE: surface rank correlation exceeded the "
                     "registered 0.90 bar; logged as duplicate and stopped before placement"))
         raise SystemExit("lane drift on the ranking surface: logged as duplicate and stopped")
@@ -258,7 +254,6 @@ def main() -> int:
             holdout=val["pooled_dti"].get(f"hide@{BUDGET}|{promoted}", {}),
             registry_overlap=lane_dots,
             raster_sha256=q["sha256"], validator={},
-            submission_name="", submission_note="",
             verdict="negative — DUPLICATE LANE: the lane-drift gate on the final dots "
                     "exceeded the registered thresholds; logged as duplicate and stopped "
                     "before shipping"))
@@ -554,21 +549,15 @@ def main() -> int:
         note=("No organizer-authenticated score-to-file mapping exists; every leaderboard "
               "number quoted in this repository is owner-reported; the holdout simulator is "
               "a relative instrument, not a leaderboard proxy."))
-    slot["verdict"] = ("APPROVED — DOWNLOAD AND SUBMIT (format-safe; promotion met)"
-                       if (slot["slot_bar_met"] and slot["checks_pass"]) else
-                       "NEGATIVE RESULT — DOWNLOAD OK FOR REVIEW; DO NOT SPEND A WEEKLY SLOT "
-                       "(the registered promotion/slot bar was not met)")
+    slot["verdict"] = "HISTORICAL RESEARCH ONLY · NOT FOR SUBMISSION · H75 TERMINAL STOP"
+    slot["approved_for_submission"] = False
+    slot["approved_for_weekly_slot"] = False
+    slot["historical_gate_result_only"] = True
     h60d.write_json(EV / "h60d_slot_gate.json", slot)
-    approved = bool(slot["slot_bar_met"] and slot["checks_pass"])
+    approved = False
     log(f"slot gate: {slot['verdict']}")
 
     name = f"{stem}-{q['sha256'][:8]}-zeros"
-    # 138 chars — fits the lane's 140-char limit WITHOUT mid-token truncation
-    # (the first build's note truncated "[0,1]" to "[0"; fixed before shipping).
-    note = ("H60D co-training disagreement arm max(pA-pB,0); outside all prior support and "
-            "the 200 m ring; finite binary [0,1]; not a verified fault map")
-    assert len(name) <= 200, "portal name limit"
-    assert len(note) <= 140, "lane note limit"
 
     # ---- run card (lane protocol item 5) -----------------------------------------------------------
     card = h60d.run_card(
@@ -633,16 +622,24 @@ def main() -> int:
                 fmt["crs"] == "EPSG:32611" and fmt["width"] == 3292 and fmt["height"] == 3730
                 and not fmt["problems"]),
             recheck=G.read_geotiff(path)),
-        submission_name=name,
-        submission_note=note,
-        verdict=("promote" if approved else "negative"),
+        verdict="historical research only — H75 terminal stop; NOT FOR SUBMISSION",
         extra=dict(
             negative_result_is_a_deliverable=True,
             promotion_to_a_real_slot_is_a_separate_selector_step=True,
             weekly_cap="as shown on the submission page",
             projection_by_rho_conditional=proj,
             champion_owner_reported=CHAMPION_OWNER_REPORTED,
-            board_top_owner_reported_2026_10_07=0.3774,
+            board_observation=dict(
+                evidence_class="PUBLIC-LEADERBOARD observation",
+                observed_utc="2026-10-09T20:18:00Z",
+                observed_top_score=0.3774,
+                observed_top_rank=1,
+                observed_subject_score=0.2778,
+                observed_subject_rank=17,
+                subject="extradr19",
+                rows_complete=False,
+                no_tiff_hash_or_organizer_receipt=True,
+                note="Team-level observation only; file association remains owner-reported."),
             preregistration=dict(
                 document="knowledge/30_hypotheses_H60D_preregistered.md",
                 sha256_frozen=("6ce875d384d4344bdd8a668bd7670fc5259b74f19059fb3b8b05c16"
@@ -662,9 +659,7 @@ def main() -> int:
                     "about half the grid, so any pool placement reads 70-84% against "
                     "it by geometry, not duplication); raw readings still reported; "
                     "both Spearman components apply to every prior"]),
-            note_on_scores=("0.2778 (h33-2-b2) and 0.3774 (board top, xiaofanhu) are "
-                            "owner-reported; no ORGANIZER-CONFIRMED number exists in this "
-                            "repo; projections are conditional arithmetic, never scores")))
+            score_evidence_limit=("0.2778 is a dated team-level public-board observation, not the highest public score or an organizer-confirmed TIFF score; the file association is owner-reported. The 0.2600-to-0.2778 byte comparison is not causal. Projections are conditional arithmetic, never scores.")))
     h60d.write_json(EV / "h60d_run_card.json", card)
     log(f"run card verdict: {card['verdict']}")
 
@@ -672,15 +667,8 @@ def main() -> int:
     DL.mkdir(parents=True, exist_ok=True)
     shutil.copy2(path, DL / path.name)
     zf = ROOT / "submission" / f"{stem}.zip"
-    readme = ("Paste-ready DrivenData fields for this artifact (competition 306, 'Make a\n"
-              "submission' dialog). The status line is part of the record: do not spend a\n"
-              "weekly slot unless evidence/h60d_slot_gate.json says slot_bar_met=true.\n")
     with zipfile.ZipFile(zf, "w", zipfile.ZIP_DEFLATED) as z:
         z.write(path, path.name)
-        z.writestr("submission-name.txt", name + "\n")
-        z.writestr("submission-note.txt", note + "\n")
-        z.writestr("STATUS.txt", slot["verdict"] + "\n")
-        z.writestr("README-paste-these.txt", readme)
     shutil.copy2(zf, DL / zf.name)
     shutil.copy2(path, DL / "h60d-candidate.tif")
     shutil.copy2(zf, DL / "h60d-candidate.zip")
@@ -688,21 +676,16 @@ def main() -> int:
     shutil.copy2(seg_path, DL / seg_path.name)
     zip_stats = dict(bytes=zf.stat().st_size, sha256=hashlib.sha256(zf.read_bytes()).hexdigest(),
                      contents=[i.filename for i in zipfile.ZipFile(zf).infolist()])
-    (ROOT / "submission" / "H60D_LATEST.txt").write_text(path.name + "\n")
-    if approved:
-        (ROOT / "submission" / "LATEST.txt").write_text(path.name + "\n")
-        (ROOT / "docs" / "submission").mkdir(exist_ok=True)
-        (ROOT / "docs" / "submission" / "LATEST.txt").write_text(path.name + "\n")
-        log("submission/LATEST.txt moved to H60 (slot gate met)")
-    else:
-        log("promotion/slot bar not met: submission/LATEST.txt left on its previous pointer; "
-            "H60D ships with an explicit negative-result status")
+    log("historical artifact only; no H60D or global submission pointer is changed")
 
     receipt = dict(
         round="H60D", lane="co-training, disagreement as the discovery signal",
-        file=path.name, stem=stem, submission_name=name, note=note, note_chars=len(note),
+        file=path.name, stem=stem,
         bytes=int(q["bytes"]), sha256=q["sha256"], nonzero_px=total, verdict=slot["verdict"],
-        approved_for_weekly_slot=approved, promoted_field=promoted,
+        artifact_status="HISTORICAL RESEARCH ONLY · NOT FOR SUBMISSION",
+        approved_for_submission=False, approved_for_weekly_slot=False,
+        historical_gate_result=dict(slot_bar_met=bool(slot["slot_bar_met"]), checks_pass=bool(slot["checks_pass"])),
+        promoted_field=promoted,
         promotion_met=promoted_any, submission_slots_used=0,
         placement=("h57.iso_select top-k (min_px 3.0 inclusive, nms_px 5) — the registered "
                    "scoring emitter (registered correction H60-5: the preregistered "
@@ -743,7 +726,8 @@ def main() -> int:
     h60d.write_json(EV / "h60d_build.json", receipt)
     (DAD / "submission_h60d.json").write_text(json.dumps(
         {**{k: v for k, v in receipt.items() if k not in ("format", "runtime_s")},
-         "download": f"downloads/{path.name}", "approved_for_weekly_slot": approved},
+         "download": f"downloads/{path.name}", "approved_for_submission": False,
+         "approved_for_weekly_slot": False},
         indent=2, allow_nan=False, default=str) + "\n")
     for nm in ("h60d_build", "h60d_format_gate", "h60d_uniqueness", "h60d_lane_gate",
                "h60d_slot_gate", "h60d_run_card", "h60d_cotrain", "h60d_cotrain_control",

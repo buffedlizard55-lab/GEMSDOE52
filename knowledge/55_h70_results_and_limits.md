@@ -1,5 +1,7 @@
 # H70 — results and limits (2026-10-09)
 
+> **Current correction (2026-10-10):** older rank-13 text refers to an earlier time-stamped public-board reading. The later saved observation at 2026-10-09 20:18 UTC puts 0.2778 at rank 17 and the public top at 0.3774. The board does not identify a TIFF hash or receipt; the file association is owner-reported. The 0.2600/0.2778 local subset relation does not explain a score change, and the 100–200 m cells are not known to be zero-credit. See [`knowledge/49`](49_why_02778_phd_answer.md).
+
 Round: **H70 — strict A-only isolation in the two-view co-training lane, with a lane-valid build.**
 Preregistered in [`knowledge/54`](54_hypotheses_H70_preregistered.md) (SHA-256
 `25b6ee74f9bf488bcfdcbbae109ae5c18d317584a1160a448959c37e45b92151`, pinned in

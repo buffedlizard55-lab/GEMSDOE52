@@ -1,4 +1,6 @@
-# 42 · H69 results and limits — the lane measured a fourth time, and the first lane-feasible placement
+# 42 · H69 historical results — co-training holdout and literal lane stop
+
+> **Current evidence correction (2026-10-10):** the historical 0.2778 discussion below is superseded where it infers a causal score change or zero-credit ring. The saved 2026-10-09 20:18 UTC public observation places extradr19 at rank 17; no public row maps a TIFF hash to a score, and the file association remains owner-reported. The 37,654/44,090 local subset and 100–200 m distances do not identify hidden-truth credit. Official staff confirms new-fault truth may lie within 300 m of known traces. All score-derived densities below are conditional model arithmetic, not hidden-truth measurements or an organizer score explanation; see [`knowledge/49`](49_why_02778_phd_answer.md).
 
 Round **H69**, 2026-10-09. Preregistration `knowledge/52_hypotheses_H69_preregistered.md`
 (SHA-256 `7bd6e682…`), amendment `knowledge/52b_h69_prereg_amendment_placement.md`. Runner
@@ -8,14 +10,12 @@ session (`data/restore_receipt.json`, `ALL_VERIFIED=True`) and a 526-blob prior 
 and SHA-verified into `work/h69/priors/` (`work/h69/prior_fetch_receipt.json`, `errors=0`, 526 fetched,
 524 file-hash matches against the frozen census).
 
-**Verdict: `negative`. Download YES · the portal will accept this file's format YES · spend a weekly
-submission slot NO. Competition slots used: 0.**
+**Disposition:** research download **YES**; local format checks **PASS**; portal acceptance **UNVERIFIED**; submission **NO — literal `DUPLICATE/STOP`**. Competition slots used: **0**.
 
-**The one thing that is new and true:** this is the **first file in this repository that satisfies the
-brief's lane rule** — max directed 3 px near-dot share 0.6985 against a limit of 0.70, and max rank
-correlation 0.0096 against a limit of 0.90, verified over 570 aligned registry rasters with 0 errors.
-H63 measured 0.8188 and H64 0.888 and both shipped files labelled DUPLICATE. The lever that made it
-possible is in §3, and its cost is quantified in §1b.
+**Lane result, with the rule boundary made explicit:** the H69 placement passes the informative-prior
+saturation-policy diagnostic (near-dot 0.6985; max Spearman 0.0096) but fails the literal all-prior
+rule because a universal-coverage probe yields a 1.0000 near-dot fraction. The final literal status is
+`DUPLICATE/STOP`; the policy-only pass does not waive it or make this a submission candidate.
 
 ## 1 · Headline results
 
@@ -39,7 +39,7 @@ possible is in §3, and its cost is quantified in §1b.
 All six arms filled their 9,400-dot-per-fold budget at 3 px separation, so the comparison is at matched
 mass (`all_arms_filled: true`).
 
-## 1b · The shipped file, and every gate measured on it
+## 1b · The archived research file, and every local gate measured on it
 
 `gems52-h69-cotrain-basementview-consensus-lanefeasible-37600px-20261009T062239Z.tif` — **147,247 bytes**, SHA-256 `9501c1c88fa1b80ac76b0d2652afb6234c470f8583a2d634dd62fc23c6ae8461`,
 **37,600** emitted cells. Three byte-identical copies are served
@@ -48,42 +48,41 @@ mass (`all_arms_filled: true`).
 
 | gate | result |
 |---|---|
-| Format (1 band, float32, EPSG:32611, 3,730 × 3,292, pinned transform, matches `sample_submission.tif`) | **PASS**, 0 problems |
-| Values | exactly {0.0, 1.0} ⊂ [0, 1]; **0 NaN, 0 infinite**, 0 mass outside the valid footprint |
- (372 distinct decoded patterns, 0 errors) | **PASS** |
+| Local format validation (1 band, float32, EPSG:32611, 3,730 × 3,292, pinned transform, matches `sample_submission.tif`) | **PASS**, 0 local problems; portal acceptance unverified |
+| Values | exactly {0.0, 1.0} ⊂ [0, 1]; **0 NaN, 0 infinite**, 0 mass outside the valid footprint; 372 distinct decoded patterns checked | **PASS** |
 | Equals the literal prior union | False |
 | Lane, **saturation policy**, final dots | **PASS** — max near-dot **0.6985** (limit 0.70), max Spearman **0.0096** (limit 0.90) |
 | Lane, saturation policy, continuous surface | **PASS** — max Spearman 0.5057 |
-| Lane, **literal** rule (probes included), final dots | DUPLICATE/STOP — one universal-coverage probe at 1.0000, which is a property of that raster (its 3 px halo covers ≥ 95 % of the legal set) and not of this candidate; reported, not waived |
+| Lane, **literal** rule (probes included), final dots | **DUPLICATE/STOP** — a universal-coverage probe yields 1.0000; literal stop controls |
 | Not the union of the two views | **PASS** — min 46,228 differing cells per fold |
 | ≥ 20 % exact support novelty vs the all-prior union | **FAILED diagnostic**, reported not waived (§6.4) |
 | S1 sufficiency | **FAIL** — View A mean 0.5281, min fold 0.4896 |
-| HOLDOUT-DTI beats `single_B` | **FAIL** — -0.101474 [-0.123610, -0.080051] |
-| **Verdict** | **`negative`** · download **YES** · portal will accept the format **YES** · spend a weekly slot **NO** · slots used **0** |
+| HOLDOUT-DTI candidate minus `single_B` | **−0.101474** [−0.123610, −0.080051] — the promotion criterion fails |
+| **Disposition** | Research download **YES** · local format **PASS** · portal acceptance **UNVERIFIED** · submission **NO — DUPLICATE/STOP** · slots used **0** |
 
-Submission name (79 chars) and note (127 chars, complete, never
-truncated mid-word) are in `submission/gems52-h69-cotrain-basementview-consensus-lanefeasible-37600px-20261009T062239Z-submission-name.txt` and `…-note.txt`.
+The artifact is retained for research review only; no submission name, paste-ready note, or upload steps
+are provided here. No organizer-confirmed submission receipt exists.
 
-**Projection (never a score)** for the shipped novel-only file, `t_core = 0` and
-ρ_novel ~ U[0.02795, 0.13871] at `S = 37,600`:
+**Conditional scenario arithmetic only (never a score or forecast)** for the archived novel-only file,
+using `t_core = 0`, assumed `|G|` values, and an assumed `ρ_novel` prior over [0.02795, 0.13871].
+These inputs are not recovered hidden truth or measured credit:
 
-| \|G\| | P(DTI > 0.2778) | P(DTI > 0.3195) | P(DTI > 0.3774) | mean | worst | best |
+| Assumed \|G\| scenario | Conditional P(DTI > 0.2778) | Conditional P(DTI > 0.3195) | Conditional P(DTI > 0.3774) | scenario mean | worst | best |
 |---|---:|---:|---:|---:|---:|---:|
 | 5,949.3 px | 0.435 | 0.311 | 0.143 | 0.2552 | 0.0856 | 0.4247 |
 | 9,230.7 px | 0.261 | 0.112 | 0.000 | 0.2102 | 0.0705 | 0.3499 |
 | 12,512.1 px | 0.087 | 0.000 | 0.000 | 0.1787 | 0.0600 | 0.2975 |
 
-**Counterfactual, NOT SHIPPED** (the withdrawn `P1 = A ∩ C` core of 25,502 px + 11,200 novel px,
-`S = 36,702`): P(DTI > 0.2778) = 0.684 at `|G| = 5,949.3` and
-0.791 at `|G| = 12,512.1`, mean DTI 0.3006 and
-0.3021, with `t_core` re-solved at each `|G|` from the reported scores of the nested
-family. That is roughly **0.05–0.09 of mean DTI and 0.25–0.5 of P(win) more than the shipped file**, and
-it is the measured price of the uniqueness rule. No such file was written, served or offered.
+**Withdrawn scenario, NOT SHIPPED:** the 25,502-cell `P1 = A ∩ C` support overlap plus 11,200
+novel-view cells was evaluated only by conditional inversion of owner-reported score associations,
+assumed `|G|`, and a sparse-emission model. The listed probabilities and DTI values are scenario outputs,
+not measured hidden-truth credit, not an estimate of organizer scoring, and not evidence of the cost or
+benefit of the uniqueness rule. No such file was written, served, or offered.
 
-The single most striking number in the round is the dots-phase rank correlation: **0.0096**
-against a limit of 0.90. The shipped emission is essentially *orthogonal* to all 372 distinct published
-prediction patterns in the family. That is exactly what the lane rule asks for, and exactly why its credit
-density cannot be certified: it is not standing where anything that has ever scored is standing.
+The informative-prior dots-phase max rank correlation is **0.0096** under the saturation-policy
+calculation. This is a local registry comparison only. It does not establish eligibility under the literal
+all-prior rule, hidden-truth novelty, or credit density; the universal-coverage probe still makes the
+literal result `DUPLICATE/STOP`.
 
 ### Post-merge re-verification against the enlarged registry
 
@@ -94,10 +93,9 @@ priors used, 2 excluded as not on the competition grid,
 376 distinct decoded patterns, 15 universal-coverage
 probes, 555 informative, 0 errors.**
 
-The result did not move: lane policy **PASS**, max near-dot **0.6985**, max
-Spearman **0.0096**. None of the four new rounds became an offender, which is what the
-consensus-restricted pool predicts — an emission drawn from pixels the family did *not* agree on stays
-lane-legal when the family grows.
+The informative-prior policy result remained **PASS** (max near-dot **0.6985**, max Spearman **0.0096**).
+The literal result remains **DUPLICATE/STOP** because universal-coverage probes are included in that rule.
+The policy-only result is not a submission clearance.
 
 The placement itself was computed against the pre-merge census (343 informative priors, frozen in
 `evidence/ctd5_prior_inventory.json` + `submission/` + `data/scored` + `data/reference` at that time), and
@@ -151,142 +149,59 @@ class of failure as `IR-H58-002` (22 of 37,654 nodes emitted — support-capacit
 at exactly zero. **The co-training mechanism cannot be executed as specified on this data with these
 views**, which is a stronger statement than "it was executed and did not help".
 
-### 2.3 The disagreement arm is below uniform random for the fourth consecutive round
+### 2.3 The disagreement arm is below uniform random on this holdout instrument
 
 0.036473 against `random` 0.072032 and `single_A` 0.071893. View A alone is indistinguishable from
 uniform random on this instrument (0.0719 vs 0.0720, paired CI on the difference spans zero at
 −0.000139 ± 0.012), and selecting where View A is confident while View B abstains is *worse* than
-selecting at random. Rounds H61, H63, H64 and H69 agree. The Blum–Mitchell discovery premise — that
-the confident/abstaining disagreement class is enriched for the target — is refuted on this data four
-times over, and the reason is visible in S1: a view at chance cannot produce a *confident* tail that
-means anything.
+selecting at random. H61, H63, H64 and H69 show the same direction on their recorded holdout runs.
+This does not establish organizer-score behavior or refute the method universally; it indicates the
+registered discovery premise is not supported by these internal measurements. View-A sufficiency at
+chance is consistent with the weak disagreement result.
 
-## 3 · The one genuinely new engineering result: the lane rule IS satisfiable, and here is the lever
+## 3 · Placement diagnostics — informative-prior policy pass does not clear the literal stop
 
-Every previous round placed first and checked the lane afterwards, and every one of them shipped a file
-labelled DUPLICATE (H63 max informative near-dot 0.8188, H64 0.888). H69 measured three constructions
-and only the third works. All three numbers are in `evidence/h69_placement.json`.
+H69 compared three placement constructions. The recorded greedy and per-prior quota results are
+engineering diagnostics over the 343 informative priors in the frozen pre-merge census; the later gate
+used a larger registry. The consensus-restricted placement attained 0.6985 maximum directed 3 px
+near-dot share and 0.0096 maximum Spearman under the **informative-prior saturation policy**. That is a
+policy diagnostic, not the literal lane verdict.
 
-**(a) Unconstrained greedy — the baseline.** 37,600 dots placed in field-rank order with hard-core 3 px
-spacing over the 4,859,987 px legal set. Worst informative near-dot **36,149 / 37,600 = 0.9614**
-(`509be169fe6253f94bf8b7323398e1b80e972c96.tif`), with **84 of 343** informative priors above the
-0.70 limit. So a field ranked by this repository's habitat signal puts 96 % of its mass within 3 px of a
-single published raster. That is the lane rule working as intended, not a threshold artefact.
+The literal all-prior check includes universal-coverage probes. At least one such probe has a directed
+3 px near-dot fraction of 1.0000, so the candidate is **`DUPLICATE/STOP` under the literal rule**. Do not
+call H69 lane-feasible or submit-eligible based on the informative-only result. The local placement
+arithmetic explains how the policy-only numbers were achieved; it does not reverse the stop or establish
+any score/credit claim.
 
-**(b) Per-prior quota, iterated to a fixed point — does not converge.** Setting every offender's quota to
-`floor(0.6985·S)` and re-placing gives:
+The registry census changed during this work and the files/probe classes differed between frozen
+placement and later gate runs. Those counts are retained as provenance, not combined as though they were
+one unchanged registry. Exact support novelty against the union of informative-prior 3 px halos was also
+0 because the union covered the legal set in the measured census; that is a registry-level diagnostic,
+not proof that a candidate has no hidden-truth novelty.
 
-| quota | dots placed | worst near-dot | achieved share | allowed at that budget |
-|---:|---:|---:|---:|---:|
-| 24,500 | 32,871 | 24,500 | 0.7453 | 22,960 |
-| 22,960 | 30,864 | 22,960 | 0.7439 | 21,558 |
-| 21,558 | 29,069 | 21,558 | 0.7416 | 20,304 |
+## 4 · Why the local-overlap recombination was withdrawn
 
-`S/quota` is structurally ≈ 1.34, so the achieved share is pinned near **0.745 at every budget**.
-Tightening the quota shrinks the file and the violation together. A quota computed against a *target*
-budget is also simply the wrong denominator: at quota 26,263 only 35,149 dots were placeable, an
-achieved share of **0.7472** — a violation created by the cap's own arithmetic.
+Preregistration considered `P1 = A ∩ C`, a 25,502-cell local support overlap, alongside novel-view
+cells. The overlap is a raster relationship; its hidden-truth credit is not directly observed. Previous
+score inversion assigned it conditional credit using owner-reported score associations, an assumed `|G|`,
+and a sparse-emission approximation. Those assumptions do not make the credit bound organizer-confirmed
+or measured.
 
-**(c) Excluding the offenders' halos — not available at all.** The union of the 84 offenders' 3 px halos
-leaves **361 px** of the 4,859,987 px legal set. Exclusion cannot fund a budget.
+The recombination was withdrawn before placement. Independently, H60C's prior uniqueness correction
+(`IR-H61-007`, `IR-UNQ-001`) means historical overlap with previous submissions is not a promotion path.
+Any associated `P(DTI > threshold)` values are scenario arithmetic only, are NOT SHIPPED, and are not
+submission candidates. The archived H69 novel-only TIFF is not submit-eligible because its literal lane
+status is `DUPLICATE/STOP` and its S1/holdout promotion gates fail.
 
-**(d) The lever that works: restrict the pool to pixels of low cross-family consensus.** `consensus(x)` is
-the number of distinct decoded prior patterns whose 3 px halo covers `x` (H69-2). Over the legal set it
-runs 0 → 276 with mean 72.7. Restricting the pool to `consensus ≤ c` and placing under the same quota:
+## 5 · Local evidence about the reported 0.2778 — no causal conclusion
 
-| c | pool px | dots placed | worst near-dot | share | allowed | feasible |
-|---:|---:|---:|---:|---:|---:|:--|
-| 160 | 4,339,239 | 36,193 | 26,263 | 0.7256 | 25,280 | no |
-| 120 | 3,994,592 | 36,088 | 26,263 | 0.7277 | 25,207 | no |
-| 100 | 3,819,056 | 36,403 | 26,263 | 0.7215 | 25,427 | no |
-| 80 | 3,460,886 | 36,987 | 26,263 | 0.7101 | 25,835 | no |
-| **60** | **2,741,649** | **37,600** | **26,263** | **0.6985** | **26,263** | **YES** |
+The saved official public-board observation at 2026-10-09 20:18 UTC lists `extradr19` at rank 17 with 0.2778; it lists 0.3774 at rank 1. This is a team-level PUBLIC-LEADERBOARD observation, not an organizer receipt or file/hash mapping. The 0.2778 association with an H33-labelled TIFF remains OWNER-REPORTED.
 
-`c = 60` fills the whole 37,600-dot budget and lands at **0.6985**, inside the brief's literal 0.70, and
-that was then re-verified by exact measurement against **all 343 informative priors**
-(`evidence/h69_lane_dots.json`). Lower thresholds (50, 40, 30, 25, 22, 20) were not needed; the search
-takes the *largest* feasible threshold so the ranking field keeps as much of its signal as the lane
-allows.
+Local bytes show that a 37,654-cell H33-labelled bitmap is a strict subset of a separate 44,090-cell bitmap associated by an owner report with 0.2600: 6,436 cells are removed and none added. The removed cells are 100–200 m from the provided known-fault mask. These are byte/spatial facts only. The official known-fault mask is pixel-exact; only new-fault truth is scored; new-fault truth may occur within 300 m of known traces. Thus the removed cells' hidden-truth credit is unknown. The subset relation does not establish that either file received its reported value or explain why an organizer score changed.
 
-The reading matters more than the number. The lane rule is not unsatisfiable because of
-universal-coverage probes, which was H61's diagnosis (`IR-H61-005`). It is unsatisfiable **for any
-emission ranked by the family's own habitat signal**, because 84 informative priors agree with that
-signal closely enough to cover 96 % of its top mass. What makes an emission lane-legal is ranking it by
-something the family did *not* agree on — here, deliberately moving 30 % of the mass to pixels that at
-most 60 of 356 published rasters cover. **The lane rule is a novelty constraint, and this round is the
-first to pay its price explicitly instead of failing it.**
+Any prior inversion of the two reported numbers is conditional on their owner-reported mapping, the sparse-emission approximation, and an assumed credit for the removed pixels. The zero-credit case is one scenario, not a measurement. It is not used here as a score explanation. See [`knowledge/49`](49_why_02778_phd_answer.md) and `IR-R5-011` for current evidence classes.
 
-Registry census measured this session (`work/h69/probe.json`, reproduced by `scripts/h69_probe.py`):
-568 prior paths, **372 distinct decoded patterns**, of which 356 are aligned single-band rasters on the
-competition grid, **13 universal-coverage probes** (3 px halo covering ≥ 95 % of the legal set) and
-**343 informative**. The probe count differs from H64's 35 / 511 and H63's 14 / 531; the classification
-rule is identical and the difference is the prior set each round assembled (§6.3).
-
-## 4 · Why the credited core was pre-registered and then withdrawn
-
-Prereg §4 pre-registered an emission built from `P1 = A ∩ C`, the double-corroborated credited core,
-25,502 px inside the legal set, whose credit is bounded *exactly* by the organiser's own reported
-scores: `t(P1) ∈ [T(A)+T(C)−T(E), T(A)]`. That is the only mass in this repository with an exact credit
-bound, and the arithmetic is favourable — the withdrawn design would have projected
-`P(DTI > 0.2778)` of roughly 0.83–1.00 across the measured `|G|` bracket.
-
-It was withdrawn before placement ran, because `README.md`'s H60C correction and `IR-H61-007` /
-`IR-UNQ-001` had already adjudicated exactly this object:
-
-> **H60C is NOT a unique submission.** Its 35,185 emitted cells are 80.4 % inside the support of prior
-> submissions (73.3 % inside `h33-2-b2` alone) … it **does not satisfy "unique, not a copy of a previous
-> submission."** Do not present it as the unique submission.
-
-The pre-registered core+novel file would have sat at a near-dot fraction of ≈ 0.695 against the
-champion — inside the literal 0.70 threshold, but the same object as the one already corrected, sized
-to pass by 0.005. That is re-tuning a negative result into a positive, which the working agreement
-forbids. `knowledge/52b` records the withdrawal; the counterfactual projection is still computed and
-published in `evidence/h69_run_card.json` under
-`projection.counterfactual_recombination_NOT_SHIPPED`, labelled as analysis and not as a candidate.
-
-The consequence is stated plainly: **withdrawing the core removes the only mass whose credit is known,
-so the shipped file's credit density is unknown and bounded only by the prior [0.0279, 0.1387].** At
-`S = 37,600` the break-even density needed to match the reported champion is 0.0907 at
-`|G| = 5,949.3` and 0.1295 at `|G| = 12,512.1`. The expected verdict for a novel-only file was
-therefore DOWNLOAD YES / SUBMIT NO **before the number was known**, and `knowledge/52b` says so.
-
-## 5 · Why the reported champion scored 0.2778, and whether it can be beaten
-
-Re-derived from the restored bytes this session, not copied (`work/h69/probe.py`,
-`evidence/h61_forensics.json`):
-
-* The reported-0.2778 file `h33-2-b2` (37,654 px) is a **strict subset** of the reported-0.2600 file
-  (44,090 px), which is a strict subset of the reported-0.1922 parent field (121,131 px). The champion
-  added **zero** pixels and deleted 6,436, every one of them between 100 m and 200 m of a mapped trace;
-  its own nearest dot is 223.6 m away.
-* For a binary emission whose dots are separated by more than the kernel support, `M = T` and the metric
-  collapses to `DTI = T / (0.2·S + 0.8·|G|)`. Deleting mass that earns no credit removes denominator and
-  no numerator. **The single move that separates 0.2600 from 0.2778 is precision, not detection.**
-* The champion's credit density is 0.0907 at `|G| = 5,949.3` and 0.1387 at `|G| = 14,088.7`, against
-  0.0279 for uniform random over the legal set — 3.2× to 5.0× random.
-* Its mass is concentrated: `P1 = A ∩ C` is 25,517 px carrying credit density 0.163–0.205, while the
-  ≤ 200 m corridor atoms carry **exactly zero**.
-* `|G|` is an **interval [5,949.3, 12,512.1] px**, not a point. The often-quoted 14,088.7 requires the
-  champion's deleted 6,436 px to earn exactly zero credit; 25 credit of ring income moves it to 12,333.
-
-**Can it be beaten?** Two routes, and only two:
-
-1. **Recombination of existing public mass.** This is the route with an exact credit bound, and the
-   projection says it clears 0.2778 across the whole `|G|` bracket. It is not available: it is a
-   duplicate by construction (§4).
-2. **A detector above 0.0907–0.1295 credit density on *novel* mass.** No instrument in this repository
-   can certify that. The hide-and-recover simulator anti-ranks the board (ρ = −0.1045, p = 0.734,
-   n = 13; the champion ranks 13th of 13 locally and 1st publicly), and the revealed-preference
-   instrument is a similarity statistic to one prior file. This round's own novel field is ranked by a
-   view at chance and a view at 0.66 habitat AUC, and habitat is not credit (`knowledge/10` §6: 63 point
-   features and 108 structure-tensor features, best AUC(P1 vs P2) 0.5453).
-
-The top of the board at 0.3774 needs `T ≈ 6,620` at `S = 37,654` and `|G| = 12,512` (density 0.176) or
-`T ≈ 4,638` at `|G| = 5,949` (density 0.123) — i.e. a detector better than anything this family has
-published. **The honest conclusion is that 0.2778 is beatable in arithmetic and not beatable with any
-detector this repository can validate, and that the only un-run idea whose target population the
-organiser has confirmed exists is R5-H1, the trace-correction corridor** (`knowledge/33`, frozen §A-gate,
-never executed). It is still rank 1 and still open.
+Whether a future submission can exceed 0.2778 or 0.3195 is unknown. H69's HOLDOUT-DTI values are internal measurements under the named hide-and-recover evaluator, not a public-board predictor; no conversion or projection is claimed.
 
 ## 6 · Limits, discrepancies and irregularities
 
@@ -330,29 +245,16 @@ never executed). It is still rank 1 and still open.
 7. **The hide-and-recover instrument withholds ~1.2 % of the footprint** against an estimated true
    prevalence of 0.12–0.25 %, and its ranking of the board is ρ = −0.1045. HOLDOUT-DTI is an instrument
    reading, never a forecast.
-8. **`ρ_novel` is a prior, not a measurement.** Every projection integrates over
-   `[0.0279, 0.1387]` — the two credit densities that are actually measured. Nothing here certifies where
-   inside that interval this round's novel mass falls.
-9. **No submission slot was used and none can be used from this sandbox**: the portal is login-walled and
-   `drivendata.org` is not reachable from here.
+8. **`ρ_novel` is a scenario prior, not a measurement.** Every projection integrates over
+   `[0.0279, 0.1387]`, an assumption derived from owner-reported score associations. No instrument here
+   certifies hidden-truth credit for the novel mass or where it lies within that interval.
+9. **No submission slot was used.** The literal `DUPLICATE/STOP` is terminal for this artifact; no override or upload procedure is provided. Portal acceptance is unverified.
 10. **ComCat is not bulk-downloadable from this sandbox**, so the seismicity channels are the organiser's
     own bands 10 and 16 rather than a fresh earthquake catalogue.
 
-## 7 · Reproduce
+## 7 · Archived evidence and provenance
 
-```bash
-python3 -m venv .venv && .venv/bin/pip install -r requirements-r2.txt
-bash scripts/download_competition_data.sh                 # restores data/, SHA-256 verified
-.venv/bin/python scripts/prepare_data.py                  # re-derives evidence/grid.json
-.venv/bin/python scripts/fetch_prior_inventory.py \
-    --out work/h69/priors --receipt work/h69/prior_fetch_receipt.json
-.venv/bin/python work/h69/probe.py                        # legal set, core, census, lane arithmetic
-.venv/bin/python scripts/run_h69.py --stage features
-.venv/bin/python scripts/run_h69.py --stage lane
-.venv/bin/python scripts/run_h69.py --stage place
-.venv/bin/python scripts/run_h69.py --stage gates
-.venv/bin/python scripts/publish_h69_site.py
-```
-
-`requirements-r2.txt` pins numpy 2.2.6 / scipy 1.15.3 / scikit-learn 1.7.2 / rasterio 1.4.3 and this
-round ran on exactly those versions.
+The historical artifacts are reviewable in `evidence/h69_*.json`, with the method and source provenance
+in `docs/h69.html` and `docs/h69-sources.html`. The scripts remain in the repository as historical
+provenance, but this note does not authorize an experiment rerun, candidate rebuild, new run-card, or
+submission. No command sequence is provided because H69 is terminal under the literal `DUPLICATE/STOP`.

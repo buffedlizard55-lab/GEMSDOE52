@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""Legacy H55 page renderer, guarded so it cannot replace a newer current artifact.
+"""Legacy H55 renderer, fail-closed under the current H75 terminal-stop status.
 
-H55 is historical on the current tree; H56 owns the current overview and submission guide. The
-archived H55 evidence and page remain available, but this renderer may run only if both the current
-receipt and submission marker explicitly point back to this exact H55 artifact.
+H55 is historical. Its old report body contains owner-attributed scores, conditional inversions,
+and obsolete submission text; it must not be republished over the reviewed H75 status pages.
 """
 from __future__ import annotations
 
@@ -137,36 +136,15 @@ def _publish_h55_from_receipt() -> int:
                   ind["tip"]["max_abs_spearman_far_at_budget"])
 
     bar = f'''<!--H55BAR--><div class="download-bar" id="h55-bar"><div>
-<strong>H55 submission GeoTIFF &mdash; the candidate this round offers, and the one
-<code>submission/LATEST.txt</code> points at</strong>
+<strong>H55 historical research GeoTIFF — RESEARCH ONLY · NOT FOR SUBMISSION</strong>
 <small><code>{ev['file']}</code></small>
-<small>{ev['bytes']:,} bytes &middot; 1 band &middot; float32 &middot; EPSG:32611 &middot;
-width {ev['width']} &times; height {ev['height']} &middot; values {ev['values'][0]}&ndash;{ev['values'][1]}
-&middot; <b>{ev['nan_px']} NaN</b> &middot; {geo['S']:,} positive px &middot; 0 on a catalogue pixel &middot;
-sha256 <code>{ev['sha256'][:16]}&hellip;</code></small>
-<small>format gate <b>{ev['format_ok']}</b> (problems {ev['format_gate']['problems']}) &middot;
-uniqueness gate <b>{ev['uniqueness_ok']}</b> &middot; <b>{uni['novel_fraction']:.1%}</b> strictly novel
-against {uni['n_priors_checked']} scanned priors &middot; {uni['prior_px_dropped']:,} prior px deliberately
-not re-emitted</small>
-<small>placement efficiency <code>A/S</code> = <b>{geo['A_per_S']:.4f}</b> =
-{geo['spacing_efficiency']:.2%} of the exact {prj['a_per_s_ceiling']:.6f} kernel-disc ceiling &mdash; the
-file that scored 0.2778 reached {prj['a_per_s_0278_file']}
-({prj['a_per_s_0278_file'] / prj['a_per_s_ceiling']:.1%}); every emitted pixel is 8-isolated (largest
-component {geo['max_component']})</small>
-<small>holdout, 4 folds &times; 2 instruments, matched-budget random control: <code>hide</code>
-<b>{sel['hide']}</b> vs {prj['random_control']['hide']} ({sel['hide_wins']}/4) &middot; <code>tip</code>
-<b>{sel['tip']}</b> vs {prj['random_control']['tip']} ({sel['tip_wins']}/4)</small>
-<small>portal name: <code>{ev['submission_name']}</code></small>
-<small>notes box, verbatim ({ev['submission_note_short_chars']} chars):
-<code>{ev['submission_note']}</code></small>
+<small>{ev['bytes']:,} bytes · one float32 band · EPSG:32611 · {geo['S']:,} positive cells · SHA-256 <code>{ev['sha256'][:16]}…</code></small>
+<small>Historical local format/pattern checks only; they do not establish registry eligibility, portal acceptance, organizer confirmation, or submission approval.</small>
+<small>H55's legacy hide/tip values are CATALOGUE-PROXY outputs, not shared HOLDOUT-DTI or a leaderboard score. No pooled shared-evaluator CI is claimed.</small>
 </div>
-<a class="button" href="downloads/{ev['file']}" download>&darr; Download .TIF</a>
-<a class="button" href="downloads/{ev['zip']}" download>&darr; Download .ZIP</a>
-<a class="button" href="h55.html">Why this file &rarr;</a>
-<small style="width:100%">placement gain in isolation &mdash; the 0.2778 file's own measured
-&rho;<sub>A</sub> = 0.01287 applied to this file's measured coverage, nothing else changed &mdash;
-<b>DTI &asymp; {prj['geometry_only_dti']:.4f}</b>. Arithmetic given its assumption, <b>not a forecast</b>:
-the instruments under-forecast the board by ~4&times; in absolute terms.</small>
+<a class="button" href="downloads/{ev['file']}" download>↓ Download research TIFF</a>
+<a class="button" href="downloads/{ev['zip']}" download>↓ Download research ZIP</a>
+<a class="button" href="h55.html">Historical H55 evidence →</a>
 </div><!--/H55BAR-->'''
 
     p = DOCS / "index.html"
@@ -182,12 +160,13 @@ the instruments under-forecast the board by ~4&times; in absolute terms.</small>
 
     HEAD = '''<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="H55: a radiometric band mis-tagged as magnetic, |G| recovered by inverting the metric, and placement at 94% of the kernel's coverage ceiling.">
-<title>H55 &mdash; radiometric correction, calibrated |G|, coverage-optimal placement &middot; GEMSDOE52</title>
+<meta name="description" content="Historical H55 research archive. H75 is the current terminal stop; H55 has no submission approval.">
+<title>H55 historical research archive · GEMSDOE52</title>
 <link rel="stylesheet" href="style.css"><script src="site.js" defer></script></head><body>
+<aside role="alert" style="padding:14px 22px;background:#fef2f2;color:#7f1d1d;border:2px solid #991b1b"><strong>H75: DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION.</strong> H55 is a historical archive; no upload, override, or slot approval is implied. <a href="h75-executive-summary.html">H75 stop status</a>.</aside>
 <a class="skip" href="#main">Skip to evidence</a>
 <header><nav><a class="brand" href="index.html">GEMS / DOE 52</a><a href="index.html">Overview</a>
-<a href="executive-summary.html">Submission guide</a><a href="validation.html">Validation</a>
+<a href="executive-summary.html">Research status</a><a href="validation.html">Validation</a>
 <a href="forensics.html">0.2778 autopsy</a><a href="sources.html">Sources</a>
 <a href="h55.html" aria-current="page">H55 (this round)</a><a href="h55-profile.html">H55-PROFILE follow-up</a><a href="h54.html">Parallel H54</a>
 <a href="h53.html">Parallel H53</a></nav></header>
@@ -202,10 +181,8 @@ rather than a measurement, it says so in the same sentence.</p>
 <a href="sources.html">official links</a></footer></body></html>
 '''
     body = HEAD + f'''
-<h1>H55 &mdash; three corrections, one file</h1>
-<p class="lede">A radiometric band hiding in the official feature file under a magnetic tag; a hidden
-constant recovered from our own scored history; and the arithmetic that says placement was worth more
-than prediction, and that this family had left 14&nbsp;% of it unspent.</p>
+<h1>H55 — historical research archive</h1>
+<p class="lede">A radiometric-band identity correction and historical catalogue-recovery experiments. Owner-reported score/file associations and score-derived hidden-truth calculations are conditional scenarios, not verified performance explanations.</p>
 
 <div class="download-bar"><div><strong>{ev['file']}</strong>
 <small>{ev['bytes']:,} bytes &middot; sha256 <code>{ev['sha256']}</code></small>
@@ -407,20 +384,14 @@ readings are recorded rather than silently renumbered).</p>
 
 <h2><span class="num">11</span> Limitations, and what to do next</h2>
 <ul class="tight">
-<li><b>Nothing here forecasts a portal score.</b> The instruments under-forecast the board by roughly
-4&times; in absolute terms &mdash; this family scores ~0.05 on <code>hide</code> folds and 0.2778 on the
-portal &mdash; so a fold number is a ranking device. The only projection given a number is the placement
-gain in isolation (&asymp;{prj['geometry_only_dti']:.4f}), and its assumption is stated in the same JSON.</li>
+<li><b>No portal-score calibration is established.</b> H55's local catalogue-proxy folds are not calibrated to hidden new-fault truth. The 0.2778 value is a dated public-board observation, not the public high score, and its association with an H33-labelled TIFF is owner-reported without a hash receipt. Any historical projection is scenario arithmetic, not a measurement or forecast.</li>
 <li><b>|G| rests on owner-reported scores.</b> The rasters, masses and geometry are SHA-256-exact; the DTI
 values are not organiser-authenticated (IR-52-003). <code>scripts/calibrate_g.py</code> prints every row so
 a human can re-check the pairings by hand.</li>
 <li><b>One tuned constant was set by inspection, not by a sweep:</b> the coherence floor
 {th['lineament']['coh_floor']} that truncates the thermal strike walk. It discards 99.94&nbsp;% of thermal
 cells' potential extent, and it is the weakest number in the shipped pipeline.</li>
-<li><b>The budget was chosen at fold prevalence (0.2&nbsp;%), not board prevalence
-(&asymp;0.157&nbsp;%).</b> The rule prefers smaller mass on a near-exact tie. A single 60&ndash;80&nbsp;k
-file would settle it, and it is the only available experiment whose answer is a board number rather than a
-fold number.</li>
+<li><b>Historical budget calibration is unresolved.</b> Fold prevalence differs from hidden new-fault prevalence. This page does not authorize another build, retune, holdout, or weekly slot; any future work requires separate explicit authorization and preregistration.</li>
 <li><b>View A is dead at 100&nbsp;m and was only tested at 100&nbsp;m.</b> N-10 excludes it as a primary
 emitter at the scale the metric scores; it does not exclude a 300&nbsp;m potential-field product used to
 <em>gate</em> a 100&nbsp;m surface detection. That is the one version of the two-view idea the measurements
@@ -428,10 +399,7 @@ do not already exclude.</li>
 <li><b>External layers are uint8-quantised mirrors</b> (1st&ndash;99th percentile) of the official grids.
 The sources are named and reachable, but a re-reduction to float32 from the USGS release would sharpen
 every ratio-step layer.</li>
-<li><b>Three rounds have shipped in parallel</b> (IR-52-029). <code>submission/LATEST.txt</code> points at
-this file; reverting is one line. Every other artefact stays downloadable and is now a prior for the
-uniqueness gate &mdash; this file is {uni['novel_fraction']:.1%} novel against {uni['n_priors_checked']} of
-them and drops {uni['prior_px_dropped']:,} prior px.</li>
+<li><b>This is a historical H55 archive.</b> Its bounded local prior comparison does not establish current registry status, global uniqueness, slot eligibility, or submission approval. H75 is the current terminal research-only stop.</li>
 </ul>
 ''' + FOOT
     profile_link = """<p class="small muted" id="h55-profile-followup-link"><strong>Separate follow-up:</strong> the H55-PROFILE paired-normal DEM experiment failed its registered mean-lift gate and is research-only. <a href="h55-profile.html">Read the follow-up evidence and download</a>; it does not replace this page's incumbent candidate.</p>"""
@@ -442,7 +410,13 @@ them and drops {uni['prior_px_dropped']:,} prior px.</li>
 
 
 def main() -> int:
-    """Refuse to publish historical H55 pages over a different current artifact."""
+    """Refuse to publish legacy owner-score/submission copy over current H75 status."""
+    index = DOCS / "index.html"
+    h75 = DOCS / "h75-executive-summary.html"
+    if index.is_file() and h75.is_file():
+        if "H75: DUPLICATE/STOP" in index.read_text(errors="replace") and "NOT FOR SUBMISSION" in h75.read_text(errors="replace"):
+            print("skipped: H75 terminal-stop pages own the current site; legacy H55 renderer was not run")
+            return 0
     current_path = DOCS / "data" / "submission.json"
     marker_path = ROOT / "submission" / "LATEST.txt"
     if not current_path.is_file() or not marker_path.is_file():
@@ -457,8 +431,7 @@ def main() -> int:
     expected = f"{STEM}.tif"
     if current.get("file") != expected or marker != expected:
         print(
-            "skipped: H55 is historical and does not match both the current receipt and "
-            "submission/LATEST.txt; H56/current pages were left untouched"
+            "skipped: H75 terminal-stop pages are current; legacy H55 publisher left shared pages untouched"
         )
         return 0
     return _publish_h55_from_receipt()

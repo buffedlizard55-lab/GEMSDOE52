@@ -83,13 +83,13 @@ def main() -> int:
 <title>H62 audit · GEMSDOE52</title><link rel="stylesheet" href="assets/ctd5.css"></head>
 <body><a class="skip" href="#main">Skip to content</a>
 <header><nav aria-label="Main navigation"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">52</span>GEMS / DOE</a>
-<a href="index.html">Overview</a><a href="h62-buriedcorr.html">Run &amp; evidence</a><a href="executive-summary.html">Submission guide</a><a href="sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header>
+<a href="index.html">Overview</a><a href="h62-buriedcorr.html">Run &amp; evidence</a><a href="executive-summary.html">Research status</a><a href="sources.html">Sources</a><a href="downloads/index.html">Archive</a></nav></header>
 <main id="main">
 <h1>H62 — buried structural corridors</h1>
 <div class="notice" role="note"><strong>{e(status_banner)}</strong><p>{e(status_long)}</p></div>
 <p class="fileline">{e(fn)} · {px:,} emitted px · SHA-256 {e(sha)}</p>
-<div class="actions"><a class="button" href="downloads/h62-buriedcorr-candidate.tif" download>Download GeoTIFF ↓</a>
-<a class="button secondary" href="downloads/h62-buriedcorr-candidate.zip" download>Single-TIFF ZIP</a></div>
+<div class="actions"><a class="button" href="downloads/h62-buriedcorr-candidate.tif" download>Download research GeoTIFF ↓</a>
+<a class="button secondary" href="downloads/h62-buriedcorr-candidate.zip" download>Research ZIP</a></div>
 
 <h2>Hypothesis and mechanism</h2>
 <p>{e(card["hypothesis"])}</p>
@@ -114,10 +114,10 @@ def main() -> int:
 <p class="small">Preregistered bars: H62={bars.get("h62")} · ungated dis_contrast={bars.get("dis_contrast")} · random={bars.get("random")} · weak-surface subgroup H62={bars.get("weak_h62")} vs view_B={bars.get("weak_view_B")} (fold wins {g.get("weak_subgroup_fold_wins")}) → <b>{e(g.get("verdict_so_far"))}</b>.</p>
 
 <h2>Why 0.2778 and can it be beaten?</h2>
-<p>The 0.2778 champion is d2-8 minus its 100–200 m catalogue ring — deleting 6,436 uncreditable pixels raised the score 6.8% (OWNER-REPORTED numbers; nested-pair algebra, knowledge/27). The board is strictly decreasing in emitted mass among off-catalogue files (Spearman −1.0, six scored files). Credit-density arithmetic: the marginal bar at DTI≈0.32 is ≈0.068 hit-mass per emitted pixel. H62 spends its 37,654-px budget on persisted buried-corridor crests — pixels no surface-mapped catalogue can contain — with zero tax (≥200 m from any mapped trace) and zero reused prior mass.</p>
+<p><strong>Current evidence correction (knowledge/49; IR-R5-011):</strong> the 0.2778 team row is rank 17 in the saved 2026-10-09 20:18 UTC public-board observation (top 0.3774); no organizer receipt maps a TIFF hash to that score, so the file association remains owner-reported. Local bytes show the H33-labelled 37,654-cell raster is a strict subset of a separate 44,090-cell 0.2600-labelled raster: 6,436 cells removed, none added, all 100–200 m from the local known-fault mask. Those facts do not identify hidden new-fault credit or explain a score change. Official staff says new-fault truth may lie within 300 m of known traces. Historical nested-pair arithmetic is conditional, not a score explanation. H62’s pixels remain model hypotheses, not confirmed faults; distance to the catalogue alone does not establish zero penalty or credit.</p>
 
 <h2>Run card</h2>
-<p class="small">Verdict: <b>{e(card["verdict"])}</b> · submission name <code>{e(name)}</code> ({len(name)} chars) · note ({len(note)}/140): <code>{e(note)}</code>. Full JSON: <a href="data/h62_run_card.json">data/h62_run_card.json</a>.</p>
+<p class="small">Verdict: <b>{e(card["verdict"])}</b>. This historical result is research-only and not approved for submission. No paste-ready name or note is provided. Full JSON: <a href="data/h62_run_card.json">data/h62_run_card.json</a>.</p>
 <p class="small">Review tables: <a href="downloads/gems52-h62-37627px-candidate-geology.csv">per-pixel geological reasoning (37,627 rows)</a> · <a href="downloads/gems52-h62-a-only-candidate-segments.csv">A-only corridor segments (1,120 rows, one falsifier each)</a>.</p>
 <p class="small">Qualification: {e(card.get("extra", {}).get("data_qualification", ""))} — every HOLDOUT-DTI number is labelled; every leaderboard number in this repository is OWNER-REPORTED, not ORGANIZER-CONFIRMED. Projections are never written as scores.</p>
 </main><footer>Independent competition research, not an official DOE or DrivenData site. Predictions are not verified faults or geothermal discoveries.<br>

@@ -1,8 +1,9 @@
-"""H60 control: score the 0.2778 champion (and every other prior) against the SAME hide-and-recover folds.
+"""Legacy H60 diagnostic: compare local raster proximity to visible catalogue folds.
 
-This is a comparison arm, not a model input: no prior raster touches a feature, a label or a
-ranking.  It is the control that knowledge/23 says is missing -- an instrument on which the
-incumbent is not scored cannot promote anything.
+This is not a competition score, not a validated candidate ranker, and not a causal test of
+public-board results. The saved labels are owner-reported file/score associations with no
+organizer receipt. Its historical output is retained for audit; do not use it for promotion,
+submission selection, or current experiment authorization.
 """
 import json, sys, glob
 from pathlib import Path
@@ -77,11 +78,12 @@ Path('evidence/h60_instrument_verdict.json').write_text(json.dumps(dict(
     n=len(recs), champion_instrument_dti=ch, placeholder_instrument_dti=ph,
     champion_scores_below_random_placeholder=bool(ch < ph),
     board_source="owner-reported filename attribution, NOT organiser-authenticated",
-    verdict=("the hide-and-recover instrument ranks the 0.2778 champion below a random "
-             "placeholder and is not correlated with the owner-reported board across the 13 "
-             "priors, so it cannot rank candidates for this competition; it measures how much "
-             "mass a field puts near the published catalogue, and the board does not reward "
-             "that.  Not a demonstrable inversion at n=13 either."),
+    verdict=(f"Internal diagnostic comparison only: the row labelled 0.2778 has value {ch:.5f}; "
+             f"the row labelled as a placeholder has value {ph:.5f}. These are not leaderboard "
+             "scores. The owner-reported file/score labels have no organizer receipt. Across "
+             "13 such labels, Spearman rho is -0.099 (p=0.748); this small sample provides no "
+             "reliable calibration, ranking, inversion, or causal evidence. The diagnostic does "
+             "not rank candidates for the competition and does not explain any score change."),
 ), indent=1) + "\n")
 print('champion', round(ch, 5), 'placeholder', round(ph, 5),
       'spearman', round(float(rho.statistic), 4), 'p', round(float(rho.pvalue), 4))

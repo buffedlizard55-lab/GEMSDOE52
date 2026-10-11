@@ -69,6 +69,13 @@ def foot():
 
 
 def main() -> int:
+    home = DOCS / "index.html"
+    h75 = DOCS / "h75-executive-summary.html"
+    if (home.is_file() and h75.is_file()
+            and "H75: DUPLICATE/STOP" in home.read_text(errors="replace")
+            and "DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION" in h75.read_text(errors="replace")):
+        print("H75 terminal stop is current; historical H60C publisher skipped all page and pointer changes")
+        return 0
     for r in REQUIRED:                      # fail fast, before any HTML is written
         load(r)
     b = load("docs/data/h60c_build.json")
@@ -80,9 +87,8 @@ def main() -> int:
     stem = b["stem"]
     sha = b["sha256"]
     name = f"gems52-h60c-core{b['core_px']}px-arm{b['emitted_px']-b['core_px']}px-{sha[:8]}-zeros"
-    note = (f"H60C: {b['core_px']}px measured-credit core (h33-2-b2 x d1-5) + "
-            f"{b['emitted_px']-b['core_px']}px bar-sized arm; 3px dot spacing; nothing within "
-            f"200m of a mapped trace; all finite binary [0,1]; not a verified fault map")
+    note = (f"H60C: {b['core_px']}px local core-overlap mask (h33-2-b2 x d1-5) + "
+            f"{b['emitted_px']-b['core_px']}px bar-sized arm; 3px dot spacing; all finite binary [0,1]; research hypothesis, not a verified fault map")
     note = note[:200]
 
     fmt, uniq, nu = b["format"], b["uniqueness"], b["not_the_union"]
@@ -117,22 +123,21 @@ def main() -> int:
 
     page = []
     page.append(head(f"H60C audit — {stem} · GEMSDOE52",
-                     "H60C: measured |G|, LP-bounded credit, two-view co-training, and a bar-sized "
+                     "H60C historical research: conditional score algebra, local co-training diagnostics, and a research-only artifact. "
                      "emission with explicit download and submission status."))
     page.append(nav("h60c.html"))
     page.append('<main id="main">')
-    page.append('<div class="eyebrow">H60C · why 0.2778 won, and what the bar to beat it actually is'
-                '</div>')
-    page.append('<h1>|G| = 14,089 hidden-truth pixels,<br>measured from the organiser\'s own '
-                'scores.</h1>')
+    page.append('<div class="status" role="alert"><strong>Historical H60C analysis — current evidence correction.</strong> The owner-reported 0.2778 row is rank 17 in the saved 2026-10-09 20:18 UTC public observation (top 0.3774); no file/hash receipt maps it to a TIFF. The local 37,654/44,090 subset and 100–200 m distances do not determine hidden-truth credit or explain a score change; new-fault truth may occur within 300 m of known traces. All score-derived |G|/credit/interval tables below are conditional scenarios, not measurements. See <a href="../knowledge/49_why_02778_phd_answer.md">knowledge/49</a> and IR-R5-011.</div>')
+    page.append('<div class="eyebrow">H60C historical research · reported 0.2778 has no established cause</div>')
+    page.append('<h1>Conditional arithmetic is not<br>a score receipt or truth measurement.</h1>')
 
     page.append('<section class="download-bar" aria-label="H60C download">')
     page.append(f'<div><strong>{esc(stem)}.tif</strong>')
     page.append(f'<small>{b["bytes"]:,} bytes · single-band float32 · EPSG:32611 · '
                 f'{fmt["width"]} × {fmt["height"]} · all finite · values exactly {{0,1}}</small>')
     page.append(f'<small>SHA-256 <code>{esc(sha)}</code></small>')
-    page.append(f'<small>{b["emitted_px"]:,} emitted px = {b["core_px"]:,} measured-credit core + '
-                f'{b["emitted_px"]-b["core_px"]:,} bar-sized arm · nearest mapped catalogue pixel '
+    page.append(f'<small>{b["emitted_px"]:,} emitted px = {b["core_px"]:,} local core-overlap cells + '
+                f'{b["emitted_px"]-b["core_px"]:,} model-selected arm cells · nearest mapped catalogue pixel '
                 f'{nu["min_distance_to_catalogue_m"]} m</small></div>')
     page.append('<a class="button" href="downloads/h60c-candidate.tif" download>'
                 '↓ Download the TIFF (format-valid · NOT a unique submission)</a>')
@@ -141,52 +146,29 @@ def main() -> int:
     page.append('<a class="button secondary" href="h60c-submission-status.html">H60C status &amp; submit rule →</a>')
     page.append('</section>')
 
-    page.append('<h2>1 · Why <code>h33-h33-2-b2</code> scored 0.2778</h2>')
-    page.append(f'<p><code>h33-2-b2</code> is <code>gems24-d2-8</code> (reported 0.2600) with '
-                f'<b>6,436 pixels deleted</b>. Every one of them lies within 100–200 m of the '
-                f'mapped USGS/INGENIOUS catalogue (measured: <code>A \\ B = 0</code>, '
-                f'<code>B \\ A = 6,436</code>, and the champion\'s minimum distance to the '
-                f'catalogue is 223.6 m). Inverting the published metric on that nested pair gives '
-                f'the deleted ring\'s credit as <b>exactly zero</b> and yields '
-                f'<b>|G| = {f["G_px"]:,.1f} px</b> — the size of the hidden expert-drawn truth. '
-                f'Deleting 14.6 % of the file\'s mass raised the score by <b>+6.8 %</b>. That is '
-                f'the whole story: the champion is not a better detector, it is a file that stopped '
-                f'paying tax on pixels that can never earn credit.</p>')
-    page.append(f'<p>The catalogue itself is {f["catalogue_px"]:,} px (1.18 % of the '
-                f'{f["footprint_px"]:,}-px footprint); the hidden truth is '
-                f'{f["G_px"]/f["footprint_px"]*100:.3f} % of it. Publication rounding to four '
-                f'decimals moves |G| by only ±70 px.</p>')
+    page.append('<h2>1 · Current evidence about the reported 0.2778</h2>')
+    page.append('<p><strong>No causal score explanation is established.</strong> The saved 2026-10-09 20:18 UTC public-board observation places 0.2778 at rank 17 (top 0.3774), but the team-level row has no TIFF hash or organizer receipt. The file association remains owner-reported. Local bytes show the H33-labelled 37,654-cell bitmap is a strict subset of a separate 44,090-cell bitmap associated by its owner with 0.2600: 6,436 removed, none added, all 100–200 m from the known-fault mask. Those distances do not identify new-fault truth or explain a score change; official staff says new-fault truth may lie within 300 m of known traces. See <a href="../knowledge/49_why_02778_phd_answer.md">current evidence classification</a>.</p>')
+    page.append(f'<p>The local catalogue mask and raster geometry are available; the competition\'s hidden new-fault labels and organizer score-to-file receipt are not. The former |G| = {f["G_px"]:,.1f} value is a conditional historical scenario, not a measurement of hidden truth.</p>')
 
-    page.append('<h2>2 · Credit density, measured for every file we hold</h2>')
-    page.append(fmt_rows(foren_tbl, "T = score × (0.2·S + 0.8·|G|); density = T / S"))
+    page.append('<h2>2 · Conditional credit-density scenarios (not measurements)</h2>')
+    page.append('<p class="small">This table algebraically inverts owner-reported values under the former assumed |G|; it is not organizer-confirmed credit, hidden-truth measurement, or a causal explanation.</p>')
+    page.append(fmt_rows(foren_tbl, "SCENARIO ONLY: T = reported score × (0.2·S + 0.8·|G|); density = T / S"))
 
-    page.append('<h2>3 · Identified intervals, not point estimates</h2>')
-    page.append('<p>Twelve scored files give twelve equations '
-                '<code>Σ<sub>atoms ⊆ file i</sub> t<sub>a</sub> = T<sub>i</sub></code> in '
-                f'{ident.get("n_atoms", 559)} unknown atom credits, so atom credit is '
-                '<b>set-identified</b>. The table below is the exact interval computed by linear '
-                'programming with the constraints <code>t ≥ 0</code>, '
-                '<code>Σ t ≤ |G|</code>, <code>t ≤ 3·|a|</code> and a per-file slack of '
-                'max(4.0, 0.002·T). A point estimate here — NNLS, or any least-squares fit — '
-                'would pick one corner of the polytope and invent information.</p>')
-    page.append(fmt_rows(ident_tbl, "Identified DTI interval per candidate emission set"))
-    page.append('<div class="status"><strong>The load-bearing consequence.</strong> '
-                'Every set that is not itself one of the scored files has a lower bound of zero. '
-                'No measurement available in this repository can certify that any arm clears the '
-                'bar. That is why H60C sizes its arm at the bar and publishes the projection table '
-                'instead of a single forecast.</div>')
+    page.append('<h2>3 · Conditional intervals under unverified score mappings</h2>')
+    page.append('<p>These linear-program intervals depend on owner-reported score-to-file associations, the assumed |G|, and the selected constraints. They are not hidden-truth measurements or organizer-confirmed score intervals.</p>')
+    page.append(f'<p>The historical calculation used {ident.get("n_atoms", 559)} atom unknowns and a per-file slack; its outputs remain conditional scenario values.</p>')
+    page.append(fmt_rows(ident_tbl, "CONDITIONAL DTI interval per candidate emission set (scenario only)"))
+    page.append('<div class="status"><strong>Conditional model implication only.</strong> Under the selected assumptions, non-reference sets can retain a zero lower bound. This does not measure hidden truth, establish a public score, or show that any arm clears a real score threshold.</div>')
 
     page.append('<h2>4 · The marginal rule that sizes the emission</h2>')
-    page.append(f'<p>A pixel with expected incremental credit <code>c</code> raises DTI iff '
+    page.append(f'<p><strong>Conditional metric algebra, not measured hidden-truth credit.</strong> A pixel with expected incremental credit <code>c</code> raises DTI iff '
                 f'<code>c &gt; α·DTI/(1 − α·DTI)</code>. At DTI ≈ 0.32 that is '
-                f'<b>c &gt; {b["marginal_bar_at_dti_032"]}</b> — about 2.7× uniform random '
-                f'(measured 0.024–0.028). The core clears this by 2.4–3× and ships whole; every '
-                f'arm pixel is admitted only on that basis.</p>')
+                f'<b>c &gt; {b["marginal_bar_at_dti_032"]}</b> under the stated algebraic setup. '
+                'This is a threshold identity, not measured hidden-truth credit or proof that the former core/arm split clears the competition score bar.</p>')
     page.append(f'<p><b>Dot spacing.</b> On the 100 m integer lattice, sampling a straight trace '
-                f'every 3 px returns 2.333 credit per dot and covers 77.8 % of the trace; the '
-                f'champion\'s <code>d2-8</code> (2.8 px) returns 2.147 and covers 76.7 %. Spacing '
-                f'3 strictly dominates 2.8 — fewer dots, more coverage — so the whole H60C '
-                f'emission uses {b["dot_spacing_px"]} px.</p>')
+                f'every 3 px gives 2.333 units of idealized kernel-footprint coverage per dot and covers 77.8 % of a straight trace; the '
+                f'local d2-8 bitmap has 2.8 px spacing with 2.147 units and 76.7 % coverage. This geometric comparison '
+                f'does not estimate hidden-truth credit or public score. H60C used {b["dot_spacing_px"]} px spacing.</p>')
 
     page.append('<h2>5 · The two-view co-training the brief requires</h2>')
     page.append(f'<p><b>Independence test (Blum–Mitchell premise).</b> Per '
@@ -217,18 +199,12 @@ def main() -> int:
     page.append('<h3>Hide-and-recover, versus the single-view baselines the brief asks for</h3>')
     page.append(fmt_rows(hide_tbl, "Mean DTI of a budget-matched top-40k emission against the "
                                    "held-out whole catalogue segment"))
-    page.append('<div class="status"><strong>Why this table cannot promote anything.</strong> '
-                'Round R4 and <code>knowledge/10</code> §5 both measured that this simulator does '
-                'not predict the organiser\'s board (Spearman −0.10; uniform random beats the '
-                'champion at the same budget). Its premise is that the hidden truth resembles a '
-                'held-out part of the mapped catalogue, and §1 says the hidden truth does not come '
-                'within 200 m of the catalogue at all. The table is reported because the brief '
-                'asks for it and because it is the bias check, not because it licenses a slot.</div>')
+    page.append('<div class="status"><strong>HOLDOUT-DTI is a separate evidence class.</strong> This table scores withheld mapped-catalogue segments; it does not measure hidden new-fault truth, authenticate the owner-reported 0.2778 value, or establish public-board calibration. It is a local diagnostic and cannot license a slot by itself.</div>')
 
     page.append('<h2>6 · A preregistered hypothesis that failed</h2>')
     page.append(f'<p>The corroboration ladder — credit density = ρ<sub>0</sub> · r<sub>clade</sub>'
                 f'<sup>(c−1)</sup> · r<sub>ext</sub><sup>f</sup>, four coefficients fitted to the '
-                f'twelve measured credits — does <b>not</b> reproduce them: median '
+                f'twelve owner-report-derived scenario values — does <b>not</b> reproduce them: median '
                 f'|relative error| {lad["fit"]["median_abs_rel"]:.3f}, maximum '
                 f'{lad["fit"]["max_abs_rel"]:.3f}, leave-one-file-out median '
                 f'{lad["loo_median_abs_rel"]:.3f}. Corroboration count is therefore <b>not</b> a '
@@ -241,8 +217,8 @@ def main() -> int:
                 '<tbody>')
     for k, v in [
         ("emitted pixels", f"{b['emitted_px']:,}"),
-        ("core (P1 = h33-2-b2 ∩ gems24-d1-5)", f"{b['core_px']:,}"),
-        ("arm tier 1 (cross-provenance corroboration)", f"{b['tier1_px']:,}"),
+        ("local core-overlap mask (P1 = h33-2-b2 ∩ gems24-d1-5; credit unknown)", f"{b['core_px']:,}"),
+        ("model-selected arm tier 1 (cross-provenance pattern)", f"{b['tier1_px']:,}"),
         ("arm tier 2 (A-only discovery, outside every prior's support)", f"{b['tier2_px']:,}"),
         ("format problems", f"{len(fmt['problems'])}"),
         ("NaN / Inf pixels", f"{fmt['nan_pixels']} / {fmt['infinity_pixels']}"),
@@ -265,7 +241,7 @@ def main() -> int:
         page.append(f"<tr><td>{esc(k)}</td><td>{esc(v)}</td></tr>")
     page.append('</tbody></table></div>')
 
-    page.append('<h2>8 · Projection, stated as a table and not as a forecast</h2>')
+    page.append('<h2>8 · Historical conditional projection, not a forecast or score</h2>')
     page.append(fmt_rows(proj_rows, "Projected DTI = (T_core + ρ·n_arm) / (0.2·S + 0.8·|G|), "
                                     "over the identified interval on T_core and a prior on the "
                                     "arm's credit density ρ"))
@@ -296,19 +272,13 @@ def main() -> int:
     (DOCS / "index.html").write_text(idx)
 
     es = []
-    es.append(head("How to submit the H60C artifact · GEMSDOE52",
-                   "Exact H60C artifact identification, gate status, and the portal steps for the "
-                   "single-band GeoTIFF; the file is all-finite [0,1] so the range error cannot "
-                   "occur."))
+    es.append(head("H60C archive status · GEMSDOE52",
+                   "Archived H60C artifact identification, local format result, and explicit no-slot status. "
+                   "Local GeoTIFF format checks do not establish portal acceptance or organizer approval."))
     es.append(nav("executive-summary.html"))
-    es.append('<main id="main"><div class="eyebrow">Executive summary · H60C · explicit submission '
-              'status</div>')
-    es.append('<h1>Download, verify, submit —<br>in that order.</h1>')
-    es.append('<div class="status"><strong>DOWNLOAD: YES — ALWAYS. WEEKLY SLOT: READ THE AUDIT '
-              'FIRST.</strong> The file is portal-valid by construction. Whether it is worth one '
-              'of the three submissions allowed every seven days is a separate question, and the '
-              'answer with its sensitivity table is on the <a href="h60c.html">H60C audit page</a>.'
-              '</div>')
+    es.append('<main id="main"><div class="eyebrow">Historical H60C · research-only status</div>')
+    es.append('<h1>Download for research;<br>no current slot approval.</h1>')
+    es.append('<div class="status"><strong>DOWNLOAD FOR RESEARCH: YES. LOCAL FORMAT CHECK: PASS; PORTAL ACCEPTANCE: UNVERIFIED. SUBMISSION APPROVAL: NO — NOT SLOT-APPROVED.</strong> This archived H60C artifact is not a current submission recommendation. The local format contract checks do not establish portal acceptance, organizer approval, or score. See <a href="h60c.html">H60C conditional analysis</a> and the current H75 stop at <a href="index.html">the site home</a>.</div>')
     es.append('<section class="download-bar" aria-label="H60C download">')
     es.append(f'<div><strong>{esc(stem)}.tif</strong>')
     es.append(f'<small>{b["bytes"]:,} bytes · SHA-256 <code>{esc(sha)}</code></small>')
@@ -320,19 +290,17 @@ def main() -> int:
     es.append('<a class="button" href="downloads/h60c-candidate.zip" download>'
               '↓ Download the one-TIFF ZIP</a>')
     es.append('<a class="button secondary" href="h60c.html">Full audit →</a></section>')
-    es.append('<h2>Is it OK to download and submit this file?</h2>')
+    es.append('<h2>Research download and local status</h2>')
     es.append('<div class="table-wrap"><table><thead><tr><th>question</th>'
               '<th>answer of record</th></tr></thead><tbody>')
     for q, a in [
         ("OK to <b>download</b>?",
-         '<span class="pill ok">YES</span> — the file is format-valid and downloading it submits nothing; every receipt is published for '
+         '<span class="pill ok">YES</span> — this is a research download; local format validation does not constitute portal acceptance. '
          'audit.'),
-        ("Format-safe for the portal?",
-         '<span class="pill ok">YES</span> — single-band float32, EPSG:32611, '
-         f'{fmt["height"]} × {fmt["width"]}, transform {fmt["transform"]}, all pixels finite and '
-         'in {0,1}. The “Predicted values must be in range [0, 1]” rejection is triggered by '
-         'NaN-bearing exports and cannot occur here: ' 
-         '<code>gems52.grid.write_geotiff</code> refuses to write otherwise.'),
+        ("Local format contract / portal acceptance?",
+         '<span class="pill ok">LOCAL CHECK: PASS</span> — single-band float32, EPSG:32611, '
+         f'{fmt["height"]} × {fmt["width"]}, pinned transform, finite binary {{0,1}}. '
+         '<span class="pill warn">PORTAL ACCEPTANCE: UNVERIFIED</span> Local validation does not prove portal acceptance, organizer approval, or score.'),
         ("Unique submission?",
          f'<span class="pill bad">NO</span> — the decoded pattern is not byte-identical to any prior, '
          f'but it is a derivative: {aud_pct:.1f} % of its cells lie inside prior-submission support and '
@@ -353,32 +321,7 @@ def main() -> int:
     ]:
         es.append(f"<tr><td>{q}</td><td>{a}</td></tr>")
     es.append('</tbody></table></div>')
-    es.append('<h2>Exact portal steps</h2><ol>')
-    es.append('<li>Use the registered eligible account on the '
-              '<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DOE GEMS '
-              'competition page</a> → <b>Submit submission</b>.</li>')
-    es.append('<li>Download the audited file with the button above '
-              '(<a href="downloads/h60c-candidate.tif" download>.tif</a> or the '
-              '<a href="downloads/h60c-candidate.zip" download>.zip</a>, which holds exactly one '
-              'TIFF). Do not reproject, rescale, or open it in software that rewrites it.</li>')
-    es.append('<li><b>Why the range error cannot happen:</b> the portal rejects rasters containing '
-              'values outside [0, 1], which historically came from NaN written outside the '
-              'footprint. This artifact is written through '
-              '<code>gems52.grid.write_geotiff</code>, which re-reads the bytes and refuses to '
-              'emit unless they are single-band float32, all finite, within [0,1], on the sample '
-              'grid, and carry no nodata tag.</li>')
-    es.append('<li>Set <b>File to submit</b> to the downloaded .tif (or the .zip).</li>')
-    es.append('<li>Paste the submission name and the note below (both ≤ 200 characters).</li>')
-    es.append('<li>Submit, then record the returned submission ID, timestamp and file hash next to '
-              'the receipt. One scored upload per file — re-verify the hash first.</li></ol>')
-    es.append(f'<label for="submission-name">Submission name ({len(name)} chars)</label>')
-    es.append(f'<input id="submission-name" readonly value="{esc(name)}" style="width:100%;'
-              'font:13px/1.6 ui-monospace,monospace;border:1px solid var(--line);border-radius:8px;'
-              'padding:12px;background:#fff">')
-    es.append('<button data-copy="submission-name">Copy name</button>')
-    es.append(f'<label for="submission-note">Portal note ({len(note)} chars)</label>')
-    es.append(f'<textarea id="submission-note" readonly>{esc(note)}</textarea>')
-    es.append('<button data-copy="submission-note">Copy note</button>')
+    es.append('<h2>No submission procedure</h2><p>This H60C artifact is a research archive only. It is not slot-approved; local format validity does not establish portal acceptance, organizer approval, or score. No upload instructions or selector override are provided.</p>')
     es.append('<h2>Machine-readable proof</h2><p class="small">'
               'build: <a href="data/h60c_build.json">h60c_build.json</a> · '
               'forensics: <a href="data/h60c_forensics.json">h60c_forensics.json</a> · '
@@ -386,11 +329,7 @@ def main() -> int:
               'co-training: <a href="data/h60c_cotrain.json">h60c_cotrain.json</a> · '
               'ladder (refuted): <a href="data/h60c_ladder.json">h60c_ladder.json</a></p>')
     es.append('<div class="status"><strong>Honest limits.</strong> Inputs are SHA-pinned owner '
-              'mirrors of a login-walled portal, not organiser-authenticated downloads. Every '
-              'leaderboard number in this repository (0.2778, 0.2600, 0.3195, 0.3774) is '
-              'owner-reported; the board publishes no filename. |G| = 14,088.7 px rests on one '
-              'nested pair of files. No organiser score is claimed for this or any other file '
-              'produced here.</div>')
+              'mirrors of a login-walled portal, not organiser-authenticated downloads. The saved 2026-10-09 20:18 UTC public-board observation records 0.2778 at rank 17 and a top row of 0.3774; no row supplies a TIFF hash or organizer receipt. The 0.2778 file association and 0.2600 comparison remain owner-reported. The former |G| = 14,088.7 value is a conditional scenario, not a measurement. No organizer-confirmed score is claimed for this artifact.</div>')
     es.append('</main>')
     es.append(foot())
     # The executive summary is the CTD5-era submission guide and is governed by the CTD5 release

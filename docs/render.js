@@ -1,6 +1,9 @@
 // Renders every number on the site from docs/data/*.json.  Kept deliberately dumb: fetch, index a
 // table, print.  If a value is missing the page shows "–" rather than a stale or guessed number.
 (async function () {
+  // Historical renderer: never replace a visible terminal stop with a file-specific submit path.
+  const terminalH75 = document.body.textContent || '';
+  if (terminalH75.includes('H75: DUPLICATE/STOP') && terminalH75.includes('NOT FOR SUBMISSION')) return;
   await Promise.all(['feed', 'leaderboard', 'submission', 'holdout_tip', 'holdout_hide',
                      'independence_tip', 'independence_hide', 'strata_tip', 'strata_hide',
                      'layer_screen', 'folds_tip', 'folds_hide', 'co_train_folds_tip',

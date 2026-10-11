@@ -1,5 +1,5 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="assets/ctd5.css"><title>H66 · DOE GEMS</title></head><body><a class="skip" href="#main">Skip to content</a>
-<header><nav aria-label="Main navigation"><a class="brand" href="index.html">DOE GEMS</a><a href="h66cotrain-executive-summary.html">Executive summary (submitting)</a><a href="h64.html">H64</a><a href="index.html">Home</a></nav></header>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="assets/ctd5.css"><title>H66 · DOE GEMS</title></head><body><!--H75-ARCHIVE-STOP--><aside role="alert" style="padding:14px 22px;background:#fef2f2;color:#7f1d1d;border:2px solid #991b1b;border-radius:8px;font:14px/1.6 system-ui"><strong>Current H75 status: DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION.</strong> H75 is terminal: no owner override, waiver, or rerun is authorized. The page below is historical/research material; no archived file is approved here. <a href="h75-executive-summary.html" style="color:#7f1d1d">Read the H75 stop status</a>.</aside><a class="skip" href="#main">Skip to content</a>
+<header><nav aria-label="Main navigation"><a class="brand" href="index.html">DOE GEMS</a><a href="h66cotrain-executive-summary.html">H66 research status</a><a href="h64.html">H64</a><a href="index.html">Home</a></nav></header>
 <main id="main">
 <section class="hero"><div><div class="eyebrow">DOE GEMS / H66 · local-scale View A co-training</div>
 <h1>Download for research.<br>Do not submit.</h1>
@@ -11,7 +11,7 @@
 <a class="button secondary" href="downloads/h66cotrain-candidate.zip" download>Single-TIFF ZIP</a>
 <a class="button secondary" href="downloads/h66cotrain-review-table.csv.gz" download>Review table (gzip CSV)</a></div>
 <p class="fileline">gems52-h66-localA-cotrain-37600px.tif<br>134,986 bytes · SHA-256 a87c55f8c4d5bbe100324941b7722a73e8e73613ab5c802194291459869ee2d5 · 37,600 emitted cells · values exactly {0, 1}, 0 NaN · EPSG:32611 · grid identical to the sample</p>
-<p class="small"><a href="h66cotrain-executive-summary.html">How to submit, and whether this file may be submitted →</a> · <a href="data/h66_run_card.json">Complete JSON run card ↗</a> · <a href="../registry/irregularities.json">Irregularities (registry JSON) ↗</a></p></section>
+<p class="small"><a href="h66cotrain-executive-summary.html">H66 research status →</a> · <a href="data/h66_run_card.json">Complete JSON run card ↗</a> · <a href="../registry/irregularities.json">Irregularities (registry JSON) ↗</a></p></section>
 <hr class="divider">
 <section><h2>Gates, measured</h2><div class="table-wrap"><table><thead><tr><th>Gate</th><th>Result</th><th>Receipt</th></tr></thead><tbody>
 <tr><td>Pre-registration hash (frozen before any fit)</td><td>e21187387a3b646e… verified</td><td><code>knowledge/43_hypotheses_H66_preregistered.md</code></td></tr>
@@ -37,9 +37,10 @@
 <p class="small">Candidate minus control: <b>-0.134766</b>, 95% CI [-0.159731, -0.110876]. The candidate does not beat single_B: the paired CI lies entirely below zero.</p>
 <p class="small"><b>Reproduction note (IR-H66-010).</b> single_B reproduces H61 to within +0.000054 (H61 receipt 0.174517; H66 0.174571). Fold 0 differs and folds 1–3 match to seven decimals. The B-view AUCs match H61 exactly. The cause is not established, and no verdict depends on it.</p></section>
 <hr class="divider">
-<section><h2>Why 0.2778 scored where it did (measured, not reported)</h2>
-<p>The 0.2778 champion <code>h33-2-b2</code> is a strict subset of the reported-0.2600 gems24 d2-8 raster: 37,654 of 44,090 positive pixels, zero on the catalogue. It removes 6,436 pixels, all between 100 m and 200 m from a mapped trace, and adds none. Its nearest dot is 223.6 m from the catalogue. Under the published metric, <code>DTI = T / (0.2·(T+S−M) + 0.8·|G|)</code>, an emitted pixel helps only if its credit density exceeds the bar. Removing pixels therefore raises the ratio when their expected credit is below the bar. That is consistent with the measured subset chain, but it is an inference: the hidden truth is not available to measure the removed pixels' credit. Pruning raises the ratio without finding new faults. The owner-reported score attribution is unlinked (IR-H65-003). The marginal bar for one uncovered truth pixel of kernel weight w is w &gt; α·DTI = 0.0556 at DTI 0.2778; the repository's accept_bar form is 0.0588 (IR-H66-002).</p>
-<p class="small">Source: <code>work/h66/champion_check.json</code> (verified on restored bytes); <code>knowledge/01_why_02778_and_the_bar.md</code>, <code>README</code> section "Why 0.2778 won".</p></section>
+<section><h2>Evidence about the reported 0.2778 — no causal explanation established</h2>
+<p><strong>PUBLIC-LEADERBOARD observation:</strong> the saved 2026-10-09 20:18 UTC board places extradr19 at 0.2778, rank 17; the top row is 0.3774. The row has no TIFF hash or submission receipt. <strong>OWNER-REPORTED file/score association:</strong> attribution to an H33-labelled file remains unauthenticated. No ORGANIZER-CONFIRMED receipt binds this value to a file.</p>
+<p><strong>LOCAL pixel facts only:</strong> the 37,654-cell H33-labelled bitmap is a strict subset of a separate owner-reported 0.2600-labelled 44,090-cell bitmap (6,436 removed, none added). The removed cells are 100–200 m from the local known-fault mask. These facts do not establish either score or why a public value changed. DrivenData staff clarifies that the known-fault mask is pixel-exact, only new-fault truth is scored, and new-fault truth may lie within 300 m of known traces. Near-trace distance alone therefore does not imply zero credit or an automatic penalty; hidden credit is unknown. Any marginal algebra is conditional scenario arithmetic, not a measured contribution or score explanation.</p>
+<p class="small">See <a href="../knowledge/49_why_02778_phd_answer.md">knowledge/49</a>, <code>IR-R5-011</code>, and <a href="data/leaderboard_observation_2026-10-09T201800Z.json">the dated board observation</a>.</p></section>
 <hr class="divider">
 <section><h2>Hypotheses carried out of this round</h2>
 <div class="table-wrap"><table><thead><tr><th>Rank</th><th>ID</th><th>Idea</th><th>Status</th></tr></thead><tbody>
@@ -50,5 +51,5 @@
 </tbody></table></div>
 <p class="small">Full pre-registration with layers, named mimics and costs: <a href="../knowledge/43_hypotheses_H66_preregistered.md"><code>knowledge/43</code></a>. Not proposed because already in the repo: Euler deconvolution, QFaults priors (one pixel), cross-field <code>C_*</code> features, gap bridging.</p></section>
 </main>
-<footer class="small">Research receipts only. Public-board numbers are owner-reported and dated (snapshot 2026-10-08). The AI-use disclosure is in the executive summary. Nothing here was uploaded.</footer>
+<footer class="small">Research receipts only. Public-board observations are dated; file/score associations are owner-reported unless an organizer receipt is available. The AI-use disclosure is in the executive summary. Nothing here was uploaded.</footer>
 </body></html>

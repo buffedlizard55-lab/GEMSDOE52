@@ -112,6 +112,7 @@ def test_served_artefact_is_all_finite_binary_and_in_range():
 
 
 @pytest.mark.skipif(not ART.exists(), reason="H60 artefact not built")
+@pytest.mark.skipif(not (ROOT / "data/sample_submission.tif").is_file(), reason="competition template not restored")
 def test_artefact_matches_the_sample_submission_geometry():
     art = json.loads(ART.read_text())
     p = ROOT / "submission" / f"{art['name']}.tif"
@@ -123,9 +124,10 @@ def test_artefact_matches_the_sample_submission_geometry():
 
 
 @pytest.mark.skipif(not ART.exists(), reason="H60 artefact not built")
+@pytest.mark.skipif(not (ROOT / "data/labels.tif").is_file(), reason="competition labels not restored")
 def test_nothing_is_emitted_inside_the_200_m_catalogue_ring():
-    """Measured on the restored bytes: deleting the 100-200 m ring raised the 0.2778
-    file's score by 2.6 % relative, so that ring is pure tax."""
+    """Check a local placement constraint only; distance from the known-fault mask does not
+    identify hidden-truth credit or explain an organizer score change."""
     from scipy import ndimage
     art = json.loads(ART.read_text())
     a = rasterio.open(ROOT / "submission" / f"{art['name']}.tif").read(1) > 0

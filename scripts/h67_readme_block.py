@@ -29,11 +29,11 @@ def main() -> int:
     reg = card["registry_correlation_and_overlap"]
     off = reg["lane_offender_identification"]
     src = off["policy_source"]["aliases"][0]
-    raster, ids = card["raster"], card["submission_identifiers"]
+    raster = card["raster"]
     ci = lambda a: f"[{a[0]:.6f}, {a[1]:.6f}]"      # noqa: E731
 
     block = f"""<!--H67-README-->
-# Current status — H67 (2026-10-09): a unique GeoTIFF was built, and the verdict is DO NOT SUBMIT
+# Historical H67 result — research-only archive; terminal lane stop
 
 > **Round label.** This round was labelled H66 in its own receipts; a parallel session merged a different
 > H66 first (PR #56), so it is **H67** in filenames. The frozen protocol is byte-identical and its body
@@ -78,36 +78,10 @@ expected gain and implementation cost with named free sources, are in the same d
 | Format contract | MEASURED | 1 band float32, EPSG:32611, {card['validator']['shape'][0]}×{card['validator']['shape'][1]}, transform and bounds identical to the pinned sample, values exactly {{0,1}}, {card['validator']['nan_inside_footprint']} NaN, {card['validator']['mass_outside_footprint']} px outside the footprint | [`h67_run_card.json`](evidence/h67_run_card.json) |
 | Reproducibility | MEASURED | a second independent run produced **bit-identical decoded pixels** (SHA-256 `{raster['decoded_pixels_sha256'][:24]}…`) | [`h67_rewrap.json`](evidence/h67_rewrap.json) |
 
-**Artefact.** `{Path(raster['file']).name}` · {raster['bytes']:,} bytes · SHA-256 `{raster['sha256']}` ·
-{raster['emitted_pixels']:,} emitted cells · ZIP SHA-256 `{(json.loads((ROOT / 'submission' / (Path(raster['file']).stem + '.json')).read_text()))['zip_sha256'][:24]}…`.
-Portal name ({ids['name_chars']} chars): `{ids['name']}`. Portal note ({ids['note_chars']} chars, limit 140):
-`{ids['note']}`.
+**Historical artifact facts.** `{Path(raster['file']).name}` · {raster['bytes']:,} bytes · SHA-256 `{raster['sha256']}` ·
+{raster['emitted_pixels']:,} emitted cells · local format check only. No portal name or note is provided; this archive is not approved for submission.
 
-**Why 0.2778 won, and what beating 0.3195 would take** — re-measured from restored bytes this session by
-[`scripts/h67_board_algebra.py`](scripts/h67_board_algebra.py) (receipt
-[`evidence/h67_board_algebra.json`](evidence/h67_board_algebra.json)), written up in
-[`knowledge/49`](knowledge/49_why_02778_phd_answer.md). In four lines:
-
-1. `h33-2-b2` (0.2778, 37,654 px) is a **strict subset** of the 0.2600 file (44,090 px). The
-   {alg['set_relations']['d2_8__minus__ref_h33_2_b2']['px']:,} deleted pixels all lie
-   {alg['set_relations']['d2_8__minus__ref_h33_2_b2']['dist_min_m']}–{alg['set_relations']['d2_8__minus__ref_h33_2_b2']['dist_max_m']} m
-   from a mapped trace: the 100–200 m catalogue ring earns **zero** credit and still pays the
-   false-positive tax. Removing it bought +6.8 % relative. Nothing else about the file changed.
-2. For dots > 200 m apart, `DTI = T / (0.2·S + 0.8·|G|)`, so the score *is* the credit density
-   `ρ = T/S`. The champion's is **0.1387** — 5.0× uniform random (0.0279). That is the whole content of 0.2778.
-3. Spearman(mass, board) = **{alg['mass_vs_board']['spearman']:.4f}** over the five owner-reported
-   off-catalogue files, and every step past 37,654 px fails the metric's own marginal rule
-   `ΔT/ΔS > 0.2·DTI`. The champion is not a better detector; it is the correct stopping point of a worse one.
-4. Required ρ for 0.3195 is **{alg['required_rho']['target_0.3195_G_14088.7']['37654']:.4f}** at 37,654 px and
-   **{alg['required_rho']['target_0.3195_G_14088.7']['100000']:.4f}** at 100,000 px; for 0.3774,
-   {alg['required_rho']['target_0.3774_G_14088.7']['37654']:.4f} and
-   {alg['required_rho']['target_0.3774_G_14088.7']['100000']:.4f}. The only sub-field with a measured ρ in that
-   range is the 25,517 px credited core P1 (ρ ∈ [0.163, 0.205] ⇒ DTI ∈ [0.2546, 0.3190], **upper bound below
-   0.3195**), and the lane rule forbids re-emitting it — any subset of P1 has 100 % of its dots within 3 px of an
-   existing registry raster. **So within this lane no candidate can be shown to beat 0.2778.** The binding
-   constraint is a ranker whose marginal credit density stays above ~0.06 out to 60,000–150,000 px: a better
-   detector, not a better placement.
-
+**Current evidence about the reported 0.2778 (see [`knowledge/49`](knowledge/49_why_02778_phd_answer.md)).** The saved 2026-10-09 20:18 UTC public-board observation places the team-level row at rank 17 (top 0.3774); no row contains a TIFF hash or submission receipt. The file-to-score association remains owner-reported. Locally, the H33-labelled 37,654-cell bitmap is a strict subset of a separate 44,090-cell bitmap associated with 0.2600 by its owner (6,436 removed, none added, all 100–200 m from the known-fault mask). Those facts do not identify hidden new-fault credit or explain any organizer score change; staff says new-fault truth may lie within 300 m of known traces. Older `|G|`, credit-density, and +6.8% calculations are conditional scenarios, not measurements or score explanations.
 **Verdict: H67 not promoted; negative result published.** Experiments used: **3 of 3** (E1 lane gates,
 E2 holdout, E3 build + release gates). Wall clock exceeded the 2 h budget and that is disclosed in the run
 card rather than smoothed: the sandbox started cold (no cached feature stack, 3.9 GB RAM, 2 CPUs), the
@@ -126,22 +100,9 @@ to a prior" with "a prior failed to open"; **-008 high**: probe classification f
 element, and this round's lane verdict depends on it; -009 the holdout budget collapses inside a fold;
 -010 two census-ineligible blobs were passed as priors.
 
-**Still open.** A unique, lane-valid candidate that is not spatially redundant with an existing registry
-raster; a holdout instrument that can rank the board (IR-H60-003, N-9, IR-H67-009); the four hypotheses in
-`knowledge/45` §3–§6 that were **not** run (drainage-network asymmetry needs USGS 3DEP 1 m tiles, unreachable
-from this sandbox); the 0.2778 file-to-board-row receipt; the portal error text behind IR-H65-007; and the
-selector decision that the lane rule makes unavoidable — the measured high-credit field is lane-blocked, so
-beating 0.3195 needs either a better detector or an explicit waiver of the 70 % rule, and only the user can
-grant that.
+**Still open.** The four geological hypotheses in `knowledge/45` §3–§6 that were **not** run (drainage-network asymmetry needs USGS 3DEP 1 m tiles, unreachable from this sandbox); a public holdout instrument that ranks leaderboard outcomes (IR-H60-003, N-9, IR-H67-009); the 0.2778 file-to-board-row receipt; and the portal error text behind IR-H65-007. H67 itself is terminal for promotion: the policy lane result is **DUPLICATE/STOP** (the >70% near-3-px rule) and its shared HOLDOUT-DTI is significantly below random. Download is for research only; no submission approval or owner-override path is implied, and no weekly slot was used.
 
-**The brief.** This round ran against the prompt embedded verbatim below
-("Complete current prompt — 2026-10-09, verbatim") and preserved at
-[`knowledge/36`](knowledge/36_current_user_brief_2026-10-09.md). Two of its clauses are stale and were
-re-verified live this session: the leaderboard is JS-rendered and cannot be fetched (the last live reading,
-2026-10-09, is #1 xiaofanhu 0.3774, #7 DARD 0.3195, #13 extradr19 0.2778 — PUBLIC BOARD, not
-ORGANIZER-CONFIRMED), and the official page states a **two-round** prize structure in which the Final Round
-re-scores the *same* single submission against an **expanded** label set that includes faults experts verify
-after reviewing every team's file ([problem page 967](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/)).
+**Historical brief note.** This round used the prompt preserved at [`knowledge/36`](knowledge/36_current_user_brief_2026-10-09.md). The saved later 2026-10-09 20:18 UTC public-board observation places 0.2778 at rank 17 (top 0.3774; 0.3195 at rank 7); these are PUBLIC-LEADERBOARD rows, not organizer-confirmed file scores. The board is JS-rendered and no row includes a TIFF hash or receipt. The official page states a **two-round** prize structure in which the Final Round re-scores the *same* single submission against an **expanded** label set that includes faults experts verify after reviewing every team's file ([problem page 967](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/)).
 <!--/H67-README-->
 
 """
@@ -158,7 +119,7 @@ after reviewing every team's file ([problem page 967](https://www.drivendata.org
     agents = ROOT / "AGENTS.md"
     at = agents.read_text(encoding="utf-8")
     apointer = f"""<!--H67-AGENTS-->
-## Current H67 continuation (2026-10-09)
+## Historical H67 continuation (2026-10-09; not current authorization)
 
 Read `README.md`'s H67 block first, then `knowledge/45_hypotheses_H67_preregistered.md` (frozen before any
 fit), `knowledge/48_h67_results_and_limits.md` (rendered from the receipts) and

@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Build the R5 pages of the GitHub Pages site from the receipts, never from typed numbers.
+"""Build the R5 research/archive status pages from receipts, never from typed scores.
 
-Writes ``docs/index.html`` (R5 lead, download and verdict above the fold), ``docs/r5.html`` (the full
-audit), ``docs/executive-summary.html`` (exactly how to submit) and ``docs/data/submission_r5.json``.
-Every figure is read out of ``evidence/r5_novel_emission.json``, ``evidence/r5_cotrain.json``,
-``evidence/r5_a_only_reasoning.json`` and ``registry/leaderboard_snapshot_2026-10-08.json`` at build
-time, so a page cannot disagree with a receipt.
+Writes ``docs/index.html`` (research download and no-approval status), ``docs/r5.html`` (the full
+audit), ``docs/executive-summary.html`` (R5 status, no submission steps) and
+``docs/data/submission_r5.json``. Build-time measurements come from the emission receipt; cumulative
+novelty and the corrected prior-count note come from the dated provenance audit. Neither is
+submission approval.
 
 Run:  python scripts/publish_site_r5.py     then  python scripts/check_site.py
 """
@@ -37,8 +37,9 @@ HEAD = ('<!doctype html>\n<html lang="en"><head><meta charset="utf-8">'
         '<link rel="stylesheet" href="style.css"><script src="site.js" defer></script></head>\n'
         '<body><a class="skip" href="#main">Skip to evidence</a>' + NAV)
 
-# the portal's own note field is capped at 200 characters
-NOTE = ("R5 novel 16,681px: six-family trace rank, ridge-walked, gated by strike coherence x the credited 010-020deg azimuth. 100% novel vs 55 repo rasters, off the 200m ring. Research artifact.")
+# The build-time prior count is inserted from the emission receipt, never maintained as free text.
+NOTE_TEMPLATE = ("R5 novel 16,681px: six-family trace rank, ridge-walked, gated by strike coherence x the credited "
+                 "010-020deg azimuth. 100% novel vs {n_priors} repo rasters at build, off the 200m ring. Research artifact.")
 
 
 def load(*p) -> dict:
@@ -50,7 +51,18 @@ def n(x, d=0) -> str:
 
 
 def main() -> int:
+
+    _h75_home = ROOT / "docs" / "index.html"
+    _h75_status = ROOT / "docs" / "h75-executive-summary.html"
+    if (_h75_home.is_file() and _h75_status.is_file()
+            and "H75: DUPLICATE/STOP" in _h75_home.read_text(errors="replace")
+            and "DUPLICATE/STOP · RESEARCH ONLY · NOT FOR SUBMISSION" in
+            _h75_status.read_text(errors="replace")):
+        print("H75 terminal stop is current; historical publisher made no page or pointer changes")
+        return 0
     em = load(EVID / "r5_novel_emission.json")
+    provenance_audit = load(EVID / "r5_provenance_audit_20261009.json")
+    note = NOTE_TEMPLATE.format(n_priors=em["uniqueness_gate"]["n_priors_checked"])
     ct = load(EVID / "r5_cotrain.json")
     rs = load(EVID / "r5_a_only_reasoning.json")
     mdl = load(EVID / "r5_model.json")
@@ -77,18 +89,36 @@ def main() -> int:
     pl_b = ct["pseudo_labels_block_unit"]
     pl_c = ct["pseudo_labels_component_unit"]
     S = em["emitted_px"]
-    ok_dl, ok_sub = em["ok_to_download"], em["ok_to_submit"]
+    ok_dl = em["ok_to_download"]
+    portal_valid = bool(em.get("portal_format_valid", em["format_gate"]["ok"]))
+    # A technical format/uniqueness check is not scientific promotion or permission to spend a slot.
+    ok_sub = False
     rows = board["rows"]
+    current = provenance_audit["current_inventory_recheck"]
+    rules_for_display = dict(em["frozen_rules"])
+    rules_for_display["R1_strict_novelty"] = (
+        "Historical frozen rule required no support in the 13 organizer-scored rasters and excluded "
+        "the local 200 m ring. The emission receipt separately records 71 accessible repository "
+        "priors at build (novelty 1.0); current closure is 120 priors (novelty 0.874408). The 200 m "
+        "cut is an internal rule, not an organizer scoring buffer.")
+    rules_for_display["R2_budget"] = (
+        "Historical scenario formula S*=4|G|beta/(1-beta), beta=0.2284; it used the legacy "
+        "|G|=14,088.7 point estimate, which is not established from hidden truth.")
+    rules_for_display["R4_prior"] = (
+        "Legacy owner-score-derived model prior kappa~U(0.3,1.3) on T(S)=kappa*471.6*S^0.2284; "
+        "not a hidden-truth measurement or leaderboard forecast.")
 
     # ---------------------------------------------------------------- machine-readable verdict
     sub = dict(
         round="R5", file=f"{name}.tif", stem=name,
-        submission_name=name, note=NOTE, note_chars=len(NOTE),
+        submission_name=name, note=note, note_chars=len(note),
         bytes=em["bytes"], sha256=em["sha256"], nonzero_px=S,
-        verdict=("FORMAT-VALID AND UNIQUE — OK TO DOWNLOAD; PORTAL-ACCEPTABLE; NOT SLOT-APPROVED "
-                 "BECAUSE NO PROMOTION INSTRUMENT IN THIS REPO CAN RANK A NOVEL FIELD"),
-        approved_for_weekly_slot=False, promoted=False,
-        ok_to_download=bool(ok_dl), ok_to_submit_portal_acceptable=bool(ok_sub),
+        verdict=("RESEARCH-ONLY — local format PASS; build-time novelty 1.0 against the receipt inventory; "
+                 "current inventory recheck is disclosed separately; NOT APPROVED FOR SUBMISSION"),
+        approved_for_weekly_slot=False, approved_for_submission=False, promoted=False,
+        ok_to_download=bool(ok_dl), portal_format_valid=bool(portal_valid),
+        ok_to_submit_portal_acceptable=False,
+        submission_eligibility="NO — no scientific promotion or weekly slot approval",
         reason_slot_not_approved=(
             "The standing rule is not to spend a slot on an idea that has not beaten the holdout best. "
             "The hide-and-recover holdout is disqualified as a leaderboard proxy (knowledge/10 §5: "
@@ -96,15 +126,20 @@ def main() -> int:
             "(habitat 0.0003 < random 0.0275 < trace 0.0395, an order the board inverts), so no "
             "candidate can clear that bar and none is claimed to."),
         p_beat_02778=p_champ, p_beat_03195=p_board, p_beat_03774=p_top, dti_at_kappa1=dti1,
-        budget_star=em["budget_star"], budget_rule=em["frozen_rules"]["R2_budget"],
+        budget_star=em["budget_star"],
+        budget_rule=rules_for_display["R2_budget"],
         novelty=em["novelty"], format=em["format_gate"], uniqueness=em["uniqueness_gate"],
+        current_inventory_recheck=provenance_audit["current_inventory_recheck"],
+        provenance_audit="evidence/r5_provenance_audit_20261009.json",
         values=v, distance_to_catalogue_m=em["distance_to_catalogue_m"],
         candidate=em["chosen"], candidate_row=chosen,
         reference_champion_cloud=champ, reference_random_matched=rnd,
-        frozen_rules=em["frozen_rules"], projection=proj,
+        frozen_rules=rules_for_display, projection=proj,
         projection_budget_curve=em["projection_budget_curve"],
-        leaderboard_bars=dict(top=board["top"], brief_stated=0.3195, family_best=0.2778,
-                              source=board["source"], observed=board["observed_date_utc"]),
+        leaderboard_bars=dict(top=board["top"], brief_stated=0.3195, owner_reported_reference=0.2778,
+                              source=board["source"], observed=board["observed_date_utc"],
+                              current_public_observation="evidence/leaderboard_observation_2026-10-09T201800Z.json",
+                              file_hash_mapping=None, organizer_receipt=None),
         receipts=["evidence/r5_novel_emission.json", "evidence/r5_novel_candidates.json",
                   "evidence/r5_cotrain.json", "evidence/r5_model.json", "evidence/r5_budget.json",
                   "evidence/r5_a_only_reasoning.json", "evidence/r5_revealed_inversion.json",
@@ -171,110 +206,52 @@ listed so the record stays complete and so no reader mistakes an archive for the
         return text.replace(anchor, anchor + "\n" + block, 1)
 
     index_fragment = f"""
-<section class="download-bar" aria-label="R5 strictly-novel artifact">
-<div><div class="eyebrow">R5 · strictly-novel emission · this session's round
-<span class="pill ok">OK TO DOWNLOAD</span>
-<span class="pill warn">PORTAL-ACCEPTABLE · NOT SLOT-APPROVED</span></div>
+<section class="download-bar" aria-label="R5 historical research artifact">
+<div><div class="eyebrow">R5 · historical research artifact
+<span class="pill warn">DOWNLOAD FOR RESEARCH</span>
+<span class="pill warn">NOT APPROVED FOR SUBMISSION</span></div>
 <strong>{name}.tif</strong>
-<small>{n(em['bytes'])} bytes · single-band float32 · EPSG:32611 · all {n(v['finite_pixels'])} cells
-finite · values exactly {{0,1}} · {n(S)} emitted px · <b>novel fraction
-{em['uniqueness_gate']['novel_fraction']:.4f}</b> against {em['uniqueness_gate']['n_priors_checked']}
-rasters · nearest mapped trace {n(em['distance_to_catalogue_m']['min'], 1)} m ·
+<small>{n(em['bytes'])} bytes · single-band float32 · EPSG:32611 · {n(S)} positive px ·
+local format gate PASS · build-time novelty {em['uniqueness_gate']['novel_fraction']:.4f} against
+{em['uniqueness_gate']['n_priors_checked']} rasters · current-inventory novelty
+{current['support_novelty']:.6f} against {current['rasters_checked']} rasters ·
 SHA-256 <code>{em['sha256'][:24]}…</code></small></div>
-<a class="button" href="{tif_rel}" download>↓ Download the R5 TIFF (one click)</a>
+<a class="button" href="{tif_rel}" download>↓ Download R5 research TIFF</a>
 <a class="button" href="downloads/r5-candidate.tif" download>↓ Same file, short name</a>
 <a class="button secondary" href="r5.html">R5 audit →</a></section>
-<div class="status"><strong>R5 in one paragraph.</strong> Co-training was run exactly as the brief
-specifies and reported honestly: the independence premise <b>holds</b> (max |ρ| {indep['max_abs']:.4f}
-against the 0.60 abandonment threshold), the pseudo-label exchange <b>harmed</b> the weaker view
-({exch['B_to_A']['delta_fold0_auc']:+.4f} AUC against {exch['A_to_B']['delta_fold0_auc']:+.4f} the other
-way), the connected-component reading of “whole segment” returns the <b>empty set</b> as a measurement,
-and the co-training propensity ranking then <b>lost</b> to the six-family detector on the frozen rule —
-so the shipped file is not a co-training product and the site does not imply otherwise. Emission:
-{n(S)} px at the derived optimum S* = 4|G|β/(1−β) = {n(em['budget_star'])}, chosen on strike coherence
-({chosen['mean_coherence_sigma4']:.4f} against the credited cloud's {champ['mean_coherence_sigma4']:.4f}
-and a random control's {rnd['mean_coherence_sigma4']:.4f}) with its dominant strike
-{chosen['dominant_strike_deg_array']:.0f}° inside the credited band. Overlap with any reading of “the
-union of the two views” is at most
-{max(u['fraction_of_emission'] for u in uni['comparisons'].values()):.4f} of the emitted pixels.
-<b>P(DTI &gt; 0.2778) = {p_champ:.3f}, P(&gt; 0.3195) = {p_board:.3f}, P(&gt; 0.3774) = {p_top:.3f}</b> —
-the board top is 0.3774, not the 0.3195 the brief states (rank 7, fetched
-{board['observed_date_utc']}). No weekly slot is authorised: the promotion instrument is disqualified
-and this round reproduced that on new data. Full record: <a href="r5.html">R5 audit</a>,
-<a href="executive-summary.html#r5">submission steps</a>,
-<code>knowledge/27_r5_findings.md</code>,
-<a href="downloads/a_only_reasoning_r5.csv">reasoning for all {n(rs['reviewed']['rows'])} A-only
-candidates</a>.</div>
+<div class="status"><strong>R5 eligibility.</strong> Research download: <b>YES</b>. Local portal-format check:
+<b>PASS</b>. Submission eligibility: <b>NO — NOT APPROVED</b>; weekly slot used: <b>0</b>.
+The 1.0 build-time novelty measurement applies to the 71-raster inventory at emission time. The
+2026-10-09 cumulative recheck against {current['rasters_checked']} accessible rasters finds support
+novelty {current['support_novelty']:.6f} while the decoded pattern remains distinct. The earlier
+free-text note said 55; that count was stale and has been corrected to 71 for the build-time receipt.
+See <a href="r5.html">the provenance audit</a>. No public score is mapped to this TIFF, and no
+organizer-confirmed receipt or promotion approval is recorded.</div>
 """
 
     exec_fragment = f"""
-<section class="download-bar" id="r5" aria-label="R5 strictly-novel artifact">
-<div><div class="eyebrow">R5 · strictly-novel emission
-<span class="pill ok">OK TO DOWNLOAD</span><span class="pill warn">NOT SLOT-APPROVED</span></div>
+<section class="download-bar" id="r5" aria-label="R5 research artifact">
+<div><div class="eyebrow">R5 · historical research TIFF
+<span class="pill warn">DOWNLOAD FOR RESEARCH ONLY</span>
+<span class="pill warn">SUBMISSION: NO</span></div>
 <strong>{name}.tif</strong>
-<small>{n(em['bytes'])} bytes · SHA-256 <code>{em['sha256']}</code> · {n(S)} px · novel fraction
-{em['uniqueness_gate']['novel_fraction']:.4f} against {em['uniqueness_gate']['n_priors_checked']}
-rasters · all cells finite, values exactly {{0,1}}, so the portal's “Predicted values must be in range
-[0, 1]” rejection cannot occur on this file</small></div>
-<a class="button" href="{tif_rel}" download>↓ Download the R5 TIFF (one click)</a>
+<small>{n(em['bytes'])} bytes · SHA-256 <code>{em['sha256']}</code> · {n(S)} positive px · local format PASS ·
+build novelty {em['uniqueness_gate']['novel_fraction']:.4f}/{em['uniqueness_gate']['n_priors_checked']} priors ·
+current novelty {current['support_novelty']:.6f}/{current['rasters_checked']} priors</small></div>
+<a class="button" href="{tif_rel}" download>↓ Download R5 research TIFF</a>
 <a class="button" href="downloads/r5-candidate.tif" download>↓ Same file, short name</a>
-<a class="button secondary" href="r5.html">R5 audit →</a></section>
-<h3>R5 — is it OK to download and submit?</h3>
-<div class="table-wrap"><table><thead><tr><th>question</th><th>answer of record</th></tr></thead><tbody>
-<tr><td>OK to <b>download</b>?</td><td><span class="pill ok">YES</span> — {str(bool(ok_dl)).upper()}.</td></tr>
-<tr><td>Will the portal <b>accept</b> it?</td><td><span class="pill ok">YES</span> —
-{str(bool(ok_sub)).upper()}. Single layer, float32, values in [0,1], EPSG:32611, 100 m, same bounds as
-the training data, transform <code>[100, 0, 243350, 0, −100, 4508550]</code> identical to
-<code>sample_submission.tif</code>, all {n(v['finite_pixels'])} cells finite, no nodata tag. Verified by
-re-reading the written bytes, not by trusting the writer.</td></tr>
-<tr><td><b>Unique</b>?</td><td><span class="pill ok">YES</span> — decoded-pixel comparison against all
-{em['uniqueness_gate']['n_priors_checked']} rasters this repository has produced: novel fraction
-{em['uniqueness_gate']['novel_fraction']:.4f}, not equal to the literal prior union, relation
-<code>{em['novelty']['relation_to_union']}</code>.</td></tr>
-<tr><td>Not merely the <b>union of the two views</b>?</td><td><span class="pill ok">CONFIRMED</span> —
-largest overlap with any reading of the union is
-{max(u['fraction_of_emission'] for u in uni['comparisons'].values()):.4f} of the emitted pixels
-(Jaccard ≤ {max(u['jaccard'] for u in uni['comparisons'].values()):.4f}), and Spearman(emitted score,
-view propensity) is
-{uni['rank_correlations']['spearman_emitted_score_vs_view_A_propensity']:+.3f} /
-{uni['rank_correlations']['spearman_emitted_score_vs_view_B_propensity']:+.3f}.
-<code>evidence/r5_not_the_union.json</code>.</td></tr>
-<tr><td>OK to spend the <b>weekly slot</b>?</td><td><span class="pill warn">NO — NOT ON THE EVIDENCE
-AVAILABLE</span>. P(DTI &gt; 0.2778) = {p_champ:.3f}, P(&gt; 0.3195) = {p_board:.3f},
-P(&gt; 0.3774) = {p_top:.3f}; DTI at κ=1 is {dti1:.4f}. The standing rule — do not spend a slot on an
-idea that has not beaten the holdout best — cannot be satisfied by anything, because the hide-and-recover
-instrument is disqualified (Spearman −0.1045, p = 0.734, n = 13) and R5 reproduced that on new data.</td></tr>
-<tr><td>Any argument for submitting anyway?</td><td><span class="pill ok">YES, ONE</span> — the
-organiser's own: Phase 2 ($250k) re-scores a label set “updated by expert review of all Phase 1
-submissions”, and staff state predictions matter there “even if they are not the most performant in
-Phase 1”. This file is {n(S)} strictly novel candidates, each with written geological reasoning in
-<a href="downloads/a_only_reasoning_r5.csv">a_only_reasoning_r5.csv</a>.</td></tr>
+<a class="button secondary" href="r5.html">Read provenance audit →</a></section>
+<h3>R5 — download, format and submission status</h3>
+<div class="table-wrap"><table><thead><tr><th>status</th><th>result</th></tr></thead><tbody>
+<tr><td>Research archive download</td><td><b>{str(bool(ok_dl)).upper()}</b> — archive/reproduction only.</td></tr>
+<tr><td>Local portal-format validation</td><td><b>{str(bool(portal_valid)).upper()}</b> — format check only; not organizer acceptance.</td></tr>
+<tr><td>Build-time support novelty</td><td>{em['uniqueness_gate']['novel_fraction']:.4f} against {em['uniqueness_gate']['n_priors_checked']} rasters at the 2026-10-08 emission build.</td></tr>
+<tr><td>Current inventory check (2026-10-09)</td><td>{current['support_novelty']:.6f} support novelty against {current['rasters_checked']} rasters; decoded pattern unique: {str(current['canonical_pattern_unique']).lower()}.</td></tr>
+<tr><td>Approved for competition submission</td><td><b>NO — not approved.</b></td></tr>
+<tr><td>Weekly slot used</td><td>0.</td></tr>
+<tr><td>Organizer-confirmed score receipt</td><td>None.</td></tr>
 </tbody></table></div>
-<h4>Exact portal steps for the R5 file</h4>
-<ol>
-<li>Sign in to the eligible account at the
-<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">competition page</a> →
-<b>Submit</b>. Slot limits and deadlines are on
-<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/rules/">the rules page</a>;
-this repository cannot see the account and does not guess the remaining count.</li>
-<li>Click <a href="{tif_rel}" download>↓ Download the R5 TIFF</a>. Do not reproject, rescale, re-save or
-rename the payload.</li>
-<li>Set <b>File to submit</b> to that <code>.tif</code>.</li>
-<li>Set the submission <b>name</b> to <code>{name}</code> ({len(name)} characters).</li>
-<li>Paste this <b>note</b> ({len(NOTE)} of 200 characters): <code>{NOTE}</code></li>
-<li>Submit. The expected score is an interval, not a point:
-{proj['0.2778']['dti_at_kappa_lo']:.4f}–{proj['0.2778']['dti_at_kappa_hi']:.4f} with {dti1:.4f} at κ=1.
-If the returned score lands outside it, that is information about the prior and belongs in
-<code>registry/irregularities.json</code>, not in a re-tune.</li>
-<li>One submission must be selected for <b>both</b> rounds before the deadline, without knowing the
-private-set score.</li>
-</ol>
-<p class="small">If a file is ever rejected with “Predicted values must be in range [0, 1]”, check in
-this order: (1) non-finite or out-of-range cells —
-<code>python -c "import rasterio,numpy as np;a=rasterio.open('F.tif').read(1);print(np.isfinite(a).all(),a.min(),a.max(),a.dtype)"</code>,
-which reports <code>{str(bool(v['all_finite']))} {v['min']} {v['max']} {v['dtype']}</code> for this
-artifact; (2) CRS/transform against <code>data/sample_submission.tif</code>; (3) band count and dtype;
-(4) if a ZIP is used, that it holds exactly one TIFF byte-identical to the canonical download.</p>
+<p>The build receipts recorded 71 accessible prior rasters. The free-text note's original 55 count was stale; it is corrected to 71. A later cumulative scan contains 49 additional rasters and reduces the current support-novelty fraction to {current['support_novelty']:.6f}. See <a href="../evidence/r5_provenance_audit_20261009.json">the provenance audit receipt</a>. This local format/uniqueness evidence does not satisfy the separate scientific promotion rule. No weekly submission slot is approved or used.</p>
 """
 
     (DOCS / "index.html").write_text(
@@ -284,30 +261,34 @@ artifact; (2) CRS/transform against <code>data/sample_submission.tif</code>; (3)
 
     # ---------------------------------------------------------------- audit page
     audit = HEAD.format(
-        desc="R5 audit trail: co-training receipt, independence test, pseudo-label readings, the "
-             "disqualified promotion instrument, the frozen emission rules and every gate.",
+        desc="R5 research archive: co-training receipts, provenance correction, current-inventory novelty check, and explicit no-submission status.",
         title="R5 audit · GEMSDOE52") + f"""
 <main id="main"><div class="eyebrow">R5 audit · every number below is read from a receipt</div>
 <h1>What was run, what it returned,<br>and what it does not license.</h1>
-<section class="download-bar" aria-label="R5 download">
+<section class="download-bar" aria-label="R5 research archive">
 <div><strong>{name}.tif</strong><small>{n(em['bytes'])} bytes · SHA-256
-<code>{em['sha256']}</code> · {n(S)} px · re-running the build reproduces these bytes exactly</small></div>
-<a class="button" href="{tif_rel}" download>↓ Download the submission TIFF (one click)</a>
+<code>{em['sha256']}</code> · {n(S)} positive px · build-time novelty {em['uniqueness_gate']['novel_fraction']:.4f} against {em['uniqueness_gate']['n_priors_checked']} rasters</small></div>
+<a class="button" href="{tif_rel}" download>↓ Download the R5 research TIFF</a>
 <a class="button" href="downloads/r5-candidate.tif" download>↓ Same file, short name (r5-candidate.tif)</a>
-<a class="button secondary" href="executive-summary.html">How to submit →</a></section>
-<div class="status"><strong>Verdict of record.</strong> OK to download: <b>YES</b>. Portal-acceptable:
-<b>YES</b> — every published format clause is re-measured from the bytes on disk by
-<code>scripts/check_site.py</code>. Weekly submission slot approved: <b>NO — NOT SLOT-APPROVED</b>, do
-not spend a slot on this file on the strength of anything in this repository: the promotion instrument
-is disqualified and P(DTI &gt; 0.2778) = {p_champ:.3f}. Research artifact; every pixel is a hypothesis
-for expert review, not a verified fault.</div>
+<a class="button secondary" href="../evidence/r5_provenance_audit_20261009.json">Read provenance audit →</a></section>
+<div class="status"><strong>Research archive only.</strong> OK to download: <b>YES</b>. Local format validation: <b>PASS</b>.
+Portal-format validity: <b>PASS on the published format checks only</b>; actual portal acceptance is unverified.
+Current accessible-inventory recheck: support novelty {current['support_novelty']:.6f} against
+{current['rasters_checked']} rasters; decoded pattern unique: {str(current['canonical_pattern_unique']).lower()}.
+<strong>Approved for competition submission: NO — NOT SLOT-APPROVED.</strong> Weekly slots used: 0. The 1.0 novelty figure
+was measured against the 71-raster inventory at the 2026-10-08 emission build; the original free-text
+note incorrectly said 55. That count is corrected and the later-round closure is recorded in the
+<a href="../evidence/r5_provenance_audit_20261009.json">provenance audit</a>. No organizer receipt maps a TIFF hash to a score.</div>
+<p class="small"><b>PUBLIC-LEADERBOARD observation, not ORGANIZER-CONFIRMED:</b> the saved 2026-10-09 20:18 UTC page read shows #1 xiaofanhu 0.3774, #7 DARD 0.3195 and #17 extradr19 0.2778. The board is team-level and contains no TIFF filename/hash or causal explanation. See <a href="data/leaderboard_observation_2026-10-09T201800Z.json">the saved observation</a>.</p>
 
-<h2>1 · The frozen rules, printed before the results</h2>
+<h2>1 · Historical frozen rules and current corrections</h2>
+<div class="status"><b>Correction:</b> the old |G| = 14,088.7 point estimate is not established; the associated R5 budget is scenario arithmetic, not a measured truth size. The organizer confirms that new-fault truth may lie within 300 m of known traces, so the local 100–200 m ring is not automatically zero-credit. The frozen emission did use 200 m as a repository rule, not an organizer scoring rule. See <a href="../knowledge/49_why_02778_phd_answer.md">current 0.2778 evidence</a>.</div>
 <div class="table-wrap"><table><thead><tr><th>rule</th><th>text</th></tr></thead><tbody>
-{''.join(f'<tr><td><code>{k}</code></td><td>{val}</td></tr>' for k, val in em['frozen_rules'].items())}
+{''.join(f'<tr><td><code>{k}</code></td><td>{val}</td></tr>' for k, val in rules_for_display.items())}
 </tbody></table></div>
 
-<h2>2 · Co-training, as the brief specifies it</h2>
+<h2>2 · Historical co-training diagnostics</h2>
+<p class="small">These are recorded diagnostics for the R5 experiment. They do not constitute an organizer score or a promotion decision.</p>
 <div class="table-wrap"><table><thead><tr><th>quantity</th><th>value</th><th>receipt</th></tr></thead><tbody>
 <tr><td>view A blocked OOF AUC (mean of 4 folds, {mdl['views']['A']['n_layers']} layers)</td>
 <td>{mdl['views']['A']['mean_auc']:.4f}</td>
@@ -388,17 +369,20 @@ against {em['uniqueness_gate']['n_priors_checked']} rasters; novel fraction
 {em['uniqueness_gate']['novel_fraction']:.4f}; equals the literal prior union
 {str(em['uniqueness_gate']['equals_literal_prior_union']).lower()}; prior union
 {n(em['novelty']['union_px'])} px</td></tr>
-<tr><td>novelty vs the 13 organiser-scored files alone</td>
+<tr><td>novelty vs the 13 organiser-scored files alone (build receipt)</td>
 <td>{em['novelty']['novel_vs_13_organiser_scored']:.4f}</td></tr>
+<tr><td>current accessible-inventory recheck (2026-10-09)</td><td>{current['support_novelty']:.6f} support novelty vs {current['rasters_checked']} rasters; pattern unique {str(current['canonical_pattern_unique']).lower()}</td></tr>
 <tr><td>distance to the mapped catalogue</td><td>min {n(em['distance_to_catalogue_m']['min'], 1)} m,
 median {n(em['distance_to_catalogue_m']['median'], 1)} m (the organiser's mask is pixel-exact; the
 200 m ring is this repository's own rule, and <code>IR-R5-006</code> records that it is not the
 organiser's)</td></tr>
-<tr><td>OK to download / OK to submit (portal-acceptable)</td><td>{str(bool(ok_dl)).upper()} /
-{str(bool(ok_sub)).upper()}</td></tr>
+<tr><td>Research download / local format validation</td><td>{str(bool(ok_dl)).upper()} / {str(bool(portal_valid)).upper()}</td></tr>
+<tr><td>Approved for competition submission / slot used</td><td><b>NO</b> / 0</td></tr>
+<tr><td>Build-time prior-count note correction</td><td>71 measured in the emission receipts; earlier free-text note said 55. See <a href="../evidence/r5_provenance_audit_20261009.json">audit</a>.</td></tr>
 </tbody></table></div>
 
-<h2>5 · The projection, as a probability over a bounded unknown</h2>
+<h2>5 · Legacy model projections (not scores or promotion evidence)</h2>
+<p class="small">The calculations below use an unverified |G| point estimate and an owner-score-derived model. They are conditional projections only; the hide-and-recover instrument is not a qualified public-board predictor. Do not read them as scores, submission eligibility, or evidence that a public result changed for a particular reason.</p>
 <div class="table-wrap"><table><thead><tr><th>bar</th><th>credit needed</th><th>κ needed</th>
 <th>P(DTI &gt; bar)</th></tr></thead><tbody>
 {''.join(f"<tr><td>{k}</td><td>{n(val['credit_needed'], 1)}</td><td>{val['kappa_needed']:.4f}</td>"
@@ -478,7 +462,7 @@ magnetic source depth estimate that no band in the file corresponds to. Full tex
     (DOCS / "r5.html").write_text(audit)
 
     print(f"wrote docs/index.html, docs/r5.html, docs/executive-summary.html, "
-          f"docs/data/submission_r5.json; short alias byte-identical: {same}; note {len(NOTE)}/200 chars")
+          f"docs/data/submission_r5.json; short alias byte-identical: {same}; note {len(note)}/200 chars")
     return 0
 
 

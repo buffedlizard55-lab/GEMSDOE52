@@ -151,6 +151,7 @@ def test_holdout_folds_are_budget_matched_inside_each_fold():
 
 
 # --------------------------------------------------------------------- the raster itself
+@pytest.mark.skipif(not (DATA / "sample_submission.tif").is_file(), reason="competition template not restored")
 def test_raster_on_disk_matches_its_receipt():
     """Would have caught IR-H65-007 ('Predicted values must be in range [0, 1]') before upload."""
     c = card()
@@ -173,6 +174,7 @@ def test_raster_on_disk_matches_its_receipt():
     assert val["mass_outside_footprint"] == 0
 
 
+@pytest.mark.skipif(not (DATA / "labels.tif").is_file(), reason="competition labels not restored")
 def test_emitted_mass_is_entirely_inside_the_eligible_footprint_and_off_catalogue():
     """N-5 forbids NaN outside the footprint; the lane forbids the 200 m catalogue ring."""
     pre, build = load("preflight"), load("build")

@@ -1,0 +1,39 @@
+{
+  "evidence_class": "PUBLIC-LEADERBOARD OBSERVATION",
+  "source": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
+  "observed_utc": "2026-10-09T20:18:00Z",
+  "observation_method": "Transcribed from the live official DrivenData leaderboard page fetched in this review; not an upload receipt or frozen competition export.",
+  "rows": [
+    {
+      "rank": 1,
+      "participant": "xiaofanhu",
+      "best_public_dw_tversky": 0.3774
+    },
+    {
+      "rank": 2,
+      "participant": "alexoktaba",
+      "best_public_dw_tversky": 0.3361
+    },
+    {
+      "rank": 3,
+      "participant": "nchuzhoy",
+      "best_public_dw_tversky": 0.3262
+    },
+    {
+      "rank": 7,
+      "participant": "DARD",
+      "best_public_dw_tversky": 0.3195
+    },
+    {
+      "rank": 17,
+      "participant": "extradr19",
+      "best_public_dw_tversky": 0.2778
+    }
+  ],
+  "scope_and_limits": [
+    "0.2778 is rank 17 in this observation, not the highest public score.",
+    "The board is team-level and does not provide a filename, raster hash, organizer submission receipt, or causal explanation.",
+    "No row is attributed to any repository TIFF or owner-reported filename without an organizer receipt.",
+    "The snapshot is a reading of the public board only; organizer-confirmed score remains none located."
+  ]
+}

@@ -10,88 +10,9 @@ This session's working branch is fixed by Arena. Do not change branches. Keep ra
 
 <!--H75-AGENTS-->
 ## Current H75 continuation (2026-10-09)
-Read README's H75 block, `knowledge/65` (+65a/65b) and `knowledge/66`. H75: B_DVA (View B + directional variogram
-anisotropy) beats single_B on the holdout (+0.0118, CI [0.0068, 0.0174]); the near-dot lane gate fails (0.922). Experiments 3/3,
-slots 0. File `docs/downloads/h75-candidate.tif` is DOWNLOAD YES, SUBMIT research-only (owner override of lane rule required).
-Next: preregister a registry restricted to scored submissions, then retest the lane.
+Read README's H75 block, `knowledge/65` (+65a/65b) and `knowledge/66`. H75 is terminal: the internal B_DVA HOLDOUT-DTI paired delta was positive, but the final-dot lane gate is **DUPLICATE/STOP** (max 3-px near-dot fraction 0.921974 > 0.70) and support novelty is 0.0. **DOWNLOAD FOR RESEARCH: YES; local format validation: PASS; submission eligibility: NO — NOT FOR SUBMISSION.** No owner override or waiver is available under the active rule. Experiments 3/3, slots 0. Do not rerun H75, retune placement, or give H75 submission steps.
 
 <!--H67-AGENTS-->
-## Current H74 continuation (2026-10-09)
-
-Read `README.md`'s H74 block first, then `knowledge/63_hypotheses_H74_preregistered.md` (frozen,
-SHA-256 pinned in `registry/h74_preregistration.json`) and `knowledge/64_h74_results_and_limits.md`.
-H74 executed the deferred **H70-E** variant — a **deformation-only View A2** (geodetic strain bands
-4/7/8 + seismicity bands 10/16, 22 channels) with View B unchanged — the lane's only untested View A
-half. **Verdict: NEGATIVE, research-only. DOWNLOAD YES; SUBMIT NO. Slots used: 0. Experiments used:
-3 of 3.** The lane's attribution question is now closed: View A2 out-of-quadrant AUC mean **0.5194**,
-min fold **0.5011** → S1 sufficiency **FAIL** (sixth consecutive failure; the deformation half alone
-is as non-transferable as the mixed View A, so the failure is common to both halves of the
-subsurface stack on this grid, not attributable to the potential-field channels). Independence on the
-A2/B pair held with the lane's lowest measured correlation (max |ρ| **0.0765** < 0.60 → exchange
-allowed); the exchange moved 15,986 whole-segment pseudo pixels and **dropped** View A2's OOF AUC
-(0.5019→0.4759, 0.5011→0.4741, 0.5234→0.4796, 0.5513→~0.48) — the donor labels amplify the
-deformation view's bias, the brief's own warning. HOLDOUT-DTI (gems52-pooled-hide-v1, 9,400
-dots/fold/arm, 53,186 withheld positives): `a_only` **0.050048** [0.035285, 0.065611] vs `single_B`
-**0.174517** [0.152316, 0.196299] (control reproduced to 2.9e-07), paired Δ **−0.124469**
-[−0.149150, −0.099436] — the strict A2-only stratum is again anti-informative (below random
-0.080426); `single_B_veto_Bonly` 0.167026 and `concordant` 0.118511 both lose to `single_B` again.
-Leakage canary max alarm AUC **0.6687**, no alarm. The build emitted the strict A2-only stratum
-(1,965 candidate cells after exact novelty) at **721 dots** (candidate exhaustion; every budget probe
-placed 721) with the measured worst informative near-dot share **0.9945** → **no lane-valid emission
-exists**; dots lane literal **DUPLICATE/STOP** (lattice probe), policy **DUPLICATE/STOP** (max near
-**0.8835**); surface lane PASS/PASS (max ρ 0.0110). The file is format-valid, canonical-pattern
-unique, tier-2 novel_fraction **1.0**, not the prior union, and every one of its 721 cells is a
-strict A2-only candidate with a written geological reasoning row
-(`docs/downloads/h74-a-only-reasoning.csv`). Do **not** re-run the co-training lane with another View
-A rebuild — both halves are now measured (potential-field: H61/H63/H64/H65/H70; deformation-only:
-H74). H74-D (radiometric-cover gating) and H74-E (H65 operator on the strain bands) remain deferred.
-IR-H74-001 (build CSR orientation crash, fixed, regression-tested) is in
-`registry/irregularities.json`.
-
-## Current H73 continuation (2026-10-09)
-
-- **H69 file verdict (H73 audit):** DOWNLOAD NO, SUBMIT NO. The literal lane rule returns DUPLICATE/STOP (14 universal-coverage probes), and a policy PASS does not waive it. This file is a research copy only.
-
-
-Read `README.md`'s H73 block first, then `knowledge/61_hypotheses_H73_preregistered.md` (frozen), its dated amendment
-`knowledge/61a_h73_preregistration_amendment_quota_placement.md` (quota placement adopted BEFORE any holdout or shipped
-placement), and `knowledge/62_h73_results_and_limits.md`. H73 is **negative at the lane gate**: a surface-only emission
-cannot be made lane-feasible on this 350-distinct-prior registry with plain greedy (best 0.8916) or with per-prior quotas
-(best 0.7043, short fill). No H73 file was emitted. The instrument control reproduces (`single_B` 0.174571, |Δ| 3.6e-07).
-Experiments used: 1 of 3. Slots used: 0. Do not re-run the quota placement at the same budget expecting a different result;
-the denominator effect is the finding. The `scripts/run_h73.py` runner refuses to run if `knowledge/61` or `61a` moved.
-The DOWNLOAD/SUBMIT decision for the repo's existing lane-feasible file is in the README H73 block; it is still NO for submission.
-
-## Current H71 continuation (2026-10-09)
-
-Read `README.md`'s H71 block first, then `knowledge/57_hypotheses_H71_preregistered.md` (frozen, SHA-256
-`315c4e47…18b4286`, pinned in `registry/h71_preregistration.json`) plus its two dated amendments
-`knowledge/57a` (lane-quiet domain measured EMPTY: 0 px) and `knowledge/57b` (novel-first placement,
-cap searched against the filled count), and `knowledge/58_h71_results_and_limits.md`. H71 is
-**NEGATIVE**: the A-only stratum does not beat single_B on the holdout (matched budget 1,264 dots/fold,
-paired delta -0.050144, CI [-0.064233, -0.036779]) and the policy lane reads DUPLICATE/STOP on the
-final dots (max near 0.8903, 17 informative offenders) — both measured, both published verbatim. The
-downloadable file `submission/gems52-h71-aonly-stratum-fallback-uncapped-3080px-20261009T073227Z.tif`
-(SHA-256 `369b844e…111ea95c`) is format-valid, decoded-unique and support-novel 0.3104; it is
-research-only. Experiments used: 3 of 3. Slots used: 0. Do not re-run H71, do not promote it, and do
-not present the H71 file as lane-valid. The two measured placement walls (quiet domain 0 px; every cap
-probe stopped at max_near = cap) are the round's main deliverable — a third placement attempt needs a
-new preregistration.
-
-## Current H70 continuation (2026-10-09)
-
-Read `README.md`'s H70 block first, then `knowledge/54_hypotheses_H70_preregistered.md` (frozen; SHA-256
-`25b6ee74…b92151`, pinned in `registry/h70_preregistration.json`) and `knowledge/55_h70_results_and_limits.md`.
-H70 is **negative**: the strict A-only discovery stratum measured purely scores HOLDOUT-DTI 0.0174, below
-uniform random; the B-only veto and concordant variants both lose to single_B; independence held (max |rho|
-0.1337); View A sufficiency failed for the fifth consecutive round (0.5166); and no lane-valid emission exists
-from the stratum (610 placeable cells, worst informative near-dot share 1.0; IR-H70-001). Experiments used: 3 of 3.
-Do not re-run the co-training lane with another View A rebuild; H70-E (deformation-only View A2) is the only
-untested variant and needs its own round. The shared H61 stages were reused, not forked; use
-`scripts/audit_uniqueness.py` for uniqueness checks. `docs/downloads/h70-candidate.tif` is research-only:
-DOWNLOAD YES, SUBMIT NO, slots used 0. `knowledge/26_current_user_brief.md` must carry the current prompt
-verbatim (two tests enforce it).
-
 ## Current H67 continuation (2026-10-09)
 
 Read `README.md`'s H67 block first, then `knowledge/45_hypotheses_H67_preregistered.md` (frozen before any
