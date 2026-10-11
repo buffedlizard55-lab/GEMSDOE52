@@ -21,9 +21,10 @@ TIFF = ROOT / "docs/downloads/h99-candidate.tif"
 
 
 def test_newest_round_owns_the_top_of_the_readme():
+    # H101 (renumbered from a parallel H97) now owns the top; the H99 block must survive intact (tests/test_h101.py)
     text = (ROOT / "README.md").read_text()
-    assert text.startswith("<!--H99-README-->")
-    head = text[: text.index("<!--/H99-README-->")]
+    assert "<!--H99-README-->" in text and "<!--/H99-README-->" in text
+    head = text[text.index("<!--H99-README-->"): text.index("<!--/H99-README-->")]
     assert "OK TO DOWNLOAD: YES" in head and "OK TO SUBMIT: NO" in head
     assert "docs/downloads/h99-candidate.tif" in head and SHA in head
     assert "knowledge/104_h99_h100_results.md" in head
@@ -184,6 +185,8 @@ def test_site_pages_carry_the_verdict_and_one_click_downloads():
         assert "<!--H99-CARD-->" in page or "<!--H99-DL-->" in page, rel
         assert "SUBMIT: NO" in page or "OK TO SUBMIT: NO" in page or "SUBMIT NO" in page, rel
         assert "h99-candidate.tif" in page, rel
+    # newest_round is whichever round is newest (H101 after this merge); H99's card must stay hash-verifiable
     feed = json.loads((ROOT / "docs/data/feed.json").read_text())["newest_round"]
-    assert feed["sha256"] == SHA and feed["hash_verified"] is True
-    assert str(feed["round"]).startswith("H99") and feed["paired_vs_random"] < 0
+    assert feed["hash_verified"] is True
+    assert int(str(feed["round"]).lstrip("H").split()[0].split("-")[0]) >= 99
+    assert hashlib.sha256(TIFF.read_bytes()).hexdigest() == SHA

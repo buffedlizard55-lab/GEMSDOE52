@@ -1,3 +1,16 @@
+<!--H101-AGENTS-->
+## Current H101 continuation (2026-10-10) — READ FIRST
+Read README's H101 block, `knowledge/105` (frozen preregistration, SHA-256 `bf5c5e01cb4b6bdf…`) and
+`knowledge/106` (results). Verdict **NEGATIVE**: download yes (audit only), submit **NO**. Experiments 3 of 3, slots 0.
+
+- The B-only stratum as a hard artefact veto does not beat `B_DVA2` (H101_veto 0.192122 vs 0.192831, CI spans 0).
+  Fall-line-flagged B-only dots are worse than clean B-only dots in 4/4 folds but removed dots beat their replacements 4/4:
+  next test is a rank-preserving soft penalty (new preregistration required).
+- **IR-H101-001:** `B_DVA2` (holdout best) is not a pure surface view: it includes DVA2 of bands 13/15/18. Lane-pure
+  `B_DVA2s` = 0.184506. Report both in any co-training round.
+- Consensus (A as soft prior) and the contour-parallel prior without disagreement both lose to `B_DVA2`.
+- Reuse `scripts/run_h101.py` stages; it redirects run_h84/run_h82 checkpoints to `work/h101` (no forks).
+<!--/H101-AGENTS-->
 <!--H99-AGENTS-->
 ## Current H99/H100 continuation (2026-10-10) — READ FIRST
 Read README's standing brief and the H99/H100 status block first. **Both experiments are strict negatives.**

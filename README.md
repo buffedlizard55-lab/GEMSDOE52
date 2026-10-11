@@ -1,3 +1,66 @@
+<!--H101-README-->
+# Current status — H101 (2026-10-10): co-training disagreement as an artefact veto · NEGATIVE
+
+> **OK TO DOWNLOAD: YES** — format-valid single-band float32 GeoTIFF, EPSG:32611, 3730×3292,
+> all-finite, values exactly {0,1} (the portal's *"Predicted values must be in range [0, 1]"* rejection cannot occur).
+>
+> **OK TO SUBMIT: NO — research-only, do not upload.** Failed gate(s): holdout_paired_vs_B_DVA2, lane_dots. The primary scored HOLDOUT-DTI 0.192122 against the control B_DVA2 0.192831; paired -0.000709 [-0.001750, 0.000340] — the interval crosses zero, so it did not beat the current holdout best. Its dots are also a lane near-duplicate of this repository's own H84 file (B_DVA2 family; IR-H101-005) and, in the post-merge check, of main's H87 board-calibrated file (IR-H101-007), logged as a duplicate.
+>
+> Weekly slots used: **0**. The agent does not pick submissions; promotion is a separate selector step.
+
+**★ [Download h101-candidate.tif](docs/downloads/h101-candidate.tif)** · [ZIP](docs/downloads/h101-candidate.zip) ·
+**[Executive summary / how to submit](docs/h101-executive-summary.html)** · [Full result](docs/h101.html) ·
+[Run card](evidence/h101_run_card.json) · [A-only reasoning CSV](docs/downloads/h101-a-only-reasoning.csv)
+
+- **File:** `submission/gems52-h101-fallline-veto-dva2-37654px-20261011T003404Z-zeros.tif` — 142,197 bytes, SHA-256 `5a9ce7cc3d10493f3fd86ba4c9887f5f198e2f5b007e301b8726e89b3644828b`
+- **Submission name:** `h101-fallline-veto-dva2-37654px-20261011T003404Z` · **Note (121/140):** `H101 co-train veto: B-only dots on fall-line/cardinal axes demoted (Hessian), DVA2 surface field, 3px, 200m ring; research`
+- **Validator (re-read from disk):** 1 band float32, EPSG:32611, 3730×3292, CRS/shape/transform/bounds = sample_submission.tif: True, NaN 0, inf 0, values [0.0, 1.0], 37,654 ones, 0 outside footprint → PASS
+- **HOLDOUT-DTI** (`gems52-pooled-hide-v1`, 53,186 withheld positive px, 9,400 dots/fold, 95 % paired cluster bootstrap):
+
+| arm | role | HOLDOUT-DTI [95 % CI] |
+|---|---|---|
+| `H101_veto_card` | attribution — road (cardinal) veto only | 0.192930 [0.170866, 0.213653] |
+| `B_DVA2` | control — current holdout best (H82/H84) | 0.192831 [0.170791, 0.213696] |
+| `H101_veto` | PRIMARY — fall-line OR road veto of B-only | 0.192122 [0.170106, 0.212841] |
+| `H101_veto_fl` | attribution — fall-line veto only | 0.192060 [0.170237, 0.212733] |
+| `B_DVA2s` | lane-pure View B (surface DVA2 only, IR-H101-001) | 0.184506 [0.163182, 0.205893] |
+| `H101_consensus` | A as soft prior: r_B·(0.9+0.1·r_A) | 0.184435 [0.162915, 0.205307] |
+| `H101_veto_s` | veto on lane-pure View B | 0.184204 [0.163205, 0.205345] |
+| `H101_scarp_soft` | contour-parallel prior, no disagreement | 0.180812 [0.160896, 0.200256] |
+| `single_B` | single-view baseline (surface) | 0.174517 [0.152316, 0.196299] |
+| `random` | floor | 0.080426 [0.070223, 0.090973] |
+| `single_A` | single-view baseline (geophysics) | 0.071954 [0.056636, 0.088566] |
+
+  Primary − control `B_DVA2` = **-0.000709** [-0.001750, 0.000340] → does not beat the holdout best.
+- **Independence:** max |ρ| 0.1184 (single_A_vs_B_DVA2s), 0.1498 (single_A_vs_B_DVA2); abandon ≥ 0.60 → not abandoned. View A sufficiency mean AUC 0.5163 (fails again).
+- **Leakage canary:** max single-feature AUC 0.6693 (bar 0.90) → none.
+- **Lane:** surface PASS (max ρ 0.4815); dots literal DUPLICATE/STOP (max near-3px 1.0000), policy DUPLICATE/STOP (max near-3px 0.9406).
+- **Gates (frozen in `registry/h101_preregistration.json`):**
+
+| gate | result |
+|---|---|
+| controls_reproduce | PASS |
+| leakage_canary | PASS |
+| independence_not_abandoned | PASS |
+| holdout_bar | PASS |
+| holdout_paired_vs_B_DVA2 | **FAIL** |
+| lane_surface_literal | PASS |
+| lane_dots | **FAIL** |
+| uniqueness | PASS |
+| format | PASS |
+| not_the_union | PASS |
+
+- **New finding (IR-H101-001):** the holdout-best "View B" `B_DVA2` contains gravity/basement variogram channels (bands 13/15/18). The lane-pure surface view `B_DVA2s` scores 0.184506, i.e. -0.008325 — the View-A physics inside "B" is worth ≈ 0.008 HOLDOUT-DTI.
+- **Lead (not evidence of a gain):** fall-line-flagged B-only dots carry less credit than clean B-only dots in all four folds, but the removed dots still out-credit their replacements in all four folds (fold 0: removed 0.1184 vs added 0.1015 (n=852); fold 1: removed 0.1118 vs added 0.0981 (n=951); fold 2: removed 0.0861 vs added 0.0843 (n=698); fold 3: removed 0.0997 vs added 0.0943 (n=1052)) — test a rank-preserving soft penalty next.
+- **Why `h33-2-b2` scored 0.2778 / can we beat 0.3195?** It is the 0.2600 `d2-8` surface field with every dot ≤ 200 m from the public catalogue deleted (re-verified from bytes this session, `evidence/h101_reverification.json`: 37,654 dots, values {0,1}, nearest dot 223.6 m from `labels.tif`, median 1964.7 m, 5.77 % within 300 m); DTI = T/(0.2·S + 0.8·|G|) rewards removing dots that cannot hit *new* faults. Beating 0.3195 needs ≈ 15 % more credit per dot at the same mass ([knowledge/76](knowledge/76_why_02778_and_what_beating_03195_requires.md)); note 0.3195 is rank 8 and the board top is 0.3774 (re-observed live this session, `evidence/h101_reverification.json`; IR-H85-008), which needs ≈ ×1.36 the champion's credit density. H101 does not deliver it; nothing in this repository has yet demonstrated it.
+- **Candidate hypotheses (5, ranked by expected gain ÷ cost, with layers, signature, why off-catalogue, how new):** [knowledge/105 §1](knowledge/105_hypotheses_H101_preregistered.md). The top one was run; #5 (INGENIOUS temperature probes, GDR 1391) needs an owner download: gdr.openei.org returned no connection from this sandbox (curl code 000, `evidence/h101_reverification.json`).
+- Docs: [preregistration](knowledge/105_hypotheses_H101_preregistered.md) · [results & limits](knowledge/106_h101_results_and_limits.md) · [irregularities](registry/irregularities.json)
+- Reproduce: `python3 scripts/restore_data.py --target-dir data` → `PYTHONPATH=src python -c "from gems52 import structural; structural.build(dest='work/r2/features', include_optional_profiles=False)"` → `PYTHONPATH=src python -m gems52.external` → `python scripts/fetch_prior_inventory.py --out work/h61/priors --receipt work/h61/prior_fetch_receipt.json` → `python scripts/run_h101.py all` → `python scripts/h101_card.py` → `python scripts/publish_h101_site.py && python scripts/check_site.py`.
+- **Renumbered:** this round was preregistered as H97; main merged other sessions' H97–H100 first, so it is H101 here (IR-H101-006, `evidence/h101_identifier_rename.diff`). Not to be confused with main's own H97 (`docs/h97.html`).
+- The standing brief for this session is the same text as `knowledge/94_current_user_brief_2026-10-10_H95.md` (reproduced verbatim in the H95 block below); read it every session.
+
+<!--/H101-README-->
+
 <!--H99-README-->
 # Current status — H99/H100 (2026-10-10): two-view co-training, boundary texture — both strict NEGATIVES
 
