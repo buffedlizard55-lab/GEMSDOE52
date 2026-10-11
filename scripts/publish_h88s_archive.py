@@ -12,7 +12,9 @@ Every number written into HTML or Markdown is read from a receipt in ``evidence/
 pages written:
     docs/index.html                  clean landing page, download box first
     docs/executive-summary.html      "how to make a submission", incl. the [0,1] portal error
-    docs/h88.html                    the round page (hypotheses, gates, irregularities)
+    docs/h88s.html                   the archive landing page (download box first)
+    docs/h88s-round.html             the round page (hypotheses, gates, irregularities)
+    docs/h88s-guide.html             the how-to-submit guide
     docs/archive-h87-landing.html    the superseded H87 landing page, preserved
     docs/archive-h87-guide.html      the superseded H87 guide, preserved
     docs/data/h88_*.json             feed copies of the receipts
@@ -94,7 +96,7 @@ def ensure_prompt_block(text: str) -> str:
              "variant before any build (`evidence/h55_paired_shoulders_holdout.json`,\n"
              "  `slot_gate.approved_for_weekly_slot = false`, 0 slots used).\n"
              "- Older rounds: `knowledge/82s_h88s_results_and_limits.md` (current), `knowledge/77`, "
-             "`knowledge/81`, and the `docs/archive-*.html` pages.\n"
+             "`knowledge/81s_h88s_champion_and_mass_lever.md`, and the `docs/archive-*.html` pages.\n"
              f"{PROMPT_END}")
     if PROMPT_START in text and PROMPT_END in text:
         head, rest = text.split(PROMPT_START, 1)
@@ -288,9 +290,9 @@ leaderboard forecast.</p>
 
 <h2>2 · What this is</h2>
 <p>{build.get('summary', '')}</p>
-<p class="small">Round <b>H88</b>, two-view co-training (Blum &amp; Mitchell, COLT '98,
+<p class="small">Round <b>H88s</b> (this session's H88, renamed at the merge; the other H88 round in this repository is the basement-step round), two-view co-training (Blum &amp; Mitchell, COLT '98,
 doi:10.1145/279943.279962) with the brief's disagreement signal; preregistered in
-<code>knowledge/80</code> before any fit and audited against its sha256 by the runner. Full method,
+<code>knowledge/80s_h88s_preregistration.md</code> before any fit and audited against its sha256 by the runner. Full method,
 gates and irregularities: <a href="h88.html">h88.html</a>. Step-by-step submission guide:
 <a href="executive-summary.html">executive-summary.html</a>.</p>
 
@@ -309,7 +311,7 @@ gates and irregularities: <a href="h88.html">h88.html</a>. Step-by-step submissi
 {('pass' if fit['sufficiency']['view_B_pass'] else 'FAIL')}</td></tr>
 <tr><td>independence, worst fold (block OOF errors on labelled negatives)</td>
 <td>max |ρ| {max(r['spatial']['max_abs_correlation'] for r in fit['independence_per_fold']):.4f} vs the 0.60 abandon rule</td></tr>
-<tr><td>shipped budget (frozen rule <code>knowledge/80s</code>)</td>
+<tr><td>shipped budget (frozen rule <code>knowledge/80s_h88s_amendment_budget.md</code>)</td>
 <td>{br.get('chosen_total', 'n/a')} dots ({br.get('per_fold', 'n/a')}/fold) against the 37,600-dot point estimate {br.get('base_dti', 'n/a')}</td></tr>
 </table>
 
@@ -324,7 +326,7 @@ the donor screen. The shipped field therefore uses View A only as a suppressor, 
 <li><b>The shipped file's own instrument number is ~0.</b> {diag_line}</li>
 <li>The champion (.2778 organiser score) is 37,654 dots of which only ~14.6 % carry kernel credit; the
 metric arithmetic behind "can we beat 0.3195" is in <a href="h88.html">h88.html</a> §4 and
-<code>knowledge/81</code>. Nothing in it is a forecast.</li>
+<code>knowledge/81s_h88s_champion_and_mass_lever.md</code>. Nothing in it is a forecast.</li>
 </ul>
 
 <h2>5 · Previous rounds (each with its own audited page)</h2>
@@ -478,9 +480,9 @@ current round's download live on <a href="index.html">docs/index.html</a>; this 
     round_page = f"""
 <p><a href="index.html">← Download page</a> · <a href="executive-summary.html">How to submit</a></p>
 <h1>H88 — sufficiency-screened two-view co-training</h1>
-<p class="small">Preregistration <code>knowledge/80</code> sha256
+<p class="small">Preregistration <code>knowledge/80s_h88s_preregistration.md</code> sha256
 <code>{prereg['hypothesis_sha256']}</code> (frozen before any fit, re-checked by the runner);
-budget amendment <code>knowledge/80s</code>; results and limits <code>knowledge/82</code>. Every
+budget amendment <code>knowledge/80s_h88s_amendment_budget.md</code>; results and limits <code>knowledge/82s_h88s_results_and_limits.md</code>. Every
 number below is read from <code>evidence/h88_*.json</code>.</p>
 
 <p class="box"><b>Shipped artefact (final bytes, this round):</b>
@@ -599,12 +601,12 @@ brief's block-level error test). This round supplies the missing holdout number 
 <li><b>IR-H88-006</b> — <code>registry/h88s_preregistration.json</code> carries the label
 <code>preregistered_utc: 2026-10-10T22:20:00Z</code>, about five minutes ahead of the wall clock at
 which it was written; what the runner actually enforces is the sha256 of
-<code>knowledge/80</code>, which is the real freeze, and the sha did not move.</li>
+<code>knowledge/80s_h88s_preregistration.md</code>, which is the real freeze, and the sha did not move.</li>
 <li><b>IR-H88-008 / amendment 80b</b> — the preregistered primary <code>corroborated_B</code> lost its
 promotion test to <code>single_B</code> (paired delta {paired_single_b['delta']:+.6f}
 [{paired_single_b['ci95'][0]:+.6f}, {paired_single_b['ci95'][1]:+.6f}]), so the shipped field is the
 measured-best permitted arm <code>{build.get('ship_field')}</code> at the preregistered largest budget;
-the amendment and its rationale are frozen in <code>knowledge/80s</code> and written verbatim into the
+the amendment and its rationale are frozen in <code>knowledge/80s_h88s_amendment_budget.md</code> and written verbatim into the
 build receipt's <code>ship_note</code>. This is a post-hoc choice among pre-registered arms, disclosed,
 not a hidden change of hypothesis.</li>
 <li><b>IR-H88-009</b> — the first H88 build (sha <code>fa53d6bb7e56…</code>, 31,177 dots) was
