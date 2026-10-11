@@ -27,9 +27,9 @@ ul,ol{margin-left:20px}
 
 <p><a href="h88s.html">← Download page</a> · <a href="h88s-guide.html">How to submit</a></p>
 <h1>H88 — sufficiency-screened two-view co-training</h1>
-<p class="small">Preregistration <code>knowledge/80</code> sha256
+<p class="small">Preregistration <code>knowledge/80s_h88s_preregistration.md</code> sha256
 <code>45a0cc62333c4a49d044852ab61d89ec688f741d50495a0e3cb3030b3ed12093</code> (frozen before any fit, re-checked by the runner);
-budget amendment <code>knowledge/80s</code>; results and limits <code>knowledge/82</code>. Every
+budget amendment <code>knowledge/80s_h88s_amendment_budget.md</code>; results and limits <code>knowledge/82s_h88s_results_and_limits.md</code>. Every
 number below is read from <code>evidence/h88_*.json</code>.</p>
 
 <p class="box"><b>Shipped artefact (final bytes, this round):</b>
@@ -169,12 +169,12 @@ brief's block-level error test). This round supplies the missing holdout number 
 <li><b>IR-H88-006</b> — <code>registry/h88s_preregistration.json</code> carries the label
 <code>preregistered_utc: 2026-10-10T22:20:00Z</code>, about five minutes ahead of the wall clock at
 which it was written; what the runner actually enforces is the sha256 of
-<code>knowledge/80</code>, which is the real freeze, and the sha did not move.</li>
+<code>knowledge/80s_h88s_preregistration.md</code>, which is the real freeze, and the sha did not move.</li>
 <li><b>IR-H88-008 / amendment 80b</b> — the preregistered primary <code>corroborated_B</code> lost its
 promotion test to <code>single_B</code> (paired delta -0.052841
 [-0.067627, -0.038227]), so the shipped field is the
 measured-best permitted arm <code>single_B</code> at the preregistered largest budget;
-the amendment and its rationale are frozen in <code>knowledge/80s</code> and written verbatim into the
+the amendment and its rationale are frozen in <code>knowledge/80s_h88s_amendment_budget.md</code> and written verbatim into the
 build receipt's <code>ship_note</code>. This is a post-hoc choice among pre-registered arms, disclosed,
 not a hidden change of hypothesis.</li>
 <li><b>IR-H88-009</b> — the first H88 build (sha <code>fa53d6bb7e56…</code>, 31,177 dots) was

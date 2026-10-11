@@ -8848,5 +8848,5 @@ Arena is designed to push AI agents to do better work. This message contains cor
 
 - **H55-1 (paired shoulders): no h55-1 tiff was built.** The decision gate closed the variant before any build (`evidence/h55_paired_shoulders_holdout.json`,
   `slot_gate.approved_for_weekly_slot = false`, 0 slots used).
-- Older rounds: `knowledge/82s_h88s_results_and_limits.md` (current), `knowledge/77`, `knowledge/81`, and the `docs/archive-*.html` pages.
+- Older rounds: `knowledge/82s_h88s_results_and_limits.md` (current), `knowledge/77`, `knowledge/81s_h88s_champion_and_mass_lever.md`, and the `docs/archive-*.html` pages.
 <!--PROMPT-VERBATIM-END-->
