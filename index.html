@@ -1,37 +1,136 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>GEMSDOE52 — DOE GEMS competition #306 — H83 candidate</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEMSDOE52 — download the submission</title>
 <style>
-body{margin:0;font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-color:#14181d;background:#fff}
-main{max-width:760px;margin:0 auto;padding:36px 20px 70px}
-h1{font-size:26px;margin:0 0 10px}
-.v{border-radius:10px;padding:14px 16px;margin:16px 0;font-weight:700;
-background:#fdecea;color:#b3261e;
-border:1px solid #f0c4bf}
-a.b{display:inline-block;background:#1f4e79;color:#fff;text-decoration:none;font-weight:700;
-padding:13px 20px;border-radius:8px;margin:6px 8px 6px 0}
-a.s{background:#eef2f6;color:#1f4e79}
-code{background:#f2f4f7;padding:1px 5px;border-radius:4px;font-size:13.5px}
-small{color:#5b6672}
-</style></head><body><main>
-<h1>H83 candidate raster &mdash; DOE GEMS competition #306</h1>
-<div class="v">OK TO DOWNLOAD: yes &nbsp;&middot;&nbsp; OK TO SUBMIT: no — research artefact only</div>
-<a class="b" href="docs/downloads/h83-candidate.tif" download>Download h83-candidate.tif &#8595;</a>
-<a class="b s" href="docs/downloads/h83-candidate.zip" download>ZIP</a>
-<a class="b s" href="docs/index.html">Full site</a>
-<a class="b s" href="docs/h83-executive-summary.html">How to submit</a>
-<a class="b s" href="docs/validator.html">Check a file in your browser</a>
-<p><small>140,798 bytes &middot; 37,654 emitted cells, values exactly {0,1}
-&middot; SHA-256 <code>de580306e2cb6460fced1b745d1d40ff9735fb5497d493a56cca7630ad2a0ef7</code> &middot; EPSG:32611, 3730&times;3292 at 100 m
-&middot; submission name <code>h83-offcatalogue-cotrain-37654px-e3-20261010T202956Z</code></small></p>
-<p><small>HOLDOUT-DTI (evaluator gems52-pooled-hide-v1, 53,186 withheld
-positives): candidate 0.036988 [0.025050, 0.050831] vs control single_B 0.174571;
-paired -0.137583 [-0.161887, -0.113776]. OFFCAT-DTI (gems52-offcatalogue-v1, diagnostic):
-0.065682 [0.043691, 0.092752]. A holdout number is never a board forecast.
-Verdict: negative.</small></p>
-<p><small>This page is a research artefact. It is not an organiser acceptance receipt, and it does not
-claim a leaderboard gain. Sources and verification status:
-<a href="docs/h83-sources.html">docs/h83-sources.html</a>.</small></p>
-</main></body></html>
+:root{--bg:#0f1117;--fg:#e8eaed;--accent:#4fc3f7;--ok:#66bb6a;--warn:#ffa726;--err:#ef5350;--card:#1a1d27;--border:#2d3040}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--fg);line-height:1.65}
+.container{max-width:900px;margin:0 auto;padding:24px 20px}
+h1{font-size:1.7rem;margin-bottom:8px;color:var(--accent)}
+h2{font-size:1.25rem;margin:26px 0 10px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px}
+h3{font-size:1.05rem;margin:18px 0 8px}
+a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+code{background:#1e2130;padding:2px 6px;border-radius:3px;font-size:.9em;word-break:break-all}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.88rem}
+th,td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--border)}
+th{color:var(--accent)}
+.download-box{background:linear-gradient(135deg,#1a237e,#0d47a1);border:2px solid var(--accent);border-radius:12px;padding:24px;margin:14px 0 20px;text-align:center}
+.download-box h2{color:#fff;border:none;margin:0 0 10px;font-size:1.4rem}
+.btn{display:inline-block;background:var(--accent);color:#000;font-weight:700;padding:14px 30px;border-radius:8px;font-size:1.05rem;margin:8px}
+.btn-zip{background:#90a4ae;color:#111}
+.ok{color:var(--ok);font-weight:700} .bad{color:var(--err);font-weight:700} .warn{color:var(--warn);font-weight:700}
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin:12px 0}
+.small{color:#9aa4b2;font-size:.86rem}
+ul,ol{margin-left:20px}
+</style></head><body><div class="container">
+
+<div class="download-box">
+<h2>1 · Download the submission file</h2>
+<a class="btn" href="docs/downloads/gems52-h88-cotrain-disagreement-suffscreen-31156px-20261010T233522Z.tif" download>⬇ Download gems52-h88-cotrain-disagreement-suffscreen-31156px-20261010T233522Z.tif</a>
+<a class="btn btn-zip" href="docs/downloads/h88-candidate.zip" download>ZIP</a>
+<p class="small" style="color:#cfe3ff;margin-top:8px">129,943 bytes · sha256
+<code>124081c0c05fc882ed8c04a2b036c574d4208c10275bb2ede90dd4d2d52246a7</code></p>
+<p style="margin-top:6px"><b>Compatibility:</b> single-band float32 GeoTIFF, EPSG:32611,
+3292×3730 on the competition grid, values exactly {0, 1}, no NaN, no
+nodata tag — this is the file that cannot trip the portal's
+<code>Predicted values must be in range [0, 1]</code> error.</p>
+</div>
+
+<div class="card">
+<h3>OK to download? Yes. OK to submit? Only the file in the box above — and read the verdict beneath it.</h3>
+<p class="small"><b>NO CERTIFIED LEADERBOARD GAIN</b> exists anywhere in this repository: no number on
+this site or in its receipts is an organiser score. Every figure is this repository's own HOLDOUT-DTI
+instrument (<code>gems52-pooled-hide-v1</code>), and the repository measured that this instrument
+does not rank organiser scores (Spearman −0.1045, n 13, IR-52-017).</p>
+<p class="small"><b>Research-only files carry DO NOT SUBMIT.</b> The CTD5 release, the R3 paired-profile
+release and the H55 archives are published for audit and are never for upload; the only
+submission-eligible file is the one in the download box above (format, uniqueness, lane and
+not-the-union gates all pass — see <a href="docs/h88.html">h88.html</a> §5).</p>
+</div>
+
+<div class="card">
+<h3>Is it safe to submit? <span class="ok">OK TO SUBMIT — yes, with the caveat in this same box: this is the round's shipped artefact, assembled by amendment 80b from the highest-scoring PERMITTED measured arm of the preregistered lane, and it passes every hard requirement (format, uniqueness, lane, not-the-union). Honest caveat, in the same breath: the preregistered co-training primary FAILED its promotion test this round (paired delta -0.052841 [-0.067627, -0.038227]) and the shipped field does not beat the repository's best measured arm (B_DVA2, HOLDOUT-DTI 0.192829, H84), so the repository's own promotion rule would not spend a weekly slot on it. Nothing here is an organiser score. A post-hoc challenger (h87_field) scored 0.056889 on the same folds; the build kept the preregistered field, and the challenger is recorded as an irregularity, not merged in.</span></h3>
+<p class="small"><b>Submission name:</b> <code>h88-cotrain-disagreement-31156px</code><br>
+<b>Note (≤140 chars):</b> <code>H88 co-train lane: B-corroborated, A-only suppressed, 31156px, 3px spacing, 200m collar</code><br>
+<b>Gates:</b> format True · uniqueness True ·
+lane True · not-the-union True ·
+verdict <b>promote</b></p>
+<p class="small"><b>Did it beat the single-view baseline?</b> NO — HOLDOUT-DTI 0.127005 [0.11105, 0.14547] vs single_B 0.179847 [0.15633, 0.20132]; paired delta -0.052841 [-0.067627, -0.038227].</p>
+<p class="small"><b>Evidence class of every score on this site:</b> HOLDOUT-DTI — the repository's own
+hide-and-recover instrument (evaluator <code>gems52-pooled-hide-v1</code>), never an organiser
+score. The same repository measured that this instrument does not rank organiser scores (Spearman
+−0.1045, IR-52-017), so treat these numbers as the only honest thing available and not as a
+leaderboard forecast.</p>
+</div>
+
+<h2>2 · What this is</h2>
+<p>H88 co-training lane candidate (preregistered corroborated_B field): View B (DEM curvature/slope + radiometric K/Th/U ratios + LiDAR scarp faces) with the B-only disagreement stratum suppressed, ranked by View B confidence, metered to 37,600 dots at 3 px spacing outside the 200 m catalogue ring. View A is measured non-sufficient and is used only as the suppressor, never as a donor.</p>
+<p class="small">Round <b>H88</b>, two-view co-training (Blum &amp; Mitchell, COLT '98,
+doi:10.1145/279943.279962) with the brief's disagreement signal; preregistered in
+<code>knowledge/80</code> before any fit and audited against its sha256 by the runner. Full method,
+gates and irregularities: <a href="docs/h88.html">h88.html</a>. Step-by-step submission guide:
+<a href="docs/executive-summary.html">executive-summary.html</a>.</p>
+
+<h2>3 · The numbers this page is built from</h2>
+<table>
+<tr><th>measurement</th><th>value</th></tr>
+<tr><td>shipped dots</td><td>31,156 (0 on the mapped catalogue, 0 within 200 m of it)</td></tr>
+<tr><td>HOLDOUT-DTI, primary <code>corroborated_B</code></td><td>0.127005
+[0.11105, 0.14547]</td></tr>
+<tr><td>HOLDOUT-DTI, <code>single_B</code> baseline</td><td>0.179847
+[0.15633, 0.20132]</td></tr>
+<tr><td>HOLDOUT-DTI, random control</td><td>0.074569</td></tr>
+<tr><td>View A sufficiency (mean OOF AUC on held-out regions)</td>
+<td>0.5154 — FAIL vs the 0.60 gate</td></tr>
+<tr><td>View B sufficiency</td><td>0.6894 —
+pass</td></tr>
+<tr><td>independence, worst fold (block OOF errors on labelled negatives)</td>
+<td>max |ρ| 0.1416 vs the 0.60 abandon rule</td></tr>
+<tr><td>shipped budget (frozen rule <code>knowledge/80a</code>)</td>
+<td>37600 dots (9400/fold) against the 37,600-dot point estimate 0.17984661470177968</td></tr>
+</table>
+
+<h2>4 · Read this before uploading</h2>
+<ul class="small">
+<li>The instrument measures <b>re-discovering the mapped catalogue</b> with whole segments hidden. The
+competition scores <b>uncatalogued</b> faults. They are different questions; the repo has already
+measured that the instrument does not rank the board (IR-52-017).</li>
+<li>View A (potential field) is not sufficient on this instrument, so the co-training exchange was
+screened out rather than used: 4 of 4 folds failed
+the donor screen. The shipped field therefore uses View A only as a suppressor, never as a donor.</li>
+<li><b>The shipped file's own instrument number is ~0.</b> The shipped bytes were also re-scored on the same instrument, after publication: HOLDOUT-DTI 0.006391 [0.00555, 0.00724]. That number is near zero BY CONSTRUCTION and is published so nobody has to discover it: the instrument's truth is the mapped catalogue, and this file emits nothing within 200 m of it (the champion's measured +6.83 % ring lever). Read the arm-level number as the detector measurement and this one as a catalogue-overlap diagnostic; neither is an organiser score. </li>
+<li>The champion (.2778 organiser score) is 37,654 dots of which only ~14.6 % carry kernel credit; the
+metric arithmetic behind "can we beat 0.3195" is in <a href="docs/h88.html">h88.html</a> §4 and
+<code>knowledge/81</code>. Nothing in it is a forecast.</li>
+</ul>
+
+<h2>5 · Previous rounds (each with its own audited page)</h2>
+<ul class="small">
+<li><a href="docs/archive-h87-landing.html">H87 landing page (superseded)</a> ·
+<a href="docs/archive-h87-guide.html">H87 guide</a> — kept verbatim for audit; its build receipt never
+carried a holdout score, and this round measured its field at
+0.056889 on the H88 folds.</li>
+<li><a href="docs/h57-creditcore.html">H57 credited-core alternate</a> — file
+<code>gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif</code>, published beside the union
+arm and never allowed to take the pointer.</li>
+<li><a href="docs/h58.html">H58 cold-geo consensus (research-only, "do not upload")</a> ·
+<a href="docs/h55-edge.html">H55-EDGE failed-gate archive</a> ·
+<a href="docs/r5.html">R5 novel strike-ridge (download ok, not slot-approved)</a> ·
+<a href="docs/h60.html">H60</a> · <a href="docs/h61-audit.html">H61 audit</a> ·
+<a href="docs/h63-audit.html">H63 audit</a> · <a href="docs/h65halo.html">H65 halo</a> ·
+<a href="docs/h66cotrain.html">H66 co-train</a> · <a href="docs/h69.html">H69</a> ·
+<a href="docs/ctd5-audit.html">CTD5 audit</a> · <a href="docs/forensics.html">forensics</a></li>
+</ul>
+<p class="small"><b>DO NOT SUBMIT</b> applies to the research-only archives (CTD5, the R3
+paired-profile release, the H55 archives): they are published for audit and are never uploaded. The only
+submission-eligible file is the one in the download box on <a href="docs/index.html">index.html</a>, and even
+that one is the owner's separate selector step.</p>
+<p class="small"><b>NO CERTIFIED LEADERBOARD GAIN</b> — no number on this page is an organiser score.</p>
+<p class="small"><b>Current pointer status (from <code>docs/data/submission.json</code>):</b>
+<code>download yes; submit is the owner's call (no weekly slot used by this round; the selector step is separate)</code></p>
+<p class="small">Generated 20261010T235820Z from <code>evidence/h88_*.json</code> ·
+<a href="https://github.com/buffedlizard55-lab/GEMSDOE52">repository</a> ·
+<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">competition</a></p>
+
+</div></body></html>

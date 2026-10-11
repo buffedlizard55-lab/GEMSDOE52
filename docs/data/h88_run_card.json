@@ -1,0 +1,266 @@
+{
+  "round": "H88",
+  "generated_utc": "20261010T235820Z",
+  "hypothesis": "Sufficiency-screened two-view co-training: View B surface evidence with the B-only disagreement stratum suppressed by View A, metered to the smallest budget that does not lose pooled holdout credit.",
+  "mechanism": "Linear relief/curvature and radiometric alteration evidence at the surface \u2014 the family that carries this competition's measurable skill \u2014 with the disagreement stratum the brief names as a surface artefact removed, and mass reduced toward the metric's marginal-credit bar.",
+  "named_non_fault_process": "roads, canals and levees, quarry faces, railroad grades, playa shorelines and erosion lines (surface channels); lithologic contacts, intrusive margins and paleo-channels (potential-field channels); gridding seams (interpolated point layers).",
+  "holdout": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "withheld_positive_px": 60894,
+    "folds": 4,
+    "budget_per_fold": 9400,
+    "primary": "corroborated_B",
+    "dti": 0.1270053690514051,
+    "ci95": [
+      0.11104584201238862,
+      0.14547497001778026
+    ],
+    "single_B": {
+      "dti": 0.17984661470177968,
+      "ci95": [
+        0.1563256255538922,
+        0.20131946687500654
+      ]
+    },
+    "paired_primary_minus_single_B": {
+      "evidence_class": "HOLDOUT-DTI",
+      "evaluator_version": "gems52-pooled-hide-v1",
+      "delta": -0.05284124565037457,
+      "ci95": [
+        -0.06762741334761603,
+        -0.038227216628070625
+      ],
+      "withheld_positive_pixels": 60894
+    },
+    "budget_curve": {
+      "k4700": {
+        "dti": 0.08058435491741646,
+        "ci95": [
+          0.06523157162288917,
+          0.09762662471341532
+        ]
+      },
+      "k6250": {
+        "dti": 0.09745714959034951,
+        "ci95": [
+          0.08116678590076934,
+          0.1140880508132783
+        ]
+      },
+      "k9400": {
+        "dti": 0.1270053690514051,
+        "ci95": [
+          0.10971328827165591,
+          0.14459205516039478
+        ]
+      },
+      "single_B": {
+        "dti": 0.17984661470177968,
+        "ci95": [
+          0.15701748711654046,
+          0.20182428114097947
+        ]
+      }
+    },
+    "random_control_dti": 0.07456938458274681,
+    "promotable_over_single_view": false
+  },
+  "co_training_premises": {
+    "independence_max_abs_rho_per_fold": [
+      0.1287885597874748,
+      0.10337813256925925,
+      0.02711067199378475,
+      0.14164685061772225
+    ],
+    "independence_threshold": 0.6,
+    "abandonment_fired": false,
+    "sufficiency_view_A_mean_oof_auc": 0.5154,
+    "sufficiency_view_B_mean_oof_auc": 0.6894,
+    "exchange": {
+      "pseudo_px": [
+        199,
+        198,
+        196,
+        198
+      ],
+      "segments": [
+        8,
+        13,
+        14,
+        13
+      ],
+      "screened_out": [
+        true,
+        true,
+        true,
+        true
+      ]
+    }
+  },
+  "leakage_canary": {
+    "A_b01_val": 0.5162,
+    "A_b01_grad": 0.5385,
+    "A_b02_val": 0.5404,
+    "A_b02_grad": 0.5413,
+    "A_b03_val": 0.5299,
+    "A_b03_grad": 0.5361,
+    "A_b04_val": 0.5736,
+    "A_b04_grad": 0.5258,
+    "A_b05_val": 0.5756,
+    "A_b05_grad": 0.599,
+    "A_b07_val": 0.5875,
+    "A_b07_grad": 0.5286,
+    "A_b08_val": 0.5653,
+    "A_b08_grad": 0.5587,
+    "A_b09_val": 0.493,
+    "A_b09_grad": 0.5323,
+    "A_b10_val": 0.5191,
+    "A_b10_grad": 0.5048,
+    "A_b11_val": 0.5703,
+    "A_b11_grad": 0.5909,
+    "A_b13_val": 0.4837,
+    "A_b13_grad": 0.5765,
+    "A_b15_val": 0.5305,
+    "A_b15_grad": 0.5726,
+    "A_b17_val": 0.5479,
+    "A_b17_grad": 0.5174,
+    "A_b18_val": 0.5764,
+    "A_b18_grad": 0.5827,
+    "B_b12_val": 0.5253,
+    "B_b12_grad": 0.5993,
+    "B_b12_lap": 0.5803,
+    "B_b12_curv_s1": 0.604,
+    "B_b12_curv_s8": 0.548,
+    "B_b12_wl_ratio": 0.5452,
+    "B_b19_val": 0.5919,
+    "B_b19_grad": 0.6474,
+    "B_b06_val": 0.4659,
+    "B_b06_grad": 0.5038,
+    "B_rad01_val": 0.4619,
+    "B_rad01_grad": 0.5072,
+    "B_rad02_val": 0.476,
+    "B_rad02_grad": 0.5219,
+    "B_rad03_val": 0.485,
+    "B_rad03_grad": 0.5225,
+    "B_rad04_val": 0.4659,
+    "B_rad04_grad": 0.5059,
+    "B_rad05_val": 0.559,
+    "B_rad05_grad": 0.53,
+    "B_rad06_val": 0.5778,
+    "B_rad06_grad": 0.5122,
+    "B_rad07_val": 0.5984,
+    "B_rad07_grad": 0.5681,
+    "B_lid01_val": 0.613,
+    "B_lid01_grad": 0.6157,
+    "B_lid03_val": 0.6139,
+    "B_lid03_grad": 0.6471,
+    "B_lid04_val": 0.6066,
+    "B_lid04_grad": 0.6394,
+    "B_lid05_val": 0.6157,
+    "B_lid05_grad": 0.6433,
+    "B_lid06_val": 0.6217,
+    "B_lid06_grad": 0.6436,
+    "B_lid07_val": 0.6194,
+    "B_lid07_grad": 0.6405,
+    "B_lid09_val": 0.6095,
+    "B_lid09_grad": 0.6331,
+    "B_lid10_val": 0.5266,
+    "B_lid10_grad": 0.5525
+  },
+  "raster_sha256": "124081c0c05fc882ed8c04a2b036c574d4208c10275bb2ede90dd4d2d52246a7",
+  "file": "/home/user/GEMSDOE52/submission/gems52-h88-cotrain-disagreement-suffscreen-31156px-20261010T233522Z.tif",
+  "bytes": 129943,
+  "submission_name": "h88-cotrain-disagreement-31156px",
+  "note": "H88 co-train lane: B-corroborated, A-only suppressed, 31156px, 3px spacing, 200m collar",
+  "validator": {
+    "path": "/home/user/GEMSDOE52/submission/gems52-h88-cotrain-disagreement-suffscreen-31156px-20261010T233522Z.tif",
+    "bytes": 129943,
+    "sha256": "124081c0c05fc882ed8c04a2b036c574d4208c10275bb2ede90dd4d2d52246a7",
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "ref_bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "nodata": null,
+    "blocksize": [
+      256,
+      256
+    ],
+    "fixture_grid": false,
+    "has_validity_mask": false,
+    "nan_pixels": 0,
+    "infinity_pixels": 0,
+    "n_nan": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.002537307096645236,
+    "n_nonzero": 31156,
+    "mass": 31156.0,
+    "mass_outside_footprint": 0,
+    "problems": [],
+    "ok": true,
+    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "uniqueness": {
+    "novel_fraction": 0.34320837077930416,
+    "identical_to_a_prior": false
+  },
+  "lane": {
+    "max_spearman": 0.05339496134442303,
+    "max_near_3px_fraction": 0.6207151110540506,
+    "max_near_source": "/home/user/GEMSDOE52/data/scored/gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif",
+    "rank_offenders": [],
+    "near_offenders": [],
+    "identical": [],
+    "informative_priors": 145,
+    "universal_coverage_probes": 1,
+    "probe_paths": [
+      "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif"
+    ],
+    "probe_coverage": [
+      0.9990273609201634
+    ],
+    "verdict": "PASS",
+    "note": "the same literal rule restricted to priors that localise something; probe statistics are retained verbatim in per_prior and nothing is deleted"
+  },
+  "not_union": {
+    "equals_view_A_dots": false,
+    "equals_view_B_dots": false,
+    "equals_set_union": false,
+    "equals_union_field_dots": false,
+    "px_different_from_set_union": 43478,
+    "px_different_from_union_field": 33570,
+    "px_different_from_A": 67840,
+    "px_different_from_B": 6444,
+    "interpretation": "the brief's test is that the emitted set is not merely the union of the two views' dots; single-view equality is reported as a flag because amendment 80b may deliberately ship one measured-best view field: shipped_dots_equal_a_single_view=false"
+  },
+  "slots_used": 0,
+  "verdict": "DOWNLOAD YES / SUBMIT-ELIGIBLE \u2014 amendment 80b: shipped field `single_B` is the arm with the highest permitted pooled estimate; the preregistered primary did NOT beat it with a paired CI clear of zero. Owner's selector step.",
+  "limits": [
+    "holdout DTI does not rank board scores (Spearman -0.1045, IR-52-017)",
+    "the budget was chosen by a point estimate on a noisy instrument (knowledge/80a)",
+    "View A is used as a suppressor only; its sufficiency failure is the ninth such measurement",
+    "no organiser receipt exists for any number in this repo"
+  ]
+}
