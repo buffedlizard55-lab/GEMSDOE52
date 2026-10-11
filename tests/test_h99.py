@@ -39,10 +39,15 @@ def test_download_is_the_canonical_file_and_the_card_sha():
 
 
 def test_zip_holds_exactly_one_byte_identical_geotiff():
-    with zipfile.ZipFile(ROOT / "docs/downloads/h99-candidate.zip") as z:
-        names = z.namelist()
-        assert len(names) == 1 and names[0].endswith(".tif")
-        assert hashlib.sha256(z.read(names[0])).hexdigest() == SHA
+    canon = CARD["raster"]["file"]
+    for rel in ("docs/downloads/h99-candidate.zip",
+                "docs/downloads/" + canon.replace(".tif", ".zip"),
+                "submission/" + canon.replace(".tif", ".zip")):
+        with zipfile.ZipFile(ROOT / rel) as z:
+            names = z.namelist()
+            # one TIFF, named exactly like the canonical artefact (no stale round ids)
+            assert names == [canon], (rel, names)
+            assert hashlib.sha256(z.read(canon)).hexdigest() == SHA
 
 
 def test_raster_is_the_portal_container_the_validator_reported():
