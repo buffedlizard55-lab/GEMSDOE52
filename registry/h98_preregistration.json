@@ -1,0 +1,62 @@
+{
+ "round": "H98",
+ "preregistered_utc": "2026-10-10T22:30:00+00:00",
+ "frozen_before_any_fit": true,
+ "parent_round": "H97",
+ "lane": "the brief's single method paragraph, second disagreement case: 'Where B is confident and A is not, suspect surface artifacts such as roads or erosion lines'",
+ "hypothesis_document": "knowledge/99_h98_hypotheses_preregistered.md",
+ "runner": "scripts/run_h98_scarp_holdout.py",
+ "lane_precheck": "scripts/check_h98_lane.py",
+ "builder": "scripts/build_h98_submission.py",
+ "prior_belief_disclosed": {
+  "source": "evidence/h97_channel_screen.json (H97 screening; PROXY-INSTRUMENT attribution, explicitly not promotable)",
+  "numbers": {
+   "b_only_B_confident_A_abstains": 0.109480,
+   "band12_DEM_curvature_sigma2_alone": 0.117263,
+   "view_B_rank": 0.095051,
+   "view_A_rank": 0.043752,
+   "random_mean_over_three_seeds": 0.051925
+  },
+  "instrument": "gems52-offcatalogue-prevalence-matched-v1 (SGMC faults >= 300 m from labels, thinned to 14089 px), K = 37654, spacing 3 px, 200 m ring",
+  "why_a_new_round_is_required": "post-hoc arm selection is forbidden in this repository (registry/h82_preregistration.json attribution_arms_not_promotable; AGENTS.md). The arm is therefore frozen here as H98's primary BEFORE any H98 fit, with the screening named as the prior belief and the validation carried out on a DIFFERENT instrument.",
+  "conflict_flagged": "the measured result is the opposite of the brief's stated prior for this case. Both are recorded; neither is deleted. The lane pre-check decides whether a file may ship at all."
+ },
+ "primary_arm": "h98_bonly = B_rank * (1 - A_rank)",
+ "view_definitions_frozen": {
+  "A": "bands 18, 11, 5, 3, 9, 2: percentile-rank of the Gaussian gradient magnitude at sigma 2 px, equal weights (identical to H97, no tuning)",
+  "B": "band 12 detrended elevation curvature magnitude at sigma 2 and 6 px, band 12 gradient magnitude sigma 2, band 19 detrended-slope curvature sigma 2, band 6 in-stack radiometric total count smoothed sigma 4; equal weights (identical to H97)"
+ },
+ "lane_precheck_rule": {
+  "order": "the lane and uniqueness gates run FIRST, on the exact support that would ship; the runner refuses to validate if the pre-check fires",
+  "stop_rule": "the brief's literal rule: STOP if the candidate's rank correlation with any registry raster exceeds 0.90, or if more than 70% of its dots fall within 3 px of any one registry raster's dots",
+  "known_collision_risk": "the DEM/scarp 'dotted ridge' family (h28-dotted-ridge, dotted-h19-5-d1-5 and d2-8, h33-2-b2) is the best-scoring family on the board; if the B-only support reproduces it, the round must stop and log a duplicate instead of shipping"
+ },
+ "validation_instrument": {
+  "name": "gems52-pooled-hide-v1",
+  "why": "it is the repository's pre-registered shared instrument and it was NOT used to choose this arm, so it is an independent check of the screening's prior belief",
+  "folds": "gems52.spatial.folds, label-blind quadrants v2, buffer 80 px, whole components hidden, 200 m collar from the VISIBLE catalogue only",
+  "budget_per_fold": 9400,
+  "arms": ["h98_bonly", "single_B", "random"],
+  "canary_alarm_auc": 0.9
+ },
+ "promotion_rule": "paired 95% CI lower bound of (h98_bonly - random) > 0 on gems52-pooled-hide-v1 AND lane pre-check PASS (not a duplicate) AND canonical uniqueness true; otherwise the round is negative and only the H97 artifact ships",
+ "emission_frozen": {
+  "K_total": 37654,
+  "min_spacing_px": 3.0,
+  "catalogue_ring_excluded_m": 200.0,
+  "values": "binary {0,1}, zeros outside the organiser domain, no nodata tag"
+ },
+ "reasoning_requirement": "only A-only candidates need written geological reasoning under the brief. This arm emits B-only candidates, so the shipped file carries, for every emitted dot, the surface evidence (curvature magnitude and scale), the potential-field quietness that licenses 'A abstains', and an explicit falsifier (a lidar scarp feature on the segment would mean the fault is surface-mappable and probably already catalogued).",
+ "budget": {"experiments": 3, "hours": 2, "submission_slots_allowed": 0},
+ "no_private_fork": true,
+ "shared_tools_to_reuse": [
+  "src/gems52/h97.py (views, unchanged)",
+  "src/gems52/nodes.py::spacing_select",
+  "src/gems52/evaluate_holdout.py",
+  "src/gems52/spatial.py::folds",
+  "src/gems52/gates.py (format_report, uniqueness_report, lane_report, find_priors)",
+  "scripts/build_h97_submission.py::build_reasoning (imported, not copied, with the H98 wording)"
+ ],
+ "expected_board_claim": "none",
+ "inputs_provenance": "integrity-pinned, not organizer-authenticated (registry/data_manifest.json, 23/23 pins, ALL_VERIFIED=True this session)"
+}

@@ -31,6 +31,45 @@ th{color:var(--accent)}
 </style>
 </head>
 <body>
+<!--H97-CARD-->
+<style>.h97card{border:2px solid #4fc3f7;border-radius:12px;padding:16px 18px;margin:14px 0;background:#f4f9fe;color:#14181d;font:15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}.h97card h2{margin:.2rem 0 .5rem;color:#0d3b66;font-size:1.25rem}.h97card p{margin:.45rem 0}.h97card code{background:#e6eef7;padding:1px 5px;border-radius:3px;word-break:break-all}.h97card .no{background:#7f1d1d;color:#fff;padding:3px 10px;border-radius:12px;font-weight:700}.h97card .yes{background:#14532d;color:#fff;padding:3px 10px;border-radius:12px;font-weight:700}.h97card a.button{display:inline-block;background:#0d47a1;color:#fff;font-weight:700;padding:10px 16px;border-radius:7px;margin:6px 8px 6px 0;text-decoration:none}.h97card a.button.secondary{background:#546e7a}</style>
+<section class="h97card">
+<h2>H97 &mdash; co-training disagreement, A-confident / B-abstains (download only)</h2>
+<p><b>OK to download?</b> <span class="yes">YES</span> unique and format-valid.
+<b>OK to submit?</b> <span class="no">NO</span> &mdash; the round&rsquo;s frozen promotion test is
+negative. <b>NO CERTIFIED LEADERBOARD GAIN.</b> Slots used: 0.</p>
+<p>The brief&rsquo;s own lane, measured end to end: View A = potential-field edge family, View B = DEM
+curvature/slope plus the in-stack radiometric band; a cell is emitted only where A is confident and B
+abstains, cover-gated, 3&nbsp;px spacing, 200&nbsp;m ring around the catalogue. Budget came from a
+prevalence-matched off-catalogue instrument, not from the historical 37,654.
+HOLDOUT-DTI <code>0.045947</code> [0.033706, 0.059307] against a matched
+random control <code>0.076551</code>; paired
+<code>-0.030604</code> [-0.043238,
+-0.016560]. Uniqueness passes: novel fraction
+0.6725 over 147 priors. 37,654 dots each
+carry a written geological reason and an explicit falsifier.</p>
+<p><a class="button" href="downloads/gems52-h97-cotrain-disagree-sparse-37654px-20261010T224136Z.tif" download>Download the H97 GeoTIFF &#8595;</a>
+<a class="button secondary" href="downloads/h97-candidate.zip" download>Single-TIFF ZIP</a>
+<a class="button secondary" href="h97-executive-summary.html">H97 executive summary / how to submit</a>
+<a class="button secondary" href="h97.html">H97 round page</a></p>
+<p style="font-size:.86rem">File <code>gems52-h97-cotrain-disagree-sparse-37654px-20261010T224136Z.tif</code> &middot; 125,032 bytes &middot;
+SHA-256 <code>eed99c0b544b1731a4dd2e10c2f4db65a90316e149c3c4a6673256459d95f5f2</code> &middot; name <code>h97-cotrain-sparse-37654px</code> &middot;
+note (117/140): <code>H97 co-train A-conf/B-abstain, 37654px, 3px spacing, 200m ring, budget from prevalence-matched off-cat, zeros-outside</code> &middot;
+<a href="downloads/h97-a-only-reasoning.csv.gz">A-only reasoning CSV</a> &middot;
+<a href="../knowledge/98_h97_results_and_limits.md">knowledge/98 &middot; H97 results and limits</a></p>
+<ul style="margin:.4rem 0 .2rem 20px">
+  <li><a href="h97-executive-summary.html">Executive summary</a> &mdash; one page, download/submit verdict
+  first, then the evidence table.</li>
+  <li><a href="h97.html">H97 round page</a> &mdash; hypothesis, both instruments, the credit curve, and what
+  the round cannot tell you.</li>
+  <li><a href="h98.html">H98 validation page</a> &mdash; the second disagreement case (B confident, A
+  abstains), validated on the same instrument after the off-catalogue screen favoured it:
+  <b>negative</b>, paired against the matched random control; the two instruments disagree in sign and both
+  numbers are published.</li>
+</ul>
+</section>
+<!--/H97-CARD-->
+
 <!--H95-CARD-->
 <style>.h95card{border:2px solid #1f4e79;border-radius:12px;padding:16px 18px;margin:16px 0;background:#f3f7fc;color:#14181d;font:15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}.h95card h2{margin:0 0 8px;font-size:19px;color:#1f4e79}.h95card a{color:#1f4e79;font-weight:700}.h95card code{background:#e8eef4;padding:1px 4px;border-radius:3px;font-size:12.5px;word-break:break-all}</style><div class="h95card"><h2>Latest round H95 — co-trained View B (A→B whole-segment pseudo-labels)</h2><p><b>OK TO DOWNLOAD: YES</b> (format-valid, all-finite, values exactly {0,1}, 37,654 cells). <b>OK TO SUBMIT: NO — research-only, do not upload.</b> Failed gate(s): holdout_promotion, lane_dots_policy. The co-trained field scored 0.1724 on HOLDOUT-DTI, below the promotable best 0.190147 (paired vs single_B CI spans 0). Its dots are also a lane near-duplicate of the parallel H93 file (IR-H95-006). No weekly slot is approved; slots used: 0.</p><p><a href="downloads/h95-candidate.tif" download>Download h95-candidate.tif</a> · <a href="downloads/h95-candidate.zip" download>ZIP</a> · <a href="h95-executive-summary.html">how to submit</a> · <a href="h95.html">full result</a></p><p><small><code>gems52-h95-cotrainB-segthin-37654px-20261010T223522Z-2c3942b4-zeros.tif</code> · SHA-256 <code>28ee81370c9ce1bfb914cc93</code> · HOLDOUT-DTI (gems52-pooled-hide-v1, 53,186 withheld positives): cotrain_B 0.172401 vs single_B 0.174571; first holdout of H87's rule 0.063316 (random 0.079238). A holdout number is not a board score.</small></p></div>
 <!--/H95-CARD-->
