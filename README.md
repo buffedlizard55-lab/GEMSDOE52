@@ -670,6 +670,71 @@ Go ahead and create a pull request and then merge the pull request onto the main
 </details>
 
 <!--/H95-README-->
+
+<!--H97-README-->
+# This session's round — H97 (artifact) and H98 (validation), 2026-10-11
+
+**Branch:** `arena/4cdd8084-gemsdoe52` · **Round-number lineage:** this pair was written as H88/H89,
+renumbered H93/H94 when those labels went to parallel sessions, and renumbered **H97/H98** for the same
+reason. Every receipt, page, hash and byte count below belongs to this pair; no number *inside* any
+receipt changed during a rename.
+
+## ⬇️ The file — and whether it is OK to submit it
+
+> ### 🚫 DOWNLOAD ONLY — do not spend a submission slot on it.
+> **OK to download?** Yes: `gems52-h97-cotrain-disagree-sparse-37654px-20261010T224136Z.tif` is
+> format-valid (single-band float32, EPSG:32611, 3730×3292 at 100 m, exactly
+> 37,654 cells at 1.0 and zeros elsewhere, every pixel finite in [0, 1], no nodata
+> tag — so the portal's rule "Predicted values must be in range [0, 1]" cannot fail on it) and unique
+> (novel fraction 0.6725 against 147 priors;
+> lane policy PASS).
+> **OK to submit?** No: the round's frozen promotion rule failed. Hide-and-recover DTI
+> **0.045947** [0.033706, 0.059307] against a matched random control
+> 0.076551; paired **-0.030604**
+> [-0.043238, -0.016560] — the interval lies wholly below zero.
+> **NO CERTIFIED LEADERBOARD GAIN from this file.** `approved_for_weekly_slot = false`, slots used 0.
+
+* **File:** [docs/downloads/gems52-h97-cotrain-disagree-sparse-37654px-20261010T224136Z.tif](docs/downloads/gems52-h97-cotrain-disagree-sparse-37654px-20261010T224136Z.tif) ·
+  [ZIP](docs/downloads/h97-candidate.zip) · SHA-256 `eed99c0b544b1731a4dd2e10c2f4db65a90316e149c3c4a6673256459d95f5f2` (125,032 bytes)
+* **Submission name / note (≤140 chars):** `h97-cotrain-sparse-37654px` ·
+  `H97 co-train A-conf/B-abstain, 37654px, 3px spacing, 200m ring, budget from prevalence-matched off-cat, zeros-outside` (117 chars)
+* **Per-dot reasoning:** [docs/downloads/h97-a-only-reasoning.csv.gz](docs/downloads/h97-a-only-reasoning.csv.gz)
+  — 37,654 rows, one written geological reason and one explicit falsifier per dot
+
+## What the two rounds measured
+
+| round | arm | pooled HOLDOUT-DTI | paired vs matched random |
+|---|---|---|---|
+| H97 | `h97_disagree` — A confident, B abstains (the brief's lane) | 0.045947 [0.033706, 0.059307] | **-0.030604** [-0.043238, -0.016560] |
+| H98 | `h98_bonly` — B confident, A abstains (the off-catalogue screen's favourite) | 0.058435 [0.043370, 0.075525] | **-0.018885** [-0.030936, -0.007620] |
+
+Matched random control on the same instrument: H97 0.076551, H98 0.077320
+(`gems52-pooled-hide-v1`, 60,894 withheld positives, 4 folds, 80 px buffer).
+
+**The one finding worth keeping:** the same pre-registered arm scores **+0.057555** above matched random on
+the off-catalogue screen that selected it and **-0.018885** on the pooled hide-and-recover
+instrument (0.058435 against random 0.077320) — the truth population, not the method, sets the
+sign. Both numbers are published together (`registry/irregularities.json` IR-H97-004); neither is averaged
+and neither is quoted alone.
+
+## Receipts and honesty notes
+
+* `evidence/h97_{holdout,channel_screen,credit_curve,build,run_card,lane_dots,a_only_segments}.json` ·
+  `evidence/h98_{lane_precheck,holdout}.json`
+* Pre-registration: `registry/h97_preregistration.json`, `registry/h98_preregistration.json` (both frozen
+  before their own fit; the withdrawn first H97 draft is disclosed inside the file, not deleted).
+* Hypotheses and limits: `knowledge/97`, `knowledge/98` (H97), `knowledge/99`, `knowledge/100` (H98).
+* Irregularities filed: **IR-H97-001 … IR-H97-006**, **IR-H98-001** in
+  `registry/irregularities.json` — including the two defects found by manual review of the reasoning CSV
+  (pixel indices used as projected coordinates; the lidar *coverage* band published under a scarp name),
+  both fixed before publication with the raster bytes unchanged.
+* Neither instrument measures the organiser's scored population. Nothing here is an organizer-confirmed
+  score; every figure is either HOLDOUT-DTI (labelled with evaluator, withheld positives and CI) or copied
+  from a receipt.
+
+---
+<!--/H97-README-->
+
 <div style="background:#f3f8f2;border:1px solid #9dc39a;color:#123d17;padding:12px 16px;margin:12px 0;border-radius:8px;font:15px/1.5 sans-serif"><strong>Round H87 board-score inversion (a DIFFERENT round from the H87 co-train-wavelength, H88 and H95 rounds already on main, and from H84, H85 and H86): DOWNLOAD YES, SUBMIT NO.</strong> Inverted 13 owner-reported public-board scores through the metric&rsquo;s exact linear form: hidden truth mass <b>|G| = 14,333.8</b> (third independent pin; H67 14,088.7, lattice 12,367), leave-one-out score MAE <b>0.02007</b>, Spearman <b>0.9436</b>. The mass lands on <b>family consensus 9,937.8 (69.3%)</b> and <b>catalogue 4,396.0 (30.7%)</b>; <b>every physical, external and disagreement basis got weight zero</b> (a 13-basis fit returned the identical solution). Dots placed by the metric&rsquo;s own marginal rule (add iff exact marginal credit c &gt; 0.2&middot;DTI), a shared tested tool <code>gems52.nodes.marginal_greedy</code> &mdash; budget derived, not chosen: <b>61,427 cells</b>, binary 0/1. Uniform-truth control self-terminates at 5.373 px and predicts <b>0.10007</b> where the pinned organiser-side lattice raster is OWNER-REPORTED at <b>0.0904</b> (+10.7%). HOLDOUT-DTI (gems52-pooled-hide-v1, 60,894 withheld): <b>0.104228 [0.084119, 0.124875]</b> vs random <b>0.075375 [0.067081, 0.083962]</b>; paired <b>+0.028853 [+0.014804, +0.043810]</b> excludes zero, but fold 0 loses (0.003118 vs 0.041666) and the holdout incumbent is not beaten. PREDICTED-BOARD on three truth realisations: candidate 0.19841 vs the 0.2778 champion 0.23948 (paired -0.04107) &mdash; worse than the file that already scored 0.2778. Decoded-pixel uniqueness PASSES vs 142 local priors (novel fraction 0.3558, max Jaccard 0.0719). <b>IR-H87-001:</b> the 13 owner-scored rasters&rsquo; 3 px halos cover <b>108.6%</b> of the footprint, so the literal lane rule is unsatisfiable for ANY non-empty emission here (random control near-3px 0.99901 vs candidate 0.99920); reported, not waived. <b>IR-H87-002:</b> lane scoped to the owner-scored registry; the four full-inventory lane passes did not fit the two-hour budget. Slots used: 0. <a href="docs/downloads/h87-candidate.tif">Download H87 GeoTIFF</a> &middot; <a href="docs/h87-executive-summary.html">H87 executive summary</a> &middot; <a href="knowledge/82_h87_board_inversion_2026-10-10.md">knowledge/82</a>. Not ORGANIZER-CONFIRMED.</div>
 
 
