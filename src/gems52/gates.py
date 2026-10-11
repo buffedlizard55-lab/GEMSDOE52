@@ -319,6 +319,13 @@ PROBE_COVERAGE = 0.95      # a prior whose 3 px halo covers >=95% of eligible pi
 NEAR_RADIUS_PX = 3.0       # the brief's "within 3 px"
 RANK_LIMIT = 0.90
 NEAR_LIMIT = 0.70
+LIFT_LIMIT = 2.0           # near-fraction / the prior's own 3 px coverage: >2 means a concentration
+                           # the prior's own coverage cannot explain; <=1 means the candidate is no
+                           # closer to that prior than a uniformly scattered dot set would be.
+                           # A lift is only meaningful *jointly* with the raw rule: a prior with a
+                           # tiny footprint can show a large lift from a handful of coincidences, so
+                           # an offender must trip the raw rule AND survive normalisation
+                           # (H97 repair, IR-H97-006).
 
 
 def _disk(radius_px: float):
@@ -347,7 +354,8 @@ def registry_coverage(prior_support: np.ndarray, eligible: np.ndarray,
 
 def lane_report(candidate, eligible, priors, *, sample, phase="dots",
                 rank_limit=RANK_LIMIT, near_limit=NEAR_LIMIT, radius_px=NEAR_RADIUS_PX,
-                probe_coverage=PROBE_COVERAGE, log=None, coverage_cache=None):
+                probe_coverage=PROBE_COVERAGE, lift_limit=LIFT_LIMIT, log=None,
+                coverage_cache=None):
     """Literal lane statistics for every prior + a measured universal-coverage-probe policy.
 
     Two verdicts are returned side by side and neither replaces the other:
@@ -435,6 +443,12 @@ def lane_report(candidate, eligible, priors, *, sample, phase="dots",
                        constant_prior=rho is None, prior_proposals=int(proposal.sum()),
                        prior_support_rule=">0 for binary; >=0.5 for continuous (shared template)",
                        coverage_3px_of_eligible=cov,
+                       # Coverage normalisation (H97 repair, IR-H97-006): a prior whose own 3 px
+                       # dilation already covers a large fraction of the footprint makes the raw
+                       # near-fraction uninformative.  `lift` = observed / that coverage; a lift of
+                       # <= 1 means the candidate is no closer than uniform scatter would be.
+                       near_3px_lift=(float(near / cov) if (near is not None and cov and cov > 0)
+                                      else None),
                        universal_coverage_probe=bool(cov >= probe_coverage),
                        near_3px_fraction=near, candidate_dots=n_dots,
                        rank_duplicate=bool(rho is not None and rho > rank_limit),
@@ -452,13 +466,27 @@ def lane_report(candidate, eligible, priors, *, sample, phase="dots",
         rk = [r["spearman"] for r in pool if r.get("spearman") is not None]
         nr = [(r["near_3px_fraction"], r["path"]) for r in pool
               if r.get("near_3px_fraction") is not None]
+        # A lift is only reported as an offender when the *raw* rule also fires: with a tiny
+        # footprint, a handful of coincidences produces a large ratio (measured: 41 of 25,400 dots
+        # against a 0.00012-coverage prior gives lift 13.1 and means nothing).
+        lf = [(r["near_3px_lift"], r["path"], r["near_3px_fraction"], r["coverage_3px_of_eligible"])
+              for r in pool if r.get("near_3px_lift") is not None and r.get("near_duplicate")]
         return (max(rk) if rk else None,
                 max(nr)[0] if nr else None,
                 max(nr)[1] if nr else None,
                 [r["path"] for r in pool if r.get("rank_duplicate")],
-                [r["path"] for r in pool if r.get("near_duplicate")])
-    lit_rho, lit_near, lit_near_src, lit_rank_off, lit_near_off = _agg(measured)
-    pol_rho, pol_near, pol_near_src, pol_rank_off, pol_near_off = _agg(informative)
+                [r["path"] for r in pool if r.get("near_duplicate")],
+                max(lf) if lf else None,
+                [r["path"] for r in pool if r.get("near_duplicate")
+                 and (r.get("near_3px_lift") or 0.0) > lift_limit],
+                [r["path"] for r in pool if r.get("near_duplicate")
+                 and (r.get("near_3px_lift") or 0.0) <= lift_limit],
+                sum(1 for r in pool if not r.get("near_duplicate")
+                    and (r.get("near_3px_lift") or 0.0) > lift_limit))
+    (lit_rho, lit_near, lit_near_src, lit_rank_off, lit_near_off, lit_lift, lit_lift_off,
+     lit_cov_explained, lit_high_lift_low_overlap) = _agg(measured)
+    (pol_rho, pol_near, pol_near_src, pol_rank_off, pol_near_off, pol_lift, pol_lift_off,
+     pol_cov_explained, pol_high_lift_low_overlap) = _agg(informative)
     identical = [r["path"] for r in measured if r.get("identical")]
     errors = [r for r in rows if "error" in r]
     verdict_policy = bool(pol_rank_off or pol_near_off or identical)
@@ -467,6 +495,15 @@ def lane_report(candidate, eligible, priors, *, sample, phase="dots",
         evidence_class="uniqueness/lane diagnostic, not a score",
         rule=f"STOP at Spearman > {rank_limit} or directed <= {radius_px:g} px dot proximity "
              f"> {near_limit}; probes classified by measured coverage >= {probe_coverage:g}",
+        coverage_normalization=(
+            "the raw near-fraction is not interpretable without the prior's own coverage: a prior "
+            f"whose {radius_px:g} px dilation covers a large part of the footprint makes any dot set "
+            "'near' it. `max_near_3px_lift` = near-fraction / coverage (>1 = closer than uniform "
+            f"scatter); `lift_offenders` are the priors with lift > {lift_limit:g}. The verdicts above "
+            "are unchanged and remain the frozen rule (H97 repair, IR-H97-006). An offender must "
+            "trip the raw rule *and* show lift above the limit; priors with lift above the limit but "
+            "a raw fraction below it are counted separately as `high_lift_low_overlap` because they "
+            "are coincidence, not duplication."),
         priors_checked=len(rows), distinct_decoded_priors=len(seen),
         candidate_decoded_sha256=decoded, rank_pixels=n,
         exact_full_eligible_rank=True, binary_spearman_method="analytic phi (mid-rank affine)",
@@ -474,11 +511,25 @@ def lane_report(candidate, eligible, priors, *, sample, phase="dots",
         literal=dict(max_spearman=lit_rho, max_near_3px_fraction=lit_near,
                      max_near_source=lit_near_src, rank_offenders=lit_rank_off,
                      near_offenders=lit_near_off, identical=identical,
+                     max_near_3px_lift=(lit_lift[0] if lit_lift else None),
+                     max_lift_source=(lit_lift[1] if lit_lift else None),
+                     max_lift_near_fraction=(lit_lift[2] if lit_lift else None),
+                     max_lift_coverage=(lit_lift[3] if lit_lift else None),
+                     lift_offenders=lit_lift_off,
+                     coverage_explained_near=lit_cov_explained,
+                     high_lift_low_overlap=lit_high_lift_low_overlap,
                      verdict="DUPLICATE/STOP" if (lit_rank_off or lit_near_off or identical) else "PASS",
                      note="applied to every aligned prior including universal-coverage probes"),
         policy=dict(max_spearman=pol_rho, max_near_3px_fraction=pol_near,
                     max_near_source=pol_near_src, rank_offenders=pol_rank_off,
                     near_offenders=pol_near_off, identical=identical,
+                    max_near_3px_lift=(pol_lift[0] if pol_lift else None),
+                    max_lift_source=(pol_lift[1] if pol_lift else None),
+                    max_lift_near_fraction=(pol_lift[2] if pol_lift else None),
+                    max_lift_coverage=(pol_lift[3] if pol_lift else None),
+                    lift_offenders=pol_lift_off,
+                    coverage_explained_near=pol_cov_explained,
+                    high_lift_low_overlap=pol_high_lift_low_overlap,
                     informative_priors=len(informative),
                     universal_coverage_probes=len(probes),
                     probe_paths=[r["path"] for r in probes],

@@ -1,0 +1,264 @@
+{
+ "runner_and_receipt_hashes": {
+  "scripts/h97_irregularities.py": "f813baf6f8565906cde40042d8e2e7105deda120c12aa9adc163062530e18bad",
+  "scripts/h97_supplemental_closure.py": "fb41f5684ea5bf54d6e35a148de8da84058c116f323fe41cc4e9dff4a6cb52d3",
+  "scripts/publish_h97_site.py": "e132dea79fe0e3b1917f60c2ff6b4f4bb8cfd0bfe546cd836c095bdf7bf1873a",
+  "scripts/run_h97_thermal_gap.py": "720fbed00b1cd644366aef095572dfcafb7056d23e64f7896d73de2c4e7fe434",
+  "src/gems52/__init__.py": "bdce6142b45c33a87cb923942f02ae4bf184171a4761b86aaad94c3a298fcf0c",
+  "src/gems52/azimuth.py": "1d446f22863506320e01f31c52d70eb826a279dd6128de2d8406872074ad7630",
+  "src/gems52/cotrain.py": "99604a3af4389978d0b6d2aaa03259d35559b440cc5bf1e99479c554cf08b74b",
+  "src/gems52/dicoincidence.py": "9084f505551454d7b62fd32a6529efdd3292a43971381cb16b7a14c3a71461be",
+  "src/gems52/emit.py": "1279da9fe8c35cfc733c767cebcf7be8141255f659986b950417a096a16659c9",
+  "src/gems52/evaluate_holdout.py": "e4211fe530ccb8f1ffeab2ef2f8e94a563492c2a3644c908d1a81e379fcbd9d4",
+  "src/gems52/external.py": "0fd5005ae80ce0d27f9a169c9a83775a1c50d44b15acdd2409c2dce365ddcb16",
+  "src/gems52/features.py": "0372c5e662cde1b163c9acb977efd40c6e095a77877a0192ccc4d77711b636d6",
+  "src/gems52/gates.py": "370f13d353afa79031a9e88765097cebc5325451299d9601567d80bb2e92ee46",
+  "src/gems52/grid.py": "40966e7c56992e1bbd28716926564d668d08fcf0014b0214382093b1d332b496",
+  "src/gems52/h55.py": "a76d934a9eb6bde4782c2c3ca62abdc843bd4c834b8c839a8e0490364c1cf665",
+  "src/gems52/h55_paired_shoulders.py": "16538a7903808142e338ea79564d119083259db0519d6e9cb4f1c9b76bdcc619",
+  "src/gems52/h57.py": "729a762345dd722a983d86dc737173850b8a85ad50a6291d93349932f1c9ff65",
+  "src/gems52/h58.py": "f8cfc7ea451c45e7e33a93ef6dea9ebb63165ed1395d63d0f3fad8fce7e63e23",
+  "src/gems52/h59.py": "96a98ac6669235355e7b957b0ccc63ad9187fd20fed6bb2b3694930a28430c19",
+  "src/gems52/h60.py": "d73c7ff030a124c6f448ab2253cf5c2e24b8593dbd9cbdcf8bcc144ec5ecfe2c",
+  "src/gems52/h60d.py": "2c8a849c09efd41b3cb401f092c669c3a8a614b9effa11ae52efc93f2b5373fc",
+  "src/gems52/h62.py": "166d3e4c9749a0f4bda704cd7b07034bfbb03949132132df5238192e03cee64c",
+  "src/gems52/h63.py": "8a95788f6fed2fe45ff1f7d0c3373e547f28da59ead4e24e12745208bc58b85e",
+  "src/gems52/h66.py": "e64737459f1981407c3e5ccce42eee70c155baaefebb147d5d8831b7f3a4be5b",
+  "src/gems52/h74.py": "8a8436b3791081289d989c49039f230d22084cdee433addec01faa4a41b8f4c9",
+  "src/gems52/holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+  "src/gems52/metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+  "src/gems52/nodes.py": "67d5dc36178625c0bd4f253c867483d57a8208506d218866271c7d10c3733786",
+  "src/gems52/revealed.py": "23463478ab380bb80c12a748e49179769f1313a6633e59fe9a2657835d58bdd7",
+  "src/gems52/spatial.py": "fad7b09db9efc512247b9a176a7e7ce8631e287592b4e07902d0b9c38bed00f8",
+  "src/gems52/structural.py": "9f1dc2710d15bb41109a9f0af926b100a100604672b2b77b45f2e0d7c4e29f50",
+  "src/gems52/structure.py": "88539d8da922080b7770247c9cea4dc4b44030122e39261030f21b87792eb103",
+  "src/gems52/submission_writer.py": "528f367a0da11c824dd9f975e7d2eb0a1d8214bc36995aca04c79c48f345335c",
+  "src/gems52/transform.py": "58925a52bd84667603c87c44657319cefaa995485783c9381abee82de242e23d",
+  "src/gems52/views54.py": "621065331129acb11ccd8591b203cd6b437e003142ed46a533f241da4132fa8a"
+ },
+ "receipts": {
+  "h97_build_pre.json": {
+   "sha256": "1ccf8477b181464946d60cb75a99a96984642363df723249b948d38d8b673879",
+   "bytes": 10439
+  },
+  "h97_gates.json": {
+   "sha256": "2855d0e3f3e8741fa9ca764201c85f5eda7ded03b7a09ad6830d6d99830e81df",
+   "bytes": 6963
+  },
+  "h97_holdout.json": {
+   "sha256": "c2da639dc36f876b204293f9ce70d83fd8797aca591058706c6832310b3a5f13",
+   "bytes": 600258
+  },
+  "h97_lane_dots.json": {
+   "sha256": "bcd2245952702638182db67380d1be77774c1a80080be2340cecdcdb7c461264",
+   "bytes": 149139
+  },
+  "h97_lane_surface.json": {
+   "sha256": "0fb2e8bffb5cdd209c6cb744137c2c23e8f7c10e75212f3ebf865dc1eb488c8c",
+   "bytes": 144348
+  },
+  "h97_offcat.json": {
+   "sha256": "2e02be210e9097d8f40bfd2363fa98286efa3d51d8713428d00aa2683876a36c",
+   "bytes": 12603
+  },
+  "h97_run_card.json": {
+   "sha256": "bc89de5db82b204dfcceb27f76e4dfd84de88688b7cec28b7a5773688e8ce393",
+   "bytes": 594882
+  },
+  "h97_uniqueness.json": {
+   "sha256": "d769411e6b1541b7151598a9830898a7efa132641f038077bd385577a2694dd9",
+   "bytes": 99309
+  },
+  "h97_views.json": {
+   "sha256": "10b6d847307e0642bee4169abfbaad70ff1781c59f3efa62824d20e366f3d7b4",
+   "bytes": 10049
+  }
+ },
+ "census_identity": {
+  "artifact_file_sha256": "939d69ac3357ba7d69058c8163667830a4f79fcb8d1c30be1a8a1b0ddf80912d",
+  "artifact_decoded_sha256": "44f30af5b5ac3a5811429cefd9461cbfc426551f2be7f81cf65d469dc650fa68",
+  "census_entries": 526,
+  "census_eligible": 524,
+  "census_distinct_sha256": 526,
+  "matches_census_file_or_decoded_sha": false,
+  "note": "metadata-only: a False here proves the file is not any censused blob byte-for-byte (file or decoded band); it does not prove pixel-level novelty, which job 3 measures against the materialised pixels"
+ },
+ "supplemental_census_closure": {
+  "n_priors": 526,
+  "novel_fraction": 0.0,
+  "identical_to_a_prior": false,
+  "distinct_from_every_comparable_prior": true,
+  "incomparable": [
+   "a97c7b2a513225c9f9f2b35736afe5abf4d2a491.tif"
+  ],
+  "max_jaccard": [
+   0.017279970429997127,
+   "2e8651d8a8c28696e635b479cb1bbf7cf8283d23.tif"
+  ],
+  "lane_dots_literal": "DUPLICATE/STOP",
+  "lane_dots_policy": "DUPLICATE/STOP",
+  "lane_dots_policy_max_near_3px": 0.8322047244094488,
+  "lane_dots_policy_max_near_source": "/home/user/GEMSDOE52/work/h95/priors/c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+  "lane_dots_probes": [
+   "/home/user/GEMSDOE52/work/h95/priors/1102512580ae652c866e0cf5754afd1531fac952.tif",
+   "/home/user/GEMSDOE52/work/h95/priors/1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+   "/home/user/GEMSDOE52/work/h95/priors/35616cbb48ac3533dd4c957b8acca57f71ba365f.tif",
+   "/home/user/GEMSDOE52/work/h95/priors/3d3ee66300203bdc878f3a052caabde671daf042.tif",
+   "/home/user/GEMSDOE52/work/h95/priors/4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+   "/home/user/GEMSDOE52/work/h95/priors/51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+   "/home/user/GEMSDOE52/work/h95/priors/5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+   "/home/user/GEMSDOE52/work/h95/priors/5c1a159439735522659ee78969df3f34efddcdde.tif",
+   "/home/user/GEMSDOE52/work/h95/priors/81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+   "/home/user/GEMSDOE52/work/h95/priors/ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+   "/home/user/GEMSDOE52/work/h95/priors/c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+   "/home/user/GEMSDOE52/work/h95/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+   "/home/user/GEMSDOE52/work/h95/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+   "/home/user/GEMSDOE52/work/h95/priors/f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif"
+  ],
+  "lane_surface_literal": "PASS",
+  "lane_surface_max_spearman": 0.033997194881143236,
+  "top_near": [
+   [
+    1.0,
+    "cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+    1.0
+   ],
+   [
+    1.0,
+    "c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+    0.9972862419647275
+   ],
+   [
+    1.0,
+    "5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+    1.0
+   ],
+   [
+    1.0,
+    "51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+    1.0
+   ],
+   [
+    1.0,
+    "4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+    0.9999994194342077
+   ]
+  ],
+  "max_near_3px_lift": 1.0028706372706389,
+  "max_lift_source": "/home/user/GEMSDOE52/work/h95/priors/d89695181cadd18a7284241c571af6f82671bf6d.tif",
+  "max_lift_coverage": 0.988265410683533,
+  "lift_offenders": [],
+  "coverage_explained_near": [
+   "0d3a7e80c288ed103f8431f28270927c39fdabb2.tif",
+   "1102512580ae652c866e0cf5754afd1531fac952.tif",
+   "1edd83ef3eb73289f0c73c21c0422df469f091aa.tif",
+   "2f15909f6c2e60ce41d849af5085ee8fe79dd221.tif",
+   "32a4a6d2d4df8ef8e880120f36d2a4d94f134f8a.tif",
+   "35616cbb48ac3533dd4c957b8acca57f71ba365f.tif",
+   "3d3ee66300203bdc878f3a052caabde671daf042.tif",
+   "437245c53c1f622da78a70b0047482b6f7ecd4a7.tif",
+   "443e8e1c799734facd50a92bc85c650f3857a2b6.tif",
+   "4e50a598eae16b3c098ca2653542dc142f1da8a8.tif",
+   "4ed175911c1537cd7690bf54f01d8920ac7fceba.tif",
+   "51dfff6d3e57497ab4eb5bbe9362303115833730.tif",
+   "5b7d2fe254a81674793ad5b3a9947a493da02e68.tif",
+   "5c1a159439735522659ee78969df3f34efddcdde.tif",
+   "5cdc640149fb5d9ff5a4cadee7216ff73173f232.tif",
+   "81c802618e6d46c6d62289d856ae74439439bbc6.tif",
+   "ab7e0752036d020fbc394a528bbe63171c3cb08f.tif",
+   "ba3de6dbc61ffbe1750590ab7c501f8805193903.tif",
+   "bae1d98134860d10ef25c2ea49c8f620091ab8ac.tif",
+   "c34205e19ca635df5d9c3d8aba6959b5514c47ef.tif",
+   "c7ff25e34715a58e9ba098ac03411e7e25dac9fd.tif",
+   "cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+   "d89695181cadd18a7284241c571af6f82671bf6d.tif",
+   "f77b8df0c589269ac416ca06f5d93751a4f2da5a.tif",
+   "fdd931161c431a583cf7039362e51832e59d07ad.tif"
+  ],
+  "high_lift_low_overlap": 31,
+  "top_lift": [
+   [
+    13.073722817367267,
+    "1d65fa2f98bc4a45dafab1e1180041f2ccadb895.tif",
+    0.0016141732283464568,
+    0.0001234669918351162,
+    false
+   ],
+   [
+    3.8161088446002114,
+    "2e8651d8a8c28696e635b479cb1bbf7cf8283d23.tif",
+    0.16086614173228347,
+    0.042154495137084164,
+    false
+   ],
+   [
+    3.1199397660796295,
+    "eb3a047fcda495867d7cc3b0e5a22f906ad4e195.tif",
+    0.004960629921259842,
+    0.0015899761832559793,
+    false
+   ],
+   [
+    3.1199397660796295,
+    "6b230be4c06cc176014f717fb87ff85b4c58d5a4.tif",
+    0.004960629921259842,
+    0.0015899761832559793,
+    false
+   ],
+   [
+    2.9471409179174137,
+    "49428bb4cd652cfffd0db247c1ad5b2f96b317bb.tif",
+    0.31417322834645667,
+    0.10660271669956863,
+    false
+   ]
+  ],
+  "coverage_normalization": "the raw near-fraction is not interpretable without the prior's own coverage: a prior whose 3 px dilation covers a large part of the footprint makes any dot set 'near' it. `max_near_3px_lift` = near-fraction / coverage (>1 = closer than uniform scatter); `lift_offenders` are the priors with lift > 2. The verdicts above are unchanged and remain the frozen rule (H97 repair, IR-H97-006). An offender must trip the raw rule *and* show lift above the limit; priors with lift above the limit but a raw fraction below it are counted separately as `high_lift_low_overlap` because they are coincidence, not duplication."
+ },
+ "supplemental_disk_closure": {
+  "n_priors": 193,
+  "literal_verdict": "DUPLICATE/STOP",
+  "policy_verdict": "DUPLICATE/STOP",
+  "policy_max_near_3px": 0.8748818897637796,
+  "policy_max_near_source": "/home/user/GEMSDOE52/submission/gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif",
+  "max_near_3px_lift": 10.850973418511222,
+  "max_lift_source": "/home/user/GEMSDOE52/submission/gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif",
+  "max_lift_near_fraction": 0.8748818897637796,
+  "max_lift_coverage": 0.08062704201922331,
+  "lift_offenders": [
+   "gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif",
+   "gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif",
+   "h96-candidate.tif"
+  ],
+  "coverage_explained_near": [
+   "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif"
+  ],
+  "high_lift_low_overlap": 24,
+  "top_lift": [
+   [
+    10.850973418511222,
+    "h96-candidate.tif",
+    0.8748818897637796,
+    0.08062704201922331
+   ],
+   [
+    10.850973418511222,
+    "gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif",
+    0.8748818897637796,
+    0.08062704201922331
+   ],
+   [
+    10.850973418511222,
+    "gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif",
+    0.8748818897637796,
+    0.08062704201922331
+   ],
+   [
+    0.9902111395976565,
+    "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    0.9889370078740157,
+    0.9987132726822701
+   ]
+  ]
+ }
+}

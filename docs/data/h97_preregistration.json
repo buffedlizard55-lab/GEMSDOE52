@@ -1,0 +1,95 @@
+{
+  "id": "H97",
+  "frozen_utc": "2026-10-10T23:20:00+00:00",
+  "frozen_before_any_fit": true,
+  "session_branch": "arena/86f85e87-gemsdoe52",
+  "document": "knowledge/97_hypotheses_H97_preregistered.md",
+  "lane": "co-training between a geophysical view (View A) and a surface view (View B), with disagreement as the discovery signal (Blum & Mitchell, COLT '98, pp. 92-100, doi:10.1145/279943.279962)",
+  "hypothesis": "Thermal-gap hypothesis: a hot spring / high-geothermometry well that the VISIBLE fault catalogue cannot explain (distance to the nearest visible catalogue fault > 3 px = 300 m) is surface evidence of a fault that is absent from that catalogue. Co-training gates the emission: the candidate is accepted where View A (potential-field / subsurface) is confident about structure and View B (surface) abstains, which is the standing brief's A-only 'buried fault' population; the reverse disagreement (B confident, A abstains) is vetoed as a surface artefact.",
+  "why_new": "The GDR 1391 INGENIOUS well/spring catalogue (sha-pinned in registry/data_manifest.json) has been used in this repository only as smooth DISTANCE channels (B_spring_dist, B_paleo_geotherm_dist, H58 cold-geothermometer field, H55/H57/H86 thermal priors). It has never been used as a per-site EXISTENCE test against the visible catalogue, which is the mechanism registered here. The measured motivation is in knowledge/97: only 23.3 % of hot sites (temp_c >= 30 C) lie within 300 m of labels.tif, against roughly 14 % expected for uniformly scattered points over the same footprint, and the file's own dist_known_fault_px column equals the distance to labels.tif exactly (Pearson 1.0000, re-measured this session).",
+  "inputs": {
+    "catalogue": "data/labels.tif (class 1)",
+    "footprint": "19-band finite intersection of data/training_features.tif, intersected with the finite domain of data/sample_submission.tif",
+    "thermal": "data/external/gdr_wellspring_in_footprint.csv (27,092 rows, sha256 122718e65bdf55aa…), deduplicated on (row, col)",
+    "off_catalogue_truth": "data/external/derived_sgmc_faults_100m_u8.tif, restricted to pixels > 3 px from labels.tif",
+    "views_reused_not_forked": "gems52.spatial.folds, gems52.evaluate_holdout (gems52-pooled-hide-v1), gems52.nodes.spacing_select, gems52.emit.greedy_emit (diagnostic), gems52.metric, gems52.gates, gems52.submission_writer"
+  },
+  "thermal_evidence_rule": {
+    "site_is_evidence": "temp_c >= 30 OR geothermquartz_c >= 100 OR geothermcat_c >= 100",
+    "dedup": "unique (row, col)",
+    "gap_definition_fold": "distance to the fold's VISIBLE catalogue > 3 px",
+    "gap_definition_ship": "distance to the FULL catalogue > 3 px"
+  },
+  "view_A": {
+    "components": [
+      {"name": "grav_hg", "source": "training_features.tif band 18 iso_grav_anom_hg", "transform": "abs"},
+      {"name": "mag_hg", "source": "training_features.tif band 3 tmi_hg", "transform": "abs"},
+      {"name": "cover_step", "source": "training_features.tif band 15 depth_to_base_surf", "transform": "gaussian_gradient_magnitude sigma=2px"},
+      {"name": "seis_line", "source": "training_features.tif band 10 deq_n100a15", "transform": "gaussian_gradient_magnitude sigma=2px"},
+      {"name": "strain_step", "source": "training_features.tif band 7 geod_shearrate", "transform": "gaussian_gradient_magnitude sigma=2px"},
+      {"name": "mag_vg", "source": "training_features.tif band 9 tmi_vg", "transform": "abs"},
+      {"name": "cond", "source": "training_features.tif band 17 cond_surf", "transform": "identity"}
+    ],
+    "weights": {"grav_hg": 0.22, "mag_hg": 0.18, "cover_step": 0.22, "seis_line": 0.13, "strain_step": 0.10, "mag_vg": 0.10, "cond": 0.05}
+  },
+  "view_B": {
+    "components": [
+      {"name": "slope", "source": "training_features.tif band 19 det_elev_slope", "transform": "identity"},
+      {"name": "ridge_curv", "source": "training_features.tif band 12 det_elev", "transform": "abs(min hessian eigenvalue) sigma=1.5px"},
+      {"name": "topo_edge", "source": "training_features.tif band 12 det_elev", "transform": "gaussian_gradient_magnitude sigma=1.5px"},
+      {"name": "K_over_Th", "source": "data/external/geodawn_rad_u8.tif band 1 K / band 2 Th", "transform": "K/(Th+eps), rank"},
+      {"name": "tc", "source": "training_features.tif band 6 (radiometric total count by bytes, IR-52-019)", "transform": "identity"}
+    ],
+    "weights": {"slope": 0.25, "ridge_curv": 0.30, "topo_edge": 0.20, "K_over_Th": 0.15, "tc": 0.10}
+  },
+  "field": {
+    "consensus": "a*b",
+    "buried": "a*clip(a-b,0,1)",
+    "artefact": "clip(b-a,0,1)",
+    "veto": "rank01(artefact) on positive support only (amendment form)",
+    "shipped_field": "(0.45*consensus + 0.55*buried) * (1 - 0.70*veto)"
+  },
+  "experiments": {
+    "E1_hide_and_recover": {
+      "instrument": "gems52-pooled-hide-v1 (whole-component label-blind quadrants, buffer_px=80, visible catalogue masked pixel-exact)",
+      "arms": ["thermal_gap_cotrain (PRIMARY)", "thermal_gap", "thermal_gap_line", "random_gap", "random_uniform", "single_A", "single_B", "cotrain_bi"],
+      "budget_dots_per_fold_per_arm": 9400,
+      "control_definition": "random_gap samples allowed pixels with distance to the VISIBLE catalogue > 3 px, count-matched to the thermal_gap arm in the same fold",
+      "primary_claim": "thermal_gap_cotrain > random_gap (paired CI excludes 0)",
+      "ci": "paired 20 km spatial-cluster bootstrap, 1000 draws"
+    },
+    "E2_off_catalogue": {
+      "instrument": "gems52-offcat-prevalence-h97: SGMC fault pixels > 3 px from labels.tif, thinned by whole 8-connected components (seed 9700) to <= 14088 px; ranking instrument only, never used to choose a budget",
+      "arms": ["thermal_gap", "thermal_gap_cotrain", "random_matched", "single_B", "single_A", "cotrain_bi"],
+      "budget_dots": 9400,
+      "note": "the reference taxonomy in knowledge/76 section 6 governs: ranking at a matched budget only"
+    },
+    "E3_mass_and_placement": {
+      "note": "credit density rho = TPw/S measured per arm on the FULL eligible set (no folds) against the catalogue is a descriptive diagnostic only; the shipping budget is chosen on E1 with the marginal rule of src/gems52/metric.py (raise mass while marginal expected credit > 0.2*DTI), not with the off-catalogue instrument",
+      "ship_budget_candidates": [25400, 40000]
+    }
+  },
+  "placement": {
+    "method": "gems52.nodes.spacing_select (priority order: thermal-gap dots first, co-training field second)",
+    "min_spacing_px": 3.0,
+    "catalogue_collar_px": 3,
+    "catalogue_collar_reason": "the champion family shows the <= 200 m ring earns exactly zero credit (knowledge/76 sections 1 and 7); the registered collar here is 3 px (300 m) because the hidden truth is not inside the kernel of any mapped fault under that same measurement",
+    "visible_catalogue_masked_pixel_exact": true
+  },
+  "gates": {
+    "independence_abandon_at_max_abs_r": 0.6,
+    "independence_method": "gems52.spatial.negative_block_errors + independence, 50 px blocks, 90th percentile view thresholds on labelled negatives",
+    "leakage_canary_alarm_auc": 0.9,
+    "promotion_bar_holdout_dti": 0.192829,
+    "promotion_bar_source": "evidence/h82_holdout.json (H82 B_DVA2)",
+    "format": "gems52.gates.format_report (single band float32, EPSG:32611, 3730x3292, transform match, all-finite, values in [0,1])",
+    "uniqueness": "gems52.gates.uniqueness_report over submission/, docs/downloads/, data/scored/, data/reference/",
+    "lane": "rank-correlation (Spearman) with any registry raster <= 0.90 AND at most 70 % of dots within 3 px of any single registry raster; checked on the surface before placement and on the final dots",
+    "not_the_union": "Jaccard vs the union of the two views' spaced top-k supports at the same budget"
+  },
+  "budget": {"experiments": 3, "hours": 2, "submission_slots": "NOT spent; promotion is the separate selector step"},
+  "verdict_rules": {
+    "promote": "E1 primary beats random_gap with a paired 95 % CI excluding 0 AND E1 primary >= 0.192829 AND all gates PASS",
+    "negative": "anything else; the run card and site must then say OK TO DOWNLOAD: YES / OK TO SUBMIT: NO (research-only)"
+  }
+}

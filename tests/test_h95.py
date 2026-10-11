@@ -46,8 +46,10 @@ def test_h95_verdict_follows_frozen_rule():
 
 def test_h95_readme_states_both_verdicts_and_brief():
     text = (ROOT / "README.md").read_text()
+    # H97 (2026-10-11) stacked its own block above this one, as every round does; the guardrail is
+    # that the H95 block still exists, is delimited, and still carries its verdicts and its brief.
+    assert "<!--H95-README-->" in text
     head = text[: text.index("<!--/H95-README-->")]
-    assert head.startswith("<!--H95-README-->")
     assert "OK TO DOWNLOAD: YES" in head and "OK TO SUBMIT:" in head
     assert "docs/downloads/h95-candidate.tif" in head and SHA in head
     brief = (ROOT / "knowledge/94_current_user_brief_2026-10-10_H95.md").read_text()
