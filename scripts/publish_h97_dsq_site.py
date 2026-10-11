@@ -145,6 +145,8 @@ def insert_block(path: Path, blob: str):
     block = blob
     if "<!--H97-DSQ-CARD-->" in text:
         text = re.sub(r"<!--H97-DSQ-CARD-->.*?<!--/H97-DSQ-CARD-->\n?", lambda m: block, text, flags=re.S)
+        path.write_text(text)
+        return True
     else:
         # below the current-pointer round's card when it exists (the page leads with the incumbent),
         # else at the top of <body>
