@@ -1,0 +1,42 @@
+{
+  "n_priors_checked": 719,
+  "candidate_decoded_sha256": "c6fbccd67b14db1b630a99bec1c2cf28a35bb620388378ac7f9551e822465d38",
+  "canonical_pattern_unique": false,
+  "identical_to_a_prior": false,
+  "identical_prior_paths": [],
+  "distinct_from_every_comparable_prior": true,
+  "audit_complete": false,
+  "n_priors_compared": 718,
+  "incomparable_priors": [
+    {
+      "path": "work/h97/priors/a97c7b2a513225c9f9f2b35736afe5abf4d2a491.tif",
+      "error": "ValueError: not aligned single-band prediction (1 bands, (32, 48))"
+    }
+  ],
+  "key_semantics": "canonical_pattern_unique is False if ANY prior is byte-identical OR unreadable; distinct_from_every_comparable_prior isolates the first condition and audit_complete isolates the second",
+  "equals_literal_prior_union": false,
+  "research_publication_ok": false,
+  "support_novelty_gate_ok": false,
+  "gate_correction": "Original >=20% support novelty retained as a FAILED diagnostic, not silently waived for slot promotion. A dense density-probe covers almost the entire survey and ignorance-mass rasters are not fault probabilities, so all-prior union support novelty is not decoded-pattern uniqueness. Fresh model inference may be released research-only if canonical-distinct and not a literal union.",
+  "union_px": 5373930,
+  "novel_vs_all_priors": 0,
+  "novel_fraction": 0.0,
+  "prior_px_dropped": 5348530,
+  "relation_to_union": "subset-of-union",
+  "ok": false,
+  "top_argument_ignored": false,
+  "rule": "distinct decoded values from every supplied prior, >=20% new support against binary/>=0.5 continuous proposal union, and selective prior-pixel removal",
+  "scope": "Only the supplied, aligned accessible inventory; not a proof against all private/unlinked submissions",
+  "max_jaccard": 0.08956126557343057,
+  "max_jaccard_source": "submission/gems52-h75-dva-variogram-anisotropy-B-37654px-20261009T200333Z.tif",
+  "file_byte_identity": {
+    "inventory_entries": 719,
+    "candidate_bytes": 117335,
+    "same_size_entries": 0,
+    "same_sha256_entries": 0,
+    "identical_paths": [],
+    "distinct_from_every_inventory_file": true,
+    "method": "stat every entry; SHA-256 every entry with candidate byte length"
+  },
+  "distinct_by_decoded_values_or_shape": true
+}
