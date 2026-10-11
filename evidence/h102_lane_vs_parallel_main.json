@@ -1,0 +1,63 @@
+{
+ "stage": "lane_vs_parallel_main",
+ "rule": "rank |Spearman| > 0.90 with any prior OR >70% of this round's dots within 3 px of one prior's dots => DUPLICATE/STOP (AGENTS.md lane doctrine)",
+ "rho_bar": 0.9,
+ "near_3px_bar": 0.7,
+ "this_file": "gems52-h102-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif",
+ "this_sha256": "c49a07d15a5bb293c0f29f67d9d4931ed5f2f9ce48978da86af4e59a54f2523d",
+ "n_my_dots": 25400,
+ "started_utc": "2026-10-11T02:14:38+00:00",
+ "priors": [
+  {
+   "file": "gems52-h97-cotrain-disagree-masslever-25400px-20261011T003257Z-6e394036aac2-zeros.tif",
+   "dots": 25400,
+   "abs_spearman": 0.0017539804205491474,
+   "my_frac_within_3px_of_their": 0.07448818897637795,
+   "their_frac_within_3px_of_mine": 0.08208661417322835,
+   "identical": false,
+   "duplicate": false
+  },
+  {
+   "file": "gems52-h97-cotrain-disagree-sparse-37654px-20261010T224136Z.tif",
+   "dots": 37654,
+   "abs_spearman": 0.0032454572494531246,
+   "my_frac_within_3px_of_their": 0.11322834645669291,
+   "their_frac_within_3px_of_mine": 0.06926222977638498,
+   "identical": false,
+   "duplicate": false
+  },
+  {
+   "file": "gems52-h97b-surface-consensus-25400px-20261011T004256Z-450c07e1cca4-zeros.tif",
+   "dots": 25400,
+   "abs_spearman": 0.0022274006566852743,
+   "my_frac_within_3px_of_their": 0.08035433070866142,
+   "their_frac_within_3px_of_mine": 0.08783464566929133,
+   "identical": false,
+   "duplicate": false
+  },
+  {
+   "file": "gems52-h101-fallline-veto-dva2-37654px-20261011T003404Z-zeros.tif",
+   "dots": 37654,
+   "abs_spearman": 0.054401993338534946,
+   "my_frac_within_3px_of_their": 0.3775590551181102,
+   "their_frac_within_3px_of_mine": 0.30259733361661445,
+   "identical": false,
+   "duplicate": false
+  },
+  {
+   "file": "gems52-h99-cotrain-atexture-disagreement-20261010T222354Z.tif",
+   "dots": 37654,
+   "abs_spearman": 0.003537224565550982,
+   "my_frac_within_3px_of_their": 0.19578740157480315,
+   "their_frac_within_3px_of_mine": 0.07736229882615393,
+   "identical": false,
+   "duplicate": false
+  }
+ ],
+ "worst_abs_spearman": 0.054401993338534946,
+ "worst_my_frac_within_3px": 0.3775590551181102,
+ "duplicate": false,
+ "ok": true,
+ "disposition": "PASS - no parallel-main raster breaches the lane doctrine; the pre-merge 602-raster census receipts (evidence/h102_lane.json) stand, and these five post-merge parallel rasters add no new breach",
+ "finished_utc": "2026-10-11T02:15:02+00:00"
+}

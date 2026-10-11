@@ -1,0 +1,74 @@
+{
+  "stage": "folds",
+  "registration": {
+    "preregistration_sha256": "02668421f590ea8f4f13aa7052a4f3240beb410214db9ef80b7ac8a8e8f96703",
+    "hypothesis_bytes": 8801,
+    "frozen_before_any_fit": true
+  },
+  "eligible_px": 5164300,
+  "catalogue_px": 60988,
+  "withheld_positive_px": 60894,
+  "buffer_px": 80,
+  "ring_px": 2,
+  "folds": 4,
+  "fold_receipts": [
+    {
+      "fold": 0,
+      "split_version": "label-blind-quadrants-v2",
+      "evaluation_region_label_blind": true,
+      "truth_px": 29297,
+      "evaluation_px": 2448048,
+      "training_domain_px": 2506320,
+      "held_components": 1829,
+      "shared_train_truth_components": 0,
+      "buffer_px": 80,
+      "nearest_training_to_region_px": 80.00624975587844,
+      "held_pixels_without_feature_support": 21,
+      "held_positive_pixels_outside_this_evaluation_region": 244
+    },
+    {
+      "fold": 1,
+      "split_version": "label-blind-quadrants-v2",
+      "evaluation_region_label_blind": true,
+      "truth_px": 12579,
+      "evaluation_px": 1365092,
+      "training_domain_px": 3635108,
+      "held_components": 684,
+      "shared_train_truth_components": 0,
+      "buffer_px": 80,
+      "nearest_training_to_region_px": 80.00624975587844,
+      "held_pixels_without_feature_support": 12,
+      "held_positive_pixels_outside_this_evaluation_region": 82
+    },
+    {
+      "fold": 2,
+      "split_version": "label-blind-quadrants-v2",
+      "evaluation_region_label_blind": true,
+      "truth_px": 9433,
+      "evaluation_px": 563614,
+      "training_domain_px": 4380876,
+      "held_components": 381,
+      "shared_train_truth_components": 0,
+      "buffer_px": 80,
+      "nearest_training_to_region_px": 80.00624975587844,
+      "held_pixels_without_feature_support": 38,
+      "held_positive_pixels_outside_this_evaluation_region": 483
+    },
+    {
+      "fold": 3,
+      "split_version": "label-blind-quadrants-v2",
+      "evaluation_region_label_blind": true,
+      "truth_px": 9585,
+      "evaluation_px": 787546,
+      "training_domain_px": 4260674,
+      "held_components": 328,
+      "shared_train_truth_components": 0,
+      "buffer_px": 80,
+      "nearest_training_to_region_px": 80.00624975587844,
+      "held_pixels_without_feature_support": 12,
+      "held_positive_pixels_outside_this_evaluation_region": 368
+    }
+  ],
+  "split_version": "label-blind-quadrants-v2",
+  "generated_utc": "2026-10-11T00:07:23+00:00"
+}

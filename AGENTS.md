@@ -22,6 +22,58 @@ Settled this round; do not re-litigate:
 - Publishing: `scripts/publish_h102_site.py` inserts `<!--H102-CARD-->` / `<!--H102-README-->` / `<!--H102-AGENTS-->`
   blocks (idempotent) and rewrites the H102 pages/pointer; verify with `scripts/check_site.py` + pytest.
 <!--/H102-AGENTS-->
+<!--H97-MASSLEVER-AGENTS-->
+## Current H97-masslever continuation (2026-10-11) — READ FIRST
+Read README's H97-masslever block first. Download **YES**; submit **your call** — no leaderboard gain is certified.
+This session's branch is `arena/c5bf6f30-gemsdoe52`. The round ran **three** experiments:
+**E1 instrument fidelity** (the repository's holdout does not rank the board: Spearman
+-0.4897, partial given log mass
+0.1264, Spearman(board, mass)
+-0.9436 over 13 OWNER-REPORTED scored priors scored
+`as_is`); **E2 co-training at the metric-implied mass lever** (NEGATIVE: cotrain_dis
+0.069041 vs cons_only 0.093310, paired -0.024269
+[-0.038071, -0.009208]); **E3 artifact + gates**.
+- The data blocker is cleared in this session: `python scripts/restore_data.py --target-dir data` restores 23
+  hash-pinned files (531 MB, ALL_VERIFIED=True) through api.github.com; `data/raw_parts` was removed afterwards.
+- Settled; do not re-litigate: the unfitted-composite co-training lane is closed for a third time (H95, H96, H97); the
+  fitted learner is where the 0.19 lives. The A-only stratum is a Phase-2 deliverable, not a DTI bet.
+- Shared-tool facts learned the hard way this round: `gates.format_report` keys are
+  `bands/dtype/crs/width/height/nan_pixels/infinity_pixels/n_min/max/n_nonzero/problems/ok`;
+  `gates.uniqueness_report` has `n_priors_checked`/`identical_to_a_prior`/per-prior `jaccard`
+  (no `identical_to_none`, no `max_jaccard`); `find_priors` excludes by resolve() **and basename**, so a
+  round that stages an alias copy of its own artifact (e.g. `h97-masslever-candidate.tif`) must drop its own names or the
+  candidate is compared to itself; `submission_writer.write_submission` rejects a note/name longer than 140 chars.
+- Use `/home/user/.venv/bin/python` (pinned numpy/scipy/rasterio/…env built this session).
+<!--/H97-MASSLEVER-AGENTS-->
+
+<!--H101-AGENTS-->
+## Current H101 continuation (2026-10-10) — READ FIRST
+Read README's H101 block, `knowledge/105` (frozen preregistration, SHA-256 `bf5c5e01cb4b6bdf…`) and
+`knowledge/106` (results). Verdict **NEGATIVE**: download yes (audit only), submit **NO**. Experiments 3 of 3, slots 0.
+
+- The B-only stratum as a hard artefact veto does not beat `B_DVA2` (H101_veto 0.192122 vs 0.192831, CI spans 0).
+  Fall-line-flagged B-only dots are worse than clean B-only dots in 4/4 folds but removed dots beat their replacements 4/4:
+  next test is a rank-preserving soft penalty (new preregistration required).
+- **IR-H101-001:** `B_DVA2` (holdout best) is not a pure surface view: it includes DVA2 of bands 13/15/18. Lane-pure
+  `B_DVA2s` = 0.184506. Report both in any co-training round.
+- Consensus (A as soft prior) and the contour-parallel prior without disagreement both lose to `B_DVA2`.
+- Reuse `scripts/run_h101.py` stages; it redirects run_h84/run_h82 checkpoints to `work/h101` (no forks).
+<!--/H101-AGENTS-->
+<!--H99-AGENTS-->
+## Current H99/H100 continuation (2026-10-10) — READ FIRST
+Read README's standing brief and the H99/H100 status block first. **Both experiments are strict negatives.**
+Download **yes** (audit only), submit **NO**. Slots used 0.
+This session's branch is `arena/f57253db-gemsdoe52`. The round is the brief's co-training lane: View A = directional
+variogram **boundary texture** on bands 2 `rtp`, 9 `tmi_vg`, 13 `iso_grav_anom`; View B = surface texture on 12, 19, 6.
+- **H99:** primary `xtex_dis` 0.034799 [0.026938, 0.044011] vs random 0.080426 [0.070223, 0.090973]; paired −0.045627 [−0.054106, −0.037194]. **H100** (lags 4–8 px = 400–800 m): 0.034697, paired −0.045728. The 400–800 m retest closes the "wrong scale" explanation for View A.
+- **Independence passes, sufficiency fails** (View A held-out AUC 0.5317 / 0.5284; 9th and 10th View-A failure). Do not re-open directional variogram anisotropy on more bands or lags; the lever is population, per `knowledge/103` §7.
+- **Identifier history (IR-H99-008):** frozen as H88/H89 → H92/H93 (main merged its own H88/H89) → H99/H100 (main used H92–H96). Renames are mechanical; `evidence/h99_identifier_rename.diff` reproduces the frozen texts byte for byte. Never edit `knowledge/101`/`98` after freezing — results go to `knowledge/104`.
+- **Writers:** channel arrays can lose their first 4 KiB page after a passing array compare (IR-H99-001); `heal_channels()` runs first in every fit/holdout/build and the whole bank was re-verified before the shipped numbers. Never trust a cached bank.
+- **Builders must read `evidence/h99_holdout.json` at build time** (IR-H99-006) — never hard-code the withheld-pixel count or put a paired CI in the `ci95` slot.
+- **Portal container:** 0.0 outside the footprint, no nodata tag, every pixel finite in [0,1] (`write_geotiff_portal_exact`), so the class of upload that produced "Predicted values must be in range [0, 1]" cannot recur for this file (IR-H99-005).
+- **Lane rule:** the literal dot rule fires only against the `r13-lattice` universal-coverage probe (IR-H99-002, reported, not waived); excluding probes the maximum is 0.3828 < 0.70.
+- One card per round: `evidence/h99_run_card.json`, `evidence/h100_run_card.json` (hypothesis, mechanism, named mimic, holdout DTI + CI, registry correlation/overlap, raster sha256, validator, name + note, verdict).
+<!--/H99-AGENTS-->
 <!--H96-AGENTS-->
 ## Current H96 continuation (2026-10-10) — READ FIRST
 Read README's standing brief and status block first. H96 verdict **NEGATIVE**. Download yes (audit only), submit **NO**.

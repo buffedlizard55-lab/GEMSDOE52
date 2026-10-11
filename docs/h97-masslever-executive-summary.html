@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Executive summary — how to submit the H97b GeoTIFF to the DOE GEMS competition</title>
+<style>body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f1117;color:#e8eaed;line-height:1.65;margin:0}.wrap{max-width:900px;margin:0 auto;padding:26px 20px}h1{color:#4fc3f7;font-size:1.6rem}h2{color:#4fc3f7;border-bottom:1px solid #2d3040;padding-bottom:6px;margin-top:30px}a{color:#4fc3f7}code{background:#1e2130;padding:2px 6px;border-radius:3px;font-size:.9em;word-break:break-all}.btn{display:inline-block;background:#4fc3f7;color:#000;font-weight:700;padding:12px 22px;border-radius:8px;margin:8px 8px 8px 0;text-decoration:none}.warn{border:2px solid #ffa726;background:#241a06;border-radius:10px;padding:16px 18px;margin:16px 0}.ok{border:2px solid #66bb6a;background:#0f2410;border-radius:10px;padding:16px 18px;margin:16px 0}.no{border:2px solid #ef5350;background:#2a0f0f;border-radius:10px;padding:16px 18px;margin:16px 0}table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.93rem}th,td{padding:7px 10px;text-align:left;border-bottom:1px solid #2d3040;vertical-align:top}th{color:#4fc3f7}.muted{color:#9aa0a6;font-size:.88rem}</style>
+</head><body><div class="wrap">
+<h1>How to submit — the H97b GeoTIFF, in the exact order the submission form asks</h1>
+
+<div class="ok"><b>✅ Step 1 — the file. OK TO DOWNLOAD: YES.</b><br>
+<a class="btn" href="downloads/h97b-candidate.tif" download>⬇ Download the single-band GeoTIFF</a>
+<a class="btn" href="downloads/h97b-candidate.zip" download>or the single-TIFF ZIP</a><br>
+<code>gems52-h97b-surface-consensus-25400px-20261011T004256Z-450c07e1cca4-zeros.tif</code> · 111,139 bytes · SHA-256 <code>1b0b00aa711fde1a0e7dfbdb3680bc9f8652a09f7ff6ee3709e7ccafda9656a2</code><br>
+Validator re-read from the written bytes: 1 band float32, EPSG:32611,
+3730 rows &times; 3292 cols, transform/bounds identical to <code>sample_submission.tif</code>: yes,
+NaN 0, infinite 0, range [0.0, 1.0],
+nodata tag None, 25,400 emitted cells, problems: [].
+Uniqueness: 196 priors checked, identical to a prior <b>False</b>,
+max Jaccard 0.0204; lane policy PASS.</div>
+
+<div class="warn"><b>⚠️ Step 2 — the decision. OK TO SUBMIT: your call.</b><br>
+The portal's old error &ldquo;<i>Predicted values must be in range [0, 1]</i>&rdquo; came from a file whose
+<b>nodata/NaN cells</b> a strict reader sees as out-of-range. This file is the all-finite container
+(<b>nodata tag None, 0 NaN, values exactly {0, 1}</b>) — the same container the
+0.2778 champion used — so that rejection cannot occur. What this round does <b>not</b> claim is a leaderboard gain:
+the promotion gate failed (holdout_promotion) and, more
+importantly, E1 measured that the repository's holdout does not rank the board's own scored files
+(Spearman <b>-0.4897</b>). The file does follow the two disciplines the
+board itself rewards — low mass (25,400 cells vs the champion's 37,654) and distance from the mapped
+catalogue (200 m collar) — but promotion to a weekly slot is a separate selector decision. Slots used: <b>0</b>.</div>
+
+<div class="no"><b>✗ Do not submit the H97 primary file.</b> 99.89% of its
+dots lie within 3 px of the H96 artifact; the protocol says log it and stop (IR-H97M-003). It remains
+<a href="downloads/h97-masslever-candidate.tif" download>downloadable</a> for audit only.</div>
+
+<h2>Step 3 — the form, field by field</h2>
+<table>
+<tr><th>Form field</th><th>What to put</th></tr>
+<tr><td>File to submit</td><td>the downloaded <code>gems52-h97b-surface-consensus-25400px-20261011T004256Z-450c07e1cca4-zeros.tif</code> (single-band GeoTIFF; a <code>.zip</code> holding
+exactly that one TIFF is equally accepted)</td></tr>
+<tr><td>Note (optional, &le;140 chars)</td><td><code>H97b lane-distinct: surface view (LiDAR scarp + radiometric ratios) ranked, View A as screen and B-only veto; 25,400 dots; 3px; 200m collar</code> (139/140)</td></tr>
+<tr><td>Submission name</td><td><code>gems52-h97b-surface-consensus-25400px-20261011T004256Z-450c07e1cca4-zeros</code></td></tr>
+</table>
+<p class="muted">Portal: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/">data tab</a> ·
+<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">problem description &amp; metric</a>.
+Requirements quoted from that page: single-band GeoTIFF matching the submission format's CRS (EPSG:32611), shape
+(3730&times;3292) and geotransform; values in [0, 1]; data outside the bounds null or NaN.</p>
+
+<h2>Step 4 — what is in the file</h2>
+<ul>
+<li>Ranker: the surface view — DEM slope, ridge curvature, topographic edge, radiometric total count and K/Th,
+the five LiDAR scarp layers, and the three GeoDAWN radiometric ratio grids.</li>
+<li>View A's role: a support screen only (eligible-rank median) plus the brief's artefact veto — where the surface
+view is confident and the potential field abstains, the response is attributed to roads/erosion and dropped.</li>
+<li>250 m discipline: 200 m catalogue collar, 3 px minimum separation, 25,400 dots placed exactly
+(S = 25,400: the mass at which the published metric reaches 0.3195 at the champion's credit, knowledge/76 §3).</li>
+<li>Provenance: inputs are integrity-pinned mirrors (not organizer-authenticated); evaluator
+<code>gems52-pooled-hide-v1</code>, 60,894 withheld positive pixels, 95 % CI, 1,000 paired
+spatial-cluster bootstrap draws.</li>
+</ul>
+<p class="muted">Negative results are deliverables: E1 (the instrument does not rank the board) and E2 (the
+co-training disagreement arm loses to its own consensus control) are reported as measured.</p>
+</div></body></html>

@@ -1,0 +1,121 @@
+{
+  "round": "H97",
+  "hypothesis": "co-training disagreement (A confident, B abstains) with the emitted budget chosen on a prevalence-matched off-catalogue instrument",
+  "mechanism": "density/susceptibility edges with no surface expression = structure buried under cover, i.e. the population the surface-mapped catalogue is least likely to hold",
+  "named_non_fault_process": "lithologic contacts and intrusive margins; palaeo-channel thalwegs; playa/salina edges; anthropogenic linears (roads, canals)",
+  "holdout_dti": {
+    "value": 0.04594740031767762,
+    "ci95": [
+      0.03370645414559958,
+      0.059307032882270225
+    ],
+    "evaluator": "gems52-pooled-hide-v1",
+    "withheld_positive_px": 60894,
+    "evidence_class": "HOLDOUT-DTI"
+  },
+  "instrument2_mass_lever": {
+    "8000": {
+      "dti": 0.001124864769837973,
+      "random_dti": 0.016399071814866707,
+      "credit_per_dot": 0.0018097867723554373
+    },
+    "15000": {
+      "dti": 0.0023860077096313583,
+      "random_dti": 0.02810817713852282,
+      "credit_per_dot": 0.002270110882818699
+    },
+    "25517": {
+      "dti": 0.003487516900133307,
+      "random_dti": 0.042326317326004864,
+      "credit_per_dot": 0.002238025888800621
+    },
+    "30000": {
+      "dti": 0.004003959762229144,
+      "random_dti": 0.04663172910028882,
+      "credit_per_dot": 0.0023051556199789047
+    },
+    "37654": {
+      "dti": 0.0050230615241286525,
+      "random_dti": 0.05337184169019906,
+      "credit_per_dot": 0.002508260775357485
+    }
+  },
+  "correlation_overlap_vs_registry": {
+    "lane": {
+      "literal": "DUPLICATE/STOP",
+      "policy": "PASS",
+      "literal_max_spearman": 0.025694775462692273,
+      "literal_max_near_3px_fraction": 0.9992298295001859,
+      "literal_max_near_source": "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "literal_rank_offenders": [],
+      "literal_near_offenders": [
+        "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif"
+      ],
+      "max_spearman": 0.025694775462692273,
+      "max_near_3px_fraction": 0.41456418972751896,
+      "max_near_source": "/home/user/GEMSDOE52/submission/gems52-h87-cotrain-wavelength-thk-37654px-20261010T213656Z.tif",
+      "informative_priors": 146,
+      "universal_coverage_probes": 1,
+      "probe_paths": [
+        "/home/user/GEMSDOE52/data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif"
+      ],
+      "probe_coverage": [
+        0.9990273609201634
+      ],
+      "full_receipt": "evidence/h97_lane_dots.json"
+    },
+    "uniqueness": {
+      "canonical_pattern_unique": true,
+      "support_novelty_gate_ok": true,
+      "novel_fraction": 0.6725181919583577,
+      "relation_to_union": "strictly-novel-and-selective",
+      "n_priors_checked": 147,
+      "identical_to_a_prior": false
+    },
+    "not_merely_the_union": {
+      "candidate_px": 37654,
+      "single_A_px": 37654,
+      "single_B_px": 37654,
+      "union_px": 74984,
+      "candidate_inside_union": 2136,
+      "candidate_share_inside_union": 0.05672704095182451,
+      "candidate_equals_union": false,
+      "jaccard_candidate_vs_union": 0.01932996687842754,
+      "note": "the candidate is the disagreement field's own top-K, not the union of the single-view top-K sets; the share inside the union quantifies how much of it the two views alone would have produced"
+    }
+  },
+  "raster_sha256": "eed99c0b544b1731a4dd2e10c2f4db65a90316e149c3c4a6673256459d95f5f2",
+  "zip_sha256": "9e2e25da35616ede1d71bf5ac39db810292f6fe136125b020d4d2fa369345613",
+  "validator": {
+    "ok": true,
+    "problems": [],
+    "checks": {
+      "single_band": true,
+      "float32": true,
+      "shape_match": true,
+      "crs_match": true,
+      "transform_match": true,
+      "all_finite": true,
+      "in_0_1": true,
+      "binary": true,
+      "nodata_none": true,
+      "ones": 37654,
+      "budget_match": true,
+      "outside_domain_zero": true,
+      "on_catalogue_zero": true,
+      "collar_respected": true,
+      "min_spacing_px": 3.0,
+      "spacing_ok": true
+    }
+  },
+  "submission_name": "h97-cotrain-sparse-37654px",
+  "note": "H97 co-train A-conf/B-abstain, 37654px, 3px spacing, 200m ring, budget from prevalence-matched off-cat, zeros-outside",
+  "slots_used": 0,
+  "approved_for_weekly_slot": false,
+  "verdict": "negative",
+  "limits": [
+    "holdout truth is catalogue faults, not the organizer's scored new faults",
+    "instrument 2's truth is SGMC-mapped faults absent from the catalogue, a proxy",
+    "no organizer receipt exists for any file in this repository"
+  ]
+}
