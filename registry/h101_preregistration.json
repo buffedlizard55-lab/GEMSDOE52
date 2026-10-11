@@ -1,0 +1,227 @@
+{
+ "round": "H101",
+ "preregistered_utc": "2026-10-11T00:03:24+00:00",
+ "hypothesis_document": "knowledge/105_hypotheses_H101_preregistered.md",
+ "hypothesis_sha256": "bf5c5e01cb4b6bdf3244c373d8cb44bf8c4945870e339989751bfdf74db1a30f",
+ "hypothesis_bytes": 9068,
+ "lane": "two-view co-training paragraph; disagreement (B-only stratum) used as an artefact veto on the strongest View-B field",
+ "frozen_before_any_fit": true,
+ "runner": "scripts/run_h101.py",
+ "runner_refuses_if_hash_moves": true,
+ "primary_arm": "H101_veto",
+ "arms": [
+  "single_A",
+  "single_B",
+  "B_DVA2",
+  "B_DVA2s",
+  "random",
+  "H101_veto",
+  "H101_veto_fl",
+  "H101_veto_card",
+  "H101_veto_s",
+  "H101_scarp_soft",
+  "H101_consensus"
+ ],
+ "learner_arms": [
+  "single_A",
+  "single_B",
+  "B_DVA2",
+  "B_DVA2s"
+ ],
+ "control_targets": {
+  "single_B": 0.174571,
+  "B_DVA2": 0.192829
+ },
+ "control_tolerance": 0.001,
+ "holdout_bar": 0.190147,
+ "holdout_bar_source": "evidence/h84_holdout.json primary B_DVA2_HVA",
+ "canary_alarm_auc": 0.9,
+ "orientation": {
+  "band": 12,
+  "sigma_px": 2.0,
+  "grad_defined_quantile": 0.25,
+  "erosion_fl_min": 0.8660254037844387,
+  "road_dcard_max_deg": 5.0,
+  "road_slope_band": 19,
+  "road_slope_max_quantile": 0.5
+ },
+ "strata": {
+  "b_only": {
+   "B_rank_min": 0.95,
+   "A_rank_max_exclusive": 0.65
+  },
+  "a_only": {
+   "A_rank_min": 0.95,
+   "B_rank_band": [
+    0.35,
+    0.65
+   ],
+   "spacing_px": 3.0
+  }
+ },
+ "veto_offset": -2.0,
+ "scarp_soft_weight": 0.25,
+ "consensus": {
+  "base": 0.9,
+  "a_weight": 0.1
+ },
+ "surface_dva2_bands": {
+  "12": "det_elev",
+  "19": "det_elev_slope"
+ },
+ "emission": {
+  "K_total": 37654,
+  "K_fold": 9400,
+  "min_spacing_px": 3.0,
+  "catalogue_ring_excluded_m": 200.0,
+  "values": "binary {0,1}",
+  "outside_footprint": "0.0, no NaN",
+  "placement": "run_h73.place_lane vs scored-only supports limit 0.70; fallback spacing_select 3 px"
+ },
+ "lane_thresholds": {
+  "max_spearman": 0.9,
+  "max_near_3px_fraction": 0.7,
+  "near_px": 3
+ },
+ "independence_thresholds_from": "registry/h74_preregistration.json",
+ "pseudo_label_exchange": "none (closed negative H61/H95); disagreement used as veto set only",
+ "budget": {
+  "experiments": 3,
+  "hours": 2,
+  "submission_slots_allowed": 0
+ },
+ "inputs_provenance": "integrity-pinned, not organizer-authenticated (registry/data_manifest.json; restore ALL_VERIFIED=True this session)",
+ "identifier_rename": {
+  "done_utc": "2026-10-11",
+  "reason": "identifier collision: this round was frozen as H97 (commit 293ed08, base 7eb226d); main meanwhile merged other sessions' H97, H98, H99 and H100 rounds (PR #100, #109), so this round is renumbered H101 (knowledge 97/98 -> 105/106). Identifier-only edit: no constant, threshold, arm or number changed; every stage ran under the H97 name with the pre-rename hash.",
+  "frm": "H97",
+  "to": "H101",
+  "document_sha256_before": "0a28e26adb45c5a2f7d5a38b920f2683cc4b8946836ea2742deef2850f63a0d0",
+  "document_sha256_after": "bf5c5e01cb4b6bdf3244c373d8cb44bf8c4945870e339989751bfdf74db1a30f",
+  "token_map": {
+   "h97": "h101",
+   "H97": "H101",
+   "knowledge/97": "knowledge/105",
+   "knowledge/98": "knowledge/106"
+  },
+  "evidence_diff": "evidence/h101_identifier_rename.diff",
+  "moves": [
+   {
+    "old": "docs/downloads/h97-a-only-reasoning.csv",
+    "new": "docs/downloads/h101-a-only-reasoning.csv"
+   },
+   {
+    "old": "docs/downloads/h97-candidate.tif",
+    "new": "docs/downloads/h101-candidate.tif"
+   },
+   {
+    "old": "docs/downloads/h97-candidate.zip",
+    "new": "docs/downloads/h101-candidate.zip"
+   },
+   {
+    "old": "docs/h97-executive-summary.html",
+    "new": "docs/h101-executive-summary.html"
+   },
+   {
+    "old": "docs/h97.html",
+    "new": "docs/h101.html"
+   },
+   {
+    "old": "evidence/h97_build.json",
+    "new": "evidence/h101_build.json"
+   },
+   {
+    "old": "evidence/h97_build_fields.json",
+    "new": "evidence/h101_build_fields.json"
+   },
+   {
+    "old": "evidence/h97_channels.json",
+    "new": "evidence/h101_channels.json"
+   },
+   {
+    "old": "evidence/h97_fit.json",
+    "new": "evidence/h101_fit.json"
+   },
+   {
+    "old": "evidence/h97_holdout.json",
+    "new": "evidence/h101_holdout.json"
+   },
+   {
+    "old": "evidence/h97_independence.json",
+    "new": "evidence/h101_independence.json"
+   },
+   {
+    "old": "evidence/h97_lane.json",
+    "new": "evidence/h101_lane.json"
+   },
+   {
+    "old": "evidence/h97_orient.json",
+    "new": "evidence/h101_orient.json"
+   },
+   {
+    "old": "evidence/h97_reverification.json",
+    "new": "evidence/h101_reverification.json"
+   },
+   {
+    "old": "evidence/h97_run_card.json",
+    "new": "evidence/h101_run_card.json"
+   },
+   {
+    "old": "evidence/h97_swap_diagnostic.json",
+    "new": "evidence/h101_swap_diagnostic.json"
+   },
+   {
+    "old": "knowledge/97_hypotheses_H97_preregistered.md",
+    "new": "knowledge/105_hypotheses_H101_preregistered.md"
+   },
+   {
+    "old": "knowledge/98_h97_results_and_limits.md",
+    "new": "knowledge/106_h101_results_and_limits.md"
+   },
+   {
+    "old": "registry/h97_preregistration.json",
+    "new": "registry/h101_preregistration.json"
+   },
+   {
+    "old": "scripts/h97_card.py",
+    "new": "scripts/h101_card.py"
+   },
+   {
+    "old": "scripts/h97_irregularities.py",
+    "new": "scripts/h101_irregularities.py"
+   },
+   {
+    "old": "scripts/h97_results_doc.py",
+    "new": "scripts/h101_results_doc.py"
+   },
+   {
+    "old": "scripts/h97_swap_diagnostic.py",
+    "new": "scripts/h101_swap_diagnostic.py"
+   },
+   {
+    "old": "scripts/publish_h97_site.py",
+    "new": "scripts/publish_h101_site.py"
+   },
+   {
+    "old": "scripts/run_h97.py",
+    "new": "scripts/run_h101.py"
+   },
+   {
+    "old": "submission/gems52-h97-fallline-veto-dva2-37654px-20261011T003404Z-zeros.json",
+    "new": "submission/gems52-h101-fallline-veto-dva2-37654px-20261011T003404Z-zeros.json"
+   },
+   {
+    "old": "submission/gems52-h97-fallline-veto-dva2-37654px-20261011T003404Z-zeros.tif",
+    "new": "submission/gems52-h101-fallline-veto-dva2-37654px-20261011T003404Z-zeros.tif"
+   },
+   {
+    "old": "submission/gems52-h97-fallline-veto-dva2-37654px-20261011T003404Z-zeros.zip",
+    "new": "submission/gems52-h101-fallline-veto-dva2-37654px-20261011T003404Z-zeros.zip"
+   },
+   {
+    "old": "tests/test_h97.py",
+    "new": "tests/test_h101.py"
+   }
+  ]
+ }
+}

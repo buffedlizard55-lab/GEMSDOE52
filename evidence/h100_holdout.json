@@ -1,0 +1,428 @@
+{
+ "round": "H100",
+ "stage": "holdout",
+ "started_utc": "2026-10-10T22:12:36Z",
+ "evidence_class": "HOLDOUT-DTI",
+ "evaluator_version": "gems52-pooled-hide-v1",
+ "arms": [
+  "xtex_dis",
+  "xtex_agree",
+  "single_Atex",
+  "single_Btex",
+  "random"
+ ],
+ "primary": "xtex_dis",
+ "budget_per_fold": 9400,
+ "min_separation_px": 3.0,
+ "folds": [
+  {
+   "fold": 0,
+   "allowed_px": 2265054,
+   "truth_px": 27309,
+   "arms": {
+    "xtex_dis": {
+     "dti": 0.017765207998524275,
+     "tpw": 422.37022269289866,
+     "fpw": 9217.305966402155,
+     "fnw": 26886.629777307102,
+     "placed": 9400,
+     "seconds": 2.7
+    },
+    "xtex_agree": {
+     "dti": 0.0738848275393053,
+     "tpw": 1767.7258360529454,
+     "fpw": 8623.394841230202,
+     "fnw": 25541.274163947055,
+     "placed": 9400,
+     "seconds": 2.5
+    },
+    "single_Atex": {
+     "dti": 0.044506513124491554,
+     "tpw": 1061.1428797034196,
+     "fpw": 8914.94600437069,
+     "fnw": 26247.85712029658,
+     "placed": 9400,
+     "seconds": 2.5
+    },
+    "single_Btex": {
+     "dti": 0.0969790974921918,
+     "tpw": 2325.3557226064568,
+     "fpw": 8328.176286787679,
+     "fnw": 24983.64427739354,
+     "placed": 9400,
+     "seconds": 2.6
+    },
+    "random": {
+     "dti": 0.04391154954444291,
+     "tpw": 1047.567157232948,
+     "fpw": 8997.93942826165,
+     "fnw": 26261.43284276705,
+     "placed": 9400,
+     "seconds": 2.4
+    }
+   },
+   "not_the_union": {
+    "disagreement_dots": 9400,
+    "also_high_in_A": 370,
+    "also_high_in_B": 0,
+    "consensus_dots": 9400,
+    "symmetric_difference_vs_consensus": 18800
+   }
+  },
+  {
+   "fold": 1,
+   "allowed_px": 1170301,
+   "truth_px": 10677,
+   "arms": {
+    "xtex_dis": {
+     "dti": 0.02323318942736909,
+     "tpw": 242.75018944259114,
+     "fpw": 9291.36452353506,
+     "fnw": 10434.249810557409,
+     "placed": 9400,
+     "seconds": 2.4
+    },
+    "xtex_agree": {
+     "dti": 0.14142850814084598,
+     "tpw": 1496.581768827024,
+     "fpw": 8704.898381264302,
+     "fnw": 9180.418231172976,
+     "placed": 9400,
+     "seconds": 2.2
+    },
+    "single_Atex": {
+     "dti": 0.07088214992527545,
+     "tpw": 744.541929841691,
+     "fpw": 9067.16371019556,
+     "fnw": 9932.458070158309,
+     "placed": 9400,
+     "seconds": 2.2
+    },
+    "single_Btex": {
+     "dti": 0.1887048489039866,
+     "tpw": 2005.6307615073188,
+     "fpw": 8428.373091498805,
+     "fnw": 8671.369238492682,
+     "placed": 9400,
+     "seconds": 2.3
+    },
+    "random": {
+     "dti": 0.07343361743372628,
+     "tpw": 772.1440320935346,
+     "fpw": 9094.144085361213,
+     "fnw": 9904.855967906466,
+     "placed": 9400,
+     "seconds": 2.1
+    }
+   },
+   "not_the_union": {
+    "disagreement_dots": 9400,
+    "also_high_in_A": 845,
+    "also_high_in_B": 0,
+    "consensus_dots": 9400,
+    "symmetric_difference_vs_consensus": 18800
+   }
+  },
+  {
+   "fold": 2,
+   "allowed_px": 471065,
+   "truth_px": 6813,
+   "arms": {
+    "xtex_dis": {
+     "dti": 0.08066083983116705,
+     "tpw": 596.5575732430194,
+     "fpw": 9130.82266205375,
+     "fnw": 6216.44242675698,
+     "placed": 9400,
+     "seconds": 2.0
+    },
+    "xtex_agree": {
+     "dti": 0.19831620045245915,
+     "tpw": 1485.0486777573778,
+     "fpw": 8704.387633780303,
+     "fnw": 5327.951322242622,
+     "placed": 9400,
+     "seconds": 1.9
+    },
+    "single_Atex": {
+     "dti": 0.1380227127122329,
+     "tpw": 1026.9765167627163,
+     "fpw": 8924.19448973264,
+     "fnw": 5786.0234832372835,
+     "placed": 9400,
+     "seconds": 2.0
+    },
+    "single_Btex": {
+     "dti": 0.22867833854839303,
+     "tpw": 1717.9732486286136,
+     "fpw": 8593.122135350119,
+     "fnw": 5095.026751371386,
+     "placed": 9400,
+     "seconds": 1.9
+    },
+    "random": {
+     "dti": 0.16184723600024814,
+     "tpw": 1210.5504513365954,
+     "fpw": 8935.383589833544,
+     "fnw": 5602.449548663404,
+     "placed": 9400,
+     "seconds": 1.9
+    }
+   },
+   "not_the_union": {
+    "disagreement_dots": 9400,
+    "also_high_in_A": 1527,
+    "also_high_in_B": 0,
+    "consensus_dots": 9400,
+    "symmetric_difference_vs_consensus": 18800
+   }
+  },
+  {
+   "fold": 3,
+   "allowed_px": 686529,
+   "truth_px": 8387,
+   "arms": {
+    "xtex_dis": {
+     "dti": 0.055797620266322664,
+     "tpw": 482.3508151353417,
+     "fpw": 9192.8917562392,
+     "fnw": 7904.649184864658,
+     "placed": 9400,
+     "seconds": 2.0
+    },
+    "xtex_agree": {
+     "dti": 0.16233240997320214,
+     "tpw": 1420.2875645795255,
+     "fpw": 8777.984816086384,
+     "fnw": 6966.712435420474,
+     "placed": 9400,
+     "seconds": 2.0
+    },
+    "single_Atex": {
+     "dti": 0.10914686795022031,
+     "tpw": 949.2026756291126,
+     "fpw": 8985.615175911284,
+     "fnw": 7437.7973243708875,
+     "placed": 9400,
+     "seconds": 2.0
+    },
+    "single_Btex": {
+     "dti": 0.19580313888862033,
+     "tpw": 1718.489650799003,
+     "fpw": 8616.60794797187,
+     "fnw": 6668.510349200997,
+     "placed": 9400,
+     "seconds": 2.1
+    },
+    "random": {
+     "dti": 0.11891114460756524,
+     "tpw": 1036.9613080079703,
+     "fpw": 9017.398732768132,
+     "fnw": 7350.038691992029,
+     "placed": 9400,
+     "seconds": 2.1
+    }
+   },
+   "not_the_union": {
+    "disagreement_dots": 9400,
+    "also_high_in_A": 1244,
+    "also_high_in_B": 0,
+    "consensus_dots": 9400,
+    "symmetric_difference_vs_consensus": 18800
+   }
+  }
+ ],
+ "pooled": {
+  "evidence_class": "HOLDOUT-DTI",
+  "evaluator_version": "gems52-pooled-hide-v1",
+  "alpha": 0.2,
+  "beta": 0.8,
+  "triangular_radius_m": 300.0,
+  "pooled": true,
+  "scores": {
+   "xtex_dis": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.03469731675945374,
+    "ci95": [
+     0.026536202254691305,
+     0.04315316443588432
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 1744.0288005138505,
+    "fpw": 36832.38490823016,
+    "fnw": 51441.97119948616
+   },
+   "xtex_agree": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.12158164621472371,
+    "ci95": [
+     0.1072035232541386,
+     0.1374626179401088
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 6169.643847216878,
+    "fpw": 34810.66567236119,
+    "fnw": 47016.35615278311
+   },
+   "single_Atex": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.07491278845855717,
+    "ci95": [
+     0.061878078190362,
+     0.08771204794503676
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 3781.864001936941,
+    "fpw": 35891.919380210165,
+    "fnw": 49404.13599806309
+   },
+   "single_Btex": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.15261550428776235,
+    "ci95": [
+     0.13381788182829094,
+     0.17041183717714092
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 7767.4493835414005,
+    "fpw": 33966.279461608465,
+    "fnw": 45418.55061645861
+   },
+   "random": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.08042564781050282,
+    "ci95": [
+     0.0702226099128376,
+     0.09097325665223467
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 4067.2229486710503,
+    "fpw": 36044.86583622452,
+    "fnw": 49118.777051328965
+   }
+  },
+  "best_comparable_control": "single_Btex",
+  "paired_differences": {
+   "xtex_agree": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "delta": -0.08688432945526997,
+    "ci95": [
+     -0.10125707655993135,
+     -0.0744184576311386
+    ],
+    "withheld_positive_pixels": 53186
+   },
+   "single_Atex": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "delta": -0.04021547169910343,
+    "ci95": [
+     -0.05000207366676766,
+     -0.030530034400007452
+    ],
+    "withheld_positive_pixels": 53186
+   },
+   "single_Btex": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "delta": -0.11791818752830861,
+    "ci95": [
+     -0.13579025161683703,
+     -0.09986295264468306
+    ],
+    "withheld_positive_pixels": 53186
+   },
+   "random": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "delta": -0.04572833105104908,
+    "ci95": [
+     -0.052841252785089554,
+     -0.03885645560571778
+    ],
+    "withheld_positive_pixels": 53186
+   }
+  },
+  "bootstrap": {
+   "method": "paired physical spatial-cluster percentile",
+   "clusters": 153,
+   "draws": 1000,
+   "seed": 61052,
+   "confidence": 0.95,
+   "caveat": "Conditional on fitted folds, catalogue labels and fixed budgets; not a leaderboard interval."
+  },
+  "implementation_sha256": {
+   "evaluate_holdout.py": "e4211fe530ccb8f1ffeab2ef2f8e94a563492c2a3644c908d1a81e379fcbd9d4",
+   "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+   "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+   "spatial.py": "fad7b09db9efc512247b9a176a7e7ce8631e287592b4e07902d0b9c38bed00f8"
+  }
+ },
+ "withheld_positive_px": 53186,
+ "sufficiency": {
+  "view_A_AUC": [
+   0.5368248756029743,
+   0.5528728674186263,
+   0.4912592836483846,
+   0.5327241843003275
+  ],
+  "view_B_AUC": [
+   0.6718425488894328,
+   0.729560973320307,
+   0.6429614567993401,
+   0.6864144627490116
+  ],
+  "note": "positives = the fold's withheld catalogue truth inside its region; negatives = region and not-catalogue and >500 m from any catalogue pixel"
+ },
+ "independence": {
+  "bar_brief": 0.9,
+  "bar_repo": 0.6,
+  "folds": [
+   {
+    "fold": 0,
+    "n_blocks": 77,
+    "pearson_rho": 0.4455177695954801,
+    "mean_abs_error_A": 0.2539645842915786,
+    "mean_abs_error_B": 0.2085928508835639
+   },
+   {
+    "fold": 1,
+    "n_blocks": 43,
+    "pearson_rho": 0.39449339203295414,
+    "mean_abs_error_A": 0.21058051260682745,
+    "mean_abs_error_B": 0.21257561766515415
+   },
+   {
+    "fold": 2,
+    "n_blocks": 28,
+    "pearson_rho": 0.2721890319159429,
+    "mean_abs_error_A": 0.24901660300323927,
+    "mean_abs_error_B": 0.21934835931805283
+   },
+   {
+    "fold": 3,
+    "n_blocks": 28,
+    "pearson_rho": -0.3443689836854613,
+    "mean_abs_error_A": 0.23203018946415516,
+    "mean_abs_error_B": 0.2330548178584219
+   }
+  ],
+  "max_abs_correlation": 0.4455177695954801,
+  "abandon_required": false,
+  "independence_ok_repo_bar": true
+ },
+ "finished_utc": "2026-10-10T22:13:26Z",
+ "caveat": "HOLDOUT-DTI hides catalogue components; the competition scores faults the catalogue lacks. This instrument screens procedures and is not a leaderboard forecast (cross-round Spearman -0.10, IR-H77-005).",
+ "evaluator_hashes": {
+  "evaluate_holdout.py": "e4211fe530ccb8f1ffeab2ef2f8e94a563492c2a3644c908d1a81e379fcbd9d4",
+  "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+  "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+  "spatial.py": "fad7b09db9efc512247b9a176a7e7ce8631e287592b4e07902d0b9c38bed00f8"
+ }
+}

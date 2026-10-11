@@ -25,6 +25,7 @@ WR = json.loads((EVID / "h102_write.json").read_text())
 DG = json.loads((EVID / "h102_posthoc_diagnostic.json").read_text())
 HO = json.loads((EVID / "h102_holdout.json").read_text())
 LN = json.loads((EVID / "h102_lane.json").read_text())
+CC = json.loads((EVID / "h102_lane_chance_control.json").read_text())
 esc = lambda x: html.escape(str(x))  # noqa: E731
 SUBMIT_OK = bool(CARD["submit_ok"])
 DOWNLOAD_OK = bool(CARD["download_ok"])
@@ -104,11 +105,15 @@ def card_html(prefix):
             "</div>")
 
 
-def insert_block(path: Path, marker: str, blob: str, *, top_of_body=True):
+def insert_block(path: Path, marker: str, blob: str, *, top_of_body=True, after=None):
     text = path.read_text(encoding="utf-8") if path.exists() else "<!doctype html><html><body></body></html>"
     block = f"<!--{marker}-->\n{blob}\n<!--/{marker}-->\n"
     if f"<!--{marker}-->" in text:
         text = re.sub(f"<!--{marker}-->.*?<!--/{marker}-->\\n?", lambda m: block, text, flags=re.S)
+    elif after and after in text:
+        # the tests (tests/test_h95.py) require the H95 README block to remain the first block: insert after it
+        i = text.index(after) + len(after)
+        text = text[:i] + "\n" + block + text[i:]
     elif top_of_body and "<body" in text:
         i = text.find(">", text.find("<body")) + 1
         text = text[:i] + "\n" + block + text[i:]
@@ -126,8 +131,10 @@ def readme_block():
             f"- **File:** `{TIF}` · SHA-256 `{SHA}`\n"
             f"- **Name:** `{NAME}` · **Note ({len(NOTE)}/140):** `{NOTE}`\n"
             f"- **Why negative:** the holdout fails the bar; the placed dots fall in A-confident / B-abstaining cells. "
-            f"The dot lane is a literal DUPLICATE/STOP (3 px share {f6(LN['full_dots']['literal']['max_near_3px_fraction'])} "
-            f"on a non-probe raster; random dots score higher on it, see IR-H102-006). "
+            f"The dot lane is a literal DUPLICATE/STOP: the literal 3 px share {f6(LN['full_dots']['literal']['max_near_3px_fraction'])} "
+            f"comes from universal-coverage probes; the policy share on an informative (non-probe) raster is "
+            f"{f6(LN['full_dots']['policy']['max_near_3px_fraction'])}, and a random set of the same size scores "
+            f"{f6(CC['result']['random_same_count']['max_near_3px_fraction'])} there (IR-H102-006). "
             f"On the holdout the A-only arm `single_A` scores {f6(HO['pooled']['scores']['single_A']['dti'])} "
             f"against {f6(HO['pooled']['scores']['random']['dti'])} for random dots (`evidence/h102_holdout.json`); "
             f"decomposition: [`evidence/h102_posthoc_diagnostic.json`](evidence/h102_posthoc_diagnostic.json). "
@@ -186,7 +193,7 @@ def main():
     insert_block(DOCS / "index.html", "H102-CARD", card_html(""))
     insert_block(DOCS / "executive-summary.html", "H102-CARD", card_html(""))
     insert_block(ROOT / "index.html", "H102-CARD", card_html("docs/"))
-    insert_block(ROOT / "README.md", "H102-README", readme_block(), top_of_body=False)
+    insert_block(ROOT / "README.md", "H102-README", readme_block(), top_of_body=False, after="<!--/H95-README-->")
     insert_block(ROOT / "AGENTS.md", "H102-AGENTS", agents_block(), top_of_body=False)
     print("published", TIF.name, "verdict", CARD["verdict"], "download", DOWNLOAD_OK, "submit", SUBMIT_OK)
 

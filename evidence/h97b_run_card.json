@@ -1,0 +1,109 @@
+{
+  "round": "H97b",
+  "generated_utc": "2026-10-11T00:48:03+00:00",
+  "registration": {
+    "amendment_sha256": "67c6b685424a473fe730ea1324aab38db47b068dbaa135c57be2803cb6d963d6",
+    "amendment_bytes": 4241,
+    "registration": "02668421f590ea8f4f13aa7052a4f3240beb410214db9ef80b7ac8a8e8f96703"
+  },
+  "amendment_to": "registry/h97_masslever_preregistration.json",
+  "hypothesis": "Lane-distinct emission: rank by the extended surface view, use View A only as a support screen and to veto the B-only road/erosion population, and emit at the metric-implied 25,400-dot mass lever.",
+  "mechanism": "A concealed fault beneath cover can still be read by surface channels that answer buried structure \u2014 LiDAR scarp morphology and radiometric ratios \u2014 where the potential field supports the location; where the potential field is silent, the surface response is attributed to a surface artefact instead.",
+  "named_non_fault_mimic": "road cuts, erosion lines, drainage scarping and DEM/radiometric acquisition seams (the B-only population, vetoed); lithologic contacts (A-only population, screened out by the surface ranker)",
+  "duplicate_finding": {
+    "h97_primary_vs_h96_near_3px_policy": 0.9385433070866142,
+    "literal": 0.9989370078740157,
+    "source": "evidence/h97_masslever_lane_dots.json",
+    "meaning": "an A-dominant field reproduces the A-view's fixed point; H97b removes A from the ranking"
+  },
+  "holdout": {
+    "withheld_positive_px": 60894,
+    "matched": {
+      "field_b": {
+        "dti": 0.10060830427746269,
+        "ci95": [
+          0.08383472180962515,
+          0.1171000339167803
+        ]
+      },
+      "random": {
+        "dti": 0.075716583838871,
+        "ci95": [
+          0.06588513893051312,
+          0.08658077370509677
+        ]
+      }
+    },
+    "mass_lever": {
+      "field_b": {
+        "dti": 0.07393457739291207,
+        "ci95": [
+          0.06034756885291039,
+          0.08752068032256205
+        ]
+      },
+      "random": {
+        "dti": 0.053666425213901275,
+        "ci95": [
+          0.04646595785385589,
+          0.06147959138575215
+        ]
+      }
+    },
+    "bar": 0.190147,
+    "verdict": "negative"
+  },
+  "gates": {
+    "format": {
+      "result": "PASS",
+      "measured": "1 band float32, EPSG:32611, 3730x3292, nan 0, inf 0, range [0.0, 1.0], emitted 25400, nodata None; problems []"
+    },
+    "uniqueness": {
+      "result": "PASS",
+      "measured": "196 priors, identical False, max Jaccard 0.0204"
+    },
+    "lane_surface": {
+      "result": "PASS",
+      "measured": "max Spearman 0.0772 (bar 0.90)"
+    },
+    "lane_dots": {
+      "result": "PASS",
+      "measured": "max Spearman 0.0351, max near-3px 0.9991338582677165 vs /home/user/GEMSDOE52/submission/gems52-h87-boardcal-marginal-20261010-61427px.tif"
+    },
+    "independence": {
+      "result": "PASS",
+      "measured": "max |rho| 0.0616 over 2283 blocks (H97, unchanged views); abandon 0.60"
+    },
+    "leakage_canary": {
+      "result": "PASS",
+      "measured": "max single-channel AUC 0.6190 (H97, unchanged views); alarm 0.90"
+    },
+    "holdout_promotion": {
+      "result": "FAIL",
+      "measured": "field_b 0.100608 vs bar 0.190147; mass-lever 0.073935; paired CI low vs random 0.010831"
+    },
+    "not_the_union": {
+      "result": "PASS",
+      "measured": "ranked by the surface view with View A as a screen and the B-only population vetoed; the H97 jaccard-vs-union test (0.0529) is superseded by a construction that cannot be the union"
+    }
+  },
+  "failed_gates": [
+    "holdout_promotion"
+  ],
+  "verdict": "negative",
+  "raster": {
+    "name": "gems52-h97b-surface-consensus-25400px-20261011T004256Z-450c07e1cca4-zeros",
+    "sha256": "1b0b00aa711fde1a0e7dfbdb3680bc9f8652a09f7ff6ee3709e7ccafda9656a2",
+    "bytes": 111139,
+    "note": "H97b lane-distinct: surface view (LiDAR scarp + radiometric ratios) ranked, View A as screen and B-only veto; 25,400 dots; 3px; 200m collar",
+    "note_chars": 139
+  },
+  "budget_deviation": "E1/E2/E3 used the round's three experiments; H97b is the artifact-production step required by the session's highest-priority instruction and is disclosed as a deviation, not counted as a fourth experiment.",
+  "download_ok": true,
+  "submit_ok": false,
+  "slots_used": 0,
+  "honesty": {
+    "bounded_by": "integrity-pinned inputs, not organizer-authenticated; the registry is local",
+    "not_a_score": "no leaderboard score is predicted anywhere in this card; HOLDOUT-DTI is catalogue recovery and E1 measured that it does not rank the board"
+  }
+}
