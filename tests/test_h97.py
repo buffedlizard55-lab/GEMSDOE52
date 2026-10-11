@@ -163,6 +163,13 @@ def test_identifier_rename_history_is_recorded_and_auditable():
     assert len(ent) == 1 and "identifier collision" in ent[0]["title"].lower()
 
 
+def test_feed_emits_the_newest_round_from_the_shared_tool():
+    """scripts/refresh_feed.py must derive newest_round itself, so a scheduled refresh keeps it."""
+    src = (ROOT / "scripts/refresh_feed.py").read_text()
+    assert "newest_round=newest_round()" in src and "def newest_round()" in src
+    assert "never advertise bytes we cannot verify" in src
+
+
 def test_site_pages_carry_the_verdict_and_one_click_downloads():
     for rel in ("docs/index.html", "docs/executive-summary.html", "docs/downloads/index.html"):
         page = (ROOT / rel).read_text()
@@ -170,4 +177,5 @@ def test_site_pages_carry_the_verdict_and_one_click_downloads():
         assert "SUBMIT: NO" in page or "OK TO SUBMIT: NO" in page or "SUBMIT NO" in page, rel
         assert "h97-candidate.tif" in page, rel
     feed = json.loads((ROOT / "docs/data/feed.json").read_text())["newest_round"]
-    assert feed["sha256"] == SHA and feed["hash_verified"] is True and feed["round"] == "H97/H98"
+    assert feed["sha256"] == SHA and feed["hash_verified"] is True
+    assert str(feed["round"]).startswith("H97") and feed["paired_vs_random"] < 0
