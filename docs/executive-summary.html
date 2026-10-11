@@ -25,6 +25,21 @@ th{color:var(--accent)}
 </style>
 </head>
 <body>
+<!--H97-CARD-->
+<style>.h97card{border:2px solid #66bb6a;border-radius:12px;padding:16px 18px;margin:16px 0;background:#0f1f14;color:#e8eaed;font:15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}.h97card h2{margin:0 0 8px;font-size:19px;color:#66bb6a}.h97card a{color:#4fc3f7;font-weight:700}.h97card code{background:#16241b;padding:1px 4px;border-radius:3px;font-size:12.5px;word-break:break-all}</style>
+<div class="h97card"><h2>Latest round H97 — potential-field directional anisotropy (View A) &times; surface anisotropy (View B)</h2>
+<p><b>OK TO DOWNLOAD: YES</b> (independent on-disk validator PASS: 1 band float32, EPSG:32611, 3730&times;3292,
+transform and bounds equal to the sample submission, <b>0 NaN, 0 inf, values exactly {0.0, 1.0}</b>,
+37,600 cells = 1). <b>OK TO SUBMIT: NO</b> — research candidate, NOT slot-approved: its holdout DTI did not clear the promotion rule (see the table below). Do not spend your last slot on it without reading the limits.</p>
+<p><a href="downloads/h97-candidate.tif" download><b>Download the H97 GeoTIFF (.tif) &darr;</b></a> &middot;
+<a href="downloads/h97-candidate.zip" download>single-TIFF .zip &darr;</a> &middot;
+<a href="downloads/h97-a-only-reasoning.csv" download>A-only reasoning CSV &darr;</a> &middot;
+<a href="h97.html">full result page</a> &middot;
+<a href="executive-summary.html">how to submit (step by step)</a></p>
+<p><small>Submission name <code>h97-pafdva-disagree-37600px-20261011T002233Z</code><br>Note (133/140): <code>H97 co-training: View-A potential-field anisotropy x View-B DEM anisotropy; disagreement field, 200m ring excluded, binary 37600 dots</code><br>
+SHA-256 <code>cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326</code> &middot; 132,324 bytes &middot;
+verdict <b>negative</b> &middot; submission slots used by this round: 0</small></p></div>
+<!--/H97-CARD-->
 <!--H95-CARD-->
 <style>.h95card{border:2px solid #1f4e79;border-radius:12px;padding:16px 18px;margin:16px 0;background:#f3f7fc;color:#14181d;font:15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}.h95card h2{margin:0 0 8px;font-size:19px;color:#1f4e79}.h95card a{color:#1f4e79;font-weight:700}.h95card code{background:#e8eef4;padding:1px 4px;border-radius:3px;font-size:12.5px;word-break:break-all}</style><div class="h95card"><h2>Latest round H95 — co-trained View B (A→B whole-segment pseudo-labels)</h2><p><b>OK TO DOWNLOAD: YES</b> (format-valid, all-finite, values exactly {0,1}, 37,654 cells). <b>OK TO SUBMIT: NO — research-only, do not upload.</b> Failed gate(s): holdout_promotion, lane_dots_policy. The co-trained field scored 0.1724 on HOLDOUT-DTI, below the promotable best 0.190147 (paired vs single_B CI spans 0). Its dots are also a lane near-duplicate of the parallel H93 file (IR-H95-006). No weekly slot is approved; slots used: 0.</p><p><a href="downloads/h95-candidate.tif" download>Download h95-candidate.tif</a> · <a href="downloads/h95-candidate.zip" download>ZIP</a> · <a href="h95-executive-summary.html">how to submit</a> · <a href="h95.html">full result</a></p><p><small><code>gems52-h95-cotrainB-segthin-37654px-20261010T223522Z-2c3942b4-zeros.tif</code> · SHA-256 <code>28ee81370c9ce1bfb914cc93</code> · HOLDOUT-DTI (gems52-pooled-hide-v1, 53,186 withheld positives): cotrain_B 0.172401 vs single_B 0.174571; first holdout of H87's rule 0.063316 (random 0.079238). A holdout number is not a board score.</small></p></div>
 <!--/H95-CARD-->

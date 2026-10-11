@@ -227,10 +227,20 @@ def test_h96_receipt_gate_blocks_promote_while_below_the_bar() -> None:
     page = (DOCS / "index.html").read_text(encoding="utf-8")
     assert "h96-bidir-cotrain-coverstep-25400px" in page
     assert note[:60] in page
-        # LATEST pointers all name this stem
-    for p in ("submission/LATEST.txt", "docs/submission/LATEST.txt", "submission/H96_LATEST.txt"):
-        txt = (ROOT / p).read_text(encoding="utf-8").strip()
-        assert txt in (H96_STEM, H96_STEM + ".tif"), (p, txt)
+        # H96 keeps its own round marker; the global pointers may move on to a newer round, but
+    # whatever they name must itself carry a per-artefact receipt with its slot gate still closed.
+    txt = (ROOT / "submission/H96_LATEST.txt").read_text(encoding="utf-8").strip()
+    assert txt in (H96_STEM, H96_STEM + ".tif"), txt
+    latest = (ROOT / "submission/LATEST.txt").read_text(encoding="utf-8").strip()
+    stem = latest[:-4] if latest.endswith(".tif") else latest
+    own = ROOT / f"evidence/submission_{stem}.json"
+    assert own.is_file(), f"global incumbent {latest} has no per-artefact receipt"
+    incumbent = json.loads(own.read_text())
+    assert incumbent["file"] == latest
+    assert incumbent["approved_for_weekly_slot"] is False
+    assert incumbent["promoted"] is False
+    assert incumbent["submission_slots_used"] == 0
+    assert (ROOT / "docs/submission/LATEST.txt").read_text(encoding="utf-8").strip() == latest
     # the run card names its validator and reports ok
     assert card["validator"]["ok"] is True
     assert card["validator"]["sha256"] == H96_SHA
@@ -278,3 +288,79 @@ def test_h96_artifact_bytes_re_verify_every_gate_claim() -> None:
     assert 'href="h96.html"' in (DOCS / "index.html").read_text(encoding="utf-8")
     assert (DOCS / "downloads/h96-candidate.tif").is_file()
     assert (DOCS / "downloads/h96-candidate.tif").read_bytes() == canonical.read_bytes()
+
+
+# --- H97 (arena/604a9c54 session): potential-field directional anisotropy x surface anisotropy -----
+# Same contract as H96: the pointer may name this round, but the receipt must keep the slot gate
+# closed, the note inside the portal limit, and the round's own receipts beside the artifact.
+
+H97_STEM = "gems52-h97-pafdva-disagree-37600px-20261011T002233Z"
+H97_SHA = "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326"
+
+
+def _h97_receipts():
+    artifacts = json.loads((ROOT / f"evidence/submission_{H97_STEM}.json").read_text())
+    card = json.loads((ROOT / "evidence/h97_run_card.json").read_text())
+    hold = json.loads((ROOT / "evidence/h97_holdout.json").read_text())
+    return artifacts, card, hold
+
+
+def test_h97_receipt_gate_blocks_promote_while_below_the_bar() -> None:
+    artifacts, card, hold = _h97_receipts()
+    assert artifacts["sha256"] == H97_SHA
+    assert artifacts["file"] == f"{H97_STEM}.tif"
+    assert artifacts["round"] == "H97"
+    assert artifacts["nonzero_px"] == 37600
+    assert artifacts["short_tif"] == "h97-candidate.tif"
+    assert artifacts["short_zip"] == "h97-candidate.zip"
+    assert artifacts["validator"]["sha256"] == H97_SHA
+    note = artifacts["note"]
+    assert 1 <= len(note) <= 140  # the owner's portal box is <=140 chars for this family's convention
+    assert artifacts["note_chars"] == len(note)
+    # run-card contract: negative verdict => slot gate closed, no upload, no promotion, zero slots
+    assert card["verdict"] == "negative"
+    assert card["submit_ok"] is False
+    assert card["submission_slots_used"] == 0
+    assert artifacts["approved_for_weekly_slot"] is False
+    assert artifacts["promoted"] is False
+    assert artifacts["submission_slots_used"] == 0
+    # labels discipline: HOLDOUT-DTI with the evaluator identity; the primary arm is the disagreement
+    hdti = card["holdout_dti"]["cotrain_disagree"]
+    assert hdti["evidence_class"] == "HOLDOUT-DTI"
+    assert hdti["evaluator_version"] == "gems52-pooled-hide-v1"
+    assert hdti["withheld_positive_pixels"] == 53186
+    assert hold["candidate"] == "cotrain_disagree"
+    assert hold["promotion_gate"]["PROMOTE"] is False
+    assert card["holdout_promotion_gate"]["PROMOTE"] is False
+    reg = artifacts["metadata"]["registration"]
+    assert reg["frozen_before_any_fit"] is True
+    assert reg["preregistration_sha256"].startswith("b2eb593f")
+    for name in ("h97_run_card.json", "h97_holdout.json", "h97_lane.json",
+                 "h97_e4_coverage.json", "h97_e4b_hysteresis.json"):
+        assert (ROOT / "evidence" / name).is_file(), name
+
+
+def test_h97_artifact_bytes_re_verify_every_gate_claim() -> None:
+    artifacts, card, hold = _h97_receipts()
+    canonical = DOCS / "downloads" / f"{H97_STEM}.tif"
+    assert canonical.is_file()
+    assert hashlib.sha256(canonical.read_bytes()).hexdigest() == H97_SHA
+    with rasterio.open(canonical) as ds:
+        data = ds.read(1)
+        assert ds.count == 1
+        assert ds.dtypes == ("float32",)
+        assert ds.crs.to_epsg() == 32611
+        assert (ds.height, ds.width) == (3730, 3292)
+        assert tuple(ds.transform)[:6] == (100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)
+        assert np.isfinite(data).all()
+        assert set(np.unique(data).tolist()) == {0.0, 1.0}
+        assert int(np.count_nonzero(data)) == 37600
+    assert card["uniqueness"]["canonical_pattern_unique"] is True
+    assert card["uniqueness"]["identical_to_a_prior"] is False
+    assert artifacts["uniqueness"]["canonical_pattern_unique"] is True
+    # the six-stage arithmetic of the held-out evaluation is exposed, not summarised away
+    assert hold["withheld_positive_px"] == 53186
+    assert hold["budget_per_fold"] == 9400
+    for arm in ("single_A2", "single_B2", "cotrain_disagree", "consensus", "buried_only",
+                "union_max", "random"):
+        assert arm in hold["pooled"]["scores"], arm

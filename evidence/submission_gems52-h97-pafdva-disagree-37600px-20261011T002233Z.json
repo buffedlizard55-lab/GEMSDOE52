@@ -1,0 +1,220 @@
+{
+ "file": "gems52-h97-pafdva-disagree-37600px-20261011T002233Z.tif",
+ "sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
+ "bytes": 132324,
+ "submission_name": "gems52-h97-pafdva-disagree-37600px-20261011T002233Z",
+ "note": "H97 co-training: View-A potential-field anisotropy x View-B DEM anisotropy; disagreement field, 200m ring excluded, binary 37600 dots",
+ "note_chars": 133,
+ "validator": {
+  "count": 1,
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "shape": [
+   3730,
+   3292
+  ],
+  "crs_match": true,
+  "shape_match": true,
+  "transform_match": true,
+  "bounds_match": true,
+  "nan": 0,
+  "infinite": 0,
+  "min": 0.0,
+  "max": 1.0,
+  "values": [
+   0.0,
+   1.0
+  ],
+  "ones": 37600,
+  "zeros": 12241560,
+  "mass": 37600.0,
+  "range_ok": true,
+  "PASS": true,
+  "range_rule_source": "official: single layer float32 with values between 0 and 1, EPSG:32611, 100 m, same bounds as the training data (https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/)",
+  "sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
+  "ok": true
+ },
+ "zip_file": "gems52-h97-pafdva-disagree-37600px-20261011T002233Z.zip",
+ "zip_sha256": "f1c4472f11caadb1adbe9e257fbb4af3cdb26be8011e47dbdb3a17fe0f45c304",
+ "approved_for_weekly_slot": false,
+ "promoted": false,
+ "submission_slots_used": 0,
+ "status": "research-only; local format validation is not organizer acceptance",
+ "metadata": {
+  "round": "H97",
+  "hypothesis": "directional semivariance anisotropy on the potential-field/subsurface bands is a subsurface texture that is not a copy of the surface texture; where View A is confident and View B abstains the fault may be buried beneath cover and absent from the surface-expression catalogue",
+  "evidence_class": "HOLDOUT-DTI",
+  "registration": {
+   "preregistration_sha256": "b2eb593fe5ebed4005574402769305b9805c2ffdd57d760ecd3d0c90bd359181",
+   "frozen_before_any_fit": true
+  }
+ },
+ "round": "H97",
+ "stem": "gems52-h97-pafdva-disagree-37600px-20261011T002233Z",
+ "nonzero_px": 37600,
+ "short_tif": "h97-candidate.tif",
+ "short_zip": "h97-candidate.zip",
+ "format": {
+  "path": "submission/gems52-h97-pafdva-disagree-37600px-20261011T002233Z.tif",
+  "bytes": 132324,
+  "sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
+  "bands": 1,
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "width": 3292,
+  "height": 3730,
+  "transform_match": true,
+  "bounds_match": true,
+  "nan_pixels": 0,
+  "infinity_pixels": 0,
+  "min": 0.0,
+  "max": 1.0,
+  "n_nonzero": 37600,
+  "mass": 37600.0,
+  "problems": [],
+  "ok": true,
+  "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+ },
+ "uniqueness": {
+  "n_priors_checked": 82,
+  "canonical_pattern_unique": true,
+  "identical_to_a_prior": false,
+  "help": "lane census scoped to locally available rasters (IR-H97-003)"
+ },
+ "holdout": {
+  "label": "HOLDOUT-DTI",
+  "evaluator": "gems52-pooled-hide-v1",
+  "withheld_positive_px": 53186,
+  "primary": {
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems52-pooled-hide-v1",
+   "dti": 0.02946034877464432,
+   "ci95": [
+    0.02115773138691092,
+    0.03975570357329162
+   ],
+   "withheld_positive_pixels": 53186,
+   "tpw": 1479.8376061106685,
+   "fpw": 36933.67879510753,
+   "fnw": 51706.16239388936
+  },
+  "controls": {
+   "single_A2": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.07639617220689764,
+    "ci95": [
+     0.061925201702061346,
+     0.09188078159587354
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 3856.0701149200836,
+    "fpw": 35773.18390604043,
+    "fnw": 49329.92988507991
+   },
+   "single_B2": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.1859682483761976,
+    "ci95": [
+     0.16404980882739553,
+     0.20706624422215536
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 9499.539114815969,
+    "fpw": 33164.01560923631,
+    "fnw": 43686.46088518404
+   },
+   "cotrain_disagree": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.02946034877464432,
+    "ci95": [
+     0.02115773138691092,
+     0.03975570357329162
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 1479.8376061106685,
+    "fpw": 36933.67879510753,
+    "fnw": 51706.16239388936
+   },
+   "consensus": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.13033209756514075,
+    "ci95": [
+     0.11280720785091922,
+     0.1489482627393436
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 6616.769942186307,
+    "fpw": 34481.91600396785,
+    "fnw": 46569.23005781367
+   },
+   "buried_only": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.0358832672321347,
+    "ci95": [
+     0.027300054119480856,
+     0.04506044378386262
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 1803.712193566384,
+    "fpw": 36782.828849125835,
+    "fnw": 51382.287806433604
+   },
+   "union_max": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.15666735264519369,
+    "ci95": [
+     0.13672418932987757,
+     0.17714682369130594
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 7977.8884589750205,
+    "fpw": 33890.458155530956,
+    "fnw": 45208.11154102499
+   },
+   "random": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "dti": 0.0815923825446992,
+    "ci95": [
+     0.07137879179130074,
+     0.09251216812060094
+    ],
+    "withheld_positive_pixels": 53186,
+    "tpw": 4126.867482230022,
+    "fpw": 36024.52259717952,
+    "fnw": 49059.132517769984
+   }
+  },
+  "paired_vs_best_control": {
+   "best_comparable_control": "single_B2",
+   "candidate_dti": 0.02946034877464432,
+   "control_dti": 0.1859682483761976,
+   "delta": -0.15650789960155329,
+   "ci95": [
+    -0.17908500547783923,
+    -0.13473655418256178
+   ],
+   "ci_lower_above_zero": false,
+   "above_standing_bar": false,
+   "PROMOTE": false
+  },
+  "note": "a holdout number is not a board forecast"
+ },
+ "placement": {
+  "dots": 37600,
+  "pool_px": 4325298,
+  "eligible_px": 4593171,
+  "ring_excluded_m": 200.0,
+  "min_cat_dist_m": 223.60679774997897,
+  "median_cat_dist_m": 2816.0255680657447,
+  "dots_within_300m_of_catalogue_pct": 2.1515957446808507
+ },
+ "submit_ok": false,
+ "download_ok": true
+}
