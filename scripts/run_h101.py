@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""H97 -- co-training lane: the B-only disagreement stratum as a fall-line / cardinal artefact veto.
+"""H101 -- co-training lane: the B-only disagreement stratum as a fall-line / cardinal artefact veto.
 
-Preregistered in ``knowledge/97_hypotheses_H97_preregistered.md`` (frozen before any fit; SHA-256
-pinned in ``registry/h97_preregistration.json``). This runner refuses to start if that file moved.
+Preregistered in ``knowledge/105_hypotheses_H101_preregistered.md`` (frozen before any fit; SHA-256
+pinned in ``registry/h101_preregistration.json``). This runner refuses to start if that file moved.
 
 Shared tools are reused, never forked:
   * cached feature stack, label-blind folds, learners, ranks -> ``run_h61`` (setup, sample_for_fit,
@@ -45,9 +45,9 @@ import run_h84 as h84                                                 # noqa: E4
 from gems52 import evaluate_holdout as evaluator                      # noqa: E402
 from gems52 import gates, nodes, spatial                              # noqa: E402
 
-PREREG = ROOT / "registry/h97_preregistration.json"
+PREREG = ROOT / "registry/h101_preregistration.json"
 REG = json.loads(PREREG.read_text())
-WORK = ROOT / "work/h97"
+WORK = ROOT / "work/h101"
 FEAT = WORK / "features"
 EVID = ROOT / "evidence"
 SAMPLE = ROOT / "data/sample_submission.tif"
@@ -55,7 +55,7 @@ SEED = base.SEED
 K_FOLD = REG["emission"]["K_fold"]
 K_TOTAL = REG["emission"]["K_total"]
 RING_M = REG["emission"]["catalogue_ring_excluded_m"]
-PREFIX = "gems52-h97-"
+PREFIX = "gems52-h101-"
 PRIMARY = REG["primary_arm"]
 BEST = "B_DVA2"
 OR = REG["orientation"]
@@ -86,14 +86,14 @@ def digest(p):
 
 def write(name, obj):
     EVID.mkdir(exist_ok=True)
-    p = EVID / f"h97_{name}.json"
+    p = EVID / f"h101_{name}.json"
     p.write_text(json.dumps(obj, indent=1, default=float, allow_nan=False) + "\n")
     return p
 
 
 def check_prereg():
     if digest(ROOT / REG["hypothesis_document"]) != REG["hypothesis_sha256"]:
-        raise SystemExit("H97 preregistered document changed after freezing; refusing to run")
+        raise SystemExit("H101 preregistered document changed after freezing; refusing to run")
     return REG
 
 
@@ -140,7 +140,7 @@ def stage_channels():
     moved = [n for n in sha if digest(FEAT / (n + ".npy")) != sha[n]]
     if moved:
         raise SystemExit(f"IR-H84-003 class failure: {len(moved)} files moved after write: {moved[:5]}")
-    man = dict(round="H97", created_utc=now(), operator="run_h84._compute_band (== run_h82 DVA2)",
+    man = dict(round="H101", created_utc=now(), operator="run_h84._compute_band (== run_h82 DVA2)",
                bands={str(k): v for k, v in h82.BANDS.items()}, lags_px=list(h82.LAGS), sigma_px=h82.SIGMA,
                dva2=DVA2, dva2_surface_only=DVA2S, sha256=sha, array_sha256=arr_sha,
                inputs_sha256=dict(store.manifest["inputs"]))
@@ -245,13 +245,13 @@ def stage_fit():
             rec["canary"][nm] = auc_of(store.gather(allg, [nm])[:, 0])
         for nm in DVA2:
             rec["canary"][nm] = auc_of(bank.col(nm)[erow])
-        rec["canary"]["H97_FL"] = auc_of(fl.ravel()[allg])
-        rec["canary"]["H97_DCARD"] = auc_of(dcard.ravel()[allg])
+        rec["canary"]["H101_FL"] = auc_of(fl.ravel()[allg])
+        rec["canary"]["H101_DCARD"] = auc_of(dcard.ravel()[allg])
         worst = max(rec["canary"].items(), key=lambda kv: kv[1])
         rec["canary_max"], rec["canary_worst"] = worst[1], worst[0]
         rec["canary_alarm"] = bool(worst[1] >= REG["canary_alarm_auc"])
-        log(f"fold {f}: canary max {worst[1]:.4f} ({worst[0]}) FL {rec['canary']['H97_FL']:.4f} "
-            f"DCARD {rec['canary']['H97_DCARD']:.4f} alarm={rec['canary_alarm']}")
+        log(f"fold {f}: canary max {worst[1]:.4f} ({worst[0]}) FL {rec['canary']['H101_FL']:.4f} "
+            f"DCARD {rec['canary']['H101_DCARD']:.4f} alarm={rec['canary_alarm']}")
         for arm in LEARNERS:
             ck = WORK / f"pred_{arm}_f{f}.npy"
             t1 = time.time()
@@ -319,7 +319,7 @@ def stage_independence():
 
 # -------------------------------------------------------------------------------------------- arms
 def arm_fields(rA, rB, rBs, fl, dcard, lowslope):
-    """All H97 derived arms from rank fields (NaN = not allowed). Frozen rules, knowledge/97 sec.2."""
+    """All H101 derived arms from rank fields (NaN = not allowed). Frozen rules, knowledge/105 sec.2."""
     sb = REG["strata"]["b_only"]
     erosion = fl >= OR["erosion_fl_min"]
     road = (dcard <= OR["road_dcard_max_deg"]) & lowslope
@@ -329,13 +329,13 @@ def arm_fields(rA, rB, rBs, fl, dcard, lowslope):
         b_only = (rb >= sb["B_rank_min"]) & (rA < sb["A_rank_max_exclusive"])
         return np.where(b_only & flag, rb + off, rb), b_only & flag
     out, flags = {}, {}
-    out["H97_veto"], flags["H97_veto"] = veto(rB, erosion | road)
-    out["H97_veto_fl"], flags["H97_veto_fl"] = veto(rB, erosion)
-    out["H97_veto_card"], flags["H97_veto_card"] = veto(rB, road)
-    out["H97_veto_s"], flags["H97_veto_s"] = veto(rBs, erosion | road)
-    out["H97_scarp_soft"] = rB * (1.0 - REG["scarp_soft_weight"] * fl)
+    out["H101_veto"], flags["H101_veto"] = veto(rB, erosion | road)
+    out["H101_veto_fl"], flags["H101_veto_fl"] = veto(rB, erosion)
+    out["H101_veto_card"], flags["H101_veto_card"] = veto(rB, road)
+    out["H101_veto_s"], flags["H101_veto_s"] = veto(rBs, erosion | road)
+    out["H101_scarp_soft"] = rB * (1.0 - REG["scarp_soft_weight"] * fl)
     c = REG["consensus"]
-    out["H97_consensus"] = rB * (c["base"] + c["a_weight"] * rA)
+    out["H101_consensus"] = rB * (c["base"] + c["a_weight"] * rA)
     return out, flags, erosion, road
 
 
@@ -408,9 +408,9 @@ def stage_holdout():
             continue
         ps = evaluator.pooled_summary({arm: terms[arm], BEST: terms[BEST]}, draws=1000, seed=SEED, candidate=arm)
         out["vs_B_DVA2"][arm] = ps["paired_differences"][BEST]
-    ps = evaluator.pooled_summary({"H97_veto_s": terms["H97_veto_s"], "B_DVA2s": terms["B_DVA2s"]},
-                                  draws=1000, seed=SEED, candidate="H97_veto_s")
-    out["H97_veto_s_vs_B_DVA2s"] = ps["paired_differences"]["B_DVA2s"]
+    ps = evaluator.pooled_summary({"H101_veto_s": terms["H101_veto_s"], "B_DVA2s": terms["B_DVA2s"]},
+                                  draws=1000, seed=SEED, candidate="H101_veto_s")
+    out["H101_veto_s_vs_B_DVA2s"] = ps["paired_differences"]["B_DVA2s"]
     out["paired_differences_keyed_by"] = "comparison arm; each entry is candidate minus that arm"
     out["finished_utc"] = now()
     write("holdout", out)
@@ -468,7 +468,7 @@ def stage_build():
 # ------------------------------------------------------------------------------------------------ lane
 def stage_lane():
     _patch_h84()
-    h84.stage_lane()          # surface lane -> quota placement -> dots lane, receipts to evidence/h97_lane.json
+    h84.stage_lane()          # surface lane -> quota placement -> dots lane, receipts to evidence/h101_lane.json
 
 
 # ----------------------------------------------------------------------------------------------- write
@@ -477,7 +477,7 @@ A_BANDS, A_MECH = h84.A_BANDS, h84.A_MECH
 
 def write_a_only_reasoning(cand, fA, fB, catd, eligible, fl, name):
     ys, xs = np.nonzero(cand)
-    p = ROOT / "docs/downloads" / "h97-a-only-reasoning.csv"   # one copy only (name in the CSV rows' file name not needed)
+    p = ROOT / "docs/downloads" / "h101-a-only-reasoning.csv"   # one copy only (name in the CSV rows' file name not needed)
     with rasterio.open(SAMPLE) as s:
         tr = s.transform
     z = {}
@@ -511,7 +511,7 @@ def write_a_only_reasoning(cand, fA, fB, catd, eligible, fl, name):
                         f"Template reading if the anomaly is real: {mech}", mimic,
                         "a seismic-reflection, gravity or MT profile across the cell shows no basement offset, "
                         "or 1-m LiDAR / field mapping shows unfaulted Quaternary cover with no buried step",
-                        "LOW: View A has failed sufficiency in every round incl. H97 (see run card); the A-only "
+                        "LOW: View A has failed sufficiency in every round incl. H101 (see run card); the A-only "
                         "stratum scored below random on the catalogue holdout (H93); reviewer lead only",
                         "model evidence for a Phase-2 reviewer target; NOT an organizer-confirmed fault"])
     return str(p.relative_to(ROOT)), int(len(ys))
@@ -521,7 +521,7 @@ def stage_write():
     check_prereg()
     from gems52 import submission_writer
     _r, store, cat, eligible, folds, va, vb, ring_px = base.setup()
-    ln = json.loads((EVID / "h97_lane.json").read_text())
+    ln = json.loads((EVID / "h101_lane.json").read_text())
     if "stopped" in ln:
         raise SystemExit("lane stopped before placement; no raster is written (duplicate logged)")
     dots = np.load(WORK / "dots.npy").astype(bool)
@@ -530,14 +530,14 @@ def stage_write():
     fl = np.load(WORK / "orient_FL.npy")
     catd = ndi.distance_transform_edt(~cat)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    name = f"h97-fallline-veto-dva2-{int(dots.sum())}px-{stamp}"
-    note = ("H97 co-train veto: B-only dots on fall-line/cardinal axes demoted (Hessian), DVA2 surface field, "
+    name = f"h101-fallline-veto-dva2-{int(dots.sum())}px-{stamp}"
+    note = ("H101 co-train veto: B-only dots on fall-line/cardinal axes demoted (Hessian), DVA2 surface field, "
             "3px, 200m ring; research")
     assert len(name) <= 140 and len(note) <= 140, (len(name), len(note))
     out = ROOT / "submission" / f"gems52-{name}-zeros.tif"
     pred = dots.astype(np.float32)          # exactly {0,1}; 0.0 outside the footprint; no NaN anywhere
     rec = submission_writer.write_submission(out, pred, SAMPLE, eligible, note=note, name=name,
-                                             metadata=dict(round="H97", primary_arm=PRIMARY))
+                                             metadata=dict(round="H101", primary_arm=PRIMARY))
     fmt = gates.format_report(out, SAMPLE, footprint=eligible)
     with rasterio.open(out) as a, rasterio.open(SAMPLE) as s:
         v = a.read(1)
@@ -598,14 +598,14 @@ def stage_write():
                               within_300m_pct=float((catd[dots] * 100 <= 300).mean() * 100)),
                a_only_reasoning_csv=a_csv, a_only_rows=n_a, finished_utc=now())
     dl = ROOT / "docs/downloads"
-    shutil.copy(out, dl / "h97-candidate.tif")
-    with zipfile.ZipFile(dl / "h97-candidate.zip", "w", zipfile.ZIP_DEFLATED) as z:
+    shutil.copy(out, dl / "h101-candidate.tif")
+    with zipfile.ZipFile(dl / "h101-candidate.zip", "w", zipfile.ZIP_DEFLATED) as z:
         z.write(out, out.name)
-    with zipfile.ZipFile(dl / "h97-candidate.zip") as z:
+    with zipfile.ZipFile(dl / "h101-candidate.zip") as z:
         assert z.namelist() == [out.name] and z.read(out.name) == out.read_bytes()
-    res["download_staged"] = dict(tif="docs/downloads/h97-candidate.tif", zip="docs/downloads/h97-candidate.zip",
-                                  tif_sha256=digest(dl / "h97-candidate.tif"),
-                                  zip_sha256=digest(dl / "h97-candidate.zip"))
+    res["download_staged"] = dict(tif="docs/downloads/h101-candidate.tif", zip="docs/downloads/h101-candidate.zip",
+                                  tif_sha256=digest(dl / "h101-candidate.tif"),
+                                  zip_sha256=digest(dl / "h101-candidate.zip"))
     write("build", res)
     log(json.dumps({k: res[k] for k in ("file", "bytes", "sha256", "name", "note")}, indent=1))
     log("validator: " + json.dumps(val, default=str))

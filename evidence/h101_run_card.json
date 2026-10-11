@@ -1,8 +1,8 @@
 {
- "round": "H97",
+ "round": "H101",
  "generated_utc": "2026-10-11T00:39:04+00:00",
  "preregistration": {
-  "document": "knowledge/97_hypotheses_H97_preregistered.md",
+  "document": "knowledge/105_hypotheses_H101_preregistered.md",
   "sha256": "0a28e26adb45c5a2f7d5a38b920f2683cc4b8946836ea2742deef2850f63a0d0",
   "frozen_utc": "2026-10-11T00:03:24+00:00"
  },
@@ -105,7 +105,7 @@
     0.09097325665223467
    ]
   },
-  "H97_veto": {
+  "H101_veto": {
    "label": "HOLDOUT-DTI",
    "evaluator": "gems52-pooled-hide-v1",
    "withheld_positive_px": 53186,
@@ -115,7 +115,7 @@
     0.21284148543594295
    ]
   },
-  "H97_veto_fl": {
+  "H101_veto_fl": {
    "label": "HOLDOUT-DTI",
    "evaluator": "gems52-pooled-hide-v1",
    "withheld_positive_px": 53186,
@@ -125,7 +125,7 @@
     0.2127325774635711
    ]
   },
-  "H97_veto_card": {
+  "H101_veto_card": {
    "label": "HOLDOUT-DTI",
    "evaluator": "gems52-pooled-hide-v1",
    "withheld_positive_px": 53186,
@@ -135,7 +135,7 @@
     0.21365293832505142
    ]
   },
-  "H97_veto_s": {
+  "H101_veto_s": {
    "label": "HOLDOUT-DTI",
    "evaluator": "gems52-pooled-hide-v1",
    "withheld_positive_px": 53186,
@@ -145,7 +145,7 @@
     0.2053452896185283
    ]
   },
-  "H97_scarp_soft": {
+  "H101_scarp_soft": {
    "label": "HOLDOUT-DTI",
    "evaluator": "gems52-pooled-hide-v1",
    "withheld_positive_px": 53186,
@@ -155,7 +155,7 @@
     0.20025645876522066
    ]
   },
-  "H97_consensus": {
+  "H101_consensus": {
    "label": "HOLDOUT-DTI",
    "evaluator": "gems52-pooled-hide-v1",
    "withheld_positive_px": 53186,
@@ -203,42 +203,42 @@
     -0.0947531218419991
    ]
   },
-  "H97_veto": {
+  "H101_veto": {
    "delta": -0.000709145527035715,
    "ci95": [
     -0.001869530681030069,
     0.0003195615806285153
    ]
   },
-  "H97_veto_fl": {
+  "H101_veto_fl": {
    "delta": -0.0007708249457316352,
    "ci95": [
     -0.0019227597347837154,
     0.00024502225911013364
    ]
   },
-  "H97_veto_card": {
+  "H101_veto_card": {
    "delta": 9.945562609595116e-05,
    "ci95": [
     -0.00013153717701764808,
     0.00030841802791149373
    ]
   },
-  "H97_veto_s": {
+  "H101_veto_s": {
    "delta": -0.008626374615780447,
    "ci95": [
     -0.016078490640446544,
     -0.002143665605574144
    ]
   },
-  "H97_scarp_soft": {
+  "H101_scarp_soft": {
    "delta": -0.012018434655247184,
    "ci95": [
     -0.017177673252581384,
     -0.0067077240069806105
    ]
   },
-  "H97_consensus": {
+  "H101_consensus": {
    "delta": -0.008395453456272156,
    "ci95": [
     -0.014779340694956953,
@@ -423,14 +423,14 @@
   "not_union_pass": true
  },
  "raster": {
-  "file": "submission/gems52-h97-fallline-veto-dva2-37654px-20261011T003404Z-zeros.tif",
+  "file": "submission/gems52-h101-fallline-veto-dva2-37654px-20261011T003404Z-zeros.tif",
   "bytes": 142197,
   "sha256": "5a9ce7cc3d10493f3fd86ba4c9887f5f198e2f5b007e301b8726e89b3644828b",
   "download": {
-   "tif": "docs/downloads/h97-candidate.tif",
-   "zip": "docs/downloads/h97-candidate.zip",
+   "tif": "docs/downloads/h101-candidate.tif",
+   "zip": "docs/downloads/h101-candidate.zip",
    "tif_sha256": "5a9ce7cc3d10493f3fd86ba4c9887f5f198e2f5b007e301b8726e89b3644828b",
-   "zip_sha256": "6668efec7db4021ffbf1b278c34699a55de87c7ca5ba1ea29af11360d8a82650"
+   "zip_sha256": "79a5761f6243bd44f83d4f515cb428103fd13cbda50d7bb8316ef25b3ae8339b"
   }
  },
  "validator": {
@@ -461,12 +461,12 @@
   "PASS": true
  },
  "submission": {
-  "name": "h97-fallline-veto-dva2-37654px-20261011T003404Z",
-  "note": "H97 co-train veto: B-only dots on fall-line/cardinal axes demoted (Hessian), DVA2 surface field, 3px, 200m ring; research",
+  "name": "h101-fallline-veto-dva2-37654px-20261011T003404Z",
+  "note": "H101 co-train veto: B-only dots on fall-line/cardinal axes demoted (Hessian), DVA2 surface field, 3px, 200m ring; research",
   "note_chars": 121
  },
  "a_only_reasoning": {
-  "csv": "docs/downloads/h97-a-only-reasoning.csv",
+  "csv": "docs/downloads/h101-a-only-reasoning.csv",
   "rows": 9277
  },
  "gates": {

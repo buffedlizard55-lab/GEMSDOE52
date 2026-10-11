@@ -1,10 +1,10 @@
 {
  "stage": "write",
- "file": "submission/gems52-h97-fallline-veto-dva2-37654px-20261011T003404Z-zeros.tif",
+ "file": "submission/gems52-h101-fallline-veto-dva2-37654px-20261011T003404Z-zeros.tif",
  "bytes": 142197,
  "sha256": "5a9ce7cc3d10493f3fd86ba4c9887f5f198e2f5b007e301b8726e89b3644828b",
- "name": "h97-fallline-veto-dva2-37654px-20261011T003404Z",
- "note": "H97 co-train veto: B-only dots on fall-line/cardinal axes demoted (Hessian), DVA2 surface field, 3px, 200m ring; research",
+ "name": "h101-fallline-veto-dva2-37654px-20261011T003404Z",
+ "note": "H101 co-train veto: B-only dots on fall-line/cardinal axes demoted (Hessian), DVA2 surface field, 3px, 200m ring; research",
  "note_chars": 121,
  "validator": {
   "count": 1,
@@ -34,7 +34,7 @@
   "PASS": true
  },
  "format_report": {
-  "path": "/home/user/GEMSDOE52/submission/gems52-h97-fallline-veto-dva2-37654px-20261011T003404Z-zeros.tif",
+  "path": "/home/user/GEMSDOE52/submission/gems52-h101-fallline-veto-dva2-37654px-20261011T003404Z-zeros.tif",
   "bytes": 142197,
   "sha256": "5a9ce7cc3d10493f3fd86ba4c9887f5f198e2f5b007e301b8726e89b3644828b",
   "bands": 1,
@@ -83,14 +83,14 @@
   "validation_class": "local on-disk template/range check; not organizer upload acceptance"
  },
  "writer_receipt": {
-  "file": "gems52-h97-fallline-veto-dva2-37654px-20261011T003404Z-zeros.tif",
+  "file": "gems52-h101-fallline-veto-dva2-37654px-20261011T003404Z-zeros.tif",
   "sha256": "5a9ce7cc3d10493f3fd86ba4c9887f5f198e2f5b007e301b8726e89b3644828b",
   "bytes": 142197,
-  "submission_name": "h97-fallline-veto-dva2-37654px-20261011T003404Z",
-  "note": "H97 co-train veto: B-only dots on fall-line/cardinal axes demoted (Hessian), DVA2 surface field, 3px, 200m ring; research",
+  "submission_name": "h101-fallline-veto-dva2-37654px-20261011T003404Z",
+  "note": "H101 co-train veto: B-only dots on fall-line/cardinal axes demoted (Hessian), DVA2 surface field, 3px, 200m ring; research",
   "note_chars": 121,
   "validator": {
-   "path": "/home/user/GEMSDOE52/submission/gems52-h97-fallline-veto-dva2-37654px-20261011T003404Z-zeros.tif",
+   "path": "/home/user/GEMSDOE52/submission/gems52-h101-fallline-veto-dva2-37654px-20261011T003404Z-zeros.tif",
    "bytes": 142197,
    "sha256": "5a9ce7cc3d10493f3fd86ba4c9887f5f198e2f5b007e301b8726e89b3644828b",
    "bands": 1,
@@ -138,15 +138,15 @@
    "ok": true,
    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
   },
-  "zip_file": "gems52-h97-fallline-veto-dva2-37654px-20261011T003404Z-zeros.zip",
-  "zip_sha256": "de8c0e108a47f06c6f71f5736614483908aa9dd8cb2b804a0b716e70da056880",
+  "zip_file": "gems52-h101-fallline-veto-dva2-37654px-20261011T003404Z-zeros.zip",
+  "zip_sha256": "79a5761f6243bd44f83d4f515cb428103fd13cbda50d7bb8316ef25b3ae8339b",
   "approved_for_weekly_slot": false,
   "promoted": false,
   "submission_slots_used": 0,
   "status": "research-only; local format validation is not organizer acceptance",
   "metadata": {
-   "round": "H97",
-   "primary_arm": "H97_veto"
+   "round": "H101",
+   "primary_arm": "H101_veto"
   }
  },
  "not_the_union": {
@@ -8656,14 +8656,14 @@
   "median_dist_m": 1442.2205101855957,
   "within_300m_pct": 14.989111382588835
  },
- "a_only_reasoning_csv": "docs/downloads/h97-a-only-reasoning.csv",
+ "a_only_reasoning_csv": "docs/downloads/h101-a-only-reasoning.csv",
  "a_only_rows": 9277,
  "finished_utc": "2026-10-11T00:37:42+00:00",
  "download_staged": {
-  "tif": "docs/downloads/h97-candidate.tif",
-  "zip": "docs/downloads/h97-candidate.zip",
+  "tif": "docs/downloads/h101-candidate.tif",
+  "zip": "docs/downloads/h101-candidate.zip",
   "tif_sha256": "5a9ce7cc3d10493f3fd86ba4c9887f5f198e2f5b007e301b8726e89b3644828b",
-  "zip_sha256": "6668efec7db4021ffbf1b278c34699a55de87c7ca5ba1ea29af11360d8a82650"
+  "zip_sha256": "79a5761f6243bd44f83d4f515cb428103fd13cbda50d7bb8316ef25b3ae8339b"
  },
  "a_only_reasoning_csv_note": "byte-identical copy kept under the short name; the long-name duplicate was removed after the write stage to avoid a second 7.6 MB file"
 }

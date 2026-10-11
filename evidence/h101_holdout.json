@@ -96,7 +96,7 @@
      "placed": 9400,
      "mean_dot_credit": 0.04277240124876058
     },
-    "H97_veto": {
+    "H101_veto": {
      "dti": 0.12633680224578472,
      "tpw": 3039.110003773673,
      "fpw": 8002.985917206213,
@@ -113,7 +113,7 @@
      "mean_dot_credit": 0.14861851944614746,
      "vetoed_cells_in_allowed": 10137
     },
-    "H97_veto_fl": {
+    "H101_veto_fl": {
      "dti": 0.1264305198076511,
      "tpw": 3041.367570118588,
      "fpw": 8000.852227825169,
@@ -130,7 +130,7 @@
      "mean_dot_credit": 0.1488455076781735,
      "vetoed_cells_in_allowed": 9082
     },
-    "H97_veto_card": {
+    "H101_veto_card": {
      "dti": 0.1267383398000619,
      "tpw": 3048.62148269188,
      "fpw": 7987.645279729052,
@@ -147,7 +147,7 @@
      "mean_dot_credit": 0.15025050215648378,
      "vetoed_cells_in_allowed": 1241
     },
-    "H97_veto_s": {
+    "H101_veto_s": {
      "dti": 0.12152071971438867,
      "tpw": 2921.512317508433,
      "fpw": 8048.83292036096,
@@ -164,7 +164,7 @@
      "mean_dot_credit": 0.14374117868500424,
      "vetoed_cells_in_allowed": 10178
     },
-    "H97_scarp_soft": {
+    "H101_scarp_soft": {
      "dti": 0.11476968257390391,
      "tpw": 2759.9143072602133,
      "fpw": 8241.165963612506,
@@ -180,7 +180,7 @@
      "placed": 9400,
      "mean_dot_credit": 0.12328021663696741
     },
-    "H97_consensus": {
+    "H101_consensus": {
      "dti": 0.11476300264972754,
      "tpw": 2756.68501539245,
      "fpw": 8110.6998623207755,
@@ -301,7 +301,7 @@
      "placed": 9400,
      "mean_dot_credit": 0.03253786325944548
     },
-    "H97_veto": {
+    "H101_veto": {
      "dti": 0.2674109293007723,
      "tpw": 2865.1604910553533,
      "fpw": 7999.0794048081425,
@@ -318,7 +318,7 @@
      "mean_dot_credit": 0.14903410587147425,
      "vetoed_cells_in_allowed": 4809
     },
-    "H97_veto_fl": {
+    "H101_veto_fl": {
      "dti": 0.26700740320236044,
      "tpw": 2860.6526625093506,
      "fpw": 8000.13659576656,
@@ -335,7 +335,7 @@
      "mean_dot_credit": 0.14892163874823833,
      "vetoed_cells_in_allowed": 4450
     },
-    "H97_veto_card": {
+    "H101_veto_card": {
      "dti": 0.26972866905640264,
      "tpw": 2890.6675915665655,
      "fpw": 7986.06260561728,
@@ -352,7 +352,7 @@
      "mean_dot_credit": 0.1504188717428426,
      "vetoed_cells_in_allowed": 416
     },
-    "H97_veto_s": {
+    "H101_veto_s": {
      "dti": 0.2627758505860607,
      "tpw": 2815.1804264610028,
      "fpw": 8043.013350143549,
@@ -369,7 +369,7 @@
      "mean_dot_credit": 0.14436028189962238,
      "vetoed_cells_in_allowed": 5530
     },
-    "H97_scarp_soft": {
+    "H101_scarp_soft": {
      "dti": 0.2471206490712805,
      "tpw": 2646.2244346065713,
      "fpw": 8186.919224401923,
@@ -385,7 +385,7 @@
      "placed": 9400,
      "mean_dot_credit": 0.12905114634022097
     },
-    "H97_consensus": {
+    "H101_consensus": {
      "dti": 0.26584838277759243,
      "tpw": 2847.2240306477606,
      "fpw": 7994.5474763268685,
@@ -506,7 +506,7 @@
      "placed": 9400,
      "mean_dot_credit": 0.04942727767728252
     },
-    "H97_veto": {
+    "H101_veto": {
      "dti": 0.22871529589572434,
      "tpw": 1717.878601837732,
      "fpw": 8585.077989717593,
@@ -523,7 +523,7 @@
      "mean_dot_credit": 0.08669383088110724,
      "vetoed_cells_in_allowed": 2194
     },
-    "H97_veto_fl": {
+    "H101_veto_fl": {
      "dti": 0.228654084342837,
      "tpw": 1717.407197316941,
      "fpw": 8585.294750230883,
@@ -540,7 +540,7 @@
      "mean_dot_credit": 0.08667077125203375,
      "vetoed_cells_in_allowed": 2074
     },
-    "H97_veto_card": {
+    "H101_veto_card": {
      "dti": 0.22834909137538104,
      "tpw": 1714.8932067259689,
      "fpw": 8582.921342500134,
@@ -557,7 +557,7 @@
      "mean_dot_credit": 0.08692326143615599,
      "vetoed_cells_in_allowed": 149
     },
-    "H97_veto_s": {
+    "H101_veto_s": {
      "dti": 0.22174936782194035,
      "tpw": 1664.822549578753,
      "fpw": 8621.560669523975,
@@ -574,7 +574,7 @@
      "mean_dot_credit": 0.08281269473149211,
      "vetoed_cells_in_allowed": 2795
     },
-    "H97_scarp_soft": {
+    "H101_scarp_soft": {
      "dti": 0.230594664382122,
      "tpw": 1733.3786052836508,
      "fpw": 8599.589154665078,
@@ -590,7 +590,7 @@
      "placed": 9400,
      "mean_dot_credit": 0.08515008992924704
     },
-    "H97_consensus": {
+    "H101_consensus": {
      "dti": 0.22166702551415904,
      "tpw": 1663.7803877708984,
      "fpw": 8613.039785453824,
@@ -711,7 +711,7 @@
      "placed": 9400,
      "mean_dot_credit": 0.040702262471475355
     },
-    "H97_veto": {
+    "H101_veto": {
      "dti": 0.2488362068329254,
      "tpw": 2197.962666059426,
      "fpw": 8418.88564990913,
@@ -728,7 +728,7 @@
      "mean_dot_credit": 0.10437386703094349,
      "vetoed_cells_in_allowed": 4188
     },
-    "H97_veto_fl": {
+    "H101_veto_fl": {
      "dti": 0.2487718388014139,
      "tpw": 2197.3939961828014,
      "fpw": 8419.452128882549,
@@ -745,7 +745,7 @@
      "mean_dot_credit": 0.1043136033103671,
      "vetoed_cells_in_allowed": 4068
     },
-    "H97_veto_card": {
+    "H101_veto_card": {
      "dti": 0.24989145925327647,
      "tpw": 2207.438459185468,
      "fpw": 8412.50681156762,
@@ -762,7 +762,7 @@
      "mean_dot_credit": 0.1050524668545084,
      "vetoed_cells_in_allowed": 203
     },
-    "H97_veto_s": {
+    "H101_veto_s": {
      "dti": 0.2277115395216691,
      "tpw": 2006.4973996946715,
      "fpw": 8503.379594802847,
@@ -779,7 +779,7 @@
      "mean_dot_credit": 0.09538514948905877,
      "vetoed_cells_in_allowed": 4024
     },
-    "H97_scarp_soft": {
+    "H101_scarp_soft": {
      "dti": 0.23789560303208163,
      "tpw": 2100.007633114252,
      "fpw": 8489.1602327217,
@@ -795,7 +795,7 @@
      "placed": 9400,
      "mean_dot_credit": 0.09689784758279783
     },
-    "H97_consensus": {
+    "H101_consensus": {
      "dti": 0.24358546814134066,
      "tpw": 2150.4450216968307,
      "fpw": 8443.043345930937,
@@ -906,7 +906,7 @@
     "fpw": 36044.86583622452,
     "fnw": 49118.777051328965
    },
-   "H97_veto": {
+   "H101_veto": {
     "evidence_class": "HOLDOUT-DTI",
     "evaluator_version": "gems52-pooled-hide-v1",
     "dti": 0.19212165660066666,
@@ -919,7 +919,7 @@
     "fpw": 33006.02896164107,
     "fnw": 43365.888237273844
    },
-   "H97_veto_fl": {
+   "H101_veto_fl": {
     "evidence_class": "HOLDOUT-DTI",
     "evaluator_version": "gems52-pooled-hide-v1",
     "dti": 0.19205997718197074,
@@ -932,7 +932,7 @@
     "fpw": 33005.735702705155,
     "fnw": 43369.178573872334
    },
-   "H97_veto_card": {
+   "H101_veto_card": {
     "evidence_class": "HOLDOUT-DTI",
     "evaluator_version": "gems52-pooled-hide-v1",
     "dti": 0.19293025775379832,
@@ -945,7 +945,7 @@
     "fpw": 32969.13603941408,
     "fnw": 43324.37925983012
    },
-   "H97_veto_s": {
+   "H101_veto_s": {
     "evidence_class": "HOLDOUT-DTI",
     "evaluator_version": "gems52-pooled-hide-v1",
     "dti": 0.18420442751192193,
@@ -958,7 +958,7 @@
     "fpw": 33216.78653483131,
     "fnw": 43777.98730675713
    },
-   "H97_scarp_soft": {
+   "H101_scarp_soft": {
     "evidence_class": "HOLDOUT-DTI",
     "evaluator_version": "gems52-pooled-hide-v1",
     "dti": 0.1808123674724552,
@@ -971,7 +971,7 @@
     "fpw": 33516.834575401204,
     "fnw": 43946.475019735306
    },
-   "H97_consensus": {
+   "H101_consensus": {
     "evidence_class": "HOLDOUT-DTI",
     "evaluator_version": "gems52-pooled-hide-v1",
     "dti": 0.18443534867143022,
@@ -985,7 +985,7 @@
     "fnw": 43767.865544492066
    }
   },
-  "best_comparable_control": "H97_veto_card",
+  "best_comparable_control": "H101_veto_card",
   "paired_differences": {
    "single_A": {
     "evidence_class": "HOLDOUT-DTI",
@@ -1037,7 +1037,7 @@
     ],
     "withheld_positive_pixels": 53186
    },
-   "H97_veto_fl": {
+   "H101_veto_fl": {
     "evidence_class": "HOLDOUT-DTI",
     "evaluator_version": "gems52-pooled-hide-v1",
     "delta": 6.16794186959202e-05,
@@ -1047,7 +1047,7 @@
     ],
     "withheld_positive_pixels": 53186
    },
-   "H97_veto_card": {
+   "H101_veto_card": {
     "evidence_class": "HOLDOUT-DTI",
     "evaluator_version": "gems52-pooled-hide-v1",
     "delta": -0.0008086011531316661,
@@ -1057,7 +1057,7 @@
     ],
     "withheld_positive_pixels": 53186
    },
-   "H97_veto_s": {
+   "H101_veto_s": {
     "evidence_class": "HOLDOUT-DTI",
     "evaluator_version": "gems52-pooled-hide-v1",
     "delta": 0.007917229088744732,
@@ -1067,7 +1067,7 @@
     ],
     "withheld_positive_pixels": 53186
    },
-   "H97_scarp_soft": {
+   "H101_scarp_soft": {
     "evidence_class": "HOLDOUT-DTI",
     "evaluator_version": "gems52-pooled-hide-v1",
     "delta": 0.01130928912821147,
@@ -1077,7 +1077,7 @@
     ],
     "withheld_positive_pixels": 53186
    },
-   "H97_consensus": {
+   "H101_consensus": {
     "evidence_class": "HOLDOUT-DTI",
     "evaluator_version": "gems52-pooled-hide-v1",
     "delta": 0.007686307929236441,
@@ -1160,7 +1160,7 @@
    ],
    "withheld_positive_pixels": 53186
   },
-  "H97_veto": {
+  "H101_veto": {
    "evidence_class": "HOLDOUT-DTI",
    "evaluator_version": "gems52-pooled-hide-v1",
    "delta": -0.000709145527035715,
@@ -1170,7 +1170,7 @@
    ],
    "withheld_positive_pixels": 53186
   },
-  "H97_veto_fl": {
+  "H101_veto_fl": {
    "evidence_class": "HOLDOUT-DTI",
    "evaluator_version": "gems52-pooled-hide-v1",
    "delta": -0.0007708249457316352,
@@ -1180,7 +1180,7 @@
    ],
    "withheld_positive_pixels": 53186
   },
-  "H97_veto_card": {
+  "H101_veto_card": {
    "evidence_class": "HOLDOUT-DTI",
    "evaluator_version": "gems52-pooled-hide-v1",
    "delta": 9.945562609595116e-05,
@@ -1190,7 +1190,7 @@
    ],
    "withheld_positive_pixels": 53186
   },
-  "H97_veto_s": {
+  "H101_veto_s": {
    "evidence_class": "HOLDOUT-DTI",
    "evaluator_version": "gems52-pooled-hide-v1",
    "delta": -0.008626374615780447,
@@ -1200,7 +1200,7 @@
    ],
    "withheld_positive_pixels": 53186
   },
-  "H97_scarp_soft": {
+  "H101_scarp_soft": {
    "evidence_class": "HOLDOUT-DTI",
    "evaluator_version": "gems52-pooled-hide-v1",
    "delta": -0.012018434655247184,
@@ -1210,7 +1210,7 @@
    ],
    "withheld_positive_pixels": 53186
   },
-  "H97_consensus": {
+  "H101_consensus": {
    "evidence_class": "HOLDOUT-DTI",
    "evaluator_version": "gems52-pooled-hide-v1",
    "delta": -0.008395453456272156,
@@ -1221,7 +1221,7 @@
    "withheld_positive_pixels": 53186
   }
  },
- "H97_veto_s_vs_B_DVA2s": {
+ "H101_veto_s_vs_B_DVA2s": {
   "evidence_class": "HOLDOUT-DTI",
   "evaluator_version": "gems52-pooled-hide-v1",
   "delta": -0.0003011729796007223,

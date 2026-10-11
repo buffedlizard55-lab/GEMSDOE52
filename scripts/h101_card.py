@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Assemble the single H97 JSON run card from receipts on disk only (no recomputation, no typed numbers)."""
+"""Assemble the single H101 JSON run card from receipts on disk only (no recomputation, no typed numbers)."""
 from __future__ import annotations
 
 import hashlib
@@ -9,11 +9,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 EV = ROOT / "evidence"
-REG = json.loads((ROOT / "registry/h97_preregistration.json").read_text())
+REG = json.loads((ROOT / "registry/h101_preregistration.json").read_text())
 
 
 def load(n):
-    return json.loads((EV / f"h97_{n}.json").read_text())
+    return json.loads((EV / f"h101_{n}.json").read_text())
 
 
 def main():
@@ -45,7 +45,7 @@ def main():
     S = lambda a: dict(label="HOLDOUT-DTI", evaluator=ho["evaluator"],  # noqa: E731
                        withheld_positive_px=sc[a]["withheld_positive_pixels"], dti=sc[a]["dti"], ci95=sc[a]["ci95"])
     card = dict(
-        round="H97", generated_utc=datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        round="H101", generated_utc=datetime.now(timezone.utc).isoformat(timespec="seconds"),
         preregistration=dict(document=REG["hypothesis_document"], sha256=REG["hypothesis_sha256"],
                              frozen_utc=REG["preregistered_utc"]),
         hypothesis=("In the co-training lane, cells where the surface view (B) is confident and the geophysical "
@@ -66,8 +66,8 @@ def main():
                           for k, v in ind["pairs"].items()),
         view_A_sufficiency=fit["sufficiency_view_A"],
         leakage_canary=dict(max_auc=fit["canary_max_overall"], bar=fit["canary_alarm_auc_bar"],
-                            fall_line_alone=[r["canary"]["H97_FL"] for r in fit["folds"]],
-                            dcard_alone=[r["canary"]["H97_DCARD"] for r in fit["folds"]]),
+                            fall_line_alone=[r["canary"]["H101_FL"] for r in fit["folds"]],
+                            dcard_alone=[r["canary"]["H101_DCARD"] for r in fit["folds"]]),
         holdout={a: S(a) for a in REG["arms"]},
         primary_minus_B_DVA2=dict(label="HOLDOUT-DTI paired", delta=pdB["delta"], ci95=pdB["ci95"]),
         attribution_minus_B_DVA2={k: dict(delta=v["delta"], ci95=v["ci95"]) for k, v in ho["vs_B_DVA2"].items()},
@@ -94,7 +94,7 @@ def main():
         ok_to_submit=bool(promote),
         submission_slots_used=0,
         experiments_used="3 of 3")
-    (EV / "h97_run_card.json").write_text(json.dumps(card, indent=1, default=float, allow_nan=False) + "\n")
+    (EV / "h101_run_card.json").write_text(json.dumps(card, indent=1, default=float, allow_nan=False) + "\n")
     print(json.dumps(dict(verdict=card["verdict"], failed=failed, sha256=sha), indent=1))
 
 
