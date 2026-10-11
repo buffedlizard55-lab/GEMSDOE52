@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="H97 view-pure radiometric DVA co-training: downloadable negative research artifact, holdout and uniqueness audit.">
+<title>H97 radiometric-DVA co-training · GEMSDOE52</title>
+<style>
+:root{--bg:#0b1020;--panel:#151d32;--panel2:#10182b;--text:#e9eefc;--muted:#9aa8c6;--blue:#6fd3ff;--green:#55d68b;--red:#ff6b72;--amber:#ffc857;--line:#2a3859}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 10% 0,#182a4b 0,transparent 36%),var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}a{color:var(--blue)}main{max-width:1040px;margin:auto;padding:32px 20px 72px}.eyebrow{color:var(--blue);font-weight:750;letter-spacing:.12em;text-transform:uppercase;font-size:.78rem}h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.05;margin:.35rem 0 1rem}h2{font-size:1.35rem;margin:2.1rem 0 .8rem}h3{font-size:1rem;color:var(--blue)}.hero,.card{background:rgba(21,29,50,.94);border:1px solid var(--line);border-radius:15px;padding:22px;margin:16px 0;box-shadow:0 14px 45px #0004}.verdict{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}.pill{border-radius:11px;padding:14px 16px;font-size:1.05rem;font-weight:800}.yes{background:#123a2a;border:1px solid #267b54;color:#8af0b4}.no{background:#431d26;border:1px solid #9e3d4e;color:#ffabb1}.buttons{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.btn{display:inline-block;padding:12px 18px;border-radius:9px;background:var(--blue);color:#07101c;text-decoration:none;font-weight:800}.btn.alt{background:#243351;color:var(--text);border:1px solid #415477}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px}.stat{background:var(--panel2);padding:15px;border-radius:10px;border:1px solid var(--line)}.stat b{display:block;font-size:1.35rem;color:#fff}.stat span{font-size:.83rem;color:var(--muted)}table{width:100%;border-collapse:collapse;font-size:.93rem}th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{color:var(--blue)}code{background:#080d18;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}.pass{color:var(--green);font-weight:800}.fail{color:var(--red);font-weight:800}.warn{color:var(--amber);font-weight:800}.small{color:var(--muted);font-size:.87rem}.callout{border-left:4px solid var(--amber);padding:12px 16px;background:#2c2415;border-radius:0 9px 9px 0}.footer{margin-top:36px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:.86rem}@media(max-width:600px){.verdict{grid-template-columns:1fr}table{font-size:.82rem}.hero,.card{padding:17px}}
+</style></head><body><main>
+<div class="eyebrow">DOE GEMS #306 · H97 · frozen two-view experiment · 2026-10-10</div>
+<h1>View-pure radiometric DVA co-training</h1>
+<p class="callout"><strong>Parallel archive namespace:</strong> frozen and executed as H97 on an isolated branch, then published as <strong>H97-RDVA</strong> because main independently acquired another H97 and advanced through H102 first. This negative archive does not replace the global current pointer.</p>
+<p class="small">A new directional radiometric surface view, one weighted whole-segment disagreement exchange, and a fail-closed audit against 719 accessible registry rasters.</p>
+<section class="hero">
+<div class="verdict"><div class="pill yes">OK TO DOWNLOAD: YES<br><span class="small">research and audit copy</span></div><div class="pill no">OK TO SUBMIT: NO<br><span class="small">do not upload · no slot approved</span></div></div>
+<p><strong>Why submission is blocked:</strong> the primary did not beat the frozen comparable holdout bar or its single-view B baseline, and the final-dot lane test is <strong>DUPLICATE/STOP</strong>. The TIFF is nevertheless format-valid and its decoded pixels differ from every one of 718 aligned comparable priors.</p>
+<div class="buttons"><a class="btn" href="downloads/h97-rdva-candidate.tif" download>Download H97 GeoTIFF ↓</a><a class="btn alt" href="downloads/h97-rdva-candidate.zip" download>Single-TIFF ZIP</a><a class="btn alt" href="h97-rdva-executive-summary.html">Submission guide</a><a class="btn alt" href="data/h97_rdva_run_card.json">Run card JSON</a></div>
+<p class="small"><strong>Canonical file:</strong> <code>gems52-h97-rdva-cotrain-25400px-20261010-c6fbccd67b14-zeros.tif</code><br><strong>SHA-256:</strong> <code>a6ca0f7b42ee722e1b04199557f84237ba186830a3b6860e38d3e4bf833722ad</code></p>
+</section>
+
+<section class="grid">
+<div class="stat"><b>0.185090</b><span>primary HOLDOUT-DTI</span></div>
+<div class="stat"><b>0.186482</b><span>single-B HOLDOUT-DTI</span></div>
+<div class="stat"><b>0.192829</b><span>frozen comparable bar</span></div>
+<div class="stat"><b>53,186</b><span>withheld positive pixels</span></div>
+<div class="stat"><b>25,400</b><span>final binary dots</span></div>
+<div class="stat"><b>0</b><span>weekly slots used</span></div>
+</section>
+
+<h2>Measured result</h2>
+<div class="card"><p>All model numbers below are <strong>HOLDOUT-DTI</strong> from <code>gems52-pooled-hide-v1</code>, pooled over four whole-segment spatial folds with a 95% 20 km cluster bootstrap CI. They are <strong>not organizer scores</strong>.</p>
+<table><thead><tr><th>arm</th><th>HOLDOUT-DTI [95% CI]</th><th>reading</th></tr></thead><tbody>
+<tr><td><code>single_B_RDVA</code></td><td><strong>0.186482</strong> [0.166242, 0.206787]</td><td>strongest H97 arm</td></tr>
+<tr><td><code>cotrain_B_RDVA</code> · primary</td><td><strong>0.185090</strong> [0.164740, 0.205110]</td><td class="fail">below bar; no lift</td></tr>
+<tr><td><code>union_pre</code></td><td>0.159604 [0.139332, 0.180973]</td><td>union is worse</td></tr>
+<tr><td><code>random</code></td><td>0.080599 [0.071883, 0.090135]</td><td>matched budget</td></tr>
+<tr><td><code>single_A_RDVA</code></td><td>0.074664 [0.060500, 0.089608]</td><td>weak A recovery</td></tr>
+<tr><td><code>Aonly_pre</code></td><td>0.019141 [0.014605, 0.023890]</td><td>not promotable</td></tr>
+</tbody></table>
+<p>Paired primary − single B: <strong>−0.001392</strong> [−0.004502, +0.001700]. Promotion required primary &gt;0.192829 and paired-CI lower bound &gt;0. Both fail.</p></div>
+
+<h2>Method and the disagreement test</h2>
+<div class="card"><div class="grid"><div><h3>View A · buried structure</h3><p>Gravity, magnetics, strain, seismicity, conductivity and depth to basement, plus directional semivariance of competition bands 13, 15 and 18.</p></div><div><h3>View B · surface</h3><p>DEM curvature/slope and radiometrics, plus directional semivariance of bands 12/19 and the new GeoDAWN K, Th, U and total-count channels.</p></div></div>
+<p>Eight directions at 100–600 m produced anisotropy and local log-variance channels. Spatial-block OOF negative-error max |ρ| was <strong>0.121626</strong>, below the 0.60 abandon bar. One buffered exchange donated 7,319 A→B pixels and 7,995 B→A diagnostic pixels, all as whole 50×50-block-contained segments at weight 0.25. The reported post-B primary can only receive the A→B buried-fault donations; the B→A refit is not an output arm because B-only detections are road/erosion/artifact suspects.</p>
+<p>Leakage canary: maximum single-feature direction-insensitive AUC <strong>0.6691</strong>; alarm strictly above 0.90; <span class="pass">PASS</span>.</p></div>
+
+<h2>Artifact gates</h2>
+<div class="card"><table><thead><tr><th>gate</th><th>measurement</th><th>verdict</th></tr></thead><tbody>
+<tr><td>format</td><td>1 band float32; EPSG:32611; 3730×3292; sample transform/bounds; finite; values exactly {0,1}; 25,400 ones</td><td class="pass">PASS</td></tr>
+<tr><td>surface lane</td><td>max Spearman 0.463212 across 719 accessible rasters</td><td class="pass">PASS</td></tr>
+<tr><td>exact file identity</td><td>all 719 inventory files have a different byte length; no copied or renamed file</td><td class="pass">DISTINCT</td></tr>
+<tr><td>decoded identity</td><td>no identity among 718 aligned comparable priors; max Jaccard 0.089561</td><td class="pass">DISTINCT</td></tr>
+<tr><td>inventory completeness</td><td>one census object is an off-grid 32×48 thumbnail and cannot enter the aligned decoded-value audit</td><td class="warn">DISCLOSED</td></tr>
+<tr><td>final-dot lane</td><td>maximum fraction within 3 pixels = 1.0000; informative priors also exceed 0.70</td><td class="fail">DUPLICATE/STOP</td></tr>
+<tr><td>not merely union</td><td>Jaccard 0.078213 vs equal-budget union field; 21,715 candidate dots outside it</td><td class="pass">PASS</td></tr>
+<tr><td>holdout promotion</td><td>0.185090 &lt; 0.192829; paired CI crosses zero</td><td class="fail">FAIL</td></tr>
+</tbody></table></div>
+<div class="callout"><strong>Distinct pixels do not override the lane rule.</strong> “Unique prediction” is established against aligned comparable bytes, while the user's stricter ≤3-pixel rule still stops submission. This is why download is YES and submit is NO.</div>
+
+<h2>Geological reasoning files</h2>
+<div class="card"><p>Every final emitted A-confident/B-abstaining cell is documented (2/2), and every donated A→B whole segment is documented (578/578). These are Phase-2 hypotheses, never verified faults.</p>
+<p><a href="downloads/gems52-h97-rdva-cotrain-25400px-20261010-c6fbccd67b14-zeros-a-only-reasoning.csv" download>A-only candidate CSV</a> · <a href="downloads/gems52-h97-rdva-cotrain-25400px-20261010-c6fbccd67b14-zeros-pseudo-segments.csv" download>A→B segment CSV</a></p></div>
+
+<h2>Why the owner-attributed 0.2778 file worked</h2>
+<div class="card"><p>The available bytes show a pruning effect. The 37,654-dot <code>h33-2-b2</code> is a strict subset of the 44,090-dot, owner-reported 0.2600 <code>d2-8</code>. The 6,436 removed dots all lie 100–200 m from the public catalogue; the retained file starts 223.6 m away. Removing denominator-only mass while retaining credited mass raises <code>DTI = T/(0.2·S + 0.8·|G|)</code> under the separated binary-dot reduction. The nested-score inverse pins |G| near 14,089 under the measured zero-credit-ring condition; a later independent board inversion obtained 14,334.</p>
+<p>The file averages roughly 13.87% inferred kernel-credit density, about five times a permitted-footprint uniform control. At the same mass, 0.3195 requires roughly 1.150× its credit and 0.3774 roughly 1.36×. <strong>H97 has not demonstrated either increase.</strong> The filename-to-0.2778 relation remains owner-reported, not organizer-authenticated.</p></div>
+
+<h2>Submission fields — prepared, but forbidden to use</h2>
+<div class="card"><p><strong>Unique name:</strong> <code>gems52-h97-rdva-cotrain-25400px-20261010-c6fbccd67b14-zeros</code></p><p><strong>Note (105/140):</strong> <code>H97 view-pure radiometric DVA co-training; 25,400 dots, 3px, 200m collar; research only, no slot approved</code></p><p class="fail">DO NOT upload these fields. A separate selector was not run and no weekly slot is approved.</p></div>
+
+<h2>Sources and manual review</h2>
+<div class="card"><ul>
+<li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DrivenData competition #306</a> and <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">submission page</a> (manual review; not reachable from this sandbox)</li>
+<li><a href="https://github.com/drivendataorg/gems-prize-reference-solution/commit/aebe92f7c8a990f0e3443451b7a825d9afd6336b">official reference solution, pinned commit aebe92f7</a></li>
+<li><a href="https://doi.org/10.5066/P93LGLVQ">USGS GeoDAWN radiometric source DOI</a> (manual review; local derivative SHA-pinned)</li>
+<li><a href="https://doi.org/10.1145/279943.279962">Blum &amp; Mitchell 1998 co-training paper</a> (manual review)</li>
+<li><a href="data/h97_rdva_run_card.json">machine-readable H97 run card</a> · <a href="data/h97_rdva_holdout.json">holdout receipt</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/112_h97_rdva_results_and_limits.md">full results and limits</a></li>
+</ul></div>
+
+<div class="footer">No H97 upload occurred. No H97 number is ORGANIZER-CONFIRMED. “HOLDOUT-DTI” always means evaluator <code>gems52-pooled-hide-v1</code>, 53,186 withheld positive pixels and the stated 95% CI.</div>
+</main></body></html>

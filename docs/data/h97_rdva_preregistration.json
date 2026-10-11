@@ -1,0 +1,61 @@
+{
+  "round": "H97",
+  "registered_utc": "2026-10-10 (session-supplied UTC date; exact clock not asserted)",
+  "frozen_before_h97_channels_or_fit": true,
+  "hypothesis_document": "knowledge/97_hypotheses_H97_preregistered.md",
+  "hypothesis_sha256": "f35c14e130af1ae00e6ed47a5a08a185125e81db8289ce30228ba7acfafc57e9",
+  "runner": "scripts/run_h97_rdva.py",
+  "lane": "two-view co-training: geophysical/subsurface A versus DEM/radiometric B; disagreement selects whole pseudo-segments",
+  "views": {
+    "A_store": "view_A_with_external",
+    "A_dva_source_bands": [13, 15, 18],
+    "B_store": "view_B_with_external",
+    "B_dva_source_bands": [12, 19],
+    "B_radiometric_sources": ["GeoDAWN_K", "GeoDAWN_Th", "GeoDAWN_U", "GeoDAWN_TC"]
+  },
+  "dva": {
+    "lags_px": [1, 2, 3, 4, 6],
+    "sigma_px": 3.0,
+    "fan_dy_dx": [[0, 1], [1, 1], [1, 0], [1, -1], [1, 2], [2, 1], [2, -1], [1, -2]],
+    "statistics": ["aniso", "logvar"],
+    "implementation_source": "scripts/run_h82.py::_gamma_stats"
+  },
+  "thresholds": {
+    "canary_auc_alarm_strictly_above": 0.9,
+    "independence_abandon_max_abs_correlation_gte": 0.6,
+    "donor_rank_min": 0.95,
+    "receiver_rank_interval": [0.35, 0.65],
+    "pseudo_sample_weight": 0.25,
+    "pseudo_cap_per_direction_per_fold": 2000,
+    "pseudo_min_segment_pixels": 5,
+    "pseudo_block_side_px": 50,
+    "pseudo_forbidden_visible_fault_collar_px": 4,
+    "fold_buffer_px": 80,
+    "holdout_budget_per_fold_per_arm": 9400,
+    "min_spacing_px": 3.0,
+    "visible_catalogue_exclusion_m": 200.0,
+    "bootstrap_draws": 1000,
+    "bootstrap_block_px": 200,
+    "surface_rank_limit": 0.9,
+    "dot_near_fraction_limit": 0.7,
+    "dot_near_radius_px": 3.0,
+    "not_union_jaccard_limit": 0.99,
+    "ship_budget": 25400,
+    "ship_full_catalogue_exclusion_m": 200.0
+  },
+  "arms": ["single_A_RDVA", "single_B_RDVA", "cotrain_B_RDVA", "union_pre", "Aonly_pre", "random"],
+  "primary_arm": "cotrain_B_RDVA",
+  "promotion": {
+    "current_holdout_best": 0.19282907051926573,
+    "source": "evidence/h84_holdout.json pooled.scores.B_DVA2",
+    "source_withheld_positive_pixels": 53186,
+    "require_primary_strictly_above_best": true,
+    "paired_against": "single_B_RDVA",
+    "require_paired_ci95_lower_gt_zero": true,
+    "require_all_other_gates": true,
+    "caveat": "H84 B_DVA2 control did not reproduce its older 0.189200 target within 0.001; conservative larger observed value retained as bar"
+  },
+  "evaluator_version": "gems52-pooled-hide-v1",
+  "submission_slots_used": 0,
+  "experiment_budget": {"maximum_experiments": 3, "maximum_hours": 2}
+}

@@ -1,0 +1,408 @@
+{
+  "round": "H97-RDVA",
+  "generated_utc": "2026-10-10T01:48:55Z",
+  "hypothesis": "View-pure directional semivariance in A (gravity/basement) and B (DEM/radiometrics), followed by exactly one weighted whole-segment disagreement exchange.",
+  "mechanism": "A-only lineaments can be concealed basement faults; radiometric/DEM directional texture gives B an altered-surface response. Only confident-donor/abstaining-receiver whole segments cross views.",
+  "named_non_fault_mimic": "lithologic or intrusive contact; radiometric flight-line/interpolation stripe; road; erosion rill; palaeochannel; basin facies boundary",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "withheld_positive_pixels": 53186,
+    "primary_arm": "cotrain_B_RDVA",
+    "primary": {
+      "evidence_class": "HOLDOUT-DTI",
+      "evaluator_version": "gems52-pooled-hide-v1",
+      "dti": 0.18509042889108415,
+      "ci95": [
+        0.16474015936097375,
+        0.20511030788324475
+      ],
+      "withheld_positive_pixels": 53186,
+      "tpw": 9454.491698788115,
+      "fpw": 33203.46926245581,
+      "fnw": 43731.5083012119
+    },
+    "paired_vs_single_B_RDVA": {
+      "evidence_class": "HOLDOUT-DTI",
+      "evaluator_version": "gems52-pooled-hide-v1",
+      "delta": -0.0013915961149278677,
+      "ci95": [
+        -0.004502160361911398,
+        0.001699501710558605
+      ],
+      "withheld_positive_pixels": 53186
+    },
+    "all_scores": {
+      "single_A_RDVA": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.0746641081053339,
+        "ci95": [
+          0.06049980996984746,
+          0.08960839025392257
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 3768.1240524802706,
+        "fpw": 35826.25834434097,
+        "fnw": 49417.875947519744
+      },
+      "single_B_RDVA": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.18648202500601202,
+        "ci95": [
+          0.16624249309358816,
+          0.20678707935208954
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 9527.017071649869,
+        "fpw": 33169.609748622104,
+        "fnw": 43658.98292835013
+      },
+      "cotrain_B_RDVA": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.18509042889108415,
+        "ci95": [
+          0.16474015936097375,
+          0.20511030788324475
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 9454.491698788115,
+        "fpw": 33203.46926245581,
+        "fnw": 43731.5083012119
+      },
+      "union_pre": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.15960390363956564,
+        "ci95": [
+          0.13933213277582485,
+          0.18097312494148138
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 8130.608773213093,
+        "fpw": 33837.48121346071,
+        "fnw": 45055.39122678691
+      },
+      "Aonly_pre": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.01914074973547594,
+        "ci95": [
+          0.01460453259441112,
+          0.02388968555450066
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 855.3303167492115,
+        "fpw": 9832.439224629037,
+        "fnw": 52330.6696832508
+      },
+      "random": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.08059851636881357,
+        "ci95": [
+          0.07188329181997094,
+          0.09013480125901631
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 4076.3062267888267,
+        "fpw": 36056.943283358145,
+        "fnw": 49109.69377321118
+      }
+    },
+    "ci_method": "95% paired 20 km spatial-cluster bootstrap, 1,000 draws"
+  },
+  "bar_to_beat": 0.19282907051926573,
+  "bar_source": "evidence/h84_holdout.json pooled.scores.B_DVA2",
+  "bar_caveat": "H84 B_DVA2 reproduction control failed tolerance; larger observed value retained conservatively",
+  "independence": {
+    "result": {
+      "n_blocks": 2089,
+      "n_negative_predictions": 4095103,
+      "negative_class": "held-out catalogue-zero proxies, not verified absence",
+      "threshold": 0.6,
+      "minimum_blocks": 20,
+      "tests": {
+        "negative_mean_squared_error": {
+          "n": 2089,
+          "pearson": 0.09402573937380332,
+          "spearman": 0.10844925824196729
+        },
+        "negative_false_positive_rate": {
+          "n": 2089,
+          "pearson": 0.10448599264298714,
+          "spearman": 0.12162557792575837
+        }
+      },
+      "max_abs_correlation": 0.12162557792575837,
+      "measured": true,
+      "allow_exchange": true,
+      "reason": "weak proxy negative-error correlation; not proof of conditional feature independence"
+    },
+    "folds": [
+      {
+        "fold": 0,
+        "labelled_negative_px": 2008690,
+        "n_blocks": 978,
+        "raw_probability_thresholds": [
+          0.4285604953765869,
+          0.5080130696296692
+        ]
+      },
+      {
+        "fold": 1,
+        "labelled_negative_px": 1063285,
+        "n_blocks": 559,
+        "raw_probability_thresholds": [
+          0.4807710349559784,
+          0.4875901937484741
+        ]
+      },
+      {
+        "fold": 2,
+        "labelled_negative_px": 409823,
+        "n_blocks": 221,
+        "raw_probability_thresholds": [
+          0.3993499279022217,
+          0.5106961727142334
+        ]
+      },
+      {
+        "fold": 3,
+        "labelled_negative_px": 613578,
+        "n_blocks": 331,
+        "raw_probability_thresholds": [
+          0.4565562605857849,
+          0.48127734661102295
+        ]
+      }
+    ],
+    "abandon_at_max_abs_correlation_gte": 0.6
+  },
+  "exchange_allowed": true,
+  "pseudo_pixels": 15314,
+  "canary": {
+    "any_alarm": false,
+    "max_auc": 0.6690685773157253,
+    "alarm_rule": "direction-insensitive raw AUC > 0.90 is leakage until proven otherwise"
+  },
+  "registry_correlation_overlap": {
+    "priors_checked": 719,
+    "surface_max_spearman": 0.4632121117570601,
+    "surface_literal_verdict": "PASS",
+    "final_dot_max_near_3px_fraction": 1.0,
+    "final_dot_near_source": "work/h97/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif",
+    "final_dot_literal_verdict": "DUPLICATE/STOP",
+    "policy_verdicts": {
+      "surface": "PASS",
+      "dots": "DUPLICATE/STOP"
+    }
+  },
+  "uniqueness": {
+    "n_priors_checked": 719,
+    "candidate_decoded_sha256": "c6fbccd67b14db1b630a99bec1c2cf28a35bb620388378ac7f9551e822465d38",
+    "canonical_pattern_unique": false,
+    "identical_to_a_prior": false,
+    "identical_prior_paths": [],
+    "distinct_from_every_comparable_prior": true,
+    "audit_complete": false,
+    "n_priors_compared": 718,
+    "incomparable_priors": [
+      {
+        "path": "work/h97/priors/a97c7b2a513225c9f9f2b35736afe5abf4d2a491.tif",
+        "error": "ValueError: not aligned single-band prediction (1 bands, (32, 48))"
+      }
+    ],
+    "key_semantics": "canonical_pattern_unique is False if ANY prior is byte-identical OR unreadable; distinct_from_every_comparable_prior isolates the first condition and audit_complete isolates the second",
+    "equals_literal_prior_union": false,
+    "research_publication_ok": false,
+    "support_novelty_gate_ok": false,
+    "gate_correction": "Original >=20% support novelty retained as a FAILED diagnostic, not silently waived for slot promotion. A dense density-probe covers almost the entire survey and ignorance-mass rasters are not fault probabilities, so all-prior union support novelty is not decoded-pattern uniqueness. Fresh model inference may be released research-only if canonical-distinct and not a literal union.",
+    "union_px": 5373930,
+    "novel_vs_all_priors": 0,
+    "novel_fraction": 0.0,
+    "prior_px_dropped": 5348530,
+    "relation_to_union": "subset-of-union",
+    "ok": false,
+    "top_argument_ignored": false,
+    "rule": "distinct decoded values from every supplied prior, >=20% new support against binary/>=0.5 continuous proposal union, and selective prior-pixel removal",
+    "scope": "Only the supplied, aligned accessible inventory; not a proof against all private/unlinked submissions",
+    "max_jaccard": 0.08956126557343057,
+    "max_jaccard_source": "submission/gems52-h75-dva-variogram-anisotropy-B-37654px-20261009T200333Z.tif",
+    "file_byte_identity": {
+      "inventory_entries": 719,
+      "candidate_bytes": 117335,
+      "same_size_entries": 0,
+      "same_sha256_entries": 0,
+      "identical_paths": [],
+      "distinct_from_every_inventory_file": true,
+      "method": "stat every entry; SHA-256 every entry with candidate byte length"
+    },
+    "distinct_by_decoded_values_or_shape": true
+  },
+  "not_the_union": {
+    "equals_single_A": false,
+    "equals_single_B": false,
+    "equals_equal_budget_union_field": false,
+    "equals_literal_set_union": false,
+    "jaccard_single_A": 0.005582168731937131,
+    "jaccard_single_B": 0.12946617159881718,
+    "jaccard_union_field": 0.0782128833704765,
+    "jaccard_set_union": 0.08628264758497317,
+    "dots_outside_union_field": 21715,
+    "dots_outside_set_union": 19371,
+    "gate": true
+  },
+  "raster": {
+    "file": "submission/gems52-h97-rdva-cotrain-25400px-20261010-c6fbccd67b14-zeros.tif",
+    "sha256": "a6ca0f7b42ee722e1b04199557f84237ba186830a3b6860e38d3e4bf833722ad",
+    "decoded_sha256": "c6fbccd67b14db1b630a99bec1c2cf28a35bb620388378ac7f9551e822465d38",
+    "bytes": 117335,
+    "nonzero_px": 25400
+  },
+  "validator": {
+    "path": "submission/gems52-h97-rdva-cotrain-25400px-20261010-c6fbccd67b14-zeros.tif",
+    "bytes": 117335,
+    "sha256": "a6ca0f7b42ee722e1b04199557f84237ba186830a3b6860e38d3e4bf833722ad",
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "ref_bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "nodata": null,
+    "blocksize": [
+      256,
+      256
+    ],
+    "fixture_grid": false,
+    "has_validity_mask": false,
+    "nan_pixels": 0,
+    "infinity_pixels": 0,
+    "n_nan": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.002068545436486602,
+    "n_nonzero": 25400,
+    "mass": 25400.0,
+    "mass_outside_footprint": 0,
+    "problems": [],
+    "ok": true,
+    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "unique_submission_name": "gems52-h97-rdva-cotrain-25400px-20261010-c6fbccd67b14-zeros",
+  "note": "H97 view-pure radiometric DVA co-training; 25,400 dots, 3px, 200m collar; research only, no slot approved",
+  "note_chars": 105,
+  "reasoning": {
+    "a_only_path": "submission/gems52-h97-rdva-cotrain-25400px-20261010-c6fbccd67b14-zeros-a-only-reasoning.csv",
+    "a_only_rows": 2,
+    "pseudo_segments_path": "submission/gems52-h97-rdva-cotrain-25400px-20261010-c6fbccd67b14-zeros-pseudo-segments.csv",
+    "pseudo_A_to_B_segments": 578,
+    "one_reason_per_final_A_only_candidate": true
+  },
+  "gates": {
+    "holdout": false,
+    "canary": true,
+    "independence": true,
+    "surface_literal_lane": true,
+    "final_dot_literal_lane": false,
+    "decoded_pattern_unique": false,
+    "not_literal_prior_union": true,
+    "not_view_union": true,
+    "format": true
+  },
+  "verdict": "negative",
+  "download_ok": true,
+  "submit_ok": false,
+  "approved_for_weekly_slot": false,
+  "submission_slots_used": 0,
+  "submission_decision": "DO NOT SUBMIT: selector step was not run; no weekly slot is approved.",
+  "literal_lane_stop": true,
+  "registration": {
+    "path": "registry/h97_rdva_preregistration.json",
+    "sha256": "0631745794bfb6a582bfe2bc2f7d3f32ed9e066b1855469606d2ff89a8993db8",
+    "hypothesis_sha256": "f35c14e130af1ae00e6ed47a5a08a185125e81db8289ce30228ba7acfafc57e9",
+    "frozen_before_fit": true
+  },
+  "full_validator_result": {
+    "path": "submission/gems52-h97-rdva-cotrain-25400px-20261010-c6fbccd67b14-zeros.tif",
+    "bytes": 117335,
+    "sha256": "a6ca0f7b42ee722e1b04199557f84237ba186830a3b6860e38d3e4bf833722ad",
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "ref_bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "nodata": null,
+    "blocksize": [
+      256,
+      256
+    ],
+    "fixture_grid": false,
+    "has_validity_mask": false,
+    "nan_pixels": 0,
+    "infinity_pixels": 0,
+    "n_nan": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.002068545436486602,
+    "n_nonzero": 25400,
+    "mass": 25400.0,
+    "mass_outside_footprint": 0,
+    "problems": [],
+    "ok": true,
+    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "evidence_class_note": "No organizer upload occurred. A holdout number is not a board score; no H97 value is ORGANIZER-CONFIRMED.",
+  "download_safety_note": "YES for research/audit: single-band float32, finite [0,1], template-aligned, and distinct from all 718 comparable priors. One 32x48 census thumbnail is incomparable; holdout/lane failures make submission NO.",
+  "irregularities": [
+    "IR-H97-RDVA-001",
+    "IR-H97-RDVA-002",
+    "IR-H97-RDVA-003",
+    "IR-H97-RDVA-004",
+    "IR-H97-RDVA-005"
+  ],
+  "original_frozen_round": "H97",
+  "integration_note": "Executed/frozen as H97-RDVA on an isolated branch; main independently acquired H97 through H102 before integration. Namespaced H97-RDVA without changing frozen preregistration bytes."
+}
