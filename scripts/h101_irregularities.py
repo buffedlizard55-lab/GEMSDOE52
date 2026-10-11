@@ -13,6 +13,8 @@ sc = ho["pooled"]["scores"]
 lane = json.loads((ROOT / "evidence/h101_lane.json").read_text())
 _rows = {r["path"].split("/")[-1]: r for r in lane["full_dots"]["per_prior"] if r.get("near_3px_fraction") is not None}
 _h84 = next((r for n, r in _rows.items() if n.startswith("gems52-h84-hva-ellipse-B")), None)
+pm = json.loads((ROOT / "evidence/h101_postmerge_uniqueness.json").read_text())
+_pm_hit = max(pm["results"], key=lambda r: r.get("near3_share", 0))
 d = json.loads(P.read_text())
 new = [
     dict(id="IR-H101-001", title="The holdout-best 'View B' learner B_DVA2 is not a pure surface view",
@@ -54,9 +56,27 @@ new = [
                       "literal verdict DUPLICATE/STOP (universal-coverage probes)."),
          disposition="Logged as a duplicate per the parallel-run protocol; the raster is a research artefact only. Any future "
                      "B_DVA2-family emission must change the ranking materially (or use quota placement vs the H82/H84 files)."),
+    dict(id="IR-H101-006", title="Identifier collision: this round was frozen as H97 and renumbered H101",
+         status="closed - renamed, history recorded",
+         what_it_is=("The round was preregistered as H97 (commit 293ed08 on base 7eb226d). Before it merged, main took H97, "
+                     "H98, H99 and H100 from parallel sessions (PR #100, #109), including a different "
+                     "evidence/h97_run_card.json and docs/downloads/h97-candidate.tif. Every H97 identifier of this round "
+                     "became H101 (knowledge 97/98 -> 105/106); the raster bytes are unchanged (SHA-256 5a9ce7cc...)."),
+         how_we_know=("registry/h101_preregistration.json identifier_rename (document SHA before/after) and "
+                      "evidence/h101_identifier_rename.diff; the submission ZIP was rebuilt so its member name matches."),
+         disposition="Identifier-only change; no constant, threshold, arm, score or verdict changed."),
+    dict(id="IR-H101-007", title="Post-merge lane check: H101 dots also sit within 3 px of main's H87 board-calibrated file",
+         status="open - reported; SUBMIT NO (verdict already negative)",
+         what_it_is=("The H101 lane check (602 rasters) ran on base 7eb226d. Rasters merged to main afterwards were "
+                     "compared after the merge; one of them crosses the >70 % within-3 px duplicate line."),
+         how_we_know=(f"evidence/h101_postmerge_uniqueness.json: {_pm_hit['file']} near-3px share {_pm_hit['near3_share']:.4f} "
+                      f"(its coverage {_pm_hit['coverage']:.4f}, {_pm_hit['prior_dots']:,} dots), exact shared dots "
+                      f"{_pm_hit['shared']:,}; no merged raster is byte- or array-identical, and every rank correlation is <= "
+                      f"{max(r['rho_sub7'] for r in pm['results']):.4f}."),
+         disposition="A second lane near-duplicate (after H84, IR-H101-005); recorded per the parallel-run protocol. Research only."),
 ]
 ids = {e["id"] for e in d["entries"]}
 d["entries"] += [e for e in new if e["id"] not in ids]
-d["generated"] = d["generated"] + " ; H101 append (IR-H101-001..005)" if "H101" not in d["generated"] else d["generated"]
-P.write_text(json.dumps(d, indent=2) + "\n")
+d["generated"] = d["generated"] + " ; H101 append (IR-H101-001..007)" if "H101" not in d["generated"] else d["generated"]
+P.write_text(json.dumps(d, indent=1) + "\n")
 print("irregularities:", len(d["entries"]))

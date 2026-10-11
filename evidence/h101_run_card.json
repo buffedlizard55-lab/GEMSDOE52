@@ -1,9 +1,9 @@
 {
  "round": "H101",
- "generated_utc": "2026-10-11T00:39:04+00:00",
+ "generated_utc": "2026-10-11T00:53:20+00:00",
  "preregistration": {
   "document": "knowledge/105_hypotheses_H101_preregistered.md",
-  "sha256": "0a28e26adb45c5a2f7d5a38b920f2683cc4b8946836ea2742deef2850f63a0d0",
+  "sha256": "bf5c5e01cb4b6bdf3244c373d8cb44bf8c4945870e339989751bfdf74db1a30f",
   "frozen_utc": "2026-10-11T00:03:24+00:00"
  },
  "hypothesis": "In the co-training lane, cells where the surface view (B) is confident and the geophysical view (A) is not are the brief's surface-artefact suspects. Where such a cell's linear feature runs down the fall line (gully/rill/drainage) or exactly N-S/E-W on a low-slope floor (section-line road), demoting it and refilling the budget with the next-ranked cells raises credit per dot.",
@@ -164,6 +164,17 @@
     0.16291500684261273,
     0.20530727999744475
    ]
+  },
+  "primary_dti": 0.19212165660066666,
+  "primary_ci95": [
+   0.17010642637345486,
+   0.21284148543594295
+  ],
+  "random_dti": 0.08042564781050282,
+  "paired_primary_minus_random": {
+   "delta": 0.11169600879016384,
+   "ci95": null,
+   "note": "point difference of the two pooled HOLDOUT-DTI scores on the same folds; not separately bootstrapped (the frozen bootstrap pairs every arm against B_DVA2)"
   }
  },
  "primary_minus_B_DVA2": {
@@ -407,6 +418,106 @@
   "top_argument_ignored": false,
   "rule": "distinct decoded values from every supplied prior, >=20% new support against binary/>=0.5 continuous proposal union, and selective prior-pixel removal",
   "scope": "Only the supplied, aligned accessible inventory; not a proof against all private/unlinked submissions"
+ },
+ "lane_postmerge": {
+  "stage": "post-merge uniqueness vs rasters added to main after base 7eb226d",
+  "candidate_sha256": "5a9ce7cc3d10493f3fd86ba4c9887f5f198e2f5b007e301b8726e89b3644828b",
+  "thresholds": {
+   "rank_corr": 0.9,
+   "near_3px_share": 0.7
+  },
+  "results": [
+   {
+    "file": "docs/downloads/gems52-h87-boardcal-marginal-20261010-61427px.tif",
+    "identical": false,
+    "prior_dots": 61427,
+    "shared": 1779,
+    "near3_share": 0.7488,
+    "coverage": 0.005,
+    "jaccard": 0.0183,
+    "rho_sub7": 0.0314
+   },
+   {
+    "file": "docs/downloads/gems52-h88-cotrain-strat-pmcal-27000px-20261010T222229Z.tif",
+    "identical": false,
+    "prior_dots": 27000,
+    "shared": 4242,
+    "near3_share": 0.545,
+    "coverage": 0.0022,
+    "jaccard": 0.0702,
+    "rho_sub7": 0.1319
+   },
+   {
+    "file": "docs/downloads/gems52-h97-cotrain-disagree-sparse-37654px-20261010T224136Z.tif",
+    "identical": false,
+    "prior_dots": 37654,
+    "shared": 179,
+    "near3_share": 0.0725,
+    "coverage": 0.0031,
+    "jaccard": 0.0024,
+    "rho_sub7": 0.0012
+   },
+   {
+    "file": "docs/downloads/gems52-h99-cotrain-atexture-disagreement-20261010T222354Z.tif",
+    "identical": false,
+    "prior_dots": 37654,
+    "shared": 39,
+    "near3_share": 0.0297,
+    "coverage": 0.0031,
+    "jaccard": 0.0005,
+    "rho_sub7": -0.0023
+   },
+   {
+    "file": "docs/downloads/h97-candidate.tif",
+    "identical": false,
+    "prior_dots": 37654,
+    "shared": 179,
+    "near3_share": 0.0725,
+    "coverage": 0.0031,
+    "jaccard": 0.0024,
+    "rho_sub7": 0.0012
+   },
+   {
+    "file": "docs/downloads/h99-candidate.tif",
+    "identical": false,
+    "prior_dots": 37654,
+    "shared": 39,
+    "near3_share": 0.0297,
+    "coverage": 0.0031,
+    "jaccard": 0.0005,
+    "rho_sub7": -0.0023
+   },
+   {
+    "file": "submission/gems52-h88-cotrain-strat-pmcal-27000px-20261010T222229Z.tif",
+    "identical": false,
+    "prior_dots": 27000,
+    "shared": 4242,
+    "near3_share": 0.545,
+    "coverage": 0.0022,
+    "jaccard": 0.0702,
+    "rho_sub7": 0.1319
+   },
+   {
+    "file": "submission/gems52-h97-cotrain-disagree-sparse-37654px-20261010T224136Z.tif",
+    "identical": false,
+    "prior_dots": 37654,
+    "shared": 179,
+    "near3_share": 0.0725,
+    "coverage": 0.0031,
+    "jaccard": 0.0024,
+    "rho_sub7": 0.0012
+   },
+   {
+    "file": "submission/gems52-h99-cotrain-atexture-disagreement-20261010T222354Z.tif",
+    "identical": false,
+    "prior_dots": 37654,
+    "shared": 39,
+    "near3_share": 0.0297,
+    "coverage": 0.0031,
+    "jaccard": 0.0005,
+    "rho_sub7": -0.0023
+   }
+  ]
  },
  "not_the_union": {
   "dots_emitted": 37654,

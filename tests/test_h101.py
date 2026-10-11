@@ -104,3 +104,23 @@ def test_readme_and_site_lead_with_h101_verdict():
     for page in ("docs/h101.html", "docs/h101-executive-summary.html"):
         t = (ROOT / page).read_text()
         assert "downloads/h101-candidate.tif" in t and "OK TO SUBMIT" in t
+
+
+def test_h101_sits_above_older_round_blocks_and_rename_is_recorded():
+    text = (ROOT / "README.md").read_text()
+    for older in ("<!--H99-README-->", "<!--H95-README-->"):
+        assert older in text and text.index("<!--H101-README-->") < text.index(older)
+    reg = json.loads((ROOT / "registry/h101_preregistration.json").read_text())
+    hist = reg["identifier_rename"]
+    assert hist["frm"] == "H97" and hist["to"] == "H101"
+    assert hist["document_sha256_after"] == reg["hypothesis_sha256"]
+    assert (ROOT / hist["evidence_diff"]).read_text().startswith("--- 293ed08:")
+    ids = {e["id"] for e in json.loads((ROOT / "registry/irregularities.json").read_text())["entries"]}
+    assert {"IR-H101-001", "IR-H101-005", "IR-H101-006", "IR-H101-007"} <= ids
+
+
+def test_feed_newest_round_is_h101_and_hash_verified():
+    card = json.loads(CARD_P.read_text())
+    feed = json.loads((ROOT / "docs/data/feed.json").read_text())["newest_round"]
+    assert feed["round"] == "H101" and feed["hash_verified"] is True
+    assert feed["sha256"] == card["raster"]["sha256"] and feed["submit_ok"] is False

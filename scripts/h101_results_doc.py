@@ -22,7 +22,7 @@ rows = "\n".join(f"| `{a}` | {f6(s[a]['dti'])} | {ci(s[a]['ci95'])} | "
                  + ("—" if a == "B_DVA2" else
                     f"{C['primary_minus_B_DVA2']['delta']:+.6f} {ci(C['primary_minus_B_DVA2']['ci95'])}" if a == "H101_veto"
                     else f"{C['attribution_minus_B_DVA2'][a]['delta']:+.6f} {ci(C['attribution_minus_B_DVA2'][a]['ci95'])}") + " |"
-                 for a in sorted(s, key=lambda a: -s[a]["dti"]))
+                 for a in sorted((k for k in s if isinstance(s[k], dict) and "dti" in s[k]), key=lambda a: -s[a]["dti"]))
 strata = "\n".join(
     f"| {i} | " + " | ".join(
         (f"{r[k]['mean_credit']:.4f} (n={r[k]['n']:,})" if r[k]["mean_credit"] is not None else f"— (n={r[k]['n']})")

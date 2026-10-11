@@ -54,7 +54,8 @@ def verdict_text():
             f"{f6(CARD['holdout']['B_DVA2']['dti'])}; paired {pd['delta']:+.6f} {ci(pd['ci95'])} — the interval "
             "crosses zero, so it did not beat the current holdout best."
             + (" Its dots are also a lane near-duplicate of this repository's own H84 file (B_DVA2 family; "
-               "IR-H101-005), logged as a duplicate." if "lane_dots" in CARD["failed_gates"] else ""))
+               "IR-H101-005) and, in the post-merge check, of main's H87 board-calibrated file (IR-H101-007), "
+               "logged as a duplicate." if "lane_dots" in CARD["failed_gates"] else ""))
 
 
 STYLE = ("<style>body{font:16px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;"
@@ -107,7 +108,7 @@ def identity_table():
 
 def holdout_table():
     vs = CARD["attribution_minus_B_DVA2"]
-    order = sorted(CARD["holdout"], key=lambda a: -CARD["holdout"][a]["dti"])
+    order = sorted((k for k, v in CARD["holdout"].items() if isinstance(v, dict) and "dti" in v), key=lambda a: -CARD["holdout"][a]["dti"])
     out = ["<table><tr><th>arm</th><th>role</th><th>HOLDOUT-DTI</th><th>95 % CI</th><th>arm − B_DVA2 (paired)</th></tr>"]
     for a in order:
         s = CARD["holdout"][a]
@@ -294,7 +295,7 @@ def readme_block():
     v = CARD["validator"]
     lane = CARD["lane"]
     rows = "\n".join(f"| `{a}` | {ARM_ROLE.get(a, '')} | {f6(s[a]['dti'])} {ci(s[a]['ci95'])} |"
-                     for a in sorted(s, key=lambda a: -s[a]["dti"]))
+                     for a in sorted((k for k in s if isinstance(s[k], dict) and "dti" in s[k]), key=lambda a: -s[a]["dti"]))
     gates = "\n".join(f"| {k} | {'PASS' if g else '**FAIL**'} |" for k, g in CARD["gates"].items())
     return f"""<!--H101-README-->
 # Current status — H101 (2026-10-10): co-training disagreement as an artefact veto · NEGATIVE
@@ -335,6 +336,7 @@ def readme_block():
 - **Candidate hypotheses (5, ranked by expected gain ÷ cost, with layers, signature, why off-catalogue, how new):** [knowledge/105 §1](knowledge/105_hypotheses_H101_preregistered.md). The top one was run; #5 (INGENIOUS temperature probes, GDR 1391) needs an owner download: gdr.openei.org returned no connection from this sandbox (curl code 000, `evidence/h101_reverification.json`).
 - Docs: [preregistration](knowledge/105_hypotheses_H101_preregistered.md) · [results & limits](knowledge/106_h101_results_and_limits.md) · [irregularities](registry/irregularities.json)
 - Reproduce: `python3 scripts/restore_data.py --target-dir data` → `PYTHONPATH=src python -c "from gems52 import structural; structural.build(dest='work/r2/features', include_optional_profiles=False)"` → `PYTHONPATH=src python -m gems52.external` → `python scripts/fetch_prior_inventory.py --out work/h61/priors --receipt work/h61/prior_fetch_receipt.json` → `python scripts/run_h101.py all` → `python scripts/h101_card.py` → `python scripts/publish_h101_site.py && python scripts/check_site.py`.
+- **Renumbered:** this round was preregistered as H97; main merged other sessions' H97–H100 first, so it is H101 here (IR-H101-006, `evidence/h101_identifier_rename.diff`). Not to be confused with main's own H97 (`docs/h97.html`).
 - The standing brief for this session is the same text as `knowledge/94_current_user_brief_2026-10-10_H95.md` (reproduced verbatim in the H95 block below); read it every session.
 
 <!--/H101-README-->

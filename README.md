@@ -1,32 +1,32 @@
-<!--H97-README-->
-# Current status — H97 (2026-10-10): co-training disagreement as an artefact veto · NEGATIVE
+<!--H101-README-->
+# Current status — H101 (2026-10-10): co-training disagreement as an artefact veto · NEGATIVE
 
 > **OK TO DOWNLOAD: YES** — format-valid single-band float32 GeoTIFF, EPSG:32611, 3730×3292,
 > all-finite, values exactly {0,1} (the portal's *"Predicted values must be in range [0, 1]"* rejection cannot occur).
 >
-> **OK TO SUBMIT: NO — research-only, do not upload.** Failed gate(s): holdout_paired_vs_B_DVA2, lane_dots. The primary scored HOLDOUT-DTI 0.192122 against the control B_DVA2 0.192831; paired -0.000709 [-0.001750, 0.000340] — the interval crosses zero, so it did not beat the current holdout best. Its dots are also a lane near-duplicate of this repository's own H84 file (B_DVA2 family; IR-H97-005), logged as a duplicate.
+> **OK TO SUBMIT: NO — research-only, do not upload.** Failed gate(s): holdout_paired_vs_B_DVA2, lane_dots. The primary scored HOLDOUT-DTI 0.192122 against the control B_DVA2 0.192831; paired -0.000709 [-0.001750, 0.000340] — the interval crosses zero, so it did not beat the current holdout best. Its dots are also a lane near-duplicate of this repository's own H84 file (B_DVA2 family; IR-H101-005) and, in the post-merge check, of main's H87 board-calibrated file (IR-H101-007), logged as a duplicate.
 >
 > Weekly slots used: **0**. The agent does not pick submissions; promotion is a separate selector step.
 
-**★ [Download h97-candidate.tif](docs/downloads/h97-candidate.tif)** · [ZIP](docs/downloads/h97-candidate.zip) ·
-**[Executive summary / how to submit](docs/h97-executive-summary.html)** · [Full result](docs/h97.html) ·
-[Run card](evidence/h97_run_card.json) · [A-only reasoning CSV](docs/downloads/h97-a-only-reasoning.csv)
+**★ [Download h101-candidate.tif](docs/downloads/h101-candidate.tif)** · [ZIP](docs/downloads/h101-candidate.zip) ·
+**[Executive summary / how to submit](docs/h101-executive-summary.html)** · [Full result](docs/h101.html) ·
+[Run card](evidence/h101_run_card.json) · [A-only reasoning CSV](docs/downloads/h101-a-only-reasoning.csv)
 
-- **File:** `submission/gems52-h97-fallline-veto-dva2-37654px-20261011T003404Z-zeros.tif` — 142,197 bytes, SHA-256 `5a9ce7cc3d10493f3fd86ba4c9887f5f198e2f5b007e301b8726e89b3644828b`
-- **Submission name:** `h97-fallline-veto-dva2-37654px-20261011T003404Z` · **Note (121/140):** `H97 co-train veto: B-only dots on fall-line/cardinal axes demoted (Hessian), DVA2 surface field, 3px, 200m ring; research`
+- **File:** `submission/gems52-h101-fallline-veto-dva2-37654px-20261011T003404Z-zeros.tif` — 142,197 bytes, SHA-256 `5a9ce7cc3d10493f3fd86ba4c9887f5f198e2f5b007e301b8726e89b3644828b`
+- **Submission name:** `h101-fallline-veto-dva2-37654px-20261011T003404Z` · **Note (121/140):** `H101 co-train veto: B-only dots on fall-line/cardinal axes demoted (Hessian), DVA2 surface field, 3px, 200m ring; research`
 - **Validator (re-read from disk):** 1 band float32, EPSG:32611, 3730×3292, CRS/shape/transform/bounds = sample_submission.tif: True, NaN 0, inf 0, values [0.0, 1.0], 37,654 ones, 0 outside footprint → PASS
 - **HOLDOUT-DTI** (`gems52-pooled-hide-v1`, 53,186 withheld positive px, 9,400 dots/fold, 95 % paired cluster bootstrap):
 
 | arm | role | HOLDOUT-DTI [95 % CI] |
 |---|---|---|
-| `H97_veto_card` | attribution — road (cardinal) veto only | 0.192930 [0.170866, 0.213653] |
+| `H101_veto_card` | attribution — road (cardinal) veto only | 0.192930 [0.170866, 0.213653] |
 | `B_DVA2` | control — current holdout best (H82/H84) | 0.192831 [0.170791, 0.213696] |
-| `H97_veto` | PRIMARY — fall-line OR road veto of B-only | 0.192122 [0.170106, 0.212841] |
-| `H97_veto_fl` | attribution — fall-line veto only | 0.192060 [0.170237, 0.212733] |
-| `B_DVA2s` | lane-pure View B (surface DVA2 only, IR-H97-001) | 0.184506 [0.163182, 0.205893] |
-| `H97_consensus` | A as soft prior: r_B·(0.9+0.1·r_A) | 0.184435 [0.162915, 0.205307] |
-| `H97_veto_s` | veto on lane-pure View B | 0.184204 [0.163205, 0.205345] |
-| `H97_scarp_soft` | contour-parallel prior, no disagreement | 0.180812 [0.160896, 0.200256] |
+| `H101_veto` | PRIMARY — fall-line OR road veto of B-only | 0.192122 [0.170106, 0.212841] |
+| `H101_veto_fl` | attribution — fall-line veto only | 0.192060 [0.170237, 0.212733] |
+| `B_DVA2s` | lane-pure View B (surface DVA2 only, IR-H101-001) | 0.184506 [0.163182, 0.205893] |
+| `H101_consensus` | A as soft prior: r_B·(0.9+0.1·r_A) | 0.184435 [0.162915, 0.205307] |
+| `H101_veto_s` | veto on lane-pure View B | 0.184204 [0.163205, 0.205345] |
+| `H101_scarp_soft` | contour-parallel prior, no disagreement | 0.180812 [0.160896, 0.200256] |
 | `single_B` | single-view baseline (surface) | 0.174517 [0.152316, 0.196299] |
 | `random` | floor | 0.080426 [0.070223, 0.090973] |
 | `single_A` | single-view baseline (geophysics) | 0.071954 [0.056636, 0.088566] |
@@ -35,7 +35,7 @@
 - **Independence:** max |ρ| 0.1184 (single_A_vs_B_DVA2s), 0.1498 (single_A_vs_B_DVA2); abandon ≥ 0.60 → not abandoned. View A sufficiency mean AUC 0.5163 (fails again).
 - **Leakage canary:** max single-feature AUC 0.6693 (bar 0.90) → none.
 - **Lane:** surface PASS (max ρ 0.4815); dots literal DUPLICATE/STOP (max near-3px 1.0000), policy DUPLICATE/STOP (max near-3px 0.9406).
-- **Gates (frozen in `registry/h97_preregistration.json`):**
+- **Gates (frozen in `registry/h101_preregistration.json`):**
 
 | gate | result |
 |---|---|
@@ -50,16 +50,50 @@
 | format | PASS |
 | not_the_union | PASS |
 
-- **New finding (IR-H97-001):** the holdout-best "View B" `B_DVA2` contains gravity/basement variogram channels (bands 13/15/18). The lane-pure surface view `B_DVA2s` scores 0.184506, i.e. -0.008325 — the View-A physics inside "B" is worth ≈ 0.008 HOLDOUT-DTI.
+- **New finding (IR-H101-001):** the holdout-best "View B" `B_DVA2` contains gravity/basement variogram channels (bands 13/15/18). The lane-pure surface view `B_DVA2s` scores 0.184506, i.e. -0.008325 — the View-A physics inside "B" is worth ≈ 0.008 HOLDOUT-DTI.
 - **Lead (not evidence of a gain):** fall-line-flagged B-only dots carry less credit than clean B-only dots in all four folds, but the removed dots still out-credit their replacements in all four folds (fold 0: removed 0.1184 vs added 0.1015 (n=852); fold 1: removed 0.1118 vs added 0.0981 (n=951); fold 2: removed 0.0861 vs added 0.0843 (n=698); fold 3: removed 0.0997 vs added 0.0943 (n=1052)) — test a rank-preserving soft penalty next.
-- **Why `h33-2-b2` scored 0.2778 / can we beat 0.3195?** It is the 0.2600 `d2-8` surface field with every dot ≤ 200 m from the public catalogue deleted (re-verified from bytes this session, `evidence/h97_reverification.json`: 37,654 dots, values {0,1}, nearest dot 223.6 m from `labels.tif`, median 1964.7 m, 5.77 % within 300 m); DTI = T/(0.2·S + 0.8·|G|) rewards removing dots that cannot hit *new* faults. Beating 0.3195 needs ≈ 15 % more credit per dot at the same mass ([knowledge/76](knowledge/76_why_02778_and_what_beating_03195_requires.md)); note 0.3195 is rank 8 and the board top is 0.3774 (re-observed live this session, `evidence/h97_reverification.json`; IR-H85-008), which needs ≈ ×1.36 the champion's credit density. H97 does not deliver it; nothing in this repository has yet demonstrated it.
-- **Candidate hypotheses (5, ranked by expected gain ÷ cost, with layers, signature, why off-catalogue, how new):** [knowledge/97 §1](knowledge/97_hypotheses_H97_preregistered.md). The top one was run; #5 (INGENIOUS temperature probes, GDR 1391) needs an owner download: gdr.openei.org returned no connection from this sandbox (curl code 000, `evidence/h97_reverification.json`).
-- Docs: [preregistration](knowledge/97_hypotheses_H97_preregistered.md) · [results & limits](knowledge/98_h97_results_and_limits.md) · [irregularities](registry/irregularities.json)
-- Reproduce: `python3 scripts/restore_data.py --target-dir data` → `PYTHONPATH=src python -c "from gems52 import structural; structural.build(dest='work/r2/features', include_optional_profiles=False)"` → `PYTHONPATH=src python -m gems52.external` → `python scripts/fetch_prior_inventory.py --out work/h61/priors --receipt work/h61/prior_fetch_receipt.json` → `python scripts/run_h97.py all` → `python scripts/h97_card.py` → `python scripts/publish_h97_site.py && python scripts/check_site.py`.
+- **Why `h33-2-b2` scored 0.2778 / can we beat 0.3195?** It is the 0.2600 `d2-8` surface field with every dot ≤ 200 m from the public catalogue deleted (re-verified from bytes this session, `evidence/h101_reverification.json`: 37,654 dots, values {0,1}, nearest dot 223.6 m from `labels.tif`, median 1964.7 m, 5.77 % within 300 m); DTI = T/(0.2·S + 0.8·|G|) rewards removing dots that cannot hit *new* faults. Beating 0.3195 needs ≈ 15 % more credit per dot at the same mass ([knowledge/76](knowledge/76_why_02778_and_what_beating_03195_requires.md)); note 0.3195 is rank 8 and the board top is 0.3774 (re-observed live this session, `evidence/h101_reverification.json`; IR-H85-008), which needs ≈ ×1.36 the champion's credit density. H101 does not deliver it; nothing in this repository has yet demonstrated it.
+- **Candidate hypotheses (5, ranked by expected gain ÷ cost, with layers, signature, why off-catalogue, how new):** [knowledge/105 §1](knowledge/105_hypotheses_H101_preregistered.md). The top one was run; #5 (INGENIOUS temperature probes, GDR 1391) needs an owner download: gdr.openei.org returned no connection from this sandbox (curl code 000, `evidence/h101_reverification.json`).
+- Docs: [preregistration](knowledge/105_hypotheses_H101_preregistered.md) · [results & limits](knowledge/106_h101_results_and_limits.md) · [irregularities](registry/irregularities.json)
+- Reproduce: `python3 scripts/restore_data.py --target-dir data` → `PYTHONPATH=src python -c "from gems52 import structural; structural.build(dest='work/r2/features', include_optional_profiles=False)"` → `PYTHONPATH=src python -m gems52.external` → `python scripts/fetch_prior_inventory.py --out work/h61/priors --receipt work/h61/prior_fetch_receipt.json` → `python scripts/run_h101.py all` → `python scripts/h101_card.py` → `python scripts/publish_h101_site.py && python scripts/check_site.py`.
+- **Renumbered:** this round was preregistered as H97; main merged other sessions' H97–H100 first, so it is H101 here (IR-H101-006, `evidence/h101_identifier_rename.diff`). Not to be confused with main's own H97 (`docs/h97.html`).
 - The standing brief for this session is the same text as `knowledge/94_current_user_brief_2026-10-10_H95.md` (reproduced verbatim in the H95 block below); read it every session.
 
-<!--/H97-README-->
+<!--/H101-README-->
 
+<!--H99-README-->
+# Current status — H99/H100 (2026-10-10): two-view co-training, boundary texture — both strict NEGATIVES
+
+> **OK TO DOWNLOAD: YES** — format-valid single-band float32 GeoTIFF, EPSG:32611, 3292×3730, transform/bounds equal to the organiser template, **0 NaN**, every value in [0,&nbsp;1], 37,654 emitted cells at ≥3&nbsp;px spacing with no mass inside the 200&nbsp;m catalogue collar.
+>
+> **OK TO SUBMIT: NO — research-only, do not upload.** The pre-registered primary scores **0.034799** HOLDOUT-DTI [0.026938, 0.044011] against its own random control **0.080426** [0.070223, 0.090973]; paired **-0.045627** [-0.054106, -0.037194]. The pre-registered long-lag follow-up (H100) repeated it. Nothing here beats the repository holdout bar (0.190147, H84).
+>
+> Weekly slots used: **0**. The agent does not pick submissions; promotion is the owner's decision.
+
+**★ [Download h99-candidate.tif](docs/downloads/h99-candidate.tif)** · [ZIP](docs/downloads/h99-candidate.zip) · [Executive summary / how to submit](docs/executive-summary.html) · [Downloads index](docs/downloads/index.html) · [Run card](evidence/h99_run_card.json) · [A-only reasoning CSV](docs/downloads/h99-candidate-a-only-reasoning.csv) · **[Results (H99+H100)](knowledge/104_h99_h100_results.md)** · **[Why 0.2778 scored, and what beating 0.3195 takes](knowledge/103_why_02778_and_the_route_above_it.md)**
+
+- **File:** `submission/gems52-h99-cotrain-atexture-disagreement-20261010T222354Z.tif` — 795,099 bytes, SHA-256 `dbbdc0715d8fac843e45e997267aab141df233b6e482206db7f1279d560a9914`
+- **Submission name:** `h99-cotrain-atexture-disagreement-37654px` (41 chars) · **Note (74/140):** `H99 A-texture vs B-texture disagreement, 37654px, 3px spacing, 200m collar`
+- **Validator (re-read from disk):** single band float32, EPSG:32611, 3292×3730, transform/bounds = organiser template, 0 NaN, 0 inf, values in [0.0, 1.0], 37,654 emitted cells, nodata tag None; problems: none
+- **HOLDOUT-DTI** (`gems52-pooled-hide-v1`, 53,186 withheld positive px over 153 physical 20 km clusters, 1,000-draw paired bootstrap):
+
+| arm | H99 (lags 1–3 px) | H100 (lags 4–8 px) |
+|---|---:|---:|
+| `xtex_dis` — the brief's A-confident/B-abstains disagreement (primary) | **0.034799** [0.026938, 0.044011] | **0.034697** [0.026536, 0.043153] |
+| `random` (same placement, control) | 0.080426 [0.070223, 0.090973] | 0.080426 [0.070223, 0.090973] |
+| `xtex_agree` | 0.128009 [0.112310, 0.143335] | 0.121582 |
+| `single_Atex` (View A alone) | 0.081910 [0.069143, 0.095862] | 0.074913 |
+| `single_Btex` (View B alone) | 0.164883 [0.145264, 0.183945] | 0.152616 |
+
+  Paired primary − random: H99 **-0.045627** [-0.054106, -0.037194]; H100 **−0.045728** [−0.052841, −0.038856] → both CIs entirely below zero → **NEGATIVE**.
+- **What the brief asked to test:** view independence **PASSES** (max |ρ| 0.4510 H99 / 0.4455 H100, bars 0.90 and 0.60); view sufficiency **FAILS** (View A held-out AUC 0.5317 / 0.5284 — the 9th and 10th consecutive View-A failure, which is why the disagreement arm loses); leakage canary **PASSES** (0.5977, alarm 0.90); the shipped field is **not the union** of the two views (0 of 37,654 dots in the consensus, 1,758 in the union, Spearman(field, max(A,B)) −0.00335).
+- **Gates:** decoded-pattern uniqueness **PASSES** against 146 comparable priors (novel 25,702 px, novel fraction 0.6826, max Jaccard 0.0131, more than the 20 % bar, more selective than the prior union). The literal dot-lane rule **fires** against one prior only — the `r13-lattice` density probe, whose own 3 px halo covers virtually the whole footprint — and is **not waived**; excluding probe rasters the maximum is **0.3828 < 0.70** (IR-H99-002).
+- **Geological reasoning for every A-only candidate:** 34,187 of the 37,654 dots — `docs/downloads/h99-candidate-a-only-reasoning.csv` (15,932,119 bytes, SHA-256 `45d750c4cc42060b4a41b1093229714fdd1ec4dad0460ebb8da5618343015fbe`). Recomputing the production placement from the frozen procedure reproduced the shipped dot set with **0 differing pixels** (`evidence/h99_reasoning.json`).
+- **Receipts:** `evidence/h99_{channels,fit,holdout,build,reasoning,run_card}.json`, `evidence/h100_{channels,fit,holdout,run_card}.json`; frozen preregistrations `knowledge/101` + `registry/h99_preregistration.json` and `knowledge/102` + `registry/h100_preregistration.json` (both pins verify); results in full `knowledge/104_h99_h100_results.md`.
+- **Identifier history (IR-H99-008):** this round was frozen as H88/H89, renamed H92/H93 when a parallel session merged its own H88/H89 round, then renamed again to **H99/H100** when `main` used H92–H96. Both renames are mechanical and auditable (`evidence/h99_identifier_rename.diff` reproduces the frozen texts byte for byte); the GeoTIFF bytes never changed.
+- **Parallel rounds on this branch's history:** keep the newest of each card; `knowledge/103` carries the 0.2778 arithmetic (|G| ≈ 14,088.7 px, T ≈ 5,223.1 px, 0.3195 needs credit density ×1.1501 or S ≤ 25,384 px) and the three off-catalogue routes that remain untested.
+
+<!--/H99-README-->
 <!--H95-README-->
 # Current status — H95 (2026-10-10): co-trained View B · first holdout of H87 · NEGATIVE
 
@@ -732,6 +766,71 @@ Go ahead and create a pull request and then merge the pull request onto the main
 </details>
 
 <!--/H95-README-->
+
+<!--H97-README-->
+# This session's round — H97 (artifact) and H98 (validation), 2026-10-11
+
+**Branch:** `arena/4cdd8084-gemsdoe52` · **Round-number lineage:** this pair was written as H88/H89,
+renumbered H93/H94 when those labels went to parallel sessions, and renumbered **H97/H98** for the same
+reason. Every receipt, page, hash and byte count below belongs to this pair; no number *inside* any
+receipt changed during a rename.
+
+## ⬇️ The file — and whether it is OK to submit it
+
+> ### 🚫 DOWNLOAD ONLY — do not spend a submission slot on it.
+> **OK to download?** Yes: `gems52-h97-cotrain-disagree-sparse-37654px-20261010T224136Z.tif` is
+> format-valid (single-band float32, EPSG:32611, 3730×3292 at 100 m, exactly
+> 37,654 cells at 1.0 and zeros elsewhere, every pixel finite in [0, 1], no nodata
+> tag — so the portal's rule "Predicted values must be in range [0, 1]" cannot fail on it) and unique
+> (novel fraction 0.6725 against 147 priors;
+> lane policy PASS).
+> **OK to submit?** No: the round's frozen promotion rule failed. Hide-and-recover DTI
+> **0.045947** [0.033706, 0.059307] against a matched random control
+> 0.076551; paired **-0.030604**
+> [-0.043238, -0.016560] — the interval lies wholly below zero.
+> **NO CERTIFIED LEADERBOARD GAIN from this file.** `approved_for_weekly_slot = false`, slots used 0.
+
+* **File:** [docs/downloads/gems52-h97-cotrain-disagree-sparse-37654px-20261010T224136Z.tif](docs/downloads/gems52-h97-cotrain-disagree-sparse-37654px-20261010T224136Z.tif) ·
+  [ZIP](docs/downloads/h97-candidate.zip) · SHA-256 `eed99c0b544b1731a4dd2e10c2f4db65a90316e149c3c4a6673256459d95f5f2` (125,032 bytes)
+* **Submission name / note (≤140 chars):** `h97-cotrain-sparse-37654px` ·
+  `H97 co-train A-conf/B-abstain, 37654px, 3px spacing, 200m ring, budget from prevalence-matched off-cat, zeros-outside` (117 chars)
+* **Per-dot reasoning:** [docs/downloads/h97-a-only-reasoning.csv.gz](docs/downloads/h97-a-only-reasoning.csv.gz)
+  — 37,654 rows, one written geological reason and one explicit falsifier per dot
+
+## What the two rounds measured
+
+| round | arm | pooled HOLDOUT-DTI | paired vs matched random |
+|---|---|---|---|
+| H97 | `h97_disagree` — A confident, B abstains (the brief's lane) | 0.045947 [0.033706, 0.059307] | **-0.030604** [-0.043238, -0.016560] |
+| H98 | `h98_bonly` — B confident, A abstains (the off-catalogue screen's favourite) | 0.058435 [0.043370, 0.075525] | **-0.018885** [-0.030936, -0.007620] |
+
+Matched random control on the same instrument: H97 0.076551, H98 0.077320
+(`gems52-pooled-hide-v1`, 60,894 withheld positives, 4 folds, 80 px buffer).
+
+**The one finding worth keeping:** the same pre-registered arm scores **+0.057555** above matched random on
+the off-catalogue screen that selected it and **-0.018885** on the pooled hide-and-recover
+instrument (0.058435 against random 0.077320) — the truth population, not the method, sets the
+sign. Both numbers are published together (`registry/irregularities.json` IR-H97-004); neither is averaged
+and neither is quoted alone.
+
+## Receipts and honesty notes
+
+* `evidence/h97_{holdout,channel_screen,credit_curve,build,run_card,lane_dots,a_only_segments}.json` ·
+  `evidence/h98_{lane_precheck,holdout}.json`
+* Pre-registration: `registry/h97_preregistration.json`, `registry/h98_preregistration.json` (both frozen
+  before their own fit; the withdrawn first H97 draft is disclosed inside the file, not deleted).
+* Hypotheses and limits: `knowledge/97`, `knowledge/98` (H97), `knowledge/99`, `knowledge/100` (H98).
+* Irregularities filed: **IR-H97-001 … IR-H97-006**, **IR-H98-001** in
+  `registry/irregularities.json` — including the two defects found by manual review of the reasoning CSV
+  (pixel indices used as projected coordinates; the lidar *coverage* band published under a scarp name),
+  both fixed before publication with the raster bytes unchanged.
+* Neither instrument measures the organiser's scored population. Nothing here is an organizer-confirmed
+  score; every figure is either HOLDOUT-DTI (labelled with evaluator, withheld positives and CI) or copied
+  from a receipt.
+
+---
+<!--/H97-README-->
+
 <div style="background:#f3f8f2;border:1px solid #9dc39a;color:#123d17;padding:12px 16px;margin:12px 0;border-radius:8px;font:15px/1.5 sans-serif"><strong>Round H87 board-score inversion (a DIFFERENT round from the H87 co-train-wavelength, H88 and H95 rounds already on main, and from H84, H85 and H86): DOWNLOAD YES, SUBMIT NO.</strong> Inverted 13 owner-reported public-board scores through the metric&rsquo;s exact linear form: hidden truth mass <b>|G| = 14,333.8</b> (third independent pin; H67 14,088.7, lattice 12,367), leave-one-out score MAE <b>0.02007</b>, Spearman <b>0.9436</b>. The mass lands on <b>family consensus 9,937.8 (69.3%)</b> and <b>catalogue 4,396.0 (30.7%)</b>; <b>every physical, external and disagreement basis got weight zero</b> (a 13-basis fit returned the identical solution). Dots placed by the metric&rsquo;s own marginal rule (add iff exact marginal credit c &gt; 0.2&middot;DTI), a shared tested tool <code>gems52.nodes.marginal_greedy</code> &mdash; budget derived, not chosen: <b>61,427 cells</b>, binary 0/1. Uniform-truth control self-terminates at 5.373 px and predicts <b>0.10007</b> where the pinned organiser-side lattice raster is OWNER-REPORTED at <b>0.0904</b> (+10.7%). HOLDOUT-DTI (gems52-pooled-hide-v1, 60,894 withheld): <b>0.104228 [0.084119, 0.124875]</b> vs random <b>0.075375 [0.067081, 0.083962]</b>; paired <b>+0.028853 [+0.014804, +0.043810]</b> excludes zero, but fold 0 loses (0.003118 vs 0.041666) and the holdout incumbent is not beaten. PREDICTED-BOARD on three truth realisations: candidate 0.19841 vs the 0.2778 champion 0.23948 (paired -0.04107) &mdash; worse than the file that already scored 0.2778. Decoded-pixel uniqueness PASSES vs 142 local priors (novel fraction 0.3558, max Jaccard 0.0719). <b>IR-H87-001:</b> the 13 owner-scored rasters&rsquo; 3 px halos cover <b>108.6%</b> of the footprint, so the literal lane rule is unsatisfiable for ANY non-empty emission here (random control near-3px 0.99901 vs candidate 0.99920); reported, not waived. <b>IR-H87-002:</b> lane scoped to the owner-scored registry; the four full-inventory lane passes did not fit the two-hour budget. Slots used: 0. <a href="docs/downloads/h87-candidate.tif">Download H87 GeoTIFF</a> &middot; <a href="docs/h87-executive-summary.html">H87 executive summary</a> &middot; <a href="knowledge/82_h87_board_inversion_2026-10-10.md">knowledge/82</a>. Not ORGANIZER-CONFIRMED.</div>
 
 

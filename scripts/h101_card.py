@@ -68,7 +68,14 @@ def main():
         leakage_canary=dict(max_auc=fit["canary_max_overall"], bar=fit["canary_alarm_auc_bar"],
                             fall_line_alone=[r["canary"]["H101_FL"] for r in fit["folds"]],
                             dcard_alone=[r["canary"]["H101_DCARD"] for r in fit["folds"]]),
-        holdout={a: S(a) for a in REG["arms"]},
+        holdout={**{a: S(a) for a in REG["arms"]},
+                 # feed-compatible summary keys read by scripts/refresh_feed.py newest_round()
+                 "primary_dti": S("H101_veto")["dti"], "primary_ci95": S("H101_veto")["ci95"],
+                 "random_dti": S("random")["dti"],
+                 "paired_primary_minus_random": dict(
+                     delta=S("H101_veto")["dti"] - S("random")["dti"], ci95=None,
+                     note="point difference of the two pooled HOLDOUT-DTI scores on the same folds; "
+                          "not separately bootstrapped (the frozen bootstrap pairs every arm against B_DVA2)")},
         primary_minus_B_DVA2=dict(label="HOLDOUT-DTI paired", delta=pdB["delta"], ci95=pdB["ci95"]),
         attribution_minus_B_DVA2={k: dict(delta=v["delta"], ci95=v["ci95"]) for k, v in ho["vs_B_DVA2"].items()},
         control_reproduction=ho["controls"],
@@ -83,6 +90,7 @@ def main():
                                    probes_excluded=pol_d["universal_coverage_probes"]),
                   placement=ln.get("emitted_placement"), n_registry=ln.get("n_full")),
         uniqueness={k: v for k, v in uq.items() if not isinstance(v, (list, dict))},
+        lane_postmerge=json.loads((ROOT / "evidence/h101_postmerge_uniqueness.json").read_text()),
         not_the_union=bu["not_the_union"],
         raster=dict(file=bu["file"], bytes=bu["bytes"], sha256=sha, download=bu["download_staged"]),
         validator=bu["validator"],
