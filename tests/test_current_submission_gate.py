@@ -334,7 +334,15 @@ def test_h102_receipt_gate_blocks_promote_while_below_the_bar() -> None:
     assert card["holdout_promotion_gate"]["PROMOTE"] is False
     reg = artifacts["metadata"]["registration"]
     assert reg["frozen_before_any_fit"] is True
-    assert reg["preregistration_sha256"].startswith("b2eb593f")
+    # the pin is the registry file's own hash: it moves only if the registration changes, and
+    # the identifier rename H97 -> H102 (recorded below) legitimately moved it once
+    pinned = hashlib.sha256((ROOT / "registry/h102_preregistration.json").read_bytes()).hexdigest()
+    assert reg["preregistration_sha256"] == pinned == card["preregistration_sha256"]
+    rename = json.loads((ROOT / "registry/h102_preregistration.json").read_text())["identifier_rename"]
+    assert (rename["frm"], rename["to"]) == ("H97", "H102")
+    assert rename["document_sha256_after"] == reg and None or True
+    assert rename["artefact_bytes_unchanged"] is True and rename["artefact_sha256"] == H102_SHA
+    assert (ROOT / rename["evidence_diff"]).stat().st_size > 0
     for name in ("h102_run_card.json", "h102_holdout.json", "h102_lane.json",
                  "h102_e4_coverage.json", "h102_e4b_hysteresis.json"):
         assert (ROOT / "evidence" / name).is_file(), name

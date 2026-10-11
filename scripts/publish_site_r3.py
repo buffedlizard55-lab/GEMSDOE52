@@ -10,6 +10,7 @@ from __future__ import annotations
 import hashlib
 import html
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -480,7 +481,8 @@ def insert_h55_review(h55_archive: dict, verification: dict, sweep: dict,
     rnd = str(current_submission.get("round") or "H56").upper()
     round_pages = {"H97": "h97.html", "H96": "h96.html", "H91": "h91.html", "H90": "h90.html", "H84": "h84.html",
                    "H60": "h60.html", "H59": "h59.html", "H58": "h58.html", "H57": "h57.html"}
-    if rnd not in round_pages and (DOCS / f"h{rnd[1:].lower()}.html").is_file():
+    page_name = f"h{rnd[1:].lower()}.html"
+    if rnd not in round_pages and ((DOCS / page_name).is_file() or (ROOT / "docs" / page_name).is_file()):
         # later rounds publish h<round>.html beside the others; pick it up instead of going stale
         round_pages[rnd] = f"h{rnd[1:].lower()}.html"
     page_href = round_pages.get(rnd) or (
@@ -607,7 +609,16 @@ def insert_r3_home_bar(sub: dict) -> None:
             index = text.index(anchor) + len(anchor)
         else:
             main = text.find("<main")
-            index = text.find(">", main) + 1 if main >= 0 else 0
+            if main >= 0:
+                index = text.find(">", main) + 1
+            else:
+                # a page without <main> must still keep its <!DOCTYPE> first: fall back to the
+                # body, and put the bar *after* the newest round's card so the round still leads
+                body = text.find("<body")
+                index = text.find(">", body) + 1 if body >= 0 else 0
+                first_card = re.search(r"<!--/[A-Z0-9]+-CARD-->", text)
+                if first_card and first_card.end() > index:
+                    index = first_card.end()
         text = text[:index] + block + text[index:]
     path.write_text(text, encoding="utf-8")
 
