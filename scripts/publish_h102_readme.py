@@ -217,7 +217,8 @@ def main() -> int:
         assert after_brief.startswith(archived_h95.strip("\n")) or after_brief == rest_after, \
             "tail changed during rewrite"
     else:
-        new = head + block + rest_after
+        # keep one blank line between this round's block and whatever block follows it
+        new = head + block + "\n\n" + rest_after
     README.write_text(new, encoding="utf-8")
     # the standing brief lives in whichever block first carried it (main keeps it inside the H95
     # block, whose copy this publisher must never drop); verify it once here, for the whole file

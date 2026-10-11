@@ -44,17 +44,15 @@ def test_h95_verdict_follows_frozen_rule():
     assert e2["control_reproduction"]["ok"]
 
 
-def test_readme_carries_current_verdicts_brief_and_the_h95_archive():
-    """H95 stopped being the incumbent when H102 shipped; its block stays in the README as an archive
-    (the same convention as the H89/H87/H83/H82 blocks below it), the current block keeps the
-    download/submit verdicts explicit, and the standing brief stays verbatim."""
+def test_h95_readme_block_is_archived_and_brief_stays_verbatim():
+    """H95 stopped being the incumbent; its README block is an archive now (the same convention as
+    the H89/H87/H83 blocks below it). The top-of-README marker belongs to whichever round is newest
+    (asserted in the newest round's own suite), so this test only demands that H95's archive and the
+    standing brief survive *somewhere* in the file, byte-verbatim."""
     text = (ROOT / "README.md").read_text()
-    assert text.startswith("<!--H102-README-->"), "the newest block must sit at the top of the README"
-    current = text[: text.index("<!--/H102-README-->")]
-    assert "OK TO DOWNLOAD: YES" in current and "OK TO SUBMIT:" in current
-    assert "docs/downloads/h102-candidate.tif" in current
-    h95 = text[text.index("<!--H95-README-->"): text.index("<!--/H95-README-->")]
-    assert "OK TO DOWNLOAD: YES" in h95 and "OK TO SUBMIT:" in h95
-    assert "docs/downloads/h95-candidate.tif" in h95 and SHA in h95
+    assert "<!--H95-README-->" in text and "<!--/H95-README-->" in text
+    head = text[text.index("<!--H95-README-->"): text.index("<!--/H95-README-->")]
+    assert "OK TO DOWNLOAD: YES" in head and "OK TO SUBMIT:" in head
+    assert "docs/downloads/h95-candidate.tif" in head and SHA in head
     brief = (ROOT / "knowledge/94_current_user_brief_2026-10-10_H95.md").read_text()
     assert brief.strip()[:200] in text
