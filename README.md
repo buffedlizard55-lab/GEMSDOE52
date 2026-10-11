@@ -1,3 +1,18 @@
+<!--H97-README-->
+# Current status — H97 (2026-10-11): disagreement graft on the H84 surface learner · NEGATIVE
+
+> **OK TO DOWNLOAD: YES** — format check only. **OK TO SUBMIT: NO — research-only, do not upload.**
+>
+> HOLDOUT-DTI graft 0.047183 [0.034716, 0.060419] vs promotable bar 0.190147 (H84 `B_DVA2_HVA`). Paired graft − B_DVA2_HVA -0.142964 [-0.164118, -0.121119]. Weekly slots used: 0.
+
+- **File:** `submission/gems52-h97-graft-B_DVA2_HVA-37654px-20261011T010835Z.tif` · SHA-256 `588d0db7af4e818d90d84ecb983ab1bb842a327f49f9a047dfb04528625f9419`
+- **Name:** `h97-graft-B_DVA2_HVA-37654px-20261011T010835Z` · **Note (139/140):** `H97: H96 disagreement formula grafted on H84 B_DVA2_HVA (A=single_A); 3px spacing; 200m ring cut; binary dots; HOLDOUT-DTI gate in run card`
+- **Why negative:** the holdout fails the bar; the placed dots fall in A-confident / B-abstaining cells. The dot lane is a literal DUPLICATE/STOP (3 px share 1.000000 on a non-probe raster; random dots score higher on it, see IR-H97-006). On the holdout the A-only arm `single_A` scores 0.071954 against 0.080426 for random dots (`evidence/h97_holdout.json`); decomposition: [`evidence/h97_posthoc_diagnostic.json`](evidence/h97_posthoc_diagnostic.json). Full result: [`docs/h97.html`](docs/h97.html) · run card: [`evidence/h97_run_card.json`](evidence/h97_run_card.json) · preregistration: [`knowledge/97`](knowledge/97_hypotheses_H97_preregistered.md).
+
+---
+
+<!--/H97-README-->
+
 <!--H95-README-->
 # Current status — H95 (2026-10-10): co-trained View B · first holdout of H87 · NEGATIVE
 

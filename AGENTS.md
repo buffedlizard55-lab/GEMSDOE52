@@ -1,3 +1,13 @@
+<!--H97-AGENTS-->
+## Current H97 continuation (2026-10-11) — READ FIRST
+Verdict **NEGATIVE** (download yes, submit NO). Experiments 2 of 3, slots 0.
+- The H96 disagreement formula grafted on the H84 `B_DVA2_HVA` learner (preregistered, `registry/h97_preregistration.json`) scored HOLDOUT-DTI 0.047183, far below the H84 control 0.190147. Do not re-run this graft with changed weights; it is measured.
+- The A-only term (`a·(a−b)`) puts the whole budget on A-confident/B-abstaining cells; the A-only arm scores 0.071954 vs random 0.080426. The veto is not the main cause (diagnostic `graft_no_veto`).
+- `scripts/fetch_prior_inventory.py` now falls back to `codeload.github.com` with git-blob-SHA-1 verification when the Git Data API rate-limits (IR-H97-003). Its receipt records the source of every blob.
+- The H84 receipt `B_DVA2` control fails its own tolerance (IR-H97-001); the H97 control `B_DVA2_HVA` reproduces.
+
+<!--/H97-AGENTS-->
+
 <!--H96-AGENTS-->
 ## Current H96 continuation (2026-10-10) — READ FIRST
 Read README's standing brief and status block first. H96 verdict **NEGATIVE**. Download yes (audit only), submit **NO**.

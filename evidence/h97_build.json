@@ -1,0 +1,9 @@
+{
+ "stage": "build",
+ "pool_px": 4325298,
+ "eligible_px": 4593171,
+ "ring_excluded_m": 200.0,
+ "rank_domain": "stitched per-fold percentile ranks over the emission pool (disclosed; IR-H97-002)",
+ "surface_nonneg_px": 12279160,
+ "started_utc": "2026-10-11T00:36:33+00:00"
+}

@@ -3745,6 +3745,62 @@
       "what_it_is": "evidence/h87_build.json states 'HOLDOUT-DTI (not yet run; this is the build receipt, not a score)' while the H87 README block printed 'Status: Submission built and validated' and 'VERDICT: PROMOTE'. No h87 holdout receipt exists in evidence/.",
       "how_we_know": "ls evidence/ | grep h87 shows only h87_build.json; README.md at bc26fe2 carries the quoted strings.",
       "disposition": "H87 is labelled build-receipt-only everywhere in the new README/site; the promotion language is removed. If the H87 family is ever selected for a slot it must first run the same hide-and-recover instrument."
+    },
+    {
+      "id": "IR-H97-001",
+      "title": "H84 receipt control B_DVA2 fails its own tolerance (committed 0.1892, measured 0.192829)",
+      "status": "open - flagged for review; not edited",
+      "what_it_is": "evidence/h84_holdout.json controls.B_DVA2: committed 0.1892, measured 0.192829, abs delta 0.003629, tolerance 0.001, PASS False. The measured value equals the H82 B_DVA2 holdout (evidence/h82_holdout.json, 0.192829). The H84 preregistration (registry/h84_preregistration.json control_targets) commits 0.1892.",
+      "how_we_know": "Read from evidence/h84_holdout.json on main at 7eb226d. H97 re-ran the H84 fit and channel stages (evidence/h97_repro_h84_fit.json, evidence/h97_repro_h84_channels.json): per-fold AUCs and channel columns reproduce byte-for-byte except timestamps.",
+      "disposition": "Not edited (shared receipt). The H97 control is B_DVA2_HVA, whose committed value 0.190147 reproduces to 3.4e-7 (evidence/h97_holdout.json). Any round that cites B_DVA2 as a control must first reconcile 0.1892 with 0.192829."
+    },
+    {
+      "id": "IR-H97-002",
+      "title": "Emission rank domain was not fixed in the H97 preregistration",
+      "status": "disclosed in the build receipt",
+      "what_it_is": "The preregistered formula is fixed; the rank domain is not. The holdout ranks a and b inside each fold's allowed cells (as H84 does). The emission field ranks them over the stitched per-fold ranks on the emission pool (h82.stitch convention, scripts/run_h97.py stage_build). Both use the same formula and weights.",
+      "how_we_know": "evidence/h97_build.json rank_domain field; scripts/run_h97.py stage_build comment.",
+      "disposition": "Disclosed. Future rounds must put the rank domain in the preregistration before the fit."
+    },
+    {
+      "id": "IR-H97-003",
+      "title": "Git Data API secondary rate limit blocked the prior census; codeload fallback added to the shared tool",
+      "status": "closed - fallback added and verified; census complete",
+      "what_it_is": "During the H97 session, api.github.com returned HTTP 403 ('API rate limit exceeded ... scraping') for blob reads from 418 of 526 census blobs, after 108 succeeded. The core REST quota was not exhausted (remaining 5000), so this is the secondary limit. scripts/fetch_prior_inventory.py now reads each blob from the codeload.github.com archive at the census's pinned commit and accepts it only if the git blob SHA-1 equals the census blob id and the byte count matches. The Git Data API is the fallback.",
+      "how_we_know": "work/h61/prior_fetch_receipt.json: 526 entries, 0 errors, 418 fetched via codeload-archive (git blob SHA-1 verified), 108 present; 524 of 524 eligible files match the census SHA-256 (file bytes); the 2 non-eligible entries are not checked by the census.",
+      "disposition": "Fixed once in the shared tool (not a private fork). The census is complete on this machine. The decoded-pixel SHA-256 column is not used by the census (n_census_sha_is_decoded_sha = 0)."
+    },
+    {
+      "id": "IR-H97-004",
+      "title": "Official page says outside-bounds cells may be 'null or nan'; the portal validator rejected NaN (N-5 restated)",
+      "status": "open - flagged for review",
+      "what_it_is": "The DrivenData problem page (https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/, fetched 2026-10-11) states: 'data outside the bounds is null or nan' and 'values between 0 and 1'. The repo's N-5 (knowledge/03) records that the portal rejects NaN with 'Predicted values must be in range [0, 1]'. H97 writes 0.0 outside the footprint, which scores identically (p = 0 contributes nothing to FPw in the official formula).",
+      "how_we_know": "fetch_page of the official URL; knowledge/03 N-5; evidence/h97_write.json validator (nan=0, nan_inside_footprint=0).",
+      "disposition": "Flagged for owner review. We cannot log in to the portal to test NaN directly. Keep 0.0 unless the owner's portal test shows NaN accepted."
+    },
+    {
+      "id": "IR-H97-005",
+      "title": "First lane run failed: surface field used a -1.0 fill outside the pool",
+      "status": "closed - fixed in the build; gate unchanged",
+      "what_it_is": "The first lane run raised ValueError 'candidate must be finite and normalized to [0,1]' in gates.lane_report (surface phase). Cause: scripts/run_h97.py stage_build wrote -1.0 as the surface value outside the emission pool. The surface field is a candidate, so the gate correctly refused it.",
+      "how_we_know": "/home/user/h97_lane.log (first run); the rebuilt field (0.0 outside the pool, asserted finite and in [0,1]) passed full_surface and restricted_surface literal and policy checks (evidence/h97_lane.json).",
+      "disposition": "Fixed in the build (0.0 outside the pool, the H84 convention). The gate was not weakened and --skip-verify was not used."
+    },
+    {
+      "id": "IR-H97-006",
+      "title": "Dot-lane literal DUPLICATE is driven by high-coverage non-probe rasters; random dots fail the same way",
+      "status": "open - flagged for owner review; verdict kept as recorded",
+      "what_it_is": "Full-census dots lane: literal DUPLICATE/STOP, max 3 px share 1.0 (universal-coverage probes, which the policy excludes by design). Policy DUPLICATE/STOP, max 3 px share 0.8773 against gems-cleanup-a-20260928T195952Z-curv_scarp.tif (coverage of the eligible footprint 0.8976). Other informative offenders: 0.8493, 0.8236, 0.7600 (coverage 0.835-0.862). The probe threshold PROBE_COVERAGE = 0.95 is preregistered and does not exclude these rasters. Chance control (same count, uniform over the emission pool, seed 97, same 3 px disk): random dots score 0.8959 on the 0.8976-coverage raster, above H97's 0.8773.",
+      "how_we_know": "evidence/h97_lane.json full_dots; evidence/h97_lane_chance_control.json (four non-probe rasters, not a full re-run).",
+      "disposition": "Not waived, not retuned. The H97 dot lane stays DUPLICATE/STOP. The 3 px near rule is coverage-driven for rasters covering ~85-90% of the footprint: a random set of the same size fails it too. Any change to PROBE_COVERAGE or NEAR_LIMIT is a preregistration change for the owner to decide."
+    },
+    {
+      "id": "IR-H97-007",
+      "title": "Uniqueness self-match: the candidate was compared against its own saved copy",
+      "status": "closed - fixed in scripts/run_h97.py stage_write; re-run",
+      "what_it_is": "stage_write saves submission/gems52-h97-...tif before the uniqueness audit, and the audit's census includes local submission artifacts. The audit flagged identical_to_a_prior = True with the candidate's own path (decoded sha256 equal), so canonical_pattern_unique was False. No other prior is identical; the self-match was the only identical match.",
+      "how_we_know": "evidence/h97_write.json (first run) uniqueness.identical_prior_paths lists only the candidate path; the per-prior decoded sha256 for that path equals candidate_decoded_sha256.",
+      "disposition": "Fixed: the candidate's own path is excluded from the comparison set, and the exclusion is recorded in uniqueness.excluded_own_path. The write stage was re-run and the card rebuilt."
     }
   ],
   "merge_note": "Entries appended in chronological order of first recording, per-round prefixes only. Merged with arena/90369109 session entries IR-H96-001..005 (bidirectional co-training disagreement round; labels H88 and H95 were taken on main by parallel sessions, so that round is H96)."
