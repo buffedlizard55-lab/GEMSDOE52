@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>H97 — co-training at the metric-implied mass lever, and the instrument/board measurement</title>
+<style>body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f1117;color:#e8eaed;line-height:1.6}.container{max-width:1000px;margin:0 auto;padding:24px 20px}h1{color:#4fc3f7}h2{color:#4fc3f7;border-bottom:1px solid #2d3040;padding-bottom:6px;margin-top:28px}a{color:#4fc3f7}code{background:#1e2130;padding:2px 6px;border-radius:3px;font-size:.9em;word-break:break-all}table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.92rem}th,td{padding:7px 10px;text-align:left;border-bottom:1px solid #2d3040;vertical-align:top}th{color:#4fc3f7}.tag-no{color:#ef5350;font-weight:700}.tag-yes{color:#66bb6a;font-weight:700}.muted{color:#9aa0a6;font-size:.88rem}</style>
+</head><body><div class="container">
+<h1>H97 — two-view co-training at the metric-implied mass lever, and the first test of whether our instrument ranks the board</h1>
+<p class="muted">Rounds H97 (primary) and H97b (lane-distinct amendment) · preregistered before any fit
+(<code>registry/h97_preregistration.json</code> doc SHA-256 <code>02668421f590ea8f</code>;
+amendment <code>registry/h97b_preregistration.json</code> SHA-256 <code>67c6b685424a473f</code>,
+chronology disclosed) · lane: Blum &amp; Mitchell COLT '98 · evaluator <code>gems52-pooled-hide-v1</code>.</p>
+
+<h2>E1 — the instrument does not rank the board (the round's most useful result)</h2>
+<p>Every OWNER-REPORTED scored prior was scored <b>exactly as submitted</b> (no budget cut, no re-placement,
+visible catalogue masked pixel-exactly) on the frozen folds.</p>
+<table><tr><th>file as submitted</th><th>board (owner-reported)</th><th>HOLDOUT-DTI</th><th>95 % CI</th><th>emitted px</th></tr>
+<tr><td><code>champion_h33_2_b2</code></td><td>0.2778</td><td><b>0.006696</b></td><td>[0.0060, 0.0075]</td><td>37,654</td></tr>
+<tr><td><code>d2_8</code></td><td>0.2600</td><td><b>0.161564</b></td><td>[0.1489, 0.1751]</td><td>44,090</td></tr>
+<tr><td><code>d1_5</code></td><td>0.2477</td><td><b>0.171730</b></td><td>[0.1583, 0.1858]</td><td>60,069</td></tr>
+<tr><td><code>tgc_v2_d1_5</code></td><td>0.2449</td><td><b>0.172543</b></td><td>[0.1591, 0.1866]</td><td>61,328</td></tr>
+<tr><td><code>h19_5</code></td><td>0.1922</td><td><b>0.166160</b></td><td>[0.1522, 0.1798]</td><td>121,131</td></tr>
+<tr><td><code>h19_4</code></td><td>0.1894</td><td><b>0.167263</b></td><td>[0.1535, 0.1810]</td><td>123,779</td></tr>
+<tr><td><code>h16_1</code></td><td>0.1855</td><td><b>0.166685</b></td><td>[0.1527, 0.1806]</td><td>123,939</td></tr>
+<tr><td><code>h28_dotted_ridge</code></td><td>0.1839</td><td><b>0.371636</b></td><td>[0.3605, 0.3818]</td><td>69,281</td></tr>
+<tr><td><code>ens12_adopted</code></td><td>0.1563</td><td><b>0.229952</b></td><td>[0.2145, 0.2430]</td><td>172,974</td></tr>
+<tr><td><code>hedge_v2</code></td><td>0.1563</td><td><b>0.665283</b></td><td>[0.6408, 0.6909]</td><td>227,507</td></tr>
+<tr><td><code>h25_ctx_ridge</code></td><td>0.1280</td><td><b>0.398814</b></td><td>[0.3827, 0.4139]</td><td>174,232</td></tr>
+<tr><td><code>r13_lattice_s5</code></td><td>0.0904</td><td><b>0.244653</b></td><td>[0.2335, 0.2553]</td><td>206,895</td></tr>
+<tr><td><code>nan_2314b599</code></td><td>0.0107</td><td><b>0.046145</b></td><td>[0.0362, 0.0554]</td><td>343,816</td></tr></table>
+<p>Spearman(board, HOLDOUT-DTI) = <b>-0.4897</b>; partial correlation
+controlling for log mass <b>0.1264</b>; Spearman(board, mass)
+<b>-0.9436</b>. Falsifier (Spearman &ge; 0.50) not hit. The champion (0.2778 on
+the board) scores 0.006696 — below the random control at its own mass
+(0.050110) — because it deliberately avoids the
+mapped catalogue this instrument scores against. <b>Beating the 0.190147 bar was always a statement about catalogue
+recovery.</b></p>
+
+<h2>E2 — co-training arms (negative)</h2>
+<table><tr><th>arm (9,400 dots/fold)</th><th>HOLDOUT-DTI</th><th>95 % CI</th></tr>
+<tr><td><code>cotrain_dis</code></td><td>0.069041</td><td>[0.0569, 0.0822]</td></tr>
+<tr><td><code>cons_only</code></td><td>0.093310</td><td>[0.0767, 0.1081]</td></tr>
+<tr><td><code>buried_only</code></td><td>0.050026</td><td>[0.0375, 0.0630]</td></tr>
+<tr><td><code>single_B</code></td><td>0.058666</td><td>[0.0464, 0.0711]</td></tr>
+<tr><td><code>single_A</code></td><td>0.074518</td><td>[0.0617, 0.0877]</td></tr>
+<tr><td><code>random</code></td><td>0.075717</td><td>[0.0665, 0.0860]</td></tr></table>
+<p>Paired <code>cotrain_dis − cons_only</code> =
+-0.024269
+[-0.038071,
+-0.009208]:
+the disagreement/veto machinery hurts. Independence max |&rho;| 0.0616
+(abandon 0.60) → exchange allowed; leakage canary max single-channel AUC
+0.6190 (alarm 0.90). Mass lever 6,350/fold:
+{"cotrain_dis": 0.049286, "single_B": 0.039622, "random": 0.053666}.</p>
+
+<h2>H97b — the lane-distinct emission</h2>
+<p>Ranked by the <b>surface view</b> (DEM curvature/slope/topographic edge, radiometric total count, K/Th,
+LiDAR scarp layers, GeoDAWN radiometric ratios) with View A used only as a support screen and to veto the
+B-only road/erosion suspect population, at 25,400 dots, 3 px, 200 m collar.
+Holdout: field_b 0.100608 [0.0838,
+0.1171] vs random 0.075717
+(mass-lever 0.073935); bar 0.190147 → <b>negative</b>.</p>
+<table><tr><th>gate</th><th>result</th><th>measured</th></tr>
+<tr><td>format</td><td class="tag-yes">PASS</td><td>1 band float32, EPSG:32611, 3730x3292, nan 0, inf 0, range [0.0, 1.0], emitted 25400, nodata None; problems []</td></tr>
+<tr><td>uniqueness</td><td class="tag-yes">PASS</td><td>196 priors, identical False, max Jaccard 0.0204</td></tr>
+<tr><td>lane_surface</td><td class="tag-yes">PASS</td><td>max Spearman 0.0772 (bar 0.90)</td></tr>
+<tr><td>lane_dots</td><td class="tag-yes">PASS</td><td>max Spearman 0.0351, max near-3px 0.9991338582677165 vs /home/user/GEMSDOE52/submission/gems52-h87-boardcal-marginal-20261010-61427px.tif</td></tr>
+<tr><td>independence</td><td class="tag-yes">PASS</td><td>max |rho| 0.0616 over 2283 blocks (H97, unchanged views); abandon 0.60</td></tr>
+<tr><td>leakage_canary</td><td class="tag-yes">PASS</td><td>max single-channel AUC 0.6190 (H97, unchanged views); alarm 0.90</td></tr>
+<tr><td>holdout_promotion</td><td class="tag-no">FAIL</td><td>field_b 0.100608 vs bar 0.190147; mass-lever 0.073935; paired CI low vs random 0.010831</td></tr>
+<tr><td>not_the_union</td><td class="tag-yes">PASS</td><td>ranked by the surface view with View A as a screen and the B-only population vetoed; the H97 jaccard-vs-union test (0.0529) is superseded by a construction that cannot be the union</td></tr></table>
+<p><a href="downloads/h97b-candidate.tif" download>Download H97b GeoTIFF</a> ·
+<a href="downloads/h97b-candidate.zip" download>single-TIFF ZIP</a> ·
+<a href="h97-executive-summary.html">how to submit</a> ·
+<a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/arena/c5bf6f30-gemsdoe52/knowledge/98_h97_results_and_limits.md">results &amp; limits</a> ·
+<a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/arena/c5bf6f30-gemsdoe52/knowledge/99_h97b_amendment.md">amendment</a></p>
+
+<h2>H97 primary — retained for audit, withdrawn from slot consideration</h2>
+<p>99.89 % of its dots lie within 3 px of the H96 artifact
+(99.89 % literal): an A-dominant field reproduces the A-view's fixed point. The protocol's rule is to log it as a
+duplicate and stop; it is logged as <b>IR-H97-003</b> and the file is published labelled.
+<a href="downloads/h97-candidate.tif" download>Download it</a> as an audit artifact — <b>do not submit it</b>.
+Its own receipts: format PASS (25,400 cells), uniqueness PASS, promotion FAIL.</p>
+<p class="muted">Facts, not claims: integrity-pinned inputs, not organizer-authenticated; the registry is local; no leaderboard score is predicted anywhere in this card; HOLDOUT-DTI is catalogue recovery and E1 measured that it does not rank the board.</p>
+</div></body></html>

@@ -1,0 +1,68 @@
+{
+  "round": "H97",
+  "preregistered_utc": "2026-10-10T23:59:00+00:00",
+  "hypothesis_document": "knowledge/97_hypotheses_H97_preregistered.md",
+  "hypothesis_sha256": "02668421f590ea8f4f13aa7052a4f3240beb410214db9ef80b7ac8a8e8f96703",
+  "hypothesis_bytes": 8801,
+  "lane": "two-view co-training paragraph (Blum & Mitchell COLT '98); disagreement as the discovery signal, mass-levered emission",
+  "frozen_before_any_fit": true,
+  "runner": "scripts/run_h97.py",
+  "runner_refuses_if_hash_moves": true,
+  "experiments": {
+    "E1_instrument_fidelity": {
+      "arms": "the 12 OWNER-REPORTED scored priors, scored as_is, plus random controls at 37,654 and 25,400 dots",
+      "hypothesis": "Spearman(board score, HOLDOUT-DTI) < 0.50",
+      "falsifier": "Spearman >= 0.50",
+      "confound_controlled": "partial correlation controlling for log emitted mass"
+    },
+    "E2_cotrain_mass_lever": {
+      "primary_arm": "cotrain_dis",
+      "arms": [
+        "cotrain_dis",
+        "cons_only",
+        "buried_only",
+        "single_B",
+        "single_A",
+        "random"
+      ],
+      "budget_per_fold": [
+        9400,
+        6350
+      ],
+      "target_total_mass": 25400,
+      "view_B_new_channels": [
+        "lidar_scarp_features_u8 b1,b3,b7,b9,b10",
+        "geodawn_extensions_u8 b1,b2,b3"
+      ]
+    }
+  },
+  "promotion_bar": {
+    "value": 0.190147,
+    "source": "evidence/h84_holdout.json primary B_DVA2_HVA",
+    "paired_rule": "CI95 lower of (primary - best control) > 0"
+  },
+  "independence_thresholds": {
+    "abandon_abs_rho": 0.6,
+    "min_blocks": 20
+  },
+  "canary_alarm_auc": 0.9,
+  "lane_thresholds": {
+    "max_spearman": 0.9,
+    "max_near_3px_fraction": 0.7,
+    "near_px": 3
+  },
+  "not_the_union_max_jaccard": 0.5,
+  "emission": {
+    "values": "binary {0,1}",
+    "container": "all-finite float32, nodata None",
+    "spacing_px": 3.0,
+    "catalogue_ring_excluded_m": 200.0,
+    "outside_footprint": 0.0
+  },
+  "budget": {
+    "experiments": 3,
+    "hours": 2,
+    "submission_slots_allowed": 0
+  },
+  "inputs_provenance": "integrity-pinned, not organizer-authenticated (registry/data_manifest.json; restore ALL_VERIFIED=True 2026-10-10)"
+}

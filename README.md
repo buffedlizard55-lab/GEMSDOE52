@@ -670,6 +670,100 @@ Go ahead and create a pull request and then merge the pull request onto the main
 </details>
 
 <!--/H95-README-->
+<!--H97-README-->
+# Current status — H97 (2026-10-11): the instrument does not track the board · co-training negative
+
+> **OK TO DOWNLOAD: YES** — single-band float32 GeoTIFF, EPSG:32611, 3730×3292, transform identical to
+> `sample_submission.tif`, **nodata tag None, 0 NaN pixels, values exactly {0, 1}**
+> (25,400 cells). The portal's *"Predicted values must be in range [0, 1]"* rejection — the one
+> the owner hit on a NaN-tagged file — cannot occur on this container.
+>
+> **OK TO SUBMIT: YOUR CALL — this round certifies no leaderboard gain.** Failed gate(s):
+> holdout_promotion, lane_dots. And now the reason is measured, not guessed: **our holdout does not
+> rank the board's own scored files** (E1 below). Slots used: **0**; promotion is a separate selector step.
+
+**★ [Download h97-candidate.tif](docs/downloads/h97-candidate.tif)** · [ZIP](docs/downloads/h97-candidate.zip) · **[Executive summary / how to submit](docs/h97-executive-summary.html)** · [Full result](docs/h97.html) · [Run card](evidence/h97_run_card.json) · [A-only reasoning CSV](docs/downloads/gems52-h97-cotrain-disagree-masslever-25400px-20261011T003257Z-6e394036aac2-zeros-a-only-reasoning.csv)
+
+- **File:** `submission/gems52-h97-cotrain-disagree-masslever-25400px-20261011T003257Z-6e394036aac2-zeros.tif` — 108,267 bytes, SHA-256 `803e491af48881067fc525942a16896ba4562ad35085fbf41c9902d2b43359b2`
+- **Submission name:** `gems52-h97-cotrain-disagree-masslever-25400px-20261011T003257Z-6e394036aac2-zeros` · **Note (139/140):** `H97 co-training A(geophys)xB(surface incl. LiDAR scarp + radiometric ratios); disagreement mass lever 25,400 dots; 3px spacing; 200m collar`
+- **Validator (re-read from disk):** 1 band float32, EPSG:32611, 3730 rows × 3292 cols, transform/bounds = sample_submission.tif, 0 NaN, 0 inf, values exactly [0.0, 1.0], emitted 25,400, nodata None; problems: []
+
+### E1 — our instrument is anti-correlated with the board (the round's most useful result)
+
+Every OWNER-REPORTED scored prior scored **exactly as submitted** (no budget cut, no re-placement,
+visible catalogue masked pixel-exactly) on the frozen folds; evaluator `gems52-pooled-hide-v1`,
+60,894 withheld positive px, 95 % CI:
+
+  | file as submitted | board (owner-reported) | HOLDOUT-DTI | emitted px |
+  |---|---|---|---|
+  | `champion_h33_2_b2` | 0.2778 | 0.006696 [0.0060, 0.0075] | 37,654 |
+  | `d2_8` | 0.2600 | 0.161564 [0.1489, 0.1751] | 44,090 |
+  | `d1_5` | 0.2477 | 0.171730 [0.1583, 0.1858] | 60,069 |
+  | `tgc_v2_d1_5` | 0.2449 | 0.172543 [0.1591, 0.1866] | 61,328 |
+  | `h19_5` | 0.1922 | 0.166160 [0.1522, 0.1798] | 121,131 |
+  | `h19_4` | 0.1894 | 0.167263 [0.1535, 0.1810] | 123,779 |
+  | `h16_1` | 0.1855 | 0.166685 [0.1527, 0.1806] | 123,939 |
+  | `h28_dotted_ridge` | 0.1839 | 0.371636 [0.3605, 0.3818] | 69,281 |
+  | `ens12_adopted` | 0.1563 | 0.229952 [0.2145, 0.2430] | 172,974 |
+  | `hedge_v2` | 0.1563 | 0.665283 [0.6408, 0.6909] | 227,507 |
+  | `h25_ctx_ridge` | 0.1280 | 0.398814 [0.3827, 0.4139] | 174,232 |
+  | `r13_lattice_s5` | 0.0904 | 0.244653 [0.2335, 0.2553] | 206,895 |
+  | `nan_2314b599` | 0.0107 | 0.046145 [0.0362, 0.0554] | 343,816 |
+
+- **Spearman(board, HOLDOUT-DTI) = -0.4897** over 13 files;
+  **partial correlation controlling for log mass = 0.1264** (zero);
+  Spearman(board, mass) = -0.9436, reproducing knowledge/76 §4 on thirteen files.
+- The champion (0.2778 on the board) scores **0.006696** here — below the
+  0.050110 random control — because it deliberately avoids the
+  mapped catalogue that this instrument scores against. **Every "beat the bar" promotion this repository has
+  made was made on an instrument that does not rank the board's own files.** Frozen falsifier (Spearman ≥ 0.50) not hit.
+
+### E2 — co-training at the metric-implied mass lever: NEGATIVE
+
+H96's rejected repair (View B given the LiDAR-scarp and GeoDAWN radiometric-ratio channels the
+certified-best *fitted* surface instrument uses) was run with the frozen arm set; matched budget
+9,400 dots/fold, mass lever 6,350 dots/fold (25,400 total):
+
+- matched: cotrain_dis 0.069041 [0.0569, 0.0822],
+  cons_only 0.093310, buried_only 0.050026,
+  single_B 0.058666, single_A 0.074518, random 0.075717
+- paired `cotrain_dis − cons_only` = -0.024269 [-0.038071, -0.009208] → the disagreement/veto machinery **hurts**
+- mass lever: cotrain_dis 0.049286, single_B 0.039622, random 0.053666
+- independence max |ρ| 0.0616 (abandon 0.60) → exchange allowed;
+  leakage canary max single-channel AUC 0.6190 (alarm 0.90) → no alarm.
+- **The lift from ~0.06 to ~0.19 on this lane is the fitted learner, not the channel list.** An unfitted rank
+  composite with the full channel set still lands at 0.058666.
+
+### E3 — artifact and gates
+
+- Placement `gems52.nodes.spacing_select` at 3 px, 200 m catalogue collar, **25,400 dots placed exactly**
+  (buried-dominant 18,967 = 74.7 %;
+  Jaccard vs the spaced A/B union **0.0529** — not the union).
+- Uniqueness: 193 priors checked / 193 comparable, identical to a prior
+  **False**, incomparable 0; this round's own staged copies dropped by name.
+- Lanes: surface PASS (max Spearman 0.1155);
+  dots literal DUPLICATE/STOP / policy DUPLICATE/STOP (max Spearman 0.4054,
+  max near-3 px 0.9989370078740157).
+- Docs: [preregistration](knowledge/97_hypotheses_H97_preregistered.md) · [results & limits](knowledge/98_h97_results_and_limits.md) ·
+  [irregularities](registry/irregularities.json) · Reproduce: `python scripts/restore_data.py --target-dir data` then
+  `python scripts/run_h97.py all` then `python scripts/publish_h97_site.py && python scripts/publish_h97_readme.py`.
+
+### Next work, ranked after E1
+
+1. **Build a board-validated instrument** (the existing off-catalogue SGMC proxy is the candidate; validate it the way E1
+   validates this one). Until then no round can certify a leaderboard gain.
+2. Then re-open model work: the fitted surface learner (0.1746 → 0.1928 measured) plus the board-measured mass lever (S ≈ 25,400).
+3. The A-only stratum stays a Phase-2 deliverable, not a DTI bet (below random on the catalogue instrument in H93, H95, H97).
+
+<details><summary><b>The H97 session brief, verbatim (read it every session)</b></summary>
+
+See `knowledge/94_current_user_brief_2026-10-10_H95.md` for the standing brief (the H97 session received
+the same co-training paragraph plus the parallel-run protocol), and `knowledge/97_hypotheses_H97_preregistered.md`
+for what this round froze before any fit.
+
+</details>
+<!--/H97-README-->
+
 <div style="background:#f3f8f2;border:1px solid #9dc39a;color:#123d17;padding:12px 16px;margin:12px 0;border-radius:8px;font:15px/1.5 sans-serif"><strong>Round H87 board-score inversion (a DIFFERENT round from the H87 co-train-wavelength, H88 and H95 rounds already on main, and from H84, H85 and H86): DOWNLOAD YES, SUBMIT NO.</strong> Inverted 13 owner-reported public-board scores through the metric&rsquo;s exact linear form: hidden truth mass <b>|G| = 14,333.8</b> (third independent pin; H67 14,088.7, lattice 12,367), leave-one-out score MAE <b>0.02007</b>, Spearman <b>0.9436</b>. The mass lands on <b>family consensus 9,937.8 (69.3%)</b> and <b>catalogue 4,396.0 (30.7%)</b>; <b>every physical, external and disagreement basis got weight zero</b> (a 13-basis fit returned the identical solution). Dots placed by the metric&rsquo;s own marginal rule (add iff exact marginal credit c &gt; 0.2&middot;DTI), a shared tested tool <code>gems52.nodes.marginal_greedy</code> &mdash; budget derived, not chosen: <b>61,427 cells</b>, binary 0/1. Uniform-truth control self-terminates at 5.373 px and predicts <b>0.10007</b> where the pinned organiser-side lattice raster is OWNER-REPORTED at <b>0.0904</b> (+10.7%). HOLDOUT-DTI (gems52-pooled-hide-v1, 60,894 withheld): <b>0.104228 [0.084119, 0.124875]</b> vs random <b>0.075375 [0.067081, 0.083962]</b>; paired <b>+0.028853 [+0.014804, +0.043810]</b> excludes zero, but fold 0 loses (0.003118 vs 0.041666) and the holdout incumbent is not beaten. PREDICTED-BOARD on three truth realisations: candidate 0.19841 vs the 0.2778 champion 0.23948 (paired -0.04107) &mdash; worse than the file that already scored 0.2778. Decoded-pixel uniqueness PASSES vs 142 local priors (novel fraction 0.3558, max Jaccard 0.0719). <b>IR-H87-001:</b> the 13 owner-scored rasters&rsquo; 3 px halos cover <b>108.6%</b> of the footprint, so the literal lane rule is unsatisfiable for ANY non-empty emission here (random control near-3px 0.99901 vs candidate 0.99920); reported, not waived. <b>IR-H87-002:</b> lane scoped to the owner-scored registry; the four full-inventory lane passes did not fit the two-hour budget. Slots used: 0. <a href="docs/downloads/h87-candidate.tif">Download H87 GeoTIFF</a> &middot; <a href="docs/h87-executive-summary.html">H87 executive summary</a> &middot; <a href="knowledge/82_h87_board_inversion_2026-10-10.md">knowledge/82</a>. Not ORGANIZER-CONFIRMED.</div>
 
 

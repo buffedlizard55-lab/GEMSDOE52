@@ -1,0 +1,83 @@
+{
+  "file": "gems52-h97-cotrain-disagree-masslever-25400px-20261011T003257Z-6e394036aac2-zeros.tif",
+  "sha256": "803e491af48881067fc525942a16896ba4562ad35085fbf41c9902d2b43359b2",
+  "bytes": 108267,
+  "submission_name": "gems52-h97-cotrain-disagree-masslever-25400px-20261011T003257Z-6e394036aac2-zeros",
+  "note": "H97 co-training A(geophys)xB(surface incl. LiDAR scarp + radiometric ratios); disagreement mass lever 25,400 dots; 3px spacing; 200m collar",
+  "note_chars": 139,
+  "validator": {
+    "path": "/home/user/GEMSDOE52/submission/gems52-h97-cotrain-disagree-masslever-25400px-20261011T003257Z-6e394036aac2-zeros.tif",
+    "bytes": 108267,
+    "sha256": "803e491af48881067fc525942a16896ba4562ad35085fbf41c9902d2b43359b2",
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "ref_bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "nodata": null,
+    "blocksize": [
+      256,
+      256
+    ],
+    "fixture_grid": false,
+    "has_validity_mask": false,
+    "nan_pixels": 0,
+    "infinity_pixels": 0,
+    "n_nan": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.002068545436486602,
+    "n_nonzero": 25400,
+    "mass": 25400.0,
+    "mass_outside_footprint": 0,
+    "problems": [],
+    "ok": true,
+    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "zip_file": "gems52-h97-cotrain-disagree-masslever-25400px-20261011T003257Z-6e394036aac2-zeros.zip",
+  "zip_sha256": "6ace9fdde60913f09a06b30f39e17dc36b0df532edc1ec63e56f9f75dd8517ac",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "status": "research-only; local format validation is not organizer acceptance",
+  "metadata": {},
+  "round": "H97",
+  "stem": "gems52-h97-cotrain-disagree-masslever-25400px-20261011T003257Z-6e394036aac2-zeros",
+  "short_tif": "h97-candidate.tif",
+  "marker": "submission/H97_LATEST.txt",
+  "download": "downloads/h97-candidate.tif",
+  "verdict": "negative",
+  "failed_gates": [
+    "holdout_promotion",
+    "lane_dots"
+  ],
+  "submit_ok": false,
+  "download_ok": true,
+  "lanes": {
+    "surface": "PASS",
+    "dots": "DUPLICATE/STOP"
+  },
+  "uniqueness": "PASS",
+  "global_pointer_untouched": "main's incumbent; a negative round must not move it",
+  "selector_note": "submit_ok False in the run card means THIS ROUND DOES NOT PROMOTE IT (its frozen promotion gate failed). E1 measured that the promotion gate does not rank the board's own scored files (Spearman -0.4897), so the gate is neither a board-validated yes nor a board-validated no. The only board-measured lever in this repository is emitted mass, and this file follows it (25,400 cells vs the champion's 37,654) and emits no mass within 200 m of the mapped catalogue. The slot decision is the owner's, within the weekly cap; this round spent none."
+}
