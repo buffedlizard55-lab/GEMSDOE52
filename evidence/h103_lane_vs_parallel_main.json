@@ -3,7 +3,7 @@
  "rule": "rank |Spearman| > 0.90 with any prior OR >70% of this round's dots within 3 px of one prior's dots => DUPLICATE/STOP (AGENTS.md lane doctrine)",
  "rho_bar": 0.9,
  "near_3px_bar": 0.7,
- "this_file": "gems52-h102-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif",
+ "this_file": "gems52-h103-disagreement-quota-dva2-25400px-20261011T005958Z-9bd97e7c-zeros.tif",
  "this_sha256": "c49a07d15a5bb293c0f29f67d9d4931ed5f2f9ce48978da86af4e59a54f2523d",
  "n_my_dots": 25400,
  "started_utc": "2026-10-11T02:14:38+00:00",
@@ -58,6 +58,6 @@
  "worst_my_frac_within_3px": 0.3775590551181102,
  "duplicate": false,
  "ok": true,
- "disposition": "PASS - no parallel-main raster breaches the lane doctrine; the pre-merge 602-raster census receipts (evidence/h102_lane.json) stand, and these five post-merge parallel rasters add no new breach",
+ "disposition": "PASS - no parallel-main raster breaches the lane doctrine; the pre-merge 602-raster census receipts (evidence/h103_lane.json) stand, and these five post-merge parallel rasters add no new breach",
  "finished_utc": "2026-10-11T02:15:02+00:00"
 }
