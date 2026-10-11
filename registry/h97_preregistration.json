@@ -1,0 +1,94 @@
+{
+  "round": "H97",
+  "preregistered_utc": "2026-10-11T00:03:24+00:00",
+  "hypothesis_document": "knowledge/97_hypotheses_H97_preregistered.md",
+  "hypothesis_sha256": "0a28e26adb45c5a2f7d5a38b920f2683cc4b8946836ea2742deef2850f63a0d0",
+  "hypothesis_bytes": 9044,
+  "lane": "two-view co-training paragraph; disagreement (B-only stratum) used as an artefact veto on the strongest View-B field",
+  "frozen_before_any_fit": true,
+  "runner": "scripts/run_h97.py",
+  "runner_refuses_if_hash_moves": true,
+  "primary_arm": "H97_veto",
+  "arms": [
+    "single_A",
+    "single_B",
+    "B_DVA2",
+    "B_DVA2s",
+    "random",
+    "H97_veto",
+    "H97_veto_fl",
+    "H97_veto_card",
+    "H97_veto_s",
+    "H97_scarp_soft",
+    "H97_consensus"
+  ],
+  "learner_arms": [
+    "single_A",
+    "single_B",
+    "B_DVA2",
+    "B_DVA2s"
+  ],
+  "control_targets": {
+    "single_B": 0.174571,
+    "B_DVA2": 0.192829
+  },
+  "control_tolerance": 0.001,
+  "holdout_bar": 0.190147,
+  "holdout_bar_source": "evidence/h84_holdout.json primary B_DVA2_HVA",
+  "canary_alarm_auc": 0.9,
+  "orientation": {
+    "band": 12,
+    "sigma_px": 2.0,
+    "grad_defined_quantile": 0.25,
+    "erosion_fl_min": 0.8660254037844387,
+    "road_dcard_max_deg": 5.0,
+    "road_slope_band": 19,
+    "road_slope_max_quantile": 0.5
+  },
+  "strata": {
+    "b_only": {
+      "B_rank_min": 0.95,
+      "A_rank_max_exclusive": 0.65
+    },
+    "a_only": {
+      "A_rank_min": 0.95,
+      "B_rank_band": [
+        0.35,
+        0.65
+      ],
+      "spacing_px": 3.0
+    }
+  },
+  "veto_offset": -2.0,
+  "scarp_soft_weight": 0.25,
+  "consensus": {
+    "base": 0.9,
+    "a_weight": 0.1
+  },
+  "surface_dva2_bands": {
+    "12": "det_elev",
+    "19": "det_elev_slope"
+  },
+  "emission": {
+    "K_total": 37654,
+    "K_fold": 9400,
+    "min_spacing_px": 3.0,
+    "catalogue_ring_excluded_m": 200.0,
+    "values": "binary {0,1}",
+    "outside_footprint": "0.0, no NaN",
+    "placement": "run_h73.place_lane vs scored-only supports limit 0.70; fallback spacing_select 3 px"
+  },
+  "lane_thresholds": {
+    "max_spearman": 0.9,
+    "max_near_3px_fraction": 0.7,
+    "near_px": 3
+  },
+  "independence_thresholds_from": "registry/h74_preregistration.json",
+  "pseudo_label_exchange": "none (closed negative H61/H95); disagreement used as veto set only",
+  "budget": {
+    "experiments": 3,
+    "hours": 2,
+    "submission_slots_allowed": 0
+  },
+  "inputs_provenance": "integrity-pinned, not organizer-authenticated (registry/data_manifest.json; restore ALL_VERIFIED=True this session)"
+}
