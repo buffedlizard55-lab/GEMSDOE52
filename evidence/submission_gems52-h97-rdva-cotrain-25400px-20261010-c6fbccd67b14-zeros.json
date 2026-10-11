@@ -78,5 +78,5 @@
   "run_card": "evidence/h97_rdva_run_card.json",
   "download_safety_note": "YES for research/audit: single-band float32, finite [0,1], template-aligned, and distinct from all 718 comparable priors. One 32x48 census thumbnail is incomparable; holdout/lane failures make submission NO.",
   "original_frozen_round": "H97",
-  "integration_note": "Executed/frozen as H97-RDVA on an isolated branch; main independently acquired H97 through H102 before integration. Namespaced H97-RDVA without changing frozen preregistration bytes."
+  "integration_note": "Executed and frozen under the H97 namespace on an isolated branch; main independently acquired H97 through H102 before integration. Published as H97-RDVA without changing frozen preregistration bytes."
 }

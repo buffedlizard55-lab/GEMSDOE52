@@ -170,7 +170,7 @@ def test_h97_irregularities_and_public_receipts_are_current_and_portable():
     published = _load("docs/data/irregularities.json")
     assert published == registry
     ids = {e["id"] for e in registry["entries"]}
-    assert {f"IR-H97-RDVA-{i:03d}" for i in range(1, 6)} <= ids
+    assert {f"IR-H97-RDVA-{i:03d}" for i in range(1, 7)} <= ids
     for path in (
         "evidence/h97_rdva_run_card.json", "evidence/h97_rdva_lane_dots.json",
         "docs/data/h97_rdva_run_card.json", f"docs/data/submission_{STEM}.json",

@@ -137,6 +137,19 @@
 5. **INGENIOUS 2 m temperature probes** (GDR 1391, DOI 10.15121/1881483) remain the highest-value unused
    channel, but `gdr.openei.org` is not reachable from this sandbox — the owner must download and pin it.
 <!--/H102-README-->
+
+<!--H97-RDVA-ARCHIVE-START-->
+## Parallel negative archive — H97-RDVA
+
+This experiment was frozen/executed as H97 on an isolated branch before `main` independently acquired H97–H102. It is namespaced **H97-RDVA** and does **not** replace the global current pointer.
+
+**OK TO DOWNLOAD: YES (research/audit). OK TO SUBMIT: NO — DO NOT UPLOAD. Slots used: 0.**
+
+[Download TIFF](docs/downloads/h97-rdva-candidate.tif) · [ZIP](docs/downloads/h97-rdva-candidate.zip) · [full evidence](docs/h97-rdva.html) · [run card](evidence/h97_rdva_run_card.json)
+
+`gems52-h97-rdva-cotrain-25400px-20261010-c6fbccd67b14-zeros.tif` · SHA-256 `a6ca0f7b42ee722e1b04199557f84237ba186830a3b6860e38d3e4bf833722ad` · primary HOLDOUT-DTI 0.185090 [0.164740, 0.205110], below single B 0.186482 and the 0.192829 bar; final-dot lane DUPLICATE/STOP.
+<!--H97-RDVA-ARCHIVE-END-->
+
 <!--H101-README-->
 # Current status — H101 (2026-10-10): co-training disagreement as an artefact veto · NEGATIVE
 

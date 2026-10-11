@@ -50,9 +50,9 @@ def replace_html_block(path: Path, block: str) -> None:
         finish = text.index(END, begin) + len(END)
         text = text[:begin] + wrapped + text[finish:]
     else:
-        anchor = "</main>"
+        anchor = "</main>" if "</main>" in text else "</body>"
         if anchor not in text:
-            raise ValueError(f"{path}: missing </main> archive insertion anchor")
+            raise ValueError(f"{path}: missing HTML archive insertion anchor")
         text = text.replace(anchor, wrapped + "\n" + anchor, 1)
     path.write_text(text, encoding="utf-8")
 
@@ -119,7 +119,10 @@ def main() -> int:
     replace_html_block(ROOT / "docs/index.html", card)
     replace_html_block(ROOT / "docs/executive-summary.html", card)
     replace_html_block(ROOT / "docs/irregularities.html", card)
-    downloads_card = card.replace('href="downloads/', 'href="').replace('href="h97-rdva', 'href="../h97-rdva')
+    downloads_card = (card.replace('href="downloads/', 'href="')
+                      .replace('href="h97-rdva.html"', 'href="../h97-rdva.html"')
+                      .replace('href="h97-rdva-executive-summary.html"',
+                               'href="../h97-rdva-executive-summary.html"'))
     replace_html_block(ROOT / "docs/downloads/index.html", downloads_card)
     root_card = card.replace('href="downloads/', 'href="docs/downloads/').replace('href="h97-rdva', 'href="docs/h97-rdva')
     replace_html_block(ROOT / "index.html", root_card)
@@ -134,7 +137,8 @@ This experiment was frozen/executed as H97 on an isolated branch before `main` i
 `{STEM}.tif` · SHA-256 `{SHA}` · primary HOLDOUT-DTI 0.185090 [0.164740, 0.205110], below single B 0.186482 and the 0.192829 bar; final-dot lane DUPLICATE/STOP.
 """
     replace_readme_block(readme)
-    print(f"published H97-RDVA archive without changing current {publication['file']}")
+    current = json.loads((ROOT / "docs/data/submission.json").read_text()).get("file")
+    print(f"published H97-RDVA archive; global current remains {current}")
     return 0
 
 

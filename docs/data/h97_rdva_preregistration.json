@@ -4,7 +4,7 @@
   "frozen_before_h97_channels_or_fit": true,
   "hypothesis_document": "knowledge/97_hypotheses_H97_preregistered.md",
   "hypothesis_sha256": "f35c14e130af1ae00e6ed47a5a08a185125e81db8289ce30228ba7acfafc57e9",
-  "runner": "scripts/run_h97_rdva.py",
+  "runner": "scripts/run_h97.py",
   "lane": "two-view co-training: geophysical/subsurface A versus DEM/radiometric B; disagreement selects whole pseudo-segments",
   "views": {
     "A_store": "view_A_with_external",

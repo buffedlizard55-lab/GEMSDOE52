@@ -821,7 +821,7 @@ def stage_write():
     primary = hold["pooled"]["scores"][PRIMARY]
     paired = hold["pooled"]["paired_differences"]["single_B_RDVA"]
     card = dict(round="H97-RDVA", original_frozen_round="H97", generated_utc=now(),
-        integration_note="Executed and frozen as H97-RDVA on an isolated branch; main independently acquired H97 through H102 before integration. Namespaced H97-RDVA without changing frozen preregistration bytes.",
+        integration_note="Executed and frozen under the H97 namespace on an isolated branch; main independently acquired H97 through H102 before integration. Published as H97-RDVA without changing frozen preregistration bytes.",
         hypothesis="View-pure directional semivariance in A (gravity/basement) and B (DEM/radiometrics), followed by exactly one weighted whole-segment disagreement exchange.",
         mechanism="A-only lineaments can be concealed basement faults; radiometric/DEM directional texture gives B an altered-surface response. Only confident-donor/abstaining-receiver whole segments cross views.",
         named_non_fault_mimic="lithologic or intrusive contact; radiometric flight-line/interpolation stripe; road; erosion rill; palaeochannel; basin facies boundary",
@@ -861,7 +861,7 @@ def stage_write():
         full_validator_result=fmt,
         evidence_class_note="No organizer upload occurred. A holdout number is not a board score; no H97 value is ORGANIZER-CONFIRMED.",
         download_safety_note="YES for research/audit: single-band float32, finite [0,1], template-aligned, and distinct from all 718 comparable priors. One 32x48 census thumbnail is incomparable; holdout/lane failures make submission NO.",
-        irregularities=["IR-H97-RDVA-001", "IR-H97-RDVA-002", "IR-H97-RDVA-003", "IR-H97-RDVA-004", "IR-H97-RDVA-005"])
+        irregularities=["IR-H97-RDVA-001", "IR-H97-RDVA-002", "IR-H97-RDVA-003", "IR-H97-RDVA-004", "IR-H97-RDVA-005", "IR-H97-RDVA-006"])
 
     dump(EVID / "h97_rdva_run_card.json", card)
     # Extend the writer receipt with the final safety facts, then stage exact downloads.

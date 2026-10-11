@@ -77,14 +77,14 @@
   "verdict": "negative",
   "run_card": "evidence/h97_rdva_run_card.json",
   "download_safety_note": "YES for research/audit: single-band float32, finite [0,1], template-aligned, and distinct from all 718 comparable priors. One 32x48 census thumbnail is incomparable; holdout/lane failures make submission NO.",
+  "original_frozen_round": "H97",
+  "integration_note": "Executed and frozen under the H97 namespace on an isolated branch; main independently acquired H97 through H102 before integration. Published as H97-RDVA without changing frozen preregistration bytes.",
   "stem": "gems52-h97-rdva-cotrain-25400px-20261010-c6fbccd67b14-zeros",
-  "marker": "submission/LATEST.txt",
+  "marker": "submission/H97_RDVA_LATEST.txt",
   "exists": true,
   "download": "downloads/gems52-h97-rdva-cotrain-25400px-20261010-c6fbccd67b14-zeros.tif",
   "download_zip": "downloads/gems52-h97-rdva-cotrain-25400px-20261010-c6fbccd67b14-zeros.zip",
   "submission_note": "H97 view-pure radiometric DVA co-training; 25,400 dots, 3px, 200m collar; research only, no slot approved",
   "submission_note_chars": 105,
-  "published_byte_hash_matches_receipt": true,
-  "original_frozen_round": "H97",
-  "integration_note": "Executed/frozen as H97-RDVA on an isolated branch; main independently acquired H97 through H102 before integration. Namespaced H97-RDVA without changing frozen preregistration bytes."
+  "published_byte_hash_matches_receipt": true
 }

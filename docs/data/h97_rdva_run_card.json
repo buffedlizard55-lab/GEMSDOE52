@@ -401,8 +401,9 @@
     "IR-H97-RDVA-002",
     "IR-H97-RDVA-003",
     "IR-H97-RDVA-004",
-    "IR-H97-RDVA-005"
+    "IR-H97-RDVA-005",
+    "IR-H97-RDVA-006"
   ],
   "original_frozen_round": "H97",
-  "integration_note": "Executed/frozen as H97-RDVA on an isolated branch; main independently acquired H97 through H102 before integration. Namespaced H97-RDVA without changing frozen preregistration bytes."
+  "integration_note": "Executed and frozen under the H97 namespace on an isolated branch; main independently acquired H97 through H102 before integration. Published as H97-RDVA without changing frozen preregistration bytes."
 }

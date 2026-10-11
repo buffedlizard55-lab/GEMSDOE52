@@ -163,8 +163,9 @@ Manual review: https://github.com/drivendataorg/gems-prize-reference-solution/co
    retained H97's guarded runtime vectors; separated research-download safety from slot approval; made
    receipts checkout-portable; and, after detecting a parallel-round collision, namespaced every mutable
    publication path as H97-RDVA while retaining the byte-frozen preregistration and hypothesis hashes.
-3. **Full requirement pass:** the complete test suite, static-site checker, byte-serving checks,
-   `git diff --check` and Python compilation are rerun after integration with current `main`; the PR record
-   is the authority for their final counts.
+3. **Full requirement pass after integrating current `main`:** **560 tests passed, 6 skipped**; the
+   static-site checker validated **138 pages and 478 JSON files**, recognized H102 as global current,
+   re-read H97-RDVA as a parallel NEGATIVE/download-YES/submit-NO archive, and served the current TIFF
+   byte-identically. `git diff --check` and Python compilation pass.
 
 Machine-readable authority: `evidence/h97_rdva_run_card.json`.
