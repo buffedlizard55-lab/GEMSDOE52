@@ -1,9 +1,9 @@
 {
- "round": "H92",
+ "round": "H97",
  "stage": "build",
- "artifact": "gems52-h92-cotrain-atexture-disagreement-20261010T222354Z.tif",
+ "artifact": "gems52-h97-cotrain-atexture-disagreement-20261010T222354Z.tif",
  "sha256": "dbbdc0715d8fac843e45e997267aab141df233b6e482206db7f1279d560a9914",
- "evidence_class": "HOLDOUT-DTI (see evidence/h92_holdout.json) \u2014 this build receipt is not a score",
+ "evidence_class": "HOLDOUT-DTI (see evidence/h97_holdout.json) \u2014 this build receipt is not a score",
  "hypothesis": "View A (potential-field/subsurface) made sufficient by replacing amplitude with boundary texture \u2014 directional variogram anisotropy on bands 2 rtp, 9 tmi_vg, 13 iso_grav_anom \u2014 so the brief's A-confident/B-abstains disagreement arm can rank buried faults under cover",
  "mechanism": "semivariance anisotropy isolates boundary geometry rather than source amplitude, so a buried offset should survive cover",
  "named_non_fault_mimic": "lithologic contacts, intrusive margins, paleo-channels and gridding seams all satisfy a directional-variogram anisotropy maximum",
@@ -25,7 +25,7 @@
   "withheld_positive_px": 53186,
   "note": "paired CI entirely below zero",
   "corrected_utc": "2026-10-10",
-  "correction": "IR-H92-006: first build hard-coded the all-bands-finite count 60,894 and put the paired CI in the ci95 slot"
+  "correction": "IR-H97-006: first build hard-coded the all-bands-finite count 60,894 and put the paired CI in the ci95 slot"
  },
  "views": {
   "view_A_bands": {
@@ -52,7 +52,7 @@
   "written_by": "gems52.grid.write_geotiff_portal_exact"
  },
  "format_checks": {
-  "path": "/home/user/GEMSDOE52/submission/gems52-h92-cotrain-atexture-disagreement-20261010T222354Z.tif",
+  "path": "/home/user/GEMSDOE52/submission/gems52-h97-cotrain-atexture-disagreement-20261010T222354Z.tif",
   "bytes": 795099,
   "sha256": "dbbdc0715d8fac843e45e997267aab141df233b6e482206db7f1279d560a9914",
   "bands": 1,
@@ -4469,7 +4469,17 @@
  },
  "verdict": "DOWNLOAD YES, SUBMIT NO",
  "verdict_reason": "the preregistered primary scores 0.034799 HOLDOUT-DTI, strictly below the 0.080426 random control with a 95% CI that excludes zero; the repository forbids spending a slot on a candidate that has not beaten the control",
- "submission_name": "h92-cotrain-atexture-disagreement-37654px",
- "submission_note": "H92 A-texture vs B-texture disagreement, 37654px, 3px spacing, 200m collar",
- "generated_utc": "2026-10-10T22:26:20Z"
+ "submission_name": "h97-cotrain-atexture-disagreement-37654px",
+ "submission_note": "H97 A-texture vs B-texture disagreement, 37654px, 3px spacing, 200m collar",
+ "generated_utc": "2026-10-10T22:26:20Z",
+ "submission_note_chars": 74,
+ "submission_name_chars": 41,
+ "a_only_reasoning": {
+  "file": "docs/downloads/h97-candidate-a-only-reasoning.csv",
+  "rows": 37654,
+  "a_only_dots": 34187,
+  "bytes": 15932119,
+  "sha256": "45d750c4cc42060b4a41b1093229714fdd1ec4dad0460ebb8da5618343015fbe",
+  "determinism_check": "scripts/h97_full_reasoning.py recomputed the production placement from the frozen procedure and found 0 differing pixels vs the shipped TIF (evidence/h97_reasoning.json)"
+ }
 }

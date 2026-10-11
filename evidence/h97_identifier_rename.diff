@@ -1,13 +1,13 @@
---- knowledge/80_hypotheses_H88_preregistered.md
-+++ knowledge/88_hypotheses_H92_preregistered.md
+--- 8e546ee:knowledge/80_hypotheses_H88_preregistered.md
++++ knowledge/97_hypotheses_H97_preregistered.md
 @@ -1,5 +1,5 @@
 -# 80 · H88 hypotheses, ranked — frozen BEFORE any H88 fit
-+# 88 · H92 hypotheses, ranked — frozen BEFORE any H92 fit
++# 97 · H97 hypotheses, ranked — frozen BEFORE any H97 fit
  
 -Written 2026-10-10 in the H88 session, on branch `arena/f57253db-gemsdoe52` (base commit `bc26fe2`,
 -README round H87). This file is hashed into `registry/h88_preregistration.json`; `scripts/run_h88.py`
-+Written 2026-10-10 in the H92 session, on branch `arena/f57253db-gemsdoe52` (base commit `bc26fe2`,
-+README round H87). This file is hashed into `registry/h92_preregistration.json`; `scripts/run_h92.py`
++Written 2026-10-10 in the H97 session, on branch `arena/f57253db-gemsdoe52` (base commit `bc26fe2`,
++README round H87). This file is hashed into `registry/h97_preregistration.json`; `scripts/run_h97.py`
  refuses to start if either the file or the pin has moved.
 @@ -37,7 +37,7 @@
  |---|---|---|---|---|---|---|---|
@@ -16,72 +16,72 @@
 -| 3 | H88-S "seismicity lineation texture" | bands 10 `deq_n100a15`, 16 `ieq_n100a15` | DVA of earthquake density — a lineated epicentral trend | faults that are active but unmapped must show a directional seismicity trend | the bands sit in View A as *raw* channels; their texture has never been isolated | low–medium | **not run this round** (budget); named for the next |
 -| 4 | H88-B "cover-step texture" | band 15 `depth_to_base_surf` | DVA + oriented step in cover thickness | a buried normal fault offsets the basement surface under a flat top surface | H85-next-B named this but it has no holdout receipt; it is a *step* detector, not a texture | low | **not run this round** (budget) |
 -| 5 | H88-A "ASTER/EMIT alteration indices" | external | clay / iron-oxide / silica absorption indices | surface alteration halo around a fault-fed system | **not viable in this sandbox**: the egress allowlist is `github.com`, `codeload.github.com`, `api.github.com`, `registry.npmjs.org`, `pypi.org`, `files.pythonhosted.org` (`knowledge/78` §6). USGS EarthExplorer / NASA Earthdata both require a login and are not reachable | high | **blocked — needs an operator-side download with a SHA pin first** |
-+| **1** | **H92-T "texture View A"** | **band 2 `rtp`** (reduced-to-pole magnetics), **band 9 `tmi_vg`** (magnetic vertical gradient), **band 13 `iso_grav_anom`** (isostatic gravity) | directional variogram anisotropy of the *potential field itself*: an elongated, laterally-persistent semivariance maximum at the fault strike, 100–600 m lag | a buried fault is a **correlated** magnetic/gravity boundary over hundreds of metres. Raw amplitude (what H61 fed View A) is dominated by the source body; the **anisotropy of the variogram** isolates the *boundary geometry* instead, which survives under cover | H82's DVA2 never touched a magnetic band, and never used the vertical gradient band 9 at all. This is a **representation change for the failing view**, not a re-tuning of the working one | medium (24 filters/band, reuse `run_h61.setup`) | **VALIDATED IN THIS ROUND — see §4** |
-+| 2 | H92-R "radiometric texture in View B" | **band 6 `tc`** (tagged magnetic TC; measured to be radiometric total count by bytes, IR-H85-005) | DVA + gradient texture of the radiometric surface: K/Th/U lineaments | hydrothermal alteration is *linear* along fault-fluid pathways; texture, not amplitude, is what a lineament is | the repo uses band 6 as a **raw channel** (`raw_band_06`) and as external radiometric *gradients*; it has never computed a **directional variogram** on it | low (folded into rank 1's fit) | tested as part of the rank-1 feature block |
-+| 3 | H92-S "seismicity lineation texture" | bands 10 `deq_n100a15`, 16 `ieq_n100a15` | DVA of earthquake density — a lineated epicentral trend | faults that are active but unmapped must show a directional seismicity trend | the bands sit in View A as *raw* channels; their texture has never been isolated | low–medium | **not run this round** (budget); named for the next |
-+| 4 | H92-B "cover-step texture" | band 15 `depth_to_base_surf` | DVA + oriented step in cover thickness | a buried normal fault offsets the basement surface under a flat top surface | H85-next-B named this but it has no holdout receipt; it is a *step* detector, not a texture | low | **not run this round** (budget) |
-+| 5 | H92-A "ASTER/EMIT alteration indices" | external | clay / iron-oxide / silica absorption indices | surface alteration halo around a fault-fed system | **not viable in this sandbox**: the egress allowlist is `github.com`, `codeload.github.com`, `api.github.com`, `registry.npmjs.org`, `pypi.org`, `files.pythonhosted.org` (`knowledge/78` §6). USGS EarthExplorer / NASA Earthdata both require a login and are not reachable | high | **blocked — needs an operator-side download with a SHA pin first** |
++| **1** | **H97-T "texture View A"** | **band 2 `rtp`** (reduced-to-pole magnetics), **band 9 `tmi_vg`** (magnetic vertical gradient), **band 13 `iso_grav_anom`** (isostatic gravity) | directional variogram anisotropy of the *potential field itself*: an elongated, laterally-persistent semivariance maximum at the fault strike, 100–600 m lag | a buried fault is a **correlated** magnetic/gravity boundary over hundreds of metres. Raw amplitude (what H61 fed View A) is dominated by the source body; the **anisotropy of the variogram** isolates the *boundary geometry* instead, which survives under cover | H82's DVA2 never touched a magnetic band, and never used the vertical gradient band 9 at all. This is a **representation change for the failing view**, not a re-tuning of the working one | medium (24 filters/band, reuse `run_h61.setup`) | **VALIDATED IN THIS ROUND — see §4** |
++| 2 | H97-R "radiometric texture in View B" | **band 6 `tc`** (tagged magnetic TC; measured to be radiometric total count by bytes, IR-H85-005) | DVA + gradient texture of the radiometric surface: K/Th/U lineaments | hydrothermal alteration is *linear* along fault-fluid pathways; texture, not amplitude, is what a lineament is | the repo uses band 6 as a **raw channel** (`raw_band_06`) and as external radiometric *gradients*; it has never computed a **directional variogram** on it | low (folded into rank 1's fit) | tested as part of the rank-1 feature block |
++| 3 | H97-S "seismicity lineation texture" | bands 10 `deq_n100a15`, 16 `ieq_n100a15` | DVA of earthquake density — a lineated epicentral trend | faults that are active but unmapped must show a directional seismicity trend | the bands sit in View A as *raw* channels; their texture has never been isolated | low–medium | **not run this round** (budget); named for the next |
++| 4 | H97-B "cover-step texture" | band 15 `depth_to_base_surf` | DVA + oriented step in cover thickness | a buried normal fault offsets the basement surface under a flat top surface | H85-next-B named this but it has no holdout receipt; it is a *step* detector, not a texture | low | **not run this round** (budget) |
++| 5 | H97-A "ASTER/EMIT alteration indices" | external | clay / iron-oxide / silica absorption indices | surface alteration halo around a fault-fed system | **not viable in this sandbox**: the egress allowlist is `github.com`, `codeload.github.com`, `api.github.com`, `registry.npmjs.org`, `pypi.org`, `files.pythonhosted.org` (`knowledge/78` §6). USGS EarthExplorer / NASA Earthdata both require a login and are not reachable | high | **blocked — needs an operator-side download with a SHA pin first** |
  
 @@ -47,3 +47,3 @@
  
 -## 3 · Frozen H88 protocol (written before the first fit)
-+## 3 · Frozen H92 protocol (written before the first fit)
++## 3 · Frozen H97 protocol (written before the first fit)
  
 @@ -74,3 +74,3 @@
  
 -Filled in after the run; see `evidence/h88_holdout.json` and `evidence/h88_run_card.json`.
-+Filled in after the run; see `evidence/h92_holdout.json` and `evidence/h92_run_card.json`.
++Filled in after the run; see `evidence/h97_holdout.json` and `evidence/h97_run_card.json`.
  The **verdict and every number are in those receipts**, not here. This section is deliberately not
---- knowledge/81_hypotheses_H89_preregistered.md
-+++ knowledge/89_hypotheses_H93_preregistered.md
+--- 8e546ee:knowledge/81_hypotheses_H89_preregistered.md
++++ knowledge/98_hypotheses_H98_preregistered.md
 @@ -1,10 +1,10 @@
 -# 81 · H89 hypotheses, ranked — frozen BEFORE any H89 fit
-+# 89 · H93 hypotheses, ranked — frozen BEFORE any H93 fit
++# 98 · H98 hypotheses, ranked — frozen BEFORE any H98 fit
  
 -Written 2026-10-10 in the H88/H89 session, branch `arena/f57253db-gemsdoe52`. This file is hashed into
 -`registry/h89_preregistration.json`; the shared runner `scripts/run_h88.py` refuses to start if either
-+Written 2026-10-10 in the H92/H93 session, branch `arena/f57253db-gemsdoe52`. This file is hashed into
-+`registry/h93_preregistration.json`; the shared runner `scripts/run_h92.py` refuses to start if either
++Written 2026-10-10 in the H97/H98 session, branch `arena/f57253db-gemsdoe52`. This file is hashed into
++`registry/h98_preregistration.json`; the shared runner `scripts/run_h97.py` refuses to start if either
  the document or the pin has moved.
  
 -Round identity: **H89** is the second experiment of this session, and it exists because of a measured
 -H89-predecessor result (H88), not because of a guess. `knowledge/80` §3 froze H88; §4 of that file is
 -filled in only after its run. This document is frozen before the first H89 fit.
-+Round identity: **H93** is the second experiment of this session, and it exists because of a measured
-+H93-predecessor result (H92), not because of a guess. `knowledge/88` §3 froze H92; §4 of that file is
-+filled in only after its run. This document is frozen before the first H93 fit.
++Round identity: **H98** is the second experiment of this session, and it exists because of a measured
++H98-predecessor result (H97), not because of a guess. `knowledge/97` §3 froze H97; §4 of that file is
++filled in only after its run. This document is frozen before the first H98 fit.
  
 @@ -12,3 +12,3 @@
  
 -## 1 · What H88 measured, and why it forces this round
-+## 1 · What H92 measured, and why it forces this round
++## 1 · What H97 measured, and why it forces this round
  
 @@ -17,5 +17,5 @@
  `nodes.spacing_select(min_px=3.0)`, 200 m collar from the fold's **visible** catalogue only.
 -Source: `evidence/h88_fit.json`, `evidence/h88_holdout.json`.
-+Source: `evidence/h92_fit.json`, `evidence/h92_holdout.json`.
++Source: `evidence/h97_fit.json`, `evidence/h97_holdout.json`.
  
 -| arm (H88) | HOLDOUT-DTI | paired vs random (95 % CI) |
-+| arm (H92) | HOLDOUT-DTI | paired vs random (95 % CI) |
++| arm (H97) | HOLDOUT-DTI | paired vs random (95 % CI) |
  |---|---:|---|
 @@ -47,3 +47,3 @@
  
 -The H88 result does **not** distinguish two explanations:
-+The H92 result does **not** distinguish two explanations:
++The H97 result does **not** distinguish two explanations:
  
 @@ -51,3 +51,3 @@
     dominated by source bodies, not boundaries), or
 -2. **The scale was wrong.** H88 computed semivariance anisotropy at lags 1–3 px = **100–300 m**.
-+2. **The scale was wrong.** H92 computed semivariance anisotropy at lags 1–3 px = **100–300 m**.
++2. **The scale was wrong.** H97 computed semivariance anisotropy at lags 1–3 px = **100–300 m**.
     The kernel radius of the competition metric is 300 m and the grid is 100 m, so lags of 100–300 m
 @@ -56,6 +56,6 @@
  
 -H89 tests explanation 2, because it is the only one of the two that is actionable with bytes already
-+H93 tests explanation 2, because it is the only one of the two that is actionable with bytes already
++H98 tests explanation 2, because it is the only one of the two that is actionable with bytes already
  on disk.
  
 -## 2 · Ranked candidate hypotheses for H89 (new relative to everything in this repository)
-+## 2 · Ranked candidate hypotheses for H93 (new relative to everything in this repository)
++## 2 · Ranked candidate hypotheses for H98 (new relative to everything in this repository)
  
 @@ -63,7 +63,7 @@
  |---|---|---|---|---|---|---|---|
@@ -90,29 +90,29 @@
 -| 3 | H89-B "cover-step detector" | band 15 `depth_to_base_surf` | oriented step in cover thickness (not texture) | a buried normal fault offsets the basement under a flat top | H85-next-B named it; no holdout receipt exists anywhere in this repository | low | **not run** (budget) |
 -| 4 | H89-M "multi-scale fusion of 1 and 3" | bands 2, 9, 11, 13, 15, 17 | DVA at lags 1–8 jointly | if the true boundary scale is unknown a priori, a two-scale fan should dominate either single scale | nothing in the repo fuses two lag families in one learner | low | **not run** (budget) |
 -| 5 | H89-A "ASTER/EMIT alteration indices" | external | clay / silica / iron-oxide absorption | surface alteration halo around a fault-fed hydrothermal system | **blocked in this sandbox**: egress allowlist is `github.com`, `codeload.github.com`, `api.github.com`, `registry.npmjs.org`, `pypi.org`, `files.pythonhosted.org`. EarthExplorer and Earthdata both require a login | high | **blocked — needs an operator download with a SHA pin** |
-+| **1** | **H93-L "deep-scale View A"** | bands **2 `rtp`**, **9 `tmi_vg`**, **11 `iso_grav_anom_vg`**, **13 `iso_grav_anom`**, **15 `depth_to_base_surf`**, **17 `cond_surf`** | directional variogram anisotropy at lags **4, 6, 8 px = 400–800 m** | a concealed normal fault offsets basement by tens of metres under a flat top surface. At 400–800 m the gravity/magnetic boundary texture is sensitive to that offset; at 100–300 m (H92) it is dominated by near-surface and gridding noise. These are the brief's own View-A ingredients: gravity, magnetics, subsurface | every DVA channel in this repository (H75, H82, H84, H92) used lags 1–6 px with the **fan concentrated at 1–2 px**; the vertical-gradient gravity band 11, the cover band 15 and the conductivity band 17 have **never** carried a variogram channel at any lag | medium (~2 min channels, reuse `run_h61.setup`) | **RUN IN THIS ROUND — see `evidence/h93_*.json`** |
-+| 2 | H93-S "seismicity lineation texture at long lag" | bands 10 `deq_n100a15`, 16 `ieq_n100a15` | DVA of earthquake density | an active-but-unmapped fault must show a directional epicentral trend | the bands are in View A as raw channels only; their texture has never been isolated | low | **not run** (budget) |
-+| 3 | H93-B "cover-step detector" | band 15 `depth_to_base_surf` | oriented step in cover thickness (not texture) | a buried normal fault offsets the basement under a flat top | H85-next-B named it; no holdout receipt exists anywhere in this repository | low | **not run** (budget) |
-+| 4 | H93-M "multi-scale fusion of 1 and 3" | bands 2, 9, 11, 13, 15, 17 | DVA at lags 1–8 jointly | if the true boundary scale is unknown a priori, a two-scale fan should dominate either single scale | nothing in the repo fuses two lag families in one learner | low | **not run** (budget) |
-+| 5 | H93-A "ASTER/EMIT alteration indices" | external | clay / silica / iron-oxide absorption | surface alteration halo around a fault-fed hydrothermal system | **blocked in this sandbox**: egress allowlist is `github.com`, `codeload.github.com`, `api.github.com`, `registry.npmjs.org`, `pypi.org`, `files.pythonhosted.org`. EarthExplorer and Earthdata both require a login | high | **blocked — needs an operator download with a SHA pin** |
++| **1** | **H98-L "deep-scale View A"** | bands **2 `rtp`**, **9 `tmi_vg`**, **11 `iso_grav_anom_vg`**, **13 `iso_grav_anom`**, **15 `depth_to_base_surf`**, **17 `cond_surf`** | directional variogram anisotropy at lags **4, 6, 8 px = 400–800 m** | a concealed normal fault offsets basement by tens of metres under a flat top surface. At 400–800 m the gravity/magnetic boundary texture is sensitive to that offset; at 100–300 m (H97) it is dominated by near-surface and gridding noise. These are the brief's own View-A ingredients: gravity, magnetics, subsurface | every DVA channel in this repository (H75, H82, H84, H97) used lags 1–6 px with the **fan concentrated at 1–2 px**; the vertical-gradient gravity band 11, the cover band 15 and the conductivity band 17 have **never** carried a variogram channel at any lag | medium (~2 min channels, reuse `run_h61.setup`) | **RUN IN THIS ROUND — see `evidence/h98_*.json`** |
++| 2 | H98-S "seismicity lineation texture at long lag" | bands 10 `deq_n100a15`, 16 `ieq_n100a15` | DVA of earthquake density | an active-but-unmapped fault must show a directional epicentral trend | the bands are in View A as raw channels only; their texture has never been isolated | low | **not run** (budget) |
++| 3 | H98-B "cover-step detector" | band 15 `depth_to_base_surf` | oriented step in cover thickness (not texture) | a buried normal fault offsets the basement under a flat top | H85-next-B named it; no holdout receipt exists anywhere in this repository | low | **not run** (budget) |
++| 4 | H98-M "multi-scale fusion of 1 and 3" | bands 2, 9, 11, 13, 15, 17 | DVA at lags 1–8 jointly | if the true boundary scale is unknown a priori, a two-scale fan should dominate either single scale | nothing in the repo fuses two lag families in one learner | low | **not run** (budget) |
++| 5 | H98-A "ASTER/EMIT alteration indices" | external | clay / silica / iron-oxide absorption | surface alteration halo around a fault-fed hydrothermal system | **blocked in this sandbox**: egress allowlist is `github.com`, `codeload.github.com`, `api.github.com`, `registry.npmjs.org`, `pypi.org`, `files.pythonhosted.org`. EarthExplorer and Earthdata both require a login | high | **blocked — needs an operator download with a SHA pin** |
  
 @@ -73,3 +73,3 @@
  
 -## 3 · Frozen H89 protocol (identical to H88 except where stated)
-+## 3 · Frozen H93 protocol (identical to H92 except where stated)
++## 3 · Frozen H98 protocol (identical to H97 except where stated)
  
 @@ -84,5 +84,5 @@
    (0.90) reads.
 -* **Decision rule, frozen**: H89-L is **supported** only if `xtex_dis`'s paired difference against
-+* **Decision rule, frozen**: H93-L is **supported** only if `xtex_dis`'s paired difference against
++* **Decision rule, frozen**: H98-L is **supported** only if `xtex_dis`'s paired difference against
    `random` has a 95 % CI whose lower bound is above 0. Anything else is a negative and is reported
 -  as one. A negative H89-L closes the "wrong scale" explanation for this footprint and leaves only
-+  as one. A negative H93-L closes the "wrong scale" explanation for this footprint and leaves only
++  as one. A negative H98-L closes the "wrong scale" explanation for this footprint and leaves only
    "the view carries no catalogue-fault signal here".
 @@ -91,4 +91,4 @@
  
 -Written after the run. See `evidence/h89_fit.json`, `evidence/h89_holdout.json`,
 -`evidence/h89_run_card.json`. Every number is labelled HOLDOUT-DTI with the evaluator version, the
-+Written after the run. See `evidence/h93_fit.json`, `evidence/h93_holdout.json`,
-+`evidence/h93_run_card.json`. Every number is labelled HOLDOUT-DTI with the evaluator version, the
++Written after the run. See `evidence/h98_fit.json`, `evidence/h98_holdout.json`,
++`evidence/h98_run_card.json`. Every number is labelled HOLDOUT-DTI with the evaluator version, the
  withheld positive pixel count and a 95 % CI, or it is not reported.

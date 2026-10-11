@@ -1,6 +1,6 @@
-# 90 · Why `h33-h33-2-b2` scored 0.2778, and whether this project can beat 0.3195
+# 99 · Why `h33-h33-2-b2` scored 0.2778, and whether this project can beat 0.3195
 
-Written 2026-10-10 (session H92/H93, branch `arena/f57253db-gemsdoe52`). **Every number in §1 was
+Written 2026-10-10 (session H97/H98, branch `arena/f57253db-gemsdoe52`). **Every number in §1 was
 re-measured by this session from the bytes on disk in `data/reference/h33-2-b2-zeros.tif`** — not
 copied from an earlier note. §2–§3 are closed-form algebra on the organiser's published metric. §4–§5
 are this session's own HOLDOUT-DTI measurements. Nothing here is a leaderboard forecast, and nothing
@@ -130,7 +130,7 @@ retains 0.766 of credit where the geometric optimum is 0.798 — within 4 % of t
 of that field can do. **Beating 0.3195 needs a detector whose top-ranked pixels are closer to the
 hidden faults than the current field's are. That is a detector problem.**
 
-## 4 · What this session measured on the mandated co-training lane (H92)
+## 4 · What this session measured on the mandated co-training lane (H97)
 
 The brief's method paragraph mandates: View A = potential-field/subsurface; View B = surface DEM
 curvature/slope plus any radiometric bands in `training_features.tif`; the discovery signal is
@@ -139,14 +139,14 @@ times (mean spatial-block OOF AUC 0.5163) while its View B sits at 0.684 — i.e
 precondition ("each sufficient") is violated on the geophysical side, and independence (which keeps
 passing, max |ρ| 0.13–0.15) has nothing to donate.
 
-H92 therefore asked the only actionable question: **can View A be made sufficient by changing its
+H97 therefore asked the only actionable question: **can View A be made sufficient by changing its
 representation from amplitude to boundary texture?** It computed directional variogram anisotropy
 (DVA) on bands never used for DVA in this repository — **2 `rtp`, 9 `tmi_vg`, and 6 (radiometric
-total count by bytes, IR-H85-005)** — preregistered as `knowledge/88` and pinned in
-`registry/h92_preregistration.json` *before the first fit*.
+total count by bytes, IR-H85-005)** — preregistered as `knowledge/97` and pinned in
+`registry/h97_preregistration.json` *before the first fit*.
 
 **Result — HOLDOUT-DTI, evaluator `gems52-pooled-hide-v1`, 53,186 withheld positive pixels, 1,000-draw
-paired physical 20 km spatial-cluster bootstrap (153 resampled clusters)** (`evidence/h92_holdout.json`):
+paired physical 20 km spatial-cluster bootstrap (153 resampled clusters)** (`evidence/h97_holdout.json`):
 
 | arm | HOLDOUT-DTI | 95 % CI | paired difference vs the primary [95 % CI] |
 |---|---:|---|---|
@@ -173,19 +173,19 @@ of negative this repository has produced. That is not a surprise once the AUCs a
 emission that ranks `A − B` is dominated by `B`'s complement, and `B` is the only view carrying
 signal. Co-training amplifies bias exactly as the brief warns it can.
 
-## 5 · H93 — is it the scale rather than the view?
+## 5 · H98 — is it the scale rather than the view?
 
-H92's lags were 1–3 px = **100–300 m**. A fault buried under cover is a *deep* boundary, and the
-sensitivity of a potential-field boundary texture to source depth grows with the lag. H93
-(`knowledge/89`, preregistered before its first fit) re-ran the identical instrument with
+H97's lags were 1–3 px = **100–300 m**. A fault buried under cover is a *deep* boundary, and the
+sensitivity of a potential-field boundary texture to source depth grows with the lag. H98
+(`knowledge/98`, preregistered before its first fit) re-ran the identical instrument with
 `lags_px = [4, 6, 8]` = **400–800 m** and View A extended to the brief's own ingredients — adding
 band 11 `iso_grav_anom_vg`, band 15 `depth_to_base_surf`, band 17 `cond_surf` — while View B was held
-unchanged in composition. Frozen decision rule: H93-L is supported only if `xtex_dis`'s paired
+unchanged in composition. Frozen decision rule: H98-L is supported only if `xtex_dis`'s paired
 difference against `random` has a CI whose lower bound is above zero.
 
-**Result — same instrument, 53,186 withheld positive pixels** (`evidence/h93_holdout.json`):
+**Result — same instrument, 53,186 withheld positive pixels** (`evidence/h98_holdout.json`):
 
-| arm (H93) | HOLDOUT-DTI | 95 % CI | paired vs primary [95 % CI] |
+| arm (H98) | HOLDOUT-DTI | 95 % CI | paired vs primary [95 % CI] |
 |---|---:|---|---|
 | `xtex_dis` — **primary** | **0.034697** | [0.026536, 0.043153] | 0 (reference) |
 | `xtex_agree` | 0.121582 | [0.107204, 0.137463] | −0.086884 [−0.101257, −0.074418] |
@@ -194,10 +194,10 @@ difference against `random` has a CI whose lower bound is above zero.
 | `random` | 0.080426 | [0.070223, 0.090973] | **−0.045728 [−0.052841, −0.038856]** |
 
 View A sufficiency at 400–800 m lags: held-out-region AUC **0.5368, 0.5529, 0.4913, 0.5327** (mean
-**0.5284**) — statistically indistinguishable from H92's short-lag **0.5317**. Independence
+**0.5284**) — statistically indistinguishable from H97's short-lag **0.5317**. Independence
 max |ρ| **0.4455**; leakage canary max **0.5950**.
 
-**H93-L is therefore NOT supported**, and the frozen decision rule closes the "wrong scale"
+**H98-L is therefore NOT supported**, and the frozen decision rule closes the "wrong scale"
 explanation. Together the two rounds establish, on this footprint and this instrument, that the
 potential-field/subsurface view carries **no measurable catalogue-fault signal in either of the two
 representations tested** (amplitude — the repository's nine prior failures — or directional-variogram

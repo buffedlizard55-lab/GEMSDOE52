@@ -1,0 +1,120 @@
+{
+ "round": "H98",
+ "hypothesis_document": "knowledge/98_hypotheses_H98_preregistered.md",
+ "hypothesis_sha256": "bb7ef5eb37e41e777a3422a74bef63002f963859fe06249f27e6155b5829390c",
+ "frozen_utc": "2026-10-10T22:10:00Z",
+ "lane": "brief co-training paragraph, second experiment: the potential-field/subsurface view (View A) at long lags",
+ "primary_arm": "xtex_dis",
+ "arms": [
+  "xtex_dis",
+  "xtex_agree",
+  "single_Atex",
+  "single_Btex",
+  "random"
+ ],
+ "evaluator": "gems52-pooled-hide-v1",
+ "thresholds": {
+  "buffer_px": 80,
+  "catalogue_exclusion_m": 200,
+  "min_dot_separation_px": 3.0,
+  "budget_dots_per_fold_per_arm": 9400,
+  "bootstrap_draws": 1000,
+  "independence_bar_brief": 0.9,
+  "independence_bar_repo": 0.6,
+  "canary_alarm_auc": 0.9
+ },
+ "band6_policy": "band 6 is radiometric total count by bytes (IR-H85-005); it is View B per the brief",
+ "fan_offsets_dy_dx": [
+  [
+   0,
+   1
+  ],
+  [
+   1,
+   1
+  ],
+  [
+   1,
+   0
+  ],
+  [
+   1,
+   -1
+  ],
+  [
+   1,
+   2
+  ],
+  [
+   2,
+   1
+  ],
+  [
+   2,
+   -1
+  ],
+  [
+   1,
+   -2
+  ]
+ ],
+ "lags_px": [
+  4,
+  6,
+  8
+ ],
+ "sigma_px": 3.0,
+ "view_a_bands": [
+  2,
+  9,
+  11,
+  13,
+  15,
+  17
+ ],
+ "view_b_bands": [
+  12,
+  19,
+  6
+ ],
+ "changed_vs_h97": "lags 1-3 px -> 4-8 px; View A gains bands 11 (gravity vertical gradient), 15 (cover thickness), 17 (conductivity)",
+ "decision_rule": "supported only if xtex_dis minus random has a 95% CI lower bound above 0",
+ "identifier_rename": {
+  "done_utc": "2026-10-11T00:15:00Z",
+  "reason": "identifier collision, twice. This round was frozen as H88/H89; a parallel session merged its own H88/H89 round to main (PR #94), so the round was renamed to H92/H93; main then filled H92, H93, H94, H95 and H96 with further parallel rounds, so the round was renamed again to H97/H98 and its knowledge documents to 97-100.",
+  "history": [
+   {
+    "step": 1,
+    "from": "H88 / H89",
+    "to": "H92 / H93",
+    "reason": "main merged a different H88/H89 round (PR #94)",
+    "document_sha256_before": "cfd76d0246bc3ba2eae8d19fd6dd068650c4bad219433664981885ad0f524832",
+    "document_sha256_after": "87f9e47bd1943e982f3ff20ee475b3ddacfeb04fb477700cf12f70698c8567ec"
+   },
+   {
+    "step": 2,
+    "from": "H92 / H93",
+    "to": "H97 / H98",
+    "reason": "main filled H92, H93, H94, H95, H96 with other rounds",
+    "document_sha256_before": "87f9e47bd1943e982f3ff20ee475b3ddacfeb04fb477700cf12f70698c8567ec",
+    "document_sha256_after": "bb7ef5eb37e41e777a3422a74bef63002f963859fe06249f27e6155b5829390c"
+   }
+  ],
+  "token_map": {
+   "h88": "h97",
+   "H88": "H97",
+   "h89": "h98",
+   "H89": "H98",
+   "h92": "h97",
+   "H92": "H97",
+   "h93": "h98",
+   "H93": "H98"
+  },
+  "evidence_diff": "evidence/h97_identifier_rename.diff",
+  "verification": "the full substitution chain (tokens h88/h89 -> h92/h93 -> h97/h98 and knowledge numbers 80-83 -> 88-91 -> 97-100) reproduces the final bytes of this document exactly from the bytes first committed at 8e546ee; evidence/h97_identifier_rename.diff holds every changed line",
+  "irregularity": "IR-H97-008"
+ },
+ "superseded_paths": {
+  "hypothesis_document": "knowledge/98_hypotheses_H98_preregistered.md"
+ }
+}

@@ -161,37 +161,37 @@ Facts the next round must respect:
   when merging, and rename identifier-only (precedent IR-H84-006).
 <!--/H85-AGENTS-->
 
-<!--H92-AGENTS-->
-## Current H92/H93 continuation (2026-10-10)
+<!--H97-AGENTS-->
+## Current H97/H98 continuation (2026-10-10)
 Read `README.md`'s standing-brief section first (verbatim operative text of the user prompt; full text in
-`knowledge/77`), then `knowledge/91_h92_h93_results.md` (both results in full), the frozen documents `knowledge/88`/`knowledge/89`, and `knowledge/90`
+`knowledge/77`), then `knowledge/100_h97_h98_results.md` (both results in full), the frozen documents `knowledge/97`/`knowledge/98`, and `knowledge/99`
 (why 0.2778, and the two routes that could actually beat 0.3195). Irregularities: registry/irregularities.json
-IR-H92-001…007.
+IR-H97-001…007.
 
 Facts the next round must respect:
-- **Both experiments are strict negatives.** H92 primary `xtex_dis` 0.034799 [0.026938, 0.044011] and H93 primary
+- **Both experiments are strict negatives.** H97 primary `xtex_dis` 0.034799 [0.026938, 0.044011] and H98 primary
   0.034697 [0.026536, 0.043153] are below the random control 0.080426 [0.070223, 0.090973]; the paired CIs are
   entirely below zero. No slot for either. Instrument: `gems52-pooled-hide-v1`, **53,186 withheld positives**,
   153 physical 20 km clusters, 1,000-draw paired bootstrap.
 - **The failing axis is sufficiency, not representation or scale.** View A held-out-region AUC: 0.5317 (100–300 m
-  DVA, H92) and 0.5284 (400–800 m DVA, H93). Independence passes (max |ρ| 0.4510 / 0.4455). Do not re-open DVA on
+  DVA, H97) and 0.5284 (400–800 m DVA, H98). Independence passes (max |ρ| 0.4510 / 0.4455). Do not re-open DVA on
   more magnetic/gravity bands or more lags; the view carries no catalogue-fault signal here.
-- **The next lever is population, per `knowledge/90` §7:** (1) a detector that ranks off-catalogue faults above
+- **The next lever is population, per `knowledge/99` §7:** (1) a detector that ranks off-catalogue faults above
   catalogue-free fields (specific candidates: GDR 1391 2-m temperature — operator download, SHA pin; seismicity
   lineation texture on bands 10/16; band-15 cover-step detector); (2) an instrument tied to the scored population.
   Placement is within ~4 % of geometric optimum and the marginal radius is ≈282 m — mass discipline cannot pay first.
-- **Writers:** channel arrays can lose their first 4 KiB page after a passing array-compare (IR-H92-001, and the
-  2/54 recurrence in work/h93). `gems52.structural.save_verified` now byte-compares; `run_h92.heal_channels()` heals;
+- **Writers:** channel arrays can lose their first 4 KiB page after a passing array-compare (IR-H97-001, and the
+  2/54 recurrence in work/h98). `gems52.structural.save_verified` now byte-compares; `run_h97.heal_channels()` heals;
   always run the digest check at the start of a stage and never trust a cached Bank.
-- **Cards:** every number must be read from its receipt (`evidence/h92_build.json` was corrected for exactly this,
-  IR-H92-006). One card per round: hypothesis, mechanism, named mimic, holdout DTI + CI, registry correlation/overlap,
+- **Cards:** every number must be read from its receipt (`evidence/h97_build.json` was corrected for exactly this,
+  IR-H97-006). One card per round: hypothesis, mechanism, named mimic, holdout DTI + CI, registry correlation/overlap,
   raster sha256, validator output, submission name + ≤140-char note, verdict.
 - **Site:** `docs/index.html` + `docs/executive-summary.html` + `docs/downloads/index.html` were rebuilt this round;
   `scripts/check_site.py` reports **0 problems** (it was 22). Do not rewrite the front page from scratch; keep the
   mandated literals (H58/R5 short paths + SHA prefixes, "do not upload", "h55-edge.html", H57 alternate link) and add
   the new round on top.
 - **Round naming:** next free identifier belongs to the next session; rename identifier-only (IR-H84-006).
-<!--/H92-AGENTS-->
+<!--/H97-AGENTS-->
 
 <!--H84-AGENTS-->
 ## Current H84 continuation (2026-10-10)

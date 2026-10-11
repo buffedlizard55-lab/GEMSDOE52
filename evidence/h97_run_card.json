@@ -1,5 +1,5 @@
 {
- "round": "H92",
+ "round": "H97",
  "experiment": "1 of 3 (budget 3 experiments / 2 h)",
  "evidence_class": "HOLDOUT-DTI",
  "hypothesis": "View A (potential-field/subsurface) can be made sufficient by replacing amplitude with boundary texture \u2014 directional variogram anisotropy on bands 2 rtp, 9 tmi_vg, 13 iso_grav_anom \u2014 so the brief's A-confident/B-abstains disagreement arm can rank buried faults under cover",
@@ -22,7 +22,7 @@
   "bands": {
    "12": "det_elev",
    "19": "det_elev_slope",
-   "6": "tc (radiometric total count by bytes, IR-H92-003)"
+   "6": "tc (radiometric total count by bytes, IR-H97-003)"
   }
  },
  "holdout": {
@@ -118,17 +118,17 @@
   "max_jaccard": 0.0131,
   "lane_max_spearman": 0.017866671336593285,
   "lane_near_3px_max_excluding_probes": 0.3828,
-  "note": "literal lane dot rule fires only against the universal-coverage r13-lattice probe (IR-H92-002)"
+  "note": "literal lane dot rule fires only against the universal-coverage r13-lattice probe (IR-H97-002)"
  },
  "raster": {
-  "file": "gems52-h92-cotrain-atexture-disagreement-20261010T222354Z.tif",
+  "file": "gems52-h97-cotrain-atexture-disagreement-20261010T222354Z.tif",
   "sha256": "dbbdc0715d8fac843e45e997267aab141df233b6e482206db7f1279d560a9914",
   "bytes": 795099,
   "placed": 37654,
   "budget": 37654
  },
  "validator": {
-  "path": "/home/user/GEMSDOE52/submission/gems52-h92-cotrain-atexture-disagreement-20261010T222354Z.tif",
+  "path": "/home/user/GEMSDOE52/submission/gems52-h97-cotrain-atexture-disagreement-20261010T222354Z.tif",
   "bytes": 795099,
   "sha256": "dbbdc0715d8fac843e45e997267aab141df233b6e482206db7f1279d560a9914",
   "bands": 1,
@@ -184,14 +184,25 @@
   "spearman_field_vs_unionmax": -0.003348276036681345,
   "note": "a high-A/low-B pixel and a high-A/high-B pixel have the same max(A,B)=union score but different disagreement scores, so the shipped field is not a rescaling of the union"
  },
- "submission_name": "h92-cotrain-atexture-disagreement-37654px",
- "submission_note": "H92 A-texture vs B-texture disagreement, 37654px, 3px spacing, 200m collar",
+ "submission_name": "h97-cotrain-atexture-disagreement-37654px",
+ "submission_note": "H97 A-texture vs B-texture disagreement, 37654px, 3px spacing, 200m collar",
  "verdict": "NEGATIVE \u2014 DOWNLOAD YES, SUBMIT NO",
  "verdict_reason": "primary 0.034799 is strictly below the 0.080426 random control with a paired 95% CI entirely below zero; no slot may be spent",
  "receipts": [
-  "evidence/h92_fit.json",
-  "evidence/h92_holdout.json",
-  "evidence/h92_build.json"
+  "evidence/h97_fit.json",
+  "evidence/h97_holdout.json",
+  "evidence/h97_build.json"
  ],
- "generated_utc": "2026-10-10"
+ "generated_utc": "2026-10-10",
+ "identifier_history": {
+  "frozen_as": "H88 (texture co-training) / H89 (long-lag follow-up)",
+  "renamed_to": [
+   "H92/H93 (main merged its own H88/H89 round, PR #94)",
+   "H97/H98 (main then used H92-H96)"
+  ],
+  "mechanical": true,
+  "evidence": "evidence/h97_identifier_rename.diff",
+  "irregularity": "IR-H97-008",
+  "artifact_bytes_changed": false
+ }
 }

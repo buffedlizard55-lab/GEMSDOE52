@@ -5,7 +5,7 @@
 [Leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/) ·
 [Data tab (login)](https://www.drivendata.org/competitions/306/competition-doe-gems/data/)
 
-**Site:** `docs/index.html` (GitHub Pages) · **Session branches merged here:** `arena/9d9926bc-gemsdoe52` (rounds H88–H91) + `arena/f57253db-gemsdoe52` (rounds H92–H93, the co-training lane) · **Last update:** H92/H93 round, 2026-10-10
+**Site:** `docs/index.html` (GitHub Pages) · **Session branches merged here:** `arena/9d9926bc-gemsdoe52` (rounds H88–H91) + `arena/f57253db-gemsdoe52` (rounds H97–H98, the co-training lane) · **Last update:** H97/H98 round, 2026-10-10
 
 ---
 
@@ -15,12 +15,12 @@
 |---|---|
 | | |
 |---|---|
-| **Download** | [`docs/downloads/h92-candidate.tif`](docs/downloads/h92-candidate.tif) (single-band float32 GeoTIFF) · [`.zip`](docs/downloads/h92-candidate.zip) |
-| **Suggested submission name** | `h92-cotrain-atexture-disagreement-37654px` (41 characters) |
-| **Note (≤140 chars)** | `H92 A-texture vs B-texture disagreement, 37654px, 3px spacing, 200m collar` (74 characters) |
+| **Download** | [`docs/downloads/h97-candidate.tif`](docs/downloads/h97-candidate.tif) (single-band float32 GeoTIFF) · [`.zip`](docs/downloads/h97-candidate.zip) |
+| **Suggested submission name** | `h97-cotrain-atexture-disagreement-37654px` (41 characters) |
+| **Note (≤140 chars)** | `H97 A-texture vs B-texture disagreement, 37654px, 3px spacing, 200m collar` (74 characters) |
 | **SHA-256** | `dbbdc0715d8fac843e45e997267aab141df233b6e482206db7f1279d560a9914` |
 | **DOWNLOAD** | **YES** — format-valid on disk (single band float32, EPSG:32611, 3292×3730, 0 NaN, every value in [0, 1], 37,654 emitted cells, no mass inside the 200 m catalogue collar), decoded-pixel unique against 146 comparable priors |
-| **SUBMIT** | **NO** — the pre-registered primary scores below its own random control with a CI that excludes zero (`evidence/h92_build.json`) |
+| **SUBMIT** | **NO** — the pre-registered primary scores below its own random control with a CI that excludes zero (`evidence/h97_build.json`) |
 | **Organiser score** | none. No file in this repository has an organiser receipt. |
 
 **How a submission is made** (the portal form asks for a file, a name and a note): download the `.tif` above, open the competition's submission page (login required; reached from the [competition page](https://www.drivendata.org/competitions/306/competition-doe-gems/)), upload the file, enter the name and note, and submit. The owner reported the portal error "Predicted values must be in range [0, 1]" for an earlier upload; which container caused it is **not verified**. This file writes 0.0 outside the footprint, so every pixel is finite and inside [0, 1]; the organiser's page says "null or nan" outside the bounds (IR-H85-004).
@@ -30,7 +30,7 @@ must beat the repository's holdout bar (0.189200, H82) before any slot decision,
 
 ---
 
-## What this round measured — H92/H93, the co-training lane (both strict negatives)
+## What this round measured — H97/H98, the co-training lane (both strict negatives)
 
 **Negative results are deliverables.** The two experiments below close the brief's co-training paragraph
 empirically; the required unique GeoTIFF was still built, gated and published (verdict: download yes,
@@ -41,7 +41,7 @@ Instrument `gems52-pooled-hide-v1`: the repository's shared hide-and-recover fol
 9,400 dots per fold per arm at ≥3 px spacing, 1,000-draw paired bootstrap. Every number is **HOLDOUT-DTI**;
 none is an organiser score.
 
-| arm | H92 (lags 1–3 px) | H93 (lags 4–8 px, long-scale retest) |
+| arm | H97 (lags 1–3 px) | H98 (lags 4–8 px, long-scale retest) |
 |---|---:|---:|
 | **primary `xtex_dis` — A-boundary texture where B abstains** | **0.034799** [0.026938, 0.044011] | **0.034697** [0.026536, 0.043153] |
 | `random` (same placement, control) | 0.080426 [0.070223, 0.090973] | 0.080426 [0.070223, 0.090973] |
@@ -49,41 +49,41 @@ none is an organiser score.
 | `A` (View A alone) | 0.081910 [0.069143, 0.095862] | 0.074913 |
 | `B` (View B alone) | 0.164883 [0.145264, 0.183945] | 0.152616 |
 
-Paired, primary − random: H92 **−0.045627** [−0.054106, −0.037194]; H93 **−0.045728** [−0.052841, −0.038856].
+Paired, primary − random: H97 **−0.045627** [−0.054106, −0.037194]; H98 **−0.045728** [−0.052841, −0.038856].
 Both CIs lie entirely below zero → **NEGATIVE**. The `random` control reproduces the committed H82/H85 receipt.
-After the feature store was healed (IR-H92-001), the H92 fit and holdout re-ran and reproduced **every number
+After the feature store was healed (IR-H97-001), the H97 fit and holdout re-ran and reproduced **every number
 bit-identically**, so the receipts demonstrably came from valid bytes.
 
 | what the brief asked to test | result |
 |---|---|
-| View independence (AUC-error correlation, spatial-block OOF) | **PASS** — max \|ρ\| 0.4510 (H92) / 0.4455 (H93), against the brief's 0.90 and the repo's 0.60 |
-| View A sufficiency | **FAIL** — held-out AUC 0.5317 (H92) / 0.5284 (H93): the 9th and 10th consecutive View-A failure. This is why the primary loses |
+| View independence (AUC-error correlation, spatial-block OOF) | **PASS** — max \|ρ\| 0.4510 (H97) / 0.4455 (H98), against the brief's 0.90 and the repo's 0.60 |
+| View A sufficiency | **FAIL** — held-out AUC 0.5317 (H97) / 0.5284 (H98): the 9th and 10th consecutive View-A failure. This is why the primary loses |
 | Leakage canary (single channel alone) | **PASS** — max 0.5977, bar 0.90 |
 | Not merely the union of the two views | **PASS** — 0 of 37,654 dots also in the consensus, 1,758 also in the union, Jaccard vs consensus 0.0, Spearman(field, max(A,B)) −0.00335 |
 | Decoded-pattern uniqueness (146 priors) | **PASS** — not identical to any prior, novel fraction 0.6826, `support_novelty_gate_ok` true |
-| Literal dot-lane rule (brief: >70 % of dots within 3 px of one prior) | **FAILS as written** — one prior, the r13-lattice density probe (206,895 proposals, near-universal coverage), puts 100 % of *any* dot set within 3 px. Excluding probe rasters the maximum is **0.3828**, below the 0.70 bar. The literal rule is **not waived** (IR-H92-002) |
+| Literal dot-lane rule (brief: >70 % of dots within 3 px of one prior) | **FAILS as written** — one prior, the r13-lattice density probe (206,895 proposals, near-universal coverage), puts 100 % of *any* dot set within 3 px. Excluding probe rasters the maximum is **0.3828**, below the 0.70 bar. The literal rule is **not waived** (IR-H97-002) |
 
 ### The file this round built (download yes, submit no)
 
-`submission/gems52-h92-cotrain-atexture-disagreement-20261010T222354Z.tif` — 795,099 bytes, sha256
+`submission/gems52-h97-cotrain-atexture-disagreement-20261010T222354Z.tif` — 795,099 bytes, sha256
 `dbbdc0715d8fac843e45e997267aab141df233b6e482206db7f1279d560a9914`, single-band float32, 3292×3730, EPSG:32611,
 transform and bounds equal to the organiser template, 0 NaN, all values in [0, 1], 37,654 emitted cells at
 ≥3 px spacing with no mass inside the 200 m collar; decoded-pixel unique against 146 comparable priors
 (novel 25,702 px, max Jaccard 0.0131). Canonical alias, ZIP and per-file receipt are in `docs/downloads/` and
 `submission/`. Written by `gems52.grid.write_geotiff_portal_exact`, so the class of upload that produced the
-owner's "Predicted values must be in range [0, 1]" error cannot recur for this file (IR-H92-005).
+owner's "Predicted values must be in range [0, 1]" error cannot recur for this file (IR-H97-005).
 
 Every A-only candidate carries written geological reasoning — 34,187 of the 37,654 dots:
-`docs/downloads/h92-candidate-a-only-reasoning.csv` (15,932,119 bytes, sha256
+`docs/downloads/h97-candidate-a-only-reasoning.csv` (15,932,119 bytes, sha256
 `45d750c4cc42060b4a41b1093229714fdd1ec4dad0460ebb8da5618343015fbe`). Recomputing the production placement from the
-frozen procedure reproduced the shipped dot set with **0 differing pixels** (`evidence/h92_reasoning.json`,
-`scripts/h92_full_reasoning.py`).
+frozen procedure reproduced the shipped dot set with **0 differing pixels** (`evidence/h97_reasoning.json`,
+`scripts/h97_full_reasoning.py`).
 
-Receipts: `evidence/h92_{channels,fit,holdout,build,reasoning,run_card}.json`,
-`evidence/h93_{channels,fit,holdout,run_card}.json`; preregistrations `knowledge/88` + `registry/h92_preregistration.json`
-and `knowledge/89` + `registry/h93_preregistration.json` (both pins verify); results in full: `knowledge/91_h92_h93_results.md`.
-Both rounds were renamed H88→H92 / H89→H93 (identifier-only) when a parallel session merged its own H88/H89 round to
-`main` in PR #94; the substitution is published line-by-line as `evidence/h92_identifier_rename.diff` and logged as IR-H92-008.
+Receipts: `evidence/h97_{channels,fit,holdout,build,reasoning,run_card}.json`,
+`evidence/h98_{channels,fit,holdout,run_card}.json`; preregistrations `knowledge/97` + `registry/h97_preregistration.json`
+and `knowledge/98` + `registry/h98_preregistration.json` (both pins verify); results in full: `knowledge/100_h97_h98_results.md`.
+Both rounds were renamed H88→H97 / H89→H98 (identifier-only) when a parallel session merged its own H88/H89 round to
+`main` in PR #94; the substitution is published line-by-line as `evidence/h97_identifier_rename.diff` and logged as IR-H97-008.
 
 ---
 

@@ -1,7 +1,7 @@
-# 88 · H92 hypotheses, ranked — frozen BEFORE any H92 fit
+# 97 · H97 hypotheses, ranked — frozen BEFORE any H97 fit
 
-Written 2026-10-10 in the H92 session, on branch `arena/f57253db-gemsdoe52` (base commit `bc26fe2`,
-README round H87). This file is hashed into `registry/h92_preregistration.json`; `scripts/run_h92.py`
+Written 2026-10-10 in the H97 session, on branch `arena/f57253db-gemsdoe52` (base commit `bc26fe2`,
+README round H87). This file is hashed into `registry/h97_preregistration.json`; `scripts/run_h97.py`
 refuses to start if either the file or the pin has moved.
 
 Lane: **the brief's co-training paragraph**. View A is potential-field and subsurface; View B is
@@ -35,17 +35,17 @@ bytes already in the stack?"**
 
 | rank | id | layer(s) (band index, tag) | physical signature targeted | why it could catch a fault missing from the USGS/INGENIOUS catalogue | how it differs from everything already in this repo | cost | status |
 |---|---|---|---|---|---|---|---|
-| **1** | **H92-T "texture View A"** | **band 2 `rtp`** (reduced-to-pole magnetics), **band 9 `tmi_vg`** (magnetic vertical gradient), **band 13 `iso_grav_anom`** (isostatic gravity) | directional variogram anisotropy of the *potential field itself*: an elongated, laterally-persistent semivariance maximum at the fault strike, 100–600 m lag | a buried fault is a **correlated** magnetic/gravity boundary over hundreds of metres. Raw amplitude (what H61 fed View A) is dominated by the source body; the **anisotropy of the variogram** isolates the *boundary geometry* instead, which survives under cover | H82's DVA2 never touched a magnetic band, and never used the vertical gradient band 9 at all. This is a **representation change for the failing view**, not a re-tuning of the working one | medium (24 filters/band, reuse `run_h61.setup`) | **VALIDATED IN THIS ROUND — see §4** |
-| 2 | H92-R "radiometric texture in View B" | **band 6 `tc`** (tagged magnetic TC; measured to be radiometric total count by bytes, IR-H85-005) | DVA + gradient texture of the radiometric surface: K/Th/U lineaments | hydrothermal alteration is *linear* along fault-fluid pathways; texture, not amplitude, is what a lineament is | the repo uses band 6 as a **raw channel** (`raw_band_06`) and as external radiometric *gradients*; it has never computed a **directional variogram** on it | low (folded into rank 1's fit) | tested as part of the rank-1 feature block |
-| 3 | H92-S "seismicity lineation texture" | bands 10 `deq_n100a15`, 16 `ieq_n100a15` | DVA of earthquake density — a lineated epicentral trend | faults that are active but unmapped must show a directional seismicity trend | the bands sit in View A as *raw* channels; their texture has never been isolated | low–medium | **not run this round** (budget); named for the next |
-| 4 | H92-B "cover-step texture" | band 15 `depth_to_base_surf` | DVA + oriented step in cover thickness | a buried normal fault offsets the basement surface under a flat top surface | H85-next-B named this but it has no holdout receipt; it is a *step* detector, not a texture | low | **not run this round** (budget) |
-| 5 | H92-A "ASTER/EMIT alteration indices" | external | clay / iron-oxide / silica absorption indices | surface alteration halo around a fault-fed system | **not viable in this sandbox**: the egress allowlist is `github.com`, `codeload.github.com`, `api.github.com`, `registry.npmjs.org`, `pypi.org`, `files.pythonhosted.org` (`knowledge/78` §6). USGS EarthExplorer / NASA Earthdata both require a login and are not reachable | high | **blocked — needs an operator-side download with a SHA pin first** |
+| **1** | **H97-T "texture View A"** | **band 2 `rtp`** (reduced-to-pole magnetics), **band 9 `tmi_vg`** (magnetic vertical gradient), **band 13 `iso_grav_anom`** (isostatic gravity) | directional variogram anisotropy of the *potential field itself*: an elongated, laterally-persistent semivariance maximum at the fault strike, 100–600 m lag | a buried fault is a **correlated** magnetic/gravity boundary over hundreds of metres. Raw amplitude (what H61 fed View A) is dominated by the source body; the **anisotropy of the variogram** isolates the *boundary geometry* instead, which survives under cover | H82's DVA2 never touched a magnetic band, and never used the vertical gradient band 9 at all. This is a **representation change for the failing view**, not a re-tuning of the working one | medium (24 filters/band, reuse `run_h61.setup`) | **VALIDATED IN THIS ROUND — see §4** |
+| 2 | H97-R "radiometric texture in View B" | **band 6 `tc`** (tagged magnetic TC; measured to be radiometric total count by bytes, IR-H85-005) | DVA + gradient texture of the radiometric surface: K/Th/U lineaments | hydrothermal alteration is *linear* along fault-fluid pathways; texture, not amplitude, is what a lineament is | the repo uses band 6 as a **raw channel** (`raw_band_06`) and as external radiometric *gradients*; it has never computed a **directional variogram** on it | low (folded into rank 1's fit) | tested as part of the rank-1 feature block |
+| 3 | H97-S "seismicity lineation texture" | bands 10 `deq_n100a15`, 16 `ieq_n100a15` | DVA of earthquake density — a lineated epicentral trend | faults that are active but unmapped must show a directional seismicity trend | the bands sit in View A as *raw* channels; their texture has never been isolated | low–medium | **not run this round** (budget); named for the next |
+| 4 | H97-B "cover-step texture" | band 15 `depth_to_base_surf` | DVA + oriented step in cover thickness | a buried normal fault offsets the basement surface under a flat top surface | H85-next-B named this but it has no holdout receipt; it is a *step* detector, not a texture | low | **not run this round** (budget) |
+| 5 | H97-A "ASTER/EMIT alteration indices" | external | clay / iron-oxide / silica absorption indices | surface alteration halo around a fault-fed system | **not viable in this sandbox**: the egress allowlist is `github.com`, `codeload.github.com`, `api.github.com`, `registry.npmjs.org`, `pypi.org`, `files.pythonhosted.org` (`knowledge/78` §6). USGS EarthExplorer / NASA Earthdata both require a login and are not reachable | high | **blocked — needs an operator-side download with a SHA pin first** |
 
 Ranking is by (prior plausibility for a *catalogue-missing* fault) × (bytes already on disk) ÷ (cost).
 **No expected-DTI number is given for any row**: nothing below has a validated estimate, and a
 projection is never written as a score (`AGENTS.md`).
 
-## 3 · Frozen H92 protocol (written before the first fit)
+## 3 · Frozen H97 protocol (written before the first fit)
 
 * **Primary arm `xtex_dis`**: `pct_rank(P_A) − pct_rank(P_B)` inside the allowed set, where `P_A` is
   the out-of-fold View-A *texture* learner and `P_B` the View-B texture learner. This is the brief's
@@ -72,6 +72,6 @@ projection is never written as a score (`AGENTS.md`).
 
 ## 4 · Result
 
-Filled in after the run; see `evidence/h92_holdout.json` and `evidence/h92_run_card.json`.
+Filled in after the run; see `evidence/h97_holdout.json` and `evidence/h97_run_card.json`.
 The **verdict and every number are in those receipts**, not here. This section is deliberately not
 written before the fit.

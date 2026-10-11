@@ -1,8 +1,8 @@
 {
- "round": "H93",
+ "round": "H98",
  "experiment": "2 of 3",
  "evidence_class": "HOLDOUT-DTI",
- "hypothesis": "The H92 failure is a scale problem: the same disagreement arm at 400-800 m lags (lags_px [4,6,8]) with View A extended to bands 2/9/11/13/15/17 should recover a buried-fault signal",
+ "hypothesis": "The H97 failure is a scale problem: the same disagreement arm at 400-800 m lags (lags_px [4,6,8]) with View A extended to bands 2/9/11/13/15/17 should recover a buried-fault signal",
  "mechanism": "a deep, covered boundary should have its semivariance anisotropy maximum at long lags",
  "named_non_fault_mimic": "basin-scale lithologic boundaries and regional gridding seams produce long-lag anisotropy",
  "view_a": {
@@ -28,7 +28,7 @@
    "6": "tc (radiometric total count by bytes)"
   }
  },
- "decision_rule": "H93-L supported only if the primary's paired difference against random has a 95% CI with lower bound > 0",
+ "decision_rule": "H98-L supported only if the primary's paired difference against random has a 95% CI with lower bound > 0",
  "holdout": {
   "instrument": "gems52-pooled-hide-v1",
   "withheld_positive_px": 53186,
@@ -109,23 +109,34 @@
    0.6864144627490116
   ],
   "view_A_mean": 0.5284,
-  "verdict": "FAIL \u2014 indistinguishable from H92 at short lags; scale explanation closed"
+  "verdict": "FAIL \u2014 indistinguishable from H97 at short lags; scale explanation closed"
  },
  "leakage_canary": {
   "max_channel_AUC": 0.595,
   "bar": 0.9
  },
  "registry": {
-  "note": "no artifact built for H93: the preregistered primary is a strict negative"
+  "note": "no artifact built for H98: the preregistered primary is a strict negative"
  },
  "raster": null,
- "verdict": "NEGATIVE \u2014 H93-L NOT supported",
+ "verdict": "NEGATIVE \u2014 H98-L NOT supported",
  "verdict_reason": "paired primary-minus-random CI lower bound -0.052841 < 0; primary below the random floor",
  "closes": "the 'wrong scale' explanation for the co-training lane's View-A failure",
  "receipts": [
-  "evidence/h93_fit.json",
-  "evidence/h93_holdout.json",
-  "knowledge/91_h92_h93_results.md"
+  "evidence/h98_fit.json",
+  "evidence/h98_holdout.json",
+  "knowledge/100_h97_h98_results.md"
  ],
- "generated_utc": "2026-10-10"
+ "generated_utc": "2026-10-10",
+ "identifier_history": {
+  "frozen_as": "H88 (texture co-training) / H89 (long-lag follow-up)",
+  "renamed_to": [
+   "H92/H93 (main merged its own H88/H89 round, PR #94)",
+   "H97/H98 (main then used H92-H96)"
+  ],
+  "mechanical": true,
+  "evidence": "evidence/h97_identifier_rename.diff",
+  "irregularity": "IR-H97-008",
+  "artifact_bytes_changed": false
+ }
 }
