@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GEMSDOE52 — current status (H96): download yes, submit NO</title>
+<title>GEMSDOE52 — current status (H97): no TIFF, download NO, submit NO</title>
 <style>
 :root{--bg:#0f1117;--fg:#e8eaed;--accent:#4fc3f7;--ok:#66bb6a;--warn:#ffa726;--err:#ef5350;--card:#1a1d27;--border:#2d3040}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -31,14 +31,16 @@ th{color:var(--accent)}
 </style>
 </head>
 <body>
+<!--H97-CARD-->
+<style>.h97card{border:2px solid #a32121;border-radius:12px;padding:16px 18px;margin:16px 0;background:#fff1f0;color:#17202a;font:15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}.h97card h2{margin:0 0 8px;font-size:19px;color:#8e1b1b}.h97card a{color:#174b75;font-weight:700}.h97card code{background:#f7dddd;padding:1px 4px;border-radius:3px;font-size:12.5px;word-break:break-all}</style><div class="h97card"><h2>Current round H97-A — NEGATIVE; no TIFF written</h2><p><b>OK TO DOWNLOAD: NO</b> (there is no H97 competition GeoTIFF). <b>OK TO SUBMIT: NO — DO NOT UPLOAD.</b> The matched HOLDOUT-DTI is 0.186265 [95% CI 0.164806, 0.207537] against the same-run H84 <code>B_DVA2</code> control at 0.192831 [0.170791, 0.213696], using <code>gems52-pooled-hide-v1</code> and 53,186 withheld positives. The final-dot lane returned <b>DUPLICATE/STOP</b> (max 100% within 3 px); the registered stop was not bypassed. Surface-before-placement passed. No organizer score, slot selection, or slot use.</p><p><a href="h97.html">Full H97 result and limits</a> · <a href="../evidence/h97_run_card.json">run card</a> · <a href="../evidence/h97_holdout.json">HOLDOUT-DTI receipt</a> · <a href="../knowledge/97_hypotheses_H97_preregistered.md">frozen preregistration</a> · <a href="../knowledge/98_h97_results_and_limits.md">results and limits</a></p><p><small>View-A sufficiency failed (mean OOF AUC 0.5101; minimum fold 0.4447), so no pseudo-label exchange was used. Candidate placement exactly equalled single View B; the separate registered not-the-union check passed. No A-only reasoning rows and no candidate TIFF.</small></p></div>
+<!--/H97-CARD-->
 <!--H95-CARD-->
-<style>.h95card{border:2px solid #1f4e79;border-radius:12px;padding:16px 18px;margin:16px 0;background:#f3f7fc;color:#14181d;font:15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}.h95card h2{margin:0 0 8px;font-size:19px;color:#1f4e79}.h95card a{color:#1f4e79;font-weight:700}.h95card code{background:#e8eef4;padding:1px 4px;border-radius:3px;font-size:12.5px;word-break:break-all}</style><div class="h95card"><h2>Latest round H95 — co-trained View B (A→B whole-segment pseudo-labels)</h2><p><b>OK TO DOWNLOAD: YES</b> (format-valid, all-finite, values exactly {0,1}, 37,654 cells). <b>OK TO SUBMIT: NO — research-only, do not upload.</b> Failed gate(s): holdout_promotion, lane_dots_policy. The co-trained field scored 0.1724 on HOLDOUT-DTI, below the promotable best 0.190147 (paired vs single_B CI spans 0). Its dots are also a lane near-duplicate of the parallel H93 file (IR-H95-006). No weekly slot is approved; slots used: 0.</p><p><a href="downloads/h95-candidate.tif" download>Download h95-candidate.tif</a> · <a href="downloads/h95-candidate.zip" download>ZIP</a> · <a href="h95-executive-summary.html">how to submit</a> · <a href="h95.html">full result</a></p><p><small><code>gems52-h95-cotrainB-segthin-37654px-20261010T223522Z-2c3942b4-zeros.tif</code> · SHA-256 <code>28ee81370c9ce1bfb914cc93</code> · HOLDOUT-DTI (gems52-pooled-hide-v1, 53,186 withheld positives): cotrain_B 0.172401 vs single_B 0.174571; first holdout of H87's rule 0.063316 (random 0.079238). A holdout number is not a board score.</small></p></div>
+<style>.h95card{border:2px solid #1f4e79;border-radius:12px;padding:16px 18px;margin:16px 0;background:#f3f7fc;color:#14181d;font:15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}.h95card h2{margin:0 0 8px;font-size:19px;color:#1f4e79}.h95card a{color:#1f4e79;font-weight:700}.h95card code{background:#e8eef4;padding:1px 4px;border-radius:3px;font-size:12.5px;word-break:break-all}</style><div class="h95card"><h2>Archived round H95 — co-trained View B (A→B whole-segment pseudo-labels)</h2><p><b>OK TO DOWNLOAD: YES</b> (format-valid, all-finite, values exactly {0,1}, 37,654 cells). <b>OK TO SUBMIT: NO — research-only, do not upload.</b> Failed gate(s): holdout_promotion, lane_dots_policy. The co-trained field scored 0.1724 on HOLDOUT-DTI, below the promotable best 0.190147 (paired vs single_B CI spans 0). Its dots are also a lane near-duplicate of the parallel H93 file (IR-H95-006). No weekly slot is approved; slots used: 0.</p><p><a href="downloads/h95-candidate.tif" download>Download h95-candidate.tif</a> · <a href="downloads/h95-candidate.zip" download>ZIP</a> · <a href="h95-executive-summary.html">how to submit</a> · <a href="h95.html">full result</a></p><p><small><code>gems52-h95-cotrainB-segthin-37654px-20261010T223522Z-2c3942b4-zeros.tif</code> · SHA-256 <code>28ee81370c9ce1bfb914cc93</code> · HOLDOUT-DTI (gems52-pooled-hide-v1, 53,186 withheld positives): cotrain_B 0.172401 vs single_B 0.174571; first holdout of H87's rule 0.063316 (random 0.079238). A holdout number is not a board score.</small></p></div>
 <!--/H95-CARD-->
 <!--H87BI-CARD-->
 <section class="hero" style="margin-top:22px"><div>
-<div class="eyebrow">DOE GEMS #306 / H87 board-score inversion &middot; a DIFFERENT round from the
-H87 co-train-wavelength card above &middot; 2026-10-10</div>
-<h2 style="margin:.3rem 0">H87 board inversion &mdash; download yes, submit no</h2>
+<div class="eyebrow">DOE GEMS #306 / H87 board-score inversion &middot; archived, separate analysis &middot; 2026-10-10</div>
+<h2 style="margin:.3rem 0">Archived H87 board inversion &mdash; download yes, submit no</h2>
 <p>Thirteen owner-reported public-board scores were inverted through the metric&rsquo;s exact linear
 form for the hidden truth density: <b>|G| = 14,333.8</b> truth pixels (a third
 independent pin), leave-one-out score MAE 0.02007, Spearman 0.9436.
@@ -68,28 +70,17 @@ Slots used 0. Nothing ORGANIZER-CONFIRMED.</p>
 <div class="container">
 
 <h1>GEMSDOE52 · current status</h1>
-<p class="muted">DOE GEMS Prize (DrivenData #306) · last updated 2026-10-10 · branches
-<code>arena/90369109-gemsdoe52</code> (H96) and <code>arena/411239c1-gemsdoe52</code> (H94)</p>
+<p class="muted">DOE GEMS Prize (DrivenData #306) · last updated 2026-10-11 · active session branch
+<code>arena/d1a45c4e-gemsdoe52</code> (H97); earlier rounds are archived below.</p>
 
 <div class="verdict">
-  <div class="big">H96 (2026-10-10) — OK to download? YES, for audit only. &nbsp; OK to submit: <span class="tag-no">NO</span>.</div>
-  <p><strong>NO CERTIFIED LEADERBOARD GAIN.</strong> No organiser score exists for H96, and its
-  HOLDOUT-DTI is below random and far below the promotion bar.</p>
-  <p>The current candidate file is <strong>not slot-approved</strong>. <strong>DO NOT SUBMIT. Do not upload it.</strong>
-  Slots used: 0.</p>
-  <p><strong>What H96 tested.</strong> Bidirectional co-training disagreement (Blum &amp; Mitchell 1998):
-  View A = gravity/magnetics/strain/seismicity/cover/conductivity; View B = DEM curvature+slope+radiometrics;
-  A-only disagreement boosted as buried-fault candidates, B-only cells vetoed as surface artifacts.
-  HOLDOUT-DTI 0.0725 [0.0581, 0.0872] vs random 0.0766 and bar 0.1928 (H82). Verdict <strong>negative</strong>.</p>
-  <p>Downloads (research-only): <a href="downloads/gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif">.tif</a> ·
-  <a href="downloads/gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.zip">.zip</a> ·
-  <a href="downloads/h96-candidate.tif">downloads/h96-candidate.tif</a> ·
-  <a href="downloads/gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros-a-only-reasoning.csv">A-only reasoning CSV</a> ·
-  <a href="downloads/gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.json">gate receipt</a></p>
-  <p>Submission name: <strong>h96-bidir-cotrain-coverstep-25400px</strong> · note:
-  <code>H96 bidir co-train A/B disagreement, cover-step ViewA, 25400px mass lever, 3px, 200m collar; HOLDOUT-DTI below bar, research candidate</code></p>
-  <p class="muted" style="margin-top:8px">Details: <a href="h96.html">H96 page</a> ·
-  <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/96_h96_results_and_limits.md">knowledge/96 · H96 results and limits</a></p>
+  <div class="big">Archived H96 (2026-10-10) — OK to download? YES, for audit only. &nbsp; OK to submit: <span class="tag-no">NO</span>.</div>
+  <p><strong>NO CERTIFIED LEADERBOARD GAIN.</strong> No organiser score exists for H96; its HOLDOUT-DTI is below random and far below the promotion bar.</p>
+  <p>The H96 file is <strong>not slot-approved</strong>. <strong>DO NOT SUBMIT. Do not upload it.</strong> Slots used: 0.</p>
+  <p><strong>What H96 tested.</strong> Bidirectional co-training disagreement (Blum &amp; Mitchell 1998): View A = gravity/magnetics/strain/seismicity/cover/conductivity; View B = DEM curvature+slope+radiometrics; A-only disagreement boosted as buried-fault candidates, B-only cells vetoed as surface artifacts. HOLDOUT-DTI 0.0725 [0.0581, 0.0872] vs random 0.0766 and bar 0.1928 (H82). Verdict <strong>negative</strong>.</p>
+  <p>Audit downloads: <a href="downloads/gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif">.tif</a> · <a href="downloads/gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.zip">.zip</a> · <a href="downloads/h96-candidate.tif">h96 candidate</a> · <a href="downloads/gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros-a-only-reasoning.csv">A-only reasoning CSV</a> · <a href="downloads/gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.json">gate receipt</a></p>
+  <p>Submission name: <strong>h96-bidir-cotrain-coverstep-25400px</strong> · note: <code>H96 bidir co-train A/B disagreement, cover-step ViewA, 25400px mass lever, 3px, 200m collar; HOLDOUT-DTI below bar, research candidate</code></p>
+  <p class="muted" style="margin-top:8px">Details: <a href="h96.html">H96 page</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/main/knowledge/96_h96_results_and_limits.md">knowledge/96 · H96 results and limits</a></p>
 </div>
 
 <div class="verdict">
@@ -128,6 +119,7 @@ Slots used 0. Nothing ORGANIZER-CONFIRMED.</p>
 <tr><td><a href="archive-h87-executive-summary.html">H87 executive summary (archived)</a></td><td>Its submission guide, kept for audit.</td><td><span class="tag-no">DO NOT SUBMIT</span></td></tr>
 <tr><td><a href="h57.html">H57 alternate</a> · <code>gems57-h57-credit-core25517-plus-novel8000-33517px-zeros.tif</code></td><td>Abandoned research alternate (refuted co-training arm disclosed). Do not upload.</td><td><span class="tag-no">do not upload</span>, not approved (IR-57-107)</td></tr>
 <tr><td><a href="h55-edge.html">H55-EDGE archive</a></td><td>Failed-gate archive, separate from the H55 candidate. Do not upload.</td><td>do not upload</td></tr>
+<tr><td><a href="h97.html">H97-A page</a> · <a href="../knowledge/98_h97_results_and_limits.md">results and limits</a></td><td>Magnetic tilt-depth A-only disagreement with strict surface B; matched H82/H84 mask; final-dot lane stopped the run.</td><td>NEGATIVE; no TIFF; download NO, submit NO</td></tr>
 <tr><td><a href="h96.html">H96 page</a></td><td>Bidirectional co-training disagreement (buried-boost/artifact-veto), cover-step View A.</td><td>NEGATIVE; download yes (audit), submit NO</td></tr>
 <tr><td><a href="h94.html">H94 page</a></td><td>Protocol, holdout, lane check, run card, irregularities.</td><td>NEGATIVE; download yes (audit), submit NO</td></tr>
 <tr><td><a href="feed.html">Feed</a></td><td>Scheduled leaderboard observation (local feed).</td><td>see page</td></tr>
@@ -135,8 +127,10 @@ Slots used 0. Nothing ORGANIZER-CONFIRMED.</p>
 
 <h2>Official links</h2>
 <ul style="margin-left:20px">
-<li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DrivenData competition #306, DOE GEMS (Data and Leaderboard)</a> · <span class="muted">not fetched from this sandbox (egress returns HTTP 000); the link comes from the brief</span></li>
-<li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">DrivenData submissions page</a> · <span class="muted">not fetched from this sandbox</span></li>
+<li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DrivenData competition #306, DOE GEMS</a> · official challenge page</li>
+<li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Official metric and submission-format details</a></li>
+<li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">Official public leaderboard</a> · team-level and volatile; does not identify an uploaded filename</li>
+<li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">DrivenData submissions page</a></li>
 </ul>
 
 <h2>Repository</h2>
@@ -149,7 +143,7 @@ Slots used 0. Nothing ORGANIZER-CONFIRMED.</p>
 </ul>
 
 <div class="footer">
-Every number on this page is a HOLDOUT-DTI value from the repository evaluator <code>gems52-pooled-hide-v1</code>, unless marked ORGANIZER-CONFIRMED. No organiser-confirmed score exists for H94. A projection is never shown as a score.
+Every H97 value on this page is HOLDOUT-DTI from the repository evaluator <code>gems52-pooled-hide-v1</code> unless explicitly marked otherwise; no ORGANIZER-CONFIRMED H97 score exists. H33-2-B2's owner-page 0.2747 is a projection, not a score, and its file-to-board attribution remains unresolved; see <a href="../knowledge/98_h97_results_and_limits.md">H97 provenance notes</a>.
 </div>
 </div>
 </body>

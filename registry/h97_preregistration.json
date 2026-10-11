@@ -1,0 +1,141 @@
+{
+  "round": "H97",
+  "preregistered_utc": "2026-10-11T00:25:00Z",
+  "frozen_before_any_fit": true,
+  "hypothesis_document": "knowledge/97_hypotheses_H97_preregistered.md",
+  "hypothesis_sha256": "47f8ce6e87913ae6e67a304a16ece786f941a8d5f8cd3a6962258e7b405cdee0",
+  "hypothesis_bytes": 13933,
+  "lane": "single co-training/disagreement lane: magnetic tilt-depth proxy in View A; strictly surface DVA2/HVA and radiometrics in View B; bounded A-only disagreement boost",
+  "ranked_hypotheses": [
+    "H97-A: magnetic tilt-depth A-only disagreement with H84 surface-only anisotropy B (selected primary; no experiment at preregistration)",
+    "H97-B: gravity upward continuation / second vertical derivative with strict surface B (deferred)",
+    "H97-C: Werner magnetic contact depth-and-dip continuity with strict surface B (deferred)",
+    "H97-D: H96 cover/strain/seismic A-only disagreement grafted onto H84 strict surface B (deferred)"
+  ],
+  "primary_hypothesis": "H97-A",
+  "primary_arm": "h97_aligned_disagreement",
+  "view_A": {
+    "base_features": "FeatureStore.view_A_with_external from the shared cache",
+    "new_features": [
+      "tilt_depth_proxy_m: half nearest-contour distance sum for +45/-45 degree TDR levels, times 100 m, capped at 5000 m",
+      "tilt_zero_proximity: exp(-abs(TDR)/(pi/4))"
+    ],
+    "source_bands": {
+      "3": "tmi_hg",
+      "9": "tmi_vg"
+    },
+    "formula": "TDR=atan2(band9, abs(band3)+0.01*median(abs(band3)[eligible])); pos45=eligible & (theta>=pi/4); neg45=eligible & (theta<=-pi/4); depth_proxy=min(0.5*(EDT(~pos45)+EDT(~neg45))*100,5000), set to 0 outside eligible & |theta|<=pi/4"
+  },
+  "view_B": {
+    "base_features": "FeatureStore.view_B_with_external from the shared cache",
+    "channel_features": "H84 DVA2/HVA/COH channels for bands 12 det_elev and 19 det_elev_slope only",
+    "prohibited_channels": "No gravity/depth/geophysical H84 channels in View B"
+  },
+  "historical_control": {
+    "name": "h84_B_DVA2",
+    "receipt": "evidence/h84_holdout.json",
+    "holdout_dti": 0.19282907051926573,
+    "ci95": [
+      0.17078978437309403,
+      0.2136913963893321
+    ],
+    "evaluator": "gems52-pooled-hide-v1",
+    "withheld_positive_pixels": 53186,
+    "note": "H84 B_DVA2 is a mixed-view-by-content comparator (its DVA2 channel bank includes bands 13/15/18); H97's trained A/B views are strictly disjoint. Refit this control on the H97 mask and report drift; do not present the historic value as an organizer score."
+  },
+  "mask": {
+    "feature_store": "work/r2/features",
+    "expected_eligible_pixels": 4593171,
+    "fold_splitter": "gems52.spatial.folds label-blind-quadrants-v2",
+    "buffer_px": 80,
+    "expected_withheld_positive_pixels": 53186,
+    "fold_truth_pixels": [
+      27309,
+      10677,
+      6813,
+      8387
+    ],
+    "mismatch_action": "STOP before supervised fit; no cross-mask comparator"
+  },
+  "thresholds": {
+    "canary_auc_alarm": 0.9,
+    "view_A_sufficiency_mean_oof_auc_min": 0.6,
+    "view_A_sufficiency_min_fold_oof_auc": 0.55,
+    "independence_max_abs_rho": 0.6,
+    "independence_block_side_px": 50,
+    "independence_min_blocks": 20,
+    "negative_label_collar_px": 4,
+    "donor_percentile": 0.95,
+    "receiver_percentile_interval": [
+      0.35,
+      0.65
+    ],
+    "pseudo_segment_block_side_px": 50,
+    "pseudo_segment_min_pixels": 5,
+    "pseudo_segment_cap_per_fold": 2000,
+    "pseudo_min_pixels_per_direction": 200,
+    "emission_budget_per_fold": 9400,
+    "min_spacing_px": 3.0,
+    "catalogue_collar_m": 200.0,
+    "lane_rank_correlation_stop": 0.9,
+    "lane_near_3px_fraction_stop": 0.7,
+    "bootstrap_draws": 1000,
+    "bootstrap_block_side_px": 200,
+    "seed": 61052
+  },
+  "pseudo_label_policy": {
+    "training_exchange": "conditional on clean canary, measured independence below 0.60, and View-A sufficiency thresholds",
+    "reason": "No exchange if any gate fails; prior N-1 refutes plain exchange on two instruments and H91/H96 document repeated View-A sufficiency failures. If permitted, use shared whole_pseudo_segments with registered 50x50 blocks, 5-pixel minimum, 2000-pixel cap, visible-catalogue exclusion, and the 80-pixel holdout buffer; hidden-region labels never enter selection or training.",
+    "shared_helper": "gems52.spatial.whole_pseudo_segments",
+    "post_exchange_seed": "61052+1000+fold",
+    "minimum_accepted_pixels_per_direction": 200
+  },
+  "candidate_formula": "score = 0.80*rB + 0.20*((rA-0.95)/0.05) if rA>=0.95 and 0.35<=rB<=0.65; otherwise 0.80*rB. rA/rB are percentile ranks over each fold's allowed region, not labels.",
+  "holdout": {
+    "evaluator": "gems52-pooled-hide-v1",
+    "alpha": 0.2,
+    "beta": 0.8,
+    "triangular_kernel_m": 300,
+    "withheld_positive_pixels": 53186,
+    "per_fold_budget": 9400,
+    "placement": "gems52.nodes.spacing_select, min_spacing_px=3.0",
+    "bootstrap": "paired physical-block percentile; 1000 draws; block_side=200; seed=61052",
+    "promotion_bar": "refit H84 B_DVA2 on the exact H97 mask; candidate paired 95% CI lower bound must exceed zero versus that same-run control and pooled candidate DTI must exceed 0.19282907051926573; no slot selection is made"
+  },
+  "lane_gate": {
+    "surface_before_placement": true,
+    "final_dots": true,
+    "full_registry": "evidence/ctd5_prior_inventory.json plus submission/, docs/downloads/, data/scored/, data/reference/",
+    "surface_stop": "any prior Spearman rank correlation >0.90",
+    "dot_stop": "any single prior with >70% of emitted dots within 3 pixels",
+    "stop_on_duplicate": true
+  },
+  "leakage_canary_features": "every cached feature used by H97 plus both tilt-depth features and all H84 channels used in either strict View B or incumbent control; direction-insensitive single-feature AUC on the held-out fold region",
+  "budget": {
+    "max_experiments": 3,
+    "max_hours": 2,
+    "this_round_experiments": 1,
+    "submission_slots_allowed": 0
+  },
+  "trusted_source": {
+    "geodawn_official": "https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and",
+    "geodawn_doi": "10.5066/P93LGLVQ",
+    "tilt_depth_method": "https://doi.org/10.1190/1.2821934",
+    "metric": "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/",
+    "leaderboard_snapshot_utc": "2026-10-11"
+  },
+  "provenance": "inputs integrity-pinned to registry/data_manifest.json; not organizer-authenticated. USGS GeoDAWN external layers were restored from the owner mirror and SHA-verified, not freshly fetched from USGS.",
+  "expected_channel_counts": {
+    "H84_DVA2_control": 50,
+    "H97_strict_surface_DVA2_HVA_COH": 32
+  },
+  "frozen_prior_inventory": {
+    "path": "evidence/ctd5_prior_inventory.json",
+    "sha256": "d8b4b7e15482636cefd52efa1085745ae2cead6562f095532beba7a12c98a7c1",
+    "bytes": 466963,
+    "blob_entries": 526,
+    "eligible_aligned_rasters": 524,
+    "source_repositories": 50,
+    "required_before_lane_check": true
+  }
+}

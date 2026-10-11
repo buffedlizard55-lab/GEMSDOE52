@@ -1,0 +1,30 @@
+{
+  "stage": "tilt_depth",
+  "generated_utc": "2026-10-11T02:39:43+00:00",
+  "source_features": [
+    "raw_band_03",
+    "raw_band_09"
+  ],
+  "source_sha256": {
+    "raw_band_03": "4b88330032272588b83be44b202c82b7622b7b8eee2d85079dfa914f9a44001e",
+    "raw_band_09": "dee275877ebc346409097744338db7f455ace1d094781ac4ccc8d5fc0df42d6c"
+  },
+  "formula": "theta=atan2(band9,abs(band3)+0.01*median(abs(band3)[eligible])); depth_proxy=0.5*(distance_to_+45+distance_to_-45)*100m, capped at 5000m and set 0 outside |theta|<=45deg; proximity=exp(-abs(theta)/(pi/4))",
+  "epsilon": 0.1322348976135254,
+  "median_horizontal_gradient": 13.223489761352539,
+  "positive_45_cells": 5,
+  "negative_45_cells": 5,
+  "central_band_cells": 4593161,
+  "depth_proxy_m": {
+    "p50": 5000.0,
+    "p95": 5000.0,
+    "p99": 5000.0,
+    "max": 5000.0
+  },
+  "theta_range_rad": [
+    -0.956856369972229,
+    1.2366706132888794
+  ],
+  "contour_support_note": "The raster contains 5 +45-degree and 5 -45-degree threshold cells; these counts are disclosed, not treated as connected contours.",
+  "caveat": "A nearest-contour raster proxy, not a connected contour pairing or validated source-depth inversion."
+}

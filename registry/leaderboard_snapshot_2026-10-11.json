@@ -1,0 +1,41 @@
+{
+  "status": "one-off live public leaderboard observation; selected rows only, not a full-board archive",
+  "observed_date_utc": "2026-10-11",
+  "observed_at_utc": "2026-10-11T02:16:16Z",
+  "source": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
+  "retrieved_by": "Arena page-fetch tool, unauthenticated public leaderboard HTML",
+  "column_header_on_board": "Best public DW-Tversky (in descending order)",
+  "score_class": "PUBLIC-BOARD (organizer-published, team-level). NOT ORGANIZER-CONFIRMED for any filename, hash, or upload receipt.",
+  "rows_captured": 3,
+  "rows_not_captured": "All other ranks; this file intentionally records only the three rows relevant to the current project brief.",
+  "rows": [
+    {
+      "rank": 1,
+      "team": "xiaofanhu",
+      "score": 0.4133,
+      "submissions": 16
+    },
+    {
+      "rank": 8,
+      "team": "DARD",
+      "score": 0.3195,
+      "submissions": 18
+    },
+    {
+      "rank": 23,
+      "team": "extradr19",
+      "score": 0.2778,
+      "submissions": 15
+    }
+  ],
+  "changes_vs_archived_2026-10-10": [
+    "#1 xiaofanhu increased from 0.3774 to 0.4133",
+    "DARD remains #8 at 0.3195",
+    "extradr19 remains at 0.2778 and is now #23 (was #22 in the archived 2026-10-10 snapshot)"
+  ],
+  "provenance_flags": [
+    "The previously archived 2026-10-10 snapshot and the prior 2026-10-11 observation supplied to this session showed #1 at 0.3774 and #8 at 0.3195; the live page changed during the 2026-10-11 review window, so date/time must accompany leaderboard references.",
+    "The page identifies teams and scores, not filenames or hashes. The association between H33-2-B2 and the extradr19 0.2778 row remains unresolved.",
+    "The GEMSDOE32 owner project page reports a 0.2747 projection for H33-2-B2 and explicitly says no organizer score exists; that projection is not a score."
+  ]
+}

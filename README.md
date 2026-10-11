@@ -1,5 +1,25 @@
+<!--H97-CURRENT-->
+# Current status — H97-A (2026-10-11): NEGATIVE · no TIFF · download NO · submit NO
+
+> **OK TO DOWNLOAD: NO.** No H97 competition GeoTIFF was written; there is no TIFF to download. **OK TO SUBMIT: NO — DO NOT UPLOAD.** The registered final-dot uniqueness gate returned `DUPLICATE/STOP`, and the holdout promotion gate failed. Neither stop was waived. No slot was selected or spent.
+>
+> H97-A was the only proposal run this round. The matched holdout used `gems52-pooled-hide-v1` with **53,186 withheld positives**. H97-A HOLDOUT-DTI = **0.186265 [95% CI 0.164806, 0.207537]**, below the same-mask H84 `B_DVA2` refit control at **0.192831 [0.170791, 0.213696]**. Paired candidate-minus-control = **−0.006566 [−0.015104, +0.000271]**. These are project-evaluated holdout results, not organizer scores.
+>
+> Leakage canary PASS (157 features; max direction-insensitive AUC 0.6708). View-A sufficiency FAIL (mean OOF AUC 0.5101; minimum fold 0.4447), so **no pseudo-label exchange** was used even though negative-error proxy correlation was weak (max |ρ| 0.09666). The depth proxy saturated at 5,000 m; only five +45° and five −45° threshold cells were present.
+>
+> Surface-before-placement PASS (max Spearman 0.4725 across 703 full-registry raster paths). Final dots **DUPLICATE/STOP**: 100% lie within 3 px of a registered prior; the informative-prior diagnostic also fails at 92.29%. The audit placement exactly equals strict single View B, so no incremental A-only placement contribution is demonstrated. The registered candidate-vs-union check passes; the separate single-view identity is disclosed. No H97 TIFF or A-only reasoning rows exist.
+
+**Evidence:** [full result and limits](knowledge/98_h97_results_and_limits.md) · [frozen hypotheses/protocol](knowledge/97_hypotheses_H97_preregistered.md) · [three-pass review](knowledge/99_h97_three_pass_review.md) · [JSON run card](evidence/h97_run_card.json) · [HOLDOUT-DTI receipt](evidence/h97_holdout.json) · [no-artifact write receipt](evidence/h97_write.json) · [site page](docs/h97.html)
+
+**Board / attribution caveat.** **ORGANIZER-CONFIRMED: none for H97 or H33-2-B2.** The archived 2026-10-10 and earlier 2026-10-11 observations had #1 at 0.3774 and #8 at 0.3195; the later 2026-10-11 live reread moved #1 to 0.4133 while #8 remained 0.3195. The 0.2778 row is team-level `extradr19` and cannot be attributed to H33-2-B2 from the board. The H33 project page's 0.2747 is a projection, not an organizer score; attribution remains unresolved. See [official-board snapshots](registry/leaderboard_snapshot_2026-10-10.json) and [latest selected-row observation](registry/leaderboard_snapshot_2026-10-11.json).
+
+The feed-owned `docs/data/submission.json` remains the prior H96 research-only pointer (`approved_for_weekly_slot=false`; slots used 0); it is not an H97 dispatch or approval. It was not rewritten because H97 produced no artifact.
+
+Official references: [DrivenData metric/format](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/) · [USGS GeoDAWN](https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and) · [Salem et al. tilt-depth DOI](https://doi.org/10.1190/1.2821934) · [Blum & Mitchell co-training DOI](https://doi.org/10.1145/279943.279962).
+<!--/H97-CURRENT-->
+
 <!--H95-README-->
-# Current status — H95 (2026-10-10): co-trained View B · first holdout of H87 · NEGATIVE
+# Archived status — H95 (2026-10-10): co-trained View B · first holdout of H87 · NEGATIVE
 
 > **OK TO DOWNLOAD: YES** — format-valid single-band float32 GeoTIFF, EPSG:32611, 3730×3292, all-finite, values exactly {0,1} (the portal's *"Predicted values must be in range [0, 1]"* rejection cannot occur).
 >

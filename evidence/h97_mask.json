@@ -1,0 +1,39 @@
+{
+  "stage": "mask",
+  "generated_utc": "2026-10-11T02:39:40+00:00",
+  "feature_store": "/home/user/GEMSDOE52/work/r2/features",
+  "feature_store_version": "structural-core-v2-band6-B+external-geodawn-v1",
+  "feature_manifest_sha256": "9f69b87c572f684c98579a2400b1c528a2aac45ad24aefece502890df0cb5526",
+  "input_features_sha256": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+  "eligible_pixels": 4593171,
+  "expected_eligible_pixels": 4593171,
+  "eligibility_mask_sha256": "2e4015272345e49181461bc7bbc3967caac68109af5a73559299489d782d9d25",
+  "fold_splitter": "gems52.spatial.folds label-blind-quadrants-v2",
+  "buffer_px": 80,
+  "fold_truth_pixels": [
+    27309,
+    10677,
+    6813,
+    8387
+  ],
+  "withheld_positive_pixels": 53186,
+  "expected_withheld_positive_pixels": 53186,
+  "shape": [
+    3730,
+    3292
+  ],
+  "crs": "EPSG:32611",
+  "transform": [
+    100.0,
+    0.0,
+    243350.0,
+    0.0,
+    -100.0,
+    4508550.0
+  ],
+  "view_A_count": 36,
+  "view_B_count": 37,
+  "ring_px": 2,
+  "evaluator": "gems52-pooled-hide-v1",
+  "status": "PASS: exact H82/H84 eligible mask and whole-segment holdout count"
+}

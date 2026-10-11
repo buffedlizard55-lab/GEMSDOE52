@@ -46,9 +46,22 @@ def test_h95_verdict_follows_frozen_rule():
 
 def test_h95_readme_states_both_verdicts_and_brief():
     text = (ROOT / "README.md").read_text()
-    head = text[: text.index("<!--/H95-README-->")]
-    assert head.startswith("<!--H95-README-->")
-    assert "OK TO DOWNLOAD: YES" in head and "OK TO SUBMIT:" in head
-    assert "docs/downloads/h95-candidate.tif" in head and SHA in head
+    start = text.index("<!--H95-README-->")
+    end = text.index("<!--/H95-README-->")
+    h95_block = text[start:end]
+    assert h95_block.startswith("<!--H95-README-->")
+    assert "OK TO DOWNLOAD: YES" in h95_block and "OK TO SUBMIT:" in h95_block
+    assert "docs/downloads/h95-candidate.tif" in h95_block and SHA in h95_block
     brief = (ROOT / "knowledge/94_current_user_brief_2026-10-10_H95.md").read_text()
-    assert brief.strip()[:200] in head
+    assert brief.strip()[:200] in h95_block
+
+
+def test_h97_current_readme_status_is_fail_closed():
+    text = (ROOT / "README.md").read_text()
+    assert text.startswith("<!--H97-CURRENT-->")
+    current = text[:text.index("<!--/H97-CURRENT-->")]
+    assert "OK TO DOWNLOAD: NO" in current
+    assert "OK TO SUBMIT: NO" in current
+    assert "no h97 competition geotiff was written" in current.lower()
+    assert "DUPLICATE/STOP" in current
+    assert "ORGANIZER-CONFIRMED" in current

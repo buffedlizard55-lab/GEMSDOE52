@@ -1,5 +1,17 @@
+<!--H97-AGENTS-->
+## Current H97 continuation (2026-10-11) — READ FIRST
+Read the H97 status block at the top of `README.md`, then `knowledge/97_hypotheses_H97_preregistered.md`, `knowledge/98_h97_results_and_limits.md`, `knowledge/99_h97_three_pass_review.md`, and the H97 JSON run card. This session's branch is fixed at `arena/d1a45c4e-gemsdoe52`.
+
+- H97-A was the only registered proposal run this round. Verdict **NEGATIVE**; **no H97 TIFF exists; download NO; submit NO; no slot selected or spent**. Do not bypass the literal final-dot DUPLICATE/STOP.
+- Matched mask: 4,593,171 eligible pixels, 53,186 withheld positives, same as H82/H84. H96's 60,894-positive mask is not comparable. H97 candidate HOLDOUT-DTI 0.186265 [0.164806, 0.207537] vs same-mask H84 `B_DVA2` refit 0.192831 [0.170791, 0.213696], evaluator `gems52-pooled-hide-v1`; no organizer score.
+- View-A sufficiency failed (mean OOF AUC 0.5101, minimum 0.4447), so pseudo-label exchange was abandoned despite weak negative-proxy error correlation. The TDR proxy saturated at 5,000 m and had only five +45° / five −45° threshold cells; do not claim validated depth or connected contours.
+- Surface-before-placement passed (max Spearman 0.4725 across 703 complete registry paths). Final dots are DUPLICATE/STOP (literal maximum within-3-px 1.0; informative-prior diagnostic 0.9229). Placement equals strict single View B; registered candidate-vs-union test passes and is separately reported. These are distinct findings.
+- The 0.2747 H33-2-B2 owner-page value is a projection; 0.2778 is team-level public-board and cannot be attributed to that file. Leaderboard changed during the 2026-10-11 review; see pinned observations and `IR-H97-005`.
+- Do not run H97-B/C/D, tune H97-A gates, emit a duplicate TIFF, select a slot, or describe a holdout as an organizer score without a new registration/authorized decision.
+<!--/H97-AGENTS-->
+
 <!--H96-AGENTS-->
-## Current H96 continuation (2026-10-10) — READ FIRST
+## Archived H96 continuation (2026-10-10)
 Read README's standing brief and status block first. H96 verdict **NEGATIVE**. Download yes (audit only), submit **NO**.
 This session's branch is `arena/90369109-gemsdoe52`. The H96 round tested **bidirectional co-training disagreement**
 (A = gravity/magnetics/strain/seismicity/cover/conductivity, B = DEM + radiometrics; Blum & Mitchell 1998):
@@ -14,7 +26,7 @@ their frozen hashes (`0f664c43…` prereg = `registry/h96_preregistration.json`,
 - `scripts/check_site.py` R5 and H58 phrase checks run only on their own pages (IR-H94-008).
 <!--/H96-AGENTS-->
 <!--H95-AGENTS-->
-## Current H95 continuation (2026-10-10) — READ FIRST
+## Archived H95 continuation (2026-10-10)
 Read README's H95 block (it ends with the session brief verbatim), `knowledge/93` (frozen preregistration,
 SHA-256 `bf55dfb78ba7c1c8…`), `knowledge/94` (brief) and `knowledge/95` (results, generated).
 Verdict **negative** — Failed gate(s): holdout_promotion, lane_dots_policy. The co-trained field scored 0.1724 on HOLDOUT-DTI, below the promotable best 0.190147 (paired vs single_B CI spans 0). Its dots are also a lane near-duplicate of the parallel H93 file (IR-H95-006). Experiments 3 of 3, slots 0.
@@ -39,7 +51,7 @@ Settled this round; do not re-litigate:
 <!--/H95-AGENTS-->
 
 <!--H94-AGENTS-->
-## Current H94 continuation (2026-10-10)
+## Archived H94 continuation (2026-10-10)
 Read README's standing brief and status block first. H94 verdict **NEGATIVE**. Download yes (audit only), submit **NO**.
 Experiments 1 of 3, slots 0.
 

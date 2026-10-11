@@ -1,0 +1,100 @@
+{
+  "round": "H97-A",
+  "generated_utc": "2026-10-11T02:52:36Z",
+  "complete": true,
+  "scope": "single preregistered H97-A proposal; no H97-B/C/D runs; no submission selection",
+  "passes": [
+    {
+      "pass_number": 1,
+      "title": "preregistration, hypothesis ranking, sources, and provenance",
+      "status": "complete",
+      "result": "PASS",
+      "checks": [
+        "H97 preregistration SHA-256 matches the frozen hypothesis document pin; H97-A only was selected and run.",
+        "Four ranked proposals remain in one co-training/disagreement lane; planning ranges remain priors, not scores.",
+        "View A and strict surface View B are disjoint (38 vs 69 learner inputs); the 87-input historical H84 B_DVA2 control is explicitly mixed-view by channel content.",
+        "Existing owner-mirrored GeoDAWN-derived cache is integrity-pinned but not organizer-authenticated; no unverified external data was required.",
+        "USGS, DrivenData metric, SEG tilt-depth, and co-training method sources were reviewed; the method citation is not treated as proof of assumptions.",
+        "H33-2-B2's owner-page 0.2747 is a projection; its file-to-score relationship with the team-level 0.2778 board row remains unresolved."
+      ],
+      "evidence": [
+        "knowledge/97_hypotheses_H97_preregistered.md",
+        "registry/h97_preregistration.json",
+        "evidence/h97_data_integrity.json",
+        "evidence/h97_channels.json",
+        "registry/leaderboard_snapshot_2026-10-10.json",
+        "registry/leaderboard_snapshot_2026-10-11.json"
+      ]
+    },
+    {
+      "pass_number": 2,
+      "title": "matched mask, leakage, view sufficiency, independence, and holdout arithmetic",
+      "status": "complete",
+      "result": "PASS \u2014 negative outcome faithfully retained",
+      "checks": [
+        "Eligible mask 4,593,171 and the four H82/H84 fold truth counts sum to the expected 53,186 withheld positives.",
+        "Leakage canary maximum direction-insensitive AUC 0.6707506 across 157 features is below 0.90.",
+        "View-A OOF mean/minimum 0.5100739/0.4447046 fails frozen 0.60/0.55 sufficiency; max negative-proxy error correlation 0.0966556 does not override it.",
+        "No pseudo-label exchange or pseudo-label training was used.",
+        "Each holdout arm is labelled HOLDOUT-DTI with gems52-pooled-hide-v1, 53,186 withheld positives, and 95% CI.",
+        "H84 B_DVA2 same-mask refit reproduces historical project-reported value within 0.001; H97 paired promotion gate fails."
+      ],
+      "evidence": [
+        "evidence/h97_mask.json",
+        "evidence/h97_canary.json",
+        "evidence/h97_fit.json",
+        "evidence/h97_holdout.json",
+        "evidence/h97_tilt_depth.json"
+      ]
+    },
+    {
+      "pass_number": 3,
+      "title": "prior registry, surface/dot gates, writer, publication, tests, and changeset review",
+      "status": "complete",
+      "result": "PASS \u2014 strict stop retained; final site, test, and diff checks recorded below",
+      "checks": [
+        "Frozen prior inventory restoration completed before lane checks (526/526 blobs, 524/524 eligible aligned rasters, zero errors).",
+        "Surface-before-placement passed at Spearman 0.4725123; final dots failed literal and informative-prior checks and were not waived.",
+        "Registered candidate-vs-union test and the separate exact-single-B diagnostic are reported distinctly; the evidence correction made no refit or re-placement.",
+        "No H97 TIFF or ZIP exists; write receipt says artifact/download/submit false; zero A-only reasoning rows; slots used zero.",
+        "README, site pages, H97 knowledge, irregularities register, and tests were reviewed for score labels, provenance, official links, and explicit no-download/no-submit.",
+        "No-artifact note_chars KeyError was fixed with a stable receipt normalizer and regression tests."
+      ],
+      "evidence": [
+        "evidence/h97_prior_restore.json",
+        "evidence/h97_build.json",
+        "evidence/h97_lane_surface.json",
+        "evidence/h97_lane_dots.json",
+        "evidence/h97_write.json",
+        "README.md",
+        "docs/index.html",
+        "docs/h97.html",
+        "docs/irregularities.html",
+        "knowledge/98_h97_results_and_limits.md",
+        "knowledge/99_h97_three_pass_review.md",
+        "tests/test_h97_tiltdepth.py",
+        "tests/test_h97_publication.py"
+      ]
+    }
+  ],
+  "automated_checks": {
+    "focused_pytest": "PASS: 15 focused H97/H95 README-preservation checks.",
+    "full_pytest": "PASS: final pytest -q after all implementation, tests, substantive README/site/result docs, and run-card edits; 534 passed, 7 skipped, 56 PendingDeprecationWarnings, 121.65 seconds. The output was then transcribed into review metadata.",
+    "site_check": "PASS: final python scripts/check_site.py; 124 pages and 437 data files checked; no problems.",
+    "git_diff_check": "PASS: git diff --check and git diff --cached --check; no whitespace errors.",
+    "transient_validation_findings": [
+      "An initial full-suite run found one case-sensitive assertion in the new H97 README test; the assertion was made case-insensitive and the subsequent full runs passed.",
+      "A site-check run before knowledge/99_h97_three_pass_review.md existed found one dead link; the review file was created and final site checks passed.",
+      "A diff check exposed the CSV writer default CRLF line terminator as trailing whitespace; the writer was changed to LF, a regression assertion was added, and the final suite/site/diff checks passed."
+    ]
+  },
+  "outcome_constraints": {
+    "verdict": "NEGATIVE",
+    "artifact_written": false,
+    "ok_to_download": false,
+    "ok_to_submit": false,
+    "submission_slots_used": 0,
+    "organizer_confirmed_score": null,
+    "literal_final_dot_stop_waived": false
+  }
+}

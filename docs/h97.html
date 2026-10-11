@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>H97-A results — negative, no TIFF, do not submit</title>
+<style>
+:root{color-scheme:light;--ink:#17202a;--muted:#536273;--blue:#174b75;--red:#a32121;--red-bg:#fff1f0;--line:#d9e0e7;--panel:#f5f8fb}
+*{box-sizing:border-box}body{margin:0;background:#edf1f5;color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:1000px;margin:0 auto;padding:28px 18px 56px}h1,h2,h3{line-height:1.25;color:var(--blue)}h1{font-size:2rem;margin:.2em 0}h2{font-size:1.35rem;margin:1.8em 0 .5em;border-bottom:1px solid var(--line);padding-bottom:.35em}h3{font-size:1.05rem;margin:1.2em 0 .3em}
+a{color:#075a96}code{background:#e9eef3;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}.muted{color:var(--muted);font-size:.94rem}.status{background:var(--red-bg);border:2px solid var(--red);border-radius:10px;padding:16px 18px;margin:18px 0}.status strong{color:var(--red)}.panel{background:white;border:1px solid var(--line);border-radius:9px;padding:15px 18px;margin:14px 0}table{width:100%;border-collapse:collapse;background:white;margin:12px 0;font-size:.94rem}th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}th{background:var(--panel);color:var(--blue)}.tag-fail{color:var(--red);font-weight:700}.tag-pass{color:#146b38;font-weight:700}ul{padding-left:1.3em}.footer{border-top:1px solid var(--line);margin-top:28px;padding-top:14px;color:var(--muted);font-size:.9rem}
+</style>
+</head>
+<body><main>
+<p class="muted"><a href="index.html">GEMSDOE52 status</a> / H97-A</p>
+<h1>H97-A — tilt-depth co-training disagreement</h1>
+<p class="muted">One registered experiment · matched H82/H84 hide-and-recover mask · 2026-10-11 review</p>
+<div class="status">
+  <p><strong>VERDICT: NEGATIVE.</strong> <strong>OK TO DOWNLOAD: NO</strong> — no H97 competition GeoTIFF was written. <strong>OK TO SUBMIT: NO — DO NOT UPLOAD.</strong> No submission slot was selected or spent.</p>
+  <p>The fit missed the frozen promotion gate, and the final-dot uniqueness gate returned <strong>DUPLICATE/STOP</strong>. Neither gate was waived. This is a project-evaluated holdout result, not an organizer-confirmed leaderboard score.</p>
+  <p class="muted">The feed-owned <code>docs/data/submission.json</code> remains a prior H96 research-only pointer with weekly approval false; it is not an H97 artifact or selection. It was not changed because H97 wrote no TIFF.</p>
+</div>
+<div class="panel">
+  <strong>Audit files:</strong>
+  <a href="../evidence/h97_run_card.json">run card</a> ·
+  <a href="../evidence/h97_holdout.json">HOLDOUT-DTI receipt</a> ·
+  <a href="../evidence/h97_build.json">registry/build receipt</a> ·
+  <a href="../evidence/h97_write.json">no-artifact writer receipt</a> ·
+  <a href="../knowledge/97_hypotheses_H97_preregistered.md">frozen preregistration</a> ·
+  <a href="../knowledge/98_h97_results_and_limits.md">full results and limits</a>
+</div>
+
+<h2>Matched evaluation</h2>
+<p>Every score in the table is <strong>HOLDOUT-DTI</strong> from <code>gems52-pooled-hide-v1</code>, with <strong>53,186 withheld positive pixels</strong> and the listed 95% confidence interval. The holdout uses whole-segment spatial hiding plus buffer, visible-fault-only catalogue features, and pixel-exact masking of visible faults. Pooled metric parameters: α=0.2, β=0.8, triangular kernel radius 300 m. Confidence intervals use the paired physical-spatial-cluster percentile bootstrap (153 clusters, 1,000 draws, seed 61,052). None of these values is ORGANIZER-CONFIRMED.</p>
+<table>
+<thead><tr><th>Arm</th><th>HOLDOUT-DTI [95% CI]</th><th>Interpretation</th></tr></thead>
+<tbody>
+<tr><td>H97-A aligned-disagreement candidate</td><td><strong>0.1862646 [0.1648063, 0.2075371]</strong></td><td>Below same-mask H84 control; promotion gate fails.</td></tr>
+<tr><td>Strict single View B</td><td>0.1865196 [0.1648984, 0.2080149]</td><td>Candidate minus B: −0.0002550 [−0.0007003, +0.0000384].</td></tr>
+<tr><td>Single View A</td><td>0.0723396 [0.0563326, 0.0889441]</td><td>View A is weak on this holdout.</td></tr>
+<tr><td>Union-max</td><td>0.1571029 [0.1357191, 0.1782365]</td><td>Below candidate and single B.</td></tr>
+<tr><td>A-only disagreement</td><td>0.0175894 [0.0127715, 0.0232973]</td><td>No geological promotion supported.</td></tr>
+<tr><td>Same-mask H84 <code>B_DVA2</code> refit</td><td><strong>0.1928308 [0.1707905, 0.2136956]</strong></td><td>Historical project-reported 0.1928291 reproduced within 0.001; this is a mixed-view-by-channel-content incumbent, not a pure-B H97 feature set.</td></tr>
+<tr><td>Random</td><td>0.0804256 [0.0702226, 0.0909733]</td><td>Reference arm.</td></tr>
+</tbody></table>
+<p>The candidate minus the same-run H84 refit is <strong>−0.0065662</strong>, paired 95% CI <strong>[−0.0151041, +0.0002708]</strong>; the interval includes zero and the candidate is below the historical bar. The H84 refit reproduces its historical project value (absolute delta 1.73×10⁻⁶), but neither H84 number is an organizer receipt.</p>
+
+<h2>Leakage, sufficiency, and pseudo-label gate</h2>
+<ul>
+<li>Leakage canary: PASS across 157 features; maximum direction-insensitive AUC 0.6707506, below the 0.90 alarm threshold.</li>
+<li>View-A spatial OOF AUC by fold: 0.5084, 0.5966, 0.4447, 0.4906; mean 0.5101 and minimum 0.4447. Frozen requirement was mean ≥0.60 and every fold ≥0.55: <strong class="tag-fail">FAIL</strong>.</li>
+<li>Spatial-block labelled-negative proxy error correlation: max |ρ| 0.09666 over 2,089 blocks. The negative labels are catalogue-zero proxies, not verified absences; weak correlation is not proof of conditional independence.</li>
+<li>Because View-A sufficiency failed, pseudo-label exchange was abandoned despite the canary and correlation screens. <code>pseudo_label_training_used=false</code>.</li>
+</ul>
+
+<h2>Tilt-depth proxy diagnostic</h2>
+<p>The rasterized nearest-contour proxy found only 5 +45° and 5 −45° threshold cells. The registered depth proxy saturated at its 5,000 m cap (p50=p95=p99=max=5,000 m). The counts are not connected contours, and the proxy is not a validated inversion or true source-depth estimate. This is a method limitation, not evidence for a buried fault.</p>
+
+<h2>Surface and final-dot lane</h2>
+<table><tbody>
+<tr><th>Pre-placement surface</th><td><span class="tag-pass">PASS</span> — maximum Spearman 0.4725123 across 703 aligned/registered raster paths; zero registry errors.</td></tr>
+<tr><th>Final dots, strict literal gate</th><td><span class="tag-fail">DUPLICATE/STOP</span> — maximum within-3-pixel fraction 1.0000; frozen stop threshold is 0.70.</td></tr>
+<tr><th>Informative-prior diagnostic</th><td><span class="tag-fail">DUPLICATE/STOP</span> — after excluding 14 broad-coverage probes for diagnosis only, 689 informative priors remain; max within-3-pixel fraction 0.9229 versus a GEMSDOE22 H23-B emission raster whose 3 px support covers 0.5328 of the eligible footprint.</td></tr>
+<tr><th>Two-view union check</th><td>Registered candidate-vs-union check PASS: candidate is neither identical to nor a subset of union-max (Jaccard 0.4012). Separately, candidate placement exactly equals strict single View B (Jaccard 1.0); no incremental A-only placement contribution is demonstrated.</td></tr>
+</tbody></table>
+<p>The census restoration was complete before lane checks: 526/526 frozen Git blobs and 524/524 eligible aligned-raster byte hashes, shape, and CRS verified; zero restoration errors. The candidate was not a union, but the single-B identity and duplicate lane still make it a negative result. The A-only reasoning CSV has zero data rows because no final A-only dots were emitted.</p>
+
+<h2>H33-2-B2 and public leaderboard provenance</h2>
+<p>The GEMSDOE32 owner-maintained page reports a projected 0.2747 for H33-2-B2 and explicitly says no organizer score exists. The public leaderboard shows team-level scores only, not file names or hashes. The file-to-score attribution between the H33-2-B2 artifact and the <code>extradr19</code> 0.2778 public-board row remains unresolved; 0.2778 is not an organizer-confirmed H33 file score.</p>
+<p>The archived 2026-10-10 / earlier 2026-10-11 observation showed #1 0.3774 and #8 0.3195. A later live re-read on 2026-10-11 showed #1 at 0.4133, DARD still #8 at 0.3195, and extradr19 at #23 with 0.2778. See the <a href="../registry/leaderboard_snapshot_2026-10-11.json">selected-row snapshot</a> and the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">official live board</a>. Board values are contextual only; H97 has no board receipt.</p>
+
+<h2>Official references</h2>
+<ul>
+<li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">DrivenData competition metric and submission format</a></li>
+<li><a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">USGS GeoDAWN magnetic/radiometric survey</a></li>
+<li><a href="https://doi.org/10.1190/1.2821934">Salem et al. (2007), tilt-depth method</a></li>
+<li><a href="https://doi.org/10.1145/279943.279962">Blum &amp; Mitchell (1998), co-training</a> — source for method assumptions, not proof those assumptions hold here</li>
+<li><a href="https://buffedlizard55-lab.github.io/GEMSDOE32/docs/index.html">H33-2-B2 owner project page</a> — not an organizer score receipt</li>
+</ul>
+<div class="footer">No H97 GeoTIFF exists. Do not upload a prior candidate as a substitute. The result is NEGATIVE; download NO, submit NO, slots used 0.</div>
+</main></body></html>

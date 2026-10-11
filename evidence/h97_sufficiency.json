@@ -1,0 +1,18 @@
+{
+  "stage": "view_A_sufficiency",
+  "generated_utc": "2026-10-11T01:24:33+00:00",
+  "result": {
+    "mean": 0.5100739014651958,
+    "min_fold": 0.4447045914445746,
+    "per_fold": [
+      0.5084435836973988,
+      0.5965908534954018,
+      0.4447045914445746,
+      0.4905565772234083
+    ],
+    "gate_mean": 0.6,
+    "gate_min_fold": 0.55,
+    "passes": false
+  },
+  "note": "OOF AUC tests the mapped catalogue population; it does not prove off-catalogue fault sufficiency."
+}

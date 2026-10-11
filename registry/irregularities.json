@@ -1,6 +1,6 @@
 {
   "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified. | H61 merge: IR-H61-001..009 appended from the H61 branch; main's repaired schema and numbering retained.",
-  "generated": "2026-10-10T21:58:00Z ; H90 append (IR-H90-001..009)",
+  "generated": "2026-10-11T02:49:54Z ; H97 append (IR-H97-001..006)",
   "entries": [
     {
       "id": "IR-30-029",
@@ -3745,7 +3745,55 @@
       "what_it_is": "evidence/h87_build.json states 'HOLDOUT-DTI (not yet run; this is the build receipt, not a score)' while the H87 README block printed 'Status: Submission built and validated' and 'VERDICT: PROMOTE'. No h87 holdout receipt exists in evidence/.",
       "how_we_know": "ls evidence/ | grep h87 shows only h87_build.json; README.md at bc26fe2 carries the quoted strings.",
       "disposition": "H87 is labelled build-receipt-only everywhere in the new README/site; the promotion language is removed. If the H87 family is ever selected for a slot it must first run the same hide-and-recover instrument."
+    },
+    {
+      "id": "IR-H97-001",
+      "title": "The preregistered tilt-depth proxy is contour-sparse and depth-cap saturated",
+      "status": "reported - method limitation; not repaired post hoc",
+      "what_it_is": "The H97-A rasterized nearest-contour diagnostic has only 5 +45-degree and 5 -45-degree threshold cells; the depth proxy p50, p95, p99 and maximum are all at the 5,000 m cap. The thresholds are not connected contours and the resulting proxy is not a validated inversion or true source depth.",
+      "how_we_know": "evidence/h97_tilt_depth.json; formula and cap frozen in registry/h97_preregistration.json and knowledge/97_hypotheses_H97_preregistered.md.",
+      "disposition": "Disclosed as a physical/method limitation in knowledge/98_h97_results_and_limits.md and docs/h97.html. No post-hoc threshold adjustment or geological fault claim; H97-A remains negative."
+    },
+    {
+      "id": "IR-H97-002",
+      "title": "View-A sufficiency failed, so low negative-error correlation did not authorize pseudo-label exchange",
+      "status": "reported - preregistered sufficiency stop obeyed",
+      "what_it_is": "The spatial-block negative-error proxy correlation max |rho| is 0.09666, below the 0.60 correlation stop, but View-A OOF AUC mean is 0.5101 and minimum fold is 0.4447, below the required mean 0.60 and every-fold 0.55. The two-view sufficiency condition fails.",
+      "how_we_know": "evidence/h97_fit.json and evidence/h97_sufficiency.json; conditional_exchange_gate records view_A_sufficiency_pass=false and pseudo_label_training_used=false. Negative labels are catalogue-zero proxies, not verified absence.",
+      "disposition": "No pseudo-label exchange was run. Weak error correlation is not proof of conditional independence and does not override the failed sufficiency gate. Scores compare the fitted no-exchange candidate only."
+    },
+    {
+      "id": "IR-H97-003",
+      "title": "H97 final-dot uniqueness fails both the literal and informative-prior lane checks",
+      "status": "reported - DUPLICATE/STOP, not waived",
+      "what_it_is": "After the surface-before-placement phase passed, the 37,654-dot H97 audit placement had a literal maximum within-3-pixel fraction of 1.0000 across the complete 703-path registry. The secondary policy diagnostic also fails: max fraction 0.9229 against a GEMSDOE22 H23-B emission raster whose 3 px support covers only 0.5328 of the eligible footprint. The frozen stop is >0.70.",
+      "how_we_know": "evidence/h97_lane_surface.json, evidence/h97_lane_dots.json, evidence/h97_build.json; complete frozen-inventory restoration is in evidence/h97_prior_restore.json and work/h61/prior_fetch_receipt.json (526/526 blobs, 524/524 eligible rasters, zero errors).",
+      "disposition": "Final-dot stop is retained. No H97 TIFF/ZIP was written, download and submit are NO, and no slot was selected or spent. The literal and policy diagnostics are both published; the policy result is not used to waive the literal stop."
+    },
+    {
+      "id": "IR-H97-004",
+      "title": "The candidate-vs-union gate passes, but the audit placement exactly equals strict single View B",
+      "status": "reported - corrected diagnostic semantics, no model rerun",
+      "what_it_is": "The fixed-budget H97 placement has equal_single_B=true and Jaccard 1.0, so it adds no incremental View-A disagreement contribution at placement. It is not identical to and is not a subset of the max(A,B) union placement (Jaccard 0.4012), so the preregistered not-the-union criterion passes. An initial stored boolean incorrectly folded single-view equality into the union test.",
+      "how_we_know": "evidence/h97_build.json not_union_interpretation_correction, evidence/h97_write.json, and evidence/h97_run_card.json. The corrected boolean is derived from already-recorded equal_union/subset_of_union values; no refit, re-placement, score change, or lane change occurred.",
+      "disposition": "The candidate-vs-union gate and the separate single-view identity are reported independently in knowledge/98_h97_results_and_limits.md and docs/h97.html. Holdout promotion and final-dot uniqueness still fail; no TIFF is written."
+    },
+    {
+      "id": "IR-H97-005",
+      "title": "H33-2-B2 attribution and public-board snapshots are team-level and time-varying",
+      "status": "open - filename-to-score attribution unresolved",
+      "what_it_is": "The GEMSDOE32 owner-maintained H33-2-B2 page gives a projected 0.2747 and explicitly says there is no organizer score receipt. The public board prints team scores, not filenames or hashes. An earlier 2026-10-11 observation had #1 0.3774, #8 0.3195 and extradr19 at 0.2778/#22; the later 2026-10-11 live observation recorded #1 0.4133, #8 0.3195 and extradr19 0.2778/#23. The board cannot identify the H33 artifact as the file that earned the team score.",
+      "how_we_know": "registry/leaderboard_snapshot_2026-10-10.json; registry/leaderboard_snapshot_2026-10-11.json (selected rows, fetched from https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/); https://buffedlizard55-lab.github.io/GEMSDOE32/docs/index.html states the project score is projected and no organizer score exists.",
+      "disposition": "Keep 0.2747 labelled a projection and 0.2778 labelled a team-level PUBLIC-BOARD value; do not call either ORGANIZER-CONFIRMED for H33-2-B2. The score-to-file relationship remains unresolved."
+    },
+    {
+      "id": "IR-H97-006",
+      "title": "The feed-owned submission pointer remains on the prior H96 research artifact because H97 wrote no TIFF",
+      "status": "reported - intentionally unchanged; no H97 submission was selected",
+      "what_it_is": "docs/data/submission.json and scripts/check_site.py still identify the H96 research-only TIFF as the feed dispatch. Its receipt states approved_for_weekly_slot=false, promoted=false and submission_slots_used=0. H97 produced no TIFF, is not download-approved, and no weekly slot was selected.",
+      "how_we_know": "docs/data/submission.json; scripts/check_site.py output; evidence/h97_write.json and evidence/h97_run_card.json.",
+      "disposition": "Do not repoint a feed-owned submission file to a nonexistent H97 artifact or use it to imply selection. The H97 current-status card/page states NEGATIVE, no TIFF, download NO, submit NO. The feed pointer remains a prior-round research artifact and its slot gate remains closed."
     }
   ],
-  "merge_note": "Entries appended in chronological order of first recording, per-round prefixes only. Merged with arena/90369109 session entries IR-H96-001..005 (bidirectional co-training disagreement round; labels H88 and H95 were taken on main by parallel sessions, so that round is H96)."
+  "merge_note": "Entries appended in chronological order of first recording, per-round prefixes only. Merged with arena/90369109 session entries IR-H96-001..005 (bidirectional co-training disagreement round; labels H88 and H95 were taken on main by parallel sessions, so that round is H96). H97-A findings appended as IR-H97-001..005: sparse/capped tilt-depth proxy, failed View-A sufficiency, full-registry final-dot stop, not-union diagnostic correction, and unresolved H33 file-to-board attribution. H97 IR-H97-006 documents that the feed-owned pointer still references an unapproved H96 research artifact because H97 has no TIFF or slot selection."
 }

@@ -1,0 +1,537 @@
+{
+  "round": "H97",
+  "generated_utc": "2026-10-11T02:50:07+00:00",
+  "preregistration": {
+    "file": "registry/h97_preregistration.json",
+    "sha256": "b2e4dba649a680f34bd2f026675c7b5cca1ebc8f055ff47f7c8069de13729986",
+    "hypothesis_document": "knowledge/97_hypotheses_H97_preregistered.md",
+    "hypothesis_sha256": "47f8ce6e87913ae6e67a304a16ece786f941a8d5f8cd3a6962258e7b405cdee0",
+    "frozen_before_any_fit": true
+  },
+  "hypothesis": "H97-A magnetic tilt-depth proxy as a geophysical View-A teacher; strict surface DVA2/HVA/radiometric View B; bounded A-only disagreement boost.",
+  "mechanism": "The tilt-angle zero contour approximates a magnetic contact; half the \u00b145\u00b0 contour separation estimates source-top depth under the ideal vertical-contact model. A map-space nearest-contour proxy is used, then A-only high confidence can add a fixed 20% score term only where B is between its 35th and 65th percentile.",
+  "named_non_fault_mimics": [
+    "intrusive/lithologic contact",
+    "basin-fill facies boundary",
+    "alluvial-fan margin",
+    "radiometric soil/vegetation/thickness contrast",
+    "airborne flight-line artifact",
+    "road or drainage line"
+  ],
+  "method_reference": "Salem et al. (2007), DOI 10.1190/1.2821934; DOI corrected from the prior H92 note's 10.1190/1.2431639.",
+  "eligible_pixels": 4593171,
+  "withheld_positive_pixels": 53186,
+  "tilt_depth_diagnostic": {
+    "positive_45_cells": 5,
+    "negative_45_cells": 5,
+    "central_band_cells": 4593161,
+    "depth_proxy_m": {
+      "p50": 5000.0,
+      "p95": 5000.0,
+      "p99": 5000.0,
+      "max": 5000.0
+    },
+    "contour_support_note": "The raster contains 5 +45-degree and 5 -45-degree threshold cells; these counts are disclosed, not treated as connected contours."
+  },
+  "holdout": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems52-pooled-hide-v1",
+    "alpha": 0.2,
+    "beta": 0.8,
+    "triangular_radius_m": 300.0,
+    "pooled": true,
+    "scores": {
+      "h97_aligned_disagreement": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.18626456706483482,
+        "ci95": [
+          0.16480626009016622,
+          0.20753705208058368
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 9514.738444797538,
+        "fpw": 33150.50537251032,
+        "fnw": 43671.261555202465
+      },
+      "single_A_pre": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.07233964592256671,
+        "ci95": [
+          0.05633262251686553,
+          0.08894406094957742
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 3649.2241365877535,
+        "fpw": 35835.280029297406,
+        "fnw": 49536.77586341222
+      },
+      "single_B_pre_strict": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.18651960173009105,
+        "ci95": [
+          0.16489839798075315,
+          0.20801493176003572
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 9528.069587227665,
+        "fpw": 33145.31011036445,
+        "fnw": 43657.93041277234
+      },
+      "single_A_post": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.07233964592256671,
+        "ci95": [
+          0.05633262251686553,
+          0.08894406094957742
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 3649.2241365877535,
+        "fpw": 35835.280029297406,
+        "fnw": 49536.77586341222
+      },
+      "single_B_post_strict": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.18651960173009105,
+        "ci95": [
+          0.16489839798075315,
+          0.20801493176003572
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 9528.069587227665,
+        "fpw": 33145.31011036445,
+        "fnw": 43657.93041277234
+      },
+      "union_max_pre": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.15710291411163033,
+        "ci95": [
+          0.1357190927412232,
+          0.1782364953411934
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 8000.127325307656,
+        "fpw": 33870.09706849074,
+        "fnw": 45185.87267469234
+      },
+      "a_only_disagreement": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.017589381585165674,
+        "ci95": [
+          0.012771486443460248,
+          0.023297314838355912
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 785.5407912352507,
+        "fpw": 9770.177687142357,
+        "fnw": 52400.45920876473
+      },
+      "h84_B_DVA2_control": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.19283080212770237,
+        "ci95": [
+          0.1707905490283501,
+          0.21369563093738267
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 9856.403248222396,
+        "fpw": 32970.88358630979,
+        "fnw": 43329.596751777644
+      },
+      "random": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.08042564781050282,
+        "ci95": [
+          0.0702226099128376,
+          0.09097325665223467
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 4067.2229486710503,
+        "fpw": 36044.86583622452,
+        "fnw": 49118.777051328965
+      }
+    },
+    "best_comparable_control": "h84_B_DVA2_control",
+    "paired_differences": {
+      "single_A_pre": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "delta": 0.11392492114226811,
+        "ci95": [
+          0.09489558373428282,
+          0.13286527440710705
+        ],
+        "withheld_positive_pixels": 53186
+      },
+      "single_B_pre_strict": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "delta": -0.0002550346652562263,
+        "ci95": [
+          -0.0007002941685124254,
+          3.840897873433876e-05
+        ],
+        "withheld_positive_pixels": 53186
+      },
+      "single_A_post": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "delta": 0.11392492114226811,
+        "ci95": [
+          0.09489558373428282,
+          0.13286527440710705
+        ],
+        "withheld_positive_pixels": 53186
+      },
+      "single_B_post_strict": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "delta": -0.0002550346652562263,
+        "ci95": [
+          -0.0007002941685124254,
+          3.840897873433876e-05
+        ],
+        "withheld_positive_pixels": 53186
+      },
+      "union_max_pre": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "delta": 0.029161652953204498,
+        "ci95": [
+          0.021933449048422538,
+          0.03564548720481354
+        ],
+        "withheld_positive_pixels": 53186
+      },
+      "a_only_disagreement": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "delta": 0.16867518547966914,
+        "ci95": [
+          0.14662261960962825,
+          0.19107149011579577
+        ],
+        "withheld_positive_pixels": 53186
+      },
+      "h84_B_DVA2_control": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "delta": -0.006566235062867548,
+        "ci95": [
+          -0.015104119796052317,
+          0.00027084379722602694
+        ],
+        "withheld_positive_pixels": 53186
+      },
+      "random": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "delta": 0.105838919254332,
+        "ci95": [
+          0.08689896852553376,
+          0.12604016311740787
+        ],
+        "withheld_positive_pixels": 53186
+      }
+    },
+    "bootstrap": {
+      "method": "paired physical spatial-cluster percentile",
+      "clusters": 153,
+      "draws": 1000,
+      "seed": 61052,
+      "confidence": 0.95,
+      "caveat": "Conditional on fitted folds, catalogue labels and fixed budgets; not a leaderboard interval."
+    },
+    "implementation_sha256": {
+      "evaluate_holdout.py": "e4211fe530ccb8f1ffeab2ef2f8e94a563492c2a3644c908d1a81e379fcbd9d4",
+      "holdout.py": "f6706d781de72092e59332074af26e1d58cf734f95bf947a0d7c3fea577e6145",
+      "metric.py": "3d454119edfcec3cc2a83278c2015d7e41d39d8c1142fca12311409a18ce7d1a",
+      "spatial.py": "fad7b09db9efc512247b9a176a7e7ce8631e287592b4e07902d0b9c38bed00f8"
+    }
+  },
+  "H84_control_reproduction": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator": "gems52-pooled-hide-v1",
+    "withheld_positive_pixels": 53186,
+    "historical_H84_B_DVA2": 0.19282907051926573,
+    "refit_H84_B_DVA2_same_H97_mask": 0.19283080212770237,
+    "abs_delta": 1.7316084366392204e-06,
+    "tolerance": 0.001,
+    "PASS": true,
+    "historical_H84_ci95": [
+      0.17078978437309403,
+      0.2136913963893321
+    ],
+    "refit_ci95": [
+      0.1707905490283501,
+      0.21369563093738267
+    ],
+    "note": "The refit control is the same-run comparator; H84's recorded score remains historical, not organizer-confirmed."
+  },
+  "holdout_gate": {
+    "candidate_score": 0.18626456706483482,
+    "historical_bar": 0.19282907051926573,
+    "refit_control": 0.19283080212770237,
+    "candidate_minus_refit_delta": -0.006566235062867548,
+    "paired_ci95": [
+      -0.015104119796052317,
+      0.00027084379722602694
+    ],
+    "exceeds_historical_bar": false,
+    "paired_lower_ci_above_zero": false,
+    "control_reproduces": true,
+    "HOLDOUT_GATE_PASS": false
+  },
+  "leakage_canary": {
+    "max_auc": 0.6707506240048702,
+    "passed": true,
+    "alarms": 0
+  },
+  "independence": {
+    "max_abs_correlation": 0.09665563334609834,
+    "allow_exchange": true,
+    "n_blocks": 2089
+  },
+  "view_A_sufficiency": {
+    "mean": 0.5100739014651958,
+    "min_fold": 0.4447045914445746,
+    "per_fold": [
+      0.5084435836973988,
+      0.5965908534954018,
+      0.4447045914445746,
+      0.4905565772234083
+    ],
+    "gate_mean": 0.6,
+    "gate_min_fold": 0.55,
+    "passes": false
+  },
+  "pseudo_label_training_used": false,
+  "registry": {
+    "census_entries": 526,
+    "census_present": 524,
+    "eligible_aligned_rasters": 524,
+    "local_artifacts": 65,
+    "docs_downloads_added": 115,
+    "total_paths": 703,
+    "restore_errors": 0,
+    "surface_literal": "PASS",
+    "surface_max_spearman": 0.47251231511409286,
+    "dots_literal": "DUPLICATE/STOP",
+    "dots_policy": "DUPLICATE/STOP",
+    "dots_max_near_3px_fraction": 1.0,
+    "dots_registry_errors": 0,
+    "stop_duplicate": true,
+    "uniqueness": {
+      "audit_complete": true,
+      "distinct_from_every_comparable_prior": true,
+      "identical_to_a_prior": false,
+      "n_priors_checked": 703,
+      "n_priors_compared": 703,
+      "novel_fraction": 0.0,
+      "equals_literal_prior_union": false,
+      "support_novelty_gate_ok": false
+    },
+    "not_the_union": {
+      "dots": 37654,
+      "union_dots": 37654,
+      "shared_with_union": 21562,
+      "jaccard_with_union": 0.40118334387675364,
+      "subset_of_union": false,
+      "equal_union": false,
+      "equal_single_A": false,
+      "equal_single_B": true,
+      "jaccard_with_single_A": 0.006751066133711215,
+      "jaccard_with_single_B": 1.0,
+      "spearman_candidate_vs_union_field": 0.6756639256127349,
+      "not_union_pass": true,
+      "distinct_from_both_single_view_placements": false,
+      "not_union_definition": "candidate placement is not identical to and not a subset of union-max placement"
+    }
+  },
+  "review_passes": [
+    {
+      "pass_number": 1,
+      "title": "preregistration, hypothesis ranking, sources, and provenance",
+      "status": "complete",
+      "result": "PASS",
+      "checks": [
+        "H97 preregistration SHA-256 matches the frozen hypothesis document pin; H97-A only was selected and run.",
+        "Four ranked proposals remain in one co-training/disagreement lane; planning ranges remain priors, not scores.",
+        "View A and strict surface View B are disjoint (38 vs 69 learner inputs); the 87-input historical H84 B_DVA2 control is explicitly mixed-view by channel content.",
+        "Existing owner-mirrored GeoDAWN-derived cache is integrity-pinned but not organizer-authenticated; no unverified external data was required.",
+        "USGS, DrivenData metric, SEG tilt-depth, and co-training method sources were reviewed; the method citation is not treated as proof of assumptions.",
+        "H33-2-B2's owner-page 0.2747 is a projection; its file-to-score relationship with the team-level 0.2778 board row remains unresolved."
+      ],
+      "evidence": [
+        "knowledge/97_hypotheses_H97_preregistered.md",
+        "registry/h97_preregistration.json",
+        "evidence/h97_data_integrity.json",
+        "evidence/h97_channels.json",
+        "registry/leaderboard_snapshot_2026-10-10.json",
+        "registry/leaderboard_snapshot_2026-10-11.json"
+      ]
+    },
+    {
+      "pass_number": 2,
+      "title": "matched mask, leakage, view sufficiency, independence, and holdout arithmetic",
+      "status": "complete",
+      "result": "PASS \u2014 negative outcome faithfully retained",
+      "checks": [
+        "Eligible mask 4,593,171 and the four H82/H84 fold truth counts sum to the expected 53,186 withheld positives.",
+        "Leakage canary maximum direction-insensitive AUC 0.6707506 across 157 features is below 0.90.",
+        "View-A OOF mean/minimum 0.5100739/0.4447046 fails frozen 0.60/0.55 sufficiency; max negative-proxy error correlation 0.0966556 does not override it.",
+        "No pseudo-label exchange or pseudo-label training was used.",
+        "Each holdout arm is labelled HOLDOUT-DTI with gems52-pooled-hide-v1, 53,186 withheld positives, and 95% CI.",
+        "H84 B_DVA2 same-mask refit reproduces historical project-reported value within 0.001; H97 paired promotion gate fails."
+      ],
+      "evidence": [
+        "evidence/h97_mask.json",
+        "evidence/h97_canary.json",
+        "evidence/h97_fit.json",
+        "evidence/h97_holdout.json",
+        "evidence/h97_tilt_depth.json"
+      ]
+    },
+    {
+      "pass_number": 3,
+      "title": "prior registry, surface/dot gates, writer, publication, tests, and changeset review",
+      "status": "complete",
+      "result": "PASS \u2014 strict stop retained; final site, test, and diff checks recorded below",
+      "checks": [
+        "Frozen prior inventory restoration completed before lane checks (526/526 blobs, 524/524 eligible aligned rasters, zero errors).",
+        "Surface-before-placement passed at Spearman 0.4725123; final dots failed literal and informative-prior checks and were not waived.",
+        "Registered candidate-vs-union test and the separate exact-single-B diagnostic are reported distinctly; the evidence correction made no refit or re-placement.",
+        "No H97 TIFF or ZIP exists; write receipt says artifact/download/submit false; zero A-only reasoning rows; slots used zero.",
+        "README, site pages, H97 knowledge, irregularities register, and tests were reviewed for score labels, provenance, official links, and explicit no-download/no-submit.",
+        "No-artifact note_chars KeyError was fixed with a stable receipt normalizer and regression tests."
+      ],
+      "evidence": [
+        "evidence/h97_prior_restore.json",
+        "evidence/h97_build.json",
+        "evidence/h97_lane_surface.json",
+        "evidence/h97_lane_dots.json",
+        "evidence/h97_write.json",
+        "README.md",
+        "docs/index.html",
+        "docs/h97.html",
+        "docs/irregularities.html",
+        "knowledge/98_h97_results_and_limits.md",
+        "knowledge/99_h97_three_pass_review.md",
+        "tests/test_h97_tiltdepth.py",
+        "tests/test_h97_publication.py"
+      ]
+    }
+  ],
+  "raster": {
+    "file": null,
+    "bytes": null,
+    "sha256": null,
+    "validator": {
+      "PASS": false,
+      "reason": "final-dot literal lane gate not PASS; duplicate or indistinguishable raster detected; final placement matches a single-view placement; no incremental disagreement contribution"
+    }
+  },
+  "submission": {
+    "name": null,
+    "note": null,
+    "note_chars": null,
+    "ok_to_download": false,
+    "ok_to_submit": false,
+    "submission_slots_used": 0,
+    "promoted": false
+  },
+  "verdict": "negative",
+  "gates_pass": false,
+  "board_status": {
+    "organizer_confirmed_score": null,
+    "no_board_receipt_for_H97": true,
+    "benchmark_0_3195_beaten": false,
+    "benchmark_0_3774_beaten": false,
+    "statement": "HOLDOUT-DTI does not demonstrate beating any public leaderboard score; no organizer result exists."
+  },
+  "three_review_passes": [
+    {
+      "pass_number": 1,
+      "title": "preregistration, hypothesis ranking, sources, and provenance",
+      "status": "complete",
+      "result": "PASS",
+      "checks": [
+        "H97 preregistration SHA-256 matches the frozen hypothesis document pin; H97-A only was selected and run.",
+        "Four ranked proposals remain in one co-training/disagreement lane; planning ranges remain priors, not scores.",
+        "View A and strict surface View B are disjoint (38 vs 69 learner inputs); the 87-input historical H84 B_DVA2 control is explicitly mixed-view by channel content.",
+        "Existing owner-mirrored GeoDAWN-derived cache is integrity-pinned but not organizer-authenticated; no unverified external data was required.",
+        "USGS, DrivenData metric, SEG tilt-depth, and co-training method sources were reviewed; the method citation is not treated as proof of assumptions.",
+        "H33-2-B2's owner-page 0.2747 is a projection; its file-to-score relationship with the team-level 0.2778 board row remains unresolved."
+      ],
+      "evidence": [
+        "knowledge/97_hypotheses_H97_preregistered.md",
+        "registry/h97_preregistration.json",
+        "evidence/h97_data_integrity.json",
+        "evidence/h97_channels.json",
+        "registry/leaderboard_snapshot_2026-10-10.json",
+        "registry/leaderboard_snapshot_2026-10-11.json"
+      ]
+    },
+    {
+      "pass_number": 2,
+      "title": "matched mask, leakage, view sufficiency, independence, and holdout arithmetic",
+      "status": "complete",
+      "result": "PASS \u2014 negative outcome faithfully retained",
+      "checks": [
+        "Eligible mask 4,593,171 and the four H82/H84 fold truth counts sum to the expected 53,186 withheld positives.",
+        "Leakage canary maximum direction-insensitive AUC 0.6707506 across 157 features is below 0.90.",
+        "View-A OOF mean/minimum 0.5100739/0.4447046 fails frozen 0.60/0.55 sufficiency; max negative-proxy error correlation 0.0966556 does not override it.",
+        "No pseudo-label exchange or pseudo-label training was used.",
+        "Each holdout arm is labelled HOLDOUT-DTI with gems52-pooled-hide-v1, 53,186 withheld positives, and 95% CI.",
+        "H84 B_DVA2 same-mask refit reproduces historical project-reported value within 0.001; H97 paired promotion gate fails."
+      ],
+      "evidence": [
+        "evidence/h97_mask.json",
+        "evidence/h97_canary.json",
+        "evidence/h97_fit.json",
+        "evidence/h97_holdout.json",
+        "evidence/h97_tilt_depth.json"
+      ]
+    },
+    {
+      "pass_number": 3,
+      "title": "prior registry, surface/dot gates, writer, publication, tests, and changeset review",
+      "status": "complete",
+      "result": "PASS \u2014 strict stop retained; final site, test, and diff checks recorded below",
+      "checks": [
+        "Frozen prior inventory restoration completed before lane checks (526/526 blobs, 524/524 eligible aligned rasters, zero errors).",
+        "Surface-before-placement passed at Spearman 0.4725123; final dots failed literal and informative-prior checks and were not waived.",
+        "Registered candidate-vs-union test and the separate exact-single-B diagnostic are reported distinctly; the evidence correction made no refit or re-placement.",
+        "No H97 TIFF or ZIP exists; write receipt says artifact/download/submit false; zero A-only reasoning rows; slots used zero.",
+        "README, site pages, H97 knowledge, irregularities register, and tests were reviewed for score labels, provenance, official links, and explicit no-download/no-submit.",
+        "No-artifact note_chars KeyError was fixed with a stable receipt normalizer and regression tests."
+      ],
+      "evidence": [
+        "evidence/h97_prior_restore.json",
+        "evidence/h97_build.json",
+        "evidence/h97_lane_surface.json",
+        "evidence/h97_lane_dots.json",
+        "evidence/h97_write.json",
+        "README.md",
+        "docs/index.html",
+        "docs/h97.html",
+        "docs/irregularities.html",
+        "knowledge/98_h97_results_and_limits.md",
+        "knowledge/99_h97_three_pass_review.md",
+        "tests/test_h97_tiltdepth.py",
+        "tests/test_h97_publication.py"
+      ]
+    }
+  ],
+  "three_review_passes_complete": true,
+  "review_record_file": "evidence/h97_review_passes.json",
+  "status": "no TIFF written; download NO, submit NO; no slot selected or spent"
+}

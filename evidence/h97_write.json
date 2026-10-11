@@ -1,0 +1,57 @@
+{
+  "stage": "write",
+  "generated_utc": "2026-10-11T02:39:45+00:00",
+  "artifact_written": false,
+  "file": null,
+  "bytes": null,
+  "sha256": null,
+  "name": null,
+  "note": null,
+  "note_chars": null,
+  "validator": {
+    "PASS": false,
+    "reason": "final-dot literal lane gate not PASS; duplicate or indistinguishable raster detected; final placement matches a single-view placement; no incremental disagreement contribution"
+  },
+  "A_only_reasoning_csv": "docs/downloads/h97-a-only-reasoning.csv",
+  "A_only_reasoning_rows": 0,
+  "download_files": [],
+  "download_ok": false,
+  "submit_ok": false,
+  "submit_status": "NO \u2014 literal lane/uniqueness gate blocked release; no slot selected or spent",
+  "stop_reason": "final-dot literal lane gate not PASS; duplicate or indistinguishable raster detected; final placement matches a single-view placement; no incremental disagreement contribution",
+  "lane": {
+    "surface": "PASS",
+    "surface_max_spearman": 0.47251231511409286,
+    "dots": "DUPLICATE/STOP",
+    "dots_max_near_3px_fraction": 1.0,
+    "dots_duplicate": true,
+    "dots_registry_errors": 0
+  },
+  "uniqueness": {
+    "audit_complete": true,
+    "distinct_from_every_comparable_prior": true,
+    "identical_to_a_prior": false,
+    "n_priors_checked": 703,
+    "n_priors_compared": 703,
+    "novel_fraction": 0.0,
+    "equals_literal_prior_union": false,
+    "support_novelty_gate_ok": false
+  },
+  "not_the_union": {
+    "dots": 37654,
+    "union_dots": 37654,
+    "shared_with_union": 21562,
+    "jaccard_with_union": 0.40118334387675364,
+    "subset_of_union": false,
+    "equal_union": false,
+    "equal_single_A": false,
+    "equal_single_B": true,
+    "jaccard_with_single_A": 0.006751066133711215,
+    "jaccard_with_single_B": 1.0,
+    "spearman_candidate_vs_union_field": 0.6756639256127349,
+    "not_union_pass": true,
+    "distinct_from_both_single_view_placements": false,
+    "not_union_definition": "candidate placement is not identical to and not a subset of union-max placement"
+  },
+  "evidence_class": "no download/submission raster written because the strict registered gates did not pass"
+}
