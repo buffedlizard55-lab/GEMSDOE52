@@ -1,0 +1,493 @@
+{
+ "round": "H97",
+ "generated_utc": "2026-10-11T00:39:04+00:00",
+ "preregistration": {
+  "document": "knowledge/97_hypotheses_H97_preregistered.md",
+  "sha256": "0a28e26adb45c5a2f7d5a38b920f2683cc4b8946836ea2742deef2850f63a0d0",
+  "frozen_utc": "2026-10-11T00:03:24+00:00"
+ },
+ "hypothesis": "In the co-training lane, cells where the surface view (B) is confident and the geophysical view (A) is not are the brief's surface-artefact suspects. Where such a cell's linear feature runs down the fall line (gully/rill/drainage) or exactly N-S/E-W on a low-slope floor (section-line road), demoting it and refilling the budget with the next-ranked cells raises credit per dot.",
+ "mechanism": "Hessian (sigma 2 px) of detrended elevation (band 12): the along-feature axis is the smaller-|curvature| eigenvector; FL = |cos| of its angle to the downslope gradient. Fault scarps run across slope (Wallace 1977, doi:10.1130/0016-7606(1977)88<1267:PAAOYF>2.0.CO;2); drainage runs down it. B-only = r_B >= 0.95 and r_A < 0.65 (B = B_DVA2 OOF, A = single_A OOF).",
+ "named_non_fault_mimics": [
+  "drainage lines, gullies and erosion rills (fall-line aligned)",
+  "section-line roads and fences (cardinal, low slope)",
+  "for the vetoed side: fault-controlled drainage and N-S range-front faults are real faults that the veto would wrongly demote"
+ ],
+ "independence": {
+  "single_A_vs_B_DVA2s": {
+   "max_abs_rho": 0.11844062824496879,
+   "n_blocks": 2089,
+   "abandon_at": 0.6
+  },
+  "single_A_vs_B_DVA2": {
+   "max_abs_rho": 0.1498315901166514,
+   "n_blocks": 2089,
+   "abandon_at": 0.6
+  }
+ },
+ "view_A_sufficiency": {
+  "mean": 0.5163195470229551,
+  "min_fold": 0.4668188015259936,
+  "per_fold": [
+   0.5055641399813249,
+   0.6013273376182449,
+   0.4668188015259936,
+   0.49156790896625724
+  ],
+  "gate_mean": 0.6,
+  "gate_min_fold": 0.55,
+  "passes": false
+ },
+ "leakage_canary": {
+  "max_auc": 0.6692638448300084,
+  "bar": 0.9,
+  "fall_line_alone": [
+   0.5186616205738035,
+   0.5138478334269926,
+   0.5350712955921637,
+   0.5275918959401455
+  ],
+  "dcard_alone": [
+   0.5062302616811307,
+   0.5119271917439354,
+   0.5078658145246016,
+   0.5072875259329915
+  ]
+ },
+ "holdout": {
+  "single_A": {
+   "label": "HOLDOUT-DTI",
+   "evaluator": "gems52-pooled-hide-v1",
+   "withheld_positive_px": 53186,
+   "dti": 0.07195422771451437,
+   "ci95": [
+    0.05663648302475561,
+    0.08856584503981733
+   ]
+  },
+  "single_B": {
+   "label": "HOLDOUT-DTI",
+   "evaluator": "gems52-pooled-hide-v1",
+   "withheld_positive_px": 53186,
+   "dti": 0.1745172875994316,
+   "ci95": [
+    0.15231581471183422,
+    0.19629866582738847
+   ]
+  },
+  "B_DVA2": {
+   "label": "HOLDOUT-DTI",
+   "evaluator": "gems52-pooled-hide-v1",
+   "withheld_positive_px": 53186,
+   "dti": 0.19283080212770237,
+   "ci95": [
+    0.1707905490283501,
+    0.21369563093738267
+   ]
+  },
+  "B_DVA2s": {
+   "label": "HOLDOUT-DTI",
+   "evaluator": "gems52-pooled-hide-v1",
+   "withheld_positive_px": 53186,
+   "dti": 0.18450560049152265,
+   "ci95": [
+    0.1631824300487892,
+    0.20589331777838377
+   ]
+  },
+  "random": {
+   "label": "HOLDOUT-DTI",
+   "evaluator": "gems52-pooled-hide-v1",
+   "withheld_positive_px": 53186,
+   "dti": 0.08042564781050282,
+   "ci95": [
+    0.0702226099128376,
+    0.09097325665223467
+   ]
+  },
+  "H97_veto": {
+   "label": "HOLDOUT-DTI",
+   "evaluator": "gems52-pooled-hide-v1",
+   "withheld_positive_px": 53186,
+   "dti": 0.19212165660066666,
+   "ci95": [
+    0.17010642637345486,
+    0.21284148543594295
+   ]
+  },
+  "H97_veto_fl": {
+   "label": "HOLDOUT-DTI",
+   "evaluator": "gems52-pooled-hide-v1",
+   "withheld_positive_px": 53186,
+   "dti": 0.19205997718197074,
+   "ci95": [
+    0.17023736643110815,
+    0.2127325774635711
+   ]
+  },
+  "H97_veto_card": {
+   "label": "HOLDOUT-DTI",
+   "evaluator": "gems52-pooled-hide-v1",
+   "withheld_positive_px": 53186,
+   "dti": 0.19293025775379832,
+   "ci95": [
+    0.17086591515621427,
+    0.21365293832505142
+   ]
+  },
+  "H97_veto_s": {
+   "label": "HOLDOUT-DTI",
+   "evaluator": "gems52-pooled-hide-v1",
+   "withheld_positive_px": 53186,
+   "dti": 0.18420442751192193,
+   "ci95": [
+    0.16320459293034842,
+    0.2053452896185283
+   ]
+  },
+  "H97_scarp_soft": {
+   "label": "HOLDOUT-DTI",
+   "evaluator": "gems52-pooled-hide-v1",
+   "withheld_positive_px": 53186,
+   "dti": 0.1808123674724552,
+   "ci95": [
+    0.16089594777588395,
+    0.20025645876522066
+   ]
+  },
+  "H97_consensus": {
+   "label": "HOLDOUT-DTI",
+   "evaluator": "gems52-pooled-hide-v1",
+   "withheld_positive_px": 53186,
+   "dti": 0.18443534867143022,
+   "ci95": [
+    0.16291500684261273,
+    0.20530727999744475
+   ]
+  }
+ },
+ "primary_minus_B_DVA2": {
+  "label": "HOLDOUT-DTI paired",
+  "delta": -0.000709145527035715,
+  "ci95": [
+   -0.0017500485175852224,
+   0.00034000467482628847
+  ]
+ },
+ "attribution_minus_B_DVA2": {
+  "single_A": {
+   "delta": -0.120876574413188,
+   "ci95": [
+    -0.1397230472926864,
+    -0.10127497144778738
+   ]
+  },
+  "single_B": {
+   "delta": -0.018313514528270763,
+   "ci95": [
+    -0.02668234028915059,
+    -0.010460470763347439
+   ]
+  },
+  "B_DVA2s": {
+   "delta": -0.008325201636179724,
+   "ci95": [
+    -0.015856429230125417,
+    -0.0017513481228909461
+   ]
+  },
+  "random": {
+   "delta": -0.11240515431719955,
+   "ci95": [
+    -0.13212315724132412,
+    -0.0947531218419991
+   ]
+  },
+  "H97_veto": {
+   "delta": -0.000709145527035715,
+   "ci95": [
+    -0.001869530681030069,
+    0.0003195615806285153
+   ]
+  },
+  "H97_veto_fl": {
+   "delta": -0.0007708249457316352,
+   "ci95": [
+    -0.0019227597347837154,
+    0.00024502225911013364
+   ]
+  },
+  "H97_veto_card": {
+   "delta": 9.945562609595116e-05,
+   "ci95": [
+    -0.00013153717701764808,
+    0.00030841802791149373
+   ]
+  },
+  "H97_veto_s": {
+   "delta": -0.008626374615780447,
+   "ci95": [
+    -0.016078490640446544,
+    -0.002143665605574144
+   ]
+  },
+  "H97_scarp_soft": {
+   "delta": -0.012018434655247184,
+   "ci95": [
+    -0.017177673252581384,
+    -0.0067077240069806105
+   ]
+  },
+  "H97_consensus": {
+   "delta": -0.008395453456272156,
+   "ci95": [
+    -0.014779340694956953,
+    -0.002646528411895644
+   ]
+  }
+ },
+ "control_reproduction": {
+  "single_B": {
+   "committed": 0.174571,
+   "measured": 0.1745172875994316,
+   "abs_delta": 5.3712400568395324e-05,
+   "tolerance": 0.001,
+   "PASS": true
+  },
+  "B_DVA2": {
+   "committed": 0.192829,
+   "measured": 0.19283080212770237,
+   "abs_delta": 1.8021277023716475e-06,
+   "tolerance": 0.001,
+   "PASS": true
+  }
+ },
+ "control_dot_strata_per_fold": [
+  {
+   "b_only_erosion": {
+    "n": 595,
+    "mean_credit": 0.11897308246754777
+   },
+   "b_only_road": {
+    "n": 62,
+    "mean_credit": 0.06951038810825014
+   },
+   "b_only_clean": {
+    "n": 4407,
+    "mean_credit": 0.14545942925159847
+   },
+   "not_b_only": {
+    "n": 4336,
+    "mean_credit": 0.16054735154428149
+   }
+  },
+  {
+   "b_only_erosion": {
+    "n": 587,
+    "mean_credit": 0.11771984747583898
+   },
+   "b_only_road": {
+    "n": 42,
+    "mean_credit": 0.08730158730158731
+   },
+   "b_only_clean": {
+    "n": 3183,
+    "mean_credit": 0.15009103125460097
+   },
+   "not_b_only": {
+    "n": 5588,
+    "mean_credit": 0.15451877650890425
+   }
+  },
+  {
+   "b_only_erosion": {
+    "n": 261,
+    "mean_credit": 0.0868438797034401
+   },
+   "b_only_road": {
+    "n": 5,
+    "mean_credit": 0.10185760300002804
+   },
+   "b_only_clean": {
+    "n": 1454,
+    "mean_credit": 0.09958271608024408
+   },
+   "not_b_only": {
+    "n": 7680,
+    "mean_credit": 0.08439703509937731
+   }
+  },
+  {
+   "b_only_erosion": {
+    "n": 508,
+    "mean_credit": 0.10762429661881319
+   },
+   "b_only_road": {
+    "n": 14,
+    "mean_credit": 0.06580790529762406
+   },
+   "b_only_clean": {
+    "n": 2002,
+    "mean_credit": 0.1495191916376324
+   },
+   "not_b_only": {
+    "n": 6876,
+    "mean_credit": 0.09188713749633731
+   }
+  }
+ ],
+ "build_fields": {
+  "stage": "build_fields",
+  "pool_px": 4325298,
+  "eligible_px": 4593171,
+  "b_only_px": 97755,
+  "vetoed_px": 17598,
+  "vetoed_erosion_px": 16152,
+  "vetoed_road_px": 1751,
+  "b_only_erosion_fraction": 0.16522940003068898,
+  "b_only_road_fraction": 0.017912127256917806,
+  "null_erosion": 0.3333333333333333,
+  "null_road": 0.05555555555555555,
+  "a_only_px": 52493,
+  "a_only_candidates": 9277,
+  "finished_utc": "2026-10-11T00:17:20+00:00"
+ },
+ "orientation_descriptives": {
+  "stage": "orient",
+  "grad_threshold": 0.007287036015112266,
+  "slope_median": 3.745419979095459,
+  "defined_fraction": 0.7499999455713711,
+  "fl_ge_erosion_fraction": 0.26778798350856087,
+  "dcard_le_road_fraction": 0.11743237950426841,
+  "catalogue_px": 53186,
+  "catalogue_fl_ge_erosion_fraction": 0.24331591020193283,
+  "catalogue_mean_fl_defined": 0.5542806386947632,
+  "eligible_mean_fl_defined": 0.6300815939903259,
+  "finished_utc": "2026-10-11T00:09:39+00:00",
+  "note": "descriptive only; thresholds were frozen before this ran"
+ },
+ "lane": {
+  "surface_literal": {
+   "verdict": "PASS",
+   "max_spearman": 0.48152430033010124
+  },
+  "dots_literal": {
+   "verdict": "DUPLICATE/STOP",
+   "max_near_3px": 1.0,
+   "worst": "/home/user/GEMSDOE52/work/h61/priors/cd838daadd39de3ccdb9d30025b7feacc4d87c9f.tif"
+  },
+  "dots_policy": {
+   "verdict": "DUPLICATE/STOP",
+   "max_near_3px": 0.9405640834971052,
+   "worst": "/home/user/GEMSDOE52/work/h61/priors/5ae4b6b4324c19727f8304eb63fc5610ad23b9d9.tif",
+   "probes_excluded": 15
+  },
+  "placement": "quota (run_h73.place_lane, scored-only supports)",
+  "n_registry": 602
+ },
+ "uniqueness": {
+  "n_priors_checked": 602,
+  "candidate_decoded_sha256": "e699626ed9344125190467703b307b173cd3ad30993e3a6945e9f353a9e90800",
+  "canonical_pattern_unique": true,
+  "identical_to_a_prior": false,
+  "distinct_from_every_comparable_prior": true,
+  "audit_complete": true,
+  "n_priors_compared": 602,
+  "key_semantics": "canonical_pattern_unique is False if ANY prior is byte-identical OR unreadable; distinct_from_every_comparable_prior isolates the first condition and audit_complete isolates the second",
+  "equals_literal_prior_union": false,
+  "research_publication_ok": true,
+  "support_novelty_gate_ok": false,
+  "gate_correction": "Original >=20% support novelty retained as a FAILED diagnostic, not silently waived for slot promotion. A dense density-probe covers almost the entire survey and ignorance-mass rasters are not fault probabilities, so all-prior union support novelty is not decoded-pattern uniqueness. Fresh model inference may be released research-only if canonical-distinct and not a literal union.",
+  "union_px": 5373930,
+  "novel_vs_all_priors": 0,
+  "novel_fraction": 0.0,
+  "prior_px_dropped": 5336276,
+  "relation_to_union": "subset-of-union",
+  "ok": false,
+  "top_argument_ignored": false,
+  "rule": "distinct decoded values from every supplied prior, >=20% new support against binary/>=0.5 continuous proposal union, and selective prior-pixel removal",
+  "scope": "Only the supplied, aligned accessible inventory; not a proof against all private/unlinked submissions"
+ },
+ "not_the_union": {
+  "dots_emitted": 37654,
+  "dots_equal_union": false,
+  "dots_subset_of_union": false,
+  "dots_equal_single_A": false,
+  "dots_equal_B_DVA2": false,
+  "jaccard_with_union": 0.2935740419465105,
+  "jaccard_with_single_A": 0.007721026080207678,
+  "jaccard_with_B_DVA2_unvetoed": 0.8096359485762346,
+  "jaccard_with_single_B": 0.0843172262857801,
+  "dots_not_in_union": 20563,
+  "dots_not_in_unvetoed_B_DVA2": 3961,
+  "not_union_pass": true
+ },
+ "raster": {
+  "file": "submission/gems52-h97-fallline-veto-dva2-37654px-20261011T003404Z-zeros.tif",
+  "bytes": 142197,
+  "sha256": "5a9ce7cc3d10493f3fd86ba4c9887f5f198e2f5b007e301b8726e89b3644828b",
+  "download": {
+   "tif": "docs/downloads/h97-candidate.tif",
+   "zip": "docs/downloads/h97-candidate.zip",
+   "tif_sha256": "5a9ce7cc3d10493f3fd86ba4c9887f5f198e2f5b007e301b8726e89b3644828b",
+   "zip_sha256": "6668efec7db4021ffbf1b278c34699a55de87c7ca5ba1ea29af11360d8a82650"
+  }
+ },
+ "validator": {
+  "count": 1,
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "shape": [
+   3730,
+   3292
+  ],
+  "crs_match": true,
+  "shape_match": true,
+  "transform_match": true,
+  "bounds_match": true,
+  "nodata": null,
+  "nan": 0,
+  "infinite": 0,
+  "nan_inside_footprint": 0,
+  "min": 0.0,
+  "max": 1.0,
+  "values": [
+   0.0,
+   1.0
+  ],
+  "ones": 37654,
+  "ones_outside_footprint": 0,
+  "range_ok": true,
+  "PASS": true
+ },
+ "submission": {
+  "name": "h97-fallline-veto-dva2-37654px-20261011T003404Z",
+  "note": "H97 co-train veto: B-only dots on fall-line/cardinal axes demoted (Hessian), DVA2 surface field, 3px, 200m ring; research",
+  "note_chars": 121
+ },
+ "a_only_reasoning": {
+  "csv": "docs/downloads/h97-a-only-reasoning.csv",
+  "rows": 9277
+ },
+ "gates": {
+  "controls_reproduce": true,
+  "leakage_canary": true,
+  "independence_not_abandoned": true,
+  "holdout_bar": true,
+  "holdout_paired_vs_B_DVA2": false,
+  "lane_surface_literal": true,
+  "lane_dots": false,
+  "uniqueness": true,
+  "format": true,
+  "not_the_union": true
+ },
+ "failed_gates": [
+  "holdout_paired_vs_B_DVA2",
+  "lane_dots"
+ ],
+ "verdict": "negative",
+ "ok_to_download": true,
+ "ok_to_submit": false,
+ "submission_slots_used": 0,
+ "experiments_used": "3 of 3"
+}

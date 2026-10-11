@@ -1,6 +1,6 @@
 {
   "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified. | H61 merge: IR-H61-001..009 appended from the H61 branch; main's repaired schema and numbering retained.",
-  "generated": "2026-10-10T21:58:00Z ; H90 append (IR-H90-001..009)",
+  "generated": "2026-10-10T21:58:00Z ; H90 append (IR-H90-001..009) ; H97 append (IR-H97-001..005)",
   "entries": [
     {
       "id": "IR-30-029",
@@ -3745,6 +3745,46 @@
       "what_it_is": "evidence/h87_build.json states 'HOLDOUT-DTI (not yet run; this is the build receipt, not a score)' while the H87 README block printed 'Status: Submission built and validated' and 'VERDICT: PROMOTE'. No h87 holdout receipt exists in evidence/.",
       "how_we_know": "ls evidence/ | grep h87 shows only h87_build.json; README.md at bc26fe2 carries the quoted strings.",
       "disposition": "H87 is labelled build-receipt-only everywhere in the new README/site; the promotion language is removed. If the H87 family is ever selected for a slot it must first run the same hide-and-recover instrument."
+    },
+    {
+      "id": "IR-H97-001",
+      "title": "The holdout-best 'View B' learner B_DVA2 is not a pure surface view",
+      "status": "open - reported; lane-pure arm added",
+      "what_it_is": "scripts/run_h82.py BANDS = {12 det_elev, 19 det_elev_slope, 13 iso_grav_anom, 15 depth_to_base_surf, 18 iso_grav_anom_hg}; B_DVA2 = View B + DVA2 of all five, so three gravity/basement (View-A) bands sit inside the surface learner. Its 'B-confident / A-not' disagreement is partly A-vs-A.",
+      "how_we_know": "H97 holdout: B_DVA2 0.192831 vs lane-pure B_DVA2s (DVA2 of bands 12/19 only) 0.184506; paired -0.008325 [-0.015856, -0.001751] (evidence/h97_holdout.json).",
+      "disposition": "Every co-training round must report the lane-pure View B next to B_DVA2; do not call B_DVA2 'surface-only'."
+    },
+    {
+      "id": "IR-H97-002",
+      "title": "Preregistered erosion null fraction ignored the undefined-gradient mask",
+      "status": "closed - corrected in reporting, rule unchanged",
+      "what_it_is": "knowledge/97 states the isotropic erosion null as 1/3, but FL is defined only on the top 75 % of gradient magnitude (FL = 0 elsewhere), so the correct null is 0.75 x 1/3 = 0.25.",
+      "how_we_know": "evidence/h97_orient.json: defined_fraction 0.7500, all-eligible erosion fraction 0.2678; B-only pool fraction 0.1652 (evidence/h97_build_fields.json).",
+      "disposition": "Only the descriptive comparison changes; the veto rule and every score are as frozen."
+    },
+    {
+      "id": "IR-H97-003",
+      "title": "Leakage canary negatives were subsampled (deviation from H84's full negatives)",
+      "status": "closed - disclosed",
+      "what_it_is": "scripts/run_h97.py stage_fit draws a seeded 400,000-cell subsample of region negatives (> 5 px from catalogue) per fold for the single-feature AUC canary; knowledge/97 did not say so.",
+      "how_we_know": "evidence/h97_fit.json canary_negatives field; max canary AUC 0.6693.",
+      "disposition": "A subsample of 400k gives AUC standard errors far below the 0.90-vs-0.67 margin; no alarm either way."
+    },
+    {
+      "id": "IR-H97-004",
+      "title": "README top block (H95) and docs/index.html title (H96) disagreed on the current round",
+      "status": "closed - superseded by the H97 blocks",
+      "what_it_is": "At main 7eb226d README.md began with <!--H95-README--> while docs/index.html's <title> and AGENTS.md's first block said H96: parallel merges (PR #101 then #102) overwrote each other's top-of-file status.",
+      "how_we_know": "grep -n '^<!--H9' README.md -> only H95 and H91 blocks; docs/index.html line 6 title 'current status (H96)'.",
+      "disposition": "H97 inserts delimited blocks at the top of README, AGENTS and every landing page; earlier blocks are preserved."
+    },
+    {
+      "id": "IR-H97-005",
+      "title": "H97 dots are a lane near-duplicate of this repository's own H84 file",
+      "status": "open - reported; SUBMIT NO",
+      "what_it_is": "The veto changes only part of the B_DVA2 emission, so the H97 dots sit within 3 px of the H84 file's dots (H84 = B_DVA2 + harmonic anisotropy channels, same family) far above that raster's own coverage.",
+      "how_we_know": "evidence/h97_lane.json full_dots: H84 near-3px 0.8852 vs its 3 px coverage 0.1556; policy verdict DUPLICATE/STOP (max 0.9406, a dense raster with coverage 0.53); literal verdict DUPLICATE/STOP (universal-coverage probes).",
+      "disposition": "Logged as a duplicate per the parallel-run protocol; the raster is a research artefact only. Any future B_DVA2-family emission must change the ranking materially (or use quota placement vs the H82/H84 files)."
     }
   ],
   "merge_note": "Entries appended in chronological order of first recording, per-round prefixes only. Merged with arena/90369109 session entries IR-H96-001..005 (bidirectional co-training disagreement round; labels H88 and H95 were taken on main by parallel sessions, so that round is H96)."
