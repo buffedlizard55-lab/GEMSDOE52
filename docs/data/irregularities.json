@@ -1,6 +1,6 @@
 {
   "about": "Machine-readable irregularities register. src/gems52/features.py has cited 'registry/irregularities.json IR-52-001' since the file was written; the file did not exist until this session (IR-52-021). Prose twins: knowledge/06 and docs/irregularities.html. Every entry here was verified in this checkout against bytes on disk or an official source fetched live; nothing is inherited unverified. | H61 merge: IR-H61-001..009 appended from the H61 branch; main's repaired schema and numbering retained.",
-  "generated": "2026-10-11T00:40:00Z",
+  "generated": "2026-10-11T01:20:00Z",
   "entries": [
     {
       "id": "IR-30-029",
@@ -3748,43 +3748,120 @@
     },
     {
       "id": "IR-H97-001",
-      "round": "H97/H98 (2026-10-10)",
-      "severity": "high",
-      "status": "resolved in code; re-verified after healing",
-      "title": "Sandbox filesystem zeroed the first 4 KiB page of written .npy channel arrays after the write check passed",
-      "what_it_is": "34 of 36 channel arrays in work/h97/features (and 2 of 54 in work/h98/features) read 0.0 at flat indices 0-991 (992 float32 = 3,968 bytes = one page after the 128-byte .npy header) while fresh recomputation gives 0.959-0.985. The old array-comparison write check passed, so the loss happened after verification. New instance of IR-H82-002 / IR-H84-003.",
-      "how_we_know": "Digest audit of every channel against its manifest pin, then a fresh recomputation of DVA_rtp_aniso_l1 compared elementwise with the on-disk array: exactly indices 0-991 differ, on-disk 0.0.",
-      "handling": "gems52.structural.save_verified now byte-compares the file on disk against the in-memory image; run_h97.heal_channels() recomputes any channel whose digest moved and records healed_channels/healed_utc in the manifest; heal runs first in every fit/holdout/build. After healing, the H97 fit and holdout reproduced every number bit-for-bit (0.034799 / 0.128009 / 0.081910 / 0.164883 / 0.080426), which is the evidence the receipts were computed from correct bytes.",
-      "disposition": "Closed for H97/H98; the general hazard remains (page loss is not reproducible on demand). Never trust a cached Bank without the run-start digest check.",
-      "identifier_note": "Entry frozen as IR-H88-00x, renumbered to IR-H97-00x by IR-H97-008 (identifier-only; no content change)."
+      "round": "H97 (2026-10-10)",
+      "severity": "medium",
+      "status": "open - reported, not waived",
+      "title": "The literal lane stop-rule is unsatisfiable in this repository: one registry prior covers 99.90% of the eligible footprint",
+      "what_it_is": "The frozen lane protocol stops a candidate when more than 70% of its dots fall inside the 3 px halo of any single registry raster. One prior - data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif, a lattice raster with finite values on 99.9027% of the eligible footprint - puts 99.9230% of this round's 37,654 dots inside its halo, so the literal verdict is DUPLICATE/STOP for ANY non-empty emission in this area, not for this candidate in particular. The policy layer, which is the layer the round relied on, reports max Spearman 0.025695 over 146 informative priors and a max near-3px fraction of 0.414564 against this repository's own H87 file.",
+      "how_we_know": "evidence/h97_build.json `lane` block and the full per-prior table in evidence/h97_lane_dots.json (universal_coverage_probes 1, probe_coverage 0.999027, literal_max_near_3px_fraction 0.999230).",
+      "handling": "Both verdicts are printed verbatim wherever the file is offered; no gate was weakened, no prior was removed from the comparison set, and no uniqueness threshold was moved.",
+      "disposition": "Open: a future round should decide whether universal-coverage probes belong in the near-3px arm of the rule or whether their halo fraction should be normalised by their own coverage. The same instrument defect is filed for other rounds of this day (IR-H93-001, IR-H95-001..005)."
     },
     {
       "id": "IR-H97-002",
-      "round": "H97/H98 (2026-10-10)",
+      "round": "H97 (2026-10-10)",
+      "severity": "low",
+      "status": "closed - duplicate quarantined, receipts pass",
+      "title": "The builder's novelty gate scans the directory it writes into, so a second run judged the candidate against its own previous output",
+      "what_it_is": "scripts/build_h97_submission.py writes the candidate into submission/ and then asks the repository-wide uniqueness gate to judge novelty against every prior in the scanned roots - which, on a re-run with the previous artifact still present, includes the earlier byte-identical copy of the same round. The gate reported the duplicate correctly; nothing was relaxed to get past it.",
+      "how_we_know": "Observed at build time in this session (the gate flagged the round's own earlier artifact); after the stale copies were moved out of the scanned roots, the final receipts record canonical_pattern_unique true, identical_to_a_prior false and novel fraction 0.672518 over 147 priors, and check_site.py re-verifies the served download byte-for-byte against the receipt.",
+      "handling": "Stale duplicates were quarantined in a scratch directory outside the repository (it does not persist). The shipped tree holds exactly one H97 artifact plus its byte-identical site copy and ZIP.",
+      "disposition": "Closed for this round. The cleaner fix for a future round is to exclude the candidate's own absolute path from the prior scan instead of relying on working-tree discipline."
+    },
+    {
+      "id": "IR-H97-003",
+      "round": "H97 (2026-10-10)",
+      "severity": "medium",
+      "status": "open - contradiction kept, not resolved",
+      "title": "The standing brief's prior for the B-only case is contradicted by this session's own off-catalogue screen; both are kept",
+      "what_it_is": "The brief says a cell where the surface view is confident and the potential-field view abstains should be read as a suspect surface artifact. The round's attribution-only screen on off-catalogue truth (SGMC faults at least 300 m from the competition catalogue) put exactly that lane-compliant arm on top of every arm measured: b_only 0.109480 against a prevalence-matched control of 0.051925, while this round's A-only disagreement field scored 0.005023 - below the control.",
+      "how_we_know": "evidence/h97_channel_screen.json, whose own receipt states that it is one instrument at one budget and that attribution cannot promote an arm.",
+      "handling": "The brief's prior is kept verbatim and the measurement is published beside it rather than replacing it. The arm was frozen for H98 in registry/h98_preregistration.json before H98's own fit and then validated on the other instrument; the screen itself is explicitly not a promotion path.",
+      "disposition": "Open, unresolved by design: H98's validation is negative on the catalogue instrument, so neither reading currently has a promotable measurement behind it."
+    },
+    {
+      "id": "IR-H97-004",
+      "round": "H97 (2026-10-10)",
+      "severity": "high",
+      "status": "open by design - both numbers published",
+      "title": "One arm, two instruments, opposite signs: +0.057555 off-catalogue versus -0.018885 on the pooled hide-and-recover instrument",
+      "what_it_is": "The same pre-registered arm scores +0.057555 above its matched random control on the off-catalogue screen (0.109480 against 0.051925) and -0.018885 on the pooled hide-and-recover instrument (0.058435 [0.043370, 0.075525] against random 0.077320 [0.068767, 0.087786]; paired 95% CI [-0.030936, -0.007620]). The truth population - SGMC faults off the catalogue versus withheld catalogue truth - flips the sign, not the method.",
+      "how_we_know": "evidence/h97_channel_screen.json against evidence/h98_holdout.json (`pooled.paired_differences.random`, evaluator gems52-pooled-hide-v1, 60,894 withheld positives, 4 folds).",
+      "handling": "Both numbers are printed together in docs/h97.html, docs/h98.html, README.md and knowledge/98 and knowledge/100; neither is averaged and neither appears alone.",
+      "disposition": "Open by design: any future arm selected on the screening number must be validated on the other instrument before it can be called anything better than a hypothesis."
+    },
+    {
+      "id": "IR-H97-006",
+      "round": "H97 (2026-10-10)",
+      "severity": "high",
+      "status": "closed - found by manual review and fixed before publication",
+      "title": "Two defects in the published per-dot reasoning CSV: pixel indices used as projected coordinates, and the lidar coverage band published under a scarp name",
+      "what_it_is": "docs/downloads/h97-a-only-reasoning.csv.gz was published with (a) lon/lat computed by feeding pixel indices straight into the reprojection, so every row read lat 0.0 beside a plausible-looking longitude (-121.48 for a Nevada site), and (b) a column named lidar_scarp_3px that actually held band 12 of data/external/lidar_scarp_features_u8.tif - the coverage mask, value 1 where lidar data exist - rather than any scarp response at all.",
+      "how_we_know": "Read row-by-row from the published file: the first row (pixel 0,630) reported lon -121.4831, lat 0.0, while the site's true UTM (306400, 4508500) reprojects to -119.2916883, 40.7046771. The 12-band lidar stack's last band is `valid` with 3,894,460 nonzero cells, and the builder read that band as the scarp field.",
+      "handling": "Fixed in scripts/build_h97_submission.py before publication: coordinates now come from the file's own affine transform (pixel to metres to degrees, cross-checked with pyproj; first row -119.291688, 40.704677), and the CSV now carries lidar_scarp_max_3px (maximum of the eight scarp-response bands within 300 m, 7x7 maximum filter = 3 px), lidar_valid, and locally_falsified_by_lidar, with a falsifier sentence that states which case applies at that dot (LIDAR_SCARP_STRONG = 128).",
+      "disposition": "Closed before publication. The raster bytes are unchanged (SHA-256 eed99c0b... before and after the fix, because the field, placement and budget never depended on the two defective values). No test in the repository covers either column, which is why the class is recorded here."
+    },
+    {
+      "id": "IR-H98-001",
+      "round": "H98 (2026-10-10)",
+      "severity": "medium",
+      "status": "open - reported, not waived",
+      "title": "The H98 lane pre-check repeats the literal-rule instrument defect: one universal-coverage prior stops any non-empty emission",
+      "what_it_is": "evidence/h98_lane_precheck.json records literal DUPLICATE/STOP against the same probe raster as H97 (data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif, 99.9% coverage of the eligible footprint), while the policy layer passes at max Spearman 0.010828 over 148 informative priors and a max near-3px fraction of 0.405349 against docs/downloads/gemsdoe52-cotrain-disagree-submodular-20261006-zeros.tif.",
+      "how_we_know": "The pre-check receipt itself. H98 ended negative and produced no artifact, so this pre-check is that round's only lane measurement.",
+      "handling": "Reported in knowledge/100 and on the H98 page; not waived, and the probe was not removed from the comparison set.",
+      "disposition": "Open - same decision needed as IR-H97-001."
+    },
+    {
+      "id": "IR-H97-005",
+      "round": "H97 (2026-10-10)",
+      "severity": "low",
+      "status": "closed - repaired on main by other sessions before this branch landed",
+      "title": "The check_site historical-string debt this session recorded was already repaired on main by the time the round landed",
+      "what_it_is": "While this round was being prepared, scripts/check_site.py failed on docs/index.html: 20 problems naming the legacy H58/H57/R5/'do not upload' sections (21 before this session repaired the pages it owned). None of them named a page or file owned by this round; the cause was an earlier session replacing docs/index.html with a stand-alone page, which is also filed on main as IR-H93-001.",
+      "how_we_know": "check_site.py was run three times over the course of the round; the last run on the merged tree (main plus this round) returned exit 0 with 0 problems over 126 pages and 438 data files, after the parallel H93/H96 sessions rebuilt the landing page.",
+      "handling": "Nothing was weakened to reach that state: this session did not edit scripts/check_site.py, removed no assertion, and moved no threshold. The page repairs this session did make were to pages it published itself.",
+      "disposition": "Closed by other sessions' repair. Recorded here because an earlier count of 20 problems was logged as this round's observation and a reviewer comparing the two numbers would otherwise find them contradictory."
+    },
+    {
+      "id": "IR-H99-001",
+      "round": "H99/H100 (2026-10-10)",
+      "severity": "high",
+      "status": "resolved in code; re-verified after healing",
+      "title": "Sandbox filesystem zeroed the first 4 KiB page of written .npy channel arrays after the write check passed",
+      "what_it_is": "34 of 36 channel arrays in work/h99/features (and 2 of 54 in work/h100/features) read 0.0 at flat indices 0-991 (992 float32 = 3,968 bytes = one page after the 128-byte .npy header) while fresh recomputation gives 0.959-0.985. The old array-comparison write check passed, so the loss happened after verification. New instance of IR-H82-002 / IR-H84-003.",
+      "how_we_know": "Digest audit of every channel against its manifest pin, then a fresh recomputation of DVA_rtp_aniso_l1 compared elementwise with the on-disk array: exactly indices 0-991 differ, on-disk 0.0.",
+      "handling": "gems52.structural.save_verified now byte-compares the file on disk against the in-memory image; run_h99.heal_channels() recomputes any channel whose digest moved and records healed_channels/healed_utc in the manifest; heal runs first in every fit/holdout/build. After healing, the H99 fit and holdout reproduced every number bit-for-bit (0.034799 / 0.128009 / 0.081910 / 0.164883 / 0.080426), which is the evidence the receipts were computed from correct bytes.",
+      "disposition": "Closed for H99/H100; the general hazard remains (page loss is not reproducible on demand). Never trust a cached Bank without the run-start digest check.",
+      "identifier_note": "Entry frozen as IR-H88-00x, renumbered to IR-H99-00x by IR-H99-008 (identifier-only; no content change)."
+    },
+    {
+      "id": "IR-H99-002",
+      "round": "H99/H100 (2026-10-10)",
       "severity": "high",
       "status": "open - literal rule reported, not waived",
       "title": "Lane dot rule fires against a universal-coverage probe (r13-lattice) for any dot set, including random",
       "what_it_is": "The literal 70 %-within-3-px dot rule reports 1.0000 against data/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif, because that raster's 206,895 positive pixels are within 3 px of 100.000 % of the 4,325,298 allowed pixels. A control of 5,000 uniformly random dots from the same allowed set also scores 1.0000. Extends IR-H85-009.",
-      "how_we_know": "Distance transform of the probe over the allowed set: 4,325,298/4,325,298 allowed pixels are within 3 px; random-dot control computed in this session (evidence in evidence/h97_build.json lane.per_prior and the session log).",
+      "how_we_know": "Distance transform of the probe over the allowed set: 4,325,298/4,325,298 allowed pixels are within 3 px; random-dot control computed in this session (evidence in evidence/h99_build.json lane.per_prior and the session log).",
       "handling": "Reported literally in the build card (duplicate=true, one offender). The informative reading excludes the probe: maximum near-3-px fraction 0.3828 against the 0.70 bar, max Spearman 0.0179 against the 0.90 bar.",
       "disposition": "Open for the selector: the literal rule cannot be satisfied by any unique candidate while a universal-coverage probe is in the prior set.",
-      "identifier_note": "Entry frozen as IR-H88-00x, renumbered to IR-H97-00x by IR-H97-008 (identifier-only; no content change)."
+      "identifier_note": "Entry frozen as IR-H88-00x, renumbered to IR-H99-00x by IR-H99-008 (identifier-only; no content change)."
     },
     {
-      "id": "IR-H97-003",
-      "round": "H97/H98 (2026-10-10)",
+      "id": "IR-H99-003",
+      "round": "H99/H100 (2026-10-10)",
       "severity": "medium",
       "status": "verified - metadata mismatch (re-confirms IR-H85-005)",
       "title": "training_features.tif band 6 is radiometric total count by bytes despite its magnetic 'tc' tag",
       "what_it_is": "Band 6 carries Spearman 1.0000 with the GeoDAWN radiometric total-count grid (data/external/geodawn_rad_u8.tif band 4, USGS DOI 10.5066/P93LGLVQ) while its tag says tilt angle / total curvature of a magnetic derivative.",
       "how_we_know": "Rank correlation recomputed from bytes; band 6 bytes are identical to the radiometric grid under monotone rescaling.",
-      "handling": "The H97/H98 view split treats band 6 as View B (surface), per the brief's 'any radiometric bands present in training_features.tif'.",
+      "handling": "The H99/H100 view split treats band 6 as View B (surface), per the brief's 'any radiometric bands present in training_features.tif'.",
       "disposition": "Recorded; the organiser tag is unreliable for this band.",
-      "identifier_note": "Entry frozen as IR-H88-00x, renumbered to IR-H97-00x by IR-H97-008 (identifier-only; no content change)."
+      "identifier_note": "Entry frozen as IR-H88-00x, renumbered to IR-H99-00x by IR-H99-008 (identifier-only; no content change)."
     },
     {
-      "id": "IR-H97-004",
-      "round": "H97/H98 (2026-10-10)",
+      "id": "IR-H99-004",
+      "round": "H99/H100 (2026-10-10)",
       "severity": "high",
       "status": "resolved in docs - H87 PROMOTE claim withdrawn",
       "title": "The previous front page said 'VERDICT: PROMOTE' for H87 although no H87 holdout was ever run",
@@ -3792,11 +3869,11 @@
       "how_we_know": "grep of evidence/ for h87 holdout receipts (none), and the build card's own evidence_class string.",
       "handling": "The front page and executive summary now mark H87 as research-only, do-not-upload, with the missing-holdout reason stated; check_site.py passes with 0 problems (was 22 pre-existing).",
       "disposition": "Closed in docs. Any future publisher must not label a build-only artifact as promoted.",
-      "identifier_note": "Entry frozen as IR-H88-00x, renumbered to IR-H97-00x by IR-H97-008 (identifier-only; no content change)."
+      "identifier_note": "Entry frozen as IR-H88-00x, renumbered to IR-H99-00x by IR-H99-008 (identifier-only; no content change)."
     },
     {
-      "id": "IR-H97-005",
-      "round": "H97/H98 (2026-10-10)",
+      "id": "IR-H99-005",
+      "round": "H99/H100 (2026-10-10)",
       "severity": "high",
       "status": "carried from IR-H84-007 / IR-H85-003; still open",
       "title": "Concurrent-session H83 round was never holdout-validated; its SUBMIT YES is withdrawn",
@@ -3804,43 +3881,43 @@
       "how_we_know": "Repository-wide search for an H83 holdout receipt on the same fold set (none found); prior IRs already established this.",
       "handling": "Retained as a warning in the round documentation; no action taken on the H83 files themselves.",
       "disposition": "Open - belongs to the selector/owner, not to this round.",
-      "identifier_note": "Entry frozen as IR-H88-00x, renumbered to IR-H97-00x by IR-H97-008 (identifier-only; no content change)."
+      "identifier_note": "Entry frozen as IR-H88-00x, renumbered to IR-H99-00x by IR-H99-008 (identifier-only; no content change)."
     },
     {
-      "id": "IR-H97-006",
-      "round": "H97/H98 (2026-10-10)",
+      "id": "IR-H99-006",
+      "round": "H99/H100 (2026-10-10)",
       "severity": "high",
       "status": "resolved in code and in the shipped card",
-      "title": "The first H97 build card hard-coded the all-bands-finite count 60,894 and put the paired CI in the ci95 slot",
-      "what_it_is": "scripts/build_h97_submission.py wrote holdout.withheld_positive_px=60894 (the all-19-bands-finite mask count; the hide-and-recover instrument withheld 53,186) and stored the paired primary-minus-random CI [-0.054106, -0.037194] under the plain ci95 key, whose meaning is the arm's own CI.",
-      "how_we_know": "Cross-check of evidence/h97_build.json against evidence/h97_holdout.json (pooled.scores.xtex_dis.withheld_positive_pixels=53186, ci95=[0.0269377, 0.0440110], pooled.paired_differences.random.ci95=[-0.0541058, -0.0371938]).",
-      "handling": "The builder now reads the holdout receipt at build time (_sc/_pair from evidence/h97_holdout.json); the shipped evidence/h97_build.json and submission/*.json were patched in place with the full-precision values plus a correction note; the artifact bytes and its sha256 are unchanged.",
+      "title": "The first H99 build card hard-coded the all-bands-finite count 60,894 and put the paired CI in the ci95 slot",
+      "what_it_is": "scripts/build_h99_submission.py wrote holdout.withheld_positive_px=60894 (the all-19-bands-finite mask count; the hide-and-recover instrument withheld 53,186) and stored the paired primary-minus-random CI [-0.054106, -0.037194] under the plain ci95 key, whose meaning is the arm's own CI.",
+      "how_we_know": "Cross-check of evidence/h99_build.json against evidence/h99_holdout.json (pooled.scores.xtex_dis.withheld_positive_pixels=53186, ci95=[0.0269377, 0.0440110], pooled.paired_differences.random.ci95=[-0.0541058, -0.0371938]).",
+      "handling": "The builder now reads the holdout receipt at build time (_sc/_pair from evidence/h99_holdout.json); the shipped evidence/h99_build.json and submission/*.json were patched in place with the full-precision values plus a correction note; the artifact bytes and its sha256 are unchanged.",
       "disposition": "Closed. Rule for every future card: quote the receipt, never hand-copy a number.",
-      "identifier_note": "Entry frozen as IR-H88-00x, renumbered to IR-H97-00x by IR-H97-008 (identifier-only; no content change)."
+      "identifier_note": "Entry frozen as IR-H88-00x, renumbered to IR-H99-00x by IR-H99-008 (identifier-only; no content change)."
     },
     {
-      "id": "IR-H97-007",
-      "round": "H97/H98 (2026-10-10)",
+      "id": "IR-H99-007",
+      "round": "H99/H100 (2026-10-10)",
       "severity": "medium",
       "status": "resolved in this round",
       "title": "scripts/check_site.py reported 22 pre-existing failures at HEAD (continuation of IR-H86-014)",
-      "what_it_is": "The 22 failures were H58/R5/H57/H55-EDGE/marker literals missing from the rewritten home page and the H87 executive summary, not H97 regressions.",
+      "what_it_is": "The 22 failures were H58/R5/H57/H55-EDGE/marker literals missing from the rewritten home page and the H87 executive summary, not H99 regressions.",
       "how_we_know": "Baseline run before editing the site reproduced exactly 22 problems; a second full run after the rewrite reports 0.",
-      "handling": "docs/index.html, docs/executive-summary.html and docs/downloads/index.html were rebuilt with the H97 round, the mandated marker literals, and the archive disclosures; check_site.py exits 0.",
+      "handling": "docs/index.html, docs/executive-summary.html and docs/downloads/index.html were rebuilt with the H99 round, the mandated marker literals, and the archive disclosures; check_site.py exits 0.",
       "disposition": "Closed on this branch.",
-      "identifier_note": "Entry frozen as IR-H88-00x, renumbered to IR-H97-00x by IR-H97-008 (identifier-only; no content change)."
+      "identifier_note": "Entry frozen as IR-H88-00x, renumbered to IR-H99-00x by IR-H99-008 (identifier-only; no content change)."
     },
     {
-      "id": "IR-H97-008",
-      "round": "H97/H98 (2026-10-10)",
+      "id": "IR-H99-008",
+      "round": "H99/H100 (2026-10-10)",
       "severity": "high",
       "status": "resolved in this session",
-      "title": "Round identifier collision, twice: frozen as H88/H89, then H92/H93, now H97/H98",
+      "title": "Round identifier collision, twice: frozen as H88/H89, then H92/H93, now H99/H100",
       "what_it_is": "This round was preregistered and run as H88 (texture-disagreement co-training) and H89 (long-lag follow-up). A parallel session merged its own, different H88/H89 round to main (PR #94), taking knowledge/80,81,83, registry/h89_preregistration.json, scripts/run_h88.py, evidence/h88_*|h89_* and docs/downloads/h88-candidate.*. The round was renamed to H92/H93; at the next merge, main had also taken H92, H93, H94, H95 and H96 for further parallel rounds, including another docs/downloads/h92-candidate.tif and another h93-abs-cotrain file.",
       "how_we_know": "git fetch origin main showed origin/main advanced bc26fe2..46a7e6b (the H88/H89 collision) and then to 5b8c81c; git ls-tree -r origin/main lists docs/downloads/h92-candidate.tif, docs/data/h93_*.json and knowledge/88_h92_hypotheses_ranked.md through knowledge/93_hypotheses_H95_preregistered_frozen_as_H88.md as already taken. 'git merge origin/main' additionally refused with 'unrelated histories' on this clone (the environment re-cloned the workspace mid-session), so the union tree was rebuilt from main's tip plus this round's files.",
-      "handling": "Second identifier-only rename of the same frozen round, to H97/H98: 39 paths (knowledge/97|98|99|100, registry/h97|h98_preregistration.json, scripts/run_h97.py, scripts/build_h97_submission.py, scripts/h97_full_reasoning.py, evidence/h97_*|h98_*, docs/data/h97_*|h98_*, submission/gems52-h97-*, submission/H97_LATEST.txt, docs/downloads/h97-candidate.*), and this round's irregularity ids IR-H88-00x -> IR-H97-00x. Both preregistration pins were re-verified after the substitution; evidence/h97_identifier_rename.diff holds every changed line, and the substitution chain (h88->h92->h97, h89->h93->h98, knowledge numbers 80-83 -> 88-91 -> 97-100) reproduces the frozen texts byte for byte from the bytes first committed at 8e546ee. Artifact bytes unchanged: sha256 dbbdc0715d8fac843e45e997267aab141df233b6e482206db7f1279d560a9914; only filenames and the portal submission name changed.",
-      "disposition": "resolved in this session. Both pins verify; no hypothesis content changed; section 4 of both preregistration documents remains the empty placeholder; the ASCII artifact manifest never leaked into any raster. A blind token rewrite during the first rename had also touched main's own IR-H88-* entries in a stale merge snapshot; that snapshot was discarded before this commit and the final registry is main's tip plus IR-H97-001..008 only (verified: no id carries two meanings)."
+      "handling": "Second identifier-only rename of the same frozen round, to H99/H100: 39 paths (knowledge/101|98|99|100, registry/h99|h100_preregistration.json, scripts/run_h99.py, scripts/build_h99_submission.py, scripts/h99_full_reasoning.py, evidence/h99_*|h100_*, docs/data/h99_*|h100_*, submission/gems52-h99-*, submission/H99_LATEST.txt, docs/downloads/h99-candidate.*), and this round's irregularity ids IR-H88-00x -> IR-H99-00x. Both preregistration pins were re-verified after the substitution; evidence/h99_identifier_rename.diff holds every changed line, and the substitution chain (h88->h92->h99, h89->h93->h100, knowledge numbers 80-83 -> 88-91 -> 97-100) reproduces the frozen texts byte for byte from the bytes first committed at 8e546ee. Artifact bytes unchanged: sha256 dbbdc0715d8fac843e45e997267aab141df233b6e482206db7f1279d560a9914; only filenames and the portal submission name changed.",
+      "disposition": "resolved in this session. Both pins verify; no hypothesis content changed; section 4 of both preregistration documents remains the empty placeholder; the ASCII artifact manifest never leaked into any raster. A blind token rewrite during the first rename had also touched main's own IR-H88-* entries in a stale merge snapshot; that snapshot was discarded before this commit and the final registry is main's tip plus IR-H99-001..008 only (verified: no id carries two meanings)."
     }
   ],
-  "merge_note": "Entries appended in chronological order of first recording, per-round prefixes only. Merged with arena/90369109 session entries IR-H96-001..005 (bidirectional co-training disagreement round; labels H88 and H95 were taken on main by parallel sessions, so that round is H96). | H97/H98 merge: this round was frozen as H88/H89, renamed to H92/H93 when main merged a parallel H88/H89 round, and renamed again to H97/H98 when main used H92-H96. IR-H97-001..008 appended and the round's own ids renumbered wholesale; no existing entry was edited or removed."
+  "merge_note": "Entries appended in chronological order of first recording, per-round prefixes only. Merged with arena/90369109 session entries IR-H96-001..005 (bidirectional co-training disagreement round; labels H88 and H95 were taken on main by parallel sessions, so that round is H96). Merged with arena/4cdd8084 session entries IR-H97-001..006 and IR-H98-001 (round labels H88/H89/H93/H94 were taken on main by parallel sessions in turn, so that pair is H97/H98; no number inside its receipts changed). | H99/H100 merge: frozen as H88/H89, renamed to H92/H93 (main merged a parallel H88/H89), to H97/H98 (main used H92-H96) and to H99/H100 (main merged another H97/H98 round, PR #100). IR-H99-001..008 appended and this round's own ids renumbered wholesale; no existing entry was edited or removed."
 }

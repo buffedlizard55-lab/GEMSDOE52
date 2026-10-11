@@ -154,10 +154,13 @@ def test_identifier_rename_history_is_recorded_and_auditable():
     for reg_path in ("registry/h99_preregistration.json", "registry/h100_preregistration.json"):
         reg = json.loads((ROOT / reg_path).read_text())
         hist = reg["identifier_rename"]
-        assert [h["to"] for h in hist["history"]] == ["H92 / H93", "H99 / H100"]
+        assert [h["to"] for h in hist["history"]] == ["H92 / H93", "H97 / H98", "H99 / H100"]
         assert hist["evidence_diff"] == "evidence/h99_identifier_rename.diff"
         assert hist["irregularity"] == "IR-H99-008"
-        assert hist["history"][1]["document_sha256_after"] == reg["hypothesis_sha256"]
+        assert hist["history"][-1]["document_sha256_after"] == reg["hypothesis_sha256"]
+        assert hist["history"][0]["document_sha256_before"] in (
+            "abfe7f9bb3bdec82fca5f958e7372c93897b64ba23b89cec10b840930a3df795",
+            "cfd76d0246bc3ba2eae8d19fd6dd068650c4bad219433664981885ad0f524832")
     ent = [e for e in json.loads((ROOT / "registry/irregularities.json").read_text())["entries"]
            if e["id"] == "IR-H99-008"]
     assert len(ent) == 1 and "identifier collision" in ent[0]["title"].lower()

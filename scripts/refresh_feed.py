@@ -434,9 +434,9 @@ def research_status():
 def newest_round():
     """The newest *round* in the repository, from its run card, hash-verified.
 
-    Additive to ``latest_research`` (which stays the audited CTD5 research card) so a
-    visitor can see the newest round without any manual checking. Stdlib only, and any
-    problem returns None rather than breaking the scheduled refresh.
+    Additive to ``latest_research`` (the audited CTD5 research card) so a visitor sees the
+    newest round without manual checking. Stdlib only; any problem returns None rather than
+    breaking the scheduled refresh.
     """
     best = None
     for card_path in sorted(EV.glob('h*_run_card.json')):
@@ -451,16 +451,16 @@ def newest_round():
         name, sha = raster.get('file'), raster.get('sha256')
         if not name or not sha:
             continue
-        published = DL / name                     # canonical name, else the short alias
+        published = DL / name
         if not published.is_file():
             short = DL / (match.group(0).split('_')[0] + '-candidate.tif')
             published = short if short.is_file() else None
         if published is None or file_hash(published) != sha:
-            continue                    # never advertise bytes we cannot verify
+            continue                     # never advertise bytes we cannot verify
         num = int(match.group(1))
         if best is None or num > best[0]:
             holdout = card.get('holdout') or {}
-            paired = (holdout.get('paired_primary_minus_random') or {})
+            paired = holdout.get('paired_primary_minus_random') or {}
             best = (num, dict(
                 run_id=card.get('round', published.stem), round=card.get('round'),
                 file=name, download='downloads/' + published.name, sha256=sha,
@@ -472,6 +472,7 @@ def newest_round():
                 run_card='evidence/' + card_path.name,
                 note='Newest round in this repository; a holdout number is not an organiser score.'))
     return best[1] if best else None
+
 
 def main():
     parser = argparse.ArgumentParser()
