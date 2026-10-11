@@ -1,0 +1,164 @@
+{
+  "round": "H100",
+  "created_utc": "2026-10-10T22:08:12Z",
+  "stage": "channels",
+  "sigma_px": 3.0,
+  "lags_px": [
+    4,
+    6,
+    8
+  ],
+  "fan_offsets_dy_dx": [
+    [
+      0,
+      1
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      1,
+      -1
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      2,
+      -1
+    ],
+    [
+      1,
+      -2
+    ]
+  ],
+  "view_a_bands": {
+    "2": "rtp",
+    "9": "tmi_vg",
+    "11": "iso_grav_anom_vg",
+    "13": "iso_grav_anom",
+    "15": "depth_to_base_surf",
+    "17": "cond_surf"
+  },
+  "view_b_bands": {
+    "12": "det_elev",
+    "19": "det_elev_slope",
+    "6": "tc_radiometric"
+  },
+  "learner_channels": [
+    "DVA_cond_surf_aniso_l4",
+    "DVA_cond_surf_aniso_l6",
+    "DVA_cond_surf_aniso_l8",
+    "DVA_cond_surf_logvar_l4",
+    "DVA_cond_surf_logvar_l6",
+    "DVA_cond_surf_logvar_l8",
+    "DVA_depth_to_base_surf_aniso_l4",
+    "DVA_depth_to_base_surf_aniso_l6",
+    "DVA_depth_to_base_surf_aniso_l8",
+    "DVA_depth_to_base_surf_logvar_l4",
+    "DVA_depth_to_base_surf_logvar_l6",
+    "DVA_depth_to_base_surf_logvar_l8",
+    "DVA_iso_grav_anom_aniso_l4",
+    "DVA_iso_grav_anom_aniso_l6",
+    "DVA_iso_grav_anom_aniso_l8",
+    "DVA_iso_grav_anom_logvar_l4",
+    "DVA_iso_grav_anom_logvar_l6",
+    "DVA_iso_grav_anom_logvar_l8",
+    "DVA_iso_grav_anom_vg_aniso_l4",
+    "DVA_iso_grav_anom_vg_aniso_l6",
+    "DVA_iso_grav_anom_vg_aniso_l8",
+    "DVA_iso_grav_anom_vg_logvar_l4",
+    "DVA_iso_grav_anom_vg_logvar_l6",
+    "DVA_iso_grav_anom_vg_logvar_l8",
+    "DVA_rtp_aniso_l4",
+    "DVA_rtp_aniso_l6",
+    "DVA_rtp_aniso_l8",
+    "DVA_rtp_logvar_l4",
+    "DVA_rtp_logvar_l6",
+    "DVA_rtp_logvar_l8",
+    "DVA_tmi_vg_aniso_l4",
+    "DVA_tmi_vg_aniso_l6",
+    "DVA_tmi_vg_aniso_l8",
+    "DVA_tmi_vg_logvar_l4",
+    "DVA_tmi_vg_logvar_l6",
+    "DVA_tmi_vg_logvar_l8",
+    "DVA_det_elev_aniso_l4",
+    "DVA_det_elev_aniso_l6",
+    "DVA_det_elev_aniso_l8",
+    "DVA_det_elev_logvar_l4",
+    "DVA_det_elev_logvar_l6",
+    "DVA_det_elev_logvar_l8",
+    "DVA_det_elev_slope_aniso_l4",
+    "DVA_det_elev_slope_aniso_l6",
+    "DVA_det_elev_slope_aniso_l8",
+    "DVA_det_elev_slope_logvar_l4",
+    "DVA_det_elev_slope_logvar_l6",
+    "DVA_det_elev_slope_logvar_l8",
+    "DVA_tc_radiometric_aniso_l4",
+    "DVA_tc_radiometric_aniso_l6",
+    "DVA_tc_radiometric_aniso_l8",
+    "DVA_tc_radiometric_logvar_l4",
+    "DVA_tc_radiometric_logvar_l6",
+    "DVA_tc_radiometric_logvar_l8"
+  ],
+  "n_channels": 54,
+  "band_receipt": [
+    {
+      "band": 2,
+      "tag": "rtp",
+      "eligible_px": 4593171
+    },
+    {
+      "band": 9,
+      "tag": "tmi_vg",
+      "eligible_px": 4593171
+    },
+    {
+      "band": 11,
+      "tag": "iso_grav_anom_vg",
+      "eligible_px": 4593171
+    },
+    {
+      "band": 13,
+      "tag": "iso_grav_anom",
+      "eligible_px": 4593171
+    },
+    {
+      "band": 15,
+      "tag": "depth_to_base_surf",
+      "eligible_px": 4593171
+    },
+    {
+      "band": 17,
+      "tag": "cond_surf",
+      "eligible_px": 4593171
+    },
+    {
+      "band": 12,
+      "tag": "det_elev",
+      "eligible_px": 4593171
+    },
+    {
+      "band": 19,
+      "tag": "det_elev_slope",
+      "eligible_px": 4593171
+    },
+    {
+      "band": 6,
+      "tag": "tc_radiometric",
+      "eligible_px": 4593171
+    }
+  ],
+  "torn_writes_repaired": {},
+  "note": "DVA never previously computed on bands 2, 9, 6 (run_h82.BANDS = 12,19,13,15,18)"
+}

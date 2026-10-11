@@ -1,6 +1,6 @@
 {
-  "generated_utc": "2026-10-10T23:35:13Z",
-  "branch": "arena/90369109-gemsdoe52",
+  "generated_utc": "2026-10-11T01:57:39Z",
+  "branch": "arena/604a9c54-gemsdoe52",
   "repo": "buffedlizard55-lab/GEMSDOE52",
   "evidence_copied": [
     "a_only_reasoning_r2.json",
@@ -203,10 +203,10 @@
     "verified_claims_r2.json",
     "verified_claims_r3.json"
   ],
-  "submission": "gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif",
-  "downloads": 114,
+  "submission": "gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif",
+  "downloads": 134,
   "leaderboard_status": "dated snapshot; automated DrivenData access disabled by Terms-of-Use policy",
-  "leaderboard_last_observed_utc": "2026-10-10",
+  "leaderboard_last_observed_utc": "2026-10-11",
   "prior_entries": 395,
   "eligible_prior_rasters": 389,
   "scientific_gate": false,
@@ -222,6 +222,27 @@
     "submit_ok": false,
     "measurement_utc": "2026-10-08T18:31:08.001658+00:00",
     "note": "Research only; local evidence refresh is not a fresh organizer or leaderboard observation."
+  },
+  "newest_round": {
+    "run_id": "H102",
+    "round": "H102",
+    "file": "gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif",
+    "download": "downloads/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif",
+    "sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
+    "hash_verified": true,
+    "verdict": "negative",
+    "submit_ok": false,
+    "approved_for_weekly_slot": false,
+    "holdout_dti": 0.02946034877464432,
+    "holdout_ci95": [
+      0.02115773138691092,
+      0.03975570357329162
+    ],
+    "random_dti": 0.0815923825446992,
+    "paired_vs_random": -0.052132033770054875,
+    "paired_ci95": null,
+    "run_card": "evidence/h102_run_card.json",
+    "note": "Newest round in this repository; a holdout number is not an organiser score."
   },
   "freshness_note": "Local evidence refresh is automatic; the board is a dated snapshot. No automatic portal submission."
 }

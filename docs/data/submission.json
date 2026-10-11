@@ -1,85 +1,227 @@
 {
-  "file": "gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif",
-  "sha256": "ba2dae7db2b919bb53c147cae0d5f9663b368b059fc1b26c69d8dbfc35948ade",
-  "bytes": 108742,
-  "submission_name": "gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros",
-  "note": "H96 bidir co-train A/B disagreement, cover-step ViewA, 25400px mass lever, 3px, 200m collar; HOLDOUT-DTI below bar, research candidate",
+  "file": "gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif",
+  "sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
+  "bytes": 132324,
+  "submission_name": "gems52-h102-pafdva-disagree-37600px-20261011T002233Z",
+  "note": "H102 co-training: View-A potential-field anisotropy x View-B DEM anisotropy; disagreement field, 200m ring excluded, binary 37600 dots",
   "note_chars": 134,
   "validator": {
-    "path": "/home/user/GEMSDOE52/submission/gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif",
-    "bytes": 108742,
-    "sha256": "ba2dae7db2b919bb53c147cae0d5f9663b368b059fc1b26c69d8dbfc35948ade",
-    "bands": 1,
+    "count": 1,
     "dtype": "float32",
     "crs": "EPSG:32611",
-    "width": 3292,
-    "height": 3730,
-    "bounds": [
-      243350.0,
-      4135550.0,
-      572550.0,
-      4508550.0
+    "shape": [
+      3730,
+      3292
     ],
-    "ref_bounds": [
-      243350.0,
-      4135550.0,
-      572550.0,
-      4508550.0
-    ],
-    "transform": [
-      100.0,
-      0.0,
-      243350.0,
-      0.0,
-      -100.0,
-      4508550.0
-    ],
-    "nodata": null,
-    "blocksize": [
-      256,
-      256
-    ],
-    "fixture_grid": false,
-    "has_validity_mask": false,
-    "nan_pixels": 0,
-    "infinity_pixels": 0,
-    "n_nan": 0,
+    "crs_match": true,
+    "shape_match": true,
+    "transform_match": true,
+    "bounds_match": true,
+    "nan": 0,
+    "infinite": 0,
     "min": 0.0,
     "max": 1.0,
-    "mean": 0.002068545436486602,
-    "n_nonzero": 25400,
-    "mass": 25400.0,
-    "mass_outside_footprint": 0,
-    "problems": [],
-    "ok": true,
-    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+    "values": [
+      0.0,
+      1.0
+    ],
+    "ones": 37600,
+    "zeros": 12241560,
+    "mass": 37600.0,
+    "range_ok": true,
+    "PASS": true,
+    "range_rule_source": "official: single layer float32 with values between 0 and 1, EPSG:32611, 100 m, same bounds as the training data (https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/)",
+    "sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
+    "ok": true
   },
-  "zip_file": "gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.zip",
-  "zip_sha256": "9ac8728c5445980215d0d74f4106a3a577c28dc15380e712edb0a27f5f53d168",
+  "zip_file": "gems52-h102-pafdva-disagree-37600px-20261011T002233Z.zip",
+  "zip_sha256": "3a1d063878a868e7aa9d23bc18deb8df438ae40b4eb10a81f1a582c824066a13",
   "approved_for_weekly_slot": false,
   "promoted": false,
   "submission_slots_used": 0,
   "status": "research-only; local format validation is not organizer acceptance",
   "metadata": {
-    "round": "H96",
-    "hypothesis": "bidirectional co-training disagreement; A-confident/B-abstain = buried fault, B-confident/A-abstain = artifact veto",
+    "round": "H102",
+    "hypothesis": "directional semivariance anisotropy on the potential-field/subsurface bands is a subsurface texture that is not a copy of the surface texture; where View A is confident and View B abstains the fault may be buried beneath cover and absent from the surface-expression catalogue",
     "evidence_class": "HOLDOUT-DTI",
     "registration": {
-      "preregistration_sha256": "0f664c43f166264864c3815d31a9230f5b95b257a426d4670a8b5ed7c78f7094",
-      "amendment_sha256": "91f74c5a5e4c730e826b91ae0731bf58883779af6753238e839e1c6ae8a84785",
+      "preregistration_sha256": "9c2e19c0966d9294b2cc453bab328ccbf5bf582dcffc0ed60e1da04476d68fb7",
       "frozen_before_any_fit": true
     }
   },
-  "round": "H96",
-  "stem": "gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros",
-  "nonzero_px": 25400,
-  "short_tif": "h96-candidate.tif",
-  "short_zip": "h96-candidate.zip",
+  "round": "H102",
+  "stem": "gems52-h102-pafdva-disagree-37600px-20261011T002233Z",
+  "nonzero_px": 37600,
+  "short_tif": "h102-candidate.tif",
+  "short_zip": "h102-candidate.zip",
+  "format": {
+    "path": "submission/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif",
+    "bytes": 132324,
+    "sha256": "cf035c83a651d90b0b920c52ce0e894b8666839d73b6f53f41a7a995f57bf326",
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "transform_match": true,
+    "bounds_match": true,
+    "nan_pixels": 0,
+    "infinity_pixels": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "n_nonzero": 37600,
+    "mass": 37600.0,
+    "problems": [],
+    "ok": true,
+    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "uniqueness": {
+    "n_priors_checked": 82,
+    "canonical_pattern_unique": true,
+    "identical_to_a_prior": false,
+    "help": "lane census scoped to locally available rasters (IR-H102-003)"
+  },
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator": "gems52-pooled-hide-v1",
+    "withheld_positive_px": 53186,
+    "primary": {
+      "evidence_class": "HOLDOUT-DTI",
+      "evaluator_version": "gems52-pooled-hide-v1",
+      "dti": 0.02946034877464432,
+      "ci95": [
+        0.02115773138691092,
+        0.03975570357329162
+      ],
+      "withheld_positive_pixels": 53186,
+      "tpw": 1479.8376061106685,
+      "fpw": 36933.67879510753,
+      "fnw": 51706.16239388936
+    },
+    "controls": {
+      "single_A2": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.07639617220689764,
+        "ci95": [
+          0.061925201702061346,
+          0.09188078159587354
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 3856.0701149200836,
+        "fpw": 35773.18390604043,
+        "fnw": 49329.92988507991
+      },
+      "single_B2": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.1859682483761976,
+        "ci95": [
+          0.16404980882739553,
+          0.20706624422215536
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 9499.539114815969,
+        "fpw": 33164.01560923631,
+        "fnw": 43686.46088518404
+      },
+      "cotrain_disagree": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.02946034877464432,
+        "ci95": [
+          0.02115773138691092,
+          0.03975570357329162
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 1479.8376061106685,
+        "fpw": 36933.67879510753,
+        "fnw": 51706.16239388936
+      },
+      "consensus": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.13033209756514075,
+        "ci95": [
+          0.11280720785091922,
+          0.1489482627393436
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 6616.769942186307,
+        "fpw": 34481.91600396785,
+        "fnw": 46569.23005781367
+      },
+      "buried_only": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.0358832672321347,
+        "ci95": [
+          0.027300054119480856,
+          0.04506044378386262
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 1803.712193566384,
+        "fpw": 36782.828849125835,
+        "fnw": 51382.287806433604
+      },
+      "union_max": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.15666735264519369,
+        "ci95": [
+          0.13672418932987757,
+          0.17714682369130594
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 7977.8884589750205,
+        "fpw": 33890.458155530956,
+        "fnw": 45208.11154102499
+      },
+      "random": {
+        "evidence_class": "HOLDOUT-DTI",
+        "evaluator_version": "gems52-pooled-hide-v1",
+        "dti": 0.0815923825446992,
+        "ci95": [
+          0.07137879179130074,
+          0.09251216812060094
+        ],
+        "withheld_positive_pixels": 53186,
+        "tpw": 4126.867482230022,
+        "fpw": 36024.52259717952,
+        "fnw": 49059.132517769984
+      }
+    },
+    "paired_vs_best_control": {
+      "best_comparable_control": "single_B2",
+      "candidate_dti": 0.02946034877464432,
+      "control_dti": 0.1859682483761976,
+      "delta": -0.15650789960155329,
+      "ci95": [
+        -0.17908500547783923,
+        -0.13473655418256178
+      ],
+      "ci_lower_above_zero": false,
+      "above_standing_bar": false,
+      "PROMOTE": false
+    },
+    "note": "a holdout number is not a board forecast"
+  },
+  "placement": {
+    "dots": 37600,
+    "pool_px": 4325298,
+    "eligible_px": 4593171,
+    "ring_excluded_m": 200.0,
+    "min_cat_dist_m": 223.60679774997897,
+    "median_cat_dist_m": 2816.0255680657447,
+    "dots_within_300m_of_catalogue_pct": 2.1515957446808507
+  },
+  "submit_ok": false,
+  "download_ok": true,
   "marker": "submission/LATEST.txt",
   "exists": true,
-  "download": "downloads/gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.tif",
-  "download_zip": "downloads/gems52-h96-bidir-cotrain-coverstep-25400px-20261010T222552Z-a6ab4495-zeros.zip",
-  "submission_note": "H96 bidir co-train A/B disagreement, cover-step ViewA, 25400px mass lever, 3px, 200m collar; HOLDOUT-DTI below bar, research candidate",
+  "download": "downloads/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.tif",
+  "download_zip": "downloads/gems52-h102-pafdva-disagree-37600px-20261011T002233Z.zip",
+  "submission_note": "H102 co-training: View-A potential-field anisotropy x View-B DEM anisotropy; disagreement field, 200m ring excluded, binary 37600 dots",
   "submission_note_chars": 134,
   "published_byte_hash_matches_receipt": true
 }

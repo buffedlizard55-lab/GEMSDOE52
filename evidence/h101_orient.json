@@ -1,0 +1,14 @@
+{
+ "stage": "orient",
+ "grad_threshold": 0.007287036015112266,
+ "slope_median": 3.745419979095459,
+ "defined_fraction": 0.7499999455713711,
+ "fl_ge_erosion_fraction": 0.26778798350856087,
+ "dcard_le_road_fraction": 0.11743237950426841,
+ "catalogue_px": 53186,
+ "catalogue_fl_ge_erosion_fraction": 0.24331591020193283,
+ "catalogue_mean_fl_defined": 0.5542806386947632,
+ "eligible_mean_fl_defined": 0.6300815939903259,
+ "finished_utc": "2026-10-11T00:09:39+00:00",
+ "note": "descriptive only; thresholds were frozen before this ran"
+}

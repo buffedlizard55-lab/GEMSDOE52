@@ -1,0 +1,73 @@
+{
+  "round": "H88s",
+  "file": "gems52-h88-cotrain-disagreement-suffscreen-31156px-20261010T233522Z.tif",
+  "stem": "gems52-h88-cotrain-disagreement-suffscreen-31156px-20261010T233522Z",
+  "bytes": 129943,
+  "sha256": "124081c0c05fc882ed8c04a2b036c574d4208c10275bb2ede90dd4d2d52246a7",
+  "nonzero_px": 31156,
+  "short_tif": "h88s-candidate.tif",
+  "short_zip": "h88s-candidate.zip",
+  "note": "H88 co-train lane: B-corroborated, A-only suppressed, 31156px, 3px spacing, 200m collar",
+  "approved_for_weekly_slot": false,
+  "promoted": false,
+  "submission_slots_used": 0,
+  "format": {
+    "path": "/home/user/GEMSDOE52/submission/gems52-h88-cotrain-disagreement-suffscreen-31156px-20261010T233522Z.tif",
+    "bytes": 129943,
+    "sha256": "124081c0c05fc882ed8c04a2b036c574d4208c10275bb2ede90dd4d2d52246a7",
+    "bands": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "ref_bounds": [
+      243350.0,
+      4135550.0,
+      572550.0,
+      4508550.0
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "nodata": null,
+    "blocksize": [
+      256,
+      256
+    ],
+    "fixture_grid": false,
+    "has_validity_mask": false,
+    "nan_pixels": 0,
+    "infinity_pixels": 0,
+    "n_nan": 0,
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.002537307096645236,
+    "n_nonzero": 31156,
+    "mass": 31156.0,
+    "mass_outside_footprint": 0,
+    "problems": [],
+    "ok": true,
+    "validation_class": "local on-disk template/range check; not organizer upload acceptance"
+  },
+  "source_build": "evidence/h88s_build.json",
+  "source_build_is_archival": false,
+  "pointer_status": "download yes; submit is the owner's call (no weekly slot used by this round; the selector step is separate)",
+  "official_score_status": "No organizer submission receipt available.",
+  "verdict": "research candidate; download yes; submit decision is the owner's separate selector step (no slot used)",
+  "reason": "amendment 80b: the preregistered primary scored 0.127005 [0.11105, 0.14547] and lost its promotion test against single_B; the shipped field is the arm with the highest permitted pooled estimate, single_B (0.179847 [0.15633, 0.20132]). The exchange_B arm was NOT shipped despite its tied top score because the round's own donor-sufficiency screen excluded it.",
+  "download": "downloads/gems52-h88-cotrain-disagreement-suffscreen-31156px-20261010T233522Z.tif",
+  "download_zip": "downloads/h88s-candidate.zip",
+  "submission_note": "H88 co-train lane: B-corroborated, A-only suppressed, 31156px, 3px spacing, 200m collar",
+  "submission_note_chars": 87
+}

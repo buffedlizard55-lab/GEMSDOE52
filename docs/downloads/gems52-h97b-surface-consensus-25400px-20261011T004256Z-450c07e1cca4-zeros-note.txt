@@ -1,0 +1,2 @@
+name: gems52-h97b-surface-consensus-25400px-20261011T004256Z-450c07e1cca4-zeros
+note (139/140): H97b lane-distinct: surface view (LiDAR scarp + radiometric ratios) ranked, View A as screen and B-only veto; 25,400 dots; 3px; 200m collar
